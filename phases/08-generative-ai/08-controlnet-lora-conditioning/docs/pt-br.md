@@ -9,7 +9,7 @@
 
 ## O Problema
 
-Um prompt como "uma mulher de vermelho andando com um cachorro numa rua movimentada" não dá ao modelo informação sobre *onde* o cachorro está, *qual pose* a mulher tem, ou *a perspectiva* da rua. Texto define uns 10% do que você precisa especificar uma imagem. O resto é visual e não pode ser descrito eficientemente em palavras.
+Um prompt como "uma mulher de vermelho andando com um cachorro numa rua movimentada" não dá ao modelo informação sobre *onde* o cachorro está, *qual pose* a mulher tem, ou *a perespecificaçãotiva* da rua. Texto define uns 10% do que você precisa eespecificaçãoificar uma imagem. O resto é visual e não pode ser descrito eficientemente em palavras.
 
 Treinar um novo modelo condicional do zero para cada sinal (pose, profundidade, canny, segmentação) é proibitivo. Você quer manter o backbone SDXL de 2.6B params congelado, anexar uma rede lateral pequena que lê a condição, e fazê-la ajustar as features intermediárias do backbone. Isso é o ControlNet.
 
@@ -90,7 +90,7 @@ gated = gate * side_out  # gate inicializado com 0
 h = base(x) + gated
 ```
 
-No passo 0 a saída é idêntica à base. Treinamento inicial atualiza `gate` lentamente — sem drift catastrófico.
+No passo 0 a saída é idêntica à base. Treinamento inicial atualiza `gate` lentamente — sem deriva catastrófico.
 
 ## Armadilhas
 
@@ -106,7 +106,7 @@ No passo 0 a saída é idêntica à base. Treinamento inicial atualiza `gate` le
 |------|---------------|
 | Reproduzir estilo artístico de uma marca | LoRA treinado em ~30 imagens selecionadas com rank 32 |
 | Colocar meu rosto em imagem gerada | DreamBooth ou LoRA + IP-Adapter-FaceID |
-| Pose específica + prompt | ControlNet-Openpose + SDXL + texto |
+| Pose eespecificaçãoífica + prompt | ControlNet-Openpose + SDXL + texto |
 | Composição com consciência de profundidade | ControlNet-Depth + SD3 |
 | Referência + prompt | IP-Adapter + texto |
 | Layout exato | ControlNet-Scribble ou ControlNet-Canny |
@@ -144,7 +144,7 @@ Um SaaS real de texto-para-imagem serve centenas de LoRAs e uma dúzia de Contro
 - **ControlNet como segunda pista de attention.** O encoder clonado roda em paralelo com a base. Dois ControlNets com peso 1.0 cada = dois forward passes extras por passo, não um passo merged. Headroom de batch size cai quadraticamente. Orçamento para ~1.5× custo por passo por ControlNet ativo.
 - **LoRAs quantizados também.** Se você quantizou a base (ver Lição 07, Flux em 8GB), o delta do LoRA também quantiza limposamente para 8-bit ou 4-bit. Carregamento estilo QLoRA permite empilhar 5-10 LoRAs sobre uma base Flux 4-bit sem estourar memória.
 
-Específico do Flux: o notebook do Niels "Flux em 8GB" quantiza a base para 4-bit; empilhar um LoRA de estilo (`pipe.load_lora_weights("user/style-lora")`) nessa base quantizada com `weight_name="pytorch_lora_weights.safetensors"` ainda funciona. Essa é a receita que a maioria das agências SaaS distribui em 2026.
+Eespecificaçãoífico do Flux: o notebook do Niels "Flux em 8GB" quantiza a base para 4-bit; empilhar um LoRA de estilo (`pipe.load_lora_weights("user/style-lora")`) nessa base quantizada com `weight_name="pytorch_lora_weights.safetensors"` ainda funciona. Essa é a receita que a maioria das agências SaaS distribui em 2026.
 
 ## Leitura Adicional
 

@@ -58,7 +58,7 @@ HBM3 de datacenter a 3 TB/s lê os mesmos 3.5 GB em 1.2 ms — teto de 830 tok/s
 - Orin Nano Super (8GB): comporta Llama 3.2 3B, Phi-3 com bom tok/s.
 - AGX Orin: roda gpt-oss-20b via vLLM a ~40 tok/s.
 - Thor / T4000 (JetPack 7.1): performance 2x o AGX Orin, suporte a EAGLE-3 e NVFP4.
-- TensorRT Edge-LLM (2026) suporta speculative decoding EAGLE-3, pesos NVFP4, chunked prefill — otimizações de datacenter portadas para edge.
+- TensorRT Edge-LLM (2026) suporta especificaçãoulative decoding EAGLE-3, pesos NVFP4, chunked prefill — otimizações de datacenter portadas para edge.
 
 ### Escolha de quantização por alvo
 
@@ -98,7 +98,7 @@ Esta aula produz `outputs/skill-edge-target-picker.md`. Dados plataforma (iOS/An
 ## Exercícios
 
 1. Execute `code/main.py`. Para um modelo 7B em Q4 num Snapdragon 8 Gen 3 (~77 GB/s de largura de banda), calcule o teto de decode. Compare com o observado de 6-8 tok/s — o runtime é eficiente?
-2. WebGPU no Android requer Chrome v121+. Projete um fallback para browsers antigos — server-side via mesma API compatível com OpenAI.
+2. WebGPU no Android requer Chrome v121+. Projete um reserva para browsers antigos — server-side via mesma API compatível com OpenAI.
 3. Seu app iOS precisa de streaming de contexto 4K. Qual combinação de modelo/formato permite ficar abaixo de 4 GB de memória ativa num iPhone 16?
 4. Jetson AGX Orin roda gpt-oss-20b a 40 tok/s. Jetson Nano comporta apenas um 3B. Se seu produto mira em ambos, como unificar o stack de inferência?
 5. Argumente se "WebLLM está pronto para produção em 2026". Cite cobertura, performance e a lacuna do Firefox Android.

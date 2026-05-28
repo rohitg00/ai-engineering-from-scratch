@@ -9,7 +9,7 @@
 
 ## O Problema
 
-Um agent implantado vê entradas que seus projetistas nunca viram. Nenhuma lista de regras é longa o suficiente para cobri-las. Nenhuma lista de regras é curta o suficiente para aplicar rapidamente sob pressão de compute. A questão prática: como alinhar um agent a princípios que sobrevivam tanto a uma cauda longa de casos quanto a inferência rápida?
+Um agente implantado vê entradas que seus projetistas nunca viram. Nenhuma lista de regras é longa o suficiente para cobri-las. Nenhuma lista de regras é curta o suficiente para aplicar rapidamente sob pressão de compute. A questão prática: como alinhar um agente a princípios que sobrevivam tanto a uma cauda longa de casos quanto a inferência rápida?
 
 Alinhamento baseado em regras (RBA): listar tudo que não é permitido. Rápido de verificar, fácil de auditar, impossível de manter atualizado, frequentemente recusa em excesso em análogos próximos que não antecipou. Alinhamento baseado em raciocínio (Constituição do Claude de 2026): codificar princípios, deixar o modelo raciocinar. Escala em casos não vistos, mais difícil de auditar, modo de falha é má-aplicação de princípios em vez de perder a regra.
 
@@ -19,7 +19,7 @@ A Constituição de 2026 toma uma posição intermediária explícita. Proibiç�
 
 ### A hierarquia de prioridades de quatro níveis
 
-1. **Segurança e suporte à supervisão humana.** Maior. O modelo prioriza não minar a capacidade de humanos e da Anthropic de supervisionar e corrigir IA. Não é "seja cauteloso"; é especificamente "não aja de formas que tornem a supervisão humana mais difícil."
+1. **Segurança e suporte à supervisão humana.** Maior. O modelo prioriza não minar a capacidade de humanos e da Anthropic de supervisionar e corrigir IA. Não é "seja cauteloso"; é eespecificaçãoificamente "não aja de formas que tornem a supervisão humana mais difícil."
 2. **Ética.** Honestidade, evitar dano a pessoas, não enganar, não manipular. Prevalece sobre as diretrizes da Anthropic quando conflitam.
 3. **Diretrizes da Anthropic.** Normas operacionais que a Anthropic decidiu que importam: escopo do produto, padrões de interação, quando usar quais ferramentas.
 4. **Utilidade.** Menor. Ser o mais útil possível dentro das prioridades superiores.
@@ -38,7 +38,7 @@ O operador não pode sobrescrever isso. O usuário não pode sobrescrever isso. 
 
 **Padrões soft-coded (ajustáveis pelo operador):**
 - Padrões de tamanho de resposta
-- Escopo temático (o modelo pode recusar tópicos fora do deploy do operador)
+- Escopo temático (o modelo pode recusar tópicos fora do implantação do operador)
 - Estilo (formal vs casual)
 - Padrões de uso de ferramentas
 
@@ -91,13 +91,13 @@ A Constituição não é o interruptor de emergência da Aula 14. Ela vive na ca
 
 1. Rode `code/main.py`. Confirme que a proibição hardcoded dispara mesmo quando utilidade é alta. Modifique o resolvedor para pesar utilidade acima de ética; observe o modo de falha.
 
-2. Leia a Constituição do Claude (pública, 79 páginas, CC0). Identifique um princípio que você acha sub-especificado. Escreva dois parágrafos explicando a ambiguidade específica e propondo uma formulação mais apertada.
+2. Leia a Constituição do Claude (pública, 79 páginas, CC0). Identifique um princípio que você acha sub-eespecificaçãoificado. Escreva dois parágrafos explicando a ambiguidade eespecificaçãoífica e propondo uma formulação mais apertada.
 
-3. Projete um conjunto de padrões soft-coded para um agent de suporte ao cliente. O que o operador ajusta? O que o operador não pode tocar? Justifique cada limite.
+3. Projete um conjunto de padrões soft-coded para um agente de suporte ao cliente. O que o operador ajusta? O que o operador não pode tocar? Justifique cada limite.
 
 4. Leia o paper CAI de Bai et al. 2022. Descreva um caso onde o loop de crítica-e-revisão do Constitutional AI produziria um resultado pior que uma regra genérica. Identifique a classe.
 
-5. O experimento participativo de 2023 da Anthropic encontrou ~50% de divergência entre princípios públicos e corporativos. Escolha uma categoria onde isso importa para deploy em produção (ex: neutralidade política). Proponha um design que permita aos operadores expressar seus próprios valores enquanto as proibições hardcoded permanecem intocáveis.
+5. O experimento participativo de 2023 da Anthropic encontrou ~50% de divergência entre princípios públicos e corporativos. Escolha uma categoria onde isso importa para implantação em produção (ex: neutralidade política). Proponha um design que permita aos operadores expressar seus próprios valores enquanto as proibições hardcoded permanecem intocáveis.
 
 ## Termos-Chave
 
@@ -118,4 +118,4 @@ A Constituição não é o interruptor de emergência da Aula 14. Ela vive na ca
 - [Bai et al. — Constitutional AI: Harmlessness from AI Feedback](https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback) — original de 2022.
 - [Anthropic — Collective Constitutional AI (2023)](https://www.anthropic.com/research/collective-constitutional-ai-aligning-a-language-model-with-public-input) — experimento participativo.
 - [Anthropic — Responsible Scaling Policy v3.0](https://anthropic.com/responsible-scaling-policy/rsp-v3-0) — onde a Constituição se encaixa na stack do RSP.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — papel da Constituição em deploys de longo prazo.
+- [Anthropic — Measuring agente autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — papel da Constituição em deploys de longo prazo.

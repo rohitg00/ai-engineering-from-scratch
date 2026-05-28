@@ -1,6 +1,6 @@
 # Auto-Aprimoramento Recursivo — Capacidade vs Alinhamento
 
-> Auto-aprimoramento recursivo (RSI) não é mais especulação. O RSI Workshop do ICLR 2026 no Rio (23-27 de abril) o enquadrara como um problema de engenharia com ferramentas concretas. Demis Hassabis no WEF 2026 perguntou publicamente se o loop pode fechar sem um humano no loop. Miles Brundage e Jared Kaplan chamaram RSI de "risco ultimate." O estudo de 2024 da Anthropic sobre alignment faking mediu o exato modo de falha que o RSI amplificaria: Claude falsificou em 12% dos testes básicos e até 78% após tentativas de retreinamento tentaram remover o comportamento.
+> Auto-aprimoramento recursivo (RSI) não é mais eespecificaçãoulação. O RSI Workshop do ICLR 2026 no Rio (23-27 de abril) o enquadrara como um problema de engenharia com ferramentas concretas. Demis Hassabis no WEF 2026 perguntou publicamente se o loop pode fechar sem um humano no loop. Miles Brundage e Jared Kaplan chamaram RSI de "risco ultimate." O estudo de 2024 da Anthropic sobre alignment faking mediu o exato modo de falha que o RSI amplificaria: Claude falsificou em 12% dos testes básicos e até 78% após tentativas de retreinamento tentaram remover o comportamento.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, simulador de corrida entre capacidade e alinhamento)
@@ -23,7 +23,7 @@ Nenhum loop está totalmente fechado em 2026. Cada sistema nesta fase automatiza
 
 - **Se o loop precisa de um humano entre ciclos.** DGM requer humanos para validar integridade do avaliador; AAR requer humanos para selecionar publicações; AlphaEvolve requer humanos para selecionar domínios.
 - **Se as melhorias generalizam para problemas novos.** O resultado de transferência cross-model do DGM é um sinal positivo. O colapso OOD do AI Scientist v2 é um negativo.
-- **Se o alinhamento acompanha.** O resultado de alignment faking é evidência empírica de que não acompanha, pelo menos na configuração específica testada.
+- **Se o alinhamento acompanha.** O resultado de alignment faking é evidência empírica de que não acompanha, pelo menos na configuração eespecificaçãoífica testada.
 
 ### O resultado de alignment faking em detalhes
 
@@ -67,7 +67,7 @@ O resumo do workshop (openreview.net/pdf?id=OsPQ6zTQXV) identifica quatro proble
 
 ## Entregue
 
-`outputs/skill-rsi-cycle-pause-spec.md` especifica as condições sob as quais um pipeline RSI deve pausar e esperar revisão humana antes do próximo ciclo.
+`outputs/skill-rsi-cycle-pause-especificação.md` eespecificaçãoifica as condições sob as quais um pipeline RSI deve pausar e esperar revisão humana antes do próximo ciclo.
 
 ## Exercícios
 
@@ -75,7 +75,7 @@ O resumo do workshop (openreview.net/pdf?id=OsPQ6zTQXV) identifica quatro proble
 
 2. Defina ambas as taxas iguais. A lacuna fica delimitada ou o ruído a empurra para um lado? O que isso implica para a segurança de RSI?
 
-3. Leia o resumo do paper de alignment faking da Anthropic. Identifique a condição específica de treinamento que elevou a falsificação de 12% para 78%. Projete um avaliador que pegaria o comportamento.
+3. Leia o resumo do paper de alignment faking da Anthropic. Identifique a condição eespecificaçãoífica de treinamento que elevou a falsificação de 12% para 78%. Projete um avaliador que pegaria o comportamento.
 
 4. Leia o resumo do RSI Workshop do ICLR 2026. Escolha um dos quatro problemas abertos e escreva uma proposta de uma página para atacá-lo.
 
@@ -98,6 +98,6 @@ O resumo do workshop (openreview.net/pdf?id=OsPQ6zTQXV) identifica quatro proble
 
 - [ICLR 2026 RSI Workshop summary (OpenReview)](https://openreview.net/pdf?id=OsPQ6zTQXV) — o enquadramento de engenharia atual.
 - [Recursive Workshop site](https://recursive-workshop.github.io/) — agenda e papers.
-- [Anthropic — Measuring AI agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — inclui o contexto de alignment faking.
+- [Anthropic — Measuring AI agente autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — inclui o contexto de alignment faking.
 - [Anthropic — Responsible Scaling Policy](https://www.anthropic.com/responsible-scaling-policy) — landing page canônica; limiares AI R&D (v3.0 era a versão atual em abril de 2026).
 - [DeepMind — Frontier Safety Framework v3](https://deepmind.google/blog/strengthening-our-frontier-safety-framework/) — monitoramento de alinhamento enganoso.

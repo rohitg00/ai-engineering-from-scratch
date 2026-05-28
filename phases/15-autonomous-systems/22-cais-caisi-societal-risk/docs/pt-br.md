@@ -9,7 +9,7 @@
 
 ## O Problema
 
-As Aulas 19 e 20 cobriram políticas de escala internas de laboratórios. A Aula 21 cobriu avaliação independente de capacidade. Esta aula cobre a terceira perspectiva: organizações de sociedade civil e governo que moldam discussão pública e base regulatória para risco catastrófico de IA.
+As Aulas 19 e 20 cobriram políticas de escala internas de laboratórios. A Aula 21 cobriu avaliação independente de capacidade. Esta aula cobre a terceira perespecificaçãotiva: organizações de sociedade civil e governo que moldam discussão pública e base regulatória para risco catastrófico de IA.
 
 Duas entidades distintas importam. CAIS é uma organização de pesquisa sem fins lucrativos que publica frameworks para pensar sobre risco de IA e coordena declarações públicas. CAISI é um centro do governo dos EUA dentro do NIST que roda acordos voluntários com laboratórios e avaliações de capacidade não classificadas. Os nomes rimam; as missões não se sobrepõem. Um profissional deveria conhecer ambas.
 
@@ -29,8 +29,8 @@ O conteúdo prático: framework de quatro riscos da CAIS é a taxonomia de risco
 O framework da CAIS agrupa risco catastrófico de IA em quatro categorias de nível superior:
 
 1. **Uso malicioso**: um ator malicioso usa IA para causar dano (síntese de armas biológicas, desinformação, ciberataques).
-2. **Corridas de IA**: pressão competitiva entre laboratórios, empresas ou nações empurra deploy além do ponto seguro.
-3. **Riscos organizacionais**: dinâmicas internas de laboratório (falhas de cultura de segurança, auditoria insuficiente, segurança subfinanciada) produzem um deploy ruim.
+2. **Corridas de IA**: pressão competitiva entre laboratórios, empresas ou nações empurra implantação além do ponto seguro.
+3. **Riscos organizacionais**: dinâmicas internas de laboratório (falhas de cultura de segurança, auditoria insuficiente, segurança subfinanciada) produzem um implantação ruim.
 4. **IAs renegadas**: uma IA suficientemente competente persegue objetivos que conflitam com bem-estar humano.
 
 Essa não é a única taxonomia; é a mais citada. As categorias não são mutuamente exclusivas — uma IA renegada produzida por uma organização que sacrificou auditoria por velocidade em uma corrida são todas as quatro.
@@ -44,7 +44,7 @@ Alavancas concretas de risco organizacional:
 - **Cultura de segurança**: membros da equipe se sentem capazes de escalar uma preocupação sem custo de carreira? Pesquisas da CAIS encontram que isso é um forte preditor das outras alavancas.
 - **Auditorias rigorosas**: externas e internas. Auditorias apenas internas produzem relatórios otimistas.
 - **Defesas em camadas**: nenhuma camada sozinha é suficiente (o tema corrente da Fase 15).
-- **Segurança da informação**: vazamento de pesos de modelo, vazamento de dados de avaliação, vazamento de técnicas de bypass de monitor. RAND SL-4 na Aula 19 é um padrão específico.
+- **Segurança da informação**: vazamento de pesos de modelo, vazamento de dados de avaliação, vazamento de técnicas de bypass de monitor. RAND SL-4 na Aula 19 é um padrão eespecificaçãoífico.
 
 ### CAISI — Center for AI Standards and Innovation
 
@@ -59,7 +59,7 @@ O papel da CAISI é o equivalente público, voltado para governo, dos engajament
 
 O projeto de lei do Senado da California (sessão 2025–2026) aborda risco catastrófico de modelos de fronteira. Disposições-chave conforme redigido:
 
-- Limiares de capacidade específicos que acionam obrigações em nível estadual.
+- Limiares de capacidade eespecificaçãoíficos que acionam obrigações em nível estadual.
 - Proteções para denunciantes de funcionários de laboratório de IA.
 - Requisitos de relato de incidentes para falhas catastróficas.
 
@@ -79,11 +79,11 @@ Essa é a síntese final para a fase: cada aula anterior é uma camada em uma st
 
 ## Use
 
-`code/main.py` implementa uma pequena ferramenta de inventário de risco. Dado um deploy proposto, rotula o deploy contra as categorias de quatro riscos e retorna uma checklist de mitigação. É uma ajuda de leitura para o framework, não um substituto para julgamento humano.
+`code/main.py` implementa uma pequena ferramenta de inventário de risco. Dado um implantação proposto, rotula o implantação contra as categorias de quatro riscos e retorna uma checklist de mitigação. É uma ajuda de leitura para o framework, não um substituto para julgamento humano.
 
 ## Entregue
 
-`outputs/skill-societal-risk-review.md` revisa um deploy para postura de risco societal: quais das quatro categorias ele toca, quais mitigações estão no lugar, qual a exposição de risco organizacional.
+`outputs/skill-societal-risk-review.md` revisa um implantação para postura de risco societal: quais das quatro categorias ele toca, quais mitigações estão no lugar, qual a exposição de risco organizacional.
 
 ## Exercícios
 
@@ -93,7 +93,7 @@ Essa é a síntese final para a fase: cada aula anterior é uma camada em uma st
 
 3. Leia uma versão atual do California SB-53. Identifique uma disposição que você acha que fortalece a postura de risco catastrófico e uma que acha que enfraqueça. Justifique ambas.
 
-4. Escolha um deploy de IA em produção que você conheça (seu ou publicado). Pontue contra as sub-alavancas de risco organizacional: cultura de segurança, rigor de auditoria, defesas em camadas, segurança da informação. Qual é mais fraca? Quanto custaria para equilibrar?
+4. Escolha um implantação de IA em produção que você conheça (seu ou publicado). Pontue contra as sub-alavancas de risco organizacional: cultura de segurança, rigor de auditoria, defesas em camadas, segurança da informação. Qual é mais fraca? Quanto custaria para equilibrar?
 
 5. Esboce uma versão 2028 do framework de quatro riscos que reflita um ano adicional de capacidade e um ano adicional de experiência de deploy. O que você adicionaria, removeria ou reagruparia?
 
@@ -105,7 +105,7 @@ Essa é a síntese final para a fase: cada aula anterior é uma camada em uma st
 | CAISI | "Segurança de IA do governo dos EUA" | Centro NIST; acordos voluntários; avaliações não classificadas |
 | Framework de quatro riscos | "Taxonomia da CAIS" | uso malicioso, corridas de IA, riscos organizacionais, IAs renegadas |
 | Uso malicioso | "Ator mau usa IA" | Armas biológicas, desinformação, ciberataques |
-| Corridas de IA | "Pressão competitiva" | Laboratórios/empresas/nações empurram deploy além da segurança |
+| Corridas de IA | "Pressão competitiva" | Laboratórios/empresas/nações empurram implantação além da segurança |
 | Risco organizacional | "Falha interna de laboratório" | Cultura de segurança, auditoria, defesas, segurança da informação |
 | IA renegada | "Agent desalinhado" | IA competente perseguindo objetivos conflitantes com bem-estar humano |
 | California SB-53 | "Regulação estadual" | Projeto de lei 2025–2026; primeira regulação estadual de risco catastrófico dos EUA se sancionado |
@@ -116,4 +116,4 @@ Essa é a síntese final para a fase: cada aula anterior é uma camada em uma st
 - [CAIS — AI Risks that Could Lead to Catastrophe](https://safe.ai/ai-risk) — o paper de quatro riscos.
 - [CAIS — May 2023 statement on extinction risk](https://safe.ai/statement-on-ai-risk) — joint statement curto.
 - [NIST CAISI](https://www.nist.gov/caisi) — centro de padrões e inovação de IA voltado para governo.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — conecta compromissos de laboratório a enquadramento societal.
+- [Anthropic — Measuring agente autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — conecta compromissos de laboratório a enquadramento societal.

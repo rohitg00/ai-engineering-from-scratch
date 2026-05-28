@@ -53,7 +53,7 @@ Abordagem do DeepSeek-V3: depois de cada passo de treinamento, pra cada expert, 
 
 ### Experts compartilhadas
 
-DeepSeek-V2/V3 também divide experts em *compartilhadas* e *roteadas*. Todo token passa por todas as experts compartilhadas. Experts roteadas são escolhidas via top-k. Experts compartilhadas capturam conhecimento comum; experts roteadas se especializam. V3 roda 1 expert compartilhada + top-8 de 256 roteadas.
+DeepSeek-V2/V3 também divide experts em *compartilhadas* e *roteadas*. Todo token passa por todas as experts compartilhadas. Experts roteadas são escolhidas via top-k. Experts compartilhadas capturam conhecimento comum; experts roteadas se eespecificaçãoializam. V3 roda 1 expert compartilhada + top-8 de 256 roteadas.
 
 ### Experts de granulação fina
 

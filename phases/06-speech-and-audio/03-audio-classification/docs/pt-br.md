@@ -4,7 +4,7 @@
 
 **Tipo:** Construir
 **Idiomas:** Python
-**Pré-requisitos:** Fase 6 · 02 (Espectrogramas e Mel), Fase 3 · 06 (CNNs), Fase 5 · 08 (CNNs e RNNs para Texto)
+**Pré-requisitos:** Fase 6 · 02 (Eespecificaçãotrogramas e Mel), Fase 3 · 06 (CNNs), Fase 5 · 08 (CNNs e RNNs para Texto)
 **Tempo:** ~75 minutos
 
 ## O Problema
@@ -46,7 +46,7 @@ Números de 2026 que você deve conhecer:
 | Benchmark | Baseline | SOTA 2026 | Fonte |
 |-----------|----------|-----------|-------|
 | ESC-50 | 82% (AST) | 97.0% (BEATs-iter3) | Paper BEATs (2024) |
-| AudioSet mAP | 0.485 (AST) | 0.548 (BEATs-iter3) | HEAR leaderboard 2026 |
+| AudioSet mAP | 0.485 (AST) | 0.548 (BEATs-iter3) | HEAR ranking 2026 |
 | Speech Commands v2 | 98% (CNN) | 99.0% (Audio-MAE) | Resultados HEAR v2 |
 
 ## Construa
@@ -85,9 +85,9 @@ def cosine(a, b):
     nb = math.sqrt(sum(x * x for x in b)) or 1e-12
     return dot / (na * nb)
 
-def knn_classify(q, bank, labels, k=5):
+def knn_classify(q, bank, rótulos, k=5):
     sims = sorted(range(len(bank)), key=lambda i: -cosine(q, bank[i]))[:k]
-    votes = Counter(labels[i] for i in sims)
+    votes = Counter(rótulos[i] for i in sims)
     return votes.most_common(1)[0][0]
 ```
 
@@ -123,7 +123,7 @@ from transformers import ASTFeatureExtractor, ASTForAudioClassification
 ext = ASTFeatureExtractor.from_pretrained("MIT/ast-finetuned-audioset-10-10-0.4593")
 model = ASTForAudioClassification.from_pretrained(
     "MIT/ast-finetuned-audioset-10-10-0.4593",
-    num_labels=50,
+    num_rótulos=50,
     ignore_mismatched_sizes=True,
 )
 
@@ -167,7 +167,7 @@ Salve como `outputs/skill-classifier-designer.md`. Escolha arquitetura, augmenta
 | AST | Audio Spectrogram Transformer | ViT em patches de log-mel; SOTA de 2021. |
 | BEATs | Áudio auto-supervisionado | Modelo da Microsoft, iter3 lidera AudioSet em 2026. |
 | Mixup | Augmentação de pares | `x = λ·x1 + (1-λ)·x2; y = λ·y1 + (1-λ)·y2`. |
-| SpecAugment | Augmentação baseada em máscara | Zerar bandas aleatórias de tempo e frequência do espectrograma. |
+| SpecAugment | Augmentação baseada em máscara | Zerar bandas aleatórias de tempo e frequência do eespecificaçãotrograma. |
 | mAP | Métrica principal multi-rótulo | Precisão média across classes e limiares. |
 
 ## Leitura Adicional

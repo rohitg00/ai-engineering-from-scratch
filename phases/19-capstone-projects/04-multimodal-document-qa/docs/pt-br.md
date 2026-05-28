@@ -1,6 +1,6 @@
 # Capstone 04 — QA Multimodal de Documentos (Visão-Primeiro em PDFs, Tabelas, Gráficos)
 
-> A fronteira de QA de documentos em 2026 se afastou de OCR-depois-texto e foi em direção a interação tardia visão-primeiro. ColPali, ColQwen2.5 e ColQwen3-omni tratam cada página de PDF como uma imagem, fazem embedding com interação tardia multi-vetor e deixam a query attend diretamente nos patches. Em 10-Ks financeiros, papers científicos e anotações manuscritas, esse padrão supera OCR-depois-texto por margens significativas. Construa a pipeline ponta a ponta em 10k páginas e publique a comparação lado a lado com OCR-depois-texto.
+> A fronteira de QA de documentos em 2026 se afastou de OCR-depois-texto e foi em direção a interação tardia visão-primeiro. ColPali, ColQwen2.5 e ColQwen3-omni tratam cada página de PDF como uma imagem, fazem embedding com interação tardia multi-vetor e deixam a consulta attend diretamente nos patches. Em 10-Ks financeiros, papers científicos e anotações manuscritas, esse padrão supera OCR-depois-texto por margens significativas. Construa a pipeline ponta a ponta em 10k páginas e publique a comparação lado a lado com OCR-depois-texto.
 
 **Tipo:** Capstone
 **Linguagens:** Python (pipeline), TypeScript (UI do visualizador)
@@ -16,9 +16,9 @@ O trade-off é armazenamento e latência. Um embedding ColQwen tem ~2048 vetores
 
 ## Conceito
 
-Interação tardia significa que cada token de query pontua contra cada token de patch, e a pontuação máxima por token de query é somada. Você ganha correspondência de granularidade fina sem precisar de um único vetor pooled. Um índice multi-vetor (Vespa, Qdrant multi-vetor ou AstraDB) armazena os embeddings por patch e roda MaxSim no momento da recuperação.
+Interação tardia significa que cada token de consulta pontua contra cada token de patch, e a pontuação máxima por token de consulta é somada. Você ganha correspondência de granularidade fina sem precisar de um único vetor pooled. Um índice multi-vetor (Vespa, Qdrant multi-vetor ou AstraDB) armazena os embeddings por patch e roda MaxSim no momento da recuperação.
 
-O respondedor é um modelo de visão-linguagem que pega a query mais as top-k páginas recuperadas como imagens e escreve uma resposta com regiões de evidência (bounding boxes ou referências de página). Qwen3-VL-30B, Gemini 2.5 Pro e InternVL3 são as escolhas de fronteira de 2026. Para equações e notação científica, um fallback OCR (Nougat, dots.ocr) é acoplado como canal de texto opcional.
+O respondedor é um modelo de visão-linguagem que pega a consulta mais as top-k páginas recuperadas como imagens e escreve uma resposta com regiões de evidência (bounding boxes ou referências de página). Qwen3-VL-30B, Gemini 2.5 Pro e InternVL3 são as escolhas de fronteira de 2026. Para equações e notação científica, um reserva OCR (Nougat, dots.ocr) é acoplado como canal de texto opcional.
 
 Avaliação é uma matriz bidimensional. Um eixo: tipo de conteúdo (parágrafos de texto plano, tabelas densas, gráficos de barras/linhas, notas manuscritas, equações). Outro eixo: abordagem de recuperação (visão-primeiro interação tardia vs OCR-depois-texto vs híbrido). Cada célula recebe nDCG@5 e acurácia da resposta. O relatório é a entrega.
 
@@ -35,11 +35,11 @@ PDFs -> renderizador de página (PyMuPDF, 180 DPI)
            v
    índice multi-vetor (Vespa ou Qdrant multi-vetor)
            |
-query ----+----> recuperar top-k páginas (MaxSim)
+consulta ----+----> recuperar top-k páginas (MaxSim)
            |
            v
   respondedor VLM: Qwen3-VL-30B | Gemini 2.5 Pro | InternVL3
-    entradas: query + imagens top-k páginas + texto OCR opcional
+    entradas: consulta + imagens top-k páginas + texto OCR opcional
            |
            v
   resposta com números de página citados + regiões de evidência
@@ -65,9 +65,9 @@ query ----+----> recuperar top-k páginas (MaxSim)
 
 2. **Embedding.** Rode ColQwen2.5-v0.2 em cada imagem de página. Forma de saída: ~2048 patch embeddings de dim 128. Aplique DocPruner para manter a metade de maior sinal. Escreva no campo multi-vetor do Vespa ou multi-vetor do Qdrant.
 
-3. **Query.** Para cada query recebida, faça embedding com a torre de query (embeddings no nível de token). Rode MaxSim contra o índice: para cada token de query, pegue o produto escalar máximo sobre os embeddings de patch da página, some. Retorne top-k páginas.
+3. **Query.** Para cada consulta recebida, faça embedding com a torre de consulta (embeddings no nível de token). Rode MaxSim contra o índice: para cada token de consulta, pegue o produto escalar máximo sobre os embeddings de patch da página, some. Retorne top-k páginas.
 
-4. **Sintetização.** Chame Qwen3-VL-30B com a query e as top-5 imagens de páginas. Prompt: "Responda usando apenas as páginas fornecidas. Cite cada afirmação por (doc_id, página) e nomeie a região (figura, tabela, parágrafo)."
+4. **Sintetização.** Chame Qwen3-VL-30B com a consulta e as top-5 imagens de páginas. Prompt: "Responda usando apenas as páginas fornecidas. Cite cada afirmação por (doc_id, página) e nomeie a região (figura, tabela, parágrafo)."
 
 5. **Regiões de evidência.** Pós-processe a resposta para extrair regiões citadas. Se o VLM emitir bounding boxes (Qwen3-VL emite), renderize-as como overlays no visualizador.
 
@@ -92,7 +92,7 @@ resposta:
 
 ## Entregue
 
-`outputs/skill-doc-qa.md` descreve a entrega: um sistema de QA multimodal visão-primeiro de documentos calibrado em um corpus específico e avaliado contra uma baseline OCR-depois-texto no ViDoRe v3.
+`outputs/skill-doc-qa.md` descreve a entrega: um sistema de QA multimodal visão-primeiro de documentos calibrado em um corpus eespecificaçãoífico e avaliado contra uma baseline OCR-depois-texto no ViDoRe v3.
 
 | Peso | Critério | Como é medido |
 |:-:|---|---|
@@ -119,9 +119,9 @@ resposta:
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |------|------------------------|------------------------|
-| Interação tardia | "Recuperação estilo ColPali" | Tokens de query pontuam contra patches de página independentemente; MaxSim agrega |
+| Interação tardia | "Recuperação estilo ColPali" | Tokens de consulta pontuam contra patches de página independentemente; MaxSim agrega |
 | Multi-vetor | "Embedding por patch" | Cada documento tem muitos vetores, não um único vetor pooled |
-| MaxSim | "Pontuação de interação tardia" | Para cada token de query, pegue similaridade máxima sobre vetores do documento; some |
+| MaxSim | "Pontuação de interação tardia" | Para cada token de consulta, pegue similaridade máxima sobre vetores do documento; some |
 | DocPruner | "Compressão de patch" | Poda de 2026 que mantém 50% dos patches com perda de acurácia desprezível |
 | ViDoRe v3 | "Benchmark de recuperação de documentos" | Padrão de 2026 para medir recuperação de documentos visuais |
 | Região de evidência | "Bounding box citado" | Uma bbox na página fonte que localiza o trecho de resposta |
@@ -136,4 +136,4 @@ resposta:
 - [Tutorial multi-vetor do Vespa](https://docs.vespa.ai/en/colpali.html) — stack de serving de referência
 - [Suporte multi-vetor do Qdrant](https://qdrant.tech/documentation/concepts/vectors/#multivectors) — índice alternativo
 - [Multi-vetor do AstraDB](https://docs.datastax.com/en/astra-db-serverless/databases/vector-search.html) — índice gerenciado alternativo
-- [Nougat OCR](https://github.com/facebookresearch/nougat) — fallback OCR capaz de equações
+- [Nougat OCR](https://github.com/facebookresearch/nougat) — reserva OCR capaz de equações

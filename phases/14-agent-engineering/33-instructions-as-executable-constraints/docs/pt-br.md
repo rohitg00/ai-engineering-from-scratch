@@ -1,6 +1,6 @@
 # Instruções de Agent como Restrições Executáveis
 
-> Instruções escritas em prosa são desejos. Instruções escritas como restrições são testes. O workbench transforma cada regra em algo que um agent pode checar no runtime e um reviewer pode verificar depois.
+> Instruções escritas em prosa são desejos. Instruções escritas como restrições são testes. O workbench transforma cada regra em algo que um agente pode checar no runtime e um reviewer pode verificar depois.
 
 **Tipo:** Construa
 **Linguagens:** Python (stdlib)
@@ -16,7 +16,7 @@
 
 ## O Problema
 
-Um `AGENTS.md` típico lê como documentação de onboarding. Ele diz ao agent pra "ter cuidado" e "testar bem" e "perguntar se tiver com dúvida." Três dias depois, o agent faz release de uma mudança sem nenhum teste, escreve num diretório proibido, e nunca pergunta porque nunca sabia onde a linha tava.
+Um `AGENTS.md` típico lê como documentação de onboarding. Ele diz ao agente pra "ter cuidado" e "testar bem" e "perguntar se tiver com dúvida." Três dias depois, o agente faz release de uma mudança sem nenhum teste, escreve num diretório proibido, e nunca pergunta porque nunca sabia onde a linha tava.
 
 Instruções são poderosas quando são operacionais e fracas quando são aspiracionais. A solução é escrever regras que o workbench consegue interpretar e o reviewer consegue pontuar.
 
@@ -39,7 +39,7 @@ flowchart LR
 | Inicialização | O que deve ser verdade antes do trabalho começar? | "arquivo de estado existe e tá fresco" |
 | Proibido | O que nunca deve acontecer? | "não edita `scripts/release.sh`" |
 | Definição de pronto | O que prova que a tarefa tá completa? | "pytest sai 0 e a linha de aceitação passa" |
-| Incerteza | O que o agent faz quando tá com dúvida? | "abre uma nota de pergunta ao invés de adivinhar" |
+| Incerteza | O que o agente faz quando tá com dúvida? | "abre uma nota de pergunta ao invés de adivinhar" |
 | Aprovação | O que precisa de aprovação humana? | "qualquer dependência nova, qualquer escrita em prod" |
 
 Uma regra que não se encaixa nessas cinco normalmente quer ser duas regras. Força o split.
@@ -62,7 +62,7 @@ Guardrails de framework (guardrails do OpenAI Agents SDK, interrupts do LangGrap
 
 - Parser de `agent-rules.md` que carrega regras num dataclass.
 - Functions verificadoras de estilo `rule_checker.py`, uma por referência de `check`.
-- Uma demo de execução de agent que viola duas regras e uma verificação passa que pega elas.
+- Uma demo de execução de agente que viola duas regras e uma verificação passa que pega elas.
 
 Execute:
 
@@ -86,7 +86,7 @@ Três padrões separam um conjunto de regras que dura um trimestre de um que dec
 
 Em produção:
 
-- Claude Code, Codex, Cursor leem as regras no início da sessão e citam elas quando recusam ações. O checker re-executa em CI pra pegar drift silencioso.
+- Claude Code, Codex, Cursor leem as regras no início da sessão e citam elas quando recusam ações. O checker re-executa em CI pra pegar deriva silencioso.
 - Guardrails do OpenAI Agents SDK registram as mesmas verificações como guardrails de input e output. O markdown é a superfície de docs; o SDK é a superfície de runtime.
 - Interrupts do LangGraph disparam quando um nó em andamento viola uma regra. O handler de interrupt lê a regra, pergunta pro humano, e retoma.
 
@@ -126,4 +126,4 @@ O conjunto de regras é portável entre os três porque é só markdown mais nom
 - [logi-cmd/agent-guardrails](https://github.com/logi-cmd/agent-guardrails) — implementação de merge-gate: escopo, teste de mutação, orçamentos de violação
 - Fase 14 · 32 — o workbench mínimo que esse conjunto de regras entra
 - Fase 14 · 38 — o gate de verificação que consome o relatório de regras
-- Fase 14 · 39 — o agent revisor que pontua aderência às regras
+- Fase 14 · 39 — o agente revisor que pontua aderência às regras

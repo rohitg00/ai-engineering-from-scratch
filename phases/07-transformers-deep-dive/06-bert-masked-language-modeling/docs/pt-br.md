@@ -77,22 +77,22 @@ E ao contrário da stack de 2018, é nativo pra Flash Attention. Inferência é 
 
 ### Passo 1: lógica de mascaramento
 
-Veja `code/main.py`. A função `create_mlm_batch` recebe uma lista de IDs de token, tamanho do vocabulário e probabilidade de máscara. Retorna IDs de entrada (com máscaras aplicadas) e labels (só nas posições mascaradas, -100 em outro lugar — convenção de ignore index do PyTorch).
+Veja `code/main.py`. A função `create_mlm_batch` recebe uma lista de IDs de token, tamanho do vocabulário e probabilidade de máscara. Retorna IDs de entrada (com máscaras aplicadas) e rótulos (só nas posições mascaradas, -100 em outro lugar — convenção de ignore index do PyTorch).
 
 ```python
 def create_mlm_batch(tokens, vocab_size, mask_prob=0.15, rng=None):
     input_ids = list(tokens)
-    labels = [-100] * len(tokens)
+    rótulos = [-100] * len(tokens)
     for i, t in enumerate(tokens):
         if rng.random() < mask_prob:
-            labels[i] = t
+            rótulos[i] = t
             r = rng.random()
             if r < 0.8:
                 input_ids[i] = MASK_ID
             elif r < 0.9:
                 input_ids[i] = rng.randrange(vocab_size)
             # else: keep original
-    return input_ids, labels
+    return input_ids, rótulos
 ```
 
 ### Passo 2: rodar predição MLM num corpus minúsculo
@@ -122,13 +122,13 @@ out = model(**inputs).last_hidden_state   # (1, N, 768)
 
 **Embeddings de modelo são BERTs com fine-tuning.** Modelos `sentence-transformers` como `all-MiniLM-L6-v2` são BERTs treinados com perda contrastiva. O encoder é o mesmo. A perda mudou.
 
-**Cross-encoders rerankers também são BERTs com fine-tuning.** Classificação de pares em `[CLS] query [SEP] doc [SEP]`. A attention bidirecional entre query e doc é o que dá aos cross-encoders sua vantagem de qualidade sobre biencoders.
+**Cross-encoders rerankers também são BERTs com fine-tuning.** Classificação de pares em `[CLS] consulta [SEP] doc [SEP]`. A attention bidirecional entre consulta e doc é o que dá aos cross-encoders sua vantagem de qualidade sobre biencoders.
 
 **Quando não escolher BERT em 2026.** Qualquer coisa generativa. O encoder não tem como produzir tokens autoregressivamente. Também: qualquer coisa abaixo de 1B parâmetros onde um decoder pequeno pode igualar qualidade com mais flexibilidade (Phi-3-Mini, Qwen2-1.5B).
 
 ## Entregando
 
-Veja `outputs/skill-bert-finetuner.md`. A skill define um fine-tuning de BERT (escolha de backbone, especificação da head, dados, avaliação, parada) pra uma nova tarefa de classificação ou extração.
+Veja `outputs/skill-bert-finetuner.md`. A skill define um fine-tuning de BERT (escolha de backbone, eespecificaçãoificação da head, dados, avaliação, parada) pra uma nova tarefa de classificação ou extração.
 
 ## Exercícios
 
@@ -142,11 +142,11 @@ Veja `outputs/skill-bert-finetuner.md`. A skill define um fine-tuning de BERT (e
 |-------|------------------------|--------------------------|
 | MLM | "Modelagem de linguagem mascarada" | Sinal de treinamento: substitui aleatoriamente 15% dos tokens por `[MASK]`, prevê os originais. |
 | Bidirecional | "Olha pros dois lados" | Attention do encoder sem máscara causal — cada posição vê todas as outras. |
-| `[CLS]` | "O token pooler" | Token especial anteposto a cada sequência; seu embedding final é a representação nível frase. |
-| `[SEP]` | "Separador de segmento" | Separa sequências pareadas (ex: query/doc, frase A/B). |
+| `[CLS]` | "O token pooler" | Token eespecificaçãoial anteposto a cada sequência; seu embedding final é a representação nível frase. |
+| `[SEP]` | "Separador de segmento" | Separa sequências pareadas (ex: consulta/doc, frase A/B). |
 | NSP | "Previsão da próxima frase" | Segunda tarefa de pré-treinamento do BERT; mostrada como inútil no RoBERTa, abandonada depois de 2019. |
 | Fine-tuning | "Adaptar a uma tarefa" | Manter o encoder maiormente congelado; treinar uma head pequena em cima pra tarefa downstream. |
-| Cross-encoder | "Um reranker" | BERT que recebe query e doc como entrada, gera score de relevância. |
+| Cross-encoder | "Um reranker" | BERT que recebe consulta e doc como entrada, gera score de relevância. |
 | ModernBERT | "Atualização 2024" | Encoder reconstruído com RoPE, RMSNorm, GeGLU, attention local/global alternada, contexto 8K. |
 
 ## Leituras Complementares

@@ -24,7 +24,7 @@ A forma de um request de function calling varia por provedor. Três exemplos con
 
 **Google Gemini API.** Você passa `tools: [{functionDeclarations: [{name, description, parameters}]}]` (aninhado sob `functionDeclarations`). A resposta chega como `candidates[0].content.parts: [{functionCall: {name, args, id}}]` onde `id` é único no Gemini 3 e acima pra correlação de chamadas paralelas. Você responde com `{functionResponse: {name, id, response}}`.
 
-Mesmo loop. Nomes de campos diferentes, aninhamento diferente, convenções de string vs. objeto diferentes, mecanismos de correlação diferentes. Uma equipe que escreve um agent de clima no OpenAI gasta dois dias portando pro Anthropic e mais um dia pro Gemini só pra infraestrutura.
+Mesmo loop. Nomes de campos diferentes, aninhamento diferente, convenções de string vs. objeto diferentes, mecanismos de correlação diferentes. Uma equipe que escreve um agente de clima no OpenAI gasta dois dias portando pro Anthropic e mais um dia pro Gemini só pra infraestrutura.
 
 Esta aula constrói um tradutor que unifica os três formatos em uma declaração canônica de ferramenta e roteia na borda. Fase 13 · 17 generaliza esse mesmo padrão num gateway de LLM.
 
@@ -35,14 +35,14 @@ Esta aula constrói um tradutor que unifica os três formatos em uma declaraçã
 Todo provedor precisa de cinco coisas:
 
 1. **Lista de ferramentas.** Nome, descrição e schema de entrada por ferramenta.
-2. **Escolha de ferramenta.** Forçar uma ferramenta específica, proibir ferramentas ou deixar o modelo decidir.
+2. **Escolha de ferramenta.** Forçar uma ferramenta eespecificaçãoífica, proibir ferramentas ou deixar o modelo decidir.
 3. **Emissão da chamada.** Saída estruturada nomeando a ferramenta e os argumentos.
 4. **Id da chamada.** Correlacionar a resposta com a chamada correta (importa pra paralelo).
 5. **Injeção do resultado.** Uma mensagem ou bloco que liga o resultado de volta à chamada.
 
 ### Diferenças de forma, campo por campo
 
-| Aspecto | OpenAI | Anthropic | Gemini |
+| Aespecificaçãoto | OpenAI | Anthropic | Gemini |
 |---------|--------|-----------|--------|
 | Envelope da declaração | `{type: "function", function: {...}}` | `{name, description, input_schema}` | `{functionDeclarations: [{...}]}` |
 | Campo do schema | `parameters` | `input_schema` | `parameters` |
@@ -70,13 +70,13 @@ Três modos que todos suportam, nomeados diferente.
 
 Mais um modo único de cada provedor:
 
-- **OpenAI.** Forçar uma ferramenta específica por nome.
-- **Anthropic.** Forçar uma ferramenta específica por nome; a flag `disable_parallel_tool_use` separa single vs. multi.
+- **OpenAI.** Forçar uma ferramenta eespecificaçãoífica por nome.
+- **Anthropic.** Forçar uma ferramenta eespecificaçãoífica por nome; a flag `disable_parallel_tool_use` separa single vs. multi.
 - **Gemini.** `mode: "VALIDATED"` roda toda resposta por um validador de schema independente da intenção do modelo.
 
 ### Chamadas paralelas
 
-O `parallel_tool_calls: true` da OpenAI (padrão) emite múltiplas chamadas numa mensagem do assistant. Você roda todas e responde com uma mensagem em lote de role tool com uma entrada por `tool_call_id`. Anthropic historicamente fazia chamada única; `disable_parallel_tool_use: false` (padrão desde Claude 3.5) habilita multi. Gemini 2 permitia chamadas paralelas mas não dava ids estáveis; Gemini 3 adiciona UUIDs pra que respostas fora de ordem sejam correlacionadas limpo.
+O `parallel_tool_calls: true` da OpenAI (padrão) emite múltiplas chamadas numa mensagem do assistant. Você roda todas e responde com uma mensagem em lote de role ferramenta com uma entrada por `tool_call_id`. Anthropic historicamente fazia chamada única; `disable_parallel_tool_use: false` (padrão desde Claude 3.5) habilita multi. Gemini 2 permitia chamadas paralelas mas não dava ids estáveis; Gemini 3 adiciona UUIDs pra que respostas fora de ordem sejam correlacionadas limpo.
 
 ### Streaming
 
@@ -136,7 +136,7 @@ Esta aula produz `outputs/skill-provider-portability-audit.md`. Dada uma integra
 
 3. Implemente a conversão de `tool_choice`: mapeie um `ToolChoice(mode="force", tool_name="x")` canônico nas três formas de provedor. Depois mapeie `mode="any"` e `mode="none"`. Consulte a tabela de diferenças da aula.
 
-4. Escolha um dos três provedores e leia seu guia de function calling de ponta a ponta. Encontre um campo na especificação do schema que os outros dois não suportam. Candidatos: `strict` da OpenAI, `disable_parallel_tool_use` do Anthropic, `function_calling_config.allowed_function_names` do Gemini.
+4. Escolha um dos três provedores e leia seu guia de function calling de ponta a ponta. Encontre um campo na eespecificaçãoificação do schema que os outros dois não suportam. Candidatos: `strict` da OpenAI, `disable_parallel_tool_use` do Anthropic, `function_calling_config.allowed_function_names` do Gemini.
 
 5. Escreva um vetor de teste: uma chamada de ferramenta cujos argumentos violam o schema declarado. Execute pelo validador de cada provedor (o da stdlib da Aula 01 serve como proxy) e registre quais erros disparam. Documente qual provedor você usaria em produção pra rigor.
 
@@ -145,13 +145,13 @@ Esta aula produz `outputs/skill-provider-portability-audit.md`. Dada uma integra
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|----------------------|--------------------------|
 | Function calling | "Uso de ferramentas" | API de nível de provedor pra emissão estruturada de chamadas de ferramenta |
-| Declaração de ferramenta | "Especificação da ferramenta" | Nome + descrição + payload de entrada JSON Schema |
-| `tool_choice` | "Forçar / proibir" | Modos auto / required / none / nome específico |
+| Declaração de ferramenta | "Eespecificaçãoificação da ferramenta" | Nome + descrição + payload de entrada JSON Schema |
+| `tool_choice` | "Forçar / proibir" | Modos auto / required / none / nome eespecificaçãoífico |
 | Modo strict | "Aplicação de schema" | Flag da OpenAI que restringe decoding pra corresponder ao schema |
 | Bloco `tool_use` | "Forma de chamada do Anthropic" | Bloco de conteúdo inline com id, name, input |
 | Part `functionCall` | "Forma de chamada do Gemini" | Uma entrada em `parts[]` contendo name, args e id |
 | Arguments-as-string | "JSON stringificado" | OpenAI retorna args como string JSON, não como objeto |
-| Parallel tool calls | "Fan-out num turno" | Múltiplas chamadas de ferramenta numa mensagem do assistant |
+| Parallel ferramenta calls | "Fan-out num turno" | Múltiplas chamadas de ferramenta numa mensagem do assistant |
 | Refusal | "Modelo se recusa" | Bloco de recusa exclusivo do modo strict em vez de uma chamada |
 | Subconjunto OpenAPI 3.0 | "Peculiaridade do schema do Gemini" | Gemini usa um dialeto similar a JSON Schema com pequenas diferenças |
 

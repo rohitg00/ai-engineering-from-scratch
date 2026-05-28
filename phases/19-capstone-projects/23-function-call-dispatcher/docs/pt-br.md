@@ -8,7 +8,7 @@
 **Tempo:** ~90 minutos
 
 ## Objetivos de Aprendizado
-- Envolver um tool handler em um timeout por chamada que retorna um erro tipado em vez de travar o loop.
+- Envolver um ferramenta handler em um timeout por chamada que retorna um erro tipado em vez de travar o loop.
 - Aplicar retry com backoff exponencial, jitter e contagem máxima de tentativas.
 - Deduplicar retries em uma chave de idempotência para que um retry que compete com uma chamada original lenta não rode duas vezes.
 - Mapear exceções do handler e falhas de transport em um único envelope de erro que o harness loop já entende.
@@ -16,7 +16,7 @@
 
 ## Onde o dispatcher fica
 
-Entre o harness loop (aula vinte) e o tool registry (aula vinte e uma). O transport (aula vinte e duas) alimenta o loop. O loop entrega uma chamada de ferramenta ao dispatcher. O dispatcher chama o registry, roda o handler, e retorna um resultado ou um envelope de erro com formato JSON-RPC.
+Entre o harness loop (aula vinte) e o ferramenta registry (aula vinte e uma). O transport (aula vinte e duas) alimenta o loop. O loop entrega uma chamada de ferramenta ao dispatcher. O dispatcher chama o registry, roda o handler, e retorna um resultado ou um envelope de erro com formato JSON-RPC.
 
 ```mermaid
 flowchart TD
@@ -132,4 +132,4 @@ Os testes usam `asyncio.sleep(0)` e handlers determinísticos baseados em `Count
 
 Duas extensões que dispatchers de produção adicionam. Primeiro, logging estruturado em cada transição (que o event stream do loop já te dá, mas o dispatcher também deve emitir eventos `dispatch.attempt` e `dispatch.retry`). Segundo, circuit breakers: depois de N falhas em uma janela, uma ferramenta ganha um período de cooldown onde despachos retornam imediatamente com `kind="circuit_open"` em vez de tentar o handler. Ambas se encaixam neste dispatcher sem mudar o contrato.
 
-A aula vinte e quatro cola o dispatcher em um agent plan-and-execute para que você veja as quatro peças em movimento.
+A aula vinte e quatro cola o dispatcher em um agente plan-and-execute para que você veja as quatro peças em movimento.

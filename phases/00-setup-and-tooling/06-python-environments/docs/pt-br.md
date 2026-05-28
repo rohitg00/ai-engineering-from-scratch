@@ -21,7 +21,7 @@ Você instala PyTorch 2.4 para um projeto de fine-tuning. Na semana seguinte, um
 Isso é o inferno das dependências. Acontece o tempo todo em trabalho de IA/ML porque:
 
 - PyTorch, JAX e TensorFlow cada um envia seus próprios bindings de CUDA
-- Bibliotecas de modelos fixam versões específicas de frameworks
+- Bibliotecas de modelos fixam versões eespecificaçãoíficas de frameworks
 - Um `pip install` global sobrescreve o que estava lá antes
 - Builds do CUDA 11.8 não funcionam com drivers CUDA 12.x (e vice-versa)
 
@@ -93,7 +93,7 @@ Mais lento que `uv`, mas funciona em qualquer lugar que Python esteja instalado.
 
 Conda gerencia dependências não-Python como toolkits CUDA, cuDNN e bibliotecas C. Use quando:
 
-- Você precisa de uma versão específica do toolkit CUDA sem instalar no sistema inteiro
+- Você precisa de uma versão eespecificaçãoífica do toolkit CUDA sem instalar no sistema inteiro
 - Está num cluster compartilhado onde não pode instalar pacotes do sistema
 - As instruções de instalação de uma biblioteca dizem "use conda"
 

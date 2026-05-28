@@ -22,7 +22,7 @@ Você tem 500 features. Seu modelo treina devagar, faz overfitting constantement
 
 ### Três Categorias
 
-**Métodos filtro:** Pontuam cada feature independentemente usando medida estatística. Rápidos, mas perdem interações.
+**Métodos filtro:** Pontuam cada funcionalidade independentemente usando medida estatística. Rápidos, mas perdem interações.
 
 **Métodos wrapper:** Treinam modelo para avaliar subconjuntos. Melhores resultados, mas caros.
 
@@ -30,7 +30,7 @@ Você tem 500 features. Seu modelo treina devagar, faz overfitting constantement
 
 ### Threshold de Variância
 
-Se uma feature mal varia, carrega quase nenhuma informação. Remova-a.
+Se uma funcionalidade mal varia, carrega quase nenhuma informação. Remova-a.
 
 ### Informação Mútua
 
@@ -74,7 +74,7 @@ selected = rfe.support_
 | Método filtro | Pontua features independentemente do modelo |
 | Método wrapper | Usa performance do modelo para avaliar subconjuntos |
 | Método embarcado | Seleciona durante o treino (L1, árvores) |
-| Informação mútua | Mede dependência entre feature e target, captura não-linearidades |
+| Informação mútua | Mede dependência entre funcionalidade e target, captura não-linearidades |
 | RFE | Eliminação recursiva de features |
 | L1/Lasso | Regularização que direciona pesos para zero (sparsidade) |
 

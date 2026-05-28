@@ -13,7 +13,7 @@ Você tem um prompt que pontua 62% na sua avaliação. Quer melhorar. O moviment
 
 A otimização bio-inspirada clássica — PSO para espaços de busca contínuos, ACO para seleção de caminhos — foi projetada exatamente pra esse regime: sem gradiente, baseada em população, barata por avaliação. Combine com LLMs pro passo de busca sem gradiente e você consegue um otimizador surpreendentemente prático.
 
-Os mesmos padrões se aplicam ao *routing* de agents em sistemas multi-agente. Uma trilha de feromônio no estilo ACO registra qual agent funcionou melhor em qual tipo de tarefa, permite ao router explorar a trilha e decai o feromônio pra que rotas possam ser redescobertas.
+Os mesmos padrões se aplicam ao *routing* de agentes em sistemas multi-agente. Uma trilha de feromônio no estilo ACO registra qual agente funcionou melhor em qual tipo de tarefa, permite ao router explorar a trilha e decai o feromônio pra que rotas possam ser redescobertas.
 
 ## Conceito
 
@@ -54,13 +54,13 @@ Otimização por Colônia de Formigas: formigas percorrem um grafo; cada caminho
 
 ### AMRO-S — ACO para routing de agents
 
-arXiv:2603.12933 usa ACO para routing multi-agente. Cada tipo de tarefa é um "destino"; cada agent é uma rota possível. Feromônios fortalecem rotas que produzem boas saídas. Contribuições principais:
+arXiv:2603.12933 usa ACO para routing multi-agente. Cada tipo de tarefa é um "destino"; cada agente é uma rota possível. Feromônios fortalecem rotas que produzem boas saídas. Contribuições principais:
 
 - **Evidência de routing interpretável.** Força do feromônio é um sinal legível por humanos.
 - **Atualização assíncrona com gate de qualidade.** Feromônios atualizam só depois que verificações de qualidade passam, desacoplando inferência de aprendizado.
 - **Speedup de 4.7x** no benchmark de routing multi-agente.
 
-O gate de qualidade importa: sem ele, agents rápidos-mas-errados acumulam feromônio e o sistema trava em rotas ruins.
+O gate de qualidade importa: sem ele, agentes rápidos-mas-errados acumulam feromônio e o sistema trava em rotas ruins.
 
 ### Quando usar PSO / ACO para LLMs
 
@@ -107,7 +107,7 @@ python3 code/main.py
 
 Saída esperada:
 - LMPSO: fitness de g_best melhora de aleatório a quase-ótimo ao longo de 30 iterações.
-- AMRO-S: tabela de feromônio estabiliza no agent certo por tipo de tarefa; routing ACO supera aleatório por ~30-40% em qualidade e também reduz latência (menos retries).
+- AMRO-S: tabela de feromônio estabiliza no agente certo por tipo de tarefa; routing ACO supera aleatório por ~30-40% em qualidade e também reduz latência (menos retries).
 
 ## Usar
 
@@ -117,7 +117,7 @@ Saída esperada:
 
 - **Comece pequeno.** 10-20 partículas, 20-50 iterações. Escale só se a curva de convergência mostrar ganho claro.
 - **Logue feromônios ou g_best por iteração.** Debugar otimizadores swarm sem trilha é doloroso.
-- **Atualizações com gate de qualidade.** Especialmente pra routing ACO: agents rápidos-mas-errados não podem acumular feromônio.
+- **Atualizações com gate de qualidade.** Eespecificaçãoialmente pra routing ACO: agentes rápidos-mas-errados não podem acumular feromônio.
 - **Resete decaimento na mudança de distribuição.** Quando sua distribuição de avaliação muda, feromônios antigos estão desatualizados; resete ou dobre a taxa temporariamente.
 - **Limite o custo por iteração.** Emita uma métrica de custo por iteração. PSO que custa $500/iteração e ganha 0.5% não é viável.
 

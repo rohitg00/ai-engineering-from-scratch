@@ -9,9 +9,9 @@
 
 ## O Problema
 
-Você envia um chatbot que precisa de três tools: consulta ao banco, API de calendário e leitor de arquivos. Escreve três JSON schemas para Claude. Depois vendas quer as mesmas tools no ChatGPT — reescreve para o parâmetro `tools` da OpenAI. Depois adiciona Cursor, Zed e Claude Code — mais três reescritas. Uma semana depois, a Anthropic adiciona um campo novo; você atualiza seis schemas.
+Você envia um chatbot que precisa de três tools: consulta ao banco, API de calendário e leitor de arquivos. Escreve três JSON schemas para Claude. Depois vendas quer as mesmas ferramentas no ChatGPT — reescreve para o parâmetro `tools` da OpenAI. Depois adiciona Cursor, Zed e Claude Code — mais três reescritas. Uma semana depois, a Anthropic adiciona um campo novo; você atualiza seis schemas.
 
-MCP colapsa essa matriz. Uma spec baseada em JSON-RPC. Um server expõe tools, resources e prompts. Qualquer host compatível — Claude Desktop, ChatGPT, Cursor, Claude Code, Zed — pode descobrir e chamar sem cola customizada.
+MCP colapsa essa matriz. Uma eespecificaçãoificação baseada em JSON-RPC. Um server expõe tools, resources e prompts. Qualquer host compatível — Claude Desktop, ChatGPT, Cursor, Claude Code, Zed — pode descobrir e chamar sem cola customizada.
 
 ## O Conceito
 
@@ -68,7 +68,7 @@ async def call_add(a: int, b: int) -> int:
     async with stdio_client(params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
-            tools = await session.list_tools()
+            ferramentas = await session.list_tools()
             result = await session.call_tool("add", {"a": a, "b": b})
             return int(result.content[0].text)
 ```
@@ -97,13 +97,13 @@ Config do host (Claude Desktop `mcp.json`):
 
 - **Capability allowlists**: Hosts expõem capability `roots` para limitar paths
 - **Human-in-the-loop para mutação**: Tools read-only podem auto-executar. Write/delete precisam de confirmação
-- **Defesa contra tool poisoning**: Trate conteúdo de resource como dados não confiáveis
+- **Defesa contra ferramenta poisoning**: Trate conteúdo de resource como dados não confiáveis
 
 ## Use
 
 | Situação | Escolha |
 |----------|---------|
-| Dev local, tools single-user | Python `FastMCP`, transport stdio |
+| Dev local, ferramentas single-user | Python `FastMCP`, transport stdio |
 | Tools remotas / SaaS | Streamable HTTP, OAuth 2.1 |
 | Host TypeScript | `@modelcontextprotocol/sdk` |
 | Servidor high-throughput | Rust SDK (`modelcontextprotocol/rust-sdk`) |
@@ -111,11 +111,11 @@ Config do host (Claude Desktop `mcp.json`):
 
 ## Entregue
 
-- `outputs/skill-mcp-server-designer.md` — skill para projetar e scaffold um MCP server com tools, resources e defaults de segurança
+- `outputs/skill-mcp-server-designer.md` — skill para projetar e scaffold um MCP server com tools, resources e configurações-padrão de segurança
 
 ## Exercícios
 
-1. **Fácil**: Estenda o `demo-server` com uma tool `subtract`. Conecte do Claude Desktop.
+1. **Fácil**: Estenda o `demo-server` com uma ferramenta `subtract`. Conecte do Claude Desktop.
 
 2. **Médio**: Adicione um `resource` expondo as últimas 100 linhas de `/var/log/app.log`. Enforce allowlist de roots.
 
@@ -125,7 +125,7 @@ Config do host (Claude Desktop `mcp.json`):
 
 | Termo | O que o pessoal diz | O que realmente significa |
 |-------|--------------------|-----------------------|
-| MCP | "Protocolo de tools para LLMs" | Spec JSON-RPC 2.0 para expor tools, resources e prompts a qualquer host |
+| MCP | "Protocolo de ferramentas para LLMs" | Spec JSON-RPC 2.0 para expor tools, resources e prompts a qualquer host |
 | Host | "Claude Desktop" | A aplicação LLM — owns o modelo e UI do usuário |
 | Client | "Conexão" | Conexão por server dentro do host que fala JSON-RPC |
 | Server | "O thing com as tools" | Seu código; anuncia tools/resources/prompts e lida com invocação |
@@ -135,8 +135,8 @@ Config do host (Claude Desktop `mcp.json`):
 
 ## Leitura Adicional
 
-- [Model Context Protocol specification](https://modelcontextprotocol.io/specification) — referência canônica
+- [Model Context Protocol especificaçãoification](https://modelcontextprotocol.io/especificaçãoification) — referência canônica
 - [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) — servers de referência
 - [Python SDK](https://github.com/modelcontextprotocol/python-sdk) — SDK oficial
-- [Security considerations for MCP](https://modelcontextprotocol.io/docs/concepts/security) — roots, destructive hints, tool poisoning
+- [Security considerations for MCP](https://modelcontextprotocol.io/docs/concepts/security) — roots, destructive hints, ferramenta poisoning
 - [Anthropic — Introducing MCP](https://www.anthropic.com/news/model-context-protocol) — post de lançamento

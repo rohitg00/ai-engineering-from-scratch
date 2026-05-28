@@ -12,7 +12,7 @@
 - Conectar um transformer que roda duas losses (NTP em tokens de texto, MSE de difusão em patches de imagem) em uma backbone.
 - Explicar por que attention bidirecional entre patches de imagem mais attention causal sobre tokens de texto é a escolha certa de máscara.
 - Comparar estilo Transfusion (imagens contínuas, loss de difusão) com estilo Chameleon (imagens discretas, NTP) em compute, qualidade e complexidade de código.
-- Nomear a contribuição do MMDiT: pesos específicos por modalidade em cada bloco, attention conjunta no fluxo residual.
+- Nomear a contribuição do MMDiT: pesos eespecificaçãoíficos por modalidade em cada bloco, attention conjunta no fluxo residual.
 
 ## O Problemo
 
@@ -77,8 +77,8 @@ Stable Diffusion 3 (Esser et al., março 2024) lançou MMDiT (Multimodal Diffusi
 
 Diferenças-chave do MMDiT:
 
-- Pesos específicos por modalidade em cada bloco. Cada bloco do transformer tem pesos separados de Q, K, V e MLP pra tokens de texto vs patches de imagem. Attention é conjunta (cross-modal); o resto é específico por modalidade.
-- Treinamento por fluxo retificado. Uma variante específica de fluxo-matching com amostragem conhecida e matemática mais simples que DDPM.
+- Pesos eespecificaçãoíficos por modalidade em cada bloco. Cada bloco do transformer tem pesos separados de Q, K, V e MLP pra tokens de texto vs patches de imagem. Attention é conjunta (cross-modal); o resto é eespecificaçãoífico por modalidade.
+- Treinamento por fluxo retificado. Uma variante eespecificaçãoífica de fluxo-matching com amostragem conhecida e matemática mais simples que DDPM.
 - Escala. MMDiT é a backbone do SD3 (variantes de 2B e 8B de parâmetros). O paper do Transfusion escala até 7B.
 
 Ambos convergem na mesma ideia central: um transformer roda NTP em texto e difusão em representações contínuas de imagem.
@@ -113,7 +113,7 @@ O transformer é um toy. A tubulação de duas losses, construção de máscara 
 
 ## Implemente
 
-Esta aula produz `outputs/skill-two-loss-trainer-designer.md`. Dada uma nova tarefa de treinamento multimodal (texto + imagem, texto + áudio, texto + vídeo), projeta o cronograma de duas losses (pesos de loss, formato da máscara, blocos compartilhados vs específicos por modalidade) e sinaliza riscos de implementação.
+Esta aula produz `outputs/skill-two-loss-trainer-designer.md`. Dada uma nova tarefa de treinamento multimodal (texto + imagem, texto + áudio, texto + vídeo), projeta o cronograma de duas losses (pesos de loss, formato da máscara, blocos compartilhados vs eespecificaçãoíficos por modalidade) e sinaliza riscos de implementação.
 
 ## Exercícios
 
@@ -121,7 +121,7 @@ Esta aula produz `outputs/skill-two-loss-trainer-designer.md`. Dada uma nova tar
 
 2. Implemente a máscara bloco-triangular pra uma sequência: `[T, T, <image>, P, P, P, P, </image>, T]`. Marque cada entrada como 0 ou 1.
 
-3. MMDiT tem pesos QKV específicos por modalidade. Qual sobrecarga de contagem de parâmetros isso adiciona vs o transformer totalmente compartilhado do Transfusion? Com 7B de parâmetros, vale a pena?
+3. MMDiT tem pesos QKV eespecificaçãoíficos por modalidade. Qual sobrecarga de contagem de parâmetros isso adiciona vs o transformer totalmente compartilhado do Transfusion? Com 7B de parâmetros, vale a pena?
 
 4. Geração: dado um prompt de texto, o modelo roda NTP por 50 tokens, depois encontra `<image>`, depois roda difusão em 256 patches com 20 steps de denoising. Quantos passos forward no total?
 
@@ -133,7 +133,7 @@ Esta aula produz `outputs/skill-two-loss-trainer-designer.md`. Dada uma nova tar
 |-------|-------------------|--------------------------|
 | Treinamento com duas losses | "NTP + difusão" | Um único transformer otimiza tanto entropia cruzada em tokens de texto quanto MSE em patches contínuos de imagem no mesmo step de gradiente |
 | Fluxo-matching | "Fluxo retificado" | Variante de difusão que prevê um campo de velocidade do ruído pros dados; matemática mais simples que DDPM |
-| MMDiT | "DiT Multimodal" | Arquitetura do Stable Diffusion 3: attention conjunta, MLPs e normalizações específicas por modalidade |
+| MMDiT | "DiT Multimodal" | Arquitetura do Stable Diffusion 3: attention conjunta, MLPs e normalizações eespecificaçãoíficas por modalidade |
 | Máscara bloco-triangular | "Texto causal + imagem bidirecional" | Máscara de attention que é causal entre texto mas bidirecional dentro de regiões de imagem |
 | Representação contínua de imagem | "Sem VQ" | Patches de imagem como vetores de valores reais, não índices inteiros de codebook |
 | Previsão de velocidade | "v-parametrização" | Saída da rede é o campo de velocidade entre ruído e dados, não o ruído em si |

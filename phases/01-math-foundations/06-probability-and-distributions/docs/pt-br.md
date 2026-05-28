@@ -67,7 +67,7 @@ Lançamentos de moeda são independentes. Tirar cartas sem reposição não é.
 
 ### Função de Massa de Probabilidade vs Função de Densidade de Probabilidade
 
-Variáveis aleatórias discretas têm uma função de massa de probabilidade (PMF). Cada resultado tem uma probabilidade específica que você pode ler diretamente.
+Variáveis aleatórias discretas têm uma função de massa de probabilidade (PMF). Cada resultado tem uma probabilidade eespecificaçãoífica que você pode ler diretamente.
 
 ```
 PMF: P(X = k)
@@ -397,7 +397,7 @@ print(f"Média: {np.mean(samples):.4f}, DP: {np.std(samples):.4f}")
 print(f"P(X < 1.96) = {normal.cdf(1.96):.4f}")
 
 logits = np.array([2.0, 1.0, 0.1])
-from scipy.special import softmax, log_softmax
+from scipy.especificaçãoial import softmax, log_softmax
 probs = softmax(logits)
 log_probs = log_softmax(logits)
 print(f"Softmax: {probs}")

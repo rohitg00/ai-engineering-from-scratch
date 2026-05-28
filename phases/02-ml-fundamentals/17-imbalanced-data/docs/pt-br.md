@@ -4,7 +4,7 @@
 
 **Tipo:** Construção
 **Idioma:** Python
-**Pré-requisitos:** Fase 2, Lições 01-09 (especialmente métricas de avaliação)
+**Pré-requisitos:** Fase 2, Lições 01-09 (eespecificaçãoialmente métricas de avaliação)
 **Tempo:** ~90 minutos
 
 ## Objetivos de Aprendizado
@@ -78,7 +78,7 @@ def smote(X_minority, k=5, n_synthetic=None):
 | MCC | Coeficiente de correlação de Matthews, balanceado mesmo com classes desiguais |
 | Oversampling | Aumentar amostras da classe minoritária |
 | Undersampling | Reduzir amostras da classe majoritária |
-| Threshold tuning | Ajustar limiar de classificação para otimizar métrica específica |
+| Threshold tuning | Ajustar limiar de classificação para otimizar métrica eespecificaçãoífica |
 
 ## Leitura Adicional
 

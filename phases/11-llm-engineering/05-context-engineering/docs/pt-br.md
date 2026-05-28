@@ -13,14 +13,14 @@
 - Calcular orçamentos de token em todos os componentes da janela de contexto (system prompt, tools, history, docs recuperados, espaço para geração)
 - Implementar estratégias de gerenciamento da janela de contexto: truncamento, sumarização e sliding window para histórico de conversa
 - Priorizar e ordenar componentes de contexto para maximizar a atenção do modelo nas informações mais relevantes
-- Construir um montador de contexto que aloca tokens dinamicamente baseado no tipo de query e espaço disponível na janela
+- Construir um montador de contexto que aloca tokens dinamicamente baseado no tipo de consulta e espaço disponível na janela
 
 ## O Problema
 
 Claude Opus 4 tem uma janela de contexto de 200K tokens. Parece muito. Mas vamos contar:
 
 - System prompt: ~4.000 tokens
-- Definições de tools: ~8.000 tokens (20 tools com schemas)
+- Definições de tools: ~8.000 tokens (20 ferramentas com schemas)
 - Exemplos few-shot: ~3.000 tokens
 - Histórico da conversa: ~50.000 tokens (20 turnos)
 - Documentos recuperados: ~10.000 tokens
@@ -105,20 +105,20 @@ class ContextBudget:
 
 ### Seleção Dinâmica de Tools
 
-Em vez de mandar todas as tools no prompt, classifique a intenção da query e inclua apenas as relevantes:
+Em vez de mandar todas as ferramentas no prompt, classifique a intenção da consulta e inclua apenas as relevantes:
 
 ```python
 TOOL_DEFINITIONS = {
     "code": {"name": "code_execution", "tokens": 200},
     "search": {"name": "web_search", "tokens": 150},
-    "database": {"name": "db_query", "tokens": 180},
+    "database": {"name": "db_consulta", "tokens": 180},
     "calendar": {"name": "calendar_api", "tokens": 120},
     "email": {"name": "send_email", "tokens": 160},
 }
 
-def classify_intent(query):
+def classify_intent(consulta):
     intents = []
-    q = query.lower()
+    q = consulta.lower()
     if any(w in q for w in ["código", "code", "executar", "python"]):
         intents.append("code")
     if any(w in q for w in ["buscar", "search", "encontrar", "web"]):
@@ -131,13 +131,13 @@ def classify_intent(query):
         intents.append("email")
     return intents if intents else ["search"]
 
-def select_tools(query, max_tokens=5000):
-    intents = classify_intent(query)
+def select_tools(consulta, max_tokens=5000):
+    intents = classify_intent(consulta)
     selected = {}
     total_tokens = 0
     for intent in intents:
-        tool = TOOL_DEFINITIONS.get(intent)
-        if tool and total_tokens + tool["tokens"] <= max_tokens:
+        ferramenta = TOOL_DEFINITIONS.get(intent)
+        if ferramenta and total_tokens + tool["tokens"] <= max_tokens:
             selected[tool["name"]] = tool
             total_tokens += tool["tokens"]
     return selected, total_tokens
@@ -182,7 +182,7 @@ def summarize_history(conversation, max_turns=5):
 
 # Cursor:
 # - Indexa codebase inteiro em embeddings
-# - Busca os arquivos mais relevantes por query
+# - Busca os arquivos mais relevantes por consulta
 # - Apenas esses pedaços entram na janela
 ```
 
@@ -200,7 +200,7 @@ Também produz `outputs/skill-context-engineering.md` — um framework de decis�
 
 3. Construa uma ferramenta de "replay de contexto". Dada uma transcrição de conversa, reabra-a pela ContextEngine e visualize como a alocação de orçamento muda a cada turno.
 
-4. Implemente um seletor de tools baseado em prioridade. Em vez de incluir/excluir binariamente, atribua uma pontuação de relevância a cada tool.
+4. Implemente um seletor de ferramentas baseado em prioridade. Em vez de incluir/excluir binariamente, atribua uma pontuação de relevância a cada tool.
 
 5. Construa um compressor de contexto multi-estratégia. Implemente três estratégias (truncamento, sumarização, extração de frases-chave) e faça benchmark em 20 documentos.
 
@@ -212,7 +212,7 @@ Também produz `outputs/skill-context-engineering.md` — um framework de decis�
 | Context engineering | "Prompt engineering avançado" | Disciplina de decidir o que entra na janela de contexto, em que ordem e com que prioridade |
 | Lost-in-the-middle | "Modelos esquecem do meio" | Empírico: LLMs prestam mais atenção ao início e fim do contexto, com queda de 10-20% no meio |
 | Token budget | "Quantos tokens sobram" | Alocação explícita da capacidade da janela entre componentes com limites por componente |
-| Dynamic context | "Carregar coisas em tempo real" | Montar a janela de contexto diferente para cada query baseado em classificação de intenção |
+| Dynamic context | "Carregar coisas em tempo real" | Montar a janela de contexto diferente para cada consulta baseado em classificação de intenção |
 
 ## Leitura Adicional
 

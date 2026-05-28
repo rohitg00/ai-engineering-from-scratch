@@ -61,7 +61,7 @@ Agentes de produção falham de formas que um notebook Jupyter não revela: time
 - Combine com execução durável pra que uma execução noturna que falhe retome no próximo tick.
 - Stacks: Kubernetes CronJob + framework durável; hosted (Render cron, Vercel cron).
 
-### Padrões de deploy de 2026
+### Padrões de implantação de 2026
 
 - **CrewAI Flows** pra produção orientada a eventos.
 - **Agno** FastAPI stateless pra microsserviços Python.
@@ -115,7 +115,7 @@ Saída: cinco traces mostrando o comportamento de cada formato na mesma tarefa. 
 
 1. Porte seu loop ReAct da Aula 01 pra todos os seis formatos na sua stack. Qual formato se encaixa em qual superfície de produto?
 2. Adicione uma DLQ à demo baseada em fila. Simule 10% de falha de job; superficie o tamanho da DLQ.
-3. Escreva um eval agent acionado por cron que roda todas as noites contra suas 20 top traces do dia.
+3. Escreva um eval agente acionado por cron que roda todas as noites contra suas 20 top traces do dia.
 4. Implemente streaming com backpressure: se o cliente estiver lento, pause o agente. Como isso interage com um orçamento de turn?
 5. Leia a documentação do Claude Managed Agents. Quando você migraria um agente self-hosted de longo horizonte pra managed?
 

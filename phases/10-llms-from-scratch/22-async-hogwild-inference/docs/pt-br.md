@@ -1,10 +1,10 @@
 # Async e Hogwild! Inference
 
-> Decodificacao especulativa (Fase 10, Aula 15) paraleliza tokens dentro de uma sequencia. Frameworks multi-agente paralelizam sequencias inteiras mas forcam coordenacao explicita (votacao, divisao de sub-tarefas). Hogwild! Inference (Rodionov et al., arXiv:2504.06261) faz algo diferente: roda N instancias do mesmo LLM em paralelo contra um KV cache COMPARTILHADO. Cada worker ve imediatamente os tokens gerados por todos os outros workers. Modelos de raciocinio modernos -- QwQ, DeepSeek-R1 -- conseguem se auto-coordenar por meio desse cache compartilhado sem nenhum fine-tuning. A abordagem e experimental mas abre um eixo totalmente novo de paralelismo de inferencia que fica ortogonal a decodificacao especulativa. Esta aula implementa um simulador Hogwild! de dois workers em Python stdlib e explica por que a colaboracao por cache compartilhado emerge das habilidades de raciocinio do modelo existente.
+> Decodificacao eespecificaçãoulativa (Fase 10, Aula 15) paraleliza tokens dentro de uma sequencia. Frameworks multi-agente paralelizam sequencias inteiras mas forcam coordenacao explicita (votacao, divisao de sub-tarefas). Hogwild! Inference (Rodionov et al., arXiv:2504.06261) faz algo diferente: roda N instancias do mesmo LLM em paralelo contra um KV cache COMPARTILHADO. Cada worker ve imediatamente os tokens gerados por todos os outros workers. Modelos de raciocinio modernos -- QwQ, DeepSeek-R1 -- conseguem se auto-coordenar por meio desse cache compartilhado sem nenhum fine-tuning. A abordagem e experimental mas abre um eixo totalmente novo de paralelismo de inferencia que fica ortogonal a decodificacao eespecificaçãoulativa. Esta aula implementa um simulador Hogwild! de dois workers em Python stdlib e explica por que a colaboracao por cache compartilhado emerge das habilidades de raciocinio do modelo existente.
 
 **Tipo:** Construir
 **Linguagens:** Python (stdlib)
-**Pre-requisitos:** Fase 10 · 12 (otimizacao de inferencia), Fase 10 · 15 (decodificacao especulativa)
+**Pre-requisitos:** Fase 10 · 12 (otimizacao de inferencia), Fase 10 · 15 (decodificacao eespecificaçãoulativa)
 **Tempo:** ~60 minutos
 
 ## Objetivos de Aprendizado
@@ -18,11 +18,11 @@
 
 LLMs modernos resolvem problemas dificeis produzindo cadeias longas de raciocinio -- 5000 tokens de logica passo-a-passo e comum, dezenas de milhares de tokens acontecem em problemas de matematica profundos. A 35 tokens/segundo de decode num modelo 70B, 50k tokens e 24 minutos. Interativo o modelo nao e.
 
-Decodificacao especulativa (Fase 10, Aula 15) te da 3-5x de speedup paralelizando dentro de uma sequencia. Alem disso a dependencia sequencial da decodificacao autoregressiva e o teto rigido. Cada token novo depende de todos os anteriores.
+Decodificacao eespecificaçãoulativa (Fase 10, Aula 15) te da 3-5x de speedup paralelizando dentro de uma sequencia. Alem disso a dependencia sequencial da decodificacao autoregressiva e o teto rigido. Cada token novo depende de todos os anteriores.
 
 A pergunta obvia: podemos paralelizar entre sequencias? Rodar multiplos copias do mesmo modelo no mesmo problema, deixar cooperar, dividir o trabalho?
 
-Trabalhos anteriores: ensambles de votacao (rodar N modelos, escolher a resposta majoritaria), arvore de pensamento (ramificar caminhos de raciocinio e recombinar) e frameworks multi-agente (designar cada agente uma sub-tarefa, usar um coordenador). Todos ajudam em dominios de tarefas especificos. Todos tambem introduzem maquinario explicito de coordenacao -- regras de votacao, logica de ramificar-e-podar, protocolos de mensagem agente-a-agente.
+Trabalhos anteriores: ensambles de votacao (rodar N modelos, escolher a resposta majoritaria), arvore de pensamento (ramificar caminhos de raciocinio e recombinar) e frameworks multi-agente (designar cada agente uma sub-tarefa, usar um coordenador). Todos ajudam em dominios de tarefas eespecificaçãoificos. Todos tambem introduzem maquinario explicito de coordenacao -- regras de votacao, logica de ramificar-e-podar, protocolos de mensagem agente-a-agente.
 
 Hogwild! Inference usa uma abordagem diferente. N workers compartilham um unico KV cache. Cada worker ve imediatamente os tokens gerados por todos os outros workers, como se fossem seu proprio contexto. Os workers -- sem nenhum treinamento ou fine-tuning -- descobrem como dividir o trabalho. Modelos de raciocinio modernos (QwQ, DeepSeek-R1, modo de raciocinio da familia Claude) podem ler o cache compartilhado e dizer coisas como "vejo que o worker 2 ja cuidou do caso base, entao vou trabalhar no passo indutivo."
 
@@ -98,7 +98,7 @@ Em abril de 2026, Hogwild! e um metodo de pesquisa com implementacao open-source
 
 1. Gerenciamento de KV cache compartilhado entre processos concorrentes e engenharia nao-trivial.
 2. Coordenacao emergente depende da tarefa; benchmarks ainda estao sendo construidos.
-3. Os speedups sao moderados comparados ao que decodificacao especulativa ja entrega, e os dois podem ser combinados mas a engenharia combinada e outra camada.
+3. Os speedups sao moderados comparados ao que decodificacao eespecificaçãoulativa ja entrega, e os dois podem ser combinados mas a engenharia combinada e outra camada.
 
 Vale conhecer. Vale experimentar. Ainda nao vale apostar um produto.
 
@@ -152,11 +152,11 @@ Caminho pragmatico de adocao:
 3. Se a melhoria for abaixo de 1.3x, voce esta no regime dominado por coordenacao. Volte pra um worker.
 4. Se a melhoria for acima de 1.5x, va pra N=4 e meça de novo. Retornos decrescentes tipicamente batem em torno de N=4-8.
 
-Combine com decodificacao especulativa: cada worker Hogwild! pode usar independentemente decodificacao especulativa. Os dois speedups se multiplicam (aproximadamente), levando um 3x de decodificacao especulativa e 1.8x de Hogwild! a um efetivo 5.4x sobre decodificacao ingenua de um worker.
+Combine com decodificacao eespecificaçãoulativa: cada worker Hogwild! pode usar independentemente decodificacao eespecificaçãoulativa. Os dois speedups se multiplicam (aproximadamente), levando um 3x de decodificacao eespecificaçãoulativa e 1.8x de Hogwild! a um efetivo 5.4x sobre decodificacao ingenua de um worker.
 
 ## Entregar
 
-Esta aula produz `outputs/skill-parallel-inference-router.md`. Dado um perfil de carga de trabalho de raciocinio (orcamento de tokens, perfil de paralelismo de tarefas, familia de modelo, alvo de deploy), rota entre votacao, arvore de pensamento, multi-agente, Hogwild! e estrategias de decodificacao especulativa.
+Esta aula produz `outputs/skill-parallel-inference-router.md`. Dado um perfil de carga de trabalho de raciocinio (orcamento de tokens, perfil de paralelismo de tarefas, familia de modelo, alvo de deploy), rota entre votacao, arvore de pensamento, multi-agente, Hogwild! e estrategias de decodificacao eespecificaçãoulativa.
 
 ## Exercicios
 
@@ -168,7 +168,7 @@ Esta aula produz `outputs/skill-parallel-inference-router.md`. Dado um perfil de
 
 4. Leia a Secao 4 do paper Hogwild! (avaliacao preliminar). Identifique os dois modos de falha que os autores reportam. Descreva como um prompt de coordenacao melhor poderia mitigar cada um.
 
-5. Combine Hogwild! com decodificacao especulativa no toy: cada worker usa uma decodificacao especulativa de 2 tokens internamente. Reporte o speedup multiplicativo. Que problema de contabilidade surge quando dois workers querem ambos estender o mesmo prefixo do cache compartilhado?
+5. Combine Hogwild! com decodificacao eespecificaçãoulativa no toy: cada worker usa uma decodificacao eespecificaçãoulativa de 2 tokens internamente. Reporte o speedup multiplicativo. Que problema de contabilidade surge quando dois workers querem ambos estender o mesmo prefixo do cache compartilhado?
 
 ## Termos Principais
 
@@ -190,5 +190,5 @@ Esta aula produz `outputs/skill-parallel-inference-router.md`. Dado um perfil de
 - [Recht, Re, Wright, Niu -- Hogwild!: A Lock-Free Approach to Parallelizing Stochastic Gradient Descent (arXiv:1106.5730, NeurIPS 2011)](https://arxiv.org/abs/1106.5730) -- o original Hogwild!, a origem do nome
 - [Su et al. -- RoFormer: Enhanced Transformer with Rotary Position Embedding (arXiv:2104.09864)](https://arxiv.org/abs/2104.09864) -- RoPE, a propriedade que torna inferencia de cache compartilhado viavel
 - [Yao et al. -- Tree of Thoughts: Deliberate Problem Solving with Large Language Models (arXiv:2305.10601)](https://arxiv.org/abs/2305.10601) -- a estrategia de raciocinio em arvore que Hogwild! fica ortogonal a
-- [Leviathan et al. -- Fast Inference from Transformers via Speculative Decoding (arXiv:2211.17192)](https://arxiv.org/abs/2211.17192) -- decodificacao especulativa, o paralelismo intra-sequencia que Hogwild! combina com
+- [Leviathan et al. -- Fast Inference from Transformers via Speculative Decoding (arXiv:2211.17192)](https://arxiv.org/abs/2211.17192) -- decodificacao eespecificaçãoulativa, o paralelismo intra-sequencia que Hogwild! combina com
 - [Implementacao de referencia Hogwild! em PyTorch](https://github.com/eqimp/hogwild_llm) -- a unica fonte de verdade pros experimentos do paper

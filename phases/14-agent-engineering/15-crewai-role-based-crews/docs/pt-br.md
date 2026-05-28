@@ -14,14 +14,14 @@
 - Distinguir Crews (autônomas baseadas em papel) de Flows (orientados a eventos determinísticos) e explicar a recomendação de produção da documentação.
 - Conectar ferramentas com o decorator `@tool` e subclasse `BaseTool`; raciocine sobre saídas estruturadas vs texto livre.
 - Nomear os quatro tipos de memória do CrewAI e quando cada um compensa.
-- Implementar uma crew de três agents com stdlib (pesquisador, escritor, editor) que produz um brief.
+- Implementar uma crew de três agentes com stdlib (pesquisador, escritor, editor) que produz um brief.
 - Identificar os três modos de falha do CrewAI: inchaço de prompt, imposto do manager-LLM, handoffs frágeis.
 
 ## O Problema
 
-Times adotando frameworks multi-agent batem no mesmo muro. "Colaboração autônoma" soa ótimo num demo. Aí um cliente abre bug e você precisa de replay determinístico. Ou finanças pergunta quanto custa por execução uma crew roteada por LLM. Ou o on-call precisa saber que agent travou às 3 da manhã.
+Times adotando frameworks multi-agent batem no mesmo muro. "Colaboração autônoma" soa ótimo num demo. Aí um cliente abre bug e você precisa de replay determinístico. Ou finanças pergunta quanto custa por execução uma crew roteada por LLM. Ou o on-call precisa saber que agente travou às 3 da manhã.
 
-Crews de forma livre roteadas por LLM não respondem nenhuma dessas direitinho. DAGs puras respondem todas mas perdem a forma exploratória que um agent de brainstorming precisa.
+Crews de forma livre roteadas por LLM não respondem nenhuma dessas direitinho. DAGs puras respondem todas mas perdem a forma exploratória que um agente de brainstorming precisa.
 
 A divisão do CrewAI é honesta sobre o trade. Crews pra trabalho colaborativo, baseado em papel, exploratório. Flows pra produção orientada a eventos, detida por código, auditável. Mesmo framework, duas formas, escolha por superfície.
 
@@ -31,22 +31,22 @@ A divisão do CrewAI é honesta sobre o trade. Crews pra trabalho colaborativo, 
 
 A superfície do CrewAI é pequena. Memorize isso e o resto é configuração.
 
-- **Agent.** `role + goal + backstory + tools + (opcional) llm`. O backstory aguenta o peso. Ele molda tom, julgamento, quando o agent para. Tools são funções que o agent pode chamar (mais abaixo).
-- **Task.** `description + expected_output + agent + (opcional) context + (opcional) output_pydantic`. Uma unidade de trabalho reutilizável. `expected_output` é o contrato. `context` lista tasks upstream cujas saídas são passadas. `output_pydantic` força uma forma estruturada.
+- **Agent.** `role + goal + backstory + ferramentas + (opcional) llm`. O backstory aguenta o peso. Ele molda tom, julgamento, quando o agente para. Tools são funções que o agente pode chamar (mais abaixo).
+- **Task.** `description + expected_output + agente + (opcional) context + (opcional) output_pydantic`. Uma unidade de trabalho reutilizável. `expected_output` é o contrato. `context` lista tasks upstream cujas saídas são passadas. `output_pydantic` força uma forma estruturada.
 - **Crew.** Contêiner. Detém a lista de `agents`, a lista de `tasks`, o `process` e configurações opcionais `memory` + `verbose` + `manager_llm`.
 - **Process.** Estratégia de execução. Sequential, Hierarchical, Consensus (planejado). Escolhe a forma da execução.
 
 Agents não se veem diretamente. Tasks referenciam agents. A Crew sequencia tasks. O Process decide quem escolhe a próxima task. Esse é o modelo mental inteiro.
 
-> **Validado contra** CrewAI 0.86 (2026-05). Versões mais recentes podem renomear ou mesclar tipos de processos; cheque a [documentação de CrewAI Processes](https://docs.crewai.com/concepts/processes) antes de depender de uma forma específica.
+> **Validado contra** CrewAI 0.86 (2026-05). Versões mais recentes podem renomear ou mesclar tipos de processos; cheque a [documentação de CrewAI Processes](https://docs.crewai.com/concepts/processes) antes de depender de uma forma eespecificaçãoífica.
 
 ### Sequential vs Hierarchical vs Consensus
 
 - **Sequential.** Tasks rodam na ordem de declaração. Saída da task N está disponível como `context` pra task N+1. Menor custo. Mais previsível. Use quando a ordem é fixa.
-- **Hierarchical.** Um Agent manager (chamada de LLM separada) roteia entre especialistas. CrewAI cria o manager da sua config `manager_llm` ou um padrão. O manager escolhe a próxima task a cada rodada e pode recusar ou re-rotear. Use quando você tem quatro ou mais especialistas e a ordem genuinamente depende da saída anterior.
+- **Hierarchical.** Um Agent manager (chamada de LLM separada) roteia entre eespecificaçãoialistas. CrewAI cria o manager da sua config `manager_llm` ou um padrão. O manager escolhe a próxima task a cada rodada e pode recusar ou re-rotear. Use quando você tem quatro ou mais eespecificaçãoialistas e a ordem genuinamente depende da saída anterior.
 - **Consensus.** Planejado, não implementado na API pública. A documentação reserva o nome pra um processo futuro baseado em voto. Não dependa disso hoje.
 
-Hierarchical adiciona uma chamada de LLM por rodada (o manager) em cima de cada chamada de especialista. Custo em tokens pode triplicar numa execução de cinco etapas. Pague só quando precisar do roteamento.
+Hierarchical adiciona uma chamada de LLM por rodada (o manager) em cima de cada chamada de eespecificaçãoialista. Custo em tokens pode triplicar numa execução de cinco etapas. Pague só quando precisar do roteamento.
 
 ### Crews vs Flows
 
@@ -67,9 +67,9 @@ Três formas de dar uma ferramenta a um Agent. Escolha a mais simples que se enc
    from crewai.tools import tool
 
    @tool("Search the web")
-   def search(query: str) -> str:
-       """Return top results for the query."""
-       return run_search(query)
+   def search(consulta: str) -> str:
+       """Return top results for the consulta."""
+       return run_search(consulta)
    ```
 
 2. **Subclasse `BaseTool`.** Ferramenta baseada em classe com schema de args explícito, suporte async, retries. Use quando a ferramenta tem estado (um cliente, um cache) ou precisa de args estruturados.
@@ -79,7 +79,7 @@ Três formas de dar uma ferramenta a um Agent. Escolha a mais simples que se enc
    from pydantic import BaseModel
 
    class SearchArgs(BaseModel):
-       query: str
+       consulta: str
        limit: int = 10
 
    class SearchTool(BaseTool):
@@ -87,8 +87,8 @@ Três formas de dar uma ferramenta a um Agent. Escolha a mais simples que se enc
        description = "Search the web and return top results."
        args_schema = SearchArgs
 
-       def _run(self, query: str, limit: int = 10) -> str:
-           return self.client.search(query, limit=limit)
+       def _run(self, consulta: str, limit: int = 10) -> str:
+           return self.client.search(consulta, limit=limit)
    ```
 
 3. **Toolkits embutidos.** CrewAI entrega adaptadores de primeira mão: `SerperDevTool`, `FileReadTool`, `DirectoryReadTool`, `CodeInterpreterTool`, `RagTool`, `WebsiteSearchTool`. Conecta com um import.
@@ -110,7 +110,7 @@ Habilite na Crew com `memory=True` ou config por tipo. Suportado por um provider
 
 ### Quando CrewAI se encaixa
 
-- Três a seis agents com papéis nomeados e workflow colaborativo. Redação, revisão, planejamento, brainstorming.
+- Três a seis agentes com papéis nomeados e workflow colaborativo. Redação, revisão, planejamento, brainstorming.
 - Roteamento onde o julgamento do LLM sobre a próxima etapa faz parte do valor (Hierarchical).
 - Qualquer lugar onde o time lê `role + goal + backstory` mais feliz que uma definição de grafo.
 
@@ -118,7 +118,7 @@ Habilite na Crew com `memory=True` ou config por tipo. Suportado por um provider
 
 - DAGs determinísticas com ordenação rígida. Use LangGraph (Aula 13). A forma de grafo é a abstração certa; o framing de papel do CrewAI é atrito.
 - Orçamentos de latência sub-segundo. Hierarchical adiciona idas e vindas. Mesmo Sequential serializa prompts que incluem backstories e saídas anteriores.
-- Loops de agent único. Pule o framework; um agent loop (Aula 1) mais um registro de ferramentas é menor.
+- Loops de agente único. Pule o framework; um agente loop (Aula 1) mais um registro de ferramentas é menor.
 
 Aula 17 (Tradeoffs de Frameworks de Agent) detalha isso numa matrix. Versão curta: CrewAI fica no canto "colaborativo baseado em papel."
 
@@ -128,9 +128,9 @@ Independente de LangChain. Python 3.10 a 3.13. Usa `uv`. Contagem de stars: veja
 
 ### Onde esse padrão dá errado
 
-- **Inchaço de prompt de backstories.** Um backstory de 2000 palavras por agent e uma crew de cinco agents queima o orçamento de contexto antes da primeira chamada de ferramenta. Mantenha backstories abaixo de 200 palavras. Reuse frases entre agents; não repita o estilo cinco vezes.
-- **Imposto de tokens do manager-LLM.** Processo Hierarchical adiciona uma chamada de LLM do manager antes de cada chamada de especialista. Numa crew de cinco tasks são seis chamadas de LLM em vez de cinco, e a chamada do manager carrega a lista completa de tasks mais saídas anteriores. Mude pra Sequential a menos que roteamento dependa da saída.
-- **Handoffs frágeis.** `expected_output` da task N é "um esboço." Task N+1 lê como `context` e tenta parsear três seções. O LLM produziu quatro. O agent downstream improvisa. Conserte com `output_pydantic` na task N pra que N+1 leia um objeto tipado, não texto livre.
+- **Inchaço de prompt de backstories.** Um backstory de 2000 palavras por agente e uma crew de cinco agentes queima o orçamento de contexto antes da primeira chamada de ferramenta. Mantenha backstories abaixo de 200 palavras. Reuse frases entre agents; não repita o estilo cinco vezes.
+- **Imposto de tokens do manager-LLM.** Processo Hierarchical adiciona uma chamada de LLM do manager antes de cada chamada de eespecificaçãoialista. Numa crew de cinco tasks são seis chamadas de LLM em vez de cinco, e a chamada do manager carrega a lista completa de tasks mais saídas anteriores. Mude pra Sequential a menos que roteamento dependa da saída.
+- **Handoffs frágeis.** `expected_output` da task N é "um esboço." Task N+1 lê como `context` e tenta parsear três seções. O LLM produziu quatro. O agente downstream improvisa. Conserte com `output_pydantic` na task N pra que N+1 leia um objeto tipado, não texto livre.
 - **Crew como produção.** Crew de forma livre entregue em produção sem wrapper de Flow. Variabilidade de saída é alta; replay é impossível; on-call não consegue diff de uma execução ruim contra uma boa. Enrole com um Flow.
 
 ## Construa
@@ -141,7 +141,7 @@ Forma:
 
 - `Agent`, `Task` dataclasses combinando com a superfície do CrewAI.
 - `SequentialCrew.kickoff(inputs)` roda tasks na ordem de declaração, passando saídas como `context`.
-- `HierarchicalCrew.kickoff(topic)` adiciona um Agent manager escolhendo o próximo especialista a cada rodada, para em "done."
+- `HierarchicalCrew.kickoff(topic)` adiciona um Agent manager escolhendo o próximo eespecificaçãoialista a cada rodada, para em "done."
 - `Flow` com decorators `@start` e `@listen(topic)`, um mini loop de eventos e um trace.
 - Decorator `tool(name)` espelhando a forma `@tool` do CrewAI.
 - `Memory` com armazenamentos `short_term`, `long_term`, `entity`; similaridade mock usa numpy.
@@ -162,8 +162,8 @@ O trace da Crew é fluido; o manager poderia em princípio reordenar. O trace do
 ## Use
 
 - **CrewAI Flow** pra produção. Mesmo quando o Flow é uma etapa que chama `Crew.kickoff()`. O Flow dá o limite de auditoria.
-- **CrewAI Crew (Sequential)** pra trabalho colaborativo de ordem clara, especialmente primeiros rascunhos e loops de revisão.
-- **CrewAI Crew (Hierarchical)** quando roteamento depende da saída e você tem quatro ou mais especialistas.
+- **CrewAI Crew (Sequential)** pra trabalho colaborativo de ordem clara, eespecificaçãoialmente primeiros rascunhos e loops de revisão.
+- **CrewAI Crew (Hierarchical)** quando roteamento depende da saída e você tem quatro ou mais eespecificaçãoialistas.
 - **LangGraph** (Aula 13) pra máquinas de estados explícitas, resume durável, ordenação rígida.
 - **AutoGen v0.4** (Aula 14) pra concorrência de modelo ator e isolamento de falhas.
 - **OpenAI Agents SDK** (Aula 16) pra produtos OpenAI-first com handoffs e guardrails.
@@ -171,7 +171,7 @@ O trace da Crew é fluido; o manager poderia em princípio reordenar. O trace do
 
 ## Entregue
 
-`outputs/skill-crew-or-flow.md` escolhe Crew vs Flow pra uma tarefa e scaffolds a implementação mínima. Rejeições rígidas em Crew-sem-backstory, Flow-sem-topics-explícitos, Hierarchical com menos de três especialistas.
+`outputs/skill-crew-or-flow.md` escolhe Crew vs Flow pra uma tarefa e scaffolds a implementação mínima. Rejeições rígidas em Crew-sem-backstory, Flow-sem-topics-explícitos, Hierarchical com menos de três eespecificaçãoialistas.
 
 ## Armadilhas
 
@@ -213,7 +213,7 @@ O trace da Crew é fluido; o manager poderia em princípio reordenar. O trace do
 
 - [CrewAI docs introduction](https://docs.crewai.com/en/introduction): conceitos e caminho de produção recomendado
 - [CrewAI Flows guide](https://docs.crewai.com/en/concepts/flows): forma orientada a eventos, `@start`, `@listen`
-- [CrewAI tools reference](https://docs.crewai.com/en/concepts/tools): `@tool`, `BaseTool`, toolkits embutidos
+- [CrewAI ferramentas reference](https://docs.crewai.com/en/concepts/tools): `@tool`, `BaseTool`, toolkits embutidos
 - [CrewAI memory](https://docs.crewai.com/en/concepts/memory): short-term, long-term, entity, contextual
 - [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents): quando multi-agent ajuda e quando não
 - [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview): a alternativa de máquina de estados

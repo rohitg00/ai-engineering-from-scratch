@@ -22,7 +22,7 @@ Os laboratórios de fronteira (Lição 18) produzem avaliações de segurança i
 
 ### MATS (ML Alignment & Theory Scholars)
 
-Começou no final de 2021. Programa de mentoria em pesquisa; scholars passam 10-12 semanas com um pesquisador sênior em um problema específico de alinhamento.
+Começou no final de 2021. Programa de mentoria em pesquisa; scholars passam 10-12 semanas com um pesquisador sênior em um problema eespecificaçãoífico de alinhamento.
 
 Escala (2026):
 - 527+ pesquisadores desde o início.
@@ -39,7 +39,7 @@ Laboratório de alinhamento aplicado. Fundado por Buck Shlegeris. Introduziu a a
 
 Papers canônicos: Greenblatt, Shlegeris et al., "AI Control" (arXiv:2312.06942, ICML 2024); Alignment Faking (Greenblatt, Denison, Wright et al., arXiv:2412.14093, em conjunto com Anthropic).
 
-Estilo: threat models específicos, adversários de pior caso, protocolos concretos que podem ser testados.
+Estilo: threat models eespecificaçãoíficos, adversários de pior caso, protocolos concretos que podem ser testados.
 
 ### Apollo Research
 

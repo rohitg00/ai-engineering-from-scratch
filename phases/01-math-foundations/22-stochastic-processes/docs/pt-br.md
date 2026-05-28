@@ -49,7 +49,7 @@ P[X_{t+1} = j | X_t = i, X_{t-1} = ...] = P[X_{t+1} = j | X_t = i]
 
 **Condições de convergência:** Irreductível + aperiódica.
 
-**Tempo de mistura:** quantos passos até a cadeia ficar "perto" da distribuição estacionária. Gap espectral controla.
+**Tempo de mistura:** quantos passos até a cadeia ficar "perto" da distribuição estacionária. Gap eespecificaçãotral controla.
 
 ### Dinâmica de Langevin
 

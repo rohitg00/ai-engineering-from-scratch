@@ -12,7 +12,7 @@
 - Calcular contagens totais de tokens visuais pra vídeo longo em diferentes FPS e pooling.
 - Explicar os três caminhos de escalonamento: contexto bruto (Gemini 1.5), ring attention (LWM), compressão de tokens (LongVILA / Video-XL).
 - Comparar VLMs de vídeo de contexto bruto vs VLMs de vídeo de recuperação agentic (VideoAgent) em acurácia e latência.
-- Projetar um teste needle-in-a-haystack pra um vídeo de 30 minutos e medir recall num minuto específico.
+- Projetar um teste needle-in-a-haystack pra um vídeo de 30 minutos e medir recall num minuto eespecificaçãoífico.
 
 ## O Problemo
 
@@ -48,7 +48,7 @@ Video-XL (arXiv:2409.14485) usa token de resumo visual: cada clip de N frames pr
 
 LongVA estende o contexto do LLM de 200k pra 2M com uma técnica de "transferência de contexto longo". Treina em texto de contexto longo, transfere pra vídeo de contexto longo via representação compartilhada.
 
-Compressão de tokens troca recall em timestamps específicos por escalabilidade. O modelo sabe geralmente o que aconteceu, mas às vezes perde frames exatos.
+Compressão de tokens troca recall em timestamps eespecificaçãoíficos por escalabilidade. O modelo sabe geralmente o que aconteceu, mas às vezes perde frames exatos.
 
 ### Caminho 4: Recuperação agentic (VideoAgent)
 
@@ -98,7 +98,7 @@ Isso combina contexto bruto pra compreensão global e recuperação pra detalhe 
 
 - Calcula orçamentos de tokens pra vídeos de 1 minuto a 3 horas em diferentes FPS + pooling.
 - Simula uma execução needle-in-a-haystack: injeta marcador num timestamp aleatório, faz pergunta, pontua recall.
-- Inclui um simulador de roteador de recuperação agentic que escolhe clips específicos pra alimentar um VLM downstream.
+- Inclui um simulador de roteador de recuperação agentic que escolhe clips eespecificaçãoíficos pra alimentar um VLM downstream.
 
 Rode a tabela de orçamento e sinta a差距 de escala.
 

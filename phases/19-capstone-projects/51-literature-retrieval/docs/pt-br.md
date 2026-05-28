@@ -74,7 +74,7 @@ score(d, q) = soma sobre t em q de idf(t) * tf_norm(t)
 
 O grafo e construido uma vez a partir do corpus. Arestas para frente vao de um paper para suas references. Arestas para tras vao de um paper para suas citations. A travessia e uma busca em largura (BFS) semeada pelos top acertos BM25, limitada a dois saltos.
 
-Dois saltos sao um limite deliberado. Um salto e raso demais; o agent frequentemente quer o ancestral ou descendente imediato. Tres saltos explodem o tamanho do resultado em um grafo conectado e tendem a divagar do topico. A aula expoe o limite de saltos como um botao de config para que um loop downstream possa aperta-lo.
+Dois saltos sao um limite deliberado. Um salto e raso demais; o agente frequentemente quer o ancestral ou descendente imediato. Tres saltos explodem o tamanho do resultado em um grafo conectado e tendem a divagar do topico. A aula expoe o limite de saltos como um botao de config para que um loop downstream possa aperta-lo.
 
 ## Dedup e ranqueamento
 
@@ -98,7 +98,7 @@ Os dois clientes de API mock (`ArxivMockClient`, `SemanticScholarMockClient`) le
 
 ## O que as aulas 52 e 53 leem
 
-O executor na aula 52 le `paper.id`, `paper.title`, e as tres primeiras frases do resumo como contexto para o experimento. O avaliador na aula 53 le `paper.year` e `paper.references` para atribuir uma baseline a um paper especifico.
+O executor na aula 52 le `paper.id`, `paper.title`, e as tres primeiras frases do resumo como contexto para o experimento. O avaliador na aula 53 le `paper.year` e `paper.references` para atribuir uma baseline a um paper eespecificaçãoifico.
 
 O cliente de recuperacao retorna um `RetrievalResult` com tanto a lista ranqueada quanto as metricas por consulta: contagem de acertos, media de pontuacao, pontuacao maxima, tempo de parede total. O executor loga essas para que uma passagem de observabilidade downstream possa plotar qualidade ao longo do tempo.
 

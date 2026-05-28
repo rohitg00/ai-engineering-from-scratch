@@ -12,7 +12,7 @@
 - Construir uma classe de grafo com representações de matriz/lista de adjacência e implementar traversals BFS e DFS
 - Computar o Laplaciano de grafo e usar seus autovalores para detectar componentes conectados e agrupar nós
 - Implementar uma rodada de message passing estilo GNN como multiplicação de matriz de adjacência normalizada
-- Aplicar clustering espectral para particionar um grafo usando o vetor de Fiedler
+- Aplicar clustering eespecificaçãotral para particionar um grafo usando o vetor de Fiedler
 
 ## O Problema
 
@@ -23,7 +23,7 @@ GNNs são a área de crescimento mais rápido em deep learning. Toda GNN se base
 Você precisa de quatro coisas:
 1. Uma maneira de representar grafos como matrizes
 2. Algoritmos de traversal para explorar estrutura
-3. O Laplaciano -- a matriz mais importante da teoria espectral
+3. O Laplaciano -- a matriz mais importante da teoria eespecificaçãotral
 4. Message passing -- a operação que faz GNNs funcionarem
 
 ## O Conceito
@@ -55,7 +55,7 @@ O grau de um nó é o número de arestas conectadas. Matriz de grau D é diagona
 
 ### Laplaciano de Grafo
 
-L = D - A. A matriz mais importante da teoria espectral de grafos.
+L = D - A. A matriz mais importante da teoria eespecificaçãotral de grafos.
 
 Propriedades:
 1. L é semi-definida positiva
@@ -63,7 +63,7 @@ Propriedades:
 3. Menor autovalor não-zero (valor de Fiedler) mede conectividade
 4. Autovetor de Fiedler revela a melhor divisão
 
-### Clustering Espectral
+### Clustering Eespecificaçãotral
 
 1. Compute o Laplaciano L
 2. Encontre os k menores autovetores de L
@@ -120,7 +120,7 @@ class Graph:
 | BFS | "Busca por nível" | Visita todos vizinhos antes de ir mais fundo |
 | DFS | "Ir fundo primeiro" | Segue um caminho até o fim antes de voltar |
 | Message passing | "Nós falam com vizinhos" | Cada nó agrega informação dos vizinhos |
-| Clustering espectral | "Agrupar por autovetores" | Particionar grafo usando autovetores do Laplaciano |
+| Clustering eespecificaçãotral | "Agrupar por autovetores" | Particionar grafo usando autovetores do Laplaciano |
 
 ## Leitura Adicional
 

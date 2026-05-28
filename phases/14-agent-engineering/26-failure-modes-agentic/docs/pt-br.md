@@ -9,10 +9,10 @@
 
 ## Objetivos de Aprendizado
 
-- Nomear as três categorias de falha do MASFT e pelo menos quatro modos específicos em cada uma.
+- Nomear as três categorias de falha do MASFT e pelo menos quatro modos eespecificaçãoíficos em cada uma.
 - Explicar por que falhas agênticas amplificam modos de falha de IA existentes (viés, alucinação).
 - Descrever os cinco modos recorrentes da indústria e suas mitigações.
-- Implementar um detector em stdlib que etiqueta traces de agentes com labels de modo de falha.
+- Implementar um detector em stdlib que etiqueta traces de agentes com rótulos de modo de falha.
 
 ## O Problema
 
@@ -50,11 +50,11 @@ Erros sub-intenção: Omissão (passo perdido), Redundância (passo repetido), D
 
 Análises de campo da Arize, Galileo, NimbleBrain 2024-2026 convergem em:
 
-1. **Ações alucinadas.** Agente invoca uma tool que não existe ou fabrica argumentos.
+1. **Ações alucinadas.** Agente invoca uma ferramenta que não existe ou fabrica argumentos.
 2. **Scope creep.** Agente expande a tarefa além do pedido pelo usuário (cria PRs extras, envia emails extras).
 3. **Erros em cascata.** Uma chamada errada dispara efeitos downstream. Uma alucinação de SKU fantasma dispara quatro chamadas de API — um incidente multi-sistema.
 4. **Perda de contexto.** Tarefas de longo horizonte esquecem restrições de turns anteriores.
-5. **Uso indevido de tools.** Chama a tool certa com argumentos errados, ou a tool errada completamente.
+5. **Uso indevido de tools.** Chama a ferramenta certa com argumentos errados, ou a ferramenta errada completamente.
 
 Cascata é o matador. Agentes não conseguem distinguir "eu falhei" da "tarefa é impossível" e frequentemente alucinam uma mensagem de sucesso em erros 400 pra fechar o loop.
 
@@ -63,14 +63,14 @@ Cascata é o matador. Agentes não conseguem distinguir "eu falhei" da "tarefa �
 Gates de verificação automatizados em cada passo de uma cadeia de raciocínio, checando grounding factual contra estado do ambiente. Concretamente:
 
 - Classificador de segurança por passo (Aula 21).
-- Validação de argumentos em chamadas de tool (Aula 06).
+- Validação de argumentos em chamadas de ferramenta (Aula 06).
 - Cross-check de conteúdo recuperado contra fatos conhecidos (Aula 05, CRITIC).
 - Detecção de alucinação de sucesso re-proando estado (o arquivo foi realmente criado?).
 
 ### Onde monitoramento de falhas dá errado
 
 - **Etiquetar só crashes.** A maioria das falhas de agente produz output com aparência válida. Precisa de checagens no nível de conteúdo.
-- **Sem baseline.** Detecção de drift precisa de um last-known-good; sem ele você não diz "isso tá piorando".
+- **Sem baseline.** Detecção de deriva precisa de um last-known-good; sem ele você não diz "isso tá piorando".
 - **Over-alerting.** Cada falha gera um page. Agrupe e faça rate-limit.
 
 ## Construa
@@ -87,13 +87,13 @@ Execute:
 python3 code/main.py
 ```
 
-Saída: labels por trace + distribuição agregada, uma reprodução barata do que o clustering de traces do Phoenix superficia.
+Saída: rótulos por trace + distribuição agregada, uma reprodução barata do que o clustering de traces do Phoenix superficia.
 
 ## Use
 
-- **Phoenix** pra clustering de drift em produção (Aula 24).
+- **Phoenix** pra clustering de deriva em produção (Aula 24).
 - **Langfuse** pra replay de sessão + anotação.
-- **Custom** pra assinaturas específicas de domínio que sua plataforma de observabilidade não detecta.
+- **Custom** pra assinaturas eespecificaçãoíficas de domínio que sua plataforma de observabilidade não detecta.
 
 ## Entregue
 
@@ -114,7 +114,7 @@ Saída: labels por trace + distribuição agregada, uma reprodução barata do q
 | MASFT | "Taxonomia de falha multi-agente" | Categorização de 14 modos da Berkeley |
 | Erro em cascata | "Falha em efeito dominó" | Um erro inicial se propaga por N passos |
 | Perda de contexto | "Esqueceu a restrição" | Turn de longo horizonte perde fatos de turns anteriores |
-| Uso indevido de tool | "Tool errada / args errados" | Chamada válida, invocação errada |
+| Uso indevido de ferramenta | "Tool errada / args errados" | Chamada válida, invocação errada |
 | Alucinação de sucesso | "Conclusão falsa" | Agente declara sucesso num 400; estado inalterado |
 | Scope creep | "Excesso" | Agente faz mais do que pedido |
 | Desvio no seguimento de instrução | "Desobediência" | Ignora system prompt ou restrição do usuário |
@@ -124,5 +124,5 @@ Saída: labels por trace + distribuição agregada, uma reprodução barata do q
 
 - [Cemri et al., MASFT (arXiv:2503.13657)](https://arxiv.org/abs/2503.13657) — 14 modos de falha, 3 categorias
 - [Microsoft, Taxonomy of Failure Mode in Agentic AI Systems](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-brand/documents/Taxonomy-of-Failure-Mode-in-Agentic-AI-Systems-Whitepaper.pdf) — risk register
-- [Arize Phoenix](https://docs.arize.com/phoenix) — clustering de drift na prática
+- [Arize Phoenix](https://docs.arize.com/phoenix) — clustering de deriva na prática
 - [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) — quando padrões mais simples evitam modos completamente

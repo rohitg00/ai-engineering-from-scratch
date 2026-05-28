@@ -72,7 +72,7 @@ flowchart TD
 
 ### Classificação vs Regressão
 
-| Aspecto | Classificação | Regressão |
+| Aespecificaçãoto | Classificação | Regressão |
 |---------|---------------|-----------|
 | Saída | Categorias discretas | Números contínuos |
 | Exemplo | "Esse email é spam?" | "Qual será o preço da casa?" |

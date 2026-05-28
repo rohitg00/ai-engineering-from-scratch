@@ -1,6 +1,6 @@
 # Escala em Produção — Filas, Checkpoints, Durabilidade
 
-> Escalar sistemas multi-agente pra milhares de execuções concorrentes requer **execução durável**. O runtime do LangGraph escreve um checkpoint após cada super-step chaveado por `thread_id` (Postgres por default); crashes de worker liberam um lease e outro worker retoma. Agents podem dormir indefinidamente esperando input humano. **MegaAgent** (arXiv:2408.09955) rodou uma fila produtor-consumidor por agent com três estados (Idle / Processing / Response) e coordenação em duas camadas (chat intra-grupo + chat admin inter-grupo). **Fiber/async** supera thread-por-job pra streaming de LLM: threads ficam ociosas 99% do tempo esperando tokens, fibers cedem cooperativamente em I/O. Contra-ponto: o "Scaling Agentic Software" de Ashpreet Bedi defende **FastAPI + Postgres + mais nada** até que a carga prove o contrário — arquiteturas simples vão mais longe do que esperado. Esta aula constrói um log de checkpoint durável, uma fila de trabalho por agent com transições de estado, uma demo async-vs-thread e fixa a regra pragmática "comece simples".
+> Escalar sistemas multi-agente pra milhares de execuções concorrentes requer **execução durável**. O runtime do LangGraph escreve um checkpoint após cada super-step chaveado por `thread_id` (Postgres por default); crashes de worker liberam um lease e outro worker retoma. Agents podem dormir indefinidamente esperando input humano. **MegaAgent** (arXiv:2408.09955) rodou uma fila produtor-consumidor por agente com três estados (Idle / Processing / Response) e coordenação em duas camadas (chat intra-grupo + chat admin inter-grupo). **Fiber/async** supera thread-por-job pra streaming de LLM: threads ficam ociosas 99% do tempo esperando tokens, fibers cedem cooperativamente em I/O. Contra-ponto: o "Scaling Agentic Software" de Ashpreet Bedi defende **FastAPI + Postgres + mais nada** até que a carga prove o contrário — arquiteturas simples vão mais longe do que esperado. Esta aula constrói um log de checkpoint durável, uma fila de trabalho por agente com transições de estado, uma demo async-vs-thread e fixa a regra pragmática "comece simples".
 
 **Tipo:** Aprender + Construir
 **Idiomas:** Python (stdlib, `asyncio`, `sqlite3`)
@@ -9,7 +9,7 @@
 
 ## Problema
 
-Um protótipo de sistema multi-agente funciona num laptop com três agents em um loop de eventos em memória. Você vai pra produção:
+Um protótipo de sistema multi-agente funciona num laptop com três agentes em um loop de eventos em memória. Você vai pra produção:
 
 - Agents às vezes rodam por horas (pesquisa longa, waits de human-in-the-loop).
 - Processos de worker crasham. Reiniciar perde estado.
@@ -20,7 +20,7 @@ O loop de eventos em memória não faz nenhuma disso. Você precisa de uma camad
 
 1. Uma engine de workflow com checkpoints (Temporal, runtime LangGraph).
 2. Uma message queue com armazenamento de estado (Postgres + SQS/RabbitMQ).
-3. Frameworks de modelo actor (produtor-consumidor por agent do MegaAgent).
+3. Frameworks de modelo actor (produtor-consumidor por agente do MegaAgent).
 4. FastAPI + Postgres feito à mão (argumento do Bedi).
 
 Esta aula constrói uma miniatura de cada uma.
@@ -41,26 +41,26 @@ worker crasha no meio do step
 
 Requisitos pra isso funcionar:
 
-- **Estado serializável.** Todo estado do agent tem que ser persistível. Closures de função com conexões ao banco de dados vivas não sobrevivem.
-- **Retoma determinística.** Dados o mesmo estado e as mesmas entradas, o agent produz as mesmas ações (ou delega pra um oracle determinístico externo pra chamadas de LLM).
+- **Estado serializável.** Todo estado do agente tem que ser persistível. Closures de função com conexões ao banco de dados vivas não sobrevivem.
+- **Retoma determinística.** Dados o mesmo estado e as mesmas entradas, o agente produz as mesmas ações (ou delega pra um oracle determinístico externo pra chamadas de LLM).
 - **Efeitos colaterais idempotentes.** Chamadas externas (chamadas de ferramenta, pagamentos) devem ser idempotentes ou usar uma chave de desduplicação.
 
 LangGraph escreve um checkpoint após cada super-step; Temporal escreve após cada atividade; Restate usa journals event-sourced. Todos três implementam o mesmo padrão.
 
 ### O runtime do LangGraph
 
-Cada agent tem um `thread_id`; estado é um dict tipado; cada super-step escreve uma linha na tabela de checkpoints. Na retoma, o runtime repete a partir do último checkpoint, não do zero. Agents podem `interrupt()` esperando input humano; o runtime persiste e libera o worker. Quando input chega, qualquer worker pode retomar.
+Cada agente tem um `thread_id`; estado é um dict tipado; cada super-step escreve uma linha na tabela de checkpoints. Na retoma, o runtime repete a partir do último checkpoint, não do zero. Agents podem `interrupt()` esperando input humano; o runtime persiste e libera o worker. Quando input chega, qualquer worker pode retomar.
 
 Esse é o design de referência em produção em abril de 2026.
 
-### A fila por agent do MegaAgent
+### A fila por agente do MegaAgent
 
-arXiv:2408.09955 descreve um experimento de escala: milhares de agents concorrentes num cluster. Arquitetura:
+arXiv:2408.09955 descreve um experimento de escala: milhares de agentes concorrentes num cluster. Arquitetura:
 
 ```
 agent i:
   state ∈ {Idle, Processing, Response}
-  in_queue   <- mensagens dirigidas ao agent i
+  in_queue   <- mensagens dirigidas ao agente i
   out_queue  -> respostas + efeitos colaterais
 
 coordenadores:
@@ -83,29 +83,29 @@ Exceção: pós-processamento CPU-bound (embedding, truques de tokenizer) ainda 
 "Scaling Agentic Software" (Ashpreet Bedi, 2026) argumenta que a maioria dos times super-engineera antes de medir a carga. O default pragmático:
 
 - FastAPI + Postgres.
-- Cada execução de agent é uma linha; estado atualizado in-place com concorrência otimista.
+- Cada execução de agente é uma linha; estado atualizado in-place com concorrência otimista.
 - Jobs em background via `pg_notify` ou um worker Celery simples.
 - Política de retry no código da aplicação.
 
-Pra cargas abaixo de ~100 execuções concorrentes de agent em tarefas gerenciáveis, isso geralmente é tudo que você precisa. Atualize quando medir falhando.
+Pra cargas abaixo de ~100 execuções concorrentes de agente em tarefas gerenciáveis, isso geralmente é tudo que você precisa. Atualize quando medir falhando.
 
 A regra: adote frameworks de execução durável quando atingir um problema concreto que arquiteturas simples não resolvem. Adoção prematura queima tempo com cerimônias que não compensam.
 
 ### Semântica exactly-once
 
-Pra execuções de agent pagas, você precisa de "effective exactly-once" (entrega pelo menos uma vez + consumidor idempotente). As movimentações de engenharia:
+Pra execuções de agente pagas, você precisa de "effective exactly-once" (entrega pelo menos uma vez + consumidor idempotente). As movimentações de engenharia:
 
 - **Chave de desduplicação por execução.** Inclua em toda chamada de efeito colateral.
 - **Padrão outbox.** Efeitos colaterais escrevem numa tabela primeiro, depois um processo separado executa. Ambos passos idempotentes.
 - **Transações compensatórias.** Quando um efeito colateral succeede mas a escrita de tracking falha, agende uma compensação.
 
-São padrões de engenharia de banco de dados, não específicos de LLM. O imposto de LLM é só que chamadas de LLM são lentas; todo o resto é sistemas distribuídos padrão.
+São padrões de engenharia de banco de dados, não eespecificaçãoíficos de LLM. O imposto de LLM é só que chamadas de LLM são lentas; todo o resto é sistemas distribuídos padrão.
 
 ### Deploy rainbow
 
-O sistema de pesquisa multi-agente da Anthropic usa "rainbow deploys": múltiplas versões do runtime de agent rodam simultaneamente pra que agents de execução longa não precisem ser mortos a cada deploy de código. Canary de novas versões em um fatia de tráfego; aposente versões antigas quando seus agents terminarem.
+O sistema de pesquisa multi-agente da Anthropic usa "rainbow deploys": múltiplas versões do runtime de agente rodam simultaneamente pra que agentes de execução longa não precisem ser mortos a cada implantação de código. Canary de novas versões em um fatia de tráfego; aposente versões antigas quando seus agentes terminarem.
 
-Isso é padrão pra sistemas stateful de execução longa; a adaptação de 2026 é que agents podem viver por horas, então ciclos de deploy precisam acomodar isso.
+Isso é padrão pra sistemas stateful de execução longa; a adaptação de 2026 é que agentes podem viver por horas, então ciclos de implantação precisam acomodar isso.
 
 ### A checklist canônica de produção
 
@@ -122,7 +122,7 @@ Isso é padrão pra sistemas stateful de execução longa; a adaptação de 2026
 
 - `CheckpointStore` — log de checkpoints com SQLite com chaves de thread-id. Cada super-step acrescenta uma linha.
 - `run_with_checkpoint(agent, thread_id)` — simula um crash no meio da execução; um segundo worker retoma do último checkpoint.
-- `AgentQueue` — máquina de estados Idle / Processing / Response por agent com uma fila de trabalho pequena.
+- `AgentQueue` — máquina de estados Idle / Processing / Response por agente com uma fila de trabalho pequena.
 - `demo_async_vs_threads()` — roda 500 "chamadas de LLM" simuladas concorrentes via asyncio e via threads; reporta tempo de parede e memória de pico (aproximada).
 
 Execute:
@@ -143,9 +143,9 @@ Endurecimento canônico em produção:
 
 - **Comece simples (regra do Bedi).** FastAPI + Postgres até medir falhando.
 - **Instrumente tudo antes de otimizar.** Histograma de latência por execução, tempo por step, contagem de retry, categorização de falhas.
-- **Padrão outbox pra efeitos colaterais.** Especialmente pagamentos e chamadas de API externas.
-- **Deploys rainbow.** Nunca mate execuções de agent em andamento durante deploys.
-- **Adote engines de execução durável (Temporal / LangGraph / Restate) quando** atingir problemas específicos: waits de human-in-the-loop de horas, coordenação cross-region, políticas complexas de retry/compensação.
+- **Padrão outbox pra efeitos colaterais.** Eespecificaçãoialmente pagamentos e chamadas de API externas.
+- **Deploys rainbow.** Nunca mate execuções de agente em andamento durante deploys.
+- **Adote engines de execução durável (Temporal / LangGraph / Restate) quando** atingir problemas eespecificaçãoíficos: waits de human-in-the-loop de horas, coordenação cross-region, políticas complexas de retry/compensação.
 - **Async pra camada de I/O.** Threads só pra pós-processamento CPU-bound.
 
 ## Exercícios
@@ -172,8 +172,8 @@ Endurecimento canônico em produção:
 
 ## Leitura Adicional
 
-- [LangChain — O runtime por trás de deep agents em produção](https://www.langchain.com/conceptual-guides/runtime-behind-production-deep-agents) — design do runtime LangGraph
-- [MegaAgent](https://arxiv.org/abs/2408.09955) — fila produtor-consumidor por agent; coordenação em duas camadas com milhares de agents concorrentes
+- [LangChain — O runtime por trás de deep agentes em produção](https://www.langchain.com/conceptual-guides/runtime-behind-production-deep-agents) — design do runtime LangGraph
+- [MegaAgent](https://arxiv.org/abs/2408.09955) — fila produtor-consumidor por agent; coordenação em duas camadas com milhares de agentes concorrentes
 - [Matrix](https://arxiv.org/abs/2511.21686) — framework descentralizado com message queues como substrato de coordenação
 - [Documentação Temporal](https://docs.temporal.io/) — engine de workflow de referência pra execução durável
-- [Anthropic — Sistema de pesquisa multi-agente](https://www.anthropic.com/engineering/multi-agent-research-system) — lições de produção incluindo deploy rainbow
+- [Anthropic — Sistema de pesquisa multi-agente](https://www.anthropic.com/engineering/multi-agent-research-system) — lições de produção incluindo implantação rainbow

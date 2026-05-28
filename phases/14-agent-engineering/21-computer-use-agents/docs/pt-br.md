@@ -1,6 +1,6 @@
 # Computer Use: Claude, OpenAI CUA, Gemini
 
-> Três modelos de computer use de produção em 2026. Todos são baseados em visão. Todos tratam screenshots, texto do DOM e outputs de tools como input não-confiável. Só instruções diretas do usuário contam como permissão. Serviços de segurança por passo são a norma.
+> Três modelos de computer use de produção em 2026. Todos são baseados em visão. Todos tratam screenshots, texto do DOM e outputs de ferramentas como input não-confiável. Só instruções diretas do usuário contam como permissão. Serviços de segurança por passo são a norma.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib)
@@ -25,7 +25,7 @@ Agentes de desktop e web precisam ver a tela e dirigir o input. Três fornecedor
 - Claude 3.5 Sonnet, depois Claude 4 / 4.5. Beta público.
 - Baseado em visão: screenshot de entrada, comandos de teclado/mouse de saída.
 - Sem APIs de acessibilidade do OS — Claude lê pixels.
-- Implementação requer três partes: um agent loop, a tool `computer` (schema embutido no modelo, não configurável pelo desenvolvedor), uma display virtual (Xvfb no Linux).
+- Implementação requer três partes: um agente loop, a ferramenta `computer` (schema embutido no modelo, não configurável pelo desenvolvedor), uma display virtual (Xvfb no Linux).
 - Claude é treinado pra contar pixels de pontos de referência até locais-alvo, produzindo coordenadas independentes de resolução.
 
 ### OpenAI CUA / Operator (jan 2025)

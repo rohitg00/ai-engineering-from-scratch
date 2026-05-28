@@ -26,7 +26,7 @@ Esta aula modela os seis e te diz quando cada um vence.
 
 ### Os três segmentos
 
-**Silício custom** — Groq (LPU), Cerebras (WSE), SambaNova (RDU). Tipicamente 5-10x mais rápido em decode que um cluster baseado em GPU no mesmo modelo. Preço por-token mais alto (Groq era ~$0.99/M no Llama-70B no fim de 2025) mas imbatível para casos de uso sensíveis a latência. Grogo é a escolha de produção para voice agents e tradução em tempo real.
+**Silício custom** — Groq (LPU), Cerebras (WSE), SambaNova (RDU). Tipicamente 5-10x mais rápido em decode que um cluster baseado em GPU no mesmo modelo. Preço por-token mais alto (Groq era ~$0.99/M no Llama-70B no fim de 2025) mas imbatível para casos de uso sensíveis a latência. Grogo é a escolha de produção para voice agentes e tradução em tempo real.
 
 **Plataformas de GPU** — Baseten, Together, Fireworks, Modal, Anyscale. Rodam em NVIDIA (H100, H200, B200 em 2026) ou às vezes AMD. A camada econômica entre "aluguel bruto de GPU" (RunPod, Lambda) e "serviço gerenciado de hiperscaler" (Bedrock).
 

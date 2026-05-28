@@ -17,7 +17,7 @@
 
 ## O Problema
 
-Você abre o ChatGPT. Digita: "Escreva um e-mail de marketing." Recebe algo genérico, inflado e inutilizável. Tenta de novo com mais detalhes e ainda assim recebe algo que parece escrito por um estagiário desmotivado. Outra tentativa, mais específica — e o modelo ignora metade do que você pediu.
+Você abre o ChatGPT. Digita: "Escreva um e-mail de marketing." Recebe algo genérico, inflado e inutilizável. Tenta de novo com mais detalhes e ainda assim recebe algo que parece escrito por um estagiário desmotivado. Outra tentativa, mais eespecificaçãoífica — e o modelo ignora metade do que você pediu.
 
 O problema não é o modelo. São suas instruções. Você está pedindo "faz uma coisa boa" e esperando que o modelo adivinhe o que é "bom" no seu contexto. Modelos seguem instruções. Se suas instruções são vagas, as saídas são vagas.
 
@@ -97,7 +97,7 @@ graph LR
 PROMPT_PATTERNS = {
     "persona": {
         "name": "Persona (Papel)",
-        "description": "Define um papel específico para o modelo assumir",
+        "description": "Define um papel eespecificaçãoífico para o modelo assumir",
         "variables": ["role", "experience", "style", "priority", "task"],
         "temperature": 0.3,
         "template": {
@@ -111,7 +111,7 @@ PROMPT_PATTERNS = {
         "variables": ["examples", "input"],
         "temperature": 0.0,
         "template": {
-            "system": "Analise o input e forneça o output no formato especificado.",
+            "system": "Analise o input e forneça o output no formato eespecificaçãoificado.",
             "user": "Exemplos:\n{examples}\n\nAgora analise:\n{input}"
         }
     },
@@ -137,7 +137,7 @@ PROMPT_PATTERNS = {
     },
     "guardrail": {
         "name": "Guardrail (Barreira)",
-        "description": "Restringe o modelo a um domínio específico",
+        "description": "Restringe o modelo a um domínio eespecificaçãoífico",
         "variables": ["role", "domain", "additional_rules", "question"],
         "temperature": 0.3,
         "template": {
@@ -151,7 +151,7 @@ PROMPT_PATTERNS = {
         "variables": ["original_prompt", "goal"],
         "temperature": 0.5,
         "template": {
-            "system": "Você é um especialista em prompt engineering.",
+            "system": "Você é um eespecificaçãoialista em prompt engineering.",
             "user": "Melhore este prompt para {goal}:\n\n{original_prompt}"
         }
     },
@@ -177,7 +177,7 @@ PROMPT_PATTERNS = {
     },
     "audience": {
         "name": "Adaptação de Audiência",
-        "description": "Adapta conteúdo para um público específico",
+        "description": "Adapta conteúdo para um público eespecificaçãoífico",
         "variables": ["content", "audience", "goal"],
         "temperature": 0.4,
         "template": {
@@ -473,8 +473,8 @@ TEST_SUITE = [
         "name": "Template Fill: Extração de Currículo",
         "pattern": "template_fill",
         "variables": {
-            "text": "João Silva é um engenheiro de software na Google com 5 anos de experiência. Ele se formou na USP com bacharelado em Ciência da Computação em 2019. Ele se especializa em sistemas distribuídos e programação em Go.",
-            "template_structure": "Nome: [nome completo]\nEmpresa: [empregador atual]\nAnos de Experiência: [número]\nFormação: [graduação, faculdade, ano]\nEspecialidades: [lista separada por vírgulas]",
+            "text": "João Silva é um engenheiro de software na Google com 5 anos de experiência. Ele se formou na USP com bacharelado em Ciência da Computação em 2019. Ele se eespecificaçãoializa em sistemas distribuídos e programação em Go.",
+            "template_structure": "Nome: [nome completo]\nEmpresa: [empregador atual]\nAnos de Experiência: [número]\nFormação: [graduação, faculdade, ano]\nEespecificaçãoialidades: [lista separada por vírgulas]",
         },
         "criteria": {
             "required_keywords": ["João Silva", "Google", "USP"],
@@ -487,7 +487,7 @@ TEST_SUITE = [
             "role": "tutor de programação Python",
             "domain": "programação Python",
             "additional_rules": "Não escreva soluções completas. Guie o aluno com dicas.",
-            "question": "Como ordeno uma lista de dicionários por uma chave específica?",
+            "question": "Como ordeno uma lista de dicionários por uma chave eespecificaçãoífica?",
         },
         "criteria": {
             "required_keywords": ["sorted", "key", "lambda"],
@@ -652,7 +652,7 @@ A mensagem de sistema do OpenAI é processada primeiro e recebe alto peso de ate
 # print(result)
 ```
 
-O preenchimento de assistente (`"{"`) força o Claude a continuar produzindo JSON sem qualquer texto introdutório. Isso é uma feature exclusiva da Anthropic — nenhum outro provedor principal suporta nativamente. É mais confiável que pedidos de JSON baseados em prompt e mais barato que o modo de structured output para casos simples.
+O preenchimento de assistente (`"{"`) força o Claude a continuar produzindo JSON sem qualquer texto introdutório. Isso é uma funcionalidade exclusiva da Anthropic — nenhum outro provedor principal suporta nativamente. É mais confiável que pedidos de JSON baseados em prompt e mais barato que o modo de structured output para casos simples.
 
 ### Google: Gemini com Configurações de Segurança
 
@@ -691,7 +691,7 @@ O Gemini processa instruções de sistema como parte da configuração do modelo
 # chain_openai = prompt | ChatOpenAI(model="gpt-5", temperature=0)
 # chain_claude = prompt | ChatAnthropic(model="claude-opus-4-7", temperature=0)
 #
-# variables = {"role": "um especialista em banco de dados", "formato": "tópicos", "question": "Quando devo usar Redis vs Memcached?"}
+# variables = {"role": "um eespecificaçãoialista em banco de dados", "formato": "tópicos", "question": "Quando devo usar Redis vs Memcached?"}
 #
 # print("GPT-4o:", chain_openai.invoke(variables).content)
 # print("Claude:", chain_claude.invoke(variables).content)

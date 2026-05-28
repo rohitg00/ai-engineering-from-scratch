@@ -79,7 +79,7 @@ Regularização aumenta deliberadamente viés pra reduzir variância.
 - **Dropout:** Desativa neurônios aleatoriamente durante treino.
 - **Early stopping:** Para o treino antes do modelo ajustar completamente os dados de treino.
 
-### Double Descent: A Perspectiva Moderna
+### Double Descent: A Perespecificaçãotiva Moderna
 
 ```mermaid
 graph LR

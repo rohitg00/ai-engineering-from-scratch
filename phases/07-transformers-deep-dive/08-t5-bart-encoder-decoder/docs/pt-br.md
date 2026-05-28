@@ -127,7 +127,7 @@ model = T5ForConditionalGeneration.from_pretrained("google/flan-t5-base")
 
 inputs = tok("translate English to French: Attention is all you need.", return_tensors="pt")
 out = model.generate(**inputs, max_new_tokens=32)
-print(tok.decode(out[0], skip_special_tokens=True))
+print(tok.decode(out[0], skip_especificaçãoial_tokens=True))
 ```
 
 O truque T5: o nome da tarefa vai no texto de entrada. O mesmo modelo lida com dezenas de tarefas porque cada tarefa é texto-entrada, texto-saída. Em 2026 esse padrão foi generalizado por modelos decoder-only sintonizados por instrução, mas T5 codificou primeiro.
@@ -150,7 +150,7 @@ Veja `outputs/skill-seq2seq-picker.md`. A skill escolhe entre encoder-decoder e 
 | Cross-attention | "Onde fonte conversa com alvo" | Q do decoder × K/V do encoder. Único lugar onde informação do encoder entra no decoder. |
 | Span corruption | "O truque de pré-treinamento do T5" | Substitui spans aleatórios por tokens sentinel; decoder gera os spans. |
 | Objetivo de denoising | "O jogo do BART" | Aplica função de ruído na entrada, treina o decoder pra reconstruir a sequência limpa. |
-| Token sentinel | "O placeholder `<extra_id_N>`" | Tokens especiais que marcam spans corrompidos na fonte e remarcam no alvo. |
+| Token sentinel | "O placeholder `<extra_id_N>`" | Tokens eespecificaçãoiais que marcam spans corrompidos na fonte e remarcam no alvo. |
 | Flan | "T5 sintonizado por instrução" | T5 fine-tuned em >1.800 tarefas; tornou encoder-decoder competitivo em seguir instruções. |
 | Beam search | "Estratégia de decodificação" | Mantém top-k sequências parciais a cada passo; padrão pra tradução/resumo. |
 | Teacher forcing | "Input durante treinamento" | Durante treinamento, alimenta o token de saída anterior verdadeiro ao decoder, não o amostrado. |

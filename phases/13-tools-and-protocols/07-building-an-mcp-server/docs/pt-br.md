@@ -1,6 +1,6 @@
 # Construindo um Servidor MCP — SDKs Python + TypeScript
 
-> A maioria dos tutoriais de MCP mostra só stdio hello-worlds. Um servidor real expõe tools mais resources mais prompts, lida com negociação de capacidades, emite erros estruturados e funciona igual entre SDKs. Esta aula constrói um servidor de notas de ponta a ponta: transporte stdlib stdio, dispatch JSON-RPC, as três primitivas do servidor e um estilo de função pura que migra pro FastMCP (SDK Python) ou pro SDK TypeScript quando você quiser escalar.
+> A maioria dos tutoriais de MCP mostra só stdio hello-worlds. Um servidor real expõe ferramentas mais resources mais prompts, lida com negociação de capacidades, emite erros estruturados e funciona igual entre SDKs. Esta aula constrói um servidor de notas de ponta a ponta: transporte stdlib stdio, dispatch JSON-RPC, as três primitivas do servidor e um estilo de função pura que migra pro FastMCP (SDK Python) ou pro SDK TypeScript quando você quiser escalar.
 
 **Tipo:** Construir
 **Linguagens:** Python (stdlib, servidor MCP via stdio)
@@ -11,14 +11,14 @@
 
 - Implementar os métodos `initialize`, `tools/list`, `tools/call`, `resources/list`, `resources/read`, `prompts/list` e `prompts/get`.
 - Escrever um loop de dispatch que lê mensagens JSON-RPC de stdin e escreve respostas em stdout.
-- Emitir respostas de erro estruturadas conforme a especificação JSON-RPC 2.0 e códigos adicionais do MCP.
+- Emitir respostas de erro estruturadas conforme a eespecificaçãoificação JSON-RPC 2.0 e códigos adicionais do MCP.
 - Migrar uma implementação stdlib pro FastMCP (SDK Python) ou pro SDK TypeScript sem reescrever a lógica de ferramentas.
 
 ## O Problema
 
 Antes de usar um transporte remoto (Fase 13 · 09) ou uma camada de auth (Fase 13 · 16), você precisa de um servidor local limpo. Local significa stdio: o servidor é spawnado pelo cliente como processo filho, mensagens fluem via stdin/stdout delimitadas por newline.
 
-A especificação 2025-11-25 prescreve que mensagens stdio são codificadas como objetos JSON com separador `\n` explícito. Sem SSE aqui; SSE era o modo remoto antigo e está sendo removido no meio de 2026 (o servidor Rovo MCP da Atlassian deprecou em 30 de junho de 2026; Keboola em 1º de abril de 2026). Pra stdio, um objeto JSON por linha é o formato de rede completo.
+A eespecificaçãoificação 2025-11-25 prescreve que mensagens stdio são codificadas como objetos JSON com separador `\n` explícito. Sem SSE aqui; SSE era o modo remoto antigo e está sendo removido no meio de 2026 (o servidor Rovo MCP da Atlassian deprecou em 30 de junho de 2026; Keboola em 1º de abril de 2026). Pra stdio, um objeto JSON por linha é o formato de rede completo.
 
 Um servidor de notas é uma boa forma porque exerce todas as três primitivas do servidor. Tools fazem mutações (`notes_create`). Resources expõem dados (`notes://{id}`). Prompts fornecem templates (`review_note`). A forma desta aula se generaliza pra qualquer domínio.
 
@@ -114,7 +114,7 @@ from fastmcp import FastMCP
 app = FastMCP("notes")
 
 @app.tool()
-def notes_search(query: str, limit: int = 10) -> list[dict]:
+def notes_search(consulta: str, limit: int = 10) -> list[dict]:
     ...
 ```
 
@@ -136,7 +136,7 @@ O que conferir:
 
 ## Entregue
 
-Esta aula produz `outputs/skill-mcp-server-scaffolder.md`. Dado um domínio (notas, tickets, arquivos, banco de dados), a skill scaffolds um servidor MCP com a divisão correta de tools / resources / prompts e caminho de migração pro SDK.
+Esta aula produz `outputs/skill-mcp-server-scaffolder.md`. Dado um domínio (notas, tickets, arquivos, banco de dados), a skill scaffolds um servidor MCP com a divisão correta de ferramentas / resources / prompts e caminho de migração pro SDK.
 
 ## Exercícios
 
@@ -148,7 +148,7 @@ Esta aula produz `outputs/skill-mcp-server-scaffolder.md`. Dado um domínio (not
 
 4. Porte o servidor pro FastMCP. O arquivo Python deve encolher pra menos de 80 linhas. O comportamento na rede deve ser idêntico; verifique com o mesmo harness de teste JSON-RPC.
 
-5. Leia a seção `server/tools` da especificação e identifique um campo de definição de ferramenta não implementado no servidor desta aula. (Dica: há vários; escolha um e adicione.)
+5. Leia a seção `server/tools` da eespecificaçãoificação e identifique um campo de definição de ferramenta não implementado no servidor desta aula. (Dica: há vários; escolha um e adicione.)
 
 ## Termos-Chave
 
@@ -171,4 +171,4 @@ Esta aula produz `outputs/skill-mcp-server-scaffolder.md`. Dado um domínio (not
 - [Model Context Protocol — TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) — implementação TS paralela
 - [FastMCP — server framework](https://gofastmcp.com/) — API Python baseada em decorators pra servidores MCP
 - [MCP — Quickstart server guide](https://modelcontextprotocol.io/quickstart/server) — tutorial ponta a ponta usando qualquer SDK
-- [MCP — Server tools spec](https://modelcontextprotocol.io/specification/2025-11-25/server/tools) — referência completa pra mensagens tools/*
+- [MCP — Server ferramentas especificação](https://modelcontextprotocol.io/especificaçãoification/2025-11-25/server/tools) — referência completa pra mensagens tools/*

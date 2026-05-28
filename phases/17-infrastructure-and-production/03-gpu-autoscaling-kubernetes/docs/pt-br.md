@@ -1,6 +1,6 @@
 # Auto-escalabilidade de GPU no Kubernetes — Karpenter, KAI Scheduler, Gang Scheduling
 
-> Três camadas, não uma. O Karpenter provisiona nós dinamicamente (em menos de um minuto, 40% mais rápido que o Cluster Autoscaler). O KAI Scheduler lida com gang scheduling, consciência de topologia e filas hierárquicas — ele evita a armadilha da alocação parcial de 7-de-8, onde sete nós ficam esperando e queimando dinheiro por causa de uma GPU faltando. Auto-escaladores de nível de aplicação (NVIDIA Dynamo Planner, llm-d Workload Variant Autoscaler) escalam em sinais específicos de inferência — profundidade de fila, utilização de KV cache — não em duty-cycle de CPU/DCGM. A armadilha clássica do HPA é que `DCGM_FI_DEV_GPU_UTIL` é uma medição de duty-cycle: 100% pode ser 10 requests ou 100. vLLM pré-aloca memória de KV cache, então memória nunca dispara scale-down. Esta aula te ensina a compor as três camadas e evitar a política padrão do Karpenter `WhenEmptyOrUnderutilized` que termina jobs de GPU rodando no meio de uma inferência.
+> Três camadas, não uma. O Karpenter provisiona nós dinamicamente (em menos de um minuto, 40% mais rápido que o Cluster Autoscaler). O KAI Scheduler lida com gang scheduling, consciência de topologia e filas hierárquicas — ele evita a armadilha da alocação parcial de 7-de-8, onde sete nós ficam esperando e queimando dinheiro por causa de uma GPU faltando. Auto-escaladores de nível de aplicação (NVIDIA Dynamo Planner, llm-d Workload Variant Autoscaler) escalam em sinais eespecificaçãoíficos de inferência — profundidade de fila, utilização de KV cache — não em duty-cycle de CPU/DCGM. A armadilha clássica do HPA é que `DCGM_FI_DEV_GPU_UTIL` é uma medição de duty-cycle: 100% pode ser 10 requests ou 100. vLLM pré-aloca memória de KV cache, então memória nunca dispara scale-down. Esta aula te ensina a compor as três camadas e evitar a política padrão do Karpenter `WhenEmptyOrUnderutilized` que termina jobs de GPU rodando no meio de uma inferência.
 
 **Tipo:** Aprendizado
 **Linguagens:** Python (stdlib, simulador de auto-escalador de profundidade de fila toy)
@@ -52,7 +52,7 @@ O KAI Scheduler (projeto "Karp" depois renomeado) lida com o que o kube-schedule
 
 **Filas hierárquicas** — múltiplas equipes competindo pelo mesmo pool de GPU com prioridade e quota. A prioridade de produção da Equipe A é preemptada pelo job de treinamento da Equipe B apenas se as regras de prioridade permitirem.
 
-KAI é implantado ao lado do kube-scheduler como um scheduler secundário; você anota os workloads para usá-lo. Ray e vLLM production-stack integram os dois.
+KAI é implantado ao lado do kube-scheduler como um agendador secundário; você anota os workloads para usá-lo. Ray e vLLM production-stack integram os dois.
 
 ### Camada 3 — sinais de nível de aplicação
 
@@ -105,7 +105,7 @@ Esta aula produz `outputs/skill-gpu-autoscaler-plan.md`. Dada topologia de clust
 ## Exercícios
 
 1. Execute `code/main.py`. Em um workload bursty, quantos requests o HPA ingênuo por duty-cycle perde que o HPA por profundidade de fila pega? De onde vem a diferença?
-2. Projete um NodePool do Karpenter para um cluster servindo Llama 3.3 70B FP8 em H100 SXM5. Especifique `capacity-type`, `disruption.consolidationPolicy`, `consolidateAfter` e um taint que mantém workloads não-GPU fora desses nós.
+2. Projete um NodePool do Karpenter para um cluster servindo Llama 3.3 70B FP8 em H100 SXM5. Eespecificaçãoifique `capacity-type`, `disruption.consolidationPolicy`, `consolidateAfter` e um taint que mantém workloads não-GPU fora desses nós.
 3. Sua equipe relata que deployments estão presos no Pending porque "GPUs disponíveis mas o pod não agenda." Diagnosticar — é Karpenter, kube-scheduler ou KAI Scheduler? Quais métricas confirmam?
 4. Escolha um sinal para auto-escalar pods de prefill disaggregados e um sinal diferente para pods de decode. Justifique os dois.
 5. Calcule o custo da armadilha de consolidação `WhenEmptyOrUnderutilized` em um serviço de produção 24x7 que média 60 eventos de perda de request/dia com TTFT P99 > 10s.
@@ -116,7 +116,7 @@ Esta aula produz `outputs/skill-gpu-autoscaler-plan.md`. Dada topologia de clust
 |-------|----------------------|--------------------------|
 | Karpenter | "o provisionador de nós" | Auto-escalador de nós do Kubernetes; provisionamento sub-minuto |
 | Cluster Autoscaler | "o escalador antigo" | Predecessor do auto-escalador de nós do Kubernetes; mais lento, baseado em grupo |
-| KAI Scheduler | "o scheduler de GPU" | Scheduler secundário para gang + topologia + filas |
+| KAI Scheduler | "o agendador de GPU" | Scheduler secundário para gang + topologia + filas |
 | Gang scheduling | "all or nothing" | Agendar N pods atomicamente ou adiar todos |
 | Consciência de topologia | "consciente do rack" | Colocar pods baseado em posicionamento NVLink/IB/rack |
 | `DCGM_FI_DEV_GPU_UTIL` | "utilização de GPU" | Métrica de duty-cycle; NÃO é sinal de escala para LLMs |
@@ -128,8 +128,8 @@ Esta aula produz `outputs/skill-gpu-autoscaler-plan.md`. Dada topologia de clust
 ## Leitura Complementar
 
 - [KAI Scheduler GitHub](https://github.com/kai-scheduler/KAI-Scheduler) — docs de design e exemplos de configuração.
-- [Karpenter Disruption Controls](https://karpenter.sh/docs/concepts/disruption/) — semântica da política de consolidação e defaults seguros para GPU.
+- [Karpenter Disruption Controls](https://karpenter.sh/docs/concepts/disruption/) — semântica da política de consolidação e configurações-padrão seguros para GPU.
 - [NVIDIA — Disaggregated LLM Inference on Kubernetes](https://developer.nvidia.com/blog/deploying-disaggregated-llm-inference-workloads-on-kubernetes/) — sinais de escala do Dynamo Planner.
 - [Ray docs — KAI Scheduler for RayClusters](https://docs.ray.io/en/latest/cluster/kubernetes/k8s-ecosystem/kai-scheduler.html) — padrão de integração com Ray.
-- [AWS EKS Compute and Autoscaling Best Practices](https://docs.aws.amazon.com/eks/latest/best-practices/aiml-compute.html) — orientação específica para Kubernetes gerenciado.
+- [AWS EKS Compute and Autoscaling Best Practices](https://docs.aws.amazon.com/eks/latest/best-practices/aiml-compute.html) — orientação eespecificaçãoífica para Kubernetes gerenciado.
 - [llm-d GitHub](https://github.com/llm-d/llm-d) — design do Workload Variant Autoscaler.

@@ -16,7 +16,7 @@
 
 ## O Problema
 
-Frameworks regulatórios (Lição 24) e políticas de segurança de laboratório (Lição 18) ambos requerem documentação. Formatos de documentação evoluíram de específicos de modelo (model cards) para específicos de dataset (datasheets) para específicos de sistema (system cards). Cada um aborda um escopo diferente de transparência. O trabalho de automação e atestações verificáveis de 2024-2025 endereça o problema histórico de adoção.
+Frameworks regulatórios (Lição 24) e políticas de segurança de laboratório (Lição 18) ambos requerem documentação. Formatos de documentação evoluíram de eespecificaçãoíficos de modelo (model cards) para eespecificaçãoíficos de dataset (datasheets) para eespecificaçãoíficos de sistema (system cards). Cada um aborda um escopo diferente de transparência. O trabalho de automação e atestações verificáveis de 2024-2025 endereça o problema histórico de adoção.
 
 ## O Conceito
 
@@ -51,9 +51,9 @@ Publicado em CACM 2021. O datasheet é a documentação upstream; o model card d
 ### Data Cards (Pushkarna et al., Google 2022)
 
 Detalhe modular em camadas. Três níveis de zoom:
-- **Telescópico.** Resumo de alto nível para não especialistas.
+- **Telescópico.** Resumo de alto nível para não eespecificaçãoialistas.
 - **Periscópico.** Visão geral intermediária para praticantes de ML.
-- **Microscópico.** Documentação detalhada em nível de feature para auditores.
+- **Microscópico.** Documentação detalhada em nível de funcionalidade para auditores.
 
 Enquadramento de objeto limite: leitores diferentes extraem informação diferente do mesmo documento.
 
@@ -66,7 +66,7 @@ Escopo: sistema de IA de ponta a ponta incluindo modelo + stack de segurança + 
 - Alinhamento com valores humanos declarados.
 - Resposta a incidentes.
 
-Sidhpurwala 2024 e trabalho de transparência em nível de sistema da Meta. "Blueprints of Trust" (arXiv:2509.20394) formaliza o System Card como complemento em camada de deploy dos Model Cards.
+Sidhpurwala 2024 e trabalho de transparência em nível de sistema da Meta. "Blueprints of Trust" (arXiv:2509.20394) formaliza o System Card como complemento em camada de implantação dos Model Cards.
 
 ### Desenvolvimentos 2024-2025
 
@@ -82,7 +82,7 @@ Lições 24-25 são camadas regulatória e CVE. Lição 26 é a camada de docume
 
 ## Use
 
-`code/main.py` gera um model card mínimo, um datasheet e um system card para um deploy fictício. Cada um segue a estrutura canônica de seções. Você pode inspecionar o formato e comparar os três escopos.
+`code/main.py` gera um model card mínimo, um datasheet e um system card para um implantação fictício. Cada um segue a estrutura canônica de seções. Você pode inespecificaçãoionar o formato e comparar os três escopos.
 
 ## Entregue
 
@@ -90,15 +90,15 @@ Esta lição produz `outputs/skill-card-audit.md`. Dado um model card, datasheet
 
 ## Exercícios
 
-1. Execute `code/main.py`. Inspecione os cards gerados. Identifique seções fracas (apenas placeholder) e especifique que evidência as fortaleceria.
+1. Execute `code/main.py`. Inespecificaçãoione os cards gerados. Identifique seções fracas (apenas placeholder) e eespecificaçãoifique que evidência as fortaleceria.
 
 2. Estenda o model card com uma análise quantitativa desagregada entre dois grupos demográficos (Lição 20).
 
-3. Leia Oreamuno et al. 2023 sobre a taxa de adoção de 0,3%. Proponha uma mudança estrutural na especificação do model card que aumentaria a adoção de considerações éticas.
+3. Leia Oreamuno et al. 2023 sobre a taxa de adoção de 0,3%. Proponha uma mudança estrutural na eespecificaçãoificação do model card que aumentaria a adoção de considerações éticas.
 
 4. O Laminator (Duddu et al. 2024) usa TEEs para atestações verificáveis. Projete um campo de model card que carregue uma atestação criptográfica de um resultado de avaliação e descreva o papel do verificador.
 
-5. Escreva um System Card (System Card, não Model Card) para um dos seus projetos passados ou um deploy hipotético. Identifique a seção de maior valor para auditores de terceiros.
+5. Escreva um System Card (System Card, não Model Card) para um dos seus projetos passados ou um implantação hipotético. Identifique a seção de maior valor para auditores de terceiros.
 
 ## Termos-Chave
 

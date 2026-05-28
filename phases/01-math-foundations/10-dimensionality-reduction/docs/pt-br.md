@@ -357,7 +357,7 @@ Esta lição produz:
 | PCA | "Reduzir dimensões" | Rotacionar seu sistema de coordenadas para que os eixos se alinhem com as direções de máxima variância, depois descartar os eixos de baixa variância. |
 | Componente principal | "Uma direção importante" | Um autovetor da matriz de covariância. A direção no espaço de features ao longo da qual os dados mais variam. |
 | Razão de variância explicada | "Quanta info essa componente tem" | A fração da variância total capturada por uma componente principal. Some as top k razões pra ver quanto k componentes preservam. |
-| Matriz de covariância | "Como as features se correlacionam" | Uma matriz simétrica onde a entrada (i,j) mede como a feature i e a feature j se movem juntas. As entradas diagonais são as variâncias individuais. |
+| Matriz de covariância | "Como as features se correlacionam" | Uma matriz simétrica onde a entrada (i,j) mede como a funcionalidade i e a funcionalidade j se movem juntas. As entradas diagonais são as variâncias individuais. |
 | t-SNE | "Aquele gráfico de clusters" | Um método não-linear que mapeia dados de alta dimensão para 2D preservando probabilidades de vizinhança pareadas. Bom para visualização, não para pré-processamento. |
 | UMAP | "t-SNE mais rápido" | Um método não-linear baseado em análise de dados topológicos. Preserva tanto local quanto alguma estrutura global. Escala melhor que o t-SNE. |
 | Perplexidade | "Um botão do t-SNE" | Controla o número efetivo de vizinhos que cada ponto considera. Perplexidade baixa foca em estrutura muito local. Perplexidade alta captura padrões mais amplos. |

@@ -3,7 +3,7 @@
 > A Fase 13 ensinou cada peça. Esse capstone conecta todas num sistema com cara de produção: um servidor MCP com ferramentas + recursos + prompts + tasks + UI, OAuth 2.1 na borda, um gateway RBAC, um cliente multi-servidor, uma chamada de sub-agente A2A, rastreamento OTel pra um coletor, detecção de tool-poisoning em CI e um bundle AGENTS.md + SKILL.md. No fim você consegue defender cada escolha de arquitetura.
 
 **Tipo:** Construir
-**Linguagens:** Python (stdlib, harness end-to-end de ecossistema)
+**Linguagens:** Python (stdlib, harness de ponta a ponta de ecossistema)
 **Pré-requisitos:** Fase 13 · 01 até 21
 **Tempo:** ~120 minutos
 
@@ -11,7 +11,7 @@
 
 - Componha um servidor MCP expondo ferramentas, recursos, prompts e uma task com um app `ui://`.
 - Coloque o servidor atrás de um gateway OAuth 2.1 que impõe RBAC e hashes ancorados.
-- Escreva um cliente multi-servidor que rastreia com atributos OTel GenAI end-to-end.
+- Escreva um cliente multi-servidor que rastreia com atributos OTel GenAI de ponta a ponta.
 - Delegue parte do workload pra um sub-agente A2A; verifique que a opacidade é preservada.
 - Empacote a stack inteira com AGENTS.md + SKILL.md pra que outros agentes possam dirigir.
 
@@ -19,8 +19,8 @@
 
 Disponibilize o sistema "pesquisa e relatório":
 
-- Usuário pergunta: "summarize the three most-cited 2026 arXiv papers on agent protocols."
-- Sistema: pesquise arXiv via MCP; delegue resumo de papers pra um agente escritor especializado via A2A; agregue resultados; renderize um relatório interativo como recurso MCP Apps `ui://`; registre cada passo no OTel.
+- Usuário pergunta: "summarize the three most-cited 2026 arXiv papers on agente protocols."
+- Sistema: pesquise arXiv via MCP; delegue resumo de papers pra um agente escritor eespecificaçãoializado via A2A; agregue resultados; renderize um relatório interativo como recurso MCP Apps `ui://`; registre cada passo no OTel.
 
 Todas as primitivas da Fase 13 aparecem. Isso não é um brinquedo — sistemas de assistente de pesquisa em produção lançados em 2026 pela Anthropic (o produto Claude Research), OpenAI (GPTs com Apps SDK) e terceiros têm exatamente essa forma.
 
@@ -108,7 +108,7 @@ Usuários deployam com `docker compose up`. Usuários do Claude Code, Cursor, Co
 
 ## Usar
 
-`code/main.py` costura os padrões das lições anteriores num demo rodável. Tudo stdlib, tudo em-processo pra que você leia end-to-end. Rode o fluxo completo pro cenário de pesquisa-e-relatório: handshake com gateway, OAuth 2.1 simulado, tools/list mesclado, generate_report como task, chamada A2A pro writer, recurso ui:// retornado, spans OTel emitidos.
+`code/main.py` costura os padrões das lições anteriores num demo rodável. Tudo stdlib, tudo em-processo pra que você leia de ponta a ponta. Rode o fluxo completo pro cenário de pesquisa-e-relatório: handshake com gateway, OAuth 2.1 simulado, tools/list mesclado, generate_report como task, chamada A2A pro writer, recurso ui:// retornado, spans OTel emitidos.
 
 O que observar:
 
@@ -138,7 +138,7 @@ Essa lição produz `outputs/skill-ecosystem-blueprint.md`. Dada uma necessidade
 
 | Termo | O que as pessoas dizem | O que significa de verdade |
 |------|----------------|------------------------|
-| Capstone | "Demo de integração da Fase 13" | Sistema end-to-end usando cada primitiva |
+| Capstone | "Demo de integração da Fase 13" | Sistema de ponta a ponta usando cada primitiva |
 | Pesquisa e relatório | "O cenário" | Padrão de pesquisar, resumir, renderizar |
 | Ecossistema | "Todas as peças juntas" | Servidor + cliente + gateway + sub-agente + telemetria + pacote |
 | Hierarquia de trace | "Trace id único" | Cada hop compartilha o trace; pai-filho via IDs de span |
@@ -147,12 +147,12 @@ Essa lição produz `outputs/skill-ecosystem-blueprint.md`. Dada uma necessidade
 | Fronteira de opacidade | "Chamada A2A esconde internos" | Raciocínio do sub-agente invisível pro orquestrador |
 | Stack de três camadas | "AGENTS.md + SKILL.md + MCP" | Contexto do projeto + workflow + ferramentas |
 | Defesa em profundidade | "Múltiplas camadas de segurança" | Hashes ancorados, OAuth, RBAC, Regra de Dois, log de auditoria |
-| Matriz de conformidade com spec | "O que disponibilizamos que a spec exige" | Checklist mapeando entregáveis pra requisitos 2025-11-25 |
+| Matriz de conformidade com especificação | "O que disponibilizamos que a eespecificaçãoificação exige" | Checklist mapeando entregáveis pra requisitos 2025-11-25 |
 
 ## Leitura Complementar
 
-- [MCP — Specification 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25) — referência consolidada
+- [MCP — Specification 2025-11-25](https://modelcontextprotocol.io/especificaçãoification/2025-11-25) — referência consolidada
 - [MCP blog — 2026 roadmap](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/) — pra onde o protocolo vai
 - [a2a-protocol.org](https://a2a-protocol.org/latest/) — referência A2A v1.0
-- [OpenTelemetry — GenAI semconv](https://opentelemetry.io/docs/specs/semconv/gen-ai/) — convenções canônicas de rastreamento
+- [OpenTelemetry — GenAI semconv](https://opentelemetry.io/docs/especificaçãos/semconv/gen-ai/) — convenções canônicas de rastreamento
 - [Anthropic — Claude Agent SDK overview](https://code.claude.com/docs/en/agent-sdk/overview) — padrões de runtime de agente em produção

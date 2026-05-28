@@ -36,7 +36,7 @@ Qualidade do tokenizer é o teto. A contribuição do Emu3 em parte é "nós tre
 
 ### Treinamento com loss única
 
-Emu3 usa um objetivo: previsão de próximo token em um vocabulário compartilhado entre tokens de texto, tokens de imagem 2D e tokens de vídeo 3D. Os pesos são multiplicados por fatores específicos por modalidade durante o treinamento pra equilibrar a contribuição, mas a loss é idêntica.
+Emu3 usa um objetivo: previsão de próximo token em um vocabulário compartilhado entre tokens de texto, tokens de imagem 2D e tokens de vídeo 3D. Os pesos são multiplicados por fatores eespecificaçãoíficos por modalidade durante o treinamento pra equilibrar a contribuição, mas a loss é idêntica.
 
 Treina em um mix de:
 - Geração de imagem: `<text caption> <image> image_tokens </image>`
@@ -61,7 +61,7 @@ Emu3 vem como três APIs funcionalmente distintas mas com um mesmo conjunto de p
 - Emu3-Chat. VQA e legendagem. Entrada imagem (tokens), saída texto.
 - Emu3-Stage2. Geração de vídeo e VQA de vídeo. Entrada texto ou vídeo, saída texto ou vídeo.
 
-Sem cabeças específicas por tarefa. Só templates de prompt diferentes. Mesmo checkpoint.
+Sem cabeças eespecificaçãoíficas por tarefa. Só templates de prompt diferentes. Mesmo checkpoint.
 
 ### Benchmarks
 
@@ -77,7 +77,7 @@ Os números nem sempre estão ganhando — Emu3 troca um ponto aqui por outro al
 
 Emu3 foi treinado com ~300 bilhões de tokens multimodais com um modelo de 7B de parâmetros. GPU-hours mais ou menos comparáveis ao pré-treinamento do Llama-2-7B (2k-4k GPU-years em silício classe A100). Modelos de difusão como Stable Diffusion 3 treinam em orçamentos similares, mas precisam de encoders de texto separados e pipelines mais complexos.
 
-Na inferência, Emu3 é mais lento que SDXL por imagem: 4096 tokens de imagem a 30 tok/s é ~2 minutos por imagem 512x512, vs 2-5 segundos pro SDXL. Decodificação especulativa e otimização de KV-cache reduzem a差距 mas não fecham. Geração de imagem autoregressiva é pesada em compute; esse é o trade-off permanente.
+Na inferência, Emu3 é mais lento que SDXL por imagem: 4096 tokens de imagem a 30 tok/s é ~2 minutos por imagem 512x512, vs 2-5 segundos pro SDXL. Decodificação eespecificaçãoulativa e otimização de KV-cache reduzem a差距 mas não fecham. Geração de imagem autoregressiva é pesada em compute; esse é o trade-off permanente.
 
 ### Por que importa
 
@@ -96,7 +96,7 @@ A implementação de CFG segue a receita do Emu3 — mistura logits condicionais
 
 ## Implemente
 
-Esta aula produz `outputs/skill-token-gen-cost-analyzer.md`. Dada uma spec de produto de geração (imagem ou vídeo, resolução alvo, tier de qualidade, orçamento de latência), calcula contagens de tokens, custo de inferência e escolhe família Emu3 vs difusão.
+Esta aula produz `outputs/skill-token-gen-cost-analyzer.md`. Dada uma eespecificaçãoificação de produto de geração (imagem ou vídeo, resolução alvo, tier de qualidade, orçamento de latência), calcula contagens de tokens, custo de inferência e escolhe família Emu3 vs difusão.
 
 ## Exercícios
 
@@ -108,7 +108,7 @@ Esta aula produz `outputs/skill-token-gen-cost-analyzer.md`. Dada uma spec de pr
 
 4. Calcule FLOPs de treinamento pro Emu3-7B com 300B tokens e compare com Stable Diffusion 3. Qual foi mais caro de treinar?
 
-5. Emu3 supera SDXL no FID mas não no VQAv2 vs VLMs especializados. Explique por que a abordagem de loss unificada mostra forças diferentes vs especialistas em benchmarks diferentes.
+5. Emu3 supera SDXL no FID mas não no VQAv2 vs VLMs eespecificaçãoializados. Explique por que a abordagem de loss unificada mostra forças diferentes vs eespecificaçãoialistas em benchmarks diferentes.
 
 ## Termos-Chave
 

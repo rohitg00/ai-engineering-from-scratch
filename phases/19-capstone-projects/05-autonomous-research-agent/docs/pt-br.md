@@ -10,17 +10,17 @@
 
 ## Problema
 
-Agents de pesquisa autônomos cruzaram um limiar em 2026. AI-Scientist-v2 da Sakana AI foi publicado na Nature com papers gerados que passaram em peer review de workshop. ShinkaEvolve (ICLR 2026) estendeu a linha para evoluir hipóteses. Agent Laboratory da AMD lançou traces reproduzíveis. Os agents não são magia — são um loop planejar-executar-verificar rodando sobre uma árvore de experimentos candidatos, com limites de custo, sandboxes com semente fixada e revisão automatizada. O ofício está no loop, no orçamento e na história de segurança.
+Agents de pesquisa autônomos cruzaram um limiar em 2026. AI-Scientist-v2 da Sakana AI foi publicado na Nature com papers gerados que passaram em peer review de workshop. ShinkaEvolve (ICLR 2026) estendeu a linha para evoluir hipóteses. Agent Laboratory da AMD lançou traces reproduzíveis. Os agentes não são magia — são um loop planejar-executar-verificar rodando sobre uma árvore de experimentos candidatos, com limites de custo, sandboxes com semente fixada e revisão automatizada. O ofício está no loop, no orçamento e na história de segurança.
 
-Você aprende o loop implementando um contra uma ideia semente em um domínio restrito (por exemplo, ablações de sparsity em attention num transformer de 100M de parâmetros). O valor não está em descobrir algo novo na primeira execução. O valor está na infraestrutura: a busca em árvore, o sandbox de experimentos, o loop escritor-revisor, o relatório do red team. A equipe da Sakana documentou falhas de escape de sandbox; seu agent deve passar no mesmo red team.
+Você aprende o loop implementando um contra uma ideia semente em um domínio restrito (por exemplo, ablações de sparsity em attention num transformer de 100M de parâmetros). O valor não está em descobrir algo novo na primeira execução. O valor está na infraestrutura: a busca em árvore, o sandbox de experimentos, o loop escritor-revisor, o relatório do red team. A equipe da Sakana documentou falhas de escape de sandbox; seu agente deve passar no mesmo red team.
 
 ## Conceito
 
-O agent é uma busca best-first em árvore. Nós são especificações de experimento: (hipótese, config, código, resultado esperado). Um passo de expansão propõe filhos com edições pequenas (trocar otimizador, alterar batch size, ablar um componente). Cada filho roda em um sandbox novo com um limite rígido de recursos. Resultados são alimentados de volta em uma função de pontuação que ranqueia nós por (novidade × qualidade × orçamento restante). A árvore cresce até o orçamento se esgotar, depois a melhor ramificação é escrita.
+O agente é uma busca best-first em árvore. Nós são eespecificaçãoificações de experimento: (hipótese, config, código, resultado esperado). Um passo de expansão propõe filhos com edições pequenas (trocar otimizador, alterar batch size, ablar um componente). Cada filho roda em um sandbox novo com um limite rígido de recursos. Resultados são alimentados de volta em uma função de pontuação que ranqueia nós por (novidade × qualidade × orçamento restante). A árvore cresce até o orçamento se esgotar, depois a melhor ramificação é escrita.
 
 O escritor é multimodal. Gera um rascunho LaTeX, compila, renderiza figuras e alimenta o PDF renderizado de volta para o modo visão do Claude Opus 4.7 para crítica sobre layout, legibilidade de figuras e alinhamento afirmação-evidência. Um conjunto de cinco revisores LLMs emite pontuações estilo NeurIPS (novidade, rigor, clareza, reprodutibilidade, impacto); se a média cair abaixo do limite, o paper volta para o escritor com crítica.
 
-Segurança é sustentável. Cada experimento roda num sandbox E2B ou Daytona sem saída de rede, com relógio de parede limitado e limites de recursos fixados. O passo de geração de código do agent passa por uma camada de política que bloqueia syscalls que escapam do sandbox. O relatório do red team reproduz a superfície de ataque documentada pela Sakana (fork bombs, escapes de filesystem, chamadas de rede escritas por LLM).
+Segurança é sustentável. Cada experimento roda num sandbox E2B ou Daytona sem saída de rede, com relógio de parede limitado e limites de recursos fixados. O passo de geração de código do agente passa por uma camada de política que bloqueia syscalls que escapam do sandbox. O relatório do red team reproduz a superfície de ataque documentada pela Sakana (fork bombs, escapes de filesystem, chamadas de rede escritas por LLM).
 
 ## Arquitetura
 
@@ -62,7 +62,7 @@ ideia semente + domínio
 
 - Orquestração: LangGraph com checkpointing e portões de aprovação humana
 - Busca em árvore: best-first customizado sobre nós de experimento (estilo AB-MCTS da Sakana v2)
-- Sandbox: E2B por experimento, fallback Docker-in-Docker; limites de recursos via cgroups
+- Sandbox: E2B por experimento, reserva Docker-in-Docker; limites de recursos via cgroups
 - Literatura: Graph API do Semantic Scholar + OpenAlex + cache local FAISS de resumos
 - Escritor: template LaTeX + Claude Opus 4.7 (modo visão) para crítica de figuras e layout
 - Revisor: conjunto de 5 juízes (Opus 4.7, GPT-5.4, Gemini 3 Pro, DeepSeek R1, Qwen3-Max) com agregação ponderada
@@ -127,7 +127,7 @@ $ ai-scientist run --seed "sparsity em attention de transformers sub-1B" --budge
 
 3. Troque o conjunto de revisores por um único juiz. Meça a taxa de falso-aceite em um conjunto retido de papers sabidamente ruins.
 
-4. Introduza um teste adversarial de exfiltração de rede: agent escreve código que tenta fazer `curl` para um endereço externo. Confirme que a política `--network=none` bloqueia. Registre a tentativa.
+4. Introduza um teste adversarial de exfiltração de rede: agente escreve código que tenta fazer `curl` para um endereço externo. Confirme que a política `--network=none` bloqueia. Registre a tentativa.
 
 5. Compare sua busca em árvore com uma baseline aleatória flat (mesmo orçamento, sem estratégia de expansão). Relate o ganho de novidade × qualidade.
 
@@ -145,7 +145,7 @@ $ ai-scientist run --seed "sparsity em attention de transformers sub-1B" --budge
 
 ## Leitura Complementar
 
-- [Repositório AI-Scientist-v2 da Sakana](https://github.com/SakanaAI/AI-Scientist-v2) — o agent de pesquisa de referência em produção
+- [Repositório AI-Scientist-v2 da Sakana](https://github.com/SakanaAI/AI-Scientist-v2) — o agente de pesquisa de referência em produção
 - [Paper AI-Scientist-v1 da Sakana (arXiv:2408.06292)](https://arxiv.org/abs/2408.06292) — a metodologia original
 - [ShinkaEvolve (Sakana ICLR 2026)](https://sakana.ai) — extensão evolutiva
 - [Agent Laboratory (AMD)](https://github.com/SamuelSchmidgall/AgentLaboratory) — framework de laboratório de pesquisa multi-papel

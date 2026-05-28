@@ -81,7 +81,7 @@ Esta lição produz `outputs/skill-provenance-check.md`. Dado um dataset usado n
 
 ## Exercícios
 
-1. Execute `code/main.py`. Produza um resumo de 12 campos para um dataset fictício e identifique quais campos estão sub-especificados.
+1. Execute `code/main.py`. Produza um resumo de 12 campos para um dataset fictício e identifique quais campos estão sub-eespecificaçãoificados.
 
 2. A exceção TDM da Diretiva de Direitos Autorais da UE é legível por máquina. Proponha um formato padrão para o sinal de opt-out e compare-o com robots.txt e C2PA "No AI Training."
 
@@ -100,7 +100,7 @@ Esta lição produz `outputs/skill-provenance-check.md`. Dado um dataset usado n
 | Interesse legítimo | "a base da UE" | Base do GDPR Artigo 6 que pode justificar treino em conteúdo público |
 | Sinal de opt-out | "não-treinar legível por máquina" | robots.txt, C2PA "No AI Training," TDM.Reservation |
 | Irreversibilidade | "não dá para des-treinar" | Dados nos pesos do modelo não são removíveis cirurgicamente |
-| Desaprendizado | "remoção aproximada" | Intervenções pós-treino para reduzir dependência do modelo em dados específicos |
+| Desaprendizado | "remoção aproximada" | Intervenções pós-treino para reduzir dependência do modelo em dados eespecificaçãoíficos |
 | Consent in Crisis | "a auditoria DPI" | Achado de julho 2024 de restrições robots.txt aceleradas |
 
 ## Leitura Complementar

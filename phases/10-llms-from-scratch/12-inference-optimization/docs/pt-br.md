@@ -1,6 +1,6 @@
 # Otimizacao de Inferencia
 
-> Duas fases definem inferencia de LLM. Prefill processa seu prompt em paralelo -- limitado por compute. Decode gera tokens um por vez -- limitado por memoria. Toda otimizacao ataca uma ou ambas.
+> Duas fases definem inferencia de LLM. Prefill processa seu prompt em paralelo -- limitado por processamento. Decode gera tokens um por vez -- limitado por memoria. Toda otimizacao ataca uma ou ambas.
 
 **Tipo:** Construir
 **Linguagens:** Python
@@ -10,9 +10,9 @@
 ## Objetivos de Aprendizado
 
 - Implementar KV-cache pra eliminar computacao redundante durante geracao autoregressiva de tokens
-- Explicar as fases de prefill vs decode de inferencia de LLM e por que cada uma tem gargalos diferentes (limitado por compute vs limitado por memoria)
+- Explicar as fases de prefill vs decode de inferencia de LLM e por que cada uma tem gargalos diferentes (limitado por processamento vs limitado por memoria)
 - Implementar conceitos de continuous batching e PagedAttention pra maximizar utilizacao de GPU sob requisicoes concorrentes
-- Comparar tecnicas de otimizacao de inferencia (KV-cache, speculative decoding, flash attention) e seus tradeoffs de throughput/latencia
+- Comparar tecnicas de otimizacao de inferencia (KV-cache, especificaçãoulative decoding, flash attention) e seus tradeoffs de throughput/latencia
 
 ## O Problema
 
@@ -20,7 +20,7 @@ Voce deploya Llama 3 70B em 4xA100 GPUs. Um usuario unico ganha ~50 tokens por s
 
 O modelo em si nao muda entre 1 usuario e 100 usuarios. Mesmos pesos, mesma arquitetura, mesma matematica. O que muda e como voce agenda o trabalho. Inferencia ingenua desperdicia 90%+ do compute disponivel de GPU. Um usuario esperando pelo token 47 segura um slot de batch inteiro aberto enquanto o barramento de memoria da GPU fica ocioso entre matmuls. Enquanto isso, o prompt de 2.000 tokens de um novo usuario poderia preencher esse tempo morto com compute util.
 
-Isso nao e um problema de scaling. E um problema de escalonamento. As tecnicas nessa aula -- KV caching, continuous batching, PagedAttention, speculative decoding, prefix caching -- sao o que separa uma conta de inferencia de $25k/mes de uma de $5k/mes servindo o mesmo trafego.
+Isso nao e um problema de scaling. E um problema de escalonamento. As tecnicas nessa aula -- KV caching, continuous batching, PagedAttention, especificaçãoulative decoding, prefix caching -- sao o que separa uma conta de inferencia de $25k/mes de uma de $5k/mes servindo o mesmo trafego.
 
 vLLM servindo Llama 3 70B em 4xA100-80GB alcança ~50 tokens/segundo/usuario em baixa concorrencia, e sustenta 15-25 TPS/usuario em 100 requisicoes concorrentes via continuous batching e PagedAttention. Sem essas otimizacoes, o mesmo hardware serve 5 TPS/usuario nessa concorrencia. Mesmas GPUs, mesmo modelo, 4x o throughput.
 
@@ -36,7 +36,7 @@ Toda requisicao de inferencia de LLM tem duas fases distintas.
 
 ```mermaid
 graph LR
-    subgraph "Prefill (limitado por compute)"
+    subgraph "Prefill (limitado por processamento)"
         P1["Todos os tokens do prompt"] --> P2["Atencao paralela"]
         P2 --> P3["Utilizacao total de matmul"]
     end
@@ -55,13 +55,13 @@ A **razao ops:byte** (tambem chamada intensidade aritmetica) captura esse tradeo
 razao ops:byte = FLOPs por token / bytes lidos da memoria
 ```
 
-Durante prefill com um lote de 4.096 tokens, voce faz ~4.096 operacoes multiply-accumulate por peso carregado. A razao e alta -- voce e limitado por compute. Durante decode com batch size 1, voce faz ~1 operacao por peso carregado. A razao e baixa -- voce e limitado por memoria.
+Durante prefill com um lote de 4.096 tokens, voce faz ~4.096 operacoes multiply-accumulate por peso carregado. A razao e alta -- voce e limitado por processamento. Durante decode com batch size 1, voce faz ~1 operacao por peso carregado. A razao e baixa -- voce e limitado por memoria.
 
 A percepcao fundamental: *decode e limitado por memoria porque voce le o modelo inteiro pra produzir um unico token*. Toda otimizacao abaixo ou reduz o que voce le, aumenta o lote de tokens processados por leitura, ou evita leituras completamente.
 
 ### KV Cache
 
-Durante atencao, a query de cada token atende os vetores key e value de todos os tokens anteriores. Sem caching, gerar o token N requer recomputar as projecoes de key e value pra todos os N-1 tokens anteriores. Token 1 e projetado quando gerando token 2, depois de novo pro token 3, depois de novo pro token 4. No token 1.000, voce projetou o token 1 um total de 999 vezes.
+Durante atencao, a consulta de cada token atende os vetores key e value de todos os tokens anteriores. Sem caching, gerar o token N requer recomputar as projecoes de key e value pra todos os N-1 tokens anteriores. Token 1 e projetado quando gerando token 2, depois de novo pro token 3, depois de novo pro token 4. No token 1.000, voce projetou o token 1 um total de 999 vezes.
 
 O KV cache armazena as projecoes de key e value de todos os tokens anteriores. Quando gerando o token N, voce so computa key e value pro token N, depois concatena com os K/V cacheados dos tokens 1 a N-1.
 
@@ -156,7 +156,7 @@ vLLM reporta desperdicio de memoria proximo de zero (~4% vs ~60-80% em alocacao 
 
 Decode e lento porque e sequencial -- voce gera um token, alimenta de volta, gera o proximo. Mas e se voce pudesse adivinhar os proximos 5 tokens barato, e depois verifica-los todos de uma vez?
 
-Speculative decoding usa um modelo rascunho **rapido e pequeno** pra gerar K tokens candidatos. O **modelo alvo** grande entao processa todos os K candidatos num unico forward pass (que parece um prefill -- paralelo, limitado por compute, eficiente). Se o modelo alvo concorda com as previsoes do modelo rascunho, voce aceita todos os K tokens no tempo de um forward pass do alvo. Se discorda na posicao j, voce aceita tokens 1 a j-1 e descarta o resto.
+Speculative decoding usa um modelo rascunho **rapido e pequeno** pra gerar K tokens candidatos. O **modelo alvo** grande entao processa todos os K candidatos num unico forward pass (que parece um prefill -- paralelo, limitado por processamento, eficiente). Se o modelo alvo concorda com as previsoes do modelo rascunho, voce aceita todos os K tokens no tempo de um forward pass do alvo. Se discorda na posicao j, voce aceita tokens 1 a j-1 e descarta o resto.
 
 ```mermaid
 graph LR
@@ -169,7 +169,7 @@ graph LR
 
 A aceleracao depende da **taxa de aceitacao** -- com que frequencia as previsoes do modelo rascunho correspondem ao alvo. Pra um Llama 3 8B rascunhando pro Llama 3 70B, taxas de aceitacao de 70-85% sao tipicas em linguagem natural. Isso se traduz em 2-3x de aceleracao no decode.
 
-Tres abordagens pra speculative decoding:
+Tres abordagens pra especificaçãoulative decoding:
 
 | Metodo | Fonte do rascunho | Taxa de aceitacao | Overhead |
 |--------|-------------|-----------------|----------|
@@ -179,7 +179,7 @@ Tres abordagens pra speculative decoding:
 
 **EAGLE** treina uma cabeca autoregressiva leve em cima dos estados ocultos do proprio modelo alvo. Ele prevê a embedding do proximo token usando as features da penultima camada do modelo alvo. Porque opera nas representacoes do proprio modelo alvo (nao de um modelo separado), ele alcança taxas de aceitacao maiores com memoria extra minima. EAGLE-2 adiciona uma arvore de rascunho dinamica que ajusta o numero de candidatos baseado no contexto.
 
-**Speculative decoding por N-gram** mantem uma tabela de continuacoes de n-gram do contexto atual ou de um corpus pre-construido. Se o rascunho corresponde ao que apareceu antes na mesma conversa (padroes repetitivos, codigo, saidas estruturadas), ele dispara sem overhead de rede neural. Taxas de aceitacao sao mais baixas em media mas o custo por especulacao e praticamente zero.
+**Speculative decoding por N-gram** mantem uma tabela de continuacoes de n-gram do contexto atual ou de um corpus pre-construido. Se o rascunho corresponde ao que apareceu antes na mesma conversa (padroes repetitivos, codigo, saidas estruturadas), ele dispara sem overhead de rede neural. Taxas de aceitacao sao mais baixas em media mas o custo por eespecificaçãoulacao e praticamente zero.
 
 Speculative decoding e *matematicamente exato* -- a distribuicao de saida e identica a distribuicao do modelo alvo. Nao e uma aproximacao. O passo de verificacao garante que cada token aceito tem exatamente a probabilidade que o modelo alvo teria atribuido.
 
@@ -207,7 +207,7 @@ Tres engines dominam servico de LLM em producao:
 
 **SGLang** constrói sobre as mesmas bases que o vLLM mas adiciona RadixAttention pra prefix caching e uma linguagem de dominio pra programas LLM estruturados. Se seu workload envolve conversas multi-turno, uso de ferramentas ou decodificacao restrita (saida JSON, geracao guiada por regex), SGLang frequentemente supera vLLM em 2-5x via reuso de prefixo.
 
-**TensorRT-LLM** compila modelos em kernels otimizados de GPU NVIDIA. Ele fusao operacoes (atencao + linear + ativacao num unico kernel), usa FP8 em GPUs H100 e integra com o NVIDIA Triton Inference Server pra deploy em producao. Ele alcança o maior throughput single-GPU em hardware NVIDIA mas exige mais configuracao e so funciona em GPUs NVIDIA.
+**TensorRT-LLM** compila modelos em kernels otimizados de GPU NVIDIA. Ele fusao operacoes (atencao + linear + ativacao num unico kernel), usa FP8 em GPUs H100 e integra com o NVIDIA Triton Inference Server pra implantação em producao. Ele alcança o maior throughput single-GPU em hardware NVIDIA mas exige mais configuracao e so funciona em GPUs NVIDIA.
 
 Numeros reais pro Llama 3 70B (4xA100-80GB, BF16):
 
@@ -220,7 +220,7 @@ Numeros reais pro Llama 3 70B (4xA100-80GB, BF16):
 
 ### O Framework Ops:Byte
 
-Voce nao pode otimizar o que nao mede. A razao ops:byte te diz se voce e limitado por compute ou memoria, o que determina quais otimizacoes importam.
+Voce nao pode otimizar o que nao mede. A razao ops:byte te diz se voce e limitado por processamento ou memoria, o que determina quais otimizacoes importam.
 
 ```
 Teto de compute: FLOPS pico da GPU
@@ -239,7 +239,7 @@ Quando ops:byte e alto (prefill, lotes grandes), voce bate no teto de compute. O
 | Decode, batch=256 | ~256 | Transicao | Ambos importam |
 | Decode, batch=1024 | ~1.024 | Compute | Fusao de kernel, tensor parallelism |
 
-O ponto de cruzamento no A100 e em torno de ops:byte = 156 (312 TFLOPS / 2 TB/s). Abaixo de 156, voce e limitado por memoria. Acima de 156, voce e limitado por compute. Continuous batching empurra decode pra esse cruzamento empacotando mais tokens por iteracao.
+O ponto de cruzamento no A100 e em torno de ops:byte = 156 (312 TFLOPS / 2 TB/s). Abaixo de 156, voce e limitado por memoria. Acima de 156, voce e limitado por processamento. Continuous batching empurra decode pra esse cruzamento empacotando mais tokens por iteracao.
 
 ## Construir
 
@@ -292,9 +292,9 @@ class KVCache:
 Uma atencao multi-head simplificada que usa o KV cache pra passos de decode.
 
 ```python
-def scaled_dot_product_attention(query, keys, values):
-    head_dim = query.shape[-1]
-    scores = np.matmul(query, keys.transpose(0, 1, 3, 2)) / np.sqrt(head_dim)
+def scaled_dot_product_attention(consulta, keys, values):
+    head_dim = consulta.shape[-1]
+    scores = np.matmul(consulta, keys.transpose(0, 1, 3, 2)) / np.sqrt(head_dim)
     seq_len_q = scores.shape[-2]
     seq_len_k = scores.shape[-1]
     if seq_len_q > 1:
@@ -503,7 +503,7 @@ class PrefixCache:
 
 ### Etapa 5: Simulador de Speculative Decoding
 
-Simulamos draft-target speculative decoding com taxas de aceitacao configuraveis.
+Simulamos draft-target especificaçãoulative decoding com taxas de aceitacao configuraveis.
 
 ```python
 class DraftModel:
@@ -530,7 +530,7 @@ class TargetModel:
         return np.random.dirichlet(np.ones(self.vocab_size))
 
 
-def speculative_decode(draft_model, target_model, context, num_speculative=5,
+def especificaçãoulative_decode(draft_model, target_model, context, num_especificaçãoulative=5,
                        draft_cost=1.0, target_cost=10.0, verify_cost=12.0):
     total_tokens = 0
     total_cost = 0.0
@@ -540,8 +540,8 @@ def speculative_decode(draft_model, target_model, context, num_speculative=5,
     max_tokens = 100
 
     while total_tokens < max_tokens:
-        draft_tokens = draft_model.generate(context, num_speculative)
-        total_cost += draft_cost * num_speculative
+        draft_tokens = draft_model.generate(context, num_especificaçãoulative)
+        total_cost += draft_cost * num_especificaçãoulative
 
         target_probs = target_model.get_probs(context, draft_tokens)
         total_cost += verify_cost
@@ -566,7 +566,7 @@ def speculative_decode(draft_model, target_model, context, num_speculative=5,
 
         accepted_counts.append(accepted)
 
-        if accepted == num_speculative:
+        if accepted == num_especificaçãoulative:
             bonus_probs = target_model.get_probs(context)
             bonus_token = np.random.choice(draft_model.vocab_size, p=bonus_probs)
             context.append(bonus_token)
@@ -575,24 +575,24 @@ def speculative_decode(draft_model, target_model, context, num_speculative=5,
     sequential_cost = total_tokens * target_cost
     return {
         "total_tokens": total_tokens,
-        "speculative_cost": total_cost,
+        "especificaçãoulative_cost": total_cost,
         "sequential_cost": sequential_cost,
         "speedup": sequential_cost / total_cost if total_cost > 0 else 1.0,
         "avg_accepted": np.mean(accepted_counts),
-        "acceptance_rate": np.mean(accepted_counts) / num_speculative,
+        "acceptance_rate": np.mean(accepted_counts) / num_especificaçãoulative,
     }
 
 
-def compare_speculation_strategies(vocab_size=1000, num_trials=20):
+def compare_especificaçãoulation_strategies(vocab_size=1000, num_trials=20):
     results = {}
 
-    for name, acceptance_rate, spec_tokens in [
+    for name, acceptance_rate, especificação_tokens in [
         ("Draft-target (8B->70B)", 0.78, 5),
         ("EAGLE", 0.85, 6),
         ("N-gram", 0.50, 4),
-        ("No speculation", 0.0, 0),
+        ("No especificaçãoulation", 0.0, 0),
     ]:
-        if spec_tokens == 0:
+        if especificação_tokens == 0:
             results[name] = {
                 "speedup": 1.0,
                 "acceptance_rate": 0.0,
@@ -605,7 +605,7 @@ def compare_speculation_strategies(vocab_size=1000, num_trials=20):
             draft = DraftModel(vocab_size, acceptance_rate=acceptance_rate)
             target = TargetModel(vocab_size)
             context = list(np.random.randint(0, vocab_size, size=10))
-            result = speculative_decode(draft, target, context, num_speculative=spec_tokens)
+            result = especificaçãoulative_decode(draft, target, context, num_especificaçãoulative=especificação_tokens)
             trial_results.append(result)
 
         results[name] = {
@@ -747,31 +747,31 @@ Essa aula produz:
 
 2. Estenda o simulador de continuous batching pra rastrear utilizacao de GPU (fracao de slots de batch preenchidos por passo). Trace a utilizacao ao longo do tempo pra batching estatico e continuous com 50 requisicoes cujos tamanhos de saida seguem uma distribuicao Pareto (shape=1.5, scale=20). Continuous batching deveria manter >80% de utilizacao.
 
-3. Implemente uma versao de grouped-query attention (GQA) do KV cache onde `num_kv_heads < num_query_heads`. Llama 3 70B usa 64 query heads mas so 8 KV heads. Compute a economia de memoria vs atencao multi-head completa (8x de reducao no tamanho do KV cache).
+3. Implemente uma versao de grouped-consulta attention (GQA) do KV cache onde `num_kv_heads < num_consulta_heads`. Llama 3 70B usa 64 consulta heads mas so 8 KV heads. Compute a economia de memoria vs atencao multi-head completa (8x de reducao no tamanho do KV cache).
 
 4. Construa um prefix cache que usa despejo LRU. Defina max_entries pra 500 e gere 1.000 requisicoes onde 60% compartilham um de 5 prefixes comuns. Meça a taxa de hit e compare com cache ilimitado. Com despejo bom, a taxa de hit deveria ficar acima de 55%.
 
-5. Estenda o simulador de speculative decoding pra implementar especulacao baseada em arvore (estilo EAGLE-2). Ao inves de uma cadeia unica de K tokens rascunho, gere uma arvore de candidatos (ex: 2 ramificacoes em cada de 3 niveis = 8 candidatos folha). Compare tokens totais aceitos por rodada de verificacao vs especulacao linear.
+5. Estenda o simulador de especificaçãoulative decoding pra implementar eespecificaçãoulacao baseada em arvore (estilo EAGLE-2). Ao inves de uma cadeia unica de K tokens rascunho, gere uma arvore de candidatos (ex: 2 ramificacoes em cada de 3 niveis = 8 candidatos folha). Compare tokens totais aceitos por rodada de verificacao vs eespecificaçãoulacao linear.
 
 ## Termos Chave
 
 | Termo | O que a gente diz | O que realmente significa |
 |------|----------------|----------------------|
-| Prefill | "Processando o prompt" | Computar atencao em todos os tokens de entrada em paralelo -- limitado por compute porque a multiplicacao de matrizes inteira mantem nucleos de GPU ocupados |
+| Prefill | "Processando o prompt" | Computar atencao em todos os tokens de entrada em paralelo -- limitado por processamento porque a multiplicacao de matrizes inteira mantem nucleos de GPU ocupados |
 | Decode | "Gerando tokens" | Produzir um token por forward pass, lendo os pesos do modelo inteiro toda vez -- limitado por memoria porque compute termina antes dos proximos pesos chegarem |
-| KV cache | "Caching estados de atencao" | Armazenar projecoes de key e value pra todos os tokens anteriores pra que nao sejam recomputados a cada passo de decode -- troca memoria por compute |
+| KV cache | "Caching estados de atencao" | Armazenar projecoes de key e value pra todos os tokens anteriores pra que nao sejam recomputados a cada passo de decode -- troca memoria por processamento |
 | Continuous batching | "Batching dinamico" | Inserir novas requisicoes no lote em execucao assim que qualquer requisicao termina, avaliado em cada iteracao de decode ao inves de esperar o lote inteiro |
 | PagedAttention | "Memoria virtual pro KV cache" | Alocar KV cache em paginas de tamanho fixo ao inves de blocos contiguos, eliminando fragmentacao de memoria e habilitando copy-on-write pra prefixes compartilhados |
 | Speculative decoding | "Rascunhar e verificar" | Usar um modelo rascunho rapido pra propor multiplos tokens, depois verifica-los todos num unico forward pass do modelo alvo -- matematicamente exato, 2-3x de aceleracao |
-| EAGLE | "Speculative decoding auto" | Uma variante de speculative decoding que treina uma cabeca leve nos proprios estados ocultos do modelo alvo, alcançando taxas de aceitacao maiores que um modelo rascunho separado |
+| EAGLE | "Speculative decoding auto" | Uma variante de especificaçãoulative decoding que treina uma cabeca leve nos proprios estados ocultos do modelo alvo, alcançando taxas de aceitacao maiores que um modelo rascunho separado |
 | Prefix caching | "Reutilizar KV do system prompt" | Armazenar entradas KV cache calculadas pra prefixes comuns (system prompts, exemplos few-shot) e reutiliza-las entre requisicoes pra pular prefill redundante |
-| Razao ops:byte | "Intensidade aritmetica" | A razao de operacoes de compute por bytes de memoria lidos -- determina se um workload e limitado por compute (razao alta) ou memoria (razao baixa) |
+| Razao ops:byte | "Intensidade aritmetica" | A razao de operacoes de compute por bytes de memoria lidos -- determina se um workload e limitado por processamento (razao alta) ou memoria (razao baixa) |
 | Tempo ate primeiro token | "TTFT" | Latencia de receber uma requisicao ate produzir o primeiro token de saida -- dominada pelo tempo de prefill pra prompts longos |
 
 ## Leitura Complementar
 
 - Kwon et al., "Efficient Memory Management for Large Language Model Serving with PagedAttention" (2023) -- o paper do vLLM que introduziu gerenciamento de KV cache paginado, agora padrao da industria pra servico de inferencia
-- Leviathan et al., "Fast Inference from Transformers via Speculative Decoding" (2023) -- o paper fundamental provando que especulacao draft-verify produz distribuicoes exatas do modelo alvo enquanto alcanca 2-3x de aceleracao
+- Leviathan et al., "Fast Inference from Transformers via Speculative Decoding" (2023) -- o paper fundamental provando que eespecificaçãoulacao draft-verify produz distribuicoes exatas do modelo alvo enquanto alcanca 2-3x de aceleracao
 - Li et al., "EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty" (2024) -- alcança taxas de aceitacao maiores treinando uma cabeca nas proprias features do modelo alvo ao inves de usar um modelo rascunho separado
 - Zheng et al., "SGLang: Efficient Execution of Structured Language Model Programs" (2024) -- introduz RadixAttention pra prefix caching e um modelo de programacao pra programas LLM multi-chamada
 - Williams et al., "Roofline: An Insightful Visual Performance Model for Multicore Architectures" (2009) -- o paper roofline original que formalizou o framework ops:byte pra raciocinar sobre gargalos de compute vs memoria

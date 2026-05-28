@@ -480,7 +480,7 @@ Layer normalization stabilizes training by normalizing activations.
 Position embeddings give the model information about token ordering.
 The causal mask ensures autoregressive generation during training.
 Pre-training on large text corpora teaches the model general language understanding.
-Fine-tuning adapts the pre-trained model to specific downstream tasks."""
+Fine-tuning adapts the pre-trained model to especificaçãoific downstream tasks."""
 
 model = train_mini_gpt(corpus, num_steps=200)
 

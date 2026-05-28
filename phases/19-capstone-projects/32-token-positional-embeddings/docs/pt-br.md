@@ -56,7 +56,7 @@ A desvantagem da tabela aprendida é que ela não pode ser consultada na posiç�
 
 ## O embedding posicional senoidal
 
-O embedding posicional senoidal é uma função de posição para vetor. Posição `p` e feature `i` produzem
+O embedding posicional senoidal é uma função de posição para vetor. Posição `p` e funcionalidade `i` produzem
 
 ```python
 angle = p / (10000 ** (2 * (i // 2) / D))
@@ -99,7 +99,7 @@ O segundo é a similaridade cosseno entre embeddings em posições vizinhas. A v
 
 ## O que esta lição não faz
 
-Ela não constrói uma codificação posicional rotativa (RoPE) ou AliBi. Essas são as escolhas modernas em transformers em produção. Ambas seguem o mesmo contrato de formato dos embeddings aqui (aplicam uma transformação dependente da posição a vetores com formato `(B, T, D)`), mas são aplicadas na etapa de projeção de attention ao invés de na entrada. A próxima lição constrói o bloco de attention, e uma das extensões opcionais é incorporar a rotação nas projeções de query-key.
+Ela não constrói uma codificação posicional rotativa (RoPE) ou AliBi. Essas são as escolhas modernas em transformers em produção. Ambas seguem o mesmo contrato de formato dos embeddings aqui (aplicam uma transformação dependente da posição a vetores com formato `(B, T, D)`), mas são aplicadas na etapa de projeção de attention ao invés de na entrada. A próxima lição constrói o bloco de attention, e uma das extensões opcionais é incorporar a rotação nas projeções de consulta-key.
 
 Ela não treina o embedding. Treinamento requer uma loss, que requer uma saída do modelo, que requer attention e uma cabeça de LM. Isso é a próxima lição e a seguinte.
 

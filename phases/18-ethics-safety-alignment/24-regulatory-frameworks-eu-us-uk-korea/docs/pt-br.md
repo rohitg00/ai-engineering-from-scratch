@@ -53,7 +53,7 @@ Primeiro rascunho 17 dezembro 2025. Segundo rascunho março 2026. Versão final 
 
 ### UK AI Security Institute (fevereiro 2025)
 
-Renomeado de AI Safety Institute. A renomeação restringe o escopo: remove viés algorítmico e enquadramentos de liberdade de expressão; foca em segurança de capacidade de fronteira. Open-sourced a ferramenta de avaliação Inspect (maio 2024). Colabora com Redwood (Lição 10) em casos de segurança de controle.
+Renomeado de AI Safety Institute. A renomeação restringe o escopo: remove viés algorítmico e enquadramentos de liberdade de expressão; foca em segurança de capacidade de fronteira. Open-sourced a ferramenta de avaliação Inespecificaçãot (maio 2024). Colabora com Redwood (Lição 10) em casos de segurança de controle.
 
 ### US CAISI (junho 2025)
 
@@ -85,7 +85,7 @@ Lição 18 é governança voluntária de laboratório; Lição 24 é regulatóri
 
 ## Use
 
-Sem código. Leia as fontes primárias do EU AI Act: o texto da regulamentação, o GPAI Code of Practice, o framework Inspect do UK AISI. Mapeie seu deploy nas obrigações aplicáveis para cada jurisdição.
+Sem código. Leia as fontes primárias do EU AI Act: o texto da regulamentação, o GPAI Code of Practice, o framework Inespecificaçãot do UK AISI. Mapeie seu implantação nas obrigações aplicáveis para cada jurisdição.
 
 ## Entregue
 
@@ -95,7 +95,7 @@ Esta lição produz `outputs/skill-regulatory-map.md`. Dada uma descrição de d
 
 1. Leia o EU AI Act (regulamento 2024/1689) e o GPAI Code of Practice (10 julho 2025). Identifique três obrigações que se aplicam a todo provedor GPAI e três que se aplicam apenas a GPAI de risco sistêmico.
 
-2. Um deploy é feito por uma empresa dos EUA, roda em infraestrutura da UE, e serve usuários coreanos. Quais três regras de jurisdição se aplicam, e qual regra vincula em cada questão substantiva?
+2. Um implantação é feito por uma empresa dos EUA, roda em infraestrutura da UE, e serve usuários coreanos. Quais três regras de jurisdição se aplicam, e qual regra vincula em cada questão substantiva?
 
 3. A renomeação do UK AI Security Institute restringe o escopo. Argumente a favor e contra o enquadramento mais estreito. Identifique a suposição de política de que cada posição depende.
 

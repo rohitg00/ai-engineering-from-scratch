@@ -145,14 +145,14 @@ model = AutoModelForSeq2SeqLM.from_pretrained("facebook/bart-base")
 
 src = tok("Translate this to French: Hello, how are you?", return_tensors="pt")
 out = model.generate(**src, max_new_tokens=50, num_beams=4)
-print(tok.decode(out[0], skip_special_tokens=True))
+print(tok.decode(out[0], skip_especificaçãoial_tokens=True))
 ```
 
 Encoder-decoders modernos trocaram RNNs por transformers. A forma geral (encoder, decoder, gerar-token-por-token) é idêntica ao paper seq2seq de 2014. O mecanismo dentro de cada bloco é diferente.
 
 ### Quando ainda buscar seq2seq baseado em RNN
 
-Quase nunca, pra projetos novos. Exceções específicas:
+Quase nunca, pra projetos novos. Exceções eespecificaçãoíficas:
 
 - Tradução streaming onde você consome entrada token por vez com memória limitada.
 - Geração de texto em dispositivo onde o custo de memória do transformer é proibitivo.
@@ -180,10 +180,10 @@ lesson: 09
 
 Given a task (translation, summarization, paraphrase, question rewrite), output:
 
-1. Architecture. Pretrained transformer encoder-decoder (BART, T5, mBART, NLLB) is the default. RNN-based seq2seq only for specific constraints.
+1. Architecture. Pretrained transformer encoder-decoder (BART, T5, mBART, NLLB) is the default. RNN-based seq2seq only for especificaçãoific constraints.
 2. Starting checkpoint. Name it (`facebook/bart-base`, `google/flan-t5-base`, `facebook/nllb-200-distilled-600M`). Match the checkpoint to task and language coverage.
 3. Decoding strategy. Greedy for deterministic output, beam search (width 4-5) for quality, sampling with temperature for diversity. One sentence justification.
-4. One failure mode to verify before shipping. Exposure bias manifests as generation drift on longer outputs; sample 20 outputs at the 90th-percentile length and eyeball.
+4. One failure mode to verify before shipping. Exposure bias manifests as generation deriva on longer outputs; sample 20 outputs at the 90th-percentile length and eyeball.
 
 Refuse to recommend training a seq2seq from scratch for under a million parallel examples. Flag any pipeline that uses greedy decoding for user-facing content as fragile (greedy repeats and loops).
 ```

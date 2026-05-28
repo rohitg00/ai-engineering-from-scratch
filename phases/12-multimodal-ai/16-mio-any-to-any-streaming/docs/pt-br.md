@@ -1,6 +1,6 @@
 # MIO e Modelos Multimodais Any-to-Any com Streaming
 
-> GPT-4o lançou um produto que a maioria dos modelos open não consegue replicar: um agent que ouve voz, vê vídeo, e fala de volta em tempo real. A resposta do ecossistema open até final de 2024 foi MIO (Wang et al., setembro 2024). MIO tokeniza texto, imagem, fala e música, treina um transformer causal sobre as sequências intercaladas, e gera qualquer modalidade pra qualquer modalidade. AnyGPT (Zhan et al., fevereiro 2024) foi a prova de conceito; MIO é a escalada; Unified-IO 2 (Allen AI, dezembro 2023) é o primo com visão + grounding de ação. Esta aula analisa o padrão any-to-any — quatro tokenizers, um transformer, decodificação amigável a streaming.
+> GPT-4o lançou um produto que a maioria dos modelos open não consegue replicar: um agente que ouve voz, vê vídeo, e fala de volta em tempo real. A resposta do ecossistema open até final de 2024 foi MIO (Wang et al., setembro 2024). MIO tokeniza texto, imagem, fala e música, treina um transformer causal sobre as sequências intercaladas, e gera qualquer modalidade pra qualquer modalidade. AnyGPT (Zhan et al., fevereiro 2024) foi a prova de conceito; MIO é a escalada; Unified-IO 2 (Allen AI, dezembro 2023) é o primo com visão + grounding de ação. Esta aula analisa o padrão any-to-any — quatro tokenizers, um transformer, decodificação amigável a streaming.
 
 **Tipo:** Aprendizado
 **Linguagens:** Python (stdlib, alocador de tokens de quatro modalidades + loop de decodificação streaming)
@@ -70,7 +70,7 @@ O currículo de treinamento do MIO:
 3. Etapa 3 — fala melhorada. Dados extras de áudio pra elevar qualidade de fala sem perder capacidade de texto.
 4. Etapa 4 — SFT. Instrução tuning entre modalidades: VQA, legendagem, narração, diálogo fala-a-fala.
 
-Pular uma etapa degrada capacidades específicas: pular etapa 2 e o modelo perde contexto cross-modal; pular etapa 3 e a fala fica ruim.
+Pular uma etapa degrada capacidades eespecificaçãoíficas: pular etapa 2 e o modelo perde contexto cross-modal; pular etapa 3 e a fala fica ruim.
 
 ### Cadeia-de-pensamento-visual
 
@@ -86,7 +86,7 @@ A imagem intermediária renderizada serve como rascunho. Benchmarks melhoram em 
 
 - AnyGPT (arXiv:2402.12226): 4 modalidades (texto, imagem, fala, música), design similar.
 - Unified-IO 2 (arXiv:2312.17172): adiciona saídas de ação visual, profundidade, normais. Mais diversidade de tarefas, escala menor.
-- NExT-GPT (arXiv:2309.05519): LLM + decoders de difusão específicos por modalidade. Não é abordagem de modelo único.
+- NExT-GPT (arXiv:2309.05519): LLM + decoders de difusão eespecificaçãoíficos por modalidade. Não é abordagem de modelo único.
 - CoDi (arXiv:2305.11846): difusão componível; any-to-any via latente compartilhado.
 
 MIO é o mais perto de any-to-any puramente por tokens. AnyGPT é seu ancestral conceitual.
@@ -122,11 +122,11 @@ Esses são problemas de pesquisa aberta. Qwen3-Omni (Aula 12.20) é a tentativa 
 
 ## Implemente
 
-Esta aula produz `outputs/skill-any-to-any-pipeline-auditor.md`. Dada uma spec de produto conversacional (modalidades de entrada, modalidades de saída, alvo de latência), audita as escolhas de design da família MIO e calcula o orçamento de latência.
+Esta aula produz `outputs/skill-any-to-any-pipeline-auditor.md`. Dada uma eespecificaçãoificação de produto conversacional (modalidades de entrada, modalidades de saída, alvo de latência), audita as escolhas de design da família MIO e calcula o orçamento de latência.
 
 ## Exercícios
 
-1. Seu produto aceita entrada de fala e retorna saída de fala. Qual o alvo de orçamento de latência end-to-end? Liste os componentes que gastam tempo.
+1. Seu produto aceita entrada de fala e retorna saída de fala. Qual o alvo de orçamento de latência de ponta a ponta? Liste os componentes que gastam tempo.
 
 2. SpeechTokenizer residual-VQ usa 8 codebooks. Proponha por que decodificar os níveis residuais em paralelo é necessário (vs sequencial) e que economia de latência isso traz.
 

@@ -30,7 +30,7 @@ Impossibilidade (Chouldechova, Kleinberg-Mullainathan-Raghavan 2017): os três n
 
 ### Justiça individual
 
-Dwork et al. 2012. Um mapa de decisão f é individualmente justo com respeito a uma métrica de similaridade específica da tarefa d se |f(x) - f(x')| <= L * d(x, x') para alguma constante de Lipschitz L. Indivíduos similares recebem decisões similares.
+Dwork et al. 2012. Um mapa de decisão f é individualmente justo com respeito a uma métrica de similaridade eespecificaçãoífica da tarefa d se |f(x) - f(x')| <= L * d(x, x') para alguma constante de Lipschitz L. Indivíduos similares recebem decisões similares.
 
 Requer definir d. Questão de política, não estatística.
 

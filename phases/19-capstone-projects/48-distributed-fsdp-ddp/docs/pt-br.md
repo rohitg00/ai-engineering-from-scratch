@@ -9,7 +9,7 @@
 
 ## Objetivos de Aprendizado
 
-- Subir um grupo de processos entre N ranks com o backend `gloo`, sem hardware especial.
+- Subir um grupo de processos entre N ranks com o backend `gloo`, sem hardware eespecificaçãoial.
 - Implementar um wrapper DDP minimo que transmita parametros na construcao e faça all-reduce de gradientes apos o backward.
 - Provar que o all-reduce de gradientes por rank corresponde a um gradiente de processo unico na entrada concatenada.
 - Esboçar o sharding de parametros FSDP: cada rank guarda um slice, o tensor completo e coletado para o forward pass e descartado depois.

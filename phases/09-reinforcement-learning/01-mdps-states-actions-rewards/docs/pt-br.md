@@ -29,7 +29,7 @@ Você não consegue aprender desse fluxo até formalizá-lo. "O que eu vi", "o q
 
 **A propriedade Markov** `P(s_{t+1} | s_t, a_t) = P(s_{t+1} | s_0, a_0, …, s_t, a_t)`. O futuro depende apenas do estado presente. Se não depende, a representação do estado está incompleta — não é uma falha do método, é uma falha do estado.
 
-**Políticas e retornos.** Uma política `π(a | s)` mapeia estados para distribuições de ações. O retorno `G_t = r_t + γ r_{t+1} + γ² r_{t+2} + …` é a soma descontada de recompensas futuras. O valor `V^π(s) = E[G_t | s_t = s]` é o retorno esperado começando de `s` sob a política `π`. O valor Q `Q^π(s, a) = E[G_t | s_t = s, a_t = a]` é o retorno esperado começando com uma ação específica. Todo algoritmo de RL estima um desses dois, depois melhora `π` de acordo.
+**Políticas e retornos.** Uma política `π(a | s)` mapeia estados para distribuições de ações. O retorno `G_t = r_t + γ r_{t+1} + γ² r_{t+2} + …` é a soma descontada de recompensas futuras. O valor `V^π(s) = E[G_t | s_t = s]` é o retorno esperado começando de `s` sob a política `π`. O valor Q `Q^π(s, a) = E[G_t | s_t = s, a_t = a]` é o retorno esperado começando com uma ação eespecificaçãoífica. Todo algoritmo de RL estima um desses dois, depois melhora `π` de acordo.
 
 **As equações de Bellman.** As equações de ponto fixo que tudo nesta fase usa:
 
@@ -118,7 +118,7 @@ Muito baixo e o agente age miope. Muito alto e a atribuição de crédito fica r
 - **Estado não-Markoviano.** Se você precisa das últimas três observações para decidir, o "estado" não é apenas a observação atual. Solução: empilhe frames (DQN em Atari empilha 4) ou use um estado recorrente (LSTM/GRU sobre observações).
 - **Recompensas esparsas.** Recompensas apenas de vitória tornam o aprendizado quase impossível em grandes espaços de estado. Modele recompensas (sinal intermediário) ou faça bootstrap com imitação (Fase 9 · 09).
 - **Exploração de recompensa.** Otimizar uma recompensa proxy frequentemente produz comportamento patológico. O agente de corrida de barcos da OpenAI ficou girando em círculos coletando powerups para sempre em vez de terminar a corrida. Sempre defina a recompensa a partir do resultado alvo, não do proxy.
-- **Especificação errada de desconto.** `γ = 1` em uma tarefa de horizonte infinito torna todo valor infinito. Sempre limite com um horizonte finito ou `γ < 1`.
+- **Eespecificaçãoificação errada de desconto.** `γ = 1` em uma tarefa de horizonte infinito torna todo valor infinito. Sempre limite com um horizonte finito ou `γ < 1`.
 - **Escala de recompensa.** Recompensas de {+100, -100} vs {+1, -1} dão políticas ótimas idênticas mas magnitudes de gradiente vastamente diferentes. Normalize para algo em `[-1, 1]` antes de usar em PPO/DQN.
 
 ## Use
@@ -127,7 +127,7 @@ O stack de 2026 reduz cada pipeline de RL a um MDP antes de tocar código:
 
 || Situação | Estado | Ação | Recompensa | γ ||
 ||-----------|-------|--------|--------|---||
-|| Controle (locação, manipulação) | Ângulos das juntas + velocidades | Torques contínuos | Específica da tarefa, modelada | 0,99 ||
+|| Controle (locação, manipulação) | Ângulos das juntas + velocidades | Torques contínuos | Eespecificaçãoífica da tarefa, modelada | 0,99 ||
 || Jogos (xadrez, Go, pôquer) | Tabuleiro + histórico | Jogada legal | Vitória=+1 / derrota=-1 | 1,0 (finito) ||
 || Estoque / precificação | Estoque + demanda | Qtd de pedido | Receita - custo | 0,95 ||
 || RLHF para LLMs | Tokens de contexto | Próximo token | Pontuação do modelo de recompensa no final | 1,0 (episódio ~200 tokens) ||
@@ -142,7 +142,7 @@ Salve como `outputs/skill-mdp-modeler.md`:
 ```markdown
 ---
 name: mdp-modeler
-description: Dada uma descrição de tarefa, produza uma especificação de Processo de Decisão Markoviano e sinalize riscos de formulação antes do treino.
+description: Dada uma descrição de tarefa, produza uma eespecificaçãoificação de Processo de Decisão Markoviano e sinalize riscos de formulação antes do treino.
 version: 1.0.0
 phase: 9
 lesson: 1
@@ -151,7 +151,7 @@ tags: [rl, mdp, modeling]
 
 Dada uma tarefa (controle / jogo / recomendação / fine-tuning de LLM), gere:
 
-1. Estado. Vetor de features ou especificação de tensor exata. Justifique a propriedade Markov.
+1. Estado. Vetor de features ou eespecificaçãoificação de tensor exata. Justifique a propriedade Markov.
 2. Ação. Conjunto discreto ou faixa contínua. Dimensionalidade.
 3. Transição. Determinística, estocástica-com-modelo-conhecido, ou apenas-amostrável.
 4. Recompensa. Função e fonte. Esparsa vs modelada. Terminal vs por passo.
@@ -183,6 +183,6 @@ Recuse lançar qualquer MDP onde o estado é não-Markoviano sem menção explí
 
 - [Sutton & Barto (2018). Reinforcement Learning: An Introduction, 2nd ed.](http://incompleteideas.net/book/RLbook2020.pdf) — o livro didático. Cap. 3 cobre MDPs e equações de Bellman; Cap. 1 motiva a hipótese de recompensa que fundamenta todas as aulas seguintes.
 - [Bellman (1957). Dynamic Programming](https://press.princeton.edu/books/paperback/9780691146683/dynamic-programming) — a origem da equação de Bellman.
-- [OpenAI Spinning Up — Part 1: Key Concepts](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html) — intro sucinta a MDPs de uma perspectiva de RL profundo.
+- [OpenAI Spinning Up — Part 1: Key Concepts](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html) — intro sucinta a MDPs de uma perespecificaçãotiva de RL profundo.
 - [Puterman (2005). Markov Decision Processes](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470316887) — a referência de pesquisa operacional sobre MDPs e métodos de solução exata.
-- [Littman (1996). Algorithms for Sequential Decision Making (PhD thesis)](https://www.cs.rutgers.edu/~mlittman/papers/thesis-main.pdf) — a derivação mais limpa de MDPs como especialização de programação dinâmica.
+- [Littman (1996). Algorithms for Sequential Decision Making (PhD thesis)](https://www.cs.rutgers.edu/~mlittman/papers/thesis-main.pdf) — a derivação mais limpa de MDPs como eespecificaçãoialização de programação dinâmica.

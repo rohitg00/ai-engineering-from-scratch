@@ -1,6 +1,6 @@
 # Padrões de Workflow da Anthropic: Simples Sobre Complexo
 
-> Schluntz e Zhang (Anthropic, Dez 2024) distinguem workflows (caminhos predefinidos) de agents (uso dinâmico de ferramentas). Cinco padrões de workflow cobrem a maioria dos casos. Comece com chamadas de API diretas. Adicione agents só quando etapas não podem ser previstas.
+> Schluntz e Zhang (Anthropic, Dez 2024) distinguem workflows (caminhos predefinidos) de agentes (uso dinâmico de ferramentas). Cinco padrões de workflow cobrem a maioria dos casos. Comece com chamadas de API diretas. Adicione agentes só quando etapas não podem ser previstas.
 
 **Tipo:** Aprender + Construir
 **Linguagens:** Python (stdlib)
@@ -11,7 +11,7 @@
 
 - Nomear os cinco padrões de workflow da Anthropic: prompt chaining, roteamento, paralelização, orchestrator-workers, evaluator-optimizer.
 - Explicar a distinção agent-vs-workflow e o custo de engenharia de cada um.
-- Identificar quando escolher um workflow em vez de um agent (e vice-versa).
+- Identificar quando escolher um workflow em vez de um agente (e vice-versa).
 - Implementar os cinco padrões com stdlib contra um LLM programado.
 
 ## O Problema
@@ -39,17 +39,17 @@ Fundação de todos os cinco padrões: um LLM com três capacidades conectadas �
 
 3. **Paralelização.** Rode N chamadas de LLM concorrentes, agregue resultados. Duas formas: seção (chunks diferentes) e votação (mesmo prompt, N execuções, maioria/síntese).
 
-4. **Orchestrator-workers.** Um LLM orquestrador decide dinamicamente quais workers (também LLMs) rodar e sintetiza suas saídas. Parecido com loops de agent mas o orquestrador não entra em loop indefinidamente.
+4. **Orchestrator-workers.** Um LLM orquestrador decide dinamicamente quais workers (também LLMs) rodar e sintetiza suas saídas. Parecido com loops de agente mas o orquestrador não entra em loop indefinidamente.
 
 5. **Evaluator-optimizer.** Um LLM propõe uma resposta, outro LLM avalia. Itere até o evaluator aprovar. Isso é Self-Refine (Aula 05) generalizado.
 
 ### Onde workflows superam agents
 
 - **Tarefas previsíveis.** Se você consegue enumerar as etapas, deveria.
-- **Tarefas com orçamento de custo.** Workflows têm contagem de etapas limitada; agents podem espiralar.
-- **Tarefas vinculadas a compliance.** Auditores querem ler o grafo, não inferi-lo de trajectories.
+- **Tarefas com orçamento de custo.** Workflows têm contagem de etapas limitada; agentes podem espiralar.
+- **Tarefas vinculadas a conformidade.** Auditores querem ler o grafo, não inferi-lo de trajectories.
 
-### Onde agents superam workflows
+### Onde agentes superam workflows
 
 - **Pesquisa aberta.** Quando a próxima etapa depende do que a etapa anterior retornou.
 - **Tarefas de tamanho variável.** Minutos a horas de trabalho onde a contagem de etapas é desconhecida.
@@ -85,7 +85,7 @@ Cada padrão imprime seu trace. Total de linhas de código por padrão é ~10-15
 
 ## Entregue
 
-`outputs/skill-workflow-picker.md` escolhe o padrão certo pra uma descrição de tarefa dada, incluindo a justificativa da decisão e o caminho de refatoração pra agent se workflows não bastarem.
+`outputs/skill-workflow-picker.md` escolhe o padrão certo pra uma descrição de tarefa dada, incluindo a justificativa da decisão e o caminho de refatoração pra agente se workflows não bastarem.
 
 ## Exercícios
 
@@ -93,7 +93,7 @@ Cada padrão imprime seu trace. Total de linhas de código por padrão é ~10-15
 2. Adicione um timeout em `parallel_vote`. O que acontece quando uma chamada trava? Como você agrega com votos faltando?
 3. Transforme `evaluator_optimizer` num bandit: mantenha os top-2 outputs entre iterações pra que um bom resultado tardio não seja sobrescrito por um ruim tardio.
 4. Combine prompt chaining com roteamento: um roteador escolhe uma de três cadeias. Meça custo em tokens versus uma alternativa de prompt grande único.
-5. Escolha uma de suas features de produção. Desenhe o grafo do workflow. Conte as etapas. Um agent realmente seria melhor aqui?
+5. Escolha uma de suas features de produção. Desenhe o grafo do workflow. Conte as etapas. Um agente realmente seria melhor aqui?
 
 ## Termos-Chave
 
@@ -105,7 +105,7 @@ Cada padrão imprime seu trace. Total de linhas de código por padrão é ~10-15
 | Prompt chaining | "Chamadas sequenciais" | Saída da chamada N é input da chamada N+1 |
 | Routing | "Despacho de classificador" | Escolher qual cadeia/modelo lida com o input |
 | Parallelization | "Fan out" | N chamadas concorrentes; agregação por seção ou votação |
-| Orchestrator-workers | "Agent despachante" | LLM orquestrador escolhe LLMs especialistas dinamicamente |
+| Orchestrator-workers | "Agent despachante" | LLM orquestrador escolhe LLMs eespecificaçãoialistas dinamicamente |
 | Evaluator-optimizer | "Propositor + juiz" | Itere até evaluator aprovar; Self-Refine generalizado |
 
 ## Leitura Complementar

@@ -18,7 +18,7 @@
 
 Quantização reduz memória e largura de banda de HBM, que é exatamente o que decode precisa. Um modelo FP16 de 70B tem 140 GB de pesos. Quantize os pesos para INT4 (AWQ ou GPTQ) e o modelo tem 35 GB — cabe em uma H100 com espaço para KV cache, o que importa porque com 128 sequências concorrentes e contexto de 2k, o KV cache sozinho tem 20-30 GB.
 
-Mas quantização não é grátis. Quantização agressiva degrada qualidade, especialmente em tarefas com carga de raciocínio pesada. Diferentes formatos funcionam com diferentes engines. Diferentes hardware suportam diferentes precisões nativamente. O zoológico de formatos de 2026 é real e você não pode copiar a escolha de outro — tem que escolher baseado na sua stack.
+Mas quantização não é grátis. Quantização agressiva degrada qualidade, eespecificaçãoialmente em tarefas com carga de raciocínio pesada. Diferentes formatos funcionam com diferentes engines. Diferentes hardware suportam diferentes precisões nativamente. O zoológico de formatos de 2026 é real e você não pode copiar a escolha de outro — tem que escolher baseado na sua stack.
 
 ## O Conceito
 

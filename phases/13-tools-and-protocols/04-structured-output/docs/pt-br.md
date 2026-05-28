@@ -16,7 +16,7 @@
 
 ## O Problema
 
-Um agent lendo um email de pedido de compra precisa transformar texto livre em `{customer, line_items, total_usd}`. Três abordagens.
+Um agente lendo um email de pedido de compra precisa transformar texto livre em `{customer, line_items, total_usd}`. Três abordagens.
 
 **Abordagem um: pedir JSON no prompt.** "Responda em JSON com campos customer, line_items, total_usd." Funciona 85 a 95 por cento do tempo em modelos frontier. Falha de seis formas: chave faltando, vírgula no final, tipos errados, campos alucinados, truncado no limite de tokens, texto vaza como "Aqui está seu JSON:".
 
@@ -61,7 +61,7 @@ class Invoice(BaseModel):
     total_usd: Decimal
 ```
 
-e o framework de agent traduz o schema no modo strict da OpenAI, `input_schema` do Anthropic ou `responseSchema` do Gemini na borda. A saída do modelo volta como uma instância `Invoice` tipada. Erros de validação levantam `ValidationError` com caminhos de erro tipados.
+e o framework de agente traduz o schema no modo strict da OpenAI, `input_schema` do Anthropic ou `responseSchema` do Gemini na borda. A saída do modelo volta como uma instância `Invoice` tipada. Erros de validação levantam `ValidationError` com caminhos de erro tipados.
 
 ### Zod, o binding TypeScript
 
@@ -77,7 +77,7 @@ Implementações de pesos abertos usam três técnicas.
 
 1. **Decoding baseado em gramática** (`outlines`, `guidance`, `lm-format-enforcer`): constrói um autômato finito determinístico a partir do schema; a cada passo, mascara os logits dos tokens que violariam o FSM.
 2. **Mascaramento de logits com parser JSON**: roda um parser JSON em lockstep com o modelo; a cada passo, computa o conjunto de próximos tokens válidos.
-3. **Decoding especulativo com verificador**: modelo draft barato propõe tokens, verificador aplica o schema.
+3. **Decoding eespecificaçãoulativo com verificador**: modelo draft barato propõe tokens, verificador aplica o schema.
 
 Provedores comerciais escolhem um deles nos bastidores. O estado da arte em 2026 é mais rápido que geração simples pra outputs estruturados curtos e velocidade aproximadamente igual pra longos.
 
@@ -131,7 +131,7 @@ Esta aula produz `outputs/skill-structured-output-designer.md`. Dado um alvo de 
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|----------------------|--------------------------|
-| JSON Schema 2020-12 | "A especificação de schema" | Dialeto de schema em draft da IETF que todo provedor moderno fala |
+| JSON Schema 2020-12 | "A eespecificaçãoificação de schema" | Dialeto de schema em draft da IETF que todo provedor moderno fala |
 | Modo strict | "Schema garantido" | Flag da OpenAI que aplica schema via decoding restrito |
 | Decoding restrito | "Mascaramento de logits" | Aplicação na hora do decode que mascara próximos tokens inválidos |
 | Recusa | "Modelo se recusa" | Resultado tipado quando o input não se encaixa no schema |
@@ -147,5 +147,5 @@ Esta aula produz `outputs/skill-structured-output-designer.md`. Dado um alvo de 
 - [OpenAI — Structured outputs](https://platform.openai.com/docs/guides/structured-outputs) — modo strict, recusas e requisitos de schema
 - [OpenAI — Introducing structured outputs](https://openai.com/index/introducing-structured-outputs-in-the-api/) — post de lançamento de agosto 2024 explicando a garantia de decoding
 - [Pydantic AI — Output](https://ai.pydantic.dev/output/) — bindings tipados de output_type que serializam pra cada provedor
-- [JSON Schema — 2020-12 release notes](https://json-schema.org/draft/2020-12/release-notes) — a especificação canônica
+- [JSON Schema — 2020-12 release notes](https://json-schema.org/draft/2020-12/release-notes) — a eespecificaçãoificação canônica
 - [Microsoft — Structured outputs in Azure OpenAI](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/structured-outputs) — notas de deployment empresarial e caveats do modo strict

@@ -14,7 +14,7 @@
 - Cache e rote de chaves JWKS usando um trigger de cron pra que verificação de assinatura sobreviva à rotação de chaves.
 - Ancore tokens a um único recurso MCP usando indicadores de recurso RFC 8707 e recuse reuso de confused-deputy.
 - Conecte cada endpoint e job de background como primitivas iii — triggers HTTP, triggers cron, funções nomeadas e leituras `state::*` — pra que uma única reinicialização reconstrua a superfície de auth.
-- Leia uma matriz de capacidades de IdP e recuse deploy quando o IdP não satisfaz o perfil de auth do MCP.
+- Leia uma matriz de capacidades de IdP e recuse implantação quando o IdP não satisfaz o perfil de auth do MCP.
 
 ## O Problema
 
@@ -22,7 +22,7 @@ O simulador da Lição 16 roda OAuth 2.1 em memória. Produção tem três lacun
 
 A primeira lacuna é cadastro. Uma organização real roda centenas de servidores MCP e milhares de clientes MCP. Operadores não cadastram manualmente cada usuário do Cursor como cliente OAuth. RFC 7591 de registro dinâmico de cliente permite que um cliente faça `POST /register` contra o servidor de autorização e receba um `client_id` (e opcionalmente um `client_secret`) na hora. O servidor publica `registration_endpoint` nos seus metadados RFC 8414; o cliente descobre sem configuração out-of-band.
 
-A segunda lacuna é rotação de chaves. Validação JWT depende das chaves de assinatura do servidor de autorização, publicadas como JSON Web Key Set (JWKS). O servidor de autorização rotaciona essas em agenda (geralmente a cada hora, às vezes mais rápido sob resposta a incidente). Um servidor MCP que busca JWKS uma vez no boot valida bem até a janela de rotação — depois cada requisição falha até reinicialização. Em produção, JWKS é conectado como valor cacheado com job de refresh que sobrescreve o cache antes das chaves anteriores expirarem, mais um fallback de busca em cache miss pra caso um token assinado por uma chave mais nova que o cache chegue.
+A segunda lacuna é rotação de chaves. Validação JWT depende das chaves de assinatura do servidor de autorização, publicadas como JSON Web Key Set (JWKS). O servidor de autorização rotaciona essas em agenda (geralmente a cada hora, às vezes mais rápido sob resposta a incidente). Um servidor MCP que busca JWKS uma vez no boot valida bem até a janela de rotação — depois cada requisição falha até reinicialização. Em produção, JWKS é conectado como valor cacheado com job de refresh que sobrescreve o cache antes das chaves anteriores expirarem, mais um reserva de busca em cache miss pra caso um token assinado por uma chave mais nova que o cache chegue.
 
 A terceira lacuna é vinculação de audience. A Lição 16 introduziu indicadores de recurso RFC 8707. Em produção, esse indicador vira uma checagem rigorosa em cada requisição. O servidor MCP compara `token.aud` com sua própria URL canônica de recurso e rejeita divergências com HTTP 401. Essa é a única defesa contra um servidor MCP upstream (ou um cliente malicioso segurando um token destinado a um servidor) reenviando esse token contra outro servidor na mesma mesh de confiança.
 
@@ -58,7 +58,7 @@ O contrato que você verifica antes de confiar num IdP pra MCP:
 - `registration_endpoint` está presente (suporte RFC 7591).
 - `response_types_supported` é exatamente `["code"]` pra OAuth 2.1.
 
-Se qualquer um desses estiver faltando, o servidor MCP recusa deploy contra este IdP. O manifesto de deploy está errado, não o código.
+Se qualquer um desses estiver faltando, o servidor MCP recusa implantação contra este IdP. O manifesto de implantação está errado, não o código.
 
 ### RFC 9728 (resumo) — Metadados de Recurso Protegido
 
@@ -123,9 +123,9 @@ A Lição 16 estabeleceu a forma. A regra de produção: cada requisição de to
 
 PKCE é obrigatório em OAuth 2.1. O fluxo de código de autorização da lição sempre carrega `code_challenge` e `code_verifier`. O servidor rejeita qualquer requisição de token sem um verificador ou com um verificador que não faz hash pro challenge armazenado.
 
-### Perfil de Auth da Especificação MCP 2025-11-25
+### Perfil de Auth da Eespecificaçãoificação MCP 2025-11-25
 
-A especificação MCP (2025-11-25) é precisa sobre o que a camada de autorização de um servidor MCP deve fazer:
+A eespecificaçãoificação MCP (2025-11-25) é precisa sobre o que a camada de autorização de um servidor MCP deve fazer:
 
 - Publicar `/.well-known/oauth-protected-resource` (RFC 9728).
 - Aceitar tokens apenas via `Authorization: Bearer ***`
@@ -134,15 +134,15 @@ A especificação MCP (2025-11-25) é precisa sobre o que a camada de autorizaç
 - Rejeitar tokens cujo `aud` não corresponde ao recurso canônico.
 - Rejeitar tokens cujo `iss` não está na lista `authorization_servers` dos metadados de recurso protegido.
 
-O draft OAuth 2.1 é a base; RFC 8414/7591/8707/9728 + RFC 7636 são a superfície; a especificação MCP é o perfil.
+O draft OAuth 2.1 é a base; RFC 8414/7591/8707/9728 + RFC 7636 são a superfície; a eespecificaçãoificação MCP é o perfil.
 
 ### Matriz de capacidades de IdP
 
-Nem todo IdP suporta o perfil completo de MCP. A matriz abaixo documenta declarações factuais de capacidade conforme a especificação 2025-11-25. É um *gate de deploy*, não uma recomendação.
+Nem todo IdP suporta o perfil completo de MCP. A matriz abaixo documenta declarações factuais de capacidade conforme a eespecificaçãoificação 2025-11-25. É um *gate de deploy*, não uma recomendação.
 
 | Categoria de IdP | Metadados RFC 8414 | DCR RFC 7591 | Recurso RFC 8707 | PKCE S256 RFC 7636 | Notas |
 |---|---|---|---|---|---|
-| Self-hosted (Keycloak) | sim | sim | sim (desde 24.x) | sim | IdP de referência pra MCP; suporta cada RFC end-to-end. |
+| Self-hosted (Keycloak) | sim | sim | sim (desde 24.x) | sim | IdP de referência pra MCP; suporta cada RFC de ponta a ponta. |
 | SSO Enterprise (Microsoft Entra ID) | sim | sim (tiers premium) | sim | sim | Disponibilidade de DCR varia por tenant; verifique antes de deployar. |
 | SSO Enterprise (Okta) | sim | sim (Okta CIC / Auth0) | sim | sim | DCR disponível no Auth0 (agora Okta CIC); organizações clássicas do Okta requerem pré-registro de admin. |
 | IdPs de login social (genérico) | varia | raramente | raramente | sim | Maioria dos IdPs sociais tratam clientes como parceiros estáticos; não dependa de DCR. Use só como fonte de identidade, coloque seu próprio servidor de autorização MCP-aware em cima. |
@@ -275,7 +275,7 @@ Essa lição produz `outputs/skill-mcp-auth-iii.md`. Dada uma config de servidor
 
 4. Leia a RFC 7591 e identifique dois campos que o handler `/register` da lição não valida. Adicione a validação. (Dica: `software_statement` e esquema de URI de `redirect_uris`.)
 
-5. Leia a seção de autorização da especificação MCP 2025-11-25. Encontre o único requisito normativo em headers `WWW-Authenticate` que o validador da lição atualmente não emite. Adicione-o.
+5. Leia a seção de autorização da eespecificaçãoificação MCP 2025-11-25. Encontre o único requisito normativo em headers `WWW-Authenticate` que o validador da lição atualmente não emite. Adicione-o.
 
 ## Termos Chave
 
@@ -294,7 +294,7 @@ Essa lição produz `outputs/skill-mcp-auth-iii.md`. Dada uma config de servidor
 
 ## Leitura Complementar
 
-- [MCP — Auth spec (2025-11-25)](https://modelcontextprotocol.io/specification/draft/basic/authorization) — o perfil de auth MCP que esta lição implementa
+- [MCP — Auth especificação (2025-11-25)](https://modelcontextprotocol.io/especificaçãoification/draft/basic/authorization) — o perfil de auth MCP que esta lição implementa
 - [RFC 8414 — OAuth 2.0 Authorization Server Metadata](https://datatracker.ietf.org/doc/html/rfc8414) — contrato de descoberta
 - [RFC 7591 — OAuth 2.0 Dynamic Client Registration Protocol](https://datatracker.ietf.org/doc/html/rfc7591) — DCR
 - [RFC 7636 — Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636) — prova de posse de cliente público

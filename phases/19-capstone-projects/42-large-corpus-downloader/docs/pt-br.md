@@ -108,7 +108,7 @@ Padroes de producao:
 ## Exercicios
 
 1. Adicionar um flag `--shingle-width` e medir como o veredicto de dedup muda nas larguras 3, 5, 9. Defenda o padrao escolhido.
-2. Adicionar suporte a gzip ao lado do zstd sniffando os magic bytes. O downloader nao deve exigir que o chamador especifique o codec.
+2. Adicionar suporte a gzip ao lado do zstd sniffando os magic bytes. O downloader nao deve exigir que o chamador eespecificaçãoifique o codec.
 3. Adicionar um modo `--resume-only` que se recusa a comecar um download novo se nenhum checkpoint for encontrado. Util em CI para evitar que uma execucao re-puxe acidentalmente 200 GB.
 4. Mover o indice LSH para um shelf ou arquivo sqlite e medir throughput versus a variante em memoria.
 5. Adicionar uma checagem de sha256 do manifesto ao iniciar. O downloader deve falhar fechado se o manifesto no disco discordar do hash do manifesto em `manifest.lock`.
@@ -126,7 +126,7 @@ Padroes de producao:
 ## Leitura Adicional
 
 - [RFC 7233](https://datatracker.ietf.org/doc/html/rfc7233) - requisicoes HTTP Range, o protocolo de resume
-- [Especificacao do formato Zstandard](https://datatracker.ietf.org/doc/html/rfc8478) - formato de frame que torna streaming de descompressao seguro
+- [Eespecificaçãoificacao do formato Zstandard](https://datatracker.ietf.org/doc/html/rfc8478) - formato de frame que torna streaming de descompressao seguro
 - [MinHash](https://en.wikipedia.org/wiki/MinHash) - a familia de assinaturas que esta aula usa
 - [Locality-sensitive hashing](https://en.wikipedia.org/wiki/Locality-sensitive_hashing) - o esquema de bandas por tras do limiar de dedup
 - Fase 19 · 43 - o corpus tokenizado HDF5 que o alimenta

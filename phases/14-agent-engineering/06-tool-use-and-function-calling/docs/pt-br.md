@@ -18,7 +18,7 @@
 
 O uso de ferramentas cedo perguntava: o modelo consegue prever uma chamada de função correta? O uso moderno de ferramentas pergunta: o modelo consegue encadear ferramentas em 40 etapas, com memória, com observabilidade parcial, com recuperação de falhas de ferramenta, sem alucinar ferramentas que não existem?
 
-Toolformer estabeleceu o baseline: modelos podem aprender quando chamar ferramentas com auto-supervisão. BFCL V4 define o alvo de avaliação de 2026. O gap entre eles é o espaço onde agents de produção vivem.
+Toolformer estabeleceu o baseline: modelos podem aprender quando chamar ferramentas com auto-supervisão. BFCL V4 define o alvo de avaliação de 2026. O gap entre eles é o espaço onde agentes de produção vivem.
 
 ## O Conceito
 
@@ -79,7 +79,7 @@ Regra de engenharia: trate IDs de correlação como peças que aguentam o peso. 
 
 ### Sandboxing
 
-Execução de ferramenta é a fronteira de sandbox. Veja Aula 09 pra detalhes. Versão curta: toda ferramenta deve especificar superfície de leitura/escrita, acesso à rede, timeout, limite de memória. Genérico `run_shell(cmd)` é uma bandeira vermelha; específico `git_status()` é mais seguro.
+Execução de ferramenta é a fronteira de sandbox. Veja Aula 09 pra detalhes. Versão curta: toda ferramenta deve eespecificaçãoificar superfície de leitura/escrita, acesso à rede, timeout, limite de memória. Genérico `run_shell(cmd)` é uma bandeira vermelha; eespecificaçãoífico `git_status()` é mais seguro.
 
 ## Construa
 
@@ -97,11 +97,11 @@ Rode:
 python3 code/main.py
 ```
 
-O trace mostra um mini agent chamando três ferramentas num turno, com uma chamada propositalmente malformada que é rejeitada com erro descritivo que o modelo pode agir.
+O trace mostra um mini agente chamando três ferramentas num turno, com uma chamada propositalmente malformada que é rejeitada com erro descritivo que o modelo pode agir.
 
 ## Use
 
-Todo provider tem seu próprio schema de ferramentas — Anthropic, OpenAI, Gemini, Bedrock. Use uma camada de tradução (OpenAI Agents SDK, Vercel AI SDK, LangChain tool adapter) se precisar multi-provider. BFCL é o benchmark de referência — rode contra seu agent antes de entregar se uso de ferramenta é central pro produto.
+Todo provider tem seu próprio schema de ferramentas — Anthropic, OpenAI, Gemini, Bedrock. Use uma camada de tradução (OpenAI Agents SDK, Vercel AI SDK, LangChain ferramenta adapter) se precisar multi-provider. BFCL é o benchmark de referência — rode contra seu agente antes de entregar se uso de ferramenta é central pro produto.
 
 ## Entregue
 

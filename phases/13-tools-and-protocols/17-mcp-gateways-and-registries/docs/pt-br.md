@@ -1,6 +1,6 @@
 # Gateways e Registries MCP — Planos de Controle Empresariais
 
-> Empresas não podem deixar cada dev instalar servidores MCP aleatórios. Um gateway centraliza auth, RBAC, auditoria, rate limiting, cache e detecção de tool poisoning, depois expõe a superfície de ferramentas mesclada como um único endpoint MCP. O Official MCP Registry (Anthropic + GitHub + PulseMCP + Microsoft, namespace-verificado) é o upstream canônico. Esta aula nomeia onde um gateway se encaixa, caminha por uma implementação mínima e faz um levantamento do panorama de vendors de 2026.
+> Empresas não podem deixar cada dev instalar servidores MCP aleatórios. Um gateway centraliza auth, RBAC, auditoria, rate limiting, cache e detecção de ferramenta poisoning, depois expõe a superfície de ferramentas mesclada como um único endpoint MCP. O Official MCP Registry (Anthropic + GitHub + PulseMCP + Microsoft, namespace-verificado) é o upstream canônico. Esta aula nomeia onde um gateway se encaixa, caminha por uma implementação mínima e faz um levantamento do panorama de vendors de 2026.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, gateway mínimo)
@@ -16,7 +16,7 @@
 
 ## O Problema
 
-Uma Fortune 500 tem 30 servidores MCP aprovados, 5000 desenvolvedores, requisitos de compliance e auditoria e uma equipe de segurança que quer política centralizada. Deixar cada desenvolvedor instalar servidores arbitrários em seus IDEs é fora de cogitação.
+Uma Fortune 500 tem 30 servidores MCP aprovados, 5000 desenvolvedores, requisitos de conformidade e auditoria e uma equipe de segurança que quer política centralizada. Deixar cada desenvolvedor instalar servidores arbitrários em seus IDEs é fora de cogitação.
 
 O padrão de gateway:
 
@@ -85,7 +85,7 @@ Official Registry exige nomes DNS reversa pra servidores públicos: `io.github.a
 |--------|-------------|
 | Cloudflare MCP Portals | Edge-hosted; OAuth integrado; tier grátis |
 | Kong AI Gateway | K8s-nativo; política granular; logs pra OpenTelemetry |
-| IBM ContextForge | IAM empresarial; compliance; export de auditoria |
+| IBM ContextForge | IAM empresarial; conformidade; export de auditoria |
 | TrueFoundry | Orientado a DevOps; métricas primeiro |
 | MintMCP | Orientado a plataforma de desenvolvedor |
 | Envoy AI Gateway | Código aberto; filtros customizáveis |
@@ -105,7 +105,7 @@ O que conferir:
 
 ## Entregue
 
-Esta aula produz `outputs/skill-gateway-bootstrap.md`. Dado um plano MCP empresarial (usuários, backends, compliance), a skill produz uma especificação de configuração do gateway.
+Esta aula produz `outputs/skill-gateway-bootstrap.md`. Dado um plano MCP empresarial (usuários, backends, conformidade), a skill produz uma eespecificaçãoificação de configuração do gateway.
 
 ## Exercícios
 
@@ -129,7 +129,7 @@ Esta aula produz `outputs/skill-gateway-bootstrap.md`. Dado um plano MCP empresa
 | Fixação de hash de ferramenta | "Manifesto aprovado" | SHA256 de cada descrição de ferramenta aprovada; bloqueia rug pulls centralmente |
 | RBAC | "Política por usuário" | Controle de acesso baseado em papéis pra ferramentas e servidores |
 | Política como código | "Regras declarativas" | Políticas OPA/Rego, Kyverno, Styra aplicadas no gateway |
-| Log de auditoria | "Quem, o quê, quando" | Log de eventos append-only pra compliance |
+| Log de auditoria | "Quem, o quê, quando" | Log de eventos append-only pra conformidade |
 | Rate limit | "Token bucket por usuário" | Limites por minuto pra prevenir abuso |
 | Official MCP Registry | "Upstream canônico" | `registry.modelcontextprotocol.io`, namespace-verificado |
 | Nomenclatura DNS reversa | "Namespace do registry" | Convenção `io.github.user/server` |

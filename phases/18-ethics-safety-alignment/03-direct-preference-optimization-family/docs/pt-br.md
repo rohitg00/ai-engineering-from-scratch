@@ -52,7 +52,7 @@ L_DPO = -log sigmoid(
 O que pode dar errado:
 
 - O gap de recompensa implícita `beta * (log(pi/pi_ref)_w - log(pi/pi_ref)_l)` é ilimitado. Uma preferência mínima pode produzir um gap arbitariamente grande.
-- A loss empurra as log-probs escolhida e rejeitada em direções opostas. Ela pode empurrar a log-prob absoluta escolhida para baixo enquanto a rejeitada cai mais rápido. Isso é o fenômeno de Resposta Escolhida Degradada.
+- A loss empurra as log-probs escolhidas e rejeitadas em direções opostas. Ela pode empurrar a log-prob absoluta escolhida para baixo enquanto a rejeitada cai mais rápido. Isso é o fenômeno de Resposta Escolhida Degradada.
 - Preferências fora da distribuição (par raro raro vs par raro raro) produzem recompensas implícitas arbitrárias.
 
 ### IPO (Azar et al., 2024)
@@ -67,7 +67,7 @@ A margem é limitada por `1/(2 beta)`. Força de preferência e gap de recompens
 
 ### KTO (Ethayarajh et al., 2024)
 
-Kahneman-Tversky Optimization descarta a estrutura par a par inteiramente. Dada uma única saída rotulada e um sinal binário "desejável" ou "indesejável", ela mapeia para uma utilidade de prospect theory:
+Kahneman-Tversky Optimization descarta a estrutura par a par inteiramente. Dada uma única saída rotulada e um sinal binário "desejável" ou "indesejável", ela mapeia para uma utilidade de proespecificaçãot theory:
 
 ```
 v(x, y) = sigma(beta * log(pi(y|x) / pi_ref(y|x)) - z_ref)
@@ -102,7 +102,7 @@ Sem política referência — o termo SFT é o regularizador. Treine em um únic
 
 ### BPO (submissão ICLR 2026, OpenReview id=b97EwMUWu7)
 
-Identifica o problema de Respostas Escolhidas Degradadas: DPO preserva a ordenação `y_w > y_l` mas a log-prob absoluta de `y_w` pode cair. BPO adiciona uma correção de uma linha que penaliza movimentos descendentes na resposta escolhida. Reporta +10.1% de acurácia em Llama-3.1-8B-Instruct em raciocínio matemático sobre DPO.
+Identifica o problema de Respostas Escolhidas Degradadas: DPO preserva a ordenação `y_w > y_l` mas a log-prob absoluta de `y_w` pode cair. BPO adiciona uma correção de uma linha que penaliza movimentos descendentes na resposta escolhida. Reporta +10.1% de acurácia em Llama-3.1-8B-Instruct em raciocínio matemático comparado ao DPO.
 
 ### O resultado universal: DAAs ainda otimizam excessivamente
 
@@ -147,7 +147,7 @@ Essa lição produz `outputs/skill-preference-loss-selector.md`. Dadas estatíst
 | DPO | "RLHF sem reward model" | Loss derivada do ótimo RLHF em forma fechada; apenas parâmetros da política |
 | Recompensa implícita | "a razão logarítmica" | `beta * log(pi(y|x) / pi_ref(y|x))` — a recompensa implícita pelo DPO |
 | IPO | "DPO limitado" | Substitui log-sigmoid por identidade; gap de recompensa implícita limitado por `1/(2 beta)` |
-| KTO | "DPO não pareado" | Utilidade de prospect theory sobre labels individuais com aversão à perda |
+| KTO | "DPO não pareado" | Utilidade de proespecificaçãot theory sobre rótulos individuais com aversão à perda |
 | SimPO | "DPO sem referência" | Log-likelihood normalizada por comprimento + margem; sem política referência |
 | ORPO | "DPO de estágio único" | NLL + termo de preferência odds-ratio; treina do modelo base em uma passagem |
 | BPO | "DPO preservador da escolhida" | DPO mais uma penalidade para diminuir a log-prob absoluta da resposta escolhida |
@@ -158,7 +158,7 @@ Essa lição produz `outputs/skill-preference-loss-selector.md`. Dadas estatíst
 
 - [Rafailov et al. — Direct Preference Optimization (NeurIPS 2023, arXiv:2305.18290)](https://arxiv.org/abs/2305.18290)
 - [Azar et al. — A General Theoretical Paradigm to Understand Learning from Human Preferences (AISTATS 2024, arXiv:2310.12036)](https://arxiv.org/abs/2310.12036) — IPO
-- [Ethayarajh et al. — KTO: Model Alignment as Prospect Theoretic Optimization (arXiv:2402.01306)](https://arxiv.org/abs/2402.01306)
+- [Ethayarajh et al. — KTO: Model Alignment as Proespecificaçãot Theoretic Optimization (arXiv:2402.01306)](https://arxiv.org/abs/2402.01306)
 - [Meng, Xia, Chen — SimPO (NeurIPS 2024, arXiv:2405.14734)](https://arxiv.org/abs/2405.14734)
 - [Hong, Lee, Thorne — ORPO (EMNLP 2024, arXiv:2403.07691)](https://arxiv.org/abs/2403.07691)
 - [BPO — Behavior Preservation Optimization (ICLR 2026 OpenReview b97EwMUWu7)](https://openreview.net/forum?id=b97EwMUWu7)

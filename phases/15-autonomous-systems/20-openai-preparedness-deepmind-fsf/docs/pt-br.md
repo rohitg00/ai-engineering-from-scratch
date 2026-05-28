@@ -9,11 +9,11 @@
 
 ## O Problema
 
-A Aula 19 leu de perto a política de escala da Anthropic. Esta aula completa o panorama lendo as da OpenAI e DeepMind. Os três documentos são artefatos primos abordando a mesma questão — quando um laboratório de fronteira deve pausar ou limitar um modelo — e convergem em um pequeno conjunto de categorias e divergem em pontos específicos que importam.
+A Aula 19 leu de perto a política de escala da Anthropic. Esta aula completa o panorama lendo as da OpenAI e DeepMind. Os três documentos são artefatos primos abordando a mesma questão — quando um laboratório de fronteira deve pausar ou limitar um modelo — e convergem em um pequeno conjunto de categorias e divergem em pontos eespecificaçãoíficos que importam.
 
-A convergência: os três rotulam long-range autonomy como uma classe de capacidade值得跟踪. Os três reconhecem comportamento enganoso (alignment faking, sandbagging) como uma classe específica de risco. Os três têm um corpo de revisão interno. A divergência: a OpenAI divide categorias em "Tracked" (mitigação obrigatória) e "Research" (sem gatilho automático). DeepMind incorpora autonomia em dois domínios ao invés de nomeá-la separadamente. Os laboratórios nomeiam Tracked vs Research, ou Critical vs Moderate, ou Tier-1 vs Tier-2; a consequência operacional de em qual balde uma capacidade vive é diferente entre laboratórios.
+A convergência: os três rotulam long-range autonomy como uma classe de capacidade值得跟踪. Os três reconhecem comportamento enganoso (alignment faking, sandbagging) como uma classe eespecificaçãoífica de risco. Os três têm um corpo de revisão interno. A divergência: a OpenAI divide categorias em "Tracked" (mitigação obrigatória) e "Research" (sem gatilho automático). DeepMind incorpora autonomia em dois domínios ao invés de nomeá-la separadamente. Os laboratórios nomeiam Tracked vs Research, ou Critical vs Moderate, ou Tier-1 vs Tier-2; a consequência operacional de em qual balde uma capacidade vive é diferente entre laboratórios.
 
-Ler juntos é o exercício útil. A mesma capacidade pode ser "mitigação obrigatória" na Anthropic, "monitorada mas não acionando" na OpenAI e "rastreada em um domínio específico" na DeepMind. A postura de política importa.
+Ler juntos é o exercício útil. A mesma capacidade pode ser "mitigação obrigatória" na Anthropic, "monitorada mas não acionando" na OpenAI e "rastreada em um domínio eespecificaçãoífico" na DeepMind. A postura de política importa.
 
 ## O Conceito
 
@@ -22,9 +22,9 @@ Ler juntos é o exercício útil. A mesma capacidade pode ser "mitigação obrig
 Estrutura:
 
 - **Tracked Categories**: acionam Capabilities Reports (o que o modelo consegue fazer) mais Safeguards Reports (quais mitigações estão no lugar). Revisados pelo Safety Advisory Group antes do deploy.
-- **Research Categories**: capacidades de modelo que o laboratório rastreia mas ainda não se compromete a mitigações específicas. Inclui Long-range Autonomy, Sandbagging, Autonomous Replication and Adaptation, Undermining Safeguards.
+- **Research Categories**: capacidades de modelo que o laboratório rastreia mas ainda não se compromete a mitigações eespecificaçãoíficas. Inclui Long-range Autonomy, Sandbagging, Autonomous Replication and Adaptation, Undermining Safeguards.
 
-Enquadramento-chave em v2: Research Categories não acionam automaticamente mitigações. A linguagem de política é mitigações "potenciais." Esse é o delta específico a observar: a localização de uma categoria em Tracked vs Research é a dobradiça entre "limitado" e "observado."
+Enquadramento-chave em v2: Research Categories não acionam automaticamente mitigações. A linguagem de política é mitigações "potenciais." Esse é o delta eespecificaçãoífico a observar: a localização de uma categoria em Tracked vs Research é a dobradiça entre "limitado" e "observado."
 
 ### Frontier Safety Framework v3 da DeepMind (setembro de 2025; Tracked Capability Levels adicionados em 17 de abril de 2026)
 
@@ -38,7 +38,7 @@ O enquadramento de autonomia difere da OpenAI. DeepMind não mantém "Autonomy" 
 
 ### Onde os três convergem
 
-- Safety Advisory Group interno (nomeado SAG da Anthropic, SAG da OpenAI, comitê interno da DeepMind). Revisão antes de deploy para modelos de alta capacidade.
+- Safety Advisory Group interno (nomeado SAG da Anthropic, SAG da OpenAI, comitê interno da DeepMind). Revisão antes de implantação para modelos de alta capacidade.
 - Menção explícita de alinhamento enganoso / alignment faking como classe de risco.
 - Artefatos permanentes em cadência declarada (Anthropic: Frontier Safety Roadmap, Risk Report; OpenAI: Capabilities and Safeguards Reports; DeepMind: ciclo de atualização do FSF).
 - Reconhecimento de que defesas baseadas apenas em monitoramento têm um teto. DeepMind é explícita: "monitoramento automatizado não permanecerá suficiente no longo prazo."
@@ -49,7 +49,7 @@ O enquadramento de autonomia difere da OpenAI. DeepMind não mantém "Autonomy" 
 - **OpenAI**: divisão Tracked vs Research; Research Categories (incluindo Long-range Autonomy) não limitam automaticamente.
 - **DeepMind**: autonomia incorporada em outros domínios; Tracked Capability Levels adicionam granularidade em abril de 2026.
 
-### Sandbagging: uma capacidade específica que complica os três
+### Sandbagging: uma capacidade eespecificaçãoífica que complica os três
 
 Sandbagging (um modelo subdesempenha estrategicamente em avaliações) está nas Research Categories da OpenAI. RSP v3.0 da Anthropic aborda via lacuna eval-vs-deploy (Aula 1). DeepMind aborda via monitoramento de alinhamento enganoso em FSF v3.
 
@@ -59,7 +59,7 @@ Se um modelo sandbags em avaliações, todos os limiares de capacidade dos frame
 
 - Localizar: toda capacidade que importa deve ser encontrável na política. Se não for encontrável, a política não cobre.
 - Classificar: é Tracked (aciona mitigação) ou Research (rastreada mas não acionando)? OpenAI nomeia isso; Anthropic e DeepMind têm seus equivalentes.
-- Cadência: a política é atualizada em agenda declarada, ou somente após eventos específicos? Cadência declarada é mais forte.
+- Cadência: a política é atualizada em agenda declarada, ou somente após eventos eespecificaçãoíficos? Cadência declarada é mais forte.
 - Independência: revisão externa é obrigatória ou opcional? Anthropic se associa com Apollo e US AI Safety Institute; OpenAI com METR; DeepMind com SAG interno principalmente.
 
 ## Use
@@ -68,7 +68,7 @@ Se um modelo sandbags em avaliações, todos os limiares de capacidade dos frame
 
 ## Entregue
 
-`outputs/skill-cross-policy-diff.md` produz uma comparação cross-policy para uma capacidade específica, usando os três frameworks como referência.
+`outputs/skill-cross-policy-diff.md` produz uma comparação cross-policy para uma capacidade eespecificaçãoífica, usando os três frameworks como referência.
 
 ## Exercícios
 
@@ -76,11 +76,11 @@ Se um modelo sandbags em avaliações, todos os limiares de capacidade dos frame
 
 2. Leia o Preparedness Framework v2 da OpenAI completo. Identifique cada Research Category. Para cada uma, escreva uma frase sobre por que está em Research e não em Tracked.
 
-3. Leia o FSF v3 da DeepMind completo, mais a atualização de Tracked Capability Levels de abril de 2026. Identifique os critérios específicos de avaliação do nível 1 de autonomia em ML R&D. Como você mediria externamente?
+3. Leia o FSF v3 da DeepMind completo, mais a atualização de Tracked Capability Levels de abril de 2026. Identifique os critérios eespecificaçãoíficos de avaliação do nível 1 de autonomia em ML R&D. Como você mediria externamente?
 
 4. Sandbagging está nas Research Categories da OpenAI. Projete uma avaliação que forçasse um modelo que sandbags a revelar sua capacidade real. Referencie a discussão de eval-context gaming da Aula 1.
 
-5. Compare as três políticas em uma capacidade específica (sua escolha). Nomeie qual política de classificação você acha mais rigorosa e qual menos. Justifique com texto-fonte.
+5. Compare as três políticas em uma capacidade eespecificaçãoífica (sua escolha). Nomeie qual política de classificação você acha mais rigorosa e qual menos. Justifique com texto-fonte.
 
 ## Termos-Chave
 

@@ -16,7 +16,7 @@
 
 ## O Problemo
 
-Red-teaming costumava ser uma atividade manual. Um pequeno grupo de testers especializados construía prompts adversariais e rastreava quais funcionavam. Isso não escala: taxa de sucesso de ataque precisa de uma amostra estatística, e o alvo é um alvo em movimento a cada release de modelo. PAIR operationaliza red-teaming como um problema de otimização com alvo black-box.
+Red-teaming costumava ser uma atividade manual. Um pequeno grupo de testers eespecificaçãoializados construía prompts adversariais e rastreava quais funcionavam. Isso não escala: taxa de sucesso de ataque precisa de uma amostra estatística, e o alvo é um alvo em movimento a cada release de modelo. PAIR operationaliza red-teaming como um problema de otimização com alvo black-box.
 
 ## O Conceito
 

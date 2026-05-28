@@ -1,6 +1,6 @@
 # Anti-Spoofing de Voz e Marca d'Água de Áudio — ASVspoof 5, AudioSeal, WaveVerify
 
-> Clonagem de voz foi mais rápida que as defesas. Sistemas de voz de produção de 2026 precisam de duas coisas: um detector (AASIST, RawNet2) que classifica fala real vs falsa, e uma marca d'água (AudioSeal) que sobrevive a compressão e edição. Entregue ambas ou não faça deploy de clonagem de voz.
+> Clonagem de voz foi mais rápida que as defesas. Sistemas de voz de produção de 2026 precisam de duas coisas: um detector (AASIST, RawNet2) que classifica fala real vs falsa, e uma marca d'água (AudioSeal) que sobrevive a compressão e edição. Entregue ambas ou não faça implantação de clonagem de voz.
 
 **Tipo:** Construir
 **Idiomas:** Python
@@ -15,7 +15,7 @@ Três defesas relacionadas:
 2. **Marca d'água de áudio.** Embute um sinal imperceptível no áudio gerado que um detector pode extrair depois. AudioSeal (Meta) e WavMark são as opções open.
 3. **Proveniência autenticada.** Assinatura criptográfica de arquivos de áudio + metadados. C2PA / Content Authenticity Initiative.
 
-Detecção lida com adversários que não cooperam. Marca d'água lida com compliance — áudio gerado por IA deve ser identificável como tal. Ambas são obrigatórias em 2026.
+Detecção lida com adversários que não cooperam. Marca d'água lida com conformidade — áudio gerado por IA deve ser identificável como tal. Ambas são obrigatórias em 2026.
 
 ## O Conceito
 
@@ -34,7 +34,7 @@ SOTA no ASVspoof 5: ~7,23% EER. No ASVspoof 2019 LA mais antigo: 0,42% EER. Depl
 
 ### AASIST e RawNet2 — famílias de modelos de detecção
 
-**AASIST** (2021, atualizado até 2026). Attention em grafo sobre características espectrais. SOTA atual na tarefa de contramedida ASVspoof 5.
+**AASIST** (2021, atualizado até 2026). Attention em grafo sobre características eespecificaçãotrais. SOTA atual na tarefa de contramedida ASVspoof 5.
 
 **RawNet2.** Front-end convolucional sobre forma de onda bruta + backbone TDNN. Baseline mais simples; ainda competitivo com ajuste fino.
 
@@ -60,7 +60,7 @@ O baseline open pré-AudioSeal. Rede neural invertível, 32 bits/seg. Problemas:
 
 ### WaveVerify (julho 2025)
 
-Resolve as fraquezas do AudioSeal — especificamente manipulações temporais (reversão, velocidade). Usa gerador baseado em FiLM + detector Mixture-of-Experts. Competitivo com AudioSeal em ataques padrão; lida com edições temporais.
+Resolve as fraquezas do AudioSeal — eespecificaçãoificamente manipulações temporais (reversão, velocidade). Usa gerador baseado em FiLM + detector Mixture-of-Experts. Competitivo com AudioSeal em ataques padrão; lida com edições temporais.
 
 ### O gap que adversários exploram
 
@@ -72,25 +72,25 @@ Não é técnica ML — é formato manifesto. Arquivos de áudio carregam metada
 
 ## Construa
 
-### Passo 1: detector simples de características espectrais (toy)
+### Passo 1: detector simples de características eespecificaçãotrais (toy)
 
 ```python
-def spectral_rolloff(spec, percentile=0.85):
+def especificaçãotral_rolloff(especificação, percentile=0.85):
     cum = 0
-    total = sum(spec)
+    total = sum(especificação)
     if total == 0:
         return 0
     threshold = total * percentile
-    for k, v in enumerate(spec):
+    for k, v in enumerate(especificação):
         cum += v
         if cum >= threshold:
             return k
-    return len(spec) - 1
+    return len(especificação) - 1
 
 def is_suspicious(audio):
-    spec = magnitude_spectrum(audio)
-    rolloff = spectral_rolloff(spec)
-    return rolloff / len(spec) > 0.92
+    especificação = magnitude_especificaçãotrum(audio)
+    rolloff = especificaçãotral_rolloff(especificação)
+    return rolloff / len(especificação) > 0.92
 ```
 
 Fala sintetizada frequentemente tem energia de alta frequência incomumente plana. Detectores de produção usam AASIST, não isso. Mas a intuição vale.
@@ -154,7 +154,7 @@ Toda geração envia: (1) marca d'água, (2) manifesto assinado, (3) log de audi
 
 - **Marca d'água sem detector nunca rodando.** Inútil. Coloque o detector no seu CI.
 - **Detecção sem calibração.** AASIST treinado em ASVspoof LA sofre de overfitting; precisão em mundo real cai. Calibre no seu domínio.
-- **Gap de mudança de tom.** Mudança de tom agressiva remove a maioria das marcas d'água. Tenha um fallback de detecção.
+- **Gap de mudança de tom.** Mudança de tom agressiva remove a maioria das marcas d'água. Tenha um reserva de detecção.
 - **Strip-and-rehost de metadados.** C2PA é facilmente contornável por re-encriptação. Sempre adicione defesa criptográfica + perceptual (marca d'água) juntas.
 - **Vivacidade como detecção.** Peça ao usuário para dizer uma frase aleatória. Previne ataques de replay mas não clonagem em tempo real.
 
@@ -187,4 +187,4 @@ Salve como `outputs/skill-spoof-defender.md`. Escolha modelo de detector, marca 
 - [Chen et al. (2025). WaveVerify](https://arxiv.org/abs/2507.21150) — detector MoE para ataques temporais.
 - [Jung et al. (2022). AASIST](https://arxiv.org/abs/2110.01200) — backbone de detecção SOTA.
 - [AudioMarkBench (2024)](https://proceedings.neurips.cc/paper_files/paper/2024/file/5d9b7775296a641a1913ab6b4425d5e8-Paper-Datasets_and_Benchmarks_Track.pdf) — avaliação de robustez.
-- [Especificação C2PA](https://c2pa.org/specifications/specifications/) — formato de manifesto de proveniência.
+- [Eespecificaçãoificação C2PA](https://c2pa.org/especificaçãoifications/especificaçãoifications/) — formato de manifesto de proveniência.

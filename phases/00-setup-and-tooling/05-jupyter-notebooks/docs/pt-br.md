@@ -94,7 +94,7 @@ Output: `(0.0032, 0.9987)`
 
 ### Passo 4: Magic commands
 
-Esses não são Python. São comandos específicos do Jupyter que começam com `%` (magic de linha) ou `%%` (magic de célula).
+Esses não são Python. São comandos eespecificaçãoíficos do Jupyter que começam com `%` (magic de linha) ou `%%` (magic de célula).
 
 **Meça o tempo do seu código:**
 

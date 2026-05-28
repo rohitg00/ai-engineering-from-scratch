@@ -9,13 +9,13 @@
 
 ## O Problema
 
-Um decoder autoregressivo inocente faz `O(N²)` trabalho pra gerar `N` tokens: a cada passo recomputa attention sobre o prefixo inteiro. Pra uma resposta de 4K tokens são 16 milhões de operações de attention, a maioria redundante. Todo estado oculto de um token de prefixo é determinístico uma vez computado — você só precisa rodar a query do novo token contra keys e values cacheados de tudo que veio antes.
+Um decoder autoregressivo inocente faz `O(N²)` trabalho pra gerar `N` tokens: a cada passo recomputa attention sobre o prefixo inteiro. Pra uma resposta de 4K tokens são 16 milhões de operações de attention, a maioria redundante. Todo estado oculto de um token de prefixo é determinístico uma vez computado — você só precisa rodar a consulta do novo token contra keys e values cacheados de tudo que veio antes.
 
 Além disso, a própria attention move muitos dados. Attention padrão materializa uma matriz de scores N×N, saída N×d do softmax, saída final N×d — muitas leituras e escritas em HBM. Pra N≥2K, attention vira limitada por memória antes de virar limitada por FLOPs. Kernels de attention clássicos subutilizam GPUs modernas em 4–10×.
 
 Duas otimizações, ambas de Dao et al., levaram inferência de fronteira de "lenta" pra "rápida":
 
-1. **KV cache.** Armazena vetores K e V de cada token de prefixo. A attention de cada novo token é uma query contra keys cacheadas. Inferência reduz de `O(N²)` pra `O(N)` por passo de geração.
+1. **KV cache.** Armazena vetores K e V de cada token de prefixo. A attention de cada novo token é uma consulta contra keys cacheadas. Inferência reduz de `O(N²)` pra `O(N)` por passo de geração.
 2. **Flash Attention.** Faz tiles da computação de attention pra que a matriz N×N inteira nunca atinja HBM. Todo softmax + matmul acontece em SRAM. Aceleração de 2–4× em tempo real no A100; 5–10× no H100 com FP8.
 
 Em 2026 ambos são universais. Toda stack de inferência de produção (vLLM, TensorRT-LLM, SGLang, llama.cpp) os assume. Todo modelo de fronteira vem com Flash Attention habilitado.
@@ -93,13 +93,13 @@ Uma viagem na HBM por tile. Pegada de memória total cai de `O(N²)` pra `O(N)`.
 
 Flash 4 é forward-pass-only no lançamento. Treinamento ainda usa Flash 3. Suporte a GQA e varlen pra Flash 4 está pendente (meados de 2026).
 
-### Decodificação especulativa — a outra vitória de latência
+### Decodificação eespecificaçãoulativa — a outra vitória de latência
 
 Modelo barato propõe N tokens. Modelo grande verifica todos N em paralelo. Se a verificação aceita k tokens, você pagou uma passada do modelo grande pra k gerações. Típico k=3–5 em código e prosa.
 
 Padrões de 2026:
 - **EAGLE 2 / Medusa.** Heads de rascunho integrados que compartilham estados ocultos do verificador. Aceleração de 2–3× sem perda de qualidade.
-- **Decodificação especulativa com modelo rascunho.** Aceleração de 2–4× em hardware de consumidor.
+- **Decodificação eespecificaçãoulativa com modelo rascunho.** Aceleração de 2–4× em hardware de consumidor.
 - **Decodificação lookahead.** Iteração de Jacobi; sem modelo rascunho. Nicho mas grátis.
 
 ### Batch contínuo
@@ -194,7 +194,7 @@ Cache de prefixo entre requisições é uma grande vitória de 2026 — o mesmo 
 
 ## Entregando
 
-Veja `outputs/skill-inference-optimizer.md`. A skill escolhe implementação de attention, estratégia de KV cache, quantização e decodificação especulativa pra uma nova implantação de inferência.
+Veja `outputs/skill-inference-optimizer.md`. A skill escolhe implementação de attention, estratégia de KV cache, quantização e decodificação eespecificaçãoulativa pra uma nova implantação de inferência.
 
 ## Exercícios
 
@@ -213,7 +213,7 @@ Veja `outputs/skill-inference-optimizer.md`. A skill escolhe implementação de 
 | Batch contínuo | "Batching sem espera" | Troca sequências terminadas por novas, sem esvaziar o batch. |
 | PagedAttention | "Destaque do vLLM" | KV cache alocado em blocos fixos com tabela de páginas; elimina fragmentação. |
 | Cache de prefixo | "Reutilizar prompts longos" | Cache de KV pra prefixo compartilhado entre requisições; corte de custo enorme pra agentes. |
-| Decodificação especulativa | "Rascunho + verificação" | Modelo rascunho barato propõe tokens; modelo grande verifica k em uma passada. |
+| Decodificação eespecificaçãoulativa | "Rascunho + verificação" | Modelo rascunho barato propõe tokens; modelo grande verifica k em uma passada. |
 
 ## Leituras Complementares
 
@@ -222,7 +222,7 @@ Veja `outputs/skill-inference-optimizer.md`. A skill escolhe implementação de 
 - [Shah et al. (2024). FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision](https://arxiv.org/abs/2407.08608) — Flash 3.
 - [FlashAttention-4 release notes (Dao-AILab, 2026)](https://github.com/Dao-AILab/flash-attention) — Pipeline de 5 estágios Blackwell e o truque de exp2 por software; leia o README do repo pra as ressalvas de lançamento forward-only que esta aula menciona.
 - [Kwon et al. (2023). Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) — paper do vLLM.
-- [Leviathan et al. (2023). Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192) — decodificação especulativa.
+- [Leviathan et al. (2023). Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192) — decodificação eespecificaçãoulativa.
 - [Li et al. (2024). EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty](https://arxiv.org/abs/2401.15077) — paper EAGLE-1/2 pra abordagem de rascunho integrado citada na aula.
 - [Cai et al. (2024). Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads](https://arxiv.org/abs/2401.10774) — abordagem Medusa referenciada ao lado de EAGLE.
 - [Docs do vLLM — PagedAttention](https://docs.vllm.ai/en/latest/design/kernel/paged_attention.html) — o deep dive canônico sobre o design de blocos de 16 tokens e tabela de páginas.

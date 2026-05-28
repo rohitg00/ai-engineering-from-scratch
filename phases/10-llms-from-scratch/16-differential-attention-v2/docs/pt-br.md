@@ -1,6 +1,6 @@
 # Differential Attention (V2)
 
-> A attention por softmax espalha um pouco de probabilidade sobre cada token que nao casa. Em 100k tokens esse ruido se acumula e afoga o sinal. O Differential Transformer (Ye et al., ICLR 2025) corrige isso calculando attention como a diferenca de dois softmaxes, subtraindo o chao de ruido compartilhado. DIFF V2 (Microsoft, janeiro de 2026) e a reescrita pra stack de producao: latencia de decode compativel com baseline Transformer, sem kernels custom, compativel com FlashAttention. Esta aula vai de V1 a V2 end-to-end, com uma implementacao toy funcional da operacao de diferenca que voce pode rodar em Python stdlib.
+> A attention por softmax espalha um pouco de probabilidade sobre cada token que nao casa. Em 100k tokens esse ruido se acumula e afoga o sinal. O Differential Transformer (Ye et al., ICLR 2025) corrige isso calculando attention como a diferenca de dois softmaxes, subtraindo o chao de ruido compartilhado. DIFF V2 (Microsoft, janeiro de 2026) e a reescrita pra stack de producao: latencia de decode compativel com baseline Transformer, sem kernels custom, compativel com FlashAttention. Esta aula vai de V1 a V2 de ponta a ponta, com uma implementacao toy funcional da operacao de diferenca que voce pode rodar em Python stdlib.
 
 **Tipo:** Construir
 **Linguagens:** Python (stdlib)
@@ -16,17 +16,17 @@
 
 ## O Problema
 
-A attention padrao por softmax tem uma propriedade matematica que vira uma dor de cabeca operacional em escala. Pra uma query `q`, os pesos de attention sao `softmax(qK^T / sqrt(d))`. Softmax nunca produz zeros exatos -- cada token que nao casa recebe massa positiva. Essa massa residual e ruido, e escala com o comprimento do contexto. Em 128k tokens, mesmo que cada token que nao casa receba apenas 0.001% da probabilidade, 127.999 deles combinados contribuem com cerca de 12% do total. O modelo tem que aprender a contornar um chao de ruido que cresce com o contexto.
+A attention padrao por softmax tem uma propriedade matematica que vira uma dor de cabeca operacional em escala. Pra uma consulta `q`, os pesos de attention sao `softmax(qK^T / sqrt(d))`. Softmax nunca produz zeros exatos -- cada token que nao casa recebe massa positiva. Essa massa residual e ruido, e escala com o comprimento do contexto. Em 128k tokens, mesmo que cada token que nao casa receba apenas 0.001% da probabilidade, 127.999 deles combinados contribuem com cerca de 12% do total. O modelo tem que aprender a contornar um chao de ruido que cresce com o contexto.
 
 Empiricamente isso aparece como interferencia de heads de attention: citations alucinadas em RAG de contexto longo, falhas lost-in-the-middle em tasks de recuperacao de 100k tokens, e degradacao sutil de acuracia em benchmarks de agulha no palheiro alem de 32k. O paper do Differential Transformer (arXiv:2410.05258, ICLR 2025) mediu a diferenca: DIFF Transformers atingem perplexidade menor, acuracia de contexto longo maior e menos alucinacoes que baselines de mesmo tamanho.
 
-DIFF V1 tinha tres problemas que o mantiveram fora de pipelines de pre-treinamento de fronteira. Seu value cache tinha que ser carregado duas vezes por passo de decode, ele requeria kernels CUDA custom que quebravam a compatibilidade com FlashAttention, e seu RMSNorm por head desestabilizava treinamento de longa duracao em escalas de 70B+. DIFF V2 (blog do Microsoft unilm, 20 de janeiro de 2026) corrigiu os tres. Esta aula percorre ambas as versoes, constrói o operador de diferenca e faz benchmark de cancelamento de ruido em uma query toy.
+DIFF V1 tinha tres problemas que o mantiveram fora de pipelines de pre-treinamento de fronteira. Seu value cache tinha que ser carregado duas vezes por passo de decode, ele requeria kernels CUDA custom que quebravam a compatibilidade com FlashAttention, e seu RMSNorm por head desestabilizava treinamento de longa duracao em escalas de 70B+. DIFF V2 (blog do Microsoft unilm, 20 de janeiro de 2026) corrigiu os tres. Esta aula percorre ambas as versoes, constrói o operador de diferenca e faz benchmark de cancelamento de ruido em uma consulta toy.
 
 ## O Conceito
 
 ### O chao de ruido do softmax
 
-Pra uma query `q` e keys `K = [k_1, ..., k_N]`, os pesos de attention sao:
+Pra uma consulta `q` e keys `K = [k_1, ..., k_N]`, os pesos de attention sao:
 
 ```
 w_i = exp(q . k_i / sqrt(d)) / sum_j exp(q . k_j / sqrt(d))
@@ -93,11 +93,11 @@ O valor cresce com o comprimento do contexto. Em 4k tokens o chao de ruido e peq
 | RoPE | Sim (inalterado) |
 | YaRN / escalabilidade de contexto longo | Sim (exatamente onde DIFF mais ajuda) |
 | FlashAttention | Sim em V2 (era nao em V1) |
-| Decodificacao especulativa | Sim (mudanca de attention e invisivel pro loop de decodificacao especulativa) |
+| Decodificacao eespecificaçãoulativa | Sim (mudanca de attention e invisivel pro loop de decodificacao eespecificaçãoulativa) |
 
 ## Construir
 
-`code/main.py` implementa differential attention em Python puro. Uma query toy com estrutura conhecida de sinal-mais-ruido permite medir a taxa de cancelamento de ruido diretamente.
+`code/main.py` implementa differential attention em Python puro. Uma consulta toy com estrutura conhecida de sinal-mais-ruido permite medir a taxa de cancelamento de ruido diretamente.
 
 ### Passo 1: attention padrao por softmax
 
@@ -164,13 +164,13 @@ Esta aula produz `outputs/skill-diff-attention-integrator.md`. Dada uma arquitet
 
 ## Exercicios
 
-1. Rode `code/main.py`. Verifique que a razao sinal-ruido reportada pra differential attention e maior que a attention padrao por softmax na query sintetica. Varie a amplitude do ruido e mostre o ponto de cruzamento onde a attention padrao fica inutilizavel.
+1. Rode `code/main.py`. Verifique que a razao sinal-ruido reportada pra differential attention e maior que a attention padrao por softmax na consulta sintetica. Varie a amplitude do ruido e mostre o ponto de cruzamento onde a attention padrao fica inutilizavel.
 
 2. Calcule o delta de contagem de parametros do baseline pro DIFF V1 e do baseline pro DIFF V2 pra um modelo de classe 7B (hidden=4096, heads=32, d_head=128, 32 camadas). Mostre quais componentes ganharam parametros e quais permaneceram iguais.
 
 3. Leia a Secao 3 do paper DIFF V1 (arXiv:2410.05258) e a Secao 2 do blog do Hugging Face do DIFF V2. Em duas frases, explique por que o RMSNorm por head do V1 era necessario e por que V2 conseguiu remove-lo sem causar divergencia de treinamento.
 
-4. Implemente uma abalacao: compute differential attention com `lambda = 0` (primeiro softmax puro) e `lambda = 1` (subtracao total). Na query sintetica, meça como a razao sinal-ruido muda ao longo da varredura. Identifique o `lambda` que maximiza sinal-ruido.
+4. Implemente uma abalacao: compute differential attention com `lambda = 0` (primeiro softmax puro) e `lambda = 1` (subtracao total). Na consulta sintetica, meça como a razao sinal-ruido muda ao longo da varredura. Identifique o `lambda` que maximiza sinal-ruido.
 
 5. Estenda o toy pra GQA + DIFF V2. Escolha 8 KV heads e 32 Q heads. Mostre que o tamanho do KV cache combina com um modelo GQA baseline com a mesma configuracao (8, 32).
 

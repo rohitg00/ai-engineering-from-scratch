@@ -161,7 +161,7 @@ Para este curso, `.gitignore` é suficiente. Use DVC quando precisar reproduzir 
 
 ## Exercícios
 
-1. Carregue o dataset `glue` com a config `mrpc` e inspecione os 5 primeiros exemplos
+1. Carregue o dataset `glue` com a config `mrpc` e inespecificaçãoione os 5 primeiros exemplos
 2. Transmita o dataset `c4` e conte quantos exemplos você consegue processar em 10 segundos
 3. Converta um dataset para Parquet e compare o tamanho do arquivo com CSV
 4. Crie uma divisão 70/15/15 train/val/test com seed fixa e verifique os tamanhos

@@ -72,7 +72,7 @@ Três razões:
 
 ## Flow matching vs DDPM — a conexão exata
 
-Flow matching com caminho condicional gaussiano é difusão *com um agendamento de ruído específico*. Escolha o agendamento `x_t = α(t) x_0 + σ(t) x_1` e flow matching recupera a difusão reformulada de Stratonovich com `v = α'·x_0 - σ'·x_1`. Os dois são algebricamente equivalentes para caminhos gaussianos.
+Flow matching com caminho condicional gaussiano é difusão *com um agendamento de ruído eespecificaçãoífico*. Escolha o agendamento `x_t = α(t) x_0 + σ(t) x_1` e flow matching recupera a difusão reformulada de Stratonovich com `v = α'·x_0 - σ'·x_1`. Os dois são algebricamente equivalentes para caminhos gaussianos.
 
 O que o flow matching adicionou: a *clareza* do alvo (uma velocidade simples), uma perda mais limpa, e a licença para experimentar com interpolantes não gaussianos.
 
@@ -131,7 +131,7 @@ Sempre que um paper diz "mais rápido que difusão" em 2025-2026, quase sempre �
 
 ## Entregue
 
-Salve `outputs/skill-fm-tuner.md`. A skill recebe uma especificação de modelo estilo difusão e a converte em uma configuração de treino de flow matching: escolha de agendamento, distribuição amostral de tempo (uniforme / logit-normal), otimizador, plano de reflow, contagem de passos alvo, protocolo de avaliação.
+Salve `outputs/skill-fm-tuner.md`. A skill recebe uma eespecificaçãoificação de modelo estilo difusão e a converte em uma configuração de treino de flow matching: escolha de agendamento, distribuição amostral de tempo (uniforme / logit-normal), otimizador, plano de reflow, contagem de passos alvo, protocolo de avaliação.
 
 ## Exercícios
 

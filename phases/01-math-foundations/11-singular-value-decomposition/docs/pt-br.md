@@ -140,7 +140,7 @@ Essa conexão te diz três coisas:
 
 ### SVD truncado: aproximação de baixo posto
 
-O teorema de Eckart-Young-Mirsky afirma que a melhor aproximação de rank-k para A (em ambas as normas de Frobenius e espectral) é obtida mantendo apenas os top k valores singulares e seus vetores correspondentes:
+O teorema de Eckart-Young-Mirsky afirma que a melhor aproximação de rank-k para A (em ambas as normas de Frobenius e eespecificaçãotral) é obtida mantendo apenas os top k valores singulares e seus vetores correspondentes:
 
 ```
 A_k = U_k * Sigma_k * V_k^T
@@ -150,7 +150,7 @@ onde:
   Sigma_k é k x k  (bloco superior esquerdo k x k de Sigma)
   V_k     é n x k  (primeiras k colunas de V)
 
-Erro de aproximação = sigma_{k+1}  (na norma espectral)
+Erro de aproximação = sigma_{k+1}  (na norma eespecificaçãotral)
                     = sqrt(sigma_{k+1}^2 + ... + sigma_r^2)  (na norma de Frobenius)
 ```
 

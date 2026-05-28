@@ -57,7 +57,7 @@ Execução remota de código via injeção de prompt na superfície de sugestão
 
 ### Calibração de severidade
 
-Padrão entre as três: fornecedores inicialmente classificaram EchoLeak como baixo (apenas divulgação de informação). Aim Labs demonstrou exfiltração de códigos MFA; a classificação escala para 9.3. A lição: vulnerabilidades específicas de IA são difíceis de classificar sem exploit demonstrado; defensores devem exigir prova-conceito abrangente.
+Padrão entre as três: fornecedores inicialmente classificaram EchoLeak como baixo (apenas divulgação de informação). Aim Labs demonstrou exfiltração de códigos MFA; a classificação escala para 9.3. A lição: vulnerabilidades eespecificaçãoíficas de IA são difíceis de classificar sem exploit demonstrado; defensores devem exigir prova-conceito abrangente.
 
 ### Posições da NIST e OWASP
 
@@ -74,19 +74,19 @@ Lição 15 é a classe de ataque em abstrato. Lição 25 é a camada CVE concret
 
 ## Entregue
 
-Esta lição produz `outputs/skill-cve-review.md`. Dado um deploy de IA em produção, enumera as superfícies de Violação de Escopo, verifica se cada uma viola a regra das três fronteiras independentes, e recomenda controles.
+Esta lição produz `outputs/skill-cve-review.md`. Dado um implantação de IA em produção, enumera as superfícies de Violação de Escopo, verifica se cada uma viola a regra das três fronteiras independentes, e recomenda controles.
 
 ## Exercícios
 
 1. Execute `code/main.py`. Relate os dados exfiltrados com e sem a defesa de separação de escopo.
 
-2. O ataque EchoLeak contorna CSP porque exfiltra via uma URL assinada pela Microsoft. Projete um deploy que restringa o conjunto de destinos de exfiltração permitidos e meça a taxa de falso positivo de uso legítimo.
+2. O ataque EchoLeak contorna CSP porque exfiltra via uma URL assinada pela Microsoft. Projete um implantação que restringa o conjunto de destinos de exfiltração permitidos e meça a taxa de falso positivo de uso legítimo.
 
 3. O framework de Violação de Escopo do Aim Labs tem três fronteiras: recuperação, escopo, saída. Construa um quarto ataque de classe CVE que explora uma combinação diferente de fronteiras.
 
 4. A correção do CamoLeak do Microsoft desabilitou renderização de imagens completamente. Proponha uma correção parcial que preserve renderização de imagens apenas para fontes confiáveis. Identifique a suposição de autenticação que isso requer.
 
-5. Divulgação responsável para vulnerabilidades de IA está evoluindo. Esboçe um protocolo de divulgação que inclua evidências específicas de IA (reprodutividade, escopo de versão de modelo, resistência a injeção de prompt).
+5. Divulgação responsável para vulnerabilidades de IA está evoluindo. Esboçe um protocolo de divulgação que inclua evidências eespecificaçãoíficas de IA (reprodutividade, escopo de versão de modelo, resistência a injeção de prompt).
 
 ## Termos-Chave
 
@@ -95,7 +95,7 @@ Esta lição produz `outputs/skill-cve-review.md`. Dado um deploy de IA em produ
 | EchoLeak | "a CVE do M365 Copilot" | CVE-2025-32711, CVSS 9.3, injeção de prompt zero-click |
 | Violação de Escopo LLM | "a nova classe" | Entrada não confiável dispara acesso a escopo privilegiado + exfiltração |
 | CamoLeak | "a CVE do GitHub Copilot" | CVSS 9.6 via proxy de imagens Camo; renderização de imagens desabilitada na correção |
-| Zero-click | "nenhuma ação do usuário" | Ataque dispara durante operação rotineira do agent |
+| Zero-click | "nenhuma ação do usuário" | Ataque dispara durante operação rotineira do agente |
 | XPIA | "o filtro PI da Microsoft" | Filtro Cross-Prompt Injection Attack; contornado pelo EchoLeak |
 | OWASP LLM01 | "a principal ameaça LLM" | Injeção de prompt; classificação OWASP 2025 |
 | Modelo de três fronteiras | "framework do Aim Labs" | Recuperação, escopo, saída — cada uma deve ser controlada independentemente |

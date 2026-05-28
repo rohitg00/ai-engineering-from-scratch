@@ -31,7 +31,7 @@ Um grafo é definido por:
 - **Arestas.** Transições condicionais ou diretas entre nós.
 - **Entrada e saída.** Nós sentinelas `START` e `END` marcam a fronteira.
 
-Exemplo: um agent com nós `classify`, `refund`, `bug`, `sales`, `done` — um workflow de roteamento como grafo.
+Exemplo: um agente com nós `classify`, `refund`, `bug`, `sales`, `done` — um workflow de roteamento como grafo.
 
 ### Execução durável
 
@@ -45,7 +45,7 @@ Todo nó pode ceder saída parcial. O grafo emite eventos de delta por nó pro c
 
 ### Human-in-the-loop
 
-Inspecione e modifique o estado entre nós. Implementações: pausa antes de um nó crítico, expõe o estado a um humano, aceita modificações, resume. O checkpointer facilita porque o estado já está serializado.
+Inespecificaçãoione e modifique o estado entre nós. Implementações: pausa antes de um nó crítico, expõe o estado a um humano, aceita modificações, resume. O checkpointer facilita porque o estado já está serializado.
 
 ### Memória
 
@@ -53,7 +53,7 @@ Curto prazo (dentro de uma execução — histórico de conversa no estado) e lo
 
 ### Três topologias
 
-1. **Supervisor.** LLM roteador central despacha pra subagents especialistas. `create_supervisor()` em `langgraph-supervisor` (embora a equipe do LangChain em 2026 recomende fazer isso via chamadas de ferramenta diretamente pra mais controle de contexto).
+1. **Supervisor.** LLM roteador central despacha pra subagents eespecificaçãoialistas. `create_supervisor()` em `langgraph-supervisor` (embora a equipe do LangChain em 2026 recomende fazer isso via chamadas de ferramenta diretamente pra mais controle de contexto).
 2. **Swarm / peer-to-peer.** Agents passam diretamente via superfície de ferramentas compartilhada. Sem roteador central.
 3. **Hierárquica.** Supervisores gerenciando sub-supervisores, implementados como subgrafos aninhados.
 
@@ -110,7 +110,7 @@ O trace mostra a primeira execução falhando no gate humano, persistência e de
 | Conditional edge | "Ramo" | Aresta escolhida por uma função de estado |
 | Subgraph | "Grafo aninhado" | Grafo usado como nó dentro de outro grafo |
 | Durable execution | "Resume de falha" | Reinicia no último nó bem-sucedido com estado exato |
-| Supervisor | "LLM roteador" | Despachante central pra subagents especialistas |
+| Supervisor | "LLM roteador" | Despachante central pra subagents eespecificaçãoialistas |
 | Swarm | "Agents P2P" | Agents passam via ferramentas compartilhadas; sem roteador central |
 
 ## Leitura Complementar

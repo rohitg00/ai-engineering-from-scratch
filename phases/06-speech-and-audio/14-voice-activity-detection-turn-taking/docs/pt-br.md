@@ -29,7 +29,7 @@ A resposta ingênua (limiar de energia) falha em qualquer ruído — trânsito, 
 
 **Nível 3: detector de turno semântico.** Modelo de detecção de turno do LiveKit (2024-2026) ou seu próprio classificador minúsculo. Distingue "pausa no meio da frase" de "terminou de falar". Usa contexto lingüístico (entonação + palavras recentes), não apenas silêncio.
 
-### Parâmetros-chave e seus defaults
+### Parâmetros-chave e seus configurações-padrão
 
 - **Threshold.** Silero emite uma probabilidade; classifique fala em > 0,5 (padrão) ou > 0,3 (sensível). Threshold menor = menos clips de primeira palavra, mais falsos positivos.
 - **Duração mínima de fala.** Rejeite fala menor que 250 ms — geralmente tosses ou ruído de cadeira.
@@ -51,7 +51,7 @@ End-to-end: 125 ms VAD + STT em flush = latência conversacional.
 | Cobra VAD (Picovoice) | 98,9% | ~1 ms | comercial |
 | Segmentação pyannote | 95% | ~10 ms | MIT-ish |
 
-Silero é o padrão correto. Cobra é o upgrade de compliance/precisão. VAD só-por-energia não tem lugar na produção de 2026.
+Silero é o padrão correto. Cobra é o upgrade de conformidade/precisão. VAD só-por-energia não tem lugar na produção de 2026.
 
 ## Construa
 
@@ -131,7 +131,7 @@ STT (Kyutai, Deepgram, AssemblyAI) precisa suportar flush para isso funcionar. W
 | Fallback sem dependências | WebRTC VAD (legado) |
 | Precisa de qualidade de fim-de-turno | Silero + detector de turno LiveKit em camadas |
 
-Regra de ouro: nunca faça deploy de VAD só-por-energia a menos que realmente não tenha outra opção.
+Regra de ouro: nunca faça implantação de VAD só-por-energia a menos que realmente não tenha outra opção.
 
 ## Armadilhas
 

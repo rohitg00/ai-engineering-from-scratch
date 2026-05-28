@@ -1,6 +1,6 @@
 # Handoff Multi-Sessão
 
-> A sessão vai acabar. O trabalho não. O pacote de handoff é o artefato que transforma "o agent trabalhou por uma hora" em "a próxima sessão é produtiva no primeiro minuto". Construa de propósito, não como reflexo tardio.
+> A sessão vai acabar. O trabalho não. O pacote de handoff é o artefato que transforma "o agente trabalhou por uma hora" em "a próxima sessão é produtiva no primeiro minuto". Construa de propósito, não como reflexo tardio.
 
 **Tipo:** Construção
 **Linguagens:** Python (stdlib)
@@ -16,7 +16,7 @@
 
 ## O Problema
 
-A sessão acaba. O agent diz "beleza, fizemos progresso". A próxima sessão abre. O próximo agent pergunta "onde paramos?". A resposta do primeiro agent sumiu. O próximo agent redescobre, re-executa os mesmos comandos, faz as mesmas perguntas pro humano de novo, e gasta trinta minutos recuperando os últimos trinta segundos da sessão anterior.
+A sessão acaba. O agente diz "beleza, fizemos progresso". A próxima sessão abre. O próximo agente pergunta "onde paramos?". A resposta do primeiro agente sumiu. O próximo agente redescobre, re-executa os mesmos comandos, faz as mesmas perguntas pro humano de novo, e gasta trinta minutos recuperando os últimos trinta segundos da sessão anterior.
 
 O custo de um handoff ruim é pago a cada sessão durante a vida da tarefa. A correção é um pacote gerado automaticamente no fim da sessão: o que mudou, por quê, o que foi tentado, o que falhou, o que falta, o que fazer primeiro na próxima vez.
 
@@ -48,11 +48,11 @@ O campo `next_action` é o que sustenta tudo. Um handoff com tudo menos `next_ac
 
 ### Handoffs são gerados, não escritos
 
-Um handoff escrito à mão é um handoff que é pulado num dia difícil. O generator lê os artefatos do workbench e emite o pacote. O trabalho do agent é deixar o workbench num estado que o generator consegue resumir, não escrever o resumo.
+Um handoff escrito à mão é um handoff que é pulado num dia difícil. O generator lê os artefatos do workbench e emite o pacote. O trabalho do agente é deixar o workbench num estado que o generator consegue resumir, não escrever o resumo.
 
 ### Duas formas: legível por humano e legível por máquina
 
-`handoff.md` é o que o humano lê. `handoff.json` é o que o próximo agent carrega. Ambos vêm dos mesmos artefatos de origem. Se divergirem, o JSON ganha.
+`handoff.md` é o que o humano lê. `handoff.json` é o que o próximo agente carrega. Ambos vêm dos mesmos artefatos de origem. Se divergirem, o JSON ganha.
 
 ### Podagem do log de feedback
 
@@ -79,9 +79,9 @@ Saída: o corpo do handoff impresso, mais os dois arquivos em disco.
 
 Codex CLI, Claude Code e OpenCode cada um tem uma história diferente de compactação; o pacote de handoff estruturado senta em cima dos três.
 
-**Estratégias de compactação variam; o schema do pacote não.** O POST /v1/responses/compact do Codex CLI é um blob AES opaco no servidor (caminho rápido para modelos OpenAI); o fallback é um "resumo de handoff" local anexado como mensagem `_summary` no role de usuário. O Claude Code roda compactação progressiva em cinco estágios a 95% do contexto. O OpenCode faz ocultação de mensagens baseada em timestamp mais um resumo de 5 cabeçalhos via LLM. Três mecanismos diferentes, mesma necessidade: serializar o que sobrevive à compressão num artefato portátil. O pacote é esse artefato.
+**Estratégias de compactação variam; o schema do pacote não.** O POST /v1/responses/compact do Codex CLI é um blob AES opaco no servidor (caminho rápido para modelos OpenAI); o reserva é um "resumo de handoff" local anexado como mensagem `_summary` no role de usuário. O Claude Code roda compactação progressiva em cinco estágios a 95% do contexto. O OpenCode faz ocultação de mensagens baseada em timestamp mais um resumo de 5 cabeçalhos via LLM. Três mecanismos diferentes, mesma necessidade: serializar o que sobrevive à compressão num artefato portátil. O pacote é esse artefato.
 
-**Handoff de sessão fresca não é compactação.** Compactação estende uma sessão; handoff fecha uma limpa e começa a próxima. O enquadramento do Hermes Issue #20372 (abril de 2026) está certo: quando a compressão in-place começa a degradar, o agent deve escrever um handoff compacto, encerrar a sessão e retomar em contexto fresco. O pacote é o que torna essa transição barata. O erro é continuar compactando até a qualidade colapsar; a correção é orçar um handoff limpo e antecipado.
+**Handoff de sessão fresca não é compactação.** Compactação estende uma sessão; handoff fecha uma limpa e começa a próxima. O enquadramento do Hermes Issue #20372 (abril de 2026) está certo: quando a compressão in-place começa a degradar, o agente deve escrever um handoff compacto, encerrar a sessão e retomar em contexto fresco. O pacote é o que torna essa transição barata. O erro é continuar compactando até a qualidade colapsar; a correção é orçar um handoff limpo e antecipado.
 
 **Um handoff ativo por branch e por tópico.** A coordenação multi-agent quebra mais em handoffs obsoletos do que em saída ruim de modelo. Sempre inclua `branch`, `last_known_good_commit` e um `status` de `active | superseded | archived`. Handoffs obsoletos são arquivados; apenas o ativo direciona a próxima sessão. Essa é a diferença entre handoff-como-notas e handoff-como-estado.
 
@@ -99,7 +99,7 @@ O pacote é pequeno, regular e barato de produzir. A economia se acumula com cad
 
 ## Entregue
 
-`outputs/skill-handoff-generator.md` produz um generator ajustado para os caminhos de artefatos do projeto, um hook de fim de sessão que o executa, e um schema `handoff.json` que o próximo agent lê na inicialização.
+`outputs/skill-handoff-generator.md` produz um generator ajustado para os caminhos de artefatos do projeto, um hook de fim de sessão que o executa, e um schema `handoff.json` que o próximo agente lê na inicialização.
 
 ## Exercícios
 
@@ -123,7 +123,7 @@ O pacote é pequeno, regular e barato de produzir. A economia se acumula com cad
 
 - [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
 - [OpenAI Agents SDK handoffs](https://platform.openai.com/docs/guides/agents-sdk/handoffs)
-- [Codex Blog, Codex CLI Context Compaction: Architecture, Configuration, Managing Long Sessions](https://codex.danielvaughan.com/2026/03/31/codex-cli-context-compaction-architecture/) — POST /v1/responses/compact e fallback local
+- [Codex Blog, Codex CLI Context Compaction: Architecture, Configuration, Managing Long Sessions](https://codex.danielvaughan.com/2026/03/31/codex-cli-context-compaction-architecture/) — POST /v1/responses/compact e reserva local
 - [Justin3go, Shedding Heavy Memories: Context Compaction in Codex, Claude Code, OpenCode](https://justin3go.com/en/posts/2026/04/09-context-compaction-in-codex-claude-code-and-opencode) — comparação de compactação entre três fornecedores
 - [JD Hodges, Claude Handoff Prompt: How to Keep Context Across Sessions (2026)](https://www.jdhodges.com/blog/ai-session-handoffs-keep-context-across-conversations/) — CLAUDE.md + HANDOVER.md, orçamento de contexto 50-75%
 - [Mervin Praison, Managing Handoffs in Multi-Agent Coding Sessions: Fresh Context Without Losing Continuity](https://mer.vin/2026/04/managing-handoffs-in-multi-agent-coding-sessions-fresh-context-without-losing-continuity/) — enquadramento de sistemas distribuídos

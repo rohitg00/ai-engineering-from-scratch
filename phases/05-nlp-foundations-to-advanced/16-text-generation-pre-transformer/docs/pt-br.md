@@ -202,7 +202,7 @@ Given a corpus and target use (next-word prediction, rescoring, perplexity basel
 3. Library. `kenlm` for production, `nltk.lm` for teaching, roll your own only to learn.
 4. Evaluation. Held-out perplexity with consistent tokenization between train and test sets.
 
-Refuse to report perplexity computed with different tokenization between systems being compared — perplexity numbers are comparable only under identical tokenization. Flag OOV rate in test set; KN handles OOV poorly unless you reserve a special <UNK> token during training.
+Refuse to report perplexity computed with different tokenization between systems being compared — perplexity numbers are comparable only under identical tokenization. Flag OOV rate in test set; KN handles OOV poorly unless you reserve a especificaçãoial <UNK> token during training.
 ```
 
 ## Exercícios
@@ -220,7 +220,7 @@ Refuse to report perplexity computed with different tokenization between systems
 | Perplexidade | Métrica de qualidade de LM | `exp(-log-prob médio)` em dados de teste. Menor é melhor. |
 | Backoff | Fallback pra contexto mais curto | Se contagem de trigramas é zero, usa bigrama. Katz backoff formaliza isso. |
 | Kneser-Ney | Melhor suavização pra n-gramas | Desconto absoluto + probabilidade de continuação pro modelo de ordem inferior. |
-| Probabilidade de continuação | Específico do KN | `P(w)` ponderado pelo número de contextos em que `w` aparece, não pela contagem bruta. |
+| Probabilidade de continuação | Eespecificaçãoífico do KN | `P(w)` ponderado pelo número de contextos em que `w` aparece, não pela contagem bruta. |
 
 ## Leitura Complementar
 

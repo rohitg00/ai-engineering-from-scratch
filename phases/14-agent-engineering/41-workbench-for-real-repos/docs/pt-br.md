@@ -89,13 +89,13 @@ Saída: uma tabela no console com os resultados por pipeline, o relatório em ma
 
 A pergunta do cético é "o quanto o workbench realmente ajuda?". Os números de 2026 dizem muito mais que a explicação.
 
-**Terminal Bench Top-30 ao Top-5 no mesmo modelo.** O *Anatomy of an Agent Harness* da LangChain (abril de 2026): um coding agent pulou de fora do top 30 pra quinto lugar no Terminal Bench 2.0 mudando apenas o harness. Mesmo modelo. Superfícies diferentes. Delta de 25 posições.
+**Terminal Bench Top-30 ao Top-5 no mesmo modelo.** O *Anatomy of an Agent Harness* da LangChain (abril de 2026): um coding agente pulou de fora do top 30 pra quinto lugar no Terminal Bench 2.0 mudando apenas o harness. Mesmo modelo. Superfícies diferentes. Delta de 25 posições.
 
-**Vercel 80% a 100% deletando tools.** A Vercel relatou que deletar 80% das tools do agent moveu a taxa de sucesso de 80% pra 100%. Superfície de tool menor, escopo mais afiado, menos formas de falhar. Espaço negativo vence.
+**Vercel 80% a 100% deletando tools.** A Vercel relatou que deletar 80% das ferramentas do agente moveu a taxa de sucesso de 80% pra 100%. Superfície de ferramenta menor, escopo mais afiado, menos formas de falhar. Espaço negativo vence.
 
 **Harvey 2x de acurácia só com harness.** Agents de jurídico mais que dobraram a acurácia via otimização de harness, sem mudança de modelo.
 
-**88% dos projetos de AI agent empresariais falham em chegar em produção.** O paper *Harness Engineering for Language Agents* do preprints.org (março de 2026) rastreia as falhas pro runtime, não pro raciocínio: estado obsoleto, retries frágeis, contexto inchado, recuperação ruim de erros intermediários.
+**88% dos projetos de AI agente empresariais falham em chegar em produção.** O paper *Harness Engineering for Language Agents* do preprints.org (março de 2026) rastreia as falhas pro runtime, não pro raciocínio: estado obsoleto, retries frágeis, contexto inchado, recuperação ruim de erros intermediários.
 
 **Colapso de contexto longo.** A baseline do WebAgent cai de 40-50% de sucesso pra menos de 10% em condições de contexto longo, principalmente por loops infinitos e perda de objetivo. O Ralph Loop e o pacote de handoff existem pra absorver isso.
 
@@ -109,13 +109,13 @@ Esta lição é o dossier que você cita quando:
 
 - Alguém pergunta por que todo PR carrega um `agent-rules.md` e um contrato de escopo.
 - Um time quer pular o gate de verificação "só nesse sprint".
-- Um novo produto de agent lança e você precisa de um benchmark portátil pra ver se realmente economiza tempo.
+- Um novo produto de agente lança e você precisa de um benchmark portátil pra ver se realmente economiza tempo.
 
 Os números viajam mais que a explicação.
 
 ## Entregue
 
-`outputs/skill-workbench-benchmark.md` é um harness de avaliação portátil que roda qualquer produto de agent pelos dois pipelines contra a sample app do próprio projeto e reporta os cinco resultados.
+`outputs/skill-workbench-benchmark.md` é um harness de avaliação portátil que roda qualquer produto de agente pelos dois pipelines contra a sample app do próprio projeto e reporta os cinco resultados.
 
 ## Exercícios
 
@@ -130,7 +130,7 @@ Os números viajam mais que a explicação.
 | Termo | O que a galera fala | O que realmente significa |
 |-------|---------------------|--------------------------|
 | Sample app | "Repo de brinquedo" | Pequeno mas realista o suficiente pra exercitar as sete superfícies |
-| Pipeline | "Workflow" | Sequência ordenada de leituras/escritas de superfícies que o agent segue |
+| Pipeline | "Workflow" | Sequência ordenada de leituras/escritas de superfícies que o agente segue |
 | Before/after report | "Os números" | O artefato que você passa pro cético |
 | False negative | "Workbench exagerado" | Tarefas onde só prompt é mais rápido; útil enumerar honestamente |
 | Workbench benchmark | "Índice de confiabilidade" | Harness portátil que roda a comparação no seu codebase |
@@ -145,4 +145,4 @@ Os números viajam mais que a explicação.
 - [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
 - Fases 14 · 32 até 14 · 40 — as superfícies que esta lição exercita ponta a ponta
 - Fase 14 · 19 — SWE-bench, GAIA, AgentBench como benchmarks macro que esta lição complementa
-- Fase 14 · 30 — desenvolvimento de agents orientado a evals que o mesmo harness conecta
+- Fase 14 · 30 — desenvolvimento de agentes orientado a evals que o mesmo harness conecta

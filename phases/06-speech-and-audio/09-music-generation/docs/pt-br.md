@@ -4,7 +4,7 @@
 
 **Tipo:** Construir
 **Idiomas:** Python
-**Pré-requisitos:** Fase 6 · 02 (Espectrogramas), Fase 4 · 10 (Modelos de Diffusão)
+**Pré-requisitos:** Fase 6 · 02 (Eespecificaçãotrogramas), Fase 4 · 10 (Modelos de Diffusão)
 **Tempo:** ~75 minutos
 
 ## O Problema
@@ -13,7 +13,7 @@ Texto → clipe de música de 30 segundos a 4 minutos, com letras, vocais e estr
 
 1. **Geração instrumental.** Texto como "bateria lo-fi hip-hop com teclas quentes" → áudio. MusicGen, Stable Audio, AudioLDM.
 2. **Geração de música (com vocais + letras).** "Música country sobre noites chuvosas no Texas" → música completa. Suno, Udio, YuE, ACE-Step.
-3. **Condicional / controlável.** Estender um clipe existente, regenerar uma ponte, trocar gênero, separar stems, ou inpainting. O inpainting + separação de stems do Udio é a feature a bater em 2026.
+3. **Condicional / controlável.** Estender um clipe existente, regenerar uma ponte, trocar gênero, separar stems, ou inpainting. O inpainting + separação de stems do Udio é a funcionalidade a bater em 2026.
 
 ## O Conceito
 
@@ -33,7 +33,7 @@ Texto → clipe de música de 30 segundos a 4 minutos, com letras, vocais e estr
 
 ### Híbrido (produção) — Suno, Udio, Lyria
 
-Pesos fechados. Provavelmente codec LM AR + vocoder baseado em diffusão com heads especializados de voz/bateria/melodia. Suno v5 (2026) é o líder de qualidade ELO 1293. Udio v4 adiciona inpainting + separação de stems (baixo, bateria, vocals downloads separados).
+Pesos fechados. Provavelmente codec LM AR + vocoder baseado em diffusão com heads eespecificaçãoializados de voz/bateria/melodia. Suno v5 (2026) é o líder de qualidade ELO 1293. Udio v4 adiciona inpainting + separação de stems (baixo, bateria, vocals downloads separados).
 
 ### Avaliação
 
@@ -59,7 +59,7 @@ Pesos fechados. Provavelmente codec LM AR + vocoder baseado em diffusão com hea
 
 - **Acordo Warner Music vs Suno.** $500M. WMG agora supervisiona similaridade de IA, direitos musicais e faixas geradas por usuários no Suno. Acordo similar da UMG no Udio.
 - **AI Act da UE** + **California SB 942**: música gerada por IA deve ser divulgada.
-- **Riffusion / MusicGen** sob MIT não têm ônus de compliance mas também não têm vocais comerciais.
+- **Riffusion / MusicGen** sob MIT não têm ônus de conformidade mas também não têm vocais comerciais.
 
 Padrões seguros para deploy:
 

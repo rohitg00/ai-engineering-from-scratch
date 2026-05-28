@@ -1,6 +1,6 @@
 # Métricas de Inferência — TTFT, TPOT, ITL, Goodput, P99
 
-> Quatro métricas decidem se uma implantação de inferência está funcionando. TTFT é prefill mais fila mais rede. TPOT (equivalentemente ITL) é o custo de decode limitado por memória por token. Latência end-to-end é TTFT mais TPOT vezes o comprimento da saída. Throughput é tokens por segundo agregados pela frota. Mas a que importa para o produto é goodput — a fração de requests que atingiram todos os SLOs simultaneamente. Alto throughput com baixo goodput significa que você está processando tokens que nunca chegam aos usuários a tempo. Números de referência para Llama-3.1-8B-Instruct no TRT-LLM em 2026: TTFT médio 162 ms, TPOT médio 7,33 ms, E2E médio 1.093 ms. Sempre reporte P50, P90, P99 — nunca só a média. E cuidado com a armadilha de medição: GenAI-Perf exclui TTFT do cálculo de ITL, LLMPerf inclui; duas ferramentas discordam sobre TPOT no mesmo run.
+> Quatro métricas decidem se uma implantação de inferência está funcionando. TTFT é prefill mais fila mais rede. TPOT (equivalentemente ITL) é o custo de decode limitado por memória por token. Latência de ponta a ponta é TTFT mais TPOT vezes o comprimento da saída. Throughput é tokens por segundo agregados pela frota. Mas a que importa para o produto é goodput — a fração de requests que atingiram todos os SLOs simultaneamente. Alto throughput com baixo goodput significa que você está processando tokens que nunca chegam aos usuários a tempo. Números de referência para Llama-3.1-8B-Instruct no TRT-LLM em 2026: TTFT médio 162 ms, TPOT médio 7,33 ms, E2E médio 1.093 ms. Sempre reporte P50, P90, P99 — nunca só a média. E cuidado com a armadilha de medição: GenAI-Perf exclui TTFT do cálculo de ITL, LLMPerf inclui; duas ferramentas discordam sobre TPOT no mesmo run.
 
 **Tipo:** Aprendizado
 **Linguagens:** Python (stdlib, calculadora de percentil toy e reporter de goodput)
@@ -16,9 +16,9 @@
 
 ## O Problema
 
-"Nosso throughput é 15.000 tokens por segundo." E daí? Se 40% dos requests passaram de 2 segundos end-to-end, os usuários abandonaram a sessão. Throughput sozinho não te diz se o produto funciona.
+"Nosso throughput é 15.000 tokens por segundo." E daí? Se 40% dos requests passaram de 2 segundos de ponta a ponta, os usuários abandonaram a sessão. Throughput sozinho não te diz se o produto funciona.
 
-Inferência tem múltiplos eixos de latência e cada um falha de um jeito. Prefill é limitado por compute e escala com o comprimento do prompt. Decode é limitado por memória e escala com o tamanho do batch. Atraso de fila é um problema operacional. Rede é um problema de distância física. Você precisa de métricas distintas para cada um, precisa de percentis e precisa de um composto único que diga "o usuário recebeu o que esperava" — esse é o goodput.
+Inferência tem múltiplos eixos de latência e cada um falha de um jeito. Prefill é limitado por processamento e escala com o comprimento do prompt. Decode é limitado por memória e escala com o tamanho do batch. Atraso de fila é um problema operacional. Rede é um problema de distância física. Você precisa de métricas distintas para cada um, precisa de percentis e precisa de um composto único que diga "o usuário recebeu o que esperava" — esse é o goodput.
 
 ## O Conceito
 
@@ -26,7 +26,7 @@ Inferência tem múltiplos eixos de latência e cada um falha de um jeito. Prefi
 
 `TTFT = queue_time + network_request + prefill_time`
 
-Prefill domina quando prompts são longos. No Llama-3.3-70B FP8 no H100, um prompt de 32k leva ~800 ms de puro prefill. Tempo de fila é comportamento do scheduler sob carga. Requisição de rede é o tempo da linha incluindo TLS. TTFT é a latência que o usuário vê antes de qualquer coisa começar a voltar.
+Prefill domina quando prompts são longos. No Llama-3.3-70B FP8 no H100, um prompt de 32k leva ~800 ms de puro prefill. Tempo de fila é comportamento do agendador sob carga. Requisição de rede é o tempo da linha incluindo TLS. TTFT é a latência que o usuário vê antes de qualquer coisa começar a voltar.
 
 ### TPOT / ITL — inter-token latency
 

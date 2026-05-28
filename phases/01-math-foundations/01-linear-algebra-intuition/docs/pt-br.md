@@ -18,7 +18,7 @@
 
 Abra qualquer paper de ML. Na primeira página, você vai ver vetores, matrizes, produtos escalares e transformações. Sem intuição de álgebra linear, isso são só símbolos. Com ela, você consegue ver o que uma rede neural realmente está fazendo — movendo pontos pelo espaço.
 
-Você não precisa ser matemático. Você precisa ver o que essas operações significam geometricamente, e depois programar elas.
+Você não precisa ser matemático. Você precisa ver o que essas operações significam geometricamente, e depois programá-las.
 
 ## O Conceito
 
@@ -83,7 +83,7 @@ Isso é literalmente como funcionam motores de busca, sistemas de recomendação
 
 ### Independência Linear
 
-Vetores são linearmente independentes se nenhum vetor do conjunto pode ser escrito como combinação dos outros. Se v1, v2, v3 são independentes, elesspan um espaço 3D. Se um é combinação dos outros, eles só span um plano.
+Vetores são linearmente independentes se nenhum vetor do conjunto pode ser escrito como combinação dos outros. Se v1, v2, v3 são independentes, eles span um espaço 3D. Se um é combinação dos outros, eles só span um plano.
 
 Por que isso importa na IA: sua matriz de features deve ter colunas linearmente independentes. Se duas features são perfeitamente correlacionadas (linearmente dependentes), o modelo não consegue distinguir seus efeitos. Isso causa multicolinearidade em regressão — a matriz de pesos fica instável, e pequenas mudanças de entrada produzem grandes oscilações na saída.
 
@@ -95,7 +95,7 @@ v2 = [0, 1, 0]
 v3 = [2, 1, 0]   # v3 = 2*v1 + v2
 ```
 
-v1 e v2 são independentes — nenhuma é múltiplo escalar ou combinação da outra. Mas v3 = 2*v1 + v2, então {v1, v2, v3} é um conjunto dependente. Esses três vetores ficam todos no plano xy. Não importa como você combine, não dá pra chegar em [0, 0, 1]. Você tem três vetores mas só duas dimensões de liberdade.
+v1 e v2 são independentes — nenhuma é múltipla escalar ou combinação da outra. Mas v3 = 2*v1 + v2, então {v1, v2, v3} é um conjunto dependente. Esses três vetores ficam todos no plano xy. Não importa como você combine, não dá pra chegar em [0, 0, 1]. Você tem três vetores mas só duas dimensões de liberdade.
 
 Em um dataset: se feature_3 = 2*feature_1 + feature_2, adicionar feature_3 não dá informação nova pro modelo. Pior, isso torna as equações normais singulares — não existe solução única para os pesos.
 
@@ -147,7 +147,7 @@ graph LR
 
 proj_b(a) = (3*1 + 4*0) / (1*1 + 0*0) * [1, 0] = 3 * [1, 0] = [3, 0]
 
-A projeção elimina o componente y. Isso é redução de dimensionalidade na sua forma mais simples — jogar fora as direções que você não se importa.
+A projeção elimina o componente y. Isso é redução de dimensionalidade na sua forma mais simples — jogar fora as direções que não lhe interessam.
 
 ### Processo de Gram-Schmidt
 
@@ -421,7 +421,7 @@ Esta aula produz:
 
 ## Conexões
 
-Tudo nesta aula se conecta a partes específicas da IA moderna:
+Tudo nesta aula se conecta a partes eespecificaçãoíficas da IA moderna:
 
 | Conceito | Onde aparece |
 |---------|------------------|
@@ -433,7 +433,7 @@ Tudo nesta aula se conecta a partes específicas da IA moderna:
 | Gram-Schmidt / QR | Solucionadores numéricos, computação de autovalores |
 | Base ortonormal | Computação numérica estável, transformações de whitening |
 
-LoRA merece uma menção especial. Ele faz fine-tuning de grandes modelos de linguagem decompondo atualizações de pesos em matrizes de baixo posto. Em vez de atualizar uma matriz de pesos de 4096x4096 (16M parâmetros), LoRA atualiza duas matrizes de tamanho 4096x16 e 16x4096 (131K parâmetros). A restrição de posto 16 significa que LoRA assume que a atualização dos pesos vive em um subespaço de 16 dimensões do espaço completo de 4096 dimensões. Isso é álgebra linear fazendo trabalho real.
+LoRA merece uma menção eespecificaçãoial. Ele faz fine-tuning de grandes modelos de linguagem decompondo atualizações de pesos em matrizes de baixo posto. Em vez de atualizar uma matriz de pesos de 4096x4096 (16M parâmetros), LoRA atualiza duas matrizes de tamanho 4096x16 e 16x4096 (131K parâmetros). A restrição de posto 16 significa que LoRA assume que a atualização dos pesos vive em um subespaço de 16 dimensões do espaço completo de 4096 dimensões. Isso é álgebra linear fazendo trabalho real.
 
 ## Exercícios
 

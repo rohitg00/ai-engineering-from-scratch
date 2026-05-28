@@ -1,6 +1,6 @@
 # Tool Registry com Schema Validation
 
-> Uma ferramenta que o agent não consegue validar é uma ferramenta que o agent não consegue chamar. Construa o registry e o verificador de schema antes de construir as ferramentas.
+> Uma ferramenta que o agente não consegue validar é uma ferramenta que o agente não consegue chamar. Construa o registry e o verificador de schema antes de construir as ferramentas.
 
 **Tipo:** Build
 **Linguagens:** Python
@@ -16,7 +16,7 @@
 
 ## Por que o registry vem antes da ferramenta
 
-Um coding agent em 2026 tem mais ferramentas registradas do que o model cabe em uma única janela de contexto. Um harness não trivial vai registrar duzentas ferramentas e expor dez a quarenta em qualquer turn. O registry é a fonte de verdade para "quais ferramentas existem," "qual é a forma dos seus argumentos," e "qual handler devo chamar." Uma vez que essas três respostas estão fixadas, o resto do harness pode parar de adivinhar.
+Um coding agente em 2026 tem mais ferramentas registradas do que o model cabe em uma única janela de contexto. Um harness não trivial vai registrar duzentas ferramentas e expor dez a quarenta em qualquer turn. O registry é a fonte de verdade para "quais ferramentas existem," "qual é a forma dos seus argumentos," e "qual handler devo chamar." Uma vez que essas três respostas estão fixadas, o resto do harness pode parar de adivinhar.
 
 O erro que estamos evitando é lançar handlers sem schemas, ou lançar schemas sem validação. Ambos são comuns. Ambos transformam a próxima camada (o dispatcher na aula vinte e três) em um jogo de adivinhação onde o único modo de falha é um stack trace do handler.
 
@@ -36,7 +36,7 @@ O schema é o único campo que o validador toca. O handler é opaco para ele. Se
 
 ## O subconjunto do JSON Schema 2020-12
 
-A especificação completa de 2020-12 é um paper. Nós precisamos de oito palavras-chave.
+A eespecificaçãoificação completa de 2020-12 é um paper. Nós precisamos de oito palavras-chave.
 
 ```text
 type           string / number / integer / boolean / object / array / null

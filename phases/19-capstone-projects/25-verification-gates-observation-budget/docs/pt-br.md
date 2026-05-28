@@ -1,10 +1,10 @@
 # Capstone Aula 25: Verification Gates e o Observation Budget
 
-> Um agent harness sem uma camada de verificação é um desejo de casaco de trincheira. Esta aula constrói a cadeia de gates determinística que decide se uma chamada de ferramenta pode disparar, quanto da sua saída o agent pode ver, e quando o loop tem que parar porque o agent leu demais. A cadeia é uma função de gates pequenos e nomeados mais um ledger de observação que rastreia cada token que o model foi mostrado.
+> Um agente harness sem uma camada de verificação é um desejo de casaco de trincheira. Esta aula constrói a cadeia de gates determinística que decide se uma chamada de ferramenta pode disparar, quanto da sua saída o agente pode ver, e quando o loop tem que parar porque o agente leu demais. A cadeia é uma função de gates pequenos e nomeados mais um ledger de observação que rastreia cada token que o model foi mostrado.
 
 **Tipo:** Build
 **Linguagens:** Python (stdlib)
-**Pré-requisitos:** Fase 19 · 20-24 (Trilha A1: agent loop, tool registry, message store, prompt builder, model router), Fase 14 · 33 (instruções como restrições), Fase 14 · 36 (contratos de escopo), Fase 14 · 38 (verification gates)
+**Pré-requisitos:** Fase 19 · 20-24 (Trilha A1: agente loop, ferramenta registry, message store, prompt builder, model router), Fase 14 · 33 (instruções como restrições), Fase 14 · 36 (contratos de escopo), Fase 14 · 38 (verification gates)
 **Tempo:** ~90 minutos
 
 ## Objetivos de Aprendizado
@@ -17,9 +17,9 @@
 
 ## O Problema
 
-Quando um agent harness deixa o model chamar ferramentas livremente, três classes de bug aparecem na primeira hora de uso real.
+Quando um agente harness deixa o model chamar ferramentas livremente, três classes de bug aparecem na primeira hora de uso real.
 
-A primeira é observação ilimitada. Um grep em um repo de 200 mil linhas despeja meio milhão de tokens de saída no próximo turn. O model vê um match por kilobyte e o resto do contexto é desperdiçado. A conta de tokens é grande e o agent está agora pior, não melhor, na tarefa.
+A primeira é observação ilimitada. Um grep em um repo de 200 mil linhas despeja meio milhão de tokens de saída no próximo turn. O model vê um match por kilobyte e o resto do contexto é desperdiçado. A conta de tokens é grande e o agente está agora pior, não melhor, na tarefa.
 
 A segunda é recência obsoleta. Uma tarefa longa acumula cinquenta chamadas de ferramenta. O model relê o primeiro read_file do turn três como se fosse estado atual. Edições feitas no turn quarenta e sete nunca aparecem porque o prompt builder serializou as observações mais antigas primeiro.
 
@@ -72,7 +72,7 @@ A implementação é um único `main.py` mais testes.
 3. `GateDecision` carrega `(allow, reason, gate_name)`.
 4. `VerificationGate` é o protocolo. Cada gate implementa `evaluate(call, ctx)`.
 5. `GateChain` envolve uma lista ordenada. Chama cada gate, retorna o primeiro deny, ou retorna allow se todos passaram.
-6. A demo roda um mini agent loop sintético. Três turns. O terceiro turn dispara o gate de orçamento e o loop reporta uma recusa limpa com contagem de recusa não-zero.
+6. A demo roda um mini agente loop sintético. Três turns. O terceiro turn dispara o gate de orçamento e o loop reporta uma recusa limpa com contagem de recusa não-zero.
 
 O contador de tokens é intencionalmente uma heurística estúpida de `len(text) // 4`. O ponto desta aula é a tubulação de gates, não o tokenizer. Use um tokenizer real em produção.
 
@@ -84,7 +84,7 @@ Você também ordena por raio de explosão. Whitelist é a afirmação mais fort
 
 ## Como isso compõe com o resto da Trilha A
 
-As aulas anteriores te deram o loop, o tool registry, o message store, o prompt builder e o model router. Esta aula adiciona a camada entre o model e as ferramentas. A aula 26 fornece o sandbox que o dispatcher entrega a chamada de ferramenta quando a cadeia de gates diz ALLOW. A aula 27 fornece o eval harness que registra contagens de recusa como sinal de qualidade. A aula 28 conecta as decisões de gate em spans de OpenTelemetry. A aula 29 costura tudo em um coding agent funcional.
+As aulas anteriores te deram o loop, o ferramenta registry, o message store, o prompt builder e o model router. Esta aula adiciona a camada entre o model e as ferramentas. A aula 26 fornece o sandbox que o dispatcher entrega a chamada de ferramenta quando a cadeia de gates diz ALLOW. A aula 27 fornece o eval harness que registra contagens de recusa como sinal de qualidade. A aula 28 conecta as decisões de gate em spans de OpenTelemetry. A aula 29 costura tudo em um coding agente funcional.
 
 ## Rodando
 

@@ -16,7 +16,7 @@
 
 ## O Problema
 
-RAG de modalidade única é um padrão resolvido: embute query, embute chunks, recupera, joga no LLM. RAG multimodal exige:
+RAG de modalidade única é um padrão resolvido: embute consulta, embute chunks, recupera, joga no LLM. RAG multimodal exige:
 
 1. Múltiplas cabeças de busca (cada modalidade precisa de embeddings num espaço compatível).
 2. Fusão de resultados de busca entre modalidades.
@@ -29,7 +29,7 @@ Os surveys de 2025 todos chegam na mesma taxonomia.
 
 ### Busca cross-modal
 
-Recuperar documentos de modalidade B dada uma query de modalidade A. Três padrões:
+Recuperar documentos de modalidade B dada uma consulta de modalidade A. Três padrões:
 
 1. Espaço de embedding compartilhado. CLIP e CLAP produzem embeddings de texto + imagem / texto + áudio num espaço compartilhado. Similaridade cosseno entre modalidades funciona diretamente. Limitado a pares treinados com CLIP.
 
@@ -47,9 +47,9 @@ Fusão por score (a mais barata). Cada modalidade tem seu próprio recuperador, 
 
 Fusão baseada em attention. Concatena todos os itens recuperados, deixa uma rede pequena de attention ponderar. Precisa de treinamento.
 
-Fusão MoE. Rede de gating roteia para experts específicos por modalidade. Diferentes tipos de query roteiam diferente — uma questão visual pondera imagens mais.
+Fusão MoE. Rede de gating roteia para experts eespecificaçãoíficos por modalidade. Diferentes tipos de consulta roteiam diferente — uma questão visual pondera imagens mais.
 
-Padrão em produção: fusão com score com leve viés para a modalidade dominante da query. Atualize para MoE se A/B mostrar ganhos claros no seu domínio.
+Padrão em produção: fusão com score com leve viés para a modalidade dominante da consulta. Atualize para MoE se A/B mostrar ganhos claros no seu domínio.
 
 ### Fundamentação de geração
 
@@ -81,7 +81,7 @@ Query: "ache um brunch vegano silencioso com luz natural."
 
 Pipeline:
 
-1. Decompor query. "silencioso" → palavra-chave de áudio/review; "brunch vegano" → item de cardápio; "luz natural" → feature de imagem.
+1. Decompor consulta. "silencioso" → palavra-chave de áudio/review; "brunch vegano" → item de cardápio; "luz natural" → funcionalidade de imagem.
 2. Buscar por modalidade:
    - Busca textual em reviews: "brunch vegano, ambiente silencioso."
    - Busca visual em fotos de restaurante: "luz natural, arejado."
@@ -106,10 +106,10 @@ Avaliação cross-modal ainda é imatura. Substitutos comuns:
 
 - Recall@k por modalidade.
 - Acurácia do top-k fundido.
-- Satisfação end-to-end avaliada por humanos.
-- Específica de tarefa (reservas completadas, compras realizadas).
+- Satisfação de ponta a ponta avaliada por humanos.
+- Eespecificaçãoífica de tarefa (reservas completadas, compras realizadas).
 
-Nenhum benchmark padrão cobre todas as modalidades. A maioria dos artigos avalia em tarefas específicas de domínio.
+Nenhum benchmark padrão cobre todas as modalidades. A maioria dos artigos avalia em tarefas eespecificaçãoíficas de domínio.
 
 ## Use
 
@@ -118,31 +118,31 @@ Nenhum benchmark padrão cobre todas as modalidades. A maioria dos artigos avali
 - Três recuperadores simulados (texto, imagem, áudio) operando num corpus compartilhado de restaurantes.
 - Fusão por score que combina scores de modalidade com pesos configuráveis.
 - Um stub de gerador que emite resposta final com citações.
-- Um loop agentic simples que reformula a query se a confiança for baixa.
+- Um loop agentic simples que reformula a consulta se a confiança for baixa.
 
 ## Entregue
 
-Esta aula produz `outputs/skill-multimodal-rag-designer.md`. Dada uma spec de produto com fluxo de query multimodal, projeta recuperadores, fusão, gerador e avaliação.
+Esta aula produz `outputs/skill-multimodal-rag-designer.md`. Dada uma eespecificaçãoificação de produto com fluxo de consulta multimodal, projeta recuperadores, fusão, gerador e avaliação.
 
 ## Exercícios
 
-1. Proponha um RAG multimodal de triagem médica: query = foto da lesão + sintomas textuais. De quais KBs busca quais modalidades?
+1. Proponha um RAG multimodal de triagem médica: consulta = foto da lesão + sintomas textuais. De quais KBs busca quais modalidades?
 
 2. Fusão por score é uma soma ponderada simples. Que modo de falha ela tem que fusão MoE evita?
 
 3. Leia a taxonomia de Abootorabi et al. (Seção 3). Quais são os três subproblemas canônicos e como mapeiam pro seu produto escolhido?
 
-4. Projete uma spec de avaliação para um RAG multimodal de planejador de viagem. Que métricas cobrem recall de imagem, recall de áudio, e correção composta?
+4. Projete uma eespecificaçãoificação de avaliação para um RAG multimodal de planejador de viagem. Que métricas cobrem recall de imagem, recall de áudio, e correção composta?
 
-5. RAG agentic multi-hop tem um imposto de latência por round-trip. Em que dificuldade de query o ganho de acurácia justifica a latência?
+5. RAG agentic multi-hop tem um imposto de latência por round-trip. Em que dificuldade de consulta o ganho de acurácia justifica a latência?
 
 ## Termos-Chave
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|------------------------|--------------------------|
-| Busca cross-modal | "Query uma modalidade, recuperar outra" | Query textual recupera imagens; query visual recupera texto; exige espaço compartilhado ou tradutor |
+| Busca cross-modal | "Query uma modalidade, recuperar outra" | Query textual recupera imagens; consulta visual recupera texto; exige espaço compartilhado ou tradutor |
 | Fusão por score | "Combinar scores" | Soma ponderada dos scores de busca por modalidade; fusão mais simples |
-| Fusão MoE | "Experts roteados por modalidade" | Rede de gating escolhe quais scores de modalidade confiar por query |
+| Fusão MoE | "Experts roteados por modalidade" | Rede de gating escolhe quais scores de modalidade confiar por consulta |
 | Geração fundamentada | "Cite suas fontes" | Cada afirmação na resposta marcada com o índice da fonte |
 | MuRAG | "Primeiro RAG multimodal" | Artigo de 2022 que estabeleceu o padrão de RAG multimodal |
 | Multi-hop agentic | "Reformular e tentar de novo" | LLM refaz queries aos recuperadores quando confiança da primeira passagem é baixa |

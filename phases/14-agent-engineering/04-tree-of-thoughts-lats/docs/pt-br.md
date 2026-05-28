@@ -69,10 +69,10 @@ Se sua tarefa tem uma resposta certa e um avaliador barulhento, busca frequentem
 
 ### Posicionamento em 2026
 
-A maioria dos agents de produção não roda LATS. Eles rodam ReAct com verificação ancorada em ferramenta (CRITIC, Aula 05). Busca aparece em nichos especializados:
+A maioria dos agentes de produção não roda LATS. Eles rodam ReAct com verificação ancorada em ferramenta (CRITIC, Aula 05). Busca aparece em nichos eespecificaçãoializados:
 
 - Agents de código que rodam testes como função valor (estilo HumanEval).
-- Agents de pesquisa profunda que exploram múltiplos caminhos de query.
+- Agents de pesquisa profunda que exploram múltiplos caminhos de consulta.
 - Workflows pesados em planejamento dentro de subgrafos do LangGraph.
 
 AlphaEvolve (Aula 11) é o extremo de 2025: busca evolutiva sobre código, fitness verificável por máquina, ganhos frontier (primeira melhoria em matmul 4x4 em 56 anos).
@@ -95,7 +95,7 @@ O trace mostra ToT expandindo três candidatos por nó com BFS, comparado com LA
 
 ## Use
 
-LangGraph entrega exploração estilo ToT como padrões de subgrafo; o post da equipe do LangChain sobre LATS (Maio 2024) é o tutorial de referência. LlamaIndex entrega um agent `TreeOfThoughts`. Pra maioria dos agents de produção de 2026 esse padrão fica atrás de um gate `if task_complexity > threshold: use_search()` — veja o padrão evaluator-optimizer na Aula 05.
+LangGraph entrega exploração estilo ToT como padrões de subgrafo; o post da equipe do LangChain sobre LATS (Maio 2024) é o tutorial de referência. LlamaIndex entrega um agente `TreeOfThoughts`. Pra maioria dos agentes de produção de 2026 esse padrão fica atrás de um gate `if task_complexity > threshold: use_search()` — veja o padrão evaluator-optimizer na Aula 05.
 
 ## Entregue
 

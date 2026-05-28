@@ -34,7 +34,7 @@ Ambos necessários. Evals pegam regressões antes da exposição; A/B confirma i
 
 1. **Engenharia de prompts** — redação, estrutura do system prompt, exemplos. Métrica: sucesso da tarefa, retenção do usuário, custo/request.
 2. **Seleção de modelo** — GPT-4 vs GPT-3.5-Turbo vs Llama-OSS. Métrica: acurácia (tarefa) + custo/request + latência P99. Multi-objetivo.
-3. **Parâmetros de geração** — temperature, top-p, max_tokens. Métrica: específica da tarefa (diversidade do output vs determinismo).
+3. **Parâmetros de geração** — temperature, top-p, max_tokens. Métrica: eespecificaçãoífica da tarefa (diversidade do output vs determinismo).
 
 ### CUPED — redução de variância
 
@@ -59,7 +59,7 @@ Hash de aleatorização distribui usuários nas variantes. Se split 50/50 entreg
 **Statsig**:
 - Adquirida por OpenAI por $1.1B (setembro 2025). Hosted, SaaS.
 - Testes sequenciais, CUPED, populações held-out.
-- Tudo-em-um: feature flags + experimentação + observabilidade.
+- Tudo-em-um: funcionalidade flags + experimentação + observabilidade.
 - Melhor para: time que já quer um produto bundle, não se importa com propriedade da OpenAI.
 
 **GrowthBook**:
@@ -126,6 +126,6 @@ Esta aula produz `outputs/skill-ab-plan.md`. Dada mudança de funcionalidade, wo
 
 - [GrowthBook — How to A/B Test AI](https://blog.growthbook.io/how-to-a-b-test-ai-a-practical-guide/)
 - [Statsig — Beyond Prompts: Data-Driven LLM Optimization](https://www.statsig.com/blog/llm-optimization-online-experimentation)
-- [Statsig vs GrowthBook comparison](https://www.statsig.com/perspectives/ab-testing-feature-flags-comparison-tools)
+- [Statsig vs GrowthBook comparison](https://www.statsig.com/perespecificaçãotives/ab-testing-feature-flags-comparison-tools)
 - [Deng et al. — CUPED](https://www.exp-platform.com/Documents/2013-02-CUPED-ImprovingSensitivityOfControlledExperiments.pdf)
 - [Howard — Confidence Sequences](https://arxiv.org/abs/1810.08240)

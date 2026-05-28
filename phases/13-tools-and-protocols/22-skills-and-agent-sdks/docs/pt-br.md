@@ -106,7 +106,7 @@ Carregamento é por nome de pasta e `name` do frontmatter. Claude Code, Anthropi
 
 ### Claude Agent SDK da Anthropic
 
-`@anthropic-ai/claude-agent-sdk` (TypeScript) e `claude-agent-sdk` (Python) carregam skills na inicialização da sessão, as expõem como "agentes" chamáveis dentro do runtime. O agent loop despacha pra uma skill quando o usuário a invoca.
+`@anthropic-ai/claude-agent-sdk` (TypeScript) e `claude-agent-sdk` (Python) carregam skills na inicialização da sessão, as expõem como "agentes" chamáveis dentro do runtime. O agente loop despacha pra uma skill quando o usuário a invoca.
 
 ### OpenAI Apps SDK
 
@@ -134,7 +134,7 @@ Os três compõem: o agente lê AGENTS.md na inicialização da sessão, o usuá
 
 ## Usar
 
-`code/main.py` disponibiliza um parser e loader de SKILL.md com stdlib. Ele descobre skills sob `./skills/`, parseia o frontmatter YAML mais corpo markdown e produz um dict indexado por nome da skill. Depois simula um agent loop que invoca `release-notes-writer` por nome.
+`code/main.py` disponibiliza um parser e loader de SKILL.md com stdlib. Ele descobre skills sob `./skills/`, parseia o frontmatter YAML mais corpo markdown e produz um dict indexado por nome da skill. Depois simula um agente loop que invoca `release-notes-writer` por nome.
 
 O que observar:
 

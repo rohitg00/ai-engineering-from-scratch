@@ -9,7 +9,7 @@
 
 ## Objetivos de Aprendizagem
 
-- Implementar self-attention de produto escalar escalonado do zero usando apenas NumPy, incluindo projeções query/key/value e a soma ponderada com softmax
+- Implementar self-attention de produto escalar escalonado do zero usando apenas NumPy, incluindo projeções consulta/key/value e a soma ponderada com softmax
 - Construir uma camada de multi-head attention que separa heads, calcula attention paralela e concatena resultados
 - Rastrear como a matriz de attention captura relacionamentos entre tokens e explicar por que a escala por sqrt(d_k) previne saturação do softmax
 - Aplicar máscara causal para converter attention bidirecional em attention autoregressiva (estilo decoder)
@@ -38,10 +38,10 @@ Attention:
 
 Cada token gera três vetores:
 - **Query (Q)**: "O que estou procurando?"
-- **Key (K)**: "O que eu contêm?"
+- **Key (K)**: "O que eu contém?"
 - **Value (V)**: "Que informação eu forneço se selecionado?"
 
-O produto escalar entre uma query e todas as keys produz scores de attention. Score alto significa "essa key combina com minha query". Esses scores ponderam os values. A saída é uma soma ponderada de values.
+O produto escalar entre uma consulta e todas as keys produz scores de attention. Score alto significa "essa key combina com minha consulta". Esses scores ponderam os values. A saída é uma soma ponderada de values.
 
 ### Computação de Q, K, V
 
@@ -60,7 +60,7 @@ Three weight matrices:
 
 Projections:
 
-  Q = X @ Wq    shape: (n, dk)      each token's query
+  Q = X @ Wq    shape: (n, dk)      each token's consulta
   K = X @ Wk    shape: (n, dk)      each token's key
   V = X @ Wv    shape: (n, dv)      each token's value
 ```
@@ -123,7 +123,7 @@ Raw scores for q1:   [2.1, 0.3, 0.1, 0.8, 0.2]
 Attention weights:   [0.52, 0.09, 0.07, 0.14, 0.08]   (sums to ~1.0)
 ```
 
-Agora cada token tem um conjunto de pesos dizendo quanto attend a cada outro token.
+Agora cada token tem um conjunto de pesos dizendo quanto atende a cada outro token.
 
 ### Soma Ponderada de Values
 

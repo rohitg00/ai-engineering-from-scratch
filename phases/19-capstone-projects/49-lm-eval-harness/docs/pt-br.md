@@ -12,15 +12,15 @@
 - Definir uma tarefa como um arquivo JSONL com `prompt`, `targets`, `metric`, e `extras` opcionais por exemplo.
 - Implementar cinco metricas: exact match, rouge-l F1, verificacao executavel, multipla escolha, e substring contains.
 - Construir um executor que agrupa exemplos por tarefa e despacha para um adaptador de modelo trocavel.
-- Emitir um leaderboard JSON com pontuacoes por tarefa, latencia, e uma media geral reproduzivel.
+- Emitir um ranking JSON com pontuacoes por tarefa, latencia, e uma media geral reproduzivel.
 
 ## O Problema
 
-Um novo modelo de linguagem aparece toda semana. O pitch de marketing e que ele vai bem. A questao honesta e: bem em que? A resposta honesta e o leaderboard que voce mesmo escreveu, porque o leaderboard do vendedor e o que ele sintonizou.
+Um novo modelo de linguagem aparece toda semana. O pitch de marketing e que ele vai bem. A questao honesta e: bem em que? A resposta honesta e o ranking que voce mesmo escreveu, porque o ranking do vendedor e o que ele sintonizou.
 
 Sem um harness no seu repo voce compara dois modelos por feeling. Com um harness voce compara eles por pontuacao em um conjunto fixo de tarefas com uma metrica fixa, em um output JSON que voce pode diffar. O harness e o contrato entre a execucao de ontem e a de hoje. Sem ele, regressoes sao publicadas.
 
-A armadilha e sobreajustar o harness a um unico modelo. A solucao e a mesma armadilha ao inverso: o harness e pequeno o suficiente para ler em quinze minutos, as tarefas sao pequenas o suficiente para mandar no repo, as metricas sao escritas do zero para que um colega possa audita-las, e o adaptador e o unico lugar onde codigo especifico de modelo vive. Troque o adaptador, o leaderboard muda; troque as tarefas, o leaderboard muda. Nada mais deve mudar.
+A armadilha e sobreajustar o harness a um unico modelo. A solucao e a mesma armadilha ao inverso: o harness e pequeno o suficiente para ler em quinze minutos, as tarefas sao pequenas o suficiente para mandar no repo, as metricas sao escritas do zero para que um colega possa audita-las, e o adaptador e o unico lugar onde codigo eespecificaçãoifico de modelo vive. Troque o adaptador, o ranking muda; troque as tarefas, o ranking muda. Nada mais deve mudar.
 
 ## O Conceito
 
@@ -35,7 +35,7 @@ flowchart TD
   board --> out[leaderboard.json]
 ```
 
-### Especificacao da tarefa
+### Eespecificaçãoificacao da tarefa
 
 Cada exemplo e uma linha JSONL:
 
@@ -155,7 +155,7 @@ class HttpAdapter:
         return out
 ```
 
-Troque `ToyAdapter` por `HttpAdapter` no topo de `main()`. O harness, as tarefas, as metricas, e o leaderboard ficam iguais.
+Troque `ToyAdapter` por `HttpAdapter` no topo de `main()`. O harness, as tarefas, as metricas, e o ranking ficam iguais.
 
 Tres padroes para impor ao entregar o harness em um projeto real:
 
@@ -165,7 +165,7 @@ Tres padroes para impor ao entregar o harness em um projeto real:
 
 ## Entregue
 
-`outputs/skill-lm-eval-harness.md` carrega a receita: especificacao de tarefa JSONL, cinco metricas, adaptador trocavel, executor em batches, leaderboard JSON com string de schema. Os arquivos de tarefa em `outputs/tasks/` sao os fixtures; copie-os para um projeto real como iniciadores.
+`outputs/skill-lm-eval-harness.md` carrega a receita: eespecificaçãoificacao de tarefa JSONL, cinco metricas, adaptador trocavel, executor em batches, ranking JSON com string de schema. Os arquivos de tarefa em `outputs/tasks/` sao os fixtures; copie-os para um projeto real como iniciadores.
 
 ## Exercicios
 
@@ -173,15 +173,15 @@ Tres padroes para impor ao entregar o harness em um projeto real:
 2. Estender `code_exec` para capturar stdout e aceitar uma lista de stdouts esperados como targets.
 3. Adicionar um comando de diff de leaderboard: dadas duas versoes `leaderboard.json`, imprimir quais tarefas mudaram e em quanto.
 4. Limitar a latencia por exemplo. Envolver a chamada do adaptador em um timeout; mostrar uma coluna separada `timeouts` no leaderboard.
-5. Fixar o conteudo das tarefas com um sha256 no leaderboard para que um leitor futuro possa verificar que pontuaram as mesmas tarefas.
+5. Fixar o conteudo das tarefas com um sha256 no ranking para que um leitor futuro possa verificar que pontuaram as mesmas tarefas.
 
 ## Termos Chave
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|------------------------|---------------------------|
-| Especificacao de tarefa | "O formato de eval" | Arquivo JSONL com prompt, targets, metric, extras opcionais por exemplo |
+| Eespecificaçãoificacao de tarefa | "O formato de eval" | Arquivo JSONL com prompt, targets, metric, extras opcionais por exemplo |
 | Metrica | "Como voce pontua" | Funcao de (prediction, targets, extras) para um float em [0, 1] |
-| Adaptador | "O cliente do modelo" | Objeto com um metodo generate(prompts) -> list[str]; o unico codigo especifico de modelo |
+| Adaptador | "O cliente do modelo" | Objeto com um metodo generate(prompts) -> list[str]; o unico codigo eespecificaçãoifico de modelo |
 | Leaderboard | "O placar" | JSON com pontuacoes por tarefa, contagens totais, latencia, e uma media geral |
 | Metrica code exec | "Rodar e checar" | Executar a predicao em um namespace restrito, comparar contra pares entrada-saida |
 

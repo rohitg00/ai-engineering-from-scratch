@@ -29,15 +29,15 @@ Essa lição lista os tradeoffs pra você escolher com base em evidências, não
 
 **Embeddings sparse.** Estilo SPLADE. Um transformer prevê um peso pra cada token do vocabulário, depois zera a maioria. Resultado é um vetor esparsa de tamanho |vocab|. Captura correspondência lexical (como BM25) mas com pesos de termo aprendidos. Forte em consultas com muitas palavras-chave.
 
-**Multi-vector (interação tardia).** ColBERTv2, Jina-ColBERT. Um vetor por token. Pontuação com MaxSim: pra cada token da consulta, encontre o token do documento mais similar, some as pontuações. Mais caro pra armazenar e pontuar, mas vence em consultas longas e corpora de domínio específico.
+**Multi-vector (interação tardia).** ColBERTv2, Jina-ColBERT. Um vetor por token. Pontuação com MaxSim: pra cada token da consulta, encontre o token do documento mais similar, some as pontuações. Mais caro pra armazenar e pontuar, mas vence em consultas longas e corpora de domínio eespecificaçãoífico.
 
 **BGE-M3: os três de uma vez.** Modelo único produz representações densa, sparse e multi-vector simultaneamente. Cada uma pode ser consultada independentemente; pontuações se fundem via soma ponderada. O padrão de 2026 quando você quer flexibilidade de um checkpoint.
 
 **Matryoshka Representation Learning.** Treinado pra que as primeiras N dimensões do vetor formem um embedding standalone útil. Truncar um vetor de 1.536 dim pra 256 dim e pagar ~1% de acurácia por 6× de economia de armazenamento. Suportado por OpenAI text-3, Cohere v4, Voyage-4, Jina v5, Gemini Embedding 2, Nomic v1.5+.
 
-### O leaderboard MTEB conta uma história parcial
+### O ranking MTEB conta uma história parcial
 
-Massive Text Embedding Benchmark — 56 tarefas em 8 tipos de tarefa no lançamento (2022), expandido pra 100+ tarefas no MTEB v2. No início de 2026, Gemini Embedding 2 lidera retrieval (67.71 MTEB-R). Cohere embed-v4 lidera geral (65.2 MTEB). BGE-M3 lidera multilíngue de peso aberto (63.0). O leaderboard é necessário mas não suficiente — sempre faça benchmark no seu domínio.
+Massive Text Embedding Benchmark — 56 tarefas em 8 tipos de tarefa no lançamento (2022), expandido pra 100+ tarefas no MTEB v2. No início de 2026, Gemini Embedding 2 lidera retrieval (67.71 MTEB-R). Cohere embed-v4 lidera geral (65.2 MTEB). BGE-M3 lidera multilíngue de peso aberto (63.0). O ranking é necessário mas não suficiente — sempre faça benchmark no seu domínio.
 
 ### O padrão de três camadas
 
@@ -65,8 +65,8 @@ corpus = [
 ]
 emb = encoder.encode(corpus, normalize_embeddings=True)
 
-query = "When was the iPhone released?"
-q_emb = encoder.encode([query], normalize_embeddings=True)[0]
+consulta = "When was the iPhone released?"
+q_emb = encoder.encode([consulta], normalize_embeddings=True)[0]
 scores = emb @ q_emb
 print(sorted(enumerate(scores), key=lambda x: -x[1]))
 ```
@@ -125,7 +125,7 @@ evaluation = MTEB(tasks=tasks)
 results = evaluation.run(encoder, output_folder="./mteb-results")
 ```
 
-Rode seus modelos candidatos num subconjunto *representativo*. Não confie só no ranking do leaderboard — seu domínio importa.
+Rode seus modelos candidatos num subconjunto *representativo*. Não confie só no ranking do ranking — seu domínio importa.
 
 ### Passo 5: similaridade cosseno do zero
 
@@ -133,7 +133,7 @@ Veja `code/main.py`. Embeddings de Averaged Hashing Trick (stdlib apenas). Não 
 
 ## Armadilhas
 
-- **Mesmo modelo pra query e doc.** Alguns modelos (Voyage, Jina-ColBERT) usam codificação assimétrica — consulta e documento passam por caminhos diferentes. Sempre verifique o card do modelo.
+- **Mesmo modelo pra consulta e doc.** Alguns modelos (Voyage, Jina-ColBERT) usam codificação assimétrica — consulta e documento passam por caminhos diferentes. Sempre verifique o card do modelo.
 - **Prefixo faltando.** Modelos `bge-*` precisam de `"Represent this sentence for searching relevant passages: "` anteposto às consultas. Lacuna de recall de 3-5 pontos se você esquecer.
 - **Matryoshka excessivo.** 1.536 → 256 geralmente é seguro. 1.536 → 64 não é. Valide no seu conjunto de avaliação.
 - **Truncamento de contexto.** A maioria dos modelos silenciosamente truncam inputs que excedem o comprimento máximo. Documentos longos precisam de chunking (ver lição 23).
@@ -153,7 +153,7 @@ A stack de 2026:
 | Armazenamento restrito | Matryoshka truncado + quantização int8 |
 | Consultas com muitas palavras-chave | Adicione SPLADE sparse, fusão RRF com denso |
 
-Padrão de 2026: comece com BGE-M3 ou text-3-large, avalie no seu domínio com MTEB, troque se um modelo de domínio específico superar por mais de 3 pontos.
+Padrão de 2026: comece com BGE-M3 ou text-3-large, avalie no seu domínio com MTEB, troque se um modelo de domínio eespecificaçãoífico superar por mais de 3 pontos.
 
 ## Entregar
 
@@ -191,12 +191,12 @@ Refuse recommendations that truncate Matryoshka to <64 dims without domain valid
 | Termo | O que as pessoas dizem | O que significa de verdade |
 |------|-----------------|-----------------------|
 | Embedding denso | O vetor | Um vetor de tamanho fixo por texto. Similaridade cosseno pra ranqueamento. |
-| Embedding sparse | BM25 aprendido | Um peso por token do vocabulário; majoritariamente zeros; treinado end-to-end. |
+| Embedding sparse | BM25 aprendido | Um peso por token do vocabulário; majoritariamente zeros; treinado de ponta a ponta. |
 | Multi-vector | Estilo ColBERT | Um vetor por token; pontuação MaxSim; índice maior, melhor recall. |
 | Matryoshka | Truque da boneca russa | As primeiras N dimensões são um embedding menor válido por si só. |
 | MTEB | O benchmark | Massive Text Embedding Benchmark — 56 tarefas no lançamento, 100+ no v2. |
 | BEIR | O benchmark de retrieval | 18 tarefas de retrieval zero-shot; frequentemente citado pra robustez cross-domain. |
-| Codificação assimétrica | Caminho de query ≠ doc | Modelo usa projeções diferentes pra consultas e documentos. |
+| Codificação assimétrica | Caminho de consulta ≠ doc | Modelo usa projeções diferentes pra consultas e documentos. |
 
 ## Leitura Complementar
 
@@ -205,4 +205,4 @@ Refuse recommendations that truncate Matryoshka to <64 dims without domain valid
 - [Chen et al. (2024). BGE-M3: Multi-lingual, Multi-functionality, Multi-granularity](https://arxiv.org/abs/2402.03216) — o modelo unificado de três modos.
 - [Kusupati et al. (2022). Matryoshka Representation Learning](https://arxiv.org/abs/2205.13147) — o objetivo de treino de escada dimensional.
 - [Santhanam et al. (2022). ColBERTv2: Effective and Efficient Retrieval via Lightweight Late Interaction](https://arxiv.org/abs/2112.01488) — interação tardia em produção.
-- [MTEB leaderboard on Hugging Face](https://huggingface.co/spaces/mteb/leaderboard) — rankings ao vivo.
+- [MTEB ranking on Hugging Face](https://huggingface.co/spaces/mteb/leaderboard) — rankings ao vivo.

@@ -1,6 +1,6 @@
 # ColPali e RAG de Documentos Vision-Native
 
-> RAG tradicional parseia PDFs em texto, divide em chunks, gera embeddings dos chunks, armazena vetores. Cada passo perde sinal: OCR derruba dados de gráficos, chunking quebra linhas de tabela, embeddings de texto ignoram figuras. ColPali (Faysse et al., julho de 2024) fez a pergunta mais simples: por que extrair texto de jeito nenhum? Embute a imagem da página diretamente via PaliGemma, usa late interaction estilo ColBERT pra busca, e mantém todo o sinal de layout, figuras, fontes e formatação que o documento carrega. Benchmarks publicados: 20-40% de acurácia end-to-end melhor que RAG de texto em documentos visualmente ricos. ColQwen2, ColSmol e VisRAG estenderam o padrão. Esta aula lê a tese de RAG vision-native e constrói um indexador pequeno estilo ColPali.
+> RAG tradicional parseia PDFs em texto, divide em chunks, gera embeddings dos chunks, armazena vetores. Cada passo perde sinal: OCR derruba dados de gráficos, chunking quebra linhas de tabela, embeddings de texto ignoram figuras. ColPali (Faysse et al., julho de 2024) fez a pergunta mais simples: por que extrair texto de jeito nenhum? Embute a imagem da página diretamente via PaliGemma, usa late interaction estilo ColBERT pra busca, e mantém todo o sinal de layout, figuras, fontes e formatação que o documento carrega. Benchmarks publicados: 20-40% de acurácia de ponta a ponta melhor que RAG de texto em documentos visualmente ricos. ColQwen2, ColSmol e VisRAG estenderam o padrão. Esta aula lê a tese de RAG vision-native e constrói um indexador pequeno estilo ColPali.
 
 **Tipo:** Construção
 **Linguagens:** Python (stdlib, indexador multi-vetor +scorer MaxSim)
@@ -11,7 +11,7 @@
 
 - Explicar a diferença entre busca por bi-encoder (um vetor por documento) e busca por late interaction (muitos vetores por documento).
 - Descrever a operação MaxSim do ColBERT e como o ColPali a generaliza de tokens de texto para patches de imagem.
-- Construir um indexador pequeno estilo ColPali: página → embeddings de patches → MaxSim sobre embeddings de termos de query → top-k páginas.
+- Construir um indexador pequeno estilo ColPali: página → embeddings de patches → MaxSim sobre embeddings de termos de consulta → top-k páginas.
 - Comparar ColPali + gerador Qwen2.5-VL vs RAG de texto + GPT-4 num caso de uso de notas fiscais / relatórios financeiros.
 
 ## O Problemo
@@ -24,23 +24,23 @@ Pipeline de RAG de texto:
 2. Texto → chunks de 300-500 tokens.
 3. Chunk → embedding por bi-encoder (um vetor).
 4. Query do usuário → embedding → similaridade cosseno → top-k chunks.
-5. Chunks + query → LLM.
+5. Chunks + consulta → LLM.
 
 Cinco passos com perdas. Gráficos não capturados. Tabelas quebradas entre chunks. Layout multi-coluna achatado. Anotações de figuras desaparecem.
 
-A solução do ColPali: pule OCR, embuta a imagem da página diretamente. Use late interaction estilo ColBERT pra busca assim o modelo pode attend a patches finos no momento da query.
+A solução do ColPali: pule OCR, embuta a imagem da página diretamente. Use late interaction estilo ColBERT pra busca assim o modelo pode attend a patches finos no momento da consulta.
 
 ## O Conceito
 
 ### ColBERT (2020)
 
-ColBERT (Khattab & Zaharia, arXiv:2004.12832) é um método de busca textual. Em vez de um vetor por documento, produz um vetor por token. No momento da query:
+ColBERT (Khattab & Zaharia, arXiv:2004.12832) é um método de busca textual. Em vez de um vetor por documento, produz um vetor por token. No momento da consulta:
 
-- Tokens de query recebem seus próprios embeddings (N_q vetores).
+- Tokens de consulta recebem seus próprios embeddings (N_q vetores).
 - Tokens do documento recebem embeddings (N_d vetores, tipicamente em cache).
-- Score = soma sobre tokens de query do max sobre tokens do documento da similaridade cosseno: Σ_i max_j cos(q_i, d_j).
+- Score = soma sobre tokens de consulta do max sobre tokens do documento da similaridade cosseno: Σ_i max_j cos(q_i, d_j).
 
-Essa é a operação MaxSim. Cada token de query "escolhe" seu token de documento de melhor correspondência. O score final é a soma.
+Essa é a operação MaxSim. Cada token de consulta "escolhe" seu token de documento de melhor correspondência. O score final é a soma.
 
 Prós: recall forte, lida com semântica no nível de termo. Contras: N_d vetores por documento, armazenamento caro.
 
@@ -49,13 +49,13 @@ Prós: recall forte, lida com semântica no nível de termo. Contras: N_d vetore
 ColPali (Faysse et al., arXiv:2407.01449) aplica o padrão do ColBERT a imagens.
 
 - Cada página é codificada por PaliGemma (ViT + linguagem) em embeddings de patches: N_p vetores por página.
-- Cada query do usuário (texto) é codificada em embeddings de tokens de query: N_q vetores.
-- Score = Σ_i max_j cos(q_i, p_j), ou seja, MaxSim entre tokens de texto da query e patches de imagem da página.
+- Cada consulta do usuário (texto) é codificada em embeddings de tokens de consulta: N_q vetores.
+- Score = Σ_i max_j cos(q_i, p_j), ou seja, MaxSim entre tokens de texto da consulta e patches de imagem da página.
 - Recuperar top-k páginas por score total.
 
-No momento de ingestão do documento: embuta cada página com PaliGemma, armazene todos os embeddings de patches. No momento da query: embuta os tokens da query, compute MaxSim contra todos os embeddings de páginas armazenados, retorne top-k páginas.
+No momento de ingestão do documento: embuta cada página com PaliGemma, armazene todos os embeddings de patches. No momento da consulta: embuta os tokens da consulta, compute MaxSim contra todos os embeddings de páginas armazenados, retorne top-k páginas.
 
-Prós: end-to-end supera RAG de texto em 20-40% em documentos visualmente ricos. Cada patch-vetor captura layout e conteúdo local.
+Prós: de ponta a ponta supera RAG de texto em 20-40% em documentos visualmente ricos. Cada patch-vetor captura layout e conteúdo local.
 
 Contras: N_p patches × floats de 4 bytes × vetores de dimensão D por página = armazenamento cresce rápido. Mitigado por quantização PQ / OPQ.
 
@@ -81,13 +81,13 @@ Benchmark parceiro do ColPali. Visual Document Retrieval Evaluation. Tarefas inc
 
 ColPali-v1 pontua ~80% nDCG@5 no ViDoRe; RAG de texto nos mesmos documentos pontua ~50-60%.
 
-### Pipeline end-to-end de RAG
+### Pipeline de ponta a ponta de RAG
 
 Para um RAG vision-native:
 
 1. Ingestão: PDF → imagens de páginas → codificação PaliGemma → armazenar todos os embeddings de patches.
-2. Query: texto do usuário → embeddings de tokens de query → MaxSim contra todas as páginas indexadas → top-k páginas.
-3. Geração: imagens de top-k páginas + query → VLM (Qwen2.5-VL ou Claude) → resposta.
+2. Query: texto do usuário → embeddings de tokens de consulta → MaxSim contra todas as páginas indexadas → top-k páginas.
+3. Geração: imagens de top-k páginas + consulta → VLM (Qwen2.5-VL ou Claude) → resposta.
 
 Sem OCR em lugar nenhum. Figuras, gráficos, fontes, layout entram todos na resposta.
 
@@ -113,7 +113,7 @@ Para todo o resto em 2026 — relatórios financeiros, artigos científicos, con
 `code/main.py`:
 
 - Codificador de patches de exemplo: mapeia uma "página" (grade pequena de vetores de feature) para um array de embeddings de patches.
-- Scorer MaxSim: computa o score estilo ColBERT entre um conjunto de embeddings de tokens de query e um conjunto de patches de página.
+- Scorer MaxSim: computa o score estilo ColBERT entre um conjunto de embeddings de tokens de consulta e um conjunto de patches de página.
 - Indexa 5 páginas de exemplo, roda 3 queries, retorna top-k com scores.
 
 ## Entregue
@@ -128,7 +128,7 @@ Esta aula produz `outputs/skill-vision-rag-designer.md`. Dado um projeto de RAG 
 
 3. ColPali indexa páginas como conjuntos de patches. O que muda se indexarmos no nível de palavra (como o ColBERT faz)? Trade-offs?
 
-4. Projete o pipeline end-to-end para um corpus de 1M de páginas com orçamento de latência de 500ms por query. Escolha ColQwen2 / VisRAG e justifique.
+4. Projete o pipeline de ponta a ponta para um corpus de 1M de páginas com orçamento de latência de 500ms por consulta. Escolha ColQwen2 / VisRAG e justifique.
 
 5. Leia M3DocRAG (arXiv:2411.04952). Descreva o padrão de attention multi-página e como difere da busca single-page do ColPali.
 
@@ -137,7 +137,7 @@ Esta aula produz `outputs/skill-vision-rag-designer.md`. Dado um projeto de RAG 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|------------------------|--------------------------|
 | Late interaction | "Estilo ColBERT" | Busca usando embeddings por token ou por patch + MaxSim, não um único vetor do documento |
-| MaxSim | "Max-sobre-patches" | Para cada token de query, pegar o token de documento de maior similaridade; somar entre queries |
+| MaxSim | "Max-sobre-patches" | Para cada token de consulta, pegar o token de documento de maior similaridade; somar entre queries |
 | Bi-encoder | "Vetor único" | Um vetor por documento; mais rápido mas perde granularidade |
 | Multi-vetor | "Muitos-vetores-por-doc" | Armazenar N_p vetores por documento / página; custo de armazenamento cresce mas recall melhora |
 | Embedding de patch | "Feature de página" | Um vetor por patch de imagem de um encoder VLM, em cache por página |

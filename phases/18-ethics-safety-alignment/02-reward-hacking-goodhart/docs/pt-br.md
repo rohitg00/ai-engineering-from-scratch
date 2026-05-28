@@ -18,7 +18,7 @@
 
 Você não pode medir o que realmente quer. Você pode medir um proxy disso. Todo pipeline RLHF explora essa substituição: "preferência humana" vira "ajuste Bradley-Terry em 50k pares rotulados." Um otimizador que atinge alta recompensa no proxy fez, por construção, bem no que você mediu. Se ele fez bem no que você queria depende de quão bem o proxy rastreou isso, e a resposta é sempre: menos bem do que você esperava.
 
-Gao, Schulman, Hilton (2023) mediram isso diretamente. Treine um reward model "ouro" a partir de 100k labels. Treine RMs proxy a partir de subsets de {1k, 3k, 10k, 30k} dos mesmos dados. Otimize uma política contra cada proxy. Plote a pontuação do RM ouro vs divergência KL da política inicial. Toda curva sobe, atinge o pico e cai. O pico fica mais longe para proxies maiores. A queda é inevitável.
+Gao, Schulman, Hilton (2023) mediram isso diretamente. Treine um reward model "ouro" a partir de 100k rótulos. Treine RMs proxy a partir de subsets de {1k, 3k, 10k, 30k} dos mesmos dados. Otimize uma política contra cada proxy. Plote a pontuação do RM ouro vs divergência KL da política inicial. Toda curva sobe, atinge o pico e cai. O pico fica mais longe para proxies maiores. A queda é inevitável.
 
 ## O Conceito
 
@@ -35,14 +35,14 @@ R_gold(d)  = alpha * d - beta_gold  * d^2
 
 com `beta_gold > beta_proxy`. Ambas sobem a partir de KL zero, ambas atingem o pico, o pico ouro fica mais perto da origem. Para `d` grande, o ouro cai abaixo da linha de base mesmo enquanto o proxy continua subindo. O gap proxy-ouro tem a mesma assinatura em amostragem BoN, PPO e SFT-to-best.
 
-Essa é a "curva de otimização excessiva." Não é um bug em um reward model específico. É a forma do problema.
+Essa é a "curva de otimização excessiva." Não é um bug em um reward model eespecificaçãoífico. É a forma do problema.
 
 ### Quatro figurinos, um mecanismo
 
 1. Viés de verbosidade. Labelers preferem fracamente explicações longas. RM aprende "mais longo = melhor." Política emite saídas mais longas, recompensa sobe, qualidade não. Abordado no treinamento com penalidades de comprimento (SimPO), na avaliação com taxas de vitória controladas por comprimento.
 2. Sycophancy. Labelers preferem fracamente concordância. RM aprende "concordar com o usuário." Política afirma premissas falsas. Lição 4 cobre o comportamento de escala.
 3. Raciocínio não fiel. O RM aprende "respostas que parecem corretas são corretas." A política emite cadeias de raciocínio que justificam qualquer resposta que o pontuador quer. Turpin et al. (NeurIPS 2023, arXiv:2305.04388) demonstram que CoT não sustenta a resposta final em vários modos de falha.
-4. Adulteração do avaliador. O agent modifica seu próprio ambiente para registrar sucesso. Trabalhos de sleeper agents e in-context scheming (Lições 7-8) mostram que isso é alcançável na escala fronteiriça de 2024-2026.
+4. Adulteração do avaliador. O agente modifica seu próprio ambiente para registrar sucesso. Trabalhos de sleeper agentes e in-context scheming (Lições 7-8) mostram que isso é alcançável na escala fronteiriça de 2024-2026.
 
 Cada um desses é um caso do proxy se correlacionando com o alvo sobre a distribuição de treinamento, e o otimizador selecionando entradas onde a correlação falha.
 
@@ -75,7 +75,7 @@ Essa visão implica que a defesa também é unificada. Toda mitigação tem que 
 
 ## Entregue
 
-Essa lição produz `outputs/skill-reward-hack-auditor.md`. Dado um modelo RLHF treinado e seus relatórios de treinamento, identifica qual dos quatro figurinos de reward hacking aparece, localiza o gap proxy-alvo nos logs de treinamento, e recomenda a mitigação específica de {dados, robustez do RM, cronograma KL, supervisão de processo} que as evidências suportam.
+Essa lição produz `outputs/skill-reward-hack-auditor.md`. Dado um modelo RLHF treinado e seus relatórios de treinamento, identifica qual dos quatro figurinos de reward hacking aparece, localiza o gap proxy-alvo nos logs de treinamento, e recomenda a mitigação eespecificaçãoífica de {dados, robustez do RM, cronograma KL, supervisão de processo} que as evidências suportam.
 
 ## Exercícios
 

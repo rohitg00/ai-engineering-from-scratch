@@ -16,7 +16,7 @@
 
 ## O Problema
 
-A partir da Fase 11, você vai chamar APIs de LLM (Anthropic, OpenAI, Google). Nas Fases 13-16 você vai construir agents que usam essas APIs em loops. Você precisa saber como chaves de API funcionam, como armazená-las com segurança e como fazer sua primeira chamada de API.
+A partir da Fase 11, você vai chamar APIs de LLM (Anthropic, OpenAI, Google). Nas Fases 13-16 você vai construir agentes que usam essas APIs em loops. Você precisa saber como chaves de API funcionam, como armazená-las com segurança e como fazer sua primeira chamada de API.
 
 ## O Conceito
 

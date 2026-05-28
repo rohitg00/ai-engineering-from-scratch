@@ -1,6 +1,6 @@
 # Agents Multimodais e Uso de Computador (Capstone)
 
-> O produto de fronteira em 2026 é um agent multimodal que lê screenshots, clica em botões, navega UIs web, preenche formulários e completa workflows end-to-end. SeeClick e CogAgent (2024) provaram a primitiva de fundamentação GUI. Ferret-UI adicionou mobile. ChartAgent introduziu uso de ferramentas visuais para gráficos. VisualWebArena e AgentVista (2026) são os benchmarks que a fronteira persegue — e até Gemini 3 Pro e Claude Opus 4.7 pontuam ~30% nas tarefas difíceis do AgentVista. Este capstone reúne todos os fios da Fase 12: percepção (VLM de alta resolução), raciocínio (LLM com uso de ferramentas), fundamentação (saída de coordenadas), memória de longo prazo e avaliação.
+> O produto de fronteira em 2026 é um agente multimodal que lê screenshots, clica em botões, navega UIs web, preenche formulários e completa workflows de ponta a ponta. SeeClick e CogAgent (2024) provaram a primitiva de fundamentação GUI. Ferret-UI adicionou mobile. ChartAgent introduziu uso de ferramentas visuais para gráficos. VisualWebArena e AgentVista (2026) são os benchmarks que a fronteira persegue — e até Gemini 3 Pro e Claude Opus 4.7 pontuam ~30% nas tarefas difíceis do AgentVista. Este capstone reúne todos os fios da Fase 12: percepção (VLM de alta resolução), raciocínio (LLM com uso de ferramentas), fundamentação (saída de coordenadas), memória de longo prazo e avaliação.
 
 **Tipo:** Capstone
 **Linguagens:** Python (stdlib, schema de ação + esqueleto de loop do agent)
@@ -9,16 +9,16 @@
 
 ## Objetivos de Aprendizado
 
-- Projetar um loop de agent multimodal: perceber → raciocinar → agir → observar → repetir.
+- Projetar um loop de agente multimodal: perceber → raciocinar → agir → observar → repetir.
 - Construir um schema de saída de fundamentação GUI (coordenadas de clique, digitar texto, scroll, arrastar) que o VLM pode emitir como JSON.
-- Comparar agents apenas de screenshot vs agents de accessibility-tree vs agents híbridos.
-- Configurar uma avaliação de benchmark de agent multimodal num pequeno recorte do VisualWebArena.
+- Comparar agentes apenas de screenshot vs agentes de accessibility-tree vs agentes híbridos.
+- Configurar uma avaliação de benchmark de agente multimodal num pequeno recorte do VisualWebArena.
 
 ## O Problemo
 
 Um workflow de site de reservas: "ache um voo pra Tóquio pra 15 de abril, assento na janela abaixo de R$ 400, reserve."
 
-Um agent multimodal precisa:
+Um agente multimodal precisa:
 
 1. Tirar um screenshot do navegador.
 2. Parsear o screenshot + URL + objetivo num plano.
@@ -63,7 +63,7 @@ Um schema de ação típico tem 6-10 tipos de ação:
 - `wait`: (ms)
 - `done`: (sucesso, explicação)
 
-O agent emite uma ação por passo. O wrapper do navegador executa e retorna o novo estado.
+O agente emite uma ação por passo. O wrapper do navegador executa e retorna o novo estado.
 
 ### Apenas screenshot vs accessibility-tree
 
@@ -87,14 +87,14 @@ API de computer-use do Claude usa o padrão de log. Mais simples, mais confiáve
 
 ### Uso de ferramentas visuais
 
-ChartAgent (arXiv:2510.04514) introduz uso de ferramentas visuais pra compreensão de gráficos: recortar, ampliar, OCR, chamar detecção externa. O agent pode emitir "recortar região (100, 200, 300, 400) e depois chamar OCR" como tool call. A ferramenta retorna texto; o VLM continua raciocinando.
+ChartAgent (arXiv:2510.04514) introduz uso de ferramentas visuais pra compreensão de gráficos: recortar, ampliar, OCR, chamar detecção externa. O agente pode emitir "recortar região (100, 200, 300, 400) e depois chamar OCR" como ferramenta call. A ferramenta retorna texto; o VLM continua raciocinando.
 
-Esse padrão generaliza: set-of-mark prompting, anotação de regiões, e ferramentas de detecção externa se encaixam todos no mesmo schema de "emitir tool call, receber resposta estruturada."
+Esse padrão generaliza: set-of-mark prompting, anotação de regiões, e ferramentas de detecção externa se encaixam todos no mesmo schema de "emitir ferramenta call, receber resposta estruturada."
 
 ### Os benchmarks de 2026
 
 - ScreenSpot-Pro. Fundamentação GUI em ~1k screenshots web. SOTA aberto Qwen2.5-VL-72B ~85%. Fronteira ~90%.
-- VisualWebArena. Tarefas web end-to-end (loja, fórum, classificados). SOTA aberto ~20%. Gemini 3 Pro ~27%.
+- VisualWebArena. Tarefas web de ponta a ponta (loja, fórum, classificados). SOTA aberto ~20%. Gemini 3 Pro ~27%.
 - AgentVista (arXiv:2602.23166). O benchmark mais difícil de 2026. Workflows realistas em 12 domínios. Modelos de fronteira pontuam 27-40%; modelos abertos 10-20%.
 - WebArena / WebShop. Benchmarks mais antigos; saturados pela fronteira.
 
@@ -103,7 +103,7 @@ Esse padrão generaliza: set-of-mark prompting, anotação de regiões, e ferram
 Gargalos de performance do agent:
 
 1. Fundamentação visual em escala fina. "Clique no X pequeno" falha frequentemente em resolução mobile.
-2. Planejamento de longo prazo. Depois de 10 ações, o agent desvia do objetivo.
+2. Planejamento de longo prazo. Depois de 10 ações, o agente desvia do objetivo.
 3. Recuperação de erros. Quando um clique falha (botão errado), detectar + recuperar raramente é dado de treinamento.
 4. Contexto entre páginas. Pular entre abas ou formulários longos perde estado.
 
@@ -111,7 +111,7 @@ Direções de pesquisa: arquiteturas de memória, replanejamento explícito, ver
 
 ### Capstone build-it
 
-A tarefa do capstone: construir um agent de computer-use que:
+A tarefa do capstone: construir um agente de computer-use que:
 
 1. Leia o HTML + screenshot de uma página mock de site de reservas.
 2. Planeje uma sequência multi-step: buscar → selecionar → preencher formulário → submeter.
@@ -127,7 +127,7 @@ A aula fornece código scaffold fácil de estender pra um navegador real.
 - Definição JSON do schema de ação (10 ações).
 - Estado de navegador simulado como dict.
 - Esqueleto do loop do agent: receber estado, emitir ação, aplicar, repetir.
-- Mini-benchmark de 10 tarefas (páginas sintéticas) pra medir taxa de sucesso end-to-end.
+- Mini-benchmark de 10 tarefas (páginas sintéticas) pra medir taxa de sucesso de ponta a ponta.
 - Hook de recuperação de erros pra quando uma ação falha.
 
 ## Entregue
@@ -142,7 +142,7 @@ Esta aula produz `outputs/skill-multimodal-agent-designer.md`. Dado um produto d
 
 3. Compressão de memória de longo prazo: projete uma summary-chain com ≤4 screenshots mantidos ativos, qualquer quantidade em log.
 
-4. Construa um hook de recuperação de erros: em falha de ação (botão não encontrado), o que o agent faz depois?
+4. Construa um hook de recuperação de erros: em falha de ação (botão não encontrado), o que o agente faz depois?
 
 5. Compare Claude 4.7 apenas de screenshot com Qwen2.5-VL híbrido screenshot + accessibility-tree em 10 tarefas web. Qual ganha em quais tarefas?
 
@@ -156,7 +156,7 @@ Esta aula produz `outputs/skill-multimodal-agent-designer.md`. Dado um produto d
 | Agent híbrido | "Screenshot + árvore" | Usa imagem e informação estruturada; mais confiável que qualquer um sozinho |
 | Uso de ferramentas visuais | "Zoom/recorte/deteção" | Agent chama ferramentas visuais externas (OCR, detecção) no meio do plano |
 | Summary-chain | "Compressão de memória" | Resumos periódicos de texto substituem histórico longo de screenshots |
-| VisualWebArena | "Benchmark web E2E" | Benchmark de 2024 pra tarefas web end-to-end |
+| VisualWebArena | "Benchmark web E2E" | Benchmark de 2024 pra tarefas web de ponta a ponta |
 | AgentVista | "Benchmark difícil 2026" | Workflows realistas em 12 domínios; até Gemini 3 Pro pontua ~30% |
 
 ## Leitura Adicional

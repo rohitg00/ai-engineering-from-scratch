@@ -72,7 +72,7 @@ Os N-ésimos pontos igualmente espaçados no círculo unitário. Base da DFT.
 ### Conexão com Transformers
 
 **Codificações posicionais sinusoidais:** pares sin/cos em diferentes frequências.
-**RoPE:** multiplica vetores query e key por matrizes de rotação complexas.
+**RoPE:** multiplica vetores consulta e key por matrizes de rotação complexas.
 
 ## Construa
 

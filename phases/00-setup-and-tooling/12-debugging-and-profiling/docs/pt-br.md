@@ -9,14 +9,14 @@
 
 ## Objetivos de Aprendizado
 
-- Usar `breakpoint()` condicional e `debug_print` para inspecionar formatos de tensores, dtypes e valores NaN durante treino
+- Usar `breakpoint()` condicional e `debug_print` para inespecificaçãoionar formatos de tensores, dtypes e valores NaN durante treino
 - Fazer profiling de loops de treino com `cProfile`, `line_profiler` e `tracemalloc` para encontrar gargalos
 - Detectar bugs comuns de IA: incompatibilidade de formatos, loss NaN, vazamento de dados e tensores em device errado
 - Configurar TensorBoard para visualizar curvas de loss, histogramas de pesos e distribuições de gradientes
 
 ## O Problema
 
-Código de IA falha diferente do código normal. Um app web trava com stack trace. Um loop de treino mal configurado roda por 8 horas, gasta $200 em GPU e produz um modelo que prevê a média de cada entrada. O código nunca deu erro. O bug era um tensor no device errado, um `.detach()` esquecido ou labels vazando pra features.
+Código de IA falha diferente do código normal. Um app web trava com stack trace. Um loop de treino mal configurado roda por 8 horas, gasta $200 em GPU e produz um modelo que prevê a média de cada entrada. O código nunca deu erro. O bug era um tensor no device errado, um `.detach()` esquecido ou rótulos vazando pra features.
 
 Você precisa de ferramentas de debug que capturam essas falhas silenciosas antes de desperdiçar seu tempo e compute.
 
@@ -52,13 +52,13 @@ Chame isso depois de cada operação suspeita. Quando o bug for encontrado, remo
 
 ### Parte 2: Debugger do Python (pdb e breakpoint)
 
-O debugger embutido é subutilizado para trabalho de IA. Coloque `breakpoint()` no seu loop de treino e inspecione tensores interativamente.
+O debugger embutido é subutilizado para trabalho de IA. Coloque `breakpoint()` no seu loop de treino e inespecificaçãoione tensores interativamente.
 
 ```python
 def training_step(model, batch, criterion, optimizer):
-    inputs, labels = batch
+    inputs, rótulos = batch
     outputs = model(inputs)
-    loss = criterion(outputs, labels)
+    loss = criterion(outputs, rótulos)
 
     if loss.item() > 100 or torch.isnan(loss):
         breakpoint()
@@ -214,7 +214,7 @@ Aqui está o fluxo de debug que captura a maioria dos bugs de IA:
 1. **Antes do treino**: Rode `check_shapes` com um batch de exemplo. Verifique que dimensões de entrada e saída batem com o esperado.
 2. **Primeiros 10 passos**: Use `debug_print` na loss, outputs e gradientes. Confirme que nada é NaN e valores estão em faixas razoáveis.
 3. **Durante o treino**: Faça log de loss, learning rate e normas de gradiente. Use TensorBoard para visualização.
-4. **Quando algo quebrar**: Coloque `breakpoint()` no ponto de falha. Inspecione tensores interativamente.
+4. **Quando algo quebrar**: Coloque `breakpoint()` no ponto de falha. Inespecificaçãoione tensores interativamente.
 5. **Para performance**: Cronometre seu carregamento de dados vs forward vs backward. Faça profiling de memória se estiver perto de OOM.
 
 ## Entregue
@@ -231,4 +231,4 @@ python phases/00-setup-and-tooling/12-debugging-and-profiling/code/debug_tools.p
 2. Faça profiling de um loop de treino com `cProfile` e identifique a função mais lenta.
 3. Use `tracemalloc` para encontrar qual linha do seu pipeline de carregamento de dados aloca mais memória.
 4. Configure o TensorBoard para um run de treino simples e identifique se o modelo está fazendo overajuste.
-5. Use `breakpoint()` dentro de um loop de treino. Pratique inspecionar formatos de tensores, devices e valores de gradiente do prompt do debugger.
+5. Use `breakpoint()` dentro de um loop de treino. Pratique inespecificaçãoionar formatos de tensores, devices e valores de gradiente do prompt do debugger.

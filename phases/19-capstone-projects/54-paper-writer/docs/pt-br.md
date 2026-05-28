@@ -38,7 +38,7 @@ flowchart TB
     Bib --> Entry1[BibEntry: chave, campos]
 ```
 
-Todo campo e dado Python puro. O renderizador e uma funcao pura de `Paper` para uma string LaTeX. O harness pode introspectar o paper antes de renderizar: contar secoes, listar arquivos de figura faltantes, checar que todo `\cite{key}` tem um `BibEntry` correspondente.
+Todo campo e dado Python puro. O renderizador e uma funcao pura de `Paper` para uma string LaTeX. O harness pode introespecificaçãotar o paper antes de renderizar: contar secoes, listar arquivos de figura faltantes, checar que todo `\cite{key}` tem um `BibEntry` correspondente.
 
 ## O contrato do render
 

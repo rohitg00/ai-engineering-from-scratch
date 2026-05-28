@@ -18,10 +18,10 @@
 
 Um robô que faz tarefas domésticas a partir de instruções em linguagem natural tem sido um alvo de pesquisa desde os anos 70. A resposta dos anos 2020: um modelo de visão-linguagem-ação (VLA). Mesma arquitetura VLM usada para VQA, mas a saída são ações (torques articulares, poses do efetuador final, comandos discretos) em vez de texto.
 
-Desafios específicos de VLAs:
+Desafios eespecificaçãoíficos de VLAs:
 
 1. Espaços de ação são contínuos (ângulos articulares, forças) e de alta dimensionalidade (braço de 7 DOF + garra de 3 DOF = 10 dimensões a 30 Hz).
-2. Dados de treinamento específicos de robô são escassos. Open X-Embodiment tem ~1M de trajetórias; texto-imagem web tem 5B+.
+2. Dados de treinamento eespecificaçãoíficos de robô são escassos. Open X-Embodiment tem ~1M de trajetórias; texto-imagem web tem 5B+.
 3. Frequência de controle importa. Loop de controle a 30 Hz significa orçamento de 33ms por ação.
 4. Segurança. Uma ação errada danifica hardware, humanos ou propriedade.
 
@@ -85,7 +85,7 @@ Os dados de treinamento. RT-X (outubro de 2023) reuniu 22 datasets cobrindo 1M d
 - Cada amostra: (estado do robô, visões de câmera, instrução, sequência de ação).
 - Higiene de treinamento: unificar espaço de ação, normalizar intervalos articulares, redimensionar câmeras.
 
-OpenVLA e π0 treinam no Open X-Embodiment. Gap de domínio para qualquer robô específico é fechado com fine-tuning LoRA em 100-1000 demos específicas de tarefa.
+OpenVLA e π0 treinam no Open X-Embodiment. Gap de domínio para qualquer robô eespecificaçãoífico é fechado com fine-tuning LoRA em 100-1000 demos eespecificaçãoíficas de tarefa.
 
 ### Co-fine-tuning vs apenas robô
 
@@ -93,13 +93,13 @@ Co-fine-tuning mistura dados web de VQA com trajetórias de robô. A proporção
 
 Proporção do RT-2: ~1:1. OpenVLA: ~0.5:1 web-to-robô. π0: similar. A proporção exata é um hiperparâmetro pra sintonizar por tamanho de dataset.
 
-Treinamento só com robôs produz modelos específicos de tarefa que falham em instruções fora de distribuição. Co-fine-tuning é a diferença entre "pegue o cubo vermelho (na demonstração)" e "pegue o terceiro maior objeto da esquerda (formulação nova)."
+Treinamento só com robôs produz modelos eespecificaçãoíficos de tarefa que falham em instruções fora de distribuição. Co-fine-tuning é a diferença entre "pegue o cubo vermelho (na demonstração)" e "pegue o terceiro maior objeto da esquerda (formulação nova)."
 
 ### Segurança e limites de ação
 
 Todo VLA em produção vem com:
 
-- Limites duros de articulação (não pode aplicar torque além da especificação).
+- Limites duros de articulação (não pode aplicar torque além da eespecificaçãoificação).
 - Limites de velocidade (clipping suave).
 - Limites do espaço de trabalho (efetuador final não pode sair da mesa).
 - Aprovação humana no loop para tarefas novas.

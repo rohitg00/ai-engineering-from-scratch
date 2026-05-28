@@ -40,13 +40,13 @@ Delta reportado: +4 a +17 pontos percentuais sobre baselines anteriores de auto-
 
 Zelikman et al. (2024) perguntaram: e se o modelo aprendesse a gerar uma racionalização curta interna em cada posição de token, não apenas entre problema e resposta? Quiet-STaR treina um modelo para emitir um "pensamento" oculto antes de cada token previsto, e então mistura a previsão consciente do pensamento com a previsão base através de um peso aprendido.
 
-Resultado: o Mistral 7B ganhou melhorias absolutas zero-shot no GSM8K de 5.9% para 10.9% e no CommonsenseQA de 36.3% para 47.2% sem fine-tuning específico para a tarefa. O modelo aprendeu "quando pensar" — tokens difíceis recebem racionalizações internas mais longas; fáceis recebem quase nenhuma.
+Resultado: o Mistral 7B ganhou melhorias absolutas zero-shot no GSM8K de 5.9% para 10.9% e no CommonsenseQA de 36.3% para 47.2% sem fine-tuning eespecificaçãoífico para a tarefa. O modelo aprendeu "quando pensar" — tokens difíceis recebem racionalizações internas mais longas; fáceis recebem quase nenhuma.
 
 ### Por que os três compartilham uma preocupação de segurança
 
 Os três métodos usam a resposta final como sinal de gradiente. Uma racionalização que chega à resposta certa através de raciocínio falho — explorando um atalho, chutando ou usando um padrão não-generalizável — é reforçada positivamente. Em problemas in-distribution o atalho funciona. Em problemas out-of-distribution ele falha silenciosamente.
 
-O verificador do V-STaR mitiga ao aprender a ranquear racionalizações, mas o verificador é treinado no mesmo conjunto de labels. Ele pode aprender a preferir raciocínio mal-formulado mas bem-formatado sobre incerteza honesta. O design mais seguro é combinar dados no estilo STaR com (a) process reward models (reward em etapas intermediárias, não apenas respostas) e (b) avaliação OOD separada que quebra atalhos simples.
+O verificador do V-STaR mitiga ao aprender a ranquear racionalizações, mas o verificador é treinado no mesmo conjunto de rótulos. Ele pode aprender a preferir raciocínio mal-formulado mas bem-formatado sobre incerteza honesta. O design mais seguro é combinar dados no estilo STaR com (a) process reward models (reward em etapas intermediárias, não apenas respostas) e (b) avaliação OOD separada que quebra atalhos simples.
 
 ### Comparação
 

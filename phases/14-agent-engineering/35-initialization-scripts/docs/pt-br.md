@@ -1,6 +1,6 @@
 # Scripts de Inicialização para Agents
 
-> Toda sessão que começa do zero paga um imposto. O agent lê os mesmos arquivos, tenta as mesmas verificações e redescobre os mesmos caminhos. Um script de init paga esse imposto uma vez e grava as respostas no estado.
+> Toda sessão que começa do zero paga um imposto. O agente lê os mesmos arquivos, tenta as mesmas verificações e redescobre os mesmos caminhos. Um script de init paga esse imposto uma vez e grava as respostas no estado.
 
 **Tipo:** Construção
 **Linguagens:** Python (stdlib)
@@ -9,16 +9,16 @@
 
 ## Objetivos de Aprendizado
 
-- Identificar o trabalho que um agent nunca deveria ter que refazer a cada sessão.
+- Identificar o trabalho que um agente nunca deveria ter que refazer a cada sessão.
 - Criar um script de init determinístico que verifica runtime, dependências e saúde do repo.
-- Persistir o resultado da verificação pra que o agent leia em vez de rodar os checks de novo.
+- Persistir o resultado da verificação pra que o agente leia em vez de rodar os checks de novo.
 - Falhar alto, rápido e com um único lugar pra olhar quando a inicialização falha.
 
 ## O Problema
 
-Abre uma sessão. O agent chuta a versão do Python. Chuta o comando de teste. Lista a raiz do repo cinco vezes pra achar o entry point. Tenta importar um pacote que não tá instalado. Pergunta ao usuário onde fica o arquivo de config. Quando ele finalmente faz uma edição de verdade, dez mil tokens foram gastos em trabalho de setup que deveria ter sido um único script.
+Abre uma sessão. O agente chuta a versão do Python. Chuta o comando de teste. Lista a raiz do repo cinco vezes pra achar o entry point. Tenta importar um pacote que não tá instalado. Pergunta ao usuário onde fica o arquivo de config. Quando ele finalmente faz uma edição de verdade, dez mil tokens foram gastos em trabalho de setup que deveria ter sido um único script.
 
-A solução é um script de inicialização que roda antes do agent fazer qualquer coisa e escreve um `init_report.json` que o agent lê na startup.
+A solução é um script de inicialização que roda antes do agente fazer qualquer coisa e escreve um `init_report.json` que o agente lê na startup.
 
 ## O Conceito
 
@@ -38,7 +38,7 @@ flowchart TD
 |-------------|-----------------|
 | Versões do runtime | Versão errada do Python ou Node gera bugs silenciosos de versão errada |
 | Disponibilidade de dependências | Um pacote faltando depois custa dez vezes mais do que pegar agora |
-| Comando de teste | O agent precisa saber como verificar; se o comando tá faltando, o workbench tá quebrado |
+| Comando de teste | O agente precisa saber como verificar; se o comando tá faltando, o workbench tá quebrado |
 | Caminhos do repo | Caminhos hardcoded desatualizam; resolva uma vez e fixe |
 | Variáveis de ambiente | `OPENAI_API_KEY` faltando é uma superfície de falha, não um mistério de runtime |
 | Frescor do estado e do board | Estado estagnado de uma sessão que crashou é uma bomba-relógio |
@@ -46,7 +46,7 @@ flowchart TD
 
 ### Falhe alto, falhe rápido, falhe em um só lugar
 
-Uma falha na verificação significa parar e apresentar pro humano. Nada de "o agent vai se virar." O objetivo inteiro do init é recusar a inicialização quando o workbench tá quebrado.
+Uma falha na verificação significa parar e apresentar pro humano. Nada de "o agente vai se virar." O objetivo inteiro do init é recusar a inicialização quando o workbench tá quebrado.
 
 ### Idempotente
 
@@ -60,7 +60,7 @@ Regras (Fase 14 · 33) descrevem o que precisa ser verdade pra agir. Init é o s
 
 `code/main.py` implementa `init_agent.py`:
 
-- Cinco verificações: versão do Python, dependências listadas via `importlib.util.find_spec`, resolubilidade do comando de teste, variáveis de ambiente necessárias, frescor do arquivo de estado.
+- Cinco verificações: versão do Python, dependências listadas via `importlib.util.find_especificação`, resolubilidade do comando de teste, variáveis de ambiente necessárias, frescor do arquivo de estado.
 - Cada verificação retorna `(nome, status, detalhe)`.
 - O script escreve `init_report.json` com o conjunto completo de verificações e sai com código diferente de zero se qualquer verificação de severidade bloqueante falhar.
 
@@ -76,7 +76,7 @@ O script imprime a tabela de verificações, escreve `init_report.json` e sai co
 
 Três padrões separam um script de init útil de uma cerimônia.
 
-**Âncora no último commit conhecido bom.** Verifica o commit atual contra um arquivo `LKG` escrito no último merge bem-sucedido. Se o diff exceder um orçamento (padrão 50 arquivos), recusa a inicialização e exige que um humano ratifique a nova baseline. É o que o AI Code Review da Cloudflare usa pra delimitar agents de review: cada sessão de review ancora no mesmo último commit conhecido bom e nunca acumula desvio entre sessões.
+**Âncora no último commit conhecido bom.** Verifica o commit atual contra um arquivo `LKG` escrito no último merge bem-sucedido. Se o diff exceder um orçamento (padrão 50 arquivos), recusa a inicialização e exige que um humano ratifique a nova baseline. É o que o AI Code Review da Cloudflare usa pra delimitar agentes de review: cada sessão de review ancora no mesmo último commit conhecido bom e nunca acumula desvio entre sessões.
 
 **Lock files com TTL.** Escreve um `prereqs.lock` após a primeira passagem bem-sucedida. Rodadas subsequentes confiam no lock por N horas (padrão 24h) e pulam as verificações caras. O script de init lê o lock primeiro; se tá fresco e o hash do manifest de dependências bate, faz curto-circuito. É o mesmo padrão que o Docker usa pra caches de camada: probe idempotente + hash de conteúdo = skip.
 
@@ -86,15 +86,15 @@ Três padrões separam um script de init útil de uma cerimônia.
 
 Em produção:
 
-- **Hooks do Claude Code.** O hook `pre-task` chama o script de init e recusa iniciar o agent se ele falhar.
-- **GitHub Actions.** Um job `setup-agent` roda o script de init; o job do agent depende dele.
-- **Docker entrypoint.** O container do agent roda o script de init antes de executar o runtime do agent; logs aparecem na falha.
+- **Hooks do Claude Code.** O hook `pre-task` chama o script de init e recusa iniciar o agente se ele falhar.
+- **GitHub Actions.** Um job `setup-agent` roda o script de init; o job do agente depende dele.
+- **Docker entrypoint.** O container do agente roda o script de init antes de executar o runtime do agent; logs aparecem na falha.
 
-O script de init é portável porque não faz chamadas pra nenhum framework específico. Bash, Make ou um arquivo de tasks podem todos encapsulá-lo.
+O script de init é portável porque não faz chamadas pra nenhum framework eespecificaçãoífico. Bash, Make ou um arquivo de tasks podem todos encapsulá-lo.
 
 ## Entregue
 
-`outputs/skill-init-script.md` entrevista o projeto, classifica o trabalho de setup em verificações e emite um `init_agent.py` específico pro projeto mais um workflow de CI que roda ele antes de qualquer etapa do agent.
+`outputs/skill-init-script.md` entrevista o projeto, classifica o trabalho de setup em verificações e emite um `init_agent.py` eespecificaçãoífico pro projeto mais um workflow de CI que roda ele antes de qualquer etapa do agent.
 
 ## Exercícios
 
@@ -111,8 +111,8 @@ O script de init é portável porque não faz chamadas pra nenhum framework espe
 | Probe | "Um check" | Uma função determinística que retorna `(nome, status, detalhe)` |
 | Relatório de init | "Saída do setup" | JSON gravado ao lado do estado com os resultados das verificações |
 | Idempotente | "Seguro pra rodar de novo" | Duas rodadas seguidas produzem relatórios idênticos módulo timestamp |
-| Falhe alto | "Não engole" | Para e apresenta pro humano; sem fallback silencioso |
-| Imposto de setup | "Custo de bootstrap" | Os tokens que o agent gasta por sessão redescobrindo o óbvio |
+| Falhe alto | "Não engole" | Para e apresenta pro humano; sem reserva silencioso |
+| Imposto de setup | "Custo de bootstrap" | Os tokens que o agente gasta por sessão redescobrindo o óbvio |
 
 ## Leitura Complementar
 

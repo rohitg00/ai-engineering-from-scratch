@@ -136,7 +136,7 @@ O modelo e o mesmo TinyGPT da aula 39 (decoder-only, causal, tokenizador de byte
 
 A implementacao e um `main.py` mais testes.
 
-1. `InstructionTokenizer`: tokenizador de byte com especiais `INST` e `RESP`. Mesma forma da aula 39.
+1. `InstructionTokenizer`: tokenizador de byte com eespecificaçãoiais `INST` e `RESP`. Mesma forma da aula 39.
 2. `TinyGPT`: transformer decoder-only. Mesma forma da aula 39 para a aula ser autocontida mesmo se voce pulou a 39.
 3. `make_preferences`: retorna doze triplos `(prompt, chosen, rejected)`.
 4. `sequence_log_prob`: dado o modelo, um prefixo de prompt, e uma completion, retorna a soma das log-probabilidades de next-token sobre a completion (sem contribuicao de posicao do prompt).

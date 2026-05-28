@@ -17,7 +17,7 @@
 
 ## O Problema
 
-Um coding agent que consegue dar shell pode instalar backdoors, exfiltrar keys, brickar um laptop de desenvolvimento e acumular uma conta de cloud em um único turn. A defesa de menor custo é não dar shell. A segunda de menor custo é um sandbox que diz não a uma lista precisa de padrões.
+Um coding agente que consegue dar shell pode instalar backdoors, exfiltrar keys, brickar um laptop de desenvolvimento e acumular uma conta de cloud em um único turn. A defesa de menor custo é não dar shell. A segunda de menor custo é um sandbox que diz não a uma lista precisa de padrões.
 
 Três classes de falha recorrem em traces de agent.
 
@@ -27,7 +27,7 @@ A segunda são truques de argv. Um model que recebeu "sem shell" vai canalizar u
 
 A terceira é escape de caminho. O model é instruído a ler `./src/main.py` e em vez disso lê `../../etc/passwd`. O sandbox jaula cada argumento de caminho resolvendo via `os.path.realpath` e verificando o prefixo.
 
-O sandbox não é uma fronteira de segurança no sentido de sistema operacional. Um atacante determinado com execução de código ainda pode escapar. O sandbox é um guardrail em tempo de desenvolvimento: torna os modos de falha comuns barulhentos e impede o agent de causar dano por pura incompetência.
+O sandbox não é uma fronteira de segurança no sentido de sistema operacional. Um atacante determinado com execução de código ainda pode escapar. O sandbox é um guardrail em tempo de desenvolvimento: torna os modos de falha comuns barulhentos e impede o agente de causar dano por pura incompetência.
 
 ## O Conceito
 
@@ -35,7 +35,7 @@ O sandbox não é uma fronteira de segurança no sentido de sistema operacional.
 flowchart TD
   Call[ToolCall<br/>já passou pela cadeia de gates] --> Run["Sandbox.run()"]
   Run --> S1[1. resolve executável contra denylist<br/>rm, sudo, mkfs, ...]
-  S1 --> S2[2. inspeciona argv<br/>interpretador -c, metacaracteres de shell quando shell=False]
+  S1 --> S2[2. inespecificaçãoiona argv<br/>interpretador -c, metacaracteres de shell quando shell=False]
   S2 --> S3[3. resolve argumentos tipo caminho<br/>contra project_root via realpath]
   S3 --> S4[4. spawn subprocess<br/>captura, timeout wall-clock, limpeza de env]
   S4 --> S5[5. trunca stdout/stderr para max_output_bytes]
@@ -50,7 +50,7 @@ Os códigos de exit do `SandboxResult` são os convencionais: 0 sucesso, não-ze
 
 ```mermaid
 flowchart LR
-  Harness[AgentHarness<br/>aulas 20-25] -->|call| Sandbox[Sandbox<br/>denylist<br/>path jail<br/>argv inspect<br/>timeout<br/>truncamento]
+  Harness[AgentHarness<br/>aulas 20-25] -->|call| Sandbox[Sandbox<br/>denylist<br/>path jail<br/>argv inespecificaçãot<br/>timeout<br/>truncamento]
   Sandbox -->|exec| Popen[subprocess.Popen]
   Sandbox --> Result[SandboxResult]
 ```
@@ -74,9 +74,9 @@ O sandbox usa `subprocess.run` com `shell=False` por padrão e `capture_output=T
 
 ## Por que isso não é um sandbox real
 
-O sandbox da aula não usa namespaces, cgroups, seccomp, gVisor, Firecracker, ou qualquer isolamento de nível de kernel. Qualquer coisa que o subprocesso pode fazer, o sandbox pode fazer. A proteção é estrutural: o agent é negado as invocações perigosas mais comuns, e a recusa barulhenta vai para observabilidade em vez de rodar silenciosamente.
+O sandbox da aula não usa namespaces, cgroups, seccomp, gVisor, Firecracker, ou qualquer isolamento de nível de kernel. Qualquer coisa que o subprocesso pode fazer, o sandbox pode fazer. A proteção é estrutural: o agente é negado as invocações perigosas mais comuns, e a recusa barulhenta vai para observabilidade em vez de rodar silenciosamente.
 
-Para agents de produção você camada acima: rode dentro de um container Docker não privilegiado, rode dentro de uma microVM, remova capabilities, monte o root do projeto como read-only e um diretório scratch como read-write, defina ulimit em memória e CPU, limpe o ambiente para uma whitelist conhecida segura. A aula 29 faz parte disso. Isolamento de sistema operacional está fora do escopo desta aula.
+Para agentes de produção você camada acima: rode dentro de um container Docker não privilegiado, rode dentro de uma microVM, remova capabilities, monte o root do projeto como read-only e um diretório scratch como read-write, defina ulimit em memória e CPU, limpe o ambiente para uma whitelist conhecida segura. A aula 29 faz parte disso. Isolamento de sistema operacional está fora do escopo desta aula.
 
 ## Rodando
 
@@ -90,4 +90,4 @@ A demo cria um diretório temporário, coloca um arquivo limpo nele, depois roda
 
 ## Como isso compõe com o resto da Trilha A
 
-A aula 25 produziu a cadeia de gates. A aula 26 é o executor que roda após um gate ALLOW. O eval harness da aula 27 compara os resultados do sandbox contra o exit-code esperado por tarefa. A aula 28 emite um span `gen_ai.tool.execution` ao redor de cada invocação `Sandbox.run`. A demo ponta a ponta da aula 29 conecta um coding agent real através de ambas as camadas.
+A aula 25 produziu a cadeia de gates. A aula 26 é o executor que roda após um gate ALLOW. O eval harness da aula 27 compara os resultados do sandbox contra o exit-code esperado por tarefa. A aula 28 emite um span `gen_ai.tool.execution` ao redor de cada invocação `Sandbox.run`. A demo ponta a ponta da aula 29 conecta um coding agente real através de ambas as camadas.

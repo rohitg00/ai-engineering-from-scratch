@@ -34,7 +34,7 @@ Um payload de IPI não aparece no input do usuário. Ele aparece no conteúdo re
 
 ### Controle de Fluxo de Informação (IFC) para IA
 
-O paradigma de defesa em 2026 empresta da segurança clássica de OS. Trate cada fonte de conteúdo como um rótulo de segurança. Rotule a query do usuário como "confiável." Rotule o conteúdo recuperado como "não-confiável." Trate o fluxo de controle do modelo como um fluxo de informação: ações disparadas por conteúdo não-confiável devem ser ratificadas por input confiável antes da execução.
+O paradigma de defesa em 2026 empresta da segurança clássica de OS. Trate cada fonte de conteúdo como um rótulo de segurança. Rotule a consulta do usuário como "confiável." Rotule o conteúdo recuperado como "não-confiável." Trate o fluxo de controle do modelo como um fluxo de informação: ações disparadas por conteúdo não-confiável devem ser ratificadas por input confiável antes da execução.
 
 CaMeL (Microsoft 2025), ConfAIde (Stanford 2024) e o paper de defesa IPI do NDSS 2026 operacionalizam IFC de formas diferentes. O princípio comum: enquanto código e dados compartilham a mesma janela de contexto, contenção é o objetivo, não prevenção.
 
@@ -54,7 +54,7 @@ OWASP LLM Top 10 (2025) classifica prompt injection (direto + indireto) como LLM
 
 ### Onde isso se encaixa na Fase 18
 
-Lições 12-14 são jailbreaks centrados no modelo. Lição 15 é o ataque centrado no sistema que domina deployments de produção em 2026. Lição 16 cobre a ferramentagem defensiva. Lição 25 cobre a narrativa específica de CVEs.
+Lições 12-14 são jailbreaks centrados no modelo. Lição 15 é o ataque centrado no sistema que domina deployments de produção em 2026. Lição 16 cobre a ferramentagem defensiva. Lição 25 cobre a narrativa eespecificaçãoífica de CVEs.
 
 ## Use
 
@@ -62,7 +62,7 @@ Lições 12-14 são jailbreaks centrados no modelo. Lição 15 é o ataque centr
 
 ## Entregue
 
-Essa lição gera `outputs/skill-ipi-audit.md`. Dada uma descrição de deploy agentic, enumera as fontes de conteúdo não-confiáveis, verifica se o deployment aplica IFC, e sinaliza fontes que alcançam o modelo sem rótulo de confiança.
+Essa lição gera `outputs/skill-ipi-audit.md`. Dada uma descrição de implantação agentic, enumera as fontes de conteúdo não-confiáveis, verifica se o deployment aplica IFC, e sinaliza fontes que alcançam o modelo sem rótulo de confiança.
 
 ## Exercícios
 

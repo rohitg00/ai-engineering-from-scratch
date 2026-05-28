@@ -4,14 +4,14 @@
 
 **Tipo:** Prática
 **Linguagens:** Python, PyTorch
-**Pré-requisitos:** Aulas 01-10 da Fase 03 (especialmente retropropagação, funções de perda, otimizadores)
+**Pré-requisitos:** Aulas 01-10 da Fase 03 (eespecificaçãoialmente retropropagação, funções de perda, otimizadores)
 **Tempo:** ~90 minutos
 
 ## Objetivos de Aprendizado
 
 - Diagnosticar falhas comuns em redes neurais (perda NaN, curva de perda plana, overfitting, oscilação) usando estratégias de debug sistemáticas
 - Aplicar a técnica "sobreajustar um lote" pra verificar que sua arquitetura e loop de treino estão corretos
-- Inspecionar magnitudes de gradiente, distribuições de ativação e normas de peso pra identificar problemas de gradiente desvanecente/explodente
+- Inespecificaçãoionar magnitudes de gradiente, distribuições de ativação e normas de peso pra identificar problemas de gradiente desvanecente/explodente
 - Construir um checklist de debug que cubra pipeline de dados, arquitetura, função de perda, otimizador e taxa de aprendizado
 
 ## O Problema

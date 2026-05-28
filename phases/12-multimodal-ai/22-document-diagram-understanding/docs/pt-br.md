@@ -51,16 +51,16 @@ Os primeiros modelos sem OCR disseram: pule deteção inteiramente, mapeie pixel
 
 Donut (Kim et al., arXiv:2111.15664):
 - Transformer encoder-decoder, encoder é Swin-B.
-- Saída é JSON para compreensão de formulários, markdown para sumarização, ou qualquer schema específico de tarefa.
+- Saída é JSON para compreensão de formulários, markdown para sumarização, ou qualquer schema eespecificaçãoífico de tarefa.
 - Sem OCR, sem layout, sem deteção.
 
 Nougat (Blecher et al., arXiv:2308.13418):
-- Treinado especificamente em artigos científicos.
+- Treinado eespecificaçãoificamente em artigos científicos.
 - Saída é LaTeX / markdown.
 - Lida com equações, layout multi-coluna, figuras.
 - O modelo que todo parser de arXiv usa.
 
-Esses são especialistas, não generalistas. Donut em artigo científico falha; Nougat em nota fiscal falha.
+Esses são eespecificaçãoialistas, não generalistas. Donut em artigo científico falha; Nougat em nota fiscal falha.
 
 ### LayoutLMv3 (2022)
 
@@ -83,7 +83,7 @@ DocLLM (Wang et al., arXiv:2401.00908) é o irmão generativo do LayoutLM. Gera 
 - LLaVA-NeXT 336-tile AnyRes funciona para documentos pequenos.
 - Qwen2.5-VL resolução dinâmica lida com 2048+ pixels nativamente.
 - Claude Opus 4.7 suporta documentos de 2576px.
-- PaliGemma 2 (abril de 2025) treina especificamente para documentos + manuscritos.
+- PaliGemma 2 (abril de 2025) treina eespecificaçãoificamente para documentos + manuscritos.
 
 O gap entre VLM-nativo e pipeline OCR fechou rapidamente. Em 2026, VLM-nativo ganha em:
 
@@ -137,7 +137,7 @@ Para um novo projeto de IA de documentos:
 
 ## Entregue
 
-Esta aula produz `outputs/skill-document-ai-stack-picker.md`. Dado um projeto de IA de documentos (domínio, escala, qualidade, regulatório), escolhe entre pipeline OCR, especialista sem OCR, e VLM-nativo.
+Esta aula produz `outputs/skill-document-ai-stack-picker.md`. Dado um projeto de IA de documentos (domínio, escala, qualidade, regulatório), escolhe entre pipeline OCR, eespecificaçãoialista sem OCR, e VLM-nativo.
 
 ## Exercícios
 

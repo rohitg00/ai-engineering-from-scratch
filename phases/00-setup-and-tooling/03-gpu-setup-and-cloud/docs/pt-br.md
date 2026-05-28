@@ -133,4 +133,4 @@ if torch.cuda.is_available():
 | CUDA | "Programação de GPU" | A plataforma de computação paralela da NVIDIA que permite rodar código na GPU |
 | VRAM | "Memória da GPU" | RAM de vídeo na GPU, separada da RAM do sistema. Limita o tamanho do modelo |
 | fp16 | "Precisão reduzida" | Ponto flutuante de 16 bits, usa metade da memória do fp32 com perda mínima de precisão |
-| Tensor Core | "Hardware rápido de matriz" | Cores especializados da GPU para multiplicação de matrizes, 4-8x mais rápidos que cores normais |
+| Tensor Core | "Hardware rápido de matriz" | Cores eespecificaçãoializados da GPU para multiplicação de matrizes, 4-8x mais rápidos que cores normais |

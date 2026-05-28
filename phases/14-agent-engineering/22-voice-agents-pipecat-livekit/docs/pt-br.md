@@ -1,6 +1,6 @@
 # Voice Agents: Pipecat e LiveKit
 
-> Voice agents são uma categoria de produção de primeira classe em 2026. Pipecat te dá um pipeline baseado em frames em Python (VAD → STT → LLM → TTS → transport). LiveKit Agents conecta modelos de IA a usuários via WebRTC. Alvos de latência de produção ficam entre 450–600ms ponta a ponta em stacks premium.
+> Voice agentes são uma categoria de produção de primeira classe em 2026. Pipecat te dá um pipeline baseado em frames em Python (VAD → STT → LLM → TTS → transport). LiveKit Agents conecta modelos de IA a usuários via WebRTC. Alvos de latência de produção ficam entre 450–600ms ponta a ponta em stacks premium.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib)
@@ -11,12 +11,12 @@
 
 - Descrever o pipeline baseado em frames do Pipecat: DOWNSTREAM (source→sink) e UPSTREAM (controle).
 - Nomear as etapas canônicas do pipeline de voz e quais transports o Pipecat suporta.
-- Explicar as duas classes de voice agent do LiveKit Agents (MultimodalAgent, VoicePipelineAgent) e quando cada uma se encaixa.
+- Explicar as duas classes de voice agente do LiveKit Agents (MultimodalAgent, VoicePipelineAgent) e quando cada uma se encaixa.
 - Resumir as expectativas de latência de produção em 2026 e como elas influenciam escolhas de arquitetura.
 
 ## O Problema
 
-Voice agents não são um loop de texto com TTS encaixado. Orçamentos de latência são brutais (~600ms), áudio parcial é o padrão, detecção de turn é um modelo, e transports vão de SIP telefônico a WebRTC. Ou você constrói um pipeline baseado em frames (Pipecat) ou apoiado numa plataforma (LiveKit).
+Voice agentes não são um loop de texto com TTS encaixado. Orçamentos de latência são brutais (~600ms), áudio parcial é o padrão, detecção de turn é um modelo, e transports vão de SIP telefônico a WebRTC. Ou você constrói um pipeline baseado em frames (Pipecat) ou apoiado numa plataforma (LiveKit).
 
 ## O Conceito
 
@@ -93,7 +93,7 @@ O trace mostra o fluxo normal e um cancelamento por barge-in que interrompe o TT
 
 - **Pipecat** pra controle total — processors customizados, Python-first, providers plugáveis.
 - **LiveKit Agents** pra deploys WebRTC-first e telefonia.
-- **Vapi / Retell** pra voice agents hospedados sem time de WebRTC.
+- **Vapi / Retell** pra voice agentes hospedados sem time de WebRTC.
 - **OpenAI Realtime / Gemini Live** pra áudio direto-in/direto-out (MultimodalAgent).
 
 ## Entregue
@@ -106,7 +106,7 @@ O trace mostra o fluxo normal e um cancelamento por barge-in que interrompe o TT
 2. Implemente STT com gate de confiança: abaixo do limiar, peça "pode repetir?".
 3. Adicione detecção de turn semântica: regra simples — se a transcrição termina com "?", fim do turn.
 4. Leia a documentação de transports do Pipecat. Troque o transport stdlib pelo SmallWebRTCTransport config (stub).
-5. Meça um OpenAI Realtime vs cascade STT+LLM+TTS na mesma query. Qual custo de latência o controle no nível de texto carrega?
+5. Meça um OpenAI Realtime vs cascade STT+LLM+TTS na mesma consulta. Qual custo de latência o controle no nível de texto carrega?
 
 ## Termos Chave
 

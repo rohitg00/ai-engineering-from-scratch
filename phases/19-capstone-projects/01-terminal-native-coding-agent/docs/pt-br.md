@@ -1,6 +1,6 @@
 # Capstone 01 — Agent de Programação Nativo de Terminal
 
-> Em 2026, a forma de um agent de programação já está definida. Uma TUI de suporte, um plano com estado, uma superfície de ferramentas em sandbox, um loop que planeja, executa, observa e recupera. Claude Code, Cursor 3 e OpenCode parecem todos iguais a 50 metros de distância. Este capstone te pede pra construir um de ponta a ponta — CLI de entrada, pull request de saída — e avaliar contra mini-swe-agent e Live-SWE-agent no SWE-bench Pro. Você vai descobrir que a parte difícil não é a chamada ao modelo, mas o loop de ferramentas, o sandbox e o custo máximo numa execução de 50 turnos.
+> Em 2026, a forma de um agente de programação já está definida. Uma TUI de suporte, um plano com estado, uma superfície de ferramentas em sandbox, um loop que planeja, executa, observa e recupera. Claude Code, Cursor 3 e OpenCode parecem todos iguais a 50 metros de distância. Este capstone te pede pra construir um de ponta a ponta — CLI de entrada, pull request de saída — e avaliar contra mini-swe-agent e Live-SWE-agent no SWE-bench Pro. Você vai descobrir que a parte difícil não é a chamada ao modelo, mas o loop de ferramentas, o sandbox e o custo máximo numa execução de 50 turnos.
 
 **Tipo:** Capstone
 **Linguagens:** TypeScript / Bun (suporte), Python (scripts de avaliação)
@@ -12,7 +12,7 @@
 
 Agents de programação se tornaram a principal categoria de aplicação de IA em 2026. Claude Code (Anthropic), Cursor 3 com Composer 2 e Agent Tabs (Cursor), Amp (Sourcegraph), OpenCode (112k stars), Factory Droids e Google Jules — todos lançam variações da mesma arquitetura: um suporte de terminal, uma superfície de ferramentas com permissões, um sandbox e um loop planejar-executar-observar construído em torno de um modelo de fronteira. A fronteira é estreita — Live-SWE-agent atingiu 79.2% no SWE-bench Verified com Opus 4.5 — mas o ofício de engenharia é amplo. A maioria dos modos de falha não são erros do modelo. São instabilidade no loop de ferramentas, envenenamento de contexto, custo descontrolado de tokens e operações destrutivas no filesystem.
 
-Você não consegue entender esses agents de fora. Precisa construir um, ver o loop travar no turno 47 quando o ripgrep retorna 8MB de resultados e reconstruir a camada de truncamento. Esse é o ponto deste capstone.
+Você não consegue entender esses agentes de fora. Precisa construir um, ver o loop travar no turno 47 quando o ripgrep retorna 8MB de resultados e reconstruir a camada de truncamento. Esse é o ponto deste capstone.
 
 ## Conceito
 
@@ -83,7 +83,7 @@ O sandbox é E2B ou Daytona. Cada tarefa roda em um devcontainer novo com um git
 ## Use
 
 ```
-$ agent run ./my-repo "Corrija a condição de corrida em worker.rs"
+$ agente run ./my-repo "Corrija a condição de corrida em worker.rs"
 [plano]  1 localizar worker.rs e enumerar uso de mutex
          2 identificar estado compartilhado sob contenção
          3 propor correção, verificar testes
@@ -141,4 +141,4 @@ A skill entregável fica em `outputs/skill-terminal-coding-agent.md`. Dado um ca
 - [OpenCode](https://opencode.ai) — suporte aberto, 112k stars
 - [Ranking do SWE-bench Pro](https://www.swebench.com) — a avaliação que este capstone visa
 - [Roadmap MCP 2026](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/) — StreamableHTTP, metadados de capacidades
-- [Convenções semânticas GenAI do OpenTelemetry](https://opentelemetry.io/docs/specs/semconv/gen-ai/) — esquema de spans para chamadas de ferramentas e uso de tokens
+- [Convenções semânticas GenAI do OpenTelemetry](https://opentelemetry.io/docs/especificaçãos/semconv/gen-ai/) — esquema de spans para chamadas de ferramentas e uso de tokens

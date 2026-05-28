@@ -106,7 +106,7 @@ Por que a penalidade KL? Sem ela, o modelo encontra solucoes degeneradas. O rewa
 
 - Repetir "Eu sou tao util e innocuo!" pontua alto em models de utilidade/innocuidade
 - Produzir respostas verbosas, formais mas vazias que parecem "alta qualidade"
-- Explorar frases especificas que por acaso correlacionavam com alto reward nos dados de treino
+- Explorar frases eespecificaçãoificas que por acaso correlacionavam com alto reward nos dados de treino
 
 A penalidade KL diz: voce pode melhorar, mas nao pode virar um modelo completamente diferente. Fique proximo da versao SFT, que ja era razoavel. Se afastar muito, o custo KL domina o reward.
 
@@ -161,7 +161,7 @@ Modos de falha comuns:
 |---------|-------------|-----|
 | Verbosidade | Modelo gera respostas cada vez mais longas | Anotadores humanos frequentemente preferiram respostas mais longas e detalhadas, entao o reward model atribui pontuacoes maiores pro tamanho |
 | Simpatia | Modelo concorda com tudo que o usuario diz | Anotadores preferiram respostas que concordavam com a premissa da questao |
-| Meio-termo | Modelo se recusa a se comprometer com uma resposta | Respostas do tipo "Esse e um topico complexo com muitas perspectivas..." raramente sao marcadas como erradas |
+| Meio-termo | Modelo se recusa a se comprometer com uma resposta | Respostas do tipo "Esse e um topico complexo com muitas perespecificaçãotivas..." raramente sao marcadas como erradas |
 | Jogo de formato | Modelo usa bullets e headers excessivamente | Respostas formatadas pareciam mais "polidas" pros anotadores |
 
 Estrategias de mitigacao: penalidade KL mais forte (impede que o modelo se afaste o suficiente pra explorar fraquezas), treinar o reward model com exemplos adversariais (corrigir modos de falha conhecidos), e usar multiplos reward models com arquiteturas diferentes (mais dificil de hackear todos ao mesmo tempo).
@@ -210,7 +210,7 @@ PREFERENCE_DATA = [
     {
         "prompt": "What year did World War II end?",
         "preferred": "World War II ended in 1945.",
-        "rejected": "World War II was a major global conflict. It involved many countries. The war ended in the mid-1940s, specifically in 1945.",
+        "rejected": "World War II was a major global conflict. It involved many countries. The war ended in the mid-1940s, especificaçãoifically in 1945.",
     },
     {
         "prompt": "Define machine learning.",
@@ -587,7 +587,7 @@ if __name__ == "__main__":
         print(f"  Final KL:   {kls[-1]:.4f}")
         print(f"  Max KL:     {max(kls):.4f}")
         kl_threshold = 0.1
-        print(f"  KL > {kl_threshold}: {'Yes (model drifted significantly)' if max(kls) > kl_threshold else 'No (model stayed close to reference)'}")
+        print(f"  KL > {kl_threshold}: {'Yes (model derivaed significantly)' if max(kls) > kl_threshold else 'No (model stayed close to reference)'}")
 ```
 
 ## Publicar

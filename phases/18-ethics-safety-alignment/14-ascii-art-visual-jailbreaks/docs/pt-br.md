@@ -56,7 +56,7 @@ Lição 12-14 descrevem três vetores de ataque ortogonais: refinamento iterativ
 
 ## Use
 
-`code/main.py` constrói um ArtPrompt simulado. Você pode disfarçar palavras específicas em uma query prejudicial com glifos ASCII art, verificar se a string disfarçada passa um filtro de palavras-chave, e (opcionalmente) decodificar a string de volta usando um reconhecedor simples.
+`code/main.py` constrói um ArtPrompt simulado. Você pode disfarçar palavras eespecificaçãoíficas em uma consulta prejudicial com glifos ASCII art, verificar se a string disfarçada passa um filtro de palavras-chave, e (opcionalmente) decodificar a string de volta usando um reconhecedor simples.
 
 ## Entregue
 

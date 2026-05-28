@@ -12,11 +12,11 @@
 - Identificar os alvos de performance do Agno e quando eles importam.
 - Nomear os três primitivos do Mastra — Agents, Tools, Workflows — e os server adapters suportados.
 - Explicar por que um backend FastAPI stateless com escopo de sessão é o caminho recomendado de produção pro Agno.
-- Escolher entre Agno e Mastra pra uma stack específica (Python-first vs TypeScript-first).
+- Escolher entre Agno e Mastra pra uma stack eespecificaçãoífica (Python-first vs TypeScript-first).
 
 ## O Problema
 
-LangGraph, AutoGen, CrewAI são frameworks pesados. Times que querem "só o agent loop, rápido, no meu runtime" recorrem ao Agno (Python) ou Mastra (TypeScript). Ambos trocam parte dos primitivos gerenciados pelo framework por velocidade bruta e encaixe mais apertado na stack ao redor.
+LangGraph, AutoGen, CrewAI são frameworks pesados. Times que querem "só o agente loop, rápido, no meu runtime" recorrem ao Agno (Python) ou Mastra (TypeScript). Ambos trocam parte dos primitivos gerenciados pelo framework por velocidade bruta e encaixe mais apertado na stack ao redor.
 
 ## O Conceito
 
@@ -52,7 +52,7 @@ Nenhum tenta ser o LangGraph. Eles competem em:
 ### Quando escolher cada
 
 - **Agno** — backend Python, muitos agentes de curta duração, requisitos fortes de performance, time que usa FastAPI.
-- **Mastra** — backend TypeScript, deploy Next.js / Vercel, roteamento multi-provider unificado, tools tipadas com Zod.
+- **Mastra** — backend TypeScript, implantação Next.js / Vercel, roteamento multi-provider unificado, ferramentas tipadas com Zod.
 - **LangGraph** (Aula 13) — quando estado durável e raciocínio explícito em graf importam mais que velocidade bruta.
 - **OpenAI / Claude Agent SDK** — quando você quer o formato productizado do provider (Aulas 16–17).
 
@@ -87,7 +87,7 @@ Dois traces estruturalmente diferentes mas funcionalmente equivalentes.
 ## Exercícios
 
 1. Leia a documentação do Agno. Porte o loop ReAct stdlib (Aula 01) pro Agno. O que sumiu? O que ficou?
-2. Leia a documentação do Mastra. Porte o mesmo loop pro Mastra. O que mudou na tipagem de tools (Zod vs nada)?
+2. Leia a documentação do Mastra. Porte o mesmo loop pro Mastra. O que mudou na tipagem de ferramentas (Zod vs nada)?
 3. Benchmark: meça a latência de instantânea de agente na sua stack. A marca de 2μs do Agno importa pro seu workload?
 4. Projete uma migração: se você vinha usando CrewAI em Python, o que quebra se migrar pro Agno?
 5. Leia os termos de licença `ee/` do Mastra. Quais restrições afetariam um fork open-source?
@@ -100,7 +100,7 @@ Dois traces estruturalmente diferentes mas funcionalmente equivalentes.
 | Mastra | "Agentes TypeScript no Vercel AI SDK" | Agents + Tools + Workflows + Model Router |
 | Unified Model Router | "Acesso multi-provider" | Cliente único pra 3.300+ modelos em 94 providers |
 | Composite storage | "Múltiplos backends" | Memória/workflows/observabilidade cada um num store diferente |
-| Mastra Studio | "Debugger local" | Interface localhost:4111 pra introspecção de agentes |
+| Mastra Studio | "Debugger local" | Interface localhost:4111 pra introespecificaçãoção de agentes |
 | Source-available | "Não é OSS" | Licença permite leitura do fonte mas restringe uso comercial |
 
 ## Leitura Complementar

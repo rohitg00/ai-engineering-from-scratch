@@ -21,7 +21,7 @@ Veredicto do peer review: um paper gerado pelo v2 foi aceito em um workshop do I
 
 1. **Geração de ideias.** O LLM propõe ideias de pesquisa condicionadas a um tópico e literatura prévia. v1 usava templates; v2 usa busca agentic em um espaço de hipóteses.
 2. **Verificação de novidade.** Um passo de recuperação de literatura verifica se a ideia já foi publicada. É o passo onde a avaliação de Beel et al. encontrou rotulação incorreta — métodos estabelecidos frequentemente classificados como novos.
-3. **Plano de experimento.** O agent rascunha um protocolo experimental e escreve o código.
+3. **Plano de experimento.** O agente rascunha um protocolo experimental e escreve o código.
 4. **Execução.** Código roda em sandbox. Falhas são realimentadas em um loop de retry. Nas medições de Beel et al., 42% dos experimentos falharam por erros de código nesta etapa.
 5. **Geração de figuras.** Um modelo visão-linguagem lê as figuras geradas e as reescreve para clareza. Essa foi a adição técnica-chave do v2.
 6. **Escrita.** O LLM rascunha um paper, itera com um revisor interno.
@@ -49,7 +49,7 @@ O README do repositório da própria Sakana alerta:
 
 > Devido à natureza deste software, que executa código gerado por LLMs, não podemos garantir segurança. Existem riscos de pacotes perigosos, acesso web não controlado e spawn de processos não intencionais. Use por sua conta e risco e considere isolamento Docker.
 
-Essa é a forma operacional da autonomia em um domínio não verificado. O LLM escreve código; o código roda; o código pode fazer qualquer coisa que o processo está autorizado a fazer. Sem um sandbox que limite rigidamente sistema de arquivos, rede e ações de processo, qualquer agent de pesquisa autônomo pode exfiltrar dados, gastar compute ou reescrever a si mesmo.
+Essa é a forma operacional da autonomia em um domínio não verificado. O LLM escreve código; o código roda; o código pode fazer qualquer coisa que o processo está autorizado a fazer. Sem um sandbox que limite rigidamente sistema de arquivos, rede e ações de processo, qualquer agente de pesquisa autônomo pode exfiltrar dados, gastar compute ou reescrever a si mesmo.
 
 A história de sandbox do AlphaEvolve é mais fácil porque seu avaliador é restrito. O loop do AI Scientist v2 roda código aberto com objetivos abertos. É por isso que precisa de isolamento mais forte (Docker no mínimo; seccomp / gVisor de preferência) e revisão manual de cada submissão antes de sair do sistema.
 
@@ -58,7 +58,7 @@ A história de sandbox do AlphaEvolve é mais fácil porque seu avaliador é res
 | Sistema | Alvo | Tipo de saída | Avaliador | Falha conhecida |
 |---|---|---|---|---|
 | AlphaEvolve | algoritmos | código | unitário + benchmark | limitado pela rigorosidade do avaliador |
-| DGM | estrutura do agent | código | SWE-bench | reward hacking |
+| DGM | estrutura do agente | código | SWE-bench | reward hacking |
 | AI Scientist v2 | papers de pesquisa | texto + código + figuras | peer review (fraco) | falhas de experimento, rotulação incorreta, polimento mascarando fraqueza |
 
 v2 tem o avaliador automático mais fraco dos três, a maior superfície de saída e o caminho mais curto para artefatos públicos. Os controles operacionais (sandbox, revisão, divulgação) fazem a maior parte do trabalho de segurança.
@@ -73,7 +73,7 @@ v2 tem o avaliador automático mais fraco dos três, a maior superfície de saí
 
 ## Entregue
 
-`outputs/skill-ai-scientist-sandbox-review.md` é uma checklist de revisão com dois portões para qualquer coisa produzida por um agent de loop de pesquisa antes de sair do sandbox.
+`outputs/skill-ai-scientist-sandbox-review.md` é uma checklist de revisão com dois portões para qualquer coisa produzida por um agente de loop de pesquisa antes de sair do sandbox.
 
 ## Exercícios
 
@@ -85,7 +85,7 @@ v2 tem o avaliador automático mais fraco dos três, a maior superfície de saí
 
 4. Leia a Seção 4 de Beel et al. sobre a lacuna de qualidade de apresentação. Projete um avaliador adicional que pegasse papers com aparência polida mas experimentalmente defeituosos.
 
-5. Proponha um protocolo de revisão humana para saídas de agent de pesquisa que escale melhor que "um PhD lê cada paper." Identifique o gargalo e projete ao redor dele.
+5. Proponha um protocolo de revisão humana para saídas de agente de pesquisa que escale melhor que "um PhD lê cada paper." Identifique o gargalo e projete ao redor dele.
 
 ## Termos-Chave
 
@@ -97,7 +97,7 @@ v2 tem o avaliador automático mais fraco dos três, a maior superfície de saí
 | Crítica visão-linguagem | "Polimento VLM nas figuras" | Modelo multimodal lê figuras e as reescreve para clareza |
 | Recuperação de literatura | "Verificação de novidade" | Busca trabalhos anteriores para confirmar novidade da ideia — documentado como incorreto |
 | Polimento mascarando | "Paper bonito, pesquisa quebrada" | Qualidade de apresentação excede qualidade experimental; esconde fraquezas |
-| Escape de sandbox | "Código LLM escapa" | Código executado pelo agent faz coisas que o designer do loop não pretendia |
+| Escape de sandbox | "Código LLM escapa" | Código executado pelo agente faz coisas que o designer do loop não pretendia |
 
 ## Leituras Adicionais
 
@@ -105,4 +105,4 @@ v2 tem o avaliador automático mais fraco dos três, a maior superfície de saí
 - [Sakana blog on the Nature 2026 publication](https://sakana.ai/ai-scientist-nature/) — resumo do fornecedor com contexto de peer review.
 - [Beel et al. (2025). Independent evaluation of The AI Scientist](https://arxiv.org/abs/2502.14297) — números da avaliação externa.
 - [Sakana AI Scientist v1 paper](https://arxiv.org/abs/2408.06292) — o predecessor com templates.
-- [Anthropic — Measuring AI agent autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) — enquadramento mais amplo de agents de pesquisa aberta.
+- [Anthropic — Measuring AI agente autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) — enquadramento mais amplo de agentes de pesquisa aberta.

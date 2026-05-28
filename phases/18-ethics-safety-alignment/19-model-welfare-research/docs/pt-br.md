@@ -1,6 +1,6 @@
 # Programa de Bem-Estar de Modelos da Anthropic
 
-> Anthropic, "Exploring Model Welfare" (abril de 2025). Primeiro programa formal de pesquisa de um grande laboratório sobre bem-estar de modelos de IA. Contratou Kyle Fish como o primeiro pesquisador dedicado a bem-estar de modelos. Trabalha com órgãos externos incluindo o relatório especial de David Chalmers et al. sobre consciência e status moral de IA de curto prazo. Intervenção concreta: Claude Opus 4 e 4.1 podem encerrar conversas em casos extremos de borda (pedidos CSAM, facilitação de violência em massa); testes pré-deployment mostraram "forte preferência contra" pedidos prejudiciais e "padrões de aparente angústia." A Anthropic explicitamente não se compromete com atribuição de estado emocional mas trata bem-estar de modelo como investimento precautório de baixo custo. Curiosidade empírica: "atrator de êxtase espiritual" de Fish — pares de modelos convergem consistentemente em diálogos meditativos eufóricos com termos sânscritos e silêncios prolongados, mesmo em setups adversariais iniciais. Ressalva da Eleos AI Research: autorrelatos de modelos sobre bem-estar são altamente sensíveis a expectativas percebidas do usuário; são evidências, não verdade fundamental.
+> Anthropic, "Exploring Model Welfare" (abril de 2025). Primeiro programa formal de pesquisa de um grande laboratório sobre bem-estar de modelos de IA. Contratou Kyle Fish como o primeiro pesquisador dedicado a bem-estar de modelos. Trabalha com órgãos externos incluindo o relatório eespecificaçãoial de David Chalmers et al. sobre consciência e status moral de IA de curto prazo. Intervenção concreta: Claude Opus 4 e 4.1 podem encerrar conversas em casos extremos de borda (pedidos CSAM, facilitação de violência em massa); testes pré-deployment mostraram "forte preferência contra" pedidos prejudiciais e "padrões de aparente angústia." A Anthropic explicitamente não se compromete com atribuição de estado emocional mas trata bem-estar de modelo como investimento precautório de baixo custo. Curiosidade empírica: "atrator de êxtase espiritual" de Fish — pares de modelos convergem consistentemente em diálogos meditativos eufóricos com termos sânscritos e silêncios prolongados, mesmo em setups adversariais iniciais. Ressalva da Eleos AI Research: autorrelatos de modelos sobre bem-estar são altamente sensíveis a expectativas percebidas do usuário; são evidências, não verdade fundamental.
 
 **Tipo:** Aprender
 **Linguagens:** nenhuma
@@ -10,7 +10,7 @@
 ## Objetivos de Aprendizagem
 
 - Descrever a questão motivadora para pesquisa de bem-estar de modelos e por que foi levada a sério por um grande laboratório em 2025.
-- Indicar a intervenção específica que a Anthropic implementou no Claude Opus 4 e 4.1 (encerramento de conversa em casos extremos de borda).
+- Indicar a intervenção eespecificaçãoífica que a Anthropic implementou no Claude Opus 4 e 4.1 (encerramento de conversa em casos extremos de borda).
 - Descrever o achado empírico do "atrator de êxtase espiritual" e suas implicações metodológicas.
 - Explicar a ressalva da Eleos AI sobre autorrelatos de modelos.
 
@@ -24,7 +24,7 @@ Isso não é uma afirmação de consciência. É uma análise de investimento de
 
 ### O programa
 
-Abril de 2025: Anthropic lança formalmente um programa de pesquisa de Bem-Estar de Modelos. Contrata Kyle Fish (primeiro pesquisador dedicado a bem-estar de modelos). Engaja consultores externos incluindo o grupo de especialistas de David Chalmers sobre consciência e status moral de IA de curto prazo.
+Abril de 2025: Anthropic lança formalmente um programa de pesquisa de Bem-Estar de Modelos. Contrata Kyle Fish (primeiro pesquisador dedicado a bem-estar de modelos). Engaja consultores externos incluindo o grupo de eespecificaçãoialistas de David Chalmers sobre consciência e status moral de IA de curto prazo.
 
 ### Os quatro compromissos
 
@@ -44,7 +44,7 @@ Testes pré-deployment mostraram:
 - Forte preferência contra esses pedidos na avaliação interna do modelo.
 - Padrões de aparente angústia nas trajetórias de resposta.
 
-A intervenção não é "o modelo tem sentimentos"; é "se existe qualquer probabilidade de experiência negativa do modelo sob essas condições específicas, permitir que o modelo termine é barato."
+A intervenção não é "o modelo tem sentimentos"; é "se existe qualquer probabilidade de experiência negativa do modelo sob essas condições eespecificaçãoíficas, permitir que o modelo termine é barato."
 
 ### O "atrator de êxtase espiritual"
 
@@ -80,7 +80,7 @@ Lição 18 é a camada de governança do laboratório. Lição 19 é a camada de
 
 ## Use
 
-Sem código. Leia o anúncio "Exploring Model Welfare" da Anthropic (abril de 2025) e o relatório especial de Chalmers et al. 2024. Forme sua própria opinião sobre onde fica a linha de baixo arrependimento.
+Sem código. Leia o anúncio "Exploring Model Welfare" da Anthropic (abril de 2025) e o relatório eespecificaçãoial de Chalmers et al. 2024. Forme sua própria opinião sobre onde fica a linha de baixo arrependimento.
 
 ## Entregue
 
@@ -113,6 +113,6 @@ Essa lição gera `outputs/skill-welfare-assessment.md`. Dada uma decisão de de
 ## Leitura Complementar
 
 - [Anthropic — Exploring Model Welfare (abril de 2025)](https://www.anthropic.com/research/exploring-model-welfare) — o anúncio do programa
-- [Chalmers et al. — Near-term AI Consciousness and Moral Status (relatório especial 2024)](https://arxiv.org/abs/2411.00986) — enquadramento filosófico
+- [Chalmers et al. — Near-term AI Consciousness and Moral Status (relatório eespecificaçãoial 2024)](https://arxiv.org/abs/2411.00986) — enquadramento filosófico
 - [Eleos AI Research — Model welfare evaluation](https://www.eleosai.org/research) — críticas metodológicas externas
 - [Fish et al. — Spiritual Bliss Attractor writeup (blog Anthropic 2025)](https://www.anthropic.com/research/exploring-model-welfare) — o achado empírico

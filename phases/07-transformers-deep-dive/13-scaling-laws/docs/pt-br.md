@@ -113,7 +113,7 @@ Insira pares `(N, D)` conhecidos pra GPT-3, Chinchilla, Llama 3 8B, DeepSeek-V3 
 
 Você provavelmente não vai treinar um modelo de fronteira sozinho. Mas leis de escala dizem:
 
-1. **Se seu fine-tune tem dados suficientes.** Se seus dados específicos da tarefa estão abaixo de 20 tokens por param do modelo base, espere saturação em algum piso de perda.
+1. **Se seu fine-tune tem dados suficientes.** Se seus dados eespecificaçãoíficos da tarefa estão abaixo de 20 tokens por param do modelo base, espere saturação em algum piso de perda.
 2. **Se deve escolher um modelo base maior.** Se você gasta todo orçamento em inferência, prefira um modelo menor e mais treinado.
 3. **Onde os retornos diminuem.** Além de 1000× do ótimo Chinchilla, mudanças em log-perda viram ruído.
 

@@ -9,7 +9,7 @@
 
 ## O Problema
 
-Um coding agent envia o mesmo system prompt de 15.000 tokens ao Claude em cada turno de uma conversa. Vinte turnos a $3/M tokens de entrada = $0,90 só de custo de entrada — antes de qualquer mensagem real do usuário. Multiplique por 10.000 conversas diárias e a conta chega a $9.000/dia para texto que nunca muda.
+Um coding agente envia o mesmo system prompt de 15.000 tokens ao Claude em cada turno de uma conversa. Vinte turnos a $3/M tokens de entrada = $0,90 só de custo de entrada — antes de qualquer mensagem real do usuário. Multiplique por 10.000 conversas diárias e a conta chega a $9.000/dia para texto que nunca muda.
 
 ## O Conceito
 

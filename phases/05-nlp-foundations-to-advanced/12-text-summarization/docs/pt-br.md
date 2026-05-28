@@ -124,7 +124,7 @@ Recomendação de produção: reporte ROUGE-L pra comparação legada, BERTScore
 
 ### Passo 4: o problema de factualidade
 
-Resumos abstrativos são propensos a alucinação. Resumos extrativos carregam risco muito menor de alucinação porque a saída é copiada da fonte, embora possam ainda enganar se frases da fonte são descontextualizadas, desatualizadas ou citadas fora de ordem. Essa é a maior razão pela qual sistemas de produção ainda preferem métodos extrativos pra conteúdo de proximidade com compliance.
+Resumos abstrativos são propensos a alucinação. Resumos extrativos carregam risco muito menor de alucinação porque a saída é copiada da fonte, embora possam ainda enganar se frases da fonte são descontextualizadas, desatualizadas ou citadas fora de ordem. Essa é a maior razão pela qual sistemas de produção ainda preferem métodos extrativos pra conteúdo de proximidade com conformidade.
 
 Tipos de alucinação pra nomear:
 
@@ -153,7 +153,7 @@ Stack de 2026:
 | Resumo de diálogo | `philschmid/bart-large-cnn-samsum` |
 | Extrativo, baixo risco de alucinação por construção | TextRank ou LSA / LexRank do `sumy` |
 
-LLMs com contexto longo frequentemente batem modelos especializados em 2026 quando compute não é restrição. O tradeoff é custo e reprodutibilidade; modelos especializados dão saídas mais consistentes.
+LLMs com contexto longo frequentemente batem modelos eespecificaçãoializados em 2026 quando compute não é restrição. O tradeoff é custo e reprodutibilidade; modelos eespecificaçãoializados dão saídas mais consistentes.
 
 ## Entregando
 
@@ -169,7 +169,7 @@ lesson: 12
 tags: [nlp, summarization]
 ---
 
-Given a task (document type, compliance requirement, length, compute budget), output:
+Given a task (document type, conformidade requirement, length, compute budget), output:
 
 1. Approach. Extractive or abstractive. Explain in one sentence why.
 2. Starting model / library. Name it. `sumy.TextRankSummarizer`, `facebook/bart-large-cnn`, `google/pegasus-pubmed`, or an LLM prompt.

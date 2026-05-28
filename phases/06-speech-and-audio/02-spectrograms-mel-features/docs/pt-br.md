@@ -1,6 +1,6 @@
-# Espectrogramas, Escala Mel e Características de Áudio
+# Eespecificaçãotrogramas, Escala Mel e Características de Áudio
 
-> Redes neurais não consomem formas de onda brutas bem. Consomem espectrogramas. Consomem espectrogramas mel ainda melhor. Todo classificador de ASR, TTS e áudio em 2026 vive ou morre por essa única escolha de pré-processamento.
+> Redes neurais não consomem formas de onda brutas bem. Consomem eespecificaçãotrogramas. Consomem eespecificaçãotrogramas mel ainda melhor. Todo classificador de ASR, TTS e áudio em 2026 vive ou morre por essa única escolha de pré-processamento.
 
 **Tipo:** Construir
 **Idiomas:** Python
@@ -11,25 +11,25 @@
 
 Pegue um clipe de 10 segundos a 16 kHz. São 160.000 floats, todos em `[-1, 1]`, quase perfeitamente descorrelacionados com o rótulo "cachorro late" ou "a palavra gato". A forma de onda bruta tem a informação mas numa forma que o modelo não consegue extrair facilmente. Dois fonemas idênticos pronunciados 100 ms têm amostras completamente diferentes.
 
-Um espectrograma resolve isso. Ele colapsa o detalhe temporal onde a percepção humana ignora (jitter de microssegundos) e preserva a estrutura onde a percepção atenta (quais frequências são energéticas, em janelas de tempo de ~10–25 ms).
+Um eespecificaçãotrograma resolve isso. Ele colapsa o detalhe temporal onde a percepção humana ignora (jitter de microssegundos) e preserva a estrutura onde a percepção atenta (quais frequências são energéticas, em janelas de tempo de ~10–25 ms).
 
-Espectrogramas mel vão além. Humanos percebem pitch logaritmicamente: 100 Hz vs 200 Hz soam "na mesma distância" que 1000 Hz vs 2000 Hz. A escala mel distorce o eixo de frequência para combinar. Um espectrograma na escala mel é a característica mais importante em ML de fala de 2010 até 2026.
+Eespecificaçãotrogramas mel vão além. Humanos percebem pitch logaritmicamente: 100 Hz vs 200 Hz soam "na mesma distância" que 1000 Hz vs 2000 Hz. A escala mel distorce o eixo de frequência para combinar. Um eespecificaçãotrograma na escala mel é a característica mais importante em ML de fala de 2010 até 2026.
 
 ## O Conceito
 
-![Forma de onda para STFT para espectrograma mel para MFCC](../assets/mel-features.svg)
+![Forma de onda para STFT para eespecificaçãotrograma mel para MFCC](../assets/mel-features.svg)
 
-**STFT (Short-Time Fourier Transform).** Fatiar a forma de onda em frames sobrepostos (típico: janela de 25 ms, hop de 10 ms = 400 amostras / 160 amostras a 16 kHz). Multiplicar cada frame por uma função de janela (Hann é o padrão; Hamming com tradeoff levemente diferente). FFT em cada frame. Empilhar os espectros de magnitude em uma matriz de formato `(n_frames, n_freq_bins)`. Esse é seu espectrograma.
+**STFT (Short-Time Fourier Transform).** Fatiar a forma de onda em frames sobrepostos (típico: janela de 25 ms, hop de 10 ms = 400 amostras / 160 amostras a 16 kHz). Multiplicar cada frame por uma função de janela (Hann é o padrão; Hamming com tradeoff levemente diferente). FFT em cada frame. Empilhar os eespecificaçãotros de magnitude em uma matriz de formato `(n_frames, n_freq_bins)`. Esse é seu eespecificaçãotrograma.
 
 **Magnitude logarítmica.** Magnitudes brutas cobrem 5-6 ordens de magnitude. Pegue `log(|X| + 1e-6)` ou `20 * log10(|X|)` para comprimir a faixa dinâmica. Toda pipeline de produção usa magnitude logarítmica, não magnitude bruta.
 
 **Escala mel.** Frequência `f` em Hz mapeia para mel `m` por `m = 2595 * log10(1 + f / 700)`. O mapeamento é aproximadamente linear abaixo de 1 kHz e aproximadamente logarítmico acima. 80 bins mel cobrindo 0–8 kHz é a entrada padrão de ASR.
 
-**Banco de filtros mel.** Um conjunto de filtros triangulares espaçados igualmente na escala mel. Cada filtro é uma soma ponderada de bins FFT adjacentes. Multiplicar a magnitude STFT pela matriz do banco de filtros dá o espectrograma mel num único matmul.
+**Banco de filtros mel.** Um conjunto de filtros triangulares espaçados igualmente na escala mel. Cada filtro é uma soma ponderada de bins FFT adjacentes. Multiplicar a magnitude STFT pela matriz do banco de filtros dá o eespecificaçãotrograma mel num único matmul.
 
-**Espectrograma log-mel.** `log(mel_spec + 1e-10)`. A entrada do Whisper. A entrada do Parakeet. A entrada do SeamlessM4T. O frontend de áudio universal de 2026.
+**Eespecificaçãotrograma log-mel.** `log(mel_especificação + 1e-10)`. A entrada do Whisper. A entrada do Parakeet. A entrada do SeamlessM4T. O frontend de áudio universal de 2026.
 
-**MFCCs.** Pegue o espectrograma log-mel, aplique uma DCT (tipo II), mantenha os 13 primeiros coeficientes. Desserializa as características e comprime mais. Característica dominante até cerca de 2015 quando CNNs/Transformers em log-mels brutos alcançaram. Ainda usado em reconhecimento de falante (x-vectors, ECAPA).
+**MFCCs.** Pegue o eespecificaçãotrograma log-mel, aplique uma DCT (tipo II), mantenha os 13 primeiros coeficientes. Desserializa as características e comprime mais. Característica dominante até cerca de 2015 quando CNNs/Transformers em log-mels brutos alcançaram. Ainda usado em reconhecimento de falante (x-vectors, ECAPA).
 
 **Tradeoff de resolução.** FFT maior = melhor resolução de frequência mas pior resolução temporal. 25 ms / 10 ms é o padrão de áudio-ML; 50 ms / 12.5 ms para música; 5 ms / 2 ms para detecção de transientes (batidas de bateria, oclusivas).
 
@@ -54,7 +54,7 @@ def hann(N):
     return [0.5 * (1 - math.cos(2 * math.pi * n / (N - 1))) for n in range(N)]
 ```
 
-Multiplicar elemento-a-elemento antes da FFT. Remove vazamento espectral causado por truncamento em endpoints não-zero.
+Multiplicar elemento-a-elemento antes da FFT. Remove vazamento eespecificaçãotral causado por truncamento em endpoints não-zero.
 
 ### Passo 3: magnitude da STFT
 
@@ -91,16 +91,16 @@ def mel_filterbank(n_mels, n_fft, sr, fmin=0, fmax=None):
     return fb
 ```
 
-80 mels cobrindo 0–8 kHz com `n_fft=400` dá uma matriz `(80, 201)`. Multiplique a magnitude STFT `(n_frames, 201)` pela transposta para obter o espectrograma mel `(n_frames, 80)`.
+80 mels cobrindo 0–8 kHz com `n_fft=400` dá uma matriz `(80, 201)`. Multiplique a magnitude STFT `(n_frames, 201)` pela transposta para obter o eespecificaçãotrograma mel `(n_frames, 80)`.
 
 ### Passo 5: log-mel
 
 ```python
-def log_mel(mel_spec, eps=1e-10):
-    return [[math.log(max(v, eps)) for v in frame] for frame in mel_spec]
+def log_mel(mel_especificação, eps=1e-10):
+    return [[math.log(max(v, eps)) for v in frame] for frame in mel_especificação]
 ```
 
-Alternativas comuns: `librosa.power_to_db` (dB normalizado por referência), `10 * log10(power + eps)`. O Whisper usa um routine mais elaborado de clip + normalização (veja `log_mel_spectrogram` do Whisper).
+Alternativas comuns: `librosa.power_to_db` (dB normalizado por referência), `10 * log10(power + eps)`. O Whisper usa um routine mais elaborado de clip + normalização (veja `log_mel_especificaçãotrogram` do Whisper).
 
 ### Passo 6: MFCCs
 
@@ -136,7 +136,7 @@ Regra de ouro: **se você não está trabalhando com música, comece com 80 log-
 - **Incompatibilidade de taxa de amostragem upstream.** Mels computadas a 22.05 kHz parecem diferentes das de 16 kHz. Corrija SR *antes* da extração.
 - **dB vs log.** O Whisper espera log-mel, não dB-mel. Algumas pipelines HF autodetectam; seu código custom não vai.
 - **Drift de normalização.** Normalização por utterance durante treino, normalização global durante inferência. Bug de produção que dobra o WER.
-- **Vazamento do padding.** Zero-padding no fim de um clipe produz um espectro plano nos frames finais. Pad simetricamente ou replique.
+- **Vazamento do padding.** Zero-padding no fim de um clipe produz um eespecificaçãotro plano nos frames finais. Pad simetricamente ou replique.
 
 ## Entregue
 
@@ -155,16 +155,16 @@ Salve como `outputs/skill-feature-extractor.md`. A skill escolhe tipo de caracte
 | Frame | Uma fatia | Pedacinho de 25 ms da forma de onda alimentado a uma FFT. |
 | Hop | Stride | Amostras entre frames consecutivos; 10 ms é o padrão ASR. |
 | Janela | A parada Hann/Hamming | Multiplicador pontual que reduz as bordas do frame a zero. |
-| STFT | Gerador de espectrograma | FFT com enquadramento + janela; produz matriz tempo × frequência. |
+| STFT | Gerador de eespecificaçãotrograma | FFT com enquadramento + janela; produz matriz tempo × frequência. |
 | Mel | Frequência distorcida | Escala de percepção logarítmica; `m = 2595·log10(1 + f/700)`. |
 | Banco de filtros | A matriz | Filtros triangulares que projetam STFT nos bins mel. |
-| Log-mel | A entrada do Whisper | `log(mel_spec + eps)`; padronizado em 2026. |
+| Log-mel | A entrada do Whisper | `log(mel_especificação + eps)`; padronizado em 2026. |
 | MFCC | Característica antiga | DCT de log-mel; 13 coeficientes, desserializados. |
 
 ## Leitura Adicional
 
 - [Davis, Mermelstein (1980). Comparison of parametric representations for monosyllabic word recognition](https://ieeexplore.ieee.org/document/1163420) — o paper das MFCC.
 - [Stevens, Volkmann, Newman (1937). A Scale for the Measurement of the Psychological Magnitude Pitch](https://pubs.aip.org/asa/jasa/article-abstract/8/3/185/735757/) — a escala mel original.
-- [OpenAI — Whisper source, log_mel_spectrogram](https://github.com/openai/whisper/blob/main/whisper/audio.py) — leia a implementação de referência.
-- [librosa feature extraction docs](https://librosa.org/doc/main/feature.html) — referência para `mfcc`, `melspectrogram` e hop/janela.
+- [OpenAI — Whisper source, log_mel_especificaçãotrogram](https://github.com/openai/whisper/blob/main/whisper/audio.py) — leia a implementação de referência.
+- [librosa funcionalidade extraction docs](https://librosa.org/doc/main/feature.html) — referência para `mfcc`, `melespecificaçãotrogram` e hop/janela.
 - [NVIDIA NeMo — audio preprocessing](https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/main/asr/asr_all.html#featurizers) — pipeline em escala de produção para modelos Parakeet + Canary.

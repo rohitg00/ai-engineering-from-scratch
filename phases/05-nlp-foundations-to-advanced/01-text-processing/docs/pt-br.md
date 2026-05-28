@@ -115,7 +115,7 @@ def lemmatize(word, pos):
 'watched'
 ```
 
-O último caso é o ponto de ensino chave. `watched` não está na nossa tabela e nosso fallback só lida com `ing`. Lematização de verdade cobre `ed`, verbos irregulares, adjetivos comparativos, plurais com mudança de som (`children -> child`). É por isso que sistemas de produção usam WordNet, o morphologizer do spaCy, ou um analisador morfológico completo.
+O último caso é o ponto de ensino chave. `watched` não está na nossa tabela e nosso reserva só lida com `ing`. Lematização de verdade cobre `ed`, verbos irregulares, adjetivos comparativos, plurais com mudança de som (`children -> child`). É por isso que sistemas de produção usam WordNet, o morphologizer do spaCy, ou um analisador morfológico completo.
 
 ### Passo 4: encadeando tudo
 
@@ -204,7 +204,7 @@ A maioria dos tutoriais ensina os algoritmos e para. Duas coisas vão morder uma
 
 **Deriva de reprodutibilidade.** NLTK e spaCy mudam comportamento de tokenização e lematizador entre versões. O que gerou `['do', "n't"]` no spaCy 2.x pode gerar `["don't"]` no 3.x. Seu modelo foi treinado em uma distribuição. Inferência agora roda em outra. Precisão degrada silenciosamente e ninguém sabe por quê. Fixe versões de bibliotecas em `requirements.txt`. Escreva um teste de regressão de pré-processamento que congele a tokenização esperada de 20 frases de exemplo. Rode em toda atualização.
 
-**Mismatch treino/inferência.** Treine com pré-processamento agressivo (lowercase, remoção de stopwords, stemming), deploy em input cru do usuário, veja a performance despencar. Esse é o bug de produção de NLP mais comum que existe. Se você pré-processa durante treino, precisa rodar a função idêntica durante inferência. Empacote o pré-processamento como função dentro do pacote do modelo, não como célula de notebook que o time de serving reescreve.
+**Mismatch treino/inferência.** Treine com pré-processamento agressivo (lowercase, remoção de stopwords, stemming), implantação em input cru do usuário, veja a performance despencar. Esse é o bug de produção de NLP mais comum que existe. Se você pré-processa durante treino, precisa rodar a função idêntica durante inferência. Empacote o pré-processamento como função dentro do pacote do modelo, não como célula de notebook que o time de serving reescreve.
 
 ## Entregando
 

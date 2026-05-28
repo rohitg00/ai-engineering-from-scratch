@@ -1,6 +1,6 @@
 # Engenharia de Features e Seleção
 
-> Uma boa feature vale mais que mil pontos de dados.
+> Uma boa funcionalidade vale mais que mil pontos de dados.
 
 **Tipo:** Build
 **Linguagens:** Python
@@ -30,7 +30,7 @@ Isso acontece o tempo todo. Na ML clássica, a representação dos dados importa
 
 **Transformação log:** Comprime distribuições enviesadas à direita (renda, população, contagens de palavras).
 
-**Binning:** Converte valores contínuos em categorias. Útil quando a relação entre feature e alvo é não-linear mas por degraus.
+**Binning:** Converte valores contínuos em categorias. Útil quando a relação entre funcionalidade e alvo é não-linear mas por degraus.
 
 ### Features Categóricas
 
@@ -64,7 +64,7 @@ Mais features nem sempre é melhor. Features irrelevantes adicionam ruído, aume
 
 **Métodos filtro (pré-modelo):**
 - Correlação: remover features altamente correlacionadas
-- Informação mútua: mede o quanto saber uma feature reduz incerteza sobre o alvo
+- Informação mútua: mede o quanto saber uma funcionalidade reduz incerteza sobre o alvo
 - Limiar de variância: remover features que quase não variam
 
 ## Construa
@@ -258,8 +258,8 @@ importances = rf.feature_importances_
 
 ## Exercícios
 
-1. Implemente seleção frente (forward selection): comece com zero features. A cada passo, adicione a feature que mais melhora a performance. Pare quando adicionar features não ajudar mais.
+1. Implemente seleção frente (forward selection): comece com zero features. A cada passo, adicione a funcionalidade que mais melhora a performance. Pare quando adicionar features não ajudar mais.
 2. Implemente seleção por estabilidade: rode seleção L1 50 vezes, cada vez em um subconjunto aleatório de 80% dos dados.
-3. Detecte multicolinearidade: calcule a matriz de correlação para todas as features e implemente uma função que remove uma feature de cada par altamente correlacionado.
+3. Detecte multicolinearidade: calcule a matriz de correlação para todas as features e implemente uma função que remove uma funcionalidade de cada par altamente correlacionado.
 4. Encadeie limiar de variância, filtro por informação mútua e RFE em um pipeline único.
 5. Implemente importância por permutação do zero. Para cada feature, embaralhe seus valores 10 vezes e meça a queda média no F1 score.

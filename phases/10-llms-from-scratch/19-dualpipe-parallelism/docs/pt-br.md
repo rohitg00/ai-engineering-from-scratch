@@ -106,7 +106,7 @@ Pra runs menores (menos de 1k GPUs), DualPipe e excessivo -- bolhas de pipeline 
 
 - Complementar ao **FSDP** (Fase 10 · 05). FSDP fragmenta os parametros do modelo entre ranks; DualPipe agenda o compute entre ranks. Eles combinam.
 - Compativel com o fracionamento de gradientes **ZeRO-3**. A contabilidade da replicacao de duas copias precisa cooperar com os gradientes fracionados do ZeRO.
-- Requer **kernels all-to-all custom** ajustados pra topologia especifica do cluster. Os kernels open-source da DeepSeek sao a implementacao de referencia.
+- Requer **kernels all-to-all custom** ajustados pra topologia eespecificaçãoifica do cluster. Os kernels open-source da DeepSeek sao a implementacao de referencia.
 
 ## Usar
 
@@ -123,7 +123,7 @@ Consideracoes de integracao pra um run de treinamento real:
 
 ## Entregar
 
-Esta aula produz `outputs/skill-dualpipe-planner.md`. Dada uma especificacao de cluster de treinamento (contagem de GPUs, topologia, interconnect, formato do modelo), recomenda uma estrategia de pipeline parallelism, o algoritmo de scheduling e a fracao de bolha esperada na escala alvo.
+Esta aula produz `outputs/skill-dualpipe-planner.md`. Dada uma eespecificaçãoificacao de cluster de treinamento (contagem de GPUs, topologia, interconnect, formato do modelo), recomenda uma estrategia de pipeline parallelism, o algoritmo de scheduling e a fracao de bolha esperada na escala alvo.
 
 ## Exercicios
 
@@ -135,7 +135,7 @@ Esta aula produz `outputs/skill-dualpipe-planner.md`. Dada uma especificacao de 
 
 4. Calcule o overhead de 2x de parametros do DualPipe pra um modelo denso 70B com P=8 estagios de pipeline e um modelo MoE 671B com P=16 estagios de pipeline. Mostre por que o overhead do caso MoE e proporcionalmente menor (a maioria dos parametros sao experts, fragmentados em um grande grupo EP).
 
-5. Compare o DualPipe com o Chimera (um scheduler bidirecional concorrente de 2021). Identifique as duas propriedades especificas que o DualPipe adicionou que o Chimera nao tinha, usando a Secao 3.4 do paper como referencia.
+5. Compare o DualPipe com o Chimera (um agendador bidirecional concorrente de 2021). Identifique as duas propriedades eespecificaçãoificas que o DualPipe adicionou que o Chimera nao tinha, usando a Secao 3.4 do paper como referencia.
 
 ## Termos Principais
 

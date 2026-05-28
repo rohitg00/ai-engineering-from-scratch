@@ -21,7 +21,7 @@ Todo LLM de fronteira em 2026 roda em um de três algoritmos (BPE, Unigram, Word
 
 **BPE (Byte-Pair Encoding).** Começa com vocabulário em nível de caractere. Conta cada par adjacente. Funde o par mais frequente num novo token. Repete até atingir o tamanho do vocabulário alvo. Algoritmo dominante: GPT-2/3/4, Llama, Gemma, Qwen2, Mistral.
 
-**BPE em nível de byte.** Mesmo algoritmo mas sobre bytes brutos (256 tokens base) em vez de caracteres Unicode. Garante zero tokens `[UNK]` — qualquer sequência de bytes é codificável. GPT-2 usa 50.257 tokens (256 bytes + 50.000 fusões + 1 especial).
+**BPE em nível de byte.** Mesmo algoritmo mas sobre bytes brutos (256 tokens base) em vez de caracteres Unicode. Garante zero tokens `[UNK]` — qualquer sequência de bytes é codificável. GPT-2 usa 50.257 tokens (256 bytes + 50.000 fusões + 1 eespecificaçãoial).
 
 **Unigram.** Começa com um vocabulário enorme. Atribui a cada token uma probabilidade unigrama. Poda iterativamente tokens cuja remoção menos aumenta a verossimilhança do corpus. Probabilístico em inferência: pode amostrar tokenizações (útil pra augmentação de dados via regularização subword). Usado por T5, mBART, ALBERT, XLNet, Gemma.
 
@@ -112,7 +112,7 @@ Apenas codificação. Rápido (backend em Rust). Corresponde exatamente à token
 ## Armadilhas que ainda causam problemas em 2026
 
 - **Drift de tokenizer.** Treina com vocabulário A, deploya com vocabulário B. IDs de tokens diferentes; modelo produz lixo. Verifique o hash de `tokenizer.json` no CI.
-- **Ambiguidade de espaço em branco.** BPE "hello" vs " hello" produzem tokens diferentes. Sempre especifique `add_special_tokens` e `add_prefix_space` explicitamente.
+- **Ambiguidade de espaço em branco.** BPE "hello" vs " hello" produzem tokens diferentes. Sempre eespecificaçãoifique `add_especificaçãoial_tokens` e `add_prefix_space` explicitamente.
 - **Sub-treinamento multilíngue.** Corpora com predominância de inglês produzem vocabulários que dividem escritas não-latinas em 5-10x mais tokens. O mesmo prompt custa 5-10x mais em japonês/árabe no GPT-3.5. o200k_base corrigiu parcialmente.
 - **Divisão de emoji.** Um único emoji pode custar 5 tokens. Considere o tratamento de emoji ao orçar contexto.
 
@@ -125,7 +125,7 @@ A stack de 2026:
 | Treinar modelo monolíngue do zero | HF Tokenizers (BPE) |
 | Treinar modelo multilíngue | SentencePiece (Unigram, `character_coverage=0.9995`) |
 | Servir API compatível com OpenAI | tiktoken (`o200k_base` pra GPT-4+) |
-| Vocabulário de domínio específico (código, matemática, proteína) | Treinar BPE customizado em corpus de domínio, fundir com vocabulário base |
+| Vocabulário de domínio eespecificaçãoífico (código, matemática, proteína) | Treinar BPE customizado em corpus de domínio, fundir com vocabulário base |
 | Inferência em borda, modelo pequeno | Unigram (vocabulários menores funcionam melhor) |
 
 Tamanho do vocabulário é uma decisão de escala, não uma constante. Heurística rough: 32k pra <1B parâmetros, 50-100k pra 1-10B, 200k+ pra multilíngue/fronteira.
@@ -149,10 +149,10 @@ Given a corpus (size, languages, domain) and deployment target (training from sc
 1. Algorithm. BPE, Unigram, or WordPiece. One-sentence reason.
 2. Library. SentencePiece, HF Tokenizers, or tiktoken. Reason.
 3. Vocab size. Rounded to nearest 1k. Reason tied to model size and language coverage.
-4. Coverage settings. `character_coverage`, `byte_fallback`, special-token list.
+4. Coverage settings. `character_coverage`, `byte_fallback`, especificaçãoial-token list.
 5. Validation plan. Average tokens-per-word on held-out set, OOV rate, compression ratio, round-trip decode equality.
 
-Refuse to train a character-coverage <0.995 tokenizer on corpora with rare-script content. Refuse to ship a vocab without a frozen `tokenizer.json` hash check in CI. Flag any monolingual tokenizer under 16k vocab as likely under-spec.
+Refuse to train a character-coverage <0.995 tokenizer on corpora with rare-script content. Refuse to ship a vocab without a frozen `tokenizer.json` hash check in CI. Flag any monolingual tokenizer under 16k vocab as likely under-especificação.
 ```
 
 ## Exercícios

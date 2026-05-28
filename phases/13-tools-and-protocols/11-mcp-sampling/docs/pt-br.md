@@ -1,6 +1,6 @@
 # Sampling MCP — Completions de LLM Solicitadas pelo Servidor e Loops de Agent
 
-> A maioria dos servidores MCP são executores burros: recebem argumentos, rodam código, retornam conteúdo. Sampling permite que um servidor inverte a direção: ele pergunta ao LLM do cliente pra tomar uma decisão. Isso permite loops de agent hospedados no servidor sem o servidor possuir credenciais de modelo. SEP-1577, incorporado na 2025-11-25, adicionou ferramentas dentro de requests de sampling pra que o loop possa incluir raciocínio mais profundo. Nota de risco de deriva: a forma do tool-in-sampling do SEP-1577 foi experimental até Q1 2026 e ainda se estabilizando nas APIs de SDK.
+> A maioria dos servidores MCP são executores burros: recebem argumentos, rodam código, retornam conteúdo. Sampling permite que um servidor inverte a direção: ele pergunta ao LLM do cliente pra tomar uma decisão. Isso permite loops de agente hospedados no servidor sem o servidor possuir credenciais de modelo. SEP-1577, incorporado na 2025-11-25, adicionou ferramentas dentro de requests de sampling pra que o loop possa incluir raciocínio mais profundo. Nota de risco de deriva: a forma do tool-in-sampling do SEP-1577 foi experimental até Q1 2026 e ainda se estabilizando nas APIs de SDK.
 
 **Tipo:** Construir
 **Linguagens:** Python (stdlib, harness de sampling)
@@ -20,11 +20,11 @@ Um servidor MCP útil pra um fluxo de trabalho de resumo de código precisa: cam
 
 Opção A: o servidor chama seu próprio LLM. Precisa de chave de API, cobra do lado do servidor, é caro por usuário.
 
-Opção B: o servidor retorna conteúdo cru; o agent do cliente faz o raciocínio. Funciona mas move lógica do servidor pro prompt do cliente, o que é frágil.
+Opção B: o servidor retorna conteúdo cru; o agente do cliente faz o raciocínio. Funciona mas move lógica do servidor pro prompt do cliente, o que é frágil.
 
 Opção C: o servidor pede ao LLM do cliente via `sampling/createMessage`. O servidor mantém o algoritmo (quais arquivos ler, quantas passadas fazer) enquanto o cliente mantém billing e escolha de modelo. O servidor não tem credenciais.
 
-Sampling é a opção C. É o mecanismo pelo qual um servidor confiável pode hospedar um loop de agent sem ser um host de LLM completo.
+Sampling é a opção C. É o mecanismo pelo qual um servidor confiável pode hospedar um loop de agente sem ser um host de LLM completo.
 
 ## O Conceito
 
@@ -85,7 +85,7 @@ Três valores:
 
 ### Sampling com ferramentas (SEP-1577)
 
-Novo em 2025-11-25: o request de sampling pode incluir um array `tools`. O cliente roda um loop completo de chamada de ferramenta usando essas ferramentas. Isso permite ao servidor hospedar um loop de agent estilo ReAct através do modelo do cliente.
+Novo em 2025-11-25: o request de sampling pode incluir um array `tools`. O cliente roda um loop completo de chamada de ferramenta usando essas ferramentas. Isso permite ao servidor hospedar um loop de agente estilo ReAct através do modelo do cliente.
 
 ```json
 {
@@ -96,7 +96,7 @@ Novo em 2025-11-25: o request de sampling pode incluir um array `tools`. O clien
 }
 ```
 
-O cliente faz loop: sample, executa ferramenta se chamada, sample de novo, retorna mensagem final do assistant. Isso é experimental até Q1 2026; assinaturas de SDK podem ainda mudar. Confirme na seção client/sampling da especificação 2025-11-25 quando implementar.
+O cliente faz loop: sample, executa ferramenta se chamada, sample de novo, retorna mensagem final do assistant. Isso é experimental até Q1 2026; assinaturas de SDK podem ainda mudar. Confirme na seção client/sampling da eespecificaçãoificação 2025-11-25 quando implementar.
 
 ### Humano no loop
 
@@ -172,7 +172,7 @@ Esta aula produz `outputs/skill-sampling-loop-designer.md`. Dado um algoritmo do
 ## Leituras Complementares
 
 - [MCP — Concepts: Sampling](https://modelcontextprotocol.io/docs/concepts/sampling) — visão geral de alto nível do sampling
-- [MCP — Client sampling spec 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/client/sampling) — forma canônica de `sampling/createMessage`
-- [MCP — GitHub SEP-1577](https://github.com/modelcontextprotocol/modelcontextprotocol) — Proposta de Evolução da Especificação pra ferramentas em sampling (experimental)
+- [MCP — Client sampling especificação 2025-11-25](https://modelcontextprotocol.io/especificaçãoification/2025-11-25/client/sampling) — forma canônica de `sampling/createMessage`
+- [MCP — GitHub SEP-1577](https://github.com/modelcontextprotocol/modelcontextprotocol) — Proposta de Evolução da Eespecificaçãoificação pra ferramentas em sampling (experimental)
 - [Unit 42 — MCP attack vectors](https://unit42.paloaltonetworks.com/modelcontextprotocol-attack-vectors/) — padrões de sampling oculto e roubo de recursos
 - [Speakeasy — MCP sampling core concept](https://www.speakeasy.com/mcp/core-concepts/sampling) — walkthrough com exemplos de código do lado do cliente

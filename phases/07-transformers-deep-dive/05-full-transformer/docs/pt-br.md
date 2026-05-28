@@ -13,7 +13,7 @@ Uma única camada de attention é um extrator de características, não um model
 
 O paper Vaswani de 2017 embalou seis decisões de design que transformaram uma camada de attention num bloco empilhável. Todo transformer desde então — encoder-only (BERT), decoder-only (GPT), encoder-decoder (T5) — herda o mesmo esqueleto. Em 2026 os blocos foram refinados (RMSNorm, SwiGLU, pre-norm, RoPE) mas o esqueleto é idêntico.
 
-Esta aula é o esqueleto. Próximas aulas o especializam — 06 pra encoders, 07 pra decoders, 08 pra encoder-decoder.
+Esta aula é o esqueleto. Próximas aulas o eespecificaçãoializam — 06 pra encoders, 07 pra decoders, 08 pra encoder-decoder.
 
 ## O Conceito
 
@@ -161,7 +161,7 @@ Veja `outputs/skill-transformer-block-reviewer.md`. A skill revisa uma nova impl
 
 ## Leituras Complementares
 
-- [Vaswani et al. (2017). Attention Is All You Need](https://arxiv.org/abs/1706.03762) — especificação original do bloco.
+- [Vaswani et al. (2017). Attention Is All You Need](https://arxiv.org/abs/1706.03762) — eespecificaçãoificação original do bloco.
 - [Xiong et al. (2020). On Layer Normalization in the Transformer Architecture](https://arxiv.org/abs/2002.04745) — por que pre-norm vence post-norm em profundidade.
 - [Zhang, Sennrich (2019). Root Mean Square Layer Normalization](https://arxiv.org/abs/1910.07467) — RMSNorm.
 - [Shazeer (2020). GLU Variants Improve Transformer](https://arxiv.org/abs/2002.05202) — paper do SwiGLU.

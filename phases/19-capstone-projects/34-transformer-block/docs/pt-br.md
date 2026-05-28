@@ -59,7 +59,7 @@ O formato é idêntico. O comportamento de treinamento não é. Com post-LN, o g
 
 ### Attention multi-head causal
 
-A sub-camada de attention projeta a entrada em três direções para tensores de query, key e value. Cada um é remodelado de `(B, T, D)` para `(B, H, T, D/H)` onde `H` é o número de cabeças. Attention de produto escalar escalonado computa `softmax(Q K^T / sqrt(d_k))` por cabeça, mascara o triângulo superior para infinito negativo, aplica a máscara via softmax, depois multiplica por `V`. As cabeças são concatenadas de volta em um único tensor `(B, T, D)` e projetadas mais uma vez. A máscara é a única peça que torna o modelo causal. Esqueça a máscara e você treina um modelo que trapsa.
+A sub-camada de attention projeta a entrada em três direções para tensores de consulta, key e value. Cada um é remodelado de `(B, T, D)` para `(B, H, T, D/H)` onde `H` é o número de cabeças. Attention de produto escalar escalonado computa `softmax(Q K^T / sqrt(d_k))` por cabeça, mascara o triângulo superior para infinito negativo, aplica a máscara via softmax, depois multiplica por `V`. As cabeças são concatenadas de volta em um único tensor `(B, T, D)` e projetadas mais uma vez. A máscara é a única peça que torna o modelo causal. Esqueça a máscara e você treina um modelo que trapsa.
 
 ### A MLP
 

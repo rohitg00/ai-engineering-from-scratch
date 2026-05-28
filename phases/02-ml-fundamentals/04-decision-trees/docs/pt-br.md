@@ -18,7 +18,7 @@
 
 Você tem dados tabulares. Linhas são amostras, colunas são features, e existe uma coluna alvo que você quer prever. Poderia jogar uma rede neural nisso. Mas para dados tabulares, modelos baseados em árvore (árvores de decisão, random forests, gradient boosted trees) consistentemente superam deep learning.
 
-Por quê? Árvores lidam com tipos mistos de feature (numéricos e categóricos) sem pré-processamento. Lidam com relações não-lineares sem engenharia de features. São interpretáveis: você olha a árvore e vê exatamente por que uma previsão foi feita.
+Por quê? Árvores lidam com tipos mistos de funcionalidade (numéricos e categóricos) sem pré-processamento. Lidam com relações não-lineares sem engenharia de features. São interpretáveis: você olha a árvore e vê exatamente por que uma previsão foi feita.
 
 ## O Conceito
 
@@ -91,21 +91,21 @@ Duas fontes de aleatoriedade tornam as árvores diversas:
 ```python
 import math
 
-def gini_impurity(labels):
-    n = len(labels)
+def gini_impurity(rótulos):
+    n = len(rótulos)
     if n == 0:
         return 0.0
     counts = {}
-    for label in labels:
+    for label in rótulos:
         counts[label] = counts.get(label, 0) + 1
     return 1.0 - sum((c / n) ** 2 for c in counts.values())
 
-def entropy(labels):
-    n = len(labels)
+def entropy(rótulos):
+    n = len(rótulos)
     if n == 0:
         return 0.0
     counts = {}
-    for label in labels:
+    for label in rótulos:
         counts[label] = counts.get(label, 0) + 1
     return -sum(
         (c / n) * math.log2(c / n) for c in counts.values() if c > 0
@@ -115,17 +115,17 @@ def entropy(labels):
 ### Passo 2: Encontre a melhor divisão
 
 ```python
-def information_gain(parent_labels, left_labels, right_labels, criterion="gini"):
+def information_gain(parent_rótulos, left_rótulos, right_rótulos, criterion="gini"):
     measure = gini_impurity if criterion == "gini" else entropy
-    n = len(parent_labels)
-    n_left = len(left_labels)
-    n_right = len(right_labels)
+    n = len(parent_rótulos)
+    n_left = len(left_rótulos)
+    n_right = len(right_rótulos)
     if n_left == 0 or n_right == 0:
         return 0.0
-    parent_impurity = measure(parent_labels)
+    parent_impurity = measure(parent_rótulos)
     child_impurity = (
-        (n_left / n) * measure(left_labels) +
-        (n_right / n) * measure(right_labels)
+        (n_left / n) * measure(left_rótulos) +
+        (n_right / n) * measure(right_rótulos)
     )
     return parent_impurity - child_impurity
 ```
@@ -156,4 +156,4 @@ Na prática, gradient boosted trees (XGBoost, LightGBM, CatBoost) são frequente
 2. Implemente divisão por redução de variância para árvores de regressão. Gere y = sin(x) + ruído para 200 pontos e ajuste sua árvore de regressão.
 3. Construa uma random forest com 1, 5, 10, 50 e 200 árvores. Plote accuracy de treino e teste vs número de árvores.
 4. Compare impureza de Gini vs entropia como critérios de divisão em 5 datasets diferentes.
-5. Implemente importância por permutação. Compare com importância MDI num dataset onde uma feature é ruído aleatório mas tem alta cardinalidade.
+5. Implemente importância por permutação. Compare com importância MDI num dataset onde uma funcionalidade é ruído aleatório mas tem alta cardinalidade.

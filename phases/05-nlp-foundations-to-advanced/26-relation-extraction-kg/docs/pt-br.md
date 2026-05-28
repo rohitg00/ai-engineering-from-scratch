@@ -16,7 +16,7 @@ Um analista lê: "Tim Cook became CEO of Apple in 2011." Quatro fatos:
 - `(Tim Cook, start_date, 2011)`
 - `(Apple, type, Organization)`
 
-Extração de Relações (RE) transforma texto livre em triplos estruturados `(sujeito, relação, objeto)`. Agregue em um corpus e você tem um grafo de conhecimento. Agregue e consulte e você tem uma base de raciocínio pra RAG, analytics ou auditorias de compliance.
+Extração de Relações (RE) transforma texto livre em triplos estruturados `(sujeito, relação, objeto)`. Agregue em um corpus e você tem um grafo de conhecimento. Agregue e consulte e você tem uma base de raciocínio pra RAG, analytics ou auditorias de conformidade.
 
 O problema de 2026: LLMs extraem relações entusiasticamente. De mais. Eles alucinam triplos que o texto fonte não suporta. Sem procedência, você não consegue distinguir triplos reais de ficção plausível. A resposta de 2026 são pipelines estilo AEVS de ancoragem-e-verificação.
 
@@ -61,7 +61,7 @@ PATTERNS = [
 ]
 ```
 
-Veja `code/main.py` pro extrator de brinquedo completo. Padrões Hearst ainda são usados em pipelines de domínio específico porque são debugáveis.
+Veja `code/main.py` pro extrator de brinquedo completo. Padrões Hearst ainda são usados em pipelines de domínio eespecificaçãoífico porque são debugáveis.
 
 ### Passo 2: classificação de relações supervisionada
 
@@ -74,7 +74,7 @@ model = AutoModelForSequenceClassification.from_pretrained("Babelscape/rebel-lar
 text = "Tim Cook was born in Alabama. He later became CEO of Apple."
 encoded = tok(text, return_tensors="pt", truncation=True)
 output = model.generate(**encoded, max_length=200)
-triples = tok.batch_decode(output, skip_special_tokens=False)
+triples = tok.batch_decode(output, skip_especificaçãoial_tokens=False)
 ```
 
 REBEL é um extrator de relações seq2seq: texto entra, triplos saem, já em IDs de propriedade da Wikidata. Fine-tuned em dados de supervisão distante. Baseline padrão de pesos abertos.
@@ -152,7 +152,7 @@ A stack de 2026:
 | Situação | Escolha |
 |-----------|------|
 | Produção rápida, domínio geral | REBEL ou LlamaPred com canonicização Wikidata |
-| Domínio específico (biomed, jurídico) | Fine-tuning de domínio estilo SciREX + ontologia customizada |
+| Domínio eespecificaçãoífico (biomed, jurídico) | Fine-tuning de domínio estilo SciREX + ontologia customizada |
 | Via prompting de LLM, saída auditada | Pipeline AEVS: ancorar → extrair → verificar → suplementar |
 | IE de notícias em alto volume | Híbrido baseado em padrões + supervisionado |
 | Construindo KG do zero | Open IE + passagem de canonicização manual |
@@ -174,7 +174,7 @@ lesson: 26
 tags: [nlp, relation-extraction, knowledge-graph]
 ---
 
-Given a corpus (domain, language, volume) and downstream use (KG-RAG, analytics, compliance), output:
+Given a corpus (domain, language, volume) and downstream use (KG-RAG, analytics, conformidade), output:
 
 1. Extractor. Pattern-based / supervised / LLM / AEVS hybrid. Reason tied to precision vs recall target.
 2. Ontology. Closed property list (Wikidata / domain) or open IE with canonicalization pass.

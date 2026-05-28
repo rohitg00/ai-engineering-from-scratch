@@ -1,10 +1,10 @@
 # Multi-Token Prediction (MTP)
 
-> Todo LLM autoregressivo do GPT-2 ao Llama 3 treina com uma loss por posicao: predizer o proximo token. DeepSeek-V3 adicionou uma segunda loss por posicao: predizer o token seguinte. Os 14B extras de parametros (num modelo de 671B) foram destilados de volta pro modelo principal atraves do fluxo de gradiente, e os heads MTP treinados foram reaproveitados na inferencia como rascunhos de decodificacao especulativa com 80%+ de aceitacao. 1.8x de throughput de geracao veio gratis. Esta aula constroi o modulo MTP sequencial do relatorio tecnico da DeepSeek, calcula a loss e o layout de parametros do head compartilhado e explica por que MTP mantem a cadeia causal enquanto o MTP paralelo original de Gloeckle et al. quebrava.
+> Todo LLM autoregressivo do GPT-2 ao Llama 3 treina com uma loss por posicao: predizer o proximo token. DeepSeek-V3 adicionou uma segunda loss por posicao: predizer o token seguinte. Os 14B extras de parametros (num modelo de 671B) foram destilados de volta pro modelo principal atraves do fluxo de gradiente, e os heads MTP treinados foram reaproveitados na inferencia como rascunhos de decodificacao eespecificaçãoulativa com 80%+ de aceitacao. 1.8x de throughput de geracao veio gratis. Esta aula constroi o modulo MTP sequencial do relatorio tecnico da DeepSeek, calcula a loss e o layout de parametros do head compartilhado e explica por que MTP mantem a cadeia causal enquanto o MTP paralelo original de Gloeckle et al. quebrava.
 
 **Tipo:** Construir
 **Linguagens:** Python (stdlib)
-**Pre-requisitos:** Fase 10 · 04 (pre-treinamento de mini GPT), Fase 10 · 15 (decodificacao especulativa)
+**Pre-requisitos:** Fase 10 · 04 (pre-treinamento de mini GPT), Fase 10 · 15 (decodificacao eespecificaçãoulativa)
 **Tempo:** ~60 minutos
 
 ## Objetivos de Aprendizado
@@ -18,9 +18,9 @@
 
 A predicao do proximo token e o objetivo padrao de treinamento de LLMs. Cada hidden state e supervisionado pra predizer exatamente uma coisa: o token imediatamente seguinte. Isso e um sinal surpreendentemente fraco. A maior parte da informacao numa sequencia vai alem de um token -- estrutura, coesao, factualidade, fluidez aritmetica. O modelo tem que aprender tudo isso acumulando muitos sinais de um token ao longo de trilhoes de tokens.
 
-MTP pergunta: e se cada hidden state fosse supervisionado pra predizer multiplos tokens futuros de uma vez? Gloeckle et al. (Meta, 2024) mostraram que isso ajuda. A implementacao deles colocou varios output heads independentes no topo da backbone, cada um predizendo um offset diferente. Paralelo, simples, mas os heads viam o mesmo hidden state sem nenhum refinamento hierarquico -- e as predicoes nao encadeavam causalmente, entao nao podiam ser usadas pra decodificacao especulativa.
+MTP pergunta: e se cada hidden state fosse supervisionado pra predizer multiplos tokens futuros de uma vez? Gloeckle et al. (Meta, 2024) mostraram que isso ajuda. A implementacao deles colocou varios output heads independentes no topo da backbone, cada um predizendo um offset diferente. Paralelo, simples, mas os heads viam o mesmo hidden state sem nenhum refinamento hierarquico -- e as predicoes nao encadeavam causalmente, entao nao podiam ser usadas pra decodificacao eespecificaçãoulativa.
 
-DeepSeek-V3 (dezembro de 2024) redesenhou o MTP como modulos sequenciais que mantem a cadeia causal em cada profundez de predicao. O modelo prediz `t+1` de `h_i^(0)`, depois prediz `t+2` de um novo hidden state `h_i^(1)` que combina `h_i^(0)` com o embedding `E(t+1)`, e assim por diante. Cada profundez e seu proprio bloco transformer pequeno. O embedding compartilhado e o output head compartilhado mantem o overhead de parametros moderado. Na escala do DeepSeek-V3, 14B de parametros extras nos modulos MTP alem dos 671B de pesos do modelo principal. Esse overhead de 2% comprou sinais de treinamento mais densos E um rascunho pronto pra decodificacao especulativa na inferencia.
+DeepSeek-V3 (dezembro de 2024) redesenhou o MTP como modulos sequenciais que mantem a cadeia causal em cada profundez de predicao. O modelo prediz `t+1` de `h_i^(0)`, depois prediz `t+2` de um novo hidden state `h_i^(1)` que combina `h_i^(0)` com o embedding `E(t+1)`, e assim por diante. Cada profundez e seu proprio bloco transformer pequeno. O embedding compartilhado e o output head compartilhado mantem o overhead de parametros moderado. Na escala do DeepSeek-V3, 14B de parametros extras nos modulos MTP alem dos 671B de pesos do modelo principal. Esse overhead de 2% comprou sinais de treinamento mais densos E um rascunho pronto pra decodificacao eespecificaçãoulativa na inferencia.
 
 Esta aula constrói um unico modulo MTP e a loss de profundez D do zero. A matematica e limpa. A implementacao sao 150 linhas.
 
@@ -68,7 +68,7 @@ L_MTP = (lambda / D) * sum_{k=1..D} L_k
 
 O MTP paralelo original de Gloeckle tinha D output heads, cada um diretamente aplicado a `h_i^(0)`. Cada head prediz `t_{i+k}` do mesmo hidden state da backbone. Isso treina bem, mas as predicoes nao sao condicionadas umas nas outras. Voce nao pode usar a saida de `head_1` pra ajudar `head_2` -- os heads disparam em paralelo.
 
-O design sequencial do DeepSeek-V3 constroi `h_i^(k)` a partir de `h_i^(k-1)` mais o embedding real do proximo token `E(t_{i+k})`. Isso preserva a cadeia causal: pra predizer `t_{i+k+1}`, o modulo na profundez `k+1` ve o que estava em `t_{i+k}`. Isso e estruturalmente identico a como um decoder autoregressivo consome sua propria saida -- tornando os modulos MTP diretamente usaveis como rascunhos de decodificacao especulativa.
+O design sequencial do DeepSeek-V3 constroi `h_i^(k)` a partir de `h_i^(k-1)` mais o embedding real do proximo token `E(t_{i+k})`. Isso preserva a cadeia causal: pra predizer `t_{i+k+1}`, o modulo na profundez `k+1` ve o que estava em `t_{i+k}`. Isso e estruturalmente identico a como um decoder autoregressivo consome sua propria saida -- tornando os modulos MTP diretamente usaveis como rascunhos de decodificacao eespecificaçãoulativa.
 
 Na inferencia: alimente `h_i^(k-1)` e o rascunho `t_{i+k}` no modulo `k+1`, obtenha uma predicao pra `t_{i+k+1}`. Repita. Isso e exatamente um rascunho estilo EAGLE, usando o modulo MTP treinado como rede de rascunho. DeepSeek-V3 reporta 80%+ de aceitacao no primeiro modulo MTP e ~1.8x de speedup.
 
@@ -85,13 +85,13 @@ Pra um modelo com hidden `h` e vocabulario `V`:
 
 Total extra por modulo: `~14h^2`. Pra `h = 7168` do DeepSeek-V3, D = 1 modulo: `~14 * 7168^2 = ~720M` parametros no papel. DeepSeek-V3 reporta 14B -- a diferenca e majoritariamente layers de expert sendo MoE no modulo MTP tambem.
 
-### O ganho da decodificacao especulativa
+### O ganho da decodificacao eespecificaçãoulativa
 
 Durante pre-treinamento, os modulos MTP desaceleram o treinamento em cerca de 10% (mais compute no forward, loss extra). O ganho e duplo:
 
 1. Sinais de treinamento mais densos. Cada hidden state ve D+1 alvos de supervision. Efeito medido em MMLU, GSM8K, MATH, HumanEval: melhorias consistentes de poucos pontos percentuais nas abalacoes do DeepSeek-V3.
 
-2. Rascunho gratis pra decodificacao especulativa na inferencia. O modulo MTP ja esta treinado pra predizer os proximos poucos tokens. Reaproveitado como rede de rascunho, ele entrega taxas de aceitacao de 80%+. Nesse nivel, N=3 ou N=5 de decodificacao especulativa da 1.8x de throughput. O custo de treinamento de 10% compensa na primeira vez que voce roda inferencia.
+2. Rascunho gratis pra decodificacao eespecificaçãoulativa na inferencia. O modulo MTP ja esta treinado pra predizer os proximos poucos tokens. Reaproveitado como rede de rascunho, ele entrega taxas de aceitacao de 80%+. Nesse nivel, N=3 ou N=5 de decodificacao eespecificaçãoulativa da 1.8x de throughput. O custo de treinamento de 10% compensa na primeira vez que voce roda inferencia.
 
 ### Relacao com EAGLE
 
@@ -103,11 +103,11 @@ EAGLE treina um modelo de rascunho pequeno SEPARADAMENTE apos o pre-treinamento.
 | Retrocompativel com pesos existentes | Sim | Nao (precisa retreinar) |
 | Params do rascunho | 1-2 camadas transformer | 1 bloco transformer + projecao |
 | Taxa de aceitacao | 0.88-0.92 | 0.80+ na profundez 1 |
-| Beneficio alem do speedup | So decodificacao especulativa | Sinais de treinamento mais densos + speedup |
+| Beneficio alem do speedup | So decodificacao eespecificaçãoulativa | Sinais de treinamento mais densos + speedup |
 
 ## Construir
 
-`code/main.py` constrói um modulo MTP unico end-to-end: embedding compartilhado, projecao, bloco transformer, output head compartilhado. Depois calcula a loss de cross-entropy por profundez em uma sequencia sintetica curta e imprime a contagem de parametros por componente. Um vocabulario toy de 32 tokens mantem os numeros legiveis.
+`code/main.py` constrói um modulo MTP unico de ponta a ponta: embedding compartilhado, projecao, bloco transformer, output head compartilhado. Depois calcula a loss de cross-entropy por profundez em uma sequencia sintetica curta e imprime a contagem de parametros por componente. Um vocabulario toy de 32 tokens mantem os numeros legiveis.
 
 ### Passo 1: tabela de embedding compartilhada
 
@@ -145,14 +145,14 @@ Imprima a contagem total de parametros, a contagem compartilhada (embedding, hea
 
 MTP esta integrado no DeepSeek-V3 (dezembro de 2024) e na serie DeepSeek-R1. Na inferencia:
 
-- A stack propria de servir da DeepSeek consome modulos MTP como decodificadores especulativos nativamente.
+- A stack propria de servir da DeepSeek consome modulos MTP como decodificadores eespecificaçãoulativos nativamente.
 - vLLM e SGLang tem caminhos de integracao pro MTP do DeepSeek-V3 em abril de 2026.
-- O tutorial ROCm da AMD mostra uma config especifica de decodificacao especulativa MTP com speedup medido de 1.8x no checkpoint V3.
+- O tutorial ROCm da AMD mostra uma config eespecificaçãoifica de decodificacao eespecificaçãoulativa MTP com speedup medido de 1.8x no checkpoint V3.
 
 Quando usar MTP num novo run de pre-treinamento:
 
 - Voce controla o pipeline completo de pre-treinamento e quer bancar sinais de treinamento mais densos.
-- Voce sabe que vai servir o modelo em escala e quer decodificacao especulativa gratis.
+- Voce sabe que vai servir o modelo em escala e quer decodificacao eespecificaçãoulativa gratis.
 - Seu hidden size e pelo menos 4096. Em escala 1B o overhead prejudica mais do que o ganho ajuda.
 
 Quando nao usar:
@@ -162,7 +162,7 @@ Quando nao usar:
 
 ## Entregar
 
-Esta aula produz `outputs/skill-mtp-planner.md`. Dada uma especificacao de run de pre-treinamento (tamanho do modelo, dados, compute), retorna um plano pra integrar MTP: numero de profundezes D, schedule de `lambda`, overhead de memoria e a fiação de decodificacao especulativa na inferencia.
+Esta aula produz `outputs/skill-mtp-planner.md`. Dada uma eespecificaçãoificacao de run de pre-treinamento (tamanho do modelo, dados, compute), retorna um plano pra integrar MTP: numero de profundezes D, schedule de `lambda`, overhead de memoria e a fiação de decodificacao eespecificaçãoulativa na inferencia.
 
 ## Exercicios
 
@@ -196,5 +196,5 @@ Esta aula produz `outputs/skill-mtp-planner.md`. Dada uma especificacao de run d
 - [DeepSeek-AI -- DeepSeek-V3 Technical Report (arXiv:2412.19437)](https://arxiv.org/abs/2412.19437) -- a descricao completa do MTP sequencial (Secao 2.2), incluindo as equacoes de loss conjunta e o speedup de 1.8x na inferencia
 - [Gloeckle et al. -- Better & Faster Large Language Models via Multi-token Prediction (arXiv:2404.19737)](https://arxiv.org/abs/2404.19737) -- o baseline de MTP paralelo que o design da DeepSeek melhora
 - [Model card do DeepSeek-V3 no Hugging Face](https://huggingface.co/deepseek-ai/DeepSeek-V3) -- 685B total (671B principal + 14B MTP), notas de deploy
-- [Leviathan et al. -- Fast Inference from Transformers via Speculative Decoding (arXiv:2211.17192)](https://arxiv.org/abs/2211.17192) -- o framework de decodificacao especulativa no qual MTP se encaixa
+- [Leviathan et al. -- Fast Inference from Transformers via Speculative Decoding (arXiv:2211.17192)](https://arxiv.org/abs/2211.17192) -- o framework de decodificacao eespecificaçãoulativa no qual MTP se encaixa
 - [Li et al. -- EAGLE-3 (arXiv:2503.01840)](https://arxiv.org/abs/2503.01840) -- a arquitetura de rascunho 2025 do EAGLE, o concorrente que MTP disputa

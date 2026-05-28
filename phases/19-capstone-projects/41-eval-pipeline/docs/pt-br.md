@@ -38,7 +38,7 @@ flowchart LR
   R --> A[(pontuacao agregada)]
 ```
 
-Cada eval e uma funcao `(model, dataset) -> EvalResult`. O resultado carrega o valor da metrica, detalhes por exemplo para inspecao, e um nome para o agregado. O pipeline compoe eles com uma config que diz quais evals rodar e como pondera-los.
+Cada eval e uma funcao `(model, dataset) -> EvalResult`. O resultado carrega o valor da metrica, detalhes por exemplo para inespecificaçãoao, e um nome para o agregado. O pipeline compoe eles com uma config que diz quais evals rodar e como pondera-los.
 
 ## Perplexidade, contada direito
 
@@ -129,7 +129,7 @@ O `EvalSuite` e um orchestrator leve. Cada eval individual e uma funcao livre qu
 A implementacao e um `main.py` mais testes.
 
 1. `TinyGPT`: a mesma arquitetura decoder-only usada nas aulas 38-40, incluida para a aula ficar autocontida.
-2. `InstructionTokenizer`: tokenizador de byte com especiais INST / RESP / PAD.
+2. `InstructionTokenizer`: tokenizador de byte com eespecificaçãoiais INST / RESP / PAD.
 3. Quatro fixtures: um corpus LM, um conjunto EM, um conjunto F1, e um conjunto de judge. Vinte exemplos cada, deterministicos.
 4. `perplexity_eval`: retorna `EvalResult` com o valor da perplexidade e histograma de loss por token.
 5. `exact_match_eval`: retorna media EM e registros por exemplo.

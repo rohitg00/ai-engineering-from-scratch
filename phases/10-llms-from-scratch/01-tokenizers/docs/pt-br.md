@@ -11,8 +11,8 @@
 
 - Implementar os algoritmos de tokenização BPE, WordPiece e Unigram do zero e comparar suas estratégias de merge
 - Explicar como o tamanho do vocabulário afeta a eficiência do modelo: muito pequeno cria sequências longas, muito grande desperdiça parâmetros de embedding
-- Analisar artefatos de tokenização em línguas e código, identificando onde tokenizers específicos falham
-- Usar as bibliotecas tiktoken e sentencepiece pra tokenizar texto e inspecionar os token IDs resultantes
+- Analisar artefatos de tokenização em línguas e código, identificando onde tokenizers eespecificaçãoíficos falham
+- Usar as bibliotecas tiktoken e sentencepiece pra tokenizar texto e inespecificaçãoionar os token IDs resultantes
 
 ## O Problema
 
@@ -149,7 +149,7 @@ O prefixo "##" diz que essa pedaço continua um token anterior. BERT usa WordPie
 
 ### SentencePiece (Llama, T5)
 
-SentencePiece trata a entrada como um fluxo bruto de caracteres Unicode, incluindo espaços. Sem etapa de pré-tokenização. Sem regras específicas de língua sobre limites de palavras. Isso torna genuinamente agnóstico de língua — funciona em chinês, japonês, tailandês e outras línguas onde espaços não separam palavras.
+SentencePiece trata a entrada como um fluxo bruto de caracteres Unicode, incluindo espaços. Sem etapa de pré-tokenização. Sem regras eespecificaçãoíficas de língua sobre limites de palavras. Isso torna genuinamente agnóstico de língua — funciona em chinês, japonês, tailandês e outras línguas onde espaços não separam palavras.
 
 SentencePiece suporta dois algoritmos:
 - **Modo BPE**: mesma lógica de merge que BPE padrão, aplicada a sequências de caracteres brutos
@@ -400,7 +400,7 @@ from tokenizers.pre_tokenizers import ByteLevel
 tokenizer = Tokenizer(BPE())
 tokenizer.pre_tokenizer = ByteLevel()
 
-trainer = BpeTrainer(vocab_size=1000, special_tokens=["<pad>", "<eos>", "<unk>"])
+trainer = BpeTrainer(vocab_size=1000, especificaçãoial_tokens=["<pad>", "<eos>", "<unk>"])
 tokenizer.train(["corpus.txt"], trainer)
 
 output = tokenizer.encode("The cat sat on the mat.")
@@ -439,7 +439,7 @@ Essa aula produz `outputs/prompt-tokenizer-analyzer.md` — um prompt reutilizá
 
 1. Modifique o tokenizer BPE pra imprimir o vocabulário a cada etapa de merge. Veja como "t" + "h" vira "th", depois "th" + "e" vira "the". Acompanhe como palavras inglesas comuns são montadas pedaço por pedaço.
 
-2. Adicione tokens especiais (`<pad>`, `<eos>`, `<unk>`) ao tokenizer BPE. Atribua IDs 0, 1, 2 e desloque todos os outros tokens adequadamente. Implemente uma etapa de pré-tokenização que divide por whitespace antes de rodar BPE.
+2. Adicione tokens eespecificaçãoiais (`<pad>`, `<eos>`, `<unk>`) ao tokenizer BPE. Atribua IDs 0, 1, 2 e desloque todos os outros tokens adequadamente. Implemente uma etapa de pré-tokenização que divide por whitespace antes de rodar BPE.
 
 3. Implemente o critério de merge do WordPiece (proporção de verossimilhança em vez de frequência). Treine BPE e WordPiece no mesmo corpus com o mesmo número de merges. Compare os vocabulários resultantes — qual produz subwords mais linguisticamente significativas?
 

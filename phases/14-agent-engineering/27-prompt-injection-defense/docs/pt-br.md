@@ -33,9 +33,9 @@ Classe de ataque: **prompt injection indireta**.
   - **Worming** — conteúdo injetado instrui o agente a incorporar o exploit no próximo output.
   - **Envenenamento de memória persistente** — agente armazena instruções do atacante; re-envenena a si mesmo na próxima sessão.
   - **Contaminação de ecossistema de informação** — fatos injetados se espalham pra outros agentes via memória compartilhada.
-  - **Uso arbitrário de tools** — qualquer tool no registry fica acessível ao atacante.
+  - **Uso arbitrário de tools** — qualquer ferramenta no registry fica acessível ao atacante.
 
-Afirmação central: processar prompts recuperados é equivalente a execução arbitrária de código na superfície de uso de tools do agente.
+Afirmação central: processar prompts recuperados é equivalente a execução arbitrária de código na superfície de uso de ferramentas do agente.
 
 ### A doutrina de defesa de 2026
 
@@ -50,9 +50,9 @@ Seis controles que convergiram nas orientações de vendors:
 
 ### PVE: Prompt-Validator-Executor
 
-Padrão de deploy que combina vários controles:
+Padrão de implantação que combina vários controles:
 
-- Um modelo **validador barato e rápido** roda em cada candidata a chamada de tool antes do **modelo principal caro** se comprometer.
+- Um modelo **validador barato e rápido** roda em cada candidata a chamada de ferramenta antes do **modelo principal caro** se comprometer.
 - Validador checa: essa ação é consistente com a intenção declarada do usuário? A ação toca uma superfície sensível? Tem conteúdo com aparência de injeção nos argumentos?
 - Se o validador rejeitar, o modelo principal recebe "essa ação foi recusada; tente uma abordagem diferente."
 
@@ -70,8 +70,8 @@ O trade-off: uma inferência extra por chamada de tool. Para a grande maioria do
 `code/main.py` implementa PVE:
 
 - Um `Validator` que roda em cada chamada de tool: checagem de formato do argumento + scan de padrão de injeção.
-- Um `Executor` que roda a chamada de tool do modelo principal só após aprovação do validador.
-- Demo: uma chamada normal de tool passa; uma injetada (prompt no argumento) é capturada; uma nota de memória envenenada dispara recusa.
+- Um `Executor` que roda a chamada de ferramenta do modelo principal só após aprovação do validador.
+- Demo: uma chamada normal de ferramenta passa; uma injetada (prompt no argumento) é capturada; uma nota de memória envenenada dispara recusa.
 
 Execute:
 
@@ -85,8 +85,8 @@ Saída: trace por chamada mostrando veredictos do validador e comportamento do e
 
 - **Guardrails do OpenAI Agents SDK** (Aula 16) — padrão built-in estilo PVE.
 - **Serviço de segurança do Gemini 2.5 Computer Use** — por passo, gerenciado pelo vendor.
-- **Melhores práticas de uso de tools da Anthropic** — trate conteúdo recuperado como não-confiável; o system prompt do Claude discute isso explicitamente.
-- **PVE customizado** — seu próprio modelo validador pra padrões de injeção específicos do domínio.
+- **Melhores práticas de uso de ferramentas da Anthropic** — trate conteúdo recuperado como não-confiável; o system prompt do Claude discute isso explicitamente.
+- **PVE customizado** — seu próprio modelo validador pra padrões de injeção eespecificaçãoíficos do domínio.
 
 ## Entregue
 

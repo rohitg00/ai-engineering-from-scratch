@@ -119,7 +119,7 @@ Pra QA em produção:
 
 ### RAGAS: o framework de avaliação de produção de 2026
 
-`RAGAS` é construído especificamente pra sistemas RAG e é o padrão de envio em 2026. Pontua quatro dimensões sem exigir referências douradas:
+`RAGAS` é construído eespecificaçãoificamente pra sistemas RAG e é o padrão de envio em 2026. Pontua quatro dimensões sem exigir referências douradas:
 
 - **Fidelidade.** Cada afirmação na resposta vem do contexto recuperado? Medido por implicação baseada em NLI. Sua métrica principal de alucinação.
 - **Relevância da resposta.** A resposta endereça a pergunta? Medido gerando perguntas hipotéticas da resposta e comparando com a pergunta real.
@@ -142,7 +142,7 @@ Stack de 2026.
 | QA conversacional (perguntas de acompanhamento) | LLM com histórico de conversação + RAG a cada turno |
 | Altamente factual, domínios regulados | Extrativo sobre corpus autoritativo; nunca generativo sozinho |
 
-QA extrativo está fora de moda em 2026 porque RAG com LLMs lida com mais casos. Ainda é usado em contextos onde ciação literal é necessária: pesquisa jurídica, compliance regulatória, ferramentas de auditoria.
+QA extrativo está fora de moda em 2026 porque RAG com LLMs lida com mais casos. Ainda é usado em contextos onde ciação literal é necessária: pesquisa jurídica, conformidade regulatória, ferramentas de auditoria.
 
 ## Entregando
 
@@ -165,7 +165,7 @@ Given requirements (corpus size, question type, factuality constraint, latency b
 3. Reader. SQuAD-tuned model, LLM by name, or "domain-fine-tuned DistilBERT."
 4. Evaluation. EM + F1 for extractive benchmarks; answer accuracy + citation accuracy + refusal calibration for production. Name what you are measuring and how you are measuring it.
 
-Refuse closed-book LLM answers for regulatory or compliance-sensitive questions. Refuse any QA system without a retrieval-recall baseline (you cannot evaluate the reader without knowing the retriever surfaced the right passage). Flag questions that require multi-hop reasoning as needing specialized multi-hop retrievers like HotpotQA-trained systems.
+Refuse closed-book LLM answers for regulatory or conformidade-sensitive questions. Refuse any QA system without a retrieval-recall baseline (you cannot evaluate the reader without knowing the retriever surfaced the right passage). Flag questions that require multi-hop reasoning as needing especificaçãoialized multi-hop retrievers like HotpotQA-trained systems.
 ```
 
 ## Exercícios

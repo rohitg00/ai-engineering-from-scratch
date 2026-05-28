@@ -52,7 +52,7 @@ No fine-tuning completo, você permite que os gradientes fluiam por toda a pilha
 Um classificador precisa de um vetor por sequência, não de um vetor por token. Três escolhas comuns:
 
 - **Mean pool**: média dos hidden states pela sequência, ponderada pela máscara de attention.
-- **CLS pool**: prepend um token especial e use apenas sua saída. É o que o BERT faz.
+- **CLS pool**: prepend um token eespecificaçãoial e use apenas sua saída. É o que o BERT faz.
 - **Last-token pool**: use o último token não-padding. É o que classificadores GPT-fazem.
 
 Esta lição usa mean pooling com ponderação explícita por máscara de attention. É o mais simples, dá um sinal estável entre comprimentos de sequência e não requer pré-treinamento de um token CLS.
@@ -130,6 +130,6 @@ A lição não escolhe um vencedor. Ela te ensina a ler os números e o custo. E
 
 - Adicione um terceiro regime que descongela apenas o último bloco. Isso às vezes é chamado de fine-tuning parcial. Custa menos que fine-tuning completo e aprende mais que apenas cabeça.
 - Adicione um schedule de taxa de aprendizado. Um schedule cosseno na cabeça mais uma taxa constante menor no corpo é uma configuração comum de produção.
-- Substitua mean pooling por um attention pool aprendido: uma pequena camada de attention com uma query aprendida. Isso frequentemente supera mean pool em sequências mais longas.
+- Substitua mean pooling por um attention pool aprendido: uma pequena camada de attention com uma consulta aprendida. Isso frequentemente supera mean pool em sequências mais longas.
 
 A implementação te dá os hooks. Os testes fixam o contrato. Os números são seus para empurrar.

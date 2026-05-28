@@ -1,6 +1,6 @@
 # Capstone 17 — Tutor IA Pessoal (Adaptativo, Multimodal, com Memória)
 
-> Khanmigo (Khan Academy), Duolingo Max, LearnLM / Gemini for Education do Google, Quizlet Q-Chat e Synthesis Tutor todos lançaram tutoria multimodal adaptativa em escala em 2026. A forma comum é uma política socrática (nunca simplesmente despejar a resposta), um modelo de aprendiz que atualiza após cada interação (estilo de rastreamento de conhecimento bayesiano), entrada de voz + texto + foto-mat, recuperação de grafo curricular, agendamento de repetição espaçada e filtros de segurança rígidos para conteúdo apropriado à idade. O capstone é lançar um tutor de disciplina específica (álgebra do ensino fundamental ou introdução a Python), rodar um estudo de eficácia de duas semanas com 10 aprendizes e passar em uma auditoria de segurança de conteúdo.
+> Khanmigo (Khan Academy), Duolingo Max, LearnLM / Gemini for Education do Google, Quizlet Q-Chat e Synthesis Tutor todos lançaram tutoria multimodal adaptativa em escala em 2026. A forma comum é uma política socrática (nunca simplesmente despejar a resposta), um modelo de aprendiz que atualiza após cada interação (estilo de rastreamento de conhecimento bayesiano), entrada de voz + texto + foto-mat, recuperação de grafo curricular, agendamento de repetição espaçada e filtros de segurança rígidos para conteúdo apropriado à idade. O capstone é lançar um tutor de disciplina eespecificaçãoífica (álgebra do ensino fundamental ou introdução a Python), rodar um estudo de eficácia de duas semanas com 10 aprendizes e passar em uma auditoria de segurança de conteúdo.
 
 **Tipo:** Capstone
 **Linguagens:** Python (backend, modelo de aprendiz), TypeScript (app web), SQL (grafo curricular via Postgres + Neo4j)
@@ -12,7 +12,7 @@
 
 Tutoria adaptativa costumava ser um nicho de pesquisa de ed-tech. Em 2026 é um produto para consumidores. Khanmigo está implantado na maioria dos distritos escolares americanos. Duolingo Max atingiu dezenas de milhões de MAUs. LearnLM / Gemini for Education do Google alimenta tutoria no Google Classroom. Quizlet Q-Chat fica ao lado de flashcards. Synthesis Tutor viralizou com tutor-para-crianças-curiosas. Elementos comuns: entrada multimodal (digitar, falar, fotografar equações), pedagogia socrática (perguntar primeiro, explicar depois), um modelo de aprendiz que atualiza após cada interação e segurança rigorosa apropriada à idade.
 
-Você vai construir um desses para uma turma específica. A barra de medição é um estudo de eficácia real: pontuações de pré-teste e pós-teste ao longo de duas semanas com 10 aprendizes. O loop de voz precisa parecer natural (sub-stack do capstone 03). A memória precisa ser respeitosa de privacidade. O filtro de segurança precisa passar em red team consciente de COPPA para K-12.
+Você vai construir um desses para uma turma eespecificaçãoífica. A barra de medição é um estudo de eficácia real: pontuações de pré-teste e pós-teste ao longo de duas semanas com 10 aprendizes. O loop de voz precisa parecer natural (sub-stack do capstone 03). A memória precisa ser respeitosa de privacidade. O filtro de segurança precisa passar em red team consciente de COPPA para K-12.
 
 ## Conceito
 
@@ -108,7 +108,7 @@ aprendiz: "6"
 
 ## Entregue
 
-`outputs/skill-ai-tutor.md` é a entrega. Um tutor adaptativo de disciplina específica com entrada multimodal, modelo de aprendiz, memória, segurança e eficácia medida.
+`outputs/skill-ai-tutor.md` é a entrega. Um tutor adaptativo de disciplina eespecificaçãoífica com entrada multimodal, modelo de aprendiz, memória, segurança e eficácia medida.
 
 | Peso | Critério | Como é medido |
 |:-:|---|---|

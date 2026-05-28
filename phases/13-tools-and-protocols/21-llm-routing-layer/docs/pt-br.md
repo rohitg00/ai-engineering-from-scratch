@@ -10,7 +10,7 @@
 ## Objetivos de Aprendizado
 
 - Distinguir opções de roteamento self-hosted, gerenciado e produção-grade.
-- Implemente uma cadeia de fallback que retenta em falhas de provider numa ordem de prioridade definida.
+- Implemente uma cadeia de reserva que retenta em falhas de provider numa ordem de prioridade definida.
 - Rastreie custo por requisição e uso de tokens entre providers.
 - Decida entre LiteLLM, OpenRouter e Portkey pra uma restrição de produção dada.
 
@@ -19,7 +19,7 @@
 Cenários onde o roteamento de provider importa:
 
 1. **Custo.** Claude Sonnet custa 3x o que Haiku custa. Pra uma tarefa de triagem, Haiku basta; pra uma tarefa de síntese, Sonnet vale a pena. Rote por requisição.
-2. **Failover.** OpenAI tem uma hora ruim. Cada requisição falha. Você quer fallback automático pra Anthropic sem redeploy.
+2. **Failover.** OpenAI tem uma hora ruim. Cada requisição falha. Você quer reserva automático pra Anthropic sem redeploy.
 3. **Latência.** Uma UI de chat ao vivo precisa de tempo-primeiro-token rápido. Um resumidor em batch não precisa. Rote por SLA de latência.
 4. **Compliance.** Usuários EU devem ficar em regiões EU. Rote por região.
 5. **Experimentação.** A/B teste dois modelos no mesmo workload. Rote por bucket de teste.
@@ -45,11 +45,11 @@ on 5xx: google/gemini-1.5-pro
 on 5xx: refuse
 ```
 
-Gateways definem isso numa config. Retentativas contam contra um orçamento pra que cascadas de fallback não explodam o custo.
+Gateways definem isso numa config. Retentativas contam contra um orçamento pra que cascadas de reserva não explodam o custo.
 
 ### Cache semântico
 
-Prompts idênticos ou quase-idênticos batem num cache em vez de ir pro provider. Economia em agent loops repetidos pode ser 30 a 60 por cento. Chaves são baseadas em embedding; prompts quase-idênticos compartilham um slot de cache.
+Prompts idênticos ou quase-idênticos batem num cache em vez de ir pro provider. Economia em agente loops repetidos pode ser 30 a 60 por cento. Chaves são baseadas em embedding; prompts quase-idênticos compartilham um slot de cache.
 
 ### Guardrails
 
@@ -74,9 +74,9 @@ Uma API key = um time. Orçamentos por chave evitam que um time consuma a cota c
 | Providers | 100+ | 300+ | 100+ |
 | Billing | Suas próprias keys | Créditos OpenRouter | Suas próprias keys |
 | Observabilidade | OpenTelemetry | Dashboard | OTel completo + redação PII |
-| Melhor pra | Times com controle total | Prototipagem rápida | Produção com compliance |
+| Melhor pra | Times com controle total | Prototipagem rápida | Produção com conformidade |
 
-LiteLLM vence quando você tem um time SRE e quer soberania de dados. OpenRouter vence quando quer uma única assinatura e sem infra. Portkey vence quando precisa de guardrails e compliance fora da caixa.
+LiteLLM vence quando você tem um time SRE e quer soberania de dados. OpenRouter vence quando quer uma única assinatura e sem infra. Portkey vence quando precisa de guardrails e conformidade fora da caixa.
 
 ### Rastreamento de custo
 
@@ -84,11 +84,11 @@ Cada requisição carrega `provider`, `model`, `input_tokens`, `output_tokens`. 
 
 ### MCP mais roteamento
 
-Um gateway pode rotear tanto chamadas de LLM quanto requisições de sampling MCP. Quando uma requisição de sampling tem modelPreferences preferindo um modelo específico, o gateway traduz pro backend certo. É onde a Fase 13 · 17 (gateway MCP) e o gateway de roteamento desta lição às vezes se fundem num único serviço.
+Um gateway pode rotear tanto chamadas de LLM quanto requisições de sampling MCP. Quando uma requisição de sampling tem modelPreferences preferindo um modelo eespecificaçãoífico, o gateway traduz pro backend certo. É onde a Fase 13 · 17 (gateway MCP) e o gateway de roteamento desta lição às vezes se fundem num único serviço.
 
 ### Estratégias de roteamento
 
-- **Prioridade estática.** Primeiro na lista; fallback em erro.
+- **Prioridade estática.** Primeiro na lista; reserva em erro.
 - **Balanceamento de carga.** Round-robin ou ponderado.
 - **Consciente de custo.** Escolha o modelo mais barato que atende latência/qualidade.
 - **Consciente de latência.** Escolha o modelo mais rápido nos últimos N minutos.
@@ -96,22 +96,22 @@ Um gateway pode rotear tanto chamadas de LLM quanto requisições de sampling MC
 
 ## Usar
 
-`code/main.py` implementa um gateway de roteamento em ~150 linhas: aceita requisições no formato OpenAI, traduz pra stubs por provider, roda uma cadeia de fallback de prioridade, rastreia custo por requisição e aplica uma pass de redação de PII nas entradas. Rode com três cenários: requisição normal, outage de provider primário disparando fallback, vazamento de PII pego pela redação.
+`code/main.py` implementa um gateway de roteamento em ~150 linhas: aceita requisições no formato OpenAI, traduz pra stubs por provider, roda uma cadeia de reserva de prioridade, rastreia custo por requisição e aplica uma pass de redação de PII nas entradas. Rode com três cenários: requisição normal, outage de provider primário disparando fallback, vazamento de PII pego pela redação.
 
 O que observar:
 
 - Dicionário `ROUTES`: alias -> lista ordenada por prioridade de providers concretos.
-- Loop de fallback retenta em 5xx.
+- Loop de reserva retenta em 5xx.
 - Rastreador de custo multiplica uso de tokens por taxas por modelo.
 - Redator de PII limpa padrões estilo SSN antes de encaminhar.
 
 ## Entregar
 
-Essa lição produz `outputs/skill-routing-config-designer.md`. Dado um perfil de workload (latência, custo, compliance), a skill escolhe LiteLLM / OpenRouter / Portkey e produz uma config de roteamento.
+Essa lição produz `outputs/skill-routing-config-designer.md`. Dado um perfil de workload (latência, custo, conformidade), a skill escolhe LiteLLM / OpenRouter / Portkey e produz uma config de roteamento.
 
 ## Exercícios
 
-1. Rode `code/main.py`. Dispare o cenário de outage; confirme que o fallback aterrissa no segundo provider e o custo é atribuído corretamente.
+1. Rode `code/main.py`. Dispare o cenário de outage; confirme que o reserva aterrissa no segundo provider e o custo é atribuído corretamente.
 
 2. Adicione cache semântico: SHA256 do prompt é uma chave de busca; cache hits retornam instantaneamente. Meça economia de custo numa chamada repetida.
 
@@ -128,7 +128,7 @@ Essa lição produz `outputs/skill-routing-config-designer.md`. Dado um perfil d
 | Gateway de roteamento | "Proxy LLM" | Camada de API única na frente de múltiplos providers |
 | Compatível com OpenAI | "Fala o schema da OpenAI" | Aceita formato `/v1/chat/completions`, traduz pra qualquer backend |
 | Alias de modelo | "nosso_modelo_inteligente" | Nome no seu código que o gateway mapeia pra um modelo concreto |
-| Cadeia de fallback | "Lista de retentativa" | Lista ordenada de providers tentados em falha |
+| Cadeia de reserva | "Lista de retentativa" | Lista ordenada de providers tentados em falha |
 | Cache semântico | "Cache de embedding de prompt" | Chave é embedding do prompt; duplicatas quase-idênticas batem no cache |
 | Guardrails | "Filtros de entrada/saída" | Redijam PII, rejeitem violações de política |
 | Limite de taxa por chave | "Orçamento de time" | Cota vinculada a uma API key |

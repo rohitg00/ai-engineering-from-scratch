@@ -48,7 +48,7 @@ O objetivo: encontrar os valores de w e b que tornam o y previsto o mais próxim
 MSE = (1/n) * sum((y_previsto - y_real)^2)
 ```
 
-Por que ao quadrado? Duas razões. Primeiro, penaliza erros grandes mais que erros pequenos. Segundo, a função ao quadrada é suave e diferenciável em todo lugar, o que torna a otimização direta.
+Por que ao quadrado? Duas razões. Primeiro, penaliza erros grandes mais que erros pequenos. Segundo, a função ao quadrado é suave e diferenciável em todo lugar, o que torna a otimização direta.
 
 ### Descida do Gradiente
 
@@ -75,7 +75,7 @@ O learning rate controla o tamanho do passo. Muito grande: você ultrapassa o m�
 
 ### Equação Normal (Solução Fechada)
 
-Para regressão linear especificamente, existe uma fórmula direta:
+Para regressão linear eespecificaçãoificamente, existe uma fórmula direta:
 ```
 w = (X^T * X)^(-1) * X^T * y
 ```

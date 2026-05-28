@@ -1,6 +1,6 @@
 # Segurança MCP II — OAuth 2.1, Resource Indicators, Escopos Incrementais
 
-> Servidores MCP remotos precisam de autorização, não só autenticação. A especificação 2025-11-25 se alinha com OAuth 2.1 + PKCE + resource indicators (RFC 8707) + metadados de protected-resource (RFC 9728). SEP-835 adiciona consentimento incremental de escopo com step-up de autorização em 403 WWW-Authenticate. Esta aula implementa o fluxo de step-up como máquina de estados pra que você veja cada salto.
+> Servidores MCP remotos precisam de autorização, não só autenticação. A eespecificaçãoificação 2025-11-25 se alinha com OAuth 2.1 + PKCE + resource indicators (RFC 8707) + metadados de protected-resource (RFC 9728). SEP-835 adiciona consentimento incremental de escopo com step-up de autorização em 403 WWW-Authenticate. Esta aula implementa o fluxo de step-up como máquina de estados pra que você veja cada salto.
 
 **Tipo:** Construir
 **Linguagens:** Python (stdlib, simulador de máquina de estados OAuth)
@@ -16,15 +16,15 @@
 
 ## O Problema
 
-MCP inicial (pré-2025) lançou servidores remotos com chaves de API ad-hoc ou sem auth. A especificação 2025-11-25 fecha esse gap com um perfil completo de OAuth 2.1.
+MCP inicial (pré-2025) lançou servidores remotos com chaves de API ad-hoc ou sem auth. A eespecificaçãoificação 2025-11-25 fecha esse gap com um perfil completo de OAuth 2.1.
 
 Três necessidades do mundo real:
 
 - **Servidores remotos comuns.** Usuário instala um servidor MCP remoto que acessa seu Notion / GitHub / Gmail. OAuth 2.1 com PKCE é a forma certa.
-- **Escalonamento de escopo.** Um servidor de notas com `notes:read` pode precisar de `notes:write` pra uma ação específica. Em vez de refazer todo o fluxo, step-up (SEP-835) solicita o escopo adicional.
+- **Escalonamento de escopo.** Um servidor de notas com `notes:read` pode precisar de `notes:write` pra uma ação eespecificaçãoífica. Em vez de refazer todo o fluxo, step-up (SEP-835) solicita o escopo adicional.
 - **Prevenção de confused deputy.** Cliente mantém um token com audiência no Servidor A. Servidor A é malicioso e tenta apresentar o token pro Servidor B. Resource indicators (RFC 8707) fixam o token à sua audiência pretendida.
 
-OAuth 2.1 não é novo. O que é novo é o perfil do MCP: fluxos específicos obrigatórios (só código de autorização + PKCE; sem implícito, sem client credentials por padrão), resource indicators obrigatórios em cada request de token e metadados de protected-resource publicados pra que clientes saibam onde ir.
+OAuth 2.1 não é novo. O que é novo é o perfil do MCP: fluxos eespecificaçãoíficos obrigatórios (só código de autorização + PKCE; sem implícito, sem client credentials por padrão), resource indicators obrigatórios em cada request de token e metadados de protected-resource publicados pra que clientes saibam onde ir.
 
 ## O Conceito
 
@@ -79,7 +79,7 @@ Seleção de escopo deve ser least-privilege: solicite o que precisa agora, esca
 
 ### Autorização de step-up (SEP-835)
 
-Usuário concede `notes:read`. Depois pede ao agent pra deletar uma nota. Servidor responde:
+Usuário concede `notes:read`. Depois pede ao agente pra deletar uma nota. Servidor responde:
 
 ```
 HTTP/1.1 403 Forbidden
@@ -103,7 +103,7 @@ Servidores de sampling (Fase 13 · 11) NÃO DEVEM passar o token do cliente pra 
 
 ### Prevenção de confused deputy
 
-Token se liga a `aud`. Cliente se liga a `client_id`. Todo request validado contra ambos. A especificação proíbe explicitamente o antigo padrão de "passar token" que era comum em ecossistemas de ferramentas remotas pré-MCP.
+Token se liga a `aud`. Cliente se liga a `client_id`. Todo request validado contra ambos. A eespecificaçãoificação proíbe explicitamente o antigo padrão de "passar token" que era comum em ecossistemas de ferramentas remotas pré-MCP.
 
 ### Descoberta de Client ID
 
@@ -158,8 +158,8 @@ Esta aula produz `outputs/skill-oauth-scope-planner.md`. Dado um servidor MCP re
 
 ## Leituras Complementares
 
-- [MCP — Authorization spec](https://modelcontextprotocol.io/specification/draft/basic/authorization) — perfil OAuth canônico do MCP
-- [den.dev — MCP November authorization spec](https://den.dev/blog/mcp-november-authorization-spec/) — walkthrough das mudanças 2025-11-25
+- [MCP — Authorization especificação](https://modelcontextprotocol.io/especificaçãoification/draft/basic/authorization) — perfil OAuth canônico do MCP
+- [den.dev — MCP November authorization especificação](https://den.dev/blog/mcp-november-authorization-especificação/) — walkthrough das mudanças 2025-11-25
 - [RFC 8707 — Resource indicators for OAuth 2.0](https://datatracker.ietf.org/doc/html/rfc8707) — a RFC de fixação de audiência
 - [RFC 9728 — OAuth 2.0 protected resource metadata](https://datatracker.ietf.org/doc/html/rfc9728) — a RFC de documento de descoberta
 - [Aembit — MCP OAuth 2.1, PKCE and the future of AI authorization](https://aembit.io/blog/mcp-oauth-2-1-pkce-and-the-future-of-ai-authorization/) — walkthrough prático de step-up

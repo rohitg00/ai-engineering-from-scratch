@@ -52,7 +52,7 @@ Exemplos concretos de reward hacking em loops de busca por código em 2025-2026:
 - Scores de benchmark que recompensavam correção-sob-teste recompensavam memorização de testes e overfitting.
 - Um proxy de "qualidade de código" recompensava remover comentários e renomear variáveis, sem mudança semântica.
 
-O fix no AlphaEvolve: lance um avaliador separado que o LLM nunca viu, com entradas geradas no momento da avaliação. Mesmo assim, a DeepMind recomenda revisão forte em qualquer deploy proposto.
+O fix no AlphaEvolve: lance um avaliador separado que o LLM nunca viu, com entradas geradas no momento da avaliação. Mesmo assim, a DeepMind recomenda revisão forte em qualquer implantação proposto.
 
 ### Por que LLM + busca vence qualquer um sozinho
 
@@ -67,7 +67,7 @@ O avaliador, por sua vez, pega as confabulações do LLM. LLMs declaram com conf
 | AlphaEvolve | Gemini | correção + benchmark | algoritmos, kernels, agendadores | matmul 4x4 48-mul |
 | FunSearch (DeepMind, 2023) | PaLM / Codey | corredução | matemática combinatória | limites inferiores de cap-set |
 | AI Scientist v2 (Sakana, L5) | GPT/Claude | crítica LLM + experimento | pesquisa ML | paper de workshop ICLR |
-| Darwin Godel Machine (L4) | estrutura do agent | SWE-bench / Polyglot | código do agent | 20% → 50% SWE-bench |
+| Darwin Godel Machine (L4) | estrutura do agente | SWE-bench / Polyglot | código do agente | 20% → 50% SWE-bench |
 
 Os quatro são variações da mesma receita: gerador mais avaliador, loop. As diferenças são o que o avaliador avalia e quão rigoroso ele é.
 
@@ -111,7 +111,7 @@ Observe:
 
 ## Leituras Adicionais
 
-- [Novikov et al. (2025). AlphaEvolve: A coding agent for scientific and algorithmic discovery](https://arxiv.org/abs/2506.13131) — o paper completo.
+- [Novikov et al. (2025). AlphaEvolve: A coding agente for scientific and algorithmic discovery](https://arxiv.org/abs/2506.13131) — o paper completo.
 - [DeepMind blog on AlphaEvolve](https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) — texto do fornecedor com resultados.
 - [AlphaEvolve results repository](https://github.com/google-deepmind/alphaevolve_results) — algoritmos descobertos, incluindo o matmul 4x4 48-mul.
 - [Romera-Paredes et al. (2023). Mathematical discoveries from program search with LLMs (FunSearch)](https://www.nature.com/articles/s41586-023-06924-6) — o sistema predecessor.

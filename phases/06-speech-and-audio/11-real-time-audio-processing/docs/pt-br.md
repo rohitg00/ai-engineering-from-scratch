@@ -4,7 +4,7 @@
 
 **Tipo:** Construir
 **Idiomas:** Python
-**Pré-requisitos:** Fase 6 · 02 (Espectrogramas), Fase 6 · 04 (ASR), Fase 6 · 07 (TTS)
+**Pré-requisitos:** Fase 6 · 02 (Eespecificaçãotrogramas), Fase 6 · 04 (ASR), Fase 6 · 07 (TTS)
 **Tempo:** ~75 minutos
 
 ## O Problema
@@ -127,7 +127,7 @@ A pilha de 2026:
 | Primeiro token LLM | Groq, Cerebras, vLLM-streaming |
 | TTS streaming | Kokoro ou ElevenLabs Turbo v2.5 |
 | Cancelamento de eco | WebRTC AEC3 |
-| Nativo end-to-end | OpenAI Realtime API ou Moshi |
+| Nativo de ponta a ponta | OpenAI Realtime API ou Moshi |
 
 ## Armadilhas
 

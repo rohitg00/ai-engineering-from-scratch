@@ -1,6 +1,6 @@
 # Seleção de Stack de Observabilidade LLM
 
-> O mercado de observabilidade em 2026 se divide em duas categorias. Plataformas de desenvolvimento (LangSmith, Langfuse, Comet Opik) empacotam monitoramento com evals, gestão de prompts, replays de sessão. Ferramentas de gateway/instrumentação (Helicone, SigNoz, OpenLLMetry, Phoenix) focam em telemetria. Langfuse tem core MIT-licensed com equilíbrio OSS forte (50K eventos/mês grátis na cloud). Phoenix é OpenTelemetry-native sob Elastic License 2.0 — excelente para visualização de drift/RAG, não é backend de produção persistente. Arize AX usa integração zero-copy Iceberg/Parquet alegando ser 100x mais barato que observabilidade monolítica. LangSmith lidera para LangChain/LangGraph, $39/usuário/mês, self-host apenas no Enterprise. Helicone é proxy-based com 15-30 minutos de setup, 100K req/mês grátis, mas menos profundidade em traces de agentes. Padrão de produção comum: Gateway (Helicone/Portkey) + plataforma de eval (Phoenix/TruLens) colados por OpenTelemetry.
+> O mercado de observabilidade em 2026 se divide em duas categorias. Plataformas de desenvolvimento (LangSmith, Langfuse, Comet Opik) empacotam monitoramento com evals, gestão de prompts, replays de sessão. Ferramentas de gateway/instrumentação (Helicone, SigNoz, OpenLLMetry, Phoenix) focam em telemetria. Langfuse tem core MIT-licensed com equilíbrio OSS forte (50K eventos/mês grátis na cloud). Phoenix é OpenTelemetry-native sob Elastic License 2.0 — excelente para visualização de deriva/RAG, não é backend de produção persistente. Arize AX usa integração zero-copy Iceberg/Parquet alegando ser 100x mais barato que observabilidade monolítica. LangSmith lidera para LangChain/LangGraph, $39/usuário/mês, self-host apenas no Enterprise. Helicone é proxy-based com 15-30 minutos de setup, 100K req/mês grátis, mas menos profundidade em traces de agentes. Padrão de produção comum: Gateway (Helicone/Portkey) + plataforma de eval (Phoenix/TruLens) colados por OpenTelemetry.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, simulador de trace-sampling)
@@ -16,9 +16,9 @@
 
 ## O Problema
 
-Você lançou uma feature LLM. Funciona. Você não tem visibilidade em falhas de prompt, loops de ferramentas, regressões de latência, picos de custo ou taxa de hit de prompt-cache. Você busca "LLM observability" e encontra oito ferramentas todas alegando resolver o mesmo problema em três preços diferentes.
+Você lançou uma funcionalidade LLM. Funciona. Você não tem visibilidade em falhas de prompt, loops de ferramentas, regressões de latência, picos de custo ou taxa de hit de prompt-cache. Você busca "LLM observability" e encontra oito ferramentas todas alegando resolver o mesmo problema em três preços diferentes.
 
-Elas não resolvem o mesmo problema. LangSmith responde "por que essa run do LangGraph falhou?" Phoenix responde "meu pipeline de RAG está drifting?" Helicone responde "qual app está queimando tokens?" Langfuse responde "posso self-hostar tudo isso?" Ferramentas diferentes, públicos diferentes.
+Elas não resolvem o mesmo problema. LangSmith responde "por que essa run do LangGraph falhou?" Phoenix responde "meu pipeline de RAG está derivaing?" Helicone responde "qual app está queimando tokens?" Langfuse responde "posso self-hostar tudo isso?" Ferramentas diferentes, públicos diferentes.
 
 Escolher envolve quatro eixos: stack (LangChain? SDK raw? multi-vendor?), tolerância a licença (só MIT? Elastic tá bom? comercial tá ok?), orçamento (tier grátis? $100/mês? $1000/mês?), e self-host (obrigatório? legal ter? nunca?).
 
@@ -40,15 +40,15 @@ Escolher envolve quatro eixos: stack (LangChain? SDK raw? multi-vendor?), toler�
 ### Phoenix (Arize) — telemetria-first, OpenTelemetry-native
 
 - Elastic License 2.0; self-host trivial.
-- Excelente em visualização de RAG e drift. Scatter plots de embedding-space como funcionalidade de primeira classe.
+- Excelente em visualização de RAG e deriva. Scatter plots de embedding-space como funcionalidade de primeira classe.
 - Não projetado como backend de produção persistente — primariamente observabilidade de development-time.
-- Sweet spot: desenvolvimento de pipeline de RAG, debugging de drift, combinado com gateway separado para produção.
+- Sweet spot: desenvolvimento de pipeline de RAG, debugging de deriva, combinado com gateway separado para produção.
 
 ### Arize AX — o jogo da escala
 
 - Comercial. Integração zero-copy com data lake via Iceberg/Parquet.
 - Alega ~100x mais barato que observabilidade monolítica (nível Datadog) em escala. A matemática: você armazena traces no seu próprio Parquet no S3; Arize lê diretamente.
-- Sweet spot: >10M traces/dia, data lake existente, quer dashboards específicos para LLM sem o preço do Datadog.
+- Sweet spot: >10M traces/dia, data lake existente, quer dashboards eespecificaçãoíficos para LLM sem o preço do Datadog.
 
 ### LangSmith — LangChain/LangGraph primeiro
 
@@ -136,6 +136,6 @@ Esta aula produz `outputs/skill-observability-stack.md`. Dados stack, escala, or
 - [SigNoz — Top LLM Observability Tools 2026](https://signoz.io/comparisons/llm-observability-tools/)
 - [Langfuse — Análise de Alternativas ao Arize AX](https://langfuse.com/faq/all/best-phoenix-arize-alternatives)
 - [PremAI — Configurando Langfuse, LangSmith, Helicone, Phoenix](https://blog.premai.io/llm-observability-setting-up-langfuse-langsmith-helicone-phoenix/)
-- [Convenções Semânticas GenAI do OpenTelemetry](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
+- [Convenções Semânticas GenAI do OpenTelemetry](https://opentelemetry.io/docs/especificaçãos/semconv/gen-ai/)
 - [Documentação do Arize Phoenix](https://docs.arize.com/phoenix)
 - [Documentação do Helicone](https://docs.helicone.ai/)

@@ -20,7 +20,7 @@ Um único neurônio é um desenhador de retas. É isso. Uma reta reta nos seus d
 
 Em 1969, Minsky e Papert provaram que essa limitação era fatal: uma rede de uma camada não consegue aprender XOR. Não "tem dificuldade pra aprender" — matematicamente não consegue. A tabela-verdade do XOR coloca [0,1] e [1,0] de um lado, [0,0] e [1,1] do outro. Nenhuma reta separa eles.
 
-Isso matou o financiamento de redes neurais por mais de uma década. A solução era óbvia em retrospecto: pare de usar uma camada. Empilhe neurônios em camadas. Deixe a primeira camada esculpir o espaço de entrada em novas features, e deixe a segunda camada combinar essas features em decisões que nenhuma reta poderia tomar.
+Isso matou o financiamento de redes neurais por mais de uma década. A solução era óbvia em retroespecificaçãoto: pare de usar uma camada. Empilhe neurônios em camadas. Deixe a primeira camada esculpir o espaço de entrada em novas features, e deixe a segunda camada combinar essas features em decisões que nenhuma reta poderia tomar.
 
 Esse empilhamento é a rede multicamada. Ela é a fundação de todo modelo de deep learning em produção hoje. O passo direto — dados fluindo da entrada pelas camadas ocultas até a saída — é a primeira coisa que você precisa construir antes que qualquer coisa funcione.
 

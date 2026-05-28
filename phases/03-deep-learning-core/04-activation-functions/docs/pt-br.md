@@ -487,7 +487,7 @@ model = nn.Sequential(
 
 Camadas ocultas em transformer: GELU. Camadas ocultas em CNN: ReLU. Camada de saída pra classificação: softmax. Camada de saída pra regressão: nenhuma (linear). Camada de saída pra probabilidades: sigmoid. É isso. Comece com esses padrões. Mude só quando tiver evidência.
 
-RNNs e LSTMs usam tanh pro estado oculto e sigmoid pra gates, mas se você está construindo do zero hoje, provavelmente não está usando RNNs. Se neurônios estão morrendo na sua rede ReLU, troque pra GELU. Não chegue no Leaky ReLU sem uma razão específica — GELU resolve o problema do neurônio morto e dá melhor fluxo de gradiente.
+RNNs e LSTMs usam tanh pro estado oculto e sigmoid pra gates, mas se você está construindo do zero hoje, provavelmente não está usando RNNs. Se neurônios estão morrendo na sua rede ReLU, troque pra GELU. Não chegue no Leaky ReLU sem uma razão eespecificaçãoífica — GELU resolve o problema do neurônio morto e dá melhor fluxo de gradiente.
 
 ## Entregue
 

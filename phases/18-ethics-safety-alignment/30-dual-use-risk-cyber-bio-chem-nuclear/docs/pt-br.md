@@ -1,6 +1,6 @@
 # Risco de Uso Duplo — Ciber, Bio, Químico, Nuclear
 
-> O cenário de uso duplo em 2026, domínio por domínio. Bio/químico: Lição 17 cobre WMDP; o teste de aquisição de arma biológica da Anthropic (uplift de 2.53x) e o alerta da Preparedness Framework v2 da OpenAI de abril 2025 ("no limiar de ajudar significativamente iniciantes a criar ameaças biológicas conhecidas") marcam o ponto de inflexão. Ciber (relatório da Anthropic de novembro 2025): atores estatais ligados à China usaram a ferramenta de codificação agentic do Claude para automatizar até 90% de uma campanha de ataque cibernético, com intervenção humana apenas em 4-6 passos; piloto "trusted access" da OpenAI dá acesso a capacidades para organizações de segurança selecionadas para trabalho defensivo de uso duplo. Erosão do gap execução bio/químico: a defesa clássica era "acesso à informação sozinho é insuficiente." Modelos de ponta com visão (GPT-5.2, Gemini 3 Pro, Claude Opus 4.5, Grok 4.1) podem observar vídeo de laboratório e fornecer correção em tempo real. Dezembro 2025: OpenAI demonstrou GPT-5 iterando em experimentos de laboratório, alcançando melhoria de eficiência de 79x via otimização de protocolo guiada por IA. Padrão novice-vs-expert: IA fornece maior uplift relativo a iniciantes mas maior capacidade absoluta a especialistas.
+> O cenário de uso duplo em 2026, domínio por domínio. Bio/químico: Lição 17 cobre WMDP; o teste de aquisição de arma biológica da Anthropic (uplift de 2.53x) e o alerta da Preparedness Framework v2 da OpenAI de abril 2025 ("no limiar de ajudar significativamente iniciantes a criar ameaças biológicas conhecidas") marcam o ponto de inflexão. Ciber (relatório da Anthropic de novembro 2025): atores estatais ligados à China usaram a ferramenta de codificação agentic do Claude para automatizar até 90% de uma campanha de ataque cibernético, com intervenção humana apenas em 4-6 passos; piloto "trusted access" da OpenAI dá acesso a capacidades para organizações de segurança selecionadas para trabalho defensivo de uso duplo. Erosão do gap execução bio/químico: a defesa clássica era "acesso à informação sozinho é insuficiente." Modelos de ponta com visão (GPT-5.2, Gemini 3 Pro, Claude Opus 4.5, Grok 4.1) podem observar vídeo de laboratório e fornecer correção em tempo real. Dezembro 2025: OpenAI demonstrou GPT-5 iterando em experimentos de laboratório, alcançando melhoria de eficiência de 79x via otimização de protocolo guiada por IA. Padrão novice-vs-expert: IA fornece maior uplift relativo a iniciantes mas maior capacidade absoluta a eespecificaçãoialistas.
 
 **Tipo:** Aprender
 **Linguagens:** nenhuma
@@ -50,14 +50,14 @@ Implicações:
 
 ### Nuclear
 
-O menos analisado dos quatro domínios CBRN em documentação pública. O threat model é diferente: aquisição de material fissil domina a dificuldade, não informação. Uplift de IA na camada de informação fornece uplift limitado a iniciantes na prática. Nenhum relatório de laboratório principal de 2024-2025 identifica cruzamento de limiar específico de nuclear.
+O menos analisado dos quatro domínios CBRN em documentação pública. O threat model é diferente: aquisição de material fissil domina a dificuldade, não informação. Uplift de IA na camada de informação fornece uplift limitado a iniciantes na prática. Nenhum relatório de laboratório principal de 2024-2025 identifica cruzamento de limiar eespecificaçãoífico de nuclear.
 
 ### Novice-relativo vs expert-absoluto
 
 Um padrão entre todos os quatro domínios:
 
 - **Uplift novice-relativo.** Alto. Multiplicativo. Conforme Anthropic 2025 bio, 2.53x.
-- **Capacidade expert-absoluto.** Teto alto. Um especialista extrai mais que um iniciante porque sabe o que perguntar e como interpretar.
+- **Capacidade expert-absoluto.** Teto alto. Um eespecificaçãoialista extrai mais que um iniciante porque sabe o que perguntar e como interpretar.
 
 Implicação para casos de segurança: endereçar apenas uplift de iniciante (via filtros de entrada, recusas, incerteza) é insuficiente para controle expert-absoluto. Medidas adicionais necessárias: hardening de elicitação, desaprendizado de capacidade (Lição 17), e protocolos de controle (Lição 10).
 
@@ -92,7 +92,7 @@ Esta lição produz `outputs/skill-dual-use-triage.md`. Dada uma alegação de c
 
 3. Uplift nuclear parece delimitado por acesso a material. Argumente a favor e contra a posição de que um futuro avanço de IA poderia mudar esse gargalo.
 
-4. Construa um caso de segurança (três pilares da Lição 18) para um modelo de fronteira capaz em ciber que delimita tanto uplift de iniciante quanto de especialista.
+4. Construa um caso de segurança (três pilares da Lição 18) para um modelo de fronteira capaz em ciber que delimita tanto uplift de iniciante quanto de eespecificaçãoialista.
 
 5. Escolha um dos quatro domínios e escreva uma previsão de um parágrafo para 2027 baseada na trajetória 2024-2025. Identifique a evidência que falsificaria sua previsão.
 
@@ -102,7 +102,7 @@ Esta lição produz `outputs/skill-dual-use-triage.md`. Dada uma alegação de c
 |-------|------------------------|---------------------------|
 | Uplift | "IA ajuda atacantes" | Aumento de capacidade do atacante atribuível a assistência de IA |
 | Uplift novice-relativo | "multiplicativo" | O quanto IA ajuda um iniciante vs status quo |
-| Capacidade expert-absoluto | "teto" | Capacidade máxima que um especialista pode extrair do modelo |
+| Capacidade expert-absoluto | "teto" | Capacidade máxima que um eespecificaçãoialista pode extrair do modelo |
 | Gap execução | "fazer vs saber" | Defesa histórica: habilidade tácita de laboratório bloqueia iniciantes |
 | Codificação agentic | "ataques autônomos" | Execução autônoma de tarefas ciber em múltiplos passos |
 | Fase de aquisição | "etapas pré-síntese" | Etapas de aquisição, equipamento, permissão de uma ameaça bio |

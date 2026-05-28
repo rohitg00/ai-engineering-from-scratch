@@ -16,7 +16,7 @@
 
 ## O Problema
 
-Um agent produz uma resposta quase certa. Talvez uma linha de código tenha um erro de sintaxe. Talvez um resumo seja longo demais. Talvez um plano pule um caso limite. O que você quer é: o agent critica sua própria saída e depois corrige.
+Um agente produz uma resposta quase certa. Talvez uma linha de código tenha um erro de sintaxe. Talvez um resumo seja longo demais. Talvez um plano pule um caso limite. O que você quer é: o agente critica sua própria saída e depois corrige.
 
 Self-Refine mostra que isso funciona com um único modelo, sem dados de treino, sem RL. Mas tem um pegadinha: LLMs são ruins em auto-verificação em fatos concretos. CRITIC nomeia a correção — roteie o passo de verificação por ferramentas externas (busca, interpretador de código, calculadora, runner de testes).
 
@@ -49,7 +49,7 @@ Fraqueza do Self-Refine: o passo de feedback é um LLM se pontuando. Pra afirma�
 - Um mecanismo de busca pra afirmações factuais.
 - Um interpretador de código pra correção de código.
 - Uma calculadora pra aritmética.
-- Verificadores específicos de domínio (testes unitários, type checkers, linters).
+- Verificadores eespecificaçãoíficos de domínio (testes unitários, type checkers, linters).
 
 O verificador produz uma crítica estruturada ancorada em resultados de ferramenta. O refinator depois condiciona nessa crítica.
 
@@ -75,7 +75,7 @@ Loop até o evaluator aprovar. Isso é Self-Refine/CRITIC no framing da Anthropi
 
 ### Output guardrails do OpenAI Agents SDK
 
-OpenAI Agents SDK entrega esse padrão como "output guardrails." Um guardrail é um validador que roda na saída final de um agent. Se o guardrail é ativado (`OutputGuardrailTripwireTriggered`), a saída é rejeitada e o agent pode tentar de novo. Guardrails podem chamar ferramentas (estilo CRITIC) ou ser funções puras (estilo Self-Refine).
+OpenAI Agents SDK entrega esse padrão como "output guardrails." Um guardrail é um validador que roda na saída final de um agent. Se o guardrail é ativado (`OutputGuardrailTripwireTriggered`), a saída é rejeitada e o agente pode tentar de novo. Guardrails podem chamar ferramentas (estilo CRITIC) ou ser funções puras (estilo Self-Refine).
 
 ### Armadilhas de 2026
 
@@ -126,7 +126,7 @@ Evaluator-optimizer da Anthropic é esse padrão em linguagem amigável ao Claud
 | Self-Refine | "LLM que se corrige" | Loop generate -> feedback -> refine num modelo, com histórico |
 | CRITIC | "Verificação ancorada em ferramenta" | Substitui feedback por verificador externo (busca, código, calc, testes) |
 | Evaluator-Optimizer | "Padrão de workflow da Anthropic" | Dois papéis — evaluator pontua, optimizer revisa — em loop até convergência |
-| Output guardrail | "Checagem post-hoc" | Validador do OpenAI Agents SDK que roda depois que o agent produz saída |
+| Output guardrail | "Checagem post-hoc" | Validador do OpenAI Agents SDK que roda depois que o agente produz saída |
 | Verify step | "Fase de crítica" | A decisão que aguenta o peso: ancorada ou auto-avaliada |
 | Refine history | "O que o modelo já tentou" | Saídas + críticas anteriores prepended no prompt de refine; remove e a qualidade colapsa |
 | Rubber-stamp loop | "Falha de auto-acordo" | Crítica de mesmo prompt retorna "parece bom"; conserte com prompts estruturalmente diferentes |

@@ -12,7 +12,7 @@
 - Nomear as três batch APIs dos providers (OpenAI, Anthropic, Google) e os descontos de 50% + turnaround de 24h em comum.
 - Calcular o custo de empilhar batch + input cached num workload noturno de classificação e comparar com o baseline síncrono-uncached.
 - Triar um workload em interativo / semi-interativo / batch e justificar a faixa.
-- Nomear as duas armadilhas: parcial-interatividade (usuário espera mais rápido que 24h) e drift de output-schema (formato de arquivo batch difere por provider).
+- Nomear as duas armadilhas: parcial-interatividade (usuário espera mais rápido que 24h) e deriva de output-schema (formato de arquivo batch difere por provider).
 
 ## O Problema
 
@@ -50,11 +50,11 @@ O empilho: batch + cache = ~10% da conta síncrona uncached. Qualquer workload q
 
 **Interativo** — usuário espera pela resposta. TTFT importa. Chamada síncrona com prompt caching. Não dá para batch.
 
-**Semi-interativo** — usuário submete uma tarefa, volta em minutos. Fila async com fallback síncrono se batch não disponível. Pense em indexação RAG de volume moderado.
+**Semi-interativo** — usuário submete uma tarefa, volta em minutos. Fila async com reserva síncrono se batch não disponível. Pense em indexação RAG de volume moderado.
 
 **Batch** — usuário espera resultados "de manhã" ou "próxima hora." Pipelines de conteúdo, classificação em escala, análise offline. Sempre batch, sempre empilhar cache.
 
-Erro comum: classificar tudo como interativo porque o pipeline é produção. Produção não é uma especificação de latência — SLA é.
+Erro comum: classificar tudo como interativo porque o pipeline é produção. Produção não é uma eespecificaçãoificação de latência — SLA é.
 
 ### A armadilha da parcial-interatividade
 

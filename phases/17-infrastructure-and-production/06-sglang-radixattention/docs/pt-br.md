@@ -1,9 +1,9 @@
 # SGLang e RadixAttention para Workloads com Prefixo Pesado
 
-> SGLang trata o KV cache como um recurso de primeira classe e reutilizável, armazenado em uma radix tree. Onde o vLLM agenda requests FCFS (primeiro a chegar, primeiro a ser servido), o scheduler com consciência de cache do SGLang prioriza requests com prefixos compartilhados mais longos — efetivamente uma travessia radix em profundidade para que os ramos quentes fiquem residentes no HBM. No Llama 3.1 8B com prompts de 1K estilo ShareGPT, SGLang atinge ~16.200 tok/s vs ~12.500 do vLLM, uma vantagem de ~29%. Em workloads RAG com prefixo pesado a vantagem chega a 6,4x. Em workloads com formato de clonagem de voz, a taxa de acerto do cache superou 86%. Implantado em 400.000+ GPUs em 2026 no xAI, LinkedIn, Cursor, Oracle, GCP, Azure, AWS. O detalhe é que o número de 6,4x evapora quando a ordenação de prefixos é inconsistente — ordenação é a alavanca do engenheiro.
+> SGLang trata o KV cache como um recurso de primeira classe e reutilizável, armazenado em uma radix tree. Onde o vLLM agenda requests FCFS (primeiro a chegar, primeiro a ser servido), o agendador com consciência de cache do SGLang prioriza requests com prefixos compartilhados mais longos — efetivamente uma travessia radix em profundidade para que os ramos quentes fiquem residentes no HBM. No Llama 3.1 8B com prompts de 1K estilo ShareGPT, SGLang atinge ~16.200 tok/s vs ~12.500 do vLLM, uma vantagem de ~29%. Em workloads RAG com prefixo pesado a vantagem chega a 6,4x. Em workloads com formato de clonagem de voz, a taxa de acerto do cache superou 86%. Implantado em 400.000+ GPUs em 2026 no xAI, LinkedIn, Cursor, Oracle, GCP, Azure, AWS. O detalhe é que o número de 6,4x evapora quando a ordenação de prefixos é inconsistente — ordenação é a alavanca do engenheiro.
 
 **Tipo:** Aprendizado
-**Linguagens:** Python (stdlib, radix-tree cache toy + scheduler com consciência de cache)
+**Linguagens:** Python (stdlib, radix-tree cache toy + agendador com consciência de cache)
 **Pré-requisitos:** Fase 17 · 04 (Internals de Serving vLLM), Fase 14 (Agentic RAG)
 **Tempo:** ~75 minutos
 
@@ -39,7 +39,7 @@ root
       |- "Context: <doc B>..."        (520 tokens, 33 blocos)
 ```
 
-Um novo request chega com prompt de sistema + "Context: <doc A>" + "Question: Carol". O scheduler percorre: prefixo do sistema coincide (124 blocos reutilizados), ramo doc-A coincide (31 blocos reutilizados), depois aloca blocos novos apenas para "Question: Carol" (4 blocos). Custo de prefill: 4 blocos de tokens novos. Sem a árvore: 160 blocos. ~40x de economia no prefill.
+Um novo request chega com prompt de sistema + "Context: <doc A>" + "Question: Carol". O agendador percorre: prefixo do sistema coincide (124 blocos reutilizados), ramo doc-A coincide (31 blocos reutilizados), depois aloca blocos novos apenas para "Question: Carol" (4 blocos). Custo de prefill: 4 blocos de tokens novos. Sem a árvore: 160 blocos. ~40x de economia no prefill.
 
 ### Agendamento com consciência de cache
 
@@ -70,7 +70,7 @@ Caso real da pesquisa: mover conteúdo dinâmico para fora do prefixo cacheável
 
 Ganha:
 - RAG (mesmo preâmbulo de recuperação, questão variando).
-- Agents (mesmos schemas de ferramentas, query variando).
+- Agents (mesmos schemas de ferramentas, consulta variando).
 - Chat com prompt de sistema longo.
 - Workloads de voz/vision com preâmbulos repetidos.
 
@@ -80,7 +80,7 @@ Perde (volta ao throughput nível vLLM):
 
 ### Por que isso é um problema de scheduler, não só de kernel
 
-Você pode implementar reutilização de KV como um truque de kernel. O insight do SGLang é que a reutilização só paga se o scheduler mantém o ramo quente resident. Uma política ingênua de "reutilizar se disponível" vai churnar o cache sob carga mista. O scheduler indexado em radix tree é o que transforma o truque de kernel em uma vantagem de 29% em produção.
+Você pode implementar reutilização de KV como um truque de kernel. O insight do SGLang é que a reutilização só paga se o agendador mantém o ramo quente resident. Uma política ingênua de "reutilizar se disponível" vai churnar o cache sob carga mista. O agendador indexado em radix tree é o que transforma o truque de kernel em uma vantagem de 29% em produção.
 
 ### Interação com vLLM
 
@@ -88,7 +88,7 @@ Os dois sistemas não são competidores estritos. Em 2026 o vLLM adicionou prefi
 
 ## Use
 
-`code/main.py` implementa um radix-tree KV cache toy mais um scheduler com duas políticas: FCFS e com consciência de cache. Roda o mesmo workload através das duas, reporta taxa de acerto do prefix-cache e delta de throughput. Depois roda um workload com "ordenção embaralhada" para mostrar o colapso do 6,4x.
+`code/main.py` implementa um radix-tree KV cache toy mais um agendador com duas políticas: FCFS e com consciência de cache. Roda o mesmo workload através das duas, reporta taxa de acerto do prefix-cache e delta de throughput. Depois roda um workload com "ordenção embaralhada" para mostrar o colapso do 6,4x.
 
 ## Entregue
 

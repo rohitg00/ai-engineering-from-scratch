@@ -1,6 +1,6 @@
 # Many-Shot Jailbreaking
 
-> Anil, Durmus, Panickssery, Sharma, et al. (Anthropic, NeurIPS 2024). Many-shot jailbreaking (MSJ) explora janelas de contexto longas: enchem centenas de turnos falso usuário-assistente onde o assistente obedece a pedidos prejudiciais, e então adicionam a query alvo. A taxa de sucesso do ataque segue uma lei de potência no número de shots; falha com 5 shots, é confiável com 256 shots em conteúdo violento e enganoso. O fenômeno segue a mesma lei de potência que o in-context learning benigno — o ataque e ICL compartilham um mecanismo subjacente, por isso defesas que preservam ICL são difíceis de projetar. Modificação de prompt baseada em classificador reduz a taxa de sucesso de 61% para 2% nos cenários testados.
+> Anil, Durmus, Panickssery, Sharma, et al. (Anthropic, NeurIPS 2024). Many-shot jailbreaking (MSJ) explora janelas de contexto longas: enchem centenas de turnos falso usuário-assistente onde o assistente obedece a pedidos prejudiciais, e então adicionam a consulta alvo. A taxa de sucesso do ataque segue uma lei de potência no número de shots; falha com 5 shots, é confiável com 256 shots em conteúdo violento e enganoso. O fenômeno segue a mesma lei de potência que o in-context learning benigno — o ataque e ICL compartilham um mecanismo subjacente, por isso defesas que preservam ICL são difíceis de projetar. Modificação de prompt baseada em classificador reduz a taxa de sucesso de 61% para 2% nos cenários testados.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, simulador de ICL vs MSJ)
@@ -44,7 +44,7 @@ Lei de potência — não logística. Aumentar os shots não platéia; continua 
 
 ### Por que compartilha um mecanismo com ICL
 
-ICL benigno: o modelo extrai a tarefa dos exemplos in-context e executa na query. MSJ: o modelo extrai "obedecer a pedidos prejudiciais" dos exemplos in-context e executa no alvo.
+ICL benigno: o modelo extrai a tarefa dos exemplos in-context e executa na consulta. MSJ: o modelo extrai "obedecer a pedidos prejudiciais" dos exemplos in-context e executa no alvo.
 
 O formato da lei de potência é idêntico. O modelo não distingue os dois porque o mecanismo — extração de padrão de exemplos in-context — é o mesmo.
 
@@ -91,7 +91,7 @@ Essa lição gera `outputs/skill-msj-audit.md`. Dada uma avaliação de seguran�
 | Termo | O que dizem | O que realmente significa |
 |-------|-------------|---------------------------|
 | MSJ | "many-shot jailbreak" | Ataque de contexto longo com centenas de pares falso obediência usuário-assistente |
-| Contagem de shots | "N exemplos no contexto" | Número de pares de obediência falsos antes da query alvo |
+| Contagem de shots | "N exemplos no contexto" | Número de pares de obediência falsos antes da consulta alvo |
 | ASR por lei de potência | "ASR = f(shots)^alpha" | Taxa de sucesso do ataque cresce polinomialmente, não sigmoidalmente, no número de shots |
 | ICL | "in-context learning" | Modelo extrai estrutura de tarefa de exemplos in-context |
 | Defesa por padrão | "classificador sobre contexto" | Defesa que detecta estrutura MSJ antes do modelo ver |

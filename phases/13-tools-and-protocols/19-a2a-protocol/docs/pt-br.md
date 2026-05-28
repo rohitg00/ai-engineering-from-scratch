@@ -16,7 +16,7 @@
 
 ## O Problema
 
-Um agente de atendimento ao cliente precisa delegar escrita de relatórios a um agente escritor especializado. Opções pré-A2A:
+Um agente de atendimento ao cliente precisa delegar escrita de relatórios a um agente escritor eespecificaçãoializado. Opções pré-A2A:
 
 - API REST customizada. Funciona mas cada pareamento é um caso único.
 - Codebase compartilhada. Requer que os dois agentes rodem o mesmo framework.
@@ -129,12 +129,12 @@ Justificativa: A2A permite que concorrentes colaborem sem revelar internos. A2A 
 |-----------|-----|-----|
 | Caso de uso | Agent-to-tool | Agent-to-agent |
 | Opacidade | Chamadas de ferramenta transparentes | Raciocínio interno opaco |
-| Chamador típico | Runtime do agent | Outro agente |
+| Chamador típico | Runtime do agente | Outro agente |
 | Estado | Resultado de chamada de ferramenta | Task com ciclo de vida |
 | Autorização | OAuth 2.1 (Fase 13 · 16) | Agent Cards assinados com JWT (AP2) |
 | Transporte | Stdio / Streamable HTTP | JSON-RPC sobre HTTP / gRPC |
 
-Use MCP quando quiser invocar uma ferramenta específica. Use A2A quando quiser delegar uma task inteira pra outro agente. Muitos sistemas de produção usam os dois: um agente usa MCP pra sua camada de ferramentas e A2A pra sua camada de colaboração.
+Use MCP quando quiser invocar uma ferramenta eespecificaçãoífica. Use A2A quando quiser delegar uma task inteira pra outro agente. Muitos sistemas de produção usam os dois: um agente usa MCP pra sua camada de ferramentas e A2A pra sua camada de colaboração.
 
 ## Usar
 
@@ -150,7 +150,7 @@ O que observar:
 
 ## Entregar
 
-Essa lição produz `outputs/skill-a2a-agent-spec.md`. Dado um novo agente que deve ser chamável por outros agentes, a skill produz o JSON do Agent Card, schema de skills e blueprint do endpoint.
+Essa lição produz `outputs/skill-a2a-agent-especificação.md`. Dado um novo agente que deve ser chamável por outros agentes, a skill produz o JSON do Agent Card, schema de skills e blueprint do endpoint.
 
 ## Exercícios
 
@@ -181,7 +181,7 @@ Essa lição produz `outputs/skill-a2a-agent-spec.md`. Dado um novo agente que d
 
 ## Leitura Complementar
 
-- [a2a-protocol.org](https://a2a-protocol.org/latest/) — especificação canônica do A2A
+- [a2a-protocol.org](https://a2a-protocol.org/latest/) — eespecificaçãoificação canônica do A2A
 - [a2aproject/A2A — GitHub](https://github.com/a2aproject/A2A) — implementações de referência e SDKs
 - [Linux Foundation — A2A launch press release](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents) — transferência de governança jun/2025
 - [Google Cloud — A2A protocol upgrade](https://cloud.google.com/blog/products/ai-machine-learning/agent2agent-protocol-is-getting-an-upgrade) — roadmap e momentum de parceiros

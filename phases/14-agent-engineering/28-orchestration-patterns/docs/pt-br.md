@@ -22,17 +22,17 @@ Times recorrem a "multi-agente" antes de precisar. Quatro padrões se repetem en
 
 ### Supervisor-worker
 
-- Um LLM de roteamento central despacha pra agentes especialistas.
-- Decide: voltar pra si, handoff pro especialista, terminar.
-- Especialistas não conversam entre si; todo roteamento passa pelo supervisor.
+- Um LLM de roteamento central despacha pra agentes eespecificaçãoialistas.
+- Decide: voltar pra si, handoff pro eespecificaçãoialista, terminar.
+- Eespecificaçãoialistas não conversam entre si; todo roteamento passa pelo supervisor.
 
 Frameworks: LangGraph `create_supervisor`, Anthropic orchestrator-workers, CrewAI Hierarchical Process.
 
-**Recomendação do LangChain em 2026:** faça supervisão via chamadas diretas de tool ao invés de `create_supervisor`. Dá controle mais fino de context engineering — você decide exatamente o que cada especialista vê.
+**Recomendação do LangChain em 2026:** faça supervisão via chamadas diretas de ferramenta ao invés de `create_supervisor`. Dá controle mais fino de context engineering — você decide exatamente o que cada eespecificaçãoialista vê.
 
 ### Swarm / peer-to-peer
 
-- Agentes fazem handoff diretamente via superfície de tools compartilhada.
+- Agentes fazem handoff diretamente via superfície de ferramentas compartilhada.
 - Sem roteador central.
 - Menor latência que supervisor (menos hops).
 - Mais difícil de raciocinar (sem ponto único de controle).
@@ -45,7 +45,7 @@ Frameworks: topologia swarm do LangGraph, handoffs do OpenAI Agents SDK (quando 
 - Implementado como subgraphs aninhados no LangGraph; crews aninhadas no CrewAI.
 - Escala pra grandes populações de agente ao custo de complexidade operacional.
 
-Quando precisa: quando o orçamento de contexto de um único supervisor não cabe nas descrições de todos os especialistas.
+Quando precisa: quando o orçamento de contexto de um único supervisor não cabe nas descrições de todos os eespecificaçãoialistas.
 
 ### Debate
 
@@ -68,7 +68,7 @@ Isso é ortogonal aos quatro padrões acima mas mapeia pra topologia: Flow é ti
 Ordem de decisão:
 
 1. Agente único + padrões de workflow (Aula 12) — comece aqui.
-2. Supervisor-worker — quando você tem 2-4 especialistas.
+2. Supervisor-worker — quando você tem 2-4 eespecificaçãoialistas.
 3. Swarm — quando latência importa mais que clareza de raciocínio.
 4. Hierárquico — só quando o orçamento de contexto do supervisor falha.
 5. Debate — quando acurácia importa mais que custo.
@@ -113,7 +113,7 @@ Saída: trace + contagem de ops por padrão. Supervisor é o mais limpo; swarm �
 
 1. Converta um supervisor-worker pra swarm removendo o roteador. O que quebra? O que melhora?
 2. Adicione um contador de hops no swarm: recuse após 3 handoffs. Captura o rebatimento A->B->A?
-3. Construa um sistema hierárquico de dois níveis pra um domínio de 12 especialistas. Onde o orçamento de contexto falha sem nesting?
+3. Construa um sistema hierárquico de dois níveis pra um domínio de 12 eespecificaçãoialistas. Onde o orçamento de contexto falha sem nesting?
 4. Profile os quatro padrões num workload de formato de produção. Qual ganha em qual métrica (latência, custo, acurácia, debugabilidade)?
 5. Leia o post "Building Effective Agents" da Anthropic. Mapeie cada um dos seus fluxos de produção pra um dos quatro. Algum que não mapeia limpo?
 
@@ -121,11 +121,11 @@ Saída: trace + contagem de ops por padrão. Supervisor é o mais limpo; swarm �
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|----------------------|--------------------------|
-| Supervisor-worker | "Roteador + especialistas" | LLM central despacha pra especialistas; eles não conversam entre si |
-| Swarm | "Peer-to-peer" | Handoffs diretos via tools compartilhadas; sem roteador central |
+| Supervisor-worker | "Roteador + eespecificaçãoialistas" | LLM central despacha pra eespecificaçãoialistas; eles não conversam entre si |
+| Swarm | "Peer-to-peer" | Handoffs diretos via ferramentas compartilhadas; sem roteador central |
 | Hierárquico | "Supervisores de supervisores" | Subgraphs aninhados pra grandes populações |
 | Debate | "Proponente + critique" | Proponentes paralelos, cross-critique (Aula 25) |
-| Supervisão via tool-call | "Supervisor sem biblioteca" | Implementa supervisor como chamadas diretas de tool pra controle de contexto |
+| Supervisão via tool-call | "Supervisor sem biblioteca" | Implementa supervisor como chamadas diretas de ferramenta pra controle de contexto |
 | Crew | "Time autônomo" | Modo de colaboração baseada em papéis do CrewAI |
 | Flow | "Workflow determinístico" | Modo de produção orientado a eventos do CrewAI |
 

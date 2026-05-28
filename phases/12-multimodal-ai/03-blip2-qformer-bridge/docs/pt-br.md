@@ -1,6 +1,6 @@
 # Do CLIP ao BLIP-2 — Q-Former como Ponte entre Modalidades
 
-> CLIP alinha imagem e texto mas não consegue gerar legendas, responder perguntas ou manter uma conversa. BLIP-2 (Salesforce, 2023) resolveu isso com uma ponte treinável pequena: 32 vetores de query aprendíveis atentam sobre as features de um ViT congelado via cross-attention, depois entram direto no fluxo de entrada de um LLM congelado. 188M parâmetros de ponte conectaram um LLM de 11B a um ViT-g/14. Todo VLM baseado em adaptador até 2026 — MiniGPT-4, InstructBLIP, primos do LLaVA — é descendente. Essa lição lê a arquitetura do Q-Former, explica seu treinamento em duas etapas e constrói uma versão de brinquedo que alimenta tokens visuais num decoder de texto congelado.
+> CLIP alinha imagem e texto mas não consegue gerar legendas, responder perguntas ou manter uma conversa. BLIP-2 (Salesforce, 2023) resolveu isso com uma ponte treinável pequena: 32 vetores de consulta aprendíveis atentam sobre as features de um ViT congelado via cross-attention, depois entram direto no fluxo de entrada de um LLM congelado. 188M parâmetros de ponte conectaram um LLM de 11B a um ViT-g/14. Todo VLM baseado em adaptador até 2026 — MiniGPT-4, InstructBLIP, primos do LLaVA — é descendente. Essa lição lê a arquitetura do Q-Former, explica seu treinamento em duas etapas e constrói uma versão de brinquedo que alimenta tokens visuais num decoder de texto congelado.
 
 **Tipo:** Construção
 **Linguagens:** Python (stdlib, demonstração de cross-attention + queries aprendíveis)
@@ -20,22 +20,22 @@ Você tem um ViT congelado que produz 256 patch tokens de dim 1408 por imagem. T
 
 A pergunta do BLIP-2: você consegue comprimir a representação de imagem de 256 tokens em bem menos tokens (digamos 32) preservando informação suficiente pro LLM fazer legendas, responder perguntas e raciocinar sobre a imagem? E você consegue treinar essa ponte sem tocar nos backbones congelados, mantendo o custo de treino só nos parâmetros da ponte?
 
-A resposta: um Q-Former. 32 vetores "query" aprendíveis que fazem cross-attention sobre os patch tokens do ViT, produzindo um resumo visual de 32 tokens que o LLM consome. 188M parâmetros no total. Treinado com objetivos contrastivos, de correspondência e generativos antes de nunca tocar no LLM.
+A resposta: um Q-Former. 32 vetores "consulta" aprendíveis que fazem cross-attention sobre os patch tokens do ViT, produzindo um resumo visual de 32 tokens que o LLM consome. 188M parâmetros no total. Treinado com objetivos contrastivos, de correspondência e generativos antes de nunca tocar no LLM.
 
 ## O Conceito
 
 ### Queries aprendíveis
 
-O truque central do Q-Former: em vez de deixar os tokens de texto do LLM atentarem sobre patches de imagem, introduz um novo conjunto de 32 vetores de query aprendíveis `Q` e deixa *eles* atentarem sobre patches de imagem. As queries são parâmetros do modelo — são aprendidas durante treinamento e as mesmas 32 queries são usadas pra cada imagem.
+O truque central do Q-Former: em vez de deixar os tokens de texto do LLM atentarem sobre patches de imagem, introduz um novo conjunto de 32 vetores de consulta aprendíveis `Q` e deixa *eles* atentarem sobre patches de imagem. As queries são parâmetros do modelo — são aprendidas durante treinamento e as mesmas 32 queries são usadas pra cada imagem.
 
-Após cross-attention, cada query guarda um resumo comprimido da imagem — "descreve o objeto principal", "descreve o fundo", "conta os objetos", etc. As queries não se especializam literalmente em rótulos semânticos; elas aprendem qualquer codificação que faça as perdas downstream caírem.
+Após cross-attention, cada consulta guarda um resumo comprimido da imagem — "descreve o objeto principal", "descreve o fundo", "conta os objetos", etc. As queries não se eespecificaçãoializam literalmente em rótulos semânticos; elas aprendem qualquer codificação que faça as perdas downstream caírem.
 
 ### Arquitetura
 
 O Q-Former é um transformer pequeno (12 camadas, ~100M parâmetros) com dois caminhos:
 
-1. Caminho de query: 32 vetores de query fluem por self-attention (entre si), depois cross-attention sobre os patch tokens do ViT congelado, depois FFN.
-2. Caminho de texto: um encoder de texto estilo BERT compartilha os pesos de self-attention e FFN com o caminho de query. Cross-attention é desabilitado pro caminho de texto.
+1. Caminho de consulta: 32 vetores de consulta fluem por self-attention (entre si), depois cross-attention sobre os patch tokens do ViT congelado, depois FFN.
+2. Caminho de texto: um encoder de texto estilo BERT compartilha os pesos de self-attention e FFN com o caminho de consulta. Cross-attention é desabilitado pro caminho de texto.
 
 Durante treino, ambos os caminhos rodam. As queries e o texto interagem por self-attention compartilhada, o que significa que as queries podem condicionar no texto pra tarefas que precisam (ITM, ITG). Na inferência pra transferência pro VLM, só as queries fluem, produzindo 32 tokens visuais.
 
@@ -44,13 +44,13 @@ Durante treino, ambos os caminhos rodam. As queries e o texto interagem por self
 BLIP-2 pré-treina em duas etapas:
 
 Etapa 1: aprendizado de representação (sem LLM). Três perdas:
-- ITC (contraste imagem-texto): estilo CLIP entre tokens de query com pooling e token CLS de texto.
+- ITC (contraste imagem-texto): estilo CLIP entre tokens de consulta com pooling e token CLS de texto.
 - ITM (correspondência imagem-texto): classificador binário — este par imagem-texto corresponde? Com mineração de hard negatives.
 - ITG (geração de texto baseada em imagem): cabeça LM causal no texto, condicionado nas queries. Força as queries a codificar conteúdo gerável por texto.
 
 Só o Q-Former treina. ViT congelado. Sem LLM envolvido.
 
-Etapa 2: aprendizado generativo. Anexa um LLM congelado (OPT-2.7B ou Flan-T5-XL, etc.). Projeta as 32 saídas de query pra dim de embedding do LLM via uma pequena camada linear. Antecede-as ao prompt de texto. Treina só a projeção linear e o Q-Former na perda LM sobre a sequência concatenada prompt + imagem + legenda.
+Etapa 2: aprendizado generativo. Anexa um LLM congelado (OPT-2.7B ou Flan-T5-XL, etc.). Projeta as 32 saídas de consulta pra dim de embedding do LLM via uma pequena camada linear. Antecede-as ao prompt de texto. Treina só a projeção linear e o Q-Former na perda LM sobre a sequência concatenada prompt + imagem + legenda.
 
 Após a etapa 2, Q-Former + projeção é o adaptador visual completo. Na inferência: imagem → ViT → Q-Former → projeção linear → antecedido ao texto → LLM congelado emite saída.
 
@@ -62,7 +62,7 @@ Qualidade: BLIP-2 iguala ou supera Flamingo-80B em VQA zero-shot sendo 50x menor
 
 ### InstructBLIP e o Q-Former consciente de instrução
 
-InstructBLIP (2023) estende o Q-Former com uma entrada extra: o texto da instrução em si. No momento da cross-attention, as queries agora têm acesso tanto aos patches da imagem quanto à instrução. As queries podem se especializar por instrução ("conta os carros", "descreve o clima") em vez de aprender um único resumo fixo. Ganhos em benchmarks em tarefas hold-out.
+InstructBLIP (2023) estende o Q-Former com uma entrada extra: o texto da instrução em si. No momento da cross-attention, as queries agora têm acesso tanto aos patches da imagem quanto à instrução. As queries podem se eespecificaçãoializar por instrução ("conta os carros", "descreve o clima") em vez de aprender um único resumo fixo. Ganhos em benchmarks em tarefas hold-out.
 
 ### MiniGPT-4 e a abordagem só com projetor
 
@@ -97,7 +97,7 @@ Os quatro são válidos. A questão decisiva é se você é limitado pelo orçam
 4. Projeta pra dim do LLM (512) via camada linear.
 5. Saem 32 tokens visuais prontos pro LLM.
 
-Toda a matemática em Python puro (loops aninhados sobre vetores). De brinquedo mas com forma correta. A matriz de pesos de attention é impressa pra você ver de quais patches cada query puxou.
+Toda a matemática em Python puro (loops aninhados sobre vetores). De brinquedo mas com forma correta. A matriz de pesos de attention é impressa pra você ver de quais patches cada consulta puxou.
 
 ## Entregue
 
@@ -119,9 +119,9 @@ Essa lição produz `outputs/skill-modality-bridge-picker.md`. Dada uma configur
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|----------------------|-------------------------|
-| Q-Former | "Transformer de queries" | Transformer pequeno com 32 vetores de query aprendíveis que fazem cross-attention sobre features congeladas do ViT |
-| Queries aprendíveis | "Soft prompt pra visão" | Um conjunto fixo de parâmetros que servem como o lado de query da cross-attention; aprendidos por modelo, compartilhados em todas as entradas |
-| Cross-attention | "Q de aqui, K/V de lá" | Attention onde query, key e value vêm de fontes diferentes; como as queries puxam dos patches do ViT |
+| Q-Former | "Transformer de queries" | Transformer pequeno com 32 vetores de consulta aprendíveis que fazem cross-attention sobre features congeladas do ViT |
+| Queries aprendíveis | "Soft prompt pra visão" | Um conjunto fixo de parâmetros que servem como o lado de consulta da cross-attention; aprendidos por modelo, compartilhados em todas as entradas |
+| Cross-attention | "Q de aqui, K/V de lá" | Attention onde consulta, key e value vêm de fontes diferentes; como as queries puxam dos patches do ViT |
 | ITC | "Contraste imagem-texto" | Perda estilo CLIP aplicada a queries com pooling do Q-Former vs CLS de texto |
 | ITM | "Correspondência imagem-texto" | Classificador binário em pares com mineração de hard negatives; força as queries a discriminar desalinhamentos refinados |
 | ITG | "Geração de texto baseada em imagem" | Perda LM causal onde o texto é gerado condicionado nas queries; força as queries a codificar conteúdo decodificável por texto |

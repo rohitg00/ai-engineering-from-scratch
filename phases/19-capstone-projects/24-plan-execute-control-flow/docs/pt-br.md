@@ -16,7 +16,7 @@
 
 ## Plano e execute, não chain-of-thought
 
-Um agent de chain-of-thought emite tokens e deixa o loop adivinhar onde a chamada de ferramenta termina. Um agent plan-and-execute emite um plano estruturado primeiro, depois executa cada passo deterministicamente. O plano são dados que o harness pode introspectar. A execução é o harness rodando esses dados através de um dispatcher.
+Um agente de chain-of-thought emite tokens e deixa o loop adivinhar onde a chamada de ferramenta termina. Um agente plan-and-execute emite um plano estruturado primeiro, depois executa cada passo deterministicamente. O plano são dados que o harness pode introespecificaçãotar. A execução é o harness rodando esses dados através de um dispatcher.
 
 Duas peças. Um planner que produz um plano. Um executor que roda o plano. O trabalho interessante é o que acontece quando o executor encontra uma falha. Três opções:
 

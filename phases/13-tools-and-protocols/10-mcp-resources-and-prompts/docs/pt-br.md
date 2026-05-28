@@ -30,7 +30,7 @@ A divisão correta: expor dados como resource, expor ações mutantes ou computa
 
 | Funcionalidade | Primitiva |
 |----------------|-----------|
-| Usuário quer pesquisar, filtrar ou transformar dados | tool |
+| Usuário quer pesquisar, filtrar ou transformar dados | ferramenta |
 | Usuário quer que o host inclua esses dados como contexto | resource |
 | Usuário quer um fluxo de trabalho template que pode re-executar | prompt |
 
@@ -43,9 +43,9 @@ Diretriz: se o modelo se beneficiaria de chamar em cada consulta relacionada, é
 URIs podem ser qualquer coisa endereçável:
 
 - `file:///Users/alice/notes/mcp.md`
-- `postgres://my-db/query/SELECT ...`
+- `postgres://my-db/consulta/SELECT ...`
 - `notes://note-14` (esquema custom)
-- `memory://session-2026-04-22/recent` (específico do servidor)
+- `memory://session-2026-04-22/recent` (eespecificaçãoífico do servidor)
 
 `contents[]` suporta tanto texto quanto binário. Binário usa `blob` como string base64-encoded mais um `mimeType`.
 
@@ -83,13 +83,13 @@ Pra MCP Apps (Aula 14): `text/html;profile=mcp-app` numa URI `ui://`.
 
 ### Resources dinâmicos
 
-Uma URI de resource não precisa corresponder a um arquivo estático. `notes://recent` pode retornar as cinco notas mais recentes em cada leitura. `db://query/users/active` pode executar uma query parametrizada. O servidor é livre pra computar conteúdo dinamicamente.
+Uma URI de resource não precisa corresponder a um arquivo estático. `notes://recent` pode retornar as cinco notas mais recentes em cada leitura. `db://consulta/users/active` pode executar uma consulta parametrizada. O servidor é livre pra computar conteúdo dinamicamente.
 
 Regra: se o cliente pode cache por URI, a URI deve ser estável. Se a computação é one-shot, a URI deve incluir um timestamp ou nonce pra que o cache do cliente não fique obsoleto.
 
 ### Assinaturas vs. polling
 
-Clientes com capacidade de assinatura recebem push do servidor via `notifications/resources/updated`. Clientes anteriores à assinatura ou hosts que não suportam fazem polling relendo. Ambos são compatíveis com a especificação. A declaração de capacidade do servidor diz ao cliente qual usar.
+Clientes com capacidade de assinatura recebem push do servidor via `notifications/resources/updated`. Clientes anteriores à assinatura ou hosts que não suportam fazem polling relendo. Ambos são compatíveis com a eespecificaçãoificação. A declaração de capacidade do servidor diz ao cliente qual usar.
 
 Custo das assinaturas: estado por sessão no servidor (quem está assinando o quê). Mantenha o conjunto de assinaturas limitado; clientes desconectados devem expirar.
 
@@ -110,7 +110,7 @@ Rode a demonstração pra ver o fluxo completo.
 
 ## Entregue
 
-Esta aula produz `outputs/skill-primitive-splitter.md`. Dado um servidor MCP proposto, a skill categoriza cada funcionalidade como tool / resource / prompt com justificativa.
+Esta aula produz `outputs/skill-primitive-splitter.md`. Dado um servidor MCP proposto, a skill categoriza cada funcionalidade como ferramenta / resource / prompt com justificativa.
 
 ## Exercícios
 
@@ -120,9 +120,9 @@ Esta aula produz `outputs/skill-primitive-splitter.md`. Dado um servidor MCP pro
 
 3. Projete três prompts pra um servidor MCP de GitHub: `summarize_pr`, `triage_issue`, `release_notes`. Cada um com schemas de argumento. O corpo do prompt deve ser executável sem edições adicionais.
 
-4. Pegue uma ferramenta existente no servidor da Aula 07 e classifique se deve permanecer como tool ou ser dividida num par resource + tool. Justifique numa frase.
+4. Pegue uma ferramenta existente no servidor da Aula 07 e classifique se deve permanecer como ferramenta ou ser dividida num par resource + tool. Justifique numa frase.
 
-5. Leia as seções `server/resources` e `server/prompts` da especificação. Identifique o único campo em `resources/read` que raramente é preenchido mas suportado pela especificação. Dica: olhe `_meta` no conteúdo do resource.
+5. Leia as seções `server/resources` e `server/prompts` da eespecificaçãoificação. Identifique o único campo em `resources/read` que raramente é preenchido mas suportado pela eespecificaçãoificação. Dica: olhe `_meta` no conteúdo do resource.
 
 ## Termos-Chave
 
@@ -130,7 +130,7 @@ Esta aula produz `outputs/skill-primitive-splitter.md`. Dado um servidor MCP pro
 |-------|----------------------|--------------------------|
 | Resource | "Dados expostos" | Conteúdo endereçável por URI que o host pode ler |
 | URI de Resource | "Ponteiro pra dados" | Identificador com prefixo de esquema (`file://`, `notes://`, etc.) |
-| `resources/subscribe` | "Observar mudanças" | Updates push do servidor a que o cliente optou pra uma URI específica |
+| `resources/subscribe` | "Observar mudanças" | Updates push do servidor a que o cliente optou pra uma URI eespecificaçãoífica |
 | `notifications/resources/updated` | "Resource mudou" | Sinal pro cliente de que um resource assinado tem conteúdo novo |
 | Template de resource | "URI parametrizado" | Padrão de URI com dicas de autocompletar pro seletor do host |
 | Prompt | "Template de slash-command" | Template multi-mensagem nomeado com slots de argumento |
@@ -143,6 +143,6 @@ Esta aula produz `outputs/skill-primitive-splitter.md`. Dado um servidor MCP pro
 
 - [MCP — Concepts: Resources](https://modelcontextprotocol.io/docs/concepts/resources) — URIs de resource, assinaturas e templates
 - [MCP — Concepts: Prompts](https://modelcontextprotocol.io/docs/concepts/prompts) — templates de prompt e integração com slash-commands
-- [MCP — Server resources spec 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/server/resources) — referência completa de mensagens `resources/*`
-- [MCP — Server prompts spec 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/server/prompts) — referência completa de mensagens `prompts/*`
+- [MCP — Server resources especificação 2025-11-25](https://modelcontextprotocol.io/especificaçãoification/2025-11-25/server/resources) — referência completa de mensagens `resources/*`
+- [MCP — Server prompts especificação 2025-11-25](https://modelcontextprotocol.io/especificaçãoification/2025-11-25/server/prompts) — referência completa de mensagens `prompts/*`
 - [MCP — Protocol info site: resources](https://modelcontextprotocol.info/docs/concepts/resources/) — guia da comunidade expandindo a documentação oficial

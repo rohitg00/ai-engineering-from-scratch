@@ -33,7 +33,7 @@ A arquitetura do Janus-Pro separa os dois encoders:
 - Caminho de geração. Imagem de entrada (se condicionando em imagem existente) → tokenizer VQ → IDs de tokens → corpo do transformer.
 - Geração de saída. Tokens de imagem previstos pelo transformer → decoder VQ → pixels.
 
-O corpo do transformer é compartilhado. Tudo acima e abaixo do corpo é específico por tarefa.
+O corpo do transformer é compartilhado. Tudo acima e abaixo do corpo é eespecificaçãoífico por tarefa.
 
 Entradas são desambiguadas pelo formato do prompt: uma tag `<understand>` roteia por SigLIP; `<generate>` roteia por VQ. Ou o roteamento é implícito pela tarefa.
 
@@ -54,7 +54,7 @@ Janus (original, arXiv 2410.13848) introduziu o desacoplamento mas em escala peq
 - 72M pra etapa 2 (unificado) pra cima de 26M.
 - Adicionou 200k amostras de instrução de geração de imagem pra etapa 3.
 
-O resultado: Janus-Pro-7B empata com LLaVA no MMMU (60.3 vs ~58) e supera DALL-E 3 no GenEval (0.80 vs 0.67). Um modelo open, competitivo em ambos os lados do espectro unificado.
+O resultado: Janus-Pro-7B empata com LLaVA no MMMU (60.3 vs ~58) e supera DALL-E 3 no GenEval (0.80 vs 0.67). Um modelo open, competitivo em ambos os lados do eespecificaçãotro unificado.
 
 ### JanusFlow — a variante de fluxo retificado
 
@@ -67,7 +67,7 @@ O corpo do transformer processa uma sequência unificada mas com duas distribui�
 - Pra compreensão: consumir features SigLIP + tokens de texto → emitir texto autoregressivamente.
 - Pra geração: consumir tokens de texto + (tokens VQ de imagem opcionais) → emitir tokens VQ de imagem autoregressivamente.
 
-O corpo não tem pesos específicos por modalidade em cada bloco. É o transformer estilo de texto que você esperaria encontrar dentro de Qwen ou Llama, mais os dois adapters de entrada.
+O corpo não tem pesos eespecificaçãoíficos por modalidade em cada bloco. É o transformer estilo de texto que você esperaria encontrar dentro de Qwen ou Llama, mais os dois adapters de entrada.
 
 Interessantemente, isso significa que o corpo do Janus-Pro poderia ser inicializado a partir de um LLM pré-treinado. Janus-Pro inicializa de DeepSeek-MoE-7B. Essa escolha importa: o LLM contribui com capacidade de raciocínio que modelos unificados do zero lutam pra alcançar.
 
@@ -121,7 +121,7 @@ Esta aula produz `outputs/skill-decoupled-encoder-picker.md`. Dado um produto qu
 | Termo | O que a galera diz | O que realmente significa |
 |-------|-------------------|--------------------------|
 | Codificação desacoplada | "Dois encoders visuais" | Tokenizer ou encoder separado por direção: semântico pra compreensão, reconstrução pra geração |
-| Corpo compartilhado | "Um transformer" | Único transformer processa a saída de qualquer encoder; sem pesos específicos por modalidade |
+| Corpo compartilhado | "Um transformer" | Único transformer processa a saída de qualquer encoder; sem pesos eespecificaçãoíficos por modalidade |
 | SigLIP pra compreensão | "Features semânticas" | Torre de visão da família CLIP que fornece features conceituais ricas, mas reconstrução ruim |
 | VQ pra geração | "Códigos de reconstrução" | Tokens com quantização vetorial que decodificam de volta pra pixels de forma limpa |
 | JanusFlow | "Variante de fluxo retificado" | Janus-Pro com cabeça de geração de fluxo-matching contínuo ao invés de VQ |

@@ -1,9 +1,9 @@
 # Compliance — SOC 2, HIPAA, GDPR, PCI-DSS, EU AI Act, ISO 42001
 
-> Cobertura multi-framework é pré-requisito para deals empresariais em 2026. **EU AI Act**: em vigor desde 1 de agosto de 2024. A maioria dos requisitos de alto risco é aplicada em 2 de agosto de 2026. Multas de até €15M ou 3% do faturamento global anual para obrigações de sistemas de alto risco (Art. 99(4)); até €35M ou 7% para práticas proibidas de AI (Art. 99(3)). Aplica-se globalmente se servindo usuários da UE. **Colorado AI Act**: em vigor em 30 de junho de 2026 (adiado de fevereiro 2026 pelo SB25B-004) — assessments de impacto para sistemas de alto risco, direito de apelar decisões de AI. Virginia similar para crédito/emprego/moradia/educação. **SOC 2 Type II**: requisito B2B de AI de facto (Type II, não Type I, para fintech). **GDPR**: a maior multa documentada específica de AI é €30.5M contra Clearview AI (DPA holandês, Set 2024); Itália aplicou €15M contra OpenAI via Garante em Dez 2024 (posteriormente revertida em recurso em Março 2026). Redação de PII em tempo real em inferência é o padrão defensável; limpeza pós-processamento não basta. **HIPAA**: healthcare vinculada — não pode enviar PHI para serviços de AI externos sem BAA. **PCI-DSS**: cobertura da camada de interação com AI requer configuração + acordos contratuais, não automático. **ISO 42001**: padrão emergente de governança de AI, requisito crescente de procurement ao lado de ISO 27001. Perfil de referência: OpenAI mantém SOC 2 Type 2, ISO/IEC 27001:2022, ISO/IEC 27701:2019, GDPR/CCPA/HIPAA (BAA)/FERPA, PCI-DSS para componentes de pagamento do ChatGPT. Mapeamento cross-framework reduz fadiga de auditoria: controles de acesso mapeiam entre ISO 27001 A.5.15-5.18, GDPR Art. 32, HIPAA §164.312(a).
+> Cobertura multi-framework é pré-requisito para deals empresariais em 2026. **EU AI Act**: em vigor desde 1 de agosto de 2024. A maioria dos requisitos de alto risco é aplicada em 2 de agosto de 2026. Multas de até €15M ou 3% do faturamento global anual para obrigações de sistemas de alto risco (Art. 99(4)); até €35M ou 7% para práticas proibidas de AI (Art. 99(3)). Aplica-se globalmente se servindo usuários da UE. **Colorado AI Act**: em vigor em 30 de junho de 2026 (adiado de fevereiro 2026 pelo SB25B-004) — assessments de impacto para sistemas de alto risco, direito de apelar decisões de AI. Virginia similar para crédito/emprego/moradia/educação. **SOC 2 Type II**: requisito B2B de AI de facto (Type II, não Type I, para fintech). **GDPR**: a maior multa documentada eespecificaçãoífica de AI é €30.5M contra Clearview AI (DPA holandês, Set 2024); Itália aplicou €15M contra OpenAI via Garante em Dez 2024 (posteriormente revertida em recurso em Março 2026). Redação de PII em tempo real em inferência é o padrão defensável; limpeza pós-processamento não basta. **HIPAA**: healthcare vinculada — não pode enviar PHI para serviços de AI externos sem BAA. **PCI-DSS**: cobertura da camada de interação com AI requer configuração + acordos contratuais, não automático. **ISO 42001**: padrão emergente de governança de AI, requisito crescente de procurement ao lado de ISO 27001. Perfil de referência: OpenAI mantém SOC 2 Type 2, ISO/IEC 27001:2022, ISO/IEC 27701:2019, GDPR/CCPA/HIPAA (BAA)/FERPA, PCI-DSS para componentes de pagamento do ChatGPT. Mapeamento cross-framework reduz fadiga de auditoria: controles de acesso mapeiam entre ISO 27001 A.5.15-5.18, GDPR Art. 32, HIPAA §164.312(a).
 
 **Tipo:** Aprender
-**Linguagens:** (Python opcional — compliance é política + processo, não código)
+**Linguagens:** (Python opcional — conformidade é política + processo, não código)
 **Pré-requisitos:** Fase 17 · 25 (Segurança), Fase 17 · 13 (Observabilidade)
 **Tempo:** ~60 minutos
 
@@ -16,15 +16,15 @@
 
 ## O Problema
 
-O procurement de um cliente empresarial pede SOC 2 Type II, GDPR, HIPAA BAA, ISO 27001 e "declaração de compliance do EU AI Act". Seu time tem SOC 2 Type I. Faltam seis meses pro Type II e você não começou os registros do Artigo 30 do GDPR.
+O procurement de um cliente empresarial pede SOC 2 Type II, GDPR, HIPAA BAA, ISO 27001 e "declaração de conformidade do EU AI Act". Seu time tem SOC 2 Type I. Faltam seis meses pro Type II e você não começou os registros do Artigo 30 do GDPR.
 
-Cobertura multi-framework não é um problema de LLM — é um problema de SaaS empresarial, com overlays específicos de LLM. Times de procurement em 2026 querem uma matriz com uma linha por framework e uma coluna por controle, não um PDF.
+Cobertura multi-framework não é um problema de LLM — é um problema de SaaS empresarial, com overlays eespecificaçãoíficos de LLM. Times de procurement em 2026 querem uma matriz com uma linha por framework e uma coluna por controle, não um PDF.
 
 ## O Conceito
 
 ### Os sete frameworks
 
-| Framework | Escopo | Requisito específico de LLM |
+| Framework | Escopo | Requisito eespecificaçãoífico de LLM |
 |-----------|--------|----------------------------|
 | SOC 2 Type II | Baseline B2B SaaS | Controles de processo auditados ao longo de 6-12 meses |
 | HIPAA | Healthcare dos EUA | BAA obrigatório; PHI não pode sair da infra sem acordo assinado |
@@ -53,7 +53,7 @@ Limpeza pós-processamento (mascarar PII depois que a LLM vê) não é postura d
 - Tokenização consistente (abordagem Mesh) preserva semântica.
 - Armazene apenas prompts mascarados + raw com consentimento.
 
-Aplicação recente: €30.5M contra Clearview AI (DPA holandês, Set 2024) é a maior multa documentada específica de AI do GDPR até hoje; €15M contra OpenAI (Garante da Itália, Dez 2024) é a maior multa específica de LLM, embora tenha sido revertida em recurso em Março 2026 e o julgamento permaneça sob revisão adicional. Alegações de pós-processamento falharam em auditorias.
+Aplicação recente: €30.5M contra Clearview AI (DPA holandês, Set 2024) é a maior multa documentada eespecificaçãoífica de AI do GDPR até hoje; €15M contra OpenAI (Garante da Itália, Dez 2024) é a maior multa eespecificaçãoífica de LLM, embora tenha sido revertida em recurso em Março 2026 e o julgamento permaneça sob revisão adicional. Alegações de pós-processamento falharam em auditorias.
 
 ### HIPAA — BAA não é opcional
 
@@ -79,7 +79,7 @@ Uma política de controle de acesso satisfaz controles de múltiplos frameworks:
 | Criptografia em trânsito | ISO 27001 A.8.24, GDPR Art. 32, HIPAA §164.312(e) |
 | Gestão de segredos | ISO 27001 A.8.19, PCI DSS Req. 8, SOC 2 CC6.1 |
 
-Ferramentas de compliance (Drata, Vanta, Secureframe) automatizam esse mapeamento. Vale o custo em escala.
+Ferramentas de conformidade (Drata, Vanta, Secureframe) automatizam esse mapeamento. Vale o custo em escala.
 
 ### ISO 42001 — emergente
 
@@ -93,22 +93,22 @@ OpenAI mantém SOC 2 Type 2, ISO/IEC 27001:2022, ISO/IEC 27701:2019, GDPR/CCPA/H
 
 - Multas do EU AI Act: até €15M / 3% (obrigações de alto risco, Art. 99(4)); até €35M / 7% (práticas proibidas, Art. 99(3)).
 - Aplicação de alto risco do EU AI Act: 2 de agosto de 2026.
-- Maior multa documentada específica de AI do GDPR: €30.5M, Clearview AI (DPA holandês, Set 2024).
-- Maior multa específica de LLM do GDPR: €15M, OpenAI (Garante da Itália, Dez 2024; revertida em recurso Março 2026).
+- Maior multa documentada eespecificaçãoífica de AI do GDPR: €30.5M, Clearview AI (DPA holandês, Set 2024).
+- Maior multa eespecificaçãoífica de LLM do GDPR: €15M, OpenAI (Garante da Itália, Dez 2024; revertida em recurso Março 2026).
 - Janela do SOC 2 Type II: 6-12 meses de controles operando.
 - Data de efetivação do Colorado AI Act: 30 de junho de 2026 (adiado de fevereiro 2026 pelo SB25B-004).
 
 ## Use
 
-`code/main.py` é uma planilha de mapeamento de compliance em Python — dada uma controle, lista frameworks que satisfaz.
+`code/main.py` é uma planilha de mapeamento de conformidade em Python — dada uma controle, lista frameworks que satisfaz.
 
 ## Entregue
 
-Esta aula produz `outputs/skill-compliance-matrix.md`. Dado segmento de cliente e geografia, especifica frameworks e controles necessários.
+Esta aula produz `outputs/skill-conformidade-matrix.md`. Dado segmento de cliente e geografia, eespecificaçãoifica frameworks e controles necessários.
 
 ## Exercícios
 
-1. Seu primeiro cliente empresarial requer SOC 2 Type II, HIPAA BAA, declaração do EU AI Act. Qual é a postura de compliance mínimo viável pra fechar o deal?
+1. Seu primeiro cliente empresarial requer SOC 2 Type II, HIPAA BAA, declaração do EU AI Act. Qual é a postura de conformidade mínimo viável pra fechar o deal?
 2. Classifique três produtos LLM hipotéticos nos tiers de risco do EU AI Act. O que muda no alto risco?
 3. Você acidentalmente enviou PHI para um provedor sem BAA. Perpassa a resposta ao incidente.
 4. Argumente se ISO 42001 é "necessário em 2026" para um vendor de AI de médio porte.
@@ -130,9 +130,9 @@ Esta aula produz `outputs/skill-compliance-matrix.md`. Dado segmento de cliente 
 
 ## Leitura Complementar
 
-- [OpenAI Security and Privacy](https://openai.com/security-and-privacy/) — perfil de compliance de referência.
-- [GuardionAI — LLM Compliance 2026: ISO 42001, EU AI Act, SOC 2, GDPR](https://guardion.ai/blog/llm-compliance-guide-iso-42001-eu-ai-act-soc2-gdpr-2026)
-- [Dsalta — SOC 2 Type 2 Audit Guide 2026: 10 AI Controls](https://www.dsalta.com/resources/ai-compliance/soc-2-type-2-audit-guide-2026-10-ai-powered-controls-every-saas-team-needs)
+- [OpenAI Security and Privacy](https://openai.com/security-and-privacy/) — perfil de conformidade de referência.
+- [GuardionAI — LLM Compliance 2026: ISO 42001, EU AI Act, SOC 2, GDPR](https://guardion.ai/blog/llm-conformidade-guide-iso-42001-eu-ai-act-soc2-gdpr-2026)
+- [Dsalta — SOC 2 Type 2 Audit Guide 2026: 10 AI Controls](https://www.dsalta.com/resources/ai-conformidade/soc-2-type-2-audit-guide-2026-10-ai-powered-controls-every-saas-team-needs)
 - [EU AI Act official text](https://eur-lex.europa.eu/eli/reg/2024/1689/oj) — fonte primária.
 - [Colorado AI Act](https://leg.colorado.gov/bills/sb24-205) — fonte primária.
 - [ISO/IEC 42001:2023](https://www.iso.org/standard/81230.html) — padrão de sistema de gestão de AI.

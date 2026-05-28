@@ -4,7 +4,7 @@
 
 **Tipo:** Construir
 **Idiomas:** Python
-**Pré-requisitos:** Fase 6 · 02 (Espectrogramas e Mel), Fase 5 · 09 (Seq2Seq), Fase 7 · 05 (Transformer Completo)
+**Pré-requisitos:** Fase 6 · 02 (Eespecificaçãotrogramas e Mel), Fase 5 · 09 (Seq2Seq), Fase 7 · 05 (Transformer Completo)
 **Tempo:** ~75 minutos
 
 ## O Problema
@@ -14,10 +14,10 @@ Você tem uma string: "Por favor, me lembre de regar as plantas às 18h." Precis
 Pipelines TTS modernas parecem isso:
 
 1. **Frontend de texto.** Normalizar texto (datas, números, emails), converter para fonemas ou tokens subword, prever características de prosódia.
-2. **Modelo acústico.** Texto → espectrograma mel. Tacotron 2 (2017), FastSpeech 2 (2020), VITS (2021), F5-TTS (2024), Kokoro (2024).
+2. **Modelo acústico.** Texto → eespecificaçãotrograma mel. Tacotron 2 (2017), FastSpeech 2 (2020), VITS (2021), F5-TTS (2024), Kokoro (2024).
 3. **Vocoder.** Mel → forma de onda. WaveNet (2016), WaveRNN, HiFi-GAN (2020), BigVGAN (2022), vocoders de codec neural em 2024+.
 
-Em 2026 a divisão acústico + vocoder se blura com modelos end-to-end de diffusão e flow-matching. Mas o modelo mental de três partes ainda vale para debug.
+Em 2026 a divisão acústico + vocoder se blura com modelos de ponta a ponta de diffusão e flow-matching. Mas o modelo mental de três partes ainda vale para debug.
 
 ## O Conceito
 
@@ -27,9 +27,9 @@ Em 2026 a divisão acústico + vocoder se blura com modelos end-to-end de diffus
 
 **FastSpeech 2 (2020).** Não autoregressivo. Predictor de duração quantos frames mel cada fonema recebe. 1 passada, 10× mais rápido que Tacotron. Perde um pouco de naturalidade (alinhamento monotônico) mas roda em todo lugar.
 
-**VITS (2021).** Treina encoder + duração baseada em flow + vocoder HiFi-GAN end-to-end com inferência variacional. Alta qualidade, modelo único. Dominante em TTS open-source 2022–2024. Variantes: YourTTS (multi-falante zero-shot), XTTS v2 (2024, Coqui).
+**VITS (2021).** Treina encoder + duração baseada em flow + vocoder HiFi-GAN de ponta a ponta com inferência variacional. Alta qualidade, modelo único. Dominante em TTS open-source 2022–2024. Variantes: YourTTS (multi-falante zero-shot), XTTS v2 (2024, Coqui).
 
-**F5-TTS (2024).** Transformer de diffusão sobre flow-matching. Prosódia natural, clonagem de voz zero-shot com 5 segundos de áudio de referência. Topo dos leaderboards de TTS open-source em 2026. 335M params.
+**F5-TTS (2024).** Transformer de diffusão sobre flow-matching. Prosódia natural, clonagem de voz zero-shot com 5 segundos de áudio de referência. Topo dos rankings de TTS open-source em 2026. 335M params.
 
 **Kokoro (2024).** Pequeno (82M), rodável em CPU, melhor TTS em inglês para uso em tempo real. Vocabulário fechado, apenas inglês, apache-2.0.
 
@@ -45,7 +45,7 @@ Em 2026 a divisão acústico + vocoder se blura com modelos end-to-end de diffus
 | 2022 | BigVGAN | 50× tempo real | generaliza entre falantes/idiomas |
 | 2024 | SNAC, DAC (codecs neurais) | integrado com modelos AR | tokens discretos, eficiente em bits |
 
-Em 2026 a maioria dos modelos "TTS" são end-to-end de texto a forma de onda; o espectrograma mel é uma representação interna.
+Em 2026 a maioria dos modelos "TTS" são de ponta a ponta de texto a forma de onda; o eespecificaçãotrograma mel é uma representação interna.
 
 ### Avaliação
 
@@ -114,7 +114,7 @@ class HiFiGAN(nn.Module):
         return self.blocks(mel)  # -> forma de onda
 ```
 
-Treino: adversarial (discriminador em janelas curtas) + perda de reconstrução de espectrograma mel + perda de matching de características. Comoditizado — use checkpoints pré-treinados do repo `hifi-gan` ou nvidia-NeMo.
+Treino: adversarial (discriminador em janelas curtas) + perda de reconstrução de eespecificaçãotrograma mel + perda de matching de características. Comoditizado — use checkpoints pré-treinados do repo `hifi-gan` ou nvidia-NeMo.
 
 ### Passo 5: a pipeline completa (pseudocódigo)
 
@@ -144,7 +144,7 @@ Líder open-source em 2026: **F5-TTS para qualidade, Kokoro para eficiência**. 
 ## Armadilhas
 
 - **Sem normalizador de texto.** "Dr. Smith" é lido como "Doutor" ou "Drive"? "2026" como "vinte e vinte e seis" ou "dois zero dois seis"? Normalize ANTES do fonemizador.
-- **OOV em substantivos próprios.** "Ghumare" → "ghyu-mair"? Tenha um modelo fallback de grafema-para-fonema para tokens desconhecidos.
+- **OOV em substantivos próprios.** "Ghumare" → "ghyu-mair"? Tenha um modelo reserva de grafema-para-fonema para tokens desconhecidos.
 - **Clipping.** Saída do vocoder raramente clipping, mas mismatch de escala mel na inferência pode ultrapassar ±1,0. Sempre `np.clip(wav, -1, 1)`.
 - **Incompatibilidade de taxa de amostragem.** Kokoro produz 24 kHz; sua pipeline downstream espera 16 kHz → resample ou terá aliasing.
 
@@ -164,7 +164,7 @@ Salve como `outputs/skill-tts-designer.md`. Projete uma pipeline TTS para uma vo
 |-------|-------------------|---------------------------|
 | Fonema | Unidade de som | Classe de som abstrata; 39 em inglês (ARPABet). |
 | Predictor de duração | Quanto tempo cada fonema dura | Saída de modelo não-AR; frames inteiros por fonema. |
-| Vocoder | Mel → forma de onda | Rede neural que mapeia mel-spec para amostras brutas. |
+| Vocoder | Mel → forma de onda | Rede neural que mapeia mel-especificação para amostras brutas. |
 | HiFi-GAN | Vocoder padrão | Baseado em GAN; dominante 2020–2024. |
 | MOS | Qualidade subjetiva | Pontuação média de opinião 1–5 de avaliadores humanos. |
 | SECS | Métrica de clonagem | Cosseno entre embeddings do falante alvo e saída. |
@@ -174,7 +174,7 @@ Salve como `outputs/skill-tts-designer.md`. Projete uma pipeline TTS para uma vo
 ## Leitura Adicional
 
 - [Shen et al. (2017). Tacotron 2](https://arxiv.org/abs/1712.05884) — o baseline seq2seq.
-- [Kim, Kong, Son (2021). VITS](https://arxiv.org/abs/2106.06103) — end-to-end baseado em flow.
+- [Kim, Kong, Son (2021). VITS](https://arxiv.org/abs/2106.06103) — de ponta a ponta baseado em flow.
 - [Chen et al. (2024). F5-TTS](https://arxiv.org/abs/2410.06885) — SOTA open-source atual.
 - [Kong, Kim, Bae (2020). HiFi-GAN](https://arxiv.org/abs/2010.05646) — o vocoder que ainda roda em 2026.
 - [Kokoro-82M no HuggingFace](https://huggingface.co/hexgrad/Kokoro-82M) — TTS amigável a CPU de 2024.

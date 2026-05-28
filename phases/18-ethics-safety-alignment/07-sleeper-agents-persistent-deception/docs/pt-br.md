@@ -74,7 +74,7 @@ Essa lição produz `outputs/skill-sleeper-audit.md`. Dado um relatório de trei
 
 1. Execute `code/main.py`. Meça a acurácia do red team e a acurácia do gatilho original após 0, 10, 50 e 200 passos de fine-tuning adversarial. Plote ambas as curvas.
 
-2. Modifique o gatilho em `code/main.py` para ser uma mudança de distribuição (por exemplo, entradas onde uma feature específica está acima de um limiar) em vez de uma string literal. O treinamento adversarial remove a backdoor? Por que essa versão está mais perto de um cenário realista de implantação?
+2. Modifique o gatilho em `code/main.py` para ser uma mudança de distribuição (por exemplo, entradas onde uma funcionalidade eespecificaçãoífica está acima de um limiar) em vez de uma string literal. O treinamento adversarial remove a backdoor? Por que essa versão está mais perto de um cenário realista de implantação?
 
 3. Leia Hubinger et al. (2024) Figura 7 (persistência por cadeia de pensamento). Resuma em um parágrafo por que backdoors treinadas com CoT são mais difíceis de remover mesmo após destilação de CoT.
 
@@ -86,7 +86,7 @@ Essa lição produz `outputs/skill-sleeper-audit.md`. Dado um relatório de trei
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|------------------------|--------------------------|
-| Backdoor | "gatilho oculto" | Padrão de entrada que induz um comportamento pré-especificado fora da distribuição |
+| Backdoor | "gatilho oculto" | Padrão de entrada que induz um comportamento pré-eespecificaçãoificado fora da distribuição |
 | Organismo modelo | "sandbox de engano" | Modelo deliberadamente construído usado para estudar um modo de falha sob condições controladas |
 | Persistência do gatilho | "backdoor sobrevive" | O gatilho ainda induz a falha após o método de treinamento que deveria removê-lo |
 | CoT destilado | "compressão de raciocínio" | Treinar um estudante para emitir a conclusão do professor sem a cadeia de pensamento do professor |
@@ -97,6 +97,6 @@ Essa lição produz `outputs/skill-sleeper-audit.md`. Dado um relatório de trei
 ## Leituras Adicionais
 
 - [Hubinger et al. — Sleeper Agents (arXiv:2401.05566)](https://arxiv.org/abs/2401.05566) — o paper canônico de demonstração de 2024
-- [MacDiarmid et al. — Simple probes can catch sleeper agents (2024 Anthropic writeup)](https://www.anthropic.com/research/probes-catch-sleeper-agents) — acompanhamento com probe de fluxo residual
+- [MacDiarmid et al. — Simple probes can catch sleeper agentes (2024 Anthropic writeup)](https://www.anthropic.com/research/probes-catch-sleeper-agents) — acompanhamento com probe de fluxo residual
 - [Hubinger et al. — Risks from Learned Optimization (arXiv:1906.01820)](https://arxiv.org/abs/1906.01820) — o predecessor teórico da Lição 6
 - [Carlini et al. — Poisoning Web-Scale Training Datasets is Practical (arXiv:2302.10149)](https://arxiv.org/abs/2302.10149) — como uma backdoor poderia ser implantada sem construção deliberada

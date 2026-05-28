@@ -114,7 +114,7 @@ Esta aula produz `outputs/skill-llm-security-plan.md`. Dado escopo regulatório 
 ## Exercícios
 
 1. Execute `code/main.py`. Envie dois prompts referenciando o mesmo CPF. Confirme que ambos recebem o mesmo placeholder.
-2. Projet a política de egress de rede para um deploy vLLM-on-EKS chamando OpenAI + Anthropic + Weaviate.
+2. Projet a política de egress de rede para um implantação vLLM-on-EKS chamando OpenAI + Anthropic + Weaviate.
 3. Você descobre uma chave no histórico do git (2 anos de idade). Qual é a resposta correta — rotacionar a chave, limpar o histórico, ou os dois? Justifique.
 4. Seu log de auditoria cresce 10 GB/dia. Projet níveis de retenção (quente 30d, morno 12mo, frio 6anos).
 5. Argumente se a tokenização reversa (substituir valores reais de volta na resposta da LLM) vale a complexidade versus manter placeholders visíveis.
@@ -132,7 +132,7 @@ Esta aula produz `outputs/skill-llm-security-plan.md`. Dado escopo regulatório 
 | Tokenização consistente | "placeholders estáveis" | Mesmo valor → mesmo token toda vez |
 | Abordagem Mesh | "tokenização Mesh" | Padrão de tokenização que preserva semântica |
 | Whitelist de egress | "allowlist de saída" | Só domínios permitidos alcançáveis |
-| Log de auditoria | "histórico imutável" | Registro append-only para compliance |
+| Log de auditoria | "histórico imutável" | Registro append-only para conformidade |
 
 ## Leitura Complementar
 

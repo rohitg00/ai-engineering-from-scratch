@@ -1,6 +1,6 @@
 # Observabilidade de Agent: Langfuse, Phoenix, Opik
 
-> Três plataformas de observabilidade de agentes open-source dominam 2026. Langfuse (MIT) — 6M+ installs/mês, tracing + gestão de prompts + evals + replay de sessão. Arize Phoenix (Elastic 2.0) — evals profundas específicas pra agentes, relevância de RAG, auto-instrumentação OpenInference. Comet Opik (Apache 2.0) — otimização automática de prompts, guardrails, detecção de alucinação por LLM-judge.
+> Três plataformas de observabilidade de agentes open-source dominam 2026. Langfuse (MIT) — 6M+ installs/mês, tracing + gestão de prompts + evals + replay de sessão. Arize Phoenix (Elastic 2.0) — evals profundas eespecificaçãoíficas pra agentes, relevância de RAG, auto-instrumentação OpenInference. Comet Opik (Apache 2.0) — otimização automática de prompts, guardrails, detecção de alucinação por LLM-judge.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib)
@@ -29,11 +29,11 @@ OTel GenAI (Aula 23) te dá o schema. Você ainda precisa da plataforma que inge
 
 ### Arize Phoenix (Elastic License 2.0)
 
-- Eval específicas pra agentes mais profundas: clustering de traces, detecção de anomalias, relevância de recuperação pra RAG.
+- Eval eespecificaçãoíficas pra agentes mais profundas: clustering de traces, detecção de anomalias, relevância de recuperação pra RAG.
 - Auto-instrumentação OpenInference nativa.
 - Complementa o Arize AX gerenciado pra produção.
-- Sem versionamento de prompts — posicionado como ferramenta de drift/regressão comportamental ao lado de plataformas mais amplas.
-- Mais forte pra: relevância de RAG, drift comportamental, detecção de anomalias.
+- Sem versionamento de prompts — posicionado como ferramenta de deriva/regressão comportamental ao lado de plataformas mais amplas.
+- Mais forte pra: relevância de RAG, deriva comportamental, detecção de anomalias.
 
 ### Comet Opik (Apache 2.0)
 
@@ -52,7 +52,7 @@ Segundo Maxim (análise de campo 2026): 89% das organizações têm observabilid
 | Necessidade | Escolha |
 |-------------|---------|
 | Tudo-em-um com gestão de prompts | Langfuse |
-| Eval profunda de RAG + drift | Phoenix |
+| Eval profunda de RAG + deriva | Phoenix |
 | Otimização automática + guardrails | Opik |
 | Licenciamento aberto, sem ELv2 | Langfuse (MIT) ou Opik (Apache 2.0) |
 | Integração Datadog / New Relic | Qualquer — todos exportam OTel |
@@ -60,7 +60,7 @@ Segundo Maxim (análise de campo 2026): 89% das organizações têm observabilid
 ### Onde esse pattern dá errado
 
 - **Sem estratégia de eval.** Tracing sem avaliação é só logging caro.
-- **LLM-judge self-rolled sem grounding.** Padrão CRITIC (Aula 05) se aplica — juízes precisam de tools externas pra verificação factual.
+- **LLM-judge self-rolled sem grounding.** Padrão CRITIC (Aula 05) se aplica — juízes precisam de ferramentas externas pra verificação factual.
 - **Versões de prompts não vinculadas a traces.** Quando a prod regredir, você não consegue bissectar até o prompt que causou.
 
 ## Construa
@@ -107,13 +107,13 @@ Saída: scores de eval por sessão e categorização de falhas correspondente ao
 | Gestão de prompts | "CMS de prompts" | Prompts versionados vinculados a traces |
 | LLM-as-judge | "Eval automática" | LLM separado que pontua output do agente contra uma rubrica |
 | Replay de sessão | "Playback de trace" | Passo a passo de runs passadas pra debug |
-| Relevância de RAG | "Qualidade da recuperação" | O contexto recuperado combina com a query |
-| Clustering de traces | "Agrupamento comportamental" | Agrupa runs similares pra detecção de drift |
+| Relevância de RAG | "Qualidade da recuperação" | O contexto recuperado combina com a consulta |
+| Clustering de traces | "Agrupamento comportamental" | Agrupa runs similares pra detecção de deriva |
 | Imposição de guardrail | "Política no log" | Checagens de PII/toxicidade/escopo no conteúdo logado |
 
 ## Leitura Complementar
 
 - [Langfuse docs](https://langfuse.com/) — tracing, evals, gestão de prompts
-- [Arize Phoenix docs](https://docs.arize.com/phoenix) — auto-instrumentação, drift
+- [Arize Phoenix docs](https://docs.arize.com/phoenix) — auto-instrumentação, deriva
 - [Comet Opik](https://www.comet.com/site/products/opik/) — otimização + guardrails
-- [OpenTelemetry GenAI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/) — o schema que todos três consomem
+- [OpenTelemetry GenAI semantic conventions](https://opentelemetry.io/docs/especificaçãos/semconv/gen-ai/) — o schema que todos três consomem

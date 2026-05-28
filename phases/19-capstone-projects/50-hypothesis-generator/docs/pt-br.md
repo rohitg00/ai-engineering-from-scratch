@@ -1,6 +1,6 @@
 # Aula 50: Gerador de Hipoteses
 
-> Um agent de pesquisa que faz a mesma pergunta duas vezes esta desperdicando tokens. O truque e forcar cada rascunho a pousar em algum lugar novo.
+> Um agente de pesquisa que faz a mesma pergunta duas vezes esta desperdicando tokens. O truque e forcar cada rascunho a pousar em algum lugar novo.
 
 **Tipo:** Build
 **Linguagens:** Python
@@ -11,7 +11,7 @@
 - Dirigir um sampler a partir de um prompt semente e transformar seus outputs em registros tipados de hipotese.
 - Aumentar a temperatura do sampler a cada passagem para que o proxo rascunho se afaste mais do anterior.
 - Filtrar quase-duplicados com um pequeno modelo de embedding e um limiar de distancia coseno.
-- Ranquear os sobreviventes com uma funcao de pontuacao que combina novidade, especificidade, e testabilidade.
+- Ranquear os sobreviventes com uma funcao de pontuacao que combina novidade, eespecificaçãoificidade, e testabilidade.
 - Manter todos os passos deterministicos para que a mesma semente sempre produza a mesma fila.
 
 ## Por que gerar, depois filtrar
@@ -69,17 +69,17 @@ O agendamento padrao e seis passagens de `0.2` a `1.2`. Seis sao suficientes par
 
 Apos cada rascunho ser parseado, o geraador embute o texto e compara com cada hipotese aceita. O embedding e uma sacola de tokens com hash, normalizada para comprimento unitario. A distancia coseno entre dois vetores unitarios e `1 - dot(a, b)`. Um rascunho passa se sua distancia minima para qualquer sobrevivente anterior estiver acima de `novelty_threshold`. Padrao e `0.25`.
 
-O embedding com hash nao e sofisticado. E deterministico, tem zero dependencias, e suficiente para pegar o caso obvio: dois rascunhos que compartilham a maioria de seus substantivos. Um deploy de producao trocaria por um pequeno modelo de frase. A interface continua a mesma.
+O embedding com hash nao e sofisticado. E deterministico, tem zero dependencias, e suficiente para pegar o caso obvio: dois rascunhos que compartilham a maioria de seus substantivos. Um implantação de producao trocaria por um pequeno modelo de frase. A interface continua a mesma.
 
 ## Pontuacao de ranqueamento
 
 ```text
 rank_score = w_novelty * novelty_score
-           + w_specificity * specificity_score
+           + w_especificaçãoificity * especificaçãoificity_score
            + w_testability * testability_score
 ```
 
-Tres sub-pontuacoes. `novelty_score` e a distancia minima de embedding dos sobreviventes anteriores. `specificity_score` e a contagem de variaveis concretas na hipotese dividida por uma contagem alvo. `testability_score` e um se a hipotese especifica tanto uma metrica quanto uma baseline, metade se tem apenas uma metrica, zero caso contrario.
+Tres sub-pontuacoes. `novelty_score` e a distancia minima de embedding dos sobreviventes anteriores. `especificaçãoificity_score` e a contagem de variaveis concretas na hipotese dividida por uma contagem alvo. `testability_score` e um se a hipotese eespecificaçãoifica tanto uma metrica quanto uma baseline, metade se tem apenas uma metrica, zero caso contrario.
 
 Pesos padrao sao `0.4`, `0.3`, `0.3`. Os pesos vivem na config do gerador para que uma aula downstream possa muda-los sem bifurcar o codigo.
 
@@ -91,9 +91,9 @@ class MockLLM:
         ...
 ```
 
-O sampler e deterministico dada uma triplet `(prompt, temperature, seed)`. O mock mantem uma tabela de respostas programadas indexada por `(prompt_signature, temperature_bucket)`. Se a tabela nao tem entrada para uma chave, o sampler retorna um fallback que falha no parser. O caminho de fallback e exercitado por um dos testes.
+O sampler e deterministico dada uma triplet `(prompt, temperature, seed)`. O mock mantem uma tabela de respostas programadas indexada por `(prompt_signature, temperature_bucket)`. Se a tabela nao tem entrada para uma chave, o sampler retorna um reserva que falha no parser. O caminho de reserva e exercitado por um dos testes.
 
-A seed e misturada na resposta para que o mesmo par `(prompt, temperature)` com seeds diferentes produza rascunhos diferentes. Nos testes fixamos a seed para manter resultados reproduziveis. Em um deploy real a seed viria de um relogio de sistema ou um contador.
+A seed e misturada na resposta para que o mesmo par `(prompt, temperature)` com seeds diferentes produza rascunhos diferentes. Nos testes fixamos a seed para manter resultados reproduziveis. Em um implantação real a seed viria de um relogio de sistema ou um contador.
 
 ## Fila de saida
 

@@ -1,6 +1,6 @@
 # Visão Qualquer Resolução: Patch-n'-Pack e NaFlex
 
-> Imagens reais não são quadrados de 224x224. Um cupom fiscal é 9:16, um gráfico é 16:9, um exame médico pode ser 4096x4096, um screenshot de celular é 9:19.5. A resposta dos VLMs pré-2024 — redimensionar tudo pra um quadrado fixo — jogava fora o sinal que faz OCR, entendimento de documentos e parsing de cenas de alta resolução funcionarem. NaViT (Google, 2023) mostrou que você podia empacotar patches de resolução variável num batch único de transformer com máscara em bloco diagonal. M-RoPE do Qwen2-VL (2024) eliminou tabelas posicionais absolutas completamente. AnyRes do LLaVA-NeXT dividiu imagens de alta resolução em base + sub-imagens. NaFlex do SigLIP 2 (2025) é agora o encoder padrão pra VLMs abertos que querem um único checkpoint servindo todas as proporções de aspecto. Essa lição implementa patch-n'-pack de ponta a ponta.
+> Imagens reais não são quadrados de 224x224. Um cupom fiscal é 9:16, um gráfico é 16:9, um exame médico pode ser 4096x4096, um screenshot de celular é 9:19.5. A resposta dos VLMs pré-2024 — redimensionar tudo pra um quadrado fixo — jogava fora o sinal que faz OCR, entendimento de documentos e parsing de cenas de alta resolução funcionarem. NaViT (Google, 2023) mostrou que você podia empacotar patches de resolução variável num batch único de transformer com máscara em bloco diagonal. M-RoPE do Qwen2-VL (2024) eliminou tabelas posicionais absolutas completamente. AnyRes do LLaVA-NeXT dividiu imagens de alta resolução em base + sub-imagens. NaFlex do SigLIP 2 (2025) é agora o encoder padrão pra VLMs abertos que querem um único checkpoint servindo todas as proporções de aespecificaçãoto. Essa lição implementa patch-n'-pack de ponta a ponta.
 
 **Tipo:** Construção
 **Linguagens:** Python (stdlib, empacotador de patches + máscara em bloco diagonal)
@@ -59,7 +59,7 @@ AnyRes é o caminho escolhido quando seu encoder está congelado e só suporta u
 
 ### M-RoPE (Qwen2-VL)
 
-Qwen2-VL introduziu Embedding Posicional Rotacional Multimodal. Em vez das posições fracionárias do NaViT ou do mosaico-e-thumbnail do AnyRes, cada patch carrega uma posição 3D (temporal, altura, largura). As rotações de query/key lidam com H, W e comprimento temporal arbitrários.
+Qwen2-VL introduziu Embedding Posicional Rotacional Multimodal. Em vez das posições fracionárias do NaViT ou do mosaico-e-thumbnail do AnyRes, cada patch carrega uma posição 3D (temporal, altura, largura). As rotações de consulta/key lidam com H, W e comprimento temporal arbitrários.
 
 M-RoPE entrega resolução dinâmica nativa sem retreino. Na inferência, você alimenta qualquer imagem HxW, o patch embedder produz tokens H/14 x W/14, cada token recebe sua posição (t=0, r=row, c=col), RoPE rotaciona a attention com as frequências certas, pronto. Qwen2.5-VL e Qwen3-VL continuam isso. V2PE do InternVL3 é a mesma ideia com encoding variável por modalidade.
 

@@ -21,7 +21,7 @@ GPT-5 custa $5 por milhão de tokens de entrada e $15 por milhão de saída. Cla
 A matemática que mata startups:
 - 10.000 usuários ativos diários
 - 10 queries por usuário por dia
-- 1.000 tokens de entrada por query
+- 1.000 tokens de entrada por consulta
 - 500 tokens de saída por resposta
 
 **Custo diário de entrada:** $250/dia
@@ -83,12 +83,12 @@ class SemanticCache:
         self.hits = 0
         self.misses = 0
 
-    def get(self, query):
-        query_emb = simple_embed(query)
+    def get(self, consulta):
+        consulta_emb = simple_embed(consulta)
         best_match = None
         best_sim = 0.0
         for entry in self.entries:
-            sim = cosine_similarity(query_emb, entry["embedding"])
+            sim = cosine_similarity(consulta_emb, entry["embedding"])
             if sim > best_sim:
                 best_sim = sim
                 best_match = entry
@@ -98,12 +98,12 @@ class SemanticCache:
         self.misses += 1
         return None
 
-    def put(self, query, response):
+    def put(self, consulta, response):
         if len(self.entries) >= self.max_size:
             self.entries.pop(0)
         self.entries.append({
-            "query": query,
-            "embedding": simple_embed(query),
+            "consulta": consulta,
+            "embedding": simple_embed(consulta),
             "response": response,
         })
 ```
@@ -114,16 +114,16 @@ class SemanticCache:
 SIMPLE_KEYWORDS = ["que horas", "endereço", "telefone", "preço", "olá", "obrigado"]
 COMPLEX_KEYWORDS = ["analisar", "comparar", "explicar por quê", "escrever código", "debugar"]
 
-def classify_complexity(query):
-    q = query.lower()
+def classify_complexity(consulta):
+    q = consulta.lower()
     if len(q.split()) <= 5 or any(kw in q for kw in SIMPLE_KEYWORDS):
         return "simple"
     if any(kw in q for kw in COMPLEX_KEYWORDS):
         return "complex"
     return "medium"
 
-def route_model(query):
-    complexity = classify_complexity(query)
+def route_model(consulta):
+    complexity = classify_complexity(consulta)
     routing = {
         "simple": "gpt-4o-mini",
         "medium": "claude-sonnet-4",
@@ -197,14 +197,14 @@ Uma aplicação RAG aplicando camadas 1-5 tipicamente reduz custos de $22.500/m�
 # client = OpenAI()
 #
 # requests = []
-# for i, query in enumerate(queries):
+# for i, consulta in enumerate(queries):
 #     requests.append({
 #         "custom_id": f"request-{i}",
 #         "method": "POST",
 #         "url": "/v1/chat/completions",
 #         "body": {
 #             "model": "gpt-4o-mini",
-#             "messages": [{"role": "user", "content": query}],
+#             "messages": [{"role": "user", "content": consulta}],
 #         },
 #     })
 #
@@ -257,7 +257,7 @@ Uma aplicação RAG aplicando camadas 1-5 tipicamente reduz custos de $22.500/m�
 | Termo | O que o pessoal diz | O que realmente significa |
 |-------|--------------------|-----------------------|
 | Prompt caching | "Cache o system prompt" | Cache de nível de provedor com desconto em prefixos repetidos |
-| Semantic caching | "Cache inteligente" | Embedding da query e retorno de resposta cacheada por similaridade |
+| Semantic caching | "Cache inteligente" | Embedding da consulta e retorno de resposta cacheada por similaridade |
 | Exact caching | "Cache por hash" | Hash do prompt completo e retorno para entradas idênticas |
 | Token bucket | "Rate limiter" | Algoritmo com balde de N tokens que recarrega a R tokens/segundo |
 | Model routing | "Roteamento econômico" | Classificador que manda queries simples para modelos baratos |

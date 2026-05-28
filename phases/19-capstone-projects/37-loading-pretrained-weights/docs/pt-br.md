@@ -9,7 +9,7 @@
 
 ## Objetivos de Aprendizado
 
-- Ler um arquivo safetensors com a biblioteca Python `safetensors` e inspecionar nomes e formatos dos tensores.
+- Ler um arquivo safetensors com a biblioteca Python `safetensors` e inespecificaçãoionar nomes e formatos dos tensores.
 - Mapear cada nome de parâmetro pré-treinado para um parâmetro dentro do modelo GPT da lição 35.
 - Lidar com as duas convenções de nomes que diferem entre os pesos GPT-2 publicados e o modelo desta trilha: `wte/wpe/h.N.attn.c_attn/c_proj` e `mlp.c_fc/c_proj` versus os nomes locais `tok_embed/pos_embed/blocks.N.attn.qkv/out_proj` e `mlp.fc1/fc2`.
 - Detectar e recusar um incompatibilidade de formato com um erro claro antes que qualquer atribuição de peso aconteça.

@@ -48,8 +48,8 @@ onde `tau` é uma temperatura aprendida (CLIP inicializa com 0.07; aprendida em 
 CLIP usa uma entropia cruzada simétrica sobre linhas e colunas:
 
 ```
-loss_i2t = CE(S, labels=identity)     # cada imagem positiva é sua própria legenda
-loss_t2i = CE(S^T, labels=identity)   # cada legenda positiva é sua própria imagem
+loss_i2t = CE(S, rótulos=identity)     # cada imagem positiva é sua própria legenda
+loss_t2i = CE(S^T, rótulos=identity)   # cada legenda positiva é sua própria imagem
 loss = (loss_i2t + loss_t2i) / 2
 ```
 
@@ -95,7 +95,7 @@ SigLIP 2 (2025) adiciona:
 - Multilíngue: treinado em 100+ idiomas onde CLIP era só inglês.
 - Escala de 1B parâmetros onde CLIP chegou no máximo em 400M.
 
-Em VLMs abertos de 2026, SigLIP 2 SO400m/14 é a torre de visão padrão. CLIP continua sendo o padrão pra recuperação pura imagem-texto onde a distribuição de treino LAION-2B específica combina com seu padrão de consulta.
+Em VLMs abertos de 2026, SigLIP 2 SO400m/14 é a torre de visão padrão. CLIP continua sendo o padrão pra recuperação pura imagem-texto onde a distribuição de treino LAION-2B eespecificaçãoífica combina com seu padrão de consulta.
 
 ### ALIGN, BASIC, OpenCLIP, EVA-CLIP
 
@@ -130,7 +130,7 @@ Essa lição produz `outputs/skill-clip-zero-shot.md`. Dado um conjunto de image
 
 4. Calcule o custo de comunicação do InfoNCE com softmax vs sigmoid pareado pra uma execução com 512 GPUs a batch 32k. Qual escala como O(N), qual como O(N^2)? Cite Seção 4 do SigLIP.
 
-5. Leia o artigo de leis de escala do OpenCLIP (arXiv:2212.07143, Cherti et al.). Reproduza a conclusão deles pra escalamendo de dados a partir das figuras: com tamanho fixo de modelo, qual é a relação log-linear entre acurácia zero-shot no ImageNet e tamanho dos dados de treino?
+5. Leia o artigo de leis de escala do OpenCLIP (arXiv:2212.07143, Cherti et al.). Reproduza a conclusão deles pra escalonamento de dados a partir das figuras: com tamanho fixo de modelo, qual é a relação log-linear entre acurácia zero-shot no ImageNet e tamanho dos dados de treino?
 
 ## Termos Chave
 

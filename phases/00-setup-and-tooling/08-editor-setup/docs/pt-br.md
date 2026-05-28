@@ -28,7 +28,7 @@ Uma configuração de editor para engenharia de IA precisa de cinco coisas:
 graph TD
     L5["5. Desenvolvimento Remoto<br/>SSH em caixas de GPU, VMs na nuvem"] --> L4
     L4["4. Integração com Terminal<br/>Rodar scripts, debugar, monitorar GPU"] --> L3
-    L3["3. Configurações Específicas de IA<br/>Auto-format, verificação de tipos, réguas"] --> L2
+    L3["3. Configurações Eespecificaçãoíficas de IA<br/>Auto-format, verificação de tipos, réguas"] --> L2
     L2["2. Extensões<br/>Python, Jupyter, Pylance, GitLens"] --> L1
     L1["1. Editor Base<br/>VS Code — gratuito, extensível, universal"]
 ```

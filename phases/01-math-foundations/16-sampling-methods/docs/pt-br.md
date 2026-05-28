@@ -69,7 +69,7 @@ Construa uma cadeia de Markov cuja distribuição estacionária é p(x). Depois 
 
 ### Amostragem Gibbs
 
-Caso especial do MCMC para distribuições multivariadas. Atualiza uma variável por vez de sua distribuição condicional.
+Caso eespecificaçãoial do MCMC para distribuições multivariadas. Atualiza uma variável por vez de sua distribuição condicional.
 
 ### Amostragem por Temperatura (Usada em LLMs)
 

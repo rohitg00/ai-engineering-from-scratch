@@ -15,7 +15,7 @@ Erra um único slot e o sistema reserva o restaurante errado, agenda o voo errad
 
 Por que ainda importa em 2026 apesar dos LLMs:
 
-- Domínios sensíveis a compliance (banco, saúde, reserva de passagens) requerem valores de slot determinísticos, não geração em texto livre.
+- Domínios sensíveis a conformidade (banco, saúde, reserva de passagens) requerem valores de slot determinísticos, não geração em texto livre.
 - Agentes com uso de ferramentas ainda precisam de resolução de slot antes de chamar APIs.
 - Correção multi-turn é mais difícil do que parece: "actually no, make it Thursday."
 
@@ -32,7 +32,7 @@ O pipeline moderno: conceitos clássicos de DST + extratores LLM + guardrails de
 - **Classificação.** Pra cada par (slot, candidate_value), prevê sim/não. Funciona pra slots de vocabulário fechado. Padrão pré-2020.
 - **Geração.** Dado o dialogue, gere valores de slots como texto livre. Funciona pra slots de vocabulário aberto. O padrão moderno.
 
-**Métrica.** Joint Goal Accuracy (JGA) — fração de turnos onde *cada* slot está correto. Tudo-ou-nada. O leaderboard do MultiWOZ 2.4 chega a ~83% em 2026.
+**Métrica.** Joint Goal Accuracy (JGA) — fração de turnos onde *cada* slot está correto. Tudo-ou-nada. O ranking do MultiWOZ 2.4 chega a ~83% em 2026.
 
 **Arquiteturas.**
 
@@ -146,7 +146,7 @@ Numa correção detectada, sobrescreva o último slot atualizado em vez de anexa
 - **Custo de regeneração de histórico completo.** Deixar o LLM regenerar estado a cada turno custa O(n²) em tokens no total. Limite o histórico ou resuma turnos mais antigos.
 - **Drift de schema.** Adicionar novos slots depois quebra dados de treino antigos. Versione seu schema.
 - **Sensibilidade a caixa.** "Italian" vs "italian" vs "ITALIAN" — normalize em todo lugar.
-- **Herança implícita.** Se o usuário já especificou "for 4 people," um pedido novo pra horário diferente não deve limpar people. Sempre passe o histórico completo.
+- **Herança implícita.** Se o usuário já eespecificaçãoificou "for 4 people," um pedido novo pra horário diferente não deve limpar people. Sempre passe o histórico completo.
 - **Livre vs conjunto fechado.** Nomes, horários e endereços precisam de slots livres; cozinhas e áreas são fechados. Misture os dois no schema.
 
 ## Usar
@@ -160,7 +160,7 @@ A stack de 2026:
 | Domínio amplo, sem rótulos, pronto pra prod | LLM + Instructor + schema Pydantic |
 | Fala / voz | ASR + normalizador + LLM-DST |
 | Fluxo de reserva multi-domínio | LLM guiado por schema com modelos Pydantic por domínio |
-| Sensível a compliance | Primário baseado em regras, fallback LLM com fluxo de confirmação |
+| Sensível a conformidade | Primário baseado em regras, reserva LLM com fluxo de confirmação |
 
 ## Entregar
 
@@ -176,7 +176,7 @@ lesson: 29
 tags: [nlp, dialogue, task-oriented]
 ---
 
-Given a use case (domain, languages, vocab openness, compliance needs), output:
+Given a use case (domain, languages, vocab openness, conformidade needs), output:
 
 1. Schema. Domain list, slots per domain, open vs closed vocabulary per slot.
 2. Extractor. Rule-based / seq2seq / LLM-with-Pydantic. Reason.
@@ -184,14 +184,14 @@ Given a use case (domain, languages, vocab openness, compliance needs), output:
 4. Evaluation. Joint Goal Accuracy on a held-out dialogue set, slot-level precision/recall, confusion on the hardest slot.
 5. Confirmation flow. When to explicitly ask the user to confirm (destructive actions, low-confidence extractions).
 
-Refuse LLM-only DST for compliance-sensitive slots without a rule-based secondary check. Refuse any DST that cannot roll back a slot on user correction. Flag schemas without version tags.
+Refuse LLM-only DST for conformidade-sensitive slots without a rule-based secondary check. Refuse any DST that cannot roll back a slot on user correction. Flag schemas without version tags.
 ```
 
 ## Exercícios
 
 1. **Fácil.** Construa o rastreador de estado baseado em regras em `code/main.py` pra 3 slots (cuisine, area, price). Teste em 10 diálogos feitos à mão. Meça JGA.
-2. **Médio.** Mesmo dataset com Instructor + Pydantic + um LLM pequeno. Compare JGA. Inspecione os turnos mais difíceis.
-3. **Difícil.** Implemente ambos e faça roteamento: primário baseado em regras, fallback LLM quando o baseado em regras emite <2 slots com confiança. Meça o JGA combinado e custo de inferência por turno.
+2. **Médio.** Mesmo dataset com Instructor + Pydantic + um LLM pequeno. Compare JGA. Inespecificaçãoione os turnos mais difíceis.
+3. **Difícil.** Implemente ambos e faça roteamento: primário baseado em regras, reserva LLM quando o baseado em regras emite <2 slots com confiança. Meça o JGA combinado e custo de inferência por turno.
 
 ## Termos Chave
 

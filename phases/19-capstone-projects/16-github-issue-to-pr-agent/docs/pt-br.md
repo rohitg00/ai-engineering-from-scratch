@@ -1,6 +1,6 @@
 # Capstone 16 — Agent Autônomo de Issue para PR no GitHub
 
-> Remote SWE Agents da AWS, Background Agents do Cursor, Codex cloud da OpenAI e Jules da Google todos lançam a mesma forma de produto de 2026: rotule uma issue, ganhe um PR. Rode um agent num sandbox em nuvem, verifique se os testes passam e publique um PR pronto para revisão com justificativa. As partes difíceis são reproduzir o ambiente de build do repo automaticamente, impedir vazamento de credenciais, aplicar orçamentos por repo e garantir que o agent não consegue force-push. Este capstone constrói a versão auto-hospedada e compara custo e taxa de pass com as alternativas hospedadas.
+> Remote SWE Agents da AWS, Background Agents do Cursor, Codex cloud da OpenAI e Jules da Google todos lançam a mesma forma de produto de 2026: rotule uma issue, ganhe um PR. Rode um agente num sandbox em nuvem, verifique se os testes passam e publique um PR pronto para revisão com justificativa. As partes difíceis são reproduzir o ambiente de build do repo automaticamente, impedir vazamento de credenciais, aplicar orçamentos por repo e garantir que o agente não consegue force-push. Este capstone constrói a versão auto-hospedada e compara custo e taxa de pass com as alternativas hospedadas.
 
 **Tipo:** Capstone
 **Linguagens:** Python (agent), TypeScript (GitHub App), YAML (Actions)
@@ -10,17 +10,17 @@
 
 ## Problema
 
-O agent de programação assíncrono em nuvem é uma categoria de produto separada dos agents de programação interativos (capstone 01). A UX é um label no GitHub. Você rotula uma issue `@agent fix this`, um worker sobe num sandbox em nuvem, clona o repo, roda testes, edita arquivos, verifica e abre um PR com a justificativa do agent no corpo. Sem loop interativo, sem terminal. Remote SWE Agents da AWS, Background Agents do Cursor, Codex cloud da OpenAI, Jules da Google e Factory Droids convergem nisso.
+O agente de programação assíncrono em nuvem é uma categoria de produto separada dos agentes de programação interativos (capstone 01). A UX é um label no GitHub. Você rotula uma issue `@agent fix this`, um worker sobe num sandbox em nuvem, clona o repo, roda testes, edita arquivos, verifica e abre um PR com a justificativa do agente no corpo. Sem loop interativo, sem terminal. Remote SWE Agents da AWS, Background Agents do Cursor, Codex cloud da OpenAI, Jules da Google e Factory Droids convergem nisso.
 
-Os desafios de engenharia são concretos: reprodução de ambiente (o agent tem que buildar o repo do zero sem imagem de dev em cache), testes flaky (devem ser re-rodados ou isolados), escopo de credenciais (um GitHub App com permissões refinadas mínimas), aplicação de orçamento por repo por dia e política de não-force-push. O capstone mede taxa de pass, custo e segurança vs as alternativas hospedadas.
+Os desafios de engenharia são concretos: reprodução de ambiente (o agente tem que buildar o repo do zero sem imagem de dev em cache), testes flaky (devem ser re-rodados ou isolados), escopo de credenciais (um GitHub App com permissões refinadas mínimas), aplicação de orçamento por repo por dia e política de não-force-push. O capstone mede taxa de pass, custo e segurança vs as alternativas hospedadas.
 
 ## Conceito
 
-O gatilho é um webhook do GitHub (label de issue ou comentário em PR). Um despachante enfileira trabalho em ECS Fargate ou Lambda. O worker puxa o repo para um sandbox Daytona ou E2B com um Dockerfile genérico inferido do repo (linguagem, framework). O agent roda um loop mini-swe-agent ou SWE-agent v2 contra Claude Opus 4.7 ou GPT-5.4-Codex. Ele itera: ler código, propor correção, aplicar patch, rodar testes.
+O gatilho é um webhook do GitHub (label de issue ou comentário em PR). Um despachante enfileira trabalho em ECS Fargate ou Lambda. O worker puxa o repo para um sandbox Daytona ou E2B com um Dockerfile genérico inferido do repo (linguagem, framework). O agente roda um loop mini-swe-agent ou SWE-agent v2 contra Claude Opus 4.7 ou GPT-5.4-Codex. Ele itera: ler código, propor correção, aplicar patch, rodar testes.
 
-Verificação é o passo de controle. CI completo deve passar no sandbox antes do PR abrir. Delta de cobertura é computado; se negativo além de um limiar, o PR abre mas recebe a label `needs-review`. O agent publica a justificativa como descrição do PR mais uma thread `@agent` que o revisor pode mencionar para follow-ups.
+Verificação é o passo de controle. CI completo deve passar no sandbox antes do PR abrir. Delta de cobertura é computado; se negativo além de um limiar, o PR abre mas recebe a label `needs-review`. O agente publica a justificativa como descrição do PR mais uma thread `@agent` que o revisor pode mencionar para follow-ups.
 
-Segurança é escopada através de duas superfícies diferentes do GitHub: o App fornece um token de instalação de curta duração com `workflows: read` e escopos estreitos de conteúdo/PR do repo; proteção de branch (não permissões de app) aplica "sem escritas diretas em `main`" e "sem force-push" — o app nunca é adicionado à lista de bypass. Acesso somente-leitura escopado por caminho a `.github/workflows` não é uma primitiva real de GitHub App, então a lista de permissões do agent em edições de arquivo tem que aplicar isso no worker. Limites de orçamento por repo por dia são aplicados no despachante (ex.: máximo 5 PRs por repo por dia, $20 por PR).
+Segurança é escopada através de duas superfícies diferentes do GitHub: o App fornece um token de instalação de curta duração com `workflows: read` e escopos estreitos de conteúdo/PR do repo; proteção de branch (não permissões de app) aplica "sem escritas diretas em `main`" e "sem force-push" — o app nunca é adicionado à lista de bypass. Acesso somente-leitura escopado por caminho a `.github/workflows` não é uma primitiva real de GitHub App, então a lista de permissões do agente em edições de arquivo tem que aplicar isso no worker. Limites de orçamento por repo por dia são aplicados no despachante (ex.: máximo 5 PRs por repo por dia, $20 por PR).
 
 ## Arquitetura
 
@@ -51,7 +51,7 @@ issue do GitHub rotulada `@agent fix` ou comentário em PR
        label: needs-review
             |
             v
-    operador revisa; pode @-mencionar o agent para follow-ups
+    operador revisa; pode @-mencionar o agente para follow-ups
 ```
 
 ## Stack
@@ -132,13 +132,13 @@ issue do GitHub rotulada `@agent fix` ou comentário em PR
 | Agent assíncrono em nuvem | "Agent em background" | Worker não-interativo que roda num sandbox em nuvem, não num terminal |
 | Inferência de ambiente | "Síntese de Dockerfile" | Detectar linguagem + gerenciador de pacotes, gerar Dockerfile se ausente |
 | Verificação | "CI-no-sandbox" | Rodar a suíte completa de testes dentro do worker antes de abrir um PR |
-| Delta de cobertura | "Preservação de cobertura" | Mudança na % de cobertura de testes do base para a branch do agent |
+| Delta de cobertura | "Preservação de cobertura" | Mudança na % de cobertura de testes do base para a branch do agente |
 | Orçamento por repo | "Teto diário" | Limite em dólares e contagem de PRs aplicado no despachante |
-| Justificativa | "Explicação do corpo do PR" | Resumo do agent do que mudou e por quê; obrigatório no corpo do PR |
+| Justificativa | "Explicação do corpo do PR" | Resumo do agente do que mudou e por quê; obrigatório no corpo do PR |
 
 ## Leitura Complementar
 
-- [Remote SWE Agents da AWS](https://github.com/aws-samples/remote-swe-agents) — referência de agent assíncrono em nuvem canônica
+- [Remote SWE Agents da AWS](https://github.com/aws-samples/remote-swe-agents) — referência de agente assíncrono em nuvem canônica
 - [SWE-agent](https://github.com/SWE-agent/SWE-agent) — referência CLI
 - [Background Agents do Cursor](https://docs.cursor.com/background-agent) — alternativa comercial
 - [OpenAI Codex (cloud)](https://openai.com/codex) — concorrente hospedado

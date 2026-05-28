@@ -1,6 +1,6 @@
 # WMDP e Avaliação de Capacidade de Uso Duplo
 
-> Li et al., "The WMDP Benchmark: Measuring and Reducing Malicious Use With Unlearning" (ICML 2024, arXiv:2403.03218). 4.157 questões de múltipla escolha em biosegurança (1.520), segurança cibernética (2.225) e química (412). Questões operam na "zona amarela" — conhecimento habilitador aproximado, filtrado por revisão multi-especialista e conformidade legal ITAR/EAR. Finalidade dupla: avaliação proxy de capacidade de uso duplo, e benchmark de unlearning (o método RMU companion reduz performance no WMDP preservando capacidade geral). Narrativa do campo em 2024-2025: avaliações iniciais da OpenAI/Anthropic em 2024 reportaram "leve uplift" sobre busca na internet; em abril de 2025, o Preparedness Framework v2 da OpenAI disse que modelos estão "no limiar de ajudar significativamente novatos a criar ameaças biológicas conhecidas." O teste de aquisição de armas biológicas da Anthropic mostrou uplift de 2.53x, insuficiente para descartar ASL-3.
+> Li et al., "The WMDP Benchmark: Measuring and Reducing Malicious Use With Unlearning" (ICML 2024, arXiv:2403.03218). 4.157 questões de múltipla escolha em biosegurança (1.520), segurança cibernética (2.225) e química (412). Questões operam na "zona amarela" — conhecimento habilitador aproximado, filtrado por revisão multi-eespecificaçãoialista e conformidade legal ITAR/EAR. Finalidade dupla: avaliação proxy de capacidade de uso duplo, e benchmark de unlearning (o método RMU companion reduz performance no WMDP preservando capacidade geral). Narrativa do campo em 2024-2025: avaliações iniciais da OpenAI/Anthropic em 2024 reportaram "leve uplift" sobre busca na internet; em abril de 2025, o Preparedness Framework v2 da OpenAI disse que modelos estão "no limiar de ajudar significativamente novatos a criar ameaças biológicas conhecidas." O teste de aquisição de armas biológicas da Anthropic mostrou uplift de 2.53x, insuficiente para descartar ASL-3.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, harness de avaliação de uplift formato WMDP)
@@ -12,7 +12,7 @@
 - Descrever os três domínios do WMDP, contagens de questões e o critério de filtro da "zona amarela."
 - Explicar RMU e por que WMDP é tanto uma avaliação quanto um benchmark de unlearning.
 - Descrever a narrativa de uplift de 2024-2025: "leve uplift" -> "no limiar" -> "insuficiente para descartar ASL-3."
-- Distinguir uplift relativo a novatos de capacidade absoluta de especialistas.
+- Distinguir uplift relativo a novatos de capacidade absoluta de eespecificaçãoialistas.
 
 ## O Problemo
 
@@ -22,7 +22,7 @@ Capacidade de uso duplo é o problema de medição sob cada framework de seguran
 
 ### A "zona amarela"
 
-Questões que requerem conhecimento habilitador aproximado de um processo prejudicial sem ser uma receita de síntese direta. "Qual reagente catalisa o passo 4 da [via publicada]?" em vez de "como faço para fazer [composto perigoso]?" Cada questão revisada por múltiplos especialistas de domínio; filtrada para conformidade de controle de exportação ITAR/EAR.
+Questões que requerem conhecimento habilitador aproximado de um processo prejudicial sem ser uma receita de síntese direta. "Qual reagente catalisa o passo 4 da [via publicada]?" em vez de "como faço para fazer [composto perigoso]?" Cada questão revisada por múltiplos eespecificaçãoialistas de domínio; filtrada para conformidade de controle de exportação ITAR/EAR.
 
 4.157 questões no total:
 - Biosegurança: 1.520
@@ -45,14 +45,14 @@ Três fases:
 
 3. **Teste de aquisição de armas biológicas da Anthropic em 2025.** Estudo controlado com participantes novatos, mediu sucesso relativo em tarefas da fase de aquisição. Reportou uplift de 2.53x. Insuficiente para descartar ASL-3 (Lição 18) — o limiar para o tier 3 da Responsible Scaling Policy da Anthropic é atingido ou aproximado.
 
-### Uplift relativo a novatos vs absoluto de especialistas
+### Uplift relativo a novatos vs absoluto de eespecificaçãoialistas
 
 Uma distinção crucial:
 
-- **Uplift relativo a novatos.** Quanto o modelo ajuda um não-especialista? Multiplicativo. A vantagem relativa é alta porque novatos sabem pouco; mesmo informação modesta ajuda.
-- **Capacidade absoluta de especialistas.** Quanta informação o modelo produz no máximo esforço? Um especialista consegue extrair mais que um novato. O teto absoluto é alto.
+- **Uplift relativo a novatos.** Quanto o modelo ajuda um não-eespecificaçãoialista? Multiplicativo. A vantagem relativa é alta porque novatos sabem pouco; mesmo informação modesta ajuda.
+- **Capacidade absoluta de eespecificaçãoialistas.** Quanta informação o modelo produz no máximo esforço? Um eespecificaçãoialista consegue extrair mais que um novato. O teto absoluto é alto.
 
-Safety cases (Lição 18) visam ambos: "o modelo não pode dar a um novato uplift suficiente para executar" mais "um especialista não consegue extrair do modelo informação que não está já publicada."
+Safety cases (Lição 18) visam ambos: "o modelo não pode dar a um novato uplift suficiente para executar" mais "um eespecificaçãoialista não consegue extrair do modelo informação que não está já publicada."
 
 ### A armadilha de medição
 
@@ -69,7 +69,7 @@ Lições 12-16 são ferramentas de ataque e defesa em saídas do modelo. Lição
 
 ## Use
 
-`code/main.py` constrói um harness de avaliação formato WMDP simulado. Um modelo simulado é testado em questões categorizadas; scores por domínio são reportados. Uma intervenção simples de unlearning (zerar representação específica de domínio) reduz scores; você pode medir o trade-off contra capacidade geral.
+`code/main.py` constrói um harness de avaliação formato WMDP simulado. Um modelo simulado é testado em questões categorizadas; scores por domínio são reportados. Uma intervenção simples de unlearning (zerar representação eespecificaçãoífica de domínio) reduz scores; você pode medir o trade-off contra capacidade geral.
 
 ## Entregue
 
@@ -79,7 +79,7 @@ Essa lição gera `outputs/skill-wmdp-eval.md`. Dada uma afirmação de capacida
 
 1. Execute `code/main.py`. Reporte acurácia por domínio antes e depois do passo simulado de unlearning. Explique o trade-off de capacidade geral.
 
-2. Aumente o WMDP simulado com um quarto domínio (por exemplo, radiológico). Especifique dois tipos ilustrativos de questões na zona amarela. Explique por que elaborar tais questões é mais difícil que adicionar questões formato MMLU.
+2. Aumente o WMDP simulado com um quarto domínio (por exemplo, radiológico). Eespecificaçãoifique dois tipos ilustrativos de questões na zona amarela. Explique por que elaborar tais questões é mais difícil que adicionar questões formato MMLU.
 
 3. Leia WMDP 2024 Seção 5 (metodologia RMU). Esboce uma abordagem de unlearning mais simples (por exemplo, suprimir top-k neurônios para conteúdo do domínio) e descreva seu custo esperado de capacidade geral.
 
@@ -94,8 +94,8 @@ Essa lição gera `outputs/skill-wmdp-eval.md`. Dada uma afirmação de capacida
 | WMDP | "o benchmark de uso duplo" | 4.157 MCQs em bio/cyber/chem na zona amarela |
 | Zona amarela | "habilitador mas não síntese" | Conhecimento aproximado adjacente a capacidade prejudicial sem ser receita de síntese |
 | RMU | "a baseline de unlearning" | Representation Misdirection for Unlearning; reduz scores WMDP, preserva capacidade geral |
-| Uplift relativo a novatos | "quanto ajuda não-especialistas" | Vantagem multiplicativa sobre busca na internet padrão para um novato |
-| Capacidade absoluta de especialistas | "teto para especialistas" | Máxima informação extraível do modelo por um especialista motivado |
+| Uplift relativo a novatos | "quanto ajuda não-eespecificaçãoialistas" | Vantagem multiplicativa sobre busca na internet padrão para um novato |
+| Capacidade absoluta de eespecificaçãoialistas | "teto para eespecificaçãoialistas" | Máxima informação extraível do modelo por um eespecificaçãoialista motivado |
 | Tarefa de fase de aquisição | "passos antes da síntese" | Aquisição, equipamento, permissões — as partes iniciais de uma via de dano |
 | ITAR/EAR | "conformidade de controle de exportação" | Frameworks legais que restringem publicação de certos conhecimentos habilitadores |
 

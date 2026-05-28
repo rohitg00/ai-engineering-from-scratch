@@ -77,7 +77,7 @@ Veja `code/main.py` pra uma implementação com stdlib apenas:
    - papel sintático (sujetos preferidos)
 3. Vincule o antecedente com maior pontuação.
 
-Não competitivo com modelos neurais. Mas mostra o espaço de busca e as decisões que um modelo end-to-end precisa tomar.
+Não competitivo com modelos neurais. Mas mostra o espaço de busca e as decisões que um modelo de ponta a ponta precisa tomar.
 
 ### Passo 3: usando LLMs pra coreferência
 
@@ -111,7 +111,7 @@ A stack de 2026:
 |-----------|------|
 | Inglês, documento único | `en_coreference_web_trf` (spaCy-experimental) ou coref neural do AllenNLP |
 | Multilíngue | SpanBERT / XLM-R treinado em OntoNotes ou Multilingual CoNLL |
-| Coref de evento cross-documento | Modelos end-to-end especializados (SOTA 2025–26) |
+| Coref de evento cross-documento | Modelos de ponta a ponta eespecificaçãoializados (SOTA 2025–26) |
 | Baseline rápida com LLM | GPT-4o / Claude com prompt de coref de saída estruturada |
 | Sistemas de diálogo em produção | Fallback baseado em regras + primário neural + revisão manual pra slots críticos |
 
@@ -162,7 +162,7 @@ Refuse LLM-only coref for documents over 2,000 tokens without sliding-window mer
 ## Leitura Complementar
 
 - [Jurafsky & Martin, SLP3 Ch. 26 — Coreference Resolution and Entity Linking](https://web.stanford.edu/~jurafsky/slp3/26.pdf) — capítulo canônico de livro didático.
-- [Lee et al. (2017). End-to-end Neural Coreference Resolution](https://arxiv.org/abs/1707.07045) — end-to-end baseada em spans.
+- [Lee et al. (2017). End-to-end Neural Coreference Resolution](https://arxiv.org/abs/1707.07045) — de ponta a ponta baseada em spans.
 - [Joshi et al. (2020). SpanBERT](https://arxiv.org/abs/1907.10529) — pré-treinamento que melhora coref.
 - [Pradhan et al. (2012). CoNLL-2012 Shared Task](https://aclanthology.org/W12-4501/) — o benchmark.
 - [Hobbs (1978). Resolving Pronoun References](https://www.sciencedirect.com/science/article/pii/0024384178900064) — o clássico baseado em regras.

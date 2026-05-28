@@ -12,11 +12,11 @@
 - Retornar um resource `ui://` de uma chamada de ferramenta e setar o MIME e metadados corretos.
 - Declarar a UI associada de uma ferramenta com `_meta.ui.resourceUri`, `_meta.ui.csp` e `_meta.ui.permissions`.
 - Implementar o JSON-RPC de postMessage de iframe sandboxed pra comunicação UI-host.
-- Aplicar defaults de CSP e permissions-policy que defendam contra ataques originados pela UI.
+- Aplicar configurações-padrão de CSP e permissions-policy que defendam contra ataques originados pela UI.
 
 ## O Problema
 
-Uma ferramenta `visualize_timeline` de 2025 pode retornar "Aqui estão 14 notas organizadas cronologicamente: ...". Isso é um parágrafo. Usuários na verdade querem a timeline interativa. Antes de MCP Apps, as opções eram: APIs de widgets específicas do cliente (artifacts do Claude, HTML de Custom GPT da OpenAI), ou nenhuma UI.
+Uma ferramenta `visualize_timeline` de 2025 pode retornar "Aqui estão 14 notas organizadas cronologicamente: ...". Isso é um parágrafo. Usuários na verdade querem a timeline interativa. Antes de MCP Apps, as opções eram: APIs de widgets eespecificaçãoíficas do cliente (artifacts do Claude, HTML de Custom GPT da OpenAI), ou nenhuma UI.
 
 MCP Apps (SEP-1724, lançado em 26 de janeiro de 2026) padronizam o contrato. Um resultado de ferramenta contém um `resource` cuja URI é `ui://...` e cujo MIME é `text/html;profile=mcp-app`. O host renderiza em um iframe sandboxed com CSP limitado e sem acesso a rede a menos que explicitamente concedido. A UI dentro do iframe posta mensagens pro host via um pequeno dialeto de JSON-RPC sobre postMessage.
 
@@ -174,11 +174,11 @@ O que conferir:
 
 ## Entregue
 
-Esta aula produz `outputs/skill-mcp-apps-spec.md`. Dada uma ferramenta que se beneficiaria de uma UI interativa, a skill produz o contrato completo de MCP Apps: URI `ui://`, CSP, permissões, pontos de entrada de postMessage e um checklist de segurança.
+Esta aula produz `outputs/skill-mcp-apps-especificação.md`. Dada uma ferramenta que se beneficiaria de uma UI interativa, a skill produz o contrato completo de MCP Apps: URI `ui://`, CSP, permissões, pontos de entrada de postMessage e um checklist de segurança.
 
 ## Exercícios
 
-1. Rode `code/main.py` e inspecione o HTML emitido. Abra o HTML diretamente num navegador; verifique que a SVG renderiza. Depois esboce o contrato de postMessage que a UI usaria pra chamar `host.callTool("notes_update", ...)`.
+1. Rode `code/main.py` e inespecificaçãoione o HTML emitido. Abra o HTML diretamente num navegador; verifique que a SVG renderiza. Depois esboce o contrato de postMessage que a UI usaria pra chamar `host.callTool("notes_update", ...)`.
 
 2. Restrinja o CSP: remova `'unsafe-inline'` e use uma política de script baseada em nonce. O que muda no código de geração do HTML?
 
@@ -186,7 +186,7 @@ Esta aula produz `outputs/skill-mcp-apps-spec.md`. Dada uma ferramenta que se be
 
 4. Audite a superfície de ataque da UI. Onde um servidor malicioso poderia injetar conteúdo? O que o sandbox do iframe defende e o que não defende?
 
-5. Leia a especificação SEP-1724 e identifique uma funcionalidade no SDK de MCP Apps que esta implementação de brinquedo não usa. (Dica: sincronização de estado no nível de componente.)
+5. Leia a eespecificaçãoificação SEP-1724 e identifique uma funcionalidade no SDK de MCP Apps que esta implementação de brinquedo não usa. (Dica: sincronização de estado no nível de componente.)
 
 ## Termos-Chave
 
@@ -206,7 +206,7 @@ Esta aula produz `outputs/skill-mcp-apps-spec.md`. Dada uma ferramenta que se be
 ## Leituras Complementares
 
 - [MCP ext-apps — GitHub](https://github.com/modelcontextprotocol/ext-apps) — implementação de referência e SDK
-- [MCP Apps specification 2026-01-26](https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/2026-01-26/apps.mdx) — documento formal de especificação
+- [MCP Apps especificaçãoification 2026-01-26](https://github.com/modelcontextprotocol/ext-apps/blob/main/especificaçãoification/2026-01-26/apps.mdx) — documento formal de eespecificaçãoificação
 - [MCP — Apps extension overview](https://modelcontextprotocol.io/extensions/apps/overview) — documentação de alto nível
 - [MCP blog — MCP Apps launch](https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/) — post de lançamento de janeiro 2026
 - [MCP Apps API reference](https://apps.extensions.modelcontextprotocol.io/api/) — referência de SDK estilo JSDoc

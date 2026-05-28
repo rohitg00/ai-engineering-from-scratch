@@ -40,7 +40,7 @@ Total de elementos = produto de todos os tamanhos. Uma forma `(2, 3, 4)` guarda 
 
 ### Formas de tensores em deep learning
 
-Diferentes tipos de dados mapeiam para formas de tensor específicas por convenção.
+Diferentes tipos de dados mapeiam para formas de tensor eespecificaçãoíficas por convenção.
 
 ```mermaid
 graph TD

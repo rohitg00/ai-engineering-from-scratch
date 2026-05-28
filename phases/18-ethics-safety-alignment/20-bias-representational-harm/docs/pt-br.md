@@ -43,9 +43,9 @@ WinoIdentity (COLM 2025) introduz justiça interseccional baseada em incerteza. 
 
 Trabalho de interpretabilidade 2024-2025 abre bias para intervenção mecanística:
 
-- **Neurônios de gênero (Yu & Ananiadou 2025).** Neurônios MLP específicos se correlacionam com comportamentos específicos de gênero. Ablação desses neurônios reduz métricas de gap de gênero com custo limitado de capacidade.
+- **Neurônios de gênero (Yu & Ananiadou 2025).** Neurônios MLP eespecificaçãoíficos se correlacionam com comportamentos eespecificaçãoíficos de gênero. Ablação desses neurônios reduz métricas de gap de gênero com custo limitado de capacidade.
 - **Bias racial clínico via SAEs (Ahsan & Wallace 2025).** Características de sparse autoencoder decompõem a representação interna em dimensões interpretáveis; características correlacionadas com raça podem ser identificadas e suprimidas.
-- **UniBias (Zhou et al. 2024).** Manipulação de heads de attention para debiasing zero-shot. Heads específicas amplificam sensibilidade de classe de identidade; zerar ou re-pesar essas heads reduz bias sem fine-tuning.
+- **UniBias (Zhou et al. 2024).** Manipulação de heads de attention para debiasing zero-shot. Heads eespecificaçãoíficas amplificam sensibilidade de classe de identidade; zerar ou re-pesar essas heads reduz bias sem fine-tuning.
 
 ### A meta-crítica
 
@@ -83,7 +83,7 @@ Essa lição gera `outputs/skill-bias-eval.md`. Dado um model card ou afirmaçã
 | Dano alocacional | "decisões desiguais" | Resultado material enviesado para um grupo |
 | WEAT | "o teste de embedding" | Word Embedding Association Test; sonda de bias baseada em co-ocorrência |
 | Interseccionalidade | "efeitos de identidade combinados" | Bias que emerge na interseção de múltiplos eixos de identidade |
-| Neurônios de gênero | "neurônios de bias MLP" | Neurônios específicos cujas ativações se correlacionam com comportamento específico de gênero |
+| Neurônios de gênero | "neurônios de bias MLP" | Neurônios eespecificaçãoíficos cujas ativações se correlacionam com comportamento eespecificaçãoífico de gênero |
 | Característica SAE | "dimensão interpretável" | Característica identificada por sparse autoencoder; útil para análise mecanística de bias |
 | UniBias | "debiasing por head de attention" | Debiasing zero-shot por repesagem de heads de attention |
 

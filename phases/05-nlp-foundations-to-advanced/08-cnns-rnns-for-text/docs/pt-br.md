@@ -21,9 +21,9 @@ Essa lição constrói ambas, depois nomeia a falha que motivou attention.
 
 ## O Conceito
 
-**TextCNN** (Kim, 2014). Tokens são embedados. Uma convolução 1D de largura `k` desliza um filtro sobre `k`-gramas consecutivos de embeddings, produzindo um feature map. Max-pooling global sobre esse mapa escolhe a ativação mais forte. Concatena saídas de max-pool de várias larguras de filtro. Alimenta uma cabeça de classificação.
+**TextCNN** (Kim, 2014). Tokens são embedados. Uma convolução 1D de largura `k` desliza um filtro sobre `k`-gramas consecutivos de embeddings, produzindo um funcionalidade map. Max-pooling global sobre esse mapa escolhe a ativação mais forte. Concatena saídas de max-pool de várias larguras de filtro. Alimenta uma cabeça de classificação.
 
-Por que funciona. Um filtro é um n-grama aprendível. Max-pooling é invariante de posição, então "not good" ativa a mesma feature no início ou no meio de uma resenha. Três larguras de filtro com 100 filtros cada dão 300 detectores de n-grama aprendidos. Treino é paralelo; sem dependência sequencial.
+Por que funciona. Um filtro é um n-grama aprendível. Max-pooling é invariante de posição, então "not good" ativa a mesma funcionalidade no início ou no meio de uma resenha. Três larguras de filtro com 100 filtros cada dão 300 detectores de n-grama aprendidos. Treino é paralelo; sem dependência sequencial.
 
 **RNN.** Em cada passo de tempo `t`, o estado oculto `h_t = f(W * x_t + U * h_{t-1} + b)`. Compartilha `W`, `U`, `b` no tempo. O estado oculto no tempo `T` é um resumo de todo o prefixo. Pra classificação, faz pool sobre `h_1 ... h_T` (máximo, médio ou último).
 
@@ -109,7 +109,7 @@ Três problemas persistiram mesmo com LSTMs.
 
 1. **Gargalo sequencial.** Treinar uma RNN numa sequência de comprimento 1000 requer 1000 passos sequenciais forward/backward. Não paraleliza no tempo.
 2. **Vetor de contexto de tamanho fixo em setups encoder-decoder.** O decoder vê apenas o último estado oculto do encoder, comprimido sobre toda a entrada. Entradas longas perdem detalhe. Lição 09 cobre isso diretamente.
-3. **Teto de acurácia em dependências distantes.** LSTMs superam RNNs simples mas ainda lutam pra propagar informação específica por 200+ passos.
+3. **Teto de acurácia em dependências distantes.** LSTMs superam RNNs simples mas ainda lutam pra propagar informação eespecificaçãoífica por 200+ passos.
 
 Attention resolveu tudo. Transformers eliminaram recorrência. Lição 10 é a virada.
 
@@ -144,7 +144,7 @@ class BertCNN(nn.Module):
 
 Lista de verificação "quando se encaixa na restrição":
 
-- **Inferência em borda/dispositivo.** TextCNN com embeddings GloVe é 10-100x menor que um transformer. Se seu alvo de deploy é um celular, essa é a stack.
+- **Inferência em borda/dispositivo.** TextCNN com embeddings GloVe é 10-100x menor que um transformer. Se seu alvo de implantação é um celular, essa é a stack.
 - **Classificação em streaming/online.** RNN processa um token por vez; transformers precisam da sequência completa. Pra texto em tempo real, LSTMs ainda ganham.
 - **Modelos pequenos pra baselines.** Iteração rápida em tarefa nova. Treina um TextCNN em 5 minutos num CPU.
 - **Rotulação de sequência com dados limitados.** BiLSTM-CRF (lição 06) ainda é uma arquitetura NER de grau de produção pra 1k-10k frases rotuladas.
@@ -163,7 +163,7 @@ phase: 5
 lesson: 08
 ---
 
-Given constraints (task, data volume, latency budget, deploy target, compute budget), output:
+Given constraints (task, data volume, latency budget, implantação target, compute budget), output:
 
 1. Encoder architecture: TextCNN, BiLSTM, BiLSTM-CRF, transformer fine-tune, or "use a pretrained transformer as a frozen encoder + small head".
 2. Embedding input: random init, GloVe / fastText frozen, or contextualized transformer embeddings.

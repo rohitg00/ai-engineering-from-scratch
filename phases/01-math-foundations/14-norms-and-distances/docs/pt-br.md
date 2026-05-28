@@ -153,7 +153,7 @@ Consulte `code/distances.py` para implementações completas com todas as demons
 
 2. Crie dois vetores onde a similaridade cosseno é alta (> 0.9) mas a distância L2 é grande (> 10). Explique geometricamente.
 
-3. Implemente uma função que recebe um dataset e um ponto de query e retorna o vizinho mais próximo sob L1, L2, cosseno e Mahalanobis.
+3. Implemente uma função que recebe um dataset e um ponto de consulta e retorna o vizinho mais próximo sob L1, L2, cosseno e Mahalanobis.
 
 ## Termos-Chave
 

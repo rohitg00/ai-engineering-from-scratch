@@ -9,10 +9,10 @@
 
 ## Objetivos de Aprendizado
 
-- Ler a config do DeepSeek-V3 de cima pra baixo e explicar cada campo em termos dos seis botoes GPT-2 mais quatro adicoes especificas da DeepSeek.
+- Ler a config do DeepSeek-V3 de cima pra baixo e explicar cada campo em termos dos seis botoes GPT-2 mais quatro adicoes eespecificaçãoificas da DeepSeek.
 - Derivar a contagem total de parametros (671B), contagem de parametros ativos (37B) e os componentes que contribuem pra cada uma.
 - Calcular o footprint do KV cache do MLA em contexto 128k e comparar com o que um modelo denso de mesmos-params-ativos com GQA pagaria.
-- Enunciar as quatro inovacoes especificas da DeepSeek (MLA, MTP, roteamento sem loss auxiliar, DualPipe) e nomear qual parte da stack de arquitetura/treinamento cada uma foca.
+- Enunciar as quatro inovacoes eespecificaçãoificas da DeepSeek (MLA, MTP, roteamento sem loss auxiliar, DualPipe) e nomear qual parte da stack de arquitetura/treinamento cada uma foca.
 
 ## O Problema
 
@@ -59,7 +59,7 @@ Efeito na loss principal: nenhum mensuravel. Efeito na arquitetura MoE: mais lim
 
 ### O MTP: treinamento mais denso + rascunho gratis
 
-Da Fase 10, Aula 18 voce sabe que DeepSeek-V3 adiciona D=1 modulo MTP que prediz o token duas posicoes a frente. Na inferencia, o modulo treinado e reaproveitado como rascunho de decodificacao especulativa com 80%+ de aceitacao. No treinamento, cada hidden state e supervisionado em D+1 = 2 alvos, fornecendo um sinal mais denso.
+Da Fase 10, Aula 18 voce sabe que DeepSeek-V3 adiciona D=1 modulo MTP que prediz o token duas posicoes a frente. Na inferencia, o modulo treinado e reaproveitado como rascunho de decodificacao eespecificaçãoulativa com 80%+ de aceitacao. No treinamento, cada hidden state e supervisionado em D+1 = 2 alvos, fornecendo um sinal mais denso.
 
 Parametros: 14B alem dos 671B principais. Overhead: 2.1%.
 
@@ -95,7 +95,7 @@ Parse:
 - `hidden_size=7168`: dimensao do embedding.
 - `num_hidden_layers=61`: profundidade total do bloco.
 - `first_k_dense_layers=3`: os primeiros 3 blocos usam MLP denso de tamanho 18432. Os 58 restantes usam MoE.
-- `num_attention_heads=128`: 128 query heads.
+- `num_attention_heads=128`: 128 consulta heads.
 - `kv_lora_rank=512`: K e V sao comprimidos pra essa dimensao latente e descomprimidos por head.
 - `num_experts=256, num_experts_per_tok=8`: cada bloco MoE tem 256 experts, roteamento top-8.
 - `shared_experts=1`: alem dos 256 experts roteados, 1 expert sempre-on contribui pra cada token. Pense nele como um "piso denso" que garante que todo token receba algo confiavel.
@@ -110,7 +110,7 @@ O calculo completo esta em `code/main.py`. O destaque:
 - 58 blocos MoE: attention com MLA (~144M) + 256 experts cada (30M cada) + 1 expert compartilhado (30M) + norm. Total ~7.95B por bloco, incluindo todos os experts. 461B total pros 58 blocos MoE.
 - Modulo MTP: 14B.
 
-Total geral: ~476B pra arquitetura core + 14B MTP + significativamente o numero publicado de 671B conta com parametros estruturais adicionais (tensores de bias, componentes especificos de expert, escalonamento de expert compartilhado, etc.). O numero que reproduzimos na calculadora e dentro de 3-5% do publicado -- o delta vem da contabilidade granular que o relatorio da DeepSeek documenta no apendice da Secao 2.
+Total geral: ~476B pra arquitetura core + 14B MTP + significativamente o numero publicado de 671B conta com parametros estruturais adicionais (tensores de bias, componentes eespecificaçãoificos de expert, escalonamento de expert compartilhado, etc.). O numero que reproduzimos na calculadora e dentro de 3-5% do publicado -- o delta vem da contabilidade granular que o relatorio da DeepSeek documenta no apendice da Secao 2.
 
 Parametros ativos por forward:
 
@@ -141,7 +141,7 @@ DeepSeek-V3 (se for lancado) deve manter MLA + MoE + MTP e adicionar DSA (DeepSe
 
 ## Usar
 
-`code/main.py` e a calculadora de parametros especializada no formato do DeepSeek-V3. Rode, compare sua saida com os numeros do paper e use em variantes hipotheticas (256 experts vs 512, top-8 vs top-16, MLA rank 512 vs 1024).
+`code/main.py` e a calculadora de parametros eespecificaçãoializada no formato do DeepSeek-V3. Rode, compare sua saida com os numeros do paper e use em variantes hipotheticas (256 experts vs 512, top-8 vs top-16, MLA rank 512 vs 1024).
 
 O que observar:
 
@@ -152,7 +152,7 @@ O que observar:
 
 ## Entregar
 
-Esta aula produz `outputs/skill-deepseek-v3-reader.md`. Dado um modelo da familia DeepSeek (V3, R1 ou qualquer variante futura), produz uma leitura componente por componente da arquitetura que nomeia cada campo da config, deriva contagens de parametros por componente e identifica quais das quatro inovacoes especificas da DeepSeek o modelo usa.
+Esta aula produz `outputs/skill-deepseek-v3-reader.md`. Dado um modelo da familia DeepSeek (V3, R1 ou qualquer variante futura), produz uma leitura componente por componente da arquitetura que nomeia cada campo da config, deriva contagens de parametros por componente e identifica quais das quatro inovacoes eespecificaçãoificas da DeepSeek o modelo usa.
 
 ## Exercicios
 
@@ -176,7 +176,7 @@ Esta aula produz `outputs/skill-deepseek-v3-reader.md`. Dado um modelo da famili
 | num_experts_per_tok | "Roteamento top-k" | Quantos experts roteados disparam por token; DeepSeek-V3 usa 8 |
 | Experts compartilhados | "Experts sempre-on" | Experts que processam cada token independente do roteamento; DeepSeek-V3 usa 1 |
 | Roteamento sem loss auxiliar | "Balanceamento de carga por bias" | Termos de bias por expert ajustados durante treinamento pra manter carga balanceada sem adicionar termo de loss |
-| Modulo MTP | "Head de predicao extra" | Bloco transformer predizendo t+2 de h^(1) e E(t+1); treinamento mais denso, rascunho de decodificacao especulativa gratis |
+| Modulo MTP | "Head de predicao extra" | Bloco transformer predizendo t+2 de h^(1) e E(t+1); treinamento mais denso, rascunho de decodificacao eespecificaçãoulativa gratis |
 | DualPipe | "Pipeline bidirecional" | Schedule de treinamento que sobrepoe compute forward/backward com all-to-all entre nodes |
 | Razao de params ativos | "Esparsidade" | active_params / total_params; DeepSeek-V3 atinge 5.5% |
 | Treinamento FP8 | "Treinamento 8-bit" | Armazenamento e muitas operacoes de compute em FP8; mais ou menos metade da memoria vs BF16 com pequena perda de qualidade |

@@ -1,6 +1,6 @@
 # Capstone: Entregar um Pack Reutilizável de Agent Workbench
 
-> O mini-track termina com um pack que você joga em qualquer repo. Onze lições de superfícies comprimidas num diretório que você pode `cp -r` e ter um agent funcionando de forma confiável na manhã seguinte. O capstone é o artefato que este curso entrega.
+> O mini-track termina com um pack que você joga em qualquer repo. Onze lições de superfícies comprimidas num diretório que você pode `cp -r` e ter um agente funcionando de forma confiável na manhã seguinte. O capstone é o artefato que este curso entrega.
 
 **Tipo:** Construção
 **Linguagens:** Python (stdlib)
@@ -66,7 +66,7 @@ Dentro:
 
 Fora:
 
-- Tarefas específicas do projeto. Tarefas ficam no board do repo alvo, não no pack.
+- Tarefas eespecificaçãoíficas do projeto. Tarefas ficam no board do repo alvo, não no pack.
 - Chamadas de SDK de fornecedor. O é framework-agnóstico.
 - Texto de onboarding. O pack fica ao lado do onboarding existente do time, não dentro dele.
 
@@ -99,13 +99,13 @@ O script copia e fixa as superfícies, escreve o README, imprime a árvore do pa
 
 Um pack só é valioso se sobrevive a forks, updates e um upstream desafiador. Quatro padrões tornam isso possível.
 
-**`VERSION` é o contrato, não marketing.** Bumps de major requerem migração de estado. Bumps de minor requerem re-execução de verificador. Bumps de patch são só docs. O instalador grava `.workbench-version` no repo alvo a cada instalação; `lint_pack.py` recusa-se a entregar se o lock do alvo divergir da `VERSION` do pack. É assim que `npm`, `Cargo` e `pyproject.toml` sobrevivem a 10 anos de mudanças; nada sobre agents muda as regras.
+**`VERSION` é o contrato, não marketing.** Bumps de major requerem migração de estado. Bumps de minor requerem re-execução de verificador. Bumps de patch são só docs. O instalador grava `.workbench-version` no repo alvo a cada instalação; `lint_pack.py` recusa-se a entregar se o lock do alvo divergir da `VERSION` do pack. É assim que `npm`, `Cargo` e `pyproject.toml` sobrevivem a 10 anos de mudanças; nada sobre agentes muda as regras.
 
 **Fonte única para distribuição entre ferramentas.** O Nx tem um único `nx ai-setup` que instala `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`, `.github/copilot-instructions.md` e um servidor MCP de uma única config. O pack deve fazer o mesmo; o instalador emite os symlinks (`ln -s AGENTS.md CLAUDE.md`) para que uma única fonte de verdade se distribua pra cada coding agent. Forkar o pack pra suportar uma ferramenta em vez de outra é um modo de falha.
 
 **`uninstall.sh` que recusa em estado não trivial.** Desinstalar o pack não pode deletar o `agent_state.json`, `task_board.json` ou `outputs/` do usuário. O desinstalador remove schemas, scripts, docs e `AGENTS.md` (com opt-out via `--keep-agents-md`) e recusa prosseguir se os arquivos de estado tiverem alterações não commitadas. Estado pertence ao usuário; o pack não o possui.
 
-**Skill publicável. Distribuição estilo SkillKit.** O pack é entregue como skill do SkillKit: `skillkit install agent-workbench-pack` instala em 32 AI agents de uma única fonte. O repo do pack é a fonte de verdade; SkillKit é o canal de distribuição. Lock-in em fornecedor colapsa; as sete superfícies ficam iguais.
+**Skill publicável. Distribuição estilo SkillKit.** O pack é entregue como skill do SkillKit: `skillkit install agent-workbench-pack` instala em 32 AI agentes de uma única fonte. O repo do pack é a fonte de verdade; SkillKit é o canal de distribuição. Lock-in em fornecedor colapsa; as sete superfícies ficam iguais.
 
 ## Use
 
@@ -113,13 +113,13 @@ Três formas de entregar o pack:
 
 - **Como diretório que você joga num repo.** `cp -r outputs/agent-workbench-pack /path/to/repo`.
 - **Como repo template público.** Fork-e-customize, com `VERSION` controlando divergência.
-- **Como skill do SkillKit.** Integrado ao seu produto de agent para que um único comando o instale.
+- **Como skill do SkillKit.** Integrado ao seu produto de agente para que um único comando o instale.
 
 O pack é a receita. Cada instalação é uma porção.
 
 ## Entregue
 
-`outputs/skill-workbench-pack.md` gera um pack ajustado ao projeto: regras afinadas com o histórico do time, globs de escopo casados com o repo, dimensões da rubrica estendidas com uma entrada específica do domínio.
+`outputs/skill-workbench-pack.md` gera um pack ajustado ao projeto: regras afinadas com o histórico do time, globs de escopo casados com o repo, dimensões da rubrica estendidas com uma entrada eespecificaçãoífica do domínio.
 
 ## Exercícios
 
@@ -144,11 +144,11 @@ O pack é a receita. Cada instalação é uma porção.
 - Fases 14 · 31 até 14 · 41 — cada superfície que este pack empacota
 - [SkillKit](https://github.com/rohitg00/skillkit) — instale esta skill em 32 AI agents
 - [Nx Blog, Teach Your AI Agent How to Work in a Monorepo](https://nx.dev/blog/nx-ai-agent-skills) — gerador de fonte única em seis ferramentas
-- [agents.md — the open spec](https://agents.md/) — o que o roteador do seu pack precisa implementar
+- [agents.md — the open especificação](https://agents.md/) — o que o roteador do seu pack precisa implementar
 - [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) — implementação de referência de um pack equivalente
 - [andrewgarst/agentic_harness](https://github.com/andrewgarst/agentic_harness) — referência com Redis e suite de evals
 - [Augment Code, A good AGENTS.md is a model upgrade](https://www.augmentcode.com/blog/how-to-write-good-agents-dot-md-files) — qualidade dos docs do pack
 - [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
 - [Anthropic, Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps)
-- Fase 14 · 30 — desenvolvimento de agents orientado a evals que consome o gate de verificação do pack
+- Fase 14 · 30 — desenvolvimento de agentes orientado a evals que consome o gate de verificação do pack
 - Fase 14 · 41 — o benchmark antes/depois que este pack melhora

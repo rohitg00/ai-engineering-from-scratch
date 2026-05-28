@@ -16,7 +16,7 @@
 
 ## O Problema
 
-Sem chamadas paralelas, um agent respondendo "qual o tempo em Bengaluru, Tóquio e Zurique" faz assim:
+Sem chamadas paralelas, um agente respondendo "qual o tempo em Bengaluru, Tóquio e Zurique" faz assim:
 
 ```
 user -> LLM
@@ -140,7 +140,7 @@ Esta aula produz `outputs/skill-parallel-call-safety-check.md`. Dado um registry
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|----------------------|--------------------------|
-| Parallel tool calls | "Fan-out num turno" | Modelo emite múltiplas chamadas de ferramenta numa mensagem do assistant |
+| Parallel ferramenta calls | "Fan-out num turno" | Modelo emite múltiplas chamadas de ferramenta numa mensagem do assistant |
 | `parallel_tool_calls` | "Flag da OpenAI" | Habilitar ou desabilitar emissão multi-chamada |
 | `disable_parallel_tool_use` | "Inverso do Anthropic" | Flag de opt-out; padrão é paralelo habilitado |
 | Id da chamada de ferramenta | "Handle de correlação" | Identificador por chamada que a mensagem resultado deve ecoar |
@@ -154,7 +154,7 @@ Esta aula produz `outputs/skill-parallel-call-safety-check.md`. Dado um registry
 ## Leituras Complementares
 
 - [OpenAI — Parallel function calling](https://platform.openai.com/docs/guides/function-calling#parallel-function-calling) — comportamento padrão e flag de opt-out
-- [Anthropic — Tool use: implementing tool use](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/implementing-tool-use) — `disable_parallel_tool_use` e resultado em lote
+- [Anthropic — Tool use: implementing ferramenta use](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/implementing-tool-use) — `disable_parallel_tool_use` e resultado em lote
 - [Google — Gemini function calling parallel section](https://ai.google.dev/gemini-api/docs/function-calling) — chamadas paralelas com correlação por id desde Gemini 3
 - [OpenAI — Streaming responses with tools](https://platform.openai.com/docs/api-reference/responses-streaming) — reassembly de argumentos em chunks pra streams da OpenAI
 - [Anthropic — Streaming messages](https://docs.anthropic.com/en/api/messages-streaming) — `content_block_delta` com `input_json_delta`

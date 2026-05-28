@@ -1,6 +1,6 @@
 # LLaVA-OneVision: Imagem Única, Multi-Imagem, Vídeo num Modelo Único
 
-> Antes do LLaVA-OneVision (Li et al., agosto de 2024), o mundo de VLMs abertos tinha linhagens separadas: LLaVA-1.5 pra imagens únicas, modelos multi-imagem como Mantis e VILA, modelos de vídeo como Video-LLaVA e Video-LLaMA. Cada um ganhou seu benchmark e falhou nos outros. LLaVA-OneVision argumentou que um único currículo podia treinar um modelo pra dominar os três cenários, e que os efeitos emergentes de transferência de tarefas (habilidades de imagem única exportadas pra vídeo, raciocínio multi-imagem exportado pra imagem única) superavam a soma de especialistas. A receita é enganosamente simples: um orçamento de tokens visuais que se mantém constante entre cenários, mais um currículo explícito que vai de imagem única pra OneVision (multi-imagem) pra vídeo. Essa lição lê o orçamento, o currículo e os comportamentos emergentes.
+> Antes do LLaVA-OneVision (Li et al., agosto de 2024), o mundo de VLMs abertos tinha linhagens separadas: LLaVA-1.5 pra imagens únicas, modelos multi-imagem como Mantis e VILA, modelos de vídeo como Video-LLaVA e Video-LLaMA. Cada um ganhou seu benchmark e falhou nos outros. LLaVA-OneVision argumentou que um único currículo podia treinar um modelo pra dominar os três cenários, e que os efeitos emergentes de transferência de tarefas (habilidades de imagem única exportadas pra vídeo, raciocínio multi-imagem exportado pra imagem única) superavam a soma de eespecificaçãoialistas. A receita é enganosamente simples: um orçamento de tokens visuais que se mantém constante entre cenários, mais um currículo explícito que vai de imagem única pra OneVision (multi-imagem) pra vídeo. Essa lição lê o orçamento, o currículo e os comportamentos emergentes.
 
 **Tipo:** Construção
 **Linguagens:** Python (stdlib, resolvedor de orçamento de tokens + planejador de currículo)
@@ -11,7 +11,7 @@
 
 - Projetar um orçamento de tokens visuais que se mantém constante entre entradas de imagem única, multi-imagem e vídeo.
 - Ordenar um currículo de treino que transfere habilidades de imagem única pra vídeo sem esquecimento catastrófico.
-- Explicar por que um único modelo supera especialistas no mesmo número de parâmetros quando o currículo é bem feito.
+- Explicar por que um único modelo supera eespecificaçãoialistas no mesmo número de parâmetros quando o currículo é bem feito.
 - Nomear as três capacidades emergentes reportadas pelo LLaVA-OneVision: raciocínio multi-câmera, set-of-mark prompting, agente de screenshot de iPhone.
 
 ## O Problema
@@ -44,7 +44,7 @@ A alocação mantém aproximadamente constante o total de tokens. O LLM nunca v�
 
 LLaVA-OneVision treina em três etapas:
 
-1. SFT de imagem única (estágio SI). Todos os dados são imagem-única-mais-texto. Treina em entrada AnyRes de alta resolução. Isso ensina percepção, OCR e compreensão refinada. Usa dados do LLaVA-NeXT mais dados específicos de imagem única do OneVision.
+1. SFT de imagem única (estágio SI). Todos os dados são imagem-única-mais-texto. Treina em entrada AnyRes de alta resolução. Isso ensina percepção, OCR e compreensão refinada. Usa dados do LLaVA-NeXT mais dados eespecificaçãoíficos de imagem única do OneVision.
 2. SFT OneVision (estágio OV). Mistura imagem-única + multi-imagem + vídeo (frames amostrados uniformemente). Treina no orçamento unificado de tokens. Isso ensina o modelo a lidar com formas heterogêneas de batch. Sem reset de pesos — continua do estágio SI.
 3. Transferência de tarefa (estágio TT). Continua com uma mistura-alvo de tarefas, geralmente mais pesada em multi-imagem ou vídeo dependendo do produto. Fine-tuning opcional pra deploy.
 
@@ -91,7 +91,7 @@ Qwen2.5-VL (Lição 12.09) faz escolhas diferentes. Usa M-RoPE e FPS dinâmico e
 - Reporta contagem de tokens esperada, FLOPs do LLM e quais cenários estão sub-tokenizados.
 - Imprime um cronograma de treino estágio a estágio.
 
-Use pra planejar um fine-tuning OneVision ou pra sanity-check o custo por requisição de um deploy de VLM.
+Use pra planejar um fine-tuning OneVision ou pra sanity-check o custo por requisição de um implantação de VLM.
 
 ## Entregue
 

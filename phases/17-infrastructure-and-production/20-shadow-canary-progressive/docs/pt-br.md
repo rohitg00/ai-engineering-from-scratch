@@ -1,6 +1,6 @@
 # Shadow Traffic, Canary Rollout e Progressive Deployment para LLMs
 
-> Rollouts de LLM combinam as partes mais difíceis de deploy de software: sem testes unitários, modos de falha difusos, sinais atrasados. A sequência é (1) shadow mode — duplica requests de produção para um modelo candidato, loga, compara com zero impacto no usuário; pega problemas óbvios de distribuição mas não garante qualidade; (2) canary rollout — migração progressiva de tráfego 10% → 25% → 50% → 75% → 100% com gates em cada etapa; acompanha percentis de latência, custo/requisição, taxa de erro/recusa, distribuição de tamanho do output, taxa de feedback do usuário; (3) testes A/B para alternativas distintas depois que a estabilidade é confirmada. O não-determinismo é irreductível — até 15% de variação de acurácia entre runs com inputs idênticos por causa da não-associatividade de ponto flutuante na GPU + variância de batch size. Custo é variável, não constante — um modelo 20% melhor pode ser 3x mais caro por chamada. Velocidade de rollback é decisiva: se o rollback exige redeploy, você é lento demais. Política fica em config/flags; modelo fica em registry com digest fixado; rollback = virar a política + reverter threshold + fixar modelo antigo em segundos.
+> Rollouts de LLM combinam as partes mais difíceis de implantação de software: sem testes unitários, modos de falha difusos, sinais atrasados. A sequência é (1) shadow mode — duplica requests de produção para um modelo candidato, loga, compara com zero impacto no usuário; pega problemas óbvios de distribuição mas não garante qualidade; (2) canary rollout — migração progressiva de tráfego 10% → 25% → 50% → 75% → 100% com gates em cada etapa; acompanha percentis de latência, custo/requisição, taxa de erro/recusa, distribuição de tamanho do output, taxa de feedback do usuário; (3) testes A/B para alternativas distintas depois que a estabilidade é confirmada. O não-determinismo é irreductível — até 15% de variação de acurácia entre runs com inputs idênticos por causa da não-associatividade de ponto flutuante na GPU + variância de batch size. Custo é variável, não constante — um modelo 20% melhor pode ser 3x mais caro por chamada. Velocidade de rollback é decisiva: se o rollback exige redeploy, você é lento demais. Política fica em config/flags; modelo fica em registry com digest fixado; rollback = virar a política + reverter threshold + fixar modelo antigo em segundos.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, simulador brincadeira de progressão canary)
@@ -10,7 +10,7 @@
 ## Objetivos de Aprendizado
 
 - Distinguir shadow mode (comparação de zero impacto), canary (tráfego progressivo ao vivo) e A/B (comparação confirmada por estabilidade).
-- Listar cinco métricas canary específicas de LLM (latência, custo/requisição, erro/recusa, distribuição de tamanho do output, feedback do usuário).
+- Listar cinco métricas canary eespecificaçãoíficas de LLM (latência, custo/requisição, erro/recusa, distribuição de tamanho do output, feedback do usuário).
 - Explicar por que o não-determinismo de LLM (até 15%) muda o que "estável" significa num rollout.
 - Projetar um caminho de rollback que leva segundos (virar política) e não horas (redeploy).
 
@@ -59,7 +59,7 @@ Um modelo 20% melhor pode ser 3x mais caro por chamada. Custo/request é um dos 
 
 ### Rollback é a arma
 
-- Flag de política (sistema de feature flag): virar percentual na config; leva segundos.
+- Flag de política (sistema de funcionalidade flag): virar percentual na config; leva segundos.
 - Fixação de modelo (digest do registry): modelo fixado não faz upgrade automático.
 - Rollback = reverter flag + definir digest fixado para o anterior. Segundos, não horas.
 

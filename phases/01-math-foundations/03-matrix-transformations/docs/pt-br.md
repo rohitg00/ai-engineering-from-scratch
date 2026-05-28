@@ -12,7 +12,7 @@
 - Construir matrizes de rotação, escala, cisalhamento e reflexão e aplicá-las a pontos 2D e 3D
 - Compor múltiplas transformações por multiplicação de matrizes e verificar que a ordem importa
 - Computar autovalores e autovetores de matrizes 2x2 a partir da equação característica
-- Explicar por que autovalores determinam direções de PCA, estabilidade de RNN e comportamento de clustering espectral
+- Explicar por que autovalores determinam direções de PCA, estabilidade de RNN e comportamento de clustering eespecificaçãotral
 
 ## O Problemo
 
@@ -174,7 +174,7 @@ Resultados diferentes. Multiplicação de matrizes não é comutativa.
 
 ### Autovalores e autovetores
 
-A maioria dos vetores muda de direção quando uma matriz os atinge. Autovetores são especiais: a matriz só os escala, nunca rotaciona. O fator de escala é o autovalor.
+A maioria dos vetores muda de direção quando uma matriz os atinge. Autovetores são eespecificaçãoiais: a matriz só os escala, nunca rotaciona. O fator de escala é o autovalor.
 
 ```
 A @ v = lambda * v
@@ -214,7 +214,7 @@ Isso diz: rotacionar para coordenadas de autovetores, escalar ao longo de cada e
 
 **Estabilidade.** Em redes recorrentes e sistemas dinâmicos, autovalores com magnitude > 1 causam explosão de saídas. Magnitude < 1 causa dissipação. Esse é o problema de gradiente evaporando/explodindo em uma frase.
 
-**Métodos espectrais.** Redes neurais de grafos usam autovalores da matriz de adjacência. Clustering espectral usa autovalores do Laplaciano. Os autovetores revelam a estrutura do grafo.
+**Métodos eespecificaçãotrais.** Redes neurais de grafos usam autovalores da matriz de adjacência. Clustering eespecificaçãotral usa autovalores do Laplaciano. Os autovetores revelam a estrutura do grafo.
 
 ### Determinante como fator de escala de volume
 
@@ -429,7 +429,7 @@ print(f"Rotacionar 90 ao redor de x: {np.round(rotated_x, 4)}")
 
 ## Entregue
 
-Esta aula constrói a base geométrica para PCA (Fase 2) e análise de pesos de rede neural. O código de autovalor/autovetor construído aqui é o mesmo algoritmo que potencializa redução de dimensionalidade, clustering espectral e análise de estabilidade em sistemas de ML em produção.
+Esta aula constrói a base geométrica para PCA (Fase 2) e análise de pesos de rede neural. O código de autovalor/autovetor construído aqui é o mesmo algoritmo que potencializa redução de dimensionalidade, clustering eespecificaçãotral e análise de estabilidade em sistemas de ML em produção.
 
 ## Exercícios
 
@@ -448,7 +448,7 @@ Esta aula constrói a base geométrica para PCA (Fase 2) e análise de pesos de 
 | Matriz de cisalhamento | "Inclina as coisas" | Uma matriz que desloca uma coordenada proporcionalmente a outra, transformando retângulos em paralelogramos. Determinante é 1. |
 | Reflexão | "Espelha as coisas" | Uma matriz que inverte o espaço ao longo de um eixo ou plano. Determinante é -1. |
 | Composição | "Faz duas coisas" | Multiplicar matrizes de transformação para encadear operações. A ordem importa: B @ A significa aplicar A primeiro, depois B. |
-| Autovetor | "Direção especial" | Uma direção que a matriz só escala, nunca rotaciona. A impressão digital da transformação. |
+| Autovetor | "Direção eespecificaçãoial" | Uma direção que a matriz só escala, nunca rotaciona. A impressão digital da transformação. |
 | Autovalor | "Quanto estica" | O fator escalar pelo qual a matriz escala seu autovetor. Pode ser negativo (inversão) ou complexo (rotação). |
 | Autodecomposição | "Quebrar a matriz" | Escrever uma matriz como V @ D @ V^(-1), separando-a em suas direções e magnitudes de escala fundamentais. |
 | Determinante | "Um único número de uma matriz" | O fator pelo qual a transformação escala a área (2D) ou volume (3D). Zero significa que a transformação é irreversível. |

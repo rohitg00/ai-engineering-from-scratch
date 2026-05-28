@@ -1,6 +1,6 @@
 # Capstone 15 — Harness de Segurança Constitucional + Intervalo de Red Team
 
-> Classificadores Constitucionais da Anthropic, Llama Guard 4 da Meta, ShieldGemma-2 da Google, Nemotron 3 Content Safety da NVIDIA e X-Guard para cobertura multilíngue definiram a stack de classificadores de segurança de 2026. garak, PyRIT, NVIDIA Aegis e promptfoo se tornaram as ferramentas padrão de avaliação adversarial. NeMo Guardrails v0.12 conecta tudo isso numa pipeline de produção. Este capstone conecta tudo: um harness de segurança em camadas ao redor de um app alvo, um agent de red team autônomo rodando 6+ famílias de ataque e um ciclo de auto-crítica constitucional que produz um delta mensurável de inofensividade.
+> Classificadores Constitucionais da Anthropic, Llama Guard 4 da Meta, ShieldGemma-2 da Google, Nemotron 3 Content Safety da NVIDIA e X-Guard para cobertura multilíngue definiram a stack de classificadores de segurança de 2026. garak, PyRIT, NVIDIA Aegis e promptfoo se tornaram as ferramentas padrão de avaliação adversarial. NeMo Guardrails v0.12 conecta tudo isso numa pipeline de produção. Este capstone conecta tudo: um harness de segurança em camadas ao redor de um app alvo, um agente de red team autônomo rodando 6+ famílias de ataque e um ciclo de auto-crítica constitucional que produz um delta mensurável de inofensividade.
 
 **Tipo:** Capstone
 **Linguagens:** Python (pipeline de segurança, red team), YAML (configs de política)
@@ -55,7 +55,7 @@ paralelo:
   agendador de red team
     -> garak (ataques clássicos)
     -> PyRIT (red team orquestrado)
-    -> agent autônomo de jailbreak (PAIR + TAP)
+    -> agente autônomo de jailbreak (PAIR + TAP)
     -> ataques de sufixo GCG
     -> multilíngue / troca de código
     -> adoção de persona multi-turn
@@ -81,7 +81,7 @@ saída: achados com pontuação CVSS + cronograma de divulgação + delta antes/
 
 3. **Cobertura de classificadores.** Carregue Llama Guard 4, X-Guard (multilíngue), ShieldGemma-2 (imagem). Rode cada um num pequeno conjunto rotulado para estabelecer baselines.
 
-4. **Agendador de red team.** Agende garak, PyRIT, um agent PAIR, um agent TAP, um runner GCG, um atacante multi-turn e um atacante de troca de código. Cada um roda numa fila separada.
+4. **Agendador de red team.** Agende garak, PyRIT, um agente PAIR, um agente TAP, um runner GCG, um atacante multi-turn e um atacante de troca de código. Cada um roda numa fila separada.
 
 5. **Suíte de ataques.** Seis famílias de ataque: (1) jailbreak automatizado PAIR, (2) tree-of-attacks TAP, (3) sufixo gradiente GCG, (4) codificação ASCII / base64 / rot13, (5) persona multi-turn, (6) troca de código multilíngue. Relate taxa de sucesso por família.
 
@@ -97,8 +97,8 @@ saída: achados com pontuação CVSS + cronograma de divulgação + delta antes/
 
 ```
 $ safety probe --model=target --family=PAIR --budget=50
-[atacante]   agent PAIR rodando no alvo
-[ataque]     tentativa 1/50: disfarçar query como pesquisa acadêmica ... bloqueado
+[atacante]   agente PAIR rodando no alvo
+[ataque]     tentativa 1/50: disfarçar consulta como pesquisa acadêmica ... bloqueado
 [ataque]     tentativa 2/50: apelar para roleplay ... bloqueado
 [ataque]     tentativa 3/50: coaxamento por cadeia-de-pensamento ... BEM-SUCEDIDO
 [achado]     CVSS 4.8 médio: bypass de roleplay no alvo
@@ -153,4 +153,4 @@ $ safety probe --model=target --family=PAIR --budget=50
 - [garak](https://github.com/NVIDIA/garak) — toolkit de red team NVIDIA
 - [PyRIT](https://github.com/Azure/PyRIT) — framework de red team Microsoft
 - [NeMo Guardrails v0.12](https://docs.nvidia.com/nemo-guardrails/) — framework de trilhas
-- [PAIR (arXiv:2310.08419)](https://arxiv.org/abs/2310.08419) — paper de agent de jailbreak
+- [PAIR (arXiv:2310.08419)](https://arxiv.org/abs/2310.08419) — paper de agente de jailbreak

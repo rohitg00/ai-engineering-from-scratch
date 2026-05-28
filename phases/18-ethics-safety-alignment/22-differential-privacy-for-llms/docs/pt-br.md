@@ -16,7 +16,7 @@
 
 ## O Problema
 
-LLMs memorizam. Carlini et al. 2021 mostrou que modelos de linguagem em produção reproduzem texto de treino verbatim sob demanda. DP é a defesa formal: treinar de modo que a prova de que a saída é insensível a qualquer exemplo individual de treino. As evidências de 2024-2025 mostram que DP-SGD é necessário mas os valores ε em deploy podem não corresponder ao threat model.
+LLMs memorizam. Carlini et al. 2021 mostrou que modelos de linguagem em produção reproduzem texto de treino verbatim sob demanda. DP é a defesa formal: treinar de modo que a prova de que a saída é insensível a qualquer exemplo individual de treino. As evidências de 2024-2025 mostram que DP-SGD é necessário mas os valores ε em implantação podem não corresponder ao threat model.
 
 ## O Conceito
 
@@ -76,7 +76,7 @@ Lições 20-21 são viés/justiça. Lição 22 é privacidade. Lição 23 é pro
 
 ## Entregue
 
-Esta lição produz `outputs/skill-dp-audit.md`. Dada uma alegação de DP em um deploy de modelo de linguagem, audita: os valores (ε, δ), o contabilizador usado, o protocolo de avaliação MIA, e se vetores de exposição de confiança foram avaliados.
+Esta lição produz `outputs/skill-dp-audit.md`. Dada uma alegação de DP em um implantação de modelo de linguagem, audita: os valores (ε, δ), o contabilizador usado, o protocolo de avaliação MIA, e se vetores de exposição de confiança foram avaliados.
 
 ## Exercícios
 
@@ -86,7 +86,7 @@ Esta lição produz `outputs/skill-dp-audit.md`. Dada uma alegação de DP em um
 
 3. Leia Nasr et al. 2025 sobre extração de dados de treino. Por que o sucesso da extração não colapsa sob ε moderado? O que isso implica sobre MIA como avaliação?
 
-4. Projete um deploy usando PMixED (arXiv:2403.15638) que opera inteiramente em tempo de inferência. Qual é o threat model que PMixED endereça e DP-SGD não?
+4. Projete um implantação usando PMixED (arXiv:2403.15638) que opera inteiramente em tempo de inferência. Qual é o threat model que PMixED endereça e DP-SGD não?
 
 5. Esboçe o ataque Reversão de DP via Feedback de LLM. Projete uma contra-medida que limite o vazamento de score de confiança e estime seu custo de deploy.
 

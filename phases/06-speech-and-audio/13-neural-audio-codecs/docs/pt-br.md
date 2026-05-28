@@ -4,7 +4,7 @@
 
 **Tipo:** Aprender
 **Idiomas:** Python
-**Pré-requisitos:** Fase 6 · 02 (Espectrogramas), Fase 10 · 11 (Quantização), Fase 5 · 19 (Tokenização Subword)
+**Pré-requisitos:** Fase 6 · 02 (Eespecificaçãotrogramas), Fase 10 · 11 (Quantização), Fase 5 · 19 (Tokenização Subword)
 **Tempo:** ~60 minutos
 
 ## O Problema

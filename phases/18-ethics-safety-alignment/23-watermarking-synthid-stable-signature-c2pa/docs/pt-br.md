@@ -12,7 +12,7 @@
 - Descrever marcação d'água em nível de token (estilo SynthID-text) e o mecanismo pela qual é detectável.
 - Descrever Stable Signature e o ataque de remoção de 2024 que o quebrou.
 - Enunciar o papel do C2PA e por que é complementar à marcação d'água.
-- Descrever as principais limitações: sinal específico do modelo, robustez sob paráfrase, e ataques que preservam significado (arXiv:2508.20228).
+- Descrever as principais limitações: sinal eespecificaçãoífico do modelo, robustez sob paráfrase, e ataques que preservam significado (arXiv:2508.20228).
 
 ## O Problema
 
@@ -60,7 +60,7 @@ Google integra ambos em Search, Ads e "Sobre esta imagem."
 
 ### Limitações
 
-- **Específico do modelo.** SynthID marca gerações de modelos habilitados com SynthID. Uma geração de modelo sem SynthID não é marcada, então "sem sinal SynthID" não é prova de autenticidade.
+- **Eespecificaçãoífico do modelo.** SynthID marca gerações de modelos habilitados com SynthID. Uma geração de modelo sem SynthID não é marcada, então "sem sinal SynthID" não é prova de autenticidade.
 - **Paráfrase.** Marcas d'água de texto não sobrevivem a paráfrase que preserva significado.
 - **Ataques de transformação.** arXiv:2508.20228 (2025) mostra ataques que preservam significado e destroem tanto marcas d'água de texto quanto muitas de imagem.
 - **Remoção por fine-tune.** Segundo "Stable Signature is Unstable," fine-tune pós-geração remove marcas d'água embutidas.
@@ -79,7 +79,7 @@ Lições 22-23 são sobre o que o modelo emite (dados privados, sinal de proveni
 
 ## Entregue
 
-Esta lição produz `outputs/skill-provenance-audit.md`. Dado um deploy de conteúdo com alegação de proveniência, audita: o mecanismo de marca d'água (se houver), a cadeia de assinatura C2PA (se houver), a robustez adversarial de cada um, e a cobertura por modalidade.
+Esta lição produz `outputs/skill-provenance-audit.md`. Dado um implantação de conteúdo com alegação de proveniência, audita: o mecanismo de marca d'água (se houver), a cadeia de assinatura C2PA (se houver), a robustez adversarial de cada um, e a cobertura por modalidade.
 
 ## Exercícios
 
@@ -89,9 +89,9 @@ Esta lição produz `outputs/skill-provenance-audit.md`. Dado um deploy de conte
 
 3. Leia Kirchenbauer et al. 2023 Seção 6 sobre robustez. Por que marcas d'água de texto falham sob paráfrase mas marcas d'água de imagem sobrevivem a corte?
 
-4. Projete um deploy que usa SynthID-text + metadados C2PA. Descreva a cadeia de proveniência que um consumidor vê. Identifique um modo de falha de cada componente.
+4. Projete um implantação que usa SynthID-text + metadados C2PA. Descreva a cadeia de proveniência que um consumidor vê. Identifique um modo de falha de cada componente.
 
-5. O resultado de 2024 "Stable Signature is Unstable" mostra que fine-tune remove a marca d'água de imagem. Projete um controle de deploy que limite esse ataque — por exemplo, exigir releases assinados de checkpoints fine-tuned.
+5. O resultado de 2024 "Stable Signature is Unstable" mostra que fine-tune remove a marca d'água de imagem. Projete um controle de implantação que limite esse ataque — por exemplo, exigir releases assinados de checkpoints fine-tuned.
 
 ## Termos-Chave
 
@@ -111,4 +111,4 @@ Esta lição produz `outputs/skill-provenance-audit.md`. Dado um deploy de conte
 - [Fernandez et al. — Stable Signature (ICCV 2023, arXiv:2303.15435)](https://arxiv.org/abs/2303.15435) — paper de marca d'água de imagem
 - ["Stable Signature is Unstable" (arXiv:2405.07145)](https://arxiv.org/abs/2405.07145) — o ataque de remoção
 - [Google DeepMind — SynthID](https://deepmind.google/models/synthid/) — a marca d'água cross-modal
-- [C2PA 2.2 Explainer (2025)](https://c2pa.org/specifications/specifications/2.2/explainer/Explainer.html) — padrão de metadados
+- [C2PA 2.2 Explainer (2025)](https://c2pa.org/especificaçãoifications/especificaçãoifications/2.2/explainer/Explainer.html) — padrão de metadados

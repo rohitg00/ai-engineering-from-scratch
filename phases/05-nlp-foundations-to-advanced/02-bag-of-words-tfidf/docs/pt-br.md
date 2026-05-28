@@ -171,7 +171,7 @@ Parâmetros que mudam tudo:
 - Detecção de spam, rotulamento de tópicos, sinalização de anomalias em logs. Presença de palavra é o que importa; nuances semânticas não.
 - Registros com poucos dados (centenas de exemplos rotulados). TF-IDF com regressão logística não tem custo de pre-treinamento.
 - Qualquer lugar onde latência importa. TF-IDF com modelo linear responde em microssegundos. Embedding de documento via transformer leva 10-100ms.
-- Sistemas que precisam explicar suas previsões. Inspecione os coeficientes do classificador. As palavras positivas no topo são a razão.
+- Sistemas que precisam explicar suas previsões. Inespecificaçãoione os coeficientes do classificador. As palavras positivas no topo são a razão.
 
 ### Quando TF-IDF falha
 
@@ -255,6 +255,6 @@ Example output:
 
 ## Leitura Complementar
 
-- [scikit-learn — feature extraction from text](https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction) — referência canônica da API, mais notas sobre cada parâmetro.
+- [scikit-learn — funcionalidade extraction from text](https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction) — referência canônica da API, mais notas sobre cada parâmetro.
 - [Salton, G., & Buckley, C. (1988). Term-weighting approaches in automatic text retrieval](https://www.sciencedirect.com/science/article/pii/0306457388900210) — o paper que fez TF-IDF ser o padrão por uma década.
 - ["Why TF-IDF Still Beats Embeddings" — Ashfaque Thonikkadavan (Medium)](https://medium.com/@cmtwskb/why-tf-idf-still-beats-embeddings-ad85c123e1b2) — visão de 2026 de quando o método antigo ganha e por quê.

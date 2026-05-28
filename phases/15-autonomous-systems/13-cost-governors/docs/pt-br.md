@@ -1,6 +1,6 @@
 # Orçamentos de Ação, Limites de Iteração e Controladores de Custo
 
-> O custo mensal de LLM de um agent de e-commerce de médio porte saltou de $1.200 para $4.800 depois que a equipe habilitou a skill de "rastreamento de pedidos." Isso não é um bug de precificação. É um agent que encontrou um novo loop e continuou gastando dentro dele. O Agent Governance Toolkit da Microsoft (2 de abril de 2026) codifica a defesa contra essa classe: `max_tokens` por request, orçamentos de token e dólar por tarefa, limites por dia/mês, limites de iteração, roteamento de modelo em camadas, cache de prompt, janela de contexto, checkpoints HITL em ações caras, interruptores de emergência em violação de orçamento. O Claude Code Agent SDK da Anthropic disponibiliza as mesmas primitivas com nomes diferentes. Limites de velocidade financeira — ex: cortar acesso se >$50 em 10 minutos — pegam loops mais rápido que limites mensais.
+> O custo mensal de LLM de um agente de e-commerce de médio porte saltou de $1.200 para $4.800 depois que a equipe habilitou a skill de "rastreamento de pedidos." Isso não é um bug de precificação. É um agente que encontrou um novo loop e continuou gastando dentro dele. O Agent Governance Toolkit da Microsoft (2 de abril de 2026) codifica a defesa contra essa classe: `max_tokens` por request, orçamentos de token e dólar por tarefa, limites por dia/mês, limites de iteração, roteamento de modelo em camadas, cache de prompt, janela de contexto, checkpoints HITL em ações caras, interruptores de emergência em violação de orçamento. O Claude Code Agent SDK da Anthropic disponibiliza as mesmas primitivas com nomes diferentes. Limites de velocidade financeira — ex: cortar acesso se >$50 em 10 minutos — pegam loops mais rápido que limites mensais.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, simulador de controlador de custo em camadas)
@@ -9,9 +9,9 @@
 
 ## O Problema
 
-Agents autônomos gastam dinheiro real em cada turno. A saída ruim de um chatbot é uma resposta ruim; o loop ruim de um agent é uma conta. O termo documentado pela indústria para o modo de falha é "Denial of Wallet" — o agent continua raciocinando, continua chamando ferramentas, continua cobrando, e nada o para porque nada foi projetado para isso.
+Agents autônomos gastam dinheiro real em cada turno. A saída ruim de um chatbot é uma resposta ruim; o loop ruim de um agente é uma conta. O termo documentado pela indústria para o modo de falha é "Denial of Wallet" — o agente continua raciocinando, continua chamando ferramentas, continua cobrando, e nada o para porque nada foi projetado para isso.
 
-O fix não é um número. É uma stack de limites em diferentes escalas de tempo e granularidades: por request, por tarefa, por hora, por dia, por mês. Uma stack bem projetada pega um loop runaway em minutos, um vazamento lento em horas, e uma versão ruim em um dia. A mesma stack mantém um orçamento quando o agent é de longo prazo e autônomo.
+O fix não é um número. É uma stack de limites em diferentes escalas de tempo e granularidades: por request, por tarefa, por hora, por dia, por mês. Uma stack bem projetada pega um loop runaway em minutos, um vazamento lento em horas, e uma versão ruim em um dia. A mesma stack mantém um orçamento quando o agente é de longo prazo e autônomo.
 
 Essa é uma aula de engenharia: a matemática é trivial, a disciplina é onde as equipes falham. A lista de limites abaixo é toda nomeada tanto no Agent Governance Toolkit da Microsoft quanto na documentação do Claude Code Agent SDK da Anthropic.
 
@@ -34,7 +34,7 @@ Essa é uma aula de engenharia: a matemática é trivial, a disciplina é onde a
 
 ### Por que a stack, não um limite
 
-Um único limite mensal pega um agent runaway só depois que a carteira acabou. Um único limite por request não pega nada no nível de sessão. Diferentes modos de falha requerem diferentes escalas de tempo:
+Um único limite mensal pega um agente runaway só depois que a carteira acabou. Um único limite por request não pega nada no nível de sessão. Diferentes modos de falha requerem diferentes escalas de tempo:
 
 - **Loop runaway** (agent preso em retry de 5 segundos): pego por limite de velocidade.
 - **Vazamento lento** (agent fazendo ~2x o trabalho esperado por tarefa): pego por limite diário.
@@ -58,21 +58,21 @@ O Agent Governance Toolkit da Microsoft cobre o OWASP Agentic Top 10 e o Artigo 
 
 ### O caso observado de $1.200 → $4.800
 
-O caso real na documentação da Microsoft: um agent de e-commerce cujo custo mensal triplicou depois que uma nova ferramenta foi adicionada. A ferramenta permitia que o agent fizesse polling de status do pedido em cada sessão. Sem detecção de loop. Sem limite por ferramenta. Sem alerta de crescimento semana a semana. O fix foi um limite por ferramenta mais um alerta de crescimento diário. Esse é um template: cada nova superfície de ferramenta é um novo potencial loop; cada nova ferramenta precisa do seu próprio limite e do seu próprio alerta.
+O caso real na documentação da Microsoft: um agente de e-commerce cujo custo mensal triplicou depois que uma nova ferramenta foi adicionada. A ferramenta permitia que o agente fizesse polling de status do pedido em cada sessão. Sem detecção de loop. Sem limite por ferramenta. Sem alerta de crescimento semana a semana. O fix foi um limite por ferramenta mais um alerta de crescimento diário. Esse é um template: cada nova superfície de ferramenta é um novo potencial loop; cada nova ferramenta precisa do seu próprio limite e do seu próprio alerta.
 
 ## Use
 
-`code/main.py` simula uma execução de agent com e sem stack de controladores de custo em camadas. O agent simulado deriva para um loop de polling após alguns turnos; a stack em camadas pega dentro da janela de velocidade enquanto um único limite mensal não dispararia senão dias depois.
+`code/main.py` simula uma execução de agente com e sem stack de controladores de custo em camadas. O agente simulado deriva para um loop de polling após alguns turnos; a stack em camadas pega dentro da janela de velocidade enquanto um único limite mensal não dispararia senão dias depois.
 
 ## Entregue
 
-`outputs/skill-agent-budget-audit.md` audita a stack de controladores de custo de um deploy de agent proposto e sinaliza camadas ausentes.
+`outputs/skill-agent-budget-audit.md` audita a stack de controladores de custo de um implantação de agente proposto e sinaliza camadas ausentes.
 
 ## Exercícios
 
-1. Rode `code/main.py`. Confirme que o limite de velocidade dispara antes do limite de iteração em uma trajetória de loop de polling. Agora desabilite o limite de velocidade e meça quanto o agent "gasta" antes que o limite de iteração o pegue.
+1. Rode `code/main.py`. Confirme que o limite de velocidade dispara antes do limite de iteração em uma trajetória de loop de polling. Agora desabilite o limite de velocidade e meça quanto o agente "gasta" antes que o limite de iteração o pegue.
 
-2. Projete um conjunto de limites por ferramenta para um agent de navegador (Aula 11). Qual ferramenta precisa do limite mais apertado? Qual pode rodar sem limite sem risco?
+2. Projete um conjunto de limites por ferramenta para um agente de navegador (Aula 11). Qual ferramenta precisa do limite mais apertado? Qual pode rodar sem limite sem risco?
 
 3. Leia a documentação do Agent Governance Toolkit da Microsoft. Liste cada tipo de limite nomeado pelo toolkit. Mapeie cada um para um dos modos de falha (loop runaway, vazamento lento, versão ruim, surto).
 
@@ -84,9 +84,9 @@ O caso real na documentação da Microsoft: um agent de e-commerce cujo custo me
 
 | Termo | O que dizem | O que significa de verdade |
 |---|---|---|
-| Denial of Wallet | "Conta runaway" | Loop de agent gerando gasto sem limite para parar |
+| Denial of Wallet | "Conta runaway" | Loop de agente gerando gasto sem limite para parar |
 | max_tokens | "Limite por request" | Teto do tamanho de um único completion |
-| max_turns | "Limite de iteração" | Teto de iterações do loop de agent em uma sessão |
+| max_turns | "Limite de iteração" | Teto de iterações do loop de agente em uma sessão |
 | max_budget_usd | "Interruptor de emergência em dólar" | Limite de custo da sessão; aborta em violação |
 | Limite de velocidade | "Limite de taxa" | Limite de gasto por janela curta (ex: $50 / 10 min) |
 | Roteamento em camadas | "Modelo menor primeiro" | Modelo barato como padrão; escalar somente quando classificador autoriza |
@@ -95,8 +95,8 @@ O caso real na documentação da Microsoft: um agent de e-commerce cujo custo me
 
 ## Leituras Adicionais
 
-- [Anthropic Claude Code Agent SDK — agent loop and budgets](https://code.claude.com/docs/en/agent-sdk/agent-loop) — `max_turns`, `max_budget_usd`, allowlists de ferramenta.
+- [Anthropic Claude Code Agent SDK — agente loop and budgets](https://code.claude.com/docs/en/agent-sdk/agent-loop) — `max_turns`, `max_budget_usd`, allowlists de ferramenta.
 - [Microsoft Agent Framework — human-in-the-loop and governance](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) — checkpoints de controlador de custo.
 - [Anthropic — Claude Managed Agents overview](https://platform.claude.com/docs/en/managed-agents/overview) — controles de custo do lado do provedor.
 - [Anthropic — Prompt caching (Claude API docs)](https://platform.claude.com/docs/en/prompt-caching) — mecânica de cache.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — perfil de custo para agents de longo prazo.
+- [Anthropic — Measuring agente autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — perfil de custo para agentes de longo prazo.

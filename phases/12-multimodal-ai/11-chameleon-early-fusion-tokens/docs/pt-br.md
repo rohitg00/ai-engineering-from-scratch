@@ -34,7 +34,7 @@ O tokenizer é um autoencoder variacional com quantização vetorial. A arquitet
 
 - Encoder: CNN + ViT que mapeia imagem para um mapa de features espacial, digamos 32x32 features de dim 256.
 - Codebook: um vocabulário aprendido de K vetores (Chameleon usa 8192), também dim 256.
-- Quantização: pra cada feature espacial, busca a entrada mais próxima do codebook por distância L2. Substitui a feature contínua pelo índice inteiro.
+- Quantização: pra cada funcionalidade espacial, busca a entrada mais próxima do codebook por distância L2. Substitui a funcionalidade contínua pelo índice inteiro.
 - Decoder: CNN que leva features quantizadas de volta pra pixels.
 
 Treinamento: loss de reconstrução do VAE + loss de compromisso + loss do codebook. Os índices do codebook formam um alfabeto discreto pra imagens.
@@ -64,7 +64,7 @@ Comparado com VLMs de adapter onde a geração é só texto, Chameleon reabre a 
 
 Treinamento de fusão precoce é instável em escala. O paper do Chameleon documenta três truques:
 
-- QK-Norm. Aplica LayerNorm nas projeções de query e key dentro da attention, antes do produto escalar. Previne explosão de magnitude de logits em profundidade. Usado por múltiplos modelos grandes pós-2024.
+- QK-Norm. Aplica LayerNorm nas projeções de consulta e key dentro da attention, antes do produto escalar. Previne explosão de magnitude de logits em profundidade. Usado por múltiplos modelos grandes pós-2024.
 - Posicionamento de dropout. Dropout após cada soma residual, não só após attention e MLP. Regularização mais necessária quando gradientes de tokens visuais podem dominar.
 - Ordenação de LayerNorm. Pre-LN no ramo residual (padrão), mais um LN extra na skip connection do último bloco. Estabiliza o fluxo de gradiente na última camada.
 
@@ -111,7 +111,7 @@ O código intencionalmente mantém o transformer minúsculo (bigramas) pra você
 
 ## Implemente
 
-Esta aula produz `outputs/skill-tokenizer-vs-adapter-picker.md`. Dada uma spec de produto (só compreensão vs compreensão + geração, qualidade de imagem requerida, orçamento de custo), escolhe entre família Chameleon (fusão precoce) e família LLaVA (fusão tardia) e justifica com regras de bolso quantitativas.
+Esta aula produz `outputs/skill-tokenizer-vs-adapter-picker.md`. Dada uma eespecificaçãoificação de produto (só compreensão vs compreensão + geração, qualidade de imagem requerida, orçamento de custo), escolhe entre família Chameleon (fusão precoce) e família LLaVA (fusão tardia) e justifica com regras de bolso quantitativas.
 
 ## Exercícios
 
@@ -119,7 +119,7 @@ Esta aula produz `outputs/skill-tokenizer-vs-adapter-picker.md`. Dada uma spec d
 
 2. Uma imagem 4K (3840x2160) na mesma densidade VQ-VAE produz quantos tokens de imagem? Um modelo estilo Chameleon consegue gerar uma imagem 4K em uma chamada de inferência? O que quebra primeiro — contexto, qualidade do tokenizer, ou KV cache?
 
-3. Implemente QK-Norm em Python puro. Dado uma query e key de 64 dims, mostre o produto escalar antes e depois do LayerNorm. Por que controle de magnitude é importante em profundidade?
+3. Implemente QK-Norm em Python puro. Dado uma consulta e key de 64 dims, mostre o produto escalar antes e depois do LayerNorm. Por que controle de magnitude é importante em profundidade?
 
 4. Leia a Seção 2.3 do Chameleon sobre estabilidade de treinamento. Descreva o modo de falha exato que o paper observou no 34B sem QK-Norm. Qual era a "assinatura de explosão de norm"?
 
@@ -132,7 +132,7 @@ Esta aula produz `outputs/skill-tokenizer-vs-adapter-picker.md`. Dada uma spec d
 | Fusão precoce | "Tokens unificados" | Imagens convertidas em tokens discretos compartilhando o vocabulário do transformer desde o step 1 |
 | VQ-VAE | "Tokenizer de imagem" | CNN + ViT + codebook que mapeia imagens pra índices inteiros que o transformer pode prever |
 | Vocabulário compartilhado | "Um dicionário" | Um único espaço de IDs de tokens cobrindo texto + imagem + separadores de modalidade |
-| QK-Norm | "Estabilizador de attention" | LayerNorm aplicada em query e key antes do produto escalar, previne explosão de norm |
+| QK-Norm | "Estabilizador de attention" | LayerNorm aplicada em consulta e key antes do produto escalar, previne explosão de norm |
 | Geração de modalidade mista | "Saída texto + imagem" | Inferência que produz autonomamente tokens de texto e imagem intercalados em uma passada |
 | Tamanho do codebook | "K entradas" | Número de vetores discretos que o VQ-VAE pode quantizar; troca compressão por fidelidade |
 | Teto do tokenizer | "Limite de reconstrução" | Melhor PSNR alcançável decodificando tokens VQ; limita a qualidade de imagem do modelo |

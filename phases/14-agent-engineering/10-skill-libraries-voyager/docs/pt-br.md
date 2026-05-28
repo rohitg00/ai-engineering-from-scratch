@@ -28,17 +28,17 @@ A resposta do Voyager: tratar cada capacidade reutilizável como um trecho de c�
 
 ### Três componentes
 
-Voyager (arXiv:2305.16291) estrutura um agent ao redor de:
+Voyager (arXiv:2305.16291) estrutura um agente ao redor de:
 
-1. **Currículo automático.** Um propositor guiado por curiosidade escolhe a próxima tarefa baseado no conjunto de skills atual do agent e no estado do ambiente. Exploração é bottom-up.
-2. **Biblioteca de skills.** Cada skill é código executável. Novas skills são adicionadas quando uma tarefa dá certo. Skills são recuperadas por similaridade query-to-descrição.
-3. **Mecanismo de prompting iterativo.** Em falha, o agent recebe erros de execução, feedback do ambiente e saída de auto-verificação, depois refina a skill.
+1. **Currículo automático.** Um propositor guiado por curiosidade escolhe a próxima tarefa baseado no conjunto de skills atual do agente e no estado do ambiente. Exploração é bottom-up.
+2. **Biblioteca de skills.** Cada skill é código executável. Novas skills são adicionadas quando uma tarefa dá certo. Skills são recuperadas por similaridade consulta-to-descrição.
+3. **Mecanismo de prompting iterativo.** Em falha, o agente recebe erros de execução, feedback do ambiente e saída de auto-verificação, depois refina a skill.
 
-A avaliação em Minecraft (Wang et al., 2024): 3.3x mais itens únicos, 8.5x mais rápido em ferramentas de pedra, 6.4x mais rápido em ferramentas de ferro, 2.3x mais percorrido no mapa versus baselines. Os números são específicos de Minecraft mas o padrão transfere.
+A avaliação em Minecraft (Wang et al., 2024): 3.3x mais itens únicos, 8.5x mais rápido em ferramentas de pedra, 6.4x mais rápido em ferramentas de ferro, 2.3x mais percorrido no mapa versus baselines. Os números são eespecificaçãoíficos de Minecraft mas o padrão transfere.
 
 ### Espaço de ação = código
 
-A maioria dos agents emite comandos primitivos. Voyager emite funções JavaScript. Uma skill é:
+A maioria dos agentes emite comandos primitivos. Voyager emite funções JavaScript. Uma skill é:
 
 ```
 async function craftIronPickaxe(bot) {
@@ -51,7 +51,7 @@ async function craftIronPickaxe(bot) {
 
 Composta de sub-skills. Armazenada com chave em descrição e embedding. Recuperada como programa, não como prompt.
 
-Essa é a skill do Claude Agent SDK de 2026: um trecho de código nomeado e recuperável mais instruções que o agent carrega sob demanda.
+Essa é a skill do Claude Agent SDK de 2026: um trecho de código nomeado e recuperável mais instruções que o agente carrega sob demanda.
 
 ### Recuperação de skills
 
@@ -78,9 +78,9 @@ Isso é Self-Refine (Aula 05) aplicado a geração de código com verificação 
 
 ### Currículo e exploração
 
-Módulo de currículo do Voyager propõe tarefas como "construir um abrigo perto do lago" baseado no que o agent tem e no que ele ainda não fez. O propositor usa o estado do ambiente + inventário de skills pra escolher uma tarefa logo acima da capacidade atual — o ponto doce da exploração.
+Módulo de currículo do Voyager propõe tarefas como "construir um abrigo perto do lago" baseado no que o agente tem e no que ele ainda não fez. O propositor usa o estado do ambiente + inventário de skills pra escolher uma tarefa logo acima da capacidade atual — o ponto doce da exploração.
 
-Pra agents de produção isso se traduz num operador "o que tá faltando": dada a biblioteca atual de skills e um domínio, quais skills nós ainda não cobrimos? Times tipicamente implementam isso manualmente como revisão de currículo.
+Pra agentes de produção isso se traduz num operador "o que tá faltando": dada a biblioteca atual de skills e um domínio, quais skills nós ainda não cobrimos? Times tipicamente implementam isso manualmente como revisão de currículo.
 
 ### Onde esse padrão dá errado
 
@@ -94,7 +94,7 @@ Pra agents de produção isso se traduz num operador "o que tá faltando": dada 
 
 - `Skill` — nome, descrição, código (como string), versão, tags, dependências.
 - `SkillLibrary` — registrar, buscar (sobreposição de token), compor (ordenação topológica de deps) e refinar (incremento de versão na atualização).
-- Um agent programado que registra três skills primitivas, compõe uma quarta, encontra uma falha e refina.
+- Um agente programado que registra três skills primitivas, compõe uma quarta, encontra uma falha e refina.
 
 Rode:
 
@@ -107,8 +107,8 @@ O trace mostra escritas na biblioteca, recuperação, composição, uma execuç�
 ## Use
 
 - **Skills do Claude Agent SDK** (Anthropic) — referência de 2026: cada skill tem descrição, código e instruções; carregadas sob demanda durante sessão de agent.
-- **skillkit** (npm: skillkit) — gerenciamento de skills cross-agent pra 32+ agents de código AI.
-- **Bibliotecas de skills customizadas** — específicas de domínio (skills SQL pra agents de dados, skills Terraform pra agents de infra). O padrão Voyager escala pra baixo.
+- **skillkit** (npm: skillkit) — gerenciamento de skills cross-agent pra 32+ agentes de código AI.
+- **Bibliotecas de skills customizadas** — eespecificaçãoíficas de domínio (skills SQL pra agentes de dados, skills Terraform pra agentes de infra). O padrão Voyager escala pra baixo.
 - **`tools` do OpenAI Agents SDK** — no extremo baixo; cada ferramenta é uma skill leve.
 
 ## Entregue
@@ -120,7 +120,7 @@ O trace mostra escritas na biblioteca, recuperação, composição, uma execuç�
 1. Adicione um detector de ciclo de dependência em `compose()`. O que acontece quando skill A depende de B que depende de A? Erro vs aviso?
 2. Implemente fixação de versão por skill. Quando uma skill pai compõe filho `crafting@1`, uma refinação pra `crafting@2` não deve atualizar silenciosamente o pai.
 3. Substitua recuperação por sobreposição de tokens por embeddings de sentence-transformers (ou implementação stdlib de BM25). Meça retrieval@5 numa biblioteca de exemplo de 50 skills.
-4. Adicione um agent de "currículo": dada a biblioteca atual e uma descrição de domínio, proponha 5 skills faltantes. Rode semanalmente.
+4. Adicione um agente de "currículo": dada a biblioteca atual e uma descrição de domínio, proponha 5 skills faltantes. Rode semanalmente.
 5. Leia a documentação de skills do Claude Agent SDK da Anthropic. Porte a biblioteca de exemplo pro schema de skills do SDK. O que muda na descoberta?
 
 ## Termos-Chave
@@ -139,5 +139,5 @@ O trace mostra escritas na biblioteca, recuperação, composição, uma execuç�
 
 - [Wang et al., Voyager (arXiv:2305.16291)](https://arxiv.org/abs/2305.16291) — o paper original de skill-library
 - [Claude Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview) — skills como a produto de 2026
-- [Anthropic, Building agents with the Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk) — skills e subagents na prática
+- [Anthropic, Building agentes with the Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk) — skills e subagents na prática
 - [Madaan et al., Self-Refine (arXiv:2303.17651)](https://arxiv.org/abs/2303.17651) — o loop de refinamento por baixo do Voyager

@@ -28,7 +28,7 @@ Um invariante é uma propriedade que deve valer antes e depois de cada auto-modi
 
 Invariantes são verificados por código externo que o loop não pode editar. Se uma modificação proposta violar um invariante, é rejeitada. Isso pega o modo de adulteração de avaliador no estilo DGM (Aula 4).
 
-A parte difícil é escolher invariantes que são necessários para segurança e computáveis em tempo razoável. Sobreespecificar trava progresso; subespecificar deixa o loop passar por cima de propriedades importantes.
+A parte difícil é escolher invariantes que são necessários para segurança e computáveis em tempo razoável. Sobreeespecificaçãoificar trava progresso; subeespecificaçãoificar deixa o loop passar por cima de propriedades importantes.
 
 ### Primitiva 2: âncoras de alinhamento
 
@@ -67,7 +67,7 @@ A implicação para nossas primitivas: elas não podem fechar o problema de segu
 
 ### Um exemplo trabalhado
 
-Suponha que um agent proponha uma edição. A stack de verificação:
+Suponha que um agente proponha uma edição. A stack de verificação:
 
 1. Verificações de invariantes: hashes de módulo, manifesto de permissões de ferramenta, cabeçalho constitucional.
 2. Verificação de âncora: declaração de objetivo corresponde à versão aprovada (byte a byte ou semanticamente).
@@ -78,7 +78,7 @@ Os quatro devem passar para a edição ser aceita. Qualquer falha individual pau
 
 ## Use
 
-`code/main.py` roda um loop de auto-aprimoramento limitado no brinquedo DGM da Aula 4, mas com as quatro primitivas sobrepostas. Cada primitiva pode ser habilitada ou desabilitada individualmente. A demonstração é que cada primitiva pega uma classe específica de falha, e que remover qualquer uma delas deixa essa classe passar.
+`code/main.py` roda um loop de auto-aprimoramento limitado no brinquedo DGM da Aula 4, mas com as quatro primitivas sobrepostas. Cada primitiva pode ser habilitada ou desabilitada individualmente. A demonstração é que cada primitiva pega uma classe eespecificaçãoífica de falha, e que remover qualquer uma delas deixa essa classe passar.
 
 ## Entregue
 
@@ -92,7 +92,7 @@ Os quatro devem passar para a edição ser aceita. Qualquer falha individual pau
 
 3. Desabilite a restrição multi-objetivo. Mostre o loop convergindo no eixo de performance enquanto um eixo de segurança cai.
 
-4. Projete uma âncora de alinhamento para um agent de codificação. Que texto, armazenado onde, verificado como?
+4. Projete uma âncora de alinhamento para um agente de codificação. Que texto, armazenado onde, verificado como?
 
 5. Leia o resumo do RSI Workshop do ICLR 2026. Escolha uma das quatro primitivas e proponha uma melhoria concreta sobre o estado da arte atual.
 

@@ -9,7 +9,7 @@
 
 ## O Problema
 
-Construa um assistente end-to-end que:
+Construa um assistente de ponta a ponta que:
 
 1. Captura entrada do microfone (16 kHz mono).
 2. Detecta início/fim da fala do usuário.
@@ -148,12 +148,12 @@ Veja `code/main.py` para uma simulação funcional que conecta os sete component
 
 ## Entregue
 
-Salve como `outputs/skill-voice-assistant-architect.md`. Dado orçamento + escala + idioma + restrições de compliance, produza uma especificação completa de pilha.
+Salve como `outputs/skill-voice-assistant-architect.md`. Dado orçamento + escala + idioma + restrições de conformidade, produza uma eespecificaçãoificação completa de pilha.
 
 ## Exercícios
 
-1. **Fácil.** Execute `code/main.py`. Simula um turno completo end-to-end com módulos stub e imprime latência por estágio.
-2. **Médio.** Substitua o stub STT por um modelo Whisper real em um `.wav` pré-gravado. Meça WER e latência end-to-end.
+1. **Fácil.** Execute `code/main.py`. Simula um turno completo de ponta a ponta com módulos stub e imprime latência por estágio.
+2. **Médio.** Substitua o stub STT por um modelo Whisper real em um `.wav` pré-gravado. Meça WER e latência de ponta a ponta.
 3. **Difícil.** Adicione chamada de ferramenta: implemente `get_weather` (qualquer API) e `set_timer`. Roteie o LLM pelas ferramentas e verifique que quando o usuário diz "defina um timer de 5 minutos" a função correta dispara e a resposta falada confirma.
 
 ## Termos Chave
@@ -169,9 +169,9 @@ Salve como `outputs/skill-voice-assistant-architect.md`. Dado orçamento + escal
 
 ## Leitura Adicional
 
-- [LiveKit — voice agent quickstart](https://docs.livekit.io/agents/) — referência de produção.
-- [Pipecat — voice agent examples](https://github.com/pipecat-ai/pipecat) — framework amigável ao DIY.
+- [LiveKit — voice agente quickstart](https://docs.livekit.io/agents/) — referência de produção.
+- [Pipecat — voice agente examples](https://github.com/pipecat-ai/pipecat) — framework amigável ao DIY.
 - [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) — caminho gerenciado nativo de voz.
 - [Kyutai Moshi](https://github.com/kyutai-labs/moshi) — referência full-duplex (Lição 15).
 - [Porcupine wake-word](https://picovoice.ai/products/porcupine/) — gate de wake-word.
-- [Anthropic — tool use guide](https://docs.anthropic.com/en/docs/build-with-claude/tool-use) — chamada de função LLM.
+- [Anthropic — ferramenta use guide](https://docs.anthropic.com/en/docs/build-with-claude/tool-use) — chamada de função LLM.

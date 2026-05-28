@@ -12,7 +12,7 @@
 - Explicar a diferença entre o Client SDK da Anthropic (API cru) e o Claude Agent SDK (formato harness).
 - Descrever subagents — paralelização e isolamento de contexto — e quando usá-los.
 - Nomear a superfície do session store do Python SDK (`append`, `load`, `list_sessions`, `delete`, `list_subkeys`) e o papel do `--session-mirror`.
-- Implementar um harness em stdlib com tools built-in, spawning de subagent com contexto isolado, lifecycle hooks e session store.
+- Implementar um harness em stdlib com ferramentas built-in, spawning de subagent com contexto isolado, lifecycle hooks e session store.
 
 ## O Problema
 
@@ -23,11 +23,11 @@ Uma API cru de LLM te dá um round-trip. Um agente de precisa de execução de t
 ### Client SDK vs Agent SDK
 
 - **Client SDK (`anthropic`).** Messages API cru. Você controla o loop, as tools, o estado.
-- **Agent SDK (`claude-agent-sdk`).** Execução de tools built-in, conexões MCP, hooks, spawning de subagent, session store. O loop do Claude Code como biblioteca.
+- **Agent SDK (`claude-agent-sdk`).** Execução de ferramentas built-in, conexões MCP, hooks, spawning de subagent, session store. O loop do Claude Code como biblioteca.
 
 ### Tools built-in
 
-O SDK traz 10+ tools de fábrica: leitura/escrita de arquivo, shell, grep, glob, web fetch, e mais. Tools customizadas são registradas via a interface padrão de tool-schema.
+O SDK traz 10+ ferramentas de fábrica: leitura/escrita de arquivo, shell, grep, glob, web fetch, e mais. Tools customizadas são registradas via a interface padrão de tool-schema.
 
 ### Subagents
 
@@ -100,7 +100,7 @@ O trace mostra isolamento de contexto dos subagentes (tamanho do contexto do orq
 - **Claude Agent SDK** para produtos Claude-first que querem o formato harness do Claude Code.
 - **Claude Managed Agents** pra trabalho assíncrono de longa duração hospedado.
 - **OpenAI Agents SDK** (Aula 16) pra contrapartes OpenAI-first.
-- **LangGraph + tools customizadas** se você quer a máquina de estados em formato graf ao invés disso.
+- **LangGraph + ferramentas customizadas** se você quer a máquina de estados em formato graf ao invés disso.
 
 ## Entregue
 
@@ -130,6 +130,6 @@ O trace mostra isolamento de contexto dos subagentes (tamanho do contexto do orq
 ## Leitura Complementar
 
 - [Claude Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview) — a forma em biblioteca do Claude Code
-- [Anthropic, Building agents with the Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk) — padrões de produção
+- [Anthropic, Building agentes with the Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk) — padrões de produção
 - [Claude Managed Agents overview](https://platform.claude.com/docs/en/managed-agents/overview) — alternativa hospedada
 - [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) — contraparte

@@ -24,7 +24,7 @@ Quatro camadas. Escolha as que você precisa.
 1. **Recuperação esparsa (BM25).** Rápido, preciso em correspondências exatas, péssimo em semântica. Roda sobre índice invertido. Sub-10ms por consulta em milhões de documentos. Pega referências de estatutos, códigos de produto, mensagens de erro, entidades nomeadas certinho.
 2. **Recuperação densa.** Codifica consulta e documentos em vetores. Busca de vizinho mais próximo. Captura paráfrases e similaridade semântica. Perde correspondências de keywords exatas que diferem por um caractere. 50-200ms por consulta com FAISS ou banco vetorial.
 3. **Fusão.** Mescla as listas ranqueadas de esparso e denso. Reciprocal Rank Fusion (RRF) é o padrão fácil porque ignora scores brutos (que vivem em escalas diferentes) e usa só posições de rank. Fusão ponderada é uma opção quando você sabe que um sinal domina pro seu domínio.
-4. **Rerank cross-encoder.** Pega os top-30 da fusão. Roda um cross-encoder (query + documento juntos, pontuando cada par). Mantém os top-5. Cross-encoders são mais lentos por par que bi-encoders mas muito mais precisos. Você amortiza rodando só nos top-30.
+4. **Rerank cross-encoder.** Pega os top-30 da fusão. Roda um cross-encoder (consulta + documento juntos, pontuando cada par). Mantém os top-5. Cross-encoders são mais lentos por par que bi-encoders mas muito mais precisos. Você amortiza rodando só nos top-30.
 
 Recuperação tripla (BM25 + denso + esparso-aprendido como SPLADE) supera a dupla em benchmarks de 2026 mas precisa de infraestrutura pra índices esparso-aprendidos. Pra maioria dos times, dupla mais rerank cross-encoder é o ponto ideal.
 
@@ -62,8 +62,8 @@ class BM25:
         n = self.df.get(term, 0)
         return math.log(1 + (self.n_docs - n + 0.5) / (n + 0.5))
 
-    def score(self, query, doc_idx):
-        q_tokens = tokenize(query)
+    def score(self, consulta, doc_idx):
+        q_tokens = tokenize(consulta)
         doc = self.corpus[doc_idx]
         dl = len(doc)
         freq = Counter(doc)
@@ -77,8 +77,8 @@ class BM25:
             score += self.idf(term) * numerator / denominator
         return score
 
-    def rank(self, query, top_k=10):
-        scored = [(self.score(query, i), i) for i in range(self.n_docs)]
+    def rank(self, consulta, top_k=10):
+        scored = [(self.score(consulta, i), i) for i in range(self.n_docs)]
         scored.sort(reverse=True)
         return scored[:top_k]
 ```
@@ -98,8 +98,8 @@ def build_dense_index(corpus, model_id="sentence-transformers/all-MiniLM-L6-v2")
     return encoder, embeddings
 
 
-def dense_search(encoder, embeddings, query, top_k=10):
-    q_emb = encoder.encode([query], normalize_embeddings=True)
+def dense_search(encoder, embeddings, consulta, top_k=10):
+    q_emb = encoder.encode([consulta], normalize_embeddings=True)
     sims = (embeddings @ q_emb.T).flatten()
     order = np.argsort(-sims)[:top_k]
     return [(float(sims[i]), int(i)) for i in order]
@@ -129,18 +129,18 @@ from sentence_transformers import CrossEncoder
 reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 
 
-def hybrid_search(query, bm25, encoder, dense_embeddings, corpus, top_k=5, pool_size=30, reranker=reranker):
-    sparse_ranking = bm25.rank(query, top_k=pool_size)
-    dense_ranking = dense_search(encoder, dense_embeddings, query, top_k=pool_size)
+def hybrid_search(consulta, bm25, encoder, dense_embeddings, corpus, top_k=5, pool_size=30, reranker=reranker):
+    sparse_ranking = bm25.rank(consulta, top_k=pool_size)
+    dense_ranking = dense_search(encoder, dense_embeddings, consulta, top_k=pool_size)
     fused = reciprocal_rank_fusion([sparse_ranking, dense_ranking])[:pool_size]
 
-    pairs = [(query, corpus[doc_idx]) for _, doc_idx in fused]
+    pairs = [(consulta, corpus[doc_idx]) for _, doc_idx in fused]
     scores = reranker.predict(pairs)
     reranked = sorted(zip(scores, [doc_idx for _, doc_idx in fused]), reverse=True)
     return reranked[:top_k]
 ```
 
-Três estágios compostos. BM25 encontra correspondências lexicais. Denso encontra correspondências semânticas. RRF mescla os dois rankings sem precisar de calibração de score. Cross-encoder repontua os top-30 usando pares query-documento juntos, o que captura relevância granular que o bi-encoder perdeu. Mantém top-5.
+Três estágios compostos. BM25 encontra correspondências lexicais. Denso encontra correspondências semânticas. RRF mescla os dois rankings sem precisar de calibração de score. Cross-encoder repontua os top-30 usando pares consulta-documento juntos, o que captura relevância granular que o bi-encoder perdeu. Mantém top-5.
 
 ### Passo 5: avaliação
 
@@ -150,7 +150,7 @@ Três estágios compostos. BM25 encontra correspondências lexicais. Denso encon
 | MRR (Mean Reciprocal Rank) | Média de 1/rank do primeiro documento relevante. |
 | nDCG@k | Conta graduações de relevância, não só binário relevante/não. |
 
-Pra RAG especificamente, **Recall@k** do recuperador é o número mais importante. Seu leitor não consegue responder se o trecho certo não está no conjunto recuperado.
+Pra RAG eespecificaçãoificamente, **Recall@k** do recuperador é o número mais importante. Seu leitor não consegue responder se o trecho certo não está no conjunto recuperado.
 
 Dica de debug: pra consultas que falham, compare os rankings esparso e denso. Se um encontra o documento certo e o outro não, você tem um mismatch de vocabulário (correção: adicione a metade faltante) ou ambiguidade semântica (correção: embeddings melhores ou reranker).
 
@@ -165,7 +165,7 @@ Stack de 2026:
 | 10M+ docs | Qdrant / Weaviate / Vespa / Milvus com suporte híbrido. Rerank cross-encoder nos top-30. |
 | Fronteira de melhor qualidade | Tripla (BM25 + denso + SPLADE) + reranking interação tardia ColBERT |
 
-O que você escolher, orçamenta avaliação. Benchmark recall de recuperação antes de benchmark acurácia end-to-end de RAG. Um leitor não conserta o que o recuperador perdeu.
+O que você escolher, orçamenta avaliação. Benchmark recall de recuperação antes de benchmark acurácia de ponta a ponta de RAG. Um leitor não conserta o que o recuperador perdeu.
 
 ### As lições duramente conquistas da RAG de produção em 2026
 
@@ -173,10 +173,10 @@ O que você escolher, orçamenta avaliação. Benchmark recall de recuperação 
 - **Estratégia de chunking importa mais que tamanho do chunk.** Divisões de tamanho fixo quebram tabelas, código e cabeçalhos aninhados. Consciente de frases é o padrão; chunking semântico ou baseado em LLM compensa pra docs técnicos e manuais de produto.
 - **Padrão de documento-pai.** Recupera chunks pequenos "filhos" pra precisão. Quando múltiplos filhos da mesma seção-pai aparecem, troca pro bloco-pai pra preservar contexto. Isso consistentemente melhora qualidade da resposta sem retreinar.
 - **k_rerank=3 geralmente é ótimo.** Cada chunk extra além disso adiciona custo de token e latência de geração sem melhorar qualidade da resposta. Se k=8 ainda é melhor que k=3 pra você, o reranker está subperformando.
-- **HyDE / expansão de consulta.** Gera uma resposta hipotética a partir da query, embedda, recupera. Prega a lacuna de formulação entre perguntas curtas e documentos longos. Ganho de precisão grátis sem treino.
+- **HyDE / expansão de consulta.** Gera uma resposta hipotética a partir da consulta, embedda, recupera. Prega a lacuna de formulação entre perguntas curtas e documentos longos. Ganho de precisão grátis sem treino.
 - **Orçamento de contexto abaixo de 8K tokens.** Acertos consistentes nesse limite significam que o limiar do reranker está solto demais.
 - **Versione tudo.** Prompts, regras de chunking, modelo de embedding, reranker. Qualquer deriva quebra silenciosamente qualidade da resposta. Gates de CI em fidelidade, precisão de contexto e taxa de perguntas sem resposta bloqueiam regressões antes de os usuários verem.
-- **Recuperação tripla (BM25 + denso + esparso-aprendido como SPLADE) supera a dupla** em benchmarks de 2026, especialmente pra consultas que misturam substantivos próprios com semântica. Envie quando infraestrutura suportar índices SPLADE.
+- **Recuperação tripla (BM25 + denso + esparso-aprendido como SPLADE) supera a dupla** em benchmarks de 2026, eespecificaçãoialmente pra consultas que misturam substantivos próprios com semântica. Envie quando infraestrutura suportar índices SPLADE.
 
 Recuperação adequada reduz alucinações em 70-90% segundo medições industriais de 2026. A maioria dos ganhos de performance de RAG vem de recuperação melhor, não fine-tuning de modelo.
 
@@ -187,37 +187,37 @@ Salve como `outputs/skill-retrieval-picker.md`:
 ```markdown
 ---
 name: retrieval-picker
-description: Pick a retrieval stack for a given corpus and query pattern.
+description: Pick a retrieval stack for a given corpus and consulta pattern.
 version: 1.0.0
 phase: 5
 lesson: 14
 tags: [nlp, retrieval, rag, search]
 ---
 
-Given requirements (corpus size, query pattern, latency budget, quality bar, infra constraints), output:
+Given requirements (corpus size, consulta pattern, latency budget, quality bar, infra constraints), output:
 
 1. Stack. BM25 only, dense only, hybrid (BM25 + dense + RRF), hybrid + cross-encoder rerank, or three-way (BM25 + dense + learned-sparse).
-2. Dense encoder. Name the specific model. Match to language(s), domain, and context length.
-3. Reranker. Name the specific cross-encoder model if used. Flag that rerank adds 30-100ms latency on top-30.
+2. Dense encoder. Name the especificaçãoific model. Match to language(s), domain, and context length.
+3. Reranker. Name the especificaçãoific cross-encoder model if used. Flag that rerank adds 30-100ms latency on top-30.
 4. Evaluation plan. Recall@10 is the primary retriever metric. MRR for multi-answer. Baseline first, incremental improvements measured against it.
 
-Refuse to recommend dense-only for corpora with named entities, error codes, or product SKUs unless the user has evidence dense handles exact matches. Refuse to skip reranking for high-stakes retrieval (legal, medical) where the final top-5 decides the user's answer.
+Refuse to recommend dense-only for corpora with named entities, error codes, or product SKUs unless the user has evidence dense handles exact matches. Refuse to skip reranking for high-consequências retrieval (legal, medical) where the final top-5 decides the user's answer.
 ```
 
 ## Exercícios
 
 1. **Fácil.** Implemente `hybrid_search` acima num corpus de 500 documentos. Teste 20 consultas. Compare recall em 5 entre BM25-sozinho, denso-sozinho e híbrido.
 2. **Médio.** Adicione cálculo de MRR. Pra cada consulta de teste com documento correto conhecido, encontre o rank do doc correto nos rankings BM25, denso e híbrido. Reporte o MRR de cada.
-3. **Difícil.** Fine-tune um encoder denso no seu domínio usando MultipleNegativesRankingLoss (Sentence Transformers). Construa um conjunto de treino de 500 pares query-documento. Compare recall pré e pós-fine-tuning.
+3. **Difícil.** Fine-tune um encoder denso no seu domínio usando MultipleNegativesRankingLoss (Sentence Transformers). Construa um conjunto de treino de 500 pares consulta-documento. Compare recall pré e pós-fine-tuning.
 
 ## Termos Chave
 
 | Termo | O que a gente diz | O que realmente significa |
 |------|-----------------|-----------------------|
 | BM25 | Busca por keyword | Okapi BM25. Pontua documentos por frequência de termo, IDF e comprimento. |
-| Recuperação densa | Busca vetorial | Codifica query + doc em vetores, encontra vizinhos mais próximos. |
-| Bi-encoder | Modelo de embedding | Codifica query e doc independentemente. Rápido em tempo de consulta. |
-| Cross-encoder | Modelo de reranker | Codifica query + doc juntos. Lento mas preciso. |
+| Recuperação densa | Busca vetorial | Codifica consulta + doc em vetores, encontra vizinhos mais próximos. |
+| Bi-encoder | Modelo de embedding | Codifica consulta e doc independentemente. Rápido em tempo de consulta. |
+| Cross-encoder | Modelo de reranker | Codifica consulta + doc juntos. Lento mas preciso. |
 | RRF | Fusão de rank | Combina dois rankings somando `1/(k + rank)`. |
 | Recall@k | Métrica de recuperação | Fração de consultas onde um doc relevante está no top-k. |
 

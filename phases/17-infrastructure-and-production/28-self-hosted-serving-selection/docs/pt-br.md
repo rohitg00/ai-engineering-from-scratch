@@ -1,6 +1,6 @@
 # Seleção de Serving Self-Hosted — llama.cpp, Ollama, TGI, vLLM, SGLang
 
-> Quatro engines dominam inferência self-hosted em 2026. Escolha com base em hardware, escala e ecossistema. **llama.cpp** é o mais rápido em CPU — maior suporte a modelos, controle total sobre quantização e threading. **Ollama** é o instalador de um comando do laptop do dev, ~15-30% mais lento que o llama.cpp (Go + CGo + serialização HTTP), gap de throughput de 3x sob carga parecida com produção. **TGI entrou em modo de manutenção em 11 de dezembro de 2025** — só correções de bug, ~10% de throughput bruto menor que o vLLM mas historicamente top de observabilidade e integração com ecossistema HF. Esse status de manutenção o torna uma aposta arriscada a longo prazo — SGLang ou vLLM são padrões mais seguros para projetos novos. **vLLM** é o padrão de produção geral — v0.15.1 (fevereiro 2026) adiciona PyTorch 2.10, RTX Blackwell SM120, otimização H200. **SGLang** é o especialista em multi-turn agentic / prefix-heavy — 400.000+ GPUs em produção (xAI, LinkedIn, Cursor, Oracle, GCP, Azure, AWS). Restrições de hardware: CPU-only → só llama.cpp. AMD / não-NVIDIA → só vLLM (TRT-LLM é travado na NVIDIA). Padrão de pipeline de 2026: dev = Ollama, staging = llama.cpp, prod = vLLM ou SGLang. Mesmos pesos GGUF/HF do começo ao fim.
+> Quatro engines dominam inferência self-hosted em 2026. Escolha com base em hardware, escala e ecossistema. **llama.cpp** é o mais rápido em CPU — maior suporte a modelos, controle total sobre quantização e threading. **Ollama** é o instalador de um comando do laptop do dev, ~15-30% mais lento que o llama.cpp (Go + CGo + serialização HTTP), gap de throughput de 3x sob carga parecida com produção. **TGI entrou em modo de manutenção em 11 de dezembro de 2025** — só correções de bug, ~10% de throughput bruto menor que o vLLM mas historicamente top de observabilidade e integração com ecossistema HF. Esse status de manutenção o torna uma aposta arriscada a longo prazo — SGLang ou vLLM são padrões mais seguros para projetos novos. **vLLM** é o padrão de produção geral — v0.15.1 (fevereiro 2026) adiciona PyTorch 2.10, RTX Blackwell SM120, otimização H200. **SGLang** é o eespecificaçãoialista em multi-turn agentic / prefix-heavy — 400.000+ GPUs em produção (xAI, LinkedIn, Cursor, Oracle, GCP, Azure, AWS). Restrições de hardware: CPU-only → só llama.cpp. AMD / não-NVIDIA → só vLLM (TRT-LLM é travado na NVIDIA). Padrão de pipeline de 2026: dev = Ollama, staging = llama.cpp, prod = vLLM ou SGLang. Mesmos pesos GGUF/HF do começo ao fim.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, caminhador de árvore de decisão de engines)
@@ -9,7 +9,7 @@
 
 ## Objetivos de Aprendizado
 
-- Escolher uma engine dada hardware (CPU / AMD / NVIDIA Hopper / Blackwell), escala (1 usuário / 100 / 10.000) e workload (chat geral / agent / longo contexto).
+- Escolher uma engine dada hardware (CPU / AMD / NVIDIA Hopper / Blackwell), escala (1 usuário / 100 / 10.000) e workload (chat geral / agente / longo contexto).
 - Nomear o status de manutenção do TGI em 2026 (11 de dezembro de 2025) e por que isso inclina projetos novos para vLLM ou SGLang.
 - Descrever o pipeline dev/staging/prod usando os mesmos pesos GGUF ou HF do começo ao fim.
 - Explicar por que "só CPU" força llama.cpp e "AMD" exclui TRT-LLM.
@@ -18,7 +18,7 @@
 
 Seu time começa um novo projeto de LLM self-hosted. Um engenheiro diz Ollama, outro diz vLLM, um terceiro diz "o TGI não funciona fora da caixa?" Os três estão certos pra contextos diferentes. Nenhum está certo pra todos.
 
-Em 2026 a árvore de decisão importa: hardware primeiro, escala segundo, workload terceiro. E um evento específico de 2025 — TGI entrando em modo de manutenção em 11 de dezembro — muda o padrão pra projetos novos.
+Em 2026 a árvore de decisão importa: hardware primeiro, escala segundo, workload terceiro. E um evento eespecificaçãoífico de 2025 — TGI entrando em modo de manutenção em 11 de dezembro — muda o padrão pra projetos novos.
 
 ## O Conceito
 

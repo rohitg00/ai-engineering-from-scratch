@@ -1,6 +1,6 @@
 # Fundamentos de Áudio — Formas de Onda, Amostragem, Transformada de Fourier
 
-> Formas de onda são o sinal bruto. Espectrogramas são a representação. Características Mel são a forma amigável para ML. Toda pipeline moderna de ASR e TTS sobe essa escada, e o primeiro degrau é entender amostragem e Fourier.
+> Formas de onda são o sinal bruto. Eespecificaçãotrogramas são a representação. Características Mel são a forma amigável para ML. Toda pipeline moderna de ASR e TTS sobe essa escada, e o primeiro degrau é entender amostragem e Fourier.
 
 **Tipo:** Aprender
 **Idiomas:** Python
@@ -102,7 +102,7 @@ A pilha que você vai usar de verdade em 2026:
 | Resample | `torchaudio.transforms.Resample` ou `librosa.resample` | Anti-aliasing correto embutido. |
 | STFT / Mel | `torchaudio` ou `librosa` | Amigável a GPU; ecossistema PyTorch. |
 | Streaming em tempo real | `sounddevice` ou `pyaudio` | Bindings PortAudio cross-platform. |
-| Inspecionar arquivo | `ffprobe` ou `soxi` | CLI, rápido, reporta sr/canais/codec. |
+| Inespecificaçãoionar arquivo | `ffprobe` ou `soxi` | CLI, rápido, reporta sr/canais/codec. |
 
 Regra de ouro: **igualize a taxa de amostragem antes de qualquer outra coisa**. O Whisper espera 16 kHz mono float32. Passe 44.1 kHz stereo e você terá lixo que parece bug do modelo.
 
@@ -114,7 +114,7 @@ Salve como `outputs/skill-audio-loader.md`. A skill ajuda você a verificar se a
 
 1. **Fácil.** Sintetize uma mix de 1 segundo de 220 Hz + 440 Hz + 880 Hz a 16 kHz. Rode DFT. Confirme três picos nos bins esperados.
 2. **Médio.** Grave um WAV de 3 segundos da sua voz a 48 kHz. Faça downsampling para 16 kHz com `torchaudio.transforms.Resample` (com anti-aliasing), depois para 16 kHz com decimação direta (a cada terceira amostra). FFT nos dois. Onde o aliasing aparece?
-3. **Difícil.** Construa a STFT do zero usando apenas `math` e a DFT do Passo 3. Tamanho do frame 400, hop 160, janela Hann. Plote magnitudes com `matplotlib.pyplot.imshow`. Esse é o espectrograma da Lição 02.
+3. **Difícil.** Construa a STFT do zero usando apenas `math` e a DFT do Passo 3. Tamanho do frame 400, hop 160, janela Hann. Plote magnitudes com `matplotlib.pyplot.imshow`. Esse é o eespecificaçãotrograma da Lição 02.
 
 ## Termos Chave
 
@@ -126,7 +126,7 @@ Salve como `outputs/skill-audio-loader.md`. A skill ajuda você a verificar se a
 | DFT | A transformada de Fourier para sequências | `N` amostras → `N` coeficientes de frequência complexos. |
 | FFT | A DFT rápida | Algoritmo `O(N log N)` que requer `N` = potência de 2. |
 | Bin | Coluna de frequência | `k · sr / N` Hz; resolução = `sr / N`. |
-| STFT | Espectrograma por baixo | FFT com enquadramento + janela ao longo do tempo. |
+| STFT | Eespecificaçãotrograma por baixo | FFT com enquadramento + janela ao longo do tempo. |
 | Aliasing | Fantasmas de frequência estranhos | Energia acima de Nyquist espelhando para bins mais baixos. |
 
 ## Leitura Adicional
@@ -135,4 +135,4 @@ Salve como `outputs/skill-audio-loader.md`. A skill ajuda você a verificar se a
 - [Smith — The Scientist and Engineer's Guide to Digital Signal Processing](https://www.dspguide.com/ch8.htm) — livro didático de DSP gratuito e canônico.
 - [librosa docs — audio primer](https://librosa.org/doc/latest/tutorial.html) — walkthrough prático com código.
 - [Heinrich Kuttruff — Room Acoustics (6th ed.)](https://www.routledge.com/Room-Acoustics/Kuttruff/p/book/9781482260434) — referência de por que o áudio real não é uma senoide limpa.
-- [Steve Eddins — FFT Interpretation notebook](https://blogs.mathworks.com/steve/2020/03/30/fft-spectrum-and-spectral-densities/) — intuição de bins de frequência esclarecida em 10 minutos.
+- [Steve Eddins — FFT Interpretation notebook](https://blogs.mathworks.com/steve/2020/03/30/fft-especificaçãotrum-and-especificaçãotral-densities/) — intuição de bins de frequência esclarecida em 10 minutos.

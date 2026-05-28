@@ -60,7 +60,7 @@ Duas regras. Primeiro, o arquivo temporario vive no mesmo diretorio que o alvo p
 
 ### Checkpoints em shards
 
-Quando o modelo fica grande o payload de arquivo unico fica grande demais para carregar rapido, grande demais para inspecionar, e doloroso demais quando uma rede compartilhada engasga no meio da leitura. A solucao e dividir o estado do parametro em shards e escrever um indice pequeno que os liga.
+Quando o modelo fica grande o payload de arquivo unico fica grande demais para carregar rapido, grande demais para inespecificaçãoionar, e doloroso demais quando uma rede compartilhada engasga no meio da leitura. A solucao e dividir o estado do parametro em shards e escrever um indice pequeno que os liga.
 
 ```mermaid
 flowchart LR
@@ -71,7 +71,7 @@ flowchart LR
   s0 --> idx[index.json]
   s1 --> idx
   sN --> idx
-  meta[meta.pt: optimizer + scheduler + train_state + rng] --> idx
+  meta[meta.pt: optimizer + agendador + train_state + rng] --> idx
 ```
 
 O indice registra a contagem de shards, o sha256 de cada shard, e o sha256 do arquivo meta. O loader falha ruidosamente quando qualquer hash nao combina. Os shards podem cair em discos fisicos diferentes; o meta e pequeno e lido primeiro.
@@ -98,7 +98,7 @@ Um resume que pula para o inicio da proxima epoca desperdia de minutos a um dia.
 
 ### Passo 4: variante em shards
 
-`save_sharded_checkpoint` faz round-robin das chaves de parametro em N shards, escreve cada shard com seu proprio save atomico, escreve um arquivo meta com optimiser e scheduler e estado de treino, e escreve o indice JSON com sha256s dos shards. `load_sharded_checkpoint` verifica cada shard antes de mesclar.
+`save_sharded_checkpoint` faz round-robin das chaves de parametro em N shards, escreve cada shard com seu proprio save atomico, escreve um arquivo meta com optimiser e agendador e estado de treino, e escreve o indice JSON com sha256s dos shards. `load_sharded_checkpoint` verifica cada shard antes de mesclar.
 
 ### Passo 5: demo de resume
 
@@ -114,7 +114,7 @@ Tanto a demo de arquivo unico quanto a de shards afirmam max-diff sob 1e-4. O re
 
 ## Use
 
-Stacks de treino de producao entregam checkpoint como parte do trainer. A forma e a mesma: modelo + optimiser + scheduler + contadores + RNG, escritos atomicamente, nomeados por passo para que o mais recente seja facil de encontrar. Layouts em shards fornecem carregamento de modelos grandes com leituras paralelas; o index.json e o que torna isso possivel.
+Stacks de treino de producao entregam checkpoint como parte do trainer. A forma e a mesma: modelo + optimiser + agendador + contadores + RNG, escritos atomicamente, nomeados por passo para que o mais recente seja facil de encontrar. Layouts em shards fornecem carregamento de modelos grandes com leituras paralelas; o index.json e o que torna isso possivel.
 
 Tres padroes para impor:
 

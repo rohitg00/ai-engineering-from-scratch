@@ -1,6 +1,6 @@
 # Jamba -- Hibrido SSM-Transformer
 
-> Modelos de espaco de estado (SSMs) e transformers querem coisas diferentes. Transformers compram qualidade via attention a custo quadratico. SSMs compram inferencia em tempo linear e memoria constante via recorrencia mas perdem qualidade. Jamba da AI21 (marco de 2024) e Jamba 1.5 (agosto de 2024) colocam os dois no mesmo modelo: 1 camada Transformer pra cada 7 camadas Mamba, MoE em cada outro bloco e uma janela de contexto de 256k que cabe em uma GPU 80GB unica. Mamba-3 (ICLR 2026) aperta o lado do SSM com espacos de estado complexos e projecoes MIMO. Esta aula le ambas as arquiteturas end-to-end e explica por que a receita hibrida sobreviveu tres anos de escalabilidade quando tentativas puras de SSM e puro Transformer de contexto longo nao sobreviveram.
+> Modelos de espaco de estado (SSMs) e transformers querem coisas diferentes. Transformers compram qualidade via attention a custo quadratico. SSMs compram inferencia em tempo linear e memoria constante via recorrencia mas perdem qualidade. Jamba da AI21 (marco de 2024) e Jamba 1.5 (agosto de 2024) colocam os dois no mesmo modelo: 1 camada Transformer pra cada 7 camadas Mamba, MoE em cada outro bloco e uma janela de contexto de 256k que cabe em uma GPU 80GB unica. Mamba-3 (ICLR 2026) aperta o lado do SSM com espacos de estado complexos e projecoes MIMO. Esta aula le ambas as arquiteturas de ponta a ponta e explica por que a receita hibrida sobreviveu tres anos de escalabilidade quando tentativas puras de SSM e puro Transformer de contexto longo nao sobreviveram.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, calculadora de mix de camadas)
@@ -37,7 +37,7 @@ y_t = C h_t
 
 A cada passo o estado evolui via uma dinamica linear `A`, recebe a entrada `B x_t` e emite saida `C h_t`. `A, B, C` podem ser aprendidos. Note a propriedade critica: calcular `y_t` precisa apenas de `h_{t-1}` e `x_t`, nao de nenhum `x` anterior. Memoria e constante. Inferencia e O(1) por token.
 
-O truque pra qualidade de modelagem e a estrutura de `A`. S4 (Gu 2021) usava uma matriz altamente estruturada que podia ser avaliada eficientemente como uma convolucao longa durante treinamento. Mamba (Gu, Dao 2023) substituiu os `A, B, C` fixos por dependentes dos dados (a parte "seletiva"). Mamba-2 (2024) simplificou mais a estrutura. Mamba-3 (2026) readiciona complexidade em lugares especificos.
+O truque pra qualidade de modelagem e a estrutura de `A`. S4 (Gu 2021) usava uma matriz altamente estruturada que podia ser avaliada eficientemente como uma convolucao longa durante treinamento. Mamba (Gu, Dao 2023) substituiu os `A, B, C` fixos por dependentes dos dados (a parte "seletiva"). Mamba-2 (2024) simplificou mais a estrutura. Mamba-3 (2026) readiciona complexidade em lugares eespecificaçãoificos.
 
 A propriedade chave: pra um LLM decoder, uma camada SSM e um substituto direto pra uma camada de attention, com estado de tamanho fixo por camada ao inves de um KV cache que cresce.
 
@@ -102,7 +102,7 @@ Hibridos ganham quando:
 
 - Contexto e longo o suficiente que o KV cache de Transformer puro vira doloroso (64k+).
 - Tarefas misturam estrutura de curto alcance (bom pra SSM) com recall de longo alcance (precisa de Transformer).
-- Voce quer deploy em orcamentos de memoria de GPU unica onde so o KV cache de Transformer nao caberia.
+- Voce quer implantação em orcamentos de memoria de GPU unica onde so o KV cache de Transformer nao caberia.
 
 Hibridos perdem quando:
 
@@ -138,15 +138,15 @@ A calculadora suporta:
 
 Os numeros sao direto dos papers Jamba-1 e Jamba-1.5 pra formatos publicados e extrapolados pra variantes hipotheticas.
 
-Consideracoes de integracao pra deploy real:
+Consideracoes de integracao pra implantação real:
 
-- A maioria dos servidores de inferencia de producao (vLLM, SGLang) suporta Jamba e Mamba. Verifique a versao especifica.
+- A maioria dos servidores de inferencia de producao (vLLM, SGLang) suporta Jamba e Mamba. Verifique a versao eespecificaçãoifica.
 - Em contexto 256k, a vantagem de memoria do Jamba aparece no throughput de requests concorrentes. Na mesma VRAM voce caixa mais sequencias de Jamba que de Transformer.
 - Mamba-3 como modelo standalone ainda nao esta sendo enviado em producao -- preview de pesquisa em 1.5B.
 
 ## Entregar
 
-Esta aula produz `outputs/skill-hybrid-picker.md`. Dada uma especificacao de carga de trabalho (perfil de contexto, mix de tarefas, orcamento de memoria), recomenda entre um Transformer puro, um hibrido estilo Jamba e um SSM puro, com raciocinio explicito sobre os tradeoffs de memoria e qualidade.
+Esta aula produz `outputs/skill-hybrid-picker.md`. Dada uma eespecificaçãoificacao de carga de trabalho (perfil de contexto, mix de tarefas, orcamento de memoria), recomenda entre um Transformer puro, um hibrido estilo Jamba e um SSM puro, com raciocinio explicito sobre os tradeoffs de memoria e qualidade.
 
 ## Exercicios
 
@@ -171,7 +171,7 @@ Esta aula produz `outputs/skill-hybrid-picker.md`. Dada uma especificacao de car
 | Estado SSM | "O buffer oculto" | Estado de tamanho fixo por camada que substitui o KV cache nas camadas Mamba |
 | Contexto 256k | "O numero principal do Jamba" | O comprimento de sequencia que Jamba-1 cabe em uma GPU 80GB unica; Transformer puro nao consegue nesse tamanho |
 | Mamba-3 | "SSM puro 2026" | A melhor arquitetura SSM atual com estado complexo + MIMO; o baseline que hibridos reconstruem ao redor |
-| MIMO | "Multi-entrada multi-saida" | Inovacao do Mamba-3 usando projecoes matriciais ao inves de escalares por feature |
+| MIMO | "Multi-entrada multi-saida" | Inovacao do Mamba-3 usando projecoes matriciais ao inves de escalares por funcionalidade |
 | Discretizacao trapezoidal exponencial | "A recorrencia do Mamba-3" | Recorrencia mais expressiva que subsume a discretizacao pelo metodo de Euler do Mamba-2 |
 | Arquitetura hibrida | "Misturar attention e SSM" | Qualquer modelo que alterna camadas Transformer e SSM; Jamba e o arquetipo de producao |
 

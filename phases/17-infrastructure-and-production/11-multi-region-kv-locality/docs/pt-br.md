@@ -65,14 +65,14 @@ Estatística amplamente citada de 2026: 32% das falhas de DR em LLMs acontecem p
 
 - `tokenizer.json` ou `tokenizer.model`
 - Configs de quantização (`quantize_config.json`, escalas AWQ, zero-points GPTQ)
-- Configs específicas do modelo (escala RoPE, attention masks, chat templates)
-- Config do engine (`vllm_config.yaml`, defaults de sampling, manifests de adaptador LoRA)
+- Configs eespecificaçãoíficas do modelo (escala RoPE, attention masks, chat templates)
+- Config do engine (`vllm_config.yaml`, configurações-padrão de sampling, manifests de adaptador LoRA)
 
 A solução é um manifesto de DR mínimo de três arquivos:
 
 1. Todos os arquivos sob o repo HF do modelo (pesos + configs + tokenizer).
-2. Config de serving específica do engine.
-3. Manifest de deploy (YAML do K8s, Dockerfile, lock de dependências).
+2. Config de serving eespecificaçãoífica do engine.
+3. Manifest de implantação (YAML do K8s, Dockerfile, lock de dependências).
 
 Além disso: execute um drill de DR trimestral. O drill da JPMorgan em us-east-1 atingiu 22 minutos de recuperação em Nov 2024 apenas porque o playbook foi ensaiado.
 
@@ -100,7 +100,7 @@ Esta aula produz `outputs/skill-multi-region-router.md`. Dadas regiões, restri�
 1. Execute `code/main.py`. Em que comprimento de prompt o roteamento cross-region vence o roteamento local-only, dado RTT de 75 ms?
 2. Sua taxa de cache hit cai de 70% para 12%. Diagnostique três causas possíveis e os observáveis que confirmariam cada uma.
 3. Projete um manifesto de DR para um modelo 70B AWQ-quantized servido no vLLM com 5 adaptadores LoRA. Liste todos os arquivos e configs.
-4. Argumente se Bedrock cross-region inference é "suficiente" para uma fintech com SLOs rígidos de TTFT. Cite comportamentos específicos.
+4. Argumente se Bedrock cross-region inference é "suficiente" para uma fintech com SLOs rígidos de TTFT. Cite comportamentos eespecificaçãoíficos.
 5. Um request originado em Paris encontra um prefixo em us-east-1. Você roteia? Escreva a política.
 
 ## Termos-Chave

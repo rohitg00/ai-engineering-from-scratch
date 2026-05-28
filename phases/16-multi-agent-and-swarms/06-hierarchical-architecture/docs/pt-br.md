@@ -52,7 +52,7 @@ Sequencial (pipeline linear) vs hierárquico: sua tarefa realmente tem sub-times
 
 ### A implementação do CrewAI
 
-`Process.hierarchical` conecta um LLM gerente sobre times especializados. O gerente:
+`Process.hierarchical` conecta um LLM gerente sobre times eespecificaçãoializados. O gerente:
 
 - recebe a tarefa de topo,
 - asigna subtarefas pras times,
@@ -87,7 +87,7 @@ Saída mostra ambos os caminhos com um contraste claro lado a lado de "o que foi
 
 ## Use
 
-`outputs/skill-hierarchy-fitness.md` avalia se uma dada tarefa deve usar hierárquico, sequencial, ou supervisor flat. Entradas: descrição da tarefa, estrutura organizacional, orçamento de reconciliação. Saída: recomendação de padrão com os modos de falha específicos pra proteger.
+`outputs/skill-hierarchy-fitness.md` avalia se uma dada tarefa deve usar hierárquico, sequencial, ou supervisor flat. Entradas: descrição da tarefa, estrutura organizacional, orçamento de reconciliação. Saída: recomendação de padrão com os modos de falha eespecificaçãoíficos pra proteger.
 
 ## Entregue
 

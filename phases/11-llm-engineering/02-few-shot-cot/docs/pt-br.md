@@ -22,11 +22,11 @@ Adicione cinco palavras — "Vamos pensar passo a passo" — e a acurácia pula 
 
 ## O Conceito
 
-### O Espectro de Raciocínio
+### O Eespecificaçãotro de Raciocínio
 
 ```mermaid
 graph LR
-    subgraph Spectrum["Espectro de Estratégias de Raciocínio"]
+    subgraph Spectrum["Eespecificaçãotro de Estratégias de Raciocínio"]
         direction LR
         A["Zero-Shot<br/>Sem exemplos<br/>Mais rápido"] --> B["Few-Shot<br/>Exemplos como âncora<br/>Mais consistente"]
         B --> C["Chain-of-Thought<br/>Raciocínio passo a passo<br/>Mais preciso"]
@@ -43,17 +43,17 @@ graph LR
 
 O few-shot funciona porque ancora a saída do modelo em exemplos concretos. Você não diz "responda em JSON" — mostra o JSON. O modelo aprende o padrão e replica.
 
-Mas a seleção de exemplos importa. Exemplos aleatórios produzem resultados aleatórios. Exemplos similares à query de entrada maximizam a acurácia. Isso se chama "seleção por similaridade" — e é o que separa few-shot medíocre de few-shot eficiente.
+Mas a seleção de exemplos importa. Exemplos aleatórios produzem resultados aleatórios. Exemplos similares à consulta de entrada maximizam a acurácia. Isso se chama "seleção por similaridade" — e é o que separa few-shot medíocre de few-shot eficiente.
 
 ```python
-def select_examples(query, example_pool, k=3):
-    """Seleciona k exemplos mais similares à query usando sobreposição de palavras."""
-    query_words = set(query.lower().split())
+def select_examples(consulta, example_pool, k=3):
+    """Seleciona k exemplos mais similares à consulta usando sobreposição de palavras."""
+    consulta_words = set(consulta.lower().split())
     
     scored = []
     for example in example_pool:
         example_words = set(example["input"].lower().split())
-        similarity = len(query_words & example_words) / len(query_words | example_words)
+        similarity = len(consulta_words & example_words) / len(consulta_words | example_words)
         scored.append((similarity, example))
     
     scored.sort(reverse=True, key=lambda x: x[0])
@@ -246,6 +246,6 @@ O `ChainOfThought` do DSPy adiciona automaticamente traces de raciocínio. `dspy
 - [Chain-of-Thought Prompting Elicits Reasoning in Large Language Models](https://arxiv.org/abs/2201.11903) — Wei et al. 2022. O paper original do CoT do Google Brain
 - [Self-Consistency Improves Chain of Thought Reasoning](https://arxiv.org/abs/2203.11171) — Wang et al. 2023. O paper de self-consistency
 - [Tree of Thoughts: Deliberate Problem Solving](https://arxiv.org/abs/2305.10601) — Yao et al. 2023. Paper do ToT
-- [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) — Yao et al. 2022. Base dos agents modernos
+- [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) — Yao et al. 2022. Base dos agentes modernos
 - [Large Language Models are Zero-Shot Reasoners](https://arxiv.org/abs/2205.11916) — Kojima et al. 2022. O paper "Vamos pensar passo a passo"
 - [DSPy: Compiling Declarative Language Model Calls](https://arxiv.org/abs/2310.03714) — Khattab et al. 2023. Prompting como problema de compilação

@@ -71,7 +71,7 @@ Um InstructGPT de 1.3B (SFT + RM + PPO-ptx) é preferido por labelers sobre o GP
 
 ### Por que esse é o ponto de referência da Fase 18
 
-Toda crítica nas lições posteriores — reward hacking (Lição 2), DPO (Lição 3), sycophancy (Lição 4), CAI (Lição 5), sleeper agents (Lição 7), alignment faking (Lição 9) — argumenta contra alguma parte desse pipeline. Reward hacking ataca o estágio 2. DPO colapsa os estágios 2 e 3. CAI substitui o labeler humano. Sycophancy mostra que o labeler é um sinal enviesado. Alignment faking mostra que a política pode contornar o estágio 3 inteiramente. Você não pode seguir nenhuma dessas críticas sem ter o pipeline na sua cabeça primeiro.
+Toda crítica nas lições posteriores — reward hacking (Lição 2), DPO (Lição 3), sycophancy (Lição 4), CAI (Lição 5), sleeper agentes (Lição 7), alignment faking (Lição 9) — argumenta contra alguma parte desse pipeline. Reward hacking ataca o estágio 2. DPO colapsa os estágios 2 e 3. CAI substitui o labeler humano. Sycophancy mostra que o labeler é um sinal enviesado. Alignment faking mostra que a política pode contornar o estágio 3 inteiramente. Você não pode seguir nenhuma dessas críticas sem ter o pipeline na sua cabeça primeiro.
 
 ## Use
 
@@ -104,7 +104,7 @@ Essa lição produz `outputs/skill-instructgpt-explainer.md`. Dada uma descriç�
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|------------------------|--------------------------|
 | SFT | "sintonização por instrução" | Estágio 1: fine-tuning por cross-entropy em pares instrução-resposta |
-| Reward model | "o RM" | Regressor escalar sobre (prompt, response) treinado com Bradley-Terry em labels par a par |
+| Reward model | "o RM" | Regressor escalar sobre (prompt, response) treinado com Bradley-Terry em rótulos par a par |
 | Bradley-Terry | "loss de preferência par a par" | -log sigmoid(r_w - r_l); reduz ordenação par a par para classificação binária |
 | Penalidade KL | "o regularizador" | `beta * KL(pi || pi_SFT)` — mantém a política RL perto da âncora SFT |
 | PPO-ptx | "PPO com mistura de pré-treinamento" | Adiciona uma fração da log-likelihood de pré-treinamento ao objetivo de PPO para compensar o custo de alinhamento |

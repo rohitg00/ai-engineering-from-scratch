@@ -121,7 +121,7 @@ def agent_loop(user_message, tools, llm, max_steps=5):
             args = tool_call.get("arguments")
             if not isinstance(tool_name, str) or tool_name not in tools:
                 history.append({"role": "assistant", "tool_call": tool_call})
-                history.append({"role": "tool", "name": str(tool_name), "content": f"error: unknown tool {tool_name!r}"})
+                history.append({"role": "tool", "name": str(tool_name), "content": f"error: unknown ferramenta {tool_name!r}"})
                 continue
             if not isinstance(args, dict):
                 history.append({"role": "assistant", "tool_call": tool_call})
@@ -138,7 +138,7 @@ def agent_loop(user_message, tools, llm, max_steps=5):
 
 Três coisas pra nomear. Ferramentas são funções chamáveis que o LLM pode invocar. O loop termina quando o LLM retorna uma resposta final em vez de uma chamada de ferramenta. O orçamento de passos evita loops infinitos em tarefas ambíguas.
 
-Produção real adiciona: fundamentação retrieval-first (injeta docs relevantes antes de cada chamada de LLM), guardrails (recusa ações destrutivas sem confirmação), observabilidade (loga cada passo) e avaliações (verificações automáticas que o comportamento do agente se mantém dentro da spec).
+Produção real adiciona: fundamentação retrieval-first (injeta docs relevantes antes de cada chamada de LLM), guardrails (recusa ações destrutivas sem confirmação), observabilidade (loga cada passo) e avaliações (verificações automáticas que o comportamento do agente se mantém dentro da especificação).
 
 ### Passo 5: roteamento híbrido
 
@@ -180,7 +180,7 @@ Sempre use roteamento híbrido em produção. Nenhuma arquitetura sozinha lida b
 - **Fabricação confiante.** Agente LLM afirma completou uma ação que não completou. Mitigação: verifique resultados, logue chamadas de ferramenta, nunca deixe o LLM afirmar ter feito algo sem retorno bem-sucedido de ferramenta.
 - **Injeção de prompt.** Usuário insere texto que sobrescreve o prompt do sistema. Ranqueou LLM01 no OWASP Top 10 for LLM Applications 2025. Duas variantes: injeção direta (colada no chat) e injeção indireta (escondida em documentos, emails ou saídas de ferramenta que o agente lê).
 
-  Taxas de ataque variam por cenário. Taxas de sucesso medidas variam ~0.5-8.5% entre modelos de fronteira em benchmarks gerais de uso de ferramentas e código. Configurações específicas de alto risco (ataques adaptativos contra agentes de código AI, orquestração vulnerável) chegaram a ~84%. CVEs de produção incluem EchoLeak (CVE-2025-32711, CVSS 9.3) — falha de exfiltração de dados zero-click no Microsoft 365 Copilot desencadeada por email controlado pelo atacante.
+  Taxas de ataque variam por cenário. Taxas de sucesso medidas variam ~0.5-8.5% entre modelos de fronteira em benchmarks gerais de uso de ferramentas e código. Configurações eespecificaçãoíficas de alto risco (ataques adaptativos contra agentes de código AI, orquestração vulnerável) chegaram a ~84%. CVEs de produção incluem EchoLeak (CVE-2025-32711, CVSS 9.3) — falha de exfiltração de dados zero-click no Microsoft 365 Copilot desencadeada por email controlado pelo atacante.
 
   Mitigações: trate entrada do usuário como não-confiável durante todo o loop; sanitize antes de chamadas de ferramenta; isole saídas de ferramenta do prompt principal; use o padrão Plan-Verify-Execute (PVE) onde o agente planeja primeiro, depois verifica cada ação contra esse plano antes de executar (isso impede que resultados de ferramenta injetem novas ações não planejadas); exija confirmação do usuário pra ações destrutivas; aplique menor-privilegio nos escopos de ferramenta.
 
@@ -203,20 +203,20 @@ lesson: 17
 tags: [nlp, agents, chatbot]
 ---
 
-Given a product context (user need, compliance constraints, available tools, data volume), output:
+Given a product context (user need, conformidade constraints, available tools, data volume), output:
 
-1. Architecture. Rule-based, retrieval, neural, LLM agent, or hybrid (specify which paths go where).
+1. Architecture. Rule-based, retrieval, neural, LLM agent, or hybrid (especificaçãoify which paths go where).
 2. LLM choice if applicable. Name the model family (Claude, GPT-4, Llama-3.1, Mixtral). Match to tool-use quality and cost.
-3. Grounding strategy. RAG sources, retrieval method (see lesson 14), tool contracts.
+3. Grounding strategy. RAG sources, retrieval method (see lesson 14), ferramenta contracts.
 4. Evaluation plan. Task success rate, tool-call correctness, off-task rate, hallucination rate on held-out dialogs.
 
-Refuse to recommend a pure-LLM agent for any destructive action (payments, account deletion, data modification) without a structured confirmation flow. Refuse to skip the prompt-injection audit if the agent has write access to anything.
+Refuse to recommend a pure-LLM agente for any destructive action (payments, account deletion, data modification) without a structured confirmation flow. Refuse to skip the prompt-injection audit if the agente has write access to anything.
 ```
 
 ## Exercícios
 
 1. **Fácil.** Implemente a resposta baseada em regras acima com 10 padrões pra bot de pedido de café. Teste casos extremos: pedidos duplos, modificações, cancelamento, intenção não clara.
-2. **Médio.** Construa um híbrido FAQ + fallback LLM. 50 entradas de FAQ prontas pra produto SaaS, fallback LLM com recuperação sobre o site de docs. Meça taxa de recusa e acurácia em 100 perguntas reais de suporte.
+2. **Médio.** Construa um híbrido FAQ + reserva LLM. 50 entradas de FAQ prontas pra produto SaaS, reserva LLM com recuperação sobre o site de docs. Meça taxa de recusa e acurácia em 100 perguntas reais de suporte.
 3. **Difícil.** Implemente o loop de agente acima com três ferramentas (buscar, ler-dados-do-usuário, enviar-email). Rode uma avaliação com 50 cenários de teste incluindo tentativas de injeção de prompt. Reporte taxa de off-task, taxa de falha de tarefa e qualquer sucesso de injeção.
 
 ## Termos Chave

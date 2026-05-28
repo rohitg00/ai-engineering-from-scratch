@@ -2,7 +2,7 @@
 
 > **Snapshot de preços datado de 2026-04.** Os valores numéricos abaixo refletem as tabelas de preços dos vendors capturadas na publicação desta aula; verifique nos docs vinculados antes de citá-los.
 
-> Cache acontece em duas camadas. L2 (no nível do provider) prompt/prefix caching reutiliza attention KV para prefixos repetidos — os docs de prompt caching do Anthropic anunciam até 90% de redução de custo e 85% de redução de latência em prompts longos; para Claude 3.5 Sonnet, leituras de cache custam $0.30/M vs $3.00/M fresh com TTL de 5 minutos e premium de escrita de 2x para a opção de TTL de 1 hora (docs.anthropic.com, 2026-04). O prompt caching da OpenAI se aplica automaticamente para prompts ≥1024 tokens e cobra entrada cached com desconto de ~90% vs fresh (platform.openai.com, 2026-04); a taxa exata por modelo depende da tabela de preços vigente. L1 (no nível do app) cache semântico pula o LLM inteiramente em hits de similaridade de embedding. A afirmação de "95% de acurácia" dos vendors se refere à correção do match, não à taxa de hit — taxas de hit em produção variam de 10% (chat aberto) até 70% (FAQ estruturada); nenhum publicador oferece baseline oficial, então trate isso como telemetria da comunidade e não como garantia. As armadilhas de produção: paralelismo mata o cache (N requests paralelos emitidos antes do primeiro write de cache podem inflar gastos várias vezes), e conteúdo dinâmico dentro do prefixo impede hits de cache completamente. ProjectDiscovery relatou ir de 7% para 74% de hit rate (2025-11) ao mover texto dinâmico para fora do prefixo cacheável.
+> Cache acontece em duas camadas. L2 (no nível do provider) prompt/prefix caching reutiliza attention KV para prefixos repetidos — os docs de prompt caching do Anthropic anunciam até 90% de redução de custo e 85% de redução de latência em prompts longos; para Claude 3.5 Sonnet, leituras de cache custam $0.30/M vs $3.00/M fresh com TTL de 5 minutos e premium de escrita de 2x para a opção de TTL de 1 hora (docs.anthropic.com, 2026-04). O prompt caching da OpenAI se aplica automaticamente para prompts ≥1024 tokens e cobra entrada cached com desconto de ~90% vs fresh (platform.openai.com, 2026-04); a taxa exata por modelo depende da tabela de preços vigente. L1 (no nível do app) cache semântico pula o LLM inteiramente em hits de similaridade de embedding. A afirmação de "95% de acurácia" dos vendors se refere à correção do match, não à taxa de hit — taxas de hit em produção variam de 10% (chat aberto) até 70% (FAQ estruturada); nenhum publicador oferece baseline oficial, então trate isso como telemetria da comunidade e não como garantia. As armadilhas de produção: paralelismo mata o cache (N requests paralelos emitidos antes do primeiro write de cache podem inflar gastos várias vezes), e conteúdo dinâmico dentro do prefixo impede hits de cache completamente. ProjectDiscovery relatou ir de 7% para 74% de taxa de acerto (2025-11) ao mover texto dinâmico para fora do prefixo cacheável.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, simulador de cache de duas camadas)
@@ -78,7 +78,7 @@ Você é um assistente útil. [regras, exemplos, instruções]
 Hora atual: 14:32:17. Usuário: abc123.
 ```
 
-ProjectDiscovery moveu de 7% para 74% de hit rate dessa forma e publicou a anatomia.
+ProjectDiscovery moveu de 7% para 74% de taxa de acerto dessa forma e publicou a anatomia.
 
 ### Empilhe batch + cache para workloads noturnos
 
@@ -92,7 +92,7 @@ Os pontos de preço foram capturados em 2026-04 dos docs vinculados dos vendors 
 - Premium de escrita Anthropic: 1.25x (TTL 5 min) ou 2x (TTL 1 hora).
 - Cache automático OpenAI: aplica-se a prompts ≥1024 tokens; entrada cached a ~10% do preço de entrada fresh nas atuais tabelas (platform.openai.com).
 - Taxa de hit de cache semântico (relato da comunidade): ~10% chat aberto; até ~70% FAQ estruturada. Não é baseline documentada pelo vendor.
-- ProjectDiscovery: 7% → 74% de hit rate ao mover dinâmico para fora do prefixo (blog do projeto, 2025-11).
+- ProjectDiscovery: 7% → 74% de taxa de acerto ao mover dinâmico para fora do prefixo (blog do projeto, 2025-11).
 - Anti-padrão de paralelismo: relatos típicos de inflação de 5-10x na conta quando N requests paralelos perdem o primeiro write de cache.
 
 ## Use
@@ -109,7 +109,7 @@ Esta aula produz `outputs/skill-cache-auditor.md`. Dado template de prompt e tr�
 2. Seu system prompt tem uma data. Mova-a. Mostre a matemática antes/depois da taxa de hit.
 3. Calcule o break-even para TTL de 1 hora (escrita 2x) vs TTL de 5 minutos (escrita 1.25x) dada sua taxa de chegada de requests.
 4. Cache semântico no threshold 0.95 acerta 20%. No 0.85 acerta 50% mas você vê respostas cached incorretas. Escolha o threshold certo e justifique.
-5. Você loteia 10 sub-queries paralelas por pergunta do usuário. Reescreva para ser cache-friendly sem adicionar latência end-to-end.
+5. Você loteia 10 sub-queries paralelas por pergunta do usuário. Reescreva para ser cache-friendly sem adicionar latência de ponta a ponta.
 
 ## Termos-Chave
 

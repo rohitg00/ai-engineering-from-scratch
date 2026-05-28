@@ -1,6 +1,6 @@
 # Lição Capstone 28: Observabilidade com Spans OTel GenAI e Métricas Prometheus
 
-> Um agent harness sem observabilidade é uma caixa preta que gasta dinheiro. Esta aula constrói manualmente um construtor de spans que emite registros compatíveis com as convenções semânticas OpenTelemetry GenAI, escreve-os em um arquivo JSON-Lines um span por linha, e expõe contadores e histogramas em formato de texto Prometheus. Tudo é Python stdlib e roda offline.
+> Um agente harness sem observabilidade é uma caixa preta que gasta dinheiro. Esta aula constrói manualmente um construtor de spans que emite registros compatíveis com as convenções semânticas OpenTelemetry GenAI, escreve-os em um arquivo JSON-Lines um span por linha, e expõe contadores e histogramas em formato de texto Prometheus. Tudo é Python stdlib e roda offline.
 
 **Tipo:** Build
 **Linguagens:** Python (stdlib)
@@ -11,15 +11,15 @@
 
 - Construir uma classe de dados de span formatada conforme as convenções semânticas OpenTelemetry GenAI.
 - Implementar um exportador JSONL que escreve um span autocontido por linha.
-- Construir contadores e histogramas com labels e exposição em formato de texto Prometheus.
+- Construir contadores e histogramas com rótulos e exposição em formato de texto Prometheus.
 - Envolver qualquer callable em um context manager de span que registra duração, status e exceções.
-- Verificar que os spans emitidos fazem roundtrip por `json.loads` e combinam com a forma da spec.
+- Verificar que os spans emitidos fazem roundtrip por `json.loads` e combinam com a forma da especificação.
 
 ## O Problema
 
-Um agent de código em produção produz três classes de artefato a cada turno: uma chamada de modelo, uma execução de ferramenta, e uma decisão de verification gate. Nenhuma dessas é útil sem telemetria estruturada.
+Um agente de código em produção produz três classes de artefato a cada turno: uma chamada de modelo, uma execução de ferramenta, e uma decisão de verification gate. Nenhuma dessas é útil sem telemetria estruturada.
 
-O primeiro modo de falha é o trace faltando. Algo deu errado na terça mas o único registro é um log de chat de 500 linhas. Não há registro de qual ferramenta rodou, quanto tempo levou, quantos tokens foram para o prompt, ou se o gate recusou algo. O autor do agent tem que adivinhar.
+O primeiro modo de falha é o trace faltando. Algo deu errado na terça mas o único registro é um log de chat de 500 linhas. Não há registro de qual ferramenta rodou, quanto tempo levou, quantos tokens foram para o prompt, ou se o gate recusou algo. O autor do agente tem que adivinhar.
 
 O segundo modo de falha é o trace não-parsável. O harness escreveu spans mas usou seus próprios nomes de campo ad-hoc. Nada no Grafana, Honeycomb, Jaeger, ou CLI local pode ler. Qualquer tooling existente na stack do time é desperdiçado porque os spans não são padrão.
 
@@ -39,9 +39,9 @@ flowchart TD
   Metrics --> Prom[/metrics text/]
 ```
 
-Toda operação no harness produz um span. Um span tem um trace id (a invocação inteira do agent), um span id (esta operação específica), um nome (ex: `gen_ai.chat`, `gen_ai.tool.execution`), atributos que seguem as convenções GenAI, um tempo de início e fim, e um status.
+Toda operação no harness produz um span. Um span tem um trace id (a invocação inteira do agent), um span id (esta operação eespecificaçãoífica), um nome (ex: `gen_ai.chat`, `gen_ai.tool.execution`), atributos que seguem as convenções GenAI, um tempo de início e fim, e um status.
 
-As convenções GenAI padronizam essas chaves de atributo: `gen_ai.system` (qual provedor, ex: `anthropic`, `openai`), `gen_ai.request.model` (o id do modelo), `gen_ai.request.max_tokens`, `gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens`, `gen_ai.response.model`, `gen_ai.response.id`, `gen_ai.operation.name`, mais chaves específicas de ferramenta `gen_ai.tool.name` e `gen_ai.tool.call.id`.
+As convenções GenAI padronizam essas chaves de atributo: `gen_ai.system` (qual provedor, ex: `anthropic`, `openai`), `gen_ai.request.model` (o id do modelo), `gen_ai.request.max_tokens`, `gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens`, `gen_ai.response.model`, `gen_ai.response.id`, `gen_ai.operation.name`, mais chaves eespecificaçãoíficas de ferramenta `gen_ai.tool.name` e `gen_ai.tool.call.id`.
 
 O exportador escreve JSONL. Um objeto JSON por linha. É o formato mais simples possível que tooling downstream pode streamar, grep e importar. Um exportador OTel real falaria OTLP gRPC; o exportador JSONL da aula é o equivalente offline e sai zero em qualquer workstation.
 
@@ -59,7 +59,7 @@ flowchart LR
 
 O construtor de spans é uma pequena classe com um método `span(name, attrs)` que retorna um context manager. O context manager registra o tempo de início na entrada, registra o tempo de fim na saída, anexa uma exceção se uma foi levantada, e envia o span finalizado para o exportador.
 
-O registro de métricas é dois dicts. Contadores são `{(name, frozen_labels): int}`. Histogramas mantêm amostras brutas em uma lista e serializam para buckets de histograma Prometheus no momento da exposição.
+O registro de métricas é dois dicts. Contadores são `{(name, frozen_rótulos): int}`. Histogramas mantêm amostras brutas em uma lista e serializam para buckets de histograma Prometheus no momento da exposição.
 
 ## O que você vai construir
 
@@ -71,7 +71,7 @@ O registro de métricas é dois dicts. Contadores são `{(name, frozen_labels): 
 4. Classes `Counter` e `Histogram` mais `MetricsRegistry`.
 5. `prometheus_exposition(registry)` que produz saída em formato de texto.
 6. Decorador `wrap_tool_call(name)` que emite um span e atualiza métricas.
-7. Demo: sintetiza uma invocação completa de agent (span gen_ai.chat ao redor de spans de ferramenta), escreve traces.jsonl, imprime a exposição Prometheus, sai zero.
+7. Demo: sintetiza uma invocação completa de agente (span gen_ai.chat ao redor de spans de ferramenta), escreve traces.jsonl, imprime a exposição Prometheus, sai zero.
 
 O span id e trace id são strings hex de 16 bytes, geradas de `os.urandom`. Isso combina com o W3C trace context do OTel. O exportador nunca lança exceção; erros de IO são mostrados mas o harness continua rodando.
 
@@ -85,7 +85,7 @@ As convenções são estáveis. O formato de rede que a aula emite continua pars
 
 ## Como isso compõe com o resto da Trilha A
 
-A lição 25 produziu a cadeia de gates. A lição 26 produziu o sandbox. A lição 27 produziu o eval harness. A lição 28 torna todos observáveis. A lição 29 envolve cada passo da demo end-to-end em spans e imprime o texto Prometheus no final.
+A lição 25 produziu a cadeia de gates. A lição 26 produziu o sandbox. A lição 27 produziu o eval harness. A lição 28 torna todos observáveis. A lição 29 envolve cada passo da demo de ponta a ponta em spans e imprime o texto Prometheus no final.
 
 ## Rodando
 

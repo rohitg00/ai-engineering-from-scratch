@@ -1,6 +1,6 @@
 # Por que Multi-Agent?
 
-> Um agent bate na parede. A jogada inteligente não é um agent maior — são mais agents.
+> Um agente bate na parede. A jogada inteligente não é um agente maior — são mais agents.
 
 **Tipo:** Aprender
 **Linguagens:** TypeScript
@@ -9,18 +9,18 @@
 
 ## Objetivos de Aprendizado
 
-- Identificar o teto de agent único (overflow de contexto, expertise misturada, gargalo sequencial) e explicar quando dividir em múltiplos agents é a jogada certa
+- Identificar o teto de agente único (overflow de contexto, expertise misturada, gargalo sequencial) e explicar quando dividir em múltiplos agentes é a jogada certa
 - Comparar padrões de orquestração (pipeline, fan-out paralelo, supervisor, hierárquico) e selecionar o certo para uma dada estrutura de tarefa
 - Projetar um sistema multi-agent com limites de papéis claros, estado compartilhado e um contrato de comunicação
-- Analisar os tradeoffs da complexidade multi-agent (latência, custo, dificuldade de debug) vs. a simplicidade de agent único
+- Analisar os tradeoffs da complexidade multi-agent (latência, custo, dificuldade de debug) vs. a simplicidade de agente único
 
 ## O Problema
 
-Você construiu um agent único na Fase 14. Funciona. Ele lê arquivos, roda comandos, chama APIs e raciocina sobre resultados. Aí você aponta ele pra um codebase real: 200 arquivos, três linguagens, testes que dependem de infraestrutura, e um requisito de pesquisar APIs externas antes de escrever código.
+Você construiu um agente único na Fase 14. Funciona. Ele lê arquivos, roda comandos, chama APIs e raciocina sobre resultados. Aí você aponta ele pra um codebase real: 200 arquivos, três linguagens, testes que dependem de infraestrutura, e um requisito de pesquisar APIs externas antes de escrever código.
 
-O agent engasga. Não porque o LLM é burro, mas porque a tarefa excede o que um loop de agent consegue lidar. A janela de contexto enche com conteúdo de arquivos. O agent esquece o que leu 40 tool calls atrás. Ele tenta ser pesquisador, programador e reviewer ao mesmo tempo, e faz os três mal.
+O agente engasga. Não porque o LLM é burro, mas porque a tarefa excede o que um loop de agente consegue lidar. A janela de contexto enche com conteúdo de arquivos. O agente esquece o que leu 40 ferramenta calls atrás. Ele tenta ser pesquisador, programador e reviewer ao mesmo tempo, e faz os três mal.
 
-Esse é o teto de agent único. Você bate nele toda vez que uma tarefa precisa de:
+Esse é o teto de agente único. Você bate nele toda vez que uma tarefa precisa de:
 
 - **Mais contexto do que cabe em uma janela** — ler 50 arquivos passa de 200k tokens
 - **Expertises diferentes em estágios diferentes** — pesquisa exige prompts diferentes de geração de código
@@ -30,7 +30,7 @@ Esse é o teto de agent único. Você bate nele toda vez que uma tarefa precisa 
 
 ### O Teto de Agent Único
 
-Um agent único é um loop, uma janela de contexto, um system prompt. Visualiza:
+Um agente único é um loop, uma janela de contexto, um system prompt. Visualiza:
 
 ```
 ┌─────────────────────────────────────────┐
@@ -58,15 +58,15 @@ Um agent único é um loop, uma janela de contexto, um system prompt. Visualiza:
 
 Três coisas quebram:
 
-1. **Saturação de contexto** — resultados de tools se acumulam. No turno 30, o agent já consumiu 150k tokens de conteúdo de arquivos, saídas de comandos e raciocínio anterior. Detalhes críticos do turno 5 se perdem.
+1. **Saturação de contexto** — resultados de ferramentas se acumulam. No turno 30, o agente já consumiu 150k tokens de conteúdo de arquivos, saídas de comandos e raciocínio anterior. Detalhes críticos do turno 5 se perdem.
 
-2. **Confusão de papel** — um system prompt que diz "você é pesquisador, programador, reviewer e tester" produz um agent que meio que pesquisa, meio que programa e nunca termina de revisar.
+2. **Confusão de papel** — um system prompt que diz "você é pesquisador, programador, reviewer e tester" produz um agente que meio que pesquisa, meio que programa e nunca termina de revisar.
 
-3. **Gargalo sequencial** — o agent lê o arquivo A, depois o B, depois o C. Três chamadas LLM em série. Três execuções de tools em série. Sem paralelismo.
+3. **Gargalo sequencial** — o agente lê o arquivo A, depois o B, depois o C. Três chamadas LLM em série. Três execuções de ferramentas em série. Sem paralelismo.
 
 ### A Solução Multi-Agent
 
-Divida o trabalho. Dê a cada agent um trabalho, uma janela de contexto e um system prompt calibrado pra esse trabalho:
+Divida o trabalho. Dê a cada agente um trabalho, uma janela de contexto e um system prompt calibrado pra esse trabalho:
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -84,7 +84,7 @@ Divida o trabalho. Dê a cada agent um trabalho, uma janela de contexto e um sys
 │   │ docs,    │ │ code     │ │ code     │ │ tests,   │  │
 │   │ finds    │ │ based on │ │ quality, │ │ reports  │  │
 │   │ patterns │ │ research │ │ finds    │ │ results  │  │
-│   │          │ │ + spec   │ │ bugs     │ │          │  │
+│   │          │ │ + especificação   │ │ bugs     │ │          │  │
 │   └─────┬────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘  │
 │         │           │            │             │         │
 │         └───────────┴────────────┴─────────────┘         │
@@ -93,24 +93,24 @@ Divida o trabalho. Dê a cada agent um trabalho, uma janela de contexto e um sys
 └──────────────────────────────────────────────────────────┘
 ```
 
-Cada agent tem:
+Cada agente tem:
 - Um system prompt focado ("Você é um code reviewer. Seu único trabalho é achar bugs.")
 - Sua própria janela de contexto (não poluída pelo trabalho de outros agents)
 - Um contrato claro de entrada/saída (recebe notas de pesquisa, retorna código)
 
 ### Sistemas Reais Que Fazem Isso
 
-**Claude Code subagents** — quando o Claude Code gera um subagent com `Task`, ele cria um agent filho com uma tarefa escopada. O pai mantém seu contexto limpo. O filho faz trabalho focado e retorna um resumo.
+**Claude Code subagents** — quando o Claude Code gera um subagent com `Task`, ele cria um agente filho com uma tarefa escopada. O pai mantém seu contexto limpo. O filho faz trabalho focado e retorna um resumo.
 
-**Devin** — roda um agent planejador, um agent programador e um agent navegador. O planejador divide o trabalho em passos. O programador escreve código. O navegador pesquisa documentação. Cada um tem contexto separado.
+**Devin** — roda um agente planejador, um agente programador e um agente navegador. O planejador divide o trabalho em passos. O programador escreve código. O navegador pesquisa documentação. Cada um tem contexto separado.
 
-**Multi-agent coding teams (SWE-bench)** — os sistemas de melhor desempenho no SWE-bench usam um pesquisador que lê o codebase, um planejador que projeta o fix e um programador que implementa. Sistemas de agent único pontuam menos.
+**Multi-agent coding teams (SWE-bench)** — os sistemas de melhor desempenho no SWE-bench usam um pesquisador que lê o codebase, um planejador que projeta o fix e um programador que implementa. Sistemas de agente único pontuam menos.
 
-**ChatGPT Deep Research** — gera múltiplos agents de busca em paralelo, cada um explorando um ângulo diferente, depois sintetiza os resultados.
+**ChatGPT Deep Research** — gera múltiplos agentes de busca em paralelo, cada um explorando um ângulo diferente, depois sintetiza os resultados.
 
-### O Espectro
+### O Eespecificaçãotro
 
-Multi-agent não é binário. É um espectro:
+Multi-agent não é binário. É um eespecificaçãotro:
 
 ```
 SIMPLE ──────────────────────────────────────────── COMPLEX
@@ -136,11 +136,11 @@ SIMPLE ────────────────────────�
 
 **Subagents** — um pai gera filhos pra subtarefas focadas. O pai mantém o plano. Os filhos reportam de volta. Isso é o que o Claude Code faz.
 
-**Pipeline** — agents rodam em sequência. A saída do Agent A vira a entrada do Agent B. Bom pra workflows por estágios: pesquisa -> código -> review -> teste.
+**Pipeline** — agentes rodam em sequência. A saída do Agent A vira a entrada do Agent B. Bom pra workflows por estágios: pesquisa -> código -> review -> teste.
 
-**Team** — agents rodam em paralelo com um message bus compartilhado. Cada um tem um papel. Um orquestrador coordena. Bom quando habilidades diferentes são necessárias ao mesmo tempo.
+**Team** — agentes rodam em paralelo com um message bus compartilhado. Cada um tem um papel. Um orquestrador coordena. Bom quando habilidades diferentes são necessárias ao mesmo tempo.
 
-**Swarm** — muitos agents idênticos ou quase idênticos com estado compartilhado. Sem orquestrador fixo. Agents pegam trabalho de uma fila. Bom pra tarefas paralelas de alta taxa de transferência.
+**Swarm** — muitos agentes idênticos ou quase idênticos com estado compartilhado. Sem orquestrador fixo. Agents pegam trabalho de uma fila. Bom pra tarefas paralelas de alta taxa de transferência.
 
 ### Os Quatro Padrões Multi-Agent
 
@@ -151,7 +151,7 @@ Input ──▶ Agent A ──▶ Agent B ──▶ Agent C ──▶ Output
           (research)  (code)      (review)
 ```
 
-Cada agent transforma os dados e passa pra frente. Fácil de raciocinar. Falha num estágio bloqueia os outros.
+Cada agente transforma os dados e passa pra frente. Fácil de raciocinar. Falha num estágio bloqueia os outros.
 
 #### Padrão 2: Fan-out / Fan-in
 
@@ -163,7 +163,7 @@ Input ──▶ Split ├──▶ Agent B ──├──▶ Merge ──▶ Ou
                 └──▶ Agent C ──┘
 ```
 
-Divide trabalho entre agents paralelos, depois combina resultados. Bom pra tarefas que se decompõem em subtarefas independentes.
+Divide trabalho entre agentes paralelos, depois combina resultados. Bom pra tarefas que se decompõem em subtarefas independentes.
 
 #### Padrão 3: Orquestrador-Trabalhador
 
@@ -179,7 +179,7 @@ Divide trabalho entre agents paralelos, depois combina resultados. Bom pra taref
            └──────────┘   └──────────┘
 ```
 
-Um orquestrador inteligente decide o que fazer, delega pra trabalhadores e sintetiza resultados. O orquestrador em si é um agent com tools pra gerar trabalhadores.
+Um orquestrador inteligente decide o que fazer, delega pra trabalhadores e sintetiza resultados. O orquestrador em si é um agente com ferramentas pra gerar trabalhadores.
 
 #### Padrão 4: Swarm entre Pares
 
@@ -203,27 +203,27 @@ Sem orquestrador central. Agents comunicam peer-to-peer. Decisões emergem da in
 
 ### Quando NÃO Usar Multi-Agent
 
-Multi-agent adiciona complexidade. Cada mensagem entre agents é um ponto potencial de falha. Debugar vai de "ler uma conversa" pra "rastrear mensagens entre cinco agents."
+Multi-agent adiciona complexidade. Cada mensagem entre agentes é um ponto potencial de falha. Debugar vai de "ler uma conversa" pra "rastrear mensagens entre cinco agents."
 
-**Fique com agent único quando:**
+**Fique com agente único quando:**
 - A tarefa cabe em uma janela de contexto (menos de ~100k tokens de dados de trabalho)
 - Você não precisa de system prompts diferentes pra diferentes estágios
 - Execução sequencial é rápida o suficiente
 - A tarefa é simples o suficiente que dividir adiciona mais overhead do que valor
 
 **O custo da complexidade:**
-- Cada fronteira de agent é um passo de compressão lossy: o contexto completo do agent A é resumido numa mensagem pro agent B
+- Cada fronteira de agente é um passo de compressão lossy: o contexto completo do agente A é resumido numa mensagem pro agente B
 - Lógica de coordenação (quem faz o quê, quando, em que ordem) é uma fonte própria de bugs
-- Latência aumenta: N agents significa N chamadas LLM em série no mínimo, mais se precisam conversar de volta e forth
-- Custo multiplica: cada agent consome tokens independentemente
+- Latência aumenta: N agentes significa N chamadas LLM em série no mínimo, mais se precisam conversar de volta e forth
+- Custo multiplica: cada agente consome tokens independentemente
 
-Regra geral: se uma tarefa leva menos de 20 tool calls e cabe em 100k tokens, mantenha como agent único.
+Regra geral: se uma tarefa leva menos de 20 ferramenta calls e cabe em 100k tokens, mantenha como agente único.
 
 ## Construa
 
 ### Passo 1: O Agent Único Sobrecarregado
 
-Aqui está um agent único tentando fazer tudo. Ele tem um system prompt enorme e uma janela de contexto com pesquisa, código e reviews:
+Aqui está um agente único tentando fazer tudo. Ele tem um system prompt enorme e uma janela de contexto com pesquisa, código e reviews:
 
 ```typescript
 type AgentResult = {
@@ -278,9 +278,9 @@ Problemas dessa abordagem:
 - O system prompt é genérico. Não pode ser calibrado pra cada estágio.
 - Nada roda em paralelo.
 
-### Passo 2: Agents Especialistas
+### Passo 2: Agents Eespecificaçãoialistas
 
-Agora divide. Cada agent recebe um trabalho:
+Agora divide. Cada agente recebe um trabalho:
 
 ```typescript
 type SpecialistAgent = {
@@ -316,15 +316,15 @@ const coder = createSpecialist(
 
 const reviewer = createSpecialist(
   "reviewer",
-  "You are a code reviewer. Find bugs, security issues, and logic errors. Be specific. Cite line numbers."
+  "You are a code reviewer. Find bugs, security issues, and logic errors. Be especificaçãoific. Cite line numbers."
 );
 ```
 
-Cada especialista tem um prompt focado. Cada um recebe uma janela de contexto limpa com só a entrada que precisa.
+Cada eespecificaçãoialista tem um prompt focado. Cada um recebe uma janela de contexto limpa com só a entrada que precisa.
 
 ### Passo 3: Coordenar por Mensagens
 
-Conecte os especialistas com passagem explícita de mensagens:
+Conecte os eespecificaçãoialistas com passagem explícita de mensagens:
 
 ```typescript
 type AgentMessage = {
@@ -387,7 +387,7 @@ async function multiAgentApproach(task: string): Promise<AgentResult> {
 }
 ```
 
-Cada agent recebe só as mensagens dirigidas a ele. Sem poluição de contexto. Os 50k tokens de leitura de documentação do pesquisador nunca entram no contexto do reviewer.
+Cada agente recebe só as mensagens dirigidas a ele. Sem poluição de contexto. Os 50k tokens de leitura de documentação do pesquisador nunca entram no contexto do reviewer.
 
 ### Passo 4: Compare
 
@@ -407,7 +407,7 @@ async function compare() {
 }
 ```
 
-A versão multi-agent usa mais tokens no total (três agents, três chamadas LLM separadas), mas o contexto de cada agent fica limpo. A qualidade de cada estágio melhora porque o system prompt é especializado.
+A versão multi-agent usa mais tokens no total (três agents, três chamadas LLM separadas), mas o contexto de cada agente fica limpo. A qualidade de cada estágio melhora porque o system prompt é eespecificaçãoializado.
 
 ## Use
 
@@ -415,21 +415,21 @@ Esta lição produz um prompt reutilizável pra decidir quando ir com multi-agen
 
 ## Exercícios
 
-1. Adicione um quarto especialista: um agent "tester" que recebe código do programador e feedback do reviewer, e escreve testes
+1. Adicione um quarto eespecificaçãoialista: um agente "tester" que recebe código do programador e feedback do reviewer, e escreve testes
 2. Modifique o pipeline pra que o reviewer possa mandar feedback de volta pro programador pra um loop de revisão (máx 2 rodadas)
-3. Converta o pipeline sequencial em um fan-out: rode o pesquisador e um agent "analisador de requisitos" em paralelo, depois combine suas saídas antes de passar pro programador
+3. Converta o pipeline sequencial em um fan-out: rode o pesquisador e um agente "analisador de requisitos" em paralelo, depois combine suas saídas antes de passar pro programador
 
 ## Termos-Chave
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|----------------------|--------------------------|
-| Swarm | "Uma mente colmeia de agents de IA" | Um conjunto de agents pares com estado compartilhado e sem líder fixo. O comportamento emerge de interações locais. |
-| Orquestrador | "O agent chefe" | Um agent cujas tools incluem gerar e gerenciar outros agents. Planeja e delega mas pode não fazer o trabalho em si. |
-| Coordenador | "O policial de trânsito" | Um componente não-agent (geralmente só código, não um LLM) que roteia mensagens entre agents baseado em regras. |
-| Consenso | "Os agents concordam" | Um protocolo onde múltiplos agents devem chegar a um acordo antes de prosseguir. Usado quando saídas conflitantes precisam de resolução. |
-| Comportamento emergente | "Os agents se viraram sozinhos" | Padrões a nível de sistema que surgem de interações entre agents mas não foram programados explicitamente. Pode ser útil ou prejudicial. |
-| Fan-out / fan-in | "Map-reduce pra agents" | Dividir uma tarefa entre agents paralelos (fan-out), depois combinar seus resultados (fan-in). |
-| Passagem de mensagens | "Agents conversam entre si" | O mecanismo de comunicação entre agents: dados estruturados enviados de um agent pro outro, substituindo janelas de contexto compartilhadas. |
+| Swarm | "Uma mente colmeia de agentes de IA" | Um conjunto de agentes pares com estado compartilhado e sem líder fixo. O comportamento emerge de interações locais. |
+| Orquestrador | "O agente chefe" | Um agente cujas ferramentas incluem gerar e gerenciar outros agents. Planeja e delega mas pode não fazer o trabalho em si. |
+| Coordenador | "O policial de trânsito" | Um componente não-agent (geralmente só código, não um LLM) que roteia mensagens entre agentes baseado em regras. |
+| Consenso | "Os agentes concordam" | Um protocolo onde múltiplos agentes devem chegar a um acordo antes de prosseguir. Usado quando saídas conflitantes precisam de resolução. |
+| Comportamento emergente | "Os agentes se viraram sozinhos" | Padrões a nível de sistema que surgem de interações entre agentes mas não foram programados explicitamente. Pode ser útil ou prejudicial. |
+| Fan-out / fan-in | "Map-reduce pra agents" | Dividir uma tarefa entre agentes paralelos (fan-out), depois combinar seus resultados (fan-in). |
+| Passagem de mensagens | "Agents conversam entre si" | O mecanismo de comunicação entre agents: dados estruturados enviados de um agente pro outro, substituindo janelas de contexto compartilhadas. |
 
 ## Leitura Complementar
 

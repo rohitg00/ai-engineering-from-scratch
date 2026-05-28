@@ -10,7 +10,7 @@
 ## Objetivos de Aprendizado
 
 - Explicar Redes de Tarefas Hierárquicas: tarefas, métodos, operadores, pré-condições, efeitos.
-- Descrever o loop híbrido do ChatHTN — busca simbólica com decomposição de fallback via LLM.
+- Descrever o loop híbrido do ChatHTN — busca simbólica com decomposição de reserva via LLM.
 - Explicar o loop evolutivo do AlphaEvolve e por que só funciona com um avaliador programático.
 - Implementar um planejador HTN de exemplo e uma busca evolutiva de exemplo com stdlib.
 
@@ -18,7 +18,7 @@
 
 ReWOO (Aula 02), Plan-and-Execute e ReAct cobrem a maioria do planejamento de agent. Dois casos que eles não cobrem bem:
 
-1. **Planos com correção provável.** Escalonamento, rotas de voo, workflows de compliance — o plano tem que ser correto por construção. Um plano fluente de LLM que às vezes alucina uma etapa é inaceitável.
+1. **Planos com correção provável.** Escalonamento, rotas de voo, workflows de conformidade — o plano tem que ser correto por construção. Um plano fluente de LLM que às vezes alucina uma etapa é inaceitável.
 2. **Otimizações com função fitness verificável por máquina.** Multiplicação de matrizes, heurísticas de escalonamento, passes de compilador — o objetivo não é "um plano correto" mas "o melhor plano."
 
 Planejamento HTN e AlphaEvolve resolvem os dois problemas diferentes. Ambos usam LLMs como amplificadores, não substitutos.
@@ -85,7 +85,7 @@ A restrição rígida: a função fitness tem que ser verificável por máquina.
 
 - **HTN sem operadores.** Sem schemas de pré-condição/efeito a alegação de correção colapsa. "LLM sugere decomposição" do ChatHTN requer o schema pra rejeitar movimentos inválidos.
 - **AlphaEvolve sem avaliador real.** "Perguntar ao LLM se o código é melhor" não é função fitness. O avaliador tem que ser determinístico e rápido.
-- **Sobre-engenharia.** A maioria das tarefas de agent não precisa de nenhum dos dois. Recorra a ReAct ou ReWOO primeiro.
+- **Sobre-engenharia.** A maioria das tarefas de agente não precisa de nenhum dos dois. Recorra a ReAct ou ReWOO primeiro.
 
 ## Construa
 
@@ -100,12 +100,12 @@ Rode:
 python3 code/main.py
 ```
 
-O trace mostra o planejador HTN decompondo uma tarefa composta (com um fallback de LLM no meio do plano) e o loop evolutivo convergindo numa expressão alvo.
+O trace mostra o planejador HTN decompondo uma tarefa composta (com um reserva de LLM no meio do plano) e o loop evolutivo convergindo numa expressão alvo.
 
 ## Use
 
-- **Planejadores HTN** — `pyhop`, `SHOP3` ou construa o seu próprio pra imposição de política específica de domínio.
-- **ChatHTN** — código de pesquisa; o padrão (simbólico + fallback LLM) porta limpo pra qualquer planejador HTN.
+- **Planejadores HTN** — `pyhop`, `SHOP3` ou construa o seu próprio pra imposição de política eespecificaçãoífica de domínio.
+- **ChatHTN** — código de pesquisa; o padrão (simbólico + reserva LLM) porta limpo pra qualquer planejador HTN.
 - **AlphaEvolve** — paper da DeepMind; o padrão (ensemble + avaliador) é reproduzível. OpenEvolve e forks open-source similares estão surgindo.
 - **Frameworks de agent** — nenhum entrega HTN ou AlphaEvolve de primeira classe ainda. Construa como subagent ou worker de background.
 
@@ -118,7 +118,7 @@ O trace mostra o planejador HTN decompondo uma tarefa composta (com um fallback 
 1. Estenda o planejador HTN com backtracking: quando a pós-condição de um operador falha em runtime, volte atrás e tente o próximo método.
 2. Adicione um cache de métodos-LLM ao ChatHTN: quando o LLM decompõe a tarefa `T` no padrão de estado `P`, armazene o resultado. Recheque a biblioteca de métodos primeiro na próxima chamada.
 3. Troque o avaliador da busca evolutiva pra uma suíte de testes real. Evolua uma função de sort que passe 20 casos de teste; reporte gerações até convergência.
-4. Leia as notas de design do avaliador do AlphaEvolve. Projete um avaliador pra um domínio que te interessa (otimização de query SQL, minimização de suíte de teste, YAML de deploy).
+4. Leia as notas de design do avaliador do AlphaEvolve. Projete um avaliador pra um domínio que te interessa (otimização de consulta SQL, minimização de suíte de teste, YAML de deploy).
 5. Combine: use HTN pra decompor uma tarefa composta em subtarefas, depois use busca evolutiva no operador primitivo de cada subtarefa. Onde ele brilha, onde ele sobre-engenharia?
 
 ## Termos-Chave

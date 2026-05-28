@@ -44,7 +44,7 @@ Se o worker 3 falha no ReAct, o loop tem que raciocinar pra sair do erro no meio
 
 ### Destilação do planner
 
-O segundo resultado do paper: como o planner não vê observações, você pode fine-tunar um modelo de 7B com saídas do planner de um professor de 175B. O modelo pequeno cuida do planejamento; o modelo grande não é necessário na inferência. Isso agora é padrão — muitos agents de produção de 2026 usam um planner pequeno e um executor grande ou vice-versa.
+O segundo resultado do paper: como o planner não vê observações, você pode fine-tunar um modelo de 7B com saídas do planner de um professor de 175B. O modelo pequeno cuida do planejamento; o modelo grande não é necessário na inferência. Isso agora é padrão — muitos agentes de produção de 2026 usam um planner pequeno e um executor grande ou vice-versa.
 
 ### Plan-and-Execute (LangChain, 2023)
 
@@ -52,7 +52,7 @@ O post de agosto de 2023 da equipe do LangChain generalizou o ReWOO num nome de 
 
 ### Plan-and-Act (Erdogan et al., arXiv:2503.09572, ICML 2025)
 
-Plan-and-Act escala o padrão pra agents web e mobile de longo horizonte. A contribuição-chave são dados de plano sintético: um gerador de trajectory rotulada produz dados de treino onde o plano é explícito. Usado pra fine-tunar modelos de planner que continuam funcionando passando de 30–50 etapas em tarefas estilo WebArena onde uma trajectory única de ReAct perde coerência.
+Plan-and-Act escala o padrão pra agentes web e mobile de longo horizonte. A contribuição-chave são dados de plano sintético: um gerador de trajectory rotulada produz dados de treino onde o plano é explícito. Usado pra fine-tunar modelos de planner que continuam funcionando passando de 30–50 etapas em tarefas estilo WebArena onde uma trajectory única de ReAct perde coerência.
 
 ### Quando escolher qual
 
@@ -97,7 +97,7 @@ LangGraph entrega Plan-and-Execute como receita (`create_react_agent` pra ReAct,
 
 1. Paralelize a execução de workers pra nós de plano independentes. O que você ganha num DAG de 6 nós com 2 grupos paralelos?
 2. Adicione um nó replanner que dispara se qualquer worker retornar erro. Qual é a menor mudança no ReWOO que o torna Plan-and-Execute?
-3. Substitua o `Planner` por um modelo pequeno (classe 7B) e mantenha o `Solver` num modelo frontier. Compare qualidade end-to-end — onde a divisão falha?
+3. Substitua o `Planner` por um modelo pequeno (classe 7B) e mantenha o `Solver` num modelo frontier. Compare qualidade de ponta a ponta — onde a divisão falha?
 4. Leia a Seção 4 do paper do ReWOO sobre destilação do planner. Reproduza o resultado 175B -> 7B conceitualmente: quais dados de treino você precisa e como você pontua qualidade do plano?
 5. Porte o exemplo pra forma de trajectory do Plan-and-Act: plano é uma sequência, não um DAG. Quais tradeoffs mudam?
 

@@ -1,6 +1,6 @@
 # Roots e Elicitation — Delimitação e Entrada do Usuário no Meio do Fluxo
 
-> Paths codificados quebram no momento em que o usuário abre um projeto diferente. Argumentos de ferramenta pré-preenchidos quebram quando o usuário subespecifica. Roots delimitam o servidor a um conjunto de URIs controlado pelo usuário; elicitation pausa no meio de uma chamada de ferramenta pra perguntar ao usuário por entrada estruturada via formulário ou URL. Duas primitivas do cliente, duas correções pra modos comuns de falha do MCP. SEP-1036 (elicitação em modo URL, 2025-11-25) é experimental até H1 2026 — verifique versões de SDK antes de depender disso.
+> Paths codificados quebram no momento em que o usuário abre um projeto diferente. Argumentos de ferramenta pré-preenchidos quebram quando o usuário subeespecificaçãoifica. Roots delimitam o servidor a um conjunto de URIs controlado pelo usuário; elicitation pausa no meio de uma chamada de ferramenta pra perguntar ao usuário por entrada estruturada via formulário ou URL. Duas primitivas do cliente, duas correções pra modos comuns de falha do MCP. SEP-1036 (elicitação em modo URL, 2025-11-25) é experimental até H1 2026 — verifique versões de SDK antes de depender disso.
 
 **Tipo:** Construir
 **Linguagens:** Python (stdlib, demonstração de roots + elicitation)
@@ -42,7 +42,7 @@ Servidor pode então chamar `roots/list`:
 {"roots": [{"uri": "file:///Users/alice/Documents/Notes", "name": "Notes"}]}
 ```
 
-Servidores DEVEM tratar roots como o limite: qualquer leitura ou escrita de arquivo fora do conjunto de roots é rejeitada. Isso não é aplicado pelo cliente (o servidor ainda é código que o usuário confiou), mas servidores compatíveis com a especificação honram.
+Servidores DEVEM tratar roots como o limite: qualquer leitura ou escrita de arquivo fora do conjunto de roots é rejeitada. Isso não é aplicado pelo cliente (o servidor ainda é código que o usuário confiou), mas servidores compatíveis com a eespecificaçãoificação honram.
 
 Quando o usuário adiciona ou remove uma root, o cliente envia `notifications/roots/list_changed`. O servidor rechama `roots/list` e atualiza seu limite.
 
@@ -120,7 +120,7 @@ Nota de risco de deriva: a forma de resposta do SEP-1036 ainda se estabilizando;
 
 ### Ponte de humano no loop
 
-Elicitation mais sampling juntos habilitam o modelo de "humano no loop" do MCP. Um loop de agent do servidor pode pausar pra entrada do usuário (elicitation) ou raciocínio do modelo (sampling). Fase 13 · 11 cobriu sampling; esta aula cobre elicitation. Junte pra controle completo no meio do loop.
+Elicitation mais sampling juntos habilitam o modelo de "humano no loop" do MCP. Um loop de agente do servidor pode pausar pra entrada do usuário (elicitation) ou raciocínio do modelo (sampling). Fase 13 · 11 cobriu sampling; esta aula cobre elicitation. Junte pra controle completo no meio do loop.
 
 ## Use
 
@@ -166,8 +166,8 @@ Esta aula produz `outputs/skill-elicitation-form-designer.md`. Dada uma ferramen
 
 ## Leituras Complementares
 
-- [MCP — Client roots spec](https://modelcontextprotocol.io/specification/draft/client/roots) — referência canônica de roots
-- [MCP — Client elicitation spec](https://modelcontextprotocol.io/specification/draft/client/elicitation) — referência canônica de elicitation
+- [MCP — Client roots especificação](https://modelcontextprotocol.io/especificaçãoification/draft/client/roots) — referência canônica de roots
+- [MCP — Client elicitation especificação](https://modelcontextprotocol.io/especificaçãoification/draft/client/elicitation) — referência canônica de elicitation
 - [Cisco — What's new in MCP elicitation, structured content, OAuth enhancements](https://blogs.cisco.com/developer/whats-new-in-mcp-elicitation-structured-content-and-oauth-enhancements) — walkthrough das adições 2025-11-25
 - [MCP — GitHub SEP-1036](https://github.com/modelcontextprotocol/modelcontextprotocol) — proposta de elicitação em modo URL (experimental, risco de deriva)
 - [The New Stack — How elicitation brings human-in-the-loop to AI tools](https://thenewstack.io/how-elicitation-in-mcp-brings-human-in-the-loop-to-ai-tools/) — walkthrough de UX

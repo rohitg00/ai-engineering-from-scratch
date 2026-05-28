@@ -105,7 +105,7 @@ I(X; Y) = H(X) - H(X|Y)
 
 Se X e Y são independentes, informação mútua é zero. Saber um não diz nada sobre o outro. Se são perfeitamente correlacionadas, informação mútua é igual à entropia de qualquer variável.
 
-Na seleção de features, alta informação mútua entre uma feature e o alvo significa que a feature é útil. Baixa informação mútua significa ruído.
+Na seleção de features, alta informação mútua entre uma funcionalidade e o alvo significa que a funcionalidade é útil. Baixa informação mútua significa ruído.
 
 ### Entropia Condicional
 
@@ -125,7 +125,7 @@ Entropia condicional é sempre não-negativa e nunca excede H(Y):
 0 <= H(Y|X) <= H(Y)
 ```
 
-Em machine learning, entropia condicional aparece em árvores de decisão. A cada divisão, o algoritmo escolhe a feature X que minimiza H(Y|X) — a feature que mais remove incerteza do rótulo Y.
+Em machine learning, entropia condicional aparece em árvores de decisão. A cada divisão, o algoritmo escolhe a funcionalidade X que minimiza H(Y|X) — a funcionalidade que mais remove incerteza do rótulo Y.
 
 ### Entropia Conjunta
 
@@ -190,11 +190,11 @@ Propriedades:
 
 **Informação mútua pra seleção de features.** No ML, você quer features que são informativas sobre o alvo. Informação mútua dá uma maneira fundamentada pra ranquear features:
 
-1. Para cada feature X_i, compute I(X_i; Y) onde Y é a variável alvo.
+1. Para cada funcionalidade X_i, compute I(X_i; Y) onde Y é a variável alvo.
 2. Ranqueie features pela pontuação de IM.
 3. Mantenha as top k features.
 
-Isso funciona pra qualquer relação entre feature e alvo — linear, não-linear, monótona ou não. Correlação só pega relações lineares. IM pega tudo.
+Isso funciona pra qualquer relação entre funcionalidade e alvo — linear, não-linear, monótona ou não. Correlação só pega relações lineares. IM pega tudo.
 
 | Método | Detecta | Custo computacional | Lida com categórica? |
 |--------|---------|-------------------|---------------------|
@@ -214,7 +214,7 @@ Com epsilon = 0.1 e 4 classes:
 - Rótulo duro:  [0, 0, 1, 0]
 - Rótulo suave: [0.025, 0.025, 0.925, 0.025]
 
-Sob a perspectiva da teoria da informação, suavização de rótulos aumenta a entropia da distribuição alvo. Rótulos duros one-hot têm entropia 0 — não há incerteza. Rótulos suaves têm entropia positiva.
+Sob a perespecificaçãotiva da teoria da informação, suavização de rótulos aumenta a entropia da distribuição alvo. Rótulos duros one-hot têm entropia 0 — não há incerteza. Rótulos suaves têm entropia positiva.
 
 Por que isso ajuda:
 - Impede que o modelo envie logits pra valores extremos (logits infinitos seriam necessários pra combinar perfeitamente um alvo one-hot sob entropia cruzada)
@@ -232,7 +232,7 @@ O segundo termo penaliza previsões distantes da uniforme — uma regularizaçã
 
 ### Por que Entropia Cruzada É A Perda de Classificação
 
-Três perspectivas, mesma conclusão.
+Três perespecificaçãotivas, mesma conclusão.
 
 **Visão da teoria da informação.** Entropia cruzada mede quantos bits você desperdiça usando a distribuição do seu modelo em vez da verdadeira. Minimizá-la torna seu modelo o codificador mais eficiente da realidade.
 
@@ -361,17 +361,17 @@ random.seed(42)
 
 n_samples = 1000
 n_classes = 3
-true_labels = [random.randint(0, n_classes - 1) for _ in range(n_samples)]
+true_rótulos = [random.randint(0, n_classes - 1) for _ in range(n_samples)]
 model_logits = [[random.gauss(0, 1) for _ in range(n_classes)] for _ in range(n_samples)]
 
 ce_loss = sum(
     cross_entropy_loss(label, logits)
-    for label, logits in zip(true_labels, model_logits)
+    for label, logits in zip(true_rótulos, model_logits)
 ) / n_samples
 
 nll = -sum(
     math.log(softmax(logits)[label])
-    for label, logits in zip(true_labels, model_logits)
+    for label, logits in zip(true_rótulos, model_logits)
 ) / n_samples
 
 print(f"Perda de entropia cruzada:      {ce_loss:.6f}")

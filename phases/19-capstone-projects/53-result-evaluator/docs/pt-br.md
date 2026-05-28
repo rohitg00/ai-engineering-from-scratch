@@ -131,10 +131,10 @@ for hipotese in fila:
     if literatura_resolve(hipotese, literatura):
         anexar(hipotese, veredito="settled")
         continue
-    candidatos = executor.run_all(especificacoes_para(hipotese))
-    baselines  = executor.run_all(especificacoes_baseline_para(hipotese))
-    metric_spec = MetricSpec("perplexity", direction=LOWER, scale=LOG)
-    veredito = avaliador.evaluate(hipotese.id, metric_spec, candidatos, baselines)
+    candidatos = executor.run_all(eespecificaçãoificacoes_para(hipotese))
+    baselines  = executor.run_all(eespecificaçãoificacoes_baseline_para(hipotese))
+    metric_especificação = MetricSpec("perplexity", direction=LOWER, scale=LOG)
+    veredito = avaliador.evaluate(hipotese.id, metric_especificação, candidatos, baselines)
     anexar(hipotese, veredito)
 ```
 

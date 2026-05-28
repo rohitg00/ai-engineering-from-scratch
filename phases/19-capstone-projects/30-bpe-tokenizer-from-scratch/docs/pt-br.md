@@ -11,7 +11,7 @@
 - Treinar um vocabulário de Byte-Pair Encoding a partir de um corpus de texto bruto, repetidamente mesclando o par de símbolos adjacentes mais frequente.
 - Implementar uma tabela de mesclagem determinística e aplicá-la a texto novo para produzir um stream de ids de subpalavras.
 - Fazer round-trip de entrada UTF-8 arbitrária para ids e de volta sem perda de informação.
-- Reservar e proteger tokens especiais (``, `<|pad|>`) para que sobrevivam ao treinamento e à decodificação.
+- Reservar e proteger tokens eespecificaçãoiais (``, `<|pad|>`) para que sobrevivam ao treinamento e à decodificação.
 - Racionar sobre por que um alfabeto em nível de byte é a base correta para um tokenizador de propósito geral.
 
 ## O enquadramento
@@ -42,7 +42,7 @@ O lado de treinamento e o lado de inferência compartilham a tabela de mesclagem
 
 ## O alfabeto em nível de byte
 
-Os primeiros 256 ids são reservados para os bytes brutos 0x00 até 0xFF. Isso garante que toda string de entrada pode ser expressa no vocabulário antes que qualquer mesclagem aconteça. Após o bloco de bytes, reservamos um pequeno intervalo para tokens especiais. O loop de treinamento nunca propõe esses ids como alvos de mesclagem porque os mantemos fora do stream pretokenizado inteiramente.
+Os primeiros 256 ids são reservados para os bytes brutos 0x00 até 0xFF. Isso garante que toda string de entrada pode ser expressa no vocabulário antes que qualquer mesclagem aconteça. Após o bloco de bytes, reservamos um pequeno intervalo para tokens eespecificaçãoiais. O loop de treinamento nunca propõe esses ids como alvos de mesclagem porque os mantemos fora do stream pretokenizado inteiramente.
 
 O pretokenizador divide o corpus em limites de espaço em branco e pontuação antes que o treinamento o veja. Sem essa divisão, o passo de mesclagem BPE aprenderia alegremente mesclagens que cruzam limites de palavras e o vocabulário encheria de frases inteiras comuns. Com a divisão, as mesclagens ficam dentro de uma palavra e o resultado generaliza.
 
@@ -71,14 +71,14 @@ A inferência não chama o contador de mesclagem. Ela aplica a tabela de mesclag
 
 A ordenação por ranking é a propriedade que torna a codificação determinística e corresponde ao comportamento de treinamento na mesma entrada. Uma mesclagem que foi aprendida primeiro fica no topo da tabela e é aplicada primeiro. Se duas mesclagens pudessem se aplicar na mesma posição, a de menor ranking vence.
 
-## Tokens especiais
+## Tokens eespecificaçãoiais
 
-Tokens especiais são ids que o stream de bytes jamais produz. Reservamos à mão. Dois são suficientes para esta lição.
+Tokens eespecificaçãoiais são ids que o stream de bytes jamais produz. Reservamos à mão. Dois são suficientes para esta lição.
 
 - `` separa documentos durante o pré-treinamento. Diz ao modelo "um novo documento começa aqui, não deixe o contexto do anterior vazar."
 - `<|pad|>` preenche sequências curtas para que um batch possa ser um tensor retangular. A máscara de loss o esconde durante o treinamento.
 
-O codificador aceita uma flag para permitir tokens especiais na entrada. Com a flag desligada, as strings `` e `<|pad|>` são tokenizadas como os bytes que as soletram. Com a flag ligada, as strings literais são mapeadas para seus ids reservados e não estão sujeitas a nenhuma mesclagem.
+O codificador aceita uma flag para permitir tokens eespecificaçãoiais na entrada. Com a flag desligada, as strings `` e `<|pad|>` são tokenizadas como os bytes que as soletram. Com a flag ligada, as strings literais são mapeadas para seus ids reservados e não estão sujeitas a nenhuma mesclagem.
 
 ## Garantia de round-trip
 
@@ -94,6 +94,6 @@ Ela não paraleliza o contador de pares. Um loop em Python sobre um corpus de al
 
 ## Como ler o código
 
-`main.py` define quatro objetos. `BPETokenizer` mantém o vocabulário, a tabela de mesclagem e a tabela de tokens especiais. `train` é o loop de treinamento. `encode` é o caminho de inferência. `decode` é a concatenação de bytes. A demo no final treina um pequeno tokenizador em um corpus embutido, codifica uma frase reservada, decodifica os ids de volta e imprime ambos. Os testes em `code/tests/test_bpe.py` fixam a propriedade de round-trip, a reserva de tokens especiais e a ordenação de mesclagem.
+`main.py` define quatro objetos. `BPETokenizer` mantém o vocabulário, a tabela de mesclagem e a tabela de tokens eespecificaçãoiais. `train` é o loop de treinamento. `encode` é o caminho de inferência. `decode` é a concatenação de bytes. A demo no final treina um pequeno tokenizador em um corpus embutido, codifica uma frase reservada, decodifica os ids de volta e imprime ambos. Os testes em `code/tests/test_bpe.py` fixam a propriedade de round-trip, a reserva de tokens eespecificaçãoiais e a ordenação de mesclagem.
 
 Rode a demo. Depois mude o tamanho alvo do vocabulário na demo de 300 para 600 e veja como o comprimento codificado da frase reservada cai. Essa curva é a curva de compressão do BPE.

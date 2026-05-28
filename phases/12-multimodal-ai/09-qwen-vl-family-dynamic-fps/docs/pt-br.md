@@ -43,7 +43,7 @@ Benchmarks na época: competitivo com GPT-4V em inglês, dominante em chinês. A
 Qwen2-VL substituiu a stack de resolução fixa + Q-Former por um encoder ViT com resolução dinâmica nativa. Mudanças principais:
 
 - Resolução dinâmica nativa. ViT aceita qualquer HxW divisível por 28 (patch 14 com merge espacial 2x). Uma imagem de 1120x672 (40x24 patches mesclados) produz 960 tokens visuais. Sem resize, sem mosaico, sem thumbnail.
-- M-RoPE (RoPE Multimodal). Cada token carrega uma posição 3D (t, h, w) em vez de 1D. Pra imagens t=0, pra vídeo t = índice do frame. RoPE rotaciona vetores query/key por uma frequência por eixo. Sem tabela de embedding posicional.
+- M-RoPE (RoPE Multimodal). Cada token carrega uma posição 3D (t, h, w) em vez de 1D. Pra imagens t=0, pra vídeo t = índice do frame. RoPE rotaciona vetores consulta/key por uma frequência por eixo. Sem tabela de embedding posicional.
 - Projetor MLP. Dropa Q-Former; usa MLP de 2 camadas nos patches mesclados.
 - Vídeo com FPS dinâmico. Vídeo amostrado a 1-2 FPS por padrão, mas modelo aceita quantidades arbitrárias de frames.
 
@@ -69,7 +69,7 @@ A lição da linhagem: até 2025, a arquitetura Qwen-VL se estabilizou. Geraçõ
 
 ### M-RoPE matematicamente
 
-RoPE clássico rotaciona um query `q` de dimensão `d` por posição `m` usando coordenadas em pares:
+RoPE clássico rotaciona um consulta `q` de dimensão `d` por posição `m` usando coordenadas em pares:
 
 ```
 q_rot[2i]   = q[2i]   * cos(m * theta_i) - q[2i+1] * sin(m * theta_i)

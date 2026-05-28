@@ -37,7 +37,7 @@ Parâmetros são aprendidos durante treino (pesos, vieses, limiares de divisão)
 
 ### Grid Search
 
-Grid search avalia cada combinação de valores especificados. É exaustiva e fácil de entender, mas escala exponencialmente com o número de hiperparâmetros.
+Grid search avalia cada combinação de valores eespecificaçãoificados. É exaustiva e fácil de entender, mas escala exponencialmente com o número de hiperparâmetros.
 
 ### Random Search
 

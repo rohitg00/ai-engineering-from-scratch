@@ -1,6 +1,6 @@
 # Avaliação — FID, CLIP Score, Preferência Humana
 
-> Todo leaderboard de modelo generativo cita FID, CLIP score e uma taxa de vitória de arena de preferência humana. Cada número tem um modo de falha que um pesquisador determinado pode explorar. Se você não conhece os modos de falha, não consegue distinguir uma melhoria real de uma execução explorada.
+> Todo ranking de modelo generativo cita FID, CLIP score e uma taxa de vitória de arena de preferência humana. Cada número tem um modo de falha que um pesquisador determinado pode explorar. Se você não conhece os modos de falha, não consegue distinguir uma melhoria real de uma execução explorada.
 
 **Tipo:** Construir
 **Linguagens:** Python
@@ -33,7 +33,7 @@ Interpretação: distância Fréchet entre duas gaussianas multivariadas no espa
 
 Modos de falha:
 - **Viesado para N pequeno.** FID é média-quadrada sobre a distribuição de features — N pequeno subestima a covariância, dá FID falsamente baixo. Sempre use N ≥ 10.000.
-- **Dependente do Inception.** Inception-v3 foi treinado no ImageNet. Domínios distantes do ImageNet (rostos, arte, imagens de texto) produzem FID sem significado. Use um extrator de features específico do domínio.
+- **Dependente do Inception.** Inception-v3 foi treinado no ImageNet. Domínios distantes do ImageNet (rostos, arte, imagens de texto) produzem FID sem significado. Use um extrator de features eespecificaçãoífico do domínio.
 - **Exploração.** Sobreadaptação ao prior do Inception dá FID baixo sem melhoria de qualidade visual. Supere com CMMD (abaixo).
 
 ### CLIP score — aderência ao prompt
@@ -64,7 +64,7 @@ Escolha um conjunto de prompts. Gere com o modelo A e o modelo B. Mostre pares p
 - **Arenas de imagem estilo Chatbot-Arena:** https://imagearena.ai/ e outros.
 
 Modos de falha:
-- **Variância do juiz.** Não-especialistas têm preferências diferentes de especialistas. Use os dois.
+- **Variância do juiz.** Não-eespecificaçãoialistas têm preferências diferentes de eespecificaçãoialistas. Use os dois.
 - **Distribuição de prompts.** Prompts selecionados favorecem uma família. Sempre documente.
 - **Exploração de reward por LLM-juiz.** GPT-4-juiz é enganado por saídas bonitas mas erradas. Triangule com humanos.
 
@@ -125,7 +125,7 @@ def elo_update(r_a, r_b, winner, k=32):
 - **Reportando uma semente.** Rode 3 sementes no mínimo. Reporte std.
 - **Inflação de CLIP score via negative prompts.** Alguns pipelines aumentam o CLIP sobreadaptando o prompt. Verifique saturação visual.
 - **Viés de Elo por sobreposição de prompts.** Se ambos os modelos viram um prompt de benchmark durante treino, Elo é inútil. Use conjuntos de prompts de teste.
-- **Enviesamento de crowd worker pago em avaliação humana.** Anotadores do Prolific, MTurk são tendenciosamente mais jovens / tech-friendly. Misture com especialistas recrutados de arte/design.
+- **Enviesamento de grupo de avaliadores worker pago em avaliação humana.** Anotadores do Prolific, MTurk são tendenciosamente mais jovens / tech-friendly. Misture com eespecificaçãoialistas recrutados de arte/design.
 
 ## Use
 

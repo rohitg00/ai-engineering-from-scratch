@@ -1,6 +1,6 @@
 # SRE para AI — Resposta a Incidentes Multi-Agent, Runbooks, Detecção Preditiva
 
-> AI SRE usa LLMs fundamentados em dados de infraestrutura (logs, runbooks, topologia de serviços) via RAG para automatizar fases de investigação, documentação e coordenação. O padrão de arquitetura em 2026 é orquestração multi-agent — agents especializados (logs, métricas, runbooks) coordenados por um supervisor; AI propõe hipóteses e consultas, humanos aprovam decisões de julgamento. Datadog Bits AI e Azure SRE Agent já entregam isso como produtos gerenciados. Runbooks estão evoluindo: NeuBird Hawkeye usa avaliação adversarial (dois modelos analisam o mesmo incidente; concordância = confiança, discordância = incerteza); memória operacional persiste entre mudanças de time. Auto-remediação continua cautelosa: AI sugere, humanos aprovam. Ação totalmente autônoma é estreita (reiniciar pod, rollback de deploy específico) com guardrails ríquissimos — quem vende "configura e esquece" está exagerando. Fronteira emergente: previsão pré-incidente. Pesquisa do MIT relata que um LLM treinado em logs históricos + temperaturas de GPU + padrões de erro de API previu 89% dos outages 10-15 min antes. Projeção: 95% dos LLMs empresariais têm failover automatizado até o fim de 2026.
+> AI SRE usa LLMs fundamentados em dados de infraestrutura (logs, runbooks, topologia de serviços) via RAG para automatizar fases de investigação, documentação e coordenação. O padrão de arquitetura em 2026 é orquestração multi-agent — agentes eespecificaçãoializados (logs, métricas, runbooks) coordenados por um supervisor; AI propõe hipóteses e consultas, humanos aprovam decisões de julgamento. Datadog Bits AI e Azure SRE Agent já entregam isso como produtos gerenciados. Runbooks estão evoluindo: NeuBird Hawkeye usa avaliação adversarial (dois modelos analisam o mesmo incidente; concordância = confiança, discordância = incerteza); memória operacional persiste entre mudanças de time. Auto-remediação continua cautelosa: AI sugere, humanos aprovam. Ação totalmente autônoma é estreita (reiniciar pod, rollback de implantação eespecificaçãoífico) com guardrails ríquissimos — quem vende "configura e esquece" está exagerando. Fronteira emergente: previsão pré-incidente. Pesquisa do MIT relata que um LLM treinado em logs históricos + temperaturas de GPU + padrões de erro de API previu 89% dos outages 10-15 min antes. Projeção: 95% dos LLMs empresariais têm failover automatizado até o fim de 2026.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, simulador brincadeira de triagem de incidentes multi-agent)
@@ -9,7 +9,7 @@
 
 ## Objetivos de Aprendizado
 
-- Diagramar a arquitetura AI SRE multi-agent: supervisor + agents especializados (logs, métricas, runbooks) + gate de aprovação humana.
+- Diagramar a arquitetura AI SRE multi-agent: supervisor + agentes eespecificaçãoializados (logs, métricas, runbooks) + gate de aprovação humana.
 - Explicar por que a auto-remediação é estreita (reiniciar pod, reverter deploy) e não ampla (rearquitetar serviço).
 - Nomear o padrão de avaliação adversarial (NeuBird Hawkeye): dois modelos concordam = confiança; discordam = escalam.
 - Citar o resultado de detecção antecipada do MIT de 89% e a restrição operacional: previsões sem atuação são só dashboards.
@@ -18,7 +18,7 @@
 
 Um engenheiro de plantão recebe page às 3 da manhã. "Taxa de erro alta no checkout." Ele checa Datadog, Loki, três runbooks, o log de deploy. 30 minutos depois ele percebe que a causa raiz é um OOM de vLLM por causa de um pico no KV cache. Ele reinicia o pod; o erro some.
 
-Em 2026 os primeiros 20 minutos dessa investigação são automatizáveis. Agrupar logs por serviço, correlacionar com deploys recentes, combinar com runbooks — tudo é RAG + uso de ferramentas. Um agent supervisionado consegue fazer triagem de primeira passada e apresentar uma hipótese antes do humano abrir o Datadog.
+Em 2026 os primeiros 20 minutos dessa investigação são automatizáveis. Agrupar logs por serviço, correlacionar com deploys recentes, combinar com runbooks — tudo é RAG + uso de ferramentas. Um agente supervisionado consegue fazer triagem de primeira passada e apresentar uma hipótese antes do humano abrir o Datadog.
 
 Remediação totalmente autônoma é um problema diferente. Reiniciar pod: seguro. Escalar pool de GPU: seguro se a política permitir. Rearquitetar o serviço: definitivamente não. A disciplina é desenhar a linha estreita.
 
@@ -47,11 +47,11 @@ Remediação totalmente autônoma é um problema diferente. Reiniciar pod: segur
         Ação (conjunto estreito)
 ```
 
-Supervisor decompõe o incidente em sub-queries. Agents especializados têm acesso a ferramentas (busca de logs, PromQL, recuperação de docs). Supervisor sintetiza, apresenta hipótese + evidências ao humano. Humano aprova ou redireciona.
+Supervisor decompõe o incidente em sub-queries. Agents eespecificaçãoializados têm acesso a ferramentas (busca de logs, PromQL, recuperação de docs). Supervisor sintetiza, apresenta hipótese + evidências ao humano. Humano aprova ou redireciona.
 
 ### Escopo da auto-remediação
 
-**Seguro (estreito)**: reiniciar pod, reverter deploy específico, escalar pool dentro de limites pré-aprovados, ativar feature flag pré-aprovada.
+**Seguro (estreito)**: reiniciar pod, reverter implantação eespecificaçãoífico, escalar pool dentro de limites pré-aprovados, ativar funcionalidade flag pré-aprovada.
 
 **Não seguro (amplo)**: mudar topologia do serviço, modificar limites de recursos, deployar código novo, mudar IAM, alterar bancos de dados.
 
@@ -63,7 +63,7 @@ Dois modelos analisam independentemente o mesmo incidente. Se concordam na causa
 
 ### Memória operacional
 
-Turnover de time é o assassino silencioso do SRE tradicional — conhecimento tribal vai embora. AI SRE armazena runbooks + post-mortems num banco vetorial; agents recuperam a cada incidente novo. Quando engenheiros novos entram, a AI tem o histórico completo.
+Turnover de time é o assassino silencioso do SRE tradicional — conhecimento tribal vai embora. AI SRE armazena runbooks + post-mortems num banco vetorial; agentes recuperam a cada incidente novo. Quando engenheiros novos entram, a AI tem o histórico completo.
 
 ### Previsão pré-incidente
 
@@ -92,7 +92,7 @@ Runbooks evoluem de páginas do Confluence para markdown versionado com seções
 
 ## Use
 
-`code/main.py` simula triagem multi-agent: agent de logs encontra erro, agent de métricas encontra pico de CPU, agent de runbooks combina com problema conhecido. Supervisor ranqueia hipóteses.
+`code/main.py` simula triagem multi-agent: agente de logs encontra erro, agente de métricas encontra pico de CPU, agente de runbooks combina com problema conhecido. Supervisor ranqueia hipóteses.
 
 ## Entregue
 
@@ -100,7 +100,7 @@ Esta aula produz `outputs/skill-ai-sre-plan.md`. Dado plantão atual, volume de 
 
 ## Exercícios
 
-1. Execute `code/main.py`. E se os agents de logs e métricas discordarem? Como o supervisor resolve?
+1. Execute `code/main.py`. E se os agentes de logs e métricas discordarem? Como o supervisor resolve?
 2. Defina três ações de auto-remediação "seguras" para seu serviço. Justifique cada uma.
 3. Escreva um template de runbook estruturado: seções, campos obrigatórios, comandos de verificação.
 4. Detecção preditiva dispara com 12 min de lead. Qual é sua política — pager, pré-drenagem, ou ambos?
@@ -112,7 +112,7 @@ Esta aula produz `outputs/skill-ai-sre-plan.md`. Dado plantão atual, volume de 
 |-------|-------------------|---------------------------|
 | AI SRE | "agent pro plantão" | Investigação de incidentes + coordenação baseada em LLM |
 | Agent supervisor | "o orquestrador" | Agent de alto nível que decompõe incidentes em sub-queries |
-| Agent especializado | "agent de domínio" | Sub-agent com acesso a ferramentas (logs, métricas, runbooks) |
+| Agent eespecificaçãoializado | "agent de domínio" | Sub-agent com acesso a ferramentas (logs, métricas, runbooks) |
 | Auto-remediação | "AI conserta" | Ação estreita pré-aprovada; NÃO rearquitetação ampla |
 | Memória operacional | "runbooks vetoriais" | Post-mortems + runbooks em banco vetorial para RAG |
 | Avaliação adversarial | "checagem de dois modelos" | Análises independentes; concordância = confiança |

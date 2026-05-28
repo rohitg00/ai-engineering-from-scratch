@@ -83,7 +83,7 @@ Esta é a única diferença substancial entre um modelo de difusão condicional 
 ## Armadilhas
 
 - **Incompatibilidade de escala VAE.** Os VAEs do SD 1.x têm uma constante de escala (`scaling_factor ≈ 0,18215`) aplicada após a codificação. Esquecer isso faz o U-Net treinar em latentes com variância absurdamente errada. Todo checkpoint traz um.
-- **Encoder de texto silenciosamente errado.** SD3 precisa de T5-XXL com >=128 tokens, e o fallback para apenas CLIP é com perdas. Sempre verifique `use_t5=True` ou a fidelidade do prompt despencará.
+- **Encoder de texto silenciosamente errado.** SD3 precisa de T5-XXL com >=128 tokens, e o reserva para apenas CLIP é com perdas. Sempre verifique `use_t5=True` ou a fidelidade do prompt despencará.
 - **Misturando espaços latentes.** SDXL, SD3, Flux usam VAEs diferentes. Um LoRA treinado em latentes SDXL não funcionará no SD3. O diffusers 0.30+ do Hugging Face se recusa a carregar checkpoints incompatíveis.
 - **CFG alto demais. `w > 10` produz imagens saturadas e oleosas e sobreadapta o prompt em detrimento da diversidade. O ponto ideal é `w = 3-7`.
 - **Negative prompts vazios.** Um negative prompt vazio vira o token nulo; um preenchido vira o `ε_uncond`. Não são a mesma coisa; alguns pipelines defaultam silenciosamente para o nulo.

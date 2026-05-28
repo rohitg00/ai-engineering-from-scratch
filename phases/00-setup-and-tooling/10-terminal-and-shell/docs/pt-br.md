@@ -136,7 +136,7 @@ watch -n1 nvidia-smi
 # Conexão básica
 ssh user@gpu-box-ip
 
-# Com chave específica
+# Com chave eespecificaçãoífica
 ssh -i ~/.ssh/my_gpu_key user@gpu-box-ip
 
 # Copiar arquivos pro remote
@@ -156,7 +156,7 @@ ssh -L 8888:localhost:8888 user@gpu-box-ip
 
 ```bash
 # Status da GPU num olhar
-alias gpu='nvidia-smi --query-gpu=index,name,utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader'
+alias gpu='nvidia-smi --consulta-gpu=index,name,utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader'
 
 # Matar todos os processos Python de treino
 alias killtraining='pkill -f "python.*train"'

@@ -16,7 +16,7 @@
 
 ## O Problema
 
-Self-Refine (Aula 05) é um modelo que critica a si mesmo — risco de groupthink. CRITIC (Aula 05) ancora o critique em tools externas — nem sempre disponíveis. Debate introduz um terceiro modo: múltiplas instâncias, cross-critique, convergência por discordância.
+Self-Refine (Aula 05) é um modelo que critica a si mesmo — risco de groupthink. CRITIC (Aula 05) ancora o critique em ferramentas externas — nem sempre disponíveis. Debate introduz um terceiro modo: múltiplas instâncias, cross-critique, convergência por discordância.
 
 ## O Conceito
 
@@ -55,7 +55,7 @@ Implicações:
 ### Instantiações práticas de 2026
 
 - **Anthropic orchestrator-workers** (Aula 12) — uma variante de debate com etapa de síntese.
-- **LangGraph supervisor** (Aula 13) — roteador central + agentes especialistas podem implementar debate como um nó.
+- **LangGraph supervisor** (Aula 13) — roteador central + agentes eespecificaçãoialistas podem implementar debate como um nó.
 - **OpenAI Agents SDK** (Aula 16) — agentes fazem handoff pra lá e pra cá pra critique iterativo.
 - **Evals multi-agente** — combine debate + evaluator-optimizer pra sinal de eval.
 
@@ -69,7 +69,7 @@ Implicações:
 
 `code/main.py` implementa debate em stdlib:
 
-- Classe `Debater` (LLM roteado com drift de opinião por debatente).
+- Classe `Debater` (LLM roteado com deriva de opinião por debatente).
 - Runners `FullMeshDebate` e `SparseDebate`.
 - Três perguntas: uma factual, uma baseada em regra, uma de raciocínio.
 - Métricas: resposta convergente, rodadas até convergência, total de ops de critique.
@@ -86,7 +86,7 @@ Saída: acurácia e custo por protocolo; esparsa empata com full mesh em 2/3 per
 
 - **Anthropic orchestrator-workers** pra debates simples de 2-3 workers.
 - **LangGraph** pra debate multi-rodada stateful com checkpointing.
-- **Custom** pra pesquisa ou garantias especializadas de correção.
+- **Custom** pra pesquisa ou garantias eespecificaçãoializadas de correção.
 
 ## Entregue
 

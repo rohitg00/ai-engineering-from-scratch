@@ -11,7 +11,7 @@
 
 - Implementar estratégias avançadas de chunking (semântico, recursivo, pai-filho) que preservam estrutura e contexto dos documentos
 - Construir pipeline de busca híbrida combinando BM25 com busca vetorial semântica e reranker cross-encoder
-- Aplicar técnicas de transformação de query (HyDE, multi-query, step-back) para melhorar retrieval em perguntas ambíguas ou complexas
+- Aplicar técnicas de transformação de consulta (HyDE, multi-consulta, step-back) para melhorar retrieval em perguntas ambíguas ou complexas
 - Diagnosticar e corrigir falhas comuns de RAG: chunk errado recuperado, resposta não está no contexto, falha de raciocínio multi-hop
 
 ## O Problema
@@ -27,24 +27,24 @@ Ou quando alguém pergunta "Como configurar SSO?" e o sistema recupera um chunk 
 BM25 é busca por palavras-chave. Semântica é busca por significado. Combinação é melhor que qualquer uma sozinha.
 
 ```python
-def bm25_score(query_words, doc_words, avg_dl, k1=1.5, b=0.75):
+def bm25_score(consulta_words, doc_words, avg_dl, k1=1.5, b=0.75):
     """Score BM25 simplificado."""
     score = 0
     dl = len(doc_words)
-    for q in query_words:
+    for q in consulta_words:
         tf = doc_words.count(q)
         idf = math.log((1000 + 1) / (1 + 1))  # simplificado
         score += idf * (tf * (k1 + 1)) / (tf + k1 * (1 - b + b * dl / avg_dl))
     return score
 
-def hybrid_search(query, documents, top_k=5, alpha=0.5):
+def hybrid_search(consulta, documents, top_k=5, alpha=0.5):
     """Combina BM25 e busca vetorial com rank fusion."""
-    query_words = query.lower().split()
+    consulta_words = consulta.lower().split()
     
     bm25_scores = []
     for i, doc in enumerate(documents):
         doc_words = doc.lower().split()
-        score = bm25_score(query_words, doc_words, 100)
+        score = bm25_score(consulta_words, doc_words, 100)
         bm25_scores.append((i, score))
     
     # Normalizar scores para [0, 1]
@@ -67,12 +67,12 @@ def hybrid_search(query, documents, top_k=5, alpha=0.5):
 Após recuperar candidatos com busca rápida (bi-encoder), use um cross-encoder mais lento mas mais preciso para reordenar:
 
 ```python
-def rerank(query, documents, top_k=5):
-    """Reordena documentos usando scoring par query-documento."""
+def rerank(consulta, documents, top_k=5):
+    """Reordena documentos usando scoring par consulta-documento."""
     scored = []
     for doc in documents:
-        # Cross-encoder: processa query e doc juntos
-        score = cross_encoder_score(query, doc)  # placeholder
+        # Cross-encoder: processa consulta e doc juntos
+        score = cross_encoder_score(consulta, doc)  # placeholder
         scored.append((doc, score))
     
     scored.sort(key=lambda x: x[1], reverse=True)
@@ -84,22 +84,22 @@ def rerank(query, documents, top_k=5):
 **HyDE** (Hypothetical Document Embeddings): Gere uma resposta hipotética e busque documentos similares a ela:
 
 ```python
-def hyde_search(query, generate_fn, embed_fn, vector_store):
+def hyde_search(consulta, generate_fn, embed_fn, vector_store):
     """Gera resposta hipotética e busca por ela."""
     hypothetical_answer = generate_fn(
-        f"Gere uma resposta detalhada para: {query}"
+        f"Gere uma resposta detalhada para: {consulta}"
     )
     hyde_embedding = embed_fn(hypothetical_answer)
     return vector_store.search(hyde_embedding, top_k=5)
 ```
 
-**Multi-Query**: Gere múltiplas variações da query e combine resultados:
+**Multi-Query**: Gere múltiplas variações da consulta e combine resultados:
 
 ```python
-def multi_query_search(query, generate_fn, vector_store, n_queries=3):
-    """Gera N variações da query e faz busca com cada uma."""
+def multi_consulta_search(consulta, generate_fn, vector_store, n_queries=3):
+    """Gera N variações da consulta e faz busca com cada uma."""
     variations = generate_fn(
-        f"Gere {n_queries} variações da pergunta: {query}"
+        f"Gere {n_queries} variações da pergunta: {consulta}"
     )
     
     all_results = {}
@@ -126,12 +126,12 @@ def multi_query_search(query, generate_fn, vector_store, n_queries=3):
 # # ChromaDB para busca semântica
 # collection = chromadb.Collection("docs")
 #
-# def hybrid_search(query, top_k=5, alpha=0.5):
+# def hybrid_search(consulta, top_k=5, alpha=0.5):
 #     # BM25 scores
-#     bm25_scores = bm25.get_scores(query.lower().split())
+#     bm25_scores = bm25.get_scores(consulta.lower().split())
 #     
 #     # Semantic scores
-#     semantic_results = collection.query(query_texts=[query], n_results=top_k)
+#     semantic_results = collection.consulta(consulta_texts=[consulta], n_results=top_k)
 #     
 #     # Fusion
 #     # ... combinar e reordenar
@@ -139,7 +139,7 @@ def multi_query_search(query, generate_fn, vector_store, n_queries=3):
 
 ## Entregue
 
-Esta aula produz uma pipeline de RAG avançada com busca híbrida, reranking e transformação de query.
+Esta aula produz uma pipeline de RAG avançada com busca híbrida, reranking e transformação de consulta.
 
 ## Exercícios
 
@@ -161,8 +161,8 @@ Esta aula produz uma pipeline de RAG avançada com busca híbrida, reranking e t
 | Hybrid search | "O melhor dos dois mundos" | Rodar busca semântica e por palavras-chave em paralelo e mesclar com rank fusion |
 | Reciprocal Rank Fusion | "Mesclar listas ranqueadas" | Combinar múltiplas listas ranqueadas somando 1/(k + rank) para cada documento |
 | Reranking | "Segunda passada de scoring" | Usar modelo cross-encoder mais caro para re-pontuar candidatos |
-| Cross-encoder | "Modelo query-documento conjunta" | Modelo que recebe query e documento como entrada única |
-| Bi-encoder | "Modelo de embedding independente" | Modelo que embedde query e documento independentemente |
+| Cross-encoder | "Modelo consulta-documento conjunta" | Modelo que recebe consulta e documento como entrada única |
+| Bi-encoder | "Modelo de embedding independente" | Modelo que embedde consulta e documento independentemente |
 | HyDE | "Buscar com resposta falsa" | Gerar resposta hipotética, embeddê-la e buscar docs similares |
 | Faithfulness | "Manteve fundamentação?" | Se a resposta gerada é suportada pelos documentos recuperados |
 

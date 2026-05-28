@@ -1,6 +1,6 @@
 # Chaos Engineering para Produção de LLM
 
-> Chaos engineering para LLMs é uma disciplina própria em 2026. Pré-requisitos antes de rodar experimentos em produção: SLI/SLO definidos, observabilidade com trace+metric+log, rollback automatizado, runbooks, plantão. Arquitetura tem quatro planos: controle (agendador de experimentos), alvo (serviços, infra, stores de dados), segurança (guardrails + abort + filtros de tráfego), observabilidade (métricas + traces + logs), feedback (para ajustes de SLO). Guardrails são obrigatórios: alertas de burn-rate pausam experimentos se o burn diário do error-budget > 2x o esperado; janelas de supressão + correlação de trace-ID deduplicam ruído de alerta. Cadência: canary semanal pequeno + revisão SLO; game day mensal + postmortem; auditoria trimestral cross-team de resiliência + mapeamento de dependências. Experimentos específicos de LLM: sobrecarga de memória, falhas de rede, outages de provedores, prompts malformados, tempestades de evição de KV cache. Ferramentas: Harness Chaos Engineering (recomendações derivadas de AI, downsizing de blast-radius, integração com MCP tool); LitmusChaos (CNCF); Chaos Mesh (CNCF Kubernetes-native).
+> Chaos engineering para LLMs é uma disciplina própria em 2026. Pré-requisitos antes de rodar experimentos em produção: SLI/SLO definidos, observabilidade com trace+metric+log, rollback automatizado, runbooks, plantão. Arquitetura tem quatro planos: controle (agendador de experimentos), alvo (serviços, infra, stores de dados), segurança (guardrails + abort + filtros de tráfego), observabilidade (métricas + traces + logs), feedback (para ajustes de SLO). Guardrails são obrigatórios: alertas de burn-rate pausam experimentos se o burn diário do error-budget > 2x o esperado; janelas de supressão + correlação de trace-ID deduplicam ruído de alerta. Cadência: canary semanal pequeno + revisão SLO; game day mensal + postmortem; auditoria trimestral cross-team de resiliência + mapeamento de dependências. Experimentos eespecificaçãoíficos de LLM: sobrecarga de memória, falhas de rede, outages de provedores, prompts malformados, tempestades de evição de KV cache. Ferramentas: Harness Chaos Engineering (recomendações derivadas de AI, downsizing de blast-radius, integração com MCP tool); LitmusChaos (CNCF); Chaos Mesh (CNCF Kubernetes-native).
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, simulador brincadeira de rodar experimentos de chaos)
@@ -11,7 +11,7 @@
 
 - Nomear os cinco pré-requisitos do chaos engineering (SLI/SLO, observabilidade, rollback, runbooks, plantão) e explicar por que pular qualquer um quebra a prática.
 - Diagramar os quatro planos (controle, alvo, segurança, observabilidade) e o loop de feedback para SLO.
-- Listar cinco experimentos específicos de LLM (sobrecarga de memória, falha de rede, outage de provedor, prompt malformado, tempestade de evição de KV).
+- Listar cinco experimentos eespecificaçãoíficos de LLM (sobrecarga de memória, falha de rede, outage de provedor, prompt malformado, tempestade de evição de KV).
 - Escolher uma ferramenta — Harness, LitmusChaos, Chaos Mesh — dada a stack.
 
 ## O Problema
@@ -52,11 +52,11 @@ Faltar qualquer um significa que chaos vira incidente real.
 - **Janelas de supressão**: silencie alertas não-relacionados ao experimento no blast-radius durante o experimento.
 - **Correlação de trace-ID**: todos os erros induzidos pelo experimento carregam uma tag para que o plantão deduplique.
 
-### Cinco experimentos específicos de LLM
+### Cinco experimentos eespecificaçãoíficos de LLM
 
 1. **Sobrecarga de memória** — force uma tempestade de preempção de KV cache enviando requests de longo contexto com alta concorrência. Observe: o serviço descarrega graciosamente ou crasha?
 
-2. **Falha de rede** — corte a conectividade entre o gateway de inferência e o provedor. Observe: o fallback entra em ação dentro do SLA? (Fase 17 · 19)
+2. **Falha de rede** — corte a conectividade entre o gateway de inferência e o provedor. Observe: o reserva entra em ação dentro do SLA? (Fase 17 · 19)
 
 3. **Simulação de outage de provedor** — 100% de 429 da OpenAI. Observe: o roteamento faz failover para Anthropic? (Fase 17 · 16, 19)
 
@@ -67,7 +67,7 @@ Faltar qualquer um significa que chaos vira incidente real.
 ### Cadência
 
 - **Semanal** — pequenos experimentos canary em staging, talvez 5% em prod.
-- **Mensal** — game day agendado em cenário específico; participação cross-team; postmortem.
+- **Mensal** — game day agendado em cenário eespecificaçãoífico; participação cross-team; postmortem.
 - **Trimestral** — auditoria cross-team de resiliência; atualização do mapa de dependências.
 
 ### Ferramentas
@@ -82,7 +82,7 @@ Faltar qualquer um significa que chaos vira incidente real.
 
 Primeiro experimento: mate um pod de réplica de decode sob tráfego estável. Observe rerouting e recuperação. Se funciona e parece seguro, progrida para chaos de rede.
 
-Primeiro experimento específico de LLM: injete 429 de um provedor por 5 minutos. Observe o fallback. A maioria dos times descobre que o fallback não foi totalmente testado.
+Primeiro experimento eespecificaçãoífico de LLM: injete 429 de um provedor por 5 minutos. Observe o fallback. A maioria dos times descobre que o reserva não foi totalmente testado.
 
 ### Números pra lembrar
 
@@ -105,7 +105,7 @@ Esta aula produz `outputs/skill-chaos-plan.md`. Dada stack e maturidade, escolhe
 2. Projet os cinco primeiros experimentos de chaos para um serviço de RAG baseado em vLLM. Inclua critérios de sucesso.
 3. Seu alerta de burn-rate pausou um experimento. Como determina a causa raiz — chaos ou natural?
 4. Argumente se chaos deve rodar em produção ou só em staging. Quando é que produção é a resposta certa?
-5. Nomeie três modos de falha específicos de LLM que chaos de rede genérico não consegue reproduzir.
+5. Nomeie três modos de falha eespecificaçãoíficos de LLM que chaos de rede genérico não consegue reproduzir.
 
 ## Termos Chave
 

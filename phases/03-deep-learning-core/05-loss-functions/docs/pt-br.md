@@ -44,7 +44,7 @@ O gradiente do MSE em relação a uma previsão é:
 dMSE/dy_pred = (2/n) * (y_pred - y_true)
 ```
 
-Linear no erro. Erros maiores recebem gradientes maiores. Isso é uma feature pra regressão (erros grandes precisam de grandes correções) e um bug pra classificação (você quer penalizar respostas erradas confiantes exponencialmente, não linearmente).
+Linear no erro. Erros maiores recebem gradientes maiores. Isso é uma funcionalidade pra regressão (erros grandes precisam de grandes correções) e um bug pra classificação (você quer penalizar respostas erradas confiantes exponencialmente, não linearmente).
 
 ### Perda de Entropia Cruzada
 
@@ -259,9 +259,9 @@ mse_loss = F.mse_loss(predictions, targets)
 bce_loss = F.binary_cross_entropy(predictions, targets)
 
 logits = torch.randn(4, 10)
-labels = torch.tensor([3, 7, 1, 9])
-ce_loss = F.cross_entropy(logits, labels)
-ce_smooth = F.cross_entropy(logits, labels, label_smoothing=0.1)
+rótulos = torch.tensor([3, 7, 1, 9])
+ce_loss = F.cross_entropy(logits, rótulos)
+ce_smooth = F.cross_entropy(logits, rótulos, label_smoothing=0.1)
 ```
 
 Use `F.cross_entropy` (não `F.nll_loss` mais softmax manual). Ela combina log-softmax e log-verossimilhança negativa numa única operação numericamente estável.

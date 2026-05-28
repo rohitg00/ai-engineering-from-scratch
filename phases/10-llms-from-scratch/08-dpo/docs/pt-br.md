@@ -116,7 +116,7 @@ graph TD
 
 ### Por que DPO e Mais Simples
 
-| Aspecto | RLHF (PPO) | DPO |
+| Aespecificaçãoto | RLHF (PPO) | DPO |
 |--------|-----------|-----|
 | Modelos pra treinar | 3 (SFT + reward + politica) | 1 (so politica) |
 | Loops de treino | 3 (SFT, RM training, PPO) | 2 (SFT, DPO) |
@@ -148,7 +148,7 @@ DPO precisa de dois modelos na memoria durante o treino -- o modelo atual e a re
 
 DPO inspirou uma familia de metodos simplificados de alinhamento.
 
-**KTO (Kahneman-Tversky Optimization, 2024):** Voce nem precisa de pares. KTO funciona com feedback despareado -- so rotule cada resposta como "boa" ou "ruim" sem comparar com uma alternativa. Isso simplifica dramaticamente a coleta de dados. Ao inves de mostrar duas respostas a anotadores e perguntar "qual e melhor?", voce mostra uma resposta e pergunta "isso e bom?". A funcao de perda aplica aversao a perda da teoria da prospecao: respostas ruins sao mais penalizadas que boas sao recompensadas.
+**KTO (Kahneman-Tversky Optimization, 2024):** Voce nem precisa de pares. KTO funciona com feedback despareado -- so rotule cada resposta como "boa" ou "ruim" sem comparar com uma alternativa. Isso simplifica dramaticamente a coleta de dados. Ao inves de mostrar duas respostas a anotadores e perguntar "qual e melhor?", voce mostra uma resposta e pergunta "isso e bom?". A funcao de perda aplica aversao a perda da teoria da proespecificaçãoao: respostas ruins sao mais penalizadas que boas sao recompensadas.
 
 **ORPO (Odds Ratio Preference Optimization, 2024):** Combina SFT e alinhamento num unico passo de treino. Ao inves de fazer SFT primeiro e depois DPO, ORPO modifica a perda do SFT pra incluir um sinal de preferencia. A perda tem dois termos: uma perda padrao de previsao de proximo token em respostas preferidas, mais um termo de odds ratio que aumenta a diferenca entre as probabilidades de respostas preferidas e rejeitadas. Um loop de treino ao inves de dois.
 
@@ -209,7 +209,7 @@ PREFERENCE_DATA = [
     {
         "prompt": "What year did World War II end?",
         "preferred": "World War II ended in 1945.",
-        "rejected": "World War II was a major global conflict. It involved many countries. The war ended in the mid-1940s, specifically in 1945.",
+        "rejected": "World War II was a major global conflict. It involved many countries. The war ended in the mid-1940s, especificaçãoifically in 1945.",
     },
     {
         "prompt": "Define machine learning.",
@@ -648,7 +648,7 @@ Essa aula produz `outputs/prompt-alignment-method-selector.md` -- um prompt que 
 
 - [Rafailov et al., 2023 -- "Direct Preference Optimization: Your Language Model is Secretly a Reward Model"](https://arxiv.org/abs/2305.18290) -- o paper DPO que simplificou o alinhamento de RLHF pra aprendizado supervisionado
 - [Tunstall et al., 2023 -- "Zephyr: Direct Distillation of LM Alignment"](https://arxiv.org/abs/2310.16944) -- Zephyr-7B, mostrando DPO no UltraFeedback igualando RLHF em benchmarks
-- [Ethayarajh et al., 2024 -- "KTO: Model Alignment as Prospect Theoretic Optimization"](https://arxiv.org/abs/2402.01306) -- eliminando a necessidade de preferencias pareadas
+- [Ethayarajh et al., 2024 -- "KTO: Model Alignment as Proespecificaçãot Theoretic Optimization"](https://arxiv.org/abs/2402.01306) -- eliminando a necessidade de preferencias pareadas
 - [Hong et al., 2024 -- "ORPO: Monolithic Preference Optimization without Reference Model"](https://arxiv.org/abs/2403.07691) -- combinando SFT e alinhamento em um passo
 - [Meng et al., 2024 -- "SimPO: Simple Preference Optimization with a Reference-Free Reward"](https://arxiv.org/abs/2405.14734) -- eliminando completamente o modelo de referencia
 - [Llama 3 Technical Report](https://arxiv.org/abs/2407.21783) -- pipeline de alinhamento da Meta combinando RLHF e DPO

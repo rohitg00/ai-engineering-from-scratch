@@ -371,7 +371,7 @@ Esta lição produz:
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|----------------------|--------------------------|
-| IEEE 754 | "O padrão de float" | Padrão internacional que define formatos de ponto flutuante binário, regras de arredondamento e valores especiais |
+| IEEE 754 | "O padrão de float" | Padrão internacional que define formatos de ponto flutuante binário, regras de arredondamento e valores eespecificaçãoiais |
 | Machine epsilon | "O limite de precisão" | O menor valor e tal que 1.0 + e != 1.0 em um formato float dado |
 | Cancelamento catastrófico | "Perda de precisão por subtração" | Quando subtrair números de ponto flutuante quase iguais, dígitos significativos se cancelam e ruído domina |
 | Overflow | "Número grande demais" | Um resultado excede o maior valor representável e vira inf |

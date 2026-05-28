@@ -43,7 +43,7 @@ Uma única matriz aprendida projeta cada patch achatado pra `d_model`. Equivalen
 
 ### Passo 4 — encoder transformer padrão
 
-Empilhe L blocos de `LayerNorm → Self-Attention → + → LayerNorm → MLP → +`. Idêntico ao BERT. Sem camadas específicas de visão. Essa é a conclusão pedagógica do paper.
+Empilhe L blocos de `LayerNorm → Self-Attention → + → LayerNorm → MLP → +`. Idêntico ao BERT. Sem camadas eespecificaçãoíficas de visão. Essa é a conclusão pedagógica do paper.
 
 ### Passo 5 — head
 

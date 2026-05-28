@@ -139,7 +139,7 @@ w = w - lr * m_hat / (sqrt(v_hat) + epsilon)
 
 A divisão por `sqrt(v_hat)` é a ideia principal. Pesos com gradientes grandes são divididos por um número grande (passo efetivo pequeno). Pesos com gradientes pequenos são divididos por um número pequeno (passo efetivo grande). Cada peso ganha sua própria taxa de aprendizado adaptativa.
 
-Hiperparâmetros padrão: `lr=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8`. Esses defaults funcionam bem pra maioria dos problemas.
+Hiperparâmetros padrão: `lr=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8`. Esses configurações-padrão funcionam bem pra maioria dos problemas.
 
 ### Agendamentos de taxa de aprendizado
 

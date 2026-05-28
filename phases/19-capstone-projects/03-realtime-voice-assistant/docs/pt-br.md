@@ -1,6 +1,6 @@
 # Capstone 03 — Assistente de Voz em Tempo Real (ASR para LLM para TTS)
 
-> Um agent de voz que se sente certo tem latência ponta a ponta abaixo de 800ms, sabe quando você parou de falar, lida com interrupção, e pode chamar uma ferramenta sem travar. Retell, Vapi, LiveKit Agents e Pipecat batem essa barra em 2026. Eles fazem isso com a mesma forma: um ASR streaming, um detector de turno, um LLM streaming e um TTS streaming, todos conectados via WebRTC com orçamentos de latência agressivos em cada salto. Construa um, meça WER e MOS e taxa de corte falso, e rode sob perda de pacotes.
+> Um agente de voz que se sente certo tem latência ponta a ponta abaixo de 800ms, sabe quando você parou de falar, lida com interrupção, e pode chamar uma ferramenta sem travar. Retell, Vapi, LiveKit Agents e Pipecat batem essa barra em 2026. Eles fazem isso com a mesma forma: um ASR streaming, um detector de turno, um LLM streaming e um TTS streaming, todos conectados via WebRTC com orçamentos de latência agressivos em cada salto. Construa um, meça WER e MOS e taxa de corte falso, e rode sob perda de pacotes.
 
 **Tipo:** Capstone
 **Linguagens:** Python (agent + pipeline), TypeScript (cliente web)
@@ -18,7 +18,7 @@ Você não chega lá costurando três chamadas REST. A arquitetura é uma pipeli
 
 A pipeline tem cinco estágios streaming: **entrada de áudio** (WebRTC do browser ou PSTN), **ASR** (transcrições parciais em streaming do Deepgram Nova-3 ou faster-whisper), **detecção de turno** (VAD mais um pequeno modelo detector de turno que lê transcrições parciais para pistas de conclusão), **LLM** (tokens em streaming assim que o turno é julgado completo), **TTS** (áudio em streaming em ~200ms do primeiro token do LLM).
 
-Três preocupações transversais. **Interrupção**: quando o usuário começa a falar enquanto o agent fala, o TTS é cancelado e o ASR retoma imediatamente. **Uso de ferramentas**: chamadas de função no meio da conversa (clima, calendário) devem rodar num canal lateral sem travar o áudio; o agent emite um token de confirmação ("um segundo...") se a latência ultrapassar 300ms. **Contrapressão**: sob perda de pacotes, transcrições parciais são retidas, o VAD levanta o limiar do gate de fala e o agent evita falar sobre uma mensagem não confirmada.
+Três preocupações transversais. **Interrupção**: quando o usuário começa a falar enquanto o agente fala, o TTS é cancelado e o ASR retoma imediatamente. **Uso de ferramentas**: chamadas de função no meio da conversa (clima, calendário) devem rodar num canal lateral sem travar o áudio; o agente emite um token de confirmação ("um segundo...") se a latência ultrapassar 300ms. **Contrapressão**: sob perda de pacotes, transcrições parciais são retidas, o VAD levanta o limiar do gate de fala e o agente evita falar sobre uma mensagem não confirmada.
 
 A barra de medição é quantitativa. WER abaixo de 8% no benchmark Hamming VAD a 15 dB SNR. Primeiro-áudio-em-saída p50 abaixo de 800ms em 100 chamadas medidas. Taxa de corte falso abaixo de 3%. MOS acima de 4.2 no TTS. 50 chamadas concorrentes em um único g5.xlarge. Esses números são a entrega.
 
@@ -65,13 +65,13 @@ browser / Twilio PSTN
 - VAD: Silero VAD v5 mais o detector de turno do LiveKit (pequeno transformer que lê transcrições parciais)
 - LLM: OpenAI GPT-4o-realtime para integração apertada, Gemini 2.5 Flash Live, ou cascata Claude Haiku 4.5 (completions em streaming, caminho de áudio separado)
 - TTS: Cartesia Sonic-2 (menor primeiro-byte), ElevenLabs Flash v3, ou Orpheus open-source para auto-hospedagem
-- Ferramentas: canal lateral FastMCP para clima/calendário/reserva; agent emite preenchimento se ferramenta demora >300ms
+- Ferramentas: canal lateral FastMCP para clima/calendário/reserva; agente emite preenchimento se ferramenta demora >300ms
 - Observabilidade: spans de voz OpenTelemetry, traces de voz Langfuse com replay de áudio
 - Deploy: um único g5.xlarge (24GB VRAM) para Whisper + Orpheus auto-hospedados; APIs hospedadas para menor latência
 
 ## Construa
 
-1. **Sessão WebRTC.** Monte uma sala LiveKit e um cliente web que faça streaming do microfone. No servidor, anexe um worker de agent que entra na sala.
+1. **Sessão WebRTC.** Monte uma sala LiveKit e um cliente web que faça streaming do microfone. No servidor, anexe um worker de agente que entra na sala.
 
 2. **Streaming de ASR.** Alimente frames PCM de 20ms ao Deepgram Nova-3 (ou faster-whisper na GPU). Inscreva-se em transcrições parciais e finais. Registre a latência por parcial.
 
@@ -104,7 +104,7 @@ latência do turno: 1040ms parada do usuário -> áudio-em-saída
 
 ## Entregue
 
-`outputs/skill-voice-agent.md` é a entrega. Dado um domínio (suporte ao cliente, agendamento ou kiosque), ela monta um agent LiveKit com a pipeline ASR/VAD/LLM/TTS calibrada na barra de medição. Rubrica:
+`outputs/skill-voice-agent.md` é a entrega. Dado um domínio (suporte ao cliente, agendamento ou kiosque), ela monta um agente LiveKit com a pipeline ASR/VAD/LLM/TTS calibrada na barra de medição. Rubrica:
 
 | Peso | Critério | Como é medido |
 |:-:|---|---|
@@ -119,13 +119,13 @@ latência do turno: 1040ms parada do usuário -> áudio-em-saída
 
 1. Troque Deepgram Nova-3 por faster-whisper v3 turbo num g5.xlarge. Meça o gap de latência e WER. Identifique onde decisões CPU-vs-GPU importam.
 
-2. Adicione uma política de arbitração de interrupção: o que o agent faz quando o usuário interrompe durante uma chamada de ferramenta? Compare três políticas (cancelar bruscamente, terminar-ferramenta-depois-parar, enfileirar próximo turno).
+2. Adicione uma política de arbitração de interrupção: o que o agente faz quando o usuário interrompe durante uma chamada de ferramenta? Compare três políticas (cancelar bruscamente, terminar-ferramenta-depois-parar, enfileirar próximo turno).
 
 3. Rode um teste adversarial de detector de turnaround: dê ao usuário pausas longas no meio de frases. Calibre o limiar de silêncio do VAD e o limiar de escore do detector de turno para o menor corte falso sem passar de 900ms.
 
-4. Deploy o mesmo agent via PSTN no Twilio. Compare primeiro-áudio-em-saída PSTN com WebRTC. Explique as diferenças de jitter buffer e codec.
+4. Deploy o mesmo agente via PSTN no Twilio. Compare primeiro-áudio-em-saída PSTN com WebRTC. Explique as diferenças de jitter buffer e codec.
 
-5. Adicione detecção de atividade de voz para idiomas não-english (japonês, espanhol). Meça a taxa de falso-disparo do Silero VAD v5 versus fine-tunes específicos por idioma.
+5. Adicione detecção de atividade de voz para idiomas não-english (japonês, espanhol). Meça a taxa de falso-disparo do Silero VAD v5 versus fine-tunes eespecificaçãoíficos por idioma.
 
 ## Termos-Chave
 
@@ -136,16 +136,16 @@ latência do turno: 1040ms parada do usuário -> áudio-em-saída
 | Primeiro-áudio-em-saída | "Latência" | Tempo de quando o usuário para de falar até o primeiro pacote de áudio sair do servidor |
 | VAD | "Gate de fala" | Modelo que classifica frames de áudio como fala vs silêncio; Silero VAD v5 é o padrão de 2026 |
 | Jitter buffer | "Suavização de áudio" | Buffer no lado do cliente que segura pacotes brevemente para absorver variação de rede |
-| Preenchimento | "Token de confirmação" | Frase curta que o agent emite para evitar silêncio quando uma ferramenta é lenta |
+| Preenchimento | "Token de confirmação" | Frase curta que o agente emite para evitar silêncio quando uma ferramenta é lenta |
 | MOS | "Mean opinion score" | Avaliação perceptual de qualidade de fala; NISQA é o proxy automatizado |
 
 ## Leitura Complementar
 
-- [LiveKit Agents 1.0](https://github.com/livekit/agents) — framework de referência para agents WebRTC
-- [Pipecat](https://github.com/pipecat-ai/pipecat) — framework alternativo de agent streaming Python-first
+- [LiveKit Agents 1.0](https://github.com/livekit/agents) — framework de referência para agentes WebRTC
+- [Pipecat](https://github.com/pipecat-ai/pipecat) — framework alternativo de agente streaming Python-first
 - [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) — referência para modelos de fala integrados
 - [Documentação Deepgram Nova-3](https://developers.deepgram.com/docs) — referência de ASR streaming
 - [Silero VAD v5](https://github.com/snakers4/silero-vad) — modelo de referência de VAD
 - [Cartesia Sonic-2](https://docs.cartesia.ai) — referência de TTS de baixa latência
-- [Arquitetura Retell AI](https://docs.retellai.com) — arquitetura de agent de voz em produção
+- [Arquitetura Retell AI](https://docs.retellai.com) — arquitetura de agente de voz em produção
 - [Stack de produção Vapi.ai](https://docs.vapi.ai) — referência de produção alternativa

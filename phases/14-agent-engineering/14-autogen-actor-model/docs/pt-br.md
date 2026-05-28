@@ -1,6 +1,6 @@
 # AutoGen v0.4: Modelo Ator e Framework de Agent
 
-> AutoGen v0.4 (Microsoft Research, Jan 2025) redesenhou orquestração de agent ao redor do modelo ator. Troca assíncrona de mensagens, agents orientados a eventos, isolamento de falhas, concorrência natural. O framework agora está em modo de manutenção enquanto Microsoft Agent Framework (pré-visualização pública Out 2025) se torna o sucessor.
+> AutoGen v0.4 (Microsoft Research, Jan 2025) redesenhou orquestração de agente ao redor do modelo ator. Troca assíncrona de mensagens, agentes orientados a eventos, isolamento de falhas, concorrência natural. O framework agora está em modo de manutenção enquanto Microsoft Agent Framework (pré-visualização pública Out 2025) se torna o sucessor.
 
 **Tipo:** Aprender + Construir
 **Linguagens:** Python (stdlib)
@@ -9,16 +9,16 @@
 
 ## Objetivos de Aprendizado
 
-- Descrever o modelo ator: agents como atores, mensagens como único IPC, isolamento de falhas por ator.
+- Descrever o modelo ator: agentes como atores, mensagens como único IPC, isolamento de falhas por ator.
 - Nomear as três camadas de API do AutoGen v0.4 — Core, AgentChat, Extensions — e o que cada uma faz.
 - Explicar por que desacoplar entrega de mensagens de tratamento dá isolamento de falhas e concorrência natural.
-- Implementar um runtime de ator com stdlib em Python e portar um fluxo de code-review de dois agents pra ele.
+- Implementar um runtime de ator com stdlib em Python e portar um fluxo de code-review de dois agentes pra ele.
 
 ## O Problema
 
-Maioria dos frameworks de agent são síncronos: um agent produz, um agent consome, em uma stack de chamadas. Falhas crasham a stack. Concorrência é aparafusada. Distribuição requer reescrita.
+Maioria dos frameworks de agente são síncronos: um agente produz, um agente consome, em uma stack de chamadas. Falhas crasham a stack. Concorrência é aparafusada. Distribuição requer reescrita.
 
-A resposta do AutoGen v0.4: modelo ator. Cada agent é um ator com uma inbox privada. Mensagens são a única interação. O runtime desacopla entrega de tratamento. Falhas isolam a um ator. Concorrência é nativa. Distribuição é só transporte diferente.
+A resposta do AutoGen v0.4: modelo ator. Cada agente é um ator com uma inbox privada. Mensagens são a única interação. O runtime desacopla entrega de tratamento. Falhas isolam a um ator. Concorrência é nativa. Distribuição é só transporte diferente.
 
 ## O Conceito
 
@@ -49,7 +49,7 @@ No modelo v0.2, chamar `agent_a.chat(agent_b)` sincronicamente bloqueia agent_a 
 ### Topologias
 
 - **RoundRobinGroupChat.** Agents revezam em rotação fixa.
-- **SelectorGroupChat.** Um agent selector escolhe quem vai próximo baseado no contexto da conversa.
+- **SelectorGroupChat.** Um agente selector escolhe quem vai próximo baseado no contexto da conversa.
 - **Magentic-One.** Equipe multi-agent de referência pra navegação web, execução de código, manipulação de arquivos. Construído sobre AgentChat.
 
 ### Observabilidade
@@ -82,7 +82,7 @@ O trace mostra entrega de mensagens, uma falha simulada num ator que não crasha
 - **AutoGen v0.4/v0.7** (manutenção) — estável pra pesquisa, prototipagem, padrões multi-agent.
 - **Microsoft Agent Framework** (pré-visualização) — o caminho à frente; mesmas ideias de modelo ator numa API renovada.
 - **Topologia swarm do LangGraph** (Aula 13) — padrão similar via handoffs de ferramentas compartilhadas.
-- **Runtime de ator custom** — quando você precisa de transporte específico (NATS, RabbitMQ, gRPC).
+- **Runtime de ator custom** — quando você precisa de transporte eespecificaçãoífico (NATS, RabbitMQ, gRPC).
 
 ## Entregue
 
@@ -114,4 +114,4 @@ O trace mostra entrega de mensagens, uma falha simulada num ator que não crasha
 
 - [AutoGen v0.4, Microsoft Research](https://www.microsoft.com/en-us/research/articles/autogen-v0-4-reimagining-the-foundation-of-agentic-ai-for-scale-extensibility-and-robustness/) — o post de redesenho
 - [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview) — alternativa em formato de grafo
-- [OpenTelemetry GenAI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/) — spans que o AutoGen emite por padrão
+- [OpenTelemetry GenAI semantic conventions](https://opentelemetry.io/docs/especificaçãos/semconv/gen-ai/) — spans que o AutoGen emite por padrão

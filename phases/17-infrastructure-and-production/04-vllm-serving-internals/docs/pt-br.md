@@ -1,9 +1,9 @@
 # Internals de Serving do vLLM: PagedAttention, Continuous Batching, Chunked Prefill
 
-> A dominância do vLLM em 2026 se sustenta em três defaults compostos, não em um truque solitário. PagedAttention está sempre ligado. Continuous batching injeta novos requests no batch ativo entre iterações de decode. Chunked prefill fatia prompts longos para que tokens de decode nunca passem fome. Ligue os três e um Llama 3.3 70B FP8 em uma H100 SXM5 empurra 2.200-2.400 tok/s a 128 concorrentes — cerca de 25% acima do default próprio do vLLM e 3-4x de um loop PyTorch ingênuo. Esta aula lê o scheduler e o kernel de attention a um nível que você pode diagramar, e termina com um continuous batcher toy em `code/main.py` que agenda prefill e decode do jeito que o vLLM faz.
+> A dominância do vLLM em 2026 se sustenta em três configurações-padrão compostos, não em um truque solitário. PagedAttention está sempre ligado. Continuous batching injeta novos requests no batch ativo entre iterações de decode. Chunked prefill fatia prompts longos para que tokens de decode nunca passem fome. Ligue os três e um Llama 3.3 70B FP8 em uma H100 SXM5 empurra 2.200-2.400 tok/s a 128 concorrentes — cerca de 25% acima do default próprio do vLLM e 3-4x de um loop PyTorch ingênuo. Esta aula lê o agendador e o kernel de attention a um nível que você pode diagramar, e termina com um continuous batcher toy em `code/main.py` que agenda prefill e decode do jeito que o vLLM faz.
 
 **Tipo:** Aprendizado
-**Linguagens:** Python (stdlib, scheduler de continuous batching toy)
+**Linguagens:** Python (stdlib, agendador de continuous batching toy)
 **Pré-requisitos:** Fase 17 · 01 (Model Serving), Fase 11 (Engenharia de LLM)
 **Tempo:** ~75 minutos
 
@@ -34,31 +34,31 @@ A fragmentação cai de 60-80% (clássico) para menos de 4% (PagedAttention). Vo
 
 ### Continuous batching no nível de iteração
 
-O antigo "dynamic batching" esperava uma janela (digamos 10 ms) para preencher um batch, rodava prefill + decode + decode + decode até cada sequência terminar. Sequências rápidas saíam cedo e ficavam ociosas enquanto a GPU terminava as lentas.
+O antigo "agrupamento dinâmico" esperava uma janela (digamos 10 ms) para preencher um batch, rodava prefill + decode + decode + decode até cada sequência terminar. Sequências rápidas saíam cedo e ficavam ociosas enquanto a GPU terminava as lentas.
 
 Continuous batching opera entre cada passo de decode. Chame o conjunto de sequências rodando de lista `RUNNING`. A cada iteração:
 
 1. Qualquer sequência em `RUNNING` que acabou de atingir EOS ou max_tokens é removida.
-2. O scheduler olha a fila de espera. Se houver blocos KV livres, ele admite novas sequências (prefill ou retomadas).
+2. O agendador olha a fila de espera. Se houver blocos KV livres, ele admite novas sequências (prefill ou retomadas).
 3. O forward pass roda em o que está em `RUNNING`, emitindo um novo token por sequência.
 
-O tamanho do batch nunca é preenchido para um número fixo. Sequências em diferentes posições de saída compartilham um forward fundido. No vLLM de 2026 isso se chama `V1 scheduler`. O invariante chave: o scheduler roda uma vez por iteração de decode, não uma vez por request.
+O tamanho do batch nunca é preenchido para um número fixo. Sequências em diferentes posições de saída compartilham um forward fundido. No vLLM de 2026 isso se chama `V1 scheduler`. O invariante chave: o agendador roda uma vez por iteração de decode, não uma vez por request.
 
 ### Chunked prefill protege a cauda de TTFT
 
-Prefill é limitado por compute. Um prompt de 32k tokens no Llama 3.3 70B leva ~800 ms de puro prefill em uma H100. Enquanto o prefill roda, tokens de decode para cada outra sequência no batch esperam. Em um loop de serving, a latência do primeiro token (TTFT) de um prompt longo se torna o pico de latência entre tokens (ITL) para dezenas de outros usuários.
+Prefill é limitado por processamento. Um prompt de 32k tokens no Llama 3.3 70B leva ~800 ms de puro prefill em uma H100. Enquanto o prefill roda, tokens de decode para cada outra sequência no batch esperam. Em um loop de serving, a latência do primeiro token (TTFT) de um prompt longo se torna o pico de latência entre tokens (ITL) para dezenas de outros usuários.
 
-Chunked prefill divide o prefill em blocos de tamanho fixo (padrão 512 tokens) e agenda cada bloco como uma unidade. Entre blocos, o scheduler pode avançar sequências de decode em um token. Você troca um pequeno golpe absoluto de latência de prefill (alguns ms por bloco) por muito menos jitter de tempo de decode. P99 ITL em carga mista cai de ~50 ms para ~15 ms em benchmarks publicados.
+Chunked prefill divide o prefill em blocos de tamanho fixo (padrão 512 tokens) e agenda cada bloco como uma unidade. Entre blocos, o agendador pode avançar sequências de decode em um token. Você troca um pequeno golpe absoluto de latência de prefill (alguns ms por bloco) por muito menos jitter de tempo de decode. P99 ITL em carga mista cai de ~50 ms para ~15 ms em benchmarks publicados.
 
-### Os três defaults interagem
+### Os três configurações-padrão interagem
 
-As três funcionalidades pressupõem uma à outra. PagedAttention dá ao scheduler um recurso KV de granulação fina para negociar. Continuous batching precisa desse recurso de granulação fina para que admitir uma nova sequência não force uma reorganização global. Chunked prefill é uma decisão que o scheduler toma na mesma lista `RUNNING` — é mais uma política de scheduler, não um sistema separado.
+As três funcionalidades pressupõem uma à outra. PagedAttention dá ao agendador um recurso KV de granulação fina para negociar. Continuous batching precisa desse recurso de granulação fina para que admitir uma nova sequência não force uma reorganização global. Chunked prefill é uma decisão que o agendador toma na mesma lista `RUNNING` — é mais uma política de scheduler, não um sistema separado.
 
-Você não precisa conhecer cada flag. Você precisa saber o que o scheduler otimiza: goodput sob orçamento de blocos KV, sujeito à fatiamento de chunked prefill.
+Você não precisa conhecer cada flag. Você precisa saber o que o agendador otimiza: goodput sob orçamento de blocos KV, sujeito à fatiamento de chunked prefill.
 
 ### O bug do v0.18.0 de 2026
 
-No vLLM v0.18.0 você não pode combinar `--enable-chunked-prefill` com speculative decoding por draft model (`--speculative-model`). A exceção documentada é o N-gram GPU speculative decoding no V1 scheduler. Equipes que ligam cada flag sem ler os release notes pegam um erro em tempo de startup, não uma regressão suave. Se seu ganho de speculative valia habilitar chunked prefill, repense a escolha — a resposta certa em 2026 costuma ser EAGLE-3 sem chunked prefill, não um draft model mais chunked prefill que não compila.
+No vLLM v0.18.0 você não pode combinar `--enable-chunked-prefill` com especificaçãoulative decoding por draft model (`--especificaçãoulative-model`). A exceção documentada é o N-gram GPU especificaçãoulative decoding no V1 scheduler. Equipes que ligam cada flag sem ler os release notes pegam um erro em tempo de startup, não uma regressão suave. Se seu ganho de especificaçãoulative valia habilitar chunked prefill, repense a escolha — a resposta certa em 2026 costuma ser EAGLE-3 sem chunked prefill, não um draft model mais chunked prefill que não compila.
 
 ### Números que você deve memorizar
 
@@ -68,7 +68,7 @@ No vLLM v0.18.0 você não pode combinar `--enable-chunked-prefill` com speculat
 - Fragmentação de KV com PagedAttention em carga de produção: <4%.
 - P99 ITL em carga mista: ~15 ms com chunked prefill, ~50 ms sem.
 
-### Como o scheduler parece
+### Como o agendador parece
 
 ```
 while True:
@@ -95,7 +95,7 @@ while True:
 
 ## Use
 
-`code/main.py` simula um scheduler estilo vLLM com funcionalidades alternáveis. Execute para ver:
+`code/main.py` simula um agendador estilo vLLM com funcionalidades alternáveis. Execute para ver:
 
 - Modo `NAIVE`: um request por vez, sem batching.
 - Modo `STATIC`: preencher e esperar, batching clássico.
@@ -106,12 +106,12 @@ A saída mostra throughput total (tokens por segundo virtual), TTFT médio e P99
 
 ## Entregue
 
-Esta aula produz `outputs/skill-vllm-scheduler-reader.md`. Dada uma config de serving (tamanho de batch, utilização de memória KV, tamanho de chunked prefill, config de speculative), produz um diagnóstico do scheduler que nomeia qual dos três defaults está criando gargalo e o que ajustar.
+Esta aula produz `outputs/skill-vllm-scheduler-reader.md`. Dada uma config de serving (tamanho de batch, utilização de memória KV, tamanho de chunked prefill, config de especificaçãoulative), produz um diagnóstico do agendador que nomeia qual dos três configurações-padrão está criando gargalo e o que ajustar.
 
 ## Exercícios
 
 1. Execute `code/main.py`. Compare `STATIC` com `CONTINUOUS` em um workload com requests curtos e longos misturados. De onde vem o gap de throughput — eficiência de prefill, eficiência de decode ou latência de cauda?
-2. Modifique o scheduler toy para adicionar `--max-num-batched-tokens`. Qual é o valor certo para uma H100 rodando Llama 3.3 70B FP8? (Dica: é função do tamanho do bloco KV e do número de blocos livres, não do HBM bruto.)
+2. Modifique o agendador toy para adicionar `--max-num-batched-tokens`. Qual é o valor certo para uma H100 rodando Llama 3.3 70B FP8? (Dica: é função do tamanho do bloco KV e do número de blocos livres, não do HBM bruto.)
 3. Re-leia os release notes do vLLM v0.18.0. Quais combinações de flags são mutualmente exclusivas? Liste-as.
 4. Calcule o desperdício de fragmentação de KV cache para um trace de 1.000 requests com média de 1.500 tokens de saída, std de 600 tokens, sob (a) alocação contígua por request a 8192 máximo, (b) PagedAttention com blocos de 16 tokens.
 5. Explique em um parágrafo por que chunked prefill ajuda o P99 ITL mas não o throughput isoladamente. De onde vem o ganho de throughput na prática?
@@ -122,18 +122,18 @@ Esta aula produz `outputs/skill-vllm-scheduler-reader.md`. Dada uma config de se
 |-------|----------------------|--------------------------|
 | PagedAttention | "o truque de KV" | Alocador de blocos de tamanho fixo para KV cache; fragmentação <4% |
 | Block table | "a page table" | Mapa por sequência de posição lógica de token para bloco KV físico |
-| Continuous batching | "dynamic batching, mas certo" | Decisões de admissão/liberação feitas a cada iteração de decode |
+| Continuous batching | "agrupamento dinâmico, mas certo" | Decisões de admissão/liberação feitas a cada iteração de decode |
 | Chunked prefill | "partição de prefill" | Quebrar prefill longo em fatias de 512 tokens alternando com decode |
 | TTFT | "tempo até o primeiro token" | Prefill + fila + rede; dominado por prefill em prompts longos |
 | ITL | "latência entre tokens" | Tempo entre tokens de decode consecutivos; dominado por tamanho do batch |
 | Goodput | "throughput que cumpre SLO" | Tokens/sec onde cada request ainda bateu nos alvos de TTFT e ITL |
-| V1 scheduler | "o novo scheduler" | Scheduler do vLLM de 2026; N-gram spec decode é o caminho compatível com chunked prefill |
+| V1 agendador | "o novo scheduler" | Scheduler do vLLM de 2026; N-gram especificação decode é o caminho compatível com chunked prefill |
 | `--gpu-memory-utilization` | "a chave de memória" | Fração de HBM reservada para blocos KV após pesos e ativações |
 
 ## Leitura Complementar
 
-- [vLLM documentation — Speculative Decoding](https://docs.vllm.ai/en/latest/features/spec_decode/) — fonte oficial sobre compatibilidade de chunked-prefill e speculative-decoding.
-- [vLLM Release Notes (NVIDIA)](https://docs.nvidia.com/deeplearning/frameworks/vllm-release-notes/index.html) — cadência de releases de 2026 e comportamento específico por versão.
+- [vLLM documentation — Speculative Decoding](https://docs.vllm.ai/en/latest/features/especificação_decode/) — fonte oficial sobre compatibilidade de chunked-prefill e especificaçãoulative-decoding.
+- [vLLM Release Notes (NVIDIA)](https://docs.nvidia.com/deeplearning/frameworks/vllm-release-notes/index.html) — cadência de releases de 2026 e comportamento eespecificaçãoífico por versão.
 - [vLLM Blog — PagedAttention](https://blog.vllm.ai/2023/06/20/vllm.html) — o artigo original que ainda define como pensar sobre o alocador.
 - [PagedAttention paper (arXiv:2309.06180)](https://arxiv.org/abs/2309.06180) — análise de fragmentação e design do scheduler.
-- [Aleksa Gordic — Inside vLLM](https://www.aleksagordic.com/blog/vllm) — walkthrough detalhado do V1 scheduler com flame graphs.
+- [Aleksa Gordic — Inside vLLM](https://www.aleksagordic.com/blog/vllm) — walkthrough detalhado do V1 agendador com flame graphs.

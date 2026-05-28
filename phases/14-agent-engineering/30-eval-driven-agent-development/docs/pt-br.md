@@ -22,7 +22,7 @@ Agentes passam demos. Falham em produção de formas que demos não conseguem pr
 
 ### Três camadas de avaliação
 
-1. **Benchmarks estáticos** — SWE-bench Verified pra código (Aula 19), WebArena/OSWorld pra navegação / desktop (Aula 20), GAIA pra generalista (Aula 19), BFCL V4 pra uso de tools (Aula 06). Use pra comparação cross-model e gate de regressão. Contaminação é real: SWE-bench+ encontrou 32.67% de vazamento de solução. Sempre reporte scores Verified / auditados.
+1. **Benchmarks estáticos** — SWE-bench Verified pra código (Aula 19), WebArena/OSWorld pra navegação / desktop (Aula 20), GAIA pra generalista (Aula 19), BFCL V4 pra uso de ferramentas (Aula 06). Use pra comparação cross-model e gate de regressão. Contaminação é real: SWE-bench+ encontrou 32.67% de vazamento de solução. Sempre reporte scores Verified / auditados.
 
 2. **Evals offline customizadas** — formato do seu produto:
    - LLM-as-judge (Langfuse, Phoenix, Opik — Aula 24).
@@ -59,10 +59,10 @@ Cada aula da Fase 14 gera casos de eval:
 | Aula | Caso de eval que gera |
 |------|----------------------|
 | 01 Agent Loop | Budget esgotado, guarda contra loop infinito |
-| 02 ReWOO | Planejador replaneja corretamente quando uma tool falha |
+| 02 ReWOO | Planejador replaneja corretamente quando uma ferramenta falha |
 | 03 Reflexion | Reflexões aprendidas se aplicam no retry |
 | 05 Self-Refine/CRITIC | Juíz aprova output refinado |
-| 06 Tool Use | Coerção de argumento funciona; tools desconhecidas rejeitadas |
+| 06 Tool Use | Coerção de argumento funciona; ferramentas desconhecidas rejeitadas |
 | 07-10 Memory | Citações de recuperação batem com fontes; fatos desatualizados invalidados |
 | 12 Workflow Patterns | Cada padrão produz output correto |
 | 13 LangGraph | Resume reproduz estado exatamente |
@@ -74,7 +74,7 @@ Cada aula da Fase 14 gera casos de eval:
 | 23 OTel | Spans emitem atributos necessários |
 | 26 Failure Modes | Detectores etiquetam falhas conhecidas |
 | 27 Prompt Injection | PVE recusa retrievals envenenados |
-| 28 Orquestração | Supervisor roteia pro especialista certo |
+| 28 Orquestração | Supervisor roteia pro eespecificaçãoialista certo |
 | 29 Formatos de Runtime | DLQ lida com N% de falha |
 
 Se sua suíte de eval tem casos pra cada um, você cobriu a Fase 14.
@@ -82,7 +82,7 @@ Se sua suíte de eval tem casos pra cada um, você cobriu a Fase 14.
 ### Onde desenvolvimento orientado por eval falha
 
 - **Sem baseline.** Evals sem last-known-good são ilegíveis. Armazene baselines.
-- **LLM-judge sem grounding.** Juízes também alucinam. Padrão CRITIC (Aula 05) — juiz ancora em tools externas.
+- **LLM-judge sem grounding.** Juízes também alucinam. Padrão CRITIC (Aula 05) — juiz ancora em ferramentas externas.
 - **Overfitting nas evals.** Otimizar pro eval diverge da utilidade em produção. Rotacione casos.
 - **Evals instáveis.** Casos não-determinísticos causam falsos alarmes. Fixe seeds, snapshotte estado.
 
@@ -133,7 +133,7 @@ Saída: pass/fail por caso, flag de regressão, veredicto do gate de CI.
 | Evaluator-optimizer | "Propor-julgamento-refinar" | Itera até o juiz aprovar |
 | Gate de CI | "Bloqueador de merge" | Falhe o build em regressão de eval |
 | Baseline | "Last-known-good" | Score de referência pra detectar regressão |
-| Eficiência de trajetória | "Passos sobre o dourado" | Contagem de passos do agente dividida pelo mínimo do especialista humano |
+| Eficiência de trajetória | "Passos sobre o dourado" | Contagem de passos do agente dividida pelo mínimo do eespecificaçãoialista humano |
 
 ## Leitura Complementar
 

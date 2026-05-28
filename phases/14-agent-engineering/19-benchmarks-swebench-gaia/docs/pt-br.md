@@ -1,6 +1,6 @@
 # Benchmarks: SWE-bench, GAIA, AgentBench
 
-> Três benchmarks ancora a avaliação de agentes em 2026. SWE-bench testa correção de código. GAIA testa uso de tools generalistas. AgentBench testa raciocínio multi-ambiente. Conheça a composição de cada um, a questão de contaminação, e o que eles não medem.
+> Três benchmarks ancora a avaliação de agentes em 2026. SWE-bench testa correção de código. GAIA testa uso de ferramentas generalistas. AgentBench testa raciocínio multi-ambiente. Conheça a composição de cada um, a questão de contaminação, e o que eles não medem.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib)
@@ -50,12 +50,12 @@ Implicação prática: um modelo que marca 50% no SWE-bench pode marcar 35% no S
 
 ### GAIA (Mialon et al., nov 2023)
 
-- 466 perguntas; 300 retidas pro leaderboard privado em huggingface.co/gaia-benchmark.
+- 466 perguntas; 300 retidas pro ranking privado em huggingface.co/gaia-benchmark.
 - Filosofia de design: "conceitualmente simples pra humanos (92%) mas difícil pra IA (GPT-4 com plugins: 15%)."
 - Testa raciocínio, multimodalidade, web, uso de tools.
-- Três níveis de dificuldade; Nível 3 requer longas cadeias de tools cross-modality.
+- Três níveis de dificuldade; Nível 3 requer longas cadeias de ferramentas cross-modality.
 
-GAIA é o que você roda pra medir "capacidade generalista". Não confunda com benchmarks específicos de código.
+GAIA é o que você roda pra medir "capacidade generalista". Não confunda com benchmarks eespecificaçãoíficos de código.
 
 ### AgentBench (Liu et al., ICLR 2024)
 
@@ -96,7 +96,7 @@ A saída mostra a taxa de resolução por tarefa + por dificuldade e torna as re
 ## Use
 
 - **SWE-bench Verified** pra agentes de código. Sempre reporte scores Verified.
-- **GAIA** pra agentes generalistas. Use o split do leaderboard privado.
+- **GAIA** pra agentes generalistas. Use o split do ranking privado.
 - **AgentBench** pra comparação multi-ambiente.
 - **Evals customizadas** (Aula 30) pro formato real do seu produto.
 
@@ -109,7 +109,7 @@ A saída mostra a taxa de resolução por tarefa + por dificuldade e torna as re
 1. Porte o harness toy pra rodar num repo real (escolha um seu). Escreva 3 testes FAIL_TO_PASS pra bugs conhecidos.
 2. Adicione uma métrica de contagem de passos. Nas suas 3 tarefas, quantos passos de agente por resolução?
 3. Leia o paper do SWE-bench+. Implemente uma checagem de vazamento de solução (match de padrão no texto da issue contra o diff).
-4. Baixe uma pergunta do GAIA do split público. Trace o que um agente de classe GPT-4 faria. Quais tools ele precisa?
+4. Baixe uma pergunta do GAIA do split público. Trace o que um agente de classe GPT-4 faria. Quais ferramentas ele precisa?
 5. Leia a análise por ambiente do AgentBench. Qual espelha a superfície do seu produto? Como é o "SOTA" lá?
 
 ## Termos Chave

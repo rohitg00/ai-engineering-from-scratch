@@ -9,7 +9,7 @@
 
 ## O Problema
 
-Considere um agent que roda por quatro horas. Ele chama três ferramentas, pergunta ao usuário duas vezes e faz quarenta chamadas de LLM. No meio do caminho, a máquina onde ele roda reinicia. O que acontece?
+Considere um agente que roda por quatro horas. Ele chama três ferramentas, pergunta ao usuário duas vezes e faz quarenta chamadas de LLM. No meio do caminho, a máquina onde ele roda reinicia. O que acontece?
 
 - Em um loop `while True` inocente: tudo é perdido. A execução recomeça do zero. As três chamadas de ferramenta (com efeitos colaterais reais) executam novamente. O usuário é questionado de novo sobre coisas que já aprovou. Quarenta chamadas de LLM são cobradas novamente.
 - Com execução durable: a execução resume do checkpoint mais recente. Atividades já completadas não são re-executadas; seus resultados são reproduzidos do log durable. O usuário não re-aprova coisas que já aprovou. As chamadas de LLM já feitas não são cobradas novamente.
@@ -56,13 +56,13 @@ Proposta-então-commit (Aula 15) requer um estado durável "aguardando humano." 
 
 ### A degradação de 35 minutos
 
-METR observou que toda classe de agent medida mostra degradação de confiabilidade além de ~35 minutos de operação contínua. Dobrar a duração da tarefa mais ou menos quadruplica a taxa de falha. Execução durable não conserta isso; permite rodar mais do que o perfil de confiabilidade suporta. O padrão seguro é combinar durabilidade com checkpoints que exigem HITL fresco na reentrada, e com interruptores de orçamento (Aula 13) que limitam compute total independente do tempo de relógio.
+METR observou que toda classe de agente medida mostra degradação de confiabilidade além de ~35 minutos de operação contínua. Dobrar a duração da tarefa mais ou menos quadruplica a taxa de falha. Execução durable não conserta isso; permite rodar mais do que o perfil de confiabilidade suporta. O padrão seguro é combinar durabilidade com checkpoints que exigem HITL fresco na reentrada, e com interruptores de orçamento (Aula 13) que limitam compute total independente do tempo de relógio.
 
 ### Quando execução durable é a resposta errada
 
 - Execuções menores que alguns minutos sem input humano. Overhead > benefício.
 - Recuperação de informação estritamente somente-leitura.
-- Tarefas onde correção requer end-to-end dentro de uma janela de contexto (algumas tarefas de raciocínio; algumas gerações one-shot).
+- Tarefas onde correção requer de ponta a ponta dentro de uma janela de contexto (algumas tarefas de raciocínio; algumas gerações one-shot).
 
 ## Use
 
@@ -76,7 +76,7 @@ O driver simula um workflow de três atividades, cai no meio da execução e mos
 
 ## Entregue
 
-`outputs/skill-durable-execution-review.md` revisa um deploy de agent de longa duração proposto para forma correta de execução durable: atividades, determinismo, backend de checkpoint, estado de input humano e política de HITL no resume.
+`outputs/skill-durable-execution-review.md` revisa um implantação de agente de longa duração proposto para forma correta de execução durable: atividades, determinismo, backend de checkpoint, estado de input humano e política de HITL no resume.
 
 ## Exercícios
 
@@ -105,8 +105,8 @@ O driver simula um workflow de três atividades, cai no meio da execução e mos
 
 ## Leituras Adicionais
 
-- [Anthropic — Claude Code Agent SDK: agent loop](https://code.claude.com/docs/en/agent-sdk/agent-loop) — orçamento, turnos e semântica de resume.
+- [Anthropic — Claude Code Agent SDK: agente loop](https://code.claude.com/docs/en/agent-sdk/agent-loop) — orçamento, turnos e semântica de resume.
 - [Microsoft — Agent Framework: human-in-the-loop and checkpointing](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) — forma do RequestInfoEvent.
 - [LangChain — The Runtime Behind Production Deep Agents](https://www.langchain.com/conceptual-guides/runtime-behind-production-deep-agents) — requisitos concretos de runtime.
 - [OpenAI Agents SDK + Temporal integration (Trigger.dev announcement)](https://trigger.dev) — forma de atividade para chamadas de LLM.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — referência da degradação de 35 minutos.
+- [Anthropic — Measuring agente autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — referência da degradação de 35 minutos.

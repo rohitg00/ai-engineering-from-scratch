@@ -339,4 +339,4 @@ A classe Matrix construída aqui é a base para o mini framework de rede neural 
 
 - [3Blue1Brown: Essência de Álgebra Linear](https://www.3blue1brown.com/topics/linear-algebra) — intuição visual para cada operação coberta aqui
 - [Documentação do NumPy sobre broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html) — as regras exatas que o NumPy segue
-- [Revisão de Álgebra Linear do Stanford CS229](http://cs229.stanford.edu/section/cs229-linalg.pdf) — referência concisa para álgebra linear específica de ML
+- [Revisão de Álgebra Linear do Stanford CS229](http://cs229.stanford.edu/section/cs229-linalg.pdf) — referência concisa para álgebra linear eespecificaçãoífica de ML

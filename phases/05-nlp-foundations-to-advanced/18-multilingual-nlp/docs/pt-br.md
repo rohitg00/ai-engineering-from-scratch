@@ -9,7 +9,7 @@
 
 ## O Problema
 
-Inglês tem bilhões de exemplos rotulados. Urdu tem milhares. Maithili quase nenhum. Qualquer sistema de NLP prático que serve um público global tem que funcionar na cauda longa de idiomas onde dados de treino específicos da tarefa não existem.
+Inglês tem bilhões de exemplos rotulados. Urdu tem milhares. Maithili quase nenhum. Qualquer sistema de NLP prático que serve um público global tem que funcionar na cauda longa de idiomas onde dados de treino eespecificaçãoíficos da tarefa não existem.
 
 Modelos multilíngues resolvem isso treinando um modelo em muitos idiomas ao mesmo tempo. A representação compartilhada permite que o modelo transfira habilidades aprendidas em idiomas com muitos recursos pra idiomas com poucos. Fine-tune o modelo em análise de sentimento em inglês e ele produz previsões de sentimento surpreendentemente boas em Urdu sem nenhum ajuste. Isso é transferência cross-lingual zero-shot, e redefiniu como o NLP chega ao mundo.
 
@@ -61,10 +61,10 @@ tok = AutoTokenizer.from_pretrained("joeddav/xlm-roberta-large-xnli")
 model = AutoModelForSequenceClassification.from_pretrained("joeddav/xlm-roberta-large-xnli")
 
 
-def classify(text, candidate_labels, hypothesis_template="This text is about {}.")
+def classify(text, candidate_rótulos, hypothesis_template="This text is about {}.")
 :
     scores = {}
-    for label in candidate_labels:
+    for label in candidate_rótulos:
         hypothesis = hypothesis_template.format(label)
         inputs = tok(text, hypothesis, return_tensors="pt", truncation=True)
         with torch.no_grad():
@@ -117,7 +117,7 @@ def few_shot_finetune(base_model, base_tokenizer, examples):
 
     def tokenize_fn(ex):
         out = base_tokenizer(ex["text"], truncation=True, max_length=128)
-        out["labels"] = ex["label"]
+        out["rótulos"] = ex["label"]
         return out
 
     ds = ds.map(tokenize_fn)
@@ -167,7 +167,7 @@ Modelos multilíngues compartilham um tokenizer em todos os idiomas. Esse vocabu
 
 O sintoma prático: seu modelo treina normalmente em hindi, a curva de perda parece ok, a perplexidade de avaliação parece razoável, e as saídas de produção estão sutilmente erradas. Morfologia colapsa no meio da frase. Inflexões raras ficam irreuperáveis. **Você não consegue resolver um tokenizer quebrado com escala de dados.**
 
-Mitigações: escolha um tokenizer com boa cobertura pro seu idioma-alvo (o vocabulário de 1M tokens do XLM-V é uma correção direta); verifique a fertilidade da tokenização em texto de validação no idioma-alvo antes de treinar; use fallback em nível de byte (SentencePiece `byte_fallback=True`, BPE em nível de byte estilo GPT-2) pra escritas realmente na cauda longa pra que nada fique OOV.
+Mitigações: escolha um tokenizer com boa cobertura pro seu idioma-alvo (o vocabulário de 1M tokens do XLM-V é uma correção direta); verifique a fertilidade da tokenização em texto de validação no idioma-alvo antes de treinar; use reserva em nível de byte (SentencePiece `byte_fallback=True`, BPE em nível de byte estilo GPT-2) pra escritas realmente na cauda longa pra que nada fique OOV.
 
 ## Entregar
 

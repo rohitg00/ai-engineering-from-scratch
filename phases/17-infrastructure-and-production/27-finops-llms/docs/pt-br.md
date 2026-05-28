@@ -70,7 +70,7 @@ $/M tokens é linguagem de vendor. Métricas de produto:
 
 - Custo por ticket de suporte resolvido.
 - Custo por artigo gerado.
-- Custo por tarefa de agent bem-sucedida.
+- Custo por tarefa de agente bem-sucedida.
 - Custo por minuto de sessão de usuário.
 
 Vincule custo a um resultado do produto. Senão otimização é desancorada.

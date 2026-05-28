@@ -11,7 +11,7 @@
 
 Um DCGAN mapeia `z` para uma imagem através de uma pilha de convoluções transpostas. O problema: `z` controla tudo — pose, iluminação, identidade, fundo — entrelaçados juntos. Move ao longo de um eixo de `z`, os quatro mudam. Você não consegue pedir ao modelo "mesma pessoa, pose diferente" porque a representação não fatora assim.
 
-Karras et al. (2019, NVIDIA) propuseram: pare de alimentar `z` diretamente nas camadas conv. Alimente um tensor constante `4×4×512` como input da rede. Aprenda um MLP de 8 camadas que mapeia `z ∈ Z → w ∈ W`. Injete `w` em cada resolução via *normalização de instância adaptativa* (AdaIN): normaliza cada feature map de conv, depois escala e desloca com projeções afins de `w`. Adiciona ruído por camada para detalhes estocásticos (poros de pele, fios de cabelo).
+Karras et al. (2019, NVIDIA) propuseram: pare de alimentar `z` diretamente nas camadas conv. Alimente um tensor constante `4×4×512` como input da rede. Aprenda um MLP de 8 camadas que mapeia `z ∈ Z → w ∈ W`. Injete `w` em cada resolução via *normalização de instância adaptativa* (AdaIN): normaliza cada funcionalidade map de conv, depois escala e desloca com projeções afins de `w`. Adiciona ruído por camada para detalhes estocásticos (poros de pele, fios de cabelo).
 
 O resultado: `W` tem eixos aproximadamente ortogonais para "estilo alto nível" (pose, identidade) vs "estilo fino" (iluminação, cor). Você pode trocar estilos entre duas imagens usando o `w` da imagem A para os níveis de baixa resolução e o `w` da imagem B para os altos. Isso desbloqueou edição, estilização cross-domain, e toda a linha de pesquisa de "inversão StyleGAN".
 
@@ -29,9 +29,9 @@ O resultado: `W` tem eixos aproximadamente ortogonais para "estilo alto nível" 
 AdaIN(x, y) = y_scale · (x - mean(x)) / std(x) + y_bias
 ```
 
-onde `y_scale` e `y_bias` vêm de projeções afins de `w`. Normaliza por feature map, depois reestiliza. "Estilo" aqui são as estatísticas de primeira e segunda ordem do feature map.
+onde `y_scale` e `y_bias` vêm de projeções afins de `w`. Normaliza por funcionalidade map, depois reestiliza. "Estilo" aqui são as estatísticas de primeira e segunda ordem do funcionalidade map.
 
-**Ruído por camada.** Ruído Gaussiano de canal único adicionado a cada feature map, escalado por um fator por canal aprendido. Controla detalhes estocásticos sem afetar estrutura global.
+**Ruído por camada.** Ruído Gaussiano de canal único adicionado a cada funcionalidade map, escalado por um fator por canal aprendido. Controla detalhes estocásticos sem afetar estrutura global.
 
 **Truque de truncamento.** Na inferência, amostra `z`, calcula `w = mapping(z)`, depois `w' = ŵ + ψ·(w - ŵ)` onde `ŵ` é a média `w` de muitas amostras. `ψ < 1` troca diversidade por qualidade. Quase toda demo do StyleGAN usa `ψ ≈ 0.7`.
 
@@ -71,7 +71,7 @@ def adain(x, w_scale, w_bias):
     return [w_scale * xi + w_bias for xi in x_norm]
 ```
 
-Scale e bias por feature map vêm de `w` via projeção linear.
+Scale e bias por funcionalidade map vêm de `w` via projeção linear.
 
 ### Passo 3: ruído por camada
 
@@ -84,7 +84,7 @@ Sigma por canal é aprendível.
 
 ## Armadilhas
 
-- **Artefatos de gota.** StyleGAN 1 produzia uma gota borrada nos feature maps porque AdaIN zerava a média. A demodulação de pesos do StyleGAN 2 corrige escalando os pesos de convolução no lugar.
+- **Artefatos de gota.** StyleGAN 1 produzia uma gota borrada nos funcionalidade maps porque AdaIN zerava a média. A demodulação de pesos do StyleGAN 2 corrige escalando os pesos de convolução no lugar.
 - **Textura grudada.** As texturas do StyleGAN 1 e 2 seguiam coordenadas de pixel, não coordenadas do objeto (visível ao interpolar). As convoluções sem aliasing do StyleGAN 3 corrigem com filtros janelados sinc.
 - **Cobertura de modo.** Truncamento `ψ < 0.7` parece limpo mas amostra de um cone estreito; use `ψ = 1.0` se precisar de diversidade.
 - **Inversão é lossy.** Inverter uma foto real em `W` geralmente é feito via otimização ou um encoder (e4e, ReStyle, HyperStyle). Resultados derivam ao longo de muitas iterações.
@@ -118,7 +118,7 @@ Salve `outputs/skill-stylegan-inversion.md`. Skill recebe uma foto real e gera: 
 |------|-----------------|-----------------------|
 | Rede de mapeamento | "O MLP" | `f: Z → W`, 8 camadas, desacopla geometria latent de estatísticas dos dados. |
 | Espaço W | "O espaço de estilo" | Saída da rede de mapeamento; aproximadamente desentrelaçado. |
-| AdaIN | "Normalização de instância adaptativa" | Normaliza feature map, depois escala + desloca por projeção de `w`. |
+| AdaIN | "Normalização de instância adaptativa" | Normaliza funcionalidade map, depois escala + desloca por projeção de `w`. |
 | Truque de truncamento | "Psi" | `w = média + ψ·(w - média)`, ψ<1 troca diversidade por qualidade. |
 | Regularização de comprimento de caminho | "PL reg" | Penaliza grandes mudanças na imagem por unidade de mudança em `w`; torna `W` mais suave. |
 | Demodulação de pesos | "A correção do StyleGAN2" | Normaliza pesos de conv em vez de ativações; elimina artefatos de gota. |

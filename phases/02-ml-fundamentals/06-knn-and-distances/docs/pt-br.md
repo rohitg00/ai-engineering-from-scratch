@@ -141,7 +141,7 @@ class KDTree:
         # Dividir na mediana do eixo atual
         ...
 
-    def query(self, point, k=1):
+    def consulta(self, point, k=1):
         # Navegar até a folha, depois retroceder
         ...
 ```

@@ -11,7 +11,7 @@
 
 Q-learning tabular precisa de um valor Q separado para cada par (estado, ação). Um tabuleiro de xadrez tem ~10⁴³ estados. Um frame do Atari é 210×160×3 = 100.800 features. RL tabular morre em milhares de estados, quanto mais bilhões.
 
-A correção é óbvia retrospectivamente: substitua a tabela Q por uma rede neural, `Q(s, a; θ)`. Mas óbvia-retrospectivamente levou décadas. Aproximação por função ingênua com Q-learning diverge sob o "triado mortal" — aproximação por função + bootstrap + aprendizado off-policy. Mnih et al. (2013, 2015) identificaram três truques de engenharia que estabilizam o aprendizado:
+A correção é óbvia retroespecificaçãotivamente: substitua a tabela Q por uma rede neural, `Q(s, a; θ)`. Mas óbvia-retroespecificaçãotivamente levou décadas. Aproximação por função ingênua com Q-learning diverge sob o "triado mortal" — aproximação por função + bootstrap + aprendizado off-policy. Mnih et al. (2013, 2015) identificaram três truques de engenharia que estabilizam o aprendizado:
 
 1. **Experience replay** descorrelaciona transições.
 2. **Rede-alvo** congela o alvo de bootstrap.

@@ -132,9 +132,9 @@ def chunk_parent_child(text, parent_size=2048, child_size=256):
     return mapping
 
 
-def retrieve_parent(child_query, mapping, encoder, top_k=3):
+def retrieve_parent(child_consulta, mapping, encoder, top_k=3):
     child_embs = encoder.encode([m["child"] for m in mapping], normalize_embeddings=True)
-    q_emb = encoder.encode([child_query], normalize_embeddings=True)[0]
+    q_emb = encoder.encode([child_consulta], normalize_embeddings=True)[0]
     scores = child_embs @ q_emb
     top = np.argsort(-scores)[:top_k]
     seen, parents = set(), []
@@ -209,20 +209,20 @@ Salve como `outputs/skill-chunker.md`:
 ```markdown
 ---
 name: chunker
-description: Pick a chunking strategy, size, and overlap for a given corpus and query distribution.
+description: Pick a chunking strategy, size, and overlap for a given corpus and consulta distribution.
 version: 1.0.0
 phase: 5
 lesson: 23
 tags: [nlp, rag, chunking]
 ---
 
-Given a corpus (document types, avg length, domain) and query distribution (factoid / analytical / multi-hop), output:
+Given a corpus (document types, avg length, domain) and consulta distribution (factoid / analytical / multi-hop), output:
 
 1. Strategy. Recursive / sentence / semantic / parent-document / late / contextual. Reason.
-2. Chunk size. Token count. Reason tied to query type.
+2. Chunk size. Token count. Reason tied to consulta type.
 3. Overlap. Default 0; justify if >0.
 4. Min/max enforcement. `min_tokens`, `max_tokens` guards.
-5. Evaluation plan. Recall@5 on 50-query stratified eval set (factoid, analytical, multi-hop).
+5. Evaluation plan. Recall@5 on 50-consulta stratified eval set (factoid, analytical, multi-hop).
 
 Refuse any chunking strategy without min/max chunk size enforcement. Refuse overlap above 20% without an ablation showing it helps. Flag semantic chunking recommendations without a min-token floor.
 ```

@@ -9,7 +9,7 @@
 
 ## Objetivos de Aprendizado
 
-- Construir um dataset de evaluation com pares entrada-saída, rubricas e casos extremos específicos da sua aplicação
+- Construir um dataset de evaluation com pares entrada-saída, rubricas e casos extremos eespecificaçãoíficos da sua aplicação
 - Implementar pontuação automatizada usando LLM-as-judge, regex matching e assertions determinísticas
 - Configurar pipelines de eval com CI/CD, custo-gated runs e dashboards de regressão
 - Medir estatisticamente se uma mudança de prompt melhora ou piora a qualidade

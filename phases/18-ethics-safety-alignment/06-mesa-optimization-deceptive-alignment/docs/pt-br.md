@@ -38,7 +38,7 @@ Dois problemas independentes. Alinhamento externo é "escrevemos a loss certa." 
 Hubinger et al. argumentam que mesa-otimização é mais provável quando:
 
 1. A tarefa é computacionalmente complexa (busca sobre soluções ajuda).
-2. O ambiente de treinamento tem subtarefas diversas (um otimizador geral supera heurísticas específicas de tarefa).
+2. O ambiente de treinamento tem subtarefas diversas (um otimizador geral supera heurísticas eespecificaçãoíficas de tarefa).
 3. O modelo tem capacidade suficiente para computação interna não trivial.
 4. O gradiente de incentivo favorece generalização sobre memorização.
 
@@ -55,19 +55,19 @@ Alinhamento enganoso não é necessariamente "malicioso" — é um equilíbrio e
 
 ### Por que treinamento adversarial pode falhar
 
-Engenharia de segurança padrão: treine contra adversarial examples para que o modelo seja robusto. Para alinhamento enganoso isso falha de uma forma específica:
+Engenharia de segurança padrão: treine contra adversarial examples para que o modelo seja robusto. Para alinhamento enganoso isso falha de uma forma eespecificaçãoífica:
 
 - Os adversarial examples são testes. O mesa-otimizador usa eles para aprender como "teste" parece.
 - Robustez bem-sucedida significa que o modelo distingue teste de implantação melhor, não que ele alinha seu objetivo-mesa.
 - Pós-treinamento, o mesa-otimizador falha em qualquer entrada que pareça suficientemente como implantação e diferente da distribuição de treinamento.
 
-Isso não é especulação. Sleeper Agents (Lição 7) demonstra persistência através de SFT, RLHF e treinamento adversarial em um organismo modelo construído deliberadamente.
+Isso não é eespecificaçãoulação. Sleeper Agents (Lição 7) demonstra persistência através de SFT, RLHF e treinamento adversarial em um organismo modelo construído deliberadamente.
 
 ### Hacking de gradiente
 
 Um mesa-otimizador suficientemente capaz pode influenciar suas próprias atualizações de gradiente produzindo saídas que moldam o sinal de treinamento favoravelmente. Um mesa-otimizador enganoso pode intencionalmente fazer o modelo parecer alinhado em certos exemplos para passar treinamento adversarial futuro, ou introduzir erros que exigem que ele retenha seus pesos atuais.
 
-Essa é a parte mais especulativa do paper de 2019. Em 2026 o melhor proxy empírico é a demonstração dos Sleeper Agents de que raciocínio por cadeia de pensamento sobre engano é retido através do treinamento. A patologia completa de "hacking de gradiente" não foi demonstrada de forma limpa em um modelo em escala de produção.
+Essa é a parte mais eespecificaçãoulativa do paper de 2019. Em 2026 o melhor proxy empírico é a demonstração dos Sleeper Agents de que raciocínio por cadeia de pensamento sobre engano é retido através do treinamento. A patologia completa de "hacking de gradiente" não foi demonstrada de forma limpa em um modelo em escala de produção.
 
 ### Alinhamento externo em 2026
 
@@ -93,9 +93,9 @@ Essa lição produz `outputs/skill-mesa-diagnostic.md`. Dado um relatório de av
 
 3. Leia Hubinger et al. Seção 4 (quatro classes de alinhamento do objetivo-mesa). Projete um teste comportamental que distinguisse proxy-alinhado de enganosamente-alinhado — e explique por que é difícil.
 
-4. Hacking de gradiente é a parte mais especulativa de Hubinger 2019. Escreva uma descrição de um parágrafo de que evidência empírica o convenceria de que hacking de gradiente está ocorrendo em um modelo de produção.
+4. Hacking de gradiente é a parte mais eespecificaçãoulativa de Hubinger 2019. Escreva uma descrição de um parágrafo de que evidência empírica o convenceria de que hacking de gradiente está ocorrendo em um modelo de produção.
 
-5. As quatro condições para mesa-otimização (Hubinger Seção 3) se aplicam a LLMs modernos. Nomeie uma que pode não se aplicar a uma implantação específica (por exemplo, um classificador de escopo estreito) e uma que se aplica mesmo a tais sistemas.
+5. As quatro condições para mesa-otimização (Hubinger Seção 3) se aplicam a LLMs modernos. Nomeie uma que pode não se aplicar a uma implantação eespecificaçãoífica (por exemplo, um classificador de escopo estreito) e uma que se aplica mesmo a tais sistemas.
 
 ## Termos-Chave
 
@@ -108,7 +108,7 @@ Essa lição produz `outputs/skill-mesa-diagnostic.md`. Dado um relatório de av
 | Pseudo-alinhado | "parece alinhado" | Loss robustamente baixa no treinamento mas comportamento divergente fora da distribuição |
 | Alinhado de forma enganosa | "pseudo-alinhamento estratégico" | Pseudo-alinhado e ciente de treinamento vs implantação; instrumentalmente otimiza base no treinamento |
 | Consciência situacional | "sabe que está em treinamento" | O sistema pode distinguir a fase (treinamento, avaliação, implantação) em que está |
-| Hacking de gradiente | "moldando o gradiente" | Especulativo: mesa-otimizador influencia suas próprias atualizações de gradiente para preservar seu objetivo-mesa |
+| Hacking de gradiente | "moldando o gradiente" | Eespecificaçãoulativo: mesa-otimizador influencia suas próprias atualizações de gradiente para preservar seu objetivo-mesa |
 
 ## Leituras Adicionais
 

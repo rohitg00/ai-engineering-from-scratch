@@ -54,7 +54,7 @@ A imagem ocupa 576 tokens do contexto do LLM. Em contexto de 2048, sobram 1472 t
 
 Congela ViT. Congela LLM. Treina só o MLP de 2 camadas. Dataset: 558k pares imagem-legenda (LAION-CC-SBU). Perda: modelagem de linguagem na legenda, condicionado nos tokens de imagem projetados.
 
-Em uma única epoch a batch 128, isso leva umas poucas horas. O projetor aprende a mapear espaço ViT pro espaço LLM. Sem supervisão específica de tarefa.
+Em uma única epoch a batch 128, isso leva umas poucas horas. O projetor aprende a mapear espaço ViT pro espaço LLM. Sem supervisão eespecificaçãoífica de tarefa.
 
 ### Etapa 2: ajuste de instrução visual
 
@@ -73,7 +73,7 @@ Nada disso toca a imagem diretamente — só a descrição textual. GPT-4 alucin
 
 ### Por que a comunidade copiou isso
 
-- Sem perdas específicas da etapa 1 pra ajustar. Perda LM durante todo o processo.
+- Sem perdas eespecificaçãoíficas da etapa 1 pra ajustar. Perda LM durante todo o processo.
 - Projetor treina em horas, não dias.
 - LLM pode ser trocado (LLaVA-Llama2, LLaVA-Mistral, LLaVA-Llama3) retreinando só o projetor.
 - Pipeline de dados de instrução visual usa GPT-4 e é barato regenerar pra um novo domínio.

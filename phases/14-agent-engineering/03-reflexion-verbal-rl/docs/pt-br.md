@@ -1,6 +1,6 @@
 # Reflexion: Aprendizado por Reforço Verbal
 
-> RL baseado em gradiente precisa de milhares de tentativas e um cluster de GPU pra corrigir um modo de falha. Reflexion (Shinn et al., NeurIPS 2023) faz isso em linguagem natural: após cada tentativa fracassada, o agent escreve uma reflexão, armazena em memória episódica e condiciona a próxima tentativa nessa memória. Esse é o padrão por trás do sleep-time compute da Letta, do CLAUDE.md do Claude Code e do learn-rule do pro-workflow.
+> RL baseado em gradiente precisa de milhares de tentativas e um cluster de GPU pra corrigir um modo de falha. Reflexion (Shinn et al., NeurIPS 2023) faz isso em linguagem natural: após cada tentativa fracassada, o agente escreve uma reflexão, armazena em memória episódica e condiciona a próxima tentativa nessa memória. Esse é o padrão por trás do sleep-time compute da Letta, do CLAUDE.md do Claude Code e do learn-rule do pro-workflow.
 
 **Tipo:** Construção
 **Linguagens:** Python (stdlib)
@@ -16,9 +16,9 @@
 
 ## O Problema
 
-Um agent falha numa tarefa. Em RL padrão você rodaria milhares de tentativas, computaria gradientes, atualizaria pesos. Caro, lento, e a maioria dos agents de produção não tem orçamento de treino pra cada falha.
+Um agente falha numa tarefa. Em RL padrão você rodaria milhares de tentativas, computaria gradientes, atualizaria pesos. Caro, lento, e a maioria dos agentes de produção não tem orçamento de treino pra cada falha.
 
-Reflexion (Shinn et al., arXiv:2303.11366) faz uma pergunta diferente: e se o agent só pensasse sobre por que falhou e tentasse de novo com esse pensamento no seu prompt? Sem atualização de pesos. Sem gradiente. Só linguagem natural armazenada entre tentativas.
+Reflexion (Shinn et al., arXiv:2303.11366) faz uma pergunta diferente: e se o agente só pensasse sobre por que falhou e tentasse de novo com esse pensamento no seu prompt? Sem atualização de pesos. Sem gradiente. Só linguagem natural armazenada entre tentativas.
 
 O resultado: no ALFWorld ele supera ReAct e outros baselines não fine-tunados. No HotpotQA ele melhora sobre ReAct. Em geração de código (HumanEval/MBPP) ele define o estado da arte na época. Tudo sem um único passo de gradiente.
 
@@ -43,16 +43,16 @@ Uma tentativa roda o Actor. Evaluator pontua. Se a pontuação é baixa, Self-Re
 ### Três tipos de avaliador
 
 1. **Escalar** — um sinal binário externo. ALFWorld passa ou falha. Testes do HumanEval passam ou falham. O mais simples, maior sinal.
-2. **Heurístico** — assinaturas de falha predefinidas. "Se o agent produziu a mesma ação duas vezes seguidas, marcar como travado." "Se a trajectory exceder 50 etapas, marcar como ineficiente."
+2. **Heurístico** — assinaturas de falha predefinidas. "Se o agente produziu a mesma ação duas vezes seguidas, marcar como travado." "Se a trajectory exceder 50 etapas, marcar como ineficiente."
 3. **Auto-avaliado** — o LLM pontua sua própria trajectory. Necessário quando não há ground truth disponível. Sinal mais fraco; combina bem com verificação ancorada em ferramenta (Aula 05 — CRITIC).
 
 O padrão de 2026 é uma mistura: escalar quando disponível, auto-avaliado quando não, heurísticas como rails de segurança.
 
 ### Por que isso generaliza
 
-Reflexion não é tanto um novo algoritmo quanto um padrão nomeado. Quase todo agent "auto-reparável" de produção roda alguma variante:
+Reflexion não é tanto um novo algoritmo quanto um padrão nomeado. Quase todo agente "auto-reparável" de produção roda alguma variante:
 
-- Sleep-time compute da Letta (Aula 08): um agent separado reflete sobre conversas passadas e escreve em blocos de memória.
+- Sleep-time compute da Letta (Aula 08): um agente separado reflete sobre conversas passadas e escreve em blocos de memória.
 - Padrão `CLAUDE.md` / "save memory" do Claude Code: reflexões capturadas como aprendizados, prepended em sessões futuras.
 - Comando `/learn-rule` do pro-workflow: correções capturadas como regras explícitas.
 - Nós de reflexão do LangGraph: um nó que pontua saída e roteia pra refinar se necessário.
@@ -69,7 +69,7 @@ Reflexion funciona quando:
 
 Reflexion não ajuda quando:
 
-- O agent já acerta na primeira tentativa.
+- O agente já acerta na primeira tentativa.
 - A falha é externa (rede caiu, ferramenta quebrada) — refletir sobre "a rede caiu" não ajuda execuções futuras.
 - A reflexão vira superstição — armazenar uma narrativa sobre uma execução instável pontual.
 
@@ -96,7 +96,7 @@ O trace mostra três tentativas. Tentativa 1 falha, uma reflexão é armazenada,
 
 ## Use
 
-LangGraph entrega reflexão como padrão de nó. Comando `/memory` do Claude Code e `/learn-rule` do pro-workflow externalizam o buffer episódico como um arquivo markdown. O sleep-time compute da Letta roda o Self-Reflector em downtime pra que o agent principal fique com latência limitada. OpenAI Agents SDK não entrega Reflexion diretamente; você constrói com um Guardrail customizado que rejeita trajectories por pontuação e uma `Session` de memória que persiste entre execuções.
+LangGraph entrega reflexão como padrão de nó. Comando `/memory` do Claude Code e `/learn-rule` do pro-workflow externalizam o buffer episódico como um arquivo markdown. O sleep-time compute da Letta roda o Self-Reflector em downtime pra que o agente principal fique com latência limitada. OpenAI Agents SDK não entrega Reflexion diretamente; você constrói com um Guardrail customizado que rejeita trajectories por pontuação e uma `Session` de memória que persiste entre execuções.
 
 ## Entregue
 
@@ -121,7 +121,7 @@ LangGraph entrega reflexão como padrão de nó. Comando `/memory` do Claude Cod
 | Heuristic evaluator | "Detector baseado em padrões" | Assinaturas de falha predefinidas (ex: loop travado, muitas etapas) |
 | Self-evaluator | "LLM como juiz da própria trajectory" | Fallback com sinal mais fraco quando não há ground truth — combine com verificação ancorada em ferramenta |
 | Memory rot | "Reflexões obsoletas" | Buffer episódico enche de entradas obsoletas; conserte com compactação/TTL |
-| Sleep-time reflection | "Auto-reflexão assíncrona" | Rode Self-Reflector fora do caminho crítico pra que o agent principal fique rápido |
+| Sleep-time reflection | "Auto-reflexão assíncrona" | Rode Self-Reflector fora do caminho crítico pra que o agente principal fique rápido |
 
 ## Leitura Complementar
 

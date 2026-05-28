@@ -1,6 +1,6 @@
 # Negociação e Barganha
 
-> Agents negociam recursos, preços, alocação de tarefas e termos. O conjunto de benchmarks de 2026 é claro: NegotiationArena (arXiv:2402.05863) mostra que LLMs podem melhorar payoffs ~20% via manipulação de persona ("desespero"); "Measuring Bargaining Abilities" (arXiv:2402.15813) mostra que comprar é mais difícil que vender e escala não ajuda — o **OG-Narrator** deles (gerador de ofertas determinístico + narrador LLM) elevou a taxa de fechamento de 26.67% pra 88.88%; a Large-Scale Autonomous Negotiation Competition (arXiv:2503.06416) rodou ~180k negociações e descobriu que agents que **escondem raciocínio** (chain-of-thought-concealing) vencem escondendo o raciocínio dos counterpartes; Bhattacharya et al. 2025 nos métricas do Harvard Negotiation Project classificou o Llama-3 como mais efetivo, Claude-3 agressivo, GPT-4 mais justo. Esta lição implementa o Contract Net Protocol (o ancestral FIPA, Lição 02), conecta um buyer/seller estilo LLM, roda uma decomição estilo OG-Narrator, e mede como a taxa de fechamento muda com cada escolha estrutural.
+> Agents negociam recursos, preços, alocação de tarefas e termos. O conjunto de benchmarks de 2026 é claro: NegotiationArena (arXiv:2402.05863) mostra que LLMs podem melhorar payoffs ~20% via manipulação de persona ("desespero"); "Measuring Bargaining Abilities" (arXiv:2402.15813) mostra que comprar é mais difícil que vender e escala não ajuda — o **OG-Narrator** deles (gerador de ofertas determinístico + narrador LLM) elevou a taxa de fechamento de 26.67% pra 88.88%; a Large-Scale Autonomous Negotiation Competition (arXiv:2503.06416) rodou ~180k negociações e descobriu que agentes que **escondem raciocínio** (chain-of-thought-concealing) vencem escondendo o raciocínio dos counterpartes; Bhattacharya et al. 2025 nos métricas do Harvard Negotiation Project classificou o Llama-3 como mais efetivo, Claude-3 agressivo, GPT-4 mais justo. Esta lição implementa o Contract Net Protocol (o ancestral FIPA, Lição 02), conecta um buyer/seller estilo LLM, roda uma decomição estilo OG-Narrator, e mede como a taxa de fechamento muda com cada escolha estrutural.
 
 **Tipo:** Aprender + Construir
 **Linguagens:** Python (stdlib)
@@ -9,7 +9,7 @@
 
 ## Problema
 
-Dois agents precisam combinar num preço. Deixados com prompts de linguagem pura, LLMs de 2024-2026 fecham negócios em taxas surpreendentemente baixas (~27% em barganhas parametrizadas no arXiv:2402.15813). Escala não resolve: GPT-4 não é estruturalmente melhor em barganha que GPT-3.5; é melhor na *linguagem* da barganha.
+Dois agentes precisam combinar num preço. Deixados com prompts de linguagem pura, LLMs de 2024-2026 fecham negócios em taxas surpreendentemente baixas (~27% em barganhas parametrizadas no arXiv:2402.15813). Escala não resolve: GPT-4 não é estruturalmente melhor em barganha que GPT-3.5; é melhor na *linguagem* da barganha.
 
 A questão raiz é que LLMs misturam dois trabalhos — decidir a oferta e narrar a oferta. O OG-Narrator separou esses: um gerador de ofertas determinístico calcula movimentos numéricos; o LLM só narra. A taxa de fechamento pula pra ~89%.
 
@@ -61,7 +61,7 @@ Isso não é "LLMs são ruins negociando." É "LLMs negociam muito parecido com 
 
 A Large-Scale Autonomous Negotiation Competition (arXiv:2503.06416) rodou ~180k negociações com muitas estratégias de LLM. Vencedores ocultaram seu raciocínio dos counterpartes:
 
-- Se um agent imprime "só vou até $75; meu preço de reserva é $70" num scratchpad visível publicamente, o oponente lê.
+- Se um agente imprime "só vou até $75; meu preço de reserva é $70" num scratchpad visível publicamente, o oponente lê.
 - Vencedores computam a privatamente; o canal de saída contém apenas a oferta e a narração mínima necessária.
 
 Isso é um eco de 2026 da teoria de jogos clássica (Aumann 1976 sobre racionalidade e informação): revelar sua valoração privada custa payoff. LLMs não intuitam isso e digitam feliz suas reservas em traces de raciocínio que se tornam visíveis pro counterpart.
@@ -82,7 +82,7 @@ Isso é um snapshot de 2025. O ponto não é qual modelo vence em abril de 2026 
 
 A reutilização moderna do Contract Net pra multi-agent com LLM:
 
-1. O agent manager decompõe uma tarefa em unidades.
+1. O agente manager decompõe uma tarefa em unidades.
 2. Transmite `cfp` com descrição da tarefa pra worker agents.
 3. Cada worker retorna uma oferta: `(preço, eta, confiança)` onde preço pode ser tokens, unidades de compute ou dólares.
 4. Manager escolhe vencedores (único ou múltiplos, dependendo da tarefa) e concede.
@@ -132,7 +132,7 @@ Checklist de barganha em produção:
 - **Geração determinística de ofertas.** Preços, quantidades, ETAs: compute, não faça prompt.
 - **Valide todas as ofertas recebidas** contra um schema. Rejeite ofertas fora da ZOPA na fronteira do protocolo.
 - **Limite rodadas.** 3-5 rodadas no máximo; escale pra mediador em deadlock.
-- **Meça taxa de fechamento e variância de payoff** continuamente. Uma taxa de fechamento caindo é um sintoma — frequentemente drift de prompt ou ataque do lado do counterpart.
+- **Meça taxa de fechamento e variância de payoff** continuamente. Uma taxa de fechamento caindo é um sintoma — frequentemente deriva de prompt ou ataque do lado do counterpart.
 - **Registre todas as propostas rejeitadas** com a razão determinística. Pra managers do Contract Net, bidders perdedores precisam entender o porquê.
 
 ## Exercícios
@@ -149,7 +149,7 @@ Checklist de barganha em produção:
 |-------|-------------------|--------------------------|
 | Contract Net | "Mercado de tarefas" | Smith 1980, FIPA 1996. cfp + propose + accept/reject. O mercado de tarefas canônico. |
 | ZOPA | "Zona de possível acordo" | Sobreposição entre máximo do comprador e mínimo do vendedor. Ofertas fora dela não fecham. |
-| BATNA | "Melhor alternativa a um acordo negociado" | Seu fallback se essa negociação falhar. Define seu preço de reserva. |
+| BATNA | "Melhor alternativa a um acordo negociado" | Seu reserva se essa negociação falhar. Define seu preço de reserva. |
 | OG-Narrator | "Gerador de ofertas + narrador" | Decomição: oferta determinística, narração LLM. |
 | Estratégia Zeuthen | "Concessão minimizadora de risco" | Gerador de ofertas clássico que concede baseado em limites de risco. |
 | Barganha Rubinstein | "Equilíbrio de ofertas alternadas" | Modelo teórico de jogos pra barganha de horizonte infinito com desconto. |

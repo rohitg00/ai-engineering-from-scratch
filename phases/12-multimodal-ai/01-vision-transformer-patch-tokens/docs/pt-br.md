@@ -41,7 +41,7 @@ A projeção de patches é matematicamente idêntica a uma convolução 2D com k
 
 Patches não têm ordem inerente — o transformer os vê como um saco. ViTs iniciais adicionavam um embedding posicional 1D aprendível (um vetor de 768 dimensões por posição, 197 deles). Funciona, mas amarra o modelo à resolução de treino: na inferência, você tem que interpolar a tabela de posições se mudar a grade.
 
-Backbones modernos de visão usam 2D-RoPE (M-RoPE do Qwen2-VL, padrão do SigLIP 2) ou posições 2D fatorizadas. 2D-RoPE rotaciona os vetores de query e key baseado no índice (linha, coluna) do patch, então o modelo infere a posição 2D relativa a partir do ângulo de rotação. Sem tabela de posições. O modelo lida com tamanhos de grade arbitrários na inferência.
+Backbones modernos de visão usam 2D-RoPE (M-RoPE do Qwen2-VL, padrão do SigLIP 2) ou posições 2D fatorizadas. 2D-RoPE rotaciona os vetores de consulta e key baseado no índice (linha, coluna) do patch, então o modelo infere a posição 2D relativa a partir do ângulo de rotação. Sem tabela de posições. O modelo lida com tamanhos de grade arbitrários na inferência.
 
 ### Token CLS, saída com pooling e tokens de registro
 
@@ -60,13 +60,13 @@ O ViT de 2020 foi pré-treinado com classificação supervisionada no JFT-300M. 
 - CLIP (2021): aprendizado contrastivo imagem-texto em 400M pares. Lição 12.02.
 - MAE (2021, He et al.): mascara 75% dos patches, reconstrói pixels. Auto-supervisionado, funciona com imagens puras.
 - DINO (2021) / DINOv2 (2023): auto-distilação com estudante-professor, sem rótulos, sem legendas. O ViT-g/14 DINOv2 de 2023 é o backbone puramente visual mais forte e o padrão pra casos de uso com "features densas."
-- SigLIP / SigLIP 2 (2023, 2025): CLIP com perda sigmoid e NaFlex pra proporção de aspecto nativa. A torre de visão dominante em VLMs abertos de 2026 (Qwen, Idefics2, LLaVA-OneVision).
+- SigLIP / SigLIP 2 (2023, 2025): CLIP com perda sigmoid e NaFlex pra proporção de aespecificaçãoto nativa. A torre de visão dominante em VLMs abertos de 2026 (Qwen, Idefics2, LLaVA-OneVision).
 
 Sua escolha de pré-treinamento determina pra que o backbone é bom: CLIP/SigLIP pra correspondência semântica com texto, DINOv2 pra features visuais densas, MAE como ponto de partida pra fine-tuning downstream.
 
 ### Leis de escala
 
-O escalamendo do ViT (Zhai et al. 2022) estabeleceu que a qualidade de um ViT obedece leis previsíveis no tamanho do modelo, tamanho dos dados e computação. Com computação fixa:
+O escalonamento do ViT (Zhai et al. 2022) estabeleceu que a qualidade de um ViT obedece leis previsíveis no tamanho do modelo, tamanho dos dados e computação. Com computação fixa:
 - Modelo maior + mais dados → qualidade melhor.
 - Tamanho do patch é uma alavanca no tamanho da sequência vs. fidelidade. Patch 14 (típico pra DINOv2/SigLIP SO400m) dá mais tokens por imagem que patch 16; melhor pra OCR e tarefas densas, pior pra velocidade.
 - Resolução é a outra grande alavanca. Ir de 224 pra 384 pra 512 quase sempre ajuda, com custo quadrático em FLOPs.
@@ -96,7 +96,7 @@ O encoder que a maioria dos VLMs abertos entrega em 2026 é SigLIP 2 SO400m/14 e
 - Tamanho do patch 14, resolução padrão 384 → 729 patch tokens por imagem.
 - Pooling médio pra tarefas no nível da imagem; todos os 729 patches fluem pro LLM pra VQA.
 - 4 tokens de registro, descartados antes da transferência pro LLM.
-- 2D-RoPE com escala no nível da imagem pra proporção de aspecto nativa.
+- 2D-RoPE com escala no nível da imagem pra proporção de aespecificaçãoto nativa.
 
 Cada decisão nessa configuração remonta a um artigo que você pode ler.
 

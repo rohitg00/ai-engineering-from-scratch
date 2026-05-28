@@ -59,7 +59,7 @@ Pula o truque de embedding. Aplica vieses diretamente nos scores de attention:
 attn_score[i, j] = (q_i · k_j) / √d  -  m_h · |i - j|
 ```
 
-Onde `m_h` é uma inclinação específica de head (ex: `1 / 2^(8·h/H)`). Tokens mais próximos ganham boost; tokens distantes são penalizados. Sem custo de treinamento. O paper mostra que extrapolação de comprimento vence sinusoidal e empata com RoPE no comprimento original treinado.
+Onde `m_h` é uma inclinação eespecificaçãoífica de head (ex: `1 / 2^(8·h/H)`). Tokens mais próximos ganham boost; tokens distantes são penalizados. Sem custo de treinamento. O paper mostra que extrapolação de comprimento vence sinusoidal e empata com RoPE no comprimento original treinado.
 
 ### O que escolher em 2026
 

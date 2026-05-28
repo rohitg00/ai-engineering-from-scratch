@@ -196,13 +196,13 @@ print(model.wv.most_similar("cat", topn=3))
 
 Pro trabalho real, você quase nunca treina Word2Vec. Baixa vetores pré-treinados.
 
-- **GloVe** — abordagem de fatorização de matriz de co-ocorrência da Stanford. Checkpoints 50d, 100d, 200d, 300d. Boa cobertura geral. Lição 04 cobre GloVe especificamente.
+- **GloVe** — abordagem de fatorização de matriz de co-ocorrência da Stanford. Checkpoints 50d, 100d, 200d, 300d. Boa cobertura geral. Lição 04 cobre GloVe eespecificaçãoificamente.
 - **fastText** — extensão Word2Vec do Facebook que embedda n-gramas de caracteres. Lida com palavras fora do vocabulário compondo subpalavras. Lição 04.
 - **Word2Vec pré-treinado no Google News** — 300d, vocabulário de 3M palavras, publicado em 2013. Ainda baixado diariamente.
 
 ### Quando Word2Vec ainda ganha em 2026
 
-- Busca leve de domínio específico. Treina em resumos médicos numa hora num laptop, ganha vetores especializados que nenhum modelo geral captura.
+- Busca leve de domínio eespecificaçãoífico. Treina em resumos médicos numa hora num laptop, ganha vetores eespecificaçãoializados que nenhum modelo geral captura.
 - Engenharia de features no estilo analogia. `vetor_gênero = média(pares man - woman)`. Subtraia de outras palavras pra obter um eixo neutro de gênero. Ainda usado em pesquisas de equidade.
 - Interpretabilidade. 100d é pequeno o suficiente pra plotar via PCA ou t-SNE e ver clusters se formarem de verdade.
 - Qualquer lugar onde inferência tenha que rodar em dispositivo sem GPU. Lookup de Word2Vec é uma única busca de linha.
@@ -222,7 +222,7 @@ Salve como `outputs/skill-embedding-probe.md`:
 ```markdown
 ---
 name: embedding-probe
-description: Inspect a word2vec model. Run analogies, find neighbors, diagnose quality.
+description: Inespecificaçãot a word2vec model. Run analogies, find neighbors, diagnose quality.
 version: 1.0.0
 phase: 5
 lesson: 03
@@ -232,7 +232,7 @@ tags: [nlp, embeddings, debugging]
 You probe trained word embeddings to verify they are working. Given a `gensim.models.KeyedVectors` object and a vocabulary, you run:
 
 1. Three canonical analogy tests. `king : man :: queen : woman`. `paris : france :: tokyo : japan`. `walking : walked :: swimming : ?`. Report the top-1 result and its cosine.
-2. Five nearest-neighbor tests on domain-specific words the user supplies. Print top-5 neighbors with cosines.
+2. Five nearest-neighbor tests on domain-especificaçãoific words the user supplies. Print top-5 neighbors with cosines.
 3. One symmetry check. `similarity(a, b) == similarity(b, a)` to within float precision.
 4. One degenerate check. If any embedding has a norm below 0.01 or above 100, the model has a training bug. Flag it.
 

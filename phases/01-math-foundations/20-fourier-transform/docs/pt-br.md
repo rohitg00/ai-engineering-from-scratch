@@ -10,7 +10,7 @@
 ## Objetivos de Aprendizado
 
 - Implementar DFT do zero e verificar contra FFT Cooley-Tukey O(N log N)
-- Interpretar coeficientes de frequência: extrair amplitude, fase e espectro de potência
+- Interpretar coeficientes de frequência: extrair amplitude, fase e eespecificaçãotro de potência
 - Aplicar o teorema da convolução para performar convolução via multiplicação FFT
 - Conectar decomposição de frequência Fourier a codificações posicionais de transformers e camadas convolucionais CNN
 
@@ -20,7 +20,7 @@ Uma gravação de áudio é uma sequência de medições de pressão ao longo do
 
 Mas muitos padrões são invisíveis no domínio do tempo. A transformada Fourier converte dados do domínio do tempo para o domínio da frequência.
 
-Isso importa para ML porque pensamento em domínio de frequência aparece em todo lugar. CNNs performam convolução (multiplicação no domínio de frequência). Codificações posicionais de transformers usam decomposição de frequência. Modelos de áudio operam em espectrogramas.
+Isso importa para ML porque pensamento em domínio de frequência aparece em todo lugar. CNNs performam convolução (multiplicação no domínio de frequência). Codificações posicionais de transformers usam decomposição de frequência. Modelos de áudio operam em eespecificaçãotrogramas.
 
 ## O Conceito
 
@@ -57,11 +57,11 @@ Convolução direta: O(N*M). FFT: O(N log N). Fundamental para CNNs.
 
 ### Janelamento
 
-Reduz vazamento espectral aplicando uma função de janela (Hann, Hamming, Blackman) antes da DFT.
+Reduz vazamento eespecificaçãotral aplicando uma função de janela (Hann, Hamming, Blackman) antes da DFT.
 
-### STFT e Espectrogramas
+### STFT e Eespecificaçãotrogramas
 
-A STFT calcula FFTs em janelas sobrepostas. Resultado: espectrograma (2D: tempo x frequência). Entrada padrão para modelos de áudio ML.
+A STFT calcula FFTs em janelas sobrepostas. Resultado: eespecificaçãotrograma (2D: tempo x frequência). Entrada padrão para modelos de áudio ML.
 
 ### Aliasing
 
@@ -115,8 +115,8 @@ def fft(x):
 | FFT | Algoritmo O(N log N) para computar DFT |
 | DFT Inversa | Reconstrói sinal temporal dos coeficientes |
 | Bico de frequência | Cada índice k representa frequência k*fs/N Hz |
-| Espectro de potência | \|X[k]\|^2, distribuição de energia |
-| Vazamento espectral | Conteúdo espúrio devido a tratar sinal não-periódico como periódico |
+| Eespecificaçãotro de potência | \|X[k]\|^2, distribuição de energia |
+| Vazamento eespecificaçãotral | Conteúdo espúrio devido a tratar sinal não-periódico como periódico |
 | Teorema da convolução | Convolução temporal = multiplicação pontual na frequência |
 | Aliasing | Frequências acima de Nyquist aparecem como frequências baixas |
 

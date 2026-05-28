@@ -46,7 +46,7 @@ Em 2026 GANs não são mais o gerador SOTA (difusão e flow matching tomaram ess
 |------|------------|-----|
 | 2015 | DCGAN | Conv/deconv, batch norm, LeakyReLU — a primeira arquitetura estável. |
 | 2017 | WGAN, WGAN-GP | Substitui BCE por distância Wasserstein + penalidade de gradiente. Corrige gradiente evanescente. |
-| 2017 | Normalização espectral | Limita Lipschitz do discriminator. Ainda usado em discriminadores em 2026. |
+| 2017 | Normalização eespecificaçãotral | Limita Lipschitz do discriminator. Ainda usado em discriminadores em 2026. |
 | 2018 | Progressive GAN | Treina low-res primeiro, adiciona camadas. Primeiros resultados de megapixel. |
 | 2019 | StyleGAN / StyleGAN2 | Rede de mapeamento + norma de instância adaptativa. State-of-the-art em fotorrealismo de domínio fixo. |
 | 2021 | StyleGAN3 | Sem aliasing, equivariante a translação — ainda o padrão ouro para rostos em 2026. |
@@ -100,7 +100,7 @@ O sintoma canônico: um dos dois modos reais para de ser gerado. O discriminator
 
 - **Discriminator forte demais.** Reduza a taxa de aprendizado de D em 2-5x, ou adicione ruído de instância/camada. Se D chega a >95% de acurácia, G está morto.
 - **Generator memoriza um modo.** Adicione ruído nos inputs de D, use uma camada minibatch-discriminator, ou mude para WGAN-GP.
-- **Estatísticas vazando do batch norm.** Batch real + batch falso passando pela mesma camada BN mistura estatísticas. Use norma de instância ou norma espectral no lugar.
+- **Estatísticas vazando do batch norm.** Batch real + batch falso passando pela mesma camada BN mistura estatísticas. Use norma de instância ou norma eespecificaçãotral no lugar.
 - **Jogo no inception score.** FID e IS são ruidosos em contagens baixas de amostras. Use ≥10k amostras na avaliação.
 - **Amostragem one-shot é mentira para tarefas condicionais.** Você ainda precisa de escalas CFG, truques de truncamento e re-amostragem para ter saídas utilizáveis.
 
@@ -139,7 +139,7 @@ Salve `outputs/skill-gan-debugger.md`. Skill recebe uma execução de GAN com fa
 | Loss não saturante | "A correção" | Use `-log D(G(z))` para G em vez de `log(1 - D(G(z)))`. |
 | Colapso de modo | "G memorizou uma coisa" | Generator produz poucas saídas distintas apesar de dados diversos. |
 | WGAN | "Wasserstein" | Substitui BCE por distância Earth-Mover + penalidade de gradiente; gradiente mais suave. |
-| Norma espectral | "Truque de Lipschitz" | Restringe normas dos pesos de D para limitar inclinação; estabiliza treinamento. |
+| Norma eespecificaçãotral | "Truque de Lipschitz" | Restringe normas dos pesos de D para limitar inclinação; estabiliza treinamento. |
 | StyleGAN | "O que funciona" | Rede de mapeamento + AdaIN; melhor da classe para rostos, ainda em 2026. |
 
 ## Nota de produção: inferência one-shot é a vantagem duradoura das GANs
@@ -148,7 +148,7 @@ GANs não vencem mais em qualidade de amostra para geração de domínio aberto,
 
 - **Sem prefill, sem estágios de decode.** Um único forward pass de `G(z)`. TTFT ≈ latência total.
 - **Sem pressão de KV-cache.** O único estado são os pesos. Tamanho do lote é limitado por memória de ativação, não cache.
-- **Batch contínuo trivial.** Como cada request tem os mesmos FLOPs fixos, um batch estável na ocupação alvo do servidor é geralmente ótimo. Nenhum scheduler in-flight necessário.
+- **Batch contínuo trivial.** Como cada request tem os mesmos FLOPs fixos, um batch estável na ocupação alvo do servidor é geralmente ótimo. Nenhum agendador in-flight necessário.
 
 É por isso que destilação de GAN (SDXL-Turbo, SD3-Turbo, ADD, LCM) é a técnica dominante para texto-para-imagem rápido em 2026: colapsa um pipeline de difusão de 20-50 passos em 1-4 forward passes estilo GAN mantendo a distribuição de uma base de difusão. A loss adversarial sobrevive como um parâmetro de treinamento para transformar geradores lentos em rápidos.
 

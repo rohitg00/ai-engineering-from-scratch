@@ -67,7 +67,7 @@ A **coluna multi-áudio é condenatória para todos.** Chance aleatória em múl
 
 ### Onde LALMs são úteis em 2026
 
-- **Auditoria de compliance de gravações de call-center.** "O agente mencionou a divulgação obrigatória?"
+- **Auditoria de conformidade de gravações de call-center.** "O agente mencionou a divulgação obrigatória?"
 - **Acessibilidade.** Descrever eventos sonoros para usuários surdos (não apenas transcrição).
 - **Moderação de conteúdo.** Detectar linguagem violenta + tom ameaçador + contexto de fundo.
 - **Capítulos de podcast/reunião.** Resumo semântico, não apenas turnos de fala.
@@ -100,7 +100,7 @@ messages = [{
 }]
 inputs = processor.apply_chat_template(messages, tokenize=True, return_tensors="pt")
 output = model.generate(**inputs, max_new_tokens=200)
-print(processor.decode(output[0], skip_special_tokens=True))
+print(processor.decode(output[0], skip_especificaçãoial_tokens=True))
 ```
 
 ### Passo 2: o padrão do projetor
@@ -145,7 +145,7 @@ Reporte por categoria (fala / som / música / multi-áudio) separadamente. Núme
 | Melhor open em áudio longo | Audio Flamingo Next |
 | Melhor closed | Gemini 2.5 Pro |
 | Agente voz-entrada / voz-saída | Qwen2.5-Omni ou GPT-4o Audio |
-| Raciocínio musical | Audio Flamingo 3 ou 2 (AF-CLAP especializado em música) |
+| Raciocínio musical | Audio Flamingo 3 ou 2 (AF-CLAP eespecificaçãoializado em música) |
 | Auditoria de call-center | Gemini 2.5 Pro via API, com RAG sobre seus docs de política |
 
 ## Armadilhas

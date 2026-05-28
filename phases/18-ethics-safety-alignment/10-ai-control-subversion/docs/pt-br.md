@@ -33,7 +33,7 @@ Controle desiste de confiar em U. Ele pergunta quais protocolos mantêm seguran�
 
 ### A tarefa de backdoor do ICML 2024
 
-Prompts são problemas de codificação de nível de competição. U produz uma solução candidata. Um oráculo oculto sinaliza se a solução contém uma backdoor (uma entrada específica que faz o código produzir uma saída errada). O red team controla U e pode ver todos os internos do protocolo. O protocolo deve maximizar a taxa de problemas resolvidos enquanto mantém a taxa de backdoor-distribuída abaixo de um limiar.
+Prompts são problemas de codificação de nível de competição. U produz uma solução candidata. Um oráculo oculto sinaliza se a solução contém uma backdoor (uma entrada eespecificaçãoífica que faz o código produzir uma saída errada). O red team controla U e pode ver todos os internos do protocolo. O protocolo deve maximizar a taxa de problemas resolvidos enquanto mantém a taxa de backdoor-distribuída abaixo de um limiar.
 
 ### Quatro protocolos comparados
 
@@ -103,7 +103,7 @@ Essa lição produz `outputs/skill-control-protocol-audit.md`. Dada uma descriç
 | AI Control | "segurança sob subversão" | Projeto de protocolo que limita resultados inaceitáveis sob um U de pior caso |
 | Modelo não confiável (U) | "o modelo forte" | O modelo capaz do qual queremos extrair trabalho mas não confiamos |
 | Modelo confiável (T) | "o modelo fraco" | Um modelo mais fraco, sabe-se não ser adversarial, usado como editor/monitor |
-| Humano confiável (H) | "o orçamento de auditoria" | Trabalho humano especializado limitado; caro; o sinal de verdade real |
+| Humano confiável (H) | "o orçamento de auditoria" | Trabalho humano eespecificaçãoializado limitado; caro; o sinal de verdade real |
 | Edição Confiável | "T edita U" | Protocolo onde T é o controle das saídas de U; H chamado em saídas ambíguas |
 | Monitoramento Não Confiável | "U monitora U" | Protocolo onde uma segunda instância de U pontua saídas; resistente a colusão apenas com investimento extra |
 | Caso de segurança de controle | "o argumento formal" | Argumento escrito de que um protocolo limita o sucesso do adversário sob U de pior caso |

@@ -388,7 +388,7 @@ for epoch in range(2000):
 
 Usamos SGD online aqui — atualizamos pesos após cada amostra em vez de acumular o lote inteiro. Isso quebra a simetria mais rápido e evita saturação da sigmoid na paisagem de perda completa. Embaralhar os dados a cada época evita que a rede memorize a ordem.
 
-Sem ajuste manual. A rede descobre o limite de decisão circular sozinha. Essa é o poder da retropropagação: você define a arquitetura, a função de perda e os dados. O algoritmo descobre os pesos.
+Sem ajuste manual. A rede descobre o limite de decisão circular sozinha. Esse é o poder da retropropagação: você define a arquitetura, a função de perda e os dados. O algoritmo descobre os pesos.
 
 ## Use
 

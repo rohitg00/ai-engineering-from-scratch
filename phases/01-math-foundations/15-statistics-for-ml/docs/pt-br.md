@@ -20,7 +20,7 @@ Você treinou dois modelos. Modelo A pontua 0.87 no seu teste. Modelo B pontua 0
 
 O Modelo B não superou realmente o Modelo A. A diferença de 0.02 era ruído. Seu conjunto de teste era pequeno demais, ou a variância alta demais, ou ambos. Você entregou aleatoriedade disfarçada de melhoria.
 
-Isso acontece o tempo todo. Mudanças no leaderboard do Kaggle. Papers que falham em reproduzir. Testes A/B que declaram vencedores com poucas centenas de amostras. A causa raiz é sempre a mesma: alguém pulou a estatística.
+Isso acontece o tempo todo. Mudanças no ranking do Kaggle. Papers que falham em reproduzir. Testes A/B que declaram vencedores com poucas centenas de amostras. A causa raiz é sempre a mesma: alguém pulou a estatística.
 
 Estatística te dá as ferramentas para distinguir sinal de ruído. Ela diz quando uma diferença é real, quão confiante você deve ser, e quanta dados você precisa antes de confiar em um resultado.
 

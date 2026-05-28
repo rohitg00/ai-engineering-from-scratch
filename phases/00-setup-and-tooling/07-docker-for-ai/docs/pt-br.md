@@ -18,7 +18,7 @@
 
 Você treinou um modelo no seu notebook com PyTorch 2.3, CUDA 12.4 e Python 3.12. Seu colega tem PyTorch 2.1, CUDA 11.8 e Python 3.10. Seu modelo trava na máquina dele. Seu Dockerfile funciona nos dois.
 
-Projetos de IA são pesadelos de dependência. Uma stack típica inclui Python, PyTorch, drivers CUDA, cuDNN, bibliotecas C de nível de sistema e pacotes especializados como flash-attn que precisam de versões exatas de compiladores. Docker empacota tudo isso em uma imagem única que roda identicamente em qualquer lugar.
+Projetos de IA são pesadelos de dependência. Uma stack típica inclui Python, PyTorch, drivers CUDA, cuDNN, bibliotecas C de nível de sistema e pacotes eespecificaçãoializados como flash-attn que precisam de versões exatas de compiladores. Docker empacota tudo isso em uma imagem única que roda identicamente em qualquer lugar.
 
 ## O Conceito
 

@@ -49,7 +49,7 @@ Em vez de uma distribuição conjunta impossível, estima n distribuições simp
 
 ### Suavização Laplace
 
-Adiciona contagem pequena `alpha` a cada feature para evitar probabilidades zero.
+Adiciona contagem pequena `alpha` a cada funcionalidade para evitar probabilidades zero.
 
 ```
 P(palavra_i | classe) = (contagem(palavra_i, classe) + alpha) / (total_palavras_classe + alpha * vocab_size)
@@ -67,7 +67,7 @@ Isso transforma a previsão em multiplicação de matriz.
 
 ### Naive Bayes vs Regressão Logística
 
-| Aspecto | Naive Bayes | Regressão Logística |
+| Aespecificaçãoto | Naive Bayes | Regressão Logística |
 |---------|------------|-------------------|
 | Tipo | Generativo | Discriminativo |
 | Treino | Contar frequências | Otimizar função de perda |

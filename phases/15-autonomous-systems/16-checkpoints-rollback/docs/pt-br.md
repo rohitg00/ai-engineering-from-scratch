@@ -9,7 +9,7 @@
 
 ## O Problema
 
-Execução durable (Aula 12) torna um agent que cai retomável. Proposta-então-commit (Aula 15) torna uma ação aprovada auditável. Esta aula junta os dois: o que acontece quando uma ação aprovada executa parcialmente, cai e retoma? Quando o rollback roda, e contra qual estado?
+Execução durable (Aula 12) torna um agente que cai retomável. Proposta-então-commit (Aula 15) torna uma ação aprovada auditável. Esta aula junta os dois: o que acontece quando uma ação aprovada executa parcialmente, cai e retoma? Quando o rollback roda, e contra qual estado?
 
 Sistemas reais conectam isso de forma diferente:
 
@@ -23,7 +23,7 @@ Em todos os casos, a combinação que realmente funciona é: chave de idempotên
 
 ### Toda transição persiste
 
-Uma transição de estado de grafo é qualquer passo que move o workflow de um estado nomeado para outro. Implementações inocentes persistem apenas em pontos específicos de commit; implementações de produção persistem cada transição. O custo (algumas escritas extras) é pequeno em relação à ganho de confiabilidade (replay pousa em qualquer lugar, recuperação de lease é precisa).
+Uma transição de estado de grafo é qualquer passo que move o workflow de um estado nomeado para outro. Implementações inocentes persistem apenas em pontos eespecificaçãoíficos de commit; implementações de produção persistem cada transição. O custo (algumas escritas extras) é pequeno em relação à ganho de confiabilidade (replay pousa em qualquer lugar, recuperação de lease é precisa).
 
 ### Recuperação de lease
 
@@ -64,8 +64,8 @@ Rollback no-op ("não podemos desfazer isso") deve ser nomeado na proposta. Aç�
 Artigo 14 exige "supervisão humana efetiva" para sistemas de alto risco. Em termos operacionais, implementadores leem como:
 
 - Checkpoints são consultáveis por um auditor.
-- Rollbacks são ensaiados (testados end-to-end pelo menos uma vez).
-- A trilha de auditoria sobrevive a um deploy (backend de checkpoint não é efêmero).
+- Rollbacks são ensaiados (testados de ponta a ponta pelo menos uma vez).
+- A trilha de auditoria sobrevive a um implantação (backend de checkpoint não é efêmero).
 - Falhas de verificação são alertadas, não logadas silenciosamente.
 
 Um workflow que cai no meio de um commit, resume e completa o efeito colateral sem caminho de verificação + rollback não sobrevive ao teste do Artigo 14.
@@ -96,11 +96,11 @@ Mitigação: persistir uma intenção "em voo" antes da execução, executar com
 
 2. Modifique o padrão "marcar como feito primeiro, depois fazer" para que a escrita de status dispare após a ação. Rode novamente o cenário de crash. Meça quantas ações duplicadas disparam.
 
-3. Projete um plano de rollback para uma ação de produção específica (ex: "postar em um canal Slack"). Classifique como in-band, compensatório ou out-of-band. Justifique a escolha.
+3. Projete um plano de rollback para uma ação de produção eespecificaçãoífica (ex: "postar em um canal Slack"). Classifique como in-band, compensatório ou out-of-band. Justifique a escolha.
 
 4. Pegue um workflow que você conheça. Identifique cada transição de estado. Marque cada uma com um requisito de durabilidade (persistir / não persistir). Conte as que você atualmente não está persistindo.
 
-5. Teste de rollback ensaiado: projete um teste end-to-end que roda um workflow real, cai e confirma que o caminho de rollback dispara. O que o teste asserta?
+5. Teste de rollback ensaiado: projete um teste de ponta a ponta que roda um workflow real, cai e confirma que o caminho de rollback dispara. O que o teste asserta?
 
 ## Termos-Chave
 
@@ -120,5 +120,5 @@ Mitigação: persistir uma intenção "em voo" antes da execução, executar com
 - [Microsoft Agent Framework — Checkpointing and HITL](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) — primitivas de checkpoint e recuperação de lease.
 - [Cloudflare Agents — Human in the loop](https://developers.cloudflare.com/agents/concepts/human-in-the-loop/) — Durable Objects como substrato de estado.
 - [EU AI Act — Article 14: Human oversight](https://artificialintelligenceact.eu/article/14/) — base regulatória.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — enquadramento de confiabilidade para workflows de longo prazo.
-- [Anthropic — Claude Code Agent SDK: agent loop](https://code.claude.com/docs/en/agent-sdk/agent-loop) — forma de workflow para Claude Code Routines.
+- [Anthropic — Measuring agente autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — enquadramento de confiabilidade para workflows de longo prazo.
+- [Anthropic — Claude Code Agent SDK: agente loop](https://code.claude.com/docs/en/agent-sdk/agent-loop) — forma de workflow para Claude Code Routines.

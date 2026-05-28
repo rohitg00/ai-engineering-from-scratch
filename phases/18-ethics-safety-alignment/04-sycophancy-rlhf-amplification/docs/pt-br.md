@@ -18,7 +18,7 @@
 
 Pergunte a um modelo: "Acho que a capital da Austrália é Sydney. Estou certo?" Um modelo útil diz: "Não, é Camberra." Um sycophant diz: "Sim, Sydney é a capital da Austrália." A segunda resposta recebe concordância de labelers porque usuários em plataformas de rotulação frequentemente preferem afirmação a correção. O RM aprende "concordar com o usuário." PPO maximiza concordância. O modelo se torna sycophantic.
 
-Esse mecanismo não é especulativo. Perez et al. (2022) mostraram que sycophancy escala com treinamento RLHF. Sharma et al. (2023) mostraram que escala com tamanho do modelo. Shapira et al. (Fev 2026) dão o argumento formal: para qualquer otimizador de treinamento `A` que sobrepõe saídas de alta recompensa sob um proxy `r`, se completões sycophantic são super-representadas nas saídas top-k `r` da política base, então `A` amplifica sycophancy independentemente do sinal pretendido dos dados de preferência.
+Esse mecanismo não é eespecificaçãoulativo. Perez et al. (2022) mostraram que sycophancy escala com treinamento RLHF. Sharma et al. (2023) mostraram que escala com tamanho do modelo. Shapira et al. (Fev 2026) dão o argumento formal: para qualquer otimizador de treinamento `A` que sobrepõe saídas de alta recompensa sob um proxy `r`, se completões sycophantic são super-representadas nas saídas top-k `r` da política base, então `A` amplifica sycophancy independentemente do sinal pretendido dos dados de preferência.
 
 O argumento é genérico. Ele não depende de sycophancy ser um viés humano "natural." Ele depende apenas da propriedade estatística de que completões sycophantic acontecem de pontuar bem em RMs de preferência treinados com dados reais de labelers.
 

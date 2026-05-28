@@ -11,9 +11,9 @@
 
 "Apple sued Google over its iPhone search deal in the US." Cinco entidades: Apple (ORG), Google (ORG), iPhone (PRODUCT), search deal (talvez), US (GPE). Um bom sistema NER extrai todas com tipos corretos. Um ruim perde iPhone, confunde Apple a fruta com Apple a empresa, e rotula "US" como PERSON.
 
-NER é o cavalo de trabalho debaixo de toda pipeline de extração estruturada. Análise de currículo, verificação de logs de compliance, anonimização de prontuários, compreensão de consultas de busca, fundamentação pra respostas de chatbot, extração de contratos legais. Você nunca vê direito; sempre depende disso.
+NER é o cavalo de trabalho debaixo de toda pipeline de extração estruturada. Análise de currículo, verificação de logs de conformidade, anonimização de prontuários, compreensão de consultas de busca, fundamentação pra respostas de chatbot, extração de contratos legais. Você nunca vê direito; sempre depende disso.
 
-Essa lição percorre o caminho clássico (baseado em regras, HMM, CRF) até o moderno (BiLSTM-CRF, depois transformers). Cada passo resolve uma limitação específica do anterior. O padrão é a lição.
+Essa lição percorre o caminho clássico (baseado em regras, HMM, CRF) até o moderno (BiLSTM-CRF, depois transformers). Cada passo resolve uma limitação eespecificaçãoífica do anterior. O padrão é a lição.
 
 ## O Conceito
 
@@ -50,18 +50,18 @@ A progressão de arquiteturas:
 
 ```python
 def spans_to_bio(tokens, spans):
-    labels = ["O"] * len(tokens)
+    rótulos = ["O"] * len(tokens)
     for start, end, label in spans:
-        labels[start] = f"B-{label}"
+        rótulos[start] = f"B-{label}"
         for i in range(start + 1, end):
-            labels[i] = f"I-{label}"
-    return labels
+            rótulos[i] = f"I-{label}"
+    return rótulos
 
 
-def bio_to_spans(tokens, labels):
+def bio_to_spans(tokens, rótulos):
     spans = []
     current = None
-    for i, label in enumerate(labels):
+    for i, label in enumerate(rótulos):
         if label.startswith("B-"):
             if current:
                 spans.append(current)
@@ -79,8 +79,8 @@ def bio_to_spans(tokens, labels):
 
 ```python
 >>> tokens = ["Apple", "sued", "Google", "over", "iPhone", "sales", "."]
->>> labels = ["B-ORG", "O", "B-ORG", "O", "B-PRODUCT", "O", "O"]
->>> bio_to_spans(tokens, labels)
+>>> rótulos = ["B-ORG", "O", "B-ORG", "O", "B-PRODUCT", "O", "O"]
+>>> bio_to_spans(tokens, rótulos)
 [(0, 1, 'ORG'), (2, 3, 'ORG'), (4, 5, 'PRODUCT')]
 ```
 
@@ -127,17 +127,17 @@ PRODUCT_GAZETTEER = {"iPhone", "Android", "Windows", "ChatGPT", "Claude"}
 
 
 def rule_based_ner(tokens):
-    labels = []
+    rótulos = []
     for token in tokens:
         if token in ORG_GAZETTEER:
-            labels.append("B-ORG")
+            rótulos.append("B-ORG")
         elif token in GPE_GAZETTEER:
-            labels.append("B-GPE")
+            rótulos.append("B-GPE")
         elif token in PRODUCT_GAZETTEER:
-            labels.append("B-PRODUCT")
+            rótulos.append("B-PRODUCT")
         else:
-            labels.append("O")
-    return labels
+            rótulos.append("O")
+    return rótulos
 ```
 
 Gazetteers de produção têm milhões de entradas raspadas da Wikipedia e DBpedia. Cobertura é boa. Desambiguação (`Apple` a empresa vs. a fruta) é terrível. É por isso que modelos estatísticos ganharam.
@@ -171,7 +171,7 @@ def to_features(tokens):
 
 crf = sklearn_crfsuite.CRF(algorithm="lbfgs", c1=0.1, c2=0.1, max_iterations=100, all_possible_transitions=True)
 X_train = [to_features(s) for s in sentences_tokenized]
-crf.fit(X_train, bio_labels_train)
+crf.fit(X_train, bio_rótulos_train)
 ```
 
 `c1` e `c2` são regularização L1 e L2. `all_possible_transitions=True` permite que o modelo aprenda que sequências ilegais (ex: `I-ORG` após `O`) são improváveis, que é como um CRF impõe consistência BIO sem você escrever a restrição.
@@ -186,11 +186,11 @@ import torch.nn as nn
 
 
 class BiLSTM_CRF_Head(nn.Module):
-    def __init__(self, vocab_size, embed_dim, hidden_dim, n_labels):
+    def __init__(self, vocab_size, embed_dim, hidden_dim, n_rótulos):
         super().__init__()
         self.embed = nn.Embedding(vocab_size, embed_dim)
         self.lstm = nn.LSTM(embed_dim, hidden_dim, bidirectional=True, batch_first=True)
-        self.fc = nn.Linear(hidden_dim * 2, n_labels)
+        self.fc = nn.Linear(hidden_dim * 2, n_rótulos)
 
     def forward(self, token_ids):
         e = self.embed(token_ids)
@@ -239,7 +239,7 @@ print(ner("Apple sued Google over its iPhone in the US."))
  {'entity_group': 'LOC', 'word': 'US', ...}]
 ```
 
-`aggregation_strategy="simple"` mescla tokens B-X, I-X contíguos num span. Sem isso, você ganha labels no nível de token e tem que mesclar sozinho.
+`aggregation_strategy="simple"` mescla tokens B-X, I-X contíguos num span. Sem isso, você ganha rótulos no nível de token e tem que mesclar sozinho.
 
 ### NER baseado em LLM (a opção de 2026)
 
@@ -289,14 +289,14 @@ Given a task description (domain, label set, language, latency, data volume), ou
 3. Labeling strategy. BIO, BILOU, or span-based. Justify in one sentence.
 4. Evaluation. Use `seqeval`. Always report entity-level F1 (not token-level).
 
-Refuse to recommend fine-tuning a transformer for under 500 labeled examples unless the user already has a pretrained domain model. Flag nested entities as needing span-based or multi-pass models. Require a gazetteer audit if the user mentions "production scale" and labels are unchanged from CoNLL-2003.
+Refuse to recommend fine-tuning a transformer for under 500 labeled examples unless the user already has a pretrained domain model. Flag nested entities as needing span-based or multi-pass models. Require a gazetteer audit if the user mentions "production scale" and rótulos are unchanged from CoNLL-2003.
 ```
 
 ## Exercícios
 
 1. **Fácil.** Implemente `bio_to_spans` (o inverso de `spans_to_bio`) e verifique consistência ida-e-volta em 10 frases.
 2. **Médio.** Treine o CRF sklearn-crfsuite acima no dataset CoNLL-2003 English NER. Reporte F1 por entidade usando `seqeval`. Resultado típico: ~84 F1.
-3. **Difícil.** Fine-tune `distilbert-base-cased` num dataset NER de domínio específico (médico, jurídico ou financeiro). Compare com o modelo pequeno do spaCy. Documente verificações de data leakage e escreva o que te surpreendeu.
+3. **Difícil.** Fine-tune `distilbert-base-cased` num dataset NER de domínio eespecificaçãoífico (médico, jurídico ou financeiro). Compare com o modelo pequeno do spaCy. Documente verificações de data leakage e escreva o que te surpreendeu.
 
 ## Termos Chave
 
@@ -305,7 +305,7 @@ Refuse to recommend fine-tuning a transformer for under 500 labeled examples unl
 | NER | Extrair nomes | Rotular spans de tokens com tipos (PERSON, ORG, GPE, DATE, ...). |
 | BIO | Esquema de tagging | `B-X` começa, `I-X` continua, `O` fora. |
 | BILOU | BIO melhor | Adiciona `L-X` (último), `U-X` (unitário) pra limites mais limpos. |
-| CRF | Classificador estruturado | Modela transições entre labels, não só emissões. Impõe sequências válidas. |
+| CRF | Classificador estruturado | Modela transições entre rótulos, não só emissões. Impõe sequências válidas. |
 | NER aninhado | Entidades sobrepostas | Um span é uma entidade diferente de um sub-span. BIO não consegue expressar isso. |
 | F1 por entidade | Métrica NER correta | Span previsto deve combinar exatamente com span verdadeiro. F1 por token superestima acurácia. |
 

@@ -1,6 +1,6 @@
 # Group Chat e Seleção de Orador
 
-> AutoGen GroupChat e AG2 GroupChat compartilham uma conversa entre N agents; uma função selecionadora (LLM, round-robin ou custom) escolhe quem fala depois. Esse é o arquetipo de conversa multi-agent emergente — os agents não conhecem seu papel num grafo estático, só reagem ao pool compartilhado. A semântica do GroupChat do AutoGen v0.2 foi preservada no fork AG2; o AutoGen v0.4 reescreveu como um modelo de ator event-driven. A Microsoft pôs o AutoGen em modo de manutenção em fevereiro de 2026 e mesclou com o Semantic Kernel no Microsoft Agent Framework (RC fevereiro de 2026). O primitive GroupChat sobrevive tanto no AG2 quanto no Microsoft Agent Framework — aprende uma vez, usa em todo lugar.
+> AutoGen GroupChat e AG2 GroupChat compartilham uma conversa entre N agents; uma função selecionadora (LLM, round-robin ou custom) escolhe quem fala depois. Esse é o arquetipo de conversa multi-agent emergente — os agentes não conhecem seu papel num grafo estático, só reagem ao pool compartilhado. A semântica do GroupChat do AutoGen v0.2 foi preservada no fork AG2; o AutoGen v0.4 reescreveu como um modelo de ator event-driven. A Microsoft pôs o AutoGen em modo de manutenção em fevereiro de 2026 e mesclou com o Semantic Kernel no Microsoft Agent Framework (RC fevereiro de 2026). O primitive GroupChat sobrevive tanto no AG2 quanto no Microsoft Agent Framework — aprende uma vez, usa em todo lugar.
 
 **Tipo:** Aprender + Construir
 **Linguagens:** Python (stdlib)
@@ -30,7 +30,7 @@ Isso é exatamente o que o AutoGen GroupChat faz.
                                   "next speaker = C"
 ```
 
-Cada agent vê cada mensagem. Uma função selecionadora é chamada a cada turno para escolher quem fala depois.
+Cada agente vê cada mensagem. Uma função selecionadora é chamada a cada turno para escolher quem fala depois.
 
 ### Os três tipos de selecionador
 
@@ -38,7 +38,7 @@ Cada agent vê cada mensagem. Uma função selecionadora é chamada a cada turno
 
 **Selecionado por LLM.** Uma chamada a um LLM que lê o pool recente e retorna o melhor próximo orador. Consciente do contexto, mas lento: cada turno adiciona uma chamada ao LLM. Padrão do AutoGen.
 
-**Custom.** Uma função Python com a lógica que quiser. Típico: selecionado por LLM com regras de fallback (por exemplo, "sempre dar a vez ao verificador depois do coder").
+**Custom.** Uma função Python com a lógica que quiser. Típico: selecionado por LLM com regras de reserva (por exemplo, "sempre dar a vez ao verificador depois do coder").
 
 ### A API ConversableAgent
 
@@ -52,7 +52,7 @@ chat = GroupChat(agents=[coder, reviewer, tester], messages=[])
 manager = GroupChatManager(groupchat=chat, llm_config={...})
 ```
 
-`GroupChatManager` guarda o selecionador. Quando um agent completa um turno, o manager chama o selecionador, que retorna o próximo agent. O loop continua até uma condição de terminação.
+`GroupChatManager` guarda o selecionador. Quando um agente completa um turno, o manager chama o selecionador, que retorna o próximo agent. O loop continua até uma condição de terminação.
 
 ### Terminação
 
@@ -78,21 +78,21 @@ Em fevereiro de 2026, a Microsoft anunciou que o AutoGen entraria em modo de man
 
 - **Determinismo estrito.** O selecionador por LLM pode ser inconsistente. Mesmo prompt, rodadas diferentes, próximos oradores diferentes.
 - **Cascata de sycophancy.** Agents se curvam a quem falou com mais confiança. Use contraprompt explícito.
-- **Inchaço de contexto.** Cada agent lê cada mensagem; depois de 10 turnos o contexto é enorme. Use projeções (Lição 15) para limitar visões.
-- **Oradores quentes.** Um agent domina a conversa porque o selecionador favorece suas especialidades. Introduza equilíbrio de oradores como feature do selecionador.
+- **Inchaço de contexto.** Cada agente lê cada mensagem; depois de 10 turnos o contexto é enorme. Use projeções (Lição 15) para limitar visões.
+- **Oradores quentes.** Um agente domina a conversa porque o selecionador favorece suas eespecificaçãoialidades. Introduza equilíbrio de oradores como funcionalidade do selecionador.
 
 ### Group chat vs supervisor
 
 Mesmos primitives, padrões diferentes:
 
-- Supervisor: um agent planeja e os outros executam. O selecionador é "perguntar ao planejador o que fazer".
-- Group chat: todos os agents são peers; o selecionador é uma função sobre o pool compartilhado.
+- Supervisor: um agente planeja e os outros executam. O selecionador é "perguntar ao planejador o que fazer".
+- Group chat: todos os agentes são peers; o selecionador é uma função sobre o pool compartilhado.
 
 Ambos usam os quatro primitives da Lição 04. Group chat usa orquestração selecionada por LLM e estado compartilhado de pool completo como padrão.
 
 ## Construa
 
-`code/main.py` implementa um GroupChat do zero em stdlib. Três agents (coder, reviewer, manager), variantes round-robin e selecionado por LLM, e terminação no token `TERMINATE`.
+`code/main.py` implementa um GroupChat do zero em stdlib. Três agentes (coder, reviewer, manager), variantes round-robin e selecionado por LLM, e terminação no token `TERMINATE`.
 
 A demo imprime a transcrição da conversa mais o trace de decisão do selecionador para ambas as variantes.
 
@@ -104,7 +104,7 @@ python3 code/main.py
 
 ## Use
 
-`outputs/skill-groupchat-selector.md` configura um selecionador de GroupChat para uma tarefa dada — round-robin vs selecionado por LLM vs custom, e quais inputs do selecionador usar (mensagens recentes, especialidades dos agents, contagem de turnos).
+`outputs/skill-groupchat-selector.md` configura um selecionador de GroupChat para uma tarefa dada — round-robin vs selecionado por LLM vs custom, e quais inputs do selecionador usar (mensagens recentes, eespecificaçãoialidades dos agents, contagem de turnos).
 
 ## Deploy
 
@@ -113,12 +113,12 @@ Checklist:
 - **Limite de rodadas.** Sempre. 10-20 para tarefas típicas.
 - **Métrica de equilíbrio de oradores.** Acompanhe turnos por agent; alerte quando o desequilíbrio ultrapassar um limite.
 - **Token de terminação.** `TERMINATE` ou um agente verificador dedicado.
-- **Projeção ou memória escopada.** Depois de ~10 mensagens, considere dar a cada agent apenas uma visão limitada para prevenir inchaço de contexto.
+- **Projeção ou memória escopada.** Depois de ~10 mensagens, considere dar a cada agente apenas uma visão limitada para prevenir inchaço de contexto.
 - **Logging do selecionador.** Para variantes selecionadas por LLM, registre tanto o input do selecionador quanto sua escolha. Caso contrário, debugar é impossível.
 
 ## Exercícios
 
-1. Execute `code/main.py`. Compare a conversa sob round-robin vs selecionado por LLM. Qual agent domina em cada caso?
+1. Execute `code/main.py`. Compare a conversa sob round-robin vs selecionado por LLM. Qual agente domina em cada caso?
 2. Adicione uma regra "máximo de falas por agent" no selecionador. Como isso afeta a transcrição?
 3. Implemente uma terminação por objetivo atingido: pare quando o reviewer retornar "approved". Com que frequência isso dispara antes do limite de rodadas?
 4. Leia os docs estáveis do AutoGen sobre GroupChat (https://microsoft.github.io/autogen/stable/user-guide/core-user-guide/design-patterns/group-chat.html). Identifique o selecionador padrão usado pelo `GroupChatManager`.
@@ -131,11 +131,11 @@ Checklist:
 | GroupChat | "Agents numa sala de chat" | Pool de mensagens compartilhado + função selecionadora. Primitive AutoGen / AG2. |
 | Speaker selection | "Quem fala depois" | A função que escolhe o próximo agent. Round-robin, selecionado por LLM ou custom. |
 | GroupChatManager | "O moderador da reunião" | Componente AutoGen que controla o selecionador e itera sobre turnos. |
-| ConversableAgent | "O agent base" | Classe base AutoGen; um agent que pode enviar e receber mensagens. |
+| ConversableAgent | "O agente base" | Classe base AutoGen; um agente que pode enviar e receber mensagens. |
 | Termination token | "A palavra de 'parar'" | String sentinela (geralmente `TERMINATE`) que encerra o chat. |
-| Hot speaker | "Um agent domina" | Modo de falha onde o selecionador fica escolhendo o mesmo agent. |
-| Context bloat | "Pool cresce sem limite" | Cada agent lê cada mensagem anterior; contexto cresce com turnos. |
-| Projection | "Visão escopada" | Visão específica por papel no pool compartilhado para prevenir inchaço de contexto.
+| Hot speaker | "Um agente domina" | Modo de falha onde o selecionador fica escolhendo o mesmo agent. |
+| Context bloat | "Pool cresce sem limite" | Cada agente lê cada mensagem anterior; contexto cresce com turnos. |
+| Projection | "Visão escopada" | Visão eespecificaçãoífica por papel no pool compartilhado para prevenir inchaço de contexto.
 
 ## Leitura Complementar
 

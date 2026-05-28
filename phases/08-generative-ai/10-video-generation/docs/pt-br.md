@@ -128,7 +128,7 @@ Salve `outputs/skill-video-brief.md`. A skill recebe um briefing de vídeo (dura
 || Patches | "Os tokens" | Blocos 3D de tamanho fixo do latente; entrada para o DiT. ||
 || Attention fatorizada | "Espacial + temporal" | Rode attention sobre o espaço, depois sobre o tempo; pule a attention 3D completa. ||
 || Image-to-video (I2V) | "Anime essa foto" | Modelo recebe imagem + texto, gera vídeo que começa a partir dela. ||
-|| Condicionamento por keyframe | "Ancorar frames" | Fixar frames específicos para controlar o arco do vídeo. ||
+|| Condicionamento por keyframe | "Ancorar frames" | Fixar frames eespecificaçãoíficos para controlar o arco do vídeo. ||
 || Motion brush | "Dica direcional" | Entrada de UI onde o usuário pinta vetores de movimento sobre a imagem. ||
 || Re-capção | "Legendas densas" | Usar um LLM para re-rotular clips de treino com prompts detalhados. ||
 || Flicker | "Artefato temporal" | Inconsistência frame-a-frame; resolvido com denoising acoplado. |

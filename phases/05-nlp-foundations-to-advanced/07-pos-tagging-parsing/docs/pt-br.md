@@ -30,7 +30,7 @@ The/DET cats/NOUN were/AUX running/VERB at/ADP 3pm/NOUN ./PUNCT
 - **Parsing de constituintes.** Frases nominais, frases verbais, frases preposicionais se aninham umas nas outras. A saída é uma árvore de categorias não-terminais (NP, VP, PP) com palavras como folhas.
 - **Parsing de dependência.** Cada palavra tem uma palavra-chave da qual depende, rotulada com uma relação gramatical. A saída é uma árvore onde cada aresta é uma tupla (chave, dependente, relação).
 
-Parsing de dependência ganhou nos anos 2010 porque generaliza limpo entre idiomas, especialmente de ordem livre.
+Parsing de dependência ganhou nos anos 2010 porque generaliza limpo entre idiomas, eespecificaçãoialmente de ordem livre.
 
 ```
 running is ROOT
@@ -193,7 +193,7 @@ Toda biblioteca de NLP de produção traz parsers de POS e dependência como par
 
 - **Lematização.** Lição 01 precisa de POS pra lematizar corretamente. Sempre.
 - **Extração estruturada de saídas de LLM.** Validar que uma frase gerada respeita restrições gramaticais (ex: concordância sujeito-verbo, modificadores obrigatórios).
-- **Sentimento baseado em aspecto.** Parses de dependência dizem qual adjetivo modifica qual substantivo.
+- **Sentimento baseado em aespecificaçãoto.** Parses de dependência dizem qual adjetivo modifica qual substantivo.
 - **Compreensão de consulta.** "movies directed by Wes Anderson starring Bill Murray" decompõe em restrições estruturadas via parse.
 - **Transferência multilíngue.** Tags UD e relações de dependência são independentes de idioma, habilitando análise estruturada zero-shot de novos idiomas.
 - **Pipelines de baixo compute.** Se você não consegue enviar um transformer, POS + parse de dependência + gazetteer leva você surpreendentemente longe.
@@ -212,10 +212,10 @@ lesson: 07
 tags: [nlp, pos, parsing]
 ---
 
-Given a downstream task (information extraction, rewrite validation, query decomposition, lemmatization), you output:
+Given a downstream task (information extraction, rewrite validation, consulta decomposition, lemmatization), you output:
 
 1. Tagset to use. Penn Treebank for English-only legacy pipelines, Universal Dependencies for multilingual or cross-lingual.
-2. Library. spaCy for most production, stanza for academic-grade multilingual, trankit for highest UD accuracy. Name the specific model ID.
+2. Library. spaCy for most production, stanza for academic-grade multilingual, trankit for highest UD accuracy. Name the especificaçãoific model ID.
 3. Integration pattern. Show the 3-5 lines that call the library and consume the needed attributes (`.pos_`, `.dep_`, `.head`).
 4. Failure mode to test. Noun-verb ambiguity (`saw`, `book`, `can`) and PP-attachment ambiguity are the classical traps. Sample 20 outputs and eyeball.
 
@@ -233,7 +233,7 @@ Refuse to recommend rolling your own parser. Building parsers from scratch is a 
 | Termo | O que a gente diz | O que realmente significa |
 |------|-----------------|-----------------------|
 | Tag POS | Tipo da palavra | Categoria gramatical. PTB tem 36; UD tem 17. |
-| Penn Treebank | Conjunto de tags padrão | Específico do inglês. Tempos verbais e número de substantivos granulares. |
+| Penn Treebank | Conjunto de tags padrão | Eespecificaçãoífico do inglês. Tempos verbais e número de substantivos granulares. |
 | Universal Dependencies | Conjunto de tags multilíngue | Mais grosso que PTB; neutro de idioma; padrão pra trabalho cross-lingual. |
 | Parse de dependência | Árvore da frase | Cada palavra tem uma chave, cada aresta tem relação gramatical. |
 | Viterbi | Programação dinâmica | Encontra a sequência de tags de maior probabilidade dadas emissões e transições. |

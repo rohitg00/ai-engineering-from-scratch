@@ -153,15 +153,15 @@ Cinco linhas dentro do loop de batch. Cinco linhas que treinaram GPT-4, Stable D
 from torch.utils.data import Dataset, DataLoader
 
 class MNISTDataset(Dataset):
-    def __init__(self, images, labels):
+    def __init__(self, images, rótulos):
         self.images = images
-        self.labels = labels
+        self.rótulos = rótulos
 
     def __len__(self):
-        return len(self.labels)
+        return len(self.rótulos)
 
     def __getitem__(self, idx):
-        return self.images[idx], self.labels[idx]
+        return self.images[idx], self.rótulos[idx]
 
 loader = DataLoader(dataset, batch_size=64, shuffle=True, num_workers=4)
 ```
@@ -207,9 +207,9 @@ def download_mnist(path="./mnist_data"):
     base_url = "https://storage.googleapis.com/cvdf-datasets/mnist/"
     files = [
         "train-images-idx3-ubyte.gz",
-        "train-labels-idx1-ubyte.gz",
+        "train-rótulos-idx1-ubyte.gz",
         "t10k-images-idx3-ubyte.gz",
-        "t10k-labels-idx1-ubyte.gz",
+        "t10k-rótulos-idx1-ubyte.gz",
     ]
     os.makedirs(path, exist_ok=True)
     for f in files:
@@ -225,12 +225,12 @@ def load_images(filepath):
         images = images.reshape(num, rows * cols).float() / 255.0
     return images
 
-def load_labels(filepath):
+def load_rótulos(filepath):
     with gzip.open(filepath, "rb") as f:
         magic, num = struct.unpack(">II", f.read(8))
         data = f.read()
-        labels = torch.frombuffer(bytearray(data), dtype=torch.uint8).long()
-    return labels
+        rótulos = torch.frombuffer(bytearray(data), dtype=torch.uint8).long()
+    return rótulos
 ```
 
 ### Passo 2: Definir o Modelo
@@ -263,17 +263,17 @@ def train_one_epoch(model, loader, criterion, optimizer, device):
     total_loss = 0
     correct = 0
     total = 0
-    for images, labels in loader:
-        images, labels = images.to(device), labels.to(device)
+    for images, rótulos in loader:
+        images, rótulos = images.to(device), rótulos.to(device)
         optimizer.zero_grad()
         outputs = model(images)
-        loss = criterion(outputs, labels)
+        loss = criterion(outputs, rótulos)
         loss.backward()
         optimizer.step()
         total_loss += loss.item() * images.size(0)
         _, predicted = outputs.max(1)
-        correct += predicted.eq(labels).sum().item()
-        total += labels.size(0)
+        correct += predicted.eq(rótulos).sum().item()
+        total += rótulos.size(0)
     return total_loss / total, correct / total
 
 
@@ -283,14 +283,14 @@ def evaluate(model, loader, criterion, device):
     correct = 0
     total = 0
     with torch.no_grad():
-        for images, labels in loader:
-            images, labels = images.to(device), labels.to(device)
+        for images, rótulos in loader:
+            images, rótulos = images.to(device), rótulos.to(device)
             outputs = model(images)
-            loss = criterion(outputs, labels)
+            loss = criterion(outputs, rótulos)
             total_loss += loss.item() * images.size(0)
             _, predicted = outputs.max(1)
-            correct += predicted.eq(labels).sum().item()
-            total += labels.size(0)
+            correct += predicted.eq(rótulos).sum().item()
+            total += rótulos.size(0)
     return total_loss / total, correct / total
 ```
 
@@ -302,12 +302,12 @@ def main():
 
     download_mnist()
     train_images = load_images("./mnist_data/train-images-idx3-ubyte.gz")
-    train_labels = load_labels("./mnist_data/train-labels-idx1-ubyte.gz")
+    train_rótulos = load_rótulos("./mnist_data/train-rótulos-idx1-ubyte.gz")
     test_images = load_images("./mnist_data/t10k-images-idx3-ubyte.gz")
-    test_labels = load_labels("./mnist_data/t10k-labels-idx1-ubyte.gz")
+    test_rótulos = load_rótulos("./mnist_data/t10k-rótulos-idx1-ubyte.gz")
 
-    train_dataset = torch.utils.data.TensorDataset(train_images, train_labels)
-    test_dataset = torch.utils.data.TensorDataset(test_images, test_labels)
+    train_dataset = torch.utils.data.TensorDataset(train_images, train_rótulos)
+    test_dataset = torch.utils.data.TensorDataset(test_images, test_rótulos)
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=64, shuffle=True
     )

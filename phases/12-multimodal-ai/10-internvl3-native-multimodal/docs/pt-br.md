@@ -20,7 +20,7 @@ O treinamento post-hoc de VLM é o padrão. LLaVA, BLIP-2, Qwen-VL, Idefics — 
 
 1. LLM congelado + encoder de visão congelado + projetor treinável, treinado em pares de legendas para alinhar embeddings.
 2. Descongelar o LLM, treinar em dados de instrução (LLaVA-Instruct, ShareGPT4V).
-3. Fine-tune opcional específico para a tarefa.
+3. Fine-tune opcional eespecificaçãoífico para a tarefa.
 
 Três sintomas da dívida de alinhamento aparecem:
 
@@ -71,7 +71,7 @@ Pra um modelo de 8B + 400M encoder, DvD mais ou menos dobra o throughput por nó
 
 ### Qualidade single-stage vs multi-stage
 
-A principal reivindicação de benchmark do InternVL3: com 78B de parâmetros, rivaliza com o MMMU-Pro do Gemini 2.5 Pro. Com 38B, rivaliza com o GPT-4o. Com 8B, lidera o leaderboard open-8B. Tudo com uma receita de pré-treinamento single-stage + instrução tuning.
+A principal reivindicação de benchmark do InternVL3: com 78B de parâmetros, rivaliza com o MMMU-Pro do Gemini 2.5 Pro. Com 38B, rivaliza com o GPT-4o. Com 8B, lidera o ranking open-8B. Tudo com uma receita de pré-treinamento single-stage + instrução tuning.
 
 A hipótese da dívida de alinhamento é mensurável: InternVL3-8B perde menos pontos em benchmarks de texto (MMLU, GSM8K) por unidade de ganho em benchmarks visuais que o Qwen2.5-VL-7B. O modelo é mais generalista porque o treinamento foi uma peça só, não duas.
 
@@ -123,7 +123,7 @@ Esta aula produz `outputs/skill-native-vs-posthoc-auditor.md`. Dado um plano pro
 | Pré-treinamento multimodal nativo | "Do zero junto" | Tokens de texto + imagem + vídeo participam da loss desde o step 1, não são enfiados depois |
 | Dívida de alinhamento | "Penalidade post-hoc" | Regressão mensurável em habilidades de texto e consistência de respostas que vem de enfiar visão num LLM congelado |
 | V2PE | "Codificação posicional visual variável" | Alocação de codificação posicional aprendível por modalidade; sucessor do M-RoPE no InternVL3 |
-| ViR | "Roteador de resolução" | Classificador pequeno que escolhe a resolução mínima por query antes da codificação, economizando tokens de inferência |
+| ViR | "Roteador de resolução" | Classificador pequeno que escolhe a resolução mínima por consulta antes da codificação, economizando tokens de inferência |
 | DvD | "Deployment desacoplado" | Encoder de visão numa GPU, LLM em outra, com handoff por streaming; dobra o throughput pra VLMs grandes |
 | InternVL-U | "Compreensão + geração unificadas" | Follow-up de 2026 que adiciona cabeças de geração de imagem à backbone de pré-treinamento nativo |
 | Corpus intercalado | "OBELICS / MMC4" | Documentos com texto e imagens em ordem de leitura natural; matéria-prima pro pré-treinamento nativo |

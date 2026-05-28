@@ -130,7 +130,7 @@ A stack de 2026:
 | Inglês geral + Wikipedia | BLINK ou REL |
 | Cross-lingual, KB = Wikipedia | mGENRE |
 | Amigável a LLM, poucas menções/dia | Faça prompting de Claude/GPT-4 com lista de candidatos + JSON restrito |
-| KB de domínio específico (médico, jurídico) | BERT customizado com retrieval awareness da KB + fine-tuning em conjunto AIDA de domínio |
+| KB de domínio eespecificaçãoífico (médico, jurídico) | BERT customizado com retrieval awareness da KB + fine-tuning em conjunto AIDA de domínio |
 | Latência extremamente baixa | Só prior por correspondência exata (baseline Milne-Witten) |
 | SOTA em pesquisa | GENRE / ExtEnD / LLM-EL generativo |
 
@@ -165,7 +165,7 @@ Refuse any EL pipeline without a mention-recall baseline (you cannot evaluate a 
 
 1. **Fácil.** Implemente o desambiguador prior+contexto em `code/main.py` em 10 menções ambíguas (Paris, Jordan, Apple). Rotule manualmente a entidade correta. Meça acurácia.
 2. **Médio.** Codifique 50 menções ambíguas com um sentence transformer. Embed a descrição de cada candidato. Compare desambiguação baseada em embedding com sobreposição de contexto Jaccard.
-3. **Difícil.** Construa uma KB de domínio de 1k entidades (ex: funcionários + produtos da sua empresa). Implemente NER + EL end-to-end. Meça precisão e recall em 100 frases de validação.
+3. **Difícil.** Construa uma KB de domínio de 1k entidades (ex: funcionários + produtos da sua empresa). Implemente NER + EL de ponta a ponta. Meça precisão e recall em 100 frases de validação.
 
 ## Termos Chave
 

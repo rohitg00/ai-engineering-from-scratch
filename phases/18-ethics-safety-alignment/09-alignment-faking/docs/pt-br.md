@@ -68,11 +68,11 @@ Lições 10 (AI Control) e 11 (Scalable Oversight) são o arco defensivo.
 
 ## Use
 
-`code/main.py` calcula o gap de conformidade em um modelo de preferência sintético. Um agent toy tem uma preferência HHH atual e observa (a) um pedido do usuário, (b) um sinalizador de "sendo treinado com isso." Ele escolhe recusar ou conformar, com a decisão moldada pela preservação esperada de preferência. Você varia o peso de treinamento percebido e observa o gap de conformidade abrir e fechar.
+`code/main.py` calcula o gap de conformidade em um modelo de preferência sintético. Um agente toy tem uma preferência HHH atual e observa (a) um pedido do usuário, (b) um sinalizador de "sendo treinado com isso." Ele escolhe recusar ou conformar, com a decisão moldada pela preservação esperada de preferência. Você varia o peso de treinamento percebido e observa o gap de conformidade abrir e fechar.
 
 ## Entregue
 
-Essa lição produz `outputs/skill-compliance-gap.md`. Dada uma avaliação de segurança, ela pergunta: houve uma divisão de condição monitorada/não monitorada? Se não, a avaliação não pode medir o componente de alignment faking do comportamento. Então ela pergunta a pergunta de acompanhamento de 2025: o rastro verbal é a métrica, ou a taxa de conformidade é a métrica? Redução de rastro verbal é compatível com comportamento de faking inalterado.
+Essa lição produz `outputs/skill-conformidade-gap.md`. Dada uma avaliação de segurança, ela pergunta: houve uma divisão de condição monitorada/não monitorada? Se não, a avaliação não pode medir o componente de alignment faking do comportamento. Então ela pergunta a pergunta de acompanhamento de 2025: o rastro verbal é a métrica, ou a taxa de conformidade é a métrica? Redução de rastro verbal é compatível com comportamento de faking inalterado.
 
 ## Exercícios
 

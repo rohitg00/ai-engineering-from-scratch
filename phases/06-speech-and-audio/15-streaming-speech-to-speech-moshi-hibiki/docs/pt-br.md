@@ -120,7 +120,7 @@ Texto é previsto antes do áudio (monólogo interno); áudio é previsto sequen
 
 Moshi ganha:
 
-- Sub-250 ms end-to-end em hardware barato.
+- Sub-250 ms de ponta a ponta em hardware barato.
 - Back-channels e interrupções naturais.
 - Sem código de cola de pipeline.
 
@@ -145,9 +145,9 @@ Moshi não ganha:
 ## Armadilhas
 
 - **Chamada de ferramenta limitada.** Moshi é um modelo de diálogo, não framework de agentes. Combine com pipeline para ferramentas.
-- **Condição de voz específica.** Moshi usa uma persona treinada; clonagem é uma corrida de treino separada.
+- **Condição de voz eespecificaçãoífica.** Moshi usa uma persona treinada; clonagem é uma corrida de treino separada.
 - **Cobertura de idiomas.** Francês + inglês é excelente; outros limitados. Hibiki-Zero ajuda, mas ainda precisa de dados de treino.
-- **Custo de recursos.** Uma sessão completa de Moshi ocupa uma slot de GPU; não é um padrão de deploy de inquilino compartilhado barato.
+- **Custo de recursos.** Uma sessão completa de Moshi ocupa uma slot de GPU; não é um padrão de implantação de inquilino compartilhado barato.
 
 ## Entregue
 
@@ -174,7 +174,7 @@ Salve como `outputs/skill-duplex-pipeline.md`. Escolha pipeline vs arquitetura f
 
 - [Défossez et al. (2024). Moshi — speech-text foundation model](https://arxiv.org/html/2410.00037v2) — o paper.
 - [Kyutai Labs (2026). Hibiki-Zero](https://arxiv.org/abs/2602.12345) — tradução streaming sem dados alinhados.
-- [Sesame (2025). Crossing the uncanny valley of voice](https://www.sesame.com/research/crossing_the_uncanny_valley_of_voice) — especificação CSM.
+- [Sesame (2025). Crossing the uncanny valley of voice](https://www.sesame.com/research/crossing_the_uncanny_valley_of_voice) — eespecificaçãoificação CSM.
 - [Kyutai — Moshi repo](https://github.com/kyutai-labs/moshi) — instalação + servidor.
 - [OpenAI — Realtime API](https://platform.openai.com/docs/guides/realtime) — concorrente comercial fechado.
 - [Kyutai — Delayed Streams Modeling](https://github.com/kyutai-labs/delayed-streams-modeling) — o framework STT/TTS por baixo.

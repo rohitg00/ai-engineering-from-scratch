@@ -25,7 +25,7 @@ O contrato SFT e um template de string. Cada exemplo de treino vira uma sequenci
 <INST> Qual a capital da Franca? <RESP> A capital da Franca e Paris.
 ```
 
-Os tokens de fronteira sao tokens especiais reservados no treinamento. O modelo aprende que tudo depois de `<RESP>` e a resposta, e a resposta e o que recebe nota. O objetivo de next-token do modelo base continua valendo; ele so e treinado em um corpus onde cada exemplo tem essa forma.
+Os tokens de fronteira sao tokens eespecificaçãoiais reservados no treinamento. O modelo aprende que tudo depois de `<RESP>` e a resposta, e a resposta e o que recebe nota. O objetivo de next-token do modelo base continua valendo; ele so e treinado em um corpus onde cada exemplo tem essa forma.
 
 Mas ha um problema. Se voce alimenta a sequencia inteira em uma cross-entropy loss comum, voce esta treinando o modelo para tambem predizer os tokens de instrução. A instrução e dada. Voce quer gradiente zero nessas posicoes. A solucao e a mascara.
 
@@ -41,7 +41,7 @@ flowchart LR
   CE --> Step[backward + passo do optimiser]
 ```
 
-`ignore_index` e uma funcionalidade de `torch.nn.functional.cross_entropy`. Qualquer posicao-alvo igual a `ignore_index` contribui zero de loss e zero de gradiente. A convencao no PyTorch e `-100`. A funcao de collate constroi dois tensores por exemplo: `input_ids` (a sequencia completa) e `labels` (uma copia de `input_ids` com as posicoes da instrução sobrescritas por `-100`).
+`ignore_index` e uma funcionalidade de `torch.nn.functional.cross_entropy`. Qualquer posicao-alvo igual a `ignore_index` contribui zero de loss e zero de gradiente. A convencao no PyTorch e `-100`. A funcao de collate constroi dois tensores por exemplo: `input_ids` (a sequencia completa) e `rótulos` (uma copia de `input_ids` com as posicoes da instrução sobrescritas por `-100`).
 
 O modelo ve a sequencia inteira durante o forward pass; a attention pode olhar para a instrução. A loss so conta tokens de resposta. E exatamente isso que voce quer: condicionar na instrução, predizer a resposta.
 
@@ -56,13 +56,13 @@ Duzentos pares instrucao-resposta sao gerados deterministicamente em `main.py`. 
 - codigo (print, sort)
 - definicao
 
-Cada tarefa tem uma instrução com template e uma resposta deterministica. Isso e intencionalmente simples. Exact-match e fragil, e a aula usa um fixture onde a resposta correta e uma string especifica. Datasets SFT reais precisam de metricas fuzzy; o principio e identico.
+Cada tarefa tem uma instrução com template e uma resposta deterministica. Isso e intencionalmente simples. Exact-match e fragil, e a aula usa um fixture onde a resposta correta e uma string eespecificaçãoifica. Datasets SFT reais precisam de metricas fuzzy; o principio e identico.
 
 Splits sao 160 treino, 40 teste. O conjunto de teste cobre os seis tipos de tarefa para que o exact-match por categoria possa ser reportado.
 
 ## Tokenizacao e Padding
 
-O tokenizador e de nivel byte com tres especiais reservados:
+O tokenizador e de nivel byte com tres eespecificaçãoiais reservados:
 
 - `INST_ID = 256`: marca o inicio da regiao de instrução.
 - `RESP_ID = 257`: marca a fronteira entre instrução e resposta.
@@ -72,21 +72,21 @@ A sequencia e `[INST] inst_bytes [RESP] resp_bytes [PAD]*`. A funcao de collate:
 
 1. Tokeniza cada exemplo.
 2. Faz padding de cada exemplo no batch para a sequencia mais longa.
-3. Constroi `labels` = `input_ids` deslocado por um (target de LM causal), com:
+3. Constroi `rótulos` = `input_ids` deslocado por um (target de LM causal), com:
    - A regiao de instrução substituida por `-100`.
    - A regiao de padding substituida por `-100`.
    - A propria posicao da fronteira `RESP_ID` substituida por `-100` (voce nao treina o modelo para predizer o token de fronteira; ele prediz o que vem a seguir).
 
 ```mermaid
 flowchart TD
-  Batch[(exemplos)] --> Tok[encode + inserir especiais]
+  Batch[(exemplos)] --> Tok[encode + inserir eespecificaçãoiais]
   Tok --> Pad[pad para o maior]
-  Pad --> Shift[deslocar labels por um]
+  Pad --> Shift[deslocar rótulos por um]
   Shift --> Mask[set -100 em<br/>inst / pad / fronteira]
-  Mask --> Out[(input_ids, labels)]
+  Mask --> Out[(input_ids, rótulos)]
 ```
 
-O deslocamento e o truco causal padrao: a posicao `i` de `input_ids` prediz a posicao `i+1`, entao `labels[i] = input_ids[i+1]` (com a posicao final removida do input e a primeira removida do target). A mascara e aplicada depois do deslocamento para cair nas posicoes certas.
+O deslocamento e o truco causal padrao: a posicao `i` de `input_ids` prediz a posicao `i+1`, entao `rótulos[i] = input_ids[i+1]` (com a posicao final removida do input e a primeira removida do target). A mascara e aplicada depois do deslocamento para cair nas posicoes certas.
 
 ## Treinamento
 
@@ -123,9 +123,9 @@ Pipelines SFT reais complementam exact-match com F1 a nivel de token (aula 41) e
 
 A implementacao e um `main.py` mais testes.
 
-1. `InstructionTokenizer`: encoder de nivel byte com especiais reservados. Codifica tanto um prefixo de instrução quanto um par completo.
+1. `InstructionTokenizer`: encoder de nivel byte com eespecificaçãoiais reservados. Codifica tanto um prefixo de instrução quanto um par completo.
 2. `make_dataset`: gera 200 pares em seis tipos de tarefa com seed fixa.
-3. `SFTDataset`: retorna `(input_ids, labels)` por exemplo, ja com mascara preparada.
+3. `SFTDataset`: retorna `(input_ids, rótulos)` por exemplo, ja com mascara preparada.
 4. `sft_collate`: padding dinamico, constroi o tensor do batch, seta `-100` nas posicoes de instrução e padding.
 5. `TinyGPT`: corpo do transformer mais cabeca LM com pesos compartilhados ou nao.
 6. `train_sft`: o loop SFT, com hooks de eval por epoca.

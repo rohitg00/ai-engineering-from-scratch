@@ -12,7 +12,7 @@
 - Conectar todos os componentes da Fase 11 (prompts, RAG, function calling, cache, guardrails) em um único serviço pronto para produção
 - Implementar streaming de tokens, tratamento gracioso de erros e gerenciamento de timeout de requisições
 - Construir observabilidade na aplicação: log de requisições, rastreamento de custo, percentis de latência e dashboards de taxa de erro
-- Implantar com health checks, rate limiting e estratégia de fallback para indisponibilidade de provedores
+- Implantar com health checks, rate limiting e estratégia de reserva para indisponibilidade de provedores
 
 ## O Problema
 
@@ -136,21 +136,21 @@ class ProductionLLMService:
         self.total_cost = 0
         self.models = ["gpt-4o", "claude-sonnet-4", "gpt-4o-mini"]
     
-    async def handle_request(self, user_id, query):
+    async def handle_request(self, user_id, consulta):
         request_id = str(uuid.uuid4())[:12]
         start_time = time.time()
         
         # 1. Guardrails de entrada
-        if detect_injection(query)[0]:
+        if detect_injection(consulta)[0]:
             return {"blocked": True, "reason": "Prompt injection detectado"}
         
         # 2. Cache check
-        cache_key = hash(query)
+        cache_key = hash(consulta)
         if cache_key in self.cache:
             return {"response": self.cache[cache_key], "cache_hit": True}
         
         # 3. Montar prompt e chamar LLM
-        result = await call_with_retry_and_fallback(query, self.models)
+        result = await call_with_retry_and_fallback(consulta, self.models)
         
         # 4. Guardrails de saída
         safe, reason = check_output_safety(result["text"])

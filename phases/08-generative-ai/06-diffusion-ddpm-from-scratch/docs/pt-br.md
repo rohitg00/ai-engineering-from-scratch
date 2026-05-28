@@ -51,7 +51,7 @@ Três intuições:
 
 2. **Score matching disfarçado.** Vincent (2011) provou que prever o ruído é equivalente a estimar `∇_x log q(x_t | x_0)`, o *score*. A EDE reversa usa esse score para subir o gradiente da densidade — uma caminhada aleatória guiada em direção a regiões de alta probabilidade.
 
-3. **O ELBO se reduz a MSE simples.** O limite inferior variacional completo tem um termo KL por timestep. Com a parametrização do DDPM, esses termos KL se simplificam em MSE na previsão de ruído com coeficientes específicos; Ho eliminou os coeficientes (chamando de loss "simples") e a qualidade *melhorou*.
+3. **O ELBO se reduz a MSE simples.** O limite inferior variacional completo tem um termo KL por timestep. Com a parametrização do DDPM, esses termos KL se simplificam em MSE na previsão de ruído com coeficientes eespecificaçãoíficos; Ho eliminou os coeficientes (chamando de loss "simples") e a qualidade *melhorou*.
 
 ## Construa
 
@@ -168,7 +168,7 @@ O paper DDPM roda T=1000 passos reversos. Ninguém distribui isso em produção.
 2. **Destilação.** Treina um estudante para combinar o professor em menos passos: Progressive Distillation (2 → 1), Consistency Models (arbitrário → 1-4), LCM, SDXL-Turbo, SD3-Turbo. Reduz latência mais 5-10×, requer retreinamento.
 3. **Cache e compilação.** `torch.compile(unet, mode="reduce-overhead")`, backends de difusão do TensorRT-LLM, attention `xformers`/SDPA, pesos bf16. Reduz latência por passo ~2×. Empilha com (1) e (2).
 
-Para um servidor de difusão em produção a conversa de orçamento é a mesma que a literatura descreve para LLMs: latência é `num_steps × step_cost + VAE_decode`, throughput é `batch_size × (num_steps × step_cost)^-1`. TTFT é pequeno (um passo); equivalente a TPOT é o tempo total de resposta porque geração de imagem é "tudo de uma vez" na perspectiva do usuário.
+Para um servidor de difusão em produção a conversa de orçamento é a mesma que a literatura descreve para LLMs: latência é `num_steps × step_cost + VAE_decode`, throughput é `batch_size × (num_steps × step_cost)^-1`. TTFT é pequeno (um passo); equivalente a TPOT é o tempo total de resposta porque geração de imagem é "tudo de uma vez" na perespecificaçãotiva do usuário.
 
 ## Leitura Adicional
 

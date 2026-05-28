@@ -11,16 +11,16 @@
 
 - Construir um framework de avaliacao customizado que roda benchmarks de multipla escolha e abertos contra um modelo de linguagem
 - Explicar por que benchmarks padrao (MMLU, HumanEval) saturam e falham em diferenciar modelos frontier
-- Implementar avaliacoes especificas por tarefa com metricas adequadas: exact match, F1, BLEU e pontuacao LLM-as-judge
-- Projetar uma suita de avaliacao customizada direcionada pro seu caso de uso ao inves de depender apenas de leaderboards publicas
+- Implementar avaliacoes eespecificaçãoificas por tarefa com metricas adequadas: exact match, F1, BLEU e pontuacao LLM-as-judge
+- Projetar uma suita de avaliacao customizada direcionada pro seu caso de uso ao inves de depender apenas de rankings publicas
 
 ## O Problema
 
-MMLU foi publicado em 2020 com 15.908 questoes em 57 materias. Em tres anos, modelos frontier o saturaram. GPT-4 pontuou 86.4%. Claude 3 Opus pontuou 86.8%. Llama 3 405B pontuou 88.6%. A leaderboard comprimiu num intervalo de 3 pontos onde diferencas sao ruido estatistico, nao gaps reais de capacidade.
+MMLU foi publicado em 2020 com 15.908 questoes em 57 materias. Em tres anos, modelos frontier o saturaram. GPT-4 pontuou 86.4%. Claude 3 Opus pontuou 86.8%. Llama 3 405B pontuou 88.6%. A ranking comprimiu num intervalo de 3 pontos onde diferencas sao ruido estatistico, nao gaps reais de capacidade.
 
 Enquanto isso, esses mesmos modelos falham em tarefas que uma crianca de 10 anos faz sem pensar. Claude 3.5 Sonnet, pontuando 88.7% no MMLU, inicialmente nao conseguia contar as letras em "strawberry" -- uma tarefa que exige zero conhecimento do mundo e zero raciocinio, so iteracao no nivel de caractere. HumanEval testa geracao de codigo com 164 problemas. Modelos pontuam 90%+ nele enquanto ainda produzem codigo que trava em edge cases que qualquer dev juninho perceberia.
 
-O gap entre performance em benchmark e confiabilidade no mundo real e o problema central da avaliacao de LLMs. Benchmarks te dizem como um modelo se performa no benchmark. Eles dizem quase nada sobre como esse modelo vai performar na SUA tarefa especifica, com OS SEUS dados, sob OS SEUS modos de falha. Se voce ta construindo um bot de suporte ao cliente, MMLU e irrelevante. Se voce ta construindo um assistente de codigo, HumanEval so cobre geracao a nivel de funcao -- nao diz nada sobre debug, refatoracao ou explicar codigo entre arquivos.
+O gap entre performance em benchmark e confiabilidade no mundo real e o problema central da avaliacao de LLMs. Benchmarks te dizem como um modelo se performa no benchmark. Eles dizem quase nada sobre como esse modelo vai performar na SUA tarefa eespecificaçãoifica, com OS SEUS dados, sob OS SEUS modos de falha. Se voce ta construindo um bot de suporte ao cliente, MMLU e irrelevante. Se voce ta construindo um assistente de codigo, HumanEval so cobre geracao a nivel de funcao -- nao diz nada sobre debug, refatoracao ou explicar codigo entre arquivos.
 
 Voce precisa de avaliacoes customizadas. Nao porque benchmarks sao inuteis -- sao uteis pra selecao basica de modelos -- mas porque a avaliacao final deve corresponder exatamente as suas condicoes de deploy.
 
@@ -32,7 +32,7 @@ Existem tres categorias de avaliacao, cada uma com custo e qualidade de sinal di
 
 **Benchmarks** sao suitas de testes padronizadas. MMLU, HumanEval, SWE-bench, MATH, ARC, HellaSwag. Voce roda um modelo no benchmark e ganha uma pontuacao. A vantagem: todo mundo usa o mesmo teste, entao voce pode comparar modelos. A desvantagem: modelos e dados de treino contaminam cada vez mais esses benchmarks. Labs treinam em dados que incluem questoes do benchmark. As pontuacoes sobem. A capacidade pode nao subir.
 
-**Avaliacoes customizadas** sao suites de testes que voce constrói pro seu caso de uso especifico. Voce define as entradas, as saidas esperadas e a funcao de pontuacao. Um sumarizador de documentos legais e avaliado em documentos legais. Um gerador de SQL e avaliado no schema do seu banco de dados. Essas sao caras de criar mas sao a unica avaliacao que prediz performance em producao.
+**Avaliacoes customizadas** sao suites de testes que voce constrói pro seu caso de uso eespecificaçãoifico. Voce define as entradas, as saidas esperadas e a funcao de pontuacao. Um sumarizador de documentos legais e avaliado em documentos legais. Um gerador de SQL e avaliado no schema do seu banco de dados. Essas sao caras de criar mas sao a unica avaliacao que prediz performance em producao.
 
 **Avaliacoes humanas** usam anotadores pagos pra julgar saidas do modelo em criterios como utilidade, correcao, fluencia e seguranca. O padrao ouro pra tarefas abertas onde pontuacao automatizada falha. Chatbot Arena coletou mais de 2 milhoes de votos de preferencia humana em mais de 100 modelos. O lado ruim: custo ($0.10-$2.00 por julgamento) e velocidade (horas a dias).
 
@@ -110,7 +110,7 @@ graph LR
 
 **lm-evaluation-harness** (EleutherAI): o framework de avaliacao open source padrao. Suporta 200+ benchmarks. Rode qualquer modelo Hugging Face contra MMLU, HellaSwag, ARC, etc. com um comando. Usado pelo Open LLM Leaderboard.
 
-**RAGAS**: framework de avaliacao especifico pra pipelines RAG. Mede fidelidade (a resposta corresponde ao contexto recuperado?), relevancia (o contexto recuperado e relevante pra pergunta?) e correcao da resposta.
+**RAGAS**: framework de avaliacao eespecificaçãoifico pra pipelines RAG. Mede fidelidade (a resposta corresponde ao contexto recuperado?), relevancia (o contexto recuperado e relevante pra pergunta?) e correcao da resposta.
 
 **promptfoo**: avaliacao dirigida por config pra engenharia de prompts. Defina testes em YAML, rode contra multiplos modelos, ganhe um relatorio pass/falha. Util pra testes de regressao de prompts -- garanta que uma mudanca no prompt nao quebre testes existentes.
 
@@ -484,13 +484,13 @@ Tambem produz `outputs/skill-llm-evaluation.md` -- um framework de decisao pra e
 
 1. Adicione um pontuador de "consistencia" que roda a mesma entrada pelo modelo 5 vezes e mede com que frequencia as saidas coincidem. Respostas inconsistentes em entradas deterministicas revelam prompts fragils ou configuracoes de temperatura altas.
 
-2. Estenda o rastreador ELO pra suportar multiplas funcoes de julgamento (exact match, F1, LLM-as-judge) e pondera-las. Compare como a leaderboard muda quando voce pega pesado no exact match vs F1.
+2. Estenda o rastreador ELO pra suportar multiplas funcoes de julgamento (exact match, F1, LLM-as-judge) e pondera-las. Compare como a ranking muda quando voce pega pesado no exact match vs F1.
 
-3. Construa uma suite de avaliacao pra uma tarefa especifica: classificacao de emails em 5 categorias. Crie 100 testes com exemplos diversos incluindo edge cases (emails que podem pertencer a multiplas categorias, emails vazios, emails em outros idiomas). Meça como diferentes "modelos" (baseado em regra, correspondencia por palavra-chave, LLM simulado) performam.
+3. Construa uma suite de avaliacao pra uma tarefa eespecificaçãoifica: classificacao de emails em 5 categorias. Crie 100 testes com exemplos diversos incluindo edge cases (emails que podem pertencer a multiplas categorias, emails vazios, emails em outros idiomas). Meça como diferentes "modelos" (baseado em regra, correspondencia por palavra-chave, LLM simulado) performam.
 
 4. Implemente deteccao de contaminacao: dado um conjunto de questoes de avaliacao e um corpus de treino, verifique que porcentagem de questoes de avaliacao (ou parafases proximas) aparecem nos dados de treino. E assim que pesquisadores auditam a validade de benchmarks.
 
-5. Construa uma ferramenta de "diff de modelo". Dados resultados de avaliacao de duas versoes de modelo, destaque quais testes especificos melhoraram, quais regrediram e quais permaneceram iguais. Esse e o equivalente de avaliacao de um diff de codigo -- essencial pra entender se uma mudanca ajudou ou prejudicou.
+5. Construa uma ferramenta de "diff de modelo". Dados resultados de avaliacao de duas versoes de modelo, destaque quais testes eespecificaçãoificos melhoraram, quais regrediram e quais permaneceram iguais. Esse e o equivalente de avaliacao de um diff de codigo -- essencial pra entender se uma mudanca ajudou ou prejudicou.
 
 ## Termos Chave
 
@@ -503,9 +503,9 @@ Tambem produz `outputs/skill-llm-evaluation.md` -- um framework de decisao pra e
 | Rating ELO | "Ranking de xadrez pra modelos" | Um rating de habilidade relativo computado de registros de vitoria/derrota pareados, usado pelo Chatbot Arena pra ranquear 100+ modelos |
 | LLM-as-judge | "Usar IA pra avaliar IA" | Um modelo forte pontua as saidas de um modelo mais fraco contra uma rubrica, ~80% de concordancia com julgadores humanos a ~$0.01/julgamento |
 | Contaminacao de dados | "O modelo viu o teste" | Dados de treino incluem questoes de benchmark, inflando scores sem melhorar capacidade real |
-| Suite de avaliacao | "Um monte de testes" | Uma colecao versionada de triples (entrada, saida_esperada, pontuador) que mede uma capacidade especifica |
+| Suite de avaliacao | "Um monte de testes" | Uma colecao versionada de triples (entrada, saida_esperada, pontuador) que mede uma capacidade eespecificaçãoifica |
 | Taxa de passagem | "Que porcentagem acerta" | Fracao de casos de avaliacao que pontuam acima de um limiar -- mais acionavel que media porque mede confiabilidade |
-| Chatbot Arena | "Site de ranking de modelos" | Plataforma LMSYS com 2M+ votos de preferencia humana, produzindo a leaderboard de LLM mais confiavel via ratings ELO |
+| Chatbot Arena | "Site de ranking de modelos" | Plataforma LMSYS com 2M+ votos de preferencia humana, produzindo a ranking de LLM mais confiavel via ratings ELO |
 
 ## Leitura Complementar
 

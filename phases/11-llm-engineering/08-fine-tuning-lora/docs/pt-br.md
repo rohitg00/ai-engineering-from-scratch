@@ -12,7 +12,7 @@
 - Implementar LoRA injetando matrizes de adaptador de baixo rank (A e B) nas camadas de attention de um modelo pré-treinado
 - Calcular a economia de parâmetros de LoRA vs fine-tuning completo
 - Fazer fine-tuning com QLoRA (base quantizada em 4-bit + adaptadores LoRA) para caber na memória de GPUs de consumo
-- Mesclar pesos LoRA de volta no modelo base para deploy e comparar velocidade de inferência com e sem adaptadores
+- Mesclar pesos LoRA de volta no modelo base para implantação e comparar velocidade de inferência com e sem adaptadores
 
 ## O Problema
 
@@ -58,8 +58,8 @@ QLoRA faz três contribuições técnicas:
 ### Quando NÃO Fazer Fine-Tuning
 
 1. **Primeiro: prompt engineering.** Custo zero, minutos para implementar.
-2. **Segundo: RAG.** Se o modelo precisa de dados específicos, retrieval é mais barato.
-3. **Terceiro: fine-tuning.** Use quando precisa de estilo/formato específico, output estruturado consistente ou destilar modelo maior em menor.
+2. **Segundo: RAG.** Se o modelo precisa de dados eespecificaçãoíficos, retrieval é mais barato.
+3. **Terceiro: fine-tuning.** Use quando precisa de estilo/formato eespecificaçãoífico, output estruturado consistente ou destilar modelo maior em menor.
 
 ## Construa
 

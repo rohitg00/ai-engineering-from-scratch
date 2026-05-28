@@ -1,6 +1,6 @@
 # vLLM Production Stack com LMCache KV Offloading
 
-> A production-stack do vLLM é o deploy de referência no Kubernetes — router, engines e observabilidade conectados juntos. LMCache é a camada de offloading que extrai KV cache da memória GPU e reutiliza entre queries e engines (CPU DRAM, depois disk/Ceph). O vLLM 0.11.0 KV Offloading Connector (Janeiro 2026) torna isso assíncrono e plugável via Connector API (v0.9.0+). Latência de offloading não é visível ao usuário. LMCache é valioso mesmo sem prefixos compartilhados — quando uma GPU fica sem slots de KV, requests preemptados podem ser restaurados da CPU ao invés de recomputar prefill. Benchmarks publicados em 16x H100 (80GB HBM) espalhados por 4 a3-highgpu-4g: quando KV cache excede HBM, tanto o offloading CPU nativo quanto o LMCache melhoram substancialmente o throughput; com footprint KV baixo, todas as configs combinam com baseline com pequeno overhead.
+> A production-stack do vLLM é o implantação de referência no Kubernetes — router, engines e observabilidade conectados juntos. LMCache é a camada de offloading que extrai KV cache da memória GPU e reutiliza entre queries e engines (CPU DRAM, depois disk/Ceph). O vLLM 0.11.0 KV Offloading Connector (Janeiro 2026) torna isso assíncrono e plugável via Connector API (v0.9.0+). Latência de offloading não é visível ao usuário. LMCache é valioso mesmo sem prefixos compartilhados — quando uma GPU fica sem slots de KV, requests preemptados podem ser restaurados da CPU ao invés de recomputar prefill. Benchmarks publicados em 16x H100 (80GB HBM) espalhados por 4 a3-highgpu-4g: quando KV cache excede HBM, tanto o offloading CPU nativo quanto o LMCache melhoram substancialmente o throughput; com footprint KV baixo, todas as configs combinam com baseline com pequeno overhead.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, simulador de KV-spill)
@@ -26,11 +26,11 @@ LMCache extrai KV cache para CPU DRAM para que requests preemptados恢复 rápid
 
 ### vLLM production-stack
 
-`github.com/vllm-project/production-stack` é o deploy de referência no Kubernetes:
+`github.com/vllm-project/production-stack` é o implantação de referência no Kubernetes:
 
 - **Router** — cache-aware (Fase 17 · 11). Consome eventos KV.
 - **Engines** — workers do vLLM. Um por GPU ou por grupo TP/PP.
-- **KV cache offload** — deploy do LMCache ou connector nativo.
+- **KV cache offload** — implantação do LMCache ou connector nativo.
 - **Observabilidade** — scrape Prometheus, dashboards Grafana, traces OTel.
 - **Control plane** — service discovery, config, rolling updates.
 
@@ -40,7 +40,7 @@ Entregue como Helm chart + operator.
 
 vLLM 0.9.0 introduziu uma Connector API para backends de KV cache plugáveis. Sua engine descarrega blocos no connector; connector armazena (RAM, disco, object storage, LMCache). Request precisa de um bloco, connector carrega de volta.
 
-vLLM 0.11.0 (Janeiro 2026) adiciona um caminho assíncrono de offload — offload pode acontecer em background para que a engine não bloqueie nele no caso comum. Latência e throughput end-to-end ainda dependem da forma do workload, taxa de hit do KV cache e pressão do sistema; as notas do próprio vLLM destacam que offloading com kernel customizado pode degradar throughput em baixas taxas de hit e que agendamento assíncrono tem issues de interação conhecidas com speculative decoding.
+vLLM 0.11.0 (Janeiro 2026) adiciona um caminho assíncrono de offload — offload pode acontecer em background para que a engine não bloqueie nele no caso comum. Latência e throughput de ponta a ponta ainda dependem da forma do workload, taxa de hit do KV cache e pressão do sistema; as notas do próprio vLLM destacam que offloading com kernel customizado pode degradar throughput em baixas taxas de hit e que agendamento assíncrono tem issues de interação conhecidas com especificaçãoulative decoding.
 
 ### Offloading CPU nativo vs LMCache
 
@@ -78,7 +78,7 @@ Serving desagregado da Fase 17 · 17 + LMCache se potencializa: transferências 
 ### Números que você deve lembrar
 
 - vLLM 0.9.0: Connector API lançada.
-- vLLM 0.11.0 (Jan 2026): caminho assíncrono de offload; impacto de latência end-to-end depende do workload, taxa de hit de KV e pressão do sistema (não é garantia absoluta).
+- vLLM 0.11.0 (Jan 2026): caminho assíncrono de offload; impacto de latência de ponta a ponta depende do workload, taxa de hit de KV e pressão do sistema (não é garantia absoluta).
 - Benchmark 16x H100: LMCache ajuda quando footprint KV excede HBM.
 - Pressão de HBM pequena: 3-5% de overhead sem benefício.
 
@@ -88,13 +88,13 @@ Serving desagregado da Fase 17 · 17 + LMCache se potencializa: transferências 
 
 ## Entregue
 
-Esta aula produz `outputs/skill-vllm-stack-decider.md`. Dada forma do workload e deploy do vLLM, decide entre nativo vs LMCache vs nenhum.
+Esta aula produz `outputs/skill-vllm-stack-decider.md`. Dada forma do workload e implantação do vLLM, decide entre nativo vs LMCache vs nenhum.
 
 ## Exercícios
 
 1. Execute `code/main.py`. Em que utilização de HBM o LMCache começa a compensar?
 2. Um tenant compartilha um system prompt de 6K tokens entre 200 queries/hora. Calcule a economia esperada do LMCache por tenant.
-3. O servidor LMCache é um ponto único de falha. Projete a estratégia de HA (réplicas, fallback para nativo).
+3. O servidor LMCache é um ponto único de falha. Projete a estratégia de HA (réplicas, reserva para nativo).
 4. LMCache armazena em Ceph em disco giratório. Para KV de 4K tokens em 70B FP8 (500 MB), qual é o tempo de leitura vs re-prefill?
 5. Argumente se o caminho assíncrono do vLLM 0.11.0 é "gratuito" — onde o overhead se esconde?
 
@@ -102,7 +102,7 @@ Esta aula produz `outputs/skill-vllm-stack-decider.md`. Dada forma do workload e
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|----------------------|--------------------------|
-| Production-stack | "o deploy de referência" | Helm chart + operator Kubernetes do vLLM |
+| Production-stack | "o implantação de referência" | Helm chart + operator Kubernetes do vLLM |
 | Connector API | "interface de backend KV" | Interface plugável de KV store do vLLM 0.9.0+ |
 | Offloading CPU nativo | "spill local da engine" | Armazenar KV na RAM host da mesma engine |
 | LMCache | "KV cache de cluster" | Servidor de KV cache cross-engine em CPU DRAM + disco |

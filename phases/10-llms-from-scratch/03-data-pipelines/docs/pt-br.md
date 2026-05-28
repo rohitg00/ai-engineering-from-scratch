@@ -86,7 +86,7 @@ Cada passo elimina uma categoria de ruído:
 
 **Filtro de qualidade:** Aqui fica interessante. O RefinedWeb (o dataset por trás do Falcon) usa um filtro baseado em perplexidade: treine um modelo pequeno de linguagem na Wikipedia, depois pontue cada documento. Perplexidade alta significa que o documento não se parece com a Wikipedia -- provavelmente spam, listas de palavras-chave, ou conteúdo gerado por máquina. Documentos com perplexidade acima de um threshold são removidos.
 
-**Deduplicação:** O passo de limpeza com maior impacto individual. O Common Crawl contém números enormes de páginas duplicadas -- avisos legais, avisos de cookies, termos de serviço. Treinar em duplicatas desperdiça compute e pode fazer o modelo memorizar e regurgitar trechos específicos literalmente.
+**Deduplicação:** O passo de limpeza com maior impacto individual. O Common Crawl contém números enormes de páginas duplicadas -- avisos legais, avisos de cookies, termos de serviço. Treinar em duplicatas desperdiça compute e pode fazer o modelo memorizar e regurgitar trechos eespecificaçãoíficos literalmente.
 
 **Remoção de PII:** Nomes, endereços de e-mail, números de telefone, números de segurança social. Detecção baseada em regex pra PII estruturada, modelos de NER pra nomes em contexto.
 
@@ -196,20 +196,20 @@ def clean_text(text):
     text = re.sub(r" {2,}", " ", text)
     return text.strip()
 
-def quality_filter(text, min_words=50, max_ratio_caps=0.3, max_ratio_special=0.1):
+def quality_filter(text, min_words=50, max_ratio_caps=0.3, max_ratio_especificaçãoial=0.1):
     words = text.split()
     if len(words) < min_words:
         return False
     caps_ratio = sum(1 for w in words if w.isupper()) / len(words)
     if caps_ratio > max_ratio_caps:
         return False
-    special_chars = sum(1 for c in text if not c.isalnum() and not c.isspace())
-    if special_chars / max(len(text), 1) > max_ratio_special:
+    especificaçãoial_chars = sum(1 for c in text if not c.isalnum() and not c.isspace())
+    if especificaçãoial_chars / max(len(text), 1) > max_ratio_especificaçãoial:
         return False
     return True
 ```
 
-O filtro de qualidade pega spam de SEO (TODO EM MAIÚSCULO), ruído gerado por máquina (alta proporção de caracteres especiais) e páginas stub (curtas demais). Essas três verificações sozinhas removem uma quantidade surpreendente de lixo dos crawls da web.
+O filtro de qualidade pega spam de SEO (TODO EM MAIÚSCULO), ruído gerado por máquina (alta proporção de caracteres eespecificaçãoiais) e páginas stub (curtas demais). Essas três verificações sozinhas removem uma quantidade surpreendente de lixo dos crawls da web.
 
 ### Passo 2: Deduplicação com MinHash
 
@@ -380,7 +380,7 @@ def compute_statistics(documents, token_ids, sequences, tokenizer_vocab_size):
     return stats
 ```
 
-A taxa de compressão te diz quão eficiente o tokenizer é nesse corpus. Texto em inglês tipicamente comprime pra aproximadamente 3-4 caracteres por token. Se você vê 1,5 caracteres por token, seu tokenizer está dividindo agressivamente demais. Se vê 8+, ele aprendeu merges muito específicos de domínio.
+A taxa de compressão te diz quão eficiente o tokenizer é nesse corpus. Texto em inglês tipicamente comprime pra aproximadamente 3-4 caracteres por token. Se você vê 1,5 caracteres por token, seu tokenizer está dividindo agressivamente demais. Se vê 8+, ele aprendeu merges muito eespecificaçãoíficos de domínio.
 
 A utilização de sequência te diz quanto das suas sequências empacotadas são dados reais versus padding. Abaixo de 90% significa que seu empacotamento é ineficiente -- você está desperdiçando compute em tokens de padding.
 

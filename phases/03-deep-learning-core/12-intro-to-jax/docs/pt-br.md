@@ -152,7 +152,7 @@ def predict(params, x):
 | Ecossistema | Focado em pesquisa | Massivo (HuggingFace, etc.) |
 | Prototipagem | Mais lento (sobrecarga funcional) | Mais rápido (mutar e seguir) |
 
-A resposta honesta: use PyTorch a menos que tenha uma razão específica pra usar JAX. Essas razões são: acesso a TPU, necessidade de gradientes por amostra, treino multi-dispositivo em escala massiva, ou trabalhar no Google/DeepMind/Anthropic.
+A resposta honesta: use PyTorch a menos que tenha uma razão eespecificaçãoífica pra usar JAX. Essas razões são: acesso a TPU, necessidade de gradientes por amostra, treino multi-dispositivo em escala massiva, ou trabalhar no Google/DeepMind/Anthropic.
 
 ### Números Aleatórios no JAX
 

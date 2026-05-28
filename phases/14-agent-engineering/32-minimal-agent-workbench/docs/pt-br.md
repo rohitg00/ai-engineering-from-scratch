@@ -11,14 +11,14 @@
 
 - Definir os três arquivos que formam o workbench mínimo viável.
 - Explicar por que um roteador raiz curto vence um `AGENTS.md` monolítico longo.
-- Construir um arquivo de estado que o agent pode ler a cada turno e escrever no final.
+- Construir um arquivo de estado que o agente pode ler a cada turno e escrever no final.
 - Construir um quadro de tarefas que sobrevive a trabalho multi-sessão sem histórico de chat.
 
 ## O Problema
 
 A maioria dos times chega a um workbench escrevendo um `AGENTS.md` de 3000 linhas e chamando de pronto. O modelo carrega ele, ignora as partes que não consegue resumir, e ainda falha nas mesmas superfícies de sempre.
 
-Você precisa do oposto. Um arquivo raiz pequeno que roteia o agent pra arquivos mais profundos só quando relevante. Estado durável que o agent lê antes de agir e escreve depois. Um quadro de tarefas que diz o que tá em andamento, o que tá bloqueado, e o que vem a seguir.
+Você precisa do oposto. Um arquivo raiz pequeno que roteia o agente pra arquivos mais profundos só quando relevante. Estado durável que o agente lê antes de agir e escreve depois. Um quadro de tarefas que diz o que tá em andamento, o que tá bloqueado, e o que vem a seguir.
 
 Três arquivos. Cada um com um trabalho. Cada um legível por máquina o suficiente pra evoluir pra um sistema real depois.
 
@@ -35,7 +35,7 @@ flowchart LR
 
 ### AGENTS.md é um roteador, não um manual
 
-Um bom `AGENTS.md` é curto. Ele aponta o agent pra:
+Um bom `AGENTS.md` é curto. Ele aponta o agente pra:
 
 - O arquivo de estado (onde você tá).
 - O quadro de tarefas (o que falta).
@@ -46,13 +46,13 @@ Qualquer coisa maior vai em docs mais profundos, carregados só quando necessár
 
 ### agent_state.json é o sistema de registro
 
-Estado carrega: o id da tarefa ativa, os arquivos tocados, as premissas feitas, os bloqueios e a próxima ação. O agent lê a cada turno. A próxima sessão lê ao invés de refazer o chat.
+Estado carrega: o id da tarefa ativa, os arquivos tocados, as premissas feitas, os bloqueios e a próxima ação. O agente lê a cada turno. A próxima sessão lê ao invés de refazer o chat.
 
 Estado fica num arquivo porque o histórico de chat é instável. Sessões morrem. Conversas são cortadas. O arquivo não.
 
 ### task_board.json é a queue
 
-O quadro de tarefas carrega cada tarefa com status `todo | in_progress | done | blocked`. É a queue de onde o agent puxa quando o estado tá vazio, e a queue que você lê quando quer saber se o agent tá no caminho certo.
+O quadro de tarefas carrega cada tarefa com status `todo | in_progress | done | blocked`. É a queue de onde o agente puxa quando o estado tá vazio, e a queue que você lê quando quer saber se o agente tá no caminho certo.
 
 Uma tarefa no quadro tem um id, um objetivo, um owner (`builder`, `reviewer` ou `human`), e critérios de aceitação. O quadro é pequeno de propósito: quando cresce pra além de uma tela, você tem um problema de planejamento, não de quadro.
 
@@ -62,7 +62,7 @@ Lições posteriores adicionam contratos de escopo, runners de feedback, gates d
 
 ## Construa
 
-`code/main.py` escreve o workbench mínimo num repo vazio e demonstra um turno de agent que:
+`code/main.py` escreve o workbench mínimo num repo vazio e demonstra um turno de agente que:
 
 1. Lê `agent_state.json`.
 2. Puxa a próxima tarefa de `task_board.json` se o estado tá vazio.
@@ -79,7 +79,7 @@ O script cria `workdir/` ao lado dele, coloca os três arquivos, roda um turno, 
 
 ## Use
 
-Dentro de produtos de agent em produção, os mesmos três arquivos aparecem sob nomes diferentes:
+Dentro de produtos de agente em produção, os mesmos três arquivos aparecem sob nomes diferentes:
 
 - **Claude Code:** `AGENTS.md` ou `CLAUDE.md` pro roteador, stores estilo `.claude/state.json` pro estado, hooks pro quadro.
 - **Codex / Cursor:** regras de workspace pro roteador, memória de sessão pro estado, tarefas enfileiradas na barra lateral do chat pro quadro.
@@ -91,11 +91,11 @@ Os nomes mudam. A forma não.
 
 O workbench mínimo sobrevive ao contato com monorepos reais quando três padrões são adicionados por cima. Eles são independentes; escolha os que o seu repo realmente precisa.
 
-**`AGENTS.md` aninhado com precedência nearest-wins.** A OpenAI distribui 88 arquivos `AGENTS.md` no seu repo principal, um por subcomponente. Codex, Cursor, Claude Code e Copilot todos caminham do arquivo de trabalho até a raiz do repo e concatenam todo `AGENTS.md` que encontram no caminho. Arquivos de subdiretório estendem o arquivo raiz. Codex adiciona `AGENTS.override.md` pra substituir ao invés de estender; o mecanismo de override é específico do Codex e deve ser evitado pra trabalho cross-tool. A medição do Augment Code é a linha que importa: os melhores arquivos `AGENTS.md` dão um salto de qualidade equivalente a fazer upgrade de Haiku pra Opus; os piores deixam a saída pior que sem nenhum arquivo.
+**`AGENTS.md` aninhado com precedência nearest-wins.** A OpenAI distribui 88 arquivos `AGENTS.md` no seu repo principal, um por subcomponente. Codex, Cursor, Claude Code e Copilot todos caminham do arquivo de trabalho até a raiz do repo e concatenam todo `AGENTS.md` que encontram no caminho. Arquivos de subdiretório estendem o arquivo raiz. Codex adiciona `AGENTS.override.md` pra substituir ao invés de estender; o mecanismo de override é eespecificaçãoífico do Codex e deve ser evitado pra trabalho cross-tool. A medição do Augment Code é a linha que importa: os melhores arquivos `AGENTS.md` dão um salto de qualidade equivalente a fazer upgrade de Haiku pra Opus; os piores deixam a saída pior que sem nenhum arquivo.
 
-**Anti-padrões pra recusar, mesmo quando parecem cobertura.** Instruções conflitantes silenciosamente derrubam o agent do modo inter pro modo ganancioso (ICLR 2026 AMBIG-SWE: 48.8% → 28% taxa de resolução); numerar prioridades ao invés de empilhar na horizontal. Regras de estilo não verificáveis ("siga o Google Python Style Guide") sem comando de validação deixam o agent inventar aderência; pare cada regra de estilo com o comando de lint exato. Começar com estilo ao invés de comandos esconde o caminho de verificação; comandos primeiro, estilo último. Escrever pra humanos ao invés de agents desperdiça orçamento de contexto; concisão é uma feature.
+**Anti-padrões pra recusar, mesmo quando parecem cobertura.** Instruções conflitantes silenciosamente derrubam o agente do modo inter pro modo ganancioso (ICLR 2026 AMBIG-SWE: 48.8% → 28% taxa de resolução); numerar prioridades ao invés de empilhar na horizontal. Regras de estilo não verificáveis ("siga o Google Python Style Guide") sem comando de validação deixam o agente inventar aderência; pare cada regra de estilo com o comando de lint exato. Começar com estilo ao invés de comandos esconde o caminho de verificação; comandos primeiro, estilo último. Escrever pra humanos ao invés de agentes desperdiça orçamento de contexto; concisão é uma feature.
 
-**Symlinks cross-tool.** Um único arquivo raiz com symlinks (`ln -s AGENTS.md CLAUDE.md`, `ln -s AGENTS.md .github/copilot-instructions.md`, `ln -s AGENTS.md .cursorrules`) mantém todo agent de codificação na mesma fonte de verdade. O `nx ai-setup` do Nx automatiza isso em Claude Code, Cursor, Copilot, Gemini, Codex e OpenCode a partir de uma única configuração.
+**Symlinks cross-tool.** Um único arquivo raiz com symlinks (`ln -s AGENTS.md CLAUDE.md`, `ln -s AGENTS.md .github/copilot-instructions.md`, `ln -s AGENTS.md .cursorrules`) mantém todo agente de codificação na mesma fonte de verdade. O `nx ai-setup` do Nx automatiza isso em Claude Code, Cursor, Copilot, Gemini, Codex e OpenCode a partir de uma única configuração.
 
 ## Entregue
 
@@ -113,14 +113,14 @@ O workbench mínimo sobrevive ao contato com monorepos reais quando três padrõ
 
 | Termo | O que a galera fala | O que realmente significa |
 |-------|---------------------|--------------------------|
-| Roteador | `AGENTS.md` | Arquivo raiz curto que aponta o agent pra docs e arquivos mais profundos |
-| Arquivo de estado | "As anotações" | Registro legível por máquina de onde o agent tá, escrito a cada turno |
+| Roteador | `AGENTS.md` | Arquivo raiz curto que aponta o agente pra docs e arquivos mais profundos |
+| Arquivo de estado | "As anotações" | Registro legível por máquina de onde o agente tá, escrito a cada turno |
 | Quadro de tarefas | "O backlog" | Queue JSON de trabalho com status, owner e aceitação |
 | Sistema de registro | "Fonte de verdade" | O arquivo que o workbench trata como autoritativo quando o chat acabou |
 
 ## Leitura Complementar
 
-- [agents.md — the open spec](https://agents.md/) — adotado por Cursor, Codex, Claude Code, Copilot, Gemini, OpenCode
+- [agents.md — the open especificação](https://agents.md/) — adotado por Cursor, Codex, Claude Code, Copilot, Gemini, OpenCode
 - [Augment Code, A good AGENTS.md is a model upgrade. A bad one is worse than no docs at all](https://www.augmentcode.com/blog/how-to-write-good-agents-dot-md-files) — saltos de qualidade medidos
 - [Blake Crosley, AGENTS.md Patterns: What Actually Changes Agent Behavior](https://blakecrosley.com/blog/agents-md-patterns) — o que funciona empiricamente, o que não funciona
 - [Datadog Frontend, Steering AI Agents in Monorepos with AGENTS.md](https://dev.to/datadog-frontend-dev/steering-ai-agents-in-monorepos-with-agentsmd-13g0) — precedência aninhada na prática

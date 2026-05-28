@@ -6,7 +6,7 @@
 **Linguagens:** Python
 **Pré-requisitos:** Fase 10 (LLMs do Zero), Fase 11 Aulas 01-05
 **Tempo:** ~90 minutos
-**Relacionado:** Fase 5 · 23 (Chunking Strategies for RAG) para os seis algoritmos de chunking. Fase 5 · 22 (Embedding Models Deep Dive) para escolher o embedder. Fase 11 · 07 (Advanced RAG) para busca híbrida, reranking e transformação de query.
+**Relacionado:** Fase 5 · 23 (Chunking Strategies for RAG) para os seis algoritmos de chunking. Fase 5 · 22 (Embedding Models Deep Dive) para escolher o embedder. Fase 11 · 07 (Advanced RAG) para busca híbrida, reranking e transformação de consulta.
 
 ## Objetivos de Aprendizado
 
@@ -35,7 +35,7 @@ graph LR
     G --> Ans["Resposta"]
 
     subgraph "Recuperar"
-        R --> Embed["Embed query"]
+        R --> Embed["Embed consulta"]
         Embed --> Search["Buscar no vector store"]
         Search --> TopK["Retornar top-k chunks"]
     end
@@ -55,7 +55,7 @@ graph LR
 
 | Preocupação | Fine-tuning | RAG |
 |-------------|------------|-----|
-| Custo | $1.000-$100.000+ por treino | $0.01-$0.10 por query |
+| Custo | $1.000-$100.000+ por treino | $0.01-$0.10 por consulta |
 | Frescor | Obsoleto até re-treinar | Atualizado em minutos |
 | Auditabilidade | Não rastreia fonte | Mostra trechos exatos |
 | Alucinação | Ainda alucina livremente | Fundamentado em docs |
@@ -147,10 +147,10 @@ def cosine_similarity(a, b):
         return 0.0
     return dot / (norm_a * norm_b)
 
-def search(query_embedding, stored_embeddings, top_k=5):
+def search(consulta_embedding, stored_embeddings, top_k=5):
     scores = []
     for i, emb in enumerate(stored_embeddings):
-        sim = cosine_similarity(query_embedding, emb)
+        sim = cosine_similarity(consulta_embedding, emb)
         scores.append((i, sim))
     scores.sort(key=lambda x: x[1], reverse=True)
     return scores[:top_k]
@@ -159,7 +159,7 @@ def search(query_embedding, stored_embeddings, top_k=5):
 ### Passo 4: Construção do Prompt
 
 ```python
-def build_rag_prompt(query, retrieved_chunks):
+def build_rag_prompt(consulta, retrieved_chunks):
     context = "\n\n---\n\n".join(
         f"[Fonte {i+1}]\n{chunk}"
         for i, chunk in enumerate(retrieved_chunks)
@@ -170,7 +170,7 @@ Se o contexto não contiver informação suficiente, diga "Não tenho informaç�
 Contexto:
 {context}
 
-Pergunta: {query}
+Pergunta: {consulta}
 
 Resposta:"""
 ```
@@ -197,9 +197,9 @@ class RAGPipeline:
             for chunk in all_chunks
         ]
 
-    def query(self, question, top_k=5):
-        query_emb = tfidf_embed(question, self.vocab, self.idf)
-        results = search(query_emb, self.embeddings, top_k)
+    def consulta(self, question, top_k=5):
+        consulta_emb = tfidf_embed(question, self.vocab, self.idf)
+        results = search(consulta_emb, self.embeddings, top_k)
         retrieved = [(self.chunks[i], score) for i, score in results]
         prompt = build_rag_prompt(
             question, [chunk for chunk, _ in retrieved]
@@ -245,16 +245,16 @@ class RAGPipeline:
 #     ids=[f"chunk_{i}" for i in range(len(chunks))]
 # )
 #
-# results = collection.query(
-#     query_texts=["Qual a política de reembolso?"],
+# results = collection.consulta(
+#     consulta_texts=["Qual a política de reembolso?"],
 #     n_results=5
 # )
 ```
 
 ## Entregue
 
-- `outputs/prompt-rag-architect.md` — prompt para projetar sistemas RAG para casos de uso específicos
-- `outputs/skill-rag-pipeline.md` — skill que ensina agents a construir e debugar pipelines RAG
+- `outputs/prompt-rag-architect.md` — prompt para projetar sistemas RAG para casos de uso eespecificaçãoíficos
+- `outputs/skill-rag-pipeline.md` — skill que ensina agentes a construir e debugar pipelines RAG
 
 ## Exercícios
 
@@ -276,7 +276,7 @@ class RAGPipeline:
 | Embedding | "Converter texto em números" | Representação vetorial densa onde significados similares produzem vetores similares |
 | Vector database | "Buscador para IA" | Store otimizado para vetores e busca por vizinhos mais próximos |
 | Chunking | "Dividir docs em pedaços" | Quebrar documentos em segmentos menores para embedder e recuperar independentemente |
-| Top-k retrieval | "Pegar os k melhores" | Retornar os k chunks mais similares à query |
+| Top-k retrieval | "Pegar os k melhores" | Retornar os k chunks mais similares à consulta |
 | Context window | "Quanto o LLM enxerga" | Máximo de tokens que o LLM processa em uma requisição |
 
 ## Leitura Adicional

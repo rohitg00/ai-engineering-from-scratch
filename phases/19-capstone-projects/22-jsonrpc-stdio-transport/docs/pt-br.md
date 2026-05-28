@@ -1,6 +1,6 @@
 # JSON-RPC 2.0 Sobre Newline-Delimited Stdio
 
-> O transport entre um model client e um tool server é JSON-RPC sobre stdio. Implementar uma vez manualmente te ensina o que cada camada de framing está pagando.
+> O transport entre um model client e um ferramenta server é JSON-RPC sobre stdio. Implementar uma vez manualmente te ensina o que cada camada de framing está pagando.
 
 **Tipo:** Build
 **Linguagens:** Python
@@ -16,7 +16,7 @@
 
 ## Por que JSON-RPC continua sendo a língua franca
 
-Um coding agent em 2026 conversa com talvez doze tool servers em uma única sessão. Cada server é um processo separado ou um endpoint remoto. O formato de rede tem sido o mesmo desde 2013. JSON-RPC 2.0 é uma spec de duas páginas. Ela sobrevive porque as alternativas (gRPC, HTTP por chamada, binário customizado) todas impõem uma troca que JSON-RPC não: escolhem ou streaming ou batching ou acoplamento ao transport. JSON-RPC é simétrico entre stdio, sockets, websockets e HTTP, e um client pode dirigir um server que nunca viu se ambos honrarem a spec.
+Um coding agente em 2026 conversa com talvez doze ferramenta servers em uma única sessão. Cada server é um processo separado ou um endpoint remoto. O formato de rede tem sido o mesmo desde 2013. JSON-RPC 2.0 é uma eespecificaçãoificação de duas páginas. Ela sobrevive porque as alternativas (gRPC, HTTP por chamada, binário customizado) todas impõem uma troca que JSON-RPC não: escolhem ou streaming ou batching ou acoplamento ao transport. JSON-RPC é simétrico entre stdio, sockets, websockets e HTTP, e um client pode dirigir um server que nunca viu se ambos honrarem a especificação.
 
 Esta aula constrói a variante stdio. JSON newline-delimited. Cada request é uma linha. Cada response é uma linha. O limite de transport é `\n`.
 
@@ -52,7 +52,7 @@ Um batch é um array JSON de requests ou notifications. O server responde com um
 
 Os códigos entre -32000 e -32099 são reservados para erros definidos pelo server. Todo o resto é definido pela aplicação. A aula se mantém nos cinco. Se seu handler levanta exceção, o transport envolve como -32603 com o nome da classe da exceção em `data.exception`.
 
-Um erro de parse tem uma regra especial. O `id` na response é `null`, porque o request nunca foi parseado o suficiente para extrair um id.
+Um erro de parse tem uma regra eespecificaçãoial. O `id` na response é `null`, porque o request nunca foi parseado o suficiente para extrair um id.
 
 ## Newline framing e a demo BytesIO
 
@@ -62,7 +62,7 @@ Para a aula, envolvemos um par `io.BytesIO` como stdin e stdout. O server lê re
 
 ## Despacho de métodos
 
-O transport não sabe quais métodos existem. Ele repassa para um callable `handler(method, params)` que o harness fornece. O handler retorna um resultado ou levanta exceção. Três classes de exceção expõem códigos específicos.
+O transport não sabe quais métodos existem. Ele repassa para um callable `handler(method, params)` que o harness fornece. O handler retorna um resultado ou levanta exceção. Três classes de exceção expõem códigos eespecificaçãoíficos.
 
 ```text
 MethodNotFound -> -32601
@@ -70,7 +70,7 @@ InvalidParams  -> -32602
 Qualquer outra -> -32603 com nome da exceção em data
 ```
 
-O transport nunca vê um tool registry. O registry fica atrás do handler. Essa é a camada que queremos. O transport fala JSON-RPC. O registry fala formas de ferramentas. O dispatcher (aula vinte e três) costura eles juntos.
+O transport nunca vê um ferramenta registry. O registry fica atrás do handler. Essa é a camada que queremos. O transport fala JSON-RPC. O registry fala formas de ferramentas. O dispatcher (aula vinte e três) costura eles juntos.
 
 ## Comportamento do stream em erros
 

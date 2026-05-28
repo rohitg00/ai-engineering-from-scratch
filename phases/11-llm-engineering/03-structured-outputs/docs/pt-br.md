@@ -6,7 +6,7 @@
 **Linguagens:** Python
 **Pré-requisitos:** Fase 10, Aulas 01-05 (LLMs do Zero)
 **Tempo:** ~90 minutos
-**Relacionado:** Fase 5 · 20 (Structured Outputs & Constrained Decoding) cobre a teoria no nível do decoder (processadores de logit FSM/CFG, Outlines, XGrammar). Esta aula foca na superfície de SDKs de produção (OpenAI `response_format`, Anthropic tool use, Instructor) — leia Fase 5 · 20 primeiro se quiser entender o que acontece abaixo da API.
+**Relacionado:** Fase 5 · 20 (Structured Outputs & Constrained Decoding) cobre a teoria no nível do decoder (processadores de logit FSM/CFG, Outlines, XGrammar). Esta aula foca na superfície de SDKs de produção (OpenAI `response_format`, Anthropic ferramenta use, Instructor) — leia Fase 5 · 20 primeiro se quiser entender o que acontece abaixo da API.
 
 ## Objetivos de Aprendizado
 
@@ -23,7 +23,7 @@ Você pede a um LLM: "Extraia o nome do produto, preço e disponibilidade deste 
 O produto é os fones Sony WH-1000XM5, que custam $348.00 e estão atualmente em estoque.
 ```
 
-Isso é uma resposta perfeitamente correta. E completamente inútil para sua aplicação. Seu sistema de inventário precisa de `{"product": "Sony WH-1000XM5", "price": 348.00, "in_stock": true}`. Você precisa de um objeto JSON com chaves específicas, tipos específicos e restrições de valor específicas. Você não precisa de uma frase.
+Isso é uma resposta perfeitamente correta. E completamente inútil para sua aplicação. Seu sistema de inventário precisa de `{"product": "Sony WH-1000XM5", "price": 348.00, "in_stock": true}`. Você precisa de um objeto JSON com chaves eespecificaçãoíficas, tipos eespecificaçãoíficos e restrições de valor eespecificaçãoíficas. Você não precisa de uma frase.
 
 A solução ingênua: adicionar "Responda em JSON" ao prompt. Funciona 90% do tempo. Nos outros 10%, o modelo envolve o JSON em fences de markdown, ou adiciona um texto introdutório como "Aqui está o JSON:", ou produz JSON sintaticamente inválido porque fechou um colchete cedo demais. Seu parser de JSON quebra. Seu pipeline quebra. Você adiciona try/except e um loop de retry. Às vezes o retry produz dados diferentes. Agora você tem um problema de consistência em cima de um problema de parse.
 
@@ -31,13 +31,13 @@ Isso não é um problema de prompt engineering. É um problema de decoding. O mo
 
 ## O Conceito
 
-### O Espectro de Saída Estruturada
+### O Eespecificaçãotro de Saída Estruturada
 
 Existem quatro níveis de controle de saída estruturada:
 
 ```mermaid
 graph LR
-    subgraph Spectrum["Espectro de Saída Estruturada"]
+    subgraph Spectrum["Eespecificaçãotro de Saída Estruturada"]
         direction LR
         A["Baseado em Prompt\n'Retorne JSON'\n~90% válido"] --> B["JSON Mode\nJSON válido garantido\nSem garantia de schema"]
         B --> C["Schema Mode\nJSON + compatível com schema\nConformidade garantida"]
@@ -54,7 +54,7 @@ graph LR
 
 **JSON mode**: a API garante que a saída é JSON válido. O `response_format: { type: "json_object" }` da OpenAI habilita isso. A saída vai parsear sem erros. Mas pode não corresponder ao schema esperado — chaves extras, tipos errados, campos faltando.
 
-**Schema mode**: a API recebe um JSON Schema e garante que a saída corresponde. Em 2026 todo provedor principal suporta isso nativamente: `response_format: { type: "json_schema", json_schema: {...} }` da OpenAI, tool use da Anthropic com `input_schema`, e `response_schema` + `response_mime_type: "application/json"` do Gemini.
+**Schema mode**: a API recebe um JSON Schema e garante que a saída corresponde. Em 2026 todo provedor principal suporta isso nativamente: `response_format: { type: "json_schema", json_schema: {...} }` da OpenAI, ferramenta use da Anthropic com `input_schema`, e `response_schema` + `response_mime_type: "application/json"` do Gemini.
 
 **Constrained decoding**: em cada posição de token durante a geração, o decoder mascara todos os tokens que produziriam saída inválida. Se o schema requer um número e o modelo está prestes a emitir uma letra, esse token recebe probabilidade zero. O modelo só pode produzir tokens que levam a saída válida.
 
@@ -375,7 +375,7 @@ Esta aula produz uma pipeline completa de saída estruturada com validação, co
 
 ## Exercícios
 
-1. Adicione suporte a enum ao validador. Teste com um campo que deve ser um dos valores específicos e verifique que valores fora do conjunto são rejeitados.
+1. Adicione suporte a enum ao validador. Teste com um campo que deve ser um dos valores eespecificaçãoíficos e verifique que valores fora do conjunto são rejeitados.
 
 2. Implemente a validação de campo opcional. Modifique o schema para tornar `categories` opcional e teste que a ausência do campo não gera erro, mas um valor inválido gera.
 
@@ -398,7 +398,7 @@ Esta aula produz uma pipeline completa de saída estruturada com validação, co
 ## Leitura Adicional
 
 - [OpenAI Structured Outputs Guide](https://platform.openai.com/docs/guides/structured-outputs) — guia oficial da OpenAI para structured outputs
-- [Anthropic Tool Use Guide](https://docs.anthropic.com/en/docs/tool-use) — documentação de tool use da Anthropic
+- [Anthropic Tool Use Guide](https://docs.anthropic.com/en/docs/tool-use) — documentação de ferramenta use da Anthropic
 - [Pydantic Documentation](https://docs.pydantic.dev/) — documentação oficial do Pydantic
 - [Instructor Library](https://instructor.readthedocs.io/) — biblioteca para structured outputs com retry
-- [JSON Schema Specification](https://json-schema.org/) — especificação do JSON Schema
+- [JSON Schema Specification](https://json-schema.org/) — eespecificaçãoificação do JSON Schema

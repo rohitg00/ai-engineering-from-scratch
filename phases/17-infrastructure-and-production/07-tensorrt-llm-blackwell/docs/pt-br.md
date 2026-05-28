@@ -11,7 +11,7 @@
 
 - Explicar por que FP8 continua sendo crítico para KV cache e attention mesmo quando pesos estão em NVFP4.
 - Computar a pegada de HBM de um modelo de fronteira sob BF16, FP8 e NVFP4 e raciocinar de onde vêm as economias.
-- Nomear as funcionalidades específicas do Blackwell que o TRT-LLM explora (FP4 day-0, MTP, serving disaggregado, primitivas all-to-all).
+- Nomear as funcionalidades eespecificaçãoíficas do Blackwell que o TRT-LLM explora (FP4 day-0, MTP, serving disaggregado, primitivas all-to-all).
 - Decidir quando o lock-in da NVIDIA do TRT-LLM vale o gap de custo de 7x vs vLLM no Hopper.
 
 ## O Problema
@@ -37,7 +37,7 @@ A config típica do Blackwell:
 - KV cache: FP8.
 - Acumulador de attention: FP32 (estabilidade do softmax).
 
-### As primitivas específicas do Blackwell que o TRT-LLM usa
+### As primitivas eespecificaçãoíficas do Blackwell que o TRT-LLM usa
 
 - **Pesos FP4 day-0**: provedores de modelo entregam pesos FP4 diretamente; TRT-LLM carrega sem conversão pós-treinamento. Sem etapa AWQ / GPTQ para FP4.
 - **Multi-token prediction (MTP)**: mesma ideia do EAGLE (Fase 17 · 05) mas integrado na build do TRT-LLM.
@@ -62,7 +62,7 @@ A regra: sempre valide a qualidade da tarefa no seu eval set antes de se comprom
 
 ### Por que isso é uma decisão de lock-in da NVIDIA
 
-TRT-LLM é C++ + CUDA + kernels de código fechado. Modelos precisam ser compilados para um SKU de GPU específico. Sem AMD, sem Intel, sem ARM. Se sua estratégia de infra é multi-vendor, TRT-LLM é inviável para o tier servido por TRT-LLM — você ainda pode servir do vLLM em hardware misto. Se você é exclusivamente NVIDIA, o gap de 7x paga pelo lock.
+TRT-LLM é C++ + CUDA + kernels de código fechado. Modelos precisam ser compilados para um SKU de GPU eespecificaçãoífico. Sem AMD, sem Intel, sem ARM. Se sua estratégia de infra é multi-vendor, TRT-LLM é inviável para o tier servido por TRT-LLM — você ainda pode servir do vLLM em hardware misto. Se você é exclusivamente NVIDIA, o gap de 7x paga pelo lock.
 
 ### Receita prática de 2026
 
@@ -96,7 +96,7 @@ Esta aula produz `outputs/skill-trtllm-blackwell-advisor.md`. Dado um workload, 
 | NVFP4 | "micro de quatro bits" | Formato FP de microscaling de 4-bit da NVIDIA; pesos e ativações no Blackwell |
 | MXFP8 | "MX oito" | Variante microscaling de FP8; acelerado por hardware nos Tensor Cores do Blackwell |
 | FP4 day-0 | "entregar pesos FP4" | Provedores de modelo lançam pesos já em FP4; sem etapa de conversão pós-treinamento |
-| MTP | "multi-token prediction" | Draft de speculative decoding integrado no TRT-LLM (Fase 17 · 05) |
+| MTP | "multi-token prediction" | Draft de especificaçãoulative decoding integrado no TRT-LLM (Fase 17 · 05) |
 | Serving disagregado | "separar prefill/decode" | Prefill e decode em pools de GPU separados; KV transferido via NVLink/IB |
 | All-to-all | "comunicação de experts MoE" | Padrão de comunicação roteando tokens para GPUs de expert; NVLink 5 corta 3x |
 | InferenceX | "benchmark de inferência SemiAnalysis" | O benchmark de custo-por-token aceito pela indústria em 2026 |

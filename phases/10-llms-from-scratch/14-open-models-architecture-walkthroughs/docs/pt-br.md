@@ -10,7 +10,7 @@
 ## Objetivos de Aprendizado
 
 - Ler o config.json do Llama 3, Mistral, Mixtral, Gemma 2, Qwen 2.5 e DeepSeek-V3 e explicar cada campo
-- Nomear a mudanca arquitetonica especifica que cada modelo fez em relacao ao GPT-2 Small e justificar a partir dos principios
+- Nomear a mudanca arquitetonica eespecificaçãoifica que cada modelo fez em relacao ao GPT-2 Small e justificar a partir dos principios
 - Calcular contagem de parametros, tamanho do KV cache e memoria de ativacao para qualquer modelo aberto apenas a partir do config
 - Escolher o modelo aberto certo pra um alvo de desconsiderando latencia, memoria e restricoes de capacidade
 

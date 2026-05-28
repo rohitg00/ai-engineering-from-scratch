@@ -1,6 +1,6 @@
 # Capstone 12 — Pipeline de Compreensão de Vídeo (Cenas, QA, Busca)
 
-> Twelve Labs tornou Marengo + Pegasus um produto. VideoDB lançou a API CRUD-for-video. Molmo 2 da AI2 publicou checkpoints VLM abertos. Gemini de longo contexto lida com horas de vídeo nativamente. TimeLens-100K definiu grounding temporal em escala. A pipeline de 2026 está definida: segmentação de cenas, legenda + embedding por cena, alinhamento de transcrição, índice multi-vetor e uma query que responde com timestamps (início, fim) mais previews de quadros. O capstone é ingerir 100 horas, atingir benchmarks públicos e medir alucinação em questões de contagem e ação.
+> Twelve Labs tornou Marengo + Pegasus um produto. VideoDB lançou a API CRUD-for-video. Molmo 2 da AI2 publicou checkpoints VLM abertos. Gemini de longo contexto lida com horas de vídeo nativamente. TimeLens-100K definiu grounding temporal em escala. A pipeline de 2026 está definida: segmentação de cenas, legenda + embedding por cena, alinhamento de transcrição, índice multi-vetor e uma consulta que responde com timestamps (início, fim) mais previews de quadros. O capstone é ingerir 100 horas, atingir benchmarks públicos e medir alucinação em questões de contagem e ação.
 
 **Tipo:** Capstone
 **Linguagens:** Python (pipeline), TypeScript (UI)
@@ -10,7 +10,7 @@
 
 ## Problema
 
-QA de vídeo longo é o problema multimodal mais consumidor de largura de banda em escala de 2026. Gemini 2.5 Pro pode ler um vídeo de 2 horas nativamente, mas ingerir 100 horas de vídeo em um corpus pesquisável ainda requer um índice em nível de cena. A forma de produção combina segmentação de cenas (TransNetV2 ou PySceneDetect), legendas por cena com um VLM (Gemini 2.5, Qwen3-VL-Max ou Molmo 2), alinhamento de transcrição (Whisper-v3-turbo com timestamps por palavra) e um índice multi-vetor que armazena legenda, embedding de quadro e transcrição lado a lado. A pipeline de query responde com timestamps (início, fim) mais previews de quadros.
+QA de vídeo longo é o problema multimodal mais consumidor de largura de banda em escala de 2026. Gemini 2.5 Pro pode ler um vídeo de 2 horas nativamente, mas ingerir 100 horas de vídeo em um corpus pesquisável ainda requer um índice em nível de cena. A forma de produção combina segmentação de cenas (TransNetV2 ou PySceneDetect), legendas por cena com um VLM (Gemini 2.5, Qwen3-VL-Max ou Molmo 2), alinhamento de transcrição (Whisper-v3-turbo com timestamps por palavra) e um índice multi-vetor que armazena legenda, embedding de quadro e transcrição lado a lado. A pipeline de consulta responde com timestamps (início, fim) mais previews de quadros.
 
 Benchmarks são públicos (ActivityNet-QA, NeXT-GQA) mais seu próprio conjunto personalizado de 100 queries. Alucinação em questões de contagem e tipo de ação é a classe de falha notoriamente difícil; o capstone mede explicitamente.
 
@@ -18,7 +18,7 @@ Benchmarks são públicos (ActivityNet-QA, NeXT-GQA) mais seu próprio conjunto 
 
 Três pipelines rodam em paralelo na ingestão. **Segmentação de cenas** corta o vídeo em cenas. **Legendas VLM** geram uma legenda por cena e um embedding de quadro de um keyframe. **Alinhamento ASR** produz timestamps por palavra. Os três streams são unidos por (scene_id, faixa de tempo). Cada cena ganha três tipos de vetor num índice multi-vetor (Qdrant): embedding de legenda, embedding de keyframe, embedding de transcrição.
 
-No momento da query, a pergunta em linguagem natural dispara contra todos os três vetores; resultados são mesclados com RRF; um adaptador de grounding temporal (estilo TimeLens) refina a janela (início, fim) dentro da cena principal. O sintetizador VLM (Gemini 2.5 Pro ou Qwen3-VL-Max) pega query + cenas principais + quadros recortados e responde com timestamps citados e um preview de quadro.
+No momento da consulta, a pergunta em linguagem natural dispara contra todos os três vetores; resultados são mesclados com RRF; um adaptador de grounding temporal (estilo TimeLens) refina a janela (início, fim) dentro da cena principal. O sintetizador VLM (Gemini 2.5 Pro ou Qwen3-VL-Max) pega consulta + cenas principais + quadros recortados e responde com timestamps citados e um preview de quadro.
 
 A medição de alucinação importa. Questões de contagem ("quantas pessoas entram na sala?") e de tipo de ação ("o chef despeja antes de mexer?") são notoriamente não-confiáveis. Relate acurácia separadamente de questões descritivas.
 
@@ -38,14 +38,14 @@ PySceneDetect / TransNetV2  (segmentação de cenas)
       v
 Qdrant multi-vetor: {caption_emb, keyframe_emb, transcript_emb}
       |
-query:
+consulta:
   consultas densas contra os três -> fusão RRF -> top-k cenas
       |
       v
 grounding temporal TimeLens / VideoITG (refinar início/fim dentro da cena)
       |
       v
-síntese VLM: query + cenas principais + previews de quadro
+síntese VLM: consulta + cenas principais + previews de quadro
       |
       v
 resposta + timestamps (início, fim) + miniaturas de quadro + citações
@@ -78,7 +78,7 @@ resposta + timestamps (início, fim) + miniaturas de quadro + citações
 
 7. **Grounding temporal.** Rode adaptador estilo TimeLens na cena principal para refinar a janela (início, fim) dentro da cena.
 
-8. **Síntese VLM.** Chame Gemini 2.5 Pro com query + clips de top-3 cenas (como imagens ou clips curtos) + transcrições. Exija citações `(video_id, start_ms, end_ms)`.
+8. **Síntese VLM.** Chame Gemini 2.5 Pro com consulta + clips de top-3 cenas (como imagens ou clips curtos) + transcrições. Exija citações `(video_id, start_ms, end_ms)`.
 
 9. **Avaliação.** Rode ActivityNet-QA e NeXT-GQA. Construa um conjunto personalizado de 100 queries. Relate acurácia geral + breakdown por classe (contagem, ação, descritiva).
 
@@ -89,7 +89,7 @@ $ video-qa ask --url=https://youtube.com/watch?v=X "quantos carros passam na esq
 [cena]      23 cenas detectadas
 [asr]       transcrição completa, 4m12s
 [índice]    69 vetores escritos (23 cenas x 3)
-[query]     cena principal: cena 3 [01:32-01:54], confiança 0.84
+[consulta]     cena principal: cena 3 [01:32-01:54], confiança 0.84
 [ground]    janela refinada: [00:12-00:58]
 [sintetizar] gemini 2.5 pro, 1.4s
 resposta:   5 carros passam pela esquina entre 00:12 e 00:58.
@@ -128,7 +128,7 @@ citações:   [cena 3: 00:12-00:58]
 |------|------------------------|------------------------|
 | Segmentação de cenas | "Detecção de shot" | Cortar vídeo em cenas nas fronteiras de shot |
 | Índice multi-vetor | "Legenda + quadro + transcrição" | Coleção Qdrant com vetores nomeados por representação |
-| Grounding temporal | "Quando exatamente aconteceu" | Refinar a janela (início, fim) para a resposta de uma query |
+| Grounding temporal | "Quando exatamente aconteceu" | Refinar a janela (início, fim) para a resposta de uma consulta |
 | Embedding de quadro | "Representação visual" | Vetor embedding de um keyframe; usado para similaridade visual de cena |
 | Fusão RRF | "Reciprocal rank fusion" | Estratégia de fusão entre múltiplas listas ranqueadas; truque clássico de recuperação híbrida |
 | Alucinação de contagem | "Erro de contagem" | Modo de falha conhecido de VLMs em questões "quantos X" |

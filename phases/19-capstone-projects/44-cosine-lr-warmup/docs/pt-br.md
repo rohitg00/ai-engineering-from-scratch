@@ -10,7 +10,7 @@
 ## Objetivos de Aprendizado
 
 - Implementar um optimiser AdamW conectado a um agendamento de taxa de aprendizado coseno com warmup linear.
-- Computar o valor exato do agendamento em qualquer passo sem drift de ponto flutuante entre execucoes.
+- Computar o valor exato do agendamento em qualquer passo sem deriva de ponto flutuante entre execucoes.
 - Logar a norma L2 do gradiente lado a lado com a taxa de aprendizado para que a saude do treinamento seja observavel.
 - Renderizar o agendamento em um plot de texto legivel e um CSV que qualquer ferramenta pode consumir.
 

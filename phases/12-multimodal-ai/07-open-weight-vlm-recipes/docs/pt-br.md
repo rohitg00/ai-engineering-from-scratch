@@ -40,7 +40,7 @@ Todo VLM em produção faz uma escolha em cada eixo. A maior parte da variância
 
 Seção 3.2 do MM1 mostrou: trocar de CLIP ViT-L/14 pra SigLIP SO400m/14 adicionou 3+ pontos MMMU. Trocar o conector de MLP pra Perceiver Resampler adicionou menos de 1 ponto. Idefics2 replicou: SigLIP > CLIP, Q-Former ≈ MLP ≈ Perceiver no mesmo número de tokens.
 
-"Cambrian Vision Encoders Match-Up" do Cambrian-1 (Tong et al., 2024) rodou 20+ encoders num benchmark visão-centrado (CV-Bench). O topo do leaderboard é uma mistura de DINOv2 e SigLIP; CLIP fica no meio; ImageBind e ViT-MAE ficam abaixo. A lacuna do CLIP ViT-L pro DINOv2 ViT-g/14 é de ~5-7 pontos no CV-Bench.
+"Cambrian Vision Encoders Match-Up" do Cambrian-1 (Tong et al., 2024) rodou 20+ encoders num benchmark visão-centrado (CV-Bench). O topo do ranking é uma mistura de DINOv2 e SigLIP; CLIP fica no meio; ImageBind e ViT-MAE ficam abaixo. A lacuna do CLIP ViT-L pro DINOv2 ViT-g/14 é de ~5-7 pontos no CV-Bench.
 
 O encoder padrão de 2026 pra VLMs abertos é SigLIP 2 SO400m/14 pra features semânticas + densas, às vezes concatenado com features DINOv2 ViT-g/14 ("Spatial Vision Aggregator" do Cambrian faz isso).
 
@@ -92,9 +92,9 @@ Dada a evidência, a receita padrão de VLM aberto pra um novo projeto em 2026:
 - Encoder: SigLIP 2 SO400m/14 em resolução nativa com NaFlex, concatenado com DINOv2 ViT-g/14 pra features densas se precisar de segmentação/grounding.
 - Conector: MLP de 2 camadas em patch tokens. Pule Q-Former a menos que você seja limitado por tokens.
 - LLM: Qwen2.5 / Llama-3.1 / Gemma 2, 7B pra custo, 70B pra qualidade, escolhido pela latência-alvo.
-- Dados: PixMo + ShareGPT4V + Cauldron, completado com dados de instrução específicos de tarefa.
+- Dados: PixMo + ShareGPT4V + Cauldron, completado com dados de instrução eespecificaçãoíficos de tarefa.
 - Resolução: dinâmica (mín 256, máx 1280 pixels por lado longo).
-- Cronograma: Etapa 1 alinhamento (só projetor), Etapa 2 fine-tuning completo, Etapa 3 fine-tuning específico de tarefa.
+- Cronograma: Etapa 1 alinhamento (só projetor), Etapa 2 fine-tuning completo, Etapa 3 fine-tuning eespecificaçãoífico de tarefa.
 
 Cada uma dessas premissas remonta a uma ablation mensurada nos artigos citados no final dessa lição.
 
@@ -118,7 +118,7 @@ Essa lição produz `outputs/skill-vlm-recipe-picker.md`. Dada uma mistura-alvo 
 
 2. Cambrian-1 descobre que concatenar DINOv2 + SigLIP supera cada um sozinho em benchmarks visão-centrados mas não adiciona sinal no MMMU. Prevê quais benchmarks ganham e quais ficam planos.
 
-3. Seu alvo é um agente de UI mobile num LLM de 2B. Escolha encoder, conector, resolução e mistura de dados. Justifique cada escolha com uma tabela de ablation específica.
+3. Seu alvo é um agente de UI mobile num LLM de 2B. Escolha encoder, conector, resolução e mistura de dados. Justifique cada escolha com uma tabela de ablation eespecificaçãoífica.
 
 4. Molmo entrega modelos de 4B e 72B. O 4B é competitivo com VLMs fechados de 7B; o 72B supera Llama-3.2-90B-Vision em 11/11 benchmarks. O que isso te diz sobre a hipótese de platô no tamanho do LLM?
 

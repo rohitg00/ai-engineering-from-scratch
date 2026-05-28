@@ -11,7 +11,7 @@
 
 Você leu todo paper. Implementou attention, separação multi-head, codificações posicionais, blocos encoder e decoder, perdas BERT e GPT, MoE, KV cache. Agora faça tudo funcionar junto numa tarefa real.
 
-O capstone: treine um pequeno transformer decoder-only end-to-end numa tarefa de modelagem de linguagem em nível de caractere. Ele lê Shakespeare. Gera novo Shakespeare. É pequeno o suficiente pra treinar num laptop em menos de 10 minutos. É correto o suficiente que trocar por um dataset maior e treinamento mais longo te dá um LM real.
+O capstone: treine um pequeno transformer decoder-only de ponta a ponta numa tarefa de modelagem de linguagem em nível de caractere. Ele lê Shakespeare. Gera novo Shakespeare. É pequeno o suficiente pra treinar num laptop em menos de 10 minutos. É correto o suficiente que trocar por um dataset maior e treinamento mais longo te dá um LM real.
 
 Esse é o "nanoGPT" do curso. Não é original — o tutorial nanoGPT do Karpathy de 2023 é a implementação de referência que todo estudante escreve pelo menos uma vez. Pegamos a forma e adaptamos em torno do que cobrimos.
 

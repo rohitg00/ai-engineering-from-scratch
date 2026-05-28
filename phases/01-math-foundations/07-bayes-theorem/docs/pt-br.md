@@ -171,7 +171,7 @@ Frequentistas tratam parâmetros como incórtos fixos. Eles perguntam: "Se eu re
 
 Bayesianos tratam parâmetros como distribuições. Eles perguntam: "Dado o que observei, o que acredito sobre os parâmetros?"
 
-| Aspecto | Frequentista | Bayesiano |
+| Aespecificaçãoto | Frequentista | Bayesiano |
 |--------|-------------|----------|
 | Saída | Estimativa pontual | Distribuição sobre valores |
 | Incerteza | Intervalos de confiança (sobre o procedimento) | Intervalos críveis (sobre o parâmetro) |
@@ -220,8 +220,8 @@ class NaiveBayes:
         self.class_word_totals = defaultdict(int)
         self.vocab = set()
 
-    def train(self, documents, labels):
-        for doc, label in zip(documents, labels):
+    def train(self, documents, rótulos):
+        for doc, label in zip(documents, rótulos):
             self.class_counts[label] += 1
             words = doc.lower().split()
             for word in words:
@@ -267,13 +267,13 @@ train_docs = [
     "please review the pull request",
 ]
 
-train_labels = [
+train_rótulos = [
     "spam", "spam", "spam", "spam", "spam",
     "ham", "ham", "ham", "ham", "ham", "ham", "ham",
 ]
 
 classifier = NaiveBayes()
-classifier.train(train_docs, train_labels)
+classifier.train(train_docs, train_rótulos)
 
 test_messages = [
     "free money waiting for you",
@@ -286,7 +286,7 @@ for msg in test_messages:
     print(f"  '{msg}' -> {classifier.predict(msg)}")
 ```
 
-### Passo 4: Inspecione as probabilidades aprendidas
+### Passo 4: Inespecificaçãoione as probabilidades aprendidas
 
 ```python
 def show_top_words(classifier, cls, n=5):
@@ -317,7 +317,7 @@ from sklearn.naive_bayes import MultinomialNB
 vectorizer = CountVectorizer()
 X_train = vectorizer.fit_transform(train_docs)
 clf = MultinomialNB()
-clf.fit(X_train, train_labels)
+clf.fit(X_train, train_rótulos)
 
 X_test = vectorizer.transform(test_messages)
 predictions = clf.predict(X_test)
@@ -329,7 +329,7 @@ Mesmo algoritmo. CountVectorizer lida com tokenização e construção de vocabu
 
 ## Entregue
 
-A classe NaiveBayes construída aqui demonstra o pipeline completo: tokenização, estimação de probabilidade com suavização de Laplace, predição em espaço log. O código em `code/bayes.py` roda end-to-end sem dependências além da biblioteca padrão do Python.
+A classe NaiveBayes construída aqui demonstra o pipeline completo: tokenização, estimação de probabilidade com suavização de Laplace, predição em espaço log. O código em `code/bayes.py` roda de ponta a ponta sem dependências além da biblioteca padrão do Python.
 
 ### Priors Conjugados
 
@@ -346,7 +346,7 @@ Por que isso importa: sem priors conjugados, você precisa de amostragem Monte C
 
 A distribuição Beta é o prior conjugado mais comum na prática. Beta(a, b) representa sua crença sobre um parâmetro de probabilidade. A média é a/(a+b). Quanto maior a+b, mais concentrada (confiante) a distribuição.
 
-Casos especiais do prior Beta:
+Casos eespecificaçãoiais do prior Beta:
 - Beta(1, 1) = uniforme. Você não tem opinião sobre o parâmetro.
 - Beta(10, 10) = picada em 0.5. Você acredita firmemente que o parâerto está perto de 0.5.
 - Beta(1, 10) = enviesada pra 0. Você acredita que o parâmetro é pequeno.
@@ -425,11 +425,11 @@ Vantagens sobre teste A/B frequentista:
 - Você pode checar resultados a qualquer momento sem inflar taxas de falso positivo (sem "problema de olhar")
 - Você pode incorporar conhecimento prévio (ex: testes anteriores sugerem que taxas de conversão são normalmente 3-8%)
 
-| Aspecto | A/B Frequentista | A/B Bayesiano |
+| Aespecificaçãoto | A/B Frequentista | A/B Bayesiano |
 |--------|----------------|--------------|
 | Saída | p-value | P(B > A) |
 | Interpretação | "Quão surpreendente são esses dados se A=B?" | "Quão provável é que B seja melhor que A?" |
-| Parada antecipada | Infla falsos positivos | Seguro em qualquer ponto (dado um prior bem escolhido e modelo corretamente especificado) |
+| Parada antecipada | Infla falsos positivos | Seguro em qualquer ponto (dado um prior bem escolhido e modelo corretamente eespecificaçãoificado) |
 | Conhecimento prévio | Não usado | Codificado como prior Beta |
 | Regra de decisão | p < 0.05 | P(B > A) > limiar |
 
@@ -439,7 +439,7 @@ Vantagens sobre teste A/B frequentista:
 
 2. **Impacto da suavização.** Rode o classificador de spam com valores de suavização de 0.01, 0.1, 1.0 e 10.0. Como as probabilidades das top palavras mudam? O que acontece com suavização=0 e uma palavra que aparece só em ham?
 
-3. **Adicione features.** Estenda a classe NaiveBayes para usar também o tamanho da mensagem (curta/longa) como feature ao lado de contagens de palavras. Estime P(curta|spam) e P(curta|ham) dos dados de treino e inclua na pontuação de predição.
+3. **Adicione features.** Estenda a classe NaiveBayes para usar também o tamanho da mensagem (curta/longa) como funcionalidade ao lado de contagens de palavras. Estime P(curta|spam) e P(curta|ham) dos dados de treino e inclua na pontuação de predição.
 
 4. **MAP à mão.** Dados observados (7 caras em 10 lançamentos), compute a estimativa MAP do viés usando um prior Beta(2,2). Compare com a estimativa MLE (7/10).
 
@@ -448,11 +448,11 @@ Vantagens sobre teste A/B frequentista:
 | Termo | O que dizem | O que realmente significa |
 |------|----------------|----------------------|
 | Prior | "Minha suposição inicial" | P(hipótese) antes de observar evidência. No ML: o termo de regularização. |
-| Verossimilhança | "Quão bem os dados se encaixam" | P(evidência\|hipótese). Quão provável são os dados observados sob uma hipótese específica. |
+| Verossimilhança | "Quão bem os dados se encaixam" | P(evidência\|hipótese). Quão provável são os dados observados sob uma hipótese eespecificaçãoífica. |
 | Posterior | "Minha crença atualizada" | P(hipótese\|evidência). O prior multiplicado pela verossimilhança, depois normalizado. |
 | Evidência | "A constante normalizadora" | P(dados) sobre todas hipóteses. Garante que o posterior soma 1. |
 | Naive Bayes | "Aquele classificador simples de texto" | Um classificador que assume que as features são independentes dada a classe. Funciona bem apesar da suposição falsa. |
-| Suavização de Laplace | "Suavização de adicionar-um" | Adicionar uma pequena contagem a cada feature pra evitar probabilidades zero de dados não vistos. |
+| Suavização de Laplace | "Suavização de adicionar-um" | Adicionar uma pequena contagem a cada funcionalidade pra evitar probabilidades zero de dados não vistos. |
 | MLE | "Só usar as frequências" | Escolher parâmetros que maximizam P(dados\|parâmetros). Sem prior. Pode fazer overajuste com dados pequenos. |
 | MAP | "MLE com prior" | Escolher parâmetros que maximizam P(dados\|parâmetros) * P(parâmetros). Equivalente a MLE regularizado. |
 | Log probabilidade | "Trabalhar em espaço log" | Usar log(P) em vez de P pra evitar underflow de ponto flutuante ao multiplicar muitos números pequenos. |

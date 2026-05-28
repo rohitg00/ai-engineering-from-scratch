@@ -85,7 +85,7 @@ Essa lição produz `outputs/skill-constitution-writer.md`. Dado um domínio (su
 
 2. Leia a constituição de 2026 da Anthropic (anthropic.com/news/claudes-constitution). Liste um princípio que seria classificado Nível 1 e um que seria classificado Nível 4. Por que a estrutura de prioridade importa para conflitos?
 
-3. Projete uma constituição para um assistente de programação de IA. Especifique Nível 1 (catastrófico: comandos destrutivos sem aprovação), Nível 2, Nível 3, Nível 4. Mantenha cada nível com 3-5 princípios.
+3. Projete uma constituição para um assistente de programação de IA. Eespecificaçãoifique Nível 1 (catastrófico: comandos destrutivos sem aprovação), Nível 2, Nível 3, Nível 4. Mantenha cada nível com 3-5 princípios.
 
 4. CAI substitui labelers humanos por labelers de IA. Nomeie um modo de falha semelhante a sycophancy que ainda pode ocorrer no RLAIF, e projete uma detecção para ele.
 

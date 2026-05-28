@@ -10,8 +10,8 @@
 ## Objetivos de Aprendizado
 
 - Implementar um loop de function calling: definir schemas de tools, parsear tool-call JSON do modelo, executar funções e retornar resultados
-- Projetar schemas de tools com descrições claras e parâmetros tipados que o modelo consegue invocar de forma confiável
-- Construir um loop multi-turno de agent que encadeia múltiplas chamadas de função para responder queries complexas
+- Projetar schemas de ferramentas com descrições claras e parâmetros tipados que o modelo consegue invocar de forma confiável
+- Construir um loop multi-turno de agente que encadeia múltiplas chamadas de função para responder queries complexas
 - Lidar com casos extremos: chamadas paralelas, propagação de erros e prevenção de loops infinitos
 
 ## O Problema
@@ -41,7 +41,7 @@ graph TD
 
 ### Definição de Tools
 
-Cada tool precisa de um schema que o modelo consegue entender:
+Cada ferramenta precisa de um schema que o modelo consegue entender:
 
 ```python
 TOOL_DEFINITIONS = {
@@ -71,9 +71,9 @@ TOOL_DEFINITIONS = {
         "parameters": {
             "type": "object",
             "properties": {
-                "query": {"type": "string", "description": "Termo de busca"}
+                "consulta": {"type": "string", "description": "Termo de busca"}
             },
-            "required": ["query"]
+            "required": ["consulta"]
         }
     }
 }
@@ -84,9 +84,9 @@ TOOL_DEFINITIONS = {
 Controla como o modelo usa as tools:
 
 - `"auto"`: Modelo decide quando chamar (padrão)
-- `"required"`: Modelo deve chamar uma tool sempre
+- `"required"`: Modelo deve chamar uma ferramenta sempre
 - `"none"`: Modelo não pode chamar tools
-- `{"function": {"name": "get_weather"}}`: Força tool específica
+- `{"function": {"name": "get_weather"}}`: Força ferramenta eespecificaçãoífica
 
 ## Construa
 
@@ -120,13 +120,13 @@ def calculator(expression):
         return {"error": str(e)}
 
 def execute_tool_call(tool_call):
-    """Executa uma chamada de tool e retorna o resultado."""
+    """Executa uma chamada de ferramenta e retorna o resultado."""
     name = tool_call["name"]
     args = tool_call["arguments"]
     
     start = time.time()
     
-    tools = {
+    ferramentas = {
         "get_weather": get_weather,
         "calculator": calculator,
     }
@@ -146,9 +146,9 @@ def execute_tool_call(tool_call):
 ### Passo 2: Simulador de LLM com Tool Calling
 
 ```python
-def simulate_llm_with_tools(query, available_tools):
+def simulate_llm_with_tools(consulta, available_tools):
     """Simula um LLM que decide quando usar tools."""
-    q = query.lower()
+    q = consulta.lower()
     
     if "clima" in q or "tempo" in q or "weather" in q:
         for city in ["Tóquio", "Londres", "Nova York"]:
@@ -173,20 +173,20 @@ def simulate_llm_with_tools(query, available_tools):
     
     return {
         "tool_calls": [],
-        "text": f"Com base na sua pergunta sobre '{query}', posso ajudá-la da seguinte forma..."
+        "text": f"Com base na sua pergunta sobre '{consulta}', posso ajudá-la da seguinte forma..."
     }
 ```
 
 ### Passo 3: Loop de Function Calling
 
 ```python
-def run_function_calling_loop(query, max_iterations=5):
+def run_function_calling_loop(consulta, max_iterations=5):
     """Executa o loop completo de function calling."""
-    messages = [{"role": "user", "content": query}]
+    messages = [{"role": "user", "content": consulta}]
     all_tool_results = []
     
     for i in range(max_iterations):
-        llm_response = simulate_llm_with_tools(query, TOOL_DEFINITIONS)
+        llm_response = simulate_llm_with_tools(consulta, TOOL_DEFINITIONS)
         
         if not llm_response["tool_calls"]:
             return {
@@ -220,7 +220,7 @@ def run_function_calling_loop(query, max_iterations=5):
 #
 # client = OpenAI()
 #
-# tools = [{
+# ferramentas = [{
 #     "type": "function",
 #     "function": {
 #         "name": "get_weather",
@@ -281,25 +281,25 @@ def run_function_calling_loop(query, max_iterations=5):
 
 1. Adicione uma 6th tool: consulta ao banco de dados. Implemente com tabela em memória.
 
-2. Implemente retry com feedback de erro. Quando uma tool falhar, devolva o erro ao modelo.
+2. Implemente retry com feedback de erro. Quando uma ferramenta falhar, devolva o erro ao modelo.
 
-3. Construa um agent multi-step que encadeia chamadas de tools.
+3. Construa um agente multi-step que encadeia chamadas de tools.
 
-4. Meça acurácia de seleção de tools: 30 queries com tools esperadas.
+4. Meça acurácia de seleção de tools: 30 queries com ferramentas esperadas.
 
-5. Implemente cache de chamadas: mesmo tool + mesmos argumentos em 60 segundos = cache hit.
+5. Implemente cache de chamadas: mesmo ferramenta + mesmos argumentos em 60 segundos = cache hit.
 
 ## Termos-Chave
 
 | Termo | O que o pessoal diz | O que realmente significa |
 |-------|--------------------|-----------------------|
-| Function calling | "Uso de tools" | Modelo gera JSON descrevendo função a invocar com argumentos específicos |
-| Tool definition | "Schema de função" | Objeto JSON Schema descrevendo nome, propósito, parâmetros e tipos da tool |
-| Tool choice | "Modo de chamada" | Controla se modelo deve (required), pode (auto) ou não pode (none) chamar tools |
-| Parallel calling | "Multi-tool" | Modelo gera múltiplas tool calls em um turno |
+| Function calling | "Uso de tools" | Modelo gera JSON descrevendo função a invocar com argumentos eespecificaçãoíficos |
+| Tool definition | "Schema de função" | Objeto JSON Schema descrevendo nome, propósito, parâmetros e tipos da ferramenta |
+| Tool choice | "Modo de chamada" | Controla se modelo deve (required), pode (auto) ou não pode (none) chamar ferramentas |
+| Parallel calling | "Multi-tool" | Modelo gera múltiplas ferramenta calls em um turno |
 | Agent loop | "Loop ReAct" | Ciclo iterativo: modelo decide, código executa, resultado volta |
-| Tool poisoning | "Prompt injection via tools" | Ataque onde resultados de tools contêm instruções manipuladoras |
-| MCP | "Protocolo de tools" | Model Context Protocol — padrão aberto para expor tools via servers |
+| Tool poisoning | "Prompt injection via tools" | Ataque onde resultados de ferramentas contêm instruções manipuladoras |
+| MCP | "Protocolo de tools" | Model Context Protocol — padrão aberto para expor ferramentas via servers |
 
 ## Leitura Adicional
 

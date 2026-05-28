@@ -18,7 +18,7 @@
 
 O primeiro transporte remoto do MCP (2024-11) era HTTP+SSE: dois endpoints, um pra POSTs do cliente e um canal Server-Sent-Events pra stream servidor-cliente. Funcionava. Também era desajeitado: dois endpoints por sessão, caches quebrados na frente de alguns CDNs e dependência rígida em conexões SSE de longa duração que certos WAFs terminam agressivamente.
 
-A especificação 2025-03-26 substituiu por Streamable HTTP: um endpoint único, POST pra requests do cliente, GET pra estabelecer uma stream de sessão, ambos compartilhando um header `Mcp-Session-Id`. Todo servidor construído ou migrado desde então usa Streamable HTTP. O modo SSE antigo está sendo deprecado — Atlassian Rovo removeu em 30 de junho de 2026; Keboola em 1º de abril de 2026; a maioria dos servidores empresariais restantes até o fim de 2026.
+A eespecificaçãoificação 2025-03-26 substituiu por Streamable HTTP: um endpoint único, POST pra requests do cliente, GET pra estabelecer uma stream de sessão, ambos compartilhando um header `Mcp-Session-Id`. Todo servidor construído ou migrado desde então usa Streamable HTTP. O modo SSE antigo está sendo deprecado — Atlassian Rovo removeu em 30 de junho de 2026; Keboola em 1º de abril de 2026; a maioria dos servidores empresariais restantes até o fim de 2026.
 
 E stdio ainda importa pra servidores locais. Claude Desktop, VS Code e todo cliente em forma de IDE spawnam servidores via stdio. O modelo mental certo: stdio pra "esta máquina", Streamable HTTP pra "pela rede". Sem cruzamento.
 
@@ -44,13 +44,13 @@ Sessões são identificadas pelo header `Mcp-Session-Id` que o servidor define n
 
 ### Endpoint único vs. dois
 
-Modo de dois endpoints da especificação antiga ainda é chamável em 2026 — a especificação o declara "compatível com legado". Mas todos os novos servidores devem ser de endpoint único. Os SDKs oficiais emitem endpoint único; use o modo legado só ao falar com um remoto não migrado.
+Modo de dois endpoints da eespecificaçãoificação antiga ainda é chamável em 2026 — a eespecificaçãoificação o declara "compatível com legado". Mas todos os novos servidores devem ser de endpoint único. Os SDKs oficiais emitem endpoint único; use o modo legado só ao falar com um remoto não migrado.
 
 ### Validação de `Origin` e DNS-rebinding
 
 Navegadores não são clientes MCP (hoje), mas um atacante pode montar uma página web que convence um navegador a fazer POST pra `localhost:1234/mcp` — onde o servidor local do usuário escuta. Se o servidor não verifica `Origin`, a política de same-origin do navegador não o salvará porque `Origin: http://evil.com` é cross-origin válido.
 
-A especificação 2025-11-25 requer que servidores rejeitem requests cujo `Origin` não esteja numa allowlist. A allowlist normalmente contém o host do cliente MCP (`https://claude.ai`, `vscode-webview://*`) e variantes de localhost pra UIs locais.
+A eespecificaçãoificação 2025-11-25 requer que servidores rejeitem requests cujo `Origin` não esteja numa allowlist. A allowlist normalmente contém o host do cliente MCP (`https://claude.ai`, `vscode-webview://*`) e variantes de localhost pra UIs locais.
 
 ### Ciclo de vida do id de sessão
 
@@ -92,7 +92,7 @@ Quando você coloca múltiplos servidores MCP atrás de um gateway (Fase 13 · 1
 
 ### Quando pular o Streamable HTTP
 
-Algumas empresas implementam servidores MCP atrás de transports gRPC ou de fila de mensagens em suas próprias redes. Isso é não-padrão — a especificação do MCP não define formalmente esses. Gateways podem expor uma superfície Streamable HTTP pra clientes MCP enquanto usam gRPC internamente. Mantenha a superfície externa compatível com a spec; o gateway cuida da tradução.
+Algumas empresas implementam servidores MCP atrás de transports gRPC ou de fila de mensagens em suas próprias redes. Isso é não-padrão — a eespecificaçãoificação do MCP não define formalmente esses. Gateways podem expor uma superfície Streamable HTTP pra clientes MCP enquanto usam gRPC internamente. Mantenha a superfície externa compatível com a especificação; o gateway cuida da tradução.
 
 ## Use
 
@@ -125,7 +125,7 @@ Esta aula produz `outputs/skill-mcp-transport-migrator.md`. Dado um servidor MCP
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|----------------------|--------------------------|
 | Transporte stdio | "Processo filho local" | JSON-RPC via stdin/stdout, delimitado por newline |
-| Streamable HTTP | "O transporte remoto" | Endpoint único POST + GET + SSE opcional, especificação 2025-03-26 |
+| Streamable HTTP | "O transporte remoto" | Endpoint único POST + GET + SSE opcional, eespecificaçãoificação 2025-03-26 |
 | HTTP+SSE | "Legado" | Modelo de dois endpoints sendo removido no meio de 2026 |
 | `Mcp-Session-Id` | "Header de sessão" | Id aleatório atribuído pelo servidor e ecoado em todo request subsequente |
 | Allowlist de `Origin` | "Defesa contra DNS-rebinding" | Rejeitar requests cuja Origin não está aprovada |
@@ -137,8 +137,8 @@ Esta aula produz `outputs/skill-mcp-transport-migrator.md`. Dado um servidor MCP
 
 ## Leituras Complementares
 
-- [MCP — Basic transports spec 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports) — referência canônica pra stdio e Streamable HTTP
-- [MCP — Basic transports spec 2025-03-26](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports) — a revisão que introduziu Streamable HTTP
+- [MCP — Basic transports especificação 2025-11-25](https://modelcontextprotocol.io/especificaçãoification/2025-11-25/basic/transports) — referência canônica pra stdio e Streamable HTTP
+- [MCP — Basic transports especificação 2025-03-26](https://modelcontextprotocol.io/especificaçãoification/2025-03-26/basic/transports) — a revisão que introduziu Streamable HTTP
 - [Cloudflare — MCP transport](https://developers.cloudflare.com/agents/model-context-protocol/transport/) — padrões de Streamable HTTP hospedados em Workers
 - [AWS — MCP transport mechanisms](https://builder.aws.com/content/35A0IphCeLvYzly9Sw40G1dVNzc/mcp-transport-mechanisms-stdio-vs-streamable-http) — comparação entre formas de deployment
 - [Atlassian — HTTP+SSE deprecation notice](https://community.atlassian.com/forums/Atlassian-Remote-MCP-Server/HTTP-SSE-Deprecation-Notice/ba-p/3205484) — exemplo concreto de prazo de migração

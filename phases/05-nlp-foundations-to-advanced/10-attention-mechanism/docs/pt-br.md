@@ -21,7 +21,7 @@ Essa é a ideia inteira. Transformers a estenderam. Self-attention aplicou a uma
 
 A cada passo do decoder `t`:
 
-1. Usa o estado oculto anterior do decoder `s_{t-1}` como **query**.
+1. Usa o estado oculto anterior do decoder `s_{t-1}` como **consulta**.
 2. Pontua contra cada estado oculto do encoder `h_1, ..., h_T`. Um escalar por posição do encoder.
 3. Faz softmax nos scores pra obter pesos de attention `α_{t,1}, ..., α_{t,T}` que somam 1.
 4. Vetor de contexto `c_t = Σ α_{t,i} * h_i`. Média ponderada dos estados do encoder.
@@ -143,11 +143,11 @@ import torch
 import torch.nn as nn
 
 mha = nn.MultiheadAttention(embed_dim=128, num_heads=8, batch_first=True)
-query = torch.randn(2, 5, 128)
+consulta = torch.randn(2, 5, 128)
 key = torch.randn(2, 10, 128)
 value = torch.randn(2, 10, 128)
 
-output, weights = mha(query, key, value)
+output, weights = mha(consulta, key, value)
 print(output.shape, weights.shape)
 ```
 
@@ -155,7 +155,7 @@ print(output.shape, weights.shape)
 torch.Size([2, 5, 128]) torch.Size([2, 5, 10])
 ```
 
-Essa é uma camada de attention de transformer. Lote de query de 5 posições, key/value lote de 10 posições, 128 dimensões cada, 8 heads. `output` são as queries aumentadas com contexto. `weights` é a matriz de alinhamento 5x10 que você pode visualizar.
+Essa é uma camada de attention de transformer. Lote de consulta de 5 posições, key/value lote de 10 posições, 128 dimensões cada, 8 heads. `output` são as queries aumentadas com contexto. `weights` é a matriz de alinhamento 5x10 que você pode visualizar.
 
 ### Quando attention clássica ainda importa
 
@@ -191,7 +191,7 @@ Given a broken attention implementation, you identify the shape mismatch. Output
 
 Refuse to recommend fixes that silently broadcast. Broadcast-hiding bugs surface later as silent accuracy degradation, the worst kind of attention bug.
 
-For Bahdanau confusion, insist the decoder input is `s_{t-1}` (pre-step state). For Luong, `s_t` (post-step state). For dot-product, flag dimension mismatch between query and key as the most common first-time error.
+For Bahdanau confusion, insist the decoder input is `s_{t-1}` (pre-step state). For Luong, `s_t` (post-step state). For dot-product, flag dimension mismatch between consulta and key as the most common first-time error.
 ```
 
 ## Exercícios
@@ -204,7 +204,7 @@ For Bahdanau confusion, insist the decoder input is `s_{t-1}` (pre-step state). 
 
 | Termo | O que a gente diz | O que realmente significa |
 |------|-----------------|-----------------------|
-| Attention | Olhar pras coisas | Média ponderada de uma sequência de values, pesos calculados de similaridade query-key. |
+| Attention | Olhar pras coisas | Média ponderada de uma sequência de values, pesos calculados de similaridade consulta-key. |
 | Query, Key, Value | QKV | Três projeções: Q pergunta, K é com o que combinar, V é o que retornar. |
 | Attention aditiva | Bahdanau | Score de feed-forward: `v^T tanh(W q + U k)`. |
 | Attention multiplicativa | Luong dot / general | Score é `q^T k` ou `q^T W k`. Mais barato, mesma precisão na maioria das tarefas. |

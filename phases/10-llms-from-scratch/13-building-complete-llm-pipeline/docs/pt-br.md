@@ -1,6 +1,6 @@
 # Construindo um Pipeline Completo de LLM
 
-> Tudo das Aulas 01 a 12 e um estagio de um unico pipeline. Esta aula e o esqueleto que transforma esses estagios em uma execucao end-to-end: tokenizar, pre-treinar, escalar, SFT, alinhar, avaliar, quantizar, servir. Voce nao vai treinar um modelo 70B num notebook. Voce vai produzir a camada de orquestracao, o manifesto, o gate de avaliacao e o plano de rollback que uma equipe de fronteira em 2026 usa pra decidir o que vai pro ar. Esta e a aula final.
+> Tudo das Aulas 01 a 12 e um estagio de um unico pipeline. Esta aula e o esqueleto que transforma esses estagios em uma execucao de ponta a ponta: tokenizar, pre-treinar, escalar, SFT, alinhar, avaliar, quantizar, servir. Voce nao vai treinar um modelo 70B num notebook. Voce vai produzir a camada de orquestracao, o manifesto, o gate de avaliacao e o plano de rollback que uma equipe de fronteira em 2026 usa pra decidir o que vai pro ar. Esta e a aula final.
 
 **Tipo:** Construir
 **Linguagens:** Python (stdlib)
@@ -9,7 +9,7 @@
 
 ## Objetivos de Aprendizado
 
-- Compor as onze aulas anteriores (tokenizer, dados, pre-treinamento, escalabilidade, SFT, RLHF, DPO, CAI, avaliacao, quantizacao, inferencia) em uma spec de pipeline reproduzivel
+- Compor as onze aulas anteriores (tokenizer, dados, pre-treinamento, escalabilidade, SFT, RLHF, DPO, CAI, avaliacao, quantizacao, inferencia) em uma eespecificaçãoificação de pipeline reproduzivel
 - Definir o contrato de artefatos entre estagios: o que cada estagio consome, o que produz, e como o proximo estagio verifica a entrada
 - Construir um orquestrador que rastreia experimentos, faz hash dos artefatos e condiciona decisoes de envio a thresholds de avaliacao
 - Projetar o plano de rollback: quais artefatos sao baratos de re-executar, quais sao caros, e quanto custa um checkpoint corrompido
@@ -20,7 +20,7 @@ As aulas anteriores cada uma funciona. Tokenizer treinado. Tiny GPT pre-treinado
 
 Um run de treinamento de fronteira nao e um notebook. Llama 3 405B levou 30 milhoes de horas H100 ao longo de aproximadamente 54 dias. DeepSeek-V3 usou cerca de 2.8 milhoes de horas H800. Durante esse tempo, um checkpoint corrompido, uma contaminacao de dados, uma regressao na avaliacao pode custar uma semana de tempo real e um mes de orcamento de GPU. A forma como as equipes sobrevivem e pela higiene do pipeline: cada estagio tem entrada deterministica, saida deterministica, manifesto, hash e gate.
 
-Esta e a aula final. Voce nao vai rodar o pipeline end-to-end num notebook. Voce vai escrever o orquestrador que coordena os estagios, o manifesto que descreve o run, o verificador que condiciona decisoes de envio e o plano de replay que permite a terceiros re-executar seu trabalho a partir de um unico arquivo. O codigo e pequeno; a disciplina e grande.
+Esta e a aula final. Voce nao vai rodar o pipeline de ponta a ponta num notebook. Voce vai escrever o orquestrador que coordena os estagios, o manifesto que descreve o run, o verificador que condiciona decisoes de envio e o plano de replay que permite a terceiros re-executar seu trabalho a partir de um unico arquivo. O codigo e pequeno; a disciplina e grande.
 
 O padrao escala de 100M para 1T de parametros sem mudanca. Os mesmos quatro componentes -- manifesto, orquestrador, gate de avaliacao, armazem de artefatos -- rodam Llama 3 e tambem rodam seu GPT de hobby. A diferenca e o tamanho dos numeros dentro da config de cada estagio, nao a forma do pipeline.
 
@@ -90,7 +90,7 @@ A saida de cada estagio e um artefato tipado. Nao um blob de diretorio, nao um p
 | 08-09 | Politica | checkpoint + hash de referencia + beta + orcamento KL consumido |
 | 10 | Relatorio de Avaliacao | scores de benchmark + diffs de regressao + hash dos dados de avaliacao |
 | 11 | Modelo Quantizado | pesos quantizados + dados de calibracao + delta de acuracia vs FP16 |
-| 12 | Especificacao do Servidor | endpoint + hash do modelo + config + hooks de observabilidade |
+| 12 | Eespecificaçãoificacao do Servidor | endpoint + hash do modelo + config + hooks de observabilidade |
 
 A tipagem evita o modo de falha mais comum: usar a saida do estagio 08 como entrada do estagio 06, enviando um modelo treinado com DPO pelo caminho de SFT. Artefatos tipados e assinaturas de estagios tipados transformam esses erros em falhas de compilacao, nao falhas no quinto dia.
 
@@ -144,7 +144,7 @@ Um run de fronteira tem um numero em dolares atrelado. Disciplina de orcamento a
 
 **Rastreamento durante o run.** Tempo real e custo por estagio sao registrados no manifesto. Depois de cada estagio, o orcamento restante e verificado. Se um estagio extrapolou, o gate do proximo estagio e avaliado com o novo orcamento restante. Voce nao fica sabendo que ficou sem dinheiro quando o VC liga.
 
-O custo reportado do Llama 3 foi de $61M. DeepSeek-V3 reportou $5.6M para o run principal de pre-treinamento. A razao e majoritariamente eficiencia de hardware mais mixture-of-experts -- mas o custo especifico e visivel porque ambas as equipes rastrearam por estagio, nao por run.
+O custo reportado do Llama 3 foi de $61M. DeepSeek-V3 reportou $5.6M para o run principal de pre-treinamento. A razao e majoritariamente eficiencia de hardware mais mixture-of-experts -- mas o custo eespecificaçãoifico e visivel porque ambas as equipes rastrearam por estagio, nao por run.
 
 ### Reprodutibilidade vs Determinismo
 
@@ -183,19 +183,19 @@ Como as dependencias de estagios sao tipadas e com hash, o orquestrador pode cal
 
 A maioria das equipes de fronteira convergiu no mesmo esqueleto.
 
-- Tokenizer: 128k BPE com fallback de byte. Treinado em um corte multilingue pequeno e balanceado.
+- Tokenizer: 128k BPE com reserva de byte. Treinado em um corte multilingue pequeno e balanceado.
 - Pre-treinamento: 10-20T tokens, majoritariamente web mais codigo mais sintetico. Otimizador Muon ou AdamW. FSDP2 ou DeepSpeed ZeRO-3. Gradient checkpointing. Pesos BF16, master FP32.
 - SFT: 500k-2M pares de instrucoes, mix humano e sintetico, com dedup rigoroso contra o dataset de avaliacao.
 - Alinhamento: DPO ou CAI + GRPO. RLHF apenas onde o sinal de preferencia e multidimensional demais pra DPO.
 - Avaliacao: MMLU-Pro, MATH, HumanEval+, GPQA, SWE-Bench Verified, LiveBench, mais um conjunto privado de retencao que o publico nunca ve.
 - Quantizacao: GPTQ ou AWQ 4-bit pra servir, 8-bit pra avaliacoes de seguranca onde deltas de acuracia importam.
-- Servindo: vLLM, TensorRT-LLM ou proprio. Batching continuo. Decodificacao especulativa. Evicao de KV cache.
+- Servindo: vLLM, TensorRT-LLM ou proprio. Batching continuo. Decodificacao eespecificaçãoulativa. Evicao de KV cache.
 
 Os numeros mudam a cada seis meses. O esqueleto nao.
 
 ## Construir
 
-O codigo da aula e um orquestrador e um verificador de manifesto, nao doze scripts de treinamento. Cada estagio e simulado com um placeholder que produz um artefato de saida com o formato e hash corretos. Rodar o orquestrador end-to-end prova que a tubulacao do pipeline funciona antes de voce queimar dinheiro de GPU nos estagios reais.
+O codigo da aula e um orquestrador e um verificador de manifesto, nao doze scripts de treinamento. Cada estagio e simulado com um placeholder que produz um artefato de saida com o formato e hash corretos. Rodar o orquestrador de ponta a ponta prova que a tubulacao do pipeline funciona antes de voce queimar dinheiro de GPU nos estagios reais.
 
 Veja `code/main.py` pra implementacao completa. Os pedacos principais:
 

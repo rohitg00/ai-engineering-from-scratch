@@ -24,7 +24,7 @@ Resposta do Show-o: mantenha ambas modalidades discretas (como Chameleon), mas g
 
 ### Difusão discreta mascarada (MaskGIT)
 
-O truque original do MaskGIT de Chang et al. (2022) é elegante. Começa de uma imagem totalmente mascarada (cada token é o id especial `<MASK>`). A cada step, prevê todos os tokens mascarados em paralelo, depois mantém os top-K previsões mais confiantes e re-mascara o resto. Depois de ~8-16 iterações, todos os tokens estão preenchidos. O cronograma de quantos tokens desmascarar por step é ajustado — cronogramas cosseno funcionam bem.
+O truque original do MaskGIT de Chang et al. (2022) é elegante. Começa de uma imagem totalmente mascarada (cada token é o id eespecificaçãoial `<MASK>`). A cada step, prevê todos os tokens mascarados em paralelo, depois mantém os top-K previsões mais confiantes e re-mascara o resto. Depois de ~8-16 iterações, todos os tokens estão preenchidos. O cronograma de quantos tokens desmascarar por step é ajustado — cronogramas cosseno funcionam bem.
 
 Treinamento é simples: amostra uma razão de mascaramento uniformemente de [0, 1], aplica nos tokens VQ da imagem, treina o transformer pra recuperar os mascarados. Exatamente o que BERT fez pra texto, escalado pra geração de imagem.
 
@@ -109,7 +109,7 @@ Esta aula produz `outputs/skill-unified-gen-model-picker.md`. Dado um produto qu
 
 1. Difusão discreta mascarada amostra em ~16 steps. Por que não 1? O que quebra se você desmascara tudo no step 0?
 
-2. Inpainting é de graça com difusão mascarada. Proponha um caso de uso de produto (real ou hipotético) onde o inpainting do Show-o supera um modelo especializado.
+2. Inpainting é de graça com difusão mascarada. Proponha um caso de uso de produto (real ou hipotético) onde o inpainting do Show-o supera um modelo eespecificaçãoializado.
 
 3. Cronograma cosseno vs cronograma linear: trace o número de tokens desmascarados por step pra T=8. Qual é mais equilibrado?
 

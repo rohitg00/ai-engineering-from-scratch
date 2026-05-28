@@ -1,6 +1,6 @@
 # Transformers de Áudio — Arquitetura Whisper
 
-> Áudio é uma imagem de frequência sobre tempo. Whisper é um ViT que come espectrogramas mel e fala de volta.
+> Áudio é uma imagem de frequência sobre tempo. Whisper é um ViT que come eespecificaçãotrogramas mel e fala de volta.
 
 **Tipo:** Aprender
 **Linguagens:** Python
@@ -15,7 +15,7 @@ Whisper apostou em três pontos:
 
 1. **Treinar em tudo.** 680.000 horas de áudio rotulado fraco coletado da internet em 97 idiomas. Sem corpus acadêmico limpo. Sem rótulos de fonema.
 2. **Modelo único multitarefa.** Um decoder treinado conjuntamente em transcrição, tradução, detecção de atividade de voz, identificação de idioma e marcação de tempo via task tokens.
-3. **Transformer encoder-decoder padrão.** Encoder consome espectrogramas log-mel. Decoder gera tokens de texto autoregressivamente. Sem vocoder, sem CTC, sem HMM.
+3. **Transformer encoder-decoder padrão.** Encoder consome eespecificaçãotrogramas log-mel. Decoder gera tokens de texto autoregressivamente. Sem vocoder, sem CTC, sem HMM.
 
 O resultado: Whisper large-v3 é robusto em sotaques, ruído e idiomas que têm zero dados rotulados limpos. É o frontend de fala padrão pra todo assistente de voz open source e a maioria dos comerciais em 2026.
 
@@ -25,7 +25,7 @@ O resultado: Whisper large-v3 é robusto em sotaques, ruído e idiomas que têm 
 
 ### Passo 1 — reamostrar + janelar
 
-Áudio a 16 kHz. Recorte/preencha pra 30 segundos. Calcule espectrograma log-mel: 80 bandas mel, stride de 10 ms → ~3.000 frames × 80 features. Essa é a "imagem de entrada" que o Whisper vê.
+Áudio a 16 kHz. Recorte/preencha pra 30 segundos. Calcule eespecificaçãotrograma log-mel: 80 bandas mel, stride de 10 ms → ~3.000 frames × 80 features. Essa é a "imagem de entrada" que o Whisper vê.
 
 ### Passo 2 — stem convolucional
 
@@ -37,7 +37,7 @@ Encoder transformer de 24 camadas (para large) sobre 1.500 timesteps. Codificaç
 
 ### Passo 4 — decoder
 
-Decoder transformer de 24 camadas. Gera tokens autoregressivamente de um vocabulário BPE que é superconjunto do GPT-2 com alguns tokens especiais de áudio.
+Decoder transformer de 24 camadas. Gera tokens autoregressivamente de um vocabulário BPE que é superconjunto do GPT-2 com alguns tokens eespecificaçãoiais de áudio.
 
 ### Passo 5 — task tokens
 
@@ -91,15 +91,15 @@ Large-v3-turbo (2024) reduziu o decoder de 32 pra 4 camadas. Decodificação 8×
 
 ## Construindo
 
-Veja `code/main.py`. Não treinamos Whisper — construímos o pipeline de espectrograma log-mel + formatador de prompt de task tokens. Essas são as partes que você realmente toca em produção.
+Veja `code/main.py`. Não treinamos Whisper — construímos o pipeline de eespecificaçãotrograma log-mel + formatador de prompt de task tokens. Essas são as partes que você realmente toca em produção.
 
 ### Passo 1: sintetizar áudio
 
 Gere uma onda sinusoidal de 1 segundo a 440 Hz amostrada a 16 kHz. 16.000 amostras.
 
-### Passo 2: espectrograma log-mel (simplificado)
+### Passo 2: eespecificaçãotrograma log-mel (simplificado)
 
-Espectrograma mel completo precisa FFT. Fazemos uma versão simplificada com enquadramento + energia por frame que mostra o pipeline sem precisar de `librosa`:
+Eespecificaçãotrograma mel completo precisa FFT. Fazemos uma versão simplificada com enquadramento + energia por frame que mostra o pipeline sem precisar de `librosa`:
 
 ```python
 def frame_signal(x, frame_size=400, hop=160):
@@ -113,7 +113,7 @@ Frame = 25 ms, hop = 10 ms. Combina com o janelamento do Whisper. Energia por fr
 
 ### Passo 3: preencher pra 30s
 
-Whisper sempre processa blocos de 30 segundos. Preencha (ou recorte) o espectrograma pra 3.000 frames.
+Whisper sempre processa blocos de 30 segundos. Preencha (ou recorte) o eespecificaçãotrograma pra 3.000 frames.
 
 ### Passo 4: construir os tokens de prompt
 
@@ -166,17 +166,17 @@ Veja `outputs/skill-asr-configurator.md`. A skill escolhe um modelo ASR, parâme
 ## Exercícios
 
 1. **Fácil.** Rode `code/main.py`. Confirme que contagem de frames pra um sinal de 1 segundo a 16 kHz com hop de 10 ms é ~100 frames. Pra 30 segundos: ~3.000 frames.
-2. **Médio.** Construa o espectrograma log-mel completo usando `numpy.fft`. Verifique que 80 bandas mel combinam com `librosa.feature.melspectrogram(n_mels=80)` dentro de erro numérico.
+2. **Médio.** Construa o eespecificaçãotrograma log-mel completo usando `numpy.fft`. Verifique que 80 bandas mel combinam com `librosa.feature.melespecificaçãotrogram(n_mels=80)` dentro de erro numérico.
 3. **Difícil.** Implemente inferência streaming: fatie o áudio em janelas de 10s com sobreposição de 2s, rode Whisper em cada bloco, merge transcrições. Meça taxa de erro por palavra vs passagem única num sample de podcast de 5 minutos.
 
 ## Termos-Chave
 
 | Termo | O que as pessoas dizem | O que realmente significa |
 |-------|------------------------|--------------------------|
-| Espectrograma mel | "Imagem de áudio" | Representação 2D: bandas de frequência num eixo, frames de tempo no outro; energia logarítmica por célula. |
-| Log-mel | "O que o Whisper vê" | Espectrograma mel passado por log; aproxima percepção humana de volume. |
+| Eespecificaçãotrograma mel | "Imagem de áudio" | Representação 2D: bandas de frequência num eixo, frames de tempo no outro; energia logarítmica por célula. |
+| Log-mel | "O que o Whisper vê" | Eespecificaçãotrograma mel passado por log; aproxima percepção humana de volume. |
 | Frame | "Uma fatia de tempo" | Janela de 25 ms de amostras; sobrepostas com stride de 10 ms. |
-| Task token | "Prefixo de prompt pra fala" | Tokens especiais como `<\|transcribe\|>` / `<\|translate\|>` no prompt do decoder. |
+| Task token | "Prefixo de prompt pra fala" | Tokens eespecificaçãoiais como `<\|transcribe\|>` / `<\|translate\|>` no prompt do decoder. |
 | VAD (Voice Activity Detection) | "Encontrar a fala" | Portão que remove silêncio antes do ASR; reduz custo massivamente. |
 | CTC | "Connectionist Temporal Classification" | Perda clássica de ASR pra treinamento sem alinhamento; Whisper NÃO usa. |
 | Whisper-turbo | "Decoder pequeno, encoder completo" | Encoder large-v3 + decoder de 4 camadas; decodificação 8× mais rápida. |
@@ -190,5 +190,5 @@ Veja `outputs/skill-asr-configurator.md`. A skill escolhe um modelo ASR, parâme
 - [Baevski et al. (2020). wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations](https://arxiv.org/abs/2006.11477) — precursor; ainda features SOTA em alguns contextos.
 - [SYSTRAN/faster-whisper](https://github.com/SYSTRAN/faster-whisper) — wrapper de produção, 4× mais rápido que referência.
 - [Jia et al. (2024). Moonshine: Speech Recognition for Live Transcription and Voice Commands](https://arxiv.org/abs/2410.15608) — ASR amigável a borda de 2024, formato Whisper mas menor.
-- [Blog HuggingFace — "Fine-Tune Whisper For Multilingual ASR with 🤗 Transformers"](https://huggingface.co/blog/fine-tune-whisper) — receita canônica de fine-tuning incluindo pré-processador de espectrograma mel e tratamento de token-timestamp.
+- [Blog HuggingFace — "Fine-Tune Whisper For Multilingual ASR with 🤗 Transformers"](https://huggingface.co/blog/fine-tune-whisper) — receita canônica de fine-tuning incluindo pré-processador de eespecificaçãotrograma mel e tratamento de token-timestamp.
 - [HuggingFace `modeling_whisper.py`](https://github.com/huggingface/transformers/blob/main/src/transformers/models/whisper/modeling_whisper.py) — implementação completa (encoder, decoder, cross-attention, geração) que espelha o diagrama da arquitetura da aula.

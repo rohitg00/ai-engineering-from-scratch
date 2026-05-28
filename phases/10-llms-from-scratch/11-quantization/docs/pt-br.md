@@ -24,7 +24,7 @@ Quantizacao substitui numeros de alta precisao por numeros de menor precisao. FP
 
 O custo e acuracia. Cada bit que voce remove destrui informacao. A questao e o quanto de acuracia voce perde e onde. Um modelo INT4 bem quantizado retém 95-99% da qualidade original na maioria dos benchmarks. Uma quantizacao ingenua pra INT4 pode destruir o modelo inteiro. A diferenca e tecnica.
 
-Quantizacoes comunitarias do Llama 3 pra INT4 com GPTQ mostram aproximadamente 1-2 pontos de perplexity perdidos no WikiText. Mistral lanzou checkpoints FP8 do Mixtral 8x22B com zero perda de qualidade mensuravel no MMLU. O formato GGUF alimenta o llama.cpp, rodando modelos de 70B em MacBooks com chips M-series. Quantizacao nao e um hack. E a rota de deploy padrao pra todo modelo maior que 7B.
+Quantizacoes comunitarias do Llama 3 pra INT4 com GPTQ mostram aproximadamente 1-2 pontos de perplexity perdidos no WikiText. Mistral lanzou checkpoints FP8 do Mixtral 8x22B com zero perda de qualidade mensuravel no MMLU. O formato GGUF alimenta o llama.cpp, rodando modelos de 70B em MacBooks com chips M-series. Quantizacao nao e um hack. E a rota de implantação padrao pra todo modelo maior que 7B.
 
 ## O Conceito
 
@@ -46,7 +46,7 @@ INT4:  [1 sinal] [3 valor]                   = 4  bits (16 niveis no total)
 
 **FP16** corta os bits pela metade. 10 bits de mantissa dao cerca de 3.3 digitos decimais. O expoente encolhe pra 5 bits, reduzindo drasticamente a faixa (valor maximo ~65.504). Isso funciona pros pesos (que se agrupam perto de zero) mas e perigoso pra ativacoes e gradientes que podem disparar durante treino. Treinamento em FP16 requer loss scaling pra prevenir underflow.
 
-**BF16** (Brain Float 16) mantem o expoente de 8 bits do FP32 mas encolhe a mantissa pra 7 bits. Mesma faixa que FP32, menos precisao que FP16. Google projetou especificamente pra deep learning. A intuicao: faixa importa mais que precisao pra redes neurais. Um gradiente de 10^-20 que underflow pra zero em FP16 sobrevive em BF16. Um peso de 0.07342 que arredonda pra 0.0734 em BF16 ja ta bom o bastante. Todo treinamento moderno usa BF16 ou uma mistura BF16/FP32.
+**BF16** (Brain Float 16) mantem o expoente de 8 bits do FP32 mas encolhe a mantissa pra 7 bits. Mesma faixa que FP32, menos precisao que FP16. Google projetou eespecificaçãoificamente pra deep learning. A intuicao: faixa importa mais que precisao pra redes neurais. Um gradiente de 10^-20 que underflow pra zero em FP16 sobrevive em BF16. Um peso de 0.07342 que arredonda pra 0.0734 em BF16 ja ta bom o bastante. Todo treinamento moderno usa BF16 ou uma mistura BF16/FP32.
 
 **FP8** vem em dois sabores. E4M3 (4 expoente, 3 mantissa) e usado pra pesos e ativacoes durante inferencia. E5M2 (5 expoente, 2 mantissa) e usado pra gradientes durante treino onde faixa importa mais que precisao. Inferencia em FP8 em GPUs H100 alcança 30-50% de ganho de velocidade sobre FP16 com perda de qualidade desprezivel.
 
@@ -143,9 +143,9 @@ graph TD
 
 **Quantizacao Pos-Treino (PTQ)** quantiza um modelo ja treinado. Sem retreino. Voce pega os pesos FP16, calcula fatores de escala, arredonda e deploya. Rapido (minutos a horas) e barato. Funciona bem pra INT8 e FP8. Pra INT4, PTQ ingenuo frequentemente falha porque erros de arredondamento se acumulam. Metodos PTQ avancados (GPTQ, AWQ) usam dados de calibracao pra minimizar o erro de quantizacao.
 
-**Quantizacao-Consciente de Treino (QAT)** insere operacoes de quantizacao falsa no forward pass durante treino. O modelo aprende a colocar seus pesos onde erros de arredondamento sao pequenos. Gradientes fluem pela quantizacao falsa usando o estimador straight-through (STE): finge que a operacao de arredondamento tem gradiente 1. QAT produz melhores modelos INT4 e INT2 que PTQ mas requer um treinamento completo. Google usou QAT pro servimento eficiente do Gemini. Meta usou QAT pra alguns alvos de deploy do Llama.
+**Quantizacao-Consciente de Treino (QAT)** insere operacoes de quantizacao falsa no forward pass durante treino. O modelo aprende a colocar seus pesos onde erros de arredondamento sao pequenos. Gradientes fluem pela quantizacao falsa usando o estimador straight-through (STE): finge que a operacao de arredondamento tem gradiente 1. QAT produz melhores modelos INT4 e INT2 que PTQ mas requer um treinamento completo. Google usou QAT pro servimento eficiente do Gemini. Meta usou QAT pra alguns alvos de implantação do Llama.
 
-| Aspecto | PTQ | QAT |
+| Aespecificaçãoto | PTQ | QAT |
 |--------|-----|-----|
 | Custo | Minutos a horas | Treinamento completo |
 | Qualidade em INT8 | Excelente (< 0.1% de perda) | Excelente |
@@ -191,7 +191,7 @@ Como voce sabe se seu modelo quantizado ainda ta bom?
 
 **Perplexity.** A metrica mais comum. Menor e melhor. Compute perplexity num dataset de validacao (WikiText-2 e padrao) pro modelo original e o quantizado. O delta te diz quanta informacao a quantizacao destruiu. Regras gerais: delta < 0.5 e excelente, 0.5-1.0 e bom, 1.0-2.0 e aceitavel pra maioria das tarefas, > 2.0 significa que algo deu errado.
 
-**Benchmarks especificos por tarefa.** Rode o modelo quantizado no MMLU, HumanEval, GSM8K ou sua suite de avaliacao customizada. Compare com o original. Quantizacao afeta capacidades diferentes de forma desigual. Tarefas de matematica e codigo sao mais sensiveis a perda de precisao que conhecimento geral.
+**Benchmarks eespecificaçãoificos por tarefa.** Rode o modelo quantizado no MMLU, HumanEval, GSM8K ou sua suite de avaliacao customizada. Compare com o original. Quantizacao afeta capacidades diferentes de forma desigual. Tarefas de matematica e codigo sao mais sensiveis a perda de precisao que conhecimento geral.
 
 **Comparacao de saidas.** Gere respostas de ambos os modelos nos mesmos prompts e compare. LLM-as-judge (Aula 10) funciona bem aqui. Compute uma taxa de vitoria: que fracao de prompts o modelo quantizado iguala ou supera o original?
 
@@ -209,7 +209,7 @@ O padrao: FP8 e praticamente gratis. INT4 custa 1-2 pontos de MMLU mas dobra thr
 
 ### Numeros Reais
 
-FP16 pra FP8 em H100: 30-50% de ganho de velocidade em inferencia, < 0.1% de perda de qualidade. Essa e a quantizacao obvia. Todo deploy H100 deveria usar.
+FP16 pra FP8 em H100: 30-50% de ganho de velocidade em inferencia, < 0.1% de perda de qualidade. Essa e a quantizacao obvia. Todo implantação H100 deveria usar.
 
 FP16 pra INT8 (LLM.int8()): 2x de reducao de memoria, < 0.5% de perda de qualidade. A abordagem de precisao mista mantem features outliers em FP16 enquanto quantiza todo o resto pra INT8.
 
@@ -217,7 +217,7 @@ FP16 pra INT4 (GPTQ/AWQ): 4x de reducao de memoria, 1-3% de perda de qualidade d
 
 FP16 pra INT4 (GGUF Q4_K_M): 3.5x de reducao de memoria, 1-2% de perda de qualidade. Otimizado pra inferencia CPU. Um modelo de 70B em Q4_K_M e cerca de 40GB e roda a 10-15 tokens/segundo num M3 Max com 64GB.
 
-FP16 pra INT2: 8x de reducao de memoria, 5-15% de perda de qualidade. So viavel pra tarefas especificas estreitas onde voce tolera degradacao. Fronteira de pesquisa, nao pronto pra producao de uso geral.
+FP16 pra INT2: 8x de reducao de memoria, 5-15% de perda de qualidade. So viavel pra tarefas eespecificaçãoificas estreitas onde voce tolera degradacao. Fronteira de pesquisa, nao pronto pra producao de uso geral.
 
 ## Construir
 
@@ -825,7 +825,7 @@ vLLM suporta nativamente modelos AWQ e GPTQ. Ele lida com a desquantizacao duran
 
 ## Publicar
 
-Essa aula produz `outputs/skill-quantization.md`, um framework de decisao pra escolher a estrategia de quantizacao certa. Dado seu tamanho de modelo, hardware alvo e requisitos de qualidade, ele te diz qual formato, metodo e passos de validacao usar. Inclui calculos de orcamento de memoria, recomendacoes de precisao por-componente e receitas de deploy pra vLLM, llama.cpp e TensorRT-LLM.
+Essa aula produz `outputs/skill-quantization.md`, um framework de decisao pra escolher a estrategia de quantizacao certa. Dado seu tamanho de modelo, hardware alvo e requisitos de qualidade, ele te diz qual formato, metodo e passos de validacao usar. Inclui calculos de orcamento de memoria, recomendacoes de precisao por-componente e receitas de implantação pra vLLM, llama.cpp e TensorRT-LLM.
 
 ## Exercicios
 
@@ -863,5 +863,5 @@ Essa aula produz `outputs/skill-quantization.md`, um framework de decisao pra es
 - [Frantar et al., 2022 -- "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers"](https://arxiv.org/abs/2210.17323) -- o paper que tornou quantizacao INT4 pratico pra LLMs usando arredondamento de pesos guiado por Hessiano
 - [Lin et al., 2023 -- "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration"](https://arxiv.org/abs/2306.00978) -- proteger pesos salientes escalando antes da quantizacao, igualando ou batendo GPTQ
 - [Dettmers et al., 2022 -- "LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale"](https://arxiv.org/abs/2208.07339) -- INT8 de precisao mista que mantem features outliers em FP16, permitindo inferencia INT8 sem perda de qualidade
-- [Xiao et al., 2023 -- "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models"](https://arxiv.org/abs/2211.10438) -- migrar a dificuldade de quantizacao de ativacoes pra pesos pra deploy W8A8
+- [Xiao et al., 2023 -- "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models"](https://arxiv.org/abs/2211.10438) -- migrar a dificuldade de quantizacao de ativacoes pra pesos pra implantação W8A8
 - [Micikevicius et al., 2022 -- "FP8 Formats for Deep Learning"](https://arxiv.org/abs/2209.05433) -- o paper NVIDIA/ARM/Intel definindo formatos E4M3 e E5M2 agora nativos em H100

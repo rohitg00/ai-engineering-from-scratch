@@ -23,7 +23,7 @@ Essas coexistem. Um modelo frontier em 2026 frequentemente mistura elas: a maior
 
 ### Sliding Window Attention (SWA)
 
-Cada query na posição `i` attend só a posições em `[i - W, i]` (SWA causal) ou `[i - W/2, i + W/2]` (bidirecional). Tokens fora da janela recebem `-inf` na matriz de scores.
+Cada consulta na posição `i` attend só a posições em `[i - W, i]` (SWA causal) ou `[i - W/2, i + W/2]` (bidirecional). Tokens fora da janela recebem `-inf` na matriz de scores.
 
 ```
 full causal:           sliding window (W=4):
@@ -169,7 +169,7 @@ Isso compila pra um kernel Triton customizado. Dentro de 10% da velocidade do Fl
 
 - **Full attention pura** — toda camada até contexto de ~16K, ou quando qualidade de recuperação é primordial.
 - **Mistura SWA + global** — contexto longo (>32K), treinamento e inferência com limite de memória. O padrão de 2026 acima de 32K.
-- **Sparse block attention** — kernel customizado, padrão customizado. Reservado pra workloads especializados (recuperação, áudio).
+- **Sparse block attention** — kernel customizado, padrão customizado. Reservado pra workloads eespecificaçãoializados (recuperação, áudio).
 - **Differential attention** — qualquer workload onde contaminação por attention-sink prejudica (RAG de longo contexto, needle-in-haystack).
 
 ## Entregando
@@ -187,7 +187,7 @@ Veja `outputs/skill-attention-variant-picker.md`. A skill escolhe uma topologia 
 
 | Termo | O que dizem | O que realmente significa |
 |------|-------------|-----------------------|
-| Sliding window attention (SWA) | "Local attention" | Cada query attend aos seus últimos `W` tokens; KV cache encolhe pra `O(W)`. |
+| Sliding window attention (SWA) | "Local attention" | Cada consulta attend aos seus últimos `W` tokens; KV cache encolhe pra `O(W)`. |
 | Effective receptive field | "Quão longe o modelo enxerga" | Em uma pilha SWA de `L` camadas com janela `W`, até `L × W` tokens. |
 | Longformer / BigBird | "Local + global + random" | Padrões esparsos com alguns tokens globais sempre-attendidos; abordagem inicial de longo contexto. |
 | Native Sparse Attention | "Truque de kernel do DeepSeek" | Aprende esparsidade em nível de bloco; pula blocos zero no nível de kernel mantendo qualidade. |

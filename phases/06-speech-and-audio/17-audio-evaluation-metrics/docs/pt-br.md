@@ -1,6 +1,6 @@
 # Avaliação de Áudio — WER, MOS, UTMOS, MMAU, FAD e os Leaderboards Abertos
 
-> Você não pode lançar o que não consegue medir. Esta aula lista as métricas de 2026 para cada tarefa de áudio: ASR (WER, CER, RTFx), TTS (MOS, UTMOS, SECS, WER-no-ida-e-volta-ASR), áudio-linguagem (MMAU, LongAudioBench), música (FAD, CLAP) e locutor (EER). Mais os leaderboards onde você compara.
+> Você não pode lançar o que não consegue medir. Esta aula lista as métricas de 2026 para cada tarefa de áudio: ASR (WER, CER, RTFx), TTS (MOS, UTMOS, SECS, WER-no-ida-e-volta-ASR), áudio-linguagem (MMAU, LongAudioBench), música (FAD, CLAP) e locutor (EER). Mais os rankings onde você compara.
 
 **Tipo:** Aprender
 **Linguagens:** Python
@@ -25,7 +25,7 @@ Cada tarefa de áudio tem múltiplas métricas, cada uma medindo um eixo diferen
 
 ## O Conceito
 
-![Matriz de avaliação de áudio — métricas vs tarefas vs leaderboards de 2026](../assets/eval-landscape.svg)
+![Matriz de avaliação de áudio — métricas vs tarefas vs rankings de 2026](../assets/eval-landscape.svg)
 
 ### Métricas de ASR
 
@@ -49,7 +49,7 @@ Cada tarefa de áudio tem múltiplas métricas, cada uma medindo um eixo diferen
 
 **TTFA (time-to-first-audio).** Latência de relógio. Kokoro-82M: ~100 ms; F5-TTS: ~1 s.
 
-### Específico de clonagem de voz
+### Eespecificaçãoífico de clonagem de voz
 
 **SECS + MOS + CER** como trio. Clonagem com SECS alto mas MOS baixo significa timbre certo mas voz antinatural; o oposto significa voz natural mas locutor errado.
 
@@ -99,7 +99,7 @@ Desbalanceado: **F1 macro** + **recall por classe**. Reporte por classe — a ac
 
 **Reatividade de interrupção.** Tempo do momento que o usuário interrompe até o assistente silenciar. Meta < 150 ms.
 
-### Os leaderboards de 2026
+### Os rankings de 2026
 
 || Leaderboard | Faixas | URL |
 ||------------|--------|-----|
@@ -184,7 +184,7 @@ Acople cada implantação com um harness de avaliação fixo que roda a cada atu
 ## Armadilhas
 
 - **Extrapolação do UTMOS.** Treinado com fala limpa estilo VCTK; pontua mal áudio ruidoso/clonado/emocional.
-- **Viés de painel MOS.** 20 trabalhadores do Amazon Mechanical Turk ≠ 20 usuários-alvo. Pague um painel de domínio se as stakes são altas.
+- **Viés de painel MOS.** 20 trabalhadores do Amazon Mechanical Turk ≠ 20 usuários-alvo. Pague um painel de domínio se as consequências são altas.
 - **FAD depende do conjunto de referência.** Compare contra a mesma distribuição de referência entre modelos.
 - **WER agregado.** Um WER de 5% no geral pode esconder 30% WER em fala com sotaque. Reporte por fatia demográfica.
 - **Saturação de benchmark público.** A maioria dos modelos de fronteira está perto do teto em benchmarks padrão. Construa um conjunto interno que reflita seu tráfego.
@@ -219,6 +219,6 @@ Salve como `outputs/skill-audio-evaluator.md`. Escolha métricas, benchmarks e f
 - [UTMOS (Saeki et al. 2022)](https://arxiv.org/abs/2204.02152) — preditor de MOS treinado.
 - [Fréchet Audio Distance (Kilgour et al. 2019)](https://arxiv.org/abs/1812.08466) — o padrão para geração musical.
 - [Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard) — rankings ao vivo de 2026.
-- [TTS Arena](https://huggingface.co/spaces/TTS-AGI/TTS-Arena) — leaderboard de TTS por votos humanos.
-- [MMAU-Pro benchmark](https://mmaubenchmark.github.io/) — leaderboard de raciocínio LALM.
+- [TTS Arena](https://huggingface.co/spaces/TTS-AGI/TTS-Arena) — ranking de TTS por votos humanos.
+- [MMAU-Pro benchmark](https://mmaubenchmark.github.io/) — ranking de raciocínio LALM.
 - [HEAR benchmark](https://hearbenchmark.com/) — benchmarks de SSL de áudio.

@@ -1,6 +1,6 @@
 # Roteamento de Modelo como Primitiva de Redução de Custos
 
-> Um broker dinâmico avalia cada request (tipo de tarefa, comprimento em tokens, similaridade de embedding, confiança) e envia queries simples para um modelo barato, escalando as complexas para um modelo frontier. Também chamado de model cascading. Estudos de caso de produção mostram 20-60% de redução de custo em iso-quality em deployements EUA/UK/EU; uma melhoria de 30% na eficiência de roteamento em SaaS de alto volume vira seis dígitos de economia anual. O contexto de 2026 é que preços de inferência LLM caíram ~10x por ano — um token de nível GPT-4 foi de $20/M para ~$0.40/M de late 2022 a 2026. A maior parte da queda vem de stacks de serving melhores (Fase 17 · 04-09), não de hardware. Roteamento é como você converte essa queda de preço em margem sem regressão de produto. O modo de falha é drift do modelo barato: o roteador empurra 40% para um modelo mais fraco, qualidade cai 3-5% em tarefas de raciocínio, ninguém percebe por um trimestre. Gate por métricas de qualidade online, não apenas por evals offline.
+> Um broker dinâmico avalia cada request (tipo de tarefa, comprimento em tokens, similaridade de embedding, confiança) e envia queries simples para um modelo barato, escalando as complexas para um modelo frontier. Também chamado de model cascading. Estudos de caso de produção mostram 20-60% de redução de custo em iso-quality em deployements EUA/UK/EU; uma melhoria de 30% na eficiência de roteamento em SaaS de alto volume vira seis dígitos de economia anual. O contexto de 2026 é que preços de inferência LLM caíram ~10x por ano — um token de nível GPT-4 foi de $20/M para ~$0.40/M de late 2022 a 2026. A maior parte da queda vem de stacks de serving melhores (Fase 17 · 04-09), não de hardware. Roteamento é como você converte essa queda de preço em margem sem regressão de produto. O modo de falha é deriva do modelo barato: o roteador empurra 40% para um modelo mais fraco, qualidade cai 3-5% em tarefas de raciocínio, ninguém percebe por um trimestre. Gate por métricas de qualidade online, não apenas por evals offline.
 
 **Tipo:** Aprender
 **Linguagens:** Python (stdlib, simulador de cascading router)
@@ -12,7 +12,7 @@
 - Explicar model cascading: barato primeiro com verificação de confiança, escalar em caso de baixa confiança.
 - Enumerar os quatro sinais de roteamento (classificação de tarefa, comprimento do prompt, similaridade de embedding com conjunto de dificuldade conhecida, auto-confiança do primeiro passo).
 - Calcular o custo blendado esperado na divisão de roteamento alvo com tolerância de perda de qualidade.
-- Nomear a métrica de monitoramento de drift (gate de qualidade online) que detecta o crescimento do modelo barato.
+- Nomear a métrica de monitoramento de deriva (gate de qualidade online) que detecta o crescimento do modelo barato.
 
 ## O Problema
 
@@ -28,7 +28,7 @@ Se você roteia os 70% para barato e os 30% para caro, sua conta cai ~65% na mes
 
 2. **Comprimento do prompt**: prompts >4K tokens geralmente precisam de frontier para coerência. Prompts <500 tokens geralmente não.
 
-3. **Similaridade de embedding com conjunto de dificuldade conhecida**: se a query está perto (cosseno > 0.88) de um bucket de dificuldade conhecida, escale diretamente para frontier.
+3. **Similaridade de embedding com conjunto de dificuldade conhecida**: se a consulta está perto (cosseno > 0.88) de um bucket de dificuldade conhecida, escale diretamente para frontier.
 
 4. **Auto-confiança do primeiro passo**: envie para barato; se log-probs do modelo mostram baixa confiança OU ele recusa OU produz linguagem evasiva, tente no frontier. Adiciona latência P95 em ~10% do tráfego mas economiza 50%+ nos outros 90%.
 
@@ -42,7 +42,7 @@ Se você roteia os 70% para barato e os 30% para caro, sua conta cai ~65% na mes
 
 ### Implementação
 
-AI gateways (Fase 17 · 19) expõem roteamento. LiteLLM tem config `router` com fallback e cost-routing. Portkey tem guards + roteamento. Kong AI Gateway tem roteamento baseado em plugins. O marketplace de modelos do OpenRouter expõe uma API de recomendação.
+AI gateways (Fase 17 · 19) expõem roteamento. LiteLLM tem config `router` com reserva e cost-routing. Portkey tem guards + roteamento. Kong AI Gateway tem roteamento baseado em plugins. O marketplace de modelos do OpenRouter expõe uma API de recomendação.
 
 Open-source: RouteLLM (LMSYS), Not Diamond (comercial), Prompt Mule.
 

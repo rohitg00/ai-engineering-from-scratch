@@ -128,10 +128,10 @@ def cosine_similarity(a, b):
         return 0.0
     return dot / (norm_a * norm_b)
 
-def search(query_embedding, stored_embeddings, top_k=5):
+def search(consulta_embedding, stored_embeddings, top_k=5):
     scores = []
     for i, emb in enumerate(stored_embeddings):
-        sim = cosine_similarity(query_embedding, emb)
+        sim = cosine_similarity(consulta_embedding, emb)
         scores.append((i, sim))
     scores.sort(key=lambda x: x[1], reverse=True)
     return scores[:top_k]
@@ -161,9 +161,9 @@ class EmbeddingSearchEngine:
             for chunk in all_chunks
         ]
 
-    def query(self, question, top_k=5):
-        query_emb = tfidf_embed(question, self.vocab, self.idf)
-        results = search(query_emb, self.embeddings, top_k)
+    def consulta(self, question, top_k=5):
+        consulta_emb = tfidf_embed(question, self.vocab, self.idf)
+        results = search(consulta_emb, self.embeddings, top_k)
         return [(self.chunks[i], score) for i, score in results]
 ```
 
@@ -197,8 +197,8 @@ class EmbeddingSearchEngine:
 #     ids=[f"chunk_{i}" for i in range(len(chunks))]
 # )
 #
-# results = collection.query(
-#     query_texts=["Política de reembolso"],
+# results = collection.consulta(
+#     consulta_texts=["Política de reembolso"],
 #     n_results=5
 # )
 ```
@@ -226,7 +226,7 @@ Esta aula produz um mecanismo de busca semântica completo que pode ser integrad
 | Embedding | "Converter texto em números" | Representação vetorial densa do texto onde significados similares produzem vetores similares |
 | Vector database | "Mecanismo de busca para IA" | Store de dados otimizado para armazenar vetores e encontrar vizinhos mais próximos por similaridade |
 | Cosine similarity | "Quão similares são dois vetores" | Cosseno do ângulo entre dois vetores; 1 = direção idêntica, 0 = ortogonal, -1 = oposto |
-| Top-k retrieval | "Pegar os k melhores matches" | Retornar os k chunks mais similares à query do store vetorial |
+| Top-k retrieval | "Pegar os k melhores matches" | Retornar os k chunks mais similares à consulta do store vetorial |
 | Context window | "Quanto texto o LLM enxerga" | Número máximo de tokens que o LLM pode processar em uma única requisição |
 | TF-IDF | "Pontuação de importância de palavras" | Frequência do Termo vezes Inverso da Frequência do Documento; pondera palavras pela distintividade no corpus |
 

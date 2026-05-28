@@ -9,7 +9,7 @@
 
 ## O Problema
 
-"Qual agent de codificação é melhor" é a pergunta errada. A pergunta certa é: em uma distribuição de tarefas que combina com meu trabalho, com a estrutura que vou rodar em produção, qual confiabilidade fim a a ponto recebo?
+"Qual agente de codificação é melhor" é a pergunta errada. A pergunta certa é: em uma distribuição de tarefas que combina com meu trabalho, com a estrutura que vou rodar em produção, qual confiabilidade fim a a ponto recebo?
 
 Entre 2022 e 2026 o campo aprendeu que a estrutura — a camada de recuperação, o planejador, o sandbox, o loop de edição-verificação, o formato de feedback — é estrutural. Claude Sonnet 4.5 no SWE-agent v1 pontuou 43.2% no SWE-bench Verified; o mesmo modelo dentro da estrutura autônoma do Cline pontuou 59.8%. 16.6 pontos percentuais absolutos de diferença, mesmos pesos. O modelo base é um componente; o loop é o produto.
 
@@ -19,7 +19,7 @@ O problema complementar é que saturação de benchmark esconde regressões. SWE
 
 ### SWE-bench, um parágrafo
 
-SWE-bench (Jimenez et al.) pega issues reais do GitHub com patches ground-truth e pede a um agent que produza um patch que faça o conjunto de testes passar. SWE-bench Verified (OpenAI, 2024) é um subconjunto de 500 tarefas curado por humanos, com as tarefas ambíguas e quebradas removidas. SWE-bench Pro é o sucessor mais difícil — tarefas que requerem 10+ linhas de mudança, onde agents de fronteira atuais ficam em 23-59%.
+SWE-bench (Jimenez et al.) pega issues reais do GitHub com patches ground-truth e pede a um agente que produza um patch que faça o conjunto de testes passar. SWE-bench Verified (OpenAI, 2024) é um subconjunto de 500 tarefas curado por humanos, com as tarefas ambíguas e quebradas removidas. SWE-bench Pro é o sucessor mais difícil — tarefas que requerem 10+ linhas de mudança, onde agentes de fronteira atuais ficam em 23-59%.
 
 ### O que a curva 2022 → 2026 realmente mostra
 
@@ -32,7 +32,7 @@ A inclinação veio de três fontes compostas: melhores modelos base, melhor est
 
 ### CodeAct vs chamadas JSON de ferramenta
 
-OpenHands (All-Hands-AI, arXiv:2407.16741, antigo OpenDevin) fez uma aposta arquitetural específica: em vez do modelo emitir chamadas JSON de ferramenta que um host decodifica e executa, o modelo emite código Python e um kernel estilo Jupyter o roda em um sandbox. O agent pode iterar sobre arquivos, encadear ferramentas e capturar suas próprias exceções dentro de uma ação.
+OpenHands (All-Hands-AI, arXiv:2407.16741, antigo OpenDevin) fez uma aposta arquitetural eespecificaçãoífica: em vez do modelo emitir chamadas JSON de ferramenta que um host decodifica e executa, o modelo emite código Python e um kernel estilo Jupyter o roda em um sandbox. O agente pode iterar sobre arquivos, encadear ferramentas e capturar suas próprias exceções dentro de uma ação.
 
 O tradeoff:
 
@@ -46,11 +46,11 @@ Ambas as arquiteturas estão em produção. CodeAct é dominante em plataformas 
 | Estrutura | Licença | Modelo de execução | Propriedade notável |
 |---|---|---|---|
 | OpenHands (OpenDevin) | MIT | CodeAct em Docker | Plataforma aberta mais ativa; replay de event-stream |
-| SWE-agent | MIT | Agent-Computer Interface (ACI) | Primeira estrutura end-to-end no SWE-bench |
+| SWE-agent | MIT | Agent-Computer Interface (ACI) | Primeira estrutura de ponta a ponta no SWE-bench |
 | Aider | Apache-2 | edição via diff em repo local | Estrutura mínima, forte estabilidade de regressão |
 | Cline | Apache-2 | agente VS Code com política de ferramentas | Estrutura aberta com maior score no Sonnet 4.5 |
 | Devin (Cognition) | Proprietário | VM gerenciada + planejador | Primeira categoria de produto "engenheiro de software AI" |
-| Claude Code | Proprietário | Modos de permissão + rotinas | Aula 10 cobre o agent loop em detalhes |
+| Claude Code | Proprietário | Modos de permissão + rotinas | Aula 10 cobre o agente loop em detalhes |
 
 ### Por que estrutura domina
 
@@ -68,7 +68,7 @@ Implicação para escolher um agent: rode um subconjunto tipo Pro do seu backlog
 
 ## Use
 
-`code/main.py` compara duas estruturas de agent de brinquedo em uma distribuição fixa de mini-tarefas:
+`code/main.py` compara duas estruturas de agente de brinquedo em uma distribuição fixa de mini-tarefas:
 
 1. Uma estrutura de **chamada JSON de ferramenta** que pega uma ação por turno.
 2. Uma estrutura **CodeAct** que pode emitir um snippet Python pequeno por ação.
@@ -77,7 +77,7 @@ Ambas usam um "modelo" stub (regras determinísticas), para que a comparação i
 
 ## Entregue
 
-`outputs/skill-scaffold-audit.md` ajuda a auditar uma estrutura de agent de codificação proposta antes de adotar: qualidade de recuperação, presença de verificador, isolamento de sandbox e adequação benchmark-à-distribuição.
+`outputs/skill-scaffold-audit.md` ajuda a auditar uma estrutura de agente de codificação proposta antes de adotar: qualidade de recuperação, presença de verificador, isolamento de sandbox e adequação benchmark-à-distribuição.
 
 ## Exercícios
 
@@ -89,7 +89,7 @@ Ambas usam um "modelo" stub (regras determinísticas), para que a comparação i
 
 4. SWE-bench Verified tem 161 tarefas single-file de 1-2 linhas. Construa um score que as exclua. Como o ranking muda?
 
-5. Leia "Introducing SWE-bench Verified" (OpenAI). Explique a metodologia específica usada para remover tarefas ambíguas e nomeie uma categoria que a curadoria perderia.
+5. Leia "Introducing SWE-bench Verified" (OpenAI). Explique a metodologia eespecificaçãoífica usada para remover tarefas ambíguas e nomeie uma categoria que a curadoria perderia.
 
 ## Termos-Chave
 
@@ -110,4 +110,4 @@ Ambas usam um "modelo" stub (regras determinísticas), para que a comparação i
 - [OpenAI — Introducing SWE-bench Verified](https://openai.com/index/introducing-swe-bench-verified/) — como o subconjunto curado foi construído.
 - [Wang et al. — OpenHands: An Open Platform for AI Software Developers](https://arxiv.org/abs/2407.16741) — arquitetura CodeAct e design de event-stream.
 - [Epoch AI — SWE-bench leaderboard](https://epoch.ai/benchmarks) — scores rastreados em tempo real.
-- [Anthropic — Measuring agent autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) — enquadramento de confiabilidade de agent de codificação de longo prazo.
+- [Anthropic — Measuring agente autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) — enquadramento de confiabilidade de agente de codificação de longo prazo.
