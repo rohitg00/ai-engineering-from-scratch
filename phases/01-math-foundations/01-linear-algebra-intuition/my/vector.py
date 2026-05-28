@@ -32,9 +32,19 @@ def magnitude(v: list) -> float:
 
 
 def cosine_similarity(a: list[float], b: list[float]) -> float:
-    if magnitude(a) == 0 or magnitude(b) == 0:
+    mag_a = magnitude(a)
+    mag_b = magnitude(b)
+    if math.isclose(mag_a, 0) or math.isclose(mag_b, 0):
         raise ValueError("передан нулевой вектор")
-    return dot(a, b) / (magnitude(a) * magnitude(b))
+    return dot(a, b) / (mag_a * mag_b)
+
+
+def normalize(v: list[float]) -> list[float]:
+    mag = magnitude(v)
+    if math.isclose(mag, 0):
+        raise ValueError("передан нулевой вектор")
+    v_normalise = scale(v, 1 / mag)
+    return v_normalise
 
 
 if __name__ == "__main__":
@@ -70,3 +80,6 @@ if __name__ == "__main__":
     print(f"косинусное сходство: {cosine_similarity([1.0, 0.0], [10.0, 0.0]):.4f}")
     print(f"косинусное сходство: {cosine_similarity([1.0, 0.0], [0.0, 1.0]):.4f}")
     print(f"косинусное сходство: {cosine_similarity([1.0, 2.0], [-1.0, -2.0]):.4f}")
+    print(f"нормализация вектора 1: {normalize([3.0, 4.0])}")
+    print(f"нормализация вектора 2: {magnitude(normalize([1.0, 2.0, 3.0]))}")
+    print(f"нормализация вектора 3: {normalize([5.0, 0.0])}")
