@@ -498,13 +498,16 @@
       overflow-x: auto;
       margin: 24px 0;
       border: 1px solid var(--rule-soft);
+      -webkit-overflow-scrolling: touch;
     }
 
     .lesson-article table {
-      width: 100%;
+      width: max-content;
+      min-width: 100%;
       border-collapse: collapse;
       font-family: var(--font-body);
       font-size: 0.96rem;
+      table-layout: auto;
     }
 
     .lesson-article thead th {
@@ -518,6 +521,9 @@
       padding: 12px 16px;
       text-align: left;
       border-bottom: 1px solid var(--ink);
+      hyphens: none;
+      white-space: normal;
+      min-width: 9rem;
     }
 
     .lesson-article tbody td {
@@ -525,6 +531,15 @@
       border-bottom: 1px solid var(--rule-soft);
       color: var(--ink);
       vertical-align: top;
+      hyphens: none;
+      overflow-wrap: normal;
+      word-break: normal;
+      min-width: 9rem;
+      max-width: 24rem;
+    }
+
+    .lesson-article tbody td code {
+      white-space: nowrap;
     }
 
     .lesson-article tbody tr:last-child td { border-bottom: none; }
@@ -1537,9 +1552,9 @@
       .lesson-article ol li { font-size: 1rem; line-height: 1.65; }
       .lesson-article > p:first-of-type::first-letter { font-size: 3rem; }
       .lesson-article pre code { font-size: 0.78rem; padding: 14px 14px; }
-      .lesson-article table { font-size: 0.84rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .lesson-article table { font-size: 0.84rem; }
       .lesson-article table th,
-      .lesson-article table td { padding: 8px 10px; white-space: nowrap; }
+      .lesson-article table td { padding: 8px 10px; min-width: 8rem; }
       .lesson-article .motto { font-size: 1.05rem; padding: 14px 16px; }
       .ai-panels { margin-top: 40px; gap: 28px; }
       .ai-panel { padding: 22px 16px; }
@@ -2147,9 +2162,9 @@
           }
           h += '</tr></thead><tbody>';
           for (var ri = 2; ri < tableRows.length; ri++) {
-            var cells = tableRows[ri];
+            var cells = normalizeTableCells(tableRows[ri], headers.length);
             h += '<tr>';
-            for (var ci = 0; ci < cells.length; ci++) {
+            for (var ci = 0; ci < headers.length; ci++) {
               var cls = '';
               if (isKeyTerms) {
                 var headerLower = (headers[ci] || '').toLowerCase();
@@ -2162,6 +2177,82 @@
           h += '</tbody></table></div>';
           tableRows = [];
           return h;
+        }
+
+        function normalizeTableCells(cells, expectedCount) {
+          var normalized = cells.slice();
+          while (normalized.length < expectedCount) {
+            normalized.push('');
+          }
+          if (normalized.length > expectedCount && expectedCount > 0) {
+            var kept = normalized.slice(0, expectedCount - 1);
+            kept.push(normalized.slice(expectedCount - 1).join(' | '));
+            normalized = kept;
+          }
+          return normalized;
+        }
+
+        function splitTableRow(line) {
+          var trimmed = line.trim();
+          if (trimmed.charAt(0) === '|') trimmed = trimmed.slice(1);
+          if (trimmed.charAt(trimmed.length - 1) === '|') trimmed = trimmed.slice(0, -1);
+
+          var cells = [];
+          var cell = '';
+          var inCode = false;
+          var codeTicks = '';
+          var escaping = false;
+
+          for (var si = 0; si < trimmed.length; si++) {
+            var ch = trimmed.charAt(si);
+
+            if (inCode) {
+              if (ch === '`' && trimmed.slice(si, si + codeTicks.length) === codeTicks) {
+                cell += codeTicks;
+                si += codeTicks.length - 1;
+                inCode = false;
+                codeTicks = '';
+              } else {
+                cell += ch;
+              }
+              continue;
+            }
+
+            if (escaping) {
+              cell += ch === '|' ? '|' : '\\' + ch;
+              escaping = false;
+              continue;
+            }
+
+            if (ch === '\\') {
+              escaping = true;
+              continue;
+            }
+
+            if (ch === '`') {
+              var tickEnd = si + 1;
+              while (tickEnd < trimmed.length && trimmed.charAt(tickEnd) === '`') {
+                tickEnd++;
+              }
+              codeTicks = trimmed.slice(si, tickEnd);
+              inCode = true;
+              cell += codeTicks;
+              si = tickEnd - 1;
+              continue;
+            }
+
+            if (ch === '|' && !inCode) {
+              cells.push(cell.trim());
+              cell = '';
+              continue;
+            }
+
+            cell += ch;
+          }
+
+          if (escaping) cell += '\\';
+          cells.push(cell.trim());
+          return cells;
         }
 
         function flushBlockquote() {
@@ -2220,8 +2311,7 @@
             out += flushList();
             out += flushBlockquote();
             if (!inTable) inTable = true;
-            var cells = line.split('|').slice(1, -1);
-            tableRows.push(cells.map(function (c) { return c.trim(); }));
+            tableRows.push(splitTableRow(line));
             continue;
           } else if (inTable) {
             out += flushTable();
