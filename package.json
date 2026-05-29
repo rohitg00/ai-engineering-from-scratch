@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "AI Engineering from Scratch - PT-BR",
   "scripts": {
-    "dev": "npx serve site -l 8000",
+    "dev": "ln -sf ../phases site/phases 2>/dev/null; http-server site -p 8000 -c-1",
     "build": "node site/build.js",
-    "preview": "npx serve site -l 8000"
+    "preview": "ln -sf ../phases site/phases 2>/dev/null; http-server site -p 8000 -c-1"
   }
 }
