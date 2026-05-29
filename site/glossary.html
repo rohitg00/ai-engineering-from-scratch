@@ -204,7 +204,7 @@
   <main class="glossary-page" id="main">
     <div class="container">
       <div class="glossary-header">
-        <h1>AI Glossary</h1>
+        <h1 data-i18n="AI Glossary">AI Glossary</h1>
         <p>What people <em>say</em> vs what things actually <em>mean</em></p>
       </div>
       <div class="glossary-search-wrap">
@@ -222,7 +222,7 @@
         <a href="index.html">Home</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
         <a href="catalog.html">Catalog</a>
-              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
+              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener" data-i18n="Report / Suggest">Report / Suggest</a>
       </div>
     </div>
   </footer>
@@ -285,10 +285,10 @@
             });
           }
 
-          countEl.textContent = terms.length + ' of ' + GLOSSARY.length + ' terms';
+          countEl.textContent = terms.length + ' ' + AIFSLang.t('of') + ' ' + GLOSSARY.length + ' ' + AIFSLang.t('terms');
 
           if (terms.length === 0) {
-            listEl.innerHTML = '<div class="glossary-empty">No terms match your search.</div>';
+            listEl.innerHTML = '<div class="glossary-empty">' + AIFSLang.t('No terms match your search.') + '</div>';
             return;
           }
 
@@ -299,11 +299,11 @@
             html += '<div class="glossary-term">' + escapeHtml(t.term) + '</div>';
             html += '<div class="glossary-row">';
             html += '<div class="glossary-col">';
-            html += '<div class="glossary-col-label">What people say</div>';
+            html += '<div class="glossary-col-label">' + AIFSLang.t('What people say') + '</div>';
             html += '<div class="glossary-col-says">"' + escapeHtml(t.says) + '"</div>';
             html += '</div>';
             html += '<div class="glossary-col">';
-            html += '<div class="glossary-col-label">What it actually means</div>';
+            html += '<div class="glossary-col-label">' + AIFSLang.t('What it actually means') + '</div>';
             html += '<div class="glossary-col-means">' + escapeHtml(t.means) + '</div>';
             html += '</div>';
             html += '</div>';

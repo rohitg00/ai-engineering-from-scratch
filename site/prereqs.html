@@ -430,7 +430,7 @@
   <main class="prereqs-page" id="main">
     <div class="container">
       <div class="prereqs-header">
-        <h1>Roadmap</h1>
+        <h1 data-i18n="Roadmap">Roadmap</h1>
         <p>Click any phase to see its prerequisites and what it unlocks downstream.</p>
       </div>
 
@@ -463,7 +463,7 @@
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
         <a href="catalog.html">Catalog</a>
         <a href="glossary.html">Glossary</a>
-              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
+              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener" data-i18n="Report / Suggest">Report / Suggest</a>
       </div>
     </div>
   </footer>
@@ -946,7 +946,7 @@
         }
         prereqHtml += '</ul>';
       } else {
-        prereqHtml = '<div class="detail-empty">None. This is a starting point.</div>';
+        prereqHtml = '<div class="detail-empty">' + AIFSLang.t('None. This is a starting point.') + '</div>';
       }
 
       /* Unlocks list */
@@ -961,7 +961,7 @@
         }
         unlockHtml += '</ul>';
       } else {
-        unlockHtml = '<div class="detail-empty">Final destination. End of the curriculum.</div>';
+        unlockHtml = '<div class="detail-empty">' + AIFSLang.t('Final destination. End of the curriculum.') + '</div>';
       }
 
       /* Compute exact GitHub tree URL using standard slug logic */
@@ -1000,8 +1000,8 @@
           '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--complete)">&#9654;</span> Unlocks</div>' + unlockHtml + '</div>' +
         '</div>' +
         '<div class="detail-actions">' +
-          (readLink ? '<a href="' + readLink + '" class="detail-link detail-link-read">Read</a>' : '') +
-          '<a href="' + phaseGithubUrl + '" target="_blank" rel="noopener" class="detail-link">View on GitHub</a>' +
+          (readLink ? '<a href="' + readLink + '" class="detail-link detail-link-read">' + AIFSLang.t('Read') + '</a>' : '') +
+          '<a href="' + phaseGithubUrl + '" target="_blank" rel="noopener" class="detail-link">' + AIFSLang.t('View on GitHub') + '</a>' +
         '</div>';
 
       panel.classList.add('open');

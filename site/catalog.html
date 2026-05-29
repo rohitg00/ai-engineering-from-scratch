@@ -253,18 +253,18 @@
   <main class="catalog-page" id="main">
     <div class="container">
       <div class="catalog-header">
-        <h1>Lesson Catalog</h1>
-        <p>Every lesson across all 20 phases. Search, filter, sort.</p>
+        <h1 data-i18n="Lesson Catalog">Lesson Catalog</h1>
+        <p data-i18n="Every lesson across all 20 phases. Search, filter, sort.">Every lesson across all 20 phases. Search, filter, sort.</p>
       </div>
       <div class="catalog-controls">
         <input type="text" class="catalog-search" id="catalogSearch" placeholder="Search lessons..." data-i18n-placeholder="Search lessons...">
         <select class="catalog-filter" id="catalogPhase">
-          <option value="">All Phases</option>
+          <option value="" data-i18n="All Phases">All Phases</option>
         </select>
         <select class="catalog-filter" id="catalogStatus">
-          <option value="">All Status</option>
-          <option value="complete">Complete</option>
-          <option value="planned">Planned</option>
+          <option value="" data-i18n="All Status">All Status</option>
+          <option value="complete" data-i18n="Complete">Complete</option>
+          <option value="planned" data-i18n="Planned">Planned</option>
         </select>
       </div>
       <div class="catalog-count" id="catalogCount"></div>
@@ -272,11 +272,11 @@
         <table class="catalog-table" id="catalogTable">
           <thead>
             <tr>
-              <th data-sort="phase">Phase <span class="sort-arrow"></span></th>
-              <th data-sort="name">Lesson <span class="sort-arrow"></span></th>
-              <th data-sort="type">Type <span class="sort-arrow"></span></th>
-              <th data-sort="lang">Language <span class="sort-arrow"></span></th>
-              <th data-sort="status">Status <span class="sort-arrow"></span></th>
+              <th data-sort="phase"><span data-i18n="Phase">Phase</span> <span class="sort-arrow"></span></th>
+              <th data-sort="name"><span data-i18n="Lessons">Lesson</span> <span class="sort-arrow"></span></th>
+              <th data-sort="type"><span data-i18n="Type">Type</span> <span class="sort-arrow"></span></th>
+              <th data-sort="lang"><span data-i18n="Language">Language</span> <span class="sort-arrow"></span></th>
+              <th data-sort="status"><span data-i18n="Status">Status</span> <span class="sort-arrow"></span></th>
             </tr>
           </thead>
           <tbody id="catalogBody"></tbody>
@@ -292,7 +292,7 @@
         <a href="index.html">Home</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
         <a href="glossary.html">Glossary</a>
-              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
+              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener" data-i18n="Report / Suggest">Report / Suggest</a>
       </div>
     </div>
   </footer>
@@ -411,10 +411,10 @@
             return 0;
           });
 
-          countEl.textContent = rows.length + ' of ' + allRows.length + ' lessons';
+          countEl.textContent = rows.length + ' ' + AIFSLang.t('of') + ' ' + allRows.length + ' ' + AIFSLang.t('lessons');
 
           if (rows.length === 0) {
-            bodyEl.innerHTML = '<tr><td colspan="5" class="catalog-empty">No lessons match your filters.</td></tr>';
+            bodyEl.innerHTML = '<tr><td colspan="5" class="catalog-empty">' + AIFSLang.t('No lessons match your filters.') + '</td></tr>';
             return;
           }
 
@@ -430,7 +430,7 @@
             }
             html += '<td>' + escapeHtml(r.type) + '</td>';
             html += '<td><span class="catalog-lang">' + escapeHtml(r.lang) + '</span></td>';
-            html += '<td><span class="catalog-status-dot ' + r.status + '"></span>' + r.status + '</td>';
+            html += '<td><span class="catalog-status-dot ' + r.status + '"></span>' + AIFSLang.t(r.status === 'complete' ? 'Complete' : 'Planned') + '</td>';
             html += '</tr>';
           }
           bodyEl.innerHTML = html;
