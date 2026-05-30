@@ -1,0 +1,78 @@
+{
+  "lesson": "15-attention-variants",
+  "title": "Attention Variants — Sliding Window, Sparse, Differential",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does sliding window attention (SWA) change compared to full causal attention?",
+      "options": [
+        "Each query attends only to a fixed local window of keys instead of the entire prefix, reducing compute and KV cache from O(N²) to O(N·W)",
+        "It removes causality so tokens can attend to future positions",
+        "It replaces softmax with a linear attention kernel only",
+        "It eliminates the need for positional encodings"
+      ],
+      "correct": 0,
+      "explanation": "SWA masks scores outside a window of width W. Memory and compute scale with N·W rather than N², and the KV cache can retain only the last W tokens per layer."
+    },
+    {
+      "stage": "check",
+      "question": "Why do production stacks like Gemma 3 interleave SWA layers with occasional full-attention layers?",
+      "options": [
+        "SWA alone weakens long-range retrieval; periodic global layers restore access to the full context while keeping most layers cheap",
+        "Full layers are required because SWA cannot be implemented in FlashAttention",
+        "Global layers exist only to increase parameter count",
+        "SWA and global layers must alternate every single layer"
+      ],
+      "correct": 0,
+      "explanation": "Overlapping windows extend receptive field layer by layer, but explicit global layers (e.g. a 5:1 SWA-to-global ratio) are the standard fix when tasks need distant-token dependencies."
+    },
+    {
+      "stage": "check",
+      "question": "In differential attention, what role does subtracting a second attention map play?",
+      "options": [
+        "It cancels the attention-sink mass on early tokens and reallocates weight to content-bearing positions",
+        "It doubles sequence length without extra compute",
+        "It converts encoder-only models into decoders",
+        "It removes the need for value projections"
+      ],
+      "correct": 0,
+      "explanation": "Two softmax maps (A1 and A2) are computed with separate Q/K projections; DiffAttn = (A1 − λ·A2)V where λ is learned. A2 captures sink behavior that A1 minus λ·A2 suppresses."
+    },
+    {
+      "stage": "check",
+      "question": "How does Flash Attention (Lesson 12) differ from sparse or sliding-window *topology* changes?",
+      "options": [
+        "FlashAttention optimizes memory movement for a given mask; SWA/sparse patterns change which pairs receive non-zero attention scores",
+        "FlashAttention only works on bidirectional encoders",
+        "Sparse attention cannot be combined with FlashAttention in 2026 stacks",
+        "There is no difference — FlashAttention always implies SWA"
+      ],
+      "correct": 0,
+      "explanation": "FlashAttention is an IO-aware kernel for full or masked attention. Sliding window and sparse masks reduce which entries exist; FlexAttention-style APIs then fuse those patterns with efficient kernels."
+    },
+    {
+      "stage": "post",
+      "question": "For causal SWA with window W on length N, what is the asymptotic attention compute scaling?",
+      "options": [
+        "O(N·W) instead of O(N²) for the non-masked entries",
+        "O(N²) regardless of W",
+        "O(W²) independent of N",
+        "O(log N) because windows stack exponentially"
+      ],
+      "correct": 0,
+      "explanation": "Each of N query positions attends to at most W keys, giving O(N·W) score entries. Effective receptive field can still grow across L layers as roughly L·W when windows overlap."
+    },
+    {
+      "stage": "post",
+      "question": "What does the lesson’s mask comparator demo in code/main.py illustrate?",
+      "options": [
+        "Side-by-side causal, SWA, local+strided sparse, and differential masks on a toy sequence so you can see which positions receive finite scores",
+        "End-to-end training of Llama 3 70B on 128K context",
+        "Quantization of KV cache to INT4 only",
+        "Conversion of BERT checkpoints to GPT-2"
+      ],
+      "correct": 0,
+      "explanation": "The build implements swa_mask, strided_mask, and differential-style scoring on small N so the sparsity pattern is visible before wiring variants into a full transformer stack."
+    }
+  ]
+}
