@@ -1,4 +1,4 @@
-<p align="center">
+ <p align="center">
   <img src="assets/banner.svg" alt="AI Engineering from Scratch — reference manual banner" width="100%">
 </p>
 
@@ -148,8 +148,36 @@ ls phases/03-deep-learning-core/05-loss-functions/outputs/
 | [`/find-your-level`](.claude/skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
 | [`/check-understanding <phase>`](.claude/skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. |
 
+### Progress tracking (local-first, optional repo sync)
+
+The website tracks your progress in your browser's localStorage. It never leaves your device unless you explicitly save it.
+
+**Save your progress:**
+
+1. Go to [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)
+2. Click **Save** in the header
+3. Optional: add a label (e.g., "Mac 2026-05-30", "PC sync")
+4. Save the `aifs-progress.json` file
+
+**Load your progress:**
+
+1. Click **Load** in the header
+2. Select your `aifs-progress.json` file
+3. Confirm the load (shows label + date if present)
+4. Your progress is restored
+
+**Sync progress across devices via your repo**
+
+`progress/aifs-progress.json` is a tracked public file. Commit and push to sync across devices (Mac ↔ PC). The site auto-loads the repo save if it's newer than your browser data.
+
+1. Commit your save: `git add progress/aifs-progress.json && git commit -m "update progress"`
+2. Push: `git push origin main`
+3. On another device: `git pull` (site auto-offers to load newer repo saves)
+
+This is a local-first design. Your data lives in your browser. The repo sync is optional — use it for multi-device convenience or collaborative learning via PRs.
+
 ```
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 ## Every lesson ships something
@@ -439,7 +467,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-7">
-<summary><b>Phase 7 — Transformers Deep Dive</b> &nbsp;<code>14 lessons</code>&nbsp; <em>The architecture that changed everything.</em></summary>
+<summary><b>Phase 7 — Transformers Deep Dive</b> &nbsp;<code>16 lessons</code>&nbsp; <em>The architecture that changed everything.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -458,11 +486,13 @@ Twenty phases. Click any phase to expand its lesson list.
 | 12 | [KV Cache, Flash Attention & Inference Optimization](phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Build | Python |
 | 13 | [Scaling Laws](phases/07-transformers-deep-dive/13-scaling-laws/) | Learn | Python |
 | 14 | [Build a Transformer from Scratch](phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Build | Python |
+| 15 | [Attention Variants — Sliding Window, Sparse, Differential](phases/07-transformers-deep-dive/15-attention-variants/) | Build | Python |
+| 16 | [Speculative Decoding — Draft, Verify, Repeat](phases/07-transformers-deep-dive/16-speculative-decoding/) | Build | Python |
 
 </details>
 
 <details id="phase-8">
-<summary><b>Phase 8 — Generative AI</b> &nbsp;<code>14 lessons</code>&nbsp; <em>Create images, video, audio, 3D, and more.</em></summary>
+<summary><b>Phase 8 — Generative AI</b> &nbsp;<code>15 lessons</code>&nbsp; <em>Create images, video, audio, 3D, and more.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -481,6 +511,7 @@ Twenty phases. Click any phase to expand its lesson list.
 | 12 | [3D Generation](phases/08-generative-ai/12-3d-generation/) | Build | Python |
 | 13 | [Flow Matching & Rectified Flows](phases/08-generative-ai/13-flow-matching-rectified-flows/) | Build | Python |
 | 14 | [Evaluation: FID, CLIP Score](phases/08-generative-ai/14-evaluation-fid-clip-score/) | Build | Python |
+| 19 | [Visual Autoregressive Modeling (VAR): Next-Scale Prediction](phases/08-generative-ai/19-visual-autoregressive-var/) | Build | Python |
 
 </details>
 
@@ -506,7 +537,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-10">
-<summary><b>Phase 10 — LLMs from Scratch</b> &nbsp;<code>22 lessons</code>&nbsp; <em>Build, train, and understand large language models.</em></summary>
+<summary><b>Phase 10 — LLMs from Scratch</b> &nbsp;<code>23 lessons</code>&nbsp; <em>Build, train, and understand large language models.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -533,6 +564,7 @@ Twenty phases. Click any phase to expand its lesson list.
 | 20 | [DeepSeek-V3 Architecture Walkthrough](phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Learn | Python |
 | 21 | [Jamba — Hybrid SSM-Transformer](phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Learn | Python |
 | 22 | [Async and Hogwild! Inference](phases/10-llms-from-scratch/22-async-hogwild-inference/) | Build | Python |
+| 34 | [Gradient Checkpointing and Activation Recomputation](phases/10-llms-from-scratch/34-gradient-checkpointing/) | Build | Python |
 
 </details>
 

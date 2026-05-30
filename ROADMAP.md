@@ -200,6 +200,8 @@ Total estimated time: ~314 hours, at your own pace.
 | 12 | [KV Cache, Flash Attention & Inference Optimization](phases/07-transformers-deep-dive/12-kv-cache-flash-attention) | ✅ | ~75 min |
 | 13 | [Scaling Laws](phases/07-transformers-deep-dive/13-scaling-laws) | ✅ | ~45 min |
 | 14 | [Build a Transformer from Scratch — The Capstone](phases/07-transformers-deep-dive/14-build-a-transformer-capstone) | ✅ | ~120 min |
+| 15 | [Attention Variants — Sliding Window, Sparse, Differential](phases/07-transformers-deep-dive/15-attention-variants/) | ✅ | ~75 min |
+| 16 | [Speculative Decoding — Draft, Verify, Repeat](phases/07-transformers-deep-dive/16-speculative-decoding/) | ✅ | ~75 min |
 
 ## Phase 8: Generative AI — ✅ (~14 hours)
 
@@ -219,6 +221,7 @@ Total estimated time: ~314 hours, at your own pace.
 | 12 | [3D Generation](phases/08-generative-ai/12-3d-generation/) | ✅ | ~45 min |
 | 13 | [Flow Matching & Rectified Flows](phases/08-generative-ai/13-flow-matching-rectified-flows/) | ✅ | ~45 min |
 | 14 | [Evaluation — FID, CLIP Score, Human Preference](phases/08-generative-ai/14-evaluation-fid-clip-score/) | ✅ | ~45 min |
+| 19 | [Visual Autoregressive Modeling (VAR) — Next-Scale Prediction](phases/08-generative-ai/19-visual-autoregressive-var/) | ✅ | ~75 min |
 
 ## Phase 9: Reinforcement Learning — ✅ (~13 hours)
 
@@ -263,6 +266,7 @@ Total estimated time: ~314 hours, at your own pace.
 | 20 | [DeepSeek-V3 Architecture Walkthrough](phases/10-llms-from-scratch/20-deepseek-v3-walkthrough) | ✅ | ~75 min |
 | 21 | [Jamba — Hybrid SSM-Transformer](phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer) | ✅ | ~60 min |
 | 22 | [Async and Hogwild! Inference](phases/10-llms-from-scratch/22-async-hogwild-inference) | ✅ | ~60 min |
+| 34 | [Gradient Checkpointing and Activation Recomputation](phases/10-llms-from-scratch/34-gradient-checkpointing/) | ✅ | ~60 min |
 
 ## Phase 11: LLM Engineering — ✅ (~17 hours)
 
