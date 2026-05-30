@@ -1,4 +1,4 @@
- <p align="center">
+<p align="center">
   <img src="assets/banner.svg" alt="AI Engineering from Scratch — reference manual banner" width="100%">
 </p>
 
@@ -148,36 +148,8 @@ ls phases/03-deep-learning-core/05-loss-functions/outputs/
 | [`/find-your-level`](.claude/skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
 | [`/check-understanding <phase>`](.claude/skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. |
 
-### Progress tracking (local-first, optional repo sync)
-
-The website tracks your progress in your browser's localStorage. It never leaves your device unless you explicitly save it.
-
-**Save your progress:**
-
-1. Go to [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)
-2. Click **Save** in the header
-3. Optional: add a label (e.g., "Mac 2026-05-30", "PC sync")
-4. Save the `aifs-progress.json` file
-
-**Load your progress:**
-
-1. Click **Load** in the header
-2. Select your `aifs-progress.json` file
-3. Confirm the load (shows label + date if present)
-4. Your progress is restored
-
-**Sync progress across devices via your repo**
-
-`progress/aifs-progress.json` is a tracked public file. Commit and push to sync across devices (Mac ↔ PC). The site auto-loads the repo save if it's newer than your browser data.
-
-1. Commit your save: `git add progress/aifs-progress.json && git commit -m "update progress"`
-2. Push: `git push origin main`
-3. On another device: `git pull` (site auto-offers to load newer repo saves)
-
-This is a local-first design. Your data lives in your browser. The repo sync is optional — use it for multi-device convenience or collaborative learning via PRs.
-
 ```
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 ## Every lesson ships something
