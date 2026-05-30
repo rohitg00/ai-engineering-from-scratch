@@ -123,6 +123,8 @@ nvidia-smi
 uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```
 
+> **On Python 3.14?** PyTorch doesn't ship CUDA wheels for the newest Python release right away, so the command above can't find a matching GPU build and you fall back to CPU-only torch. Use Python 3.11–3.13 for GPU support until the CUDA wheels catch up to 3.14.
+
 ```python
 import torch
 print(f"CUDA available: {torch.cuda.is_available()}")
