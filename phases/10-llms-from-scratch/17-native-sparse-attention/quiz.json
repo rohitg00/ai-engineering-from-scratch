@@ -1,0 +1,78 @@
+{
+  "lesson": "17-native-sparse-attention",
+  "title": "Native Sparse Attention (DeepSeek NSA)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the fundamental trade-off in native sparse attention?",
+      "options": [
+        "Reducing KV cache memory and compute cost while maintaining model quality by attending only to the most relevant tokens",
+        "Increasing model size to improve accuracy",
+        "Removing all attention mechanisms",
+        "Using only local attention patterns"
+      ],
+      "correct": 0,
+      "explanation": "Native sparse attention (like DeepSeek NSA) doesn't just approximate attention—it replaces dense attention with hardware-aligned sparse patterns that explicitly attend only to relevant tokens. This dramatically reduces memory and compute while preserving the ability to capture long-range dependencies."
+    },
+    {
+      "stage": "check",
+      "question": "What are the three parallel paths in DeepSeek NSA's architecture?",
+      "options": [
+        "Compression path, selection path, and sliding window path",
+        "Encoding, decoding, and attention",
+        "Self-attention, cross-attention, and feed-forward",
+        "Input, hidden, and output layers"
+      ],
+      "correct": 0,
+      "explanation": "The three-path architecture is the core of DeepSeek NSA: the compression path compresses the sequence, the selection path picks relevant tokens based on queries, and the sliding window path handles local context. Their outputs are merged, giving the model both efficiency and the ability to capture different types of dependencies."
+    },
+    {
+      "stage": "check",
+      "question": "How does the sliding window path differ from the other two paths?",
+      "options": [
+        "It attends only to tokens within a fixed-size window around each position, handling local dependencies efficiently",
+        "It attends to all tokens in the sequence",
+        "It uses a different attention mechanism entirely",
+        "It is only used during training"
+      ],
+      "correct": 0,
+      "explanation": "The sliding window path is straightforward: for each position, it attends only to tokens within a window of size K (e.g., ±4 tokens). This captures local patterns cheaply and is hardware-friendly because the attention matrix is sparse with a predictable banded structure."
+    },
+    {
+      "stage": "check",
+      "question": "What makes native sparse attention hardware-aligned?",
+      "options": [
+        "The sparse patterns are designed to map efficiently to GPU memory layouts and thread block execution, avoiding random memory access",
+        "It runs on CPU instead of GPU",
+        "It uses specialized hardware",
+        "It requires less training data"
+      ],
+      "correct": 0,
+      "explanation": "Dense attention's O(n²) memory causes thrashing on GPUs. Native sparse patterns like NSA's are designed so that the tokens being attended to are predictable and contiguous in memory. This allows efficient memory access patterns and thread block execution, making the sparse operations run fast on standard GPU hardware."
+    },
+    {
+      "stage": "post",
+      "question": "How much KV cache reduction can native sparse attention achieve compared to dense attention?",
+      "options": [
+        "Up to 90% or more, depending on the sequence length and sparsity configuration",
+        "No reduction in memory usage",
+        "Only 10-20% reduction",
+        "Memory usage increases slightly"
+      ],
+      "correct": 0,
+      "explanation": "Since each position attends only to a subset of tokens (often O(√n) or O(log n) instead of O(n)), the KV cache stores far fewer key-value vectors per position. For long sequences, this can reduce memory by an order of magnitude, enabling much longer contexts or larger batch sizes on the same hardware."
+    },
+    {
+      "stage": "post",
+      "question": "Why is native sparse attention considered 'native' rather than an approximation?",
+      "options": [
+        "Because it replaces the dense attention operation entirely with a designed sparse mechanism, rather than approximating dense attention with pruning",
+        "Because it only works with native language models",
+        "Because it was invented by DeepSeek",
+        "Because it uses native Python code"
+      ],
+      "correct": 0,
+      "explanation": "Approaches like pruning approximate dense attention by removing low-weight connections after computing them. Native sparse attention (like NSA) never computes the dense matrix at all—it explicitly defines which tokens to attend to using learned patterns. This is a fundamentally different computational graph, not an approximation of dense attention."
+    }
+  ]
+}
