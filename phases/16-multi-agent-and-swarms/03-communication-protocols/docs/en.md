@@ -38,21 +38,13 @@ This lesson goes deep. You will read real wire formats from each spec, build wor
 Think of these four protocols as layers, each addressing a different question:
 
 ```mermaid
-block-beta
-  columns 1
-  block:ANP["ANP — How do agents trust strangers?\nDecentralized identity (DID), E2EE, meta-protocol"]
-  end
-  block:A2A["A2A — How do agents collaborate on goals?\nAgent Cards, task lifecycle, streaming, negotiation"]
-  end
-  block:ACP["ACP — How do agents talk in auditable systems?\nRuns, trajectory metadata, session continuity"]
-  end
-  block:MCP["MCP — How does an agent use a tool?\nTool discovery, execution, context sharing"]
-  end
+flowchart TB
+    ANP["ANP - trust strangers"]
+    A2A["A2A - collaborate on goals"]
+    ACP["ACP - audit agent runs"]
+    MCP["MCP - use external tools"]
 
-  style ANP fill:#f3e8ff,stroke:#7c3aed
-  style A2A fill:#dbeafe,stroke:#2563eb
-  style ACP fill:#fef3c7,stroke:#d97706
-  style MCP fill:#d1fae5,stroke:#059669
+    ANP --> A2A --> ACP --> MCP
 ```
 
 They're not competitors. They solve different problems at different levels.
@@ -191,7 +183,11 @@ stateDiagram-v2
     canceled --> [*]
     rejected --> [*]
 
-    note right of completed: Terminal states are immutable.\nFollow-ups create new tasks\nwithin the same contextId.
+    note right of completed
+        Terminal states are immutable.
+        Follow-ups create new tasks
+        within the same contextId.
+    end note
 ```
 
 All 8 states (the spec also defines `UNSPECIFIED` as a sentinel, omitted here):
@@ -315,10 +311,6 @@ graph LR
     A --> D["Registry<br/>Centralized catalog"]
     A --> E["Embedded<br/>Container labels"]
 
-    style B fill:#dbeafe,stroke:#2563eb
-    style C fill:#d1fae5,stroke:#059669
-    style D fill:#fef3c7,stroke:#d97706
-    style E fill:#f3e8ff,stroke:#7c3aed
 ```
 
 The **AgentManifest** is simpler than A2A's Agent Card:
@@ -437,9 +429,6 @@ graph TB
     Layer3 --> Layer2
     Layer2 --> Layer1
 
-    style Layer1 fill:#d1fae5,stroke:#059669
-    style Layer2 fill:#dbeafe,stroke:#2563eb
-    style Layer3 fill:#f3e8ff,stroke:#7c3aed
 ```
 
 #### DID Documents (Real Structure)
@@ -590,9 +579,6 @@ graph TB
     RA <-->|ANP + A2A| EA
     CA <-->|ANP + A2A| PA
 
-    style org fill:#f8fafc,stroke:#334155
-    style ext fill:#fef2f2,stroke:#991b1b
-    style AUDIT fill:#fef3c7,stroke:#d97706
 ```
 
 - **MCP** connects each agent to its tools
@@ -1140,10 +1126,6 @@ graph LR
     ACP_A --> A2A_T[A2A: Create Task]
     A2A_T --> RESULT[Task + Audit Entry]
 
-    style ANP_V fill:#d1fae5,stroke:#059669
-    style A2A_D fill:#dbeafe,stroke:#2563eb
-    style ACP_A fill:#fef3c7,stroke:#d97706
-    style A2A_T fill:#dbeafe,stroke:#2563eb
 ```
 
 ```typescript
@@ -1461,11 +1443,6 @@ graph TD
     INFRA -->|Yes| BROKER[A2A + message broker]
     INFRA -->|No| ANP_R[ANP + A2A<br/>DID verification]
 
-    style MCP_R fill:#d1fae5,stroke:#059669
-    style A2A_R fill:#dbeafe,stroke:#2563eb
-    style ACP_R fill:#fef3c7,stroke:#d97706
-    style ANP_R fill:#f3e8ff,stroke:#7c3aed
-    style BROKER fill:#e0e7ff,stroke:#4338ca
 ```
 
 ## Ship It
