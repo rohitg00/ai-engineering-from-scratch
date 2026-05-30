@@ -1,0 +1,78 @@
+{
+  "lesson": "16-speculative-decoding",
+  "title": "Speculative Decoding — Draft, Verify, Repeat",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What quality guarantee does correct speculative sampling preserve?",
+      "options": [
+        "The output token sequence is identically distributed to what the verifier model would produce alone",
+        "The draft model’s distribution replaces the verifier’s distribution for speed",
+        "Only greedy decoding is supported; sampling temperature is forbidden",
+        "The verifier never runs; only the draft model generates text"
+      ],
+      "correct": 0,
+      "explanation": "Leviathan et al. (2023) acceptance with residual sampling on rejection ensures the marginal distribution matches the verifier—speed comes from parallelism, not approximation error."
+    },
+    {
+      "stage": "check",
+      "question": "For a drafted token with draft probability p_i and verifier probability q_i(d_i), when is the draft accepted?",
+      "options": [
+        "With probability min(1, q_i(d_i) / p_i(d_i)) using an independent uniform draw",
+        "Always when the draft and verifier pick the same token ID",
+        "Only when p_i > q_i",
+        "Never — drafts are always discarded"
+      ],
+      "correct": 0,
+      "explanation": "The lesson implements accept_or_reject with ratio q/p capped at 1. On rejection, the next token is sampled from the normalized positive part of (q − p)."
+    },
+    {
+      "stage": "check",
+      "question": "What does acceptance rate α control in the speedup story?",
+      "options": [
+        "How often draft tokens survive verification—higher α means fewer big-model steps per generated token",
+        "The learning rate during speculative fine-tuning",
+        "The number of layers in the draft transformer",
+        "Whether KV cache is stored in FP8"
+      ],
+      "correct": 0,
+      "explanation": "α is the expected per-position acceptance probability. With N drafts per step, high α reduces verifier calls roughly by 1/(1−α) in the high-acceptance regime, combined with cheap draft forward passes."
+    },
+    {
+      "stage": "check",
+      "question": "Why must production stacks roll back KV cache state after a rejected draft?",
+      "options": [
+        "Verification extends the cache by N draft positions; rejections truncate back to the last accepted prefix",
+        "KV cache is never used during speculative decoding",
+        "Draft models do not use attention",
+        "Rollback is only needed for training, not inference"
+      ],
+      "correct": 0,
+      "explanation": "One verifier forward appends N draft keys/values. If draft j is rejected, positions after the accepted prefix must be discarded so the next step starts from a consistent cache length."
+    },
+    {
+      "stage": "post",
+      "question": "How does EAGLE differ from vanilla speculative decoding with a separate small draft model?",
+      "options": [
+        "EAGLE reuses verifier hidden states in a tiny draft network, often raising acceptance above vanilla separate-draft setups",
+        "EAGLE removes the verifier entirely",
+        "EAGLE only works on diffusion image models",
+        "EAGLE forbids tree search over candidate continuations"
+      ],
+      "correct": 0,
+      "explanation": "EAGLE-1/2/3 condition a lightweight draft on the verifier’s features so draft and verifier distributions correlate more strongly; EAGLE-3 adds tree search over continuations in production stacks like vLLM."
+    },
+    {
+      "stage": "post",
+      "question": "In the lesson’s toy implementation, what is residual_dist(q, p) used for?",
+      "options": [
+        "Sampling the next token from max(0, q−p) renormalized when a draft token is rejected",
+        "Computing the draft model’s learning rate",
+        "Padding batches to the nearest power of two",
+        "Encrypting logits before softmax"
+      ],
+      "correct": 0,
+      "explanation": "Element-wise subtraction, clamp negatives to zero, renormalize—this is the corrected distribution for the rejection position so the combined procedure matches direct verifier sampling."
+    }
+  ]
+}
