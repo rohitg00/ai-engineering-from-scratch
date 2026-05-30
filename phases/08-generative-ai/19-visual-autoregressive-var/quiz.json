@@ -1,0 +1,78 @@
+{
+  "lesson": "19-visual-autoregressive-var",
+  "title": "Visual Autoregressive Modeling (VAR): Next-Scale Prediction",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What generation-order problem hurt early pixel-by-pixel or raster-order image autoregression?",
+      "options": [
+        "Early spatial positions must commit before later context exists, so quality scaled poorly compared to text GPTs",
+        "Raster order is too fast for GPUs",
+        "VQ codebooks cannot represent color",
+        "Diffusion models cannot be trained on ImageNet"
+      ],
+      "correct": 0,
+      "explanation": "A 1D visit order over a 2D grid forces corner pixels to decide before the global image structure is known—VAR changes the unit of prediction from single tokens to whole scales."
+    },
+    {
+      "stage": "check",
+      "question": "In VAR, what is predicted at each autoregressive step during generation?",
+      "options": [
+        "The entire token grid at the next resolution scale, conditioned on all coarser scales",
+        "One RGB pixel at a time in row-major order only",
+        "A single continuous noise vector for the full image",
+        "Only the final high-resolution scale without coarse stages"
+      ],
+      "correct": 0,
+      "explanation": "Generation runs z₁ (e.g. 1×1), then z₂ (2×2), then finer scales up to K; each scale is produced in one forward pass with parallel prediction within the scale."
+    },
+    {
+      "stage": "check",
+      "question": "How does the multi-scale VQ tokenizer represent an image latent?",
+      "options": [
+        "Residual token grids at increasing resolution whose embedded sum reconstructs the latent, trained once then frozen",
+        "A single 8×8 codebook with no coarse levels",
+        "Continuous flow matching in pixel space only",
+        "Per-pixel softmax without a codebook"
+      ],
+      "correct": 0,
+      "explanation": "Each scale captures what prior scales missed; embeddings are upsampled and summed before the decoder—same codebook across scales, residual VQ style."
+    },
+    {
+      "stage": "check",
+      "question": "Why can VAR attend within a scale without strict intra-scale causality?",
+      "options": [
+        "All positions at scale k are predicted jointly in parallel because causality is defined across scales, not left-to-right within the grid",
+        "VAR uses bidirectional attention to future image pixels in time",
+        "Scale k tokens never attend to scale k−1",
+        "Attention is disabled within each scale"
+      ],
+      "correct": 0,
+      "explanation": "Causality is in scale order: tokens at scale k see all of scales 1..k. Within-scale parallelism is the main latency win versus per-token image AR."
+    },
+    {
+      "stage": "post",
+      "question": "What scaling-law result did Tian et al. report for VAR on ImageNet?",
+      "options": [
+        "FID improves predictably with compute/parameters like GPT perplexity—power-law behavior for image generation",
+        "VAR cannot be trained beyond 1M parameters",
+        "FID is independent of model size",
+        "VAR only works on text, not class-conditional images"
+      ],
+      "correct": 0,
+      "explanation": "VAR was among the first image generators to show clean compute-to-FID scaling, making budgeted quality targets more predictable than per-architecture tuning alone."
+    },
+    {
+      "stage": "post",
+      "question": "Compared to diffusion at inference, what is VAR’s typical pass structure on a 256×256 image in this lesson’s framing?",
+      "options": [
+        "About K scale steps (e.g. ~10 forwards) with parallel tokens per scale, versus many sequential denoising steps for DiT-class models",
+        "Thousands of per-pixel steps identical to PixelCNN",
+        "A single forward with no tokenizer",
+        "Only adversarial discriminator updates at inference"
+      ],
+      "correct": 0,
+      "explanation": "VAR trades many fine-grained denoising iterations for fewer coarse-to-fine scale passes; each pass fills a full grid at that resolution, which is why inference can beat DiT on pass count at matched budgets."
+    }
+  ]
+}
