@@ -1,0 +1,78 @@
+{
+  "lesson": "15-speculative-decoding-eagle3",
+  "title": "Speculative Decoding and EAGLE-3",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the fundamental guarantee of the Leviathan rejection sampling rule in speculative decoding?",
+      "options": [
+        "It produces samples identically distributed to the verifier's distribution",
+        "It always accepts the draft model's tokens",
+        "It doubles the generation speed regardless of models",
+        "It requires both models to have the same architecture"
+      ],
+      "correct": 0,
+      "explanation": "The Leviathan rule accepts draft tokens with probability min(1, q(d)/p(d)) and samples from the residual on rejection. This mathematically guarantees that the final output distribution equals the verifier's distribution exactly."
+    },
+    {
+      "stage": "check",
+      "question": "What does the acceptance rate α represent in the speedup formula?",
+      "options": [
+        "The probability that the verifier accepts the draft model's token proposal",
+        "The number of tokens generated per second",
+        "The ratio of draft model size to verifier size",
+        "The temperature setting for sampling"
+      ],
+      "correct": 0,
+      "explanation": "α is the single biggest lever for speedup in speculative decoding. It measures how often the draft model's tokens match what the verifier would have produced, which determines how many draft tokens can be accepted without recomputation."
+    },
+    {
+      "stage": "check",
+      "question": "How does EAGLE-3 improve upon the original speculative decoding approach?",
+      "options": [
+        "It introduces a learned draft model that conditionally generates token candidates based on the verifier's hidden states",
+        "It uses a larger draft model",
+        "It skips the verification step entirely",
+        "It processes tokens in parallel regardless of acceptance"
+      ],
+      "correct": 0,
+      "explanation": "Original spec-decoding used a small independent draft model. EAGLE trains a draft head that reads the verifier's hidden states to predict which tokens the verifier is likely to accept, making the draft much more informed and raising the acceptance rate."
+    },
+    {
+      "stage": "check",
+      "question": "What happens to the KV cache when the verifier rejects a draft token?",
+      "options": [
+        "The cache rolls back to the state before the rejected token was added, and a new token is sampled from the residual distribution",
+        "The cache grows indefinitely with rejected tokens",
+        "The rejected token is kept in the cache",
+        "The entire cache is flushed and rebuilt"
+      ],
+      "correct": 0,
+      "explanation": "On rejection, the speculative loop must roll back the KV cache to the pre-rejection state to maintain correctness. It then samples a new token from the residual (q-p)+ distribution, which is what the verifier would have sampled if not for the draft proposal."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the speedup formula involve both the acceptance rate α and the cost ratio c?",
+      "options": [
+        "Because speedup depends on both how often tokens are accepted (α) and how much cheaper the draft model is to run (c)",
+        "Because α alone determines speedup",
+        "Because c alone determines speedup",
+        "Speedup is constant regardless of either parameter"
+      ],
+      "correct": 0,
+      "explanation": "Speedup = (1 - α^(N+1)) / ((1-α)c + α(1-c)) captures the trade-off: higher α means more accepted tokens (good), but higher c means the draft is more expensive relative to the verifier (bad). The optimal draft length N depends on both."
+    },
+    {
+      "stage": "post",
+      "question": "What is the bonus token in speculative decoding?",
+      "options": [
+        "When all N draft tokens are accepted, the verifier generates one extra token without needing a new forward pass, effectively amortizing the cost over N+1 tokens",
+        "A token generated at random when all drafts fail",
+        "A token added to increase the sequence length",
+        "A token used for padding sequences"
+      ],
+      "correct": 0,
+      "explanation": "Full acceptance means the verifier's forward pass validated N tokens at once. The verifier can then sample one more token before the next draft-verify round, giving N+1 tokens for the cost of one verifier pass. This bonus is why high acceptance rates are so valuable."
+    }
+  ]
+}
