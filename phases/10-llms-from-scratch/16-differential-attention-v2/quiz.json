@@ -1,0 +1,78 @@
+{
+  "lesson": "16-differential-attention-v2",
+  "title": "Differential Attention (V2)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the core operation in differential attention?",
+      "options": [
+        "Computing the difference between two softmax-normalized attention distributions",
+        "Adding two attention distributions together",
+        "Applying a single softmax to query-key scores",
+        "Concatenating attention heads"
+      ],
+      "correct": 0,
+      "explanation": "Differential attention computes softmax(Q₁K₁^T) - softmax(Q₂K₂^T), where the subtraction of two attention distributions cancels out noise and amplifies the signal. This is the defining operation that gives the technique its name and effectiveness."
+    },
+    {
+      "stage": "check",
+      "question": "Why does differential attention reduce noise compared to standard attention?",
+      "options": [
+        "Because noise is typically structured similarly across the two attention maps and subtracts out, while the signal (relevant query-key matches) tends to differ",
+        "Because it uses more parameters",
+        "Because it skips the softmax computation",
+        "Because it averages across more heads"
+      ],
+      "correct": 0,
+      "explanation": "The noise cancellation analogy is key: if two noisy measurements are subtracted, the shared noise cancels while the true difference remains. In attention, both maps attend to somewhat similar patterns (noise), but the true query-key relationships differ between the two projections (signal)."
+    },
+    {
+      "stage": "check",
+      "question": "What is the role of the learned scalar λ in differential attention?",
+      "options": [
+        "It controls the balance between the differential component and the standard component, allowing the model to dial in how much noise cancellation to apply",
+        "It scales the key vectors",
+        "It determines the number of heads",
+        "It is always set to 1.0"
+      ],
+      "correct": 0,
+      "explanation": "λ is a learned parameter that multiplies the differential attention term before adding it to a baseline standard attention term. This lets the model learn when differential attention is helpful (high λ) vs when standard attention suffices (low λ), making it a flexible, learnable mechanism."
+    },
+    {
+      "stage": "check",
+      "question": "What architectural change enables differential attention?",
+      "options": [
+        "Dedicating a subset of attention heads to computing differential attention instead of standard attention",
+        "Adding more layers",
+        "Increasing model width",
+        "Changing the activation function"
+      ],
+      "correct": 0,
+      "explanation": "Differential attention V2 uses specialized heads that compute the difference operation. These heads are interleaved with standard attention heads, giving the model both options. The allocation of differential vs standard heads can be learned during training."
+    },
+    {
+      "stage": "post",
+      "question": "How does differential attention help with long-range reasoning?",
+      "options": [
+        "By canceling out spurious attention patterns that accumulate over long sequences, leaving only the genuine long-range dependencies",
+        "By shortening sequences",
+        "By adding more positional encodings",
+        "By increasing context window size"
+      ],
+      "correct": 0,
+      "explanation": "In long sequences, attention patterns can become diffuse and pick up spurious correlations. The subtraction in differential attention suppresses these shared diffuse patterns (which appear in both Q₁K₁ and Q₂K₂), sharpening the signal for the actual long-range relationships that differ between the two projections."
+    },
+    {
+      "stage": "post",
+      "question": "Why is differential attention particularly useful for complex reasoning tasks?",
+      "options": [
+        "Because these tasks require disentangling multiple pieces of information, and the subtraction operation helps separate signal from noise more effectively than standard attention",
+        "Because it makes training faster",
+        "Because it reduces model size",
+        "Because it is required for all tasks"
+      ],
+      "correct": 0,
+      "explanation": "Complex reasoning involves tracking multiple relationships, some of which are relevant (signal) and some spurious (noise). Standard attention attends to everything. Differential attention's subtraction helps downweight the spurious patterns, making it easier for the model to focus on the genuine reasoning-relevant dependencies."
+    }
+  ]
+}
