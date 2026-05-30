@@ -1,0 +1,78 @@
+{
+  "lesson": "34-gradient-checkpointing",
+  "title": "Gradient Checkpointing and Activation Recomputation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the fundamental memory-compute trade-off in gradient checkpointing?",
+      "options": [
+        "Trading forward pass activations (memory) for recomputing them during backward pass (compute) to fit larger models or batch sizes",
+        "Increasing both memory and compute",
+        "Decreasing both memory and compute",
+        "Eliminating the need for backward passes"
+      ],
+      "correct": 0,
+      "explanation": "During forward pass, we normally store all activations for backward. Checkpointing drops some activations and recomputes them on-demand during backward. This costs extra compute but saves memory, enabling training of larger models or with larger batch sizes."
+    },
+    {
+      "stage": "check",
+      "question": "What is the O(√n) strategy for checkpoint selection?",
+      "options": [
+        "Selecting checkpoint positions at roughly every √n layers to balance memory savings and recomputation cost optimally",
+        "Selecting checkpoints randomly",
+        "Selecting every layer as a checkpoint",
+        "Selecting no checkpoints"
+      ],
+      "correct": 0,
+      "explanation": "The O(√n) strategy is proven optimal: for a network with n layers, checkpointing every √n layers gives the best trade-off. More checkpoints save less memory; fewer checkpoints cost more recomputation. √n balances these costs mathematically."
+    },
+    {
+      "stage": "check",
+      "question": "How does recursive checkpointing differ from uniform checkpointing?",
+      "options": [
+        "Recursive checkpointing applies checkpointing hierarchically across segments, while uniform checkpointing uses a fixed interval",
+        "Recursive is faster to implement",
+        "Uniform checkpointing is only for small models",
+        "There is no difference"
+      ],
+      "correct": 0,
+      "explanation": "Uniform checkpointing picks every k-th layer. Recursive checkpointing can checkpoint segments of the network itself, creating a hierarchy of checkpointed and recomputed regions. This is more complex but can achieve better memory savings for very deep networks by tailoring checkpoint granularity to the network structure."
+    },
+    {
+      "stage": "check",
+      "question": "What must be preserved when recomputing activations during backward pass?",
+      "options": [
+        "The exact same random state and computational graph as the original forward pass to ensure gradients are computed correctly",
+        "Only the input tensors",
+        "Only the output tensors",
+        "Nothing needs to be preserved"
+      ],
+      "correct": 0,
+      "explanation": "Recomputation must reproduce the forward pass exactly. If the forward used dropout, batch norm with running stats, or any stochastic operation, the backward recomputation must use the same random seeds and state. Otherwise, gradients would be computed incorrectly, breaking training."
+    },
+    {
+      "stage": "post",
+      "question": "When is gradient checkpointing most beneficial?",
+      "options": [
+        "When training large models that exceed GPU memory, or when using large batch sizes that would otherwise OOM",
+        "For all training runs regardless of model size",
+        "Only for inference",
+        "When using small models"
+      ],
+      "correct": 0,
+      "explanation": "Checkpointing adds compute overhead (typically 20-30% slower training). It's worth it only when memory is the bottleneck: either the model is too large to fit without checkpointing, or the desired batch size causes OOM. For small models with plenty of memory, the extra compute cost isn't justified."
+    },
+    {
+      "stage": "post",
+      "question": "How does gradient checkpointing affect the backward pass algorithm?",
+      "options": [
+        "It requires modifying the backward pass to detect missing activations and trigger recomputation of the corresponding forward segment",
+        "The backward pass runs unchanged",
+        "The backward pass skips certain layers",
+        "The backward pass runs faster"
+      ],
+      "correct": 0,
+      "explanation": "Standard backward assumes all activations are available. With checkpointing, when the backward pass reaches a layer whose activations were dropped (not checkpointed), it must first recompute the forward segment that produced those activations. This requires instrumentation in the backward pass or a custom autograd engine that knows which activations are missing and how to recompute them."
+    }
+  ]
+}
