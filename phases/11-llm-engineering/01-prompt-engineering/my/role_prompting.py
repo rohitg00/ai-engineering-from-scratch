@@ -54,3 +54,5 @@ for label, system_prompt in roles:
         if block.type == "text":
             print(block.text)
     print()
+
+x = 1 + 2

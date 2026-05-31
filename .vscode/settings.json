@@ -1,12 +1,44 @@
 {
+  // ---- Python / форматирование ----
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll.ruff": "explicit",
       "source.organizeImports.ruff": "explicit"
-    }
+    },
+    "editor.tabSize": 4
   },
   "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
-  "ruff.nativeServer": "on"
+  "python.terminal.activateEnvironment": true,
+  "python.envFile": "${workspaceFolder}/.env",
+  "ruff.nativeServer": "on",
+
+  // ---- Pylance (анализ кода) ----
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.diagnosticMode": "openFilesOnly",
+
+  // ---- Jupyter-ноутбуки ----
+  "notebook.formatOnSave.enabled": true,
+  "notebook.lineNumbers": "on",
+  "jupyter.askForKernelRestart": false,
+
+  // ---- Визуальные ориентиры ----
+  "editor.rulers": [88],
+
+  // ---- Чистота дерева файлов и поиска ----
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.ruff_cache": true,
+    "**/*.egg-info": true,
+    "**/.ipynb_checkpoints": true
+  },
+  "search.exclude": {
+    "**/.venv": true,
+    "**/node_modules": true,
+    "**/outputs": false
+  },
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true
 }
