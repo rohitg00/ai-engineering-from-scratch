@@ -57,3 +57,6 @@ mlruns/
 .link-cache.json
 .claude/
 catalog.json
+*.pt
+*.pth
+*.safetensors
