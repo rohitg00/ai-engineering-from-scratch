@@ -27,19 +27,19 @@
 
 ```mermaid
 flowchart TB
-  T[Token ids<br/>shape B, T] --> E[Token embedding<br/>50257, 768]
-  T --> P[Position lookup<br/>0 to T-1]
-  P --> PE[Position embedding<br/>1024, 768]
-  E --> A[Add]
+  T[Token ids<br/>形状 B, T] --> E[Token embedding<br/>50257, 768]
+  T --> P[位置查表<br/>0 到 T-1]
+  P --> PE[位置 embedding<br/>1024, 768]
+  E --> A[相加]
   PE --> A
   A --> D[Embedding dropout]
   D --> B1[Block 1]
   B1 --> B2[Block 2]
   B2 --> Bk[...]
   Bk --> B12[Block 12]
-  B12 --> L[Final LayerNorm]
-  L --> H[LM head<br/>tied to token embedding]
-  H --> O[Logits<br/>shape B, T, 50257]
+  B12 --> L[最终 LayerNorm]
+  L --> H[LM head<br/>与 token embedding 绑定]
+  H --> O[Logits<br/>形状 B, T, 50257]
 ```
 
 Token id 变成 token 向量。Position id 变成位置向量。两者相加之后送进整个 block 栈。最终的 LayerNorm 是 block 之外、几乎所有现代变体都保留下来的那一块。LM head 复用 token embedding 矩阵，这就是 weight tying 的含义。
@@ -58,14 +58,14 @@ GPT-2 用的是学习得到的位置嵌入。位置表是一个形状为 `(1024,
 
 ```mermaid
 flowchart LR
-  P[Prompt tokens] --> M[Model forward]
-  M --> Last[Take last position logits]
-  Last --> T[Divide by temperature]
-  T --> K[Mask to top k]
+  P[Prompt tokens] --> M[模型前向]
+  M --> Last[取最后位置的 logits]
+  Last --> T[除以 temperature]
+  T --> K[mask 到 top k]
   K --> S[Softmax]
-  S --> MN[Multinomial sample]
-  MN --> A[Append to context]
-  A --> Slide[Slide context if > ctx_len]
+  S --> MN[Multinomial 采样]
+  MN --> A[追加到 context]
+  A --> Slide[若 ＞ ctx_len 则滑动 context]
   Slide --> M
 ```
 

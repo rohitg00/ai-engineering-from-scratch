@@ -21,15 +21,15 @@
 
 ```mermaid
 flowchart LR
-    Seed[Seed hypotheses] --> Sched[Iteration scheduler]
-    Sched --> Exp[Experiment runner]
-    Exp --> Bus[Result bus]
+    Seed[种子假设] --> Sched[迭代调度器]
+    Sched --> Exp[实验执行器]
+    Exp --> Bus[结果总线]
     Bus --> Sched
-    Bus --> Trig[Paper trigger]
-    Trig --> Pick[Best result picker]
-    Pick --> Critic[Critic loop]
-    Critic --> Writer[Paper writer]
-    Writer --> Report[Demo report]
+    Bus --> Trig[论文触发器]
+    Trig --> Pick[最佳结果挑选器]
+    Pick --> Critic[Critic 循环]
+    Critic --> Writer[论文写作器]
+    Writer --> Report[Demo 报告]
 ```
 
 五个阶段。种子是三条 hypothesis 的列表。调度器在三个并行槽位里跨这三条假设跑六个实验。bus 报告一个或多个 paper 触发。picker 挑出唯一的最佳结果。critic loop 在从那个结果构建出的草稿上做迭代。paper writer 发出最终的 LaTeX、BibTeX 和 manifest。
@@ -40,10 +40,10 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    Demo[57: end-to-end demo] --> A[54: PaperWriter]
-    Demo --> B[55: CriticLoop]
-    Demo --> C[56: IterationScheduler]
-    Demo --> Inline[Inline stub: seed and runner]
+    Demo[57，端到端 demo] --> A[54，PaperWriter]
+    Demo --> B[55，CriticLoop]
+    Demo --> C[56，IterationScheduler]
+    Demo --> Inline[内联桩，种子与 runner]
 ```
 
 那个内联 stub 顶替了第五十到五十三节课：一个小的种子假设生成器加一个同步的奖励函数。用户只要改两处 import，就能把内联 stub 换成那几节课里真正的原语。
@@ -59,7 +59,7 @@ demo 在构造上就是确定性的。实验 runner 是带种子的 numpy。crit
 ```mermaid
 flowchart TB
     Rep[DemoReport] --> Sch[scheduler_report]
-    Rep --> Pick[best_branch and best_reward]
+    Rep --> Pick[best_branch 与 best_reward]
     Rep --> Cri[critic_result]
     Rep --> Pap[paper_manifest]
     Rep --> Term[stop_reason]

@@ -65,12 +65,12 @@ dy/dx = f'(g(h(x))) * g'(h(x)) * h'(x)
 
 ```mermaid
 graph TD
-    x1["x1 = 2"] --> mul["* (multiply)"]
+    x1["x1 = 2"] --> mul["* （乘）"]
     x2["x2 = 3"] --> mul
-    mul -->|"a = 6"| add["+ (add)"]
+    mul -->|"a = 6"| add["+ （加）"]
     b["b = 1"] --> add
     add -->|"c = 7"| relu["relu"]
-    relu -->|"y = 7"| y["output y"]
+    relu -->|"y = 7"| y["输出 y"]
 ```
 
 **反向传播（计算梯度）：**

@@ -38,20 +38,20 @@ Bai 等人 (2022) 把流水线设计成两阶段。
 
 ```mermaid
 graph TD
-    subgraph SL["Stage 1: SL-CAI"]
-        P1["Harmful prompt"] --> R1["Initial response\n(possibly harmful)"]
-        R1 --> C1["Model critiques\nagainst principle"]
-        C1 --> REV["Model revises\nresponse"]
-        REV --> SFT["SFT on\n(prompt, revised)"]
+    subgraph SL["阶段 1：SL-CAI"]
+        P1["有害 prompt"] --> R1["初始 response\n(可能有害)"]
+        R1 --> C1["模型自我批评\n对照原则"]
+        C1 --> REV["模型修订\nresponse"]
+        REV --> SFT["在以下数据上 SFT\n(prompt、修订后)"]
     end
 
-    subgraph RL["Stage 2: RLAIF"]
-        P2["Prompt"] --> S1["Sample response A"]
-        P2 --> S2["Sample response B"]
-        S1 --> J["Model judges\nA vs B via constitution"]
+    subgraph RL["阶段 2：RLAIF"]
+        P2["Prompt"] --> S1["采样 response A"]
+        P2 --> S2["采样 response B"]
+        S1 --> J["模型评判\n依据 constitution 比较 A 与 B"]
         S2 --> J
-        J --> RM["Preference dataset"]
-        RM --> TRAIN["DPO / PPO training"]
+        J --> RM["偏好数据集"]
+        RM --> TRAIN["DPO / PPO 训练"]
     end
 
     SL --> RL
@@ -140,14 +140,14 @@ DeepSeek 把它在 R1-Zero 之后应用的版本叫"rejection sampling fine-tuni
 
 ```mermaid
 graph LR
-    M0["SFT Model v0"] --> G["Generate G responses\nper prompt"]
-    G --> S["Score with rule\nor constitution"]
-    S --> F["Filter / rank"]
-    F --> T["Fine-tune\n(SFT or GRPO)"]
-    T --> M1["SFT Model v1"]
-    M1 -.->|iterate| G
+    M0["SFT 模型 v0"] --> G["生成 G responses\n每个 prompt"]
+    G --> S["用规则打分\n或 constitution"]
+    S --> F["过滤 / 排序"]
+    F --> T["微调\n(SFT 或 GRPO)"]
+    T --> M1["SFT 模型 v1"]
+    M1 -.->|迭代| G
 
-    H["Human data\n(small fraction)"] --> T
+    H["人工数据\n(小部分)"] --> T
 
     style M0 fill:#1a1a2e,stroke:#e94560,color:#fff
     style M1 fill:#1a1a2e,stroke:#51cf66,color:#fff

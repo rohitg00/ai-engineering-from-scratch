@@ -34,19 +34,19 @@ Phase 10 的每节课对应一个阶段。完整依赖图如下。
 
 ```mermaid
 graph TD
-    S1["01 Tokenizer vocab"] --> S2["02 Trained tokenizer"]
-    S2 --> S3["03 Sharded dataset"]
-    S3 --> S4["04 Base model checkpoint"]
-    S4 --> S5["05 Scaled training recipe"]
+    S1["01 Tokenizer 词表"] --> S2["02 训练好的 tokenizer"]
+    S2 --> S3["03 分片数据集"]
+    S3 --> S4["04 基座模型 checkpoint"]
+    S4 --> S5["05 规模化训练配方"]
     S5 --> S6["06 SFT checkpoint"]
-    S6 --> S7["07 Reward model + PPO policy"]
+    S6 --> S7["07 reward model 加 PPO policy"]
     S6 --> S8["08 DPO policy"]
-    S7 --> S9["09 CAI / GRPO refined policy"]
+    S7 --> S9["09 CAI / GRPO 精修 policy"]
     S8 --> S9
-    S9 --> S10["10 Eval report"]
-    S9 --> S11["11 Quantized weights"]
-    S11 --> S12["12 Inference server"]
-    S10 --> GATE["Ship gate"]
+    S9 --> S10["10 评估报告"]
+    S9 --> S11["11 量化权重"]
+    S11 --> S12["12 推理服务"]
+    S10 --> GATE["上线门禁"]
     S12 --> GATE
 
     style S1 fill:#1a1a2e,stroke:#e94560,color:#fff
@@ -156,14 +156,14 @@ Llama 3 公开报告的成本是 6100 万美元。DeepSeek-V3 报告主预训练
 
 ```mermaid
 graph LR
-    M["Manifest v1.2.3"] --> O["Orchestrator"]
-    O --> S["Stages 01 → 12"]
-    S --> AS["Artifact Store\n(content-addressed)"]
-    S --> ET["Experiment Tracker\n(metrics, curves)"]
-    AS --> GATE["Eval Gate"]
+    M["Manifest v1.2.3"] --> O["编排器"]
+    O --> S["各阶段 01 → 12"]
+    S --> AS["制品存储\n(内容寻址)"]
+    S --> ET["实验追踪器\n(指标、曲线)"]
+    AS --> GATE["评估门禁"]
     ET --> GATE
-    GATE -->|pass| SHIP["Ship"]
-    GATE -->|fail| ROLL["Rollback plan"]
+    GATE -->|通过| SHIP["上线"]
+    GATE -->|失败| ROLL["回滚方案"]
 
     style M fill:#1a1a2e,stroke:#0f3460,color:#fff
     style GATE fill:#1a1a2e,stroke:#e94560,color:#fff

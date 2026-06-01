@@ -32,15 +32,15 @@
 
 ```mermaid
 flowchart LR
-    A["Image file<br/>(JPEG/PNG)"] --> B["Decode<br/>uint8 HWC"]
-    B --> C["Convert<br/>colorspace<br/>(RGB/BGR/YCbCr)"]
-    C --> D["Resize<br/>shorter side"]
-    D --> E["Center crop<br/>model size"]
-    E --> F["Divide by 255<br/>float32 [0,1]"]
-    F --> G["Subtract mean<br/>Divide by std"]
-    G --> H["Transpose<br/>HWC → CHW"]
-    H --> I["Batch<br/>CHW → NCHW"]
-    I --> J["Model"]
+    A["图像文件<br/>JPEG／PNG"] --> B["解码<br/>uint8 HWC"]
+    B --> C["转换色彩空间<br/>RGB／BGR／YCbCr"]
+    C --> D["缩放<br/>按短边"]
+    D --> E["中心裁剪<br/>模型尺寸"]
+    E --> F["除以 255<br/>float32 区间 0 到 1"]
+    F --> G["减均值<br/>除标准差"]
+    G --> H["转置<br/>HWC → CHW"]
+    H --> I["组 batch<br/>CHW → NCHW"]
+    I --> J["模型"]
 
     style A fill:#fef3c7,stroke:#d97706
     style J fill:#ddd6fe,stroke:#7c3aed
@@ -122,15 +122,15 @@ img_chw = img_hwc.permute(2, 0, 1)        # PyTorch tensor
 
 ```mermaid
 flowchart TB
-    subgraph HWC["HWC — pixels stored interleaved (PIL, OpenCV, JPEG)"]
-        H1["row 0: R G B | R G B | R G B ..."]
-        H2["row 1: R G B | R G B | R G B ..."]
-        H3["row 2: R G B | R G B | R G B ..."]
+    subgraph HWC["HWC——像素交错存储（PIL、OpenCV、JPEG）"]
+        H1["第 0 行：R G B ｜ R G B ｜ R G B ……"]
+        H2["第 1 行：R G B ｜ R G B ｜ R G B ……"]
+        H3["第 2 行：R G B ｜ R G B ｜ R G B ……"]
     end
-    subgraph CHW["CHW — channels stored as stacked planes (PyTorch, cuDNN)"]
-        C1["plane R: entire H x W of red values"]
-        C2["plane G: entire H x W of green values"]
-        C3["plane B: entire H x W of blue values"]
+    subgraph CHW["CHW——通道按平面堆叠存储（PyTorch、cuDNN）"]
+        C1["平面 R：整张 H x W 的红色值"]
+        C2["平面 G：整张 H x W 的绿色值"]
+        C3["平面 B：整张 H x W 的蓝色值"]
     end
     HWC -->|"transpose(2, 0, 1)"| CHW
     CHW -->|"transpose(1, 2, 0)"| HWC

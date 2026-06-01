@@ -28,18 +28,18 @@
 
 ```mermaid
 graph TD
-    A["**Markdown Cell**\n# My Experiment\nTesting learning rate 0.01"] --> B["**Code Cell** ► Run\nmodel.fit(X, y, lr=0.01)\n---\nOutput: loss = 0.342"]
-    B --> C["**Code Cell** ► Run\nplt.plot(losses)\n---\nOutput: inline plot"]
+    A["**Markdown 单元**\n# 我的实验\n测试学习率 0.01"] --> B["**代码单元** ► 运行\nmodel.fit(X, y, lr=0.01)\n---\n输出: loss = 0.342"]
+    B --> C["**代码单元** ► 运行\nplt.plot(losses)\n---\n输出: 内联图表"]
 ```
 
 kernel 是后台运行的一个 Python 进程。当你执行某个 cell 时，cell 会把代码发给 kernel，kernel 执行后把结果发回来。所有 cell 共用同一个 kernel，所以变量会在 cell 之间持续存在。
 
 ```mermaid
 graph LR
-    A[Notebook UI] <--> B[Kernel\nPython process]
-    B --> C[Keeps variables in memory]
-    B --> D[Runs cells in whatever order you click]
-    B --> E[Dies when you restart it]
+    A[Notebook 界面] <--> B[Kernel\nPython 进程]
+    B --> C[把变量保留在内存里]
+    B --> D[按你点击的顺序执行 cell]
+    B --> E[重启时会被清空]
 ```
 
 「按你点击的顺序执行」这一点既是超能力，也是脚下的雷。

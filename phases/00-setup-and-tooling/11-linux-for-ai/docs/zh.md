@@ -28,13 +28,13 @@ Linux 把所有东西都放在一个根 `/` 下面。没有 `C:\`，也没有 `/
 
 ```mermaid
 graph TD
-    root["/"] --> home["home/your-username/<br/>Your files — clone repos, run training"]
-    root --> tmp["tmp/<br/>Temporary files, cleared on reboot"]
-    root --> usr["usr/<br/>System programs and libraries"]
-    root --> etc["etc/<br/>Config files"]
-    root --> varlog["var/log/<br/>Logs — check when something breaks"]
-    root --> mnt["mnt/ or /media/<br/>External drives and volumes"]
-    root --> proc["proc/ and /sys/<br/>Virtual files — kernel and hardware info"]
+    root["/"] --> home["home/your-username/<br/>你的文件 — clone 仓库、运行训练"]
+    root --> tmp["tmp/<br/>临时文件，重启时清空"]
+    root --> usr["usr/<br/>系统程序和库"]
+    root --> etc["etc/<br/>配置文件"]
+    root --> varlog["var/log/<br/>日志 — 出问题时来这里查"]
+    root --> mnt["mnt/ or /media/<br/>外接磁盘和卷"]
+    root --> proc["proc/ and /sys/<br/>虚拟文件 — 内核与硬件信息"]
 ```
 
 你的 home 目录是 `~` 或 `/home/your-username`。你做的几乎所有事都在这里发生。

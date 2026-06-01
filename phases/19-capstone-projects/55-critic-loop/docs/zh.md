@@ -25,14 +25,14 @@
 
 ```mermaid
 flowchart LR
-    Draft[Paper draft] --> Critic[Critic]
+    Draft[论文草稿] --> Critic[Critic]
     Critic --> Scores
-    Scores --> Clar[clarity 0-10]
-    Scores --> Nov[novelty 0-10]
-    Scores --> Ev[evidence 0-10]
-    Scores --> Meth[methodology 0-10]
-    Scores --> Rel[related-work 0-10]
-    Scores --> Revs[revision suggestions]
+    Scores --> Clar[清晰度 0-10]
+    Scores --> Nov[新颖性 0-10]
+    Scores --> Ev[证据 0-10]
+    Scores --> Meth[方法学 0-10]
+    Scores --> Rel[相关工作 0-10]
+    Scores --> Revs[修订建议]
 ```
 
 分数是一个向量。harness 跨轮次盯着每一个维度。一次修订把 clarity 拉上去却把 evidence 砸下去——这就是 evidence 上的回退，收敛检查能看见。一个纯模型的 critic 给不了这种保证。
@@ -41,9 +41,9 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    Critique[Critique] --> Scores[scores dict]
-    Critique --> Sugg[suggestions list]
-    Sugg --> S1[Suggestion: dimension, target, edit]
+    Critique[Critique] --> Scores[scores 字典]
+    Critique --> Sugg[suggestions 列表]
+    Sugg --> S1[Suggestion，含 dimension、target、edit]
     Critique --> Round[round int]
     Critique --> Reason[overall reason str]
 ```
@@ -56,13 +56,13 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    Start[Round n complete] --> A{All five dimensions ge target?}
-    A -- yes --> Stop1[converged: target]
-    A -- no --> B{Plateau detected?}
-    B -- yes --> Stop2[converged: plateau]
-    B -- no --> C{Round ge max?}
-    C -- yes --> Stop3[stopped: budget]
-    C -- no --> Next[Run round n plus 1]
+    Start[第 n 轮完成] --> A{五个维度都 ge target？}
+    A -- yes --> Stop1[已收敛，达到 target]
+    A -- no --> B{检测到平台期？}
+    B -- yes --> Stop2[已收敛，进入 plateau]
+    B -- no --> C{轮次 ge max？}
+    C -- yes --> Stop3[已停止，预算耗尽]
+    C -- no --> Next[跑第 n+1 轮]
 ```
 
 target 是最严格的一档：五个维度（clarity、novelty、evidence、methodology、related_work）每一个都必须打到 `>= target_score`（默认 `8.0`），循环才会返回成功。均值很高但有一项偏弱——不算。平台期（plateau）检测拿当前轮的均值跟上一轮的均值比。如果连续两轮的提升都低于 `plateau_epsilon`（默认 `0.1`），循环就以 `plateau` 退出。预算（budget）是轮次的硬上限（默认 `5`），到点以 `budget` 退出。

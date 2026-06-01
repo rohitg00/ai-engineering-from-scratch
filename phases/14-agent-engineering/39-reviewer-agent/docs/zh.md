@@ -26,11 +26,11 @@ acceptance 是必要条件，不是充分条件。reviewer 要问的是 acceptan
 
 ```mermaid
 flowchart LR
-  Builder[Builder Agent] --> Artifacts[diff + state + feedback + verdict]
+  Builder[Builder Agent] --> Artifacts[diff + 状态 + 反馈 + 裁决]
   Artifacts --> Reviewer[Reviewer Agent]
   Reviewer --> Rubric[reviewer_checklist.md]
   Reviewer --> Report[review_report.json]
-  Report --> Human[Human Sign-Off]
+  Report --> Human[人类签字确认]
 ```
 
 ### Reviewer rubric（评分标尺）

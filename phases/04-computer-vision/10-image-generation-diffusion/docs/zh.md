@@ -60,15 +60,15 @@ Equivalently:
 
 ```mermaid
 flowchart LR
-    X0["x_0<br/>(clean image)"] --> Q1["q(x_t|x_0)<br/>add noise"]
-    Q1 --> XT["x_t<br/>(noisy)"]
-    XT --> MODEL["model(x_t, t)"]
-    MODEL --> EPS["predicted epsilon"]
-    EPS --> LOSS["MSE against<br/>true epsilon"]
+    X0["x_0<br/>（干净图像）"] --> Q1["q（x_t given x_0）<br/>加噪声"]
+    Q1 --> XT["x_t<br/>（带噪）"]
+    XT --> MODEL["model（x_t, t）"]
+    MODEL --> EPS["预测的 epsilon"]
+    EPS --> LOSS["对真实 epsilon<br/>计算 MSE"]
 
-    XT -.->|sampling| STEP["p(x_{t-1}|x_t)"]
-    STEP -.-> XT1["x_{t-1}"]
-    XT1 -.->|repeat 1000x| X0S["x_0 (sampled)"]
+    XT -.->|采样| STEP["p（x_t-1 given x_t）"]
+    STEP -.-> XT1["x_t-1"]
+    XT1 -.->|重复 1000 次| X0S["x_0（采样得到）"]
 
     style X0 fill:#dcfce7,stroke:#16a34a
     style MODEL fill:#fef3c7,stroke:#d97706

@@ -30,13 +30,13 @@
 
 ```mermaid
 flowchart LR
-    Q["Query image<br/>or text"] --> ENC["Encoder"]
-    ENC --> EMB["Query embedding"]
-    EMB --> IDX["FAISS index"]
-    CAT["Catalogue images"] --> ENC2["Encoder (same)"] --> IDX_BUILD["Build index"]
+    Q["查询图像<br/>或文本"] --> ENC["编码器"]
+    ENC --> EMB["查询 embedding"]
+    EMB --> IDX["FAISS 索引"]
+    CAT["图库图像"] --> ENC2["编码器（同一个）"] --> IDX_BUILD["构建索引"]
     IDX_BUILD --> IDX
-    IDX --> RANK["Top-k nearest<br/>by cosine / L2"]
-    RANK --> OUT["Ranked results"]
+    IDX --> RANK["按余弦／L2<br/>取 top-k 最近邻"]
+    RANK --> OUT["排序结果"]
 
     style ENC fill:#dbeafe,stroke:#2563eb
     style IDX fill:#fef3c7,stroke:#d97706

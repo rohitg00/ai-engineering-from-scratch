@@ -28,16 +28,16 @@ cosine + warmup 调度有三段。从 step 0 到 `warmup_steps`，学习率从 0
 
 ```mermaid
 flowchart TD
-  Step[Training step] --> Branch{step state}
-  Branch -- step <= warmup --> Linear[Linear ramp from 0 to lr_max]
-  Branch -- warmup < step <= total --> Cosine[Cosine decay from lr_max to lr_min]
-  Branch -- step > total --> Floor[Pin at lr_min]
+  Step[训练 step] --> Branch{step 状态}
+  Branch -- step <= warmup --> Linear[从 0 线性爬升到 lr_max]
+  Branch -- warmup < step <= total --> Cosine[从 lr_max 余弦衰减到 lr_min]
+  Branch -- step > total --> Floor[钉在 lr_min]
   Linear --> Apply[AdamW.step]
   Cosine --> Apply
   Floor --> Apply
-  Apply --> GradNorm[Compute gradient L2 norm]
-  GradNorm --> Log[Step log row]
-  Log --> Plot[Text plot + CSV]
+  Apply --> GradNorm[计算梯度 L2 范数]
+  GradNorm --> Log[step 日志行]
+  Log --> Plot[文本图 + CSV]
 ```
 
 ### Warmup 公式（Warmup formula）

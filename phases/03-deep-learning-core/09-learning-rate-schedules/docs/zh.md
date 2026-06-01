@@ -107,19 +107,19 @@ Phase 2 (T/2 to T):    lr ramps from lr_max to lr_max/10000
 
 ```mermaid
 graph LR
-    subgraph "Constant"
+    subgraph "恒定（Constant）"
         C1["lr"] --- C2["lr"] --- C3["lr"]
     end
 
-    subgraph "Step Decay"
+    subgraph "阶梯衰减（Step Decay）"
         S1["0.1"] --- S2["0.1"] --- S3["0.01"] --- S4["0.001"]
     end
 
-    subgraph "Cosine Annealing"
-        CS1["lr_max"] --> CS2["gradual"] --> CS3["steep"] --> CS4["lr_min"]
+    subgraph "余弦退火（Cosine Annealing）"
+        CS1["lr_max"] --> CS2["渐缓"] --> CS3["陡降"] --> CS4["lr_min"]
     end
 
-    subgraph "Warmup + Cosine"
+    subgraph "Warmup + 余弦"
         WC1["0"] --> WC2["lr_max"] --> WC3["cosine"] --> WC4["lr_min"]
     end
 ```
@@ -128,29 +128,29 @@ graph LR
 
 ```mermaid
 flowchart TD
-    Start["Choosing a LR schedule"] --> Know{"Know total<br/>training steps?"}
+    Start["选择 LR 调度策略"] --> Know{"知道总<br/>训练步数吗？"}
 
-    Know -->|"Yes"| Budget{"Compute budget?"}
-    Know -->|"No"| Constant["Use constant LR<br/>with manual decay"]
+    Know -->|"知道"| Budget{"算力预算？"}
+    Know -->|"不知道"| Constant["用恒定 LR<br/>配合手动衰减"]
 
-    Budget -->|"Large (days/weeks)"| WarmCos["Warmup + Cosine Decay<br/>(Llama/GPT default)"]
-    Budget -->|"Small (hours)"| OneCycle["1cycle Policy<br/>(fastest convergence)"]
-    Budget -->|"Moderate"| Cosine["Cosine Annealing<br/>(safe default)"]
+    Budget -->|"大（数天/数周）"| WarmCos["Warmup + 余弦衰减<br/>（Llama/GPT 默认）"]
+    Budget -->|"小（数小时）"| OneCycle["1cycle 策略<br/>（收敛最快）"]
+    Budget -->|"中等"| Cosine["余弦退火<br/>（安全默认）"]
 
-    WarmCos --> Warmup["Warmup = 1-5% of steps"]
-    OneCycle --> FindLR["Find lr_max with LR range test"]
-    Cosine --> MinLR["Set lr_min = lr_max / 10"]
+    WarmCos --> Warmup["Warmup = 步数的 1-5%"]
+    OneCycle --> FindLR["用 LR range test 找 lr_max"]
+    Cosine --> MinLR["设 lr_min = lr_max / 10"]
 ```
 
 ### 来自已发表模型的真实数字（Real Numbers from Published Models）
 
 ```mermaid
 graph TD
-    subgraph "Published LR Configs"
-        L3["Llama 3 (405B)<br/>Peak: 3e-4<br/>Warmup: 2000 steps<br/>Schedule: Cosine to 3e-5"]
-        G3["GPT-3 (175B)<br/>Peak: 6e-4<br/>Warmup: 375M tokens<br/>Schedule: Cosine to 0"]
-        R50["ResNet-50<br/>Peak: 0.1<br/>Warmup: none<br/>Schedule: Step decay x0.1 at 30,60,90"]
-        B["BERT (340M)<br/>Peak: 1e-4<br/>Warmup: 10K steps<br/>Schedule: Linear decay"]
+    subgraph "已发表的 LR 配置"
+        L3["Llama 3 （405B）<br/>峰值 3e-4<br/>Warmup 2000 步<br/>调度 余弦衰减到 3e-5"]
+        G3["GPT-3 （175B）<br/>峰值 6e-4<br/>Warmup 375M token<br/>调度 余弦衰减到 0"]
+        R50["ResNet-50<br/>峰值 0.1<br/>Warmup 无<br/>调度 在 30,60,90 处阶梯衰减 x0.1"]
+        B["BERT （340M）<br/>峰值 1e-4<br/>Warmup 10K 步<br/>调度 线性衰减"]
     end
 ```
 

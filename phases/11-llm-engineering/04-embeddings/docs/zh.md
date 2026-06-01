@@ -69,13 +69,13 @@ graph LR
     end
 
     subgraph "2019: Sentence-BERT"
-        S1["How do I reset my password?"] --> E1["[0.04, 0.12, ...]"]
-        S2["I need to change my password"] --> E2["[0.05, 0.11, ...]"]
+        S1["我该如何重置密码？"] --> E1["[0.04, 0.12, ...]"]
+        S2["我需要修改密码"] --> E2["[0.05, 0.11, ...]"]
     end
 
     subgraph "2024: Instruction-Tuned"
-        I1["search_query: password reset"] --> T1["[0.08, 0.09, ...]"]
-        I2["search_document: To reset your password, click..."] --> T2["[0.07, 0.10, ...]"]
+        I1["search_query：密码重置"] --> T1["[0.08, 0.09, ...]"]
+        I2["search_document：要重置密码，请点击……"] --> T2["[0.07, 0.10, ...]"]
     end
 ```
 
@@ -143,12 +143,12 @@ HNSW 用一点点精度损失（通常 95-99% 的 recall）换取巨大的速度
 ```mermaid
 graph TD
     subgraph "HNSW Layers"
-        L2["Layer 2 (sparse)"] -->|"long jumps"| L1["Layer 1 (medium)"]
-        L1 -->|"shorter jumps"| L0["Layer 0 (dense, all vectors)"]
+        L2["Layer 2 (稀疏)"] -->|"长跳"| L1["Layer 1 (中等)"]
+        L1 -->|"短跳"| L0["Layer 0 (稠密，全部向量)"]
     end
 
-    Q["Query vector"] -->|"enter at top"| L2
-    L0 -->|"nearest neighbors"| R["Top-k results"]
+    Q["Query 向量"] -->|"从顶层进入"| L2
+    L0 -->|"最近邻"| R["Top-k 结果"]
 ```
 
 生产可选项：
@@ -193,10 +193,10 @@ cross-encoder 把查询和文档作为单一输入丢进模型，输出一个相
 
 ```mermaid
 graph LR
-    Q["Query"] --> BE["Bi-Encoder: embed query"]
-    BE --> VS["Vector search: top 100"]
-    VS --> CE["Cross-Encoder: rerank"]
-    CE --> R["Top 10 results"]
+    Q["Query"] --> BE["Bi-Encoder：嵌入 query"]
+    BE --> VS["向量检索：top 100"]
+    VS --> CE["Cross-Encoder：重排"]
+    CE --> R["Top 10 结果"]
 ```
 
 reranker 模型：Cohere Rerank 3.5（每千次查询 $2）、BGE-reranker-v2（免费、开源）、Jina Reranker v2（免费、开源）。

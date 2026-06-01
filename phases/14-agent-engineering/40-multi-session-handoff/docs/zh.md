@@ -31,7 +31,7 @@ flowchart LR
   Review[review_report.json] --> Generator
   Feedback[feedback_record.jsonl] --> Generator
   Generator --> Handoff[handoff.md + handoff.json]
-  Handoff --> Next[Next Session]
+  Handoff --> Next[下一个会话]
 ```
 
 ### 每个交接包必带的七个字段

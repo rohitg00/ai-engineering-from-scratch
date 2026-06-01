@@ -32,17 +32,17 @@
 
 ```mermaid
 flowchart LR
-    subgraph IN["Input (H x W)"]
+    subgraph IN["输入（H x W）"]
         direction LR
-        I1["5 x 5 image"]
+        I1["5 x 5 图像"]
     end
-    subgraph K["Kernel (3 x 3)"]
-        K1["learned<br/>weights"]
+    subgraph K["卷积核（3 x 3）"]
+        K1["可学习<br/>权重"]
     end
-    subgraph OUT["Output (H-2 x W-2)"]
-        O1["3 x 3 map"]
+    subgraph OUT["输出（H-2 x W-2）"]
+        O1["3 x 3 特征图"]
     end
-    I1 --> |"slide kernel<br/>compute dot product<br/>at each position"| O1
+    I1 --> |"滑动卷积核<br/>在每个位置<br/>计算点积"| O1
     K1 --> O1
 
     style IN fill:#dbeafe,stroke:#2563eb
@@ -156,12 +156,12 @@ Parameter count: C_out * C_in * K * K + C_out   (the + C_out is biases)
 
 ```mermaid
 flowchart LR
-    X["Input<br/>(C_in, H, W)"] --> IM2COL["im2col<br/>(extract patches)"]
-    IM2COL --> COLS["Cols matrix<br/>(C_in * K * K, H_out * W_out)"]
-    W["Weight<br/>(C_out, C_in, K, K)"] --> FLAT["Flatten<br/>(C_out, C_in * K * K)"]
+    X["输入<br/>（C_in, H, W）"] --> IM2COL["im2col<br/>（提取 patch）"]
+    IM2COL --> COLS["Cols 矩阵<br/>（C_in * K * K, H_out * W_out）"]
+    W["权重<br/>（C_out, C_in, K, K）"] --> FLAT["展平<br/>（C_out, C_in * K * K）"]
     FLAT --> MM["matmul"]
     COLS --> MM
-    MM --> OUT["Output<br/>(C_out, H_out * W_out)<br/>reshape to (C_out, H_out, W_out)"]
+    MM --> OUT["输出<br/>（C_out, H_out * W_out）<br/>reshape 为 （C_out, H_out, W_out）"]
 
     style X fill:#dbeafe,stroke:#2563eb
     style W fill:#fef3c7,stroke:#d97706

@@ -210,12 +210,12 @@ prediction = argmax(log_scores)
 
 ```mermaid
 flowchart LR
-    A[Raw Text] --> B[Tokenize]
-    B --> C[Build Vocabulary]
-    C --> D[Count Word Frequencies]
-    D --> E[Apply Smoothing]
-    E --> F[Compute Log Probabilities]
-    F --> G[Predict: argmax P class given words]
+    A[原始文本] --> B[分词]
+    B --> C[构建词表]
+    C --> D[统计词频]
+    D --> E[应用平滑]
+    E --> F[计算对数概率]
+    F --> G[预测 argmax P 给定词时的类别]
 
     style A fill:#f9f,stroke:#333
     style G fill:#9f9,stroke:#333

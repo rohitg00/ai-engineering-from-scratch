@@ -31,7 +31,7 @@ flowchart LR
   Router[AGENTS.md] --> Rules[docs/agent-rules.md]
   Rules --> Checker[rule_checker.py]
   Checker --> Report[rule_report.json]
-  Report --> Reviewer[Reviewer]
+  Report --> Reviewer[审查者]
 ```
 
 ### 五个类别覆盖大部分规则（Five categories that cover most rules）

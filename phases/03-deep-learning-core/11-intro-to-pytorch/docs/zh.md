@@ -91,10 +91,10 @@ x.squeeze()        # remove size-1 dimensions
 
 ```mermaid
 graph LR
-    x["x (leaf)"] --> mul["*"]
-    w["w (leaf, requires_grad)"] --> mul
+    x["x （leaf）"] --> mul["*"]
+    w["w （leaf, requires_grad）"] --> mul
     mul --> add["+"]
-    b["b (leaf, requires_grad)"] --> add
+    b["b （leaf, requires_grad）"] --> add
     add --> loss["loss"]
     loss --> |".backward()"| add
     add --> |"grad"| b

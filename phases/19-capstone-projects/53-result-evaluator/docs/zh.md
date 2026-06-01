@@ -52,14 +52,14 @@ improvement 是带符号的。在「越高越好」的指标上拿到负的 impr
 
 ```mermaid
 flowchart TD
-    A[ExperimentResult candidate] --> N[normalise metrics]
-    B[ExperimentResult baseline] --> N
-    N --> I[direction aware improvement]
-    N --> T[paired t test]
-    I --> V[verdict path]
+    A[ExperimentResult 候选] --> N[归一化 metrics]
+    B[ExperimentResult 基线] --> N
+    N --> I[方向感知的改进度]
+    N --> T[配对 t 检验]
+    I --> V[判定路径]
     T --> V
-    V --> O[Verdict record]
-    O --> Q[attach to hypothesis queue]
+    V --> O[Verdict 记录]
+    O --> Q[挂到假设队列]
 ```
 
 评估器跑三组独立的计算，然后在 verdict 路径里汇合。每组计算都是纯函数，没有共享状态。

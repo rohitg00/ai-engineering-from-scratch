@@ -30,16 +30,16 @@
 
 ```mermaid
 flowchart LR
-    A[Full Dataset] --> B[Train Set 60-70%]
-    A --> C[Validation Set 15-20%]
-    A --> D[Test Set 15-20%]
-    B --> E[Fit Model]
+    A[完整数据集] --> B[训练集 60-70%]
+    A --> C[验证集 15-20%]
+    A --> D[测试集 15-20%]
+    B --> E[拟合模型]
     E --> C
-    C --> F[Tune Hyperparameters]
+    C --> F[调超参数]
     F --> E
-    F --> G[Final Model]
+    F --> G[最终模型]
     G --> D
-    D --> H[Report Performance]
+    D --> H[报告性能]
 ```
 
 三种划分，三种用途：
@@ -56,27 +56,27 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    subgraph Fold1["Fold 1"]
+    subgraph Fold1["第 1 折"]
         direction LR
-        V1["Val"] --- T1a["Train"] --- T1b["Train"] --- T1c["Train"] --- T1d["Train"]
+        V1["验证"] --- T1a["训练"] --- T1b["训练"] --- T1c["训练"] --- T1d["训练"]
     end
-    subgraph Fold2["Fold 2"]
+    subgraph Fold2["第 2 折"]
         direction LR
-        T2a["Train"] --- V2["Val"] --- T2b["Train"] --- T2c["Train"] --- T2d["Train"]
+        T2a["训练"] --- V2["验证"] --- T2b["训练"] --- T2c["训练"] --- T2d["训练"]
     end
-    subgraph Fold3["Fold 3"]
+    subgraph Fold3["第 3 折"]
         direction LR
-        T3a["Train"] --- T3b["Train"] --- V3["Val"] --- T3c["Train"] --- T3d["Train"]
+        T3a["训练"] --- T3b["训练"] --- V3["验证"] --- T3c["训练"] --- T3d["训练"]
     end
-    subgraph Fold4["Fold 4"]
+    subgraph Fold4["第 4 折"]
         direction LR
-        T4a["Train"] --- T4b["Train"] --- T4c["Train"] --- V4["Val"] --- T4d["Train"]
+        T4a["训练"] --- T4b["训练"] --- T4c["训练"] --- V4["验证"] --- T4d["训练"]
     end
-    subgraph Fold5["Fold 5"]
+    subgraph Fold5["第 5 折"]
         direction LR
-        T5a["Train"] --- T5b["Train"] --- T5c["Train"] --- T5d["Train"] --- V5["Val"]
+        T5a["训练"] --- T5b["训练"] --- T5c["训练"] --- T5d["训练"] --- V5["验证"]
     end
-    Fold1 --> R["Average scores"]
+    Fold1 --> R["平均各折得分"]
     Fold2 --> R
     Fold3 --> R
     Fold4 --> R

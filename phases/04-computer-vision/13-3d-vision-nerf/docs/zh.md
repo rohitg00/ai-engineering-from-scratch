@@ -56,12 +56,12 @@ f(P) = max_{p in P} MLP(p)
 
 ```mermaid
 flowchart LR
-    PTS["N points<br/>(x, y, z)"] --> MLP1["shared MLP<br/>(64, 64)"]
-    MLP1 --> MLP2["shared MLP<br/>(64, 128, 1024)"]
-    MLP2 --> MAX["max pool<br/>(symmetric)"]
-    MAX --> FEAT["global feature<br/>(1024,)"]
-    FEAT --> FC["MLP classifier"]
-    FC --> CLS["class logits"]
+    PTS["N 个点<br/>（x, y, z）"] --> MLP1["共享 MLP<br/>（64, 64）"]
+    MLP1 --> MLP2["共享 MLP<br/>（64, 128, 1024）"]
+    MLP2 --> MAX["max pool<br/>（对称）"]
+    MAX --> FEAT["全局特征<br/>（1024,）"]
+    FEAT --> FC["MLP 分类器"]
+    FC --> CLS["类别 logits"]
 
     style MLP1 fill:#dbeafe,stroke:#2563eb
     style MAX fill:#fef3c7,stroke:#d97706

@@ -34,13 +34,13 @@
 
 ```mermaid
 flowchart LR
-    IMG["Image"] --> DET["Text detection<br/>(DB, EAST, CRAFT)"]
-    DET --> BOX["Word/line<br/>bounding boxes"]
-    BOX --> CROP["Crop each region"]
-    CROP --> REC["Recognition<br/>(CRNN + CTC)"]
-    REC --> TXT["Text strings"]
-    TXT --> LAY["Layout<br/>ordering"]
-    LAY --> OUT["Reading-order text"]
+    IMG["图像"] --> DET["文本检测<br/>（DB、EAST、CRAFT）"]
+    DET --> BOX["词／行<br/>边界框"]
+    BOX --> CROP["裁剪每个区域"]
+    CROP --> REC["识别<br/>（CRNN + CTC）"]
+    REC --> TXT["文本字符串"]
+    TXT --> LAY["版面<br/>排序"]
+    LAY --> OUT["按阅读顺序的文本"]
 
     style DET fill:#dbeafe,stroke:#2563eb
     style REC fill:#fef3c7,stroke:#d97706

@@ -44,7 +44,7 @@ graph LR
     b["b"] --> add
     add -- "z2 = z1 + b" --> sig["sigmoid"]
     sig -- "a = sigmoid(z2)" --> loss["Loss"]
-    y["target"] --> loss
+    y["目标值"] --> loss
 ```
 
 前向传播：值从左流向右。x 与 w 相乘得到 z1 = w*x。加上 b 得到 z2。过 sigmoid 得到激活 a。用 loss 函数把 a 和目标 y 比较。
@@ -57,13 +57,13 @@ graph LR
 
 ```mermaid
 graph TB
-    subgraph Forward["Forward Pass"]
+    subgraph Forward["前向传播"]
         direction LR
-        f1["Input x"] --> f2["z = Wx + b"]
+        f1["输入 x"] --> f2["z = Wx + b"]
         f2 --> f3["a = sigmoid(z)"]
         f3 --> f4["Loss = (a - y)^2"]
     end
-    subgraph Backward["Backward Pass"]
+    subgraph Backward["反向传播"]
         direction RL
         b4["dL/dL = 1"] --> b3["dL/da = 2(a-y)"]
         b3 --> b2["dL/dz = dL/da * a(1-a)"]
@@ -80,10 +80,10 @@ graph TB
 
 ```mermaid
 graph RL
-    L["Loss"] -- "dL/da3" --> L3["Layer 3\na3 = sigmoid(z3)"]
-    L3 -- "dL/dz3 = dL/da3 * sigmoid'(z3)" --> L2["Layer 2\na2 = sigmoid(z2)"]
-    L2 -- "dL/dz2 = dL/da2 * sigmoid'(z2)" --> L1["Layer 1\na1 = sigmoid(z1)"]
-    L1 -- "dL/dz1 = dL/da1 * sigmoid'(z1)" --> I["Input"]
+    L["Loss"] -- "dL/da3" --> L3["第 3 层\na3 = sigmoid(z3)"]
+    L3 -- "dL/dz3 = dL/da3 * sigmoid'(z3)" --> L2["第 2 层\na2 = sigmoid(z2)"]
+    L2 -- "dL/dz2 = dL/da2 * sigmoid'(z2)" --> L1["第 1 层\na1 = sigmoid(z1)"]
+    L1 -- "dL/dz1 = dL/da1 * sigmoid'(z1)" --> I["输入"]
 ```
 
 每经过一层，gradient 都要乘上一次 sigmoid 的导数。sigmoid 的导数是 a * (1 - a)，最大值为 0.25（在 a = 0.5 时取到）。三层下来，gradient 最多被乘了 0.25^3 = 0.0156。十层下来：0.25^10 = 0.000001。

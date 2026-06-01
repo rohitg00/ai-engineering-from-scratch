@@ -28,16 +28,16 @@
 
 ```mermaid
 flowchart LR
-    A[raw corpus text] --> B[byte split per word]
-    B --> C[count adjacent pair frequencies]
-    C --> D{pair table empty?}
-    D -- no --> E[merge most frequent pair]
-    E --> F[append merge to merge table]
-    F --> G[grow vocabulary by one id]
+    A[原始语料文本] --> B[按词做字节切分]
+    B --> C[统计相邻 pair 频率]
+    C --> D{pair 表为空？}
+    D -- no --> E[合并最高频 pair]
+    E --> F[把合并追加到 merge 表]
+    F --> G[词表增长一个 id]
     G --> C
-    D -- yes --> H[final vocab + merges]
-    H --> I[encode new text]
-    H --> J[decode ids back to bytes]
+    D -- yes --> H[最终 vocab + merges]
+    H --> I[编码新文本]
+    H --> J[把 id 解码回字节]
 ```
 
 训练侧和推理侧共享同一张合并表，这种共享就是契约。如果你在推理时改了合并顺序，解出来的就是另一串 id 了。

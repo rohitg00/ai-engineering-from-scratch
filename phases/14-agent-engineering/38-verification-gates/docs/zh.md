@@ -35,9 +35,9 @@ flowchart TD
   Rules[rule_report.json] --> Gate
   Feedback[feedback_record.jsonl] --> Gate
   Gate --> Verdict[verification_report.json]
-  Verdict --> Pass{passed?}
+  Verdict --> Pass{通过？}
   Pass -- yes --> Review[Reviewer Agent]
-  Pass -- no --> Refuse[refuse done + surface to human]
+  Pass -- no --> Refuse[拒绝完成并上报给人类]
 ```
 
 ### 关卡检查什么（What the gate checks）

@@ -156,18 +156,18 @@ D = [[2, 0, 0],    A = [[0, 1, 1],    L = [[2, -1, -1],
 
 ```mermaid
 graph TD
-    subgraph "Graph to Matrices"
-        G["Graph G"] --> A["Adjacency Matrix A"]
-        G --> D["Degree Matrix D"]
-        A --> L["Laplacian L = D - A"]
+    subgraph "图转换成矩阵"
+        G["图 G"] --> A["邻接矩阵 A"]
+        G --> D["度矩阵 D"]
+        A --> L["拉普拉斯矩阵 L = D - A"]
         D --> L
     end
-    subgraph "Spectral Analysis"
-        L --> E["Eigenvalues of L"]
-        L --> V["Eigenvectors of L"]
-        E --> C["Connected components (zeros)"]
-        E --> F["Connectivity (Fiedler value)"]
-        V --> S["Spectral clustering"]
+    subgraph "谱分析"
+        L --> E["L 的特征值"]
+        L --> V["L 的特征向量"]
+        E --> C["连通分量（零特征值）"]
+        E --> F["连通性（Fiedler 值）"]
+        V --> S["谱聚类"]
     end
 ```
 
@@ -211,15 +211,15 @@ H^(k+1) = sigma(A_norm * H^(k) * W)
 
 ```mermaid
 graph LR
-    subgraph "Round 0"
-        A0["Node A: [1,0]"]
-        B0["Node B: [0,1]"]
-        C0["Node C: [1,1]"]
+    subgraph "第 0 轮"
+        A0["节点 A: [1,0]"]
+        B0["节点 B: [0,1]"]
+        C0["节点 C: [1,1]"]
     end
-    subgraph "Round 1 (aggregate neighbors)"
-        A1["Node A: avg(B,C) = [0.5, 1.0]"]
-        B1["Node B: avg(A,C) = [1.0, 0.5]"]
-        C1["Node C: avg(A,B) = [0.5, 0.5]"]
+    subgraph "第 1 轮（聚合邻居）"
+        A1["节点 A: avg(B,C) = [0.5, 1.0]"]
+        B1["节点 B: avg(A,C) = [1.0, 0.5]"]
+        C1["节点 C: avg(A,B) = [0.5, 0.5]"]
     end
     A0 --> A1
     B0 --> A1

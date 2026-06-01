@@ -26,12 +26,12 @@
 
 ```mermaid
 graph TD
-    subgraph tmux["tmux session: training"]
-        subgraph top["Top row"]
-            P1["Pane 1: Training run<br/>python train.py<br/>Epoch 12/100 ..."]
-            P2["Pane 2: GPU monitor<br/>watch -n1 nvidia-smi<br/>GPU: 78% | Mem: 14/24G"]
+    subgraph tmux["tmux 会话: training"]
+        subgraph top["顶部一行"]
+            P1["窗格 1: 训练任务<br/>python train.py<br/>Epoch 12/100 ..."]
+            P2["窗格 2: GPU 监控<br/>watch -n1 nvidia-smi<br/>GPU: 78% | Mem: 14/24G"]
         end
-        P3["Pane 3: Logs + experiments<br/>tail -f logs/train.log | grep loss"]
+        P3["窗格 3: 日志 + 实验<br/>tail -f logs/train.log | grep loss"]
     end
 ```
 

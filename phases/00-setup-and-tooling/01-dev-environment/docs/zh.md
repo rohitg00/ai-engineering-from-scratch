@@ -28,9 +28,9 @@
 
 ```mermaid
 graph TD
-    A["4. AI/ML Libraries\nPyTorch, JAX, transformers, etc."] --> B["3. Language Runtimes\nPython 3.11+, Node 20+, Rust, Julia"]
-    B --> C["2. Package Managers\nuv, pnpm, cargo, juliaup"]
-    C --> D["1. System Foundation\nOS, shell, git, editor, GPU drivers"]
+    A["4. AI/ML 库\nPyTorch, JAX, transformers 等"] --> B["3. 语言运行时\nPython 3.11+, Node 20+, Rust, Julia"]
+    B --> C["2. 包管理器\nuv, pnpm, cargo, juliaup"]
+    C --> D["1. 系统基础\n操作系统、shell、git、编辑器、GPU 驱动"]
 ```
 
 我们自下而上安装。每一层都依赖下面那一层。

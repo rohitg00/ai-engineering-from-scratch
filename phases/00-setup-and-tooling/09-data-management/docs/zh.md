@@ -24,12 +24,12 @@
 
 ```mermaid
 graph TD
-    A["Hugging Face Hub"] --> B["datasets library"]
-    B --> C["Load / Stream"]
-    C --> D["Local Cache<br/>~/.cache/huggingface/"]
-    B --> E["Format Conversion<br/>CSV, JSON, Parquet, Arrow"]
-    E --> F["Data Splits<br/>train / val / test"]
-    F --> G["Your Training Pipeline"]
+    A["Hugging Face Hub"] --> B["datasets 库"]
+    B --> C["加载 / 流式读取"]
+    C --> D["本地缓存<br/>~/.cache/huggingface/"]
+    B --> E["格式转换<br/>CSV, JSON, Parquet, Arrow"]
+    E --> F["数据切分<br/>train / val / test"]
+    F --> G["你的训练流水线"]
 ```
 
 Hugging Face 的 `datasets` 库是 AI 工作里加载数据的标准方式。下载、缓存、格式转换、流式读取，开箱即用。

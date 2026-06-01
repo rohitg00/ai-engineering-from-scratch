@@ -40,13 +40,13 @@ KNN 还以各种化名出现在现代 AI 的方方面面。向量数据库就是
 
 ```mermaid
 graph TD
-    Q["Query point ?"] --> D["Compute distances<br>to all training points"]
-    D --> S["Sort by distance"]
-    S --> K["Select K nearest"]
-    K --> C{"Classification<br>or Regression?"}
-    C -->|Classification| V["Majority vote"]
-    C -->|Regression| A["Average values"]
-    V --> P["Prediction"]
+    Q["查询点 ?"] --> D["计算到所有训练点<br>的距离"]
+    D --> S["按距离排序"]
+    S --> K["选出最近的 K 个"]
+    K --> C{"分类<br>还是回归？"}
+    C -->|分类| V["多数投票"]
+    C -->|回归| A["取平均值"]
+    V --> P["预测结果"]
     A --> P
 ```
 
@@ -67,16 +67,16 @@ K 是唯一的超参数。它控制偏差-方差的权衡：
 
 ```mermaid
 graph LR
-    subgraph "K=1 (overfitting)"
-        A["Jagged boundary<br>follows every point"]
+    subgraph "K=1（过拟合）"
+        A["边界锯齿状<br>贴合每一个点"]
     end
-    subgraph "K=15 (good)"
-        B["Smooth boundary<br>captures true pattern"]
+    subgraph "K=15（良好）"
+        B["边界平滑<br>捕捉真实规律"]
     end
-    subgraph "K=N (underfitting)"
-        C["Flat boundary<br>predicts majority class"]
+    subgraph "K=N（欠拟合）"
+        C["边界平直<br>预测为多数类"]
     end
-    A -->|"increase K"| B -->|"increase K"| C
+    A -->|"增大 K"| B -->|"增大 K"| C
 ```
 
 ### 距离度量（Distance metrics）
@@ -170,12 +170,12 @@ KD-tree 沿着特征坐标轴递归地把空间切开。每一层在某个维度
 
 ```mermaid
 graph TD
-    R["Split on x1 at 5.0"] -->|"x1 <= 5.0"| L["Split on x2 at 3.0"]
-    R -->|"x1 > 5.0"| RR["Split on x2 at 7.0"]
-    L -->|"x2 <= 3.0"| LL["Leaf: 3 points"]
-    L -->|"x2 > 3.0"| LR["Leaf: 4 points"]
-    RR -->|"x2 <= 7.0"| RL["Leaf: 2 points"]
-    RR -->|"x2 > 7.0"| RRR["Leaf: 5 points"]
+    R["在 x1=5.0 处分裂"] -->|"x1 <= 5.0"| L["在 x2=3.0 处分裂"]
+    R -->|"x1 > 5.0"| RR["在 x2=7.0 处分裂"]
+    L -->|"x2 <= 3.0"| LL["叶子 3 个点"]
+    L -->|"x2 > 3.0"| LR["叶子 4 个点"]
+    RR -->|"x2 <= 7.0"| RL["叶子 2 个点"]
+    RR -->|"x2 > 7.0"| RRR["叶子 5 个点"]
 ```
 
 要找最近邻，先沿树往下走到包含查询点的叶子，然后回溯，只在「可能包含更近点」的相邻分区里继续找。

@@ -28,18 +28,18 @@
 
 ```mermaid
 flowchart TB
-  D[(Token tensor<br/>train + val)] --> B[Make batches<br/>input + target shift by one]
-  B --> F[Forward<br/>logits]
-  F --> L[Cross entropy<br/>flatten over batch and time]
-  L --> Bw[Backward]
-  Bw --> Cg[Clip grad norm]
+  D[(Token 张量<br/>train + val)] --> B[构造 batch<br/>input + target 右移一位]
+  B --> F[前向<br/>logits]
+  F --> L[交叉熵<br/>在 batch 与 time 上展平]
+  L --> Bw[反向]
+  Bw --> Cg[裁剪梯度范数]
   Cg --> Step[AdamW step]
-  Step --> Sched[Cosine LR schedule]
-  Sched --> JL[Append step record<br/>to losses.jsonl]
-  JL --> Probe{Step is a probe step?}
-  Probe -- yes --> Eval[evaluate_model on val]
+  Step --> Sched[Cosine LR 调度]
+  Sched --> JL[追加 step 记录<br/>到 losses.jsonl]
+  JL --> Probe{是否 probe step？}
+  Probe -- yes --> Eval[在 val 上 evaluate_model]
   Probe -- yes --> Sample[generate_and_print_sample]
-  Probe -- no --> Next[Next step]
+  Probe -- no --> Next[下一步]
   Eval --> Next
   Sample --> Next
 ```

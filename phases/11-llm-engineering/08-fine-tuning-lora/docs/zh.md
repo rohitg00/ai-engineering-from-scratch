@@ -62,12 +62,12 @@ y = Wx + BAx
 
 ```mermaid
 graph LR
-    X["Input x"] --> W["Frozen W (d x d)"]
+    X["输入 x"] --> W["冻结的 W (d x d)"]
     X --> A["A (r x d)"]
     A --> B["B (d x r)"]
-    W --> Plus["+ (merge)"]
+    W --> Plus["+ (合并)"]
     B --> Plus
-    Plus --> Y["Output y"]
+    Plus --> Y["输出 y"]
 
     style W fill:#1a1a2e,stroke:#e94560,color:#fff
     style A fill:#0f3460,stroke:#16213e,color:#fff
@@ -207,13 +207,13 @@ LoRA r=16 在大多数 benchmark 上离全量微调不到 1%。QLoRA r=16 再损
 
 ```mermaid
 graph TD
-    Start["Need better model behavior?"] --> PE["Try prompt engineering"]
-    PE -->|"Works"| Done["Ship it"]
-    PE -->|"Not enough"| RAG["Need external knowledge?"]
-    RAG -->|"Yes"| RAGBuild["Build RAG pipeline"]
-    RAG -->|"No, need style/format change"| FT["Fine-tune with LoRA/QLoRA"]
-    RAGBuild -->|"Works"| Done
-    RAGBuild -->|"Also need style change"| FT
+    Start["需要更好的模型行为？"] --> PE["尝试 prompt engineering"]
+    PE -->|"可行"| Done["上线 it"]
+    PE -->|"不够"| RAG["需要外部知识？"]
+    RAG -->|"是"| RAGBuild["构建 RAG 流水线"]
+    RAG -->|"否，需要改风格/格式"| FT["微调 with LoRA/QLoRA"]
+    RAGBuild -->|"可行"| Done
+    RAGBuild -->|"同时需要改风格"| FT
     FT --> Done
 
     style Start fill:#1a1a2e,stroke:#e94560,color:#fff

@@ -119,14 +119,14 @@ output = sum_i weights[i] * expert[indices[i]](x)
 
 ```mermaid
 graph LR
-    I["Token hidden state"] --> R["Router\n(linear -> softmax)"]
-    R --> T["Top-k selection"]
+    I["Token 隐状态"] --> R["Router\n(linear 到 softmax)"]
+    R --> T["Top-k 选择"]
     T --> E1["Expert 1\n(MLP)"]
     T --> E2["Expert 2\n(MLP)"]
-    T --> EN["Expert 64\n(MLP, unused)"]
-    E1 --> S["Weighted sum"]
+    T --> EN["Expert 64\n(MLP, 未启用)"]
+    E1 --> S["加权求和"]
     E2 --> S
-    S --> O["Output"]
+    S --> O["输出"]
 
     style EN fill:#eeeeee,stroke:#999,color:#999
     style E1 fill:#1a1a2e,stroke:#51cf66,color:#fff

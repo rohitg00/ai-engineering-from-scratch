@@ -42,23 +42,23 @@
 
 ```mermaid
 graph LR
-    Client["Client<br/>(Web, Mobile, API)"]
-    GW["API Gateway<br/>Auth + Rate Limit"]
-    PR["Prompt Router<br/>Template Selection"]
-    Cache["Semantic Cache<br/>Embedding Lookup"]
-    LLM["LLM Call<br/>Streaming"]
-    Guard["Guardrails<br/>Input + Output"]
-    Eval["Eval Logger<br/>Quality Tracking"]
-    Cost["Cost Tracker<br/>Token Accounting"]
-    Resp["Response<br/>SSE Stream"]
+    Client["客户端<br/>(Web、移动端、API)"]
+    GW["API 网关<br/>Auth + 速率限制"]
+    PR["Prompt 路由<br/>模板选择"]
+    Cache["语义缓存<br/>Embedding 查询"]
+    LLM["LLM 调用<br/>流式"]
+    Guard["Guardrails<br/>输入 + 输出"]
+    Eval["评估日志<br/>质量追踪"]
+    Cost["成本追踪<br/>Token 计量"]
+    Resp["Response<br/>SSE 流"]
 
     Client --> GW --> Guard
-    Guard -->|Input Check| PR
+    Guard -->|输入 Check| PR
     PR --> Cache
-    Cache -->|Hit| Resp
-    Cache -->|Miss| LLM
+    Cache -->|命中| Resp
+    Cache -->|未命中| LLM
     LLM --> Guard
-    Guard -->|Output Check| Eval
+    Guard -->|输出 Check| Eval
     Eval --> Cost --> Resp
 ```
 
@@ -178,11 +178,11 @@ prompt 不是"能跑"就算完工，而是要有数据证明它打过了备选�
 
 ```mermaid
 graph TD
-    R["Incoming Request"]
+    R["进入的请求"]
     H["Hash(user_id) mod 100"]
     A["Prompt v1 (90%)"]
     B["Prompt v2 (10%)"]
-    L["Log Both Results"]
+    L["记录两边结果"]
     
     R --> H
     H -->|0-89| A

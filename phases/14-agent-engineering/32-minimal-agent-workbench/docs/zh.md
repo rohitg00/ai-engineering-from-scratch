@@ -28,7 +28,7 @@
 
 ```mermaid
 flowchart LR
-  Agent[Agent Loop] --> Router[AGENTS.md]
+  Agent[Agent 循环] --> Router[AGENTS.md]
   Router --> State[agent_state.json]
   Router --> Board[task_board.json]
   State --> Agent

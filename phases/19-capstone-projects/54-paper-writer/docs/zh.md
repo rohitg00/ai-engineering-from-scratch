@@ -30,15 +30,15 @@
 ```mermaid
 flowchart TB
     Paper[Paper] --> Meta[metadata]
-    Paper --> Sections[sections list]
-    Paper --> Figures[figures list]
-    Paper --> Bib[bibliography list]
+    Paper --> Sections[sections 列表]
+    Paper --> Figures[figures 列表]
+    Paper --> Bib[bibliography 列表]
     Meta --> Title[title]
     Meta --> Authors[authors]
     Meta --> Abstract[abstract]
-    Sections --> Sec1[Section: id, title, body, cites]
-    Figures --> Fig1[Figure: id, path, caption, label]
-    Bib --> Entry1[BibEntry: key, fields]
+    Sections --> Sec1[Section，含 id、title、body、cites]
+    Figures --> Fig1[Figure，含 id、path、caption、label]
+    Bib --> Entry1[BibEntry，含 key、fields]
 ```
 
 每个字段都是普通的 Python 数据。渲染器（renderer）是从 `Paper` 到一段 LaTeX 字符串的纯函数。harness 可以在渲染之前对 paper 做内省：数一数有多少章节，列出缺失的图文件，检查每个 `\cite{key}` 是否都有匹配的 `BibEntry`。
@@ -56,7 +56,7 @@ flowchart TB
 ```mermaid
 flowchart LR
     Exp[experiment.json] --> Reader[read_experiment_manifest]
-    Reader --> Figs[Figure list]
+    Reader --> Figs[Figure 列表]
     Figs --> Paper[Paper.figures]
     Paper --> Render[render_latex]
     Render --> Out[paper.tex]
@@ -79,9 +79,9 @@ flowchart TB
     Writer[PaperWriter.write] --> Tex[paper.tex]
     Writer --> Bib[references.bib]
     Writer --> Man[manifest.json]
-    Man --> F[figures referenced]
-    Man --> C[citations used]
-    Man --> S[sections rendered]
+    Man --> F[引用到的 figures]
+    Man --> C[用到的 citations]
+    Man --> S[渲染的 sections]
 ```
 
 下游的评估器（evaluator）或 critic loop 读的就是这份 manifest——它们不解析 LaTeX，而是读 manifest。下一节课的 critic loop 把这份 manifest 当作输入，输出一份反馈列表。这也是为什么 manifest 是契约的一部分，而 LaTeX 不是。

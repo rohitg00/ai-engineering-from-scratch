@@ -160,27 +160,27 @@ SFT 的学习率比预训练低 15 倍。这一点至关重要。微调时学习
 
 ```mermaid
 graph TD
-    subgraph SFT["Supervised Fine-Tuning Pipeline"]
+    subgraph SFT["监督微调流水线"]
         direction TB
-        D["Instruction Dataset\n(10K-100K examples)"] --> F["Format into\n(instruction, response) pairs"]
-        F --> T["Tokenize with\nchat template"]
-        T --> M["Create loss mask\n(1 for response, 0 for instruction)"]
-        M --> FW["Forward pass\n(full sequence)"]
-        FW --> L["Compute masked loss\n(response tokens only)"]
-        L --> BW["Backward pass"]
-        BW --> U["Update weights\n(lr=2e-5, 1-3 epochs)"]
+        D["指令数据集\n(10K-100K 个样例)"] --> F["格式化为\n(instruction, response) 对"]
+        F --> T["使用以下方式 tokenize\nchat 模板"]
+        T --> M["创建 loss mask\n(1 表示 response，0 表示 instruction)"]
+        M --> FW["前向传播\n(完整序列)"]
+        FW --> L["计算带 mask 的 loss\n(仅 response 的 token)"]
+        L --> BW["反向传播"]
+        BW --> U["更新 weights\n(lr=2e-5, 1-3 epochs)"]
     end
 
-    subgraph Base["Base Model\n(pre-trained)"]
-        B1["Knows language"]
-        B2["Knows facts"]
-        B3["No conversation pattern"]
+    subgraph Base["基座模型\n(预训练)"]
+        B1["掌握语言"]
+        B2["掌握事实"]
+        B3["没有对话模式"]
     end
 
-    subgraph Chat["Chat Model\n(after SFT)"]
-        C1["Knows language"]
-        C2["Knows facts"]
-        C3["Follows instructions"]
+    subgraph Chat["Chat 模型\n(SFT 之后)"]
+        C1["掌握语言"]
+        C2["掌握事实"]
+        C3["遵循指令"]
     end
 
     Base --> SFT --> Chat

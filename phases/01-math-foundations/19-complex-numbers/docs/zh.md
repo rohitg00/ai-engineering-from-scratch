@@ -164,13 +164,13 @@ Rotation via matrix multiplication:
 
 ```mermaid
 graph TD
-    subgraph "Complex Multiplication = 2D Rotation"
-        A["z = x + yi<br/>Point (x, y)"] -->|"multiply by e^(i*theta)"| B["z' = z * e^(i*theta)<br/>Point rotated by theta"]
+    subgraph "复数乘法 = 二维旋转"
+        A["z = x + yi<br/>点 (x, y)"] -->|"乘以 e^(i*theta)"| B["z' = z * e^(i*theta)<br/>点旋转了 theta"]
     end
-    subgraph "Equivalent Matrix Form"
-        C["vector [x, y]"] -->|"multiply by rotation matrix"| D["[x cos theta - y sin theta,<br/> x sin theta + y cos theta]"]
+    subgraph "等价的矩阵形式"
+        C["向量 [x, y]"] -->|"乘以旋转矩阵"| D["[x cos theta - y sin theta,<br/> x sin theta + y cos theta]"]
     end
-    B -.->|"same result"| D
+    B -.->|"结果相同"| D
 ```
 
 ### 相量与旋转信号（Phasors and rotating signals）
@@ -252,17 +252,17 @@ PE(pos, 2i+1) = cos(pos / 10000^(2i/d))
 
 ```mermaid
 graph LR
-    subgraph "Unit Circle"
+    subgraph "单位圆"
         direction TB
         U1["e^(i*0) = 1"] -.-> U2["e^(i*pi/2) = i"]
         U2 -.-> U3["e^(i*pi) = -1"]
         U3 -.-> U4["e^(i*3pi/2) = -i"]
         U4 -.-> U1
     end
-    subgraph "Applications"
-        A1["Euler's formula:<br/>e^(i*theta) = cos + i*sin"]
-        A2["DFT uses roots of unity:<br/>e^(2*pi*i*k/N)"]
-        A3["RoPE uses rotation:<br/>q * e^(i*m*theta)"]
+    subgraph "应用"
+        A1["欧拉公式:<br/>e^(i*theta) = cos + i*sin"]
+        A2["DFT 用到单位根:<br/>e^(2*pi*i*k/N)"]
+        A3["RoPE 用到旋转:<br/>q * e^(i*m*theta)"]
     end
     U1 --> A1
     U1 --> A2

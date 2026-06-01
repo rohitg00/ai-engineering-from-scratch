@@ -38,14 +38,14 @@ vLLM 在 4 张 A100-80GB 上部署 Llama 3 70B，低并发时能跑到 ~50 token
 
 ```mermaid
 graph LR
-    subgraph "Prefill (compute-bound)"
-        P1["All prompt tokens"] --> P2["Parallel attention"]
-        P2 --> P3["Full matmul utilization"]
+    subgraph "Prefill (计算受限)"
+        P1["所有 prompt token"] --> P2["并行 attention"]
+        P2 --> P3["充分利用矩阵乘"]
     end
 
-    subgraph "Decode (memory-bound)"
-        D1["One token at a time"] --> D2["Sequential generation"]
-        D2 --> D3["Waiting on memory reads"]
+    subgraph "Decode (内存受限)"
+        D1["一次一个 token"] --> D2["顺序生成"]
+        D2 --> D3["等待内存读取"]
     end
 
     P3 --> D1
@@ -69,16 +69,16 @@ KV cache 把前面所有 token 的 key 和 value 投影都存下来。生成第 
 
 ```mermaid
 graph TD
-    subgraph "Without KV Cache"
-        A1["Token 5: recompute K,V for tokens 1-4"]
-        A2["Token 6: recompute K,V for tokens 1-5"]
-        A3["Token 7: recompute K,V for tokens 1-6"]
+    subgraph "不使用 KV Cache"
+        A1["Token 5：重新计算 token 的 K、V，范围 1-4"]
+        A2["Token 6：重新计算 token 的 K、V，范围 1-5"]
+        A3["Token 7：重新计算 token 的 K、V，范围 1-6"]
     end
 
-    subgraph "With KV Cache"
-        B1["Token 5: compute K5,V5, read K1-4,V1-4 from cache"]
-        B2["Token 6: compute K6,V6, read K1-5,V1-5 from cache"]
-        B3["Token 7: compute K7,V7, read K1-6,V1-6 from cache"]
+    subgraph "使用 KV Cache"
+        B1["Token 5：计算 K5、V5，从缓存读取 K1-4、V1-4"]
+        B2["Token 6：计算 K6、V6，从缓存读取 K1-5、V1-5"]
+        B3["Token 7：计算 K7、V7，从缓存读取 K1-6、V1-6"]
     end
 ```
 
@@ -137,18 +137,18 @@ PagedAttention（出自 vLLM）把操作系统那套虚拟内存搬进了 KV cac
 
 ```mermaid
 graph TD
-    subgraph "Contiguous allocation"
-        C1["Request A: 2GB block"]
-        C2["[free: 0.5GB]"]
-        C3["Request B: 1GB block"]
-        C4["[free: 1.5GB -- but fragmented]"]
+    subgraph "连续分配"
+        C1["请求 A：2GB 块"]
+        C2["[空闲：0.5GB]"]
+        C3["请求 B：1GB 块"]
+        C4["[空闲：1.5GB —— 但已碎片化]"]
     end
 
     subgraph "PagedAttention"
-        P1["Page pool: 256 pages of 16 tokens each"]
-        P2["Request A: pages 3,7,12,45,88..."]
-        P3["Request B: pages 1,4,9,22,67..."]
-        P4["No fragmentation, no waste"]
+        P1["页池：256 页，每页 16 个 token"]
+        P2["请求 A：页 3,7,12,45,88..."]
+        P3["请求 B：页 1,4,9,22,67..."]
+        P4["无碎片、无浪费"]
     end
 ```
 
@@ -164,11 +164,11 @@ Speculative decoding 用一个小而快的 **draft model（草稿模型）** 生
 
 ```mermaid
 graph LR
-    D["Draft model (1B)"] -->|"Generate 5 tokens<br/>~5ms"| C["Candidates: the cat sat on the"]
-    C --> T["Target model (70B)"]
-    T -->|"Verify all 5 in one pass<br/>~70ms"| V{"Match?"}
-    V -->|"4 of 5 match"| A["Accept 4 tokens in 75ms<br/>vs 280ms sequential"]
-    V -->|"Mismatch at pos 5"| R["Reject token 5<br/>Resample from target"]
+    D["Draft 模型 (1B)"] -->|"生成 5 个 token<br/>~5ms"| C["候选：the cat sat on the"]
+    C --> T["Target 模型 (70B)"]
+    T -->|"一次性验证全部 5 个<br/>~70ms"| V{"匹配？"}
+    V -->|"5 个中匹配 4 个"| A["以 75ms 接受 4 个 token<br/>对比顺序生成的 280ms"]
+    V -->|"第 5 位不匹配"| R["拒绝 token 5<br/>从 target 重新采样"]
 ```
 
 加速比取决于 **acceptance rate（接受率）**——draft model 的预测和 target 一致的频率。Llama 3 8B 给 Llama 3 70B 当 draft 时，自然语言上典型的接受率是 70-85%。这能换来 2-3 倍的 decode 加速。

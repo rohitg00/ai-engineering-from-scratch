@@ -26,13 +26,13 @@
 
 ```mermaid
 flowchart LR
-  start[start] --> zero[zero grads]
-  zero --> mb1[micro batch 1: forward + scaled backward]
-  mb1 --> mb2[micro batch 2: forward + scaled backward]
+  start[开始] --> zero[梯度清零]
+  zero --> mb1[微 batch 1，前向 + 缩放反向]
+  mb1 --> mb2[微 batch 2，前向 + 缩放反向]
   mb2 --> dots[...]
-  dots --> mbN[micro batch N: forward + scaled backward + sync]
+  dots --> mbN[微 batch N，前向 + 缩放反向 + 同步]
   mbN --> step[optimizer step]
-  step --> next[next effective step]
+  step --> next[下一个有效 step]
 ```
 
 合约其实很短：
@@ -67,11 +67,11 @@ opt.step()
 
 ```mermaid
 flowchart TD
-  micro[fixed micro batch] --> small[small accum: low loss noise budget, high stepper churn]
-  micro --> large[large accum: smooth loss, optimizer step rare]
-  small --> sps1[samples per second saturates at hardware limit]
-  large --> sps2[samples per second still hits hardware limit]
-  sps1 --> note[total samples per optimizer step scales linearly with accum]
+  micro[固定的微 batch] --> small[小累积，loss 噪声预算低、stepper 翻动频繁]
+  micro --> large[大累积，loss 平滑、optimizer step 罕见]
+  small --> sps1[每秒样本数饱和到硬件上限]
+  large --> sps2[每秒样本数同样触及硬件上限]
+  sps1 --> note[每个 optimizer step 的总样本数随累积线性增长]
   sps2 --> note
 ```
 

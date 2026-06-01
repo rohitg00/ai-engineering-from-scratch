@@ -37,7 +37,7 @@ x - y  = 1          They intersect at x=2, y=1.
 
 ```mermaid
 graph LR
-    A["2x + y = 5"] --- S["Solution: (2, 1)"]
+    A["2x + y = 5"] --- S["解: (2, 1)"]
     B["x - y = 1"] --- S
 ```
 
@@ -45,14 +45,14 @@ graph LR
 
 ```mermaid
 graph TD
-    subgraph "One Solution"
-        A1["Lines intersect at a single point"]
+    subgraph "唯一解"
+        A1["两条直线相交于一个点"]
     end
-    subgraph "No Solution"
-        A2["Lines are parallel — no intersection"]
+    subgraph "无解"
+        A2["两条直线平行 — 没有交点"]
     end
-    subgraph "Infinite Solutions"
-        A3["Lines are identical — every point is a solution"]
+    subgraph "无穷多解"
+        A3["两条直线重合 — 每个点都是解"]
     end
 ```
 

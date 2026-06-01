@@ -42,20 +42,20 @@ Paper
 
 ```mermaid
 flowchart TD
-    Q[query string] --> A[arxiv mock client]
-    Q --> S[semantic scholar mock client]
-    A --> L[load corpus]
+    Q[查询字符串] --> A[arxiv mock 客户端]
+    Q --> S[semantic scholar mock 客户端]
+    A --> L[加载语料]
     S --> L
-    L --> B[bm25 index]
-    L --> G[citation graph]
+    L --> B[bm25 索引]
+    L --> G[引用图]
     Q --> B
-    B --> R1[lexical hits]
-    R1 --> H[expand hops 1 to 2]
+    B --> R1[词法命中]
+    R1 --> H[扩展 1 到 2 跳]
     G --> H
-    H --> R2[graph hits]
-    R1 --> M[merge and dedup]
+    H --> R2[图命中]
+    R1 --> M[合并并去重]
     R2 --> M
-    M --> O[ranked paper list]
+    M --> O[排序后的论文列表]
 ```
 
 检索 client 同时拥有两路检索和合并逻辑。调用方把 query 交给它，拿回一个排好序的列表，每一项都带着按论文计算的分数字段（`bm25_score`、`graph_distance`、`recency_score`、`final_score`），用来解释排名。

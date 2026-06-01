@@ -47,16 +47,16 @@ Hypothesis
 
 ```mermaid
 flowchart TD
-    A[seed prompt] --> B[temperature ramp]
-    B --> C[mock language model draft]
-    C --> D[parse tagged response]
-    D --> E{novelty filter}
-    E -- duplicate --> F[discard]
-    E -- novel --> G[append to survivors]
-    G --> H{pass budget hit}
+    A[种子 prompt] --> B[temperature 爬升]
+    B --> C[mock 语言模型草稿]
+    C --> D[解析带标签的响应]
+    D --> E{新颖性过滤}
+    E -- duplicate --> F[丢弃]
+    E -- novel --> G[加入幸存者]
+    G --> H{命中 pass 预算}
     H -- no --> B
-    H -- yes --> I[rank survivors]
-    I --> J[hypothesis queue]
+    H -- yes --> I[给幸存者排序]
+    I --> J[假设队列]
 ```
 
 循环本身平铺直叙，有意思的地方是每个框都有一份硬约束。

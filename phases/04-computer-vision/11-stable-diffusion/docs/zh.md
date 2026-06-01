@@ -30,16 +30,16 @@
 
 ```mermaid
 flowchart LR
-    TXT["Text prompt"] --> TE["Text encoder<br/>(CLIP-L or T5)"]
-    TE --> CT["Text<br/>embedding"]
+    TXT["文本 prompt"] --> TE["文本编码器<br/>（CLIP-L 或 T5）"]
+    TE --> CT["文本<br/>embedding"]
 
-    NOISE["Noise<br/>4x64x64"] --> UNET["UNet<br/>(denoiser with<br/>cross-attention<br/>to text)"]
+    NOISE["噪声<br/>4x64x64"] --> UNET["UNet<br/>（带对文本的<br/>cross-attention<br/>的去噪器）"]
     CT --> UNET
 
-    UNET --> SCHED["Scheduler<br/>(DPM-Solver++,<br/>Euler)"]
-    SCHED --> LATENT["Clean latent<br/>4x64x64"]
-    LATENT --> VAE["VAE decoder"]
-    VAE --> IMG["512x512<br/>RGB image"]
+    UNET --> SCHED["调度器<br/>（DPM-Solver++、<br/>Euler）"]
+    SCHED --> LATENT["干净 latent<br/>4x64x64"]
+    LATENT --> VAE["VAE 解码器"]
+    VAE --> IMG["512x512<br/>RGB 图像"]
 
     style TE fill:#dbeafe,stroke:#2563eb
     style UNET fill:#fef3c7,stroke:#d97706

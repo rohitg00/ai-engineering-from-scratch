@@ -28,11 +28,11 @@
 
 ```mermaid
 graph TD
-    L5["5. Remote Development<br/>SSH into GPU boxes, cloud VMs"] --> L4
-    L4["4. Terminal Integration<br/>Run scripts, debug, monitor GPU"] --> L3
-    L3["3. AI-Specific Settings<br/>Auto-format, type checking, rulers"] --> L2
-    L2["2. Extensions<br/>Python, Jupyter, Pylance, GitLens"] --> L1
-    L1["1. Base Editor<br/>VS Code — free, extensible, universal"]
+    L5["5. 远程开发<br/>SSH 连入 GPU 机器、云端虚拟机"] --> L4
+    L4["4. 终端集成<br/>运行脚本、调试、监控 GPU"] --> L3
+    L3["3. AI 专属设置<br/>自动格式化、类型检查、标尺线"] --> L2
+    L2["2. 扩展插件<br/>Python, Jupyter, Pylance, GitLens"] --> L1
+    L1["1. 基础编辑器<br/>VS Code — 免费、可扩展、通用"]
 ```
 
 ## 动手实现（Build It）

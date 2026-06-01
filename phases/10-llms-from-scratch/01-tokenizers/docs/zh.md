@@ -42,10 +42,10 @@
 
 ```mermaid
 graph TD
-    A["Text: 'unhappiness'"] --> B{"Tokenization Strategy"}
-    B -->|Word-level| C["['unhappiness']\n1 token if in vocab\n[UNK] if not"]
-    B -->|Character-level| D["['u','n','h','a','p','p','i','n','e','s','s']\n11 tokens"]
-    B -->|Subword BPE| E["['un','happi','ness']\n3 tokens"]
+    A["Text: 'unhappiness'"] --> B{"Tokenization 策略"}
+    B -->|Word-level| C["['unhappiness']\n在词表中则 1 个 token\n[UNK] 否则"]
+    B -->|Character-level| D["['u','n','h','a','p','p','i','n','e','s','s']\n11 个 token"]
+    B -->|Subword BPE| E["['un','happi','ness']\n3 个 token"]
 
     style C fill:#ff6b6b,color:#fff
     style D fill:#ffa500,color:#fff
@@ -108,14 +108,14 @@ Step 4 -- Merge (wes,t) -> "west":
 
 ```mermaid
 graph LR
-    subgraph Training["BPE Training Loop"]
+    subgraph Training["BPE 训练循环"]
         direction TB
-        T1["Start: character vocabulary"] --> T2["Count all adjacent pairs"]
-        T2 --> T3["Merge most frequent pair"]
-        T3 --> T4["Add merged token to vocab"]
-        T4 --> T5{"Reached target\nvocab size?"}
+        T1["起点：字符词表"] --> T2["统计所有相邻字符对"]
+        T2 --> T3["合并最高频的字符对"]
+        T3 --> T4["把合并后的 token 加入词表"]
+        T4 --> T5{"是否达到目标\n词表大小？"}
         T5 -->|No| T2
-        T5 -->|Yes| T6["Done: save merge table"]
+        T5 -->|是| T6["完成：保存合并表"]
     end
 ```
 
@@ -165,17 +165,17 @@ Llama 2 用 SentencePiece BPE，vocabulary 大小为 32,000 个 token。T5 用 S
 
 ```mermaid
 graph LR
-    subgraph Small["Small Vocab (32K)\ne.g., BERT, T5"]
-        S1["More tokens per text"]
-        S2["Longer sequences"]
-        S3["Smaller embedding matrix"]
-        S4["Better rare-word handling"]
+    subgraph Small["小词表 (32K)\ne.g., BERT, T5"]
+        S1["每段文本 token 更多"]
+        S2["序列更长"]
+        S3["embedding 矩阵更小"]
+        S4["更擅长处理罕见词"]
     end
-    subgraph Large["Large Vocab (128K+)\ne.g., Llama 3, GPT-4o"]
-        L1["Fewer tokens per text"]
-        L2["Shorter sequences"]
-        L3["Larger embedding matrix"]
-        L4["Faster inference"]
+    subgraph Large["大词表 (128K+)\ne.g., Llama 3, GPT-4o"]
+        L1["每段文本 token 更少"]
+        L2["序列更短"]
+        L3["embedding 矩阵更大"]
+        L4["推理更快"]
     end
 ```
 

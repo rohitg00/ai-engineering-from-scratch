@@ -28,18 +28,18 @@ HDF5 合适，是因为它提供了一种 chunked、可扩展、纯整数的 dat
 
 ```mermaid
 flowchart TD
-  JSONL[JSONL documents] --> Tokenize[Tokenize incrementally]
-  Tokenize --> Buffer[Append to in-memory buffer]
-  Buffer --> Flush{buffer >= chunk?}
+  JSONL[JSONL 文档] --> Tokenize[增量 tokenize]
+  Tokenize --> Buffer[追加到内存缓冲区]
+  Buffer --> Flush{缓冲区 ＞= chunk？}
   Flush -- no --> Tokenize
-  Flush -- yes --> Resize[Resize HDF5 dataset]
-  Resize --> Write[Write buffer to new range]
+  Flush -- yes --> Resize[扩容 HDF5 dataset]
+  Resize --> Write[把缓冲区写入新区段]
   Write --> Buffer
-  Buffer --> Close[Final flush + close]
-  Close --> ShardDone[Shard file finalized]
-  ShardDone --> MMapRead[Memory-mapped read]
-  MMapRead --> Window[Sliding-window dataloader]
-  Window --> Train[Train batch]
+  Buffer --> Close[最终 flush + 关闭]
+  Close --> ShardDone[分片文件定稿]
+  ShardDone --> MMapRead[内存映射读取]
+  MMapRead --> Window[滑动窗口 dataloader]
+  Window --> Train[训练 batch]
 ```
 
 ### 把可扩展 HDF5 用对（Resizable HDF5 done right）

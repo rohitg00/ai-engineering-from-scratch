@@ -65,11 +65,11 @@ sigmoid(z) = 1 / (1 + e^(-z))
 
 ```mermaid
 flowchart LR
-    X[Input features x] --> L["Linear: z = wx + b"]
-    L --> S["Sigmoid: p = 1/(1+e^-z)"]
-    S --> D{"p >= 0.5?"}
-    D -->|Yes| P[Predict 1]
-    D -->|No| N[Predict 0]
+    X[输入特征 x] --> L["线性 z = wx + b"]
+    L --> S["Sigmoid p = 1/(1+e^-z)"]
+    S --> D{"p >= 0.5？"}
+    D -->|是| P[预测为 1]
+    D -->|否| N[预测为 0]
 ```
 
 输出 p 解释为 P(y=1 | x)，即输入属于类别 1 的概率。决策边界就在 wx + b = 0 这个位置——此时 sigmoid 的输出恰好是 0.5。
@@ -103,13 +103,13 @@ dL/db = (1/n) * sum(p - y)
 
 ```mermaid
 flowchart TD
-    A[Initialize w=0, b=0] --> B[Forward pass: z = wx+b, p = sigmoid z]
-    B --> C[Compute loss: binary cross-entropy]
-    C --> D["Compute gradients: dw = (1/n) * sum((p-y)*x)"]
-    D --> E[Update: w = w - lr*dw, b = b - lr*db]
-    E --> F{Converged?}
-    F -->|No| B
-    F -->|Yes| G[Model trained]
+    A[初始化 w=0, b=0] --> B[前向传播 z = wx+b, p = sigmoid z]
+    B --> C[计算 loss 二元交叉熵]
+    C --> D["计算梯度 dw = (1/n) * sum((p-y)*x)"]
+    D --> E[更新 w = w - lr*dw, b = b - lr*db]
+    E --> F{收敛了吗？}
+    F -->|否| B
+    F -->|是| G[模型训练完成]
 ```
 
 ### 决策边界（The Decision Boundary）

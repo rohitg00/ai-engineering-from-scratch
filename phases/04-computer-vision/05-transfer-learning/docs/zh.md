@@ -32,11 +32,11 @@
 
 ```mermaid
 flowchart TB
-    subgraph FE["Feature extraction — backbone frozen"]
-        FE1["Pretrained backbone<br/>(no gradient)"] --> FE2["New head<br/>(trained)"]
+    subgraph FE["特征提取——骨干网络冻结"]
+        FE1["预训练骨干网络<br/>（不求梯度）"] --> FE2["新的头部<br/>（训练）"]
     end
-    subgraph FT["Fine-tuning — end-to-end"]
-        FT1["Pretrained backbone<br/>(tiny LR)"] --> FT2["New head<br/>(normal LR)"]
+    subgraph FT["微调——端到端"]
+        FT1["预训练骨干网络<br/>（极小学习率）"] --> FT2["新的头部<br/>（正常学习率）"]
     end
 
     style FE1 fill:#e5e7eb,stroke:#6b7280

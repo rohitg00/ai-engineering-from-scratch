@@ -391,9 +391,9 @@ Posterior: Beta(a + s, b + f)
 
 ```mermaid
 graph LR
-    A["Prior<br/>Beta(1,1)<br/>mean = 0.50"] -->|"7H, 3T"| B["Posterior 1<br/>Beta(8,4)<br/>mean = 0.67"]
-    B -->|"becomes prior"| C["Prior 2<br/>Beta(8,4)"]
-    C -->|"5H, 5T"| D["Posterior 2<br/>Beta(13,9)<br/>mean = 0.59"]
+    A["先验<br/>Beta(1,1)<br/>mean = 0.50"] -->|"7正, 3反"| B["后验 1<br/>Beta(8,4)<br/>mean = 0.67"]
+    B -->|"成为新的先验"| C["先验 2<br/>Beta(8,4)"]
+    C -->|"5正, 5反"| D["后验 2<br/>Beta(13,9)<br/>mean = 0.59"]
 ```
 
 观测顺序不影响结果。把全部 12 次正面和 8 次反面一次性塞给 Beta(1,1) 更新，得到的同样是 Beta(13, 9)。序贯更新和 batch 更新在数学上等价。但序贯更新让你可以在每一步都做决策，而不必保留原始数据。

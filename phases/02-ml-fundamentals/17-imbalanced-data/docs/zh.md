@@ -61,17 +61,17 @@ Accuracy = (0 + 990) / 1000 = 99.0%
 
 ```mermaid
 flowchart TD
-    A[Imbalanced Dataset] --> B{Imbalance Ratio?}
-    B -->|Mild: 80/20| C[Class Weights]
-    B -->|Moderate: 95/5| D[SMOTE + Threshold Tuning]
-    B -->|Severe: 99/1| E[SMOTE + Class Weights + Threshold]
-    C --> F[Train Model]
+    A[不平衡数据集] --> B{不平衡比例？}
+    B -->|轻度 80/20| C[类别权重]
+    B -->|中度 95/5| D[SMOTE + 阈值调优]
+    B -->|重度 99/1| E[SMOTE + 类别权重 + 阈值]
+    C --> F[训练模型]
     D --> F
     E --> F
-    F --> G[Evaluate with F1 / AUPRC / MCC]
-    G --> H{Good Enough?}
-    H -->|No| I[Try Different Strategy]
-    H -->|Yes| J[Deploy with Monitoring]
+    F --> G[用 F1 / AUPRC / MCC 评估]
+    G --> H{足够好了吗？}
+    H -->|否| I[尝试不同策略]
+    H -->|是| J[部署并持续监控]
     I --> B
 ```
 
@@ -91,25 +91,25 @@ SMOTE 创造的是「合理但非复制」的合成少数类样本。算法：
 
 ```mermaid
 flowchart LR
-    subgraph Original["Original Minority Points"]
-        P1["x1 (1.0, 2.0)"]
-        P2["x2 (1.5, 2.5)"]
-        P3["x3 (2.0, 1.5)"]
+    subgraph Original["原始的少数类点"]
+        P1["x1 （1.0, 2.0）"]
+        P2["x2 （1.5, 2.5）"]
+        P3["x3 （2.0, 1.5）"]
     end
-    subgraph SMOTE["SMOTE Generation"]
+    subgraph SMOTE["SMOTE 生成"]
         direction TB
-        S1["Pick x1, neighbor x2"]
-        S2["random t = 0.4"]
+        S1["选取 x1，邻居 x2"]
+        S2["随机 t = 0.4"]
         S3["new = x1 + 0.4*(x2-x1)"]
-        S4["new = (1.2, 2.2)"]
+        S4["new = （1.2, 2.2）"]
         S1 --> S2 --> S3 --> S4
     end
     Original --> SMOTE
-    subgraph Result["Augmented Set"]
-        R1["x1 (1.0, 2.0)"]
-        R2["x2 (1.5, 2.5)"]
-        R3["x3 (2.0, 1.5)"]
-        R4["synthetic (1.2, 2.2)"]
+    subgraph Result["扩充后的数据集"]
+        R1["x1 （1.0, 2.0）"]
+        R2["x2 （1.5, 2.5）"]
+        R3["x3 （2.0, 1.5）"]
+        R4["合成点 （1.2, 2.2）"]
     end
     SMOTE --> Result
 ```
@@ -167,11 +167,11 @@ weighted_loss = -sum(w_i * [y_i * log(p_i) + (1-y_i) * log(1-p_i)])
 
 ```mermaid
 flowchart LR
-    A[Model] --> B[Predict Probabilities]
-    B --> C[Sweep Thresholds 0.0 to 1.0]
-    C --> D[Compute F1 at Each]
-    D --> E[Pick Best Threshold]
-    E --> F[Use in Production]
+    A[模型] --> B[预测概率]
+    B --> C[在 0.0 到 1.0 之间扫描阈值]
+    C --> D[在每个阈值上计算 F1]
+    D --> E[挑选最佳阈值]
+    E --> F[用于生产环境]
 ```
 
 模型对一笔欺诈交易可能输出 P(fraud) = 0.15。在 0.5 阈值下它会被判为非欺诈；在 0.10 阈值下就被正确抓住了。概率校准没那么重要，关键是排序——只要欺诈得到的概率比非欺诈更高，就一定存在某个阈值能把它们分开。
@@ -193,24 +193,24 @@ class weights 的推广。不再用统一代价，而是为每种误分配指定
 
 ```mermaid
 flowchart TD
-    A[Start: Imbalanced Dataset] --> B{How imbalanced?}
-    B -->|"< 70/30"| C["Mild: try class weights first"]
-    B -->|"70/30 to 95/5"| D["Moderate: SMOTE + class weights"]
-    B -->|"> 95/5"| E["Severe: combine multiple strategies"]
-    C --> F{Enough data?}
+    A[起点 不平衡数据集] --> B{有多不平衡？}
+    B -->|"< 70/30"| C["轻度 先试类别权重"]
+    B -->|"70/30 到 95/5"| D["中度 SMOTE + 类别权重"]
+    B -->|"> 95/5"| E["重度 组合多种策略"]
+    C --> F{数据够多吗？}
     D --> F
     E --> F
-    F -->|"< 1000 samples"| G["Oversample or SMOTE, avoid undersampling"]
-    F -->|"1000-10000"| H["SMOTE + threshold tuning"]
-    F -->|"> 10000"| I["Undersampling OK, or class weights"]
-    G --> J[Train + Evaluate with F1/AUPRC]
+    F -->|"< 1000 样本"| G["过采样或 SMOTE，避免欠采样"]
+    F -->|"1000-10000"| H["SMOTE + 阈值调优"]
+    F -->|"> 10000"| I["可以欠采样，或用类别权重"]
+    G --> J[训练 + 用 F1/AUPRC 评估]
     H --> J
     I --> J
-    J --> K{Recall high enough?}
-    K -->|No| L[Lower threshold]
-    K -->|Yes| M{Precision acceptable?}
-    M -->|No| N[Raise threshold or add features]
-    M -->|Yes| O[Ship it]
+    J --> K{recall 够高吗？}
+    K -->|否| L[降低阈值]
+    K -->|是| M{precision 可接受吗？}
+    M -->|否| N[提高阈值或增加特征]
+    M -->|是| O[上线]
 ```
 
 ## 动手实现（Build It）

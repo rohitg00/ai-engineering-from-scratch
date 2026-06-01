@@ -30,9 +30,9 @@ Classification 一张图给一个标签。Detection 一张图给若干个 box。
 
 ```mermaid
 flowchart LR
-    IN["Input image"] --> SEM["Semantic<br/>(pixel → class)"]
-    IN --> INS["Instance<br/>(pixel → object id,<br/>only foreground classes)"]
-    IN --> PAN["Panoptic<br/>(every pixel → class + id)"]
+    IN["输入图像"] --> SEM["语义<br/>（像素 → 类别）"]
+    IN --> INS["实例<br/>（像素 → 物体 id，<br/>仅前景类别）"]
+    IN --> PAN["全景<br/>（每个像素 → 类别 + id）"]
 
     style SEM fill:#dbeafe,stroke:#2563eb
     style INS fill:#fef3c7,stroke:#d97706
@@ -49,15 +49,15 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    subgraph ENC["Encoder (contracting)"]
+    subgraph ENC["编码器（收缩）"]
         E1["64<br/>H x W"] --> E2["128<br/>H/2 x W/2"]
         E2 --> E3["256<br/>H/4 x W/4"]
         E3 --> E4["512<br/>H/8 x W/8"]
     end
-    subgraph BOT["Bottleneck"]
+    subgraph BOT["瓶颈层"]
         B1["1024<br/>H/16 x W/16"]
     end
-    subgraph DEC["Decoder (expanding)"]
+    subgraph DEC["解码器（扩张）"]
         D4["512<br/>H/8 x W/8"] --> D3["256<br/>H/4 x W/4"]
         D3 --> D2["128<br/>H/2 x W/2"]
         D2 --> D1["64<br/>H x W"]
@@ -67,7 +67,7 @@ flowchart LR
     E2 -. skip .-> D2
     E3 -. skip .-> D3
     E4 -. skip .-> D4
-    D1 --> OUT["1x1 conv<br/>classes"]
+    D1 --> OUT["1x1 卷积<br/>类别"]
 
     style ENC fill:#dbeafe,stroke:#2563eb
     style BOT fill:#fef3c7,stroke:#d97706

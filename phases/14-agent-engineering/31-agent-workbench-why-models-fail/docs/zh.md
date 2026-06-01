@@ -42,13 +42,13 @@ workbench 与模型无关。你可以换掉模型、保留这些表面。但你�
 
 ```mermaid
 flowchart LR
-  Task[Task] --> Scope[Scope Contract]
-  Scope --> State[Repo Memory]
-  State --> Agent[Agent Loop]
-  Agent --> Feedback[Runtime Feedback]
-  Feedback --> Verify[Verification Gate]
-  Verify --> Review[Reviewer]
-  Review --> Handoff[Handoff]
+  Task[任务] --> Scope[范围契约]
+  Scope --> State[Repo 记忆]
+  State --> Agent[Agent 循环]
+  Agent --> Feedback[运行时反馈]
+  Feedback --> Verify[验证关卡]
+  Verify --> Review[审查者]
+  Review --> Handoff[交接]
   Handoff --> State
 ```
 

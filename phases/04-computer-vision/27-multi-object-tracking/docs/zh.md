@@ -30,15 +30,15 @@
 
 ```mermaid
 flowchart LR
-    F1["Frame t"] --> DET["Detector"] --> D1["Detections at t"]
-    PREV["Tracks up to t-1"] --> PREDICT["Motion predict<br/>(Kalman)"]
-    PREDICT --> PRED["Predicted tracks at t"]
-    D1 --> ASSOC["Hungarian assignment<br/>(IoU / cosine / motion)"]
+    F1["第 t 帧"] --> DET["检测器"] --> D1["t 时刻的检测"]
+    PREV["截至 t-1 的轨迹"] --> PREDICT["运动预测<br/>（Kalman）"]
+    PREDICT --> PRED["t 时刻的预测轨迹"]
+    D1 --> ASSOC["匈牙利匹配<br/>（IoU ／ 余弦 ／ 运动）"]
     PRED --> ASSOC
-    ASSOC --> UPDATE["Update matched tracks"]
-    ASSOC --> NEW["Birth new tracks"]
-    ASSOC --> DEAD["Age unmatched tracks; delete after N"]
-    UPDATE --> NEXT["Tracks at t"]
+    ASSOC --> UPDATE["更新匹配上的轨迹"]
+    ASSOC --> NEW["新建轨迹"]
+    ASSOC --> DEAD["未匹配轨迹计龄；超过 N 后删除"]
+    UPDATE --> NEXT["t 时刻的轨迹"]
     NEW --> NEXT
     DEAD --> NEXT
 

@@ -46,11 +46,11 @@ SH coefficients  c_lm       (3 * (L+1)^2,)   view-dependent colour
 
 ```mermaid
 flowchart LR
-    SCENE["Millions of 3D Gaussians<br/>(position, rotation, scale,<br/>opacity, SH colour)"] --> PROJ["Project to 2D<br/>(camera extrinsics + intrinsics)"]
-    PROJ --> TILES["Assign to tiles<br/>(16x16 screen-space)"]
-    TILES --> SORT["Depth-sort<br/>per tile"]
-    SORT --> ALPHA["Alpha-composite<br/>front-to-back"]
-    ALPHA --> PIX["Pixel colour"]
+    SCENE["数百万个 3D 高斯<br/>（位置、旋转、尺度、<br/>不透明度、SH 颜色）"] --> PROJ["投影到 2D<br/>（相机外参 + 内参）"]
+    PROJ --> TILES["分配到 tile<br/>（16x16 屏幕空间）"]
+    TILES --> SORT["逐 tile<br/>按深度排序"]
+    SORT --> ALPHA["由前到后<br/>alpha 合成"]
+    ALPHA --> PIX["像素颜色"]
 
     style SCENE fill:#dbeafe,stroke:#2563eb
     style ALPHA fill:#fef3c7,stroke:#d97706

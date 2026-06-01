@@ -65,13 +65,13 @@ MSE = (1/n) * sum((y_predicted - y_actual)^2)
 
 ```mermaid
 flowchart TD
-    A[Initialize w and b randomly] --> B[Compute predictions: y_hat = wx + b]
-    B --> C[Compute cost: MSE]
-    C --> D[Compute gradients: dMSE/dw, dMSE/db]
-    D --> E[Update parameters]
-    E --> F{Cost low enough?}
-    F -->|No| B
-    F -->|Yes| G[Done: optimal w and b found]
+    A[随机初始化 w 和 b] --> B[计算预测值 y_hat = wx + b]
+    B --> C[计算代价 MSE]
+    C --> D[计算梯度 dMSE/dw, dMSE/db]
+    D --> E[更新参数]
+    E --> F{代价足够低？}
+    F -->|否| B
+    F -->|是| G[完成 找到最优的 w 和 b]
 ```
 
 梯度告诉你两件事：每个参数该往哪个方向走，以及走多大步。

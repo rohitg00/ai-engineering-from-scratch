@@ -48,15 +48,15 @@
 ```mermaid
 graph LR
     subgraph Before
-        A["Point A"]
-        B["Point B"]
+        A["点 A"]
+        B["点 B"]
     end
-    subgraph Matrix["Matrix Multiplication"]
-        M["M (transformation)"]
+    subgraph Matrix["矩阵乘法"]
+        M["M（变换）"]
     end
     subgraph After
-        A2["Point A'"]
-        B2["Point B'"]
+        A2["点 A'"]
+        B2["点 B'"]
     end
     A --> M
     B --> M
@@ -136,12 +136,12 @@ proj_b(a) = (a dot b / b dot b) * b
 
 ```mermaid
 graph LR
-    subgraph Projection["Projection of a onto b"]
+    subgraph Projection["a 在 b 上的投影"]
         direction TB
-        O["Origin"] --> |"b (direction)"| B["b"]
-        O --> |"a (original)"| A["a"]
-        O --> |"proj_b(a)"| P["projection"]
-        A -.-> |"residual (perpendicular)"| P
+        O["原点"] --> |"b（方向）"| B["b"]
+        O --> |"a（原始）"| A["a"]
+        O --> |"proj_b(a)"| P["投影"]
+        A -.-> |"残差（垂直）"| P
     end
 ```
 

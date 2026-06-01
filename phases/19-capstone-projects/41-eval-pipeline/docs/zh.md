@@ -29,15 +29,15 @@
 
 ```mermaid
 flowchart LR
-  Model[trained model] --> PPL[perplexity eval<br/>held-out LM]
-  Model --> EM[exact-match eval<br/>factual short-form]
-  Model --> F1[token F1 eval<br/>open-ended]
-  Model --> J[mock judge<br/>1-5 scoring]
+  Model[训练好的模型] --> PPL[困惑度评估<br/>留出 LM]
+  Model --> EM[精确匹配评估<br/>事实型短答]
+  Model --> F1[token F1 评估<br/>开放式]
+  Model --> J[mock judge<br/>1-5 打分]
   PPL --> R[Report]
   EM --> R
   F1 --> R
   J --> R
-  R --> A[(aggregate score)]
+  R --> A[(聚合分数)]
 ```
 
 每个 eval 都是一个 `(model, dataset) -> EvalResult` 的函数。结果里带着指标值、便于检查的逐样本细节，以及用于聚合的名字。流水线靠一份配置把它们组合起来——配置说明跑哪些 eval，以及怎么加权。
@@ -90,8 +90,8 @@ flowchart LR
   Inst[instruction] --> Judge[mock judge]
   Pred[prediction] --> Judge
   Ref[reference] --> Judge
-  Judge --> Score[1-5 score]
-  Judge --> Why[rationale]
+  Judge --> Score[1-5 分]
+  Judge --> Why[理由]
 ```
 
 ## 聚合（Aggregation）
@@ -109,8 +109,8 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-  Data[(held-out fixtures<br/>LM / EM / F1 / Judge)] --> Suite[EvalSuite]
-  Model[trained model] --> Suite
+  Data[(留出 fixture<br/>LM / EM / F1 / Judge)] --> Suite[EvalSuite]
+  Model[训练好的模型] --> Suite
   Suite --> PE[perplexity_eval]
   Suite --> EE[exact_match_eval]
   Suite --> FE[token_f1_eval]
@@ -119,9 +119,9 @@ flowchart TD
   EE --> Agg
   FE --> Agg
   JE --> Agg
-  Agg --> R[FinalReport<br/>per-task + aggregate]
+  Agg --> R[FinalReport<br/>逐任务 + 聚合]
   R --> JSON[(report.json)]
-  R --> Pretty[stdout table]
+  R --> Pretty[stdout 表格]
 ```
 
 `EvalSuite` 是一个薄薄的编排器（orchestrator）。每个 eval 都是一个独立函数，签名 `(model, tokenizer, dataset, config)`，返回一个 `EvalResult`。`Aggregator` 收集结果产出最终报告。Demo 既会把表格打到 stdout，也会写一份 JSON 副本给下游 CI 消费。

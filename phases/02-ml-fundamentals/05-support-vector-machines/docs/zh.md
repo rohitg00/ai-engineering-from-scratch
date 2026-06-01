@@ -46,9 +46,9 @@ graph LR
         direction TB
         A["w^T x + b = +1"] ~~~ B["w^T x + b = 0"] ~~~ C["w^T x + b = -1"]
     end
-    D["+ class points"] --> A
-    E["- class points"] --> C
-    B --- F["Decision boundary"]
+    D["+ 类样本点"] --> A
+    E["- 类样本点"] --> C
+    B --- F["决策边界"]
 ```
 
 优化问题：
@@ -72,11 +72,11 @@ subject to  y_i * (w^T x_i + b) >= 1  for all i
 ```mermaid
 graph TD
     subgraph Classification
-        SV1["Support Vector (+ class)<br>y(w'x+b) = 1"] --- DB["Decision Boundary<br>w'x+b = 0"]
-        DB --- SV2["Support Vector (- class)<br>y(w'x+b) = 1"]
+        SV1["支持向量（+ 类）<br>y(w'x+b) = 1"] --- DB["决策边界<br>w'x+b = 0"]
+        DB --- SV2["支持向量（- 类）<br>y(w'x+b) = 1"]
     end
-    O1["Other + points<br>(do not affect boundary)"] -.-> SV1
-    O2["Other - points<br>(do not affect boundary)"] -.-> SV2
+    O1["其他 + 点<br>（不影响边界）"] -.-> SV1
+    O2["其他 - 点<br>（不影响边界）"] -.-> SV2
 ```
 
 绝大多数训练点都是无关紧要的，只有支持向量重要。这也是为什么 SVM 在预测阶段对内存友好：你只需要保存支持向量，不必保存整个训练集。
@@ -179,13 +179,13 @@ RBF kernel 把数据映射到一个无限维的空间。在输入空间里靠得
 
 ```mermaid
 graph LR
-    subgraph "Input Space (not separable)"
-        A["Data points in 2D<br>circular boundary"]
+    subgraph "输入空间（不可分）"
+        A["二维数据点<br>圆形边界"]
     end
-    subgraph "Feature Space (separable)"
-        B["Data points in higher dim<br>linear boundary"]
+    subgraph "特征空间（可分）"
+        B["高维数据点<br>线性边界"]
     end
-    A -->|"Kernel trick<br>K(x,z) = phi(x).phi(z)"| B
+    A -->|"核技巧<br>K(x,z) = phi(x).phi(z)"| B
 ```
 
 Kernel trick 在不真正进入高维空间的前提下，算出了高维空间里的点积。比如 D 维空间里 d 阶的 polynomial kernel，显式特征空间维度是 O(D^d)，但 K(x, z) 只需 O(D) 的时间就能算出来。

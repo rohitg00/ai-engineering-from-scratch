@@ -35,9 +35,9 @@ graph LR
     x1["x1"] -- "w1" --> sum["Σ(wi*xi) + b"]
     x2["x2"] -- "w2" --> sum
     x3["x3"] -- "w3" --> sum
-    bias["bias"] --> sum
+    bias["偏置"] --> sum
     sum --> step["step(z)"]
-    step --> out["output (0 or 1)"]
+    step --> out["输出（0 或 1）"]
 ```
 
 阶跃函数（step function）很粗暴：如果加权和加 bias 大于等于 0，输出 1；否则输出 0。
@@ -215,13 +215,13 @@ for inputs, expected in xor_data:
 
 ```mermaid
 graph LR
-    x1["x1"] --> OR["OR neuron"]
-    x1 --> NAND["NAND neuron"]
+    x1["x1"] --> OR["OR 神经元"]
+    x1 --> NAND["NAND 神经元"]
     x2["x2"] --> OR
     x2 --> NAND
-    OR --> AND["AND neuron"]
+    OR --> AND["AND 神经元"]
     NAND --> AND
-    AND --> out["output"]
+    AND --> out["输出"]
 ```
 
 ```python

@@ -63,15 +63,15 @@ Random search 从分布里采样超参数，而不是从网格里取。同样 9 
 ```mermaid
 flowchart LR
     subgraph Grid Search
-        G1[3 unique learning rates]
-        G2[3 unique max depths]
-        G3[9 total evaluations]
+        G1[3 个不同的 learning rate]
+        G2[3 个不同的最大深度]
+        G3[共 9 次评估]
     end
 
     subgraph Random Search
-        R1[9 unique learning rates]
-        R2[9 unique max depths]
-        R3[9 total evaluations]
+        R1[9 个不同的 learning rate]
+        R2[9 个不同的最大深度]
+        R3[共 9 次评估]
     end
 ```
 
@@ -88,13 +88,13 @@ Random search 不看结果。它不会学到「高 learning rate 会发散」或
 
 ```mermaid
 flowchart TD
-    A[Define search space] --> B[Evaluate initial random points]
-    B --> C[Fit surrogate model to results]
-    C --> D[Use acquisition function to pick next point]
-    D --> E[Evaluate the model at that point]
-    E --> F{Budget exhausted?}
-    F -->|No| C
-    F -->|Yes| G[Return best hyperparameters found]
+    A[定义搜索空间] --> B[评估初始随机点]
+    B --> C[用结果拟合代理模型]
+    C --> D[用采集函数挑选下一个点]
+    D --> E[在该点评估模型]
+    E --> F{预算耗尽？}
+    F -->|否| C
+    F -->|是| G[返回找到的最佳超参数]
 ```
 
 两个关键组件：
@@ -157,11 +157,11 @@ Learning rate 几乎一直是最重要的超参数。调度器不是把它固定
 
 ```mermaid
 flowchart TD
-    A[Start with defaults] --> B[Coarse random search: 20-50 trials]
-    B --> C[Identify important hyperparameters]
-    C --> D[Fine random or Bayesian search: 50-100 trials in narrowed space]
-    D --> E[Final model with best hyperparameters]
-    E --> F[Retrain on full training data]
+    A[从默认值开始] --> B[粗粒度随机搜索 20-50 次试验]
+    B --> C[找出重要的超参数]
+    C --> D[在缩小的空间里做精细随机或贝叶斯搜索 50-100 次试验]
+    D --> E[用最佳超参数得到最终模型]
+    E --> F[在完整训练数据上重新训练]
 ```
 
 具体流程：
@@ -181,19 +181,19 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    D[Full Dataset] --> O1[Outer Fold 1: Test]
-    D --> O2[Outer Fold 2: Test]
-    D --> O3[Outer Fold 3: Test]
-    D --> O4[Outer Fold 4: Test]
-    D --> O5[Outer Fold 5: Test]
+    D[完整数据集] --> O1[外层第 1 折 测试]
+    D --> O2[外层第 2 折 测试]
+    D --> O3[外层第 3 折 测试]
+    D --> O4[外层第 4 折 测试]
+    D --> O5[外层第 5 折 测试]
 
-    O1 --> I1[Inner 5-fold CV on remaining data]
-    I1 --> T1[Best hyperparams for fold 1]
-    T1 --> E1[Evaluate on outer test fold 1]
+    O1 --> I1[在剩余数据上做内层 5 折 CV]
+    I1 --> T1[第 1 折的最佳超参数]
+    T1 --> E1[在外层测试折 1 上评估]
 
-    O2 --> I2[Inner 5-fold CV on remaining data]
-    I2 --> T2[Best hyperparams for fold 2]
-    T2 --> E2[Evaluate on outer test fold 2]
+    O2 --> I2[在剩余数据上做内层 5 折 CV]
+    I2 --> T2[第 2 折的最佳超参数]
+    T2 --> E2[在外层测试折 2 上评估]
 ```
 
 每个外层 fold 独立找自己的最佳超参数。外层得分就是泛化性能的无偏估计。

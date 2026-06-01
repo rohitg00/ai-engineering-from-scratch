@@ -27,15 +27,15 @@
 
 ```mermaid
 flowchart LR
-  SF[safetensors file<br/>gpt2-stub.safetensors] --> R[Reader<br/>safe_open]
-  R --> N[Parameter name iterator]
-  N --> M[Name mapper<br/>pretrained -> local]
-  M --> S[Shape check]
-  S -- match --> A[Assign tensor<br/>under torch.no_grad]
-  S -- mismatch --> E[Log mismatch<br/>do not assign]
+  SF[safetensors 文件<br/>gpt2-stub.safetensors] --> R[Reader<br/>safe_open]
+  R --> N[参数名迭代器]
+  N --> M[名称映射器<br/>pretrained → local]
+  M --> S[形状检查]
+  S -- match --> A[赋值张量<br/>在 torch.no_grad 下]
+  S -- mismatch --> E[记录不匹配<br/>不赋值]
   A --> RP[LoadReport]
   E --> RP
-  RP --> G[generate<br/>sanity sample]
+  RP --> G[generate<br/>合理性采样]
 ```
 
 名字映射器就是一个字符串到字符串的函数。形状检查就是一句 if。赋值动作放在 `torch.no_grad()` 里，autograd 不会跟踪这次加载。报告里保存每一个名字的处理结果。

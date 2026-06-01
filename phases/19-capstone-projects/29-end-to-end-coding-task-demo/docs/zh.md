@@ -29,10 +29,10 @@ gate chain 说 ALLOW，但 sandbox 因为某个 chain 没预料到的原因拒�
 
 ```mermaid
 flowchart TD
-  Repo[Repo fixture<br/>src/fizz.py buggy<br/>tests/test_fizz.py] --> Harness
-  Policy[Policy<br/>deterministic stand-in<br/>for the model] -->|tool call| Harness
+  Repo[Repo fixture<br/>src/fizz.py 有 bug<br/>tests/test_fizz.py] --> Harness
+  Policy[Policy<br/>模型的<br/>确定性替身] -->|tool call| Harness
   Harness[Harness<br/>gate chain / sandbox<br/>span builder / observation ledger] -->|observation| Policy
-  Harness --> Out[EvalReport + JSONL<br/>+ Prometheus exposition]
+  Harness --> Out[EvalReport + JSONL<br/>+ Prometheus 暴露格式]
 ```
 
 agent 的 policy 是一个状态机，五个状态。
@@ -58,11 +58,11 @@ flowchart TD
   Policy -->|step| Dispatcher[StepDispatcher]
   Dispatcher --> Gate[GateChain.evaluate]
   Gate -->|ALLOW| Sandbox
-  Gate -->|DENY| Refuse[refuse note]
-  Sandbox --> Obs[Observation<br/>append to ledger]
+  Gate -->|DENY| Refuse[拒绝说明]
+  Sandbox --> Obs[Observation<br/>追加到 ledger]
   Obs --> Span
   Refuse --> SpanErr[Span ERROR]
-  Span --> Back[back to Policy]
+  Span --> Back[回到 Policy]
   SpanErr --> Back
   Back --> Policy
 ```

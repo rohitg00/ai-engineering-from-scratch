@@ -32,15 +32,15 @@
 
 ```mermaid
 flowchart LR
-    A[Raw Data] --> B{Choose Method}
+    A[原始数据] --> B{选择方法}
     B --> C[K-Means]
     B --> D[DBSCAN]
-    B --> E[Hierarchical]
+    B --> E[层次聚类]
     B --> F[GMM]
-    C --> G[Flat, spherical clusters]
-    D --> H[Arbitrary shapes, noise detection]
-    E --> I[Tree of nested clusters]
-    F --> J[Soft assignments, elliptical clusters]
+    C --> G[扁平的球形簇]
+    D --> H[任意形状，可检测噪声]
+    E --> I[嵌套簇的树状结构]
+    F --> J[软分配，椭圆形簇]
 ```
 
 ### K-Means：主力工具（K-Means: The Workhorse）

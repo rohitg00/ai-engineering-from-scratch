@@ -78,8 +78,8 @@ where:
 
 ```mermaid
 graph LR
-    A[Simple Model] -->|increase complexity| B[Sweet Spot]
-    B -->|increase complexity| C[Complex Model]
+    A[简单模型] -->|增加复杂度| B[最佳平衡点]
+    B -->|增加复杂度| C[复杂模型]
 
     style A fill:#f9f,stroke:#333
     style B fill:#9f9,stroke:#333
@@ -111,9 +111,9 @@ graph LR
 
 ```mermaid
 graph LR
-    A[Underfit Zone] --> B[Classical Sweet Spot]
-    B --> C[Interpolation Threshold]
-    C --> D[Double Descent - Error Drops Again]
+    A[欠拟合区] --> B[经典最佳平衡点]
+    B --> C[插值阈值]
+    C --> D[双下降 误差再次下降]
 
     style A fill:#fdd,stroke:#333
     style B fill:#dfd,stroke:#333
@@ -143,15 +143,15 @@ graph LR
 
 ```mermaid
 flowchart TD
-    A[Compare train error vs test error] --> B{Large gap?}
-    B -->|Yes| C[High variance - overfitting]
-    B -->|No| D{Both errors high?}
-    D -->|Yes| E[High bias - underfitting]
-    D -->|No| F[Good fit]
+    A[对比训练误差与测试误差] --> B{差距很大？}
+    B -->|是| C[高方差 过拟合]
+    B -->|否| D{两个误差都高？}
+    D -->|是| E[高偏差 欠拟合]
+    D -->|否| F[拟合良好]
 
-    C --> G[More data / Regularize / Simpler model]
-    E --> H[More features / Complex model / Less regularization]
-    F --> I[Deploy]
+    C --> G[更多数据 / 正则化 / 更简单的模型]
+    E --> H[更多特征 / 更复杂的模型 / 减少正则化]
+    F --> I[部署]
 ```
 
 | 症状 | 诊断 | 处方 |
@@ -201,24 +201,24 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    subgraph HB["High Bias Learning Curve"]
+    subgraph HB["高偏差学习曲线"]
         direction LR
-        HB1["Small N: both errors high"]
-        HB2["Large N: both errors converge to HIGH error"]
+        HB1["小 N 时 两个误差都高"]
+        HB2["大 N 时 两个误差都收敛到 高误差"]
         HB1 --> HB2
     end
 
-    subgraph HV["High Variance Learning Curve"]
+    subgraph HV["高方差学习曲线"]
         direction LR
-        HV1["Small N: train low, test high (big gap)"]
-        HV2["Large N: gap shrinks but slowly"]
+        HV1["小 N 时 训练低，测试高（差距大）"]
+        HV2["大 N 时 差距缩小但很慢"]
         HV1 --> HV2
     end
 
-    subgraph GF["Good Fit Learning Curve"]
+    subgraph GF["拟合良好学习曲线"]
         direction LR
-        GF1["Small N: some gap"]
-        GF2["Large N: both converge to LOW error"]
+        GF1["小 N 时 有些差距"]
+        GF2["大 N 时 两者都收敛到 低误差"]
         GF1 --> GF2
     end
 ```
@@ -247,13 +247,13 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[Model underperforming] --> B[Generate learning curve]
-    B --> C{Gap between train and val?}
-    C -->|Large gap, val still decreasing| D[More data will help]
-    C -->|Small gap, both high| E[More data will NOT help]
-    C -->|Large gap, val flat| F[Regularize or simplify]
-    E --> G[Generate validation curve]
-    G --> H[Try more complex model]
+    A[模型表现不佳] --> B[绘制学习曲线]
+    B --> C{训练与验证之间的差距？}
+    C -->|差距大，验证仍在下降| D[更多数据会有帮助]
+    C -->|差距小，两者都高| E[更多数据没有帮助]
+    C -->|差距大，验证已走平| F[正则化或简化]
+    E --> G[绘制验证曲线]
+    G --> H[尝试更复杂的模型]
 ```
 
 ## 动手实现（Build It）

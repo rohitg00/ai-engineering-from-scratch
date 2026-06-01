@@ -32,12 +32,12 @@
 
 ```mermaid
 graph TD
-    A["Age < 30?"] -->|Yes| B["Income > 50k?"]
-    A -->|No| C["Credit Score > 700?"]
-    B -->|Yes| D["Approve"]
-    B -->|No| E["Deny"]
-    C -->|Yes| F["Approve"]
-    C -->|No| G["Deny"]
+    A["年龄 小于 30？"] -->|是| B["收入 大于 50k？"]
+    A -->|否| C["信用分 大于 700？"]
+    B -->|是| D["批准"]
+    B -->|否| E["拒绝"]
+    C -->|是| F["批准"]
+    C -->|否| G["拒绝"]
 ```
 
 每个内部节点用一个阈值去测试某个特征；每个叶子节点给出一个预测。要给一个新数据点分类，从根节点出发，沿着分支走下去，直到落到某个叶子。
@@ -139,15 +139,15 @@ VR(S, feature, threshold) = Var(S) - weighted_avg(Var(S_left), Var(S_right))
 
 ```mermaid
 graph TD
-    D["Training Data"] --> B1["Bootstrap Sample 1"]
-    D --> B2["Bootstrap Sample 2"]
-    D --> B3["Bootstrap Sample 3"]
-    D --> BN["Bootstrap Sample N"]
-    B1 --> T1["Tree 1<br>(random feature subset)"]
-    B2 --> T2["Tree 2<br>(random feature subset)"]
-    B3 --> T3["Tree 3<br>(random feature subset)"]
-    BN --> TN["Tree N<br>(random feature subset)"]
-    T1 --> V["Aggregate Predictions<br>(majority vote or average)"]
+    D["训练数据"] --> B1["Bootstrap 样本 1"]
+    D --> B2["Bootstrap 样本 2"]
+    D --> B3["Bootstrap 样本 3"]
+    D --> BN["Bootstrap 样本 N"]
+    B1 --> T1["树 1<br>（随机特征子集）"]
+    B2 --> T2["树 2<br>（随机特征子集）"]
+    B3 --> T3["树 3<br>（随机特征子集）"]
+    BN --> TN["树 N<br>（随机特征子集）"]
+    T1 --> V["聚合预测<br>（多数投票或求平均）"]
     T2 --> V
     T3 --> V
     TN --> V

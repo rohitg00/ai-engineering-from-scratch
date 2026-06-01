@@ -33,16 +33,16 @@
 
 ```mermaid
 graph TD
-    subgraph without["Without virtual environments"]
-        SP[System Python] --> T24["torch 2.4.0 (CUDA 12.4)\nProject A needs this"]
-        SP --> T21["torch 2.1.0 (CUDA 11.8)\nProject B needs this"]
-        SP --> CONFLICT["CONFLICT: only one\ntorch version can exist"]
+    subgraph without["没有虚拟环境"]
+        SP[系统 Python] --> T24["torch 2.4.0 (CUDA 12.4)\n项目 A 需要这个"]
+        SP --> T21["torch 2.1.0 (CUDA 11.8)\n项目 B 需要这个"]
+        SP --> CONFLICT["冲突: 只能存在一个\ntorch 版本"]
     end
 
-    subgraph with["With virtual environments"]
-        PA["Project A (.venv/)"] --> PA1["torch 2.4.0 (CUDA 12.4)"]
+    subgraph with["使用虚拟环境"]
+        PA["项目 A (.venv/)"] --> PA1["torch 2.4.0 (CUDA 12.4)"]
         PA --> PA2["transformers 4.44"]
-        PB["Project B (.venv/)"] --> PB1["torch 2.1.0 (CUDA 11.8)"]
+        PB["项目 B (.venv/)"] --> PB1["torch 2.1.0 (CUDA 11.8)"]
         PB --> PB2["diffusers 0.28"]
     end
 ```

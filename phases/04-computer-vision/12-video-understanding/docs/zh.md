@@ -30,9 +30,9 @@
 
 ```mermaid
 flowchart LR
-    V["Video clip<br/>(T frames)"] --> A1["2D + pool<br/>run 2D CNN per frame,<br/>average over time"]
-    V --> A2["3D conv<br/>convolve over<br/>T x H x W"]
-    V --> A3["Spatio-temporal<br/>transformer<br/>attention over<br/>(t, h, w) tokens"]
+    V["视频片段<br/>（T 帧）"] --> A1["2D + pool<br/>每帧跑 2D CNN，<br/>在时间上取平均"]
+    V --> A2["3D 卷积<br/>在 T x H x W 上<br/>做卷积"]
+    V --> A3["时空<br/>transformer<br/>对 （t, h, w） token<br/>做 attention"]
 
     A1 --> C["Logits"]
     A2 --> C

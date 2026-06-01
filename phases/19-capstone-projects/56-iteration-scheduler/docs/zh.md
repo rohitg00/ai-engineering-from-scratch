@@ -27,16 +27,16 @@
 
 ```mermaid
 flowchart LR
-    Queue[Hypothesis queue] --> Sched[Scheduler]
-    Sched --> Slot1[Slot 1]
-    Sched --> Slot2[Slot 2]
-    Sched --> Slot3[Slot 3]
-    Slot1 --> Bus[Result bus]
+    Queue[假设队列] --> Sched[Scheduler]
+    Sched --> Slot1[槽位 1]
+    Sched --> Slot2[槽位 2]
+    Sched --> Slot3[槽位 3]
+    Slot1 --> Bus[结果总线]
     Slot2 --> Bus
     Slot3 --> Bus
-    Bus --> Score[UCB scorer]
+    Bus --> Score[UCB 打分器]
     Score --> Queue
-    Bus --> Paper[Paper write fan-out]
+    Bus --> Paper[论文写作扇出]
 ```
 
 队列里放着 hypothesis。某个 slot 空出来时，调度器挑出 UCB 最高的那个 hypothesis。每个 slot 异步跑一个实验。跑完的实验把结果 fan 到 bus 上。bus 更新原分支的 UCB 统计量，并在分支的收益越过阈值时 fan-out 到「写论文」阶段。
@@ -47,8 +47,8 @@ flowchart LR
 flowchart TB
     Hyp[Hypothesis] --> Id[id]
     Hyp --> Branch[branch id]
-    Hyp --> Payload[payload dict]
-    Hyp --> Stats[runs and reward sum]
+    Hyp --> Payload[payload 字典]
+    Hyp --> Stats[runs 与 reward 之和]
     Stats --> Runs[runs int]
     Stats --> Sum[reward sum float]
 ```

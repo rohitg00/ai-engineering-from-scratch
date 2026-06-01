@@ -94,17 +94,17 @@ where E = DFT of even-indexed samples
 
 ```mermaid
 graph TD
-    subgraph "8-point FFT (Cooley-Tukey)"
-        X["x[0..7]<br/>8 samples"] -->|"split even/odd"| E["Even: x[0,2,4,6]"]
-        X -->|"split even/odd"| O["Odd: x[1,3,5,7]"]
-        E -->|"4-pt FFT"| EK["E[0..3]"]
-        O -->|"4-pt FFT"| OK["O[0..3]"]
-        EK -->|"combine with twiddle factors"| XK["X[0..7]"]
-        OK -->|"combine with twiddle factors"| XK
+    subgraph "8 点 FFT (Cooley-Tukey)"
+        X["x[0..7]<br/>8 个采样"] -->|"按偶/奇拆分"| E["偶: x[0,2,4,6]"]
+        X -->|"按偶/奇拆分"| O["奇: x[1,3,5,7]"]
+        E -->|"4 点 FFT"| EK["E[0..3]"]
+        O -->|"4 点 FFT"| OK["O[0..3]"]
+        EK -->|"用旋转因子合并"| XK["X[0..7]"]
+        OK -->|"用旋转因子合并"| XK
     end
-    subgraph "Complexity"
-        C1["DFT: O(N^2) = 64 multiplications"]
-        C2["FFT: O(N log N) = 24 multiplications"]
+    subgraph "复杂度"
+        C1["DFT: O(N^2) = 64 次乘法"]
+        C2["FFT: O(N log N) = 24 次乘法"]
     end
 ```
 
@@ -156,18 +156,18 @@ where * is convolution and . is element-wise multiplication
 
 ```mermaid
 graph LR
-    subgraph "Time Domain"
-        TA["Signal x[n]"] -->|"convolve (slow: O(NM))"| TC["Output y[n]"]
-        TB["Filter h[n]"] -->|"convolve"| TC
+    subgraph "时域"
+        TA["信号 x[n]"] -->|"卷积（慢: O(NM)）"| TC["输出 y[n]"]
+        TB["滤波器 h[n]"] -->|"卷积"| TC
     end
-    subgraph "Frequency Domain"
-        FA["FFT(x)"] -->|"multiply (fast: O(N))"| FC["FFT(x) * FFT(h)"]
-        FB["FFT(h)"] -->|"multiply"| FC
+    subgraph "频域"
+        FA["FFT(x)"] -->|"相乘（快: O(N)）"| FC["FFT(x) * FFT(h)"]
+        FB["FFT(h)"] -->|"相乘"| FC
         FC -->|"IFFT"| FD["y[n]"]
     end
     TA -.->|"FFT"| FA
     TB -.->|"FFT"| FB
-    FD -.->|"same result"| TC
+    FD -.->|"结果相同"| TC
 ```
 
 ### 加窗（Windowing）

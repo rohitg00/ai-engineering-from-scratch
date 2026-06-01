@@ -29,15 +29,15 @@
 
 ```mermaid
 flowchart TB
-  X[Input embedding<br/>shape B, T, D] --> N1[LayerNorm 1]
-  N1 --> MHA[Multi head causal attention]
-  MHA --> R1[Add residual]
+  X[输入 embedding<br/>形状 B, T, D] --> N1[LayerNorm 1]
+  N1 --> MHA[多头 causal attention]
+  MHA --> R1[加残差]
   X --> R1
   R1 --> N2[LayerNorm 2]
-  N2 --> MLP[Position wise MLP<br/>D to 4D to D]
-  MLP --> R2[Add residual]
+  N2 --> MLP[逐位置 MLP<br/>D 到 4D 到 D]
+  MLP --> R2[加残差]
   R1 --> R2
-  R2 --> Y[Output, same shape]
+  R2 --> Y[输出，形状不变]
 ```
 
 这是 pre-LN 版本。LayerNorm 蹲在 residual 分支里，子层之前。residual 连接把没归一化过的信号直接往后送。
@@ -46,15 +46,15 @@ post-LN 版本则把 LayerNorm 挪到了 residual 加法之后。
 
 ```mermaid
 flowchart TB
-  X[Input] --> MHA[Multi head causal attention]
-  MHA --> R1[Add residual]
+  X[输入] --> MHA[多头 causal attention]
+  MHA --> R1[加残差]
   X --> R1
   R1 --> N1[LayerNorm 1]
-  N1 --> MLP[Position wise MLP]
-  MLP --> R2[Add residual]
+  N1 --> MLP[逐位置 MLP]
+  MLP --> R2[加残差]
   N1 --> R2
   R2 --> N2[LayerNorm 2]
-  N2 --> Y[Output]
+  N2 --> Y[输出]
 ```
 
 形状完全一样。训练行为不一样。post-LN 下，沿 residual 路径反传的梯度必须穿过 LayerNorm。深度 12、学习率 `3e-4` 时，那个梯度衰减得够快，需要靠 warmup 调度才能撑住。pre-LN 把 residual 路径留作未归一化，梯度可以干净地一路传到 embedding 层。这也正是为什么 GPT-2 之后的开源模型一律采用 pre-LN。

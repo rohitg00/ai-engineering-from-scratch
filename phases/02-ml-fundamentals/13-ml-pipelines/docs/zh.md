@@ -32,11 +32,11 @@
 
 ```mermaid
 flowchart LR
-    A[Raw Data] --> B[Impute Missing Values]
-    B --> C[Scale Numeric Features]
-    C --> D[Encode Categoricals]
-    D --> E[Train Model]
-    E --> F[Prediction]
+    A[原始数据] --> B[填补缺失值]
+    B --> C[缩放数值特征]
+    C --> D[编码类别特征]
+    D --> E[训练模型]
+    E --> F[预测]
 ```
 
 流水线保证：
@@ -226,13 +226,13 @@ def set_seed(seed=42):
 
 ```mermaid
 flowchart TD
-    A[Jupyter Notebook] --> B[Extract functions]
-    B --> C[Build Pipeline object]
-    C --> D[Add config file for hyperparameters]
-    D --> E[Add experiment tracking]
-    E --> F[Add data validation]
-    F --> G[Add tests]
-    G --> H[Package for deployment]
+    A[Jupyter Notebook] --> B[抽取函数]
+    B --> C[构建 Pipeline 对象]
+    C --> D[添加超参数配置文件]
+    D --> E[添加实验追踪]
+    E --> F[添加数据校验]
+    F --> G[添加测试]
+    G --> H[打包以便部署]
 
     style A fill:#fdd,stroke:#333
     style H fill:#dfd,stroke:#333

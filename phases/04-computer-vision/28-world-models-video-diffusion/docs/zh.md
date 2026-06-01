@@ -30,15 +30,15 @@
 
 ```mermaid
 flowchart LR
-    subgraph GEN["Pure video generation"]
-        G1["Text / image prompt"] --> G2["Video DiT"] --> G3["Video frames"]
+    subgraph GEN["纯视频生成"]
+        G1["文本 ／ 图像 prompt"] --> G2["视频 DiT"] --> G3["视频帧"]
     end
-    subgraph ACTION["Action-conditioned world model"]
-        A1["Past frames + action"] --> A2["Latent-action video DiT"] --> A3["Next frames"]
+    subgraph ACTION["动作条件世界模型"]
+        A1["过去帧 + 动作"] --> A2["潜动作视频 DiT"] --> A3["下一批帧"]
         A3 --> A1
     end
-    subgraph RL["World models for RL (DreamerV3)"]
-        R1["State + action"] --> R2["Latent transition model"] --> R3["Next latent + reward"]
+    subgraph RL["用于 RL 的世界模型（DreamerV3）"]
+        R1["状态 + 动作"] --> R2["潜空间转移模型"] --> R3["下一个 latent + 奖励"]
         R3 --> R1
     end
 

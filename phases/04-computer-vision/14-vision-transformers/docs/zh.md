@@ -30,13 +30,13 @@
 
 ```mermaid
 flowchart LR
-    IMG["Image<br/>(3, 224, 224)"] --> PATCH["Patch embedding<br/>conv 16x16 s=16<br/>-> (768, 14, 14)"]
-    PATCH --> FLAT["Flatten to<br/>(196, 768) tokens"]
-    FLAT --> CAT["Prepend<br/>[CLS] token"]
-    CAT --> POS["Add learned<br/>positional embed"]
-    POS --> ENC["N transformer<br/>encoder blocks"]
-    ENC --> CLS["Take [CLS]<br/>token output"]
-    CLS --> HEAD["MLP classifier"]
+    IMG["图像<br/>（3, 224, 224）"] --> PATCH["Patch embedding<br/>卷积 16x16 s=16<br/>-> （768, 14, 14）"]
+    PATCH --> FLAT["展平为<br/>（196, 768） token"]
+    FLAT --> CAT["前置<br/>[CLS] token"]
+    CAT --> POS["加可学习<br/>位置 embed"]
+    POS --> ENC["N 个 transformer<br/>编码器 block"]
+    ENC --> CLS["取 [CLS]<br/>token 输出"]
+    CLS --> HEAD["MLP 分类器"]
 
     style PATCH fill:#dbeafe,stroke:#2563eb
     style ENC fill:#fef3c7,stroke:#d97706

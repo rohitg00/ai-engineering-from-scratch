@@ -58,21 +58,21 @@ INT4:  [1 sign] [3 value]                   = 4  bits (16 levels total)
 
 ```mermaid
 graph LR
-    subgraph Formats["Number Format Landscape"]
+    subgraph Formats["数值格式全景"]
         direction TB
-        FP32["FP32\n32 bits\n4 bytes/param\nTraining gold standard"]
-        BF16["BF16\n16 bits\n2 bytes/param\nTraining default"]
-        FP16["FP16\n16 bits\n2 bytes/param\nInference baseline"]
-        FP8["FP8\n8 bits\n1 byte/param\n30-50% faster"]
-        INT8["INT8\n8 bits\n1 byte/param\n2x throughput"]
-        INT4["INT4\n4 bits\n0.5 bytes/param\n4x compression"]
+        FP32["FP32\n32 位\n4 字节/参数\n训练黄金标准"]
+        BF16["BF16\n16 位\n2 字节/参数\n训练默认值"]
+        FP16["FP16\n16 位\n2 字节/参数\n推理基线"]
+        FP8["FP8\n8 位\n1 字节/参数\n30-50% 更快"]
+        INT8["INT8\n8 位\n1 字节/参数\n2x 吞吐"]
+        INT4["INT4\n4 位\n0.5 字节/参数\n4x 压缩"]
     end
 
-    FP32 -->|"training"| BF16
-    BF16 -->|"inference"| FP16
-    FP16 -->|"H100 native"| FP8
-    FP16 -->|"server deploy"| INT8
-    FP16 -->|"edge/laptop"| INT4
+    FP32 -->|"训练"| BF16
+    BF16 -->|"推理"| FP16
+    FP16 -->|"H100 原生"| FP8
+    FP16 -->|"服务器部署"| INT8
+    FP16 -->|"边缘/笔记本"| INT4
 
     style FP32 fill:#1a1a2e,stroke:#0f3460,color:#fff
     style BF16 fill:#1a1a2e,stroke:#0f3460,color:#fff
@@ -123,17 +123,17 @@ quantized = clamp(round(tensor / scale), -128, 127)
 
 ```mermaid
 graph TD
-    subgraph Sensitivity["Quantization Sensitivity (Low to High)"]
+    subgraph Sensitivity["量化敏感度 (从低到高)"]
         direction LR
-        W["Weights\nGaussian, near zero\nINT4 works well"]
-        A["Activations\nWider range, outliers\nINT8 with care"]
-        KV["KV Cache\nErrors compound\nFP8 or INT8"]
-        ATT["Attention Logits\nSoftmax amplifies error\nKeep in FP16"]
+        W["权重\n高斯分布、接近零\nINT4 效果良好"]
+        A["激活值\n范围更宽、有离群值\n谨慎使用 INT8"]
+        KV["KV Cache\n误差累积\nFP8 或 INT8"]
+        ATT["Attention Logits\nSoftmax 放大误差\n保留为 FP16"]
     end
 
-    W -->|"safe"| A
-    A -->|"careful"| KV
-    KV -->|"dangerous"| ATT
+    W -->|"安全"| A
+    A -->|"谨慎"| KV
+    KV -->|"危险"| ATT
 
     style W fill:#1a1a2e,stroke:#51cf66,color:#fff
     style A fill:#1a1a2e,stroke:#ffa500,color:#fff
@@ -166,16 +166,16 @@ graph TD
 
 ```mermaid
 graph TD
-    subgraph Methods["Quantization Methods"]
+    subgraph Methods["量化方法"]
         direction TB
-        GPTQ_["GPTQ\nHessian-guided\nPer-layer optimization\nPopular on HuggingFace"]
-        AWQ_["AWQ\nActivation-aware\nSalient weight scaling\n1.5-2x faster than GPTQ"]
-        GGUF_["GGUF\nMixed precision\nCPU + Metal optimized\nllama.cpp ecosystem"]
+        GPTQ_["GPTQ\nHessian 引导\n逐层优化\n在 HuggingFace 上流行"]
+        AWQ_["AWQ\n激活感知\n显著权重缩放\n1.5-2x 更快 than GPTQ"]
+        GGUF_["GGUF\n混合精度\n针对 CPU 与 Metal 优化\nllama.cpp 生态"]
     end
 
-    subgraph Use["Best For"]
-        GPU["GPU inference\n(CUDA, ROCm)"]
-        EDGE["Edge / Laptop\n(CPU, Metal)"]
+    subgraph Use["最适合"]
+        GPU["GPU 推理\n(CUDA, ROCm)"]
+        EDGE["边缘 / 笔记本\n(CPU, Metal)"]
     end
 
     GPTQ_ --> GPU

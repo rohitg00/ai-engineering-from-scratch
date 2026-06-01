@@ -28,18 +28,18 @@
 
 ```mermaid
 flowchart LR
-    A[raw corpus text] --> B[tokenizer.encode]
-    B --> C[flat list of ids]
-    C --> D[sliding window slicer]
+    A[原始语料文本] --> B[tokenizer.encode]
+    B --> C[扁平的 id 列表]
+    C --> D[滑动窗口切片器]
     D --> E[(id_window_0)]
     D --> F[(id_window_1)]
     D --> G[(id_window_n)]
     E --> H[PyTorch Dataset]
     F --> H
     G --> H
-    H --> I[DataLoader with seeded shuffle]
-    I --> J[batches of B x T+1 ids]
-    J --> K[split into input and target]
+    H --> I[带固定种子 shuffle 的 DataLoader]
+    I --> J[B x T+1 个 id 的 batch]
+    J --> K[拆成 input 和 target]
 ```
 
 切片器永远不会跨过语料边界。如果最后一个窗口凑不齐 `T+1` 个 id，就直接丢掉。当然，用 `<|pad|>` 把尾巴 padding 起来也是合法做法，但那会把 loss mask 弄复杂。本课选择直接丢。

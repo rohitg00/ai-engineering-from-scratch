@@ -30,15 +30,15 @@
 
 ```mermaid
 flowchart LR
-    REQ["HTTP request<br/>+ image bytes"] --> LOAD["Decode<br/>+ preprocess"]
-    LOAD --> DET["Detector<br/>(YOLO / Mask R-CNN)"]
-    DET --> CROP["Crop + resize<br/>each detection"]
-    CROP --> CLS["Classifier<br/>(ConvNeXt-Tiny)"]
-    CLS --> AGG["Aggregate<br/>detections + classes"]
-    AGG --> SCHEMA["Pydantic<br/>validation"]
-    SCHEMA --> RESP["JSON response"]
+    REQ["HTTP 请求<br/>+ 图像字节"] --> LOAD["解码<br/>+ 预处理"]
+    LOAD --> DET["检测器<br/>（YOLO ／ Mask R-CNN）"]
+    DET --> CROP["对每个检测<br/>裁剪 + 缩放"]
+    CROP --> CLS["分类器<br/>（ConvNeXt-Tiny）"]
+    CLS --> AGG["聚合<br/>检测 + 类别"]
+    AGG --> SCHEMA["Pydantic<br/>校验"]
+    SCHEMA --> RESP["JSON 响应"]
 
-    REQ -.->|error| RESP
+    REQ -.->|出错| RESP
 
     style DET fill:#fef3c7,stroke:#d97706
     style CLS fill:#dbeafe,stroke:#2563eb

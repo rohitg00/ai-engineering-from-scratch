@@ -84,15 +84,15 @@ Google 对「我该用多大的 kernel？」的回答是：全都要，并联。
 
 ```mermaid
 flowchart LR
-    IN["Input feature map"] --> A["1x1 conv"]
-    IN --> B["3x3 conv"]
-    IN --> C["5x5 conv"]
+    IN["输入特征图"] --> A["1x1 卷积"]
+    IN --> B["3x3 卷积"]
+    IN --> C["5x5 卷积"]
     IN --> D["3x3 max pool"]
-    A --> CAT["Concatenate<br/>along channel axis"]
+    A --> CAT["沿通道轴<br/>拼接"]
     B --> CAT
     C --> CAT
     D --> CAT
-    CAT --> OUT["Next block"]
+    CAT --> OUT["下一个 block"]
 
     style IN fill:#dbeafe,stroke:#2563eb
     style CAT fill:#fef3c7,stroke:#d97706
@@ -131,8 +131,8 @@ residual block:   y = F(x) + x
 
 ```mermaid
 flowchart LR
-    X["Input x"] --> F["F(x)<br/>conv + BN + ReLU<br/>conv + BN"]
-    X -.->|identity skip| PLUS(["+"])
+    X["输入 x"] --> F["F（x）<br/>conv + BN + ReLU<br/>conv + BN"]
+    X -.->|恒等 skip| PLUS(["+"])
     F --> PLUS
     PLUS --> RELU["ReLU"]
     RELU --> OUT["y"]

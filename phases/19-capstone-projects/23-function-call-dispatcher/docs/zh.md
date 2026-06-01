@@ -23,17 +23,17 @@
 ```mermaid
 flowchart TD
     loop[harness loop]
-    disp[dispatcher]
+    disp[派发器]
     reg[tool registry]
     handler[handler]
     loop --> disp
-    disp -->|get name| reg
-    disp -->|validate args| reg
+    disp -->|取 name| reg
+    disp -->|校验 args| reg
     disp -->|asyncio.wait_for handler args timeout| handler
-    handler -->|success| disp
-    handler -->|TimeoutError -> retry or fail| disp
-    handler -->|Exception -> map to error code| disp
-    disp -->|Ok result or DispatchError| loop
+    handler -->|成功| disp
+    handler -->|TimeoutError → 重试或失败| disp
+    handler -->|Exception → 映射为错误码| disp
+    disp -->|Ok 结果或 DispatchError| loop
 ```
 
 派发器是唯一知道计时器、重试和幂等性这些事的层。Loop 不知道，registry 不知道，handler 也不知道。这种隔离正是它的意义所在。
@@ -90,34 +90,34 @@ Harness loop 把 `kind` 映射到下一个状态。`schema` 和 `not_found` 走 
 
 ```mermaid
 flowchart TD
-    start([caller: dispatch name, args, opts])
-    validate[registry.validate name, args]
-    schema_err[DispatchError kind=schema]
-    idem_check{idempotency cache?}
-    in_flight[await existing future]
-    cached[return cached result]
-    attempt[asyncio.wait_for handler args, timeout]
-    success[cache + return result]
-    timeout_branch{TimeoutError + idempotent?}
-    retry[retry with backoff]
+    start([调用方 dispatch name、args、opts])
+    validate[registry.validate name、args]
+    schema_err[DispatchError kind 为 schema]
+    idem_check{idempotency 缓存命中？}
+    in_flight[await 进行中的 future]
+    cached[返回缓存结果]
+    attempt[asyncio.wait_for handler args、timeout]
+    success[缓存并返回结果]
+    timeout_branch{TimeoutError 且幂等？}
+    retry[带退避重试]
     fail[DispatchError]
-    transient_branch{TransientError?}
-    other[map Exception to kind, no retry]
+    transient_branch{TransientError？}
+    other[将 Exception 映射为 kind 不重试]
     exhausted[DispatchError]
 
     start --> validate
-    validate -->|errors| schema_err
+    validate -->|有错误| schema_err
     validate -->|ok| idem_check
-    idem_check -->|hit in flight| in_flight
-    idem_check -->|hit recent| cached
-    idem_check -->|miss| attempt
+    idem_check -->|命中进行中| in_flight
+    idem_check -->|命中最近| cached
+    idem_check -->|未命中| attempt
     attempt --> success
     attempt --> timeout_branch
-    timeout_branch -->|yes| retry
-    timeout_branch -->|no| fail
+    timeout_branch -->|是| retry
+    timeout_branch -->|否| fail
     attempt --> transient_branch
-    transient_branch -->|yes, attempts left| retry
-    transient_branch -->|exhausted| exhausted
+    transient_branch -->|是 还有尝试次数| retry
+    transient_branch -->|已耗尽| exhausted
     attempt --> other
     retry --> attempt
 ```

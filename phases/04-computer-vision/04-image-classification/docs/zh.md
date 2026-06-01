@@ -30,16 +30,16 @@
 
 ```mermaid
 flowchart LR
-    A["Dataset<br/>(images + labels)"] --> B["Augment<br/>(random transforms)"]
-    B --> C["Normalise<br/>(mean/std)"]
-    C --> D["DataLoader<br/>(batch + shuffle)"]
-    D --> E["Model<br/>(CNN)"]
-    E --> F["Logits<br/>(N, C)"]
-    F --> G["Cross-entropy loss"]
-    F --> H["Argmax<br/>at eval"]
-    G --> I["Backward"]
-    I --> J["Optimizer step"]
-    J --> K["Scheduler step"]
+    A["数据集<br/>（图像 + 标签）"] --> B["数据增广<br/>（随机变换）"]
+    B --> C["归一化<br/>（均值／标准差）"]
+    C --> D["DataLoader<br/>（batch + 打乱）"]
+    D --> E["模型<br/>（CNN）"]
+    E --> F["Logits<br/>（N, C）"]
+    F --> G["交叉熵 loss"]
+    F --> H["Argmax<br/>评估时"]
+    G --> I["反向传播"]
+    I --> J["optimizer step"]
+    J --> K["scheduler step"]
     K --> E
 
     style A fill:#dbeafe,stroke:#2563eb

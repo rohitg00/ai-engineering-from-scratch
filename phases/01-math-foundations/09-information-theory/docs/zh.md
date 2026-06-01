@@ -147,11 +147,11 @@ H(X,Y) <= H(X) + H(Y)
 
 ```mermaid
 graph TD
-    subgraph "Information Venn Diagram"
+    subgraph "信息论韦恩图"
         direction LR
         HX["H(X)"]
         HY["H(Y)"]
-        MI["I(X;Y)<br/>Mutual<br/>Information"]
+        MI["I(X;Y)<br/>互信息<br/>Mutual Information"]
         HXgY["H(X|Y)<br/>= H(X) - I(X;Y)"]
         HYgX["H(Y|X)<br/>= H(Y) - I(X;Y)"]
         HXY["H(X,Y) = H(X) + H(Y) - I(X;Y)"]

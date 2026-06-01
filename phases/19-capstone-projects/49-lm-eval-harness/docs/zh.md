@@ -28,12 +28,12 @@
 
 ```mermaid
 flowchart TD
-  tasks[task JSONLs: prompt, targets, metric, extras] --> loader[load_all_tasks]
+  tasks[task JSONL，含 prompt、targets、metric、extras] --> loader[load_all_tasks]
   loader --> runner[run_leaderboard]
   runner --> adapter[ModelAdapter.generate batch]
-  adapter --> metrics[METRIC_FNS dispatch by name]
-  metrics --> scores[per example score]
-  scores --> board[Leaderboard: per task + overall]
+  adapter --> metrics[按名称分发 METRIC_FNS]
+  metrics --> scores[逐样本分数]
+  scores --> board[Leaderboard，逐任务 + 总体]
   board --> out[leaderboard.json]
 ```
 
@@ -98,11 +98,11 @@ Adapter 是这套架构的接缝。本节自带 `ToyAdapter`——一个确定�
 
 ```mermaid
 flowchart LR
-  examples[N examples] --> batches[B-sized batches]
+  examples[N 个样本] --> batches[大小为 B 的 batch]
   batches --> adapter[adapter.generate]
-  adapter --> per[per example score 0..1]
-  per --> avg[task score]
-  avg --> over[overall = mean of task scores]
+  adapter --> per[逐样本分数 0..1]
+  per --> avg[任务分数]
+  avg --> over[总体 = 各任务分数的均值]
 ```
 
 ## 动手实现（Build It）

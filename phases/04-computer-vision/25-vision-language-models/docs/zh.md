@@ -30,16 +30,16 @@ CLIP（Phase 4 Lesson 18）给了你一个图像和文本共享的 embedding 空
 
 ```mermaid
 flowchart LR
-    IMG["Image<br/>(H x W x 3)"] --> ViT["Vision encoder<br/>(ViT, CLIP-L,<br/>SigLIP, DINOv3)"]
-    ViT --> FEATS["Image tokens<br/>(N, d_vit)"]
-    FEATS --> PROJ["Projector<br/>(2-4 layer MLP<br/>or Q-former)"]
-    PROJ --> VTOK["Image tokens<br/>in LLM space<br/>(N, d_llm)"]
-    TXT["Text prompt"] --> TOK["LLM tokenizer"]
-    TOK --> TTOK["Text tokens<br/>(M, d_llm)"]
-    VTOK --> CONCAT["Interleave<br/>or concat"]
+    IMG["图像<br/>（H x W x 3）"] --> ViT["视觉编码器<br/>（ViT、CLIP-L、<br/>SigLIP、DINOv3）"]
+    ViT --> FEATS["图像 token<br/>（N, d_vit）"]
+    FEATS --> PROJ["投影器<br/>（2 到 4 层 MLP<br/>或 Q-former）"]
+    PROJ --> VTOK["LLM 空间中的<br/>图像 token<br/>（N, d_llm）"]
+    TXT["文本 prompt"] --> TOK["LLM tokenizer"]
+    TOK --> TTOK["文本 token<br/>（M, d_llm）"]
+    VTOK --> CONCAT["交错<br/>或拼接"]
     TTOK --> CONCAT
-    CONCAT --> LLM["Decoder LLM<br/>(Qwen3, LLaMA, etc.)"]
-    LLM --> OUT["Text answer"]
+    CONCAT --> LLM["解码器 LLM<br/>（Qwen3、LLaMA 等）"]
+    LLM --> OUT["文本回答"]
 
     style ViT fill:#dbeafe,stroke:#2563eb
     style PROJ fill:#fef3c7,stroke:#d97706

@@ -41,12 +41,12 @@
 
 ```mermaid
 flowchart LR
-    subgraph IID["Standard ML (i.i.d.)"]
+    subgraph IID["标准 ML（i.i.d.）"]
         direction TB
-        S1[Sample 1] ~~~ S2[Sample 2]
-        S2 ~~~ S3[Sample 3]
+        S1[样本 1] ~~~ S2[样本 2]
+        S2 ~~~ S3[样本 3]
     end
-    subgraph TS["Time Series (not i.i.d.)"]
+    subgraph TS["时间序列（非 i.i.d.）"]
         direction LR
         T1[t=1] --> T2[t=2]
         T2 --> T3[t=3]
@@ -70,13 +70,13 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A[Observed Time Series] --> B[Trend]
-    A --> C[Seasonality]
-    A --> D[Residual/Noise]
+    A[观测到的时间序列] --> B[趋势]
+    A --> C[季节性]
+    A --> D[残差/噪声]
 
-    B --> E[Long-term direction: up, down, flat]
-    C --> F[Repeating patterns: daily, weekly, yearly]
-    D --> G[Random variation after removing trend and seasonality]
+    B --> E[长期方向 上升、下降、持平]
+    C --> F[重复出现的规律 每日、每周、每年]
+    D --> G[去除趋势和季节性后的随机波动]
 ```
 
 - **Trend（趋势）**：长期方向。营收每年增长 10%。全球气温在升高。
@@ -152,12 +152,12 @@ Autocorrelation（自相关）衡量的是时刻 t 的值与时刻 t-k（往前 
 
 ```mermaid
 flowchart TD
-    subgraph WRONG["Random Split (WRONG)"]
+    subgraph WRONG["随机切分（错误）"]
         direction LR
-        W1[Jan] --> W2[Mar]
-        W2 --> W3[Feb]
-        W3 --> W4[May]
-        W4 --> W5[Apr]
+        W1[1月] --> W2[3月]
+        W2 --> W3[2月]
+        W3 --> W4[5月]
+        W4 --> W5[4月]
         style W1 fill:#fdd
         style W3 fill:#fdd
         style W5 fill:#fdd
@@ -165,11 +165,11 @@ flowchart TD
         style W4 fill:#dfd
     end
 
-    subgraph RIGHT["Walk-Forward (CORRECT)"]
+    subgraph RIGHT["向前滚动（正确）"]
         direction LR
-        R1["Train: Jan-Mar"] --> R2["Test: Apr"]
-        R3["Train: Jan-Apr"] --> R4["Test: May"]
-        R5["Train: Jan-May"] --> R6["Test: Jun"]
+        R1["训练 1月-3月"] --> R2["测试 4月"]
+        R3["训练 1月-4月"] --> R4["测试 5月"]
+        R5["训练 1月-5月"] --> R6["测试 6月"]
         style R1 fill:#dfd
         style R2 fill:#fdd
         style R3 fill:#dfd

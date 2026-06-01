@@ -30,9 +30,9 @@ CLIP（Radford 等，OpenAI 2021）证明了：在从网上抓取的 4 亿（图
 
 ```mermaid
 flowchart LR
-    IMG["Image"] --> IENC["Image encoder<br/>(ViT-L/14)"] --> IEMB["Image embedding<br/>(1024,)"]
-    TXT["Caption"] --> TENC["Text encoder<br/>(transformer)"] --> TEMB["Text embedding<br/>(1024,)"]
-    IEMB --> SIM["Cosine similarity"]
+    IMG["图像"] --> IENC["图像编码器<br/>（ViT-L/14）"] --> IEMB["图像 embedding<br/>（1024,）"]
+    TXT["文字描述"] --> TENC["文本编码器<br/>（transformer）"] --> TEMB["文本 embedding<br/>（1024,）"]
+    IEMB --> SIM["余弦相似度"]
     TEMB --> SIM
 
     style IENC fill:#dbeafe,stroke:#2563eb

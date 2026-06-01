@@ -30,14 +30,14 @@ embedding 阶段的输入是一批形状为 `(B, T)` 的 token id。输出是形
 
 ```mermaid
 flowchart LR
-    A["(B, T) token ids"] --> B[token embedding lookup]
-    B --> C["(B, T, D) token vectors"]
-    A --> D[position broadcast 0..T-1]
-    D --> E[positional embedding lookup]
-    E --> F["(B, T, D) position vectors"]
-    C --> G[elementwise sum]
+    A["(B, T) token ids"] --> B[token embedding 查表]
+    B --> C["(B, T, D) token 向量"]
+    A --> D[位置广播 0..T-1]
+    D --> E[位置 embedding 查表]
+    E --> F["(B, T, D) 位置向量"]
+    C --> G[逐元素相加]
     F --> G
-    G --> H["(B, T, D) input to attention"]
+    G --> H["(B, T, D) 输入到 attention"]
 ```
 
 组合方式是相加，不是拼接。相加能让 `D` 在整张网络里始终保持不变，并把"在某一层、某个特征维度上，是 token 含义占主导还是位置占主导"这个决策，交给模型自己按特征逐维去判断。

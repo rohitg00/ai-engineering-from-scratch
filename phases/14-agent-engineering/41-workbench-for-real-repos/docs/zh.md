@@ -26,9 +26,9 @@
 
 ```mermaid
 flowchart TD
-  Task[Task: validate /signup and add tests] --> A[Prompt-only run]
-  Task --> B[Workbench-guided run]
-  A --> M[Measure: 5 outcomes]
+  Task[任务：验证 /signup 并补测试] --> A[仅 prompt 运行]
+  Task --> B[workbench 引导运行]
+  A --> M[度量：5 项产出]
   B --> M
   M --> Report[before-after-report.md]
 ```

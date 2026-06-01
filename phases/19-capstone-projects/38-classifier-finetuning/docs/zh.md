@@ -31,11 +31,11 @@
 
 ```mermaid
 flowchart LR
-  T[Tokens] --> E[Token + position<br/>embeddings]
-  E --> B[Transformer body<br/>N blocks]
-  B --> H1[Old: LM head<br/>vocab projection]
-  B --> H2[New: classifier head<br/>linear to 2 logits]
-  H2 --> L[Cross-entropy loss<br/>vs label]
+  T[Tokens] --> E[Token + position<br/>embedding]
+  E --> B[Transformer body<br/>N 个 block]
+  B --> H1[旧：LM head<br/>词表投影]
+  B --> H2[新：分类头<br/>线性映射到 2 个 logits]
+  H2 --> L[交叉熵 loss<br/>对照 label]
 ```
 
 模型是一个函数 `f_theta(tokens) -> hidden_states`。头是一个函数 `g_phi(hidden) -> logits`。换头意味着保留 `theta`、替换 `g_phi`。body 的参数是昂贵的那部分。头只是一个线性层。
@@ -61,11 +61,11 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-  H[Hidden states<br/>B x T x D] --> M[Mask out pads]
-  M --> S[Sum across T]
-  S --> N[Divide by<br/>non-pad count]
-  N --> P[Pooled<br/>B x D]
-  P --> C[Classifier head<br/>D x 2]
+  H[Hidden states<br/>B x T x D] --> M[mask 掉 pad]
+  M --> S[在 T 上求和]
+  S --> N[除以<br/>非 pad 数量]
+  N --> P[池化后<br/>B x D]
+  P --> C[分类头<br/>D x 2]
 ```
 
 ## 数据（The Data）
@@ -95,15 +95,15 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-  Toks[(SMS fixture<br/>800 labelled)] --> Tok[ByteTokenizer<br/>vocab 260]
+  Toks[(SMS fixture<br/>800 条带标签)] --> Tok[ByteTokenizer<br/>vocab 260]
   Tok --> DS[ClassificationDataset<br/>pad + mask]
-  DS --> DL[DataLoader<br/>batched]
-  DL --> M[Classifier<br/>body + mean-pool + head]
-  M --> L[Cross-entropy loss]
-  L --> O[Adam optimiser]
-  O -->|head-only| M
-  O -->|full FT| M
-  M --> E[Evaluator<br/>P / R / F1]
+  DS --> DL[DataLoader<br/>已分 batch]
+  DL --> M[分类器<br/>body + 均值池化 + head]
+  M --> L[交叉熵 loss]
+  L --> O[Adam optimizer]
+  O -->|仅 head| M
+  O -->|全量 FT| M
+  M --> E[评估器<br/>P / R / F1]
 ```
 
 body 是一个刻意做小的 transformer：vocab 260，hidden 64，4 个 head，2 个 block，最大序列长度 32。它小到能在 CPU 上九十秒内把两种范式都训到收敛。课程里它没有真正预训练；取而代之的是 `pretrain_quick` 辅助函数在同一 fixture 的文本上做五个 epoch 的 LM 训练，给 body 一个非平凡的起点。这样课程是自包含的。

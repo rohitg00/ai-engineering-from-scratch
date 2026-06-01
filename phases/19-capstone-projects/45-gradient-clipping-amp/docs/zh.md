@@ -28,17 +28,17 @@
 
 ```mermaid
 flowchart TD
-  Forward[Forward in autocast] --> Loss[Loss in FP32]
+  Forward[在 autocast 中前向] --> Loss[FP32 下的 Loss]
   Loss --> Scale[scaler.scale loss]
-  Scale --> Backward[Backward pass FP16 grads]
+  Scale --> Backward[反向 FP16 梯度]
   Backward --> Unscale[scaler.unscale optimizer]
-  Unscale --> NormCheck[Compute global L2 norm]
+  Unscale --> NormCheck[计算全局 L2 范数]
   NormCheck --> Detect{NaN or Inf?}
-  Detect -- yes --> Skip[Skip step + log + scaler.update halves]
-  Detect -- no --> Clip[Clip grads to max_norm]
+  Detect -- yes --> Skip[跳过 step + 记录 + scaler.update 减半]
+  Detect -- no --> Clip[把梯度裁剪到 max_norm]
   Clip --> StepOpt[scaler.step optimizer]
-  StepOpt --> Update[scaler.update doubles or halves]
-  Update --> NextStep[Next step]
+  StepOpt --> Update[scaler.update 翻倍或减半]
+  Update --> NextStep[下一步]
   Skip --> NextStep
 ```
 

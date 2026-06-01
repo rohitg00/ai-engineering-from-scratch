@@ -30,16 +30,16 @@
 
 ```mermaid
 graph LR
-    subgraph Before["Standard Basis"]
-        e1["e1 = [1, 0] (along x)"]
-        e2["e2 = [0, 1] (along y)"]
+    subgraph Before["标准基"]
+        e1["e1 = [1, 0]（沿 x 轴）"]
+        e2["e2 = [0, 1]（沿 y 轴）"]
     end
-    subgraph Transform["Matrix M"]
-        M["M = columns are new basis vectors"]
+    subgraph Transform["矩阵 M"]
+        M["M = 各列是新的基向量"]
     end
-    subgraph After["After Transformation M"]
-        e1p["e1' = new x-basis"]
-        e2p["e2' = new y-basis"]
+    subgraph After["经过变换 M 之后"]
+        e1p["e1' = 新的 x 基"]
+        e2p["e2' = 新的 y 基"]
     end
     e1 --> M --> e1p
     e2 --> M --> e2p
@@ -51,14 +51,14 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph Before["Before Rotation"]
+    subgraph Before["旋转前"]
         A["A(2, 1)"]
         B["B(0, 2)"]
     end
-    subgraph Rot["Rotate 45 degrees"]
+    subgraph Rot["旋转 45 度"]
         R["R(θ) = [[cos θ, -sin θ], [sin θ, cos θ]]"]
     end
-    subgraph After["After Rotation"]
+    subgraph After["旋转后"]
         Ap["A'(0.71, 2.12)"]
         Bp["B'(-1.41, 1.41)"]
     end
@@ -88,14 +88,14 @@ Ry(theta) = |  cos  0  sin |     Rotate around y-axis
 
 ```mermaid
 graph LR
-    subgraph Before["Before Scaling"]
+    subgraph Before["缩放前"]
         A["A(2, 1)"]
         B["B(0, 2)"]
     end
-    subgraph Scale["Scale sx=2, sy=0.5"]
+    subgraph Scale["缩放 sx=2, sy=0.5"]
         S["S = [[2, 0], [0, 0.5]]"]
     end
-    subgraph After["After Scaling"]
+    subgraph After["缩放后"]
         Ap["A'(4, 0.5)"]
         Bp["B'(0, 1)"]
     end
@@ -109,16 +109,16 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph Before["Before Shear"]
+    subgraph Before["剪切前"]
         A["A(1, 0)"]
         B["B(0, 1)"]
     end
-    subgraph Shear["Shear in x, k=1"]
+    subgraph Shear["沿 x 剪切, k=1"]
         Sh["Shx = [[1, k], [0, 1]]"]
     end
-    subgraph After["After Shear"]
-        Ap["A(1, 0) unchanged"]
-        Bp["B'(1, 1) shifted"]
+    subgraph After["剪切后"]
+        Ap["A(1, 0) 不变"]
+        Bp["B'(1, 1) 已偏移"]
     end
     A --> Sh --> Ap
     B --> Sh --> Bp
@@ -134,13 +134,13 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph Before["Before Reflection"]
+    subgraph Before["反射前"]
         A["A(2, 1)"]
     end
-    subgraph Reflect["Reflect across y-axis"]
+    subgraph Reflect["沿 y 轴反射"]
         R["[[-1, 0], [0, 1]]"]
     end
-    subgraph After["After Reflection"]
+    subgraph After["反射后"]
         Ap["A'(-2, 1)"]
     end
     A --> R --> Ap
@@ -156,8 +156,8 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph Path1["Rotate 90 then Scale (2, 0.5)"]
-        P1["(1, 0)"] -->|"Rotate 90"| P2["(0, 1)"] -->|"Scale"| P3["(0, 0.5)"]
+    subgraph Path1["先旋转 90 再缩放 (2, 0.5)"]
+        P1["(1, 0)"] -->|"旋转 90"| P2["(0, 1)"] -->|"缩放"| P3["(0, 0.5)"]
     end
 ```
 
@@ -165,8 +165,8 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph Path2["Scale (2, 0.5) then Rotate 90"]
-        Q1["(1, 0)"] -->|"Scale"| Q2["(2, 0)"] -->|"Rotate 90"| Q3["(0, 2)"]
+    subgraph Path2["先缩放 (2, 0.5) 再旋转 90"]
+        Q1["(1, 0)"] -->|"缩放"| Q2["(2, 0)"] -->|"旋转 90"| Q3["(0, 2)"]
     end
 ```
 

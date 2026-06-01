@@ -39,11 +39,11 @@ The product is the Sony WH-1000XM5 headphones, which cost $348.00 and are curren
 
 ```mermaid
 graph LR
-    subgraph Spectrum["Structured Output Spectrum"]
+    subgraph Spectrum["Structured 输出 Spectrum"]
         direction LR
-        A["Prompt-based\n'Return JSON'\n~90% valid"] --> B["JSON Mode\nGuaranteed valid JSON\nNo schema guarantee"]
-        B --> C["Schema Mode\nJSON + matches schema\nGuaranteed compliance"]
-        C --> D["Constrained Decoding\nToken-level enforcement\n100% compliance"]
+        A["基于 Prompt\n'返回 JSON'\n~90% 有效"] --> B["JSON 模式\nGuaranteed 有效 JSON\n不保证 schema"]
+        B --> C["Schema 模式\nJSON 且符合 schema\n保证合规"]
+        C --> D["约束解码\ntoken 级强制\n100% 合规"]
     end
 
     style A fill:#1a1a2e,stroke:#ff6b6b,color:#fff
@@ -106,11 +106,11 @@ class Product(BaseModel):
 
 ```mermaid
 graph TD
-    subgraph ToolUse["Tool Use Flow"]
-        U["User: Extract product info\nfrom this review text"] --> M["Model processes input"]
-        M --> TC["Tool Call:\nextract_product(\n  product='Sony WH-1000XM5',\n  price=348.00,\n  in_stock=true\n)"]
-        TC --> V["Validate against\nfunction schema"]
-        V --> R["Structured Result:\n{product, price, in_stock}"]
+    subgraph ToolUse["Tool Use 流程"]
+        U["User: 抽取 product info\n来自这段评论文本"] --> M["模型处理输入"]
+        M --> TC["Tool Call：\nextract_product(\n  product='Sony WH-1000XM5',\n  price=348.00,\n  in_stock=true\n)"]
+        TC --> V["对照校验\n函数 schema"]
+        V --> R["结构化结果：\n{product, price, in_stock}"]
     end
 
     style U fill:#1a1a2e,stroke:#0f3460,color:#fff
