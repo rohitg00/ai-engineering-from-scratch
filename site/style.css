@@ -352,6 +352,12 @@ p.dropcap::first-letter {
   color: var(--blueprint);
 }
 
+.lang-toggle {
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
 .btn {
   font-family: var(--font-mono);
   font-size: 0.8rem;

@@ -20,6 +20,20 @@
     initSmoothScroll();
     initFadeObserver();
     initScrollExplode();
+
+    if (window.AIEFS_I18N) {
+      AIEFS_I18N.initLangToggle(function () {
+        renderPhases();
+        // If the phase modal is currently open, re-render its contents too.
+        if (currentPhaseIdx >= 0 && PHASES[currentPhaseIdx]) {
+          var op = PHASES[currentPhaseIdx];
+          document.getElementById('modalPhaseNum').textContent = AIEFS_I18N.t('modal.phasePrefix') + ' ' + String(op.id).padStart(2, '0');
+          document.getElementById('modalTitle').textContent = AIEFS_I18N.L(op, 'name');
+          document.getElementById('modalDesc').textContent = AIEFS_I18N.L(op, 'desc');
+          renderModalLessons(op);
+        }
+      });
+    }
   });
 
   function updateThemeIcon() {
@@ -126,7 +140,7 @@
       var num = String(p.id).padStart(2, '0');
       html += '<div class="toc-row" data-phase="' + i + '">';
       html += '<span class="toc-num">' + roman + '.</span>';
-      html += '<div><span class="toc-status ' + statusClass + '"></span><span class="toc-name">' + escapeHtml(p.name) + '</span></div>';
+      html += '<div><span class="toc-status ' + statusClass + '"></span><span class="toc-name">' + escapeHtml(AIEFS_I18N.L(p, 'name')) + '</span></div>';
       html += '<span class="toc-meta">' + done + ' / ' + total + '</span>';
       html += '<span class="toc-meta">' + num + '</span>';
       html += '</div>';
@@ -195,7 +209,7 @@
     if (resetBtn) {
       resetBtn.addEventListener('click', function () {
         if (!window.AIFSProgress) return;
-        var ok = window.confirm('Clear all your local progress (quiz answers and completed lessons)? This cannot be undone.');
+        var ok = window.confirm(AIEFS_I18N.t('modal.confirmReset'));
         if (!ok) return;
         window.AIFSProgress.reset();
       });
@@ -209,9 +223,9 @@
     if (!p) return;
     currentPhaseIdx = idx;
 
-    document.getElementById('modalPhaseNum').textContent = 'PHASE ' + String(p.id).padStart(2, '0');
-    document.getElementById('modalTitle').textContent = p.name;
-    document.getElementById('modalDesc').textContent = p.desc;
+    document.getElementById('modalPhaseNum').textContent = AIEFS_I18N.t('modal.phasePrefix') + ' ' + String(p.id).padStart(2, '0');
+    document.getElementById('modalTitle').textContent = AIEFS_I18N.L(p, 'name');
+    document.getElementById('modalDesc').textContent = AIEFS_I18N.L(p, 'desc');
 
     renderModalLessons(p);
 
@@ -238,22 +252,23 @@
       if (userComplete) statusClass = 'complete';
 
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
-      html += '<span class="modal-lesson-status ' + statusClass + '"' + (userComplete ? ' title="You completed this lesson"' : '') + '></span>';
+      html += '<span class="modal-lesson-status ' + statusClass + '"' + (userComplete ? ' title="' + escapeHtml(AIEFS_I18N.t('lesson.youCompleted')) + '"' : '') + '></span>';
       if (l.url) {
-        html += '<a href="' + l.url + '" target="_blank" rel="noopener">' + escapeHtml(l.name) + '</a>';
+        html += '<a href="' + l.url + '" target="_blank" rel="noopener">' + escapeHtml(AIEFS_I18N.L(l, 'name')) + '</a>';
       } else {
-        html += '<a>' + escapeHtml(l.name) + '</a>';
+        html += '<a>' + escapeHtml(AIEFS_I18N.L(l, 'name')) + '</a>';
       }
-      html += '<span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Combines: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span>';
+      html += '<span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="' + escapeHtml(AIEFS_I18N.t('modal.combinesPrefix') + ' ' + l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span>';
       html += '<span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span>';
 
       var actionHtml = '';
       if ((l.status === 'complete' || userComplete) && lessonPath) {
-        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + (userComplete ? 'Review' : 'Read') + '</a>';
+        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + (userComplete ? AIEFS_I18N.t('lesson.review') : AIEFS_I18N.t('lesson.read')) + '</a>';
       }
       var toggleHtml = '';
       if (hasProgress && lessonPath) {
-        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '" aria-label="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '">' + (userComplete ? '✓' : '+') + '</button>';
+        var toggleTitle = userComplete ? AIEFS_I18N.t('lesson.markNotDone') : AIEFS_I18N.t('lesson.markComplete');
+        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + escapeHtml(toggleTitle) + '" aria-label="' + escapeHtml(toggleTitle) + '">' + (userComplete ? '✓' : '+') + '</button>';
       }
       html += (actionHtml || '<span class="modal-lesson-read-placeholder" aria-hidden="true"></span>') + toggleHtml;
       html += '</div>';
@@ -283,7 +298,7 @@
       var pct = Math.round((userDone / p.lessons.length) * 100);
       if (progEl) {
         progEl.style.display = '';
-        progEl.innerHTML = '<span class="modal-progress-count">' + userDone + ' / ' + p.lessons.length + '</span> <span class="modal-progress-label">completed</span> <span class="modal-progress-pct">' + pct + '%</span>';
+        progEl.innerHTML = '<span class="modal-progress-count">' + userDone + ' / ' + p.lessons.length + '</span> <span class="modal-progress-label">' + AIEFS_I18N.t('modal.completed') + '</span> <span class="modal-progress-pct">' + pct + '%</span>';
       }
       if (barEl && barFill) {
         barEl.style.display = '';
@@ -308,6 +323,7 @@
   function closeModal() {
     document.getElementById('modalOverlay').classList.remove('open');
     document.body.style.overflow = '';
+    currentPhaseIdx = -1;  // forget selection so lang-switch / progress repaints skip the hidden modal
   }
 
   function initCopyButton() {

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "logreg-pre-1",
+    "stage": "pre",
+    "question": "sigmoid 函数输出的取值范围是什么？",
+    "options": [
+      "负无穷到正无穷",
+      "0 到 1（开区间，不含端点）",
+      "-1 到 1",
+      "0 到正无穷"
+    ],
+    "correct": 1,
+    "explanation": "sigmoid 函数 1/(1+e^(-z)) 输出严格介于 0 和 1 之间的值，可被解释为概率。"
+  },
+  {
+    "id": "logreg-pre-2",
+    "stage": "pre",
+    "question": "为什么 logistic regression（逻辑回归）虽然用于分类，却仍被称为“regression（回归）”？",
+    "options": [
+      "它预测连续值，然后再进行四舍五入",
+      "这个名字来自它所使用的 logistic（sigmoid）函数，而非回归分析",
+      "它最初是为回归设计的，后来才被改用于分类",
+      "它像线性回归一样最小化均方误差"
+    ],
+    "correct": 1,
+    "explanation": "这个名字来自 logistic 函数（sigmoid）。尽管名字里有 regression，逻辑回归其实是一种输出类别概率的分类算法。"
+  },
+  {
+    "id": "logreg-post-1",
+    "stage": "post",
+    "question": "在逻辑回归中，为什么使用 binary cross-entropy（二元交叉熵）而不是 MSE？",
+    "options": [
+      "交叉熵计算更快",
+      "MSE 与 sigmoid 结合会产生带有局部极小值的非凸代价曲面，而交叉熵是凸的",
+      "MSE 只能用于线性模型",
+      "交叉熵只在数据集平衡时才有效"
+    ],
+    "correct": 1,
+    "explanation": "MSE 与 sigmoid 激活相结合会产生带有许多局部极小值的非凸代价曲面。binary cross-entropy 配合 sigmoid 则是凸的，保证存在唯一的全局最小值。"
+  },
+  {
+    "id": "logreg-post-2",
+    "stage": "post",
+    "question": "某垃圾邮件过滤器的 precision（精确率）= 0.95，recall（召回率）= 0.60。这在实际中意味着什么？",
+    "options": [
+      "所有邮件中有 95% 被正确分类，且 60% 的垃圾邮件被捕获",
+      "当它把一封邮件标记为垃圾邮件时，有 95% 的概率是对的；但它只捕获了实际垃圾邮件的 60%",
+      "被标记的邮件中有 60% 是垃圾邮件，且所有垃圾邮件中有 95% 被捕获",
+      "模型在测试集上准确率为 95%，在训练集上为 60%"
+    ],
+    "correct": 1,
+    "explanation": "precision = 0.95 表示被预测为垃圾邮件的邮件中有 95% 确实是垃圾邮件（误报很少）。recall = 0.60 表示只捕获了实际垃圾邮件的 60%（有 40% 漏网）。"
+  },
+  {
+    "id": "logreg-post-3",
+    "stage": "post",
+    "question": "在用于 4 个类别的 softmax 回归中，关于输出概率，下列哪项是正确的？",
+    "options": [
+      "每个类别得到一个介于 0 和 1 之间的独立概率",
+      "四个输出概率之和为 1，概率最高的类别即为预测结果",
+      "只有得分最高的前两个类别获得非零概率",
+      "输出是原始得分，而非概率"
+    ],
+    "correct": 1,
+    "explanation": "softmax 将一组原始得分转换为和为 1 的概率。预测类别就是概率最高的那个类别。"
+  }
+]

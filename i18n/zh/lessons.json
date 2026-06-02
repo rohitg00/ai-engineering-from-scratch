@@ -1,0 +1,1406 @@
+{
+  "phases/00-setup-and-tooling/01-dev-environment": {
+    "name": "开发环境"
+  },
+  "phases/00-setup-and-tooling/02-git-and-collaboration": {
+    "name": "Git 与协作"
+  },
+  "phases/00-setup-and-tooling/03-gpu-setup-and-cloud": {
+    "name": "GPU 配置与云端"
+  },
+  "phases/00-setup-and-tooling/04-apis-and-keys": {
+    "name": "API 与密钥"
+  },
+  "phases/00-setup-and-tooling/05-jupyter-notebooks": {
+    "name": "Jupyter Notebook"
+  },
+  "phases/00-setup-and-tooling/06-python-environments": {
+    "name": "Python 环境"
+  },
+  "phases/00-setup-and-tooling/07-docker-for-ai": {
+    "name": "面向 AI 的 Docker"
+  },
+  "phases/00-setup-and-tooling/08-editor-setup": {
+    "name": "编辑器配置"
+  },
+  "phases/00-setup-and-tooling/09-data-management": {
+    "name": "数据管理"
+  },
+  "phases/00-setup-and-tooling/10-terminal-and-shell": {
+    "name": "终端与 Shell"
+  },
+  "phases/00-setup-and-tooling/11-linux-for-ai": {
+    "name": "面向 AI 的 Linux"
+  },
+  "phases/00-setup-and-tooling/12-debugging-and-profiling": {
+    "name": "调试与性能分析"
+  },
+  "phases/01-math-foundations/01-linear-algebra-intuition": {
+    "name": "线性代数直觉"
+  },
+  "phases/01-math-foundations/02-vectors-matrices-operations": {
+    "name": "向量、矩阵与运算"
+  },
+  "phases/01-math-foundations/03-matrix-transformations": {
+    "name": "矩阵变换与特征值"
+  },
+  "phases/01-math-foundations/04-calculus-for-ml": {
+    "name": "面向 ML 的微积分：导数与gradient"
+  },
+  "phases/01-math-foundations/05-chain-rule-and-autodiff": {
+    "name": "链式法则与自动微分"
+  },
+  "phases/01-math-foundations/06-probability-and-distributions": {
+    "name": "概率与分布"
+  },
+  "phases/01-math-foundations/07-bayes-theorem": {
+    "name": "贝叶斯定理与统计思维"
+  },
+  "phases/01-math-foundations/08-optimization": {
+    "name": "优化：gradient descent 家族"
+  },
+  "phases/01-math-foundations/09-information-theory": {
+    "name": "信息论：熵与 KL 散度"
+  },
+  "phases/01-math-foundations/10-dimensionality-reduction": {
+    "name": "降维：PCA、t-SNE、UMAP"
+  },
+  "phases/01-math-foundations/11-singular-value-decomposition": {
+    "name": "奇异值分解"
+  },
+  "phases/01-math-foundations/12-tensor-operations": {
+    "name": "张量运算"
+  },
+  "phases/01-math-foundations/13-numerical-stability": {
+    "name": "数值稳定性"
+  },
+  "phases/01-math-foundations/14-norms-and-distances": {
+    "name": "范数与距离"
+  },
+  "phases/01-math-foundations/15-statistics-for-ml": {
+    "name": "面向 ML 的统计学"
+  },
+  "phases/01-math-foundations/16-sampling-methods": {
+    "name": "采样方法"
+  },
+  "phases/01-math-foundations/17-linear-systems": {
+    "name": "线性方程组"
+  },
+  "phases/01-math-foundations/18-convex-optimization": {
+    "name": "凸优化"
+  },
+  "phases/01-math-foundations/19-complex-numbers": {
+    "name": "面向 AI 的复数"
+  },
+  "phases/01-math-foundations/20-fourier-transform": {
+    "name": "傅里叶变换"
+  },
+  "phases/01-math-foundations/21-graph-theory": {
+    "name": "面向 ML 的图论"
+  },
+  "phases/01-math-foundations/22-stochastic-processes": {
+    "name": "随机过程"
+  },
+  "phases/02-ml-fundamentals/01-what-is-machine-learning": {
+    "name": "什么是机器学习"
+  },
+  "phases/02-ml-fundamentals/02-linear-regression": {
+    "name": "从零实现线性回归"
+  },
+  "phases/02-ml-fundamentals/03-logistic-regression": {
+    "name": "逻辑回归与分类"
+  },
+  "phases/02-ml-fundamentals/04-decision-trees": {
+    "name": "决策树与随机森林"
+  },
+  "phases/02-ml-fundamentals/05-support-vector-machines": {
+    "name": "支持向量机"
+  },
+  "phases/02-ml-fundamentals/06-knn-and-distances": {
+    "name": "KNN 与距离度量"
+  },
+  "phases/02-ml-fundamentals/07-unsupervised-learning": {
+    "name": "无监督学习：K-Means、DBSCAN"
+  },
+  "phases/02-ml-fundamentals/08-feature-engineering": {
+    "name": "特征工程与特征选择"
+  },
+  "phases/02-ml-fundamentals/09-model-evaluation": {
+    "name": "模型评估：指标与交叉验证"
+  },
+  "phases/02-ml-fundamentals/10-bias-variance": {
+    "name": "偏差、方差与学习曲线"
+  },
+  "phases/02-ml-fundamentals/11-ensemble-methods": {
+    "name": "集成方法：Boosting、Bagging、Stacking"
+  },
+  "phases/02-ml-fundamentals/12-hyperparameter-tuning": {
+    "name": "超参数调优"
+  },
+  "phases/02-ml-fundamentals/13-ml-pipelines": {
+    "name": "ML 流水线与实验追踪"
+  },
+  "phases/02-ml-fundamentals/14-naive-bayes": {
+    "name": "朴素贝叶斯"
+  },
+  "phases/02-ml-fundamentals/15-time-series": {
+    "name": "时间序列基础"
+  },
+  "phases/02-ml-fundamentals/16-anomaly-detection": {
+    "name": "异常检测"
+  },
+  "phases/02-ml-fundamentals/17-imbalanced-data": {
+    "name": "处理不平衡数据"
+  },
+  "phases/02-ml-fundamentals/18-feature-selection": {
+    "name": "特征选择"
+  },
+  "phases/03-deep-learning-core/01-the-perceptron": {
+    "name": "感知机：一切的起点"
+  },
+  "phases/03-deep-learning-core/02-multi-layer-networks": {
+    "name": "多层网络与前向传播"
+  },
+  "phases/03-deep-learning-core/03-backpropagation": {
+    "name": "从零实现反向传播"
+  },
+  "phases/03-deep-learning-core/04-activation-functions": {
+    "name": "激活函数：ReLU、Sigmoid、GELU 及其原理"
+  },
+  "phases/03-deep-learning-core/05-loss-functions": {
+    "name": "loss 函数：MSE、交叉熵、对比损失"
+  },
+  "phases/03-deep-learning-core/06-optimizers": {
+    "name": "optimizer：SGD、Momentum、Adam、AdamW"
+  },
+  "phases/03-deep-learning-core/07-regularization": {
+    "name": "正则化：dropout、weight decay、BatchNorm"
+  },
+  "phases/03-deep-learning-core/08-weight-initialization": {
+    "name": "权重初始化与训练稳定性"
+  },
+  "phases/03-deep-learning-core/09-learning-rate-schedules": {
+    "name": "learning rate 调度与 warmup"
+  },
+  "phases/03-deep-learning-core/10-mini-framework": {
+    "name": "动手打造你自己的迷你框架"
+  },
+  "phases/03-deep-learning-core/11-intro-to-pytorch": {
+    "name": "PyTorch 入门"
+  },
+  "phases/03-deep-learning-core/12-intro-to-jax": {
+    "name": "JAX 入门"
+  },
+  "phases/03-deep-learning-core/13-debugging-neural-networks": {
+    "name": "神经网络调试"
+  },
+  "phases/04-computer-vision/01-image-fundamentals": {
+    "name": "图像基础：像素、通道、色彩空间"
+  },
+  "phases/04-computer-vision/02-convolutions-from-scratch": {
+    "name": "从零实现卷积"
+  },
+  "phases/04-computer-vision/03-cnns-lenet-to-resnet": {
+    "name": "CNN：从 LeNet 到 ResNet"
+  },
+  "phases/04-computer-vision/04-image-classification": {
+    "name": "图像分类"
+  },
+  "phases/04-computer-vision/05-transfer-learning": {
+    "name": "迁移学习与 fine-tune"
+  },
+  "phases/04-computer-vision/06-object-detection-yolo": {
+    "name": "目标检测——从零实现 YOLO"
+  },
+  "phases/04-computer-vision/07-semantic-segmentation-unet": {
+    "name": "语义分割——U-Net"
+  },
+  "phases/04-computer-vision/08-instance-segmentation-mask-rcnn": {
+    "name": "实例分割——Mask R-CNN"
+  },
+  "phases/04-computer-vision/09-image-generation-gans": {
+    "name": "图像生成——GAN"
+  },
+  "phases/04-computer-vision/10-image-generation-diffusion": {
+    "name": "图像生成——diffusion 模型"
+  },
+  "phases/04-computer-vision/11-stable-diffusion": {
+    "name": "Stable Diffusion——架构与 fine-tune"
+  },
+  "phases/04-computer-vision/12-video-understanding": {
+    "name": "视频理解——时序建模"
+  },
+  "phases/04-computer-vision/13-3d-vision-nerf": {
+    "name": "三维视觉：点云、NeRF"
+  },
+  "phases/04-computer-vision/14-vision-transformers": {
+    "name": "Vision Transformer（ViT）"
+  },
+  "phases/04-computer-vision/15-real-time-edge": {
+    "name": "实时视觉：边缘部署"
+  },
+  "phases/04-computer-vision/16-vision-pipeline-capstone": {
+    "name": "构建完整的视觉流水线"
+  },
+  "phases/04-computer-vision/17-self-supervised-vision": {
+    "name": "自监督视觉——SimCLR、DINO、MAE"
+  },
+  "phases/04-computer-vision/18-open-vocab-clip": {
+    "name": "开放词表视觉——CLIP"
+  },
+  "phases/04-computer-vision/19-ocr-document-understanding": {
+    "name": "OCR 与文档理解"
+  },
+  "phases/04-computer-vision/20-image-retrieval-metric": {
+    "name": "图像检索与度量学习"
+  },
+  "phases/04-computer-vision/21-keypoint-pose": {
+    "name": "关键点检测与姿态估计"
+  },
+  "phases/04-computer-vision/22-3d-gaussian-splatting": {
+    "name": "从零实现三维高斯泼溅"
+  },
+  "phases/04-computer-vision/23-diffusion-transformers-rectified-flow": {
+    "name": "Diffusion Transformer 与 Rectified Flow"
+  },
+  "phases/04-computer-vision/24-sam3-open-vocab-segmentation": {
+    "name": "SAM 3 与开放词表分割"
+  },
+  "phases/04-computer-vision/25-vision-language-models": {
+    "name": "VLM 视觉语言模型（ViT-MLP-LLM）"
+  },
+  "phases/04-computer-vision/26-monocular-depth": {
+    "name": "单目深度与几何估计"
+  },
+  "phases/04-computer-vision/27-multi-object-tracking": {
+    "name": "多目标跟踪与视频记忆"
+  },
+  "phases/04-computer-vision/28-world-models-video-diffusion": {
+    "name": "世界模型与视频 diffusion"
+  },
+  "phases/05-nlp-foundations-to-advanced/01-text-processing": {
+    "name": "文本处理：tokenization、词干提取、词形还原"
+  },
+  "phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf": {
+    "name": "词袋、TF-IDF 与文本表示"
+  },
+  "phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec": {
+    "name": "词 embedding：从零实现 Word2Vec"
+  },
+  "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword": {
+    "name": "GloVe、FastText 与子词 embedding"
+  },
+  "phases/05-nlp-foundations-to-advanced/05-sentiment-analysis": {
+    "name": "情感分析"
+  },
+  "phases/05-nlp-foundations-to-advanced/06-named-entity-recognition": {
+    "name": "命名实体识别（NER）"
+  },
+  "phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing": {
+    "name": "词性标注与句法分析"
+  },
+  "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text": {
+    "name": "文本分类——用于文本的 CNN 与 RNN"
+  },
+  "phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence": {
+    "name": "序列到序列模型"
+  },
+  "phases/05-nlp-foundations-to-advanced/10-attention-mechanism": {
+    "name": "attention 机制——突破性进展"
+  },
+  "phases/05-nlp-foundations-to-advanced/11-machine-translation": {
+    "name": "机器翻译"
+  },
+  "phases/05-nlp-foundations-to-advanced/12-text-summarization": {
+    "name": "文本摘要"
+  },
+  "phases/05-nlp-foundations-to-advanced/13-question-answering": {
+    "name": "问答系统"
+  },
+  "phases/05-nlp-foundations-to-advanced/14-information-retrieval-search": {
+    "name": "信息检索与搜索"
+  },
+  "phases/05-nlp-foundations-to-advanced/15-topic-modeling": {
+    "name": "主题建模：LDA、BERTopic"
+  },
+  "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer": {
+    "name": "文本生成"
+  },
+  "phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural": {
+    "name": "聊天机器人：从规则到神经网络"
+  },
+  "phases/05-nlp-foundations-to-advanced/18-multilingual-nlp": {
+    "name": "多语言 NLP"
+  },
+  "phases/05-nlp-foundations-to-advanced/19-subword-tokenization": {
+    "name": "子词 tokenization：BPE、WordPiece、Unigram、SentencePiece"
+  },
+  "phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding": {
+    "name": "结构化输出与受限解码"
+  },
+  "phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment": {
+    "name": "NLI 与文本蕴含"
+  },
+  "phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive": {
+    "name": "embedding 模型深入剖析"
+  },
+  "phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag": {
+    "name": "RAG 的分块策略"
+  },
+  "phases/05-nlp-foundations-to-advanced/24-coreference-resolution": {
+    "name": "共指消解"
+  },
+  "phases/05-nlp-foundations-to-advanced/25-entity-linking": {
+    "name": "实体链接与消歧"
+  },
+  "phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg": {
+    "name": "关系抽取与知识图谱构建"
+  },
+  "phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks": {
+    "name": "LLM 评估：RAGAS、DeepEval、G-Eval"
+  },
+  "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation": {
+    "name": "长 context 评估：NIAH、RULER、LongBench、MRCR"
+  },
+  "phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking": {
+    "name": "对话状态跟踪"
+  },
+  "phases/06-speech-and-audio/01-audio-fundamentals": {
+    "name": "音频基础：波形、采样与 FFT"
+  },
+  "phases/06-speech-and-audio/02-spectrograms-mel-features": {
+    "name": "频谱图、梅尔标度与音频特征"
+  },
+  "phases/06-speech-and-audio/03-audio-classification": {
+    "name": "音频分类"
+  },
+  "phases/06-speech-and-audio/04-speech-recognition-asr": {
+    "name": "语音识别（ASR）"
+  },
+  "phases/06-speech-and-audio/05-whisper-architecture-finetuning": {
+    "name": "Whisper：架构与微调"
+  },
+  "phases/06-speech-and-audio/06-speaker-recognition-verification": {
+    "name": "说话人识别与验证"
+  },
+  "phases/06-speech-and-audio/07-text-to-speech": {
+    "name": "文本转语音（TTS）"
+  },
+  "phases/06-speech-and-audio/08-voice-cloning-conversion": {
+    "name": "语音克隆与语音转换"
+  },
+  "phases/06-speech-and-audio/09-music-generation": {
+    "name": "音乐生成"
+  },
+  "phases/06-speech-and-audio/10-audio-language-models": {
+    "name": "音频-语言模型"
+  },
+  "phases/06-speech-and-audio/11-real-time-audio-processing": {
+    "name": "实时音频处理"
+  },
+  "phases/06-speech-and-audio/12-voice-assistant-pipeline": {
+    "name": "构建语音助手流水线"
+  },
+  "phases/06-speech-and-audio/13-neural-audio-codecs": {
+    "name": "神经音频编解码器 — EnCodec、SNAC、Mimi、DAC"
+  },
+  "phases/06-speech-and-audio/14-voice-activity-detection-turn-taking": {
+    "name": "语音活动检测与轮次切换"
+  },
+  "phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki": {
+    "name": "流式语音到语音 — Moshi、Hibiki"
+  },
+  "phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking": {
+    "name": "语音防欺骗与音频水印"
+  },
+  "phases/06-speech-and-audio/17-audio-evaluation-metrics": {
+    "name": "音频评估 — WER、MOS、MMAU 与排行榜"
+  },
+  "phases/07-transformers-deep-dive/01-why-transformers": {
+    "name": "为何需要 transformer：RNN 的问题"
+  },
+  "phases/07-transformers-deep-dive/02-self-attention-from-scratch": {
+    "name": "从零实现 self-attention"
+  },
+  "phases/07-transformers-deep-dive/03-multi-head-attention": {
+    "name": "multi-head attention（多头注意力）"
+  },
+  "phases/07-transformers-deep-dive/04-positional-encoding": {
+    "name": "位置编码：正弦编码、RoPE、ALiBi"
+  },
+  "phases/07-transformers-deep-dive/05-full-transformer": {
+    "name": "完整的 transformer：encoder + decoder"
+  },
+  "phases/07-transformers-deep-dive/06-bert-masked-language-modeling": {
+    "name": "BERT — 掩码语言建模"
+  },
+  "phases/07-transformers-deep-dive/07-gpt-causal-language-modeling": {
+    "name": "GPT — 因果语言建模"
+  },
+  "phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder": {
+    "name": "T5、BART — encoder-decoder 模型"
+  },
+  "phases/07-transformers-deep-dive/09-vision-transformers": {
+    "name": "Vision Transformer（ViT）"
+  },
+  "phases/07-transformers-deep-dive/10-audio-transformers-whisper": {
+    "name": "音频 transformer — Whisper 架构"
+  },
+  "phases/07-transformers-deep-dive/11-mixture-of-experts": {
+    "name": "Mixture of Experts（MoE）"
+  },
+  "phases/07-transformers-deep-dive/12-kv-cache-flash-attention": {
+    "name": "KV cache、Flash Attention 与 推理优化"
+  },
+  "phases/07-transformers-deep-dive/13-scaling-laws": {
+    "name": "Scaling Laws（缩放定律）"
+  },
+  "phases/07-transformers-deep-dive/14-build-a-transformer-capstone": {
+    "name": "从零构建 transformer"
+  },
+  "phases/08-generative-ai/01-generative-models-taxonomy-history": {
+    "name": "生成模型：分类与历史"
+  },
+  "phases/08-generative-ai/02-autoencoders-vae": {
+    "name": "自编码器与 VAE"
+  },
+  "phases/08-generative-ai/03-gans-generator-discriminator": {
+    "name": "GAN：生成器对抗判别器"
+  },
+  "phases/08-generative-ai/04-conditional-gans-pix2pix": {
+    "name": "条件 GAN 与 Pix2Pix"
+  },
+  "phases/08-generative-ai/05-stylegan": {
+    "name": "StyleGAN"
+  },
+  "phases/08-generative-ai/06-diffusion-ddpm-from-scratch": {
+    "name": "diffusion 模型 — 从零实现 DDPM"
+  },
+  "phases/08-generative-ai/07-latent-diffusion-stable-diffusion": {
+    "name": "latent diffusion 与 Stable Diffusion"
+  },
+  "phases/08-generative-ai/08-controlnet-lora-conditioning": {
+    "name": "ControlNet、LoRA 与条件控制"
+  },
+  "phases/08-generative-ai/09-inpainting-outpainting-editing": {
+    "name": "图像修复、外扩绘制与编辑"
+  },
+  "phases/08-generative-ai/10-video-generation": {
+    "name": "视频生成"
+  },
+  "phases/08-generative-ai/11-audio-generation": {
+    "name": "音频生成"
+  },
+  "phases/08-generative-ai/12-3d-generation": {
+    "name": "3D 生成"
+  },
+  "phases/08-generative-ai/13-flow-matching-rectified-flows": {
+    "name": "Flow Matching 与 Rectified Flow"
+  },
+  "phases/08-generative-ai/14-evaluation-fid-clip-score": {
+    "name": "评估：FID、CLIP Score"
+  },
+  "phases/09-reinforcement-learning/01-mdps-states-actions-rewards": {
+    "name": "MDP：状态、动作与奖励"
+  },
+  "phases/09-reinforcement-learning/02-dynamic-programming": {
+    "name": "动态规划"
+  },
+  "phases/09-reinforcement-learning/03-monte-carlo-methods": {
+    "name": "蒙特卡洛方法"
+  },
+  "phases/09-reinforcement-learning/04-q-learning-sarsa": {
+    "name": "Q-Learning、SARSA"
+  },
+  "phases/09-reinforcement-learning/05-dqn": {
+    "name": "深度 Q 网络（DQN）"
+  },
+  "phases/09-reinforcement-learning/06-policy-gradients-reinforce": {
+    "name": "策略梯度 — REINFORCE"
+  },
+  "phases/09-reinforcement-learning/07-actor-critic-a2c-a3c": {
+    "name": "Actor-Critic — A2C、A3C"
+  },
+  "phases/09-reinforcement-learning/08-ppo": {
+    "name": "PPO"
+  },
+  "phases/09-reinforcement-learning/09-reward-modeling-rlhf": {
+    "name": "奖励建模与 RLHF"
+  },
+  "phases/09-reinforcement-learning/10-multi-agent-rl": {
+    "name": "多 agent 强化学习"
+  },
+  "phases/09-reinforcement-learning/11-sim-to-real-transfer": {
+    "name": "仿真到现实迁移"
+  },
+  "phases/09-reinforcement-learning/12-rl-for-games": {
+    "name": "面向游戏的强化学习"
+  },
+  "phases/10-llms-from-scratch/01-tokenizers": {
+    "name": "Tokenizer：BPE、WordPiece、SentencePiece"
+  },
+  "phases/10-llms-from-scratch/02-building-a-tokenizer": {
+    "name": "从零构建 Tokenizer"
+  },
+  "phases/10-llms-from-scratch/03-data-pipelines": {
+    "name": "预训练的数据流水线"
+  },
+  "phases/10-llms-from-scratch/04-pre-training-mini-gpt": {
+    "name": "预训练一个迷你 GPT（124M）"
+  },
+  "phases/10-llms-from-scratch/05-scaling-distributed": {
+    "name": "分布式训练、FSDP、DeepSpeed"
+  },
+  "phases/10-llms-from-scratch/06-instruction-tuning-sft": {
+    "name": "指令微调 — SFT"
+  },
+  "phases/10-llms-from-scratch/07-rlhf": {
+    "name": "RLHF — 奖励模型 + PPO"
+  },
+  "phases/10-llms-from-scratch/08-dpo": {
+    "name": "DPO — 直接偏好优化"
+  },
+  "phases/10-llms-from-scratch/09-constitutional-ai-self-improvement": {
+    "name": "Constitutional AI 与自我改进"
+  },
+  "phases/10-llms-from-scratch/10-evaluation": {
+    "name": "评估 — 基准测试与 evals"
+  },
+  "phases/10-llms-from-scratch/11-quantization": {
+    "name": "量化：INT8、GPTQ、AWQ、GGUF"
+  },
+  "phases/10-llms-from-scratch/12-inference-optimization": {
+    "name": "推理优化"
+  },
+  "phases/10-llms-from-scratch/13-building-complete-llm-pipeline": {
+    "name": "构建完整的 LLM 流水线"
+  },
+  "phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs": {
+    "name": "开源模型：架构详解"
+  },
+  "phases/10-llms-from-scratch/15-speculative-decoding-eagle3": {
+    "name": "投机解码与 EAGLE-3"
+  },
+  "phases/10-llms-from-scratch/16-differential-attention-v2": {
+    "name": "Differential Attention（V2）"
+  },
+  "phases/10-llms-from-scratch/17-native-sparse-attention": {
+    "name": "Native Sparse Attention（DeepSeek NSA）"
+  },
+  "phases/10-llms-from-scratch/18-multi-token-prediction": {
+    "name": "多 token 预测（MTP）"
+  },
+  "phases/10-llms-from-scratch/19-dualpipe-parallelism": {
+    "name": "DualPipe 并行"
+  },
+  "phases/10-llms-from-scratch/20-deepseek-v3-walkthrough": {
+    "name": "DeepSeek-V3 架构详解"
+  },
+  "phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer": {
+    "name": "Jamba — 混合 SSM-Transformer"
+  },
+  "phases/10-llms-from-scratch/22-async-hogwild-inference": {
+    "name": "异步与 Hogwild! 推理"
+  },
+  "phases/11-llm-engineering/01-prompt-engineering": {
+    "name": "Prompt 工程：技巧与模式"
+  },
+  "phases/11-llm-engineering/02-few-shot-cot": {
+    "name": "Few-Shot、CoT、Tree-of-Thought"
+  },
+  "phases/11-llm-engineering/03-structured-outputs": {
+    "name": "结构化输出"
+  },
+  "phases/11-llm-engineering/04-embeddings": {
+    "name": "Embedding 与向量表示"
+  },
+  "phases/11-llm-engineering/05-context-engineering": {
+    "name": "上下文工程"
+  },
+  "phases/11-llm-engineering/06-rag": {
+    "name": "RAG：检索增强生成"
+  },
+  "phases/11-llm-engineering/07-advanced-rag": {
+    "name": "进阶 RAG：分块与重排"
+  },
+  "phases/11-llm-engineering/08-fine-tuning-lora": {
+    "name": "用 LoRA 与 QLoRA 微调"
+  },
+  "phases/11-llm-engineering/09-function-calling": {
+    "name": "Function Calling 与 Tool Use"
+  },
+  "phases/11-llm-engineering/10-evaluation": {
+    "name": "评估与测试"
+  },
+  "phases/11-llm-engineering/11-caching-cost": {
+    "name": "缓存、限流与成本"
+  },
+  "phases/11-llm-engineering/12-guardrails": {
+    "name": "护栏与安全"
+  },
+  "phases/11-llm-engineering/13-production-app": {
+    "name": "构建生产级 LLM 应用"
+  },
+  "phases/11-llm-engineering/14-model-context-protocol": {
+    "name": "Model Context Protocol（MCP）"
+  },
+  "phases/11-llm-engineering/15-prompt-caching": {
+    "name": "Prompt 缓存与上下文缓存"
+  },
+  "phases/11-llm-engineering/16-langgraph-state-machines": {
+    "name": "LangGraph：agent 的状态机"
+  },
+  "phases/11-llm-engineering/17-agent-framework-tradeoffs": {
+    "name": "Agent 框架的取舍"
+  },
+  "phases/12-multimodal-ai/01-vision-transformer-patch-tokens": {
+    "name": "Vision Transformer 与 patch-token 原语"
+  },
+  "phases/12-multimodal-ai/02-clip-contrastive-pretraining": {
+    "name": "CLIP 与对比式视觉-语言预训练"
+  },
+  "phases/12-multimodal-ai/03-blip2-qformer-bridge": {
+    "name": "BLIP-2 Q-Former 作为模态桥梁"
+  },
+  "phases/12-multimodal-ai/04-flamingo-gated-cross-attention": {
+    "name": "Flamingo 与门控 cross-attention"
+  },
+  "phases/12-multimodal-ai/05-llava-visual-instruction-tuning": {
+    "name": "LLaVA 与视觉指令微调"
+  },
+  "phases/12-multimodal-ai/06-any-resolution-patch-n-pack": {
+    "name": "任意分辨率视觉 — Patch-n'-Pack 与 NaFlex"
+  },
+  "phases/12-multimodal-ai/07-open-weight-vlm-recipes": {
+    "name": "开源权重 VLM 配方：真正重要的是什么"
+  },
+  "phases/12-multimodal-ai/08-llava-onevision-single-multi-video": {
+    "name": "LLaVA-OneVision：单图、多图、视频"
+  },
+  "phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps": {
+    "name": "Qwen-VL 家族与动态 FPS 视频"
+  },
+  "phases/12-multimodal-ai/10-internvl3-native-multimodal": {
+    "name": "InternVL3 原生多模态预训练"
+  },
+  "phases/12-multimodal-ai/11-chameleon-early-fusion-tokens": {
+    "name": "Chameleon 早融合纯 token"
+  },
+  "phases/12-multimodal-ai/12-emu3-next-token-for-generation": {
+    "name": "Emu3 用 next-token 预测做生成"
+  },
+  "phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion": {
+    "name": "Transfusion：autoregressive + diffusion"
+  },
+  "phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified": {
+    "name": "Show-o 离散 diffusion 统一模型"
+  },
+  "phases/12-multimodal-ai/15-janus-pro-decoupled-encoders": {
+    "name": "Janus-Pro 解耦 encoder"
+  },
+  "phases/12-multimodal-ai/16-mio-any-to-any-streaming": {
+    "name": "MIO 任意到任意流式"
+  },
+  "phases/12-multimodal-ai/17-video-language-temporal-grounding": {
+    "name": "视频-语言时序定位"
+  },
+  "phases/12-multimodal-ai/18-long-video-million-token": {
+    "name": "百万 token 上下文的长视频"
+  },
+  "phases/12-multimodal-ai/19-audio-language-whisper-to-af3": {
+    "name": "音频-语言模型：从 Whisper 到 AF3"
+  },
+  "phases/12-multimodal-ai/20-omni-models-thinker-talker": {
+    "name": "Omni 模型：Thinker-Talker 流式"
+  },
+  "phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot": {
+    "name": "具身 VLA：RT-2、OpenVLA、π0、GR00T"
+  },
+  "phases/12-multimodal-ai/22-document-diagram-understanding": {
+    "name": "文档与图表理解"
+  },
+  "phases/12-multimodal-ai/23-colpali-vision-native-rag": {
+    "name": "ColPali 视觉原生文档 RAG"
+  },
+  "phases/12-multimodal-ai/24-multimodal-rag-cross-modal": {
+    "name": "多模态 RAG 与跨模态检索"
+  },
+  "phases/12-multimodal-ai/25-multimodal-agents-computer-use": {
+    "name": "多模态 agent 与 Computer-Use（综合项目）"
+  },
+  "phases/13-tools-and-protocols/01-the-tool-interface": {
+    "name": "工具接口"
+  },
+  "phases/13-tools-and-protocols/02-function-calling-deep-dive": {
+    "name": "Function Calling 深入剖析"
+  },
+  "phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls": {
+    "name": "并行与流式工具调用"
+  },
+  "phases/13-tools-and-protocols/04-structured-output": {
+    "name": "结构化输出"
+  },
+  "phases/13-tools-and-protocols/05-tool-schema-design": {
+    "name": "工具 schema 设计"
+  },
+  "phases/13-tools-and-protocols/06-mcp-fundamentals": {
+    "name": "MCP 基础"
+  },
+  "phases/13-tools-and-protocols/07-building-an-mcp-server": {
+    "name": "构建 MCP server"
+  },
+  "phases/13-tools-and-protocols/08-building-an-mcp-client": {
+    "name": "构建 MCP client"
+  },
+  "phases/13-tools-and-protocols/09-mcp-transports": {
+    "name": "MCP 传输层"
+  },
+  "phases/13-tools-and-protocols/10-mcp-resources-and-prompts": {
+    "name": "MCP Resources 与 Prompts"
+  },
+  "phases/13-tools-and-protocols/11-mcp-sampling": {
+    "name": "MCP Sampling"
+  },
+  "phases/13-tools-and-protocols/12-mcp-roots-and-elicitation": {
+    "name": "MCP Roots 与 Elicitation"
+  },
+  "phases/13-tools-and-protocols/13-mcp-async-tasks": {
+    "name": "MCP 异步任务"
+  },
+  "phases/13-tools-and-protocols/14-mcp-apps": {
+    "name": "MCP Apps"
+  },
+  "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning": {
+    "name": "MCP 安全 I — 工具投毒"
+  },
+  "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1": {
+    "name": "MCP 安全 II — OAuth 2.1"
+  },
+  "phases/13-tools-and-protocols/17-mcp-gateways-and-registries": {
+    "name": "MCP 网关与注册中心"
+  },
+  "phases/13-tools-and-protocols/18-mcp-auth-production": {
+    "name": "生产环境的 MCP 鉴权 — iii 上的 DCR + JWKS"
+  },
+  "phases/13-tools-and-protocols/19-a2a-protocol": {
+    "name": "A2A 协议"
+  },
+  "phases/13-tools-and-protocols/20-opentelemetry-genai": {
+    "name": "OpenTelemetry GenAI"
+  },
+  "phases/13-tools-and-protocols/21-llm-routing-layer": {
+    "name": "LLM 路由层"
+  },
+  "phases/13-tools-and-protocols/22-skills-and-agent-sdks": {
+    "name": "Skills 与 Agent SDK"
+  },
+  "phases/13-tools-and-protocols/23-capstone-tool-ecosystem": {
+    "name": "综合项目 — 工具生态"
+  },
+  "phases/14-agent-engineering/01-the-agent-loop": {
+    "name": "Agent 循环"
+  },
+  "phases/14-agent-engineering/02-rewoo-plan-and-execute": {
+    "name": "ReWOO 与 Plan-and-Execute"
+  },
+  "phases/14-agent-engineering/03-reflexion-verbal-rl": {
+    "name": "Reflexion 与语言强化学习"
+  },
+  "phases/14-agent-engineering/04-tree-of-thoughts-lats": {
+    "name": "Tree of Thoughts 与 LATS"
+  },
+  "phases/14-agent-engineering/05-self-refine-and-critic": {
+    "name": "Self-Refine 与 CRITIC"
+  },
+  "phases/14-agent-engineering/06-tool-use-and-function-calling": {
+    "name": "Tool Use 与 Function Calling"
+  },
+  "phases/14-agent-engineering/07-memory-virtual-context-memgpt": {
+    "name": "记忆——虚拟上下文与 MemGPT"
+  },
+  "phases/14-agent-engineering/08-memory-blocks-sleep-time-compute": {
+    "name": "记忆块与睡眠期计算（Sleep-Time Compute）"
+  },
+  "phases/14-agent-engineering/09-hybrid-memory-mem0": {
+    "name": "混合记忆——Mem0 向量 + 图 + KV"
+  },
+  "phases/14-agent-engineering/10-skill-libraries-voyager": {
+    "name": "技能库与终身学习——Voyager"
+  },
+  "phases/14-agent-engineering/11-planning-htn-and-evolutionary": {
+    "name": "用 HTN 与进化搜索做规划"
+  },
+  "phases/14-agent-engineering/12-anthropic-workflow-patterns": {
+    "name": "Anthropic 的工作流模式"
+  },
+  "phases/14-agent-engineering/13-langgraph-stateful-graphs": {
+    "name": "LangGraph——有状态图与持久化执行"
+  },
+  "phases/14-agent-engineering/14-autogen-actor-model": {
+    "name": "AutoGen v0.4——Actor 模型"
+  },
+  "phases/14-agent-engineering/15-crewai-role-based-crews": {
+    "name": "CrewAI——基于角色的 Crew 与 Flow"
+  },
+  "phases/14-agent-engineering/16-openai-agents-sdk": {
+    "name": "OpenAI Agents SDK——交接、护栏与 Tracing"
+  },
+  "phases/14-agent-engineering/17-claude-agent-sdk": {
+    "name": "Claude Agent SDK——Subagent 与会话存储"
+  },
+  "phases/14-agent-engineering/18-agno-and-mastra-runtimes": {
+    "name": "Agno 与 Mastra——生产级运行时"
+  },
+  "phases/14-agent-engineering/19-benchmarks-swebench-gaia": {
+    "name": "基准测试——SWE-bench、GAIA、AgentBench"
+  },
+  "phases/14-agent-engineering/20-benchmarks-webarena-osworld": {
+    "name": "基准测试——WebArena 与 OSWorld"
+  },
+  "phases/14-agent-engineering/21-computer-use-agents": {
+    "name": "Computer Use——Claude、OpenAI CUA、Gemini"
+  },
+  "phases/14-agent-engineering/22-voice-agents-pipecat-livekit": {
+    "name": "语音 Agent——Pipecat 与 LiveKit"
+  },
+  "phases/14-agent-engineering/23-otel-genai-conventions": {
+    "name": "OpenTelemetry GenAI 语义约定"
+  },
+  "phases/14-agent-engineering/24-agent-observability-platforms": {
+    "name": "Agent 可观测性——Langfuse、Phoenix、Opik"
+  },
+  "phases/14-agent-engineering/25-multi-agent-debate": {
+    "name": "多 agent 辩论与协作"
+  },
+  "phases/14-agent-engineering/26-failure-modes-agentic": {
+    "name": "失败模式——agent 为何崩溃"
+  },
+  "phases/14-agent-engineering/27-prompt-injection-defense": {
+    "name": "Prompt 注入与 PVE 防御"
+  },
+  "phases/14-agent-engineering/28-orchestration-patterns": {
+    "name": "编排模式——Supervisor、Swarm、分层"
+  },
+  "phases/14-agent-engineering/29-production-runtimes": {
+    "name": "生产级运行时——队列、事件、Cron"
+  },
+  "phases/14-agent-engineering/30-eval-driven-agent-development": {
+    "name": "评估驱动的 agent 开发"
+  },
+  "phases/14-agent-engineering/31-agent-workbench-why-models-fail": {
+    "name": "Agent 工作台：强模型为何仍会失败"
+  },
+  "phases/14-agent-engineering/32-minimal-agent-workbench": {
+    "name": "最小 agent 工作台"
+  },
+  "phases/14-agent-engineering/33-instructions-as-executable-constraints": {
+    "name": "把 agent 指令写成可执行约束"
+  },
+  "phases/14-agent-engineering/34-repo-memory-and-state": {
+    "name": "仓库记忆与持久状态"
+  },
+  "phases/14-agent-engineering/35-initialization-scripts": {
+    "name": "Agent 的初始化脚本"
+  },
+  "phases/14-agent-engineering/36-scope-contracts": {
+    "name": "范围契约与任务边界"
+  },
+  "phases/14-agent-engineering/37-runtime-feedback-loops": {
+    "name": "运行时反馈循环"
+  },
+  "phases/14-agent-engineering/38-verification-gates": {
+    "name": "验证门"
+  },
+  "phases/14-agent-engineering/39-reviewer-agent": {
+    "name": "审查 agent：把构建者与评判者分离"
+  },
+  "phases/14-agent-engineering/40-multi-session-handoff": {
+    "name": "多会话交接"
+  },
+  "phases/14-agent-engineering/41-workbench-for-real-repos": {
+    "name": "在真实仓库上使用工作台"
+  },
+  "phases/14-agent-engineering/42-agent-workbench-capstone": {
+    "name": "结课项目：交付可复用的 agent 工作台套件"
+  },
+  "phases/15-autonomous-systems/01-long-horizon-agents": {
+    "name": "从聊天机器人到长程 agent（METR）"
+  },
+  "phases/15-autonomous-systems/02-star-family-reasoning": {
+    "name": "STaR、V-STaR、Quiet-STaR：自学推理"
+  },
+  "phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding": {
+    "name": "AlphaEvolve：进化式编码 agent"
+  },
+  "phases/15-autonomous-systems/04-darwin-godel-machine": {
+    "name": "Darwin Gödel Machine：自我修改的 agent"
+  },
+  "phases/15-autonomous-systems/05-ai-scientist-v2": {
+    "name": "AI Scientist v2：研讨会级研究"
+  },
+  "phases/15-autonomous-systems/06-automated-alignment-research": {
+    "name": "自动化对齐研究（Anthropic AAR）"
+  },
+  "phases/15-autonomous-systems/07-recursive-self-improvement": {
+    "name": "递归自我改进：能力 vs 对齐"
+  },
+  "phases/15-autonomous-systems/08-bounded-self-improvement": {
+    "name": "有界自我改进的设计"
+  },
+  "phases/15-autonomous-systems/09-coding-agent-landscape": {
+    "name": "自主编码 agent 全景（SWE-bench、CodeAct）"
+  },
+  "phases/15-autonomous-systems/10-claude-code-permission-modes": {
+    "name": "Claude Code 权限模式与自动模式"
+  },
+  "phases/15-autonomous-systems/11-browser-agents": {
+    "name": "浏览器 agent 与间接 prompt 注入"
+  },
+  "phases/15-autonomous-systems/12-durable-execution": {
+    "name": "面向长时运行 agent 的持久化执行"
+  },
+  "phases/15-autonomous-systems/13-cost-governors": {
+    "name": "动作预算、迭代上限、成本管控"
+  },
+  "phases/15-autonomous-systems/14-kill-switches-canaries": {
+    "name": "终止开关、熔断器、Canary Token"
+  },
+  "phases/15-autonomous-systems/15-propose-then-commit": {
+    "name": "HITL：先提议后提交"
+  },
+  "phases/15-autonomous-systems/16-checkpoints-rollback": {
+    "name": "Checkpoint 与回滚"
+  },
+  "phases/15-autonomous-systems/17-constitutional-ai": {
+    "name": "Constitutional AI 与规则覆盖"
+  },
+  "phases/15-autonomous-systems/18-llama-guard": {
+    "name": "Llama Guard 与输入/输出分类"
+  },
+  "phases/15-autonomous-systems/19-anthropic-rsp": {
+    "name": "Anthropic 负责任扩展政策 v3.0"
+  },
+  "phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf": {
+    "name": "OpenAI Preparedness 框架与 DeepMind FSF"
+  },
+  "phases/15-autonomous-systems/21-metr-external-evaluation": {
+    "name": "METR 时间跨度与外部评估"
+  },
+  "phases/15-autonomous-systems/22-cais-caisi-societal-risk": {
+    "name": "CAIS、CAISI 与社会级风险"
+  },
+  "phases/16-multi-agent-and-swarms/01-why-multi-agent": {
+    "name": "为什么需要多 agent"
+  },
+  "phases/16-multi-agent-and-swarms/02-fipa-acl-heritage": {
+    "name": "FIPA-ACL 渊源与言语行为"
+  },
+  "phases/16-multi-agent-and-swarms/03-communication-protocols": {
+    "name": "通信协议"
+  },
+  "phases/16-multi-agent-and-swarms/04-primitive-model": {
+    "name": "多 agent 原语模型"
+  },
+  "phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern": {
+    "name": "Supervisor / Orchestrator-Worker 模式"
+  },
+  "phases/16-multi-agent-and-swarms/06-hierarchical-architecture": {
+    "name": "分层架构与分解漂移"
+  },
+  "phases/16-multi-agent-and-swarms/07-society-of-mind-debate": {
+    "name": "心智社会与多 agent 辩论"
+  },
+  "phases/16-multi-agent-and-swarms/08-role-specialization": {
+    "name": "角色专业化——Planner / Critic / Executor / Verifier"
+  },
+  "phases/16-multi-agent-and-swarms/09-parallel-swarm-networks": {
+    "name": "并行 Swarm 与网络化架构"
+  },
+  "phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection": {
+    "name": "群聊与发言者选择"
+  },
+  "phases/16-multi-agent-and-swarms/11-handoffs-and-routines": {
+    "name": "交接与例程（无状态编排）"
+  },
+  "phases/16-multi-agent-and-swarms/12-a2a-protocol": {
+    "name": "A2A——Agent-to-Agent 协议"
+  },
+  "phases/16-multi-agent-and-swarms/13-shared-memory-blackboard": {
+    "name": "共享记忆与黑板模式"
+  },
+  "phases/16-multi-agent-and-swarms/14-consensus-and-bft": {
+    "name": "共识与拜占庭容错"
+  },
+  "phases/16-multi-agent-and-swarms/15-voting-debate-topology": {
+    "name": "投票、自一致性与辩论拓扑"
+  },
+  "phases/16-multi-agent-and-swarms/16-negotiation-bargaining": {
+    "name": "协商与议价"
+  },
+  "phases/16-multi-agent-and-swarms/17-generative-agents-simulation": {
+    "name": "生成式 agent 与涌现仿真"
+  },
+  "phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination": {
+    "name": "心智理论与涌现协调"
+  },
+  "phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco": {
+    "name": "群体优化（PSO、ACO）"
+  },
+  "phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo": {
+    "name": "MARL——MADDPG、QMIX、MAPPO"
+  },
+  "phases/16-multi-agent-and-swarms/21-agent-economies": {
+    "name": "Agent 经济、token 激励与声誉"
+  },
+  "phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints": {
+    "name": "生产级扩展——队列、Checkpoint、持久性"
+  },
+  "phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink": {
+    "name": "失败模式——MAST、群体思维、单一化"
+  },
+  "phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks": {
+    "name": "评估与协调基准测试"
+  },
+  "phases/16-multi-agent-and-swarms/25-case-studies-2026-sota": {
+    "name": "案例研究与 2026 年最新进展"
+  },
+  "phases/17-infrastructure-and-production/01-managed-llm-platforms": {
+    "name": "托管 LLM 平台 — Bedrock、Azure OpenAI、Vertex AI"
+  },
+  "phases/17-infrastructure-and-production/02-inference-platform-economics": {
+    "name": "推理平台经济学 — Fireworks、Together、Baseten、Modal"
+  },
+  "phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes": {
+    "name": "Kubernetes 上的 GPU 自动扩缩 — Karpenter、KAI Scheduler"
+  },
+  "phases/17-infrastructure-and-production/04-vllm-serving-internals": {
+    "name": "vLLM 服务内部原理 — PagedAttention、连续 batching、分块 prefill"
+  },
+  "phases/17-infrastructure-and-production/05-eagle3-speculative-decoding": {
+    "name": "生产环境中的 EAGLE-3 投机解码"
+  },
+  "phases/17-infrastructure-and-production/06-sglang-radixattention": {
+    "name": "面向前缀密集型负载的 SGLang 与 RadixAttention"
+  },
+  "phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell": {
+    "name": "Blackwell 上的 TensorRT-LLM 与 FP8、NVFP4"
+  },
+  "phases/17-infrastructure-and-production/08-inference-metrics-goodput": {
+    "name": "推理指标 — TTFT、TPOT、ITL、Goodput、P99"
+  },
+  "phases/17-infrastructure-and-production/09-production-quantization": {
+    "name": "生产级量化 — AWQ、GPTQ、GGUF、FP8、NVFP4"
+  },
+  "phases/17-infrastructure-and-production/10-cold-start-mitigation": {
+    "name": "Serverless LLM 的冷启动缓解"
+  },
+  "phases/17-infrastructure-and-production/11-multi-region-kv-locality": {
+    "name": "多区域 LLM 服务与 KV cache 局部性"
+  },
+  "phases/17-infrastructure-and-production/12-edge-inference": {
+    "name": "边缘推理 — ANE、Hexagon、WebGPU、Jetson"
+  },
+  "phases/17-infrastructure-and-production/13-llm-observability": {
+    "name": "LLM 可观测性技术栈选型"
+  },
+  "phases/17-infrastructure-and-production/14-prompt-semantic-caching": {
+    "name": "prompt 缓存与语义缓存的经济性"
+  },
+  "phases/17-infrastructure-and-production/15-batch-apis": {
+    "name": "Batch API — 50% 折扣已成行业标准"
+  },
+  "phases/17-infrastructure-and-production/16-model-routing": {
+    "name": "作为降本原语的模型路由"
+  },
+  "phases/17-infrastructure-and-production/17-disaggregated-prefill-decode": {
+    "name": "prefill/decode 分离 — NVIDIA Dynamo 与 llm-d"
+  },
+  "phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache": {
+    "name": "搭配 LMCache KV 卸载的 vLLM 生产技术栈"
+  },
+  "phases/17-infrastructure-and-production/19-ai-gateways": {
+    "name": "AI 网关 — LiteLLM、Portkey、Kong、Bifrost"
+  },
+  "phases/17-infrastructure-and-production/20-shadow-canary-progressive": {
+    "name": "影子、金丝雀与渐进式部署"
+  },
+  "phases/17-infrastructure-and-production/21-ab-testing-llm-features": {
+    "name": "LLM 功能的 A/B 测试 — GrowthBook 与 Statsig"
+  },
+  "phases/17-infrastructure-and-production/22-load-testing-llm-apis": {
+    "name": "LLM API 的负载测试 — k6、LLMPerf、GenAI-Perf"
+  },
+  "phases/17-infrastructure-and-production/23-sre-for-ai": {
+    "name": "面向 AI 的 SRE — 多 agent 事件响应"
+  },
+  "phases/17-infrastructure-and-production/24-chaos-engineering-llm": {
+    "name": "LLM 生产环境的混沌工程"
+  },
+  "phases/17-infrastructure-and-production/25-security-secrets-audit": {
+    "name": "安全 — 密钥、PII 脱敏、审计日志"
+  },
+  "phases/17-infrastructure-and-production/26-compliance-frameworks": {
+    "name": "合规 — SOC 2、HIPAA、GDPR、欧盟 AI 法案、ISO 42001"
+  },
+  "phases/17-infrastructure-and-production/27-finops-llms": {
+    "name": "面向 LLM 的 FinOps — 单位经济性与多租户成本归因"
+  },
+  "phases/17-infrastructure-and-production/28-self-hosted-serving-selection": {
+    "name": "自托管服务选型 — llama.cpp、Ollama、TGI、vLLM、SGLang"
+  },
+  "phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal": {
+    "name": "作为对齐信号的指令遵循"
+  },
+  "phases/18-ethics-safety-alignment/02-reward-hacking-goodhart": {
+    "name": "奖励作弊与古德哈特定律"
+  },
+  "phases/18-ethics-safety-alignment/03-direct-preference-optimization-family": {
+    "name": "DPO 直接偏好优化家族"
+  },
+  "phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification": {
+    "name": "谄媚：RLHF 的放大效应"
+  },
+  "phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif": {
+    "name": "Constitutional AI 与 RLAIF"
+  },
+  "phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment": {
+    "name": "Mesa 优化与欺骗性对齐"
+  },
+  "phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception": {
+    "name": "潜伏 agent — 持续性欺骗"
+  },
+  "phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models": {
+    "name": "前沿模型中的上下文内图谋"
+  },
+  "phases/18-ethics-safety-alignment/09-alignment-faking": {
+    "name": "伪装对齐"
+  },
+  "phases/18-ethics-safety-alignment/10-ai-control-subversion": {
+    "name": "AI 管控 — 即便被颠覆也保障安全"
+  },
+  "phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong": {
+    "name": "可扩展监督与由弱到强泛化"
+  },
+  "phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks": {
+    "name": "红队演练：PAIR 与自动化攻击"
+  },
+  "phases/18-ethics-safety-alignment/13-many-shot-jailbreaking": {
+    "name": "Many-Shot 越狱"
+  },
+  "phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks": {
+    "name": "ASCII 艺术与视觉越狱"
+  },
+  "phases/18-ethics-safety-alignment/15-indirect-prompt-injection": {
+    "name": "间接 prompt 注入"
+  },
+  "phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit": {
+    "name": "红队工具：Garak、Llama Guard、PyRIT"
+  },
+  "phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation": {
+    "name": "WMDP 与双重用途能力评估"
+  },
+  "phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf": {
+    "name": "前沿安全框架 — RSP、PF、FSF"
+  },
+  "phases/18-ethics-safety-alignment/19-model-welfare-research": {
+    "name": "模型福祉研究"
+  },
+  "phases/18-ethics-safety-alignment/20-bias-representational-harm": {
+    "name": "偏见与表征性伤害"
+  },
+  "phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual": {
+    "name": "公平性标准：群体、个体、反事实"
+  },
+  "phases/18-ethics-safety-alignment/22-differential-privacy-for-llms": {
+    "name": "面向 LLM 的差分隐私"
+  },
+  "phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa": {
+    "name": "水印：SynthID、Stable Signature、C2PA"
+  },
+  "phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea": {
+    "name": "监管框架：欧盟、美国、英国、韩国"
+  },
+  "phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai": {
+    "name": "EchoLeak 与面向 AI 的 CVE 漏洞"
+  },
+  "phases/18-ethics-safety-alignment/26-model-system-dataset-cards": {
+    "name": "模型、系统与数据集说明卡"
+  },
+  "phases/18-ethics-safety-alignment/27-data-provenance-training-governance": {
+    "name": "数据溯源与训练数据治理"
+  },
+  "phases/18-ethics-safety-alignment/28-alignment-research-ecosystem": {
+    "name": "对齐研究生态：MATS、Redwood、Apollo、METR"
+  },
+  "phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard": {
+    "name": "内容审核系统：OpenAI、Perspective、Llama Guard"
+  },
+  "phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear": {
+    "name": "双重用途风险：网络、生物、化学、核"
+  },
+  "phases/19-capstone-projects/01-terminal-native-coding-agent": {
+    "name": "终端原生编码 agent"
+  },
+  "phases/19-capstone-projects/02-rag-over-codebase": {
+    "name": "面向代码库的 RAG（跨仓库语义搜索）"
+  },
+  "phases/19-capstone-projects/03-realtime-voice-assistant": {
+    "name": "实时语音助手（ASR → LLM → TTS）"
+  },
+  "phases/19-capstone-projects/04-multimodal-document-qa": {
+    "name": "多模态文档问答（视觉优先）"
+  },
+  "phases/19-capstone-projects/05-autonomous-research-agent": {
+    "name": "自主研究 agent（AI 科学家级）"
+  },
+  "phases/19-capstone-projects/06-devops-troubleshooting-agent": {
+    "name": "面向 Kubernetes 的 DevOps 排障 agent"
+  },
+  "phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline": {
+    "name": "端到端微调流水线"
+  },
+  "phases/19-capstone-projects/08-production-rag-chatbot": {
+    "name": "生产级 RAG 聊天机器人（受监管垂直行业）"
+  },
+  "phases/19-capstone-projects/09-code-migration-agent": {
+    "name": "代码迁移 agent（仓库级升级）"
+  },
+  "phases/19-capstone-projects/10-multi-agent-software-team": {
+    "name": "多 agent 软件工程团队"
+  },
+  "phases/19-capstone-projects/11-llm-observability-dashboard": {
+    "name": "LLM 可观测性与评估仪表盘"
+  },
+  "phases/19-capstone-projects/12-video-understanding-pipeline": {
+    "name": "视频理解流水线（场景 → 问答）"
+  },
+  "phases/19-capstone-projects/13-mcp-server-with-registry": {
+    "name": "带注册表与治理的 MCP 服务器"
+  },
+  "phases/19-capstone-projects/14-speculative-decoding-server": {
+    "name": "投机解码推理服务器"
+  },
+  "phases/19-capstone-projects/15-constitutional-safety-harness": {
+    "name": "Constitutional 安全测试框架 + 红队靶场"
+  },
+  "phases/19-capstone-projects/16-github-issue-to-pr-agent": {
+    "name": "GitHub Issue 转 PR 的自主 agent"
+  },
+  "phases/19-capstone-projects/17-personal-ai-tutor": {
+    "name": "个人 AI 导师（自适应、多模态）"
+  },
+  "phases/19-capstone-projects/20-agent-harness-loop-contract": {
+    "name": "agent harness 循环契约"
+  },
+  "phases/19-capstone-projects/21-tool-registry-schema-validation": {
+    "name": "带 Schema 校验的工具注册表"
+  },
+  "phases/19-capstone-projects/22-jsonrpc-stdio-transport": {
+    "name": "基于换行分隔 Stdio 的 JSON-RPC 2.0"
+  },
+  "phases/19-capstone-projects/23-function-call-dispatcher": {
+    "name": "function call 分发器"
+  },
+  "phases/19-capstone-projects/24-plan-execute-control-flow": {
+    "name": "Plan-Execute 控制流"
+  },
+  "phases/19-capstone-projects/25-verification-gates-observation-budget": {
+    "name": "验证关卡与观测预算"
+  },
+  "phases/19-capstone-projects/26-sandbox-runner-denylist": {
+    "name": "带拒绝名单与路径隔离的沙箱运行器"
+  },
+  "phases/19-capstone-projects/27-eval-harness-fixture-tasks": {
+    "name": "带固定任务集的评估 harness"
+  },
+  "phases/19-capstone-projects/28-observability-otel-traces": {
+    "name": "基于 OTel GenAI Span 与 Prometheus 指标的可观测性"
+  },
+  "phases/19-capstone-projects/29-end-to-end-coding-task-demo": {
+    "name": "在 harness 上运行的端到端编码 agent"
+  },
+  "phases/19-capstone-projects/30-bpe-tokenizer-from-scratch": {
+    "name": "从零实现 BPE tokenizer"
+  },
+  "phases/19-capstone-projects/31-tokenized-dataset-sliding-window": {
+    "name": "带滑动窗口的 token 化数据集"
+  },
+  "phases/19-capstone-projects/32-token-positional-embeddings": {
+    "name": "token embedding 与位置 embedding"
+  },
+  "phases/19-capstone-projects/33-multihead-self-attention": {
+    "name": "multi-head self-attention"
+  },
+  "phases/19-capstone-projects/34-transformer-block": {
+    "name": "从零实现 transformer block"
+  },
+  "phases/19-capstone-projects/35-gpt-model-assembly": {
+    "name": "GPT 模型组装"
+  },
+  "phases/19-capstone-projects/36-training-loop-eval": {
+    "name": "训练循环与评估"
+  },
+  "phases/19-capstone-projects/37-loading-pretrained-weights": {
+    "name": "加载预训练权重"
+  },
+  "phases/19-capstone-projects/38-classifier-finetuning": {
+    "name": "通过替换分类头进行分类器微调"
+  },
+  "phases/19-capstone-projects/39-instruction-tuning-sft": {
+    "name": "通过监督式微调进行指令调优"
+  },
+  "phases/19-capstone-projects/40-dpo-from-scratch": {
+    "name": "从零实现 DPO 直接偏好优化"
+  },
+  "phases/19-capstone-projects/41-eval-pipeline": {
+    "name": "完整评估流水线"
+  },
+  "phases/19-capstone-projects/42-large-corpus-downloader": {
+    "name": "大规模语料下载器"
+  },
+  "phases/19-capstone-projects/43-hdf5-tokenized-corpus": {
+    "name": "HDF5 token 化语料"
+  },
+  "phases/19-capstone-projects/44-cosine-lr-warmup": {
+    "name": "余弦 learning rate 与线性预热"
+  },
+  "phases/19-capstone-projects/45-gradient-clipping-amp": {
+    "name": "gradient 裁剪与混合精度"
+  },
+  "phases/19-capstone-projects/46-gradient-accumulation": {
+    "name": "gradient 累积"
+  },
+  "phases/19-capstone-projects/47-checkpoint-save-resume": {
+    "name": "checkpoint 保存与恢复"
+  },
+  "phases/19-capstone-projects/48-distributed-fsdp-ddp": {
+    "name": "从零实现分布式数据并行与 FSDP"
+  },
+  "phases/19-capstone-projects/49-lm-eval-harness": {
+    "name": "语言模型评估 harness"
+  },
+  "phases/19-capstone-projects/50-hypothesis-generator": {
+    "name": "假设生成器"
+  },
+  "phases/19-capstone-projects/51-literature-retrieval": {
+    "name": "文献检索"
+  },
+  "phases/19-capstone-projects/52-experiment-runner": {
+    "name": "实验运行器"
+  },
+  "phases/19-capstone-projects/53-result-evaluator": {
+    "name": "结果评估器"
+  },
+  "phases/19-capstone-projects/54-paper-writer": {
+    "name": "论文撰写器"
+  },
+  "phases/19-capstone-projects/55-critic-loop": {
+    "name": "批判循环"
+  },
+  "phases/19-capstone-projects/56-iteration-scheduler": {
+    "name": "迭代调度器"
+  },
+  "phases/19-capstone-projects/57-end-to-end-research-demo": {
+    "name": "端到端研究演示"
+  }
+}

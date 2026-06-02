@@ -1,0 +1,37 @@
+[
+  {
+    "question": "RLHF 中的奖励模型（reward model）从什么中学习？",
+    "options": ["原始文本文档", "人类偏好对：给定两个回复，人类更偏好哪一个", "benchmark 分数", "模型的损失曲线"],
+    "correct": 1,
+    "explanation": "奖励模型在偏好数据上训练：针对同一 prompt 的成对回复，由人类标注哪个更好。它学习为符合人类偏好的回复赋予更高的分数。",
+    "stage": "pre"
+  },
+  {
+    "question": "为什么在 RLHF 的 PPO 训练中要使用 KL 散度惩罚？",
+    "options": ["为了加快训练", "为了防止策略（policy）偏离 SFT 模型太远，否则会导致奖励作弊（reward hacking）", "为了减少内存占用", "为了改进分词"],
+    "correct": 1,
+    "explanation": "没有 KL 惩罚，模型会找到一些退化的方式来最大化奖励分数（例如产出利用奖励模型弱点的重复文本）。KL 让模型保持接近表现良好的 SFT 基线。",
+    "stage": "pre"
+  },
+  {
+    "question": "一个完整的 RLHF 流水线需要多少个独立的模型？",
+    "options": ["一个", "两个", "三个：SFT 模型、奖励模型，以及正在被优化的策略模型（policy model）", "四个"],
+    "correct": 2,
+    "explanation": "RLHF 需要：(1) 作为起点和 KL 参考的 SFT 模型，(2) 在偏好数据上训练的奖励模型，(3) 用 PPO 进行优化的策略模型。正是这种复杂性催生了 DPO（第 08 课）。",
+    "stage": "post"
+  },
+  {
+    "question": "RLHF 中的「奖励作弊（reward hacking）」是什么？",
+    "options": ["奖励模型被对手攻击", "策略找到一些方式来最大化奖励分数，却并未真正提升回复质量", "训练数据被破坏", "learning rate 太高"],
+    "correct": 1,
+    "explanation": "奖励模型是对人类判断的不完美代理。策略可能发现一些能获得高奖励的模式（例如冗长的回复、过度的模棱两可），而实际上并没有更有帮助。KL 惩罚限制了这种情况。",
+    "stage": "post"
+  },
+  {
+    "question": "PPO 的裁剪（clipping）机制防止了什么？",
+    "options": ["梯度溢出", "过大的策略更新，这可能会破坏训练的稳定性", "内存溢出", "数据泄漏"],
+    "correct": 1,
+    "explanation": "PPO 把新旧策略之间的概率比裁剪到诸如 [0.8, 1.2] 的范围内。这防止任何单次更新过于剧烈地改变策略，使训练比原始策略梯度（vanilla policy gradient）更稳定。",
+    "stage": "post"
+  }
+]

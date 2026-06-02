@@ -1,0 +1,67 @@
+[
+  {
+    "id": "pipeline-pre-1",
+    "stage": "pre",
+    "question": "在 ML 流水线（pipeline）的语境下，data leakage（数据泄露）是指什么？",
+    "options": [
+      "在预处理过程中数据被意外删除",
+      "来自测试集或未来数据的信息污染了训练过程",
+      "模型处理数据太慢",
+      "在编码过程中特征被丢弃"
+    ],
+    "correct": 1,
+    "explanation": "数据泄露发生在：在训练时使用了预测阶段本不可获得的信息。例如：在包含测试数据的完整数据集上计算 scaler 的均值/标准差。"
+  },
+  {
+    "id": "pipeline-pre-2",
+    "stage": "pre",
+    "question": "为什么在划分训练/测试集之前就在完整数据集上拟合 scaler 会被视为泄露？",
+    "options": [
+      "缩放会改变数据分布",
+      "scaler 的统计量（均值、标准差）包含了测试数据，因此模型在训练时间接“看到”了测试信息",
+      "缩放应该只在测试集上进行",
+      "在大数据集上拟合 scaler 太耗时"
+    ],
+    "correct": 1,
+    "explanation": "当 scaler 在全部数据上拟合时，它的均值和标准差就编码了测试样本的信息。训练特征随后被用测试统计量进行平移，把未来信息泄露进了训练。"
+  },
+  {
+    "id": "pipeline-post-1",
+    "stage": "post",
+    "question": "在 sklearn 中，对一个流水线步骤调用 fit_transform 与 transform 有什么区别？",
+    "options": [
+      "二者完全相同——都会拟合并变换",
+      "fit_transform 从数据中学习参数并应用变换；transform 只应用此前学到的参数",
+      "transform 用于训练数据；fit_transform 用于测试数据",
+      "fit_transform 更慢但更准确"
+    ],
+    "correct": 1,
+    "explanation": "fit_transform 从数据中计算统计量（例如均值、标准差）并对其进行变换。transform 则应用已经学到的统计量，而不重新计算。在测试数据上，必须使用 transform 以避免泄露。"
+  },
+  {
+    "id": "pipeline-post-2",
+    "stage": "post",
+    "question": "为什么对真实世界的数据集来说 ColumnTransformer 是必要的？",
+    "options": [
+      "它让流水线在多个 CPU 上并行运行",
+      "它在同一个流水线内对数值列和类别列应用不同的预处理步骤",
+      "它会自动移除含缺失值的列",
+      "它把所有列转换为同一种数据类型"
+    ],
+    "correct": 1,
+    "explanation": "真实数据集包含混合类型。数值列需要缩放，类别列需要编码。ColumnTransformer 在单个流水线内把每个列子集路由到合适的转换器。"
+  },
+  {
+    "id": "pipeline-post-3",
+    "stage": "post",
+    "question": "一个生产环境中的模型收到了训练时从未见过的类别值（'new_category'）。流水线应当如何处理？",
+    "options": [
+      "完全忽略该行，不返回任何预测",
+      "从头重新训练整个模型",
+      "优雅地处理未知类别，例如使用一个“unknown”桶，或在目标编码中使用全局均值",
+      "把这个未知类别转换为数字零"
+    ],
+    "correct": 2,
+    "explanation": "健壮的流水线会预先考虑生产环境中出现的未见类别。解决方案包括为独热编码设置一个“unknown”兜底值，或在目标编码中默认使用全局均值。"
+  }
+]

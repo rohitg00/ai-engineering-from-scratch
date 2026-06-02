@@ -168,7 +168,7 @@
 </head>
 <body>
 
-  <a href="#main" class="skip-link">Skip to content</a>
+  <a href="#main" class="skip-link" data-i18n="a11y.skipToContent">Skip to content</a>
 
   <header class="site-header">
     <div class="header-inner">
@@ -176,18 +176,18 @@
         <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
       </a>
       <nav class="header-nav">
-        <a href="index.html#contents">Contents</a>
-        <a href="catalog.html">Catalog</a>
-        <a href="prereqs.html">Roadmap</a>
-        <a href="glossary.html">Glossary</a>
+        <a href="index.html#contents" data-i18n="nav.contents">Contents</a>
+        <a href="catalog.html" data-i18n="nav.catalog">Catalog</a>
+        <a href="prereqs.html" data-i18n="nav.roadmap">Roadmap</a>
+        <a href="glossary.html" data-i18n="nav.glossary">Glossary</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
-          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+          <span class="star-count" data-loading="true" aria-label="GitHub stars" data-i18n-attr="aria-label:a11y.githubStars">…</span>
         </a>
       </nav>
       <button class="search-toggle" type="button" data-cmd-palette
-        aria-label="Search (⌘K)" title="Search (⌘K)">
+        aria-label="Search (⌘K)" title="Search (⌘K)" data-i18n-attr="aria-label:a11y.search;title:a11y.search">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2.5"
           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -195,7 +195,10 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </button>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+      <button class="theme-toggle lang-toggle" id="langToggle" aria-label="切换语言 / Toggle language" type="button">
+        <span id="langLabel">中</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button" data-i18n-attr="aria-label:a11y.toggleTheme">
         <span class="theme-icon" id="themeIcon">N</span>
       </button>
     </div>
@@ -204,11 +207,11 @@
   <main class="glossary-page" id="main">
     <div class="container">
       <div class="glossary-header">
-        <h1>AI Glossary</h1>
-        <p>What people <em>say</em> vs what things actually <em>mean</em></p>
+        <h1 data-i18n="glossary.title">AI Glossary</h1>
+        <p data-i18n="glossary.subtitle">What people <em>say</em> vs what things actually <em>mean</em></p>
       </div>
       <div class="glossary-search-wrap">
-        <input type="text" class="glossary-search" id="glossarySearch" placeholder="Search terms...">
+        <input type="text" class="glossary-search" id="glossarySearch" placeholder="Search terms..." data-i18n-attr="placeholder:glossary.searchPlaceholder">
       </div>
       <div class="glossary-count" id="glossaryCount"></div>
       <div class="glossary-list" id="glossaryList"></div>
@@ -217,17 +220,18 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>AI Engineering from Scratch · open source · free forever.</p>
+      <p data-i18n="footer.taglineFull">AI Engineering from Scratch · open source · free forever.</p>
       <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
-        <a href="catalog.html">Catalog</a>
-              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
+        <a href="index.html" data-i18n="footer.home">Home</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" data-i18n="footer.github">GitHub</a>
+        <a href="catalog.html" data-i18n="footer.catalog">Catalog</a>
+              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener" data-i18n="footer.reportSuggest">Report / Suggest</a>
       </div>
     </div>
   </footer>
 
   <script src="data.js?v=20260525a"></script>
+  <script src="i18n.js?v=20260531a"></script>
   <script src="progress.js?v=20260525a"></script>
   <script src="header.js?v=20260525a" defer></script>
   <script src="cmdpalette.js?v=20260525a" defer></script>
@@ -279,16 +283,23 @@
           if (filter) {
             var q = filter.toLowerCase();
             terms = terms.filter(function (t) {
-              return t.term.toLowerCase().indexOf(q) !== -1 ||
+              // Match against both English canonical and localized strings.
+              var term = (AIEFS_I18N.L(t, 'term') || t.term).toLowerCase();
+              var says = (AIEFS_I18N.L(t, 'says') || t.says).toLowerCase();
+              var means = (AIEFS_I18N.L(t, 'means') || t.means).toLowerCase();
+              return term.indexOf(q) !== -1 ||
+                says.indexOf(q) !== -1 ||
+                means.indexOf(q) !== -1 ||
+                t.term.toLowerCase().indexOf(q) !== -1 ||
                 t.says.toLowerCase().indexOf(q) !== -1 ||
                 t.means.toLowerCase().indexOf(q) !== -1;
             });
           }
 
-          countEl.textContent = terms.length + ' of ' + GLOSSARY.length + ' terms';
+          countEl.textContent = AIEFS_I18N.tf('glossary.countFmt', { n: terms.length, total: GLOSSARY.length });
 
           if (terms.length === 0) {
-            listEl.innerHTML = '<div class="glossary-empty">No terms match your search.</div>';
+            listEl.innerHTML = '<div class="glossary-empty">' + AIEFS_I18N.t('glossary.empty') + '</div>';
             return;
           }
 
@@ -296,15 +307,15 @@
           for (var i = 0; i < terms.length; i++) {
             var t = terms[i];
             html += '<div class="glossary-card">';
-            html += '<div class="glossary-term">' + escapeHtml(t.term) + '</div>';
+            html += '<div class="glossary-term">' + escapeHtml(AIEFS_I18N.L(t, 'term')) + '</div>';
             html += '<div class="glossary-row">';
             html += '<div class="glossary-col">';
-            html += '<div class="glossary-col-label">What people say</div>';
-            html += '<div class="glossary-col-says">"' + escapeHtml(t.says) + '"</div>';
+            html += '<div class="glossary-col-label">' + AIEFS_I18N.t('glossary.colSays') + '</div>';
+            html += '<div class="glossary-col-says">"' + escapeHtml(AIEFS_I18N.L(t, 'says')) + '"</div>';
             html += '</div>';
             html += '<div class="glossary-col">';
-            html += '<div class="glossary-col-label">What it actually means</div>';
-            html += '<div class="glossary-col-means">' + escapeHtml(t.means) + '</div>';
+            html += '<div class="glossary-col-label">' + AIEFS_I18N.t('glossary.colMeans') + '</div>';
+            html += '<div class="glossary-col-means">' + escapeHtml(AIEFS_I18N.L(t, 'means')) + '</div>';
             html += '</div>';
             html += '</div>';
             html += '</div>';
@@ -326,6 +337,13 @@
         if (searchInput) {
           searchInput.addEventListener('input', function () {
             renderGlossary(searchInput.value.trim());
+          });
+        }
+
+        if (window.AIEFS_I18N) {
+          AIEFS_I18N.initLangToggle(function () {
+            // Preserve the current search filter across the re-render.
+            renderGlossary(searchInput ? searchInput.value.trim() : '');
           });
         }
       });

@@ -1,0 +1,37 @@
+[
+  {
+    "question": "为什么像 MMLU 这样的 benchmark 在比较前沿模型时变得不那么有用了？",
+    "options": ["它们测试了错误的科目", "前沿模型已经在 MMLU 上饱和（得分 86-89%），把排行榜压缩到差异仅为统计噪声的区间", "MMLU 是为更小的模型设计的", "题目太简单"],
+    "correct": 1,
+    "explanation": "当 GPT-4、Claude 3 和 Llama 3 在 MMLU 上都得到 86-89% 时，1 分的差异并无意义。该 benchmark 已无法区分模型，但它仍主导着排行榜文化。",
+    "stage": "pre"
+  },
+  {
+    "question": "在 LLM 评估的语境中，古德哈特定律（Goodhart's Law）是什么？",
+    "options": ["关于模型扩展的定律", "当一项度量成为目标时，它就不再是好的度量——模型和团队会去优化 benchmark 而非真实能力", "关于 learning rate 调度的规则", "关于 attention 机制的定理"],
+    "correct": 1,
+    "explanation": "各实验室为 benchmark 分数做优化（数据污染、针对 benchmark 的特定 prompt 设计）。分数上去了，但真实世界的能力未必提升。你自己的针对任务的评估才是唯一可靠的度量。",
+    "stage": "pre"
+  },
+  {
+    "question": "什么是 LLM-as-judge（以 LLM 作为评判者）的评估方法？",
+    "options": ["让人类评判者评估每一个回复", "使用一个强大的 LLM（如 GPT-4）依据评分细则给回复打分，从而大规模地替代昂贵的人类评估", "为评估训练一个独立的分类器", "用模型评估它自己"],
+    "correct": 1,
+    "explanation": "LLM-as-judge 使用一个有能力的模型，依据既定标准给回复打分。它比人类评估更便宜、更快，但存在偏差（例如偏好冗长的回复），必须加以校准。",
+    "stage": "post"
+  },
+  {
+    "question": "为什么构建自定义评估套件很重要，而不是依赖公开的 benchmark？",
+    "options": ["公开 benchmark 总是错的", "公开 benchmark 测试通用能力；而你的应用有特定需求，只有自定义评估才能衡量", "自定义评估更容易构建", "公开 benchmark 太贵"],
+    "correct": 1,
+    "explanation": "一个在 MMLU 上得 90% 的模型，可能在你的特定任务上失败（例如按你的格式从法律文档中提取日期）。只有使用你的数据、你的边界情况和你的成功标准的自定义评估，才能衡量真正重要的东西。",
+    "stage": "post"
+  },
+  {
+    "question": "在 LLM benchmark 的语境中，数据污染（data contamination）是什么？",
+    "options": ["训练数据被破坏", "benchmark 题目出现在模型的预训练数据中，在不反映真实能力的情况下虚高了分数", "模型生成了错误的数据", "评估数据被错误标注"],
+    "correct": 1,
+    "explanation": "如果 MMLU 题目出现在训练语料中，模型就是记住了答案而非对其进行推理。这会虚高分数，使 benchmark 比较变得不可靠。随着训练语料的扩大，这是个日益严重的问题。",
+    "stage": "post"
+  }
+]

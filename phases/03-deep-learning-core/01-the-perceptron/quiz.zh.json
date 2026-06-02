@@ -1,0 +1,37 @@
+[
+  {
+    "question": "在应用激活函数（activation）之前，perceptron（感知机）对输入执行的是什么数学运算？",
+    "options": ["矩阵求逆", "加权求和再加上偏置（bias）", "傅里叶变换", "特征值分解"],
+    "correct": 1,
+    "explanation": "perceptron 先计算输入与权重（weight）的点积，再加上一个偏置（bias）项，然后将结果送入阶跃函数。这个「加权求和加偏置」就是其核心计算。",
+    "stage": "pre"
+  },
+  {
+    "question": "对于一个分类问题，「线性可分（linearly separable）」是什么意思？",
+    "options": ["数据可以按顺序排序", "存在单一的一条直线（或超平面）可以完美地把各类别分开", "特征与标签之间存在线性关系", "数据只有两个维度"],
+    "correct": 1,
+    "explanation": "当你可以画出单一的超平面、把输入空间完美地划分为正确的类别时，这个数据集就是线性可分的。AND 和 OR 是线性可分的；XOR 则不是。",
+    "stage": "pre"
+  },
+  {
+    "question": "为什么单个 perceptron 无法学会 XOR 函数？",
+    "options": ["学习率（learning rate）太低", "XOR 的输入太多", "XOR 不是线性可分的——没有任何一条直线能把各类别分开", "阶跃函数阻断了梯度（gradient）传播"],
+    "correct": 2,
+    "explanation": "XOR 把 [0,1] 和 [1,0] 放在一侧，把 [0,0] 和 [1,1] 放在另一侧。没有任何一条直线能把这两组分开，因此只能画出一条线性边界的单个 perceptron 无法解决 XOR。",
+    "stage": "post"
+  },
+  {
+    "question": "在 perceptron 学习规则中，当预测与目标一致时会发生什么？",
+    "options": ["权重翻倍", "权重被置为零", "什么都不变——误差为零，所以更新量为零", "学习率减半"],
+    "correct": 2,
+    "explanation": "更新规则为 w_i = w_i + lr * error * x_i。当预测等于目标时，error = 0，因此所有权重更新量都为零。perceptron 只在犯错时才进行调整。",
+    "stage": "post"
+  },
+  {
+    "question": "如何使用多个 perceptron 来解决 XOR？",
+    "options": ["对单个 perceptron 使用更大的学习率", "用两层结构组合 OR、NAND 和 AND perceptron", "给单个 perceptron 添加更多输入", "去掉偏置项"],
+    "correct": 1,
+    "explanation": "XOR = (x1 OR x2) AND NOT(x1 AND x2)。一个包含 OR 神经元（neuron）和 NAND 神经元的隐藏层（hidden layer）馈入到输出端的 AND 神经元，便能从线性组件中构造出非线性的决策边界。",
+    "stage": "post"
+  }
+]

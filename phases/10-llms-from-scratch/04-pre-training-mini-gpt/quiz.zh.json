@@ -1,0 +1,37 @@
+[
+  {
+    "question": "GPT 在预训练期间使用什么训练目标？",
+    "options": ["掩码语言建模（预测被掩盖的 token）", "下一个 token 预测：给定之前的 token，预测下一个", "句子分类", "图文对齐"],
+    "correct": 1,
+    "explanation": "GPT 是一个因果（自回归，autoregressive）语言模型，使用下一个 token 预测进行训练。给定 token [t1, t2, ..., tn]，它学习预测 tn+1。损失是预测的下一个 token 与实际下一个 token 之间的交叉熵。",
+    "stage": "pre"
+  },
+  {
+    "question": "GPT-2 Small（124M）有多少个 transformer 层、attention head 和 embedding 维度？",
+    "options": ["6 层、6 个 head、512 维", "12 层、12 个 head、768 维", "24 层、16 个 head、1024 维", "48 层、25 个 head、1600 维"],
+    "correct": 1,
+    "explanation": "GPT-2 Small 有 12 个 transformer 层，每层 12 个 attention head，以及 768 维的 embedding。该架构有 1.24 亿参数，可以在单个 GPU 上数小时内完成训练。",
+    "stage": "pre"
+  },
+  {
+    "question": "GPT 中因果 attention mask（causal attention mask）的作用是什么？",
+    "options": ["它阻止对 padding token 的注意力", "它阻止每个 token 关注未来的 token，确保模型只能使用过去的上下文来进行预测", "它掩盖掉低置信度的 attention 分数", "它减少训练时的内存占用"],
+    "correct": 1,
+    "explanation": "因果 mask 是一个三角矩阵，在 softmax 之前把未来位置设为负无穷。位置 5 的 token 可以关注位置 1-5，但不能关注 6 及之后。这确保模型从左到右生成 token。",
+    "stage": "post"
+  },
+  {
+    "question": "在文本生成中，「temperature（温度）」控制什么？",
+    "options": ["生成速度", "token 选择的随机性：温度越低输出越确定，越高输出越多样", "生成的 token 数量", "模型的置信度阈值"],
+    "correct": 1,
+    "explanation": "temperature 在 softmax 之前对 logits 做除法。temperature=0.1 使分布非常陡峭（近乎确定）。temperature=1.0 是训练分布。temperature>1.0 会使分布变平，增加随机性。",
+    "stage": "post"
+  },
+  {
+    "question": "为什么预训练所需的算力远多于微调？",
+    "options": ["预训练使用更大的 batch size", "预训练从零开始处理数万亿 token 以学习通用语言模式，而微调只是在数千个样本上调整一个已具备能力的模型", "预训练使用不同的架构", "微调不使用梯度"],
+    "correct": 1,
+    "explanation": "预训练从随机权重出发，在数万亿 token 上构建全部语言知识。微调从这些学到的权重出发，在小得多的数据集（数千到数百万个样本）上对其进行调整。",
+    "stage": "post"
+  }
+]

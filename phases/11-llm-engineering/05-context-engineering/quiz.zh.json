@@ -1,0 +1,37 @@
+[
+  {
+    "question": "prompt engineering 与 context engineering 之间有什么区别？",
+    "options": ["两者是一回事", "prompt 是用户的查询；context 是模型窗口中的一切：system prompt、工具、检索到的文档、历史，以及 prompt 本身", "context engineering 关乎数据库设计", "prompt engineering 更高级"],
+    "correct": 1,
+    "explanation": "prompt engineering 专注于打磨用户指令。context engineering 则管理输入模型的全部内容：什么进、什么不进、以何种顺序，以及如何分配有限的 context window。",
+    "stage": "pre"
+  },
+  {
+    "question": "为什么 context window 中的顺序会影响 LLM 的表现？",
+    "options": ["不会——LLM 对所有 token 一视同仁", "LLM 存在近因和首因偏好，会更多地关注 context window 的开头和结尾", "按字母顺序排列能帮助模型更快搜索", "顺序只对代码才重要"],
+    "correct": 1,
+    "explanation": "研究表明 LLM 更关注 context window 的开头和结尾（即「迷失在中间」现象）。把最重要的信息放在上下文的开头或结尾，能提升利用率。",
+    "stage": "pre"
+  },
+  {
+    "question": "一个编码助手用掉了 128K context window 中的 22,700 个 token。为什么预算管理仍然重要？",
+    "options": ["128K 对任何用例都应该够用", "长对话、大代码文件和检索到的文档可能很快填满窗口；缺乏预算管理，关键上下文就会被截断", "token 计数不准确", "只有 prompt 才重要"],
+    "correct": 1,
+    "explanation": "22,700 个 token 只是基线。一场 50 轮的对话会再加上 3 万多个 token；检索一个大代码库会再加 5 万多个；工具调用结果还会更多。缺乏主动管理，窗口会被填满，最旧的上下文就会丢失。",
+    "stage": "post"
+  },
+  {
+    "question": "针对对话历史的滑动窗口策略是什么？",
+    "options": ["把模型迁移到另一台服务器", "只在上下文中保留最近 N 轮，丢弃更早的轮次，可选地先对它们进行摘要", "把对话按固定大小的块来处理", "动态扩展 context window"],
+    "correct": 1,
+    "explanation": "滑动窗口在上下文中完整保留最近 K 轮对话。更早的轮次要么被丢弃，要么被替换成摘要。这在保留最相关的近期上下文的同时，限制了内存占用。",
+    "stage": "post"
+  },
+  {
+    "question": "上下文组装器应该如何在各组件之间分配 token？",
+    "options": ["给每个组件平均分配", "根据查询类型动态分配：简单问题需要更少的检索上下文，复杂问题需要更多，同时始终为生成预留余量", "始终最大化检索上下文", "尽量减少 system prompt 的 token"],
+    "correct": 1,
+    "explanation": "一个简单的事实性问题可能只需要 500 个 token 的检索上下文；一项复杂分析可能需要 1 万个。优秀的上下文组装器会动态调整分配，同时始终为模型的回复预留余量。",
+    "stage": "post"
+  }
+]

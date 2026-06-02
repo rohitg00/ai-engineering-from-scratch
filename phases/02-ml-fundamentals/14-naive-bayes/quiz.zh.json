@@ -1,0 +1,67 @@
+[
+  {
+    "id": "nb-pre-1",
+    "stage": "pre",
+    "question": "Naive Bayes（朴素贝叶斯）中的“朴素（naive）”假设是什么？",
+    "options": [
+      "每个类别的先验概率相等",
+      "在给定类别标签的条件下，所有特征彼此条件独立",
+      "数据服从正态分布",
+      "模型没有需要学习的参数"
+    ],
+    "correct": 1,
+    "explanation": "朴素贝叶斯假设在给定类别的条件下，每个特征都与其他所有特征独立。这在数学上是错的（例如“machine”和“learning”会共同出现），但在实践中效果很好。"
+  },
+  {
+    "id": "nb-pre-2",
+    "stage": "pre",
+    "question": "在朴素贝叶斯中，Laplace smoothing（拉普拉斯平滑）防止了什么？",
+    "options": [
+      "对大数据集的过拟合",
+      "训练时某类别中从未出现过的词出现零概率",
+      "在高维数据上训练缓慢",
+      "数据集中的类别不平衡"
+    ],
+    "correct": 1,
+    "explanation": "如果不做平滑，一个在“spam”训练邮件中从未出现过的词会得到 P(word|spam) = 0，从而无论其他证据多强都会使整个乘积为零。拉普拉斯平滑会给每个计数加 1。"
+  },
+  {
+    "id": "nb-post-1",
+    "stage": "post",
+    "question": "朴素的独立性假设对文本而言显然是错的。为什么朴素贝叶斯仍然能分类得很好？",
+    "options": [
+      "它只在独立性成立的极小词表上有效",
+      "分类只需要正确的类别排序，而不需要正确的概率估计；并且该假设引入的是稳定的误差，对所有类别影响相似",
+      "现代实现暗中移除了独立性假设",
+      "它只在特征真正独立时才有效"
+    ],
+    "correct": 1,
+    "explanation": "朴素贝叶斯需要的是把类别排对，而非估计精确概率。独立性假设是高偏差但低方差的，在数据有限时很稳定。相关特征也会为正确类别重复计入证据。"
+  },
+  {
+    "id": "nb-post-2",
+    "stage": "post",
+    "question": "什么时候该用 Multinomial NB（多项式朴素贝叶斯）而非 Gaussian NB（高斯朴素贝叶斯）？",
+    "options": [
+      "Multinomial 用于回归，Gaussian 用于分类",
+      "Multinomial 用于词计数/频率特征，Gaussian 用于连续的实数值特征",
+      "Multinomial 用于二元数据，Gaussian 用于多分类问题",
+      "二者可互换——总是用更快的那个"
+    ],
+    "correct": 1,
+    "explanation": "Multinomial NB 对特征计数（文本中的词频）建模。Gaussian NB 假设特征服从正态分布，适用于测量值或传感器读数等连续特征。"
+  },
+  {
+    "id": "nb-post-3",
+    "stage": "post",
+    "question": "一封邮件中“free”出现两次、“money”出现一次。在使用对数概率的 Multinomial NB 中，垃圾邮件得分如何计算？",
+    "options": [
+      "log P(spam) + log P(free|spam) + log P(money|spam)",
+      "log P(spam) + 2 * log P(free|spam) + 1 * log P(money|spam)",
+      "P(spam) * P(free|spam) * P(money|spam)",
+      "log P(spam) * 2 * log P(free|spam)"
+    ],
+    "correct": 1,
+    "explanation": "Multinomial NB 将各词的似然按其计数做幂次相乘。在对数空间中即为：log P(spam) + 2*log P(free|spam) + 1*log P(money|spam)。词计数充当了指数。"
+  }
+]

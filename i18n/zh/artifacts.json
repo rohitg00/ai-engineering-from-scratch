@@ -1,0 +1,1445 @@
+{
+  "phases/00-setup-and-tooling/01-dev-environment|prompt-env-check.md": {
+    "description": "诊断并修复 AI 工程环境搭建中的问题"
+  },
+  "phases/00-setup-and-tooling/04-apis-and-keys|prompt-api-troubleshooter.md": {
+    "description": "诊断并修复常见的 AI API 错误（鉴权、速率限制、超时）"
+  },
+  "phases/00-setup-and-tooling/05-jupyter-notebooks|prompt-notebook-helper.md": {
+    "description": "调试 Jupyter notebook 问题，包括内核崩溃、内存问题和显示故障"
+  },
+  "phases/00-setup-and-tooling/09-data-management|prompt-data-helper.md": {
+    "description": "为 AI/ML 任务查找并加载合适的 dataset"
+  },
+  "phases/00-setup-and-tooling/12-debugging-and-profiling|prompt-debug-ai-code.md": {
+    "description": "诊断 AI 特有的 bug，包括 NaN loss、形状错误、训练失败和显存溢出（OOM）"
+  },
+  "phases/01-math-foundations/01-linear-algebra-intuition|prompt-linear-algebra-tutor.md": {
+    "description": "通过几何直觉和 AI 应用来讲解线性代数"
+  },
+  "phases/01-math-foundations/02-vectors-matrices-operations|prompt-matrix-operations.md": {
+    "description": "通过几何直觉讲解矩阵运算，将抽象数学与神经网络的内部机制联系起来"
+  },
+  "phases/01-math-foundations/03-matrix-transformations|prompt-transformation-visualizer.md": {
+    "description": "根据矩阵元素，解释该矩阵变换在几何上的作用"
+  },
+  "phases/01-math-foundations/04-calculus-for-ml|skill-gradient-computation.md": {
+    "description": "计算常见 ML loss 函数的 gradient，并选择合适的求导方法"
+  },
+  "phases/01-math-foundations/05-chain-rule-and-autodiff|skill-autodiff.md": {
+    "description": "构建、调试并理解自动微分系统"
+  },
+  "phases/01-math-foundations/06-probability-and-distributions|skill-probability-reasoning.md": {
+    "description": "为给定的 ML 问题选择合适的概率分布"
+  },
+  "phases/01-math-foundations/07-bayes-theorem|prompt-bayesian-reasoning.md": {
+    "description": "针对任意场景，逐步推演贝叶斯推理过程"
+  },
+  "phases/01-math-foundations/08-optimization|prompt-optimizer-guide.md": {
+    "description": "引导用户为其特定的机器学习问题选择合适的 optimizer"
+  },
+  "phases/01-math-foundations/09-information-theory|skill-information-theory.md": {
+    "description": "将信息论概念应用于 ML loss 函数、模型评估和特征选择"
+  },
+  "phases/01-math-foundations/10-dimensionality-reduction|skill-dimensionality-reduction.md": {
+    "description": "根据数据规模、目标和下游用途，为给定任务选择合适的降维技术"
+  },
+  "phases/01-math-foundations/11-singular-value-decomposition|skill-svd.md": {
+    "description": "将 SVD 应用于实际问题，包括压缩、去噪、推荐和最小二乘求解"
+  },
+  "phases/01-math-foundations/12-tensor-operations|prompt-tensor-debugger.md": {
+    "description": "用于调试深度学习代码中张量形状错误的逐步 prompt"
+  },
+  "phases/01-math-foundations/12-tensor-operations|prompt-tensor-shapes.md": {
+    "description": "调试张量形状不匹配问题，并为常见深度学习操作推荐修复方案"
+  },
+  "phases/01-math-foundations/13-numerical-stability|prompt-numerical-debugger.md": {
+    "description": "诊断神经网络训练中的 NaN、Inf 和数值稳定性问题"
+  },
+  "phases/01-math-foundations/14-norms-and-distances|prompt-distance-chooser.md": {
+    "description": "引导用户为其特定任务选择合适的距离度量"
+  },
+  "phases/01-math-foundations/15-statistics-for-ml|skill-statistical-testing.md": {
+    "description": "为比较 ML 模型和评估实验选择合适的统计检验方法"
+  },
+  "phases/01-math-foundations/16-sampling-methods|skill-sampling-strategy.md": {
+    "description": "为生成、估计或推理选择合适的采样方法"
+  },
+  "phases/01-math-foundations/17-linear-systems|prompt-linear-solver.md": {
+    "description": "根据矩阵性质，为求解线性方程组 Ax=b 推荐合适的算法"
+  },
+  "phases/01-math-foundations/18-convex-optimization|skill-convexity-checker.md": {
+    "description": "判断一个优化问题是否为凸问题，并选择合适的求解器"
+  },
+  "phases/01-math-foundations/19-complex-numbers|skill-complex-arithmetic.md": {
+    "description": "ML 和信号处理场景中复数运算的快速参考"
+  },
+  "phases/01-math-foundations/20-fourier-transform|prompt-spectral-analyzer.md": {
+    "description": "引导使用傅里叶变换技术分析信号的频率成分"
+  },
+  "phases/01-math-foundations/21-graph-theory|skill-graph-analysis.md": {
+    "description": "分析图结构数据，并为 ML 任务选择合适的图算法"
+  },
+  "phases/01-math-foundations/22-stochastic-processes|prompt-stochastic-process-advisor.md": {
+    "description": "识别给定问题适用哪种随机过程框架，并推荐相应的实现方式"
+  },
+  "phases/02-ml-fundamentals/01-what-is-machine-learning|prompt-ml-problem-framer.md": {
+    "description": "将现实世界的业务问题构建为一个机器学习任务"
+  },
+  "phases/02-ml-fundamentals/02-linear-regression|skill-regression.md": {
+    "description": "根据数据特征和问题约束选择合适的回归方法"
+  },
+  "phases/02-ml-fundamentals/03-logistic-regression|skill-classification-baseline.md": {
+    "description": "在动用复杂模型之前，先建立一个强大的分类 baseline"
+  },
+  "phases/02-ml-fundamentals/04-decision-trees|prompt-tree-interpreter.md": {
+    "description": "解读决策树结果并诊断潜在问题"
+  },
+  "phases/02-ml-fundamentals/05-support-vector-machines|skill-svm-kernel-chooser.md": {
+    "description": "为你的问题选择合适的 SVM 核函数，并调优 C 和 gamma 参数"
+  },
+  "phases/02-ml-fundamentals/06-knn-and-distances|prompt-distance-metric-advisor.md": {
+    "description": "根据数据类型和问题特征推荐合适的距离度量"
+  },
+  "phases/02-ml-fundamentals/07-unsupervised-learning|skill-clustering-guide.md": {
+    "description": "根据数据形态、噪声和约束选择合适的聚类算法"
+  },
+  "phases/02-ml-fundamentals/08-feature-engineering|prompt-feature-engineer.md": {
+    "description": "用于从原始表格数据中进行特征工程的系统化 prompt"
+  },
+  "phases/02-ml-fundamentals/09-model-evaluation|skill-evaluation.md": {
+    "description": "面向分类和回归模型的评估策略清单"
+  },
+  "phases/02-ml-fundamentals/10-bias-variance|prompt-model-diagnostics.md": {
+    "description": "利用训练/测试指标和学习曲线诊断模型性能问题"
+  },
+  "phases/02-ml-fundamentals/11-ensemble-methods|prompt-ensemble-selector.md": {
+    "description": "为给定的 dataset 和问题挑选合适的集成方法"
+  },
+  "phases/02-ml-fundamentals/11-ensemble-methods|skill-ensemble-builder.md": {
+    "description": "为你的问题选择合适的集成方法并进行配置"
+  },
+  "phases/02-ml-fundamentals/12-hyperparameter-tuning|prompt-tuning-strategy.md": {
+    "description": "根据模型类型、数据规模和算力预算推荐超参数调优策略"
+  },
+  "phases/02-ml-fundamentals/13-ml-pipelines|prompt-ml-pipeline.md": {
+    "description": "构建、调试并部署可复现的 ML 流水线"
+  },
+  "phases/02-ml-fundamentals/14-naive-bayes|skill-naive-bayes-chooser.md": {
+    "description": "为你的分类任务选择合适的朴素贝叶斯变体"
+  },
+  "phases/02-ml-fundamentals/15-time-series|prompt-time-series-advisor.md": {
+    "description": "构建时间序列问题并推荐相应方法"
+  },
+  "phases/02-ml-fundamentals/16-anomaly-detection|skill-anomaly-detector.md": {
+    "description": "为你的问题选择合适的异常检测方法"
+  },
+  "phases/02-ml-fundamentals/17-imbalanced-data|skill-imbalanced-data.md": {
+    "description": "处理不平衡分类问题的决策清单"
+  },
+  "phases/02-ml-fundamentals/18-feature-selection|skill-feature-selector.md": {
+    "description": "用于选择合适特征选择方法的快速参考决策树"
+  },
+  "phases/03-deep-learning-core/01-the-perceptron|skill-perceptron.md": {
+    "description": "理解感知机模式，以及何时使用单层与多层架构"
+  },
+  "phases/03-deep-learning-core/02-multi-layer-networks|prompt-network-architect.md": {
+    "description": "引导用户设计神经网络架构，为给定问题选择层数、神经元数量和激活函数"
+  },
+  "phases/03-deep-learning-core/03-backpropagation|prompt-gradient-debugger.md": {
+    "description": "诊断并修复神经网络中的 gradient 问题——梯度消失、梯度爆炸和 NaN 值"
+  },
+  "phases/03-deep-learning-core/04-activation-functions|prompt-activation-selector.md": {
+    "description": "为任意神经网络架构选择合适激活函数的决策 prompt"
+  },
+  "phases/03-deep-learning-core/05-loss-functions|prompt-loss-debugger.md": {
+    "description": "用于调试 loss 曲线和训练失败的诊断 prompt"
+  },
+  "phases/03-deep-learning-core/05-loss-functions|prompt-loss-function-selector.md": {
+    "description": "为任意 ML 任务选择合适 loss 函数的决策 prompt"
+  },
+  "phases/03-deep-learning-core/06-optimizers|prompt-optimizer-selector.md": {
+    "description": "为任意架构选择合适 optimizer 和 learning rate 的决策 prompt"
+  },
+  "phases/03-deep-learning-core/07-regularization|prompt-regularization-advisor.md": {
+    "description": "根据过拟合症状选择正则化策略的诊断 prompt"
+  },
+  "phases/03-deep-learning-core/08-weight-initialization|prompt-init-strategy.md": {
+    "description": "诊断权重初始化问题，并为任意神经网络架构推荐合适的策略"
+  },
+  "phases/03-deep-learning-core/09-learning-rate-schedules|prompt-lr-schedule-advisor.md": {
+    "description": "为任意训练配置推荐合适的 learning rate 调度和超参数"
+  },
+  "phases/03-deep-learning-core/10-mini-framework|prompt-framework-architect.md": {
+    "description": "使用框架抽象——模块、容器、loss 和 optimizer——设计神经网络架构"
+  },
+  "phases/03-deep-learning-core/11-intro-to-pytorch|prompt-pytorch-debugger.md": {
+    "description": "根据症状诊断并修复常见的 PyTorch 训练失败"
+  },
+  "phases/03-deep-learning-core/11-intro-to-pytorch|skill-pytorch-patterns.md": {
+    "description": "PyTorch 训练、评估和部署的参考模式"
+  },
+  "phases/03-deep-learning-core/12-intro-to-jax|prompt-jax-optimizer.md": {
+    "description": "为给定的训练场景选择并配置合适的 JAX/Optax optimizer"
+  },
+  "phases/03-deep-learning-core/12-intro-to-jax|skill-jax-patterns.md": {
+    "description": "JAX 中的函数式编程模式——何时以及如何使用 grad、jit、vmap 和 pmap"
+  },
+  "phases/03-deep-learning-core/13-debugging-neural-networks|prompt-nn-debugger.md": {
+    "description": "根据症状诊断神经网络训练失败——loss 曲线、gradient 统计和激活模式"
+  },
+  "phases/03-deep-learning-core/13-debugging-neural-networks|skill-debug-checklist.md": {
+    "description": "用于调试神经网络训练失败的决策树清单"
+  },
+  "phases/04-computer-vision/01-image-fundamentals|prompt-vision-preprocessing-audit.md": {
+    "description": "将任意模型卡或数据集卡转化为一份清单，列出视觉流水线必须遵守的预处理不变量"
+  },
+  "phases/04-computer-vision/01-image-fundamentals|skill-image-tensor-inspector.md": {
+    "description": "检查任意图像形状的张量或数组，报告 dtype、布局、取值范围，以及它看起来是原始、归一化还是标准化的"
+  },
+  "phases/04-computer-vision/02-convolutions-from-scratch|prompt-cnn-architect.md": {
+    "description": "根据输入尺寸、参数预算和目标感受野设计一组 Conv2d 层"
+  },
+  "phases/04-computer-vision/02-convolutions-from-scratch|skill-conv-shape-calculator.md": {
+    "description": "逐层遍历 CNN 规格，为每个 block 报告输出形状、感受野和参数量"
+  },
+  "phases/04-computer-vision/03-cnns-lenet-to-resnet|prompt-backbone-selector.md": {
+    "description": "为给定任务、数据集规模和算力预算选择合适的视觉 backbone（LeNet、VGG、ResNet、MobileNet、EfficientNet-Lite、ConvNeXt、ViT）"
+  },
+  "phases/04-computer-vision/03-cnns-lenet-to-resnet|skill-residual-block-reviewer.md": {
+    "description": "审查 PyTorch 残差 block 的跳跃连接正确性、BN 放置、激活顺序和形状对齐"
+  },
+  "phases/04-computer-vision/04-image-classification|prompt-classifier-pipeline-auditor.md": {
+    "description": "审计 PyTorch 图像分类训练脚本，检查覆盖大多数静默 bug 的五个不变量"
+  },
+  "phases/04-computer-vision/04-image-classification|skill-classification-diagnostics.md": {
+    "description": "给定混淆矩阵和类别名称，揭示各类别的失败情况并提出影响最大的单项修复"
+  },
+  "phases/04-computer-vision/05-transfer-learning|prompt-fine-tune-planner.md": {
+    "description": "根据数据集规模、领域差距和算力预算，在特征提取、渐进式与端到端 fine-tune 之间做选择"
+  },
+  "phases/04-computer-vision/05-transfer-learning|skill-freeze-inspector.md": {
+    "description": "报告哪些参数可训练、哪些 BatchNorm 层处于 eval 模式，以及 optimizer 是否真正在消费可训练参数"
+  },
+  "phases/04-computer-vision/06-object-detection-yolo|prompt-detection-metric-reader.md": {
+    "description": "将一行 precision/recall/AP/mAP 指标转化为一句诊断和最有用的下一个实验"
+  },
+  "phases/04-computer-vision/06-object-detection-yolo|skill-anchor-designer.md": {
+    "description": "给定真值框数据集，对 (w, h) 运行 k-means，返回每个 FPN 层级的 anchor 集合及覆盖统计"
+  },
+  "phases/04-computer-vision/07-semantic-segmentation-unet|prompt-segmentation-task-picker.md": {
+    "description": "在语义、实例与全景分割之间做选择，并为给定任务指定架构"
+  },
+  "phases/04-computer-vision/07-semantic-segmentation-unet|skill-segmentation-mask-inspector.md": {
+    "description": "报告类别分布、预测掩码统计，以及最可能被欠预测或边界模糊的类别"
+  },
+  "phases/04-computer-vision/08-instance-segmentation-mask-rcnn|prompt-instance-vs-semantic-router.md": {
+    "description": "通过三个问题在实例、语义与全景分割之间做选择，并给出首选模型"
+  },
+  "phases/04-computer-vision/08-instance-segmentation-mask-rcnn|skill-mask-rcnn-head-swapper.md": {
+    "description": "生成在 torchvision Mask R-CNN 上为自定义 num_classes 替换 box 和 mask head 的确切代码"
+  },
+  "phases/04-computer-vision/09-image-generation-gans|prompt-gan-training-triage.md": {
+    "description": "阅读 GAN 训练曲线的描述，判定失败模式并给出唯一推荐修复"
+  },
+  "phases/04-computer-vision/09-image-generation-gans|skill-dcgan-scaffold.md": {
+    "description": "根据 z_dim、image_size 和 num_channels 编写完整的 DCGAN 脚手架，包含训练循环和样本保存器"
+  },
+  "phases/04-computer-vision/10-image-generation-diffusion|prompt-diffusion-sampler-picker.md": {
+    "description": "根据质量目标、延迟预算和条件类型选择 DDPM、DDIM、DPM-Solver++ 或 Euler ancestral"
+  },
+  "phases/04-computer-vision/10-image-generation-diffusion|skill-noise-schedule-designer.md": {
+    "description": "给定 T 和目标加噪程度，生成线性、cosine 或 sigmoid 的 beta 调度，并附 SNR 图"
+  },
+  "phases/04-computer-vision/11-stable-diffusion|prompt-sd-pipeline-planner.md": {
+    "description": "根据延迟预算、保真度目标和授权约束，选择 SD 1.5 / SDXL / SD3 / FLUX 及调度器和精度"
+  },
+  "phases/04-computer-vision/11-stable-diffusion|skill-lora-training-setup.md": {
+    "description": "为自定义数据集编写完整的 LoRA 训练配置，包含 caption、rank、batch size 和 learning rate"
+  },
+  "phases/04-computer-vision/12-video-understanding|prompt-video-architecture-picker.md": {
+    "description": "根据外观与运动权重、数据集规模和算力预算，选择 2D+pool / I3D / (2+1)D / 时空 transformer"
+  },
+  "phases/04-computer-vision/12-video-understanding|skill-frame-sampler-auditor.md": {
+    "description": "审计视频流水线的帧采样器，检查差一错误、短片段处理和裁剪一致性"
+  },
+  "phases/04-computer-vision/13-3d-vision-nerf|prompt-3d-task-router.md": {
+    "description": "根据任务和输入路由到合适的 3D 表示（点云、网格、体素、NeRF、Gaussian splat）"
+  },
+  "phases/04-computer-vision/13-3d-vision-nerf|skill-point-cloud-loader.md": {
+    "description": "为 .ply / .pcd / .xyz 文件编写 PyTorch Dataset，包含正确的归一化、居中和点采样"
+  },
+  "phases/04-computer-vision/14-vision-transformers|prompt-vit-vs-cnn-picker.md": {
+    "description": "根据数据集规模、算力和推理栈在 ViT、ConvNeXt 或 Swin 之间做选择"
+  },
+  "phases/04-computer-vision/14-vision-transformers|skill-vit-patch-and-pos-embed-inspector.md": {
+    "description": "验证 ViT 的 patch embedding 和位置 embedding 形状是否与模型期望的序列长度匹配"
+  },
+  "phases/04-computer-vision/15-real-time-edge|prompt-edge-deployment-planner.md": {
+    "description": "根据目标设备和延迟 SLA 选择 backbone、量化策略和运行时"
+  },
+  "phases/04-computer-vision/15-real-time-edge|skill-latency-profiler.md": {
+    "description": "编写完整的延迟基准测试脚本，包含 warmup、同步、百分位数和内存追踪"
+  },
+  "phases/04-computer-vision/16-vision-pipeline-capstone|prompt-vision-service-shape-reviewer.md": {
+    "description": "审查视觉服务代码中的契约/响应形状违规，并指出第一个破坏性 bug"
+  },
+  "phases/04-computer-vision/16-vision-pipeline-capstone|skill-pipeline-budget-planner.md": {
+    "description": "给定目标延迟和吞吐，为每个流水线阶段分配时间预算，并标记最先超预算的阶段"
+  },
+  "phases/04-computer-vision/17-self-supervised-vision|prompt-ssl-pretraining-picker.md": {
+    "description": "根据数据集规模、算力和下游任务选择 SimCLR / MAE / DINOv2"
+  },
+  "phases/04-computer-vision/17-self-supervised-vision|skill-linear-probe-runner.md": {
+    "description": "为任意冻结 encoder 和带标签数据集编写完整的 linear-probe 评估"
+  },
+  "phases/04-computer-vision/18-open-vocab-clip|prompt-zero-shot-class-picker.md": {
+    "description": "给定类别列表和领域，为 zero-shot CLIP 设计 prompt 模板"
+  },
+  "phases/04-computer-vision/18-open-vocab-clip|skill-image-text-retriever.md": {
+    "description": "使用任意 CLIP checkpoint 构建图像 embedding 索引；支持以文搜图和以图搜图"
+  },
+  "phases/04-computer-vision/19-ocr-document-understanding|prompt-ocr-stack-picker.md": {
+    "description": "根据文档类型、语言和结构选择 Tesseract / PaddleOCR / Donut / VLM-OCR"
+  },
+  "phases/04-computer-vision/19-ocr-document-understanding|skill-ctc-decoder.md": {
+    "description": "从零编写贪心和 beam search 的 CTC 解码器，包含长度归一化"
+  },
+  "phases/04-computer-vision/20-image-retrieval-metric|prompt-retrieval-loss-picker.md": {
+    "description": "为给定的检索问题选择 triplet / InfoNCE / ProxyNCA"
+  },
+  "phases/04-computer-vision/20-image-retrieval-metric|skill-recall-at-k-runner.md": {
+    "description": "为 recall@K 编写干净的评估框架，包含 train/val/gallery 划分和恰当的数据契约"
+  },
+  "phases/04-computer-vision/21-keypoint-pose|prompt-pose-stack-picker.md": {
+    "description": "根据延迟、人群规模以及 2D 与 3D 需求选择 MediaPipe / YOLOv8-pose / HRNet / ViTPose"
+  },
+  "phases/04-computer-vision/21-keypoint-pose|skill-heatmap-to-coords.md": {
+    "description": "编写每个生产级姿态模型都使用的亚像素 heatmap 转坐标例程"
+  },
+  "phases/04-computer-vision/22-3d-gaussian-splatting|prompt-3dgs-capture-planner.md": {
+    "description": "根据场景类型和硬件，为 3DGS 重建规划一次拍照采集会话"
+  },
+  "phases/04-computer-vision/22-3d-gaussian-splatting|skill-3dgs-export-router.md": {
+    "description": "根据下游查看器或引擎，选择合适的 3DGS 导出格式（.ply / .splat / glTF KHR_gaussian_splatting / USD）"
+  },
+  "phases/04-computer-vision/23-diffusion-transformers-rectified-flow|prompt-dit-model-picker.md": {
+    "description": "根据质量、延迟和授权，在 SD3、SD3.5、FLUX.1-dev、FLUX.1-schnell、Z-Image、SD4 Turbo 之间做选择"
+  },
+  "phases/04-computer-vision/23-diffusion-transformers-rectified-flow|skill-rectified-flow-trainer.md": {
+    "description": "编写完整的 rectified-flow 训练循环，使用 AdaLN DiT 和 Euler 采样"
+  },
+  "phases/04-computer-vision/24-sam3-open-vocab-segmentation|prompt-open-vocab-stack-picker.md": {
+    "description": "根据延迟、概念复杂度和授权选择 SAM 3 / Grounded SAM 2 / YOLO-World / SAM-MI"
+  },
+  "phases/04-computer-vision/24-sam3-open-vocab-segmentation|skill-concept-prompt-designer.md": {
+    "description": "将用户话语转化为格式良好的 SAM 3 概念 prompt，包含拆分、消歧和兜底"
+  },
+  "phases/04-computer-vision/25-vision-language-models|prompt-vlm-selector.md": {
+    "description": "根据准确率、延迟、上下文长度和预算选择 Qwen3-VL / InternVL3.5 / LLaVA-Next / API"
+  },
+  "phases/04-computer-vision/25-vision-language-models|skill-cmer-monitor.md": {
+    "description": "为生产 VLM 端点配置跨模态错误率（Cross-Modal Error Rate）监控、仪表盘和告警"
+  },
+  "phases/04-computer-vision/26-monocular-depth|prompt-depth-model-picker.md": {
+    "description": "根据延迟、绝对深度与相对深度需求和场景类型选择 Depth Anything V3 / Marigold / UniDepth / MiDaS"
+  },
+  "phases/04-computer-vision/26-monocular-depth|skill-depth-to-pointcloud.md": {
+    "description": "从深度图构建点云，正确处理内参并导出为 .ply"
+  },
+  "phases/04-computer-vision/27-multi-object-tracking|prompt-tracker-picker.md": {
+    "description": "根据场景类型、遮挡模式和延迟预算选择 SORT / ByteTrack / BoT-SORT / SAM 2 / SAM 3.1"
+  },
+  "phases/04-computer-vision/27-multi-object-tracking|skill-mot-evaluator.md": {
+    "description": "针对真值轨迹编写完整的 MOTA / IDF1 / HOTA 评估框架"
+  },
+  "phases/04-computer-vision/28-world-models-video-diffusion|prompt-video-model-picker.md": {
+    "description": "为给定任务、授权和延迟目标选择 Sora 2 / Runway Gen-5 / Wan-Video / HunyuanVideo / Cosmos"
+  },
+  "phases/04-computer-vision/28-world-models-video-diffusion|skill-physical-plausibility-checks.md": {
+    "description": "在发布前对任意生成视频自动检查物体恒存性、重力和连续性"
+  },
+  "phases/05-nlp-foundations-to-advanced/01-text-processing|prompt-preprocessing-advisor.md": {
+    "description": "为 NLP 任务推荐 tokenization、词干提取和词形还原的配置。"
+  },
+  "phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf|prompt-vectorization-picker.md": {
+    "description": "给定文本分类任务，推荐 BoW、TF-IDF、embedding 或混合方案。"
+  },
+  "phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec|skill-embedding-probe.md": {
+    "description": "检查 word2vec 模型。运行类比、查找近邻、诊断质量。"
+  },
+  "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword|skill-embeddings-picker.md": {
+    "description": "为新的语言模型或文本流水线选择 tokenization 方法。"
+  },
+  "phases/05-nlp-foundations-to-advanced/05-sentiment-analysis|prompt-sentiment-baseline.md": {
+    "description": "为新数据集设计情感分析 baseline。"
+  },
+  "phases/05-nlp-foundations-to-advanced/06-named-entity-recognition|skill-ner-picker.md": {
+    "description": "为给定的抽取任务选择合适的 NER 方法。"
+  },
+  "phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing|skill-grammar-pipeline.md": {
+    "description": "为下游 NLP 任务设计经典的 POS + 依存分析流水线。"
+  },
+  "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text|prompt-text-encoder-picker.md": {
+    "description": "为给定的约束集合选择文本 encoder 架构。"
+  },
+  "phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence|prompt-seq2seq-design.md": {
+    "description": "为给定任务设计 sequence-to-sequence 流水线。"
+  },
+  "phases/05-nlp-foundations-to-advanced/10-attention-mechanism|prompt-attention-shapes.md": {
+    "description": "调试 attention 实现中的形状 bug。"
+  },
+  "phases/05-nlp-foundations-to-advanced/11-machine-translation|skill-mt-evaluator.md": {
+    "description": "评估机器翻译输出是否可发布。"
+  },
+  "phases/05-nlp-foundations-to-advanced/12-text-summarization|skill-summary-picker.md": {
+    "description": "选择抽取式或生成式，指定库，并加入事实性检查。"
+  },
+  "phases/05-nlp-foundations-to-advanced/13-question-answering|skill-qa-architect.md": {
+    "description": "选择 QA 架构、检索策略和评估方案。"
+  },
+  "phases/05-nlp-foundations-to-advanced/14-information-retrieval-search|skill-retrieval-picker.md": {
+    "description": "为给定语料和查询模式选择检索栈。"
+  },
+  "phases/05-nlp-foundations-to-advanced/15-topic-modeling|skill-topic-picker.md": {
+    "description": "为语料选择 LDA 或 BERTopic。指定库、调节旋钮和评估。"
+  },
+  "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer|prompt-lm-baseline.md": {
+    "description": "在训练神经 LM 之前，构建可复现的 n-gram 语言模型 baseline。"
+  },
+  "phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural|skill-chatbot-architect.md": {
+    "description": "为给定用例设计 chatbot 技术栈。"
+  },
+  "phases/05-nlp-foundations-to-advanced/18-multilingual-nlp|skill-multilingual-picker.md": {
+    "description": "为多语言 NLP 任务选择源语言、目标模型和评估方案。"
+  },
+  "phases/05-nlp-foundations-to-advanced/19-subword-tokenization|skill-bpe-vs-wordpiece.md": {
+    "description": "为给定语料和部署目标选择 tokenizer 算法、词表大小和库。"
+  },
+  "phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding|skill-structured-output-picker.md": {
+    "description": "选择结构化输出方法、schema 设计和验证方案。"
+  },
+  "phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment|skill-nli-picker.md": {
+    "description": "为分类 / 忠实性 / zero-shot 任务选择 NLI 模型、标签模板和评估配置。"
+  },
+  "phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive|skill-embedding-picker.md": {
+    "description": "为给定语料和部署选择 embedding 模型、维度和检索模式。"
+  },
+  "phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag|skill-chunker.md": {
+    "description": "为给定语料和查询分布选择分块策略、大小和重叠。"
+  },
+  "phases/05-nlp-foundations-to-advanced/24-coreference-resolution|skill-coref-picker.md": {
+    "description": "选择共指消解方法、评估方案和集成策略。"
+  },
+  "phases/05-nlp-foundations-to-advanced/25-entity-linking|skill-entity-linker.md": {
+    "description": "设计实体链接流水线——知识库、候选生成器、消歧器、评估。"
+  },
+  "phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg|skill-re-designer.md": {
+    "description": "设计带溯源和规范化的关系抽取流水线。"
+  },
+  "phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks|skill-eval-architect.md": {
+    "description": "设计带校准评审员和 CI 门禁的 LLM 评估方案。"
+  },
+  "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation|skill-long-context-eval.md": {
+    "description": "为给定模型和用例设计一套长上下文评估测试集。"
+  },
+  "phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking|skill-dst-designer.md": {
+    "description": "设计对话状态追踪器——schema、抽取器、更新策略、评估。"
+  },
+  "phases/06-speech-and-audio/01-audio-fundamentals|skill-audio-loader.md": {
+    "description": "根据目标模型的预期校验原始音频文件，并安全地进行重采样。"
+  },
+  "phases/06-speech-and-audio/02-spectrograms-mel-features|skill-feature-extractor.md": {
+    "description": "选择特征类型、mel 数量、帧长/跳步以及归一化方式，以匹配下游音频模型。"
+  },
+  "phases/06-speech-and-audio/03-audio-classification|skill-classifier-designer.md": {
+    "description": "为音频分类任务选择架构、数据增强、类别平衡策略以及评估指标。"
+  },
+  "phases/06-speech-and-audio/04-speech-recognition-asr|skill-asr-picker.md": {
+    "description": "为给定的部署目标选择 ASR 模型、解码策略、分块方式以及语言模型融合方案。"
+  },
+  "phases/06-speech-and-audio/05-whisper-architecture-finetuning|skill-whisper-tuner.md": {
+    "description": "针对给定的语言、领域和延迟预算，设计 Whisper 微调或 inference 流水线。"
+  },
+  "phases/06-speech-and-audio/06-speaker-recognition-verification|skill-speaker-verifier.md": {
+    "description": "设计说话人验证或说话人分离流水线，确定模型选型、注册协议以及阈值调优。"
+  },
+  "phases/06-speech-and-audio/07-text-to-speech|skill-tts-designer.md": {
+    "description": "针对给定的语言、风格和延迟目标，选择 TTS 模型、音色、文本归一化范围以及评估方案。"
+  },
+  "phases/06-speech-and-audio/08-voice-cloning-conversion|skill-voice-cloner.md": {
+    "description": "为语音克隆部署选择克隆方式（zero-shot / 转换 / 自适应）、授权凭证、水印以及安全过滤器。"
+  },
+  "phases/06-speech-and-audio/09-music-generation|skill-music-designer.md": {
+    "description": "为部署选择音乐生成模型、许可证策略、时长方案以及披露用元数据。"
+  },
+  "phases/06-speech-and-audio/10-audio-language-models|skill-alm-picker.md": {
+    "description": "为音频理解任务选择音频语言模型、benchmark 子集、输出模态（文本还是语音）以及防护机制。"
+  },
+  "phases/06-speech-and-audio/11-real-time-audio-processing|skill-realtime-pipeline.md": {
+    "description": "为目标端到端延迟选择传输方式、VAD、流式 STT、LLM、流式 TTS 以及编排方案。"
+  },
+  "phases/06-speech-and-audio/12-voice-assistant-pipeline|skill-voice-assistant-architect.md": {
+    "description": "为给定工作负载产出全栈语音助手规格——组件、延迟预算、可观测性与合规性。"
+  },
+  "phases/06-speech-and-audio/13-neural-audio-codecs|skill-codec-picker.md": {
+    "description": "为给定的生成或压缩任务选择神经音频编解码器（EnCodec / DAC / SNAC / Mimi）。"
+  },
+  "phases/06-speech-and-audio/14-voice-activity-detection-turn-taking|skill-vad-tuner.md": {
+    "description": "为语音 agent 选择 VAD 模型、阈值、静音延挂时间、预滚动以及话轮检测策略。"
+  },
+  "phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki|skill-duplex-pipeline.md": {
+    "description": "为语音 agent 工作负载选择全双工（Moshi）还是流水线（VAD + STT + LLM + TTS）架构。"
+  },
+  "phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking|skill-spoof-defender.md": {
+    "description": "为语音生成 / 语音认证部署选择检测模型、水印、溯源清单以及运维手册。"
+  },
+  "phases/06-speech-and-audio/17-audio-evaluation-metrics|skill-audio-evaluator.md": {
+    "description": "为任何音频模型发布选择指标、benchmark、归一化规则以及报告格式。"
+  },
+  "phases/07-transformers-deep-dive/01-why-transformers|skill-architecture-picker.md": {
+    "description": "在给定序列长度、吞吐和训练预算的情况下，选择序列架构（RNN、transformer、SSM、混合架构）。"
+  },
+  "phases/07-transformers-deep-dive/02-self-attention-from-scratch|prompt-attention-explainer.md": {
+    "description": "通过数据库查找的类比来讲解 attention 机制。"
+  },
+  "phases/07-transformers-deep-dive/03-multi-head-attention|skill-mha-configurator.md": {
+    "description": "为新的 transformer 推荐头数、KV 头数以及投影策略（MHA / MQA / GQA / MLA）。"
+  },
+  "phases/07-transformers-deep-dive/04-positional-encoding|skill-positional-encoding-picker.md": {
+    "description": "在给定上下文长度和训练预算的情况下，选择位置编码（RoPE、ALiBi、正弦编码）及缩放策略。"
+  },
+  "phases/07-transformers-deep-dive/05-full-transformer|skill-transformer-block-reviewer.md": {
+    "description": "对照 2026 年默认实践审查 transformer block 实现并标记偏差。"
+  },
+  "phases/07-transformers-deep-dive/06-bert-masked-language-modeling|skill-bert-finetuner.md": {
+    "description": "为新的分类、抽取或检索任务规划 BERT 微调。"
+  },
+  "phases/07-transformers-deep-dive/07-gpt-causal-language-modeling|skill-sampling-tuner.md": {
+    "description": "为给定的生成任务选择解码策略（greedy / temperature / top-k / top-p / min-p / 投机解码）。"
+  },
+  "phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder|skill-seq2seq-picker.md": {
+    "description": "为新的序列到序列任务在 encoder-decoder 与 decoder-only 之间做选择。"
+  },
+  "phases/07-transformers-deep-dive/09-vision-transformers|skill-vit-configurator.md": {
+    "description": "为新的视觉任务选择 ViT 变体、patch 大小以及预训练来源。"
+  },
+  "phases/07-transformers-deep-dive/10-audio-transformers-whisper|skill-asr-configurator.md": {
+    "description": "为新的语音流水线选择 ASR 模型（Whisper 变体 / Moonshine / faster-whisper）及解码参数。"
+  },
+  "phases/07-transformers-deep-dive/11-mixture-of-experts|skill-moe-configurator.md": {
+    "description": "为新的 MoE transformer 选择专家数量、top-k、平衡策略以及共享专家布局。"
+  },
+  "phases/07-transformers-deep-dive/12-kv-cache-flash-attention|skill-inference-optimizer.md": {
+    "description": "为新的 inference 部署选择 attention 实现、KV cache 策略、量化以及投机解码方案。"
+  },
+  "phases/07-transformers-deep-dive/13-scaling-laws|skill-training-budget-estimator.md": {
+    "description": "在给定算力预算和部署约束的情况下，为新的 transformer 训练任务估算 (N, D, 时长, GPU 数量)。"
+  },
+  "phases/07-transformers-deep-dive/14-build-a-transformer-capstone|skill-transformer-review.md": {
+    "description": "对照第 7 阶段的 13 节课审查一个从零实现的 transformer。"
+  },
+  "phases/07-transformers-deep-dive/15-attention-variants|skill-attention-variant-picker.md": {
+    "description": "在给定上下文长度、检索需求和算力概况的情况下，为新模型选择全量 / 滑动窗口 / 稀疏 / 差分 attention 拓扑。"
+  },
+  "phases/07-transformers-deep-dive/16-speculative-decoding|skill-spec-decode-picker.md": {
+    "description": "为新的 LLM inference 工作负载选择投机解码策略（vanilla / Medusa / EAGLE / lookahead）及调优参数。"
+  },
+  "phases/08-generative-ai/01-generative-models-taxonomy-history|skill-model-chooser.md": {
+    "description": "为给定的任务和预算选择生成式模型家族、骨干网络以及托管替代方案。"
+  },
+  "phases/08-generative-ai/02-autoencoders-vae|skill-vae-trainer.md": {
+    "description": "为给定数据集和下游用途确定 VAE 架构、latent 大小、beta 调度以及评估方案。"
+  },
+  "phases/08-generative-ai/03-gans-generator-discriminator|skill-gan-debugger.md": {
+    "description": "从 loss 曲线和样本网格诊断 GAN 训练失败，并给出一行修复方案。"
+  },
+  "phases/08-generative-ai/04-conditional-gans-pix2pix|skill-img2img-chooser.md": {
+    "description": "在给定配对与非配对数据、领域专属程度和延迟预算的情况下，选择图像到图像方案。"
+  },
+  "phases/08-generative-ai/05-stylegan|skill-stylegan-inversion.md": {
+    "description": "为预训练 StyleGAN 处理真实照片选择反演与编辑流水线。"
+  },
+  "phases/08-generative-ai/06-diffusion-ddpm-from-scratch|skill-diffusion-trainer.md": {
+    "description": "配置 diffusion 训练任务：调度、预测目标、采样器以及评估方案。"
+  },
+  "phases/08-generative-ai/07-latent-diffusion-stable-diffusion|skill-sd-prompter.md": {
+    "description": "为给定的 prompt、风格和质量标准配置 Stable Diffusion / Flux inference。"
+  },
+  "phases/08-generative-ai/08-controlnet-lora-conditioning|skill-sd-toolkit-composer.md": {
+    "description": "在 SD / Flux 基座之上为给定输入组合 ControlNet、LoRA 以及 IP-Adapter。"
+  },
+  "phases/08-generative-ai/09-inpainting-outpainting-editing|skill-editing-pipeline.md": {
+    "description": "规划从源图 + 编辑描述到可交付成品的图像编辑流水线。"
+  },
+  "phases/08-generative-ai/10-video-generation|skill-video-brief.md": {
+    "description": "将视频需求转化为面向 2026 年视频生成器的模型 + prompt + 分镜方案。"
+  },
+  "phases/08-generative-ai/11-audio-generation|skill-audio-brief.md": {
+    "description": "将音频需求转化为横跨 TTS、音乐和音效的模型 + prompt + 评估方案。"
+  },
+  "phases/08-generative-ai/12-3d-generation|skill-3d-pipeline.md": {
+    "description": "在给定输入类型、输出格式和用例的情况下，选择 3D 生成或重建流水线。"
+  },
+  "phases/08-generative-ai/13-flow-matching-rectified-flows|skill-fm-tuner.md": {
+    "description": "将 diffusion 训练方案转换为 flow-matching / rectified-flow 配置。"
+  },
+  "phases/08-generative-ai/14-evaluation-fid-clip-score|skill-eval-report.md": {
+    "description": "规划一次完整的生成式模型评估：样本质量、遵循度、偏好以及失败审计。"
+  },
+  "phases/08-generative-ai/19-visual-autoregressive-var|skill-var-tokenizer-designer.md": {
+    "description": "为 next-scale 视觉自回归图像生成设计多尺度残差 VQ tokenizer。"
+  },
+  "phases/09-reinforcement-learning/01-mdps-states-actions-rewards|skill-mdp-modeler.md": {
+    "description": "给定任务描述，产出马尔可夫决策过程（MDP）规格，并在训练前标记建模风险。"
+  },
+  "phases/09-reinforcement-learning/02-dynamic-programming|skill-dp-solver.md": {
+    "description": "通过策略迭代或值迭代精确求解小型表格型 MDP，并报告收敛行为。"
+  },
+  "phases/09-reinforcement-learning/03-monte-carlo-methods|skill-mc-evaluator.md": {
+    "description": "通过 Monte Carlo rollout 评估策略，并产出收敛报告，如有可能则与 DP 进行对比。"
+  },
+  "phases/09-reinforcement-learning/04-q-learning-sarsa|skill-td-agent.md": {
+    "description": "为表格型或小特征 RL 任务在 Q-learning、SARSA、Expected SARSA 之间做选择。"
+  },
+  "phases/09-reinforcement-learning/05-dqn|skill-dqn-trainer.md": {
+    "description": "为离散动作 RL 任务产出 DQN 训练配置（buffer、target 同步、ε 调度、reward 裁剪）。"
+  },
+  "phases/09-reinforcement-learning/06-policy-gradients-reinforce|skill-policy-gradient-trainer.md": {
+    "description": "为给定任务产出 REINFORCE / actor-critic / PPO 训练配置，并诊断方差问题。"
+  },
+  "phases/09-reinforcement-learning/07-actor-critic-a2c-a3c|skill-actor-critic-trainer.md": {
+    "description": "为给定环境产出 A2C / A3C / GAE 配置，并指定优势估计与 loss 权重。"
+  },
+  "phases/09-reinforcement-learning/08-ppo|skill-ppo-trainer.md": {
+    "description": "为给定环境产出 PPO 训练配置及诊断方案。"
+  },
+  "phases/09-reinforcement-learning/09-reward-modeling-rlhf|skill-rlhf-architect.md": {
+    "description": "为语言模型设计 RLHF / DPO / GRPO 对齐流水线，涵盖奖励模型（RM）、KL 以及数据策略。"
+  },
+  "phases/09-reinforcement-learning/10-multi-agent-rl|skill-marl-architect.md": {
+    "description": "为给定任务选择合适的多 agent RL 范式（IPPO、CTDE、self-play、league）。"
+  },
+  "phases/09-reinforcement-learning/11-sim-to-real-transfer|skill-sim2real-planner.md": {
+    "description": "为给定的机器人 + 任务规划 sim-to-real 迁移流水线，涵盖 DR、SI 以及安全性。"
+  },
+  "phases/09-reinforcement-learning/12-rl-for-games|skill-game-rl-designer.md": {
+    "description": "为给定领域设计游戏 RL 或推理 RL 训练流水线（AlphaZero / MuZero / GRPO）。"
+  },
+  "phases/10-llms-from-scratch/01-tokenizers|prompt-tokenizer-analyzer.md": {
+    "description": "针对给定文本，跨不同模型和 tokenizer 类型分析其 tokenization 效率"
+  },
+  "phases/10-llms-from-scratch/01-tokenizers|skill-tokenizer.md": {
+    "description": "为 LLM 项目选择并构建 tokenizer"
+  },
+  "phases/10-llms-from-scratch/02-building-a-tokenizer|prompt-tokenizer-builder.md": {
+    "description": "为 LLM 项目构建并调试生产级 tokenizer"
+  },
+  "phases/10-llms-from-scratch/03-data-pipelines|prompt-data-quality-checker.md": {
+    "description": "验证并调试 LLM 预训练流水线中的数据质量"
+  },
+  "phases/10-llms-from-scratch/04-pre-training-mini-gpt|prompt-gpt-architecture-analyzer.md": {
+    "description": "分析任意 GPT 风格 transformer 模型中的架构选择"
+  },
+  "phases/10-llms-from-scratch/05-scaling-distributed|prompt-distributed-training-planner.md": {
+    "description": "在给定模型规模和可用硬件的情况下，规划一次分布式训练"
+  },
+  "phases/10-llms-from-scratch/06-instruction-tuning-sft|prompt-sft-data-curator.md": {
+    "description": "为有监督微调（SFT）设计并整理指令数据集"
+  },
+  "phases/10-llms-from-scratch/07-rlhf|prompt-reward-model-designer.md": {
+    "description": "为 RLHF 对齐设计奖励模型的训练流水线"
+  },
+  "phases/10-llms-from-scratch/08-dpo|prompt-alignment-method-selector.md": {
+    "description": "为你的使用场景选择合适的对齐方法（SFT、RLHF、DPO、KTO、ORPO、SimPO）"
+  },
+  "phases/10-llms-from-scratch/09-constitutional-ai-self-improvement|skill-self-improvement-auditor.md": {
+    "description": "在大规模运行之前，审查一个拟定的自我改进或 constitutional AI 流水线。"
+  },
+  "phases/10-llms-from-scratch/10-evaluation|prompt-eval-designer.md": {
+    "description": "为任意 LLM 任务设计自定义评估套件，包括测试用例、打分函数以及通过/失败阈值"
+  },
+  "phases/10-llms-from-scratch/10-evaluation|skill-llm-evaluation.md": {
+    "description": "基于任务类型、预算和需求，选择合适 LLM 评估策略的决策框架"
+  },
+  "phases/10-llms-from-scratch/11-quantization|skill-quantization.md": {
+    "description": "基于硬件、质量和延迟约束，为部署 LLM 选择合适的量化策略"
+  },
+  "phases/10-llms-from-scratch/12-inference-optimization|skill-inference-optimization.md": {
+    "description": "诊断并优化 LLM inference 服务的吞吐、延迟和成本"
+  },
+  "phases/10-llms-from-scratch/13-building-complete-llm-pipeline|skill-llm-pipeline-reviewer.md": {
+    "description": "在一次耗资数百万美元的训练之前，审查端到端的 LLM 训练流水线清单。"
+  },
+  "phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs|skill-open-model-picker.md": {
+    "description": "为给定部署目标选择开源 LLM 系列、量化方案和 inference 技术栈。"
+  },
+  "phases/10-llms-from-scratch/15-speculative-decoding-eagle3|skill-eagle3-tuner.md": {
+    "description": "为新的 inference 工作负载选择并调优投机解码（speculative decoding）策略（vanilla / Medusa / EAGLE-1/2/3 / lookahead）。"
+  },
+  "phases/10-llms-from-scratch/16-differential-attention-v2|skill-diff-attention-integrator.md": {
+    "description": "将 Differential Attention V2 加入新的预训练或 LoRA 微调的集成方案。"
+  },
+  "phases/10-llms-from-scratch/17-native-sparse-attention|skill-nsa-integrator.md": {
+    "description": "在长上下文预训练中集成 Native Sparse Attention 的方案。"
+  },
+  "phases/10-llms-from-scratch/18-multi-token-prediction|skill-mtp-planner.md": {
+    "description": "为新的预训练规划多 token 预测（multi-token prediction）的集成方案。"
+  },
+  "phases/10-llms-from-scratch/19-dualpipe-parallelism|skill-dualpipe-planner.md": {
+    "description": "为训练集群规划流水线并行策略（1F1B、Zero Bubble、DualPipe、DualPipeV）。"
+  },
+  "phases/10-llms-from-scratch/20-deepseek-v3-walkthrough|skill-deepseek-v3-reader.md": {
+    "description": "读取 DeepSeek 系列的配置，并逐组件产出架构分析。"
+  },
+  "phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer|skill-hybrid-picker.md": {
+    "description": "为给定工作负载在纯 Transformer、Jamba 风格混合架构与纯 SSM 之间做选择。"
+  },
+  "phases/10-llms-from-scratch/22-async-hogwild-inference|skill-parallel-inference-router.md": {
+    "description": "在投票、tree-of-thought、多 agent、Hogwild! 和投机解码策略之间为推理工作负载做路由。"
+  },
+  "phases/10-llms-from-scratch/25-speculative-decoding|skill-speculative-tuning.md": {
+    "description": "对解码工作负载做性能剖析，为投机解码选择 draft 模型、draft 长度 K、temperature 门控以及回退策略。"
+  },
+  "phases/10-llms-from-scratch/34-gradient-checkpointing|skill-checkpointing-planner.md": {
+    "description": "在给定训练配置和 HBM 预算的情况下，为每一层选择激活重计算策略（none / selective / full / offload）。"
+  },
+  "phases/11-llm-engineering/01-prompt-engineering|prompt-prompt-optimizer.md": {
+    "description": "接收一份 prompt 草稿，使用经过验证的 prompt 工程模式重写它，以在各模型上达到最佳效果"
+  },
+  "phases/11-llm-engineering/01-prompt-engineering|skill-prompt-patterns.md": {
+    "description": "基于任务类型、可靠性要求和目标模型，选择合适 prompt 模式的决策框架"
+  },
+  "phases/11-llm-engineering/02-few-shot-cot|prompt-reasoning-chain.md": {
+    "description": "生产级的 few-shot CoT prompt，支持自一致性（self-consistency），适用于多步推理任务"
+  },
+  "phases/11-llm-engineering/02-few-shot-cot|skill-cot-patterns.md": {
+    "description": "基于任务复杂度、准确率要求和成本约束，选择合适推理技术的决策框架"
+  },
+  "phases/11-llm-engineering/03-structured-outputs|prompt-structured-extractor.md": {
+    "description": "在给定 JSON Schema 定义的情况下，从非结构化文本中抽取结构化数据"
+  },
+  "phases/11-llm-engineering/03-structured-outputs|skill-structured-outputs.md": {
+    "description": "基于提供商、可靠性和复杂度，选择合适结构化输出策略的决策框架"
+  },
+  "phases/11-llm-engineering/04-embeddings|prompt-embedding-advisor.md": {
+    "description": "为特定使用场景选择 embedding 模型、维度和策略"
+  },
+  "phases/11-llm-engineering/04-embeddings|skill-embedding-patterns.md": {
+    "description": "embedding、向量检索和相似度的生产实践模式"
+  },
+  "phases/11-llm-engineering/05-context-engineering|prompt-context-optimizer.md": {
+    "description": "审查上下文组装策略，并给出优化建议，以减少 token 浪费并提升回复质量"
+  },
+  "phases/11-llm-engineering/05-context-engineering|skill-context-engineering.md": {
+    "description": "基于任务类型、窗口大小和延迟预算，设计上下文组装流水线的决策框架"
+  },
+  "phases/11-llm-engineering/06-rag|prompt-rag-architect.md": {
+    "description": "针对特定使用场景设计 RAG 系统，并给出具体的架构决策"
+  },
+  "phases/11-llm-engineering/06-rag|skill-rag-pipeline.md": {
+    "description": "从第一性原理构建并调试 RAG 流水线"
+  },
+  "phases/11-llm-engineering/07-advanced-rag|prompt-advanced-rag-debugger.md": {
+    "description": "诊断并修复检索、生成和评估各环节的 RAG 质量问题"
+  },
+  "phases/11-llm-engineering/07-advanced-rag|skill-advanced-rag.md": {
+    "description": "构建带混合检索、重排序和评估的生产级 RAG"
+  },
+  "phases/11-llm-engineering/08-fine-tuning-lora|prompt-lora-advisor.md": {
+    "description": "为特定微调任务确定 LoRA rank、目标模块和超参数"
+  },
+  "phases/11-llm-engineering/08-fine-tuning-lora|skill-fine-tuning-guide.md": {
+    "description": "关于何时以及如何使用 LoRA 和 QLoRA 微调 LLM 的决策树"
+  },
+  "phases/11-llm-engineering/09-function-calling|prompt-tool-designer.md": {
+    "description": "从自然语言描述出发，为 function calling 设计完整的工具定义（JSON Schema）"
+  },
+  "phases/11-llm-engineering/09-function-calling|skill-function-calling-patterns.md": {
+    "description": "在生产中实现 function calling 的决策框架——工具设计、错误处理、安全性以及各提供商的模式"
+  },
+  "phases/11-llm-engineering/10-evaluation|prompt-eval-designer.md": {
+    "description": "从使用场景的描述出发，为 LLM 应用设计量身定制的评估评分细则和测试套件"
+  },
+  "phases/11-llm-engineering/10-evaluation|skill-eval-patterns.md": {
+    "description": "选择评估策略的决策框架——何时使用何种方法、如何确定测试套件规模，以及如何将评估集成进 CI/CD"
+  },
+  "phases/11-llm-engineering/11-caching-cost|prompt-cost-optimizer.md": {
+    "description": "分析一个 LLM 应用，并给出具体的成本优化建议及预计节省额"
+  },
+  "phases/11-llm-engineering/11-caching-cost|skill-cost-patterns.md": {
+    "description": "LLM 成本优化的决策框架——缓存策略、限流、模型路由以及预算控制"
+  },
+  "phases/11-llm-engineering/12-guardrails|prompt-safety-auditor.md": {
+    "description": "审查任意 LLM 应用的安全漏洞——prompt 注入、数据泄露、越狱以及输出风险"
+  },
+  "phases/11-llm-engineering/12-guardrails|skill-guardrail-patterns.md": {
+    "description": "在生产中选择并实现护栏（guardrails）的决策框架——工具选型、分层策略以及成本与性能的权衡"
+  },
+  "phases/11-llm-engineering/13-production-app|prompt-architecture-reviewer.md": {
+    "description": "对照生产就绪清单审查任意 LLM 应用的架构——识别缺口、风险和缺失的组件"
+  },
+  "phases/11-llm-engineering/13-production-app|skill-production-checklist.md": {
+    "description": "将 LLM 应用交付到生产环境的决策框架——覆盖每个组件，并给出具体的阈值和通过/失败标准"
+  },
+  "phases/11-llm-engineering/14-model-context-protocol|skill-mcp-server-designer.md": {
+    "description": "设计并搭建一个带工具、资源和安全默认值的 MCP server。"
+  },
+  "phases/11-llm-engineering/15-prompt-caching|skill-prompt-caching-planner.md": {
+    "description": "设计对缓存友好的 prompt 布局，并选择合适的提供商缓存模式。"
+  },
+  "phases/11-llm-engineering/16-langgraph-state-machines|skill-stategraph-designer.md": {
+    "description": "将一个 agent 任务转化为 LangGraph StateGraph，包含命名节点、带类型的状态、reducer、checkpointer 以及人工中断。"
+  },
+  "phases/11-llm-engineering/17-agent-framework-tradeoffs|skill-framework-picker.md": {
+    "description": "通过将抽象层级与问题形态相匹配，为 agent 任务在 LangGraph、CrewAI、AutoGen、Agno 或纯 Python 之间做选择。"
+  },
+  "phases/12-multimodal-ai/01-vision-transformer-patch-tokens|skill-patch-geometry-reader.md": {
+    "description": "读取 ViT 配置，为下游 VLM 规划产出 patch-token、参数量和显存（VRAM）分析。"
+  },
+  "phases/12-multimodal-ai/02-clip-contrastive-pretraining|skill-clip-zero-shot.md": {
+    "description": "使用 CLIP / SigLIP checkpoint 运行零样本图像分类，产出带相似度分数的排序预测结果。"
+  },
+  "phases/12-multimodal-ai/03-blip2-qformer-bridge|skill-modality-bridge-picker.md": {
+    "description": "在给定 token 预算、质量目标和训练算力的情况下，为 VLM 配置在 Q-Former、MLP 投影器和 Perceiver resampler 之间给出推荐。"
+  },
+  "phases/12-multimodal-ai/04-flamingo-gated-cross-attention|skill-gated-bridge-diagnostic.md": {
+    "description": "在开源 VLM 配置中识别 Flamingo 系列的设计要素，并诊断冻结/门控（gating）问题。"
+  },
+  "phases/12-multimodal-ai/05-llava-visual-instruction-tuning|skill-llava-vibes-eval.md": {
+    "description": "对 LLaVA 系列 VLM 运行一个 10 条 prompt 的体感评估（vibes-eval），并产出一份人类可读的评分卡。"
+  },
+  "phases/12-multimodal-ai/06-any-resolution-patch-n-pack|skill-resolution-budget-planner.md": {
+    "description": "为混合宽高比的 VLM 工作负载在 square-resize、AnyRes、M-RoPE 和 NaFlex 之间做选择，并产出按任务划分的 token 预算方案。"
+  },
+  "phases/12-multimodal-ai/07-open-weight-vlm-recipes|skill-vlm-recipe-picker.md": {
+    "description": "选择开放权重 VLM 配方（encoder、连接器、LLM、数据配比、分辨率调度），并为每项选择附上消融实验表引用。"
+  },
+  "phases/12-multimodal-ai/08-llava-onevision-single-multi-video|skill-onevision-budget-planner.md": {
+    "description": "为目标产品组合，在单图、多图和视频场景之间分配 LLaVA-OneVision 风格的统一视觉 token 预算。"
+  },
+  "phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps|skill-qwen-vl-pipeline-designer.md": {
+    "description": "为目标视频或图像任务配置 Qwen2.5-VL 或 Qwen3-VL 部署——分辨率上下界、动态 FPS 策略、window-attention 开关以及 JSON agent 输出模式。"
+  },
+  "phases/12-multimodal-ai/10-internvl3-native-multimodal|skill-native-vs-posthoc-auditor.md": {
+    "description": "审查一份拟定的 VLM 训练方案，并在原生多模态预训练与在 LLM 上事后挂接 adapter 之间给出推荐，附带语料配比和对齐债务分析。"
+  },
+  "phases/12-multimodal-ai/11-chameleon-early-fusion-tokens|skill-tokenizer-vs-adapter-picker.md": {
+    "description": "为一个 VLM 项目在 Chameleon 风格的早期融合（共享词表 tokenizer）和 LLaVA 风格的后期融合（在冻结 LLM 上挂接 adapter）之间做选择。"
+  },
+  "phases/12-multimodal-ai/12-emu3-next-token-for-generation|skill-token-gen-cost-analyzer.md": {
+    "description": "为 Emu3 风格的 next-token 生成计算 token 数量、inference 延迟和质量上限，并在 Emu3 系列与 diffusion 之间做选择。"
+  },
+  "phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion|skill-two-loss-trainer-designer.md": {
+    "description": "设计一个 Transfusion / MMDiT 风格的双 loss 训练方案（一种模态用 NTP，另一种用 diffusion），包含 loss 权重、掩码设计和调度。"
+  },
+  "phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified|skill-unified-gen-model-picker.md": {
+    "description": "为一个同时需要多模态理解与生成且要求开放权重的产品，在 Show-o / Transfusion / Emu3 / Janus-Pro 系列之间做选择。"
+  },
+  "phases/12-multimodal-ai/15-janus-pro-decoupled-encoders|skill-decoupled-encoder-picker.md": {
+    "description": "判断一个统一 VLM 是否应解耦其视觉 encoder，并在 Janus-Pro、JanusFlow 和 InternVL-U 之间做选择。"
+  },
+  "phases/12-multimodal-ai/16-mio-any-to-any-streaming|skill-any-to-any-pipeline-auditor.md": {
+    "description": "审查一个对话式任意到任意（any-to-any）设计，并为 MIO / AnyGPT / Moshi 系列技术栈计算延迟预算。"
+  },
+  "phases/12-multimodal-ai/17-video-language-temporal-grounding|skill-video-vlm-frame-planner.md": {
+    "description": "为视频语言模型的部署规划帧采样、逐帧池化、输出格式和基准测试目标。"
+  },
+  "phases/12-multimodal-ai/18-long-video-million-token|skill-long-video-strategy-planner.md": {
+    "description": "为长视频理解任务在 brute-context、ring-attention、token 压缩和 agent 式检索之间做选择，并计算延迟与召回率的预期。"
+  },
+  "phases/12-multimodal-ai/19-audio-language-whisper-to-af3|skill-audio-llm-pipeline-picker.md": {
+    "description": "为音频任务在级联式（Whisper + LLM）和端到端（AF3 / Qwen-Audio）之间做选择，并给出 encoder 和桥接配置。"
+  },
+  "phases/12-multimodal-ai/20-omni-models-thinker-talker|skill-omni-streaming-budget.md": {
+    "description": "为目标 TTFAB 和功能集，估算 Thinker-Talker 流式语音流水线（Qwen-Omni / Moshi / Mini-Omni）的规模。"
+  },
+  "phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot|skill-vla-action-format-picker.md": {
+    "description": "为机器人任务选择动作格式（离散分桶、FAST、flow-matching、双系统）和 VLA 系列（RT-2、OpenVLA、π0、GR00T）。"
+  },
+  "phases/12-multimodal-ai/22-document-diagram-understanding|skill-document-ai-stack-picker.md": {
+    "description": "基于领域、规模和合规需求，为文档 AI 项目在 OCR 流水线、免 OCR 专用模型和 VLM 原生方案之间做选择。"
+  },
+  "phases/12-multimodal-ai/23-colpali-vision-native-rag|skill-vision-rag-designer.md": {
+    "description": "使用 ColPali / ColQwen2 / VisRAG 设计视觉原生的文档 RAG，附带存储估算和生成器选型。"
+  },
+  "phases/12-multimodal-ai/24-multimodal-rag-cross-modal|skill-multimodal-rag-designer.md": {
+    "description": "跨文本、图像、音频、视频设计一个生产级多模态 RAG，包含检索器、融合策略和有据可循的生成器。"
+  },
+  "phases/12-multimodal-ai/25-multimodal-agents-computer-use|skill-multimodal-agent-designer.md": {
+    "description": "设计一个多模态 agent（computer-use、GUI grounding、Web 或移动端），包含动作 schema、记忆策略和基准测试评估方案。"
+  },
+  "phases/13-tools-and-protocols/01-the-tool-interface|skill-tool-interface-reviewer.md": {
+    "description": "在工具定义（名称 + 描述 + JSON Schema + 执行器概要）交付给 LLM 之前，审查其对循环（loop）的适配性。"
+  },
+  "phases/13-tools-and-protocols/02-function-calling-deep-dive|skill-provider-portability-audit.md": {
+    "description": "针对某一提供商审查 function-calling 集成，找出移植到另外两家时会出现的问题。"
+  },
+  "phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls|skill-parallel-call-safety-check.md": {
+    "description": "审查工具注册表的安全并行化能力。为每个工具标记 parallel_safe、记录顺序依赖，并标记下游限流风险。"
+  },
+  "phases/13-tools-and-protocols/04-structured-output|skill-structured-output-designer.md": {
+    "description": "为自由文本抽取目标设计兼容 strict 模式的 JSON Schema 及 Pydantic 模型，并预置带类型的拒答和重试处理桩。"
+  },
+  "phases/13-tools-and-protocols/05-tool-schema-design|skill-tool-schema-linter.md": {
+    "description": "对照生产设计规则审查工具注册表的名称、描述、参数和结构。可在每次工具注册表变更时于 CI 中运行。"
+  },
+  "phases/13-tools-and-protocols/06-mcp-fundamentals|skill-mcp-handshake-tracer.md": {
+    "description": "给定一段 pcap 风格的 MCP 客户端-服务器会话记录，为每条消息标注其原语、生命周期阶段和能力依赖。"
+  },
+  "phases/13-tools-and-protocols/07-building-an-mcp-server|skill-mcp-server-scaffolder.md": {
+    "description": "搭建一个特定领域的 MCP server，配以合理的 tools/resources/prompts 划分以及 SDK 演进路径。"
+  },
+  "phases/13-tools-and-protocols/08-building-an-mcp-client|skill-mcp-client-harness.md": {
+    "description": "给定一份声明式的 MCP server 列表（名称、命令、参数），搭建一个多 server 客户端，包含握手、命名空间合并和路由。"
+  },
+  "phases/13-tools-and-protocols/09-mcp-transports|skill-mcp-transport-migrator.md": {
+    "description": "产出一份从旧版 HTTP+SSE 迁移到 Streamable HTTP 的方案，包含 session id 连续性和 Origin 校验。"
+  },
+  "phases/13-tools-and-protocols/10-mcp-resources-and-prompts|skill-primitive-splitter.md": {
+    "description": "将 MCP server 草案中的每项能力归类为 tool、resource 或 prompt，并附上理由。"
+  },
+  "phases/13-tools-and-protocols/11-mcp-sampling|skill-sampling-loop-designer.md": {
+    "description": "使用 MCP sampling 设计一个服务端托管的 agent 循环，配以合理的 modelPreferences、限流和安全确认。"
+  },
+  "phases/13-tools-and-protocols/12-mcp-roots-and-elicitation|skill-elicitation-form-designer.md": {
+    "description": "为一个需要在调用中途进行用户确认或消歧的工具，设计 elicitation 表单 schema 和消息模板。"
+  },
+  "phases/13-tools-and-protocols/13-mcp-async-tasks|skill-task-store-designer.md": {
+    "description": "为一个长时间运行的 MCP 工具设计任务存储：状态结构、ttl、持久性、取消和崩溃恢复。"
+  },
+  "phases/13-tools-and-protocols/14-mcp-apps|skill-mcp-apps-spec.md": {
+    "description": "为一个需要交互式 UI 资源的工具，产出完整的 MCP Apps 契约。"
+  },
+  "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning|skill-mcp-threat-model.md": {
+    "description": "为一个 MCP 部署产出威胁模型，列明适用的攻击类别、已就位的防御措施以及 Rule-of-Two 违规情况。"
+  },
+  "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1|skill-oauth-scope-planner.md": {
+    "description": "为一个远程 MCP server 设计 OAuth 2.1 的 scope 集合、绑定规则和升级（step-up）策略。"
+  },
+  "phases/13-tools-and-protocols/17-mcp-gateways-and-registries|skill-gateway-bootstrap.md": {
+    "description": "在给定用户、后端和合规约束的情况下，产出一份网关配置规范。"
+  },
+  "phases/13-tools-and-protocols/18-mcp-auth-production|skill-mcp-auth-iii.md": {
+    "description": "将生产级 MCP 授权（RFC 8414、7591、8707、7636 PKCE、9728）接入 iii 原语——用 registerTrigger 处理 HTTP/cron，用 registerFunction 做校验，用 state::* 做 JWKS 缓存。"
+  },
+  "phases/13-tools-and-protocols/19-a2a-protocol|skill-a2a-agent-spec.md": {
+    "description": "为一个应可通过 A2A 调用的 agent 产出 Agent Card 和 skills schema。"
+  },
+  "phases/13-tools-and-protocols/20-opentelemetry-genai|skill-otel-genai-instrumentation.md": {
+    "description": "为一个 agent 代码库产出一份插桩方案，使其端到端发出 OTel GenAI span。"
+  },
+  "phases/13-tools-and-protocols/21-llm-routing-layer|skill-routing-config-designer.md": {
+    "description": "给定一份工作负载画像，选择 LiteLLM / OpenRouter / Portkey 并产出一份路由配置。"
+  },
+  "phases/13-tools-and-protocols/22-skills-and-agent-sdks|skill-agent-bundle.md": {
+    "description": "为一个工作流产出可移植的 SKILL.md + AGENTS.md + MCP-server 蓝图，可在 Claude Code、Cursor、Codex 及兼容 agent 间加载。"
+  },
+  "phases/13-tools-and-protocols/23-capstone-tool-ecosystem|skill-ecosystem-blueprint.md": {
+    "description": "在给定产品需求的情况下，产出一份完整的 Phase 13 生态架构；列明原语、安全态势、遥测和打包方式。"
+  },
+  "phases/14-agent-engineering/01-the-agent-loop|skill-agent-loop.md": {
+    "description": "在任意目标语言/运行时中写出一个正确、精简的 ReAct agent 循环，包含工具、停止条件和轮次预算。"
+  },
+  "phases/14-agent-engineering/02-rewoo-plan-and-execute|skill-rewoo-planner.md": {
+    "description": "根据用户请求和工具目录生成一个经过校验的 ReWOO 计划 DAG。"
+  },
+  "phases/14-agent-engineering/03-reflexion-verbal-rl|skill-reflexion-buffer.md": {
+    "description": "为 verbal RL 维护一个反思的情景记忆缓冲区，支持 TTL、去重和限定作用域。"
+  },
+  "phases/14-agent-engineering/04-tree-of-thoughts-lats|skill-search-policy.md": {
+    "description": "根据任务形态、token 预算和评估器质量，选择搜索策略（ReAct、ToT、LATS、进化式）。"
+  },
+  "phases/14-agent-engineering/05-self-refine-and-critic|skill-refine-loop.md": {
+    "description": "根据任务、验证器可用性和迭代预算，配置一个评估器-优化器（Self-Refine / CRITIC）循环。"
+  },
+  "phases/14-agent-engineering/06-tool-use-and-function-calling|skill-tool-registry.md": {
+    "description": "构建一个生产级工具目录与注册表，支持 JSON Schema 校验、并行调度和可观测性。"
+  },
+  "phases/14-agent-engineering/07-memory-virtual-context-memgpt|skill-virtual-memory.md": {
+    "description": "为任意目标运行时搭建一个 MemGPT 形态的两层记忆系统（主上下文 + 归档存储 + 记忆工具），具备正确的淘汰、引用和不可信输入处理。"
+  },
+  "phases/14-agent-engineering/08-memory-blocks-sleep-time-compute|skill-memory-blocks.md": {
+    "description": "生成一个 Letta 形态的三层记忆系统（核心块、回忆、归档），并配备一个在关键路径之外的睡眠时段整合 agent。"
+  },
+  "phases/14-agent-engineering/09-hybrid-memory-mem0|skill-hybrid-memory.md": {
+    "description": "生成一个 Mem0 形态的三存储记忆系统（向量 + KV + 图），包含融合打分器、作用域分类法和时序失效机制。"
+  },
+  "phases/14-agent-engineering/10-skill-libraries-voyager|skill-skill-library.md": {
+    "description": "生成一个 Voyager 形态的技能库，支持注册、按相似度检索、组合式执行和失败驱动的精化。"
+  },
+  "phases/14-agent-engineering/11-planning-htn-and-evolutionary|skill-hybrid-planner.md": {
+    "description": "构建一个混合 planner——用 ChatHTN 生成可证明可靠的计划，用 AlphaEvolve 配合机器可校验的评估器进行代码搜索——并为问题选出合适的那一个。"
+  },
+  "phases/14-agent-engineering/12-anthropic-workflow-patterns|skill-workflow-picker.md": {
+    "description": "为给定任务选出合适的模式（prompt 链、路由器、并行、编排器-工作者、评估器-优化器，或完整 agent），并产出最小实现。"
+  },
+  "phases/14-agent-engineering/13-langgraph-stateful-graphs|skill-state-graph.md": {
+    "description": "构建一个 LangGraph 形态的状态机，具备类型化状态、条件边、逐节点 checkpoint 和持久化恢复。"
+  },
+  "phases/14-agent-engineering/14-autogen-actor-model|skill-actor-runtime.md": {
+    "description": "构建一个 AutoGen v0.4 形态的 actor 运行时，具备私有状态、每个 actor 独立收件箱、仅消息 IPC、故障隔离和死信队列。"
+  },
+  "phases/14-agent-engineering/15-crewai-role-based-crews|skill-crew-or-flow.md": {
+    "description": "为给定任务在 CrewAI Crew 与 Flow 之间做选择，并搭建最小实现。"
+  },
+  "phases/14-agent-engineering/16-openai-agents-sdk|skill-agents-sdk-scaffold.md": {
+    "description": "搭建一个 OpenAI Agents SDK 应用，包含分诊 agent、handoff、输入/输出/工具护栏、会话存储和 trace 处理器。"
+  },
+  "phases/14-agent-engineering/17-claude-agent-sdk|skill-claude-agent-scaffold.md": {
+    "description": "搭建一个 Claude Agent SDK 应用，包含 subagent、生命周期 hook、会话存储、MCP 服务器挂载和 W3C trace 传播。"
+  },
+  "phases/14-agent-engineering/18-agno-and-mastra-runtimes|skill-runtime-picker.md": {
+    "description": "根据给定的技术栈、延迟预算和运维形态，选出一个生产级 agent 运行时（Agno、Mastra、LangGraph、厂商 SDK）。"
+  },
+  "phases/14-agent-engineering/19-benchmarks-swebench-gaia|skill-benchmark-harness.md": {
+    "description": "为某个代码库构建一个 SWE-bench 风格的测试框架，包含 FAIL_TO_PASS / PASS_TO_PASS 门控、污染检查和步数指标。"
+  },
+  "phases/14-agent-engineering/20-benchmarks-webarena-osworld|skill-web-desktop-harness.md": {
+    "description": "构建一个 WebArena/OSWorld 风格的测试框架，采用基于执行的评估和轨迹效率指标。"
+  },
+  "phases/14-agent-engineering/21-computer-use-agents|skill-computer-use-safety.md": {
+    "description": "为一个 computer-use agent 构建逐步安全分类器 + 确认门控，配合允许列表导航和注入标记过滤。"
+  },
+  "phases/14-agent-engineering/22-voice-agents-pipecat-livekit|skill-voice-pipeline.md": {
+    "description": "搭建一个 Pipecat 形态的语音流水线（VAD + STT + LLM + TTS + 传输），具备打断（barge-in）、置信度门控和延迟预算强制约束。"
+  },
+  "phases/14-agent-engineering/23-otel-genai-conventions|skill-otel-genai.md": {
+    "description": "使用 OpenTelemetry GenAI 语义约定为 agent 注入埋点——invoke_agent、chat、tool_call span，配以正确的属性和可选开启的内容捕获。"
+  },
+  "phases/14-agent-engineering/24-agent-observability-platforms|skill-obs-platform-wiring.md": {
+    "description": "选出一个可观测性平台（Langfuse、Phoenix、Opik、Datadog），并将 trace + eval + prompt 版本接入现有 agent。"
+  },
+  "phases/14-agent-engineering/25-multi-agent-debate|skill-debate.md": {
+    "description": "搭建一个多 agent 辩论，包含 N 个辩手、R 轮、可配置拓扑（全网状、星形、环形）和收敛规则。"
+  },
+  "phases/14-agent-engineering/26-failure-modes-agentic|skill-failure-detector.md": {
+    "description": "为 agent trace 生成失败模式检测器，接入 trace 存储，标记业界反复出现的五种模式以及领域特定的特征签名。"
+  },
+  "phases/14-agent-engineering/27-prompt-injection-defense|skill-injection-defense.md": {
+    "description": "为任意 agent 运行时构建一个 PVE（Prompt-Validator-Executor）层，支持来源标记的内容、注入标记扫描和允许列表导航。"
+  },
+  "phases/14-agent-engineering/28-orchestration-patterns|skill-orchestration-picker.md": {
+    "description": "为给定问题选出一种编排拓扑（监督者、swarm、分层、辩论或无），并以最小方式实现。"
+  },
+  "phases/14-agent-engineering/29-production-runtimes|skill-runtime-shape.md": {
+    "description": "选出一种生产运行时形态（请求-响应、流式、队列、事件、cron、持久化），并接入可观测性。"
+  },
+  "phases/14-agent-engineering/30-eval-driven-agent-development|skill-eval-suite.md": {
+    "description": "构建一个三层 eval 套件（静态 benchmark、自定义离线、线上生产），配以评估器-优化器循环和 CI 门控。"
+  },
+  "phases/14-agent-engineering/31-agent-workbench-why-models-fail|skill-workbench-audit.md": {
+    "description": "在任何 agent 工作开始之前，审计一个 repo 的七个 agent workbench 面，并报告哪些缺失、哪些不完整、哪些健康。"
+  },
+  "phases/14-agent-engineering/32-minimal-agent-workbench|skill-minimal-workbench.md": {
+    "description": "为任意 repo 铺设三文件最小可用 agent workbench——简短的 AGENTS.md 路由器、持久化的 agent_state.json，以及一个与项目当前待办挂钩的 JSON task_board.json。"
+  },
+  "phases/14-agent-engineering/33-instructions-as-executable-constraints|skill-rule-set-builder.md": {
+    "description": "访谈项目负责人，将其现有的文字说明归类为五个运维类别，并产出一个带版本的 agent-rules.md 以及一个 Python 检查器桩。"
+  },
+  "phases/14-agent-engineering/34-repo-memory-and-state|skill-state-schema.md": {
+    "description": "为 agent 状态和任务看板生成项目特定的 JSON Schema，一个带原子写入的 Python StateManager，以及一个迁移脚手架，使 schema 升级不会损坏 workbench。"
+  },
+  "phases/14-agent-engineering/35-initialization-scripts|skill-init-script.md": {
+    "description": "访谈一个项目，并产出一个确定性的 init_agent.py（包含五个探针），外加一个 CI 工作流，只要任一探针失败就拒绝启动 agent。"
+  },
+  "phases/14-agent-engineering/36-scope-contracts|skill-scope-contract.md": {
+    "description": "生成逐任务的作用域契约，包含允许/禁止的 glob、验收标准和回滚计划，外加一个可用于 CI、能感知 glob 的检查器，在每次 agent diff 上运行。"
+  },
+  "phases/14-agent-engineering/37-runtime-feedback-loops|skill-feedback-runner.md": {
+    "description": "用确定性的 stdout/stderr/退出码/时长捕获来包裹 shell 命令，为每条命令持久化一条 JSONL 记录，并在缺少反馈时拒绝推进 agent 循环。"
+  },
+  "phases/14-agent-engineering/38-verification-gates|skill-verification-gate.md": {
+    "description": "生成一个确定性的验证门，将作用域、规则和反馈产物合并为每个任务一份 verification_report.json，外加 CI 接线，在没有绿色判定时拒绝合并。"
+  },
+  "phases/14-agent-engineering/39-reviewer-agent|skill-reviewer-agent.md": {
+    "description": "建立一个 reviewer agent 角色，配以五维评分量表，读取 builder 产物，产出结构化评审报告，让人类评审从一份写好的文稿而非空白页开始。"
+  },
+  "phases/14-agent-engineering/40-multi-session-handoff|skill-handoff-generator.md": {
+    "description": "从 workbench 产物生成会话结束时的交接包，同时产出人类可读的 Markdown 和机器可读的 JSON，并以七个规范字段为键。"
+  },
+  "phases/14-agent-engineering/41-workbench-for-real-repos|skill-workbench-benchmark.md": {
+    "description": "在项目自带的示例应用上，分别用仅 prompt 和 workbench 引导两条流水线跑同一个任务，并产出一份含五种结果的前后对比报告。"
+  },
+  "phases/14-agent-engineering/42-agent-workbench-capstone|skill-workbench-pack.md": {
+    "description": "生成一个针对项目调优的、开箱即用的 agent workbench 包——规则针对团队历史打磨、作用域 glob 匹配该 repo、评分维度扩展一个领域特定项。"
+  },
+  "phases/15-autonomous-systems/01-long-horizon-agents|skill-horizon-reality-check.md": {
+    "description": "给定一个你想交给 agent 的任务，判断当前前沿的时间跨度是否能以足够余量覆盖它。"
+  },
+  "phases/15-autonomous-systems/02-star-family-reasoning|skill-star-loop-reviewer.md": {
+    "description": "在投入训练算力之前，审计一个拟用的自学推理流水线（STaR 系列）。"
+  },
+  "phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding|skill-evaluator-rigor-audit.md": {
+    "description": "在为搜索投入任何算力之前，审计一个拟用的 AlphaEvolve 风格进化式编码循环的评估器。"
+  },
+  "phases/15-autonomous-systems/04-darwin-godel-machine|skill-dgm-evaluator-firewall.md": {
+    "description": "为一个 Darwin-Gödel-Machine 风格的自我修改 agent 循环指定所需的评估器隔离，以避免已记录的奖励作弊。"
+  },
+  "phases/15-autonomous-systems/05-ai-scientist-v2|skill-ai-scientist-sandbox-review.md": {
+    "description": "在任何东西离开沙箱之前，对研究循环 agent 的输出进行两道门的评审清单。"
+  },
+  "phases/15-autonomous-systems/06-automated-alignment-research|skill-aar-deployment-review.md": {
+    "description": "对一个自动化对齐研究流水线进行部署前评审，包括沙箱隔离和日志完整性。"
+  },
+  "phases/15-autonomous-systems/07-recursive-self-improvement|skill-rsi-cycle-pause-spec.md": {
+    "description": "指定一个 RSI 流水线在进入下一周期之前必须暂停并等待人类评审的条件。"
+  },
+  "phases/15-autonomous-systems/08-bounded-self-improvement|skill-bounded-loop-review.md": {
+    "description": "对照四原语栈（不变量、锚点、多目标、回归检测）审计一个拟用的有界自我改进循环。"
+  },
+  "phases/15-autonomous-systems/09-coding-agent-landscape|skill-scaffold-audit.md": {
+    "description": "在为生产代码变更采用之前，审计一个拟用的编码 agent 脚手架（检索、验证器循环、沙箱、benchmark 契合度）。"
+  },
+  "phases/15-autonomous-systems/10-claude-code-permission-modes|skill-permission-mode-picker.md": {
+    "description": "在开始运行之前，为一个 Claude Code 任务匹配正确的权限模式、预算上限和所需隔离。"
+  },
+  "phases/15-autonomous-systems/11-browser-agents|skill-browser-agent-trust-boundary.md": {
+    "description": "在 agent 接触真实站点之前，界定一个拟用的 browser-agent 部署——信任区、授权写入、所需防御。"
+  },
+  "phases/15-autonomous-systems/12-durable-execution|skill-durable-execution-review.md": {
+    "description": "评审一个拟用的长时运行 agent 部署是否具有正确的持久化执行形态（活动、确定性、checkpoint 后端、人类输入状态、恢复时的 HITL）。"
+  },
+  "phases/15-autonomous-systems/13-cost-governors|skill-agent-budget-audit.md": {
+    "description": "在启用无人值守运行之前，审计一个 agent 部署的成本治理栈并标记缺失的层。"
+  },
+  "phases/15-autonomous-systems/14-kill-switches-canaries|skill-tripwire-design.md": {
+    "description": "在首次自主运行之前，评审一个拟用的 agent 检测器栈（kill switch、断路器、canary token）并标记缺失的触发线。"
+  },
+  "phases/15-autonomous-systems/15-propose-then-commit|skill-hitl-design.md": {
+    "description": "评审一个拟用的 Human-in-the-Loop 工作流是否符合先提议后提交的形态，并标记缺失的元数据、幂等性、验证或质询-应答层。"
+  },
+  "phases/15-autonomous-systems/16-checkpoints-rollback|skill-rollback-rehearsal.md": {
+    "description": "为一个拟用的自主工作流设计回滚演练测试，并审计 checkpoint 后端的审计轨迹持久化。"
+  },
+  "phases/15-autonomous-systems/17-constitutional-ai|skill-constitution-review.md": {
+    "description": "审计一个部署的宪法层——硬编码禁令、软编码默认值、运营者可调整边界，以及四级层级解析。"
+  },
+  "phases/15-autonomous-systems/18-llama-guard|skill-classifier-stack-audit.md": {
+    "description": "审计一个部署的输入/输出分类器栈（模型、分类法、输入护栏、输出护栏、对话护栏）并标记对抗攻击缺口。"
+  },
+  "phases/15-autonomous-systems/19-anthropic-rsp|skill-scaling-policy-review.md": {
+    "description": "对照 RSP v3.0 参考形态，评审一个前沿实验室的扩展策略（Anthropic RSP、OpenAI Preparedness、DeepMind FSF、内部策略）。"
+  },
+  "phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf|skill-cross-policy-diff.md": {
+    "description": "以 OpenAI Preparedness Framework v2、Anthropic RSP v3.0 和 DeepMind FSF v3 为参考，为某项特定能力产出一份跨策略对比。"
+  },
+  "phases/15-autonomous-systems/21-metr-external-evaluation|skill-horizon-interpretation.md": {
+    "description": "评审一家厂商的时间跨度声明，并就 benchmark 声明与部署现实之间产出一份差距分析。"
+  },
+  "phases/15-autonomous-systems/22-cais-caisi-societal-risk|skill-societal-risk-review.md": {
+    "description": "使用 CAIS 四风险框架以及 CAISI / SB-53 监管背景，评审一个部署的社会层级风险态势。"
+  },
+  "phases/16-multi-agent-and-swarms/01-why-multi-agent|prompt-multi-agent-decision.md": {
+    "description": "判断一个任务是需要多 agent 系统还是单个 agent。"
+  },
+  "phases/16-multi-agent-and-swarms/02-fipa-acl-heritage|skill-fipa-mapper.md": {
+    "description": "将任意 2026 年的 agent 协议规范（MCP、A2A、ACP、ANP、CA-MCP、NLIP 或新出现的）映射到 FIPA-ACL 的言语行为（performative）和交互协议上，以判断哪些是真正的创新、哪些是重复发明。"
+  },
+  "phases/16-multi-agent-and-swarms/03-communication-protocols|prompt-protocol-selector.md": {
+    "description": "根据系统需求帮助选择合适的 agent 通信协议（MCP、A2A、ACP、ANP）。"
+  },
+  "phases/16-multi-agent-and-swarms/04-primitive-model|skill-primitive-mapper.md": {
+    "description": "将任意多 agent 框架或代码库映射到四个原语轴（agent、handoff、共享状态、编排器）。"
+  },
+  "phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern|skill-supervisor-designer.md": {
+    "description": "为给定的研究型查询设计一个监督者/编排器-工作者系统，明确主导 prompt、工作者角色、分解规则和综合模板。"
+  },
+  "phases/16-multi-agent-and-swarms/06-hierarchical-architecture|skill-hierarchy-fitness.md": {
+    "description": "判断一个多 agent 任务适合分层、扁平监督者还是顺序结构。揭示真正重要的失败模式。"
+  },
+  "phases/16-multi-agent-and-swarms/07-society-of-mind-debate|skill-debate-configurator.md": {
+    "description": "为给定任务配置一场多 agent 辩论，在运行前估算质量增益和 token 成本。"
+  },
+  "phases/16-multi-agent-and-swarms/08-role-specialization|skill-role-designer.md": {
+    "description": "为一个多 agent 系统产出角色花名册，为给定任务命名 planner/executor/critic/verifier，并给出明确的 I/O schema。"
+  },
+  "phases/16-multi-agent-and-swarms/09-parallel-swarm-networks|skill-swarm-fit.md": {
+    "description": "判断一个任务适合 swarm（去中心化）架构还是监督者（中心化）架构。"
+  },
+  "phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection|skill-groupchat-selector.md": {
+    "description": "为一个任务配置 AutoGen/AG2 风格的 GroupChat 选择器，命名选择器变体、终止条件和防热门发言者规则。"
+  },
+  "phases/16-multi-agent-and-swarms/11-handoffs-and-routines|skill-handoff-designer.md": {
+    "description": "为 Swarm/Agents-SDK 风格的系统设计 handoff 拓扑：存在哪些 agent、它们可以调用哪些 handoff、传递什么上下文。"
+  },
+  "phases/16-multi-agent-and-swarms/12-a2a-protocol|skill-a2a-integrator.md": {
+    "description": "在两个 agent 之间设计一次 A2A 集成——Agent Card、任务 schema、鉴权、流式或轮询。"
+  },
+  "phases/16-multi-agent-and-swarms/13-shared-memory-blackboard|skill-memory-auditor.md": {
+    "description": "审计一个多 agent 系统的共享记忆设计的来源追溯、版本管理、验证器隔离和投影 schema。在上生产前标记记忆投毒暴露面。"
+  },
+  "phases/16-multi-agent-and-swarms/14-consensus-and-bft|skill-consensus-designer.md": {
+    "description": "为一个多 agent 集成设计一个具备 BFT 意识的共识协议。选择聚类、加权、阈值和升级策略；针对拜占庭、谄媚和单一文化模式对设计做攻击测试。"
+  },
+  "phases/16-multi-agent-and-swarms/15-voting-debate-topology|skill-topology-picker.md": {
+    "description": "为给定任务挑选一种多 agent 辩论拓扑（星形 / 链形 / 树形 / 图形）、agent 数量 N、异质性画像和轮次上限。"
+  },
+  "phases/16-multi-agent-and-swarms/16-negotiation-bargaining|skill-bargainer-designer.md": {
+    "description": "设计一个协商协议：由哪个 agent 叙述、哪个组件生成报价、私有草稿区如何与公开消息分离、轮次上限是多少，以及如何监控成交率。"
+  },
+  "phases/16-multi-agent-and-swarms/17-generative-agents-simulation|skill-simulation-designer.md": {
+    "description": "为给定场景设计一个生成式 agent 仿真（Smallville 风格）。指定记忆 schema、反思节奏、计划跨度、空间/社交约束和评估指标。"
+  },
+  "phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination|skill-tom-auditor.md": {
+    "description": "审计一个声称「涌现协作」的多 agent 系统。通过控制条件、统计检验和互补性测量，将真正由 ToM 驱动的协作与 prompt 包装出来的假象区分开。"
+  },
+  "phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco|skill-swarm-optimizer.md": {
+    "description": "为给定的 LLM 或 agent 优化问题在 PSO、ACO、遗传算法和基于 gradient 的优化器之间做选择。受生物启发的 swarm 算法是无 gradient 的，适合搜索空间离散或适应度函数为黑盒的 LLM 时代工作负载。"
+  },
+  "phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo|skill-marl-picker.md": {
+    "description": "为给定的多 agent 任务选择一种 MARL 算法（MADDPG、QMIX、MAPPO、IQL 或其扩展）。需考虑协作与竞争、动作空间类型、异质性、奖励结构和规模。"
+  },
+  "phases/16-multi-agent-and-swarms/21-agent-economies|skill-economy-designer.md": {
+    "description": "设计一个最小的 agent 经济体——身份、贡献归因、支付机制、声誉。挑选能解决用户多 agent 激励问题的最小技术栈。"
+  },
+  "phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints|skill-scaling-advisor.md": {
+    "description": "就一个多 agent 生产系统的持久化执行选型给出建议。根据具体的负载和状态保留需求，在 FastAPI + Postgres、LangGraph 运行时、Temporal、Restate 或自研之间做选择。"
+  },
+  "phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink|skill-mast-auditor.md": {
+    "description": "对一个多 agent 系统运行 MAST 风格的失败模式审计。将执行轨迹失败归类到 Specification / Coordination / Verification 和 Groupthink 家族；按预期失败减少程度对缓解措施排序。"
+  },
+  "phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks|skill-benchmark-reader.md": {
+    "description": "以怀疑的态度阅读一项多 agent benchmark 声明。从 benchmark 选择、污染、baseline、统计显著性、任务多样性和成本披露等方面为该声明打分。"
+  },
+  "phases/16-multi-agent-and-swarms/25-case-studies-2026-sota|skill-case-study-mapper.md": {
+    "description": "将一个拟用的多 agent 系统设计映射到最接近的 2026 年生产参考案例（Anthropic Research、MetaGPT/ChatDev 或 OpenClaw/Moltbook）。揭示已知的权衡、推荐的框架，以及那些已在生产中验证过的具体设计决策。"
+  },
+  "phases/17-infrastructure-and-production/01-managed-llm-platforms|skill-managed-platform-picker.md": {
+    "description": "根据工作负载、SLA 与合规要求，选定一个托管 LLM 平台（Bedrock、Azure OpenAI、Vertex AI）并选定第二个作为冗余备份——然后产出一份 FinOps 监测仪表化方案。"
+  },
+  "phases/17-infrastructure-and-production/02-inference-platform-economics|skill-inference-platform-picker.md": {
+    "description": "根据工作负载、SLA、预算与运维约束，选定一个推理平台（Fireworks、Together、Baseten、Modal、Replicate、Anyscale 或自研芯片）。将按 token、按分钟、按预测的定价归一化对比。"
+  },
+  "phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes|skill-gpu-autoscaler-plan.md": {
+    "description": "为基于 Kubernetes 的 LLM 服务集群设计一套三层 GPU 自动扩缩方案（Karpenter + KAI Scheduler + 应用层信号）。诊断 DCGM_FI_DEV_GPU_UTIL 陷阱与部分分配失败问题。"
+  },
+  "phases/17-infrastructure-and-production/04-vllm-serving-internals|skill-vllm-scheduler-reader.md": {
+    "description": "通过解读调度器级别的旋钮参数来诊断 vLLM 服务配置，识别 PagedAttention、continuous batching、chunked prefill 三者中哪个是瓶颈。"
+  },
+  "phases/17-infrastructure-and-production/05-eagle3-speculative-decoding|skill-eagle3-rollout.md": {
+    "description": "产出一份分阶段的 EAGLE-3 推测解码（speculative decoding）上线方案，在正式发布前先在真实流量上测量接受率 alpha。"
+  },
+  "phases/17-infrastructure-and-production/06-sglang-radixattention|skill-radix-scheduler-advisor.md": {
+    "description": "针对希望利用 RadixAttention 缓存复用的前缀密集型工作负载，就 SGLang 采用与 prompt 排序规范给出建议。"
+  },
+  "phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell|skill-trtllm-blackwell-advisor.md": {
+    "description": "针对给定的工作负载与预算，判断 Blackwell + TensorRT-LLM + Dynamo 是否值得被 NVIDIA 锁定。"
+  },
+  "phases/17-infrastructure-and-production/08-inference-metrics-goodput|skill-slo-goodput-gate.md": {
+    "description": "产出一份可直接用于 CI/CD 的基准测试方案，以 goodput（有效吞吐）而非 throughput 来把关 LLM 部署，附带 P50/P90/P99 分位数与有据可循的工具选型。"
+  },
+  "phases/17-infrastructure-and-production/09-production-quantization|skill-quantization-picker.md": {
+    "description": "根据硬件、引擎、工作负载与质量容忍度，选定一种 2026 年的量化格式，并产出一份校准 + 验证方案。"
+  },
+  "phases/17-infrastructure-and-production/10-cold-start-mitigation|skill-cold-start-planner.md": {
+    "description": "为 serverless LLM 部署挑选并叠加冷启动缓解手段。对各阶段（节点、镜像、权重、引擎、首次前向传播）做预算分配，并将缓解手段与 SLA 匹配。"
+  },
+  "phases/17-infrastructure-and-production/11-multi-region-kv-locality|skill-multi-region-router.md": {
+    "description": "设计一套多区域 LLM 路由方案，涵盖 KV cache 局部性、数据驻留边界、灾备（DR）清单与季度故障切换演练。"
+  },
+  "phases/17-infrastructure-and-production/12-edge-inference|skill-edge-target-picker.md": {
+    "description": "根据设备、模型与延迟预算，选定一个边缘推理目标（Apple ANE、Qualcomm Hexagon、WebGPU/WebLLM、NVIDIA Jetson）及匹配的量化格式。"
+  },
+  "phases/17-infrastructure-and-production/13-llm-observability|skill-observability-stack.md": {
+    "description": "根据技术栈、规模、预算与许可证态势，选定一套 LLM 可观测性栈（开发平台 + 网关 + 可选的规模化层），并定义 OpenTelemetry GenAI 属性集。"
+  },
+  "phases/17-infrastructure-and-production/14-prompt-semantic-caching|skill-cache-auditor.md": {
+    "description": "审计一个 LLM prompt 模板及其流量模式的可缓存性。给出 prompt 重构、TTL 选择、并行化修复与语义缓存阈值的建议。"
+  },
+  "phases/17-infrastructure-and-production/15-batch-apis|skill-batch-triager.md": {
+    "description": "将 LLM 工作负载分流到交互式 / 半交互式 / batch 三条通道，计算叠加折扣（batch + 缓存）所带来的节省，并标记被错误分流的工作负载。"
+  },
+  "phases/17-infrastructure-and-production/16-model-routing|skill-router-plan.md": {
+    "description": "设计一套 LLM 模型路由方案——选定模式（预路由、级联、集成）、信号（任务、长度、embedding、置信度）以及在线质量关卡。"
+  },
+  "phases/17-infrastructure-and-production/17-disaggregated-prefill-decode|skill-disaggregation-decider.md": {
+    "description": "针对给定的工作负载与集群，判断是否采用分离式 prefill/decode（Dynamo 或 llm-d）。量化 prefill:decode 比例、KV 传输成本与预期节省。"
+  },
+  "phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache|skill-vllm-stack-decider.md": {
+    "description": "根据工作负载与机群规模，决定 vLLM 部署布局——production-stack Helm chart、KV 卸载（原生 CPU 或 LMCache）、router/可观测性集成。"
+  },
+  "phases/17-infrastructure-and-production/19-ai-gateways|skill-gateway-picker.md": {
+    "description": "根据规模、延迟预算、合规、运维态势与定价容忍度，选定一个 AI 网关（LiteLLM、Portkey、Kong AI、Cloudflare/Vercel）。"
+  },
+  "phases/17-infrastructure-and-production/20-shadow-canary-progressive|skill-rollout-runbook.md": {
+    "description": "为新的 LLM 模型或 prompt 模板设计一套 shadow → canary → A/B → 100% 的上线方案，包含五道金丝雀关卡、感知噪声底线的阈值，以及秒级快速回滚路径。"
+  },
+  "phases/17-infrastructure-and-production/21-ab-testing-llm-features|skill-ab-plan.md": {
+    "description": "设计一项 LLM A/B 测试——选定平台（Statsig 或 GrowthBook）、主指标、护栏、含 LLM 噪声缓冲的样本量、CUPED、序贯停止以及多重比较校正。"
+  },
+  "phases/17-infrastructure-and-production/22-load-testing-llm-apis|skill-load-test-plan.md": {
+    "description": "设计一项贴近真实的 LLM 负载测试——选定工具（LLMPerf、k6、GenAI-Perf、guidellm），构建四种模式（稳态、爬坡、尖峰、浸泡），并在 CI 中设关把控。"
+  },
+  "phases/17-infrastructure-and-production/23-sre-for-ai|skill-ai-sre-plan.md": {
+    "description": "为团队设计一套 AI SRE 落地方案——多 agent 分流架构、结构化运行手册、对抗性评估、范围收窄的自动修复，以及预测性检测态势。"
+  },
+  "phases/17-infrastructure-and-production/24-chaos-engineering-llm|skill-chaos-plan.md": {
+    "description": "设计一套 LLM 混沌工程方案——验证前置条件、构建四个平面、选定工具、从三个安全实验起步，并强制执行安全平面关卡。"
+  },
+  "phases/17-infrastructure-and-production/25-security-secrets-audit|skill-llm-security-plan.md": {
+    "description": "产出一份 LLM 安全方案，涵盖密钥保管库、带一致性 token 化的 PII 脱敏、网络出站允许列表、审计日志留存以及零信任态势。"
+  },
+  "phases/17-infrastructure-and-production/26-compliance-frameworks|skill-compliance-matrix.md": {
+    "description": "根据客户的地域、细分市场与合同范围，为一个 LLM SaaS 产出所需合规框架矩阵。将控制项映射到 SOC 2、HIPAA、GDPR、PCI-DSS、欧盟 AI 法案、科罗拉多 AI 法案、ISO 42001。"
+  },
+  "phases/17-infrastructure-and-production/27-finops-llms|skill-finops-plan.md": {
+    "description": "设计一套 LLM FinOps 方案——归因模式（用户/任务/租户 + 四层 token）、三级强制执行阶梯，以及单位指标（每解决一次 / 每件产物的成本）。"
+  },
+  "phases/17-infrastructure-and-production/28-self-hosted-serving-selection|skill-engine-picker.md": {
+    "description": "根据硬件、规模与工作负载，选定一个自托管 LLM 引擎（llama.cpp、Ollama、TGI、vLLM、SGLang）。点明 2026 年 TGI 进入维护模式可作为迁移触发信号。"
+  },
+  "phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal|skill-instructgpt-explainer.md": {
+    "description": "对照 InstructGPT 三阶段参考范式，诊断一篇 RLHF 系列论文或一条流水线。"
+  },
+  "phases/18-ethics-safety-alignment/02-reward-hacking-goodhart|skill-reward-hack-auditor.md": {
+    "description": "从训练日志与评估输出中诊断已训练 RLHF 模型的奖励攻击（reward hacking）失败模式。"
+  },
+  "phases/18-ethics-safety-alignment/03-direct-preference-optimization-family|skill-preference-loss-selector.md": {
+    "description": "根据数据集形态与目标阶段，推荐一种直接对齐算法的 loss。"
+  },
+  "phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification|skill-sycophancy-probe.md": {
+    "description": "生成成对的「用户信念 / 第三方信念」prompt，并为模型的谄媚倾向（sycophancy）打分。"
+  },
+  "phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif|skill-constitution-writer.md": {
+    "description": "为特定领域的 AI 系统起草一份四层级的章程（constitution）。"
+  },
+  "phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment|skill-mesa-diagnostic.md": {
+    "description": "将观察到的安全失败分类为外部对齐失败、代理型内部对齐失败，或欺骗型内部对齐失败。"
+  },
+  "phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception|skill-sleeper-audit.md": {
+    "description": "审计一份对齐训练报告，判断它是否真正证明了已移除植入的或疑似的后门。"
+  },
+  "phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models|skill-scheming-triage.md": {
+    "description": "对照 Apollo 三支柱阴谋（scheming）框架，对一份 agent 部署事故报告进行分流。"
+  },
+  "phases/18-ethics-safety-alignment/09-alignment-faking|skill-compliance-gap.md": {
+    "description": "通过「受监控 / 未受监控」的合规差距，评估一份安全报告能否检测出对齐伪装（alignment faking）。"
+  },
+  "phases/18-ethics-safety-alignment/10-ai-control-subversion|skill-control-protocol-audit.md": {
+    "description": "在 AI Control 威胁模型下审计一套部署协议。"
+  },
+  "phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong|skill-w2sg-pgr.md": {
+    "description": "通过「已恢复性能差距」（performance-gap-recovered）指标，审计一项可扩展监督或 W2SG 主张。"
+  },
+  "phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks|skill-attack-audit.md": {
+    "description": "审计一份红队评估报告的攻击覆盖度、预算、评判者身份与行为集合。"
+  },
+  "phases/18-ethics-safety-alignment/13-many-shot-jailbreaking|skill-msj-audit.md": {
+    "description": "审计一项长上下文安全评估对多样本越狱（many-shot jailbreaking）的覆盖度。"
+  },
+  "phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks|skill-encoding-audit.md": {
+    "description": "审计一份越狱防御报告对各类编码族攻击的覆盖情况。"
+  },
+  "phases/18-ethics-safety-alignment/15-indirect-prompt-injection|skill-ipi-audit.md": {
+    "description": "审计一个 agent 化部署的间接 prompt 注入暴露面与信息流控制覆盖度。"
+  },
+  "phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit|skill-red-team-stack.md": {
+    "description": "为给定部署推荐一套红队工具栈及其配置。"
+  },
+  "phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation|skill-wmdp-eval.md": {
+    "description": "对照 WMDP、遗忘（unlearning）评估与诱导（elicitation）研究，审计一项两用能力主张。"
+  },
+  "phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf|skill-framework-diff.md": {
+    "description": "将一份新的安全框架或发布说明与 RSP v3.0、PF v2、FSF v3.0 进行对比。"
+  },
+  "phases/18-ethics-safety-alignment/19-model-welfare-research|skill-welfare-assessment.md": {
+    "description": "将 Anthropic 的四步福祉预防性评估应用于一项部署决策。"
+  },
+  "phases/18-ethics-safety-alignment/20-bias-representational-harm|skill-bias-eval.md": {
+    "description": "审计一份偏见评估报告，涵盖各指标类别、交叉性以及去偏机制。"
+  },
+  "phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual|skill-fairness-criterion.md": {
+    "description": "识别某项主张援引了哪条公平性准则，并审计相关假设。"
+  },
+  "phases/18-ethics-safety-alignment/22-differential-privacy-for-llms|skill-dp-audit.md": {
+    "description": "审计一项针对语言模型部署的差分隐私（differential privacy）主张。"
+  },
+  "phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa|skill-provenance-audit.md": {
+    "description": "审计一项内容部署的溯源链，涵盖水印与 C2PA 元数据。"
+  },
+  "phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea|skill-regulatory-map.md": {
+    "description": "梳理一项部署在欧盟、美国、英国、韩国的 AI 监管义务。"
+  },
+  "phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai|skill-cve-review.md": {
+    "description": "审查一个生产 AI 部署的 LLM 越权（Scope Violation）暴露面。"
+  },
+  "phases/18-ethics-safety-alignment/26-model-system-dataset-cards|skill-card-audit.md": {
+    "description": "审计一份 model card、数据集说明书（datasheet）或 system card 的完整性与可验证性。"
+  },
+  "phases/18-ethics-safety-alignment/27-data-provenance-training-governance|skill-provenance-check.md": {
+    "description": "对照加州 AB 2013 与欧盟 TDM 退出（opt-out）义务，检查一个训练数据集。"
+  },
+  "phases/18-ethics-safety-alignment/28-alignment-research-ecosystem|skill-ecosystem-map.md": {
+    "description": "将一项对齐主张或评估映射到对应的机构、方法学与交叉核验。"
+  },
+  "phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard|skill-moderation-stack.md": {
+    "description": "为一个生产部署推荐一套内容审核（moderation）栈配置。"
+  },
+  "phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear|skill-dual-use-triage.md": {
+    "description": "在四个 CBRN 领域间对一项能力主张或事故报告进行分流。"
+  },
+  "phases/19-capstone-projects/01-terminal-native-coding-agent|skill-terminal-coding-agent.md": {
+    "description": "构建并评估一个终端原生编码 agent，使其在 SWE-bench Pro 上以受限成本、沙箱化工具与完整的 2026 hook 接口面运行。"
+  },
+  "phases/19-capstone-projects/02-rag-over-codebase|skill-codebase-rag.md": {
+    "description": "构建一套跨仓库语义搜索系统，具备 AST 感知的分块、混合检索、增量重建索引与带引用的回答。"
+  },
+  "phases/19-capstone-projects/03-realtime-voice-assistant|skill-voice-agent.md": {
+    "description": "构建一个实时语音 agent，首音输出延迟低于 800ms，支持打断（barge-in）处理与对话中途的工具使用。"
+  },
+  "phases/19-capstone-projects/04-multimodal-document-qa|skill-doc-qa.md": {
+    "description": "在 1 万页文档上构建一套视觉优先的多模态文档问答系统，具备后交互（late-interaction）检索与证据区域引用。"
+  },
+  "phases/19-capstone-projects/05-autonomous-research-agent|skill-ai-scientist.md": {
+    "description": "构建一个自主研究 agent，能够运行实验树搜索、借助视觉评审撰写 LaTeX 论文，并通过一轮沙箱逃逸红队测试。"
+  },
+  "phases/19-capstone-projects/06-devops-troubleshooting-agent|skill-devops-agent.md": {
+    "description": "构建一个 Kubernetes 排障 agent，能够遍历集群知识图谱、对根因排序，并让每一步修复都经过 Slack 把关。"
+  },
+  "phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline|skill-finetuning-pipeline.md": {
+    "description": "运行一条可复现的「数据→SFT→DPO→服务」微调流水线，包含消融实验、量化，以及一份符合 2026 Model Openness Framework 的 model card。"
+  },
+  "phases/19-capstone-projects/08-production-rag-chatbot|skill-production-rag.md": {
+    "description": "部署一个受监管领域的 RAG 聊天机器人，具备角色 + 司法辖区过滤、prompt 缓存、护栏与实时漂移监控。"
+  },
+  "phases/19-capstone-projects/09-code-migration-agent|skill-migration-agent.md": {
+    "description": "构建一个仓库级代码迁移 agent，将确定性配方与 agent 回退循环相结合，通过 MigrationBench 并发布一套失败分类法。"
+  },
+  "phases/19-capstone-projects/10-multi-agent-software-team|skill-multi-agent-team.md": {
+    "description": "构建一支多 agent 软件团队，包含架构师、并行编码者、评审者与测试者；在 SWE-bench Pro 上评测并产出一份交接复盘。"
+  },
+  "phases/19-capstone-projects/11-llm-observability-dashboard|skill-llm-observability.md": {
+    "description": "构建一个自托管的 LLM 可观测性仪表盘，能够摄取 OpenTelemetry GenAI span、运行评估，并在五分钟内捕获注入的回归。"
+  },
+  "phases/19-capstone-projects/12-video-understanding-pipeline|skill-video-qa.md": {
+    "description": "构建一条视频理解流水线，具备场景切分、多向量索引、时序定位与带时间戳的引用。"
+  },
+  "phases/19-capstone-projects/13-mcp-server-with-registry|skill-mcp-server.md": {
+    "description": "部署一个生产级 MCP server，具备 StreamableHTTP、OAuth 2.1 作用域、OPA 策略、面向破坏性工具的人工审批关卡，以及用于发现的注册表。"
+  },
+  "phases/19-capstone-projects/14-speculative-decoding-server|skill-inference-server.md": {
+    "description": "交付一个推测解码（speculative decoding）推理 server，采用 EAGLE-3 或 P-EAGLE 草稿模型、K8s 自动扩缩，并附一份完整的吞吐/延迟/成本报告。"
+  },
+  "phases/19-capstone-projects/15-constitutional-safety-harness|skill-safety-harness.md": {
+    "description": "围绕目标 LLM 应用搭建一条分层安全流水线，运行覆盖六大族的红队靶场，并执行宪法式自我批判以获得可量化的无害性提升。"
+  },
+  "phases/19-capstone-projects/16-github-issue-to-pr-agent|skill-issue-to-pr.md": {
+    "description": "构建一个异步的 GitHub「issue 到 PR」agent，在云沙箱中运行、复现构建、验证测试，并在严格的单仓库预算内开出可供评审的 PR。"
+  },
+  "phases/19-capstone-projects/17-personal-ai-tutor|skill-ai-tutor.md": {
+    "description": "针对特定学科交付一个自适应的多模态个人导师，具备贝叶斯知识追踪、课程图谱、安全过滤器，以及一项实测的两周成效研究。"
+  },
+  "phases/19-capstone-projects/46-gradient-accumulation|skill-gradient-accumulation.md": {
+    "description": "通过缩放微 batch 的 loss、并在每个窗口仅执行一次 optimizer 更新，以大于设备显存的有效 batch 进行训练。"
+  },
+  "phases/19-capstone-projects/47-checkpoint-save-resume|skill-checkpoint-save-resume.md": {
+    "description": "原子化、分片的 checkpoint，并完整捕获 RNG 状态，使被中断的训练能在 epoch 中途恢复并保持相同的 loss 轨迹。"
+  },
+  "phases/19-capstone-projects/48-distributed-fsdp-ddp|skill-distributed-fsdp-ddp.md": {
+    "description": "用一个从零实现的 DDP 封装器，并在 gloo 或 nccl 后端上勾勒 FSDP 参数分片，搭起多 rank 训练。"
+  },
+  "phases/19-capstone-projects/49-lm-eval-harness|skill-lm-eval-harness.md": {
+    "description": "一个极简的语言模型评估框架，具备 JSONL 任务规范、五项指标、可替换的适配器以及排行榜 JSON 输出。"
+  }
+}

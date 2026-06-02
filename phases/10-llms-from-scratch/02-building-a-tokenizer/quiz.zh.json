@@ -1,0 +1,37 @@
+[
+  {
+    "question": "为什么一个基础的 BPE tokenizer 在处理多语言或代码输入时会出问题？",
+    "options": ["BPE 本质上只能处理单一语言", "如果没有恰当的 Unicode 处理、字节回退和预分词正则，它会产生错误或低效的 token 序列", "多语言文本无法被分词", "BPE 只适用于 ASCII"],
+    "correct": 1,
+    "explanation": "一个朴素的 BPE 实现可能无法处理多字节 Unicode 字符，可能错误地跨越单词边界进行合并，也可能没有针对训练词表之外字符的字节级回退。",
+    "stage": "pre"
+  },
+  {
+    "question": "在生产级 tokenizer 中，预分词正则（pre-tokenization regex）的作用是什么？",
+    "options": ["移除标点符号", "在 BPE 合并之前于单词边界处切分文本，防止跨空格和单词边界的合并", "压缩空白字符", "将文本转换为小写"],
+    "correct": 1,
+    "explanation": "预分词正则把文本切分成若干块（通常在单词边界、数字和标点处），使 BPE 合并只在块内发生。没有它，BPE 可能会把 'end' 与下一个单词前的空格合并到一起。",
+    "stage": "pre"
+  },
+  {
+    "question": "什么是特殊 token（special token），为什么 tokenizer 要专门处理它们？",
+    "options": ["频繁出现的 token", "像 <|endoftext|> 或 [PAD] 这样的保留 token，用于控制模型行为，必须被编码为单个特定的 ID", "embedding 取值最大的 token", "仅在评估时使用的 token"],
+    "correct": 1,
+    "explanation": "特殊 token 承担结构性用途：标记文档边界、填充序列、指示生成的开始/结束。它们必须被识别并编码为其确切的 ID，而不能被拆分成子词。",
+    "stage": "post"
+  },
+  {
+    "question": "如何评估一个自定义 tokenizer 是否优秀？",
+    "options": ["检查它能否对你的名字分词", "在多样化文本上测量压缩率（每字符的 token 数），并与 tiktoken 等成熟 tokenizer 进行比较", "统计词表大小", "仅测量编码速度"],
+    "correct": 1,
+    "explanation": "压缩率（每个 token 对应的字节数，或每个单词对应的 token 数）衡量效率。好的 tokenizer 对相同文本产生更少的 token，意味着 context window 中能容纳更多内容。要跨语言和领域进行比较。",
+    "stage": "post"
+  },
+  {
+    "question": "对于现代 LLM，为什么字节级 BPE 比词级分词更受青睐？",
+    "options": ["它更快", "它能表示任何输入而不产生未知 token，同时仍能为常见模式学习高效的子词合并", "它产生更小的词表", "词级分词更准确"],
+    "correct": 1,
+    "explanation": "词级 tokenizer 无法处理未见过的单词（会产生 [UNK] token）。字节级 BPE 从原始字节出发（保证覆盖任何输入），并为常见序列学习合并，在覆盖率与效率之间取得平衡。",
+    "stage": "post"
+  }
+]

@@ -394,7 +394,7 @@
 </head>
 <body>
 
-  <a href="#main" class="skip-link">Skip to content</a>
+  <a href="#main" class="skip-link" data-i18n="a11y.skipToContent">Skip to content</a>
 
   <header class="site-header">
     <div class="header-inner">
@@ -402,18 +402,18 @@
         <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
       </a>
       <nav class="header-nav">
-        <a href="index.html#contents">Contents</a>
-        <a href="catalog.html">Catalog</a>
-        <a href="prereqs.html">Roadmap</a>
-        <a href="glossary.html">Glossary</a>
+        <a href="index.html#contents" data-i18n="nav.contents">Contents</a>
+        <a href="catalog.html" data-i18n="nav.catalog">Catalog</a>
+        <a href="prereqs.html" data-i18n="nav.roadmap">Roadmap</a>
+        <a href="glossary.html" data-i18n="nav.glossary">Glossary</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
-          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+          <span class="star-count" data-loading="true" aria-label="GitHub stars" data-i18n-attr="aria-label:a11y.githubStars">…</span>
         </a>
       </nav>
       <button class="search-toggle" type="button" data-cmd-palette
-        aria-label="Search (⌘K)" title="Search (⌘K)">
+        aria-label="Search (⌘K)" title="Search (⌘K)" data-i18n-attr="aria-label:a11y.search;title:a11y.search">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2.5"
           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -421,7 +421,10 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </button>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <button class="theme-toggle lang-toggle" id="langToggle" aria-label="切换语言 / Toggle language" type="button">
+        <span id="langLabel">中</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" data-i18n-attr="aria-label:a11y.toggleTheme">
         <span class="theme-icon" id="themeIcon">N</span>
       </button>
     </div>
@@ -430,20 +433,20 @@
   <main class="prereqs-page" id="main">
     <div class="container">
       <div class="prereqs-header">
-        <h1>Roadmap</h1>
-        <p>Click any phase to see its prerequisites and what it unlocks downstream.</p>
+        <h1 data-i18n="roadmap.title">Roadmap</h1>
+        <p data-i18n="roadmap.subtitle">Click any phase to see its prerequisites and what it unlocks downstream.</p>
       </div>
 
       <div class="prereqs-controls">
         <div class="prereqs-legend">
-          <div class="legend-item"><span class="legend-dot complete"></span> Complete</div>
-          <div class="legend-item"><span class="legend-dot in-progress"></span> In Progress</div>
-          <div class="legend-item"><span class="legend-dot planned"></span> Planned</div>
+          <div class="legend-item"><span class="legend-dot complete"></span> <span data-i18n="roadmap.legendComplete">Complete</span></div>
+          <div class="legend-item"><span class="legend-dot in-progress"></span> <span data-i18n="roadmap.legendInProgress">In Progress</span></div>
+          <div class="legend-item"><span class="legend-dot planned"></span> <span data-i18n="roadmap.legendPlanned">Planned</span></div>
         </div>
-        <button class="reset-btn" id="resetBtn">&#10005; Clear selection</button>
+        <button class="reset-btn" id="resetBtn">&#10005; <span data-i18n="roadmap.clearSelection">Clear selection</span></button>
       </div>
 
-      <div class="graph-scroll-hint">&#8596; Scroll to explore the full graph</div>
+      <div class="graph-scroll-hint">&#8596; <span data-i18n="roadmap.scrollHint">Scroll to explore the full graph</span></div>
 
       <div class="graph-wrap">
         <div class="graph-container" id="graphContainer">
@@ -457,18 +460,19 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>AI Engineering from Scratch · open source · free forever.</p>
+      <p data-i18n="footer.taglineFull">AI Engineering from Scratch · open source · free forever.</p>
       <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
-        <a href="catalog.html">Catalog</a>
-        <a href="glossary.html">Glossary</a>
-              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
+        <a href="index.html" data-i18n="footer.home">Home</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" data-i18n="footer.github">GitHub</a>
+        <a href="catalog.html" data-i18n="footer.catalog">Catalog</a>
+        <a href="glossary.html" data-i18n="footer.glossary">Glossary</a>
+              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener" data-i18n="footer.reportSuggest">Report / Suggest</a>
       </div>
     </div>
   </footer>
 
   <script src="data.js?v=20260525a"></script>
+  <script src="i18n.js?v=20260531a"></script>
   <script src="progress.js?v=20260525a"></script>
   <script src="header.js?v=20260525a" defer></script>
   <script src="cmdpalette.js?v=20260525a" defer></script>
@@ -507,6 +511,17 @@
         });
       }
       buildGraph();
+
+      if (window.AIEFS_I18N) {
+        AIEFS_I18N.initLangToggle(function () {
+          relabelNodes();
+          // Re-render the detail panel for the currently selected phase, if any,
+          // preserving the selection/highlight state.
+          if (selectedId !== null) {
+            showDetail(selectedId, getAncestors(selectedId), getDescendants(selectedId));
+          }
+        });
+      }
     });
 
     /* ===================================================
@@ -788,7 +803,7 @@
           transform: 'translate(' + (pos.x - NODE_W / 2) + ',' + (pos.y - NODE_H / 2) + ')',
           tabindex: '0',
           role: 'button',
-          'aria-label': 'Select Phase ' + id + ': ' + phase.name
+          'aria-label': AIEFS_I18N.tf('roadmap.selectPhaseAria', { id: id, name: AIEFS_I18N.L(phase, 'name') })
         });
 
         /* Background */
@@ -802,7 +817,7 @@
         }));
 
         /* Label content */
-        var lines = splitName(phase.name);
+        var lines = splitName(AIEFS_I18N.L(phase, 'name'));
         var stats = lessonStats(phase);
 
         if (lines.length === 1) {
@@ -831,6 +846,42 @@
       }
 
       document.getElementById('resetBtn').addEventListener('click', clearSelection);
+    }
+
+    /* ===================================================
+       Re-label nodes after a language switch.
+
+       Nodes are built once in buildGraph(); on lang toggle we only need to
+       rewrite the visible text (id + name lines) and the aria-label. The
+       status bar / lesson counts are language-independent so they stay.
+    =================================================== */
+    function relabelNodes() {
+      for (var nid in nodeEls) {
+        var id    = parseInt(nid);
+        var g     = nodeEls[id];
+        var phase = PHASE_MAP[id];
+        if (!g || !phase) continue;
+
+        g.setAttribute('aria-label', AIEFS_I18N.tf('roadmap.selectPhaseAria', { id: id, name: AIEFS_I18N.L(phase, 'name') }));
+
+        var lines = splitName(AIEFS_I18N.L(phase, 'name'));
+        var stats = lessonStats(phase);
+
+        /* Remove existing label text nodes, keep rect + status bar. */
+        var texts = g.querySelectorAll('.node-id, .node-name');
+        for (var ti = 0; ti < texts.length; ti++) g.removeChild(texts[ti]);
+
+        if (lines.length === 1) {
+          g.appendChild(svgEl('text', { class: 'node-id',   x: 12, y: 22, 'text-anchor': 'start' })).textContent = String(id).padStart(2, '0');
+          g.appendChild(svgEl('text', { class: 'node-name', x: 36, y: 22, 'text-anchor': 'start' })).textContent = lines[0];
+          g.appendChild(svgEl('text', { class: 'node-id',   x: NODE_W - 12, y: 46, 'text-anchor': 'end', style: 'font-size:9px;fill:var(--text-muted)' })).textContent = stats.done + '/' + stats.total;
+        } else {
+          g.appendChild(svgEl('text', { class: 'node-id',   x: 12, y: 18, 'text-anchor': 'start' })).textContent = String(id).padStart(2, '0');
+          g.appendChild(svgEl('text', { class: 'node-id',   x: NODE_W - 12, y: 18, 'text-anchor': 'end', style: 'font-size:9px;fill:var(--text-muted)' })).textContent = stats.done + '/' + stats.total;
+          g.appendChild(svgEl('text', { class: 'node-name', x: 12, y: 32, 'text-anchor': 'start' })).textContent = lines[0];
+          g.appendChild(svgEl('text', { class: 'node-name', x: 12, y: 47, 'text-anchor': 'start', style: 'font-size:11px' })).textContent = lines[1];
+        }
+      }
     }
 
     /* ===================================================
@@ -941,12 +992,12 @@
         prereqHtml = '<ul class="detail-prereq-list">';
         for (var i = 0; i < directPrereqs.length; i++) {
           var ppid = directPrereqs[i];
-          var pn   = PHASE_MAP[ppid] ? PHASE_MAP[ppid].name : 'Phase ' + ppid;
-          prereqHtml += '<li data-goto="' + ppid + '" tabindex="0" role="button" aria-label="Go to Phase ' + ppid + ': ' + escapeHtml(pn) + '"><span class="li-num">' + String(ppid).padStart(2, '0') + '</span> ' + escapeHtml(pn) + '</li>';
+          var pn   = PHASE_MAP[ppid] ? AIEFS_I18N.L(PHASE_MAP[ppid], 'name') : AIEFS_I18N.tf('roadmap.phaseFallback', { id: ppid });
+          prereqHtml += '<li data-goto="' + ppid + '" tabindex="0" role="button" aria-label="' + escapeHtml(AIEFS_I18N.tf('roadmap.gotoAria', { id: ppid, name: pn })) + '"><span class="li-num">' + String(ppid).padStart(2, '0') + '</span> ' + escapeHtml(pn) + '</li>';
         }
         prereqHtml += '</ul>';
       } else {
-        prereqHtml = '<div class="detail-empty">None. This is a starting point.</div>';
+        prereqHtml = '<div class="detail-empty">' + AIEFS_I18N.t('roadmap.prereqEmpty') + '</div>';
       }
 
       /* Unlocks list */
@@ -956,12 +1007,12 @@
         unlockHtml = '<ul class="detail-unlock-list">';
         for (var i = 0; i < childIds.length; i++) {
           var cid = childIds[i];
-          var cn  = PHASE_MAP[cid] ? PHASE_MAP[cid].name : 'Phase ' + cid;
-          unlockHtml += '<li data-goto="' + cid + '" tabindex="0" role="button" aria-label="Go to Phase ' + cid + ': ' + escapeHtml(cn) + '"><span class="li-num">' + String(cid).padStart(2, '0') + '</span> ' + escapeHtml(cn) + '</li>';
+          var cn  = PHASE_MAP[cid] ? AIEFS_I18N.L(PHASE_MAP[cid], 'name') : AIEFS_I18N.tf('roadmap.phaseFallback', { id: cid });
+          unlockHtml += '<li data-goto="' + cid + '" tabindex="0" role="button" aria-label="' + escapeHtml(AIEFS_I18N.tf('roadmap.gotoAria', { id: cid, name: cn })) + '"><span class="li-num">' + String(cid).padStart(2, '0') + '</span> ' + escapeHtml(cn) + '</li>';
         }
         unlockHtml += '</ul>';
       } else {
-        unlockHtml = '<div class="detail-empty">Final destination. End of the curriculum.</div>';
+        unlockHtml = '<div class="detail-empty">' + AIEFS_I18N.t('roadmap.unlockEmpty') + '</div>';
       }
 
       /* Compute exact GitHub tree URL using standard slug logic */
@@ -985,23 +1036,23 @@
 
       panel.innerHTML =
         '<div class="detail-top">' +
-          '<span class="detail-phase-num">Phase ' + String(id).padStart(2, '0') + '</span>' +
+          '<span class="detail-phase-num">' + AIEFS_I18N.t('roadmap.phaseNumPrefix') + ' ' + String(id).padStart(2, '0') + '</span>' +
           '<span class="detail-status ' + phase.status + '">' + phase.status.replace('-', ' ') + '</span>' +
         '</div>' +
-        '<div class="detail-title">' + escapeHtml(phase.name) + '</div>' +
-        '<div class="detail-desc">' + escapeHtml(phase.desc) + '</div>' +
+        '<div class="detail-title">' + escapeHtml(AIEFS_I18N.L(phase, 'name')) + '</div>' +
+        '<div class="detail-desc">' + escapeHtml(AIEFS_I18N.L(phase, 'desc')) + '</div>' +
         '<div class="detail-stats">' +
-          '<strong>' + stats.done + '</strong> of <strong>' + stats.total + '</strong> lessons complete' +
-          ' &nbsp;·&nbsp; <strong>' + ancestorCount + '</strong> prerequisite phases' +
-          ' &nbsp;·&nbsp; <strong>' + descendantCount + '</strong> phases unlocked' +
+          AIEFS_I18N.tf('roadmap.statsComplete', { done: '<strong>' + stats.done + '</strong>', total: '<strong>' + stats.total + '</strong>' }) +
+          ' &nbsp;·&nbsp; <strong>' + ancestorCount + '</strong> ' + AIEFS_I18N.t('roadmap.statsPrereqPhases') +
+          ' &nbsp;·&nbsp; <strong>' + descendantCount + '</strong> ' + AIEFS_I18N.t('roadmap.statsPhasesUnlocked') +
         '</div>' +
         '<div class="detail-sections">' +
-          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--accent)">&#9664;</span> Prerequisites</div>' + prereqHtml + '</div>' +
-          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--complete)">&#9654;</span> Unlocks</div>' + unlockHtml + '</div>' +
+          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--accent)">&#9664;</span> ' + AIEFS_I18N.t('roadmap.sectionPrereqs') + '</div>' + prereqHtml + '</div>' +
+          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--complete)">&#9654;</span> ' + AIEFS_I18N.t('roadmap.sectionUnlocks') + '</div>' + unlockHtml + '</div>' +
         '</div>' +
         '<div class="detail-actions">' +
-          (readLink ? '<a href="' + readLink + '" class="detail-link detail-link-read">Read</a>' : '') +
-          '<a href="' + phaseGithubUrl + '" target="_blank" rel="noopener" class="detail-link">View on GitHub</a>' +
+          (readLink ? '<a href="' + readLink + '" class="detail-link detail-link-read">' + AIEFS_I18N.t('roadmap.read') + '</a>' : '') +
+          '<a href="' + phaseGithubUrl + '" target="_blank" rel="noopener" class="detail-link">' + AIEFS_I18N.t('roadmap.viewOnGithub') + '</a>' +
         '</div>';
 
       panel.classList.add('open');

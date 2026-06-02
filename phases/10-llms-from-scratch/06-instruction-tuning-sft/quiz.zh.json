@@ -1,0 +1,37 @@
+[
+  {
+    "question": "基础语言模型（base model）与指令微调模型（instruction-tuned model）之间的根本区别是什么？",
+    "options": ["它们有不同的架构", "base model 续写文本模式；指令微调模型则遵循指令并回答问题", "指令微调模型更大", "base model 更快"],
+    "correct": 1,
+    "explanation": "用下一个 token 预测训练出来的 base model 会续写文本模式。向它提问，它可能会生成更多问题。SFT 通过在（指令，回复）对上训练，教它产出回答。",
+    "stage": "pre"
+  },
+  {
+    "question": "在 SFT 中，对非 assistant token 进行 loss 掩码（masking）的目的是什么？",
+    "options": ["加快训练速度", "只训练模型生成回复，而不是记忆指令格式或 system prompt", "减少内存占用", "防止过拟合"],
+    "correct": 1,
+    "explanation": "在 SFT 期间，你希望模型学会如何回复，而不是如何复现指令。loss 掩码把 system/user token 的损失设为 0，使梯度只来自 assistant 回复的 token。",
+    "stage": "pre"
+  },
+  {
+    "question": "SFT 训练数据通常遵循什么格式？",
+    "options": ["原始文本文档", "由特殊 token 标记 system、user 和 assistant 角色的聊天模板（chat template）", "键值对", "SQL 查询及其结果"],
+    "correct": 1,
+    "explanation": "SFT 数据使用结构化的聊天格式：设定行为的 system prompt、user 指令和 assistant 回复。特殊 token 标记角色边界，使模型学会对话结构。",
+    "stage": "post"
+  },
+  {
+    "question": "为什么一个 SFT 模型在 benchmark 上可能有更低的困惑度（perplexity），却有更差的对话质量？",
+    "options": ["benchmark 出错了", "SFT 优化的是对训练样本的模式匹配，而非人类所看重的细微质量判断——后者需要 RLHF/DPO", "模型太小", "learning rate 设错了"],
+    "correct": 1,
+    "explanation": "SFT 教模型遵循格式并产出合理的回复。当存在多个有效选项时，它并不教模型哪个回复更好。人类偏好对齐（RLHF/DPO）弥补了这一差距。",
+    "stage": "post"
+  },
+  {
+    "question": "进行有效的 SFT 通常需要多少高质量的指令-回复对？",
+    "options": ["数百万", "1 万到 10 万个高质量样本", "少于 100 个", "数十亿"],
+    "correct": 1,
+    "explanation": "SFT 在数据效率上出人意料地高。研究表明，1 万到 10 万个高质量样本（如 Alpaca 或 LIMA 数据集）就能有效地教会指令遵循。质量远比数量重要。",
+    "stage": "post"
+  }
+]

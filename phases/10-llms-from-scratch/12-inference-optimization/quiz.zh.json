@@ -1,0 +1,37 @@
+[
+  {
+    "question": "LLM 推理的两个阶段是什么？",
+    "options": ["训练和评估", "prefill（并行处理 prompt，受算力限制）和 decode（一次生成一个 token，受内存限制）", "编码和解码", "前向和反向"],
+    "correct": 1,
+    "explanation": "prefill 并行处理所有 prompt token（受算力限制）。decode 自回归地一次生成一个 token（受加载模型权重的内存带宽限制）。不同的优化分别针对各个阶段。",
+    "stage": "pre"
+  },
+  {
+    "question": "在自回归生成期间，KV cache 消除了什么？",
+    "options": ["对 attention mask 的需求", "在每个生成步骤中对所有先前 token 的 key 和 value 向量的冗余重复计算", "embedding 查找", "softmax 计算"],
+    "correct": 1,
+    "explanation": "没有 KV cache，生成第 N 个 token 需要重新计算前面 N-1 个 token 的 attention key 和 value。KV cache 存储这些向量，于是每个新 token 只需计算它自己的 K 和 V，每步节省 O(N) 的计算量。",
+    "stage": "pre"
+  },
+  {
+    "question": "什么是连续批处理（continuous batching），为什么它能提升吞吐量？",
+    "options": ["在一个大 batch 中处理所有请求", "在请求开始和结束时动态地从正在运行的 batch 中加入和移除请求，而不是等待整个 batch 全部完成", "使用更大的 batch size", "跨多个模型进行批处理"],
+    "correct": 1,
+    "explanation": "在静态批处理中，一个短请求会占着它的 batch 槽位直到最长的请求完成。连续批处理立即用新请求填满已完成的槽位，让 GPU 保持忙碌，从而提升整体吞吐量。",
+    "stage": "post"
+  },
+  {
+    "question": "PagedAttention（用于 vLLM）解决了什么问题？",
+    "options": ["它加快了 attention 计算", "它像虚拟内存一样以固定大小的块管理 KV cache 内存，消除变长序列带来的碎片化", "它减小模型大小", "它提升分词速度"],
+    "correct": 1,
+    "explanation": "变长序列的 KV cache 会导致内存碎片化（分配之间出现浪费的空隙）。PagedAttention 以固定块分配 KV cache，并用页表（page table）映射它们，就像操作系统的虚拟内存一样。",
+    "stage": "post"
+  },
+  {
+    "question": "什么是推测解码（speculative decoding）？",
+    "options": ["生成多个回复并挑选最好的", "用一个小的草稿模型（draft model）提出多个 token，由大模型并行验证，从而加快生成", "预测用户想要哪些 token", "缓存频繁生成的序列"],
+    "correct": 1,
+    "explanation": "一个又小又快的模型生成 N 个候选 token。大模型在单次前向传播中并行验证全部 N 个。如果接受了 K 个 token，你就在大约 1 次大模型步骤的时间内生成了 K 个 token。",
+    "stage": "post"
+  }
+]

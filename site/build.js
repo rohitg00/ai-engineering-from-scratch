@@ -17,6 +17,19 @@ const ROADMAP_PATH = path.join(REPO_ROOT, 'ROADMAP.md');
 const GLOSSARY_PATH = path.join(REPO_ROOT, 'glossary', 'terms.md');
 const OUTPUT_PATH = path.join(__dirname, 'data.js');
 
+const I18N_ZH_DIR = path.join(REPO_ROOT, 'i18n', 'zh');
+
+// Load a sparse zh-overlay JSON; return {} if absent/unreadable so the
+// build degrades gracefully to English-only.
+function loadOverlay(name) {
+  try {
+    const p = path.join(I18N_ZH_DIR, name);
+    return JSON.parse(fs.readFileSync(p, 'utf8'));
+  } catch (_) {
+    return {};
+  }
+}
+
 const GITHUB_BASE = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/';
 
 // ─── Parse ROADMAP.md for lesson statuses ────────────────────────────
@@ -222,12 +235,17 @@ function parseReadme(content, roadmapStatuses) {
   return phases;
 }
 
-// ─── Extract lesson summary + keywords from docs/en.md ───────────────
+// ─── Extract lesson summary + keywords from a lesson doc ─────────────
 /**
- * Single-pass read of a lesson's docs/en.md.
+ * Single-pass read of a lesson's localized doc.
+ *
+ * `lang` selects the source file: 'zh' reads docs/zh.md, anything else
+ * reads docs/en.md.
  *
  * Returns:
  *   summary  — first `> blockquote` line (the lesson's one-liner motto).
+ *              For zh, a leading `> 译注…` (translator note) blockquote
+ *              is skipped so the real motto is used.
  *   keywords — all `### H3` heading texts joined by ' · '.
  *              H3 headings are the densest vocabulary in a lesson doc
  *              (e.g. "Scaled dot-product · Causal masking · KV cache"),
@@ -236,8 +254,9 @@ function parseReadme(content, roadmapStatuses) {
  * Both fields are empty strings when the file is absent or has no
  * matching content — expected for planned lessons with no docs yet.
  */
-function extractLessonMeta(relPath) {
-  const docPath = path.join(REPO_ROOT, relPath, 'docs', 'en.md');
+function extractLessonMetaForLang(relPath, lang) {
+  const file = lang === 'zh' ? 'zh.md' : 'en.md';
+  const docPath = path.join(REPO_ROOT, relPath, 'docs', file);
   const result = { summary: '', keywords: '' };
   try {
     const lines = fs.readFileSync(docPath, 'utf8').split(/\r?\n/);
@@ -246,6 +265,8 @@ function extractLessonMeta(relPath) {
       const line = raw.trim();
       if (!result.summary && line.startsWith('> ') && line.length > 3) {
         const s = line.slice(2).trim();
+        // zh.md 首个引用常是译注("译注：本文译自…"),跳过它,取下一条
+        if (lang === 'zh' && s.startsWith('译注')) continue;
         result.summary = s.length > 180 ? s.slice(0, 177) + '…' : s;
       }
       if (line.startsWith('### ')) {
@@ -255,9 +276,14 @@ function extractLessonMeta(relPath) {
     }
     if (h3s.length) result.keywords = h3s.join(' · ');
   } catch (_) {
-    // File absent or unreadable — expected for planned lessons.
+    // 文件缺失或不可读 —— planned 课程或未翻译的 zh.md,预期内
   }
   return result;
+}
+
+// 向后兼容:保留原签名(英文)供现有调用使用
+function extractLessonMeta(relPath) {
+  return extractLessonMetaForLang(relPath, 'en');
 }
 
 // ─── Parse glossary/terms.md ──────────────────────────────────────────
@@ -393,6 +419,11 @@ function discoverArtifacts() {
 function build() {
   console.log('📖 Reading source files...');
 
+  const zhPhases    = loadOverlay('phases.json');
+  const zhLessons   = loadOverlay('lessons.json');
+  const zhGlossary  = loadOverlay('glossary.json');
+  const zhArtifacts = loadOverlay('artifacts.json');
+
   const readme = fs.readFileSync(README_PATH, 'utf8');
   const roadmap = fs.readFileSync(ROADMAP_PATH, 'utf8');
   const glossary = fs.readFileSync(GLOSSARY_PATH, 'utf8');
@@ -406,19 +437,60 @@ function build() {
   console.log('🔍 Parsing glossary/terms.md...');
   const glossaryTerms = parseGlossary(glossary);
 
+  let zhGlossaryHits = 0;
+  for (const term of glossaryTerms) {
+    const ov = zhGlossary[term.term];
+    if (ov) {
+      if (ov.says)  term.says_zh  = ov.says;
+      if (ov.means) term.means_zh = ov.means;
+      if (ov.term)  term.term_zh  = ov.term;
+      zhGlossaryHits++;
+    }
+  }
+
   console.log('🔍 Discovering outputs + Phase 14 missions...');
   const artifacts = discoverArtifacts();
 
-  console.log('📚 Extracting lesson summaries + keywords from docs/en.md...');
+  let zhArtifactHits = 0;
+  for (const a of artifacts) {
+    const key = a.lessonPath + '|' + a.file.split('/').pop();
+    const ov = zhArtifacts[key];
+    if (ov) {
+      if (ov.name)        a.name_zh        = ov.name;
+      if (ov.description) a.description_zh = ov.description;
+      zhArtifactHits++;
+    }
+  }
+
+  // phase 名称/描述中文覆盖
+  let zhPhaseHits = 0;
+  for (const phase of phases) {
+    const ov = zhPhases[String(phase.id)];
+    if (ov) {
+      if (ov.name) { phase.name_zh = ov.name; zhPhaseHits++; }
+      if (ov.desc) { phase.desc_zh = ov.desc; }
+    }
+  }
+
+  console.log('📚 Extracting lesson summaries + keywords (en + zh)...');
   let summarized = 0, withKeywords = 0;
+  let zhLessonHits = 0, zhSummaryHits = 0, zhKeywordHits = 0;
   for (const phase of phases) {
     for (const lesson of phase.lessons) {
-      if (lesson.url) {
-        const relPath = lesson.url.replace(GITHUB_BASE, '').replace(/\/+$/, '');
-        const meta = extractLessonMeta(relPath);
-        if (meta.summary)  { lesson.summary  = meta.summary;  summarized++;   }
-        if (meta.keywords) { lesson.keywords = meta.keywords; withKeywords++; }
-      }
+      if (!lesson.url) continue;
+      const relPath = lesson.url.replace(GITHUB_BASE, '').replace(/\/+$/, '');
+      const en = extractLessonMetaForLang(relPath, 'en');
+      if (en.summary)  { lesson.summary  = en.summary;  summarized++;   }
+      if (en.keywords) { lesson.keywords = en.keywords; withKeywords++; }
+
+      // lesson name 中文覆盖(来自 lessons.json overlay)
+      const ov = zhLessons[relPath];
+      if (ov && ov.name) { lesson.name_zh = ov.name; zhLessonHits++; }
+
+      // summary/keywords 中文(来自 zh.md)
+      const zh = extractLessonMetaForLang(relPath, 'zh');
+      if (zh.summary)  { lesson.summary_zh  = zh.summary;  zhSummaryHits++; }
+      if (zh.keywords) { lesson.keywords_zh = zh.keywords; zhKeywordHits++; }
     }
   }
 
@@ -438,6 +510,12 @@ function build() {
   console.log(`   Glossary terms: ${glossaryTerms.length}`);
   console.log(`   Artifacts: ${artifacts.length}`);
 
+  console.log(`\n🌏 中文覆盖率:`);
+  console.log(`   phases     ${zhPhaseHits}/${phases.length}`);
+  console.log(`   lessons    name ${zhLessonHits}, summary ${zhSummaryHits}, keywords ${zhKeywordHits} / ${totalLessons}`);
+  console.log(`   glossary   ${zhGlossaryHits}/${glossaryTerms.length}`);
+  console.log(`   artifacts  ${zhArtifactHits}/${artifacts.length}`);
+
   // Generate data.js
   const output = `// Auto-generated by build.js — do not edit manually.
 // Last built: ${new Date().toISOString()}
@@ -453,4 +531,12 @@ const ARTIFACTS = ${JSON.stringify(artifacts, null, 2)};
   console.log(`\n✅ Generated ${OUTPUT_PATH}`);
 }
 
-build();
+// 供测试脚本 import;直接 `node build.js` 运行时不受影响
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { extractLessonMetaForLang, extractLessonMeta };
+}
+
+// 仅在直接运行(node build.js)时执行;被 import 时不触发,避免测试副作用重写 data.js
+if (require.main === module) {
+  build();
+}
