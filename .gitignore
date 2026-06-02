@@ -38,8 +38,10 @@ Thumbs.db
 *.swo
 *~
 .idea/
-.vscode/
 *.log
+
+.vscode/.history/
+.vscode/*.code-workspace
 
 data/
 models/

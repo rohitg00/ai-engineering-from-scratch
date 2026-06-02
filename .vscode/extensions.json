@@ -1,0 +1,15 @@
+{
+  // Рекомендованные расширения для работы над курсом в WSL.
+  // VSCode предложит установить их при открытии папки.
+  // Это только рекомендации — уже установленные расширения не затрагиваются.
+  "recommendations": [
+    "ms-vscode-remote.remote-wsl",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.debugpy",
+    "charliermarsh.ruff",
+    "ms-toolsai.jupyter",
+    "ms-toolsai.jupyter-renderers",
+    "tamasfe.even-better-toml"
+  ]
+}
