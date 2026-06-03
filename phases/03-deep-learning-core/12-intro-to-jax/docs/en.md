@@ -438,13 +438,13 @@ pip install jax jaxlib optax flax
 For GPU support:
 
 ```bash
-pip install jax[cuda12]
+pip install 'jax[cuda12]'
 ```
 
 For TPU (Google Cloud):
 
 ```bash
-pip install jax[tpu] -f https://storage.googleapis.com/jax-releases/libtpu_releases.html
+pip install 'jax[tpu]' -f https://storage.googleapis.com/jax-releases/libtpu_releases.html
 ```
 
 **Performance gotchas:**
