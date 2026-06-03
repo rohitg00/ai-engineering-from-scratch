@@ -125,7 +125,10 @@ class PathJailChecks(unittest.TestCase):
         secret = os.path.join(outside_dir, "secret.txt")
         with open(secret, "w", encoding="utf-8") as fh:
             fh.write("TOP-SECRET\n")
-        os.symlink(secret, os.path.join(root, "link.txt"))
+        try:
+            os.symlink(secret, os.path.join(root, "link.txt"))
+        except OSError:
+            self.skipTest("symlinks not supported on this platform")
         reason = _check_path_jail(["cat", "link.txt"], cfg)
         self.assertIsNotNone(reason)
         self.assertIn("outside project root", reason)
