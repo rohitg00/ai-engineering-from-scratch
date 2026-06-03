@@ -1,0 +1,14 @@
+# .gitattributes - GitHub Linguist overrides for accurate language detection
+
+# Generated and vendored files
+*.min.js linguist-generated
+*.min.css linguist-generated
+dist/** linguist-generated
+vendor/** linguist-vendored
+third_party/** linguist-vendored
+
+# Markdown-heavy skill and documentation repo
+*.sh linguist-documentation
+*.ps1 linguist-documentation
+install.* linguist-documentation
+*.md linguist-detectable

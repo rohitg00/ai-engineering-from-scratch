@@ -1,0 +1,15 @@
+{
+  "name": "\u251c\u2500\u2500 prompt-loss-function-selector.md Dev",
+  "image": "mcr.microsoft.com/devcontainers/python",
+  "features": {},
+  "postCreateCommand": "python -m pip install -r requirements.txt",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "yzhang.markdown-all-in-one",
+        "DavidAnson.vscode-markdownlint",
+        "ms-python.python"
+      ]
+    }
+  }
+}

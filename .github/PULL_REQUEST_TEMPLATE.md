@@ -1,31 +1,23 @@
-<!-- Thanks for contributing. Fill out what applies. Delete sections that don't. -->
+## Summary
 
-## What this PR does
+Briefly describe what changed and why.
 
-<!-- One-sentence summary. -->
+## Type of Change
 
-## Kind of change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Breaking change
+- [ ] Documentation update
+- [ ] Maintenance / tooling update
 
-- [ ] New lesson
-- [ ] Fix to an existing lesson
-- [ ] Translation
-- [ ] New output (prompt, skill, agent, MCP server)
-- [ ] Docs / website / tooling
+## Testing
+
+- [ ] Tests pass locally
+- [ ] Relevant manual checks completed
+- [ ] Documentation updated if behavior changed
 
 ## Checklist
 
-- [ ] Code runs without errors with the listed dependencies
-- [ ] No comments in code files (docs explain, code is self-explanatory)
-- [ ] Built from scratch first, then shown with a framework (for new lessons)
-- [ ] Lesson folder matches `LESSON_TEMPLATE.md` structure
-- [ ] ROADMAP.md row for the lesson is a markdown link (`[Name](phases/...)`), not bare text
-- [ ] One lesson per commit (atomic per-lesson rule)
-- [ ] Tested locally / code output matches what `docs/en.md` claims
-
-## Phase / lesson
-
-<!-- e.g. Phase 5 · 03-tokenizers -->
-
-## Notes for reviewer
-
-<!-- Anything surprising, any deviations from the template, open questions. -->
+- [ ] Changes are scoped and focused
+- [ ] No credentials or local env files were committed
+- [ ] I reviewed the diff before opening this PR
