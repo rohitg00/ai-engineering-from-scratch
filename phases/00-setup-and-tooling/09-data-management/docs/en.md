@@ -140,7 +140,7 @@ Model weights and large datasets should not go into git. Three options:
 
 **Option A: .gitignore (simplest)**
 
-```
+```text
 *.bin
 *.safetensors
 *.pt
