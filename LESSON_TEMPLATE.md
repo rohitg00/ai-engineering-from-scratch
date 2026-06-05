@@ -7,18 +7,27 @@ Use this template when creating a new lesson. Copy the folder structure and fill
 ```
 NN-lesson-name/
 ├── code/
-│   ├── main.py            (primary implementation)
+│   ├── main.py            (primary implementation — always a code/ dir)
 │   ├── main.ts            (TypeScript version, if applicable)
 │   ├── main.rs            (Rust version, if applicable)
 │   └── main.jl            (Julia version, if applicable)
-├── notebook/
-│   └── lesson.ipynb       (Jupyter notebook for experimentation)
 ├── docs/
-│   └── en.md              (lesson documentation)
+│   └── en.md              (lesson documentation — 6-beat format)
+├── quiz.json              (exactly 6 questions: 1 pre + 3 check + 2 post)
 └── outputs/
     ├── prompt-*.md         (prompts produced by this lesson)
-    └── skill-*.md          (skills produced by this lesson)
+    ├── skill-*.md          (skills produced by this lesson)
+    └── agent-*.md          (agent definitions produced by this lesson)
 ```
+
+A lesson MUST have at minimum:
+- `code/` with at least one source or config file (rule L005)
+- `docs/en.md` with at least 200 bytes and an H1 header (rules L002-L004)
+- `quiz.json` with exactly 6 questions in the canonical schema (rules L006-L009)
+
+The `notebook/` directory is **not** part of the standard lesson. If a lesson
+benefits from a Jupyter notebook, add one in `code/` beside the implementation
+files, or reference an external Colab link in the "Further Reading" section.
 
 ## Documentation Format (docs/en.md)
 
@@ -93,12 +102,76 @@ Include it here and save it in the outputs/ folder.]
 - [Resource 2](url) — [why it's worth reading]
 ```
 
+## Quiz Format (quiz.json)
+
+Every lesson must have a `quiz.json` with exactly 6 questions following the
+canonical schema:
+
+```json
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "...",
+      "options": ["A", "B", "C", "D"],
+      "correct": 0,
+      "explanation": "..."
+    },
+    {
+      "stage": "check",
+      "question": "...",
+      "options": ["A", "B", "C", "D"],
+      "correct": 0,
+      "explanation": "..."
+    },
+    {
+      "stage": "check",
+      "question": "...",
+      "options": ["A", "B", "C", "D"],
+      "correct": 0,
+      "explanation": "..."
+    },
+    {
+      "stage": "check",
+      "question": "...",
+      "options": ["A", "B", "C", "D"],
+      "correct": 0,
+      "explanation": "..."
+    },
+    {
+      "stage": "post",
+      "question": "...",
+      "options": ["A", "B", "C", "D"],
+      "correct": 0,
+      "explanation": "..."
+    },
+    {
+      "stage": "post",
+      "question": "...",
+      "options": ["A", "B", "C", "D"],
+      "correct": 0,
+      "explanation": "..."
+    }
+  ]
+}
+```
+
+Rules (enforced by `scripts/audit_lessons.py`):
+- **L006**: `quiz.json` must be valid JSON with a non-empty `questions` array
+- **L007**: Legacy keys (`q`, `choices`, `answer`) are rejected — use canonical keys only
+- **L008**: Options must be 2–6 items
+- **L009**: `correct` must be a valid index within the options array
+
 ## Code File Guidelines
 
 - Code must run without errors
-- No comments — code should be self-explanatory
+- Add a 4–6 line header comment citing the lesson path and any external spec/RFC
+  referenced by the implementation
+- Use inline comments sparingly — let the code speak, but don't be dogmatic about
+  "zero comments."  Some algorithms need a one-liner to orient the reader
 - Use the language that fits best for the topic
-- Include a `requirements.txt` or equivalent if there are dependencies
+- Include a `# requires: pkg1, pkg2` comment at the top if your entry file needs
+  packages outside the Python stdlib (see `scripts/lesson_run.py`)
 - Start simple, build up complexity
 - Every function and class should have a clear purpose
 
@@ -130,4 +203,17 @@ tags: [relevant, tags]
 ---
 
 [Skill content]
+```
+
+### Agents
+
+```markdown
+---
+name: agent-name
+description: What this agent does
+phase: [phase number]
+lesson: [lesson number]
+---
+
+[Agent definition]
 ```
