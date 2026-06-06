@@ -1,0 +1,109 @@
+/* animations.css — drop-in alongside style.css.
+   No new colors, no new fonts. Just motion that respects the manual. */
+
+/* ── core easing + timing tokens (additive; safe to inline) ── */
+:root {
+  --ease-paper: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snap:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --t-fast: 160ms;
+  --t-med:  420ms;
+  --t-slow: 900ms;
+}
+
+/* ── on-scroll reveals (one-shot) ───────────────────────────── */
+.fr { opacity: 0; transform: translateY(14px);
+      transition: opacity var(--t-med) var(--ease-paper) var(--fr-d, 0ms),
+                  transform var(--t-med) var(--ease-paper) var(--fr-d, 0ms); }
+.fr.in { opacity: 1; transform: none; }
+
+.fr-l { opacity: 0; transform: translateX(-14px);
+        transition: opacity var(--t-med) var(--ease-paper) var(--fr-d, 0ms),
+                    transform var(--t-med) var(--ease-paper) var(--fr-d, 0ms); }
+.fr-l.in { opacity: 1; transform: none; }
+
+.fr-clip { clip-path: inset(0 100% 0 0);
+           transition: clip-path var(--t-slow) var(--ease-paper) var(--fr-d, 0ms); }
+.fr-clip.in { clip-path: inset(0 0 0 0); }
+
+/* ── ambient looping ascii-rule shimmer (subtle) ────────────── */
+@keyframes shimmer {
+  0%, 100% { opacity: .85; }
+  50%      { opacity: 1; }
+}
+.ambient-shimmer { animation: shimmer 5.6s ease-in-out infinite; }
+
+/* ── pulsing node (used on roadmap "you are here") ──────────── */
+@keyframes node-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--blueprint-tint-strong); }
+  50%      { box-shadow: 0 0 0 6px transparent; }
+}
+.node-pulse { animation: node-pulse 2.2s ease-in-out infinite; }
+
+/* ── scanning line (used on flagship figure) ────────────────── */
+@keyframes scan-x {
+  0%   { transform: translateX(0%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+.scan-x { animation: scan-x 4.4s linear infinite; }
+
+/* ── progress bar fill (deterministic by --pct) ─────────────── */
+.bar-track { position: relative; height: 4px; background: var(--rule-soft); overflow: hidden; }
+.bar-fill  { position: absolute; inset: 0 auto 0 0; width: var(--pct, 0%);
+             background: var(--blueprint);
+             transition: width 1.2s var(--ease-paper); }
+
+/* ── hover-lift (cards, used carefully) ─────────────────────── */
+.hover-lift { transition: transform var(--t-fast) var(--ease-paper),
+                          border-color var(--t-fast) var(--ease-paper); }
+.hover-lift:hover { transform: translate(-2px, -2px); }
+
+/* ── focus-ring (replaces default outline) ──────────────────── */
+:where(a, button):focus-visible {
+  outline: 2px solid var(--blueprint);
+  outline-offset: 2px;
+}
+
+/* ── reduced motion: turn it all off ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .fr, .fr-l, .fr-clip { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; }
+  .ambient-shimmer, .node-pulse, .scan-x { animation: none !important; }
+  .bar-fill { transition: none !important; }
+}
+
+/* ── interactive figure surface ─────────────────────────────── */
+.figure-card {
+  border: 1px solid var(--rule-soft);
+  background: var(--bg);
+  padding: 18px 18px 14px;
+  margin: 28px 0;
+  position: relative;
+}
+.figure-card .fig-meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--font-mono); font-size: .68rem; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--ink-mute); margin-bottom: 12px;
+}
+.figure-card .fig-meta .label { color: var(--blueprint); }
+.figure-card .fig-caption {
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px dashed var(--rule-soft);
+  font-family: var(--font-body); font-size: .94rem; color: var(--ink-soft);
+  line-height: 1.5; max-width: 60ch;
+}
+.figure-card .fig-controls {
+  display: flex; gap: 8px; margin-top: 10px;
+  font-family: var(--font-mono); font-size: .66rem; letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.figure-card .fig-controls button {
+  background: transparent; border: 1px solid var(--rule-soft);
+  color: var(--ink-soft); padding: 4px 10px; cursor: pointer;
+  font: inherit; letter-spacing: inherit; text-transform: inherit;
+  transition: border-color var(--t-fast), color var(--t-fast);
+}
+.figure-card .fig-controls button:hover,
+.figure-card .fig-controls button[aria-pressed="true"] {
+  color: var(--blueprint); border-color: var(--blueprint);
+}

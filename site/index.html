@@ -19,6 +19,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20260525a">
+  <link rel="stylesheet" href="animations.css?v=20260606a">
+  <script src="figures.js?v=20260606a" defer></script>
   <style>
     .manual-masthead {
       padding: 96px 0 24px;
@@ -684,6 +686,18 @@
           <p>Each lesson runs the same loop: read the problem, derive the math, write the code, run the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding. Free, open source, and built to run on your own laptop.</p>
         </div>
       </div>
+    </section>
+
+
+    <section class="container reveal" style="padding:48px 0;border-bottom:1px solid var(--rule-soft);">
+      <figure class="figure-card">
+        <figcaption class="fig-meta">
+          <span class="label">FIG_001 · the move that matters</span>
+          <span>attention as a soft lookup</span>
+        </figcaption>
+        <div data-figure="attention-matrix" style="min-height:200px;"></div>
+        <p class="fig-caption">A query asks every key how relevant it is. Softmax turns the scores into weights. Pull a weighted blend of the values. That is the whole trick behind every transformer.</p>
+      </figure>
     </section>
 
 
