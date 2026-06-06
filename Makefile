@@ -39,7 +39,7 @@ typecheck:
 	$(PYTHON) -m mypy --config-file pyproject.toml scripts/
 
 test:
-	$(PYTHON) -m pytest --timeout=60 -x
+	$(PYTHON) -m pytest --timeout=30 -x
 
 # ── Curriculum checks ─────────────────────────────────────────────────────
 

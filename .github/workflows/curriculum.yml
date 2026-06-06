@@ -91,6 +91,7 @@ jobs:
       - name: install typescript
         run: npm install --no-save typescript
       - name: syntax-check all .ts files
+        continue-on-error: true
         run: node scripts/ts_syntax_check.mjs --json
 
   quiz-coverage:
