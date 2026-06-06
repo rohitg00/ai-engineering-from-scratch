@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/40-dpo-from-scratch",
+  "title": "Direct Preference Optimization from Scratch",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before reading: under the Bradley-Terry preference model, the probability a human prefers completion y_w to y_l given prompt x is sigmoid(r(x, y_w) - r(x, y_l)). What is the implication?",
+      "options": [
+        "You must fit r before training the policy.",
+        "Only the difference in reward matters; any function added to both r(x, y_w) and r(x, y_l) cancels.",
+        "Bradley-Terry requires a normalising constant Z(x) that does not vanish.",
+        "Sigmoid is incompatible with maximum likelihood."
+      ],
+      "correct": 1,
+      "explanation": "The Bradley-Terry preference depends only on the reward difference. Anything common to both completions cancels. This is the structural reason DPO can avoid an explicit reward model: the prompt-only term in the optimal policy formula cancels."
+    },
+    {
+      "stage": "check",
+      "question": "The DPO loss for a single triple is -log sigmoid( beta * ( (logp_w_pol - logp_w_ref) - (logp_l_pol - logp_l_ref) ) ). If logp_w_pol = logp_w_ref and logp_l_pol = logp_l_ref, the loss equals?",
+      "options": [
+        "0.",
+        "log(2).",
+        "beta.",
+        "-1."
+      ],
+      "correct": 1,
+      "explanation": "Both differences are zero, so the sigmoid argument is zero, the sigmoid value is 0.5, and -log(0.5) = log(2). This is the loss when the policy has not moved from the reference at all."
+    },
+    {
+      "stage": "check",
+      "question": "During DPO training, the chosen log-probability under the reference model changes between epochs because the policy diverges from it. True or false?",
+      "options": [
+        "True: the reference drifts as the policy updates.",
+        "False: the reference is frozen; reference log-probs are computed once and reused.",
+        "True only when beta is non-zero.",
+        "False unless gradients are explicitly disabled with no_grad."
+      ],
+      "correct": 1,
+      "explanation": "The reference is frozen for the entire DPO run. Its parameters never update. The implementation either snapshots reference log-probs once or wraps the reference forward pass in no_grad with requires_grad=False set on its parameters."
+    },
+    {
+      "stage": "check",
+      "question": "Taking the gradient of L_DPO with respect to logp_w_pol (the policy's log-probability of the chosen completion), the sign is?",
+      "options": [
+        "Positive (loss increases as chosen log-prob increases).",
+        "Negative (loss decreases as chosen log-prob increases).",
+        "Zero (loss is independent of policy log-probs).",
+        "Indeterminate (depends on the reference)."
+      ],
+      "correct": 1,
+      "explanation": "The gradient is -beta * (1 - sigmoid(z)), which is non-positive. Increasing the chosen log-probability decreases the loss, which is exactly the training signal we want."
+    },
+    {
+      "stage": "post",
+      "question": "On your fixture the DPO loss decreases but the policy starts preferring shorter completions across the board, even when shorter is worse. The most likely cause?",
+      "options": [
+        "The beta is too low.",
+        "Length bias: longer sequences accumulate more log-probability terms (each negative), so sum-of-log-probs penalises length structurally.",
+        "The reference is not properly frozen.",
+        "The optimiser is using the wrong learning rate."
+      ],
+      "correct": 1,
+      "explanation": "Sum-of-log-probabilities is biased toward shorter sequences because every additional token adds a negative log-probability term. The standard fix is to normalise log-probs by completion length when training and evaluating."
+    },
+    {
+      "stage": "post",
+      "question": "You want to replace the sigmoid + log loss with the IPO variant (z - 1)^2. What is the practical effect on training dynamics?",
+      "options": [
+        "It does not saturate the way the sigmoid loss does, which holds up better under noisy preference labels.",
+        "It is mathematically equivalent at all points.",
+        "It removes the need for the reference model entirely.",
+        "It requires no beta parameter."
+      ],
+      "correct": 0,
+      "explanation": "IPO's squared loss does not saturate the way the sigmoid does, which helps when preference labels are noisy or when some triples are mis-labelled. Empirically it reduces over-optimisation on small preference datasets."
+    }
+  ]
+}

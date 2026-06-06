@@ -1,0 +1,90 @@
+{
+  "lesson": "27-prompt-injection-defense",
+  "title": "Prompt Injection and the PVE Defense",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is indirect prompt injection?",
+      "options": [
+        "A user typing 'ignore all rules' directly",
+        "Instructions embedded in data the agent retrieves (a page, PDF, email, memory note) that override the developer prompt on ingest",
+        "A model misclick",
+        "A typo in the system prompt"
+      ],
+      "correct": 1,
+      "explanation": "Greshake et al. coined indirect prompt injection: attacker-controlled retrieved content carries instructions."
+    },
+    {
+      "stage": "pre",
+      "question": "What does the lesson say processing retrieved prompts is equivalent to?",
+      "options": [
+        "Free speech",
+        "Arbitrary code execution on the agent's tool-use surface",
+        "A static analysis pass",
+        "A pure function call"
+      ],
+      "correct": 1,
+      "explanation": "Greshake's framing: retrieved instructions can hit any tool the agent has access to."
+    },
+    {
+      "stage": "check",
+      "question": "Which is NOT one of the five demonstrated exploit classes?",
+      "options": [
+        "Data theft",
+        "Worming",
+        "Persistent memory poisoning",
+        "Cache invalidation"
+      ],
+      "correct": 3,
+      "explanation": "The five are data theft, worming, persistent memory poisoning, ecosystem contamination, arbitrary tool use."
+    },
+    {
+      "stage": "check",
+      "question": "What does PVE stand for?",
+      "options": [
+        "Prompt-Validator-Executor: a cheap fast validator runs on each tool call before the expensive main model commits",
+        "Provider-Verifier-Encoder",
+        "Plan-Verify-Execute, an HTN dialect",
+        "Pre-Vectorize-Embed"
+      ],
+      "correct": 0,
+      "explanation": "PVE wraps every tool invocation with a cheap validator before main-model commit."
+    },
+    {
+      "stage": "check",
+      "question": "Why is 'system prompt says ignore untrusted instructions' insufficient?",
+      "options": [
+        "It is too short",
+        "It is instruction-following, not enforcement; the model can still be overridden by sufficiently persuasive injected content",
+        "Providers strip it",
+        "It is encrypted"
+      ],
+      "correct": 1,
+      "explanation": "Real defense needs source tagging, allowlists, per-step safety, and PVE-style validation, not just prompting."
+    },
+    {
+      "stage": "post",
+      "question": "What is overtrust of retrieved memory?",
+      "options": [
+        "Caching too aggressively",
+        "Yesterday's agent wrote a poisoned memory note; today's agent reads it and re-executes the injection",
+        "Loading the wrong model",
+        "Forgetting to vacuum the index"
+      ],
+      "correct": 1,
+      "explanation": "Persistent memory poisoning means injections survive across sessions if memory is treated as trusted."
+    },
+    {
+      "stage": "post",
+      "question": "What metadata does the lesson recommend attaching to every piece of content?",
+      "options": [
+        "An encryption key",
+        "A source tag: user_message vs tool_output vs retrieved; validator refuses directives in retrieved content",
+        "A timestamp only",
+        "A token count"
+      ],
+      "correct": 1,
+      "explanation": "Provenance tagging lets the validator treat content according to its trust level."
+    }
+  ]
+}

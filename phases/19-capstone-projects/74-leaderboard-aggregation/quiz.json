@@ -1,0 +1,78 @@
+{
+  "lesson": "74-leaderboard-aggregation",
+  "title": "Leaderboard Aggregation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the aggregator require every input score to be in [0, 1]?",
+      "options": [
+        "It is the bin range for ECE",
+        "Without a common scale, a single metric with a 0-100 range dominates the per-model mean",
+        "Numpy requires it",
+        "Markdown rendering expects two decimals"
+      ],
+      "correct": 1,
+      "explanation": "If pass-rate is in [0,1] and BLEU is in [0,100], the latter swamps the average. Normalisation belongs at the metric layer and is checked here."
+    },
+    {
+      "stage": "pre",
+      "question": "What information does mean score hide that win-rate exposes?",
+      "options": [
+        "Whether the model is well calibrated",
+        "Per-task wins resist outliers and scale shifts; mean is sensitive to both",
+        "The number of tasks completed",
+        "The bootstrap interval"
+      ],
+      "correct": 1,
+      "explanation": "Win-rate counts task-by-task wins. A model can have a high mean from one easy task and still lose most pairwise comparisons."
+    },
+    {
+      "stage": "check",
+      "question": "How does bootstrap_mean_ci estimate the confidence interval?",
+      "options": [
+        "By assuming a normal distribution on the mean",
+        "By resampling task scores with replacement, computing the mean over each sample, then taking the alpha/2 and 1 - alpha/2 percentiles",
+        "By computing the standard deviation analytically",
+        "By calling scipy.stats.bootstrap"
+      ],
+      "correct": 1,
+      "explanation": "Non-parametric percentile bootstrap on the per-task scores; no distributional assumption, no scipy."
+    },
+    {
+      "stage": "check",
+      "question": "When does the pairwise diff CI report `significant`?",
+      "options": [
+        "When the CI does not contain zero",
+        "When the mean difference is larger than 0.1",
+        "When both models have more than thirty tasks",
+        "When the win-rates are unequal"
+      ],
+      "correct": 0,
+      "explanation": "A CI that strictly excludes zero means the difference is unlikely to be zero at the chosen level; that is the operational definition the lesson uses."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the pairwise bootstrap paired rather than independent?",
+      "options": [
+        "Independent bootstrap is illegal in Python",
+        "Paired bootstrap respects that the same task feeds both models; differences are computed task by task before resampling",
+        "Paired bootstrap runs faster",
+        "Paired bootstrap is the only one numpy supports"
+      ],
+      "correct": 1,
+      "explanation": "Paired bootstrap reduces noise: we sample over tasks, not over models, so the comparison is on the same task set every iteration."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the aggregator return per-category means alongside the headline number?",
+      "options": [
+        "It is required by JSON Schema",
+        "Headline mean can mask category-level weakness (good overall, bad at code); per-category exposes that",
+        "Per-category means run faster than overall mean",
+        "Markdown rendering requires it"
+      ],
+      "correct": 1,
+      "explanation": "A model can win on aggregate by being okay everywhere or by dominating one category. Per-category breakdown lets the consumer see which."
+    }
+  ]
+}

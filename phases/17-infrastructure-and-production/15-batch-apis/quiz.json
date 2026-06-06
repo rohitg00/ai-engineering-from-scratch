@@ -1,0 +1,78 @@
+{
+  "lesson": "15-batch-apis",
+  "title": "Batch APIs — the 50% Discount as Industry Standard",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the common batch-API offer across OpenAI, Anthropic, and Google in 2026?",
+      "options": [
+        "10% discount with 1-hour turnaround",
+        "90% discount with 7-day turnaround",
+        "Free if under 1k tokens",
+        "50% discount with 24-hour turnaround"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does \"24-hour turnaround\" actually guarantee in the lesson's framing?",
+      "options": [
+        "24h is the cache TTL",
+        "The batch always takes 24 hours",
+        "The provider promises to return within 24 hours, with typical P50 around 2-6 hours",
+        "Only batches under 1k requests qualify"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How does stacking batch with cached input change the bill versus synchronous uncached on a shared-system-prompt workload?",
+      "options": [
+        "It has no effect because caching is automatic",
+        "It only helps if the model is on Vertex",
+        "It can drop to roughly 10% of the synchronous-uncached baseline",
+        "It increases cost by 50%"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which workload-triage lane is wrong to default to in 2026 for content pipelines and offline labeling?",
+      "options": [
+        "Interactive, because it sounds urgent",
+        "Batch, because the user does not see a 24h delay",
+        "Hybrid batch-and-cache",
+        "Semi-interactive with async queue"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the output-schema trap across providers?",
+      "options": [
+        "JSONL is unsupported by Anthropic",
+        "All providers use the same OpenAI JSONL format",
+        "Vertex requires Parquet only",
+        "Batch file formats differ per provider (OpenAI JSONL, Anthropic JSONL, Vertex BigQuery/GCS), so a portable client needs per-provider adapters"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Per the lesson, what is the simplest decision rule for triaging a workload to batch?",
+      "options": [
+        "If the prompt is under 1k tokens, batch it",
+        "If it uses tools, batch it",
+        "Batch only when the gateway requires it",
+        "If the user wouldn't notice a 24-hour delivery, always batch (and stack caching)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

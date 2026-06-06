@@ -1,0 +1,78 @@
+{
+  "lesson": "84-refusal-evaluation",
+  "title": "Capstone 84 — Refusal Evaluation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does under-refusal measure?",
+      "options": [
+        "How often the model answers prompts labeled unsafe",
+        "How often the model refuses prompts labeled safe",
+        "How many tokens the model emits per response",
+        "The cost of the API call per prompt"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Why use a mock LLM rather than a real model for this lesson?",
+      "options": [
+        "Because real models are not allowed in capstones",
+        "So the same input yields the same output across runs, making code changes attributable to known causes",
+        "Because mock LLMs are more accurate than real ones",
+        "Because the lesson requires GPU hardware"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Given safe prompt count = 30, refused safe count = 5, what is over-refusal rate?",
+      "options": [
+        "0.50",
+        "0.17",
+        "0.30",
+        "0.05"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does Expected Calibration Error (ECE) measure here?",
+      "options": [
+        "The fraction of refusals on unsafe prompts",
+        "The gap between the model's stated confidence and its observed accuracy, binned across confidence ranges",
+        "The total token count across all responses",
+        "The number of regex rules that fired"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does the framework join unsafe prompts against the lesson 82 taxonomy?",
+      "options": [
+        "To re-run the lesson 82 corpus loader",
+        "To report under-refusal per attack category so the team sees which boundary the model leaks on",
+        "To raise the severity of every prompt by one",
+        "To remove duplicates"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does the framework return both under-refusal and over-refusal rather than a single safety score?",
+      "options": [
+        "Because Python dataclasses prefer multiple fields",
+        "Because they are two opposite errors and a single number hides whichever one is worse on a given build",
+        "Because under-refusal is only used in CI",
+        "Because over-refusal is computed by a different team"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

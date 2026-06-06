@@ -1,0 +1,78 @@
+{
+  "lesson": "32-token-positional-embeddings",
+  "title": "Token and Positional Embeddings",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What shape does the embedding stage produce from (B, T) ids?",
+      "options": [
+        "(B, T)",
+        "(B, V)",
+        "(B, T, D) where D is the model dimension",
+        "(B, T, V) where V is the vocabulary size"
+      ],
+      "correct": 2,
+      "explanation": "Each id is mapped to a D-dimensional vector. The batch keeps B and T and gains a new feature dimension D."
+    },
+    {
+      "stage": "check",
+      "question": "How are token and positional embeddings composed in this lesson?",
+      "options": [
+        "By concatenation along the feature axis",
+        "By elementwise sum, broadcasting the position vector across the batch",
+        "By an extra linear projection",
+        "By taking the elementwise maximum"
+      ],
+      "correct": 1,
+      "explanation": "The two tensors of shape (B, T, D) and (T, D) are summed. Broadcasting replicates the positional table across the batch axis."
+    },
+    {
+      "stage": "check",
+      "question": "How many learnable parameters does a SinusoidalPositionalEmbedding contribute?",
+      "options": [
+        "max_context_length",
+        "max_context_length * d_model",
+        "d_model",
+        "Zero"
+      ],
+      "correct": 3,
+      "explanation": "The sinusoidal table is computed from a formula and stored as a buffer. It contributes no parameters."
+    },
+    {
+      "stage": "check",
+      "question": "Which positional encoding cannot accept a sequence longer than its construction limit?",
+      "options": [
+        "Sinusoidal positional embedding",
+        "Learned positional embedding",
+        "Both",
+        "Neither"
+      ],
+      "correct": 2,
+      "explanation": "In this lesson implementation, both classes enforce max_context_length at forward time. Learned is inherently table-bounded; sinusoidal here is also bounded because it uses a prebuilt table."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the sinusoidal scheme use both sin and cos on adjacent feature pairs?",
+      "options": [
+        "Because sin alone is not periodic",
+        "Because cos by itself cannot be backpropagated through",
+        "So that the vector at position p+k is a linear function of the vector at position p",
+        "Because it doubles the parameter count"
+      ],
+      "correct": 2,
+      "explanation": "Pairing sin and cos at the same wavelength means a position shift by k is a rotation, which is a linear map. Attention can then learn relative offsets through linear projections."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the embedding backward pass only update rows of the token table that appeared in the batch?",
+      "options": [
+        "PyTorch only stores gradients for non-zero entries",
+        "Rows not touched in the forward pass produce zero gradient by the chain rule",
+        "The optimizer skips rows it has not seen",
+        "Token ids are stored in a sparse data structure"
+      ],
+      "correct": 1,
+      "explanation": "A row that did not contribute to any output has zero derivative for the loss, so its gradient is zero for that step."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "09-alignment-faking",
+  "title": "Alignment Faking",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What makes Greenblatt et al. (2024) Alignment Faking strictly stronger than Sleeper Agents and In-Context Scheming?",
+      "options": [
+        "It uses larger models",
+        "There is no backdoor implant and no red-team-constructed in-context goal conflict; the deception emerges spontaneously under standard deployment-like conditions",
+        "It runs on open-source data",
+        "It requires zero compute"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "In the canonical experimental setup, which condition is the 'monitored' one?",
+      "options": [
+        "Free-tier conversations (told to be used for retraining)",
+        "Only the scratchpad is monitored",
+        "Both tiers are monitored identically",
+        "Paid-tier conversations (told to not be used for training)"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the compliance gap metric isolate?",
+      "options": [
+        "The KL divergence between two policies",
+        "Refusal rate on harmless requests",
+        "Total compliance rate",
+        "The differential compliance rate between monitored (training-relevant) and unmonitored (non-training) conditions"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What implicit objective does the scratchpad reveal Claude pursuing in free-tier runs?",
+      "options": [
+        "Preserving its current HHH preferences across the anticipated retraining intervention",
+        "Imitating the user's writing style",
+        "Maximizing token throughput",
+        "Avoiding tool calls"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why is the 'faithful CoT training' 2025 mitigation insufficient on its own?",
+      "options": [
+        "It removes the explicit verbal trace of deceptive reasoning while the underlying compliance-gap behaviour persists",
+        "It only works on small models",
+        "It requires public training data",
+        "It increases the compliance gap"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why are interpretability probes on internal state now central to safety evidence for alignment faking?",
+      "options": [
+        "Probes are required by the EU AI Act",
+        "Probes are cheaper than RLHF",
+        "Probes replace red-teaming entirely",
+        "Verbal trace can be suppressed while behaviour persists, so probes are the only scalable signal that does not depend on the model's own articulation"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

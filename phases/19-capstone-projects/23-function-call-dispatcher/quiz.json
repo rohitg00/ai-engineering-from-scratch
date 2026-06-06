@@ -1,0 +1,90 @@
+{
+  "lesson": "23-function-call-dispatcher",
+  "title": "Function Call Dispatcher",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does timeout on a non-idempotent tool default to no retry?",
+      "options": [
+        "Because the dispatcher cannot measure non-idempotent calls",
+        "Because the tool may have partially committed; retry can duplicate the effect",
+        "Because non-idempotent handlers run faster",
+        "Because idempotency keys are slow"
+      ],
+      "correct": 1,
+      "explanation": "Retrying a db.write that timed out at 4.9s can produce a second write. The dispatcher refuses unless the handler tells it the call is safe to repeat."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the idempotency-key dedupe protecting against?",
+      "options": [
+        "Slow networks",
+        "A retry that fires while the original call is still in flight",
+        "Schema validation errors",
+        "Process restarts"
+      ],
+      "correct": 1,
+      "explanation": "Without dedupe, a retry at 5s races a slow original still pending. The cache collapses both into one handler invocation."
+    },
+    {
+      "stage": "check",
+      "question": "Which error kinds are eligible for retry in this dispatcher?",
+      "options": [
+        "schema and not_found",
+        "internal and budget_exceeded",
+        "timeout (if idempotent) and transient",
+        "All of them"
+      ],
+      "correct": 2,
+      "explanation": "Schema and not_found are deterministic. Internal masks an unknown handler bug. Budget exceeded is a yield. Only timeout-on-idempotent and explicit TransientError retry."
+    },
+    {
+      "stage": "check",
+      "question": "What does the semaphore around _run_with_retries protect?",
+      "options": [
+        "The handler from itself",
+        "The backend from too many simultaneous calls fanned out by gather()",
+        "The validator",
+        "The retry counter"
+      ],
+      "correct": 1,
+      "explanation": "A gather of forty calls would open forty concurrent dispatches without the limit. The semaphore caps the wave."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the idempotency key derived by the caller, not by the dispatcher?",
+      "options": [
+        "Because Python hashes are unstable",
+        "Because deriving from args alone makes two semantically-different calls collide if they happen to share args",
+        "Because the registry would not have the key",
+        "Because the cache cannot store strings"
+      ],
+      "correct": 1,
+      "explanation": "The caller knows the step id, the planner intent, the user. Args alone are not enough context to safely dedupe."
+    },
+    {
+      "stage": "post",
+      "question": "Which JSON-RPC error code maps to a schema failure on dispatch?",
+      "options": [
+        "-32601",
+        "-32602",
+        "-32603",
+        "-32700"
+      ],
+      "correct": 1,
+      "explanation": "-32602 Invalid params. The dispatcher returns it before any handler runs."
+    },
+    {
+      "stage": "post",
+      "question": "After max_attempts is reached with timeouts on an idempotent tool, what is returned?",
+      "options": [
+        "An exception is raised",
+        "DispatchOk with no result",
+        "DispatchError with kind=timeout and attempts==max_attempts",
+        "DispatchError with kind=internal"
+      ],
+      "correct": 2,
+      "explanation": "The dispatcher returns a typed error envelope. The kind reflects the last failure mode, attempts reflects how many tries it made."
+    }
+  ]
+}

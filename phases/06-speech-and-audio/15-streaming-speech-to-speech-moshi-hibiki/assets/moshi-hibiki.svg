@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .content { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 15px; font-weight: 700; fill: #1a1a1a; }
+      .tag { font-size: 10px; fill: #c0392b; font-weight: 600; }
+      .line { stroke: #1a1a1a; stroke-width: 1.3; fill: none; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">Moshi — full-duplex dialogue, 3 parallel streams, 200 ms latency</text>
+
+  <rect x="20" y="55" width="160" height="50" class="box"/>
+  <text x="100" y="78" text-anchor="middle" class="label">user audio in</text>
+  <text x="100" y="96" text-anchor="middle" class="caption">Mimi 12.5 Hz × 8 codebooks</text>
+
+  <line x1="182" y1="80" x2="203" y2="80" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="205" y="55" width="470" height="200" class="hot"/>
+  <text x="440" y="78" text-anchor="middle" class="label">Temporal Transformer (7B, 80 ms/step)</text>
+  <text x="440" y="98" text-anchor="middle" class="tag">sees three streams, predicts all three</text>
+
+  <rect x="225" y="120" width="200" height="30" class="box"/>
+  <text x="325" y="140" text-anchor="middle" class="content">user Mimi t-k...t</text>
+
+  <rect x="225" y="160" width="200" height="30" class="box"/>
+  <text x="325" y="180" text-anchor="middle" class="content">moshi Mimi t-k...t-1</text>
+
+  <rect x="225" y="200" width="200" height="30" class="box"/>
+  <text x="325" y="220" text-anchor="middle" class="content">moshi text t-k...t-1</text>
+
+  <rect x="445" y="130" width="210" height="40" class="hot"/>
+  <text x="550" y="150" text-anchor="middle" class="content">predict moshi text[t]</text>
+  <text x="550" y="166" text-anchor="middle" class="caption">= inner monologue</text>
+
+  <rect x="445" y="180" width="210" height="50" class="hot"/>
+  <text x="550" y="200" text-anchor="middle" class="content">predict moshi Mimi[t]</text>
+  <text x="550" y="216" text-anchor="middle" class="caption">via Depth Transformer (8 codebooks)</text>
+
+  <line x1="678" y1="155" x2="703" y2="155" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="678" y1="205" x2="703" y2="205" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="705" y="140" width="150" height="40" class="box"/>
+  <text x="780" y="160" text-anchor="middle" class="content">text out</text>
+  <text x="780" y="175" text-anchor="middle" class="caption">transcript for free</text>
+
+  <rect x="705" y="190" width="150" height="50" class="box"/>
+  <text x="780" y="210" text-anchor="middle" class="content">moshi audio out</text>
+  <text x="780" y="228" text-anchor="middle" class="caption">via Mimi decoder</text>
+
+  <rect x="20" y="275" width="835" height="80" class="box"/>
+  <text x="437" y="297" text-anchor="middle" class="label">why full-duplex beats a pipeline</text>
+  <text x="50" y="322" class="content">pipeline  (VAD + STT + LLM + TTS):  latency bound by longest stage, rigid turn structure</text>
+  <text x="50" y="342" class="content">full-duplex (Moshi):  both streams active; interrupt, back-channel, 200 ms theoretical floor</text>
+
+  <rect x="20" y="365" width="835" height="90" class="hot"/>
+  <text x="437" y="386" text-anchor="middle" class="label">2026 streaming S2S picks</text>
+  <text x="50" y="410" class="content">Moshi                — lowest-latency voice companion, EN + FR         · CC-BY 4.0</text>
+  <text x="50" y="428" class="content">Hibiki / Hibiki-Zero — streaming speech-to-speech translation         · CC-BY 4.0</text>
+  <text x="50" y="446" class="content">GPT-4o Realtime / Gemini Live — closed commercial peers               · commercial</text>
+</svg>

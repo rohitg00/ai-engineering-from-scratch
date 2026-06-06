@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="28" text-anchor="middle" class="title">factor → swap speaker → recombine (plus watermark)</text>
+
+  <rect x="40" y="60" width="180" height="70" class="box"/>
+  <text x="130" y="82" text-anchor="middle" class="label">target ref (5 s)</text>
+  <text x="130" y="105" text-anchor="middle" class="content">alice_5s.wav</text>
+  <text x="130" y="121" text-anchor="middle" class="caption">dry, close-mic, single speaker</text>
+
+  <line x1="225" y1="95" x2="248" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="252" y="60" width="180" height="70" class="hot"/>
+  <text x="342" y="82" text-anchor="middle" class="label">speaker encoder</text>
+  <text x="342" y="105" text-anchor="middle" class="content">ECAPA / WavLM-SV</text>
+  <text x="342" y="121" text-anchor="middle" class="caption">192-d embedding</text>
+
+  <line x1="437" y1="95" x2="460" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="464" y="60" width="180" height="70" class="box"/>
+  <text x="554" y="82" text-anchor="middle" class="label">cloning TTS</text>
+  <text x="554" y="105" text-anchor="middle" class="content">F5 / XTTS / VALL-E 2</text>
+  <text x="554" y="121" text-anchor="middle" class="caption">text + speaker_emb → mel</text>
+
+  <line x1="649" y1="95" x2="672" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="676" y="60" width="170" height="70" class="hot"/>
+  <text x="761" y="82" text-anchor="middle" class="label">watermark</text>
+  <text x="761" y="105" text-anchor="middle" class="content">SilentCipher</text>
+  <text x="761" y="121" text-anchor="middle" class="caption">~32 bits, inaudible</text>
+
+  <rect x="252" y="155" width="180" height="40" class="box"/>
+  <text x="342" y="180" text-anchor="middle" class="content">text: "add milk to list"</text>
+  <line x1="342" y1="155" x2="342" y2="135" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="230" width="180" height="70" class="box"/>
+  <text x="130" y="252" text-anchor="middle" class="label">source speech</text>
+  <text x="130" y="275" text-anchor="middle" class="content">bob saying "turn off"</text>
+  <text x="130" y="291" text-anchor="middle" class="caption">any speaker, any text</text>
+
+  <line x1="225" y1="265" x2="248" y2="265" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="252" y="230" width="180" height="70" class="hot"/>
+  <text x="342" y="252" text-anchor="middle" class="label">content extractor</text>
+  <text x="342" y="275" text-anchor="middle" class="content">ASR PPG / WavLM frames</text>
+  <text x="342" y="291" text-anchor="middle" class="caption">speaker-invariant representation</text>
+
+  <line x1="437" y1="265" x2="460" y2="265" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="464" y="230" width="180" height="70" class="box"/>
+  <text x="554" y="252" text-anchor="middle" class="label">resynthesizer</text>
+  <text x="554" y="275" text-anchor="middle" class="content">KNN-VC / Diff-HierVC</text>
+  <text x="554" y="291" text-anchor="middle" class="caption">content + alice_emb → wav</text>
+
+  <line x1="649" y1="265" x2="672" y2="265" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="676" y="230" width="170" height="70" class="hot"/>
+  <text x="761" y="252" text-anchor="middle" class="label">output</text>
+  <text x="761" y="275" text-anchor="middle" class="content">alice saying "turn off"</text>
+  <text x="761" y="291" text-anchor="middle" class="caption">content preserved</text>
+
+  <rect x="40" y="330" width="800" height="130" class="hot"/>
+  <text x="440" y="354" text-anchor="middle" class="label">legal and ethical stack (required 2026)</text>
+  <text x="60"  y="382" class="content">consent gate</text>    <text x="230" y="382" class="caption">signed record + speaker-hash match before inference</text>
+  <text x="60"  y="402" class="content">watermark</text>       <text x="230" y="402" class="caption">SilentCipher or PerTh; ~32-bit payload, MP3-robust</text>
+  <text x="60"  y="422" class="content">detector pair</text>   <text x="230" y="422" class="caption">AASIST / RawNet2 — ship with the generator</text>
+  <text x="60"  y="442" class="content">audit log</text>       <text x="230" y="442" class="caption">tamper-evident record of every synthesis request</text>
+</svg>

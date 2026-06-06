@@ -1,0 +1,78 @@
+{
+  "lesson": "46-gradient-accumulation",
+  "title": "Gradient Accumulation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the effective batch identity that gradient accumulation expresses?",
+      "options": [
+        "effective_batch = micro_batch / accum_steps",
+        "effective_batch = micro_batch * accum_steps",
+        "effective_batch = micro_batch + accum_steps",
+        "effective_batch = world_size only"
+      ],
+      "correct": 1,
+      "explanation": "Micro batch is what fits in memory; accumulation steps are how many forward + backward passes pile gradients into the same buffer before one optimizer step."
+    },
+    {
+      "stage": "pre",
+      "question": "Why must the loss be divided by accum_steps before backward on each micro batch?",
+      "options": [
+        "It makes the loss curve prettier",
+        "PyTorch sums gradients into param.grad by default, so without the division the accumulated gradient is N times too large and the optimizer step is N times too aggressive",
+        "It avoids NaNs",
+        "It is required for mixed precision only"
+      ],
+      "correct": 1,
+      "explanation": "The accumulation buffer is a sum. Per-micro-batch scaling by 1/N pushes that sum back into the same scale a single full-batch backward would produce."
+    },
+    {
+      "stage": "check",
+      "question": "When does the optimizer step run inside the accumulation loop?",
+      "options": [
+        "After every micro batch",
+        "Only after the last micro batch in the accumulation window",
+        "Twice per window for safety",
+        "Never; the optimizer is replaced"
+      ],
+      "correct": 1,
+      "explanation": "Stepping mid-accumulation contaminates every parameter the rest of the run depends on. The optimizer step fires once per effective batch."
+    },
+    {
+      "stage": "check",
+      "question": "What does the no_sync context wrap on a real multi-GPU run?",
+      "options": [
+        "The forward pass",
+        "The optimizer step",
+        "The non-final micro batches, so the gradient all-reduce only fires after the last backward instead of N times",
+        "The data loader"
+      ],
+      "correct": 2,
+      "explanation": "DDP's no_sync skips the gradient collective. Wrapping all but the last micro batch turns N collectives per effective step into one."
+    },
+    {
+      "stage": "check",
+      "question": "What does the equivalence_check function in main.py assert?",
+      "options": [
+        "That the loss converges",
+        "That a single full-batch backward and an accum_steps chunked backward with loss / N produce the same gradient buffer and the same post-step parameters up to a small tolerance",
+        "That throughput is constant",
+        "That gradients are zero"
+      ],
+      "correct": 1,
+      "explanation": "The assertion bound is max-abs-diff under 1e-4. Without the loss scaling the diff blows up; with the scaling it sits at floating point noise."
+    },
+    {
+      "stage": "post",
+      "question": "Reading the throughput against effective batch curve, what stays roughly constant and what scales?",
+      "options": [
+        "Samples per second drops with larger effective batch",
+        "Samples per second saturates near the hardware limit while wall time per optimizer step scales linearly with accum_steps; optimizer steps per second is what falls",
+        "Both metrics scale linearly with accum",
+        "Throughput goes up because the model gets faster"
+      ],
+      "correct": 1,
+      "explanation": "Each micro batch costs the same forward + backward. Accumulation buys statistical smoothing per optimizer step, not raw throughput; the curve is a useful reality check against folklore."
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .content { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 10px; fill: #555; font-style: italic; }
+      .title { font-size: 15px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">voice assistant pipeline — 7 components, 1 turn</text>
+
+  <rect x="20" y="55" width="100" height="90" class="box"/>
+  <text x="70" y="78" text-anchor="middle" class="label">1. mic</text>
+  <text x="70" y="96" text-anchor="middle" class="content">16 kHz mono</text>
+  <text x="70" y="114" text-anchor="middle" class="content">20 ms chunks</text>
+
+  <line x1="122" y1="100" x2="140" y2="100" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="142" y="55" width="100" height="90" class="hot"/>
+  <text x="192" y="78" text-anchor="middle" class="label">2. VAD</text>
+  <text x="192" y="96" text-anchor="middle" class="content">Silero</text>
+  <text x="192" y="114" text-anchor="middle" class="content">+ pre-roll</text>
+
+  <line x1="244" y1="100" x2="262" y2="100" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="264" y="55" width="100" height="90" class="box"/>
+  <text x="314" y="78" text-anchor="middle" class="label">3. STT</text>
+  <text x="314" y="96" text-anchor="middle" class="content">Whisper / Parakeet</text>
+  <text x="314" y="114" text-anchor="middle" class="content">streaming</text>
+
+  <line x1="366" y1="100" x2="384" y2="100" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="386" y="55" width="130" height="90" class="box"/>
+  <text x="451" y="78" text-anchor="middle" class="label">4. LLM + tools</text>
+  <text x="451" y="96" text-anchor="middle" class="content">GPT-4o / Claude</text>
+  <text x="451" y="114" text-anchor="middle" class="content">stream + JSON tools</text>
+
+  <line x1="518" y1="100" x2="536" y2="100" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="538" y="55" width="110" height="90" class="hot"/>
+  <text x="593" y="78" text-anchor="middle" class="label">5. TTS</text>
+  <text x="593" y="96" text-anchor="middle" class="content">Kokoro / Cartesia</text>
+  <text x="593" y="114" text-anchor="middle" class="content">stream from token 20</text>
+
+  <line x1="650" y1="100" x2="668" y2="100" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="670" y="55" width="100" height="90" class="box"/>
+  <text x="720" y="78" text-anchor="middle" class="label">6. speaker</text>
+  <text x="720" y="96" text-anchor="middle" class="content">opus out</text>
+  <text x="720" y="114" text-anchor="middle" class="content">PLC enabled</text>
+
+  <line x1="772" y1="100" x2="790" y2="100" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="792" y="55" width="70" height="90" class="box"/>
+  <text x="827" y="78" text-anchor="middle" class="label">7. user</text>
+  <text x="827" y="114" text-anchor="middle" class="content">ear</text>
+
+  <path d="M827,55 Q800,30 100,30 Q60,30 60,55" class="line" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="5,3" fill="none"/>
+  <text x="440" y="24" text-anchor="middle" class="caption" fill="#c0392b">barge-in: if user speaks, VAD cancels TTS + LLM, restart from (2)</text>
+
+  <rect x="20" y="175" width="840" height="130" class="box"/>
+  <text x="440" y="197" text-anchor="middle" class="label">the three failure modes you will hit</text>
+  <text x="50" y="225" class="content">1. first-word clip — VAD triggers late; user's "hey" is lost. Keep 200-400 ms pre-roll buffer.</text>
+  <text x="50" y="245" class="content">2. barge-in confusion — LLM keeps generating after user interrupts. Wire VAD → cancel-LLM.</text>
+  <text x="50" y="265" class="content">3. silence hallucinations — Whisper says "Thanks for watching" on silent warm-up. Always VAD-gate.</text>
+  <text x="50" y="290" class="caption">in production, log every turn + P50/P95/P99 per-stage histograms before shipping.</text>
+
+  <rect x="20" y="315" width="840" height="155" class="hot"/>
+  <text x="440" y="337" text-anchor="middle" class="label">2026 reference stacks (pick by target latency + license)</text>
+  <text x="50" y="363" class="content">LiveKit + Deepgram + GPT-4o + Cartesia        350-500 ms   industry default</text>
+  <text x="50" y="381" class="content">Pipecat + Whisper-stream + GPT-4o + Kokoro    500-800 ms   DIY open-source</text>
+  <text x="50" y="399" class="content">Moshi (full-duplex, single model)              200-300 ms   different architecture — lesson 15</text>
+  <text x="50" y="417" class="content">Vapi / Retell (managed)                        300-500 ms   fastest to ship</text>
+  <text x="50" y="435" class="content">whisper.cpp + llama.cpp + Kokoro-ONNX          offline      edge / privacy</text>
+  <text x="50" y="460" class="caption">add wake-word gate (Porcupine) for always-on consumer devices; never log raw audio &gt; 30 days.</text>
+</svg>

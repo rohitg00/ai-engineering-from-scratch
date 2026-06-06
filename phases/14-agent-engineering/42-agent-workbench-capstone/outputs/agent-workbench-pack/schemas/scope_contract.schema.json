@@ -1,0 +1,47 @@
+{
+  "$id": "scope_contract.schema.json",
+  "type": "object",
+  "required": [
+    "task_id",
+    "goal",
+    "allowed_files",
+    "forbidden_files",
+    "acceptance_criteria",
+    "rollback_plan"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string"
+    },
+    "goal": {
+      "type": "string"
+    },
+    "allowed_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "forbidden_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rollback_plan": {
+      "type": "string"
+    },
+    "approvals_required": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

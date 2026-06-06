@@ -1,0 +1,67 @@
+[
+  {
+    "id": "pipeline-pre-1",
+    "stage": "pre",
+    "question": "What is data leakage in the context of ML pipelines?",
+    "options": [
+      "Data being accidentally deleted during preprocessing",
+      "Information from the test set or future data contaminating the training process",
+      "The model being too slow to process the data",
+      "Features being dropped during encoding"
+    ],
+    "correct": 1,
+    "explanation": "Data leakage occurs when information that would not be available at prediction time is used during training. Example: computing the scaler's mean/std on the full dataset including test data."
+  },
+  {
+    "id": "pipeline-pre-2",
+    "stage": "pre",
+    "question": "Why is fitting a scaler on the full dataset before splitting into train/test considered leaky?",
+    "options": [
+      "Scaling changes the data distribution",
+      "The scaler's statistics (mean, std) include test data, so the model indirectly sees test information during training",
+      "Scaling should only be done on the test set",
+      "Fitting the scaler takes too long on large datasets"
+    ],
+    "correct": 1,
+    "explanation": "When the scaler is fit on all data, its mean and standard deviation encode information from test samples. Training features are then shifted using test statistics, leaking future information into training."
+  },
+  {
+    "id": "pipeline-post-1",
+    "stage": "post",
+    "question": "In sklearn, what is the difference between calling fit_transform and transform on a pipeline step?",
+    "options": [
+      "They are identical -- both fit and transform",
+      "fit_transform learns parameters from the data and applies the transform; transform only applies previously learned parameters",
+      "transform is for training data; fit_transform is for test data",
+      "fit_transform is slower but more accurate"
+    ],
+    "correct": 1,
+    "explanation": "fit_transform computes statistics (e.g., mean, std) from the data AND transforms it. transform applies the already-learned statistics without recomputing. On test data, you must use transform to avoid leakage."
+  },
+  {
+    "id": "pipeline-post-2",
+    "stage": "post",
+    "question": "Why is a ColumnTransformer necessary for real-world datasets?",
+    "options": [
+      "It makes the pipeline run in parallel on multiple CPUs",
+      "It applies different preprocessing steps to numeric and categorical columns within the same pipeline",
+      "It removes columns with missing values automatically",
+      "It converts all columns to the same data type"
+    ],
+    "correct": 1,
+    "explanation": "Real datasets have mixed types. Numeric columns need scaling, categorical columns need encoding. ColumnTransformer routes each column subset to the appropriate transformer within a single pipeline."
+  },
+  {
+    "id": "pipeline-post-3",
+    "stage": "post",
+    "question": "A production model receives a categorical value it never saw during training ('new_category'). What should the pipeline handle?",
+    "options": [
+      "Ignore the row entirely and return no prediction",
+      "Retrain the entire model from scratch",
+      "Handle unknown categories gracefully, e.g., by using an 'unknown' bucket or the global mean in target encoding",
+      "Convert the unknown category to the number zero"
+    ],
+    "correct": 2,
+    "explanation": "Robust pipelines anticipate unseen categories in production. Solutions include an 'unknown' fallback for one-hot encoding, or defaulting to the global mean for target encoding."
+  }
+]

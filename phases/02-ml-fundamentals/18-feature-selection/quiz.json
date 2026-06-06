@@ -1,0 +1,67 @@
+[
+  {
+    "id": "featsel-pre-1",
+    "stage": "pre",
+    "question": "Why can adding more features actually make a model perform worse?",
+    "options": [
+      "More features always improve model accuracy",
+      "Irrelevant features add noise, increase overfitting risk, and dilute the signal from useful features",
+      "Models have a hard limit on the number of features they can accept",
+      "More features make the model run out of memory"
+    ],
+    "correct": 1,
+    "explanation": "Irrelevant features give the model opportunities to overfit on noise in the training data. They increase dimensionality, making the data sparser and distances less meaningful (curse of dimensionality)."
+  },
+  {
+    "id": "featsel-pre-2",
+    "stage": "pre",
+    "question": "What is the key difference between filter and wrapper feature selection methods?",
+    "options": [
+      "Filter methods use a model to evaluate features; wrapper methods use statistics",
+      "Filter methods score features using statistics without a model; wrapper methods train a model to evaluate feature subsets",
+      "Filter methods are always more accurate than wrapper methods",
+      "Wrapper methods can only select one feature at a time"
+    ],
+    "correct": 1,
+    "explanation": "Filter methods (variance threshold, mutual information, correlation) score features with statistical measures. Wrapper methods (RFE, forward selection) train models repeatedly to evaluate different feature subsets."
+  },
+  {
+    "id": "featsel-post-1",
+    "stage": "post",
+    "question": "Mutual information can detect relationships that Pearson correlation cannot. What kind?",
+    "options": [
+      "Linear relationships between continuous features",
+      "Nonlinear relationships such as quadratic or periodic dependencies",
+      "Relationships between categorical features only",
+      "Relationships that require more than 1000 data points"
+    ],
+    "correct": 1,
+    "explanation": "Pearson correlation only measures linear association. A quadratic relationship (y = x^2) has zero correlation but high mutual information. MI captures any statistical dependency between variables."
+  },
+  {
+    "id": "featsel-post-2",
+    "stage": "post",
+    "question": "L1 (Lasso) regularization performs feature selection as part of training. How?",
+    "options": [
+      "It removes features with low variance before training starts",
+      "It drives the weights of irrelevant features to exactly zero, effectively eliminating them from the model",
+      "It ranks features by correlation with the target",
+      "It trains separate models for each feature"
+    ],
+    "correct": 1,
+    "explanation": "L1 regularization adds |w| penalty to the loss. The geometry of the L1 constraint (diamond shape) causes some weight solutions to land exactly at zero, producing sparse models that automatically select features."
+  },
+  {
+    "id": "featsel-post-3",
+    "stage": "post",
+    "question": "RFE removes the least important feature and retrains. Why is this better than just removing all low-importance features at once?",
+    "options": [
+      "It is not better -- removing all at once is always preferred",
+      "Feature importances change as features are removed, so iterative removal accounts for interactions between features",
+      "RFE uses a different importance metric than single-step removal",
+      "Removing one at a time is only necessary for neural networks"
+    ],
+    "correct": 1,
+    "explanation": "Feature importances are relative. When a correlated feature is removed, the importance of its counterpart may increase. Iterative removal lets the model reassess importances at each step, capturing these interactions."
+  }
+]

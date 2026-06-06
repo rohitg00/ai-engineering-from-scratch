@@ -1,0 +1,78 @@
+{
+  "lesson": "33-multihead-self-attention",
+  "title": "Multi-Head Self-Attention",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does an efficient self-attention block use a single linear layer that outputs 3*D features?",
+      "options": [
+        "It enforces weight sharing between Q, K, and V",
+        "It is mathematically equivalent to three Linear(D, D) layers and runs as one matmul",
+        "It avoids the need for a causal mask",
+        "It reduces the model parameter count"
+      ],
+      "correct": 1,
+      "explanation": "Stacking three (D, D) projection matrices into one (3D, D) matrix produces the same outputs, but the forward pass is a single accelerator-friendly matmul."
+    },
+    {
+      "stage": "check",
+      "question": "What is the relationship between d_model, n_heads, and d_head?",
+      "options": [
+        "d_head = d_model * n_heads",
+        "d_head = d_model + n_heads",
+        "d_head = d_model // n_heads and d_model must be divisible by n_heads",
+        "d_head is independent of d_model"
+      ],
+      "correct": 2,
+      "explanation": "The block splits d_model evenly across heads. The constraint d_model % n_heads == 0 is enforced at construction."
+    },
+    {
+      "stage": "check",
+      "question": "What value goes into the scaling factor of scaled dot-product attention?",
+      "options": [
+        "sqrt(d_model)",
+        "sqrt(d_head)",
+        "sqrt(n_heads)",
+        "sqrt(seq_len)"
+      ],
+      "correct": 1,
+      "explanation": "Scores are divided by sqrt(d_head), the head dimension that the matmul contracts. This keeps the variance of the scores bounded as d_head grows."
+    },
+    {
+      "stage": "check",
+      "question": "How does the causal mask enforce that position t cannot attend to position t+1?",
+      "options": [
+        "By multiplying the keys at future positions by zero",
+        "By setting score entries above the diagonal to negative infinity before softmax",
+        "By removing future tokens from the input",
+        "By using a different attention head for the future"
+      ],
+      "correct": 1,
+      "explanation": "Setting future entries to -inf forces softmax to give them weight zero. Past and present positions retain a valid weight distribution."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the block end with a Linear(D, D) output projection after merging heads?",
+      "options": [
+        "To allow the model to mix information across heads",
+        "To match the model's vocabulary size",
+        "To normalize the activations to mean zero",
+        "It is required for autograd to track gradients"
+      ],
+      "correct": 0,
+      "explanation": "Without the output projection, head outputs would only ever combine in later layers. The projection gives the block one place to mix heads in the same step."
+    },
+    {
+      "stage": "post",
+      "question": "What does an attention-weight matrix of shape (B, H, T, T) tell you?",
+      "options": [
+        "How many parameters each head has",
+        "Which key positions each query position attends to, per head, per batch element",
+        "The cosine similarity between query and value vectors",
+        "The output logits for the next token"
+      ],
+      "correct": 1,
+      "explanation": "Row t of the per-head matrix is the distribution over key positions used by query position t. Inspecting it shows where each head looks."
+    }
+  ]
+}

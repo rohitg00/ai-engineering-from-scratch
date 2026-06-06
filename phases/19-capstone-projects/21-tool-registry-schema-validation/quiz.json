@@ -1,0 +1,78 @@
+{
+  "lesson": "21-tool-registry-schema-validation",
+  "title": "Tool Registry with Schema Validation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why register a tool's schema separately from its handler?",
+      "options": [
+        "Because schemas have to live in YAML",
+        "So the validator stays pure data, and the handler stays opaque code",
+        "Because handlers cannot return JSON",
+        "Because schemas must be compiled"
+      ],
+      "correct": 1,
+      "explanation": "Keeping the schema as data and the handler as code lets the validator be a pure function over the schema tree."
+    },
+    {
+      "stage": "check",
+      "question": "Which keywords are intentionally outside the subset this lesson implements?",
+      "options": [
+        "type, properties, required",
+        "minLength, maxLength, pattern",
+        "oneOf, anyOf, $ref, allOf",
+        "items, enum"
+      ],
+      "correct": 2,
+      "explanation": "The omitted keywords add cycles and reference resolution. We keep the subset linear so the validator stays a single recursive walk."
+    },
+    {
+      "stage": "check",
+      "question": "Why does register() reject duplicates by default?",
+      "options": [
+        "Because the registry cannot store more than one record per name",
+        "Silent overwrites are the cause of production tool catalog drift",
+        "Because the schema cannot be re-validated",
+        "Because handlers cannot be replaced"
+      ],
+      "correct": 1,
+      "explanation": "Forcing override=True surfaces the case where two parts of the code intend to own the same tool name."
+    },
+    {
+      "stage": "check",
+      "question": "What does the validator do when a schema specifies type integer but receives the value True?",
+      "options": [
+        "Treats it as 1 and passes",
+        "Returns a type error because bool is not integer in this validator",
+        "Raises an unhandled exception",
+        "Coerces to integer silently"
+      ],
+      "correct": 1,
+      "explanation": "Python bool is a subclass of int, but the validator filters bool out of the integer check. JSON booleans and integers are distinct."
+    },
+    {
+      "stage": "post",
+      "question": "When the input object is {'user': {'email': 0}} and the schema requires user.email to be a string, what is the error path?",
+      "options": [
+        "/",
+        "/user",
+        "/user/email",
+        "user.email"
+      ],
+      "correct": 2,
+      "explanation": "JSON pointer encodes the descent through user then email as /user/email."
+    },
+    {
+      "stage": "post",
+      "question": "Why is the registry not a security boundary?",
+      "options": [
+        "Because handlers can still misbehave after validation passes",
+        "Because handlers are async",
+        "Because the schema is JSON",
+        "Because the registry is in-process"
+      ],
+      "correct": 0,
+      "explanation": "The registry checks shape. Behavior, timeouts, and isolation belong to the dispatcher and the sandbox."
+    }
+  ]
+}

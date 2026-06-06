@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .soc { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hipaa { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .gdpr { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .eu { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .emerging { fill: #ffe1e1; stroke: #b71c1c; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">LLM compliance — seven frameworks, one matrix</text>
+
+  <rect x="40" y="50" width="220" height="100" class="soc"/>
+  <text x="150" y="72" text-anchor="middle" class="head">SOC 2 Type II</text>
+  <text x="150" y="92" text-anchor="middle" class="step">B2B SaaS baseline</text>
+  <text x="150" y="110" text-anchor="middle" class="small">6-12 months operated controls</text>
+  <text x="150" y="128" text-anchor="middle" class="small">Type I is a starter, not a gate</text>
+
+  <rect x="280" y="50" width="220" height="100" class="hipaa"/>
+  <text x="390" y="72" text-anchor="middle" class="head">HIPAA</text>
+  <text x="390" y="92" text-anchor="middle" class="step">BAA required for PHI</text>
+  <text x="390" y="110" text-anchor="middle" class="small">Bedrock, Azure, Vertex, OpenAI, Anthropic</text>
+  <text x="390" y="128" text-anchor="middle" class="small">all provide BAA</text>
+
+  <rect x="520" y="50" width="220" height="100" class="gdpr"/>
+  <text x="630" y="72" text-anchor="middle" class="head">GDPR</text>
+  <text x="630" y="92" text-anchor="middle" class="step">real-time PII redaction</text>
+  <text x="630" y="110" text-anchor="middle" class="small">post-processing not defensible</text>
+  <text x="630" y="128" text-anchor="middle" class="small">Clearview AI €30.5M (2024); OpenAI €15M (2024, overturned)</text>
+
+  <rect x="760" y="50" width="160" height="100" class="box"/>
+  <text x="840" y="72" text-anchor="middle" class="head">PCI-DSS</text>
+  <text x="840" y="92" text-anchor="middle" class="step">payment-data scope</text>
+  <text x="840" y="110" text-anchor="middle" class="small">config + contracts</text>
+  <text x="840" y="128" text-anchor="middle" class="small">for AI-interaction layer</text>
+
+  <rect x="40" y="170" width="340" height="120" class="eu"/>
+  <text x="210" y="192" text-anchor="middle" class="head">EU AI Act</text>
+  <text x="60" y="216" class="step">· in force August 1, 2024</text>
+  <text x="60" y="234" class="step">· high-risk enforcement August 2, 2026</text>
+  <text x="60" y="252" class="step">· fines up to €35M or 7% global turnover</text>
+  <text x="60" y="270" class="step">· risk tiers: unacceptable / high / limited / minimal</text>
+  <text x="210" y="285" text-anchor="middle" class="caption">most B2B LLM SaaS is limited-risk</text>
+
+  <rect x="400" y="170" width="300" height="120" class="box"/>
+  <text x="550" y="192" text-anchor="middle" class="head">Colorado AI Act</text>
+  <text x="420" y="216" class="step">· effective June 30, 2026 (delayed)</text>
+  <text x="420" y="234" class="step">· impact assessments</text>
+  <text x="420" y="252" class="step">· right to appeal AI decisions</text>
+  <text x="420" y="270" class="step">· Virginia similar for credit / employment</text>
+
+  <rect x="720" y="170" width="200" height="120" class="emerging"/>
+  <text x="820" y="192" text-anchor="middle" class="head">ISO 42001</text>
+  <text x="820" y="212" text-anchor="middle" class="step">AI governance</text>
+  <text x="820" y="230" text-anchor="middle" class="small">risk mgmt</text>
+  <text x="820" y="248" text-anchor="middle" class="small">transparency</text>
+  <text x="820" y="266" text-anchor="middle" class="small">human oversight</text>
+  <text x="820" y="284" text-anchor="middle" class="caption">pairs with ISO 27001</text>
+
+  <rect x="40" y="310" width="880" height="90" class="box"/>
+  <text x="480" y="332" text-anchor="middle" class="head">cross-framework mapping — one control satisfies many</text>
+  <text x="60" y="358" class="small">access logging: ISO 27001 A.5.15-18 · GDPR Art. 32 · HIPAA §164.312(a) · SOC 2 CC6</text>
+  <text x="60" y="376" class="small">encryption in transit: ISO A.8.24 · GDPR Art. 32 · HIPAA §164.312(e) · PCI Req. 4</text>
+  <text x="60" y="394" class="small">audit log retention: SOC 2 CC7 · HIPAA §164.312(b) · ISO A.8.15</text>
+
+  <rect x="40" y="410" width="880" height="80" class="box"/>
+  <text x="480" y="432" text-anchor="middle" class="head">reference profile — OpenAI 2026</text>
+  <text x="480" y="454" text-anchor="middle" class="step">SOC 2 Type 2 · ISO/IEC 27001:2022 · ISO/IEC 27701:2019 · GDPR · CCPA</text>
+  <text x="480" y="474" text-anchor="middle" class="step">HIPAA (BAA) · FERPA · PCI-DSS (ChatGPT payments)</text>
+</svg>

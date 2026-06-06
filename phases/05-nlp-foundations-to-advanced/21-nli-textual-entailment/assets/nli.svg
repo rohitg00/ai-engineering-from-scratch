@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .ent { fill: #e8f5e9; stroke: #2e7d32; stroke-width: 1.5; }
+      .cont { fill: #fce4ec; stroke: #c0392b; stroke-width: 1.5; }
+      .neu { fill: #f5f5f5; stroke: #616161; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">NLI — one task, three production uses</text>
+
+  <!-- Premise + Hypothesis input -->
+  <rect x="60" y="70" width="280" height="60" class="box"/>
+  <text x="75" y="92" class="label">premise (t):</text>
+  <text x="75" y="112" class="content">"A cat is sleeping on the couch."</text>
+
+  <rect x="60" y="140" width="280" height="60" class="box"/>
+  <text x="75" y="162" class="label">hypothesis (h):</text>
+  <text x="75" y="182" class="content">"There is a cat in the room."</text>
+
+  <line x1="340" y1="135" x2="400" y2="135" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Encoder -->
+  <rect x="400" y="90" width="220" height="90" class="box"/>
+  <text x="510" y="115" text-anchor="middle" class="label">transformer encoder</text>
+  <text x="510" y="138" text-anchor="middle" class="content">[CLS] t [SEP] h [SEP]</text>
+  <text x="510" y="160" text-anchor="middle" class="caption">DeBERTa-v3 / RoBERTa / BART</text>
+
+  <line x1="620" y1="135" x2="680" y2="135" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- 3-way softmax -->
+  <rect x="680" y="70" width="180" height="50" class="ent"/>
+  <text x="770" y="92" text-anchor="middle" class="label">entailment</text>
+  <text x="770" y="110" text-anchor="middle" class="content">0.97</text>
+
+  <rect x="680" y="125" width="180" height="50" class="neu"/>
+  <text x="770" y="147" text-anchor="middle" class="label">neutral</text>
+  <text x="770" y="165" text-anchor="middle" class="content">0.02</text>
+
+  <rect x="680" y="180" width="180" height="50" class="cont"/>
+  <text x="770" y="202" text-anchor="middle" class="label">contradiction</text>
+  <text x="770" y="220" text-anchor="middle" class="content">0.01</text>
+
+  <!-- Three uses below -->
+  <text x="450" y="270" text-anchor="middle" class="title">same model, three plugs</text>
+
+  <rect x="40" y="290" width="260" height="130" class="ent"/>
+  <text x="170" y="315" text-anchor="middle" class="label">1. zero-shot classification</text>
+  <text x="170" y="340" text-anchor="middle" class="content">t = document</text>
+  <text x="170" y="358" text-anchor="middle" class="content">h = "about {label}"</text>
+  <text x="170" y="385" text-anchor="middle" class="caption">pick max-entailment label</text>
+  <text x="170" y="402" text-anchor="middle" class="caption">no training data needed</text>
+
+  <rect x="320" y="290" width="260" height="130" class="ent"/>
+  <text x="450" y="315" text-anchor="middle" class="label">2. faithfulness (RAG)</text>
+  <text x="450" y="340" text-anchor="middle" class="content">t = retrieved context</text>
+  <text x="450" y="358" text-anchor="middle" class="content">h = generated answer claim</text>
+  <text x="450" y="385" text-anchor="middle" class="caption">entailment → supported</text>
+  <text x="450" y="402" text-anchor="middle" class="caption">RAGAS faithfulness core</text>
+
+  <rect x="600" y="290" width="260" height="130" class="ent"/>
+  <text x="730" y="315" text-anchor="middle" class="label">3. summarization fact-check</text>
+  <text x="730" y="340" text-anchor="middle" class="content">t = source document</text>
+  <text x="730" y="358" text-anchor="middle" class="content">h = summary sentence</text>
+  <text x="730" y="385" text-anchor="middle" class="caption">contradiction → hallucination</text>
+  <text x="730" y="402" text-anchor="middle" class="caption">neutral → unsupported claim</text>
+</svg>

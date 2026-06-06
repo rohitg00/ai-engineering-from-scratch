@@ -1,0 +1,78 @@
+{
+  "lesson": "47-checkpoint-save-resume",
+  "title": "Checkpoint Save and Resume",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which set best describes a complete training checkpoint?",
+      "options": [
+        "Model weights only",
+        "Model state, optimizer state, scheduler state, step counters, loss history, and RNG state for python, numpy, torch CPU, torch CUDA",
+        "Just the loss history",
+        "Anything torch.save() can serialize"
+      ],
+      "correct": 1,
+      "explanation": "Resume must walk the same trajectory. Without optimizer moments, scheduler position, and RNG state the resumed loss is a different curve."
+    },
+    {
+      "stage": "pre",
+      "question": "Why does the saver write to a temporary file and then rename instead of writing the target name directly?",
+      "options": [
+        "Faster I/O",
+        "POSIX rename within the same directory is atomic, so a crash mid-write leaves the previous good file in place rather than a half-written file at the target name",
+        "It dedupes the file",
+        "It bypasses fsync"
+      ],
+      "correct": 1,
+      "explanation": "atomic_save calls os.replace from a temp file in the same directory. Cross-device renames lose atomicity, which is why the temp file must live in the target directory."
+    },
+    {
+      "stage": "check",
+      "question": "Why does a sharded checkpoint store a sha256 in index.json per shard?",
+      "options": [
+        "For SEO",
+        "So the loader can detect a truncated or tampered shard at load time instead of silently merging a bad state_dict",
+        "To compress the file",
+        "Because torch requires it"
+      ],
+      "correct": 1,
+      "explanation": "load_sharded_checkpoint asserts each shard's actual hash matches the recorded one and the meta file's hash too. Silent corruption is the worst failure mode."
+    },
+    {
+      "stage": "check",
+      "question": "How does resume continue at the right offset inside the current epoch?",
+      "options": [
+        "It skips to the next epoch boundary",
+        "TrainState records (epoch, batch_in_epoch) and the RNG state is restored, so the loader fast-forwards the generator past the batches already consumed before continuing",
+        "It uses a special database",
+        "It always restarts from step 0"
+      ],
+      "correct": 1,
+      "explanation": "Without (epoch, batch_in_epoch) you snap to the next epoch boundary and waste work. Without RNG you see different batches. Both are required."
+    },
+    {
+      "stage": "check",
+      "question": "What does the schema field on the payload buy you?",
+      "options": [
+        "Nothing",
+        "A migration hook: future format changes bump the schema string and the loader can dispatch on it instead of breaking old runs",
+        "A pretty filename",
+        "Compression"
+      ],
+      "correct": 1,
+      "explanation": "The lesson uses ckpt.v1; the next version is ckpt.v2 with a migrate function. Without the field, format evolution requires breakage."
+    },
+    {
+      "stage": "post",
+      "question": "Reading the resume demo summary, what does max_loss_diff_after_resume near 0 prove?",
+      "options": [
+        "Nothing useful",
+        "That the post-resume loss trajectory matches the uninterrupted baseline within floating point noise, which means the RNG state and the optimizer state were both restored faithfully",
+        "That the model is good",
+        "That the disk is fast"
+      ],
+      "correct": 1,
+      "explanation": "If you forget RNG you see a different curve and a non-trivial diff. If you forget optimizer state the diff is huge. The near-zero number is the contract."
+    }
+  ]
+}

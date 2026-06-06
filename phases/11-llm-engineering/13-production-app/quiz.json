@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What is the biggest gap between an LLM demo and a production LLM application?",
+    "options": ["The model quality", "Infrastructure: error handling, streaming, cost tracking, rate limiting, fallbacks, observability, and graceful degradation under load", "The prompt quality", "The choice of API provider"],
+    "correct": 1,
+    "explanation": "A demo calls an API and prints the response. Production must handle timeouts, provider outages, concurrent users, cost budgets, streaming delivery, logging, and graceful degradation. The model is the easy part.",
+    "stage": "pre"
+  },
+  {
+    "question": "Why is streaming token delivery important in production LLM applications?",
+    "options": ["It reduces cost", "Users perceive the first token arriving quickly as faster, even if total generation time is the same -- reducing perceived latency from seconds to milliseconds", "It uses less memory", "It improves model accuracy"],
+    "correct": 1,
+    "explanation": "Without streaming, users wait 3-10 seconds seeing nothing before the full response appears. With streaming, the first token arrives in ~200ms and text flows continuously, making the experience feel responsive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What should happen when your LLM API provider has an outage?",
+    "options": ["Show users an error page", "The application should automatically fall back to an alternative provider or return a graceful degraded response", "Retry indefinitely until the provider recovers", "Switch to a local model"],
+    "correct": 1,
+    "explanation": "Production systems need fallback strategies: try Provider B if Provider A fails, serve cached responses for common queries, or return a helpful 'temporarily unavailable' message. Never let a provider outage crash your application.",
+    "stage": "post"
+  },
+  {
+    "question": "What observability metrics should a production LLM application track?",
+    "options": ["Only error counts", "Request latency (P50/P95/P99), cost per request, error rates, token usage, cache hit rates, and quality scores from automated evals", "Only model accuracy", "Only monthly cost"],
+    "correct": 1,
+    "explanation": "Comprehensive observability covers: latency percentiles (for SLA compliance), cost tracking (for budget management), error rates (for reliability), token usage (for optimization), and quality metrics (for regression detection).",
+    "stage": "post"
+  },
+  {
+    "question": "Why should you implement rate limiting in your LLM application?",
+    "options": ["To make the application seem exclusive", "To prevent individual users from exhausting your API budget, protect against abuse, and ensure fair access during high traffic", "To reduce model accuracy", "Rate limiting is only needed for free tiers"],
+    "correct": 1,
+    "explanation": "Without rate limiting, a single user (or bot) can exhaust your daily API budget in minutes. Rate limiting protects your costs, prevents abuse, and ensures all users get reasonable response times during peak load.",
+    "stage": "post"
+  }
+]

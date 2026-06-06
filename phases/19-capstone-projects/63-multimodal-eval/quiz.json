@@ -1,0 +1,78 @@
+{
+  "lesson": "63-multimodal-eval",
+  "title": "Multimodal Evaluation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is training loss alone an insufficient measure of a multimodal model's quality?",
+      "options": [
+        "Loss is hard to compute",
+        "Training loss measures fit on the training distribution; eval surfaces (retrieval, VQA, captioning) measure whether the model generalizes to held-out tasks",
+        "Loss values are random",
+        "Loss is a string"
+      ],
+      "correct": 1,
+      "explanation": "Loss minimization is necessary but not sufficient. Held-out metrics on three task surfaces measure what the model can actually do."
+    },
+    {
+      "stage": "pre",
+      "question": "What is R@5 measuring in a 100-sample retrieval eval?",
+      "options": [
+        "The fifth caption is always correct",
+        "Fraction of queries whose correct match lands in the top 5 retrieved candidates out of 100",
+        "Five percent accuracy",
+        "Five queries per second"
+      ],
+      "correct": 1,
+      "explanation": "R@K = fraction of queries with the target in the top K ranked candidates. Higher is better."
+    },
+    {
+      "stage": "check",
+      "question": "Why does BLEU-4 take the geometric mean of 1- to 4-gram precisions instead of the arithmetic mean?",
+      "options": [
+        "Arithmetic is slower",
+        "Geometric mean is zero if any n-gram precision is zero, which is the strict matching property BLEU wants; smoothing handles the zero case",
+        "Geometric mean is bigger",
+        "PyTorch supports only geometric mean"
+      ],
+      "correct": 1,
+      "explanation": "The geometric mean enforces that ALL n-gram orders contribute; a 4-gram precision of zero collapses the score before smoothing."
+    },
+    {
+      "stage": "check",
+      "question": "What does the brevity penalty in BLEU-4 protect against?",
+      "options": [
+        "Long captions getting penalized",
+        "Short captions gaming high precision by emitting only safe high-frequency tokens; BP < 1 when generated < reference length",
+        "Memory leaks",
+        "Tokenizer errors"
+      ],
+      "correct": 1,
+      "explanation": "Without BP a one-word caption matching one reference word would score 1.0. BP shrinks the score for too-short generations."
+    },
+    {
+      "stage": "check",
+      "question": "Why does multi-reference BLEU usually score higher than single-reference BLEU on the same generation?",
+      "options": [
+        "The math is different",
+        "Each n-gram in the generation can match any reference, so the clipped count is higher when more references are available",
+        "Single-reference is broken",
+        "References cost extra memory"
+      ],
+      "correct": 1,
+      "explanation": "More references give the n-gram more chances to be matched; clipped counts grow and the precision rises."
+    },
+    {
+      "stage": "post",
+      "question": "Which eval surface uses no model embeddings and only id-level matching?",
+      "options": [
+        "Retrieval",
+        "VQA exact match: a predicted answer id is compared directly to a reference id with no embedding step",
+        "BLEU-4",
+        "Cosine similarity"
+      ],
+      "correct": 1,
+      "explanation": "VQA exact match is an integer comparison after the model emits its answer token; no embedding or similarity math involved."
+    }
+  ]
+}

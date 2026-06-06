@@ -1,0 +1,78 @@
+{
+  "lesson": "64-chunking-strategies-advanced",
+  "title": "Chunking Strategies, Compared",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is the chunking choice an upper bound on retrieval quality and not just a hyperparameter?",
+      "options": [
+        "Because the LLM never reads chunks",
+        "Because the embedding model is fixed at training time",
+        "Because no embedding, reranker, or LLM downstream can recover an answer span that was cut into incoherent pieces",
+        "Because BM25 has no role in modern RAG"
+      ],
+      "correct": 2,
+      "explanation": "If the chunk that holds the answer span is incoherent the embedding moves to the wrong cluster and downstream components cannot repair the damage."
+    },
+    {
+      "stage": "pre",
+      "question": "Which strategy is the strongest single-strategy default when you have no prior knowledge of the corpus?",
+      "options": [
+        "Fixed-window",
+        "Sentence packer",
+        "Recursive split",
+        "Structural markdown"
+      ],
+      "correct": 2,
+      "explanation": "Recursive split adapts per region by trying the strongest separator first and falling back, so it survives inconsistent structure."
+    },
+    {
+      "stage": "check",
+      "question": "What does recall@k measure in this lesson?",
+      "options": [
+        "Whether the top-k chunks contain the literal query string",
+        "Whether any of the top-k chunks overlaps the gold answer span",
+        "The cosine similarity between the query and the top-k chunks",
+        "The number of unique documents in the top-k"
+      ],
+      "correct": 1,
+      "explanation": "Each query carries gold offsets; recall@k is 1 if any top-k chunk overlaps the gold span, else 0; averaged across queries."
+    },
+    {
+      "stage": "check",
+      "question": "Why does fixed-window chunking fail badly on code or YAML corpora?",
+      "options": [
+        "It loses Unicode characters",
+        "It cuts identifiers and key-value pairs in half, producing chunks that embed to noise",
+        "It produces chunks larger than the embedding model's context window",
+        "It cannot be parallelized"
+      ],
+      "correct": 1,
+      "explanation": "Character-level cuts inside a symbol destroy the meaning the embedding model is supposed to capture."
+    },
+    {
+      "stage": "check",
+      "question": "What is the centroid drift termination criterion in semantic chunking?",
+      "options": [
+        "Cosine similarity between the running mean vector and the next sentence drops below a threshold",
+        "Character count exceeds the max",
+        "Sentence count exceeds a hardcoded limit",
+        "The chunker has consumed the entire embedding budget"
+      ],
+      "correct": 0,
+      "explanation": "Semantic chunking cuts when the running centroid no longer matches the next sentence by a configured similarity threshold."
+    },
+    {
+      "stage": "post",
+      "question": "What stale-embedding failure mode does semantic chunking introduce that the other four strategies do not?",
+      "options": [
+        "Chunks too small for the embedding context",
+        "Chunk boundaries change whenever you change the chunk-model, requiring a coordinated rebuild",
+        "Chunks are no longer indexable by BM25",
+        "Chunks lose their start and end offsets"
+      ],
+      "correct": 1,
+      "explanation": "Semantic clustering depends on an embedding model; swapping the model changes the boundaries, so the chunk-model must be pinned separately or rebuilt together with the retrieval model."
+    }
+  ]
+}

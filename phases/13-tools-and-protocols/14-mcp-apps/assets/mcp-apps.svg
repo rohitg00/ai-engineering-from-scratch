@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">MCP Apps (SEP-1724): ui:// resources in a sandboxed iframe</text>
+
+  <rect x="40" y="60" width="240" height="440" class="cool"/>
+  <text x="160" y="82" text-anchor="middle" class="head">server</text>
+  <text x="56" y="108" class="step">tools/call result</text>
+  <text x="56" y="126" class="small">content[]:</text>
+  <text x="56" y="142" class="small">  text, ui_resource</text>
+  <text x="56" y="158" class="step">_meta.ui</text>
+  <text x="56" y="174" class="small">  resourceUri:</text>
+  <text x="56" y="190" class="small">    ui://notes/timeline</text>
+  <text x="56" y="206" class="small">  csp: {...}</text>
+  <text x="56" y="222" class="small">  permissions: [...]</text>
+  <text x="56" y="254" class="step">resources/read</text>
+  <text x="56" y="270" class="small">  mimeType:</text>
+  <text x="56" y="286" class="small">  text/html;profile=</text>
+  <text x="56" y="302" class="small">  mcp-app</text>
+  <text x="56" y="334" class="step">HTML bundle</text>
+  <text x="56" y="350" class="small">  single-file,</text>
+  <text x="56" y="366" class="small">  inlined styles,</text>
+  <text x="56" y="382" class="small">  inlined data,</text>
+  <text x="56" y="398" class="small">  postMessage client</text>
+
+  <path d="M280,280 L360,280" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="360" y="60" width="280" height="440" class="box"/>
+  <text x="500" y="82" text-anchor="middle" class="head">host (client)</text>
+  <text x="376" y="108" class="step">iframe sandbox</text>
+  <text x="376" y="126" class="small">sandbox="allow-scripts</text>
+  <text x="376" y="142" class="small">        allow-same-origin"</text>
+  <text x="376" y="174" class="step">apply CSP headers</text>
+  <text x="376" y="190" class="small">  default-src 'self'</text>
+  <text x="376" y="206" class="small">  script-src 'self'</text>
+  <text x="376" y="222" class="small">  connect-src 'self'</text>
+  <text x="376" y="254" class="step">apply permissions</text>
+  <text x="376" y="270" class="small">  camera / mic /</text>
+  <text x="376" y="286" class="small">  geo / network:*</text>
+  <text x="376" y="302" class="small">  each is a user prompt</text>
+  <text x="376" y="334" class="step">mediate postMessage</text>
+  <text x="376" y="350" class="small">  iframe -&gt; host call</text>
+  <text x="376" y="366" class="small">  host -&gt; MCP server</text>
+  <text x="376" y="382" class="small">  MCP result -&gt; iframe</text>
+  <text x="376" y="414" class="step">visually distinguish</text>
+  <text x="376" y="430" class="small">  server UI from host</text>
+  <text x="376" y="446" class="small">  (defeat prompt-</text>
+  <text x="376" y="462" class="small">  injection via UI)</text>
+
+  <path d="M640,280 L720,280" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="720" y="60" width="200" height="440" class="cold"/>
+  <text x="820" y="82" text-anchor="middle" class="head">postMessage JSON-RPC</text>
+  <text x="736" y="108" class="step">iframe -&gt; host</text>
+  <text x="736" y="126" class="small">host.callTool</text>
+  <text x="736" y="142" class="small">host.readResource</text>
+  <text x="736" y="158" class="small">host.getPrompt</text>
+  <text x="736" y="174" class="small">host.close</text>
+  <text x="736" y="206" class="step">host -&gt; iframe</text>
+  <text x="736" y="222" class="small">ui/initialize</text>
+  <text x="736" y="238" class="small">notifications/*</text>
+  <text x="736" y="270" class="step">shape</text>
+  <text x="736" y="286" class="small">{jsonrpc, id,</text>
+  <text x="736" y="302" class="small"> method, params}</text>
+  <text x="736" y="334" class="step">trust model</text>
+  <text x="736" y="350" class="small">every host.* call</text>
+  <text x="736" y="366" class="small">goes through the MCP</text>
+  <text x="736" y="382" class="small">server's permissions</text>
+  <text x="736" y="414" class="step">support (2026-04)</text>
+  <text x="736" y="430" class="small">Claude Desktop, Goose</text>
+  <text x="736" y="446" class="small">ChatGPT, Cursor beta</text>
+  <text x="736" y="462" class="small">VS Code insider</text>
+</svg>

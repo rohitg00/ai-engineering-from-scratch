@@ -1,0 +1,90 @@
+{
+  "lesson": "22-jsonrpc-stdio-transport",
+  "title": "JSON-RPC 2.0 over Newline-Delimited Stdio",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What distinguishes a JSON-RPC notification from a request on the wire?",
+      "options": [
+        "Different jsonrpc version field",
+        "Notifications omit the id field; servers must not respond to them",
+        "Notifications use a different method namespace",
+        "Notifications are wrapped in an array"
+      ],
+      "correct": 1,
+      "explanation": "Absence of id is the only marker. Servers do not respond, because there is no id to correlate against."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is newline-delimited JSON sufficient for stdio framing?",
+      "options": [
+        "Because JSON does not allow literal newlines inside strings without escaping, so each object can be one line",
+        "Because pipes guarantee newline atomicity",
+        "Because UTF-8 has no newline byte",
+        "Because the spec mandates it"
+      ],
+      "correct": 0,
+      "explanation": "json.dumps emits a single line per object; literal newlines inside strings are escaped. That makes \\n a safe record separator."
+    },
+    {
+      "stage": "check",
+      "question": "Which error code does the transport return when JSON parsing fails?",
+      "options": [
+        "-32600",
+        "-32700",
+        "-32603",
+        "-32601"
+      ],
+      "correct": 1,
+      "explanation": "-32700 is Parse error. The response id is null because no id could be extracted."
+    },
+    {
+      "stage": "check",
+      "question": "If a handler raises a plain ValueError, what does the transport return?",
+      "options": [
+        "Method not found (-32601)",
+        "Invalid params (-32602)",
+        "Internal error (-32603) with the exception class name in data",
+        "It does not return; the connection drops"
+      ],
+      "correct": 2,
+      "explanation": "Unmapped exceptions surface as -32603. data.exception preserves the class name for the client."
+    },
+    {
+      "stage": "check",
+      "question": "What does the server return when a batch contains only notifications?",
+      "options": [
+        "An empty array",
+        "Nothing — no bytes are written",
+        "One null per notification",
+        "A single null response"
+      ],
+      "correct": 1,
+      "explanation": "Spec rule: if every entry is a notification, the server stays silent."
+    },
+    {
+      "stage": "post",
+      "question": "A line with broken JSON arrives in the middle of a session. What happens to subsequent lines?",
+      "options": [
+        "The transport closes the stream",
+        "They are buffered until the broken line is retried",
+        "The transport writes a -32700 response and continues reading the next line as fresh",
+        "They are all rejected with -32600"
+      ],
+      "correct": 2,
+      "explanation": "The framing layer must not poison the stream. One parse error means one error response and the loop continues."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the transport not consult the tool registry directly?",
+      "options": [
+        "Because the registry is async",
+        "To keep the transport layer JSON-RPC-shaped only; the handler stitches transport to registry",
+        "Because the registry holds secrets",
+        "Because the transport runs in a different process"
+      ],
+      "correct": 1,
+      "explanation": "The transport speaks the wire. The dispatcher (next lesson) is where transport meets registry meets timeout."
+    }
+  ]
+}

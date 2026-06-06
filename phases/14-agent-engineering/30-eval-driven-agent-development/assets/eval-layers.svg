@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .bench { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .custom { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .online { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .loop { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Eval-driven development — three layers + evaluator-optimizer loop</text>
+
+  <rect x="40" y="50" width="290" height="220" class="bench"/>
+  <text x="185" y="72" text-anchor="middle" class="head">1. static benchmarks</text>
+  <text x="60" y="96" class="small">cross-model comparison + regression gate</text>
+  <rect x="60" y="108" width="250" height="30" class="box"/>
+  <text x="78" y="128" class="step">SWE-bench Verified (code)</text>
+  <rect x="60" y="140" width="250" height="30" class="box"/>
+  <text x="78" y="160" class="step">WebArena / OSWorld (web/desktop)</text>
+  <rect x="60" y="172" width="250" height="30" class="box"/>
+  <text x="78" y="192" class="step">GAIA (generalist)</text>
+  <rect x="60" y="204" width="250" height="30" class="box"/>
+  <text x="78" y="224" class="step">BFCL V4 (tool use)</text>
+  <rect x="60" y="236" width="250" height="28" class="box"/>
+  <text x="78" y="254" class="step">contamination: always report +audit</text>
+
+  <rect x="340" y="50" width="290" height="220" class="custom"/>
+  <text x="485" y="72" text-anchor="middle" class="head">2. custom offline evals</text>
+  <text x="360" y="96" class="small">your product's shape</text>
+  <rect x="360" y="108" width="250" height="30" class="box"/>
+  <text x="378" y="128" class="step">LLM-as-judge (Langfuse, Phoenix, Opik)</text>
+  <rect x="360" y="140" width="250" height="30" class="box"/>
+  <text x="378" y="160" class="step">execution-based (run patch, check tests)</text>
+  <rect x="360" y="172" width="250" height="30" class="box"/>
+  <text x="378" y="192" class="step">trajectory-based (OSWorld-Human)</text>
+  <rect x="360" y="204" width="250" height="30" class="box"/>
+  <text x="378" y="224" class="step">pinned seeds, snapshot state</text>
+  <rect x="360" y="236" width="250" height="28" class="box"/>
+  <text x="378" y="254" class="step">evals live next to code</text>
+
+  <rect x="640" y="50" width="290" height="220" class="online"/>
+  <text x="785" y="72" text-anchor="middle" class="head">3. online evals (prod)</text>
+  <text x="660" y="96" class="small">continuous, sampled, PII-scrubbed</text>
+  <rect x="660" y="108" width="250" height="30" class="box"/>
+  <text x="678" y="128" class="step">session replays (Langfuse)</text>
+  <rect x="660" y="140" width="250" height="30" class="box"/>
+  <text x="678" y="160" class="step">guardrail-triggered alerts</text>
+  <rect x="660" y="172" width="250" height="30" class="box"/>
+  <text x="678" y="192" class="step">per-step cost / latency tracking</text>
+  <rect x="660" y="204" width="250" height="30" class="box"/>
+  <text x="678" y="224" class="step">failure tagging (Lesson 26)</text>
+  <rect x="660" y="236" width="250" height="28" class="box"/>
+  <text x="678" y="254" class="step">feedback loop into custom cases</text>
+
+  <rect x="40" y="290" width="880" height="220" class="loop"/>
+  <text x="480" y="312" text-anchor="middle" class="head">evaluator-optimizer loop  (Anthropic, generalized Self-Refine)</text>
+
+  <rect x="60" y="328" width="200" height="50" class="box"/>
+  <text x="160" y="352" text-anchor="middle" class="step">proposer</text>
+  <text x="160" y="368" text-anchor="middle" class="small">emits candidate</text>
+
+  <rect x="300" y="328" width="200" height="50" class="box"/>
+  <text x="400" y="352" text-anchor="middle" class="step">evaluator</text>
+  <text x="400" y="368" text-anchor="middle" class="small">judges (pass / fail + reason)</text>
+
+  <rect x="540" y="328" width="200" height="50" class="box"/>
+  <text x="640" y="352" text-anchor="middle" class="step">refine</text>
+  <text x="640" y="368" text-anchor="middle" class="small">feedback returns to proposer</text>
+
+  <rect x="780" y="328" width="130" height="50" class="box"/>
+  <text x="845" y="358" text-anchor="middle" class="step">pass  ship</text>
+
+  <line x1="260" y1="353" x2="300" y2="353" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="500" y1="353" x2="540" y2="353" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="500" y1="353" x2="780" y2="353" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="640" y1="378" x2="160" y2="378" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="398" width="840" height="30" class="box"/>
+  <text x="78" y="418" class="step">2026 best practice: evals in CI; fail merge on &gt;=5% regression vs baseline</text>
+  <rect x="60" y="432" width="840" height="30" class="box"/>
+  <text x="78" y="452" class="step">every guardrail maps to a case; every learned rule maps to a failure case</text>
+  <rect x="60" y="466" width="840" height="30" class="box"/>
+  <text x="78" y="486" class="step">LLM-judge grounds via CRITIC (external tools); avoid judge hallucination</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">eval is not the last step. it is the outer loop that drives every Phase 14 choice.</text>
+</svg>

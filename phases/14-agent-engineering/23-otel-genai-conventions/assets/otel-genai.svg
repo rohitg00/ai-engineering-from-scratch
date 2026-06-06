@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .agent { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .tool { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .chat { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .capture { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">OpenTelemetry GenAI semantic conventions — canonical span tree</text>
+
+  <rect x="40" y="50" width="880" height="240" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">span tree with GenAI attributes</text>
+
+  <rect x="60" y="90" width="840" height="34" class="agent"/>
+  <text x="78" y="112" class="step">invoke_agent research_bot  [INTERNAL]</text>
+  <text x="540" y="112" class="small">gen_ai.agent.name, gen_ai.provider.name, gen_ai.request.model</text>
+
+  <rect x="100" y="132" width="800" height="30" class="chat"/>
+  <text x="118" y="152" class="step">chat  gen_ai.operation.name=chat</text>
+  <text x="500" y="152" class="small">gen_ai.response.model if it differs from request</text>
+
+  <rect x="140" y="170" width="760" height="30" class="tool"/>
+  <text x="158" y="190" class="step">tool_call search_tool  gen_ai.tool.name, gen_ai.data_source.id</text>
+
+  <rect x="100" y="208" width="800" height="30" class="chat"/>
+  <text x="118" y="228" class="step">chat  (continuation turn)</text>
+
+  <rect x="100" y="246" width="800" height="30" class="chat"/>
+  <text x="118" y="266" class="step">chat  (final answer)</text>
+
+  <rect x="40" y="310" width="440" height="200" class="capture"/>
+  <text x="260" y="332" text-anchor="middle" class="head">content capture — opt-in only</text>
+  <rect x="60" y="348" width="400" height="30" class="box"/>
+  <text x="78" y="368" class="step">gen_ai.input.messages.reference_id</text>
+  <rect x="60" y="382" width="400" height="30" class="box"/>
+  <text x="78" y="402" class="step">gen_ai.output.messages.reference_id</text>
+  <rect x="60" y="416" width="400" height="30" class="box"/>
+  <text x="78" y="436" class="step">gen_ai.system_instructions (if opt-in)</text>
+  <rect x="60" y="450" width="400" height="30" class="box"/>
+  <text x="78" y="470" class="step">external store: S3, SQLite, log pipeline</text>
+  <rect x="60" y="484" width="400" height="22" class="box"/>
+  <text x="78" y="500" class="step">stays out of span body; PII-safe</text>
+
+  <rect x="500" y="310" width="420" height="200" class="box"/>
+  <text x="710" y="332" text-anchor="middle" class="head">span kinds + technology specific</text>
+  <rect x="520" y="348" width="380" height="30" class="agent"/>
+  <text x="538" y="368" class="step">CLIENT: remote agent services (Assistants, Bedrock)</text>
+  <rect x="520" y="382" width="380" height="30" class="agent"/>
+  <text x="538" y="402" class="step">INTERNAL: in-process (LangChain, CrewAI, local ReAct)</text>
+  <rect x="520" y="416" width="380" height="30" class="tool"/>
+  <text x="538" y="436" class="step">per-provider conventions: Anthropic, Azure AI, Bedrock, OpenAI</text>
+  <rect x="520" y="450" width="380" height="30" class="chat"/>
+  <text x="538" y="470" class="step">Datadog v1.37+ maps natively</text>
+  <rect x="520" y="484" width="380" height="22" class="box"/>
+  <text x="538" y="500" class="step">OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">spec: opentelemetry.io/docs/specs/semconv/gen-ai/ — most conventions still experimental (Mar 2026).</text>
+</svg>

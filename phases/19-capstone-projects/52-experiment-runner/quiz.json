@@ -1,0 +1,78 @@
+{
+  "lesson": "52-experiment-runner",
+  "title": "Experiment Runner",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the runner spawn a subprocess instead of importing the experiment script in process?",
+      "options": [
+        "Because Python disallows nested imports",
+        "Because a separate process gives the runner a kill handle on timeout or memory limits and isolates crashes from the orchestrator",
+        "Because the metrics format requires it",
+        "Because subprocess is faster than import"
+      ],
+      "correct": 1,
+      "explanation": "A separate process is the simplest isolation the language ships. The parent retains a kill handle and an independent address space, so a crashing experiment cannot take the orchestrator with it."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is the memory cap described as soft?",
+      "options": [
+        "Because it only applies to the heap, not the stack",
+        "Because the poller has a non zero interval, so a process can spike above the cap between polls and the runner only acts on the next observation",
+        "Because the operating system always overrides it",
+        "Because numpy ignores the cap"
+      ],
+      "correct": 1,
+      "explanation": "The cap is enforced by polling, not by an in kernel limit. The poller interval is the resolution of the cap, and short spikes can briefly exceed the cap before the next observation."
+    },
+    {
+      "stage": "check",
+      "question": "Which terminal label does the runner return when stdout has the metrics but the exit code is non zero?",
+      "options": [
+        "ok",
+        "timeout",
+        "oom",
+        "crash"
+      ],
+      "correct": 3,
+      "explanation": "Terminal is ok only when exit code is zero and metrics parsed. A non zero exit code is crash even if some metrics were captured before the failure."
+    },
+    {
+      "stage": "check",
+      "question": "How does the runner identify the final metrics blob inside stdout?",
+      "options": [
+        "It reads the first json line",
+        "It reads the last json line whose keys cover the required metric_keys; earlier covering lines become intermediate metrics",
+        "It scans stderr for json",
+        "It expects exactly one line of output"
+      ],
+      "correct": 1,
+      "explanation": "Final metrics are the last line that parses as json and includes every required key. Earlier covering lines are kept as intermediate metrics for learning curves."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the ablation helper sweep one knob at a time rather than a full factorial?",
+      "options": [
+        "Because the runner cannot launch more than one subprocess",
+        "Because one knob at a time produces a clean axis the evaluator can plot, while full factorial blows up exponentially and confuses interpretation",
+        "Because numpy does not support the cartesian product",
+        "Because the seed only varies along one knob"
+      ],
+      "correct": 1,
+      "explanation": "Single knob sweeps keep the result interpretable. Full factorial costs scale exponentially with the number of knobs and the resulting table is hard to read."
+    },
+    {
+      "stage": "check",
+      "question": "What guarantee does forwarding spec.seed into config['__seed'] give the evaluator?",
+      "options": [
+        "Faster wall time",
+        "Lower memory consumption",
+        "Determinism, so a re run with the same seed produces identical metrics and the evaluator can detect real changes from random noise",
+        "A free significance test"
+      ],
+      "correct": 2,
+      "explanation": "The seed pins random initialisation in the experiment. Two runs with the same seed produce identical metrics, which is what lets the evaluator distinguish a real regression from a different draw."
+    }
+  ]
+}

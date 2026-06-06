@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="FIG_001.C — agent loop returning to itself">
+  <defs>
+    <style>
+      .bp { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
+      .bp-fill { fill: #3553ff; }
+      .face { fill: rgba(53, 83, 255, 0.08); }
+      .face-strong { fill: rgba(53, 83, 255, 0.18); }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; }
+    </style>
+  </defs>
+
+  <rect width="120" height="120" fill="#fafaf5"/>
+
+  <text class="mono bp-fill" x="8" y="14" font-size="6.5" letter-spacing="1.5">FIG_001.C</text>
+
+  <!-- center model node -->
+  <rect class="face-strong" x="46" y="52" width="28" height="20"/>
+  <rect class="bp" x="46" y="52" width="28" height="20" stroke-width="1.5"/>
+  <text class="mono bp-fill" x="60" y="65" font-size="6.5" letter-spacing="1.5" text-anchor="middle">LLM</text>
+
+  <!-- loop arrow: top arc going right, descending on right, returning underneath -->
+  <path class="bp" d="M 60 32 A 28 28 0 1 1 32 60" stroke-width="1.5"/>
+  <polyline class="bp" points="36,56 32,60 36,64" stroke-width="1.5"/>
+
+  <!-- tool action node on right -->
+  <rect class="face" x="84" y="50" width="20" height="14"/>
+  <rect class="bp" x="84" y="50" width="20" height="14" stroke-width="1.2"/>
+  <text class="mono bp-fill" x="94" y="60" font-size="5.5" letter-spacing="1" text-anchor="middle">TOOL</text>
+
+  <!-- short connectors from LLM box to tool box -->
+  <line class="bp" x1="74" y1="58" x2="84" y2="58" stroke-width="1.2"/>
+  <polyline class="bp" points="82,55 84,58 82,61" stroke-width="1.2"/>
+  <line class="bp" x1="84" y1="62" x2="74" y2="62" stroke-width="1.2"/>
+  <polyline class="bp" points="76,59 74,62 76,65" stroke-width="1.2"/>
+
+  <!-- observation node beneath -->
+  <rect class="face" x="50" y="82" width="20" height="12"/>
+  <rect class="bp" x="50" y="82" width="20" height="12" stroke-width="1.2"/>
+  <text class="mono bp-fill" x="60" y="90" font-size="5.5" letter-spacing="1" text-anchor="middle">OBS</text>
+  <line class="bp" x1="60" y1="72" x2="60" y2="82" stroke-width="1.2"/>
+  <polyline class="bp" points="57,80 60,82 63,80" stroke-width="1.2" fill="#fafaf5"/>
+
+  <text class="mono bp-fill" x="60" y="114" font-size="7" letter-spacing="1.5" text-anchor="middle">AGENT</text>
+</svg>

@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What is the primary purpose of a tokenizer in an LLM pipeline?",
+    "options": ["To remove stop words from text", "To convert text into a sequence of integers that the model can process", "To translate text between languages", "To compress text for storage"],
+    "correct": 1,
+    "explanation": "LLMs process numbers, not text. The tokenizer converts every character, word, and symbol into integer IDs from a fixed vocabulary. This conversion is not neutral -- it determines how the model 'sees' language.",
+    "stage": "pre"
+  },
+  {
+    "question": "What does BPE (Byte Pair Encoding) do to build its vocabulary?",
+    "options": ["Splits text into individual characters only", "Iteratively merges the most frequent adjacent pair of tokens until reaching the target vocabulary size", "Uses a dictionary lookup for whole words", "Randomly assigns IDs to substrings"],
+    "correct": 1,
+    "explanation": "BPE starts with individual bytes/characters and repeatedly merges the most common adjacent pair. 'th' + 'e' becomes 'the'. After thousands of merges, common words become single tokens while rare words are split into subword pieces.",
+    "stage": "pre"
+  },
+  {
+    "question": "Why does vocabulary size create a tradeoff in LLM design?",
+    "options": ["Larger vocabularies always perform better", "Too small creates long sequences (more computation); too large wastes embedding parameters on rare tokens", "Vocabulary size doesn't affect model performance", "Smaller vocabularies are always more efficient"],
+    "correct": 1,
+    "explanation": "Small vocabulary (e.g., character-level) means every word is many tokens, increasing sequence length and computation. Large vocabulary wastes parameters on tokens that rarely appear in training data. Most LLMs use 32K-100K tokens.",
+    "stage": "post"
+  },
+  {
+    "question": "What problem does byte-level fallback solve in tokenization?",
+    "options": ["It speeds up tokenization", "It ensures any input (emoji, rare scripts, binary data) can be encoded without 'unknown' tokens", "It reduces vocabulary size", "It improves model accuracy"],
+    "correct": 1,
+    "explanation": "With byte-level fallback, the tokenizer can fall back to raw byte values (256 possible) for any character not in the vocabulary. This guarantees complete coverage -- no input is ever 'unknown.'",
+    "stage": "post"
+  },
+  {
+    "question": "How does the tokenizer affect non-English language performance in LLMs?",
+    "options": ["Tokenizers work equally well for all languages", "Languages underrepresented in training data get worse token merges, requiring more tokens per word and wasting context window", "Non-English text is always character-tokenized", "Tokenization doesn't affect language performance"],
+    "correct": 1,
+    "explanation": "BPE merges are learned from training data. If Japanese text is 5% of the corpus, Japanese characters get fewer merges, requiring 2-5x more tokens per word than English. This effectively shrinks the context window for non-English text.",
+    "stage": "post"
+  }
+]

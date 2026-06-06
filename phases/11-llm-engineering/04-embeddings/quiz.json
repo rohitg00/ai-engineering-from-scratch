@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What problem do embeddings solve that keyword search cannot?",
+    "options": ["Embeddings are faster", "Embeddings capture semantic meaning, matching 'payment didn't go through' with 'charge was declined' even though they share no words", "Embeddings use less storage", "Embeddings work offline"],
+    "correct": 1,
+    "explanation": "Keyword search treats words as independent symbols. Embeddings map text to high-dimensional vectors where semantic similarity = geometric proximity. Texts with the same meaning cluster together regardless of word choice.",
+    "stage": "pre"
+  },
+  {
+    "question": "What does cosine similarity measure between two embedding vectors?",
+    "options": ["The Euclidean distance", "The angle between the vectors, indicating how similar their directions are regardless of magnitude", "The sum of their components", "The number of matching dimensions"],
+    "correct": 1,
+    "explanation": "Cosine similarity = dot(A,B) / (|A|*|B|). It ranges from -1 (opposite) to 1 (identical direction). Two texts with the same meaning will have vectors pointing in nearly the same direction, giving cosine similarity near 1.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is the typical dimensionality of modern text embedding models?",
+    "options": ["2-10 dimensions", "50-100 dimensions", "768-3072 dimensions", "100,000+ dimensions"],
+    "correct": 2,
+    "explanation": "Modern embedding models (OpenAI text-embedding-3, BGE, E5) produce vectors with 768 to 3072 dimensions. Higher dimensions capture more nuance but cost more to store and search.",
+    "stage": "post"
+  },
+  {
+    "question": "Why should you evaluate embedding quality using retrieval benchmarks rather than just inspecting similarity scores?",
+    "options": ["Similarity scores are always wrong", "Absolute similarity values vary by model; what matters is whether relevant documents rank higher than irrelevant ones (precision@k, recall)", "Retrieval benchmarks are faster", "Similarity scores don't use cosine distance"],
+    "correct": 1,
+    "explanation": "A cosine similarity of 0.85 might mean 'very similar' for one model and 'somewhat similar' for another. Retrieval metrics (precision@k, recall) measure what actually matters: does the right document come back?",
+    "stage": "post"
+  },
+  {
+    "question": "When would you use a local/open-source embedding model instead of an API-based one?",
+    "options": ["Local models are always better", "When you need data privacy, offline operation, lower cost at scale, or domain-specific fine-tuning", "Local models produce higher quality embeddings", "API models don't support batching"],
+    "correct": 1,
+    "explanation": "API embeddings (OpenAI, Cohere) are easy but send your data externally. Local models (BGE, E5, Nomic) keep data private, eliminate per-call costs at scale, and can be fine-tuned on domain-specific data.",
+    "stage": "post"
+  }
+]

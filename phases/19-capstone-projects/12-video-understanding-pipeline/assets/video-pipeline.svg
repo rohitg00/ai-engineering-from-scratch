@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">video understanding pipeline — scene -&gt; multi-vector -&gt; grounded answer</text>
+
+  <rect x="40" y="50" width="880" height="100" class="box"/>
+  <text x="480" y="70" text-anchor="middle" class="head">ingest (three pipelines in parallel)</text>
+  <rect x="60" y="84" width="270" height="52" class="cool"/>
+  <text x="195" y="104" text-anchor="middle" class="step">scene segmentation</text>
+  <text x="195" y="122" text-anchor="middle" class="small">TransNetV2 / PySceneDetect</text>
+  <rect x="345" y="84" width="270" height="52" class="cool"/>
+  <text x="480" y="104" text-anchor="middle" class="step">VLM caption + frame embed</text>
+  <text x="480" y="122" text-anchor="middle" class="small">Gemini 2.5 Pro / Qwen3-VL / Molmo 2</text>
+  <rect x="630" y="84" width="270" height="52" class="cool"/>
+  <text x="765" y="104" text-anchor="middle" class="step">ASR + word timestamps</text>
+  <text x="765" y="122" text-anchor="middle" class="small">Whisper-v3-turbo (faster-whisper)</text>
+
+  <rect x="40" y="170" width="880" height="80" class="dsk"/>
+  <text x="480" y="190" text-anchor="middle" class="head">multi-vector Qdrant index (three named vectors per scene)</text>
+  <text x="480" y="214" text-anchor="middle" class="small">caption_emb   frame_emb   transcript_emb</text>
+  <text x="480" y="232" text-anchor="middle" class="small">payload: video_id, scene_id, start_ms, end_ms, keyframe_url</text>
+
+  <rect x="40" y="270" width="440" height="240" class="box"/>
+  <text x="260" y="292" text-anchor="middle" class="head">query flow</text>
+  <rect x="60" y="310" width="400" height="30" class="cool"/>
+  <text x="260" y="330" text-anchor="middle" class="step">three parallel dense queries</text>
+  <rect x="60" y="346" width="400" height="30" class="cool"/>
+  <text x="260" y="366" text-anchor="middle" class="step">reciprocal rank fusion -&gt; top-k scenes</text>
+  <rect x="60" y="382" width="400" height="30" class="hot"/>
+  <text x="260" y="402" text-anchor="middle" class="step">temporal grounding (TimeLens / VideoITG)</text>
+  <rect x="60" y="418" width="400" height="30" class="dsk"/>
+  <text x="260" y="438" text-anchor="middle" class="step">VLM synth with cited timestamps</text>
+  <text x="260" y="466" text-anchor="middle" class="small">answer + (start, end) + frame previews</text>
+  <text x="260" y="484" text-anchor="middle" class="caption">UI: jump-to-frame + thumbnail strip</text>
+
+  <rect x="520" y="270" width="400" height="240" class="box"/>
+  <text x="720" y="292" text-anchor="middle" class="head">evaluation</text>
+  <rect x="540" y="310" width="360" height="30" class="cool"/>
+  <text x="720" y="330" text-anchor="middle" class="step">ActivityNet-QA + NeXT-GQA</text>
+  <rect x="540" y="346" width="360" height="30" class="cool"/>
+  <text x="720" y="366" text-anchor="middle" class="step">custom 100-query hand-labeled set</text>
+  <rect x="540" y="382" width="360" height="30" class="hot"/>
+  <text x="720" y="402" text-anchor="middle" class="step">hallucination sub-bench</text>
+  <text x="720" y="420" text-anchor="middle" class="small">counting + action-type reported separately</text>
+  <text x="720" y="440" text-anchor="middle" class="small">temporal IoU on held-out grounding set</text>
+  <text x="720" y="466" text-anchor="middle" class="small">ingest throughput: hours-of-video / $</text>
+  <text x="720" y="488" text-anchor="middle" class="caption">target: 100 hours indexed, &lt; 2 min per query</text>
+</svg>

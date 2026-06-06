@@ -1,0 +1,78 @@
+{
+  "lesson": "66-reranker-cross-encoder",
+  "title": "Cross-Encoder Reranker",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the architectural difference between a bi-encoder and a cross-encoder?",
+      "options": [
+        "Bi-encoders use cosine; cross-encoders use dot product",
+        "Bi-encoders are trained; cross-encoders are not",
+        "A bi-encoder embeds query and document independently; a cross-encoder reads the concatenated (query, document) sequence with full attention across both",
+        "Cross-encoders run only on GPUs"
+      ],
+      "correct": 2,
+      "explanation": "Cross attention across the join is what gives the cross-encoder its precision; the bi-encoder never sees the query and document together."
+    },
+    {
+      "stage": "pre",
+      "question": "Why can a cross-encoder not be used as the primary retriever on a 10M-document corpus?",
+      "options": [
+        "It requires one forward pass per (query, document) pair, which is 10M passes per query",
+        "It cannot embed text",
+        "It does not support negative scores",
+        "It requires the CLS token at the end of the sequence"
+      ],
+      "correct": 0,
+      "explanation": "Throughput collapses at corpus scale; the cross-encoder runs once per pair instead of once per document at index time."
+    },
+    {
+      "stage": "check",
+      "question": "What is the role of the N parameter in a two-stage retrieve-then-rerank pipeline?",
+      "options": [
+        "It is the number of layers in the cross-encoder",
+        "It is the number of candidates returned by the bi-encoder for the cross-encoder to rescore",
+        "It is the size of the vocabulary",
+        "It is the cross-encoder hidden dimension"
+      ],
+      "correct": 1,
+      "explanation": "N is the rerank pool; it caps quality (cross-encoder cannot exceed bi-encoder recall at N) and latency (cross-encoder runs N forward passes)."
+    },
+    {
+      "stage": "check",
+      "question": "Why must you pick N strictly larger than K (typically 3x or more)?",
+      "options": [
+        "The cross-encoder requires N to be a multiple of K",
+        "If N equals K the cross-encoder cannot reorder, only reweight; rerank lift collapses to zero",
+        "Smaller N reduces the embedding dimensionality",
+        "BM25 requires it for the IDF computation"
+      ],
+      "correct": 1,
+      "explanation": "With N = K there is nothing to reorder; the cross-encoder's only job is to pick the right K out of N, which needs N > K."
+    },
+    {
+      "stage": "check",
+      "question": "What does the cross-encoder's mean-pooling head do in this lesson?",
+      "options": [
+        "Averages the last-layer outputs over non-pad positions and feeds a single linear head to produce one relevance scalar",
+        "Sums the embedding indices",
+        "Pools over the vocabulary distribution",
+        "Computes the softmax over the document positions"
+      ],
+      "correct": 0,
+      "explanation": "Mean-pool over non-pad positions, then a single linear layer outputs the relevance score; CLS-pooling is an alternative with similar quality."
+    },
+    {
+      "stage": "post",
+      "question": "Which production failure mode does logging the rank-1 cross-encoder score help detect?",
+      "options": [
+        "Out-of-domain queries: when the top-1 reranker score is below a corpus-specific threshold, the model is signalling that nothing in the corpus actually answers the query",
+        "Network outages",
+        "Vocabulary drift in the tokenizer",
+        "Index corruption in the bi-encoder"
+      ],
+      "correct": 0,
+      "explanation": "A consistently low rank-1 score is the cross-encoder telling you the retrieved pool does not contain the answer; surface that to the LLM as low-confidence."
+    }
+  ]
+}

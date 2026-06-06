@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What architectural difference distinguishes an action-conditioned world model (Genie 3) from a pure video generation model (Sora 2)?",
+      "options": ["Action-conditioned models are smaller", "Pure video generators condition on a prompt at t=0 and roll out; action-conditioned world models take a latent or explicit action per frame so the user can steer the rollout mid-generation", "Only the training datasets differ", "World models only work on 3D scenes"],
+      "correct": 1,
+      "explanation": "Sora 2 is autoregressive on spacetime tokens; its prompt sets the scene but you cannot change direction mid-rollout. Genie 3 infers or takes a latent action at each step and conditions the next-frame prediction on it, letting the user interact with the simulated world. This interactivity is what makes a model a 'world simulator' rather than a video generator."
+    },
+    {
+      "stage": "pre",
+      "question": "Divided attention in a video transformer means what?",
+      "options": ["Half the tokens are masked", "Each block does a temporal attention (same spatial position, across frames) followed by a spatial attention (same frame, across positions); this factorises cost from O((T*H*W)^2) into O((H*W)*T^2) + O(T*(H*W)^2) — dramatically cheaper than the joint product", "Only half the layers run attention", "Attention is split across GPUs"],
+      "correct": 1,
+      "explanation": "Full joint attention over spacetime tokens is prohibitive: for T=150 temporal tokens and a 60x45 spatial grid (2700 spatial tokens), the joint (T*H*W)^2 ≈ 1.6e11 pairs. Divided attention runs temporal attention at each spatial position (H*W * T^2 ≈ 6.1e7) and spatial attention at each timestep (T * (H*W)^2 ≈ 1.1e9) — multiple orders of magnitude less. TimeSformer introduced this pattern; almost every 2026 video DiT (Sora, Wan, HunyuanVideo) uses a divided or window variant."
+    },
+    {
+      "stage": "post",
+      "question": "Sora 2's 2026 release advertised better physical plausibility. Which specific failure modes did this target?",
+      "options": ["Colour balance and contrast", "Weight, balance, object permanence, cause-and-effect — the model now handles dropped objects, characters colliding, and 'failures on purpose' (a missed jump) more believably than Sora 1", "Text rendering inside images", "Video length"],
+      "correct": 1,
+      "explanation": "Prior-generation video models famously failed on spaghetti-eating, drinking from glasses, and persistent-object scenes — hands would pass through objects, items would disappear mid-action. Sora 2 explicitly advertises improvements on weight, balance, object permanence, and cause-and-effect, measured against internal and public plausibility benchmarks. These are the dominant quality failures the field is still working on."
+    },
+    {
+      "stage": "post",
+      "question": "In the emerging robotics stack (VLM + video generation + inverse dynamics), what does the inverse dynamics model do?",
+      "options": ["It generates the next frame", "It takes a pair (current observation, desired next observation from the video model) and outputs the low-level motor action that would connect them; this closes the loop between imagined rollouts and actual actuation", "It trains the VLM", "It labels training data"],
+      "correct": 1,
+      "explanation": "The VLM plans, the video model imagines, and the inverse dynamics model turns imagination into motor commands. Given two consecutive observations, inverse dynamics asks: what action produced this transition? This three-component stack lets a robot train largely in a learned simulator, using the video model to generate data and the inverse dynamics model to execute."
+    },
+    {
+      "stage": "post",
+      "question": "Autonomous-driving teams use world models (Cosmos-Drive, Gaia-2, DrivingWorld) to replace what cost?",
+      "options": ["Actual fleet insurance", "Expensive real-world data collection for rare or dangerous corner cases (pedestrian jaywalks, icy roads, unusual vehicles); synthesised driving video provides on-demand training and evaluation data for those scenarios", "Road tolls", "Vehicle depreciation"],
+      "correct": 1,
+      "explanation": "Collecting corner-case driving data takes millions of real-world miles. Cosmos-Drive, Gaia-2, and DrivingWorld generate it conditioned on trajectories and maps. Teams use this data to expand training sets, evaluate planners in reproducible conditions, and de-risk scenarios they cannot ethically drive in reality. Replacing a fraction of real-world collection with synthesis is one of the clearest production wins for video world models in 2026."
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <marker id="edge" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .person { fill: #e3f2fd; stroke: #1565c0; stroke-width: 1.5; }
+      .org { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .place { fill: #e8f5e9; stroke: #2e7d32; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .edge-label { font-size: 11px; fill: #c0392b; font-weight: 600; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">text → triples → knowledge graph (with provenance)</text>
+
+  <!-- Source text -->
+  <rect x="40" y="55" width="820" height="55" class="box"/>
+  <text x="55" y="78" class="label">source text</text>
+  <text x="55" y="98" class="content">"Tim Cook became CEO of Apple in 2011. Steve Jobs founded Apple in 1976."</text>
+
+  <!-- Arrow -->
+  <line x1="450" y1="112" x2="450" y2="135" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Triples table -->
+  <rect x="40" y="140" width="820" height="100" class="box"/>
+  <text x="55" y="162" class="label">triples (AEVS-verified, with source spans)</text>
+  <text x="55" y="185" class="mono">(Tim Cook, P169 "CEO of", Apple)   span=[0, 30]   "Tim Cook became CEO of Apple"</text>
+  <text x="55" y="205" class="mono">(Steve Jobs, P112 "founded", Apple) span=[38, 63]  "Steve Jobs founded Apple"</text>
+  <text x="55" y="228" class="caption">each triple carries char-span + evidence phrase — audit trail non-negotiable in production</text>
+
+  <line x1="450" y1="242" x2="450" y2="265" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Graph -->
+  <text x="450" y="280" text-anchor="middle" class="label">knowledge graph</text>
+
+  <ellipse cx="180" cy="350" rx="100" ry="35" class="person"/>
+  <text x="180" y="345" text-anchor="middle" class="label">Tim Cook</text>
+  <text x="180" y="363" text-anchor="middle" class="caption">Q265852 (PERSON)</text>
+
+  <ellipse cx="450" cy="350" rx="80" ry="35" class="org"/>
+  <text x="450" y="345" text-anchor="middle" class="label">Apple</text>
+  <text x="450" y="363" text-anchor="middle" class="caption">Q312 (ORG)</text>
+
+  <ellipse cx="720" cy="350" rx="100" ry="35" class="person"/>
+  <text x="720" y="345" text-anchor="middle" class="label">Steve Jobs</text>
+  <text x="720" y="363" text-anchor="middle" class="caption">Q19837 (PERSON)</text>
+
+  <!-- Edges -->
+  <line x1="280" y1="350" x2="370" y2="350" stroke="#c0392b" stroke-width="2" marker-end="url(#edge)"/>
+  <text x="325" y="340" text-anchor="middle" class="edge-label">P169</text>
+  <text x="325" y="375" text-anchor="middle" class="caption">CEO of</text>
+
+  <line x1="620" y1="350" x2="540" y2="350" stroke="#c0392b" stroke-width="2" marker-end="url(#edge)"/>
+  <text x="580" y="340" text-anchor="middle" class="edge-label">P112</text>
+  <text x="580" y="375" text-anchor="middle" class="caption">founded</text>
+
+  <text x="450" y="430" text-anchor="middle" class="caption">query with SPARQL / Cypher / graph traversal — each edge traces back to source span</text>
+</svg>

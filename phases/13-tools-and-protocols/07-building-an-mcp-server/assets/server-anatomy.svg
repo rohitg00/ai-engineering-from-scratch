@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">stdio MCP server anatomy</text>
+
+  <rect x="40" y="50" width="200" height="400" class="cold"/>
+  <text x="140" y="72" text-anchor="middle" class="head">client (host)</text>
+  <text x="56" y="104" class="small">Claude Desktop,</text>
+  <text x="56" y="120" class="small">Cursor, VS Code,</text>
+  <text x="56" y="136" class="small">ChatGPT, ...</text>
+  <text x="56" y="172" class="step">spawns server as</text>
+  <text x="56" y="188" class="step">child process</text>
+  <text x="56" y="220" class="small">writes JSON-RPC</text>
+  <text x="56" y="236" class="small">to child's stdin</text>
+  <text x="56" y="268" class="small">reads responses</text>
+  <text x="56" y="284" class="small">from child's stdout</text>
+  <text x="56" y="316" class="step">newline-delimited</text>
+  <text x="56" y="332" class="small">one JSON object</text>
+  <text x="56" y="348" class="small">per line</text>
+
+  <path d="M240,250 L320,250" class="edge" marker-end="url(#arrow)"/>
+  <path d="M320,300 L240,300" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="320" y="50" width="600" height="400" class="box"/>
+  <text x="620" y="72" text-anchor="middle" class="head">server process (this lesson's code)</text>
+
+  <rect x="340" y="90" width="560" height="50" class="cool"/>
+  <text x="620" y="112" text-anchor="middle" class="step">dispatch loop</text>
+  <text x="620" y="130" text-anchor="middle" class="small">read line -&gt; json.loads -&gt; route by method -&gt; write response</text>
+
+  <rect x="340" y="150" width="170" height="80" class="hot"/>
+  <text x="425" y="170" text-anchor="middle" class="step">tools</text>
+  <text x="425" y="188" text-anchor="middle" class="small">notes_list</text>
+  <text x="425" y="204" text-anchor="middle" class="small">notes_search</text>
+  <text x="425" y="220" text-anchor="middle" class="small">notes_create</text>
+
+  <rect x="530" y="150" width="170" height="80" class="cool"/>
+  <text x="615" y="170" text-anchor="middle" class="step">resources</text>
+  <text x="615" y="188" text-anchor="middle" class="small">notes://note-1</text>
+  <text x="615" y="204" text-anchor="middle" class="small">notes://note-2</text>
+  <text x="615" y="220" text-anchor="middle" class="small">notes://note-N</text>
+
+  <rect x="720" y="150" width="170" height="80" class="cold"/>
+  <text x="805" y="170" text-anchor="middle" class="step">prompts</text>
+  <text x="805" y="188" text-anchor="middle" class="small">review_note</text>
+  <text x="805" y="210" text-anchor="middle" class="small">(slash-command</text>
+  <text x="805" y="226" text-anchor="middle" class="small">template)</text>
+
+  <rect x="340" y="250" width="560" height="70" class="box"/>
+  <text x="620" y="272" text-anchor="middle" class="step">capabilities at initialize</text>
+  <text x="620" y="294" text-anchor="middle" class="small">{ tools: {listChanged: true}, resources: {subscribe: false},</text>
+  <text x="620" y="310" text-anchor="middle" class="small">  prompts: {} }</text>
+
+  <rect x="340" y="340" width="560" height="100" class="cool"/>
+  <text x="620" y="362" text-anchor="middle" class="step">graduation: FastMCP / TS SDK</text>
+  <text x="356" y="384" class="small">@app.tool() def notes_search(query: str, limit: int = 10) -&gt; list[dict]: ...</text>
+  <text x="356" y="400" class="small">same wire behavior; ~80 lines vs ~200. Decorator generates schema</text>
+  <text x="356" y="416" class="small">from type hints and runs the stdio dispatcher for you.</text>
+</svg>

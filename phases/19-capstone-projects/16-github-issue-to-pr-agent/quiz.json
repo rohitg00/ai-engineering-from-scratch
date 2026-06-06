@@ -1,0 +1,90 @@
+{
+  "lesson": "16-github-issue-to-pr-agent",
+  "title": "Capstone 16 — GitHub Issue-to-PR Autonomous Agent",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How is the async cloud coding agent triggered in production?",
+      "options": [
+        "A long-lived SSH session into a VM",
+        "A GitHub webhook fired by an issue label or PR comment, dispatched to a sandbox worker",
+        "A scheduled cron job hitting the repo",
+        "A manual file upload"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Why must the agent run with a short-lived GitHub App installation token rather than a personal access token?",
+      "options": [
+        "Apps avoid GitHub rate limits entirely",
+        "App tokens grant fine-grained, scoped, short-lived credentials suited for per-task workers",
+        "Personal access tokens cannot open PRs",
+        "Apps require less code than PATs"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which two protections prevent the agent from clobbering main?",
+      "options": [
+        "Requiring a captcha per push",
+        "Branch protection enforcing no direct push or force-push to main, with the app not on the bypass list",
+        "Encrypting the repo before clone",
+        "Disabling git on the worker"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is path-scoped protection for .github/workflows enforced at the worker rather than as a GitHub App permission?",
+      "options": [
+        "Workflows are stored outside the repo",
+        "Path scoping is impossible in any form",
+        "GitHub App permissions are not path-scoped, so the worker's allow-list check on the proposed diff is the right place to enforce it",
+        ".github/workflows is a virtual path"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What gating happens after the agent loop concludes, before opening a PR?",
+      "options": [
+        "The reviewer model rewrites the diff",
+        "Full CI runs in the sandbox; coverage delta is computed; PRs with a regression beyond a threshold are labeled needs-review",
+        "The PR opens immediately with no checks",
+        "The repo is force-pushed to main"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which budget knobs does the dispatcher enforce per repo per day?",
+      "options": [
+        "Only a wall-clock cap",
+        "Unlimited PRs and unlimited cost",
+        "A dollar ceiling per PR plus a maximum number of PRs per repo per day",
+        "Only a turn cap"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What goes into the PR body that the agent posts?",
+      "options": [
+        "Only the diff",
+        "Rationale, diff summary, trace URL, cost, and turn count so reviewers can audit and follow up",
+        "A generated changelog only",
+        "Nothing; the PR has an empty body"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the main difference between relative depth and metric depth?",
+      "options": [
+        "Relative depth is always lower resolution",
+        "There is no difference",
+        "Metric depth uses grayscale output; relative uses colour",
+        "Relative depth gives only ordered distances without real-world units; metric depth gives distances in metres and requires the model to have learnt absolute scale from training data"
+      ],
+      "correct": 3,
+      "explanation": "Relative depth preserves ordering and ratios but has no anchor to real-world units \u2014 a MiDaS or Depth Anything prediction needs alignment before you can compare it to a ground-truth measurement in metres. Metric depth models (ZoeDepth, UniDepth, Metric3D) output calibrated distances at the cost of sensitivity to camera intrinsics and training data coverage."
+    },
+    {
+      "stage": "pre",
+      "question": "Depth Anything V3 uses a frozen DINOv2 encoder plus a DPT-style decoder. Why freeze the encoder?",
+      "options": [
+        "DINOv2 would otherwise learn bad features",
+        "DINOv2's self-supervised features already encode scene structure, texture gradients, and object semantics that correlate with depth; freezing them lets the decoder train with a small head on limited depth-supervised data while keeping the encoder's strong generalisation",
+        "Compute savings at training time only",
+        "Freezing is a legal requirement"
+      ],
+      "correct": 1,
+      "explanation": "Self-supervised ViTs like DINOv2 / DINOv3 already have features that transfer to dense tasks with minimal fine-tuning. A frozen encoder plus a lightweight depth decoder means you train a tiny number of parameters on depth data, and you inherit DINOv2's cross-domain generalisation (indoor, outdoor, medical, satellite) for free. Fine-tuning the backbone sometimes hurts if the depth dataset is narrower than DINOv2's pretraining distribution."
+    },
+    {
+      "stage": "post",
+      "question": "To lift a pixel (u, v) with predicted depth d to 3D, you use X = (u - cx) * d / fx, Y = (v - cy) * d / fy, Z = d. What are fx, fy, cx, cy?",
+      "options": [
+        "Pinhole camera intrinsics \u2014 focal lengths and principal point in pixels, from EXIF metadata or camera calibration",
+        "Training loss weights",
+        "Normalisation constants",
+        "Weights learned by the depth decoder"
+      ],
+      "correct": 0,
+      "explanation": "The pinhole-camera formula needs the camera intrinsics. fx, fy are the focal lengths in pixel units; cx, cy are the principal point (usually near image centre). Without intrinsics you can only assume a generic FOV (~60 degrees) which is enough for visualisation but not for measurement. Many 2026 pipelines estimate intrinsics automatically from image content (Perspective Fields, UniDepth)."
+    },
+    {
+      "stage": "post",
+      "question": "When evaluating a relative-depth model (MiDaS, Depth Anything), why do you apply scale-and-shift alignment before computing AbsRel?",
+      "options": [
+        "To inflate the metric score",
+        "Relative-depth predictions have arbitrary scale and offset; aligning them to ground truth via least-squares fit of a * pred + b = target gives a fair measurement of the ordering quality that relative models are actually trained to produce",
+        "To enable GPU inference",
+        "Pytorch cannot compute AbsRel without alignment"
+      ],
+      "correct": 1,
+      "explanation": "MiDaS-style models produce outputs where only the ordering and ratios are meaningful. Directly computing AbsRel without alignment measures the scale mismatch, not the model's actual quality. Least-squares alignment fits a linear transform that minimises squared error; the residual after alignment is what you report. Every MiDaS / Depth Anything paper uses this protocol."
+    },
+    {
+      "stage": "post",
+      "question": "Your Depth Anything prediction on a glass-fronted reception desk reports believable but clearly wrong depth for the glass region. Why?",
+      "options": [
+        "The model is broken",
+        "The model was trained without glass data",
+        "Glass, mirrors, and highly reflective surfaces break the monocular cues the model relies on; the network sees the texture / content behind the glass and reports a plausible depth consistent with that, not the real glass surface distance",
+        "Your image resolution is wrong"
+      ],
+      "correct": 2,
+      "explanation": "Monocular depth relies on texture gradients, occlusion ordering, and perspective cues. Reflective or transparent surfaces confuse all of them: a mirror shows a scene with its own depth; glass shows content behind it. The model fills in a plausible depth and is confidently wrong. This is a fundamental limit of monocular depth, not a bug. Fix by fusing with stereo, LiDAR, or polarisation cameras when materials like glass matter."
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "lesson": "12-text-summarization",
+  "title": "Text Summarization",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the key behavioral difference between extractive and abstractive summarization?",
+      "options": [
+        "Extractive uses TF-IDF; abstractive uses Word2Vec",
+        "Extractive returns sentences verbatim from the source; abstractive generates new text and can hallucinate",
+        "Extractive is multilingual only",
+        "Extractive is slower than abstractive"
+      ],
+      "correct": 1,
+      "explanation": "Extractive lifts sentences verbatim; abstractive rewrites and risks hallucination."
+    },
+    {
+      "stage": "pre",
+      "question": "What does ROUGE measure?",
+      "options": [
+        "Embedding similarity",
+        "N-gram and longest-common-subsequence overlap between system and reference summaries",
+        "Reading time",
+        "Token-level perplexity"
+      ],
+      "correct": 1,
+      "explanation": "ROUGE-1/2/L measure unigram, bigram, and LCS overlap with references."
+    },
+    {
+      "stage": "check",
+      "question": "How does TextRank score sentences in extractive summarization?",
+      "options": [
+        "By raw word count",
+        "By comparing to a reference summary",
+        "By running a PageRank-style iteration over a graph where edges are sentence-similarity weights",
+        "By embedding cosine to the question"
+      ],
+      "correct": 2,
+      "explanation": "TextRank uses PageRank over a sentence-similarity graph; highly connected sentences score highest."
+    },
+    {
+      "stage": "check",
+      "question": "Why enable stemming when computing ROUGE?",
+      "options": [
+        "Without stemming, 'running' and 'run' count as different tokens and ROUGE undercounts true overlap",
+        "To speed up ROUGE",
+        "Stemming normalizes case",
+        "Stemming is required by the rouge-score package"
+      ],
+      "correct": 0,
+      "explanation": "Stemming merges morphological variants so ROUGE credits semantically equivalent forms."
+    },
+    {
+      "stage": "check",
+      "question": "Which 2026 metric is purpose-built to detect summary hallucinations via NLI entailment?",
+      "options": [
+        "BLEU",
+        "ROUGE-L",
+        "Faithfulness checks (e.g. FactCC or RAGAS faithfulness) using NLI between source and summary claims",
+        "chrF"
+      ],
+      "correct": 2,
+      "explanation": "NLI-based faithfulness scoring flags claims in the summary not entailed by the source."
+    },
+    {
+      "stage": "post",
+      "question": "Why is extractive summarization preferred for compliance-adjacent content?",
+      "options": [
+        "Outputs are lifted verbatim from the source, eliminating the abstractive hallucination class",
+        "It is faster",
+        "Extractive supports longer outputs",
+        "ROUGE scores are higher"
+      ],
+      "correct": 0,
+      "explanation": "Verbatim extraction cannot invent content, which matters where factuality is regulated."
+    },
+    {
+      "stage": "post",
+      "question": "Which of these is an abstractive hallucination type to monitor for?",
+      "options": [
+        "Punctuation drift",
+        "Stopword removal",
+        "Long sentences",
+        "Entity swap (e.g. 'John Smith' rendered as 'John Brown'), number drift, polarity flip, or fact invention"
+      ],
+      "correct": 3,
+      "explanation": "Entity swaps, numeric drift, polarity flips, and invented facts are the canonical abstractive failure modes."
+    },
+    {
+      "stage": "post",
+      "question": "When would you reach for a Pegasus checkpoint over BART-large-CNN?",
+      "options": [
+        "When evaluating BLEU",
+        "When the input is short",
+        "When you need extractive output",
+        "For domains like scientific abstracts where Pegasus's gap-sentence pretraining objective is a closer fit"
+      ],
+      "correct": 3,
+      "explanation": "Pegasus's gap-sentence objective excels at long-form domain summarization (e.g. pubmed)."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .old { fill: #eeeeee; stroke: #888; stroke-width: 1.2; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="28" text-anchor="middle" class="title">differential attention — subtract the noise floor</text>
+
+  <!-- Input -->
+  <rect x="30" y="60" width="160" height="40" class="box"/>
+  <text x="110" y="85" text-anchor="middle" class="step">hidden state x</text>
+
+  <!-- Split into two QK branches -->
+  <line x1="190" y1="70" x2="250" y2="70" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="190" y1="90" x2="250" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="250" y="50" width="200" height="30" class="cool"/>
+  <text x="350" y="70" text-anchor="middle" class="step">Q1 = xWq1 · K1 = xWk1</text>
+
+  <rect x="250" y="80" width="200" height="30" class="cool"/>
+  <text x="350" y="100" text-anchor="middle" class="step">Q2 = xWq2 · K2 = xWk2</text>
+
+  <!-- Softmax branches -->
+  <line x1="450" y1="65" x2="490" y2="65" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="450" y1="95" x2="490" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="490" y="50" width="200" height="30" class="hot"/>
+  <text x="590" y="70" text-anchor="middle" class="step">A1 = softmax(Q1 K1^T / sqrt(d))</text>
+
+  <rect x="490" y="80" width="200" height="30" class="hot"/>
+  <text x="590" y="100" text-anchor="middle" class="step">A2 = softmax(Q2 K2^T / sqrt(d))</text>
+
+  <!-- Subtraction -->
+  <line x1="690" y1="80" x2="730" y2="80" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="730" y="60" width="200" height="40" class="box"/>
+  <text x="830" y="85" text-anchor="middle" class="step">A = A1 - lambda * A2</text>
+
+  <!-- Multiply V -->
+  <line x1="830" y1="100" x2="830" y2="140" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="730" y="140" width="200" height="40" class="box"/>
+  <text x="830" y="165" text-anchor="middle" class="step">out = A V</text>
+
+  <!-- Noise cancellation visual -->
+  <rect x="30" y="220" width="900" height="130" class="box"/>
+  <text x="480" y="243" text-anchor="middle" class="label">the intuition: both softmaxes carry the same uniform noise floor</text>
+
+  <!-- A1 bar chart -->
+  <text x="50" y="272" class="step">A1</text>
+  <rect x="90" y="267" width="820" height="8" fill="#bbb"/>
+  <rect x="500" y="260" width="4" height="22" fill="#c0392b"/>
+  <text x="910" y="275" class="small" text-anchor="end">signal</text>
+
+  <!-- A2 bar chart -->
+  <text x="50" y="302" class="step">A2</text>
+  <rect x="90" y="297" width="820" height="8" fill="#bbb"/>
+  <text x="910" y="305" class="small" text-anchor="end">no signal</text>
+
+  <!-- A1 - A2 result -->
+  <text x="50" y="335" class="step">A1 - lambda*A2</text>
+  <rect x="90" y="328" width="820" height="3" fill="#eee"/>
+  <rect x="500" y="321" width="4" height="17" fill="#2e7d32"/>
+  <text x="910" y="338" class="small" text-anchor="end">signal survives</text>
+
+  <!-- V1 vs V2 diff -->
+  <rect x="30" y="370" width="900" height="150" class="box"/>
+  <text x="480" y="393" text-anchor="middle" class="label">V1 (ICLR 2025) -&gt; V2 (Microsoft, Jan 2026)</text>
+
+  <text x="50" y="420" class="step">head dim</text>
+  <text x="220" y="420" class="small">V1: halved (preserve param count)  ·  V2: unchanged (match baseline decode)</text>
+
+  <text x="50" y="440" class="step">query heads</text>
+  <text x="220" y="440" class="small">V1: same as baseline  ·  V2: doubled, KV heads unchanged</text>
+
+  <text x="50" y="460" class="step">kernel</text>
+  <text x="220" y="460" class="small">V1: custom CUDA  ·  V2: plain FlashAttention — zero code change</text>
+
+  <text x="50" y="480" class="step">per-head norm</text>
+  <text x="220" y="480" class="small">V1: RMSNorm after subtraction (unstable at 70B)  ·  V2: removed</text>
+
+  <text x="50" y="500" class="step">decode speed</text>
+  <text x="220" y="500" class="small">V1: slower (V cache loaded twice)  ·  V2: matches baseline exactly</text>
+
+  <text x="480" y="535" text-anchor="middle" class="caption">ICLR 2025 experiment -&gt; production pre-training. same math, production-ready packaging.</text>
+</svg>

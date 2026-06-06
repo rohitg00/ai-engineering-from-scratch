@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
+    </style>
+  </defs>
+  <text x="450" y="28" text-anchor="middle" class="title">Role specialization — planner, executor, critic, verifier</text>
+
+  <rect x="40" y="60" width="170" height="100" class="cool"/>
+  <text x="125" y="82" text-anchor="middle" class="head">Planner</text>
+  <text x="125" y="104" text-anchor="middle" class="small">reads goal</text>
+  <text x="125" y="120" text-anchor="middle" class="small">produces spec</text>
+  <text x="125" y="138" text-anchor="middle" class="small">(signature, tests, I/O)</text>
+  <text x="125" y="154" text-anchor="middle" class="small">MetaGPT: PM + Architect</text>
+
+  <line x1="210" y1="110" x2="250" y2="110" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="250" y="60" width="170" height="100" class="hot"/>
+  <text x="335" y="82" text-anchor="middle" class="head">Executor</text>
+  <text x="335" y="104" text-anchor="middle" class="small">reads one step</text>
+  <text x="335" y="120" text-anchor="middle" class="small">produces artifact</text>
+  <text x="335" y="138" text-anchor="middle" class="small">has the real tools</text>
+  <text x="335" y="154" text-anchor="middle" class="small">ChatDev: asks if unclear</text>
+
+  <line x1="420" y1="110" x2="460" y2="110" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="460" y="60" width="170" height="100" class="dsk"/>
+  <text x="545" y="82" text-anchor="middle" class="head">Critic</text>
+  <text x="545" y="104" text-anchor="middle" class="small">subjective review</text>
+  <text x="545" y="120" text-anchor="middle" class="small">catches taste issues</text>
+  <text x="545" y="138" text-anchor="middle" class="small">fooled by plausible prose</text>
+  <text x="545" y="154" text-anchor="middle" class="small">(LLM-based)</text>
+
+  <line x1="630" y1="110" x2="670" y2="110" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="670" y="60" width="200" height="100" class="cold"/>
+  <text x="770" y="82" text-anchor="middle" class="head">Verifier</text>
+  <text x="770" y="104" text-anchor="middle" class="small">deterministic check</text>
+  <text x="770" y="120" text-anchor="middle" class="small">tests, type, schema</text>
+  <text x="770" y="138" text-anchor="middle" class="small">cannot be fooled</text>
+  <text x="770" y="154" text-anchor="middle" class="small">(code, not LLM)</text>
+
+  <line x1="335" y1="160" x2="335" y2="200" class="edge"/>
+  <path d="M 335 200 Q 300 220 265 200" class="edge" fill="none" stroke-dasharray="3 3"/>
+  <text x="295" y="195" class="small">communicative dehallucination (ChatDev)</text>
+
+  <rect x="40" y="240" width="830" height="110" class="box"/>
+  <text x="450" y="262" text-anchor="middle" class="head">why verifier is load-bearing</text>
+  <text x="450" y="284" text-anchor="middle" class="small">MAST taxonomy (Cemri et al. 2025): 21.3% of 1642 multi-agent failures are verification gaps</text>
+  <text x="450" y="304" text-anchor="middle" class="small">PwC 2025: structured validation loop in CrewAI moved accuracy 10% -> 70% (7× gain)</text>
+  <text x="450" y="324" text-anchor="middle" class="small">anti-pattern: every role is an LLM that says "looks good to me" — classic MAST failure</text>
+  <text x="450" y="342" text-anchor="middle" class="small">always pair critic (subjective) with verifier (deterministic); they catch different bugs</text>
+
+  <rect x="40" y="370" width="830" height="110" class="box"/>
+  <text x="450" y="392" text-anchor="middle" class="head">MetaGPT's SOP pattern</text>
+  <text x="450" y="412" text-anchor="middle" class="small">Code = SOP(Team): Product Manager, Architect, Project Manager, Engineer, QA Engineer</text>
+  <text x="450" y="430" text-anchor="middle" class="small">each role has strict input/output schema · pipeline becomes deterministic</text>
+  <text x="450" y="450" text-anchor="middle" class="small">CrewAI Agent(role, goal, backstory) is the modern ergonomic surface</text>
+  <text x="450" y="470" text-anchor="middle" class="small">LangGraph encodes roles as graph nodes with specialized prompts</text>
+</svg>

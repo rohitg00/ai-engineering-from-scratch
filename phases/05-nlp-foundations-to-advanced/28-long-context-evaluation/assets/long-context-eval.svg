@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .pass { fill: #e8f5e9; stroke: #2e7d32; stroke-width: 1; }
+      .partial { fill: #fff1d6; stroke: #c0392b; stroke-width: 1; }
+      .fail { fill: #fce4ec; stroke: #c0392b; stroke-width: 1; }
+      .label { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; fill: #333; }
+      .mono { font-size: 10px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .cell-pass { fill: #2e7d32; }
+      .cell-partial { fill: #c0392b; }
+      .cell-fail { fill: #c0392b; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">needle-in-haystack grid — depth × length pass rate</text>
+
+  <!-- Grid -->
+  <text x="200" y="70" text-anchor="middle" class="label">NIAH pass-rate heatmap</text>
+
+  <!-- Column headers -->
+  <text x="120" y="100" class="mono">4k</text>
+  <text x="170" y="100" class="mono">16k</text>
+  <text x="225" y="100" class="mono">64k</text>
+  <text x="275" y="100" class="mono">256k</text>
+  <text x="330" y="100" class="mono">1M</text>
+
+  <!-- Row: depth 0.1 -->
+  <text x="70" y="125" class="mono">depth 0.1</text>
+  <rect x="110" y="110" width="40" height="25" class="pass"/>
+  <rect x="160" y="110" width="40" height="25" class="pass"/>
+  <rect x="215" y="110" width="40" height="25" class="pass"/>
+  <rect x="265" y="110" width="40" height="25" class="pass"/>
+  <rect x="320" y="110" width="40" height="25" class="partial"/>
+
+  <!-- Row: depth 0.3 -->
+  <text x="70" y="155" class="mono">depth 0.3</text>
+  <rect x="110" y="140" width="40" height="25" class="pass"/>
+  <rect x="160" y="140" width="40" height="25" class="pass"/>
+  <rect x="215" y="140" width="40" height="25" class="pass"/>
+  <rect x="265" y="140" width="40" height="25" class="partial"/>
+  <rect x="320" y="140" width="40" height="25" class="fail"/>
+
+  <!-- Row: depth 0.5 -->
+  <text x="70" y="185" class="mono">depth 0.5</text>
+  <rect x="110" y="170" width="40" height="25" class="pass"/>
+  <rect x="160" y="170" width="40" height="25" class="partial"/>
+  <rect x="215" y="170" width="40" height="25" class="fail"/>
+  <rect x="265" y="170" width="40" height="25" class="fail"/>
+  <rect x="320" y="170" width="40" height="25" class="fail"/>
+
+  <!-- Row: depth 0.7 -->
+  <text x="70" y="215" class="mono">depth 0.7</text>
+  <rect x="110" y="200" width="40" height="25" class="pass"/>
+  <rect x="160" y="200" width="40" height="25" class="pass"/>
+  <rect x="215" y="200" width="40" height="25" class="partial"/>
+  <rect x="265" y="200" width="40" height="25" class="fail"/>
+  <rect x="320" y="200" width="40" height="25" class="fail"/>
+
+  <!-- Row: depth 0.9 -->
+  <text x="70" y="245" class="mono">depth 0.9</text>
+  <rect x="110" y="230" width="40" height="25" class="pass"/>
+  <rect x="160" y="230" width="40" height="25" class="pass"/>
+  <rect x="215" y="230" width="40" height="25" class="pass"/>
+  <rect x="265" y="230" width="40" height="25" class="partial"/>
+  <rect x="320" y="230" width="40" height="25" class="fail"/>
+
+  <!-- Legend -->
+  <rect x="110" y="275" width="20" height="15" class="pass"/>
+  <text x="135" y="287" class="caption">pass ≥ 90%</text>
+  <rect x="210" y="275" width="20" height="15" class="partial"/>
+  <text x="235" y="287" class="caption">partial 60-90%</text>
+  <rect x="310" y="275" width="20" height="15" class="fail"/>
+  <text x="335" y="287" class="caption">fail &lt; 60%</text>
+
+  <text x="200" y="325" text-anchor="middle" class="caption">middle depths degrade first — "lost in the middle"</text>
+
+  <!-- Right side: bigger picture -->
+  <rect x="450" y="70" width="410" height="350" class="box"/>
+  <text x="655" y="95" text-anchor="middle" class="label">beyond NIAH</text>
+
+  <text x="465" y="130" class="content"><tspan font-weight="700">RULER</tspan> — 13 tasks: multi-needle, variable</text>
+  <text x="465" y="148" class="content">tracing, aggregation, QA. Exposes models</text>
+  <text x="465" y="166" class="content">that saturate NIAH but fail multi-hop.</text>
+
+  <text x="465" y="200" class="content"><tspan font-weight="700">LongBench v2</tspan> — 503 multiple-choice Qs,</text>
+  <text x="465" y="218" class="content">8k–2M context, six real-world categories.</text>
+
+  <text x="465" y="252" class="content"><tspan font-weight="700">MRCR 8-needle</tspan> — Gemini 3 Pro advertises</text>
+  <text x="465" y="270" class="content">10M; scores 77% at 128k, 26.3% at 1M.</text>
+
+  <text x="465" y="304" class="content"><tspan font-weight="700">NoLiMa / BABILong</tspan> — non-lexical needle</text>
+  <text x="465" y="322" class="content">and reasoning-in-haystack — hardest variants.</text>
+
+  <text x="655" y="370" text-anchor="middle" class="label">report two numbers, not one:</text>
+  <text x="655" y="390" text-anchor="middle" class="caption">effective retrieval length &amp; effective reasoning length</text>
+  <text x="655" y="408" text-anchor="middle" class="caption">(usually 25-50% of advertised window)</text>
+</svg>

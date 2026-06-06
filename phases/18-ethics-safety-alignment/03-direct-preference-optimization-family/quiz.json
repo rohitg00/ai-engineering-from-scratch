@@ -1,0 +1,78 @@
+{
+  "lesson": "03-direct-preference-optimization-family",
+  "title": "The Direct Preference Optimization Family",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why can DPO skip training an explicit reward model?",
+      "options": [
+        "DPO trains its own reward model implicitly in a second optimization loop",
+        "The closed-form RLHF optimum lets you express reward as a log-ratio of policies, which substitutes into the Bradley-Terry loss",
+        "Preference data does not require a scalar reward",
+        "Bradley-Terry preferences happen to be invariant to the reward function"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What failure mode does IPO (Azar et al., 2024) primarily address in DPO?",
+      "options": [
+        "Requirement of paired data",
+        "Reliance on a reference policy",
+        "Length bias of the chosen response",
+        "Unbounded implicit reward gap from tiny preference probabilities"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "When would you reach for KTO over DPO?",
+      "options": [
+        "When you must guarantee zero implicit-reward drift",
+        "When you have unpaired single labels (desirable / undesirable) and want to use loss-aversion utilities",
+        "When you have only paired data with strong margins",
+        "When you want to remove the KL penalty entirely"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which property is unique to SimPO compared to DPO?",
+      "options": [
+        "It removes the reference policy and normalizes log-likelihood by sequence length",
+        "It drops the Bradley-Terry log-sigmoid for an identity mapping",
+        "It uses an odds-ratio loss with NLL",
+        "It keeps the reference policy and adds a margin"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the 'Degraded Chosen Response' problem in DPO that BPO targets?",
+      "options": [
+        "The chosen response is missing from the reference policy's support",
+        "The chosen response is sampled with low probability at inference",
+        "DPO can drive the chosen response's absolute log-prob down as long as the rejected log-prob falls faster",
+        "The chosen response becomes longer than the rejected"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Rafailov et al. (NeurIPS 2024) on scaling laws for direct alignment algorithms show:",
+      "options": [
+        "DAAs exhibit the same Gao et al. peak-and-collapse over-optimization shape on gold reward",
+        "DAAs eliminate Goodhart by design",
+        "Over-optimization disappears when paired data exceeds 100k examples",
+        "DPO over-optimizes but IPO and SimPO do not"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

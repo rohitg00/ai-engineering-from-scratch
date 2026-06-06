@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="28" text-anchor="middle" class="title">MAST taxonomy — the 2026 reference for multi-agent failure modes</text>
+
+  <rect x="40" y="60" width="880" height="200" class="box"/>
+  <text x="480" y="84" text-anchor="middle" class="head">three MAST categories (Cemri 2025, NeurIPS) — 41-86.7% failure rate on real MAS</text>
+
+  <rect x="60" y="110" width="270" height="130" class="hot"/>
+  <text x="195" y="134" text-anchor="middle" class="head">Specification</text>
+  <text x="195" y="154" text-anchor="middle" class="step">41.77%</text>
+  <text x="195" y="180" text-anchor="middle" class="small">role ambiguity</text>
+  <text x="195" y="196" text-anchor="middle" class="small">unclear task definition</text>
+  <text x="195" y="212" text-anchor="middle" class="small">implicit success criteria</text>
+  <text x="195" y="232" text-anchor="middle" class="caption">fix: explicit role contracts</text>
+
+  <rect x="345" y="110" width="270" height="130" class="cool"/>
+  <text x="480" y="134" text-anchor="middle" class="head">Coordination</text>
+  <text x="480" y="154" text-anchor="middle" class="step">36.94%</text>
+  <text x="480" y="180" text-anchor="middle" class="small">state desync</text>
+  <text x="480" y="196" text-anchor="middle" class="small">message loss / timeout</text>
+  <text x="480" y="212" text-anchor="middle" class="small">concurrent writes</text>
+  <text x="480" y="232" text-anchor="middle" class="caption">fix: versioned state + acks</text>
+
+  <rect x="630" y="110" width="270" height="130" class="cold"/>
+  <text x="765" y="134" text-anchor="middle" class="head">Verification</text>
+  <text x="765" y="154" text-anchor="middle" class="step">21.30%</text>
+  <text x="765" y="180" text-anchor="middle" class="small">no independent checker</text>
+  <text x="765" y="196" text-anchor="middle" class="small">chain of trust</text>
+  <text x="765" y="212" text-anchor="middle" class="small">silent wrong outputs</text>
+  <text x="765" y="232" text-anchor="middle" class="caption">fix: unwritable verifier</text>
+
+  <rect x="40" y="270" width="880" height="230" class="cool"/>
+  <text x="480" y="294" text-anchor="middle" class="head">Groupthink family (arXiv:2508.05687)</text>
+
+  <text x="60" y="326" class="step">monoculture</text>
+  <text x="220" y="326" class="small">same base model → correlated hallucinations</text>
+
+  <text x="60" y="352" class="step">conformity</text>
+  <text x="220" y="352" class="small">agents align with loudest peer; rewards sycophancy</text>
+
+  <text x="60" y="378" class="step">deficient ToM</text>
+  <text x="220" y="378" class="small">fails to model each other (Lesson 18); long-horizon break</text>
+
+  <text x="60" y="404" class="step">mixed-motive</text>
+  <text x="220" y="404" class="small">partial-incentive alignment → compromise-middle outputs</text>
+
+  <text x="60" y="430" class="step">cascading</text>
+  <text x="220" y="430" class="small">retry storms; one failure amplifies through dependencies</text>
+
+  <text x="60" y="466" class="step">fix: STRATUS</text>
+  <text x="220" y="466" class="small">detection + diagnosis + validation agents → 1.5x mitigation success</text>
+  <text x="60" y="486" class="step">+ breakers</text>
+  <text x="220" y="486" class="small">circuit breakers on every outbound call; capped retries</text>
+</svg>

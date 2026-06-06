@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A file on disk is decoded into a NumPy array with shape (224, 224, 3) and dtype uint8. What does each number represent?",
+      "options": ["The probability that a pixel is that colour, between 0 and 1", "One photon count per detector, normalized to the full dynamic range of the sensor", "A sample of light intensity at one grid position, quantized to one of 256 levels per channel", "A floating-point brightness value ready to feed to a convolutional network"],
+      "correct": 2,
+      "explanation": "A uint8 image stores 8-bit integers in [0, 255]. Each integer is one quantized sample of light intensity at one (row, column, channel) position. It is neither a probability nor a float; you must divide by 255 and standardize before feeding it to a pretrained model."
+    },
+    {
+      "stage": "pre",
+      "question": "You load an image with Pillow and get an array of shape (480, 640, 3). You pass it as a batched tensor (1, 480, 640, 3) to a PyTorch Conv2d with in_channels=3. What happens?",
+      "options": ["Nothing — PyTorch auto-detects the layout", "The first conv layer treats height as the channel axis, producing meaningless feature maps", "PyTorch raises a RuntimeError: Conv2d expects NCHW, sees 480 channels where the weight expects 3, and refuses to run", "Accuracy drops by a few percent but inference still works"],
+      "correct": 2,
+      "explanation": "PyTorch Conv2d enforces strict channel-count checking against the weight tensor. A batched HWC input (1, 480, 640, 3) is interpreted as NCHW with C=480, which does not match the weight's expected 3 channels, and PyTorch raises RuntimeError before any computation. The loud failure is a feature — it forces you to fix the layout. You must permute to NCHW (`.permute(0, 3, 1, 2)`) before feeding PyTorch."
+    },
+    {
+      "stage": "post",
+      "question": "Why do ImageNet pretrained models expect inputs standardized with mean=[0.485, 0.456, 0.406] and std=[0.229, 0.224, 0.225]?",
+      "options": ["Those are the RGB values of an average natural scene", "Those are the per-channel mean and standard deviation of the ImageNet training set in [0, 1] space, so subtracting them centers the distribution the model was trained on", "They make the input strictly zero-mean unit-variance for any image", "They are required by the ReLU activation function"],
+      "correct": 1,
+      "explanation": "The numbers are statistics of the ImageNet training corpus computed after dividing pixels by 255. Using them aligns your input distribution with the one the network saw during training. For a model trained on a different dataset you would recompute the stats on that dataset."
+    },
+    {
+      "stage": "post",
+      "question": "You resize a segmentation mask (integer class IDs 0..20) from 500x500 to 224x224. Which interpolation method is correct?",
+      "options": ["Bilinear — it smooths the class boundaries", "Bicubic — it preserves sharpness", "Lanczos — highest quality", "Nearest neighbour — it preserves valid integer class IDs instead of inventing fractional ones"],
+      "correct": 3,
+      "explanation": "Bilinear, bicubic, and lanczos average neighbouring values. On a class-ID mask that produces non-integer values like 4.7 between class 4 and class 5, which are not real classes. Nearest neighbour picks the closest original pixel and keeps the label space intact. This rule also applies to any channel that encodes IDs or indices."
+    },
+    {
+      "stage": "post",
+      "question": "RGB grayscale conversion uses weights 0.299 R + 0.587 G + 0.114 B rather than 0.333 R + 0.333 G + 0.333 B. Why?",
+      "options": ["To compensate for JPEG compression artifacts in each channel", "Because green photons carry more energy than red or blue photons", "Because human vision is most sensitive to green and least sensitive to blue, so the weighted sum matches perceived luminance", "To match the behaviour of the Bayer filter on camera sensors"],
+      "correct": 2,
+      "explanation": "The ITU-R BT.601 weights 0.299/0.587/0.114 come from the luminous efficiency of the human eye. An equal-weight average would make green-tinted images look too dark and red ones too bright to a human observer. Most classical computer-vision grayscale code uses these weights; BT.709 (0.2126/0.7152/0.0722) is the modern HDTV variant for linear-light inputs."
+    }
+  ]
+}

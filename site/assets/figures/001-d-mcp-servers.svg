@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="FIG_001.D — MCP server exposing tools, resources, prompts">
+  <defs>
+    <style>
+      .bp { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
+      .bp-fill { fill: #3553ff; }
+      .face { fill: rgba(53, 83, 255, 0.08); }
+      .face-strong { fill: rgba(53, 83, 255, 0.18); }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; }
+    </style>
+  </defs>
+
+  <rect width="120" height="120" fill="#fafaf5"/>
+
+  <text class="mono bp-fill" x="8" y="14" font-size="6.5" letter-spacing="1.5">FIG_001.D</text>
+
+  <!-- server rack body -->
+  <rect class="face" x="24" y="30" width="50" height="70"/>
+  <rect class="bp" x="24" y="30" width="50" height="70" stroke-width="1.5"/>
+
+  <!-- three rack units -->
+  <rect class="face-strong" x="28" y="38" width="42" height="14"/>
+  <rect class="bp" x="28" y="38" width="42" height="14" stroke-width="1.2"/>
+  <circle class="bp-fill" cx="34" cy="45" r="1.6"/>
+  <line class="bp" x1="40" y1="45" x2="64" y2="45" stroke-width="1"/>
+
+  <rect class="face-strong" x="28" y="56" width="42" height="14"/>
+  <rect class="bp" x="28" y="56" width="42" height="14" stroke-width="1.2"/>
+  <circle class="bp-fill" cx="34" cy="63" r="1.6"/>
+  <line class="bp" x1="40" y1="63" x2="64" y2="63" stroke-width="1"/>
+
+  <rect class="face-strong" x="28" y="74" width="42" height="14"/>
+  <rect class="bp" x="28" y="74" width="42" height="14" stroke-width="1.2"/>
+  <circle class="bp-fill" cx="34" cy="81" r="1.6"/>
+  <line class="bp" x1="40" y1="81" x2="64" y2="81" stroke-width="1"/>
+
+  <!-- labels for the three rack rows: TOOLS / RESOURCES / PROMPTS -->
+  <text class="mono bp-fill" x="78" y="48" font-size="5.5" letter-spacing="1">TOOLS</text>
+  <text class="mono bp-fill" x="78" y="66" font-size="5.5" letter-spacing="1">RES</text>
+  <text class="mono bp-fill" x="78" y="84" font-size="5.5" letter-spacing="1">PROMPTS</text>
+
+  <!-- JSON-RPC wire emerging top -->
+  <line class="bp" x1="49" y1="30" x2="49" y2="20" stroke-width="1.5"/>
+  <line class="bp" x1="44" y1="20" x2="54" y2="20" stroke-width="1.5"/>
+
+  <text class="mono bp-fill" x="60" y="114" font-size="7" letter-spacing="1.5" text-anchor="middle">MCP</text>
+</svg>

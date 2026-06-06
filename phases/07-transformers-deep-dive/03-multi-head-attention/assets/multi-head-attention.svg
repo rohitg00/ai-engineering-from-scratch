@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .head1 { fill: #fbe9d7; stroke: #1a1a1a; stroke-width: 1; }
+      .head2 { fill: #d8e6f0; stroke: #1a1a1a; stroke-width: 1; }
+      .head3 { fill: #e4eadb; stroke: #1a1a1a; stroke-width: 1; }
+      .head4 { fill: #efdce2; stroke: #1a1a1a; stroke-width: 1; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">multi-head attention — split, attend in parallel, concatenate</text>
+
+  <!-- Input -->
+  <rect x="370" y="55" width="160" height="36" class="hot"/>
+  <text x="450" y="79" text-anchor="middle" class="content">X  (N, d_model)</text>
+
+  <line x1="450" y1="91" x2="450" y2="110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Q K V projections -->
+  <rect x="260" y="110" width="90" height="30" class="box"/>
+  <text x="305" y="130" text-anchor="middle" class="content">@ W_q</text>
+  <rect x="405" y="110" width="90" height="30" class="box"/>
+  <text x="450" y="130" text-anchor="middle" class="content">@ W_k</text>
+  <rect x="550" y="110" width="90" height="30" class="box"/>
+  <text x="595" y="130" text-anchor="middle" class="content">@ W_v</text>
+
+  <line x1="450" y1="110" x2="305" y2="140" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="450" y1="110" x2="595" y2="140" stroke="#1a1a1a" stroke-width="1"/>
+
+  <!-- Split heads -->
+  <text x="100" y="175" class="label">split into 4 heads</text>
+
+  <!-- Q heads -->
+  <text x="305" y="170" text-anchor="middle" class="caption">Q (N, d_model) → reshape (4, N, d_head)</text>
+  <rect x="210" y="180" width="45" height="26" class="head1"/><text x="232" y="198" text-anchor="middle" class="content">Q_1</text>
+  <rect x="260" y="180" width="45" height="26" class="head2"/><text x="282" y="198" text-anchor="middle" class="content">Q_2</text>
+  <rect x="310" y="180" width="45" height="26" class="head3"/><text x="332" y="198" text-anchor="middle" class="content">Q_3</text>
+  <rect x="360" y="180" width="45" height="26" class="head4"/><text x="382" y="198" text-anchor="middle" class="content">Q_4</text>
+
+  <rect x="440" y="180" width="45" height="26" class="head1"/><text x="462" y="198" text-anchor="middle" class="content">K_1</text>
+  <rect x="490" y="180" width="45" height="26" class="head2"/><text x="512" y="198" text-anchor="middle" class="content">K_2</text>
+  <rect x="540" y="180" width="45" height="26" class="head3"/><text x="562" y="198" text-anchor="middle" class="content">K_3</text>
+  <rect x="590" y="180" width="45" height="26" class="head4"/><text x="612" y="198" text-anchor="middle" class="content">K_4</text>
+
+  <rect x="670" y="180" width="45" height="26" class="head1"/><text x="692" y="198" text-anchor="middle" class="content">V_1</text>
+  <rect x="720" y="180" width="45" height="26" class="head2"/><text x="742" y="198" text-anchor="middle" class="content">V_2</text>
+  <rect x="770" y="180" width="45" height="26" class="head3"/><text x="792" y="198" text-anchor="middle" class="content">V_3</text>
+  <rect x="820" y="180" width="45" height="26" class="head4"/><text x="842" y="198" text-anchor="middle" class="content">V_4</text>
+
+  <!-- Parallel attention per head -->
+  <text x="450" y="240" text-anchor="middle" class="caption">softmax(Q_h K_h^T / √d_head) V_h  —  batched matmul, one op</text>
+
+  <rect x="180" y="260" width="110" height="44" class="head1"/>
+  <text x="235" y="280" text-anchor="middle" class="content">head 1</text>
+  <text x="235" y="295" text-anchor="middle" class="caption">subject-verb</text>
+
+  <rect x="310" y="260" width="110" height="44" class="head2"/>
+  <text x="365" y="280" text-anchor="middle" class="content">head 2</text>
+  <text x="365" y="295" text-anchor="middle" class="caption">positional</text>
+
+  <rect x="440" y="260" width="110" height="44" class="head3"/>
+  <text x="495" y="280" text-anchor="middle" class="content">head 3</text>
+  <text x="495" y="295" text-anchor="middle" class="caption">copy / induction</text>
+
+  <rect x="570" y="260" width="110" height="44" class="head4"/>
+  <text x="625" y="280" text-anchor="middle" class="content">head 4</text>
+  <text x="625" y="295" text-anchor="middle" class="caption">named entities</text>
+
+  <line x1="235" y1="304" x2="450" y2="340" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="365" y1="304" x2="450" y2="340" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="495" y1="304" x2="450" y2="340" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="625" y1="304" x2="450" y2="340" stroke="#1a1a1a" stroke-width="1"/>
+
+  <!-- Concatenate -->
+  <rect x="330" y="340" width="240" height="36" class="hot"/>
+  <text x="450" y="362" text-anchor="middle" class="content">concat → (N, d_model)</text>
+
+  <line x1="450" y1="376" x2="450" y2="395" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="370" y="395" width="160" height="30" class="box"/>
+  <text x="450" y="415" text-anchor="middle" class="content">@ W_o  (d_model, d_model)</text>
+
+  <line x1="450" y1="425" x2="450" y2="444" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="370" y="444" width="160" height="36" class="hot"/>
+  <text x="450" y="468" text-anchor="middle" class="content">output  (N, d_model)</text>
+
+  <text x="450" y="503" text-anchor="middle" class="caption">W_o is where the heads mix. until W_o, every head lives in its own subspace.</text>
+</svg>

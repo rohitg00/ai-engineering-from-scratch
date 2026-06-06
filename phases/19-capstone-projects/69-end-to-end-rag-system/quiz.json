@@ -1,0 +1,78 @@
+{
+  "lesson": "69-end-to-end-rag-system",
+  "title": "End-to-End RAG System",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is the integration test the only honest grade of a six-component RAG pipeline?",
+      "options": [
+        "The chunker is the only component that matters",
+        "Each stage's isolated metric does not predict the system's metric because each stage interacts with the next; the only valid grade is the whole pipeline run end to end against the same qrels",
+        "Production servers cannot run individual stage tests",
+        "The components run on different machines"
+      ],
+      "correct": 1,
+      "explanation": "Isolated wins do not compose; the pipeline is graded on the joint output."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the role of refuse-on-low-confidence in the answer generator?",
+      "options": [
+        "It logs every refusal to disk",
+        "It returns 'I do not know' when the reranker top-1 score sits below a corpus-specific threshold, preventing hallucinated answers when the retrieved context does not address the query",
+        "It blocks queries longer than 100 tokens",
+        "It triggers a re-retrieval with a different chunker"
+      ],
+      "correct": 1,
+      "explanation": "A consistently low rank-1 score is the model telling you nothing in the corpus answers this query; refuse rather than hallucinate."
+    },
+    {
+      "stage": "check",
+      "question": "Why are the rerank training triples kept disjoint from the eval queries?",
+      "options": [
+        "To save GPU memory",
+        "To prevent train-test leakage; if the eval queries overlap the rerank training set the eval looks magical and the regression test does not catch real drift",
+        "Because the cross-encoder requires distinct vocabularies",
+        "Because RRF cannot fuse overlapping lists"
+      ],
+      "correct": 1,
+      "explanation": "Strict separation is the basic hygiene; otherwise the rerank metric does not predict production behavior."
+    },
+    {
+      "stage": "check",
+      "question": "What is the purpose of the self-terminating demo's exit code?",
+      "options": [
+        "Cosmetic",
+        "It encodes pass/fail against the metric thresholds; a CI smoke test can plug the demo into the pipeline and gate the merge on a non-zero exit",
+        "It is required by Python",
+        "The reranker uses it as a training signal"
+      ],
+      "correct": 1,
+      "explanation": "Exit code 0 means thresholds met; non-zero means regression. That is the contract a CI gate consumes."
+    },
+    {
+      "stage": "check",
+      "question": "What does a citation anchor look like in this pipeline?",
+      "options": [
+        "[doc_id:chunk_index]",
+        "Markdown link with the source URL",
+        "JSON-RPC envelope",
+        "The literal embedding vector"
+      ],
+      "correct": 0,
+      "explanation": "The generator emits the (doc_id, chunk_index) tuple as an anchor so a downstream UI or auditor can map every claim back to its source chunk."
+    },
+    {
+      "stage": "post",
+      "question": "Which failure mode is invisible to the mock generator and must be tested with a real LLM before shipping?",
+      "options": [
+        "Latency",
+        "Hallucination: the mock generator only emits text from retrieved chunks and cannot invent content; a real LLM can ignore the chunks and generate ungrounded answers",
+        "Tokenization",
+        "Vector index size"
+      ],
+      "correct": 1,
+      "explanation": "The mock cannot test the generator's safety against hallucinated content; only a real model swap-in can."
+    }
+  ]
+}

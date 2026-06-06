@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What is the fundamental difference between a base language model and an instruction-tuned model?",
+    "options": ["They have different architectures", "A base model continues text patterns; an instruction-tuned model follows instructions and answers questions", "Instruction-tuned models are larger", "Base models are faster"],
+    "correct": 1,
+    "explanation": "A base model trained with next-token prediction continues text patterns. Ask it a question and it may generate more questions. SFT teaches it to produce answers by training on (instruction, response) pairs.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is the purpose of masking loss on non-assistant tokens during SFT?",
+    "options": ["To speed up training", "To train the model only to generate responses, not to memorize the instruction format or system prompts", "To reduce memory usage", "To prevent overfitting"],
+    "correct": 1,
+    "explanation": "During SFT, you want the model to learn how to respond, not how to reproduce the instruction. Loss masking sets the loss to 0 for system/user tokens so gradients only come from the assistant's response tokens.",
+    "stage": "pre"
+  },
+  {
+    "question": "What format does SFT training data typically follow?",
+    "options": ["Raw text documents", "Chat template with system, user, and assistant roles marked by special tokens", "Key-value pairs", "SQL queries and results"],
+    "correct": 1,
+    "explanation": "SFT data uses a structured chat format: a system prompt setting behavior, a user instruction, and an assistant response. Special tokens mark role boundaries so the model learns the conversational structure.",
+    "stage": "post"
+  },
+  {
+    "question": "Why might an SFT model produce lower perplexity on benchmarks but worse conversational quality?",
+    "options": ["The benchmarks are wrong", "SFT optimizes for pattern matching on training examples, not for the nuanced quality judgments humans care about -- that requires RLHF/DPO", "The model is too small", "The learning rate was wrong"],
+    "correct": 1,
+    "explanation": "SFT teaches the model to follow formats and produce plausible responses. It doesn't teach which response is better when multiple valid options exist. Human preference alignment (RLHF/DPO) addresses this gap.",
+    "stage": "post"
+  },
+  {
+    "question": "How many high-quality instruction-response pairs are typically needed for effective SFT?",
+    "options": ["Millions", "10,000 to 100,000 high-quality examples", "Fewer than 100", "Billions"],
+    "correct": 1,
+    "explanation": "SFT is surprisingly data-efficient. Studies show that 10K-100K high-quality examples (like the Alpaca or LIMA datasets) can effectively teach instruction following. Quality matters far more than quantity.",
+    "stage": "post"
+  }
+]

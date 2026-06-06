@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/38-classifier-finetuning",
+  "title": "Classifier Fine-Tuning by Head Swap",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before reading: a pretrained language model has a body with 5M parameters and an output head that projects to a 30K vocabulary. You want a 2-class classifier. Which is the most defensible first move?",
+      "options": [
+        "Discard the body and train a new transformer from scratch on the 800-example labelled set.",
+        "Replace only the head with a 2-class linear layer and decide later whether to train the body.",
+        "Keep the original head but mask all but two output logits.",
+        "Freeze the head and train only the body."
+      ],
+      "correct": 1,
+      "explanation": "The body is the expensive part and encodes useful structure from pretraining. Swap the head first. Whether to freeze the body is a separate decision driven by data size and domain drift."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the lesson use mean pooling with an attention-mask weighting instead of a plain mean across the sequence axis?",
+      "options": [
+        "Plain mean is mathematically undefined for transformers.",
+        "Padding positions contribute irrelevant hidden states that would pull the pooled vector toward zero.",
+        "Mean pool requires masking by convention even when there are no pads.",
+        "Plain mean ignores the batch dimension."
+      ],
+      "correct": 1,
+      "explanation": "Padding tokens carry no signal but the body still produces hidden states for them. Without masking, padded positions corrupt the pooled representation, especially on short sequences in a batch padded to the longest example."
+    },
+    {
+      "stage": "check",
+      "question": "In `train_classifier`, the optimiser is constructed with `[p for p in model.parameters() if p.requires_grad]`. What does this idiom enforce?",
+      "options": [
+        "It silently ignores the head when the body is frozen.",
+        "It tells PyTorch to autograd through frozen parameters anyway.",
+        "It builds the param group from only the trainable subset, so the head-only and full-FT cases share the same code path.",
+        "It is required by the Adam constructor."
+      ],
+      "correct": 2,
+      "explanation": "The optimiser only updates the parameters in its param list. By filtering on `requires_grad`, the same training function works for both regimes; the toggle is the freeze call, not the loop."
+    },
+    {
+      "stage": "check",
+      "question": "Precision is 0.9 and recall is 0.6 on the spam class. What is the F1?",
+      "options": [
+        "0.75",
+        "0.72",
+        "0.50",
+        "0.30"
+      ],
+      "correct": 1,
+      "explanation": "F1 is the harmonic mean of precision and recall: 2 * 0.9 * 0.6 / (0.9 + 0.6) = 1.08 / 1.5 = 0.72."
+    },
+    {
+      "stage": "post",
+      "question": "You retrain the model with full fine-tuning at the same learning rate as head-only training. F1 collapses to 0.55 from 0.90. What is the most likely cause?",
+      "options": [
+        "The body parameters needed a smaller learning rate than the head.",
+        "Adam is incompatible with classification objectives.",
+        "Cross-entropy loss is not defined for two-class problems.",
+        "PyTorch silently disables gradients during full fine-tuning."
+      ],
+      "correct": 0,
+      "explanation": "A pretrained body usually needs a smaller learning rate than a fresh head. A common pattern is two parameter groups: high LR on the head, smaller LR on the body. The same LR for both destroys pretraining signal."
+    },
+    {
+      "stage": "post",
+      "question": "Your team wants to deploy the classifier and asks how to record which regime produced the production checkpoint. Which artifact answers that question reproducibly?",
+      "options": [
+        "The final loss value, since head-only loss is always higher than full-FT loss.",
+        "The `trainable` count in `TrainReport`, which differs by orders of magnitude between regimes.",
+        "The confusion matrix, which uniquely identifies the regime.",
+        "The precision-recall-F1 triple."
+      ],
+      "correct": 1,
+      "explanation": "`trainable` records the number of parameters that received gradients during training. Head-only has on the order of `hidden * num_classes`; full FT has the whole model. The number is the audit trail."
+    }
+  ]
+}

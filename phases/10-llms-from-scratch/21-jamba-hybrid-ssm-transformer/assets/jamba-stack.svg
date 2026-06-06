@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .mamba { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.2; }
+      .attn { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.2; }
+      .moe { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.2; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 11px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Jamba — 1 Transformer layer per 7 Mamba layers, MoE on alternates</text>
+
+  <!-- One Jamba block (8 layers) -->
+  <rect x="60" y="50" width="280" height="480" class="box"/>
+  <text x="200" y="72" text-anchor="middle" class="head">one Jamba block (8 layers)</text>
+
+  <!-- 7 Mamba + 1 Attention, MoE on alternating -->
+  <rect x="80" y="90" width="240" height="44" class="mamba"/>
+  <text x="200" y="110" text-anchor="middle" class="step">Mamba (SSM)</text>
+  <text x="200" y="126" text-anchor="middle" class="small">+ MoE router</text>
+
+  <rect x="80" y="140" width="240" height="44" class="mamba"/>
+  <text x="200" y="160" text-anchor="middle" class="step">Mamba (SSM)</text>
+  <text x="200" y="176" text-anchor="middle" class="small">dense MLP</text>
+
+  <rect x="80" y="190" width="240" height="44" class="mamba"/>
+  <text x="200" y="210" text-anchor="middle" class="step">Mamba (SSM)</text>
+  <text x="200" y="226" text-anchor="middle" class="small">+ MoE router</text>
+
+  <rect x="80" y="240" width="240" height="44" class="mamba"/>
+  <text x="200" y="260" text-anchor="middle" class="step">Mamba (SSM)</text>
+  <text x="200" y="276" text-anchor="middle" class="small">dense MLP</text>
+
+  <rect x="80" y="290" width="240" height="44" class="mamba"/>
+  <text x="200" y="310" text-anchor="middle" class="step">Mamba (SSM)</text>
+  <text x="200" y="326" text-anchor="middle" class="small">+ MoE router</text>
+
+  <rect x="80" y="340" width="240" height="44" class="mamba"/>
+  <text x="200" y="360" text-anchor="middle" class="step">Mamba (SSM)</text>
+  <text x="200" y="376" text-anchor="middle" class="small">dense MLP</text>
+
+  <rect x="80" y="390" width="240" height="44" class="mamba"/>
+  <text x="200" y="410" text-anchor="middle" class="step">Mamba (SSM)</text>
+  <text x="200" y="426" text-anchor="middle" class="small">+ MoE router</text>
+
+  <rect x="80" y="440" width="240" height="44" class="attn"/>
+  <text x="200" y="460" text-anchor="middle" class="step">Transformer (attention)</text>
+  <text x="200" y="476" text-anchor="middle" class="small">dense MLP</text>
+
+  <text x="200" y="510" text-anchor="middle" class="caption">repeat this block N times</text>
+
+  <!-- Memory comparison -->
+  <rect x="380" y="50" width="540" height="220" class="box"/>
+  <text x="650" y="72" text-anchor="middle" class="head">memory at 256k context (BF16)</text>
+
+  <text x="400" y="104" class="step">pure Transformer MHA 32L</text>
+  <text x="680" y="104" class="step" fill="#c0392b">128 GB</text>
+  <rect x="400" y="110" width="495" height="14" fill="#c0392b"/>
+
+  <text x="400" y="144" class="step">pure Transformer GQA(8) 32L</text>
+  <text x="680" y="144" class="step" fill="#c0392b">32 GB</text>
+  <rect x="400" y="150" width="124" height="14" fill="#c0392b"/>
+
+  <text x="400" y="184" class="step">Jamba 1:3 hybrid 32L</text>
+  <text x="680" y="184" class="step" fill="#c0392b">32 GB</text>
+  <rect x="400" y="190" width="124" height="14" fill="#c0392b"/>
+
+  <text x="400" y="224" class="step">Jamba 1:7 hybrid 32L</text>
+  <text x="680" y="224" class="step" fill="#2e7d32">16 GB</text>
+  <rect x="400" y="230" width="62" height="14" fill="#2e7d32"/>
+
+  <text x="400" y="260" class="step">pure Mamba 32L</text>
+  <text x="680" y="260" class="step" fill="#2e7d32">&lt;1 MB</text>
+  <rect x="400" y="262" width="4" height="14" fill="#2e7d32"/>
+
+  <!-- Ratio rationale -->
+  <rect x="380" y="290" width="540" height="240" class="box"/>
+  <text x="650" y="312" text-anchor="middle" class="head">why the 1:7 ratio</text>
+
+  <text x="400" y="340" class="step">1:1 (pure Transformer)</text>
+  <text x="620" y="340" class="small">best quality, worst memory</text>
+
+  <text x="400" y="362" class="step">1:3 (25% attention)</text>
+  <text x="620" y="362" class="small">still KV-heavy, small quality win</text>
+
+  <text x="400" y="384" class="step">1:7 (12.5% attention)  ✓</text>
+  <text x="620" y="384" class="small">AI21 sweet spot — 256k on one 80GB GPU</text>
+
+  <text x="400" y="406" class="step">1:15 (6% attention)</text>
+  <text x="620" y="406" class="small">in-context recall starts failing</text>
+
+  <text x="400" y="428" class="step">0:N (pure Mamba)</text>
+  <text x="620" y="428" class="small">state-tracking fails without attention</text>
+
+  <text x="400" y="465" class="step">Mamba-3 (ICLR 2026)</text>
+  <text x="620" y="465" class="small">complex state + MIMO; pushes ratio lower?</text>
+
+  <text x="400" y="488" class="step">frontier hybrids in 2026</text>
+  <text x="620" y="488" class="small">Jamba 1.5 Large: 398B/94B active, enterprise</text>
+  <text x="620" y="504" class="small">next-gen: likely Mamba-3 + attention at 1:10+</text>
+</svg>

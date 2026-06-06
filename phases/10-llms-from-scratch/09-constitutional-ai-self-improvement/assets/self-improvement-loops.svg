@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #222; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">two loops replace the human preference budget</text>
+
+  <!-- CAI column -->
+  <rect x="40" y="55" width="400" height="380" class="box"/>
+  <text x="240" y="80" text-anchor="middle" class="label">Constitutional AI — subjective behavior</text>
+
+  <rect x="60" y="100" width="360" height="32" class="hot"/>
+  <text x="240" y="121" text-anchor="middle" class="content">prompt + initial response</text>
+
+  <line x1="240" y1="137" x2="240" y2="155" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="160" width="360" height="48" class="box"/>
+  <text x="240" y="180" text-anchor="middle" class="content">model critiques against</text>
+  <text x="240" y="198" text-anchor="middle" class="content">principle sampled from constitution</text>
+
+  <line x1="240" y1="213" x2="240" y2="231" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="236" width="360" height="32" class="box"/>
+  <text x="240" y="257" text-anchor="middle" class="content">model rewrites response</text>
+
+  <line x1="240" y1="273" x2="240" y2="291" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="296" width="360" height="32" class="cool"/>
+  <text x="240" y="317" text-anchor="middle" class="content">SFT on (prompt, revised)</text>
+
+  <line x1="240" y1="333" x2="240" y2="351" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="356" width="360" height="32" class="cool"/>
+  <text x="240" y="377" text-anchor="middle" class="content">DPO on pairwise AI judgments</text>
+
+  <text x="240" y="412" text-anchor="middle" class="caption">lever is the constitution — editing text,</text>
+  <text x="240" y="427" text-anchor="middle" class="caption">not re-labeling thousands of pairs</text>
+
+  <!-- GRPO column -->
+  <rect x="460" y="55" width="400" height="380" class="box"/>
+  <text x="660" y="80" text-anchor="middle" class="label">GRPO — verifiable behavior</text>
+
+  <rect x="480" y="100" width="360" height="32" class="hot"/>
+  <text x="660" y="121" text-anchor="middle" class="content">prompt (math / code / format)</text>
+
+  <line x1="660" y1="137" x2="660" y2="155" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="480" y="160" width="360" height="48" class="box"/>
+  <text x="660" y="180" text-anchor="middle" class="content">sample G responses</text>
+  <text x="660" y="198" text-anchor="middle" class="content">(G = 16, 32, 64)</text>
+
+  <line x1="660" y1="213" x2="660" y2="231" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="480" y="236" width="360" height="32" class="box"/>
+  <text x="660" y="257" text-anchor="middle" class="content">deterministic rule grades each one</text>
+
+  <line x1="660" y1="273" x2="660" y2="291" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="480" y="296" width="360" height="32" class="cool"/>
+  <text x="660" y="317" text-anchor="middle" class="content">A_i = (r_i - mean) / std  (group-relative)</text>
+
+  <line x1="660" y1="333" x2="660" y2="351" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="480" y="356" width="360" height="32" class="cool"/>
+  <text x="660" y="377" text-anchor="middle" class="content">clipped surrogate + KL to reference</text>
+
+  <text x="660" y="412" text-anchor="middle" class="caption">no value function, no reward model —</text>
+  <text x="660" y="427" text-anchor="middle" class="caption">DeepSeek-R1 recipe, ORM only</text>
+
+  <text x="450" y="468" text-anchor="middle" class="caption">CAI for "tone". GRPO for "answer". Most 2026 pipelines run both.</text>
+</svg>

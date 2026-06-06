@@ -1,0 +1,108 @@
+{
+  "cases": [
+    {
+      "case": "refusal-without-redirect",
+      "draft": "I cannot help with that question.",
+      "revised": "I cannot help with that question.\n\nIf this is something I cannot help with, consider rephrasing or reaching out to the relevant team.",
+      "draft_violations": [
+        {
+          "rule_name": "no-empty-refusal",
+          "severity": "medium",
+          "explanation": "Refusals must offer a next step (a suggestion, an alternative, or a redirect).",
+          "matched_span": null
+        }
+      ],
+      "revised_violations": [],
+      "diff": [
+        {
+          "op": "add",
+          "text": ""
+        },
+        {
+          "op": "add",
+          "text": "If this is something I cannot help with, consider rephrasing or reaching out to the relevant team."
+        }
+      ]
+    },
+    {
+      "case": "code-without-assumption",
+      "draft": "Here is the code:\n```python\ndef add(a, b):\n    return a + b\n```\nLet me know if this works.",
+      "revised": "Here is the code:\n```python\ndef add(a, b):\n    return a + b\n```\nLet me know if this works.\n\nAssumption: the example inputs are valid and the module is on the import path.",
+      "draft_violations": [
+        {
+          "rule_name": "end-with-runnable-or-assumption",
+          "severity": "medium",
+          "explanation": "Code responses must end with a closing fence or an explicit assumption.",
+          "matched_span": null
+        }
+      ],
+      "revised_violations": [],
+      "diff": [
+        {
+          "op": "add",
+          "text": ""
+        },
+        {
+          "op": "add",
+          "text": "Assumption: the example inputs are valid and the module is on the import path."
+        }
+      ]
+    },
+    {
+      "case": "pii-in-example",
+      "draft": "Example user: lee@example.com. Here is how to look them up.",
+      "revised": "Example user: [example-contact]. Here is how to look them up.",
+      "draft_violations": [
+        {
+          "rule_name": "no-pii-in-examples",
+          "severity": "high",
+          "explanation": "Examples must not contain real-looking emails or phone numbers.",
+          "matched_span": "lee@example.com"
+        }
+      ],
+      "revised_violations": [],
+      "diff": [
+        {
+          "op": "edit-removed",
+          "text": "Example user: lee@example.com. Here is how to look them up."
+        },
+        {
+          "op": "edit-added",
+          "text": "Example user: [example-contact]. Here is how to look them up."
+        }
+      ]
+    },
+    {
+      "case": "internal-library-leak",
+      "draft": "Use the internal-only adapter for the database call.",
+      "revised": "Use the [internal] adapter for the database call.",
+      "draft_violations": [
+        {
+          "rule_name": "no-internal-library-leak",
+          "severity": "high",
+          "explanation": "Internal library names must not appear in outputs.",
+          "matched_span": "internal-only"
+        }
+      ],
+      "revised_violations": [],
+      "diff": [
+        {
+          "op": "edit-removed",
+          "text": "Use the internal-only adapter for the database call."
+        },
+        {
+          "op": "edit-added",
+          "text": "Use the [internal] adapter for the database call."
+        }
+      ]
+    },
+    {
+      "case": "clean-response",
+      "draft": "Here is a haiku about autumn leaves drifting onto a still pond surface.",
+      "revised": "Here is a haiku about autumn leaves drifting onto a still pond surface.",
+      "draft_violations": [],
+      "revised_violations": [],
+      "diff": []
+    }
+  ]
+}

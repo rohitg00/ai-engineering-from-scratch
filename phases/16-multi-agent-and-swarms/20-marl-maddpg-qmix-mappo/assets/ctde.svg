@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="28" text-anchor="middle" class="title">CTDE and the three MARL baselines</text>
+
+  <rect x="40" y="60" width="440" height="200" class="cold"/>
+  <text x="260" y="84" text-anchor="middle" class="head">Training time — centralized</text>
+
+  <rect x="70" y="110" width="360" height="100" class="box"/>
+  <text x="250" y="134" text-anchor="middle" class="step">critic / mixer / value</text>
+  <text x="250" y="158" text-anchor="middle" class="small">sees all agents' observations + actions</text>
+  <text x="250" y="176" text-anchor="middle" class="small">stationary target for each actor update</text>
+  <text x="250" y="196" text-anchor="middle" class="small">addresses non-stationarity of multi-learner settings</text>
+
+  <text x="260" y="234" text-anchor="middle" class="caption">MADDPG critic · QMIX mixer · MAPPO centralized V</text>
+
+  <rect x="500" y="60" width="420" height="200" class="cool"/>
+  <text x="710" y="84" text-anchor="middle" class="head">Deploy time — decentralized</text>
+
+  <rect x="530" y="110" width="110" height="100" class="box"/>
+  <text x="585" y="140" text-anchor="middle" class="step">actor 0</text>
+  <text x="585" y="160" text-anchor="middle" class="small">sees o_0 only</text>
+  <text x="585" y="180" text-anchor="middle" class="small">local action</text>
+
+  <rect x="655" y="110" width="110" height="100" class="box"/>
+  <text x="710" y="140" text-anchor="middle" class="step">actor 1</text>
+  <text x="710" y="160" text-anchor="middle" class="small">sees o_1 only</text>
+  <text x="710" y="180" text-anchor="middle" class="small">local action</text>
+
+  <rect x="780" y="110" width="110" height="100" class="box"/>
+  <text x="835" y="140" text-anchor="middle" class="step">actor N</text>
+  <text x="835" y="160" text-anchor="middle" class="small">sees o_N only</text>
+  <text x="835" y="180" text-anchor="middle" class="small">local action</text>
+
+  <text x="710" y="234" text-anchor="middle" class="caption">no critic at runtime; only local policy call</text>
+
+  <rect x="40" y="290" width="880" height="200" class="box"/>
+  <text x="480" y="314" text-anchor="middle" class="head">three baselines, three specializations</text>
+
+  <text x="60" y="348" class="step">MADDPG (2017)</text>
+  <text x="260" y="348" class="small">per-agent critic · continuous actions · mixed cooperative/competitive · scales ~10 agents</text>
+
+  <text x="60" y="378" class="step">QMIX (2018)</text>
+  <text x="260" y="378" class="small">value decomposition · monotone mixer · cooperative · discrete · dominant on SMAC</text>
+
+  <text x="60" y="408" class="step">MAPPO (2022)</text>
+  <text x="260" y="408" class="small">PPO with centralized V · minimal tuning · cooperative · robust across benchmarks</text>
+
+  <text x="60" y="438" class="step">production note</text>
+  <text x="260" y="438" class="small">start with MAPPO; escalate to MADDPG for mixed settings, QMIX for sparse cooperative</text>
+
+  <text x="60" y="468" class="caption">For LLM-agent systems: CTDE is a design pattern; training end-to-end is optional.</text>
+</svg>

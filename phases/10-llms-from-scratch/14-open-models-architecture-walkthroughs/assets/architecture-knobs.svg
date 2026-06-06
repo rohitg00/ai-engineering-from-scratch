@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .old { fill: #eeeeee; stroke: #888; stroke-width: 1.2; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="28" text-anchor="middle" class="title">six knobs: GPT-2 → open frontier</text>
+
+  <!-- Six rows, two columns: "was" (left) vs "now" (right) -->
+  <!-- Row 1: Norm -->
+  <text x="30" y="72" class="head">1 / Norm</text>
+  <rect x="130" y="55" width="330" height="36" class="old"/>
+  <text x="295" y="78" text-anchor="middle" class="step">LayerNorm — mean + std + scale + bias</text>
+  <line x1="465" y1="73" x2="495" y2="73" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="500" y="55" width="330" height="36" class="cool"/>
+  <text x="665" y="78" text-anchor="middle" class="step">RMSNorm — std + scale</text>
+
+  <!-- Row 2: Position -->
+  <text x="30" y="122" class="head">2 / Position</text>
+  <rect x="130" y="105" width="330" height="36" class="old"/>
+  <text x="295" y="128" text-anchor="middle" class="step">learned embedding table</text>
+  <line x1="465" y1="123" x2="495" y2="123" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="500" y="105" width="330" height="36" class="cool"/>
+  <text x="665" y="128" text-anchor="middle" class="step">RoPE (+ YaRN / NTK for stretch)</text>
+
+  <!-- Row 3: Activation -->
+  <text x="30" y="172" class="head">3 / Activation</text>
+  <rect x="130" y="155" width="330" height="36" class="old"/>
+  <text x="295" y="178" text-anchor="middle" class="step">GELU — one projection</text>
+  <line x1="465" y1="173" x2="495" y2="173" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="500" y="155" width="330" height="36" class="cool"/>
+  <text x="665" y="178" text-anchor="middle" class="step">SwiGLU — gate · swish(gate) · up</text>
+
+  <!-- Row 4: Attention -->
+  <text x="30" y="222" class="head">4 / Attention</text>
+  <rect x="130" y="205" width="330" height="36" class="old"/>
+  <text x="295" y="228" text-anchor="middle" class="step">MHA — one K,V per head</text>
+  <line x1="465" y1="223" x2="495" y2="223" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="500" y="205" width="330" height="36" class="cool"/>
+  <text x="665" y="228" text-anchor="middle" class="step">GQA → MQA → MLA (shrink KV cache)</text>
+
+  <!-- Row 5: MLP density -->
+  <text x="30" y="272" class="head">5 / MLP</text>
+  <rect x="130" y="255" width="330" height="36" class="old"/>
+  <text x="295" y="278" text-anchor="middle" class="step">dense — every param per token</text>
+  <line x1="465" y1="273" x2="495" y2="273" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="500" y="255" width="330" height="36" class="cool"/>
+  <text x="665" y="278" text-anchor="middle" class="step">MoE — top-k of N experts per token</text>
+
+  <!-- Row 6: Norm placement -->
+  <text x="30" y="322" class="head">6 / Norm place</text>
+  <rect x="130" y="305" width="330" height="36" class="old"/>
+  <text x="295" y="328" text-anchor="middle" class="step">post-norm — hard to train deep</text>
+  <line x1="465" y1="323" x2="495" y2="323" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="500" y="305" width="330" height="36" class="cool"/>
+  <text x="665" y="328" text-anchor="middle" class="step">pre-norm (stays everywhere)</text>
+
+  <!-- Model comparison strip -->
+  <rect x="30" y="360" width="900" height="140" class="box"/>
+  <text x="480" y="383" text-anchor="middle" class="label">the diff for each frontier open model</text>
+
+  <text x="50" y="410" class="step">GPT-2 Small</text>
+  <text x="200" y="410" class="small">LayerNorm · GELU · learned · MHA · dense · 1k ctx</text>
+
+  <text x="50" y="432" class="step">Llama 3 8B</text>
+  <text x="200" y="432" class="small">RMSNorm · SwiGLU · RoPE · GQA 32/8 · dense · 128k</text>
+
+  <text x="50" y="454" class="step">Mixtral 8x7B</text>
+  <text x="200" y="454" class="small">RMSNorm · SwiGLU · RoPE · GQA · MoE 8/top-2 · 32k</text>
+
+  <text x="50" y="476" class="step">DeepSeek V3</text>
+  <text x="200" y="476" class="small">RMSNorm · SwiGLU · RoPE · MLA · MoE 256/top-8 · 128k · 671B/37B active</text>
+
+  <text x="480" y="515" text-anchor="middle" class="caption">same skeleton, six tuned knobs — the next frontier model picks a subset of these</text>
+</svg>

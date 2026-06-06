@@ -1,0 +1,78 @@
+{
+  "lesson": "37-loading-pretrained-weights",
+  "title": "Loading Pretrained Weights",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the loader need a name map?",
+      "options": [
+        "Pretrained tensors and local parameters share the same name",
+        "Published GPT-2 weights use names like wte, wpe, h.N.attn.c_attn; the local model uses tok_embed, pos_embed, blocks.N.attn.qkv; the loader translates one onto the other",
+        "Safetensors files are encrypted",
+        "Torch requires it"
+      ],
+      "correct": 1,
+      "explanation": "The two naming conventions are different histories; the map is a literal dict expanded per layer."
+    },
+    {
+      "stage": "check",
+      "question": "What is the conv1d transpose, and which tensors need it?",
+      "options": [
+        "All weight tensors",
+        "Published GPT-2 stores c_attn, c_proj, and c_fc weights in tensorflow conv1d layout, which is the transpose of what nn.Linear.weight expects; the loader calls .t() on those during assignment",
+        "Only the embedding",
+        "Only the LayerNorm scales"
+      ],
+      "correct": 1,
+      "explanation": "Three suffixes need transposing; biases and LayerNorms are already shaped correctly."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the LM head not in the safetensors file?",
+      "options": [
+        "It is computed at runtime from logits",
+        "Weight tying: the LM head shares storage with the token embedding (wte), so loading wte and aliasing lm_head.weight = tok_embed.weight after the load reconstructs the head",
+        "It is too large",
+        "It is loaded from a separate file"
+      ],
+      "correct": 1,
+      "explanation": "Setting lm_head.weight = tok_embed.weight after wte lands restores the alias; copying instead doubles the parameter count."
+    },
+    {
+      "stage": "check",
+      "question": "What does the loader do on a shape mismatch?",
+      "options": [
+        "Pads the smaller tensor",
+        "Records the mismatch in LoadReport.shape_mismatch and refuses to assign, leaving the local parameter untouched",
+        "Crashes the process",
+        "Truncates the larger tensor"
+      ],
+      "correct": 1,
+      "explanation": "Half loaded models are silent failure machines; refusing to assign keeps the report honest."
+    },
+    {
+      "stage": "post",
+      "question": "Why is the demo's stub fixture not a real GPT-2 download?",
+      "options": [
+        "Real files are not in safetensors format",
+        "The demo must run offline and quickly; the stub uses the exact pretrained naming convention so the loader code path is identical, and swapping in a real file changes nothing about the loader",
+        "Real weights are encrypted",
+        "Safetensors cannot store large tensors"
+      ],
+      "correct": 1,
+      "explanation": "Same code path, smaller payload; the loader works on either."
+    },
+    {
+      "stage": "post",
+      "question": "Why generate a sample before and after the load?",
+      "options": [
+        "To measure inference speed",
+        "If the post-load samples are identical to the pre-load samples, the load did not change the model, which means the mapping silently missed every tensor",
+        "To warm up the GPU cache",
+        "To set the random seed"
+      ],
+      "correct": 1,
+      "explanation": "Sanity generation is the cheapest gate: a sample fingerprint that fails to change exposes a broken load that the LoadReport summary would not catch on its own."
+    }
+  ]
+}

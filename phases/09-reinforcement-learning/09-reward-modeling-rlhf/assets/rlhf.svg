@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e8f1fb; stroke: #2471a3; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">RLHF: three stages, one language model</text>
+
+  <rect x="30" y="60" width="270" height="360" class="box"/>
+  <text x="165" y="88" text-anchor="middle" class="label">Stage 1: SFT</text>
+  <text x="50" y="118" class="content">data:  (prompt, ideal_response)</text>
+  <text x="50" y="140" class="content">loss:  next-token log-likelihood</text>
+  <text x="50" y="162" class="content">output:  pi_SFT  (demos)</text>
+  <text x="165" y="200" text-anchor="middle" class="caption">biased toward good behavior</text>
+  <text x="165" y="220" text-anchor="middle" class="caption">still an LM; can lie, ramble</text>
+
+  <rect x="50" y="255" width="230" height="140" class="hot"/>
+  <text x="165" y="280" text-anchor="middle" class="label">frozen anchor</text>
+  <text x="70" y="310" class="content">pi_ref = pi_SFT</text>
+  <text x="70" y="332" class="content">R_phi init from pi_SFT</text>
+  <text x="165" y="370" text-anchor="middle" class="caption">stays put across stages 2-3</text>
+
+  <rect x="315" y="60" width="270" height="360" class="box"/>
+  <text x="450" y="88" text-anchor="middle" class="label">Stage 2: reward model</text>
+  <text x="335" y="118" class="content">data: (x, y_+, y_-)  prefs</text>
+  <text x="335" y="140" class="content">loss: Bradley-Terry</text>
+  <text x="335" y="162" class="content">  -log sig(R_phi(x,y_+)-R_phi(x,y_-))</text>
+  <text x="335" y="200" class="content">output: scalar R_phi(x, y)</text>
+  <text x="450" y="235" text-anchor="middle" class="caption">preferences -&gt; reward</text>
+
+  <rect x="335" y="280" width="230" height="120" class="cool"/>
+  <text x="450" y="305" text-anchor="middle" class="label">2026 alternative</text>
+  <text x="355" y="330" class="content">DPO skips R_phi entirely:</text>
+  <text x="355" y="352" class="content">closed-form pref loss on pi</text>
+  <text x="450" y="385" text-anchor="middle" class="caption">same quality, less compute</text>
+
+  <rect x="600" y="60" width="270" height="360" class="box"/>
+  <text x="735" y="88" text-anchor="middle" class="label">Stage 3: PPO</text>
+  <text x="620" y="118" class="content">sample y ~ pi_theta(. | x)</text>
+  <text x="620" y="140" class="content">reward = R_phi(x, y)</text>
+  <text x="620" y="162" class="content">          - beta * KL(pi_theta || pi_ref)</text>
+  <text x="620" y="185" class="content">PPO clipped surrogate update</text>
+  <text x="735" y="225" text-anchor="middle" class="caption">KL keeps pi near the manifold</text>
+  <text x="735" y="245" text-anchor="middle" class="caption">where R_phi was trained</text>
+
+  <rect x="620" y="275" width="230" height="125" class="hot"/>
+  <text x="735" y="300" text-anchor="middle" class="label">diagnostics</text>
+  <text x="640" y="325" class="content">mean KL &lt; 10</text>
+  <text x="640" y="345" class="content">RM score rising</text>
+  <text x="640" y="365" class="content">human eval: stable or up</text>
+  <text x="735" y="390" text-anchor="middle" class="caption">holdback: reward-hacking alarm</text>
+
+  <text x="450" y="450" text-anchor="middle" class="caption">2022: InstructGPT / ChatGPT shipped on this recipe  ·  2026: DPO + GRPO do most of the work</text>
+</svg>

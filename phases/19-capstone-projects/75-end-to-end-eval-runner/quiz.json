@@ -1,0 +1,78 @@
+{
+  "lesson": "75-end-to-end-eval-runner",
+  "title": "End-to-End Eval Runner",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the smallest possible surface for the ModelAdapter interface?",
+      "options": [
+        "generate(prompt, task) returning text plus optional confidence and per-token nll",
+        "complete, embed, classify, summarise",
+        "init, login, generate, close",
+        "load_weights, generate, save_weights"
+      ],
+      "correct": 0,
+      "explanation": "One method covers any adapter. Everything else is optional decoration. The runner does not need a richer surface."
+    },
+    {
+      "stage": "pre",
+      "question": "Why does the runner accept a parallel flag rather than always running in parallel?",
+      "options": [
+        "Parallel execution is unsafe in CPython",
+        "Tests need deterministic execution order; the flag lets them switch to sequential",
+        "Parallel execution requires GPU",
+        "ThreadPoolExecutor is not stdlib"
+      ],
+      "correct": 1,
+      "explanation": "Tests want reproducibility. Production wants throughput. The flag splits those concerns without two code paths."
+    },
+    {
+      "stage": "check",
+      "question": "How does the runner determine the correct flag for the calibration buffer?",
+      "options": [
+        "It calls the adapter twice and compares outputs",
+        "It uses exact_match-style metrics at threshold 1.0 and graded metrics at threshold 0.5 by default",
+        "It uses the average bin confidence",
+        "It uses Brier decomposition"
+      ],
+      "correct": 1,
+      "explanation": "The threshold is metric-aware: exact_match-style metrics use a near-1.0 cutoff, while graded metrics use 0.5 by default."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the runner build EvalRun records and hand them to the aggregator instead of computing the leaderboard inline?",
+      "options": [
+        "EvalRun is more memory-efficient",
+        "It keeps the runner agnostic to the aggregator and lets the leaderboard layer evolve without touching the runner",
+        "The aggregator is faster on numpy arrays than dataclasses",
+        "EvalRun is required by JSON Schema"
+      ],
+      "correct": 1,
+      "explanation": "Composition over inlining. The runner produces records; the aggregator owns the leaderboard math. Each lesson owns one concern."
+    },
+    {
+      "stage": "check",
+      "question": "What is the role of the perplexity block in the final JSON envelope?",
+      "options": [
+        "It is required for the leaderboard ranking",
+        "It is the input to the calibration report",
+        "It carries the held-out language modelling number per model, independent of task scoring",
+        "It is computed from the bootstrap CI"
+      ],
+      "correct": 2,
+      "explanation": "Perplexity sits next to the leaderboard, not inside it. It uses the adapter's per-call token NLL and token counts."
+    },
+    {
+      "stage": "post",
+      "question": "What is the clean-run exit criterion of the self-terminating demo?",
+      "options": [
+        "Every task validated, every task scored, calibration aggregated, and rule-based adapter strictly above the random adapter on the leaderboard",
+        "Every task scored above 0.9",
+        "ECE below 0.05 for every model",
+        "Bootstrap CI excludes zero for every pair"
+      ],
+      "correct": 0,
+      "explanation": "The demo enforces the contract end to end: every layer ran and the most accurate adapter is ranked accordingly."
+    }
+  ]
+}

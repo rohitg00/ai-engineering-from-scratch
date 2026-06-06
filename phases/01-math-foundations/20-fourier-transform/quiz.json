@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does the Fourier transform do to a signal?",
+      "options": [
+        "Compresses the signal to use less storage",
+        "Decomposes the signal into sine waves of different frequencies, amplitudes, and phases",
+        "Removes noise from the signal",
+        "Converts the signal from analog to digital"
+      ],
+      "correct": 1,
+      "explanation": "The Fourier transform converts a signal from the time domain to the frequency domain. Each frequency coefficient X[k] tells you the amplitude and phase of a sine wave at frequency k. The signal is re-expressed as a sum of these sine waves."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the time complexity of the Fast Fourier Transform (FFT) compared to the direct DFT?",
+      "options": [
+        "Both are O(N^2)",
+        "FFT is O(N log N), DFT is O(N^2)",
+        "FFT is O(N), DFT is O(N log N)",
+        "FFT is O(log N), DFT is O(N)"
+      ],
+      "correct": 1,
+      "explanation": "The direct DFT computes N outputs, each summing over N inputs: O(N^2). The Cooley-Tukey FFT splits the signal into even/odd halves recursively, doing O(N) work at each of log2(N) levels, giving O(N log N). For N = 1 million, this is 20 million vs 1 trillion operations."
+    },
+    {
+      "stage": "post",
+      "question": "What does the convolution theorem state?",
+      "options": [
+        "Convolution in the time domain equals addition in the frequency domain",
+        "Convolution in the time domain equals pointwise multiplication in the frequency domain",
+        "Convolution always increases the length of a signal",
+        "Convolution and correlation are identical operations"
+      ],
+      "correct": 1,
+      "explanation": "The convolution theorem states that convolution in the time domain equals pointwise multiplication in the frequency domain: x * h = IFFT(FFT(x) . FFT(h)). This is why FFT-based convolution is O(N log N) instead of O(N*M) for large kernels."
+    },
+    {
+      "stage": "post",
+      "question": "Why does zero-padding a signal before FFT NOT increase the true frequency resolution?",
+      "options": [
+        "Zero-padding introduces noise that cancels the improvement",
+        "Zero-padding interpolates between existing frequency bins but cannot reveal frequency detail absent from the original samples",
+        "Zero-padding only works for power-of-2 signal lengths",
+        "The FFT algorithm ignores zero-padded samples"
+      ],
+      "correct": 1,
+      "explanation": "True frequency resolution depends on the observation time T = N/fs. Zero-padding adds more frequency bins (finer grid) but only interpolates the existing spectrum — it gives a smoother-looking result without resolving frequencies closer than 1/T Hz apart."
+    },
+    {
+      "stage": "post",
+      "question": "In the original Transformer's sinusoidal positional encodings, why are different dimension pairs assigned geometrically spaced frequencies?",
+      "options": [
+        "It reduces the computational cost of attention",
+        "Each frequency provides a different resolution — high frequencies encode fine position, low frequencies encode coarse position, giving each position a unique fingerprint",
+        "Geometric spacing is required by the FFT algorithm",
+        "It ensures all encoding values are between 0 and 1"
+      ],
+      "correct": 1,
+      "explanation": "High-frequency dimensions change rapidly with position (fine resolution), while low-frequency dimensions change slowly (coarse resolution). Together, the multi-frequency encoding gives every position a unique pattern — similar to how Fourier coefficients uniquely identify a signal."
+    }
+  ]
+}

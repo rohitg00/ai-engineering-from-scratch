@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow16" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">The 2026 red-team tooling stack</text>
+
+  <rect x="40" y="60" width="880" height="160" class="box"/>
+  <text x="480" y="85" text-anchor="middle" class="head">runtime defense: Llama Guard + Prompt-Guard</text>
+
+  <rect x="60" y="100" width="180" height="100" class="cool"/>
+  <text x="150" y="125" text-anchor="middle" class="step">user input</text>
+  <rect x="75" y="135" width="150" height="30" class="cold"/>
+  <text x="150" y="155" text-anchor="middle" class="small">Prompt-Guard-86M</text>
+  <rect x="75" y="165" width="150" height="30" class="cold"/>
+  <text x="150" y="185" text-anchor="middle" class="small">Llama Guard 3/4</text>
+
+  <rect x="280" y="100" width="180" height="100" class="hot"/>
+  <text x="370" y="125" text-anchor="middle" class="step">target LLM</text>
+  <text x="370" y="155" text-anchor="middle" class="small">model under deployment</text>
+  <text x="370" y="185" text-anchor="middle" class="small">14 MLCommons hazards watched</text>
+
+  <rect x="500" y="100" width="180" height="100" class="cool"/>
+  <text x="590" y="125" text-anchor="middle" class="step">output</text>
+  <rect x="515" y="135" width="150" height="30" class="cold"/>
+  <text x="590" y="155" text-anchor="middle" class="small">Llama Guard 3/4</text>
+  <rect x="515" y="165" width="150" height="30" class="cold"/>
+  <text x="590" y="185" text-anchor="middle" class="small">category scores</text>
+
+  <rect x="720" y="100" width="180" height="100" class="cool"/>
+  <text x="810" y="125" text-anchor="middle" class="step">user</text>
+  <text x="810" y="155" text-anchor="middle" class="small">response delivered</text>
+  <text x="810" y="185" text-anchor="middle" class="small">or refusal issued</text>
+
+  <path d="M 240 150 L 280 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow16)" fill="none"/>
+  <path d="M 460 150 L 500 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow16)" fill="none"/>
+  <path d="M 680 150 L 720 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow16)" fill="none"/>
+
+  <rect x="40" y="240" width="880" height="140" class="box"/>
+  <text x="480" y="265" text-anchor="middle" class="head">regression: Garak nightly</text>
+  <rect x="60" y="285" width="260" height="80" class="cold"/>
+  <text x="190" y="310" text-anchor="middle" class="step">probes</text>
+  <text x="190" y="330" text-anchor="middle" class="small">hallucination / leak / injection / jailbreak</text>
+  <text x="190" y="350" text-anchor="middle" class="small">static / dynamic / adaptive</text>
+  <rect x="340" y="285" width="260" height="80" class="cold"/>
+  <text x="470" y="310" text-anchor="middle" class="step">detectors</text>
+  <text x="470" y="330" text-anchor="middle" class="small">score expected-failure match</text>
+  <text x="470" y="350" text-anchor="middle" class="small">TBSA tier-based pass/fail</text>
+  <rect x="620" y="285" width="260" height="80" class="cold"/>
+  <text x="750" y="310" text-anchor="middle" class="step">harnesses</text>
+  <text x="750" y="330" text-anchor="middle" class="small">run probe-detector pairs</text>
+  <text x="750" y="350" text-anchor="middle" class="small">ship report artifact</text>
+
+  <rect x="40" y="400" width="880" height="90" class="box"/>
+  <text x="480" y="425" text-anchor="middle" class="head">campaigns: PyRIT pre-release</text>
+  <text x="60" y="450" class="small">converters: paraphrase / encode / translate / roleplay / system-prompt-rewrite.</text>
+  <text x="60" y="468" class="small">orchestrators: Crescendo (escalation) / TAP (branching) / RedTeaming (custom loops).</text>
+  <text x="60" y="486" class="small">scoring: LLM-as-judge (GPT-4-turbo, StrongREJECT) or Llama Guard-as-judge.</text>
+</svg>

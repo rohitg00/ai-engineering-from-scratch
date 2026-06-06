@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .content { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 15px; font-weight: 700; fill: #1a1a1a; }
+      .tag { font-size: 10px; fill: #c0392b; font-weight: 600; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">music generation — two paradigms, one legal landscape</text>
+
+  <rect x="30" y="55" width="400" height="170" class="box"/>
+  <text x="230" y="78" text-anchor="middle" class="label">A. AR token LM over neural codec</text>
+  <text x="230" y="96" text-anchor="middle" class="tag">MusicGen · ACE-Step · YuE · VALL-E-Music</text>
+  <text x="50" y="124" class="content">text prompt  →  T5 / CLAP embedding</text>
+  <text x="50" y="142" class="content">  →  AR transformer over EnCodec tokens</text>
+  <text x="50" y="160" class="content">  →  EnCodec decoder  →  audio 32 kHz</text>
+  <text x="50" y="188" class="caption">streams (future); structured songs with lyrics</text>
+  <text x="50" y="205" class="caption">drift past 30 s; loops; needs crossfade</text>
+
+  <rect x="450" y="55" width="400" height="170" class="box"/>
+  <text x="650" y="78" text-anchor="middle" class="label">B. latent diffusion over mel / latent codec</text>
+  <text x="650" y="96" text-anchor="middle" class="tag">Stable Audio · AudioLDM 2 · Riffusion</text>
+  <text x="470" y="124" class="content">text  →  CLAP embedding</text>
+  <text x="470" y="142" class="content">  →  latent diffusion (DDPM / flow)</text>
+  <text x="470" y="160" class="content">  →  decoder  →  audio 44.1 / 48 kHz</text>
+  <text x="470" y="188" class="caption">best for loops, textures, sound design</text>
+  <text x="470" y="205" class="caption">weaker structure, weaker vocals</text>
+
+  <rect x="30" y="250" width="820" height="180" class="hot"/>
+  <text x="440" y="272" text-anchor="middle" class="label">2026 leaderboard + legal note</text>
+  <text x="60" y="300" class="content">MusicGen-large     3.3B  30 s      no vocals   MIT              - instrumental baseline</text>
+  <text x="60" y="318" class="content">Stable Audio Open  1.2B  47 s      no vocals   non-commercial   - loops, textures</text>
+  <text x="60" y="336" class="content">ACE-Step XL (Apr 26) 4B  &gt; 2 min   vocals      Apache-2.0       - open full-song</text>
+  <text x="60" y="354" class="content">Suno v5 (closed)    ?    4 min     vocals      commercial       - ELO 1293; quality leader</text>
+  <text x="60" y="372" class="content">Udio v4 (closed)    ?    4 min     vocals+stems commercial      - inpainting, stem split</text>
+  <text x="60" y="400" class="caption">legal: Warner + UMG settled with Suno / Udio in 2025-26; disclosure + watermarking required (EU AI Act, CA SB 942)</text>
+  <text x="60" y="418" class="caption">safe-to-ship: instrumental MIT/CC0 · commercial API with license · train on owned catalog</text>
+</svg>

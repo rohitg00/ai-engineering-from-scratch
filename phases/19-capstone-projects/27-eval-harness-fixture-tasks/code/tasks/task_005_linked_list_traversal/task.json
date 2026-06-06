@@ -1,0 +1,8 @@
+{
+  "id": "task_005_linked_list_traversal",
+  "goal": "linked_list_length(head) should count every node in the linked list starting at head, including head itself. The buggy version starts counting from head.next, dropping one node. Fix it by initialising the counter to 0 and incrementing for every node walked.",
+  "verifier": {
+    "name": "file_equals",
+    "args": { "path": "linked_list.py" }
+  }
+}

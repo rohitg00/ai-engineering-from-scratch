@@ -1,0 +1,90 @@
+{
+  "lesson": "34-repo-memory-and-state",
+  "title": "Repo Memory and Durable State",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the durability test that decides whether a piece of information belongs in repo memory?",
+      "options": [
+        "Whether it is JSON",
+        "Whether it would be useful three months from now in a CI rerun; if yes, repo; if no, telemetry",
+        "Whether the user marked it as important",
+        "Whether it fits in 4 kB"
+      ],
+      "correct": 1,
+      "explanation": "Repo memory is for durable, three-months-from-now-useful state; transient data is telemetry."
+    },
+    {
+      "stage": "pre",
+      "question": "What schema field carries the agent's contract version?",
+      "options": [
+        "schema_version",
+        "build_hash",
+        "model_id",
+        "session_uuid"
+      ],
+      "correct": 0,
+      "explanation": "schema_version is the integer contract; the manager refuses to load from an unknown version."
+    },
+    {
+      "stage": "check",
+      "question": "How does atomic write work?",
+      "options": [
+        "tempfile.mkstemp in the same directory, write, fsync, os.replace (atomic rename) over the target",
+        "Truncate-then-write to the target",
+        "Append-only with a CRC",
+        "Encrypt and overwrite"
+      ],
+      "correct": 0,
+      "explanation": "Atomic rename on POSIX and Windows is what prevents partial-write corruption."
+    },
+    {
+      "stage": "check",
+      "question": "Why are idempotency keys required for non-idempotent tool calls?",
+      "options": [
+        "For billing",
+        "If the agent crashes after a tool call but before checkpointing the result, retry safely; log call ID before execution and skip the call on retry",
+        "To deduplicate logs",
+        "To shorten output"
+      ],
+      "correct": 1,
+      "explanation": "pending_calls.jsonl carries the call IDs; recovery checks and skips already-executed work."
+    },
+    {
+      "stage": "check",
+      "question": "Where should large artifacts (CSVs, long transcripts, generated files) live relative to state?",
+      "options": [
+        "Inline in agent_state.json",
+        "As separate files (or object storage) with only the path kept in state, so checkpoints stay small and fast",
+        "In environment variables",
+        "Concatenated into one giant log"
+      ],
+      "correct": 1,
+      "explanation": "Separate artifacts grow independently of state; checkpoints stay cheap to read and write."
+    },
+    {
+      "stage": "post",
+      "question": "What does event sourcing for audit + snapshots for resume buy you?",
+      "options": [
+        "Lower disk usage",
+        "Replay agent decisions verbatim by reading the snapshot then replaying events after it; same shape as Postgres WAL",
+        "Faster inference",
+        "Native voice support"
+      ],
+      "correct": 1,
+      "explanation": "Append to state.events.jsonl on every mutation; periodically snapshot to state.json; replay events after the snapshot timestamp."
+    },
+    {
+      "stage": "post",
+      "question": "What does the lesson say happens when schema_version mismatches?",
+      "options": [
+        "The manager silently upgrades",
+        "The manager refuses to load until a migration script in tools/migrate_state.py runs",
+        "The state is deleted",
+        "The agent retries"
+      ],
+      "correct": 1,
+      "explanation": "Schema migrations or refuse-to-load; never silent upgrade."
+    }
+  ]
+}

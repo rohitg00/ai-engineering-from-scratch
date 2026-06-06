@@ -1,0 +1,78 @@
+{
+  "lesson": "59-vit-transformer",
+  "title": "Vision Transformer Encoder",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the standard ViT block use pre-LayerNorm placement instead of post-LayerNorm?",
+      "options": [
+        "Post-LN is patented",
+        "Pre-LN trains stably at depth without learning-rate warm-up while post-LN diverges past about 6 layers",
+        "Pre-LN runs faster",
+        "Post-LN uses more memory"
+      ],
+      "correct": 1,
+      "explanation": "Pre-LN normalizes each sub-layer's input which keeps gradient norms bounded as depth grows."
+    },
+    {
+      "stage": "pre",
+      "question": "At hidden=768 with heads=12, what is the per-head dimension and why does it matter?",
+      "options": [
+        "12, so each head can run on a small GPU",
+        "64, which controls the resolution of each attention map and lets twelve heads attend independently in parallel",
+        "768, because all heads share the projection",
+        "96, set by ResNet-50"
+      ],
+      "correct": 1,
+      "explanation": "head_dim = hidden / heads = 64. Each head projects the token to its own 64-D q/k/v and computes its own attention map."
+    },
+    {
+      "stage": "check",
+      "question": "Does the ViT encoder need a causal attention mask?",
+      "options": [
+        "Yes, like a GPT decoder",
+        "No: the encoder is bidirectional, every token may attend to every other token in the same sequence",
+        "Only for the CLS row",
+        "Only during training"
+      ],
+      "correct": 1,
+      "explanation": "Vision encoders are bidirectional. Causal masking appears later when a text decoder consumes the cross-attention output."
+    },
+    {
+      "stage": "check",
+      "question": "What does the CLS token's final hidden state represent after all 12 blocks?",
+      "options": [
+        "A copy of the input embedding",
+        "A learned vector summary of the entire image that downstream heads project into class logits or contrastive embeddings",
+        "Random noise",
+        "The last patch only"
+      ],
+      "correct": 1,
+      "explanation": "The CLS token starts empty and accumulates information from every patch through self-attention across all 12 blocks."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the feed-forward layer expanded to 4x the hidden dim?",
+      "options": [
+        "PyTorch requires 4x",
+        "An empirical sweet spot since the original Transformer; smaller underfits, larger overfits at fixed data budget",
+        "It halves FLOPs",
+        "It removes the need for attention"
+      ],
+      "correct": 1,
+      "explanation": "The 4x factor has held across language and vision transformers since 2017. Capacity per parameter peaks here."
+    },
+    {
+      "stage": "post",
+      "question": "Which family extension keeps the block math unchanged but adds prepended learned tokens?",
+      "options": [
+        "Causal masking",
+        "Register tokens (DINOv2): a few learned vectors prepended after CLS that capture global statistics and smooth attention maps",
+        "Mixture-of-experts",
+        "RoPE rotation"
+      ],
+      "correct": 1,
+      "explanation": "Register tokens stabilize attention without altering the block's math; they are extra slots in the sequence."
+    }
+  ]
+}

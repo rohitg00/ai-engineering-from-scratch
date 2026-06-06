@@ -1,0 +1,37 @@
+[
+  {
+    "question": "Why is neural network debugging harder than traditional software debugging?",
+    "options": ["Neural networks use different programming languages", "Networks can produce wrong outputs without any error messages or crashes -- the code runs but the results are silently incorrect", "Neural networks can't be tested", "There are no debugging tools for neural networks"],
+    "correct": 1,
+    "explanation": "Traditional bugs crash or throw exceptions. Neural network bugs produce a number that's just wrong -- a loss that doesn't decrease, accuracy that plateaus, or outputs that are subtly incorrect. No error message tells you what went wrong.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is the 'overfit one batch' debugging technique?",
+    "options": ["Training on the full dataset until it overfits", "Training on a single small batch until the loss reaches near-zero, verifying the model can memorize at least a few examples", "Using a very large batch size", "Overfitting the validation set"],
+    "correct": 1,
+    "explanation": "If your model can't memorize a tiny batch (e.g., 4-8 samples) to near-zero loss, something is fundamentally broken: wrong architecture, broken loss function, or incorrect training loop. This is the first diagnostic to run.",
+    "stage": "pre"
+  },
+  {
+    "question": "Your loss is NaN after a few training steps. What is the most likely cause?",
+    "options": ["The dataset is too small", "Exploding gradients or numerical overflow, often from a learning rate that's too high or missing gradient clipping", "The model has too few parameters", "The activation function is wrong"],
+    "correct": 1,
+    "explanation": "NaN loss typically comes from numerical overflow: gradients explode, weights grow unbounded, and operations like log(0) or exp(1000) produce infinity/NaN. Lower the learning rate or add gradient clipping.",
+    "stage": "post"
+  },
+  {
+    "question": "Your training loss decreases but validation loss stays flat from the start. What does this indicate?",
+    "options": ["The model is overfitting", "The model is learning training data patterns but they don't generalize -- likely a data pipeline issue (train/val data mismatch) or severe overfitting", "The learning rate is too low", "The model needs more layers"],
+    "correct": 1,
+    "explanation": "If validation loss never improves, the model is either memorizing training noise (overfitting), or there's a data pipeline bug where train and validation distributions are fundamentally different.",
+    "stage": "post"
+  },
+  {
+    "question": "What should you check first when your loss curve is completely flat (loss doesn't decrease at all)?",
+    "options": ["Try a different architecture", "Verify gradients are nonzero, the learning rate is high enough, and the loss function actually depends on the model's predictions", "Add more training data", "Switch to a different optimizer"],
+    "correct": 1,
+    "explanation": "A flat loss means the model isn't updating. Common causes: zero gradients (dead neurons, detached tensors), learning rate too small, or a loss function that doesn't flow gradients to the model (e.g., using .item() before .backward()).",
+    "stage": "post"
+  }
+]

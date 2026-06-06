@@ -1,0 +1,66 @@
+{
+  "lesson": "14-model-context-protocol",
+  "title": "Model Context Protocol",
+  "questions": [
+    {
+      "stage": "post",
+      "question": "What three primitives does an MCP server expose?",
+      "options": [
+        "Functions, types, classes",
+        "Tools, resources, prompts",
+        "Endpoints, webhooks, queues",
+        "Agents, skills, workflows"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What wire format does MCP use?",
+      "options": [
+        "GraphQL over HTTP",
+        "gRPC with protobuf",
+        "JSON-RPC 2.0",
+        "REST with OpenAPI"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which metadata field signals a tool mutates state and should require human approval?",
+      "options": [
+        "readonly: false",
+        "mutating: true",
+        "destructiveHint: true",
+        "requiresAuth: true"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the 2025-06-18 transport that replaced the earlier SSE-only remote transport?",
+      "options": [
+        "WebTransport",
+        "Streamable HTTP",
+        "WebSocket-only",
+        "gRPC bidi"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "When should a tool be split into its own MCP server instead of staying inline?",
+      "options": [
+        "When it is called fewer than 10 times per day",
+        "When it is called from two or more hosts and is read-only/cacheable",
+        "When it returns more than 1KB of data",
+        "Never; MCP is only for local dev"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

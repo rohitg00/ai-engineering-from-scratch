@@ -1,0 +1,11 @@
+{
+  "id": "task_004_empty_reverse",
+  "goal": "reverse_list takes a list and should return a new list with the elements in reverse order. The buggy version has an empty body and returns None. Implement the function and verify with the bundled assertion.",
+  "verifier": {
+    "name": "regex_match",
+    "args": {
+      "path": "reverse.py",
+      "pattern": "return\\s+(.+\\[::-1\\]|list\\(reversed\\(.+\\)\\))"
+    }
+  }
+}

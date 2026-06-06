@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .axis { stroke: #333; stroke-width: 1; }
+      .curve-k { fill: none; stroke: #999; stroke-width: 1.3; stroke-dasharray: 5,3; }
+      .curve-c { fill: none; stroke: #c0392b; stroke-width: 2; }
+      .pt-old { fill: #888; stroke: #333; stroke-width: 1; }
+      .pt-new { fill: #c0392b; stroke: #1a1a1a; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">scaling laws — parameters, tokens, compute, and what changed in 2026</text>
+
+  <!-- Left: loss vs compute -->
+  <rect x="40" y="60" width="420" height="360" class="box"/>
+  <text x="250" y="84" text-anchor="middle" class="label">loss vs training compute</text>
+
+  <!-- axes -->
+  <line x1="90" y1="370" x2="430" y2="370" class="axis"/>
+  <line x1="90" y1="110" x2="90" y2="370" class="axis"/>
+  <text x="250" y="400" text-anchor="middle" class="caption">log10 compute (FLOPs)</text>
+  <text x="65" y="240" text-anchor="middle" class="caption" transform="rotate(-90 65 240)">cross-entropy loss</text>
+
+  <!-- ticks -->
+  <text x="110" y="385" text-anchor="middle" class="caption">18</text>
+  <text x="190" y="385" text-anchor="middle" class="caption">20</text>
+  <text x="270" y="385" text-anchor="middle" class="caption">22</text>
+  <text x="350" y="385" text-anchor="middle" class="caption">24</text>
+  <text x="430" y="385" text-anchor="middle" class="caption">26</text>
+
+  <text x="78" y="370" text-anchor="end" class="caption">3.5</text>
+  <text x="78" y="310" text-anchor="end" class="caption">2.8</text>
+  <text x="78" y="240" text-anchor="end" class="caption">2.2</text>
+  <text x="78" y="180" text-anchor="end" class="caption">1.9</text>
+  <text x="78" y="130" text-anchor="end" class="caption">1.7</text>
+
+  <!-- Kaplan (under-trained) curve -->
+  <path class="curve-k" d="M 110 370 Q 180 340 240 290 Q 290 250 360 225 Q 400 215 430 210"/>
+  <text x="380" y="205" class="caption" fill="#555">Kaplan 2020 (under-trained)</text>
+
+  <!-- Chinchilla (optimal) curve -->
+  <path class="curve-c" d="M 110 350 Q 180 310 240 260 Q 290 220 360 195 Q 400 180 430 170"/>
+  <text x="370" y="165" class="caption" fill="#c0392b">Chinchilla 2022 (D/N ≈ 20)</text>
+
+  <!-- Floor line E -->
+  <line x1="90" y1="125" x2="430" y2="125" stroke="#1a1a1a" stroke-width="0.6" stroke-dasharray="2,3"/>
+  <text x="100" y="120" class="caption">E (irreducible)</text>
+
+  <!-- Real model dots -->
+  <circle cx="295" cy="245" r="4" class="pt-old"/>
+  <text x="300" y="240" class="caption" fill="#555">GPT-3</text>
+  <circle cx="330" cy="220" r="4" class="pt-new"/>
+  <text x="336" y="215" class="caption">Chinchilla 70B</text>
+  <circle cx="380" cy="185" r="4" class="pt-new"/>
+  <text x="386" y="181" class="caption">Llama 3 70B</text>
+
+  <!-- Right: the knob -->
+  <rect x="485" y="60" width="375" height="200" class="box"/>
+  <text x="672" y="84" text-anchor="middle" class="label">compute = 6 × N × D</text>
+
+  <text x="510" y="120" class="content">N</text>
+  <rect x="530" y="104" width="300" height="22" fill="#ffe0a8" stroke="#1a1a1a" stroke-width="1"/>
+  <text x="680" y="120" text-anchor="middle" class="content">parameters (capacity)</text>
+
+  <text x="510" y="155" class="content">D</text>
+  <rect x="530" y="139" width="300" height="22" fill="#a9c9a4" stroke="#1a1a1a" stroke-width="1"/>
+  <text x="680" y="155" text-anchor="middle" class="content">training tokens (usage)</text>
+
+  <text x="672" y="190" text-anchor="middle" class="caption">trade at fixed C</text>
+  <text x="672" y="210" text-anchor="middle" class="content">min L  =  A/N^α + B/D^β + E</text>
+  <text x="672" y="232" text-anchor="middle" class="caption">α ≈ 0.34, β ≈ 0.28, E ≈ 1.69</text>
+
+  <!-- Right: 2026 picture -->
+  <rect x="485" y="280" width="375" height="200" class="box"/>
+  <text x="672" y="304" text-anchor="middle" class="label">the 2026 twist</text>
+  <text x="504" y="332" class="caption">— Chinchilla-optimal: minimize TRAINING loss per FLOP</text>
+  <text x="504" y="352" class="caption">— inference-optimal: bigger D, smaller N (over-train)</text>
+  <text x="504" y="372" class="caption">— Llama 3 8B: D/N ≈ 1875 (15T tokens, 8B params)</text>
+  <text x="504" y="392" class="caption">— data quality (Phi-style filtering) &gt;2× effective FLOPs</text>
+  <text x="504" y="412" class="caption">— MoE decouples total params from active FLOPs</text>
+  <text x="504" y="432" class="caption">— Muon optimizer: 2× training-FLOP efficiency vs AdamW</text>
+  <text x="504" y="452" class="caption">— "emergence" is often a scoring artifact; loss is smooth</text>
+
+  <text x="450" y="504" text-anchor="middle" class="caption">same power-law shape, different absolute constants. still the map frontier labs plan against.</text>
+</svg>

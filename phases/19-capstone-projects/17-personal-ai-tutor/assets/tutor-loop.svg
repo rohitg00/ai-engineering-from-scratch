@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .edge { stroke: #555; stroke-width: 1.2; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">personal AI tutor — multimodal input + learner model + safety</text>
+
+  <rect x="40" y="50" width="220" height="160" class="cool"/>
+  <text x="150" y="72" text-anchor="middle" class="head">multimodal input</text>
+  <rect x="60" y="90" width="180" height="30" class="cool"/>
+  <text x="150" y="110" text-anchor="middle" class="step">text (web chat)</text>
+  <rect x="60" y="126" width="180" height="30" class="cool"/>
+  <text x="150" y="146" text-anchor="middle" class="step">voice (LiveKit + Whisper)</text>
+  <rect x="60" y="162" width="180" height="30" class="cool"/>
+  <text x="150" y="182" text-anchor="middle" class="step">photo math (dots.ocr)</text>
+
+  <rect x="300" y="50" width="320" height="160" class="dsk"/>
+  <text x="460" y="72" text-anchor="middle" class="head">tutor policy (LangGraph)</text>
+  <rect x="320" y="90" width="280" height="28" class="cool"/>
+  <text x="460" y="110" text-anchor="middle" class="step">read signal (correct / partial / stuck)</text>
+  <rect x="320" y="124" width="280" height="28" class="cool"/>
+  <text x="460" y="144" text-anchor="middle" class="step">select next concept (graph walk)</text>
+  <rect x="320" y="158" width="280" height="28" class="cool"/>
+  <text x="460" y="178" text-anchor="middle" class="step">scaffold / hint / celebrate</text>
+
+  <rect x="660" y="50" width="260" height="160" class="cold"/>
+  <text x="790" y="72" text-anchor="middle" class="head">learner model</text>
+  <text x="790" y="94" text-anchor="middle" class="small">Bayesian knowledge tracing</text>
+  <text x="790" y="112" text-anchor="middle" class="small">per-concept mastery</text>
+  <text x="790" y="130" text-anchor="middle" class="small">spaced-repetition (FSRS)</text>
+  <text x="790" y="148" text-anchor="middle" class="small">update after each interaction</text>
+  <text x="790" y="166" text-anchor="middle" class="small">weekly progress report</text>
+  <text x="790" y="186" text-anchor="middle" class="small">parental dashboard</text>
+
+  <rect x="40" y="240" width="420" height="270" class="box"/>
+  <text x="250" y="262" text-anchor="middle" class="head">curriculum graph</text>
+  <text x="250" y="282" text-anchor="middle" class="small">Neo4j of 50-150 concepts</text>
+  <text x="250" y="300" text-anchor="middle" class="small">prerequisite edges</text>
+  <text x="250" y="318" text-anchor="middle" class="small">OER content attached</text>
+  <rect x="60" y="336" width="380" height="40" class="cool"/>
+  <text x="250" y="356" text-anchor="middle" class="step">K-12 algebra OR intro Python</text>
+  <text x="250" y="370" text-anchor="middle" class="small">pick one for depth</text>
+  <text x="250" y="396" text-anchor="middle" class="small">walk algorithm:</text>
+  <text x="250" y="414" text-anchor="middle" class="small">  pick lowest-mastery concept</text>
+  <text x="250" y="432" text-anchor="middle" class="small">  whose prereqs are mastered</text>
+  <text x="250" y="454" text-anchor="middle" class="small">OER sources:</text>
+  <text x="250" y="472" text-anchor="middle" class="small">OpenStax, Open Textbook,</text>
+  <text x="250" y="490" text-anchor="middle" class="small">Khan Academy lite</text>
+
+  <rect x="500" y="240" width="420" height="270" class="box"/>
+  <text x="710" y="262" text-anchor="middle" class="head">safety + memory</text>
+  <rect x="520" y="280" width="380" height="30" class="hot"/>
+  <text x="710" y="300" text-anchor="middle" class="step">Llama Guard 4 + age filter</text>
+  <rect x="520" y="316" width="380" height="30" class="hot"/>
+  <text x="710" y="336" text-anchor="middle" class="step">COPPA-aware retention (1y)</text>
+  <rect x="520" y="352" width="380" height="30" class="dsk"/>
+  <text x="710" y="372" text-anchor="middle" class="step">memory: episodic + semantic</text>
+  <text x="710" y="396" text-anchor="middle" class="small">parent-accessible deletion</text>
+  <text x="710" y="414" text-anchor="middle" class="small">learner-scoped isolation</text>
+
+  <text x="710" y="442" text-anchor="middle" class="small">efficacy study (2 weeks, 10 learners):</text>
+  <text x="710" y="460" text-anchor="middle" class="small">pre-test + 6 sessions + post-test</text>
+  <text x="710" y="478" text-anchor="middle" class="small">adaptive cohort vs linear baseline</text>
+  <text x="710" y="498" text-anchor="middle" class="caption">Khanmigo / Duolingo Max / LearnLM shape</text>
+</svg>

@@ -1,0 +1,90 @@
+{
+  "lesson": "13-mcp-server-with-registry",
+  "title": "Capstone 13 — MCP Server with Registry and Governance",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the 2026 MCP revision favor StreamableHTTP for production servers?",
+      "options": [
+        "It removes the need for authentication",
+        "It is the only transport that supports tool calls",
+        "It encrypts payloads automatically",
+        "It is stateless by default, so a single endpoint behind a load balancer can scale horizontally"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Which authorization model gates tool calls in this capstone?",
+      "options": [
+        "OAuth 2.1 tokens carrying per-tool scopes, checked at tool-call time",
+        "A shared admin password",
+        "API keys per IP address",
+        "Mutual TLS without scopes"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the role of the .well-known/mcp-capabilities document?",
+      "options": [
+        "Stores audit logs for the server",
+        "Lists outbound IP ranges",
+        "Holds the OPA policy bundle",
+        "Exposes the tool manifest, transport URL, and auth requirements so the registry can validate and index the server"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why do destructive tools live on a separate MCP server in this design?",
+      "options": [
+        "They cannot be exposed over StreamableHTTP",
+        "They run on slower hardware",
+        "They are gated behind an approval token elevated via a Slack card within a short window",
+        "They require a different programming language"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does OPA / Rego decide on every tool call?",
+      "options": [
+        "Which model to invoke",
+        "Where to write the audit log",
+        "How the server should re-rank the response",
+        "Whether the caller's scopes permit invocation, plus PII redaction and payload caps"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which evidence demonstrates StreamableHTTP horizontal scaling in the load test?",
+      "options": [
+        "Reducing concurrency to one client",
+        "Switching to stdio transport",
+        "Running everything in a single process",
+        "Adding a second replica and showing the load balancer redistributing without session stickiness"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does the audit log scrub PII via Presidio before being persisted per tenant?",
+      "options": [
+        "To make logs shorter",
+        "To meet enterprise security requirements while keeping per-call lineage queryable",
+        "Presidio reduces ClickHouse write amplification",
+        "PII improves search performance"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

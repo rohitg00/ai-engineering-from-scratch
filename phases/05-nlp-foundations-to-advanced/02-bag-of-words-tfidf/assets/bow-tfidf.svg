@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .vec { fill: #f3ece0; stroke: #1a1a1a; stroke-width: 1.2; }
+      .label { font-size: 15px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', 'Courier New', monospace; }
+      .stage { font-size: 12px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .line { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .weight { font-size: 11px; fill: #666; font-family: 'Menlo', monospace; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="40" width="180" height="240" rx="4"/>
+  <text class="label" x="110" y="65" text-anchor="middle">3 documents</text>
+  <text class="content" x="35" y="100">d0: "the cat sat"</text>
+  <text class="content" x="35" y="140">d1: "the dog sat"</text>
+  <text class="content" x="35" y="180">d2: "the cat ran"</text>
+  <text class="content" x="35" y="230">vocab:</text>
+  <text class="content" x="35" y="250">the, cat, sat,</text>
+  <text class="content" x="35" y="270">dog, ran</text>
+
+  <path class="line" d="M 200 160 L 250 160" marker-end="url(#arrow)"/>
+  <text class="stage" x="225" y="150">count</text>
+
+  <rect class="vec" x="250" y="60" width="230" height="60" rx="4"/>
+  <text class="label" x="365" y="85" text-anchor="middle">BoW · d0</text>
+  <text class="content" x="260" y="108">[1, 1, 1, 0, 0]</text>
+
+  <rect class="vec" x="250" y="135" width="230" height="60" rx="4"/>
+  <text class="label" x="365" y="160" text-anchor="middle">BoW · d1</text>
+  <text class="content" x="260" y="183">[1, 0, 1, 1, 0]</text>
+
+  <rect class="vec" x="250" y="210" width="230" height="60" rx="4"/>
+  <text class="label" x="365" y="235" text-anchor="middle">BoW · d2</text>
+  <text class="content" x="260" y="258">[1, 1, 0, 0, 1]</text>
+
+  <path class="line" d="M 480 160 L 530 160" marker-end="url(#arrow)"/>
+  <text class="stage" x="505" y="150">* IDF</text>
+  <text class="weight" x="505" y="180">down-weight</text>
+  <text class="weight" x="505" y="195">"the"</text>
+
+  <rect class="vec" x="530" y="60" width="260" height="60" rx="4"/>
+  <text class="label" x="660" y="85" text-anchor="middle">TF-IDF · d0</text>
+  <text class="content" x="540" y="108">[0.0, 0.58, 0.58, 0.0, 0.0]</text>
+
+  <rect class="vec" x="530" y="135" width="260" height="60" rx="4"/>
+  <text class="label" x="660" y="160" text-anchor="middle">TF-IDF · d1</text>
+  <text class="content" x="540" y="183">[0.0, 0.0, 0.58, 0.82, 0.0]</text>
+
+  <rect class="vec" x="530" y="210" width="260" height="60" rx="4"/>
+  <text class="label" x="660" y="235" text-anchor="middle">TF-IDF · d2</text>
+  <text class="content" x="540" y="258">[0.0, 0.58, 0.0, 0.0, 0.82]</text>
+
+  <text class="stage" x="450" y="310" text-anchor="middle">order discarded. rarity rewarded. sparse, interpretable, fast.</text>
+</svg>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow29" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Three-layer moderation: the 2026 default deployment pattern</text>
+
+  <rect x="40" y="60" width="180" height="100" class="cool"/>
+  <text x="130" y="90" text-anchor="middle" class="step">user prompt</text>
+  <text x="130" y="115" text-anchor="middle" class="small">Llama Guard 3/4</text>
+  <text x="130" y="135" text-anchor="middle" class="small">OpenAI Moderation</text>
+
+  <rect x="240" y="60" width="180" height="100" class="cold"/>
+  <text x="330" y="90" text-anchor="middle" class="step">custom rules</text>
+  <text x="330" y="115" text-anchor="middle" class="small">finance disclaimer</text>
+  <text x="330" y="135" text-anchor="middle" class="small">medical refusal</text>
+
+  <rect x="440" y="60" width="180" height="100" class="hot"/>
+  <text x="530" y="90" text-anchor="middle" class="step">model</text>
+  <text x="530" y="115" text-anchor="middle" class="small">GPT-5, Claude, Gemini</text>
+  <text x="530" y="135" text-anchor="middle" class="small">or open-source</text>
+
+  <rect x="640" y="60" width="180" height="100" class="cool"/>
+  <text x="730" y="90" text-anchor="middle" class="step">output moderation</text>
+  <text x="730" y="115" text-anchor="middle" class="small">Llama Guard 3/4</text>
+  <text x="730" y="135" text-anchor="middle" class="small">OpenAI Moderation</text>
+
+  <path d="M 220 110 L 240 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow29)" fill="none"/>
+  <path d="M 420 110 L 440 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow29)" fill="none"/>
+  <path d="M 620 110 L 640 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow29)" fill="none"/>
+
+  <rect x="40" y="180" width="880" height="160" class="box"/>
+  <text x="480" y="205" text-anchor="middle" class="head">category taxonomies</text>
+  <rect x="60" y="225" width="280" height="100" class="cool"/>
+  <text x="200" y="250" text-anchor="middle" class="step">OpenAI Moderation (13 categories)</text>
+  <text x="200" y="270" text-anchor="middle" class="small">harassment(+threatening) / hate(+threatening)</text>
+  <text x="200" y="288" text-anchor="middle" class="small">self-harm(+intent,+instructions) / sexual(+minors)</text>
+  <text x="200" y="306" text-anchor="middle" class="small">violence(+graphic) / illicit(+violent)</text>
+
+  <rect x="360" y="225" width="280" height="100" class="cool"/>
+  <text x="500" y="250" text-anchor="middle" class="step">Llama Guard 3 (14 categories)</text>
+  <text x="500" y="270" text-anchor="middle" class="small">MLCommons AILuminate taxonomy</text>
+  <text x="500" y="288" text-anchor="middle" class="small">+ code-interpreter-abuse, elections</text>
+  <text x="500" y="306" text-anchor="middle" class="small">+ defamation, specialized-advice</text>
+
+  <rect x="660" y="225" width="240" height="100" class="cool"/>
+  <text x="780" y="250" text-anchor="middle" class="step">Perspective (toxicity baseline)</text>
+  <text x="780" y="270" text-anchor="middle" class="small">TOXICITY / SEVERE / INSULT</text>
+  <text x="780" y="288" text-anchor="middle" class="small">pre-LLM-era</text>
+  <text x="780" y="306" text-anchor="middle" class="small">still used in research</text>
+
+  <rect x="40" y="360" width="880" height="130" class="box"/>
+  <text x="480" y="385" text-anchor="middle" class="head">deprecations + migration</text>
+  <text x="60" y="415" class="small">Azure Content Moderator: deprecated Feb 2024, retired Feb 2027.</text>
+  <text x="60" y="435" class="small">replacement: Azure AI Content Safety (LLM-based, integrates with Azure OpenAI).</text>
+  <text x="60" y="455" class="small">migration projects: 2024-2027 for affected deployments; factor into EU AI Act timeline.</text>
+  <text x="60" y="475" class="small">omni-moderation-latest (2024): free for most developers; text + images; 42% better on multilingual.</text>
+</svg>

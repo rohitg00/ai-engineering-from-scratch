@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">Durable execution: replay re-runs workflow, logged activities skip</text>
+
+  <rect x="40" y="50" width="800" height="460" class="box"/>
+
+  <!-- Attempt 1 -->
+  <text x="60" y="80" class="label">attempt 1 — crash after call_llm</text>
+
+  <rect x="60" y="96" width="150" height="50" class="cool"/>
+  <text x="135" y="118" text-anchor="middle" class="label">fetch_docs</text>
+  <text x="135" y="136" text-anchor="middle" class="small">run, log done</text>
+
+  <rect x="230" y="96" width="150" height="50" class="cool"/>
+  <text x="305" y="118" text-anchor="middle" class="label">call_llm</text>
+  <text x="305" y="136" text-anchor="middle" class="small">run, log done</text>
+
+  <rect x="400" y="96" width="150" height="50" class="hot"/>
+  <text x="475" y="118" text-anchor="middle" class="label">CRASH</text>
+  <text x="475" y="136" text-anchor="middle" class="small">write_report not yet run</text>
+
+  <!-- Event log -->
+  <rect x="60" y="170" width="490" height="74" class="cold"/>
+  <text x="80" y="192" class="label">event log (durable)</text>
+  <text x="80" y="212" class="content">[fetch_docs started, fetch_docs done (result=X),</text>
+  <text x="80" y="228" class="content"> call_llm started, call_llm done (result=Y)]</text>
+
+  <!-- Attempt 2 -->
+  <text x="60" y="276" class="label">attempt 2 — replay</text>
+
+  <rect x="60" y="292" width="150" height="50" class="cold"/>
+  <text x="135" y="314" text-anchor="middle" class="label">fetch_docs</text>
+  <text x="135" y="332" text-anchor="middle" class="small">replay from log</text>
+
+  <rect x="230" y="292" width="150" height="50" class="cold"/>
+  <text x="305" y="314" text-anchor="middle" class="label">call_llm</text>
+  <text x="305" y="332" text-anchor="middle" class="small">replay from log</text>
+
+  <rect x="400" y="292" width="150" height="50" class="cool"/>
+  <text x="475" y="314" text-anchor="middle" class="label">write_report</text>
+  <text x="475" y="332" text-anchor="middle" class="small">run, log done</text>
+
+  <rect x="570" y="292" width="150" height="50" class="box"/>
+  <text x="645" y="314" text-anchor="middle" class="label">return report</text>
+  <text x="645" y="332" text-anchor="middle" class="small">done</text>
+
+  <path d="M210 317 L230 317" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M380 317 L400 317" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M550 317 L570 317" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Why determinism -->
+  <rect x="60" y="370" width="760" height="120" class="hot"/>
+  <text x="440" y="394" text-anchor="middle" class="label">what makes replay work</text>
+  <text x="80" y="416" class="content">1. Workflow code is deterministic (no wall clock, no random, no hidden I/O).</text>
+  <text x="80" y="432" class="content">2. Every activity is logged with args + result; replay re-reads the log.</text>
+  <text x="80" y="448" class="content">3. Backend survives the crash (PostgreSQL / Durable Objects; not SQLite for prod).</text>
+  <text x="80" y="464" class="content">4. HITL pauses are a workflow signal, not a polling loop.</text>
+  <text x="80" y="480" class="content">LLM calls fit the activity shape: non-deterministic, expensive, potentially failing.</text>
+</svg>

@@ -1,0 +1,102 @@
+{
+  "lesson": "25-entity-linking",
+  "title": "Entity Linking & Disambiguation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does entity linking add on top of NER?",
+      "options": [
+        "Translations",
+        "Sentiment polarity",
+        "Part-of-speech tags",
+        "It maps each detected mention to a unique entry in a knowledge base (Wikidata, Wikipedia, or a domain KB)"
+      ],
+      "correct": 3,
+      "explanation": "EL turns a mention into a canonical KB id, disambiguating between same-name entities."
+    },
+    {
+      "stage": "pre",
+      "question": "What are the two main subtasks in entity linking?",
+      "options": [
+        "Tokenization and parsing",
+        "POS tagging and lemmatization",
+        "Embedding and clustering",
+        "Candidate generation (shortlist of plausible KB entries) and disambiguation (pick the right one given context)"
+      ],
+      "correct": 3,
+      "explanation": "EL decomposes into proposing candidates then ranking them by contextual fit."
+    },
+    {
+      "stage": "check",
+      "question": "Why must mention recall be reported alongside disambiguation accuracy?",
+      "options": [
+        "Mention recall is mandatory by GDPR",
+        "Recall replaces precision",
+        "Disambiguation cannot recover from missing candidates; the pipeline is bounded by candidate-generation recall",
+        "Recall is required by spaCy"
+      ],
+      "correct": 2,
+      "explanation": "If candidates miss the gold entity, no disambiguator can fix it; recall floors pipeline quality."
+    },
+    {
+      "stage": "check",
+      "question": "How does GENRE perform entity linking?",
+      "options": [
+        "Decodes the entity's canonical name token-by-token under constrained decoding over a trie of valid KB ids",
+        "By BM25",
+        "By computing TF-IDF",
+        "By PageRank"
+      ],
+      "correct": 0,
+      "explanation": "GENRE generates the canonical KB name with constrained decoding to guarantee a valid id."
+    },
+    {
+      "stage": "check",
+      "question": "What is NIL handling in entity linking?",
+      "options": [
+        "Predicting a 'not in KB' label when no candidate is a real match (emerging entities, obscure people)",
+        "Returning the entire candidate list",
+        "Lowercasing the input",
+        "Skipping every mention"
+      ],
+      "correct": 0,
+      "explanation": "NIL prediction prevents guessing wrong KB ids for entities the KB does not cover."
+    },
+    {
+      "stage": "post",
+      "question": "Why does popularity bias hurt entity linking in specialized domains?",
+      "options": [
+        "Models trained on web data over-predict frequent entities (e.g. basketball Jordan over the ML researcher Michael I. Jordan)",
+        "It biases toward older entities only",
+        "Popularity removes NIL",
+        "Popularity helps recall"
+      ],
+      "correct": 0,
+      "explanation": "Popularity priors skew predictions away from less-common, domain-specific name-clashes."
+    },
+    {
+      "stage": "post",
+      "question": "What is a safe LLM-EL pattern in 2026?",
+      "options": [
+        "Provide a candidate list and use constrained JSON output that the LLM can only choose from valid KB ids",
+        "Just prompt 'find the entity'",
+        "Free-form generation",
+        "Skip candidate generation"
+      ],
+      "correct": 0,
+      "explanation": "Constraining the LLM to a valid candidate list prevents made-up KB ids and keeps output queryable."
+    },
+    {
+      "stage": "post",
+      "question": "Why must NER mention boundaries be exact for entity linking to work?",
+      "options": [
+        "Boundary errors propagate: 'Bank of America' clipped to 'Bank' surfaces wrong candidates and tanks EL recall",
+        "Boundary precision only affects NER metrics, not entity-linking candidate quality",
+        "Boundaries change tokenization",
+        "Boundaries break Wikipedia lookups"
+      ],
+      "correct": 0,
+      "explanation": "Mis-bounded mentions retrieve the wrong alias set, propagating errors into disambiguation."
+    }
+  ]
+}

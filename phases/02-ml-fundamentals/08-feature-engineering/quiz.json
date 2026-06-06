@@ -1,0 +1,67 @@
+[
+  {
+    "id": "feateng-pre-1",
+    "stage": "pre",
+    "question": "Why is feature engineering often more impactful than choosing a fancier algorithm?",
+    "options": [
+      "Feature engineering makes the code run faster",
+      "Good features expose patterns to the model that raw data hides, making even simple models effective",
+      "Feature engineering eliminates the need for a test set",
+      "Fancy algorithms cannot process raw data"
+    ],
+    "correct": 1,
+    "explanation": "The representation of data matters more than the algorithm. A well-engineered feature like BMI (weight/height^2) directly exposes the relevant pattern, making even logistic regression competitive with complex ensembles."
+  },
+  {
+    "id": "feateng-pre-2",
+    "stage": "pre",
+    "question": "What is one-hot encoding?",
+    "options": [
+      "Replacing each category with its frequency in the dataset",
+      "Creating one binary column per category, with exactly one column set to 1 per row",
+      "Converting all features to values between 0 and 1",
+      "Encoding the target variable as a probability"
+    ],
+    "correct": 1,
+    "explanation": "One-hot encoding creates a binary column for each unique category. For a color feature with values red/blue/green, it produces three columns: is_red, is_blue, is_green."
+  },
+  {
+    "id": "feateng-post-1",
+    "stage": "post",
+    "question": "What is the data leakage risk with target encoding?",
+    "options": [
+      "It makes the model too slow to train",
+      "It replaces categories with the mean target value, which can leak information from the test set if not computed on training data only",
+      "It creates too many features",
+      "It only works with binary targets"
+    ],
+    "correct": 1,
+    "explanation": "Target encoding replaces each category with the mean target for that category. If computed on the full dataset (including test data), test labels leak into training features, inflating performance estimates."
+  },
+  {
+    "id": "feateng-post-2",
+    "stage": "post",
+    "question": "TF-IDF weights a word by its inverse document frequency. What is the effect?",
+    "options": [
+      "Common words like 'the' get high weight because they appear frequently",
+      "Rare, distinctive words get higher weight while common words get lower weight",
+      "All words get equal weight regardless of frequency",
+      "Only the most frequent word in each document is kept"
+    ],
+    "correct": 1,
+    "explanation": "IDF = log(total docs / docs containing word). Common words (appearing in many documents) get low IDF. Rare, distinctive words get high IDF, making them more influential in the representation."
+  },
+  {
+    "id": "feateng-post-3",
+    "stage": "post",
+    "question": "You have two features with correlation 0.98. Why might you remove one?",
+    "options": [
+      "Highly correlated features always cause the model to crash",
+      "They are redundant -- both carry nearly the same information, and keeping both increases overfitting risk without adding signal",
+      "Correlated features make the data non-stationary",
+      "Correlation above 0.5 means the features are measuring different things"
+    ],
+    "correct": 1,
+    "explanation": "Features with r=0.98 are nearly redundant. Keeping both adds a noisy duplicate that increases dimensionality, overfitting risk, and multicollinearity without providing new information about the target."
+  }
+]

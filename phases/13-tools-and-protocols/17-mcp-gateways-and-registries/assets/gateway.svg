@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">MCP gateway in the control plane</text>
+
+  <rect x="40" y="60" width="200" height="440" class="cool"/>
+  <text x="140" y="82" text-anchor="middle" class="head">developers</text>
+  <text x="60" y="110" class="small">5000 users</text>
+  <text x="60" y="128" class="small">across IDEs</text>
+  <text x="60" y="162" class="step">seen as single</text>
+  <text x="60" y="180" class="step">MCP endpoint</text>
+  <text x="60" y="212" class="small">auth via gateway's</text>
+  <text x="60" y="228" class="small">own OAuth 2.1</text>
+  <text x="60" y="260" class="small">never see backend</text>
+  <text x="60" y="276" class="small">tokens</text>
+
+  <path d="M240,280 L340,280" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="340" y="60" width="320" height="440" class="cold"/>
+  <text x="500" y="82" text-anchor="middle" class="head">gateway</text>
+  <text x="356" y="108" class="step">1 / auth (OAuth 2.1)</text>
+  <text x="356" y="124" class="small">map developer to user_id</text>
+  <text x="356" y="146" class="step">2 / RBAC</text>
+  <text x="356" y="162" class="small">user -&gt; allowed tools</text>
+  <text x="356" y="184" class="step">3 / pinned-hash check</text>
+  <text x="356" y="200" class="small">reject mutated descriptions</text>
+  <text x="356" y="222" class="step">4 / rate limit</text>
+  <text x="356" y="238" class="small">per-user token bucket</text>
+  <text x="356" y="260" class="step">5 / policy-as-code</text>
+  <text x="356" y="276" class="small">OPA / Rego, Kyverno, Styra</text>
+  <text x="356" y="298" class="step">6 / audit log</text>
+  <text x="356" y="314" class="small">append-only event stream</text>
+  <text x="356" y="336" class="step">7 / PII redaction</text>
+  <text x="356" y="352" class="small">filter results pre-return</text>
+  <text x="356" y="374" class="step">8 / OTel GenAI spans</text>
+  <text x="356" y="390" class="small">gen_ai.* attributes per call</text>
+  <text x="356" y="420" class="step">vendors (2026)</text>
+  <text x="356" y="438" class="small">Cloudflare MCP Portals,</text>
+  <text x="356" y="454" class="small">Kong AI Gateway, IBM</text>
+  <text x="356" y="470" class="small">ContextForge, MintMCP,</text>
+  <text x="356" y="486" class="small">Envoy AI Gateway</text>
+
+  <path d="M660,200 L760,200" class="edge" marker-end="url(#arrow)"/>
+  <path d="M660,280 L760,280" class="edge" marker-end="url(#arrow)"/>
+  <path d="M660,360 L760,360" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="760" y="60" width="160" height="440" class="hot"/>
+  <text x="840" y="82" text-anchor="middle" class="head">backends</text>
+  <text x="776" y="108" class="step">notes MCP</text>
+  <text x="776" y="126" class="small">Official Registry</text>
+
+  <text x="776" y="158" class="step">github MCP</text>
+  <text x="776" y="176" class="small">Official Registry</text>
+
+  <text x="776" y="208" class="step">postgres MCP</text>
+  <text x="776" y="226" class="small">Glama / admin-curated</text>
+
+  <text x="776" y="258" class="step">custom</text>
+  <text x="776" y="276" class="small">internal / reverse-DNS</text>
+  <text x="776" y="292" class="small">namespace pinned</text>
+
+  <text x="776" y="330" class="step">credentials</text>
+  <text x="776" y="348" class="small">stay in vault</text>
+  <text x="776" y="364" class="small">behind gateway</text>
+
+  <text x="776" y="396" class="step">session ids</text>
+  <text x="776" y="414" class="small">per-backend, rewritten</text>
+  <text x="776" y="430" class="small">at gateway boundary</text>
+</svg>

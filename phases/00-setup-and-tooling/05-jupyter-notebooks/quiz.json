@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is a Jupyter notebook?",
+      "options": ["A text editor for writing Python scripts", "An interactive document that mixes executable code cells with markdown text and inline outputs", "A version control system for data science projects", "A package manager for Python libraries"],
+      "correct": 1,
+      "explanation": "A Jupyter notebook (.ipynb) is an interactive environment where you can write and execute code in cells, see outputs inline, and mix code with formatted text explanations."
+    },
+    {
+      "stage": "pre",
+      "question": "What does the Jupyter kernel do?",
+      "options": ["Formats markdown cells into HTML", "Runs the code in cells and keeps variables in memory between executions", "Manages file storage for the notebook", "Connects the notebook to GitHub for version control"],
+      "correct": 1,
+      "explanation": "The kernel is a separate Python process that executes cell code and maintains state (variables, imports) in memory. All cells in a notebook share the same kernel."
+    },
+    {
+      "stage": "post",
+      "question": "What is the difference between %timeit and %%time magic commands?",
+      "options": ["%timeit measures wall time, %%time measures CPU time", "%timeit runs code many times and averages, %%time runs code once", "%timeit works on single lines, %%time works on the whole notebook", "There is no difference, they are aliases"],
+      "correct": 1,
+      "explanation": "%timeit runs the statement many times for a statistical average (good for microbenchmarks). %%time runs the cell once and reports wall time (good for training runs)."
+    },
+    {
+      "stage": "post",
+      "question": "What is the most common cause of a notebook working on your machine but failing when someone runs it top to bottom?",
+      "options": ["Using a different Python version", "Out-of-order cell execution creating hidden dependencies on execution order", "Missing the %matplotlib inline magic command", "Using too many markdown cells"],
+      "correct": 1,
+      "explanation": "Running cells out of order creates hidden state dependencies. A variable might exist because you ran cell 5 before cell 2. Kernel > Restart & Run All verifies linear execution."
+    },
+    {
+      "stage": "post",
+      "question": "When should you move code from a notebook into a .py script?",
+      "options": ["As soon as you write more than 10 lines of code", "When the code is a reusable utility, training pipeline, or production code", "Never -- notebooks are always better for AI work", "Only when you need to run on a GPU"],
+      "correct": 1,
+      "explanation": "The rule is 'explore in notebooks, ship in scripts.' Reusable utilities, training pipelines, and anything running in production should be .py files. Notebooks are for exploration and prototyping."
+    }
+  ]
+}

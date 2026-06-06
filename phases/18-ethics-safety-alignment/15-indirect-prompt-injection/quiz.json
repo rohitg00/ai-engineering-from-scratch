@@ -1,0 +1,78 @@
+{
+  "lesson": "15-indirect-prompt-injection",
+  "title": "Indirect Prompt Injection - Production Attack Surface",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What distinguishes indirect prompt injection (IPI) from direct prompt injection?",
+      "options": [
+        "IPI requires fine-tuning the target model",
+        "IPI embeds instructions inside external content (web pages, emails, tool outputs) that the agent consumes during normal operation, without the attacker touching the user's prompt",
+        "IPI is a synonym for jailbreaking",
+        "IPI only works on multimodal models"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which of these is NOT one of the three IPI delivery vectors listed in the lesson?",
+      "options": [
+        "Retrieval-augmented generation (poisoned retrieval)",
+        "Direct system-prompt edits by the user",
+        "Tool output",
+        "Inbox / document workflows"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why do user-input filters miss IPI?",
+      "options": [
+        "Filters cannot read JSON",
+        "User-input filters are case-sensitive",
+        "The payload never appears in the user's input; it appears in retrieved or tool-supplied content",
+        "Filters only run after the model responds"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the central principle of Information Flow Control (IFC) for AI agents?",
+      "options": [
+        "Encrypt all retrieved content",
+        "Use only single-turn prompts",
+        "Disable all tools by default",
+        "Label content by source as trusted or untrusted; actions triggered by untrusted content must be ratified by trusted input before execution"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What did Nasr et al. (October 2025, 'The Attacker Moves Second') find about 12 published IPI defenses with adaptive attacks?",
+      "options": [
+        "Adaptive attacks were too expensive to evaluate",
+        "Their reported near-zero ASR held under adaptive attack",
+        "Only one defense was broken",
+        "Adaptive attacks (gradient, RL, random search, human red-team) broke >90% of them despite their original near-zero ASR claims"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Where does prompt injection rank in the 2025 OWASP LLM Top 10?",
+      "options": [
+        "Not listed",
+        "LLM01 (top, #1 application-layer threat)",
+        "LLM05",
+        "LLM10 (lowest)"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

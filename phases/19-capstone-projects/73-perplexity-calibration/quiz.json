@@ -1,0 +1,78 @@
+{
+  "lesson": "73-perplexity-calibration",
+  "title": "Perplexity and Calibration",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does a perplexity of 1.0 imply about a language model on the test corpus?",
+      "options": [
+        "The model assigns probability 1 to every actual token; it is a perfect model",
+        "The model is uniform over the vocabulary",
+        "The corpus is empty",
+        "The model is broken"
+      ],
+      "correct": 0,
+      "explanation": "Perplexity equals exp(avg negative log-likelihood). When every token gets probability 1, the NLL is zero, and exp(0) is 1."
+    },
+    {
+      "stage": "pre",
+      "question": "Why does the harness require non-negative log-probabilities from the adapter?",
+      "options": [
+        "Perplexity is undefined for negative values",
+        "Negative log-probabilities are non-negative by definition; receiving a negative value means the adapter sent log p, not -log p",
+        "Numpy crashes on negatives",
+        "The bin edges in ECE assume positivity"
+      ],
+      "correct": 1,
+      "explanation": "-log p of a probability is non-negative. A negative value is a contract violation that would silently give perplexity < 1, which is impossible."
+    },
+    {
+      "stage": "check",
+      "question": "What does expected calibration error measure?",
+      "options": [
+        "The mean absolute distance between predicted and true labels",
+        "The average gap between bin-level confidence and bin-level accuracy, weighted by bin size",
+        "The variance of the softmax output",
+        "The cross-entropy of the predictions"
+      ],
+      "correct": 1,
+      "explanation": "ECE bins predictions by confidence, measures the gap between average confidence and average accuracy per bin, weights by bin size."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the implementation also return populated_bins alongside the ECE value?",
+      "options": [
+        "It is required for reliability diagrams",
+        "It signals when too few bins are populated for the single number to be trustworthy",
+        "It is the denominator of the Brier score",
+        "It is needed by numpy"
+      ],
+      "correct": 1,
+      "explanation": "With few populated bins the ECE is dominated by noise. Reporting the populated count lets the runner refuse to publish a misleading single number."
+    },
+    {
+      "stage": "check",
+      "question": "What does Brier score capture that ECE does not?",
+      "options": [
+        "It is faster to compute",
+        "It penalises local miscalibration directly, since it is the per-prediction squared error",
+        "It does not need ground-truth labels",
+        "It works only on binary outcomes"
+      ],
+      "correct": 1,
+      "explanation": "ECE only looks at averages per bin. Brier squares the error per prediction, so it catches the case where bins cancel out on average but are individually miscalibrated."
+    },
+    {
+      "stage": "post",
+      "question": "Why is calibration a per-model report rather than a per-task metric?",
+      "options": [
+        "Tasks do not have probabilities",
+        "Single tasks have too few predictions to estimate bin statistics; the report aggregates across the whole eval",
+        "Calibration is too slow to compute per task",
+        "ECE requires the runner to know the model architecture"
+      ],
+      "correct": 1,
+      "explanation": "Per-task calibration is dominated by noise. The runner pools confidence/correctness pairs across all tasks before computing ECE, Brier, and the reliability diagram."
+    }
+  ]
+}

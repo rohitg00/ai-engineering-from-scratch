@@ -1,0 +1,78 @@
+{
+  "lesson": "76-collective-ops-from-scratch",
+  "title": "Collective Ops From Scratch",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the per-rank bandwidth cost of ring allreduce for a tensor of T bytes on N ranks?",
+      "options": [
+        "T bytes",
+        "N * T bytes",
+        "2T(N-1)/N bytes",
+        "T log2(N) bytes"
+      ],
+      "correct": 2,
+      "explanation": "Ring allreduce moves N-1 chunks of size T/N twice (reduce-scatter then allgather); the per-rank total is 2T(N-1)/N, independent of cluster size."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is the queue mesh in this lesson an honest stand-in for NCCL on a real cluster?",
+      "options": [
+        "It runs on CUDA cores",
+        "It hardware-offloads reductions",
+        "It implements the same wire pattern (ordered point-to-point sends around a ring), only the medium differs",
+        "It compresses messages"
+      ],
+      "correct": 2,
+      "explanation": "Algorithmic correctness depends on the wire pattern, not the medium; the queue ring exposes the same race shapes and chunk schedule as NCCL ring allreduce."
+    },
+    {
+      "stage": "check",
+      "question": "After the reduce-scatter half of ring allreduce, what does rank r hold?",
+      "options": [
+        "Nothing",
+        "The full tensor unreduced",
+        "The reduced sum for one chunk (one Nth of the tensor)",
+        "The reduced sum for two chunks"
+      ],
+      "correct": 2,
+      "explanation": "Reduce-scatter parks the sum of one chunk on one rank; the allgather half then rotates those completed chunks around the ring."
+    },
+    {
+      "stage": "check",
+      "question": "Why use tree broadcast instead of N-1 direct sends from the source?",
+      "options": [
+        "Trees use less memory",
+        "Trees double the holder set per round; depth is log2(N) so latency scales as log not N",
+        "Trees are mandatory in PyTorch",
+        "Direct sends drop packets"
+      ],
+      "correct": 1,
+      "explanation": "log2(N) hops dominate when latency per hop is the bottleneck; N-1 sequential sends pay that latency floor N times."
+    },
+    {
+      "stage": "check",
+      "question": "Why verify against torch.distributed gloo on the same input?",
+      "options": [
+        "Gloo is faster",
+        "Gloo is the legal reference for collective semantics; byte-equal output proves your algorithm agrees with the spec before it runs on a real cluster",
+        "Gloo writes JSONL automatically",
+        "Gloo requires no setup"
+      ],
+      "correct": 1,
+      "explanation": "Without a reference, the primitive looks correct until step 10000 of a real training run; gloo gives byte-equal ground truth on CPU."
+    },
+    {
+      "stage": "post",
+      "question": "When does tree allreduce win over ring allreduce?",
+      "options": [
+        "Always",
+        "When messages are large",
+        "Small messages or high-latency links; the log2(N) hop count beats the bandwidth term 2T(N-1)/N below the crossover",
+        "Never"
+      ],
+      "correct": 2,
+      "explanation": "NCCL picks ring above ~1 MB and tree below; the crossover is bandwidth-versus-latency on the given cluster topology."
+    }
+  ]
+}

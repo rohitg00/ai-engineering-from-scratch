@@ -1,0 +1,78 @@
+{
+  "lesson": "71-classical-metrics",
+  "title": "Classical Metrics",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is the tokenizer chosen at the metric layer rather than the runner layer?",
+      "options": [
+        "Metric implementations are O(n) regardless of tokenizer choice",
+        "The tokenizer defines what counts as a token match; swapping it changes the benchmark",
+        "Numpy requires a tokenizer at import time",
+        "Tokenizers are model-specific and the runner cannot see the model"
+      ],
+      "correct": 1,
+      "explanation": "BLEU and F1 are sensitive to tokenisation. Binding the tokenizer to the metric makes scores reproducible and lets you point at the rule."
+    },
+    {
+      "stage": "pre",
+      "question": "What does modified n-gram precision do that plain n-gram precision does not?",
+      "options": [
+        "It uses a different log base",
+        "It clips each candidate n-gram count by the maximum count seen in any reference",
+        "It runs faster than plain precision",
+        "It returns a value in 0 to 100 instead of 0 to 1"
+      ],
+      "correct": 1,
+      "explanation": "Clipping by the reference cap stops a candidate from inflating its score by repeating a high-precision word over and over."
+    },
+    {
+      "stage": "check",
+      "question": "Why does BLEU use a brevity penalty?",
+      "options": [
+        "Without it, a very short candidate that matches a few words gets a high precision and unfairly high BLEU",
+        "Long candidates make the geometric mean numerically unstable",
+        "Brevity penalty replaces the n-gram count cap",
+        "It compensates for the additive-one smoothing"
+      ],
+      "correct": 0,
+      "explanation": "Precision alone rewards short outputs. BP downweights candidates shorter than the reference using exp(1 - r/c)."
+    },
+    {
+      "stage": "check",
+      "question": "What does ROUGE-L compare?",
+      "options": [
+        "The 4-gram precision against any reference 4-gram",
+        "The longest common subsequence of candidate and reference token sequences",
+        "The Levenshtein distance between candidate and reference strings",
+        "The character-level Jaccard index"
+      ],
+      "correct": 1,
+      "explanation": "ROUGE-L uses the LCS length, then computes precision (LCS/cand-len) and recall (LCS/ref-len) combined with F-beta."
+    },
+    {
+      "stage": "check",
+      "question": "Token-level F1 returns 1.0 for which case?",
+      "options": [
+        "When the prediction is empty and the target is non-empty",
+        "When prediction and target are both empty",
+        "When the prediction is a superset of the target with extra noise",
+        "When the prediction and target share exactly one token"
+      ],
+      "correct": 1,
+      "explanation": "By convention, empty-empty is a perfect match. Any non-empty target with an empty prediction is 0.0."
+    },
+    {
+      "stage": "post",
+      "question": "Why dispatch on metric_name rather than category in the score function?",
+      "options": [
+        "It lets the same category use different metrics across tasks and keeps the dispatcher metric-agnostic",
+        "Category is harder to validate than metric_name",
+        "metric_name is shorter than category",
+        "The runner does not have access to the category field"
+      ],
+      "correct": 0,
+      "explanation": "metric_name is the contract. A summary task can use rouge_l on one record and bleu_4 on another; the dispatcher does not need to care."
+    }
+  ]
+}

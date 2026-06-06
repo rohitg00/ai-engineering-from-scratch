@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cheap { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .front { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .signal { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .arrow { stroke: #1a1a1a; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">model routing — four signals, three patterns</text>
+
+  <rect x="40" y="50" width="280" height="220" class="signal"/>
+  <text x="180" y="72" text-anchor="middle" class="head">signals</text>
+  <rect x="60" y="90" width="240" height="35" class="box"/>
+  <text x="180" y="112" text-anchor="middle" class="step">1. task classification</text>
+  <rect x="60" y="130" width="240" height="35" class="box"/>
+  <text x="180" y="152" text-anchor="middle" class="step">2. prompt length</text>
+  <rect x="60" y="170" width="240" height="35" class="box"/>
+  <text x="180" y="192" text-anchor="middle" class="step">3. embedding to known-hard</text>
+  <rect x="60" y="210" width="240" height="35" class="box"/>
+  <text x="180" y="232" text-anchor="middle" class="step">4. self-confidence (logprobs)</text>
+  <text x="180" y="258" text-anchor="middle" class="caption">combine all four; each alone misses</text>
+
+  <rect x="340" y="50" width="280" height="220" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">pattern: CASCADE (cheap-first)</text>
+  <rect x="360" y="90" width="240" height="45" class="cheap"/>
+  <text x="480" y="115" text-anchor="middle" class="step">cheap model (Haiku-class)</text>
+  <text x="480" y="130" text-anchor="middle" class="small">$0.25/M input, $1/M output</text>
+  <rect x="360" y="150" width="240" height="35" class="signal"/>
+  <text x="480" y="172" text-anchor="middle" class="step">confidence check</text>
+  <rect x="360" y="200" width="240" height="60" class="front"/>
+  <text x="480" y="222" text-anchor="middle" class="step">frontier only if low-confidence</text>
+  <text x="480" y="240" text-anchor="middle" class="small">~10% escalated in mixed traffic</text>
+  <text x="480" y="254" text-anchor="middle" class="small">~2x latency on escalated</text>
+
+  <rect x="640" y="50" width="280" height="220" class="box"/>
+  <text x="780" y="72" text-anchor="middle" class="head">pattern: PRE_ROUTE</text>
+  <text x="780" y="94" text-anchor="middle" class="small">classifier up front (5-10ms)</text>
+  <rect x="660" y="110" width="240" height="45" class="cheap"/>
+  <text x="780" y="135" text-anchor="middle" class="step">cheap for simple</text>
+  <rect x="660" y="170" width="240" height="45" class="front"/>
+  <text x="780" y="195" text-anchor="middle" class="step">frontier for hard</text>
+  <text x="780" y="230" text-anchor="middle" class="caption">fastest overall, quality floor depends on classifier accuracy</text>
+
+  <rect x="40" y="290" width="880" height="100" class="box"/>
+  <text x="480" y="312" text-anchor="middle" class="head">the 2026 price curve</text>
+  <text x="480" y="334" text-anchor="middle" class="step">GPT-4-level quality: $20/M (late 2022) → $0.40/M (2026) ≈ 50x cheaper</text>
+  <text x="480" y="352" text-anchor="middle" class="step">aggregate LLM price drop: ~10x per year, mostly serving efficiency (Phase 17 · 04-09)</text>
+  <text x="480" y="372" text-anchor="middle" class="caption">routing captures those gains at the app layer</text>
+
+  <rect x="40" y="410" width="880" height="80" class="box"/>
+  <text x="480" y="432" text-anchor="middle" class="head">drift is the real risk</text>
+  <text x="480" y="454" text-anchor="middle" class="step">monitor: thumbs up/down per route · LLM-judge sample per route · escalation rate · refusal rate</text>
+  <text x="480" y="474" text-anchor="middle" class="caption">cheap-model creep is silent until a competitor benchmark surfaces it</text>
+</svg>

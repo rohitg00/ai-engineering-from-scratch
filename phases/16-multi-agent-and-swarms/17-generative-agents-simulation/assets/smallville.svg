@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="28" text-anchor="middle" class="title">Generative agents — three components from Park et al. 2023</text>
+
+  <rect x="40" y="60" width="280" height="220" class="cool"/>
+  <text x="180" y="84" text-anchor="middle" class="head">memory stream</text>
+  <text x="180" y="108" text-anchor="middle" class="step">append-only log</text>
+  <text x="60" y="136" class="small">[t=0]  observation :: saw Isabella</text>
+  <text x="60" y="154" class="small">[t=1]  observation :: invited to party</text>
+  <text x="60" y="172" class="small">[t=2]  reflection  :: I enjoy parties</text>
+  <text x="60" y="190" class="small">[t=3]  plan        :: attend at 5pm</text>
+  <text x="60" y="208" class="small">[t=4]  action      :: head to cafe</text>
+  <text x="180" y="240" text-anchor="middle" class="caption">retrieval: recency + importance + relevance</text>
+  <text x="180" y="258" text-anchor="middle" class="caption">top-k feeds prompts</text>
+
+  <rect x="340" y="60" width="280" height="220" class="cold"/>
+  <text x="480" y="84" text-anchor="middle" class="head">reflection</text>
+  <text x="480" y="108" text-anchor="middle" class="step">higher-order beliefs</text>
+  <text x="480" y="136" text-anchor="middle" class="small">periodic trigger:</text>
+  <text x="480" y="154" text-anchor="middle" class="small">unprocessed importance &gt; threshold</text>
+  <text x="480" y="180" text-anchor="middle" class="small">prompt: "given recent memories,</text>
+  <text x="480" y="196" text-anchor="middle" class="small">what is a higher-level insight?"</text>
+  <text x="480" y="222" text-anchor="middle" class="small">output: new reflection entries</text>
+  <text x="480" y="240" text-anchor="middle" class="small">re-ingested into the stream</text>
+  <text x="480" y="258" text-anchor="middle" class="caption">without reflection: no belief formation</text>
+
+  <rect x="640" y="60" width="280" height="220" class="box"/>
+  <text x="780" y="84" text-anchor="middle" class="head">plan</text>
+  <text x="780" y="108" text-anchor="middle" class="step">day / hour / action</text>
+  <text x="780" y="136" text-anchor="middle" class="small">day: go to work, have dinner</text>
+  <text x="780" y="156" text-anchor="middle" class="small">hour: 9am cafe, 12pm lunch...</text>
+  <text x="780" y="176" text-anchor="middle" class="small">action: walk to cafe, order coffee</text>
+  <text x="780" y="206" text-anchor="middle" class="small">revision trigger:</text>
+  <text x="780" y="222" text-anchor="middle" class="small">observation contradicts plan</text>
+  <text x="780" y="240" text-anchor="middle" class="small">only affected segment re-plans</text>
+  <text x="780" y="258" text-anchor="middle" class="caption">without plan: reactive noise</text>
+
+  <rect x="40" y="310" width="880" height="200" class="hot"/>
+  <text x="480" y="334" text-anchor="middle" class="head">emergent behavior — Valentine's Day party</text>
+
+  <text x="70" y="362" class="step">tick 0</text>
+  <text x="140" y="362" class="small">agent-0 (Isabella) is seeded with: "host party at cafe, 5pm"</text>
+
+  <text x="70" y="382" class="step">tick 0-2</text>
+  <text x="140" y="382" class="small">Isabella invites neighbors; each invitation becomes an observation in their stream</text>
+
+  <text x="70" y="402" class="step">tick 1-3</text>
+  <text x="140" y="402" class="small">invited neighbors reflect -&gt; belief "I am invited to a party" -&gt; plan to attend</text>
+
+  <text x="70" y="422" class="step">tick 2-4</text>
+  <text x="140" y="422" class="small">invitees tell other neighbors; second-degree spread</text>
+
+  <text x="70" y="442" class="step">tick 5</text>
+  <text x="140" y="442" class="small">three components converge: 3-5 agents arrive at the cafe on time</text>
+
+  <text x="70" y="470" class="caption">single seed + three components = coordinated arrival without an orchestrator</text>
+  <text x="70" y="490" class="caption">documented failures: spatial norms (closed stores, single-person bathrooms)</text>
+</svg>

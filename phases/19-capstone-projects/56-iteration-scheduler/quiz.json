@@ -1,0 +1,78 @@
+{
+  "lesson": "56-iteration-scheduler",
+  "title": "Iteration Scheduler",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the scheduler use UCB scoring instead of always picking the current best branch?",
+      "options": [
+        "Because UCB is faster to compute",
+        "Because greedy picks never explore; UCB balances exploitation with exploration",
+        "Because asyncio requires UCB",
+        "Because the queue cannot be sorted otherwise"
+      ],
+      "correct": 1,
+      "explanation": "Greedy locks onto the first lead. Uniform never exploits. UCB picks the leader while reserving capacity for less-explored branches via the sqrt(ln N / n) term."
+    },
+    {
+      "stage": "pre",
+      "question": "What score does a branch with zero completed runs receive under UCB1?",
+      "options": [
+        "Zero",
+        "The exploration constant c",
+        "Positive infinity, so untried branches are always picked first",
+        "The mean reward of all other branches"
+      ],
+      "correct": 2,
+      "explanation": "The lesson assigns +inf for runs=0. This guarantees every branch is tried at least once before any branch is revisited."
+    },
+    {
+      "stage": "check",
+      "question": "How does the scheduler keep multiple slots busy?",
+      "options": [
+        "It runs the runner in a thread pool",
+        "It uses asyncio.create_task per dispatched hypothesis and awaits FIRST_COMPLETED on the in-flight set",
+        "It uses multiprocessing",
+        "It blocks the event loop on a sleep"
+      ],
+      "correct": 1,
+      "explanation": "Each dispatched hypothesis becomes a task. The main loop waits on FIRST_COMPLETED so a finished slot is freed immediately and another hypothesis is dispatched."
+    },
+    {
+      "stage": "check",
+      "question": "When does the scheduler emit a paper.trigger for a branch?",
+      "options": [
+        "Every time a result lands on that branch",
+        "On the first result whose branch mean meets or exceeds the paper threshold, and only once per branch",
+        "Only at the end of the run",
+        "When the prune floor is hit"
+      ],
+      "correct": 1,
+      "explanation": "The trigger fires once per branch, the first time the branch's mean crosses the threshold. The paper_triggered flag on BranchStats prevents repeats."
+    },
+    {
+      "stage": "post",
+      "question": "What happens to a branch whose mean reward stays below the prune floor after the minimum-runs threshold?",
+      "options": [
+        "Nothing; UCB will eventually pick another branch",
+        "The branch is marked pruned and remaining hypotheses on that branch are removed from the queue",
+        "The scheduler raises an exception",
+        "The reward floor is lowered automatically"
+      ],
+      "correct": 1,
+      "explanation": "Pruning removes the branch from future scheduling. Pruning is separate from the picker: UCB ranks, pruning culls."
+    },
+    {
+      "stage": "post",
+      "question": "Which two budgets does the scheduler enforce as hard limits?",
+      "options": [
+        "Memory and CPU",
+        "max_experiments (total runs) and max_seconds (wall clock)",
+        "slots and queue depth",
+        "paper triggers and prune count"
+      ],
+      "correct": 1,
+      "explanation": "Both fire as stop reasons. max_experiments caps total work. max_seconds caps wall time. The trace records which one stopped the run."
+    }
+  ]
+}

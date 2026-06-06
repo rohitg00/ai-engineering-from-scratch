@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What is the main advantage of DPO over RLHF?",
+    "options": ["DPO produces better models", "DPO eliminates the need for a separate reward model and PPO, training directly on preference pairs in a single loop", "DPO uses less training data", "DPO works without any preference data"],
+    "correct": 1,
+    "explanation": "RLHF requires training a reward model separately, then running PPO optimization. DPO folds both steps into a single training objective that directly optimizes the language model on preference pairs.",
+    "stage": "pre"
+  },
+  {
+    "question": "What role does the reference model play in DPO?",
+    "options": ["It generates training data", "It serves as the anchor that prevents the trained model from diverging too far, similar to the KL penalty in RLHF", "It evaluates model quality", "It handles tokenization"],
+    "correct": 1,
+    "explanation": "The DPO loss compares log probabilities under the trained policy and the reference (usually SFT) model. The reference model constrains how far the policy can drift, preventing reward hacking without explicit KL tuning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What does the beta parameter in DPO control?",
+    "options": ["The learning rate", "How strongly the policy is constrained to stay close to the reference model -- higher beta means more conservative updates", "The batch size", "The number of training epochs"],
+    "correct": 1,
+    "explanation": "Beta scales the implicit KL divergence penalty. Beta=0.1 allows the model to diverge significantly from the reference (potentially better but riskier). Beta=0.5 keeps it close (safer but less learning).",
+    "stage": "post"
+  },
+  {
+    "question": "How does DPO implicitly represent a reward model?",
+    "options": ["It doesn't -- DPO has no concept of reward", "The DPO loss function can be derived by showing that the optimal policy under a reward function is directly expressible through policy log probabilities", "It trains a hidden reward model inside the language model", "DPO uses the loss function as the reward"],
+    "correct": 1,
+    "explanation": "Rafailov et al. showed that the closed-form solution of the RLHF objective expresses the reward as a function of the policy's log-probabilities relative to the reference. DPO optimizes this directly, implicitly learning the reward.",
+    "stage": "post"
+  },
+  {
+    "question": "When might RLHF still be preferred over DPO?",
+    "options": ["Always -- RLHF is strictly better", "When you need a reusable reward model for evaluating multiple policies or when online data collection is beneficial", "When you have less preference data", "When training smaller models"],
+    "correct": 1,
+    "explanation": "DPO is offline (fixed preference data). RLHF allows online data collection where the reward model scores new generations, discovering reward-hacking patterns. A standalone reward model is also useful for evaluation and other policies.",
+    "stage": "post"
+  }
+]

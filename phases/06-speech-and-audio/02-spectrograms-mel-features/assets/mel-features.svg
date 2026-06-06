@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .wave { fill: none; stroke: #1a1a1a; stroke-width: 1.3; }
+    </style>
+  </defs>
+
+  <text x="440" y="30" text-anchor="middle" class="title">the four-step ladder every audio model climbs</text>
+
+  <!-- Step 1: Waveform -->
+  <rect x="40" y="60" width="180" height="140" class="box"/>
+  <text x="130" y="82" text-anchor="middle" class="label">1. waveform</text>
+  <path class="wave" d="M55,140 Q70,85 85,140 T115,140 T145,140 T175,140 T205,140"/>
+  <text x="130" y="175" text-anchor="middle" class="caption">T samples in [-1, 1]</text>
+  <text x="130" y="192" text-anchor="middle" class="caption">10 s at 16 kHz = 160,000</text>
+
+  <!-- arrow -->
+  <line x1="225" y1="130" x2="248" y2="130" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="237" y="120" text-anchor="middle" class="caption" font-size="10">frame+FFT</text>
+
+  <!-- Step 2: STFT -->
+  <rect x="255" y="60" width="180" height="140" class="box"/>
+  <text x="345" y="82" text-anchor="middle" class="label">2. STFT</text>
+  <rect x="270" y="100" width="12" height="80" fill="#eed9a8"/>
+  <rect x="284" y="110" width="12" height="70" fill="#e6c87a"/>
+  <rect x="298" y="95" width="12" height="85" fill="#d4a74c"/>
+  <rect x="312" y="115" width="12" height="65" fill="#e6c87a"/>
+  <rect x="326" y="105" width="12" height="75" fill="#d4a74c"/>
+  <rect x="340" y="90" width="12" height="90" fill="#c0392b"/>
+  <rect x="354" y="108" width="12" height="72" fill="#e6c87a"/>
+  <rect x="368" y="120" width="12" height="60" fill="#eed9a8"/>
+  <rect x="382" y="130" width="12" height="50" fill="#eed9a8"/>
+  <rect x="396" y="140" width="12" height="40" fill="#faf6ef" stroke="#aaa"/>
+  <text x="345" y="190" text-anchor="middle" class="caption">|FFT| per 25 ms frame, 10 ms hop</text>
+
+  <line x1="440" y1="130" x2="463" y2="130" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="452" y="120" text-anchor="middle" class="caption" font-size="10">filterbank</text>
+
+  <!-- Step 3: Mel spectrogram -->
+  <rect x="470" y="60" width="180" height="140" class="hot"/>
+  <text x="560" y="82" text-anchor="middle" class="label">3. log-mel</text>
+  <rect x="485" y="100" width="12" height="78" fill="#c0392b" opacity="0.9"/>
+  <rect x="499" y="102" width="12" height="76" fill="#c0392b" opacity="0.8"/>
+  <rect x="513" y="108" width="12" height="70" fill="#d4a74c"/>
+  <rect x="527" y="112" width="12" height="66" fill="#c0392b" opacity="0.7"/>
+  <rect x="541" y="105" width="12" height="73" fill="#d4a74c"/>
+  <rect x="555" y="95" width="12" height="83" fill="#c0392b"/>
+  <rect x="569" y="100" width="12" height="78" fill="#c0392b" opacity="0.9"/>
+  <rect x="583" y="110" width="12" height="68" fill="#d4a74c"/>
+  <rect x="597" y="115" width="12" height="63" fill="#d4a74c"/>
+  <rect x="611" y="120" width="12" height="58" fill="#eed9a8"/>
+  <text x="560" y="190" text-anchor="middle" class="caption">80 mels, log scale, [T, 80]</text>
+
+  <line x1="655" y1="130" x2="678" y2="130" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="668" y="120" text-anchor="middle" class="caption" font-size="10">DCT (opt)</text>
+
+  <!-- Step 4: MFCC or model input -->
+  <rect x="685" y="60" width="180" height="140" class="box"/>
+  <text x="775" y="82" text-anchor="middle" class="label">4. model input</text>
+  <text x="775" y="110" text-anchor="middle" class="content">Whisper: log-mel</text>
+  <text x="775" y="128" text-anchor="middle" class="content">Parakeet: log-mel</text>
+  <text x="775" y="146" text-anchor="middle" class="content">ECAPA: log-mel</text>
+  <text x="775" y="164" text-anchor="middle" class="content">KWS tiny: MFCC-13</text>
+  <text x="775" y="185" text-anchor="middle" class="caption">tensor: [batch, T, 80]</text>
+
+  <!-- Mel scale curve -->
+  <rect x="40" y="235" width="400" height="220" class="box"/>
+  <text x="240" y="258" text-anchor="middle" class="label">mel scale is log-perception of pitch</text>
+  <line x1="80" y1="420" x2="420" y2="420" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="80" y1="420" x2="80" y2="280" stroke="#1a1a1a" stroke-width="1"/>
+  <path d="M80,420 Q140,380 200,340 T320,300 T420,282" class="wave" stroke="#c0392b" stroke-width="2"/>
+  <text x="75" y="285" text-anchor="end" class="caption">mel</text>
+  <text x="420" y="437" text-anchor="end" class="caption">Hz</text>
+  <text x="80" y="437" class="caption">0</text>
+  <line x1="200" y1="420" x2="200" y2="416" stroke="#1a1a1a" stroke-width="1"/>
+  <text x="200" y="437" text-anchor="middle" class="caption">1 kHz</text>
+  <line x1="300" y1="420" x2="300" y2="416" stroke="#1a1a1a" stroke-width="1"/>
+  <text x="300" y="437" text-anchor="middle" class="caption">4 kHz</text>
+  <line x1="380" y1="420" x2="380" y2="416" stroke="#1a1a1a" stroke-width="1"/>
+  <text x="380" y="437" text-anchor="middle" class="caption">8 kHz</text>
+  <text x="240" y="395" text-anchor="middle" class="content" font-size="11">m = 2595 · log10(1 + f / 700)</text>
+
+  <!-- Filterbank visualization -->
+  <rect x="460" y="235" width="400" height="220" class="box"/>
+  <text x="660" y="258" text-anchor="middle" class="label">triangular mel filterbank</text>
+  <line x1="480" y1="420" x2="840" y2="420" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="480" y1="420" x2="480" y2="300" stroke="#1a1a1a" stroke-width="1"/>
+  <polyline points="480,420 490,300 500,420" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <polyline points="495,420 510,300 525,420" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <polyline points="515,420 535,300 555,420" fill="none" stroke="#c0392b" stroke-width="1.5"/>
+  <polyline points="545,420 570,300 595,420" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <polyline points="580,420 615,300 650,420" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <polyline points="635,420 685,300 735,420" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <polyline points="710,420 780,300 820,420" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text x="660" y="437" text-anchor="middle" class="caption">Hz (linear)  — triangles widen with frequency</text>
+  <text x="660" y="395" text-anchor="middle" class="content" font-size="11">each mel bin = weighted sum of FFT bins</text>
+</svg>

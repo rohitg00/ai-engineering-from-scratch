@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+    <style>
+      .doc { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .ent1 { fill: #e3f2fd; stroke: #1565c0; stroke-width: 1.5; }
+      .ent2 { fill: #fce4ec; stroke: #c0392b; stroke-width: 1.5; }
+      .ent3 { fill: #e8f5e9; stroke: #2e7d32; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 13px; fill: #333; }
+      .span1 { fill: #1565c0; font-weight: 600; }
+      .span2 { fill: #c0392b; font-weight: 600; }
+      .span3 { fill: #2e7d32; font-weight: 600; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">mentions → clusters → entities</text>
+
+  <!-- Input document -->
+  <rect x="40" y="55" width="820" height="140" class="doc"/>
+  <text x="50" y="80" class="label">document</text>
+
+  <text x="50" y="110" class="content">
+    <tspan class="span1">Tim Cook</tspan> walked onto the stage.
+    <tspan class="span1">He</tspan> announced the new iPhone.
+  </text>
+  <text x="50" y="135" class="content">
+    <tspan class="span2">The company</tspan> also showed a laptop.
+    <tspan class="span2">It</tspan> will ship in June.
+  </text>
+  <text x="50" y="160" class="content">
+    <tspan class="span3">Mary Chen</tspan> leads the AI team.
+    <tspan class="span3">She</tspan> built the voice assistant.
+  </text>
+  <text x="50" y="185" class="caption">three entities, seven mentions across three sentences</text>
+
+  <!-- Clusters -->
+  <text x="450" y="230" text-anchor="middle" class="label">coreference clustering</text>
+
+  <rect x="60" y="250" width="240" height="130" class="ent1"/>
+  <text x="180" y="278" text-anchor="middle" class="label">Entity #1</text>
+  <text x="180" y="300" text-anchor="middle" class="content">Tim Cook</text>
+  <text x="180" y="320" text-anchor="middle" class="content">He</text>
+  <text x="180" y="355" text-anchor="middle" class="caption">type: PERSON</text>
+
+  <rect x="330" y="250" width="240" height="130" class="ent2"/>
+  <text x="450" y="278" text-anchor="middle" class="label">Entity #2</text>
+  <text x="450" y="300" text-anchor="middle" class="content">The company</text>
+  <text x="450" y="320" text-anchor="middle" class="content">It</text>
+  <text x="450" y="355" text-anchor="middle" class="caption">type: ORG</text>
+
+  <rect x="600" y="250" width="240" height="130" class="ent3"/>
+  <text x="720" y="278" text-anchor="middle" class="label">Entity #3</text>
+  <text x="720" y="300" text-anchor="middle" class="content">Mary Chen</text>
+  <text x="720" y="320" text-anchor="middle" class="content">She</text>
+  <text x="720" y="355" text-anchor="middle" class="caption">type: PERSON</text>
+
+  <text x="450" y="420" text-anchor="middle" class="caption">resolved clusters feed IE, QA, summarization — downstream tasks see one entity, not many mentions</text>
+</svg>

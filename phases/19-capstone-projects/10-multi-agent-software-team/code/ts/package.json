@@ -1,0 +1,17 @@
+{
+  "name": "multi-agent-software-team",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Multi-file TypeScript skeleton for the multi-agent software team capstone.",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

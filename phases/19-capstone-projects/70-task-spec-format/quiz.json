@@ -1,0 +1,78 @@
+{
+  "lesson": "70-task-spec-format",
+  "title": "Task Spec Format",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why freeze the task record schema before writing scoring code?",
+      "options": [
+        "It makes the JSON parser run faster",
+        "It locks the contract so metrics, runners, and post-processors agree on field names",
+        "It removes the need for a validator",
+        "It allows arbitrary new metric names without further changes"
+      ],
+      "correct": 1,
+      "explanation": "The schema is the contract every downstream consumer reads from. Locking it lets you change components independently without breaking the rest."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the closed vocabulary that the metric_name field accepts?",
+      "options": [
+        "Whatever the runner is configured to recognise",
+        "exact_match, f1, bleu_4, rouge_l, accuracy, code_exec",
+        "Any string the task author chooses",
+        "Only exact_match and f1"
+      ],
+      "correct": 1,
+      "explanation": "The lesson pins the metric vocabulary to six names. Adding one requires a new lesson and a new validator entry."
+    },
+    {
+      "stage": "check",
+      "question": "What does the validator do when it sees an unknown top-level field on a record?",
+      "options": [
+        "Strips it and continues",
+        "Logs a warning but accepts the record",
+        "Returns a validation error and rejects the record",
+        "Renames it to metadata.unknown"
+      ],
+      "correct": 2,
+      "explanation": "Unknown fields are a forward-compatibility hazard. The validator rejects them so the schema stays the only source of truth."
+    },
+    {
+      "stage": "check",
+      "question": "Why are few-shot examples attached to the task record rather than computed by the runner?",
+      "options": [
+        "The runner does not have file I/O",
+        "Author intent is part of the eval; binding examples to the task removes per-model variance in prompt construction",
+        "It saves disk space",
+        "Few-shot is only used during fine-tuning"
+      ],
+      "correct": 1,
+      "explanation": "Few-shot composition is part of the eval definition, not the model interface. Putting it in the task means every model sees the same prompt."
+    },
+    {
+      "stage": "check",
+      "question": "Which category-metric pair is illegal under the validator?",
+      "options": [
+        "summary + rouge_l",
+        "arithmetic + exact_match",
+        "mcq + bleu_4",
+        "code_exec + code_exec"
+      ],
+      "correct": 2,
+      "explanation": "BLEU on a single letter is meaningless. The validator enforces that mcq tasks use exact_match or accuracy only."
+    },
+    {
+      "stage": "post",
+      "question": "What does the post_process rule extract_letter return when the generation is `Answer: C is correct`?",
+      "options": [
+        "The full string unchanged",
+        "C",
+        "Answer",
+        "An empty string"
+      ],
+      "correct": 1,
+      "explanation": "extract_letter returns the first character matching [A-E] in the generation. The string has C at the start of the body."
+    }
+  ]
+}

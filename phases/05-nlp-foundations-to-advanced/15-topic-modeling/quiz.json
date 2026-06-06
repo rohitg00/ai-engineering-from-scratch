@@ -1,0 +1,102 @@
+{
+  "lesson": "15-topic-modeling",
+  "title": "Topic Modeling — LDA and BERTopic",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does LDA assume about each document?",
+      "options": [
+        "Each document belongs to exactly one topic",
+        "Documents are sentences",
+        "Each document is a mixture of topics; each topic is a distribution over words",
+        "Documents are independent of topics"
+      ],
+      "correct": 2,
+      "explanation": "LDA's generative story is mixed-membership: each doc has a topic distribution, each topic a word distribution."
+    },
+    {
+      "stage": "pre",
+      "question": "What does BERTopic use to form topic clusters?",
+      "options": [
+        "Direct softmax over the vocabulary",
+        "Encode docs with a sentence transformer, reduce dimensionality with UMAP, then cluster with HDBSCAN",
+        "Run BM25 followed by k-means",
+        "Train an LSTM end-to-end"
+      ],
+      "correct": 1,
+      "explanation": "BERTopic = embeddings + UMAP + HDBSCAN, with class-based TF-IDF for topic words."
+    },
+    {
+      "stage": "check",
+      "question": "Why does scikit-learn's LDA expect raw counts (CountVectorizer), not TF-IDF?",
+      "options": [
+        "TF-IDF is too slow",
+        "LDA's probabilistic model is defined over integer term counts; TF-IDF distorts the underlying distribution",
+        "LDA cannot handle floats",
+        "Memory limits"
+      ],
+      "correct": 1,
+      "explanation": "LDA likelihood assumes counts; feeding TF-IDF values violates the model assumption."
+    },
+    {
+      "stage": "check",
+      "question": "What does HDBSCAN's -1 label mean in a BERTopic output?",
+      "options": [
+        "A reserved category",
+        "An outlier cluster of documents the density-based algorithm could not confidently assign",
+        "Stopword cluster",
+        "Top topic"
+      ],
+      "correct": 1,
+      "explanation": "HDBSCAN marks unclustered points with -1; in BERTopic these are documents that did not fit any topic."
+    },
+    {
+      "stage": "check",
+      "question": "Which coherence metric is the common default for topic-model evaluation?",
+      "options": [
+        "BLEU",
+        "Accuracy",
+        "Perplexity only",
+        "c_v coherence via NPMI over sliding windows of top topic words"
+      ],
+      "correct": 3,
+      "explanation": "c_v coherence (Roder et al., 2015) is the canonical automatic topic-coherence metric."
+    },
+    {
+      "stage": "post",
+      "question": "When is LDA usually a better fit than BERTopic?",
+      "options": [
+        "On short tweets",
+        "Long documents where mixed-membership topic distributions are useful and embeddings would truncate input",
+        "When embeddings are noisy",
+        "When you need a single topic per document"
+      ],
+      "correct": 1,
+      "explanation": "Long documents benefit from LDA's mixed-membership model; BERT encoders truncate inputs."
+    },
+    {
+      "stage": "post",
+      "question": "Why does BERTopic typically win on short text (tweets, headlines)?",
+      "options": [
+        "Short text has fewer topics",
+        "It is faster",
+        "Semantic similarity in embedding space captures meaning where bag-of-words counts are too sparse",
+        "It supports more languages"
+      ],
+      "correct": 2,
+      "explanation": "BERT embeddings provide semantic similarity for short text where word-overlap statistics fail."
+    },
+    {
+      "stage": "post",
+      "question": "What is a common LDA failure mode for which you should monitor topics?",
+      "options": [
+        "Document mixtures that sum to 1",
+        "Topics that match labeled categories perfectly",
+        "Junk topics that absorb stopwords or extremely frequent terms",
+        "Topics with too few documents"
+      ],
+      "correct": 2,
+      "explanation": "LDA can create junk topics that absorb stopwords; tighter min_df/max_df and stopword filtering mitigate."
+    }
+  ]
+}

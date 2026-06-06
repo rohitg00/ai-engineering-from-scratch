@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">MCP transports: stdio, Streamable HTTP, legacy SSE</text>
+
+  <rect x="40" y="60" width="290" height="400" class="cool"/>
+  <text x="185" y="82" text-anchor="middle" class="head">stdio (local)</text>
+  <text x="56" y="108" class="step">child process</text>
+  <text x="56" y="126" class="small">client spawns server,</text>
+  <text x="56" y="142" class="small">talks via stdin/stdout</text>
+  <text x="56" y="174" class="step">wire format</text>
+  <text x="56" y="192" class="small">one JSON per line, \n</text>
+  <text x="56" y="208" class="small">stdout ONLY for JSON-RPC</text>
+  <text x="56" y="224" class="small">stderr for logs</text>
+  <text x="56" y="256" class="step">session</text>
+  <text x="56" y="274" class="small">process = session</text>
+  <text x="56" y="290" class="small">no id needed</text>
+  <text x="56" y="322" class="step">auth</text>
+  <text x="56" y="340" class="small">inherits parent trust</text>
+  <text x="56" y="372" class="step">verdict</text>
+  <text x="56" y="390" class="small">local servers only.</text>
+  <text x="56" y="406" class="small">simplest, most reliable.</text>
+
+  <rect x="345" y="60" width="290" height="400" class="cold"/>
+  <text x="490" y="82" text-anchor="middle" class="head">Streamable HTTP (remote)</text>
+  <text x="361" y="108" class="step">single endpoint /mcp</text>
+  <text x="361" y="126" class="small">POST : JSON-RPC request</text>
+  <text x="361" y="142" class="small">GET  : open SSE stream</text>
+  <text x="361" y="158" class="small">DELETE : terminate session</text>
+  <text x="361" y="190" class="step">session</text>
+  <text x="361" y="208" class="small">Mcp-Session-Id header</text>
+  <text x="361" y="224" class="small">cryptographic random,</text>
+  <text x="361" y="240" class="small">server-assigned</text>
+  <text x="361" y="272" class="step">security</text>
+  <text x="361" y="290" class="small">Origin allowlist</text>
+  <text x="361" y="306" class="small">DNS-rebinding defense</text>
+  <text x="361" y="322" class="small">OAuth 2.1 (Lesson 16)</text>
+  <text x="361" y="354" class="step">reconnect</text>
+  <text x="361" y="372" class="small">re-GET with same sid;</text>
+  <text x="361" y="388" class="small">last-event-id replay</text>
+  <text x="361" y="420" class="step">verdict</text>
+  <text x="361" y="438" class="small">the 2026 standard.</text>
+
+  <rect x="650" y="60" width="290" height="400" class="hot"/>
+  <text x="795" y="82" text-anchor="middle" class="head">legacy HTTP+SSE</text>
+  <text x="666" y="108" class="step">two endpoints</text>
+  <text x="666" y="126" class="small">POST /messages</text>
+  <text x="666" y="142" class="small">GET  /sse (stream)</text>
+  <text x="666" y="174" class="step">problems</text>
+  <text x="666" y="192" class="small">CDN / WAF hostile</text>
+  <text x="666" y="208" class="small">two sessions to track</text>
+  <text x="666" y="224" class="small">long-SSE timeouts</text>
+  <text x="666" y="256" class="step">deprecation</text>
+  <text x="666" y="274" class="small">Atlassian Rovo: 2026-06-30</text>
+  <text x="666" y="290" class="small">Keboola: 2026-04-01</text>
+  <text x="666" y="306" class="small">official spec flags LEGACY</text>
+  <text x="666" y="338" class="step">migration</text>
+  <text x="666" y="356" class="small">fold two endpoints to one;</text>
+  <text x="666" y="372" class="small">generate fresh sid;</text>
+  <text x="666" y="388" class="small">add Origin checks</text>
+  <text x="666" y="420" class="step">verdict</text>
+  <text x="666" y="438" class="small">migrate before mid-2026.</text>
+
+  <text x="480" y="498" text-anchor="middle" class="caption">pick stdio for local, Streamable HTTP for remote; SSE mode is a temporary bridge.</text>
+</svg>

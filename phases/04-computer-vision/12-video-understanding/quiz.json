@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does a 2D+pool video model fail on the Something-Something V2 dataset?",
+      "options": [
+        "The images are too small",
+        "The model architecture is incompatible",
+        "The dataset's labels are defined by motion direction ('pushing something from left to right'), not appearance; order-invariant average pooling over per-frame features cannot distinguish motion direction",
+        "There are too many classes"
+      ],
+      "correct": 2,
+      "explanation": "Something-Something labels are literally 'X moved left to right' vs 'X moved right to left'. The two look identical in any single frame, and averaging frame embeddings is order-invariant so pool(f1, f2, ..., fT) == pool(fT, ..., f2, f1). Motion-defined labels require a model that attends to temporal order."
+    },
+    {
+      "stage": "pre",
+      "question": "What is I3D's inflation trick?",
+      "options": [
+        "A way to pretrain on more images",
+        "Take a 2D CNN's pretrained kernels, copy each along a new time axis (dividing by kernel_T to preserve activation scale), and use them to initialise a 3D CNN \u2014 giving the 3D model strong weights without 3D pretraining",
+        "A scheduler for learning rates",
+        "A method for compressing videos"
+      ],
+      "correct": 1,
+      "explanation": "Inflation bootstraps 3D video models from strong 2D ImageNet weights. A 3x3 2D kernel becomes a 3x3x3 3D kernel by replicating along T with a 1/kernel_T rescale. It transfers object and texture features learnt on ImageNet directly into the video model, which is why I3D was the first 3D model to seriously beat 2D+pool baselines."
+    },
+    {
+      "stage": "post",
+      "question": "A (2+1)D factorised convolution splits a 3D conv into which two operations?",
+      "options": [
+        "One temporal conv followed by one depthwise conv",
+        "A grouped conv and a 1x1 conv",
+        "Two 3D convs with different strides",
+        "A spatial 1x3x3 conv followed by a temporal 3x1x1 conv, with a BN+ReLU in between to add a non-linearity that full 3D convs do not have"
+      ],
+      "correct": 3,
+      "explanation": "(2+1)D factorises the 3x3x3 kernel into (1x3x3) then (3x1x1). The two convs have a non-linearity between them (BN+ReLU), which increases expressive power per parameter. On Kinetics, R(2+1)D-34 outperforms an equivalent R3D-34 with fewer params \u2014 the extra non-linearity is doing real work."
+    },
+    {
+      "stage": "post",
+      "question": "In a video transformer, what does 'divided attention' mean?",
+      "options": [
+        "Attention over half the tokens",
+        "Each transformer block has two attention modules: one over tokens at the same spatial position across time (temporal attention), then one over tokens at the same timestep across space (spatial attention) \u2014 breaking the O((T*H*W)^2) full attention into O(T^2) + O((H*W)^2)",
+        "Attention applied only during training",
+        "Attention that skips some layers"
+      ],
+      "correct": 1,
+      "explanation": "Full joint spatio-temporal attention is O((T*H*W)^2), which is infeasible for long videos. Divided attention (TimeSformer) alternates temporal and spatial attention within each block, bringing cost to O(T^2 + (H*W)^2). It trades off a theoretical loss in expressivity for tractable training; in practice divided attention matches or beats joint on most benchmarks."
+    },
+    {
+      "stage": "post",
+      "question": "Your Kinetics-400 model reports 76% clip accuracy and 82% video accuracy. What does the gap tell you?",
+      "options": [
+        "Per-clip predictions are noisy; averaging predictions across multiple sampled clips per video (test-time augmentation) stabilises the result. A large gap suggests the model's features are sensitive to which 8-frame window was sampled, and longer clips or stronger spatial augmentation during training would shrink the gap",
+        "The model is broken",
+        "The test set is too small",
+        "Clip accuracy is always lower than video accuracy by definition"
+      ],
+      "correct": 0,
+      "explanation": "Clip accuracy evaluates the model on a single sampled window; video accuracy averages predictions across multiple windows. A 6-point gap means the model is sensitive to which window you sampled. Closing the gap means the model has generalised better across the temporal distribution of each video \u2014 which is what you want in deployment. Report both numbers always."
+    }
+  ]
+}

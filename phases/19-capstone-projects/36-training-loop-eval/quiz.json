@@ -1,0 +1,78 @@
+{
+  "lesson": "36-training-loop-eval",
+  "title": "Training Loop and Evaluation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why must the target tensor be the input tensor shifted by one position?",
+      "options": [
+        "Cross entropy needs identical tensors",
+        "Next token prediction is the training objective: at every position the model predicts the token that comes next; forgetting the shift trains the model to predict itself, which learns nothing useful",
+        "It speeds up the optimizer",
+        "It is required by AdamW"
+      ],
+      "correct": 1,
+      "explanation": "Input is tokens 0..T-1; target is tokens 1..T; loss is computed on the flattened (batch*seq, vocab) and (batch*seq,) shapes."
+    },
+    {
+      "stage": "pre",
+      "question": "What does evaluate_model do that the training step does not?",
+      "options": [
+        "It runs the optimizer",
+        "It runs a fixed number of validation batches under no_grad and with dropout disabled, returning a reproducible mean loss",
+        "It changes the model weights",
+        "It computes gradients twice"
+      ],
+      "correct": 1,
+      "explanation": "Held out evaluation needs no gradients, no dropout, and a fixed slice of validation data to be reproducible across runs."
+    },
+    {
+      "stage": "check",
+      "question": "Which AdamW parameters get weight decay?",
+      "options": [
+        "Every parameter equally",
+        "Matrix-shaped tensors (linear weights, embedding tables) receive weight decay; scale, shift, and bias tensors receive zero decay",
+        "Only the LM head",
+        "Only the LayerNorm scales"
+      ],
+      "correct": 1,
+      "explanation": "Putting decay on a LayerNorm scale drives the scale to zero and breaks normalization; the split is a standard production pattern."
+    },
+    {
+      "stage": "check",
+      "question": "What shape does the warmup-plus-cosine schedule trace from step 0 to the final step?",
+      "options": [
+        "Constant",
+        "Linear ramp from zero to max over warmup_steps, then cosine decay from max to min_lr over the remaining steps",
+        "Exponential growth",
+        "Step function"
+      ],
+      "correct": 1,
+      "explanation": "Warmup populates optimizer state; cosine decay tapers the step size so the final phase fine-tunes the weights."
+    },
+    {
+      "stage": "check",
+      "question": "Why clip gradient norm before optimizer.step()?",
+      "options": [
+        "It accelerates the matmul",
+        "A bad batch can produce a huge gradient that wipes out hours of training; clipping to max_norm=1.0 keeps the optimizer in a safe range without distorting normal updates",
+        "It reduces memory usage",
+        "It removes the warmup requirement"
+      ],
+      "correct": 1,
+      "explanation": "Gradient clipping is the cheapest insurance against divergence; one is the default that survives most setups."
+    },
+    {
+      "stage": "post",
+      "question": "Why log per step records as JSONL instead of pickled state?",
+      "options": [
+        "JSONL is required by the optimizer",
+        "JSONL records are durable across refactors, greppable, plottable in thirty lines, and survive crashes; pickled state ties you to the module layout that produced it",
+        "JSONL trains faster",
+        "JSONL uses less GPU memory"
+      ],
+      "correct": 1,
+      "explanation": "Any crash leaves a readable artifact; resume reads the last step; tooling on top is trivial."
+    }
+  ]
+}

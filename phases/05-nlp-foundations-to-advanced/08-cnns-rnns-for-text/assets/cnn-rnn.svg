@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .emb { fill: #f3ece0; stroke: #1a1a1a; stroke-width: 1.2; }
+      .filter { fill: none; stroke: #c0392b; stroke-width: 2; stroke-dasharray: 4,3; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .stage { font-size: 12px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .line { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .rnn { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .note { font-size: 11px; fill: #666; font-style: italic; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="20" width="420" height="380" rx="4"/>
+  <text class="label" x="230" y="45" text-anchor="middle">TextCNN</text>
+  <text class="note" x="40" y="65">filters are learnable n-grams</text>
+
+  <rect class="emb" x="40"  y="80" width="70" height="30" rx="2"/><text class="content" x="75"  y="100" text-anchor="middle">the</text>
+  <rect class="emb" x="115" y="80" width="70" height="30" rx="2"/><text class="content" x="150" y="100" text-anchor="middle">cat</text>
+  <rect class="emb" x="190" y="80" width="70" height="30" rx="2"/><text class="content" x="225" y="100" text-anchor="middle">sat</text>
+  <rect class="emb" x="265" y="80" width="70" height="30" rx="2"/><text class="content" x="300" y="100" text-anchor="middle">on</text>
+  <rect class="emb" x="340" y="80" width="70" height="30" rx="2"/><text class="content" x="375" y="100" text-anchor="middle">mat</text>
+
+  <rect class="filter" x="35" y="75" width="155" height="40" rx="2"/>
+  <text class="content" x="110" y="138" text-anchor="middle" fill="#c0392b">filter w=2</text>
+
+  <rect class="filter" x="110" y="150" width="230" height="40" rx="2"/>
+  <text class="content" x="225" y="210" text-anchor="middle" fill="#c0392b">filter w=3</text>
+
+  <rect class="filter" x="185" y="220" width="230" height="40" rx="2"/>
+  <text class="content" x="300" y="280" text-anchor="middle" fill="#c0392b">filter w=4</text>
+
+  <path class="line" d="M 230 290 L 230 320" marker-end="url(#arrow)"/>
+  <text class="stage" x="230" y="340">max-pool + concat</text>
+
+  <rect class="box" x="150" y="355" width="160" height="30" rx="3" fill="#fff1d6"/>
+  <text class="content" x="230" y="375" text-anchor="middle">fixed-size vector</text>
+
+  <rect class="box" x="460" y="20" width="420" height="380" rx="4"/>
+  <text class="label" x="670" y="45" text-anchor="middle">LSTM</text>
+  <text class="note" x="475" y="65">hidden state carries info forward</text>
+
+  <circle cx="510" cy="150" r="18" fill="#f3ece0" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text class="content" x="510" y="155" text-anchor="middle">h1</text>
+  <circle cx="580" cy="150" r="18" fill="#f3ece0" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text class="content" x="580" y="155" text-anchor="middle">h2</text>
+  <circle cx="650" cy="150" r="18" fill="#f3ece0" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text class="content" x="650" y="155" text-anchor="middle">h3</text>
+  <circle cx="720" cy="150" r="18" fill="#f3ece0" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text class="content" x="720" y="155" text-anchor="middle">h4</text>
+  <circle cx="790" cy="150" r="18" fill="#f3ece0" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text class="content" x="790" y="155" text-anchor="middle">h5</text>
+
+  <path class="rnn" d="M 528 150 L 562 150" marker-end="url(#arrow)"/>
+  <path class="rnn" d="M 598 150 L 632 150" marker-end="url(#arrow)"/>
+  <path class="rnn" d="M 668 150 L 702 150" marker-end="url(#arrow)"/>
+  <path class="rnn" d="M 738 150 L 772 150" marker-end="url(#arrow)"/>
+
+  <rect class="emb" x="490" y="210" width="40" height="30" rx="2"/><text class="content" x="510" y="230" text-anchor="middle">the</text>
+  <rect class="emb" x="560" y="210" width="40" height="30" rx="2"/><text class="content" x="580" y="230" text-anchor="middle">cat</text>
+  <rect class="emb" x="630" y="210" width="40" height="30" rx="2"/><text class="content" x="650" y="230" text-anchor="middle">sat</text>
+  <rect class="emb" x="700" y="210" width="40" height="30" rx="2"/><text class="content" x="720" y="230" text-anchor="middle">on</text>
+  <rect class="emb" x="770" y="210" width="40" height="30" rx="2"/><text class="content" x="790" y="230" text-anchor="middle">mat</text>
+
+  <path class="line" d="M 510 210 L 510 170"/>
+  <path class="line" d="M 580 210 L 580 170"/>
+  <path class="line" d="M 650 210 L 650 170"/>
+  <path class="line" d="M 720 210 L 720 170"/>
+  <path class="line" d="M 790 210 L 790 170"/>
+
+  <text class="stage" x="670" y="285">pool h1..h5 → classifier</text>
+
+  <text class="note" x="475" y="320">gates decide what to keep / forget</text>
+  <text class="note" x="475" y="340">still fails past ~200 steps</text>
+  <text class="note" x="475" y="360">sequential = no parallelism</text>
+  <text class="note" x="475" y="380">→ attention came next</text>
+</svg>

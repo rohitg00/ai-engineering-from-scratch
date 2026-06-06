@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .old { fill: #eeeeee; stroke: #888; stroke-width: 1.2; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="28" text-anchor="middle" class="title">speculative decoding loop — EAGLE-3 style</text>
+
+  <!-- prefix -->
+  <rect x="30" y="60" width="200" height="40" class="box"/>
+  <text x="130" y="85" text-anchor="middle" class="step">prefix x_1 ... x_k</text>
+
+  <!-- draft step -->
+  <rect x="260" y="60" width="280" height="40" class="cool"/>
+  <text x="400" y="85" text-anchor="middle" class="step">draft N tokens: d_1, d_2, ..., d_N  ~ p</text>
+  <line x1="232" y1="80" x2="258" y2="80" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- verify -->
+  <rect x="570" y="60" width="360" height="40" class="hot"/>
+  <text x="750" y="85" text-anchor="middle" class="step">verifier q(prefix + drafts) — ONE forward pass</text>
+  <line x1="542" y1="80" x2="568" y2="80" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Leviathan rule -->
+  <rect x="30" y="140" width="900" height="60" class="box"/>
+  <text x="50" y="165" class="head">Leviathan rule (for each i = 1..N)</text>
+  <text x="50" y="185" class="step">accept d_i  if  u &lt; min(1, q(d_i) / p(d_i))  else  emit  correction ~ (q - p)_+ / ||(q - p)_+||_1  and STOP</text>
+
+  <!-- outcome A -->
+  <rect x="30" y="220" width="430" height="80" class="cool"/>
+  <text x="245" y="243" text-anchor="middle" class="head">all N accepted</text>
+  <text x="245" y="263" text-anchor="middle" class="step">emit d_1 ... d_N + bonus ~ q_{N+1}</text>
+  <text x="245" y="282" text-anchor="middle" class="small">kv_length += N + 1  |  up to N+1 tokens per verify</text>
+
+  <!-- outcome B -->
+  <rect x="500" y="220" width="430" height="80" class="hot"/>
+  <text x="715" y="243" text-anchor="middle" class="head">reject at position j</text>
+  <text x="715" y="263" text-anchor="middle" class="step">emit d_1 ... d_{j-1} + correction ~ residual</text>
+  <text x="715" y="282" text-anchor="middle" class="small">kv truncate_to(k + j)  |  discard drafts after j</text>
+
+  <!-- draft evolution table -->
+  <rect x="30" y="320" width="900" height="150" class="box"/>
+  <text x="480" y="343" text-anchor="middle" class="label">the draft evolution — what each generation bought</text>
+
+  <text x="50" y="372" class="step">Leviathan 2023</text>
+  <text x="220" y="372" class="small">separate small LLM  ·  alpha ~ 0.60  ·  2x speedup</text>
+
+  <text x="50" y="392" class="step">EAGLE-1 (2024)</text>
+  <text x="220" y="392" class="small">1-layer transformer on verifier hidden states  ·  alpha ~ 0.75  ·  2.5x</text>
+
+  <text x="50" y="412" class="step">EAGLE-2 (2024)</text>
+  <text x="220" y="412" class="small">+ dynamic draft tree  ·  alpha ~ 0.85  ·  3x-4x</text>
+
+  <text x="50" y="432" class="step">EAGLE-3 (2025)</text>
+  <text x="220" y="432" class="small">drop feature loss  +  training-time test  ·  alpha ~ 0.90+  ·  3x-6.5x</text>
+
+  <text x="50" y="452" class="step">Medusa (2024)</text>
+  <text x="220" y="452" class="small">extra LM heads on verifier (no draft model)  ·  alpha ~ 0.70  ·  2x-3x</text>
+
+  <text x="480" y="500" text-anchor="middle" class="caption">output distribution = verifier distribution. exactly. the only variable is alpha and N.</text>
+</svg>

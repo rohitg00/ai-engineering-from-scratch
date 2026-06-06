@@ -1,0 +1,102 @@
+{
+  "lesson": "17-chatbots-rule-to-neural",
+  "title": "Chatbots — Rule-Based to Neural to LLM Agents",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does a slot-filling state machine do in a rule-based chatbot?",
+      "options": [
+        "Detects sarcasm",
+        "Picks the most fluent reply",
+        "Embeds the user message",
+        "Tracks which required parameters (date, destination, amount) are still missing and asks for them in sequence"
+      ],
+      "correct": 3,
+      "explanation": "Slot filling iteratively collects the structured parameters a task handler needs."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is retrieval-based chat resistant to hallucination?",
+      "options": [
+        "It uses embeddings",
+        "It rejects all queries",
+        "It returns a canned response from a curated set rather than generating new text",
+        "It uses BM25"
+      ],
+      "correct": 2,
+      "explanation": "Retrieval surfaces pre-written answers; no generation means no fabricated content."
+    },
+    {
+      "stage": "check",
+      "question": "What defines an LLM agent loop versus a single-shot LLM call?",
+      "options": [
+        "Use of greedy decoding",
+        "Use of softmax",
+        "A controller that interleaves LLM calls with tool invocations until the model returns a final answer or the step budget is hit",
+        "Bigger context window"
+      ],
+      "correct": 2,
+      "explanation": "Agents add a plan-act-observe loop with tool calls and a termination condition."
+    },
+    {
+      "stage": "check",
+      "question": "Why is hybrid routing (rules + retrieval + LLM agent) the 2026 production default?",
+      "options": [
+        "It is cheaper to maintain",
+        "It removes the need for evaluation",
+        "No single architecture handles every request well; rules cover destructive actions, retrieval covers FAQ, agents handle ambiguous open-ended queries",
+        "It avoids embeddings"
+      ],
+      "correct": 2,
+      "explanation": "Hybrid systems use deterministic rules for risky actions and reserve LLM agents for open-ended queries."
+    },
+    {
+      "stage": "check",
+      "question": "What is prompt injection?",
+      "options": [
+        "A SQL injection variant only",
+        "A type of tokenizer attack",
+        "Injecting tokens into embeddings",
+        "User-supplied (direct) or document-supplied (indirect) text that tries to override the system prompt or hijack the agent's behavior"
+      ],
+      "correct": 3,
+      "explanation": "Prompt injection rewrites the agent's behavior via untrusted text in user input or tool outputs."
+    },
+    {
+      "stage": "post",
+      "question": "Which OWASP Top 10 (LLM Apps 2025) risk is ranked LLM01?",
+      "options": [
+        "Prompt injection (direct and indirect)",
+        "Insecure deserialization",
+        "Broken access control",
+        "SQL injection"
+      ],
+      "correct": 0,
+      "explanation": "Prompt injection is LLM01 in the OWASP LLM Apps Top 10 (2025)."
+    },
+    {
+      "stage": "post",
+      "question": "What mitigation pattern reduces indirect prompt injection by separating planning from execution?",
+      "options": [
+        "Shorter context",
+        "Plan-Verify-Execute: the agent plans first, verifies each action against the plan, then executes — preventing tool outputs from injecting new unplanned actions",
+        "Bigger model",
+        "Lower temperature"
+      ],
+      "correct": 1,
+      "explanation": "PVE checks each step against the agreed plan, so injected instructions from tool outputs are rejected."
+    },
+    {
+      "stage": "post",
+      "question": "Why must destructive actions (payments, deletions) route through a structured flow even in an LLM-agent system?",
+      "options": [
+        "LLMs are slow",
+        "Beam search is unsafe",
+        "Tools cannot be called",
+        "Confident fabrication, prompt injection, and scope creep mean the LLM cannot be the sole authority for irreversible side effects"
+      ],
+      "correct": 3,
+      "explanation": "Hallucination and injection make irreversible actions through pure LLM agents unsafe; require deterministic confirmation flows."
+    }
+  ]
+}

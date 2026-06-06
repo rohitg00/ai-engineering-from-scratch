@@ -1,0 +1,78 @@
+{
+  "lesson": "28-alignment-research-ecosystem",
+  "title": "Alignment Research Ecosystem - MATS, Redwood, Apollo, METR",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does MATS do, and what is its rough scale?",
+      "options": [
+        "A reward-model training service",
+        "ML Alignment & Theory Scholars: a research mentorship program with 527+ scholars since 2021, 180+ papers, and roughly 80% of pre-2025 alumni working on safety/security",
+        "A regulatory body that issues AI export licenses",
+        "A frontier safety institute owned by the EU"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which agenda did Redwood Research introduce?",
+      "options": [
+        "Differential privacy for LLMs",
+        "AI Control (Lesson 10): safety despite subversion via U / T / H protocols",
+        "Watermarking via SynthID",
+        "Constitutional AI"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which organisation authored the In-Context Scheming paper and the 'Towards Safety Cases for AI Scheming' framework?",
+      "options": [
+        "METR",
+        "MATS",
+        "Eleos AI",
+        "Apollo Research"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is METR's distinctive methodological style in the alignment ecosystem?",
+      "options": [
+        "Adversarial training of base models",
+        "Task-based capability evaluations, autonomous-task time-horizon studies, and framework synthesis (e.g., 'Common Elements of Frontier AI Safety Policies')",
+        "Hardware-attested verifiable inference",
+        "Closed-source red-teaming only"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does multi-organisation co-authorship matter for safety claims?",
+      "options": [
+        "It increases citation counts",
+        "It speeds up publication",
+        "It is mandated by the EU AI Act",
+        "Labs evaluating their own models have a structural conflict of interest; external evaluators (Redwood, Apollo, METR, Eleos, UK AISI) can raise and validate failure modes the lab might underreport"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is Eleos AI Research's primary contribution to the ecosystem?",
+      "options": [
+        "AI Control benchmarks",
+        "Watermarking standards",
+        "California training-data law drafting",
+        "Pre-deployment model-welfare evaluations (Lesson 19), including the external welfare assessment in Claude Opus 4's system card"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

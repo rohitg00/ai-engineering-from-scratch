@@ -1,0 +1,78 @@
+{
+  "lesson": "45-gradient-clipping-amp",
+  "title": "Gradient Clipping and Mixed Precision",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What problem does global L2 gradient clipping solve?",
+      "options": [
+        "Slow training",
+        "A single bad batch can spike the gradient norm by orders of magnitude; clipping bounds the worst-case optimizer step so one batch cannot reset hours of learning",
+        "Vocabulary drift",
+        "Random restart"
+      ],
+      "correct": 1,
+      "explanation": "Clipping is the safety belt that keeps a noisy batch from wrecking the loss curve."
+    },
+    {
+      "stage": "check",
+      "question": "What is the correct order of GradScaler operations in a step?",
+      "options": [
+        "step, scale, unscale, backward, update",
+        "scaler.scale(loss).backward(); scaler.unscale_(optimizer); clip_grad_norm_; scaler.step(optimizer); scaler.update()",
+        "backward, step, scale, update",
+        "Any order; the scaler reorders internally"
+      ],
+      "correct": 1,
+      "explanation": "Clip on unscaled gradients between unscale_ and step; update always runs."
+    },
+    {
+      "stage": "check",
+      "question": "What does scaler.update() do on a skipped step?",
+      "options": [
+        "Nothing",
+        "Halves the scaling factor and resets the no-inf counter; forgetting to call it on the skip path is the bug that produces 'the scaling factor never changed'",
+        "Doubles the scaling factor",
+        "Closes the run"
+      ],
+      "correct": 1,
+      "explanation": "The scaler tunes its factor based on the skip / clean ratio across recent steps."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the loss finiteness check necessary even with a GradScaler?",
+      "options": [
+        "Because GradScaler is slow",
+        "GradScaler handles backward-pass overflow but a non-finite loss does not produce useful gradients; skipping before backward saves compute and avoids polluting the scaler's state",
+        "It is decorative",
+        "PyTorch requires it"
+      ],
+      "correct": 1,
+      "explanation": "Loss check covers forward-pass failures; scaler covers backward-pass failures."
+    },
+    {
+      "stage": "post",
+      "question": "What is the production signal in the rolling skip rate?",
+      "options": [
+        "Always page on any skip",
+        "A handful of skips per run is healthy; hundreds of skips per epoch (above roughly 5 percent rolling rate) is a hard alert that the model is in a regime FP16 cannot hold",
+        "Skip rate is irrelevant",
+        "Page only on consecutive skips"
+      ],
+      "correct": 1,
+      "explanation": "Rate-based alerting catches silent failure modes that occasional-skip pages would not."
+    },
+    {
+      "stage": "post",
+      "question": "Why switch from FP16 to BF16 autocast when skips are frequent?",
+      "options": [
+        "BF16 is newer",
+        "BF16 has a wider exponent range than FP16 and rarely needs loss scaling; the skip rate typically drops to zero on the same model",
+        "BF16 is slower so it skips less",
+        "Random tradition"
+      ],
+      "correct": 1,
+      "explanation": "FP16 favors mantissa precision over range; BF16 trades the other way, removing the overflow class entirely."
+    }
+  ]
+}

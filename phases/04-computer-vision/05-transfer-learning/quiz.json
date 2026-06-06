@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "You have 500 labelled images for a new task close to the ImageNet distribution. Which regime makes the most sense?",
+      "options": ["Train a ResNet-50 from scratch", "Freeze an ImageNet-pretrained backbone and train only a new linear head", "Fine-tune every layer with the same large LR", "Ignore pretrained weights; small datasets work best with small models"],
+      "correct": 1,
+      "explanation": "With 500 images you do not have enough signal to train a deep network from scratch or to safely fine-tune all layers end-to-end without destroying pretrained features. Freezing the backbone and training only a new head (linear probe) uses the pretrained features directly and is the standard recipe for small, close-domain datasets."
+    },
+    {
+      "stage": "pre",
+      "question": "Why do early conv layers of an ImageNet-pretrained network transfer well to medical images even though ImageNet contains no X-rays?",
+      "options": ["PyTorch re-initialises early layers automatically", "Early layers encode generic visual primitives — edges, orientations, contrast — that are shared across almost any visual domain; only late layers specialise to ImageNet categories", "ImageNet secretly contains medical data", "Transfer only works when domains match"],
+      "correct": 1,
+      "explanation": "Gabor-like filters and simple texture detectors are the features early CNN layers learn on any natural-image corpus. They reflect the statistics of light, shadow, and edges that hold across photography, medical imaging, microscopy, and satellite data. Late layers progressively specialise, which is why fine-tuning focuses on the last few blocks."
+    },
+    {
+      "stage": "post",
+      "question": "When fine-tuning end-to-end with discriminative learning rates, why should early layers get a smaller LR than late layers?",
+      "options": ["Early layers have fewer parameters", "Early layers encode general features you want to preserve; late layers encode task-specific features that must move; a smaller LR on early layers prevents feature drift and catastrophic forgetting", "PyTorch requires layer-wise LR for correctness", "A smaller LR in the early layers speeds up training"],
+      "correct": 1,
+      "explanation": "Early layers already encode the right visual primitives; you want tiny updates so those features are preserved. Late layers need to move toward the new task. One learning rate for the whole model forces a compromise that hurts both ends. Discriminative LRs let each stage move at its own pace, which is the empirical sweet spot for fine-tuning."
+    },
+    {
+      "stage": "post",
+      "question": "You fine-tune a ResNet on a 10-class medical dataset of 800 grayscale images (replicated to 3 channels). Accuracy is 10% (random chance for 10 classes). What is the most likely cause?",
+      "options": ["You used the wrong loss function", "BatchNorm running statistics are from ImageNet RGB photos and badly mismatch the grayscale-medical distribution, so the first few BN layers produce noise that propagates forward", "ResNet cannot handle grayscale input", "800 images is simply too few for any transfer learning"],
+      "correct": 1,
+      "explanation": "BatchNorm keeps running_mean and running_var from ImageNet. On a small, distribution-shifted dataset those buffers never adapt fast enough during a short fine-tune, and BN normalises activations with the wrong stats. Fixes: freeze BN statistics, switch to GroupNorm, or pretrain BN stats with a BN-only warmup pass on the target dataset."
+    },
+    {
+      "stage": "post",
+      "question": "You compare two runs: (a) linear probe on frozen ImageNet backbone, 82% accuracy; (b) end-to-end fine-tune, 78% accuracy. What should you conclude?",
+      "options": ["Fine-tuning is not helpful; ship the linear probe", "A fine-tune that ends below the linear probe is almost always a training bug — LR too high, BN mishandled, or scheduler/optimizer misconfigured; diagnose before concluding anything about transfer", "The dataset is too large", "Pretrained weights are bad"],
+      "correct": 1,
+      "explanation": "Fine-tuning should always beat or match the linear probe, since the linear probe is a special case of fine-tuning with backbone LR = 0. If fine-tune is worse, the pipeline is actively destroying pretrained features. The fix is to lower backbone LR, apply discriminative LRs, or freeze BN — not to abandon fine-tuning."
+    }
+  ]
+}

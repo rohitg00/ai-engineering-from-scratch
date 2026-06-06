@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">StyleGAN: mapping network + AdaIN + per-layer noise</text>
+
+  <!-- mapping network -->
+  <rect x="30" y="90" width="80" height="40" class="box"/>
+  <text x="70" y="114" text-anchor="middle" class="mono">z ~ N(0, I)</text>
+
+  <line x1="110" y1="110" x2="140" y2="110" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="140" y="80" width="130" height="60" class="cold"/>
+  <text x="205" y="108" text-anchor="middle" class="label">mapping f(z)</text>
+  <text x="205" y="126" text-anchor="middle" class="caption">8-layer MLP</text>
+
+  <line x1="270" y1="110" x2="310" y2="110" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="310" y="90" width="60" height="40" class="hot"/>
+  <text x="340" y="114" text-anchor="middle" class="mono">w &#8712; W</text>
+
+  <!-- synthesis -->
+  <rect x="380" y="60" width="470" height="260" class="box"/>
+  <text x="615" y="82" text-anchor="middle" class="label">synthesis g(const, w, noise)</text>
+
+  <rect x="400" y="100" width="80" height="30" class="hot"/>
+  <text x="440" y="120" text-anchor="middle" class="mono">const 4&#215;4&#215;512</text>
+
+  <line x1="440" y1="130" x2="440" y2="160" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="400" y="160" width="80" height="30" class="box"/>
+  <text x="440" y="180" text-anchor="middle" class="content">conv 3&#215;3</text>
+
+  <line x1="440" y1="190" x2="440" y2="220" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="400" y="220" width="80" height="30" class="cold"/>
+  <text x="440" y="240" text-anchor="middle" class="content">AdaIN(w)</text>
+
+  <line x1="480" y1="235" x2="530" y2="235" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="530" y="220" width="80" height="30" class="box"/>
+  <text x="570" y="240" text-anchor="middle" class="content">+ noise</text>
+
+  <line x1="610" y1="235" x2="660" y2="235" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="660" y="220" width="60" height="30" class="box"/>
+  <text x="690" y="240" text-anchor="middle" class="content">up 2x</text>
+
+  <line x1="720" y1="235" x2="760" y2="235" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="3,3"/>
+  <text x="790" y="240" text-anchor="middle" class="caption">...repeat to 1024</text>
+
+  <!-- AdaIN formula -->
+  <rect x="380" y="280" width="470" height="30" class="hot"/>
+  <text x="615" y="300" text-anchor="middle" class="mono">AdaIN(x, w) = scale(w) &#183; (x - &#956;) / &#963;  +  bias(w)</text>
+
+  <!-- w injection arrows -->
+  <path d="M 340,130 Q 360,200 400,235" fill="none" stroke="#2c5f8c" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+
+  <!-- truncation -->
+  <rect x="30" y="360" width="400" height="130" class="box"/>
+  <text x="230" y="385" text-anchor="middle" class="label">truncation trick</text>
+  <text x="230" y="408" text-anchor="middle" class="mono">w&#8242; = w&#772; + &#968; &#183; (w - w&#772;)</text>
+  <text x="230" y="432" text-anchor="middle" class="caption">&#968; = 1.0 &#8594; full diversity, occasional glitches</text>
+  <text x="230" y="452" text-anchor="middle" class="caption">&#968; = 0.7 &#8594; default demo setting</text>
+  <text x="230" y="472" text-anchor="middle" class="caption">&#968; = 0.0 &#8594; mean image, no variation</text>
+
+  <!-- version evolution -->
+  <rect x="460" y="360" width="400" height="130" class="cold"/>
+  <text x="660" y="385" text-anchor="middle" class="label">v1 &#8594; v2 &#8594; v3</text>
+  <text x="660" y="408" text-anchor="middle" class="caption">v2: weight demodulation, no droplets</text>
+  <text x="660" y="428" text-anchor="middle" class="caption">v3: alias-free conv, no texture sticking</text>
+  <text x="660" y="448" text-anchor="middle" class="caption">XL: conditional ImageNet</text>
+  <text x="660" y="468" text-anchor="middle" class="caption">R3GAN (2024): minimal recipe, 20x fewer params</text>
+</svg>

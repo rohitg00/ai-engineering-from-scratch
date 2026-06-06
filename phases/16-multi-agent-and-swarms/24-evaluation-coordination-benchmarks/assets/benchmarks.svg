@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="28" text-anchor="middle" class="title">2025-2026 multi-agent benchmarks and what each measures</text>
+
+  <rect x="40" y="60" width="880" height="220" class="box"/>
+  <text x="480" y="84" text-anchor="middle" class="head">the five canonical benchmarks</text>
+
+  <rect x="60" y="110" width="170" height="150" class="cool"/>
+  <text x="145" y="134" text-anchor="middle" class="step">MultiAgentBench</text>
+  <text x="145" y="152" text-anchor="middle" class="step">(MARBLE)</text>
+  <text x="145" y="174" text-anchor="middle" class="small">topologies:</text>
+  <text x="145" y="190" text-anchor="middle" class="small">star/chain/tree/graph</text>
+  <text x="145" y="212" text-anchor="middle" class="small">graph wins research</text>
+  <text x="145" y="230" text-anchor="middle" class="small">coord-tax past ~4</text>
+  <text x="145" y="252" text-anchor="middle" class="caption">ACL 2025</text>
+
+  <rect x="240" y="110" width="170" height="150" class="hot"/>
+  <text x="325" y="134" text-anchor="middle" class="step">COMMA</text>
+  <text x="325" y="174" text-anchor="middle" class="small">multimodal,</text>
+  <text x="325" y="190" text-anchor="middle" class="small">asymmetric info</text>
+  <text x="325" y="212" text-anchor="middle" class="small">GPT-4o struggles</text>
+  <text x="325" y="230" text-anchor="middle" class="small">to beat random</text>
+  <text x="325" y="252" text-anchor="middle" class="caption">null-result signal</text>
+
+  <rect x="420" y="110" width="170" height="150" class="cold"/>
+  <text x="505" y="134" text-anchor="middle" class="step">MedAgentBoard</text>
+  <text x="505" y="174" text-anchor="middle" class="small">4 medical tasks</text>
+  <text x="505" y="190" text-anchor="middle" class="small">single-LLM often</text>
+  <text x="505" y="212" text-anchor="middle" class="small">matches multi-agent</text>
+  <text x="505" y="230" text-anchor="middle" class="small">over-engineering check</text>
+  <text x="505" y="252" text-anchor="middle" class="caption">domain stress test</text>
+
+  <rect x="600" y="110" width="170" height="150" class="cool"/>
+  <text x="685" y="134" text-anchor="middle" class="step">AgentArch</text>
+  <text x="685" y="174" text-anchor="middle" class="small">tools + memory +</text>
+  <text x="685" y="190" text-anchor="middle" class="small">orchestration</text>
+  <text x="685" y="212" text-anchor="middle" class="small">per-layer value</text>
+  <text x="685" y="230" text-anchor="middle" class="small">attribution</text>
+  <text x="685" y="252" text-anchor="middle" class="caption">enterprise stack</text>
+
+  <rect x="780" y="110" width="140" height="150" class="hot"/>
+  <text x="850" y="134" text-anchor="middle" class="step">SWE-bench Pro</text>
+  <text x="850" y="174" text-anchor="middle" class="small">1865 problems</text>
+  <text x="850" y="190" text-anchor="middle" class="small">~23% vs 70%+ on</text>
+  <text x="850" y="212" text-anchor="middle" class="small">Verified</text>
+  <text x="850" y="230" text-anchor="middle" class="small">contamination</text>
+  <text x="850" y="252" text-anchor="middle" class="caption">gating 2026 test</text>
+
+  <rect x="40" y="290" width="880" height="210" class="box"/>
+  <text x="480" y="314" text-anchor="middle" class="head">read benchmark claims skeptically</text>
+
+  <text x="60" y="346" class="step">[1]</text>
+  <text x="120" y="346" class="small">which benchmark + split? Verified vs Pro is a 40-point gap for frontier models</text>
+
+  <text x="60" y="372" class="step">[2]</text>
+  <text x="120" y="372" class="small">contamination: is the benchmark post-training-cutoff?</text>
+
+  <text x="60" y="398" class="step">[3]</text>
+  <text x="120" y="398" class="small">baselines: vs single-LLM, vs random, vs prior multi-agent</text>
+
+  <text x="60" y="424" class="step">[4]</text>
+  <text x="120" y="424" class="small">statistical significance: N trials, CI, p-value</text>
+
+  <text x="60" y="450" class="step">[5]</text>
+  <text x="120" y="450" class="small">task diversity: one task or many — generalization matters</text>
+
+  <text x="60" y="476" class="step">[6]</text>
+  <text x="120" y="476" class="small">cost disclosure: tokens + wall-clock — 20x cost for 10% lift is a business decision</text>
+</svg>

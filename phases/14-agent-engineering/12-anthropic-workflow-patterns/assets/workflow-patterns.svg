@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .chain { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .route { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .par { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .orch { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .eval { fill: #fde8e8; stroke: #c0392b; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Anthropic's five workflow patterns (Dec 2024)</text>
+
+  <rect x="40" y="50" width="880" height="110" class="chain"/>
+  <text x="480" y="72" text-anchor="middle" class="head">1. prompt chaining — sequential, optional programmatic gate</text>
+  <rect x="60" y="88" width="140" height="40" class="box"/>
+  <text x="130" y="112" text-anchor="middle" class="step">LLM A</text>
+  <rect x="220" y="88" width="140" height="40" class="box"/>
+  <text x="290" y="112" text-anchor="middle" class="step">gate: pass?</text>
+  <rect x="380" y="88" width="140" height="40" class="box"/>
+  <text x="450" y="112" text-anchor="middle" class="step">LLM B</text>
+  <rect x="540" y="88" width="140" height="40" class="box"/>
+  <text x="610" y="112" text-anchor="middle" class="step">LLM C</text>
+  <rect x="700" y="88" width="200" height="40" class="box"/>
+  <text x="800" y="112" text-anchor="middle" class="step">output</text>
+  <line x1="200" y1="108" x2="220" y2="108" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="360" y1="108" x2="380" y2="108" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="520" y1="108" x2="540" y2="108" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="680" y1="108" x2="700" y2="108" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="480" y="150" text-anchor="middle" class="small">use when: task has clean linear decomposition</text>
+
+  <rect x="40" y="170" width="880" height="110" class="route"/>
+  <text x="480" y="192" text-anchor="middle" class="head">2. routing — classifier dispatches to specialist handlers</text>
+  <rect x="60" y="208" width="160" height="40" class="box"/>
+  <text x="140" y="232" text-anchor="middle" class="step">classifier LLM</text>
+  <rect x="260" y="208" width="160" height="40" class="box"/>
+  <text x="340" y="232" text-anchor="middle" class="step">refund chain</text>
+  <rect x="440" y="208" width="160" height="40" class="box"/>
+  <text x="520" y="232" text-anchor="middle" class="step">bug chain</text>
+  <rect x="620" y="208" width="160" height="40" class="box"/>
+  <text x="700" y="232" text-anchor="middle" class="step">sales chain</text>
+  <line x1="220" y1="228" x2="260" y2="228" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="480" y="270" text-anchor="middle" class="small">use when: categorically different inputs need different handling</text>
+
+  <rect x="40" y="290" width="440" height="150" class="par"/>
+  <text x="260" y="312" text-anchor="middle" class="head">3. parallelization — sectioning or voting</text>
+  <rect x="60" y="328" width="120" height="40" class="box"/>
+  <text x="120" y="352" text-anchor="middle" class="step">LLM 1</text>
+  <rect x="60" y="376" width="120" height="40" class="box"/>
+  <text x="120" y="400" text-anchor="middle" class="step">LLM 2</text>
+  <rect x="200" y="352" width="140" height="40" class="box"/>
+  <text x="270" y="376" text-anchor="middle" class="step">LLM 3</text>
+  <rect x="360" y="352" width="100" height="40" class="box"/>
+  <text x="410" y="376" text-anchor="middle" class="step">aggregate</text>
+  <text x="260" y="430" text-anchor="middle" class="small">voting: majority / synthesis</text>
+
+  <rect x="500" y="290" width="420" height="150" class="orch"/>
+  <text x="710" y="312" text-anchor="middle" class="head">4. orchestrator-workers — dynamic dispatch</text>
+  <rect x="520" y="328" width="140" height="40" class="box"/>
+  <text x="590" y="352" text-anchor="middle" class="step">orchestrator</text>
+  <rect x="680" y="328" width="100" height="40" class="box"/>
+  <text x="730" y="352" text-anchor="middle" class="step">worker A</text>
+  <rect x="800" y="328" width="100" height="40" class="box"/>
+  <text x="850" y="352" text-anchor="middle" class="step">worker B</text>
+  <rect x="680" y="376" width="220" height="40" class="box"/>
+  <text x="790" y="400" text-anchor="middle" class="step">synth</text>
+  <line x1="660" y1="348" x2="680" y2="348" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="710" y="430" text-anchor="middle" class="small">like agent but orchestrator does not loop indefinitely</text>
+
+  <rect x="40" y="450" width="880" height="120" class="eval"/>
+  <text x="480" y="472" text-anchor="middle" class="head">5. evaluator-optimizer — propose, judge, refine</text>
+  <rect x="60" y="488" width="160" height="40" class="box"/>
+  <text x="140" y="512" text-anchor="middle" class="step">proposer LLM</text>
+  <rect x="260" y="488" width="160" height="40" class="box"/>
+  <text x="340" y="512" text-anchor="middle" class="step">evaluator LLM</text>
+  <rect x="460" y="488" width="160" height="40" class="box"/>
+  <text x="540" y="512" text-anchor="middle" class="step">pass  output</text>
+  <rect x="660" y="488" width="240" height="40" class="box"/>
+  <text x="780" y="512" text-anchor="middle" class="step">fail  feedback loops to proposer</text>
+  <line x1="220" y1="508" x2="260" y2="508" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="420" y1="508" x2="460" y2="508" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="480" y="556" text-anchor="middle" class="small">Self-Refine (Lesson 05) generalized; CRITIC pattern if evaluator grounds on external tools</text>
+
+  <text x="480" y="600" text-anchor="middle" class="caption">five patterns cover most use cases. agents only when steps cannot be predicted.</text>
+</svg>

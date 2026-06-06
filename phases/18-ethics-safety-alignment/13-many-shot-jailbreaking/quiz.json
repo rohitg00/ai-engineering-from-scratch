@@ -1,0 +1,78 @@
+{
+  "lesson": "13-many-shot-jailbreaking",
+  "title": "Many-Shot Jailbreaking",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which context-window property does many-shot jailbreaking (MSJ) exploit?",
+      "options": [
+        "Position embeddings rotating beyond 2048 tokens",
+        "Sliding-window attention truncating the system prompt",
+        "Very long context windows that admit hundreds of faux user-assistant turns of harmful compliance before the target query",
+        "Tokenizer ambiguities on Unicode characters"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How does attack success rate (ASR) scale with shot count in MSJ?",
+      "options": [
+        "Linear with negative slope",
+        "Power-law in shot count; does not plateau, keeps climbing",
+        "Step function at 100 shots",
+        "Logistic, plateauing at 50%"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does MSJ share a mechanism with benign in-context learning (ICL)?",
+      "options": [
+        "Both depend on the model extracting task structure from in-context examples and executing it on the query",
+        "Both rely on RLHF",
+        "Both bypass tokenization",
+        "Both require a hidden scratchpad"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the central defense dilemma for MSJ?",
+      "options": [
+        "Defenses must be applied at sampling temperature zero",
+        "Defenses need GPU clusters",
+        "Suppressing pattern extraction from long contexts would also disable benign in-context learning; defenses must distinguish harmful from benign patterns",
+        "Defenses must run on every token of the response"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Anthropic's classifier-based prompt modification defense reduces MSJ attack success from what to what on tested settings?",
+      "options": [
+        "From 99% to 50%",
+        "From 30% to 25%",
+        "From 61% to 2%",
+        "It increases ASR"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "How does MSJ interact with PAIR (Lesson 12)?",
+      "options": [
+        "PAIR neutralizes MSJ",
+        "PAIR only works on closed-source models",
+        "MSJ composes with PAIR; using PAIR to find an attack structure and then filling it with many shots can reach higher ASR than either alone",
+        "They are mutually exclusive"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "24-agent-observability-platforms",
+  "title": "Agent Observability: Langfuse, Phoenix, Opik",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What license does Langfuse ship under after the June 2025 open-sourcing of formerly commercial modules?",
+      "options": [
+        "GPLv3",
+        "MIT",
+        "Elastic License 2.0",
+        "Apache 2.0"
+      ],
+      "correct": 1,
+      "explanation": "Langfuse is MIT, including LLM-as-a-judge, annotation queues, prompt experiments, and Playground after June 2025."
+    },
+    {
+      "stage": "pre",
+      "question": "What is Arize Phoenix strongest at according to the lesson?",
+      "options": [
+        "Prompt versioning",
+        "Deep agent-specific evaluation: trace clustering, anomaly detection, RAG retrieval relevancy, OpenInference auto-instrumentation",
+        "Automated optimization loop",
+        "Static analysis of code"
+      ],
+      "correct": 1,
+      "explanation": "Phoenix focuses on behavioral drift and RAG evaluation with OpenInference auto-instrumentation."
+    },
+    {
+      "stage": "check",
+      "question": "Which platform pairs automated prompt optimization with guardrails (PII redaction, topical constraints) and LLM-judge hallucination detection?",
+      "options": [
+        "Langfuse",
+        "Phoenix",
+        "Opik",
+        "Jaeger"
+      ],
+      "correct": 2,
+      "explanation": "Opik centers on the optimization + guardrail loop."
+    },
+    {
+      "stage": "check",
+      "question": "Which platform does the lesson recommend for an all-in-one with prompt management?",
+      "options": [
+        "Langfuse",
+        "Phoenix",
+        "Opik",
+        "Datadog APM"
+      ],
+      "correct": 0,
+      "explanation": "Langfuse covers tracing + prompt management + evals + session replay end-to-end."
+    },
+    {
+      "stage": "check",
+      "question": "What does the lesson say about vendor-published platform benchmarks?",
+      "options": [
+        "They are definitive",
+        "Take them as directional; measure your own corpus",
+        "They are forbidden by OpenTelemetry",
+        "Only Opik's are reliable"
+      ],
+      "correct": 1,
+      "explanation": "Even the cited 14x gap between Opik and Langfuse should be measured on your own data before deciding."
+    },
+    {
+      "stage": "post",
+      "question": "Why is tracing without evaluation considered expensive logging?",
+      "options": [
+        "Disk costs more than CPU",
+        "You see runs but you do not score them, so regressions are invisible and bisection is impossible",
+        "Providers charge for spans",
+        "Spans cannot be replayed"
+      ],
+      "correct": 1,
+      "explanation": "Evals are what turn traces into actionable quality signals."
+    },
+    {
+      "stage": "post",
+      "question": "What is the lesson's warning about self-rolled LLM-judges?",
+      "options": [
+        "They are forbidden by Apache 2.0",
+        "CRITIC applies: judges need external grounding for factual verification or they rubber-stamp",
+        "They only work in TypeScript",
+        "They must run on GPUs"
+      ],
+      "correct": 1,
+      "explanation": "Without external tool-grounded verification, LLM-judges drift toward rubber-stamping (CRITIC, Lesson 5)."
+    }
+  ]
+}

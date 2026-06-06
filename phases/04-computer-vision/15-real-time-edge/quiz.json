@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "You benchmark a model and report 'average 12ms per image on a 4090'. What is missing?",
+      "options": ["Nothing; that is a complete benchmark", "Percentiles (p50/p95/p99), warmup discipline, and CUDA synchronisation; a mean alone hides tail latency and may measure kernel dispatch instead of kernel execution", "The model size", "The dataset name"],
+      "correct": 1,
+      "explanation": "Production latency is measured in percentiles because real-time systems fail on tails, not averages. Without warmup, JIT compilation inflates the first few measurements. Without torch.cuda.synchronize, GPU kernel launches return before the kernel finishes, so you measure dispatch, not execution. All three have to be right for the number to be meaningful."
+    },
+    {
+      "stage": "pre",
+      "question": "FLOPs and on-device latency do not correlate perfectly. Why?",
+      "options": ["FLOPs counters are broken", "Different operations have different hardware friendliness; depthwise convolutions may have lower FLOPs but are memory-bound on GPUs, while dense convolutions use Tensor Cores efficiently. Memory bandwidth, kernel launch overhead, and cache behaviour also shape latency beyond raw FLOPs", "FLOPs ignore batch size", "PyTorch counts FLOPs incorrectly"],
+      "correct": 1,
+      "explanation": "FLOPs is a cheap proxy. Wall-clock latency depends on how well an operation matches the hardware's strengths: dense matmuls pin Tensor Cores; depthwise convs stall on memory bandwidth; attention stalls on sequence-length^2 memory reads. For architecture search FLOPs is useful; for deployment decisions measure on the target device."
+    },
+    {
+      "stage": "post",
+      "question": "Post-training static INT8 quantisation typically loses how much accuracy on ImageNet-class vision models?",
+      "options": ["5-10 percentage points", "0.1-1 percentage points when properly calibrated; batch-norm-fused conv models are particularly well-behaved under INT8", "Always 0; it is lossless", "20+ points; unusable"],
+      "correct": 1,
+      "explanation": "Static PTQ on well-calibrated vision models loses a fraction of a point to about 1 point. The bigger loss modes are (a) insufficient calibration data, (b) quantising activations with extreme outliers (fix with per-channel quantisation or clipping), (c) un-fused BatchNorm layers. When those are handled, INT8 is essentially free."
+    },
+    {
+      "stage": "post",
+      "question": "Your mobile app needs a vision model under 10MB with sub-10ms latency. Which backbone do you pick?",
+      "options": ["ResNet-50", "MobileNetV3-Small or EfficientNet-Lite-B0 quantised to INT8; both target this budget and compile cleanly to TFLite / Core ML", "ViT-Base", "ConvNeXt-Large"],
+      "correct": 1,
+      "explanation": "Mobile vision shipping in 2026 is still dominated by MobileNetV3 and EfficientNet-Lite variants because they were designed for this budget: depthwise convs, h-swish, squeeze-excite, quantisation-aware from day one. ResNet-50 and ViT-Base are 100MB+ in FP32 and 25MB+ in INT8, blowing the size budget before latency is even measured."
+    },
+    {
+      "stage": "post",
+      "question": "You export a PyTorch model to ONNX with opset 17 and it fails with 'Unsupported operator'. What are the most likely causes?",
+      "options": ["The ONNX library is outdated", "(1) A custom op that has no ONNX mapping; (2) a non-deterministic control-flow path that tracing cannot capture; (3) a tensor-scalar interaction that is implicit in Python but has no ONNX equivalent. Fixes: replace the op, use `torch.jit.script` for control flow, or upgrade opset", "The model has too many parameters", "The input shape is wrong"],
+      "correct": 1,
+      "explanation": "ONNX export is tracing by default, so anything that tracing cannot capture — runtime control flow, Python-level branches, custom CUDA ops — fails. Most failures are a single node that has no ONNX equivalent (often a tiny custom op or a call to torch.special.*). The fix is either replacing the op, switching to `torch.jit.script`, or moving to a newer opset where the op exists."
+    }
+  ]
+}

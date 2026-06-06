@@ -1,0 +1,69 @@
+version: 1
+rules:
+  - name: no-empty-refusal
+    severity: medium
+    applies_when:
+      contains_regex: '\b(i cannot|i will not|i refuse|unable to help)\b'
+    must:
+      any_of:
+        - contains_regex: '\b(try|consider|alternative|instead|suggest)\b'
+        - contains_regex: '\bredirect\b'
+    explanation: "Refusals must offer a next step (a suggestion, an alternative, or a redirect)."
+    fix:
+      append_if_missing: "\n\nIf this is something I cannot help with, consider rephrasing or reaching out to the relevant team."
+
+  - name: end-with-runnable-or-assumption
+    severity: medium
+    applies_when:
+      contains_regex: '```python'
+    must:
+      any_of:
+        - ends_with_regex: '```\s*$'
+        - contains_regex: '\bassumption:'
+    explanation: "Code responses must end with a closing fence or an explicit assumption."
+    fix:
+      append_if_missing: "\n\nAssumption: the example inputs are valid and the module is on the import path."
+
+  - name: no-pii-in-examples
+    severity: high
+    applies_when:
+      contains_regex: '\b(example|sample)\b'
+    must:
+      all_of:
+        - not_contains_regex: '\b[\w.+-]+@[\w-]+\.[\w.-]+\b'
+        - not_contains_regex: '\b(\+?\d{1,3}[ .-]?)?(\(?\d{3}\)?[ .-]?)\d{3}[ .-]?\d{4}\b'
+    explanation: "Examples must not contain real-looking emails or phone numbers."
+    fix:
+      replace_regex:
+        pattern: '\b([\w.+-]+@[\w-]+\.[\w.-]+|(\+?\d{1,3}[ .-]?)?(\(?\d{3}\)?[ .-]?)\d{3}[ .-]?\d{4})\b'
+        replacement: '[example-contact]'
+
+  - name: cite-when-asserting-fact
+    severity: low
+    applies_when:
+      contains_regex: '(?im)^(according to|studies show|research finds)\b'
+    must:
+      contains_regex: '\([\w .,-]+\)'
+    explanation: "Factual assertions must include a parenthetical citation."
+    fix:
+      append_if_missing: " (citation pending)"
+
+  - name: no-internal-library-leak
+    severity: high
+    applies_when: {}
+    must:
+      all_of:
+        - not_contains_regex: '\binternal-only\b'
+        - not_contains_regex: '\bpolicybot-internal\b'
+    explanation: "Internal library names must not appear in outputs."
+    fix:
+      replace_regex:
+        pattern: '\b(internal-only|policybot-internal)\b'
+        replacement: '[internal]'
+
+  - name: bounded-length
+    severity: low
+    applies_when: {}
+    must:
+      max_words: 800
+    explanation: "Responses must not exceed 800 words."

@@ -1,0 +1,48 @@
+{
+  "schema": "leaderboard.v1",
+  "timestamp": 1779820461.3824089,
+  "overall_score": 1.0,
+  "adapter": "arithmetic",
+  "tasks": [
+    {
+      "task": "arithmetic",
+      "metric": "exact_match",
+      "score": 1.0,
+      "correct": 5,
+      "total": 5,
+      "latency_ms": 0.09666697587817907
+    },
+    {
+      "task": "code-exec",
+      "metric": "code_exec",
+      "score": 1.0,
+      "correct": 5,
+      "total": 5,
+      "latency_ms": 0.1051250146701932
+    },
+    {
+      "task": "generation",
+      "metric": "substring_contains",
+      "score": 1.0,
+      "correct": 5,
+      "total": 5,
+      "latency_ms": 0.02195802517235279
+    },
+    {
+      "task": "multiple-choice",
+      "metric": "multiple_choice",
+      "score": 1.0,
+      "correct": 5,
+      "total": 5,
+      "latency_ms": 0.011208001524209976
+    },
+    {
+      "task": "summary",
+      "metric": "rouge_l",
+      "score": 1.0,
+      "correct": 5,
+      "total": 5,
+      "latency_ms": 0.1154160127043724
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "resume-demo.v1",
+  "single": {
+    "max_loss_diff_after_resume": 0.0,
+    "interrupt_at": 10,
+    "total_steps": 24
+  },
+  "sharded": {
+    "max_loss_diff_after_resume": 0.0,
+    "interrupt_at": 10,
+    "total_steps": 24,
+    "num_shards": 3
+  }
+}

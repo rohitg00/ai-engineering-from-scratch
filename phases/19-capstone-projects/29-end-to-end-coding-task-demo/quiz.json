@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/29-end-to-end-coding-task-demo",
+  "title": "End-to-End Coding Agent on the Harness",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before reading the lesson: why does the end-to-end demo replace the LLM with a deterministic policy?",
+      "options": [
+        "The LLM is too slow to run in tests.",
+        "The harness is what the lesson is testing; the policy is the substitutable seam.",
+        "Deterministic policies always outperform LLMs on coding tasks.",
+        "The lesson cannot afford the inference cost."
+      ],
+      "correct": 1,
+      "explanation": "The harness contract does not care whether the policy is an LLM or a state machine. Removing the LLM removes the network and the variance and turns the lesson into a reproducible integration test."
+    },
+    {
+      "stage": "check",
+      "question": "The agent's state machine has five states. In what order does it execute them on a normal pass?",
+      "options": [
+        "SURVEY -> FIX -> VERIFY -> RUN_TESTS -> INSPECT.",
+        "SURVEY -> RUN_TESTS -> INSPECT -> FIX -> VERIFY.",
+        "RUN_TESTS -> SURVEY -> INSPECT -> FIX -> VERIFY.",
+        "SURVEY -> INSPECT -> FIX -> RUN_TESTS -> VERIFY."
+      ],
+      "correct": 1,
+      "explanation": "The agent surveys the project, runs the tests, inspects the failing test, fixes the bug, then verifies. RUN_TESTS comes before INSPECT because the test failure is the signal the policy reads."
+    },
+    {
+      "stage": "check",
+      "question": "The bundled fixture's bug is an off-by-one in src/fizz.py: range(1, n) instead of range(1, n + 1). Where does the policy decide to apply the fix?",
+      "options": [
+        "Inside the SURVEY state, by reading the file header.",
+        "Inside the INSPECT state, after the test failure has named the expected output.",
+        "Inside the VERIFY state, after the rerun.",
+        "Outside the state machine, in the gate chain."
+      ],
+      "correct": 1,
+      "explanation": "INSPECT is where the policy reads the failing test and learns the expected shape. The fix is identified there and written in the next FIX state."
+    },
+    {
+      "stage": "check",
+      "question": "Every tool call goes through what chain of components in order?",
+      "options": [
+        "Sandbox -> GateChain -> SpanBuilder -> ObservationLedger.",
+        "GateChain -> SpanBuilder -> Sandbox -> ObservationLedger.",
+        "SpanBuilder -> GateChain -> Sandbox -> ObservationLedger.",
+        "ObservationLedger -> GateChain -> Sandbox -> SpanBuilder."
+      ],
+      "correct": 1,
+      "explanation": "Gate first (allow / refuse), span next (so the refusal is also captured), sandbox third (only if allowed), ledger last (only on success). The lesson code wires it that way."
+    },
+    {
+      "stage": "post",
+      "question": "You replace the deterministic policy with a real LLM. Which harness component changes?",
+      "options": [
+        "The gate chain has to be rewritten to handle LLM stochasticity.",
+        "The sandbox has to be hardened with seccomp.",
+        "Nothing in the harness changes; the policy is the only piece that swaps.",
+        "The Prometheus exposition format becomes incompatible."
+      ],
+      "correct": 2,
+      "explanation": "The lesson's point: the harness is policy-agnostic. The seam is the next_action / observe interface. The LLM plugs in there without touching gate, sandbox, ledger, or spans."
+    },
+    {
+      "stage": "post",
+      "question": "The demo asserts the agent solves the fixture in fewer than 12 steps. The deterministic policy uses 5. What is a real-LLM agent likely to do, and how does the harness handle it?",
+      "options": [
+        "The LLM uses 5 steps too; the harness is unchanged.",
+        "The LLM may use more steps; the step_budget bounds the loop and an unsolved run is reported as a failure with a halted_reason.",
+        "The LLM cannot run inside this harness.",
+        "The harness silently extends the budget."
+      ],
+      "correct": 1,
+      "explanation": "The step budget is the loud, deterministic stopping criterion. An LLM that wanders gets capped and the report tells you exactly why."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "67-query-rewriting-hyde",
+  "title": "Query Rewriting: HyDE, Multi-Query, and Decomposition",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the core mechanism of HyDE (Hypothetical Document Embeddings)?",
+      "options": [
+        "Embed the user query through a larger model",
+        "Generate a fake answer with an LLM, embed that hypothetical document, and retrieve against its vector instead of the query vector",
+        "Run the query through multiple retrievers and pick the best one",
+        "Hash the query and look it up in a cache"
+      ],
+      "correct": 1,
+      "explanation": "HyDE writes a document-shaped passage in the corpus voice and retrieves on that embedding; the query vector is replaced."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is it acceptable for the LLM-generated hypothetical document in HyDE to be factually wrong?",
+      "options": [
+        "The reranker repairs factual errors",
+        "The retriever cares about the token distribution, not factual correctness; the hypothetical's vector lands near the real passage",
+        "The user never sees the hypothetical",
+        "The LLM call is rolled back when wrong"
+      ],
+      "correct": 1,
+      "explanation": "Retrieval is similarity in embedding space; if the hypothetical's vocabulary matches the corpus, the vector lands in the right region."
+    },
+    {
+      "stage": "check",
+      "question": "What is the difference between multi-query expansion and query decomposition?",
+      "options": [
+        "Multi-query produces N paraphrases of the same question; decomposition produces sub-questions that together cover a multi-topic question",
+        "Multi-query uses cosine; decomposition uses BM25",
+        "Decomposition runs locally; multi-query requires a remote model",
+        "They are identical"
+      ],
+      "correct": 0,
+      "explanation": "Paraphrases preserve intent; sub-questions split a multi-topic query into independently answerable pieces."
+    },
+    {
+      "stage": "check",
+      "question": "When does query decomposition over-split and hurt retrieval?",
+      "options": [
+        "When the query is atomic (single-topic), the decomposer invents fake sub-questions and the retrievals all return the same document with reduced rank",
+        "When the query is too long for the LLM",
+        "When the corpus is too small",
+        "When BM25 is disabled"
+      ],
+      "correct": 0,
+      "explanation": "Decomposing an atomic query splits it into fake sub-questions; their retrievals dilute the merge so the right document ranks lower."
+    },
+    {
+      "stage": "check",
+      "question": "Why do the three rewriting strategies fuse with RRF rather than score interpolation?",
+      "options": [
+        "RRF is the only operation supported by Python",
+        "Score interpolation requires per-corpus calibration; RRF combines rank-based contributions without calibration, which is required when fusing N retrievals from different rewrites",
+        "RRF runs on GPUs and score interpolation does not",
+        "Score interpolation cannot handle more than two lists"
+      ],
+      "correct": 1,
+      "explanation": "Same argument as lesson 65; rank-based fusion does not need per-corpus alpha tuning and stays stable across rewriter outputs."
+    },
+    {
+      "stage": "post",
+      "question": "What is the latency floor when running all three rewriters in parallel?",
+      "options": [
+        "The slowest single retrieval",
+        "One LLM call (the rewriters and retrievals run in parallel; the LLM call is the floor)",
+        "Three LLM calls in series",
+        "Zero, because the rewriters cache everything"
+      ],
+      "correct": 1,
+      "explanation": "All three rewriters fan out to a model call; if they run in parallel the floor is one model call latency, then the retrievals run in parallel after."
+    }
+  ]
+}

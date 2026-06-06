@@ -1,0 +1,78 @@
+{
+  "lesson": "14-prompt-semantic-caching",
+  "title": "Prompt Caching and Semantic Caching Economics",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the difference between L1 semantic caching and L2 prompt/prefix caching?",
+      "options": [
+        "L1 skips the LLM entirely on embedding similarity hits; L2 reuses attention KV at the provider for repeated prefixes",
+        "L1 is provider-side and L2 is client-side",
+        "L2 stores embeddings; L1 stores attention KV",
+        "L1 and L2 are the same"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which Anthropic mechanism marks blocks as cacheable for L2 prompt caching?",
+      "options": [
+        "Explicit cache_control attribute on the request blocks",
+        "A separate /caches endpoint",
+        "Filename suffixes in tool definitions",
+        "An implicit prompt-length threshold"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How does the parallelization anti-pattern inflate the bill?",
+      "options": [
+        "Parallel requests bypass batching",
+        "Parallelization triggers a per-request guardrail charge",
+        "All parallel requests share one cache entry automatically",
+        "N parallel requests with the same prefix arrive before the first cache write completes, so each pays a write premium and gets zero discount"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the dynamic-content anti-pattern in cacheable prefixes?",
+      "options": [
+        "Putting tool schemas in the prefix",
+        "Always streaming responses",
+        "Including content that changes every request (current time to the minute, request ID, randomized example order) inside the cacheable prefix, killing hit rate",
+        "Using too short a system prompt"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "How can batch + cached input stack overnight to cut cost?",
+      "options": [
+        "Batch only saves output cost",
+        "Batch APIs give 50% off; cached input adds another ~10x; combined, overnight pipelines drop to ~10% of synchronous-uncached cost",
+        "Batch is incompatible with caching",
+        "Caching disables batch eligibility"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does the lesson say about semantic cache \"95% accuracy\" claims?",
+      "options": [
+        "95% is the OpenAI default cache hit rate",
+        "95% refers to match correctness, not hit rate; reported production hit rates range from ~10% (open chat) up to ~70% (structured FAQ)",
+        "95% is a vendor-documented hit-rate baseline",
+        "95% means you should expect 95% cache hits"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

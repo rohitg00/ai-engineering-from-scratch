@@ -1,0 +1,78 @@
+{
+  "lesson": "49-lm-eval-harness",
+  "title": "Language Model Evaluation Harness",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What four fields define a task example in the harness's JSONL format?",
+      "options": [
+        "name, score, payload, vendor",
+        "id, prompt, targets, metric, and an optional extras dict for side data the metric needs",
+        "input and output",
+        "weights and bias"
+      ],
+      "correct": 1,
+      "explanation": "The JSONL line is the contract. The extras field lets the code_exec metric pass io_pairs without polluting the prompt."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is the metric function signature (prediction, targets, extras) -> float?",
+      "options": [
+        "Random choice",
+        "It is the smallest signature that handles single-target string match, multi-reference rouge-l, and code_exec with side data, while keeping scores in a comparable [0.0, 1.0] range",
+        "It returns an integer",
+        "It needs the model object"
+      ],
+      "correct": 1,
+      "explanation": "Floats in [0,1] mean per-task and overall scores are interpretable averages. The extras slot is how code_exec gets its io_pairs."
+    },
+    {
+      "stage": "check",
+      "question": "How does the code_exec metric resist malicious predictions?",
+      "options": [
+        "It does not",
+        "It runs the prediction with a stripped __builtins__ dict so the namespace exposes only a few safe names; import statements fail because the importer is not in scope",
+        "It uses sandbox containers",
+        "It rejects anything that contains def"
+      ],
+      "correct": 1,
+      "explanation": "The lesson's safe namespace strips builtins down to a handful of names. The test asserts that import os returns score 0.0 instead of executing."
+    },
+    {
+      "stage": "check",
+      "question": "What does the model adapter abstraction buy you?",
+      "options": [
+        "Nothing",
+        "It is the only model-specific code in the harness; swap the adapter to point at a new vendor, and the tasks, metrics, runner, and leaderboard format stay the same",
+        "It makes the model faster",
+        "It is required by torch"
+      ],
+      "correct": 1,
+      "explanation": "ToyAdapter in the lesson is a deterministic pattern matcher. An HttpAdapter for a real vendor has the same generate(prompts) -> list[str] surface."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the leaderboard JSON carry a schema string like leaderboard.v1?",
+      "options": [
+        "For SEO",
+        "So future format changes bump the version and downstream dashboards can dispatch on it instead of breaking silently",
+        "It is random",
+        "It compresses the file"
+      ],
+      "correct": 1,
+      "explanation": "Same trick as the checkpoint payload from lesson 47. The schema field is the migration hook."
+    },
+    {
+      "stage": "post",
+      "question": "Reading a leaderboard, overall_score is computed how, and what should you watch for when comparing two runs?",
+      "options": [
+        "Sum of correct counts",
+        "Mean of per-task scores (each in [0,1]); when comparing, also diff per-example predictions for tasks whose scores moved, because the score alone hides which examples regressed",
+        "Best task score",
+        "Random sample"
+      ],
+      "correct": 1,
+      "explanation": "Mean of per-task means weights every task equally. Use --include-per-example to keep the prediction-level evidence next to the score so regressions are visible."
+    }
+  ]
+}

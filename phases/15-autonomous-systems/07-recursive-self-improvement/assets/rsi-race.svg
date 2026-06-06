@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .cap-curve { stroke: #c0392b; stroke-width: 2; fill: none; }
+      .align-curve { stroke: #2e7d32; stroke-width: 2; fill: none; }
+      .axis { stroke: #444; stroke-width: 1; fill: none; }
+      .thresh { stroke: #aaa; stroke-width: 1; stroke-dasharray: 4 3; fill: none; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">RSI — capability and alignment compound at different rates</text>
+
+  <rect x="40" y="50" width="520" height="380" class="box"/>
+  <text x="300" y="72" text-anchor="middle" class="label">capability vs alignment across cycles</text>
+
+  <!-- Axes -->
+  <line x1="80" y1="110" x2="80" y2="390" class="axis"/>
+  <line x1="80" y1="390" x2="540" y2="390" class="axis"/>
+  <text x="55" y="120" class="small">8x</text>
+  <text x="55" y="180" class="small">4x</text>
+  <text x="55" y="240" class="small">2x</text>
+  <text x="55" y="300" class="small">1.5x</text>
+  <text x="55" y="370" class="small">1x</text>
+
+  <text x="80" y="408" class="small">0</text>
+  <text x="180" y="408" class="small">5</text>
+  <text x="280" y="408" class="small">10</text>
+  <text x="380" y="408" class="small">20</text>
+  <text x="480" y="408" class="small">30</text>
+  <text x="300" y="422" text-anchor="middle" class="small">cycle</text>
+
+  <!-- 1.5x threshold line -->
+  <line x1="80" y1="300" x2="540" y2="300" class="thresh"/>
+  <text x="544" y="303" class="small">pause threshold</text>
+
+  <!-- Capability curve (faster compounding) -->
+  <polyline class="cap-curve" points="80,370 120,350 160,325 200,295 240,258 280,215 320,170 360,130 400,100 440,80 480,65 520,55"/>
+  <text x="480" y="55" class="small">capability (r_c = 1.15)</text>
+
+  <!-- Alignment curve (slower compounding) -->
+  <polyline class="align-curve" points="80,370 120,358 160,342 200,323 240,300 280,275 320,247 360,218 400,188 440,159 480,132 520,108"/>
+  <text x="495" y="125" class="small">alignment (r_a = 1.08)</text>
+
+  <!-- Right: takeaway -->
+  <rect x="580" y="50" width="260" height="380" class="box"/>
+  <text x="710" y="72" text-anchor="middle" class="label">what moves the race</text>
+
+  <rect x="600" y="92" width="220" height="66" class="hot"/>
+  <text x="710" y="114" text-anchor="middle" class="content">capability has measurable</text>
+  <text x="710" y="130" text-anchor="middle" class="content">targets. optimization loops</text>
+  <text x="710" y="146" text-anchor="middle" class="content">are good at sharp targets.</text>
+
+  <rect x="600" y="166" width="220" height="66" class="cool"/>
+  <text x="710" y="188" text-anchor="middle" class="content">alignment has fuzzy</text>
+  <text x="710" y="204" text-anchor="middle" class="content">targets (values, intent).</text>
+  <text x="710" y="220" text-anchor="middle" class="content">loops lag on fuzzy targets.</text>
+
+  <rect x="600" y="240" width="220" height="66" class="cold"/>
+  <text x="710" y="262" text-anchor="middle" class="content">Anthropic 2024:</text>
+  <text x="710" y="278" text-anchor="middle" class="content">12%-78% alignment faking</text>
+  <text x="710" y="294" text-anchor="middle" class="content">depending on setup.</text>
+
+  <rect x="600" y="314" width="220" height="100" class="box"/>
+  <text x="710" y="336" text-anchor="middle" class="content">mitigations</text>
+  <text x="610" y="356" class="small">- pause-on-gap thresholds</text>
+  <text x="610" y="372" class="small">- external eval between cycles</text>
+  <text x="610" y="388" class="small">- constitutional anchor</text>
+  <text x="610" y="404" class="small">- regression detection</text>
+
+  <text x="440" y="470" text-anchor="middle" class="caption">Hassabis (WEF 2026): can the loop close without a human in the loop? open question.</text>
+  <text x="440" y="494" text-anchor="middle" class="small">Brundage, Kaplan: RSI is the "ultimate risk" — capability may outrun alignment during each cycle.</text>
+</svg>

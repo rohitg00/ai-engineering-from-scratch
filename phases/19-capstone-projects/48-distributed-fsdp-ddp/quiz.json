@@ -1,0 +1,78 @@
+{
+  "lesson": "48-distributed-fsdp-ddp",
+  "title": "Distributed Data Parallel and FSDP from Scratch",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which two collective ops are the core of a from-scratch DDP wrapper?",
+      "options": [
+        "send and recv",
+        "broadcast at construction so every rank starts from the same parameters, and all_reduce after backward so every rank ends with the averaged gradient",
+        "reduce_scatter only",
+        "barrier and barrier"
+      ],
+      "correct": 1,
+      "explanation": "Broadcast at init keeps ranks in sync at step zero. All-reduce after backward keeps them in sync at every step that follows."
+    },
+    {
+      "stage": "pre",
+      "question": "Why does this lesson work on CPU without CUDA?",
+      "options": [
+        "It is a stub",
+        "torch.distributed ships a gloo backend that runs collectives over plain sockets, so torch.multiprocessing workers on CPU form a real process group; only the device tag changes on a GPU box",
+        "It uses simulated tensors",
+        "It does not use torch.distributed at all"
+      ],
+      "correct": 1,
+      "explanation": "Gloo is the CPU collective backend. The same call sites work on nccl on GPU; the API surface is identical."
+    },
+    {
+      "stage": "check",
+      "question": "What does the manual_all_reduce_matches_single_process test prove?",
+      "options": [
+        "Nothing",
+        "That summing per-rank gradients and dividing by world_size recovers the gradient a single process would compute on the concatenated input, within floating point noise",
+        "That the optimizer converges",
+        "That CUDA is unnecessary"
+      ],
+      "correct": 1,
+      "explanation": "The cross entropy mean reduction on the full batch equals the average of per-rank means. Sum-and-divide is the right operation; the test makes that visible."
+    },
+    {
+      "stage": "check",
+      "question": "What does the FSDP sketch in this lesson do per parameter on every forward pass?",
+      "options": [
+        "Nothing",
+        "Pads the flat parameter to a multiple of world_size, slices, all_gathers the slices on every rank, drops the pad, and verifies the reconstruction matches the original",
+        "Re-initializes the parameter",
+        "Computes a hash"
+      ],
+      "correct": 1,
+      "explanation": "Each rank owns 1/world_size of every parameter. The gather rebuilds the full tensor for compute; production FSDP overlaps the gather with the previous layer's work."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the gloo all_gather sized to world_size equal-size shards even when the parameter length is not divisible by world_size?",
+      "options": [
+        "Gloo's all_gather requires equal output tensor sizes per rank, so the flat parameter is right-padded to a multiple of world_size before slicing and the padding is dropped after the gather",
+        "It is a bug",
+        "It speeds up the network",
+        "Random choice"
+      ],
+      "correct": 0,
+      "explanation": "Gloo (and nccl) all_gather expects same-size outputs. Padding is the cheapest fix; the sketch trims the result back to the original length."
+    },
+    {
+      "stage": "post",
+      "question": "Reading the demo output, param_sum_spread near zero across ranks tells you what?",
+      "options": [
+        "That the loss is low",
+        "That every rank ended the run at the same parameter values, which means the broadcast at construction and the all-reduce after every backward both worked; if either was broken the spread would grow over steps",
+        "That the network is fast",
+        "Nothing meaningful"
+      ],
+      "correct": 1,
+      "explanation": "DDP's invariant is parameter parity across ranks. The spread is the audit; the demo asserts it stays under 1e-3."
+    }
+  ]
+}

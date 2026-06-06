@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "You feed a 224x224 RGB image to a conv with kernel_size=3, stride=1, padding=0. What is the output spatial size?",
+      "options": ["224x224", "222x222", "112x112", "74x74"],
+      "correct": 1,
+      "explanation": "Output size = (H - K + 2P) / S + 1 = (224 - 3 + 0) / 1 + 1 = 222. Without padding, every 3x3 convolution shrinks the feature map by 2 pixels on each axis — one pixel off each border."
+    },
+    {
+      "stage": "pre",
+      "question": "A conv layer has in_channels=3, out_channels=64, kernel_size=3, with bias. How many learnable parameters?",
+      "options": ["1,728", "1,792", "576", "192"],
+      "correct": 1,
+      "explanation": "C_out * C_in * K * K + C_out = 64 * 3 * 3 * 3 + 64 = 1,728 + 64 = 1,792. The +C_out is one bias per output channel. Compare that to a dense layer on the same input (224*224*3 -> 64 = about 9.6M params) and you see why convolution is the right prior for images."
+    },
+    {
+      "stage": "post",
+      "question": "Why do modern CNNs prefer stacks of 3x3 convolutions over a single 5x5 or 7x7 conv?",
+      "options": ["3x3 convolutions are hardware-accelerated; larger ones are not", "Two 3x3 convs cover the same 5x5 receptive field with fewer parameters (2 * 9 vs 25) and add an extra non-linearity between them", "Large kernels overflow GPU registers", "3x3 is the only kernel size that supports padding"],
+      "correct": 1,
+      "explanation": "Stacking 3x3 convs gives the same receptive field as one large conv but with fewer parameters and more non-linearities, which increases expressive power. VGG proved this empirically and every modern family (ResNet, ConvNeXt) inherited the design."
+    },
+    {
+      "stage": "post",
+      "question": "What does the im2col transformation actually do?",
+      "options": ["It compresses the image to fit in GPU cache", "It extracts every kernel-sized receptive window from the input and stacks them as columns so that convolution becomes a single matrix multiply", "It converts float32 pixels to int8 for faster arithmetic", "It concatenates all images in a batch into a single 2D matrix"],
+      "correct": 1,
+      "explanation": "im2col reshapes the input so that each column is one flattened receptive field. Flattening the kernel into a row reduces convolution to cols @ w_flat.T, a single GEMM call that GPUs execute thousands of times faster than a quadruple Python loop. Every production conv library is some variant of this."
+    },
+    {
+      "stage": "post",
+      "question": "You stack four 3x3 convolutions (all stride 1, no pooling). What is the receptive field of a neuron in the final layer?",
+      "options": ["3x3 — each conv is 3x3", "5x5 — two convs give 5x5 and depth does not help", "9x9 — every conv adds 2 on each side: 1 + 4*(3-1) = 9", "15x15 — every conv triples the receptive field"],
+      "correct": 2,
+      "explanation": "For L stacked K x K convs with stride 1, receptive field = 1 + L * (K - 1). With L=4 and K=3 that is 1 + 4*2 = 9. The same formula generalises with stride: receptive field grows multiplicatively through strided layers, which is why a deep network with downsampling can cover the whole image in ten or fifteen blocks."
+    }
+  ]
+}

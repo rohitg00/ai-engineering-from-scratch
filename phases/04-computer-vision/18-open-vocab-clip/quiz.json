@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "CLIP's contrastive loss is symmetric (image-to-text + text-to-image). Why both directions?",
+      "options": ["Numerical stability", "You want both queries to work at inference: text-to-image retrieval and image-to-text retrieval. Training only one direction makes the other direction's accuracy drop significantly", "Because loss must sum to zero", "Symmetry is required by PyTorch"],
+      "correct": 1,
+      "explanation": "The embedding space needs to be symmetric across modalities because downstream tasks query in both directions. Zero-shot classification is text-to-image (classify image given text prompts). Retrieval can go either way. Training with only i2t or only t2i leaves the other direction weak."
+    },
+    {
+      "stage": "pre",
+      "question": "Zero-shot classification with CLIP works by... ?",
+      "options": ["Running a classifier head trained on ImageNet", "Encoding prompts like 'a photo of a dog' for each candidate class, encoding the test image, and taking argmax of cosine similarities between the image embedding and all class text embeddings", "Fine-tuning the image encoder on the class", "Searching a database of labelled examples"],
+      "correct": 1,
+      "explanation": "Zero-shot means no task-specific training: the model's representations already let you compare images to arbitrary text descriptions. Write one prompt per class, encode all prompts and the test image, cosine similarity, argmax. The only 'trick' is prompt engineering — using multiple templates per class and averaging their embeddings gains 1-3 top-1 on ImageNet."
+    },
+    {
+      "stage": "post",
+      "question": "SigLIP replaces CLIP's softmax with a sigmoid loss per pair. What benefit does that give?",
+      "options": ["Faster GPU kernels", "The sigmoid loss is per-pair, so it does not depend on the batch as a normalisation denominator. SigLIP trains well at smaller batch sizes where CLIP's softmax loss starves for negatives", "Lower memory use", "Better accuracy on COCO only"],
+      "correct": 1,
+      "explanation": "CLIP's symmetric cross-entropy is a softmax over the whole batch, so effective negatives = batch_size - 1. Small batches starve it. SigLIP is per-pair: each (image, caption) pair gets a binary decision (match or not). No batch-level normalisation, so SigLIP works at batch 128 while CLIP needs 8192. At equal scale SigLIP matches or beats CLIP."
+    },
+    {
+      "stage": "post",
+      "question": "A practitioner reports 88% zero-shot top-1 on CIFAR-10 with CLIP ViT-B/32 and 90% with the same model using 80 prompt templates per class. Why does template averaging help?",
+      "options": ["It doubles the dataset", "Different templates activate different aspects of the text encoder's learned distribution; averaging smooths the class embedding over the manifold of plausible natural-language descriptions of the class, producing a more robust centroid", "It reduces variance in logit_scale", "80 is the magic number for CLIP"],
+      "correct": 1,
+      "explanation": "Each template is a different natural-language cue. 'a photo of a dog' emphasises one aspect; 'a blurry photo of a dog' another; 'a sketch of a dog' yet another. Averaging the text embeddings gives a smoother representation of the concept 'dog' that is less sensitive to individual-prompt quirks. The OpenAI CLIP paper published 80 templates that lift ImageNet zero-shot by ~2 points."
+    },
+    {
+      "stage": "post",
+      "question": "Why do modern VLMs (LLaVA, Qwen-VL, InternVL) use a CLIP-family vision encoder instead of a supervised ImageNet ResNet?",
+      "options": ["CLIP encoders are faster", "CLIP features are aligned with natural language, so the LLM can reason about them with less adaptation; supervised ImageNet features were never trained against captions and need heavy projection layers to bridge to text", "ResNets cannot see colour", "It is a licensing requirement"],
+      "correct": 1,
+      "explanation": "A VLM bolts a vision encoder to a language model and trains a small projection. CLIP-style encoders were trained against text, so their outputs already live in a space the LLM can consume with a few linear layers of adaptation. Supervised ImageNet encoders have no notion of natural-language structure and require much larger bridging MLPs to work with an LLM. This is why every SOTA VLM uses a CLIP-family vision tower."
+    }
+  ]
+}

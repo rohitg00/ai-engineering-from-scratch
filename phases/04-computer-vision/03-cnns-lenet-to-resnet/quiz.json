@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What single architectural idea did AlexNet (2012) introduce that made training deep CNNs practical on GPUs?",
+      "options": ["Residual connections", "Replacing tanh with ReLU, which does not saturate and speeds convergence by roughly 6x", "Batch normalization", "Depthwise separable convolutions"],
+      "correct": 1,
+      "explanation": "AlexNet's biggest training speedup came from ReLU. Tanh saturates for large positive or negative inputs, which kills gradients and caps the depth you can train. ReLU is piecewise linear, does not saturate for positive inputs, and was the single change that took training from weeks to days. Dropout and GPU parallelism mattered, but ReLU is the one that unlocked depth."
+    },
+    {
+      "stage": "pre",
+      "question": "Why did VGG prefer stacks of 3x3 convolutions over a single larger kernel?",
+      "options": ["Smaller kernels run faster on CPU", "Two 3x3 convs cover the same 5x5 receptive field with fewer parameters (18C^2 vs 25C^2) and one extra ReLU between them", "3x3 convs are rotation-invariant; 5x5 is not", "Larger kernels cannot be trained with SGD"],
+      "correct": 1,
+      "explanation": "Two stacked 3x3 convs see the same 5x5 patch as one 5x5 conv, but use fewer parameters (2 * 3 * 3 * C^2 = 18C^2 compared to 25C^2) and include an additional non-linearity. That extra ReLU increases expressive power. VGG turned this observation into an entire architecture with exactly one block type repeated."
+    },
+    {
+      "stage": "post",
+      "question": "ResNet introduced residual connections as y = F(x) + x. What problem does this solve?",
+      "options": ["Overfitting in the classifier head", "Vanishing activations in layers with ReLU", "The degradation problem — past ~20 plain conv layers, training loss starts getting worse because the optimizer struggles to learn an identity mapping through many non-linear layers", "Memory consumption during backprop"],
+      "correct": 2,
+      "explanation": "Before ResNet, training loss started increasing past about 20 layers even though the network had more capacity — the degradation problem. A residual block can trivially represent identity by driving F to zero, giving the optimizer a safe default. With that escape hatch, every extra block can make the network slightly better, which is how 100+ layer networks became trainable."
+    },
+    {
+      "stage": "post",
+      "question": "In a ResNet BasicBlock with in_channels=64, out_channels=128, stride=2, what is the role of the shortcut branch?",
+      "options": ["It is always identity; the main branch handles the shape change", "It is a 1x1 conv with stride 2 that matches the output channels and spatial size of the main branch so the two can be added", "It is a max-pool that halves the spatial dimension", "It is a placeholder that is removed at inference time"],
+      "correct": 1,
+      "explanation": "When a block changes channel count or spatial stride, the identity path cannot be added directly to the main branch because shapes differ. The shortcut becomes a 1x1 conv with stride=2 and C_out output channels, optionally followed by batch norm. Pass-through identity is used only when in_c == out_c and stride == 1."
+    },
+    {
+      "stage": "post",
+      "question": "ResNet-18 has ~11.7M parameters and matches or beats VGG-16 (138M params) on ImageNet. What does this imply about VGG?",
+      "options": ["VGG's kernels were too small to learn good features", "Most of VGG's parameters are wasted in the fully connected head and the redundant depth past the point where residual connections would let each layer contribute", "VGG was trained with a worse optimizer", "VGG's accuracy on ImageNet has been measured incorrectly"],
+      "correct": 1,
+      "explanation": "VGG-16's parameter count is dominated by its giant fully connected classifier (three dense layers on 25088 activations), and its plain deep stack cannot add layers as efficiently as a residual stack. ResNet-18 replaces the FC head with global average pool plus one linear layer and uses residual blocks, which together give roughly 12x parameter efficiency at similar accuracy."
+    }
+  ]
+}

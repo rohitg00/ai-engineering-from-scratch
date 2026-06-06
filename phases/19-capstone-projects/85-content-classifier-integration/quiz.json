@@ -1,0 +1,78 @@
+{
+  "lesson": "85-content-classifier-integration",
+  "title": "Capstone 85 — Content Classifier Integration",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why run output-side classifiers if the input was already checked?",
+      "options": [
+        "To make the system slower on purpose",
+        "Because any input bypass produces an output the user will see, and the output is the last place to catch it",
+        "Because input classifiers are deprecated",
+        "Because the standard library requires both"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Which three classifiers are wired in this lesson?",
+      "options": [
+        "Sentiment, language, length",
+        "Toxicity, PII, instruction-leakage",
+        "OCR, ASR, TTS",
+        "Quality, factuality, citation"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the router do when one verdict is high and another is medium?",
+      "options": [
+        "Run only the medium action",
+        "Run both actions in sequence",
+        "Take the maximum severity and apply that action; block dominates redact",
+        "Drop both verdicts and ship the original"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is a Luhn check used inside the PII classifier?",
+      "options": [
+        "To translate digits into letters",
+        "To distinguish credit-card shaped digit runs from arbitrary digit sequences with low false positives",
+        "To compute the SSN",
+        "To compress the regex"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How does the instruction-leakage classifier decide?",
+      "options": [
+        "By detecting curly braces in the output",
+        "By computing trigram cosine between the output and a known system prompt, with a threshold",
+        "By calling another model",
+        "By counting tokens"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does the toxicity classifier check for negation in a small left window?",
+      "options": [
+        "To slow the regex down",
+        "To skip matches like 'you are not stupid' so the classifier does not over-redact common reassurances",
+        "To increase the false-positive rate",
+        "Because negation is required by Unicode"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

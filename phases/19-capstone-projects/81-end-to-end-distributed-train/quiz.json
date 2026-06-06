@@ -1,0 +1,78 @@
+{
+  "lesson": "81-end-to-end-distributed-train",
+  "title": "End-to-End Distributed Training",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does a capstone matter when each lesson already had its own tests?",
+      "options": [
+        "Cosmetic",
+        "Composition is a separate property: pieces can pass unit tests but the integration deadlocks, the loss diverges, or the memory grows when they run together",
+        "Slower",
+        "Easier to grade"
+      ],
+      "correct": 1,
+      "explanation": "End-to-end tests catch wiring bugs that no piece tests in isolation: rendezvous, barrier order, gather contracts."
+    },
+    {
+      "stage": "pre",
+      "question": "What four invariants does the demo verify?",
+      "options": [
+        "Speed",
+        "(a) loss runs to step 20 without NaN, (b) every rank's parameter norm agrees, (c) per-rank optimiser memory equals the ZeRO-1 formula, (d) the step-10 checkpoint reloads byte-equal",
+        "Tokens per second",
+        "Hardware"
+      ],
+      "correct": 1,
+      "explanation": "Each invariant catches a different composition bug: NaN catches divergence, norm-agree catches sync drift, memory catches sharding bugs, checkpoint catches write atomicity."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the model a tiny GPT instead of an MLP?",
+      "options": [
+        "Look fancy",
+        "GPT adds LayerNorm running statistics, embedding gradient shape, and softmax+cross-entropy edge cases that an MLP would hide",
+        "Faster",
+        "Required"
+      ],
+      "correct": 1,
+      "explanation": "MLP gradient sync was verified in lesson 77; the capstone needs a model with more edge cases to prove composition under realistic ops."
+    },
+    {
+      "stage": "check",
+      "question": "What does self-terminating mean in this context?",
+      "options": [
+        "Process kills itself",
+        "Fixed step count (20), exit 0 on completion, no human in the loop; if any piece deadlocks the demo never returns and CI catches it",
+        "Crash recovery",
+        "Manual"
+      ],
+      "correct": 1,
+      "explanation": "A bounded run with exit 0 lets the test rig assert termination; while-True loops mask deadlocks."
+    },
+    {
+      "stage": "check",
+      "question": "How does the demo combine DDP and ZeRO?",
+      "options": [
+        "Both at once",
+        "DDP-style broadcast at init for parameter sync, ZeRO-1's reduce_scatter+allgather replaces optimiser.step; DDP gradient allreduce is subsumed into ZeRO's reduce_scatter",
+        "DDP only",
+        "ZeRO only"
+      ],
+      "correct": 1,
+      "explanation": "ZeRO-1 owns the gradient sync via reduce_scatter, so DDP's separate allreduce is not needed; the broadcast at init is the only DDP-specific call that survives."
+    },
+    {
+      "stage": "post",
+      "question": "Why does production use wall-clock checkpoint cadence instead of step count?",
+      "options": [
+        "Looks cleaner",
+        "Step time varies with sequence length and microbatch count; a 10-minute cadence catches the same compute regardless of model size",
+        "Faster",
+        "Required by NCCL"
+      ],
+      "correct": 1,
+      "explanation": "The lesson uses step-based for clarity; production runs typically save every 5-15 minutes of wall-clock."
+    }
+  ]
+}

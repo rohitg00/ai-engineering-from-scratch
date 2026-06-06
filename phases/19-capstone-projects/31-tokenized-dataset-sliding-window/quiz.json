@@ -1,0 +1,78 @@
+{
+  "lesson": "31-tokenized-dataset-sliding-window",
+  "title": "Tokenized Dataset with Sliding Window",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the shape contract for a causal LM training batch?",
+      "options": [
+        "(B, T) input ids and (B, T) target ids where target is the input shifted left by one",
+        "(B, V) one-hot vectors over the vocabulary",
+        "(B, T, T) attention masks with the input ids on the diagonal",
+        "(B, 2) input id and label pairs"
+      ],
+      "correct": 0,
+      "explanation": "Causal LM training reads (B, T) input ids and predicts the same shape of target ids, where target[t] = input[t+1]."
+    },
+    {
+      "stage": "check",
+      "question": "How many windows of length T+1 fit in an id stream of length N with stride S?",
+      "options": [
+        "N // (T + 1)",
+        "max(0, 1 + (N - (T + 1)) // S)",
+        "(N - T) * S",
+        "N - T - S"
+      ],
+      "correct": 1,
+      "explanation": "The first window starts at 0. Subsequent windows start at multiples of S. The last window must still cover T+1 ids."
+    },
+    {
+      "stage": "check",
+      "question": "What effect does halving the stride have on the dataset?",
+      "options": [
+        "It halves the number of training examples per epoch",
+        "It roughly doubles the number of training examples per epoch",
+        "It has no effect because windows never overlap",
+        "It removes overlap between consecutive windows"
+      ],
+      "correct": 1,
+      "explanation": "A smaller stride produces more overlapping windows, increasing the example count and the boundary diversity at the cost of more compute per epoch."
+    },
+    {
+      "stage": "check",
+      "question": "Why pass an explicit torch.Generator to the DataLoader?",
+      "options": [
+        "It speeds up data loading",
+        "It removes the need for batch padding",
+        "It makes the shuffle deterministic across runs with the same seed",
+        "It enables multi-GPU training"
+      ],
+      "correct": 2,
+      "explanation": "A seeded generator reproduces the same shuffle. Reruns with the same seed see batches in the same order, which is required for fair hyperparameter comparison."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the dataset return (input[:-1], input[1:]) from each window of size T+1?",
+      "options": [
+        "It throws away one id to save memory",
+        "It implements the shift-by-one target so the loss measures next-token prediction",
+        "It removes a special token from the input",
+        "It is a quirk of PyTorch tensor indexing"
+      ],
+      "correct": 1,
+      "explanation": "The target at position t is the input at position t+1. Slicing the window into [:-1] and [1:] expresses that contract."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson drop incomplete trailing windows rather than padding them?",
+      "options": [
+        "Padding would change the vocabulary size",
+        "Dropping keeps every example the same length so no loss mask is needed",
+        "Padded tokens are not supported by the model",
+        "Dropped data is recovered by the next epoch"
+      ],
+      "correct": 1,
+      "explanation": "All examples are exactly T tokens long by construction, so the batch is a clean rectangular tensor and the loss applies uniformly without a mask."
+    }
+  ]
+}

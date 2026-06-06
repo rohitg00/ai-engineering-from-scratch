@@ -1,0 +1,78 @@
+{
+  "lesson": "78-zero-parameter-sharding",
+  "title": "ZeRO Optimizer State Sharding",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does ZeRO shard optimiser state first instead of parameters?",
+      "options": [
+        "Optimiser is more important",
+        "Optimiser state is the largest memory term and is only touched during the step, not forward or backward",
+        "Parameters are easier",
+        "DeepSpeed mandates it"
+      ],
+      "correct": 1,
+      "explanation": "For Adam in mixed precision the fp32 master plus two moments is 12P bytes per rank vs 4P for fp16 params + grads. Sharding the biggest term first wins the most memory per unit complexity."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the per-step wire pattern of ZeRO stage 1?",
+      "options": [
+        "One allreduce",
+        "One reduce_scatter on gradients plus one allgather on updated parameters",
+        "One broadcast",
+        "Nothing"
+      ],
+      "correct": 1,
+      "explanation": "Reduce_scatter delivers each rank only its gradient shard; allgather distributes the updated parameter shards back. Total bytes equal allreduce, memory is divided by N."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the per-step bandwidth the same as DDP?",
+      "options": [
+        "Magic",
+        "Allreduce equals reduce_scatter plus allgather in bandwidth; ZeRO splits that into two halves on different data",
+        "ZeRO uses compression",
+        "It is not the same"
+      ],
+      "correct": 1,
+      "explanation": "Ring allreduce is implemented as reduce_scatter then allgather. ZeRO does the same two operations but the allgather rotates the updated parameters, not the summed gradient."
+    },
+    {
+      "stage": "check",
+      "question": "For a 7B model with Adam in mixed precision on 8 ranks, what is the memory drop vs vanilla DDP?",
+      "options": [
+        "10%",
+        "Around 65% (vanilla 16P vs ZeRO-1 4P + 12P/N = 5.5P)",
+        "99%",
+        "0%"
+      ],
+      "correct": 1,
+      "explanation": "Vanilla: 2P + 2P + 4P + 4P + 4P = 16P. ZeRO-1: 2P + 2P + (4P+4P+4P)/8 = 5.5P. Drop is (16-5.5)/16 = 65.6%."
+    },
+    {
+      "stage": "check",
+      "question": "What does ZeRO-2 add over ZeRO-1?",
+      "options": [
+        "Nothing",
+        "Also drops the non-shard gradients after reduce_scatter, freeing per-rank gradient memory; bandwidth stays the same",
+        "Switches backend to NCCL",
+        "Removes the optimiser"
+      ],
+      "correct": 1,
+      "explanation": "ZeRO-2 zeroes the non-shard gradient portion after reduce_scatter; same bandwidth as ZeRO-1 but lower gradient memory."
+    },
+    {
+      "stage": "post",
+      "question": "Why does ZeRO require the optimiser state checkpoint to record which rank owns which shard?",
+      "options": [
+        "Cosmetic",
+        "Without per-rank ownership the saved state is unreadable at restart; resuming on the same world size needs to put the right shard back on the right rank",
+        "It does not",
+        "Compression"
+      ],
+      "correct": 1,
+      "explanation": "Lesson 80 builds the sharded checkpoint manifest precisely so a ZeRO run can resume on the same topology."
+    }
+  ]
+}

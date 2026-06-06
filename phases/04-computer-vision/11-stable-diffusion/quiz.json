@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does Stable Diffusion run its DDPM in a 4x64x64 latent space rather than directly on 3x512x512 pixel images?",
+      "options": ["Latents are easier to visualise", "Training and sampling on 16,384 latent values instead of 786,432 pixels is roughly 48x cheaper; a pretrained VAE handles the image <-> latent conversion, and the diffusion model only has to model the structured latent manifold", "Latents are the native output of GPUs", "To make inference deterministic"],
+      "correct": 1,
+      "explanation": "Latent diffusion is the single innovation that made consumer-GPU text-to-image practical. The VAE compresses 48x spatial and channel information. The diffusion model can spend its entire parameter and compute budget modelling the latent manifold, which is the part the user sees after decoding."
+    },
+    {
+      "stage": "pre",
+      "question": "What does classifier-free guidance (CFG) do at inference?",
+      "options": ["Runs two separate models and averages them", "Uses one model trained to predict both conditional eps_cond and unconditional eps_uncond noise, then combines them as eps = eps_uncond + w*(eps_cond - eps_uncond) to amplify prompt adherence", "Adds a classifier head to the model at test time", "Uses a larger scheduler"],
+      "correct": 1,
+      "explanation": "CFG trains a single model with the conditioning dropped 10% of the time so the same weights produce both cond and uncond predictions. At inference the formula above amplifies the conditional direction. Guidance scale w is the standard knob to tune prompt adherence vs diversity; SD defaults to 7.5."
+    },
+    {
+      "stage": "post",
+      "question": "You swap SD's default scheduler for DPM-Solver++ 2M Karras and reduce num_inference_steps from 50 to 20. What is the expected result?",
+      "options": ["Worse quality and longer runtime", "Comparable quality in roughly half the time; DPM-Solver++ is a second-order ODE integrator that converges in fewer steps than DDIM for the same sample quality", "Numerical instability", "You must also retrain the model"],
+      "correct": 1,
+      "explanation": "Schedulers are decoupled from the model weights. DPM-Solver++ is a higher-order solver that achieves DDIM-50 quality in about 20 steps. Zero retraining required, and it is the production default in 2026. Going below 8 steps typically needs distilled/consistency-model variants like LCM or Turbo."
+    },
+    {
+      "stage": "post",
+      "question": "Why is LoRA fine-tuning popular for Stable Diffusion instead of full fine-tuning?",
+      "options": ["LoRA produces better images by default", "LoRA keeps the 860M base U-Net frozen and inserts tiny rank-decomposition matrices into attention layers, so a fine-tune trains in minutes on consumer hardware, produces 10-50 MB adapters, and can be swapped or mixed at inference", "LoRA is required by diffusers", "LoRA prevents overfitting entirely"],
+      "correct": 1,
+      "explanation": "LoRA's value is training cost and distribution. Full SD fine-tuning updates 860M+ parameters and needs 20+ GB of VRAM. LoRA updates ~1-10M parameters and fits in 6-8 GB. The base model is unchanged, so the same LoRA loads into any compatible checkpoint, and multiple LoRAs can be combined. CivitAI's ecosystem is entirely LoRAs."
+    },
+    {
+      "stage": "post",
+      "question": "You generate the same prompt with guidance_scale=15 and see oversaturated colours and burned-in artefacts. What is going on?",
+      "options": ["The model is broken", "CFG amplifies the conditional direction; past a threshold around 9-12 the amplification pushes predictions outside the manifold the VAE can decode cleanly, producing visual artefacts. Drop guidance to 7-9 for balanced results", "The VAE needs retraining", "The seed is wrong"],
+      "correct": 1,
+      "explanation": "CFG's formula is unbounded: higher w moves the prediction further along (eps_cond - eps_uncond). Past a point, you leave the trained distribution and the VAE decoder produces over-saturated, posterised images. Production default is 7-8. Some newer schedulers support CFG scheduling (lower w at final timesteps) to avoid this."
+    }
+  ]
+}

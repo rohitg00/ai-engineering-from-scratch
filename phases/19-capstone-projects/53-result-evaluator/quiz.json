@@ -1,0 +1,78 @@
+{
+  "lesson": "53-result-evaluator",
+  "title": "Result Evaluator",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the evaluator use a paired t test instead of comparing two single numbers?",
+      "options": [
+        "Because numpy requires paired arrays",
+        "Because pairing the same seed across candidate and baseline isolates the configuration change from random initialisation noise",
+        "Because the runner cannot emit a single number",
+        "Because t tests are always required by IRB"
+      ],
+      "correct": 1,
+      "explanation": "Pairing by seed cancels out random initialisation effects. The remaining difference is attributable to the configuration change, which is what the test measures."
+    },
+    {
+      "stage": "pre",
+      "question": "Why does the evaluator carry a direction field on every metric?",
+      "options": [
+        "Because accuracy and loss point in opposite ways; the sign of the improvement depends on which direction is better for the metric being compared",
+        "Because the runner requires it",
+        "Because numpy needs the direction for variance",
+        "Because the parser expects it"
+      ],
+      "correct": 0,
+      "explanation": "Higher is better metrics improve when they go up; lower is better metrics improve when they go down. The direction field tells the improvement function which sign convention to apply."
+    },
+    {
+      "stage": "check",
+      "question": "What does the verdict path return when |improvement| is below the threshold even if the p value is significant?",
+      "options": [
+        "improved",
+        "regressed",
+        "noise",
+        "failed"
+      ],
+      "correct": 2,
+      "explanation": "A statistically significant change that is too small to act on is still noise from the loop's point of view. The threshold gate runs before the significance gate."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the evaluator transform log scaled metrics before computing improvement?",
+      "options": [
+        "Because numpy logs are faster",
+        "Because perplexity and similar metrics grow exponentially with loss; transforming to log space makes a threshold like two percent meaningful across linear and log metrics",
+        "Because the p value depends on it",
+        "Because the runner only emits log scaled metrics"
+      ],
+      "correct": 1,
+      "explanation": "Perplexity is exp(loss). A small loss change is a large perplexity change. Taking the log keeps relative improvements comparable to linear metrics under one threshold."
+    },
+    {
+      "stage": "check",
+      "question": "When does the paired t test helper return p_value = None?",
+      "options": [
+        "When the means are equal",
+        "When fewer than two paired samples are available",
+        "When the variance is zero",
+        "When the metric scale is log"
+      ],
+      "correct": 1,
+      "explanation": "The t distribution needs at least one degree of freedom. With n less than two there is no variance estimate and the helper returns None so the verdict path can mark the run as noise."
+    },
+    {
+      "stage": "check",
+      "question": "What happens if even one candidate result has a terminal label other than ok?",
+      "options": [
+        "The evaluator drops that seed and proceeds",
+        "The evaluator returns a failed verdict and records the bad terminals in the rationale",
+        "The evaluator retries the run",
+        "The evaluator falls back to a one sided test"
+      ],
+      "correct": 1,
+      "explanation": "A failed run invalidates the candidate set. The evaluator short circuits the verdict path and returns failed with the offending terminals listed, so the orchestrator does not draw a conclusion from a crashed run."
+    }
+  ]
+}

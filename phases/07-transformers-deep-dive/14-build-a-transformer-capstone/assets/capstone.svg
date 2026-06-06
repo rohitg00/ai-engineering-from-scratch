@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .norm { fill: #e7edd9; stroke: #1a1a1a; stroke-width: 1; }
+      .attn { fill: #ffd78a; stroke: #c0392b; stroke-width: 1.3; }
+      .ffn { fill: #d7e3ee; stroke: #1a1a1a; stroke-width: 1; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">capstone: a decoder-only transformer, end to end</text>
+
+  <!-- Input tokens -->
+  <rect x="350" y="60" width="200" height="30" class="hot"/>
+  <text x="450" y="80" text-anchor="middle" class="content">token IDs (B, N)</text>
+  <line x1="450" y1="90" x2="450" y2="108" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Embedding -->
+  <rect x="300" y="108" width="300" height="32" class="box"/>
+  <text x="450" y="129" text-anchor="middle" class="content">token emb + positional emb</text>
+  <line x1="450" y1="140" x2="450" y2="158" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Block outer -->
+  <rect x="200" y="158" width="500" height="290" class="box"/>
+  <text x="450" y="180" text-anchor="middle" class="label">repeat L times</text>
+
+  <!-- Norm1 -->
+  <rect x="280" y="200" width="340" height="24" class="norm"/>
+  <text x="450" y="217" text-anchor="middle" class="content">RMSNorm</text>
+  <line x1="450" y1="224" x2="450" y2="242" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Causal MHA -->
+  <rect x="260" y="242" width="380" height="32" class="attn"/>
+  <text x="450" y="263" text-anchor="middle" class="content">causal multi-head self-attention</text>
+  <line x1="450" y1="274" x2="450" y2="292" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- + residual -->
+  <circle cx="450" cy="304" r="10" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="450" y="308" text-anchor="middle" class="content">+</text>
+  <path d="M 280 215 Q 220 215 220 304 Q 220 304 440 304" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <line x1="450" y1="314" x2="450" y2="330" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Norm2 -->
+  <rect x="280" y="330" width="340" height="24" class="norm"/>
+  <text x="450" y="347" text-anchor="middle" class="content">RMSNorm</text>
+  <line x1="450" y1="354" x2="450" y2="370" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- FFN -->
+  <rect x="280" y="370" width="340" height="32" class="ffn"/>
+  <text x="450" y="391" text-anchor="middle" class="content">SwiGLU FFN</text>
+  <line x1="450" y1="402" x2="450" y2="418" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- + residual -->
+  <circle cx="450" cy="430" r="10" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="450" y="434" text-anchor="middle" class="content">+</text>
+  <path d="M 280 345 Q 220 345 220 430 Q 220 430 440 430" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <line x1="450" y1="448" x2="450" y2="468" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Final norm -->
+  <rect x="280" y="468" width="340" height="24" class="norm"/>
+  <text x="450" y="485" text-anchor="middle" class="content">RMSNorm</text>
+  <line x1="450" y1="492" x2="450" y2="510" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- LM head tied -->
+  <rect x="280" y="510" width="340" height="32" class="hot"/>
+  <text x="450" y="530" text-anchor="middle" class="content">lm_head (tied to token emb)</text>
+
+  <line x1="450" y1="542" x2="450" y2="558" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="330" y="558" width="240" height="30" class="box"/>
+  <text x="450" y="578" text-anchor="middle" class="content">shift-by-one cross-entropy</text>
+
+  <text x="450" y="608" text-anchor="middle" class="caption">one config, thirteen lessons compressed into a single training script.</text>
+</svg>

@@ -1,0 +1,3357 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson - AI Engineering from Scratch</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
+  <meta name="description" content="A lesson from the AI Engineering from Scratch curriculum. 503 lessons across 20 phases, four languages, every algorithm built from raw math.">
+  <meta property="og:title" content="AI Engineering from Scratch · Lesson">
+  <meta property="og:description" content="503 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
+  <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
+  <!-- og:url omitted intentionally: lesson.html is a static template that loads the lesson body client-side via ?path=. Static hosting cannot template the URL, so we let crawlers fall back to the request URL (which is the lesson-specific share link). -->
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Engineering from Scratch">
+  <meta name="twitter:description" content="503 lessons. 20 phases. Build it from raw math, by hand.">
+  <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260525a">
+  <style>
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: var(--blueprint);
+      z-index: 9999;
+      transition: width 0.05s linear;
+      width: 0%;
+    }
+
+    .lesson-layout {
+      display: flex;
+      padding-top: 64px;
+      min-height: 100vh;
+    }
+
+    .lesson-sidebar {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      bottom: 0;
+      width: 240px;
+      background: var(--bg);
+      border-right: 1px solid var(--rule-soft);
+      overflow-y: auto;
+      z-index: 50;
+      padding: 24px 0;
+      transition: transform 0.25s ease;
+    }
+
+    .lesson-sidebar-toggle {
+      display: none;
+      position: fixed;
+      top: 74px;
+      left: 10px;
+      z-index: 60;
+      background: var(--bg-surface);
+      border: 1px solid var(--rule-soft);
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--ink);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lesson-sidebar-toggle:hover {
+      border-color: var(--blueprint);
+      color: var(--blueprint);
+    }
+
+    .lesson-sidebar::-webkit-scrollbar { width: 4px; }
+    .lesson-sidebar::-webkit-scrollbar-thumb { background: var(--rule-soft); }
+
+    .sidebar-phase-header {
+      padding: 18px 20px 8px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--ink-mute);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .sidebar-lesson-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 20px;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
+    }
+
+    .sidebar-lesson-link:hover {
+      background: var(--blueprint-tint);
+      color: var(--ink);
+    }
+
+    .sidebar-lesson-link.active {
+      color: var(--blueprint);
+      background: var(--blueprint-tint);
+      border-left-color: var(--blueprint);
+    }
+
+    .sidebar-lesson-link.disabled {
+      opacity: 0.5;
+    }
+
+    .sidebar-lesson-dot {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
+      border: 1px solid var(--ink-mute);
+      background: transparent;
+    }
+
+    .sidebar-lesson-dot.complete {
+      background: var(--blueprint);
+      border-color: var(--blueprint);
+    }
+
+    .sidebar-lesson-dot.in-progress {
+      background: linear-gradient(135deg, var(--blueprint) 0%, var(--blueprint) 50%, transparent 50%, transparent 100%);
+      border-color: var(--blueprint);
+    }
+
+    .sidebar-lesson-dot.planned {
+      border-style: dashed;
+    }
+
+    .sidebar-phase-nav {
+      padding: 18px 20px;
+      border-top: 1px solid var(--rule-soft);
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-phase-nav a {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-bottom: none;
+    }
+
+    .sidebar-phase-nav a:hover {
+      color: var(--blueprint);
+    }
+
+    .lesson-main {
+      flex: 1;
+      min-width: 0;
+      margin-left: 240px;
+      display: flex;
+      justify-content: center;
+      padding: 56px 32px 96px;
+    }
+
+    .lesson-content {
+      max-width: 720px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .lesson-article {
+      max-width: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    .lesson-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 16px;
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--rule-soft);
+      border-top-color: var(--blueprint);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .lesson-loading-text {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    .lesson-error {
+      text-align: left;
+      padding: 64px 0;
+    }
+
+    .lesson-error h2 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      color: var(--blueprint);
+      margin-bottom: 12px;
+    }
+
+    .lesson-error p {
+      color: var(--ink-soft);
+      margin-bottom: 24px;
+    }
+
+    .lesson-article h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--blueprint);
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--blueprint);
+      line-height: 1;
+    }
+
+    .lesson-article h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 1.9rem);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      margin-top: 56px;
+      margin-bottom: 18px;
+      padding-bottom: 0;
+      border-bottom: none;
+      line-height: 1.05;
+    }
+
+    .lesson-article h2.section-build,
+    .lesson-article h2.section-use,
+    .lesson-article h2.section-ship {
+      border-left: 3px solid var(--blueprint);
+      padding-left: 16px;
+    }
+
+    .lesson-article h3 {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-top: 36px;
+      margin-bottom: 12px;
+    }
+
+    .lesson-article h1,
+    .lesson-article h2,
+    .lesson-article h3 {
+      scroll-margin-top: var(--header-offset, 92px);
+    }
+
+    .lesson-article p {
+      font-family: var(--font-body);
+      font-size: 1.06rem;
+      line-height: 1.7;
+      color: var(--ink);
+      margin-bottom: 18px;
+      text-align: justify;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+    }
+
+    .lesson-article > p:first-of-type::first-letter,
+    .lesson-article .drop-cap::first-letter {
+      float: left;
+      font-family: var(--font-display);
+      font-size: 4rem;
+      line-height: 0.85;
+      padding: 0.06em 0.16em 0 0;
+      color: var(--blueprint);
+    }
+
+    .lesson-article .motto {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: var(--ink);
+      border-left: 2px solid var(--blueprint);
+      background: var(--blueprint-tint);
+      padding: 18px 22px;
+      margin: 24px 0 32px;
+      text-align: left;
+    }
+
+    .lesson-article blockquote {
+      border-left: 2px solid var(--blueprint);
+      background: var(--blueprint-tint);
+      padding: 14px 22px;
+      margin: 20px 0;
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-style: italic;
+      text-align: left;
+    }
+
+    .lesson-article strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .lesson-article em {
+      font-style: italic;
+    }
+
+    .lesson-article a {
+      color: var(--blueprint);
+      text-decoration: none;
+      border-bottom: 1px solid var(--blueprint);
+      transition: background 0.15s;
+    }
+
+    .lesson-article a:hover {
+      background: var(--blueprint-tint);
+    }
+
+    .lesson-article hr {
+      border: none;
+      height: 6px;
+      margin: 40px 0;
+      background-image:
+        repeating-linear-gradient(to right, var(--blueprint) 0, var(--blueprint) 4px, transparent 4px, transparent 8px),
+        repeating-linear-gradient(to right, transparent 0, transparent 8px, var(--blueprint-tint-strong) 8px, var(--blueprint-tint-strong) 14px);
+      background-size: 100% 3px, 100% 3px;
+      background-position: 0 0, 0 3px;
+      background-repeat: no-repeat;
+    }
+
+    .lesson-article ul {
+      list-style: none;
+      padding-left: 22px;
+      margin-bottom: 18px;
+    }
+
+    .lesson-article ul li {
+      font-family: var(--font-body);
+      font-size: 1.06rem;
+      line-height: 1.7;
+      color: var(--ink);
+      position: relative;
+      padding-left: 6px;
+      margin-bottom: 4px;
+      text-align: left;
+    }
+
+    .lesson-article ul li::before {
+      content: "";
+      position: absolute;
+      left: -16px;
+      top: 0.65em;
+      width: 6px;
+      height: 6px;
+      background: var(--blueprint);
+    }
+
+    .lesson-article ol {
+      list-style: none;
+      padding-left: 28px;
+      margin-bottom: 18px;
+      counter-reset: ol-counter;
+    }
+
+    .lesson-article ol li {
+      font-family: var(--font-body);
+      font-size: 1.06rem;
+      line-height: 1.7;
+      color: var(--ink);
+      position: relative;
+      padding-left: 6px;
+      margin-bottom: 4px;
+      counter-increment: ol-counter;
+      text-align: left;
+    }
+
+    .lesson-article ol li::before {
+      content: counter(ol-counter, decimal-leading-zero);
+      position: absolute;
+      left: -28px;
+      top: 0.1em;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--blueprint);
+    }
+
+    .lesson-article code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--code-bg);
+      padding: 1px 6px;
+      border: 1px solid var(--rule-soft);
+      color: var(--blueprint);
+    }
+
+    .lesson-article pre {
+      position: relative;
+      margin: 20px 0;
+      overflow: hidden;
+      border: 1px solid var(--rule-soft);
+      background: var(--code-bg);
+    }
+
+    .lesson-article pre code {
+      display: block;
+      background: var(--code-bg);
+      color: var(--ink);
+      padding: 22px 24px;
+      font-size: 0.86rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      border: none;
+    }
+
+    .code-lang {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 4px 10px;
+      background: var(--blueprint);
+      color: var(--bg);
+      z-index: 2;
+    }
+
+    .code-copy {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      background: transparent;
+      border: 1px solid var(--rule-soft);
+      padding: 3px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      cursor: pointer;
+      z-index: 2;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .code-copy:hover {
+      color: var(--blueprint);
+      border-color: var(--blueprint);
+    }
+
+    .syn-keyword { color: var(--blueprint); font-weight: 500; }
+    .syn-string { color: var(--ink); }
+    .syn-number { color: var(--blueprint); }
+    .syn-comment { color: var(--ink-mute); font-style: italic; }
+    .syn-function { color: var(--ink); font-weight: 500; }
+    .syn-operator { color: var(--ink-soft); }
+
+    [data-theme="dark"] .syn-keyword { color: var(--blueprint); }
+    [data-theme="dark"] .syn-string { color: var(--ink); }
+    [data-theme="dark"] .syn-number { color: var(--blueprint); }
+    [data-theme="dark"] .syn-comment { color: var(--ink-mute); }
+    [data-theme="dark"] .syn-function { color: var(--ink); }
+    [data-theme="dark"] .syn-operator { color: var(--ink-soft); }
+
+    .lesson-article .table-wrap {
+      overflow-x: auto;
+      margin: 24px 0;
+      border: 1px solid var(--rule-soft);
+    }
+
+    .lesson-article table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+    }
+
+    .lesson-article thead th {
+      background: var(--bg-surface);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .lesson-article tbody td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--rule-soft);
+      color: var(--ink);
+      vertical-align: top;
+    }
+
+    .lesson-article tbody tr:last-child td { border-bottom: none; }
+
+    .lesson-article tbody tr:hover {
+      background: var(--blueprint-tint);
+    }
+
+    .lesson-article .key-terms-table .col-says {
+      font-family: var(--font-body);
+      font-style: italic;
+      color: var(--ink-soft);
+    }
+
+    .learning-objectives {
+      background: transparent;
+      border: 1px solid var(--blueprint);
+      padding: 22px 26px;
+      margin: 24px 0 32px;
+    }
+
+    .learning-objectives-title {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .learning-objectives ul { margin: 0; padding-left: 20px; }
+    .learning-objectives li {
+      margin-bottom: 6px;
+      color: var(--ink);
+      line-height: 1.55;
+      font-size: 0.98rem;
+      text-align: left;
+    }
+
+    .lesson-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 28px;
+      padding: 14px 0;
+      border-top: 1px solid var(--rule-soft);
+      border-bottom: 1px solid var(--rule-soft);
+    }
+
+    .lesson-meta-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border: 1px solid var(--rule-soft);
+      color: var(--ink-soft);
+      background: transparent;
+    }
+
+    .lesson-meta-tag.time-tag {
+      border-color: var(--blueprint);
+      color: var(--blueprint);
+      background: var(--blueprint-tint);
+    }
+
+    .quiz-section,
+    .quiz-container {
+      border: 1px solid var(--blueprint);
+      padding: 22px 26px;
+      margin: 32px 0;
+      background: transparent;
+    }
+
+    .quiz-title {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+      margin: 0 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .quiz-question {
+      margin-bottom: 24px;
+      border: none;
+      padding: 0;
+      background: transparent;
+    }
+
+    .quiz-question:last-child { margin-bottom: 0; }
+
+    .quiz-question-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+      margin-bottom: 6px;
+    }
+
+    .quiz-question-text {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 12px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border: 1px solid var(--rule-soft);
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+      color: var(--ink);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      background: transparent;
+      text-align: left;
+      width: 100%;
+    }
+
+    .quiz-option:hover:not(.selected):not(.disabled) {
+      border-color: var(--blueprint);
+      background: var(--blueprint-tint);
+    }
+
+    .quiz-option .opt-letter,
+    .quiz-option .quiz-marker {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid var(--ink-soft);
+      color: var(--ink-soft);
+    }
+
+    .quiz-option.selected.correct,
+    .quiz-option.correct,
+    .quiz-option.disabled.is-answer {
+      border-color: var(--blueprint);
+      background: var(--blueprint-tint);
+      color: var(--blueprint);
+    }
+
+    .quiz-option.selected.correct .opt-letter,
+    .quiz-option.selected.correct .quiz-marker,
+    .quiz-option.correct .opt-letter,
+    .quiz-option.correct .quiz-marker {
+      border-color: var(--blueprint);
+      background: var(--blueprint);
+      color: var(--bg);
+    }
+
+    .quiz-option.selected.wrong,
+    .quiz-option.incorrect {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+
+    .quiz-option.selected.wrong .opt-letter,
+    .quiz-option.selected.wrong .quiz-marker,
+    .quiz-option.incorrect .opt-letter,
+    .quiz-option.incorrect .quiz-marker {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .quiz-option.disabled { cursor: default; opacity: 0.7; }
+
+    .quiz-explanation {
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+      padding: 12px 16px;
+      border-left: 2px solid var(--blueprint);
+      background: var(--blueprint-tint);
+      display: none;
+    }
+
+    .quiz-explanation.visible { display: block; }
+
+    .quiz-score {
+      text-align: center;
+      padding: 24px;
+      border: 1px solid var(--blueprint);
+      background: var(--blueprint-tint);
+      display: none;
+      margin-top: 16px;
+    }
+
+    .quiz-score.visible { display: block; }
+
+    .quiz-score-number {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      color: var(--blueprint);
+      line-height: 1;
+    }
+
+    .quiz-score-label {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-top: 6px;
+    }
+
+    .quiz-deeper {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      margin-top: 16px;
+      padding: 12px;
+      background: var(--code-bg);
+      border: 1px solid var(--rule-soft);
+    }
+
+    .quiz-deeper code { color: var(--blueprint); }
+
+    .lab-challenge {
+      background: transparent;
+      border: 1px dashed var(--blueprint);
+      padding: 20px 26px;
+      margin: 28px 0;
+    }
+
+    .lab-challenge h2 {
+      font-family: var(--font-display);
+      color: var(--blueprint) !important;
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 0 12px !important;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .lesson-article .mermaid-container {
+      margin: 24px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .mermaid-block { width: 100%; max-width: 100%; }
+
+    .mermaid-toolbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .mermaid-btn {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid var(--rule-soft);
+      color: var(--ink-soft);
+      background: transparent;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .mermaid-btn:hover {
+      border-color: var(--blueprint);
+      color: var(--blueprint);
+    }
+
+    .mermaid-render {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--rule-soft);
+      padding: 16px;
+      background: var(--bg-surface);
+    }
+
+    .mermaid-source { display: none; }
+
+    .mermaid-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--overlay-bg);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .mermaid-modal-overlay.open { display: flex; }
+
+    .mermaid-modal {
+      width: min(1100px, 96vw);
+      height: min(760px, 88vh);
+      background: var(--modal-bg);
+      border: 1px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .mermaid-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--rule-soft);
+      background: var(--bg-surface);
+    }
+
+    .mermaid-modal-title {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mermaid-modal-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .mermaid-modal-body {
+      flex: 1;
+      overflow: auto;
+      padding: 18px;
+      background: var(--bg);
+    }
+
+    .mermaid-modal-center {
+      min-height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mermaid-modal-body svg { max-width: none; height: auto; }
+
+    .lesson-article .mermaid-container pre {
+      overflow: visible;
+      background: none;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .lesson-article .mermaid-container svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    :where(
+      .lesson-article .mermaid-render foreignObject p,
+      .lesson-article .mermaid-render foreignObject span,
+      .mermaid-modal-body foreignObject p,
+      .mermaid-modal-body foreignObject span
+    ) {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+      text-align: center;
+      text-transform: none;
+      margin: 0;
+      hyphens: none;
+      -webkit-hyphens: none;
+      color: var(--ink);
+    }
+
+    .lesson-nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 16px;
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule-soft);
+    }
+
+    .lesson-nav-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 16px 20px;
+      background: transparent;
+      border: 1px solid var(--rule-soft);
+      text-decoration: none;
+      transition: border-color 0.15s, background 0.15s;
+      max-width: 48%;
+    }
+
+    .lesson-nav-btn:hover {
+      border-color: var(--blueprint);
+      background: var(--blueprint-tint);
+    }
+
+    .lesson-nav-btn .nav-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+    }
+
+    .lesson-nav-btn .nav-title {
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .lesson-nav-btn.next {
+      text-align: right;
+      margin-left: auto;
+    }
+
+    .ai-panels {
+      margin-top: 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .ai-panel {
+      border: 1px solid var(--ink);
+      padding: 28px 26px;
+      background: transparent;
+    }
+
+    .ai-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+
+    .ai-panel-icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      border: 1px solid var(--blueprint);
+      color: var(--blueprint);
+      background: var(--blueprint-tint);
+    }
+
+    .ai-panel-icon.coral,
+    .ai-panel-icon.blue,
+    .ai-panel-icon.green {
+      background: var(--blueprint-tint);
+      color: var(--blueprint);
+      border-color: var(--blueprint);
+    }
+
+    .ai-panel-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .ai-panel-subtitle {
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+      color: var(--ink-soft);
+      margin-top: -8px;
+      margin-bottom: 18px;
+    }
+
+    .output-cards,
+    .code-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .output-card {
+      border: 1px solid var(--rule-soft);
+      padding: 18px;
+      background: var(--bg);
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .output-card:hover {
+      border-color: var(--blueprint);
+      background: var(--blueprint-tint);
+    }
+
+    .output-card-name {
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+      color: var(--ink);
+      word-break: break-all;
+      margin-bottom: 10px;
+      text-transform: none;
+    }
+
+    .output-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 2px 8px;
+      margin-bottom: 10px;
+      border: 1px solid var(--blueprint);
+      color: var(--blueprint);
+      background: var(--blueprint-tint);
+    }
+
+    .output-badge.prompt,
+    .output-badge.skill,
+    .output-badge.other {
+      border-color: var(--blueprint);
+      color: var(--blueprint);
+      background: var(--blueprint-tint);
+    }
+
+    .output-desc {
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      margin-bottom: 12px;
+      text-transform: none;
+      letter-spacing: 0;
+      font-variant: normal;
+      text-align: left;
+    }
+
+    .output-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .output-btn,
+    .code-card-btn {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      text-decoration: none;
+      border: 1px solid var(--rule-soft);
+      color: var(--ink-soft);
+      background: transparent;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .output-btn:hover,
+    .code-card-btn:hover {
+      border-color: var(--blueprint);
+      color: var(--blueprint);
+    }
+
+    .output-install-hint {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--ink-soft);
+      background: var(--code-bg);
+      padding: 8px 12px;
+      border: 1px solid var(--rule-soft);
+      margin-top: 10px;
+      word-break: break-all;
+      display: none;
+    }
+
+    .output-install-hint.visible { display: block; }
+
+    .code-card {
+      background: var(--code-bg);
+      border: 1px solid var(--rule-soft);
+      padding: 18px;
+      transition: border-color 0.15s;
+    }
+
+    .code-card:hover {
+      border-color: var(--blueprint);
+    }
+
+    .code-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .code-lang-icon {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border: 1px solid var(--rule-soft);
+      color: var(--ink-soft);
+      line-height: 1;
+    }
+
+    .code-card-name {
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+      color: var(--ink);
+      word-break: break-all;
+      text-transform: none;
+    }
+
+    .code-card-size {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink-mute);
+      margin-bottom: 12px;
+    }
+
+    .code-card-run {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--blueprint);
+      background: var(--blueprint-tint);
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      border: 1px solid var(--blueprint);
+      text-transform: none;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--rule-soft) transparent;
+    }
+
+    .code-card-run::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .code-card-run::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .code-card-run::-webkit-scrollbar-thumb {
+      background: var(--rule-soft);
+      border-radius: 3px;
+    }
+
+    .code-card-run::-webkit-scrollbar-thumb:hover {
+      background: var(--ink-mute);
+    }
+
+    .code-card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .learning-timeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      padding: 24px 0;
+      position: relative;
+    }
+
+    .timeline-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-width: 92px;
+      flex-shrink: 0;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .timeline-dot {
+      width: 12px;
+      height: 12px;
+      background: transparent;
+      border: 1px solid var(--ink-mute);
+      z-index: 2;
+      transition: transform 0.15s, background 0.15s, border-color 0.15s;
+    }
+
+    .timeline-item.current .timeline-dot {
+      width: 18px;
+      height: 18px;
+      background: var(--blueprint);
+      border-color: var(--blueprint);
+    }
+
+    .timeline-item.prev .timeline-dot,
+    .timeline-item.done .timeline-dot {
+      background: var(--blueprint);
+      border-color: var(--blueprint);
+    }
+
+    .timeline-line {
+      width: 36px;
+      height: 1px;
+      background: var(--rule-soft);
+      flex-shrink: 0;
+    }
+
+    .timeline-line.done,
+    .timeline-line.active {
+      background: var(--blueprint);
+    }
+
+    .timeline-label {
+      font-family: var(--font-body);
+      font-size: 0.84rem;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--ink-mute);
+      text-align: center;
+      max-width: 120px;
+      line-height: 1.35;
+    }
+
+    .timeline-item.current .timeline-label {
+      color: var(--blueprint);
+      font-weight: 500;
+    }
+
+    .timeline-ellipsis {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--ink-mute);
+      letter-spacing: 0.04em;
+      padding: 0 8px;
+      white-space: nowrap;
+    }
+
+
+    .phase-progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--rule-soft);
+      overflow: hidden;
+      margin: 14px 0 8px;
+    }
+
+    .phase-progress-fill {
+      height: 100%;
+      background: var(--blueprint);
+      transition: width 0.5s ease;
+    }
+
+    .phase-progress-text {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--ink-soft);
+      text-align: left;
+    }
+
+    .phase-complete-callout {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+      text-align: center;
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid var(--blueprint);
+      background: var(--blueprint-tint);
+      display: none;
+    }
+
+    .phase-complete-callout.visible { display: block; }
+
+    .continue-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .phase-finished {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--blueprint);
+      padding: 8px 16px;
+    }
+
+    .continue-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .continue-link {
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .continue-link:hover {
+      color: var(--blueprint);
+      border-bottom-color: var(--blueprint);
+    }
+
+    .continue-callout {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--ink-soft);
+      background: var(--code-bg);
+      padding: 12px 18px;
+      border: 1px solid var(--rule-soft);
+      max-width: 480px;
+    }
+
+    .continue-callout code { color: var(--blueprint); }
+
+    .panel-loading {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .panel-fallback {
+      text-align: left;
+      padding: 16px 0;
+    }
+
+    .panel-fallback a {
+      color: var(--blueprint);
+      text-decoration: none;
+      border-bottom: 1px solid var(--blueprint);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+    }
+
+    .toc-sidebar {
+      position: fixed;
+      top: 64px;
+      right: 0;
+      bottom: 0;
+      width: 240px;
+      background: transparent;
+      overflow-y: auto;
+      z-index: 40;
+      padding: 56px 24px 80px;
+      display: none;
+      scrollbar-width: thin;
+      scrollbar-color: var(--rule-soft) transparent;
+    }
+
+    .toc-sidebar[aria-hidden="true"] { display: none; }
+
+    .toc-sidebar::-webkit-scrollbar { width: 3px; }
+    .toc-sidebar::-webkit-scrollbar-thumb { background: var(--rule-soft); }
+
+    .toc-header {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--blueprint);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 18px;
+    }
+
+    .toc-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      border-left: 1px solid var(--rule-soft);
+    }
+
+    .toc-item { line-height: 1.4; }
+
+    .toc-link {
+      font-family: var(--font-body);
+      font-size: 0.84rem;
+      color: var(--ink-soft);
+      text-decoration: none;
+      display: block;
+      border-left: 2px solid transparent;
+      padding: 5px 16px;
+      margin-left: -1px;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toc-h3 .toc-link {
+      padding-left: 28px;
+      font-size: 0.78rem;
+    }
+
+    .toc-link:hover {
+      color: var(--ink);
+      background: var(--blueprint-tint);
+    }
+
+    .toc-link:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: 2px;
+    }
+
+    .toc-link.active {
+      color: var(--blueprint);
+      border-left-color: var(--blueprint);
+      font-weight: 500;
+    }
+
+    @media (min-width: 1280px) {
+      .lesson-main { padding-right: 240px; }
+      .toc-sidebar { display: block; }
+    }
+
+    @media (max-width: 1279px) {
+      .lesson-main { padding-right: 32px; }
+    }
+
+    @media (min-width: 1440px) {
+      .lesson-article { max-width: 760px; }
+      .lesson-sidebar { width: 280px; min-width: 280px; }
+      .lesson-main { margin-left: 280px; padding-right: 280px; }
+      .toc-sidebar { width: 280px; }
+    }
+
+    @media (max-width: 900px) {
+      .lesson-sidebar { transform: translateX(-100%); }
+      .lesson-sidebar.open { transform: translateX(0); }
+      .lesson-sidebar-toggle {
+        display: flex;
+        top: 70px;
+        right: 12px;
+        left: auto;
+        width: 32px;
+        height: 32px;
+        font-size: 0.95rem;
+      }
+      .lesson-main { margin-left: 0; padding: 56px 20px 80px; }
+    }
+
+    @media (max-width: 768px) {
+      .lesson-main { padding: 56px 16px 60px; }
+      .lesson-article { max-width: 100%; }
+      .lesson-article p,
+      .lesson-article ul li,
+      .lesson-article ol li { font-size: 1rem; line-height: 1.65; }
+      .lesson-article > p:first-of-type::first-letter { font-size: 3rem; }
+      .lesson-article pre code { font-size: 0.78rem; padding: 14px 14px; }
+      .lesson-article table { font-size: 0.84rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .lesson-article table th,
+      .lesson-article table td { padding: 8px 10px; white-space: nowrap; }
+      .lesson-article .motto { font-size: 1.05rem; padding: 14px 16px; }
+      .ai-panels { margin-top: 40px; gap: 28px; }
+      .ai-panel { padding: 22px 16px; }
+      .output-cards,
+      .code-cards { grid-template-columns: 1fr; }
+      .lesson-nav-bottom { flex-direction: column; gap: 12px; }
+      .lesson-nav-btn { max-width: 100%; }
+      .lesson-nav-btn.next { text-align: left; }
+    }
+
+    @media (max-width: 480px) {
+      .lesson-article p,
+      .lesson-article ul li,
+      .lesson-article ol li { font-size: 0.96rem; }
+      .lesson-article > p:first-of-type::first-letter { font-size: 2.6rem; }
+      .ai-panel { padding: 18px 12px; }
+      .timeline-item { min-width: 70px; }
+      .timeline-line { width: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
+      </a>
+      <nav class="header-nav">
+        <a href="index.html#contents">Contents</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="prereqs.html">Roadmap</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
+          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+        </a>
+      </nav>
+      <button class="search-toggle" type="button" data-cmd-palette
+        aria-label="Search (⌘K)" title="Search (⌘K)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+        <span class="theme-icon" id="themeIcon">N</span>
+      </button>
+    </div>
+  </header>
+
+  <button class="lesson-sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">&#9776;</button>
+
+  <div class="mermaid-modal-overlay" id="mermaidModalOverlay" aria-hidden="true">
+    <div class="mermaid-modal" role="dialog" aria-modal="true" aria-label="Expanded diagram">
+      <div class="mermaid-modal-header">
+        <div class="mermaid-modal-title" id="mermaidModalTitle">Diagram</div>
+        <div class="mermaid-modal-actions">
+          <button class="mermaid-btn" type="button" id="mermaidModalClose">Close</button>
+        </div>
+      </div>
+      <div class="mermaid-modal-body" id="mermaidModalBody"><div class="mermaid-modal-center" id="mermaidModalCenter"></div></div>
+    </div>
+  </div>
+
+  <div class="lesson-layout">
+    <aside class="lesson-sidebar" id="lessonSidebar"></aside>
+    <main class="lesson-main" id="main">
+      <div class="lesson-content" id="lessonContent">
+        <div class="lesson-loading" id="lessonLoading">
+          <div class="spinner"></div>
+          <div class="lesson-loading-text">Loading lesson...</div>
+        </div>
+      </div>
+    </main>
+    <aside class="toc-sidebar" id="tocSidebar" aria-hidden="true"></aside>
+  </div>
+
+  <script src="data.js?v=20260525a"></script>
+  <script src="progress.js?v=20260525a"></script>
+  <script src="header.js?v=20260525a" defer></script>
+  <script src="cmdpalette.js?v=20260525a" defer></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: document.documentElement.getAttribute('data-theme') === 'light' ? 'default' : 'dark',
+      fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+      themeVariables: {
+        fontSize: '13px'
+      },
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+        nodeSpacing: 40,
+        rankSpacing: 50,
+        padding: 12
+      }
+    });
+    window._mermaidReady = mermaid;
+  </script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var stored = localStorage.getItem('theme');
+      if (stored) {
+        root.setAttribute('data-theme', stored);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        root.setAttribute('data-theme', 'dark');
+      } else {
+        root.setAttribute('data-theme', 'light');
+      }
+      updateThemeIcon();
+
+      function updateThemeIcon() {
+        var icon = document.getElementById('themeIcon');
+        if (!icon) return;
+        var theme = root.getAttribute('data-theme');
+        icon.textContent = theme === 'light' ? 'N' : 'D';
+      }
+
+      var btn = document.getElementById('themeToggle');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var current = root.getAttribute('data-theme');
+          var next = current === 'light' ? 'dark' : 'light';
+          root.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+          updateThemeIcon();
+          updateMermaidThemeAndRerender();
+        });
+      }
+
+      var params = new URLSearchParams(window.location.search);
+      var lessonPath = params.get('path');
+
+      if (!lessonPath) {
+        showError('No lesson path specified', 'Add ?path=phases/01-math-foundations/01-linear-algebra-intuition to the URL.');
+        return;
+      }
+
+      if (window.AIFSProgress) {
+        window.AIFSProgress.recordVisit(lessonPath);
+      }
+
+      var phaseMatch = lessonPath.match(/phases\/(\d+-[^/]+)/);
+      var lessonMatch = lessonPath.match(/phases\/\d+-[^/]+\/(\d+-[^/]+)/);
+      var currentPhaseSlug = phaseMatch ? phaseMatch[1] : null;
+      var currentLessonSlug = lessonMatch ? lessonMatch[1] : null;
+
+      var currentPhaseIndex = -1;
+      var currentLessonIndex = -1;
+      var flatLessons = [];
+
+      if (typeof PHASES !== 'undefined') {
+        for (var i = 0; i < PHASES.length; i++) {
+          var p = PHASES[i];
+          var pSlug = extractPhaseSlug(p, i);
+          for (var j = 0; j < p.lessons.length; j++) {
+            var l = p.lessons[j];
+            var lSlug = extractLessonSlug(l, j);
+            flatLessons.push({
+              phaseIndex: i,
+              lessonIndex: j,
+              phaseName: p.name,
+              phaseId: p.id,
+              phaseSlug: pSlug,
+              lessonName: l.name,
+              lessonSlug: lSlug,
+              status: l.status,
+              type: l.type,
+              lang: l.lang,
+              url: l.url,
+              path: 'phases/' + pSlug + '/' + lSlug,
+              isReadable: l.status === 'complete' || !!l.url
+            });
+            if (pSlug === currentPhaseSlug && lSlug === currentLessonSlug) {
+              currentPhaseIndex = i;
+              currentLessonIndex = flatLessons.length - 1;
+            }
+          }
+        }
+      }
+
+      buildSidebar();
+      initSidebarToggle();
+      initScrollProgress();
+      fetchLesson(lessonPath);
+
+      function extractPhaseSlug(phase, index) {
+        if (phase.url) {
+          var m = phase.url.match(/phases\/([^/]+)/);
+          if (m) return m[1];
+        }
+        if (phase.lessons && phase.lessons.length > 0 && phase.lessons[0].url) {
+          var m2 = phase.lessons[0].url.match(/phases\/([^/]+)/);
+          if (m2) return m2[1];
+        }
+        return String(phase.id).padStart(2, '0') + '-' + phase.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      }
+
+      function extractLessonSlug(lesson, index) {
+        if (lesson.url) {
+          var m = lesson.url.match(/phases\/[^/]+\/([^/]+)/);
+          if (m) return m[1].replace(/\/$/, '');
+        }
+        return String(index + 1).padStart(2, '0') + '-' + lesson.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      }
+
+      function buildSidebar() {
+        var sidebar = document.getElementById('lessonSidebar');
+        if (!sidebar || typeof PHASES === 'undefined') return;
+
+        var html = '';
+
+        var prevPhaseIdx = currentPhaseIndex > 0 ? currentPhaseIndex - 1 : -1;
+        var nextPhaseIdx = (currentPhaseIndex >= 0 && currentPhaseIndex < PHASES.length - 1) ? currentPhaseIndex + 1 : -1;
+
+        if (prevPhaseIdx >= 0 || nextPhaseIdx >= 0) {
+          html += '<div class="sidebar-phase-nav">';
+          if (prevPhaseIdx >= 0) {
+            var pp = PHASES[prevPhaseIdx];
+            var ppSlug = extractPhaseSlug(pp, prevPhaseIdx);
+            var ppFirstLesson = pp.lessons[0] ? extractLessonSlug(pp.lessons[0], 0) : '';
+            html += '<a href="lesson.html?path=phases/' + ppSlug + '/' + ppFirstLesson + '">&larr; Phase ' + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(pp.name) + '</a>';
+          }
+          if (nextPhaseIdx >= 0) {
+            var np = PHASES[nextPhaseIdx];
+            var npSlug = extractPhaseSlug(np, nextPhaseIdx);
+            var npFirstLesson = np.lessons[0] ? extractLessonSlug(np.lessons[0], 0) : '';
+            html += '<a href="lesson.html?path=phases/' + npSlug + '/' + npFirstLesson + '">Phase ' + String(np.id).padStart(2, '0') + ': ' + escapeHtml(np.name) + ' &rarr;</a>';
+          }
+          html += '</div>';
+        }
+
+        if (currentPhaseIndex >= 0) {
+          var phase = PHASES[currentPhaseIndex];
+          html += '<div class="sidebar-phase-header">Phase ' + String(phase.id).padStart(2, '0') + ' · ' + escapeHtml(phase.name) + '</div>';
+          for (var k = 0; k < phase.lessons.length; k++) {
+            var les = phase.lessons[k];
+            var lesSlug = extractLessonSlug(les, k);
+            var pSlugCurrent = extractPhaseSlug(phase, currentPhaseIndex);
+            var isActive = lesSlug === currentLessonSlug;
+            var lesReadable = les.status === 'complete' || !!les.url;
+            if (lesReadable) {
+              html += '<a class="sidebar-lesson-link' + (isActive ? ' active' : '') + '" href="lesson.html?path=phases/' + pSlugCurrent + '/' + lesSlug + '">';
+            } else {
+              html += '<span class="sidebar-lesson-link disabled">';
+            }
+            html += '<span class="sidebar-lesson-dot ' + les.status + '"></span>';
+            html += escapeHtml(les.name);
+            html += lesReadable ? '</a>' : '</span>';
+          }
+        }
+
+        sidebar.innerHTML = html;
+      }
+
+      function initSidebarToggle() {
+        var toggle = document.getElementById('sidebarToggle');
+        var sidebar = document.getElementById('lessonSidebar');
+        if (!toggle || !sidebar) return;
+
+        toggle.addEventListener('click', function () {
+          sidebar.classList.toggle('open');
+        });
+
+        document.addEventListener('click', function (e) {
+          if (window.innerWidth <= 900 && sidebar.classList.contains('open')) {
+            if (!sidebar.contains(e.target) && e.target !== toggle) {
+              sidebar.classList.remove('open');
+            }
+          }
+        });
+      }
+
+      function initScrollProgress() {
+        var bar = document.getElementById('scrollProgress');
+        if (!bar) return;
+        window.addEventListener('scroll', function () {
+          var scrollTop = window.scrollY || document.documentElement.scrollTop;
+          var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          bar.style.width = pct + '%';
+        }, { passive: true });
+      }
+
+      function fetchLesson(path) {
+        var rawUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/docs/en.md';
+        var quizUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/quiz.json';
+
+        fetch(rawUrl)
+          .then(function (res) {
+            if (!res.ok) throw new Error('fetch-failed');
+            return res.text();
+          })
+          .then(function (md) {
+            try {
+              renderLesson(md);
+            } catch (err) {
+              console.error('renderLesson failed', err);
+              showError('Render error', 'Loaded the lesson markdown but failed to render it. Details in the browser console.');
+              return;
+            }
+            fetch(quizUrl)
+              .then(function (res) { return res.ok ? res.json() : null; })
+              .catch(function () { return null; })
+              .then(function (data) {
+                if (!data) return;
+                try { renderQuiz(data); }
+                catch (err) { console.error('renderQuiz failed', err); }
+              });
+          })
+          .catch(function () {
+            showError('Lesson not found', 'Could not fetch the lesson at <code>' + escapeHtml(path) + '</code>. It may not have been written yet.');
+          });
+      }
+
+      function showError(title, msg) {
+        var el = document.getElementById('lessonContent');
+        el.innerHTML = '<div class="lesson-error"><h2>' + title + '</h2><p>' + msg + '</p><a href="index.html" class="btn btn-primary">Back to Home</a></div>';
+      }
+
+      function renderLesson(md) {
+        var el = document.getElementById('lessonContent');
+        var html = parseMd(md);
+        html += '<div class="ai-panels" id="aiPanels"></div>';
+        html = addBottomNav(html);
+        el.innerHTML = '<article class="lesson-article">' + html + '</article>';
+
+        document.title = extractTitle(md) + ' - AI Engineering from Scratch';
+
+        initCodeCopy();
+        renderMermaidBlocks();
+        renderAIPanels();
+        buildTOC();
+
+        document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+          link.addEventListener('click', function (e) {
+            if (link.classList && link.classList.contains('toc-link')) return;
+            var target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      }
+
+      function buildTOC() {
+        var sidebar = document.getElementById('tocSidebar');
+        if (!sidebar) return;
+
+        var article = document.querySelector('.lesson-article');
+        if (!article) {
+          sidebar.innerHTML = '';
+          sidebar.removeAttribute('aria-hidden');
+          return;
+        }
+
+        var headings = article.querySelectorAll('h2, h3');
+        if (!headings.length) {
+          sidebar.innerHTML = '';
+          sidebar.removeAttribute('aria-hidden');
+          return;
+        }
+
+        var used = Object.create(null);
+
+        function ensureHeadingId(heading, idx) {
+          if (!heading) return '';
+
+          var base = '';
+          if (heading.id) {
+            base = heading.id;
+          } else if (typeof slugify === 'function') {
+            base = slugify(heading.textContent || '');
+          } else {
+            base = String(heading.textContent || '').toLowerCase().trim().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
+          }
+          if (!base) base = 'section-' + String(idx + 1);
+
+          var candidate = base;
+          var n = 2;
+
+          while (used[candidate] || (document.getElementById(candidate) && document.getElementById(candidate) !== heading)) {
+            candidate = base + '-' + n;
+            n++;
+          }
+          
+          used[candidate] = true;
+          heading.id = candidate;
+          return candidate;
+        }
+
+        var html = '<div class="toc-header">On this page</div>';
+        html += '<nav aria-label="On this page"><ul class="toc-nav">';
+        for (var i = 0; i < headings.length; i++) {
+          var heading = headings[i];
+          var level = heading.tagName.toLowerCase();
+          var id = ensureHeadingId(heading, i);
+          if (!id) continue;
+          var fullText = (heading.textContent || '').trim();
+          var text = fullText.replace(/^[^\p{L}\p{N}]+/u, '').trim();
+          if (!text) continue;
+          html += '<li class="toc-item toc-' + level + '"><a href="#' + id + '" class="toc-link" data-toc-id="' + id + '" title="' + escapeHtml(fullText) + '">' + escapeHtml(text) + '</a></li>';
+        }
+        html += '</ul></nav>';
+        sidebar.innerHTML = html;
+        sidebar.removeAttribute('aria-hidden');
+
+        sidebar.querySelectorAll('.toc-link').forEach(function (a) {
+          a.addEventListener('click', function (e) {
+            var href = a.getAttribute('href');
+            if (!href || href.charAt(0) !== '#') return;
+            var id = href.slice(1);
+            var target = document.getElementById(id);
+            if (!target) return;
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            history.replaceState(null, '', '#' + id);
+            if (!target.hasAttribute('tabindex')) {
+              target.setAttribute('tabindex', '-1');
+              target.addEventListener('blur', function blurHandler() {
+                target.removeAttribute('tabindex');
+                target.removeEventListener('blur', blurHandler);
+              });
+            }
+            target.focus({ preventScroll: true });
+          });
+        });
+
+        initScrollspy(headings, sidebar);
+      }
+
+      function initScrollspy(headings, sidebar) {
+        sidebar = sidebar || document.getElementById('tocSidebar');
+        if (!sidebar) return;
+
+        var links = sidebar.querySelectorAll('.toc-link');
+        if (!links.length || !headings || !headings.length) return;
+
+        var headerOffsetStr = getComputedStyle(document.documentElement).getPropertyValue('--header-offset').trim();
+        var headerOffset = parseInt(headerOffsetStr, 10) || 92;
+
+        if (sidebar._tocObserver && sidebar._tocObserver.disconnect) {
+          sidebar._tocObserver.disconnect();
+          sidebar._tocObserver = null;
+        }
+        if (sidebar._tocScrollHandler) {
+          window.removeEventListener('scroll', sidebar._tocScrollHandler);
+          sidebar._tocScrollHandler = null;
+        }
+        if (sidebar._tocResizeHandler) {
+          window.removeEventListener('resize', sidebar._tocResizeHandler);
+          sidebar._tocResizeHandler = null;
+        }
+
+        function setActive(id) {
+          if (!id || sidebar._tocActiveId === id) return;
+          sidebar._tocActiveId = id;
+
+          links.forEach(function (link) {
+            var href = link.getAttribute('href');
+            var match = href && href.charAt(0) === '#' ? href.slice(1) : '';
+            if (match === id) link.classList.add('active');
+            else link.classList.remove('active');
+          });
+
+          var activeLink = sidebar.querySelector('.toc-link.active');
+          if (activeLink) {
+            var linkTop = activeLink.offsetTop;
+            var sidebarHeight = sidebar.clientHeight;
+            var sidebarScroll = sidebar.scrollTop;
+            if (linkTop < sidebarScroll + 50 || linkTop > sidebarScroll + sidebarHeight - 100) {
+              sidebar.scrollTo({ top: Math.max(0, linkTop - sidebarHeight / 3), behavior: 'smooth' });
+            }
+          }
+        }
+
+        function fallbackByScroll() {
+          var y = (window.scrollY || document.documentElement.scrollTop || 0) + headerOffset + 18;
+          var active = '';
+          for (var i = 0; i < headings.length; i++) {
+            var h = headings[i];
+            if (!h || !h.id) continue;
+            var top = h.getBoundingClientRect().top + window.scrollY;
+            if (top <= y) active = h.id;
+            else break;
+          }
+          if (!active && headings[0] && headings[0].id) active = headings[0].id;
+          if (active) setActive(active);
+        }
+
+        if (typeof IntersectionObserver !== 'undefined') {
+          var marginOffset = headerOffset - 4;
+          var obs = new IntersectionObserver(function (entries) {
+            var best = null;
+            for (var i = 0; i < entries.length; i++) {
+              var e = entries[i];
+              if (!e.isIntersecting) continue;
+              if (!best) best = e;
+              else if (e.boundingClientRect.top < best.boundingClientRect.top) best = e;
+            }
+            if (best && best.target && best.target.id) setActive(best.target.id);
+          }, {
+            root: null,
+            threshold: [0.01, 0.1],
+            rootMargin: '-' + marginOffset + 'px 0px -70% 0px'
+          });
+
+          Array.from(headings).forEach(function (h) {
+            if (h && h.id) obs.observe(h);
+          });
+          sidebar._tocObserver = obs;
+
+          var initial = (location.hash && location.hash.charAt(0) === '#') ? location.hash.slice(1) : '';
+          if (initial && document.getElementById(initial)) setActive(initial);
+          else if (headings[0] && headings[0].id) setActive(headings[0].id);
+
+          return;
+        }
+
+        sidebar._tocScrollHandler = function () {
+          if (window._tocTicking) return;
+          window._tocTicking = true;
+          window.requestAnimationFrame(function () {
+            fallbackByScroll();
+            window._tocTicking = false;
+          });
+        };
+        window.addEventListener('scroll', sidebar._tocScrollHandler, { passive: true });
+
+        sidebar._tocResizeHandler = function () {
+          fallbackByScroll();
+        };
+        window.addEventListener('resize', sidebar._tocResizeHandler);
+
+        fallbackByScroll();
+      }
+
+      function extractTitle(md) {
+        var m = md.match(/^# (.+)/m);
+        return m ? m[1] : 'Lesson';
+      }
+
+      function parseMd(md) {
+        var lines = md.split(/\r?\n/);
+        var out = '';
+        var inCodeBlock = false;
+        var codeLang = '';
+        var codeLines = [];
+        var inTable = false;
+        var tableRows = [];
+        var inList = false;
+        var listType = '';
+        var listItems = [];
+        var firstBlockquoteDone = false;
+        var firstParaAfterMottoDone = false;
+        var inBlockquote = false;
+        var blockquoteLines = [];
+        var mermaidBlocks = 0;
+        var inLabChallenge = false;
+
+        function flushLabChallenge() {
+          if (!inLabChallenge) return '';
+          inLabChallenge = false;
+          return '</div>';
+        }
+
+        function flushList() {
+          if (!inList) return '';
+          inList = false;
+          var tag = listType === 'ol' ? 'ol' : 'ul';
+          var h = '<' + tag + '>';
+          for (var li = 0; li < listItems.length; li++) {
+            h += '<li>' + inlineFormat(listItems[li]) + '</li>';
+          }
+          h += '</' + tag + '>';
+          listItems = [];
+          return h;
+        }
+
+        function flushTable() {
+          if (!inTable) return '';
+          inTable = false;
+          if (tableRows.length < 2) return '';
+          var headers = tableRows[0];
+          var isKeyTerms = false;
+          for (var th = 0; th < headers.length; th++) {
+            if (headers[th].toLowerCase().indexOf('what people say') >= 0 || headers[th].toLowerCase().indexOf('people say') >= 0) {
+              isKeyTerms = true;
+            }
+          }
+          var h = '<div class="table-wrap' + (isKeyTerms ? ' key-terms-table' : '') + '"><table><thead><tr>';
+          for (var ti = 0; ti < headers.length; ti++) {
+            h += '<th>' + inlineFormat(headers[ti].trim()) + '</th>';
+          }
+          h += '</tr></thead><tbody>';
+          for (var ri = 2; ri < tableRows.length; ri++) {
+            var cells = tableRows[ri];
+            h += '<tr>';
+            for (var ci = 0; ci < headers.length; ci++) {
+              var cls = '';
+              if (isKeyTerms) {
+                var headerLower = (headers[ci] || '').toLowerCase();
+                if (headerLower.indexOf('say') >= 0) cls = ' class="col-says"';
+              }
+              h += '<td' + cls + '>' + inlineFormat((cells[ci] || '').trim()) + '</td>';
+            }
+            h += '</tr>';
+          }
+          h += '</tbody></table></div>';
+          tableRows = [];
+          return h;
+        }
+
+        function flushBlockquote() {
+          if (!inBlockquote) return '';
+          inBlockquote = false;
+          var text = blockquoteLines.join(' ');
+          blockquoteLines = [];
+          if (!firstBlockquoteDone) {
+            firstBlockquoteDone = true;
+            return '<div class="motto">' + inlineFormat(text) + '</div>';
+          }
+          return '<blockquote><p>' + inlineFormat(text) + '</p></blockquote>';
+        }
+
+        for (var i = 0; i < lines.length; i++) {
+          var line = lines[i];
+
+          if (inCodeBlock) {
+            if (line.match(/^```\s*$/)) {
+              inCodeBlock = false;
+              var raw = codeLines.join('\n');
+              if (codeLang === 'mermaid') {
+                mermaidBlocks++;
+                out += '<div class="mermaid-container">';
+                out += '<div class="mermaid-block" data-mermaid-index="' + mermaidBlocks + '">';
+                out += '<div class="mermaid-toolbar">';
+                out += '<button type="button" class="mermaid-btn mermaid-expand" data-mermaid-index="' + mermaidBlocks + '">Expand</button>';
+                out += '</div>';
+                out += '<pre class="mermaid mermaid-source" id="mermaid-' + mermaidBlocks + '">' + escapeHtml(raw) + '</pre>';
+                out += '<div class="mermaid-render" id="mermaid-render-' + mermaidBlocks + '"></div>';
+                out += '</div>';
+                out += '</div>';
+              } else {
+                out += renderCodeBlock(raw, codeLang);
+              }
+              codeLines = [];
+              codeLang = '';
+            } else {
+              codeLines.push(line);
+            }
+            continue;
+          }
+
+          var codeStart = line.match(/^```(\w*)/);
+          if (codeStart) {
+            out += flushList();
+            out += flushTable();
+            out += flushBlockquote();
+            inCodeBlock = true;
+            codeLang = codeStart[1] || '';
+            codeLines = [];
+            continue;
+          }
+
+          if (line.match(/^\s*\|.*\|\s*$/)) {
+            out += flushList();
+            out += flushBlockquote();
+            if (!inTable) inTable = true;
+            tableRows.push(splitTableRow(line));
+            continue;
+          } else if (inTable) {
+            out += flushTable();
+          }
+
+          if (line.match(/^>\s/)) {
+            out += flushList();
+            out += flushTable();
+            if (!inBlockquote) inBlockquote = true;
+            blockquoteLines.push(line.replace(/^>\s?/, ''));
+            continue;
+          } else if (inBlockquote) {
+            out += flushBlockquote();
+          }
+
+          var h1 = line.match(/^# (.+)/);
+          if (h1) {
+            out += flushList();
+            out += flushLabChallenge();
+            var slug = slugify(h1[1]);
+            out += '<h1 id="' + slug + '">' + inlineFormat(h1[1]) + '</h1>';
+            continue;
+          }
+
+          var h2 = line.match(/^## (.+)/);
+          if (h2) {
+            out += flushList();
+            var slug2 = slugify(h2[1]);
+            var sectionClass = '';
+            var txt = h2[1].toLowerCase();
+            if (txt.indexOf('build it') >= 0 || txt.indexOf('build ') === 0) sectionClass = ' section-build';
+            else if (txt.indexOf('use it') >= 0 || txt.indexOf('use ') === 0) sectionClass = ' section-use';
+            else if (txt.indexOf('ship it') >= 0 || txt.indexOf('ship ') === 0) sectionClass = ' section-ship';
+            if (txt.indexOf('learning objectives') >= 0) {
+              var objItems = [];
+              for (var lo = i + 1; lo < lines.length; lo++) {
+                var loLine = lines[lo];
+                if (loLine.match(/^[-*]\s+(.+)/)) {
+                  objItems.push(loLine.replace(/^[-*]\s+/, ''));
+                } else if (loLine.trim() === '') {
+                  continue;
+                } else {
+                  break;
+                }
+              }
+              out += '<div class="learning-objectives"><div class="learning-objectives-title">&#127919; Learning Objectives</div><ul>';
+              for (var oi = 0; oi < objItems.length; oi++) {
+                out += '<li>' + inlineFormat(objItems[oi]) + '</li>';
+              }
+              out += '</ul></div>';
+              i = lo - 1;
+              continue;
+            }
+            if (txt.indexOf('lab challenge') >= 0) {
+              out += flushLabChallenge();
+              inLabChallenge = true;
+              out += '<div class="lab-challenge">';
+              out += '<h2 id="' + slug2 + '">&#128171; Lab Challenge</h2>';
+              continue;
+            }
+            out += flushLabChallenge();
+            out += '<h2 id="' + slug2 + '" class="' + sectionClass + '">' + inlineFormat(h2[1]) + '</h2>';
+            continue;
+          }
+
+          var h3 = line.match(/^### (.+)/);
+          if (h3) {
+            out += flushList();
+            var slug3 = slugify(h3[1]);
+            out += '<h3 id="' + slug3 + '">' + inlineFormat(h3[1]) + '</h3>';
+            continue;
+          }
+
+          if (line.match(/^---+$/)) {
+            out += flushList();
+            out += '<hr>';
+            continue;
+          }
+
+          var ulMatch = line.match(/^[-*]\s+(.+)/);
+          if (ulMatch) {
+            out += flushTable();
+            out += flushBlockquote();
+            if (!inList || listType !== 'ul') {
+              out += flushList();
+              inList = true;
+              listType = 'ul';
+            }
+            listItems.push(ulMatch[1]);
+            continue;
+          }
+
+          var olMatch = line.match(/^\d+\.\s+(.+)/);
+          if (olMatch) {
+            out += flushTable();
+            out += flushBlockquote();
+            if (!inList || listType !== 'ol') {
+              out += flushList();
+              inList = true;
+              listType = 'ol';
+            }
+            listItems.push(olMatch[1]);
+            continue;
+          }
+
+          if (inList) {
+            out += flushList();
+          }
+
+          if (line.trim() === '') {
+            continue;
+          }
+
+          var paraClass = '';
+          if (firstBlockquoteDone && !firstParaAfterMottoDone) {
+            var isMetaLine = line.match(/^\*\*[^*]+\*\*\s*:/);
+            if (!isMetaLine) {
+              paraClass = ' class="drop-cap"';
+              firstParaAfterMottoDone = true;
+            }
+          }
+
+          var metaMatch = line.match(/^\*\*([^*]+)\*\*:\s*(.+)/);
+          if (metaMatch && !firstParaAfterMottoDone) {
+            out += '<div class="lesson-meta-tag"><strong>' + escapeHtml(metaMatch[1]) + ':</strong> ' + inlineFormat(metaMatch[2]) + '</div>';
+            continue;
+          }
+
+          out += '<p' + paraClass + '>' + inlineFormat(line) + '</p>';
+        }
+
+        out += flushList();
+        out += flushTable();
+        out += flushBlockquote();
+        out += flushLabChallenge();
+
+        return out;
+      }
+
+      function splitTableRow(line) {
+        // Split a markdown table row on cell delimiters while respecting
+        // escaped pipes (P(X\|Y)) and pipes inside inline-code spans (`a | b`).
+        var cells = [];
+        var cur = '';
+        var inCode = false;
+        for (var i = 0; i < line.length; i++) {
+          var ch = line.charAt(i);
+          if (ch === '\\' && line.charAt(i + 1) === '|') {
+            cur += '|';
+            i++;
+            continue;
+          }
+          if (ch === '`') {
+            inCode = !inCode;
+            cur += ch;
+            continue;
+          }
+          if (ch === '|' && !inCode) {
+            cells.push(cur);
+            cur = '';
+            continue;
+          }
+          cur += ch;
+        }
+        cells.push(cur);
+        if (cells.length && cells[0].trim() === '') cells.shift();
+        if (cells.length && cells[cells.length - 1].trim() === '') cells.pop();
+        return cells.map(function (c) { return c.trim(); });
+      }
+
+      function inlineFormat(text) {
+        text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        text = text.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+        text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+        text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function (m, label, href) {
+          if (/^https?:\/\/|^mailto:/i.test(href)) {
+            return '<a href="' + href + '" target="_blank" rel="noopener">' + label + '</a>';
+          }
+          return label;
+        });
+        return text;
+      }
+
+      function slugify(text) {
+        return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      }
+
+      function renderCodeBlock(code, lang) {
+        var highlighted = highlightSyntax(escapeHtml(code), lang);
+        var langLabel = lang ? '<span class="code-lang">' + escapeHtml(lang) + '</span>' : '';
+        return '<pre>' + langLabel + '<button class="code-copy" data-code="' + escapeAttr(code) + '">Copy</button><code>' + highlighted + '</code></pre>';
+      }
+
+      function highlightSyntax(code, lang) {
+        var keywords, commentPattern;
+
+        if (lang === 'python' || lang === 'py') {
+          keywords = /\b(def|class|return|if|elif|else|for|while|in|import|from|as|with|try|except|finally|raise|yield|lambda|not|and|or|is|None|True|False|print|self|pass|break|continue|assert|global)\b/g;
+          commentPattern = /(#[^\n]*)/g;
+        } else if (lang === 'julia') {
+          keywords = /\b(function|end|if|elseif|else|for|while|in|using|import|return|struct|mutable|abstract|type|module|export|let|const|begin|do|try|catch|finally|throw|true|false|nothing|println)\b/g;
+          commentPattern = /(#[^\n]*)/g;
+        } else if (lang === 'javascript' || lang === 'js' || lang === 'typescript' || lang === 'ts') {
+          keywords = /\b(function|const|let|var|return|if|else|for|while|class|new|this|import|export|from|async|await|try|catch|throw|typeof|instanceof|true|false|null|undefined|console)\b/g;
+          commentPattern = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g;
+        } else if (lang === 'rust') {
+          keywords = /\b(fn|let|mut|struct|enum|impl|trait|pub|use|mod|self|super|crate|return|if|else|for|while|loop|match|async|await|true|false|None|Some|Ok|Err|println)\b/g;
+          commentPattern = /(\/\/[^\n]*)/g;
+        } else {
+          keywords = /\b(function|def|class|return|if|else|for|while|import|from|const|let|var|true|false|null|None|print|println)\b/g;
+          commentPattern = /(#[^\n]*|\/\/[^\n]*)/g;
+        }
+
+        var tokens = [];
+        function stash(match) {
+          var id = '\x00TOK' + tokens.length + '\x00';
+          tokens.push(match);
+          return id;
+        }
+
+        code = code.replace(commentPattern, function (m) { return stash('<span class="syn-comment">' + m + '</span>'); });
+        code = code.replace(/(&quot;(?:[^&]|&(?!quot;))*?&quot;|&#39;(?:[^&]|&(?!#39;))*?&#39;|&quot;&quot;&quot;[\s\S]*?&quot;&quot;&quot;)/g, function (m) { return stash('<span class="syn-string">' + m + '</span>'); });
+        code = code.replace(/"([^"]*?)"/g, function (m) { return stash('<span class="syn-string">' + m + '</span>'); });
+
+        code = code.replace(keywords, '<span class="syn-keyword">$1</span>');
+        code = code.replace(/\b(\d+\.?\d*)\b/g, '<span class="syn-number">$1</span>');
+
+        for (var ti = 0; ti < tokens.length; ti++) {
+          code = code.replace('\x00TOK' + ti + '\x00', tokens[ti]);
+        }
+        return code;
+      }
+
+      function initCodeCopy() {
+        document.querySelectorAll('.code-copy').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var code = btn.getAttribute('data-code');
+            navigator.clipboard.writeText(code).then(function () {
+              btn.textContent = 'Copied!';
+              setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+            });
+          });
+        });
+      }
+
+      function renderMermaidBlocks() {
+        var fontsReady = (document.fonts && document.fonts.load)
+          ? Promise.all([
+              document.fonts.load('400 13px "JetBrains Mono"'),
+              document.fonts.load('500 13px "JetBrains Mono"'),
+              document.fonts.load('700 13px "JetBrains Mono"')
+            ]).catch(function () {})
+          : Promise.resolve();
+        var check = setInterval(function () {
+          if (!window._mermaidReady) return;
+          clearInterval(check);
+          fontsReady.then(function () {
+            rerenderMermaidBlocks();
+            bindMermaidToolbar();
+            initMermaidModal();
+          });
+        }, 100);
+        setTimeout(function () { clearInterval(check); }, 10000);
+      }
+
+      function mermaidTheme() {
+        return document.documentElement.getAttribute('data-theme') === 'light' ? 'default' : 'dark';
+      }
+
+      // Lessons hard-code node fills (light pastels that vanish on the dark
+      // default theme, and dark navies that vanish in light mode). Rather than
+      // maintain a hex table, flip the lightness band while preserving hue, so
+      // color-coding survives and labels stay legible in either theme.
+      function hexToHsl(hex) {
+        var r = parseInt(hex.slice(1, 3), 16) / 255;
+        var g = parseInt(hex.slice(3, 5), 16) / 255;
+        var b = parseInt(hex.slice(5, 7), 16) / 255;
+        var max = Math.max(r, g, b), min = Math.min(r, g, b), h = 0, s = 0, l = (max + min) / 2;
+        if (max !== min) {
+          var d = max - min;
+          s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+          if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
+          else if (max === g) h = (b - r) / d + 2;
+          else h = (r - g) / d + 4;
+          h /= 6;
+        }
+        return [h, s, l];
+      }
+
+      function hslToHex(h, s, l) {
+        function hue(p, q, t) {
+          if (t < 0) t += 1;
+          if (t > 1) t -= 1;
+          if (t < 1 / 6) return p + (q - p) * 6 * t;
+          if (t < 1 / 2) return q;
+          if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+          return p;
+        }
+        var r, g, b;
+        if (s === 0) {
+          r = g = b = l;
+        } else {
+          var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+          var p = 2 * l - q;
+          r = hue(p, q, h + 1 / 3);
+          g = hue(p, q, h);
+          b = hue(p, q, h - 1 / 3);
+        }
+        function c(x) {
+          x = Math.round(Math.max(0, Math.min(1, x)) * 255);
+          return ('0' + x.toString(16)).slice(-2);
+        }
+        return '#' + c(r) + c(g) + c(b);
+      }
+
+      function mermaidPreprocess(def) {
+        var dark = mermaidTheme() === 'dark';
+        return def.replace(/fill\s*:\s*(#[0-9a-fA-F]{6})/g, function (m, hex) {
+          var hsl = hexToHsl(hex.toLowerCase());
+          if (dark && hsl[2] > 0.65) return 'fill:' + hslToHex(hsl[0], hsl[1], 0.26);
+          if (!dark && hsl[2] < 0.30) return 'fill:' + hslToHex(hsl[0], Math.min(hsl[1], 0.5), 0.86);
+          return m;
+        });
+      }
+
+      function updateMermaidThemeAndRerender() {
+        if (!window._mermaidReady) return;
+        try {
+          window._mermaidReady.initialize({
+            startOnLoad: false,
+            theme: mermaidTheme(),
+            fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+            themeVariables: { fontSize: '13px' },
+            flowchart: { useMaxWidth: true, htmlLabels: true, nodeSpacing: 40, rankSpacing: 50, padding: 12 }
+          });
+        } catch (_) {}
+        rerenderMermaidBlocks();
+        rerenderMermaidModal();
+      }
+
+      function rerenderMermaidBlocks() {
+        if (!window._mermaidReady) return;
+        var sources = document.querySelectorAll('pre.mermaid.mermaid-source');
+        sources.forEach(function (pre) {
+          var idxMatch = pre.id && pre.id.match(/mermaid-(\d+)/);
+          var idx = idxMatch ? idxMatch[1] : null;
+          if (!idx) return;
+          var target = document.getElementById('mermaid-render-' + idx);
+          if (!target) return;
+          var def = mermaidPreprocess(pre.textContent);
+          target.innerHTML = '<div class="panel-loading">Rendering diagram...</div>';
+
+          var token = ++mermaidRenderSeq;
+          target._mermaidRenderToken = token;
+
+          window._mermaidReady.render('mermaid-' + idx + '-svg', def).then(function (result) {
+            if (target._mermaidRenderToken !== token) return;
+            target.innerHTML = result.svg;
+          }).catch(function () {
+            if (target._mermaidRenderToken !== token) return;
+            target.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Diagram could not be rendered.</p>';
+          });
+        });
+      }
+
+      function bindMermaidToolbar() {
+        document.querySelectorAll('.mermaid-expand').forEach(function (btn) {
+          if (btn._bound) return;
+          btn._bound = true;
+          btn.addEventListener('click', function () {
+            var idx = btn.getAttribute('data-mermaid-index');
+            openMermaidModal(idx, btn);
+          });
+        });
+      }
+
+      function initMermaidModal() {
+        var overlay = document.getElementById('mermaidModalOverlay');
+        var closeBtn = document.getElementById('mermaidModalClose');
+        if (!overlay || !closeBtn) return;
+        if (overlay._bound) return;
+        overlay._bound = true;
+
+        closeBtn.addEventListener('click', closeMermaidModal);
+        overlay.addEventListener('click', function (e) {
+          if (e.target === overlay) closeMermaidModal();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (!overlay.classList.contains('open')) return;
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            closeMermaidModal();
+            return;
+          }
+
+          if (e.key === 'Tab') {
+            var focusables = getMermaidModalFocusables();
+            if (!focusables.length) return;
+            var first = focusables[0];
+            var last = focusables[focusables.length - 1];
+            var active = document.activeElement;
+
+            if (e.shiftKey) {
+              if (active === first || active === overlay) {
+                e.preventDefault();
+                last.focus();
+              }
+            } else {
+              if (active === last) {
+                e.preventDefault();
+                first.focus();
+              }
+            }
+          }
+        });
+      }
+
+      var lastMermaidTrigger = null;
+      var openMermaidIndex = null;
+      var mermaidRenderSeq = 0;
+
+      function getMermaidModalFocusables() {
+        var modal = document.querySelector('#mermaidModalOverlay .mermaid-modal');
+        if (!modal) return [];
+        return Array.prototype.slice.call(modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+          .filter(function (el) { return !el.disabled && el.offsetParent !== null; });
+      }
+
+      function openMermaidModal(idx, triggerEl) {
+        var overlay = document.getElementById('mermaidModalOverlay');
+        var body = document.getElementById('mermaidModalBody');
+        var center = document.getElementById('mermaidModalCenter');
+        var title = document.getElementById('mermaidModalTitle');
+        var closeBtn = document.getElementById('mermaidModalClose');
+        var pre = document.getElementById('mermaid-' + idx);
+        if (!overlay || !body || !center || !pre || !closeBtn) return;
+
+        lastMermaidTrigger = triggerEl || document.activeElement;
+        openMermaidIndex = idx;
+
+        if (title) title.textContent = 'Diagram';
+
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        closeBtn.focus();
+
+        rerenderMermaidModal();
+      }
+
+      function rerenderMermaidModal() {
+        var overlay = document.getElementById('mermaidModalOverlay');
+        var center = document.getElementById('mermaidModalCenter');
+        if (!overlay || !center) return;
+        if (!overlay.classList.contains('open')) return;
+        if (!openMermaidIndex) return;
+        if (!window._mermaidReady) return;
+
+        var pre = document.getElementById('mermaid-' + openMermaidIndex);
+        if (!pre) return;
+        var def = mermaidPreprocess(pre.textContent);
+
+        center.innerHTML = '<div class="panel-loading">Rendering diagram...</div>';
+        var token = ++mermaidRenderSeq;
+        center._mermaidRenderToken = token;
+
+        window._mermaidReady.render('mermaid-modal-svg', def).then(function (result) {
+          if (center._mermaidRenderToken !== token) return;
+          center.innerHTML = result.svg;
+        }).catch(function () {
+          if (center._mermaidRenderToken !== token) return;
+          center.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Diagram could not be rendered.</p>';
+        });
+      }
+
+      function closeMermaidModal() {
+        var overlay = document.getElementById('mermaidModalOverlay');
+        var center = document.getElementById('mermaidModalCenter');
+        if (!overlay) return;
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        if (center) center.innerHTML = '';
+        document.body.style.overflow = '';
+        openMermaidIndex = null;
+
+        if (lastMermaidTrigger && typeof lastMermaidTrigger.focus === 'function') {
+          lastMermaidTrigger.focus();
+        }
+      }
+
+      function renderQuiz(data) {
+        var questions = data.questions || data;
+        if (!questions || !questions.length) return;
+
+        var article = document.querySelector('.lesson-article');
+        if (!article) return;
+
+        var conceptH2 = article.querySelector('#the-concept, #concept');
+        var buildH2 = article.querySelector('#build-it, #build');
+        var keyTermsH2 = article.querySelector('#key-terms');
+
+        var preQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'pre'; }), 'pre', 'Pre-Lesson Check');
+        var checkQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'check'; }), 'check', 'Mid-Lesson Check');
+        var postQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'post'; }), 'post', 'Post-Lesson Quiz');
+
+        if (!preQuizHtml && !checkQuizHtml && !postQuizHtml) {
+          var allHtml = buildQuizHtml(questions, 'all', 'Quiz');
+          if (allHtml && keyTermsH2) {
+            keyTermsH2.insertAdjacentHTML('beforebegin', allHtml);
+          } else if (allHtml) {
+            article.insertAdjacentHTML('beforeend', allHtml);
+          }
+          restoreQuizAnswers();
+          return;
+        }
+
+        if (preQuizHtml && conceptH2) {
+          conceptH2.insertAdjacentHTML('beforebegin', preQuizHtml);
+        } else if (preQuizHtml && buildH2) {
+          buildH2.insertAdjacentHTML('beforebegin', preQuizHtml);
+        }
+
+        // Mid-lesson check: land between Build It and Use It if possible,
+        // otherwise fall back to before Use It / Ship It / Key Terms.
+        var useH2 = article.querySelector('#use-it, #use');
+        var shipH2 = article.querySelector('#ship-it, #ship');
+        if (checkQuizHtml && useH2) {
+          useH2.insertAdjacentHTML('beforebegin', checkQuizHtml);
+        } else if (checkQuizHtml && shipH2) {
+          shipH2.insertAdjacentHTML('beforebegin', checkQuizHtml);
+        } else if (checkQuizHtml && keyTermsH2) {
+          keyTermsH2.insertAdjacentHTML('beforebegin', checkQuizHtml);
+        } else if (checkQuizHtml) {
+          article.insertAdjacentHTML('beforeend', checkQuizHtml);
+        }
+
+        if (postQuizHtml && keyTermsH2) {
+          keyTermsH2.insertAdjacentHTML('beforebegin', postQuizHtml);
+        } else if (postQuizHtml) {
+          article.insertAdjacentHTML('beforeend', postQuizHtml);
+        }
+
+        restoreQuizAnswers();
+      }
+
+      function buildQuizHtml(questions, id, title) {
+        if (!questions.length) return '';
+        var html = '<div class="quiz-section" id="quiz-' + id + '">';
+        html += '<div class="quiz-title">&#9989; ' + escapeHtml(title) + '</div>';
+        for (var qi = 0; qi < questions.length; qi++) {
+          var q = questions[qi];
+          var qid = id + '-q' + qi;
+          html += '<div class="quiz-question" data-correct="' + q.correct + '" id="' + qid + '">';
+          html += '<div class="quiz-question-text">' + (qi + 1) + '. ' + escapeHtml(q.question) + '</div>';
+          html += '<div class="quiz-options">';
+          for (var oi = 0; oi < q.options.length; oi++) {
+            html += '<div class="quiz-option" data-index="' + oi + '" onclick="handleQuizClick(this)">';
+            html += '<span class="quiz-marker"></span>';
+            html += '<span>' + escapeHtml(q.options[oi]) + '</span>';
+            html += '</div>';
+          }
+          html += '</div>';
+          if (q.explanation) {
+            html += '<div class="quiz-explanation" id="' + qid + '-exp">' + escapeHtml(q.explanation) + '</div>';
+          }
+          html += '</div>';
+        }
+        html += '<div class="quiz-score" id="quiz-' + id + '-score"></div>';
+        html += '</div>';
+        return html;
+      }
+
+      window.handleQuizClick = function (el) {
+        var questionDiv = el.closest('.quiz-question');
+        if (questionDiv.classList.contains('answered')) return;
+        applyQuizAnswer(questionDiv, parseInt(el.getAttribute('data-index')), true);
+      };
+
+      function applyQuizAnswer(questionDiv, chosen, persist) {
+        if (!questionDiv || isNaN(chosen)) return;
+        questionDiv.classList.add('answered');
+
+        var correct = parseInt(questionDiv.getAttribute('data-correct'));
+        var options = questionDiv.querySelectorAll('.quiz-option');
+
+        for (var i = 0; i < options.length; i++) {
+          options[i].classList.add('disabled');
+          if (i === correct) {
+            options[i].classList.add('correct');
+            var mc = options[i].querySelector('.quiz-marker');
+            if (mc) mc.textContent = '\u2713';
+          }
+        }
+        if (chosen !== correct) {
+          var picked = questionDiv.querySelector('.quiz-option[data-index="' + chosen + '"]');
+          if (picked) {
+            picked.classList.add('incorrect');
+            var mp = picked.querySelector('.quiz-marker');
+            if (mp) mp.textContent = '\u2717';
+          }
+        }
+
+        var exp = questionDiv.querySelector('.quiz-explanation');
+        if (exp) exp.style.display = 'block';
+
+        if (persist && window.AIFSProgress && lessonPath) {
+          window.AIFSProgress.recordAnswer(lessonPath, questionDiv.id, chosen, chosen === correct);
+        }
+
+        updateSectionScore(questionDiv.closest('.quiz-section'));
+        maybeMarkLessonComplete();
+      }
+
+      function updateSectionScore(section) {
+        if (!section) return;
+        var allQs = section.querySelectorAll('.quiz-question');
+        var answeredQs = section.querySelectorAll('.quiz-question.answered');
+        if (allQs.length !== answeredQs.length) return;
+        var correctCount = 0;
+        for (var j = 0; j < allQs.length; j++) {
+          if (!allQs[j].querySelector('.quiz-option.incorrect')) correctCount++;
+        }
+        var scoreEl = section.querySelector('.quiz-score');
+        if (scoreEl) {
+          scoreEl.textContent = correctCount + '/' + allQs.length + ' correct';
+          scoreEl.style.display = 'block';
+        }
+      }
+
+      function maybeMarkLessonComplete() {
+        if (!window.AIFSProgress || !lessonPath) return;
+        var sections = document.querySelectorAll('.quiz-section');
+        if (!sections.length) return;
+        for (var s = 0; s < sections.length; s++) {
+          var qs = sections[s].querySelectorAll('.quiz-question');
+          var answered = sections[s].querySelectorAll('.quiz-question.answered');
+          if (qs.length === 0 || qs.length !== answered.length) return;
+          if (sections[s].querySelector('.quiz-option.incorrect')) return;
+        }
+        window.AIFSProgress.markLessonComplete(lessonPath);
+      }
+
+      function restoreQuizAnswers() {
+        if (!window.AIFSProgress || !lessonPath) return;
+        var lp = window.AIFSProgress.getLessonProgress(lessonPath);
+        if (!lp || !lp.answers) return;
+        for (var qid in lp.answers) {
+          var q = document.getElementById(qid);
+          if (q && !q.classList.contains('answered')) {
+            applyQuizAnswer(q, lp.answers[qid].picked, false);
+          }
+        }
+      }
+
+      function addBottomNav(html) {
+        if (currentLessonIndex < 0) return html;
+
+        var prev = null;
+        for (var pi = currentLessonIndex - 1; pi >= 0; pi--) {
+          if (flatLessons[pi].isReadable) { prev = flatLessons[pi]; break; }
+        }
+        var next = null;
+        for (var ni = currentLessonIndex + 1; ni < flatLessons.length; ni++) {
+          if (flatLessons[ni].isReadable) { next = flatLessons[ni]; break; }
+        }
+
+        var nav = '<div class="lesson-nav-bottom">';
+        if (prev) {
+          nav += '<a class="lesson-nav-btn prev" href="lesson.html?path=' + prev.path + '">';
+          nav += '<span class="nav-label">&larr; Previous</span>';
+          nav += '<span class="nav-title">' + escapeHtml(prev.lessonName) + '</span>';
+          nav += '</a>';
+        } else {
+          nav += '<div></div>';
+        }
+        if (next) {
+          nav += '<a class="lesson-nav-btn next" href="lesson.html?path=' + next.path + '">';
+          nav += '<span class="nav-label">Next &rarr;</span>';
+          nav += '<span class="nav-title">' + escapeHtml(next.lessonName) + '</span>';
+          nav += '</a>';
+        }
+        nav += '</div>';
+        return html + nav;
+      }
+
+      function renderAIPanels() {
+        var container = document.getElementById('aiPanels');
+        if (!container || !lessonPath) return;
+
+        renderOutputsPanel(container);
+        renderCodePanel(container);
+        renderQuizPanel(container);
+        renderLearningPathPanel(container);
+        renderContinuePanel(container);
+      }
+
+      var ghApiCache = {};
+
+      function ghApiFetch(apiPath, cb) {
+        if (ghApiCache[apiPath]) {
+          cb(null, ghApiCache[apiPath]);
+          return;
+        }
+        fetch('https://api.github.com/repos/rohitg00/ai-engineering-from-scratch/contents/' + apiPath, {
+          headers: { 'Accept': 'application/vnd.github.v3+json' }
+        }).then(function (res) {
+          if (!res.ok) throw new Error(res.status);
+          return res.json();
+        }).then(function (data) {
+          ghApiCache[apiPath] = data;
+          cb(null, data);
+        }).catch(function (err) {
+          cb(err, null);
+        });
+      }
+
+      function classifyOutput(name) {
+        var lower = name.toLowerCase();
+        if (lower.indexOf('prompt') >= 0) return 'prompt';
+        if (lower.indexOf('skill') >= 0) return 'skill';
+        return 'other';
+      }
+
+      function langIcon(filename) {
+        var ext = filename.split('.').pop().toLowerCase();
+        var map = { py: 'PY', python: 'PY', ts: 'TS', js: 'JS', rust: 'RS', rs: 'RS', jl: 'JL', julia: 'JL', sh: 'SH', bash: 'SH' };
+        return map[ext] || '··';
+      }
+
+      function langCommand(filename) {
+        var ext = filename.split('.').pop().toLowerCase();
+        if (ext === 'py') return 'python';
+        if (ext === 'ts') return 'npx tsx';
+        if (ext === 'js') return 'node';
+        if (ext === 'rs') return 'cargo run --';
+        if (ext === 'jl') return 'julia';
+        if (ext === 'sh') return 'bash';
+        return 'run';
+      }
+
+      function formatSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        return (bytes / 1024).toFixed(1) + ' KB';
+      }
+
+      function extractFrontmatterDesc(content) {
+        var match = content.match(/^---[\s\S]*?description:\s*(.+?)[\r\n]/m);
+        if (match) return match[1].replace(/^["']|["']$/g, '').trim();
+        var firstLine = content.split('\n').find(function (l) { return l.trim() && !l.match(/^[#-]/) && !l.match(/^---/); });
+        return firstLine ? firstLine.trim().substring(0, 120) : '';
+      }
+
+      function renderOutputsPanel(container) {
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">O</div><div class="ai-panel-title">What This Lesson Ships</div></div><div class="ai-panel-subtitle">Prompts, skills, and artifacts you can use right now</div><div id="outputsContent" class="panel-loading">Loading outputs...</div>';
+        container.appendChild(panel);
+
+        ghApiFetch(lessonPath + '/outputs', function (err, data) {
+          var el = document.getElementById('outputsContent');
+          if (err || !data || !Array.isArray(data) || data.length === 0) {
+            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            return;
+          }
+
+          var html = '<div class="output-cards">';
+          data.forEach(function (file, idx) {
+            var type = classifyOutput(file.name);
+            var badgeClass = type;
+            var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? 'Skill' : 'Output';
+            var installId = 'install-hint-' + idx;
+            var installHint = '';
+            if (type === 'prompt') {
+              installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
+            } else if (type === 'skill') {
+              var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
+              installHint = 'npx skills add rohitg00/ai-engineering-from-scratch --skill ' + skillName;
+            }
+
+            html += '<div class="output-card">';
+            html += '<div class="output-badge ' + badgeClass + '">' + badgeText + '</div>';
+            html += '<div class="output-card-name">' + escapeHtml(file.name) + '</div>';
+            html += '<div class="output-desc" id="desc-' + idx + '">Loading description...</div>';
+            html += '<div class="output-actions">';
+            html += '<a class="output-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
+            if (installHint) {
+              html += '<button class="output-btn" onclick="var h=document.getElementById(\'' + installId + '\');h.classList.toggle(\'visible\')">Install</button>';
+            }
+            html += '</div>';
+            if (installHint) {
+              html += '<div class="output-install-hint" id="' + installId + '">' + escapeHtml(installHint) + '</div>';
+            }
+            html += '</div>';
+
+            fetch(file.download_url).then(function (r) { return r.text(); }).then(function (content) {
+              var descEl = document.getElementById('desc-' + idx);
+              if (descEl) {
+                var desc = extractFrontmatterDesc(content);
+                descEl.textContent = desc || file.name;
+              }
+            }).catch(function () {
+              var descEl = document.getElementById('desc-' + idx);
+              if (descEl) descEl.textContent = file.name;
+            });
+          });
+          html += '</div>';
+          el.innerHTML = html;
+        });
+      }
+
+      function renderCodePanel(container) {
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Executable files from this lesson</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
+        container.appendChild(panel);
+
+        ghApiFetch(lessonPath + '/code', function (err, data) {
+          var el = document.getElementById('codeContent');
+          if (err || !data || !Array.isArray(data) || data.length === 0) {
+            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            return;
+          }
+
+          var html = '<div class="code-cards">';
+          data.forEach(function (file) {
+            var icon = langIcon(file.name);
+            var cmd = langCommand(file.name);
+            var runCmd = cmd + ' ' + lessonPath + '/code/' + file.name;
+            html += '<div class="code-card">';
+            html += '<div class="code-card-header"><span class="code-lang-icon">' + icon + '</span><span class="code-card-name">' + escapeHtml(file.name) + '</span></div>';
+            html += '<div class="code-card-size">' + formatSize(file.size) + '</div>';
+            html += '<div class="code-card-run">' + escapeHtml(runCmd) + '</div>';
+            html += '<div class="code-card-actions">';
+            html += '<a class="code-card-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
+            html += '<button class="code-card-btn code-card-copy" data-command="' + escapeAttr(runCmd) + '">Copy command</button>';
+            html += '</div>';
+            html += '</div>';
+          });
+          html += '</div>';
+          el.innerHTML = html;
+          el.querySelectorAll('.code-card-copy').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              var command = btn.getAttribute('data-command');
+              navigator.clipboard.writeText(command).then(function () {
+                btn.textContent = 'Copied!';
+                setTimeout(function () { btn.textContent = 'Copy command'; }, 1500);
+              });
+            });
+          });
+        });
+      }
+
+      function getQuizQuestions() {
+        var pathLower = (lessonPath || '').toLowerCase();
+        var lessonName = '';
+        if (currentLessonIndex >= 0) lessonName = flatLessons[currentLessonIndex].lessonName;
+
+        if (pathLower.indexOf('math') >= 0 || pathLower.indexOf('linear-algebra') >= 0 || pathLower.indexOf('calculus') >= 0) {
+          return [
+            { q: 'What does a dot product measure between two vectors?', opts: ['Their sum', 'How aligned they are', 'Their cross product', 'The distance between them'], answer: 1, explain: 'The dot product measures the similarity or alignment between two vectors. When it is zero, the vectors are orthogonal.' },
+            { q: 'What does the gradient of a function point toward?', opts: ['The minimum', 'The steepest ascent', 'The nearest saddle point', 'A random direction'], answer: 1, explain: 'The gradient always points in the direction of steepest increase. Gradient descent moves opposite to the gradient to find minima.' },
+            { q: 'A matrix with shape (3, 5) multiplied by (5, 2) produces what shape?', opts: ['(3, 2)', '(5, 5)', '(3, 5)', '(2, 3)'], answer: 0, explain: 'Matrix multiplication: (m, n) x (n, p) = (m, p). So (3, 5) x (5, 2) = (3, 2).' }
+          ];
+        }
+
+        if (pathLower.indexOf('ml') >= 0 || pathLower.indexOf('regression') >= 0 || pathLower.indexOf('classification') >= 0 || pathLower.indexOf('supervised') >= 0) {
+          return [
+            { q: 'What is the purpose of a loss function in machine learning?', opts: ['To generate data', 'To measure how wrong predictions are', 'To select features', 'To split data'], answer: 1, explain: 'A loss function quantifies the difference between predicted and actual values. The optimizer minimizes this value during training.' },
+            { q: 'Why do we split data into train and test sets?', opts: ['To save memory', 'To evaluate generalization on unseen data', 'To make training faster', 'To reduce the dataset size'], answer: 1, explain: 'The test set acts as unseen data, revealing whether the model memorized training data or learned generalizable patterns.' },
+            { q: 'What does overfitting mean?', opts: ['The model is too simple', 'The model memorizes training data but fails on new data', 'The model trains too slowly', 'The loss is too low'], answer: 1, explain: 'Overfitting occurs when a model performs well on training data but poorly on new data because it learned noise rather than signal.' }
+          ];
+        }
+
+        if (pathLower.indexOf('deep-learning') >= 0 || pathLower.indexOf('neural') >= 0 || pathLower.indexOf('backprop') >= 0 || pathLower.indexOf('activation') >= 0) {
+          return [
+            { q: 'What does backpropagation compute?', opts: ['Forward predictions', 'The gradient of the loss with respect to each weight', 'The learning rate', 'New training data'], answer: 1, explain: 'Backpropagation uses the chain rule to compute how much each weight contributed to the error, then adjusts weights accordingly.' },
+            { q: 'Why do neural networks need non-linear activation functions?', opts: ['To speed up training', 'Without them, stacking layers is equivalent to a single linear layer', 'To reduce memory usage', 'To normalize outputs'], answer: 1, explain: 'Without non-linearities, any composition of linear layers collapses to a single linear transformation. Activations like ReLU let the network learn complex patterns.' },
+            { q: 'What does the learning rate control?', opts: ['How many epochs to train', 'The size of each weight update step', 'The number of layers', 'The batch size'], answer: 1, explain: 'The learning rate scales the gradient update. Too large causes divergence, too small causes slow or stuck training.' }
+          ];
+        }
+
+        if (pathLower.indexOf('llm') >= 0 || pathLower.indexOf('transformer') >= 0 || pathLower.indexOf('attention') >= 0 || pathLower.indexOf('tokeniz') >= 0 || pathLower.indexOf('fine-tun') >= 0) {
+          return [
+            { q: 'What does self-attention allow a transformer to do?', opts: ['Process tokens in order', 'Weight the importance of every token relative to every other token', 'Reduce vocabulary size', 'Compress the model'], answer: 1, explain: 'Self-attention computes pairwise relevance scores across all positions, allowing the model to relate distant tokens without recurrence.' },
+            { q: 'Why do LLMs use tokenizers instead of raw characters?', opts: ['Characters are too large', 'Tokens compress frequent patterns into single units, reducing sequence length', 'Tokenizers are faster to train', 'Characters cannot be embedded'], answer: 1, explain: 'Subword tokenizers like BPE balance vocabulary size against sequence length, making common words single tokens while handling rare words as pieces.' },
+            { q: 'What is the key difference between pre-training and fine-tuning?', opts: ['Pre-training uses labeled data', 'Pre-training learns general language; fine-tuning adapts to a specific task', 'Fine-tuning uses more data', 'There is no difference'], answer: 1, explain: 'Pre-training learns language patterns from massive unlabeled text. Fine-tuning takes that foundation and specializes it on smaller, task-specific data.' }
+          ];
+        }
+
+        if (pathLower.indexOf('rag') >= 0 || pathLower.indexOf('retrieval') >= 0 || pathLower.indexOf('embed') >= 0 || pathLower.indexOf('vector') >= 0) {
+          return [
+            { q: 'What is the core idea behind RAG?', opts: ['Training a larger model', 'Retrieving relevant context before generating a response', 'Using more GPUs', 'Reducing model size'], answer: 1, explain: 'RAG (Retrieval-Augmented Generation) grounds LLM responses in retrieved documents, reducing hallucination and enabling knowledge updates without retraining.' },
+            { q: 'What do embedding models produce?', opts: ['Text summaries', 'Dense vector representations of text', 'Token counts', 'Grammar corrections'], answer: 1, explain: 'Embedding models map text into fixed-dimensional vectors where semantic similarity corresponds to geometric proximity.' },
+            { q: 'Why use cosine similarity for comparing embeddings?', opts: ['It is the only metric', 'It measures angular similarity regardless of vector magnitude', 'It is faster than dot product', 'It works with integers only'], answer: 1, explain: 'Cosine similarity normalizes for magnitude, focusing on direction. Two texts about the same topic will have high cosine similarity regardless of length.' }
+          ];
+        }
+
+        if (pathLower.indexOf('agent') >= 0 || pathLower.indexOf('tool') >= 0 || pathLower.indexOf('mcp') >= 0) {
+          return [
+            { q: 'What distinguishes an AI agent from a simple chatbot?', opts: ['Agents are faster', 'Agents can take actions and use tools autonomously', 'Agents use bigger models', 'There is no difference'], answer: 1, explain: 'Agents have a loop: observe, decide, act. They can call tools, read files, search the web, and chain multiple steps to complete complex tasks.' },
+            { q: 'What is MCP (Model Context Protocol)?', opts: ['A model training format', 'A standardized protocol for connecting AI models to tools and data sources', 'A compression algorithm', 'A testing framework'], answer: 1, explain: 'MCP provides a universal interface between AI assistants and external tools/data, replacing one-off integrations with a standard protocol.' },
+            { q: 'Why is tool-use important for LLMs?', opts: ['It reduces cost', 'It lets LLMs access real-time information and take actions beyond text generation', 'It makes responses shorter', 'It removes hallucinations entirely'], answer: 1, explain: 'Tools extend LLMs beyond their training data cutoff, enabling real-time lookups, calculations, code execution, and interaction with external systems.' }
+          ];
+        }
+
+        if (pathLower.indexOf('eval') >= 0 || pathLower.indexOf('safety') >= 0 || pathLower.indexOf('alignment') >= 0 || pathLower.indexOf('deploy') >= 0) {
+          return [
+            { q: 'Why are evals critical for production AI systems?', opts: ['To save money', 'To measure performance objectively before and after changes', 'To make the model bigger', 'Evals are optional'], answer: 1, explain: 'Evals are the tests of AI engineering. Without them, you cannot know if a change improved or regressed quality. They should run on every code change.' },
+            { q: 'What does "alignment" mean in AI safety?', opts: ['Aligning text on screen', 'Ensuring AI systems act according to human intentions and values', 'Making models faster', 'Using the same training data'], answer: 1, explain: 'Alignment ensures that as AI systems become more capable, they remain helpful, honest, and harmless, acting in accordance with human goals.' },
+            { q: 'What is a guardrail in the context of deployed LLMs?', opts: ['A physical barrier', 'A check that prevents harmful, off-topic, or policy-violating outputs', 'A backup model', 'A caching layer'], answer: 1, explain: 'Guardrails filter inputs and outputs at runtime, catching toxicity, prompt injection, PII leaks, and other risks before they reach the user.' }
+          ];
+        }
+
+        return [
+          { q: 'What does "from scratch" mean in this course?', opts: ['Using no computer', 'Building each concept by implementing it yourself, not just reading theory', 'Starting from assembly language', 'Only using pen and paper'], answer: 1, explain: 'This course follows a Build-Use-Ship methodology: first understand by building it, then apply it, then ship it as a real artifact.' },
+          { q: 'Why does this course combine math, ML, and engineering?', opts: ['To make it longer', 'Because real AI engineering requires all three to build production systems', 'Math is just for fun', 'Engineering is optional'], answer: 1, explain: 'Production AI systems require mathematical foundations (for understanding), ML knowledge (for modeling), and engineering skills (for deployment and reliability).' },
+          { q: 'What is the "Ship" step in the Build-Use-Ship framework?', opts: ['Mailing physical goods', 'Creating a reusable artifact like a prompt, skill, or tool from what you learned', 'Publishing a paper', 'Deleting your code'], answer: 2, explain: 'The Ship step turns your learning into something tangible: a prompt, skill file, MCP tool, or CLI utility that others (or future you) can use immediately.' }
+        ];
+      }
+
+      function renderQuizPanel(container) {
+        var questions = getQuizQuestions();
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel';
+
+        var phase = '';
+        if (currentLessonIndex >= 0) {
+          var fl = flatLessons[currentLessonIndex];
+          phase = fl.phaseSlug || '';
+        }
+
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">Q</div><div class="ai-panel-title">Test Your Understanding</div></div>';
+        html += '<div class="ai-panel-subtitle">Did you get it?</div>';
+        html += '<div class="quiz-container" id="quizContainer">';
+
+        var letters = ['A', 'B', 'C', 'D'];
+        questions.forEach(function (q, qi) {
+          html += '<div class="quiz-question" id="quiz-q-' + qi + '">';
+          html += '<div class="quiz-question-num">Question ' + (qi + 1) + ' of ' + questions.length + '</div>';
+          html += '<div class="quiz-question-text">' + escapeHtml(q.q) + '</div>';
+          html += '<div class="quiz-options">';
+          q.opts.forEach(function (opt, oi) {
+            html += '<button class="quiz-option" data-qi="' + qi + '" data-oi="' + oi + '" onclick="handleQuizAnswer(' + qi + ',' + oi + ')">';
+            html += '<span class="opt-letter">' + letters[oi] + '</span>';
+            html += '<span>' + escapeHtml(opt) + '</span>';
+            html += '</button>';
+          });
+          html += '</div>';
+          html += '<div class="quiz-explanation" id="quiz-explain-' + qi + '">' + escapeHtml(q.explain) + '</div>';
+          html += '</div>';
+        });
+
+        html += '<div class="quiz-score" id="quizScore"><div class="quiz-score-number" id="quizScoreNum">0/' + questions.length + '</div><div class="quiz-score-label">Complete all questions to see your score</div></div>';
+        html += '<div class="quiz-deeper">Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed</div>';
+        html += '</div>';
+
+        panel.innerHTML = html;
+        container.appendChild(panel);
+
+        window._quizData = questions;
+        window._quizAnswered = 0;
+        window._quizCorrect = 0;
+      }
+
+      window.handleQuizAnswer = function (qi, oi) {
+        var questions = window._quizData;
+        if (!questions) return;
+
+        var qEl = document.getElementById('quiz-q-' + qi);
+        if (!qEl) return;
+        var opts = qEl.querySelectorAll('.quiz-option');
+        if (opts[0].classList.contains('disabled')) return;
+
+        var correct = questions[qi].answer;
+        opts.forEach(function (opt, i) {
+          opt.classList.add('disabled');
+          if (i === oi) {
+            opt.classList.add('selected');
+            opt.classList.add(i === correct ? 'correct' : 'wrong');
+          }
+          if (i === correct) {
+            opt.classList.add('is-answer');
+          }
+        });
+
+        var explain = document.getElementById('quiz-explain-' + qi);
+        if (explain) explain.classList.add('visible');
+
+        window._quizAnswered++;
+        if (oi === correct) window._quizCorrect++;
+
+        if (window._quizAnswered === questions.length) {
+          var scoreEl = document.getElementById('quizScore');
+          var scoreNum = document.getElementById('quizScoreNum');
+          if (scoreEl && scoreNum) {
+            scoreNum.textContent = window._quizCorrect + '/' + questions.length;
+            scoreEl.querySelector('.quiz-score-label').textContent =
+              window._quizCorrect === questions.length ? 'Perfect score!' :
+              window._quizCorrect >= 2 ? 'Great work!' : 'Keep studying!';
+            scoreEl.classList.add('visible');
+          }
+        }
+      };
+
+      function renderLearningPathPanel(container) {
+        if (currentLessonIndex < 0 || typeof PHASES === 'undefined') return;
+
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel';
+
+        var current = flatLessons[currentLessonIndex];
+        var phaseIdx = current.phaseIndex;
+        var phase = PHASES[phaseIdx];
+        var lessonsInPhase = [];
+        var currentIdxInPhase = -1;
+
+        for (var i = 0; i < flatLessons.length; i++) {
+          if (flatLessons[i].phaseIndex === phaseIdx) {
+            if (i === currentLessonIndex) currentIdxInPhase = lessonsInPhase.length;
+            lessonsInPhase.push({ flat: flatLessons[i], flatIdx: i });
+          }
+        }
+
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">P</div><div class="ai-panel-title">Learning Path</div></div>';
+        html += '<div class="ai-panel-subtitle">Phase ' + String(phase.id).padStart(2, '0') + ': ' + escapeHtml(phase.name) + '</div>';
+
+        // Window: 2 before current + current + 2 after, cap at 5 visible.
+        var windowSize = 5;
+        var startIdx = Math.max(0, currentIdxInPhase - 2);
+        var endIdx = Math.min(lessonsInPhase.length, startIdx + windowSize);
+        startIdx = Math.max(0, endIdx - windowSize);
+        var visible = lessonsInPhase.slice(startIdx, endIdx);
+        var hiddenBefore = startIdx;
+        var hiddenAfter = lessonsInPhase.length - endIdx;
+
+        html += '<div class="learning-timeline">';
+        if (hiddenBefore > 0) {
+          html += '<span class="timeline-ellipsis" title="' + hiddenBefore + ' earlier lessons">&laquo; ' + hiddenBefore + '</span>';
+          html += '<div class="timeline-line done"></div>';
+        }
+        visible.forEach(function (item, vIdx) {
+          var idx = startIdx + vIdx;
+          var isCurrent = idx === currentIdxInPhase;
+          var isPrev = idx < currentIdxInPhase;
+          var cls = isCurrent ? 'current' : isPrev ? 'prev' : '';
+
+          if (vIdx > 0) {
+            var lineCls = idx <= currentIdxInPhase ? (idx === currentIdxInPhase ? 'active' : 'done') : '';
+            html += '<div class="timeline-line ' + lineCls + '"></div>';
+          }
+
+          if (item.flat.isReadable) {
+            html += '<a class="timeline-item ' + cls + '" href="lesson.html?path=' + item.flat.path + '" title="' + escapeAttr(item.flat.lessonName) + '">';
+          } else {
+            html += '<span class="timeline-item ' + cls + ' disabled" title="' + escapeAttr(item.flat.lessonName) + '">';
+          }
+          html += '<div class="timeline-dot"></div>';
+          html += '<div class="timeline-label">' + escapeHtml(item.flat.lessonName) + '</div>';
+          html += item.flat.isReadable ? '</a>' : '</span>';
+        });
+        if (hiddenAfter > 0) {
+          html += '<div class="timeline-line"></div>';
+          html += '<span class="timeline-ellipsis" title="' + hiddenAfter + ' later lessons">' + hiddenAfter + ' &raquo;</span>';
+        }
+        html += '</div>';
+
+        var completedCount = currentIdxInPhase + 1;
+        var totalCount = lessonsInPhase.length;
+        var pct = Math.round((completedCount / totalCount) * 100);
+
+        html += '<div class="phase-progress-bar"><div class="phase-progress-fill" style="width:' + pct + '%"></div></div>';
+        html += '<div class="phase-progress-text">You\'ve completed ' + completedCount + ' of ' + totalCount + ' lessons in this phase</div>';
+
+        if (completedCount >= totalCount && phaseIdx < PHASES.length - 1) {
+          var nextPhase = PHASES[phaseIdx + 1];
+          html += '<div class="phase-complete-callout visible">Ready for Phase ' + String(nextPhase.id).padStart(2, '0') + ': ' + escapeHtml(nextPhase.name) + '</div>';
+        }
+
+        panel.innerHTML = html;
+        container.appendChild(panel);
+      }
+
+      function renderContinuePanel(container) {
+        if (currentLessonIndex < 0) return;
+
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel';
+
+        var next = null;
+        for (var ci = currentLessonIndex + 1; ci < flatLessons.length; ci++) {
+          if (flatLessons[ci].isReadable) { next = flatLessons[ci]; break; }
+        }
+        var current = flatLessons[currentLessonIndex];
+        var phaseIdx = current.phaseIndex;
+        var phase = PHASES[phaseIdx];
+
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">N</div><div class="ai-panel-title">Continue Learning</div></div>';
+        html += '<div class="continue-panel">';
+
+        if (!next || !next.path) {
+          html += '<div class="phase-finished">\u2705 You finished this phase!</div>';
+        }
+
+        html += '<div class="continue-links">';
+
+        var phaseSlug = extractPhaseSlug(phase, phaseIdx);
+        var firstLesson = phase.lessons[0] ? extractLessonSlug(phase.lessons[0], 0) : '';
+        html += '<a class="continue-link" href="lesson.html?path=phases/' + phaseSlug + '/' + firstLesson + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
+        html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
+        html += '</div>';
+
+        html += '<div class="continue-callout">Run <code>/find-your-level</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed for a personalized learning path</div>';
+        html += '</div>';
+
+        panel.innerHTML = html;
+        container.appendChild(panel);
+      }
+
+      function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function escapeAttr(str) {
+        return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+    })();
+  </script>
+</body>
+</html>

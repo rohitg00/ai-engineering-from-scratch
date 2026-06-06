@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does a p-value of 0.03 mean in a hypothesis test?",
+      "options": [
+        "There is a 3% probability the null hypothesis is true",
+        "There is a 3% probability of seeing data this extreme if the null hypothesis were true",
+        "The model improved by 3%",
+        "97% of the data supports the alternative hypothesis"
+      ],
+      "correct": 1,
+      "explanation": "The p-value is the probability of observing data as extreme as what you got, assuming the null hypothesis is true. It is NOT the probability that H0 is true — this is the single most common misunderstanding in statistics."
+    },
+    {
+      "stage": "pre",
+      "question": "Why do you divide by (n-1) instead of n when computing sample variance?",
+      "options": [
+        "It makes the computation faster",
+        "It accounts for the fact that the sample mean is not the true population mean (Bessel's correction)",
+        "It converts the variance to standard deviation",
+        "It only applies when the sample size is odd"
+      ],
+      "correct": 1,
+      "explanation": "Bessel's correction (dividing by n-1) compensates for the bias introduced by using the sample mean instead of the true population mean. Without it, sample variance systematically underestimates the true population variance."
+    },
+    {
+      "stage": "post",
+      "question": "You test 20 different model configurations at alpha = 0.05. What is the approximate probability of at least one false positive?",
+      "options": [
+        "5%",
+        "25%",
+        "64%",
+        "95%"
+      ],
+      "correct": 2,
+      "explanation": "P(at least one false positive) = 1 - (1 - 0.05)^20 = 1 - 0.95^20 ≈ 0.64 (64%). This is the multiple comparison problem. Bonferroni correction addresses it by testing each at alpha/20 = 0.0025."
+    },
+    {
+      "stage": "post",
+      "question": "Model A scores 0.9234 and Model B scores 0.9237 on 1 million test samples with p-value = 0.001. What should you conclude?",
+      "options": [
+        "Model B is significantly better and should be deployed immediately",
+        "The difference is statistically significant but a 0.03% improvement may not be practically significant",
+        "The test is invalid because the sample size is too large",
+        "Model A is better because it was tested first"
+      ],
+      "correct": 1,
+      "explanation": "With 1 million samples, even trivially small differences become statistically significant. The p-value confirms the difference is real, but the effect size (0.03% accuracy gain) may not justify the engineering cost of deployment. Always report both p-value and effect size."
+    },
+    {
+      "stage": "post",
+      "question": "What advantage does bootstrap have over the paired t-test for comparing two ML models?",
+      "options": [
+        "Bootstrap always produces smaller p-values",
+        "Bootstrap requires no distributional assumptions and works for any metric (AUC, F1, median)",
+        "Bootstrap needs fewer samples to reach significance",
+        "Bootstrap can only be used with neural networks"
+      ],
+      "correct": 1,
+      "explanation": "Bootstrap resampling estimates the sampling distribution of any statistic by resampling with replacement. Unlike the t-test, it does not assume normality. It works for any metric — AUC, F1, precision@k, median — without needing a closed-form formula."
+    }
+  ]
+}

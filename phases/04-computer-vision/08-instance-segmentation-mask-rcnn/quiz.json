@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why did Mask R-CNN replace RoIPool with RoIAlign?",
+      "options": ["RoIAlign is faster on GPUs", "RoIPool rounds box coordinates to integers at multiple steps, misaligning the feature map from the input pixels by up to a feature-map pixel; RoIAlign uses bilinear sampling with no rounding, preserving localisation", "RoIPool only works on CPU", "RoIPool was a copyright issue"],
+      "correct": 1,
+      "explanation": "RoIPool's rounding costs up to a stride-sized misalignment (e.g. 32 pixels on a stride-32 feature map). RoIAlign samples at exact float coordinates via bilinear interpolation. The change lifted mask AP by 3-4 points on COCO in the original paper and is now standard in every detector that cares about localisation."
+    },
+    {
+      "stage": "pre",
+      "question": "Mask R-CNN's mask head outputs a 28x28 mask per class per proposal. Why per class?",
+      "options": ["Because binary masks need per-class channels for backprop", "Decoupling mask prediction from classification: the mask head only has to learn the shape for each class separately, so the classifier's decision does not affect which mask is produced, only which channel is read at inference", "Binary masks overflow in a single channel", "The paper required it"],
+      "correct": 1,
+      "explanation": "Producing one mask per class per proposal decouples mask shape learning from classification. At inference you read only the channel matching the predicted class. This multi-task decoupling matters because mask shape and class probability are different targets that train with different gradients."
+    },
+    {
+      "stage": "post",
+      "question": "torchvision's Mask R-CNN prediction dict has `labels` that start at 1, not 0. Why?",
+      "options": ["Legacy bug", "Class 0 is reserved for background; user classes are always 1-based so the classifier head can treat background as a real class with its own logits and gradients", "torchvision uses 1-based indexing throughout", "Training data determined it"],
+      "correct": 1,
+      "explanation": "Most detectors treat background as class 0 and explicit foreground classes as 1..C. The softmax over (C+1) classes lets the network learn to actively predict 'no object here' rather than just low confidence on all classes. A dataset with 4 real classes needs num_classes = 5 when swapping the predictor."
+    },
+    {
+      "stage": "post",
+      "question": "You fine-tune Mask R-CNN on a 500-image dataset and val mAP plateaus while train loss keeps dropping. What is the first thing to try?",
+      "options": ["Add more epochs", "Freeze the backbone and FPN so the model only fine-tunes the RPN and heads; 500 images is too few to update 23M backbone parameters without overfitting", "Switch to segmentation U-Net", "Use a higher learning rate"],
+      "correct": 1,
+      "explanation": "On small datasets you do not have enough signal to fine-tune every parameter. Freezing the pretrained backbone and FPN (ImageNet + COCO features) and training only the RPN objectness head and the two classifier/mask heads is the standard recipe and usually fixes this plateau in one training run."
+    },
+    {
+      "stage": "post",
+      "question": "The FPN inside Mask R-CNN has four levels (P2, P3, P4, P5) at strides 4, 8, 16, 32. Why not just use one level?",
+      "options": ["To use more GPU memory", "Objects in natural images span a range of scales; routing each proposal to the FPN level matching its size gives the head a feature map with the right receptive field for that object, which is strictly better than always using one scale", "Four levels is arbitrary", "To reduce parameter count"],
+      "correct": 1,
+      "explanation": "A small object on a stride-32 feature map occupies a single cell, which has almost no spatial information. FPN routes small objects to the high-resolution, shallow levels (P2) and large objects to the low-resolution, deep levels (P5), matching receptive field to object size. This is why every modern detector has a pyramid."
+    }
+  ]
+}

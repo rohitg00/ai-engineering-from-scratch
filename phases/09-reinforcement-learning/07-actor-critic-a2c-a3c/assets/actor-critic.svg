@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e8f1fb; stroke: #2471a3; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">actor-critic: policy + value, trained together</text>
+
+  <rect x="40" y="60" width="820" height="60" class="box"/>
+  <text x="60" y="85" class="label">shared state features x = phi(s)</text>
+  <text x="60" y="105" class="caption">MLP trunk, CNN on pixels, transformer on tokens — same input, two heads</text>
+
+  <rect x="40" y="140" width="400" height="180" class="hot"/>
+  <text x="240" y="165" text-anchor="middle" class="label">actor  pi_theta(a | s)</text>
+  <text x="60" y="195" class="content">logits = f_theta(x)</text>
+  <text x="60" y="215" class="content">p = softmax(logits)</text>
+  <text x="60" y="245" class="content">loss: -A * log pi(a|s)</text>
+  <text x="60" y="265" class="content">  + c_e * H(pi(.|s))</text>
+  <text x="240" y="295" text-anchor="middle" class="caption">policy gradient, on-policy</text>
+
+  <rect x="460" y="140" width="400" height="180" class="cool"/>
+  <text x="660" y="165" text-anchor="middle" class="label">critic  V_phi(s)</text>
+  <text x="480" y="195" class="content">v_hat = w . x</text>
+  <text x="480" y="215" class="content">target = G_t  (MC)</text>
+  <text x="480" y="235" class="content">       or  r + g V(s')  (TD)</text>
+  <text x="480" y="265" class="content">loss: c_v * (v_hat - target)^2</text>
+  <text x="660" y="295" text-anchor="middle" class="caption">MSE regression to return</text>
+
+  <rect x="40" y="340" width="820" height="80" class="box"/>
+  <text x="60" y="365" class="label">advantage estimator A_t</text>
+  <text x="60" y="388" class="content">A_t = delta_t + (g * lam) * A_{t+1}     delta_t = r_{t+1} + g V(s_{t+1}) - V(s_t)</text>
+  <text x="60" y="410" class="caption">GAE(lam): lam=0 pure TD, lam=1 pure MC, lam=0.95 the 2026 default</text>
+
+  <text x="450" y="450" text-anchor="middle" class="caption">subtract V from return, normalize, multiply by grad log pi — lower variance, same gradient</text>
+</svg>

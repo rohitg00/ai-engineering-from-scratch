@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
+      .mask { fill: #2c3e50; stroke: #1a1a1a; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">inpainting vs outpainting vs SDEdit</text>
+
+  <!-- inpainting panel -->
+  <text x="165" y="70" text-anchor="middle" class="label">inpainting</text>
+  <rect x="40" y="80" width="250" height="130" class="box"/>
+  <rect x="55" y="95" width="220" height="100" class="cold"/>
+  <rect x="120" y="120" width="80" height="50" class="mask"/>
+  <text x="160" y="230" text-anchor="middle" class="caption">mask inside, pin outside</text>
+  <text x="160" y="248" text-anchor="middle" class="caption">9-channel U-Net:</text>
+  <text x="160" y="264" text-anchor="middle" class="mono">noisy | encoded_src | mask</text>
+
+  <!-- outpainting -->
+  <text x="450" y="70" text-anchor="middle" class="label">outpainting</text>
+  <rect x="310" y="80" width="260" height="130" class="box"/>
+  <rect x="410" y="110" width="70" height="70" class="cold"/>
+  <rect x="325" y="95" width="85" height="100" class="mask"/>
+  <rect x="480" y="95" width="85" height="100" class="mask"/>
+  <text x="450" y="230" text-anchor="middle" class="caption">invert the mask</text>
+  <text x="450" y="248" text-anchor="middle" class="caption">extend beyond the canvas</text>
+  <text x="450" y="264" text-anchor="middle" class="caption">same model, same loss</text>
+
+  <!-- SDEdit -->
+  <text x="720" y="70" text-anchor="middle" class="label">SDEdit (no retraining)</text>
+  <rect x="590" y="80" width="270" height="130" class="box"/>
+  <text x="725" y="110" text-anchor="middle" class="mono">x_0 -&gt; add noise to t -&gt; denoise</text>
+  <text x="725" y="135" text-anchor="middle" class="caption">t/T = 0.3 &#8594; minor edits</text>
+  <text x="725" y="153" text-anchor="middle" class="caption">t/T = 0.6 &#8594; moderate edits</text>
+  <text x="725" y="171" text-anchor="middle" class="caption">t/T = 0.9 &#8594; near-random</text>
+  <text x="725" y="195" text-anchor="middle" class="caption">no mask, just noise-level slider</text>
+
+  <!-- pipeline flow -->
+  <rect x="40" y="310" width="820" height="100" class="hot"/>
+  <text x="450" y="335" text-anchor="middle" class="label">inpainting inference loop</text>
+  <text x="450" y="358" text-anchor="middle" class="mono">for t = T .. 1:  x_t[masked] = denoise;  x_t[unmasked] = noise(clean_source, t)</text>
+  <text x="450" y="380" text-anchor="middle" class="caption">replace unmasked region with a fresh forward-diffused clean image each step</text>
+  <text x="450" y="398" text-anchor="middle" class="caption">final step: pin unmasked pixels to the clean source exactly</text>
+
+  <!-- tools -->
+  <rect x="40" y="425" width="820" height="60" class="box"/>
+  <text x="450" y="448" text-anchor="middle" class="label">2026 editing stack</text>
+  <text x="450" y="470" text-anchor="middle" class="caption">SAM 2 mask &#8594; SD-Inpaint / Flux-Fill / GPT-Image Edit &#8594; Flux-Kontext for instruction edits</text>
+</svg>

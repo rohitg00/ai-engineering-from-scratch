@@ -1,0 +1,90 @@
+{
+  "lesson": "08-production-rag-chatbot",
+  "title": "Capstone 08 — Production RAG Chatbot for a Regulated Vertical",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does prompt caching matter so much in a regulated-domain RAG chatbot?",
+      "options": [
+        "It removes the need for a vector database",
+        "At 60-80% hit rate it cuts per-query cost 3-5x by discounting stable prefix tokens",
+        "It eliminates hallucinations",
+        "It improves recall on the rerank stage"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "What goes into the cache header versus the uncached suffix of each request?",
+      "options": [
+        "Random text padding to hit cache size",
+        "Only the retrieved documents",
+        "User question first, system prompt last",
+        "System prompt and static policies in the cache header, reranked context as cache extension, user question as the uncached suffix"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How does the retrieval layer respect jurisdiction tags like GDPR or HIPAA?",
+      "options": [
+        "It runs a separate index per country",
+        "It blocks the response after generation only",
+        "It rewrites the user question per region",
+        "Role and jurisdiction filters apply before the hybrid search merge so chunks outside the user's scope are never reranked"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which layered guardrail combination does the synthesis stage pass output through?",
+      "options": [
+        "Only Llama Guard 4 on input",
+        "Llama Guard 4, NeMo Guardrails policy rails, and Presidio PII scrub, plus citation enforcement",
+        "Just an output PII regex",
+        "A single LLM-judge faithfulness check"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the drift dashboard alert on?",
+      "options": [
+        "A change in the underlying LLM provider",
+        "Latency above 200ms",
+        "A retrieval-quality drop, for example a 5% week-over-week dip in nDCG or citation score",
+        "Any new document added to the index"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "How big is the golden set used to gate the deliverable's correctness rubric?",
+      "options": [
+        "5 demo queries",
+        "200 expert-labeled question/answer pairs with citations",
+        "20 questions",
+        "2000 synthetic questions"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which RAGAS scores are tracked online per turn?",
+      "options": [
+        "Throughput, GPU utilization, and queue depth",
+        "BLEU, ROUGE, and METEOR",
+        "Faithfulness, answer relevance, and context precision",
+        "Token count and dollar cost"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

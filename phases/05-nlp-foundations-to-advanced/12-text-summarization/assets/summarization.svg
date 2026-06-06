@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .stage { font-size: 12px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .line { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .note { font-size: 11px; fill: #666; font-style: italic; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="30" width="420" height="310" rx="4"/>
+  <text class="label" x="230" y="55" text-anchor="middle">extractive (TextRank)</text>
+
+  <circle cx="100" cy="130" r="20" fill="#f3ece0" stroke="#1a1a1a"/><text class="content" x="100" y="134" text-anchor="middle">s1</text>
+  <circle cx="220" cy="110" r="20" fill="#fff1d6" stroke="#c0392b" stroke-width="2"/><text class="content" x="220" y="114" text-anchor="middle">s2</text>
+  <circle cx="340" cy="130" r="20" fill="#f3ece0" stroke="#1a1a1a"/><text class="content" x="340" y="134" text-anchor="middle">s3</text>
+  <circle cx="130" cy="220" r="20" fill="#f3ece0" stroke="#1a1a1a"/><text class="content" x="130" y="224" text-anchor="middle">s4</text>
+  <circle cx="260" cy="230" r="20" fill="#fff1d6" stroke="#c0392b" stroke-width="2"/><text class="content" x="260" y="234" text-anchor="middle">s5</text>
+  <circle cx="350" cy="220" r="20" fill="#f3ece0" stroke="#1a1a1a"/><text class="content" x="350" y="224" text-anchor="middle">s6</text>
+
+  <line x1="120" y1="130" x2="200" y2="110" stroke="#999"/>
+  <line x1="240" y1="110" x2="320" y2="130" stroke="#999"/>
+  <line x1="100" y1="150" x2="130" y2="200" stroke="#999"/>
+  <line x1="220" y1="130" x2="260" y2="210" stroke="#999"/>
+  <line x1="340" y1="150" x2="350" y2="200" stroke="#999"/>
+  <line x1="220" y1="130" x2="130" y2="200" stroke="#999"/>
+  <line x1="220" y1="130" x2="350" y2="200" stroke="#999"/>
+  <line x1="260" y1="230" x2="350" y2="220" stroke="#999"/>
+  <line x1="260" y1="230" x2="130" y2="220" stroke="#999"/>
+
+  <text class="stage" x="230" y="290">PageRank picks most connected sentences</text>
+  <text class="note" x="230" y="310" text-anchor="middle">verbatim. never hallucinates.</text>
+  <text class="note" x="230" y="325" text-anchor="middle">risk: misses distributed content.</text>
+
+  <rect class="box" x="460" y="30" width="420" height="310" rx="4"/>
+  <text class="label" x="670" y="55" text-anchor="middle">abstractive (BART / T5 / Pegasus)</text>
+
+  <rect class="box" x="480" y="90" width="180" height="60" rx="3"/>
+  <text class="content" x="570" y="115" text-anchor="middle">article (500-2000 tokens)</text>
+  <text class="content" x="570" y="135" text-anchor="middle">tokens in</text>
+
+  <path class="line" d="M 660 120 L 700 120" marker-end="url(#arrow)"/>
+
+  <rect class="hot" x="700" y="90" width="160" height="60" rx="3"/>
+  <text class="content" x="780" y="115" text-anchor="middle">transformer enc-dec</text>
+  <text class="content" x="780" y="135" text-anchor="middle">cross-attention</text>
+
+  <path class="line" d="M 780 150 L 780 190" marker-end="url(#arrow)"/>
+
+  <rect class="box" x="700" y="190" width="160" height="50" rx="3"/>
+  <text class="content" x="780" y="215" text-anchor="middle">new text (60-200 tok)</text>
+
+  <text class="stage" x="670" y="275">generates new tokens, not selects</text>
+  <text class="note" x="670" y="295" text-anchor="middle">fluent, compressive.</text>
+  <text class="note" x="670" y="310" text-anchor="middle">risk: hallucinated entities,</text>
+  <text class="note" x="670" y="325" text-anchor="middle">flipped polarity, wrong numbers.</text>
+</svg>

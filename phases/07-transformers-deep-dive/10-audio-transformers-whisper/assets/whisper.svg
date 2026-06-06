@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .enc { fill: #e7edd9; stroke: #1a1a1a; stroke-width: 1; }
+      .dec { fill: #d7e3ee; stroke: #1a1a1a; stroke-width: 1; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">whisper — encoder-decoder for speech recognition</text>
+
+  <!-- Waveform -->
+  <rect x="50" y="60" width="200" height="60" class="hot"/>
+  <path d="M 55 90 Q 75 60, 95 90 T 135 90 T 175 90 T 215 90 T 245 90" fill="none" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="150" y="138" text-anchor="middle" class="caption">audio @ 16 kHz, 30 s window</text>
+
+  <line x1="250" y1="90" x2="280" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Mel spectrogram -->
+  <rect x="290" y="60" width="220" height="60" class="box"/>
+  <g transform="translate(295 65)">
+    <rect x="0"  y="0" width="15" height="50" fill="#f0e9d6"/>
+    <rect x="15" y="0" width="15" height="50" fill="#dbcc90"/>
+    <rect x="30" y="0" width="15" height="50" fill="#b49a53"/>
+    <rect x="45" y="0" width="15" height="50" fill="#8a723a"/>
+    <rect x="60" y="0" width="15" height="50" fill="#c4aa5d"/>
+    <rect x="75" y="0" width="15" height="50" fill="#dbcc90"/>
+    <rect x="90" y="0" width="15" height="50" fill="#9b814a"/>
+    <rect x="105" y="0" width="15" height="50" fill="#b49a53"/>
+    <rect x="120" y="0" width="15" height="50" fill="#c4aa5d"/>
+    <rect x="135" y="0" width="15" height="50" fill="#dbcc90"/>
+    <rect x="150" y="0" width="15" height="50" fill="#f0e9d6"/>
+    <rect x="165" y="0" width="15" height="50" fill="#b49a53"/>
+    <rect x="180" y="0" width="15" height="50" fill="#dbcc90"/>
+    <rect x="195" y="0" width="15" height="50" fill="#8a723a"/>
+  </g>
+  <text x="400" y="138" text-anchor="middle" class="caption">log-mel: 80 bins × 3000 frames</text>
+
+  <line x1="510" y1="90" x2="540" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Conv stem -->
+  <rect x="550" y="60" width="150" height="60" class="box"/>
+  <text x="625" y="85" text-anchor="middle" class="content">conv1d × 2</text>
+  <text x="625" y="105" text-anchor="middle" class="content">stride 2 → 1500</text>
+
+  <!-- Encoder -->
+  <rect x="60" y="170" width="760" height="100" class="enc"/>
+  <text x="440" y="195" text-anchor="middle" class="label">encoder transformer (24 layers for large)</text>
+  <text x="440" y="220" text-anchor="middle" class="caption">self-attention + GELU FFN + sinusoidal positional encoding</text>
+  <text x="440" y="245" text-anchor="middle" class="caption">output: 1500 × 1280 hidden states</text>
+
+  <line x1="625" y1="120" x2="625" y2="170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Task tokens -->
+  <rect x="60" y="300" width="320" height="50" class="hot"/>
+  <text x="220" y="320" text-anchor="middle" class="content">&lt;|startoftranscript|&gt; &lt;|en|&gt; &lt;|transcribe|&gt;</text>
+  <text x="220" y="340" text-anchor="middle" class="caption">task tokens — 4-token prefix controls behavior</text>
+
+  <line x1="380" y1="325" x2="410" y2="325" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Decoder -->
+  <rect x="420" y="295" width="400" height="120" class="dec"/>
+  <text x="620" y="317" text-anchor="middle" class="label">decoder transformer</text>
+  <text x="620" y="340" text-anchor="middle" class="caption">masked self-attn + cross-attn to encoder + FFN</text>
+  <text x="620" y="360" text-anchor="middle" class="caption">32 layers (large) or 4 layers (turbo)</text>
+  <text x="620" y="385" text-anchor="middle" class="caption">BPE vocabulary: GPT-2 + audio specials</text>
+  <text x="620" y="405" text-anchor="middle" class="caption">beam search width 5 at inference</text>
+
+  <!-- Cross-attention arrow from encoder -->
+  <path d="M 440 245 Q 500 245 500 360" fill="none" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="458" y="275" class="caption">cross-attn</text>
+
+  <line x1="620" y1="415" x2="620" y2="440" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="490" y="440" width="260" height="30" class="hot"/>
+  <text x="620" y="460" text-anchor="middle" class="content">"attention is all you need"</text>
+
+  <text x="450" y="502" text-anchor="middle" class="caption">encoder runs once. decoder runs autoregressively. task token decides transcribe vs translate.</text>
+</svg>

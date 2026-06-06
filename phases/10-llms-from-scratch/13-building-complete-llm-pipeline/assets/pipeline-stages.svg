@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .gate { fill: #f0e6ff; stroke: #5e3fbe; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="28" text-anchor="middle" class="title">twelve stages, one manifest, one ship gate</text>
+
+  <!-- Stages grid 4x3 -->
+  <g>
+    <!-- row 1 -->
+    <rect x="30"  y="60" width="180" height="60" class="box"/>
+    <text x="120" y="82" text-anchor="middle" class="label">01 / 02  Tokenizer</text>
+    <text x="120" y="102" text-anchor="middle" class="step">vocab, merges, hash</text>
+    <text x="120" y="115" text-anchor="middle" class="small">~1 hr · ~$5</text>
+
+    <rect x="245" y="60" width="180" height="60" class="box"/>
+    <text x="335" y="82" text-anchor="middle" class="label">03  Dataset</text>
+    <text x="335" y="102" text-anchor="middle" class="step">shards, dedup, rows</text>
+    <text x="335" y="115" text-anchor="middle" class="small">~hours · ~$50</text>
+
+    <rect x="460" y="60" width="180" height="60" class="hot"/>
+    <text x="550" y="82" text-anchor="middle" class="label">04 / 05  Pre-training</text>
+    <text x="550" y="102" text-anchor="middle" class="step">base checkpoint</text>
+    <text x="550" y="115" text-anchor="middle" class="small">days · $$$</text>
+
+    <rect x="675" y="60" width="180" height="60" class="box"/>
+    <text x="765" y="82" text-anchor="middle" class="label">06  SFT</text>
+    <text x="765" y="102" text-anchor="middle" class="step">instruction tuned</text>
+    <text x="765" y="115" text-anchor="middle" class="small">~hours · $$</text>
+
+    <!-- row 2 -->
+    <rect x="30"  y="170" width="180" height="60" class="box"/>
+    <text x="120" y="192" text-anchor="middle" class="label">07  RLHF (PPO)</text>
+    <text x="120" y="212" text-anchor="middle" class="step">reward + policy</text>
+    <text x="120" y="225" text-anchor="middle" class="small">parallel w/ 08</text>
+
+    <rect x="245" y="170" width="180" height="60" class="box"/>
+    <text x="335" y="192" text-anchor="middle" class="label">08  DPO</text>
+    <text x="335" y="212" text-anchor="middle" class="step">preference pairs</text>
+    <text x="335" y="225" text-anchor="middle" class="small">parallel w/ 07</text>
+
+    <rect x="460" y="170" width="180" height="60" class="box"/>
+    <text x="550" y="192" text-anchor="middle" class="label">09  CAI + GRPO</text>
+    <text x="550" y="212" text-anchor="middle" class="step">self-improvement</text>
+    <text x="550" y="225" text-anchor="middle" class="small">rule rewards</text>
+
+    <rect x="675" y="170" width="180" height="60" class="box"/>
+    <text x="765" y="192" text-anchor="middle" class="label">10  Evaluation</text>
+    <text x="765" y="212" text-anchor="middle" class="step">MMLU, MATH, GPQA</text>
+    <text x="765" y="225" text-anchor="middle" class="small">held-out set</text>
+
+    <!-- row 3 -->
+    <rect x="30"  y="280" width="180" height="60" class="box"/>
+    <text x="120" y="302" text-anchor="middle" class="label">11  Quantization</text>
+    <text x="120" y="322" text-anchor="middle" class="step">GPTQ / AWQ / GGUF</text>
+    <text x="120" y="335" text-anchor="middle" class="small">4-bit · ~mins</text>
+
+    <rect x="245" y="280" width="180" height="60" class="box"/>
+    <text x="335" y="302" text-anchor="middle" class="label">12  Inference</text>
+    <text x="335" y="322" text-anchor="middle" class="step">vLLM, TRT-LLM</text>
+    <text x="335" y="335" text-anchor="middle" class="small">continuous batch</text>
+
+    <rect x="460" y="280" width="180" height="60" class="gate"/>
+    <text x="550" y="302" text-anchor="middle" class="label">Ship gate</text>
+    <text x="550" y="322" text-anchor="middle" class="step">regression + KL + $</text>
+    <text x="550" y="335" text-anchor="middle" class="small">numeric thresholds</text>
+
+    <rect x="675" y="280" width="180" height="60" class="cool"/>
+    <text x="765" y="302" text-anchor="middle" class="label">Artifact store</text>
+    <text x="765" y="322" text-anchor="middle" class="step">content-addressed</text>
+    <text x="765" y="335" text-anchor="middle" class="small">hash, not filename</text>
+  </g>
+
+  <!-- Flow arrows between columns row1 -->
+  <line x1="210" y1="90" x2="245" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="425" y1="90" x2="460" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="640" y1="90" x2="675" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Down from row1 to row2 (06 SFT -> 07/08 -> 09 -> 10) -->
+  <line x1="765" y1="120" x2="765" y2="160" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="765" y1="160" x2="120" y2="160" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="120" y1="160" x2="120" y2="170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="765" y1="160" x2="335" y2="160" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="335" y1="160" x2="335" y2="170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Row 2 flow -->
+  <line x1="210" y1="200" x2="460" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="425" y1="200" x2="460" y2="200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="640" y1="200" x2="675" y2="200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Row 2 to row 3 -->
+  <line x1="550" y1="230" x2="550" y2="270" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="550" y1="270" x2="120" y2="270" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="120" y1="270" x2="120" y2="280" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="210" y1="310" x2="245" y2="310" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- eval -> gate -->
+  <line x1="765" y1="230" x2="765" y2="270" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="765" y1="270" x2="550" y2="270" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="550" y1="270" x2="550" y2="280" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Manifest and cost labels at bottom -->
+  <rect x="30" y="380" width="400" height="100" class="box"/>
+  <text x="230" y="402" text-anchor="middle" class="label">Manifest</text>
+  <text x="230" y="422" text-anchor="middle" class="step">version, seed, git_commit</text>
+  <text x="230" y="440" text-anchor="middle" class="step">per-stage input/output hash</text>
+  <text x="230" y="458" text-anchor="middle" class="step">cost, wall clock, status</text>
+  <text x="230" y="473" text-anchor="middle" class="small">single file, sufficient to replay</text>
+
+  <rect x="460" y="380" width="400" height="100" class="gate"/>
+  <text x="660" y="402" text-anchor="middle" class="label">Gates</text>
+  <text x="660" y="422" text-anchor="middle" class="step">regression: metric ≥ baseline</text>
+  <text x="660" y="440" text-anchor="middle" class="step">KL budget: drift &lt; cap</text>
+  <text x="660" y="458" text-anchor="middle" class="step">safety: refusal rate &lt; 5%</text>
+  <text x="660" y="473" text-anchor="middle" class="step">cost: total &lt; budget</text>
+
+  <text x="480" y="508" text-anchor="middle" class="caption">no subjective sign-off — every gate is a number, and every gate is versioned</text>
+</svg>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">monolithic vs atomic tools, same task surface</text>
+
+  <rect x="40" y="50" width="440" height="450" class="hot"/>
+  <text x="260" y="72" text-anchor="middle" class="head">monolithic (selection accuracy drops)</text>
+
+  <rect x="60" y="92" width="400" height="80" class="box"/>
+  <text x="80" y="114" class="step">notes_do_everything({</text>
+  <text x="96" y="132" class="step">  action: "list" | "get" | "search"</text>
+  <text x="96" y="148" class="step">         | "create" | "update" | "delete",</text>
+  <text x="80" y="164" class="step">  target, options: {...}</text>
+
+  <text x="60" y="200" class="step">  problems:</text>
+  <text x="60" y="220" class="small">  - model picks action by string, not by tool name</text>
+  <text x="60" y="240" class="small">  - options: {} is untyped -> hallucinations</text>
+  <text x="60" y="260" class="small">  - description has to explain six behaviors</text>
+  <text x="60" y="280" class="small">  - impossible to disambiguate close-competitor cases</text>
+
+  <text x="60" y="320" class="step">  benchmarks on internal registries:</text>
+  <text x="60" y="340" class="small">  - 15-30 pp lower selection accuracy vs atomic</text>
+  <text x="60" y="360" class="small">  - higher hallucination rate on options payload</text>
+  <text x="60" y="380" class="small">  - harder retry recovery (which field was wrong?)</text>
+
+  <text x="60" y="430" class="step">  rule of thumb:</text>
+  <text x="60" y="450" class="small">  if action enum has &gt; 3 values, split the tool.</text>
+  <text x="60" y="470" class="small">  if options has &gt; 2 variant shapes, split the tool.</text>
+
+  <rect x="500" y="50" width="420" height="450" class="cool"/>
+  <text x="710" y="72" text-anchor="middle" class="head">atomic (each tool one job)</text>
+
+  <rect x="520" y="92" width="380" height="280" class="box"/>
+  <text x="540" y="116" class="step">notes_list(tag?)</text>
+  <text x="540" y="134" class="small">  "Use when user wants all or tag-filtered notes.</text>
+  <text x="540" y="150" class="small">   Do not use to read body; use notes_get."</text>
+
+  <text x="540" y="178" class="step">notes_get(note_id)</text>
+  <text x="540" y="196" class="small">  "Use when user asks for a specific note body."</text>
+
+  <text x="540" y="220" class="step">notes_search(query, limit?)</text>
+  <text x="540" y="238" class="small">  "Use when user searches by content keywords."</text>
+
+  <text x="540" y="262" class="step">notes_create(title, body, tag?)</text>
+  <text x="540" y="280" class="small">  "Use when user writes a new note."</text>
+
+  <text x="540" y="304" class="step">notes_update(note_id, title?, body?)</text>
+  <text x="540" y="322" class="small">  "Use when user edits an existing note."</text>
+
+  <text x="540" y="346" class="step">notes_delete(note_id)</text>
+  <text x="540" y="364" class="small">  "Use when user explicitly deletes."</text>
+
+  <text x="520" y="410" class="step">namespace: notes_*</text>
+  <text x="520" y="428" class="small">- shared prefix = grouped in model context</text>
+  <text x="520" y="448" class="small">- tight descriptions = reliable selection</text>
+  <text x="520" y="468" class="small">- typed schemas = no argument hallucination</text>
+  <text x="520" y="486" class="small">- +10 to +20 pp selection accuracy</text>
+</svg>

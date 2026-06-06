@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .stage { font-size: 11px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .line { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
+      .axis { stroke: #999; stroke-width: 1; stroke-dasharray: 3,3; }
+      .note { font-size: 11px; fill: #666; font-style: italic; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="20" width="400" height="340" rx="4"/>
+  <text class="label" x="220" y="45" text-anchor="middle">multilingual embedding space</text>
+
+  <line class="axis" x1="40" y1="340" x2="400" y2="340"/>
+  <line class="axis" x1="220" y1="70" x2="220" y2="340"/>
+
+  <circle cx="130" cy="180" r="8" fill="#1a1a1a"/>
+  <text class="content" x="100" y="175">cat (en)</text>
+
+  <circle cx="150" cy="175" r="8" fill="#1a1a1a"/>
+  <text class="content" x="155" y="170">chat (fr)</text>
+
+  <circle cx="140" cy="200" r="8" fill="#1a1a1a"/>
+  <text class="content" x="90" y="215">gato (es)</text>
+
+  <circle cx="165" cy="190" r="8" fill="#1a1a1a"/>
+  <text class="content" x="185" y="192">Katze (de)</text>
+
+  <circle cx="145" cy="215" r="8" fill="#1a1a1a"/>
+  <text class="content" x="100" y="235">बिल्ली (hi)</text>
+
+  <circle cx="300" cy="250" r="8" fill="#1a1a1a"/>
+  <text class="content" x="260" y="245">dog (en)</text>
+
+  <circle cx="320" cy="245" r="8" fill="#1a1a1a"/>
+  <text class="content" x="325" y="240">chien (fr)</text>
+
+  <text class="stage" x="220" y="305">translations cluster.</text>
+  <text class="stage" x="220" y="322">distant words stay distant.</text>
+
+  <rect class="box" x="440" y="20" width="440" height="340" rx="4"/>
+  <text class="label" x="660" y="45" text-anchor="middle">cross-lingual transfer</text>
+
+  <rect class="hot" x="460" y="75" width="180" height="50" rx="3"/>
+  <text class="content" x="550" y="100" text-anchor="middle">fine-tune on English</text>
+  <text class="content" x="550" y="118" text-anchor="middle">sentiment labels</text>
+
+  <path class="line" d="M 640 100 L 670 100" marker-end="url(#arrow)"/>
+
+  <rect class="box" x="680" y="75" width="180" height="50" rx="3"/>
+  <text class="content" x="770" y="100" text-anchor="middle">run on Hindi, Urdu,</text>
+  <text class="content" x="770" y="118" text-anchor="middle">Swahili, French ...</text>
+
+  <text class="stage" x="660" y="160">zero-shot transfer.</text>
+
+  <rect class="hot" x="460" y="185" width="180" height="50" rx="3"/>
+  <text class="content" x="550" y="210" text-anchor="middle">add 100-500 target</text>
+  <text class="content" x="550" y="228" text-anchor="middle">language examples</text>
+
+  <path class="line" d="M 640 210 L 670 210" marker-end="url(#arrow)"/>
+
+  <rect class="box" x="680" y="185" width="180" height="50" rx="3"/>
+  <text class="content" x="770" y="210" text-anchor="middle">accuracy 95-98%</text>
+  <text class="content" x="770" y="228" text-anchor="middle">of English baseline</text>
+
+  <text class="stage" x="660" y="270">few-shot fine-tuning.</text>
+
+  <text class="note" x="660" y="300" text-anchor="middle">source language matters.</text>
+  <text class="note" x="660" y="315" text-anchor="middle">Hindi source &gt; English source</text>
+  <text class="note" x="660" y="330" text-anchor="middle">for Marathi, Bengali, Nepali.</text>
+  <text class="note" x="660" y="350" text-anchor="middle">Check LANGRANK / qWALS.</text>
+</svg>

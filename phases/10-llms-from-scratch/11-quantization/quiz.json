@@ -1,0 +1,37 @@
+[
+  {
+    "question": "How much VRAM does a 70B parameter model in FP16 require just for weights?",
+    "options": ["35 GB", "70 GB", "140 GB", "280 GB"],
+    "correct": 2,
+    "explanation": "70 billion parameters * 2 bytes per FP16 parameter = 140 billion bytes = 140 GB. This exceeds a single A100 (80GB), requiring at least two GPUs just to load the weights.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is quantization in the context of LLMs?",
+    "options": ["Removing unused model layers", "Reducing the numerical precision of weights (e.g., FP16 to INT4) to decrease memory usage and increase inference speed", "Compressing the training data", "Reducing the vocabulary size"],
+    "correct": 1,
+    "explanation": "Quantization maps high-precision floating point weights to lower-precision integers. INT4 quantization stores each weight in 4 bits instead of 16, reducing memory by 4x with minimal accuracy loss.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is the key difference between post-training quantization (PTQ) and quantization-aware training (QAT)?",
+    "options": ["PTQ is more accurate", "PTQ quantizes after training with no retraining; QAT simulates quantization during training so the model learns to tolerate reduced precision", "QAT doesn't use gradients", "PTQ requires more data"],
+    "correct": 1,
+    "explanation": "PTQ is fast (just calibrate and quantize) but can lose accuracy. QAT includes fake quantization during training, allowing the model to adjust its weights to be more robust to precision loss. QAT usually gives better accuracy.",
+    "stage": "post"
+  },
+  {
+    "question": "What does 'per-channel' quantization mean and why is it better than 'per-tensor'?",
+    "options": ["It quantizes each output channel separately, using different scale/zero-point for each, reducing quantization error", "It processes one color channel at a time", "It uses separate GPUs per channel", "It's a type of data parallelism"],
+    "correct": 0,
+    "explanation": "Per-tensor uses one scale factor for the entire weight matrix. Per-channel uses a separate scale for each output channel (row). Since different channels have different value ranges, per-channel captures them more accurately.",
+    "stage": "post"
+  },
+  {
+    "question": "Why do 95% of weights in Llama 3 70B fall between -0.1 and +0.1?",
+    "options": ["The model is poorly trained", "Weight decay and normalization during training push weights toward small values, making the full FP16 range wasteful", "The weights haven't converged yet", "This is specific to the Llama architecture"],
+    "correct": 1,
+    "explanation": "Weight decay regularization shrinks weights toward zero. Layer normalization keeps activations centered. Combined, they produce weight distributions concentrated near zero, making low-precision quantization effective.",
+    "stage": "post"
+  }
+]

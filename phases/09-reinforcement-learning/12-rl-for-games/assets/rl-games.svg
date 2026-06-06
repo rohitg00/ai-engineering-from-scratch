@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e8f1fb; stroke: #2471a3; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">self-play + search + policy improvement — one recipe, three eras</text>
+
+  <rect x="40" y="60" width="260" height="360" class="box"/>
+  <text x="170" y="88" text-anchor="middle" class="label">AlphaZero (2017)</text>
+  <text x="60" y="115" class="content">env: chess / shogi / Go</text>
+  <text x="60" y="135" class="content">rules: known</text>
+  <text x="60" y="160" class="content">policy-value net (p, v)</text>
+  <text x="60" y="180" class="content">MCTS with PUCT</text>
+  <text x="60" y="205" class="content">target:  pi_MCTS, z_outcome</text>
+  <text x="60" y="225" class="content">L = (v-z)^2 - pi * log p</text>
+  <text x="170" y="265" text-anchor="middle" class="caption">tabula rasa self-play</text>
+  <text x="170" y="285" text-anchor="middle" class="caption">Go, chess, shogi</text>
+  <text x="170" y="320" text-anchor="middle" class="caption">requires: perfect sim</text>
+  <text x="170" y="340" text-anchor="middle" class="caption">discrete actions</text>
+  <text x="170" y="360" text-anchor="middle" class="caption">zero-sum</text>
+
+  <rect x="320" y="60" width="260" height="360" class="hot"/>
+  <text x="450" y="88" text-anchor="middle" class="label">MuZero (2019)</text>
+  <text x="340" y="115" class="content">env: anything</text>
+  <text x="340" y="135" class="content">rules: learned (g)</text>
+  <text x="340" y="160" class="content">encoder h, dynamics g</text>
+  <text x="340" y="180" class="content">MCTS in latent space</text>
+  <text x="340" y="205" class="content">target:  pi_MCTS, z, reward</text>
+  <text x="340" y="225" class="content">L = sum over horizon</text>
+  <text x="450" y="265" text-anchor="middle" class="caption">no sim required</text>
+  <text x="450" y="285" text-anchor="middle" class="caption">Atari, Go, chess, shogi</text>
+  <text x="450" y="320" text-anchor="middle" class="caption">same loop, learned model</text>
+  <text x="450" y="340" text-anchor="middle" class="caption">higher compute cost</text>
+  <text x="450" y="360" text-anchor="middle" class="caption">stochastic extensions exist</text>
+
+  <rect x="600" y="60" width="260" height="360" class="cool"/>
+  <text x="730" y="88" text-anchor="middle" class="label">GRPO (2024-2025)</text>
+  <text x="620" y="115" class="content">env: LLM reasoning</text>
+  <text x="620" y="135" class="content">action: next token</text>
+  <text x="620" y="160" class="content">verifier: tests/math check</text>
+  <text x="620" y="180" class="content">group sampling (G rollouts)</text>
+  <text x="620" y="205" class="content">A_i = (r_i - mean_r) / std_r</text>
+  <text x="620" y="225" class="content">L = -A * log pi + beta KL</text>
+  <text x="730" y="265" text-anchor="middle" class="caption">no critic, no reward model</text>
+  <text x="730" y="285" text-anchor="middle" class="caption">math, code, reasoning</text>
+  <text x="730" y="320" text-anchor="middle" class="caption">DeepSeek-R1 recipe</text>
+  <text x="730" y="340" text-anchor="middle" class="caption">group-relative baseline</text>
+  <text x="730" y="360" text-anchor="middle" class="caption">same spirit as AlphaZero</text>
+
+  <text x="450" y="445" text-anchor="middle" class="caption">pattern: sample many trajectories, rank them, train the policy to increase the good ones' probability</text>
+</svg>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">text / image -&gt; 3D in 2026</text>
+
+  <!-- input -->
+  <rect x="30" y="70" width="140" height="60" class="box"/>
+  <text x="100" y="95" text-anchor="middle" class="content">prompt or image</text>
+  <text x="100" y="115" text-anchor="middle" class="caption">text, 1 photo, or 3-16 photos</text>
+
+  <line x1="170" y1="100" x2="210" y2="100" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- multi-view diffusion -->
+  <rect x="210" y="70" width="220" height="60" class="cold"/>
+  <text x="320" y="95" text-anchor="middle" class="content">multi-view diffusion</text>
+  <text x="320" y="115" text-anchor="middle" class="caption">SV3D, CAT3D, MVDream, Zero123</text>
+
+  <line x1="430" y1="100" x2="470" y2="100" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- views -->
+  <g>
+    <rect x="480" y="75" width="25" height="25" class="hot"/>
+    <rect x="510" y="75" width="25" height="25" class="hot"/>
+    <rect x="540" y="75" width="25" height="25" class="hot"/>
+    <rect x="570" y="75" width="25" height="25" class="hot"/>
+    <rect x="480" y="105" width="25" height="25" class="hot"/>
+    <rect x="510" y="105" width="25" height="25" class="hot"/>
+    <rect x="540" y="105" width="25" height="25" class="hot"/>
+    <rect x="570" y="105" width="25" height="25" class="hot"/>
+  </g>
+  <text x="540" y="148" text-anchor="middle" class="caption">8 consistent views</text>
+
+  <line x1="605" y1="100" x2="650" y2="100" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- 3D fit -->
+  <rect x="650" y="70" width="220" height="60" class="cold"/>
+  <text x="760" y="95" text-anchor="middle" class="content">3D fit</text>
+  <text x="760" y="115" text-anchor="middle" class="caption">Gaussian splat or mesh extract</text>
+
+  <!-- Gaussian splat example -->
+  <text x="180" y="200" class="label">3D Gaussian Splatting (Kerbl 2023)</text>
+  <rect x="40" y="215" width="380" height="160" class="box"/>
+  <circle cx="120" cy="290" r="25" fill="#c0392b" opacity="0.6"/>
+  <circle cx="160" cy="280" r="20" fill="#c0392b" opacity="0.5"/>
+  <circle cx="190" cy="305" r="30" fill="#c0392b" opacity="0.5"/>
+  <circle cx="230" cy="290" r="22" fill="#c0392b" opacity="0.6"/>
+  <circle cx="275" cy="310" r="28" fill="#c0392b" opacity="0.5"/>
+  <circle cx="320" cy="295" r="18" fill="#c0392b" opacity="0.7"/>
+  <text x="230" y="355" text-anchor="middle" class="caption">~1M Gaussians per scene, differentiable render, 100 fps</text>
+
+  <!-- Direct text-to-mesh -->
+  <text x="670" y="200" class="label">direct text/image to mesh</text>
+  <rect x="480" y="215" width="380" height="160" class="box"/>
+  <text x="670" y="248" text-anchor="middle" class="content">Meshy 4, Rodin Gen-1.5, Hunyuan3D 2.0</text>
+  <text x="670" y="275" text-anchor="middle" class="caption">output: PBR mesh (albedo, roughness,</text>
+  <text x="670" y="293" text-anchor="middle" class="caption">metallic, normal)</text>
+  <text x="670" y="320" text-anchor="middle" class="caption">&#8594; direct import into Unity, Unreal, Blender</text>
+  <text x="670" y="340" text-anchor="middle" class="caption">30s - 60s per asset on hosted endpoints</text>
+
+  <!-- time progression -->
+  <rect x="40" y="410" width="820" height="90" class="hot"/>
+  <text x="450" y="435" text-anchor="middle" class="label">2022 &#8594; 2026 time per asset</text>
+  <text x="450" y="458" text-anchor="middle" class="caption">DreamFusion 2022: 1 hour; LRM 2023: 5s; TripoSR 2024: 1s; Meshy 4 2025: 30s with PBR</text>
+  <text x="450" y="480" text-anchor="middle" class="caption">NeRF &#8594; 3D-GS &#8594; direct generative mesh: quality up, time down 100x</text>
+</svg>

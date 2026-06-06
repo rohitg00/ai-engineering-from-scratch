@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In the ViT-MLP-LLM VLM pattern, which component is most commonly trained while the others are kept frozen during alignment?",
+      "options": ["The vision encoder", "The projector (the 2-4 layer MLP between ViT and LLM) — it maps vision tokens into the LLM's embedding space and carries most of the cross-modal alignment signal", "The LLM", "All components are always trained together"],
+      "correct": 1,
+      "explanation": "The standard VLM recipe trains the projector first with ViT and LLM frozen (alignment stage), then optionally unfreezes everything for pre-training and instruction tuning. The projector is small (tens to hundreds of millions of params) and takes the brunt of the modality bridge. Fine-tuning in production often trains only the projector + LoRA on attention — cheap and effective."
+    },
+    {
+      "stage": "pre",
+      "question": "DeepStack (used in Qwen3-VL) does what?",
+      "options": ["Uses only the deepest ViT layer's features", "Stacks features from multiple ViT depths before projection, so the LLM sees both high-level semantics (deep layers) and fine-grained spatial detail (shallow layers)", "Doubles the depth of the LLM", "Is a specific quantisation scheme"],
+      "correct": 1,
+      "explanation": "Vanilla VLMs project only last-layer ViT features. DeepStack samples multiple depths, concatenates, and projects. Deep layers give semantics ('this is a chart'); shallow layers give position and texture ('the bar at x=120 is red'). The combination closes the grounding gap on tasks requiring fine localisation, like GUI agent actions or dense captioning."
+    },
+    {
+      "stage": "post",
+      "question": "A production VLM shows high text confidence but the generated text describes objects not present in the image. Which metric captures this failure?",
+      "options": ["Perplexity", "Cross-Modal Error Rate (CMER) — fraction of outputs where text confidence is high but image-text cosine similarity (via a CLIP-family checker) is low; ~12% typical on uncurated web data", "Accuracy on MMMU", "Token generation latency"],
+      "correct": 1,
+      "explanation": "CMER is a production alignment KPI. It catches the classic VLM hallucination pattern: the model is sure about its text, but the text is not grounded in the image. Monitor CMER per endpoint and prompt type; treat rising CMER as a signal that the model is drifting out of distribution or encountering a prompt category it cannot handle. Skywork.ai cut hallucinations ~35% by making CMER a first-class KPI."
+    },
+    {
+      "stage": "post",
+      "question": "Why do modern VLMs use SigLIP or custom vision encoders rather than a supervised ImageNet ResNet as the backbone?",
+      "options": ["SigLIP is faster", "CLIP/SigLIP-style encoders are trained jointly with text, so their output space is already approximately aligned with language; the projector then has to do much less work and the model reasons better about visual-textual concepts", "ResNets cannot produce tokens", "SigLIP has more parameters"],
+      "correct": 1,
+      "explanation": "Vision-language pretraining shapes the encoder to live in a text-compatible space. A supervised ImageNet ResNet was trained without any text signal, so bridging to an LLM requires much larger projectors and more data. CLIP/SigLIP/DINOv3 encoders produce features that an LLM can consume with a few linear layers. Almost every SOTA VLM uses a CLIP-family or SigLIP encoder for this reason."
+    },
+    {
+      "stage": "post",
+      "question": "Qwen3-VL-235B-A22B achieves top scores on OSWorld. What is OSWorld, and what does this imply?",
+      "options": ["A synthetic benchmark", "An agent benchmark where the model operates desktop GUIs — identifies buttons, reads UI state, emits actions; Qwen3-VL's top scores imply VLMs are now viable visual agents for GUI automation", "A pose-estimation benchmark", "A video QA benchmark"],
+      "correct": 1,
+      "explanation": "OSWorld tests whether a model can autonomously operate a desktop environment via screenshots. Qwen3-VL's top global scores indicate the 'visual agent' paradigm — VLM reads screen, decides action, tool-calls the mouse/keyboard — has crossed into practical territory. This is what 2026 AI PC demos run; it is also a direct route into automated QA, RPA, and accessibility products."
+    }
+  ]
+}

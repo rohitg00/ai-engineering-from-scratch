@@ -1,0 +1,78 @@
+{
+  "lesson": "68-rag-eval-precision-recall",
+  "title": "RAG Evaluation: Precision, Recall, MRR, nDCG, Faithfulness, Answer Relevance",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is recall@k usually the headline retrieval metric in production RAG?",
+      "options": [
+        "Recall ignores ranking",
+        "Generation can drop irrelevant chunks but cannot invent an answer from a chunk it never saw, so missing the right chunk is the more expensive failure",
+        "Recall is required by the OpenAPI spec",
+        "Recall is the same as precision in RAG"
+      ],
+      "correct": 1,
+      "explanation": "A retriever that misses the right chunk cannot be repaired downstream; surplus chunks waste tokens but rarely poison the answer."
+    },
+    {
+      "stage": "pre",
+      "question": "What does MRR compute?",
+      "options": [
+        "The mean of 1 / position-of-first-relevant-document across queries",
+        "The geometric mean of cosine similarity",
+        "Median rank of the second relevant document",
+        "Token count of the answer"
+      ],
+      "correct": 0,
+      "explanation": "MRR is dominated by the top of the list: rank 1 contributes 1.0, rank 2 contributes 0.5, rank 10 contributes 0.1."
+    },
+    {
+      "stage": "check",
+      "question": "When should you reach for nDCG instead of recall@k?",
+      "options": [
+        "When the corpus is small",
+        "When the gold labels carry graded relevance (e.g. doc A is 3, doc B is 2, doc C is 1) and binary metrics lose information",
+        "When the retriever does not return scores",
+        "Never"
+      ],
+      "correct": 1,
+      "explanation": "nDCG uses graded gains and a position discount; recall flattens everything to binary."
+    },
+    {
+      "stage": "check",
+      "question": "What is the difference between faithfulness and answer relevance?",
+      "options": [
+        "Faithfulness asks 'is the answer grounded in the retrieved context'; answer relevance asks 'does the answer address the question'",
+        "Faithfulness measures precision; relevance measures recall",
+        "Faithfulness is a retrieval metric and relevance is a chunker metric",
+        "They are the same metric with two names"
+      ],
+      "correct": 0,
+      "explanation": "A faithful but off-topic answer scores high on faithfulness, low on relevance; a relevant but ungrounded answer scores high on relevance, low on faithfulness."
+    },
+    {
+      "stage": "check",
+      "question": "A pipeline shows decent recall@5 but low MRR. Which stage should you investigate first?",
+      "options": [
+        "The chunker",
+        "The reranker, because the right chunk is in the top-k but not at the top",
+        "The generator",
+        "The corpus ingestor"
+      ],
+      "correct": 1,
+      "explanation": "Recall@5 means the gold is in top-5; low MRR means it is not at the top of the list. That is the rerank stage's job."
+    },
+    {
+      "stage": "post",
+      "question": "What production hazard makes a frozen qrels file dangerous over time?",
+      "options": [
+        "The retriever stops working after six months",
+        "Qrels rot: the corpus changes and a doc that was the gold answer last quarter is no longer the right answer; metrics get reported against stale labels",
+        "Embedding vectors expire",
+        "The eval suite uses up disk space"
+      ],
+      "correct": 1,
+      "explanation": "Schedule a quarterly qrels review or your metrics will be measuring the wrong thing as the corpus evolves."
+    }
+  ]
+}

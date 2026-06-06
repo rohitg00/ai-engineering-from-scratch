@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the 'single-agent ceiling'?",
+      "options": ["The maximum number of tools an agent can use", "The point where a single agent fails because the task exceeds one context window, requires different expertise, or needs parallel work", "The limit on how many API calls an agent can make per minute", "The maximum model size that can run on a single GPU"],
+      "correct": 1,
+      "explanation": "A single agent has one context window, one system prompt, and processes sequentially. When tasks require reading 50 files (context overflow), switching between research and coding (mixed expertise), or doing independent work simultaneously (parallelism), a single agent breaks down."
+    },
+    {
+      "stage": "pre",
+      "question": "Why might you use multiple specialized agents instead of one powerful general agent?",
+      "options": ["Multiple agents are always cheaper than a single large model", "Each agent can have a focused system prompt, smaller context, and specialized tools, leading to better performance on its specific subtask", "Multiple agents can share the same context window", "General agents cannot use tools"],
+      "correct": 1,
+      "explanation": "A researcher agent optimized for search, a coder agent optimized for implementation, and a reviewer agent optimized for code quality each do their job better than a single agent trying to be all three simultaneously."
+    },
+    {
+      "stage": "post",
+      "question": "When is a pipeline (sequential) multi-agent pattern better than a parallel fan-out pattern?",
+      "options": ["When you want to minimize total latency", "When each stage depends on the output of the previous stage, such as research then code then review", "When all subtasks are independent of each other", "When you have more GPUs than tasks"],
+      "correct": 1,
+      "explanation": "Pipeline patterns are right when work is inherently sequential: the coder needs the researcher's output, and the reviewer needs the coder's output. Parallel fan-out is better when subtasks are independent."
+    },
+    {
+      "stage": "post",
+      "question": "What is the supervisor pattern in multi-agent systems?",
+      "options": ["A human manually assigns tasks to each agent", "A central orchestrator agent that decomposes the task, delegates to worker agents, collects results, and decides next steps", "A monitoring system that logs agent actions for debugging", "A pattern where agents vote on the best response"],
+      "correct": 1,
+      "explanation": "The supervisor agent acts as a project manager: it breaks the task into subtasks, assigns them to specialized workers, reviews their output, and decides whether to iterate or finalize. This provides centralized control over the workflow."
+    },
+    {
+      "stage": "post",
+      "question": "What is the primary tradeoff of multi-agent systems compared to single agents?",
+      "options": ["Multi-agent systems always produce lower quality results", "Increased complexity, latency, and cost from multiple LLM calls and inter-agent communication, traded for better handling of complex tasks", "Multi-agent systems require more training data", "Multi-agent systems cannot use external tools"],
+      "correct": 1,
+      "explanation": "Every additional agent means more LLM calls (cost), more round trips (latency), and more failure modes (debugging complexity). Multi-agent is only worth it when the task genuinely exceeds what a single agent can handle."
+    }
+  ]
+}

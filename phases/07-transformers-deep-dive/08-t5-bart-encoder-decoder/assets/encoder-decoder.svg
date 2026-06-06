@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .enc { fill: #e7edd9; stroke: #1a1a1a; stroke-width: 1; }
+      .dec { fill: #d7e3ee; stroke: #1a1a1a; stroke-width: 1; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">encoder-decoder — cross-attention is the only pipe</text>
+
+  <!-- Source input -->
+  <rect x="60" y="70" width="260" height="32" class="hot"/>
+  <text x="190" y="92" text-anchor="middle" class="content">source tokens (N_src)</text>
+
+  <line x1="190" y1="102" x2="190" y2="125" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Encoder stack -->
+  <rect x="60" y="125" width="260" height="170" class="enc"/>
+  <text x="190" y="150" text-anchor="middle" class="label">encoder (bidirectional)</text>
+
+  <rect x="90" y="170" width="200" height="30" class="box"/>
+  <text x="190" y="190" text-anchor="middle" class="content">block 1: self-attn + FFN</text>
+  <rect x="90" y="208" width="200" height="30" class="box"/>
+  <text x="190" y="228" text-anchor="middle" class="content">block 2: self-attn + FFN</text>
+  <rect x="90" y="246" width="200" height="30" class="box"/>
+  <text x="190" y="266" text-anchor="middle" class="content">block L: self-attn + FFN</text>
+
+  <line x1="190" y1="295" x2="190" y2="320" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="60" y="320" width="260" height="30" class="hot"/>
+  <text x="190" y="340" text-anchor="middle" class="content">encoder output (N_src, d)</text>
+
+  <!-- Target input -->
+  <rect x="580" y="70" width="260" height="32" class="hot"/>
+  <text x="710" y="92" text-anchor="middle" class="content">target tokens (shifted right)</text>
+
+  <line x1="710" y1="102" x2="710" y2="125" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Decoder stack -->
+  <rect x="500" y="125" width="340" height="275" class="dec"/>
+  <text x="670" y="150" text-anchor="middle" class="label">decoder (causal + cross-attn)</text>
+
+  <rect x="530" y="170" width="280" height="30" class="box"/>
+  <text x="670" y="190" text-anchor="middle" class="content">masked self-attention</text>
+
+  <rect x="530" y="208" width="280" height="30" class="hot"/>
+  <text x="670" y="228" text-anchor="middle" class="content">cross-attention ◀── enc_out</text>
+
+  <rect x="530" y="246" width="280" height="30" class="box"/>
+  <text x="670" y="266" text-anchor="middle" class="content">FFN</text>
+
+  <text x="670" y="303" text-anchor="middle" class="caption">(repeat L times)</text>
+
+  <rect x="530" y="315" width="280" height="30" class="box"/>
+  <text x="670" y="335" text-anchor="middle" class="content">linear → vocab</text>
+
+  <line x1="670" y1="345" x2="670" y2="368" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="560" y="368" width="220" height="30" class="hot"/>
+  <text x="670" y="388" text-anchor="middle" class="content">next-token logits</text>
+
+  <!-- Cross-attention arrow -->
+  <path d="M 320 335 Q 420 335 420 223 Q 420 223 530 223" fill="none" stroke="#c0392b" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="420" y="275" text-anchor="middle" class="caption">cross-attn:</text>
+  <text x="420" y="290" text-anchor="middle" class="caption">Q from decoder,</text>
+  <text x="420" y="305" text-anchor="middle" class="caption">K/V from encoder</text>
+
+  <!-- Pretraining insets -->
+  <rect x="60" y="430" width="360" height="70" class="box"/>
+  <text x="240" y="452" text-anchor="middle" class="label">T5 pretraining</text>
+  <text x="240" y="474" text-anchor="middle" class="caption">span corruption: replace spans with sentinels,</text>
+  <text x="240" y="490" text-anchor="middle" class="caption">decode only the spans</text>
+
+  <rect x="480" y="430" width="360" height="70" class="box"/>
+  <text x="660" y="452" text-anchor="middle" class="label">BART pretraining</text>
+  <text x="660" y="474" text-anchor="middle" class="caption">apply noise (mask, delete, infill, shuffle),</text>
+  <text x="660" y="490" text-anchor="middle" class="caption">decoder reconstructs the whole clean sequence</text>
+</svg>

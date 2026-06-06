@@ -1,0 +1,78 @@
+{
+  "lesson": "42-large-corpus-downloader",
+  "title": "Large Corpus Downloader",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the downloader keep a separate .partial.json checkpoint per shard?",
+      "options": [
+        "To make the cache directory look organized",
+        "So a resumed download can verify the sha256 prefix over the verified bytes before appending, making silent corruption impossible",
+        "Because urllib requires it",
+        "To store the URL in case the shard file moves"
+      ],
+      "correct": 1,
+      "explanation": "The checkpoint records verified_bytes and the sha256 of those bytes; resume only proceeds when the on-disk hash matches."
+    },
+    {
+      "stage": "check",
+      "question": "What does the LSH band scheme buy that exact-hash dedup does not?",
+      "options": [
+        "Constant memory usage",
+        "Sub-linear lookup that flags near-duplicates with high Jaccard similarity even when the documents differ by a few tokens",
+        "Lossless compression",
+        "Faster sha256 computation"
+      ],
+      "correct": 1,
+      "explanation": "MinHash plus LSH catches paraphrases and boilerplate variants that exact-hash dedup walks past."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the checkpoint written before the bytes are appended, not after?",
+      "options": [
+        "It is convenient",
+        "If the process dies between the write and the checkpoint update, the next resume reads a checkpoint that is behind the bytes and silently re-appends, corrupting the file",
+        "It is faster",
+        "It saves disk space"
+      ],
+      "correct": 1,
+      "explanation": "Checkpoint-first matches a write-ahead log: a crash leaves the verified offset trailing or equal to the file, never ahead."
+    },
+    {
+      "stage": "check",
+      "question": "What is the role of the manifest sha256 lock file?",
+      "options": [
+        "It speeds up reads",
+        "Downstream stages refuse to start unless the manifest content matches the pinned hash, closing the silent attack surface where an attacker edits one file",
+        "It records the date",
+        "It is a backup of the manifest"
+      ],
+      "correct": 1,
+      "explanation": "Pinning the manifest hash makes the link between code and data a content-addressed contract."
+    },
+    {
+      "stage": "post",
+      "question": "Why is dedup placed upstream of tokenization rather than after?",
+      "options": [
+        "The tokenizer cannot read JSONL",
+        "Tokenization is expensive; running it twice on the same document doubles cost for no loss-curve benefit, so dropping duplicates first is strictly cheaper",
+        "Tokenizers reject duplicates",
+        "The tokenizer needs a vocabulary first"
+      ],
+      "correct": 1,
+      "explanation": "Dedup is the first stage where each duplicate-dropped document saves the tokenizer one pass."
+    },
+    {
+      "stage": "post",
+      "question": "What does tombstoning a dropped duplicate preserve that a silent delete does not?",
+      "options": [
+        "Disk space",
+        "The link between the duplicate and the keeper it collided with, plus an audit trail that survives a later threshold change",
+        "Compression ratio",
+        "Manifest sha256 stability"
+      ],
+      "correct": 1,
+      "explanation": "Tombstones let a future pass revisit the dedup threshold; deletes lose the evidence."
+    }
+  ]
+}

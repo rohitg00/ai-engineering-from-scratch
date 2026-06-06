@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/27-eval-harness-fixture-tasks",
+  "title": "Eval Harness with Fixture Tasks",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before reading the lesson: which property does a good agent eval verifier need above all others?",
+      "options": [
+        "Speed in the millisecond range.",
+        "Determinism across runs.",
+        "A natural-language explanation of the verdict.",
+        "Coverage of every line of the candidate's code."
+      ],
+      "correct": 1,
+      "explanation": "Determinism is what makes a regression detectable. A non-deterministic verifier turns every red into a coin flip."
+    },
+    {
+      "stage": "check",
+      "question": "A candidate scores 3 passes in 5 samples on a single task. What value does the lesson's pass@5 formula return (rounded to two decimals)?",
+      "options": [
+        "0.60",
+        "0.99",
+        "0.75",
+        "1.00"
+      ],
+      "correct": 1,
+      "explanation": "pass@k = 1 - (1 - p)^k = 1 - (1 - 0.6)^5 = 1 - 0.4^5 = 1 - 0.01024 = 0.98976, which rounds to 0.99. The raw per-sample rate (0.6) is the value option (a) names, but the formula amplifies it across k samples."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the lesson include both pass@1 and pass@k in the report?",
+      "options": [
+        "pass@1 is the value users see in the dashboard; pass@k is for internal debugging.",
+        "pass@k can hide a model that is right only one in many samples, so pass@1 anchors the result to first-attempt quality.",
+        "pass@k and pass@1 are mathematically identical for k > 1.",
+        "pass@1 is the version supported by the verifier registry; pass@k is reserved for future verifiers."
+      ],
+      "correct": 1,
+      "explanation": "pass@k makes models that get the answer once in many tries look strong; pass@1 is the first-attempt floor. Reporting both prevents over-claiming."
+    },
+    {
+      "stage": "check",
+      "question": "The harness calls _prepare_scratch before every sample. Why is that important for pass@k > 1?",
+      "options": [
+        "It avoids race conditions on shared temp directories.",
+        "It ensures each sample starts from the buggy setup, not the previous sample's output.",
+        "It is purely a performance optimisation.",
+        "It is only relevant for shell verifiers."
+      ],
+      "correct": 1,
+      "explanation": "Without a fresh scratch, sample N+1 starts from sample N's output. The harness would measure 'second-attempt cleanup' rather than first-attempt success."
+    },
+    {
+      "stage": "post",
+      "question": "You add a new verifier 'pytest_passes' that runs pytest in the scratch dir. Which existing verifier should you base it on?",
+      "options": [
+        "file_equals, because pytest writes a results file.",
+        "regex_match, because pytest output contains the word 'passed'.",
+        "shell_exit_zero, because pytest signals pass via exit code 0.",
+        "It is impossible to express pytest as a verifier."
+      ],
+      "correct": 2,
+      "explanation": "pytest exits 0 on pass and non-zero on failure. shell_exit_zero is the right primitive. Production wiring routes the call through the sandbox from lesson 26."
+    },
+    {
+      "stage": "post",
+      "question": "A reviewer asks: 'is this regression in the model or in the harness?' Which artifact answers that question?",
+      "options": [
+        "The agent's chain-of-thought transcript.",
+        "The per-task, per-sample SampleResult plus the verifier detail message.",
+        "The verifier registry source code.",
+        "The fixture JSON files."
+      ],
+      "correct": 1,
+      "explanation": "Per-sample latency, verifier detail, and pass/fail let you triage: same fixtures, different verdicts, so the model changed; same verdicts but different latency, so something else moved."
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Self-Refine (2023) and CRITIC (2023) — iterative improvement</text>
+
+  <rect x="40" y="60" width="420" height="440" class="box"/>
+  <text x="250" y="84" text-anchor="middle" class="head">Self-Refine: one model, three prompts</text>
+
+  <rect x="70" y="110" width="360" height="50" class="cool"/>
+  <text x="90" y="132" class="step">generate(task)  -&gt; output</text>
+  <text x="90" y="148" class="small">base producer — task prompt, no history</text>
+
+  <rect x="70" y="170" width="360" height="50" class="cold"/>
+  <text x="90" y="192" class="step">feedback(task, output)  -&gt; critique</text>
+  <text x="90" y="208" class="small">self-critic; weakest link — model scoring itself</text>
+
+  <rect x="70" y="230" width="360" height="50" class="hot"/>
+  <text x="90" y="252" class="step">refine(task, output, critique, HISTORY)  -&gt; output'</text>
+  <text x="90" y="268" class="small">history is load-bearing; drop it and quality tanks</text>
+
+  <rect x="70" y="290" width="360" height="50" class="dsk"/>
+  <text x="90" y="312" class="step">stop: feedback says fine OR max_iters</text>
+  <text x="90" y="328" class="small">pair both conditions; single stops hide bugs</text>
+
+  <text x="70" y="360" class="step">avg +20 absolute over 7 tasks (paper)</text>
+  <text x="70" y="376" class="small">math, code, acronym, dialog; includes GPT-4</text>
+  <text x="70" y="400" class="step">pitfall: rubber-stamp loop</text>
+  <text x="70" y="416" class="small">same-prompt critic agrees with itself</text>
+  <text x="70" y="432" class="small">fix: different prompt style or a smaller critic</text>
+  <text x="70" y="460" class="step">fits Anthropic "evaluator-optimizer"</text>
+  <text x="70" y="476" class="small">one of the 5 workflow patterns (Dec 2024)</text>
+
+  <rect x="500" y="60" width="420" height="440" class="box"/>
+  <text x="710" y="84" text-anchor="middle" class="head">CRITIC: verify through external tools</text>
+
+  <rect x="530" y="110" width="360" height="50" class="cool"/>
+  <text x="550" y="132" class="step">generate(task)  -&gt; output</text>
+  <text x="550" y="148" class="small">same producer</text>
+
+  <rect x="530" y="170" width="360" height="50" class="cold"/>
+  <text x="550" y="192" class="step">verify(task, output, TOOLS)  -&gt; critique</text>
+  <text x="550" y="208" class="small">search, code, calculator, tests — grounded</text>
+
+  <rect x="530" y="230" width="360" height="50" class="hot"/>
+  <text x="550" y="252" class="step">refine(task, output, critique, HISTORY)  -&gt; output'</text>
+  <text x="550" y="268" class="small">same refine, better critique -&gt; better output</text>
+
+  <rect x="530" y="290" width="360" height="50" class="dsk"/>
+  <text x="550" y="312" class="step">stop: verifier passes OR max_iters</text>
+  <text x="550" y="328" class="small">verifier signal dominates self-critic</text>
+
+  <text x="530" y="360" class="step">key claim</text>
+  <text x="530" y="376" class="small">LLMs are unreliable at self-verification without external grounding</text>
+  <text x="530" y="400" class="step">maps to OpenAI Agents SDK output guardrails</text>
+  <text x="530" y="416" class="small">guardrails can call tools; tripwires enforce retries</text>
+  <text x="530" y="440" class="step">maps to Gemini 2.5 per-step safety</text>
+  <text x="530" y="456" class="small">every action verified before commit</text>
+  <text x="530" y="480" class="small">no external verifier? CRITIC reduces to Self-Refine</text>
+</svg>

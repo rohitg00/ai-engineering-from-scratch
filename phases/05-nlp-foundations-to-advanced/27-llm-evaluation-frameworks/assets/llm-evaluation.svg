@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .metric { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .judge { fill: #e3f2fd; stroke: #1565c0; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">RAG evaluation — four dimensions, LLM-as-judge backend</text>
+
+  <!-- Inputs: question, context, answer -->
+  <rect x="40" y="55" width="250" height="30" class="box"/>
+  <text x="165" y="75" text-anchor="middle" class="content">question: "When was iPhone released?"</text>
+
+  <rect x="40" y="95" width="250" height="55" class="box"/>
+  <text x="165" y="114" text-anchor="middle" class="content">retrieved context:</text>
+  <text x="165" y="132" text-anchor="middle" class="mono">"Apple released first iPhone</text>
+  <text x="165" y="145" text-anchor="middle" class="mono">June 29, 2007."</text>
+
+  <rect x="40" y="160" width="250" height="30" class="box"/>
+  <text x="165" y="180" text-anchor="middle" class="content">answer: "June 29, 2007."</text>
+
+  <line x1="290" y1="125" x2="330" y2="125" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Judge -->
+  <rect x="330" y="80" width="220" height="130" class="judge"/>
+  <text x="440" y="105" text-anchor="middle" class="label">LLM judge</text>
+  <text x="440" y="128" text-anchor="middle" class="caption">(GPT-4o-mini, Haiku, Mistral-small)</text>
+  <text x="440" y="155" text-anchor="middle" class="mono">score(q, ctx, ans) → 0..1</text>
+  <text x="440" y="180" text-anchor="middle" class="caption">rubric + chain-of-thought</text>
+  <text x="440" y="198" text-anchor="middle" class="caption">calibrated vs human</text>
+
+  <line x1="550" y1="125" x2="590" y2="125" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Metrics panel -->
+  <rect x="590" y="55" width="270" height="250" class="box"/>
+  <text x="725" y="80" text-anchor="middle" class="label">four RAG metrics</text>
+
+  <rect x="605" y="95" width="240" height="45" class="metric"/>
+  <text x="615" y="115" class="label">faithfulness</text>
+  <text x="615" y="132" class="caption">claims in answer entailed by context?</text>
+
+  <rect x="605" y="145" width="240" height="45" class="metric"/>
+  <text x="615" y="165" class="label">answer relevance</text>
+  <text x="615" y="182" class="caption">answer addresses the question?</text>
+
+  <rect x="605" y="195" width="240" height="45" class="metric"/>
+  <text x="615" y="215" class="label">context precision</text>
+  <text x="615" y="232" class="caption">fraction of retrieved chunks relevant</text>
+
+  <rect x="605" y="245" width="240" height="45" class="metric"/>
+  <text x="615" y="265" class="label">context recall</text>
+  <text x="615" y="282" class="caption">retrieved set covers gold answer?</text>
+
+  <!-- Bottom -->
+  <rect x="40" y="335" width="820" height="95" class="box"/>
+  <text x="55" y="358" class="label">cost / calibration / CI</text>
+  <text x="55" y="378" class="content">$0.001 – $0.003 per judged case with GPT-4o-mini  —  &lt;$5 per 1000-sample regression run</text>
+  <text x="55" y="396" class="content">required: Spearman ρ &gt; 0.7 vs 50 hand-labeled cases before trusting the number</text>
+  <text x="55" y="414" class="content">gate: pytest + DeepEval thresholds; freeze judge model + version; surface bottom-10%</text>
+</svg>

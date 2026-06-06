@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How does a ViT turn an image into a sequence of tokens?",
+      "options": ["Flattens the entire image into one vector", "Applies a conv with kernel_size = stride = patch_size to split the image into non-overlapping patches and linearly project each to a token embedding in one operation", "Runs a CNN first and uses its feature map as tokens", "Sorts pixel intensities"],
+      "correct": 1,
+      "explanation": "The first layer of a ViT is a conv with kernel_size = stride = 16, turning a 224x224 image into a 14x14 grid of 16x16 patches, each projected to dim=768. That single conv does both patchification and projection. The result is 196 tokens that a standard transformer encoder can process."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the [CLS] token in ViT and why is it needed?",
+      "options": ["A learned vector prepended to the token sequence; after N transformer layers its output aggregates the whole image and feeds the classifier head", "A special pixel value", "A placeholder for missing data", "A dropout mask"],
+      "correct": 0,
+      "explanation": "ViT follows BERT's convention: prepend a learned vector (the CLS token) to the patch sequence. Self-attention lets every token see every other token, so the CLS token aggregates global information from all patches. The classifier reads only the CLS output. Alternative designs use average-pooling over all patch tokens (used by ConvNeXt and many post-ViT models)."
+    },
+    {
+      "stage": "post",
+      "question": "Why did the original ViT paper need JFT-300M pretraining to beat ResNet, and why does DeiT not?",
+      "options": ["ViT is broken without JFT-300M", "ViT has weaker inductive biases than CNNs; without enough data it overfits. DeiT showed that with strong augmentation (RandAugment, Mixup, CutMix), stochastic depth, and optionally CNN distillation, ViTs train fine on ImageNet-1k alone", "DeiT uses different attention", "The ViT paper was wrong"],
+      "correct": 1,
+      "explanation": "ViT's lack of inductive bias (no locality, no translation equivariance baked in) means the network has to learn these from data. With 1M ImageNet images that is hard; with 300M JFT images it is easy. DeiT replaced the data with training-recipe improvements: heavy augmentation, stochastic depth, and distillation from a CNN teacher, all of which compensate for the lack of priors."
+    },
+    {
+      "stage": "post",
+      "question": "Pre-LayerNorm (`x = x + sublayer(LN(x))`) vs post-LayerNorm (`x = LN(x + sublayer(x))`) — which is used in modern transformers and why?",
+      "options": ["Post-LN; it is simpler", "Pre-LN; it trains deeper networks stably without learning-rate warmup and avoids the gradient instabilities that post-LN suffers past about 6 layers", "They are identical", "Neither; modern transformers skip LayerNorm"],
+      "correct": 1,
+      "explanation": "Post-LN was the original transformer (2017) and required careful warmup + small learning rates past 6-8 layers. Pre-LN (Xiong et al., 2020; used by ViT, GPT-2+, every modern LLM) is numerically more stable: the residual stream accumulates without passing through LN, and each sublayer operates on a normalised input. Every transformer deeper than 12 layers uses pre-LN."
+    },
+    {
+      "stage": "post",
+      "question": "Swin Transformer introduces windowed attention. What problem does it solve?",
+      "options": ["Vanishing gradients", "Full attention has O((H*W)^2) cost; Swin restricts attention to local windows of 7x7 patches, reducing cost to O(H*W * window^2). Alternating blocks shift the window by half its size so information eventually mixes across the image", "BatchNorm not supported", "Overfitting to texture"],
+      "correct": 1,
+      "explanation": "A 224x224 image with 4x4 patches has 56*56 = 3136 tokens; full attention is 3136^2 = ~10M pairs per layer. Swin attends only within 7x7 windows, giving 49^2 = 2401 pairs per window (plus the window count). Shifted windows in alternating blocks mix information across windows over a few layers. This brings a CNN-like locality prior back to the transformer without giving up attention."
+    }
+  ]
+}

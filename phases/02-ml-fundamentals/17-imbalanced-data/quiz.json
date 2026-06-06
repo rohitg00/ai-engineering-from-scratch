@@ -1,0 +1,67 @@
+[
+  {
+    "id": "imbalanced-pre-1",
+    "stage": "pre",
+    "question": "A fraud detection dataset has 99.9% legitimate transactions and 0.1% fraud. A model predicts 'legitimate' for every transaction. What is its accuracy?",
+    "options": [
+      "50%",
+      "0.1%",
+      "99.9%",
+      "100%"
+    ],
+    "correct": 2,
+    "explanation": "Accuracy = 999/1000 = 99.9%. The model catches zero fraud but looks great by accuracy. This is exactly why accuracy is dangerous for imbalanced datasets."
+  },
+  {
+    "id": "imbalanced-pre-2",
+    "stage": "pre",
+    "question": "Which metric would correctly identify the always-predict-negative model as useless?",
+    "options": [
+      "Accuracy (99.9%)",
+      "Recall (0%) or F1 score (0%)",
+      "Specificity (100%)",
+      "True negative rate (100%)"
+    ],
+    "correct": 1,
+    "explanation": "Recall = TP/(TP+FN) = 0/total_positives = 0%. F1 = 2*0*0/(0+0) = 0. Both correctly show the model catches nothing in the positive class. Accuracy hides this failure."
+  },
+  {
+    "id": "imbalanced-post-1",
+    "stage": "post",
+    "question": "How does SMOTE generate synthetic minority samples?",
+    "options": [
+      "By duplicating existing minority samples exactly",
+      "By randomly generating points anywhere in the feature space",
+      "By interpolating between a minority sample and one of its K nearest minority neighbors",
+      "By flipping the labels of majority class samples"
+    ],
+    "correct": 2,
+    "explanation": "SMOTE picks a minority point, selects one of its K nearest minority neighbors, and creates a new point on the line segment between them: new = x + rand(0,1) * (neighbor - x). This produces plausible, non-duplicate samples."
+  },
+  {
+    "id": "imbalanced-post-2",
+    "stage": "post",
+    "question": "You lower the classification threshold from 0.5 to 0.3 on an imbalanced dataset. What happens to precision and recall?",
+    "options": [
+      "Both precision and recall increase",
+      "Recall increases (more positives caught) but precision decreases (more false positives)",
+      "Precision increases but recall decreases",
+      "Neither changes -- threshold only affects speed"
+    ],
+    "correct": 1,
+    "explanation": "Lowering the threshold means more samples are predicted positive. This catches more true positives (recall up) but also adds more false positives (precision down). Threshold tuning trades precision for recall."
+  },
+  {
+    "id": "imbalanced-post-3",
+    "stage": "post",
+    "question": "Why is AUPRC (Area Under Precision-Recall Curve) more informative than AUC-ROC for highly imbalanced datasets?",
+    "options": [
+      "AUPRC is always higher than AUC-ROC",
+      "A random classifier has AUPRC equal to the positive class rate (e.g., 0.001), making improvements visible, while AUC-ROC starts at 0.5 regardless of imbalance",
+      "AUPRC does not require a threshold",
+      "AUC-ROC cannot be computed for imbalanced data"
+    ],
+    "correct": 1,
+    "explanation": "For imbalanced data, AUC-ROC can look deceptively good because the large number of true negatives inflates the true negative rate. AUPRC's baseline equals the positive rate, making real improvements in detecting the minority class much more apparent."
+  }
+]

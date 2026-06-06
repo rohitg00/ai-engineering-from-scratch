@@ -1,0 +1,102 @@
+{
+  "lesson": "28-long-context-evaluation",
+  "title": "Long-Context Evaluation — NIAH, RULER, LongBench, MRCR",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does the original NIAH benchmark measure?",
+      "options": [
+        "Tokenizer fertility",
+        "Whether the model can retrieve a planted fact at controlled depths across a long context",
+        "Embedding cosine drift",
+        "Multi-hop reasoning only"
+      ],
+      "correct": 1,
+      "explanation": "NIAH = needle in a haystack: plant a fact, ask the model to retrieve it, sweep depth and length."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is the advertised context window often very different from the usable context?",
+      "options": [
+        "Attention degrades with length and task; spec-sheet maximums rarely hold under multi-hop or reasoning loads",
+        "Tokenizers truncate",
+        "Embeddings overflow",
+        "Beam search slows"
+      ],
+      "correct": 0,
+      "explanation": "Effective context for reasoning is usually 25-50% of the advertised max."
+    },
+    {
+      "stage": "check",
+      "question": "What does RULER add over NIAH?",
+      "options": [
+        "Translation tasks",
+        "Faster inference",
+        "Per-token logprobs",
+        "Thirteen task types across retrieval, multi-hop tracing, aggregation, and QA at multiple context lengths"
+      ],
+      "correct": 3,
+      "explanation": "RULER expands NIAH into a multi-task long-context benchmark catching models that saturate NIAH but fail elsewhere."
+    },
+    {
+      "stage": "check",
+      "question": "What is the 'lost in the middle' effect?",
+      "options": [
+        "Models under-attend to content placed in the middle of long inputs; depth=0.5 often performs worse than depth=0 or 1",
+        "Models reorder tokens",
+        "Models forget the first token",
+        "Models lose punctuation"
+      ],
+      "correct": 0,
+      "explanation": "Mid-context content is least attended; sweeping depth exposes the U-shaped accuracy curve."
+    },
+    {
+      "stage": "check",
+      "question": "Why must NIAH-only evaluation be supplemented with multi-hop tests?",
+      "options": [
+        "Multi-hop is faster",
+        "NIAH lacks ground truth",
+        "NIAH cannot run on long context",
+        "Frontier models can ace single-needle retrieval but still fail multi-hop variable-tracing or aggregation tasks"
+      ],
+      "correct": 3,
+      "explanation": "Retrieval pass does not imply reasoning pass; multi-hop benchmarks expose the real ceiling."
+    },
+    {
+      "stage": "post",
+      "question": "What does NoLiMa stress?",
+      "options": [
+        "Streaming output",
+        "Latency",
+        "Tokenization",
+        "Needles that share no literal tokens with the query, so retrieval requires a semantic reasoning step"
+      ],
+      "correct": 3,
+      "explanation": "NoLiMa removes lexical overlap so the model must reason rather than match keywords."
+    },
+    {
+      "stage": "post",
+      "question": "What two numbers should a long-context spec sheet report?",
+      "options": [
+        "Effective retrieval length (e.g. 90% NIAH pass) and effective reasoning length (e.g. 70% multi-hop pass)",
+        "GPU memory and latency only",
+        "Only the advertised max",
+        "Tokens per second only"
+      ],
+      "correct": 0,
+      "explanation": "Distinguishing retrieval-effective from reasoning-effective length is essential for real-world claims."
+    },
+    {
+      "stage": "post",
+      "question": "Why measure time-to-first-token at long context lengths?",
+      "options": [
+        "1M-token prefills can take tens of seconds; accuracy alone hides product-impacting latency",
+        "Tokenization is slow",
+        "Required by RAG",
+        "Beam search depends on it"
+      ],
+      "correct": 0,
+      "explanation": "Long prompts have huge prefill costs; latency must be tracked alongside accuracy."
+    }
+  ]
+}

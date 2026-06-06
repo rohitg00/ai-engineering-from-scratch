@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .fwd { fill: #dff4dd; stroke: #2e7d32; stroke-width: 1.2; }
+      .rev { fill: #ffd9c2; stroke: #c0392b; stroke-width: 1.2; }
+      .overlap { fill: #e1d7ff; stroke: #5a4fcf; stroke-width: 1.2; }
+      .bubble { fill: #f2f2f2; stroke: #aaa; stroke-width: 1.0; stroke-dasharray: 2,2; }
+      .label { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 11px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">DualPipe schedule — P=4, 8 micro-batches, two directions</text>
+
+  <!-- Y-axis: ranks -->
+  <text x="20" y="70" class="head">rank 0</text>
+  <text x="20" y="120" class="head">rank 1</text>
+  <text x="20" y="170" class="head">rank 2</text>
+  <text x="20" y="220" class="head">rank 3</text>
+
+  <!-- Time axis -->
+  <text x="480" y="50" text-anchor="middle" class="small">time →</text>
+
+  <!-- Row 0: rank 0 -->
+  <!-- Warmup: 4 forward slots, no overlap yet -->
+  <rect x="80" y="60" width="40" height="20" class="fwd"/>
+  <text x="100" y="74" text-anchor="middle" class="step">F1</text>
+  <rect x="125" y="60" width="40" height="20" class="fwd"/>
+  <text x="145" y="74" text-anchor="middle" class="step">F2</text>
+  <rect x="170" y="60" width="40" height="20" class="fwd"/>
+  <text x="190" y="74" text-anchor="middle" class="step">F3</text>
+  <rect x="215" y="60" width="40" height="20" class="fwd"/>
+  <text x="235" y="74" text-anchor="middle" class="step">F4</text>
+  <!-- Stable phase: overlapped forward+reverse -->
+  <rect x="265" y="60" width="50" height="20" class="overlap"/>
+  <text x="290" y="74" text-anchor="middle" class="step">F5/F8R</text>
+  <rect x="320" y="60" width="50" height="20" class="overlap"/>
+  <text x="345" y="74" text-anchor="middle" class="step">F6/F7R</text>
+  <rect x="375" y="60" width="50" height="20" class="overlap"/>
+  <text x="400" y="74" text-anchor="middle" class="step">F7/F6R</text>
+  <rect x="430" y="60" width="50" height="20" class="overlap"/>
+  <text x="455" y="74" text-anchor="middle" class="step">F8/F5R</text>
+  <!-- Backwards -->
+  <rect x="490" y="60" width="40" height="20" class="rev"/>
+  <text x="510" y="74" text-anchor="middle" class="step">B1</text>
+  <rect x="535" y="60" width="40" height="20" class="rev"/>
+  <text x="555" y="74" text-anchor="middle" class="step">B2</text>
+  <rect x="580" y="60" width="40" height="20" class="rev"/>
+  <text x="600" y="74" text-anchor="middle" class="step">B3</text>
+  <rect x="625" y="60" width="40" height="20" class="rev"/>
+  <text x="645" y="74" text-anchor="middle" class="step">B4</text>
+
+  <!-- Row 1: rank 1 (shifted right by one slot) -->
+  <rect x="80" y="110" width="45" height="20" class="bubble"/>
+  <rect x="125" y="110" width="40" height="20" class="fwd"/>
+  <text x="145" y="124" text-anchor="middle" class="step">F1</text>
+  <rect x="170" y="110" width="40" height="20" class="fwd"/>
+  <text x="190" y="124" text-anchor="middle" class="step">F2</text>
+  <rect x="215" y="110" width="40" height="20" class="fwd"/>
+  <text x="235" y="124" text-anchor="middle" class="step">F3</text>
+  <rect x="260" y="110" width="50" height="20" class="overlap"/>
+  <text x="285" y="124" text-anchor="middle" class="step">F4/F8R</text>
+  <rect x="315" y="110" width="50" height="20" class="overlap"/>
+  <text x="340" y="124" text-anchor="middle" class="step">F5/F7R</text>
+  <rect x="370" y="110" width="50" height="20" class="overlap"/>
+  <text x="395" y="124" text-anchor="middle" class="step">F6/F6R</text>
+  <rect x="425" y="110" width="50" height="20" class="overlap"/>
+  <text x="450" y="124" text-anchor="middle" class="step">F7/F5R</text>
+  <rect x="480" y="110" width="50" height="20" class="overlap"/>
+  <text x="505" y="124" text-anchor="middle" class="step">F8/B1</text>
+  <rect x="535" y="110" width="40" height="20" class="rev"/>
+  <text x="555" y="124" text-anchor="middle" class="step">B2</text>
+  <rect x="580" y="110" width="40" height="20" class="rev"/>
+  <text x="600" y="124" text-anchor="middle" class="step">B3</text>
+  <rect x="625" y="110" width="40" height="20" class="rev"/>
+  <text x="645" y="124" text-anchor="middle" class="step">B4</text>
+
+  <!-- Row 2: rank 2 (shifted right by two slots) -->
+  <rect x="80" y="160" width="90" height="20" class="bubble"/>
+  <rect x="170" y="160" width="40" height="20" class="fwd"/>
+  <text x="190" y="174" text-anchor="middle" class="step">F1</text>
+  <rect x="215" y="160" width="40" height="20" class="fwd"/>
+  <text x="235" y="174" text-anchor="middle" class="step">F2</text>
+  <rect x="260" y="160" width="50" height="20" class="overlap"/>
+  <text x="285" y="174" text-anchor="middle" class="step">F3/F8R</text>
+  <rect x="315" y="160" width="50" height="20" class="overlap"/>
+  <text x="340" y="174" text-anchor="middle" class="step">F4/F7R</text>
+  <rect x="370" y="160" width="50" height="20" class="overlap"/>
+  <text x="395" y="174" text-anchor="middle" class="step">F5/F6R</text>
+  <rect x="425" y="160" width="50" height="20" class="overlap"/>
+  <text x="450" y="174" text-anchor="middle" class="step">F6/F5R</text>
+  <rect x="480" y="160" width="50" height="20" class="overlap"/>
+  <text x="505" y="174" text-anchor="middle" class="step">F7/B1</text>
+  <rect x="535" y="160" width="50" height="20" class="overlap"/>
+  <text x="560" y="174" text-anchor="middle" class="step">F8/B2</text>
+  <rect x="590" y="160" width="40" height="20" class="rev"/>
+  <text x="610" y="174" text-anchor="middle" class="step">B3</text>
+
+  <!-- Row 3: rank 3 -->
+  <rect x="80" y="210" width="135" height="20" class="bubble"/>
+  <rect x="215" y="210" width="40" height="20" class="fwd"/>
+  <text x="235" y="224" text-anchor="middle" class="step">F1</text>
+  <rect x="260" y="210" width="50" height="20" class="overlap"/>
+  <text x="285" y="224" text-anchor="middle" class="step">F2/F8R</text>
+  <rect x="315" y="210" width="50" height="20" class="overlap"/>
+  <text x="340" y="224" text-anchor="middle" class="step">F3/F7R</text>
+  <rect x="370" y="210" width="50" height="20" class="overlap"/>
+  <text x="395" y="224" text-anchor="middle" class="step">F4/F6R</text>
+  <rect x="425" y="210" width="50" height="20" class="overlap"/>
+  <text x="450" y="224" text-anchor="middle" class="step">F5/F5R</text>
+  <rect x="480" y="210" width="50" height="20" class="overlap"/>
+  <text x="505" y="224" text-anchor="middle" class="step">F6/B1</text>
+  <rect x="535" y="210" width="50" height="20" class="overlap"/>
+  <text x="560" y="224" text-anchor="middle" class="step">F7/B2</text>
+  <rect x="590" y="210" width="50" height="20" class="overlap"/>
+  <text x="615" y="224" text-anchor="middle" class="step">F8/B3</text>
+
+  <!-- Legend -->
+  <rect x="680" y="60" width="240" height="180" class="box"/>
+  <text x="800" y="82" text-anchor="middle" class="head">legend</text>
+
+  <rect x="695" y="100" width="22" height="16" class="fwd"/>
+  <text x="725" y="112" class="step">forward (left-to-right)</text>
+
+  <rect x="695" y="125" width="22" height="16" class="rev"/>
+  <text x="725" y="137" class="step">backward (standard)</text>
+
+  <rect x="695" y="150" width="22" height="16" class="overlap"/>
+  <text x="725" y="162" class="step">bidirectional overlap</text>
+
+  <rect x="695" y="175" width="22" height="16" class="bubble"/>
+  <text x="725" y="187" class="step">bubble (warmup only)</text>
+
+  <text x="695" y="215" class="small">bubbles do not grow</text>
+  <text x="695" y="228" class="small">with micro-batch count</text>
+
+  <!-- Bubble fraction table -->
+  <rect x="30" y="280" width="900" height="230" class="box"/>
+  <text x="480" y="303" text-anchor="middle" class="label">bubble fraction vs schedule — lower is better</text>
+
+  <text x="50" y="335" class="step">P=8, M=16</text>
+  <text x="260" y="335" class="small">1F1B: 30.4%   Zero Bubble: 11.3%   DualPipe: 5.5%   DualPipeV: 6.5%</text>
+
+  <text x="50" y="360" class="step">P=8, M=64</text>
+  <text x="260" y="360" class="small">1F1B: 9.9%    Zero Bubble: 3.4%    DualPipe: 1.5%   DualPipeV: 1.8%</text>
+
+  <text x="50" y="385" class="step">P=16, M=128</text>
+  <text x="260" y="385" class="small">1F1B: 10.5%   Zero Bubble: 3.9%    DualPipe: 1.8%   DualPipeV: 2.1%</text>
+
+  <text x="50" y="420" class="step">DualPipe cost</text>
+  <text x="260" y="420" class="small">2x parameter copies per rank — affordable at MoE scale (EP dominates)</text>
+
+  <text x="50" y="445" class="step">DualPipeV cost</text>
+  <text x="260" y="445" class="small">1x parameter copies, slightly larger bubble — better fit for dense models</text>
+
+  <text x="50" y="480" class="step">DeepSeek-V3</text>
+  <text x="260" y="480" class="small">2048 H800 GPUs, ~2.8M GPU-hours. DualPipe recovers ~245k GPU-hours</text>
+  <text x="260" y="498" class="small">over a 1F1B baseline — enough to fund a separate 70B dense run.</text>
+</svg>

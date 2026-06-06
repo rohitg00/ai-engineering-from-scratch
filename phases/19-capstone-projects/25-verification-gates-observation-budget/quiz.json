@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/25-verification-gates-observation-budget",
+  "title": "Verification Gates and the Observation Budget",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before reading the lesson: which of these is the strongest reason a harness needs a deterministic gate chain rather than a model-as-judge?",
+      "options": [
+        "Models are too slow to act as judges in production.",
+        "Determinism makes the deny reason auditable and the chain replayable.",
+        "A model-as-judge always produces hallucinated allow decisions.",
+        "Gate chains let the model write its own policy."
+      ],
+      "correct": 1,
+      "explanation": "Audit trails and reproducibility are the practical wins. A judge model can also be wired in, but the structural gate needs to be deterministic so the decision can be reproduced and reviewed."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the lesson run WhitelistGate before BudgetGate in the chain?",
+      "options": [
+        "Whitelist denials are cheaper, so short-circuiting them avoids the expensive ledger sum.",
+        "BudgetGate cannot run until at least one tool has been called.",
+        "Whitelist must always be the last gate by convention.",
+        "Order does not matter because GateChain randomises evaluation order."
+      ],
+      "correct": 0,
+      "explanation": "Cheap denials run first. WhitelistGate is O(1) hash lookup. BudgetGate has to sum the ledger. Short-circuiting on whitelist avoids that work when the call is structurally illegal."
+    },
+    {
+      "stage": "check",
+      "question": "An ObservationLedger has recorded a 60-token observation from read_file. The harness then refuses a subsequent call. What does the ledger record about the refusal?",
+      "options": [
+        "A zero-token Observation row tagged refused.",
+        "Nothing. The ledger only records successful observations.",
+        "A negative-token Observation row representing the refusal cost.",
+        "The refusal is appended as a synthetic Observation with the refuser's name."
+      ],
+      "correct": 1,
+      "explanation": "The ledger records observations the model has seen. A refusal produces a GateDecision, not an Observation. Refusal counts live alongside the ledger, not inside it."
+    },
+    {
+      "stage": "check",
+      "question": "RecencyGate.window is set to 3. The ledger's latest_turn is 5. A new ToolCall arrives on turn 10. What happens?",
+      "options": [
+        "The gate allows: the call is on the latest turn.",
+        "The gate denies: gap of 5 exceeds window of 3.",
+        "The gate allows: window applies to ledger size, not turn gap.",
+        "The gate raises an exception because the ledger is stale."
+      ],
+      "correct": 1,
+      "explanation": "RecencyGate compares (call.turn - ledger.latest_turn) against the window. 10 - 5 = 5, which is greater than 3, so the gate denies."
+    },
+    {
+      "stage": "post",
+      "question": "You want to add a per-call output cap (no single observation may exceed 8000 tokens). Where does this gate logically belong in the chain?",
+      "options": [
+        "Before WhitelistGate, since size is the cheapest property to check.",
+        "After BudgetGate, since cumulative budget always dominates.",
+        "It cannot be a gate because the size is only known after the tool runs.",
+        "Inside the BudgetGate so the limits compose."
+      ],
+      "correct": 2,
+      "explanation": "The output size is not known at gate-evaluation time. The harness applies the cap after the tool runs, by truncating the observation before the model sees it. Gates evaluate inputs, not outputs."
+    },
+    {
+      "stage": "post",
+      "question": "A reviewer asks you to prove that the agent never fired a denied tool call during a session. Which artifact do you point them at?",
+      "options": [
+        "The ObservationLedger snapshot, which only contains successful observations.",
+        "The list of ChainOutcome records, which contains every per-call decision with deny reasons.",
+        "The pytest output, which records test pass/fail.",
+        "The model's chat transcript, which contains its own self-report."
+      ],
+      "correct": 1,
+      "explanation": "ChainOutcome records carry per-call decisions and deny reasons. The ledger and transcript can support the claim, but the auditable artifact is the chain decisions."
+    }
+  ]
+}

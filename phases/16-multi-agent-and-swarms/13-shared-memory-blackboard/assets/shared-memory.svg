@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <marker id="redarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .red { fill: #c0392b; }
+    </style>
+  </defs>
+  <text x="480" y="28" text-anchor="middle" class="title">Shared memory patterns and the poisoning path</text>
+
+  <rect x="40" y="60" width="420" height="200" class="cool"/>
+  <text x="250" y="82" text-anchor="middle" class="head">Full message pool (AutoGen, MetaGPT)</text>
+
+  <rect x="70" y="100" width="90" height="40" class="box"/>
+  <text x="115" y="124" text-anchor="middle" class="step">agent A</text>
+  <rect x="70" y="150" width="90" height="40" class="box"/>
+  <text x="115" y="174" text-anchor="middle" class="step">agent B</text>
+  <rect x="70" y="200" width="90" height="40" class="box"/>
+  <text x="115" y="224" text-anchor="middle" class="step">agent C</text>
+
+  <rect x="260" y="130" width="160" height="80" class="box"/>
+  <text x="340" y="156" text-anchor="middle" class="step">pool</text>
+  <text x="340" y="178" text-anchor="middle" class="small">append-only log</text>
+  <text x="340" y="198" text-anchor="middle" class="small">every agent reads all</text>
+
+  <line x1="160" y1="120" x2="256" y2="150" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <line x1="160" y1="170" x2="256" y2="170" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <line x1="160" y1="220" x2="256" y2="190" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+
+  <rect x="500" y="60" width="420" height="200" class="cold"/>
+  <text x="710" y="82" text-anchor="middle" class="head">Blackboard with topics (CA-MCP, Matrix)</text>
+
+  <rect x="530" y="100" width="90" height="40" class="box"/>
+  <text x="575" y="124" text-anchor="middle" class="step">publisher</text>
+  <rect x="530" y="150" width="90" height="40" class="box"/>
+  <text x="575" y="174" text-anchor="middle" class="step">publisher</text>
+
+  <rect x="640" y="100" width="100" height="40" class="box"/>
+  <text x="690" y="124" text-anchor="middle" class="step">prices</text>
+  <rect x="640" y="150" width="100" height="40" class="box"/>
+  <text x="690" y="174" text-anchor="middle" class="step">alerts</text>
+  <rect x="640" y="200" width="100" height="40" class="box"/>
+  <text x="690" y="224" text-anchor="middle" class="step">summaries</text>
+
+  <rect x="770" y="100" width="130" height="40" class="box"/>
+  <text x="835" y="124" text-anchor="middle" class="step">subscriber</text>
+  <rect x="770" y="150" width="130" height="40" class="box"/>
+  <text x="835" y="174" text-anchor="middle" class="step">subscriber</text>
+  <rect x="770" y="200" width="130" height="40" class="box"/>
+  <text x="835" y="224" text-anchor="middle" class="step">subscriber</text>
+
+  <line x1="620" y1="120" x2="636" y2="120" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <line x1="620" y1="170" x2="636" y2="170" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <line x1="740" y1="120" x2="766" y2="120" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <line x1="740" y1="170" x2="766" y2="170" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <line x1="740" y1="220" x2="766" y2="220" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="290" width="880" height="230" class="hot"/>
+  <text x="480" y="314" text-anchor="middle" class="head">memory poisoning — the failure mode shared memory invents</text>
+
+  <rect x="70" y="335" width="120" height="50" class="box"/>
+  <text x="130" y="358" text-anchor="middle" class="step">retriever</text>
+  <text x="130" y="372" text-anchor="middle" class="small">hallucinates decimal</text>
+
+  <rect x="230" y="335" width="120" height="50" class="box"/>
+  <text x="290" y="358" text-anchor="middle" class="step">summarizer</text>
+  <text x="290" y="372" text-anchor="middle" class="small">echoes 42%</text>
+
+  <rect x="390" y="335" width="120" height="50" class="box"/>
+  <text x="450" y="358" text-anchor="middle" class="step">analyst</text>
+  <text x="450" y="372" text-anchor="middle" class="small">recommends adoption</text>
+
+  <rect x="550" y="335" width="150" height="50" class="box"/>
+  <text x="625" y="358" text-anchor="middle" class="step">final report</text>
+  <text x="625" y="372" text-anchor="middle" class="small red">42% — never existed</text>
+
+  <line x1="190" y1="360" x2="226" y2="360" stroke="#c0392b" marker-end="url(#redarrow)"/>
+  <line x1="350" y1="360" x2="386" y2="360" stroke="#c0392b" marker-end="url(#redarrow)"/>
+  <line x1="510" y1="360" x2="546" y2="360" stroke="#c0392b" marker-end="url(#redarrow)"/>
+
+  <rect x="740" y="335" width="160" height="120" class="cool"/>
+  <text x="820" y="358" text-anchor="middle" class="step">verifier</text>
+  <text x="820" y="376" text-anchor="middle" class="small">read-only</text>
+  <text x="820" y="392" text-anchor="middle" class="small">re-fetches sources</text>
+  <text x="820" y="408" text-anchor="middle" class="small">flags inconsistency</text>
+  <text x="820" y="438" text-anchor="middle" class="small">output routed to</text>
+  <text x="820" y="452" text-anchor="middle" class="small">a separate channel</text>
+
+  <line x1="130" y1="385" x2="740" y2="390" stroke="#2e7d32" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+  <text x="480" y="488" text-anchor="middle" class="caption">mitigations: append-only log · provenance fields · unwritable verifier · independent source access</text>
+</svg>

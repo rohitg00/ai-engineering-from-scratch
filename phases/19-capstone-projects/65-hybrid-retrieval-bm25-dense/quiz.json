@@ -1,0 +1,78 @@
+{
+  "lesson": "65-hybrid-retrieval-bm25-dense",
+  "title": "Hybrid Retrieval with BM25 and Dense Embeddings",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does a production RAG endpoint need both lexical and semantic retrieval at once?",
+      "options": [
+        "Semantic retrieval is always more accurate",
+        "Lexical search is required by law for compliance",
+        "The query distribution mixes literal-identifier and paraphrased queries; one modality fails on each class",
+        "It halves the index size"
+      ],
+      "correct": 2,
+      "explanation": "BM25 dominates on literal symbols; dense dominates on paraphrases. A real endpoint receives both classes from the same users."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the BM25 parameter b at the default 0.75?",
+      "options": [
+        "A multiplier on the IDF term",
+        "A length-normalization knob: longer documents are penalized but not linearly",
+        "A query-time exponent on cosine similarity",
+        "The number of fields in the document"
+      ],
+      "correct": 1,
+      "explanation": "b interpolates between no length normalization (0) and full normalization (1); 0.75 is the published recommendation."
+    },
+    {
+      "stage": "check",
+      "question": "What does Reciprocal Rank Fusion compute for each candidate?",
+      "options": [
+        "Sum of 1 / (k + rank) across each ranked list that contains the candidate",
+        "Product of cosine similarities across modalities",
+        "Average of the BM25 and dense scores after min-max normalization",
+        "The median rank across modalities"
+      ],
+      "correct": 0,
+      "explanation": "RRF sums 1 / (k + rank) contributions per ranked list; k = 60 is the published default."
+    },
+    {
+      "stage": "check",
+      "question": "Why is rank-based fusion preferred over a linear interpolation of BM25 and cosine scores?",
+      "options": [
+        "Cosine scores are unbounded",
+        "BM25 scores cannot be sorted",
+        "BM25 scores are unbounded and corpus-dependent; cosine is bounded in -1 to 1; the score scales are not comparable across corpora",
+        "Linear interpolation requires GPU support"
+      ],
+      "correct": 2,
+      "explanation": "Score interpolation breaks every reindex because the score distributions shift; ranks are comparable across modalities by construction."
+    },
+    {
+      "stage": "check",
+      "question": "What happens to RRF when you make the constant k very small?",
+      "options": [
+        "The top-1 contribution dominates the fusion; deep ranks contribute almost nothing",
+        "The fusion becomes equivalent to a linear score sum",
+        "Out-of-corpus terms get a positive score",
+        "The fusion ignores the second modality"
+      ],
+      "correct": 0,
+      "explanation": "Small k concentrates the rank-1 contribution; large k flattens the contribution curve and lets deep candidates vote."
+    },
+    {
+      "stage": "post",
+      "question": "Which failure mode does field weighting through token repetition specifically avoid?",
+      "options": [
+        "Out-of-vocabulary embeddings",
+        "Adding a second score-aggregation step at query time; the math stays identical and per-field-score combination logic is not needed",
+        "BM25 IDF collapsing to zero",
+        "Cosine similarity going negative"
+      ],
+      "correct": 1,
+      "explanation": "Repeating tokens at index time multiplies term frequency, which lets the BM25 scoring math stay one summation rather than a separate field-score combinator."
+    }
+  ]
+}

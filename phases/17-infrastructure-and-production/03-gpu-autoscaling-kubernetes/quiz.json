@@ -1,0 +1,78 @@
+{
+  "lesson": "03-gpu-autoscaling-kubernetes",
+  "title": "GPU Autoscaling on Kubernetes — Karpenter, KAI Scheduler, Gang Scheduling",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which signal does HPA typically scale on by default that the lesson calls broken for vLLM-style serving?",
+      "options": [
+        "Queue depth",
+        "P99 TTFT",
+        "KV cache utilization",
+        "DCGM_FI_DEV_GPU_UTIL duty cycle"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which problem does gang scheduling in KAI Scheduler primarily prevent?",
+      "options": [
+        "GPU memory fragmentation",
+        "Tokenizer GIL contention",
+        "The partial-allocation trap where 7 of 8 GPUs sit idle waiting on the eighth",
+        "Cold-start latency"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is Karpenter's default consolidationPolicy WhenEmptyOrUnderutilized dangerous for inference GPU pools?",
+      "options": [
+        "It refuses to scale up under burst",
+        "It only consolidates spot instances",
+        "It terminates running GPU nodes to migrate pods, which evicts running requests and reloads weights",
+        "It prevents Karpenter from provisioning new nodes"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Roughly how much faster is Karpenter at provisioning a GPU node compared to Cluster Autoscaler?",
+      "options": [
+        "Roughly 40% faster (~45-60s vs ~90-120s)",
+        "About 10x slower",
+        "The same",
+        "About 5% faster"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "For disaggregated prefill / decode pods (Phase 17 · 17), which scaling signals does the lesson recommend?",
+      "options": [
+        "Manual scaling only",
+        "A single HPA on duty cycle covering both pod classes",
+        "Queue depth for prefill pods and KV cache pressure for decode pods, as separate per-role HPAs",
+        "Cluster Autoscaler for both"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which Karpenter disruption setting does the lesson recommend for an inference GPU pool to avoid evicting running jobs?",
+      "options": [
+        "consolidationPolicy: WhenEmptyOrUnderutilized with consolidateAfter: 0s",
+        "consolidationPolicy: WhenEmpty with consolidateAfter: 1h",
+        "Always run with spot instances and no consolidation",
+        "Disable Karpenter entirely"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

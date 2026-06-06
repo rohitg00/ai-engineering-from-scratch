@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">autoencoder vs VAE — the one trick</text>
+
+  <!-- plain AE -->
+  <text x="180" y="70" text-anchor="middle" class="label">plain autoencoder</text>
+  <rect x="40" y="85" width="60" height="50" class="box"/>
+  <text x="70" y="115" text-anchor="middle" class="content">x</text>
+  <line x1="100" y1="110" x2="140" y2="110" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="140" y="85" width="80" height="50" class="box"/>
+  <text x="180" y="115" text-anchor="middle" class="content">encoder</text>
+  <line x1="220" y1="110" x2="260" y2="110" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="260" y="85" width="40" height="50" class="box"/>
+  <text x="280" y="115" text-anchor="middle" class="content">z</text>
+  <line x1="300" y1="110" x2="320" y2="110" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <text x="180" y="170" text-anchor="middle" class="caption">loss = ||x - x&#770;||&#178;</text>
+  <text x="180" y="188" text-anchor="middle" class="caption">z-space: lumpy, not a distribution</text>
+  <text x="180" y="206" text-anchor="middle" class="caption">sample random z -&gt; garbage out</text>
+
+  <!-- VAE -->
+  <text x="630" y="70" text-anchor="middle" class="label">variational autoencoder</text>
+
+  <rect x="360" y="85" width="60" height="50" class="box"/>
+  <text x="390" y="115" text-anchor="middle" class="content">x</text>
+  <line x1="420" y1="110" x2="460" y2="110" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="460" y="85" width="90" height="50" class="box"/>
+  <text x="505" y="115" text-anchor="middle" class="content">encoder</text>
+
+  <line x1="550" y1="100" x2="585" y2="85" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="550" y1="125" x2="585" y2="140" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="585" y="65" width="60" height="36" class="hot"/>
+  <text x="615" y="88" text-anchor="middle" class="mono">&#956;(x)</text>
+  <rect x="585" y="128" width="80" height="36" class="hot"/>
+  <text x="625" y="151" text-anchor="middle" class="mono">log &#963;&#178;(x)</text>
+
+  <rect x="700" y="85" width="120" height="60" class="cold"/>
+  <text x="760" y="108" text-anchor="middle" class="mono">z = &#956; + &#963;&#183;&#949;</text>
+  <text x="760" y="128" text-anchor="middle" class="caption">reparameterize</text>
+  <text x="760" y="142" text-anchor="middle" class="caption">&#949; ~ N(0, I)</text>
+
+  <line x1="650" y1="85" x2="700" y2="100" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="665" y1="146" x2="700" y2="130" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- decoder + loss -->
+  <line x1="760" y1="145" x2="760" y2="190" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="700" y="195" width="120" height="45" class="box"/>
+  <text x="760" y="220" text-anchor="middle" class="content">decoder</text>
+  <line x1="760" y1="240" x2="760" y2="280" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="720" y="285" width="80" height="40" class="box"/>
+  <text x="760" y="309" text-anchor="middle" class="content">x&#770;</text>
+
+  <!-- loss box -->
+  <rect x="40" y="260" width="540" height="140" class="box"/>
+  <text x="310" y="284" text-anchor="middle" class="label">loss = reconstruction + &#946; &#183; KL</text>
+  <text x="310" y="312" text-anchor="middle" class="mono">||x - x&#770;||&#178;   +   &#189; &#931;( &#963;&#178; + &#956;&#178; - log&#963;&#178; - 1 )</text>
+  <text x="310" y="340" text-anchor="middle" class="caption">recon term: push x&#770; &#8594; x</text>
+  <text x="310" y="360" text-anchor="middle" class="caption">KL term: push q(z|x) &#8594; N(0, I)</text>
+  <text x="310" y="380" text-anchor="middle" class="caption">&#946; knob trades sharpness for well-shaped latent</text>
+
+  <!-- sampling -->
+  <rect x="40" y="420" width="820" height="50" class="hot"/>
+  <text x="450" y="438" text-anchor="middle" class="label">inference: sample z ~ N(0, I), forward through decoder &#8594; new x&#770;</text>
+  <text x="450" y="458" text-anchor="middle" class="caption">one forward pass; no iteration; decoder is the whole generator</text>
+</svg>

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the approximate range of numbers that float32 can represent?",
+      "options": [
+        "+/- 65,504",
+        "+/- 3.4e38",
+        "+/- 1.8e308",
+        "+/- 1.0e10"
+      ],
+      "correct": 1,
+      "explanation": "Float32 has an 8-bit exponent giving a range of approximately +/- 3.4e38. Float16 is limited to +/- 65,504, and float64 reaches +/- 1.8e308."
+    },
+    {
+      "stage": "pre",
+      "question": "Why does 0.1 + 0.2 not equal 0.3 in floating-point arithmetic?",
+      "options": [
+        "Python rounds all decimals to integers",
+        "0.1 and 0.2 cannot be represented exactly in binary floating point",
+        "The CPU has a bug in its addition circuit",
+        "0.3 is not a valid floating-point number"
+      ],
+      "correct": 1,
+      "explanation": "The number 0.1 is a repeating fraction in binary (like 1/3 in decimal). Float32 truncates it, so the stored value is approximately 0.100000001490116. The accumulated error makes the sum differ from 0.3."
+    },
+    {
+      "stage": "post",
+      "question": "In the stable softmax implementation, why do you subtract max(logits) before exponentiating?",
+      "options": [
+        "It makes the output probabilities more uniform",
+        "It prevents exp() from overflowing by ensuring the largest exponent is 0",
+        "It converts logits from float16 to float32",
+        "It normalizes the logits to have zero mean"
+      ],
+      "correct": 1,
+      "explanation": "After subtracting max(logits), the largest value is 0 and exp(0) = 1, which cannot overflow. All other values are negative, so their exponentials are less than 1. The probabilities are mathematically identical to the naive version."
+    },
+    {
+      "stage": "post",
+      "question": "When using centered finite differences for gradient checking, what happens if the step size h is too small (e.g., 1e-15)?",
+      "options": [
+        "The approximation becomes more accurate",
+        "Catastrophic cancellation destroys the result because f(x+h) and f(x-h) are nearly identical",
+        "The function evaluation becomes faster",
+        "The gradient automatically becomes zero"
+      ],
+      "correct": 1,
+      "explanation": "When h is extremely small, f(x+h) and f(x-h) differ only in their last few significant digits. Subtracting them cancels the leading digits, leaving mostly rounding noise. Typical good values are h = 1e-5 to 1e-7."
+    },
+    {
+      "stage": "post",
+      "question": "Why is bfloat16 generally preferred over float16 for neural network training?",
+      "options": [
+        "bfloat16 has more mantissa bits, giving better precision",
+        "bfloat16 has the same exponent range as float32, avoiding overflow on large activations without loss scaling",
+        "bfloat16 uses less memory than float16",
+        "bfloat16 is supported by more GPU architectures than float16"
+      ],
+      "correct": 1,
+      "explanation": "bfloat16 has 8 exponent bits (same as float32, range up to 3.4e38) while float16 has only 5 exponent bits (max ~65,504). During training, activations and gradients can exceed 65,504, causing float16 overflow. bfloat16 handles this without loss scaling."
+    }
+  ]
+}

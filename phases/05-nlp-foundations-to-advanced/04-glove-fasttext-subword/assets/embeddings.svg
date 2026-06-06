@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .label { font-size: 15px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', 'Courier New', monospace; }
+      .stage { font-size: 12px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .note { font-size: 11px; fill: #666; font-style: italic; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="30" width="270" height="360" rx="4"/>
+  <text class="label" x="155" y="55" text-anchor="middle">GloVe</text>
+  <text class="note" x="35" y="78">co-occurrence matrix factorization</text>
+
+  <text class="content" x="35" y="110">X[i][j] = count(word j near i)</text>
+  <text class="content" x="35" y="130">train so v_i · v_j + b_i + b_j</text>
+  <text class="content" x="35" y="150">          ≈ log(X[i][j])</text>
+
+  <rect fill="#f3ece0" stroke="#1a1a1a" stroke-width="1" x="35" y="180" width="220" height="150"/>
+  <text class="content" x="50" y="205">         the  cat  dog  sat</text>
+  <text class="content" x="50" y="225">   the   0    5    4    6</text>
+  <text class="content" x="50" y="245">   cat   5    0    1    3</text>
+  <text class="content" x="50" y="265">   dog   4    1    0    2</text>
+  <text class="content" x="50" y="285">   sat   6    3    2    0</text>
+
+  <text class="stage" x="155" y="365">one big matrix, factorize once</text>
+
+  <rect class="box" x="310" y="30" width="270" height="360" rx="4"/>
+  <text class="label" x="445" y="55" text-anchor="middle">FastText</text>
+  <text class="note" x="325" y="78">word = sum of char n-grams</text>
+
+  <text class="content" x="325" y="110">"where"</text>
+  <text class="content" x="325" y="135">  = &lt;wh + whe + her</text>
+  <text class="content" x="325" y="155">  + ere + re&gt;</text>
+  <text class="content" x="325" y="175">  + &lt;whe + wher + here</text>
+  <text class="content" x="325" y="195">  + ere&gt; + &lt;where&gt;</text>
+
+  <text class="content" x="325" y="230">"whereupon" shares</text>
+  <text class="content" x="325" y="250">  &lt;wh, whe, her, ere</text>
+  <text class="content" x="325" y="270">  with "where"</text>
+
+  <text class="content" x="325" y="305">→ sensible vector even for</text>
+  <text class="content" x="325" y="325">   OOV words</text>
+
+  <text class="stage" x="445" y="365">handles new and rare words</text>
+
+  <rect class="box" x="600" y="30" width="280" height="360" rx="4"/>
+  <text class="label" x="740" y="55" text-anchor="middle">BPE</text>
+  <text class="note" x="615" y="78">learned subword vocabulary</text>
+
+  <text class="content" x="615" y="110">start: bytes or chars</text>
+  <text class="content" x="615" y="130">iterate:</text>
+  <text class="content" x="615" y="150">  find most-common pair</text>
+  <text class="content" x="615" y="170">  merge it, add to vocab</text>
+
+  <text class="content" x="615" y="205">after training:</text>
+  <text class="content" x="615" y="230">"unbelievably"</text>
+  <text class="content" x="615" y="250">  → un + bel + iev + ably</text>
+
+  <text class="content" x="615" y="290">"tokenization"</text>
+  <text class="content" x="615" y="310">  → token + ization</text>
+
+  <text class="stage" x="740" y="365">every LLM tokenizer uses this</text>
+</svg>

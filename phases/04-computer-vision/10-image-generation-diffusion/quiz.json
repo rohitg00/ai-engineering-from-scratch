@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why can diffusion training pick any timestep t directly instead of simulating the forward Markov chain step by step?",
+      "options": ["It is an approximation that ignores the intermediate steps", "Because the composition of many Gaussian additions still yields a Gaussian, giving a closed-form q(x_t|x_0) = N(sqrt(alpha_bar_t) x_0, (1 - alpha_bar_t) I) that you can sample in one step", "Because x_t is independent of x_0", "It is required by PyTorch's autograd"],
+      "correct": 1,
+      "explanation": "Repeated Gaussian additions close up analytically. The cumulative product alpha_bar_t encodes 'how much signal is left after t steps', and you can sample x_t directly without running the chain. This is why diffusion training is O(1) per step rather than O(T)."
+    },
+    {
+      "stage": "pre",
+      "question": "What does a DDPM's neural network actually predict?",
+      "options": ["The next image x_{t-1} directly", "The noise epsilon that was added at step t, from which x_{t-1}'s mean is derived analytically", "The class label of the input", "The signal-to-noise ratio"],
+      "correct": 1,
+      "explanation": "DDPM parameterises the model to predict epsilon. Given the noise prediction and the noise schedule, x_{t-1}'s Gaussian mean and variance are closed-form. Predicting epsilon instead of x_0 or x_{t-1} simplifies the loss to a plain MSE and gives numerically better gradients."
+    },
+    {
+      "stage": "post",
+      "question": "Why does DDIM achieve similar sample quality to DDPM with ~20x fewer steps?",
+      "options": ["DDIM changes the training objective", "DDIM reformulates sampling as a deterministic ODE whose trajectory can be discretised with far fewer steps while hitting nearly the same endpoint; no retraining required", "DDIM uses a faster model architecture", "DDIM generates smaller images"],
+      "correct": 1,
+      "explanation": "DDIM's key observation is that the reverse process, when re-parameterised deterministically, becomes an ODE that a few steps approximate well. The model (weights and loss) is unchanged from DDPM; only the sampler differs. A DDPM checkpoint can be used with a DDIM, DPM-Solver, or Euler sampler interchangeably."
+    },
+    {
+      "stage": "post",
+      "question": "You plot `alpha_bar_t` for a linear beta schedule with T=1000 and see it drops to near-zero by t=600. Why does this matter?",
+      "options": ["It does not matter", "The last 40% of timesteps add almost no signal; training those timesteps teaches the network to denoise noise that is already approximately N(0, I), which wastes capacity. Cosine or sigmoid schedules fix this by spreading the noise injection more evenly", "alpha_bar_t must be zero at the end", "PyTorch requires a linear schedule"],
+      "correct": 1,
+      "explanation": "Linear beta schedules finish the diffusion process too early. By t=600 the signal is already destroyed; training and sampling through t=600-1000 adds nothing. Cosine schedules (Nichol & Dhariwal) keep signal around longer, which is why modern models use them, especially at lower resolutions."
+    },
+    {
+      "stage": "post",
+      "question": "Why does time conditioning get added to the U-Net via a sinusoidal embedding instead of a one-hot timestep?",
+      "options": ["One-hot vectors are too large", "A sinusoidal embedding is smooth in t, which lets the network interpolate between timesteps it has not seen exactly and encodes scale information the architecture can use additively at multiple depths", "Sinusoidal is required by BatchNorm", "One-hot would violate the chain rule"],
+      "correct": 1,
+      "explanation": "Sinusoidal embeddings give the network a continuous representation of t at multiple frequencies. Any timestep is a unique point in that embedding space, and nearby timesteps are nearby embeddings. That lets the model generalise across all T values with far fewer parameters than a learned per-timestep embedding. Same idea as transformer positional encoding."
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .content { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 15px; font-weight: 700; fill: #1a1a1a; }
+      .tag { font-size: 10px; fill: #c0392b; font-weight: 600; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">audio evaluation — one metric per task, one leaderboard per metric</text>
+
+  <rect x="20" y="50" width="200" height="200" class="box"/>
+  <text x="120" y="72" text-anchor="middle" class="label">ASR</text>
+  <text x="30" y="96" class="content">primary:  WER (normalized)</text>
+  <text x="30" y="114" class="content">          CER for tone langs</text>
+  <text x="30" y="132" class="content">speed:    RTFx</text>
+  <text x="30" y="150" class="content">latency:  first-token ms</text>
+  <text x="30" y="174" class="tag">Open ASR Leaderboard</text>
+  <text x="30" y="192" class="caption">Parakeet 6.05% avg WER</text>
+  <text x="30" y="210" class="caption">Whisper-v3-turbo 1.58% LS</text>
+  <text x="30" y="228" class="caption">Canary-Qwen 5.63% avg</text>
+
+  <rect x="235" y="50" width="200" height="200" class="hot"/>
+  <text x="335" y="72" text-anchor="middle" class="label">TTS</text>
+  <text x="245" y="96" class="content">primary:  MOS / UTMOS</text>
+  <text x="245" y="114" class="content">          SECS (cloning)</text>
+  <text x="245" y="132" class="content">round:    ASR-WER on output</text>
+  <text x="245" y="150" class="content">latency:  TTFA ms</text>
+  <text x="245" y="174" class="tag">TTS Arena · Artificial Analysis</text>
+  <text x="245" y="192" class="caption">Inworld TTS-1.5 ELO 1236</text>
+  <text x="245" y="210" class="caption">Kokoro-82M ELO 1059</text>
+  <text x="245" y="228" class="caption">ElevenLabs v3 ELO 1179</text>
+
+  <rect x="450" y="50" width="200" height="200" class="box"/>
+  <text x="550" y="72" text-anchor="middle" class="label">speaker + diarization</text>
+  <text x="460" y="96" class="content">primary:  EER</text>
+  <text x="460" y="114" class="content">          minDCF</text>
+  <text x="460" y="132" class="content">diariz:   DER / JER</text>
+  <text x="460" y="150" class="content">overlap:  per-segment F1</text>
+  <text x="460" y="174" class="tag">VoxCeleb1-O / VoxSRC</text>
+  <text x="460" y="192" class="caption">ECAPA 0.87% EER</text>
+  <text x="460" y="210" class="caption">3D-Speaker 0.50% EER</text>
+  <text x="460" y="228" class="caption">pyannote Precision-2 &lt; 0.40%</text>
+
+  <rect x="665" y="50" width="195" height="200" class="box"/>
+  <text x="762" y="72" text-anchor="middle" class="label">audio classification</text>
+  <text x="675" y="96" class="content">exclusive: top-1, top-5</text>
+  <text x="675" y="114" class="content">multi:     mAP</text>
+  <text x="675" y="132" class="content">imbalanced: macro F1</text>
+  <text x="675" y="150" class="content">           per-class recall</text>
+  <text x="675" y="174" class="tag">HEAR · AudioSet · ESC-50</text>
+  <text x="675" y="192" class="caption">BEATs-iter3 AudioSet 0.548</text>
+  <text x="675" y="210" class="caption">Audio-MAE Speech Cmd 99.0%</text>
+  <text x="675" y="228" class="caption">BEATs ESC-50 97.0%</text>
+
+  <rect x="20" y="265" width="410" height="220" class="box"/>
+  <text x="225" y="287" text-anchor="middle" class="label">music generation</text>
+  <text x="30" y="313" class="content">primary: FAD (Fréchet Audio Distance)</text>
+  <text x="30" y="331" class="content">        CLAP (text-audio alignment)</text>
+  <text x="30" y="349" class="content">consumer: blind-panel MOS / ELO</text>
+  <text x="30" y="375" class="tag">Suno v5 ELO 1293 (quality leader)</text>
+  <text x="30" y="395" class="caption">Udio v4 — producer tools + stems</text>
+  <text x="30" y="413" class="caption">MusicGen-large on MusicCaps ~4.5 FAD</text>
+  <text x="30" y="441" class="content">always pair FAD with human MOS panel</text>
+  <text x="30" y="459" class="content">open: ACE-Step XL / YuE / Stable Audio Open</text>
+
+  <rect x="450" y="265" width="410" height="220" class="hot"/>
+  <text x="655" y="287" text-anchor="middle" class="label">audio-language + streaming</text>
+  <text x="460" y="313" class="content">LALM reasoning: MMAU-Pro (1800 Q)</text>
+  <text x="460" y="331" class="content">long-audio:    LongAudioBench</text>
+  <text x="460" y="349" class="content">captioning:    FENSE / SPICE / CIDEr</text>
+  <text x="460" y="375" class="tag">Gemini 2.5 Pro ~60% MMAU-Pro overall</text>
+  <text x="460" y="395" class="caption">GPT-4o Audio 52.5% — Qwen2.5-Omni 52.2%</text>
+  <text x="460" y="413" class="caption">multi-audio subset: ~22% ALL models (near random)</text>
+  <text x="460" y="441" class="content">streaming S2S: latency P50/P95 + WER</text>
+  <text x="460" y="459" class="content">Moshi 200 ms L4 · GPT-4o Realtime ~300 ms</text>
+</svg>

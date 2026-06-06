@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="28" text-anchor="middle" class="title">Durable execution for multi-agent systems</text>
+
+  <rect x="40" y="60" width="880" height="180" class="cool"/>
+  <text x="480" y="84" text-anchor="middle" class="head">super-step + checkpoint pattern (LangGraph, Temporal, Restate)</text>
+
+  <rect x="60" y="110" width="110" height="100" class="box"/>
+  <text x="115" y="135" text-anchor="middle" class="step">super-step 1</text>
+  <text x="115" y="158" text-anchor="middle" class="small">plan</text>
+  <line x1="115" y1="175" x2="115" y2="195" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <text x="115" y="220" text-anchor="middle" class="caption">write ckpt</text>
+
+  <rect x="200" y="110" width="110" height="100" class="box"/>
+  <text x="255" y="135" text-anchor="middle" class="step">super-step 2</text>
+  <text x="255" y="158" text-anchor="middle" class="small">research</text>
+  <line x1="255" y1="175" x2="255" y2="195" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <text x="255" y="220" text-anchor="middle" class="caption">write ckpt</text>
+
+  <rect x="340" y="110" width="110" height="100" class="hot"/>
+  <text x="395" y="135" text-anchor="middle" class="step">super-step 3</text>
+  <text x="395" y="158" text-anchor="middle" class="small">CRASH</text>
+  <line x1="395" y1="175" x2="395" y2="195" stroke="#c0392b"/>
+
+  <rect x="480" y="110" width="110" height="100" class="cold"/>
+  <text x="535" y="135" text-anchor="middle" class="step">resume</text>
+  <text x="535" y="158" text-anchor="middle" class="small">from ckpt 2</text>
+  <line x1="535" y1="175" x2="535" y2="195" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <text x="535" y="220" text-anchor="middle" class="caption">another worker</text>
+
+  <rect x="620" y="110" width="110" height="100" class="box"/>
+  <text x="675" y="135" text-anchor="middle" class="step">super-step 3'</text>
+  <text x="675" y="158" text-anchor="middle" class="small">research (re-done)</text>
+  <text x="675" y="220" text-anchor="middle" class="caption">idempotent tool calls</text>
+
+  <rect x="760" y="110" width="140" height="100" class="box"/>
+  <text x="830" y="135" text-anchor="middle" class="step">super-step 4</text>
+  <text x="830" y="158" text-anchor="middle" class="small">synthesize + reply</text>
+
+  <line x1="170" y1="160" x2="196" y2="160" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <line x1="310" y1="160" x2="336" y2="160" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <line x1="590" y1="160" x2="616" y2="160" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <line x1="730" y1="160" x2="756" y2="160" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="270" width="420" height="230" class="cold"/>
+  <text x="250" y="294" text-anchor="middle" class="head">tier the choice to the load</text>
+
+  <text x="60" y="326" class="step">Tier 1  (Bedi's rule)</text>
+  <text x="60" y="346" class="small">FastAPI + Postgres + outbox</text>
+  <text x="60" y="364" class="small">&lt; 100 concurrent runs, sub-hour tasks</text>
+
+  <text x="60" y="396" class="step">Tier 2</text>
+  <text x="60" y="416" class="small">LangGraph runtime or Temporal</text>
+  <text x="60" y="434" class="small">hour-long runs, interrupt/resume, retries</text>
+
+  <text x="60" y="466" class="step">Tier 3</text>
+  <text x="60" y="486" class="small">custom outbox + event sourcing, specialized</text>
+
+  <rect x="500" y="270" width="420" height="230" class="cool"/>
+  <text x="710" y="294" text-anchor="middle" class="head">async vs threads for I/O-bound LLM calls</text>
+
+  <rect x="520" y="320" width="180" height="80" class="box"/>
+  <text x="610" y="344" text-anchor="middle" class="step">asyncio / fibers</text>
+  <text x="610" y="366" text-anchor="middle" class="small">cooperative yield on I/O</text>
+  <text x="610" y="386" text-anchor="middle" class="small">10k concurrent: fine</text>
+
+  <rect x="720" y="320" width="180" height="80" class="hot"/>
+  <text x="810" y="344" text-anchor="middle" class="step">thread-per-call</text>
+  <text x="810" y="366" text-anchor="middle" class="small">~1MB stack each</text>
+  <text x="810" y="386" text-anchor="middle" class="small">10k concurrent: ~10GB</text>
+
+  <text x="710" y="430" text-anchor="middle" class="caption">LLM calls idle 99% of wall-clock on I/O; threads pay memory for no gain</text>
+  <text x="710" y="450" text-anchor="middle" class="caption">CPU-bound post-processing stays on threads / processes</text>
+  <text x="710" y="475" text-anchor="middle" class="caption">rainbow deployments keep long-running agents alive across code pushes</text>
+</svg>

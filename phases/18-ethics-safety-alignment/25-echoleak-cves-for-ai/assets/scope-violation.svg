@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow25" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">EchoLeak: the three-boundary LLM Scope Violation</text>
+
+  <rect x="40" y="60" width="280" height="180" class="box"/>
+  <text x="180" y="82" text-anchor="middle" class="head">boundary 1: retrieval</text>
+  <rect x="60" y="100" width="240" height="60" class="hot"/>
+  <text x="180" y="125" text-anchor="middle" class="step">untrusted content</text>
+  <text x="180" y="145" text-anchor="middle" class="small">attacker email in RAG context</text>
+  <rect x="60" y="170" width="240" height="60" class="cool"/>
+  <text x="180" y="195" text-anchor="middle" class="step">defense: scope labels</text>
+  <text x="180" y="215" text-anchor="middle" class="small">IFC + untrusted tag</text>
+
+  <rect x="340" y="60" width="280" height="180" class="box"/>
+  <text x="480" y="82" text-anchor="middle" class="head">boundary 2: scope</text>
+  <rect x="360" y="100" width="240" height="60" class="hot"/>
+  <text x="480" y="125" text-anchor="middle" class="step">privileged access</text>
+  <text x="480" y="145" text-anchor="middle" class="small">mailbox / repo / HR scopes</text>
+  <rect x="360" y="170" width="240" height="60" class="cool"/>
+  <text x="480" y="195" text-anchor="middle" class="step">defense: capability gating</text>
+  <text x="480" y="215" text-anchor="middle" class="small">tool calls only from trusted intent</text>
+
+  <rect x="640" y="60" width="280" height="180" class="box"/>
+  <text x="780" y="82" text-anchor="middle" class="head">boundary 3: output</text>
+  <rect x="660" y="100" width="240" height="60" class="hot"/>
+  <text x="780" y="125" text-anchor="middle" class="step">exfiltration</text>
+  <text x="780" y="145" text-anchor="middle" class="small">CSP-approved URL; image render</text>
+  <rect x="660" y="170" width="240" height="60" class="cool"/>
+  <text x="780" y="195" text-anchor="middle" class="step">defense: narrow allowlist</text>
+  <text x="780" y="215" text-anchor="middle" class="small">egress domain restrictions</text>
+
+  <path d="M 320 150 L 340 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow25)" fill="none"/>
+  <path d="M 620 150 L 640 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow25)" fill="none"/>
+
+  <rect x="40" y="270" width="880" height="220" class="box"/>
+  <text x="480" y="295" text-anchor="middle" class="head">CVEs in the family (2025)</text>
+  <text x="60" y="325" class="small">CVE-2025-32711 EchoLeak (CVSS 9.3): M365 Copilot; zero-click; CSP-approved exfiltration.</text>
+  <text x="60" y="345" class="small">CamoLeak (CVSS 9.6): GitHub Copilot Chat via Camo image proxy; fixed by disabling image rendering.</text>
+  <text x="60" y="365" class="small">CVE-2025-53773: GitHub Copilot RCE via prompt injection in code-suggestion surface.</text>
+  <text x="60" y="395" class="small">severity calibration: vendors initially under-rate. Aim Labs escalates via demonstrated MFA-code exfiltration.</text>
+  <text x="60" y="415" class="small">NIST AI SPD 2024: "generative AI's greatest security flaw." OWASP LLM01 2025: #1 threat.</text>
+  <text x="60" y="445" class="small">policy: three boundaries require three independent controls. fixing one is not sufficient.</text>
+  <text x="60" y="465" class="small">responsible disclosure: MSRC patches server-side; Aim Labs publishes; ecosystem learns. iterate.</text>
+</svg>

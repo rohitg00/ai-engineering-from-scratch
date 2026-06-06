@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">latent diffusion = VAE + diffusion, separately trained</text>
+
+  <!-- stage 1 -->
+  <rect x="30" y="60" width="840" height="130" class="box"/>
+  <text x="450" y="82" text-anchor="middle" class="label">stage 1: train VAE (encoder + decoder), freeze</text>
+
+  <rect x="60" y="100" width="100" height="70" class="box"/>
+  <text x="110" y="130" text-anchor="middle" class="content">image x</text>
+  <text x="110" y="148" text-anchor="middle" class="caption">512 &#215; 512 &#215; 3</text>
+
+  <line x1="160" y1="135" x2="200" y2="135" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="200" y="100" width="120" height="70" class="cold"/>
+  <text x="260" y="130" text-anchor="middle" class="content">encoder E</text>
+
+  <line x1="320" y1="135" x2="360" y2="135" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="360" y="100" width="120" height="70" class="hot"/>
+  <text x="420" y="128" text-anchor="middle" class="content">latent z</text>
+  <text x="420" y="146" text-anchor="middle" class="caption">64 &#215; 64 &#215; 4  (1/16 of pixels)</text>
+
+  <line x1="480" y1="135" x2="520" y2="135" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="520" y="100" width="120" height="70" class="cold"/>
+  <text x="580" y="130" text-anchor="middle" class="content">decoder D</text>
+
+  <line x1="640" y1="135" x2="680" y2="135" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="680" y="100" width="150" height="70" class="box"/>
+  <text x="755" y="130" text-anchor="middle" class="content">x&#770;  (reconstruction)</text>
+  <text x="755" y="148" text-anchor="middle" class="caption">L1 + LPIPS + GAN</text>
+
+  <!-- stage 2 -->
+  <rect x="30" y="210" width="840" height="190" class="box"/>
+  <text x="450" y="232" text-anchor="middle" class="label">stage 2: train diffusion on z-space</text>
+
+  <rect x="80" y="250" width="110" height="80" class="hot"/>
+  <text x="135" y="280" text-anchor="middle" class="mono">z_T ~ N(0, I)</text>
+
+  <line x1="190" y1="290" x2="240" y2="290" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="240" y="250" width="300" height="80" class="cold"/>
+  <text x="390" y="278" text-anchor="middle" class="label">U-Net / DiT</text>
+  <text x="390" y="298" text-anchor="middle" class="mono">&#949;_&#952;(z_t, t, text_embed)</text>
+  <text x="390" y="318" text-anchor="middle" class="caption">iterate T-&gt;0</text>
+
+  <line x1="540" y1="290" x2="590" y2="290" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="590" y="250" width="120" height="80" class="hot"/>
+  <text x="650" y="290" text-anchor="middle" class="mono">z_0</text>
+
+  <line x1="710" y1="290" x2="750" y2="290" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="750" y="250" width="110" height="80" class="box"/>
+  <text x="805" y="285" text-anchor="middle" class="content">D(z_0)</text>
+  <text x="805" y="303" text-anchor="middle" class="caption">decoded image</text>
+
+  <!-- text conditioning -->
+  <rect x="80" y="345" width="460" height="45" class="box"/>
+  <text x="310" y="370" text-anchor="middle" class="caption">text encoder (CLIP / T5) -&gt; cross-attention in each U-Net block</text>
+
+  <!-- loss -->
+  <rect x="30" y="415" width="840" height="80" class="hot"/>
+  <text x="450" y="438" text-anchor="middle" class="label">same loss as pixel-space DDPM:  L = E || &#949; - &#949;_&#952;(z_t, t, c) ||&#178;</text>
+  <text x="450" y="462" text-anchor="middle" class="caption">~64x fewer FLOPs than pixel diffusion for the same quality</text>
+  <text x="450" y="482" text-anchor="middle" class="caption">CFG:  &#949;_cfg = (1+w) &#183; &#949;_cond - w &#183; &#949;_uncond  (w &#8776; 3-7)</text>
+</svg>

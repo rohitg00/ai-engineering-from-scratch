@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">code RAG — hybrid retrieval with AST chunking + rerank</text>
+
+  <rect x="40" y="50" width="230" height="460" class="box"/>
+  <text x="155" y="72" text-anchor="middle" class="head">ingest</text>
+  <rect x="60" y="90" width="190" height="44" class="cool"/>
+  <text x="155" y="108" text-anchor="middle" class="step">git push webhook</text>
+  <text x="155" y="124" text-anchor="middle" class="small">diff changed files</text>
+  <rect x="60" y="148" width="190" height="44" class="cool"/>
+  <text x="155" y="166" text-anchor="middle" class="step">tree-sitter parse</text>
+  <text x="155" y="182" text-anchor="middle" class="small">17 language grammars</text>
+  <rect x="60" y="206" width="190" height="44" class="cool"/>
+  <text x="155" y="224" text-anchor="middle" class="step">function/class chunk</text>
+  <text x="155" y="240" text-anchor="middle" class="small">AST node boundaries</text>
+  <rect x="60" y="264" width="190" height="44" class="dsk"/>
+  <text x="155" y="282" text-anchor="middle" class="step">LLM summary</text>
+  <text x="155" y="298" text-anchor="middle" class="small">Haiku 4.5 prompt cache</text>
+  <rect x="60" y="322" width="190" height="44" class="cold"/>
+  <text x="155" y="340" text-anchor="middle" class="step">symbol graph edges</text>
+  <text x="155" y="356" text-anchor="middle" class="small">imports / calls (kuzu)</text>
+  <rect x="60" y="380" width="190" height="100" class="box"/>
+  <text x="155" y="402" text-anchor="middle" class="small">incremental:</text>
+  <text x="155" y="420" text-anchor="middle" class="small">re-embed only changed</text>
+  <text x="155" y="438" text-anchor="middle" class="small">chunks; push-to-search</text>
+  <text x="155" y="456" text-anchor="middle" class="small">&lt; 60s on 2M LOC fleet</text>
+
+  <rect x="300" y="50" width="310" height="230" class="box"/>
+  <text x="455" y="72" text-anchor="middle" class="head">indexes</text>
+  <rect x="320" y="90" width="130" height="80" class="cool"/>
+  <text x="385" y="110" text-anchor="middle" class="step">dense</text>
+  <text x="385" y="128" text-anchor="middle" class="small">Voyage-code-3</text>
+  <text x="385" y="144" text-anchor="middle" class="small">Qdrant 1.12 hybrid</text>
+  <text x="385" y="160" text-anchor="middle" class="small">payload: repo+span</text>
+
+  <rect x="460" y="90" width="130" height="80" class="hot"/>
+  <text x="525" y="110" text-anchor="middle" class="step">BM25</text>
+  <text x="525" y="128" text-anchor="middle" class="small">Tantivy (Rust)</text>
+  <text x="525" y="144" text-anchor="middle" class="small">field-weighted</text>
+  <text x="525" y="160" text-anchor="middle" class="small">symbol x4 / body x1</text>
+
+  <rect x="320" y="182" width="270" height="90" class="cold"/>
+  <text x="455" y="200" text-anchor="middle" class="step">symbol graph (kuzu)</text>
+  <text x="455" y="218" text-anchor="middle" class="small">import edges, call edges, inheritance</text>
+  <text x="455" y="236" text-anchor="middle" class="small">used at query-time for cross-repo expansion</text>
+  <text x="455" y="254" text-anchor="middle" class="small">&quot;symbol X from repo A used in repo B&quot;</text>
+
+  <rect x="300" y="296" width="310" height="214" class="box"/>
+  <text x="455" y="318" text-anchor="middle" class="head">query (LangGraph)</text>
+  <rect x="320" y="336" width="270" height="36" class="cool"/>
+  <text x="455" y="358" text-anchor="middle" class="step">retrieve: dense || BM25 top-10</text>
+  <rect x="320" y="378" width="270" height="36" class="hot"/>
+  <text x="455" y="400" text-anchor="middle" class="step">fuse: reciprocal rank fusion</text>
+  <rect x="320" y="420" width="270" height="36" class="dsk"/>
+  <text x="455" y="442" text-anchor="middle" class="step">rerank: cross-encoder top-5</text>
+  <rect x="320" y="462" width="270" height="36" class="cold"/>
+  <text x="455" y="484" text-anchor="middle" class="step">synth: Claude Sonnet 4.7 1M</text>
+
+  <rect x="640" y="50" width="280" height="460" class="box"/>
+  <text x="780" y="72" text-anchor="middle" class="head">answer gate</text>
+  <rect x="660" y="90" width="240" height="44" class="cool"/>
+  <text x="780" y="108" text-anchor="middle" class="step">citation parse</text>
+  <text x="780" y="124" text-anchor="middle" class="small">(repo/path:start-end) anchors</text>
+  <rect x="660" y="148" width="240" height="44" class="hot"/>
+  <text x="780" y="166" text-anchor="middle" class="step">reject uncited claims</text>
+  <text x="780" y="182" text-anchor="middle" class="small">re-ask or drop</text>
+  <rect x="660" y="206" width="240" height="44" class="cold"/>
+  <text x="780" y="224" text-anchor="middle" class="step">prompt cache</text>
+  <text x="780" y="240" text-anchor="middle" class="small">system + reranked context</text>
+
+  <rect x="660" y="264" width="240" height="240" class="box"/>
+  <text x="780" y="286" text-anchor="middle" class="head">eval</text>
+  <text x="780" y="306" text-anchor="middle" class="small">100 labeled cross-repo Qs</text>
+  <text x="780" y="324" text-anchor="middle" class="small">MRR@10, nDCG@10</text>
+  <text x="780" y="342" text-anchor="middle" class="small">citation faithfulness rate</text>
+  <text x="780" y="360" text-anchor="middle" class="small">p50 &lt; 1.5s, p99 &lt; 4s</text>
+  <text x="780" y="378" text-anchor="middle" class="small">10k QPS index size</text>
+  <text x="780" y="400" text-anchor="middle" class="small">incremental push-to-search &lt; 60s</text>
+  <text x="780" y="428" text-anchor="middle" class="small">weekly drift rerun</text>
+  <text x="780" y="446" text-anchor="middle" class="small">alert MRR drop &gt; 5%</text>
+  <text x="780" y="476" text-anchor="middle" class="caption">2M LOC, 10 repos target</text>
+</svg>

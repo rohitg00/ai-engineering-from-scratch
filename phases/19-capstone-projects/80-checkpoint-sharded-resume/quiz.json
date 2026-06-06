@@ -1,0 +1,78 @@
+{
+  "lesson": "80-checkpoint-sharded-resume",
+  "title": "Sharded Checkpoint and Atomic Resume",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is gather-then-write the wrong checkpoint pattern at scale?",
+      "options": [
+        "It looks ugly",
+        "All state passes through rank 0; write bandwidth is the slowest single link, not the aggregate, so a TB-scale write takes hours",
+        "It uses too much CPU",
+        "It needs special hardware"
+      ],
+      "correct": 1,
+      "explanation": "Sharded write scales with cluster size: 64 ranks writing in parallel finish in 1/64 the time of one rank writing the gathered state."
+    },
+    {
+      "stage": "pre",
+      "question": "What does the manifest record that the shard files cannot?",
+      "options": [
+        "Random numbers",
+        "world_size, schema version, per-shard sha256, and shard ownership; gives the loader a contract to validate before touching state",
+        "Filesystem name",
+        "Hostname"
+      ],
+      "correct": 1,
+      "explanation": "Without the manifest the loader has to guess which shard belongs to which rank and trust the file count is right."
+    },
+    {
+      "stage": "check",
+      "question": "Why write to <name>.tmp and rename instead of writing directly?",
+      "options": [
+        "Faster",
+        "POSIX rename within a filesystem is atomic: a crash mid-write leaves the previous file untouched. Direct writes can leave half-finished checkpoints that poison the next resume",
+        "Required by torch",
+        "Saves memory"
+      ],
+      "correct": 1,
+      "explanation": "Without atomic write a partial save plus an updated manifest pointing at it corrupts state on the next load."
+    },
+    {
+      "stage": "check",
+      "question": "What does sha256 per shard defend against?",
+      "options": [
+        "Network attacks",
+        "Partial or corrupted writes; verifying the hash on load catches truncated shards before they touch model state",
+        "Slowdown",
+        "Memory leak"
+      ],
+      "correct": 1,
+      "explanation": "Without sha256 verification a truncated shard loads silently and corrupts the optimiser, surfacing later as NaN loss."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the load path reject a world_size mismatch loudly?",
+      "options": [
+        "Cosmetic",
+        "Resuming a 4-rank shard layout on 8 ranks silently misassigns shards; loud rejection forces the operator to use the cross-world-size rebalance path",
+        "Easier to code",
+        "Hardware needs it"
+      ],
+      "correct": 1,
+      "explanation": "The cross-world-size rebalance is a separate operation; silently splicing wrong sized shards corrupts state."
+    },
+    {
+      "stage": "post",
+      "question": "Why does production rotate checkpoints (keep last K)?",
+      "options": [
+        "Aesthetic",
+        "Without rotation the disk fills mid-run and the next checkpoint fails; rotation deletes the oldest before writing the new one, bounding disk usage",
+        "Compression",
+        "It does not"
+      ],
+      "correct": 1,
+      "explanation": "Real runs keep 3-5 recent checkpoints; the oldest is dropped before each new save so the disk budget is fixed."
+    }
+  ]
+}

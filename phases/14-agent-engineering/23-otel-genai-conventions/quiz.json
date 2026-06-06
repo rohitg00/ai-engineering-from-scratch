@@ -1,0 +1,90 @@
+{
+  "lesson": "23-otel-genai-conventions",
+  "title": "OpenTelemetry GenAI Semantic Conventions",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which span name represents an agent run in the GenAI conventions?",
+      "options": [
+        "agent.start",
+        "invoke_agent (optionally suffixed by gen_ai.agent.name)",
+        "run_chain",
+        "agent_loop"
+      ],
+      "correct": 1,
+      "explanation": "invoke_agent is the canonical name; the agent's name attribute appears in the span name when set."
+    },
+    {
+      "stage": "pre",
+      "question": "Which three span categories does the GenAI SIG define?",
+      "options": [
+        "Model/client, agent, tool",
+        "Frontend, backend, db",
+        "Read, write, exec",
+        "Latency, error, throughput"
+      ],
+      "correct": 0,
+      "explanation": "Model/client (LLM calls), agent (create/invoke), tool (per invocation) are the categories."
+    },
+    {
+      "stage": "check",
+      "question": "When does an invoke_agent span use kind CLIENT vs INTERNAL?",
+      "options": [
+        "Always INTERNAL",
+        "CLIENT for remote agent services (OpenAI Assistants, Bedrock Agents); INTERNAL for in-process frameworks (LangChain, CrewAI, local ReAct)",
+        "CLIENT for HTTPS only",
+        "Always CLIENT"
+      ],
+      "correct": 1,
+      "explanation": "Remote agent calls are CLIENT; in-process agent runs are INTERNAL."
+    },
+    {
+      "stage": "check",
+      "question": "What is the default rule for content capture (inputs and outputs)?",
+      "options": [
+        "Capture everything by default",
+        "Instrumentations SHOULD NOT capture by default; capture is opt-in via gen_ai.* attributes",
+        "Capture only output, never input",
+        "Capture only on errors"
+      ],
+      "correct": 1,
+      "explanation": "Default-off content capture protects PII and secrets; opt-in is explicit."
+    },
+    {
+      "stage": "check",
+      "question": "Which attribute identifies the corpus or store consulted for a retrieval?",
+      "options": [
+        "gen_ai.provider.name",
+        "gen_ai.request.model",
+        "gen_ai.data_source.id",
+        "gen_ai.agent.name"
+      ],
+      "correct": 2,
+      "explanation": "gen_ai.data_source.id labels the RAG corpus or store hit by retrieval."
+    },
+    {
+      "stage": "post",
+      "question": "What does the lesson recommend for storing prompt content in production?",
+      "options": [
+        "Capture full prompts on every span as plain text",
+        "Store content externally (S3, log store) and record reference IDs on the span instead",
+        "Never store any content",
+        "Encrypt prompts in span attributes"
+      ],
+      "correct": 1,
+      "explanation": "External storage with pointer IDs avoids PII leaking into traces that ops can read."
+    },
+    {
+      "stage": "post",
+      "question": "How do you opt into the experimental stable preview of GenAI conventions?",
+      "options": [
+        "Edit the OTel collector config",
+        "Set OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental",
+        "Rebuild the SDK from source",
+        "Pay for a license"
+      ],
+      "correct": 1,
+      "explanation": "The env var pins the experimental conventions so attributes are not silently renamed."
+    }
+  ]
+}

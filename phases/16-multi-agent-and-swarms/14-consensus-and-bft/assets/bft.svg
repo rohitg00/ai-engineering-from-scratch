@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="28" text-anchor="middle" class="title">BFT for LLM agents — three attacks, three aggregators</text>
+
+  <rect x="40" y="60" width="880" height="200" class="box"/>
+  <text x="480" y="84" text-anchor="middle" class="head">the three LLM-agent-specific attacks</text>
+
+  <rect x="60" y="100" width="270" height="140" class="hot"/>
+  <text x="195" y="122" text-anchor="middle" class="head">byzantine lie</text>
+  <text x="195" y="146" text-anchor="middle" class="step">one agent outputs wrong</text>
+  <text x="195" y="164" text-anchor="middle" class="step">with high confidence</text>
+  <text x="195" y="188" text-anchor="middle" class="small">classical BFT handles if f &lt; n/3</text>
+  <text x="195" y="212" text-anchor="middle" class="caption">mitigation: any majority-based vote</text>
+
+  <rect x="340" y="100" width="270" height="140" class="hot"/>
+  <text x="475" y="122" text-anchor="middle" class="head">sycophantic conformity</text>
+  <text x="475" y="146" text-anchor="middle" class="step">an agent copies whoever</text>
+  <text x="475" y="164" text-anchor="middle" class="step">spoke first, low confidence</text>
+  <text x="475" y="188" text-anchor="middle" class="small">classical BFT does not detect</text>
+  <text x="475" y="212" text-anchor="middle" class="caption">mitigation: confidence-weighted (CP-WBFT)</text>
+
+  <rect x="620" y="100" width="280" height="140" class="hot"/>
+  <text x="760" y="122" text-anchor="middle" class="head">monoculture (correlated errors)</text>
+  <text x="760" y="146" text-anchor="middle" class="step">three agents share a base</text>
+  <text x="760" y="164" text-anchor="middle" class="step">model; same hallucination</text>
+  <text x="760" y="188" text-anchor="middle" class="small">classical BFT fails: all look honest</text>
+  <text x="760" y="212" text-anchor="middle" class="caption">mitigation: model diversity + verifier</text>
+
+  <rect x="40" y="290" width="880" height="210" class="cool"/>
+  <text x="480" y="314" text-anchor="middle" class="head">2025-2026 aggregator variants</text>
+
+  <rect x="60" y="330" width="270" height="150" class="cold"/>
+  <text x="195" y="352" text-anchor="middle" class="head">CP-WBFT</text>
+  <text x="195" y="372" text-anchor="middle" class="step">confidence-probe weighted</text>
+  <text x="195" y="392" text-anchor="middle" class="small">w(cluster) = sum(c_i)</text>
+  <text x="195" y="410" text-anchor="middle" class="small">winner if w/total &gt; threshold</text>
+  <text x="195" y="432" text-anchor="middle" class="caption">arXiv:2511.10400</text>
+  <text x="195" y="452" text-anchor="middle" class="small">+85.71% BFT on complete graphs</text>
+
+  <rect x="340" y="330" width="270" height="150" class="cold"/>
+  <text x="475" y="352" text-anchor="middle" class="head">DecentLLMs</text>
+  <text x="475" y="372" text-anchor="middle" class="step">leaderless, geometric median</text>
+  <text x="475" y="392" text-anchor="middle" class="small">workers propose in parallel</text>
+  <text x="475" y="410" text-anchor="middle" class="small">evaluator agents score</text>
+  <text x="475" y="432" text-anchor="middle" class="caption">arXiv:2507.14928</text>
+  <text x="475" y="452" text-anchor="middle" class="small">robust when f &lt; n/2</text>
+
+  <rect x="620" y="330" width="280" height="150" class="cold"/>
+  <text x="760" y="352" text-anchor="middle" class="head">WBFT + Hierarchical Clustering</text>
+  <text x="760" y="372" text-anchor="middle" class="step">Core + Edge split</text>
+  <text x="760" y="392" text-anchor="middle" class="small">weight = quality * trust(history)</text>
+  <text x="760" y="410" text-anchor="middle" class="small">Core consensus first, Edge follows</text>
+  <text x="760" y="432" text-anchor="middle" class="caption">arXiv:2505.05103</text>
+  <text x="760" y="452" text-anchor="middle" class="small">bounds consensus latency</text>
+</svg>

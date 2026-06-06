@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is a GPU faster than a CPU for training neural networks?",
+      "options": ["GPUs have higher clock speeds than CPUs", "GPUs can perform thousands of parallel matrix operations simultaneously", "GPUs have more RAM than CPUs", "GPUs use a more efficient programming language"],
+      "correct": 1,
+      "explanation": "GPUs have thousands of cores optimized for parallel computation, making them ideal for the matrix multiplications that dominate neural network training."
+    },
+    {
+      "stage": "pre",
+      "question": "What does VRAM refer to?",
+      "options": ["Virtual RAM used by the operating system for swap space", "Video RAM on the GPU, separate from system RAM", "The total RAM available across all devices", "A type of CPU cache memory"],
+      "correct": 1,
+      "explanation": "VRAM (Video RAM) is the dedicated memory on a GPU. It limits the size of models and batch sizes you can use during training, separate from your system's main RAM."
+    },
+    {
+      "stage": "post",
+      "question": "What command verifies that your NVIDIA GPU is detected and shows its current status?",
+      "options": ["gpu --status", "nvidia-smi", "torch.cuda.list_devices()", "lspci | grep gpu"],
+      "correct": 1,
+      "explanation": "nvidia-smi (NVIDIA System Management Interface) displays GPU utilization, memory usage, temperature, and running processes. It is the standard tool for verifying GPU availability."
+    },
+    {
+      "stage": "post",
+      "question": "When benchmarking GPU vs CPU matrix multiplication, why must you call torch.cuda.synchronize() before measuring GPU time?",
+      "options": ["To transfer data from CPU to GPU memory", "To ensure all GPU operations have completed before stopping the timer", "To reset the GPU clock speed to its base frequency", "To free unused GPU memory"],
+      "correct": 1,
+      "explanation": "GPU operations are asynchronous -- Python returns immediately while the GPU is still computing. synchronize() blocks until all GPU operations finish, giving accurate timing."
+    },
+    {
+      "stage": "post",
+      "question": "Using the fp16 rule of thumb, approximately how many parameters can fit in 24 GB of VRAM?",
+      "options": ["24 billion parameters", "12 billion parameters", "6 billion parameters", "48 billion parameters"],
+      "correct": 1,
+      "explanation": "In fp16, each parameter uses 2 bytes. 24 GB / 2 bytes = 12 billion parameters. This is a rough estimate; actual usage includes activations, gradients, and optimizer states."
+    }
+  ]
+}

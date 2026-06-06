@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">tool vs resource vs prompt - the decision rule</text>
+
+  <rect x="40" y="60" width="290" height="420" class="hot"/>
+  <text x="185" y="82" text-anchor="middle" class="head">tool</text>
+  <text x="185" y="106" text-anchor="middle" class="small">model decides when to call</text>
+  <text x="56" y="140" class="step">examples:</text>
+  <text x="56" y="158" class="small">  notes_search(query)</text>
+  <text x="56" y="174" class="small">  notes_create(...)</text>
+  <text x="56" y="190" class="small">  github_open_pr(...)</text>
+  <text x="56" y="210" class="step">call shape:</text>
+  <text x="56" y="228" class="small">  tools/call name, args</text>
+  <text x="56" y="244" class="small">  returns content blocks</text>
+  <text x="56" y="260" class="small">  isError on failure</text>
+  <text x="56" y="280" class="step">UX:</text>
+  <text x="56" y="298" class="small">  invoked mid-conversation</text>
+  <text x="56" y="314" class="small">  annotations hint UI</text>
+  <text x="56" y="334" class="step">picks when:</text>
+  <text x="56" y="352" class="small">  side-effect or action</text>
+  <text x="56" y="368" class="small">  computed transform</text>
+  <text x="56" y="384" class="small">  mutation on data</text>
+  <text x="56" y="410" class="step">decision signal:</text>
+  <text x="56" y="428" class="small">  model should decide</text>
+  <text x="56" y="444" class="small">  every related query</text>
+
+  <rect x="345" y="60" width="290" height="420" class="cool"/>
+  <text x="490" y="82" text-anchor="middle" class="head">resource</text>
+  <text x="490" y="106" text-anchor="middle" class="small">user decides when to attach</text>
+  <text x="361" y="140" class="step">examples:</text>
+  <text x="361" y="158" class="small">  notes://note-1</text>
+  <text x="361" y="174" class="small">  file:///path/to.md</text>
+  <text x="361" y="190" class="small">  db://schema/tables</text>
+  <text x="361" y="210" class="step">call shape:</text>
+  <text x="361" y="228" class="small">  resources/list</text>
+  <text x="361" y="244" class="small">  resources/read uri</text>
+  <text x="361" y="260" class="small">  resources/subscribe</text>
+  <text x="361" y="280" class="step">UX:</text>
+  <text x="361" y="298" class="small">  resource picker panel</text>
+  <text x="361" y="314" class="small">  include-file dialog</text>
+  <text x="361" y="334" class="step">picks when:</text>
+  <text x="361" y="352" class="small">  read-only data</text>
+  <text x="361" y="368" class="small">  addressable by URI</text>
+  <text x="361" y="384" class="small">  may need subscribe</text>
+  <text x="361" y="410" class="step">decision signal:</text>
+  <text x="361" y="428" class="small">  user wants to include</text>
+  <text x="361" y="444" class="small">  as context</text>
+
+  <rect x="650" y="60" width="290" height="420" class="cold"/>
+  <text x="795" y="82" text-anchor="middle" class="head">prompt</text>
+  <text x="795" y="106" text-anchor="middle" class="small">reusable workflow template</text>
+  <text x="666" y="140" class="step">examples:</text>
+  <text x="666" y="158" class="small">  /review_note note_id</text>
+  <text x="666" y="174" class="small">  /summarize_pr pr_id</text>
+  <text x="666" y="190" class="small">  /triage_issue tag</text>
+  <text x="666" y="210" class="step">call shape:</text>
+  <text x="666" y="228" class="small">  prompts/list</text>
+  <text x="666" y="244" class="small">  prompts/get name, args</text>
+  <text x="666" y="260" class="small">  returns messages[]</text>
+  <text x="666" y="280" class="step">UX:</text>
+  <text x="666" y="298" class="small">  slash command in chat</text>
+  <text x="666" y="314" class="small">  arg picker dialog</text>
+  <text x="666" y="334" class="step">picks when:</text>
+  <text x="666" y="352" class="small">  multi-step workflow</text>
+  <text x="666" y="368" class="small">  re-used across sessions</text>
+  <text x="666" y="384" class="small">  users want a shortcut</text>
+  <text x="666" y="410" class="step">decision signal:</text>
+  <text x="666" y="428" class="small">  canonical prompt sequence</text>
+  <text x="666" y="444" class="small">  worth naming</text>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "schema": "ddp-demo.v1",
+  "world_size": 2,
+  "backend": "gloo",
+  "param_sum_per_rank": {
+    "1": -1.2760528326034546,
+    "0": -1.2760528326034546
+  },
+  "param_sum_spread": 0.0,
+  "losses": [
+    1.6027354001998901,
+    1.378564715385437
+  ],
+  "grad_norm_after_all_reduce": 0.5539114150168322,
+  "manual_all_reduce_max_diff_vs_single_process": 2.3283064365386963e-08,
+  "fsdp_round_trip_all_ranks_ok": true
+}

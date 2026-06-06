@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do pose models regress heatmaps instead of (x, y) coordinates directly?",
+      "options": ["Heatmaps are cheaper to compute", "The spatial structure of a conv feature map aligns with spatial output; a Gaussian heatmap target provides a smooth loss landscape that tolerates small localisation errors, whereas direct coordinate regression is brittle and loses spatial context", "Heatmaps are required by the COCO metric", "Coordinate regression produces NaN"],
+      "correct": 1,
+      "explanation": "Regressing coordinates with MSE asks the network to reduce a 2D position to two scalars, losing the feature-map alignment that CNNs exploit. Heatmap regression gives the network a per-pixel loss that is smooth around the true location and preserves spatial priors. The empirical improvement over coordinate regression is large enough that every modern pose model uses heatmaps."
+    },
+    {
+      "stage": "pre",
+      "question": "Top-down pose estimation vs bottom-up: which scales better with crowd size, and why?",
+      "options": ["Top-down, because each person uses a separate fast model", "Bottom-up, because it does one forward pass over the whole image then groups keypoints, so runtime is constant in the number of people", "They scale equally", "Top-down never scales"],
+      "correct": 1,
+      "explanation": "Top-down runs a per-person keypoint model after a person detector, so cost grows linearly with the number of people. Bottom-up (OpenPose, HigherHRNet) produces all keypoints and association fields in one pass, then groups them — constant time regardless of crowd density. The trade: top-down is more accurate per-person; bottom-up is faster in crowds."
+    },
+    {
+      "stage": "post",
+      "question": "What are Part Affinity Fields?",
+      "options": ["A scheduling algorithm", "2-channel unit-vector fields that encode the direction from one keypoint to another; integrating the PAF along a candidate line tells you whether two keypoints belong to the same instance, enabling bottom-up association without per-person detection", "A data augmentation technique", "A type of loss function"],
+      "correct": 1,
+      "explanation": "Per connected keypoint pair (limb), predict a 2-channel field (x, y components of the unit vector pointing from one keypoint to the other). To match a candidate shoulder with a candidate elbow, integrate the PAF along the line joining them; higher integral = stronger match. This turns pose into a bipartite matching problem solvable in polynomial time."
+    },
+    {
+      "stage": "post",
+      "question": "Why does sub-pixel refinement around the argmax meaningfully lift keypoint accuracy?",
+      "options": ["It smooths the heatmap", "Integer argmax rounds to the nearest grid cell; fitting a local parabola or using the offset dx = 0.25*(heatmap[y,x+1] - heatmap[y,x-1]) recovers the continuous peak position, often halving the L2 error for cleanly predicted keypoints", "It prevents overfitting", "It normalises the output"],
+      "correct": 1,
+      "explanation": "A well-predicted heatmap has a smooth Gaussian peak whose centre is usually between grid cells. Integer argmax loses that sub-pixel information (up to 0.5 px error). Fitting a parabola or using the first-difference offset recovers the continuous peak. For sports analytics, medical landmarks, or anything requiring precise coordinates, this step is mandatory."
+    },
+    {
+      "stage": "post",
+      "question": "OKS (Object Keypoint Similarity) is the pose-estimation analogue of what object-detection metric?",
+      "options": ["Inference latency", "IoU — both measure geometric match between prediction and ground truth, with OKS using keypoint distances weighted by each keypoint's annotation variance; COCO reports mAP@OKS 0.5:0.95 for pose", "Classification accuracy", "Cross-entropy loss"],
+      "correct": 1,
+      "explanation": "OKS ranges 0 to 1 like IoU and plays the same role: it decides whether a prediction matches a ground-truth pose at a given strictness level. Each keypoint has a variance (COCO publishes them) that scales its contribution — invariant joints like nose and eyes weigh more than wrists, which are annotated less consistently. COCO Pose AP @ OKS 0.5:0.95 is the 2026 community benchmark."
+    }
+  ]
+}

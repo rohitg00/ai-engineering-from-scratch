@@ -1,0 +1,78 @@
+{
+  "lesson": "79-pipeline-parallel",
+  "title": "Pipeline Parallel and Bubble Analysis",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the pipeline bubble?",
+      "options": [
+        "A bug in NCCL",
+        "Idle time at start and end of the pipeline: stages with no work until the first microbatch reaches them, and after the last microbatch leaves",
+        "Memory leak",
+        "A network packet"
+      ],
+      "correct": 1,
+      "explanation": "With M microbatches and N stages, per-stage bubble is (N-1)/(M+N-1). Picking M much greater than N shrinks it."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is GPipe's activation memory proportional to M?",
+      "options": [
+        "Bug",
+        "All M microbatches' activations must be held until the matching backward; nothing frees until the drain begins",
+        "Compiler limit",
+        "Hardware limit"
+      ],
+      "correct": 1,
+      "explanation": "GPipe fills the pipeline with all forwards before any backward. Each in-flight microbatch carries its activations until its backward starts."
+    },
+    {
+      "stage": "check",
+      "question": "How does 1F1B improve over GPipe?",
+      "options": [
+        "Lower bubble",
+        "Same bubble but bounded activation memory; once mb 0's forward reaches the last stage, its backward begins and activations free",
+        "Higher throughput",
+        "Smaller model"
+      ],
+      "correct": 1,
+      "explanation": "Megatron-LM and PipeDream use 1F1B to bound activation memory by pipeline depth, not microbatch count."
+    },
+    {
+      "stage": "check",
+      "question": "Why is equal compute per stage more important than equal parameter count?",
+      "options": [
+        "Aesthetic",
+        "The slowest stage gates every cycle; other stages idle waiting for it. Embedding layers have many parameters but little compute, so partitioning by parameter count misbalances the pipeline",
+        "Memory aligned",
+        "Easier to code"
+      ],
+      "correct": 1,
+      "explanation": "Megatron-LM exposes --num-layers-per-stage as a list to allow uneven layer counts when per-layer cost differs."
+    },
+    {
+      "stage": "check",
+      "question": "What goes wrong if every stage calls send before recv?",
+      "options": [
+        "Memory leak",
+        "Deadlock on the wire; standard fix is to interleave even-rank send-first and odd-rank recv-first",
+        "Slow",
+        "Higher bubble"
+      ],
+      "correct": 1,
+      "explanation": "Synchronous send/recv pairs need one side to be receiving when the other sends. The lesson schedules ranks explicitly so the pattern is visible."
+    },
+    {
+      "stage": "post",
+      "question": "Pipeline plus ZeRO-1 combines what two memory wins?",
+      "options": [
+        "Compression and quantisation",
+        "Per-stage parameter sharding (each rank only holds one stage of layers) plus per-rank optimiser sharding (each rank only holds 1/N of optimiser state for its stage)",
+        "Activation only",
+        "Nothing"
+      ],
+      "correct": 1,
+      "explanation": "Pipeline shards layers across ranks; ZeRO shards optimiser state within the data-parallel group at each pipeline rank. Both wins compound."
+    }
+  ]
+}

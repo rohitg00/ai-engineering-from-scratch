@@ -1,0 +1,78 @@
+{
+  "lesson": "01-instruction-following-alignment-signal",
+  "title": "Instruction-Following as Alignment Signal",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does a raw pre-trained language model often respond to 'write a Python function that reverses a list' with another prompt instead of code?",
+      "options": [
+        "Its vocabulary lacks Python tokens",
+        "It cannot represent function signatures without fine-tuning",
+        "Its temperature defaults to zero",
+        "It is trained to complete web-style text, where prompts continue with more prompts"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which loss does the InstructGPT reward model use over pairwise preference labels?",
+      "options": [
+        "Mean squared error on labeler scores",
+        "Bradley-Terry: -log sigmoid(r(x, y_w) - r(x, y_l))",
+        "Hinge loss with a fixed margin",
+        "Cross-entropy between predicted and true reward"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the KL penalty in stage 3 of InstructGPT primarily protecting against?",
+      "options": [
+        "Catastrophic forgetting of tokenizer statistics",
+        "Numerical instability in PPO gradient updates",
+        "Overflowing context windows during sampling",
+        "The optimizer finding adversarial high-reward strings that exploit the reward model"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What problem does PPO-ptx mix into the RL objective to mitigate?",
+      "options": [
+        "The reward model drifting during PPO",
+        "The KL term becoming negative",
+        "The alignment tax: regression on benchmarks RLHF did not target",
+        "Tokenizer mismatch between SFT and RM"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "A 1.3B InstructGPT was preferred over the 175B base GPT-3 about 70% of the time. What does this say about alignment and capability?",
+      "options": [
+        "Alignment is a different axis from capability, and the base model sets the capability floor",
+        "Preference rates above 50% prove the proxy reward equals human values",
+        "Capability and alignment are the same axis at scale",
+        "Bigger base models always lose to small aligned models"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which of the following is the reward model in InstructGPT initialized from?",
+      "options": [
+        "A random scalar regressor with no pretraining",
+        "A separate encoder-only transformer",
+        "The base pre-trained model with the LM head intact",
+        "The SFT model with the LM head replaced by a scalar head"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

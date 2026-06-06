@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/41-eval-pipeline",
+  "title": "Full Evaluation Pipeline",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before reading: a colleague reports their model has perplexity 4.2 on the held-out set. They ask if the model is good. What is the most defensible response?",
+      "options": [
+        "Yes: perplexity below 5 means the model is good.",
+        "Perplexity tells you how well the model fits the language distribution. It says nothing about whether the model follows instructions or returns correct answers.",
+        "Perplexity is meaningless without an explicit prompt.",
+        "Only judge models can answer that question."
+      ],
+      "correct": 1,
+      "explanation": "Perplexity is one dimension. A model can have low perplexity and still be wrong on factual tasks, or have decent perplexity and still produce bad-quality answers. You need multiple evals, each measuring a different dimension."
+    },
+    {
+      "stage": "check",
+      "question": "The perplexity eval sums per-token negative log-likelihood over non-pad positions and divides by the total non-pad token count. Why not average per-batch perplexities instead?",
+      "options": [
+        "Averaging per-batch perplexities is mathematically equivalent.",
+        "Averaging per-batch perplexities under-weights short sequences (their per-batch ppl carries more variance) and produces a biased aggregate.",
+        "Batches contain padded tokens that must always be averaged.",
+        "Perplexity is undefined for batched data."
+      ],
+      "correct": 1,
+      "explanation": "Per-token aggregation is the textbook definition and avoids batch-size and length biases. Per-batch averaging is a common bug; on a fixture with varying sequence lengths it produces a different number from the correct one."
+    },
+    {
+      "stage": "check",
+      "question": "Token F1 returns 1.0 when both prediction and reference are empty. Which other case must return a specific value?",
+      "options": [
+        "When pred is empty but reference is non-empty, F1 must be 1.0.",
+        "When pred is non-empty but reference is empty, F1 must be undefined.",
+        "When only one of pred or reference is empty, F1 must be 0.0.",
+        "When pred contains exactly one matching token, F1 must be 0.5."
+      ],
+      "correct": 2,
+      "explanation": "Empty-empty is a vacuous match. Mixed empty-non-empty is the unambiguous miss case: there is content on one side and nothing on the other. The SQuAD convention is F1 = 0 in that case."
+    },
+    {
+      "stage": "check",
+      "question": "The aggregator normalises perplexity with `1 / (1 + log(max(ppl, 1.0)))`. What does this guarantee about the normalised score?",
+      "options": [
+        "It is always in [0, 1] and decreases monotonically as raw perplexity grows.",
+        "It is always in [0, 1] and increases monotonically as raw perplexity grows.",
+        "It is unbounded above.",
+        "It only returns 0 or 1 (binary)."
+      ],
+      "correct": 0,
+      "explanation": "Perplexity 1 (theoretical floor) maps to 1.0. Infinity maps to 0. The score is in [0, 1] and lower perplexity is better, which matches the direction of the other normalised metrics."
+    },
+    {
+      "stage": "post",
+      "question": "You swap the mock judge for a real frontier-model judge. What is the minimum change to the pipeline?",
+      "options": [
+        "Rewrite the aggregator to accept a different score range.",
+        "Replace the `judge_fn` argument to `judge_eval` with a function that has the same signature: (instruction, prediction, reference) -> JudgeVerdict.",
+        "Add a new entry to DEFAULT_WEIGHTS.",
+        "Migrate the entire eval suite to async I/O."
+      ],
+      "correct": 1,
+      "explanation": "The judge interface is `(instruction, prediction, reference) -> JudgeVerdict`. Any function with that signature drops in. The pipeline is decoupled from the judge implementation by that boundary, which is the point."
+    },
+    {
+      "stage": "post",
+      "question": "Your aggregate score is 0.72, but exact-match is 0.40 and judge is 4.5/5. Which trade-off is the model making?",
+      "options": [
+        "The model is hitting the gold string exactly less often, but the judge thinks the open-form answers are decent.",
+        "The model is overfitting on the LM corpus.",
+        "The aggregate is mis-computed.",
+        "The judge is mis-aligned with exact-match by definition."
+      ],
+      "correct": 0,
+      "explanation": "Low EM with high judge suggests paraphrase: the answers are right in substance but not character-for-character with the gold. This is exactly the dimension that EM misses and judge captures. The trade-off is informative, not a bug."
+    }
+  ]
+}

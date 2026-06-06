@@ -1,0 +1,78 @@
+{
+  "lesson": "30-bpe-tokenizer-from-scratch",
+  "title": "BPE Tokenizer From Scratch",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does a byte-level BPE tokenizer start from a 256-symbol alphabet?",
+      "options": [
+        "It guarantees any UTF-8 input can be represented before any merge is learned",
+        "It is the smallest alphabet that supports the English language",
+        "It matches the GPU warp size on most accelerators",
+        "It removes the need to store a merge table"
+      ],
+      "correct": 0,
+      "explanation": "The 256 raw byte ids cover every possible UTF-8 input. No unknown token is ever required because any input can be expressed as a sequence of bytes."
+    },
+    {
+      "stage": "check",
+      "question": "What does each BPE training step do?",
+      "options": [
+        "Splits a random word and assigns it a new id",
+        "Counts adjacent symbol pairs across the corpus and merges the most frequent one",
+        "Decreases the vocabulary by removing the least common id",
+        "Trains a small neural network to score subwords"
+      ],
+      "correct": 1,
+      "explanation": "Each step finds the highest-frequency adjacent pair across the corpus, merges it into a new symbol, and records the merge."
+    },
+    {
+      "stage": "check",
+      "question": "When encoding new text, in what order are merges applied?",
+      "options": [
+        "In random order until none apply",
+        "By position in the input, left to right, regardless of training rank",
+        "By the rank the merge received during training, lowest rank first",
+        "By the bytes of the pair, sorted alphabetically"
+      ],
+      "correct": 2,
+      "explanation": "Inference applies merges in the order they were learned. The earliest merge in the table wins when multiple merges could apply."
+    },
+    {
+      "stage": "check",
+      "question": "What is the encoder's behavior on a special-token string when allow_special is False?",
+      "options": [
+        "It raises an error",
+        "It maps the string to its reserved id",
+        "It encodes the literal bytes of the string",
+        "It silently skips the string"
+      ],
+      "correct": 2,
+      "explanation": "With allow_special off, a string like <|endoftext|> is treated as raw bytes and goes through the merge loop like any other input."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the decoder never need an unknown-token id?",
+      "options": [
+        "Every learned token is the concatenation of two known tokens, recursing down to single bytes",
+        "The encoder strips unknown tokens before decoding",
+        "The model rejects unknown ids during sampling",
+        "The decoder always returns the empty string for unknown ids"
+      ],
+      "correct": 0,
+      "explanation": "Every id resolves either to a raw byte or to two previously known ids. Recursive expansion always terminates in bytes, which decode to UTF-8."
+    },
+    {
+      "stage": "post",
+      "question": "What happens to the encoded length of a fixed sentence as the target vocabulary grows?",
+      "options": [
+        "It increases linearly with the vocabulary size",
+        "It stays constant because each id encodes a single byte",
+        "It tends to decrease because larger vocabularies cover more subwords",
+        "It oscillates randomly because BPE is non-deterministic"
+      ],
+      "correct": 2,
+      "explanation": "Larger vocabularies learn more merges, so common subwords collapse into single ids and the encoded sequence gets shorter."
+    }
+  ]
+}

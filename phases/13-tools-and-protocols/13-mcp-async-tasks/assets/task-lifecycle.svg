@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">task lifecycle (SEP-1686) - experimental through H1 2026</text>
+
+  <rect x="40" y="60" width="880" height="80" class="box"/>
+  <text x="60" y="82" class="step">client -&gt; tools/call {name, arguments, _meta: {task: {required: true}}}</text>
+  <text x="60" y="102" class="step">server -&gt; result {_meta: {task: {id, state: "working", ttl}}}</text>
+  <text x="60" y="124" class="small">task returned immediately; no long-held connection needed.</text>
+
+  <rect x="40" y="160" width="160" height="80" class="cool"/>
+  <text x="120" y="196" text-anchor="middle" class="step">working</text>
+  <text x="120" y="216" text-anchor="middle" class="small">worker running</text>
+
+  <rect x="260" y="160" width="160" height="80" class="cold"/>
+  <text x="340" y="196" text-anchor="middle" class="step">input_required</text>
+  <text x="340" y="216" text-anchor="middle" class="small">need elicitation</text>
+
+  <rect x="480" y="160" width="160" height="80" class="cool"/>
+  <text x="560" y="196" text-anchor="middle" class="step">completed</text>
+  <text x="560" y="216" text-anchor="middle" class="small">result available</text>
+
+  <rect x="700" y="160" width="100" height="80" class="hot"/>
+  <text x="750" y="196" text-anchor="middle" class="step">failed</text>
+  <text x="750" y="216" text-anchor="middle" class="small">error</text>
+
+  <rect x="820" y="160" width="100" height="80" class="box"/>
+  <text x="870" y="196" text-anchor="middle" class="step">cancelled</text>
+  <text x="870" y="216" text-anchor="middle" class="small">user stop</text>
+
+  <path d="M200,200 L260,200" class="edge" marker-end="url(#arrow)"/>
+  <path d="M420,200 L480,200" class="edge" marker-end="url(#arrow)"/>
+  <path d="M640,200 L700,200" class="edge" marker-end="url(#arrow)"/>
+  <path d="M640,200 L820,200" class="edge" marker-end="url(#arrow)"/>
+  <path d="M200,200 L200,150 C200,120 340,120 340,160" class="edge" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+  <text x="270" y="128" class="small">loop back after elicitation</text>
+
+  <rect x="40" y="260" width="420" height="110" class="cool"/>
+  <text x="250" y="282" text-anchor="middle" class="head">polling client</text>
+  <text x="56" y="306" class="step">while true:</text>
+  <text x="56" y="322" class="step">  status = tasks/status {taskId}</text>
+  <text x="56" y="338" class="step">  if status.state terminal: break</text>
+  <text x="56" y="354" class="step">result = tasks/result {taskId}</text>
+
+  <rect x="480" y="260" width="440" height="110" class="cold"/>
+  <text x="700" y="282" text-anchor="middle" class="head">streaming client (optional)</text>
+  <text x="496" y="306" class="step">server -&gt; notifications/tasks/updated</text>
+  <text x="496" y="322" class="step">  {taskId, state, progress}</text>
+  <text x="496" y="344" class="small">client renders progress bar; no polling loop.</text>
+
+  <rect x="40" y="390" width="880" height="110" class="box"/>
+  <text x="480" y="412" text-anchor="middle" class="head">durability and recovery</text>
+  <text x="60" y="434" class="step">persist task state per tick (filesystem / SQLite / Redis)</text>
+  <text x="60" y="452" class="step">ttl promise: server retains terminal state for ttl ms</text>
+  <text x="60" y="470" class="step">on restart: reload all tasks; in-flight working -&gt; failed with CRASH_RECOVERY</text>
+  <text x="60" y="488" class="small">subtasks and durable subscriptions are 2026 roadmap; treat as experimental.</text>
+</svg>

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "knn-pre-1",
+    "stage": "pre",
+    "question": "KNN is called a 'lazy learner.' What does that mean?",
+    "options": [
+      "It converges slowly during training",
+      "It does no computation at training time and computes everything at prediction time",
+      "It uses a simplified version of the loss function",
+      "It only works on small datasets"
+    ],
+    "correct": 1,
+    "explanation": "Lazy learning means KNN stores the training data and does no work during 'training.' All computation (distance calculations, voting) happens when a prediction is requested."
+  },
+  {
+    "id": "knn-pre-2",
+    "stage": "pre",
+    "question": "Why is feature scaling critical for KNN?",
+    "options": [
+      "KNN cannot handle negative numbers without scaling",
+      "Distance calculations are dominated by features with larger ranges, making scaling necessary for fair comparisons",
+      "Feature scaling reduces the number of neighbors needed",
+      "KNN uses gradient descent which requires normalized inputs"
+    ],
+    "correct": 1,
+    "explanation": "KNN relies on distances. A feature ranging 0-1000 will dominate a feature ranging 0-1 in distance calculations. Scaling puts all features on comparable ranges."
+  },
+  {
+    "id": "knn-post-1",
+    "stage": "post",
+    "question": "In 100 dimensions with uniform random points, what happens to the ratio of max distance to min distance?",
+    "options": [
+      "It increases dramatically, making neighbors more distinct",
+      "It approaches 1, making all points nearly equidistant from each other",
+      "It stays the same as in 2 dimensions",
+      "It becomes negative due to numerical overflow"
+    ],
+    "correct": 1,
+    "explanation": "This is the curse of dimensionality. In high dimensions, distances converge: max_dist / min_dist approaches 1. When all points are equidistant, 'nearest' becomes meaningless."
+  },
+  {
+    "id": "knn-post-2",
+    "stage": "post",
+    "question": "Which distance metric is most appropriate for comparing text documents represented as TF-IDF vectors?",
+    "options": [
+      "L2 (Euclidean) distance",
+      "L1 (Manhattan) distance",
+      "Cosine distance",
+      "Chebyshev distance"
+    ],
+    "correct": 2,
+    "explanation": "Cosine distance measures the angle between vectors, ignoring magnitude. For text, document length (magnitude) is noise -- direction captures meaning. Cosine consistently outperforms L1/L2 for text."
+  },
+  {
+    "id": "knn-post-3",
+    "stage": "post",
+    "question": "What happens to the KNN decision boundary as K increases from 1 to N (the full dataset size)?",
+    "options": [
+      "The boundary becomes more complex and detailed",
+      "The boundary stays the same regardless of K",
+      "The boundary smooths out, eventually predicting the majority class for every point",
+      "The boundary becomes circular"
+    ],
+    "correct": 2,
+    "explanation": "K=1 produces jagged boundaries that follow every point (overfitting). As K increases, boundaries smooth out. K=N means every query considers all points, always predicting the majority class (maximum bias)."
+  }
+]

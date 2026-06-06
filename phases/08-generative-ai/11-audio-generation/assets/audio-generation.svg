@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">audio gen: codec tokens + transformer or diffusion</text>
+
+  <!-- waveform -->
+  <rect x="30" y="70" width="140" height="60" class="box"/>
+  <text x="100" y="98" text-anchor="middle" class="content">waveform</text>
+  <text x="100" y="116" text-anchor="middle" class="caption">24 kHz, 1-D</text>
+
+  <line x1="170" y1="100" x2="210" y2="100" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- codec encoder -->
+  <rect x="210" y="70" width="160" height="60" class="cold"/>
+  <text x="290" y="98" text-anchor="middle" class="content">codec encoder</text>
+  <text x="290" y="116" text-anchor="middle" class="caption">Encodec / DAC / SoundStream</text>
+
+  <line x1="370" y1="100" x2="410" y2="100" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- tokens -->
+  <rect x="410" y="60" width="220" height="80" class="hot"/>
+  <text x="520" y="85" text-anchor="middle" class="label">RVQ tokens</text>
+  <text x="520" y="105" text-anchor="middle" class="mono">K &#215; 75 Hz indices</text>
+  <text x="520" y="125" text-anchor="middle" class="caption">8 codebooks typical</text>
+
+  <line x1="630" y1="100" x2="670" y2="100" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="670" y="70" width="180" height="60" class="cold"/>
+  <text x="760" y="98" text-anchor="middle" class="content">codec decoder</text>
+  <text x="760" y="116" text-anchor="middle" class="caption">tokens &#8594; wav</text>
+
+  <!-- two generators -->
+  <text x="230" y="190" text-anchor="middle" class="label">token-AR path (MusicGen, VALL-E)</text>
+  <rect x="40" y="200" width="380" height="130" class="cold"/>
+  <text x="230" y="225" text-anchor="middle" class="content">decoder-only transformer</text>
+  <text x="230" y="243" text-anchor="middle" class="mono">p(t_n | t_&lt;n, text_prompt, voice_prompt)</text>
+  <text x="230" y="265" text-anchor="middle" class="caption">streams naturally (~200 ms TTFB)</text>
+  <text x="230" y="285" text-anchor="middle" class="caption">delayed-parallel: K offset streams</text>
+  <text x="230" y="305" text-anchor="middle" class="caption">dominates speech in 2026</text>
+
+  <text x="670" y="190" text-anchor="middle" class="label">diffusion / flow path (Stable Audio, AudioLDM)</text>
+  <rect x="480" y="200" width="380" height="130" class="cold"/>
+  <text x="670" y="225" text-anchor="middle" class="content">DiT on audio latents</text>
+  <text x="670" y="243" text-anchor="middle" class="mono">x_t &#8594; x_0 via flow matching</text>
+  <text x="670" y="265" text-anchor="middle" class="caption">faster total time for long clips</text>
+  <text x="670" y="285" text-anchor="middle" class="caption">cleaner for music at &gt;=30 s</text>
+  <text x="670" y="305" text-anchor="middle" class="caption">dominates music generation in 2026</text>
+
+  <!-- 2026 stack -->
+  <rect x="30" y="360" width="830" height="140" class="box"/>
+  <text x="445" y="385" text-anchor="middle" class="label">2026 production stack</text>
+  <text x="445" y="410" text-anchor="middle" class="caption">TTS: ElevenLabs V3, OpenAI TTS, GPT-4o realtime, NaturalSpeech 3</text>
+  <text x="445" y="430" text-anchor="middle" class="caption">Music: Suno v4, Udio, Stable Audio 2.5, MusicGen 3.3B</text>
+  <text x="445" y="450" text-anchor="middle" class="caption">SFX: AudioCraft 2, ElevenLabs SFX, Stable Audio Open</text>
+  <text x="445" y="475" text-anchor="middle" class="caption">Voice clone: XTTS v2 (open), ElevenLabs Pro (consent-verified)</text>
+</svg>

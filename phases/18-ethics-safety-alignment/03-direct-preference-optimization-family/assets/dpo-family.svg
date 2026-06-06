@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">the DPO family tree — six preference losses, one closed-form ancestor</text>
+
+  <rect x="340" y="60" width="280" height="80" class="box"/>
+  <text x="480" y="85" text-anchor="middle" class="head">RLHF-with-KL optimum</text>
+  <text x="480" y="108" text-anchor="middle" class="step">pi*(y|x) ∝ pi_ref * exp(r / beta)</text>
+  <text x="480" y="126" text-anchor="middle" class="small">substitute into Bradley-Terry → DPO</text>
+
+  <rect x="50" y="180" width="200" height="110" class="hot"/>
+  <text x="150" y="202" text-anchor="middle" class="head">DPO</text>
+  <text x="60" y="224" class="small">-log sig(beta * log(pi/pi_ref)_w</text>
+  <text x="60" y="240" class="small">     - beta * log(pi/pi_ref)_l)</text>
+  <text x="60" y="262" class="small">unbounded implicit reward;</text>
+  <text x="60" y="278" class="small">chosen prob can fall.</text>
+
+  <rect x="270" y="180" width="200" height="110" class="cool"/>
+  <text x="370" y="202" text-anchor="middle" class="head">IPO</text>
+  <text x="280" y="224" class="small">(margin - 1/(2 beta))^2</text>
+  <text x="280" y="246" class="small">bounded gap;</text>
+  <text x="280" y="262" class="small">preference strength</text>
+  <text x="280" y="278" class="small">proportional.</text>
+
+  <rect x="490" y="180" width="200" height="110" class="cold"/>
+  <text x="590" y="202" text-anchor="middle" class="head">KTO</text>
+  <text x="500" y="224" class="small">sigma(beta * log-ratio - z_ref)</text>
+  <text x="500" y="246" class="small">unpaired single-label data;</text>
+  <text x="500" y="262" class="small">loss-averse weight</text>
+  <text x="500" y="278" class="small">on undesirable.</text>
+
+  <rect x="710" y="180" width="200" height="110" class="dsk"/>
+  <text x="810" y="202" text-anchor="middle" class="head">SimPO</text>
+  <text x="720" y="224" class="small">no pi_ref;</text>
+  <text x="720" y="246" class="small">length-normalized</text>
+  <text x="720" y="262" class="small">log pi + margin gamma.</text>
+  <text x="720" y="278" class="small">kills length bias.</text>
+
+  <rect x="270" y="320" width="200" height="110" class="box"/>
+  <text x="370" y="342" text-anchor="middle" class="head">ORPO</text>
+  <text x="280" y="364" class="small">NLL(y_w) + lambda * OR(w, l)</text>
+  <text x="280" y="386" class="small">single-stage from base;</text>
+  <text x="280" y="402" class="small">no separate SFT checkpoint.</text>
+  <text x="280" y="420" class="small">self-regularized.</text>
+
+  <rect x="490" y="320" width="200" height="110" class="hot"/>
+  <text x="590" y="342" text-anchor="middle" class="head">BPO (ICLR 2026)</text>
+  <text x="500" y="364" class="small">DPO + anchor penalty on</text>
+  <text x="500" y="386" class="small">decreases of log pi(y_w).</text>
+  <text x="500" y="402" class="small">fixes degraded chosen.</text>
+  <text x="500" y="420" class="small">+10.1% math on L3.1-8B.</text>
+
+  <path d="M 480 140 L 150 180" stroke="#888" stroke-width="1" fill="none"/>
+  <path d="M 480 140 L 370 180" stroke="#888" stroke-width="1" fill="none"/>
+  <path d="M 480 140 L 590 180" stroke="#888" stroke-width="1" fill="none"/>
+  <path d="M 480 140 L 810 180" stroke="#888" stroke-width="1" fill="none"/>
+  <path d="M 150 290 L 370 320" stroke="#888" stroke-width="1" fill="none"/>
+  <path d="M 150 290 L 590 320" stroke="#888" stroke-width="1" fill="none"/>
+
+  <rect x="50" y="460" width="860" height="140" class="box"/>
+  <text x="480" y="484" text-anchor="middle" class="head">choosing among them — 2026</text>
+  <text x="70" y="510" class="small">paired prefs, well-normalized → DPO · length bias visible → SimPO · saturating at high beta → IPO</text>
+  <text x="70" y="530" class="small">unpaired binary feedback → KTO · single-stage base-to-aligned → ORPO · chosen log-prob dropping → BPO</text>
+  <text x="70" y="552" class="small">every lab runs a battery. the optimum is not the same for math reasoning and safety behaviour.</text>
+  <text x="70" y="574" class="small">Rafailov et al. (NeurIPS 2024) prove DAAs still over-optimize — Goodhart does not care which loss you chose.</text>
+</svg>

@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What are the two phases of LLM inference?",
+    "options": ["Training and evaluation", "Prefill (processes the prompt in parallel, compute-bound) and decode (generates tokens one at a time, memory-bound)", "Encoding and decoding", "Forward and backward"],
+    "correct": 1,
+    "explanation": "Prefill processes all prompt tokens in parallel (limited by compute). Decode generates tokens autoregressively one at a time (limited by memory bandwidth for loading model weights). Different optimizations target each phase.",
+    "stage": "pre"
+  },
+  {
+    "question": "What does KV-cache eliminate during autoregressive generation?",
+    "options": ["The need for attention masks", "Redundant recomputation of key and value vectors for all previous tokens at each generation step", "The embedding lookup", "The softmax computation"],
+    "correct": 1,
+    "explanation": "Without KV-cache, generating token N requires recomputing attention keys and values for all N-1 previous tokens. KV-cache stores these vectors, so each new token only computes its own K and V, saving O(N) computation per step.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is continuous batching and why does it improve throughput?",
+    "options": ["Processing all requests in one large batch", "Dynamically adding and removing requests from the running batch as they start and finish, instead of waiting for the entire batch to complete", "Using larger batch sizes", "Batching across multiple models"],
+    "correct": 1,
+    "explanation": "In static batching, a short request holds its batch slot until the longest request finishes. Continuous batching immediately fills completed slots with new requests, keeping the GPU busy and improving overall throughput.",
+    "stage": "post"
+  },
+  {
+    "question": "What problem does PagedAttention (used in vLLM) solve?",
+    "options": ["It speeds up the attention computation", "It manages KV-cache memory in fixed-size blocks like virtual memory, eliminating fragmentation from variable-length sequences", "It reduces model size", "It improves tokenization speed"],
+    "correct": 1,
+    "explanation": "KV-cache for variable-length sequences causes memory fragmentation (wasted gaps between allocations). PagedAttention allocates KV-cache in fixed blocks and maps them with a page table, like OS virtual memory.",
+    "stage": "post"
+  },
+  {
+    "question": "What is speculative decoding?",
+    "options": ["Generating multiple responses and picking the best", "Using a small draft model to propose multiple tokens that the large model verifies in parallel, speeding up generation", "Predicting which tokens the user wants", "Caching frequently generated sequences"],
+    "correct": 1,
+    "explanation": "A small fast model generates N candidate tokens. The large model verifies all N in a single forward pass (parallel). If K tokens are accepted, you've generated K tokens in the time of roughly 1 large-model step.",
+    "stage": "post"
+  }
+]

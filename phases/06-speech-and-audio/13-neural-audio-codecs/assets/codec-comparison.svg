@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .content { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 15px; font-weight: 700; fill: #1a1a1a; }
+      .tag { font-size: 10px; fill: #c0392b; font-weight: 600; }
+      .line { stroke: #1a1a1a; stroke-width: 1.3; fill: none; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">neural audio codecs — four variations on RVQ, one semantic/acoustic split</text>
+
+  <rect x="20" y="55" width="200" height="150" class="box"/>
+  <text x="120" y="78" text-anchor="middle" class="label">EnCodec (Meta, 2022)</text>
+  <text x="120" y="96" text-anchor="middle" class="tag">acoustic RVQ baseline</text>
+  <text x="30" y="120" class="content">wav  →  conv+transformer+conv</text>
+  <text x="30" y="138" class="content"> →  RVQ (4-32 codebooks)</text>
+  <text x="30" y="156" class="content"> →  decoder  →  wav</text>
+  <text x="30" y="178" class="caption">75 Hz · 24 kHz · used by MusicGen</text>
+  <text x="30" y="196" class="caption">PESQ 3.2 @ 6 kbps</text>
+
+  <rect x="235" y="55" width="200" height="150" class="box"/>
+  <text x="335" y="78" text-anchor="middle" class="label">DAC (Descript, 2023)</text>
+  <text x="335" y="96" text-anchor="middle" class="tag">reconstruction king</text>
+  <text x="245" y="120" class="content">EnCodec +</text>
+  <text x="245" y="138" class="content"> L2-norm codebooks</text>
+  <text x="245" y="156" class="content"> periodic activations</text>
+  <text x="245" y="174" class="content"> improved losses</text>
+  <text x="245" y="196" class="caption">44.1 kHz full-band · PESQ 3.5 @ 6 kbps</text>
+
+  <rect x="450" y="55" width="200" height="150" class="box"/>
+  <text x="550" y="78" text-anchor="middle" class="label">SNAC (Siuzdak 2024)</text>
+  <text x="550" y="96" text-anchor="middle" class="tag">multi-scale RVQ</text>
+  <text x="460" y="120" class="content">coarse codes @ 12 Hz</text>
+  <text x="460" y="138" class="content">medium @ 25 Hz</text>
+  <text x="460" y="156" class="content">fine @ 50 Hz</text>
+  <text x="460" y="178" class="caption">hierarchical → AR-LM friendly</text>
+  <text x="460" y="196" class="caption">used by Orpheus-3B</text>
+
+  <rect x="665" y="55" width="200" height="150" class="hot"/>
+  <text x="765" y="78" text-anchor="middle" class="label">Mimi (Kyutai 2024)</text>
+  <text x="765" y="96" text-anchor="middle" class="tag">semantic + acoustic split</text>
+  <text x="675" y="120" class="content">codebook 0 — WavLM distilled</text>
+  <text x="675" y="138" class="content">            (semantic)</text>
+  <text x="675" y="156" class="content">codebooks 1-7 — acoustic</text>
+  <text x="675" y="178" class="caption">12.5 Hz · 4.4 kbps · powers Moshi</text>
+  <text x="675" y="196" class="caption">used by Sesame CSM</text>
+
+  <rect x="20" y="225" width="845" height="100" class="box"/>
+  <text x="440" y="247" text-anchor="middle" class="label">why this matters for language modeling over audio</text>
+  <text x="50" y="274" class="content">10 s speech × 12.5 Hz × 8 codebooks  =  1000 tokens  →  trivial transformer context</text>
+  <text x="50" y="294" class="content">factorize: LM predicts semantic codebook 0 first (text-aligned), then acoustic codebooks 1-7</text>
+  <text x="50" y="314" class="content">result: zero-shot voice cloning (semantic = content, acoustic conditioned on reference)</text>
+
+  <rect x="20" y="335" width="845" height="115" class="hot"/>
+  <text x="440" y="356" text-anchor="middle" class="label">pick by the problem</text>
+  <text x="50" y="382" class="content">music generation      →  EnCodec-24k   · MusicGen, AudioLDM</text>
+  <text x="50" y="400" class="content">highest fidelity      →  DAC-44.1k     · audio restoration, editing</text>
+  <text x="50" y="418" class="content">AR LM over speech    →  SNAC or Mimi  · TTS, codec LM</text>
+  <text x="50" y="436" class="content">full-duplex streaming →  Mimi only     · Moshi, Sesame CSM</text>
+</svg>

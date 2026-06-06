@@ -1,0 +1,78 @@
+{
+  "lesson": "72-code-exec-metric",
+  "title": "Code Exec Metric",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the runner spawn a fresh Python subprocess per candidate rather than calling exec inline?",
+      "options": [
+        "It is faster than exec",
+        "It avoids polluting builtins",
+        "It isolates timeouts, output overruns, and dangerous imports from the host eval process",
+        "exec is deprecated in modern Python"
+      ],
+      "correct": 2,
+      "explanation": "An infinite loop or runaway memory allocation in candidate code crashes only the subprocess. The host eval keeps making progress."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the score for a task with three assertions when two pass and one fails?",
+      "options": [
+        "1.0",
+        "0.667",
+        "0.0",
+        "0.5"
+      ],
+      "correct": 1,
+      "explanation": "Score is passed divided by total. Two of three is 0.667. The exit code is assertion_fail."
+    },
+    {
+      "stage": "check",
+      "question": "Which exit code does the runner return when the candidate code does not parse?",
+      "options": [
+        "error",
+        "assertion_fail",
+        "timeout",
+        "syntax_error"
+      ],
+      "correct": 3,
+      "explanation": "compile() raises SyntaxError inside the runner, the inner script catches it and writes exit_code=syntax_error."
+    },
+    {
+      "stage": "check",
+      "question": "Why is wall-clock timeout the load-bearing control rather than the import denylist?",
+      "options": [
+        "Imports cannot be denied in Python",
+        "Most failures are infinite loops, and a determined adversary can bypass any in-process denylist",
+        "subprocess.run does not support denylists",
+        "Wall-clock is checked at compile time"
+      ],
+      "correct": 1,
+      "explanation": "Denylists catch lazy code, timeouts catch infinite loops. The denylist is a backstop, the timeout is the floor."
+    },
+    {
+      "stage": "check",
+      "question": "What does pass_at_k(n, c, k) return when n - c < k?",
+      "options": [
+        "Zero, because the sample is undefined",
+        "One, because the sample must contain at least one passing solution",
+        "c / n, the empirical pass rate",
+        "Raises ValueError"
+      ],
+      "correct": 1,
+      "explanation": "If there are fewer fails than the sample size, every sample of size k necessarily includes at least one pass, so the probability is 1."
+    },
+    {
+      "stage": "post",
+      "question": "How does the runner surface an output overflow, and why is the cap 256 KB?",
+      "options": [
+        "Stdout from the subprocess is streamed; once the 256 KB running total is crossed the child is killed and the task is recorded as exit_code=error with detail \"output overflow\"",
+        "Stderr only; size matches the OS pipe default",
+        "The candidate source size, capped so generated code stays small",
+        "The score value, expressed as a percentage with two decimals"
+      ],
+      "correct": 0,
+      "explanation": "The cap protects the host. Candidate code that floods stdout gets killed mid-stream; the runner normalises the result under exit_code=error with detail \"output overflow\" rather than minting a new exit code."
+    }
+  ]
+}

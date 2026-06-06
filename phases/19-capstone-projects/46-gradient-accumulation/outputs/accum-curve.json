@@ -1,0 +1,35 @@
+{
+  "schema": "accum-curve.v1",
+  "points": [
+    {
+      "effective_batch": 4,
+      "accum_steps": 1,
+      "micro_batch": 4,
+      "avg_loss": 2.7746317982673645,
+      "samples_per_sec": 10589.599020053975,
+      "median_step_ms": 0.36970898509025574,
+      "sync_calls": 8,
+      "steps": 8
+    },
+    {
+      "effective_batch": 8,
+      "accum_steps": 2,
+      "micro_batch": 4,
+      "avg_loss": 2.778739705681801,
+      "samples_per_sec": 12129.73295382913,
+      "median_step_ms": 0.6751659093424678,
+      "sync_calls": 8,
+      "steps": 8
+    },
+    {
+      "effective_batch": 16,
+      "accum_steps": 4,
+      "micro_batch": 4,
+      "avg_loss": 2.7735252678394318,
+      "samples_per_sec": 12667.36269537429,
+      "median_step_ms": 1.2691670563071966,
+      "sync_calls": 8,
+      "steps": 8
+    }
+  ]
+}

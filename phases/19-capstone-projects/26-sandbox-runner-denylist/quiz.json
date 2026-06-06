@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/26-sandbox-runner-denylist",
+  "title": "Sandbox Runner with Denylist and Path Jail",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before reading the lesson: what is the strongest reason a sandbox checks argv shapes for interpreter invocations like python3 -c?",
+      "options": [
+        "Interpreters are slow and waste agent budget.",
+        "An interpreter with -c is a shell call by another name and bypasses the executable denylist.",
+        "Interpreters cannot be safely sandboxed at all.",
+        "The model writes better code without them."
+      ],
+      "correct": 1,
+      "explanation": "python3 -c, bash -c, node -e, and friends are functionally identical to giving the model a shell. Blocking the executable name is not enough."
+    },
+    {
+      "stage": "check",
+      "question": "The sandbox is configured with project_root=/work. A path argument arrives as ./src/main.py. How is the jail check performed?",
+      "options": [
+        "Literal string prefix match against /work.",
+        "os.path.realpath of the joined absolute path is checked for a /work prefix.",
+        "The sandbox refuses every relative path.",
+        "The sandbox spawns the subprocess and checks the working directory after the fact."
+      ],
+      "correct": 1,
+      "explanation": "realpath resolves symlinks. A literal prefix check is bypassed by a symlink inside the project root pointing outside. realpath plus prefix-or-equal is the safe check."
+    },
+    {
+      "stage": "check",
+      "question": "A SandboxResult comes back with denied=True, timed_out=False, exit_code=-100. What is the canonical interpretation?",
+      "options": [
+        "The subprocess started and was killed by SIGKILL.",
+        "The sandbox never spawned the subprocess; the call was refused before exec.",
+        "The subprocess returned -100 explicitly.",
+        "The wall-clock timeout fired."
+      ],
+      "correct": 1,
+      "explanation": "The sentinel exit_code -100 paired with denied=True means the sandbox short-circuited before subprocess.run was called."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the sandbox prefer shell=False by default and refuse shell metacharacters?",
+      "options": [
+        "shell=True is slower in CPython.",
+        "Shell parsing exposes the entire shell DSL to the model, which is the surface the sandbox is trying to shrink.",
+        "subprocess does not accept shell=True on macOS.",
+        "It makes the test suite simpler."
+      ],
+      "correct": 1,
+      "explanation": "shell=True turns argv into a shell-interpreted string. Pipes, redirects, command substitution, and globbing all become available. The sandbox cannot meaningfully refuse a payload once shell parsing runs."
+    },
+    {
+      "stage": "post",
+      "question": "You want to add a per-process memory limit to the sandbox. The lesson's sandbox does not implement this. What is the correct next step?",
+      "options": [
+        "Use os.setrlimit(RLIMIT_AS) in a preexec_fn passed to subprocess.run.",
+        "Add the limit to the denylist as a string.",
+        "Increase the wall-clock timeout to compensate.",
+        "Skip it: a denylist is sufficient for memory bombs."
+      ],
+      "correct": 0,
+      "explanation": "subprocess.run accepts preexec_fn (POSIX) or a similar mechanism. setrlimit(RLIMIT_AS) caps the address space of the child. The sandbox in this lesson does not ship this; lesson 29's end-to-end demo discusses how to layer container-level limits on top."
+    },
+    {
+      "stage": "post",
+      "question": "The model invokes the sandbox with argv=['cat', 'src/../src/main.py']. The file exists under project_root. Should the call pass the path jail?",
+      "options": [
+        "No, any .. in a path is an automatic refusal.",
+        "Yes: realpath collapses src/../src to src and the resolved path is inside project_root.",
+        "No: argv is rejected by the regex gate before the sandbox sees it.",
+        "It depends on whether the user is root."
+      ],
+      "correct": 1,
+      "explanation": "realpath normalises the path. The sandbox does not blanket-refuse .. tokens; it checks the resolved target. This is intentional: legitimate paths sometimes go through .. legitimately."
+    }
+  ]
+}

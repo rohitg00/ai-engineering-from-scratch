@@ -1,0 +1,90 @@
+{
+  "lesson": "14-speculative-decoding-server",
+  "title": "Capstone 14 — Speculative-Decoding Inference Server",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the two-layer mechanism behind speculative decoding?",
+      "options": [
+        "Two target models alternate per token",
+        "An embedding model and a synthesizer",
+        "A retrieval cache and a reranker",
+        "A draft model proposes k candidate tokens; the target model verifies them in a single pass"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "What does EAGLE-3 do that ngram drafts do not?",
+      "options": [
+        "It replaces the target model",
+        "It trains draft heads on the target model's hidden states for higher acceptance rates",
+        "It avoids tokenization entirely",
+        "It runs only on CPUs"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is p99 tail latency reported across batch sizes 1, 8, and 32?",
+      "options": [
+        "Steady-state tokens-per-second can hide that the verify pass on rejection is more expensive than vanilla decoding",
+        "vLLM cannot serve batch sizes below 8",
+        "p99 only matters at batch size 32",
+        "Tail latency is independent of batch size"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does acceptance rate drift when the traffic distribution shifts?",
+      "options": [
+        "vLLM rotates models hourly",
+        "Draft alignment depends on the input distribution: ShareGPT, code, and domain data exercise different patterns",
+        "The OS scheduler reshuffles GPU memory",
+        "Quantization changes at runtime"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which Kubernetes HPA signal does the deployment scale on?",
+      "options": [
+        "Cluster autoscaler nodes",
+        "CPU utilization",
+        "Disk IOPS",
+        "Queue-wait time on inference requests"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does P-EAGLE add over serial EAGLE-3?",
+      "options": [
+        "Quantization to FP4 weights",
+        "Removal of the target model",
+        "Parallel speculation across a tree of draft branches verified in one target pass",
+        "Automatic dataset curation"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which throughput target does the rubric demand against the non-speculative baseline?",
+      "options": [
+        "At least 2.5x at matched quality on two models",
+        "Any improvement above baseline",
+        "Roughly 1.1x at matched quality",
+        "Exactly 10x throughput at any quality"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

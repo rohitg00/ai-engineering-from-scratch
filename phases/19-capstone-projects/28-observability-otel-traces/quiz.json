@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/28-observability-otel-traces",
+  "title": "Observability: OTel GenAI Spans and Prometheus Metrics",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before reading the lesson: what is the practical benefit of writing your harness's spans in the OTel GenAI attribute shape?",
+      "options": [
+        "OTel spans compress better on disk.",
+        "Every OTel-compatible backend can read them without a custom parser.",
+        "OTel is a Python-only standard, so the harness gets type hints.",
+        "It is required by HIPAA."
+      ],
+      "correct": 1,
+      "explanation": "The conventions are a contract with the wider ecosystem. Honeycomb, Grafana Tempo, Jaeger, and Datadog all parse gen_ai.* attributes out of the box."
+    },
+    {
+      "stage": "check",
+      "question": "An exception is raised inside a SpanBuilder.span() context. What does the lesson's builder record?",
+      "options": [
+        "The span is dropped to avoid polluting the trace.",
+        "status=ERROR, status_message includes the exception type and message, and an 'exception' event is appended.",
+        "status remains UNSET and the exception is silently swallowed.",
+        "The span is renamed to 'error'."
+      ],
+      "correct": 1,
+      "explanation": "Status ERROR plus an exception event matches the OTel spec. The exception is re-raised so caller code can react."
+    },
+    {
+      "stage": "check",
+      "question": "The Prometheus exposition for a histogram includes _bucket, _sum, and _count lines. Why are bucket counts cumulative (each le bucket includes all smaller buckets)?",
+      "options": [
+        "Cumulative counts let the scraper compute per-bucket counts via subtraction without storing all observations.",
+        "Cumulative counts are the only format Grafana supports.",
+        "They are not cumulative; the lesson's exposition is non-standard.",
+        "Cumulative counts reduce floating-point error."
+      ],
+      "correct": 0,
+      "explanation": "Prometheus' design choice: a backend reads cumulative counts and computes per-bucket differences. This lets the time series be a simple monotonic counter per bucket."
+    },
+    {
+      "stage": "check",
+      "question": "The harness wraps a tool execution in a span. Which attribute keys identify it as a tool call under the GenAI conventions?",
+      "options": [
+        "gen_ai.system + gen_ai.request.model.",
+        "gen_ai.tool.name + gen_ai.tool.call.id.",
+        "agent.harness.tool + agent.harness.call.",
+        "operation + tool.name."
+      ],
+      "correct": 1,
+      "explanation": "gen_ai.tool.name and gen_ai.tool.call.id are the canonical keys for tool executions in the GenAI conventions."
+    },
+    {
+      "stage": "post",
+      "question": "You want to query 'what is the p95 latency of read_file calls'. Which artifact do you query?",
+      "options": [
+        "Each span's duration_ms in traces.jsonl, parsed by a script.",
+        "The Prometheus histogram tool_latency_ms{tool=\"read_file\"} scraped over a window.",
+        "The counter tools_called_total, divided by the time window.",
+        "The status_message field of the span."
+      ],
+      "correct": 1,
+      "explanation": "Histograms are the right tool for percentiles. The counter only counts; the trace contains raw spans but is not pre-aggregated."
+    },
+    {
+      "stage": "post",
+      "question": "A reviewer asks why the lesson hand-rolls instead of importing opentelemetry-sdk. Which answer is correct?",
+      "options": [
+        "The SDK does not support GenAI conventions.",
+        "Hand-rolling teaches the wire format; the SDK can drop in later with the same attribute keys.",
+        "Hand-rolling is faster at runtime.",
+        "The SDK requires a network connection at import time."
+      ],
+      "correct": 1,
+      "explanation": "The conventions are stable across implementations. The hand-rolled version exists for clarity; production wires in the SDK and reuses the same gen_ai.* keys."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does U-Net need skip connections between the encoder and decoder?",
+      "options": ["To speed up training", "The encoder compresses spatial detail to gain context; the decoder cannot reconstruct sharp boundaries without access to the encoder's high-resolution feature maps, and skips supply exactly that", "Because transposed convolutions require extra inputs", "To match PyTorch shape conventions"],
+      "correct": 1,
+      "explanation": "Without skips, a U-Net's decoder is producing H x W predictions from a very low-resolution bottleneck, which cannot resolve crisp edges. Skip connections splice the encoder's high-resolution, low-semantic features into the decoder's low-resolution, high-semantic features so both context and detail are available at every output stage."
+    },
+    {
+      "stage": "pre",
+      "question": "A segmentation task has 99% background pixels and 1% tumour pixels. You train with plain cross-entropy and reach 99% pixel accuracy. What happened?",
+      "options": ["The model converged", "The model learned to predict background for every pixel; pixel accuracy is dominated by the majority class and ignores the class you actually care about", "The loss function was implemented incorrectly", "The optimizer failed"],
+      "correct": 1,
+      "explanation": "Pixel accuracy on an imbalanced dataset is a useless metric. The network collects the easy 99% by always predicting background and produces empty tumour masks. The fix: combine cross-entropy with Dice loss (overlap-based, scale-free) and report IoU/Dice per foreground class."
+    },
+    {
+      "stage": "post",
+      "question": "Which task type separates individual cars of the same class from each other?",
+      "options": ["Semantic segmentation", "Instance segmentation", "Both produce the same output", "Neither — that requires a detection model instead"],
+      "correct": 1,
+      "explanation": "Semantic segmentation labels every pixel with a class but merges touching instances of the same class into one blob. Instance segmentation keeps instance IDs, so each car, each person, each apple is a separate predicted mask. Panoptic segmentation unifies both: semantic labels for stuff, instance IDs for things."
+    },
+    {
+      "stage": "post",
+      "question": "You swap U-Net's bilinear upsample + 3x3 conv for a ConvTranspose2d with kernel_size=2, stride=2 and see checkerboard artifacts in the output. Why?",
+      "options": ["Transposed conv is broken in PyTorch", "When kernel_size is not evenly divisible by stride, output pixels receive unequal contributions from input pixels, producing a periodic pattern in the output that looks like a checkerboard", "The learning rate was too low", "Batch norm has to be added before transposed conv"],
+      "correct": 1,
+      "explanation": "Checkerboard artifacts come from uneven overlap of the transposed convolution's receptive field across output positions. Using kernel_size = stride * n (e.g. kernel 4, stride 2) or replacing transposed conv with bilinear upsample + conv eliminates the artifacts. The modern default is bilinear + conv for this reason."
+    },
+    {
+      "stage": "post",
+      "question": "You report mIoU = 0.78 on a 10-class segmentation task. Why should you also publish per-class IoU?",
+      "options": ["Per-class IoU is required by PyTorch", "Mean IoU hides individual class failures; a mIoU of 0.78 is consistent with eight classes at 0.9 and two at 0.3, which is a very different deployment story than all classes near 0.78", "Per-class IoU is always higher than mIoU", "It is only needed for medical imaging"],
+      "correct": 1,
+      "explanation": "An aggregate mean compresses the distribution of per-class scores, which is exactly what the reader needs to decide whether the model is ready to ship. Two weak classes in an otherwise strong model may make the system unusable for the intended task; a flat profile means the model needs a uniform data upgrade. Always publish per-class metrics alongside the mean."
+    }
+  ]
+}

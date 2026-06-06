@@ -1,0 +1,78 @@
+{
+  "lesson": "13-llm-observability",
+  "title": "LLM Observability Stack Selection",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How does the lesson split the 2026 LLM observability market?",
+      "options": [
+        "Development platforms (bundled with evals/prompts/sessions) versus gateway/telemetry tools",
+        "On-prem versus cloud",
+        "Vendor versus open source",
+        "Python versus TypeScript"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which tool does the lesson position as MIT-licensed core with strong self-host story and 50K events/month free cloud tier?",
+      "options": [
+        "LangSmith",
+        "Phoenix",
+        "Arize AX",
+        "Langfuse"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is Arize AX's main scale claim relative to monolithic observability stacks like Datadog?",
+      "options": [
+        "Always more expensive",
+        "Roughly 100x cheaper at scale via zero-copy Iceberg/Parquet integration",
+        "Free under 1M events/day",
+        "10% cheaper"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the lesson call the wrong instrumentation layer for portability?",
+      "options": [
+        "Instrumenting inside your agent framework, since it couples you to that framework",
+        "Sampling at 5% on successes",
+        "Using OpenTelemetry GenAI semantic conventions",
+        "Instrumenting at the HTTP/OpenAI-SDK layer"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which OpenTelemetry conventions does the lesson identify as the 2026 interop layer between observability tools?",
+      "options": [
+        "OTel messaging semantic conventions",
+        "OTel database semantic conventions",
+        "GenAI semantic conventions (gen_ai.system, gen_ai.request.model, gen_ai.usage.input_tokens)",
+        "OTel HTTP semantic conventions"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson argue full-trace retention does not scale past 1M requests/day?",
+      "options": [
+        "Retention storage costs more than the LLM calls themselves; teams must sample (e.g. 100% errors, 100% high-cost, 5% successes)",
+        "OpenTelemetry caps trace volume",
+        "Vendors block it",
+        "Phoenix only supports 1M traces"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}
