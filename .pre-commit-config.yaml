@@ -35,7 +35,8 @@ repos:
         args: [--config-file=pyproject.toml]
         additional_dependencies: []
         pass_filenames: false
-        # mypy checks scripts/ with permissive rules (see pyproject.toml).
+        # mypy checks scripts/ with stricter rules — see [[tool.mypy.overrides]] in
+        # pyproject.toml (disallow_untyped_defs = true for scripts.*).
         # It blocks on errors — skip with SKIP=mypy git commit if needed.
 
   - repo: https://github.com/pre-commit/mirrors-prettier

@@ -167,8 +167,9 @@ Rules (enforced by `scripts/audit_lessons.py`):
 - Code must run without errors
 - Add a 4–6 line header comment citing the lesson path and any external spec/RFC
   referenced by the implementation
-- Include 5+ unit tests in `code/tests/test_*.py`, runnable via `python -m pytest`
-  or `python -m unittest`.  Use `scripts/scaffold_tests.py` to generate a skeleton
+- Include 5+ unit tests in `code/tests/test_<slug>.py` (use the lesson slug to keep
+  module names unique across phases), runnable via `python -m pytest` or
+  `python -m unittest`.  Use `scripts/scaffold_tests.py` to generate a skeleton
   from your code's function signatures
 - Use inline comments sparingly — let the code speak, but don't be dogmatic about
   "zero comments."  Some algorithms need a one-liner to orient the reader

@@ -33,6 +33,7 @@ LESSON_DIR_RE = re.compile(r"^[0-9]{2}-[a-z0-9][a-z0-9-]*[a-z0-9]$")
 class PhaseCoverage:
     phase_id: int
     phase_name: str
+    phase_slug: str
     total_lessons: int
     with_quiz: int
     missing: list[str]
@@ -75,6 +76,7 @@ def gather() -> list[PhaseCoverage]:
         phases[phase_id] = PhaseCoverage(
             phase_id=phase_id,
             phase_name=name,
+            phase_slug=phase_dir.name.split("-", 1)[1],
             total_lessons=total,
             with_quiz=with_quiz,
             missing=missing,
@@ -148,7 +150,7 @@ def main(argv: list[str]) -> int:
     if args.missing:
         for c in coverages:
             for name in c.missing:
-                print(f"phases/{c.phase_id:02d}-{c.phase_name.lower().replace(' ', '-')}/{name}")
+                print(f"phases/{c.phase_id:02d}-{c.phase_slug}/{name}")
         return 0
 
     if args.json:

@@ -22,7 +22,7 @@ class TestVector:
 
     def test_sub(self) -> None:
         v = vectors.Vector([5, 7, 9]) - vectors.Vector([1, 2, 3])
-        for a, b in zip(v.components, [4.0, 5.0, 6.0]):
+        for a, b in zip(v.components, [4.0, 5.0, 6.0], strict=True):
             assert abs(a - b) < 1e-10
 
     def test_scalar_mul(self) -> None:

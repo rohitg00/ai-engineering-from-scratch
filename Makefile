@@ -68,7 +68,7 @@ install-skills:
 # ── Scaffolding ────────────────────────────────────────────────────────────
 
 scaffold:
-	test -n "$(SLUG)" || (echo "Usage: make scaffold PHASE=NN SLUG=lesson-name"; exit 1)
+	test -n "$(PHASE)" -a -n "$(SLUG)" || (echo "Usage: make scaffold PHASE=NN SLUG=lesson-name"; exit 1)
 	bash scripts/scaffold-lesson.sh $(PHASE) $(SLUG)
 
 # ── Link checking ─────────────────────────────────────────────────────────

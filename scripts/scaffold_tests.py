@@ -80,9 +80,9 @@ def _generate_test_module(
         # Derive import path: e.g. phases/14-.../01-.../code/main.py
         # We can't easily import from here, but we can reference the path.
         lines.append("")
-        lines.append(f"# To import the code under test, add the lesson")
-        lines.append(f"# directory to sys.path or install as a package:")
-        lines.append(f"#   import sys")
+        lines.append("# To import the code under test, add the lesson")
+        lines.append("# directory to sys.path or install as a package:")
+        lines.append("#   import sys")
         lines.append(f"#   sys.path.insert(0, '{rel}/code')")
         lines.append(f"#   from {fname.replace('.py', '')} import {', '.join(py_files[fname][:5])}")
         break  # Only show the import hint for the first file

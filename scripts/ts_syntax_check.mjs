@@ -88,9 +88,7 @@ function checkFiles(filePaths) {
       );
 
       // Walk the AST looking for syntax diagnostics.
-      const diagnostics = [].concat(
-        ts.getParseDiagnostics(sf)
-      );
+      const diagnostics = ts.getParseDiagnostics(sf);
 
       if (diagnostics.length > 0) {
         const messages = diagnostics.map(
