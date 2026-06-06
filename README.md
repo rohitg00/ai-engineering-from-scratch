@@ -2,6 +2,8 @@
   <img src="assets/banner.svg" alt="AI Engineering from Scratch — reference manual banner" width="100%">
 </p>
 
+# AI Engineering from Scratch
+
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
   <a href="ROADMAP.md"><img src="https://img.shields.io/badge/lessons-503-3553ff?style=flat-square&labelColor=fafaf5" alt="503 lessons"></a>
@@ -24,7 +26,7 @@
 >
 > You don't just learn AI. You build it. End-to-end. By hand.
 
-## How this works
+## How it works
 
 Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a
 flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't
@@ -106,7 +108,7 @@ flowchart LR
   U --> S["SHIP IT<br/><sub>prompt · skill · agent · MCP</sub>"]
 ```
 
-## Getting started
+## Quick start
 
 Three ways in. Pick one.
 
@@ -236,7 +238,7 @@ the agent went wrong and explain why...
 
 <a id="contents"></a>
 
-## Contents
+## Table of Contents
 
 Twenty phases. Click any phase to expand its lesson list.
 
@@ -1174,6 +1176,17 @@ Sign up via [GitHub Sponsors](https://github.com/sponsors/rohitg00).
 </a>
 
 If this manual helped you, star the repo. It keeps the project alive.
+
+## FAQ
+
+**Q: Is this curriculum completely free?**
+A: Yes, it is 100% free, open source, and licensed under the MIT License.
+
+**Q: Which programming languages are covered?**
+A: The curriculum uses Python, TypeScript, Rust, and Julia to implement various parts of the AI engineering lifecycle from scratch.
+
+**Q: How can I contribute a new lesson or fix an issue?**
+A: Check out [CONTRIBUTING.md](CONTRIBUTING.md) for details on the structure, lesson template, and submission process.
 
 ## License
 
