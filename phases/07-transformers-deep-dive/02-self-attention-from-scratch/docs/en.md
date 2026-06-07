@@ -144,24 +144,17 @@ For token 1:
 
 ### Full Pipeline
 
-```
-                    +-------+
-  X (input)  ----->|  @ Wq  |-----> Q
-                    +-------+
-                    +-------+
-  X (input)  ----->|  @ Wk  |-----> K
-                    +-------+                     +----------+
-                    +-------+                     |          |
-  X (input)  ----->|  @ Wv  |-----> V ---------->| weighted |----> output
-                    +-------+          ^          |   sum    |
-                                       |          +----------+
-                              +--------+--------+
-                              |    softmax      |
-                              +---------+-------+
-                                        ^
-                              +---------+-------+
-                              | Q @ K^T / sqrt  |
-                              +-----------------+
+```mermaid
+flowchart LR
+  X["X (input)"] --> Q["Q = X · Wq"]
+  X --> K["K = X · Wk"]
+  X --> V["V = X · Wv"]
+  Q --> S["Q · Kᵀ / √dk"]
+  K --> S
+  S --> SM["softmax"]
+  SM --> WS["weighted sum"]
+  V --> WS
+  WS --> O["output"]
 ```
 
 Formula in one line:
