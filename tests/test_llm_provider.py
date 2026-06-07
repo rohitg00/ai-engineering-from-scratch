@@ -30,11 +30,15 @@ class TestProviderDefaults(unittest.TestCase):
         cfg = PROVIDER_DEFAULTS["minimax"]
         self.assertEqual(cfg["env_key"], "MINIMAX_API_KEY")
         self.assertEqual(cfg["base_url"], "https://api.minimax.io/v1")
-        self.assertEqual(cfg["default_model"], "MiniMax-M2.7")
+        self.assertEqual(cfg["default_model"], "MiniMax-M3")
+        self.assertIn("MiniMax-M3", cfg["models"])
         self.assertIn("MiniMax-M2.7", cfg["models"])
         self.assertIn("MiniMax-M2.7-highspeed", cfg["models"])
-        self.assertIn("MiniMax-M2.5", cfg["models"])
-        self.assertIn("MiniMax-M2.5-highspeed", cfg["models"])
+        # M3 is listed first (default)
+        self.assertEqual(cfg["models"][0], "MiniMax-M3")
+        # Older models removed
+        self.assertNotIn("MiniMax-M2.5", cfg["models"])
+        self.assertNotIn("MiniMax-M2.5-highspeed", cfg["models"])
 
     def test_each_provider_has_required_keys(self):
         for name, cfg in PROVIDER_DEFAULTS.items():
@@ -96,7 +100,7 @@ class TestGetLLMClient(unittest.TestCase):
         mock_openai.return_value = MagicMock()
         client = get_llm_client("minimax")
         self.assertEqual(client.provider, "minimax")
-        self.assertEqual(client.default_model, "MiniMax-M2.7")
+        self.assertEqual(client.default_model, "MiniMax-M3")
         mock_openai.assert_called_once_with(
             api_key="test-minimax-key",
             base_url="https://api.minimax.io/v1",
@@ -159,7 +163,7 @@ class TestChat(unittest.TestCase):
         return LLMClient(
             provider="minimax",
             client=mock_sdk,
-            default_model="MiniMax-M2.7",
+            default_model="MiniMax-M3",
         )
 
     def _make_openai_client(self):
@@ -190,7 +194,7 @@ class TestChat(unittest.TestCase):
         result = chat(client, "What is a neural network?")
         self.assertEqual(result, "Neural networks are computing systems.")
         call_kwargs = client.client.chat.completions.create.call_args
-        self.assertEqual(call_kwargs.kwargs["model"], "MiniMax-M2.7")
+        self.assertEqual(call_kwargs.kwargs["model"], "MiniMax-M3")
 
     def test_chat_minimax_strips_think_tags(self):
         client = self._make_minimax_client()

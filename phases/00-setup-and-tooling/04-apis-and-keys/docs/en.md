@@ -93,7 +93,7 @@ client = openai.OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="MiniMax-M2.7",
+    model="MiniMax-M3",
     max_tokens=256,
     temperature=0.7,
     messages=[{"role": "user", "content": "What is a neural network in one sentence?"}],

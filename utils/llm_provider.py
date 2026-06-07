@@ -13,7 +13,7 @@ Usage:
 
     # Explicit provider
     client = get_llm_client("minimax")
-    response = chat(client, "Explain transformers", model="MiniMax-M2.7")
+    response = chat(client, "Explain transformers", model="MiniMax-M3")
 """
 
 import os
@@ -39,13 +39,12 @@ PROVIDER_DEFAULTS = {
     "minimax": {
         "env_key": "MINIMAX_API_KEY",
         "base_url": "https://api.minimax.io/v1",
-        "default_model": "MiniMax-M2.7",
+        "default_model": "MiniMax-M3",
         "max_tokens": 1024,
         "models": [
+            "MiniMax-M3",
             "MiniMax-M2.7",
             "MiniMax-M2.7-highspeed",
-            "MiniMax-M2.5",
-            "MiniMax-M2.5-highspeed",
         ],
     },
 }

@@ -26,8 +26,8 @@ class TestMiniMaxIntegration(unittest.TestCase):
         self.assertIsInstance(response, str)
         self.assertGreater(len(response), 0)
 
-    def test_m25_model(self):
-        client = get_llm_client("minimax", model="MiniMax-M2.5")
+    def test_m27_model(self):
+        client = get_llm_client("minimax", model="MiniMax-M2.7")
         response = chat(client, "Reply with exactly: test ok")
         self.assertIsInstance(response, str)
         self.assertGreater(len(response), 0)

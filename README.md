@@ -527,7 +527,7 @@ The course uses LLM APIs starting from Phase 11. You can use any of these provid
 |----------|--------|-------|
 | Anthropic | Claude Sonnet, Opus | `export ANTHROPIC_API_KEY="sk-ant-..."` |
 | OpenAI | GPT-4o, GPT-4 | `export OPENAI_API_KEY="sk-..."` |
-| [MiniMax](https://www.minimax.io) | MiniMax-M2.7, M2.7-highspeed | `export MINIMAX_API_KEY="eyJ..."` |
+| [MiniMax](https://www.minimax.io) | MiniMax-M3, M2.7, M2.7-highspeed | `export MINIMAX_API_KEY="eyJ..."` |
 
 The `utils/llm_provider.py` utility auto-detects your provider from environment variables and provides a unified `chat()` interface across all providers. MiniMax uses an OpenAI-compatible API, so it works with the standard `openai` Python SDK.
 
