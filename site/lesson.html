@@ -1629,6 +1629,7 @@
   <script src="progress.js?v=20260525a"></script>
   <script src="header.js?v=20260525a" defer></script>
   <script src="cmdpalette.js?v=20260525a" defer></script>
+  <script src="lesson-figures.js?v=20260607a"></script>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     mermaid.initialize({
@@ -1881,6 +1882,7 @@
 
         initCodeCopy();
         renderMermaidBlocks();
+        if (window.mountLessonFigures) window.mountLessonFigures(el);
         renderAIPanels();
         buildTOC();
 
@@ -2183,7 +2185,9 @@
             if (line.match(/^```\s*$/)) {
               inCodeBlock = false;
               var raw = codeLines.join('\n');
-              if (codeLang === 'mermaid') {
+              if (codeLang === 'figure') {
+                out += '<div class="lesson-figure" data-figure="' + escapeHtml(raw.trim()) + '"></div>';
+              } else if (codeLang === 'mermaid') {
                 mermaidBlocks++;
                 out += '<div class="mermaid-container">';
                 out += '<div class="mermaid-block" data-mermaid-index="' + mermaidBlocks + '">';

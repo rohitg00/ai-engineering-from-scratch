@@ -53,6 +53,12 @@ That 10 GB is why Llama 3 70B at 128K context needs most of a 40 GB A100 just fo
 
 **GQA is the KV-cache win.** MHA with 64 heads would be 32 GB. MLA compresses even further.
 
+Drag the dimensions and watch the cache size move. Push the sequence length or batch up and see how fast it blows past a single GPU:
+
+```figure
+kv-cache
+```
+
 ### Flash Attention — the tiling trick
 
 Standard attention:
