@@ -58,6 +58,22 @@ A hand-written handoff is a handoff that gets skipped on a hard day. The generat
 
 The full `feedback_record.jsonl` may be hundreds of entries. The handoff carries only the last K plus every entry with a non-zero exit. The next session loads the full log if it needs to, but the packet stays small.
 
+### Leave a clean state
+
+A handoff describes the work. A clean state makes the work resumable. They are not the same thing. A perfect `handoff.md` is worthless if the next session opens to a half-applied diff, a temp file the agent forgot, a stray branch, and tests that error before they even run. The next agent then spends its first ten minutes cleaning up after the last one instead of building, and the cost compounds every session for the life of the task.
+
+So the session does not end when the feature works. It ends when the workbench is in a state the generator can summarize and the next session can trust. Cleanup is its own phase, run before the handoff, and it is a check, not a habit, because a habit is the thing that gets skipped on a hard day.
+
+| Check | Clean means | Dirty blocks because |
+|-------|-------------|----------------------|
+| Working tree | Every change committed or explicitly stashed with a note | A half-applied diff looks like intentional work to the next agent |
+| Temp artifacts | No `*.tmp`, scratch dirs, debug prints, or commented-out blocks left behind | Stray files pollute the diff and the next agent's mental model |
+| Tests | Green, or red with the failure named in `open_risks` | A silent red test is a trap the next session steps in |
+| Feature board | `feature_list.json` status reflects reality (Phase 14 · 36) | A stale board sends the next session to work that is already done |
+| Branch | On the expected branch, no detached HEAD, no orphan branches | Wrong branch means the next session's first commit lands in the wrong place |
+
+The cleanup phase emits a `clean_state.json` of blocking issues; an empty list is the precondition the handoff generator asserts before it writes a packet. A handoff built on a dirty tree is not a handoff, it is a forwarded mess. The two artifacts pair: cleanup proves the workbench is safe to leave, the handoff proves the next session knows where to start.
+
 ## Build It
 
 `code/main.py` implements:

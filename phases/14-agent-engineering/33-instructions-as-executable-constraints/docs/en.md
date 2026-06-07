@@ -56,6 +56,30 @@ Rules live one per heading in a single markdown file. Renames are visible in dif
 
 Framework guardrails (OpenAI Agents SDK guardrails, LangGraph interrupts) enforce rules at the runtime level. The rule set in this lesson is the human-readable, reviewable contract that those guardrails implement. You need both: the runtime catches violations during a turn, the rule set proves the runtime is doing the right thing.
 
+### Progressive disclosure: a map, not an encyclopedia
+
+The reason `AGENTS.md` keeps growing is that every incident adds a rule and no incident removes one. A year in, the file is two thousand lines, and the agent reads the first screen, runs out of attention budget, and acts on a fraction of what it was told. A giant instruction file fails for the same reason a forty-page onboarding doc fails: the reader skims it once and never returns to the part that mattered.
+
+The fix is not a shorter file. It is a layered one. The root router stays small enough to read every session and holds nothing but pointers. The depth lives in topic files the agent loads only when the task touches them. Give the agent a map, not the whole encyclopedia, and let it walk to the page it needs.
+
+```
+AGENTS.md                  # router, < 50 lines: what this repo is, where to look, the 5 hard rules
+docs/
+  agent-rules.md           # the full rule set (this lesson)
+  architecture.md          # loaded when the task touches module boundaries
+  testing.md               # loaded when the task writes or runs tests
+  deploy.md                # loaded only for release work, gated behind an approval rule
+feature_list.json          # the backlog (Phase 14 · 36)
+```
+
+| Tier | Lives in | Read when | Size budget |
+|------|----------|-----------|-------------|
+| Router | `AGENTS.md` | Every session, always | Under ~50 lines |
+| Rules | `docs/agent-rules.md` | Every session, on startup | One screen per category |
+| Topic docs | `docs/<topic>.md` | Only when the task touches that topic | As deep as needed |
+
+Two tests keep the layering honest. The reachability test: an agent should reach any rule in at most two hops from the router, so the router must link every topic doc by path, not describe it in prose. The freshness test: the router is short enough that a reviewer rereads it on every PR, which is the only thing that stops it from silently growing back into the encyclopedia it replaced. A pointer that no longer resolves is a worse failure than a missing rule, so a broken link in the router is itself a startup-check violation.
+
 ## Build It
 
 `code/main.py` ships:

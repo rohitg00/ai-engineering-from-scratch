@@ -60,6 +60,36 @@ Listing how to roll back forces the contract author to think about what could go
 
 The agent writes a diff. The checker reads the diff, the allowed globs, the forbidden globs, and a list of any acceptance commands that ran. Each violation is a tagged finding the verification gate can refuse.
 
+### Two altitudes of scope: the feature list and the task contract
+
+The scope contract bounds one task. It does not bound the project. An agent can stay perfectly inside a contract for the login fix and still, on the next turn, decide the project also needs a settings page, a dark mode toggle, and a rewrite of the router. The contract was never asked which work was in scope for the project, only which files were in scope for the task.
+
+That second altitude needs its own primitive: a `feature_list.json` the agent reads at session start. It is the project backlog as a machine-readable, ordered file. The agent picks exactly one feature whose `status` is `todo`, writes its `id` into the active scope contract, and is forbidden from starting a second feature in the same session. "One feature at a time" stops being a line in the prompt the agent can rationalize past and becomes a value it reads off disk and a check the gate enforces.
+
+```json
+{
+  "project": "knowledge-base",
+  "active": "import-pdf",
+  "features": [
+    { "id": "import-pdf",   "status": "in_progress", "goal": "import a PDF into the library",        "done_when": "pytest tests/test_import.py && a sample PDF appears in the library view" },
+    { "id": "full-text-search", "status": "todo",     "goal": "search document text and rank hits",   "done_when": "query returns ranked results with snippets" },
+    { "id": "cite-answers", "status": "todo",         "goal": "answers carry source citations",        "done_when": "every answer renders at least one clickable citation" }
+  ]
+}
+```
+
+| Field | Purpose |
+|-------|---------|
+| `active` | The single feature the current session may touch; empty means pick one and set it |
+| `features[].id` | Stable slug the scope contract's `task_id` points at |
+| `features[].status` | `todo`, `in_progress`, `done`, `blocked`; only one `in_progress` at a time |
+| `features[].goal` | One sentence the reviewer can verify |
+| `features[].done_when` | The acceptance line that flips `in_progress` to `done` |
+
+Two rules make the list load-bearing instead of decorative. First, the invariant "at most one `in_progress`" is itself a startup check (Phase 14 · 33): if the list shows two, the session refuses to start until a human resolves it. Second, the feature list is a file, not a chat message, because the chat scrolls out of context and the file persists across sessions and across agents. The handoff (Phase 14 · 40) writes the finished feature's status back to `done` so the next session opens to an accurate board instead of re-deriving what is left.
+
+The contract and the list compose by least privilege, the same merge described below: the task contract's `allowed_files` must sit inside whatever the active feature touches, never outside it.
+
 ## Build It
 
 `code/main.py` implements:
