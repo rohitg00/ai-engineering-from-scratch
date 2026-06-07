@@ -664,15 +664,15 @@
       const w = 110, h = 50, y = OP_Y;
       const g = el('g', {});
       g.appendChild(el('rect', { x: x - w/2, y, width: w, height: h, fill:'var(--bg)', stroke:'var(--blueprint)', 'stroke-width': 1.4 }));
-      g.appendChild(el('text', { x, y: y + 22, 'text-anchor':'middle', 'font-family':'var(--font-mono)', 'font-size': 13, 'font-weight': 700, fill:'var(--blueprint)' }, [txt(label)]));
-      g.appendChild(el('text', { x, y: y + 38, 'text-anchor':'middle', 'font-family':'var(--font-mono)', 'font-size': 10, fill:'var(--ink-mute)' }, [txt(sub)]));
+      g.appendChild(el('text', { x, y: y + 21, 'text-anchor':'middle', 'font-family':'var(--font-mono)', 'font-size': 13, 'font-weight': 700, fill:'var(--blueprint)' }, [txt(label)]));
+      g.appendChild(el('text', { x, y: y + 37, 'text-anchor':'middle', 'font-family':'var(--font-mono)', 'font-size': 8.5, fill:'var(--ink-mute)' }, [txt(sub)]));
       svg.appendChild(g);
       return { x, y, w, h, box: g };
     }
-    const op1 = opBox((colX[0]+colX[1])/2, 'MHA', 'multi-head attention');
-    const op2 = opBox((colX[1]+colX[2])/2, '+', 'residual + LayerNorm');
+    const op1 = opBox((colX[0]+colX[1])/2, 'MHA', 'multi-head attn');
+    const op2 = opBox((colX[1]+colX[2])/2, '+', 'residual + norm');
     const op3 = opBox((colX[2]+colX[3])/2, 'FFN', 'feed-forward');
-    const op4 = opBox((colX[3]+colX[4])/2, '+', 'residual + LayerNorm');
+    const op4 = opBox((colX[3]+colX[4])/2, '+', 'residual + norm');
 
     // beam particles
     const beam = el('circle', { r: 5, fill:'var(--warn)' });
