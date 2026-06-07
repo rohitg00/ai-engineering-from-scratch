@@ -34,7 +34,9 @@
       '.lf-bar.over i{background:var(--warn,#b8870f)}',
       '.lf-meta{font-family:var(--font-mono,monospace);font-size:.7rem;color:var(--ink-mute,#777);margin-top:8px;letter-spacing:.04em}',
       '.lf-formula{font-family:var(--font-mono,monospace);font-size:.72rem;color:var(--ink-soft,#555);margin-top:6px;word-break:break-word}',
-      '.lf-cap{font-family:var(--font-body,serif);font-size:.92rem;color:var(--ink-soft,#555);line-height:1.5;padding:12px 16px;border-top:1px solid var(--rule-soft,#ddd)}'
+      '.lf-cap{font-family:var(--font-body,serif);font-size:.92rem;color:var(--ink-soft,#555);line-height:1.5;padding:12px 16px;border-top:1px solid var(--rule-soft,#ddd)}',
+      '.lesson-figure.lf-animated{border:1px solid var(--rule-soft,#ddd);background:var(--bg,#fafaf5);margin:28px 0;padding:14px}',
+      '.lesson-figure.lf-animated svg{display:block;width:100%;height:auto;max-width:760px;margin:0 auto;color:var(--blueprint,#3553ff)}'
     ].join('\n');
     document.head.appendChild(s);
   }
@@ -113,20 +115,35 @@
     state._render();
   }
 
-  var FIGS = { 'kv-cache': kvCache };
+  // Interactive widgets defined here. Animated figures live in figures.js and
+  // are reached through window.AIFS_FIGURES (same fenced-block syntax).
+  var FIGS = { 'kv-cache-sizer': kvCache };
 
   function mountLessonFigures(root) {
     ensureStyles();
     (root || document).querySelectorAll('.lesson-figure[data-figure]').forEach(function (host) {
       if (host.dataset.lfMounted) return;
       var parts = (host.dataset.figure || '').trim().split(/\s+/);
-      var fn = FIGS[parts[0]];
-      if (!fn) return;
+      var name = parts[0];
       var cfg = {};
-      var rest = host.dataset.figure.trim().slice(parts[0].length).trim();
+      var rest = host.dataset.figure.trim().slice(name.length).trim();
       if (rest) { try { cfg = JSON.parse(rest); } catch (e) {} }
-      try { fn(host, cfg); host.dataset.lfMounted = '1'; }
-      catch (e) { console.warn('lesson figure "' + parts[0] + '" failed:', e); }
+
+      var local = FIGS[name];
+      var animated = window.AIFS_FIGURES && window.AIFS_FIGURES[name];
+      try {
+        if (local) {
+          local(host, cfg);
+        } else if (animated) {
+          host.classList.add('lf-animated');
+          animated(host, cfg);
+        } else {
+          return; // unknown figure; leave the empty host out
+        }
+        host.dataset.lfMounted = '1';
+      } catch (e) {
+        console.warn('lesson figure "' + name + '" failed:', e);
+      }
     });
   }
 

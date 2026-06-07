@@ -56,7 +56,7 @@ That 10 GB is why Llama 3 70B at 128K context needs most of a 40 GB A100 just fo
 Drag the dimensions and watch the cache size move. Push the sequence length or batch up and see how fast it blows past a single GPU:
 
 ```figure
-kv-cache
+kv-cache-sizer
 ```
 
 ### Flash Attention — the tiling trick

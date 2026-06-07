@@ -56,6 +56,10 @@ BPE is a greedy compression algorithm repurposed for tokenization. The idea is s
 
 Start with individual characters. Count every adjacent pair in the training corpus. Merge the most frequent pair into a new token. Repeat until you reach your target vocabulary size.
 
+```figure
+tokenizer-bpe
+```
+
 Here is BPE running on a tiny corpus with the words "lower", "lowest", and "newest":
 
 ```

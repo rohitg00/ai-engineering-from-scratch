@@ -101,6 +101,12 @@ Scores = Q @ K^T    shape: (n, n)
 Each row: one token's attention over the entire sequence
 ```
 
+Watch one query at a time sweep the keys: each row scores every token, softmax turns the scores into weights, and the context vector is the weighted blend of values.
+
+```figure
+attention-matrix
+```
+
 ### Why Scale?
 
 The dot products grow with dimension dk. If dk = 64, dot products can be in the range of tens, pushing softmax into regions where gradients vanish. The fix: divide by sqrt(dk).

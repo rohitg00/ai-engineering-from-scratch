@@ -28,6 +28,12 @@ This lesson is the skeleton. Next lessons specialize it — 06 for encoders, 07 
 5. **Layer normalization.** `LayerNorm` or `RMSNorm` (modern). Stabilizes the residual stream.
 6. **Cross-attention (decoder only).** Queries come from the decoder, keys and values from the encoder output.
 
+Watch a vector flow through one block: attention mixes across positions, the residual carries it forward, the FFN transforms it, and norm keeps the stream stable.
+
+```figure
+transformer-block
+```
+
 ### Encoder block (used by BERT, T5 encoder)
 
 ```
