@@ -323,17 +323,20 @@ class TestListProviders(unittest.TestCase):
 class TestAgentLoop(unittest.TestCase):
     """Test agent loop with provider integration."""
 
-    def test_agent_extract_tool_calls(self):
-        sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-        # Import the agent module
+    def setUp(self):
+        """Load agent module once per test."""
         agent_path = os.path.join(
             os.path.dirname(__file__), "..",
             "phases", "14-agent-engineering", "01-the-agent-loop", "code"
         )
-        sys.path.insert(0, agent_path)
+        if agent_path not in sys.path:
+            sys.path.insert(0, agent_path)
         from agent_loop import SimpleAgent, TOOLS
+        self.SimpleAgent = SimpleAgent
+        self.TOOLS = TOOLS
 
-        agent = SimpleAgent(TOOLS)
+    def test_agent_extract_tool_calls(self):
+        agent = self.SimpleAgent(self.TOOLS)
         calls = agent._extract_tool_calls(
             "TOOL_CALL: list_files(path=/tmp)"
         )
@@ -342,28 +345,12 @@ class TestAgentLoop(unittest.TestCase):
         self.assertEqual(calls[0]["arguments"]["path"], "/tmp")
 
     def test_agent_no_tool_calls(self):
-        sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-        agent_path = os.path.join(
-            os.path.dirname(__file__), "..",
-            "phases", "14-agent-engineering", "01-the-agent-loop", "code"
-        )
-        sys.path.insert(0, agent_path)
-        from agent_loop import SimpleAgent, TOOLS
-
-        agent = SimpleAgent(TOOLS)
+        agent = self.SimpleAgent(self.TOOLS)
         calls = agent._extract_tool_calls("Just a normal response")
         self.assertEqual(len(calls), 0)
 
     def test_agent_multiple_tool_calls(self):
-        sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-        agent_path = os.path.join(
-            os.path.dirname(__file__), "..",
-            "phases", "14-agent-engineering", "01-the-agent-loop", "code"
-        )
-        sys.path.insert(0, agent_path)
-        from agent_loop import SimpleAgent, TOOLS
-
-        agent = SimpleAgent(TOOLS)
+        agent = self.SimpleAgent(self.TOOLS)
         calls = agent._extract_tool_calls(
             "TOOL_CALL: list_files(path=.) then TOOL_CALL: read_file(path=README.md)"
         )
