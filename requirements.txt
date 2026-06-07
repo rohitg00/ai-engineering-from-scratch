@@ -1,7 +1,7 @@
 numpy>=1.24
 matplotlib>=3.7
 jupyter>=1.0
-torch>=2.0
+torch>=2.10.1
 torchvision>=0.15
 torchaudio>=2.0
 transformers>=4.30
