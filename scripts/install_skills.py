@@ -20,9 +20,7 @@ Options:
     --force                            overwrite existing files
     --json                             write manifest.json only; do not print steps
 
-Always writes <target>/manifest.json with the full inventory (name, type, phase,
-lesson, source path, target path, tags, version).
-"""
+
 
 from __future__ import annotations
 
