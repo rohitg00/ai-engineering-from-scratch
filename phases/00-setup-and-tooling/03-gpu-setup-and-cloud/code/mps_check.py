@@ -1,7 +1,7 @@
 import torch
 import time
-import psutil
 import platform
+import os
 
 def check_mps():
     print("====MPS Check====\n")
@@ -39,7 +39,7 @@ def check_mps():
         print(f"MPS matrix multiply ({size}x{size}): {mps_time:.3f}s")
         print(f"Speedup: {cpu_time / mps_time:.0f}x")
 
-        total_ram = psutil.virtual_memory().total
+        total_ram = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")
         vram_gb = total_ram / 1e9
         params_fp16 = vram_gb * 1e9 / 2
         params_billions = params_fp16 / 1e9
