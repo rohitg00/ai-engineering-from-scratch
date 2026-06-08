@@ -24,7 +24,7 @@
     .about {
       max-width: 760px;
       margin: 0 auto;
-      padding: 64px 0 80px;
+      padding: 100px 0 80px;
     }
     .about-eyebrow {
       font-family: var(--font-mono);
@@ -69,7 +69,7 @@
       border: 1px solid var(--rule-soft);
     }
     .about .lede { font-size: 1.15rem; color: var(--ink); }
-    @media (max-width: 768px) { .about { padding: 40px 0 56px; } }
+    @media (max-width: 768px) { .about { padding: 80px 0 48px; } }
   </style>
 </head>
 <body>
@@ -158,6 +158,41 @@
       "founder": { "@type": "Person", "name": "Rohit Ghumare", "url": "https://github.com/rohitg00" }
     }
   }
+  </script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var stored = localStorage.getItem('theme');
+      if (stored) {
+        root.setAttribute('data-theme', stored);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        root.setAttribute('data-theme', 'dark');
+      } else {
+        root.setAttribute('data-theme', 'light');
+      }
+
+      function updateIcon() {
+        var icon = document.getElementById('themeIcon');
+        if (!icon) return;
+        icon.textContent = root.getAttribute('data-theme') === 'light' ? 'N' : 'D';
+      }
+
+      updateIcon();
+
+      document.addEventListener('DOMContentLoaded', function () {
+        updateIcon();
+
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+          btn.addEventListener('click', function () {
+            var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateIcon();
+          });
+        }
+      });
+    })();
   </script>
   <script src="data.js?v=20260525a"></script>
   <script src="progress.js?v=20260525a"></script>
