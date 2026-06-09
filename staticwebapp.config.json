@@ -1,0 +1,24 @@
+{
+  "routes": [
+    { "route": "/", "rewrite": "/site/index.html" },
+    { "route": "/glossary", "rewrite": "/site/glossary.html" },
+    { "route": "/catalog", "rewrite": "/site/catalog.html" },
+    { "route": "/path", "rewrite": "/site/prereqs.html" },
+    { "route": "/roadmap", "rewrite": "/site/prereqs.html" },
+    { "route": "/about", "rewrite": "/site/about.html" }
+  ],
+  "navigationFallback": {
+    "rewrite": "/site/index.html",
+    "exclude": ["/site/*", "/phases/*", "/assets/*", "/*.{js,css,png,jpg,jpeg,svg,webp,woff2,woff,ttf,ico,md,json}"]
+  },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff"
+  },
+  "mimeTypes": {
+    ".md": "text/markdown",
+    ".json": "application/json"
+  },
+  "responseOverrides": {
+    "404": { "rewrite": "/site/index.html" }
+  }
+}

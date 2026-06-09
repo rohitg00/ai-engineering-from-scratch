@@ -44,27 +44,12 @@
   }
 
   function load() {
+    // No runtime network calls: only paint a previously cached value.
+    // The live GitHub fetch was removed to keep pages fully self-contained.
     var cached = readCache();
     if (cached != null) {
       paint(cached);
-      return;
     }
-    fetch('https://api.github.com/repos/' + REPO, {
-      headers: { Accept: 'application/vnd.github+json' },
-    })
-      .then(function (r) {
-        if (!r.ok) throw new Error('gh ' + r.status);
-        return r.json();
-      })
-      .then(function (data) {
-        var n = data.stargazers_count;
-        if (typeof n !== 'number') return;
-        writeCache(n);
-        paint(n);
-      })
-      .catch(function () {
-        // Leave the placeholder; the link still works.
-      });
   }
 
   if (document.readyState === 'loading') {
