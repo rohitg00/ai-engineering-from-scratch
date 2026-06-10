@@ -116,6 +116,23 @@ class PathJailChecks(unittest.TestCase):
         reason = _check_path_jail(["echo", "-n"], cfg)
         self.assertIsNone(reason)
 
+    def test_slashless_symlink_to_outside_is_denied(self) -> None:
+        # A symlink whose name has no slash points outside the root. The module
+        # advertises a "symlink-safe path jail via realpath prefix check", so the
+        # jail must resolve and refuse it even though _looks_like_path misses it.
+        root, cfg = _make_root()
+        outside_dir = tempfile.mkdtemp(prefix="sandbox-outside-")
+        secret = os.path.join(outside_dir, "secret.txt")
+        with open(secret, "w", encoding="utf-8") as fh:
+            fh.write("TOP-SECRET\n")
+        try:
+            os.symlink(secret, os.path.join(root, "link.txt"))
+        except OSError:
+            self.skipTest("symlinks not supported on this platform")
+        reason = _check_path_jail(["cat", "link.txt"], cfg)
+        self.assertIsNotNone(reason)
+        self.assertIn("outside project root", reason)
+
 
 class TruncateTests(unittest.TestCase):
     def test_under_cap_not_truncated(self) -> None:
