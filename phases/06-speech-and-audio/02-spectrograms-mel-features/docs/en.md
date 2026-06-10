@@ -33,6 +33,10 @@ Mel spectrograms push further. Humans perceive pitch logarithmically: 100 Hz vs 
 
 **Resolution trade.** Larger FFT = better frequency resolution but worse time resolution. 25 ms / 10 ms is the audio-ML default; 50 ms / 12.5 ms for music; 5 ms / 2 ms for transient detection (drum hits, plosives).
 
+```figure
+spectrogram-window
+```
+
 ## Build It
 
 ### Step 1: frame the waveform

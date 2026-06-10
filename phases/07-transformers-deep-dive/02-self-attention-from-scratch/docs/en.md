@@ -163,6 +163,10 @@ Formula in one line:
 Attention(Q, K, V) = softmax( Q @ K^T / sqrt(dk) ) @ V
 ```
 
+```figure
+softmax-attention-scaling
+```
+
 ## Build It
 
 ### Step 1: Softmax from scratch

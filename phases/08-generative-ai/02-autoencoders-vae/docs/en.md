@@ -38,6 +38,10 @@ Reconstruction pushes `x̂` toward `x`. KL pushes `q(z|x)` toward the prior. The
 
 **Sampling.** At inference: draw `z ~ N(0, I)`, forward through decoder. One forward pass — no iterative sampling like diffusion.
 
+```figure
+vae-latent-grid
+```
+
 ## Build It
 
 `code/main.py` implements a tiny VAE without numpy or torch. Input is 8-dimensional synthetic data drawn from a 2-component Gaussian mixture in 8-D. Encoder and decoder are single hidden-layer MLPs. We implement tanh activation, forward pass, loss, and a hand-written backward pass. Not production — pedagogy.

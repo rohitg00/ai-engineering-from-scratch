@@ -70,6 +70,10 @@ LangGraph originally shipped a `langgraph-supervisor` library with a high-level 
 - **Simple queries.** Single-agent handles them faster and cheaper. Use the lead's "scale effort" check before spawning workers.
 - **Strict determinism.** Supervisor uses LLM-selected delegation. Static graphs are better when audit/replay matter more than adaptability.
 
+```figure
+supervisor-hierarchy
+```
+
 ## Build It
 
 `code/main.py` implements a supervisor of three parallel workers using `threading`. The lead decomposes a query into sub-questions, workers run concurrently on each sub-question, and the lead synthesizes. No real LLMs — the workers are scripted to simulate fetch-and-summarize.

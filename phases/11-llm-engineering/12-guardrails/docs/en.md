@@ -177,6 +177,10 @@ No defense is perfect. Here is the spectrum:
 
 Most applications should target layered defense. Maximum security is for financial services, healthcare, and government. The cost-benefit math: a $50/month moderation API is cheaper than one viral screenshot of your bot producing harmful content.
 
+```figure
+guardrail-gates
+```
+
 ## Build It
 
 ### Step 1: Input Guardrails

@@ -135,6 +135,10 @@ The only eval that matters for production. The process:
 | LLM-as-judge | ~$0.01 | ~80% | Open-ended generation |
 | Human eval | $0.10-$2.00 | N/A (is the ground truth) | Ambiguous, high-stakes tasks |
 
+```figure
+perplexity-loss
+```
+
 ## Build It
 
 ### Step 1: A Minimal Eval Framework

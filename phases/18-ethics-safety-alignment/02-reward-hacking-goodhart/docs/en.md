@@ -69,6 +69,10 @@ None of these eliminate reward hacking. They move the curve's peak further out. 
 
 This view implies the defense is also unified. Every mitigation has to either reduce proxy-target gap (better data, better RMs), reduce optimization pressure (conservative schedules, early stop), or shift selection pressure onto hard-to-game features (process supervision, debate, information flow control).
 
+```figure
+rlhf-reward-kl
+```
+
 ## Use It
 
 `code/main.py` simulates Gao et al.'s over-optimization curves on a toy regression problem. The "gold" reward is the true linear function of a feature vector. The "proxy" RM is the gold plus Gaussian noise fit on a finite sample. A policy is a mean of a Gaussian over features; training is hill-climbing on proxy reward with a KL penalty to the initial policy. You can vary: sample size of the proxy, KL coefficient, and the noise tail heaviness. Watch the proxy-gold gap open at exactly the KL distance the paper predicts.

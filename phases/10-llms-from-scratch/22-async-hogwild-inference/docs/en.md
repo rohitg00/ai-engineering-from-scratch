@@ -102,6 +102,10 @@ As of April 2026, Hogwild! is a research method with an open-source PyTorch impl
 
 Worth knowing. Worth experimenting with. Not yet worth betting a product on.
 
+```figure
+continuous-batching
+```
+
 ## Build It
 
 `code/main.py` implements a toy Hogwild! simulator:

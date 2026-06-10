@@ -221,6 +221,10 @@ SVMs still win in these situations:
 - Binary classification with clear margin structure
 - Anomaly detection (one-class SVM)
 
+```figure
+svm-margin
+```
+
 ## Build It
 
 ### Step 1: Hinge loss and gradient

@@ -219,6 +219,10 @@ Multi-agent adds complexity. Every message between agents is a potential failure
 
 Rule of thumb: if a task takes fewer than 20 tool calls and fits in 100k tokens, keep it single-agent.
 
+```figure
+swarm-messages
+```
+
 ## Build It
 
 ### Step 1: The Overloaded Single Agent

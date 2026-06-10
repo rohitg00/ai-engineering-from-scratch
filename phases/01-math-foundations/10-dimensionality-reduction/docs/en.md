@@ -190,6 +190,10 @@ Plotting cumulative explained variance against number of components gives you th
 
 Reconstruction error is useful beyond choosing k. You can use it for anomaly detection: samples with high reconstruction error are outliers that do not fit the learned subspace. This is the basis of PCA-based anomaly detection in production systems.
 
+```figure
+pca-axes
+```
+
 ## Build It
 
 ### Step 1: PCA from scratch

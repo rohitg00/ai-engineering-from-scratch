@@ -169,6 +169,10 @@ When to prioritize:
 - **Recall**: when false negatives are costly (cancer screening, you do not want to miss a tumor)
 - **F1**: when you need a single balanced metric
 
+```figure
+logistic-sigmoid
+```
+
 ## Build It
 
 ### Step 1: Sigmoid function and data generation

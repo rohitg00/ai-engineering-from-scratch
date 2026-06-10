@@ -113,6 +113,10 @@ Broadcasting stretches the vector across rows:
 
 Every modern framework does this automatically. Understanding it prevents confusion when shapes seem wrong but the code runs.
 
+```figure
+vector-projection
+```
+
 ## Build It
 
 ### Step 1: Vector class

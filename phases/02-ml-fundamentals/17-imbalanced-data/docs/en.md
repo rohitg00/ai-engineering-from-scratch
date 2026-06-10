@@ -211,6 +211,10 @@ flowchart TD
     M -->|Yes| O[Ship it]
 ```
 
+```figure
+class-imbalance
+```
+
 ## Build It
 
 ### Step 1: Generate an imbalanced dataset

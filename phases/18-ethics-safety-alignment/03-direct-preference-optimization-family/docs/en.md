@@ -120,6 +120,10 @@ DAAs do not escape Goodhart. They change the surface where it bites from "reward
 
 Every lab runs all five on a battery and picks the winner per task. There is no reason the optimum is the same for math reasoning and safety.
 
+```figure
+dpo-margin
+```
+
 ## Use It
 
 `code/main.py` compares six losses (DPO, IPO, KTO, SimPO, ORPO, BPO) on a toy preference dataset where the true preference strength varies by pair. Each loss is optimized against the same 500-pair sample with a small softmax policy. Plots final win rate, chosen-log-prob drift, and implicit-reward spread per method.

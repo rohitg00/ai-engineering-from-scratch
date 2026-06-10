@@ -49,6 +49,10 @@ Lower variance than SARSA (no sample of `a'`), same on-policy target. Often the 
 
 **n-step TD and TD(λ).** Interpolate between TD(0) and MC by waiting `n` steps before bootstrapping. `n=1` is TD, `n=∞` is MC. TD(λ) averages over all `n` with geometric weights `(1-λ)λ^{n-1}`. Most deep-RL uses `n` between 3 and 20.
 
+```figure
+qlearning-gridworld
+```
+
 ## Build It
 
 ### Step 1: SARSA on ε-greedy policy

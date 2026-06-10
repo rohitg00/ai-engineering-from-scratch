@@ -243,6 +243,10 @@ When ops:byte is high (prefill, large batches), you hit the compute roof. Memory
 
 The crossover point on A100 is around ops:byte = 156 (312 TFLOPS / 2 TB/s). Below 156, you are memory-bound. Above 156, you are compute-bound. Continuous batching pushes decode toward this crossover by packing more tokens per iteration.
 
+```figure
+context-window-slide
+```
+
 ## Build It
 
 ### Step 1: KV Cache from Scratch

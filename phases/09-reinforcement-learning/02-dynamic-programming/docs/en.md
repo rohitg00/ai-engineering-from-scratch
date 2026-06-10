@@ -38,6 +38,10 @@ Repeat until `max_s |V_{new}(s) - V(s)| < ε`. Extract the policy at the end by 
 
 **Why `γ < 1` matters.** The Bellman operator is a `γ`-contraction in the sup-norm: `||T V - T V'||_∞ ≤ γ ||V - V'||_∞`. Contraction implies unique fixed point and geometric convergence. Drop `γ < 1` and you lose the guarantee — you need a finite horizon or an absorbing terminal state.
 
+```figure
+value-iteration-gamma
+```
+
 ## Build It
 
 ### Step 1: build the GridWorld MDP model

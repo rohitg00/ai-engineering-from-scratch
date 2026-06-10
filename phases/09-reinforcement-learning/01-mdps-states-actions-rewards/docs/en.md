@@ -38,6 +38,10 @@ You cannot learn from this stream until you formalize it. "What I saw," "what I 
 
 These split expected return into "this step's reward" plus "discounted value of where you land." Recursive. Every algorithm in Phase 9 either iterates this equation to convergence (dynamic programming), samples from it (Monte Carlo), or bootstraps it one step (temporal difference).
 
+```figure
+discount-horizon
+```
+
 ## Build It
 
 ### Step 1: a tiny deterministic MDP

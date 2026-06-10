@@ -100,6 +100,10 @@ The encoder most open VLMs ship with in 2026 is SigLIP 2 SO400m/14 at native res
 
 Every decision in that config traces back to a paper you can read.
 
+```figure
+image-patch-tokens
+```
+
 ## Use It
 
 `code/main.py` is a patch tokenizer and geometry calculator. It takes (image H, W, patch P, hidden D, depth L) and reports:

@@ -76,6 +76,10 @@ In 2026, min-p + temperature 0.7 is a reasonable default for open-weights models
 
 The core architecture hasn't changed much since GPT-2. Everything interesting has happened in data, scale, and post-training.
 
+```figure
+causal-mask
+```
+
 ## Build It
 
 ### Step 1: the causal mask

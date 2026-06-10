@@ -180,6 +180,10 @@ With strides:   RF grows multiplicatively with stride along each layer.
 
 The entire reason "3x3 all the way down" works (VGG, ResNet, ConvNeXt) is that two 3x3 convs see the same input area as one 5x5 conv but with fewer parameters and an extra non-linearity in between.
 
+```figure
+convolution-kernel
+```
+
 ## Build It
 
 ### Step 1: Pad an array

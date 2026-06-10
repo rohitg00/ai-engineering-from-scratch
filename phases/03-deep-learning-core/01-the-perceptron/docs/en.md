@@ -112,6 +112,10 @@ This is a fundamental limit. A single perceptron can only solve linearly separab
 
 The fix: stack perceptrons into layers. A multi-layer perceptron can solve XOR by combining two linear decisions into a nonlinear one.
 
+```figure
+perceptron-boundary
+```
+
 ## Build It
 
 ### Step 1: The Perceptron class

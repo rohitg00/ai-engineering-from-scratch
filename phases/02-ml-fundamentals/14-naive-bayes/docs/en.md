@@ -225,6 +225,10 @@ In practice, we work in log space to avoid floating-point underflow. Instead of 
 log P(class | features) = log P(class) + sum_i log P(feature_i | class)
 ```
 
+```figure
+naive-bayes
+```
+
 ## Build It
 
 The code in `code/naive_bayes.py` implements both MultinomialNB and GaussianNB from scratch.

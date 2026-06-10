@@ -273,6 +273,10 @@ A language model with perplexity 50 is, on average, as confused as if it had to 
 
 GPT-2 achieved perplexity ~30 on common benchmarks. Modern models are in the single digits for well-represented domains.
 
+```figure
+entropy-kl
+```
+
 ## Build It
 
 ### Step 1: Information content and entropy

@@ -189,6 +189,10 @@ Trees and forests dominate neural networks on tabular data. Several reasons:
 
 Neural networks win when the data has spatial or sequential structure (images, text, audio). For flat tables of features, trees are the default.
 
+```figure
+decision-tree-depth
+```
+
 ## Build It
 
 ### Step 1: Gini impurity and entropy

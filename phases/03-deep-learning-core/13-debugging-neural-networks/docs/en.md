@@ -207,6 +207,10 @@ These are the bugs that waste the most collective hours in the PyTorch community
 | Gradients all zero | Dead ReLUs or detached computation graph | Switch to LeakyReLU, check `.requires_grad` |
 | Out of memory during training | Batch too large or graph not freed | Reduce batch size, use `torch.no_grad()` for eval |
 
+```figure
+learning-curves
+```
+
 ## Build It
 
 A diagnostic toolkit that monitors activations, gradients, and loss curves. You will deliberately break a network and use the toolkit to diagnose each problem.

@@ -132,6 +132,10 @@ dL/db1 = dL/dz1
 
 Every gradient is a product of local derivatives traced back from the loss. That's all backpropagation is.
 
+```figure
+backprop-vanishing
+```
+
 ## Build It
 
 ### Step 1: The Value Node

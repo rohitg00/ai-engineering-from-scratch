@@ -72,6 +72,27 @@
     return el('div', { class: 'lf-ctrl' }, [el('label', {}, [label, val]), input]);
   }
 
+  function select(state, key, label, options) {
+    var sel = el('select');
+    options.forEach(function (o) { sel.appendChild(el('option', { value: o[1] }, [o[0]])); });
+    sel.value = state[key];
+    sel.addEventListener('change', function () { state[key] = sel.value; state._render(); });
+    return el('div', { class: 'lf-ctrl' }, [el('label', {}, [label]), sel]);
+  }
+
+  function clamp(x, lo, hi) { return x < lo ? lo : x > hi ? hi : x; }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  // requestAnimationFrame loop that respects reduced-motion (renders one static
+  // frame for headless / reduced-motion, animates in a real browser).
+  function raf(step) {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !window.requestAnimationFrame) { step(0, true); return function () {}; }
+    var alive = true, t0 = null;
+    function tick(ts) { if (!alive) return; if (t0 === null) t0 = ts; step((ts - t0) / 1000, false); window.requestAnimationFrame(tick); }
+    window.requestAnimationFrame(tick);
+    return function () { alive = false; };
+  }
+
   // ── kv-cache: drag the dims, watch the cache size ──────────────────────
   function kvCache(host, cfg) {
     var GiB = Math.pow(1024, 3);
@@ -710,6 +731,16 @@
     });
   }
 
+  // Register more widgets from external module files (figures-<topic>.js).
+  // Modules load after this file and call LF.register({ 'name': fn, ... }).
+  function register(obj) { for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k)) FIGS[k] = obj[k]; }
+
   window.mountLessonFigures = mountLessonFigures;
   window.LESSON_FIGURES = FIGS;
+  // Shared toolkit for figure module files. Vanilla, no deps, theme via CSS vars.
+  window.LF = {
+    el: el, svgEl: svgEl, slider: slider, select: select,
+    fmtInt: fmtInt, fmtSeq: fmtSeq, clamp: clamp, lerp: lerp, raf: raf,
+    register: register
+  };
 })();

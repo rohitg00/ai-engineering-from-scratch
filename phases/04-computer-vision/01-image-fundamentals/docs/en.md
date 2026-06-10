@@ -196,6 +196,10 @@ Lanczos               slowest, best quality, used for final display
 
 Rule of thumb: bilinear for training, bicubic or lanczos for assets you will look at, nearest for anything containing integer class IDs.
 
+```figure
+conv-output-size
+```
+
 ## Build It
 
 ### Step 1: Load an image and inspect its shape

@@ -74,6 +74,10 @@ The MemGPT paper is the 2026 foundation even if production systems run Letta, Me
 - **Memory poisoning.** External memory is retrieved text. If attacker-controlled content lands in a memory note, the agent re-ingests it next session. This is the Greshake et al. (Lesson 27) attack restated over time.
 - **Citation loss.** Agent recalls "the user asked me to ship X" but cannot cite which turn. Store source references (session ID, turn ID) with every archival write.
 
+```figure
+context-budget
+```
+
 ## Build It
 
 `code/main.py` implements MemGPT's two-tier pattern in stdlib:
