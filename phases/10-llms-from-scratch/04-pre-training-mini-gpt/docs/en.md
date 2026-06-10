@@ -464,6 +464,10 @@ Temperature controls randomness. Temperature 1.0 uses the raw distribution. Temp
 
 The `tokens[-seq_len:]` window is necessary because the model has a maximum context length (1024 for GPT-2). Once you exceed it, you must drop the oldest tokens. This is the "context window" that everyone talks about.
 
+```figure
+sampling-decoder
+```
+
 ## Use It
 
 ### Full Training and Generation Demo

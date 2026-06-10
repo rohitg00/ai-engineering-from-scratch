@@ -219,6 +219,10 @@ FP16 to INT4 (GGUF Q4_K_M): 3.5x memory reduction, 1-2% quality loss. Optimized 
 
 FP16 to INT2: 8x memory reduction, 5-15% quality loss. Only viable for specific narrow tasks where you can tolerate degradation. Research frontier, not production-ready for general use.
 
+```figure
+quantization
+```
+
 ## Build It
 
 ### Step 1: Number Format Representations

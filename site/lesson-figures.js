@@ -317,6 +317,194 @@
     state._render();
   }
 
+  // ── sampling-decoder: temperature, then top-k, then top-p, over the logits ─
+  function samplingDecoder(host, cfg) {
+    var logits = (cfg && cfg.logits) || [4.2, 3.6, 3.1, 2.5, 2.0, 1.4, 0.9, 0.4, -0.2, -0.9];
+    var labels = (cfg && cfg.labels) || ['the', 'a', 'an', 'this', 'that', 'one', 'some', 'my', 'our', 'its'];
+    var state = { T: 0.8, k: 5, p: 0.9 };
+    var rows = el('div', {});
+    var meta = el('div', { class: 'lf-meta' });
+    var formula = el('div', { class: 'lf-formula' });
+    state._render = function () {
+      var T = Math.max(0.05, state.T);
+      var ex = logits.map(function (z) { return Math.exp(z / T); });
+      var sum = ex.reduce(function (a, b) { return a + b; }, 0);
+      var probs = ex.map(function (e) { return e / sum; });
+      var idx = probs.map(function (p, i) { return i; }).sort(function (a, b) { return probs[b] - probs[a]; });
+      var keep = {};
+      var kLim = state.k === 0 ? probs.length : state.k;
+      var cum = 0, kept = 0;
+      idx.forEach(function (i, rank) {
+        if (rank < kLim && (cum < state.p || kept === 0)) { keep[i] = true; cum += probs[i]; kept++; }
+      });
+      var kSum = idx.reduce(function (a, i) { return a + (keep[i] ? probs[i] : 0); }, 0);
+      while (rows.firstChild) rows.removeChild(rows.firstChild);
+      idx.forEach(function (i) {
+        var on = !!keep[i];
+        var renorm = on ? probs[i] / kSum : 0;
+        var bar = el('i'); bar.style.width = (renorm * 100).toFixed(1) + '%';
+        if (!on) bar.style.background = 'var(--rule-soft,#ccc)';
+        var lab = el('label', {}, [labels[i] + (on ? '' : ' ·'), el('b', {}, [on ? (renorm * 100).toFixed(1) + '%' : 'cut'])]);
+        if (!on) lab.style.opacity = '0.45';
+        rows.appendChild(el('div', { class: 'lf-ctrl' }, [lab, el('div', { class: 'lf-bar' }, [bar])]));
+      });
+      meta.textContent = kept + ' of ' + probs.length + ' tokens survive  ·  ' + (T < 0.5 ? 'low T: near-greedy' : T > 1.2 ? 'high T: wild' : 'balanced');
+      formula.textContent = 'softmax(z / T) → keep top-' + (state.k === 0 ? '∞' : state.k) + ' → keep until cumulative p ≤ ' + state.p.toFixed(2) + ' → renormalize';
+    };
+    var grid = el('div', { class: 'lf-grid' }, [
+      slider(state, 'T', 'temperature', 0.1, 2.0, 0.05),
+      slider(state, 'k', 'top-k (0 = off)', 0, 10, 1),
+      slider(state, 'p', 'top-p (nucleus)', 0.1, 1.0, 0.05)
+    ]);
+    host.appendChild(el('div', { class: 'lf' }, [
+      el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['SAMPLING DECODER']), el('span', {}, ['temperature → top-k → top-p'])]),
+      el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [rows, meta, formula])]),
+      el('div', { class: 'lf-cap' }, ['Decoding runs three filters in order. Temperature reshapes the distribution, top-k caps the candidate count, top-p keeps the smallest set covering probability p. What survives is renormalized and sampled from.'])
+    ]));
+    state._render();
+  }
+
+  // ── scaling-laws: Chinchilla loss and the 20-tokens-per-parameter rule ─────
+  function scalingLaws(host) {
+    var state = { logN: 9, logD: 10.3 };
+    var num = el('span', { class: 'lf-num' });
+    var bar = el('i');
+    var barWrap = el('div', { class: 'lf-bar' }, [bar]);
+    var meta = el('div', { class: 'lf-meta' });
+    var formula = el('div', { class: 'lf-formula' });
+    function human(x) { var u = ['', 'K', 'M', 'B', 'T', 'P']; var i = 0; while (x >= 1000 && i < u.length - 1) { x /= 1000; i++; } return x.toFixed(x < 10 ? 1 : 0) + u[i]; }
+    state._render = function () {
+      var N = Math.pow(10, state.logN), D = Math.pow(10, state.logD);
+      var L = 1.69 + 406.4 / Math.pow(N, 0.34) + 410.7 / Math.pow(D, 0.28);
+      var C = 6 * N * D;
+      var ratio = D / N;
+      num.innerHTML = L.toFixed(3) + ' <small>loss</small>';
+      var pct = Math.max(2, Math.min(100, (ratio / 20) * 50));
+      bar.style.width = pct + '%';
+      barWrap.classList.toggle('over', ratio > 30 || ratio < 12);
+      meta.textContent = human(ratio) + ' tokens/param  ·  ' + (ratio < 12 ? 'under-trained: too few tokens' : ratio > 30 ? 'over-trained: spend on params instead' : 'near Chinchilla-optimal (~20)');
+      formula.textContent = 'N = ' + human(N) + ' params · D = ' + human(D) + ' tokens · compute 6ND ≈ ' + human(C) + ' FLOPs';
+    };
+    var grid = el('div', { class: 'lf-grid' }, [
+      slider(state, 'logN', 'parameters (10^x)', 7, 12, 0.1),
+      slider(state, 'logD', 'tokens (10^x)', 9, 13, 0.1)
+    ]);
+    host.appendChild(el('div', { class: 'lf' }, [
+      el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['SCALING LAWS']), el('span', {}, ['drag params and tokens'])]),
+      el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [num, barWrap, meta, formula])]),
+      el('div', { class: 'lf-cap' }, ['The Chinchilla fit predicts loss from parameters and tokens. For a fixed compute budget, loss is lowest near 20 tokens per parameter. Most early large models were badly under-trained: too many parameters, too few tokens.'])
+    ]));
+    state._render();
+  }
+
+  // ── quantization: bits per weight against model size and precision ─────────
+  function quantization(host) {
+    var state = { logN: 9.85, bits: 16 };
+    var num = el('span', { class: 'lf-num' });
+    var bar = el('i');
+    var barWrap = el('div', { class: 'lf-bar' }, [bar]);
+    var meta = el('div', { class: 'lf-meta' });
+    var formula = el('div', { class: 'lf-formula' });
+    var GB = 1e9;
+    function human(x) { var u = ['', 'K', 'M', 'B', 'T']; var i = 0; while (x >= 1000 && i < u.length - 1) { x /= 1000; i++; } return x.toFixed(x < 10 ? 1 : 0) + u[i]; }
+    state._render = function () {
+      var N = Math.pow(10, state.logN);
+      var bytesFp32 = N * 4;
+      var bytes = N * state.bits / 8;
+      var gb = bytes / GB;
+      num.innerHTML = gb.toFixed(gb < 10 ? 2 : 1) + ' <small>GB</small>';
+      bar.style.width = Math.min(100, state.bits / 32 * 100) + '%';
+      var levels = Math.pow(2, state.bits);
+      var err = state.bits >= 16 ? 'negligible' : state.bits >= 8 ? '< 1% perplexity hit' : state.bits >= 4 ? 'small with good schemes (GPTQ/AWQ)' : 'large: needs care';
+      meta.textContent = Math.round((1 - bytes / bytesFp32) * 100) + '% smaller than fp32  ·  quantization error: ' + err;
+      formula.textContent = human(N) + ' params · ' + state.bits + ' bits = ' + (state.bits >= 16 ? '2^' + state.bits : human(levels)) + ' levels per weight';
+    };
+    var sel = el('select');
+    [['fp32 (32-bit)', 32], ['fp16 / bf16 (16-bit)', 16], ['int8 (8-bit)', 8], ['int4 (4-bit)', 4], ['int2 (2-bit)', 2]].forEach(function (o) { sel.appendChild(el('option', { value: o[1] }, [o[0]])); });
+    sel.value = state.bits;
+    sel.addEventListener('change', function () { state.bits = Number(sel.value); state._render(); });
+    var grid = el('div', { class: 'lf-grid' }, [
+      slider(state, 'logN', 'parameters (10^x)', 8, 12, 0.05),
+      el('div', { class: 'lf-ctrl' }, [el('label', {}, ['precision']), sel])
+    ]);
+    host.appendChild(el('div', { class: 'lf' }, [
+      el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['QUANTIZATION']), el('span', {}, ['pick the precision'])]),
+      el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [num, barWrap, meta, formula])]),
+      el('div', { class: 'lf-cap' }, ['Each weight costs its bit-width in storage. Halving the bits halves the memory and roughly doubles throughput, while the precision lost grows. 8-bit is nearly free; 4-bit needs careful schemes; below that, accuracy falls off.'])
+    ]));
+    state._render();
+  }
+
+  // ── rope-explorer: rotary frequencies across position and dimension ────────
+  function ropeExplorer(host) {
+    var state = { pos: 16, logBase: 4 };
+    var W = 520, H = 220, PAD = 28, D = 64, SEQ = 64;
+    var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
+    var meta = el('div', { class: 'lf-meta' });
+    var formula = el('div', { class: 'lf-formula' });
+    var dims = [0, 8, 24, 56];
+    function px(s) { return PAD + s / SEQ * (W - 2 * PAD); }
+    function py(v) { return H - PAD - (v + 1) / 2 * (H - 2 * PAD); }
+    state._render = function () {
+      var base = Math.pow(10, state.logBase);
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      svg.appendChild(svgEl('line', { x1: PAD, y1: py(0), x2: W - PAD, y2: py(0), stroke: 'var(--rule-soft,#eee)', 'stroke-width': '1' }));
+      dims.forEach(function (di, j) {
+        var freq = 1 / Math.pow(base, di / D);
+        var d = '', i;
+        for (i = 0; i <= 160; i++) { var s = SEQ * i / 160; d += (i ? 'L' : 'M') + px(s).toFixed(1) + ' ' + py(Math.sin(s * freq)).toFixed(1) + ' '; }
+        var op = (1 - j * 0.2).toFixed(2);
+        svg.appendChild(svgEl('path', { d: d, fill: 'none', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '1.6', opacity: op }));
+      });
+      var mx = px(state.pos);
+      svg.appendChild(svgEl('line', { x1: mx, y1: PAD, x2: mx, y2: H - PAD, stroke: 'var(--ink-mute,#999)', 'stroke-width': '1', 'stroke-dasharray': '3 3' }));
+      meta.textContent = 'position ' + state.pos + '  ·  base ' + Math.round(base).toLocaleString('en-US') + '  ·  4 of ' + D + ' dimension pairs shown (dark = low dim, fast)';
+      formula.textContent = 'θ(pos, i) = pos / base^(2i/d)   ·   low dims rotate fast, high dims slow';
+    };
+    var grid = el('div', { class: 'lf-grid' }, [
+      slider(state, 'pos', 'token position', 0, SEQ, 1),
+      slider(state, 'logBase', 'base (10^x)', 2, 5, 0.1)
+    ]);
+    host.appendChild(el('div', { class: 'lf' }, [
+      el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['ROTARY POSITION']), el('span', {}, ['drag position and base'])]),
+      el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [svg, meta, formula])]),
+      el('div', { class: 'lf-cap' }, ['RoPE rotates each pair of dimensions by an angle that grows with position. Low dimensions use high frequencies (rotate fast, encode nearby order); high dimensions use low frequencies (rotate slowly, encode long-range distance). Raising the base stretches every wavelength, extending usable context.'])
+    ]));
+    state._render();
+  }
+
+  // ── lora-params: rank against trainable fraction of a weight matrix ────────
+  function loraParams(host) {
+    var state = { d: 4096, r: 8, layers: 32 };
+    var num = el('span', { class: 'lf-num' });
+    var bar = el('i');
+    var barWrap = el('div', { class: 'lf-bar' }, [bar]);
+    var meta = el('div', { class: 'lf-meta' });
+    var formula = el('div', { class: 'lf-formula' });
+    function human(x) { var u = ['', 'K', 'M', 'B']; var i = 0; while (x >= 1000 && i < u.length - 1) { x /= 1000; i++; } return x.toFixed(x < 10 ? 2 : 1) + u[i]; }
+    state._render = function () {
+      var mats = 2 * state.layers; // q and v projections per layer
+      var full = mats * state.d * state.d;
+      var lora = mats * 2 * state.d * state.r;
+      var frac = lora / full * 100;
+      num.innerHTML = frac.toFixed(frac < 1 ? 3 : 2) + ' <small>% trainable</small>';
+      bar.style.width = Math.min(100, frac * 8) + '%';
+      meta.textContent = human(lora) + ' trainable of ' + human(full) + ' frozen  ·  ' + Math.round(full / lora) + 'x fewer gradients to store';
+      formula.textContent = 'ΔW = B·A,  A∈ℝ^{r×d}, B∈ℝ^{d×r}  →  2·d·r per matrix vs d²  =  2r/d = ' + (2 * state.r / state.d * 100).toFixed(3) + '%';
+    };
+    var grid = el('div', { class: 'lf-grid' }, [
+      slider(state, 'd', 'model dim d', 512, 8192, 128),
+      slider(state, 'r', 'LoRA rank r', 1, 128, 1),
+      slider(state, 'layers', 'layers (q,v each)', 1, 96, 1)
+    ]);
+    host.appendChild(el('div', { class: 'lf' }, [
+      el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['LORA RANK']), el('span', {}, ['drag the rank'])]),
+      el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [num, barWrap, meta, formula])]),
+      el('div', { class: 'lf-cap' }, ['LoRA freezes the d×d weight and trains a low-rank update B·A with only 2·d·r parameters. The trainable fraction is 2r/d, so a rank of 8 on a 4096-dim model trains well under one percent of the weights while keeping most of the quality.'])
+    ]));
+    state._render();
+  }
+
   // Interactive widgets defined here. Animated figures live in figures.js and
   // are reached through window.AIFS_FIGURES (same fenced-block syntax).
   var FIGS = {
@@ -325,7 +513,12 @@
     'softmax-temperature': softmaxTemp,
     'bias-variance': biasVariance,
     'l2-regularization': regL2,
-    'lr-schedule': lrSchedule
+    'lr-schedule': lrSchedule,
+    'sampling-decoder': samplingDecoder,
+    'scaling-laws': scalingLaws,
+    'quantization': quantization,
+    'rope-explorer': ropeExplorer,
+    'lora-params': loraParams
   };
 
   function mountLessonFigures(root) {

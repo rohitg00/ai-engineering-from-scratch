@@ -84,6 +84,10 @@ Scaling laws still work, but:
 
 The Muon optimizer (Kimi Moonlight, 2024) showed a ~2× effective-compute gain over AdamW at matched data. Some 2026 training runs use Muon by default. Changes the absolute constant in the scaling law, not its shape.
 
+```figure
+scaling-laws
+```
+
 ## Build It
 
 See `code/main.py`. We implement the Chinchilla loss equation and solve for compute-optimal `(N, D)` at each of several compute budgets.
