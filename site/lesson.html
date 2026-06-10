@@ -1851,8 +1851,12 @@
       }
 
       function fetchLesson(path) {
-        var rawUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/docs/en.md';
-        var quizUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/quiz.json';
+        // Load lesson content from the repo's local files (served relative to
+        // /site), not from GitHub. Requires serving the repo root over a local
+        // dev server (e.g. `python3 -m http.server` in the repo root) so the
+        // page is reached at /site/lesson.html and ../<path> resolves on disk.
+        var rawUrl = '../' + path + '/docs/en.md';
+        var quizUrl = '../' + path + '/quiz.json';
 
         fetch(rawUrl)
           .then(function (res) {
