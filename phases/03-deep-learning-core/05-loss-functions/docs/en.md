@@ -187,6 +187,10 @@ graph LR
     CL_S -->|"Best for"| Emb2["Representation learning"]
 ```
 
+```figure
+cross-entropy-loss
+```
+
 ## Build It
 
 ### Step 1: MSE and Its Gradient

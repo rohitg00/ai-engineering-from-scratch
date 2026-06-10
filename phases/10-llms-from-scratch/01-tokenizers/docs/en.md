@@ -202,6 +202,10 @@ Tokenizers trained primarily on English are brutal to other languages. Korean te
 
 This is why Llama 3 quadrupled its vocabulary from 32K to 128K. More tokens dedicated to non-English scripts means fairer compression across languages.
 
+```figure
+tokenizer-tradeoff
+```
+
 ## Build It
 
 ### Step 1: Character-Level Tokenizer

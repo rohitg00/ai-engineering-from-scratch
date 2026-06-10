@@ -505,6 +505,162 @@
     state._render();
   }
 
+  // ── precision-recall-threshold: slide the cutoff, watch P, R, F1 trade ─────
+  function precisionRecall(host) {
+    var state = { thr: 0.5 };
+    var muP = 0.64, muN = 0.36, sd = 0.13, Npos = 100, Nneg = 100;
+    var W = 520, H = 210, PAD = 28;
+    var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
+    var status = el('span', { class: 'lf-num' });
+    var meta = el('div', { class: 'lf-meta' });
+    var formula = el('div', { class: 'lf-formula' });
+    function erf(x) { var s = x < 0 ? -1 : 1; x = Math.abs(x); var t = 1 / (1 + 0.3275911 * x); var y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return s * y; }
+    function cdf(x, mu) { return 0.5 * (1 + erf((x - mu) / (sd * Math.SQRT2))); }
+    function gauss(x, mu) { return Math.exp(-0.5 * Math.pow((x - mu) / sd, 2)); }
+    function px(x) { return PAD + x * (W - 2 * PAD); }
+    function py(v) { return H - PAD - v * (H - 2 * PAD); }
+    state._render = function () {
+      var tp = Npos * (1 - cdf(state.thr, muP));
+      var fp = Nneg * (1 - cdf(state.thr, muN));
+      var fn = Npos - tp;
+      var prec = tp / (tp + fp || 1), rec = tp / (tp + fn || 1);
+      var f1 = 2 * prec * rec / ((prec + rec) || 1);
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      [{ mu: muN, st: 'var(--ink-mute,#999)' }, { mu: muP, st: 'var(--blueprint,#3553ff)' }].forEach(function (g) {
+        var d = '', i; for (i = 0; i <= 120; i++) { var x = i / 120; d += (i ? 'L' : 'M') + px(x).toFixed(1) + ' ' + py(gauss(x, g.mu)).toFixed(1) + ' '; }
+        svg.appendChild(svgEl('path', { d: d, fill: 'none', stroke: g.st, 'stroke-width': '2' }));
+      });
+      var tx = px(state.thr);
+      svg.appendChild(svgEl('line', { x1: tx, y1: PAD, x2: tx, y2: H - PAD, stroke: 'var(--warn,#b8870f)', 'stroke-width': '1.5' }));
+      status.innerHTML = 'F1 = ' + f1.toFixed(3);
+      meta.textContent = 'precision ' + prec.toFixed(2) + '  ·  recall ' + rec.toFixed(2) + '  ·  TP ' + Math.round(tp) + ' · FP ' + Math.round(fp) + ' · FN ' + Math.round(fn);
+      formula.textContent = 'predict positive when score ≥ ' + state.thr.toFixed(2) + '   ·   raise it for precision, lower it for recall';
+    };
+    var grid = el('div', {}, [slider(state, 'thr', 'decision threshold', 0.02, 0.98, 0.01)]);
+    host.appendChild(el('div', { class: 'lf' }, [
+      el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['PRECISION / RECALL']), el('span', {}, ['drag the threshold'])]),
+      el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [svg, el('div', { style: 'margin-top:10px' }, [status]), meta, formula])]),
+      el('div', { class: 'lf-cap' }, ['Grey is the negative class, blue the positive; the orange line is the threshold. Move it right and you predict positive less often: precision rises, recall falls. F1 is their harmonic mean, highest where the two curves cross.'])
+    ]));
+    state._render();
+  }
+
+  // ── cross-entropy-loss: the price of being confident and wrong ─────────────
+  function crossEntropy(host) {
+    var state = { p: 0.5 };
+    var W = 520, H = 200, PAD = 30, LMAX = 5;
+    var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
+    var num = el('span', { class: 'lf-num' });
+    var meta = el('div', { class: 'lf-meta' });
+    var formula = el('div', { class: 'lf-formula' });
+    function px(p) { return PAD + p * (W - 2 * PAD); }
+    function py(l) { return H - PAD - Math.min(l, LMAX) / LMAX * (H - 2 * PAD); }
+    state._render = function () {
+      var p = Math.max(0.001, state.p);
+      var loss = -Math.log(p);
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      var d = '', i; for (i = 0; i <= 140; i++) { var x = 0.007 + (1 - 0.007) * i / 140; d += (i ? 'L' : 'M') + px(x).toFixed(1) + ' ' + py(-Math.log(x)).toFixed(1) + ' '; }
+      svg.appendChild(svgEl('path', { d: d, fill: 'none', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '2' }));
+      svg.appendChild(svgEl('circle', { cx: px(p), cy: py(loss), r: '5', fill: 'var(--blueprint,#3553ff)' }));
+      num.innerHTML = loss.toFixed(3) + ' <small>nats</small>';
+      meta.textContent = p > 0.9 ? 'confident and correct: loss near zero' : p < 0.1 ? 'confident and wrong: loss explodes' : 'uncertain: moderate loss';
+      formula.textContent = 'loss = −log(p_true),  p = ' + p.toFixed(3) + '   ·   p→1 gives 0, p→0 gives ∞';
+    };
+    var grid = el('div', {}, [slider(state, 'p', 'probability on the true class', 0.01, 1.0, 0.01)]);
+    host.appendChild(el('div', { class: 'lf' }, [
+      el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['CROSS-ENTROPY LOSS']), el('span', {}, ['drag the probability'])]),
+      el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [svg, el('div', { style: 'margin-top:10px' }, [num]), meta, formula])]),
+      el('div', { class: 'lf-cap' }, ['Cross-entropy charges −log of the probability the model put on the correct answer. Right and confident costs almost nothing; wrong and confident costs a fortune. That asymmetry is what pushes the model to be calibrated, not just correct.'])
+    ]));
+    state._render();
+  }
+
+  // ── cosine-similarity: the angle is the similarity ─────────────────────────
+  function cosineSim(host) {
+    var state = { deg: 40 };
+    var W = 300, H = 240, CX = 60, CY = 150, R = 110;
+    var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
+    var num = el('span', { class: 'lf-num' });
+    var meta = el('div', { class: 'lf-meta' });
+    function vec(x2, y2, st) { return svgEl('line', { x1: CX, y1: CY, x2: x2, y2: y2, stroke: st, 'stroke-width': '2.5' }); }
+    state._render = function () {
+      var rad = state.deg * Math.PI / 180;
+      var cos = Math.cos(rad);
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      svg.appendChild(svgEl('path', { d: 'M ' + (CX + 30) + ' ' + CY + ' A 30 30 0 0 0 ' + (CX + 30 * cos) + ' ' + (CY - 30 * Math.sin(rad)), fill: 'none', stroke: 'var(--rule-soft,#ccc)', 'stroke-width': '1.5' }));
+      svg.appendChild(vec(CX + R, CY, 'var(--ink-mute,#999)'));
+      svg.appendChild(vec(CX + R * cos, CY - R * Math.sin(rad), 'var(--blueprint,#3553ff)'));
+      num.innerHTML = cos.toFixed(3) + ' <small>cos θ</small>';
+      meta.textContent = state.deg + '°  ·  ' + (cos > 0.7 ? 'similar' : cos > 0.1 ? 'loosely related' : cos > -0.1 ? 'unrelated (orthogonal)' : 'opposite');
+    };
+    var grid = el('div', {}, [slider(state, 'deg', 'angle between vectors', 0, 180, 1)]);
+    host.appendChild(el('div', { class: 'lf' }, [
+      el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['COSINE SIMILARITY']), el('span', {}, ['drag the angle'])]),
+      el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [svg, el('div', { style: 'margin-top:10px' }, [num]), meta])]),
+      el('div', { class: 'lf-cap' }, ['Embeddings compare by angle, not distance. Cosine is 1 when two vectors point the same way, 0 when orthogonal (unrelated), and negative when opposed. Magnitude drops out, so a long document and a short query can still match.'])
+    ]));
+    state._render();
+  }
+
+  // ── tokenizer-tradeoff: vocabulary size against tokens and table cost ──────
+  function tokenizerTradeoff(host) {
+    var state = { logV: 15, dim: 768 };
+    var num = el('span', { class: 'lf-num' });
+    var meta = el('div', { class: 'lf-meta' });
+    var formula = el('div', { class: 'lf-formula' });
+    function human(x) { var u = ['', 'K', 'M', 'B']; var i = 0; while (x >= 1000 && i < u.length - 1) { x /= 1000; i++; } return x.toFixed(x < 10 ? 1 : 0) + u[i]; }
+    state._render = function () {
+      var vocab = Math.pow(2, state.logV);
+      var tpw = Math.max(1.0, 1 + 6 / (state.logV - 5));
+      var docWords = 1000;
+      var seq = Math.round(docWords * tpw);
+      var emb = vocab * state.dim;
+      num.innerHTML = human(emb) + ' <small>embedding params</small>';
+      meta.textContent = tpw.toFixed(2) + ' tokens/word  ·  a ' + docWords + '-word doc ≈ ' + seq + ' tokens';
+      formula.textContent = 'vocab ' + human(vocab) + ' × dim ' + state.dim + ' = embedding table  ·  bigger vocab → fewer tokens, larger table';
+    };
+    var grid = el('div', { class: 'lf-grid' }, [
+      slider(state, 'logV', 'vocabulary (2^x)', 8, 18, 1),
+      slider(state, 'dim', 'embedding dim', 128, 4096, 128)
+    ]);
+    host.appendChild(el('div', { class: 'lf' }, [
+      el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['TOKENIZER TRADEOFF']), el('span', {}, ['drag the vocab size'])]),
+      el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [num, meta, formula])]),
+      el('div', { class: 'lf-cap' }, ['A larger vocabulary splits text into fewer tokens, so sequences are shorter and cheaper to attend over. But the embedding and output tables scale with vocab size, so the gain is paid back in parameters. Real tokenizers sit where the two pressures balance, around 32K to 128K.'])
+    ]));
+    state._render();
+  }
+
+  // ── rag-chunking: chunk size and overlap against count and context ─────────
+  function ragChunking(host) {
+    var state = { chunk: 512, overlap: 64, topk: 5 };
+    var corpus = 100000;
+    var num = el('span', { class: 'lf-num' });
+    var meta = el('div', { class: 'lf-meta' });
+    var formula = el('div', { class: 'lf-formula' });
+    function human(x) { var u = ['', 'K', 'M']; var i = 0; while (x >= 1000 && i < u.length - 1) { x /= 1000; i++; } return x.toFixed(x < 10 ? 1 : 0) + u[i]; }
+    state._render = function () {
+      var ov = Math.min(state.overlap, state.chunk - 16);
+      var stride = state.chunk - ov;
+      var nChunks = Math.ceil((corpus - ov) / stride);
+      var ctx = state.topk * state.chunk;
+      num.innerHTML = fmtInt(nChunks) + ' <small>chunks</small>';
+      meta.textContent = 'top-' + state.topk + ' retrieval feeds ' + fmtInt(ctx) + ' tokens into the prompt  ·  ' + human(nChunks) + ' vectors to store';
+      formula.textContent = 'chunks = ⌈(corpus − overlap) / (chunk − overlap)⌉  ·  corpus = ' + human(corpus) + ' tokens';
+    };
+    var grid = el('div', { class: 'lf-grid' }, [
+      slider(state, 'chunk', 'chunk size (tokens)', 64, 2048, 32),
+      slider(state, 'overlap', 'overlap (tokens)', 0, 256, 8),
+      slider(state, 'topk', 'top-k retrieved', 1, 20, 1)
+    ]);
+    host.appendChild(el('div', { class: 'lf' }, [
+      el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['RAG CHUNKING']), el('span', {}, ['drag chunk and k'])]),
+      el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [num, meta, formula])]),
+      el('div', { class: 'lf-cap' }, ['Small chunks pinpoint the relevant passage but fragment context and multiply the vectors to index. Large chunks keep context whole but dilute each match and blow up the tokens fed into the prompt. Overlap softens boundaries at the cost of more chunks.'])
+    ]));
+    state._render();
+  }
+
   // Interactive widgets defined here. Animated figures live in figures.js and
   // are reached through window.AIFS_FIGURES (same fenced-block syntax).
   var FIGS = {
@@ -518,7 +674,12 @@
     'scaling-laws': scalingLaws,
     'quantization': quantization,
     'rope-explorer': ropeExplorer,
-    'lora-params': loraParams
+    'lora-params': loraParams,
+    'precision-recall-threshold': precisionRecall,
+    'cross-entropy-loss': crossEntropy,
+    'cosine-similarity': cosineSim,
+    'tokenizer-tradeoff': tokenizerTradeoff,
+    'rag-chunking': ragChunking
   };
 
   function mountLessonFigures(root) {
