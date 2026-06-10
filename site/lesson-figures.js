@@ -370,7 +370,7 @@
         rows.appendChild(el('div', { class: 'lf-ctrl' }, [lab, el('div', { class: 'lf-bar' }, [bar])]));
       });
       meta.textContent = kept + ' of ' + probs.length + ' tokens survive  ·  ' + (T < 0.5 ? 'low T: near-greedy' : T > 1.2 ? 'high T: wild' : 'balanced');
-      formula.textContent = 'softmax(z / T) → keep top-' + (state.k === 0 ? '∞' : state.k) + ' → keep until cumulative p ≤ ' + state.p.toFixed(2) + ' → renormalize';
+      formula.textContent = 'softmax(z / T) → keep top-' + (state.k === 0 ? '∞' : state.k) + ' → keep smallest set with cumulative ≥ ' + state.p.toFixed(2) + ' → renormalize';
     };
     var grid = el('div', { class: 'lf-grid' }, [
       slider(state, 'T', 'temperature', 0.1, 2.0, 0.05),

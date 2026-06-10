@@ -214,14 +214,12 @@
       var b = state.b, depth = state.depth;
       while (svg.firstChild) svg.removeChild(svg.firstChild);
       svg.appendChild(arrowDefs());
-      var total = 0, level, levelTop = 28, rowH = (H - 56) / Math.max(1, depth);
+      var level, levelTop = 28, rowH = (H - 56) / Math.max(1, depth), capped = false;
       var prev = [{ x: W / 2 }];
-      total += 1;
       svg.appendChild(svgEl('circle', { cx: W / 2, cy: levelTop, r: '10', fill: 'var(--blueprint,#3553ff)' }));
       for (level = 1; level <= depth; level++) {
         var count = Math.pow(b, level);
-        if (count > 64) { count = 64; }
-        total += count;
+        if (count > 64) { count = 64; capped = true; }
         var y = levelTop + rowH * level;
         var cur = [];
         var k;
@@ -235,8 +233,10 @@
         prev = cur;
       }
       var exact = 0, lv; for (lv = 0; lv <= depth; lv++) { exact += Math.pow(b, lv); }
-      meta.textContent = 'branching ' + b + ', depth ' + depth + '  →  ' + exact + ' agents total (leaves do the work, internal nodes delegate)';
-      formula.textContent = 'total = Σ b^level for level 0..depth = (b^(depth+1) − 1) / (b − 1)';
+      meta.textContent = 'branching ' + b + ', depth ' + depth + '  →  ' + exact + ' agents total' + (capped ? ' · diagram caps each level at 64' : '') + ' (leaves do the work, internal nodes delegate)';
+      formula.textContent = b === 1
+        ? 'total = Σ 1^level for level 0..depth = depth + 1 = ' + exact
+        : 'total = Σ b^level for level 0..depth = (b^(depth+1) − 1) / (b − 1) = ' + exact;
     };
     var grid = el('div', { class: 'lf-grid' }, [
       LF.slider(state, 'b', 'branching factor b', 1, 5, 1),

@@ -372,8 +372,9 @@
     var formula = el('div', { class: 'lf-formula' });
     state._render = function () {
       var size = state.size, patch = state.patch;
-      var perSide = Math.max(1, Math.round(size / patch));
+      var perSide = Math.max(1, Math.ceil(size / patch));
       var n = perSide * perSide;
+      var padded = perSide * patch;
       while (svg.firstChild) svg.removeChild(svg.firstChild);
       var ox = PAD, oy = (H - BOX) / 2, cell = BOX / perSide;
       svg.appendChild(svgEl('rect', { x: ox, y: oy.toFixed(1), width: BOX, height: BOX,
@@ -398,8 +399,8 @@
       }
       num.innerHTML = LF.fmtInt(n) + ' <small>patch tokens</small>';
       meta.textContent = perSide + ' x ' + perSide + ' grid  ·  each ' + patch + ' x ' + patch
-        + ' px patch becomes one token (plus a CLS token in ViT)';
-      formula.textContent = 'tokens = (size / patch)^2 = (' + size + ' / ' + patch + ')^2 = ' + perSide + '^2 = ' + n;
+        + ' px patch becomes one token' + (padded !== size ? ' · image padded to ' + padded + 'px' : '') + ' (plus a CLS token in ViT)';
+      formula.textContent = 'tokens = ⌈size / patch⌉² = ⌈' + size + ' / ' + patch + '⌉² = ' + perSide + '² = ' + n;
     };
     var grid = el('div', { class: 'lf-grid' }, [
       LF.select(state, 'size', 'image size (px)', [['224', 224], ['256', 256], ['336', 336], ['384', 384], ['448', 448]]),
