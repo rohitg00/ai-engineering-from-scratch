@@ -96,6 +96,10 @@ Chain-of-thought, math, code-gen with long context — these suffer visibly from
 - Blackwell datacenter, validated quality: NVFP4 + FP8 KV.
 - Ambiguous: run a 1,000-sample eval on each candidate format.
 
+```figure
+gpu-memory-breakdown
+```
+
 ## Use It
 
 `code/main.py` computes memory footprint (weights + KV + activations) and relative throughput across the six formats for a range of model sizes. Shows where KV cache dominates, where weight compression pays, and where FP8 is the safe pick.

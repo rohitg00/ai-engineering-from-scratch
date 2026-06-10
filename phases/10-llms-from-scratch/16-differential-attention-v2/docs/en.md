@@ -95,6 +95,10 @@ The value grows with context length. At 4k tokens the noise floor is small enoug
 | FlashAttention | Yes in V2 (was no in V1) |
 | Speculative decoding | Yes (attention change is invisible to the spec-decode loop) |
 
+```figure
+differential-attention
+```
+
 ## Build It
 
 `code/main.py` implements differential attention in pure Python. A toy query with known signal-plus-noise structure lets you measure the noise-cancellation ratio directly.

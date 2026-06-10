@@ -239,6 +239,10 @@ graph TD
     style N1 fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
+```figure
+paged-kv-cache
+```
+
 ## Build It
 
 ### Step 1: Simulate Data Parallelism

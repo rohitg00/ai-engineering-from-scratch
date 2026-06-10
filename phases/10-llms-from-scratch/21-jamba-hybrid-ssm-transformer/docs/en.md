@@ -122,6 +122,10 @@ Hybrids lose when:
 
 The 2026 landscape: pure-Transformer MoE dominates the frontier, but hybrids own the 256k-plus context niche. Mamba-3's state-tracking wins may push hybrid ratios lower (more SSM, less attention) in the next generation.
 
+```figure
+swiglu-ffn
+```
+
 ## Use It
 
 `code/main.py` is a memory calculator for hybrid architectures. Given an SSM-Transformer ratio and a hidden-size / layer-count config, it computes:

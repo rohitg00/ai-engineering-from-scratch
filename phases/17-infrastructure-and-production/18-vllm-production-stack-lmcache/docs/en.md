@@ -82,6 +82,10 @@ Phase 17 · 17 disaggregated serving + LMCache compounds: KV transfers from pref
 - 16x H100 benchmark: LMCache helps when KV footprint exceeds HBM.
 - Small HBM pressure: 3-5% overhead without benefit.
 
+```figure
+zero-sharding
+```
+
 ## Use It
 
 `code/main.py` simulates a preemption-heavy workload with and without LMCache. Reports re-prefills avoided, throughput gain, and the break-even HBM utilization.

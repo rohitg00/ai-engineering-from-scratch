@@ -91,6 +91,10 @@ Phase 17 · 01 (managed hyperscalers), · 02 (inference platforms) cover managed
 - SGLang production footprint: 400,000+ GPUs.
 - Ollama throughput gap vs llama.cpp: 15-30% slower; 3x under prod load.
 
+```figure
+data-parallel
+```
+
 ## Use It
 
 `code/main.py` is a decision-tree walker: given hardware + scale + workload, picks an engine and explains why.

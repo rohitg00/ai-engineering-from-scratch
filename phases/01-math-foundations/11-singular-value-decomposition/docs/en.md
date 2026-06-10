@@ -360,6 +360,10 @@ It is faster and more numerically stable.
 
 This means everything you learned about dimensionality reduction in Lesson 10 is SVD under the hood. PCA is the most common application of SVD in machine learning.
 
+```figure
+svd-rank-reconstruction
+```
+
 ## Build It
 
 ### Step 1: SVD from scratch using power iteration

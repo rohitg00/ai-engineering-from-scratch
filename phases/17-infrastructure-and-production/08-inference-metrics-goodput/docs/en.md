@@ -100,6 +100,10 @@ Enterprise SLOs tighten TTFT (200-400 ms) and loosen E2E. The point is to write 
 - Run 30-50 iterations, take percentiles of the combined sample.
 - Publish with tool name, tool version, model, hardware, concurrency, prompt distribution.
 
+```figure
+throughput-latency
+```
+
 ## Use It
 
 `code/main.py` is a toy goodput calculator. Generate a synthetic latency distribution, apply an SLO, and compute goodput. Also shows the GenAI-Perf vs LLMPerf TPOT difference on the same trace.

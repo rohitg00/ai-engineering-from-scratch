@@ -93,6 +93,10 @@ while True:
 
 `code/main.py` is exactly this loop in stdlib Python with fake token counts and fake forward latency. Running it shows how chunked prefill keeps decode sequences alive during a long prefill.
 
+```figure
+tensor-parallel
+```
+
 ## Use It
 
 `code/main.py` simulates a vLLM-style scheduler with toggleable features. Run it to see:

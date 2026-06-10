@@ -64,6 +64,10 @@ METR observed that every agent class measured shows reliability decay beyond ~35
 - Strictly read-only information retrieval.
 - Tasks where correctness requires end-to-end within one context window (some reasoning tasks; some one-shot generation).
 
+```figure
+memory-consolidation
+```
+
 ## Use It
 
 `code/main.py` implements a minimal durable-execution engine in stdlib Python. It supports:

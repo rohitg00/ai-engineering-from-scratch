@@ -82,6 +82,10 @@ With `N = 128k, l = 64, k = 16, b = 64, w = 512`: per-query cost is `2000 + 1024
 
 MoBA (Moonshot, arXiv:2502.13189) was concurrently published and takes a similar three-is-better-than-one approach, applying the MoE principle to attention blocks. NSA and MoBA are the two architectures to know for 2026 long-context pre-training.
 
+```figure
+sliding-window-attention
+```
+
 ## Build It
 
 `code/main.py` implements the three branches on a short synthetic sequence and shows:

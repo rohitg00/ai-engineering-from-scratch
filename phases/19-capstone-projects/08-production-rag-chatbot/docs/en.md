@@ -68,6 +68,10 @@ eval:
 - Guardrails: Llama Guard 4 input/output classifier, NeMo Guardrails v0.12 policy, Presidio PII scrub
 - Compliance: role-based access labels on chunks; jurisdiction tags for GDPR/HIPAA
 
+```figure
+canary-rollout
+```
+
 ## Build It
 
 1. **Ingestion.** Parse your corpus (1000-10000 documents for a serious build) with Unstructured or docling. For scanned / visual-heavy pages, route through ColPali. Produce chunks with summaries, role-labels, jurisdiction tags.

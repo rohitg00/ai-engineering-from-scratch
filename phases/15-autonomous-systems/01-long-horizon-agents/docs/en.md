@@ -59,6 +59,10 @@ Practical consequence: a horizon number is a capability ceiling, not a reliabili
 
 Every row becomes a lesson in this phase.
 
+```figure
+task-decomposition
+```
+
 ## Use It
 
 Run `code/main.py`. It simulates the METR horizon curve and shows:

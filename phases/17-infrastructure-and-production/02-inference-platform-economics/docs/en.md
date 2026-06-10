@@ -90,6 +90,10 @@ Every platform above vLLM and SGLang claims a custom engine. FireAttention, RayT
 - Modal valuation: $1.1B (Series B, 2025).
 - Per-minute beats per-token above ~30% sustained utilization.
 
+```figure
+cost-per-token
+```
+
 ## Use It
 
 `code/main.py` compares the six vendors on a synthetic workload across pricing models. Reports $/day and effective $/M tokens. Run it to find the break-even between per-token and per-minute.

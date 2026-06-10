@@ -29,6 +29,10 @@ Three operations. Each has a job and a failure mode.
 
 Rule of thumb. Stem when speed matters and you can tolerate noise (search indexing, rough classification). Lemmatize when meaning matters (question answering, semantic search, anything the user will read).
 
+```figure
+edit-distance
+```
+
 ## Build It
 
 ### Step 1: a regex word tokenizer

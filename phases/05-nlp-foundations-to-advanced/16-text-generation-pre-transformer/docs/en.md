@@ -44,6 +44,10 @@ The Kneser-Ney insight is deep. "San Francisco" is a common bigram. Unigram "Fra
 perplexity = exp(- (1/N) * Σ log P(w_i | context_i))
 ```
 
+```figure
+ngram-backoff
+```
+
 ## Build It
 
 ### Step 1: trigram counts

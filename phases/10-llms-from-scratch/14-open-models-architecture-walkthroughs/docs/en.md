@@ -220,6 +220,10 @@ The 8B weights are 16 GB in BF16. The KV cache for a single 128k sequence is lar
 - **Long-context needs**: Llama 3 (128k with RoPE scaling), DeepSeek (MLA advantage).
 - **Low-latency serving**: Gemma 2 9B (sliding window cuts long-context compute).
 
+```figure
+rmsnorm-vs-layernorm
+```
+
 ## Build It
 
 The lesson's code is a calculator. Given any config.json, it prints parameter count by component, KV cache at max context, SwiGLU MLP ratio, and a short verdict on the architecture (dense / GQA / MLA / MoE).

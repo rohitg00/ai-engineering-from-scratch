@@ -177,6 +177,10 @@ Mitigation strategies: stronger KL penalty (prevents the model from straying far
 
 Anthropic's 2022 paper trained a 52B reward model on 22,000 comparisons. Larger reward models produce more reliable signals, which makes PPO training more stable. Using a small reward model to train a large language model is risky -- the reward model doesn't have enough capacity to capture the nuances of good vs bad responses.
 
+```figure
+rlhf-pipeline
+```
+
 ## Build It
 
 ### Step 1: Synthetic Preference Data

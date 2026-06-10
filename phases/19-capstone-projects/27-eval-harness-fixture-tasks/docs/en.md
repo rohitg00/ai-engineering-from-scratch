@@ -49,6 +49,10 @@ The third is `shell_exit_zero`. The harness runs a shell command (through the sa
 
 The harness runs each task `k` times. Pass@k is `1 - (1 - p)^k` where p is the empirical pass rate; the harness also reports raw counts so you can spot variance. Latency is wall-clock per sample. Cost is whatever the agent self-reports (token count, USD, or both); the harness sums it across samples and presents the per-task and aggregate numbers.
 
+```figure
+pass-at-k
+```
+
 ## Architecture
 
 ```mermaid

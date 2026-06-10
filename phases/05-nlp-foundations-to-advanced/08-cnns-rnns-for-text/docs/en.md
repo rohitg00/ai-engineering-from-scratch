@@ -31,6 +31,10 @@ Plain RNNs suffer vanishing gradients. The **LSTM** adds gates that decide what 
 
 **Bidirectional RNNs** run one RNN forward and another backward, concatenating hidden states. Every token's representation sees both left and right context. Essential for tagging tasks.
 
+```figure
+rnn-unroll
+```
+
 ## Build It
 
 ### Step 1: TextCNN in PyTorch

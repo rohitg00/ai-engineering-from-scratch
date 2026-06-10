@@ -101,6 +101,10 @@ graph LR
 
 Key patterns: `i,i->` (dot product), `i,j->ij` (outer product), `ii->` (trace), `ij->ji` (transpose), `bij,bjk->bik` (batch matmul), `bhtd,bhsd->bhts` (attention scores).
 
+```figure
+tensor-broadcast
+```
+
 ## Build It
 
 The code lives in `code/tensors.py`. Each step references the implementation there.

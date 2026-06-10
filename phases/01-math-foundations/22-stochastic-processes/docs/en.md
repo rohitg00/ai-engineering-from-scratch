@@ -228,6 +228,10 @@ The chain is guaranteed to converge to p(x) under mild conditions. But convergen
 | Markov decision process | Reinforcement learning |
 | Metropolis-Hastings | Bayesian inference, posterior sampling |
 
+```figure
+random-walk-diffusion
+```
+
 ## Build It
 
 ### Step 1: Random walk simulator
