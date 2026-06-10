@@ -1191,3 +1191,6 @@ Maintained by [Rohit Ghumare](https://github.com/rohitg00) and the community.
   <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Report / Suggest</a>
 </sub>
+
+## Contributing
+PRs welcome!

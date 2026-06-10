@@ -56,7 +56,8 @@ def run_niah_grid(lengths, depths, seed=0):
     needle = "the magic word is pineapple"
     expected = "pineapple"
     capacity = 20000
-    print(f"  {'depth\\len':<12}  " + "  ".join(f"{n:>6}" for n in lengths))
+    depth_label = 'depth\\len'
+    print(f"  {depth_label:<12}  " + "  ".join(f"{n:>6}" for n in lengths))
     for d in depths:
         row = []
         for n in lengths:
