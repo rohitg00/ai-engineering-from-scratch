@@ -108,6 +108,10 @@ MMAU (Massive Multimodal Audio Understanding) is the 2024-2025 audio reasoning b
 
 Open SOTA (AF3) at 0.72; proprietary frontier ~0.78 (Gemini 2.5 Pro, Claude Opus 4.7). The gap is smaller than VideoMME's open-vs-closed delta, indicating audio-LLMs are maturing.
 
+```figure
+audio-text-ctc
+```
+
 ## Use It
 
 `code/main.py`:

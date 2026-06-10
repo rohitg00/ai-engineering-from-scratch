@@ -69,6 +69,10 @@ OpenAI's Superalignment team dissolved in May 2024 after Jan Leike's departure t
 
 Lessons 6-10 describe the threat and the defensive paradigm under the assumption U is untrustworthy. Lesson 11 is the offensive paradigm: make the overseer strong enough to verify U's alignment. Lessons 12-16 then turn to the practical tooling of adversarial evaluation.
 
+```figure
+scalable-oversight
+```
+
 ## Use It
 
 `code/main.py` simulates a W2SG fine-tune on a synthetic task. Weak labeler has 70% accuracy with structured errors; strong model has 95% ceiling on gold labels. You fine-tune the strong model on weak labels, measure PGR, and compare to strong-on-gold and weak-alone.

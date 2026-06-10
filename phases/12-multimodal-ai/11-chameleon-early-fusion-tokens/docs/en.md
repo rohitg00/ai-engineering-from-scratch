@@ -98,6 +98,10 @@ Fuyu (Adept, 2023) is a related approach: skip the separate vision encoder entir
 
 AnyGPT (Zhan et al., 2024) extends Chameleon to four modalities: text, image, speech, music. Same VQ-VAE trick for each, shared transformer. Any-to-any generation. Covered more in Lesson 12.16.
 
+```figure
+vq-codebook
+```
+
 ## Use It
 
 `code/main.py` builds a toy end-to-end early-fusion model:

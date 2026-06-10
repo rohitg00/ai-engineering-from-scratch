@@ -125,6 +125,10 @@ Masked Autoencoder (He et al., 2022): mask 75% of patches at random, train the e
 
 MAE makes ViT trainable on ImageNet-1k alone, hits SOTA, and is the current default self-supervised recipe.
 
+```figure
+batchnorm-inference
+```
+
 ## Build It
 
 ### Step 1: Patch embedding

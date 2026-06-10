@@ -63,6 +63,10 @@ Short-term (within a run — conversation history in state) and long-term (acros
 - **Non-deterministic nodes.** Resume assumes node inputs produce the same state update. Random seeds, wall-clock, external APIs must be captured.
 - **Over-use of conditional edges.** A graph with every edge conditional is a state machine that cannot be reasoned about. Prefer linear chains with occasional branches.
 
+```figure
+langgraph-state
+```
+
 ## Build It
 
 `code/main.py` implements a stdlib stateful graph:

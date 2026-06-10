@@ -218,6 +218,10 @@ You do not have to build everything from scratch. These tools provide eval infra
 
 For this lesson, we build it from scratch so you understand every layer. In production, use one of these tools.
 
+```figure
+llm-judge-rubric
+```
+
 ## Build It
 
 ### Step 1: Define the Eval Data Structures

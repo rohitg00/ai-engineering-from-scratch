@@ -76,6 +76,10 @@ Flow matching with a Gaussian-conditional path is diffusion *with a specific noi
 
 What flow matching added: the *clarity* of the target (a plain velocity), a cleaner loss, and the license to experiment with non-Gaussian interpolants.
 
+```figure
+normalizing-flow
+```
+
 ## Build It
 
 `code/main.py` implements 1-D flow matching on a two-mode Gaussian mixture. The vector field `v_θ(x, t)` is a tiny MLP trained with the straight-line target. At inference, integrate 1, 2, 4, and 20 Euler steps and compare sample quality.

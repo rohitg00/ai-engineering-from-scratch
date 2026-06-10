@@ -66,6 +66,10 @@ Plan-and-Act scales the pattern to long-horizon web and mobile agents. The key c
 
 Anthropic's Dec 2024 guidance: start with the simplest. If the task is one tool call plus a summary, do not build ReWOO. If the task is a 40-step research assignment, do not do ReAct alone.
 
+```figure
+rewoo-plan
+```
+
 ## Build It
 
 `code/main.py` implements a toy ReWOO:

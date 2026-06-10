@@ -99,6 +99,10 @@ Janus-Pro (Lesson 12.15) refines Transfusion's idea by decoupling the vision enc
 
 2026 production VLMs that emit images — Gemini 3 Pro, GPT-5, Claude Opus 4.7's image generation path — almost certainly use some descendant of this family. Details are proprietary.
 
+```figure
+cfg-guidance-scale
+```
+
 ## Use It
 
 `code/main.py` builds a toy Transfusion on a tiny MNIST-like problem:

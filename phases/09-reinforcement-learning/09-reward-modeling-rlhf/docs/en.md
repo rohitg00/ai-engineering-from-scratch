@@ -54,6 +54,10 @@ In 2026 the PPO step is mostly replaced by DPO (Phase 10 · 08) because it is ch
 - **Process reward models (PRMs):** score partial solutions (each reasoning step), used in both RLHF and GRPO variants for reasoning.
 - **Constitutional AI / RLAIF:** use an aligned LLM to generate preferences instead of humans. Scales the preference budget.
 
+```figure
+reward-model
+```
+
 ## Build It
 
 This lesson uses tiny synthetic "prompts" and "responses" represented as strings. The RM is a linear scorer over a bag-of-tokens representation. No real LLM — the *shape* of the pipeline matters, not the scale. See `code/main.py`.

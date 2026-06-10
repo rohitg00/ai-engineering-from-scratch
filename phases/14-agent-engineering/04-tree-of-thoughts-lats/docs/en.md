@@ -77,6 +77,10 @@ Most production agents do not run LATS. They run ReAct with tool-grounded verifi
 
 AlphaEvolve (Lesson 11) is the 2025 extreme: evolutionary search over code, machine-checkable fitness, frontier gains (first 4x4 matmul improvement in 56 years).
 
+```figure
+tree-of-thoughts
+```
+
 ## Build It
 
 `code/main.py` implements:

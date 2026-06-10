@@ -298,6 +298,10 @@ The best prompts are model-agnostic. They work on GPT-5, Claude Opus 4.7, Gemini
 5. Test with temperature=0 first to isolate prompt quality from sampling randomness
 6. Include 2-3 few-shot examples -- they transfer across models better than instructions alone
 
+```figure
+cot-decomposition
+```
+
 ## Build It
 
 ### Step 1: Prompt Template Library

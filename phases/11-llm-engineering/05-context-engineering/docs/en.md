@@ -157,6 +157,10 @@ The key insight: different queries need different context. A static system promp
 
 This is what separates a good AI application from a great one. The model is the same. The context is the differentiator.
 
+```figure
+lost-in-the-middle
+```
+
 ## Build It
 
 ### Step 1: Token Counter

@@ -48,6 +48,10 @@ Violate the order — put the user message above the system prompt, interleave d
 
 Anthropic's 25% write premium means a cached block has to be read at least twice to net-save money. 1 write + 1 read averages 0.675x cost per request (saves 32%); 1 write + 10 reads averages 0.205x (saves 80%). Rule of thumb: cache anything you expect to reuse at least 3 times within the TTL.
 
+```figure
+prompt-cache-hit
+```
+
 ## Build It
 
 ### Step 1: Anthropic prompt caching with explicit markers

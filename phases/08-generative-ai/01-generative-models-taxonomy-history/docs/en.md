@@ -60,6 +60,10 @@ When a new generative model paper drops, answer these five questions before read
 
 You will re-answer these five for every lesson in this phase. By the end, they will be reflex.
 
+```figure
+autoencoder-bottleneck
+```
+
 ## Build It
 
 The code for this lesson is a lightweight visualization: fit a 1-D mixture-of-Gaussians from samples using three toy approaches (kernel density, discrete histogram, and a nearest-sample "GAN-ish" generator) so you can see the difference between explicit vs implicit density on a problem you can print on one screen.

@@ -114,6 +114,10 @@ Three tiny functions translate it to the three provider shapes. The harness in `
 
 Production teams wrap this translator in `AbstractToolset` (Pydantic AI), `UniversalToolNode` (LangGraph), or `BaseTool` (LlamaIndex). Phase 13 · 17 ships a gateway that exposes an OpenAI-shaped API in front of any of the three.
 
+```figure
+function-call-args
+```
+
 ## Use It
 
 `code/main.py` defines one canonical `Tool` dataclass and three translators that emit the OpenAI, Anthropic, and Gemini declaration JSON. It then parses a hand-crafted provider response of each shape into the same canonical call object, demonstrating that the semantics are identical under the skin. Run it and diff the three declarations side by side.

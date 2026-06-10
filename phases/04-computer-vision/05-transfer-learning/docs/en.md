@@ -115,6 +115,10 @@ Transfer-learning runs need two numbers you would not track on a scratch run:
 
 If fine-tuned is less than pretrained-only, you have a learning-rate or BN bug. Always print both.
 
+```figure
+transfer-learning
+```
+
 ## Build It
 
 ### Step 1: Load a pretrained backbone and inspect it

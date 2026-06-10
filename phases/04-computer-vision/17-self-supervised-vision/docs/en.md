@@ -105,6 +105,10 @@ After self-supervised pretraining, the standard evaluation is a **linear probe**
 
 Linear probe is a pure measure of feature quality; fine-tuning typically adds 2-5 points but also mixes in the effect of head retraining.
 
+```figure
+data-augmentation
+```
+
 ## Build It
 
 ### Step 1: Two-view augmentation pipeline

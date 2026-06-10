@@ -322,6 +322,10 @@ Chaining beats single-prompt for three reasons:
 
 The right technique depends on three factors: accuracy requirement, latency budget, and cost tolerance. For most production systems, few-shot CoT with a 3-sample self-consistency fallback covers 90% of use cases.
 
+```figure
+few-shot-curve
+```
+
 ## Build It
 
 We will build a math problem solver that combines few-shot prompting, chain-of-thought reasoning, and self-consistency voting into a single pipeline. Then we will add tree-of-thought for hard problems.

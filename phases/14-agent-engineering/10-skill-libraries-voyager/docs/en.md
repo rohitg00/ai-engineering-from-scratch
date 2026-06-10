@@ -88,6 +88,10 @@ For production agents this translates to a "what's missing" operator: given the 
 - **Composed-skill drift.** Parent skill depends on a child that was refined. Version skills; a parent pinned to v1 doesn't magically pick up v3.
 - **Retrieval quality.** Vector retrieval over skill descriptions degrades as the library grows past a few hundred. Supplement with tag filters and hard constraints ("only skills with `category=tooling`").
 
+```figure
+voyager-skills
+```
+
 ## Build It
 
 `code/main.py` implements a stdlib skill library:
