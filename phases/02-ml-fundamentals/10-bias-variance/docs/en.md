@@ -254,6 +254,10 @@ flowchart TD
     G --> H[Try more complex model]
 ```
 
+```figure
+bias-variance
+```
+
 ## Build It
 
 The code in `code/bias_variance.py` runs the full bias-variance decomposition experiment. Here is the approach, step by step.

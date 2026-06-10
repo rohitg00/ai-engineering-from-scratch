@@ -216,6 +216,10 @@ flowchart TD
     Task -->|"Regression"| Linear["Use Linear (no activation)"]
 ```
 
+```figure
+softmax-temperature
+```
+
 ## Build It
 
 ### Step 1: Implement All Activation Functions with Derivatives

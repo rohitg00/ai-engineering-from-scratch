@@ -187,6 +187,10 @@ flowchart TD
     Light --> WD0["Weight decay 1e-4"]
 ```
 
+```figure
+l2-regularization
+```
+
 ## Build It
 
 ### Step 1: Dropout (Train and Eval Mode)

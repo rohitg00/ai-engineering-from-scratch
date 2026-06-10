@@ -195,6 +195,10 @@ graph TD
 
 Sharp minima generalize poorly. Flat minima generalize well. This is one reason SGD with momentum often outperforms Adam on final test accuracy: its noise prevents settling into sharp minima.
 
+```figure
+gradient-descent
+```
+
 ## Build It
 
 ### Step 1: Define a test function

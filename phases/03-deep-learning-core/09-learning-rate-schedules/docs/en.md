@@ -152,6 +152,10 @@ graph TD
     end
 ```
 
+```figure
+lr-schedule
+```
+
 ## Build It
 
 ### Step 1: Schedule Functions
