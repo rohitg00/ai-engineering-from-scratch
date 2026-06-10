@@ -1,5 +1,6 @@
 import json
 import math
+import re
 import time
 
 
@@ -100,9 +101,14 @@ def read_file(path):
 def run_code(code, language="python"):
     if language != "python":
         return {"error": True, "message": f"Language '{language}' not supported. Only 'python' is available."}
-    forbidden = ["import os", "import sys", "import subprocess", "exec(", "eval(", "__import__", "open("]
+    # TOY SANDBOX: This blocklist is for demonstration only. Do not use in production.
+    # Real-world sandboxing requires Docker, gVisor, or dedicated runtimes (e.g. E2B).
+    forbidden = [
+        r"\b(?:import|from)\s+(?:os|sys|subprocess|shlex|pty|ctypes)\b",
+        r"\b(exec|eval|__import__|open|getattr|setattr|delattr|hasattr)\s*\(",
+    ]
     for pattern in forbidden:
-        if pattern in code:
+        if re.search(pattern, code, re.IGNORECASE | re.MULTILINE):
             return {"error": True, "message": f"Forbidden operation: {pattern}", "code": "SECURITY_VIOLATION"}
     try:
         local_vars = {}

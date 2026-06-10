@@ -106,7 +106,7 @@ class ShardedCheckpointTests(unittest.TestCase):
             data = tampered.read_bytes()
             tampered.write_bytes(data + b"\x00")
             model2, opt2, sched2 = _build_components(total_steps=4)
-            with self.assertRaises(AssertionError):
+            with self.assertRaises(ValueError):
                 ckpt.load_sharded_checkpoint(Path(tmp), model2, opt2, sched2)
 
 
