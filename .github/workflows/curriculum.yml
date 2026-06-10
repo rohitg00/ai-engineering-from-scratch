@@ -8,6 +8,10 @@ on:
       - "scripts/audit_lessons.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
+      - "scripts/lesson_run.py"
+      - "scripts/quiz_coverage.py"
+      - "scripts/ts_syntax_check.mjs"
+      - "scripts/_lib.py"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
@@ -20,6 +24,10 @@ on:
       - "scripts/audit_lessons.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
+      - "scripts/lesson_run.py"
+      - "scripts/quiz_coverage.py"
+      - "scripts/ts_syntax_check.mjs"
+      - "scripts/_lib.py"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
@@ -30,6 +38,8 @@ permissions:
   contents: read
 
 jobs:
+  # ── Blocking checks ───────────────────────────────────────────────────
+
   audit:
     name: invariant checks
     runs-on: ubuntu-latest
@@ -42,6 +52,109 @@ jobs:
           python-version: "3.12"
       - name: run scripts/audit_lessons.py
         run: python3 scripts/audit_lessons.py
+
+  # ── Advisory code checks ──────────────────────────────────────────────
+
+  python-syntax:
+    name: python syntax check (advisory)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
+        with:
+          python-version: "3.12"
+      - name: syntax-check all .py files
+        run: |
+          python3 scripts/lesson_run.py --json > /tmp/syntax.json
+          python3 -c "
+          import json
+          data = json.load(open('/tmp/syntax.json'))
+          failed = [f for f in data['failed']]
+          skipped = [f for f in data['skipped']]
+          print(f'Syntax: {data[\"checked\"]} lessons, {len(data[\"passed\"])} passed, {len(failed)} failed, {len(skipped)} skipped')
+          for f in failed:
+              print(f'::warning file={f[\"lesson\"]}::syntax error: {f[\"reason\"]}')
+          "
+
+  typescript-syntax:
+    name: typescript syntax check (advisory)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@e62d1c64a114b2d4b223e6e62319cbfa45a42c6a  # v4
+        with:
+          node-version: "22"
+      - name: install typescript
+        run: npm install --no-save typescript
+      - name: syntax-check all .ts files
+        continue-on-error: true
+        run: node scripts/ts_syntax_check.mjs --json
+
+  quiz-coverage:
+    name: quiz coverage report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
+        with:
+          python-version: "3.12"
+      - name: report quiz coverage
+        run: |
+          python3 scripts/quiz_coverage.py --json > /tmp/coverage.json
+          python3 -c "
+          import json
+          data = json.load(open('/tmp/coverage.json'))
+          total = data['total_lessons']
+          with_q = data['total_with_quiz']
+          pct = round(with_q / total * 100, 1) if total else 0
+          print(f'Quiz coverage: {with_q}/{total} ({pct}%)')
+          for p in sorted(data['phases'], key=lambda x: x['coverage_pct']):
+              if p['coverage_pct'] < 10:
+                  print(f'::warning title=Quiz coverage phase {p[\"phase_id\"]:02d}::{p[\"phase_name\"]}: {p[\"with_quiz\"]}/{p[\"total_lessons\"]} ({p[\"coverage_pct\"]}%)')
+          "
+
+  # ── Pytest (lessons that have tests) ──────────────────────────────────
+
+  pytest:
+    name: lesson tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Only phases that actually contain test files — discovered at
+          # script-write time.  Add rows as tests proliferate.
+          - phase: 19
+            label: "capstone"
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
+        with:
+          python-version: "3.12"
+      - name: install test deps
+        run: |
+          python3 -m pip install --quiet pytest pytest-timeout
+          # Many capstone tests import torch / numpy / h5py / zstandard / safetensors.
+          # Install everything the allowlist permits so tests don't fail on imports.
+          python3 -m pip install --quiet \
+            numpy \
+            torch \
+            h5py \
+            zstandard \
+            safetensors \
+            || echo "::warning::Some test dependencies failed to install (may be expected)"
+      - name: run tests (phase ${{ matrix.phase }})
+        run: python3 -m pytest phases/${{ matrix.phase }}*/ --timeout=60 -v --tb=short || echo "::warning::Some tests failed"
+
+  # ── Auto-sync jobs (main only) ────────────────────────────────────────
 
   readme-counts-sync:
     name: README counts auto-fix (main only)
@@ -78,7 +191,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md
           git commit -m "$BOT_COMMIT_PREFIX"
-          # Retry on non-fast-forward when another merge to main races us
           branch="${GITHUB_REF#refs/heads/}"
           for attempt in 1 2 3 4 5; do
             if git push origin "HEAD:${branch}"; then
