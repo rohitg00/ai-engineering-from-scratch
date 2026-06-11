@@ -50,14 +50,14 @@ Three options, one format:
 
 | Interface | Install | Best for |
 |-----------|---------|----------|
-| JupyterLab | `pip install jupyterlab` then `jupyter lab` | Full IDE experience, multiple tabs, file browser, terminal |
-| Jupyter Notebook | `pip install notebook` then `jupyter notebook` | Simple, lightweight, one notebook at a time |
+| JupyterLab | `uv pip install jupyterlab` then `jupyter lab` | Full IDE experience, multiple tabs, file browser, terminal |
+| Jupyter Notebook | `uv pip install notebook` then `jupyter notebook` | Simple, lightweight, one notebook at a time |
 | VS Code | Install "Jupyter" extension | Already in your editor, git integration, debugging |
 
 All three read and write the same `.ipynb` file. Pick whatever you like. JupyterLab is the most common in AI work.
 
 ```bash
-pip install jupyterlab
+uv pip install jupyterlab
 jupyter lab
 ```
 
