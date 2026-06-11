@@ -143,7 +143,7 @@ Give up: return fallback response
 **Fallback model chain.** When your primary model is unavailable, fall through a chain:
 
 ```
-claude-sonnet-4-20250514 -> gpt-4o -> gpt-4o-mini -> cached response -> "Service temporarily unavailable"
+claude-sonnet-4-6 -> gpt-4o -> gpt-4o-mini -> cached response -> "Service temporarily unavailable"
 ```
 
 Each step trades quality for availability. The user always gets something.
@@ -296,7 +296,7 @@ from typing import AsyncGenerator
 
 
 class ModelName(Enum):
-    CLAUDE_SONNET = "claude-sonnet-4-20250514"
+    CLAUDE_SONNET = "claude-sonnet-4-6"
     GPT_4O = "gpt-4o"
     GPT_4O_MINI = "gpt-4o-mini"
 
@@ -1078,7 +1078,7 @@ Replace the simulated LLM calls with actual provider SDKs.
 #         yield delta
 #
 #
-# async def call_anthropic(prompt, model="claude-sonnet-4-20250514"):
+# async def call_anthropic(prompt, model="claude-sonnet-4-6"):
 #     client = anthropic.AsyncAnthropic()
 #     async with client.messages.stream(
 #         model=model,
