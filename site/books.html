@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books - AI Engineering from Scratch</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
+  <meta name="description" content="Book-style HTML editions of AI Engineering from Scratch, organized into three long-form volumes.">
+  <meta property="og:title" content="Books - AI Engineering from Scratch">
+  <meta property="og:description" content="Read AI Engineering from Scratch as three structured book volumes: Foundations, Modern AI and LLMs, and AI in Production.">
+  <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=2">
+  <meta property="og:url" content="https://aiengineeringfromscratch.com/books.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Books - AI Engineering from Scratch">
+  <meta name="twitter:description" content="Read the curriculum as three structured book volumes.">
+  <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260508a">
+  <style>
+    .books-page {
+      padding: 100px 0 80px;
+      min-height: 100vh;
+    }
+
+    .books-header {
+      margin-bottom: 42px;
+      max-width: 780px;
+    }
+
+    .books-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+      margin-bottom: 12px;
+    }
+
+    .books-header h1 {
+      font-size: clamp(2.6rem, 8vw, 5.4rem);
+      margin-bottom: 12px;
+    }
+
+    .books-header p {
+      color: var(--ink-soft);
+      font-size: clamp(1rem, 2vw, 1.14rem);
+      max-width: 720px;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .book-card {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-width: 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--rule);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .book-cover {
+      min-height: 220px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(90deg, var(--blueprint-tint-strong) 0 1px, transparent 1px 100%),
+        linear-gradient(0deg, var(--blueprint-tint-strong) 0 1px, transparent 1px 100%),
+        var(--bg);
+      background-size: 24px 24px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .book-volume {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+    }
+
+    .book-cover-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 0.88;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+      overflow-wrap: anywhere;
+    }
+
+    .book-body {
+      padding: 22px;
+    }
+
+    .book-body h2 {
+      font-size: 1.55rem;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .book-body p {
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+      text-align: left;
+    }
+
+    .book-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .book-chip {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      border: 1px solid var(--rule-soft);
+      padding: 4px 8px;
+    }
+
+    .book-actions {
+      padding: 0 22px 22px;
+    }
+
+    .book-actions .btn {
+      width: 100%;
+      max-width: none;
+    }
+
+    .books-note {
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid var(--rule-soft);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    @media (max-width: 980px) {
+      .book-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .book-card {
+        grid-template-columns: 260px minmax(0, 1fr);
+        grid-template-rows: auto auto;
+      }
+
+      .book-cover {
+        grid-row: 1 / span 2;
+        min-height: 100%;
+      }
+
+      .book-actions {
+        padding-top: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .books-page {
+        padding: 80px 0 48px;
+      }
+
+      .books-header {
+        margin-bottom: 28px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .book-card {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .book-cover {
+        grid-row: auto;
+        min-height: 190px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
+      </a>
+      <nav class="header-nav">
+        <a href="index.html#contents">Contents</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="prereqs.html">Roadmap</a>
+        <a href="books.html">Books</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
+          <span class="star-count" data-loading="true" aria-label="GitHub stars">...</span>
+        </a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+        <span class="theme-icon" id="themeIcon">N</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="books-page">
+    <div class="container">
+      <div class="books-header">
+        <div class="books-kicker">Long-form editions</div>
+        <h1>Books</h1>
+        <p>Read AI Engineering from Scratch as structured HTML volumes. The interactive curriculum stays available; these editions are for learners who prefer a book-style path through the same material.</p>
+      </div>
+
+      <div class="book-grid" aria-label="Available book volumes">
+        <article class="book-card">
+          <div class="book-cover" aria-hidden="true">
+            <div class="book-volume">Volume 1</div>
+            <div class="book-cover-title">Foundations</div>
+          </div>
+          <div class="book-body">
+            <h2>Foundations</h2>
+            <p>Setup, math, classical machine learning, neural networks, computer vision, NLP, and speech/audio foundations.</p>
+            <div class="book-meta">
+              <span class="book-chip">12 chapters</span>
+              <span class="book-chip">Foundations</span>
+            </div>
+          </div>
+          <div class="book-actions">
+            <a class="btn btn-primary" href="book/vol-1-foundations.html">Read</a>
+          </div>
+        </article>
+
+        <article class="book-card">
+          <div class="book-cover" aria-hidden="true">
+            <div class="book-volume">Volume 2</div>
+            <div class="book-cover-title">Modern AI and LLMs</div>
+          </div>
+          <div class="book-body">
+            <h2>Modern AI and LLMs</h2>
+            <p>Transformers, generative models, LLM training and alignment, inference, RAG, tools, multimodal AI, agents, and multi-agent systems.</p>
+            <div class="book-meta">
+              <span class="book-chip">22 chapters</span>
+              <span class="book-chip">LLMs</span>
+            </div>
+          </div>
+          <div class="book-actions">
+            <a class="btn btn-primary" href="book/vol-2-modern-ai-and-llms.html">Read</a>
+          </div>
+        </article>
+
+        <article class="book-card">
+          <div class="book-cover" aria-hidden="true">
+            <div class="book-volume">Volume 3</div>
+            <div class="book-cover-title">AI in Production</div>
+          </div>
+          <div class="book-body">
+            <h2>AI in Production</h2>
+            <p>Serving, inference economics, deployment, SRE, security, compliance, FinOps, safety, governance, evaluation, red teaming, and capstones.</p>
+            <div class="book-meta">
+              <span class="book-chip">8 chapters</span>
+              <span class="book-chip">Production</span>
+            </div>
+          </div>
+          <div class="book-actions">
+            <a class="btn btn-primary" href="book/vol-3-ai-in-production.html">Read</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="books-note">Book files are generated from the project content and served as an additional reading format.</div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>AI Engineering from Scratch - open source - free forever.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="header.js?v=20260508a" defer></script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var stored = localStorage.getItem('theme');
+      if (stored) {
+        root.setAttribute('data-theme', stored);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        root.setAttribute('data-theme', 'dark');
+      } else {
+        root.setAttribute('data-theme', 'light');
+      }
+
+      function updateIcon() {
+        var icon = document.getElementById('themeIcon');
+        if (!icon) return;
+        icon.textContent = root.getAttribute('data-theme') === 'light' ? 'N' : 'D';
+      }
+
+      updateIcon();
+
+      document.addEventListener('DOMContentLoaded', function () {
+        updateIcon();
+
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+          btn.addEventListener('click', function () {
+            var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateIcon();
+          });
+        }
+      });
+    })();
+  </script>
+  <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
+</body>
+</html>
