@@ -1,5 +1,5 @@
-import shutil
 import sys
+import shutil
 
 CHECKS = [
     ("Python 3.10+", lambda: sys.version_info >= (3, 10), f"Python {sys.version}"),
