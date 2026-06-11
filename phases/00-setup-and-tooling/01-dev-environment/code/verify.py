@@ -1,6 +1,5 @@
-import sys
 import shutil
-import subprocess
+import sys
 
 CHECKS = [
     ("Python 3.10+", lambda: sys.version_info >= (3, 10), f"Python {sys.version}"),
@@ -17,7 +16,11 @@ GPU_CHECKS = [
     (
         "CUDA",
         lambda: __import__("torch").cuda.is_available(),
-        lambda: __import__("torch").cuda.get_device_name(0) if __import__("torch").cuda.is_available() else "Not available",
+        lambda: (
+            __import__("torch").cuda.get_device_name(0)
+            if __import__("torch").cuda.is_available()
+            else "Not available"
+        ),
     ),
 ]
 
