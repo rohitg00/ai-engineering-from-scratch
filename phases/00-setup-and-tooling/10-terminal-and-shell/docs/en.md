@@ -1,4 +1,4 @@
-# Terminal & Shell
+﻿# Terminal & Shell
 
 > The terminal is where AI engineers live. Get comfortable here.
 
@@ -101,7 +101,7 @@ The three redirects you need:
 | `>>` | Append stdout to file |
 | `2>` | Write stderr to file |
 | `2>&1` | Send stderr to same place as stdout |
-| `\|` | Send stdout of one command as stdin to the next |
+| <code>&#124;</code> | Send stdout of one command as stdin to the next |
 
 ### Step 3: Background processes
 
