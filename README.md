@@ -1144,6 +1144,18 @@ relative links inside lesson docs.
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
+## Translations
+
+Community-maintained adaptations of this curriculum:
+
+- 🇹🇷 **Turkish** — [komunite/ai-engineering](https://github.com/komunite/ai-engineering) · maintained by [Komünite](https://komunite.com.tr) · site: <https://ai-muhendisligi.komunite.com.tr>
+
+Maintain a translation in another language? Open a PR adding it here, following the [FORKING.md](FORKING.md) guidance under "For Other Languages".
+
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
+
 ## Sponsor the work
 
 Free, MIT-licensed, 503 lessons. The curriculum is maintained on sponsorship alone. Cash only.
