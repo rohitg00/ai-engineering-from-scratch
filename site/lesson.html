@@ -1626,6 +1626,7 @@
     <aside class="toc-sidebar" id="tocSidebar" aria-hidden="true"></aside>
   </div>
 
+  <script src="build-meta.js"></script>
   <script src="data.js?v=20260525a"></script>
   <script src="progress.js?v=20260525a"></script>
   <script src="header.js?v=20260525a" defer></script>
@@ -1851,8 +1852,13 @@
       }
 
       function fetchLesson(path) {
-        var rawUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/docs/en.md';
-        var quizUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/quiz.json';
+        // Fetch docs from the branch this site was built from (set by build.js
+        // via build-meta.js), so PR preview deploys render their own lesson
+        // edits instead of always pulling main. Falls back to main.
+        var ref = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
+        var base = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ref + '/';
+        var rawUrl = base + path + '/docs/en.md';
+        var quizUrl = base + path + '/quiz.json';
 
         fetch(rawUrl)
           .then(function (res) {

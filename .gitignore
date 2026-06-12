@@ -62,3 +62,4 @@ catalog.json
 # commit, so they can't drift or drop URLs. Regenerated fresh from PHASES.
 site/sitemap.xml
 site/llms.txt
+site/build-meta.js
