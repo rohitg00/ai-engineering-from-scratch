@@ -95,6 +95,10 @@ Pricing points are captured 2026-04 from the linked vendor docs and drift every 
 - ProjectDiscovery: 7% → 74% hit rate by moving dynamic out of prefix (project blog, 2025-11).
 - Parallelization anti-pattern: typical reports of 5–10x bill inflation when N parallel requests miss the first cache write.
 
+```figure
+semantic-cache-hit
+```
+
 ## Use It
 
 `code/main.py` simulates L1 + L2 caching on mixed workloads. Reports hit rates, bill, and shows the parallelization penalty.

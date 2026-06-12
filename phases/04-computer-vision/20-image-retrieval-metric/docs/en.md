@@ -102,6 +102,10 @@ Two very different problems with the same name:
 
 Always ask which one you are solving before picking a model.
 
+```figure
+metric-embedding
+```
+
 ## Build It
 
 ### Step 1: Triplet loss

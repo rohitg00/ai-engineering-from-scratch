@@ -65,6 +65,10 @@ Implications:
 - **Hub failure.** In a star topology, a bad hub corrupts everyone. Rotate or use multiple hubs.
 - **Prompt homogenization.** All agents use the same prompt; they produce the same answers. Use diverse prompts and/or models.
 
+```figure
+debate-converge
+```
+
 ## Build It
 
 `code/main.py` implements stdlib debate:

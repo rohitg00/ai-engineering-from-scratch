@@ -82,6 +82,10 @@ The demo runs everything end to end. It prints a per-stage breakdown of one quer
 
 This is the shape a CI smoke test takes. The pipeline runs offline, fast, deterministic. The thresholds are deliberately tight on the fixture so a regression in any of the six lessons fails the demo.
 
+```figure
+rag-pipeline-flow
+```
+
 ## Build It
 
 `code/main.py` implements:

@@ -189,6 +189,10 @@ graph TD
     style C3 fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
+```figure
+loss-masking
+```
+
 ## Build It
 
 ### Step 1: Instruction Dataset

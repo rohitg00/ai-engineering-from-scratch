@@ -62,6 +62,10 @@ BM25 scores are unbounded and corpus-dependent. Cosine similarities are bounded 
 
 This is the same argument you hear about RankFusion vs RRF in Vespa and Weaviate documentation. They came to the same conclusion: stay rank-based unless you have very strong evidence to interpolate scores.
 
+```figure
+rrf-fusion
+```
+
 ## Build It
 
 `code/main.py` implements:

@@ -89,6 +89,10 @@ The three headline metrics:
 
 A confusion matrix prints the four counts as a 2x2 grid. The demo writes this to stdout for both training regimes.
 
+```figure
+cap-classifier-head-swap
+```
+
 ## Architecture
 
 ```mermaid

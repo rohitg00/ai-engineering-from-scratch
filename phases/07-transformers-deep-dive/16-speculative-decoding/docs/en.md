@@ -80,6 +80,10 @@ Verification feeds `N` draft tokens into the verifier in one forward pass. This 
 
 Production implementations (vLLM's `--speculative-model`, TensorRT-LLM's LookaheadDecoder) handle this with scratch KV buffers. Write first, commit on acceptance. It's not conceptually hard, but it is fiddly.
 
+```figure
+draft-verify-tokens
+```
+
 ## Build It
 
 See `code/main.py`. We implement the core speculative-sampling algorithm (rejection step + residual distribution) with:

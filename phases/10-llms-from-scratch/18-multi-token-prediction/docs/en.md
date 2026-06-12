@@ -105,6 +105,10 @@ EAGLE trains a small draft model SEPARATELY after pre-training. MTP bakes the dr
 | Acceptance rate | 0.88-0.92 | 0.80+ at depth 1 |
 | Benefit beyond speedup | Speculative decoding only | Denser training signal + speedup |
 
+```figure
+multi-token-predict
+```
+
 ## Build It
 
 `code/main.py` builds a single MTP module end to end: shared embedding, projection, transformer block, shared output head. It then computes the per-depth cross-entropy loss on a short synthetic sequence and prints the parameter count by component. A toy vocabulary of 32 tokens keeps the numbers readable.

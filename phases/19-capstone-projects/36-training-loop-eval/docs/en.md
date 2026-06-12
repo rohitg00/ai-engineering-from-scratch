@@ -64,6 +64,10 @@ Warmup ramps the learning rate from zero to the target over a few hundred steps 
 
 A model whose training loss drops nicely but whose generated samples are all the same token is broken. A model whose loss curve looks flat but whose generated samples sharpen into coherent words is learning. The qualitative probe runs faster than reading the full curve and catches modes the scalar misses.
 
+```figure
+cap-training-loop
+```
+
 ## Build It
 
 `code/main.py` implements:

@@ -76,6 +76,10 @@ Suppose an agent proposes an edit. The gating stack:
 
 All four must pass for the edit to land. Any single failure pauses the loop.
 
+```figure
+bounded-gates
+```
+
 ## Use It
 
 `code/main.py` runs a bounded self-improvement loop on the DGM-style toy from Lesson 4, but with the four primitives layered on top. Each primitive can be enabled or disabled individually. The demonstration is that each primitive catches a specific failure class, and that removing any one of them lets that failure class through.

@@ -14,6 +14,10 @@
 - Inspect per-head attention weights for a fixed input and reason about what each head looks at.
 - Train a small attention block on a toy task and watch the loss fall as the heads specialize.
 
+```figure
+cap-multihead-attention
+```
+
 ## The frame
 
 Attention is the function that lets a token's representation pull information from other tokens in the same sequence. Self-attention means queries, keys, and values are all derived from the same input. Multi-head means the projection is split into H parallel attention problems whose outputs are concatenated and projected back.

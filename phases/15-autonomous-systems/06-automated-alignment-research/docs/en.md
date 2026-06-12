@@ -50,6 +50,10 @@ Human researchers set the task queue, review results, and hold the constitutiona
 
 This matches the propose-then-commit pattern from Lesson 15 applied to research itself: AARs propose; humans commit.
 
+```figure
+aar-forum
+```
+
 ## Use It
 
 `code/main.py` simulates a multi-AAR research forum. Three independent "research agents" run in parallel, posting findings to an append-only forum with optional tamper attempts.

@@ -104,6 +104,10 @@ GANs have no ground truth, so how do you know they are working?
 
 For a small synthetic-data run, sample inspection is enough.
 
+```figure
+cv-gan-image
+```
+
 ## Build It
 
 ### Step 1: Generator

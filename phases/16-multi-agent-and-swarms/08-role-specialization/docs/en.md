@@ -69,6 +69,10 @@ Every role in your system is an LLM and every role's output is "looks good to me
 - **AutoGen** — role-specific ConversableAgents with one-word names in a GroupChat.
 - **OpenAI Agents SDK** — handoff tools between role-specialized Agents.
 
+```figure
+swarm-roles
+```
+
 ## Build It
 
 `code/main.py` implements a 4-role pipeline building a simple Python function:

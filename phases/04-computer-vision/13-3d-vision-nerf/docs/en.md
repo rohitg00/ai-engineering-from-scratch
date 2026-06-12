@@ -124,6 +124,10 @@ Almost every real NeRF product in 2026 is actually 3D Gaussian splatting. The me
 - **NeRF Synthetic** / **Blended MVS** — posed-image datasets for view synthesis.
 - **Mip-NeRF 360** dataset — unbounded real scenes.
 
+```figure
+nerf-rays
+```
+
 ## Build It
 
 ### Step 1: PointNet classifier

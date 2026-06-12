@@ -170,6 +170,10 @@ graph TD
     end
 ```
 
+```figure
+agentic-rag-loop
+```
+
 ## Build It
 
 ### Step 1: BM25 Implementation

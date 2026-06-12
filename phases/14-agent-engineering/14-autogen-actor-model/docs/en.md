@@ -60,6 +60,10 @@ OpenTelemetry support is built in. Every message emits a span; tool calls carry 
 
 Early 2026: AutoGen v0.7.x is stable for research and prototyping. Microsoft has shifted active development to the Microsoft Agent Framework (public preview Oct 1 2025; 1.0 GA targeted end of Q1 2026). AutoGen patterns port forward cleanly — the actor model is the durable idea.
 
+```figure
+actor-mailbox
+```
+
 ## Build It
 
 `code/main.py` implements a stdlib actor runtime:

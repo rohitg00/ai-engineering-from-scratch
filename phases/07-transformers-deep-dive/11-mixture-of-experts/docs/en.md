@@ -78,6 +78,10 @@ DeepSeek-V3 beats Llama 3 70B (dense) on almost every benchmark while doing **fe
 
 All experts live on GPU regardless of which ones fire. A 671B model needs ~1.3 TB of VRAM for fp16 weights. Frontier MoE deployment requires expert parallelism — shard experts across GPUs, route tokens across the network. Latency is dominated by the all-to-all communication, not the matmul.
 
+```figure
+expert-routing
+```
+
 ## Build It
 
 See `code/main.py`. A compact MoE layer in pure stdlib with:

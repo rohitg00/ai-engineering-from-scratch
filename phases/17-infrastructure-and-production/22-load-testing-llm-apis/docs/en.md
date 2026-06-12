@@ -82,6 +82,10 @@ Build from real traffic samples (if you have them) or from published distributio
 - Typical CI gate: 30-50 iterations per PR.
 - Four patterns: steady, ramp, spike, soak.
 
+```figure
+load-pattern-waves
+```
+
 ## Use It
 
 `code/main.py` simulates a load test with realistic prompt distribution, measures effective TPOT, and demonstrates the uniform-prompt trap.

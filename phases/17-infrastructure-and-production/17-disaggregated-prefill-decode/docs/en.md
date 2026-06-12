@@ -105,6 +105,10 @@ Benchmark numbers drift — NVIDIA and the inference stack post updated results 
 - Disaggregation threshold: prompts >512 tokens + outputs >200 tokens.
 - KV transfer via NIXL: 20-80 ms for 4K-prompt KV on 70B FP8.
 
+```figure
+prefill-decode-split
+```
+
 ## Use It
 
 `code/main.py` simulates colocated vs disaggregated serving. Reports throughput, cost per request, and the prompt-length crossover.
