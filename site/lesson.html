@@ -425,6 +425,17 @@
       color: var(--blueprint);
     }
 
+    .lesson-article .math-inline {
+      background: var(--code-bg);
+      padding: 1px 6px;
+      border: 1px solid var(--rule-soft);
+      color: var(--blueprint);
+    }
+
+    .lesson-article .math-inline .katex {
+      font-size: 1.04em;
+    }
+
     .lesson-article pre {
       position: relative;
       margin: 20px 0;
@@ -1956,6 +1967,7 @@
 
         initCodeCopy();
         renderMermaidBlocks();
+        renderMathSpans();
         if (window.mountLessonFigures) window.mountLessonFigures(el);
         renderAIPanels();
         buildTOC();
@@ -2469,12 +2481,42 @@
         return cells.map(function (c) { return c.trim(); });
       }
 
+      // Lessons write math as inline code (e.g. `h_t = f(h_{t-1}, x_t)`), which is
+      // hard to read. Spans matching a strong math signal (and no code-like traits)
+      // are rendered with KaTeX instead; everything else stays as code.
+      // Input is HTML-escaped text. The heuristic must stay conservative: a miss
+      // keeps the status quo, a false positive renders real code as math.
+      function looksLikeMath(s) {
+        if (/[一-鿿]/.test(s)) return false;                                  // CJK prose
+        if (s.indexOf('&quot;') !== -1 || s.indexOf('$') !== -1) return false; // string literals / $-wrapped
+        // A literal &lt; here can only come from em/strong injection residue
+        // (a real < is already &amp;lt;) — reject the whole span.
+        if (s.indexOf('&lt;') !== -1) return false;
+        // Single quote: an opening quote (not preceded by an identifier or closing
+        // bracket) means a string literal; primes like V(s') pass through.
+        if (/(^|[^a-zA-Z0-9)\]])&#39;/.test(s)) return false;
+        if (s.indexOf('*') !== -1) return false;                              // code-style multiplication
+        if (/_[a-z]{4,}/.test(s)) return false;                               // snake_case identifiers
+        if (/--|::|=&gt;|-&gt;|\/\//.test(s)) return false;                   // code operators
+        if (/[a-z]{2,} [a-z]{2,} [a-z]{2,}/.test(s)) return false;            // prose mixed into the span
+        if (/[a-z]{2,}-[a-z]{2,}/.test(s)) return false;                      // hyphenated words (would render as subtraction)
+        if (/\{\s*[a-z]+\s*:/.test(s)) return false;                          // dict/object literals
+        // ^ needs a base char before it (rejects regex anchors like ^Bearer);
+        // keep | in the class so double norms like ||q||^2 still match.
+        return /[_^]\{/.test(s) ||
+          /[½⅓¼·≈≠≤≥±×÷√∇∂∑Σ∏∫πθμσεαβγλδηρτφψωΩΔ∈∉∞∝∀∃²³ᵀ]/.test(s) ||
+          /[0-9a-zA-Z)\]}|]\^[0-9a-zA-Z(]/.test(s);
+      }
+
       function inlineFormat(text) {
         text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         text = text.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
         text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
         text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
-        text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+        text = text.replace(/`([^`]+)`/g, function (m, c) {
+          if (looksLikeMath(c)) return '<code class="math-tex" data-tex="' + c + '">' + c + '</code>';
+          return '<code>' + c + '</code>';
+        });
         text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function (m, label, href) {
           if (/^https?:\/\/|^mailto:/i.test(href)) {
             return '<a href="' + href + '" target="_blank" rel="noopener">' + label + '</a>';
@@ -2486,6 +2528,49 @@
 
       function slugify(text) {
         return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      }
+
+      // Normalize the pseudo-LaTeX used in lessons into something KaTeX accepts.
+      // getAttribute already decodes HTML entities, so this sees the raw text.
+      function texPreprocess(s) {
+        s = s.replace(/\\\|/g, '|');  // markdown table-escaped pipes
+        s = s.replace(/²/g, '^2').replace(/³/g, '^3').replace(/ᵀ/g, '^T');
+        s = s.replace(/([A-Za-zα-ωΑ-Ω])̅/g, '\\bar{$1}');
+        s = s.replace(/([A-Za-zα-ωΑ-Ω])̂/g, '\\hat{$1}');
+        s = s.replace(/ŵ/g, '\\hat{w}').replace(/â/g, '\\hat{a}');
+        s = s.replace(/√/g, '\\sqrt ');
+        s = s.replace(/~/g, '\\sim ');
+        s = s.replace(/([_^])([a-zA-Z0-9]+(?:\.[0-9]+)?)/g, '$1{$2}');
+        s = s.replace(/\b(softmax|argmax|argmin|log10|log|exp|sin|cos|tanh|max|min|KL|Tr|Var|sqrt)\b(\s*\()/g, '\\operatorname{$1}$2');
+        return s;
+      }
+
+      // Lazy-load KaTeX and render math-tex spans; any failure falls back to the
+      // original code styling, so a bad span can never look worse than before.
+      function renderMathSpans() {
+        var spans = document.querySelectorAll('code.math-tex');
+        if (!spans.length) return;
+        var KATEX = 'https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min';
+        if (!document.getElementById('katex-css')) {
+          var link = document.createElement('link');
+          link.id = 'katex-css'; link.rel = 'stylesheet'; link.href = KATEX + '.css';
+          document.head.appendChild(link);
+        }
+        function renderAll() {
+          spans.forEach(function (el) {
+            try {
+              var span = document.createElement('span');
+              span.className = 'math-inline';
+              window.katex.render(texPreprocess(el.getAttribute('data-tex')), span, { throwOnError: true, strict: false });
+              el.replaceWith(span);
+            } catch (e) { el.classList.remove('math-tex'); }
+          });
+        }
+        if (window.katex) { renderAll(); return; }
+        var script = document.createElement('script');
+        script.src = KATEX + '.js';
+        script.onload = renderAll;
+        document.head.appendChild(script);
       }
 
       function renderCodeBlock(code, lang) {
