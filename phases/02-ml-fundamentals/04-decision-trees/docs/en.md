@@ -48,44 +48,46 @@ At each node, we have a set of samples. We want to split them so that the result
 
 **Gini impurity** measures the probability that a randomly chosen sample would be misclassified if it were labeled according to the class distribution at that node.
 
-```
-Gini(S) = 1 - sum(p_k^2)
+$$
+\text{Gini}(S) = 1 - \sum_k p_k^2
+$$
 
-where p_k is the proportion of class k in set S.
-```
+where $p_k$ is the proportion of class $k$ in set $S$.
 
-For a pure node (all one class), Gini = 0. For a binary split with 50/50 classes, Gini = 0.5. Lower is better.
+For a pure node (all one class), $\text{Gini} = 0$. For a binary split with 50/50 classes, $\text{Gini} = 0.5$. Lower is better.
 
-```
 Example: 6 cats, 4 dogs
 
-Gini = 1 - (0.6^2 + 0.4^2) = 1 - (0.36 + 0.16) = 0.48
-```
+$$
+\text{Gini} = 1 - (0.6^2 + 0.4^2) = 1 - (0.36 + 0.16) = 0.48
+$$
 
 **Entropy** measures the information content (disorder) in a node. Covered in Phase 1 Lesson 09.
 
-```
-Entropy(S) = -sum(p_k * log2(p_k))
-```
+$$
+\text{Entropy}(S) = -\sum_k p_k \log_2(p_k)
+$$
 
-For a pure node, entropy = 0. For a 50/50 binary split, entropy = 1.0. Lower is better.
+For a pure node, $\text{entropy} = 0$. For a 50/50 binary split, $\text{entropy} = 1.0$. Lower is better.
 
-```
 Example: 6 cats, 4 dogs
 
-Entropy = -(0.6 * log2(0.6) + 0.4 * log2(0.4))
-        = -(0.6 * -0.737 + 0.4 * -1.322)
-        = 0.442 + 0.529
-        = 0.971 bits
-```
+$$
+\begin{aligned}
+\text{Entropy} &= -(0.6 \cdot \log_2(0.6) + 0.4 \cdot \log_2(0.4)) \\
+&= -(0.6 \cdot -0.737 + 0.4 \cdot -1.322) \\
+&= 0.442 + 0.529 \\
+&= 0.971 \text{ bits}
+\end{aligned}
+$$
 
 **Information gain** is the reduction in impurity (entropy or Gini) after a split.
 
-```
-IG(S, feature, threshold) = Impurity(S) - weighted_avg(Impurity(S_left), Impurity(S_right))
+$$
+\text{IG}(S, \text{feature}, \text{threshold}) = \text{Impurity}(S) - \text{weighted\_avg}(\text{Impurity}(S_{\text{left}}), \text{Impurity}(S_{\text{right}}))
+$$
 
 where the weights are the proportions of samples in each child.
-```
 
 The greedy algorithm at each node: try every feature and every possible threshold. Pick the (feature, threshold) pair that maximizes information gain.
 
@@ -98,7 +100,7 @@ For a dataset with n features and m samples at the current node:
    - Try every midpoint between consecutive distinct values as a threshold
    - Compute the information gain for each threshold
 2. Select the feature and threshold with the highest information gain
-3. Split the data into left (feature <= threshold) and right (feature > threshold)
+3. Split the data into left ($\text{feature} \leq \text{threshold}$) and right ($\text{feature} > \text{threshold}$)
 4. Recurse on each child
 
 This greedy approach does not guarantee the globally optimal tree. Finding the optimal tree is NP-hard. But greedy splitting works well in practice.
@@ -125,9 +127,9 @@ For regression, the leaf prediction is the mean of the target values in that lea
 
 **Variance reduction** replaces information gain:
 
-```
-VR(S, feature, threshold) = Var(S) - weighted_avg(Var(S_left), Var(S_right))
-```
+$$
+\text{VR}(S, \text{feature}, \text{threshold}) = \text{Var}(S) - \text{weighted\_avg}(\text{Var}(S_{\text{left}}), \text{Var}(S_{\text{right}}))
+$$
 
 Pick the split that reduces variance the most. The tree partitions the input space into regions, and predicts a constant (the mean) in each region.
 
@@ -155,7 +157,7 @@ Two sources of randomness make the trees diverse:
 
 **Bagging (bootstrap aggregating):** Each tree is trained on a bootstrap sample, a random sample with replacement from the training data. About 63% of the original samples appear in each bootstrap (the rest are out-of-bag samples that can be used for validation).
 
-**Feature randomization:** At each split, only a random subset of features is considered. For classification, the default is sqrt(n_features). For regression, n_features/3. This prevents all trees from splitting on the same dominant feature.
+**Feature randomization:** At each split, only a random subset of features is considered. For classification, the default is $\sqrt{n_{\text{features}}}$. For regression, $n_{\text{features}}/3$. This prevents all trees from splitting on the same dominant feature.
 
 The key insight: averaging many decorrelated trees reduces variance without increasing bias. Each individual tree may be mediocre. The ensemble is strong.
 
@@ -165,10 +167,9 @@ Random forests naturally provide feature importance scores. The most common meth
 
 **Mean Decrease in Impurity (MDI):** For each feature, sum the total reduction in impurity across all trees and all nodes where that feature is used. Features that produce bigger impurity reductions at earlier splits are more important.
 
-```
-importance(feature_j) = sum over all nodes where feature_j is used:
-    (n_samples_at_node / n_total_samples) * impurity_decrease
-```
+$$
+\text{importance}(\text{feature}_j) = \sum_{\text{nodes using feature}_j} \frac{n_{\text{samples at node}}}{n_{\text{total samples}}} \cdot \text{impurity\_decrease}
+$$
 
 This is fast (computed during training) but biased toward high-cardinality features and features with many possible split points.
 
@@ -348,7 +349,7 @@ This lesson produces `outputs/prompt-tree-interpreter.md` -- a prompt that inter
 
 1. Train a single decision tree on a 2D dataset with 3 classes. Manually trace the splits and draw the rectangular decision boundaries. Compare the boundaries at max_depth=2 vs max_depth=10.
 
-2. Implement variance reduction splitting for regression trees. Generate y = sin(x) + noise for 200 points and fit your regression tree. Plot the tree's piecewise-constant predictions against the true curve.
+2. Implement variance reduction splitting for regression trees. Generate $y = \sin(x) + \text{noise}$ for 200 points and fit your regression tree. Plot the tree's piecewise-constant predictions against the true curve.
 
 3. Build a random forest with 1, 5, 10, 50, and 200 trees. Plot training accuracy and test accuracy vs number of trees. Observe that test accuracy plateaus but does not decrease (forests resist overfitting).
 
