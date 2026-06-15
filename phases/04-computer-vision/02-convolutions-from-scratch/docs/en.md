@@ -10,7 +10,7 @@
 ## Learning Objectives
 
 - Implement 2D convolution from scratch using only NumPy, including the nested-loop version and a vectorised `im2col` version
-- Compute output spatial size for any combination of input size, kernel size, padding, and stride, and justify the `(H - K + 2P) / S + 1` formula
+- Compute output spatial size for any combination of input size, kernel size, padding, and stride, and justify the $(H - K + 2P) / S + 1$ formula
 - Hand-design kernels (edge, blur, sharpen, Sobel) and explain why each one produces the pattern of activations it does
 - Stack convolutions into a feature extractor and connect the depth-of-the-stack to the size of the receptive field
 
@@ -74,9 +74,9 @@ That one formula — **shared weights, locality, sliding window** — is the ent
 
 Given input spatial size `H`, kernel size `K`, padding `P`, stride `S`:
 
-```
-H_out = floor( (H - K + 2P) / S ) + 1
-```
+$$
+H_{out} = \left\lfloor \frac{H - K + 2P}{S} \right\rfloor + 1
+$$
 
 Memorise this. You will compute it dozens of times per architecture.
 
@@ -88,7 +88,7 @@ Memorise this. You will compute it dozens of times per architecture.
 | Pool 2x2 | 32 | 2 | 0 | 2 | 16 |
 | Large receptive field | 32 | 7 | 3 | 2 | 16 |
 
-"Same padding" means pick P so that H_out == H when S == 1. For odd K, that is P = (K - 1) / 2. That is why 3x3 kernels dominate — they are the smallest odd kernel that still has a centre.
+"Same padding" means pick P so that H_out == H when S == 1. For odd K, that is $P = (K - 1) / 2$. That is why 3x3 kernels dominate — they are the smallest odd kernel that still has a centre.
 
 ### Padding
 
@@ -146,7 +146,7 @@ Output:  (C_out, H', W')       64 x 3 x 3
 Parameter count: C_out * C_in * K * K + C_out   (the + C_out is biases)
 ```
 
-That last line is the one you will calculate when planning a model. A 64-channel 3x3 conv on a 3-channel input has `64 * 3 * 3 * 3 + 64 = 1,792` parameters. Cheap.
+That last line is the one you will calculate when planning a model. A 64-channel 3x3 conv on a 3-channel input has $64 \times 3 \times 3 \times 3 + 64 = 1{,}792$ parameters. Cheap.
 
 ### The im2col trick
 
@@ -172,11 +172,11 @@ Every production conv implementation is some variant of this plus cache-tiling t
 
 A single 3x3 conv looks at 9 input pixels. Stack two 3x3 convs and a neuron in the second layer looks at 5x5 input pixels. Three 3x3 convs give 7x7. In general:
 
-```
-RF after L stacked K x K convs (stride 1) = 1 + L * (K - 1)
+$$
+\text{RF after } L \text{ stacked } K \times K \text{ convs (stride 1)} = 1 + L \cdot (K - 1)
+$$
 
-With strides:   RF grows multiplicatively with stride along each layer.
-```
+With strides: RF grows multiplicatively with stride along each layer.
 
 The entire reason "3x3 all the way down" works (VGG, ResNet, ConvNeXt) is that two 3x3 convs see the same input area as one 5x5 conv but with fewer parameters and an extra non-linearity in between.
 
