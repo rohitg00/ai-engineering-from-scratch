@@ -28,19 +28,17 @@ Every optimizer in deep learning is an answer to the same question: how do you g
 
 Optimization is finding the input values that minimize (or maximize) a function. In machine learning, the function is the loss. The inputs are the model's weights. Training is optimization.
 
-```
-minimize L(w) where:
-  L = loss function
-  w = model weights (could be millions of parameters)
-```
+$$
+\text{minimize } L(w) \quad \text{where } L = \text{loss function}, \; w = \text{model weights (could be millions of parameters)}
+$$
 
 ### Gradient descent (vanilla)
 
 The simplest optimizer. Compute the gradient of the loss with respect to every weight. Move each weight in the opposite direction of its gradient. Scale the step by the learning rate.
 
-```
-w = w - lr * gradient
-```
+$$
+w = w - \text{lr} \cdot \text{gradient}
+$$
 
 That is the entire algorithm. One line.
 
@@ -94,10 +92,12 @@ The noise in SGD and mini-batch is not a bug. It helps escape shallow local mini
 
 Vanilla gradient descent only looks at the current gradient. If the gradient zigzags (common in narrow valleys), progress is slow. Momentum fixes this by accumulating past gradients into a velocity term.
 
-```
-v = beta * v + gradient
-w = w - lr * v
-```
+$$
+\begin{aligned}
+v &= \beta \cdot v + \text{gradient} \\
+w &= w - \text{lr} \cdot v
+\end{aligned}
+$$
 
 The analogy: a ball rolling downhill. It does not stop and restart at every bump. It builds speed in consistent directions and dampens oscillations.
 
@@ -116,7 +116,7 @@ graph TD
     end
 ```
 
-`beta` (typically 0.9) controls how much history to keep. Higher beta means more momentum, smoother paths, but slower response to direction changes.
+$\beta$ (typically 0.9) controls how much history to keep. Higher $\beta$ means more momentum, smoother paths, but slower response to direction changes.
 
 ### Adam: adaptive learning rates
 
@@ -127,17 +127,17 @@ Adam (Adaptive Moment Estimation) tracks two things per weight:
 1. First moment (m): running average of gradients (like momentum)
 2. Second moment (v): running average of squared gradients (gradient magnitude)
 
-```
-m = beta1 * m + (1 - beta1) * gradient
-v = beta2 * v + (1 - beta2) * gradient^2
+$$
+\begin{aligned}
+m &= \beta_1 \cdot m + (1 - \beta_1) \cdot \text{gradient} \\
+v &= \beta_2 \cdot v + (1 - \beta_2) \cdot \text{gradient}^2 \\[4pt]
+\hat{m} &= m / (1 - \beta_1^t) \quad &&\text{bias correction} \\
+\hat{v} &= v / (1 - \beta_2^t) \quad &&\text{bias correction} \\[4pt]
+w &= w - \text{lr} \cdot \hat{m} / (\sqrt{\hat{v}} + \epsilon)
+\end{aligned}
+$$
 
-m_hat = m / (1 - beta1^t)    bias correction
-v_hat = v / (1 - beta2^t)    bias correction
-
-w = w - lr * m_hat / (sqrt(v_hat) + epsilon)
-```
-
-The division by `sqrt(v_hat)` is the key insight. Weights with large gradients get divided by a large number (small effective step). Weights with small gradients get divided by a small number (large effective step). Each weight gets its own adaptive learning rate.
+The division by $\sqrt{\hat{v}}$ is the key insight. Weights with large gradients get divided by a large number (small effective step). Weights with small gradients get divided by a small number (large effective step). Each weight gets its own adaptive learning rate.
 
 Default hyperparameters: `lr=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8`. These defaults work well for most problems.
 
@@ -149,14 +149,14 @@ Common schedules:
 
 | Schedule | Formula | Use case |
 |----------|---------|----------|
-| Step decay | lr = lr * factor every N epochs | Simple, manual control |
-| Exponential decay | lr = lr_0 * decay^t | Smooth reduction |
-| Cosine annealing | lr = lr_min + 0.5 * (lr_max - lr_min) * (1 + cos(pi * t / T)) | Transformers, modern training |
+| Step decay | $\text{lr} = \text{lr} \cdot \text{factor}$ every $N$ epochs | Simple, manual control |
+| Exponential decay | $\text{lr} = \text{lr}_0 \cdot \text{decay}^t$ | Smooth reduction |
+| Cosine annealing | $\text{lr} = \text{lr}_{\min} + 0.5 \cdot (\text{lr}_{\max} - \text{lr}_{\min}) \cdot (1 + \cos(\pi \cdot t / T))$ | Transformers, modern training |
 | Warmup + decay | Linear ramp up, then decay | Large models, prevents early instability |
 
 ### Convex vs non-convex
 
-A convex function has one minimum. Gradient descent always finds it. A quadratic like `f(x) = x^2` is convex.
+A convex function has one minimum. Gradient descent always finds it. A quadratic like $f(x) = x^2$ is convex.
 
 Neural network loss functions are non-convex. They have many local minima, saddle points, and flat regions.
 
@@ -205,9 +205,9 @@ gradient-descent
 
 The Rosenbrock function is a classic optimization benchmark. Its minimum is at (1, 1) inside a narrow curved valley that is easy to find but hard to follow.
 
-```
-f(x, y) = (1 - x)^2 + 100 * (y - x^2)^2
-```
+$$
+f(x, y) = (1 - x)^2 + 100 \cdot (y - x^2)^2
+$$
 
 ```python
 def rosenbrock(params):
@@ -351,9 +351,9 @@ The optimizer classes built here reappear in Phase 3 when we train a neural netw
 
 2. **Momentum comparison.** Run SGD with momentum values [0.0, 0.5, 0.9, 0.99] on the Rosenbrock function. Track the loss at every step. Which momentum value converges fastest? Which overshoots?
 
-3. **Saddle point escape.** Define the function `f(x, y) = x^2 - y^2` (a saddle point at the origin). Start at (0.01, 0.01). Compare how vanilla GD, SGD with momentum, and Adam behave. Which escapes the saddle point?
+3. **Saddle point escape.** Define the function $f(x, y) = x^2 - y^2$ (a saddle point at the origin). Start at (0.01, 0.01). Compare how vanilla GD, SGD with momentum, and Adam behave. Which escapes the saddle point?
 
-4. **Implement learning rate decay.** Add an exponential decay schedule to the GradientDescent class: `lr = lr_0 * 0.999^step`. Compare convergence with and without decay on the Rosenbrock function.
+4. **Implement learning rate decay.** Add an exponential decay schedule to the GradientDescent class: $\text{lr} = \text{lr}_0 \cdot 0.999^{\text{step}}$. Compare convergence with and without decay on the Rosenbrock function.
 
 ## Key Terms
 
@@ -365,7 +365,7 @@ The optimizer classes built here reappear in Phase 3 when we train a neural netw
 | SGD | "Random sampling" | Stochastic gradient descent. Compute gradient on a random subset instead of the full dataset. Almost always means mini-batch SGD in practice. |
 | Mini-batch | "A chunk of data" | A small subset of training data (32-256 samples) used to estimate the gradient. Balances speed and gradient accuracy. |
 | Adam | "The default optimizer" | Adaptive Moment Estimation. Tracks per-weight running averages of gradients and squared gradients to give each weight its own learning rate. |
-| Bias correction | "Fix the cold start" | Adam's first and second moments are initialized to zero. Bias correction divides by (1 - beta^t) to compensate during early steps. |
+| Bias correction | "Fix the cold start" | Adam's first and second moments are initialized to zero. Bias correction divides by $(1 - \beta^t)$ to compensate during early steps. |
 | Learning rate schedule | "Change lr over time" | A function that adjusts the learning rate during training. Large steps early, small steps late. |
 | Convex function | "One valley" | A function where any local minimum is the global minimum. Gradient descent always finds it. Neural network losses are not convex. |
 | Saddle point | "Flat but not a minimum" | A point where the gradient is zero but it is a minimum in some directions and a maximum in others. Common in high dimensions. |
