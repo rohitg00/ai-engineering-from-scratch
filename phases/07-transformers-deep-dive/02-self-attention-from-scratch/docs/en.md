@@ -11,7 +11,7 @@
 
 - Implement scaled dot-product self-attention from scratch using only NumPy, including query/key/value projections and the softmax-weighted sum
 - Build a multi-head attention layer that splits heads, computes parallel attention, and concatenates results
-- Trace how the attention matrix captures token relationships and explain why scaling by sqrt(d_k) prevents softmax saturation
+- Trace how the attention matrix captures token relationships and explain why scaling by $\sqrt{d_k}$ prevents softmax saturation
 - Apply causal masking to convert bidirectional attention into autoregressive (decoder-style) attention
 
 ## The Problem
@@ -109,11 +109,11 @@ attention-matrix
 
 ### Why Scale?
 
-The dot products grow with dimension dk. If dk = 64, dot products can be in the range of tens, pushing softmax into regions where gradients vanish. The fix: divide by sqrt(dk).
+The dot products grow with dimension $d_k$. If $d_k = 64$, dot products can be in the range of tens, pushing softmax into regions where gradients vanish. The fix: divide by $\sqrt{d_k}$.
 
-```
-Scaled scores = (Q @ K^T) / sqrt(dk)
-```
+$$
+\text{Scaled scores} = \frac{Q K^T}{\sqrt{d_k}}
+$$
 
 This keeps values in a range where softmax produces useful gradients.
 
@@ -135,12 +135,15 @@ Now each token has a set of weights saying how much to attend to every other tok
 
 The final output for each token is a weighted sum of all value vectors:
 
-```
-output_i = sum( attention_weight[i][j] * v_j  for all j )
+$$
+\text{output}_i = \sum_j \text{attention\_weight}[i][j] \cdot v_j
+$$
 
 For token 1:
-  output_1 = 0.52 * v1 + 0.09 * v2 + 0.07 * v3 + 0.14 * v4 + 0.08 * v5
-```
+
+$$
+\text{output}_1 = 0.52 \cdot v_1 + 0.09 \cdot v_2 + 0.07 \cdot v_3 + 0.14 \cdot v_4 + 0.08 \cdot v_5
+$$
 
 ### Full Pipeline
 
@@ -159,9 +162,9 @@ flowchart LR
 
 Formula in one line:
 
-```
-Attention(Q, K, V) = softmax( Q @ K^T / sqrt(dk) ) @ V
-```
+$$
+\text{Attention}(Q, K, V) = \text{softmax}\!\left( \frac{Q K^T}{\sqrt{d_k}} \right) V
+$$
 
 ```figure
 softmax-attention-scaling
@@ -302,7 +305,7 @@ print(f"\nAttn weights (averaged over heads):")
 print(attn_weights[0].detach().numpy().round(3))
 ```
 
-The key difference: multi-head attention runs multiple attention functions in parallel, each with its own Q, K, V projections of size dk = d_model / n_heads, then concatenates results. This lets the model attend to different relationship types simultaneously.
+The key difference: multi-head attention runs multiple attention functions in parallel, each with its own Q, K, V projections of size $d_k = d_{\text{model}} / n_{\text{heads}}$, then concatenates results. This lets the model attend to different relationship types simultaneously.
 
 ## Ship It
 
@@ -322,7 +325,7 @@ This lesson produces:
 | Query (Q) | "The question vector" | A learned projection of the input that represents what information this token is looking for |
 | Key (K) | "The label vector" | A learned projection that represents what information this token contains, matched against queries |
 | Value (V) | "The content vector" | A learned projection carrying the actual information that gets aggregated based on attention scores |
-| Scaled dot-product attention | "The attention formula" | softmax(QK^T / sqrt(dk)) @ V - scaling prevents softmax saturation in high dimensions |
+| Scaled dot-product attention | "The attention formula" | $\text{softmax}(QK^T / \sqrt{d_k})\,V$ - scaling prevents softmax saturation in high dimensions |
 | Self-attention | "The token looks at itself and others" | Attention where Q, K, V all come from the same sequence, letting every position attend to every other position |
 | Attention weights | "How much focus" | A probability distribution over positions, produced by softmax over scaled dot products |
 | Multi-head attention | "Parallel attention" | Running multiple attention functions with different projections, then concatenating results for richer representations |
