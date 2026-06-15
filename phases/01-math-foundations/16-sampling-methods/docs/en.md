@@ -615,7 +615,7 @@ def gumbel_sample():
     return -math.log(-math.log(u))
 
 def gumbel_softmax(logits, temperature):
-    gumbels = [math.log(p) + gumbel_sample() for p in logits]
+    gumbels = [z + gumbel_sample() for z in logits]
     return softmax([g / temperature for g in gumbels])
 ```
 
