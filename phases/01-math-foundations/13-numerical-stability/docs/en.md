@@ -572,7 +572,7 @@ These stable implementations reappear in Phase 3 when building the training loop
 
 1. **Catastrophic cancellation.** Compute the variance of [1000000.0, 1000001.0, 1000002.0] using the naive formula $E[x^2] - E[x]^2$ in float32. Then compute it using Welford's online algorithm. Compare the errors against the true variance (0.6667).
 
-2. **Precision hunt.** Find the smallest positive float32 value `x` such that `1.0 + x == 1.0` in Python. This is the machine epsilon. Verify it matches `numpy.finfo(numpy.float32).eps`.
+2. **Precision hunt.** Find the smallest positive float32 value `x` such that `1.0 + x > 1.0` in float32. This is the machine epsilon. Verify it matches `numpy.finfo(numpy.float32).eps`.
 
 3. **Log-sum-exp edge cases.** Test your `logsumexp_stable` function with: (a) all values equal, (b) one value much larger than the rest, (c) all values very negative (-1000). Verify it gives correct results where the naive version fails.
 
