@@ -26,7 +26,7 @@ Understanding convexity does three things. First, it tells you when your problem
 
 ### Convex sets
 
-A set S is convex if for any two points in S, the line segment between them also lies entirely in S.
+A set $S$ is convex if for any two points in $S$, the line segment between them also lies entirely in $S$.
 
 | Convex sets | Not convex |
 |---|---|
@@ -34,12 +34,12 @@ A set S is convex if for any two points in S, the line segment between them also
 | **Triangle**: same property holds for all interior points | **Donut/annulus**: the hole means some line segments leave the set |
 | The line segment between any two points stays within the set | The line segment between some pairs of points exits the set |
 
-Formal test: for any points x, y in S and any t in [0, 1], the point tx + (1-t)y is also in S.
+Formal test: for any points $x, y$ in $S$ and any $t \in [0, 1]$, the point $tx + (1-t)y$ is also in $S$.
 
 Examples of convex sets:
-- A line, a plane, all of R^n
+- A line, a plane, all of $\mathbb{R}^n$
 - A ball (circle, sphere, hypersphere)
-- A halfspace: {x : a^T x <= b}
+- A halfspace: $\{x : a^T x \leq b\}$
 - The intersection of any number of convex sets
 
 Examples of non-convex sets:
@@ -49,11 +49,11 @@ Examples of non-convex sets:
 
 ### Convex functions
 
-A function f is convex if its domain is a convex set and for any two points x, y in its domain and any t in [0, 1]:
+A function $f$ is convex if its domain is a convex set and for any two points $x, y$ in its domain and any $t \in [0, 1]$:
 
-```
-f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y)
-```
+$$
+f(tx + (1-t)y) \leq t \cdot f(x) + (1-t) \cdot f(y)
+$$
 
 Geometrically: the line segment between any two points on the graph lies above or on the graph.
 
@@ -64,26 +64,26 @@ Geometrically: the line segment between any two points on the graph lies above o
 | **Local minima** | Every local minimum is the global minimum | Multiple local minima may exist at different heights |
 
 Common convex functions:
-- f(x) = x^2 (parabola)
-- f(x) = |x| (absolute value)
-- f(x) = e^x (exponential)
-- f(x) = max(0, x) (ReLU, though piecewise linear)
-- f(x) = -log(x) for x > 0 (negative log)
-- Any linear function f(x) = a^T x + b (both convex and concave)
+- $f(x) = x^2$ (parabola)
+- $f(x) = |x|$ (absolute value)
+- $f(x) = e^x$ (exponential)
+- $f(x) = \max(0, x)$ (ReLU, though piecewise linear)
+- $f(x) = -\log(x)$ for $x > 0$ (negative log)
+- Any linear function $f(x) = a^T x + b$ (both convex and concave)
 
 ### Testing for convexity
 
 Three practical tests, from easiest to most rigorous.
 
-**Test 1: Second derivative test (1D).** If f''(x) >= 0 for all x, then f is convex.
+**Test 1: Second derivative test (1D).** If $f''(x) \geq 0$ for all $x$, then $f$ is convex.
 
-- f(x) = x^2: f''(x) = 2 >= 0. Convex.
-- f(x) = x^3: f''(x) = 6x. Negative for x < 0. Not convex.
-- f(x) = e^x: f''(x) = e^x > 0. Convex.
+- $f(x) = x^2$: $f''(x) = 2 \geq 0$. Convex.
+- $f(x) = x^3$: $f''(x) = 6x$. Negative for $x < 0$. Not convex.
+- $f(x) = e^x$: $f''(x) = e^x > 0$. Convex.
 
-**Test 2: Hessian test (multivariate).** If the Hessian matrix H(x) is positive semidefinite for all x, then f is convex. The Hessian is the matrix of second partial derivatives.
+**Test 2: Hessian test (multivariate).** If the Hessian matrix $H(x)$ is positive semidefinite for all $x$, then $f$ is convex. The Hessian is the matrix of second partial derivatives.
 
-**Test 3: Definition test.** Check the inequality f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y) directly. Useful for functions where derivatives are hard to compute.
+**Test 3: Definition test.** Check the inequality $f(tx + (1-t)y) \leq t \cdot f(x) + (1-t) \cdot f(y)$ directly. Useful for functions where derivatives are hard to compute.
 
 ### Why convexity matters
 
@@ -129,21 +129,24 @@ Linear models with convex losses are convex. The moment you add hidden layers wi
 
 ### The Hessian matrix
 
-The Hessian H of a function f: R^n -> R is the n x n matrix of second partial derivatives.
+The Hessian $H$ of a function $f: \mathbb{R}^n \to \mathbb{R}$ is the $n \times n$ matrix of second partial derivatives.
 
-```
-H[i][j] = d^2 f / (dx_i dx_j)
-```
+$$
+H_{ij} = \frac{\partial^2 f}{\partial x_i \, \partial x_j}
+$$
 
-For f(x, y) = x^2 + 3xy + y^2:
+For $f(x, y) = x^2 + 3xy + y^2$:
 
-```
-df/dx = 2x + 3y       d^2f/dx^2 = 2      d^2f/dxdy = 3
-df/dy = 3x + 2y       d^2f/dydx = 3      d^2f/dy^2 = 2
+$$
+\begin{aligned}
+\frac{\partial f}{\partial x} = 2x + 3y \qquad & \frac{\partial^2 f}{\partial x^2} = 2 \qquad \frac{\partial^2 f}{\partial x \, \partial y} = 3 \\
+\frac{\partial f}{\partial y} = 3x + 2y \qquad & \frac{\partial^2 f}{\partial y \, \partial x} = 3 \qquad \frac{\partial^2 f}{\partial y^2} = 2
+\end{aligned}
+$$
 
-H = [ 2  3 ]
-    [ 3  2 ]
-```
+$$
+H = \begin{bmatrix} 2 & 3 \\ 3 & 2 \end{bmatrix}
+$$
 
 The Hessian tells you about curvature:
 - Eigenvalues all positive: the function curves upward in every direction (convex at that point)
@@ -151,19 +154,23 @@ The Hessian tells you about curvature:
 - Mixed signs: saddle point (curves up in some directions, down in others)
 - Zero eigenvalue: flat in that direction (degenerate)
 
-For convexity, the Hessian must be positive semidefinite (all eigenvalues >= 0) everywhere, not just at one point.
+For convexity, the Hessian must be positive semidefinite (all eigenvalues $\geq 0$) everywhere, not just at one point.
 
 ### Newton's method
 
 Gradient descent uses first-order information (the gradient). Newton's method uses second-order information (the Hessian). It fits a quadratic approximation at the current point and jumps directly to the minimum of that quadratic.
 
-```
 Update rule:
-  x_new = x - H^(-1) * gradient
+
+$$
+x_{\text{new}} = x - H^{-1} \cdot \text{gradient}
+$$
 
 Compare to gradient descent:
-  x_new = x - lr * gradient
-```
+
+$$
+x_{\text{new}} = x - \text{lr} \cdot \text{gradient}
+$$
 
 Newton's method replaces the scalar learning rate with the inverse Hessian. This automatically adjusts the step size and direction based on local curvature.
 
@@ -190,14 +197,14 @@ Advantages:
 - Scale-invariant (works regardless of how you parameterize the problem)
 
 Disadvantages:
-- Computing the Hessian costs O(n^2) memory and O(n^3) to invert
-- For a neural network with 1 million weights, that is 10^12 entries and 10^18 operations
+- Computing the Hessian costs $O(n^2)$ memory and $O(n^3)$ to invert
+- For a neural network with 1 million weights, that is $10^{12}$ entries and $10^{18}$ operations
 - Not practical for deep learning
 
 ### Constrained optimization
 
-Unconstrained optimization: minimize f(x) over all x.
-Constrained optimization: minimize f(x) subject to constraints.
+Unconstrained optimization: minimize $f(x)$ over all $x$.
+Constrained optimization: minimize $f(x)$ subject to constraints.
 
 Real problems have constraints. You want to minimize cost but your budget is limited. You want to minimize error but your model complexity is bounded.
 
@@ -216,22 +223,24 @@ graph LR
 
 The method of Lagrange multipliers converts a constrained problem into an unconstrained one.
 
-Problem: minimize f(x) subject to g(x) = 0.
+Problem: minimize $f(x)$ subject to $g(x) = 0$.
 
-Solution: introduce a new variable (the Lagrange multiplier lambda) and solve the unconstrained problem:
+Solution: introduce a new variable (the Lagrange multiplier $\lambda$) and solve the unconstrained problem:
 
-```
-L(x, lambda) = f(x) + lambda * g(x)
-```
+$$
+L(x, \lambda) = f(x) + \lambda \cdot g(x)
+$$
 
-At the solution, the gradient of L is zero:
+At the solution, the gradient of $L$ is zero:
 
-```
-dL/dx = df/dx + lambda * dg/dx = 0
-dL/dlambda = g(x) = 0
-```
+$$
+\begin{aligned}
+\frac{\partial L}{\partial x} &= \frac{\partial f}{\partial x} + \lambda \cdot \frac{\partial g}{\partial x} = 0 \\
+\frac{\partial L}{\partial \lambda} &= g(x) = 0
+\end{aligned}
+$$
 
-Geometric intuition: at the constrained minimum, the gradient of f must be parallel to the gradient of the constraint g. If they were not parallel, you could move along the constraint surface and reduce f further.
+Geometric intuition: at the constrained minimum, the gradient of $f$ must be parallel to the gradient of the constraint $g$. If they were not parallel, you could move along the constraint surface and reduce $f$ further.
 
 ```mermaid
 graph LR
@@ -240,39 +249,41 @@ graph LR
     S --- C["At the solution, gradient of f is parallel to gradient of g"]
 ```
 
-Example: minimize f(x,y) = x^2 + y^2 subject to x + y = 1.
+Example: minimize $f(x,y) = x^2 + y^2$ subject to $x + y = 1$.
 
-```
-L = x^2 + y^2 + lambda(x + y - 1)
+$$
+\begin{aligned}
+L &= x^2 + y^2 + \lambda(x + y - 1) \\[4pt]
+\frac{\partial L}{\partial x} &= 2x + \lambda = 0 \implies x = -\lambda/2 \\
+\frac{\partial L}{\partial y} &= 2y + \lambda = 0 \implies y = -\lambda/2 \\
+\frac{\partial L}{\partial \lambda} &= x + y - 1 = 0
+\end{aligned}
+$$
 
-dL/dx = 2x + lambda = 0  =>  x = -lambda/2
-dL/dy = 2y + lambda = 0  =>  y = -lambda/2
-dL/dlambda = x + y - 1 = 0
+From the first two: $x = y$. Substituting: $2x = 1$, so $x = y = 0.5$, $\lambda = -1$.
 
-From first two: x = y
-Substituting: 2x = 1, so x = y = 0.5, lambda = -1
-```
-
-The closest point on the line x + y = 1 to the origin is (0.5, 0.5).
+The closest point on the line $x + y = 1$ to the origin is $(0.5, 0.5)$.
 
 ### KKT conditions
 
 The Karush-Kuhn-Tucker conditions extend Lagrange multipliers to inequality constraints.
 
-Problem: minimize f(x) subject to g_i(x) <= 0 for i = 1, ..., m.
+Problem: minimize $f(x)$ subject to $g_i(x) \leq 0$ for $i = 1, \ldots, m$.
 
 The KKT conditions (necessary for optimality):
 
-```
-1. Stationarity:    df/dx + sum(lambda_i * dg_i/dx) = 0
-2. Primal feasibility:  g_i(x) <= 0  for all i
-3. Dual feasibility:    lambda_i >= 0  for all i
-4. Complementary slackness:  lambda_i * g_i(x) = 0  for all i
-```
+$$
+\begin{aligned}
+&\text{1. Stationarity:} && \frac{\partial f}{\partial x} + \sum_i \lambda_i \cdot \frac{\partial g_i}{\partial x} = 0 \\
+&\text{2. Primal feasibility:} && g_i(x) \leq 0 \quad \text{for all } i \\
+&\text{3. Dual feasibility:} && \lambda_i \geq 0 \quad \text{for all } i \\
+&\text{4. Complementary slackness:} && \lambda_i \cdot g_i(x) = 0 \quad \text{for all } i
+\end{aligned}
+$$
 
-Complementary slackness is the key insight: either the constraint is active (g_i = 0, the solution sits on the boundary) or the multiplier is zero (the constraint does not matter). A constraint that does not affect the solution has lambda = 0.
+Complementary slackness is the key insight: either the constraint is active ($g_i = 0$, the solution sits on the boundary) or the multiplier is zero (the constraint does not matter). A constraint that does not affect the solution has $\lambda = 0$.
 
-KKT conditions are central to SVMs. The support vectors are the data points where the constraint is active (lambda > 0). All other data points have lambda = 0 and do not affect the decision boundary.
+KKT conditions are central to SVMs. The support vectors are the data points where the constraint is active ($\lambda > 0$). All other data points have $\lambda = 0$ and do not affect the decision boundary.
 
 ### Regularization as constrained optimization
 
@@ -280,25 +291,31 @@ L1 and L2 regularization are not arbitrary tricks. They are constrained optimiza
 
 **L2 regularization (Ridge):**
 
-```
-minimize  Loss(w)  subject to  ||w||^2 <= t
+$$
+\text{minimize } \text{Loss}(w) \quad \text{subject to } \|w\|^2 \leq t
+$$
 
 Equivalent unconstrained form:
-minimize  Loss(w) + lambda * ||w||^2
-```
 
-The constraint ||w||^2 <= t defines a ball (circle in 2D, sphere in 3D). The solution is where the loss contours first touch this ball.
+$$
+\text{minimize } \text{Loss}(w) + \lambda \cdot \|w\|^2
+$$
+
+The constraint $\|w\|^2 \leq t$ defines a ball (circle in 2D, sphere in 3D). The solution is where the loss contours first touch this ball.
 
 **L1 regularization (LASSO):**
 
-```
-minimize  Loss(w)  subject to  ||w||_1 <= t
+$$
+\text{minimize } \text{Loss}(w) \quad \text{subject to } \|w\|_1 \leq t
+$$
 
 Equivalent unconstrained form:
-minimize  Loss(w) + lambda * ||w||_1
-```
 
-The constraint ||w||_1 <= t defines a diamond (rotated square in 2D).
+$$
+\text{minimize } \text{Loss}(w) + \lambda \cdot \|w\|_1
+$$
+
+The constraint $\|w\|_1 \leq t$ defines a diamond (rotated square in 2D).
 
 | Property | L2 constraint (circle) | L1 constraint (diamond) |
 |---|---|---|
@@ -315,12 +332,14 @@ Every constrained optimization problem (the primal) has a companion problem (the
 
 The Lagrangian dual function:
 
-```
-Primal: minimize f(x) subject to g(x) <= 0
-Lagrangian: L(x, lambda) = f(x) + lambda * g(x)
-Dual function: d(lambda) = min_x L(x, lambda)
-Dual problem: maximize d(lambda) subject to lambda >= 0
-```
+$$
+\begin{aligned}
+\text{Primal:} \quad & \text{minimize } f(x) \text{ subject to } g(x) \leq 0 \\
+\text{Lagrangian:} \quad & L(x, \lambda) = f(x) + \lambda \cdot g(x) \\
+\text{Dual function:} \quad & d(\lambda) = \min_x L(x, \lambda) \\
+\text{Dual problem:} \quad & \text{maximize } d(\lambda) \text{ subject to } \lambda \geq 0
+\end{aligned}
+$$
 
 Why duality matters:
 - The dual problem is sometimes easier to solve than the primal
@@ -329,16 +348,16 @@ Why duality matters:
 
 For SVMs specifically:
 
-```
-Primal: find w, b that maximize the margin 2/||w|| subject to
-        y_i(w^T x_i + b) >= 1 for all i
+$$
+\begin{aligned}
+\text{Primal:} \quad & \text{find } w, b \text{ that maximize the margin } \frac{2}{\|w\|} \text{ subject to} \\
+& y_i(w^T x_i + b) \geq 1 \text{ for all } i \\[6pt]
+\text{Dual:} \quad & \text{maximize } \sum_i \alpha_i - \tfrac{1}{2} \sum_{ij} \alpha_i \alpha_j y_i y_j \, x_i^T x_j \\
+& \text{subject to } \alpha_i \geq 0 \text{ and } \sum_i \alpha_i y_i = 0
+\end{aligned}
+$$
 
-Dual:   maximize sum(alpha_i) - 0.5 * sum_ij(alpha_i * alpha_j * y_i * y_j * x_i^T x_j)
-        subject to alpha_i >= 0 and sum(alpha_i * y_i) = 0
-
-The dual only involves dot products x_i^T x_j.
-Replace x_i^T x_j with K(x_i, x_j) to get the kernel trick.
-```
+The dual only involves dot products $x_i^T x_j$. Replace $x_i^T x_j$ with $K(x_i, x_j)$ to get the kernel trick.
 
 ### Why deep learning works despite non-convexity
 
@@ -346,7 +365,7 @@ Neural network loss functions are wildly non-convex. By every classical measure,
 
 **Most local minima are good enough.** In high-dimensional spaces, random critical points (where the gradient is zero) are overwhelmingly saddle points, not local minima. The few local minima that exist tend to have loss values close to the global minimum. Getting trapped in a terrible local minimum is extremely unlikely when the parameter space has millions of dimensions.
 
-**Saddle points, not local minima, are the real obstacle.** In a function with n parameters, a saddle point has a mix of positive and negative curvature directions. For a random critical point in high dimensions, the probability of all n eigenvalues being positive (local minimum) is roughly 2^(-n). Almost all critical points are saddle points. SGD's noise helps escape them.
+**Saddle points, not local minima, are the real obstacle.** In a function with $n$ parameters, a saddle point has a mix of positive and negative curvature directions. For a random critical point in high dimensions, the probability of all $n$ eigenvalues being positive (local minimum) is roughly $2^{-n}$. Almost all critical points are saddle points. SGD's noise helps escape them.
 
 **Overparameterization smooths the landscape.** Networks with more parameters than training examples have smoother, more connected loss surfaces. Wider networks have fewer bad local minima. This is counterintuitive but empirically consistent.
 
@@ -365,21 +384,21 @@ Neural network loss functions are wildly non-convex. By every classical measure,
 
 Pure Newton's method is impractical for large models. Several approximations make second-order information usable.
 
-**L-BFGS (Limited-memory BFGS):** Approximates the inverse Hessian using the last m gradient differences. Requires O(mn) memory instead of O(n^2). Works well for problems with up to ~10,000 parameters. Used in classical ML (logistic regression, CRFs) but not deep learning.
+**L-BFGS (Limited-memory BFGS):** Approximates the inverse Hessian using the last $m$ gradient differences. Requires $O(mn)$ memory instead of $O(n^2)$. Works well for problems with up to ~10,000 parameters. Used in classical ML (logistic regression, CRFs) but not deep learning.
 
 **Natural gradient:** Uses the Fisher information matrix (expected Hessian of the log-likelihood) instead of the standard Hessian. This accounts for the geometry of probability distributions. K-FAC (Kronecker-Factored Approximate Curvature) approximates the Fisher matrix as a Kronecker product, making it practical for neural networks.
 
-**Hessian-free optimization:** Uses conjugate gradient to solve Hx = g without ever forming H. Only requires Hessian-vector products, which can be computed in O(n) time via automatic differentiation.
+**Hessian-free optimization:** Uses conjugate gradient to solve $Hx = g$ without ever forming $H$. Only requires Hessian-vector products, which can be computed in $O(n)$ time via automatic differentiation.
 
 **Diagonal approximations:** Adam's second moment is a diagonal approximation of the Hessian's diagonal. AdaHessian extends this by using actual Hessian diagonal elements via Hutchinson's estimator.
 
 | Method | Memory | Per-step cost | When to use |
 |--------|--------|--------------|-------------|
-| Gradient descent | O(n) | O(n) | Baseline, large models |
-| Newton's method | O(n^2) | O(n^3) | Small convex problems |
-| L-BFGS | O(mn) | O(mn) | Medium convex problems |
-| Adam | O(n) | O(n) | Deep learning default |
-| K-FAC | O(n) | O(n) per layer | Research, large-batch training |
+| Gradient descent | $O(n)$ | $O(n)$ | Baseline, large models |
+| Newton's method | $O(n^2)$ | $O(n^3)$ | Small convex problems |
+| L-BFGS | $O(mn)$ | $O(mn)$ | Medium convex problems |
+| Adam | $O(n)$ | $O(n)$ | Deep learning default |
+| K-FAC | $O(n)$ | $O(n)$ per layer | Research, large-batch training |
 
 ```figure
 convex-vs-nonconvex
@@ -516,13 +535,13 @@ print(f"Support vectors: {svm.n_support_}")
 
 ## Exercises
 
-1. **Convexity gallery.** Test these functions for convexity using the checker: f(x) = x^4, f(x) = sin(x), f(x,y) = x^2 + y^2, f(x,y) = x*y, f(x) = max(x, 0). Explain why each result makes sense.
+1. **Convexity gallery.** Test these functions for convexity using the checker: $f(x) = x^4$, $f(x) = \sin(x)$, $f(x,y) = x^2 + y^2$, $f(x,y) = xy$, $f(x) = \max(x, 0)$. Explain why each result makes sense.
 
-2. **Newton vs gradient descent race.** Run both methods on f(x,y) = 50*x^2 + y^2 from the starting point (10, 10). How many steps does each need to reach loss < 1e-10? What happens to gradient descent when the condition number (ratio of largest to smallest Hessian eigenvalue) increases?
+2. **Newton vs gradient descent race.** Run both methods on $f(x,y) = 50x^2 + y^2$ from the starting point $(10, 10)$. How many steps does each need to reach loss < 1e-10? What happens to gradient descent when the condition number (ratio of largest to smallest Hessian eigenvalue) increases?
 
-3. **Lagrange multiplier geometry.** Minimize f(x,y) = (x-3)^2 + (y-3)^2 subject to x + 2y = 4. Verify the solution by checking that the gradient of f is parallel to the gradient of g at the solution.
+3. **Lagrange multiplier geometry.** Minimize $f(x,y) = (x-3)^2 + (y-3)^2$ subject to $x + 2y = 4$. Verify the solution by checking that the gradient of $f$ is parallel to the gradient of $g$ at the solution.
 
-4. **Regularization constraint.** Implement L1-constrained optimization: minimize (x-3)^2 + (y-2)^2 subject to |x| + |y| <= 1. Show that the solution has one coordinate equal to zero (sparsity from the diamond constraint).
+4. **Regularization constraint.** Implement L1-constrained optimization: minimize $(x-3)^2 + (y-2)^2$ subject to $|x| + |y| \leq 1$. Show that the solution has one coordinate equal to zero (sparsity from the diamond constraint).
 
 5. **Hessian eigenvalue analysis.** Compute the Hessian of the Rosenbrock function at (1,1) and at (-1,1). Compute eigenvalues at both points. What do the eigenvalues tell you about the curvature at the minimum versus far from it?
 
