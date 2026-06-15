@@ -32,37 +32,28 @@ Before you model anything, you need to know what your data looks like. Descripti
 
 **Measures of central tendency** answer "where is the middle?"
 
-```
-Mean:   sum of all values / count
-        mu = (1/n) * sum(x_i)
+- **Mean:** sum of all values / count.
 
-Median: middle value when sorted
-        Robust to outliers. If you have [1, 2, 3, 4, 1000], the mean is 202
-        but the median is 3.
+$$
+\mu = \frac{1}{n} \sum x_i
+$$
 
-Mode:   most frequent value
-        Useful for categorical data. For continuous data, rarely informative.
-```
+- **Median:** middle value when sorted. Robust to outliers. If you have $[1, 2, 3, 4, 1000]$, the mean is 202 but the median is 3.
+- **Mode:** most frequent value. Useful for categorical data. For continuous data, rarely informative.
 
 The mean is the balance point. The median is the halfway mark. When they diverge, your distribution is skewed. Income distributions have mean >> median (right skew from billionaires). Loss distributions during training often have mean << median (left skew from easy samples).
 
 **Measures of spread** answer "how dispersed is the data?"
 
-```
-Variance:   average squared deviation from the mean
-            sigma^2 = (1/n) * sum((x_i - mu)^2)
+- **Variance:** average squared deviation from the mean.
 
-Standard deviation:  square root of variance
-                     sigma = sqrt(sigma^2)
-                     Same units as the data, so more interpretable.
+$$
+\sigma^2 = \frac{1}{n} \sum (x_i - \mu)^2
+$$
 
-Range:      max - min
-            Sensitive to outliers. Almost never useful alone.
-
-IQR:        Q3 - Q1 (interquartile range)
-            The range of the middle 50% of the data.
-            Robust to outliers. Used for box plots and outlier detection.
-```
+- **Standard deviation:** square root of variance, $\sigma = \sqrt{\sigma^2}$. Same units as the data, so more interpretable.
+- **Range:** $\max - \min$. Sensitive to outliers. Almost never useful alone.
+- **IQR:** $Q_3 - Q_1$ (interquartile range). The range of the middle 50% of the data. Robust to outliers. Used for box plots and outlier detection.
 
 **Percentiles** divide sorted data into 100 equal parts. The 25th percentile (Q1) means 25% of values fall below this point. The 50th percentile is the median. The 75th percentile is Q3.
 
@@ -77,10 +68,12 @@ In ML, you care about percentiles for inference latency, prediction confidence d
 
 **Sample vs population statistics.** When computing variance from a sample, divide by (n-1) instead of n. This is Bessel's correction. It compensates for the fact that your sample mean is not the true population mean. With n in the denominator, you systematically underestimate the true variance. With (n-1), the estimate is unbiased.
 
-```
-Population variance: sigma^2 = (1/N) * sum((x_i - mu)^2)
-Sample variance:     s^2     = (1/(n-1)) * sum((x_i - x_bar)^2)
-```
+$$
+\begin{aligned}
+\text{Population variance:} \quad & \sigma^2 = \frac{1}{N} \sum (x_i - \mu)^2 \\
+\text{Sample variance:} \quad & s^2 = \frac{1}{n-1} \sum (x_i - \bar{x})^2
+\end{aligned}
+$$
 
 In practice: if n is large (thousands of samples), the difference is negligible. If n is small (dozens of samples), it matters.
 
@@ -90,27 +83,24 @@ Correlation measures the strength and direction of a linear relationship between
 
 **Pearson correlation coefficient** measures linear association:
 
-```
-r = sum((x_i - x_bar)(y_i - y_bar)) / (n * s_x * s_y)
+$$
+r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{n \cdot s_x \cdot s_y}
+$$
 
-r = +1:  perfect positive linear relationship
-r = -1:  perfect negative linear relationship
-r =  0:  no linear relationship (but there might be a nonlinear one!)
+- $r = +1$: perfect positive linear relationship
+- $r = -1$: perfect negative linear relationship
+- $r = 0$: no linear relationship (but there might be a nonlinear one!)
 
-Range: [-1, 1]
-```
+Range: $[-1, 1]$
 
 Pearson assumes the relationship is linear and both variables are roughly normally distributed. It is sensitive to outliers. A single extreme point can drag r from 0.1 to 0.9.
 
 **Spearman rank correlation** measures monotonic association:
 
-```
 1. Replace each value with its rank (1, 2, 3, ...)
 2. Compute Pearson correlation on the ranks
 
-Spearman catches any monotonic relationship, not just linear.
-If y = x^3, Pearson gives r < 1 but Spearman gives rho = 1.
-```
+Spearman catches any monotonic relationship, not just linear. If $y = x^3$, Pearson gives $r < 1$ but Spearman gives $\rho = 1$.
 
 **When to use each:**
 
@@ -131,31 +121,34 @@ Spearman:   Ordinal data (rankings, ratings).
 
 The covariance between two variables measures how they vary together:
 
-```
-Cov(X, Y) = (1/n) * sum((x_i - x_bar)(y_i - y_bar))
+$$
+\text{Cov}(X, Y) = \frac{1}{n} \sum (x_i - \bar{x})(y_i - \bar{y})
+$$
 
-Cov(X, Y) > 0:  X and Y tend to increase together
-Cov(X, Y) < 0:  when X increases, Y tends to decrease
-Cov(X, Y) = 0:  no linear co-movement
-```
+- $\text{Cov}(X, Y) > 0$: $X$ and $Y$ tend to increase together
+- $\text{Cov}(X, Y) < 0$: when $X$ increases, $Y$ tends to decrease
+- $\text{Cov}(X, Y) = 0$: no linear co-movement
 
-For d features, the covariance matrix C is a d x d matrix where C[i][j] = Cov(feature_i, feature_j). The diagonal entries C[i][i] are the variances of each feature.
+For $d$ features, the covariance matrix $C$ is a $d \times d$ matrix where $C[i][j] = \text{Cov}(\text{feature}_i, \text{feature}_j)$. The diagonal entries $C[i][i]$ are the variances of each feature.
 
-```
-C = | Var(x1)      Cov(x1,x2)  Cov(x1,x3) |
-    | Cov(x2,x1)  Var(x2)      Cov(x2,x3) |
-    | Cov(x3,x1)  Cov(x3,x2)  Var(x3)     |
+$$
+C = \begin{bmatrix}
+\text{Var}(x_1) & \text{Cov}(x_1,x_2) & \text{Cov}(x_1,x_3) \\
+\text{Cov}(x_2,x_1) & \text{Var}(x_2) & \text{Cov}(x_2,x_3) \\
+\text{Cov}(x_3,x_1) & \text{Cov}(x_3,x_2) & \text{Var}(x_3)
+\end{bmatrix}
+$$
 
 Properties:
-  - Symmetric: C[i][j] = C[j][i]
-  - Positive semi-definite: all eigenvalues >= 0
-  - Diagonal = variances
-  - Off-diagonal = covariances
-```
+
+- Symmetric: $C[i][j] = C[j][i]$
+- Positive semi-definite: all eigenvalues $\geq 0$
+- Diagonal = variances
+- Off-diagonal = covariances
 
 **Connection to PCA.** PCA eigendecomposes the covariance matrix. The eigenvectors are the principal components (directions of maximum variance). The eigenvalues tell you how much variance each component captures. This is exactly what Lesson 10 covered, but now you see why the covariance matrix is the right thing to decompose: it encodes all pairwise linear relationships in your data.
 
-**Connection to correlation.** The correlation matrix is the covariance matrix of standardized variables (each divided by its standard deviation). Correlation normalizes covariance so all values fall in [-1, 1].
+**Connection to correlation.** The correlation matrix is the covariance matrix of standardized variables (each divided by its standard deviation). Correlation normalizes covariance so all values fall in $[-1, 1]$.
 
 ### Hypothesis Testing
 
@@ -174,28 +167,24 @@ Example:
 
 **The p-value** is the probability of seeing data as extreme as what you observed, assuming H0 is true. It is NOT the probability that H0 is true. This is the single most common misunderstanding in statistics.
 
-```
-p-value = P(data this extreme | H0 is true)
+$$
+\text{p-value} = P(\text{data this extreme} \mid H_0 \text{ is true})
+$$
 
-If p-value < alpha (typically 0.05):
-    Reject H0. The result is "statistically significant."
-If p-value >= alpha:
-    Fail to reject H0. You do not have enough evidence.
-    This does NOT mean H0 is true.
-```
+- If $\text{p-value} < \alpha$ (typically 0.05): Reject $H_0$. The result is "statistically significant."
+- If $\text{p-value} \geq \alpha$: Fail to reject $H_0$. You do not have enough evidence. This does NOT mean $H_0$ is true.
 
 **Confidence intervals** give a range of plausible values for a parameter:
 
-```
 95% confidence interval for the mean:
-    x_bar +/- z * (s / sqrt(n))
 
-where z = 1.96 for 95% confidence
+$$
+\bar{x} \pm z \cdot \frac{s}{\sqrt{n}}
+$$
 
-Interpretation: if you repeated this experiment many times, 95% of the
-computed intervals would contain the true mean. It does NOT mean there
-is a 95% probability the true mean is in this specific interval.
-```
+where $z = 1.96$ for 95% confidence.
+
+Interpretation: if you repeated this experiment many times, 95% of the computed intervals would contain the true mean. It does NOT mean there is a 95% probability the true mean is in this specific interval.
 
 The width of the confidence interval tells you about precision. Wide intervals mean high uncertainty. Narrow intervals mean your estimate is precise (but not necessarily accurate, if your data is biased).
 
@@ -205,27 +194,21 @@ The t-test compares means. There are several flavors.
 
 **One-sample t-test:** is the population mean different from a hypothesized value?
 
-```
-t = (x_bar - mu_0) / (s / sqrt(n))
-
-degrees of freedom = n - 1
-```
+$$
+t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}, \qquad \text{degrees of freedom} = n - 1
+$$
 
 **Two-sample t-test (independent):** are two group means different?
 
-```
-t = (x_bar_1 - x_bar_2) / sqrt(s1^2/n1 + s2^2/n2)
+$$
+t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{s_1^2/n_1 + s_2^2/n_2}}
+$$
 
-This is Welch's t-test, which does not assume equal variances.
-Always use Welch's unless you have a specific reason for equal variances.
-```
+This is Welch's t-test, which does not assume equal variances. Always use Welch's unless you have a specific reason for equal variances.
 
 **Paired t-test:** when measurements come in pairs (same model evaluated on same data splits):
 
-```
-Compute d_i = x_i - y_i for each pair
-Then run a one-sample t-test on the d_i values against mu_0 = 0
-```
+Compute $d_i = x_i - y_i$ for each pair. Then run a one-sample t-test on the $d_i$ values against $\mu_0 = 0$.
 
 In ML, the paired t-test is common: you run both models on the same 10 cross-validation folds and compare their scores pairwise.
 
@@ -233,20 +216,23 @@ In ML, the paired t-test is common: you run both models on the same 10 cross-val
 
 The chi-squared test checks if observed frequencies match expected frequencies. Useful for categorical data.
 
-```
-chi^2 = sum((observed - expected)^2 / expected)
+$$
+\chi^2 = \sum \frac{(\text{observed} - \text{expected})^2}{\text{expected}}
+$$
 
-Example: does a language model's output distribution match the
-training distribution across categories?
+Example: does a language model's output distribution match the training distribution across categories?
 
+```text
 Category    Observed   Expected
 Positive       120        100
 Negative        80        100
-chi^2 = (120-100)^2/100 + (80-100)^2/100 = 4 + 4 = 8
-
-With 1 degree of freedom, chi^2 = 8 gives p < 0.005.
-The difference is significant.
 ```
+
+$$
+\chi^2 = \frac{(120-100)^2}{100} + \frac{(80-100)^2}{100} = 4 + 4 = 8
+$$
+
+With 1 degree of freedom, $\chi^2 = 8$ gives $p < 0.005$. The difference is significant.
 
 ### A/B Testing for ML Models
 
@@ -297,13 +283,13 @@ engineering cost of deploying a new model.
 
 **Effect size** quantifies how big the difference is, independent of sample size:
 
-```
-Cohen's d = (mean_1 - mean_2) / pooled_std
+$$
+\text{Cohen's } d = \frac{\text{mean}_1 - \text{mean}_2}{\text{pooled\_std}}
+$$
 
-d = 0.2:  small effect
-d = 0.5:  medium effect
-d = 0.8:  large effect
-```
+- $d = 0.2$: small effect
+- $d = 0.5$: medium effect
+- $d = 0.8$: large effect
 
 Always report both the p-value and the effect size. The p-value tells you if the difference is real. The effect size tells you if it matters.
 
@@ -311,23 +297,25 @@ Always report both the p-value and the effect size. The p-value tells you if the
 
 When you test many hypotheses, some will be "significant" by chance. If you test 20 things at alpha = 0.05, you expect 1 false positive even when nothing is real.
 
-```
-P(at least one false positive) = 1 - (1 - alpha)^m
+$$
+P(\text{at least one false positive}) = 1 - (1 - \alpha)^m
+$$
 
-m = 20 tests, alpha = 0.05:
-P(false positive) = 1 - 0.95^20 = 0.64
+For $m = 20$ tests, $\alpha = 0.05$:
+
+$$
+P(\text{false positive}) = 1 - 0.95^{20} = 0.64
+$$
 
 You have a 64% chance of at least one false positive.
-```
 
 **Bonferroni correction:** divide alpha by the number of tests.
 
-```
-Adjusted alpha = alpha / m = 0.05 / 20 = 0.0025
+$$
+\text{Adjusted } \alpha = \frac{\alpha}{m} = \frac{0.05}{20} = 0.0025
+$$
 
-Only reject H0 if p-value < 0.0025.
-Conservative but simple. Works when tests are independent.
-```
+Only reject $H_0$ if $\text{p-value} < 0.0025$. Conservative but simple. Works when tests are independent.
 
 In ML, this matters when you compare a model across multiple metrics, test many hyperparameter configurations, or evaluate on multiple datasets.
 
@@ -423,14 +411,13 @@ In ML experiments, you typically have small n (5 or 10 cross-validation folds), 
 
 The CLT says the distribution of sample means approaches a normal distribution as n grows, regardless of the underlying population distribution.
 
-```
-If X_1, X_2, ..., X_n are iid with mean mu and variance sigma^2:
+If $X_1, X_2, \ldots, X_n$ are iid with mean $\mu$ and variance $\sigma^2$:
 
-    X_bar ~ Normal(mu, sigma^2 / n)    as n -> infinity
+$$
+\bar{X} \sim \text{Normal}\left(\mu, \frac{\sigma^2}{n}\right) \quad \text{as } n \to \infty
+$$
 
-Works for n >= 30 in most cases.
-For highly skewed distributions, you might need n >= 100.
-```
+Works for $n \geq 30$ in most cases. For highly skewed distributions, you might need $n \geq 100$.
 
 **Why this matters for ML:**
 
@@ -497,7 +484,7 @@ All from scratch, using only `math` and `random`. No numpy, no scipy.
 | Standard deviation | Square root of variance. Measures spread in original units. |
 | Percentile | Value below which a given percentage of data falls. |
 | IQR | Interquartile range. Q3 minus Q1. The spread of the middle 50%. |
-| Pearson correlation | Measures linear association between two variables. Range [-1, 1]. |
+| Pearson correlation | Measures linear association between two variables. Range $[-1, 1]$. |
 | Spearman correlation | Measures monotonic association using ranks. |
 | Covariance matrix | Matrix of pairwise covariances between all features. |
 | Null hypothesis | Default assumption of no effect or no difference. |
