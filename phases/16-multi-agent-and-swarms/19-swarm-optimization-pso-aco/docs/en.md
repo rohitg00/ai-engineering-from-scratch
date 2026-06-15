@@ -19,17 +19,19 @@ The same patterns apply to agent *routing* in multi-agent systems. An ACO-style 
 
 ### PSO refresher (Kennedy & Eberhart 1995)
 
-Particle Swarm Optimization: population of particles in a continuous search space. Each particle has position `x_i` and velocity `v_i`. Each iteration:
+Particle Swarm Optimization: population of particles in a continuous search space. Each particle has position $x_i$ and velocity $v_i$. Each iteration:
 
-```
-v_i <- w * v_i + c1 * r1 * (p_best_i - x_i) + c2 * r2 * (g_best - x_i)
-x_i <- x_i + v_i
-evaluate fitness(x_i)
-update p_best_i if improved
-update g_best if global best
-```
+$$
+\begin{aligned}
+v_i &\leftarrow w \cdot v_i + c_1 \cdot r_1 \cdot (p_{\text{best},i} - x_i) + c_2 \cdot r_2 \cdot (g_{\text{best}} - x_i) \\
+x_i &\leftarrow x_i + v_i \\
+&\text{evaluate } \mathrm{fitness}(x_i) \\
+&\text{update } p_{\text{best},i} \text{ if improved} \\
+&\text{update } g_{\text{best}} \text{ if global best}
+\end{aligned}
+$$
 
-Where `p_best` is particle's own best, `g_best` is swarm's best, `w, c1, c2` are inertia + cognitive + social weights, `r1, r2` are random factors.
+Where $p_{\text{best}}$ is particle's own best, $g_{\text{best}}$ is swarm's best, $w, c_1, c_2$ are inertia + cognitive + social weights, $r_1, r_2$ are random factors.
 
 ### PSO on LLM outputs — LMPSO
 
