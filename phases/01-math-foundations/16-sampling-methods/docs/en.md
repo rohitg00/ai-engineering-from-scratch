@@ -118,7 +118,7 @@ $$
 &\quad 2.\ \text{Sample } u \sim \text{Uniform}(0, 1) \\
 &\quad 3.\ \text{If } u < p(x) / (M \, q(x)), \text{ accept } x \\
 &\quad 4.\ \text{Otherwise, reject and go to step 1} \\
-&\text{Acceptance rate} = 1/M
+&\text{Acceptance rate} = 1/M \quad \text{(when } p \text{ is normalized)}
 \end{aligned}
 $$
 
@@ -467,7 +467,7 @@ def sample_uniform(a, b):
 
 def sample_exponential_inverse_cdf(lam):
     u = random.random()
-    return -math.log(u) / lam
+    return -math.log1p(-u) / lam
 ```
 
 Generate 10,000 exponential samples and verify the mean is $1/\lambda$.
@@ -555,6 +555,8 @@ def softmax(logits):
     return [e / total for e in exps]
 
 def temperature_sample(logits, temperature):
+    if temperature == 0:
+        return max(range(len(logits)), key=lambda i: logits[i])
     scaled = [z / temperature for z in logits]
     probs = softmax(scaled)
     return sample_from_probs(probs)
