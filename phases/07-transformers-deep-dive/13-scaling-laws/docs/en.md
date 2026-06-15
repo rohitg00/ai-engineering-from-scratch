@@ -14,7 +14,7 @@ When you have C FLOPs of training compute and want the best model, you face two 
 1. **How many parameters (N)?** Bigger model, higher capacity.
 2. **How many training tokens (D)?** More data, better use of capacity.
 
-FLOPs scale approximately as `6 × N × D`. You can push N up and D down, or D up and N down. Which is better?
+FLOPs scale approximately as $6 \times N \times D$. You can push N up and D down, or D up and N down. Which is better?
 
 Before 2022, the answer was "push N hard." GPT-3 (2020) was 175B parameters trained on ~300B tokens. A ratio of about 1.7 tokens per parameter. The Kaplan scaling laws backed this up.
 
@@ -30,23 +30,25 @@ Hoffmann et al. (2022), training a small family of models called Chinchilla, fou
 
 From the Chinchilla paper, loss follows:
 
-```
-L(N, D) = A / N^α + B / D^β + E
-```
+$$
+L(N, D) = \frac{A}{N^\alpha} + \frac{B}{D^\beta} + E
+$$
 
-- `N` = parameters (non-embedding).
-- `D` = training tokens.
-- `α ≈ 0.34`, `β ≈ 0.28` (roughly symmetric).
-- `E ≈ 1.69`, the irreducible loss ceiling.
-- `A ≈ 406`, `B ≈ 411`.
+- $N$ = parameters (non-embedding).
+- $D$ = training tokens.
+- $\alpha \approx 0.34$, $\beta \approx 0.28$ (roughly symmetric).
+- $E \approx 1.69$, the irreducible loss ceiling.
+- $A \approx 406$, $B \approx 411$.
 
-Two terms trade against each other as you scale. Take the derivative w.r.t. `N` at fixed compute (C = 6ND) and solve:
+Two terms trade against each other as you scale. Take the derivative w.r.t. $N$ at fixed compute ($C = 6ND$) and solve:
 
-```
-N_opt ≈ 0.6 × (C/6)^0.5
-D_opt ≈ 0.6 × (C/6)^0.5
-D_opt / N_opt ≈ 20
-```
+$$
+\begin{aligned}
+N_{opt} &\approx 0.6 \times (C/6)^{0.5} \\
+D_{opt} &\approx 0.6 \times (C/6)^{0.5} \\
+D_{opt} / N_{opt} &\approx 20
+\end{aligned}
+$$
 
 Compute-optimal: 20 tokens per parameter.
 
@@ -134,8 +136,8 @@ See `outputs/skill-training-budget-estimator.md`. The skill picks `(N, D, hours,
 ## Exercises
 
 1. **Easy.** Run `code/main.py`. Print Chinchilla-optimal `(N, D)` for compute budgets `1e20`, `1e22`, `1e24`. Compare to the real model table.
-2. **Medium.** Implement the Hoffmann loss-as-function-of-compute curve. Plot loss vs `log10(C)` for the compute-optimal frontier. Identify when the law predicts we'd need `>10^28` FLOPs for the next 0.1 reduction in cross-entropy.
-3. **Hard.** Fit your own scaling law on 5 tiny models (100K to 10M params) trained on the same dataset. Estimate `α` and `E`. How well do your exponents match published ones?
+2. **Medium.** Implement the Hoffmann loss-as-function-of-compute curve. Plot loss vs $\log_{10}(C)$ for the compute-optimal frontier. Identify when the law predicts we'd need $>10^{28}$ FLOPs for the next 0.1 reduction in cross-entropy.
+3. **Hard.** Fit your own scaling law on 5 tiny models (100K to 10M params) trained on the same dataset. Estimate $\alpha$ and $E$. How well do your exponents match published ones?
 
 ## Key Terms
 
@@ -143,10 +145,10 @@ See `outputs/skill-training-budget-estimator.md`. The skill picks `(N, D, hours,
 |------|-----------------|-----------------------|
 | Parameters (N) | "Model size" | Non-embedding weight count; determines capacity. |
 | Tokens (D) | "Training data" | Number of training tokens seen; determines how well the parameters get used. |
-| Compute (C) | "FLOPs spent" | Approximately `6 × N × D` for a standard transformer. |
-| Chinchilla-optimal | "D/N ≈ 20" | Ratio that minimizes loss per FLOP of pretraining. |
-| Over-training | "Past Chinchilla" | Spend extra training FLOPs to save inference FLOPs; D/N >> 20. |
-| Irreducible loss | "The floor" | The `E` term in the scaling law; the entropy of the data itself. |
+| Compute (C) | "FLOPs spent" | Approximately $6 \times N \times D$ for a standard transformer. |
+| Chinchilla-optimal | "$D/N \approx 20$" | Ratio that minimizes loss per FLOP of pretraining. |
+| Over-training | "Past Chinchilla" | Spend extra training FLOPs to save inference FLOPs; $D/N \gg 20$. |
+| Irreducible loss | "The floor" | The $E$ term in the scaling law; the entropy of the data itself. |
 | Emergent capability | "Sudden jumps at scale" | Often a scorer artifact; continuous loss is smooth. |
 | Effective compute | "Training-efficiency multiplier" | Better data / optimizer / architecture multiplies how far a FLOP goes. |
 
