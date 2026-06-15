@@ -18,7 +18,10 @@
   <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- KaTeX: renders LaTeX math ($...$ inline, $$...$$ block) in lesson docs. Pinned + SRI. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.css" integrity="sha384-vlBdW0r3AcZO/HboRPznQNowvexd3fY8qHOWkBi5q7KGgqJ+F48+DceybYmrVbmB" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css?v=20260525a">
   <style>
     .scroll-progress {
@@ -1560,6 +1563,26 @@
       .timeline-item { min-width: 70px; }
       .timeline-line { width: 20px; }
     }
+
+    /* KaTeX math: keep display blocks from overflowing narrow screens, and
+       degrade unparsed/unloaded formulas to a readable monospace fallback. */
+    .lesson-article .math-block {
+      margin: 1.25rem 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 2px 0;
+    }
+    .lesson-article .math-block .katex-display { margin: 0; }
+    .lesson-article .katex { font-size: 1.05em; }
+    .lesson-article .math-fallback {
+      color: var(--text-muted, #555);
+      white-space: pre-wrap;
+    }
+    pre.math-fallback {
+      display: block;
+      padding: 0.75rem 1rem;
+      overflow-x: auto;
+    }
   </style>
 </head>
 <body>
@@ -1626,6 +1649,7 @@
     <aside class="toc-sidebar" id="tocSidebar" aria-hidden="true"></aside>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.js" integrity="sha384-AtrdNsnxl/75rvBneBVH7DtOvCxSVahR2zWqle1coBKd8DEmLoviqNeJSx64gNAs" crossorigin="anonymous"></script>
   <script src="build-meta.js"></script>
   <script src="data.js?v=20260525a"></script>
   <script src="progress.js?v=20260525a"></script>
@@ -2192,6 +2216,8 @@
         var blockquoteLines = [];
         var mermaidBlocks = 0;
         var inLabChallenge = false;
+        var inMathBlock = false;
+        var mathBlockLines = [];
 
         function flushLabChallenge() {
           if (!inLabChallenge) return '';
@@ -2261,6 +2287,17 @@
         for (var i = 0; i < lines.length; i++) {
           var line = lines[i];
 
+          if (inMathBlock) {
+            if (line.match(/^\s*\$\$\s*$/)) {
+              inMathBlock = false;
+              out += renderMathBlock(mathBlockLines.join('\n'));
+              mathBlockLines = [];
+            } else {
+              mathBlockLines.push(line);
+            }
+            continue;
+          }
+
           if (inCodeBlock) {
             if (line.match(/^```\s*$/)) {
               inCodeBlock = false;
@@ -2297,6 +2334,25 @@
             inCodeBlock = true;
             codeLang = codeStart[1] || '';
             codeLines = [];
+            continue;
+          }
+
+          // Block math: $$ ... $$ on one line, or a lone $$ opening a multi-line
+          // display block closed by a matching lone $$.
+          var mathOneLine = line.match(/^\s*\$\$(.+?)\$\$\s*$/);
+          if (mathOneLine) {
+            out += flushList();
+            out += flushTable();
+            out += flushBlockquote();
+            out += renderMathBlock(mathOneLine[1].trim());
+            continue;
+          }
+          if (line.match(/^\s*\$\$\s*$/)) {
+            out += flushList();
+            out += flushTable();
+            out += flushBlockquote();
+            inMathBlock = true;
+            mathBlockLines = [];
             continue;
           }
 
@@ -2440,6 +2496,9 @@
         out += flushTable();
         out += flushBlockquote();
         out += flushLabChallenge();
+        if (inMathBlock && mathBlockLines.length) {
+          out += renderMathBlock(mathBlockLines.join('\n'));
+        }
 
         return out;
       }
@@ -2475,18 +2534,64 @@
         return cells.map(function (c) { return c.trim(); });
       }
 
+      // KaTeX renders math to HTML strings synchronously. These helpers degrade
+      // gracefully to the raw TeX if KaTeX failed to load or the source is invalid,
+      // so a bad formula never blanks the lesson.
+      function renderMathInline(tex) {
+        if (typeof katex === 'undefined') {
+          return '<code class="math-fallback">' + escapeHtml(tex) + '</code>';
+        }
+        try {
+          return katex.renderToString(tex, { displayMode: false, throwOnError: false });
+        } catch (e) {
+          return '<code class="math-fallback">' + escapeHtml(tex) + '</code>';
+        }
+      }
+
+      function renderMathBlock(tex) {
+        if (typeof katex === 'undefined') {
+          return '<pre class="math-fallback math-block">' + escapeHtml(tex) + '</pre>';
+        }
+        try {
+          return '<div class="math-block">' +
+            katex.renderToString(tex, { displayMode: true, throwOnError: false }) +
+            '</div>';
+        } catch (e) {
+          return '<pre class="math-fallback math-block">' + escapeHtml(tex) + '</pre>';
+        }
+      }
+
       function inlineFormat(text) {
+        // Protect inline-code and inline-math spans with private-use sentinels
+        // BEFORE escaping/markdown so their contents survive verbatim. Code is
+        // stashed first so a $ inside `code` is never mistaken for math.
+        var stash = [];
+        function keep(html) { stash.push(html); return '' + (stash.length - 1) + ''; }
+
+        text = text.replace(/`([^`]+)`/g, function (m, code) {
+          return keep('<code>' + escapeHtml(code) + '</code>');
+        });
+
+        // Inline math: $...$ using the Pandoc rule — opener not followed by a
+        // space, closer not preceded by a space and not followed by a digit.
+        // This leaves prose dollar amounts ($50,000, $0.25/$2.50) untouched.
+        text = text.replace(/\$(?=\S)([^$\n]+?)\$(?!\d)/g, function (whole, tex) {
+          if (/\s$/.test(tex)) return whole;
+          return keep(renderMathInline(tex));
+        });
+
         text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         text = text.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
         text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
         text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
-        text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
         text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function (m, label, href) {
           if (/^https?:\/\/|^mailto:/i.test(href)) {
             return '<a href="' + href + '" target="_blank" rel="noopener">' + label + '</a>';
           }
           return label;
         });
+
+        text = text.replace(/(\d+)/g, function (m, i) { return stash[+i]; });
         return text;
       }
 
