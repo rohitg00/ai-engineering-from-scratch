@@ -167,7 +167,7 @@ Two forces act on the particle:
 1. **Gradient force** ($-dt \cdot \nabla U$): pushes toward low energy (like gradient descent)
 2. **Random force** ($\sqrt{2 T \, dt} \cdot z$): pushes in random directions (exploration)
 
-At temperature $T = 0$, this is pure gradient descent. At high temperature, it is nearly a random walk. At the right temperature, the particle explores the energy landscape and spends more time in low-energy regions.
+At temperature $T = 0$, this is pure gradient descent. Higher temperatures produce nearly random-walk behavior. The sweet spot lets the particle explore the energy landscape and spend more time in low-energy regions.
 
 **Connection to diffusion models.** The forward process of a diffusion model is:
 
