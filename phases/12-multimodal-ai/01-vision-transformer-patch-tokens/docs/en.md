@@ -28,11 +28,11 @@ By 2026 the ViT primitive is the unquestioned foundation. Every open-weights VLM
 
 ### Patches as tokens
 
-Given an image `x` of shape `(H, W, 3)` and a patch size `P`, you carve the image into a grid of `(H/P) x (W/P)` non-overlapping patches. Each patch is a `P x P x 3` cube of pixels. Flatten each cube to a `3 P^2` vector. Apply a shared linear projection `W_E` of shape `(3 P^2, D)` to map each patch into the model's hidden dimension `D`.
+Given an image `x` of shape $(H, W, 3)$ and a patch size $P$, you carve the image into a grid of $(H/P) \times (W/P)$ non-overlapping patches. Each patch is a $P \times P \times 3$ cube of pixels. Flatten each cube to a $3P^2$ vector. Apply a shared linear projection $W_E$ of shape $(3P^2, D)$ to map each patch into the model's hidden dimension $D$.
 
 For the ViT-B/16 canonical config:
-- Resolution 224, patch size 16 → grid 14x14 → 196 patch tokens.
-- Each patch is `16 x 16 x 3 = 768` pixel values, projected to `D = 768`.
+- Resolution 224, patch size 16 → grid $14 \times 14$ → 196 patch tokens.
+- Each patch is $16 \times 16 \times 3 = 768$ pixel values, projected to $D = 768$.
 - Add a learnable `[CLS]` token → sequence length 197.
 
 The patch projection is mathematically identical to a 2D convolution with kernel size `P`, stride `P`, and `D` output channels. That is how production code actually implements it — `nn.Conv2d(3, D, kernel_size=P, stride=P)`. The "linear projection" framing is conceptual; the kernel framing is efficient.
@@ -77,15 +77,17 @@ ViT-g/14 (1B params, patch 14, resolution 224 → 256 tokens) and SigLIP SO400m/
 
 The full calculation lives in `code/main.py`. For ViT-B/16 at 224:
 
-```
-patch_embed = 3 * 16 * 16 * 768 + 768  =  591k
-cls + pos    = 768 + 197 * 768          =  152k
-block        = 4 * 768^2 (QKVO) + 2 * 4 * 768^2 (MLP) + 2 * 2*768 (LN)
-             = 12 * 768^2 + 3k          =  7.1M
-12 blocks    = 85M
-final LN    = 1.5k
-total       ≈ 86M
-```
+$$
+\begin{aligned}
+\text{patch\_embed} &= 3 \cdot 16 \cdot 16 \cdot 768 + 768 = 591\text{k} \\
+\text{cls} + \text{pos} &= 768 + 197 \cdot 768 = 152\text{k} \\
+\text{block} &= 4 \cdot 768^2 \,(\text{QKVO}) + 2 \cdot 4 \cdot 768^2 \,(\text{MLP}) + 2 \cdot 2 \cdot 768 \,(\text{LN}) \\
+&= 12 \cdot 768^2 + 3\text{k} = 7.1\text{M} \\
+12 \text{ blocks} &= 85\text{M} \\
+\text{final LN} &= 1.5\text{k} \\
+\text{total} &\approx 86\text{M}
+\end{aligned}
+$$
 
 Ball-park every ViT this way before you load the checkpoint. The backbone size sets your VRAM floor in any downstream VLM.
 
