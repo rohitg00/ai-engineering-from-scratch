@@ -420,7 +420,7 @@ The Bayesian A/B test:
 
 Computing $P(B > A)$ analytically is hard. But Monte Carlo makes it trivial:
 
-```
+```text
 1. Draw 100,000 samples from Beta(51, 951)  -> samples_A
 2. Draw 100,000 samples from Beta(66, 936)  -> samples_B
 3. P(B > A) = fraction of samples where B > A
