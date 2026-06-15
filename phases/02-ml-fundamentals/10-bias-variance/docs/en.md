@@ -54,23 +54,23 @@ High variance (overfitting):
 
 ### The Decomposition
 
-For any point x, the expected prediction error under squared loss decomposes exactly:
+For any point $x$, the expected prediction error under squared loss decomposes exactly:
 
-```
-Expected Error = Bias^2 + Variance + Irreducible Noise
+$$
+\begin{aligned}
+\text{Expected Error} &= \text{Bias}^2 + \text{Variance} + \text{Irreducible Noise} \\
+\text{Bias}^2 &= (E[\hat{f}(x)] - f(x))^2 \\
+\text{Variance} &= E[(\hat{f}(x) - E[\hat{f}(x)])^2] \\
+\text{Noise} &= E[(y - f(x))^2] = \sigma^2
+\end{aligned}
+$$
 
-where:
-  Bias^2   = (E[f_hat(x)] - f(x))^2
-  Variance = E[(f_hat(x) - E[f_hat(x)])^2]
-  Noise    = E[(y - f(x))^2]             (sigma^2)
-```
+- $f(x)$ is the true function
+- $\hat{f}(x)$ is your model's prediction
+- $E[\ldots]$ is the expectation over different training sets
+- $y$ is the observed label (true function plus noise)
 
-- `f(x)` is the true function
-- `f_hat(x)` is your model's prediction
-- `E[...]` is the expectation over different training sets
-- `y` is the observed label (true function plus noise)
-
-The noise term is irreducible. No model can do better than sigma^2 on noisy data. Your job is to find the right balance between bias^2 and variance.
+The noise term is irreducible. No model can do better than $\sigma^2$ on noisy data. Your job is to find the right balance between $\text{bias}^2$ and variance.
 
 ### Model Complexity vs Error
 
@@ -101,7 +101,7 @@ Regularization deliberately increases bias to reduce variance. It constrains the
 - **Dropout:** Randomly disables neurons during training. Forces redundant representations.
 - **Early stopping:** Stops training before the model fully fits the training data.
 
-The regularization strength (lambda, dropout rate, number of epochs) directly controls where you sit on the bias-variance curve. More regularization means more bias, less variance.
+The regularization strength ($\lambda$, dropout rate, number of epochs) directly controls where you sit on the bias-variance curve. More regularization means more bias, less variance.
 
 ### Double Descent: The Modern Perspective
 
@@ -131,9 +131,9 @@ Why does this happen? At the interpolation threshold, the model has just enough 
 
 | Regime | Parameters vs Samples | Behavior |
 |--------|----------------------|----------|
-| Underparameterized | p << n | Classical tradeoff applies |
-| Interpolation threshold | p ~ n | Variance peaks, test error spikes |
-| Overparameterized | p >> n | Implicit regularization kicks in, test error drops |
+| Underparameterized | $p \ll n$ | Classical tradeoff applies |
+| Interpolation threshold | $p \sim n$ | Variance peaks, test error spikes |
+| Overparameterized | $p \gg n$ | Implicit regularization kicks in, test error drops |
 
 For practical purposes: if you are using neural networks or large tree ensembles, do not stop at the interpolation threshold. Either stay well below it (with explicit regularization) or go well past it. The worst place to be is right at the threshold.
 
@@ -170,7 +170,7 @@ flowchart TD
 **When variance is the problem:**
 - Get more training data
 - Use bagging (random forests)
-- Increase regularization (higher lambda, more dropout)
+- Increase regularization (higher $\lambda$, more dropout)
 - Feature selection (remove noisy features)
 - Use cross-validation to detect it early
 
@@ -180,7 +180,7 @@ Ensemble methods are the most practical tool for fighting variance.
 
 **Bagging (Bootstrap Aggregating)** trains multiple models on different bootstrap samples of the training data, then averages their predictions. Each individual model has high variance, but the average has much lower variance. Random forests are bagging applied to decision trees.
 
-Why it works mathematically: if you average N independent predictions, each with variance sigma^2, the variance of the average is sigma^2 / N. The models are not truly independent (they all see similar data), so the reduction is less than 1/N, but it is still substantial.
+Why it works mathematically: if you average $N$ independent predictions, each with variance $\sigma^2$, the variance of the average is $\sigma^2 / N$. The models are not truly independent (they all see similar data), so the reduction is less than $1/N$, but it is still substantial.
 
 **Boosting** reduces bias by building models sequentially, where each new model focuses on the errors of the ensemble so far. Gradient boosting and AdaBoost are the main examples. Boosting can overfit if you add too many models, so you need early stopping or regularization.
 
@@ -264,7 +264,7 @@ The code in `code/bias_variance.py` runs the full bias-variance decomposition ex
 
 ### Step 1: Generate Synthetic Data from a Known Function
 
-We use `f(x) = sin(1.5x) + 0.5x` with Gaussian noise. Knowing the true function lets us compute exact bias and variance.
+We use $f(x) = \sin(1.5x) + 0.5x$ with Gaussian noise. Knowing the true function lets us compute exact bias and variance.
 
 ```python
 def true_function(x):
@@ -306,10 +306,10 @@ variance = np.mean(predictions.var(axis=0))
 total_error = np.mean(np.mean((predictions - y_true) ** 2, axis=1))
 ```
 
-- `mean_pred` is E[f_hat(x)] estimated from bootstrap samples
+- `mean_pred` is $E[\hat{f}(x)]$ estimated from bootstrap samples
 - `bias_sq` is the squared gap between average prediction and truth
 - `variance` is the average spread of predictions across bootstrap samples
-- `total_error` should approximately equal bias^2 + variance + noise
+- `total_error` should approximately equal $\text{bias}^2 + \text{variance} + \text{noise}$
 
 ### Step 4: Learning Curves
 
@@ -440,9 +440,9 @@ This lesson produces: `outputs/prompt-model-diagnostics.md`
 
 2. Increase the training set size from 30 to 300. How does this affect the variance component? Does the optimal polynomial degree shift?
 
-3. Add L2 regularization (Ridge regression) to the experiment. For a fixed high-degree polynomial (degree 15), sweep lambda from 0 to 100. Plot bias^2 and variance as functions of lambda.
+3. Add L2 regularization (Ridge regression) to the experiment. For a fixed high-degree polynomial (degree 15), sweep $\lambda$ from 0 to 100. Plot $\text{bias}^2$ and variance as functions of $\lambda$.
 
-4. Modify the true function from a polynomial to `sin(x)`. How does the bias-variance decomposition change? Is there still a clear optimal degree?
+4. Modify the true function from a polynomial to $\sin(x)$. How does the bias-variance decomposition change? Is there still a clear optimal degree?
 
 5. Implement a simple bootstrap aggregating (bagging) wrapper: train 10 models on bootstrap samples and average predictions. Show that this reduces variance without increasing bias much.
 
