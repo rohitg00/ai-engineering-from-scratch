@@ -7,6 +7,15 @@ from torch.optim import SGD
 from torch.optim.lr_scheduler import CosineAnnealingLR
 
 
+def get_device():
+    """Pick the best available accelerator: CUDA, then Apple Silicon (MPS), then CPU."""
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
 def synthetic_cifar(num_per_class=300, num_classes=10, seed=0):
     rng = np.random.default_rng(seed)
     X = []
@@ -192,7 +201,7 @@ def main():
     train_loader = DataLoader(train_ds, batch_size=128, shuffle=True, num_workers=0)
     val_loader = DataLoader(val_ds, batch_size=256, shuffle=False, num_workers=0)
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = get_device()
     model = MiniClassifier(num_classes=10).to(device)
     optimizer = SGD(model.parameters(), lr=0.05, momentum=0.9, weight_decay=5e-4, nesterov=True)
     scheduler = CosineAnnealingLR(optimizer, T_max=5)
