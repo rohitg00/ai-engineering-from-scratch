@@ -31,13 +31,13 @@ f -> tokenize at 2x2: token grid z_2 of shape (2, 2)
 f -> tokenize at (H/p)x(W/p): token grid z_K of shape (H/p, W/p)
 ```
 
-Each z_k uses the same codebook (typical size 4096-16384). The tokenization at each scale is not independent — it is trained so that summing the residuals at each scale reconstructs f:
+Each $z_k$ uses the same codebook (typical size 4096-16384). The tokenization at each scale is not independent — it is trained so that summing the residuals at each scale reconstructs $f$:
 
-```
-f ≈ upsample(embed(z_1), target_size) + ... + upsample(embed(z_K), target_size)
-```
+$$
+f \approx \text{upsample}(\text{embed}(z_1), \text{target\_size}) + \cdots + \text{upsample}(\text{embed}(z_K), \text{target\_size})
+$$
 
-This is a **residual VQ** variant. Scale k captures what scales 1..k-1 missed. Decoder takes the sum of all scale embeddings and produces the image.
+This is a **residual VQ** variant. Scale $k$ captures what scales $1..k-1$ missed. Decoder takes the sum of all scale embeddings and produces the image.
 
 The multi-scale VQ tokenizer is trained once (like VQGAN) and then frozen. All the generative work is done by the autoregressive model on top.
 
@@ -50,9 +50,9 @@ Input sequence structure:
 [START, z_1 tokens, z_2 tokens, z_3 tokens, ..., z_K tokens]
 ```
 
-Position embeddings encode both scale index and spatial position within the scale. Attention is causal in scale order: token at scale k, position (i, j) can attend to all tokens at scales 1..k and to tokens at scale k itself that come earlier in whatever intra-scale order is used (VAR uses fixed positional attention with no intra-scale causality — all positions within a scale are predicted in parallel).
+Position embeddings encode both scale index and spatial position within the scale. Attention is causal in scale order: token at scale $k$, position $(i, j)$ can attend to all tokens at scales $1..k$ and to tokens at scale $k$ itself that come earlier in whatever intra-scale order is used (VAR uses fixed positional attention with no intra-scale causality — all positions within a scale are predicted in parallel).
 
-Training loss: at each scale k, predict the tokens z_k given all prior-scale tokens. Cross-entropy loss on the discrete VQ codes. Same structure as GPT except the "sequence" is now scale-structured.
+Training loss: at each scale $k$, predict the tokens $z_k$ given all prior-scale tokens. Cross-entropy loss on the discrete VQ codes. Same structure as GPT except the "sequence" is now scale-structured.
 
 ### Generation
 
@@ -73,7 +73,7 @@ For K = 10 scales, generation is 10 transformer forward passes. Each pass produc
 Three structural wins:
 1. **Coarse-to-fine aligns with natural image statistics.** Human visual perception and image datasets both exhibit scale-dependent regularities: low-frequency structure is stable and predictable; high-frequency detail is conditional on low-frequency content. Next-scale prediction exploits this.
 2. **Parallel generation within scale.** Unlike GPT-style token AR, VAR produces all tokens at a scale in one step. Effective generation length is log-scale instead of linear.
-3. **No generation order bias.** Tokens at scale k see all of scale k-1; there is no "left-of" or "above" bias that forces early tokens to commit before late context is available.
+3. **No generation order bias.** Tokens at scale $k$ see all of scale $k-1$; there is no "left-of" or "above" bias that forces early tokens to commit before late context is available.
 
 ### Scaling Law
 
@@ -121,9 +121,9 @@ This lesson produces `outputs/skill-var-tokenizer-designer.md` — a skill for d
 | VAR | "Visual AutoRegressive" | Image generation by next-scale prediction over a pyramid of VQ token grids |
 | Next-scale prediction | "Predict coarser, then finer" | The model predicts tokens at increasing resolution scales, conditioning on all previous scales |
 | Multi-scale VQ tokenizer | "Residual VQ" | VQ-VAE that produces K token grids of increasing resolution, with decoder summing all scales |
-| Scale k | "Pyramid level k" | One of K resolution levels, from 1x1 at k=1 up to (H/p)x(W/p) at k=K |
+| Scale k | "Pyramid level k" | One of K resolution levels, from 1x1 at $k=1$ up to (H/p)x(W/p) at $k=K$ |
 | Parallel-within-scale | "One forward per scale" | All tokens at scale k are predicted in one transformer pass, not autoregressively |
-| Causal-across-scales | "Scale-ordered attention" | Token at scale k can attend to all of scales 1..k but not scales k+1..K |
+| Causal-across-scales | "Scale-ordered attention" | Token at scale $k$ can attend to all of scales $1..k$ but not scales $k+1..K$ |
 | Residual VQ | "Additive tokenization" | Each scale's tokens encode the residual left by lower scales; decoder sums all scale embeddings |
 | VAR scaling law | "Image GPT scaling" | FID follows a predictable power law in compute, like language models' perplexity |
 | HART | "Hybrid VAR + text" | Text-conditional VAR variant combining MaskGIT-style iterative decoding with VAR's scale structure |
