@@ -68,20 +68,19 @@ The columns of U are called left singular vectors. The columns of V are called r
 
 Each component of the SVD has a distinct geometric meaning.
 
-**Right singular vectors (columns of V):** These form an orthonormal basis for the input space (R^n). They are the directions in input space that the matrix maps to orthogonal directions in output space. Think of them as the natural coordinate system for the domain.
+**Right singular vectors (columns of V):** These form an orthonormal basis for the input space ($\mathbb{R}^n$). They are the directions in input space that the matrix maps to orthogonal directions in output space. Think of them as the natural coordinate system for the domain.
 
 **Singular values (diagonal of Sigma):** These are the scaling factors. The i-th singular value tells you how much the matrix stretches vectors along the i-th right singular vector. A singular value of zero means the matrix crushes that direction entirely.
 
-**Left singular vectors (columns of U):** These form an orthonormal basis for the output space (R^m). The i-th left singular vector is the direction in output space where the i-th right singular vector lands (after scaling).
+**Left singular vectors (columns of U):** These form an orthonormal basis for the output space ($\mathbb{R}^m$). The i-th left singular vector is the direction in output space where the i-th right singular vector lands (after scaling).
 
 The relationship between them:
 
-```
-A * v_i = sigma_i * u_i
+$$
+A v_i = \sigma_i u_i
+$$
 
-The matrix A takes the i-th right singular vector v_i,
-scales it by sigma_i, and maps it to the i-th left singular vector u_i.
-```
+The matrix $A$ takes the $i$-th right singular vector $v_i$, scales it by $\sigma_i$, and maps it to the $i$-th left singular vector $u_i$.
 
 This gives you a coordinate-by-coordinate picture of what any matrix does.
 
@@ -89,85 +88,87 @@ This gives you a coordinate-by-coordinate picture of what any matrix does.
 
 The SVD can be written as a sum of rank-1 matrices:
 
-```
-A = sigma_1 * u_1 * v_1^T + sigma_2 * u_2 * v_2^T + ... + sigma_r * u_r * v_r^T
+$$
+A = \sigma_1 u_1 v_1^T + \sigma_2 u_2 v_2^T + \cdots + \sigma_r u_r v_r^T
+$$
 
-Each term sigma_i * u_i * v_i^T is a rank-1 matrix (an outer product).
-The full matrix is the sum of r such matrices, where r is the rank.
-```
+Each term $\sigma_i u_i v_i^T$ is a rank-1 matrix (an outer product). The full matrix is the sum of $r$ such matrices, where $r$ is the rank.
 
 This form is the foundation of low-rank approximation. Each term adds one layer of structure. The first term captures the single most important pattern. The second captures the next most important. And so on. Truncating this sum gives you the best possible approximation at any given rank.
 
-```
-Rank-1 approx:    A_1 = sigma_1 * u_1 * v_1^T
-                  (captures the dominant pattern)
+Rank-1 approx: $A_1 = \sigma_1 u_1 v_1^T$ (captures the dominant pattern).
 
-Rank-2 approx:    A_2 = sigma_1 * u_1 * v_1^T + sigma_2 * u_2 * v_2^T
-                  (captures the two most important patterns)
+Rank-2 approx: $A_2 = \sigma_1 u_1 v_1^T + \sigma_2 u_2 v_2^T$ (captures the two most important patterns).
 
-Rank-k approx:    A_k = sum of top k terms
-                  (optimal by the Eckart-Young theorem)
-```
+Rank-k approx: $A_k =$ sum of top $k$ terms (optimal by the Eckart-Young theorem).
 
 ### Relationship to eigendecomposition
 
-SVD and eigendecomposition are deeply connected. The singular values and vectors of A come directly from the eigenvalues and eigenvectors of A^T A and A A^T.
+SVD and eigendecomposition are deeply connected. The singular values and vectors of $A$ come directly from the eigenvalues and eigenvectors of $A^T A$ and $A A^T$.
 
-```
-A^T A = V * Sigma^T * U^T * U * Sigma * V^T
-      = V * Sigma^T * Sigma * V^T
-      = V * D * V^T
+$$
+\begin{aligned}
+A^T A &= V \Sigma^T U^T U \Sigma V^T \\
+      &= V \Sigma^T \Sigma V^T \\
+      &= V D V^T
+\end{aligned}
+$$
 
-where D = Sigma^T * Sigma is a diagonal matrix with sigma_i^2 on the diagonal.
+where $D = \Sigma^T \Sigma$ is a diagonal matrix with $\sigma_i^2$ on the diagonal.
 
 So:
-- The right singular vectors (V) are eigenvectors of A^T A
-- The singular values squared (sigma_i^2) are eigenvalues of A^T A
+- The right singular vectors ($V$) are eigenvectors of $A^T A$
+- The singular values squared ($\sigma_i^2$) are eigenvalues of $A^T A$
 
 Similarly:
-A A^T = U * Sigma * V^T * V * Sigma^T * U^T
-      = U * Sigma * Sigma^T * U^T
+
+$$
+\begin{aligned}
+A A^T &= U \Sigma V^T V \Sigma^T U^T \\
+      &= U \Sigma \Sigma^T U^T
+\end{aligned}
+$$
 
 So:
-- The left singular vectors (U) are eigenvectors of A A^T
-- The eigenvalues of A A^T are also sigma_i^2
-```
+- The left singular vectors ($U$) are eigenvectors of $A A^T$
+- The eigenvalues of $A A^T$ are also $\sigma_i^2$
 
 This connection tells you three things:
 1. Singular values are always real and non-negative (they are square roots of eigenvalues of a positive semi-definite matrix).
-2. You could compute SVD via eigendecomposition of A^T A, but this squares the condition number and loses numerical precision. Dedicated SVD algorithms avoid this.
+2. You could compute SVD via eigendecomposition of $A^T A$, but this squares the condition number and loses numerical precision. Dedicated SVD algorithms avoid this.
 3. When A is square and symmetric positive semi-definite, SVD and eigendecomposition are the same thing.
 
 ### Truncated SVD: low-rank approximation
 
 The Eckart-Young-Mirsky theorem states that the best rank-k approximation to A (in both Frobenius and spectral norm) is obtained by keeping only the top k singular values and their corresponding vectors:
 
-```
-A_k = U_k * Sigma_k * V_k^T
+$$
+A_k = U_k \Sigma_k V_k^T
+$$
 
-where:
-  U_k     is m x k  (first k columns of U)
-  Sigma_k is k x k  (top-left k x k block of Sigma)
-  V_k     is n x k  (first k columns of V)
+where $U_k$ is $m \times k$ (first $k$ columns of $U$), $\Sigma_k$ is $k \times k$ (top-left $k \times k$ block of $\Sigma$), and $V_k$ is $n \times k$ (first $k$ columns of $V$).
 
-Approximation error = sigma_{k+1}  (in spectral norm)
-                    = sqrt(sigma_{k+1}^2 + ... + sigma_r^2)  (in Frobenius norm)
-```
+$$
+\begin{aligned}
+\text{Approximation error} &= \sigma_{k+1} \quad (\text{in spectral norm}) \\
+                           &= \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad (\text{in Frobenius norm})
+\end{aligned}
+$$
 
 This is not just "a good" approximation. It is provably the best possible approximation of rank k. No other rank-k matrix is closer to A.
 
 | Component | Relative magnitude | Kept in rank-3 approx? |
 |-----------|-------------------|------------------------|
-| sigma_1 | Largest | Yes |
-| sigma_2 | Large | Yes |
-| sigma_3 | Medium-large | Yes |
-| sigma_4 | Medium | No (error) |
-| sigma_5 | Medium-small | No (error) |
-| sigma_6 | Small | No (error) |
-| sigma_7 | Very small | No (error) |
-| sigma_8 | Tiny | No (error) |
+| $\sigma_1$ | Largest | Yes |
+| $\sigma_2$ | Large | Yes |
+| $\sigma_3$ | Medium-large | Yes |
+| $\sigma_4$ | Medium | No (error) |
+| $\sigma_5$ | Medium-small | No (error) |
+| $\sigma_6$ | Small | No (error) |
+| $\sigma_7$ | Very small | No (error) |
+| $\sigma_8$ | Tiny | No (error) |
 
-Keep top 3: A_3 captures the three largest singular values. Error = remaining values (sigma_4 through sigma_8).
+Keep top 3: $A_3$ captures the three largest singular values. Error = remaining values ($\sigma_4$ through $\sigma_8$).
 
 If singular values decay fast, a small k captures most of the matrix. If they decay slowly, the matrix has no low-rank structure.
 
@@ -253,23 +254,23 @@ Noisy data has signal concentrated in the top singular values and noise spread a
 
 | Component | Magnitude | Type |
 |-----------|-----------|------|
-| sigma_1 | Very large | Signal |
-| sigma_2 | Large | Signal |
-| sigma_3 | Medium | Signal |
-| sigma_4 | Near zero | Negligible |
-| sigma_5 | Near zero | Negligible |
+| $\sigma_1$ | Very large | Signal |
+| $\sigma_2$ | Large | Signal |
+| $\sigma_3$ | Medium | Signal |
+| $\sigma_4$ | Near zero | Negligible |
+| $\sigma_5$ | Near zero | Negligible |
 
 **Noisy signal singular values (noise adds to all):**
 
 | Component | Magnitude | Type |
 |-----------|-----------|------|
-| sigma_1 | Very large | Signal |
-| sigma_2 | Large | Signal |
-| sigma_3 | Medium | Signal |
-| sigma_4 | Small | Noise |
-| sigma_5 | Small | Noise |
-| sigma_6 | Small | Noise |
-| sigma_7 | Small | Noise |
+| $\sigma_1$ | Very large | Signal |
+| $\sigma_2$ | Large | Signal |
+| $\sigma_3$ | Medium | Signal |
+| $\sigma_4$ | Small | Noise |
+| $\sigma_5$ | Small | Noise |
+| $\sigma_6$ | Small | Noise |
+| $\sigma_7$ | Small | Noise |
 
 ```mermaid
 graph TD
@@ -283,41 +284,40 @@ This is used in signal processing, scientific measurement, and data cleaning. An
 
 ### Pseudoinverse via SVD
 
-The Moore-Penrose pseudoinverse A+ generalizes matrix inversion to non-square and singular matrices. SVD makes computing it trivial.
+The Moore-Penrose pseudoinverse $A^+$ generalizes matrix inversion to non-square and singular matrices. SVD makes computing it trivial.
 
-```
-If A = U * Sigma * V^T, then:
+If $A = U \Sigma V^T$, then:
 
-A+ = V * Sigma+ * U^T
+$$
+A^+ = V \Sigma^+ U^T
+$$
 
-where Sigma+ is formed by:
-  1. Transpose Sigma (swap rows and columns)
-  2. Replace each non-zero diagonal entry sigma_i with 1/sigma_i
+where $\Sigma^+$ is formed by:
+  1. Transpose $\Sigma$ (swap rows and columns)
+  2. Replace each non-zero diagonal entry $\sigma_i$ with $1/\sigma_i$
   3. Leave zeros as zeros
 
-For A (m x n):      A+ is (n x m)
-For Sigma (m x n):  Sigma+ is (n x m)
-```
+For $A$ ($m \times n$), $A^+$ is $n \times m$. For $\Sigma$ ($m \times n$), $\Sigma^+$ is $n \times m$.
 
-The pseudoinverse solves least-squares problems. If Ax = b has no exact solution (overdetermined system), then x = A+ b is the least-squares solution (minimizes ||Ax - b||).
+The pseudoinverse solves least-squares problems. If $Ax = b$ has no exact solution (overdetermined system), then $x = A^+ b$ is the least-squares solution (minimizes $\lVert Ax - b \rVert$).
 
-```
 Overdetermined system (more equations than unknowns):
 
-  [1  1]         [3]
-  [2  1] x   =   [5]       No exact solution exists.
-  [3  1]         [6]
+$$
+\begin{bmatrix} 1 & 1 \\ 2 & 1 \\ 3 & 1 \end{bmatrix} x = \begin{bmatrix} 3 \\ 5 \\ 6 \end{bmatrix}
+$$
 
-  x_ls = A+ b = V * Sigma+ * U^T * b
+No exact solution exists.
 
-  This gives the x that minimizes the sum of squared residuals.
-  Same result as the normal equations (A^T A)^(-1) A^T b,
-  but numerically more stable.
-```
+$$
+x_{ls} = A^+ b = V \Sigma^+ U^T b
+$$
+
+This gives the $x$ that minimizes the sum of squared residuals. Same result as the normal equations $(A^T A)^{-1} A^T b$, but numerically more stable.
 
 ### Numerical stability advantages
 
-Computing eigendecomposition of A^T A squares the singular values (eigenvalues of A^T A are sigma_i^2). This squares the condition number, amplifying numerical errors.
+Computing eigendecomposition of $A^T A$ squares the singular values (eigenvalues of $A^T A$ are $\sigma_i^2$). This squares the condition number, amplifying numerical errors.
 
 ```
 Example:
@@ -332,31 +332,31 @@ Example:
                            (6 extra digits of precision lost)
 ```
 
-Modern SVD algorithms (Golub-Kahan bidiagonalization) work directly on A, never forming A^T A. This is why you should always prefer `np.linalg.svd(A)` over `np.linalg.eig(A.T @ A)`.
+Modern SVD algorithms (Golub-Kahan bidiagonalization) work directly on $A$, never forming $A^T A$. This is why you should always prefer `np.linalg.svd(A)` over `np.linalg.eig(A.T @ A)`.
 
 ### Connection to PCA
 
 PCA IS SVD on centered data. This is not an analogy. It is literally the same computation.
 
-```
-Given data matrix X (n_samples x n_features), centered (mean subtracted):
+Given data matrix $X$ ($n_\text{samples} \times n_\text{features}$), centered (mean subtracted), the covariance matrix is:
 
-Covariance matrix: C = (1/(n-1)) * X^T X
+$$
+C = \frac{1}{n-1} X^T X
+$$
 
-PCA finds eigenvectors of C. But:
+PCA finds eigenvectors of $C$. But:
 
-  X = U * Sigma * V^T    (SVD of X)
+$$
+\begin{aligned}
+X &= U \Sigma V^T \quad (\text{SVD of } X) \\
+X^T X &= V \Sigma^2 V^T \\
+C &= \frac{1}{n-1} V \Sigma^2 V^T
+\end{aligned}
+$$
 
-  X^T X = V * Sigma^2 * V^T
+So the principal components are exactly the right singular vectors $V$. The explained variance for each component is $\sigma_i^2 / (n-1)$.
 
-  C = (1/(n-1)) * V * Sigma^2 * V^T
-
-So the principal components are exactly the right singular vectors V.
-The explained variance for each component is sigma_i^2 / (n-1).
-
-In sklearn, PCA is implemented using SVD, not eigendecomposition.
-It is faster and more numerically stable.
-```
+In sklearn, PCA is implemented using SVD, not eigendecomposition. It is faster and more numerically stable.
 
 This means everything you learned about dimensionality reduction in Lesson 10 is SVD under the hood. PCA is the most common application of SVD in machine learning.
 
@@ -368,7 +368,7 @@ svd-rank-reconstruction
 
 ### Step 1: SVD from scratch using power iteration
 
-The idea: to find the largest singular value and its vectors, use power iteration on A^T A (or A A^T). Then deflate the matrix and repeat for the next singular value.
+The idea: to find the largest singular value and its vectors, use power iteration on $A^T A$ (or $A A^T$). Then deflate the matrix and repeat for the next singular value.
 
 ```python
 import numpy as np
@@ -513,7 +513,7 @@ This lesson produces:
 
 ## Exercises
 
-1. Implement the full SVD from scratch without using power iteration. Instead, compute the eigendecomposition of A^T A to get V and the singular values, then compute U = A V Sigma^{-1}. Compare numerical accuracy with your power iteration version and with NumPy.
+1. Implement the full SVD from scratch without using power iteration. Instead, compute the eigendecomposition of $A^T A$ to get $V$ and the singular values, then compute $U = A V \Sigma^{-1}$. Compare numerical accuracy with your power iteration version and with NumPy.
 
 2. Load a real grayscale image (or convert one to grayscale). Compress it at ranks 1, 5, 10, 25, 50, 100. For each rank, compute the compression ratio and the relative error. Find the rank where the image becomes visually acceptable.
 
@@ -521,20 +521,20 @@ This lesson produces:
 
 4. Create a 100x50 document-term matrix with 3 synthetic topics. Each topic has 5 associated terms. Add noise. Apply SVD and verify that the top 3 singular values are much larger than the rest. Project documents into the 3D latent space and check that documents from the same topic cluster together.
 
-5. Generate a clean low-rank matrix (rank 3, size 50x40) and add Gaussian noise at different levels (sigma = 0.1, 0.5, 1.0, 2.0). For each noise level, find the optimal truncation rank by sweeping k from 1 to 40 and measuring reconstruction error against the clean matrix. Plot how the optimal k changes with noise level.
+5. Generate a clean low-rank matrix (rank 3, size 50x40) and add Gaussian noise at different levels ($\sigma$ = 0.1, 0.5, 1.0, 2.0). For each noise level, find the optimal truncation rank by sweeping k from 1 to 40 and measuring reconstruction error against the clean matrix. Plot how the optimal k changes with noise level.
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| SVD | "Factor any matrix" | Decompose A into U Sigma V^T where U and V are orthogonal and Sigma is diagonal with non-negative entries. Works for any matrix of any shape. |
-| Singular value | "How important this component is" | The i-th diagonal entry of Sigma. Measures how much the matrix stretches along the i-th principal direction. Always non-negative, sorted in decreasing order. |
-| Left singular vector | "Output direction" | A column of U. The direction in output space that the i-th right singular vector maps to (after scaling by sigma_i). |
-| Right singular vector | "Input direction" | A column of V. The direction in input space that the matrix maps to the i-th left singular vector (after scaling by sigma_i). |
+| SVD | "Factor any matrix" | Decompose $A$ into $U \Sigma V^T$ where $U$ and $V$ are orthogonal and $\Sigma$ is diagonal with non-negative entries. Works for any matrix of any shape. |
+| Singular value | "How important this component is" | The $i$-th diagonal entry of $\Sigma$. Measures how much the matrix stretches along the $i$-th principal direction. Always non-negative, sorted in decreasing order. |
+| Left singular vector | "Output direction" | A column of $U$. The direction in output space that the $i$-th right singular vector maps to (after scaling by $\sigma_i$). |
+| Right singular vector | "Input direction" | A column of $V$. The direction in input space that the matrix maps to the $i$-th left singular vector (after scaling by $\sigma_i$). |
 | Truncated SVD | "Low-rank approximation" | Keep only the top k singular values and their vectors. Produces the provably best rank-k approximation to the original matrix (Eckart-Young theorem). |
 | Rank | "True dimensionality" | The number of non-zero singular values. Tells you how many independent directions the matrix actually uses. |
-| Pseudoinverse | "Generalized inverse" | V Sigma+ U^T. Inverts non-zero singular values, leaves zeros as zeros. Solves least-squares problems for non-square or singular matrices. |
-| Condition number | "How sensitive to errors" | sigma_max / sigma_min. A large condition number means small input changes cause large output changes. SVD reveals this directly. |
+| Pseudoinverse | "Generalized inverse" | $V \Sigma^+ U^T$. Inverts non-zero singular values, leaves zeros as zeros. Solves least-squares problems for non-square or singular matrices. |
+| Condition number | "How sensitive to errors" | $\sigma_{\max} / \sigma_{\min}$. A large condition number means small input changes cause large output changes. SVD reveals this directly. |
 | Latent factor | "Hidden variable" | A dimension in the low-rank space discovered by SVD. In recommendations, a latent factor might correspond to genre preference. In NLP, it might correspond to a topic. |
 | Frobenius norm | "Total matrix size" | Square root of the sum of squared entries. Equals the square root of the sum of squared singular values. Used to measure approximation error. |
 | Eckart-Young theorem | "SVD gives the best compression" | For any target rank k, the truncated SVD minimizes the approximation error over all possible rank-k matrices. |
