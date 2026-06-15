@@ -55,15 +55,15 @@ flowchart LR
 
 ### Rectified flow in one paragraph
 
-DDPM defines the forward process as a noisy SDE where `x_t` is increasingly corrupted. The learned reverse is a second SDE, solved by 1000 small steps.
+DDPM defines the forward process as a noisy SDE where $x_t$ is increasingly corrupted. The learned reverse is a second SDE, solved by 1000 small steps.
 
 Rectified flow defines a **straight-line** interpolation between clean data and pure noise:
 
-```
-x_t = (1 - t) * x_0 + t * epsilon,     t in [0, 1]
-```
+$$
+x_t = (1 - t) \cdot x_0 + t \cdot \epsilon, \quad t \in [0, 1]
+$$
 
-Train a network to predict the velocity `v_theta(x_t, t) = epsilon - x_0` — the forward direction along the straight-line path from clean data to noise (`dx_t/dt`). During sampling, you integrate this velocity backward to step from noise toward data. The resulting ODE is much closer to a straight line, so far fewer integration steps are needed to sample.
+Train a network to predict the velocity $v_\theta(x_t, t) = \epsilon - x_0$ — the forward direction along the straight-line path from clean data to noise ($dx_t/dt$). During sampling, you integrate this velocity backward to step from noise toward data. The resulting ODE is much closer to a straight line, so far fewer integration steps are needed to sample.
 
 SD3 calls this **Rectified Flow Matching**. FLUX, Z-Image, and most 2026 models use the same objective. Typical inference: 20-30 Euler steps (deterministic) vs 50+ DDIM steps in the old DDPM regime. Distilled / turbo / schnell / LCM variants take it down to 1-4 steps.
 
@@ -92,7 +92,7 @@ Rectified flow changes the sampler, not the conditioning. Classifier-free guidan
 
 Four names for the same idea: distil a slow many-step model into a fast few-step model.
 
-- **LCM (Latent Consistency Model)** — train a student that predicts the final `x_0` from any intermediate `x_t` in one step.
+- **LCM (Latent Consistency Model)** — train a student that predicts the final $x_0$ from any intermediate $x_t$ in one step.
 - **SDXL Turbo / FLUX schnell** — 1-4 step models trained with adversarial diffusion distillation.
 - **SD Turbo** — OpenAI-style Consistency Models adapted to latent diffusion.
 
@@ -237,7 +237,7 @@ def rectified_flow_train_step(model, x0, optimizer, device):
     return loss.item()
 ```
 
-Compare with DDPM's noise-prediction loss (Lesson 10): same structure, different target. Instead of predicting the noise `epsilon`, we predict the **velocity** `epsilon - x_0`, which points from data to noise along the straight-line interpolation.
+Compare with DDPM's noise-prediction loss (Lesson 10): same structure, different target. Instead of predicting the noise $\epsilon$, we predict the **velocity** $\epsilon - x_0$, which points from data to noise along the straight-line interpolation.
 
 ### Step 4: Euler sampler
 
@@ -336,7 +336,7 @@ This lesson produces:
 | MMDiT | "Multi-modal DiT (SD3)" | Separate weight streams for text and image tokens that share a joint self-attention |
 | Single-stream / double-stream | "FLUX trick" | First N blocks double-stream (separate weights per modality), later blocks single-stream (concat + shared weights) for efficiency |
 | Rectified flow | "Straight-line noise-to-data" | Linear interpolation between data and noise; network predicts velocity; fewer ODE steps needed at inference |
-| Velocity target | "epsilon - x_0" | The regression target in rectified flow; points from clean data to noise |
+| Velocity target | "$\epsilon - x_0$" | The regression target in rectified flow; points from clean data to noise |
 | CFG guidance | "classifier-free guidance" | Mix conditional and unconditional predictions; still used in rectified-flow models |
 | Schnell / turbo / LCM | "1-4 step distillation" | Small-step variants distilled from full-quality models; production real-time |
 
