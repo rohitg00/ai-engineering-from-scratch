@@ -246,7 +246,7 @@ Normal equations:
 A^T A = | 4  10 |    A^T b = | 22 |
         | 10 30 |            | 63 |
 
-Solve: x = [1.5, 1.7]
+Solve: x = [1.5, 1.6]
 
 This is linear regression. x[0] is the intercept, x[1] is the slope.
 ```
@@ -326,7 +326,7 @@ Rules of thumb:
 - $\kappa \sim 10^k$: you lose about $k$ digits of precision from your floating-point arithmetic.
 - $\kappa \sim 10^{16}$ (for float64): the solution is meaningless. The matrix is effectively singular.
 
-In ML, ill-conditioning happens when features are nearly collinear. Regularization (adding $\lambda I$) improves the condition number from $\sigma_{\max} / \sigma_{\min}$ to $(\sigma_{\max} + \lambda) / (\sigma_{\min} + \lambda)$.
+In ML, ill-conditioning happens when features are nearly collinear. For the regularized normal equations, adding $\lambda I$ changes the condition number from $\sigma_{\max}^2 / \sigma_{\min}^2$ to $(\sigma_{\max}^2 + \lambda) / (\sigma_{\min}^2 + \lambda)$.
 
 ### Iterative methods: conjugate gradient
 
