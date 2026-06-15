@@ -6,6 +6,15 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, TensorDataset
 
 
+def get_device():
+    """Pick the best available accelerator: CUDA, then Apple Silicon (MPS), then CPU."""
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
 def linear_beta_schedule(T=1000, beta_start=1e-4, beta_end=2e-2):
     return torch.linspace(beta_start, beta_end, T)
 
@@ -137,7 +146,7 @@ def synthetic_circles(num=200, size=16, seed=0):
 
 def main():
     torch.manual_seed(0)
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = get_device()
     T = 200
 
     schedule = precompute_schedule(linear_beta_schedule(T=T, beta_start=1e-4, beta_end=0.04))
