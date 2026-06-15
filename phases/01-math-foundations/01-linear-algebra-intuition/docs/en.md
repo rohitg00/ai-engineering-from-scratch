@@ -32,7 +32,7 @@ A vector is just a list of numbers. But those numbers mean something -- they're 
 |---|---|-------|
 | 3 | 2 | The vector points from origin (0,0) to (3, 2) on the plane |
 
-The vector has magnitude sqrt(3^2 + 2^2) = sqrt(13) and points up and to the right.
+The vector has magnitude $\sqrt{3^2 + 2^2} = \sqrt{13}$ and points up and to the right.
 
 In AI, vectors represent everything:
 - A word → a vector of 768 numbers (its "meaning" in embedding space)
@@ -71,13 +71,17 @@ In AI, matrices ARE the model:
 
 The dot product of two vectors tells you how similar they are.
 
-```
-a · b = a₁×b₁ + a₂×b₂ + ... + aₙ×bₙ
+$$
+\mathbf{a} \cdot \mathbf{b} = a_1 b_1 + a_2 b_2 + \cdots + a_n b_n
+$$
 
-Same direction:      a · b > 0  (similar)
-Perpendicular:       a · b = 0  (unrelated)
-Opposite direction:  a · b < 0  (dissimilar)
-```
+$$
+\begin{aligned}
+\text{Same direction:} \quad & \mathbf{a} \cdot \mathbf{b} > 0 \quad (\text{similar}) \\
+\text{Perpendicular:} \quad & \mathbf{a} \cdot \mathbf{b} = 0 \quad (\text{unrelated}) \\
+\text{Opposite direction:} \quad & \mathbf{a} \cdot \mathbf{b} < 0 \quad (\text{dissimilar})
+\end{aligned}
+$$
 
 This is literally how search engines, recommendation systems, and RAG work -- find vectors with high dot products.
 
@@ -95,25 +99,25 @@ v2 = [0, 1, 0]
 v3 = [2, 1, 0]   # v3 = 2*v1 + v2
 ```
 
-v1 and v2 are independent -- neither is a scalar multiple or combination of the other. But v3 = 2*v1 + v2, so {v1, v2, v3} is a dependent set. These three vectors all lie in the xy-plane. No matter how you combine them, you cannot reach [0, 0, 1]. You have three vectors but only two dimensions of freedom.
+v1 and v2 are independent -- neither is a scalar multiple or combination of the other. But $\mathbf{v}_3 = 2\mathbf{v}_1 + \mathbf{v}_2$, so $\{\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3\}$ is a dependent set. These three vectors all lie in the xy-plane. No matter how you combine them, you cannot reach $[0, 0, 1]$. You have three vectors but only two dimensions of freedom.
 
-In a dataset: if feature_3 = 2*feature_1 + feature_2, adding feature_3 gives the model zero new information. Worse, it makes the normal equations singular -- there is no unique solution for the weights.
+In a dataset: if $\text{feature}_3 = 2 \cdot \text{feature}_1 + \text{feature}_2$, adding feature_3 gives the model zero new information. Worse, it makes the normal equations singular -- there is no unique solution for the weights.
 
 ### Basis and Rank
 
 A basis is a minimal set of linearly independent vectors that span the entire space. The number of basis vectors is the dimension of the space.
 
-The standard basis for 3D space is {[1,0,0], [0,1,0], [0,0,1]}. But any three independent vectors in 3D form a valid basis. The choice of basis is a choice of coordinate system.
+The standard basis for 3D space is $\{[1,0,0], [0,1,0], [0,0,1]\}$. But any three independent vectors in 3D form a valid basis. The choice of basis is a choice of coordinate system.
 
-Rank of a matrix = number of linearly independent columns = number of linearly independent rows. If rank < min(rows, cols), the matrix is rank-deficient. This means:
+Rank of a matrix = number of linearly independent columns = number of linearly independent rows. If $\text{rank} < \min(\text{rows}, \text{cols})$, the matrix is rank-deficient. This means:
 - The system has infinitely many solutions (or none)
 - Information is lost in the transformation
 - The matrix cannot be inverted
 
 | Situation | Rank | What it means for ML |
 |-----------|------|---------------------|
-| Full rank (rank = min(m, n)) | Maximum possible | Unique least-squares solution exists. Model is well-conditioned. |
-| Rank deficient (rank < min(m, n)) | Below maximum | Features are redundant. Infinitely many weight solutions. Regularization needed. |
+| Full rank ($\text{rank} = \min(m, n)$) | Maximum possible | Unique least-squares solution exists. Model is well-conditioned. |
+| Rank deficient ($\text{rank} < \min(m, n)$) | Below maximum | Features are redundant. Infinitely many weight solutions. Regularization needed. |
 | Rank 1 | 1 | Every column is a scaled copy of one vector. All data lies on a line. |
 | Near rank-deficient (small singular values) | Numerically low | Matrix is ill-conditioned. Tiny input noise causes large output changes. Use SVD truncation or ridge regression. |
 
@@ -121,11 +125,11 @@ Rank of a matrix = number of linearly independent columns = number of linearly i
 
 Projecting vector **a** onto vector **b** gives the component of **a** in the direction of **b**:
 
-```
-proj_b(a) = (a dot b / b dot b) * b
-```
+$$
+\text{proj}_{\mathbf{b}}(\mathbf{a}) = \frac{\mathbf{a} \cdot \mathbf{b}}{\mathbf{b} \cdot \mathbf{b}} \, \mathbf{b}
+$$
 
-The residual (a - proj_b(a)) is perpendicular to b. This orthogonal decomposition is the foundation of least-squares fitting.
+The residual $\mathbf{a} - \text{proj}_{\mathbf{b}}(\mathbf{a})$ is perpendicular to $\mathbf{b}$. This orthogonal decomposition is the foundation of least-squares fitting.
 
 Projection is everywhere in ML:
 - Linear regression minimizes the distance from observations to the column space -- the solution IS a projection
@@ -143,9 +147,11 @@ graph LR
     end
 ```
 
-**Example:** a = [3, 4], b = [1, 0]
+**Example:** $\mathbf{a} = [3, 4]$, $\mathbf{b} = [1, 0]$
 
-proj_b(a) = (3*1 + 4*0) / (1*1 + 0*0) * [1, 0] = 3 * [1, 0] = [3, 0]
+$$
+\text{proj}_{\mathbf{b}}(\mathbf{a}) = \frac{3 \cdot 1 + 4 \cdot 0}{1 \cdot 1 + 0 \cdot 0} \, [1, 0] = 3 \, [1, 0] = [3, 0]
+$$
 
 The projection drops the y-component. This is dimensionality reduction in its simplest form -- throw away the directions you don't care about.
 
@@ -159,19 +165,17 @@ The algorithm:
 3. Take the third vector, subtract its projections onto all previous vectors, normalize
 4. Repeat for remaining vectors
 
-```
-Input:  v1, v2, v3, ... (linearly independent)
-
-u1 = v1 / |v1|
-
-w2 = v2 - (v2 dot u1) * u1
-u2 = w2 / |w2|
-
-w3 = v3 - (v3 dot u1) * u1 - (v3 dot u2) * u2
-u3 = w3 / |w3|
-
-Output: u1, u2, u3, ... (orthonormal basis)
-```
+$$
+\begin{aligned}
+\text{Input:} \quad & \mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3, \ldots \ (\text{linearly independent}) \\[4pt]
+\mathbf{u}_1 &= \frac{\mathbf{v}_1}{\lVert \mathbf{v}_1 \rVert} \\[4pt]
+\mathbf{w}_2 &= \mathbf{v}_2 - (\mathbf{v}_2 \cdot \mathbf{u}_1)\, \mathbf{u}_1 \\
+\mathbf{u}_2 &= \frac{\mathbf{w}_2}{\lVert \mathbf{w}_2 \rVert} \\[4pt]
+\mathbf{w}_3 &= \mathbf{v}_3 - (\mathbf{v}_3 \cdot \mathbf{u}_1)\, \mathbf{u}_1 - (\mathbf{v}_3 \cdot \mathbf{u}_2)\, \mathbf{u}_2 \\
+\mathbf{u}_3 &= \frac{\mathbf{w}_3}{\lVert \mathbf{w}_3 \rVert} \\[4pt]
+\text{Output:} \quad & \mathbf{u}_1, \mathbf{u}_2, \mathbf{u}_3, \ldots \ (\text{orthonormal basis})
+\end{aligned}
+$$
 
 This is how QR decomposition works internally. Q is the orthonormal basis, R captures the projection coefficients. QR decomposition is used in:
 - Solving linear systems (more stable than Gaussian elimination)
