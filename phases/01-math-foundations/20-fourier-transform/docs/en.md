@@ -244,7 +244,7 @@ A single FFT gives you the frequency content of the entire signal, but tells you
 
 The Short-Time Fourier Transform (STFT) solves this by computing FFTs on overlapping windows of the signal. The result is a spectrogram: a 2D representation with time on one axis and frequency on the other. The intensity at each point shows the energy at that frequency at that time.
 
-```
+```text
 STFT procedure:
 1. Choose a window size (e.g., 1024 samples)
 2. Choose a hop size (e.g., 256 samples -- 75% overlap)
@@ -261,7 +261,7 @@ Spectrograms are the standard input representation for audio ML models. Speech r
 
 If a signal contains frequencies above $f_s/2$ (the Nyquist frequency), sampling at rate $f_s$ will create aliased copies. A 90 Hz signal sampled at 100 Hz looks identical to a 10 Hz signal. There is no way to distinguish them from the samples alone.
 
-```
+```text
 Example:
   True signal: 90 Hz sine wave
   Sampling rate: 100 Hz
