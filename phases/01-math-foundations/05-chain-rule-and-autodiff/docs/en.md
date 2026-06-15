@@ -28,30 +28,32 @@ This is how PyTorch, TensorFlow, and JAX work. You will build a miniature versio
 
 ### The Chain Rule
 
-If `y = f(g(x))`, the derivative of `y` with respect to `x` is:
+If $y = f(g(x))$, the derivative of $y$ with respect to $x$ is:
 
-```
-dy/dx = dy/dg * dg/dx = f'(g(x)) * g'(x)
-```
+$$
+\frac{dy}{dx} = \frac{dy}{dg} \cdot \frac{dg}{dx} = f'(g(x)) \cdot g'(x)
+$$
 
 Multiply the derivatives along the chain. Each link contributes its local derivative.
 
-Example: `y = sin(x^2)`
+Example: $y = \sin(x^2)$
 
-```
-g(x) = x^2       g'(x) = 2x
-f(g) = sin(g)     f'(g) = cos(g)
-
-dy/dx = cos(x^2) * 2x
-```
+$$
+\begin{aligned}
+g(x) &= x^2 & g'(x) &= 2x \\
+f(g) &= \sin(g) & f'(g) &= \cos(g) \\
+\frac{dy}{dx} &= \cos(x^2) \cdot 2x
+\end{aligned}
+$$
 
 For deeper compositions, the chain extends:
 
-```
-y = f(g(h(x)))
-
-dy/dx = f'(g(h(x))) * g'(h(x)) * h'(x)
-```
+$$
+\begin{aligned}
+y &= f(g(h(x))) \\
+\frac{dy}{dx} &= f'(g(h(x))) \cdot g'(h(x)) \cdot h'(x)
+\end{aligned}
+$$
 
 Every layer in a neural network is one link in this chain.
 
@@ -88,47 +90,49 @@ The backward pass applies the chain rule at every node, propagating gradients fr
 
 There are two ways to apply the chain rule through a graph.
 
-**Forward mode** starts at the inputs and pushes derivatives forward. It computes `dx/dx = 1` and propagates through each operation. Good when you have few inputs and many outputs.
+**Forward mode** starts at the inputs and pushes derivatives forward. It computes $dx/dx = 1$ and propagates through each operation. Good when you have few inputs and many outputs.
 
-```
-Forward mode: seed dx/dx = 1, propagate forward
+$$
+\begin{aligned}
+&\text{Forward mode: seed } dx/dx = 1, \text{ propagate forward} \\
+x &= 2 & (dx/dx &= 1) \\
+a &= x^2 & (da/dx &= 2x = 4) \\
+y &= \sin(a) & \left(\frac{dy}{dx} = \cos(a) \cdot \frac{da}{dx} = \cos(4) \cdot 4 = -2.615\right)
+\end{aligned}
+$$
 
-  x = 2       (dx/dx = 1)
-  a = x^2     (da/dx = 2x = 4)
-  y = sin(a)  (dy/dx = cos(a) * da/dx = cos(4) * 4 = -2.615)
-```
+**Reverse mode** starts at the output and pulls gradients backward. It computes $dy/dy = 1$ and propagates through each operation in reverse. Good when you have many inputs and few outputs.
 
-**Reverse mode** starts at the output and pulls gradients backward. It computes `dy/dy = 1` and propagates through each operation in reverse. Good when you have many inputs and few outputs.
-
-```
-Reverse mode: seed dy/dy = 1, propagate backward
-
-  y = sin(a)  (dy/dy = 1)
-  a = x^2     (dy/da = cos(a) = cos(4) = -0.654)
-  x = 2       (dy/dx = dy/da * da/dx = -0.654 * 4 = -2.615)
-```
+$$
+\begin{aligned}
+&\text{Reverse mode: seed } dy/dy = 1, \text{ propagate backward} \\
+y &= \sin(a) & (dy/dy &= 1) \\
+a &= x^2 & (dy/da &= \cos(a) = \cos(4) = -0.654) \\
+x &= 2 & \left(\frac{dy}{dx} = \frac{dy}{da} \cdot \frac{da}{dx} = -0.654 \cdot 4 = -2.615\right)
+\end{aligned}
+$$
 
 Neural networks have millions of inputs (weights) and one output (loss). Reverse mode computes all gradients in one backward pass. This is why backpropagation uses reverse mode.
 
 | Mode | Seed | Direction | Best when |
 |------|------|-----------|-----------|
-| Forward | `dx_i/dx_i = 1` | Input to output | Few inputs, many outputs |
-| Reverse | `dy/dy = 1` | Output to input | Many inputs, few outputs (neural nets) |
+| Forward | $dx_i/dx_i = 1$ | Input to output | Few inputs, many outputs |
+| Reverse | $dy/dy = 1$ | Output to input | Many inputs, few outputs (neural nets) |
 
 ### Dual Numbers for Forward Mode
 
-Forward mode can be implemented elegantly with dual numbers. A dual number has the form `a + b*epsilon` where `epsilon^2 = 0`.
+Forward mode can be implemented elegantly with dual numbers. A dual number has the form $a + b\epsilon$ where $\epsilon^2 = 0$.
 
-```
-Dual number: (value, derivative)
-
-(2, 1) means: value is 2, derivative w.r.t. x is 1
-
-Arithmetic rules:
-  (a, a') + (b, b') = (a+b, a'+b')
-  (a, a') * (b, b') = (a*b, a'*b + a*b')
-  sin(a, a')         = (sin(a), cos(a)*a')
-```
+$$
+\begin{aligned}
+&\text{Dual number: } (\text{value}, \text{derivative}) \\
+&(2, 1) \text{ means: value is 2, derivative w.r.t. } x \text{ is 1} \\
+&\text{Arithmetic rules:} \\
+(a, a') + (b, b') &= (a+b,\ a'+b') \\
+(a, a') \cdot (b, b') &= (a \cdot b,\ a' \cdot b + a \cdot b') \\
+\sin(a, a') &= (\sin(a),\ \cos(a) \cdot a')
+\end{aligned}
+$$
 
 Seed the input variable with derivative 1. The derivative propagates automatically through every operation.
 
@@ -300,11 +304,11 @@ The basic Value class handles addition, multiplication, and relu. A real autogra
 | Operation | Backward rule | Used in |
 |-----------|--------------|---------|
 | `__sub__` | Reuses add + neg | Loss computation (pred - target) |
-| `__pow__` | n * x^(n-1) | Polynomial activations, MSE (error^2) |
+| `__pow__` | $n \cdot x^{n-1}$ | Polynomial activations, MSE ($\text{error}^2$) |
 | `__truediv__` | Reuses mul + pow(-1) | Normalization, learning rate scaling |
-| `exp` | exp(x) * upstream | Softmax, log-likelihood |
-| `log` | (1/x) * upstream | Cross-entropy loss, log probabilities |
-| `tanh` | (1 - tanh^2) * upstream | Classic activation function |
+| `exp` | $\exp(x) \cdot \text{upstream}$ | Softmax, log-likelihood |
+| `log` | $(1/x) \cdot \text{upstream}$ | Cross-entropy loss, log probabilities |
+| `tanh` | $(1 - \tanh^2) \cdot \text{upstream}$ | Classic activation function |
 
 The clever part: `__sub__` and `__truediv__` are defined in terms of existing operations. They get correct gradients for free because the chain rule composes through the underlying add/mul/pow operations.
 
@@ -350,7 +354,7 @@ class MLP:
         return [p for layer in self.layers for p in layer.parameters()]
 ```
 
-A `Neuron` computes `tanh(w1*x1 + w2*x2 + ... + b)`. A `Layer` is a list of neurons. An `MLP` stacks layers. Every weight is a `Value`, so calling `loss.backward()` propagates gradients to every parameter.
+A `Neuron` computes $\tanh(w_1 x_1 + w_2 x_2 + \dots + b)$. A `Layer` is a list of neurons. An `MLP` stacks layers. Every weight is a `Value`, so calling `loss.backward()` propagates gradients to every parameter.
 
 **Training on XOR:**
 
@@ -442,8 +446,8 @@ print(f"dy/dx1 = {x1.grad}")   # 3.0 (= x2)
 print(f"dy/dx2 = {x2.grad}")   # 2.0 (= x1)
 ```
 
-Manual check: `y = relu(x1*x2 + 1)`. Since `x1*x2 + 1 = 7 > 0`, relu is identity.
-`dy/dx1 = x2 = 3`. `dy/dx2 = x1 = 2`. The engine matches.
+Manual check: $y = \text{relu}(x_1 x_2 + 1)$. Since $x_1 x_2 + 1 = 7 > 0$, relu is identity.
+$dy/dx_1 = x_2 = 3$. $dy/dx_2 = x_1 = 2$. The engine matches.
 
 ## Use It
 
@@ -489,11 +493,11 @@ The Value class built here is the foundation for the neural network training loo
 
 ## Exercises
 
-1. Add `__pow__` to the Value class so you can compute `x ** n`. Verify that `d/dx(x^3)` at `x=2` equals `12.0`.
+1. Add `__pow__` to the Value class so you can compute $x^n$. Verify that $\frac{d}{dx}(x^3)$ at $x=2$ equals $12.0$.
 
-2. Add `tanh` as an activation function. Verify that `tanh'(0) = 1` and `tanh'(2) = 0.0707` (approx).
+2. Add `tanh` as an activation function. Verify that $\tanh'(0) = 1$ and $\tanh'(2) = 0.0707$ (approx).
 
-3. Build a computation graph for a single neuron: `y = relu(w1*x1 + w2*x2 + b)`. Compute all five gradients and verify against PyTorch.
+3. Build a computation graph for a single neuron: $y = \text{relu}(w_1 x_1 + w_2 x_2 + b)$. Compute all five gradients and verify against PyTorch.
 
 4. Implement forward-mode autodiff using dual numbers. Create a `Dual` class and verify it gives the same derivatives as your reverse-mode engine.
 
@@ -506,13 +510,13 @@ The Value class built here is the foundation for the neural network training loo
 | Forward mode | "Push derivatives forward" | Autodiff that propagates derivatives from inputs to outputs. One pass per input variable. |
 | Reverse mode | "Backpropagation" | Autodiff that propagates gradients from outputs to inputs. One pass per output variable. |
 | Autograd | "Automatic gradients" | A system that records operations on values, builds a graph, and computes exact gradients via the chain rule |
-| Dual numbers | "Value plus derivative" | Numbers of the form a + b*epsilon (epsilon^2 = 0) that carry derivative information through arithmetic |
+| Dual numbers | "Value plus derivative" | Numbers of the form $a + b\epsilon$ ($\epsilon^2 = 0$) that carry derivative information through arithmetic |
 | Topological sort | "Dependency order" | Ordering graph nodes so every node comes after all its dependencies. Required for correct gradient propagation. |
 | Gradient accumulation | "Add, don't replace" | When a value feeds into multiple operations, its gradient is the sum of all incoming gradient contributions |
 | Dynamic graph | "Define by run" | A computation graph rebuilt on every forward pass, allowing Python control flow inside models (PyTorch style) |
 | Gradient checking | "Numerical verification" | Comparing autodiff gradients against numerical finite-difference gradients to verify correctness. Essential for debugging. |
 | MLP | "Multi-layer perceptron" | A neural network with one or more hidden layers of neurons. Each neuron computes a weighted sum plus bias, then applies an activation function. |
-| Neuron | "Weighted sum + activation" | The basic unit: output = activation(w1*x1 + w2*x2 + ... + b). The weights and bias are learnable parameters. |
+| Neuron | "Weighted sum + activation" | The basic unit: $\text{output} = \text{activation}(w_1 x_1 + w_2 x_2 + \dots + b)$. The weights and bias are learnable parameters. |
 
 ## Further Reading
 
