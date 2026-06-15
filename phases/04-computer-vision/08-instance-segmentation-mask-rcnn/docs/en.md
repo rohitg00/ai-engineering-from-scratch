@@ -86,14 +86,14 @@ Upsample the 28x28 mask to the proposal's original pixel size to produce the fin
 
 Mask R-CNN has four losses added together:
 
-```
-L = L_rpn_cls + L_rpn_box + L_box_cls + L_box_reg + L_mask
-```
+$$
+L = L_{\text{rpn\_cls}} + L_{\text{rpn\_box}} + L_{\text{box\_cls}} + L_{\text{box\_reg}} + L_{\text{mask}}
+$$
 
-- `L_rpn_cls`, `L_rpn_box` — objectness + box regression for the RPN proposals.
-- `L_box_cls` — cross-entropy over (C+1) classes (including background) on the head's classifier.
-- `L_box_reg` — smooth L1 on the head's box refinement.
-- `L_mask` — per-pixel binary cross-entropy on the 28x28 mask output.
+- $L_{\text{rpn\_cls}}$, $L_{\text{rpn\_box}}$ — objectness + box regression for the RPN proposals.
+- $L_{\text{box\_cls}}$ — cross-entropy over $(C+1)$ classes (including background) on the head's classifier.
+- $L_{\text{box\_reg}}$ — smooth L1 on the head's box refinement.
+- $L_{\text{mask}}$ — per-pixel binary cross-entropy on the 28x28 mask output.
 
 Each loss has its own default weight; the torchvision implementation exposes them as constructor arguments.
 
