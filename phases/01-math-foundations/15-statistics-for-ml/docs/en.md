@@ -182,7 +182,7 @@ $$
 \bar{x} \pm z \cdot \frac{s}{\sqrt{n}}
 $$
 
-where $z = 1.96$ for 95% confidence.
+where $z = 1.96$ for 95% confidence. This is the large-sample approximation; when $n$ is small and the population variance is unknown, use the $t$-distribution's critical value $t_{n-1,\,0.975}$ in place of $z$.
 
 Interpretation: if you repeated this experiment many times, 95% of the computed intervals would contain the true mean. It does NOT mean there is a 95% probability the true mean is in this specific interval.
 
