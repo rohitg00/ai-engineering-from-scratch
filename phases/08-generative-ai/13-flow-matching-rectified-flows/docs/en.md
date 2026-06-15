@@ -9,9 +9,9 @@
 
 ## The Problem
 
-DDPM's reverse process is a 1000-step stochastic walk from `N(0, I)` back to the data distribution. DDIM collapsed it to 20-50 deterministic steps. You want fewer steps — ideally one. The blocker is that the ODE solving the reverse process is stiff; the path is curved.
+DDPM's reverse process is a 1000-step stochastic walk from $N(0, I)$ back to the data distribution. DDIM collapsed it to 20-50 deterministic steps. You want fewer steps — ideally one. The blocker is that the ODE solving the reverse process is stiff; the path is curved.
 
-If you could train the model such that the path from noise to data was a *straight line*, a single Euler step from `t=1` to `t=0` would work. Flow matching builds this directly: define a straight-line interpolation from `x_1 ∼ N(0, I)` to `x_0 ∼ data`, train a vector field `v_θ(x, t)` to match its time derivative, integrate at inference.
+If you could train the model such that the path from noise to data was a *straight line*, a single Euler step from $t=1$ to $t=0$ would work. Flow matching builds this directly: define a straight-line interpolation from $x_1 \sim N(0, I)$ to $x_0 \sim \text{data}$, train a vector field $v_\theta(x, t)$ to match its time derivative, integrate at inference.
 
 Rectified flow (Liu 2022) goes further: iteratively straighten the paths with a reflow procedure that produces a progressively closer-to-linear ODE. After two reflow iterations, a 2-step sampler matches 50-step DDPM quality.
 
@@ -23,41 +23,41 @@ Rectified flow (Liu 2022) goes further: iteratively straighten the paths with a 
 
 Define:
 
-```
-x_t = t · x_1 + (1 - t) · x_0,   t ∈ [0, 1]
-```
+$$
+x_t = t \cdot x_1 + (1 - t) \cdot x_0, \quad t \in [0, 1]
+$$
 
-where `x_0 ~ data` and `x_1 ~ N(0, I)`. The time derivative along this straight line is constant:
+where $x_0 \sim \text{data}$ and $x_1 \sim N(0, I)$. The time derivative along this straight line is constant:
 
-```
-dx_t / dt = x_1 - x_0
-```
+$$
+\frac{dx_t}{dt} = x_1 - x_0
+$$
 
-Define a neural vector field `v_θ(x_t, t)` and train it to match this derivative:
+Define a neural vector field $v_\theta(x_t, t)$ and train it to match this derivative:
 
-```
-L = E_{x_0, x_1, t} || v_θ(x_t, t) - (x_1 - x_0) ||²
-```
+$$
+L = \mathbb{E}_{x_0, x_1, t} \, \| v_\theta(x_t, t) - (x_1 - x_0) \|^2
+$$
 
-This is the **conditional flow matching** loss (Lipman 2023). Training is simulation-free: you never unroll the ODE. Just sample `(x_0, x_1, t)` and regress.
+This is the **conditional flow matching** loss (Lipman 2023). Training is simulation-free: you never unroll the ODE. Just sample $(x_0, x_1, t)$ and regress.
 
 ### Sampling
 
 At inference, integrate the learned vector field *backwards* in time:
 
-```
-x_{t-Δt} = x_t - Δt · v_θ(x_t, t)
-```
+$$
+x_{t-\Delta t} = x_t - \Delta t \cdot v_\theta(x_t, t)
+$$
 
-Start at `x_1 ~ N(0, I)`, Euler-step down to `t=0`.
+Start at $x_1 \sim N(0, I)$, Euler-step down to $t=0$.
 
 ### Rectified flow (Liu 2022)
 
-Straight-line flow works but the learned paths are *not actually straight* — they curve because many `x_0`s can map to the same `x_1`. Rectified flow's reflow step:
+Straight-line flow works but the learned paths are *not actually straight* — they curve because many $x_0$s can map to the same $x_1$. Rectified flow's reflow step:
 
-1. Train flow model v_1 with random pairings.
-2. Sample N pairs `(x_1, x_0)` by integrating v_1 from `x_1` to its landing `x_0`.
-3. Train v_2 on those paired examples. Because the pairs are now "ODE-matched", the straight-line interpolant between them is genuinely flatter.
+1. Train flow model $v_1$ with random pairings.
+2. Sample $N$ pairs $(x_1, x_0)$ by integrating $v_1$ from $x_1$ to its landing $x_0$.
+3. Train $v_2$ on those paired examples. Because the pairs are now "ODE-matched", the straight-line interpolant between them is genuinely flatter.
 4. Repeat.
 
 In practice 2 reflow iterations get you to near-linear, enabling 2-4 step inference. SDXL-Turbo, SD3-Turbo, LCM are all distilled-from-flow-matching models.
@@ -67,18 +67,18 @@ In practice 2 reflow iterations get you to near-linear, enabling 2-4 step infere
 Three reasons:
 
 1. **Simulation-free training** — no ODE unrolling during training, trivial to implement.
-2. **Better loss geometry** — straight paths have consistent signal-to-noise, whereas DDPM ε-loss has bad SNR at edges of the schedule.
+2. **Better loss geometry** — straight paths have consistent signal-to-noise, whereas DDPM $\epsilon$-loss has bad SNR at edges of the schedule.
 3. **Faster inference** — 4-8 steps at SDXL-Turbo quality; 1 step with consistency distillation.
 
 ## Flow matching vs DDPM — the exact connection
 
-Flow matching with a Gaussian-conditional path is diffusion *with a specific noise schedule*. Pick the `x_t = α(t) x_0 + σ(t) x_1` schedule and flow matching recovers Stratonovich-reformulated diffusion with `v = α'·x_0 - σ'·x_1`. The two are algebraically equivalent for Gaussian paths.
+Flow matching with a Gaussian-conditional path is diffusion *with a specific noise schedule*. Pick the $x_t = \alpha(t) x_0 + \sigma(t) x_1$ schedule and flow matching recovers Stratonovich-reformulated diffusion with $v = \alpha' \cdot x_0 - \sigma' \cdot x_1$. The two are algebraically equivalent for Gaussian paths.
 
 What flow matching added: the *clarity* of the target (a plain velocity), a cleaner loss, and the license to experiment with non-Gaussian interpolants.
 
 ## Build It
 
-`code/main.py` implements 1-D flow matching on a two-mode Gaussian mixture. The vector field `v_θ(x, t)` is a tiny MLP trained with the straight-line target. At inference, integrate 1, 2, 4, and 20 Euler steps and compare sample quality.
+`code/main.py` implements 1-D flow matching on a two-mode Gaussian mixture. The vector field $v_\theta(x, t)$ is a tiny MLP trained with the straight-line target. At inference, integrate 1, 2, 4, and 20 Euler steps and compare sample quality.
 
 ### Step 1: training loss
 
@@ -111,10 +111,10 @@ Expect the 4-step sampler to already match the 20-step quality — a big deal fo
 
 ## Pitfalls
 
-- **Time parameterization.** Flow matching uses `t ∈ [0, 1]` with `t=0` at data, `t=1` at noise. DDPM uses `t ∈ [0, T]` with `t=0` at data, `t=T` at noise. Same direction, different scale. Papers get this wrong constantly.
+- **Time parameterization.** Flow matching uses $t \in [0, 1]$ with $t=0$ at data, $t=1$ at noise. DDPM uses $t \in [0, T]$ with $t=0$ at data, $t=T$ at noise. Same direction, different scale. Papers get this wrong constantly.
 - **Schedule choice.** Rectified flow's straight line is "the" flow-matching schedule, but you can use cosine or logit-normal t-sampling (SD3 does this) for better scale coverage.
 - **Reflow cost.** Generating the paired dataset for reflow is a full inference pass per sample. Only do reflow when you really need 1-2 step inference.
-- **Classifier-free guidance still applies.** Just swap ε for v in the linear combination: `v_cfg = (1+w) v_cond - w v_uncond`.
+- **Classifier-free guidance still applies.** Just swap $\epsilon$ for $v$ in the linear combination: $v_\text{cfg} = (1+w) v_\text{cond} - w \, v_\text{uncond}$.
 
 ## Use It
 
@@ -136,21 +136,21 @@ Save `outputs/skill-fm-tuner.md`. Skill takes a diffusion-style model spec and c
 ## Exercises
 
 1. **Easy.** Run `code/main.py` and compare 1-step vs 20-step MSE vs the true data distribution.
-2. **Medium.** Switch from uniform `t` sampling to logit-normal (concentrates sampling at mid-t). Does the model quality improve?
-3. **Hard.** Implement one reflow iteration: generate paired (x_0, x_1) by integrating the first model, train a second model on the pairs, and compare 1-step sample quality.
+2. **Medium.** Switch from uniform $t$ sampling to logit-normal (concentrates sampling at mid-t). Does the model quality improve?
+3. **Hard.** Implement one reflow iteration: generate paired $(x_0, x_1)$ by integrating the first model, train a second model on the pairs, and compare 1-step sample quality.
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| Flow matching | "Straight-line diffusion" | Train `v_θ(x, t)` to match `x_1 - x_0` along an interpolant. |
+| Flow matching | "Straight-line diffusion" | Train $v_\theta(x, t)$ to match $x_1 - x_0$ along an interpolant. |
 | Rectified flow | "Reflow" | Iterative procedure that straightens learned flows. |
-| Velocity field | "v_θ" | Output of the model — the direction to move `x_t`. |
-| Straight-line interpolant | "The path" | `x_t = (1-t)·x_0 + t·x_1`; trivial target derivative. |
+| Velocity field | "v_θ" | Output of the model — the direction to move $x_t$. |
+| Straight-line interpolant | "The path" | $x_t = (1-t) \cdot x_0 + t \cdot x_1$; trivial target derivative. |
 | Euler sampler | "1st order ODE solver" | Simplest integrator; works well when paths are straight. |
-| Logit-normal t | "SD3 sampling" | Concentrate `t` sampling toward mid-values where gradients are strongest. |
-| Consistency distillation | "1-step sampler" | Train a student to map any `x_t` directly to `x_0`. |
-| CFG with velocity | "v-CFG" | `v_cfg = (1+w) v_cond - w v_uncond`; same trick, new variable. |
+| Logit-normal t | "SD3 sampling" | Concentrate $t$ sampling toward mid-values where gradients are strongest. |
+| Consistency distillation | "1-step sampler" | Train a student to map any $x_t$ directly to $x_0$. |
+| CFG with velocity | "v-CFG" | $v_\text{cfg} = (1+w) v_\text{cond} - w \, v_\text{uncond}$; same trick, new variable. |
 
 ## Production note: Flux.1-schnell is flow matching at its fastest
 
