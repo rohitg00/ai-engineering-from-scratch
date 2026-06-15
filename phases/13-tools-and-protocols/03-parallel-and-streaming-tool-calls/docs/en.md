@@ -102,7 +102,7 @@ Order in the reply does not matter for correctness on OpenAI or Anthropic. Gemin
 
 ### Benchmark: sequential vs parallel
 
-The harness in `code/main.py` simulates three executors with 400, 600, and 800 ms latency. Sequential runs it in 1800 ms total. Parallel runs it in max(400, 600, 800) = 800 ms. The difference is constant, not proportional, so the savings grow with tool count.
+The harness in `code/main.py` simulates three executors with 400, 600, and 800 ms latency. Sequential runs it in 1800 ms total. Parallel runs it in $\max(400, 600, 800) = 800$ ms. The difference is constant, not proportional, so the savings grow with tool count.
 
 Real-world caveat: parallel calls stress downstream APIs. A 10-way fan-out to a rate-limited service will fail. Phase 13 · 17 covers gateway-level backpressure; retry semantics are planned for a future phase.
 
@@ -126,7 +126,7 @@ This lesson produces `outputs/skill-parallel-call-safety-check.md`. Given a tool
 
 ## Exercises
 
-1. Run `code/main.py` and vary the simulated latencies. Confirm that the parallel-to-sequential ratio is approximately `max/sum` (real runs deviate slightly from the ideal because of thread scheduling, serialization, and harness overhead). At what latency distribution does parallel stop mattering?
+1. Run `code/main.py` and vary the simulated latencies. Confirm that the parallel-to-sequential ratio is approximately $\max/\text{sum}$ (real runs deviate slightly from the ideal because of thread scheduling, serialization, and harness overhead). At what latency distribution does parallel stop mattering?
 
 2. Extend the accumulator to handle a "call was cancelled mid-stream" case by dropping its buffer and emitting a `cancelled` event. What provider documents this case explicitly? Check Anthropic's `content_block_stop` semantics and OpenAI's `finish_reason: "length"` behavior.
 
