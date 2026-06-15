@@ -28,7 +28,7 @@ This lesson builds every major distance function from scratch, shows you when ea
 
 ### Norms: measuring vector magnitude
 
-A norm measures the "size" of a vector. Every distance function between two vectors can be written as the norm of their difference: $d(a, b) = \|a - b\|$. So understanding norms is understanding distances.
+A norm measures the "size" of a vector. Many vector distances can be written as the norm of their difference: $d(a, b) = \|a - b\|$. So understanding norms is understanding many distances.
 
 ### L1 Norm (Manhattan distance)
 
