@@ -9,47 +9,47 @@
 
 ## The Problem
 
-You want a sampler for `p_data(x)`. GANs play a minimax game that often diverges. VAEs produce blurry samples from a Gaussian decoder. What you really want is a training objective that is (a) a single stable loss (no saddle point, no minimax), (b) a lower bound on `log p(x)` (so you have likelihoods), and (c) samples that match SOTA quality.
+You want a sampler for $p_{\text{data}}(x)$. GANs play a minimax game that often diverges. VAEs produce blurry samples from a Gaussian decoder. What you really want is a training objective that is (a) a single stable loss (no saddle point, no minimax), (b) a lower bound on $\log p(x)$ (so you have likelihoods), and (c) samples that match SOTA quality.
 
-Sohl-Dickstein et al. (2015) had a theoretical answer: define a Markov chain `q(x_t | x_{t-1})` that gradually adds Gaussian noise, and train a reverse chain `p_θ(x_{t-1} | x_t)` to denoise. Ho, Jain, Abbeel (2020) showed the loss could be simplified to one line — predict the noise — and cleaned up the math. In 2020 this was a curiosity. In 2021 it produced state-of-the-art samples. In 2022 it became Stable Diffusion. In 2026 it is the substrate.
+Sohl-Dickstein et al. (2015) had a theoretical answer: define a Markov chain $q(x_t \mid x_{t-1})$ that gradually adds Gaussian noise, and train a reverse chain $p_\theta(x_{t-1} \mid x_t)$ to denoise. Ho, Jain, Abbeel (2020) showed the loss could be simplified to one line — predict the noise — and cleaned up the math. In 2020 this was a curiosity. In 2021 it produced state-of-the-art samples. In 2022 it became Stable Diffusion. In 2026 it is the substrate.
 
 ## The Concept
 
 ![DDPM: forward noise, reverse denoise](../assets/ddpm.svg)
 
-**Forward process `q`.** Add Gaussian noise in `T` small steps. The closed form — the reason the math is tractable — is that the cumulative step is also Gaussian:
+**Forward process $q$.** Add Gaussian noise in $T$ small steps. The closed form — the reason the math is tractable — is that the cumulative step is also Gaussian:
 
-```
-q(x_t | x_0) = N( sqrt(α̅_t) · x_0,  (1 - α̅_t) · I )
-```
+$$
+q(x_t \mid x_0) = \mathcal{N}\left( \sqrt{\bar{\alpha}_t} \cdot x_0,\ (1 - \bar{\alpha}_t) \cdot I \right)
+$$
 
-where `α̅_t = ∏_{s=1..t} (1 - β_s)` for a schedule of `β_t`. Pick `β_t` from 1e-4 to 0.02 linearly over T=1000 steps and `x_T` is approximately `N(0, I)`.
+where $\bar{\alpha}_t = \prod_{s=1}^{t} (1 - \beta_s)$ for a schedule of $\beta_t$. Pick $\beta_t$ from 1e-4 to 0.02 linearly over T=1000 steps and $x_T$ is approximately $\mathcal{N}(0, I)$.
 
-**Reverse process `p_θ`.** Learn a neural net `ε_θ(x_t, t)` that predicts the noise that was added. Given `x_t`, denoise by:
+**Reverse process $p_\theta$.** Learn a neural net $\varepsilon_\theta(x_t, t)$ that predicts the noise that was added. Given $x_t$, denoise by:
 
-```
-x_{t-1} = (1 / sqrt(α_t)) · ( x_t - (β_t / sqrt(1 - α̅_t)) · ε_θ(x_t, t) )  +  σ_t · z
-```
+$$
+x_{t-1} = \frac{1}{\sqrt{\alpha_t}} \cdot \left( x_t - \frac{\beta_t}{\sqrt{1 - \bar{\alpha}_t}} \cdot \varepsilon_\theta(x_t, t) \right) + \sigma_t \cdot z
+$$
 
-where `σ_t` is either `sqrt(β_t)` or a learned variance. The expression is ugly but it is just algebra — solving for `x_{t-1}` given the posterior `q(x_{t-1} | x_t, x_0)` and substituting `x_0` with its noise-predicted estimate.
+where $\sigma_t$ is either $\sqrt{\beta_t}$ or a learned variance. The expression is ugly but it is just algebra — solving for $x_{t-1}$ given the posterior $q(x_{t-1} \mid x_t, x_0)$ and substituting $x_0$ with its noise-predicted estimate.
 
 **Training loss.**
 
-```
-L_simple = E_{x_0, t, ε} [ || ε - ε_θ( sqrt(α̅_t) · x_0 + sqrt(1 - α̅_t) · ε,  t ) ||² ]
-```
+$$
+L_{\text{simple}} = \mathbb{E}_{x_0, t, \varepsilon} \left[ \left\| \varepsilon - \varepsilon_\theta\left( \sqrt{\bar{\alpha}_t} \cdot x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \varepsilon,\ t \right) \right\|^2 \right]
+$$
 
-Sample `x_0` from data, pick a random `t`, sample `ε ~ N(0, I)`, compute the noisy `x_t` in one shot via the closed form, and regress on the noise. One loss, no minimax, no KL, no reparameterization tricks.
+Sample $x_0$ from data, pick a random $t$, sample $\varepsilon \sim \mathcal{N}(0, I)$, compute the noisy $x_t$ in one shot via the closed form, and regress on the noise. One loss, no minimax, no KL, no reparameterization tricks.
 
-**Sampling.** Start `x_T ~ N(0, I)`. Iterate the reverse step from `t = T` to `1`. Done.
+**Sampling.** Start $x_T \sim \mathcal{N}(0, I)$. Iterate the reverse step from $t = T$ to $1$. Done.
 
 ## Why it works
 
 Three intuitions:
 
-1. **Denoising is easy; generating is hard.** At `t=T`, the data is pure noise — the net has to solve a trivial problem. At `t=0`, the net only has to clean up a few pixels. At intermediate `t`, the problem is hard but the net has many gradients flowing through the same weights from every noise level.
+1. **Denoising is easy; generating is hard.** At $t=T$, the data is pure noise — the net has to solve a trivial problem. At $t=0$, the net only has to clean up a few pixels. At intermediate $t$, the problem is hard but the net has many gradients flowing through the same weights from every noise level.
 
-2. **Score matching in disguise.** Vincent (2011) proved that predicting the noise is equivalent to estimating `∇_x log q(x_t | x_0)`, the *score*. The reverse SDE uses this score to walk up the density gradient — a guided random walk toward high-probability regions.
+2. **Score matching in disguise.** Vincent (2011) proved that predicting the noise is equivalent to estimating $\nabla_x \log q(x_t \mid x_0)$, the *score*. The reverse SDE uses this score to walk up the density gradient — a guided random walk toward high-probability regions.
 
 3. **The ELBO reduces to simple MSE.** The full variational lower bound has a KL term per timestep. With DDPM's parameterization those KL terms simplify to MSE on noise prediction with specific coefficients; Ho dropped the coefficients (calling it "simple" loss) and quality *improved*.
 
@@ -114,17 +114,17 @@ For a 1-D problem with 40 timesteps and a 24-unit MLP, this learns the two-mode 
 
 The net needs to know which timestep it is denoising. Two standard options:
 
-- **Sinusoidal embedding.** Like Transformer positional encoding. `embed(t) = [sin(t/ω_0), cos(t/ω_0), sin(t/ω_1), ...]`. Pass through an MLP, broadcast into the net.
+- **Sinusoidal embedding.** Like Transformer positional encoding. $\text{embed}(t) = [\sin(t/\omega_0), \cos(t/\omega_0), \sin(t/\omega_1), \ldots]$. Pass through an MLP, broadcast into the net.
 - **Film / group-norm conditioning.** Project embedding to per-channel scale/bias (FiLM) at each block.
 
 Our toy code uses sinusoidal → concat. Production U-Nets use FiLM.
 
 ## Pitfalls
 
-- **Schedule matters a lot.** Linear `β` is the DDPM default but cosine schedule (Nichol & Dhariwal, 2021) gives better FID for the same compute. Switch schedules if quality plateaus.
-- **Timestep embedding is fragile.** Passing raw `t` as a float works for toy 1-D but fails for images; always use a proper embedding.
-- **V-prediction vs ε-prediction.** For narrow regimes (very small or very large t), `ε` has poor signal-to-noise. V-prediction (`v = α·ε - σ·x`) is more stable; SDXL, SD3, and Flux use it.
-- **Classifier-free guidance.** At inference, compute both conditional and unconditional `ε`, then `ε_cfg = (1 + w) · ε_cond - w · ε_uncond` with `w ≈ 3-7`. Covered in Lesson 08.
+- **Schedule matters a lot.** Linear $\beta$ is the DDPM default but cosine schedule (Nichol & Dhariwal, 2021) gives better FID for the same compute. Switch schedules if quality plateaus.
+- **Timestep embedding is fragile.** Passing raw $t$ as a float works for toy 1-D but fails for images; always use a proper embedding.
+- **V-prediction vs ε-prediction.** For narrow regimes (very small or very large t), $\varepsilon$ has poor signal-to-noise. V-prediction ($v = \alpha \cdot \varepsilon - \sigma \cdot x$) is more stable; SDXL, SD3, and Flux use it.
+- **Classifier-free guidance.** At inference, compute both conditional and unconditional $\varepsilon$, then $\varepsilon_{\text{cfg}} = (1 + w) \cdot \varepsilon_{\text{cond}} - w \cdot \varepsilon_{\text{uncond}}$ with $w \approx 3\text{-}7$. Covered in Lesson 08.
 - **1000 steps is a lot.** Production uses DDIM (20-50 steps), DPM-Solver (10-20 steps), or distillation (1-4 steps). See Lesson 12.
 
 ## Use It
@@ -147,19 +147,19 @@ Save `outputs/skill-diffusion-trainer.md`. Skill takes a dataset + compute budge
 
 1. **Easy.** Change T from 40 to 10 in `code/main.py`. How does sample quality (visual histogram of outputs) degrade? At what T does the two-mode structure collapse?
 2. **Medium.** Switch from ε-prediction to v-prediction. Re-derive the reverse step. Compare final sample quality.
-3. **Hard.** Add classifier-free guidance. Condition on a class label `c ∈ {0, 1}`, drop it 10% of the time during training, and at sampling time use `ε = (1+w)·ε_cond - w·ε_uncond`. Measure the conditional-mode-hit rate at `w = 0, 1, 3, 7`.
+3. **Hard.** Add classifier-free guidance. Condition on a class label $c \in \{0, 1\}$, drop it 10% of the time during training, and at sampling time use $\varepsilon = (1+w) \cdot \varepsilon_{\text{cond}} - w \cdot \varepsilon_{\text{uncond}}$. Measure the conditional-mode-hit rate at $w = 0, 1, 3, 7$.
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| Forward process | "Adding noise" | Fixed Markov chain `q(x_t \| x_{t-1})` that destroys the data. |
-| Reverse process | "Denoising" | Learned chain `p_θ(x_{t-1} \| x_t)` that reconstructs the data. |
+| Forward process | "Adding noise" | Fixed Markov chain $q(x_t \mid x_{t-1})$ that destroys the data. |
+| Reverse process | "Denoising" | Learned chain $p_\theta(x_{t-1} \mid x_t)$ that reconstructs the data. |
 | β schedule | "The noise ladder" | Per-step variance; linear, cosine, or sigmoid. |
-| α̅ | "Alpha bar" | Cumulative product `∏(1 - β)`; gives closed-form `x_t` from `x_0`. |
-| Simple loss | "MSE on noise" | `\|\|ε - ε_θ(x_t, t)\|\|²`; all variational derivations collapse to this. |
+| α̅ | "Alpha bar" | Cumulative product $\prod(1 - \beta)$; gives closed-form $x_t$ from $x_0$. |
+| Simple loss | "MSE on noise" | $\lVert \varepsilon - \varepsilon_\theta(x_t, t) \rVert^2$; all variational derivations collapse to this. |
 | ε-prediction | "Predict noise" | Output is the noise added; standard DDPM. |
-| V-prediction | "Predict velocity" | Output is `α·ε - σ·x`; better conditioning across t. |
+| V-prediction | "Predict velocity" | Output is $\alpha \cdot \varepsilon - \sigma \cdot x$; better conditioning across t. |
 | DDPM | "The paper" | Ho et al. 2020; linear β, 1000 steps, U-Net. |
 | DDIM | "Deterministic sampler" | Non-Markov sampler, 20-50 steps, same training objective. |
 | Classifier-free guidance | "CFG" | Mix conditional and unconditional noise predictions to amplify conditioning. |
@@ -168,11 +168,11 @@ Save `outputs/skill-diffusion-trainer.md`. Skill takes a dataset + compute budge
 
 The DDPM paper runs T=1000 reverse steps. Nobody ships that in production. Every real inference stack picks one of three strategies — and each maps cleanly to production framing of "where is the latency coming from":
 
-1. **Faster sampler, same model.** DDIM (20-50 steps), DPM-Solver++ (10-20), UniPC (8-16). Drop-in replacement of the reverse loop; the trained `ε_θ` weights are untouched. Cuts latency 20-50×.
+1. **Faster sampler, same model.** DDIM (20-50 steps), DPM-Solver++ (10-20), UniPC (8-16). Drop-in replacement of the reverse loop; the trained $\varepsilon_\theta$ weights are untouched. Cuts latency 20-50×.
 2. **Distillation.** Train a student to match the teacher in fewer steps: Progressive Distillation (2 → 1), Consistency Models (arbitrary → 1-4), LCM, SDXL-Turbo, SD3-Turbo. Cuts latency another 5-10×, requires retraining.
 3. **Caching and compilation.** `torch.compile(unet, mode="reduce-overhead")`, TensorRT-LLM's diffusion backends, `xformers`/SDPA attention, bf16 weights. Cuts per-step latency ~2×. Stacks with (1) and (2).
 
-For a production diffusion server the budget conversation is the same as production literature describes for LLMs: latency is `num_steps × step_cost + VAE_decode`, throughput is `batch_size × (num_steps × step_cost)^-1`. TTFT is small (one step); TPOT-equivalent is the full response time because image generation is "all-at-once" from the user's perspective.
+For a production diffusion server the budget conversation is the same as production literature describes for LLMs: latency is $\text{num\_steps} \times \text{step\_cost} + \text{VAE\_decode}$, throughput is $\text{batch\_size} \times (\text{num\_steps} \times \text{step\_cost})^{-1}$. TTFT is small (one step); TPOT-equivalent is the full response time because image generation is "all-at-once" from the user's perspective.
 
 ## Further Reading
 
