@@ -443,7 +443,7 @@ def compress_image_svd(image_matrix, k):
     compressed = U[:, :k] @ np.diag(S[:k]) @ Vt[:k, :]
     return compressed
 
-image = np.random.seed(42)
+np.random.seed(42)
 rows, cols = 200, 300
 image = np.random.randn(rows, cols)
 
