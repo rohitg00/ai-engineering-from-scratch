@@ -12,12 +12,22 @@ CHECKS = [
     ("Rust (cargo)", lambda: shutil.which("cargo") is not None, None),
 ]
 
+def _gpu_backend():
+    """Return a human label for the active GPU backend, or None if CPU-only."""
+    torch = __import__("torch")
+    if torch.cuda.is_available():
+        return f"CUDA — {torch.cuda.get_device_name(0)}"
+    if torch.backends.mps.is_available():
+        return "MPS — Apple Silicon"
+    return None
+
+
 GPU_CHECKS = [
     ("PyTorch", lambda: __import__("torch"), None),
     (
-        "CUDA",
-        lambda: __import__("torch").cuda.is_available(),
-        lambda: __import__("torch").cuda.get_device_name(0) if __import__("torch").cuda.is_available() else "Not available",
+        "GPU acceleration (CUDA or MPS)",
+        lambda: _gpu_backend() is not None,
+        lambda: _gpu_backend() or "Not available",
     ),
 ]
 
