@@ -26,7 +26,7 @@ The two representations dominate for different reasons. Point clouds are what se
 
 ### Point clouds
 
-A point cloud is an unordered set of N points in R^3, optionally each with features (colour, intensity, normal).
+A point cloud is an unordered set of $N$ points in $\mathbb{R}^3$, optionally each with features (colour, intensity, normal).
 
 ```
 cloud = [
@@ -44,9 +44,9 @@ No grid, no connectivity. Two properties make this hard for neural networks:
 
 PointNet (Qi et al., 2017) solved both with one idea: apply a shared MLP to every point, then aggregate with a symmetric function (max pool). The result is a fixed-size vector that does not depend on order.
 
-```
-f(P) = max_{p in P} MLP(p)
-```
+$$
+f(P) = \max_{p \in P} \text{MLP}(p)
+$$
 
 This is the entire core of PointNet. Deeper variants (PointNet++, Point Transformer) add hierarchical sampling and local aggregation but the symmetric-function trick is unchanged.
 
@@ -89,22 +89,23 @@ A loss compares the rendered pixel to the ground-truth pixel in the training pho
 
 A vanilla MLP on `(x, y, z)` cannot represent high-frequency details because MLPs are spectrally biased toward low frequencies. NeRF fixes this by encoding each coordinate into a Fourier feature vector before the MLP:
 
-```
-gamma(p) = (sin(2^0 pi p), cos(2^0 pi p), sin(2^1 pi p), cos(2^1 pi p), ...)
-```
+$$
+\gamma(p) = (\sin(2^0 \pi p), \cos(2^0 \pi p), \sin(2^1 \pi p), \cos(2^1 \pi p), \ldots)
+$$
 
-Up to L=10 frequency levels. This is the same trick transformers use for positions, and it appears again in diffusion time conditioning (Lesson 10). Without it, NeRFs look blurry.
+Up to $L=10$ frequency levels. This is the same trick transformers use for positions, and it appears again in diffusion time conditioning (Lesson 10). Without it, NeRFs look blurry.
 
 ### Volumetric rendering
 
-```
-C(r) = sum_i T_i * (1 - exp(-sigma_i * delta_i)) * c_i
+$$
+\begin{aligned}
+C(r) &= \sum_i T_i \cdot (1 - \exp(-\sigma_i \cdot \delta_i)) \cdot c_i \\
+T_i &= \exp\left(-\sum_{j<i} \sigma_j \cdot \delta_j\right) \\
+\delta_i &= t_{i+1} - t_i
+\end{aligned}
+$$
 
-T_i  = exp(- sum_{j<i} sigma_j * delta_j)
-delta_i = t_{i+1} - t_i
-```
-
-`T_i` is transmittance — how much light survives to point i. `(1 - exp(-sigma_i * delta_i))` is the opacity at point i. `c_i` is the colour. The final pixel is a weighted sum along the ray.
+$T_i$ is transmittance — how much light survives to point $i$. $(1 - \exp(-\sigma_i \cdot \delta_i))$ is the opacity at point $i$. $c_i$ is the colour. The final pixel is a weighted sum along the ray.
 
 ### What replaced NeRFs
 
@@ -184,7 +185,7 @@ print(f"input:  {x.shape}")
 print(f"encoded: {y.shape}     # (5, 60)")
 ```
 
-Multiplying by `2^l * pi` gives progressively higher frequencies.
+Multiplying by $2^l \cdot \pi$ gives progressively higher frequencies.
 
 ### Step 3: Tiny NeRF MLP
 
