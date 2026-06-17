@@ -560,11 +560,14 @@
       .manual-title {
         font-size: clamp(2.65rem, 14vw, 4.2rem);
         line-height: 0.94;
+        letter-spacing: 0;
       }
 
       .manual-tagline {
         max-width: 34ch;
         line-height: 1.48;
+        hyphens: none;
+        -webkit-hyphens: none;
       }
 
       .manual-attribution {
@@ -599,6 +602,13 @@
         text-align: left;
       }
 
+      .preface-body p:first-of-type::first-letter {
+        float: none;
+        font: inherit;
+        padding: 0;
+        color: inherit;
+      }
+
       .stat-row {
         grid-template-columns: minmax(0, 1fr) auto;
       }
@@ -626,8 +636,8 @@
       .colophon { padding: 24px 0; }
 
       .manual-title {
-        font-size: clamp(2.4rem, 14vw, 3.6rem);
-        line-height: 0.92;
+        font-size: clamp(2.15rem, 11.6vw, 2.95rem);
+        line-height: 0.98;
       }
 
       .manual-meta-row {
@@ -638,12 +648,18 @@
       }
 
       .manual-tagline {
-        font-size: 0.96rem;
+        font-size: 1rem;
+        line-height: 1.45;
         margin: 16px 0 4px;
       }
 
+      .manual-attribution {
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+
       .ascii-rule {
-        margin: 16px 0;
+        margin: 18px 0 !important;
       }
 
       .preface-eyebrow,
