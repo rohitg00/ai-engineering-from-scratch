@@ -551,15 +551,34 @@
     }
 
     @media (max-width: 600px) {
+      html,
+      body {
+        overflow-x: hidden;
+      }
+
+      .manual-masthead.container,
+      .preface.container,
+      .stat-block.container,
+      .toc.container,
+      .colophon.container {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .manual-masthead {
+        padding-top: 76px;
+      }
+
       .manual-meta-row {
         align-items: flex-start;
         flex-direction: column;
-        margin-bottom: 18px;
+        margin-bottom: 20px;
+        gap: 6px;
       }
 
       .manual-title {
-        font-size: clamp(2.65rem, 14vw, 4.2rem);
-        line-height: 0.94;
+        font-size: clamp(2.45rem, 12vw, 3.7rem);
+        line-height: 0.98;
         letter-spacing: 0;
       }
 
@@ -599,14 +618,20 @@
       }
 
       .preface-body {
+        font-size: 1rem;
+        line-height: 1.62;
         text-align: left;
+        hyphens: none;
+        -webkit-hyphens: none;
       }
 
       .preface-body p:first-of-type::first-letter {
-        float: none;
-        font: inherit;
-        padding: 0;
-        color: inherit;
+        float: none !important;
+        font-family: inherit !important;
+        font-size: inherit !important;
+        line-height: inherit !important;
+        padding: 0 !important;
+        color: inherit !important;
       }
 
       .stat-row {
@@ -618,7 +643,12 @@
       }
 
       .toc-row {
-        grid-template-columns: 30px minmax(0, 1fr);
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 8px 12px;
+        padding: 14px 12px;
+        margin-bottom: 8px;
+        border: 1px solid var(--rule-soft);
+        background: rgba(107, 142, 255, 0.04);
       }
 
       .toc-row .toc-meta {
@@ -626,18 +656,36 @@
         min-width: 0;
         text-align: left;
       }
+
+      .toc-list {
+        border-top: none;
+      }
+
+      .toc-name {
+        font-size: 1.12rem;
+        line-height: 1.1;
+      }
     }
 
     @media (max-width: 480px) {
-      .manual-masthead { padding: 72px 0 12px; }
+      .manual-masthead { padding: 70px 0 12px; }
       .preface { padding: 24px 0; }
       .stat-block { padding: 24px 0; }
       .toc { padding: 24px 0 32px; }
       .colophon { padding: 24px 0; }
 
+      .manual-masthead.container,
+      .preface.container,
+      .stat-block.container,
+      .toc.container,
+      .colophon.container {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
       .manual-title {
-        font-size: clamp(2.15rem, 11.6vw, 2.95rem);
-        line-height: 0.98;
+        font-size: clamp(2.05rem, 11vw, 2.75rem);
+        line-height: 1;
       }
 
       .manual-meta-row {
@@ -674,8 +722,12 @@
       }
 
       .preface-body p:first-of-type::first-letter {
-        font-size: 2.8rem;
-        padding: 0.04em 0.1em 0 0;
+        float: none !important;
+        font-family: inherit !important;
+        font-size: inherit !important;
+        line-height: inherit !important;
+        padding: 0 !important;
+        color: inherit !important;
       }
 
       .stat-row {
@@ -694,9 +746,9 @@
       }
 
       .toc-row {
-        grid-template-columns: 30px 1fr auto;
+        grid-template-columns: auto minmax(0, 1fr);
         gap: 8px;
-        padding: 10px 0;
+        padding: 13px 12px;
       }
 
       .toc-name {

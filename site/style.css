@@ -986,6 +986,8 @@ body.js-anim .toc-row.in-view {
   .header-inner {
     height: 52px;
     padding: 0 14px;
+    justify-content: flex-start;
+    gap: 8px;
   }
 
   .logo {
@@ -999,7 +1001,8 @@ body.js-anim .toc-row.in-view {
   }
 
   .header-nav {
-    gap: 10px;
+    margin-left: auto;
+    gap: 0;
   }
 
   .theme-toggle {
@@ -1045,45 +1048,94 @@ body.js-anim .toc-row.in-view {
     line-height: 1.5;
   }
 
+  .modal-lessons {
+    gap: 10px;
+  }
+
   .modal-lesson {
     grid-template-columns: 14px minmax(0, 1fr) auto;
     gap: 8px 10px;
-    padding: 14px 0;
+    padding: 14px 12px;
+    border: 1px solid var(--rule-soft);
+    background: rgba(107, 142, 255, 0.04);
+  }
+
+  .modal-lesson:last-child {
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .modal-lesson-status {
+    align-self: start;
+    margin-top: 0.42em;
   }
 
   .modal-lesson > a {
+    grid-column: 2 / 4;
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
+    font-size: 1rem;
     line-height: 1.35;
   }
 
   .modal-lesson-type {
     grid-column: 2;
+    grid-row: 2;
     justify-self: start;
     min-width: 0;
+    padding: 3px 9px;
   }
 
   .modal-lesson-lang {
-    grid-column: 2;
-    justify-self: start;
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: end;
     min-width: 0;
-    text-align: left;
+    text-align: right;
+    align-self: center;
+    font-size: 0.7rem;
   }
 
-  .modal-lesson .modal-lesson-read,
+  .modal-lesson .modal-lesson-read {
+    grid-column: 2;
+    grid-row: 3;
+    justify-self: stretch;
+    margin-top: 4px;
+    padding: 8px 12px;
+    border-color: var(--blueprint);
+    background: var(--blueprint-tint);
+    color: var(--blueprint);
+    text-align: center;
+    font-size: 0.7rem;
+  }
+
   .modal-lesson-read-placeholder {
-    grid-column: 3;
-    grid-row: 1;
-    justify-self: end;
+    display: none;
   }
 
   .modal-lesson-toggle {
     grid-column: 3;
-    grid-row: 2 / span 2;
-    align-self: center;
-    width: 32px;
-    height: 32px;
+    grid-row: 3;
+    align-self: stretch;
+    width: auto;
+    min-width: 76px;
+    height: auto;
+    margin-top: 4px;
+    padding: 0 12px;
+    gap: 6px;
+    background: var(--bg);
+    font-size: 0.75rem;
+  }
+
+  .modal-lesson-toggle::after {
+    content: "Mark";
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .modal-lesson-toggle.done::after {
+    content: "Done";
   }
 
   .modal-footer {
