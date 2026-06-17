@@ -982,6 +982,32 @@ body.js-anim .toc-row.in-view {
   }
 }
 
+@media (max-width: 600px) {
+  .header-inner {
+    height: 52px;
+    padding: 0 14px;
+  }
+
+  .logo {
+    max-width: calc(100vw - 120px);
+    font-size: 1.05rem;
+    line-height: 1;
+  }
+
+  .header-github {
+    display: none;
+  }
+
+  .header-nav {
+    gap: 10px;
+  }
+
+  .theme-toggle {
+    width: 34px;
+    height: 34px;
+  }
+}
+
 @media (max-width: 480px) {
   body {
     font-size: 16px;
