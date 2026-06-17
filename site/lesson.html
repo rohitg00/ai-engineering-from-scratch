@@ -1516,34 +1516,110 @@
     }
 
     @media (max-width: 900px) {
+      html,
+      body {
+        overflow-x: hidden;
+      }
+      .lesson-layout { padding-top: 56px; }
       .lesson-sidebar { transform: translateX(-100%); }
       .lesson-sidebar.open { transform: translateX(0); }
       .lesson-sidebar-toggle {
         display: flex;
-        top: 70px;
-        right: 12px;
+        top: auto;
+        right: 16px;
+        bottom: 18px;
         left: auto;
-        width: 32px;
-        height: 32px;
-        font-size: 0.95rem;
+        width: auto;
+        height: 44px;
+        padding: 0 14px;
+        gap: 8px;
+        border-color: var(--blueprint);
+        background: var(--modal-bg);
+        color: var(--blueprint);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
-      .lesson-main { margin-left: 0; padding: 56px 20px 80px; }
+      .lesson-sidebar {
+        top: 56px;
+        width: min(360px, 88vw);
+        padding: 18px 0 88px;
+        border-right-color: var(--blueprint);
+        box-shadow: 16px 0 40px rgba(0, 0, 0, 0.22);
+      }
+      .sidebar-phase-header {
+        padding: 18px 18px 8px;
+      }
+      .sidebar-lesson-link {
+        padding: 10px 18px;
+        font-size: 1rem;
+        line-height: 1.35;
+      }
+      .lesson-main {
+        margin-left: 0;
+        justify-content: stretch;
+        padding: 44px 20px 80px;
+      }
+      .lesson-content { max-width: none; }
     }
 
     @media (max-width: 768px) {
-      .lesson-main { padding: 56px 16px 60px; }
+      .lesson-main { padding: 40px 16px 60px; }
       .lesson-article { max-width: 100%; }
+      .lesson-article h1 {
+        font-size: clamp(2.05rem, 11vw, 3rem);
+        line-height: 0.95;
+        margin-bottom: 16px;
+        padding-bottom: 14px;
+      }
+      .lesson-article h2 {
+        margin-top: 42px;
+        font-size: clamp(1.35rem, 8vw, 1.9rem);
+      }
+      .lesson-article h3 {
+        margin-top: 28px;
+        font-size: 0.84rem;
+        line-height: 1.35;
+      }
       .lesson-article p,
       .lesson-article ul li,
       .lesson-article ol li { font-size: 1rem; line-height: 1.65; }
+      .lesson-article p {
+        text-align: left;
+        hyphens: none;
+        -webkit-hyphens: none;
+      }
       .lesson-article > p:first-of-type::first-letter { font-size: 3rem; }
       .lesson-article pre code { font-size: 0.78rem; padding: 14px 14px; }
       .lesson-article table { font-size: 0.84rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
       .lesson-article table th,
       .lesson-article table td { padding: 8px 10px; white-space: nowrap; }
       .lesson-article .motto { font-size: 1.05rem; padding: 14px 16px; }
+      .learning-objectives,
+      .quiz-section,
+      .quiz-container {
+        padding: 18px 16px;
+      }
+      .lesson-meta {
+        gap: 6px;
+        margin-bottom: 24px;
+      }
+      .lesson-meta-tag {
+        font-size: 0.66rem;
+        letter-spacing: 0.07em;
+        padding: 3px 8px;
+      }
       .ai-panels { margin-top: 40px; gap: 28px; }
       .ai-panel { padding: 22px 16px; }
+      .ai-panel-header {
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .ai-panel-title {
+        font-size: 1.22rem;
+        line-height: 1.05;
+      }
       .output-cards,
       .code-cards { grid-template-columns: 1fr; }
       .lesson-nav-bottom { flex-direction: column; gap: 12px; }
@@ -1552,11 +1628,49 @@
     }
 
     @media (max-width: 480px) {
+      .lesson-main { padding: 36px 12px 56px; }
+      .lesson-sidebar-toggle {
+        right: 12px;
+        bottom: 14px;
+        height: 42px;
+        padding: 0 12px;
+      }
       .lesson-article p,
       .lesson-article ul li,
       .lesson-article ol li { font-size: 0.96rem; }
+      .lesson-article h1 { font-size: clamp(1.9rem, 12vw, 2.55rem); }
       .lesson-article > p:first-of-type::first-letter { font-size: 2.6rem; }
+      .lesson-article ul { padding-left: 18px; }
+      .lesson-article ol { padding-left: 24px; }
+      .learning-objectives,
+      .quiz-section,
+      .quiz-container {
+        padding: 16px 12px;
+      }
+      .learning-objectives-title,
+      .quiz-title {
+        align-items: flex-start;
+        font-size: 0.66rem;
+        line-height: 1.35;
+      }
+      .quiz-option {
+        gap: 10px;
+        padding: 10px 12px;
+      }
       .ai-panel { padding: 18px 12px; }
+      .code-card,
+      .output-card {
+        padding: 14px;
+      }
+      .code-card-actions,
+      .output-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .code-card-btn,
+      .output-btn {
+        text-align: center;
+      }
       .timeline-item { min-width: 70px; }
       .timeline-line { width: 20px; }
     }
@@ -1599,7 +1713,10 @@
     </div>
   </header>
 
-  <button class="lesson-sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">&#9776;</button>
+  <button class="lesson-sidebar-toggle" id="sidebarToggle" aria-label="Toggle lesson menu" type="button">
+    <span aria-hidden="true">&#9776;</span>
+    <span>Lessons</span>
+  </button>
 
   <div class="mermaid-modal-overlay" id="mermaidModalOverlay" aria-hidden="true">
     <div class="mermaid-modal" role="dialog" aria-modal="true" aria-label="Expanded diagram">
