@@ -550,6 +550,74 @@
       }
     }
 
+    @media (max-width: 600px) {
+      .manual-meta-row {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 18px;
+      }
+
+      .manual-title {
+        font-size: clamp(2.65rem, 14vw, 4.2rem);
+        line-height: 0.94;
+      }
+
+      .manual-tagline {
+        max-width: 34ch;
+        line-height: 1.48;
+      }
+
+      .manual-attribution {
+        line-height: 1.45;
+      }
+
+      .masthead-cta {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .masthead-btn {
+        width: 100%;
+        justify-content: center;
+        min-width: 0;
+      }
+
+      .masthead-btn svg {
+        flex-shrink: 0;
+      }
+
+      .masthead-btn span {
+        min-width: 0;
+      }
+
+      .masthead-btn-count {
+        flex-shrink: 0;
+      }
+
+      .preface-body {
+        text-align: left;
+      }
+
+      .stat-row {
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .stat-row-bar {
+        grid-column: 1 / -1;
+      }
+
+      .toc-row {
+        grid-template-columns: 30px minmax(0, 1fr);
+      }
+
+      .toc-row .toc-meta {
+        grid-column: 2;
+        min-width: 0;
+        text-align: left;
+      }
+    }
+
     @media (max-width: 480px) {
       .manual-masthead { padding: 72px 0 12px; }
       .preface { padding: 24px 0; }
