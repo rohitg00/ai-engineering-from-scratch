@@ -1006,6 +1006,90 @@ body.js-anim .toc-row.in-view {
     width: 34px;
     height: 34px;
   }
+
+  .modal-overlay {
+    align-items: stretch;
+    justify-content: flex-end;
+    padding: 52px 0 0;
+  }
+
+  .modal {
+    max-width: 100%;
+    max-height: calc(100vh - 52px);
+    height: calc(100vh - 52px);
+    border-left: none;
+    border-right: none;
+    padding: 24px 16px 22px;
+  }
+
+  .modal-close {
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--rule-soft);
+    background: var(--modal-bg);
+  }
+
+  .modal-header {
+    padding-right: 38px;
+  }
+
+  .modal-title {
+    font-size: 2rem;
+    line-height: 0.98;
+  }
+
+  .modal-desc {
+    font-size: 0.96rem;
+    line-height: 1.5;
+  }
+
+  .modal-lesson {
+    grid-template-columns: 14px minmax(0, 1fr) auto;
+    gap: 8px 10px;
+    padding: 14px 0;
+  }
+
+  .modal-lesson > a {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.35;
+  }
+
+  .modal-lesson-type {
+    grid-column: 2;
+    justify-self: start;
+    min-width: 0;
+  }
+
+  .modal-lesson-lang {
+    grid-column: 2;
+    justify-self: start;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .modal-lesson .modal-lesson-read,
+  .modal-lesson-read-placeholder {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .modal-lesson-toggle {
+    grid-column: 3;
+    grid-row: 2 / span 2;
+    align-self: center;
+    width: 32px;
+    height: 32px;
+  }
+
+  .modal-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 480px) {
