@@ -116,6 +116,10 @@ This is standard for long-running stateful systems; the 2026 adaptation is that 
 - Rainbow/canary deployment for stateful workloads.
 - Observability: per-agent traces, super-step audit, retry counter.
 
+```figure
+sw-checkpoint-replay
+```
+
 ## Build It
 
 `code/main.py` implements:

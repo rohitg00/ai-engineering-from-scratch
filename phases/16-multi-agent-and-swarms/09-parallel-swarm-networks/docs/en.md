@@ -68,6 +68,10 @@ Mitigations:
 
 Swarm pairs naturally with content-based routing (Lesson 22). Instead of a generic queue, have one queue per message type. Specialist workers subscribe only to their type. This is the basis for message-bus architectures that scale to thousands of agents.
 
+```figure
+sw-work-stealing
+```
+
 ## Build It
 
 `code/main.py` implements a swarm of 4 worker threads pulling from a shared `queue.Queue`. Tasks have variable durations (some fast, some slow). The demo contrasts:

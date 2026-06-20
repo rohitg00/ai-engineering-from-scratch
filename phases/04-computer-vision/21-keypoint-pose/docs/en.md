@@ -87,6 +87,10 @@ The standard body-pose dataset: 17 keypoints per person, PCK (Percentage of Corr
   - Direct 3D regression from image (PyMAF, MHFormer).
   - Multi-view setups (CMU Panoptic) for ground truth.
 
+```figure
+cv3-pose-heatmap
+```
+
 ## Build It
 
 ### Step 1: Gaussian heatmap target

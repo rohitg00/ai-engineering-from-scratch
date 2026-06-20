@@ -79,6 +79,10 @@ A production eval report should include:
 
 Any single metric is a lie. Three corroborating metrics + qualitative review are a claim.
 
+```figure
+gx-fid-distributions
+```
+
 ## Build It
 
 `code/main.py` implements FID, CLIP-score-like, and Elo aggregation on synthetic "feature vectors" (we use 4-D vectors as stand-ins for Inception features). You see:

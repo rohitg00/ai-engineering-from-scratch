@@ -97,6 +97,10 @@ The Sibyl framework (cited in Minsky-LLM literature) formalizes a "jury" — a s
 - Rounds are unbounded. Conformity wins every time.
 - The task is simple. A single agent with self-consistency at N=5 is cheaper and as accurate.
 
+```figure
+sw-debate-topology
+```
+
 ## Build It
 
 `code/main.py` implements:

@@ -102,6 +102,10 @@ Phase 14 · 12 covers error recovery and self-healing in depth; Phase 17 covers 
 
 Every remaining lesson is an elaboration of this four-step loop. Hold it in mind as the invariant.
 
+```figure
+tp-tool-loop
+```
+
 ## Use It
 
 `code/main.py` runs the four-step loop without an LLM. A fake "decider" function simulates the model by pattern-matching on the user message; the executor, schema validator, and observe-step harness are real. Run it to see the full request/response choreography with printable intermediate state, then replace the fake decider with any real provider in a later lesson.

@@ -120,6 +120,10 @@ The capstone task: build a computer-use agent that:
 
 The lesson provides scaffold code that is easy to extend into a real browser.
 
+```figure
+mm-agent-loop
+```
+
 ## Use It
 
 `code/main.py` is the capstone scaffold:

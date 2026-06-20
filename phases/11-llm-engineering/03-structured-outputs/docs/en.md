@@ -133,6 +133,10 @@ Even with schema enforcement, structured outputs can fail in subtle ways.
 
 **Optional field omission**: the model omits fields that are technically optional but semantically important for your use case. Set them as required in the schema even if the data is sometimes missing -- force the model to produce `null` explicitly.
 
+```figure
+mx-schema-funnel
+```
+
 ## Build It
 
 ### Step 1: JSON Schema Validator

@@ -48,6 +48,10 @@ If stage 0 takes 50 ms and stage 1 takes 100 ms, every cycle is gated on stage 1
 
 A pipeline runs M microbatches of size B each. The effective batch size is M*B. The gradient at the end of a pipeline step is the gradient on the combined M*B examples. Bubble fraction depends on M; the optimiser sees M*B. Tuning M means trading bubble (lower with high M) against per-microbatch memory (higher activation memory with high M for GPipe).
 
+```figure
+cd-pipeline-bubble
+```
+
 ## Build It
 
 `code/main.py` implements:

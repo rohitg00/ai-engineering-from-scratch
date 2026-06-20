@@ -120,6 +120,10 @@ View-dependent colour is a function `c(direction)` on the unit sphere. Spherical
 - **Generative splats** — text-to-splat models (Marble by World Labs) that hallucinate entire scenes.
 - **3D Gaussian Unscented Transform** — NVIDIA NuRec's variant for autonomous driving simulation.
 
+```figure
+cv3-gaussian-splat
+```
+
 ## Build It
 
 ### Step 1: A 2D Gaussian

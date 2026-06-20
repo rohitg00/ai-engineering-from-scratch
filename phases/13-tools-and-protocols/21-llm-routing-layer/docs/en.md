@@ -98,6 +98,10 @@ A gateway can route both LLM calls AND MCP sampling requests. When a sampling re
 - **Latency-aware.** Pick the fastest model in the last N minutes.
 - **Task-aware.** Prompt classifier routes coding to one model, summarization to another.
 
+```figure
+tp-router-failover
+```
+
 ## Use It
 
 `code/main.py` implements a routing gateway in ~150 lines: accepts OpenAI-shaped requests, translates to per-provider stubs, runs a priority fallback chain, tracks per-request cost, and applies a PII redaction pass on inputs. Run it with three scenarios: normal request, primary-provider outage triggering fallback, PII leakage caught by redaction.

@@ -171,6 +171,10 @@ One MCP server can expose tools to any compatible client. A Postgres MCP server 
 
 MCP is to function calling what HTTP is to networking. It standardizes the transport layer so tools become portable.
 
+```figure
+mx-tool-call-loop
+```
+
 ## Build It
 
 ### Step 1: Define the Tool Registry

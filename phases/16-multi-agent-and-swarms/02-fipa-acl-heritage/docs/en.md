@@ -144,6 +144,10 @@ Mitigations without going full ontology:
 
 Reading the table top to bottom, the pattern is: keep the structural primitive, drop the formalism, let LLMs paper over the ambiguity.
 
+```figure
+sw-contract-net
+```
+
 ## Build It
 
 `code/main.py` implements a pure-stdlib FIPA-ACL translator. It encodes and decodes the canonical ACL envelope and shows how every MCP / A2A message shape reduces to the same seven fields. The demo:

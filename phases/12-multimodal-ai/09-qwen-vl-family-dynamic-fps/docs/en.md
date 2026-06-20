@@ -109,6 +109,10 @@ Qwen2.5-VL's agent training explicitly targets structured tool calls:
 
 Parsing is deterministic: JSON.parse over the model's output. Compare to free-form "click at (1024, 512)" which required regex and ambiguity handling. The shift is why Qwen2.5-VL's ScreenSpot scores jumped from Qwen2-VL's 55% to 84%.
 
+```figure
+mm-mrope-axes
+```
+
 ## Use It
 
 `code/main.py` implements:

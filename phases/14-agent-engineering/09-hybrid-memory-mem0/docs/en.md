@@ -88,6 +88,10 @@ Every write picks one scope. Retrieval can query across scopes with per-scope we
 - **KV schema creep.** `(user_id, type, entity)` looks simple until every team adds their own `type`. Audit the type set quarterly.
 - **Graph explosion.** One noisy extractor adds 50 edges per message. Cap graph writes per `add` call; drop low-confidence edges.
 
+```figure
+ae-memory-fusion
+```
+
 ## Build It
 
 `code/main.py` implements the three-store pattern in stdlib:

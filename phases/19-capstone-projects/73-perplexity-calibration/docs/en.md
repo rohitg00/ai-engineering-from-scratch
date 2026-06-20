@@ -15,6 +15,10 @@
 - Build the reliability diagram data needed to plot a confidence-versus-accuracy curve.
 - Wire all three into the eval harness so the runner can attach `perplexity`, `ece`, and `brier` numbers to a model report.
 
+```figure
+cd-reliability-diagram
+```
+
 ## What perplexity tells you
 
 Perplexity is the exponentiated average negative log-likelihood per token. Lower is better. A perplexity of one means the model assigns probability one to every actual token. A perplexity of the vocabulary size means the model is uniform and learnt nothing. Real numbers fall in between: a strong 2026 base model on WikiText-103 sits around eight to twelve. A bad one on the same text sits at fifty plus.

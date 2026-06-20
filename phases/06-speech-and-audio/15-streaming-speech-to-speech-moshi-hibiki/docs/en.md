@@ -72,6 +72,10 @@ Sesame CSM (2025) uses a similar idea — a Llama-3 backbone with a Mimi codec h
 | GPT-4o Realtime | ~300 ms | closed, OpenAI API | commercial |
 | Gemini 2.5 Live | ~350 ms | closed, Google API | commercial |
 
+```figure
+sp-fullduplex
+```
+
 ## Build It
 
 ### Step 1: the interface

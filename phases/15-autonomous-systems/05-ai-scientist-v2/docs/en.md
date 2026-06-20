@@ -63,6 +63,10 @@ AlphaEvolve's sandbox story is easier because its evaluator is tight. AI Scienti
 
 v2 has the weakest automatic evaluator of the three, the widest output surface, and the shortest path to public artifacts. The operational controls (sandbox, review, disclosure) are doing most of the safety work.
 
+```figure
+mx-research-loop
+```
+
 ## Use It
 
 `code/main.py` simulates the v2 loop as a state machine: idea → novelty check → experiment → figure → writeup → review → accept-or-iterate. Each state has a configurable failure probability pulled from the Beel et al. findings. Run the simulator for N loops and count:

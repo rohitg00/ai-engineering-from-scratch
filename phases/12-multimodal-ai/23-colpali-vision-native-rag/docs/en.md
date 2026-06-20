@@ -108,6 +108,10 @@ ColPali is ~30x more storage per document. At scale, OPQ / PQ brings it down to 
 
 For everything else in 2026 — financial reports, scientific papers, legal contracts, medical records, UX documentation — vision-native RAG wins.
 
+```figure
+mm-maxsim
+```
+
 ## Use It
 
 `code/main.py`:

@@ -45,6 +45,10 @@ Both steps are learnable. Both are benchmarked. The combined pipeline has been s
 
 Always report both. A system with 99% disambiguation on 80% candidate recall is an 80% pipeline.
 
+```figure
+gx-entity-linking
+```
+
 ## Build It
 
 ### Step 1: build an alias index from Wikipedia redirects

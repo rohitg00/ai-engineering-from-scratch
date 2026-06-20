@@ -71,6 +71,10 @@ Datadog v1.37+ maps GenAI attributes natively into its LLM Observability schema.
 - **Spans without parent links.** Orphaned tool spans. Always propagate context.
 - **Not setting stability opt-in.** Your attributes may get renamed on backend upgrade.
 
+```figure
+ae-genai-span-tree
+```
+
 ## Build It
 
 `code/main.py` implements a stdlib span emitter matching GenAI conventions:
