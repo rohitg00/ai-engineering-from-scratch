@@ -51,7 +51,7 @@ If `code` is not found on macOS, open VS Code, press `Cmd+Shift+P`, type "Shell 
 
 ### Step 2: Install Essential Extensions
 
-Open the integrated terminal in VS Code (`Ctrl+`` ` or `` Cmd+` ``) and install the extensions that matter for AI work:
+Open the integrated terminal in VS Code (`Ctrl+`` ` `` on all platforms, or via menu: View → Terminal) and install the extensions that matter for AI work:
 
 ```bash
 code --install-extension ms-python.python
@@ -124,7 +124,7 @@ Useful shortcuts:
 |--------|-------|---------------|
 | Toggle terminal | `` Ctrl+` `` | `` Ctrl+` `` |
 | New terminal | `Ctrl+Shift+`` ` | `Ctrl+Shift+`` ` |
-| Split terminal | `Cmd+\` | `Ctrl+\` |
+| Split terminal | `Cmd+Shift+5` | `Ctrl+Shift+5` |
 
 Split terminals are useful: one for running your script, one for monitoring GPU with `nvidia-smi -l 1` or `watch -n 1 nvidia-smi`.
 
