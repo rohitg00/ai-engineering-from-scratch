@@ -123,9 +123,8 @@ Useful shortcuts:
 | Action | macOS | Linux/Windows |
 |--------|-------|---------------|
 | Toggle terminal | `` Ctrl+` `` | `` Ctrl+` `` |
-| New terminal | `Ctrl+Shift+`` ` | `Ctrl+Shift+`` ` |
-| Split terminal | `Cmd+Shift+5` | `Ctrl+Shift+5` |
-
+| New terminal | `` Ctrl+Shift+` `` | `` Ctrl+Shift+` `` |
+| Split terminal | `Cmd+\` | `Ctrl+Shift+5` |
 Split terminals are useful: one for running your script, one for monitoring GPU with `nvidia-smi -l 1` or `watch -n 1 nvidia-smi`.
 
 ### Step 5: Remote Development (SSH into GPU Boxes)
