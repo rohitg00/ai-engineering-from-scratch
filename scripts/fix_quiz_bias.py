@@ -22,10 +22,8 @@ TIMEOUT = 30  # seconds
 
 
 def get_api_key() -> str:
-    key = sys.argv[1] if len(sys.argv) > 1 else ""
-    if not key:
-        import os
-        key = os.environ.get("ANTHROPIC_API_KEY", "")
+    import os
+    key = os.environ.get("ANTHROPIC_API_KEY", "")
     if not key:
         print("Error: ANTHROPIC_API_KEY environment variable not set.")
         print("Usage: export ANTHROPIC_API_KEY=your_key_here")
