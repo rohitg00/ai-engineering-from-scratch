@@ -9,11 +9,11 @@ Usage:
 """
 
 import json
-import os
 import sys
 import urllib.request
 import urllib.error
 from pathlib import Path
+from typing import List
 
 THRESHOLD = 1.5
 API_URL = "https://api.anthropic.com/v1/messages"
@@ -22,7 +22,10 @@ TIMEOUT = 30  # seconds
 
 
 def get_api_key() -> str:
-    key = os.environ.get("ANTHROPIC_API_KEY", "")
+    key = sys.argv[1] if len(sys.argv) > 1 else ""
+    if not key:
+        import os
+        key = os.environ.get("ANTHROPIC_API_KEY", "")
     if not key:
         print("Error: ANTHROPIC_API_KEY environment variable not set.")
         print("Usage: export ANTHROPIC_API_KEY=your_key_here")
@@ -30,7 +33,7 @@ def get_api_key() -> str:
     return key
 
 
-def is_biased(options: list[str], correct: int) -> bool:
+def is_biased(options: List[str], correct: int) -> bool:
     if not options or correct < 0 or correct >= len(options):
         return False
     correct_len = len(options[correct])
@@ -39,6 +42,21 @@ def is_biased(options: list[str], correct: int) -> bool:
         return False
     avg = sum(distractors) / len(distractors)
     return avg > 0 and correct_len / avg > THRESHOLD
+
+
+def is_valid_question(q: dict, expected_correct: int, expected_options_count: int) -> bool:
+    """Validate that rewritten question matches the canonical schema."""
+    if not isinstance(q, dict):
+        return False
+    if "question" not in q or "options" not in q or "correct" not in q:
+        return False
+    if not isinstance(q["options"], list):
+        return False
+    if len(q["options"]) != expected_options_count:
+        return False
+    if q["correct"] != expected_correct:
+        return False
+    return True
 
 
 def rewrite_question(question: dict, api_key: str) -> dict:
@@ -115,22 +133,39 @@ def fix_quiz(path: Path, api_key: str) -> int:
         return 0
 
     fixed = 0
+    changed = False
     for i, q in enumerate(questions):
         if not isinstance(q, dict):
             continue
         options = q.get("options", [])
         correct = q.get("correct", -1)
-        if is_biased(options, correct):
-            print(f"  Fixing Q#{i}: {q.get('question', '')[:60]}...")
-            questions[i] = rewrite_question(q, api_key)
-            fixed += 1
+        if not is_biased(options, correct):
+            continue
 
-    try:
-        with open(path, "w") as f:
-            json.dump(data, f, indent=2)
-            f.write("\n")
-    except OSError as e:
-        print(f"  ERROR writing {path}: {e}")
+        print(f"  Fixing Q#{i}: {q.get('question', '')[:60]}...")
+        rewritten = rewrite_question(q, api_key)
+
+        # validate before overwriting
+        if not is_valid_question(rewritten, correct, len(options)):
+            print(f"    Validation failed — keeping original")
+            continue
+
+        # skip if bias not actually fixed
+        if is_biased(rewritten.get("options", []), rewritten.get("correct", -1)):
+            print(f"    Bias not resolved — keeping original")
+            continue
+
+        questions[i] = rewritten
+        fixed += 1
+        changed = True
+
+    if changed:
+        try:
+            with open(path, "w") as f:
+                json.dump(data, f, indent=2)
+                f.write("\n")
+        except OSError as e:
+            print(f"  ERROR writing {path}: {e}")
 
     return fixed
 
