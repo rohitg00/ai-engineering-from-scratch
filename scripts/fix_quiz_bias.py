@@ -18,6 +18,7 @@ from pathlib import Path
 THRESHOLD = 1.5
 API_URL = "https://api.anthropic.com/v1/messages"
 MODEL = "claude-sonnet-4-6"
+TIMEOUT = 30  # seconds
 
 
 def get_api_key() -> str:
@@ -76,23 +77,35 @@ Return only valid JSON in exactly this format, nothing else:
     )
 
     try:
-        with urllib.request.urlopen(req) as resp:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
             data = json.loads(resp.read())
             text = data["content"][0]["text"].strip()
-            # strip markdown fences if present
             if text.startswith("```"):
                 text = text.split("```")[1]
                 if text.startswith("json"):
                     text = text[4:]
             return json.loads(text.strip())
-    except (urllib.error.HTTPError, json.JSONDecodeError) as e:
-        print(f"    API error: {e} — keeping original")
-        return question
+    except urllib.error.HTTPError as e:
+        print(f"    HTTP error {e.code}: {e.reason} — keeping original")
+    except urllib.error.URLError as e:
+        print(f"    Network error: {e.reason} — keeping original")
+    except (KeyError, IndexError) as e:
+        print(f"    Unexpected response shape: {e} — keeping original")
+    except json.JSONDecodeError as e:
+        print(f"    Failed to parse API response as JSON: {e} — keeping original")
+    except Exception as e:
+        print(f"    Unexpected error: {e} — keeping original")
+
+    return question
 
 
 def fix_quiz(path: Path, api_key: str) -> int:
-    with open(path) as f:
-        data = json.load(f)
+    try:
+        with open(path) as f:
+            data = json.load(f)
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"  ERROR reading {path}: {e}")
+        return 0
 
     if isinstance(data, list):
         questions = data
@@ -112,9 +125,12 @@ def fix_quiz(path: Path, api_key: str) -> int:
             questions[i] = rewrite_question(q, api_key)
             fixed += 1
 
-    with open(path, "w") as f:
-        json.dump(data, f, indent=2)
-        f.write("\n")
+    try:
+        with open(path, "w") as f:
+            json.dump(data, f, indent=2)
+            f.write("\n")
+    except OSError as e:
+        print(f"  ERROR writing {path}: {e}")
 
     return fixed
 
@@ -128,13 +144,26 @@ def main():
 
     total_fixed = 0
     for path in quiz_files:
-        issues = [
-            q for q in (json.load(open(path)) if isinstance(json.load(open(path)), list)
-                        else json.load(open(path)).get("questions", []))
+        try:
+            with open(path) as f:
+                data = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            continue
+
+        if isinstance(data, list):
+            questions = data
+        elif isinstance(data, dict):
+            questions = data.get("questions", [])
+        else:
+            continue
+
+        biased = [
+            q for q in questions
             if isinstance(q, dict) and is_biased(q.get("options", []), q.get("correct", -1))
         ]
-        if issues:
-            print(f"Fixing {len(issues)} question(s) in {path.relative_to(root)}")
+
+        if biased:
+            print(f"Fixing {len(biased)} question(s) in {path.relative_to(root)}")
             total_fixed += fix_quiz(path, api_key)
 
     print(f"\nDone. Fixed {total_fixed} biased questions.")
