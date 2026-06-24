@@ -52,6 +52,8 @@ def is_valid_question(q: dict, expected_correct: int, expected_options_count: in
         return False
     if len(q["options"]) != expected_options_count:
         return False
+    if not all(isinstance(o, str) for o in q["options"]):
+        return False
     if q["correct"] != expected_correct:
         return False
     return True
