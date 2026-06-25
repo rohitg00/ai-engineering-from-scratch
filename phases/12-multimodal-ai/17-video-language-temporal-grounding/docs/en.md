@@ -105,6 +105,10 @@ For video VLMs in 2026:
 - Output: structured JSON with time + event fields.
 - Benchmarks: VideoMME + TempCompass for general; EgoSchema for long-horizon.
 
+```figure
+video-temporal-patches
+```
+
 ## Use It
 
 `code/main.py` includes:

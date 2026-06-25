@@ -74,6 +74,10 @@ Letta V1 (`letta_v1_agent`, 2026) deprecates `send_message`/heartbeat and inline
 - **Silent drift.** Sleep-time agent rewrites a block and the primary agent never notices. Version blocks and surface diffs in the trace.
 - **Poisoned consolidation.** Sleep-time agent processes attacker-reachable content into core. Lesson 27 applies to the sleep-time surface too.
 
+```figure
+memory-blocks
+```
+
 ## Build It
 
 `code/main.py` implements:

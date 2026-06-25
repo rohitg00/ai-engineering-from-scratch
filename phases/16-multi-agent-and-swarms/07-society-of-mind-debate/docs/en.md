@@ -56,6 +56,10 @@ Zhuge et al. ("Mindstorms in Natural Language-Based Societies of Mind," arXiv:23
 - **Topic drift.** Debates over many rounds drift from the original question. Mitigation: re-inject the question every round.
 - **Compute blowup.** N agents × R rounds = N·R LLM calls, each with a context that grows. A 5-agent, 5-round debate is 25 calls at growing context. Cost per question can exceed 10× a single CoT call.
 
+```figure
+multi-agent-debate
+```
+
 ## Build It
 
 `code/main.py` runs a 3-agent × 3-round debate on a math question where each agent starts with a different (possibly wrong) answer. Agents are scripted — each "updates" by averaging the neighbors' answers weighted by a scripted confidence. Convergence is visible in the round-by-round log.

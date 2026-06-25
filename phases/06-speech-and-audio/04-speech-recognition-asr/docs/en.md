@@ -48,6 +48,10 @@ Advantages: highest quality on offline ASR, easy to train with standard seq2seq 
 
 All these are encoder-decoder or RNN-T based. Pure CTC systems (wav2vec 2.0) sit around 1.8–2.1% on test-clean.
 
+```figure
+ctc-collapse
+```
+
 ## Build It
 
 ### Step 1: greedy CTC decode

@@ -66,6 +66,10 @@ Every frontier lab now runs MSJ evaluations at 256+ shots against production mod
 
 Lesson 12 is the in-context iterative attack. Lesson 13 is the long-context length-exploit. Lesson 14 is the encoding attack. Lesson 15 is the injection attack at the system boundary. Together they define the 2026 jailbreak attack surface.
 
+```figure
+jailbreak-defense
+```
+
 ## Use It
 
 `code/main.py` builds a toy target with a keyword filter and a "patterned-continuation" weakness: when the context contains N examples of harmful-compliance pairs, the target's filter score is damped by a power-law factor. You can reproduce the shot-vs-ASR curve.

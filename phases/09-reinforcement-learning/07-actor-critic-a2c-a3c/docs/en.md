@@ -53,6 +53,10 @@ with `λ ∈ [0, 1]`. `λ = 0` is TD (low variance, high bias). `λ = 1` is MC (
 
 Three terms: policy-gradient loss, value regression, entropy bonus. `c_v ~ 0.5`, `c_e ~ 0.01` are canonical starting points.
 
+```figure
+actor-critic
+```
+
 ## Build It
 
 ### Step 1: a critic

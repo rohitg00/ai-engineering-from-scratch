@@ -71,6 +71,10 @@ Single-source evaluations are unreliable: labs evaluating their own models have 
 
 Lessons 7-11 reference Redwood and Apollo work; Lesson 18 references METR's framework comparison; Lesson 19 references Eleos. Lesson 28 is the explicit organisational map for the ecosystem the rest of the Phase relies on.
 
+```figure
+sae-features
+```
+
 ## Use It
 
 No code. Read METR's "Common Elements of Frontier AI Safety Policies" as an example of how external synthesis adds value to lab-internal policy work.

@@ -61,6 +61,10 @@ Same actor-critic structure as A2C. Three coefficients, usually `c_v = 0.5`, `c_
 
 **KL-penalty variant.** The original paper proposed an alternative using an adaptive KL penalty: `L = L^{PG} - β · KL(π_θ || π_old)` with `β` adjusted based on observed KL. The clipping version became dominant; the KL variant survives in RLHF (where KL to the reference policy is a separate constraint you always want anyway).
 
+```figure
+ppo-clip
+```
+
 ## Build It
 
 ### Step 1: capture `log π_old(a | s)` at rollout time
