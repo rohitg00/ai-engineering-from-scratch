@@ -48,11 +48,18 @@ wandb/
 mlruns/
 *.pt
 *.pth
+*.ckpt
 *.onnx
 *.safetensors
 *.bin
+*.gguf
 *.h5
+runs/
 .gstack/
+
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
 
 .link-cache.json
 .claude/
