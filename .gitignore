@@ -63,3 +63,8 @@ catalog.json
 site/sitemap.xml
 site/llms.txt
 site/build-meta.js
+
+
+# Added by cargo
+
+/target
