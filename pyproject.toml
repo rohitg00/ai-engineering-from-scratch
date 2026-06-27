@@ -1,0 +1,18 @@
+[project]
+name = "ai-engineering-from-scratch"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "anthropic>=0.112.0",
+    "datasets>=5.0.0",
+    "huggingface-hub>=1.21.0",
+    "jupyterlab>=4.6.0",
+    "matplotlib>=3.11.0",
+    "numpy>=2.5.0",
+    "pandas>=3.0.3",
+    "scikit-learn>=1.9.0",
+    "tensorboard>=2.20.0",
+    "torch>=2.12.1",
+    "torchaudio>=2.11.0",
+    "torchvision>=0.27.1",
+]
