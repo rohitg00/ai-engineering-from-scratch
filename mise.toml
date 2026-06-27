@@ -1,0 +1,11 @@
+[tools]
+# Node & TypeScript
+node = "22"
+pnpm = "10.32"
+
+# Python
+python = "3.12"
+uv = "latest"
+
+# Rust
+rust = "stable"
