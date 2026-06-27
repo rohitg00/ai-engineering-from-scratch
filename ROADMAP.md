@@ -1,3 +1,54 @@
+# 學習路徑分析（Claude 個人觀點）
+
+> 以下為對本課程的取捨建議，非官方內容。重要性 = 對 AI 工程師職涯的價值；難度 = 上手門檻。星等 1–5。
+
+## 逐 Phase 評分
+
+| Phase | 主題 | 重要性 | 難度 | 建議時間 | 備註 |
+|---|---|---|---|---|---|
+| 0 | Setup & Tooling | ⭐⭐ | ⭐ | 跳 / 2hr | 已會就跳，Docker、env 邊用邊查 |
+| 1 | Math Foundations | ⭐⭐⭐ | ⭐⭐⭐⭐ | 選讀 | 懂就跳，卡住才回查 |
+| 2 | ML Fundamentals | ⭐⭐⭐ | ⭐⭐ | 8hr | 概念地基，樹/SVM 略讀 |
+| 3 | **DL Core** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | 全做 15hr | backprop 手刻必做，核心 |
+| 4 | Computer Vision | ⭐⭐⭐ | ⭐⭐⭐⭐ | 選讀 | 非做 CV 就略，挑 ViT/CLIP/Diffusion |
+| 5 | NLP Foundations | ⭐⭐⭐ | ⭐⭐⭐ | 選讀 | 挑 tokenization/embedding/RAG chunking，前置 RNN 略 |
+| 6 | Speech & Audio | ⭐⭐ | ⭐⭐⭐ | 跳 | 非語音領域不碰 |
+| 7 | **Transformers** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | 全做 14hr | 整套核心，attention 手刻必做 |
+| 8 | Generative AI | ⭐⭐⭐ | ⭐⭐⭐⭐ | 選讀 | Diffusion/Flow Matching 挑做 |
+| 9 | Reinforcement Learning | ⭐⭐⭐ | ⭐⭐⭐⭐ | 選讀 | 只為懂 RLHF 才需 PPO，其餘略 |
+| 10 | **LLMs from Scratch** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 全做 26hr | 最硬最值，pre-train + SFT + DPO |
+| 11 | **LLM Engineering** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | 全做 17hr | 實戰最高 ROI，RAG/prompt/tool/MCP |
+| 12 | Multimodal AI | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 選讀 | 65hr 太重，挑 CLIP/LLaVA/Qwen-VL |
+| 13 | **Tools & Protocols** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | 全做 24hr | MCP/function calling，當紅核心 |
+| 14 | **Agent Engineering** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | 全做 42hr | 2026 最熱，agent loop/memory/orchestration |
+| 15 | Autonomous Systems | ⭐⭐⭐ | ⭐⭐⭐ | 選讀 | 偏研究/安全，挑 permission/HITL/kill switch |
+| 16 | Multi-Agent & Swarms | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | 選讀 | 接續 14，挑 supervisor/handoff/A2A |
+| 17 | **Infra & Production** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | 全做 32hr | 部署/serving/成本，資深分水嶺 |
+| 18 | Ethics, Safety, Alignment | ⭐⭐⭐ | ⭐⭐⭐ | 選讀 | 挑 prompt injection/red-team/guardrails |
+| 19 | Capstone Projects | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 挑 2–3 個 | 87 個，別全做，挑對口的 |
+
+## 最核心 5 個（按依賴順序）
+
+1. **Phase 3 — DL Core** — 一切地基。backprop 不手刻，後面全空中樓閣
+2. **Phase 7 — Transformers** — 現代 AI 唯一架構。attention 手刻
+3. **Phase 10 — LLMs from Scratch** — 真懂 LLM ≠ 調 API。最硬最值
+4. **Phase 11 + 13 + 14 — LLM Eng / Tools / Agent** — 三個一起，2026 就業核心
+5. **Phase 17 — Infra & Production** — 把玩具變產品，junior/senior 分水嶺
+
+## 三條路徑
+
+- **A. AI 應用工程師（最快上工，~90hr）** → 3 → 7(略讀) → 11 → 13 → 14 → 17 → Capstone 1,2,8
+- **B. AI 研究/底層（深，~150hr）** → 1 → 3 → 7 → 10 → 8/9(選) → Capstone 30–49
+- **C. 全棧 LLM 工程師（推薦，~200hr）** → 3 → 7 → 10 → 11 → 13 → 14 → 16 → 17 → Capstone 1,2,10,16
+
+## 原則
+
+- 別線性硬啃 1→19。1,050hr 全做 = 必半路死。能力圈邊界 > 大小
+- 手刻課必做，walkthrough 課可略讀。標題有 "from scratch"/"Build" = 動手；"Architecture Walkthrough"/"Landscape" = 讀
+- Capstone 是真實力。讀 100 課 < 做完 3 個 capstone
+
+---
+
 # Roadmap
 
 Status tracker for every phase and lesson. The status glyphs in this file feed
