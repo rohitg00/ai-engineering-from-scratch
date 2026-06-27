@@ -3,7 +3,7 @@
 > Your distance function defines what "similar" means. Choose wrong and everything downstream breaks.
 
 **Type:** Build
-**Language:** Python
+**Language:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -431,7 +431,7 @@ norm-unit-balls
 
 ### Step 1: All norm and distance functions
 
-See `code/distances.py` for the complete implementation. Every function is built from scratch using only basic Python math.
+See `code/distances.py` for the complete implementation. Every function is built from scratch using only basic Python math. `code/distances.ts` is a from-scratch TypeScript port of the same functions and demos — run it with `npx tsx distances.ts`.
 
 ### Step 2: Same data, different distances, different neighbors
 
