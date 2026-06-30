@@ -596,6 +596,80 @@
       background: var(--blueprint-tint);
     }
 
+    /* ── Beginner companion preview (read before the lesson) ─────────── */
+    .companion-preview {
+      margin: 4px 0 30px;
+      border: 1px solid var(--blueprint);
+      background: var(--blueprint-tint);
+    }
+
+    .companion-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 13px 18px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      color: var(--ink);
+      font-family: var(--font-body);
+    }
+
+    .companion-toggle-main { display: flex; flex-direction: column; gap: 2px; }
+
+    .companion-toggle-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+    }
+
+    .companion-toggle-title { font-size: 1rem; font-weight: 600; color: var(--ink); }
+
+    .companion-toggle-icon {
+      flex: none;
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      line-height: 1;
+      border: 1px solid var(--blueprint);
+      color: var(--blueprint);
+      background: var(--bg);
+    }
+
+    .companion-toggle:hover .companion-toggle-icon { background: var(--blueprint); color: var(--bg); }
+
+    .companion-body {
+      padding: 2px 20px 16px;
+      border-top: 1px solid var(--blueprint-tint-strong);
+    }
+
+    .companion-body .companion-h {
+      font-family: var(--font-mono);
+      color: var(--ink);
+      margin: 16px 0 6px;
+    }
+
+    .companion-body .companion-h2 {
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+    }
+
+    .companion-body .companion-h3 { font-size: 0.95rem; letter-spacing: 0.02em; }
+    .companion-body > .companion-h:first-child { margin-top: 8px; }
+    .companion-body p { margin: 6px 0; line-height: 1.62; }
+    .companion-body ul { margin: 6px 0; padding-left: 20px; }
+    .companion-body li { margin: 3px 0; line-height: 1.55; }
+
     .quiz-section,
     .quiz-container {
       border: 1px solid var(--blueprint);
@@ -1964,6 +2038,7 @@
         renderMermaidBlocks();
         if (window.mountLessonFigures) window.mountLessonFigures(el);
         renderAIPanels();
+        insertCompanionPreview(el);
         buildTOC();
 
         document.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -1975,6 +2050,60 @@
               target.scrollIntoView({ behavior: 'smooth' });
             }
           });
+        });
+      }
+
+      // Inject the "read before you start" beginner preview for this lesson,
+      // sourced from docs/companion-guide and baked into PHASES by build.js.
+      // Headings are demoted to <div> so they stay out of the lesson's TOC.
+      function insertCompanionPreview(container) {
+        var cf = (typeof flatLessons !== 'undefined') ? flatLessons[currentLessonIndex] : null;
+        var lessonObj = (cf && typeof PHASES !== 'undefined' && PHASES[cf.phaseIndex])
+          ? PHASES[cf.phaseIndex].lessons[cf.lessonIndex] : null;
+        var comp = lessonObj && lessonObj.companion;
+        if (!comp || !comp.body) return;
+
+        var article = container.querySelector('.lesson-article');
+        if (!article || article.querySelector('.companion-preview')) return;
+
+        var bodyHtml;
+        try {
+          bodyHtml = parseMd(comp.body.replace(/\[\[([^\]]+)\]\]/g, '$1'))
+            .replace(/<h2\b[^>]*>/g, '<div class="companion-h companion-h2">')
+            .replace(/<h3\b[^>]*>/g, '<div class="companion-h companion-h3">')
+            .replace(/<\/h[23]>/g, '</div>');
+        } catch (err) {
+          console.error('companion render failed', err);
+          return;
+        }
+
+        var wrap = document.createElement('section');
+        wrap.className = 'companion-preview';
+        wrap.innerHTML =
+          '<button class="companion-toggle" type="button" aria-expanded="false">' +
+            '<span class="companion-toggle-main">' +
+              '<span class="companion-toggle-kicker">New to this? Start here</span>' +
+              '<span class="companion-toggle-title">Read a plain-English preview of this lesson</span>' +
+            '</span>' +
+            '<span class="companion-toggle-icon" aria-hidden="true">+</span>' +
+          '</button>' +
+          '<div class="companion-body" hidden>' + bodyHtml + '</div>';
+
+        var firstHeading = article.querySelector('h1');
+        if (firstHeading && firstHeading.parentNode === article) {
+          firstHeading.insertAdjacentElement('afterend', wrap);
+        } else {
+          article.insertBefore(wrap, article.firstChild);
+        }
+
+        var btn = wrap.querySelector('.companion-toggle');
+        var body = wrap.querySelector('.companion-body');
+        var icon = wrap.querySelector('.companion-toggle-icon');
+        btn.addEventListener('click', function () {
+          var open = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+          if (open) { body.setAttribute('hidden', ''); icon.textContent = '+'; }
+          else { body.removeAttribute('hidden'); icon.textContent = '−'; }
         });
       }
 

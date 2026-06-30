@@ -50,18 +50,33 @@
       var lessons = PHASES[i].lessons;
       totalLessons += lessons.length;
       for (var j = 0; j < lessons.length; j++) {
-        var staticDone = lessons[j].status === 'complete';
+        // Count only lessons the user has completed (ticked / passed quiz),
+        // not the author "content exists" status — so progress starts at 0
+        // and only climbs as the user marks lessons done.
         var userDone = false;
         if (hasProgress && lessons[j].url) {
           var lp = window.AIFSProgress.extractPath(lessons[j].url);
           if (lp) userDone = window.AIFSProgress.isLessonComplete(lp);
         }
-        if (staticDone || userDone) completeLessons++;
+        if (userDone) completeLessons++;
       }
     }
+    // A phase counts as complete only when the user has completed all of its
+    // lessons (again, user progress — not the author status).
     var completePhases = 0;
     for (var p = 0; p < PHASES.length; p++) {
-      if (PHASES[p].status === 'complete') completePhases++;
+      var ph = PHASES[p];
+      if (!ph.lessons.length) continue;
+      var allDone = true;
+      for (var q = 0; q < ph.lessons.length; q++) {
+        var phDone = false;
+        if (hasProgress && ph.lessons[q].url) {
+          var plp = window.AIFSProgress.extractPath(ph.lessons[q].url);
+          if (plp) phDone = window.AIFSProgress.isLessonComplete(plp);
+        }
+        if (!phDone) { allDone = false; break; }
+      }
+      if (allDone) completePhases++;
     }
     return {
       lessons: totalLessons,
@@ -113,13 +128,14 @@
       var total = p.lessons.length;
       var done = 0;
       for (var j = 0; j < p.lessons.length; j++) {
-        var staticDone = p.lessons[j].status === 'complete';
+        // User progress only — the per-phase "X / Y" count reflects lessons
+        // the user has completed, starting at 0.
         var userDone = false;
         if (hasProgress && p.lessons[j].url) {
           var lp = window.AIFSProgress.extractPath(p.lessons[j].url);
           if (lp) userDone = window.AIFSProgress.isLessonComplete(lp);
         }
-        if (staticDone || userDone) done++;
+        if (userDone) done++;
       }
       var statusClass = p.status.replace(/ /g, '-');
       var roman = toRoman(p.id);

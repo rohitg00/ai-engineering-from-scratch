@@ -268,6 +268,64 @@ function extractLessonMeta(relPath) {
   return result;
 }
 
+// ─── Beginner companion previews (docs/companion-guide/<slug>/README.md) ──
+/**
+ * The Beginner Companion Guide ships one markdown file per phase. Two layouts
+ * are supported, both ordered to match the phase's lessons one-to-one:
+ *   • Standard (phases 00–18): a `# Phase …` intro, then one `# <Lesson>`
+ *     section per lesson.
+ *   • Project (phase 19): a `# Phase …` intro and `## Track …` group headers,
+ *     with one `### NN — <Project>` entry per lesson.
+ *
+ * Returns the per-lesson sections in document order — { title, body }, where
+ * body is the markdown under the heading with its trailing `---` divider
+ * stripped. Returns [] if the phase has no companion file yet.
+ */
+function parseCompanionGuide(phaseSlug) {
+  const file = path.join(REPO_ROOT, 'docs', 'companion-guide', phaseSlug, 'README.md');
+  let lines;
+  try {
+    lines = fs.readFileSync(file, 'utf8').split(/\r?\n/);
+  } catch (_) {
+    return []; // No companion guide written for this phase — expected.
+  }
+
+  // Split into sections whose heading is exactly `entryLevel` hashes. A body
+  // runs until the next heading at the entry level or shallower (so `## Track`
+  // group headers don't bleed into a `###` entry, and nested `##`/`###` inside
+  // a `#` lesson stay part of its body).
+  function collect(entryLevel) {
+    const entryRe = new RegExp('^#{' + entryLevel + '} +(.+?)\\s*$');
+    const sections = [];
+    let cur = null, collecting = false;
+    for (const line of lines) {
+      const head = line.match(/^(#{1,6}) +(.+?)\s*$/);
+      if (head) {
+        if (entryRe.test(line)) {
+          if (cur) sections.push(cur);
+          cur = { title: head[2].trim(), body: [] };
+          collecting = true;
+          continue;
+        }
+        if (head[1].length <= entryLevel) collecting = false; // group/peer heading ends the body
+      }
+      if (collecting && cur) cur.body.push(line);
+    }
+    if (cur) sections.push(cur);
+    for (const s of sections) {
+      s.body = s.body.join('\n').replace(/\n*\s*-{3,}\s*$/, '').trim();
+    }
+    return sections;
+  }
+
+  // Standard layout: drop the first `#` section (the phase intro).
+  const h1Sections = collect(1);
+  if (h1Sections.length > 1) return h1Sections.slice(1);
+
+  // Project layout (phase 19): each lesson is a `### NN — …` entry.
+  return collect(3);
+}
+
 // ─── Parse glossary/terms.md ──────────────────────────────────────────
 function parseGlossary(content) {
   const terms = [];
@@ -448,6 +506,28 @@ function build() {
       }
     }
   }
+
+  console.log('🧭 Attaching beginner companion previews from docs/companion-guide...');
+  // Attach companion previews for every phase. Set to an array of phase ids
+  // (e.g. [0]) to limit the in-lesson preview button to specific chapters.
+  const COMPANION_PHASES = null;
+  let companionAttached = 0;
+  for (const phase of phases) {
+    if (COMPANION_PHASES && !COMPANION_PHASES.includes(phase.id)) continue;
+    const withUrl = phase.lessons.find(l => l.url);
+    const slugMatch = withUrl && withUrl.url.match(/phases\/([^/]+)/);
+    if (!slugMatch) continue;
+    const lessonSections = parseCompanionGuide(slugMatch[1]);
+    if (!lessonSections.length) continue;
+    phase.lessons.forEach((lesson, idx) => {
+      const sec = lessonSections[idx];
+      if (sec && sec.body) {
+        lesson.companion = { title: sec.title, body: sec.body };
+        companionAttached++;
+      }
+    });
+  }
+  console.log(`   Companion previews attached: ${companionAttached}`);
 
   // Stats
   let totalLessons = 0;
