@@ -103,6 +103,12 @@ rustc --version
 cargo --version
 ```
 
+Initialize a Cargo project in the course repo root so Rust lessons build and run with `cargo`. Use `--vcs none` since the repo is already under git:
+
+```bash
+cargo init --vcs none
+```
+
 ### Step 5: Julia (Optional)
 
 For math-heavy lessons where Julia shines.
