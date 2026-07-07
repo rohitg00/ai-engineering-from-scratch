@@ -1151,6 +1151,12 @@ Free, MIT-licensed, 503 lessons. The curriculum is maintained on sponsorship alo
 **Reach (verified 2026-05-14):** 55,593 monthly visitors · 90,709 page views · 7.5K stars ·
 Twitter/X is the #1 acquisition channel.
 
+<br />
+<br />
+<a href="https://vercel.com/open-source-program">
+  <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge-2026.svg" />
+</a>
+
 **Current sponsors:** [CodeRabbit](https://coderabbit.link/rohit-ghumare) · [iii](https://iii.dev?utm_source=ai-engineering-from-scratch&utm_medium=readme&utm_campaign=sponsor)
 
 | Tier | $/mo | What you get |
