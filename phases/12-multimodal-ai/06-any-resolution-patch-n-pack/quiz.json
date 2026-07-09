@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Any-Resolution Vision: Patch-n'-Pack and NaFlex' belong to?",
+    "options": [
+      "Computer Vision",
+      "Llms From Scratch",
+      "Infrastructure and Production",
+      "Multimodal Ai"
+    ],
+    "correct": 3,
+    "explanation": "'Any-Resolution Vision: Patch-n'-Pack and NaFlex' is lesson 06 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Any-Resolution Vision: Patch-n'-Pack and NaFlex'?",
+    "options": [
+      "Capstone \u2014 Julia",
+      "Learn \u2014 \u2014",
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Python (stdlib, patch packer + block-diagonal mask)"
+    ],
+    "correct": 3,
+    "explanation": "'Any-Resolution Vision: Patch-n'-Pack and NaFlex' is tagged as Build in Python (stdlib, patch packer + block-diagonal mask).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'Any-Resolution Vision: Patch-n'-Pack and NaFlex'?",
+    "options": [
+      "Omni Models: Qwen2.5-Omni and the Thinker-Talker Split",
+      "LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model",
+      "Open-Weight VLM Recipes: What Actually Matters",
+      "Qwen-VL Family and Dynamic-FPS Video"
+    ],
+    "correct": 2,
+    "explanation": "'Open-Weight VLM Recipes: What Actually Matters' follows 'Any-Resolution Vision: Patch-n'-Pack and NaFlex' as lesson 07.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Any-Resolution Vision: Patch-n'-Pack and NaFlex'?",
+    "options": [
+      "main.py",
+      "main.rs",
+      "yaml_subset.py",
+      "main.ts"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Any-Resolution Vision: Patch-n'-Pack and NaFlex'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Any-Resolution Vision: Patch-n'-Pack and NaFlex'?",
+    "options": [
+      "Video is not a stack of photos. A 5-second clip has causal ordering, action verbs, and event timing that an image model cannot represent. Video-LLaMA (Zhang et al., June 2023) shipped the first open video-LLM with audio-visual grounding. VideoChat and Video-LLaVA scaled the pattern. By 2025 Qwen2.5-VL's TMRoPE closed the gap with frontier proprietary models. Each system solved temporal tokens differently \u2014 Q-former per clip, concat-pool per frame, TMRoPE per token. This lesson reads the patterns, builds a uniform-vs-dynamic frame sampler, and evaluates on temporal grounding tasks.",
+      "BAAI's Emu3 (Wang et al., September 2024) is the 2024 result that should have ended the diffusion-versus-autoregressive debate. A single Llama-style decoder-only transformer, trained only on the next-token-prediction objective, across a unified vocabulary of text + VQ image tokens + 3D VQ video tokens, beats SDXL on image generation and LLaVA-1.6 on perception. No CLIP loss. No diffusion schedule. Classifier-free guidance is used at inference for quality, but the core training objective is next-token prediction with teacher forcing. Published in Nature. This lesson reads the Emu3 thesis \u2014 why a better tokenizer plus scale is all you need \u2014 and contrasts with diffusion approaches.",
+      "Vision-native document RAG is one slice. Production multimodal RAG goes wider \u2014 retrieving across text, images, audio, and video for workflows like trip planning (\"find me a quiet vegan brunch with natural light\"), medical triage (\"what injury matches this photo + these notes\"), e-commerce (\"outfits similar to this selfie, in my size\"), and field service (\"diagnose this engine sound plus photo of the part\"). Three 2025 surveys \u2014 Abootorabi et al., Mei et al., Zhao et al. \u2014 codified the sub-problems: cross-modal retrieval, retrieval fusion, generation grounding, multimodal evaluation. This lesson reads the surveys and designs a production pipeline.",
+      "Real images are not 224x224 squares. A receipt is 9:16, a chart is 16:9, a medical scan might be 4096x4096, a mobile screenshot is 9:19.5. The pre-2024 VLM answer \u2014 resize everything to a fixed square \u2014 threw away the signal that makes OCR, document understanding, and high-resolution scene parsing work. NaViT (Google, 2023) showed you could pack variable-resolution patches into a single transformer batch with block-diagonal masking. Qwen2-VL's M-RoPE (2024) dropped absolute positional tables entirely. LLaVA-NeXT's AnyRes tiled high-resolution images into a base + sub-images. SigLIP 2's NaFlex variant (2025) is now the default encoder for open VLMs that want a single checkpoint to serve every aspect ratio. This lesson implements patch-n'-pack end to end."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Any-Resolution Vision: Patch-n'-Pack and NaFlex'.",
+    "stage": "pre"
+  }
+]

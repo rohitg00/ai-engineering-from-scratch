@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Temporal Difference \u2014 Q-Learning & SARSA' belong to?",
+    "options": [
+      "Llm Engineering",
+      "Math Foundations",
+      "Generative Ai",
+      "Reinforcement Learning"
+    ],
+    "correct": 3,
+    "explanation": "'Temporal Difference \u2014 Q-Learning & SARSA' is lesson 04 in Phase 9 \u2014 Reinforcement Learning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Temporal Difference \u2014 Q-Learning & SARSA'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Learn \u2014 Rust",
+      "Build \u2014 Python",
+      "Learn \u2014 \u2014"
+    ],
+    "correct": 2,
+    "explanation": "'Temporal Difference \u2014 Q-Learning & SARSA' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Reinforcement Learning, which lesson comes immediately after 'Temporal Difference \u2014 Q-Learning & SARSA'?",
+    "options": [
+      "Proximal Policy Optimization (PPO)",
+      "Deep Q-Networks (DQN)",
+      "Dynamic Programming \u2014 Policy Iteration & Value Iteration",
+      "MDPs, States, Actions & Rewards"
+    ],
+    "correct": 1,
+    "explanation": "'Deep Q-Networks (DQN)' follows 'Temporal Difference \u2014 Q-Learning & SARSA' as lesson 05.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Temporal Difference \u2014 Q-Learning & SARSA'?",
+    "options": [
+      "main.ts",
+      "main.py",
+      "complex_numbers.py",
+      "test_main.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Temporal Difference \u2014 Q-Learning & SARSA'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Temporal Difference \u2014 Q-Learning & SARSA'?",
+    "options": [
+      "REINFORCE is noisy. Add a critic that learns `V\u0302(s)`, subtract it from the return, and you get an advantage that has the same expectation but far lower variance. That is actor-critic. A2C runs it synchronously; A3C runs it across threads. Both are the mental model for every modern deep-RL method.",
+      "1992: TD-Gammon beat human champions at backgammon with pure TD. 2016: AlphaGo beat Lee Sedol. 2017: AlphaZero dominated chess, shogi, and Go from scratch. 2024: DeepSeek-R1 proved the same recipe, with GRPO replacing PPO, works on reasoning. Games are the benchmark that drives every breakthrough in this phase.",
+      "Stop estimating value. Parameterize the policy directly, compute the gradient of expected return, step uphill. Williams (1992) wrote it in one theorem. It is why PPO, GRPO, and every LLM RL loop exist.",
+      "Monte Carlo waits until the episode ends. TD updates after every step by bootstrapping the next value estimate. Q-learning is off-policy and optimistic; SARSA is on-policy and cautious. Both are one line of code. Both underpin every deep-RL method in this phase."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Temporal Difference \u2014 Q-Learning & SARSA'.",
+    "stage": "pre"
+  }
+]

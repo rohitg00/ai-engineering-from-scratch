@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ phase.name }}{% endblock %}
+{% block content %}
+  <a class="back-link" href="/">&larr; Dashboard</a>
+  <h1>Phase {{ phase.id }} — {{ phase.name }}</h1>
+
+  <table class="lesson-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Lesson</th>
+        <th>Type</th>
+        <th>Best score</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in lesson_rows %}
+        <tr>
+          <td>{{ "%02d"|format(row.lesson.order) }}</td>
+          <td>
+            {{ row.lesson.title }}
+            {% if row.progress and row.progress.mastered %}<span class="badge mastered">mastered</span>{% endif %}
+          </td>
+          <td>{{ row.lesson.type }}</td>
+          <td>
+            {% if row.progress %}
+              {{ row.progress.best_score }} / {{ row.progress.total_questions }}
+            {% else %}
+              —
+            {% endif %}
+          </td>
+          <td><a class="play-link" href="/play/{{ phase.dir_name }}/{{ row.lesson.lesson_dir }}?restart=1">Play</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,50 @@
+[
+  {
+    "question": "Which phase does the lesson 'RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era' belong to?",
+    "options": [
+      "Tools and Protocols",
+      "Ethics Safety Alignment",
+      "Reinforcement Learning",
+      "Llm Engineering"
+    ],
+    "correct": 2,
+    "explanation": "'RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era' is lesson 12 in Phase 9 \u2014 Reinforcement Learning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era'?",
+    "options": [
+      "Build \u2014 Python",
+      "Learn \u2014 Rust",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 Julia"
+    ],
+    "correct": 0,
+    "explanation": "'RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era'?",
+    "options": [
+      "main.rs",
+      "main.py",
+      "main.rs",
+      "production_app.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era'?",
+    "options": [
+      "Dynamic programming needs a model. Monte Carlo needs nothing but episodes. Run the policy, watch the returns, average them. The simplest idea in RL \u2014 and the one that unlocks everything downstream.",
+      "A2C throws away each rollout after one update. PPO wraps the policy gradient in a clipped importance ratio so you can do 10+ epochs on the same data without the policy exploding. Schulman et al. (2017). Still the default policy-gradient algorithm in 2026.",
+      "Single-agent RL assumes the environment is stationary. Put two learning agents in the same world and that assumption breaks: each agent is part of the other's environment, and both are changing. Multi-agent RL is the set of tricks to make learning converge when the Markov assumption no longer holds.",
+      "1992: TD-Gammon beat human champions at backgammon with pure TD. 2016: AlphaGo beat Lee Sedol. 2017: AlphaZero dominated chess, shogi, and Go from scratch. 2024: DeepSeek-R1 proved the same recipe, with GRPO replacing PPO, works on reasoning. Games are the benchmark that drives every breakthrough in this phase."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'DualPipe Parallelism' belong to?",
+    "options": [
+      "Setup and Tooling",
+      "Llms From Scratch",
+      "Transformers Deep Dive",
+      "Tools and Protocols"
+    ],
+    "correct": 1,
+    "explanation": "'DualPipe Parallelism' is lesson 19 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'DualPipe Parallelism'?",
+    "options": [
+      "Learn \u2014 Python (stdlib, schedule simulator)",
+      "Build \u2014 Rust",
+      "Build \u2014 Python",
+      "Capstone \u2014 Python"
+    ],
+    "correct": 0,
+    "explanation": "'DualPipe Parallelism' is tagged as Learn in Python (stdlib, schedule simulator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Llms From Scratch, which lesson comes immediately after 'DualPipe Parallelism'?",
+    "options": [
+      "Multi-Token Prediction (MTP)",
+      "RLHF: Reward Model + PPO",
+      "Pre-Training a Mini GPT (124M Parameters)",
+      "DeepSeek-V3 Architecture Walkthrough"
+    ],
+    "correct": 3,
+    "explanation": "'DeepSeek-V3 Architecture Walkthrough' follows 'DualPipe Parallelism' as lesson 20.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'DualPipe Parallelism'?",
+    "options": [
+      "main.jl",
+      "main.ts",
+      "main.py",
+      "tests"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'DualPipe Parallelism'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'DualPipe Parallelism'?",
+    "options": [
+      "RLHF needs humans in the loop. Constitutional AI replaces most of them with the model itself. Write a list of principles, have the model critique its own outputs against those principles, and train on the critiques. DeepSeek-R1 pushed this further in 2025: let the model generate millions of reasoning traces, grade them with a rule, and run GRPO on the outcome. Most of the \"alignment work\" in a 2026 frontier model is the model alignment itself. This lesson builds both loops.",
+      "Phase 7 \u00b7 Lesson 16 proved the math: the Leviathan rejection rule preserves the verifier's distribution exactly. This lesson is the training-stack view of 2026 production speculative decoding. EAGLE-3 turned the draft model from a cheap approximation into a purpose-built tiny network trained on the verifier's own hidden states, then added a training-time test loop that aligns its train and inference distributions. Result: 3\u00d7 to 6.5\u00d7 end-to-end speedup, accepted per-token rates above 0.9 on chat, no distributional tradeoff. Every production inference stack in 2026 ships it by default.",
+      "DeepSeek-V3 was trained on 2,048 H800 GPUs with MoE experts scattered across nodes. Cross-node expert all-to-all communication cost 1 GPU-hour of comm for every 1 GPU-hour of compute. GPUs were idle half the time. DualPipe (DeepSeek, Dec 2024) is a bidirectional pipeline that overlaps forward and backward computation with the all-to-all comms they trigger. Bubbles drop, throughput climbs, and the keeping of two model-parameter copies (the \"dual\" that gives the name) is cheap once Expert Parallelism is already spreading experts across ranks anyway. This lesson is a Learn-type walkthrough of what DualPipe actually does and why Sea AI Lab's DualPipeV refinement drops the 2x parameter cost at the expense of a marginally tighter bubble.",
+      "A 70B model in FP16 needs 140GB. Two A100s just for weights. Quantize to FP8: one 80GB GPU. INT4: a MacBook."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'DualPipe Parallelism'.",
+    "stage": "pre"
+  }
+]

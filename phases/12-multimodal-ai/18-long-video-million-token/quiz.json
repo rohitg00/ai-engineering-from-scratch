@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Long-Video Understanding at Million-Token Context' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Tools and Protocols",
+      "Nlp Foundations to Advanced",
+      "Generative Ai"
+    ],
+    "correct": 0,
+    "explanation": "'Long-Video Understanding at Million-Token Context' is lesson 18 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Long-Video Understanding at Million-Token Context'?",
+    "options": [
+      "Learn \u2014 \u2014",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Python (stdlib, needle-in-haystack simulator + agentic-retrieval router)"
+    ],
+    "correct": 3,
+    "explanation": "'Long-Video Understanding at Million-Token Context' is tagged as Build in Python (stdlib, needle-in-haystack simulator + agentic-retrieval router).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'Long-Video Understanding at Million-Token Context'?",
+    "options": [
+      "InternVL3: Native Multimodal Pretraining",
+      "Multimodal Agents and Computer-Use (Capstone)",
+      "Audio-Language Models: the Whisper to Audio Flamingo 3 Arc",
+      "Embodied VLAs: RT-2, OpenVLA, \u03c00, GR00T"
+    ],
+    "correct": 2,
+    "explanation": "'Audio-Language Models: the Whisper to Audio Flamingo 3 Arc' follows 'Long-Video Understanding at Million-Token Context' as lesson 19.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Long-Video Understanding at Million-Token Context'?",
+    "options": [
+      "ml_intro.py",
+      "ts",
+      "main.py",
+      "rules.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Long-Video Understanding at Million-Token Context'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Long-Video Understanding at Million-Token Context'?",
+    "options": [
+      "Before LLaVA-OneVision (Li et al., August 2024) the open-VLM world had separate lineages: LLaVA-1.5 for single images, multi-image models like Mantis and VILA, video models like Video-LLaVA and Video-LLaMA. Each won its benchmark and failed at the others. LLaVA-OneVision argued a single curriculum could train one model to dominate all three scenarios, and that the emergent task-transfer effects (single-image skills exported to video, multi-image reasoning exported to single-image) beat the sum of specialists. The recipe is deceptively simple: a visual-token budget that stays constant across scenarios, plus an explicit curriculum that moves from single-image to OneVision (multi-image) to video. This lesson reads the budget, the curriculum, and the emergent behaviors.",
+      "The 2024-2026 open-weight VLM literature is a forest of ablation tables. Apple's MM1 tested 13 combinations of image encoder, connector, and data mix. Allen AI's Molmo proved detailed human captions beat GPT-4V distillation. Cambrian-1 ran 20+ encoder comparisons. Idefics2 formalized the five-axis design space. Prismatic VLMs compared 27 training recipes on a controlled benchmark. Out of all that noise, a small set of results holds across papers: image encoder matters more than connector architecture, data mixture matters more than either, and detailed human captions beat distilled synthetic data. This lesson reads those tables so you do not have to.",
+      "GPT-4o ships a product most open models cannot replicate: an agent that hears voice, sees video, and speaks back in real time. The open-ecosystem answer by late 2024 was MIO (Wang et al., September 2024). MIO tokenizes text, image, speech, and music, trains one causal transformer over the interleaved sequences, and generates any modality to any modality. AnyGPT (Zhan et al., February 2024) was the proof of concept; MIO is the scale-up; Unified-IO 2 (Allen AI, December 2023) is the cousin with vision + action grounding. This lesson reads the any-to-any pattern \u2014 four tokenizers, one transformer, streaming-friendly decode.",
+      "A 1-hour 4K video at 24 FPS, patched and embedded, produces on the order of 60 million tokens. A 2-hour podcast episode transcribed is 30,000 tokens. A full Blu-ray feature film, even compressed with aggressive pooling, is hundreds of thousands of tokens. Google's Gemini 1.5 (March 2024) opened this era with a 10-million-token context, doing reliable needle-in-a-haystack recall over hour-long videos. LWM (Liu et al., February 2024) showed ring attention's scaling path. LongVILA and Video-XL scaled ingestion further. VideoAgent swapped raw context for agentic retrieval. Each approach is a different trade-off on compute, recall, and engineering complexity. This lesson reads them side by side."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Long-Video Understanding at Million-Token Context'.",
+    "stage": "pre"
+  }
+]

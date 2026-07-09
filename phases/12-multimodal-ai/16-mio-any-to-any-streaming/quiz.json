@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'MIO and Any-to-Any Streaming Multimodal Models' belong to?",
+    "options": [
+      "Speech and Audio",
+      "Nlp Foundations to Advanced",
+      "Multimodal Ai",
+      "Ml Fundamentals"
+    ],
+    "correct": 2,
+    "explanation": "'MIO and Any-to-Any Streaming Multimodal Models' is lesson 16 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'MIO and Any-to-Any Streaming Multimodal Models'?",
+    "options": [
+      "Build \u2014 \u2014",
+      "Capstone \u2014 Julia",
+      "Capstone \u2014 Python",
+      "Learn \u2014 Python (stdlib, four-modality token allocator + streaming decode loop)"
+    ],
+    "correct": 3,
+    "explanation": "'MIO and Any-to-Any Streaming Multimodal Models' is tagged as Learn in Python (stdlib, four-modality token allocator + streaming decode loop).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'MIO and Any-to-Any Streaming Multimodal Models'?",
+    "options": [
+      "Embodied VLAs: RT-2, OpenVLA, \u03c00, GR00T",
+      "CLIP and Contrastive Vision-Language Pretraining",
+      "Video-Language Models: Temporal Tokens and Grounding",
+      "Chameleon and Early-Fusion Token-Only Multimodal Models"
+    ],
+    "correct": 2,
+    "explanation": "'Video-Language Models: Temporal Tokens and Grounding' follows 'MIO and Any-to-Any Streaming Multimodal Models' as lesson 17.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'MIO and Any-to-Any Streaming Multimodal Models'?",
+    "options": [
+      "test_main.py",
+      "main.py",
+      "main.ts",
+      "ts"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'MIO and Any-to-Any Streaming Multimodal Models'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'MIO and Any-to-Any Streaming Multimodal Models'?",
+    "options": [
+      "GPT-4o ships a product most open models cannot replicate: an agent that hears voice, sees video, and speaks back in real time. The open-ecosystem answer by late 2024 was MIO (Wang et al., September 2024). MIO tokenizes text, image, speech, and music, trains one causal transformer over the interleaved sequences, and generates any modality to any modality. AnyGPT (Zhan et al., February 2024) was the proof of concept; MIO is the scale-up; Unified-IO 2 (Allen AI, December 2023) is the cousin with vision + action grounding. This lesson reads the any-to-any pattern \u2014 four tokenizers, one transformer, streaming-friendly decode.",
+      "The 2026 frontier product is a multimodal agent that reads screenshots, clicks buttons, navigates web UIs, fills forms, and completes workflows end-to-end. SeeClick and CogAgent (2024) proved the GUI-grounding primitive. Ferret-UI added mobile. ChartAgent introduced visual tool-use for charts. VisualWebArena and AgentVista (2026) are the benchmarks the frontier chases \u2014 and even Gemini 3 Pro and Claude Opus 4.7 score ~30% on AgentVista's hard tasks. This capstone pulls together every thread of Phase 12: perception (high-res VLM), reasoning (LLM with tool use), grounding (coordinate output), long-horizon memory, and evaluation.",
+      "Before LLaVA-OneVision (Li et al., August 2024) the open-VLM world had separate lineages: LLaVA-1.5 for single images, multi-image models like Mantis and VILA, video models like Video-LLaVA and Video-LLaMA. Each won its benchmark and failed at the others. LLaVA-OneVision argued a single curriculum could train one model to dominate all three scenarios, and that the emergent task-transfer effects (single-image skills exported to video, multi-image reasoning exported to single-image) beat the sum of specialists. The recipe is deceptively simple: a visual-token budget that stays constant across scenarios, plus an explicit curriculum that moves from single-image to OneVision (multi-image) to video. This lesson reads the budget, the curriculum, and the emergent behaviors.",
+      "Real images are not 224x224 squares. A receipt is 9:16, a chart is 16:9, a medical scan might be 4096x4096, a mobile screenshot is 9:19.5. The pre-2024 VLM answer \u2014 resize everything to a fixed square \u2014 threw away the signal that makes OCR, document understanding, and high-resolution scene parsing work. NaViT (Google, 2023) showed you could pack variable-resolution patches into a single transformer batch with block-diagonal masking. Qwen2-VL's M-RoPE (2024) dropped absolute positional tables entirely. LLaVA-NeXT's AnyRes tiled high-resolution images into a base + sub-images. SigLIP 2's NaFlex variant (2025) is now the default encoder for open VLMs that want a single checkpoint to serve every aspect ratio. This lesson implements patch-n'-pack end to end."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'MIO and Any-to-Any Streaming Multimodal Models'.",
+    "stage": "pre"
+  }
+]

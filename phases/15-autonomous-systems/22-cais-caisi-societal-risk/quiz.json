@@ -1,0 +1,50 @@
+[
+  {
+    "question": "Which phase does the lesson 'CAIS, CAISI, and Societal-Scale Risk' belong to?",
+    "options": [
+      "Reinforcement Learning",
+      "Setup and Tooling",
+      "Autonomous Systems",
+      "Math Foundations"
+    ],
+    "correct": 2,
+    "explanation": "'CAIS, CAISI, and Societal-Scale Risk' is lesson 22 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'CAIS, CAISI, and Societal-Scale Risk'?",
+    "options": [
+      "Build \u2014 Rust",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 \u2014",
+      "Learn \u2014 Python (stdlib, four-risk inventory and mitigation matcher)"
+    ],
+    "correct": 3,
+    "explanation": "'CAIS, CAISI, and Societal-Scale Risk' is tagged as Learn in Python (stdlib, four-risk inventory and mitigation matcher).",
+    "stage": "pre"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'CAIS, CAISI, and Societal-Scale Risk'?",
+    "options": [
+      "bpe.py",
+      "debug_tools.py",
+      "tests",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'CAIS, CAISI, and Societal-Scale Risk'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'CAIS, CAISI, and Societal-Scale Risk'?",
+    "options": [
+      "In 2023 a chatbot answered a question in one turn. In 2026 a frontier model routinely runs minutes to hours on a single task. METR's Time Horizon 1.1 benchmark (January 2026) puts Claude Opus 4.6 at 14+ hours of expert work at 50% reliability. The horizon has been doubling roughly every seven months since GPT-2. Every assumption we built around single-turn chat \u2014 context, trust, failure modes, cost, observability \u2014 breaks when runs last longer than lunch.",
+      "A kill switch is a boolean held outside the agent's edit surface \u2014 a Redis key, a feature flag, a signed config \u2014 that disables the agent entirely. A circuit breaker is finer-grained: it trips on a specific pattern (five identical tool calls in a row), pauses the offending path, and escalates to a human. A canary token inherits from classical deception: a fake credential or honeypot record an agent has no legitimate reason to touch, whose access triggers an alert. eBPF-based datapaths (e.g. Cilium) can rewrite a quarantined pod's egress to a forensic honeypot at the kernel layer; published Cilium benchmarks report sub-millisecond P99 datapath latency under load (your propagation budget depends on how a policy update reaches the node, not the datapath itself). Statistical detectors (EWMA, CUSUM) that adapt to a moving baseline will quietly accept drift \u2014 layer them with hard constitutional limits that do not bend.",
+      "Pair a frontier coding model with an evolutionary loop and a machine-checkable evaluator. Let the loop run long enough. It discovers a 4x4 complex-matrix multiplication procedure that uses 48 scalar multiplications \u2014 the first improvement over Strassen in 56 years. It also finds a Google-wide Borg scheduling heuristic that recovers ~0.7% of cluster compute in production. The architecture is boring on purpose. The wins come from the evaluator's rigor.",
+      "The Center for AI Safety (CAIS, San Francisco, founded 2022 by Hendrycks and Zhang) publishes the four-risk framework \u2014 malicious use, AI races, organizational risks, rogue AIs \u2014 and the May 2023 statement on extinction risk signed by hundreds of professors and company leaders. 2026 releases from CAIS: AI Dashboard for frontier-model evaluation, Remote Labor Index (with Scale AI), Superintelligence Strategy Paper, AI Frontiers newsletter. A distinct entity: NIST Center for AI Standards and Innovation (CAISI) \u2014 US-government-facing voluntary agreements and unclassified capability evaluations focused on cyber, bio, and chemical-weapons risks. CAIS flags organizational risk as one of four top-level risks: safety culture, rigorous audits, multi-layered defenses, and information security are foundational but routinely traded off against deployment speed. California SB-53, if signed, would be the first US state-level catastrophic-risk regulation."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'CAIS, CAISI, and Societal-Scale Risk'.",
+    "stage": "pre"
+  }
+]

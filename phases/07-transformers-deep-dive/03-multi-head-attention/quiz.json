@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Multi-Head Attention' belong to?",
+    "options": [
+      "Speech and Audio",
+      "Capstone Projects",
+      "Transformers Deep Dive",
+      "Llms From Scratch"
+    ],
+    "correct": 2,
+    "explanation": "'Multi-Head Attention' is lesson 03 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Multi-Head Attention'?",
+    "options": [
+      "Build \u2014 Python",
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 Julia",
+      "Learn \u2014 \u2014"
+    ],
+    "correct": 0,
+    "explanation": "'Multi-Head Attention' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'Multi-Head Attention'?",
+    "options": [
+      "Why Transformers \u2014 The Problems with RNNs",
+      "Build a Transformer from Scratch \u2014 The Capstone",
+      "Self-Attention from Scratch",
+      "Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi"
+    ],
+    "correct": 3,
+    "explanation": "'Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi' follows 'Multi-Head Attention' as lesson 04.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Multi-Head Attention'?",
+    "options": [
+      "main.ts",
+      "main.py",
+      "optimizers.py",
+      "Dockerfile"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Multi-Head Attention'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Multi-Head Attention'?",
+    "options": [
+      "GPT predicts the next word. BERT predicts a missing word. One sentence of difference \u2014 and half a decade of everything embedding-shaped.",
+      "One attention head learns one relation at a time. Eight heads learn eight. Heads are free. Take more of them.",
+      "Full attention is a circle. Every token sees every token, and memory pays the price. Four variants bend the shape of the circle and recover half the cost.",
+      "Attention is permutation-invariant. \"The cat sat on the mat\" and \"mat the on sat cat the\" produce the same output without positional signal. Three algorithms fix it \u2014 each with a different bet on what \"position\" means."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Multi-Head Attention'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Multimodal RAG and Cross-Modal Retrieval' belong to?",
+    "options": [
+      "Generative Ai",
+      "Multi Agent and Swarms",
+      "Multimodal Ai",
+      "Nlp Foundations to Advanced"
+    ],
+    "correct": 2,
+    "explanation": "'Multimodal RAG and Cross-Modal Retrieval' is lesson 24 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Multimodal RAG and Cross-Modal Retrieval'?",
+    "options": [
+      "Learn \u2014 Julia",
+      "Learn \u2014 \u2014",
+      "Build \u2014 Python (stdlib, cross-modal retriever with fusion + grounded generator)",
+      "Learn \u2014 TypeScript"
+    ],
+    "correct": 2,
+    "explanation": "'Multimodal RAG and Cross-Modal Retrieval' is tagged as Build in Python (stdlib, cross-modal retriever with fusion + grounded generator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'Multimodal RAG and Cross-Modal Retrieval'?",
+    "options": [
+      "Document and Diagram Understanding",
+      "Emu3: Next-Token Prediction for Image and Video Generation",
+      "Open-Weight VLM Recipes: What Actually Matters",
+      "Multimodal Agents and Computer-Use (Capstone)"
+    ],
+    "correct": 3,
+    "explanation": "'Multimodal Agents and Computer-Use (Capstone)' follows 'Multimodal RAG and Cross-Modal Retrieval' as lesson 25.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Multimodal RAG and Cross-Modal Retrieval'?",
+    "options": [
+      "experiments",
+      "yaml_subset.py",
+      "ts",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Multimodal RAG and Cross-Modal Retrieval'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Multimodal RAG and Cross-Modal Retrieval'?",
+    "options": [
+      "The 2024-2026 open-weight VLM literature is a forest of ablation tables. Apple's MM1 tested 13 combinations of image encoder, connector, and data mix. Allen AI's Molmo proved detailed human captions beat GPT-4V distillation. Cambrian-1 ran 20+ encoder comparisons. Idefics2 formalized the five-axis design space. Prismatic VLMs compared 27 training recipes on a controlled benchmark. Out of all that noise, a small set of results holds across papers: image encoder matters more than connector architecture, data mixture matters more than either, and detailed human captions beat distilled synthetic data. This lesson reads those tables so you do not have to.",
+      "Vision-native document RAG is one slice. Production multimodal RAG goes wider \u2014 retrieving across text, images, audio, and video for workflows like trip planning (\"find me a quiet vegan brunch with natural light\"), medical triage (\"what injury matches this photo + these notes\"), e-commerce (\"outfits similar to this selfie, in my size\"), and field service (\"diagnose this engine sound plus photo of the part\"). Three 2025 surveys \u2014 Abootorabi et al., Mei et al., Zhao et al. \u2014 codified the sub-problems: cross-modal retrieval, retrieval fusion, generation grounding, multimodal evaluation. This lesson reads the surveys and designs a production pipeline.",
+      "GPT-4o ships a product most open models cannot replicate: an agent that hears voice, sees video, and speaks back in real time. The open-ecosystem answer by late 2024 was MIO (Wang et al., September 2024). MIO tokenizes text, image, speech, and music, trains one causal transformer over the interleaved sequences, and generates any modality to any modality. AnyGPT (Zhan et al., February 2024) was the proof of concept; MIO is the scale-up; Unified-IO 2 (Allen AI, December 2023) is the cousin with vision + action grounding. This lesson reads the any-to-any pattern \u2014 four tokenizers, one transformer, streaming-friendly decode.",
+      "The Qwen-VL family \u2014 Qwen-VL (2023), Qwen2-VL (2024), Qwen2.5-VL (2025), Qwen3-VL (2025) \u2014 is the most influential open vision-language model lineage in 2026. Each generation made a single decisive architectural bet that the rest of the open ecosystem copied within twelve months: native dynamic resolution via M-RoPE, dynamic-FPS sampling with absolute time alignment, window attention in the ViT, and structured agent output formats. By Qwen3-VL, the recipe had stabilized: a 2D-RoPE-ViT encoder with native-aspect-ratio inputs, an MLP projector into a large Qwen3 language base, and training stages that emphasized OCR, grounding, and agent behavior as first-class targets. This lesson reads the family chronologically so you understand why every knob is where it is."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Multimodal RAG and Cross-Modal Retrieval'.",
+    "stage": "pre"
+  }
+]

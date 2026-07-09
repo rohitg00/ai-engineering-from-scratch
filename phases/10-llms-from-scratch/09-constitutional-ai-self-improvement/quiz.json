@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Constitutional AI and Self-Improvement' belong to?",
+    "options": [
+      "Generative Ai",
+      "Llms From Scratch",
+      "Setup and Tooling",
+      "Capstone Projects"
+    ],
+    "correct": 1,
+    "explanation": "'Constitutional AI and Self-Improvement' is lesson 09 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Constitutional AI and Self-Improvement'?",
+    "options": [
+      "Learn \u2014 Julia",
+      "Build \u2014 Python (stdlib + numpy)",
+      "Capstone \u2014 TypeScript",
+      "Capstone \u2014 Rust"
+    ],
+    "correct": 1,
+    "explanation": "'Constitutional AI and Self-Improvement' is tagged as Build in Python (stdlib + numpy).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Llms From Scratch, which lesson comes immediately after 'Constitutional AI and Self-Improvement'?",
+    "options": [
+      "Jamba \u2014 Hybrid SSM-Transformer",
+      "Evaluation: Benchmarks, Evals, LM Harness",
+      "Native Sparse Attention (DeepSeek NSA)",
+      "DualPipe Parallelism"
+    ],
+    "correct": 1,
+    "explanation": "'Evaluation: Benchmarks, Evals, LM Harness' follows 'Constitutional AI and Self-Improvement' as lesson 10.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Constitutional AI and Self-Improvement'?",
+    "options": [
+      "main.py",
+      "trees.py",
+      "main.jl",
+      "ensembles.py"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Constitutional AI and Self-Improvement'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Constitutional AI and Self-Improvement'?",
+    "options": [
+      "SFT teaches the model to follow instructions. But it doesn't teach the model which response is BETTER. Two grammatically correct, factually accurate answers can differ enormously in helpfulness. RLHF is how you encode human judgment into the model's behavior. It's what makes Claude helpful and GPT polite.",
+      "Speculative decoding (Phase 10 \u00b7 15) parallelizes tokens within one sequence. Multi-agent frameworks parallelize across whole sequences but force explicit coordination (voting, sub-task splitting). Hogwild! Inference (Rodionov et al., arXiv:2504.06261) does something else: run N instances of the same LLM in parallel against a SHARED key-value cache. Each worker sees every other worker's generated tokens instantly. Modern reasoning models \u2014 QwQ, DeepSeek-R1 \u2014 can self-coordinate through that shared cache without any fine-tuning. The approach is experimental but it opens an entirely new axis of inference parallelism that sits orthogonal to spec decode. This lesson implements a two-worker Hogwild! simulator in stdlib Python and explains why the shared-cache collaboration emerges from the existing model's reasoning abilities.",
+      "RLHF needs humans in the loop. Constitutional AI replaces most of them with the model itself. Write a list of principles, have the model critique its own outputs against those principles, and train on the critiques. DeepSeek-R1 pushed this further in 2025: let the model generate millions of reasoning traces, grade them with a rule, and run GRPO on the outcome. Most of the \"alignment work\" in a 2026 frontier model is the model alignment itself. This lesson builds both loops.",
+      "GPT-2 Small has 124 million parameters. That's 12 transformer layers, 12 attention heads, and 768-dimensional embeddings. You can train it from scratch on a single GPU in a few hours. Most people never do this. They use pre-trained checkpoints. But if you don't train one yourself, you don't actually understand what's happening inside the model you're building products on."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Constitutional AI and Self-Improvement'.",
+    "stage": "pre"
+  }
+]

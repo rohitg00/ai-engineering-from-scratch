@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model' belong to?",
+    "options": [
+      "Capstone Projects",
+      "Multimodal Ai",
+      "Llm Engineering",
+      "Reinforcement Learning"
+    ],
+    "correct": 1,
+    "explanation": "'LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model' is lesson 08 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model'?",
+    "options": [
+      "Build \u2014 Python (stdlib, token budget solver + curriculum planner)",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 \u2014",
+      "Capstone \u2014 Julia"
+    ],
+    "correct": 0,
+    "explanation": "'LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model' is tagged as Build in Python (stdlib, token budget solver + curriculum planner).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model'?",
+    "options": [
+      "Qwen-VL Family and Dynamic-FPS Video",
+      "Multimodal Agents and Computer-Use (Capstone)",
+      "Vision Transformers and the Patch-Token Primitive",
+      "Flamingo and Gated Cross-Attention for Few-Shot VLMs"
+    ],
+    "correct": 0,
+    "explanation": "'Qwen-VL Family and Dynamic-FPS Video' follows 'LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model' as lesson 09.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model'?",
+    "options": [
+      "main.py",
+      "Dockerfile",
+      "tests",
+      "tests"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model'?",
+    "options": [
+      "The first time a model read a recipe off a website and executed it in a kitchen robot was RT-2 (Google DeepMind, July 2023). RT-2 discretized actions as text tokens, co-fine-tuned a VLM on web data plus robot-action data, and proved that web-scale vision-language knowledge transfers to robotic control. OpenVLA (June 2024) shipped the open 7B reference. Physical Intelligence's \u03c00 series (2024-2025) added flow-matching action experts. NVIDIA's GR00T N1 (March 2025) delivered dual-system (System 1 / System 2) control for humanoid robots at scale. The VLA primitive \u2014 vision-language-action, a single model that sees, reads, and acts \u2014 is the bridge between this phase's understanding models and the autonomous systems in Phase 15.",
+      "Before LLaVA-OneVision (Li et al., August 2024) the open-VLM world had separate lineages: LLaVA-1.5 for single images, multi-image models like Mantis and VILA, video models like Video-LLaVA and Video-LLaMA. Each won its benchmark and failed at the others. LLaVA-OneVision argued a single curriculum could train one model to dominate all three scenarios, and that the emergent task-transfer effects (single-image skills exported to video, multi-image reasoning exported to single-image) beat the sum of specialists. The recipe is deceptively simple: a visual-token budget that stays constant across scenarios, plus an explicit curriculum that moves from single-image to OneVision (multi-image) to video. This lesson reads the budget, the curriculum, and the emergent behaviors.",
+      "The 2024-2026 open-weight VLM literature is a forest of ablation tables. Apple's MM1 tested 13 combinations of image encoder, connector, and data mix. Allen AI's Molmo proved detailed human captions beat GPT-4V distillation. Cambrian-1 ran 20+ encoder comparisons. Idefics2 formalized the five-axis design space. Prismatic VLMs compared 27 training recipes on a controlled benchmark. Out of all that noise, a small set of results holds across papers: image encoder matters more than connector architecture, data mixture matters more than either, and detailed human captions beat distilled synthetic data. This lesson reads those tables so you do not have to.",
+      "Transfusion mixes continuous and discrete representations. Show-o (Xie et al., August 2024) goes the other way: text tokens use causal next-token prediction, image tokens use masked discrete diffusion in the spirit of MaskGIT. Both sit inside one transformer with a hybrid attention mask. The result unifies VQA, text-to-image, inpainting, and mixed-modality generation on one backbone, one tokenizer per modality, one loss formulation (next-token extended to masked prediction). This lesson walks the Show-o design \u2014 why masked discrete diffusion is a parallel, few-step image generator \u2014 and contrasts with Transfusion and Emu3."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'BERT \u2014 Masked Language Modeling' belong to?",
+    "options": [
+      "Computer Vision",
+      "Transformers Deep Dive",
+      "Multi Agent and Swarms",
+      "Ml Fundamentals"
+    ],
+    "correct": 1,
+    "explanation": "'BERT \u2014 Masked Language Modeling' is lesson 06 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'BERT \u2014 Masked Language Modeling'?",
+    "options": [
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 Python",
+      "Learn \u2014 Rust",
+      "Capstone \u2014 Rust"
+    ],
+    "correct": 1,
+    "explanation": "'BERT \u2014 Masked Language Modeling' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'BERT \u2014 Masked Language Modeling'?",
+    "options": [
+      "Mixture of Experts (MoE)",
+      "Build a Transformer from Scratch \u2014 The Capstone",
+      "Self-Attention from Scratch",
+      "GPT \u2014 Causal Language Modeling"
+    ],
+    "correct": 3,
+    "explanation": "'GPT \u2014 Causal Language Modeling' follows 'BERT \u2014 Masked Language Modeling' as lesson 07.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'BERT \u2014 Masked Language Modeling'?",
+    "options": [
+      "tests",
+      "main.py",
+      "main.rs",
+      "anomaly_detection.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'BERT \u2014 Masked Language Modeling'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'BERT \u2014 Masked Language Modeling'?",
+    "options": [
+      "The 2020 Kaplan paper said: bigger model, lower loss. The 2022 Hoffmann paper said: you were under-training. Compute goes into two buckets \u2014 parameters and tokens \u2014 and the split is not obvious.",
+      "Attention is permutation-invariant. \"The cat sat on the mat\" and \"mat the on sat cat the\" produce the same output without positional signal. Three algorithms fix it \u2014 each with a different bet on what \"position\" means.",
+      "Thirteen lessons. One model. No shortcuts.",
+      "GPT predicts the next word. BERT predicts a missing word. One sentence of difference \u2014 and half a decade of everything embedding-shaped."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'BERT \u2014 Masked Language Modeling'.",
+    "stage": "pre"
+  }
+]

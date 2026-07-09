@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Browser Agents and Long-Horizon Web Tasks' belong to?",
+    "options": [
+      "Computer Vision",
+      "Autonomous Systems",
+      "Capstone Projects",
+      "Agent Engineering"
+    ],
+    "correct": 1,
+    "explanation": "'Browser Agents and Long-Horizon Web Tasks' is lesson 11 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Browser Agents and Long-Horizon Web Tasks'?",
+    "options": [
+      "Learn \u2014 Python (stdlib, indirect prompt-injection attack surface model)",
+      "Capstone \u2014 Rust",
+      "Build \u2014 \u2014",
+      "Build \u2014 Julia"
+    ],
+    "correct": 0,
+    "explanation": "'Browser Agents and Long-Horizon Web Tasks' is tagged as Learn in Python (stdlib, indirect prompt-injection attack surface model).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'Browser Agents and Long-Horizon Web Tasks'?",
+    "options": [
+      "The Autonomous Coding Agent Landscape (2026)",
+      "METR Time Horizons and External Capability Evaluation",
+      "Long-Running Background Agents: Durable Execution",
+      "Llama Guard and Input/Output Classification"
+    ],
+    "correct": 2,
+    "explanation": "'Long-Running Background Agents: Durable Execution' follows 'Browser Agents and Long-Horizon Web Tasks' as lesson 12.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Browser Agents and Long-Horizon Web Tasks'?",
+    "options": [
+      "main.py",
+      "tests.py",
+      "tests",
+      "tests"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Browser Agents and Long-Horizon Web Tasks'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Browser Agents and Long-Horizon Web Tasks'?",
+    "options": [
+      "RSP v3.0 went into effect February 24, 2026, replacing the 2023 policy. Two-tier mitigation: what Anthropic will do unilaterally vs what is framed as an industry-wide recommendation (including RAND SL-4 security standards). Adds Frontier Safety Roadmaps and Risk Reports as standing documents rather than one-off deliverables. Drops the 2023 pause commitment. Introduces the AI R&D-4 threshold: once crossed, Anthropic must publish an affirmative case identifying misalignment risks and mitigations. Claude Opus 4.6 does not cross it. Anthropic states in the v3.0 announcement that \"confidently ruling this out is becoming difficult.\" SaferAI rated the 2023 RSP at 2.2; they downgraded v3.0 to 1.9, putting Anthropic in the \"weak\" RSP category alongside OpenAI and DeepMind. Qualitative thresholds replaced the 2023 quantitative commitments; removing the pause clause is the sharpest regression.",
+      "Research has converged on four primitives for bounding a self-improvement loop. Formal invariants that must hold across every edit. Alignment anchors that cannot be modified. Multi-objective constraints where every dimension (safety, fairness, robustness) must hold, not just performance. Regression detection that pauses the loop when historical metrics suggest capability loss. None of them is a proof of safety \u2014 information-theoretic results (Kolmogorov complexity, Lob's theorem) bound what any system can prove about its own successors. They are mitigations that raise the cost of silent failure.",
+      "ChatGPT agent (July 2025) merged Operator and deep research into one browser/terminal agent and set BrowseComp SOTA at 68.9%. OpenAI shut Operator down August 31, 2025 \u2014 consolidation at the product layer. Anthropic's Vercept acquisition moved Claude Sonnet on OSWorld from under 15% to 72.5%. WebArena-Verified (ServiceNow, ICLR 2026) fixed 11.3 percentage points of false-negative rate in the original WebArena and shipped the 258-task Hard subset. The numbers are real. So is the attack surface: OpenAI's head of preparedness stated publicly that indirect prompt injection into browser agents \"is not a bug that can be fully patched.\" Documented 2025\u20132026 attacks: Tainted Memories (Atlas CSRF), HashJack (Cato Networks), and one-click hijacks in Perplexity Comet.",
+      "Every graph-state transition persists. When a worker crashes, its lease expires and another worker picks up at the latest checkpoint. Cloudflare Durable Objects hold state across hours or weeks. Propose-then-commit (Lesson 15) defines a rollback plan per action. Post-action verification closes the loop. EU AI Act Article 14 makes effective human oversight mandatory for high-risk systems \u2014 in practice this means checkpoints must be queryable, rollbacks must be rehearsed, and the audit trail must survive a deploy. The sharp failure mode: without idempotency keys and precondition checks, a retry after a transient failure can double-execute an already-approved action. Post-action verification is what catches it."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Browser Agents and Long-Horizon Web Tasks'.",
+    "stage": "pre"
+  }
+]

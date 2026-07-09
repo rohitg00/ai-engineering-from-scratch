@@ -1,0 +1,50 @@
+[
+  {
+    "question": "Which phase does the lesson 'Speculative Decoding \u2014 Draft, Verify, Repeat' belong to?",
+    "options": [
+      "Math Foundations",
+      "Agent Engineering",
+      "Transformers Deep Dive",
+      "Llm Engineering"
+    ],
+    "correct": 2,
+    "explanation": "'Speculative Decoding \u2014 Draft, Verify, Repeat' is lesson 16 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Speculative Decoding \u2014 Draft, Verify, Repeat'?",
+    "options": [
+      "Build \u2014 Python",
+      "Learn \u2014 Rust",
+      "Learn \u2014 TypeScript",
+      "Learn \u2014 \u2014"
+    ],
+    "correct": 0,
+    "explanation": "'Speculative Decoding \u2014 Draft, Verify, Repeat' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Speculative Decoding \u2014 Draft, Verify, Repeat'?",
+    "options": [
+      "test_main.py",
+      "fixtures.py",
+      "lora.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Speculative Decoding \u2014 Draft, Verify, Repeat'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Speculative Decoding \u2014 Draft, Verify, Repeat'?",
+    "options": [
+      "Training is parallel and FLOP-bound. Inference is serial and memory-bound. Different bottleneck, different tricks.",
+      "Autoregressive decoding is serial. Each token waits for the previous one. Speculative decoding breaks the chain: a cheap model drafts N tokens, the expensive model verifies all N in one forward pass. When the draft is right you paid one big forward for N generations.",
+      "BERT sees both sides. GPT sees only the past. The triangle mask is the most consequential single line of code in modern AI.",
+      "One attention head learns one relation at a time. Eight heads learn eight. Heads are free. Take more of them."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Speculative Decoding \u2014 Draft, Verify, Repeat'.",
+    "stage": "pre"
+  }
+]

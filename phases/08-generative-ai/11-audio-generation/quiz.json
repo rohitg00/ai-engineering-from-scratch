@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Audio Generation' belong to?",
+    "options": [
+      "Generative Ai",
+      "Ml Fundamentals",
+      "Infrastructure and Production",
+      "Nlp Foundations to Advanced"
+    ],
+    "correct": 0,
+    "explanation": "'Audio Generation' is lesson 11 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Audio Generation'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Learn \u2014 TypeScript",
+      "Build \u2014 Python",
+      "Capstone \u2014 TypeScript"
+    ],
+    "correct": 2,
+    "explanation": "'Audio Generation' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after 'Audio Generation'?",
+    "options": [
+      "ControlNet, LoRA & Conditioning",
+      "Visual Autoregressive Modeling (VAR): Next-Scale Prediction",
+      "3D Generation",
+      "Flow Matching & Rectified Flows"
+    ],
+    "correct": 2,
+    "explanation": "'3D Generation' follows 'Audio Generation' as lesson 12.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Audio Generation'?",
+    "options": [
+      "main.ts",
+      "tests",
+      "main.py",
+      "test_main.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Audio Generation'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Audio Generation'?",
+    "options": [
+      "Text alone is a clumsy control signal. ControlNet lets you clone a pretrained diffusion model and steer it with a depth map, pose skeleton, scribble, or edge image. LoRA lets you fine-tune a 2B-parameter model by training 10 million parameters. Together they turned Stable Diffusion from a toy into the 2026 image pipeline that ships at every agency.",
+      "Audio is a 1-D signal at 16-48 kHz. A five-second clip is 80-240k samples. No transformer attends to that sequence directly. The solution for every production audio model in 2026 is the same: a neural codec (Encodec, SoundStream, DAC) compresses audio to discrete tokens at 50-75 Hz, and a transformer or diffusion model generates tokens.",
+      "Pixel-space diffusion on 512\u00d7512 images is a computational war crime. Rombach et al. (2022) noticed that you do not need all 786k dimensions to generate an image \u2014 you need enough to capture semantic structure, and a separate decoder for the rest. Run diffusion inside a VAE's latent space. That one idea is Stable Diffusion.",
+      "Every image model, text model, video model, and 3D model fits in one of five buckets. Pick the wrong bucket and you will fight the math for weeks. Pick the right one and the field's last twelve years of progress stacks cleanly in your head."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Audio Generation'.",
+    "stage": "pre"
+  }
+]

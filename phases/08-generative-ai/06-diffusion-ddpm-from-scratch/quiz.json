@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Diffusion Models \u2014 DDPM from Scratch' belong to?",
+    "options": [
+      "Transformers Deep Dive",
+      "Infrastructure and Production",
+      "Generative Ai",
+      "Nlp Foundations to Advanced"
+    ],
+    "correct": 2,
+    "explanation": "'Diffusion Models \u2014 DDPM from Scratch' is lesson 06 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Diffusion Models \u2014 DDPM from Scratch'?",
+    "options": [
+      "Build \u2014 Python",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 Julia"
+    ],
+    "correct": 0,
+    "explanation": "'Diffusion Models \u2014 DDPM from Scratch' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after 'Diffusion Models \u2014 DDPM from Scratch'?",
+    "options": [
+      "3D Generation",
+      "Audio Generation",
+      "Autoencoders & Variational Autoencoders (VAE)",
+      "Latent Diffusion & Stable Diffusion"
+    ],
+    "correct": 3,
+    "explanation": "'Latent Diffusion & Stable Diffusion' follows 'Diffusion Models \u2014 DDPM from Scratch' as lesson 07.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Diffusion Models \u2014 DDPM from Scratch'?",
+    "options": [
+      "perceptron.py",
+      "main.py",
+      "main.ts",
+      "tests.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Diffusion Models \u2014 DDPM from Scratch'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Diffusion Models \u2014 DDPM from Scratch'?",
+    "options": [
+      "Most generators stir `z` into every layer at the same time. StyleGAN split it apart: first map `z` to an intermediate `w`, then *inject* `w` at every resolution level through AdaIN. That single change untangled the latent space and made photorealistic faces a solved problem for seven years running.",
+      "Text-to-image makes new things. Inpainting fixes old ones. In production, 70% of billable image work is editing \u2014 swap a background, remove a logo, extend the canvas, regenerate a hand. Inpainting is where diffusion earns its keep.",
+      "Ho, Jain, Abbeel (2020) gave the field a recipe it could not quit. Destroy the data with noise over a thousand small steps. Train one neural net to predict the noise. Reverse the process at inference. Today every mainstream image, video, 3D, and music model runs on this loop, possibly with flow matching or consistency tricks on top.",
+      "Every image model, text model, video model, and 3D model fits in one of five buckets. Pick the wrong bucket and you will fight the math for weeks. Pick the right one and the field's last twelve years of progress stacks cleanly in your head."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Diffusion Models \u2014 DDPM from Scratch'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "question": "Which phase does the lesson 'Capstone \u2014 Build a Complete Tool Ecosystem' belong to?",
+    "options": [
+      "Computer Vision",
+      "Tools and Protocols",
+      "Transformers Deep Dive",
+      "Agent Engineering"
+    ],
+    "correct": 1,
+    "explanation": "'Capstone \u2014 Build a Complete Tool Ecosystem' is lesson 23 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Capstone \u2014 Build a Complete Tool Ecosystem'?",
+    "options": [
+      "Learn \u2014 Python",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Python (stdlib, end-to-end ecosystem harness)"
+    ],
+    "correct": 3,
+    "explanation": "'Capstone \u2014 Build a Complete Tool Ecosystem' is tagged as Build in Python (stdlib, end-to-end ecosystem harness).",
+    "stage": "pre"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Capstone \u2014 Build a Complete Tool Ecosystem'?",
+    "options": [
+      "fourier.py",
+      "numerical.py",
+      "main.py",
+      "main.jl"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Capstone \u2014 Build a Complete Tool Ecosystem'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Capstone \u2014 Build a Complete Tool Ecosystem'?",
+    "options": [
+      "stdio works locally and nowhere else. Streamable HTTP (2025-03-26) is the remote standard. The old HTTP+SSE transport is deprecated and being removed in mid-2026. Picking the wrong transport costs a migration; picking the right one buys a remote-hostable MCP server with session continuity and DNS-rebinding protection.",
+      "Phase 13 taught every piece. This capstone wires them into one production-shaped system: an MCP server with tools + resources + prompts + tasks + UI, OAuth 2.1 at the edge, an RBAC gateway, a multi-server client, an A2A sub-agent call, OTel tracing into a collector, tool-poisoning detection in CI, and an AGENTS.md + SKILL.md bundle. By the end you can defend every architectural choice.",
+      "The three frontier providers converged on the same tool-call loop in 2024 and then diverged on everything else. OpenAI uses `tools` and `tool_calls`. Anthropic uses `tool_use` and `tool_result` blocks. Gemini uses `functionDeclarations` and unique-id correlation. This lesson diffs the three side by side so code that ships on one provider does not break when you port it.",
+      "\"Ask the model nicely to return JSON\" fails 5 to 15 percent of the time, even on frontier models. Structured outputs close that gap with constrained decoding: the model is literally prevented from emitting a token that would violate the schema. OpenAI's strict mode, Anthropic's schema-typed tool use, Gemini's `responseSchema`, Pydantic AI's `output_type`, and Zod's `.parse` are five surface forms of the same idea. This lesson builds the schema validator and the strict-mode contract learners will use for every production extraction pipeline."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Capstone \u2014 Build a Complete Tool Ecosystem'.",
+    "stage": "pre"
+  }
+]

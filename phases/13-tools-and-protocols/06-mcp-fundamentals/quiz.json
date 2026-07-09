@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base' belong to?",
+    "options": [
+      "Computer Vision",
+      "Nlp Foundations to Advanced",
+      "Math Foundations",
+      "Tools and Protocols"
+    ],
+    "correct": 3,
+    "explanation": "'MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base' is lesson 06 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base'?",
+    "options": [
+      "Build \u2014 Julia",
+      "Capstone \u2014 Julia",
+      "Capstone \u2014 Rust",
+      "Learn \u2014 Python (stdlib, JSON-RPC parser)"
+    ],
+    "correct": 3,
+    "explanation": "'MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base' is tagged as Learn in Python (stdlib, JSON-RPC parser).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base'?",
+    "options": [
+      "The Tool Interface \u2014 Why Agents Need Structured I/O",
+      "MCP Resources and Prompts \u2014 Context Exposure Beyond Tools",
+      "Building an MCP Server \u2014 Python + TypeScript SDKs",
+      "Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini"
+    ],
+    "correct": 2,
+    "explanation": "'Building an MCP Server \u2014 Python + TypeScript SDKs' follows 'MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base' as lesson 07.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base'?",
+    "options": [
+      "tests",
+      "main.ts",
+      "test_main.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base'?",
+    "options": [
+      "Three independent weather lookups serialized is three round trips. Run them in parallel and total time collapses to the slowest single call. Every frontier provider now emits multiple tool calls in a single turn. The payoff is real; the plumbing is subtle. This lesson walks both halves: the parallel fan-out and the streamed-argument reassembly, with emphasis on the id-correlation trap.",
+      "Text-only tool output caps what agents can show. MCP Apps (SEP-1724, official January 26, 2026) let a tool return sandboxed interactive HTML rendered inline in Claude Desktop, ChatGPT, Cursor, Goose, and VS Code. Dashboards, forms, maps, 3D scenes, all through one extension. This lesson walks the `ui://` resource scheme, the `text/html;profile=mcp-app` MIME, the iframe-sandbox postMessage protocol, and the security surface that comes with letting a server render HTML.",
+      "Every integration before MCP was a one-off. The Model Context Protocol, first shipped by Anthropic in November 2024 and now stewarded by the Linux Foundation's Agentic AI Foundation, standardizes discovery and invocation so any client can speak to any server. The 2025-11-25 spec names six primitives (three server, three client), a three-phase lifecycle, and a JSON-RPC 2.0 wire format. Learn those and the rest of the MCP chapter of this phase becomes reading.",
+      "Tools get 90 percent of MCP attention. The other two server primitives solve different problems. Resources expose data for reading; prompts expose reusable templates as slash-commands. Many servers should use resources instead of wrapping reads in tools, and prompts instead of hard-coding workflows in client prompts. This lesson names the decision rule and walks the `resources/*` and `prompts/*` messages."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base'.",
+    "stage": "pre"
+  }
+]

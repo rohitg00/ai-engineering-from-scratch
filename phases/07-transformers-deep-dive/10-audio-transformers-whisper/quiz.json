@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Audio Transformers \u2014 Whisper Architecture' belong to?",
+    "options": [
+      "Transformers Deep Dive",
+      "Nlp Foundations to Advanced",
+      "Ethics Safety Alignment",
+      "Speech and Audio"
+    ],
+    "correct": 0,
+    "explanation": "'Audio Transformers \u2014 Whisper Architecture' is lesson 10 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Audio Transformers \u2014 Whisper Architecture'?",
+    "options": [
+      "Build \u2014 TypeScript",
+      "Learn \u2014 Python",
+      "Capstone \u2014 TypeScript",
+      "Capstone \u2014 Rust"
+    ],
+    "correct": 1,
+    "explanation": "'Audio Transformers \u2014 Whisper Architecture' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'Audio Transformers \u2014 Whisper Architecture'?",
+    "options": [
+      "Why Transformers \u2014 The Problems with RNNs",
+      "Attention Variants \u2014 Sliding Window, Sparse, Differential",
+      "Mixture of Experts (MoE)",
+      "Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi"
+    ],
+    "correct": 2,
+    "explanation": "'Mixture of Experts (MoE)' follows 'Audio Transformers \u2014 Whisper Architecture' as lesson 11.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Audio Transformers \u2014 Whisper Architecture'?",
+    "options": [
+      "main.jl",
+      "tests",
+      "main.py",
+      "tests"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Audio Transformers \u2014 Whisper Architecture'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Audio Transformers \u2014 Whisper Architecture'?",
+    "options": [
+      "The 2020 Kaplan paper said: bigger model, lower loss. The 2022 Hoffmann paper said: you were under-training. Compute goes into two buckets \u2014 parameters and tokens \u2014 and the split is not obvious.",
+      "Attention is permutation-invariant. \"The cat sat on the mat\" and \"mat the on sat cat the\" produce the same output without positional signal. Three algorithms fix it \u2014 each with a different bet on what \"position\" means.",
+      "Audio is an image of frequency over time. Whisper is a ViT that eats mel spectrograms and speaks back.",
+      "BERT sees both sides. GPT sees only the past. The triangle mask is the most consequential single line of code in modern AI."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Audio Transformers \u2014 Whisper Architecture'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Omni Models: Qwen2.5-Omni and the Thinker-Talker Split' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Reinforcement Learning",
+      "Llms From Scratch",
+      "Deep Learning Core"
+    ],
+    "correct": 0,
+    "explanation": "'Omni Models: Qwen2.5-Omni and the Thinker-Talker Split' is lesson 20 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Omni Models: Qwen2.5-Omni and the Thinker-Talker Split'?",
+    "options": [
+      "Build \u2014 Python (stdlib, streaming pipeline latency simulator + VAD loop)",
+      "Learn \u2014 Python",
+      "Learn \u2014 TypeScript",
+      "Learn \u2014 Julia"
+    ],
+    "correct": 0,
+    "explanation": "'Omni Models: Qwen2.5-Omni and the Thinker-Talker Split' is tagged as Build in Python (stdlib, streaming pipeline latency simulator + VAD loop).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'Omni Models: Qwen2.5-Omni and the Thinker-Talker Split'?",
+    "options": [
+      "Document and Diagram Understanding",
+      "Embodied VLAs: RT-2, OpenVLA, \u03c00, GR00T",
+      "Audio-Language Models: the Whisper to Audio Flamingo 3 Arc",
+      "Open-Weight VLM Recipes: What Actually Matters"
+    ],
+    "correct": 1,
+    "explanation": "'Embodied VLAs: RT-2, OpenVLA, \u03c00, GR00T' follows 'Omni Models: Qwen2.5-Omni and the Thinker-Talker Split' as lesson 21.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Omni Models: Qwen2.5-Omni and the Thinker-Talker Split'?",
+    "options": [
+      "ts",
+      "main.rs",
+      "main.ts",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Omni Models: Qwen2.5-Omni and the Thinker-Talker Split'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Omni Models: Qwen2.5-Omni and the Thinker-Talker Split'?",
+    "options": [
+      "GPT-4o's product demo in May 2024 was disruptive not because of the underlying model but because of the product shape \u2014 a voice interface where you talk, the model sees what the camera sees, and it talks back in under 250ms. The open ecosystem spent the rest of 2024 and 2025 racing to reach that product surface. Qwen2.5-Omni (March 2025) is the reference open design: a Thinker (large text-generating transformer) plus a Talker (parallel speech-generating transformer), linked by streaming speech tokens. Mini-Omni simplified it, Moshi matched its latency, GLM-4-Voice extended it to Chinese. This lesson reads the Thinker-Talker architecture and the latency budget that makes streaming real-time dialogue work.",
+      "The 2024-2026 open-weight VLM literature is a forest of ablation tables. Apple's MM1 tested 13 combinations of image encoder, connector, and data mix. Allen AI's Molmo proved detailed human captions beat GPT-4V distillation. Cambrian-1 ran 20+ encoder comparisons. Idefics2 formalized the five-axis design space. Prismatic VLMs compared 27 training recipes on a controlled benchmark. Out of all that noise, a small set of results holds across papers: image encoder matters more than connector architecture, data mixture matters more than either, and detailed human captions beat distilled synthetic data. This lesson reads those tables so you do not have to.",
+      "A 1-hour 4K video at 24 FPS, patched and embedded, produces on the order of 60 million tokens. A 2-hour podcast episode transcribed is 30,000 tokens. A full Blu-ray feature film, even compressed with aggressive pooling, is hundreds of thousands of tokens. Google's Gemini 1.5 (March 2024) opened this era with a 10-million-token context, doing reliable needle-in-a-haystack recall over hour-long videos. LWM (Liu et al., February 2024) showed ring attention's scaling path. LongVILA and Video-XL scaled ingestion further. VideoAgent swapped raw context for agentic retrieval. Each approach is a different trade-off on compute, recall, and engineering complexity. This lesson reads them side by side.",
+      "The Qwen-VL family \u2014 Qwen-VL (2023), Qwen2-VL (2024), Qwen2.5-VL (2025), Qwen3-VL (2025) \u2014 is the most influential open vision-language model lineage in 2026. Each generation made a single decisive architectural bet that the rest of the open ecosystem copied within twelve months: native dynamic resolution via M-RoPE, dynamic-FPS sampling with absolute time alignment, window attention in the ViT, and structured agent output formats. By Qwen3-VL, the recipe had stabilized: a 2D-RoPE-ViT encoder with native-aspect-ratio inputs, an MLP projector into a large Qwen3 language base, and training stages that emphasized OCR, grounding, and agent behavior as first-class targets. This lesson reads the family chronologically so you understand why every knob is where it is."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Omni Models: Qwen2.5-Omni and the Thinker-Talker Split'.",
+    "stage": "pre"
+  }
+]

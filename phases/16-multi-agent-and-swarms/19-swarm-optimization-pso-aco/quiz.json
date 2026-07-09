@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Swarm Optimization for LLMs (PSO, ACO)' belong to?",
+    "options": [
+      "Multi Agent and Swarms",
+      "Capstone Projects",
+      "Nlp Foundations to Advanced",
+      "Setup and Tooling"
+    ],
+    "correct": 0,
+    "explanation": "'Swarm Optimization for LLMs (PSO, ACO)' is lesson 19 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Swarm Optimization for LLMs (PSO, ACO)'?",
+    "options": [
+      "Learn + Build \u2014 Python (stdlib)",
+      "Learn \u2014 TypeScript",
+      "Learn \u2014 \u2014",
+      "Build \u2014 Python"
+    ],
+    "correct": 0,
+    "explanation": "'Swarm Optimization for LLMs (PSO, ACO)' is tagged as Learn + Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Swarm Optimization for LLMs (PSO, ACO)'?",
+    "options": [
+      "A2A \u2014 The Agent-to-Agent Protocol",
+      "Production Scaling \u2014 Queues, Checkpoints, Durability",
+      "Case Studies and the 2026 State of the Art",
+      "MARL \u2014 MADDPG, QMIX, MAPPO"
+    ],
+    "correct": 3,
+    "explanation": "'MARL \u2014 MADDPG, QMIX, MAPPO' follows 'Swarm Optimization for LLMs (PSO, ACO)' as lesson 20.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Swarm Optimization for LLMs (PSO, ACO)'?",
+    "options": [
+      "shell_aliases.sh",
+      "main.py",
+      "mock_llm.py",
+      "main.jl"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Swarm Optimization for LLMs (PSO, ACO)'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Swarm Optimization for LLMs (PSO, ACO)'?",
+    "options": [
+      "Bio-inspired optimization is making an LLM comeback. **LMPSO** (arXiv:2504.09247) uses PSO where each particle's velocity is a prompt and the LLM generates the next candidate; works well on structured-sequence outputs (math expressions, programs). **Model Swarms** (arXiv:2410.11163) treats each LLM expert as a PSO particle on a model-weight manifold and reports **13.3% average gain** over 12 baselines on 9 datasets with just 200 instances. **SwarmPrompt** (ICAART 2025) hybridizes PSO + Grey Wolf for prompt optimization. **AMRO-S** (arXiv:2603.12933) is ACO-inspired pheromone specialists for multi-agent LLM routing \u2014 **4.7x speedup**, interpretable routing evidence, quality-gated asynchronous update that decouples inference from learning. This lesson implements PSO on prompt parameter space and ACO on agent routing, measures why these classical algorithms fit the LLM era, and when they do not.",
+      "Every multi-agent framework shipping in 2026 \u2014 AutoGen, LangGraph, CrewAI, OpenAI Agents SDK, Microsoft Agent Framework \u2014 is a point in a four-dimensional design space. Four primitives, nothing more: the agent, the handoff, the shared state, the orchestrator. This lesson builds them from zero, runs a toy system on all four, then maps every major framework onto the same axes so you can read any new release in one paragraph.",
+      "Google announced A2A in April 2025; by April 2026 the spec is at https://a2a-protocol.org/latest/specification/ and 150+ organizations back it. A2A is the horizontal complement to MCP (Lesson 13): where MCP is vertical (agent \u2194 tools), A2A is peer-to-peer (agent \u2194 agent). It defines Agent Cards (discovery), tasks with artifacts (text, structured data, video), opaque task lifecycles, and auth. Production systems increasingly pair MCP with A2A. Google Cloud rolled A2A support into Vertex AI Agent Builder during 2025-2026.",
+      "One agent hits a wall. The smart move is not a bigger agent - it is more agents."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Swarm Optimization for LLMs (PSO, ACO)'.",
+    "stage": "pre"
+  }
+]

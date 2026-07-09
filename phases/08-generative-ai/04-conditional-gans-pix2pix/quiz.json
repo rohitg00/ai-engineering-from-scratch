@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Conditional GANs & Pix2Pix' belong to?",
+    "options": [
+      "Llm Engineering",
+      "Generative Ai",
+      "Agent Engineering",
+      "Reinforcement Learning"
+    ],
+    "correct": 1,
+    "explanation": "'Conditional GANs & Pix2Pix' is lesson 04 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Conditional GANs & Pix2Pix'?",
+    "options": [
+      "Build \u2014 Python",
+      "Learn \u2014 Rust",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 Julia"
+    ],
+    "correct": 0,
+    "explanation": "'Conditional GANs & Pix2Pix' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after 'Conditional GANs & Pix2Pix'?",
+    "options": [
+      "3D Generation",
+      "StyleGAN",
+      "Generative Models \u2014 Taxonomy & History",
+      "Audio Generation"
+    ],
+    "correct": 1,
+    "explanation": "'StyleGAN' follows 'Conditional GANs & Pix2Pix' as lesson 05.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Conditional GANs & Pix2Pix'?",
+    "options": [
+      "main.py",
+      "bpe.rs",
+      "tests",
+      "main.ts"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Conditional GANs & Pix2Pix'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Conditional GANs & Pix2Pix'?",
+    "options": [
+      "The first big unlock of 2014-2017 was controlling what a GAN makes. Attach a label, or an image, or a sentence. Pix2Pix did the image version and it still beats every generic text-to-image model on narrow image-to-image tasks.",
+      "An image is a 2-D tensor. A video is a 3-D one. The theory is the same; the compute is 10-100x harder. OpenAI's Sora (Feb 2024) proved it was possible. By 2026 Veo 2, Kling 1.5, Runway Gen-3, Pika 2.0, and WAN 2.2 ship production video from text at 1080p \u2014 and the open-weights stack (CogVideoX, HunyuanVideo, Mochi-1, WAN 2.2) is 12 months behind.",
+      "Audio is a 1-D signal at 16-48 kHz. A five-second clip is 80-240k samples. No transformer attends to that sequence directly. The solution for every production audio model in 2026 is the same: a neural codec (Encodec, SoundStream, DAC) compresses audio to discrete tokens at 50-75 Hz, and a transformer or diffusion model generates tokens.",
+      "Text-to-image makes new things. Inpainting fixes old ones. In production, 70% of billable image work is editing \u2014 swap a background, remove a logo, extend the canvas, regenerate a hand. Inpainting is where diffusion earns its keep."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Conditional GANs & Pix2Pix'.",
+    "stage": "pre"
+  }
+]

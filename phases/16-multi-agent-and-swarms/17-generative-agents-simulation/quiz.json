@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Generative Agents and Emergent Simulation' belong to?",
+    "options": [
+      "Multi Agent and Swarms",
+      "Math Foundations",
+      "Transformers Deep Dive",
+      "Multimodal Ai"
+    ],
+    "correct": 0,
+    "explanation": "'Generative Agents and Emergent Simulation' is lesson 17 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Generative Agents and Emergent Simulation'?",
+    "options": [
+      "Capstone \u2014 Julia",
+      "Learn \u2014 \u2014",
+      "Learn \u2014 Julia",
+      "Learn + Build \u2014 Python (stdlib)"
+    ],
+    "correct": 3,
+    "explanation": "'Generative Agents and Emergent Simulation' is tagged as Learn + Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Generative Agents and Emergent Simulation'?",
+    "options": [
+      "The Multi-Agent Primitive Model",
+      "Hierarchical Architecture and Its Failure Mode",
+      "Voting, Self-Consistency, and Debate Topology",
+      "Theory of Mind and Emergent Coordination"
+    ],
+    "correct": 3,
+    "explanation": "'Theory of Mind and Emergent Coordination' follows 'Generative Agents and Emergent Simulation' as lesson 18.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Generative Agents and Emergent Simulation'?",
+    "options": [
+      "evaluation.py",
+      "pipeline.py",
+      "main.py",
+      "test_main.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Generative Agents and Emergent Simulation'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Generative Agents and Emergent Simulation'?",
+    "options": [
+      "Park et al. 2023 (UIST '23, arXiv:2304.03442) populated **Smallville**, a sandbox of 25 agents, with a three-part architecture: **memory stream** (natural-language log), **reflection** (higher-level syntheses the agent generates about its own stream), and **plan** (day-level behavior, then sub-plans). The landmark result was the Valentine's Day party emergence: one agent seeded with \"wants to throw a Valentine's Day party,\" without further scripting, produced invitations spread through the population, coordinated dates, and the party happened \u2014 from 24 agents who started with no knowledge of it. Ablations show all three components are required for believability. The documented failures are spatial-norm errors (entering closed stores, sharing single-person bathrooms). This is the reference architecture for agent simulations and multi-agent social evaluation in 2026.",
+      "Google announced A2A in April 2025; by April 2026 the spec is at https://a2a-protocol.org/latest/specification/ and 150+ organizations back it. A2A is the horizontal complement to MCP (Lesson 13): where MCP is vertical (agent \u2194 tools), A2A is peer-to-peer (agent \u2194 agent). It defines Agent Cards (discovery), tasks with artifacts (text, structured data, video), opaque task lifecycles, and auth. Production systems increasingly pair MCP with A2A. Google Cloud rolled A2A support into Vertex AI Agent Builder during 2025-2026.",
+      "AutoGen GroupChat and AG2 GroupChat share one conversation across N agents; a selector function (LLM, round-robin, or custom) picks who speaks next. This is the archetype of emergent multi-agent conversation \u2014 agents do not know their role in a static graph, they just react to the shared pool. AutoGen v0.2's GroupChat semantics were preserved in the AG2 fork; AutoGen v0.4 rewrote it as an event-driven actor model. Microsoft put AutoGen into maintenance mode in February 2026 and merged it with Semantic Kernel into Microsoft Agent Framework (RC February 2026). The GroupChat primitive survives in both AG2 and Microsoft Agent Framework \u2014 learn it once, use it everywhere.",
+      "Hierarchical is supervisor nested. Manager agents over sub-managers over workers. CrewAI `Process.hierarchical` is the textbook version: a `manager_llm` dynamically delegates tasks and validates outputs. The LangGraph equivalent is `create_supervisor(create_supervisor(...))`. It is the natural pattern when the task is a real org chart. It is also the pattern most likely to collapse into managerial looping \u2014 manager agents assign work poorly, misinterpret sub-outputs, or fail to reach consensus. Sequential often beats it."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Generative Agents and Emergent Simulation'.",
+    "stage": "pre"
+  }
+]

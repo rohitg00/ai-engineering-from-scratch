@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Society of Mind and Multi-Agent Debate' belong to?",
+    "options": [
+      "Reinforcement Learning",
+      "Computer Vision",
+      "Multi Agent and Swarms",
+      "Math Foundations"
+    ],
+    "correct": 2,
+    "explanation": "'Society of Mind and Multi-Agent Debate' is lesson 07 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Society of Mind and Multi-Agent Debate'?",
+    "options": [
+      "Capstone \u2014 Python",
+      "Capstone \u2014 \u2014",
+      "Learn + Build \u2014 Python (stdlib)",
+      "Learn \u2014 Rust"
+    ],
+    "correct": 2,
+    "explanation": "'Society of Mind and Multi-Agent Debate' is tagged as Learn + Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Society of Mind and Multi-Agent Debate'?",
+    "options": [
+      "The Multi-Agent Primitive Model",
+      "Role Specialization \u2014 Planner, Critic, Executor, Verifier",
+      "Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors",
+      "Negotiation and Bargaining"
+    ],
+    "correct": 1,
+    "explanation": "'Role Specialization \u2014 Planner, Critic, Executor, Verifier' follows 'Society of Mind and Multi-Agent Debate' as lesson 08.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Society of Mind and Multi-Agent Debate'?",
+    "options": [
+      "tests",
+      "tests",
+      "main.jl",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Society of Mind and Multi-Agent Debate'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Society of Mind and Multi-Agent Debate'?",
+    "options": [
+      "Park et al. 2023 (UIST '23, arXiv:2304.03442) populated **Smallville**, a sandbox of 25 agents, with a three-part architecture: **memory stream** (natural-language log), **reflection** (higher-level syntheses the agent generates about its own stream), and **plan** (day-level behavior, then sub-plans). The landmark result was the Valentine's Day party emergence: one agent seeded with \"wants to throw a Valentine's Day party,\" without further scripting, produced invitations spread through the population, coordinated dates, and the party happened \u2014 from 24 agents who started with no knowledge of it. Ablations show all three components are required for believability. The documented failures are spatial-norm errors (entering closed stores, sharing single-person bathrooms). This is the reference architecture for agent simulations and multi-agent social evaluation in 2026.",
+      "Minsky's 1986 premise \u2014 intelligence is a society of specialists \u2014 gets rediscovered every decade. In 2023 Du et al. turned it into a concrete algorithm: multiple LLM instances propose answers, read each other's answers, critique, and update. Over N rounds they converge on a consensus that beats zero-shot CoT and reflection on six reasoning and factuality tasks. Two findings matter: both **multiple agents** and **multiple rounds** contribute independently. The society beats a single-agent monologue; the multi-round exchange beats one-shot voting.",
+      "The reference taxonomy for 2026 is **MAST** (Cemri et al., NeurIPS 2025, arXiv:2503.13657), derived from 1642 execution traces across 7 state-of-the-art open-source MAS showing **41\u201386.7% failure rate**. Three root categories: **Specification Problems** (41.77%) \u2014 role ambiguity, unclear task definitions; **Coordination Failures** (36.94%) \u2014 communication breakdowns, state desync; **Verification Gaps** (21.30%) \u2014 missing validation, absent quality checks. The **Groupthink** family (arXiv:2508.05687) adds: monoculture collapse (same base model \u2192 correlated failures), conformity bias (agents reinforce each other's errors), deficient theory of mind, mixed-motive dynamics, cascading reliability failures. Cascading example: retry storms where a payment failure triggers order retries, which trigger inventory retries, which overwhelm inventory service (10x load in seconds \u2014 needs circuit breakers). Memory poisoning: one agent's hallucination enters shared memory, downstream agents treat it as fact; accuracy decays gradually, making root-cause diagnosis painful. **STRATUS** (NeurIPS 2025) reports 1.5x mitigation-success improvement via specialized detection / diagnosis / validation agents. This lesson treats failure modes as first-class engineering targets.",
+      "Agents that can't speak the same language aren't a team. They're strangers shouting into the void."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Society of Mind and Multi-Agent Debate'.",
+    "stage": "pre"
+  }
+]

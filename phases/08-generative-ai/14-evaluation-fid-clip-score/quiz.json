@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Evaluation \u2014 FID, CLIP Score, Human Preference' belong to?",
+    "options": [
+      "Deep Learning Core",
+      "Capstone Projects",
+      "Generative Ai",
+      "Speech and Audio"
+    ],
+    "correct": 2,
+    "explanation": "'Evaluation \u2014 FID, CLIP Score, Human Preference' is lesson 14 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Evaluation \u2014 FID, CLIP Score, Human Preference'?",
+    "options": [
+      "Build \u2014 Python",
+      "Capstone \u2014 Julia",
+      "Learn \u2014 TypeScript",
+      "Learn \u2014 \u2014"
+    ],
+    "correct": 0,
+    "explanation": "'Evaluation \u2014 FID, CLIP Score, Human Preference' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after 'Evaluation \u2014 FID, CLIP Score, Human Preference'?",
+    "options": [
+      "Visual Autoregressive Modeling (VAR): Next-Scale Prediction",
+      "GANs \u2014 Generator vs Discriminator",
+      "Flow Matching & Rectified Flows",
+      "Inpainting, Outpainting & Image Editing"
+    ],
+    "correct": 0,
+    "explanation": "'Visual Autoregressive Modeling (VAR): Next-Scale Prediction' follows 'Evaluation \u2014 FID, CLIP Score, Human Preference' as lesson 19.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Evaluation \u2014 FID, CLIP Score, Human Preference'?",
+    "options": [
+      "main.py",
+      "derivatives.py",
+      "first_api_call.py",
+      "ts"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Evaluation \u2014 FID, CLIP Score, Human Preference'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Evaluation \u2014 FID, CLIP Score, Human Preference'?",
+    "options": [
+      "An image is a 2-D tensor. A video is a 3-D one. The theory is the same; the compute is 10-100x harder. OpenAI's Sora (Feb 2024) proved it was possible. By 2026 Veo 2, Kling 1.5, Runway Gen-3, Pika 2.0, and WAN 2.2 ship production video from text at 1080p \u2014 and the open-weights stack (CogVideoX, HunyuanVideo, Mochi-1, WAN 2.2) is 12 months behind.",
+      "Every image model, text model, video model, and 3D model fits in one of five buckets. Pick the wrong bucket and you will fight the math for weeks. Pick the right one and the field's last twelve years of progress stacks cleanly in your head.",
+      "A plain autoencoder compresses then reconstructs. It memorizes. It does not generate. Add one trick \u2014 force the code to look Gaussian \u2014 and you get a sampler. That single trick, the reparameterization of `z = \u03bc + \u03c3\u00b7\u03b5`, is why every latent-diffusion and flow-matching image model you use in 2026 has a VAE at the input.",
+      "Every generative model leaderboard cites FID, CLIP score, and a win rate from a human-preference arena. Each number has a failure mode a determined researcher can game. If you do not know the failure modes, you cannot tell a real improvement from a gaming run."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Evaluation \u2014 FID, CLIP Score, Human Preference'.",
+    "stage": "pre"
+  }
+]

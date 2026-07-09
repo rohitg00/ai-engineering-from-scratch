@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Anthropic Responsible Scaling Policy v3.0' belong to?",
+    "options": [
+      "Reinforcement Learning",
+      "Autonomous Systems",
+      "Llm Engineering",
+      "Setup and Tooling"
+    ],
+    "correct": 1,
+    "explanation": "'Anthropic Responsible Scaling Policy v3.0' is lesson 19 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Anthropic Responsible Scaling Policy v3.0'?",
+    "options": [
+      "Learn \u2014 Python (stdlib, RSP threshold decision engine)",
+      "Capstone \u2014 Python",
+      "Build \u2014 Rust",
+      "Capstone \u2014 TypeScript"
+    ],
+    "correct": 0,
+    "explanation": "'Anthropic Responsible Scaling Policy v3.0' is tagged as Learn in Python (stdlib, RSP threshold decision engine).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'Anthropic Responsible Scaling Policy v3.0'?",
+    "options": [
+      "Action Budgets, Iteration Caps, and Cost Governors",
+      "METR Time Horizons and External Capability Evaluation",
+      "Darwin Godel Machine \u2014 Open-Ended Self-Modifying Agents",
+      "OpenAI Preparedness Framework and DeepMind Frontier Safety Framework"
+    ],
+    "correct": 3,
+    "explanation": "'OpenAI Preparedness Framework and DeepMind Frontier Safety Framework' follows 'Anthropic Responsible Scaling Policy v3.0' as lesson 20.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Anthropic Responsible Scaling Policy v3.0'?",
+    "options": [
+      "perceptron.py",
+      "main.py",
+      "main.ts",
+      "main.ts"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Anthropic Responsible Scaling Policy v3.0'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Anthropic Responsible Scaling Policy v3.0'?",
+    "options": [
+      "RSP v3.0 went into effect February 24, 2026, replacing the 2023 policy. Two-tier mitigation: what Anthropic will do unilaterally vs what is framed as an industry-wide recommendation (including RAND SL-4 security standards). Adds Frontier Safety Roadmaps and Risk Reports as standing documents rather than one-off deliverables. Drops the 2023 pause commitment. Introduces the AI R&D-4 threshold: once crossed, Anthropic must publish an affirmative case identifying misalignment risks and mitigations. Claude Opus 4.6 does not cross it. Anthropic states in the v3.0 announcement that \"confidently ruling this out is becoming difficult.\" SaferAI rated the 2023 RSP at 2.2; they downgraded v3.0 to 1.9, putting Anthropic in the \"weak\" RSP category alongside OpenAI and DeepMind. Qualitative thresholds replaced the 2023 quantitative commitments; removing the pause clause is the sharpest regression.",
+      "Production long-horizon agents do not run in `while True`. Every LLM call becomes an activity with checkpoint, retry, and replay. Temporal's OpenAI Agents SDK integration went GA March 2026. Claude Code Routines (Anthropic) runs scheduled Claude Code invocations without a persistent local process. Sessions pause on human-input, survive deploys, and resume from the latest checkpoint keyed by `thread_id`. Behind the new ergonomics sits an old pattern \u2014 workflow orchestration \u2014 with one new input: LLM calls as non-deterministic activities that must be deterministically replayed on recovery.",
+      "The smallest possible self-improvement loop sits inside the rationale. A model generates a chain of thought, keeps the ones that land on correct answers, and fine-tunes on those. That is STaR. V-STaR adds a verifier so inference-time selection is better. Quiet-STaR pushes the rationale down to every token. All three work. None of them are magic \u2014 the loop preserves any shortcut that happened to reach the right answer.",
+      "Anthropic ran parallel teams of Claude Opus 4.6 Autonomous Alignment Researchers in independent sandboxes, coordinating via a shared forum whose logs live outside any sandbox (so agents cannot delete their own records). On the weak-to-strong training problem, the AARs outperformed human researchers. Anthropic's own summary flags that prescribed workflows often constrain AAR flexibility and degrade performance. Automating alignment research is the compression step that compresses the timeline to the exact misalignment risks the RSP is meant to detect."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Anthropic Responsible Scaling Policy v3.0'.",
+    "stage": "pre"
+  }
+]

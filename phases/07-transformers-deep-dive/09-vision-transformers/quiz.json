@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Vision Transformers (ViT)' belong to?",
+    "options": [
+      "Capstone Projects",
+      "Llms From Scratch",
+      "Transformers Deep Dive",
+      "Math Foundations"
+    ],
+    "correct": 2,
+    "explanation": "'Vision Transformers (ViT)' is lesson 09 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Vision Transformers (ViT)'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Build \u2014 Python",
+      "Learn \u2014 Rust",
+      "Learn \u2014 TypeScript"
+    ],
+    "correct": 1,
+    "explanation": "'Vision Transformers (ViT)' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'Vision Transformers (ViT)'?",
+    "options": [
+      "Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi",
+      "Build a Transformer from Scratch \u2014 The Capstone",
+      "Attention Variants \u2014 Sliding Window, Sparse, Differential",
+      "Audio Transformers \u2014 Whisper Architecture"
+    ],
+    "correct": 3,
+    "explanation": "'Audio Transformers \u2014 Whisper Architecture' follows 'Vision Transformers (ViT)' as lesson 10.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Vision Transformers (ViT)'?",
+    "options": [
+      "test_main.py",
+      "notebook_tips.py",
+      "main.jl",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Vision Transformers (ViT)'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Vision Transformers (ViT)'?",
+    "options": [
+      "A dense 70B transformer activates every parameter for every token. A 671B MoE activates only 37B per token and beats it on every benchmark. Sparsity is the most important scaling idea of the decade.",
+      "An image is a grid of patches. A sentence is a grid of tokens. The same transformer eats both.",
+      "Audio is an image of frequency over time. Whisper is a ViT that eats mel spectrograms and speaks back.",
+      "BERT sees both sides. GPT sees only the past. The triangle mask is the most consequential single line of code in modern AI."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Vision Transformers (ViT)'.",
+    "stage": "pre"
+  }
+]

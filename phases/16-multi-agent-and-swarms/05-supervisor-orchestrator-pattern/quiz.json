@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Supervisor / Orchestrator-Worker Pattern' belong to?",
+    "options": [
+      "Agent Engineering",
+      "Multi Agent and Swarms",
+      "Transformers Deep Dive",
+      "Capstone Projects"
+    ],
+    "correct": 1,
+    "explanation": "'Supervisor / Orchestrator-Worker Pattern' is lesson 05 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Supervisor / Orchestrator-Worker Pattern'?",
+    "options": [
+      "Build \u2014 \u2014",
+      "Build \u2014 Julia",
+      "Capstone \u2014 Python",
+      "Learn + Build \u2014 Python (stdlib, `threading`)"
+    ],
+    "correct": 3,
+    "explanation": "'Supervisor / Orchestrator-Worker Pattern' is tagged as Learn + Build in Python (stdlib, `threading`).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Supervisor / Orchestrator-Worker Pattern'?",
+    "options": [
+      "Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors",
+      "Production Scaling \u2014 Queues, Checkpoints, Durability",
+      "Hierarchical Architecture and Its Failure Mode",
+      "Theory of Mind and Emergent Coordination"
+    ],
+    "correct": 2,
+    "explanation": "'Hierarchical Architecture and Its Failure Mode' follows 'Supervisor / Orchestrator-Worker Pattern' as lesson 06.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Supervisor / Orchestrator-Worker Pattern'?",
+    "options": [
+      "dim_reduction.py",
+      "tests.py",
+      "main.py",
+      "tests"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Supervisor / Orchestrator-Worker Pattern'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Supervisor / Orchestrator-Worker Pattern'?",
+    "options": [
+      "Bio-inspired optimization is making an LLM comeback. **LMPSO** (arXiv:2504.09247) uses PSO where each particle's velocity is a prompt and the LLM generates the next candidate; works well on structured-sequence outputs (math expressions, programs). **Model Swarms** (arXiv:2410.11163) treats each LLM expert as a PSO particle on a model-weight manifold and reports **13.3% average gain** over 12 baselines on 9 datasets with just 200 instances. **SwarmPrompt** (ICAART 2025) hybridizes PSO + Grey Wolf for prompt optimization. **AMRO-S** (arXiv:2603.12933) is ACO-inspired pheromone specialists for multi-agent LLM routing \u2014 **4.7x speedup**, interpretable routing evidence, quality-gated asynchronous update that decouples inference from learning. This lesson implements PSO on prompt parameter space and ACO on agent routing, measures why these classical algorithms fit the LLM era, and when they do not.",
+      "Five 2025-2026 benchmarks cover the multi-agent evaluation space. **MultiAgentBench / MARBLE** (ACL 2025, arXiv:2503.01935) evaluates star/chain/tree/graph topologies with milestone KPIs; **graph is best for research**, cognitive planning adds ~3% milestone achievement. **COMMA** evaluates multimodal asymmetric-information coordination; state-of-the-art models including GPT-4o struggle to beat a random baseline. **MedAgentBoard** (arXiv:2505.12371) covers four medical task categories and often finds multi-agent does not dominate single-LLM. **AgentArch** (arXiv:2509.10769) benchmarks enterprise agent architectures combining tool-use + memory + orchestration. **SWE-bench Pro** ([arXiv:2509.16941](https://arxiv.org/abs/2509.16941)) has 1865 problems across 41 repos spanning business apps, B2B services, and developer tools; frontier models score ~23% on Pro vs 70%+ on Verified \u2014 a reality check on contamination. Claude Opus 4.7 (April 2026) is reported at **64.3%** on Pro with explicit agent-teams coordination (no Anthropic primary source published yet \u2014 treat as preliminary); Verdent (agent scaffold) hits **76.1% pass@1** on Verified ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report)). **AAAI 2026 Bridge Program WMAC** (https://multiagents.org/2026/) is the 2026 community focal point. This lesson builds on MARBLE's metrics, runs a topology-vs-metric sweep, and pins the \"just passing SWE-bench Verified is not evidence of generalization\" rule.",
+      "One lead agent plans and delegates; specialized workers execute in parallel contexts and report back. This is the pattern behind Anthropic's Research system (Claude Opus 4 as lead, Sonnet 4 as subagents), measured at +90.2% over single-agent Opus 4 on internal research evals. Anthropic's engineering post reports that 80% of the variance on BrowseComp is explained by token usage alone \u2014 multi-agent wins largely because each subagent gets a fresh context window. This lesson builds the supervisor pattern from the primitives and covers the 2026 engineering lessons from production deployments.",
+      "Minsky's 1986 premise \u2014 intelligence is a society of specialists \u2014 gets rediscovered every decade. In 2023 Du et al. turned it into a concrete algorithm: multiple LLM instances propose answers, read each other's answers, critique, and update. Over N rounds they converge on a consensus that beats zero-shot CoT and reflection on six reasoning and factuality tasks. Two findings matter: both **multiple agents** and **multiple rounds** contribute independently. The society beats a single-agent monologue; the multi-round exchange beats one-shot voting."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Supervisor / Orchestrator-Worker Pattern'.",
+    "stage": "pre"
+  }
+]

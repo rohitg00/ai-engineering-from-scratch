@@ -1,0 +1,50 @@
+[
+  {
+    "question": "Which phase does the lesson 'Visual Autoregressive Modeling (VAR): Next-Scale Prediction' belong to?",
+    "options": [
+      "Generative Ai",
+      "Infrastructure and Production",
+      "Llm Engineering",
+      "Agent Engineering"
+    ],
+    "correct": 0,
+    "explanation": "'Visual Autoregressive Modeling (VAR): Next-Scale Prediction' is lesson 19 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Visual Autoregressive Modeling (VAR): Next-Scale Prediction'?",
+    "options": [
+      "Capstone \u2014 Python",
+      "Build \u2014 Python (with PyTorch)",
+      "Capstone \u2014 TypeScript",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 1,
+    "explanation": "'Visual Autoregressive Modeling (VAR): Next-Scale Prediction' is tagged as Build in Python (with PyTorch).",
+    "stage": "pre"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Visual Autoregressive Modeling (VAR): Next-Scale Prediction'?",
+    "options": [
+      "tests",
+      "main.py",
+      "main.jl",
+      "knn.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Visual Autoregressive Modeling (VAR): Next-Scale Prediction'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Visual Autoregressive Modeling (VAR): Next-Scale Prediction'?",
+    "options": [
+      "Goodfellow's trick in 2014 was to skip density entirely. Two networks. One makes fakes. One catches them. They fight until the fakes are indistinguishable from real. It shouldn't work. It often doesn't. When it does, the samples are still the sharpest in the literature for narrow domains.",
+      "Diffusion models sample iteratively in time (denoising steps). VAR samples iteratively in scale \u2014 it predicts a 1x1 token, then 2x2, then 4x4, up to the final resolution, each scale conditioning on the previous. The 2024 paper showed VAR matches GPT-style scaling laws for image generation and beats DiT at the same compute budget. This lesson builds the core mechanism.",
+      "3D is the modality where 2D-to-3D leverage is strongest. The 2023 breakthrough was 3D Gaussian Splatting. The 2024-2026 generative push layers multi-view diffusion + 3D reconstruction on top to produce objects and scenes from a single prompt or photo.",
+      "Text alone is a clumsy control signal. ControlNet lets you clone a pretrained diffusion model and steer it with a depth map, pose skeleton, scribble, or edge image. LoRA lets you fine-tune a 2B-parameter model by training 10 million parameters. Together they turned Stable Diffusion from a toy into the 2026 image pipeline that ships at every agency."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Visual Autoregressive Modeling (VAR): Next-Scale Prediction'.",
+    "stage": "pre"
+  }
+]

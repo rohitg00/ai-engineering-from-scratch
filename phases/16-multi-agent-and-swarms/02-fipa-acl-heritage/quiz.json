@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Heritage of FIPA-ACL and Speech Acts' belong to?",
+    "options": [
+      "Reinforcement Learning",
+      "Multi Agent and Swarms",
+      "Multimodal Ai",
+      "Generative Ai"
+    ],
+    "correct": 1,
+    "explanation": "'Heritage of FIPA-ACL and Speech Acts' is lesson 02 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Heritage of FIPA-ACL and Speech Acts'?",
+    "options": [
+      "Learn \u2014 Python (stdlib)",
+      "Build \u2014 Rust",
+      "Capstone \u2014 \u2014",
+      "Capstone \u2014 Julia"
+    ],
+    "correct": 0,
+    "explanation": "'Heritage of FIPA-ACL and Speech Acts' is tagged as Learn in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Heritage of FIPA-ACL and Speech Acts'?",
+    "options": [
+      "Communication Protocols",
+      "Shared Memory and Blackboard Patterns",
+      "MARL \u2014 MADDPG, QMIX, MAPPO",
+      "Production Scaling \u2014 Queues, Checkpoints, Durability"
+    ],
+    "correct": 0,
+    "explanation": "'Communication Protocols' follows 'Heritage of FIPA-ACL and Speech Acts' as lesson 03.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Heritage of FIPA-ACL and Speech Acts'?",
+    "options": [
+      "main.py",
+      "main.jl",
+      "tests.py",
+      "tests"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Heritage of FIPA-ACL and Speech Acts'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Heritage of FIPA-ACL and Speech Acts'?",
+    "options": [
+      "Five 2025-2026 benchmarks cover the multi-agent evaluation space. **MultiAgentBench / MARBLE** (ACL 2025, arXiv:2503.01935) evaluates star/chain/tree/graph topologies with milestone KPIs; **graph is best for research**, cognitive planning adds ~3% milestone achievement. **COMMA** evaluates multimodal asymmetric-information coordination; state-of-the-art models including GPT-4o struggle to beat a random baseline. **MedAgentBoard** (arXiv:2505.12371) covers four medical task categories and often finds multi-agent does not dominate single-LLM. **AgentArch** (arXiv:2509.10769) benchmarks enterprise agent architectures combining tool-use + memory + orchestration. **SWE-bench Pro** ([arXiv:2509.16941](https://arxiv.org/abs/2509.16941)) has 1865 problems across 41 repos spanning business apps, B2B services, and developer tools; frontier models score ~23% on Pro vs 70%+ on Verified \u2014 a reality check on contamination. Claude Opus 4.7 (April 2026) is reported at **64.3%** on Pro with explicit agent-teams coordination (no Anthropic primary source published yet \u2014 treat as preliminary); Verdent (agent scaffold) hits **76.1% pass@1** on Verified ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report)). **AAAI 2026 Bridge Program WMAC** (https://multiagents.org/2026/) is the 2026 community focal point. This lesson builds on MARBLE's metrics, runs a topology-vs-metric sweep, and pins the \"just passing SWE-bench Verified is not evidence of generalization\" rule.",
+      "Minsky's 1986 premise \u2014 intelligence is a society of specialists \u2014 gets rediscovered every decade. In 2023 Du et al. turned it into a concrete algorithm: multiple LLM instances propose answers, read each other's answers, critique, and update. Over N rounds they converge on a consensus that beats zero-shot CoT and reflection on six reasoning and factuality tasks. Two findings matter: both **multiple agents** and **multiple rounds** contribute independently. The society beats a single-agent monologue; the multi-round exchange beats one-shot voting.",
+      "Before MCP, before A2A, there was FIPA-ACL. In 2000 the IEEE Foundation for Intelligent Physical Agents ratified an agent communication language with twenty performatives, two content languages, and a set of interaction protocols \u2014 contract net, subscribe/notify, request-when. It faded from industry because the ontology overhead was too heavy for the web, but the LLM revival of multi-agent systems is quietly reimplementing the same ideas without the formal semantics: JSON contracts stand in for performatives, natural language stands in for ontologies. This lesson reads FIPA-ACL seriously so you can see which 2026 protocol decisions are reinvention, which are novelty, and where the current wave is going to rediscover problems the 2000s already solved.",
+      "AutoGen GroupChat and AG2 GroupChat share one conversation across N agents; a selector function (LLM, round-robin, or custom) picks who speaks next. This is the archetype of emergent multi-agent conversation \u2014 agents do not know their role in a static graph, they just react to the shared pool. AutoGen v0.2's GroupChat semantics were preserved in the AG2 fork; AutoGen v0.4 rewrote it as an event-driven actor model. Microsoft put AutoGen into maintenance mode in February 2026 and merged it with Semantic Kernel into Microsoft Agent Framework (RC February 2026). The GroupChat primitive survives in both AG2 and Microsoft Agent Framework \u2014 learn it once, use it everywhere."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Heritage of FIPA-ACL and Speech Acts'.",
+    "stage": "pre"
+  }
+]

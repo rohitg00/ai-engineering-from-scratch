@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'MCP Apps \u2014 Interactive UI Resources via `ui://`' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Tools and Protocols",
+      "Speech and Audio",
+      "Llms From Scratch"
+    ],
+    "correct": 1,
+    "explanation": "'MCP Apps \u2014 Interactive UI Resources via `ui://`' is lesson 14 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'MCP Apps \u2014 Interactive UI Resources via `ui://`'?",
+    "options": [
+      "Capstone \u2014 Julia",
+      "Build \u2014 Python (stdlib, UI resource emitter), HTML (sample app)",
+      "Capstone \u2014 Rust",
+      "Learn \u2014 \u2014"
+    ],
+    "correct": 1,
+    "explanation": "'MCP Apps \u2014 Interactive UI Resources via `ui://`' is tagged as Build in Python (stdlib, UI resource emitter), HTML (sample app).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'MCP Apps \u2014 Interactive UI Resources via `ui://`'?",
+    "options": [
+      "MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing",
+      "Roots and Elicitation \u2014 Scoping and Mid-Flight User Input",
+      "The Tool Interface \u2014 Why Agents Need Structured I/O",
+      "Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work"
+    ],
+    "correct": 0,
+    "explanation": "'MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing' follows 'MCP Apps \u2014 Interactive UI Resources via `ui://`' as lesson 15.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'MCP Apps \u2014 Interactive UI Resources via `ui://`'?",
+    "options": [
+      "tests",
+      "ts",
+      "numerical.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'MCP Apps \u2014 Interactive UI Resources via `ui://`'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'MCP Apps \u2014 Interactive UI Resources via `ui://`'?",
+    "options": [
+      "Provider lock-in is expensive. Different tool-calling workloads suit different models. Routing gateways give one API surface, retries, failover, cost tracking, and guardrails. Three archetypes dominate 2026: LiteLLM (open-source self-hosted), OpenRouter (managed SaaS), Portkey (production-grade, open-sourced in March 2026). This lesson names the decision criteria and walks a stdlib routing gateway.",
+      "\"Ask the model nicely to return JSON\" fails 5 to 15 percent of the time, even on frontier models. Structured outputs close that gap with constrained decoding: the model is literally prevented from emitting a token that would violate the schema. OpenAI's strict mode, Anthropic's schema-typed tool use, Gemini's `responseSchema`, Pydantic AI's `output_type`, and Zod's `.parse` are five surface forms of the same idea. This lesson builds the schema validator and the strict-mode contract learners will use for every production extraction pipeline.",
+      "Tools get 90 percent of MCP attention. The other two server primitives solve different problems. Resources expose data for reading; prompts expose reusable templates as slash-commands. Many servers should use resources instead of wrapping reads in tools, and prompts instead of hard-coding workflows in client prompts. This lesson names the decision rule and walks the `resources/*` and `prompts/*` messages.",
+      "Text-only tool output caps what agents can show. MCP Apps (SEP-1724, official January 26, 2026) let a tool return sandboxed interactive HTML rendered inline in Claude Desktop, ChatGPT, Cursor, Goose, and VS Code. Dashboards, forms, maps, 3D scenes, all through one extension. This lesson walks the `ui://` resource scheme, the `text/html;profile=mcp-app` MIME, the iframe-sandbox postMessage protocol, and the security surface that comes with letting a server render HTML."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'MCP Apps \u2014 Interactive UI Resources via `ui://`'.",
+    "stage": "pre"
+  }
+]

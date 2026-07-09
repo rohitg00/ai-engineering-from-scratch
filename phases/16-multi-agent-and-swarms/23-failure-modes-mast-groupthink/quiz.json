@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Speech and Audio",
+      "Math Foundations",
+      "Multi Agent and Swarms"
+    ],
+    "correct": 3,
+    "explanation": "'Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors' is lesson 23 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors'?",
+    "options": [
+      "Learn \u2014 Python (stdlib)",
+      "Capstone \u2014 Julia",
+      "Capstone \u2014 TypeScript",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 0,
+    "explanation": "'Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors' is tagged as Learn in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors'?",
+    "options": [
+      "Swarm Optimization for LLMs (PSO, ACO)",
+      "Case Studies and the 2026 State of the Art",
+      "Evaluation and Coordination Benchmarks",
+      "Generative Agents and Emergent Simulation"
+    ],
+    "correct": 2,
+    "explanation": "'Evaluation and Coordination Benchmarks' follows 'Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors' as lesson 24.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors'?",
+    "options": [
+      "test_main.py",
+      "agent-rules.md",
+      "main.rs",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors'?",
+    "options": [
+      "Scaling multi-agent systems to thousands of concurrent runs requires **durable execution**. LangGraph's runtime writes a checkpoint after each super-step keyed by `thread_id` (Postgres by default); worker crashes release a lease and another worker resumes. Agents can sleep indefinitely waiting for human input. **MegaAgent** (arXiv:2408.09955) ran a per-agent producer-consumer queue with three states (Idle / Processing / Response) and two-layer coordination (intra-group chat + inter-group admin chat). **Fiber/async** beats thread-per-job for LLM streaming: threads sit idle 99% of the time waiting for tokens, fibers cooperatively yield on I/O. Counterpoint: Ashpreet Bedi's \"Scaling Agentic Software\" argues for **FastAPI + Postgres + nothing else** until load proves otherwise \u2014 simple architectures go further than expected. This lesson builds a durable checkpoint log, a per-agent work queue with state transitions, an async-vs-thread demo, and lands the pragmatic \"start simple\" rule.",
+      "Two approaches coexist in 2026 multi-agent systems: the **message pool** (everyone sees everyone's messages, as in AutoGen GroupChat or MetaGPT) and the **blackboard with subscription** (agents subscribe to relevant events, as in Context-Aware MCP or the Matrix framework). Both are the only stateful part of a multi-agent system \u2014 which means both are where the interesting bugs live. The reference failure mode is **memory poisoning**: one agent hallucinates a \"fact,\" other agents treat it as verified, and accuracy decays gradually in a way that is much harder to debug than an immediate crash. This lesson builds both structures from stdlib, injects a poisoning attack, and shows the three mitigations that actually work in production.",
+      "The reference taxonomy for 2026 is **MAST** (Cemri et al., NeurIPS 2025, arXiv:2503.13657), derived from 1642 execution traces across 7 state-of-the-art open-source MAS showing **41\u201386.7% failure rate**. Three root categories: **Specification Problems** (41.77%) \u2014 role ambiguity, unclear task definitions; **Coordination Failures** (36.94%) \u2014 communication breakdowns, state desync; **Verification Gaps** (21.30%) \u2014 missing validation, absent quality checks. The **Groupthink** family (arXiv:2508.05687) adds: monoculture collapse (same base model \u2192 correlated failures), conformity bias (agents reinforce each other's errors), deficient theory of mind, mixed-motive dynamics, cascading reliability failures. Cascading example: retry storms where a payment failure triggers order retries, which trigger inventory retries, which overwhelm inventory service (10x load in seconds \u2014 needs circuit breakers). Memory poisoning: one agent's hallucination enters shared memory, downstream agents treat it as fact; accuracy decays gradually, making root-cause diagnosis painful. **STRATUS** (NeurIPS 2025) reports 1.5x mitigation-success improvement via specialized detection / diagnosis / validation agents. This lesson treats failure modes as first-class engineering targets.",
+      "Agents that can't speak the same language aren't a team. They're strangers shouting into the void."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors'.",
+    "stage": "pre"
+  }
+]

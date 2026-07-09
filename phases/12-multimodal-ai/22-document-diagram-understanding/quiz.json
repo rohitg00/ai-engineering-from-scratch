@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Document and Diagram Understanding' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Infrastructure and Production",
+      "Autonomous Systems",
+      "Llms From Scratch"
+    ],
+    "correct": 0,
+    "explanation": "'Document and Diagram Understanding' is lesson 22 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Document and Diagram Understanding'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Build \u2014 Python (stdlib, layout-aware document parser skeleton)",
+      "Capstone \u2014 Python",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 1,
+    "explanation": "'Document and Diagram Understanding' is tagged as Build in Python (stdlib, layout-aware document parser skeleton).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'Document and Diagram Understanding'?",
+    "options": [
+      "InternVL3: Native Multimodal Pretraining",
+      "Qwen-VL Family and Dynamic-FPS Video",
+      "ColPali and Vision-Native Document RAG",
+      "Long-Video Understanding at Million-Token Context"
+    ],
+    "correct": 2,
+    "explanation": "'ColPali and Vision-Native Document RAG' follows 'Document and Diagram Understanding' as lesson 23.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Document and Diagram Understanding'?",
+    "options": [
+      "first_api_call.py",
+      "verify.ts",
+      "debug_tools.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Document and Diagram Understanding'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Document and Diagram Understanding'?",
+    "options": [
+      "CLIP aligns image and text but cannot generate captions, answer questions, or hold a conversation. BLIP-2 (Salesforce, 2023) solved that with a small trainable bridge: 32 learnable query vectors attend over a frozen ViT's features via cross-attention, then slot directly into a frozen LLM's input stream. 188M parameters of bridge connected an 11B LLM to a ViT-g/14. Every adapter-based VLM through 2026 \u2014 MiniGPT-4, InstructBLIP, LLaVA's cousins \u2014 is a descendant. This lesson reads the Q-Former's architecture, explains its two-stage training, and builds a toy version that feeds visual tokens into a frozen text decoder.",
+      "Traditional RAG parses PDFs into text, splits into chunks, embeds chunks, stores vectors. Every step loses signal: OCR drops chart data, chunking breaks table rows, text embeddings ignore figures. ColPali (Faysse et al., July 2024) asked the simpler question: why extract text at all? Embed the page image directly via PaliGemma, use ColBERT-style late interaction for retrieval, and keep all the layout, figures, fonts, and formatting signal the document carries. Published benchmarks: 20-40% better end-to-end accuracy than text-RAG on visually-rich documents. ColQwen2, ColSmol, and VisRAG extended the pattern. This lesson reads the vision-native RAG thesis and builds a tiny ColPali-like indexer.",
+      "Documents are not photos. A PDF, scientific paper, invoice, or handwritten form has layout, tables, diagrams, footnotes, headers, and semantic structure that plain image understanding cannot capture. The pre-VLM stack was a pipeline: Tesseract OCR + LayoutLMv3 + table-extraction heuristics. The VLM wave replaced that with OCR-free models \u2014 Donut (2022), Nougat (2023), DocLLM (2023) \u2014 that emit structured markup directly. By 2026 the frontier is just \"feed the page image to Claude Opus 4.7 at 2576px native,\" and the structured-markup output comes for free. This lesson reads the three-era arc of document AI.",
+      "Video is not a stack of photos. A 5-second clip has causal ordering, action verbs, and event timing that an image model cannot represent. Video-LLaMA (Zhang et al., June 2023) shipped the first open video-LLM with audio-visual grounding. VideoChat and Video-LLaVA scaled the pattern. By 2025 Qwen2.5-VL's TMRoPE closed the gap with frontier proprietary models. Each system solved temporal tokens differently \u2014 Q-former per clip, concat-pool per frame, TMRoPE per token. This lesson reads the patterns, builds a uniform-vs-dynamic frame sampler, and evaluates on temporal grounding tasks."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Document and Diagram Understanding'.",
+    "stage": "pre"
+  }
+]

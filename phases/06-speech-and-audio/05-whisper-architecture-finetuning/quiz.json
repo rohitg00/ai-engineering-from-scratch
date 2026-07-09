@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Whisper \u2014 Architecture & Fine-Tuning' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Speech and Audio",
+      "Capstone Projects",
+      "Setup and Tooling"
+    ],
+    "correct": 1,
+    "explanation": "'Whisper \u2014 Architecture & Fine-Tuning' is lesson 05 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Whisper \u2014 Architecture & Fine-Tuning'?",
+    "options": [
+      "Capstone \u2014 TypeScript",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 Julia",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Whisper \u2014 Architecture & Fine-Tuning' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Whisper \u2014 Architecture & Fine-Tuning'?",
+    "options": [
+      "Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention",
+      "Speaker Recognition & Verification",
+      "Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue",
+      "Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform"
+    ],
+    "correct": 1,
+    "explanation": "'Speaker Recognition & Verification' follows 'Whisper \u2014 Architecture & Fine-Tuning' as lesson 06.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Whisper \u2014 Architecture & Fine-Tuning'?",
+    "options": [
+      "main.ts",
+      "main.py",
+      "test_main.py",
+      "vectors.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Whisper \u2014 Architecture & Fine-Tuning'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Whisper \u2014 Architecture & Fine-Tuning'?",
+    "options": [
+      "Everything from lessons 01-11, stitched together. Build a voice assistant that listens, reasons, and talks back. In 2026 that is a solved engineering problem, not a research problem \u2014 but the integration details decide whether it ships.",
+      "Whisper is a 30-second-window transformer encoder-decoder, trained on 680k hours of multilingual weakly-supervised audio-text pairs. One architecture, multiple tasks, robust across 99 languages. The 2026 reference ASR.",
+      "2026 audio generation is almost all tokens. EnCodec, SNAC, Mimi, and DAC turn continuous waveforms into discrete sequences that a transformer can predict. The semantic-vs-acoustic token split \u2014 first-codebook as semantic, rest as acoustic \u2014 is the most important architectural shift since the Transformer for audio.",
+      "Voice cloning reads your text in someone else's voice. Voice conversion rewrites your voice into someone else's while preserving what you said. Both hang on the same decomposition: separate speaker identity from content."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Whisper \u2014 Architecture & Fine-Tuning'.",
+    "stage": "pre"
+  }
+]

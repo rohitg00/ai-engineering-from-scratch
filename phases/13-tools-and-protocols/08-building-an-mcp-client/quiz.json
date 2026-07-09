@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Building an MCP Client \u2014 Discovery, Invocation, Session Management' belong to?",
+    "options": [
+      "Tools and Protocols",
+      "Multimodal Ai",
+      "Infrastructure and Production",
+      "Reinforcement Learning"
+    ],
+    "correct": 0,
+    "explanation": "'Building an MCP Client \u2014 Discovery, Invocation, Session Management' is lesson 08 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Building an MCP Client \u2014 Discovery, Invocation, Session Management'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Python (stdlib, multi-server MCP client)",
+      "Capstone \u2014 Python",
+      "Learn \u2014 TypeScript"
+    ],
+    "correct": 1,
+    "explanation": "'Building an MCP Client \u2014 Discovery, Invocation, Session Management' is tagged as Build in Python (stdlib, multi-server MCP client).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'Building an MCP Client \u2014 Discovery, Invocation, Session Management'?",
+    "options": [
+      "A2A \u2014 Agent-to-Agent Protocol",
+      "MCP Resources and Prompts \u2014 Context Exposure Beyond Tools",
+      "MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration",
+      "MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing"
+    ],
+    "correct": 2,
+    "explanation": "'MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration' follows 'Building an MCP Client \u2014 Discovery, Invocation, Session Management' as lesson 09.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Building an MCP Client \u2014 Discovery, Invocation, Session Management'?",
+    "options": [
+      "time_series.py",
+      "main.py",
+      "linear_regression.py",
+      "perceptron.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Building an MCP Client \u2014 Discovery, Invocation, Session Management'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Building an MCP Client \u2014 Discovery, Invocation, Session Management'?",
+    "options": [
+      "Provider lock-in is expensive. Different tool-calling workloads suit different models. Routing gateways give one API surface, retries, failover, cost tracking, and guardrails. Three archetypes dominate 2026: LiteLLM (open-source self-hosted), OpenRouter (managed SaaS), Portkey (production-grade, open-sourced in March 2026). This lesson names the decision criteria and walks a stdlib routing gateway.",
+      "Most MCP content ships server tutorials and waves a hand at the client. Client code is where the hard orchestration lives: process spawning, capability negotiation, tool list merging across multiple servers, sampling callbacks, reconnection, and namespace collision resolution. This lesson builds a multi-server client that lifts three different MCP servers into one flat tool namespace for the model.",
+      "Every integration before MCP was a one-off. The Model Context Protocol, first shipped by Anthropic in November 2024 and now stewarded by the Linux Foundation's Agentic AI Foundation, standardizes discovery and invocation so any client can speak to any server. The 2025-11-25 spec names six primitives (three server, three client), a three-phase lifecycle, and a JSON-RPC 2.0 wire format. Learn those and the rest of the MCP chapter of this phase becomes reading.",
+      "A correct tool fails silently when the model cannot tell when to use it. Naming, descriptions, and parameter shapes drive 10 to 20 percentage-point swings in tool-selection accuracy on benchmarks like StableToolBench and MCPToolBench++. This lesson names the design rules that separate a tool a model picks reliably from a tool a model mis-fires."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Building an MCP Client \u2014 Discovery, Invocation, Session Management'.",
+    "stage": "pre"
+  }
+]

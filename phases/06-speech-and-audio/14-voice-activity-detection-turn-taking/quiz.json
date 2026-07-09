@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick' belong to?",
+    "options": [
+      "Speech and Audio",
+      "Agent Engineering",
+      "Llm Engineering",
+      "Capstone Projects"
+    ],
+    "correct": 0,
+    "explanation": "'Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick' is lesson 14 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick'?",
+    "options": [
+      "Learn \u2014 Julia",
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Python",
+      "Learn \u2014 TypeScript"
+    ],
+    "correct": 2,
+    "explanation": "'Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick'?",
+    "options": [
+      "Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue",
+      "Speaker Recognition & Verification",
+      "Whisper \u2014 Architecture & Fine-Tuning",
+      "Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake"
+    ],
+    "correct": 0,
+    "explanation": "'Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue' follows 'Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick' as lesson 15.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick'?",
+    "options": [
+      "main.py",
+      "main.ts",
+      "sampling.py",
+      "test_main.py"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick'?",
+    "options": [
+      "Every voice agent lives or dies on two decisions: is the user speaking now, and are they done? VAD answers the first. Turn-detection (VAD + silence-hangover + semantic endpoint model) answers the second. Get either wrong and your assistant either cuts users off or never shuts up.",
+      "2026 music generation: Suno v5 and Udio v4 dominate commercial; MusicGen, Stable Audio Open, and ACE-Step lead open-source. The technical problem is mostly solved. The legal problem (Warner Music $500M settlement, UMG settlement) reshaped the field in 2025-2026.",
+      "2026 audio generation is almost all tokens. EnCodec, SNAC, Mimi, and DAC turn continuous waveforms into discrete sequences that a transformer can predict. The semantic-vs-acoustic token split \u2014 first-codebook as semantic, rest as acoustic \u2014 is the most important architectural shift since the Transformer for audio.",
+      "ASR inverts speech to text; TTS inverts text to speech. The 2026 stack is three parts: text \u2192 tokens, tokens \u2192 mel, mel \u2192 waveform. Each part has a default model that fits in a laptop."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick'.",
+    "stage": "pre"
+  }
+]

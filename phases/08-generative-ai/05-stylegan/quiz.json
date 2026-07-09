@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'StyleGAN' belong to?",
+    "options": [
+      "Ml Fundamentals",
+      "Multi Agent and Swarms",
+      "Generative Ai",
+      "Deep Learning Core"
+    ],
+    "correct": 2,
+    "explanation": "'StyleGAN' is lesson 05 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'StyleGAN'?",
+    "options": [
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 TypeScript",
+      "Build \u2014 Python",
+      "Learn \u2014 Rust"
+    ],
+    "correct": 2,
+    "explanation": "'StyleGAN' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after 'StyleGAN'?",
+    "options": [
+      "Generative Models \u2014 Taxonomy & History",
+      "Latent Diffusion & Stable Diffusion",
+      "3D Generation",
+      "Diffusion Models \u2014 DDPM from Scratch"
+    ],
+    "correct": 3,
+    "explanation": "'Diffusion Models \u2014 DDPM from Scratch' follows 'StyleGAN' as lesson 06.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'StyleGAN'?",
+    "options": [
+      "ts",
+      "trees.py",
+      "main.py",
+      "ml_intro.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'StyleGAN'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'StyleGAN'?",
+    "options": [
+      "Goodfellow's trick in 2014 was to skip density entirely. Two networks. One makes fakes. One catches them. They fight until the fakes are indistinguishable from real. It shouldn't work. It often doesn't. When it does, the samples are still the sharpest in the literature for narrow domains.",
+      "Most generators stir `z` into every layer at the same time. StyleGAN split it apart: first map `z` to an intermediate `w`, then *inject* `w` at every resolution level through AdaIN. That single change untangled the latent space and made photorealistic faces a solved problem for seven years running.",
+      "Every image model, text model, video model, and 3D model fits in one of five buckets. Pick the wrong bucket and you will fight the math for weeks. Pick the right one and the field's last twelve years of progress stacks cleanly in your head.",
+      "3D is the modality where 2D-to-3D leverage is strongest. The 2023 breakthrough was 3D Gaussian Splatting. The 2024-2026 generative push layers multi-view diffusion + 3D reconstruction on top to produce objects and scenes from a single prompt or photo."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'StyleGAN'.",
+    "stage": "pre"
+  }
+]

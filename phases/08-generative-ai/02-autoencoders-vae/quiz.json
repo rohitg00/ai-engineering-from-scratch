@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Autoencoders & Variational Autoencoders (VAE)' belong to?",
+    "options": [
+      "Ethics Safety Alignment",
+      "Generative Ai",
+      "Transformers Deep Dive",
+      "Multi Agent and Swarms"
+    ],
+    "correct": 1,
+    "explanation": "'Autoencoders & Variational Autoencoders (VAE)' is lesson 02 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Autoencoders & Variational Autoencoders (VAE)'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Learn \u2014 \u2014",
+      "Capstone \u2014 Julia",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Autoencoders & Variational Autoencoders (VAE)' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after 'Autoencoders & Variational Autoencoders (VAE)'?",
+    "options": [
+      "GANs \u2014 Generator vs Discriminator",
+      "Visual Autoregressive Modeling (VAR): Next-Scale Prediction",
+      "Flow Matching & Rectified Flows",
+      "Inpainting, Outpainting & Image Editing"
+    ],
+    "correct": 0,
+    "explanation": "'GANs \u2014 Generator vs Discriminator' follows 'Autoencoders & Variational Autoencoders (VAE)' as lesson 03.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Autoencoders & Variational Autoencoders (VAE)'?",
+    "options": [
+      "experiments",
+      "tests",
+      "pipeline.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Autoencoders & Variational Autoencoders (VAE)'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Autoencoders & Variational Autoencoders (VAE)'?",
+    "options": [
+      "A plain autoencoder compresses then reconstructs. It memorizes. It does not generate. Add one trick \u2014 force the code to look Gaussian \u2014 and you get a sampler. That single trick, the reparameterization of `z = \u03bc + \u03c3\u00b7\u03b5`, is why every latent-diffusion and flow-matching image model you use in 2026 has a VAE at the input.",
+      "Diffusion models take 20-50 sampling steps because they walk a curved path from noise to data. Flow matching (Lipman et al., 2023) and rectified flow (Liu et al., 2022) trained straight paths. Straighter paths mean fewer steps mean faster inference. Stable Diffusion 3, Flux.1, and AudioCraft 2 all switched to flow matching in 2024.",
+      "Every image model, text model, video model, and 3D model fits in one of five buckets. Pick the wrong bucket and you will fight the math for weeks. Pick the right one and the field's last twelve years of progress stacks cleanly in your head.",
+      "Audio is a 1-D signal at 16-48 kHz. A five-second clip is 80-240k samples. No transformer attends to that sequence directly. The solution for every production audio model in 2026 is the same: a neural codec (Encodec, SoundStream, DAC) compresses audio to discrete tokens at 50-75 Hz, and a transformer or diffusion model generates tokens."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Autoencoders & Variational Autoencoders (VAE)'.",
+    "stage": "pre"
+  }
+]

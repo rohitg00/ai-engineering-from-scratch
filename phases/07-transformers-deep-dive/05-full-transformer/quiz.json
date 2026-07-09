@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'The Full Transformer \u2014 Encoder + Decoder' belong to?",
+    "options": [
+      "Transformers Deep Dive",
+      "Llms From Scratch",
+      "Llm Engineering",
+      "Reinforcement Learning"
+    ],
+    "correct": 0,
+    "explanation": "'The Full Transformer \u2014 Encoder + Decoder' is lesson 05 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'The Full Transformer \u2014 Encoder + Decoder'?",
+    "options": [
+      "Learn \u2014 Rust",
+      "Learn \u2014 \u2014",
+      "Build \u2014 Python",
+      "Learn \u2014 Julia"
+    ],
+    "correct": 2,
+    "explanation": "'The Full Transformer \u2014 Encoder + Decoder' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'The Full Transformer \u2014 Encoder + Decoder'?",
+    "options": [
+      "Why Transformers \u2014 The Problems with RNNs",
+      "Speculative Decoding \u2014 Draft, Verify, Repeat",
+      "BERT \u2014 Masked Language Modeling",
+      "Audio Transformers \u2014 Whisper Architecture"
+    ],
+    "correct": 2,
+    "explanation": "'BERT \u2014 Masked Language Modeling' follows 'The Full Transformer \u2014 Encoder + Decoder' as lesson 06.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'The Full Transformer \u2014 Encoder + Decoder'?",
+    "options": [
+      "main.ts",
+      "main.py",
+      "jax_intro.py",
+      "main.jl"
+    ],
+    "correct": 3,
+    "explanation": "'main.jl' is the implementation shipped with 'The Full Transformer \u2014 Encoder + Decoder'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'The Full Transformer \u2014 Encoder + Decoder'?",
+    "options": [
+      "Autoregressive decoding is serial. Each token waits for the previous one. Speculative decoding breaks the chain: a cheap model drafts N tokens, the expensive model verifies all N in one forward pass. When the draft is right you paid one big forward for N generations.",
+      "Attention is the star. Everything else \u2014 residuals, normalization, feed-forward, cross-attention \u2014 is the scaffolding that lets you stack it deep.",
+      "Audio is an image of frequency over time. Whisper is a ViT that eats mel spectrograms and speaks back.",
+      "RNNs process tokens one at a time. Transformers process all tokens at once. That single architectural bet changed every scaling curve in deep learning after 2017."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'The Full Transformer \u2014 Encoder + Decoder'.",
+    "stage": "pre"
+  }
+]

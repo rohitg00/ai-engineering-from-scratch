@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'DeepSeek-V3 Architecture Walkthrough' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Generative Ai",
+      "Autonomous Systems",
+      "Llm Engineering"
+    ],
+    "correct": 0,
+    "explanation": "'DeepSeek-V3 Architecture Walkthrough' is lesson 20 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'DeepSeek-V3 Architecture Walkthrough'?",
+    "options": [
+      "Learn \u2014 Python (stdlib, parameter calculator)",
+      "Capstone \u2014 Julia",
+      "Build \u2014 Python",
+      "Build \u2014 Rust"
+    ],
+    "correct": 0,
+    "explanation": "'DeepSeek-V3 Architecture Walkthrough' is tagged as Learn in Python (stdlib, parameter calculator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Llms From Scratch, which lesson comes immediately after 'DeepSeek-V3 Architecture Walkthrough'?",
+    "options": [
+      "Differential Attention (V2)",
+      "Data Pipelines for Pre-Training",
+      "Jamba \u2014 Hybrid SSM-Transformer",
+      "Gradient Checkpointing and Activation Recomputation"
+    ],
+    "correct": 2,
+    "explanation": "'Jamba \u2014 Hybrid SSM-Transformer' follows 'DeepSeek-V3 Architecture Walkthrough' as lesson 21.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'DeepSeek-V3 Architecture Walkthrough'?",
+    "options": [
+      "advanced_prompting.py",
+      "main.rs",
+      "main.py",
+      "ml_intro.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'DeepSeek-V3 Architecture Walkthrough'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'DeepSeek-V3 Architecture Walkthrough'?",
+    "options": [
+      "Phase 10 \u00b7 Lesson 14 named the six architectural knobs every open model turns. DeepSeek-V3 (December 2024, 671B parameters total, 37B active) turns all six and adds four more: Multi-Head Latent Attention, auxiliary-loss-free load balancing, Multi-Token Prediction, and DualPipe training. This lesson reads DeepSeek-V3's architecture top to bottom and derives every parameter count from the published config. By the end you can explain why the 671B/37B ratio is the right bet and why MLA + MoE together beat either alone at the frontier.",
+      "At 64k tokens, attention eats 70-80% of decode latency. Every open-model lab has a plan to fix it. DeepSeek's NSA (ACL 2025 best paper) is the one that stuck: three parallel attention branches \u2014 compressed coarse-grained tokens, selectively retained fine-grained tokens, and sliding windows for local context \u2014 combined through a learned gate. It is hardware-aligned (kernel-friendly), natively trainable (works in pre-training, not bolted on at inference), and on 64k decodes it runs faster than FlashAttention while matching or beating full attention quality. This lesson builds the three branches end-to-end and shows why the sparsity is end-to-end differentiable.",
+      "A base model predicts the next token. That's it. It doesn't follow instructions, answer questions, or refuse harmful requests. SFT is the bridge between a token predictor and a useful assistant. Every model you've ever talked to -- Claude, GPT, Llama Chat -- went through this step.",
+      "Every autoregressive LLM from GPT-2 to Llama 3 trains on one loss per position: predict the next token. DeepSeek-V3 added a second loss per position: predict the token after that. The extra 14B of parameters (on a 671B model) got distilled back into the main model through gradient flow, and the trained MTP heads were repurposed at inference as speculative-decoding drafters with 80%+ acceptance. 1.8\u00d7 generation throughput came for free. This lesson builds the sequential MTP module from the DeepSeek technical report, computes the loss and the shared-head parameter layout, and explains why MTP keeps the causal chain while Gloeckle et al.'s original parallel MTP broke it."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'DeepSeek-V3 Architecture Walkthrough'.",
+    "stage": "pre"
+  }
+]

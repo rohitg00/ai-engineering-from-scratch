@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone' belong to?",
+    "options": [
+      "Computer Vision",
+      "Infrastructure and Production",
+      "Nlp Foundations to Advanced",
+      "Speech and Audio"
+    ],
+    "correct": 3,
+    "explanation": "'Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone' is lesson 12 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone'?",
+    "options": [
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Python",
+      "Learn \u2014 Julia"
+    ],
+    "correct": 2,
+    "explanation": "'Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone'?",
+    "options": [
+      "Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split",
+      "Whisper \u2014 Architecture & Fine-Tuning",
+      "Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake",
+      "Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio"
+    ],
+    "correct": 0,
+    "explanation": "'Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split' follows 'Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone' as lesson 13.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone'?",
+    "options": [
+      "single_vs_multi.ts",
+      "main.py",
+      "bias_variance.py",
+      "tests"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone'?",
+    "options": [
+      "Batch pipelines process a file. Real-time pipelines process the next 20 milliseconds before the next 20 arrive. Every conversational AI, broadcast studio, and telephony bot lives and dies by this latency budget.",
+      "Neural nets do not consume raw waveforms well. They consume spectrograms. They consume mel spectrograms even better. Every ASR, TTS, and audio classifier in 2026 lives or dies by this single preprocessing choice.",
+      "Every voice agent lives or dies on two decisions: is the user speaking now, and are they done? VAD answers the first. Turn-detection (VAD + silence-hangover + semantic endpoint model) answers the second. Get either wrong and your assistant either cuts users off or never shuts up.",
+      "Everything from lessons 01-11, stitched together. Build a voice assistant that listens, reasons, and talks back. In 2026 that is a solved engineering problem, not a research problem \u2014 but the integration details decide whether it ships."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End' belong to?",
+    "options": [
+      "Tools and Protocols",
+      "Multimodal Ai",
+      "Ethics Safety Alignment",
+      "Speech and Audio"
+    ],
+    "correct": 0,
+    "explanation": "'OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End' is lesson 20 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End'?",
+    "options": [
+      "Learn \u2014 \u2014",
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Python (stdlib, OTel span emitter)",
+      "Learn \u2014 Julia"
+    ],
+    "correct": 2,
+    "explanation": "'OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End' is tagged as Build in Python (stdlib, OTel span emitter).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End'?",
+    "options": [
+      "MCP Apps \u2014 Interactive UI Resources via `ui://`",
+      "Roots and Elicitation \u2014 Scoping and Mid-Flight User Input",
+      "LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey",
+      "Parallel Tool Calls and Streaming with Tools"
+    ],
+    "correct": 2,
+    "explanation": "'LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey' follows 'OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End' as lesson 21.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End'?",
+    "options": [
+      "main.ts",
+      "main.py",
+      "guardrails.py",
+      "ts"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End'?",
+    "options": [
+      "Provider lock-in is expensive. Different tool-calling workloads suit different models. Routing gateways give one API surface, retries, failover, cost tracking, and guardrails. Three archetypes dominate 2026: LiteLLM (open-source self-hosted), OpenRouter (managed SaaS), Portkey (production-grade, open-sourced in March 2026). This lesson names the decision criteria and walks a stdlib routing gateway.",
+      "An agent calls five tools, three MCP servers, and two sub-agents. You need one trace across all of it. The OpenTelemetry GenAI semantic conventions (stable attributes in v1.37 and up) are the 2026 standard, natively supported by Datadog, Langfuse, Arize Phoenix, OpenLLMetry, and AgentOps. This lesson names the required attributes, walks the span hierarchy (agent \u2192 LLM \u2192 tool), and ships a stdlib span emitter you can plug into any OTel exporter.",
+      "Remote MCP servers need authorization, not just authentication. The 2025-11-25 spec aligns with OAuth 2.1 + PKCE + resource indicators (RFC 8707) + protected-resource metadata (RFC 9728). SEP-835 adds incremental scope consent with step-up authorization on 403 WWW-Authenticate. This lesson implements the step-up flow as a state machine so you can see every hop.",
+      "Hard-coded paths break the moment a user opens a different project. Pre-filled tool arguments break when the user under-specifies. Roots scope the server to a user-controlled set of URIs; elicitation pauses mid-tool-call to ask the user for structured input via a form or URL. Two client primitives, two fixes for common MCP failure modes. SEP-1036 (URL-mode elicitation, 2025-11-25) is experimental through H1 2026 \u2014 check SDK versions before depending on it."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End'.",
+    "stage": "pre"
+  }
+]

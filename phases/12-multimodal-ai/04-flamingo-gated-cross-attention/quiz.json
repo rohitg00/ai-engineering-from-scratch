@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Flamingo and Gated Cross-Attention for Few-Shot VLMs' belong to?",
+    "options": [
+      "Ethics Safety Alignment",
+      "Ml Fundamentals",
+      "Infrastructure and Production",
+      "Multimodal Ai"
+    ],
+    "correct": 3,
+    "explanation": "'Flamingo and Gated Cross-Attention for Few-Shot VLMs' is lesson 04 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Flamingo and Gated Cross-Attention for Few-Shot VLMs'?",
+    "options": [
+      "Build \u2014 TypeScript",
+      "Build \u2014 \u2014",
+      "Learn \u2014 Python (stdlib, gated cross-attention + Perceiver resampler demo)",
+      "Capstone \u2014 TypeScript"
+    ],
+    "correct": 2,
+    "explanation": "'Flamingo and Gated Cross-Attention for Few-Shot VLMs' is tagged as Learn in Python (stdlib, gated cross-attention + Perceiver resampler demo).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'Flamingo and Gated Cross-Attention for Few-Shot VLMs'?",
+    "options": [
+      "LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model",
+      "Show-o and Discrete-Diffusion Unified Models",
+      "Long-Video Understanding at Million-Token Context",
+      "LLaVA and Visual Instruction Tuning"
+    ],
+    "correct": 3,
+    "explanation": "'LLaVA and Visual Instruction Tuning' follows 'Flamingo and Gated Cross-Attention for Few-Shot VLMs' as lesson 05.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Flamingo and Gated Cross-Attention for Few-Shot VLMs'?",
+    "options": [
+      "tests.py",
+      "tensors.py",
+      "main.rs",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Flamingo and Gated Cross-Attention for Few-Shot VLMs'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Flamingo and Gated Cross-Attention for Few-Shot VLMs'?",
+    "options": [
+      "Every open VLM before InternVL3 followed the same three-step recipe: take a text LLM trained on trillions of text tokens, bolt on a vision encoder, then fine-tune the seams. This works but has alignment debt \u2014 the text LLM has spent its full pretraining budget on pure text and does not natively understand visual tokens. When you add vision post-hoc, the LLM has to re-learn how to relate visual input to its text reasoning without forgetting the text. InternVL3 (Zhu et al., April 2025) rejects the post-hoc approach: one pretraining run, text and multimodal interleaved from step one. The result matches Gemini 2.5 Pro on MMMU-Pro at 78B params open. This lesson reads the case for native pretraining and what changes when you make it.",
+      "The 2026 frontier product is a multimodal agent that reads screenshots, clicks buttons, navigates web UIs, fills forms, and completes workflows end-to-end. SeeClick and CogAgent (2024) proved the GUI-grounding primitive. Ferret-UI added mobile. ChartAgent introduced visual tool-use for charts. VisualWebArena and AgentVista (2026) are the benchmarks the frontier chases \u2014 and even Gemini 3 Pro and Claude Opus 4.7 score ~30% on AgentVista's hard tasks. This capstone pulls together every thread of Phase 12: perception (high-res VLM), reasoning (LLM with tool use), grounding (coordinate output), long-horizon memory, and evaluation.",
+      "DeepMind's Flamingo (2022) did two things before anyone else. It showed a single model could process arbitrarily interleaved sequences of images, videos, and text. And it showed VLMs could learn in-context \u2014 give a few-shot prompt with three example (image, caption) pairs and the model captions a new image without any gradient step. The mechanism: gated cross-attention layers, inserted between the frozen LLM's existing layers, with a learned tanh gate that starts at zero so the LLM's text capability is preserved at initialization. This lesson walks Flamingo's Perceiver resampler and gated cross-attention architecture \u2014 the ancestor of Gemini's interleaved inputs and Idefics2's visual tokens.",
+      "CLIP aligns image and text but cannot generate captions, answer questions, or hold a conversation. BLIP-2 (Salesforce, 2023) solved that with a small trainable bridge: 32 learnable query vectors attend over a frozen ViT's features via cross-attention, then slot directly into a frozen LLM's input stream. 188M parameters of bridge connected an 11B LLM to a ViT-g/14. Every adapter-based VLM through 2026 \u2014 MiniGPT-4, InstructBLIP, LLaVA's cousins \u2014 is a descendant. This lesson reads the Q-Former's architecture, explains its two-stage training, and builds a toy version that feeds visual tokens into a frozen text decoder."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Flamingo and Gated Cross-Attention for Few-Shot VLMs'.",
+    "stage": "pre"
+  }
+]

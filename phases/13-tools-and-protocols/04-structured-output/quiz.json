@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Llms From Scratch",
+      "Tools and Protocols",
+      "Capstone Projects"
+    ],
+    "correct": 2,
+    "explanation": "'Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding' is lesson 04 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding'?",
+    "options": [
+      "Learn \u2014 TypeScript",
+      "Learn \u2014 \u2014",
+      "Learn \u2014 Julia",
+      "Build \u2014 Python (stdlib, JSON Schema 2020-12 subset)"
+    ],
+    "correct": 3,
+    "explanation": "'Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding' is tagged as Build in Python (stdlib, JSON Schema 2020-12 subset).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding'?",
+    "options": [
+      "MCP Apps \u2014 Interactive UI Resources via `ui://`",
+      "MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing",
+      "Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini",
+      "Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints"
+    ],
+    "correct": 3,
+    "explanation": "'Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints' follows 'Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding' as lesson 05.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding'?",
+    "options": [
+      "clustering.py",
+      "tests",
+      "main.py",
+      "tests"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding'?",
+    "options": [
+      "stdio works locally and nowhere else. Streamable HTTP (2025-03-26) is the remote standard. The old HTTP+SSE transport is deprecated and being removed in mid-2026. Picking the wrong transport costs a migration; picking the right one buys a remote-hostable MCP server with session continuity and DNS-rebinding protection.",
+      "\"Ask the model nicely to return JSON\" fails 5 to 15 percent of the time, even on frontier models. Structured outputs close that gap with constrained decoding: the model is literally prevented from emitting a token that would violate the schema. OpenAI's strict mode, Anthropic's schema-typed tool use, Gemini's `responseSchema`, Pydantic AI's `output_type`, and Zod's `.parse` are five surface forms of the same idea. This lesson builds the schema validator and the strict-mode contract learners will use for every production extraction pipeline.",
+      "Real agent work takes minutes to hours: CI runs, deep-research synthesis, batch exports. Synchronous tool calls drop connections, time out, or block the UI. SEP-1686, merged in 2025-11-25, adds a Tasks primitive: any request can be augmented to become a task, and the result can be fetched later or streamed via state notifications. Drift-risk note: Tasks are experimental through H1 2026; SDK surface is still being designed around the spec.",
+      "Enterprises cannot let every dev install random MCP servers. A gateway centralizes auth, RBAC, audit, rate limiting, caching, and tool-poisoning detection, then exposes the merged tool surface as a single MCP endpoint. The Official MCP Registry (Anthropic + GitHub + PulseMCP + Microsoft, namespace-verified) is the canonical upstream. This lesson names where a gateway fits, walks a minimal implementation, and surveys the 2026 vendor landscape."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding'.",
+    "stage": "pre"
+  }
+]

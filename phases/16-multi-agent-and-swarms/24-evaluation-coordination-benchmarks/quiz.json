@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Evaluation and Coordination Benchmarks' belong to?",
+    "options": [
+      "Transformers Deep Dive",
+      "Multi Agent and Swarms",
+      "Autonomous Systems",
+      "Math Foundations"
+    ],
+    "correct": 1,
+    "explanation": "'Evaluation and Coordination Benchmarks' is lesson 24 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Evaluation and Coordination Benchmarks'?",
+    "options": [
+      "Capstone \u2014 Julia",
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 Python (stdlib)",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 2,
+    "explanation": "'Evaluation and Coordination Benchmarks' is tagged as Learn in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Evaluation and Coordination Benchmarks'?",
+    "options": [
+      "Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors",
+      "Heritage of FIPA-ACL and Speech Acts",
+      "Hierarchical Architecture and Its Failure Mode",
+      "Case Studies and the 2026 State of the Art"
+    ],
+    "correct": 3,
+    "explanation": "'Case Studies and the 2026 State of the Art' follows 'Evaluation and Coordination Benchmarks' as lesson 25.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Evaluation and Coordination Benchmarks'?",
+    "options": [
+      "main.rs",
+      "evaluation.py",
+      "main.ts",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Evaluation and Coordination Benchmarks'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Evaluation and Coordination Benchmarks'?",
+    "options": [
+      "The most common multi-agent decomposition in 2026: one agent plans, one executes, one critiques or verifies. MetaGPT (arXiv:2308.00352) formalizes this as SOPs encoded into role prompts \u2014 Product Manager, Architect, Project Manager, Engineer, QA Engineer \u2014 following `Code = SOP(Team)`. ChatDev (arXiv:2307.07924) chains designer, programmer, reviewer, tester through a \"chat chain\" with \"communicative dehallucination\" (agents explicitly request missing details). The verifier is load-bearing: Cemri et al. (MAST, arXiv:2503.13657) show every multi-agent failure can be traced to missing or broken verification. PwC reported 7\u00d7 accuracy gain (10% \u2192 70%) from structured validation loops in CrewAI.",
+      "Long-horizon autonomous agents (METR's 1-hour to 8-hour work-curve) need economic agency. The emerging **5-layer stack** is: **DePIN** (physical compute) \u2192 **Identity** (W3C DIDs + reputation capital) \u2192 **Cognition** (RAG + MCP) \u2192 **Settlement** (account abstraction) \u2192 **Governance** (Agentic DAOs). Production agent-incentive networks include **Bittensor** (TAO subnets reward task-specific models), **Fetch.ai / ASI Alliance** (ASI-1 Mini LLM + FET token), and **Gonka** (transformer-based PoW that reallocates compute to productive AI tasks). Academic work: AAMAS 2025's decentralized LaMAS uses **Shapley-value credit attribution** to fairly reward contributing agents; Google Research \"Mechanism design for large language models\" proposes **token auctions** with second-price payment under monotone aggregation. This lesson builds a minimal agent marketplace, applies Shapley-value credit attribution to a multi-agent pipeline, and runs a second-price token auction so the game-theory machinery lands concretely.",
+      "One agent hits a wall. The smart move is not a bigger agent - it is more agents.",
+      "Five 2025-2026 benchmarks cover the multi-agent evaluation space. **MultiAgentBench / MARBLE** (ACL 2025, arXiv:2503.01935) evaluates star/chain/tree/graph topologies with milestone KPIs; **graph is best for research**, cognitive planning adds ~3% milestone achievement. **COMMA** evaluates multimodal asymmetric-information coordination; state-of-the-art models including GPT-4o struggle to beat a random baseline. **MedAgentBoard** (arXiv:2505.12371) covers four medical task categories and often finds multi-agent does not dominate single-LLM. **AgentArch** (arXiv:2509.10769) benchmarks enterprise agent architectures combining tool-use + memory + orchestration. **SWE-bench Pro** ([arXiv:2509.16941](https://arxiv.org/abs/2509.16941)) has 1865 problems across 41 repos spanning business apps, B2B services, and developer tools; frontier models score ~23% on Pro vs 70%+ on Verified \u2014 a reality check on contamination. Claude Opus 4.7 (April 2026) is reported at **64.3%** on Pro with explicit agent-teams coordination (no Anthropic primary source published yet \u2014 treat as preliminary); Verdent (agent scaffold) hits **76.1% pass@1** on Verified ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report)). **AAAI 2026 Bridge Program WMAC** (https://multiagents.org/2026/) is the 2026 community focal point. This lesson builds on MARBLE's metrics, runs a topology-vs-metric sweep, and pins the \"just passing SWE-bench Verified is not evidence of generalization\" rule."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Evaluation and Coordination Benchmarks'.",
+    "stage": "pre"
+  }
+]

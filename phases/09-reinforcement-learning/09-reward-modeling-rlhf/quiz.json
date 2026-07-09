@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Reward Modeling & RLHF' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Ethics Safety Alignment",
+      "Reinforcement Learning",
+      "Generative Ai"
+    ],
+    "correct": 2,
+    "explanation": "'Reward Modeling & RLHF' is lesson 09 in Phase 9 \u2014 Reinforcement Learning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Reward Modeling & RLHF'?",
+    "options": [
+      "Learn \u2014 Julia",
+      "Capstone \u2014 Rust",
+      "Learn \u2014 TypeScript",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Reward Modeling & RLHF' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Reinforcement Learning, which lesson comes immediately after 'Reward Modeling & RLHF'?",
+    "options": [
+      "Proximal Policy Optimization (PPO)",
+      "RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era",
+      "Sim-to-Real Transfer",
+      "Multi-Agent RL"
+    ],
+    "correct": 3,
+    "explanation": "'Multi-Agent RL' follows 'Reward Modeling & RLHF' as lesson 10.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Reward Modeling & RLHF'?",
+    "options": [
+      "ts",
+      "main.py",
+      "data_utils.py",
+      "main.ts"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Reward Modeling & RLHF'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Reward Modeling & RLHF'?",
+    "options": [
+      "A2C throws away each rollout after one update. PPO wraps the policy gradient in a clipped importance ratio so you can do 10+ epochs on the same data without the policy exploding. Schulman et al. (2017). Still the default policy-gradient algorithm in 2026.",
+      "2013: Mnih trained one Q-learning network on raw pixels, beat every classical RL agent on seven Atari games. 2015: extended to 49 games, published in Nature, sparked the deep-RL era. DQN is Q-learning plus three tricks that make function approximation stable.",
+      "Humans cannot write a reward function for \"good assistant response,\" but they can compare two responses and pick the better one. Fit a reward model to those comparisons, then RL the language model against it. Christiano 2017. InstructGPT 2022. The recipe that turned GPT-3 into ChatGPT. In 2026 it is mostly being replaced by DPO \u2014 but the mental model stays.",
+      "Dynamic programming is RL with cheating. You already know the transition and reward functions; you just iterate the Bellman equation until `V` or `\u03c0` stops moving. It is the benchmark every sampling-based method tries to approach."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Reward Modeling & RLHF'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Ethics Safety Alignment",
+      "Agent Engineering",
+      "Multimodal Ai"
+    ],
+    "correct": 0,
+    "explanation": "'STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning' is lesson 02 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning'?",
+    "options": [
+      "Learn \u2014 Python (stdlib, bootstrap-loop simulator)",
+      "Build \u2014 \u2014",
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 Python"
+    ],
+    "correct": 0,
+    "explanation": "'STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning' is tagged as Learn in Python (stdlib, bootstrap-loop simulator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning'?",
+    "options": [
+      "AI Scientist v2 \u2014 Workshop-Level Autonomous Research",
+      "Anthropic Responsible Scaling Policy v3.0",
+      "The Shift from Chatbots to Long-Horizon Agents",
+      "AlphaEvolve \u2014 Evolutionary Coding Agents"
+    ],
+    "correct": 3,
+    "explanation": "'AlphaEvolve \u2014 Evolutionary Coding Agents' follows 'STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning' as lesson 03.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning'?",
+    "options": [
+      "optimizers.py",
+      "main.ts",
+      "tests",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning'?",
+    "options": [
+      "The smallest possible self-improvement loop sits inside the rationale. A model generates a chain of thought, keeps the ones that land on correct answers, and fine-tunes on those. That is STaR. V-STaR adds a verifier so inference-time selection is better. Quiet-STaR pushes the rationale down to every token. All three work. None of them are magic \u2014 the loop preserves any shortcut that happened to reach the right answer.",
+      "OpenAI Preparedness Framework v2 (April 2025) introduces Research Categories \u2014 Long-range Autonomy, Sandbagging, Autonomous Replication and Adaptation, Undermining Safeguards \u2014 distinct from Tracked Categories. Tracked Categories trigger Capabilities Reports plus Safeguards Reports reviewed by the Safety Advisory Group. DeepMind's FSF v3 (September 2025, with Tracked Capability Levels added April 17, 2026) folds autonomy into ML R&D and Cyber domains (ML R&D autonomy level 1 = fully automate the AI R&D pipeline at competitive cost vs human + AI tools). FSF v3 explicitly addresses deceptive alignment via automated monitoring for instrumental-reasoning misuse. The honest note: Research Categories in PF v2 (including Long-range Autonomy) do not automatically trigger mitigations; the policy language is \"potential.\" DeepMind itself says automated monitoring \"will not remain sufficient long-term\" if instrumental reasoning strengthens.",
+      "METR (ex-ARC Evals) is an independent 501(c)(3) since December 2023. Their Time Horizon 1.1 benchmark (January 2026) fits a logistic curve to task-success probability vs log(expert human completion time); the intersection at 50% probability defines the model's time horizon. The 2025\u20132026 engagement set covers GPT-5.1, GPT-5.1-Codex-Max, and prototype monitoring evaluations (can a monitor catch side tasks; can the agent evade). Benchmark suites: HCAST (180+ ML, cyber, SWE, reasoning tasks; 1 minute to 8+ hours), RE-Bench (71 ML research-engineering tasks with expert baseline), SWAA. The honest note: METR measurements are idealized \u2014 no human, no real consequences \u2014 and the team has documented the eval-vs-deployment behavior gap (Lesson 1). A time horizon is an upper bound, not a deployment prediction.",
+      "SWE-bench Verified went from 4% to 80.9% in under three years. Same Claude Sonnet 4.5 scored 43.2% on SWE-agent v1 and 59.8% on Cline autonomous \u2014 the scaffolding around the model now matters as much as the model itself. OpenHands (formerly OpenDevin) is the most active MIT-licensed platform and its CodeAct loop executes Python actions directly in a sandbox instead of JSON tool calls. The headline numbers hide a methodological issue: 161 of 500 SWE-bench Verified tasks require only a 1\u20132 line change, and SWE-bench Pro (10+ line tasks) sits at 23\u201359% for the same frontier models."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning'.",
+    "stage": "pre"
+  }
+]

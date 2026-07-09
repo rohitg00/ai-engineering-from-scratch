@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'MCP Gateways and Registries \u2014 Enterprise Control Planes' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Setup and Tooling",
+      "Reinforcement Learning",
+      "Tools and Protocols"
+    ],
+    "correct": 3,
+    "explanation": "'MCP Gateways and Registries \u2014 Enterprise Control Planes' is lesson 17 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'MCP Gateways and Registries \u2014 Enterprise Control Planes'?",
+    "options": [
+      "Build \u2014 Rust",
+      "Learn \u2014 Python (stdlib, minimal gateway)",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 1,
+    "explanation": "'MCP Gateways and Registries \u2014 Enterprise Control Planes' is tagged as Learn in Python (stdlib, minimal gateway).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'MCP Gateways and Registries \u2014 Enterprise Control Planes'?",
+    "options": [
+      "MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens",
+      "MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing",
+      "Building an MCP Client \u2014 Discovery, Invocation, Session Management",
+      "MCP Resources and Prompts \u2014 Context Exposure Beyond Tools"
+    ],
+    "correct": 0,
+    "explanation": "'MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens' follows 'MCP Gateways and Registries \u2014 Enterprise Control Planes' as lesson 18.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'MCP Gateways and Registries \u2014 Enterprise Control Planes'?",
+    "options": [
+      "tests",
+      "vscode",
+      "main.py",
+      "rules.yml"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'MCP Gateways and Registries \u2014 Enterprise Control Planes'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'MCP Gateways and Registries \u2014 Enterprise Control Planes'?",
+    "options": [
+      "Enterprises cannot let every dev install random MCP servers. A gateway centralizes auth, RBAC, audit, rate limiting, caching, and tool-poisoning detection, then exposes the merged tool surface as a single MCP endpoint. The Official MCP Registry (Anthropic + GitHub + PulseMCP + Microsoft, namespace-verified) is the canonical upstream. This lesson names where a gateway fits, walks a minimal implementation, and surveys the 2026 vendor landscape.",
+      "Hard-coded paths break the moment a user opens a different project. Pre-filled tool arguments break when the user under-specifies. Roots scope the server to a user-controlled set of URIs; elicitation pauses mid-tool-call to ask the user for structured input via a form or URL. Two client primitives, two fixes for common MCP failure modes. SEP-1036 (URL-mode elicitation, 2025-11-25) is experimental through H1 2026 \u2014 check SDK versions before depending on it.",
+      "Tools get 90 percent of MCP attention. The other two server primitives solve different problems. Resources expose data for reading; prompts expose reusable templates as slash-commands. Many servers should use resources instead of wrapping reads in tools, and prompts instead of hard-coding workflows in client prompts. This lesson names the decision rule and walks the `resources/*` and `prompts/*` messages.",
+      "A correct tool fails silently when the model cannot tell when to use it. Naming, descriptions, and parameter shapes drive 10 to 20 percentage-point swings in tool-selection accuracy on benchmarks like StableToolBench and MCPToolBench++. This lesson names the design rules that separate a tool a model picks reliably from a tool a model mis-fires."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'MCP Gateways and Registries \u2014 Enterprise Control Planes'.",
+    "stage": "pre"
+  }
+]

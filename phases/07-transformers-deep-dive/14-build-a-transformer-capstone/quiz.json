@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Build a Transformer from Scratch \u2014 The Capstone' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Llms From Scratch",
+      "Transformers Deep Dive",
+      "Agent Engineering"
+    ],
+    "correct": 2,
+    "explanation": "'Build a Transformer from Scratch \u2014 The Capstone' is lesson 14 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Build a Transformer from Scratch \u2014 The Capstone'?",
+    "options": [
+      "Build \u2014 Python",
+      "Capstone \u2014 \u2014",
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 TypeScript"
+    ],
+    "correct": 0,
+    "explanation": "'Build a Transformer from Scratch \u2014 The Capstone' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'Build a Transformer from Scratch \u2014 The Capstone'?",
+    "options": [
+      "Audio Transformers \u2014 Whisper Architecture",
+      "Mixture of Experts (MoE)",
+      "T5, BART \u2014 Encoder-Decoder Models",
+      "Attention Variants \u2014 Sliding Window, Sparse, Differential"
+    ],
+    "correct": 3,
+    "explanation": "'Attention Variants \u2014 Sliding Window, Sparse, Differential' follows 'Build a Transformer from Scratch \u2014 The Capstone' as lesson 15.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Build a Transformer from Scratch \u2014 The Capstone'?",
+    "options": [
+      "ts",
+      "main.py",
+      "tests.py",
+      "test_main.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Build a Transformer from Scratch \u2014 The Capstone'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Build a Transformer from Scratch \u2014 The Capstone'?",
+    "options": [
+      "Thirteen lessons. One model. No shortcuts.",
+      "Autoregressive decoding is serial. Each token waits for the previous one. Speculative decoding breaks the chain: a cheap model drafts N tokens, the expensive model verifies all N in one forward pass. When the draft is right you paid one big forward for N generations.",
+      "BERT sees both sides. GPT sees only the past. The triangle mask is the most consequential single line of code in modern AI.",
+      "RNNs process tokens one at a time. Transformers process all tokens at once. That single architectural bet changed every scaling curve in deep learning after 2017."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Build a Transformer from Scratch \u2014 The Capstone'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Knowledge Game{% endblock %} — AI Engineering from Scratch</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Knowledge Game</a>
+    <nav>
+      <a href="/">Dashboard</a>
+      <form class="reset-form" method="post" action="/reset" onsubmit="return confirm('Reset all progress? This cannot be undone.');">
+        <button type="submit" class="btn-danger-ghost">Reset progress</button>
+      </form>
+    </nav>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

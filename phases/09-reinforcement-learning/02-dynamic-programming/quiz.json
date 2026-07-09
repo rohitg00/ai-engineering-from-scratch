@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Dynamic Programming \u2014 Policy Iteration & Value Iteration' belong to?",
+    "options": [
+      "Tools and Protocols",
+      "Reinforcement Learning",
+      "Nlp Foundations to Advanced",
+      "Ethics Safety Alignment"
+    ],
+    "correct": 1,
+    "explanation": "'Dynamic Programming \u2014 Policy Iteration & Value Iteration' is lesson 02 in Phase 9 \u2014 Reinforcement Learning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Dynamic Programming \u2014 Policy Iteration & Value Iteration'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Python",
+      "Learn \u2014 \u2014",
+      "Learn \u2014 Julia"
+    ],
+    "correct": 1,
+    "explanation": "'Dynamic Programming \u2014 Policy Iteration & Value Iteration' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Reinforcement Learning, which lesson comes immediately after 'Dynamic Programming \u2014 Policy Iteration & Value Iteration'?",
+    "options": [
+      "Policy Gradient \u2014 REINFORCE from Scratch",
+      "Deep Q-Networks (DQN)",
+      "MDPs, States, Actions & Rewards",
+      "Monte Carlo Methods \u2014 Learning from Complete Episodes"
+    ],
+    "correct": 3,
+    "explanation": "'Monte Carlo Methods \u2014 Learning from Complete Episodes' follows 'Dynamic Programming \u2014 Policy Iteration & Value Iteration' as lesson 03.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Dynamic Programming \u2014 Policy Iteration & Value Iteration'?",
+    "options": [
+      "pytorch_intro.py",
+      "main.ts",
+      "matrices.jl",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Dynamic Programming \u2014 Policy Iteration & Value Iteration'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Dynamic Programming \u2014 Policy Iteration & Value Iteration'?",
+    "options": [
+      "Stop estimating value. Parameterize the policy directly, compute the gradient of expected return, step uphill. Williams (1992) wrote it in one theorem. It is why PPO, GRPO, and every LLM RL loop exist.",
+      "Monte Carlo waits until the episode ends. TD updates after every step by bootstrapping the next value estimate. Q-learning is off-policy and optimistic; SARSA is on-policy and cautious. Both are one line of code. Both underpin every deep-RL method in this phase.",
+      "REINFORCE is noisy. Add a critic that learns `V\u0302(s)`, subtract it from the return, and you get an advantage that has the same expectation but far lower variance. That is actor-critic. A2C runs it synchronously; A3C runs it across threads. Both are the mental model for every modern deep-RL method.",
+      "Dynamic programming is RL with cheating. You already know the transition and reward functions; you just iterate the Bellman equation until `V` or `\u03c0` stops moving. It is the benchmark every sampling-based method tries to approach."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Dynamic Programming \u2014 Policy Iteration & Value Iteration'.",
+    "stage": "pre"
+  }
+]

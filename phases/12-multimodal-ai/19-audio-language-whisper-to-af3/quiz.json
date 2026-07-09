@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Audio-Language Models: the Whisper to Audio Flamingo 3 Arc' belong to?",
+    "options": [
+      "Reinforcement Learning",
+      "Math Foundations",
+      "Multimodal Ai",
+      "Infrastructure and Production"
+    ],
+    "correct": 2,
+    "explanation": "'Audio-Language Models: the Whisper to Audio Flamingo 3 Arc' is lesson 19 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Audio-Language Models: the Whisper to Audio Flamingo 3 Arc'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Capstone \u2014 Python",
+      "Build \u2014 Python (stdlib, log-Mel spectrogram + audio Q-former skeleton)",
+      "Learn \u2014 Python"
+    ],
+    "correct": 2,
+    "explanation": "'Audio-Language Models: the Whisper to Audio Flamingo 3 Arc' is tagged as Build in Python (stdlib, log-Mel spectrogram + audio Q-former skeleton).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'Audio-Language Models: the Whisper to Audio Flamingo 3 Arc'?",
+    "options": [
+      "Long-Video Understanding at Million-Token Context",
+      "CLIP and Contrastive Vision-Language Pretraining",
+      "Omni Models: Qwen2.5-Omni and the Thinker-Talker Split",
+      "Chameleon and Early-Fusion Token-Only Multimodal Models"
+    ],
+    "correct": 2,
+    "explanation": "'Omni Models: Qwen2.5-Omni and the Thinker-Talker Split' follows 'Audio-Language Models: the Whisper to Audio Flamingo 3 Arc' as lesson 20.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Audio-Language Models: the Whisper to Audio Flamingo 3 Arc'?",
+    "options": [
+      "main.py",
+      "main.ts",
+      "main.ts",
+      "tests"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Audio-Language Models: the Whisper to Audio Flamingo 3 Arc'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Audio-Language Models: the Whisper to Audio Flamingo 3 Arc'?",
+    "options": [
+      "Whisper (Radford et al., December 2022) settled speech recognition \u2014 680k hours of weakly-supervised multilingual speech, a simple encoder-decoder transformer, a benchmark that made every subsequent ASR release cite it. But recognition is not reasoning. Asking \"what instruments are in this recording\" or \"what emotion is the speaker expressing\" or \"what happened at minute 3\" requires audio understanding, not transcription. Qwen-Audio, SALMONN, LTU, and NVIDIA's Audio Flamingo 3 (AF3, July 2025) progressively built that stack: keep Whisper-class encoders, bolt on Q-formers, train on audio-text instruction data, add chain-of-thought reasoning. This lesson walks the arc.",
+      "GPT-4o ships a product most open models cannot replicate: an agent that hears voice, sees video, and speaks back in real time. The open-ecosystem answer by late 2024 was MIO (Wang et al., September 2024). MIO tokenizes text, image, speech, and music, trains one causal transformer over the interleaved sequences, and generates any modality to any modality. AnyGPT (Zhan et al., February 2024) was the proof of concept; MIO is the scale-up; Unified-IO 2 (Allen AI, December 2023) is the cousin with vision + action grounding. This lesson reads the any-to-any pattern \u2014 four tokenizers, one transformer, streaming-friendly decode.",
+      "Documents are not photos. A PDF, scientific paper, invoice, or handwritten form has layout, tables, diagrams, footnotes, headers, and semantic structure that plain image understanding cannot capture. The pre-VLM stack was a pipeline: Tesseract OCR + LayoutLMv3 + table-extraction heuristics. The VLM wave replaced that with OCR-free models \u2014 Donut (2022), Nougat (2023), DocLLM (2023) \u2014 that emit structured markup directly. By 2026 the frontier is just \"feed the page image to Claude Opus 4.7 at 2576px native,\" and the structured-markup output comes for free. This lesson reads the three-era arc of document AI.",
+      "A 1-hour 4K video at 24 FPS, patched and embedded, produces on the order of 60 million tokens. A 2-hour podcast episode transcribed is 30,000 tokens. A full Blu-ray feature film, even compressed with aggressive pooling, is hundreds of thousands of tokens. Google's Gemini 1.5 (March 2024) opened this era with a 10-million-token context, doing reliable needle-in-a-haystack recall over hour-long videos. LWM (Liu et al., February 2024) showed ring attention's scaling path. LongVILA and Video-XL scaled ingestion further. VideoAgent swapped raw context for agentic retrieval. Each approach is a different trade-off on compute, recall, and engineering complexity. This lesson reads them side by side."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Audio-Language Models: the Whisper to Audio Flamingo 3 Arc'.",
+    "stage": "pre"
+  }
+]

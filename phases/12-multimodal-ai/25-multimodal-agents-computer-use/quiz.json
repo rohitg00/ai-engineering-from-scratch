@@ -1,0 +1,50 @@
+[
+  {
+    "question": "Which phase does the lesson 'Multimodal Agents and Computer-Use (Capstone)' belong to?",
+    "options": [
+      "Agent Engineering",
+      "Setup and Tooling",
+      "Ml Fundamentals",
+      "Multimodal Ai"
+    ],
+    "correct": 3,
+    "explanation": "'Multimodal Agents and Computer-Use (Capstone)' is lesson 25 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Multimodal Agents and Computer-Use (Capstone)'?",
+    "options": [
+      "Build \u2014 Julia",
+      "Learn \u2014 \u2014",
+      "Build \u2014 Python",
+      "Capstone \u2014 Python (stdlib, action schema + agent loop skeleton)"
+    ],
+    "correct": 3,
+    "explanation": "'Multimodal Agents and Computer-Use (Capstone)' is tagged as Capstone in Python (stdlib, action schema + agent loop skeleton).",
+    "stage": "pre"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Multimodal Agents and Computer-Use (Capstone)'?",
+    "options": [
+      "ensembles.py",
+      "main.rs",
+      "linear_regression.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Multimodal Agents and Computer-Use (Capstone)'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Multimodal Agents and Computer-Use (Capstone)'?",
+    "options": [
+      "GPT-4o ships a product most open models cannot replicate: an agent that hears voice, sees video, and speaks back in real time. The open-ecosystem answer by late 2024 was MIO (Wang et al., September 2024). MIO tokenizes text, image, speech, and music, trains one causal transformer over the interleaved sequences, and generates any modality to any modality. AnyGPT (Zhan et al., February 2024) was the proof of concept; MIO is the scale-up; Unified-IO 2 (Allen AI, December 2023) is the cousin with vision + action grounding. This lesson reads the any-to-any pattern \u2014 four tokenizers, one transformer, streaming-friendly decode.",
+      "Before LLaVA-OneVision (Li et al., August 2024) the open-VLM world had separate lineages: LLaVA-1.5 for single images, multi-image models like Mantis and VILA, video models like Video-LLaVA and Video-LLaMA. Each won its benchmark and failed at the others. LLaVA-OneVision argued a single curriculum could train one model to dominate all three scenarios, and that the emergent task-transfer effects (single-image skills exported to video, multi-image reasoning exported to single-image) beat the sum of specialists. The recipe is deceptively simple: a visual-token budget that stays constant across scenarios, plus an explicit curriculum that moves from single-image to OneVision (multi-image) to video. This lesson reads the budget, the curriculum, and the emergent behaviors.",
+      "BAAI's Emu3 (Wang et al., September 2024) is the 2024 result that should have ended the diffusion-versus-autoregressive debate. A single Llama-style decoder-only transformer, trained only on the next-token-prediction objective, across a unified vocabulary of text + VQ image tokens + 3D VQ video tokens, beats SDXL on image generation and LLaVA-1.6 on perception. No CLIP loss. No diffusion schedule. Classifier-free guidance is used at inference for quality, but the core training objective is next-token prediction with teacher forcing. Published in Nature. This lesson reads the Emu3 thesis \u2014 why a better tokenizer plus scale is all you need \u2014 and contrasts with diffusion approaches.",
+      "The 2026 frontier product is a multimodal agent that reads screenshots, clicks buttons, navigates web UIs, fills forms, and completes workflows end-to-end. SeeClick and CogAgent (2024) proved the GUI-grounding primitive. Ferret-UI added mobile. ChartAgent introduced visual tool-use for charts. VisualWebArena and AgentVista (2026) are the benchmarks the frontier chases \u2014 and even Gemini 3 Pro and Claude Opus 4.7 score ~30% on AgentVista's hard tasks. This capstone pulls together every thread of Phase 12: perception (high-res VLM), reasoning (LLM with tool use), grounding (coordinate output), long-horizon memory, and evaluation."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Multimodal Agents and Computer-Use (Capstone)'.",
+    "stage": "pre"
+  }
+]

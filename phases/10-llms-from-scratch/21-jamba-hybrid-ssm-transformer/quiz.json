@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Jamba \u2014 Hybrid SSM-Transformer' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Autonomous Systems",
+      "Transformers Deep Dive",
+      "Infrastructure and Production"
+    ],
+    "correct": 0,
+    "explanation": "'Jamba \u2014 Hybrid SSM-Transformer' is lesson 21 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Jamba \u2014 Hybrid SSM-Transformer'?",
+    "options": [
+      "Build \u2014 Rust",
+      "Learn \u2014 Python (stdlib, layer-mix calculator)",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 1,
+    "explanation": "'Jamba \u2014 Hybrid SSM-Transformer' is tagged as Learn in Python (stdlib, layer-mix calculator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Llms From Scratch, which lesson comes immediately after 'Jamba \u2014 Hybrid SSM-Transformer'?",
+    "options": [
+      "Constitutional AI and Self-Improvement",
+      "Speculative Decoding and EAGLE",
+      "Async and Hogwild! Inference",
+      "DeepSeek-V3 Architecture Walkthrough"
+    ],
+    "correct": 2,
+    "explanation": "'Async and Hogwild! Inference' follows 'Jamba \u2014 Hybrid SSM-Transformer' as lesson 22.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Jamba \u2014 Hybrid SSM-Transformer'?",
+    "options": [
+      "time_series.py",
+      "tests",
+      "main.ts",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Jamba \u2014 Hybrid SSM-Transformer'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Jamba \u2014 Hybrid SSM-Transformer'?",
+    "options": [
+      "RLHF works. It also requires training three models (SFT, reward model, policy), managing PPO's instability, and tuning a KL penalty. DPO asks: what if you could skip all of that? DPO directly optimizes the language model on preference pairs. No reward model. No PPO. One training loop. Same results.",
+      "A frontier LLM generating one token requires a full forward pass over billions of parameters. That forward pass is massively over-provisioned: most of the time a much smaller model can guess the next 3-5 tokens correctly, and the big model only needs to *verify* the guess. When the guess is right you got 5 tokens for the price of one. Speculative decoding (Leviathan et al. 2023) made this exact, and EAGLE-3 (2025) pushed acceptance rates to ~4.5 tokens per verify \u2014 a 4-5x speedup at matched output distribution.",
+      "State space models (SSMs) and transformers want different things. Transformers buy quality via attention at quadratic cost. SSMs buy linear-time inference and constant memory via a recurrence but lag quality. AI21's Jamba (March 2024) and Jamba 1.5 (August 2024) put them in the same model: 1 Transformer layer for every 7 Mamba layers, MoE on every other block, and a 256k context window that fits on a single 80GB GPU. Mamba-3 (ICLR 2026) tightens the SSM side with complex-valued state spaces and MIMO projections. This lesson reads both architectures end to end and explains why the hybrid recipe has survived three years of scaling when pure-SSM and pure-Transformer long-context attempts have not.",
+      "DeepSeek-V3 was trained on 2,048 H800 GPUs with MoE experts scattered across nodes. Cross-node expert all-to-all communication cost 1 GPU-hour of comm for every 1 GPU-hour of compute. GPUs were idle half the time. DualPipe (DeepSeek, Dec 2024) is a bidirectional pipeline that overlaps forward and backward computation with the all-to-all comms they trigger. Bubbles drop, throughput climbs, and the keeping of two model-parameter copies (the \"dual\" that gives the name) is cheap once Expert Parallelism is already spreading experts across ranks anyway. This lesson is a Learn-type walkthrough of what DualPipe actually does and why Sea AI Lab's DualPipeV refinement drops the 2x parameter cost at the expense of a marginally tighter bubble."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Jamba \u2014 Hybrid SSM-Transformer'.",
+    "stage": "pre"
+  }
+]

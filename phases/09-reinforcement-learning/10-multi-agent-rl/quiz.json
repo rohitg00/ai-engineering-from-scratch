@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Multi-Agent RL' belong to?",
+    "options": [
+      "Ethics Safety Alignment",
+      "Reinforcement Learning",
+      "Capstone Projects",
+      "Setup and Tooling"
+    ],
+    "correct": 1,
+    "explanation": "'Multi-Agent RL' is lesson 10 in Phase 9 \u2014 Reinforcement Learning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Multi-Agent RL'?",
+    "options": [
+      "Learn \u2014 Julia",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 Julia",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Multi-Agent RL' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Reinforcement Learning, which lesson comes immediately after 'Multi-Agent RL'?",
+    "options": [
+      "Temporal Difference \u2014 Q-Learning & SARSA",
+      "Sim-to-Real Transfer",
+      "RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era",
+      "Monte Carlo Methods \u2014 Learning from Complete Episodes"
+    ],
+    "correct": 1,
+    "explanation": "'Sim-to-Real Transfer' follows 'Multi-Agent RL' as lesson 11.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Multi-Agent RL'?",
+    "options": [
+      "perceptron.py",
+      "logistic_regression.py",
+      "main.py",
+      "main.ts"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Multi-Agent RL'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Multi-Agent RL'?",
+    "options": [
+      "A Markov Decision Process is five things: states, actions, transitions, rewards, a discount. Everything in RL \u2014 Q-learning, PPO, DPO, GRPO \u2014 optimizes over this shape. Learn it once, read the rest of reinforcement learning for free.",
+      "Single-agent RL assumes the environment is stationary. Put two learning agents in the same world and that assumption breaks: each agent is part of the other's environment, and both are changing. Multi-agent RL is the set of tricks to make learning converge when the Markov assumption no longer holds.",
+      "1992: TD-Gammon beat human champions at backgammon with pure TD. 2016: AlphaGo beat Lee Sedol. 2017: AlphaZero dominated chess, shogi, and Go from scratch. 2024: DeepSeek-R1 proved the same recipe, with GRPO replacing PPO, works on reasoning. Games are the benchmark that drives every breakthrough in this phase.",
+      "REINFORCE is noisy. Add a critic that learns `V\u0302(s)`, subtract it from the return, and you get an advantage that has the same expectation but far lower variance. That is actor-critic. A2C runs it synchronously; A3C runs it across threads. Both are the mental model for every modern deep-RL method."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Multi-Agent RL'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Checkpoints and Rollback' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Transformers Deep Dive",
+      "Setup and Tooling",
+      "Computer Vision"
+    ],
+    "correct": 0,
+    "explanation": "'Checkpoints and Rollback' is lesson 16 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Checkpoints and Rollback'?",
+    "options": [
+      "Build \u2014 TypeScript",
+      "Capstone \u2014 Python",
+      "Capstone \u2014 Rust",
+      "Learn \u2014 Python (stdlib, checkpoint and rollback state machine)"
+    ],
+    "correct": 3,
+    "explanation": "'Checkpoints and Rollback' is tagged as Learn in Python (stdlib, checkpoint and rollback state machine).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'Checkpoints and Rollback'?",
+    "options": [
+      "Constitutional AI and Rule Overrides",
+      "Action Budgets, Iteration Caps, and Cost Governors",
+      "AlphaEvolve \u2014 Evolutionary Coding Agents",
+      "Llama Guard and Input/Output Classification"
+    ],
+    "correct": 0,
+    "explanation": "'Constitutional AI and Rule Overrides' follows 'Checkpoints and Rollback' as lesson 17.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Checkpoints and Rollback'?",
+    "options": [
+      "tests",
+      "main.py",
+      "tests",
+      "main.jl"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Checkpoints and Rollback'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Checkpoints and Rollback'?",
+    "options": [
+      "Every graph-state transition persists. When a worker crashes, its lease expires and another worker picks up at the latest checkpoint. Cloudflare Durable Objects hold state across hours or weeks. Propose-then-commit (Lesson 15) defines a rollback plan per action. Post-action verification closes the loop. EU AI Act Article 14 makes effective human oversight mandatory for high-risk systems \u2014 in practice this means checkpoints must be queryable, rollbacks must be rehearsed, and the audit trail must survive a deploy. The sharp failure mode: without idempotency keys and precondition checks, a retry after a transient failure can double-execute an already-approved action. Post-action verification is what catches it.",
+      "Claude Code exposes seven permission modes. \"plan\" asks before every action, \"default\" asks only for risky ones, \"acceptEdits\" auto-approves file writes but still confirms shell execution, and \"bypassPermissions\" approves everything. Auto Mode (March 24, 2026) replaces per-action approval with a two-stage parallel safety classifier: a single-token fast check runs on every action; flagged actions kick off a chain-of-thought deep review. Action budgets are enforced via `max_turns` and `max_budget_usd`. Auto Mode shipped as a research preview \u2014 Anthropic has stated explicitly that the classifier is not sufficient alone.",
+      "A mid-sized e-commerce agent's monthly LLM cost jumped from $1,200 to $4,800 after its team enabled the \"order-tracking\" skill. That is not a pricing bug. That is an agent that found a new loop and kept spending inside it. Microsoft's Agent Governance Toolkit (April 2, 2026) codifies the defense against this class: per-request `max_tokens`, per-task token and dollar budgets, per-day/month caps, iteration caps, tiered model routing, prompt caching, context windowing, HITL checkpoints on expensive actions, kill switches on budget breach. Anthropic's Claude Code Agent SDK ships the same primitives under different names. Financial velocity limits \u2014 e.g. cut access on >$50 in 10 minutes \u2014 catch loops faster than monthly caps.",
+      "METR (ex-ARC Evals) is an independent 501(c)(3) since December 2023. Their Time Horizon 1.1 benchmark (January 2026) fits a logistic curve to task-success probability vs log(expert human completion time); the intersection at 50% probability defines the model's time horizon. The 2025\u20132026 engagement set covers GPT-5.1, GPT-5.1-Codex-Max, and prototype monitoring evaluations (can a monitor catch side tasks; can the agent evade). Benchmark suites: HCAST (180+ ML, cyber, SWE, reasoning tasks; 1 minute to 8+ hours), RE-Bench (71 ML research-engineering tasks with expert baseline), SWAA. The honest note: METR measurements are idealized \u2014 no human, no real consequences \u2014 and the team has documented the eval-vs-deployment behavior gap (Lesson 1). A time horizon is an upper bound, not a deployment prediction."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Checkpoints and Rollback'.",
+    "stage": "pre"
+  }
+]

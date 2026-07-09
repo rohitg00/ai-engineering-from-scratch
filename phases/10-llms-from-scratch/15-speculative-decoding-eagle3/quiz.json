@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Speculative Decoding and EAGLE-3' belong to?",
+    "options": [
+      "Infrastructure and Production",
+      "Transformers Deep Dive",
+      "Tools and Protocols",
+      "Llms From Scratch"
+    ],
+    "correct": 3,
+    "explanation": "'Speculative Decoding and EAGLE-3' is lesson 15 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Speculative Decoding and EAGLE-3'?",
+    "options": [
+      "Learn \u2014 Python",
+      "Learn \u2014 Julia",
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Python (stdlib)"
+    ],
+    "correct": 3,
+    "explanation": "'Speculative Decoding and EAGLE-3' is tagged as Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Llms From Scratch, which lesson comes immediately after 'Speculative Decoding and EAGLE-3'?",
+    "options": [
+      "Building a Tokenizer from Scratch",
+      "Building a Complete LLM Pipeline",
+      "Differential Attention (V2)",
+      "Scaling: Distributed Training, FSDP, DeepSpeed"
+    ],
+    "correct": 2,
+    "explanation": "'Differential Attention (V2)' follows 'Speculative Decoding and EAGLE-3' as lesson 16.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Speculative Decoding and EAGLE-3'?",
+    "options": [
+      "ts",
+      "main.py",
+      "main.jl",
+      "advanced_prompting.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Speculative Decoding and EAGLE-3'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Speculative Decoding and EAGLE-3'?",
+    "options": [
+      "The model is a mirror. It reflects whatever data you feed it. Feed it garbage, it reflects garbage with perfect fluency.",
+      "SFT teaches the model to follow instructions. But it doesn't teach the model which response is BETTER. Two grammatically correct, factually accurate answers can differ enormously in helpfulness. RLHF is how you encode human judgment into the model's behavior. It's what makes Claude helpful and GPT polite.",
+      "Phase 7 \u00b7 Lesson 16 proved the math: the Leviathan rejection rule preserves the verifier's distribution exactly. This lesson is the training-stack view of 2026 production speculative decoding. EAGLE-3 turned the draft model from a cheap approximation into a purpose-built tiny network trained on the verifier's own hidden states, then added a training-time test loop that aligns its train and inference distributions. Result: 3\u00d7 to 6.5\u00d7 end-to-end speedup, accepted per-token rates above 0.9 on chat, no distributional tradeoff. Every production inference stack in 2026 ships it by default.",
+      "Your LLM does not read English. It reads integers. The tokenizer decides whether those integers carry meaning or waste it."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Speculative Decoding and EAGLE-3'.",
+    "stage": "pre"
+  }
+]

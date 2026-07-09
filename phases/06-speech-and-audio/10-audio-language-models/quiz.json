@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio' belong to?",
+    "options": [
+      "Speech and Audio",
+      "Multi Agent and Swarms",
+      "Tools and Protocols",
+      "Agent Engineering"
+    ],
+    "correct": 0,
+    "explanation": "'Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio' is lesson 10 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio'?",
+    "options": [
+      "Learn \u2014 Python",
+      "Capstone \u2014 Julia",
+      "Build \u2014 Rust",
+      "Build \u2014 \u2014"
+    ],
+    "correct": 0,
+    "explanation": "'Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio'?",
+    "options": [
+      "Voice Cloning & Voice Conversion",
+      "Real-Time Audio Processing",
+      "Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split",
+      "Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick"
+    ],
+    "correct": 1,
+    "explanation": "'Real-Time Audio Processing' follows 'Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio' as lesson 11.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio'?",
+    "options": [
+      "main.py",
+      "tests",
+      "data_utils.py",
+      "tests"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio'?",
+    "options": [
+      "Batch pipelines process a file. Real-time pipelines process the next 20 milliseconds before the next 20 arrive. Every conversational AI, broadcast studio, and telephony bot lives and dies by this latency budget.",
+      "You cannot ship what you cannot measure. This lesson names the 2026 metrics for every audio task: ASR (WER, CER, RTFx), TTS (MOS, UTMOS, SECS, WER-on-ASR-round-trip), audio-language (MMAU, LongAudioBench), music (FAD, CLAP), and speaker (EER). Plus the leaderboards where you compare.",
+      "Whisper is a 30-second-window transformer encoder-decoder, trained on 680k hours of multilingual weakly-supervised audio-text pairs. One architecture, multiple tasks, robust across 99 languages. The 2026 reference ASR.",
+      "2026 audio-language models reason over speech + environmental sound + music. Qwen2.5-Omni-7B matches GPT-4o Audio on MMAU-Pro. Audio Flamingo Next beats Gemini 2.5 Pro on LongAudioBench. The gap between open and closed is essentially closed \u2014 except on multi-audio tasks, where everyone is near random."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio'.",
+    "stage": "pre"
+  }
+]

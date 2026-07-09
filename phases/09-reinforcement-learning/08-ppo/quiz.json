@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Proximal Policy Optimization (PPO)' belong to?",
+    "options": [
+      "Math Foundations",
+      "Reinforcement Learning",
+      "Ml Fundamentals",
+      "Agent Engineering"
+    ],
+    "correct": 1,
+    "explanation": "'Proximal Policy Optimization (PPO)' is lesson 08 in Phase 9 \u2014 Reinforcement Learning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Proximal Policy Optimization (PPO)'?",
+    "options": [
+      "Capstone \u2014 TypeScript",
+      "Capstone \u2014 Rust",
+      "Learn \u2014 TypeScript",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Proximal Policy Optimization (PPO)' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Reinforcement Learning, which lesson comes immediately after 'Proximal Policy Optimization (PPO)'?",
+    "options": [
+      "Reward Modeling & RLHF",
+      "MDPs, States, Actions & Rewards",
+      "Monte Carlo Methods \u2014 Learning from Complete Episodes",
+      "Multi-Agent RL"
+    ],
+    "correct": 0,
+    "explanation": "'Reward Modeling & RLHF' follows 'Proximal Policy Optimization (PPO)' as lesson 09.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Proximal Policy Optimization (PPO)'?",
+    "options": [
+      "main.jl",
+      "transformations.py",
+      "main.py",
+      "svm.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Proximal Policy Optimization (PPO)'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Proximal Policy Optimization (PPO)'?",
+    "options": [
+      "2013: Mnih trained one Q-learning network on raw pixels, beat every classical RL agent on seven Atari games. 2015: extended to 49 games, published in Nature, sparked the deep-RL era. DQN is Q-learning plus three tricks that make function approximation stable.",
+      "A Markov Decision Process is five things: states, actions, transitions, rewards, a discount. Everything in RL \u2014 Q-learning, PPO, DPO, GRPO \u2014 optimizes over this shape. Learn it once, read the rest of reinforcement learning for free.",
+      "A2C throws away each rollout after one update. PPO wraps the policy gradient in a clipped importance ratio so you can do 10+ epochs on the same data without the policy exploding. Schulman et al. (2017). Still the default policy-gradient algorithm in 2026.",
+      "1992: TD-Gammon beat human champions at backgammon with pure TD. 2016: AlphaGo beat Lee Sedol. 2017: AlphaZero dominated chess, shogi, and Go from scratch. 2024: DeepSeek-R1 proved the same recipe, with GRPO replacing PPO, works on reasoning. Games are the benchmark that drives every breakthrough in this phase."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Proximal Policy Optimization (PPO)'.",
+    "stage": "pre"
+  }
+]

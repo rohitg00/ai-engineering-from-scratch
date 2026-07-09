@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Voting, Self-Consistency, and Debate Topology' belong to?",
+    "options": [
+      "Ethics Safety Alignment",
+      "Multi Agent and Swarms",
+      "Llm Engineering",
+      "Llms From Scratch"
+    ],
+    "correct": 1,
+    "explanation": "'Voting, Self-Consistency, and Debate Topology' is lesson 15 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Voting, Self-Consistency, and Debate Topology'?",
+    "options": [
+      "Build \u2014 Julia",
+      "Capstone \u2014 Rust",
+      "Learn + Build \u2014 Python (stdlib)",
+      "Build \u2014 Python"
+    ],
+    "correct": 2,
+    "explanation": "'Voting, Self-Consistency, and Debate Topology' is tagged as Learn + Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Voting, Self-Consistency, and Debate Topology'?",
+    "options": [
+      "Shared Memory and Blackboard Patterns",
+      "Negotiation and Bargaining",
+      "Parallel / Swarm / Networked Architectures",
+      "Agent Economies, Token Incentives, Reputation"
+    ],
+    "correct": 1,
+    "explanation": "'Negotiation and Bargaining' follows 'Voting, Self-Consistency, and Debate Topology' as lesson 16.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Voting, Self-Consistency, and Debate Topology'?",
+    "options": [
+      "jax_intro.py",
+      "transformations.py",
+      "main.py",
+      "main.ts"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Voting, Self-Consistency, and Debate Topology'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Voting, Self-Consistency, and Debate Topology'?",
+    "options": [
+      "One agent hits a wall. The smart move is not a bigger agent - it is more agents.",
+      "The cheapest aggregation: sample N independent agents, majority-vote. Wang et al. 2022 self-consistency did this with one model sampled N times. Multi-agent extends it with **heterogeneous** agents to escape monoculture \u2014 different models, different prompts, different temperatures, different contexts. Beyond majority vote, debate topology matters: MultiAgentBench (arXiv:2503.01935, ACL 2025) evaluated star / chain / tree / graph coordination and found **graph best for research**, with a \"coordination tax\" past ~4 agents. AgentVerse (ICLR 2024) documents two emergent patterns \u2014 volunteer behaviors and conformity behaviors \u2014 and conformity is both a feature (finding consensus) and a risk (groupthink, Lesson 24). This lesson maps the topology space, builds each variant, and measures the coordination tax.",
+      "Google announced A2A in April 2025; by April 2026 the spec is at https://a2a-protocol.org/latest/specification/ and 150+ organizations back it. A2A is the horizontal complement to MCP (Lesson 13): where MCP is vertical (agent \u2194 tools), A2A is peer-to-peer (agent \u2194 agent). It defines Agent Cards (discovery), tasks with artifacts (text, structured data, video), opaque task lifecycles, and auth. Production systems increasingly pair MCP with A2A. Google Cloud rolled A2A support into Vertex AI Agent Builder during 2025-2026.",
+      "Two approaches coexist in 2026 multi-agent systems: the **message pool** (everyone sees everyone's messages, as in AutoGen GroupChat or MetaGPT) and the **blackboard with subscription** (agents subscribe to relevant events, as in Context-Aware MCP or the Matrix framework). Both are the only stateful part of a multi-agent system \u2014 which means both are where the interesting bugs live. The reference failure mode is **memory poisoning**: one agent hallucinates a \"fact,\" other agents treat it as verified, and accuracy decays gradually in a way that is much harder to debug than an immediate crash. This lesson builds both structures from stdlib, injects a poisoning attack, and shows the three mitigations that actually work in production."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Voting, Self-Consistency, and Debate Topology'.",
+    "stage": "pre"
+  }
+]

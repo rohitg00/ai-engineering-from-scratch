@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops' belong to?",
+    "options": [
+      "Tools and Protocols",
+      "Ethics Safety Alignment",
+      "Computer Vision",
+      "Llm Engineering"
+    ],
+    "correct": 0,
+    "explanation": "'MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops' is lesson 11 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops'?",
+    "options": [
+      "Build \u2014 Python (stdlib, sampling harness)",
+      "Learn \u2014 Julia",
+      "Learn \u2014 TypeScript",
+      "Learn \u2014 Python"
+    ],
+    "correct": 0,
+    "explanation": "'MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops' is tagged as Build in Python (stdlib, sampling harness).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops'?",
+    "options": [
+      "Roots and Elicitation \u2014 Scoping and Mid-Flight User Input",
+      "MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens",
+      "MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base",
+      "Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini"
+    ],
+    "correct": 0,
+    "explanation": "'Roots and Elicitation \u2014 Scoping and Mid-Flight User Input' follows 'MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops' as lesson 12.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops'?",
+    "options": [
+      "main.jl",
+      "main.py",
+      "main.ts",
+      "main.jl"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops'?",
+    "options": [
+      "Most MCP servers are dumb executors: take arguments, run code, return content. Sampling lets a server flip direction: it asks the client's LLM to make a decision. This enables server-hosted agent loops without the server owning any model credentials. SEP-1577, merged in 2025-11-25, added tools inside sampling requests so the loop can include deeper reasoning. Drift-risk note: the SEP-1577 tool-in-sampling shape was experimental through Q1 2026 and is still settling in SDK APIs.",
+      "Every integration before MCP was a one-off. The Model Context Protocol, first shipped by Anthropic in November 2024 and now stewarded by the Linux Foundation's Agentic AI Foundation, standardizes discovery and invocation so any client can speak to any server. The 2025-11-25 spec names six primitives (three server, three client), a three-phase lifecycle, and a JSON-RPC 2.0 wire format. Learn those and the rest of the MCP chapter of this phase becomes reading.",
+      "MCP is agent-to-tool. A2A (Agent2Agent) is agent-to-agent \u2014 an open protocol for letting opaque agents built on different frameworks collaborate. Released by Google in April 2025, donated to the Linux Foundation in June 2025, reaching v1.0 in April 2026 with 150+ supporters including AWS, Cisco, Microsoft, Salesforce, SAP, and ServiceNow. It absorbed IBM's ACP and added the AP2 payments extension. This lesson walks the Agent Card, Task lifecycle, and the two transport bindings.",
+      "stdio works locally and nowhere else. Streamable HTTP (2025-03-26) is the remote standard. The old HTTP+SSE transport is deprecated and being removed in mid-2026. Picking the wrong transport costs a migration; picking the right one buys a remote-hostable MCP server with session continuity and DNS-rebinding protection."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops'.",
+    "stage": "pre"
+  }
+]

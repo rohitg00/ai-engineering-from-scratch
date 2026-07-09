@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Async and Hogwild! Inference' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Capstone Projects",
+      "Agent Engineering",
+      "Reinforcement Learning"
+    ],
+    "correct": 0,
+    "explanation": "'Async and Hogwild! Inference' is lesson 22 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Async and Hogwild! Inference'?",
+    "options": [
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 Rust",
+      "Build \u2014 Python (stdlib)",
+      "Learn \u2014 Julia"
+    ],
+    "correct": 2,
+    "explanation": "'Async and Hogwild! Inference' is tagged as Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Llms From Scratch, which lesson comes immediately after 'Async and Hogwild! Inference'?",
+    "options": [
+      "Speculative Decoding and EAGLE",
+      "Evaluation: Benchmarks, Evals, LM Harness",
+      "Native Sparse Attention (DeepSeek NSA)",
+      "Pre-Training a Mini GPT (124M Parameters)"
+    ],
+    "correct": 0,
+    "explanation": "'Speculative Decoding and EAGLE' follows 'Async and Hogwild! Inference' as lesson 25.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Async and Hogwild! Inference'?",
+    "options": [
+      "main.py",
+      "tests",
+      "Dockerfile",
+      "safety_gate.py"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Async and Hogwild! Inference'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Async and Hogwild! Inference'?",
+    "options": [
+      "Your 124M model trained on one GPU. Now try 7 billion parameters. The model doesn't fit in memory. The data takes weeks on a single machine. Distributed training isn't optional at scale. It's the only path forward.",
+      "Goodhart's Law: when a measure becomes a target, it ceases to be a good measure. Every frontier lab games benchmarks. MMLU scores go up while models still can't reliably count the number of R's in \"strawberry.\" The only eval that matters is YOUR eval -- on YOUR task, with YOUR data.",
+      "Speculative decoding (Phase 10 \u00b7 15) parallelizes tokens within one sequence. Multi-agent frameworks parallelize across whole sequences but force explicit coordination (voting, sub-task splitting). Hogwild! Inference (Rodionov et al., arXiv:2504.06261) does something else: run N instances of the same LLM in parallel against a SHARED key-value cache. Each worker sees every other worker's generated tokens instantly. Modern reasoning models \u2014 QwQ, DeepSeek-R1 \u2014 can self-coordinate through that shared cache without any fine-tuning. The approach is experimental but it opens an entirely new axis of inference parallelism that sits orthogonal to spec decode. This lesson implements a two-worker Hogwild! simulator in stdlib Python and explains why the shared-cache collaboration emerges from the existing model's reasoning abilities.",
+      "A 70B model in FP16 needs 140GB. Two A100s just for weights. Quantize to FP8: one 80GB GPU. INT4: a MacBook."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Async and Hogwild! Inference'.",
+    "stage": "pre"
+  }
+]

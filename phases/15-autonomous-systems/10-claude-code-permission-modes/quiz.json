@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Claude Code as an Autonomous Agent: Permission Modes and Auto Mode' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Tools and Protocols",
+      "Ml Fundamentals",
+      "Math Foundations"
+    ],
+    "correct": 0,
+    "explanation": "'Claude Code as an Autonomous Agent: Permission Modes and Auto Mode' is lesson 10 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Claude Code as an Autonomous Agent: Permission Modes and Auto Mode'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Capstone \u2014 Julia",
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 Python (stdlib, two-stage classifier simulator)"
+    ],
+    "correct": 3,
+    "explanation": "'Claude Code as an Autonomous Agent: Permission Modes and Auto Mode' is tagged as Learn in Python (stdlib, two-stage classifier simulator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'Claude Code as an Autonomous Agent: Permission Modes and Auto Mode'?",
+    "options": [
+      "Recursive Self-Improvement \u2014 Capability vs Alignment",
+      "Darwin Godel Machine \u2014 Open-Ended Self-Modifying Agents",
+      "Bounded Self-Improvement Designs",
+      "Browser Agents and Long-Horizon Web Tasks"
+    ],
+    "correct": 3,
+    "explanation": "'Browser Agents and Long-Horizon Web Tasks' follows 'Claude Code as an Autonomous Agent: Permission Modes and Auto Mode' as lesson 11.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Claude Code as an Autonomous Agent: Permission Modes and Auto Mode'?",
+    "options": [
+      "main.jl",
+      "tests",
+      "main.py",
+      "ts"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Claude Code as an Autonomous Agent: Permission Modes and Auto Mode'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Claude Code as an Autonomous Agent: Permission Modes and Auto Mode'?",
+    "options": [
+      "OpenAI Preparedness Framework v2 (April 2025) introduces Research Categories \u2014 Long-range Autonomy, Sandbagging, Autonomous Replication and Adaptation, Undermining Safeguards \u2014 distinct from Tracked Categories. Tracked Categories trigger Capabilities Reports plus Safeguards Reports reviewed by the Safety Advisory Group. DeepMind's FSF v3 (September 2025, with Tracked Capability Levels added April 17, 2026) folds autonomy into ML R&D and Cyber domains (ML R&D autonomy level 1 = fully automate the AI R&D pipeline at competitive cost vs human + AI tools). FSF v3 explicitly addresses deceptive alignment via automated monitoring for instrumental-reasoning misuse. The honest note: Research Categories in PF v2 (including Long-range Autonomy) do not automatically trigger mitigations; the policy language is \"potential.\" DeepMind itself says automated monitoring \"will not remain sufficient long-term\" if instrumental reasoning strengthens.",
+      "The Center for AI Safety (CAIS, San Francisco, founded 2022 by Hendrycks and Zhang) publishes the four-risk framework \u2014 malicious use, AI races, organizational risks, rogue AIs \u2014 and the May 2023 statement on extinction risk signed by hundreds of professors and company leaders. 2026 releases from CAIS: AI Dashboard for frontier-model evaluation, Remote Labor Index (with Scale AI), Superintelligence Strategy Paper, AI Frontiers newsletter. A distinct entity: NIST Center for AI Standards and Innovation (CAISI) \u2014 US-government-facing voluntary agreements and unclassified capability evaluations focused on cyber, bio, and chemical-weapons risks. CAIS flags organizational risk as one of four top-level risks: safety culture, rigorous audits, multi-layered defenses, and information security are foundational but routinely traded off against deployment speed. California SB-53, if signed, would be the first US state-level catastrophic-risk regulation.",
+      "Llama Guard 3 (Meta, Llama-3.1-8B base, fine-tuned for content safety) classifies both LLM inputs and outputs against an MLCommons 13-hazard taxonomy across 8 languages. A 1B-INT4 quantized variant runs at over 30 tokens/sec on mobile CPUs. Llama Guard 4 is multimodal (image + text), expands to the S1\u2013S14 category set (including S14 Code Interpreter Abuse), and is a drop-in replacement for Llama Guard 3 8B/11B. NVIDIA NeMo Guardrails v0.20.0 (January 2026) adds Colang dialog-flow rails on top of input and output rails. The honest note: \"Bypassing Prompt Injection and Jailbreak Detection in LLM Guardrails\" (Huang et al., arXiv:2504.11168) showed Emoji Smuggling hit 100% attack success rate on six prominent guard systems; NeMo Guard Detect recorded 72.54% ASR on jailbreaks. Classifiers are a layer, not a solution.",
+      "Claude Code exposes seven permission modes. \"plan\" asks before every action, \"default\" asks only for risky ones, \"acceptEdits\" auto-approves file writes but still confirms shell execution, and \"bypassPermissions\" approves everything. Auto Mode (March 24, 2026) replaces per-action approval with a two-stage parallel safety classifier: a single-token fast check runs on every action; flagged actions kick off a chain-of-thought deep review. Action budgets are enforced via `max_turns` and `max_budget_usd`. Auto Mode shipped as a research preview \u2014 Anthropic has stated explicitly that the classifier is not sufficient alone."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Claude Code as an Autonomous Agent: Permission Modes and Auto Mode'.",
+    "stage": "pre"
+  }
+]

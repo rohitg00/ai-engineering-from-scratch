@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Real-Time Audio Processing' belong to?",
+    "options": [
+      "Speech and Audio",
+      "Autonomous Systems",
+      "Ml Fundamentals",
+      "Reinforcement Learning"
+    ],
+    "correct": 0,
+    "explanation": "'Real-Time Audio Processing' is lesson 11 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Real-Time Audio Processing'?",
+    "options": [
+      "Build \u2014 Python",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 Julia"
+    ],
+    "correct": 0,
+    "explanation": "'Real-Time Audio Processing' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Real-Time Audio Processing'?",
+    "options": [
+      "Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split",
+      "Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio",
+      "Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake",
+      "Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone"
+    ],
+    "correct": 3,
+    "explanation": "'Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone' follows 'Real-Time Audio Processing' as lesson 12.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Real-Time Audio Processing'?",
+    "options": [
+      "tests",
+      "ts",
+      "tests.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Real-Time Audio Processing'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Real-Time Audio Processing'?",
+    "options": [
+      "Batch pipelines process a file. Real-time pipelines process the next 20 milliseconds before the next 20 arrive. Every conversational AI, broadcast studio, and telephony bot lives and dies by this latency budget.",
+      "Waveforms are the raw signal. Spectrograms are the representation. Mel features are the ML-friendly form. Every modern ASR and TTS pipeline walks this ladder, and the first rung is understanding sampling and Fourier.",
+      "ASR asks \"what did they say?\" Speaker recognition asks \"who said it?\" The math looks the same \u2014 embeddings plus cosine \u2014 but every production decision hinges on a single EER number.",
+      "2026 audio-language models reason over speech + environmental sound + music. Qwen2.5-Omni-7B matches GPT-4o Audio on MMAU-Pro. Audio Flamingo Next beats Gemini 2.5 Pro on LongAudioBench. The gap between open and closed is essentially closed \u2014 except on multi-audio tasks, where everyone is near random."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Real-Time Audio Processing'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+  <h1>AI Engineering — Knowledge Game</h1>
+  <p class="subtitle">Play a quiz on any lesson from the 20-phase curriculum. Score, streaks, and mastery are tracked per lesson.</p>
+
+  <section class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-value">{{ stats.total_score }}</div>
+      <div class="stat-label">Total score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ stats.current_streak }}</div>
+      <div class="stat-label">Current streak</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ stats.best_streak }}</div>
+      <div class="stat-label">Best streak</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ quizzes_played }} / {{ total_lessons }}</div>
+      <div class="stat-label">Lessons played</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ phases_mastered }} / {{ total_phases }}</div>
+      <div class="stat-label">Phases mastered</div>
+    </div>
+  </section>
+
+  <h2>Phases</h2>
+  <div class="phase-grid">
+    {% for row in phase_rows %}
+      <a class="phase-card" href="/phases/{{ row.phase.dir_name }}">
+        <div class="phase-card-head">
+          <span class="phase-id">P{{ row.phase.id }}</span>
+          <span class="phase-name">{{ row.phase.name }}</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: {{ row.pct }}%"></div>
+        </div>
+        <div class="phase-card-foot">
+          <span>{{ row.mastered_count }}/{{ row.phase.lessons|length }} mastered</span>
+          <span>{{ row.played_count }} played</span>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}

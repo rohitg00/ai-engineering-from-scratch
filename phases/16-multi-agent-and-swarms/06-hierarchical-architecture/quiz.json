@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Hierarchical Architecture and Its Failure Mode' belong to?",
+    "options": [
+      "Nlp Foundations to Advanced",
+      "Transformers Deep Dive",
+      "Computer Vision",
+      "Multi Agent and Swarms"
+    ],
+    "correct": 3,
+    "explanation": "'Hierarchical Architecture and Its Failure Mode' is lesson 06 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Hierarchical Architecture and Its Failure Mode'?",
+    "options": [
+      "Learn \u2014 \u2014",
+      "Learn + Build \u2014 Python (stdlib)",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 Python"
+    ],
+    "correct": 1,
+    "explanation": "'Hierarchical Architecture and Its Failure Mode' is tagged as Learn + Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Hierarchical Architecture and Its Failure Mode'?",
+    "options": [
+      "Society of Mind and Multi-Agent Debate",
+      "Agent Economies, Token Incentives, Reputation",
+      "Why Multi-Agent?",
+      "Case Studies and the 2026 State of the Art"
+    ],
+    "correct": 0,
+    "explanation": "'Society of Mind and Multi-Agent Debate' follows 'Hierarchical Architecture and Its Failure Mode' as lesson 07.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Hierarchical Architecture and Its Failure Mode'?",
+    "options": [
+      "tests",
+      "main.py",
+      "ts",
+      "advanced_prompting.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Hierarchical Architecture and Its Failure Mode'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Hierarchical Architecture and Its Failure Mode'?",
+    "options": [
+      "Classical distributed-systems BFT meets stochastic LLMs. In 2025-2026 three research directions emerged: **CP-WBFT** (arXiv:2511.10400) weighs each vote by a confidence probe; **DecentLLMs** (arXiv:2507.14928) goes leaderless with parallel worker proposals and geometric-median aggregation; **WBFT** (arXiv:2505.05103) combines weighted voting with Hierarchical Structure Clustering to split Core and Edge nodes. The honest empirical result from \"Can AI Agents Agree?\" (arXiv:2603.01213) is that even scalar agreement is fragile today \u2014 a single deceptive agent can compromise a Mixture-of-Agents. BFT is necessary but not sufficient. This lesson builds a minimal BFT protocol, injects three agent-specific attacks (byzantine lie, sycophantic conformity, correlated-error monoculture), and measures how each consensus variant copes.",
+      "Three production-grade references to study end-to-end, each illustrating a different slice of multi-agent engineering. **Anthropic's Research system** (orchestrator-worker, 15x tokens, +90.2% over single-agent Opus 4, rainbow deployments) is the canonical supervisor case. **MetaGPT / ChatDev** (SOP-encoded role specialization for software engineering; ChatDev's \"communicative dehallucination\"; MacNet extension to >1000 agents via DAGs, arXiv:2406.07155) is the canonical role-decomposition case. **OpenClaw / Moltbook** (originally Clawdbot by Peter Steinberger, November 2025; renamed twice; 247k GitHub stars by March 2026; local ReAct-loop agents; Moltbook as an agent-only social network with ~2.3M agent accounts within days of launch, acquired by Meta 2026-03-10) illustrates what happens at population scale: emergent economic activity, prompt-injection risks, state-level regulation (China restricted OpenClaw on government computers, March 2026). **Framework landscape April 2026:** LangGraph and CrewAI lead production; AG2 is the community AutoGen continuation; Microsoft AutoGen is in maintenance mode (merged into Microsoft Agent Framework, RC Feb 2026); OpenAI Agents SDK is the production Swarm successor; Google ADK (April 2025) is the A2A-native entrant. Every major framework now ships MCP support; most ship A2A. This lesson reads each case end-to-end and distills the common patterns so you can pick the right reference for your next production system.",
+      "Hierarchical is supervisor nested. Manager agents over sub-managers over workers. CrewAI `Process.hierarchical` is the textbook version: a `manager_llm` dynamically delegates tasks and validates outputs. The LangGraph equivalent is `create_supervisor(create_supervisor(...))`. It is the natural pattern when the task is a real org chart. It is also the pattern most likely to collapse into managerial looping \u2014 manager agents assign work poorly, misinterpret sub-outputs, or fail to reach consensus. Sequential often beats it.",
+      "Park et al. 2023 (UIST '23, arXiv:2304.03442) populated **Smallville**, a sandbox of 25 agents, with a three-part architecture: **memory stream** (natural-language log), **reflection** (higher-level syntheses the agent generates about its own stream), and **plan** (day-level behavior, then sub-plans). The landmark result was the Valentine's Day party emergence: one agent seeded with \"wants to throw a Valentine's Day party,\" without further scripting, produced invitations spread through the population, coordinated dates, and the party happened \u2014 from 24 agents who started with no knowledge of it. Ablations show all three components are required for believability. The documented failures are spatial-norm errors (entering closed stores, sharing single-person bathrooms). This is the reference architecture for agent simulations and multi-agent social evaluation in 2026."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Hierarchical Architecture and Its Failure Mode'.",
+    "stage": "pre"
+  }
+]

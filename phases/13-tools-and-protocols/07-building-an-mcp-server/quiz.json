@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Building an MCP Server \u2014 Python + TypeScript SDKs' belong to?",
+    "options": [
+      "Reinforcement Learning",
+      "Nlp Foundations to Advanced",
+      "Infrastructure and Production",
+      "Tools and Protocols"
+    ],
+    "correct": 3,
+    "explanation": "'Building an MCP Server \u2014 Python + TypeScript SDKs' is lesson 07 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Building an MCP Server \u2014 Python + TypeScript SDKs'?",
+    "options": [
+      "Learn \u2014 Julia",
+      "Capstone \u2014 Julia",
+      "Learn \u2014 Rust",
+      "Build \u2014 Python (stdlib, stdio MCP server)"
+    ],
+    "correct": 3,
+    "explanation": "'Building an MCP Server \u2014 Python + TypeScript SDKs' is tagged as Build in Python (stdlib, stdio MCP server).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'Building an MCP Server \u2014 Python + TypeScript SDKs'?",
+    "options": [
+      "Building an MCP Client \u2014 Discovery, Invocation, Session Management",
+      "Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work",
+      "MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes",
+      "MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops"
+    ],
+    "correct": 0,
+    "explanation": "'Building an MCP Client \u2014 Discovery, Invocation, Session Management' follows 'Building an MCP Server \u2014 Python + TypeScript SDKs' as lesson 08.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Building an MCP Server \u2014 Python + TypeScript SDKs'?",
+    "options": [
+      "ensembles.py",
+      "self_attention.py",
+      "tests",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Building an MCP Server \u2014 Python + TypeScript SDKs'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Building an MCP Server \u2014 Python + TypeScript SDKs'?",
+    "options": [
+      "Provider lock-in is expensive. Different tool-calling workloads suit different models. Routing gateways give one API surface, retries, failover, cost tracking, and guardrails. Three archetypes dominate 2026: LiteLLM (open-source self-hosted), OpenRouter (managed SaaS), Portkey (production-grade, open-sourced in March 2026). This lesson names the decision criteria and walks a stdlib routing gateway.",
+      "A language model produces tokens. A program takes actions. The gap between those two is the tool interface: a contract that lets the model request an action and the host execute it. Every 2026 stack \u2014 function calling on OpenAI, Anthropic, and Gemini; MCP's `tools/call`; A2A's task parts \u2014 is a different encoding of the same four-step loop. This lesson names the loop and shows the minimum machinery to run it.",
+      "Most MCP tutorials show only stdio hello-worlds. A real server exposes tools plus resources plus prompts, handles capability negotiation, emits structured errors, and works the same across SDKs. This lesson builds a notes server end-to-end: stdlib stdio transport, JSON-RPC dispatch, the three server primitives, and a pure-function style that drops into either the Python SDK's FastMCP or the TypeScript SDK when you graduate.",
+      "Real agent work takes minutes to hours: CI runs, deep-research synthesis, batch exports. Synchronous tool calls drop connections, time out, or block the UI. SEP-1686, merged in 2025-11-25, adds a Tasks primitive: any request can be augmented to become a task, and the result can be fetched later or streamed via state notifications. Drift-risk note: Tasks are experimental through H1 2026; SDK surface is still being designed around the spec."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Building an MCP Server \u2014 Python + TypeScript SDKs'.",
+    "stage": "pre"
+  }
+]

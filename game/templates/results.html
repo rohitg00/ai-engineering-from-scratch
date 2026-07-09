@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Results — {{ lesson.title }}{% endblock %}
+{% block content %}
+  <a class="back-link" href="/phases/{{ phase.dir_name }}">&larr; {{ phase.name }}</a>
+  <h1>{{ lesson.title }}</h1>
+
+  <div class="results-card">
+    <div class="results-score">{{ score }} / {{ total_questions }}</div>
+    {% if score == total_questions %}
+      <p class="results-line">Perfect score — lesson mastered.</p>
+    {% else %}
+      <p class="results-line">Keep going — review the lesson and try again.</p>
+    {% endif %}
+
+    <div class="quiz-meta">
+      <span>Total score: {{ stats.total_score }}</span>
+      <span>Current streak: {{ stats.current_streak }}</span>
+      <span>Best streak: {{ stats.best_streak }}</span>
+    </div>
+
+    {% if progress %}
+      <p class="muted">Best score for this lesson: {{ progress.best_score }} / {{ progress.total_questions }} across {{ progress.attempts_count }} attempt(s).</p>
+    {% endif %}
+
+    <div class="results-actions">
+      <a class="btn-primary" href="/play/{{ phase.dir_name }}/{{ lesson.lesson_dir }}?restart=1">Play again</a>
+      <a class="btn-secondary" href="/phases/{{ phase.dir_name }}">Back to phase</a>
+    </div>
+  </div>
+{% endblock %}

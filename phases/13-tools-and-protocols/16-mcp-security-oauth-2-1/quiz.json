@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes' belong to?",
+    "options": [
+      "Llm Engineering",
+      "Multimodal Ai",
+      "Tools and Protocols",
+      "Math Foundations"
+    ],
+    "correct": 2,
+    "explanation": "'MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes' is lesson 16 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes'?",
+    "options": [
+      "Build \u2014 Python (stdlib, OAuth state machine simulator)",
+      "Learn \u2014 Julia",
+      "Capstone \u2014 Rust",
+      "Learn \u2014 TypeScript"
+    ],
+    "correct": 0,
+    "explanation": "'MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes' is tagged as Build in Python (stdlib, OAuth state machine simulator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes'?",
+    "options": [
+      "MCP Resources and Prompts \u2014 Context Exposure Beyond Tools",
+      "Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding",
+      "A2A \u2014 Agent-to-Agent Protocol",
+      "MCP Gateways and Registries \u2014 Enterprise Control Planes"
+    ],
+    "correct": 3,
+    "explanation": "'MCP Gateways and Registries \u2014 Enterprise Control Planes' follows 'MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes' as lesson 17.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes'?",
+    "options": [
+      "bias_variance.py",
+      "main.py",
+      "linear_regression.py",
+      "yaml_subset.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes'?",
+    "options": [
+      "Real agent work takes minutes to hours: CI runs, deep-research synthesis, batch exports. Synchronous tool calls drop connections, time out, or block the UI. SEP-1686, merged in 2025-11-25, adds a Tasks primitive: any request can be augmented to become a task, and the result can be fetched later or streamed via state notifications. Drift-risk note: Tasks are experimental through H1 2026; SDK surface is still being designed around the spec.",
+      "Remote MCP servers need authorization, not just authentication. The 2025-11-25 spec aligns with OAuth 2.1 + PKCE + resource indicators (RFC 8707) + protected-resource metadata (RFC 9728). SEP-835 adds incremental scope consent with step-up authorization on 403 WWW-Authenticate. This lesson implements the step-up flow as a state machine so you can see every hop.",
+      "Lesson 16 stood up the OAuth 2.1 state machine in memory. By 2026, every MCP server you ship to a real org sits behind production auth: client enrollment that scales to an unbounded client population (Client ID Metadata Documents first, dynamic client registration as a backwards-compatible fallback), authorization-server metadata discovery (RFC 8414 *or* OpenID Connect Discovery), JWKS cache refresh that does not break a 3 a.m. token validation, and audience-pinned tokens that refuse cross-resource replay. This lesson models the full surface with three roles \u2014 an authorization server, a resource server (the MCP server), and a client \u2014 so you can trace every hop from discovery to a validated tool call.",
+      "Phase 13 taught every piece. This capstone wires them into one production-shaped system: an MCP server with tools + resources + prompts + tasks + UI, OAuth 2.1 at the edge, an RBAC gateway, a multi-server client, an A2A sub-agent call, OTel tracing into a collector, tool-poisoning detection in CI, and an AGENTS.md + SKILL.md bundle. By the end you can defend every architectural choice."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes'.",
+    "stage": "pre"
+  }
+]

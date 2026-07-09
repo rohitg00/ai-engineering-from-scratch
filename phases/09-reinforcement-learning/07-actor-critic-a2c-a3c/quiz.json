@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Actor-Critic \u2014 A2C and A3C' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Deep Learning Core",
+      "Math Foundations",
+      "Reinforcement Learning"
+    ],
+    "correct": 3,
+    "explanation": "'Actor-Critic \u2014 A2C and A3C' is lesson 07 in Phase 9 \u2014 Reinforcement Learning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Actor-Critic \u2014 A2C and A3C'?",
+    "options": [
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 Python",
+      "Learn \u2014 Rust",
+      "Capstone \u2014 Rust"
+    ],
+    "correct": 1,
+    "explanation": "'Actor-Critic \u2014 A2C and A3C' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Reinforcement Learning, which lesson comes immediately after 'Actor-Critic \u2014 A2C and A3C'?",
+    "options": [
+      "MDPs, States, Actions & Rewards",
+      "Sim-to-Real Transfer",
+      "Proximal Policy Optimization (PPO)",
+      "Policy Gradient \u2014 REINFORCE from Scratch"
+    ],
+    "correct": 2,
+    "explanation": "'Proximal Policy Optimization (PPO)' follows 'Actor-Critic \u2014 A2C and A3C' as lesson 08.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Actor-Critic \u2014 A2C and A3C'?",
+    "options": [
+      "tests",
+      "main.py",
+      "main.ts",
+      "tests"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Actor-Critic \u2014 A2C and A3C'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Actor-Critic \u2014 A2C and A3C'?",
+    "options": [
+      "A policy trained in a simulator that fails on hardware is a policy that memorized the simulator. Domain randomization, domain adaptation, and system identification are the three tools to make learned controllers cross the reality gap.",
+      "REINFORCE is noisy. Add a critic that learns `V\u0302(s)`, subtract it from the return, and you get an advantage that has the same expectation but far lower variance. That is actor-critic. A2C runs it synchronously; A3C runs it across threads. Both are the mental model for every modern deep-RL method.",
+      "Single-agent RL assumes the environment is stationary. Put two learning agents in the same world and that assumption breaks: each agent is part of the other's environment, and both are changing. Multi-agent RL is the set of tricks to make learning converge when the Markov assumption no longer holds.",
+      "Dynamic programming is RL with cheating. You already know the transition and reward functions; you just iterate the Bellman equation until `V` or `\u03c0` stops moving. It is the benchmark every sampling-based method tries to approach."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Actor-Critic \u2014 A2C and A3C'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Agent Economies, Token Incentives, Reputation' belong to?",
+    "options": [
+      "Ml Fundamentals",
+      "Capstone Projects",
+      "Deep Learning Core",
+      "Multi Agent and Swarms"
+    ],
+    "correct": 3,
+    "explanation": "'Agent Economies, Token Incentives, Reputation' is lesson 21 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Agent Economies, Token Incentives, Reputation'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Rust",
+      "Learn \u2014 Python (stdlib)",
+      "Capstone \u2014 Python"
+    ],
+    "correct": 2,
+    "explanation": "'Agent Economies, Token Incentives, Reputation' is tagged as Learn in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Agent Economies, Token Incentives, Reputation'?",
+    "options": [
+      "Theory of Mind and Emergent Coordination",
+      "The Multi-Agent Primitive Model",
+      "Production Scaling \u2014 Queues, Checkpoints, Durability",
+      "MARL \u2014 MADDPG, QMIX, MAPPO"
+    ],
+    "correct": 2,
+    "explanation": "'Production Scaling \u2014 Queues, Checkpoints, Durability' follows 'Agent Economies, Token Incentives, Reputation' as lesson 22.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Agent Economies, Token Incentives, Reputation'?",
+    "options": [
+      "main.py",
+      "tests",
+      "main.rs",
+      "main.ts"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Agent Economies, Token Incentives, Reputation'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Agent Economies, Token Incentives, Reputation'?",
+    "options": [
+      "Li et al. (arXiv:2310.10701) showed that LLM agents in a cooperative text game exhibit **emergent high-order Theory of Mind** (ToM) \u2014 reasoning about what another agent believes about a third agent's beliefs \u2014 but fail on long-horizon planning due to context management and hallucination. Riedl (arXiv:2510.05174) measured higher-order synergy across a population and found that **only** the ToM-prompt condition produces identity-linked differentiation and goal-directed complementarity; lower-capacity LLMs show only spurious emergence. That is, coordination emergence is prompt-conditional and model-dependent, not free. This lesson implements a minimal ToM-aware agent, runs a cooperative task with and without ToM prompting, and measures the coordination delta against the Riedl 2025 protocol.",
+      "AutoGen GroupChat and AG2 GroupChat share one conversation across N agents; a selector function (LLM, round-robin, or custom) picks who speaks next. This is the archetype of emergent multi-agent conversation \u2014 agents do not know their role in a static graph, they just react to the shared pool. AutoGen v0.2's GroupChat semantics were preserved in the AG2 fork; AutoGen v0.4 rewrote it as an event-driven actor model. Microsoft put AutoGen into maintenance mode in February 2026 and merged it with Semantic Kernel into Microsoft Agent Framework (RC February 2026). The GroupChat primitive survives in both AG2 and Microsoft Agent Framework \u2014 learn it once, use it everywhere.",
+      "One agent hits a wall. The smart move is not a bigger agent - it is more agents.",
+      "Long-horizon autonomous agents (METR's 1-hour to 8-hour work-curve) need economic agency. The emerging **5-layer stack** is: **DePIN** (physical compute) \u2192 **Identity** (W3C DIDs + reputation capital) \u2192 **Cognition** (RAG + MCP) \u2192 **Settlement** (account abstraction) \u2192 **Governance** (Agentic DAOs). Production agent-incentive networks include **Bittensor** (TAO subnets reward task-specific models), **Fetch.ai / ASI Alliance** (ASI-1 Mini LLM + FET token), and **Gonka** (transformer-based PoW that reallocates compute to productive AI tasks). Academic work: AAMAS 2025's decentralized LaMAS uses **Shapley-value credit attribution** to fairly reward contributing agents; Google Research \"Mechanism design for large language models\" proposes **token auctions** with second-price payment under monotone aggregation. This lesson builds a minimal agent marketplace, applies Shapley-value credit attribution to a multi-agent pipeline, and runs a second-price token auction so the game-theory machinery lands concretely."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Agent Economies, Token Incentives, Reputation'.",
+    "stage": "pre"
+  }
+]

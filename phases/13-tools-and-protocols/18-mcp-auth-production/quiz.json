@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens' belong to?",
+    "options": [
+      "Multi Agent and Swarms",
+      "Tools and Protocols",
+      "Llms From Scratch",
+      "Autonomous Systems"
+    ],
+    "correct": 1,
+    "explanation": "'MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens' is lesson 18 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens'?",
+    "options": [
+      "Build \u2014 Python (stdlib)",
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 Rust"
+    ],
+    "correct": 0,
+    "explanation": "'MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens' is tagged as Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens'?",
+    "options": [
+      "MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base",
+      "MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing",
+      "A2A \u2014 Agent-to-Agent Protocol",
+      "MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration"
+    ],
+    "correct": 2,
+    "explanation": "'A2A \u2014 Agent-to-Agent Protocol' follows 'MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens' as lesson 19.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens'?",
+    "options": [
+      "rules.yml",
+      "main.py",
+      "main.ts",
+      "autodiff.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens'?",
+    "options": [
+      "Lesson 16 stood up the OAuth 2.1 state machine in memory. By 2026, every MCP server you ship to a real org sits behind production auth: client enrollment that scales to an unbounded client population (Client ID Metadata Documents first, dynamic client registration as a backwards-compatible fallback), authorization-server metadata discovery (RFC 8414 *or* OpenID Connect Discovery), JWKS cache refresh that does not break a 3 a.m. token validation, and audience-pinned tokens that refuse cross-resource replay. This lesson models the full surface with three roles \u2014 an authorization server, a resource server (the MCP server), and a client \u2014 so you can trace every hop from discovery to a validated tool call.",
+      "Text-only tool output caps what agents can show. MCP Apps (SEP-1724, official January 26, 2026) let a tool return sandboxed interactive HTML rendered inline in Claude Desktop, ChatGPT, Cursor, Goose, and VS Code. Dashboards, forms, maps, 3D scenes, all through one extension. This lesson walks the `ui://` resource scheme, the `text/html;profile=mcp-app` MIME, the iframe-sandbox postMessage protocol, and the security surface that comes with letting a server render HTML.",
+      "Three independent weather lookups serialized is three round trips. Run them in parallel and total time collapses to the slowest single call. Every frontier provider now emits multiple tool calls in a single turn. The payoff is real; the plumbing is subtle. This lesson walks both halves: the parallel fan-out and the streamed-argument reassembly, with emphasis on the id-correlation trap.",
+      "Most MCP tutorials show only stdio hello-worlds. A real server exposes tools plus resources plus prompts, handles capability negotiation, emits structured errors, and works the same across SDKs. This lesson builds a notes server end-to-end: stdlib stdio transport, JSON-RPC dispatch, the three server primitives, and a pure-function style that drops into either the Python SDK's FastMCP or the TypeScript SDK when you graduate."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens'.",
+    "stage": "pre"
+  }
+]

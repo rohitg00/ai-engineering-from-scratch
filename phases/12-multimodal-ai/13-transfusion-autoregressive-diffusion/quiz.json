@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Transfusion: Autoregressive Text + Diffusion Image in One Transformer' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Speech and Audio",
+      "Transformers Deep Dive",
+      "Computer Vision"
+    ],
+    "correct": 0,
+    "explanation": "'Transfusion: Autoregressive Text + Diffusion Image in One Transformer' is lesson 13 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Transfusion: Autoregressive Text + Diffusion Image in One Transformer'?",
+    "options": [
+      "Learn \u2014 \u2014",
+      "Capstone \u2014 Julia",
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 Python (stdlib, two-loss trainer on MNIST-scale toy)"
+    ],
+    "correct": 3,
+    "explanation": "'Transfusion: Autoregressive Text + Diffusion Image in One Transformer' is tagged as Build in Python (stdlib, two-loss trainer on MNIST-scale toy).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'Transfusion: Autoregressive Text + Diffusion Image in One Transformer'?",
+    "options": [
+      "Document and Diagram Understanding",
+      "Long-Video Understanding at Million-Token Context",
+      "Show-o and Discrete-Diffusion Unified Models",
+      "Vision Transformers and the Patch-Token Primitive"
+    ],
+    "correct": 2,
+    "explanation": "'Show-o and Discrete-Diffusion Unified Models' follows 'Transfusion: Autoregressive Text + Diffusion Image in One Transformer' as lesson 14.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Transfusion: Autoregressive Text + Diffusion Image in One Transformer'?",
+    "options": [
+      "agent-rules.md",
+      "main.py",
+      "main.ts",
+      "tests"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Transfusion: Autoregressive Text + Diffusion Image in One Transformer'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Transfusion: Autoregressive Text + Diffusion Image in One Transformer'?",
+    "options": [
+      "CLIP aligns image and text but cannot generate captions, answer questions, or hold a conversation. BLIP-2 (Salesforce, 2023) solved that with a small trainable bridge: 32 learnable query vectors attend over a frozen ViT's features via cross-attention, then slot directly into a frozen LLM's input stream. 188M parameters of bridge connected an 11B LLM to a ViT-g/14. Every adapter-based VLM through 2026 \u2014 MiniGPT-4, InstructBLIP, LLaVA's cousins \u2014 is a descendant. This lesson reads the Q-Former's architecture, explains its two-stage training, and builds a toy version that feeds visual tokens into a frozen text decoder.",
+      "Chameleon and Emu3 bet everything on discrete tokens. They work, but the quantization bottleneck is visible \u2014 the image quality plateaus below continuous-space diffusion models. Transfusion (Meta, Zhou et al., August 2024) takes the opposite bet: keep images continuous, drop the VQ-VAE entirely, and train one transformer with two losses. Text tokens get next-token-prediction. Image patches get a flow-matching / diffusion loss. Both objectives optimize the same weights. The architecture underlying Stable Diffusion 3 (MMDiT) is a close cousin. This lesson reads the Transfusion thesis, builds a toy two-loss trainer, and traces the attention mask that lets one transformer do both jobs.",
+      "The 2026 frontier product is a multimodal agent that reads screenshots, clicks buttons, navigates web UIs, fills forms, and completes workflows end-to-end. SeeClick and CogAgent (2024) proved the GUI-grounding primitive. Ferret-UI added mobile. ChartAgent introduced visual tool-use for charts. VisualWebArena and AgentVista (2026) are the benchmarks the frontier chases \u2014 and even Gemini 3 Pro and Claude Opus 4.7 score ~30% on AgentVista's hard tasks. This capstone pulls together every thread of Phase 12: perception (high-res VLM), reasoning (LLM with tool use), grounding (coordinate output), long-horizon memory, and evaluation.",
+      "Traditional RAG parses PDFs into text, splits into chunks, embeds chunks, stores vectors. Every step loses signal: OCR drops chart data, chunking breaks table rows, text embeddings ignore figures. ColPali (Faysse et al., July 2024) asked the simpler question: why extract text at all? Embed the page image directly via PaliGemma, use ColBERT-style late interaction for retrieval, and keep all the layout, figures, fonts, and formatting signal the document carries. Published benchmarks: 20-40% better end-to-end accuracy than text-RAG on visually-rich documents. ColQwen2, ColSmol, and VisRAG extended the pattern. This lesson reads the vision-native RAG thesis and builds a tiny ColPali-like indexer."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Transfusion: Autoregressive Text + Diffusion Image in One Transformer'.",
+    "stage": "pre"
+  }
+]

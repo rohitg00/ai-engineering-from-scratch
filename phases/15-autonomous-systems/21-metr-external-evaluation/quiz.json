@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'METR Time Horizons and External Capability Evaluation' belong to?",
+    "options": [
+      "Transformers Deep Dive",
+      "Computer Vision",
+      "Nlp Foundations to Advanced",
+      "Autonomous Systems"
+    ],
+    "correct": 3,
+    "explanation": "'METR Time Horizons and External Capability Evaluation' is lesson 21 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'METR Time Horizons and External Capability Evaluation'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Learn \u2014 Python (stdlib, logistic-fit horizon estimator)",
+      "Build \u2014 TypeScript",
+      "Build \u2014 Julia"
+    ],
+    "correct": 1,
+    "explanation": "'METR Time Horizons and External Capability Evaluation' is tagged as Learn in Python (stdlib, logistic-fit horizon estimator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'METR Time Horizons and External Capability Evaluation'?",
+    "options": [
+      "The Shift from Chatbots to Long-Horizon Agents",
+      "Recursive Self-Improvement \u2014 Capability vs Alignment",
+      "AI Scientist v2 \u2014 Workshop-Level Autonomous Research",
+      "CAIS, CAISI, and Societal-Scale Risk"
+    ],
+    "correct": 3,
+    "explanation": "'CAIS, CAISI, and Societal-Scale Risk' follows 'METR Time Horizons and External Capability Evaluation' as lesson 22.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'METR Time Horizons and External Capability Evaluation'?",
+    "options": [
+      "tests",
+      "tests",
+      "test_main.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'METR Time Horizons and External Capability Evaluation'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'METR Time Horizons and External Capability Evaluation'?",
+    "options": [
+      "The Center for AI Safety (CAIS, San Francisco, founded 2022 by Hendrycks and Zhang) publishes the four-risk framework \u2014 malicious use, AI races, organizational risks, rogue AIs \u2014 and the May 2023 statement on extinction risk signed by hundreds of professors and company leaders. 2026 releases from CAIS: AI Dashboard for frontier-model evaluation, Remote Labor Index (with Scale AI), Superintelligence Strategy Paper, AI Frontiers newsletter. A distinct entity: NIST Center for AI Standards and Innovation (CAISI) \u2014 US-government-facing voluntary agreements and unclassified capability evaluations focused on cyber, bio, and chemical-weapons risks. CAIS flags organizational risk as one of four top-level risks: safety culture, rigorous audits, multi-layered defenses, and information security are foundational but routinely traded off against deployment speed. California SB-53, if signed, would be the first US state-level catastrophic-risk regulation.",
+      "Claude Code exposes seven permission modes. \"plan\" asks before every action, \"default\" asks only for risky ones, \"acceptEdits\" auto-approves file writes but still confirms shell execution, and \"bypassPermissions\" approves everything. Auto Mode (March 24, 2026) replaces per-action approval with a two-stage parallel safety classifier: a single-token fast check runs on every action; flagged actions kick off a chain-of-thought deep review. Action budgets are enforced via `max_turns` and `max_budget_usd`. Auto Mode shipped as a research preview \u2014 Anthropic has stated explicitly that the classifier is not sufficient alone.",
+      "METR (ex-ARC Evals) is an independent 501(c)(3) since December 2023. Their Time Horizon 1.1 benchmark (January 2026) fits a logistic curve to task-success probability vs log(expert human completion time); the intersection at 50% probability defines the model's time horizon. The 2025\u20132026 engagement set covers GPT-5.1, GPT-5.1-Codex-Max, and prototype monitoring evaluations (can a monitor catch side tasks; can the agent evade). Benchmark suites: HCAST (180+ ML, cyber, SWE, reasoning tasks; 1 minute to 8+ hours), RE-Bench (71 ML research-engineering tasks with expert baseline), SWAA. The honest note: METR measurements are idealized \u2014 no human, no real consequences \u2014 and the team has documented the eval-vs-deployment behavior gap (Lesson 1). A time horizon is an upper bound, not a deployment prediction.",
+      "Llama Guard 3 (Meta, Llama-3.1-8B base, fine-tuned for content safety) classifies both LLM inputs and outputs against an MLCommons 13-hazard taxonomy across 8 languages. A 1B-INT4 quantized variant runs at over 30 tokens/sec on mobile CPUs. Llama Guard 4 is multimodal (image + text), expands to the S1\u2013S14 category set (including S14 Code Interpreter Abuse), and is a drop-in replacement for Llama Guard 3 8B/11B. NVIDIA NeMo Guardrails v0.20.0 (January 2026) adds Colang dialog-flow rails on top of input and output rails. The honest note: \"Bypassing Prompt Injection and Jailbreak Detection in LLM Guardrails\" (Huang et al., arXiv:2504.11168) showed Emoji Smuggling hit 100% attack success rate on six prominent guard systems; NeMo Guard Detect recorded 72.54% ASR on jailbreaks. Classifiers are a layer, not a solution."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'METR Time Horizons and External Capability Evaluation'.",
+    "stage": "pre"
+  }
+]

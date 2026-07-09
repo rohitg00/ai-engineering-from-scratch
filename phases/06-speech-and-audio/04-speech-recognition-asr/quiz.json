@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention' belong to?",
+    "options": [
+      "Deep Learning Core",
+      "Ethics Safety Alignment",
+      "Speech and Audio",
+      "Setup and Tooling"
+    ],
+    "correct": 2,
+    "explanation": "'Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention' is lesson 04 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention'?",
+    "options": [
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 Julia",
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention'?",
+    "options": [
+      "Whisper \u2014 Architecture & Fine-Tuning",
+      "Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split",
+      "Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue",
+      "Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick"
+    ],
+    "correct": 0,
+    "explanation": "'Whisper \u2014 Architecture & Fine-Tuning' follows 'Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention' as lesson 05.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention'?",
+    "options": [
+      "ts",
+      "main.jl",
+      "main.py",
+      "main.ts"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention'?",
+    "options": [
+      "2026 music generation: Suno v5 and Udio v4 dominate commercial; MusicGen, Stable Audio Open, and ACE-Step lead open-source. The technical problem is mostly solved. The legal problem (Warner Music $500M settlement, UMG settlement) reshaped the field in 2025-2026.",
+      "Voice cloning reads your text in someone else's voice. Voice conversion rewrites your voice into someone else's while preserving what you said. Both hang on the same decomposition: separate speaker identity from content.",
+      "Speech recognition is audio classification at every timestep, glued together by a sequence model that knows English and silence. CTC, RNN-T, and attention are the three ways to do it. Pick one and understand why.",
+      "Whisper is a 30-second-window transformer encoder-decoder, trained on 680k hours of multilingual weakly-supervised audio-text pairs. One architecture, multiple tasks, robust across 99 languages. The 2026 reference ASR."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention'.",
+    "stage": "pre"
+  }
+]

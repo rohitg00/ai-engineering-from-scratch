@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'ControlNet, LoRA & Conditioning' belong to?",
+    "options": [
+      "Ethics Safety Alignment",
+      "Multimodal Ai",
+      "Generative Ai",
+      "Llm Engineering"
+    ],
+    "correct": 2,
+    "explanation": "'ControlNet, LoRA & Conditioning' is lesson 08 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'ControlNet, LoRA & Conditioning'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Learn \u2014 Rust",
+      "Build \u2014 Python",
+      "Learn \u2014 \u2014"
+    ],
+    "correct": 2,
+    "explanation": "'ControlNet, LoRA & Conditioning' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after 'ControlNet, LoRA & Conditioning'?",
+    "options": [
+      "Diffusion Models \u2014 DDPM from Scratch",
+      "Audio Generation",
+      "Inpainting, Outpainting & Image Editing",
+      "Conditional GANs & Pix2Pix"
+    ],
+    "correct": 2,
+    "explanation": "'Inpainting, Outpainting & Image Editing' follows 'ControlNet, LoRA & Conditioning' as lesson 09.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'ControlNet, LoRA & Conditioning'?",
+    "options": [
+      "main.py",
+      "tests",
+      "test_main.py",
+      "tests"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'ControlNet, LoRA & Conditioning'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'ControlNet, LoRA & Conditioning'?",
+    "options": [
+      "Text alone is a clumsy control signal. ControlNet lets you clone a pretrained diffusion model and steer it with a depth map, pose skeleton, scribble, or edge image. LoRA lets you fine-tune a 2B-parameter model by training 10 million parameters. Together they turned Stable Diffusion from a toy into the 2026 image pipeline that ships at every agency.",
+      "3D is the modality where 2D-to-3D leverage is strongest. The 2023 breakthrough was 3D Gaussian Splatting. The 2024-2026 generative push layers multi-view diffusion + 3D reconstruction on top to produce objects and scenes from a single prompt or photo.",
+      "Diffusion models sample iteratively in time (denoising steps). VAR samples iteratively in scale \u2014 it predicts a 1x1 token, then 2x2, then 4x4, up to the final resolution, each scale conditioning on the previous. The 2024 paper showed VAR matches GPT-style scaling laws for image generation and beats DiT at the same compute budget. This lesson builds the core mechanism.",
+      "Goodfellow's trick in 2014 was to skip density entirely. Two networks. One makes fakes. One catches them. They fight until the fakes are indistinguishable from real. It shouldn't work. It often doesn't. When it does, the samples are still the sharpest in the literature for narrow domains."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'ControlNet, LoRA & Conditioning'.",
+    "stage": "pre"
+  }
+]

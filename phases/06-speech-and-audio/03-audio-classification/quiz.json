@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs' belong to?",
+    "options": [
+      "Tools and Protocols",
+      "Setup and Tooling",
+      "Llms From Scratch",
+      "Speech and Audio"
+    ],
+    "correct": 3,
+    "explanation": "'Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs' is lesson 03 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs'?",
+    "options": [
+      "Learn \u2014 Rust",
+      "Build \u2014 Python",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 1,
+    "explanation": "'Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs'?",
+    "options": [
+      "Speaker Recognition & Verification",
+      "Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio",
+      "Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention",
+      "Audio Evaluation \u2014 WER, MOS, UTMOS, MMAU, FAD, and the Open Leaderboards"
+    ],
+    "correct": 2,
+    "explanation": "'Speech Recognition (ASR) \u2014 CTC, RNN-T, Attention' follows 'Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs' as lesson 04.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs'?",
+    "options": [
+      "main.py",
+      "main.rs",
+      "tests",
+      "main.ts"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs'?",
+    "options": [
+      "Waveforms are the raw signal. Spectrograms are the representation. Mel features are the ML-friendly form. Every modern ASR and TTS pipeline walks this ladder, and the first rung is understanding sampling and Fourier.",
+      "You cannot ship what you cannot measure. This lesson names the 2026 metrics for every audio task: ASR (WER, CER, RTFx), TTS (MOS, UTMOS, SECS, WER-on-ASR-round-trip), audio-language (MMAU, LongAudioBench), music (FAD, CLAP), and speaker (EER). Plus the leaderboards where you compare.",
+      "2026 audio generation is almost all tokens. EnCodec, SNAC, Mimi, and DAC turn continuous waveforms into discrete sequences that a transformer can predict. The semantic-vs-acoustic token split \u2014 first-codebook as semantic, rest as acoustic \u2014 is the most important architectural shift since the Transformer for audio.",
+      "Everything from \"dog barking vs siren\" to \"which language is this\" is audio classification. The features are mels. The architecture moves each decade. The evaluation stays AUC, F1, and per-class recall."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Long-Running Background Agents: Durable Execution' belong to?",
+    "options": [
+      "Ethics Safety Alignment",
+      "Infrastructure and Production",
+      "Multi Agent and Swarms",
+      "Autonomous Systems"
+    ],
+    "correct": 3,
+    "explanation": "'Long-Running Background Agents: Durable Execution' is lesson 12 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Long-Running Background Agents: Durable Execution'?",
+    "options": [
+      "Capstone \u2014 Python",
+      "Capstone \u2014 \u2014",
+      "Capstone \u2014 Rust",
+      "Learn \u2014 Python (stdlib, minimal durable-execution state machine)"
+    ],
+    "correct": 3,
+    "explanation": "'Long-Running Background Agents: Durable Execution' is tagged as Learn in Python (stdlib, minimal durable-execution state machine).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'Long-Running Background Agents: Durable Execution'?",
+    "options": [
+      "Browser Agents and Long-Horizon Web Tasks",
+      "Action Budgets, Iteration Caps, and Cost Governors",
+      "Kill Switches, Circuit Breakers, and Canary Tokens",
+      "Anthropic Responsible Scaling Policy v3.0"
+    ],
+    "correct": 1,
+    "explanation": "'Action Budgets, Iteration Caps, and Cost Governors' follows 'Long-Running Background Agents: Durable Execution' as lesson 13.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Long-Running Background Agents: Durable Execution'?",
+    "options": [
+      "main.py",
+      "main.jl",
+      "tests",
+      "yaml_subset.py"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Long-Running Background Agents: Durable Execution'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Long-Running Background Agents: Durable Execution'?",
+    "options": [
+      "Production long-horizon agents do not run in `while True`. Every LLM call becomes an activity with checkpoint, retry, and replay. Temporal's OpenAI Agents SDK integration went GA March 2026. Claude Code Routines (Anthropic) runs scheduled Claude Code invocations without a persistent local process. Sessions pause on human-input, survive deploys, and resume from the latest checkpoint keyed by `thread_id`. Behind the new ergonomics sits an old pattern \u2014 workflow orchestration \u2014 with one new input: LLM calls as non-deterministic activities that must be deterministically replayed on recovery.",
+      "Every graph-state transition persists. When a worker crashes, its lease expires and another worker picks up at the latest checkpoint. Cloudflare Durable Objects hold state across hours or weeks. Propose-then-commit (Lesson 15) defines a rollback plan per action. Post-action verification closes the loop. EU AI Act Article 14 makes effective human oversight mandatory for high-risk systems \u2014 in practice this means checkpoints must be queryable, rollbacks must be rehearsed, and the audit trail must survive a deploy. The sharp failure mode: without idempotency keys and precondition checks, a retry after a transient failure can double-execute an already-approved action. Post-action verification is what catches it.",
+      "Anthropic ran parallel teams of Claude Opus 4.6 Autonomous Alignment Researchers in independent sandboxes, coordinating via a shared forum whose logs live outside any sandbox (so agents cannot delete their own records). On the weak-to-strong training problem, the AARs outperformed human researchers. Anthropic's own summary flags that prescribed workflows often constrain AAR flexibility and degrade performance. Automating alignment research is the compression step that compresses the timeline to the exact misalignment risks the RSP is meant to detect.",
+      "The smallest possible self-improvement loop sits inside the rationale. A model generates a chain of thought, keeps the ones that land on correct answers, and fine-tunes on those. That is STaR. V-STaR adds a verifier so inference-time selection is better. Quiet-STaR pushes the rationale down to every token. All three work. None of them are magic \u2014 the loop preserves any shortcut that happened to reach the right answer."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Long-Running Background Agents: Durable Execution'.",
+    "stage": "pre"
+  }
+]

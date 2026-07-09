@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Sim-to-Real Transfer' belong to?",
+    "options": [
+      "Infrastructure and Production",
+      "Agent Engineering",
+      "Tools and Protocols",
+      "Reinforcement Learning"
+    ],
+    "correct": 3,
+    "explanation": "'Sim-to-Real Transfer' is lesson 11 in Phase 9 \u2014 Reinforcement Learning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Sim-to-Real Transfer'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 Python",
+      "Build \u2014 Julia"
+    ],
+    "correct": 2,
+    "explanation": "'Sim-to-Real Transfer' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Reinforcement Learning, which lesson comes immediately after 'Sim-to-Real Transfer'?",
+    "options": [
+      "Actor-Critic \u2014 A2C and A3C",
+      "Multi-Agent RL",
+      "RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era",
+      "Policy Gradient \u2014 REINFORCE from Scratch"
+    ],
+    "correct": 2,
+    "explanation": "'RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era' follows 'Sim-to-Real Transfer' as lesson 12.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Sim-to-Real Transfer'?",
+    "options": [
+      "main.rs",
+      "main.py",
+      "tests",
+      "main.ts"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Sim-to-Real Transfer'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Sim-to-Real Transfer'?",
+    "options": [
+      "A policy trained in a simulator that fails on hardware is a policy that memorized the simulator. Domain randomization, domain adaptation, and system identification are the three tools to make learned controllers cross the reality gap.",
+      "Monte Carlo waits until the episode ends. TD updates after every step by bootstrapping the next value estimate. Q-learning is off-policy and optimistic; SARSA is on-policy and cautious. Both are one line of code. Both underpin every deep-RL method in this phase.",
+      "Humans cannot write a reward function for \"good assistant response,\" but they can compare two responses and pick the better one. Fit a reward model to those comparisons, then RL the language model against it. Christiano 2017. InstructGPT 2022. The recipe that turned GPT-3 into ChatGPT. In 2026 it is mostly being replaced by DPO \u2014 but the mental model stays.",
+      "A Markov Decision Process is five things: states, actions, transitions, rewards, a discount. Everything in RL \u2014 Q-learning, PPO, DPO, GRPO \u2014 optimizes over this shape. Learn it once, read the rest of reinforcement learning for free."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Sim-to-Real Transfer'.",
+    "stage": "pre"
+  }
+]

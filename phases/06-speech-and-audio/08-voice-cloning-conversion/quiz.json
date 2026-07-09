@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Voice Cloning & Voice Conversion' belong to?",
+    "options": [
+      "Speech and Audio",
+      "Tools and Protocols",
+      "Math Foundations",
+      "Setup and Tooling"
+    ],
+    "correct": 0,
+    "explanation": "'Voice Cloning & Voice Conversion' is lesson 08 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Voice Cloning & Voice Conversion'?",
+    "options": [
+      "Build \u2014 Python",
+      "Capstone \u2014 Julia",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 0,
+    "explanation": "'Voice Cloning & Voice Conversion' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Voice Cloning & Voice Conversion'?",
+    "options": [
+      "Whisper \u2014 Architecture & Fine-Tuning",
+      "Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake",
+      "Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro",
+      "Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio"
+    ],
+    "correct": 1,
+    "explanation": "'Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake' follows 'Voice Cloning & Voice Conversion' as lesson 09.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Voice Cloning & Voice Conversion'?",
+    "options": [
+      "safety_gate.py",
+      "test_main.py",
+      "main.py",
+      "tests"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Voice Cloning & Voice Conversion'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Voice Cloning & Voice Conversion'?",
+    "options": [
+      "Speech recognition is audio classification at every timestep, glued together by a sequence model that knows English and silence. CTC, RNN-T, and attention are the three ways to do it. Pick one and understand why.",
+      "Every voice agent lives or dies on two decisions: is the user speaking now, and are they done? VAD answers the first. Turn-detection (VAD + silence-hangover + semantic endpoint model) answers the second. Get either wrong and your assistant either cuts users off or never shuts up.",
+      "ASR inverts speech to text; TTS inverts text to speech. The 2026 stack is three parts: text \u2192 tokens, tokens \u2192 mel, mel \u2192 waveform. Each part has a default model that fits in a laptop.",
+      "Voice cloning reads your text in someone else's voice. Voice conversion rewrites your voice into someone else's while preserving what you said. Both hang on the same decomposition: separate speaker identity from content."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Voice Cloning & Voice Conversion'.",
+    "stage": "pre"
+  }
+]

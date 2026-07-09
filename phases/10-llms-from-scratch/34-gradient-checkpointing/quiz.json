@@ -1,0 +1,50 @@
+[
+  {
+    "question": "Which phase does the lesson 'Gradient Checkpointing and Activation Recomputation' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Setup and Tooling",
+      "Agent Engineering",
+      "Autonomous Systems"
+    ],
+    "correct": 0,
+    "explanation": "'Gradient Checkpointing and Activation Recomputation' is lesson 34 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Gradient Checkpointing and Activation Recomputation'?",
+    "options": [
+      "Build \u2014 Python (with numpy, optional torch)",
+      "Capstone \u2014 \u2014",
+      "Learn \u2014 \u2014",
+      "Learn \u2014 Julia"
+    ],
+    "correct": 0,
+    "explanation": "'Gradient Checkpointing and Activation Recomputation' is tagged as Build in Python (with numpy, optional torch).",
+    "stage": "pre"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Gradient Checkpointing and Activation Recomputation'?",
+    "options": [
+      "ts",
+      "main.ts",
+      "tests",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Gradient Checkpointing and Activation Recomputation'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Gradient Checkpointing and Activation Recomputation'?",
+    "options": [
+      "A base model predicts the next token. That's it. It doesn't follow instructions, answer questions, or refuse harmful requests. SFT is the bridge between a token predictor and a useful assistant. Every model you've ever talked to -- Claude, GPT, Llama Chat -- went through this step.",
+      "Backprop keeps every intermediate activation. At 70B parameters and 128K context that is 3 TB of activations per rank. Checkpointing trades FLOPs for memory: recompute instead of save. The question is which segments to drop, and the answer is not \"all of them.\"",
+      "The model is a mirror. It reflects whatever data you feed it. Feed it garbage, it reflects garbage with perfect fluency.",
+      "A frontier LLM generating one token requires a full forward pass over billions of parameters. That forward pass is massively over-provisioned: most of the time a much smaller model can guess the next 3-5 tokens correctly, and the big model only needs to *verify* the guess. When the guess is right you got 5 tokens for the price of one. Speculative decoding (Leviathan et al. 2023) made this exact, and EAGLE-3 (2025) pushed acceptance rates to ~4.5 tokens per verify \u2014 a 4-5x speedup at matched output distribution."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Gradient Checkpointing and Activation Recomputation'.",
+    "stage": "pre"
+  }
+]

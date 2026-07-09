@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Differential Attention (V2)' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Speech and Audio",
+      "Tools and Protocols",
+      "Deep Learning Core"
+    ],
+    "correct": 0,
+    "explanation": "'Differential Attention (V2)' is lesson 16 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Differential Attention (V2)'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Capstone \u2014 Python",
+      "Build \u2014 Python (stdlib)",
+      "Capstone \u2014 Julia"
+    ],
+    "correct": 2,
+    "explanation": "'Differential Attention (V2)' is tagged as Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Llms From Scratch, which lesson comes immediately after 'Differential Attention (V2)'?",
+    "options": [
+      "Inference Optimization",
+      "Speculative Decoding and EAGLE-3",
+      "Native Sparse Attention (DeepSeek NSA)",
+      "Quantization: Making Models Fit"
+    ],
+    "correct": 2,
+    "explanation": "'Native Sparse Attention (DeepSeek NSA)' follows 'Differential Attention (V2)' as lesson 17.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Differential Attention (V2)'?",
+    "options": [
+      "vectors.py",
+      "tests",
+      "test_main.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Differential Attention (V2)'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Differential Attention (V2)'?",
+    "options": [
+      "Everything from Lessons 01 to 12 is one stage of one pipeline. This lesson is the scaffold that turns those stages into a single end-to-end run: tokenize, pre-train, scale, SFT, align, evaluate, quantize, serve. You will not train a 70B model on a laptop. You will produce the orchestration layer, the manifest, the eval gate, and the rollback plan that a 2026 frontier team uses to decide what gets shipped. This is the capstone.",
+      "Softmax attention spreads a small amount of probability over every non-matching token. Over 100k tokens that noise adds up and drowns the signal. Differential Transformer (Ye et al., ICLR 2025) fixes it by computing attention as the difference of two softmaxes, subtracting the shared noise floor. DIFF V2 (Microsoft, January 2026) is the production-stack rewrite: matching decode latency to baseline Transformer, no custom kernels, FlashAttention-compatible. This lesson is V1 to V2 end-to-end, with a working toy implementation of the difference operation you can run in stdlib Python.",
+      "Your LLM does not read English. It reads integers. The tokenizer decides whether those integers carry meaning or waste it.",
+      "You built a GPT-2 Small from scratch in Lesson 04. Frontier open models in 2026 are the same family with five or six concrete changes. RMSNorm instead of LayerNorm. SwiGLU instead of GELU. RoPE instead of learned positions. GQA or MLA instead of full MHA. Mixture-of-Experts at scale. The math you already know covers 95% of them. This lesson reads Llama 3, DeepSeek-V3, Mixtral, Qwen, and Gemma side by side and names the exact line where each architecture diverges."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Differential Attention (V2)'.",
+    "stage": "pre"
+  }
+]

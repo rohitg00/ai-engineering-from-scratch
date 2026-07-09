@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Bounded Self-Improvement Designs' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Llm Engineering",
+      "Deep Learning Core",
+      "Computer Vision"
+    ],
+    "correct": 0,
+    "explanation": "'Bounded Self-Improvement Designs' is lesson 08 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Bounded Self-Improvement Designs'?",
+    "options": [
+      "Learn \u2014 Python (stdlib, bounded-loop with invariant check)",
+      "Build \u2014 Rust",
+      "Build \u2014 \u2014",
+      "Capstone \u2014 Python"
+    ],
+    "correct": 0,
+    "explanation": "'Bounded Self-Improvement Designs' is tagged as Learn in Python (stdlib, bounded-loop with invariant check).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'Bounded Self-Improvement Designs'?",
+    "options": [
+      "Action Budgets, Iteration Caps, and Cost Governors",
+      "Anthropic Responsible Scaling Policy v3.0",
+      "Long-Running Background Agents: Durable Execution",
+      "The Autonomous Coding Agent Landscape (2026)"
+    ],
+    "correct": 3,
+    "explanation": "'The Autonomous Coding Agent Landscape (2026)' follows 'Bounded Self-Improvement Designs' as lesson 09.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Bounded Self-Improvement Designs'?",
+    "options": [
+      "debug_neural_nets.py",
+      "main.py",
+      "derivatives.py",
+      "svd.jl"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Bounded Self-Improvement Designs'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Bounded Self-Improvement Designs'?",
+    "options": [
+      "Production long-horizon agents do not run in `while True`. Every LLM call becomes an activity with checkpoint, retry, and replay. Temporal's OpenAI Agents SDK integration went GA March 2026. Claude Code Routines (Anthropic) runs scheduled Claude Code invocations without a persistent local process. Sessions pause on human-input, survive deploys, and resume from the latest checkpoint keyed by `thread_id`. Behind the new ergonomics sits an old pattern \u2014 workflow orchestration \u2014 with one new input: LLM calls as non-deterministic activities that must be deterministically replayed on recovery.",
+      "Research has converged on four primitives for bounding a self-improvement loop. Formal invariants that must hold across every edit. Alignment anchors that cannot be modified. Multi-objective constraints where every dimension (safety, fairness, robustness) must hold, not just performance. Regression detection that pauses the loop when historical metrics suggest capability loss. None of them is a proof of safety \u2014 information-theoretic results (Kolmogorov complexity, Lob's theorem) bound what any system can prove about its own successors. They are mitigations that raise the cost of silent failure.",
+      "Anthropic ran parallel teams of Claude Opus 4.6 Autonomous Alignment Researchers in independent sandboxes, coordinating via a shared forum whose logs live outside any sandbox (so agents cannot delete their own records). On the weak-to-strong training problem, the AARs outperformed human researchers. Anthropic's own summary flags that prescribed workflows often constrain AAR flexibility and degrade performance. Automating alignment research is the compression step that compresses the timeline to the exact misalignment risks the RSP is meant to detect.",
+      "Anthropic's January 22, 2026 Claude Constitution runs 79 pages and is CC0. It moves from rule-based to reason-based alignment and establishes a four-tier priority hierarchy: (1) safety and supporting human oversight, (2) ethics, (3) Anthropic guidelines, (4) helpfulness. Behaviours split into hardcoded prohibitions (bioweapons uplift, CSAM) that operators and users cannot override and soft-coded defaults that operators can adjust within defined bounds. The 2022 original (Bai et al.) trained harmlessness via self-critique and RLAIF against a constitution. The honest caveat: reason-based alignment relies on the model generalising principles to unanticipated situations. Anthropic's own 2023 participatory experiment showed ~50% divergence between public-sourced and corporate principles; the 2026 version did not incorporate those findings."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Bounded Self-Improvement Designs'.",
+    "stage": "pre"
+  }
+]

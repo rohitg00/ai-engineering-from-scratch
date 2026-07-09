@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Janus-Pro: Decoupled Encoders for Unified Multimodal Models' belong to?",
+    "options": [
+      "Multi Agent and Swarms",
+      "Generative Ai",
+      "Autonomous Systems",
+      "Multimodal Ai"
+    ],
+    "correct": 3,
+    "explanation": "'Janus-Pro: Decoupled Encoders for Unified Multimodal Models' is lesson 15 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Janus-Pro: Decoupled Encoders for Unified Multimodal Models'?",
+    "options": [
+      "Build \u2014 Python (stdlib, dual-encoder routing + shared-body signal)",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 Rust",
+      "Learn \u2014 Julia"
+    ],
+    "correct": 0,
+    "explanation": "'Janus-Pro: Decoupled Encoders for Unified Multimodal Models' is tagged as Build in Python (stdlib, dual-encoder routing + shared-body signal).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'Janus-Pro: Decoupled Encoders for Unified Multimodal Models'?",
+    "options": [
+      "Qwen-VL Family and Dynamic-FPS Video",
+      "Document and Diagram Understanding",
+      "From CLIP to BLIP-2 \u2014 Q-Former as Modality Bridge",
+      "MIO and Any-to-Any Streaming Multimodal Models"
+    ],
+    "correct": 3,
+    "explanation": "'MIO and Any-to-Any Streaming Multimodal Models' follows 'Janus-Pro: Decoupled Encoders for Unified Multimodal Models' as lesson 16.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Janus-Pro: Decoupled Encoders for Unified Multimodal Models'?",
+    "options": [
+      "linear_systems.py",
+      "matrices.py",
+      "main.py",
+      "vscode"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Janus-Pro: Decoupled Encoders for Unified Multimodal Models'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Janus-Pro: Decoupled Encoders for Unified Multimodal Models'?",
+    "options": [
+      "Unified multimodal models have an unavoidable tension. Understanding wants semantic features \u2014 SigLIP or DINOv2 output vectors rich with concept-level information. Generation wants reconstruction-friendly codes \u2014 VQ tokens that compose back into crisp pixels. The two goals are not compatible in a single encoder. Janus (DeepSeek, October 2024) and Janus-Pro (DeepSeek, January 2025) argue the fix is to stop trying: decouple the two encoders. Share the transformer body between tasks, but route understanding through SigLIP and generation through a VQ tokenizer. At 7B, Janus-Pro beats DALL-E 3 on GenEval while matching LLaVA on MMMU. This lesson reads why two encoders work where one fails.",
+      "The 2026 frontier product is a multimodal agent that reads screenshots, clicks buttons, navigates web UIs, fills forms, and completes workflows end-to-end. SeeClick and CogAgent (2024) proved the GUI-grounding primitive. Ferret-UI added mobile. ChartAgent introduced visual tool-use for charts. VisualWebArena and AgentVista (2026) are the benchmarks the frontier chases \u2014 and even Gemini 3 Pro and Claude Opus 4.7 score ~30% on AgentVista's hard tasks. This capstone pulls together every thread of Phase 12: perception (high-res VLM), reasoning (LLM with tool use), grounding (coordinate output), long-horizon memory, and evaluation.",
+      "Documents are not photos. A PDF, scientific paper, invoice, or handwritten form has layout, tables, diagrams, footnotes, headers, and semantic structure that plain image understanding cannot capture. The pre-VLM stack was a pipeline: Tesseract OCR + LayoutLMv3 + table-extraction heuristics. The VLM wave replaced that with OCR-free models \u2014 Donut (2022), Nougat (2023), DocLLM (2023) \u2014 that emit structured markup directly. By 2026 the frontier is just \"feed the page image to Claude Opus 4.7 at 2576px native,\" and the structured-markup output comes for free. This lesson reads the three-era arc of document AI.",
+      "GPT-4o's product demo in May 2024 was disruptive not because of the underlying model but because of the product shape \u2014 a voice interface where you talk, the model sees what the camera sees, and it talks back in under 250ms. The open ecosystem spent the rest of 2024 and 2025 racing to reach that product surface. Qwen2.5-Omni (March 2025) is the reference open design: a Thinker (large text-generating transformer) plus a Talker (parallel speech-generating transformer), linked by streaming speech tokens. Mini-Omni simplified it, Moshi matched its latency, GLM-4-Voice extended it to Chinese. This lesson reads the Thinker-Talker architecture and the latency budget that makes streaming real-time dialogue work."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Janus-Pro: Decoupled Encoders for Unified Multimodal Models'.",
+    "stage": "pre"
+  }
+]

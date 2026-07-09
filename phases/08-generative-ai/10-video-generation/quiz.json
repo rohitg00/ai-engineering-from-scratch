@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Video Generation' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Generative Ai",
+      "Autonomous Systems",
+      "Ml Fundamentals"
+    ],
+    "correct": 1,
+    "explanation": "'Video Generation' is lesson 10 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Video Generation'?",
+    "options": [
+      "Learn \u2014 \u2014",
+      "Capstone \u2014 \u2014",
+      "Learn \u2014 Julia",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Video Generation' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after 'Video Generation'?",
+    "options": [
+      "Autoencoders & Variational Autoencoders (VAE)",
+      "Generative Models \u2014 Taxonomy & History",
+      "Evaluation \u2014 FID, CLIP Score, Human Preference",
+      "Audio Generation"
+    ],
+    "correct": 3,
+    "explanation": "'Audio Generation' follows 'Video Generation' as lesson 11.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Video Generation'?",
+    "options": [
+      "main.py",
+      "tests",
+      "main.jl",
+      "function_calling.py"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Video Generation'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Video Generation'?",
+    "options": [
+      "Text-to-image makes new things. Inpainting fixes old ones. In production, 70% of billable image work is editing \u2014 swap a background, remove a logo, extend the canvas, regenerate a hand. Inpainting is where diffusion earns its keep.",
+      "3D is the modality where 2D-to-3D leverage is strongest. The 2023 breakthrough was 3D Gaussian Splatting. The 2024-2026 generative push layers multi-view diffusion + 3D reconstruction on top to produce objects and scenes from a single prompt or photo.",
+      "An image is a 2-D tensor. A video is a 3-D one. The theory is the same; the compute is 10-100x harder. OpenAI's Sora (Feb 2024) proved it was possible. By 2026 Veo 2, Kling 1.5, Runway Gen-3, Pika 2.0, and WAN 2.2 ship production video from text at 1080p \u2014 and the open-weights stack (CogVideoX, HunyuanVideo, Mochi-1, WAN 2.2) is 12 months behind.",
+      "Every generative model leaderboard cites FID, CLIP score, and a win rate from a human-preference arena. Each number has a failure mode a determined researcher can game. If you do not know the failure modes, you cannot tell a real improvement from a gaming run."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Video Generation'.",
+    "stage": "pre"
+  }
+]

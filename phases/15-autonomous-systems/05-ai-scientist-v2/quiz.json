@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'AI Scientist v2 \u2014 Workshop-Level Autonomous Research' belong to?",
+    "options": [
+      "Llm Engineering",
+      "Tools and Protocols",
+      "Autonomous Systems",
+      "Capstone Projects"
+    ],
+    "correct": 2,
+    "explanation": "'AI Scientist v2 \u2014 Workshop-Level Autonomous Research' is lesson 05 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'AI Scientist v2 \u2014 Workshop-Level Autonomous Research'?",
+    "options": [
+      "Learn \u2014 Python (stdlib, research-loop state-machine toy)",
+      "Capstone \u2014 Julia",
+      "Build \u2014 \u2014",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 0,
+    "explanation": "'AI Scientist v2 \u2014 Workshop-Level Autonomous Research' is tagged as Learn in Python (stdlib, research-loop state-machine toy).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'AI Scientist v2 \u2014 Workshop-Level Autonomous Research'?",
+    "options": [
+      "OpenAI Preparedness Framework and DeepMind Frontier Safety Framework",
+      "Constitutional AI and Rule Overrides",
+      "Recursive Self-Improvement \u2014 Capability vs Alignment",
+      "Automated Alignment Research (Anthropic AAR)"
+    ],
+    "correct": 3,
+    "explanation": "'Automated Alignment Research (Anthropic AAR)' follows 'AI Scientist v2 \u2014 Workshop-Level Autonomous Research' as lesson 06.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'AI Scientist v2 \u2014 Workshop-Level Autonomous Research'?",
+    "options": [
+      "function_calling.py",
+      "numerical.py",
+      "ts",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'AI Scientist v2 \u2014 Workshop-Level Autonomous Research'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'AI Scientist v2 \u2014 Workshop-Level Autonomous Research'?",
+    "options": [
+      "In 2023 a chatbot answered a question in one turn. In 2026 a frontier model routinely runs minutes to hours on a single task. METR's Time Horizon 1.1 benchmark (January 2026) puts Claude Opus 4.6 at 14+ hours of expert work at 50% reliability. The horizon has been doubling roughly every seven months since GPT-2. Every assumption we built around single-turn chat \u2014 context, trust, failure modes, cost, observability \u2014 breaks when runs last longer than lunch.",
+      "Sakana's AI Scientist v2 (Yamada et al., arXiv:2504.08066) runs the full research loop: hypothesis, code, experiments, figures, writeup, submission. It is the first system to have a generated paper pass peer review at an ICLR 2025 workshop. Independent evaluation (Beel et al.) found 42% of experiments failed from coding errors and literature review frequently mislabeled established concepts as novel. Sakana's own docs warn that the codebase executes LLM-written code and recommend Docker isolation. Both halves of that picture are the point.",
+      "The 2026 consensus on HITL is specific. It is not \"the agent asks, the user clicks Approve.\" It is propose-then-commit: the proposed action is persisted to a durable store with an idempotency key; surfaced to a reviewer with intent, data lineage, permissions touched, blast radius, and a rollback plan; committed only after positive acknowledgement; verified after execution to confirm the side effect actually happened. LangGraph's `interrupt()` plus PostgreSQL checkpointing, Microsoft Agent Framework's `RequestInfoEvent`, and Cloudflare's `waitForApproval()` all implement the same shape. The canonical failure mode is the rubber-stamp approval: \"Approve?\" is clicked without review. The documented mitigation is challenge-and-response with an explicit checklist.",
+      "A mid-sized e-commerce agent's monthly LLM cost jumped from $1,200 to $4,800 after its team enabled the \"order-tracking\" skill. That is not a pricing bug. That is an agent that found a new loop and kept spending inside it. Microsoft's Agent Governance Toolkit (April 2, 2026) codifies the defense against this class: per-request `max_tokens`, per-task token and dollar budgets, per-day/month caps, iteration caps, tiered model routing, prompt caching, context windowing, HITL checkpoints on expensive actions, kill switches on budget breach. Anthropic's Claude Code Agent SDK ships the same primitives under different names. Financial velocity limits \u2014 e.g. cut access on >$50 in 10 minutes \u2014 catch loops faster than monthly caps."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'AI Scientist v2 \u2014 Workshop-Level Autonomous Research'.",
+    "stage": "pre"
+  }
+]

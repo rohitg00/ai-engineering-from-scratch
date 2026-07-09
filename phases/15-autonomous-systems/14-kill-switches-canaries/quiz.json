@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Kill Switches, Circuit Breakers, and Canary Tokens' belong to?",
+    "options": [
+      "Infrastructure and Production",
+      "Reinforcement Learning",
+      "Generative Ai",
+      "Autonomous Systems"
+    ],
+    "correct": 3,
+    "explanation": "'Kill Switches, Circuit Breakers, and Canary Tokens' is lesson 14 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Kill Switches, Circuit Breakers, and Canary Tokens'?",
+    "options": [
+      "Capstone \u2014 Julia",
+      "Capstone \u2014 Python",
+      "Build \u2014 TypeScript",
+      "Learn \u2014 Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary)"
+    ],
+    "correct": 3,
+    "explanation": "'Kill Switches, Circuit Breakers, and Canary Tokens' is tagged as Learn in Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'Kill Switches, Circuit Breakers, and Canary Tokens'?",
+    "options": [
+      "Human-in-the-Loop: Propose-Then-Commit",
+      "Claude Code as an Autonomous Agent: Permission Modes and Auto Mode",
+      "Constitutional AI and Rule Overrides",
+      "Darwin Godel Machine \u2014 Open-Ended Self-Modifying Agents"
+    ],
+    "correct": 0,
+    "explanation": "'Human-in-the-Loop: Propose-Then-Commit' follows 'Kill Switches, Circuit Breakers, and Canary Tokens' as lesson 15.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Kill Switches, Circuit Breakers, and Canary Tokens'?",
+    "options": [
+      "vectors.jl",
+      "tests",
+      "numerical.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Kill Switches, Circuit Breakers, and Canary Tokens'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Kill Switches, Circuit Breakers, and Canary Tokens'?",
+    "options": [
+      "A mid-sized e-commerce agent's monthly LLM cost jumped from $1,200 to $4,800 after its team enabled the \"order-tracking\" skill. That is not a pricing bug. That is an agent that found a new loop and kept spending inside it. Microsoft's Agent Governance Toolkit (April 2, 2026) codifies the defense against this class: per-request `max_tokens`, per-task token and dollar budgets, per-day/month caps, iteration caps, tiered model routing, prompt caching, context windowing, HITL checkpoints on expensive actions, kill switches on budget breach. Anthropic's Claude Code Agent SDK ships the same primitives under different names. Financial velocity limits \u2014 e.g. cut access on >$50 in 10 minutes \u2014 catch loops faster than monthly caps.",
+      "A kill switch is a boolean held outside the agent's edit surface \u2014 a Redis key, a feature flag, a signed config \u2014 that disables the agent entirely. A circuit breaker is finer-grained: it trips on a specific pattern (five identical tool calls in a row), pauses the offending path, and escalates to a human. A canary token inherits from classical deception: a fake credential or honeypot record an agent has no legitimate reason to touch, whose access triggers an alert. eBPF-based datapaths (e.g. Cilium) can rewrite a quarantined pod's egress to a forensic honeypot at the kernel layer; published Cilium benchmarks report sub-millisecond P99 datapath latency under load (your propagation budget depends on how a policy update reaches the node, not the datapath itself). Statistical detectors (EWMA, CUSUM) that adapt to a moving baseline will quietly accept drift \u2014 layer them with hard constitutional limits that do not bend.",
+      "Anthropic ran parallel teams of Claude Opus 4.6 Autonomous Alignment Researchers in independent sandboxes, coordinating via a shared forum whose logs live outside any sandbox (so agents cannot delete their own records). On the weak-to-strong training problem, the AARs outperformed human researchers. Anthropic's own summary flags that prescribed workflows often constrain AAR flexibility and degrade performance. Automating alignment research is the compression step that compresses the timeline to the exact misalignment risks the RSP is meant to detect.",
+      "RSP v3.0 went into effect February 24, 2026, replacing the 2023 policy. Two-tier mitigation: what Anthropic will do unilaterally vs what is framed as an industry-wide recommendation (including RAND SL-4 security standards). Adds Frontier Safety Roadmaps and Risk Reports as standing documents rather than one-off deliverables. Drops the 2023 pause commitment. Introduces the AI R&D-4 threshold: once crossed, Anthropic must publish an affirmative case identifying misalignment risks and mitigations. Claude Opus 4.6 does not cross it. Anthropic states in the v3.0 announcement that \"confidently ruling this out is becoming difficult.\" SaferAI rated the 2023 RSP at 2.2; they downgraded v3.0 to 1.9, putting Anthropic in the \"weak\" RSP category alongside OpenAI and DeepMind. Qualitative thresholds replaced the 2023 quantitative commitments; removing the pause clause is the sharpest regression."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Kill Switches, Circuit Breakers, and Canary Tokens'.",
+    "stage": "pre"
+  }
+]

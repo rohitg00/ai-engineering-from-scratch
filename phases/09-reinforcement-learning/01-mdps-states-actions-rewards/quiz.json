@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'MDPs, States, Actions & Rewards' belong to?",
+    "options": [
+      "Ethics Safety Alignment",
+      "Agent Engineering",
+      "Computer Vision",
+      "Reinforcement Learning"
+    ],
+    "correct": 3,
+    "explanation": "'MDPs, States, Actions & Rewards' is lesson 01 in Phase 9 \u2014 Reinforcement Learning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'MDPs, States, Actions & Rewards'?",
+    "options": [
+      "Build \u2014 \u2014",
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 Julia",
+      "Learn \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'MDPs, States, Actions & Rewards' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Reinforcement Learning, which lesson comes immediately after 'MDPs, States, Actions & Rewards'?",
+    "options": [
+      "Multi-Agent RL",
+      "Dynamic Programming \u2014 Policy Iteration & Value Iteration",
+      "RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era",
+      "Sim-to-Real Transfer"
+    ],
+    "correct": 1,
+    "explanation": "'Dynamic Programming \u2014 Policy Iteration & Value Iteration' follows 'MDPs, States, Actions & Rewards' as lesson 02.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'MDPs, States, Actions & Rewards'?",
+    "options": [
+      "tests",
+      "verify.ts",
+      "main.py",
+      "ml_intro.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'MDPs, States, Actions & Rewards'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'MDPs, States, Actions & Rewards'?",
+    "options": [
+      "Dynamic programming is RL with cheating. You already know the transition and reward functions; you just iterate the Bellman equation until `V` or `\u03c0` stops moving. It is the benchmark every sampling-based method tries to approach.",
+      "A2C throws away each rollout after one update. PPO wraps the policy gradient in a clipped importance ratio so you can do 10+ epochs on the same data without the policy exploding. Schulman et al. (2017). Still the default policy-gradient algorithm in 2026.",
+      "A Markov Decision Process is five things: states, actions, transitions, rewards, a discount. Everything in RL \u2014 Q-learning, PPO, DPO, GRPO \u2014 optimizes over this shape. Learn it once, read the rest of reinforcement learning for free.",
+      "Stop estimating value. Parameterize the policy directly, compute the gradient of expected return, step uphill. Williams (1992) wrote it in one theorem. It is why PPO, GRPO, and every LLM RL loop exist."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'MDPs, States, Actions & Rewards'.",
+    "stage": "pre"
+  }
+]

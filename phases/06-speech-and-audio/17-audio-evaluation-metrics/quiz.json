@@ -1,0 +1,50 @@
+[
+  {
+    "question": "Which phase does the lesson 'Audio Evaluation \u2014 WER, MOS, UTMOS, MMAU, FAD, and the Open Leaderboards' belong to?",
+    "options": [
+      "Setup and Tooling",
+      "Multimodal Ai",
+      "Speech and Audio",
+      "Computer Vision"
+    ],
+    "correct": 2,
+    "explanation": "'Audio Evaluation \u2014 WER, MOS, UTMOS, MMAU, FAD, and the Open Leaderboards' is lesson 17 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Audio Evaluation \u2014 WER, MOS, UTMOS, MMAU, FAD, and the Open Leaderboards'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 Julia",
+      "Learn \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Audio Evaluation \u2014 WER, MOS, UTMOS, MMAU, FAD, and the Open Leaderboards' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Audio Evaluation \u2014 WER, MOS, UTMOS, MMAU, FAD, and the Open Leaderboards'?",
+    "options": [
+      "tests",
+      "fixture_repo",
+      "main.py",
+      "tests"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Audio Evaluation \u2014 WER, MOS, UTMOS, MMAU, FAD, and the Open Leaderboards'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Audio Evaluation \u2014 WER, MOS, UTMOS, MMAU, FAD, and the Open Leaderboards'?",
+    "options": [
+      "Batch pipelines process a file. Real-time pipelines process the next 20 milliseconds before the next 20 arrive. Every conversational AI, broadcast studio, and telephony bot lives and dies by this latency budget.",
+      "You cannot ship what you cannot measure. This lesson names the 2026 metrics for every audio task: ASR (WER, CER, RTFx), TTS (MOS, UTMOS, SECS, WER-on-ASR-round-trip), audio-language (MMAU, LongAudioBench), music (FAD, CLAP), and speaker (EER). Plus the leaderboards where you compare.",
+      "Everything from \"dog barking vs siren\" to \"which language is this\" is audio classification. The features are mels. The architecture moves each decade. The evaluation stays AUC, F1, and per-class recall.",
+      "2026 music generation: Suno v5 and Udio v4 dominate commercial; MusicGen, Stable Audio Open, and ACE-Step lead open-source. The technical problem is mostly solved. The legal problem (Warner Music $500M settlement, UMG settlement) reshaped the field in 2025-2026."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Audio Evaluation \u2014 WER, MOS, UTMOS, MMAU, FAD, and the Open Leaderboards'.",
+    "stage": "pre"
+  }
+]

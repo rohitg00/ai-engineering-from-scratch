@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Parallel / Swarm / Networked Architectures' belong to?",
+    "options": [
+      "Setup and Tooling",
+      "Transformers Deep Dive",
+      "Multi Agent and Swarms",
+      "Ethics Safety Alignment"
+    ],
+    "correct": 2,
+    "explanation": "'Parallel / Swarm / Networked Architectures' is lesson 09 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Parallel / Swarm / Networked Architectures'?",
+    "options": [
+      "Build \u2014 \u2014",
+      "Learn + Build \u2014 Python (stdlib, `threading`, `queue`)",
+      "Build \u2014 Python",
+      "Build \u2014 Rust"
+    ],
+    "correct": 1,
+    "explanation": "'Parallel / Swarm / Networked Architectures' is tagged as Learn + Build in Python (stdlib, `threading`, `queue`).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Parallel / Swarm / Networked Architectures'?",
+    "options": [
+      "Voting, Self-Consistency, and Debate Topology",
+      "Production Scaling \u2014 Queues, Checkpoints, Durability",
+      "Group Chat and Speaker Selection",
+      "Supervisor / Orchestrator-Worker Pattern"
+    ],
+    "correct": 2,
+    "explanation": "'Group Chat and Speaker Selection' follows 'Parallel / Swarm / Networked Architectures' as lesson 10.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Parallel / Swarm / Networked Architectures'?",
+    "options": [
+      "tests",
+      "main.ts",
+      "main.py",
+      "main.ts"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Parallel / Swarm / Networked Architectures'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Parallel / Swarm / Networked Architectures'?",
+    "options": [
+      "One lead agent plans and delegates; specialized workers execute in parallel contexts and report back. This is the pattern behind Anthropic's Research system (Claude Opus 4 as lead, Sonnet 4 as subagents), measured at +90.2% over single-agent Opus 4 on internal research evals. Anthropic's engineering post reports that 80% of the variance on BrowseComp is explained by token usage alone \u2014 multi-agent wins largely because each subagent gets a fresh context window. This lesson builds the supervisor pattern from the primitives and covers the 2026 engineering lessons from production deployments.",
+      "The reinforcement-learning heritage of multi-agent coordination, which still informs LLM-agent systems in 2026. **MADDPG** (Lowe et al., NeurIPS 2017, arXiv:1706.02275) introduced Centralized Training, Decentralized Execution (CTDE): each critic sees all agents' states and actions during training; at test time only local actors run. Works for cooperative, competitive, and mixed settings. **QMIX** (Rashid et al., ICML 2018, arXiv:1803.11485) is value-decomposition with a monotonic mixing network; per-agent Qs combine into joint Q so `argmax` distributes cleanly \u2014 dominant on StarCraft Multi-Agent Challenge (SMAC). **MAPPO** (Yu et al., NeurIPS 2022, arXiv:2103.01955) is PPO with a centralized value function; \"surprisingly effective\" on particle-world, SMAC, Google Research Football, Hanabi with minimal tuning. These underpin training policies for agent teams that must act decentrally. MAPPO is the **default 2026 cooperative-MARL baseline**. This lesson builds each from a small grid-world toy and lands the three ideas in muscle memory before touching LLM-agent training.",
+      "Contrast with supervisor: no central decider. Agents read a shared event bus, pick up work asynchronously, write results back. LangGraph explicitly supports \"Swarm Architecture\" for decentralized, dynamic environments. Matrix (arXiv:2511.21686) represents both control and data flow as serialized messages passed through distributed queues to eliminate the orchestrator bottleneck. The tradeoff is explicit: determinism and traceability for scalability. Swarm fits tasks with many independent sub-problems; it does not fit tasks that need a single coherent plan.",
+      "OpenAI's Swarm (October 2024) distilled multi-agent orchestration to two primitives: **routines** (instructions + tools as a system prompt) and **handoffs** (a tool that returns another Agent). No state machine, no branching DSL \u2014 the LLM routes by calling the right handoff tool. The OpenAI Agents SDK (March 2025) is the production successor. Swarm itself remains the cleanest conceptual reference \u2014 its entire source fits in a few hundred lines. The pattern is viral because the API surface is roughly \"agent = prompt + tools; handoff = function returning agent.\" Limitation: stateless, so memory is the caller's problem."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Parallel / Swarm / Networked Architectures'.",
+    "stage": "pre"
+  }
+]

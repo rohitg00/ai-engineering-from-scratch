@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'T5, BART \u2014 Encoder-Decoder Models' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Infrastructure and Production",
+      "Math Foundations",
+      "Transformers Deep Dive"
+    ],
+    "correct": 3,
+    "explanation": "'T5, BART \u2014 Encoder-Decoder Models' is lesson 08 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'T5, BART \u2014 Encoder-Decoder Models'?",
+    "options": [
+      "Learn \u2014 Python",
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 Julia",
+      "Capstone \u2014 Rust"
+    ],
+    "correct": 0,
+    "explanation": "'T5, BART \u2014 Encoder-Decoder Models' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'T5, BART \u2014 Encoder-Decoder Models'?",
+    "options": [
+      "Vision Transformers (ViT)",
+      "Self-Attention from Scratch",
+      "Speculative Decoding \u2014 Draft, Verify, Repeat",
+      "Multi-Head Attention"
+    ],
+    "correct": 0,
+    "explanation": "'Vision Transformers (ViT)' follows 'T5, BART \u2014 Encoder-Decoder Models' as lesson 09.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'T5, BART \u2014 Encoder-Decoder Models'?",
+    "options": [
+      "derivatives.py",
+      "main.ts",
+      "tests",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'T5, BART \u2014 Encoder-Decoder Models'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'T5, BART \u2014 Encoder-Decoder Models'?",
+    "options": [
+      "Autoregressive decoding is serial. Each token waits for the previous one. Speculative decoding breaks the chain: a cheap model drafts N tokens, the expensive model verifies all N in one forward pass. When the draft is right you paid one big forward for N generations.",
+      "Encoders understand. Decoders generate. Put them back together and you get a model built for input \u2192 output tasks: translate, summarize, rewrite, transcribe.",
+      "GPT predicts the next word. BERT predicts a missing word. One sentence of difference \u2014 and half a decade of everything embedding-shaped.",
+      "Full attention is a circle. Every token sees every token, and memory pays the price. Four variants bend the shape of the circle and recover half the cost."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'T5, BART \u2014 Encoder-Decoder Models'.",
+    "stage": "pre"
+  }
+]

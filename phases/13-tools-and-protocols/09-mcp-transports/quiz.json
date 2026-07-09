@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Nlp Foundations to Advanced",
+      "Tools and Protocols",
+      "Transformers Deep Dive"
+    ],
+    "correct": 2,
+    "explanation": "'MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration' is lesson 09 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration'?",
+    "options": [
+      "Build \u2014 Julia",
+      "Capstone \u2014 Julia",
+      "Learn \u2014 Python (stdlib, Streamable HTTP endpoint skeleton)",
+      "Build \u2014 Rust"
+    ],
+    "correct": 2,
+    "explanation": "'MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration' is tagged as Learn in Python (stdlib, Streamable HTTP endpoint skeleton).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration'?",
+    "options": [
+      "Capstone \u2014 Build a Complete Tool Ecosystem",
+      "MCP Resources and Prompts \u2014 Context Exposure Beyond Tools",
+      "OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End",
+      "MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing"
+    ],
+    "correct": 1,
+    "explanation": "'MCP Resources and Prompts \u2014 Context Exposure Beyond Tools' follows 'MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration' as lesson 10.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration'?",
+    "options": [
+      "main.py",
+      "bayes.py",
+      "main.ts",
+      "main.jl"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration'?",
+    "options": [
+      "stdio works locally and nowhere else. Streamable HTTP (2025-03-26) is the remote standard. The old HTTP+SSE transport is deprecated and being removed in mid-2026. Picking the wrong transport costs a migration; picking the right one buys a remote-hostable MCP server with session continuity and DNS-rebinding protection.",
+      "Enterprises cannot let every dev install random MCP servers. A gateway centralizes auth, RBAC, audit, rate limiting, caching, and tool-poisoning detection, then exposes the merged tool surface as a single MCP endpoint. The Official MCP Registry (Anthropic + GitHub + PulseMCP + Microsoft, namespace-verified) is the canonical upstream. This lesson names where a gateway fits, walks a minimal implementation, and surveys the 2026 vendor landscape.",
+      "A language model produces tokens. A program takes actions. The gap between those two is the tool interface: a contract that lets the model request an action and the host execute it. Every 2026 stack \u2014 function calling on OpenAI, Anthropic, and Gemini; MCP's `tools/call`; A2A's task parts \u2014 is a different encoding of the same four-step loop. This lesson names the loop and shows the minimum machinery to run it.",
+      "Real agent work takes minutes to hours: CI runs, deep-research synthesis, batch exports. Synchronous tool calls drop connections, time out, or block the UI. SEP-1686, merged in 2025-11-25, adds a Tasks primitive: any request can be augmented to become a task, and the result can be fetched later or streamed via state notifications. Drift-risk note: Tasks are experimental through H1 2026; SDK surface is still being designed around the spec."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'MCP Transports \u2014 stdio vs Streamable HTTP vs SSE Migration'.",
+    "stage": "pre"
+  }
+]

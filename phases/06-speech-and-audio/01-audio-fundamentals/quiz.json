@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Multimodal Ai",
+      "Computer Vision",
+      "Speech and Audio"
+    ],
+    "correct": 3,
+    "explanation": "'Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform' is lesson 01 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform'?",
+    "options": [
+      "Build \u2014 TypeScript",
+      "Build \u2014 Rust",
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform'?",
+    "options": [
+      "Spectrograms, Mel Scale & Audio Features",
+      "Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro",
+      "Voice Cloning & Voice Conversion",
+      "Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone"
+    ],
+    "correct": 0,
+    "explanation": "'Spectrograms, Mel Scale & Audio Features' follows 'Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform' as lesson 02.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform'?",
+    "options": [
+      "yaml_subset.py",
+      "tests",
+      "main.py",
+      "test_main.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform'?",
+    "options": [
+      "Batch pipelines process a file. Real-time pipelines process the next 20 milliseconds before the next 20 arrive. Every conversational AI, broadcast studio, and telephony bot lives and dies by this latency budget.",
+      "Speech recognition is audio classification at every timestep, glued together by a sequence model that knows English and silence. CTC, RNN-T, and attention are the three ways to do it. Pick one and understand why.",
+      "Every voice agent lives or dies on two decisions: is the user speaking now, and are they done? VAD answers the first. Turn-detection (VAD + silence-hangover + semantic endpoint model) answers the second. Get either wrong and your assistant either cuts users off or never shuts up.",
+      "Waveforms are the raw signal. Spectrograms are the representation. Mel features are the ML-friendly form. Every modern ASR and TTS pipeline walks this ladder, and the first rung is understanding sampling and Fourier."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform'.",
+    "stage": "pre"
+  }
+]

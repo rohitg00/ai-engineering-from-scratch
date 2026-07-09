@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'The Multi-Agent Primitive Model' belong to?",
+    "options": [
+      "Multi Agent and Swarms",
+      "Autonomous Systems",
+      "Infrastructure and Production",
+      "Ml Fundamentals"
+    ],
+    "correct": 0,
+    "explanation": "'The Multi-Agent Primitive Model' is lesson 04 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'The Multi-Agent Primitive Model'?",
+    "options": [
+      "Build \u2014 Julia",
+      "Learn \u2014 Python (stdlib)",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 TypeScript"
+    ],
+    "correct": 1,
+    "explanation": "'The Multi-Agent Primitive Model' is tagged as Learn in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'The Multi-Agent Primitive Model'?",
+    "options": [
+      "Generative Agents and Emergent Simulation",
+      "Society of Mind and Multi-Agent Debate",
+      "Why Multi-Agent?",
+      "Supervisor / Orchestrator-Worker Pattern"
+    ],
+    "correct": 3,
+    "explanation": "'Supervisor / Orchestrator-Worker Pattern' follows 'The Multi-Agent Primitive Model' as lesson 05.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'The Multi-Agent Primitive Model'?",
+    "options": [
+      "main.jl",
+      "tests.py",
+      "main.py",
+      "tests"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'The Multi-Agent Primitive Model'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'The Multi-Agent Primitive Model'?",
+    "options": [
+      "Every multi-agent framework shipping in 2026 \u2014 AutoGen, LangGraph, CrewAI, OpenAI Agents SDK, Microsoft Agent Framework \u2014 is a point in a four-dimensional design space. Four primitives, nothing more: the agent, the handoff, the shared state, the orchestrator. This lesson builds them from zero, runs a toy system on all four, then maps every major framework onto the same axes so you can read any new release in one paragraph.",
+      "Minsky's 1986 premise \u2014 intelligence is a society of specialists \u2014 gets rediscovered every decade. In 2023 Du et al. turned it into a concrete algorithm: multiple LLM instances propose answers, read each other's answers, critique, and update. Over N rounds they converge on a consensus that beats zero-shot CoT and reflection on six reasoning and factuality tasks. Two findings matter: both **multiple agents** and **multiple rounds** contribute independently. The society beats a single-agent monologue; the multi-round exchange beats one-shot voting.",
+      "The reference taxonomy for 2026 is **MAST** (Cemri et al., NeurIPS 2025, arXiv:2503.13657), derived from 1642 execution traces across 7 state-of-the-art open-source MAS showing **41\u201386.7% failure rate**. Three root categories: **Specification Problems** (41.77%) \u2014 role ambiguity, unclear task definitions; **Coordination Failures** (36.94%) \u2014 communication breakdowns, state desync; **Verification Gaps** (21.30%) \u2014 missing validation, absent quality checks. The **Groupthink** family (arXiv:2508.05687) adds: monoculture collapse (same base model \u2192 correlated failures), conformity bias (agents reinforce each other's errors), deficient theory of mind, mixed-motive dynamics, cascading reliability failures. Cascading example: retry storms where a payment failure triggers order retries, which trigger inventory retries, which overwhelm inventory service (10x load in seconds \u2014 needs circuit breakers). Memory poisoning: one agent's hallucination enters shared memory, downstream agents treat it as fact; accuracy decays gradually, making root-cause diagnosis painful. **STRATUS** (NeurIPS 2025) reports 1.5x mitigation-success improvement via specialized detection / diagnosis / validation agents. This lesson treats failure modes as first-class engineering targets.",
+      "OpenAI's Swarm (October 2024) distilled multi-agent orchestration to two primitives: **routines** (instructions + tools as a system prompt) and **handoffs** (a tool that returns another Agent). No state machine, no branching DSL \u2014 the LLM routes by calling the right handoff tool. The OpenAI Agents SDK (March 2025) is the production successor. Swarm itself remains the cleanest conceptual reference \u2014 its entire source fits in a few hundred lines. The pattern is viral because the API surface is roughly \"agent = prompt + tools; handoff = function returning agent.\" Limitation: stateless, so memory is the caller's problem."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'The Multi-Agent Primitive Model'.",
+    "stage": "pre"
+  }
+]

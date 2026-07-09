@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Mixture of Experts (MoE)' belong to?",
+    "options": [
+      "Transformers Deep Dive",
+      "Nlp Foundations to Advanced",
+      "Computer Vision",
+      "Multi Agent and Swarms"
+    ],
+    "correct": 0,
+    "explanation": "'Mixture of Experts (MoE)' is lesson 11 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Mixture of Experts (MoE)'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 TypeScript",
+      "Capstone \u2014 Julia",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Mixture of Experts (MoE)' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'Mixture of Experts (MoE)'?",
+    "options": [
+      "Build a Transformer from Scratch \u2014 The Capstone",
+      "Vision Transformers (ViT)",
+      "Audio Transformers \u2014 Whisper Architecture",
+      "KV Cache, Flash Attention & Inference Optimization"
+    ],
+    "correct": 3,
+    "explanation": "'KV Cache, Flash Attention & Inference Optimization' follows 'Mixture of Experts (MoE)' as lesson 12.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Mixture of Experts (MoE)'?",
+    "options": [
+      "main.jl",
+      "feature_selection.py",
+      "sampling.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Mixture of Experts (MoE)'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Mixture of Experts (MoE)'?",
+    "options": [
+      "Autoregressive decoding is serial. Each token waits for the previous one. Speculative decoding breaks the chain: a cheap model drafts N tokens, the expensive model verifies all N in one forward pass. When the draft is right you paid one big forward for N generations.",
+      "Thirteen lessons. One model. No shortcuts.",
+      "Audio is an image of frequency over time. Whisper is a ViT that eats mel spectrograms and speaks back.",
+      "A dense 70B transformer activates every parameter for every token. A 671B MoE activates only 37B per token and beats it on every benchmark. Sparsity is the most important scaling idea of the decade."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Mixture of Experts (MoE)'.",
+    "stage": "pre"
+  }
+]

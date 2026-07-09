@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing' belong to?",
+    "options": [
+      "Tools and Protocols",
+      "Agent Engineering",
+      "Capstone Projects",
+      "Ml Fundamentals"
+    ],
+    "correct": 0,
+    "explanation": "'MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing' is lesson 15 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing'?",
+    "options": [
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 TypeScript",
+      "Build \u2014 \u2014",
+      "Learn \u2014 Python (stdlib, hash-pin + poisoning detector)"
+    ],
+    "correct": 3,
+    "explanation": "'MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing' is tagged as Learn in Python (stdlib, hash-pin + poisoning detector).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing'?",
+    "options": [
+      "Skills and Agent SDKs \u2014 Anthropic Skills, AGENTS.md, OpenAI Apps SDK",
+      "Building an MCP Server \u2014 Python + TypeScript SDKs",
+      "MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes",
+      "Parallel Tool Calls and Streaming with Tools"
+    ],
+    "correct": 2,
+    "explanation": "'MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes' follows 'MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing' as lesson 16.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing'?",
+    "options": [
+      "main.py",
+      "fourier.py",
+      "main.rs",
+      "tests"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing'?",
+    "options": [
+      "An agent calls five tools, three MCP servers, and two sub-agents. You need one trace across all of it. The OpenTelemetry GenAI semantic conventions (stable attributes in v1.37 and up) are the 2026 standard, natively supported by Datadog, Langfuse, Arize Phoenix, OpenLLMetry, and AgentOps. This lesson names the required attributes, walks the span hierarchy (agent \u2192 LLM \u2192 tool), and ships a stdlib span emitter you can plug into any OTel exporter.",
+      "Enterprises cannot let every dev install random MCP servers. A gateway centralizes auth, RBAC, audit, rate limiting, caching, and tool-poisoning detection, then exposes the merged tool surface as a single MCP endpoint. The Official MCP Registry (Anthropic + GitHub + PulseMCP + Microsoft, namespace-verified) is the canonical upstream. This lesson names where a gateway fits, walks a minimal implementation, and surveys the 2026 vendor landscape.",
+      "Phase 13 taught every piece. This capstone wires them into one production-shaped system: an MCP server with tools + resources + prompts + tasks + UI, OAuth 2.1 at the edge, an RBAC gateway, a multi-server client, an A2A sub-agent call, OTel tracing into a collector, tool-poisoning detection in CI, and an AGENTS.md + SKILL.md bundle. By the end you can defend every architectural choice.",
+      "Tool descriptions land in the model's context verbatim. Malicious servers embed hidden instructions that users never see. Research in 2025-2026 from Invariant Labs, Unit 42, and an arXiv study published March 2026 measured attack-success rates above 70 percent on frontier models and about 85 percent against state-of-the-art defenses under adaptive attacks. This lesson names the seven concrete attack classes and builds a tool-poisoning detector you can run in CI."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing'.",
+    "stage": "pre"
+  }
+]

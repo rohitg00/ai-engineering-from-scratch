@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Deep Q-Networks (DQN)' belong to?",
+    "options": [
+      "Infrastructure and Production",
+      "Setup and Tooling",
+      "Multimodal Ai",
+      "Reinforcement Learning"
+    ],
+    "correct": 3,
+    "explanation": "'Deep Q-Networks (DQN)' is lesson 05 in Phase 9 \u2014 Reinforcement Learning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Deep Q-Networks (DQN)'?",
+    "options": [
+      "Learn \u2014 Julia",
+      "Capstone \u2014 Rust",
+      "Learn \u2014 Rust",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Deep Q-Networks (DQN)' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Reinforcement Learning, which lesson comes immediately after 'Deep Q-Networks (DQN)'?",
+    "options": [
+      "Dynamic Programming \u2014 Policy Iteration & Value Iteration",
+      "RL for Games \u2014 AlphaZero, MuZero, and the LLM-Reasoning Era",
+      "Actor-Critic \u2014 A2C and A3C",
+      "Policy Gradient \u2014 REINFORCE from Scratch"
+    ],
+    "correct": 3,
+    "explanation": "'Policy Gradient \u2014 REINFORCE from Scratch' follows 'Deep Q-Networks (DQN)' as lesson 06.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Deep Q-Networks (DQN)'?",
+    "options": [
+      "main.jl",
+      "main.py",
+      "bayes.py",
+      "ml_intro.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Deep Q-Networks (DQN)'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Deep Q-Networks (DQN)'?",
+    "options": [
+      "REINFORCE is noisy. Add a critic that learns `V\u0302(s)`, subtract it from the return, and you get an advantage that has the same expectation but far lower variance. That is actor-critic. A2C runs it synchronously; A3C runs it across threads. Both are the mental model for every modern deep-RL method.",
+      "Humans cannot write a reward function for \"good assistant response,\" but they can compare two responses and pick the better one. Fit a reward model to those comparisons, then RL the language model against it. Christiano 2017. InstructGPT 2022. The recipe that turned GPT-3 into ChatGPT. In 2026 it is mostly being replaced by DPO \u2014 but the mental model stays.",
+      "2013: Mnih trained one Q-learning network on raw pixels, beat every classical RL agent on seven Atari games. 2015: extended to 49 games, published in Nature, sparked the deep-RL era. DQN is Q-learning plus three tricks that make function approximation stable.",
+      "A2C throws away each rollout after one update. PPO wraps the policy gradient in a clipped importance ratio so you can do 10+ epochs on the same data without the policy exploding. Schulman et al. (2017). Still the default policy-gradient algorithm in 2026."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Deep Q-Networks (DQN)'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'A2A \u2014 Agent-to-Agent Protocol' belong to?",
+    "options": [
+      "Deep Learning Core",
+      "Transformers Deep Dive",
+      "Generative Ai",
+      "Tools and Protocols"
+    ],
+    "correct": 3,
+    "explanation": "'A2A \u2014 Agent-to-Agent Protocol' is lesson 19 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'A2A \u2014 Agent-to-Agent Protocol'?",
+    "options": [
+      "Learn \u2014 Julia",
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 \u2014",
+      "Build \u2014 Python (stdlib, Agent Card + Task harness)"
+    ],
+    "correct": 3,
+    "explanation": "'A2A \u2014 Agent-to-Agent Protocol' is tagged as Build in Python (stdlib, Agent Card + Task harness).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'A2A \u2014 Agent-to-Agent Protocol'?",
+    "options": [
+      "MCP Resources and Prompts \u2014 Context Exposure Beyond Tools",
+      "Building an MCP Server \u2014 Python + TypeScript SDKs",
+      "OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End",
+      "LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey"
+    ],
+    "correct": 2,
+    "explanation": "'OpenTelemetry GenAI \u2014 Tracing Tool Calls End-to-End' follows 'A2A \u2014 Agent-to-Agent Protocol' as lesson 20.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'A2A \u2014 Agent-to-Agent Protocol'?",
+    "options": [
+      "bayes.py",
+      "feature_selection.py",
+      "main.py",
+      "tests"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'A2A \u2014 Agent-to-Agent Protocol'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'A2A \u2014 Agent-to-Agent Protocol'?",
+    "options": [
+      "Most MCP content ships server tutorials and waves a hand at the client. Client code is where the hard orchestration lives: process spawning, capability negotiation, tool list merging across multiple servers, sampling callbacks, reconnection, and namespace collision resolution. This lesson builds a multi-server client that lifts three different MCP servers into one flat tool namespace for the model.",
+      "Tools get 90 percent of MCP attention. The other two server primitives solve different problems. Resources expose data for reading; prompts expose reusable templates as slash-commands. Many servers should use resources instead of wrapping reads in tools, and prompts instead of hard-coding workflows in client prompts. This lesson names the decision rule and walks the `resources/*` and `prompts/*` messages.",
+      "MCP is agent-to-tool. A2A (Agent2Agent) is agent-to-agent \u2014 an open protocol for letting opaque agents built on different frameworks collaborate. Released by Google in April 2025, donated to the Linux Foundation in June 2025, reaching v1.0 in April 2026 with 150+ supporters including AWS, Cisco, Microsoft, Salesforce, SAP, and ServiceNow. It absorbed IBM's ACP and added the AP2 payments extension. This lesson walks the Agent Card, Task lifecycle, and the two transport bindings.",
+      "Phase 13 taught every piece. This capstone wires them into one production-shaped system: an MCP server with tools + resources + prompts + tasks + UI, OAuth 2.1 at the edge, an RBAC gateway, a multi-server client, an A2A sub-agent call, OTel tracing into a collector, tool-poisoning detection in CI, and an AGENTS.md + SKILL.md bundle. By the end you can defend every architectural choice."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'A2A \u2014 Agent-to-Agent Protocol'.",
+    "stage": "pre"
+  }
+]

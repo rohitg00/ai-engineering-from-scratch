@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'CLIP and Contrastive Vision-Language Pretraining' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Nlp Foundations to Advanced",
+      "Multi Agent and Swarms",
+      "Tools and Protocols"
+    ],
+    "correct": 0,
+    "explanation": "'CLIP and Contrastive Vision-Language Pretraining' is lesson 02 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'CLIP and Contrastive Vision-Language Pretraining'?",
+    "options": [
+      "Build \u2014 Python (stdlib, InfoNCE + sigmoid loss implementations)",
+      "Capstone \u2014 Python",
+      "Capstone \u2014 Julia",
+      "Learn \u2014 Python"
+    ],
+    "correct": 0,
+    "explanation": "'CLIP and Contrastive Vision-Language Pretraining' is tagged as Build in Python (stdlib, InfoNCE + sigmoid loss implementations).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'CLIP and Contrastive Vision-Language Pretraining'?",
+    "options": [
+      "MIO and Any-to-Any Streaming Multimodal Models",
+      "Open-Weight VLM Recipes: What Actually Matters",
+      "From CLIP to BLIP-2 \u2014 Q-Former as Modality Bridge",
+      "LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model"
+    ],
+    "correct": 2,
+    "explanation": "'From CLIP to BLIP-2 \u2014 Q-Former as Modality Bridge' follows 'CLIP and Contrastive Vision-Language Pretraining' as lesson 03.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'CLIP and Contrastive Vision-Language Pretraining'?",
+    "options": [
+      "tests",
+      "tests",
+      "main.py",
+      "main.jl"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'CLIP and Contrastive Vision-Language Pretraining'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'CLIP and Contrastive Vision-Language Pretraining'?",
+    "options": [
+      "The Qwen-VL family \u2014 Qwen-VL (2023), Qwen2-VL (2024), Qwen2.5-VL (2025), Qwen3-VL (2025) \u2014 is the most influential open vision-language model lineage in 2026. Each generation made a single decisive architectural bet that the rest of the open ecosystem copied within twelve months: native dynamic resolution via M-RoPE, dynamic-FPS sampling with absolute time alignment, window attention in the ViT, and structured agent output formats. By Qwen3-VL, the recipe had stabilized: a 2D-RoPE-ViT encoder with native-aspect-ratio inputs, an MLP projector into a large Qwen3 language base, and training stages that emphasized OCR, grounding, and agent behavior as first-class targets. This lesson reads the family chronologically so you understand why every knob is where it is.",
+      "A 1-hour 4K video at 24 FPS, patched and embedded, produces on the order of 60 million tokens. A 2-hour podcast episode transcribed is 30,000 tokens. A full Blu-ray feature film, even compressed with aggressive pooling, is hundreds of thousands of tokens. Google's Gemini 1.5 (March 2024) opened this era with a 10-million-token context, doing reliable needle-in-a-haystack recall over hour-long videos. LWM (Liu et al., February 2024) showed ring attention's scaling path. LongVILA and Video-XL scaled ingestion further. VideoAgent swapped raw context for agentic retrieval. Each approach is a different trade-off on compute, recall, and engineering complexity. This lesson reads them side by side.",
+      "Traditional RAG parses PDFs into text, splits into chunks, embeds chunks, stores vectors. Every step loses signal: OCR drops chart data, chunking breaks table rows, text embeddings ignore figures. ColPali (Faysse et al., July 2024) asked the simpler question: why extract text at all? Embed the page image directly via PaliGemma, use ColBERT-style late interaction for retrieval, and keep all the layout, figures, fonts, and formatting signal the document carries. Published benchmarks: 20-40% better end-to-end accuracy than text-RAG on visually-rich documents. ColQwen2, ColSmol, and VisRAG extended the pattern. This lesson reads the vision-native RAG thesis and builds a tiny ColPali-like indexer.",
+      "OpenAI's CLIP (2021) proved a single idea big enough to power the next five years: align an image encoder and a text encoder in the same vector space using only noisy web image-caption pairs and a contrastive loss. Zero supervised labels. 400M pairs. The resulting embedding space does zero-shot classification, image-text retrieval, and plugs into every 2026 VLM as its vision tower. SigLIP 2 (2025) replaced softmax with sigmoid and scaled past CLIP at lower cost. This lesson walks the math from InfoNCE to sigmoid pairwise loss and builds the training step in stdlib Python."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'CLIP and Contrastive Vision-Language Pretraining'.",
+    "stage": "pre"
+  }
+]

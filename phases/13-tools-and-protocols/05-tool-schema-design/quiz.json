@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Llms From Scratch",
+      "Math Foundations",
+      "Tools and Protocols"
+    ],
+    "correct": 3,
+    "explanation": "'Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints' is lesson 05 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints'?",
+    "options": [
+      "Build \u2014 Julia",
+      "Learn \u2014 Python (stdlib, tool schema linter)",
+      "Build \u2014 Python",
+      "Capstone \u2014 Python"
+    ],
+    "correct": 1,
+    "explanation": "'Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints' is tagged as Learn in Python (stdlib, tool schema linter).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints'?",
+    "options": [
+      "Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding",
+      "Parallel Tool Calls and Streaming with Tools",
+      "MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base",
+      "MCP Auth in Production \u2014 Enrollment, JWKS Refresh, Audience-Pinned Tokens"
+    ],
+    "correct": 2,
+    "explanation": "'MCP Fundamentals \u2014 Primitives, Lifecycle, JSON-RPC Base' follows 'Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints' as lesson 06.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints'?",
+    "options": [
+      "lora.py",
+      "test_main.py",
+      "test_main.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints'?",
+    "options": [
+      "Tool descriptions land in the model's context verbatim. Malicious servers embed hidden instructions that users never see. Research in 2025-2026 from Invariant Labs, Unit 42, and an arXiv study published March 2026 measured attack-success rates above 70 percent on frontier models and about 85 percent against state-of-the-art defenses under adaptive attacks. This lesson names the seven concrete attack classes and builds a tool-poisoning detector you can run in CI.",
+      "Every integration before MCP was a one-off. The Model Context Protocol, first shipped by Anthropic in November 2024 and now stewarded by the Linux Foundation's Agentic AI Foundation, standardizes discovery and invocation so any client can speak to any server. The 2025-11-25 spec names six primitives (three server, three client), a three-phase lifecycle, and a JSON-RPC 2.0 wire format. Learn those and the rest of the MCP chapter of this phase becomes reading.",
+      "A correct tool fails silently when the model cannot tell when to use it. Naming, descriptions, and parameter shapes drive 10 to 20 percentage-point swings in tool-selection accuracy on benchmarks like StableToolBench and MCPToolBench++. This lesson names the design rules that separate a tool a model picks reliably from a tool a model mis-fires.",
+      "Text-only tool output caps what agents can show. MCP Apps (SEP-1724, official January 26, 2026) let a tool return sandboxed interactive HTML rendered inline in Claude Desktop, ChatGPT, Cursor, Goose, and VS Code. Dashboards, forms, maps, 3D scenes, all through one extension. This lesson walks the `ui://` resource scheme, the `text/html;profile=mcp-app` MIME, the iframe-sandbox postMessage protocol, and the security surface that comes with letting a server render HTML."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Tool Schema Design \u2014 Naming, Descriptions, Parameter Constraints'.",
+    "stage": "pre"
+  }
+]

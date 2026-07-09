@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey' belong to?",
+    "options": [
+      "Tools and Protocols",
+      "Math Foundations",
+      "Autonomous Systems",
+      "Agent Engineering"
+    ],
+    "correct": 0,
+    "explanation": "'LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey' is lesson 21 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey'?",
+    "options": [
+      "Capstone \u2014 Python",
+      "Learn \u2014 Python (stdlib, routing + failover + cost tracker)",
+      "Build \u2014 Python",
+      "Build \u2014 TypeScript"
+    ],
+    "correct": 1,
+    "explanation": "'LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey' is tagged as Learn in Python (stdlib, routing + failover + cost tracker).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey'?",
+    "options": [
+      "Skills and Agent SDKs \u2014 Anthropic Skills, AGENTS.md, OpenAI Apps SDK",
+      "Building an MCP Client \u2014 Discovery, Invocation, Session Management",
+      "Parallel Tool Calls and Streaming with Tools",
+      "The Tool Interface \u2014 Why Agents Need Structured I/O"
+    ],
+    "correct": 0,
+    "explanation": "'Skills and Agent SDKs \u2014 Anthropic Skills, AGENTS.md, OpenAI Apps SDK' follows 'LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey' as lesson 22.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey'?",
+    "options": [
+      "main.ts",
+      ".gitignore",
+      "main.py",
+      "debug_tools.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey'?",
+    "options": [
+      "Tools get 90 percent of MCP attention. The other two server primitives solve different problems. Resources expose data for reading; prompts expose reusable templates as slash-commands. Many servers should use resources instead of wrapping reads in tools, and prompts instead of hard-coding workflows in client prompts. This lesson names the decision rule and walks the `resources/*` and `prompts/*` messages.",
+      "Provider lock-in is expensive. Different tool-calling workloads suit different models. Routing gateways give one API surface, retries, failover, cost tracking, and guardrails. Three archetypes dominate 2026: LiteLLM (open-source self-hosted), OpenRouter (managed SaaS), Portkey (production-grade, open-sourced in March 2026). This lesson names the decision criteria and walks a stdlib routing gateway.",
+      "A correct tool fails silently when the model cannot tell when to use it. Naming, descriptions, and parameter shapes drive 10 to 20 percentage-point swings in tool-selection accuracy on benchmarks like StableToolBench and MCPToolBench++. This lesson names the design rules that separate a tool a model picks reliably from a tool a model mis-fires.",
+      "Hard-coded paths break the moment a user opens a different project. Pre-filled tool arguments break when the user under-specifies. Roots scope the server to a user-controlled set of URIs; elicitation pauses mid-tool-call to ask the user for structured input via a form or URL. Two client primitives, two fixes for common MCP failure modes. SEP-1036 (URL-mode elicitation, 2025-11-25) is experimental through H1 2026 \u2014 check SDK versions before depending on it."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'LLM Routing Layer \u2014 LiteLLM, OpenRouter, Portkey'.",
+    "stage": "pre"
+  }
+]

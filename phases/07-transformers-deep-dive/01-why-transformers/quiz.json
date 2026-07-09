@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Why Transformers \u2014 The Problems with RNNs' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Transformers Deep Dive",
+      "Llms From Scratch",
+      "Infrastructure and Production"
+    ],
+    "correct": 1,
+    "explanation": "'Why Transformers \u2014 The Problems with RNNs' is lesson 01 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Why Transformers \u2014 The Problems with RNNs'?",
+    "options": [
+      "Build \u2014 \u2014",
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 Julia",
+      "Learn \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Why Transformers \u2014 The Problems with RNNs' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'Why Transformers \u2014 The Problems with RNNs'?",
+    "options": [
+      "The Full Transformer \u2014 Encoder + Decoder",
+      "Self-Attention from Scratch",
+      "Speculative Decoding \u2014 Draft, Verify, Repeat",
+      "Build a Transformer from Scratch \u2014 The Capstone"
+    ],
+    "correct": 1,
+    "explanation": "'Self-Attention from Scratch' follows 'Why Transformers \u2014 The Problems with RNNs' as lesson 02.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Why Transformers \u2014 The Problems with RNNs'?",
+    "options": [
+      "main.py",
+      "main.py",
+      "rules.py",
+      "main.jl"
+    ],
+    "correct": 3,
+    "explanation": "'main.jl' is the implementation shipped with 'Why Transformers \u2014 The Problems with RNNs'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Why Transformers \u2014 The Problems with RNNs'?",
+    "options": [
+      "Autoregressive decoding is serial. Each token waits for the previous one. Speculative decoding breaks the chain: a cheap model drafts N tokens, the expensive model verifies all N in one forward pass. When the draft is right you paid one big forward for N generations.",
+      "RNNs process tokens one at a time. Transformers process all tokens at once. That single architectural bet changed every scaling curve in deep learning after 2017.",
+      "BERT sees both sides. GPT sees only the past. The triangle mask is the most consequential single line of code in modern AI.",
+      "An image is a grid of patches. A sentence is a grid of tokens. The same transformer eats both."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Why Transformers \u2014 The Problems with RNNs'.",
+    "stage": "pre"
+  }
+]

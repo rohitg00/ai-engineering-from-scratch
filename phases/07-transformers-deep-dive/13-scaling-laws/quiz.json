@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Scaling Laws' belong to?",
+    "options": [
+      "Transformers Deep Dive",
+      "Reinforcement Learning",
+      "Speech and Audio",
+      "Autonomous Systems"
+    ],
+    "correct": 0,
+    "explanation": "'Scaling Laws' is lesson 13 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Scaling Laws'?",
+    "options": [
+      "Build \u2014 \u2014",
+      "Capstone \u2014 \u2014",
+      "Learn \u2014 Python",
+      "Capstone \u2014 TypeScript"
+    ],
+    "correct": 2,
+    "explanation": "'Scaling Laws' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'Scaling Laws'?",
+    "options": [
+      "BERT \u2014 Masked Language Modeling",
+      "Audio Transformers \u2014 Whisper Architecture",
+      "Build a Transformer from Scratch \u2014 The Capstone",
+      "GPT \u2014 Causal Language Modeling"
+    ],
+    "correct": 2,
+    "explanation": "'Build a Transformer from Scratch \u2014 The Capstone' follows 'Scaling Laws' as lesson 14.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Scaling Laws'?",
+    "options": [
+      "ensembles.py",
+      "main.py",
+      "main.rs",
+      "verify.ts"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Scaling Laws'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Scaling Laws'?",
+    "options": [
+      "Attention is a lookup table where every word asks \"who matters to me?\" - and learns the answer.",
+      "Autoregressive decoding is serial. Each token waits for the previous one. Speculative decoding breaks the chain: a cheap model drafts N tokens, the expensive model verifies all N in one forward pass. When the draft is right you paid one big forward for N generations.",
+      "The 2020 Kaplan paper said: bigger model, lower loss. The 2022 Hoffmann paper said: you were under-training. Compute goes into two buckets \u2014 parameters and tokens \u2014 and the split is not obvious.",
+      "Training is parallel and FLOP-bound. Inference is serial and memory-bound. Different bottleneck, different tricks."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Scaling Laws'.",
+    "stage": "pre"
+  }
+]

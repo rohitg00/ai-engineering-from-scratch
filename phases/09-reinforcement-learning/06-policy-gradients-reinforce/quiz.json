@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Policy Gradient \u2014 REINFORCE from Scratch' belong to?",
+    "options": [
+      "Speech and Audio",
+      "Reinforcement Learning",
+      "Deep Learning Core",
+      "Autonomous Systems"
+    ],
+    "correct": 1,
+    "explanation": "'Policy Gradient \u2014 REINFORCE from Scratch' is lesson 06 in Phase 9 \u2014 Reinforcement Learning.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Policy Gradient \u2014 REINFORCE from Scratch'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Capstone \u2014 Julia",
+      "Learn \u2014 Julia",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Policy Gradient \u2014 REINFORCE from Scratch' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Reinforcement Learning, which lesson comes immediately after 'Policy Gradient \u2014 REINFORCE from Scratch'?",
+    "options": [
+      "Dynamic Programming \u2014 Policy Iteration & Value Iteration",
+      "Proximal Policy Optimization (PPO)",
+      "MDPs, States, Actions & Rewards",
+      "Actor-Critic \u2014 A2C and A3C"
+    ],
+    "correct": 3,
+    "explanation": "'Actor-Critic \u2014 A2C and A3C' follows 'Policy Gradient \u2014 REINFORCE from Scratch' as lesson 07.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Policy Gradient \u2014 REINFORCE from Scratch'?",
+    "options": [
+      "production_app.py",
+      "prompt_engineering.py",
+      "tests",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Policy Gradient \u2014 REINFORCE from Scratch'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Policy Gradient \u2014 REINFORCE from Scratch'?",
+    "options": [
+      "A2C throws away each rollout after one update. PPO wraps the policy gradient in a clipped importance ratio so you can do 10+ epochs on the same data without the policy exploding. Schulman et al. (2017). Still the default policy-gradient algorithm in 2026.",
+      "Stop estimating value. Parameterize the policy directly, compute the gradient of expected return, step uphill. Williams (1992) wrote it in one theorem. It is why PPO, GRPO, and every LLM RL loop exist.",
+      "1992: TD-Gammon beat human champions at backgammon with pure TD. 2016: AlphaGo beat Lee Sedol. 2017: AlphaZero dominated chess, shogi, and Go from scratch. 2024: DeepSeek-R1 proved the same recipe, with GRPO replacing PPO, works on reasoning. Games are the benchmark that drives every breakthrough in this phase.",
+      "Monte Carlo waits until the episode ends. TD updates after every step by bootstrapping the next value estimate. Q-learning is off-policy and optimistic; SARSA is on-policy and cautious. Both are one line of code. Both underpin every deep-RL method in this phase."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Policy Gradient \u2014 REINFORCE from Scratch'.",
+    "stage": "pre"
+  }
+]

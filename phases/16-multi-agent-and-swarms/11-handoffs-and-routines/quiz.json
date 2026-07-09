@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Handoffs and Routines \u2014 Stateless Orchestration' belong to?",
+    "options": [
+      "Multi Agent and Swarms",
+      "Speech and Audio",
+      "Tools and Protocols",
+      "Math Foundations"
+    ],
+    "correct": 0,
+    "explanation": "'Handoffs and Routines \u2014 Stateless Orchestration' is lesson 11 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Handoffs and Routines \u2014 Stateless Orchestration'?",
+    "options": [
+      "Build \u2014 Rust",
+      "Capstone \u2014 Python",
+      "Build \u2014 \u2014",
+      "Learn + Build \u2014 Python (stdlib)"
+    ],
+    "correct": 3,
+    "explanation": "'Handoffs and Routines \u2014 Stateless Orchestration' is tagged as Learn + Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Handoffs and Routines \u2014 Stateless Orchestration'?",
+    "options": [
+      "The Multi-Agent Primitive Model",
+      "Generative Agents and Emergent Simulation",
+      "A2A \u2014 The Agent-to-Agent Protocol",
+      "Supervisor / Orchestrator-Worker Pattern"
+    ],
+    "correct": 2,
+    "explanation": "'A2A \u2014 The Agent-to-Agent Protocol' follows 'Handoffs and Routines \u2014 Stateless Orchestration' as lesson 12.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Handoffs and Routines \u2014 Stateless Orchestration'?",
+    "options": [
+      "main.py",
+      "graph_theory.py",
+      "tensors.py",
+      "lora.py"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Handoffs and Routines \u2014 Stateless Orchestration'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Handoffs and Routines \u2014 Stateless Orchestration'?",
+    "options": [
+      "Minsky's 1986 premise \u2014 intelligence is a society of specialists \u2014 gets rediscovered every decade. In 2023 Du et al. turned it into a concrete algorithm: multiple LLM instances propose answers, read each other's answers, critique, and update. Over N rounds they converge on a consensus that beats zero-shot CoT and reflection on six reasoning and factuality tasks. Two findings matter: both **multiple agents** and **multiple rounds** contribute independently. The society beats a single-agent monologue; the multi-round exchange beats one-shot voting.",
+      "Five 2025-2026 benchmarks cover the multi-agent evaluation space. **MultiAgentBench / MARBLE** (ACL 2025, arXiv:2503.01935) evaluates star/chain/tree/graph topologies with milestone KPIs; **graph is best for research**, cognitive planning adds ~3% milestone achievement. **COMMA** evaluates multimodal asymmetric-information coordination; state-of-the-art models including GPT-4o struggle to beat a random baseline. **MedAgentBoard** (arXiv:2505.12371) covers four medical task categories and often finds multi-agent does not dominate single-LLM. **AgentArch** (arXiv:2509.10769) benchmarks enterprise agent architectures combining tool-use + memory + orchestration. **SWE-bench Pro** ([arXiv:2509.16941](https://arxiv.org/abs/2509.16941)) has 1865 problems across 41 repos spanning business apps, B2B services, and developer tools; frontier models score ~23% on Pro vs 70%+ on Verified \u2014 a reality check on contamination. Claude Opus 4.7 (April 2026) is reported at **64.3%** on Pro with explicit agent-teams coordination (no Anthropic primary source published yet \u2014 treat as preliminary); Verdent (agent scaffold) hits **76.1% pass@1** on Verified ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report)). **AAAI 2026 Bridge Program WMAC** (https://multiagents.org/2026/) is the 2026 community focal point. This lesson builds on MARBLE's metrics, runs a topology-vs-metric sweep, and pins the \"just passing SWE-bench Verified is not evidence of generalization\" rule.",
+      "OpenAI's Swarm (October 2024) distilled multi-agent orchestration to two primitives: **routines** (instructions + tools as a system prompt) and **handoffs** (a tool that returns another Agent). No state machine, no branching DSL \u2014 the LLM routes by calling the right handoff tool. The OpenAI Agents SDK (March 2025) is the production successor. Swarm itself remains the cleanest conceptual reference \u2014 its entire source fits in a few hundred lines. The pattern is viral because the API surface is roughly \"agent = prompt + tools; handoff = function returning agent.\" Limitation: stateless, so memory is the caller's problem.",
+      "Every multi-agent framework shipping in 2026 \u2014 AutoGen, LangGraph, CrewAI, OpenAI Agents SDK, Microsoft Agent Framework \u2014 is a point in a four-dimensional design space. Four primitives, nothing more: the agent, the handoff, the shared state, the orchestrator. This lesson builds them from zero, runs a toy system on all four, then maps every major framework onto the same axes so you can read any new release in one paragraph."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Handoffs and Routines \u2014 Stateless Orchestration'.",
+    "stage": "pre"
+  }
+]

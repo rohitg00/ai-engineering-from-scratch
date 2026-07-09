@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Action Budgets, Iteration Caps, and Cost Governors' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Autonomous Systems",
+      "Deep Learning Core",
+      "Nlp Foundations to Advanced"
+    ],
+    "correct": 1,
+    "explanation": "'Action Budgets, Iteration Caps, and Cost Governors' is lesson 13 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Action Budgets, Iteration Caps, and Cost Governors'?",
+    "options": [
+      "Capstone \u2014 Julia",
+      "Build \u2014 TypeScript",
+      "Learn \u2014 Python (stdlib, layered cost-governor simulator)",
+      "Capstone \u2014 TypeScript"
+    ],
+    "correct": 2,
+    "explanation": "'Action Budgets, Iteration Caps, and Cost Governors' is tagged as Learn in Python (stdlib, layered cost-governor simulator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'Action Budgets, Iteration Caps, and Cost Governors'?",
+    "options": [
+      "Darwin Godel Machine \u2014 Open-Ended Self-Modifying Agents",
+      "Human-in-the-Loop: Propose-Then-Commit",
+      "Recursive Self-Improvement \u2014 Capability vs Alignment",
+      "Kill Switches, Circuit Breakers, and Canary Tokens"
+    ],
+    "correct": 3,
+    "explanation": "'Kill Switches, Circuit Breakers, and Canary Tokens' follows 'Action Budgets, Iteration Caps, and Cost Governors' as lesson 14.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Action Budgets, Iteration Caps, and Cost Governors'?",
+    "options": [
+      "main.py",
+      "statistics.py",
+      "pytorch_intro.py",
+      "test_main.py"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Action Budgets, Iteration Caps, and Cost Governors'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Action Budgets, Iteration Caps, and Cost Governors'?",
+    "options": [
+      "In 2023 a chatbot answered a question in one turn. In 2026 a frontier model routinely runs minutes to hours on a single task. METR's Time Horizon 1.1 benchmark (January 2026) puts Claude Opus 4.6 at 14+ hours of expert work at 50% reliability. The horizon has been doubling roughly every seven months since GPT-2. Every assumption we built around single-turn chat \u2014 context, trust, failure modes, cost, observability \u2014 breaks when runs last longer than lunch.",
+      "Anthropic ran parallel teams of Claude Opus 4.6 Autonomous Alignment Researchers in independent sandboxes, coordinating via a shared forum whose logs live outside any sandbox (so agents cannot delete their own records). On the weak-to-strong training problem, the AARs outperformed human researchers. Anthropic's own summary flags that prescribed workflows often constrain AAR flexibility and degrade performance. Automating alignment research is the compression step that compresses the timeline to the exact misalignment risks the RSP is meant to detect.",
+      "Research has converged on four primitives for bounding a self-improvement loop. Formal invariants that must hold across every edit. Alignment anchors that cannot be modified. Multi-objective constraints where every dimension (safety, fairness, robustness) must hold, not just performance. Regression detection that pauses the loop when historical metrics suggest capability loss. None of them is a proof of safety \u2014 information-theoretic results (Kolmogorov complexity, Lob's theorem) bound what any system can prove about its own successors. They are mitigations that raise the cost of silent failure.",
+      "A mid-sized e-commerce agent's monthly LLM cost jumped from $1,200 to $4,800 after its team enabled the \"order-tracking\" skill. That is not a pricing bug. That is an agent that found a new loop and kept spending inside it. Microsoft's Agent Governance Toolkit (April 2, 2026) codifies the defense against this class: per-request `max_tokens`, per-task token and dollar budgets, per-day/month caps, iteration caps, tiered model routing, prompt caching, context windowing, HITL checkpoints on expensive actions, kill switches on budget breach. Anthropic's Claude Code Agent SDK ships the same primitives under different names. Financial velocity limits \u2014 e.g. cut access on >$50 in 10 minutes \u2014 catch loops faster than monthly caps."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Action Budgets, Iteration Caps, and Cost Governors'.",
+    "stage": "pre"
+  }
+]

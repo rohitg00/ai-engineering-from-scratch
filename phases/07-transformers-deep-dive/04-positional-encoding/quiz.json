@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi' belong to?",
+    "options": [
+      "Multi Agent and Swarms",
+      "Transformers Deep Dive",
+      "Generative Ai",
+      "Capstone Projects"
+    ],
+    "correct": 1,
+    "explanation": "'Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi' is lesson 04 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Learn \u2014 \u2014",
+      "Capstone \u2014 Julia",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi'?",
+    "options": [
+      "Build a Transformer from Scratch \u2014 The Capstone",
+      "Multi-Head Attention",
+      "The Full Transformer \u2014 Encoder + Decoder",
+      "BERT \u2014 Masked Language Modeling"
+    ],
+    "correct": 2,
+    "explanation": "'The Full Transformer \u2014 Encoder + Decoder' follows 'Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi' as lesson 05.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi'?",
+    "options": [
+      "test_main.py",
+      "main.py",
+      "main.py",
+      "main.jl"
+    ],
+    "correct": 3,
+    "explanation": "'main.jl' is the implementation shipped with 'Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi'?",
+    "options": [
+      "Attention is permutation-invariant. \"The cat sat on the mat\" and \"mat the on sat cat the\" produce the same output without positional signal. Three algorithms fix it \u2014 each with a different bet on what \"position\" means.",
+      "RNNs process tokens one at a time. Transformers process all tokens at once. That single architectural bet changed every scaling curve in deep learning after 2017.",
+      "Audio is an image of frequency over time. Whisper is a ViT that eats mel spectrograms and speaks back.",
+      "The 2020 Kaplan paper said: bigger model, lower loss. The 2022 Hoffmann paper said: you were under-training. Compute goes into two buckets \u2014 parameters and tokens \u2014 and the split is not obvious."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Positional Encoding \u2014 Sinusoidal, RoPE, ALiBi'.",
+    "stage": "pre"
+  }
+]

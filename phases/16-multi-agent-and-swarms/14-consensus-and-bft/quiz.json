@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Consensus and Byzantine Fault Tolerance for Agents' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Deep Learning Core",
+      "Multi Agent and Swarms",
+      "Speech and Audio"
+    ],
+    "correct": 2,
+    "explanation": "'Consensus and Byzantine Fault Tolerance for Agents' is lesson 14 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Consensus and Byzantine Fault Tolerance for Agents'?",
+    "options": [
+      "Learn \u2014 Rust",
+      "Learn + Build \u2014 Python (stdlib)",
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 Julia"
+    ],
+    "correct": 1,
+    "explanation": "'Consensus and Byzantine Fault Tolerance for Agents' is tagged as Learn + Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Consensus and Byzantine Fault Tolerance for Agents'?",
+    "options": [
+      "Case Studies and the 2026 State of the Art",
+      "Swarm Optimization for LLMs (PSO, ACO)",
+      "Negotiation and Bargaining",
+      "Voting, Self-Consistency, and Debate Topology"
+    ],
+    "correct": 3,
+    "explanation": "'Voting, Self-Consistency, and Debate Topology' follows 'Consensus and Byzantine Fault Tolerance for Agents' as lesson 15.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Consensus and Byzantine Fault Tolerance for Agents'?",
+    "options": [
+      "eval_framework.py",
+      "tests",
+      "main.py",
+      "main.ts"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Consensus and Byzantine Fault Tolerance for Agents'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Consensus and Byzantine Fault Tolerance for Agents'?",
+    "options": [
+      "Minsky's 1986 premise \u2014 intelligence is a society of specialists \u2014 gets rediscovered every decade. In 2023 Du et al. turned it into a concrete algorithm: multiple LLM instances propose answers, read each other's answers, critique, and update. Over N rounds they converge on a consensus that beats zero-shot CoT and reflection on six reasoning and factuality tasks. Two findings matter: both **multiple agents** and **multiple rounds** contribute independently. The society beats a single-agent monologue; the multi-round exchange beats one-shot voting.",
+      "OpenAI's Swarm (October 2024) distilled multi-agent orchestration to two primitives: **routines** (instructions + tools as a system prompt) and **handoffs** (a tool that returns another Agent). No state machine, no branching DSL \u2014 the LLM routes by calling the right handoff tool. The OpenAI Agents SDK (March 2025) is the production successor. Swarm itself remains the cleanest conceptual reference \u2014 its entire source fits in a few hundred lines. The pattern is viral because the API surface is roughly \"agent = prompt + tools; handoff = function returning agent.\" Limitation: stateless, so memory is the caller's problem.",
+      "Scaling multi-agent systems to thousands of concurrent runs requires **durable execution**. LangGraph's runtime writes a checkpoint after each super-step keyed by `thread_id` (Postgres by default); worker crashes release a lease and another worker resumes. Agents can sleep indefinitely waiting for human input. **MegaAgent** (arXiv:2408.09955) ran a per-agent producer-consumer queue with three states (Idle / Processing / Response) and two-layer coordination (intra-group chat + inter-group admin chat). **Fiber/async** beats thread-per-job for LLM streaming: threads sit idle 99% of the time waiting for tokens, fibers cooperatively yield on I/O. Counterpoint: Ashpreet Bedi's \"Scaling Agentic Software\" argues for **FastAPI + Postgres + nothing else** until load proves otherwise \u2014 simple architectures go further than expected. This lesson builds a durable checkpoint log, a per-agent work queue with state transitions, an async-vs-thread demo, and lands the pragmatic \"start simple\" rule.",
+      "Classical distributed-systems BFT meets stochastic LLMs. In 2025-2026 three research directions emerged: **CP-WBFT** (arXiv:2511.10400) weighs each vote by a confidence probe; **DecentLLMs** (arXiv:2507.14928) goes leaderless with parallel worker proposals and geometric-median aggregation; **WBFT** (arXiv:2505.05103) combines weighted voting with Hierarchical Structure Clustering to split Core and Edge nodes. The honest empirical result from \"Can AI Agents Agree?\" (arXiv:2603.01213) is that even scalar agreement is fragile today \u2014 a single deceptive agent can compromise a Mixture-of-Agents. BFT is necessary but not sufficient. This lesson builds a minimal BFT protocol, injects three agent-specific attacks (byzantine lie, sycophantic conformity, correlated-error monoculture), and measures how each consensus variant copes."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Consensus and Byzantine Fault Tolerance for Agents'.",
+    "stage": "pre"
+  }
+]

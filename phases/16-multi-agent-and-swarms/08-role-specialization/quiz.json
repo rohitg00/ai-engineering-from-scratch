@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Role Specialization \u2014 Planner, Critic, Executor, Verifier' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Multi Agent and Swarms",
+      "Transformers Deep Dive",
+      "Deep Learning Core"
+    ],
+    "correct": 1,
+    "explanation": "'Role Specialization \u2014 Planner, Critic, Executor, Verifier' is lesson 08 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Role Specialization \u2014 Planner, Critic, Executor, Verifier'?",
+    "options": [
+      "Learn \u2014 TypeScript",
+      "Learn \u2014 Julia",
+      "Learn \u2014 Python",
+      "Learn + Build \u2014 Python (stdlib)"
+    ],
+    "correct": 3,
+    "explanation": "'Role Specialization \u2014 Planner, Critic, Executor, Verifier' is tagged as Learn + Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Role Specialization \u2014 Planner, Critic, Executor, Verifier'?",
+    "options": [
+      "Parallel / Swarm / Networked Architectures",
+      "Production Scaling \u2014 Queues, Checkpoints, Durability",
+      "Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors",
+      "MARL \u2014 MADDPG, QMIX, MAPPO"
+    ],
+    "correct": 0,
+    "explanation": "'Parallel / Swarm / Networked Architectures' follows 'Role Specialization \u2014 Planner, Critic, Executor, Verifier' as lesson 09.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Role Specialization \u2014 Planner, Critic, Executor, Verifier'?",
+    "options": [
+      "time_series.py",
+      "tests",
+      "main.py",
+      "bpe.rs"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Role Specialization \u2014 Planner, Critic, Executor, Verifier'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Role Specialization \u2014 Planner, Critic, Executor, Verifier'?",
+    "options": [
+      "Scaling multi-agent systems to thousands of concurrent runs requires **durable execution**. LangGraph's runtime writes a checkpoint after each super-step keyed by `thread_id` (Postgres by default); worker crashes release a lease and another worker resumes. Agents can sleep indefinitely waiting for human input. **MegaAgent** (arXiv:2408.09955) ran a per-agent producer-consumer queue with three states (Idle / Processing / Response) and two-layer coordination (intra-group chat + inter-group admin chat). **Fiber/async** beats thread-per-job for LLM streaming: threads sit idle 99% of the time waiting for tokens, fibers cooperatively yield on I/O. Counterpoint: Ashpreet Bedi's \"Scaling Agentic Software\" argues for **FastAPI + Postgres + nothing else** until load proves otherwise \u2014 simple architectures go further than expected. This lesson builds a durable checkpoint log, a per-agent work queue with state transitions, an async-vs-thread demo, and lands the pragmatic \"start simple\" rule.",
+      "OpenAI's Swarm (October 2024) distilled multi-agent orchestration to two primitives: **routines** (instructions + tools as a system prompt) and **handoffs** (a tool that returns another Agent). No state machine, no branching DSL \u2014 the LLM routes by calling the right handoff tool. The OpenAI Agents SDK (March 2025) is the production successor. Swarm itself remains the cleanest conceptual reference \u2014 its entire source fits in a few hundred lines. The pattern is viral because the API surface is roughly \"agent = prompt + tools; handoff = function returning agent.\" Limitation: stateless, so memory is the caller's problem.",
+      "Five 2025-2026 benchmarks cover the multi-agent evaluation space. **MultiAgentBench / MARBLE** (ACL 2025, arXiv:2503.01935) evaluates star/chain/tree/graph topologies with milestone KPIs; **graph is best for research**, cognitive planning adds ~3% milestone achievement. **COMMA** evaluates multimodal asymmetric-information coordination; state-of-the-art models including GPT-4o struggle to beat a random baseline. **MedAgentBoard** (arXiv:2505.12371) covers four medical task categories and often finds multi-agent does not dominate single-LLM. **AgentArch** (arXiv:2509.10769) benchmarks enterprise agent architectures combining tool-use + memory + orchestration. **SWE-bench Pro** ([arXiv:2509.16941](https://arxiv.org/abs/2509.16941)) has 1865 problems across 41 repos spanning business apps, B2B services, and developer tools; frontier models score ~23% on Pro vs 70%+ on Verified \u2014 a reality check on contamination. Claude Opus 4.7 (April 2026) is reported at **64.3%** on Pro with explicit agent-teams coordination (no Anthropic primary source published yet \u2014 treat as preliminary); Verdent (agent scaffold) hits **76.1% pass@1** on Verified ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report)). **AAAI 2026 Bridge Program WMAC** (https://multiagents.org/2026/) is the 2026 community focal point. This lesson builds on MARBLE's metrics, runs a topology-vs-metric sweep, and pins the \"just passing SWE-bench Verified is not evidence of generalization\" rule.",
+      "The most common multi-agent decomposition in 2026: one agent plans, one executes, one critiques or verifies. MetaGPT (arXiv:2308.00352) formalizes this as SOPs encoded into role prompts \u2014 Product Manager, Architect, Project Manager, Engineer, QA Engineer \u2014 following `Code = SOP(Team)`. ChatDev (arXiv:2307.07924) chains designer, programmer, reviewer, tester through a \"chat chain\" with \"communicative dehallucination\" (agents explicitly request missing details). The verifier is load-bearing: Cemri et al. (MAST, arXiv:2503.13657) show every multi-agent failure can be traced to missing or broken verification. PwC reported 7\u00d7 accuracy gain (10% \u2192 70%) from structured validation loops in CrewAI."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Role Specialization \u2014 Planner, Critic, Executor, Verifier'.",
+    "stage": "pre"
+  }
+]

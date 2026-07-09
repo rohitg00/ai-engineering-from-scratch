@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Open Models: Architecture Walkthroughs' belong to?",
+    "options": [
+      "Llm Engineering",
+      "Llms From Scratch",
+      "Math Foundations",
+      "Capstone Projects"
+    ],
+    "correct": 1,
+    "explanation": "'Open Models: Architecture Walkthroughs' is lesson 14 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Open Models: Architecture Walkthroughs'?",
+    "options": [
+      "Build \u2014 \u2014",
+      "Build \u2014 Rust",
+      "Build \u2014 Python",
+      "Learn \u2014 Python (stdlib)"
+    ],
+    "correct": 3,
+    "explanation": "'Open Models: Architecture Walkthroughs' is tagged as Learn in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Llms From Scratch, which lesson comes immediately after 'Open Models: Architecture Walkthroughs'?",
+    "options": [
+      "DPO: Direct Preference Optimization",
+      "Evaluation: Benchmarks, Evals, LM Harness",
+      "Speculative Decoding and EAGLE-3",
+      "DeepSeek-V3 Architecture Walkthrough"
+    ],
+    "correct": 2,
+    "explanation": "'Speculative Decoding and EAGLE-3' follows 'Open Models: Architecture Walkthroughs' as lesson 15.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Open Models: Architecture Walkthroughs'?",
+    "options": [
+      "tests",
+      "main.py",
+      "tests",
+      "tests"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Open Models: Architecture Walkthroughs'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Open Models: Architecture Walkthroughs'?",
+    "options": [
+      "A frontier LLM generating one token requires a full forward pass over billions of parameters. That forward pass is massively over-provisioned: most of the time a much smaller model can guess the next 3-5 tokens correctly, and the big model only needs to *verify* the guess. When the guess is right you got 5 tokens for the price of one. Speculative decoding (Leviathan et al. 2023) made this exact, and EAGLE-3 (2025) pushed acceptance rates to ~4.5 tokens per verify \u2014 a 4-5x speedup at matched output distribution.",
+      "You built a GPT-2 Small from scratch in Lesson 04. Frontier open models in 2026 are the same family with five or six concrete changes. RMSNorm instead of LayerNorm. SwiGLU instead of GELU. RoPE instead of learned positions. GQA or MLA instead of full MHA. Mixture-of-Experts at scale. The math you already know covers 95% of them. This lesson reads Llama 3, DeepSeek-V3, Mixtral, Qwen, and Gemma side by side and names the exact line where each architecture diverges.",
+      "A 70B model in FP16 needs 140GB. Two A100s just for weights. Quantize to FP8: one 80GB GPU. INT4: a MacBook.",
+      "Goodhart's Law: when a measure becomes a target, it ceases to be a good measure. Every frontier lab games benchmarks. MMLU scores go up while models still can't reliably count the number of R's in \"strawberry.\" The only eval that matters is YOUR eval -- on YOUR task, with YOUR data."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Open Models: Architecture Walkthroughs'.",
+    "stage": "pre"
+  }
+]

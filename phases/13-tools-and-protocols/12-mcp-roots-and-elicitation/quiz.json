@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Roots and Elicitation \u2014 Scoping and Mid-Flight User Input' belong to?",
+    "options": [
+      "Reinforcement Learning",
+      "Ml Fundamentals",
+      "Generative Ai",
+      "Tools and Protocols"
+    ],
+    "correct": 3,
+    "explanation": "'Roots and Elicitation \u2014 Scoping and Mid-Flight User Input' is lesson 12 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Roots and Elicitation \u2014 Scoping and Mid-Flight User Input'?",
+    "options": [
+      "Learn \u2014 Rust",
+      "Build \u2014 Python (stdlib, roots + elicitation demo)",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 Python"
+    ],
+    "correct": 1,
+    "explanation": "'Roots and Elicitation \u2014 Scoping and Mid-Flight User Input' is tagged as Build in Python (stdlib, roots + elicitation demo).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'Roots and Elicitation \u2014 Scoping and Mid-Flight User Input'?",
+    "options": [
+      "MCP Gateways and Registries \u2014 Enterprise Control Planes",
+      "Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work",
+      "Building an MCP Server \u2014 Python + TypeScript SDKs",
+      "Capstone \u2014 Build a Complete Tool Ecosystem"
+    ],
+    "correct": 1,
+    "explanation": "'Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work' follows 'Roots and Elicitation \u2014 Scoping and Mid-Flight User Input' as lesson 13.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Roots and Elicitation \u2014 Scoping and Mid-Flight User Input'?",
+    "options": [
+      "tests",
+      "main.py",
+      "fourier.py",
+      "tests.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Roots and Elicitation \u2014 Scoping and Mid-Flight User Input'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Roots and Elicitation \u2014 Scoping and Mid-Flight User Input'?",
+    "options": [
+      "Enterprises cannot let every dev install random MCP servers. A gateway centralizes auth, RBAC, audit, rate limiting, caching, and tool-poisoning detection, then exposes the merged tool surface as a single MCP endpoint. The Official MCP Registry (Anthropic + GitHub + PulseMCP + Microsoft, namespace-verified) is the canonical upstream. This lesson names where a gateway fits, walks a minimal implementation, and surveys the 2026 vendor landscape.",
+      "Most MCP servers are dumb executors: take arguments, run code, return content. Sampling lets a server flip direction: it asks the client's LLM to make a decision. This enables server-hosted agent loops without the server owning any model credentials. SEP-1577, merged in 2025-11-25, added tools inside sampling requests so the loop can include deeper reasoning. Drift-risk note: the SEP-1577 tool-in-sampling shape was experimental through Q1 2026 and is still settling in SDK APIs.",
+      "Hard-coded paths break the moment a user opens a different project. Pre-filled tool arguments break when the user under-specifies. Roots scope the server to a user-controlled set of URIs; elicitation pauses mid-tool-call to ask the user for structured input via a form or URL. Two client primitives, two fixes for common MCP failure modes. SEP-1036 (URL-mode elicitation, 2025-11-25) is experimental through H1 2026 \u2014 check SDK versions before depending on it.",
+      "Most MCP content ships server tutorials and waves a hand at the client. Client code is where the hard orchestration lives: process spawning, capability negotiation, tool list merging across multiple servers, sampling callbacks, reconnection, and namespace collision resolution. This lesson builds a multi-server client that lifts three different MCP servers into one flat tool namespace for the model."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Roots and Elicitation \u2014 Scoping and Mid-Flight User Input'.",
+    "stage": "pre"
+  }
+]

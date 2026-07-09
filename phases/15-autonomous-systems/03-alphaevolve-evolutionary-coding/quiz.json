@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'AlphaEvolve \u2014 Evolutionary Coding Agents' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Ml Fundamentals",
+      "Multi Agent and Swarms",
+      "Generative Ai"
+    ],
+    "correct": 0,
+    "explanation": "'AlphaEvolve \u2014 Evolutionary Coding Agents' is lesson 03 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'AlphaEvolve \u2014 Evolutionary Coding Agents'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Build \u2014 Rust",
+      "Learn \u2014 Python (stdlib, evolutionary-loop toy)",
+      "Build \u2014 \u2014"
+    ],
+    "correct": 2,
+    "explanation": "'AlphaEvolve \u2014 Evolutionary Coding Agents' is tagged as Learn in Python (stdlib, evolutionary-loop toy).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'AlphaEvolve \u2014 Evolutionary Coding Agents'?",
+    "options": [
+      "Bounded Self-Improvement Designs",
+      "METR Time Horizons and External Capability Evaluation",
+      "Automated Alignment Research (Anthropic AAR)",
+      "Darwin Godel Machine \u2014 Open-Ended Self-Modifying Agents"
+    ],
+    "correct": 3,
+    "explanation": "'Darwin Godel Machine \u2014 Open-Ended Self-Modifying Agents' follows 'AlphaEvolve \u2014 Evolutionary Coding Agents' as lesson 04.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'AlphaEvolve \u2014 Evolutionary Coding Agents'?",
+    "options": [
+      "test_main.py",
+      "docker-compose.yml",
+      "main.py",
+      "ts"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'AlphaEvolve \u2014 Evolutionary Coding Agents'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'AlphaEvolve \u2014 Evolutionary Coding Agents'?",
+    "options": [
+      "Anthropic's January 22, 2026 Claude Constitution runs 79 pages and is CC0. It moves from rule-based to reason-based alignment and establishes a four-tier priority hierarchy: (1) safety and supporting human oversight, (2) ethics, (3) Anthropic guidelines, (4) helpfulness. Behaviours split into hardcoded prohibitions (bioweapons uplift, CSAM) that operators and users cannot override and soft-coded defaults that operators can adjust within defined bounds. The 2022 original (Bai et al.) trained harmlessness via self-critique and RLAIF against a constitution. The honest caveat: reason-based alignment relies on the model generalising principles to unanticipated situations. Anthropic's own 2023 participatory experiment showed ~50% divergence between public-sourced and corporate principles; the 2026 version did not incorporate those findings.",
+      "The Center for AI Safety (CAIS, San Francisco, founded 2022 by Hendrycks and Zhang) publishes the four-risk framework \u2014 malicious use, AI races, organizational risks, rogue AIs \u2014 and the May 2023 statement on extinction risk signed by hundreds of professors and company leaders. 2026 releases from CAIS: AI Dashboard for frontier-model evaluation, Remote Labor Index (with Scale AI), Superintelligence Strategy Paper, AI Frontiers newsletter. A distinct entity: NIST Center for AI Standards and Innovation (CAISI) \u2014 US-government-facing voluntary agreements and unclassified capability evaluations focused on cyber, bio, and chemical-weapons risks. CAIS flags organizational risk as one of four top-level risks: safety culture, rigorous audits, multi-layered defenses, and information security are foundational but routinely traded off against deployment speed. California SB-53, if signed, would be the first US state-level catastrophic-risk regulation.",
+      "METR (ex-ARC Evals) is an independent 501(c)(3) since December 2023. Their Time Horizon 1.1 benchmark (January 2026) fits a logistic curve to task-success probability vs log(expert human completion time); the intersection at 50% probability defines the model's time horizon. The 2025\u20132026 engagement set covers GPT-5.1, GPT-5.1-Codex-Max, and prototype monitoring evaluations (can a monitor catch side tasks; can the agent evade). Benchmark suites: HCAST (180+ ML, cyber, SWE, reasoning tasks; 1 minute to 8+ hours), RE-Bench (71 ML research-engineering tasks with expert baseline), SWAA. The honest note: METR measurements are idealized \u2014 no human, no real consequences \u2014 and the team has documented the eval-vs-deployment behavior gap (Lesson 1). A time horizon is an upper bound, not a deployment prediction.",
+      "Pair a frontier coding model with an evolutionary loop and a machine-checkable evaluator. Let the loop run long enough. It discovers a 4x4 complex-matrix multiplication procedure that uses 48 scalar multiplications \u2014 the first improvement over Strassen in 56 years. It also finds a Google-wide Borg scheduling heuristic that recovers ~0.7% of cluster compute in production. The architecture is boring on purpose. The wins come from the evaluator's rigor."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'AlphaEvolve \u2014 Evolutionary Coding Agents'.",
+    "stage": "pre"
+  }
+]

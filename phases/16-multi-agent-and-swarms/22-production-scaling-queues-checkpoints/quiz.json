@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Production Scaling \u2014 Queues, Checkpoints, Durability' belong to?",
+    "options": [
+      "Tools and Protocols",
+      "Reinforcement Learning",
+      "Multi Agent and Swarms",
+      "Llms From Scratch"
+    ],
+    "correct": 2,
+    "explanation": "'Production Scaling \u2014 Queues, Checkpoints, Durability' is lesson 22 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Production Scaling \u2014 Queues, Checkpoints, Durability'?",
+    "options": [
+      "Learn \u2014 \u2014",
+      "Learn \u2014 TypeScript",
+      "Learn + Build \u2014 Python (stdlib, `asyncio`, `sqlite3`)",
+      "Learn \u2014 Julia"
+    ],
+    "correct": 2,
+    "explanation": "'Production Scaling \u2014 Queues, Checkpoints, Durability' is tagged as Learn + Build in Python (stdlib, `asyncio`, `sqlite3`).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Production Scaling \u2014 Queues, Checkpoints, Durability'?",
+    "options": [
+      "Theory of Mind and Emergent Coordination",
+      "The Multi-Agent Primitive Model",
+      "Handoffs and Routines \u2014 Stateless Orchestration",
+      "Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors"
+    ],
+    "correct": 3,
+    "explanation": "'Failure Modes \u2014 MAST, Groupthink, Monoculture, Cascading Errors' follows 'Production Scaling \u2014 Queues, Checkpoints, Durability' as lesson 23.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Production Scaling \u2014 Queues, Checkpoints, Durability'?",
+    "options": [
+      "prompt_engineering.py",
+      "main.py",
+      "vscode",
+      "main.jl"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Production Scaling \u2014 Queues, Checkpoints, Durability'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Production Scaling \u2014 Queues, Checkpoints, Durability'?",
+    "options": [
+      "One agent hits a wall. The smart move is not a bigger agent - it is more agents.",
+      "Agents that can't speak the same language aren't a team. They're strangers shouting into the void.",
+      "Scaling multi-agent systems to thousands of concurrent runs requires **durable execution**. LangGraph's runtime writes a checkpoint after each super-step keyed by `thread_id` (Postgres by default); worker crashes release a lease and another worker resumes. Agents can sleep indefinitely waiting for human input. **MegaAgent** (arXiv:2408.09955) ran a per-agent producer-consumer queue with three states (Idle / Processing / Response) and two-layer coordination (intra-group chat + inter-group admin chat). **Fiber/async** beats thread-per-job for LLM streaming: threads sit idle 99% of the time waiting for tokens, fibers cooperatively yield on I/O. Counterpoint: Ashpreet Bedi's \"Scaling Agentic Software\" argues for **FastAPI + Postgres + nothing else** until load proves otherwise \u2014 simple architectures go further than expected. This lesson builds a durable checkpoint log, a per-agent work queue with state transitions, an async-vs-thread demo, and lands the pragmatic \"start simple\" rule.",
+      "Three production-grade references to study end-to-end, each illustrating a different slice of multi-agent engineering. **Anthropic's Research system** (orchestrator-worker, 15x tokens, +90.2% over single-agent Opus 4, rainbow deployments) is the canonical supervisor case. **MetaGPT / ChatDev** (SOP-encoded role specialization for software engineering; ChatDev's \"communicative dehallucination\"; MacNet extension to >1000 agents via DAGs, arXiv:2406.07155) is the canonical role-decomposition case. **OpenClaw / Moltbook** (originally Clawdbot by Peter Steinberger, November 2025; renamed twice; 247k GitHub stars by March 2026; local ReAct-loop agents; Moltbook as an agent-only social network with ~2.3M agent accounts within days of launch, acquired by Meta 2026-03-10) illustrates what happens at population scale: emergent economic activity, prompt-injection risks, state-level regulation (China restricted OpenClaw on government computers, March 2026). **Framework landscape April 2026:** LangGraph and CrewAI lead production; AG2 is the community AutoGen continuation; Microsoft AutoGen is in maintenance mode (merged into Microsoft Agent Framework, RC Feb 2026); OpenAI Agents SDK is the production Swarm successor; Google ADK (April 2025) is the A2A-native entrant. Every major framework now ships MCP support; most ship A2A. This lesson reads each case end-to-end and distills the common patterns so you can pick the right reference for your next production system."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Production Scaling \u2014 Queues, Checkpoints, Durability'.",
+    "stage": "pre"
+  }
+]

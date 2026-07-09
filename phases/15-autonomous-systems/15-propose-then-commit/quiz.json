@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Human-in-the-Loop: Propose-Then-Commit' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Multi Agent and Swarms",
+      "Tools and Protocols",
+      "Llms From Scratch"
+    ],
+    "correct": 0,
+    "explanation": "'Human-in-the-Loop: Propose-Then-Commit' is lesson 15 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Human-in-the-Loop: Propose-Then-Commit'?",
+    "options": [
+      "Build \u2014 Rust",
+      "Capstone \u2014 Julia",
+      "Build \u2014 TypeScript",
+      "Learn \u2014 Python (stdlib, propose-then-commit state machine with idempotency)"
+    ],
+    "correct": 3,
+    "explanation": "'Human-in-the-Loop: Propose-Then-Commit' is tagged as Learn in Python (stdlib, propose-then-commit state machine with idempotency).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'Human-in-the-Loop: Propose-Then-Commit'?",
+    "options": [
+      "Checkpoints and Rollback",
+      "Recursive Self-Improvement \u2014 Capability vs Alignment",
+      "Bounded Self-Improvement Designs",
+      "METR Time Horizons and External Capability Evaluation"
+    ],
+    "correct": 0,
+    "explanation": "'Checkpoints and Rollback' follows 'Human-in-the-Loop: Propose-Then-Commit' as lesson 16.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Human-in-the-Loop: Propose-Then-Commit'?",
+    "options": [
+      "main.py",
+      "transformations.py",
+      "pipeline.py",
+      "tests"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Human-in-the-Loop: Propose-Then-Commit'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Human-in-the-Loop: Propose-Then-Commit'?",
+    "options": [
+      "The 2026 consensus on HITL is specific. It is not \"the agent asks, the user clicks Approve.\" It is propose-then-commit: the proposed action is persisted to a durable store with an idempotency key; surfaced to a reviewer with intent, data lineage, permissions touched, blast radius, and a rollback plan; committed only after positive acknowledgement; verified after execution to confirm the side effect actually happened. LangGraph's `interrupt()` plus PostgreSQL checkpointing, Microsoft Agent Framework's `RequestInfoEvent`, and Cloudflare's `waitForApproval()` all implement the same shape. The canonical failure mode is the rubber-stamp approval: \"Approve?\" is clicked without review. The documented mitigation is challenge-and-response with an explicit checklist.",
+      "Anthropic's January 22, 2026 Claude Constitution runs 79 pages and is CC0. It moves from rule-based to reason-based alignment and establishes a four-tier priority hierarchy: (1) safety and supporting human oversight, (2) ethics, (3) Anthropic guidelines, (4) helpfulness. Behaviours split into hardcoded prohibitions (bioweapons uplift, CSAM) that operators and users cannot override and soft-coded defaults that operators can adjust within defined bounds. The 2022 original (Bai et al.) trained harmlessness via self-critique and RLAIF against a constitution. The honest caveat: reason-based alignment relies on the model generalising principles to unanticipated situations. Anthropic's own 2023 participatory experiment showed ~50% divergence between public-sourced and corporate principles; the 2026 version did not incorporate those findings.",
+      "In 2023 a chatbot answered a question in one turn. In 2026 a frontier model routinely runs minutes to hours on a single task. METR's Time Horizon 1.1 benchmark (January 2026) puts Claude Opus 4.6 at 14+ hours of expert work at 50% reliability. The horizon has been doubling roughly every seven months since GPT-2. Every assumption we built around single-turn chat \u2014 context, trust, failure modes, cost, observability \u2014 breaks when runs last longer than lunch.",
+      "Claude Code exposes seven permission modes. \"plan\" asks before every action, \"default\" asks only for risky ones, \"acceptEdits\" auto-approves file writes but still confirms shell execution, and \"bypassPermissions\" approves everything. Auto Mode (March 24, 2026) replaces per-action approval with a two-stage parallel safety classifier: a single-token fast check runs on every action; flagged actions kick off a chain-of-thought deep review. Action budgets are enforced via `max_turns` and `max_budget_usd`. Auto Mode shipped as a research preview \u2014 Anthropic has stated explicitly that the classifier is not sufficient alone."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Human-in-the-Loop: Propose-Then-Commit'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'GPT \u2014 Causal Language Modeling' belong to?",
+    "options": [
+      "Multimodal Ai",
+      "Computer Vision",
+      "Transformers Deep Dive",
+      "Math Foundations"
+    ],
+    "correct": 2,
+    "explanation": "'GPT \u2014 Causal Language Modeling' is lesson 07 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'GPT \u2014 Causal Language Modeling'?",
+    "options": [
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 Julia",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'GPT \u2014 Causal Language Modeling' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'GPT \u2014 Causal Language Modeling'?",
+    "options": [
+      "Build a Transformer from Scratch \u2014 The Capstone",
+      "BERT \u2014 Masked Language Modeling",
+      "Attention Variants \u2014 Sliding Window, Sparse, Differential",
+      "T5, BART \u2014 Encoder-Decoder Models"
+    ],
+    "correct": 3,
+    "explanation": "'T5, BART \u2014 Encoder-Decoder Models' follows 'GPT \u2014 Causal Language Modeling' as lesson 08.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'GPT \u2014 Causal Language Modeling'?",
+    "options": [
+      "main.py",
+      "transformations.jl",
+      "main.jl",
+      "tests"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'GPT \u2014 Causal Language Modeling'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'GPT \u2014 Causal Language Modeling'?",
+    "options": [
+      "Full attention is a circle. Every token sees every token, and memory pays the price. Four variants bend the shape of the circle and recover half the cost.",
+      "An image is a grid of patches. A sentence is a grid of tokens. The same transformer eats both.",
+      "Attention is permutation-invariant. \"The cat sat on the mat\" and \"mat the on sat cat the\" produce the same output without positional signal. Three algorithms fix it \u2014 each with a different bet on what \"position\" means.",
+      "BERT sees both sides. GPT sees only the past. The triangle mask is the most consequential single line of code in modern AI."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'GPT \u2014 Causal Language Modeling'.",
+    "stage": "pre"
+  }
+]

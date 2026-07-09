@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'The Autonomous Coding Agent Landscape (2026)' belong to?",
+    "options": [
+      "Autonomous Systems",
+      "Infrastructure and Production",
+      "Agent Engineering",
+      "Speech and Audio"
+    ],
+    "correct": 0,
+    "explanation": "'The Autonomous Coding Agent Landscape (2026)' is lesson 09 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'The Autonomous Coding Agent Landscape (2026)'?",
+    "options": [
+      "Capstone \u2014 Julia",
+      "Learn \u2014 Python (stdlib, CodeAct vs JSON tool-call comparison)",
+      "Build \u2014 Python",
+      "Capstone \u2014 Rust"
+    ],
+    "correct": 1,
+    "explanation": "'The Autonomous Coding Agent Landscape (2026)' is tagged as Learn in Python (stdlib, CodeAct vs JSON tool-call comparison).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'The Autonomous Coding Agent Landscape (2026)'?",
+    "options": [
+      "The Shift from Chatbots to Long-Horizon Agents",
+      "Recursive Self-Improvement \u2014 Capability vs Alignment",
+      "CAIS, CAISI, and Societal-Scale Risk",
+      "Claude Code as an Autonomous Agent: Permission Modes and Auto Mode"
+    ],
+    "correct": 3,
+    "explanation": "'Claude Code as an Autonomous Agent: Permission Modes and Auto Mode' follows 'The Autonomous Coding Agent Landscape (2026)' as lesson 10.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'The Autonomous Coding Agent Landscape (2026)'?",
+    "options": [
+      "main.py",
+      "tests",
+      "Dockerfile",
+      "main.ts"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'The Autonomous Coding Agent Landscape (2026)'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'The Autonomous Coding Agent Landscape (2026)'?",
+    "options": [
+      "SWE-bench Verified went from 4% to 80.9% in under three years. Same Claude Sonnet 4.5 scored 43.2% on SWE-agent v1 and 59.8% on Cline autonomous \u2014 the scaffolding around the model now matters as much as the model itself. OpenHands (formerly OpenDevin) is the most active MIT-licensed platform and its CodeAct loop executes Python actions directly in a sandbox instead of JSON tool calls. The headline numbers hide a methodological issue: 161 of 500 SWE-bench Verified tasks require only a 1\u20132 line change, and SWE-bench Pro (10+ line tasks) sits at 23\u201359% for the same frontier models.",
+      "Research has converged on four primitives for bounding a self-improvement loop. Formal invariants that must hold across every edit. Alignment anchors that cannot be modified. Multi-objective constraints where every dimension (safety, fairness, robustness) must hold, not just performance. Regression detection that pauses the loop when historical metrics suggest capability loss. None of them is a proof of safety \u2014 information-theoretic results (Kolmogorov complexity, Lob's theorem) bound what any system can prove about its own successors. They are mitigations that raise the cost of silent failure.",
+      "The 2026 consensus on HITL is specific. It is not \"the agent asks, the user clicks Approve.\" It is propose-then-commit: the proposed action is persisted to a durable store with an idempotency key; surfaced to a reviewer with intent, data lineage, permissions touched, blast radius, and a rollback plan; committed only after positive acknowledgement; verified after execution to confirm the side effect actually happened. LangGraph's `interrupt()` plus PostgreSQL checkpointing, Microsoft Agent Framework's `RequestInfoEvent`, and Cloudflare's `waitForApproval()` all implement the same shape. The canonical failure mode is the rubber-stamp approval: \"Approve?\" is clicked without review. The documented mitigation is challenge-and-response with an explicit checklist.",
+      "Pair a frontier coding model with an evolutionary loop and a machine-checkable evaluator. Let the loop run long enough. It discovers a 4x4 complex-matrix multiplication procedure that uses 48 scalar multiplications \u2014 the first improvement over Strassen in 56 years. It also finds a Google-wide Borg scheduling heuristic that recovers ~0.7% of cluster compute in production. The architecture is boring on purpose. The wins come from the evaluator's rigor."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'The Autonomous Coding Agent Landscape (2026)'.",
+    "stage": "pre"
+  }
+]

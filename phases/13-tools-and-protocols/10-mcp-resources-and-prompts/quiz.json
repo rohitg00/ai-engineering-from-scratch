@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'MCP Resources and Prompts \u2014 Context Exposure Beyond Tools' belong to?",
+    "options": [
+      "Generative Ai",
+      "Tools and Protocols",
+      "Infrastructure and Production",
+      "Multi Agent and Swarms"
+    ],
+    "correct": 1,
+    "explanation": "'MCP Resources and Prompts \u2014 Context Exposure Beyond Tools' is lesson 10 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'MCP Resources and Prompts \u2014 Context Exposure Beyond Tools'?",
+    "options": [
+      "Build \u2014 Python (stdlib, resource + prompt handler)",
+      "Capstone \u2014 Julia",
+      "Capstone \u2014 TypeScript",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 0,
+    "explanation": "'MCP Resources and Prompts \u2014 Context Exposure Beyond Tools' is tagged as Build in Python (stdlib, resource + prompt handler).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'MCP Resources and Prompts \u2014 Context Exposure Beyond Tools'?",
+    "options": [
+      "MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops",
+      "Building an MCP Client \u2014 Discovery, Invocation, Session Management",
+      "MCP Gateways and Registries \u2014 Enterprise Control Planes",
+      "Capstone \u2014 Build a Complete Tool Ecosystem"
+    ],
+    "correct": 0,
+    "explanation": "'MCP Sampling \u2014 Server-Requested LLM Completions and Agent Loops' follows 'MCP Resources and Prompts \u2014 Context Exposure Beyond Tools' as lesson 11.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'MCP Resources and Prompts \u2014 Context Exposure Beyond Tools'?",
+    "options": [
+      "bpe.rs",
+      "main.py",
+      "main.jl",
+      "ml_intro.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'MCP Resources and Prompts \u2014 Context Exposure Beyond Tools'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'MCP Resources and Prompts \u2014 Context Exposure Beyond Tools'?",
+    "options": [
+      "Tool descriptions land in the model's context verbatim. Malicious servers embed hidden instructions that users never see. Research in 2025-2026 from Invariant Labs, Unit 42, and an arXiv study published March 2026 measured attack-success rates above 70 percent on frontier models and about 85 percent against state-of-the-art defenses under adaptive attacks. This lesson names the seven concrete attack classes and builds a tool-poisoning detector you can run in CI.",
+      "Tools get 90 percent of MCP attention. The other two server primitives solve different problems. Resources expose data for reading; prompts expose reusable templates as slash-commands. Many servers should use resources instead of wrapping reads in tools, and prompts instead of hard-coding workflows in client prompts. This lesson names the decision rule and walks the `resources/*` and `prompts/*` messages.",
+      "Three independent weather lookups serialized is three round trips. Run them in parallel and total time collapses to the slowest single call. Every frontier provider now emits multiple tool calls in a single turn. The payoff is real; the plumbing is subtle. This lesson walks both halves: the parallel fan-out and the streamed-argument reassembly, with emphasis on the id-correlation trap.",
+      "Text-only tool output caps what agents can show. MCP Apps (SEP-1724, official January 26, 2026) let a tool return sandboxed interactive HTML rendered inline in Claude Desktop, ChatGPT, Cursor, Goose, and VS Code. Dashboards, forms, maps, 3D scenes, all through one extension. This lesson walks the `ui://` resource scheme, the `text/html;profile=mcp-app` MIME, the iframe-sandbox postMessage protocol, and the security surface that comes with letting a server render HTML."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'MCP Resources and Prompts \u2014 Context Exposure Beyond Tools'.",
+    "stage": "pre"
+  }
+]

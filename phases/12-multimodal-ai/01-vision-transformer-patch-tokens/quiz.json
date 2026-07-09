@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Vision Transformers and the Patch-Token Primitive' belong to?",
+    "options": [
+      "Tools and Protocols",
+      "Llm Engineering",
+      "Transformers Deep Dive",
+      "Multimodal Ai"
+    ],
+    "correct": 3,
+    "explanation": "'Vision Transformers and the Patch-Token Primitive' is lesson 01 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Vision Transformers and the Patch-Token Primitive'?",
+    "options": [
+      "Capstone \u2014 TypeScript",
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Python",
+      "Learn \u2014 Python (stdlib, patch tokenizer + geometry calculator)"
+    ],
+    "correct": 3,
+    "explanation": "'Vision Transformers and the Patch-Token Primitive' is tagged as Learn in Python (stdlib, patch tokenizer + geometry calculator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'Vision Transformers and the Patch-Token Primitive'?",
+    "options": [
+      "LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model",
+      "InternVL3: Native Multimodal Pretraining",
+      "From CLIP to BLIP-2 \u2014 Q-Former as Modality Bridge",
+      "CLIP and Contrastive Vision-Language Pretraining"
+    ],
+    "correct": 3,
+    "explanation": "'CLIP and Contrastive Vision-Language Pretraining' follows 'Vision Transformers and the Patch-Token Primitive' as lesson 02.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Vision Transformers and the Patch-Token Primitive'?",
+    "options": [
+      "main.ts",
+      "main.jl",
+      "main.py",
+      "test_main.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Vision Transformers and the Patch-Token Primitive'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Vision Transformers and the Patch-Token Primitive'?",
+    "options": [
+      "Before anything multimodal, an image has to become a sequence of tokens a transformer can eat. The 2020 ViT paper answered this with 16x16 pixel patches, a linear projection, and a position embedding. Five years later every 2026 frontier model (Claude Opus 4.7 at 2576px native, Gemini 3.1 Pro, Qwen3.5-Omni) still begins this way \u2014 the encoder changed from ViT to DINOv2 to SigLIP 2, register tokens were added, the positional scheme became 2D-RoPE, but the primitive held. This lesson reads the patch-token pipeline end to end and builds it in stdlib Python so the rest of Phase 12 has a concrete mental model for \"visual tokens.\"",
+      "BAAI's Emu3 (Wang et al., September 2024) is the 2024 result that should have ended the diffusion-versus-autoregressive debate. A single Llama-style decoder-only transformer, trained only on the next-token-prediction objective, across a unified vocabulary of text + VQ image tokens + 3D VQ video tokens, beats SDXL on image generation and LLaVA-1.6 on perception. No CLIP loss. No diffusion schedule. Classifier-free guidance is used at inference for quality, but the core training objective is next-token prediction with teacher forcing. Published in Nature. This lesson reads the Emu3 thesis \u2014 why a better tokenizer plus scale is all you need \u2014 and contrasts with diffusion approaches.",
+      "Traditional RAG parses PDFs into text, splits into chunks, embeds chunks, stores vectors. Every step loses signal: OCR drops chart data, chunking breaks table rows, text embeddings ignore figures. ColPali (Faysse et al., July 2024) asked the simpler question: why extract text at all? Embed the page image directly via PaliGemma, use ColBERT-style late interaction for retrieval, and keep all the layout, figures, fonts, and formatting signal the document carries. Published benchmarks: 20-40% better end-to-end accuracy than text-RAG on visually-rich documents. ColQwen2, ColSmol, and VisRAG extended the pattern. This lesson reads the vision-native RAG thesis and builds a tiny ColPali-like indexer.",
+      "Every open VLM before InternVL3 followed the same three-step recipe: take a text LLM trained on trillions of text tokens, bolt on a vision encoder, then fine-tune the seams. This works but has alignment debt \u2014 the text LLM has spent its full pretraining budget on pure text and does not natively understand visual tokens. When you add vision post-hoc, the LLM has to re-learn how to relate visual input to its text reasoning without forgetting the text. InternVL3 (Zhu et al., April 2025) rejects the post-hoc approach: one pretraining run, text and multimodal interleaved from step one. The result matches Gemini 2.5 Pro on MMMU-Pro at 78B params open. This lesson reads the case for native pretraining and what changes when you make it."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Vision Transformers and the Patch-Token Primitive'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Negotiation and Bargaining' belong to?",
+    "options": [
+      "Speech and Audio",
+      "Multi Agent and Swarms",
+      "Transformers Deep Dive",
+      "Reinforcement Learning"
+    ],
+    "correct": 1,
+    "explanation": "'Negotiation and Bargaining' is lesson 16 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Negotiation and Bargaining'?",
+    "options": [
+      "Build \u2014 Rust",
+      "Learn \u2014 \u2014",
+      "Learn + Build \u2014 Python (stdlib)",
+      "Build \u2014 Julia"
+    ],
+    "correct": 2,
+    "explanation": "'Negotiation and Bargaining' is tagged as Learn + Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Negotiation and Bargaining'?",
+    "options": [
+      "Society of Mind and Multi-Agent Debate",
+      "Generative Agents and Emergent Simulation",
+      "Evaluation and Coordination Benchmarks",
+      "Why Multi-Agent?"
+    ],
+    "correct": 1,
+    "explanation": "'Generative Agents and Emergent Simulation' follows 'Negotiation and Bargaining' as lesson 17.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Negotiation and Bargaining'?",
+    "options": [
+      "main.py",
+      "complex_numbers.py",
+      "main.rs",
+      "production_app.py"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Negotiation and Bargaining'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Negotiation and Bargaining'?",
+    "options": [
+      "Scaling multi-agent systems to thousands of concurrent runs requires **durable execution**. LangGraph's runtime writes a checkpoint after each super-step keyed by `thread_id` (Postgres by default); worker crashes release a lease and another worker resumes. Agents can sleep indefinitely waiting for human input. **MegaAgent** (arXiv:2408.09955) ran a per-agent producer-consumer queue with three states (Idle / Processing / Response) and two-layer coordination (intra-group chat + inter-group admin chat). **Fiber/async** beats thread-per-job for LLM streaming: threads sit idle 99% of the time waiting for tokens, fibers cooperatively yield on I/O. Counterpoint: Ashpreet Bedi's \"Scaling Agentic Software\" argues for **FastAPI + Postgres + nothing else** until load proves otherwise \u2014 simple architectures go further than expected. This lesson builds a durable checkpoint log, a per-agent work queue with state transitions, an async-vs-thread demo, and lands the pragmatic \"start simple\" rule.",
+      "Agents negotiate resources, prices, task allocations, and terms. The 2026 benchmark set is clear: NegotiationArena (arXiv:2402.05863) shows LLMs can improve payoffs ~20% via persona manipulation (\"desperation\"); \"Measuring Bargaining Abilities\" (arXiv:2402.15813) shows buyer is harder than seller and scale does not help \u2014 their **OG-Narrator** (deterministic offer generator + LLM narrator) pushed deal rate from 26.67% to 88.88%; the Large-Scale Autonomous Negotiation Competition (arXiv:2503.06416) ran ~180k negotiations and found that **chain-of-thought-concealing** agents win by hiding reasoning from counterparts; Bhattacharya et al. 2025 on Harvard Negotiation Project metrics ranked Llama-3 most-effective, Claude-3 aggressive, GPT-4 fairest. This lesson implements Contract Net Protocol (the FIPA ancestor, Lesson 02), wires an LLM-style buyer/seller, runs an OG-Narrator-style decomposition, and measures how deal rate changes with each structural choice.",
+      "Li et al. (arXiv:2310.10701) showed that LLM agents in a cooperative text game exhibit **emergent high-order Theory of Mind** (ToM) \u2014 reasoning about what another agent believes about a third agent's beliefs \u2014 but fail on long-horizon planning due to context management and hallucination. Riedl (arXiv:2510.05174) measured higher-order synergy across a population and found that **only** the ToM-prompt condition produces identity-linked differentiation and goal-directed complementarity; lower-capacity LLMs show only spurious emergence. That is, coordination emergence is prompt-conditional and model-dependent, not free. This lesson implements a minimal ToM-aware agent, runs a cooperative task with and without ToM prompting, and measures the coordination delta against the Riedl 2025 protocol.",
+      "Before MCP, before A2A, there was FIPA-ACL. In 2000 the IEEE Foundation for Intelligent Physical Agents ratified an agent communication language with twenty performatives, two content languages, and a set of interaction protocols \u2014 contract net, subscribe/notify, request-when. It faded from industry because the ontology overhead was too heavy for the web, but the LLM revival of multi-agent systems is quietly reimplementing the same ideas without the formal semantics: JSON contracts stand in for performatives, natural language stands in for ontologies. This lesson reads FIPA-ACL seriously so you can see which 2026 protocol decisions are reinvention, which are novelty, and where the current wave is going to rediscover problems the 2000s already solved."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Negotiation and Bargaining'.",
+    "stage": "pre"
+  }
+]

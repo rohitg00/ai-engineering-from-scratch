@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Speech and Audio",
+      "Deep Learning Core",
+      "Nlp Foundations to Advanced"
+    ],
+    "correct": 1,
+    "explanation": "'Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split' is lesson 13 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 Python",
+      "Build \u2014 \u2014"
+    ],
+    "correct": 2,
+    "explanation": "'Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split'?",
+    "options": [
+      "Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone",
+      "Audio Fundamentals \u2014 Waveforms, Sampling, Fourier Transform",
+      "Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick",
+      "Spectrograms, Mel Scale & Audio Features"
+    ],
+    "correct": 2,
+    "explanation": "'Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick' follows 'Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split' as lesson 14.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split'?",
+    "options": [
+      "tests",
+      "main.jl",
+      "main.py",
+      "test_main.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split'?",
+    "options": [
+      "2026 music generation: Suno v5 and Udio v4 dominate commercial; MusicGen, Stable Audio Open, and ACE-Step lead open-source. The technical problem is mostly solved. The legal problem (Warner Music $500M settlement, UMG settlement) reshaped the field in 2025-2026.",
+      "Speech recognition is audio classification at every timestep, glued together by a sequence model that knows English and silence. CTC, RNN-T, and attention are the three ways to do it. Pick one and understand why.",
+      "Everything from \"dog barking vs siren\" to \"which language is this\" is audio classification. The features are mels. The architecture moves each decade. The evaluation stays AUC, F1, and per-class recall.",
+      "2026 audio generation is almost all tokens. EnCodec, SNAC, Mimi, and DAC turn continuous waveforms into discrete sequences that a transformer can predict. The semantic-vs-acoustic token split \u2014 first-codebook as semantic, rest as acoustic \u2014 is the most important architectural shift since the Transformer for audio."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Neural Audio Codecs \u2014 EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split'.",
+    "stage": "pre"
+  }
+]

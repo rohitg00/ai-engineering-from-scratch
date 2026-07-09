@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Generative Models \u2014 Taxonomy & History' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Generative Ai",
+      "Setup and Tooling",
+      "Infrastructure and Production"
+    ],
+    "correct": 1,
+    "explanation": "'Generative Models \u2014 Taxonomy & History' is lesson 01 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Generative Models \u2014 Taxonomy & History'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Learn \u2014 Python",
+      "Build \u2014 \u2014",
+      "Capstone \u2014 Julia"
+    ],
+    "correct": 1,
+    "explanation": "'Generative Models \u2014 Taxonomy & History' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after 'Generative Models \u2014 Taxonomy & History'?",
+    "options": [
+      "GANs \u2014 Generator vs Discriminator",
+      "ControlNet, LoRA & Conditioning",
+      "Latent Diffusion & Stable Diffusion",
+      "Autoencoders & Variational Autoencoders (VAE)"
+    ],
+    "correct": 3,
+    "explanation": "'Autoencoders & Variational Autoencoders (VAE)' follows 'Generative Models \u2014 Taxonomy & History' as lesson 02.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Generative Models \u2014 Taxonomy & History'?",
+    "options": [
+      "dim_reduction.py",
+      "main.py",
+      "main.jl",
+      "classifiers.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Generative Models \u2014 Taxonomy & History'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Generative Models \u2014 Taxonomy & History'?",
+    "options": [
+      "Every image model, text model, video model, and 3D model fits in one of five buckets. Pick the wrong bucket and you will fight the math for weeks. Pick the right one and the field's last twelve years of progress stacks cleanly in your head.",
+      "Every generative model leaderboard cites FID, CLIP score, and a win rate from a human-preference arena. Each number has a failure mode a determined researcher can game. If you do not know the failure modes, you cannot tell a real improvement from a gaming run.",
+      "Most generators stir `z` into every layer at the same time. StyleGAN split it apart: first map `z` to an intermediate `w`, then *inject* `w` at every resolution level through AdaIN. That single change untangled the latent space and made photorealistic faces a solved problem for seven years running.",
+      "Audio is a 1-D signal at 16-48 kHz. A five-second clip is 80-240k samples. No transformer attends to that sequence directly. The solution for every production audio model in 2026 is the same: a neural codec (Encodec, SoundStream, DAC) compresses audio to discrete tokens at 50-75 Hz, and a transformer or diffusion model generates tokens."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Generative Models \u2014 Taxonomy & History'.",
+    "stage": "pre"
+  }
+]

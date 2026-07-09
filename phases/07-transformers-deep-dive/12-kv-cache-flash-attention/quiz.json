@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'KV Cache, Flash Attention & Inference Optimization' belong to?",
+    "options": [
+      "Math Foundations",
+      "Transformers Deep Dive",
+      "Deep Learning Core",
+      "Tools and Protocols"
+    ],
+    "correct": 1,
+    "explanation": "'KV Cache, Flash Attention & Inference Optimization' is lesson 12 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'KV Cache, Flash Attention & Inference Optimization'?",
+    "options": [
+      "Build \u2014 Python",
+      "Learn \u2014 Julia",
+      "Learn \u2014 Rust",
+      "Capstone \u2014 Rust"
+    ],
+    "correct": 0,
+    "explanation": "'KV Cache, Flash Attention & Inference Optimization' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'KV Cache, Flash Attention & Inference Optimization'?",
+    "options": [
+      "Vision Transformers (ViT)",
+      "Scaling Laws",
+      "The Full Transformer \u2014 Encoder + Decoder",
+      "Mixture of Experts (MoE)"
+    ],
+    "correct": 1,
+    "explanation": "'Scaling Laws' follows 'KV Cache, Flash Attention & Inference Optimization' as lesson 13.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'KV Cache, Flash Attention & Inference Optimization'?",
+    "options": [
+      "tests.py",
+      "tests",
+      "tests",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'KV Cache, Flash Attention & Inference Optimization'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'KV Cache, Flash Attention & Inference Optimization'?",
+    "options": [
+      "Training is parallel and FLOP-bound. Inference is serial and memory-bound. Different bottleneck, different tricks.",
+      "Autoregressive decoding is serial. Each token waits for the previous one. Speculative decoding breaks the chain: a cheap model drafts N tokens, the expensive model verifies all N in one forward pass. When the draft is right you paid one big forward for N generations.",
+      "GPT predicts the next word. BERT predicts a missing word. One sentence of difference \u2014 and half a decade of everything embedding-shaped.",
+      "Full attention is a circle. Every token sees every token, and memory pays the price. Four variants bend the shape of the circle and recover half the cost."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'KV Cache, Flash Attention & Inference Optimization'.",
+    "stage": "pre"
+  }
+]

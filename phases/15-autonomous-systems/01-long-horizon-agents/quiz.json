@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'The Shift from Chatbots to Long-Horizon Agents' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Tools and Protocols",
+      "Autonomous Systems",
+      "Transformers Deep Dive"
+    ],
+    "correct": 2,
+    "explanation": "'The Shift from Chatbots to Long-Horizon Agents' is lesson 01 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'The Shift from Chatbots to Long-Horizon Agents'?",
+    "options": [
+      "Build \u2014 Python",
+      "Learn \u2014 Python (stdlib, horizon-curve simulator)",
+      "Capstone \u2014 Julia",
+      "Capstone \u2014 Rust"
+    ],
+    "correct": 1,
+    "explanation": "'The Shift from Chatbots to Long-Horizon Agents' is tagged as Learn in Python (stdlib, horizon-curve simulator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'The Shift from Chatbots to Long-Horizon Agents'?",
+    "options": [
+      "STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning",
+      "Bounded Self-Improvement Designs",
+      "AlphaEvolve \u2014 Evolutionary Coding Agents",
+      "Llama Guard and Input/Output Classification"
+    ],
+    "correct": 0,
+    "explanation": "'STaR, V-STaR, Quiet-STaR \u2014 Self-Taught Reasoning' follows 'The Shift from Chatbots to Long-Horizon Agents' as lesson 02.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'The Shift from Chatbots to Long-Horizon Agents'?",
+    "options": [
+      "ts",
+      "env_setup.sh",
+      "main.py",
+      "tests"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'The Shift from Chatbots to Long-Horizon Agents'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'The Shift from Chatbots to Long-Horizon Agents'?",
+    "options": [
+      "The smallest possible self-improvement loop sits inside the rationale. A model generates a chain of thought, keeps the ones that land on correct answers, and fine-tunes on those. That is STaR. V-STaR adds a verifier so inference-time selection is better. Quiet-STaR pushes the rationale down to every token. All three work. None of them are magic \u2014 the loop preserves any shortcut that happened to reach the right answer.",
+      "Claude Code exposes seven permission modes. \"plan\" asks before every action, \"default\" asks only for risky ones, \"acceptEdits\" auto-approves file writes but still confirms shell execution, and \"bypassPermissions\" approves everything. Auto Mode (March 24, 2026) replaces per-action approval with a two-stage parallel safety classifier: a single-token fast check runs on every action; flagged actions kick off a chain-of-thought deep review. Action budgets are enforced via `max_turns` and `max_budget_usd`. Auto Mode shipped as a research preview \u2014 Anthropic has stated explicitly that the classifier is not sufficient alone.",
+      "OpenAI Preparedness Framework v2 (April 2025) introduces Research Categories \u2014 Long-range Autonomy, Sandbagging, Autonomous Replication and Adaptation, Undermining Safeguards \u2014 distinct from Tracked Categories. Tracked Categories trigger Capabilities Reports plus Safeguards Reports reviewed by the Safety Advisory Group. DeepMind's FSF v3 (September 2025, with Tracked Capability Levels added April 17, 2026) folds autonomy into ML R&D and Cyber domains (ML R&D autonomy level 1 = fully automate the AI R&D pipeline at competitive cost vs human + AI tools). FSF v3 explicitly addresses deceptive alignment via automated monitoring for instrumental-reasoning misuse. The honest note: Research Categories in PF v2 (including Long-range Autonomy) do not automatically trigger mitigations; the policy language is \"potential.\" DeepMind itself says automated monitoring \"will not remain sufficient long-term\" if instrumental reasoning strengthens.",
+      "In 2023 a chatbot answered a question in one turn. In 2026 a frontier model routinely runs minutes to hours on a single task. METR's Time Horizon 1.1 benchmark (January 2026) puts Claude Opus 4.6 at 14+ hours of expert work at 50% reliability. The horizon has been doubling roughly every seven months since GPT-2. Every assumption we built around single-turn chat \u2014 context, trust, failure modes, cost, observability \u2014 breaks when runs last longer than lunch."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'The Shift from Chatbots to Long-Horizon Agents'.",
+    "stage": "pre"
+  }
+]

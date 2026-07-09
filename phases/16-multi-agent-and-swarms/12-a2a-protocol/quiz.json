@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'A2A \u2014 The Agent-to-Agent Protocol' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Autonomous Systems",
+      "Transformers Deep Dive",
+      "Multi Agent and Swarms"
+    ],
+    "correct": 3,
+    "explanation": "'A2A \u2014 The Agent-to-Agent Protocol' is lesson 12 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'A2A \u2014 The Agent-to-Agent Protocol'?",
+    "options": [
+      "Learn \u2014 Python",
+      "Build \u2014 Rust",
+      "Capstone \u2014 Rust",
+      "Learn + Build \u2014 Python (stdlib, `http.server`, `json`)"
+    ],
+    "correct": 3,
+    "explanation": "'A2A \u2014 The Agent-to-Agent Protocol' is tagged as Learn + Build in Python (stdlib, `http.server`, `json`).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'A2A \u2014 The Agent-to-Agent Protocol'?",
+    "options": [
+      "Voting, Self-Consistency, and Debate Topology",
+      "Parallel / Swarm / Networked Architectures",
+      "Shared Memory and Blackboard Patterns",
+      "Consensus and Byzantine Fault Tolerance for Agents"
+    ],
+    "correct": 2,
+    "explanation": "'Shared Memory and Blackboard Patterns' follows 'A2A \u2014 The Agent-to-Agent Protocol' as lesson 13.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'A2A \u2014 The Agent-to-Agent Protocol'?",
+    "options": [
+      "main.py",
+      "ts",
+      "naive_bayes.py",
+      "tests"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'A2A \u2014 The Agent-to-Agent Protocol'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'A2A \u2014 The Agent-to-Agent Protocol'?",
+    "options": [
+      "Two approaches coexist in 2026 multi-agent systems: the **message pool** (everyone sees everyone's messages, as in AutoGen GroupChat or MetaGPT) and the **blackboard with subscription** (agents subscribe to relevant events, as in Context-Aware MCP or the Matrix framework). Both are the only stateful part of a multi-agent system \u2014 which means both are where the interesting bugs live. The reference failure mode is **memory poisoning**: one agent hallucinates a \"fact,\" other agents treat it as verified, and accuracy decays gradually in a way that is much harder to debug than an immediate crash. This lesson builds both structures from stdlib, injects a poisoning attack, and shows the three mitigations that actually work in production.",
+      "One agent hits a wall. The smart move is not a bigger agent - it is more agents.",
+      "Google announced A2A in April 2025; by April 2026 the spec is at https://a2a-protocol.org/latest/specification/ and 150+ organizations back it. A2A is the horizontal complement to MCP (Lesson 13): where MCP is vertical (agent \u2194 tools), A2A is peer-to-peer (agent \u2194 agent). It defines Agent Cards (discovery), tasks with artifacts (text, structured data, video), opaque task lifecycles, and auth. Production systems increasingly pair MCP with A2A. Google Cloud rolled A2A support into Vertex AI Agent Builder during 2025-2026.",
+      "Three production-grade references to study end-to-end, each illustrating a different slice of multi-agent engineering. **Anthropic's Research system** (orchestrator-worker, 15x tokens, +90.2% over single-agent Opus 4, rainbow deployments) is the canonical supervisor case. **MetaGPT / ChatDev** (SOP-encoded role specialization for software engineering; ChatDev's \"communicative dehallucination\"; MacNet extension to >1000 agents via DAGs, arXiv:2406.07155) is the canonical role-decomposition case. **OpenClaw / Moltbook** (originally Clawdbot by Peter Steinberger, November 2025; renamed twice; 247k GitHub stars by March 2026; local ReAct-loop agents; Moltbook as an agent-only social network with ~2.3M agent accounts within days of launch, acquired by Meta 2026-03-10) illustrates what happens at population scale: emergent economic activity, prompt-injection risks, state-level regulation (China restricted OpenClaw on government computers, March 2026). **Framework landscape April 2026:** LangGraph and CrewAI lead production; AG2 is the community AutoGen continuation; Microsoft AutoGen is in maintenance mode (merged into Microsoft Agent Framework, RC Feb 2026); OpenAI Agents SDK is the production Swarm successor; Google ADK (April 2025) is the A2A-native entrant. Every major framework now ships MCP support; most ship A2A. This lesson reads each case end-to-end and distills the common patterns so you can pick the right reference for your next production system."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'A2A \u2014 The Agent-to-Agent Protocol'.",
+    "stage": "pre"
+  }
+]

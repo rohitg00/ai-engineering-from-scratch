@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Llama Guard and Input/Output Classification' belong to?",
+    "options": [
+      "Agent Engineering",
+      "Autonomous Systems",
+      "Speech and Audio",
+      "Deep Learning Core"
+    ],
+    "correct": 1,
+    "explanation": "'Llama Guard and Input/Output Classification' is lesson 18 in Phase 15 \u2014 Autonomous Systems.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Llama Guard and Input/Output Classification'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 Julia",
+      "Build \u2014 \u2014",
+      "Learn \u2014 Python (stdlib, category-tagged classifier simulator)"
+    ],
+    "correct": 3,
+    "explanation": "'Llama Guard and Input/Output Classification' is tagged as Learn in Python (stdlib, category-tagged classifier simulator).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Autonomous Systems, which lesson comes immediately after 'Llama Guard and Input/Output Classification'?",
+    "options": [
+      "AlphaEvolve \u2014 Evolutionary Coding Agents",
+      "Automated Alignment Research (Anthropic AAR)",
+      "CAIS, CAISI, and Societal-Scale Risk",
+      "Anthropic Responsible Scaling Policy v3.0"
+    ],
+    "correct": 3,
+    "explanation": "'Anthropic Responsible Scaling Policy v3.0' follows 'Llama Guard and Input/Output Classification' as lesson 19.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Llama Guard and Input/Output Classification'?",
+    "options": [
+      "linear_systems.py",
+      "fixture_repo",
+      "evaluation.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Llama Guard and Input/Output Classification'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Llama Guard and Input/Output Classification'?",
+    "options": [
+      "ChatGPT agent (July 2025) merged Operator and deep research into one browser/terminal agent and set BrowseComp SOTA at 68.9%. OpenAI shut Operator down August 31, 2025 \u2014 consolidation at the product layer. Anthropic's Vercept acquisition moved Claude Sonnet on OSWorld from under 15% to 72.5%. WebArena-Verified (ServiceNow, ICLR 2026) fixed 11.3 percentage points of false-negative rate in the original WebArena and shipped the 258-task Hard subset. The numbers are real. So is the attack surface: OpenAI's head of preparedness stated publicly that indirect prompt injection into browser agents \"is not a bug that can be fully patched.\" Documented 2025\u20132026 attacks: Tainted Memories (Atlas CSRF), HashJack (Cato Networks), and one-click hijacks in Perplexity Comet.",
+      "The smallest possible self-improvement loop sits inside the rationale. A model generates a chain of thought, keeps the ones that land on correct answers, and fine-tunes on those. That is STaR. V-STaR adds a verifier so inference-time selection is better. Quiet-STaR pushes the rationale down to every token. All three work. None of them are magic \u2014 the loop preserves any shortcut that happened to reach the right answer.",
+      "The Center for AI Safety (CAIS, San Francisco, founded 2022 by Hendrycks and Zhang) publishes the four-risk framework \u2014 malicious use, AI races, organizational risks, rogue AIs \u2014 and the May 2023 statement on extinction risk signed by hundreds of professors and company leaders. 2026 releases from CAIS: AI Dashboard for frontier-model evaluation, Remote Labor Index (with Scale AI), Superintelligence Strategy Paper, AI Frontiers newsletter. A distinct entity: NIST Center for AI Standards and Innovation (CAISI) \u2014 US-government-facing voluntary agreements and unclassified capability evaluations focused on cyber, bio, and chemical-weapons risks. CAIS flags organizational risk as one of four top-level risks: safety culture, rigorous audits, multi-layered defenses, and information security are foundational but routinely traded off against deployment speed. California SB-53, if signed, would be the first US state-level catastrophic-risk regulation.",
+      "Llama Guard 3 (Meta, Llama-3.1-8B base, fine-tuned for content safety) classifies both LLM inputs and outputs against an MLCommons 13-hazard taxonomy across 8 languages. A 1B-INT4 quantized variant runs at over 30 tokens/sec on mobile CPUs. Llama Guard 4 is multimodal (image + text), expands to the S1\u2013S14 category set (including S14 Code Interpreter Abuse), and is a drop-in replacement for Llama Guard 3 8B/11B. NVIDIA NeMo Guardrails v0.20.0 (January 2026) adds Colang dialog-flow rails on top of input and output rails. The honest note: \"Bypassing Prompt Injection and Jailbreak Detection in LLM Guardrails\" (Huang et al., arXiv:2504.11168) showed Emoji Smuggling hit 100% attack success rate on six prominent guard systems; NeMo Guard Detect recorded 72.54% ASR on jailbreaks. Classifiers are a layer, not a solution."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Llama Guard and Input/Output Classification'.",
+    "stage": "pre"
+  }
+]

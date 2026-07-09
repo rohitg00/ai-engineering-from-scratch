@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake' belong to?",
+    "options": [
+      "Setup and Tooling",
+      "Llm Engineering",
+      "Ml Fundamentals",
+      "Speech and Audio"
+    ],
+    "correct": 3,
+    "explanation": "'Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake' is lesson 09 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake'?",
+    "options": [
+      "Capstone \u2014 TypeScript",
+      "Capstone \u2014 Rust",
+      "Build \u2014 Python",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 2,
+    "explanation": "'Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake'?",
+    "options": [
+      "Voice Anti-Spoofing & Audio Watermarking \u2014 ASVspoof 5, AudioSeal, WaveVerify",
+      "Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio",
+      "Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro",
+      "Real-Time Audio Processing"
+    ],
+    "correct": 1,
+    "explanation": "'Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio' follows 'Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake' as lesson 10.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake'?",
+    "options": [
+      "test_main.py",
+      "transformations.jl",
+      "main.py",
+      "tests"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake'?",
+    "options": [
+      "2024-2026 redefined voice AI. Moshi ships a single model that listens and speaks simultaneously at 200 ms latency. Hibiki does speech-to-speech translation chunk-by-chunk. Both abandon the ASR \u2192 LLM \u2192 TTS pipeline for a unified full-duplex architecture over Mimi codec tokens. This is the new reference design.",
+      "2026 audio-language models reason over speech + environmental sound + music. Qwen2.5-Omni-7B matches GPT-4o Audio on MMAU-Pro. Audio Flamingo Next beats Gemini 2.5 Pro on LongAudioBench. The gap between open and closed is essentially closed \u2014 except on multi-audio tasks, where everyone is near random.",
+      "Every voice agent lives or dies on two decisions: is the user speaking now, and are they done? VAD answers the first. Turn-detection (VAD + silence-hangover + semantic endpoint model) answers the second. Get either wrong and your assistant either cuts users off or never shuts up.",
+      "2026 music generation: Suno v5 and Udio v4 dominate commercial; MusicGen, Stable Audio Open, and ACE-Step lead open-source. The technical problem is mostly solved. The legal problem (Warner Music $500M settlement, UMG settlement) reshaped the field in 2025-2026."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake'.",
+    "stage": "pre"
+  }
+]

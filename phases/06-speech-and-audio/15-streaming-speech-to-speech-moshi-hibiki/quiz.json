@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue' belong to?",
+    "options": [
+      "Capstone Projects",
+      "Speech and Audio",
+      "Tools and Protocols",
+      "Ethics Safety Alignment"
+    ],
+    "correct": 1,
+    "explanation": "'Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue' is lesson 15 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue'?",
+    "options": [
+      "Capstone \u2014 Julia",
+      "Build \u2014 Julia",
+      "Learn \u2014 Python",
+      "Capstone \u2014 Rust"
+    ],
+    "correct": 2,
+    "explanation": "'Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue'?",
+    "options": [
+      "Voice Cloning & Voice Conversion",
+      "Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick",
+      "Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs",
+      "Voice Anti-Spoofing & Audio Watermarking \u2014 ASVspoof 5, AudioSeal, WaveVerify"
+    ],
+    "correct": 3,
+    "explanation": "'Voice Anti-Spoofing & Audio Watermarking \u2014 ASVspoof 5, AudioSeal, WaveVerify' follows 'Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue' as lesson 16.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue'?",
+    "options": [
+      "feature_selection.py",
+      "ts",
+      "classifiers.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue'?",
+    "options": [
+      "ASR asks \"what did they say?\" Speaker recognition asks \"who said it?\" The math looks the same \u2014 embeddings plus cosine \u2014 but every production decision hinges on a single EER number.",
+      "Everything from lessons 01-11, stitched together. Build a voice assistant that listens, reasons, and talks back. In 2026 that is a solved engineering problem, not a research problem \u2014 but the integration details decide whether it ships.",
+      "2024-2026 redefined voice AI. Moshi ships a single model that listens and speaks simultaneously at 200 ms latency. Hibiki does speech-to-speech translation chunk-by-chunk. Both abandon the ASR \u2192 LLM \u2192 TTS pipeline for a unified full-duplex architecture over Mimi codec tokens. This is the new reference design.",
+      "Everything from \"dog barking vs siren\" to \"which language is this\" is audio classification. The features are mels. The architecture moves each decade. The evaluation stays AUC, F1, and per-class recall."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Streaming Speech-to-Speech \u2014 Moshi, Hibiki, and Full-Duplex Dialogue'.",
+    "stage": "pre"
+  }
+]

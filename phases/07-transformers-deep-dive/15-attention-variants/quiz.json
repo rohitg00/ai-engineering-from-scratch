@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Attention Variants \u2014 Sliding Window, Sparse, Differential' belong to?",
+    "options": [
+      "Generative Ai",
+      "Agent Engineering",
+      "Reinforcement Learning",
+      "Transformers Deep Dive"
+    ],
+    "correct": 3,
+    "explanation": "'Attention Variants \u2014 Sliding Window, Sparse, Differential' is lesson 15 in Phase 7 \u2014 Transformers Deep Dive.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Attention Variants \u2014 Sliding Window, Sparse, Differential'?",
+    "options": [
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 Julia",
+      "Learn \u2014 Rust",
+      "Build \u2014 Python"
+    ],
+    "correct": 3,
+    "explanation": "'Attention Variants \u2014 Sliding Window, Sparse, Differential' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Transformers Deep Dive, which lesson comes immediately after 'Attention Variants \u2014 Sliding Window, Sparse, Differential'?",
+    "options": [
+      "Speculative Decoding \u2014 Draft, Verify, Repeat",
+      "KV Cache, Flash Attention & Inference Optimization",
+      "Build a Transformer from Scratch \u2014 The Capstone",
+      "GPT \u2014 Causal Language Modeling"
+    ],
+    "correct": 0,
+    "explanation": "'Speculative Decoding \u2014 Draft, Verify, Repeat' follows 'Attention Variants \u2014 Sliding Window, Sparse, Differential' as lesson 16.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Attention Variants \u2014 Sliding Window, Sparse, Differential'?",
+    "options": [
+      "tests.py",
+      "tests",
+      "trees.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Attention Variants \u2014 Sliding Window, Sparse, Differential'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Attention Variants \u2014 Sliding Window, Sparse, Differential'?",
+    "options": [
+      "The 2020 Kaplan paper said: bigger model, lower loss. The 2022 Hoffmann paper said: you were under-training. Compute goes into two buckets \u2014 parameters and tokens \u2014 and the split is not obvious.",
+      "Full attention is a circle. Every token sees every token, and memory pays the price. Four variants bend the shape of the circle and recover half the cost.",
+      "BERT sees both sides. GPT sees only the past. The triangle mask is the most consequential single line of code in modern AI.",
+      "Encoders understand. Decoders generate. Put them back together and you get a model built for input \u2192 output tasks: translate, summarize, rewrite, transcribe."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Attention Variants \u2014 Sliding Window, Sparse, Differential'.",
+    "stage": "pre"
+  }
+]

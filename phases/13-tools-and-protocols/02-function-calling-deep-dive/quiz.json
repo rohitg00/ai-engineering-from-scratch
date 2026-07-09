@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini' belong to?",
+    "options": [
+      "Infrastructure and Production",
+      "Tools and Protocols",
+      "Deep Learning Core",
+      "Autonomous Systems"
+    ],
+    "correct": 1,
+    "explanation": "'Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini' is lesson 02 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini'?",
+    "options": [
+      "Build \u2014 Python (stdlib, schema translators)",
+      "Capstone \u2014 \u2014",
+      "Learn \u2014 Julia",
+      "Capstone \u2014 Rust"
+    ],
+    "correct": 0,
+    "explanation": "'Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini' is tagged as Build in Python (stdlib, schema translators).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini'?",
+    "options": [
+      "Parallel Tool Calls and Streaming with Tools",
+      "MCP Resources and Prompts \u2014 Context Exposure Beyond Tools",
+      "MCP Security II \u2014 OAuth 2.1, Resource Indicators, Incremental Scopes",
+      "Structured Output \u2014 JSON Schema, Pydantic, Zod, Constrained Decoding"
+    ],
+    "correct": 0,
+    "explanation": "'Parallel Tool Calls and Streaming with Tools' follows 'Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini' as lesson 03.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini'?",
+    "options": [
+      "tests",
+      "tests",
+      "main.ts",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini'?",
+    "options": [
+      "Real agent work takes minutes to hours: CI runs, deep-research synthesis, batch exports. Synchronous tool calls drop connections, time out, or block the UI. SEP-1686, merged in 2025-11-25, adds a Tasks primitive: any request can be augmented to become a task, and the result can be fetched later or streamed via state notifications. Drift-risk note: Tasks are experimental through H1 2026; SDK surface is still being designed around the spec.",
+      "A language model produces tokens. A program takes actions. The gap between those two is the tool interface: a contract that lets the model request an action and the host execute it. Every 2026 stack \u2014 function calling on OpenAI, Anthropic, and Gemini; MCP's `tools/call`; A2A's task parts \u2014 is a different encoding of the same four-step loop. This lesson names the loop and shows the minimum machinery to run it.",
+      "The three frontier providers converged on the same tool-call loop in 2024 and then diverged on everything else. OpenAI uses `tools` and `tool_calls`. Anthropic uses `tool_use` and `tool_result` blocks. Gemini uses `functionDeclarations` and unique-id correlation. This lesson diffs the three side by side so code that ships on one provider does not break when you port it.",
+      "Tool descriptions land in the model's context verbatim. Malicious servers embed hidden instructions that users never see. Research in 2025-2026 from Invariant Labs, Unit 42, and an arXiv study published March 2026 measured attack-success rates above 70 percent on frontier models and about 85 percent against state-of-the-art defenses under adaptive attacks. This lesson names the seven concrete attack classes and builds a tool-poisoning detector you can run in CI."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Function Calling Deep Dive \u2014 OpenAI, Anthropic, Gemini'.",
+    "stage": "pre"
+  }
+]

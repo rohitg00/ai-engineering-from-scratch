@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Spectrograms, Mel Scale & Audio Features' belong to?",
+    "options": [
+      "Speech and Audio",
+      "Setup and Tooling",
+      "Llm Engineering",
+      "Multi Agent and Swarms"
+    ],
+    "correct": 0,
+    "explanation": "'Spectrograms, Mel Scale & Audio Features' is lesson 02 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Spectrograms, Mel Scale & Audio Features'?",
+    "options": [
+      "Build \u2014 Python",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 TypeScript",
+      "Learn \u2014 TypeScript"
+    ],
+    "correct": 0,
+    "explanation": "'Spectrograms, Mel Scale & Audio Features' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Spectrograms, Mel Scale & Audio Features'?",
+    "options": [
+      "Voice Cloning & Voice Conversion",
+      "Voice Activity Detection & Turn-Taking \u2014 Silero, Cobra, and the Flush Trick",
+      "Build a Voice Assistant Pipeline \u2014 The Phase 6 Capstone",
+      "Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs"
+    ],
+    "correct": 3,
+    "explanation": "'Audio Classification \u2014 From k-NN on MFCCs to AST and BEATs' follows 'Spectrograms, Mel Scale & Audio Features' as lesson 03.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Spectrograms, Mel Scale & Audio Features'?",
+    "options": [
+      "main.py",
+      "tests",
+      "bpe.py",
+      "tests"
+    ],
+    "correct": 0,
+    "explanation": "'main.py' is the implementation shipped with 'Spectrograms, Mel Scale & Audio Features'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Spectrograms, Mel Scale & Audio Features'?",
+    "options": [
+      "Waveforms are the raw signal. Spectrograms are the representation. Mel features are the ML-friendly form. Every modern ASR and TTS pipeline walks this ladder, and the first rung is understanding sampling and Fourier.",
+      "Neural nets do not consume raw waveforms well. They consume spectrograms. They consume mel spectrograms even better. Every ASR, TTS, and audio classifier in 2026 lives or dies by this single preprocessing choice.",
+      "Everything from \"dog barking vs siren\" to \"which language is this\" is audio classification. The features are mels. The architecture moves each decade. The evaluation stays AUC, F1, and per-class recall.",
+      "Batch pipelines process a file. Real-time pipelines process the next 20 milliseconds before the next 20 arrive. Every conversational AI, broadcast studio, and telephony bot lives and dies by this latency budget."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Spectrograms, Mel Scale & Audio Features'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ lesson.title }}{% endblock %}
+{% block content %}
+  <a class="back-link" href="/phases/{{ phase.dir_name }}">&larr; {{ phase.name }}</a>
+  <h1>{{ lesson.title }}</h1>
+  <div class="quiz-meta">
+    <span>Question {{ question_number }} / {{ total_questions }}</span>
+    <span>Score: {{ score }}</span>
+    <span>Streak: {{ stats.current_streak }}</span>
+  </div>
+
+  <div class="question-card">
+    <p class="question-text">{{ question.question }}</p>
+    <form method="post" action="/play/{{ phase.dir_name }}/{{ lesson.lesson_dir }}/answer">
+      {% for option in question.options %}
+        <label class="option {% if answered is not none %}{% if loop.index0 == question.correct %}correct{% elif loop.index0 == answered %}incorrect{% endif %}{% endif %}">
+          <input type="radio" name="selected" value="{{ loop.index0 }}" {% if answered is not none %}disabled{% endif %} {% if answered == loop.index0 %}checked{% endif %} required>
+          {{ option }}
+        </label>
+      {% endfor %}
+
+      {% if answered is not none %}
+        <div class="feedback {% if last_correct %}feedback-correct{% else %}feedback-incorrect{% endif %}">
+          {% if last_correct %}Correct!{% else %}Not quite.{% endif %}
+          {{ question.explanation }}
+        </div>
+        <input type="hidden" name="selected" value="{{ answered }}">
+        <button type="submit" class="btn-primary">
+          {% if question_number == total_questions %}See results{% else %}Next question{% endif %}
+        </button>
+      {% else %}
+        <button type="submit" class="btn-primary">Submit answer</button>
+      {% endif %}
+    </form>
+  </div>
+{% endblock %}

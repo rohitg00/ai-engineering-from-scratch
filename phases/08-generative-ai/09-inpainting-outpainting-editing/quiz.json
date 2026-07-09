@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Inpainting, Outpainting & Image Editing' belong to?",
+    "options": [
+      "Computer Vision",
+      "Generative Ai",
+      "Tools and Protocols",
+      "Ml Fundamentals"
+    ],
+    "correct": 1,
+    "explanation": "'Inpainting, Outpainting & Image Editing' is lesson 09 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Inpainting, Outpainting & Image Editing'?",
+    "options": [
+      "Learn \u2014 Rust",
+      "Learn \u2014 Julia",
+      "Build \u2014 Python",
+      "Learn \u2014 \u2014"
+    ],
+    "correct": 2,
+    "explanation": "'Inpainting, Outpainting & Image Editing' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after 'Inpainting, Outpainting & Image Editing'?",
+    "options": [
+      "GANs \u2014 Generator vs Discriminator",
+      "Video Generation",
+      "ControlNet, LoRA & Conditioning",
+      "Autoencoders & Variational Autoencoders (VAE)"
+    ],
+    "correct": 1,
+    "explanation": "'Video Generation' follows 'Inpainting, Outpainting & Image Editing' as lesson 10.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Inpainting, Outpainting & Image Editing'?",
+    "options": [
+      "information_theory.py",
+      "debug_tools.py",
+      "yaml_subset.py",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Inpainting, Outpainting & Image Editing'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Inpainting, Outpainting & Image Editing'?",
+    "options": [
+      "Text-to-image makes new things. Inpainting fixes old ones. In production, 70% of billable image work is editing \u2014 swap a background, remove a logo, extend the canvas, regenerate a hand. Inpainting is where diffusion earns its keep.",
+      "3D is the modality where 2D-to-3D leverage is strongest. The 2023 breakthrough was 3D Gaussian Splatting. The 2024-2026 generative push layers multi-view diffusion + 3D reconstruction on top to produce objects and scenes from a single prompt or photo.",
+      "Every image model, text model, video model, and 3D model fits in one of five buckets. Pick the wrong bucket and you will fight the math for weeks. Pick the right one and the field's last twelve years of progress stacks cleanly in your head.",
+      "Text alone is a clumsy control signal. ControlNet lets you clone a pretrained diffusion model and steer it with a depth map, pose skeleton, scribble, or edge image. LoRA lets you fine-tune a 2B-parameter model by training 10 million parameters. Together they turned Stable Diffusion from a toy into the 2026 image pipeline that ships at every agency."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Inpainting, Outpainting & Image Editing'.",
+    "stage": "pre"
+  }
+]

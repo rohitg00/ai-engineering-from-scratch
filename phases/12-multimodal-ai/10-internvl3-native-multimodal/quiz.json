@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'InternVL3: Native Multimodal Pretraining' belong to?",
+    "options": [
+      "Llm Engineering",
+      "Reinforcement Learning",
+      "Multimodal Ai",
+      "Ethics Safety Alignment"
+    ],
+    "correct": 2,
+    "explanation": "'InternVL3: Native Multimodal Pretraining' is lesson 10 in Phase 12 \u2014 Multimodal Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'InternVL3: Native Multimodal Pretraining'?",
+    "options": [
+      "Capstone \u2014 Julia",
+      "Capstone \u2014 Rust",
+      "Capstone \u2014 Python",
+      "Learn \u2014 Python (stdlib, training-corpus mixer)"
+    ],
+    "correct": 3,
+    "explanation": "'InternVL3: Native Multimodal Pretraining' is tagged as Learn in Python (stdlib, training-corpus mixer).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multimodal Ai, which lesson comes immediately after 'InternVL3: Native Multimodal Pretraining'?",
+    "options": [
+      "Chameleon and Early-Fusion Token-Only Multimodal Models",
+      "LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model",
+      "Emu3: Next-Token Prediction for Image and Video Generation",
+      "Omni Models: Qwen2.5-Omni and the Thinker-Talker Split"
+    ],
+    "correct": 0,
+    "explanation": "'Chameleon and Early-Fusion Token-Only Multimodal Models' follows 'InternVL3: Native Multimodal Pretraining' as lesson 11.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'InternVL3: Native Multimodal Pretraining'?",
+    "options": [
+      "env_setup.sh",
+      "main.py",
+      "svd.jl",
+      "ts"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'InternVL3: Native Multimodal Pretraining'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'InternVL3: Native Multimodal Pretraining'?",
+    "options": [
+      "OpenAI's CLIP (2021) proved a single idea big enough to power the next five years: align an image encoder and a text encoder in the same vector space using only noisy web image-caption pairs and a contrastive loss. Zero supervised labels. 400M pairs. The resulting embedding space does zero-shot classification, image-text retrieval, and plugs into every 2026 VLM as its vision tower. SigLIP 2 (2025) replaced softmax with sigmoid and scaled past CLIP at lower cost. This lesson walks the math from InfoNCE to sigmoid pairwise loss and builds the training step in stdlib Python.",
+      "Every open VLM before InternVL3 followed the same three-step recipe: take a text LLM trained on trillions of text tokens, bolt on a vision encoder, then fine-tune the seams. This works but has alignment debt \u2014 the text LLM has spent its full pretraining budget on pure text and does not natively understand visual tokens. When you add vision post-hoc, the LLM has to re-learn how to relate visual input to its text reasoning without forgetting the text. InternVL3 (Zhu et al., April 2025) rejects the post-hoc approach: one pretraining run, text and multimodal interleaved from step one. The result matches Gemini 2.5 Pro on MMMU-Pro at 78B params open. This lesson reads the case for native pretraining and what changes when you make it.",
+      "The 2026 frontier product is a multimodal agent that reads screenshots, clicks buttons, navigates web UIs, fills forms, and completes workflows end-to-end. SeeClick and CogAgent (2024) proved the GUI-grounding primitive. Ferret-UI added mobile. ChartAgent introduced visual tool-use for charts. VisualWebArena and AgentVista (2026) are the benchmarks the frontier chases \u2014 and even Gemini 3 Pro and Claude Opus 4.7 score ~30% on AgentVista's hard tasks. This capstone pulls together every thread of Phase 12: perception (high-res VLM), reasoning (LLM with tool use), grounding (coordinate output), long-horizon memory, and evaluation.",
+      "The Qwen-VL family \u2014 Qwen-VL (2023), Qwen2-VL (2024), Qwen2.5-VL (2025), Qwen3-VL (2025) \u2014 is the most influential open vision-language model lineage in 2026. Each generation made a single decisive architectural bet that the rest of the open ecosystem copied within twelve months: native dynamic resolution via M-RoPE, dynamic-FPS sampling with absolute time alignment, window attention in the ViT, and structured agent output formats. By Qwen3-VL, the recipe had stabilized: a 2D-RoPE-ViT encoder with native-aspect-ratio inputs, an MLP projector into a large Qwen3 language base, and training stages that emphasized OCR, grounding, and agent behavior as first-class targets. This lesson reads the family chronologically so you understand why every knob is where it is."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'InternVL3: Native Multimodal Pretraining'.",
+    "stage": "pre"
+  }
+]

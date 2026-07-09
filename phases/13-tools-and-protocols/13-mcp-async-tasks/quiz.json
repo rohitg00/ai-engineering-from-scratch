@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work' belong to?",
+    "options": [
+      "Tools and Protocols",
+      "Deep Learning Core",
+      "Reinforcement Learning",
+      "Multimodal Ai"
+    ],
+    "correct": 0,
+    "explanation": "'Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work' is lesson 13 in Phase 13 \u2014 Tools and Protocols.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work'?",
+    "options": [
+      "Capstone \u2014 Python",
+      "Learn \u2014 \u2014",
+      "Capstone \u2014 Rust",
+      "Build \u2014 Python (stdlib, async task state machine)"
+    ],
+    "correct": 3,
+    "explanation": "'Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work' is tagged as Build in Python (stdlib, async task state machine).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Tools and Protocols, which lesson comes immediately after 'Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work'?",
+    "options": [
+      "Capstone \u2014 Build a Complete Tool Ecosystem",
+      "MCP Security I \u2014 Tool Poisoning, Rug Pulls, Cross-Server Shadowing",
+      "MCP Apps \u2014 Interactive UI Resources via `ui://`",
+      "The Tool Interface \u2014 Why Agents Need Structured I/O"
+    ],
+    "correct": 2,
+    "explanation": "'MCP Apps \u2014 Interactive UI Resources via `ui://`' follows 'Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work' as lesson 14.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work'?",
+    "options": [
+      "tests",
+      "main.py",
+      "self_attention.py",
+      "main.ts"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work'?",
+    "options": [
+      "Real agent work takes minutes to hours: CI runs, deep-research synthesis, batch exports. Synchronous tool calls drop connections, time out, or block the UI. SEP-1686, merged in 2025-11-25, adds a Tasks primitive: any request can be augmented to become a task, and the result can be fetched later or streamed via state notifications. Drift-risk note: Tasks are experimental through H1 2026; SDK surface is still being designed around the spec.",
+      "Hard-coded paths break the moment a user opens a different project. Pre-filled tool arguments break when the user under-specifies. Roots scope the server to a user-controlled set of URIs; elicitation pauses mid-tool-call to ask the user for structured input via a form or URL. Two client primitives, two fixes for common MCP failure modes. SEP-1036 (URL-mode elicitation, 2025-11-25) is experimental through H1 2026 \u2014 check SDK versions before depending on it.",
+      "Enterprises cannot let every dev install random MCP servers. A gateway centralizes auth, RBAC, audit, rate limiting, caching, and tool-poisoning detection, then exposes the merged tool surface as a single MCP endpoint. The Official MCP Registry (Anthropic + GitHub + PulseMCP + Microsoft, namespace-verified) is the canonical upstream. This lesson names where a gateway fits, walks a minimal implementation, and surveys the 2026 vendor landscape.",
+      "MCP is agent-to-tool. A2A (Agent2Agent) is agent-to-agent \u2014 an open protocol for letting opaque agents built on different frameworks collaborate. Released by Google in April 2025, donated to the Linux Foundation in June 2025, reaching v1.0 in April 2026 with 150+ supporters including AWS, Cisco, Microsoft, Salesforce, SAP, and ServiceNow. It absorbed IBM's ACP and added the AP2 payments extension. This lesson walks the Agent Card, Task lifecycle, and the two transport bindings."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Async Tasks (SEP-1686) \u2014 Call-Now, Fetch-Later for Long-Running Work'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Native Sparse Attention (DeepSeek NSA)' belong to?",
+    "options": [
+      "Setup and Tooling",
+      "Tools and Protocols",
+      "Llms From Scratch",
+      "Infrastructure and Production"
+    ],
+    "correct": 2,
+    "explanation": "'Native Sparse Attention (DeepSeek NSA)' is lesson 17 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Native Sparse Attention (DeepSeek NSA)'?",
+    "options": [
+      "Learn \u2014 Python",
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 Python (stdlib)",
+      "Learn \u2014 \u2014"
+    ],
+    "correct": 2,
+    "explanation": "'Native Sparse Attention (DeepSeek NSA)' is tagged as Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Llms From Scratch, which lesson comes immediately after 'Native Sparse Attention (DeepSeek NSA)'?",
+    "options": [
+      "Constitutional AI and Self-Improvement",
+      "Multi-Token Prediction (MTP)",
+      "Differential Attention (V2)",
+      "DPO: Direct Preference Optimization"
+    ],
+    "correct": 1,
+    "explanation": "'Multi-Token Prediction (MTP)' follows 'Native Sparse Attention (DeepSeek NSA)' as lesson 18.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Native Sparse Attention (DeepSeek NSA)'?",
+    "options": [
+      "main.ts",
+      "production_app.py",
+      "main.ts",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'Native Sparse Attention (DeepSeek NSA)'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Native Sparse Attention (DeepSeek NSA)'?",
+    "options": [
+      "You built a GPT-2 Small from scratch in Lesson 04. Frontier open models in 2026 are the same family with five or six concrete changes. RMSNorm instead of LayerNorm. SwiGLU instead of GELU. RoPE instead of learned positions. GQA or MLA instead of full MHA. Mixture-of-Experts at scale. The math you already know covers 95% of them. This lesson reads Llama 3, DeepSeek-V3, Mixtral, Qwen, and Gemma side by side and names the exact line where each architecture diverges.",
+      "Softmax attention spreads a small amount of probability over every non-matching token. Over 100k tokens that noise adds up and drowns the signal. Differential Transformer (Ye et al., ICLR 2025) fixes it by computing attention as the difference of two softmaxes, subtracting the shared noise floor. DIFF V2 (Microsoft, January 2026) is the production-stack rewrite: matching decode latency to baseline Transformer, no custom kernels, FlashAttention-compatible. This lesson is V1 to V2 end-to-end, with a working toy implementation of the difference operation you can run in stdlib Python.",
+      "At 64k tokens, attention eats 70-80% of decode latency. Every open-model lab has a plan to fix it. DeepSeek's NSA (ACL 2025 best paper) is the one that stuck: three parallel attention branches \u2014 compressed coarse-grained tokens, selectively retained fine-grained tokens, and sliding windows for local context \u2014 combined through a learned gate. It is hardware-aligned (kernel-friendly), natively trainable (works in pre-training, not bolted on at inference), and on 64k decodes it runs faster than FlashAttention while matching or beating full attention quality. This lesson builds the three branches end-to-end and shows why the sparsity is end-to-end differentiable.",
+      "Phase 7 \u00b7 Lesson 16 proved the math: the Leviathan rejection rule preserves the verifier's distribution exactly. This lesson is the training-stack view of 2026 production speculative decoding. EAGLE-3 turned the draft model from a cheap approximation into a purpose-built tiny network trained on the verifier's own hidden states, then added a training-time test loop that aligns its train and inference distributions. Result: 3\u00d7 to 6.5\u00d7 end-to-end speedup, accepted per-token rates above 0.9 on chat, no distributional tradeoff. Every production inference stack in 2026 ships it by default."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Native Sparse Attention (DeepSeek NSA)'.",
+    "stage": "pre"
+  }
+]

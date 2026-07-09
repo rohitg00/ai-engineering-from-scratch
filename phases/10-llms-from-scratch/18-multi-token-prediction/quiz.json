@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Multi-Token Prediction (MTP)' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Multi Agent and Swarms",
+      "Math Foundations",
+      "Capstone Projects"
+    ],
+    "correct": 0,
+    "explanation": "'Multi-Token Prediction (MTP)' is lesson 18 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Multi-Token Prediction (MTP)'?",
+    "options": [
+      "Build \u2014 Python (stdlib)",
+      "Capstone \u2014 \u2014",
+      "Learn \u2014 TypeScript",
+      "Capstone \u2014 Julia"
+    ],
+    "correct": 0,
+    "explanation": "'Multi-Token Prediction (MTP)' is tagged as Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Llms From Scratch, which lesson comes immediately after 'Multi-Token Prediction (MTP)'?",
+    "options": [
+      "Differential Attention (V2)",
+      "Open Models: Architecture Walkthroughs",
+      "RLHF: Reward Model + PPO",
+      "DualPipe Parallelism"
+    ],
+    "correct": 3,
+    "explanation": "'DualPipe Parallelism' follows 'Multi-Token Prediction (MTP)' as lesson 19.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Multi-Token Prediction (MTP)'?",
+    "options": [
+      "bayes.py",
+      "fourier.py",
+      "main.py",
+      "tests"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Multi-Token Prediction (MTP)'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Multi-Token Prediction (MTP)'?",
+    "options": [
+      "Phase 7 \u00b7 Lesson 16 proved the math: the Leviathan rejection rule preserves the verifier's distribution exactly. This lesson is the training-stack view of 2026 production speculative decoding. EAGLE-3 turned the draft model from a cheap approximation into a purpose-built tiny network trained on the verifier's own hidden states, then added a training-time test loop that aligns its train and inference distributions. Result: 3\u00d7 to 6.5\u00d7 end-to-end speedup, accepted per-token rates above 0.9 on chat, no distributional tradeoff. Every production inference stack in 2026 ships it by default.",
+      "A frontier LLM generating one token requires a full forward pass over billions of parameters. That forward pass is massively over-provisioned: most of the time a much smaller model can guess the next 3-5 tokens correctly, and the big model only needs to *verify* the guess. When the guess is right you got 5 tokens for the price of one. Speculative decoding (Leviathan et al. 2023) made this exact, and EAGLE-3 (2025) pushed acceptance rates to ~4.5 tokens per verify \u2014 a 4-5x speedup at matched output distribution.",
+      "Every autoregressive LLM from GPT-2 to Llama 3 trains on one loss per position: predict the next token. DeepSeek-V3 added a second loss per position: predict the token after that. The extra 14B of parameters (on a 671B model) got distilled back into the main model through gradient flow, and the trained MTP heads were repurposed at inference as speculative-decoding drafters with 80%+ acceptance. 1.8\u00d7 generation throughput came for free. This lesson builds the sequential MTP module from the DeepSeek technical report, computes the loss and the shared-head parameter layout, and explains why MTP keeps the causal chain while Gloeckle et al.'s original parallel MTP broke it.",
+      "At 64k tokens, attention eats 70-80% of decode latency. Every open-model lab has a plan to fix it. DeepSeek's NSA (ACL 2025 best paper) is the one that stuck: three parallel attention branches \u2014 compressed coarse-grained tokens, selectively retained fine-grained tokens, and sliding windows for local context \u2014 combined through a learned gate. It is hardware-aligned (kernel-friendly), natively trainable (works in pre-training, not bolted on at inference), and on 64k decodes it runs faster than FlashAttention while matching or beating full attention quality. This lesson builds the three branches end-to-end and shows why the sparsity is end-to-end differentiable."
+    ],
+    "correct": 2,
+    "explanation": "That line is the opening motto of 'Multi-Token Prediction (MTP)'.",
+    "stage": "pre"
+  }
+]

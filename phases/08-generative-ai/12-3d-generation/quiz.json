@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson '3D Generation' belong to?",
+    "options": [
+      "Llm Engineering",
+      "Computer Vision",
+      "Deep Learning Core",
+      "Generative Ai"
+    ],
+    "correct": 3,
+    "explanation": "'3D Generation' is lesson 12 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is '3D Generation'?",
+    "options": [
+      "Build \u2014 Julia",
+      "Learn \u2014 Python",
+      "Capstone \u2014 \u2014",
+      "Build \u2014 TypeScript"
+    ],
+    "correct": 1,
+    "explanation": "'3D Generation' is tagged as Learn in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after '3D Generation'?",
+    "options": [
+      "Diffusion Models \u2014 DDPM from Scratch",
+      "Flow Matching & Rectified Flows",
+      "Inpainting, Outpainting & Image Editing",
+      "Audio Generation"
+    ],
+    "correct": 1,
+    "explanation": "'Flow Matching & Rectified Flows' follows '3D Generation' as lesson 13.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson '3D Generation'?",
+    "options": [
+      "svd.jl",
+      "tests",
+      "main.rs",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with '3D Generation'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson '3D Generation'?",
+    "options": [
+      "Audio is a 1-D signal at 16-48 kHz. A five-second clip is 80-240k samples. No transformer attends to that sequence directly. The solution for every production audio model in 2026 is the same: a neural codec (Encodec, SoundStream, DAC) compresses audio to discrete tokens at 50-75 Hz, and a transformer or diffusion model generates tokens.",
+      "3D is the modality where 2D-to-3D leverage is strongest. The 2023 breakthrough was 3D Gaussian Splatting. The 2024-2026 generative push layers multi-view diffusion + 3D reconstruction on top to produce objects and scenes from a single prompt or photo.",
+      "Every image model, text model, video model, and 3D model fits in one of five buckets. Pick the wrong bucket and you will fight the math for weeks. Pick the right one and the field's last twelve years of progress stacks cleanly in your head.",
+      "The first big unlock of 2014-2017 was controlling what a GAN makes. Attach a label, or an image, or a sentence. Pix2Pix did the image version and it still beats every generic text-to-image model on narrow image-to-image tasks."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of '3D Generation'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Shared Memory and Blackboard Patterns' belong to?",
+    "options": [
+      "Multi Agent and Swarms",
+      "Llm Engineering",
+      "Ml Fundamentals",
+      "Math Foundations"
+    ],
+    "correct": 0,
+    "explanation": "'Shared Memory and Blackboard Patterns' is lesson 13 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Shared Memory and Blackboard Patterns'?",
+    "options": [
+      "Learn \u2014 Julia",
+      "Capstone \u2014 Julia",
+      "Build \u2014 Python",
+      "Learn + Build \u2014 Python (stdlib, `threading`)"
+    ],
+    "correct": 3,
+    "explanation": "'Shared Memory and Blackboard Patterns' is tagged as Learn + Build in Python (stdlib, `threading`).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Shared Memory and Blackboard Patterns'?",
+    "options": [
+      "Negotiation and Bargaining",
+      "Consensus and Byzantine Fault Tolerance for Agents",
+      "The Multi-Agent Primitive Model",
+      "Agent Economies, Token Incentives, Reputation"
+    ],
+    "correct": 1,
+    "explanation": "'Consensus and Byzantine Fault Tolerance for Agents' follows 'Shared Memory and Blackboard Patterns' as lesson 14.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Shared Memory and Blackboard Patterns'?",
+    "options": [
+      "clustering.py",
+      "stochastic.py",
+      "main.py",
+      "feature_selection.py"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Shared Memory and Blackboard Patterns'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Shared Memory and Blackboard Patterns'?",
+    "options": [
+      "Bio-inspired optimization is making an LLM comeback. **LMPSO** (arXiv:2504.09247) uses PSO where each particle's velocity is a prompt and the LLM generates the next candidate; works well on structured-sequence outputs (math expressions, programs). **Model Swarms** (arXiv:2410.11163) treats each LLM expert as a PSO particle on a model-weight manifold and reports **13.3% average gain** over 12 baselines on 9 datasets with just 200 instances. **SwarmPrompt** (ICAART 2025) hybridizes PSO + Grey Wolf for prompt optimization. **AMRO-S** (arXiv:2603.12933) is ACO-inspired pheromone specialists for multi-agent LLM routing \u2014 **4.7x speedup**, interpretable routing evidence, quality-gated asynchronous update that decouples inference from learning. This lesson implements PSO on prompt parameter space and ACO on agent routing, measures why these classical algorithms fit the LLM era, and when they do not.",
+      "Classical distributed-systems BFT meets stochastic LLMs. In 2025-2026 three research directions emerged: **CP-WBFT** (arXiv:2511.10400) weighs each vote by a confidence probe; **DecentLLMs** (arXiv:2507.14928) goes leaderless with parallel worker proposals and geometric-median aggregation; **WBFT** (arXiv:2505.05103) combines weighted voting with Hierarchical Structure Clustering to split Core and Edge nodes. The honest empirical result from \"Can AI Agents Agree?\" (arXiv:2603.01213) is that even scalar agreement is fragile today \u2014 a single deceptive agent can compromise a Mixture-of-Agents. BFT is necessary but not sufficient. This lesson builds a minimal BFT protocol, injects three agent-specific attacks (byzantine lie, sycophantic conformity, correlated-error monoculture), and measures how each consensus variant copes.",
+      "The reinforcement-learning heritage of multi-agent coordination, which still informs LLM-agent systems in 2026. **MADDPG** (Lowe et al., NeurIPS 2017, arXiv:1706.02275) introduced Centralized Training, Decentralized Execution (CTDE): each critic sees all agents' states and actions during training; at test time only local actors run. Works for cooperative, competitive, and mixed settings. **QMIX** (Rashid et al., ICML 2018, arXiv:1803.11485) is value-decomposition with a monotonic mixing network; per-agent Qs combine into joint Q so `argmax` distributes cleanly \u2014 dominant on StarCraft Multi-Agent Challenge (SMAC). **MAPPO** (Yu et al., NeurIPS 2022, arXiv:2103.01955) is PPO with a centralized value function; \"surprisingly effective\" on particle-world, SMAC, Google Research Football, Hanabi with minimal tuning. These underpin training policies for agent teams that must act decentrally. MAPPO is the **default 2026 cooperative-MARL baseline**. This lesson builds each from a small grid-world toy and lands the three ideas in muscle memory before touching LLM-agent training.",
+      "Two approaches coexist in 2026 multi-agent systems: the **message pool** (everyone sees everyone's messages, as in AutoGen GroupChat or MetaGPT) and the **blackboard with subscription** (agents subscribe to relevant events, as in Context-Aware MCP or the Matrix framework). Both are the only stateful part of a multi-agent system \u2014 which means both are where the interesting bugs live. The reference failure mode is **memory poisoning**: one agent hallucinates a \"fact,\" other agents treat it as verified, and accuracy decays gradually in a way that is much harder to debug than an immediate crash. This lesson builds both structures from stdlib, injects a poisoning attack, and shows the three mitigations that actually work in production."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Shared Memory and Blackboard Patterns'.",
+    "stage": "pre"
+  }
+]

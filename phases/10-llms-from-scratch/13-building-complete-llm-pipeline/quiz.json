@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Building a Complete LLM Pipeline' belong to?",
+    "options": [
+      "Llms From Scratch",
+      "Deep Learning Core",
+      "Llm Engineering",
+      "Computer Vision"
+    ],
+    "correct": 0,
+    "explanation": "'Building a Complete LLM Pipeline' is lesson 13 in Phase 10 \u2014 Llms From Scratch.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Building a Complete LLM Pipeline'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Capstone \u2014 Rust",
+      "Build \u2014 Python (stdlib)",
+      "Capstone \u2014 Julia"
+    ],
+    "correct": 2,
+    "explanation": "'Building a Complete LLM Pipeline' is tagged as Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Llms From Scratch, which lesson comes immediately after 'Building a Complete LLM Pipeline'?",
+    "options": [
+      "Open Models: Architecture Walkthroughs",
+      "Async and Hogwild! Inference",
+      "Speculative Decoding and EAGLE",
+      "Native Sparse Attention (DeepSeek NSA)"
+    ],
+    "correct": 0,
+    "explanation": "'Open Models: Architecture Walkthroughs' follows 'Building a Complete LLM Pipeline' as lesson 14.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Building a Complete LLM Pipeline'?",
+    "options": [
+      "tests",
+      "main.py",
+      "test_main.py",
+      "env_setup.sh"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Building a Complete LLM Pipeline'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Building a Complete LLM Pipeline'?",
+    "options": [
+      "Everything from Lessons 01 to 12 is one stage of one pipeline. This lesson is the scaffold that turns those stages into a single end-to-end run: tokenize, pre-train, scale, SFT, align, evaluate, quantize, serve. You will not train a 70B model on a laptop. You will produce the orchestration layer, the manifest, the eval gate, and the rollback plan that a 2026 frontier team uses to decide what gets shipped. This is the capstone.",
+      "GPT-2 Small has 124 million parameters. That's 12 transformer layers, 12 attention heads, and 768-dimensional embeddings. You can train it from scratch on a single GPU in a few hours. Most people never do this. They use pre-trained checkpoints. But if you don't train one yourself, you don't actually understand what's happening inside the model you're building products on.",
+      "A frontier LLM generating one token requires a full forward pass over billions of parameters. That forward pass is massively over-provisioned: most of the time a much smaller model can guess the next 3-5 tokens correctly, and the big model only needs to *verify* the guess. When the guess is right you got 5 tokens for the price of one. Speculative decoding (Leviathan et al. 2023) made this exact, and EAGLE-3 (2025) pushed acceptance rates to ~4.5 tokens per verify \u2014 a 4-5x speedup at matched output distribution.",
+      "Phase 10 \u00b7 Lesson 14 named the six architectural knobs every open model turns. DeepSeek-V3 (December 2024, 671B parameters total, 37B active) turns all six and adds four more: Multi-Head Latent Attention, auxiliary-loss-free load balancing, Multi-Token Prediction, and DualPipe training. This lesson reads DeepSeek-V3's architecture top to bottom and derives every parameter count from the published config. By the end you can explain why the 671B/37B ratio is the right bet and why MLA + MoE together beat either alone at the frontier."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Building a Complete LLM Pipeline'.",
+    "stage": "pre"
+  }
+]

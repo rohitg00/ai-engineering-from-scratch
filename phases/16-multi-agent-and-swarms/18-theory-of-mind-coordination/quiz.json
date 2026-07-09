@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Theory of Mind and Emergent Coordination' belong to?",
+    "options": [
+      "Llm Engineering",
+      "Math Foundations",
+      "Generative Ai",
+      "Multi Agent and Swarms"
+    ],
+    "correct": 3,
+    "explanation": "'Theory of Mind and Emergent Coordination' is lesson 18 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Theory of Mind and Emergent Coordination'?",
+    "options": [
+      "Capstone \u2014 Python",
+      "Learn + Build \u2014 Python (stdlib)",
+      "Build \u2014 Julia",
+      "Build \u2014 Rust"
+    ],
+    "correct": 1,
+    "explanation": "'Theory of Mind and Emergent Coordination' is tagged as Learn + Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Theory of Mind and Emergent Coordination'?",
+    "options": [
+      "Hierarchical Architecture and Its Failure Mode",
+      "Society of Mind and Multi-Agent Debate",
+      "The Multi-Agent Primitive Model",
+      "Swarm Optimization for LLMs (PSO, ACO)"
+    ],
+    "correct": 3,
+    "explanation": "'Swarm Optimization for LLMs (PSO, ACO)' follows 'Theory of Mind and Emergent Coordination' as lesson 19.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Theory of Mind and Emergent Coordination'?",
+    "options": [
+      "tensors.py",
+      "main.ts",
+      "main.py",
+      "main.ts"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Theory of Mind and Emergent Coordination'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Theory of Mind and Emergent Coordination'?",
+    "options": [
+      "Li et al. (arXiv:2310.10701) showed that LLM agents in a cooperative text game exhibit **emergent high-order Theory of Mind** (ToM) \u2014 reasoning about what another agent believes about a third agent's beliefs \u2014 but fail on long-horizon planning due to context management and hallucination. Riedl (arXiv:2510.05174) measured higher-order synergy across a population and found that **only** the ToM-prompt condition produces identity-linked differentiation and goal-directed complementarity; lower-capacity LLMs show only spurious emergence. That is, coordination emergence is prompt-conditional and model-dependent, not free. This lesson implements a minimal ToM-aware agent, runs a cooperative task with and without ToM prompting, and measures the coordination delta against the Riedl 2025 protocol.",
+      "Contrast with supervisor: no central decider. Agents read a shared event bus, pick up work asynchronously, write results back. LangGraph explicitly supports \"Swarm Architecture\" for decentralized, dynamic environments. Matrix (arXiv:2511.21686) represents both control and data flow as serialized messages passed through distributed queues to eliminate the orchestrator bottleneck. The tradeoff is explicit: determinism and traceability for scalability. Swarm fits tasks with many independent sub-problems; it does not fit tasks that need a single coherent plan.",
+      "Two approaches coexist in 2026 multi-agent systems: the **message pool** (everyone sees everyone's messages, as in AutoGen GroupChat or MetaGPT) and the **blackboard with subscription** (agents subscribe to relevant events, as in Context-Aware MCP or the Matrix framework). Both are the only stateful part of a multi-agent system \u2014 which means both are where the interesting bugs live. The reference failure mode is **memory poisoning**: one agent hallucinates a \"fact,\" other agents treat it as verified, and accuracy decays gradually in a way that is much harder to debug than an immediate crash. This lesson builds both structures from stdlib, injects a poisoning attack, and shows the three mitigations that actually work in production.",
+      "AutoGen GroupChat and AG2 GroupChat share one conversation across N agents; a selector function (LLM, round-robin, or custom) picks who speaks next. This is the archetype of emergent multi-agent conversation \u2014 agents do not know their role in a static graph, they just react to the shared pool. AutoGen v0.2's GroupChat semantics were preserved in the AG2 fork; AutoGen v0.4 rewrote it as an event-driven actor model. Microsoft put AutoGen into maintenance mode in February 2026 and merged it with Semantic Kernel into Microsoft Agent Framework (RC February 2026). The GroupChat primitive survives in both AG2 and Microsoft Agent Framework \u2014 learn it once, use it everywhere."
+    ],
+    "correct": 0,
+    "explanation": "That line is the opening motto of 'Theory of Mind and Emergent Coordination'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Group Chat and Speaker Selection' belong to?",
+    "options": [
+      "Agent Engineering",
+      "Llm Engineering",
+      "Capstone Projects",
+      "Multi Agent and Swarms"
+    ],
+    "correct": 3,
+    "explanation": "'Group Chat and Speaker Selection' is lesson 10 in Phase 16 \u2014 Multi Agent and Swarms.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Group Chat and Speaker Selection'?",
+    "options": [
+      "Capstone \u2014 \u2014",
+      "Build \u2014 Python",
+      "Learn + Build \u2014 Python (stdlib)",
+      "Capstone \u2014 Python"
+    ],
+    "correct": 2,
+    "explanation": "'Group Chat and Speaker Selection' is tagged as Learn + Build in Python (stdlib).",
+    "stage": "pre"
+  },
+  {
+    "question": "In Multi Agent and Swarms, which lesson comes immediately after 'Group Chat and Speaker Selection'?",
+    "options": [
+      "Evaluation and Coordination Benchmarks",
+      "Supervisor / Orchestrator-Worker Pattern",
+      "Handoffs and Routines \u2014 Stateless Orchestration",
+      "Generative Agents and Emergent Simulation"
+    ],
+    "correct": 2,
+    "explanation": "'Handoffs and Routines \u2014 Stateless Orchestration' follows 'Group Chat and Speaker Selection' as lesson 11.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Group Chat and Speaker Selection'?",
+    "options": [
+      "tests",
+      "main.py",
+      "notebook_tips.py",
+      "autodiff.py"
+    ],
+    "correct": 1,
+    "explanation": "'main.py' is the implementation shipped with 'Group Chat and Speaker Selection'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Group Chat and Speaker Selection'?",
+    "options": [
+      "Three production-grade references to study end-to-end, each illustrating a different slice of multi-agent engineering. **Anthropic's Research system** (orchestrator-worker, 15x tokens, +90.2% over single-agent Opus 4, rainbow deployments) is the canonical supervisor case. **MetaGPT / ChatDev** (SOP-encoded role specialization for software engineering; ChatDev's \"communicative dehallucination\"; MacNet extension to >1000 agents via DAGs, arXiv:2406.07155) is the canonical role-decomposition case. **OpenClaw / Moltbook** (originally Clawdbot by Peter Steinberger, November 2025; renamed twice; 247k GitHub stars by March 2026; local ReAct-loop agents; Moltbook as an agent-only social network with ~2.3M agent accounts within days of launch, acquired by Meta 2026-03-10) illustrates what happens at population scale: emergent economic activity, prompt-injection risks, state-level regulation (China restricted OpenClaw on government computers, March 2026). **Framework landscape April 2026:** LangGraph and CrewAI lead production; AG2 is the community AutoGen continuation; Microsoft AutoGen is in maintenance mode (merged into Microsoft Agent Framework, RC Feb 2026); OpenAI Agents SDK is the production Swarm successor; Google ADK (April 2025) is the A2A-native entrant. Every major framework now ships MCP support; most ship A2A. This lesson reads each case end-to-end and distills the common patterns so you can pick the right reference for your next production system.",
+      "AutoGen GroupChat and AG2 GroupChat share one conversation across N agents; a selector function (LLM, round-robin, or custom) picks who speaks next. This is the archetype of emergent multi-agent conversation \u2014 agents do not know their role in a static graph, they just react to the shared pool. AutoGen v0.2's GroupChat semantics were preserved in the AG2 fork; AutoGen v0.4 rewrote it as an event-driven actor model. Microsoft put AutoGen into maintenance mode in February 2026 and merged it with Semantic Kernel into Microsoft Agent Framework (RC February 2026). The GroupChat primitive survives in both AG2 and Microsoft Agent Framework \u2014 learn it once, use it everywhere.",
+      "Contrast with supervisor: no central decider. Agents read a shared event bus, pick up work asynchronously, write results back. LangGraph explicitly supports \"Swarm Architecture\" for decentralized, dynamic environments. Matrix (arXiv:2511.21686) represents both control and data flow as serialized messages passed through distributed queues to eliminate the orchestrator bottleneck. The tradeoff is explicit: determinism and traceability for scalability. Swarm fits tasks with many independent sub-problems; it does not fit tasks that need a single coherent plan.",
+      "The most common multi-agent decomposition in 2026: one agent plans, one executes, one critiques or verifies. MetaGPT (arXiv:2308.00352) formalizes this as SOPs encoded into role prompts \u2014 Product Manager, Architect, Project Manager, Engineer, QA Engineer \u2014 following `Code = SOP(Team)`. ChatDev (arXiv:2307.07924) chains designer, programmer, reviewer, tester through a \"chat chain\" with \"communicative dehallucination\" (agents explicitly request missing details). The verifier is load-bearing: Cemri et al. (MAST, arXiv:2503.13657) show every multi-agent failure can be traced to missing or broken verification. PwC reported 7\u00d7 accuracy gain (10% \u2192 70%) from structured validation loops in CrewAI."
+    ],
+    "correct": 1,
+    "explanation": "That line is the opening motto of 'Group Chat and Speaker Selection'.",
+    "stage": "pre"
+  }
+]

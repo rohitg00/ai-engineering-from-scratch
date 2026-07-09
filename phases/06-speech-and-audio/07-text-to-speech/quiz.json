@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro' belong to?",
+    "options": [
+      "Speech and Audio",
+      "Generative Ai",
+      "Llm Engineering",
+      "Multi Agent and Swarms"
+    ],
+    "correct": 0,
+    "explanation": "'Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro' is lesson 07 in Phase 6 \u2014 Speech and Audio.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro'?",
+    "options": [
+      "Learn \u2014 \u2014",
+      "Learn \u2014 Rust",
+      "Build \u2014 Python",
+      "Capstone \u2014 \u2014"
+    ],
+    "correct": 2,
+    "explanation": "'Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Speech and Audio, which lesson comes immediately after 'Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro'?",
+    "options": [
+      "Voice Cloning & Voice Conversion",
+      "Audio-Language Models \u2014 Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio",
+      "Music Generation \u2014 MusicGen, Stable Audio, Suno, and the Licensing Earthquake",
+      "Whisper \u2014 Architecture & Fine-Tuning"
+    ],
+    "correct": 0,
+    "explanation": "'Voice Cloning & Voice Conversion' follows 'Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro' as lesson 08.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro'?",
+    "options": [
+      "complex_numbers.py",
+      "tests",
+      "main.py",
+      "transformations.jl"
+    ],
+    "correct": 2,
+    "explanation": "'main.py' is the implementation shipped with 'Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro'?",
+    "options": [
+      "Every voice agent lives or dies on two decisions: is the user speaking now, and are they done? VAD answers the first. Turn-detection (VAD + silence-hangover + semantic endpoint model) answers the second. Get either wrong and your assistant either cuts users off or never shuts up.",
+      "2026 audio-language models reason over speech + environmental sound + music. Qwen2.5-Omni-7B matches GPT-4o Audio on MMAU-Pro. Audio Flamingo Next beats Gemini 2.5 Pro on LongAudioBench. The gap between open and closed is essentially closed \u2014 except on multi-audio tasks, where everyone is near random.",
+      "Waveforms are the raw signal. Spectrograms are the representation. Mel features are the ML-friendly form. Every modern ASR and TTS pipeline walks this ladder, and the first rung is understanding sampling and Fourier.",
+      "ASR inverts speech to text; TTS inverts text to speech. The 2026 stack is three parts: text \u2192 tokens, tokens \u2192 mel, mel \u2192 waveform. Each part has a default model that fits in a laptop."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'Text-to-Speech (TTS) \u2014 From Tacotron to F5 and Kokoro'.",
+    "stage": "pre"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Which phase does the lesson 'GANs \u2014 Generator vs Discriminator' belong to?",
+    "options": [
+      "Capstone Projects",
+      "Generative Ai",
+      "Llms From Scratch",
+      "Llm Engineering"
+    ],
+    "correct": 1,
+    "explanation": "'GANs \u2014 Generator vs Discriminator' is lesson 03 in Phase 8 \u2014 Generative Ai.",
+    "stage": "pre"
+  },
+  {
+    "question": "What lesson type and language(s) is 'GANs \u2014 Generator vs Discriminator'?",
+    "options": [
+      "Capstone \u2014 TypeScript",
+      "Build \u2014 Python",
+      "Capstone \u2014 \u2014",
+      "Learn \u2014 Julia"
+    ],
+    "correct": 1,
+    "explanation": "'GANs \u2014 Generator vs Discriminator' is tagged as Build in Python.",
+    "stage": "pre"
+  },
+  {
+    "question": "In Generative Ai, which lesson comes immediately after 'GANs \u2014 Generator vs Discriminator'?",
+    "options": [
+      "StyleGAN",
+      "Conditional GANs & Pix2Pix",
+      "3D Generation",
+      "Audio Generation"
+    ],
+    "correct": 1,
+    "explanation": "'Conditional GANs & Pix2Pix' follows 'GANs \u2014 Generator vs Discriminator' as lesson 04.",
+    "stage": "post"
+  },
+  {
+    "question": "Which file under code/ implements the lesson 'GANs \u2014 Generator vs Discriminator'?",
+    "options": [
+      "time_series.py",
+      "stochastic.py",
+      "tests",
+      "main.py"
+    ],
+    "correct": 3,
+    "explanation": "'main.py' is the implementation shipped with 'GANs \u2014 Generator vs Discriminator'.",
+    "stage": "post"
+  },
+  {
+    "question": "Which one-line summary matches the lesson 'GANs \u2014 Generator vs Discriminator'?",
+    "options": [
+      "Diffusion models take 20-50 sampling steps because they walk a curved path from noise to data. Flow matching (Lipman et al., 2023) and rectified flow (Liu et al., 2022) trained straight paths. Straighter paths mean fewer steps mean faster inference. Stable Diffusion 3, Flux.1, and AudioCraft 2 all switched to flow matching in 2024.",
+      "The first big unlock of 2014-2017 was controlling what a GAN makes. Attach a label, or an image, or a sentence. Pix2Pix did the image version and it still beats every generic text-to-image model on narrow image-to-image tasks.",
+      "3D is the modality where 2D-to-3D leverage is strongest. The 2023 breakthrough was 3D Gaussian Splatting. The 2024-2026 generative push layers multi-view diffusion + 3D reconstruction on top to produce objects and scenes from a single prompt or photo.",
+      "Goodfellow's trick in 2014 was to skip density entirely. Two networks. One makes fakes. One catches them. They fight until the fakes are indistinguishable from real. It shouldn't work. It often doesn't. When it does, the samples are still the sharpest in the literature for narrow domains."
+    ],
+    "correct": 3,
+    "explanation": "That line is the opening motto of 'GANs \u2014 Generator vs Discriminator'.",
+    "stage": "pre"
+  }
+]
