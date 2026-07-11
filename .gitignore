@@ -18,6 +18,7 @@ node_modules/
 .next/
 out/
 .vercel
+site/book/
 
 target/
 Cargo.lock
