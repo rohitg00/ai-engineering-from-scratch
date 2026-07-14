@@ -145,24 +145,72 @@ PROMPT_PATTERNS = {
 }
 
 
+PROVIDER_CONFIGS = {
+    "minimax": {
+        "display_name": "MiniMax",
+        "regions": {
+            "global_en": {
+                "docs_root": "https://platform.minimax.io/docs",
+                "base_urls": {
+                    "openai": "https://api.minimax.io/v1",
+                    "anthropic": "https://api.minimax.io/anthropic",
+                },
+            },
+            "cn_zh": {
+                "docs_root": "https://platform.minimaxi.com/docs",
+                "base_urls": {
+                    "openai": "https://api.minimaxi.com/v1",
+                    "anthropic": "https://api.minimaxi.com/anthropic",
+                },
+            },
+        },
+    },
+}
+
+
+API_PATHS = {
+    "openai": "/chat/completions",
+    "anthropic": "/v1/messages",
+}
+
+
 MODEL_CONFIGS = {
     "gpt-4o": {
         "provider": "openai",
+        "protocols": ("openai",),
         "model": "gpt-4o",
         "max_tokens": 2048,
         "context_window": 128_000,
     },
     "claude-3.5-sonnet": {
         "provider": "anthropic",
+        "protocols": ("anthropic",),
         "model": "claude-3-5-sonnet-20241022",
         "max_tokens": 2048,
         "context_window": 200_000,
     },
     "gemini-1.5-pro": {
         "provider": "google",
+        "protocols": ("google",),
         "model": "gemini-1.5-pro",
         "max_tokens": 2048,
         "context_window": 2_000_000,
+    },
+    "MiniMax-M3": {
+        "provider": "minimax",
+        "protocols": ("openai", "anthropic"),
+        "model": "MiniMax-M3",
+        "max_tokens": 2048,
+        "context_window": 1_000_000,
+        "thinking": ("adaptive", "disabled"),
+    },
+    "MiniMax-M2.7": {
+        "provider": "minimax",
+        "protocols": ("openai", "anthropic"),
+        "model": "MiniMax-M2.7",
+        "max_tokens": 2048,
+        "context_window": 204_800,
+        "thinking": ("always_on",),
     },
 }
 
@@ -208,39 +256,39 @@ def build_multi_turn(pattern_name, turns, system_override=None):
     }
 
 
-def format_openai_request(prompt):
+def format_openai_request(prompt, config):
     return {
-        "model": MODEL_CONFIGS["gpt-4o"]["model"],
+        "model": config["model"],
         "messages": [
             {"role": "system", "content": prompt["system"]},
             {"role": "user", "content": prompt["user"]},
         ],
         "temperature": prompt["temperature"],
-        "max_tokens": MODEL_CONFIGS["gpt-4o"]["max_tokens"],
+        "max_tokens": config["max_tokens"],
     }
 
 
-def format_anthropic_request(prompt):
+def format_anthropic_request(prompt, config):
     return {
-        "model": MODEL_CONFIGS["claude-3.5-sonnet"]["model"],
+        "model": config["model"],
         "system": prompt["system"],
         "messages": [
             {"role": "user", "content": prompt["user"]},
         ],
         "temperature": prompt["temperature"],
-        "max_tokens": MODEL_CONFIGS["claude-3.5-sonnet"]["max_tokens"],
+        "max_tokens": config["max_tokens"],
     }
 
 
-def format_google_request(prompt):
+def format_google_request(prompt, config):
     return {
-        "model": MODEL_CONFIGS["gemini-1.5-pro"]["model"],
+        "model": config["model"],
         "contents": [
             {"role": "user", "parts": [{"text": f"{prompt['system']}\n\n{prompt['user']}"}]},
         ],
         "generationConfig": {
             "temperature": prompt["temperature"],
-            "maxOutputTokens": MODEL_CONFIGS["gemini-1.5-pro"]["max_tokens"],
+            "maxOutputTokens": config["max_tokens"],
         },
     }
 
@@ -250,6 +298,43 @@ FORMATTERS = {
     "anthropic": format_anthropic_request,
     "google": format_google_request,
 }
+
+
+def format_model_request(prompt, model_name, protocol=None, region="global_en"):
+    config = MODEL_CONFIGS.get(model_name)
+    if not config:
+        raise ValueError(f"Unknown model: {model_name}. Available: {list(MODEL_CONFIGS.keys())}")
+
+    protocols = config["protocols"]
+    selected_protocol = protocol or protocols[0]
+    if selected_protocol not in protocols:
+        raise ValueError(f"{model_name} does not support the {selected_protocol} protocol")
+
+    provider_config = PROVIDER_CONFIGS.get(config["provider"])
+    base_url = None
+    request_url = None
+    docs_root = None
+    selected_region = None
+    if provider_config:
+        region_config = provider_config["regions"].get(region)
+        if not region_config:
+            raise ValueError(f"Unknown region: {region}")
+        base_url = region_config["base_urls"].get(selected_protocol)
+        if not base_url:
+            raise ValueError(f"{model_name} has no {selected_protocol} endpoint in {region}")
+        request_url = f"{base_url.rstrip('/')}{API_PATHS[selected_protocol]}"
+        docs_root = region_config["docs_root"]
+        selected_region = region
+
+    return {
+        "provider": config["provider"],
+        "protocol": selected_protocol,
+        "region": selected_region,
+        "base_url": base_url,
+        "request_url": request_url,
+        "docs_root": docs_root,
+        "body": FORMATTERS[selected_protocol](prompt, config),
+    }
 
 
 def simulate_llm_call(model_name, request):
@@ -288,19 +373,29 @@ def simulate_llm_call(model_name, request):
 
     return simulated_responses.get(
         model_name,
-        {"response": "Unknown model", "tokens_used": {}, "latency_ms": 0},
+        {
+            "response": f"[{model_name} response {prompt_hash}] This is a simulated response.",
+            "tokens_used": {"prompt": 150, "completion": 45, "total": 195},
+            "latency_ms": 800,
+            "finish_reason": "stop",
+        },
     )
 
 
-def run_prompt_test(prompt, models=None):
+def run_prompt_test(prompt, models=None, protocol_overrides=None, region="global_en"):
     if models is None:
         models = list(MODEL_CONFIGS.keys())
+    if protocol_overrides is None:
+        protocol_overrides = {}
 
     results = {}
     for model_name in models:
-        config = MODEL_CONFIGS[model_name]
-        formatter = FORMATTERS[config["provider"]]
-        request = formatter(prompt)
+        request = format_model_request(
+            prompt,
+            model_name,
+            protocol=protocol_overrides.get(model_name),
+            region=region,
+        )
 
         start = time.time()
         response = simulate_llm_call(model_name, request)

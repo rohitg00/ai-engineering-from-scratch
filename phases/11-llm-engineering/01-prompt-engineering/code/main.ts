@@ -101,19 +101,60 @@ const PROMPT_PATTERNS: Readonly<Record<PatternName, Pattern>> = {
   },
 } as const;
 
-type Provider = "openai" | "anthropic" | "google";
+type Provider = "openai" | "anthropic" | "google" | "minimax";
+type ApiProtocol = "openai" | "anthropic" | "google";
+type Region = "global_en" | "cn_zh";
+
+type ProviderConfig = {
+  readonly displayName: string;
+  readonly regions: Readonly<Record<Region, {
+    readonly docsRoot: string;
+    readonly baseUrls: Readonly<Partial<Record<ApiProtocol, string>>>;
+  }>>;
+};
+
+const PROVIDER_CONFIGS: Readonly<Partial<Record<Provider, ProviderConfig>>> = {
+  minimax: {
+    displayName: "MiniMax",
+    regions: {
+      global_en: {
+        docsRoot: "https://platform.minimax.io/docs",
+        baseUrls: {
+          openai: "https://api.minimax.io/v1",
+          anthropic: "https://api.minimax.io/anthropic",
+        },
+      },
+      cn_zh: {
+        docsRoot: "https://platform.minimaxi.com/docs",
+        baseUrls: {
+          openai: "https://api.minimaxi.com/v1",
+          anthropic: "https://api.minimaxi.com/anthropic",
+        },
+      },
+    },
+  },
+};
+
+const API_PATHS: Readonly<Partial<Record<ApiProtocol, string>>> = {
+  openai: "/chat/completions",
+  anthropic: "/v1/messages",
+};
 
 type ModelConfig = {
   readonly provider: Provider;
+  readonly protocols: readonly ApiProtocol[];
   readonly model: string;
   readonly maxTokens: number;
   readonly contextWindow: number;
+  readonly thinking?: readonly string[];
 };
 
 const MODEL_CONFIGS: Readonly<Record<string, ModelConfig>> = {
-  "gpt-4o": { provider: "openai", model: "gpt-4o", maxTokens: 2048, contextWindow: 128_000 },
-  "claude-3.5-sonnet": { provider: "anthropic", model: "claude-3-5-sonnet-20241022", maxTokens: 2048, contextWindow: 200_000 },
-  "gemini-1.5-pro": { provider: "google", model: "gemini-1.5-pro", maxTokens: 2048, contextWindow: 2_000_000 },
+  "gpt-4o": { provider: "openai", protocols: ["openai"], model: "gpt-4o", maxTokens: 2048, contextWindow: 128_000 },
+  "claude-3.5-sonnet": { provider: "anthropic", protocols: ["anthropic"], model: "claude-3-5-sonnet-20241022", maxTokens: 2048, contextWindow: 200_000 },
+  "gemini-1.5-pro": { provider: "google", protocols: ["google"], model: "gemini-1.5-pro", maxTokens: 2048, contextWindow: 2_000_000 },
+  "MiniMax-M3": { provider: "minimax", protocols: ["openai", "anthropic"], model: "MiniMax-M3", maxTokens: 2048, contextWindow: 1_000_000, thinking: ["adaptive", "disabled"] },
+  "MiniMax-M2.7": { provider: "minimax", protocols: ["openai", "anthropic"], model: "MiniMax-M2.7", maxTokens: 2048, contextWindow: 204_800, thinking: ["always_on"] },
 };
 
 type BuiltPrompt = {
@@ -176,6 +217,16 @@ type GoogleRequest = {
 
 type ProviderRequest = OpenAIRequest | AnthropicRequest | GoogleRequest;
 
+type ResolvedRequest = {
+  readonly provider: Provider;
+  readonly protocol: ApiProtocol;
+  readonly region: Region | null;
+  readonly baseUrl: string | null;
+  readonly requestUrl: string | null;
+  readonly docsRoot: string | null;
+  readonly body: ProviderRequest;
+};
+
 function formatOpenAI(p: BuiltPrompt, cfg: ModelConfig): OpenAIRequest {
   return {
     model: cfg.model,
@@ -206,11 +257,57 @@ function formatGoogle(p: BuiltPrompt, cfg: ModelConfig): GoogleRequest {
   };
 }
 
-const FORMATTERS: Readonly<Record<Provider, (p: BuiltPrompt, c: ModelConfig) => ProviderRequest>> = {
+const FORMATTERS: Readonly<Record<ApiProtocol, (p: BuiltPrompt, c: ModelConfig) => ProviderRequest>> = {
   openai: formatOpenAI,
   anthropic: formatAnthropic,
   google: formatGoogle,
 };
+
+function formatModelRequest(
+  prompt: BuiltPrompt,
+  modelName: string,
+  protocol?: ApiProtocol,
+  region: Region = "global_en",
+): ResolvedRequest {
+  const config = MODEL_CONFIGS[modelName];
+  if (!config) {
+    throw new Error("Unknown model: " + modelName + ". Available models: " + Object.keys(MODEL_CONFIGS).join(", "));
+  }
+  const selectedProtocol = protocol ?? config.protocols[0];
+  if (!config.protocols.includes(selectedProtocol)) {
+    throw new Error(modelName + " does not support the " + selectedProtocol + " protocol");
+  }
+
+  const providerConfig = PROVIDER_CONFIGS[config.provider];
+  let selectedRegion: Region | null = null;
+  let baseUrl: string | null = null;
+  let requestUrl: string | null = null;
+  let docsRoot: string | null = null;
+  if (providerConfig) {
+    const regionConfig = providerConfig.regions[region];
+    baseUrl = regionConfig.baseUrls[selectedProtocol] ?? null;
+    if (!baseUrl) {
+      throw new Error(modelName + " has no " + selectedProtocol + " endpoint in " + region);
+    }
+    const requestPath = API_PATHS[selectedProtocol];
+    if (!requestPath) {
+      throw new Error("No request path configured for " + selectedProtocol);
+    }
+    selectedRegion = region;
+    requestUrl = baseUrl.replace(/\/$/, "") + requestPath;
+    docsRoot = regionConfig.docsRoot;
+  }
+
+  return {
+    provider: config.provider,
+    protocol: selectedProtocol,
+    region: selectedRegion,
+    baseUrl,
+    requestUrl,
+    docsRoot,
+    body: FORMATTERS[selectedProtocol](prompt, config),
+  };
+}
 
 type SimulatedResponse = {
   response: string;
@@ -219,7 +316,7 @@ type SimulatedResponse = {
   finishReason: string;
 };
 
-function simulateLlmCall(modelName: string, request: ProviderRequest): SimulatedResponse {
+function simulateLlmCall(modelName: string, request: ResolvedRequest): SimulatedResponse {
   const promptHash = createHash("md5").update(JSON.stringify(request)).digest("hex").slice(0, 8);
   const responses: Record<string, SimulatedResponse> = {
     "gpt-4o": {
@@ -242,10 +339,10 @@ function simulateLlmCall(modelName: string, request: ProviderRequest): Simulated
     },
   };
   return responses[modelName] ?? {
-    response: "Unknown model",
-    tokensUsed: { prompt: 0, completion: 0, total: 0 },
-    latencyMs: 0,
-    finishReason: "unknown",
+    response: "[" + modelName + " " + promptHash + "] Simulated response.",
+    tokensUsed: { prompt: 150, completion: 45, total: 195 },
+    latencyMs: 800,
+    finishReason: "stop",
   };
 }
 
@@ -320,17 +417,18 @@ type ModelResult = {
   apiLatencyMs: number;
   wallTimeMs: number;
   finishReason: string;
-  requestPayload: ProviderRequest;
+  requestPayload: ResolvedRequest;
 };
 
-function runPromptTest(prompt: BuiltPrompt, models: readonly string[] = Object.keys(MODEL_CONFIGS)): Record<string, ModelResult> {
+function runPromptTest(
+  prompt: BuiltPrompt,
+  models: readonly string[] = Object.keys(MODEL_CONFIGS),
+  protocolOverrides: Readonly<Partial<Record<string, ApiProtocol>>> = {},
+  region: Region = "global_en",
+): Record<string, ModelResult> {
   const out: Record<string, ModelResult> = {};
   for (const name of models) {
-    const cfg = MODEL_CONFIGS[name];
-    if (!cfg) {
-      throw new Error("Unknown model: " + name + ". Available models: " + Object.keys(MODEL_CONFIGS).join(", "));
-    }
-    const request = FORMATTERS[cfg.provider](prompt, cfg);
+    const request = formatModelRequest(prompt, name, protocolOverrides[name], region);
     const start = Date.now();
     const response = simulateLlmCall(name, request);
     out[name] = {
