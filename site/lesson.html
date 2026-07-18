@@ -3235,8 +3235,9 @@
       // Maps a lesson's own quiz.json ({question, options, correct, explanation})
       // into the {q, opts, answer, explain} shape this panel renders.
       function normalizeLessonQuiz(data) {
-        if (!data || !Array.isArray(data.questions)) return [];
-        return data.questions
+        var questions = Array.isArray(data) ? data : (data && data.questions);
+        if (!Array.isArray(questions)) return [];
+        return questions
           .filter(function (q) { return q && q.question && Array.isArray(q.options); })
           .map(function (q) {
             return { q: q.question, opts: q.options, answer: q.correct, explain: q.explanation || '' };
@@ -3256,11 +3257,15 @@
           return;
         }
 
-        var quizUrl = rawContentBase() + lessonPath + '/quiz.json';
+        var expectedLessonPath = lessonPath;
+        var quizUrl = rawContentBase() + expectedLessonPath + '/quiz.json';
         fetch(quizUrl)
           .then(function (res) { return res.ok ? res.json() : null; })
           .catch(function () { return null; })
           .then(function (data) {
+            // If the user navigated to a different lesson while this fetch
+            // was in flight, don't overwrite the newer panel with stale data.
+            if (expectedLessonPath !== lessonPath) return;
             var questions = normalizeLessonQuiz(data);
             // Fall back to the generic topic-based questions only if this
             // lesson has no quiz.json of its own (or it failed to load).
