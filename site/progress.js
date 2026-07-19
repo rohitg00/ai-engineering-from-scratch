@@ -11,7 +11,9 @@
  *       "<lesson-path>": {
  *         answers: { "<qid>": { picked: number, correct: boolean, t: number } },
  *         completedAt: number | null,
- *         visitedAt: number
+ *         visitedAt: number,
+ *         scrollPercent: number,
+ *         scrollY: number
  *       }
  *     },
  *     updatedAt: number
@@ -56,7 +58,7 @@
 
   function ensureLesson(state, path) {
     if (!state.lessons[path]) {
-      state.lessons[path] = { answers: {}, completedAt: null, visitedAt: 0 };
+      state.lessons[path] = { answers: {}, completedAt: null, visitedAt: 0, scrollPercent: 0, scrollY: 0 };
     }
     return state.lessons[path];
   }
@@ -74,6 +76,16 @@
     var state = read();
     var lesson = ensureLesson(state, path);
     lesson.answers[qid] = { picked: picked, correct: !!correct, t: Date.now() };
+    write(state);
+  }
+
+  function recordPosition(path, scrollPercent, scrollY) {
+    if (!path) return;
+    var state = read();
+    var lesson = ensureLesson(state, path);
+    lesson.visitedAt = Date.now();
+    lesson.scrollPercent = Math.max(0, Math.min(100, Number(scrollPercent) || 0));
+    lesson.scrollY = Math.max(0, Number(scrollY) || 0);
     write(state);
   }
 
@@ -99,7 +111,24 @@
   function getLessonProgress(path) {
     if (!path) return null;
     var state = read();
-    return state.lessons[path] || { answers: {}, completedAt: null, visitedAt: 0 };
+    return state.lessons[path] || { answers: {}, completedAt: null, visitedAt: 0, scrollPercent: 0, scrollY: 0 };
+  }
+
+  function getMostRecentLesson() {
+    var state = read();
+    var recent = null;
+    for (var path in state.lessons) {
+      var lesson = state.lessons[path];
+      if (!lesson || !lesson.visitedAt) continue;
+      if (!recent || lesson.visitedAt > recent.progress.visitedAt) {
+        recent = { path: path, progress: lesson };
+      }
+    }
+    return recent;
+  }
+
+  function getState() {
+    return read();
   }
 
   function isLessonComplete(path) {
@@ -159,6 +188,7 @@
 
   window.AIFSProgress = {
     recordVisit: recordVisit,
+    recordPosition: recordPosition,
     recordAnswer: recordAnswer,
     markLessonComplete: markLessonComplete,
     unmarkLessonComplete: unmarkLessonComplete,
@@ -167,6 +197,8 @@
     countCompletedFromUrls: countCompletedFromUrls,
     extractPath: extractPath,
     totalCompleted: totalCompleted,
+    getMostRecentLesson: getMostRecentLesson,
+    getState: getState,
     reset: reset,
     onChange: onChange,
   };

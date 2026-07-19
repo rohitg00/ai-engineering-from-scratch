@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lesson - AI Engineering from Scratch</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
-  <meta name="description" content="A lesson from the AI Engineering from Scratch curriculum. 503 lessons across 20 phases, four languages, every algorithm built from raw math.">
+  <meta name="description" content="Read a lesson and track your progress through AI Engineering from Scratch by Rohit Ghumare and contributors.">
   <link rel="canonical" href="https://aiengineeringfromscratch.com/lesson.html">
   <meta property="og:title" content="AI Engineering from Scratch · Lesson">
   <meta property="og:description" content="503 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
@@ -1560,6 +1560,57 @@
       .timeline-item { min-width: 70px; }
       .timeline-line { width: 20px; }
     }
+
+    .reader-dock {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 95;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      border: 1px solid var(--rule-soft);
+      background: var(--header-bg);
+      box-shadow: var(--shadow-hard);
+      backdrop-filter: blur(12px);
+    }
+    .reader-dock > span {
+      padding: 0 8px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+    .reader-dock button {
+      min-width: 34px;
+      height: 30px;
+      padding: 0 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-soft);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+    .reader-dock button:hover,
+    .reader-dock button.active {
+      border-color: var(--blueprint);
+      color: var(--blueprint);
+      background: var(--blueprint-tint);
+    }
+    body.reader-small .lesson-article p,
+    body.reader-small .lesson-article li { font-size: 0.92rem; line-height: 1.58; }
+    body.reader-large .lesson-article p,
+    body.reader-large .lesson-article li { font-size: 1.12rem; line-height: 1.78; }
+    body.reader-focus .lesson-content { max-width: 680px; }
+
+    @media (max-width: 600px) {
+      .reader-dock { right: 10px; bottom: 10px; }
+      .reader-dock > span { display: none; }
+      .reader-dock button { min-width: 30px; padding: 0 6px; }
+    }
   </style>
 </head>
 <body>
@@ -1601,6 +1652,14 @@
 
   <button class="lesson-sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">&#9776;</button>
 
+  <div class="reader-dock" aria-label="Reading comfort controls">
+    <span>Reading</span>
+    <button type="button" data-reader-size="small" aria-label="Smaller text">A-</button>
+    <button type="button" data-reader-size="medium" aria-label="Default text size">A</button>
+    <button type="button" data-reader-size="large" aria-label="Larger text">A+</button>
+    <button type="button" id="readerFocus" aria-label="Toggle focused reading width">Focus</button>
+  </div>
+
   <div class="mermaid-modal-overlay" id="mermaidModalOverlay" aria-hidden="true">
     <div class="mermaid-modal" role="dialog" aria-modal="true" aria-label="Expanded diagram">
       <div class="mermaid-modal-header">
@@ -1628,6 +1687,7 @@
 
   <script src="build-meta.js"></script>
   <script src="data.js?v=20260525a"></script>
+  <script src="materials.js"></script>
   <script src="progress.js?v=20260525a"></script>
   <script src="header.js?v=20260525a" defer></script>
   <script src="cmdpalette.js?v=20260525a" defer></script>
@@ -1697,6 +1757,35 @@
         });
       }
 
+      function applyReaderSettings() {
+        var size = localStorage.getItem('aifs:reader:size') || 'medium';
+        var focus = localStorage.getItem('aifs:reader:focus') === 'true';
+        document.body.classList.remove('reader-small', 'reader-large', 'reader-focus');
+        if (size === 'small') document.body.classList.add('reader-small');
+        if (size === 'large') document.body.classList.add('reader-large');
+        if (focus) document.body.classList.add('reader-focus');
+        document.querySelectorAll('[data-reader-size]').forEach(function (control) {
+          control.classList.toggle('active', control.getAttribute('data-reader-size') === size);
+        });
+        var focusBtn = document.getElementById('readerFocus');
+        if (focusBtn) focusBtn.classList.toggle('active', focus);
+      }
+
+      document.querySelectorAll('[data-reader-size]').forEach(function (control) {
+        control.addEventListener('click', function () {
+          localStorage.setItem('aifs:reader:size', control.getAttribute('data-reader-size'));
+          applyReaderSettings();
+        });
+      });
+      var readerFocus = document.getElementById('readerFocus');
+      if (readerFocus) {
+        readerFocus.addEventListener('click', function () {
+          localStorage.setItem('aifs:reader:focus', String(!document.body.classList.contains('reader-focus')));
+          applyReaderSettings();
+        });
+      }
+      applyReaderSettings();
+
       var params = new URLSearchParams(window.location.search);
       var lessonPath = params.get('path');
 
@@ -1737,6 +1826,7 @@
               type: l.type,
               lang: l.lang,
               url: l.url,
+              materials: window.MATERIALS ? window.MATERIALS['phases/' + pSlug + '/' + lSlug] || null : null,
               path: 'phases/' + pSlug + '/' + lSlug,
               isReadable: l.status === 'complete' || !!l.url
             });
@@ -1843,12 +1933,31 @@
       function initScrollProgress() {
         var bar = document.getElementById('scrollProgress');
         if (!bar) return;
-        window.addEventListener('scroll', function () {
+        var saveTimer = null;
+        function updatePosition(save) {
           var scrollTop = window.scrollY || document.documentElement.scrollTop;
           var docHeight = document.documentElement.scrollHeight - window.innerHeight;
           var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
           bar.style.width = pct + '%';
+          if (save && window.AIFSProgress) window.AIFSProgress.recordPosition(lessonPath, pct, scrollTop);
+        }
+        window.addEventListener('scroll', function () {
+          updatePosition(false);
+          if (saveTimer) clearTimeout(saveTimer);
+          saveTimer = setTimeout(function () { updatePosition(true); }, 350);
         }, { passive: true });
+        window.addEventListener('beforeunload', function () { updatePosition(true); });
+        updatePosition(false);
+      }
+
+      function restoreReadingPosition() {
+        if (params.get('resume') !== '1' || !window.AIFSProgress) return;
+        var progress = window.AIFSProgress.getLessonProgress(lessonPath);
+        if (!progress) return;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var fromPercent = docHeight > 0 ? docHeight * ((progress.scrollPercent || 0) / 100) : 0;
+        var target = Math.max(progress.scrollY || 0, fromPercent);
+        if (target > 40) window.scrollTo({ top: target, behavior: 'smooth' });
       }
 
       function fetchLesson(path) {
@@ -1859,12 +1968,22 @@
         var base = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ref + '/';
         var rawUrl = base + path + '/docs/en.md';
         var quizUrl = base + path + '/quiz.json';
+        var localUrl = 'course/' + path + '/docs/en.md';
+        var localQuizUrl = 'course/' + path + '/quiz.json';
 
-        fetch(rawUrl)
-          .then(function (res) {
-            if (!res.ok) throw new Error('fetch-failed');
+        function fetchText(primary, fallback) {
+          return fetch(primary).then(function (res) {
+            if (!res.ok) throw new Error('local-fetch-failed');
             return res.text();
-          })
+          }).catch(function () {
+            return fetch(fallback).then(function (res) {
+              if (!res.ok) throw new Error('fetch-failed');
+              return res.text();
+            });
+          });
+        }
+
+        fetchText(localUrl, rawUrl)
           .then(function (md) {
             try {
               renderLesson(md);
@@ -1873,9 +1992,11 @@
               showError('Render error', 'Loaded the lesson markdown but failed to render it. Details in the browser console.');
               return;
             }
-            fetch(quizUrl)
-              .then(function (res) { return res.ok ? res.json() : null; })
-              .catch(function () { return null; })
+            fetch(localQuizUrl)
+              .then(function (res) { if (!res.ok) throw new Error('local-quiz-missing'); return res.json(); })
+              .catch(function () {
+                return fetch(quizUrl).then(function (res) { return res.ok ? res.json() : null; }).catch(function () { return null; });
+              })
               .then(function (data) {
                 if (!data) return;
                 try { renderQuiz(data); }
@@ -1955,7 +2076,7 @@
         var html = parseMd(md);
         html += '<div class="ai-panels" id="aiPanels"></div>';
         html = addBottomNav(html);
-        el.innerHTML = '<article class="lesson-article">' + html + '</article>';
+        el.innerHTML = '<aside class="source-credit lesson-source-credit" aria-label="Course attribution"><strong>Open-source course</strong><span>This lesson is part of <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">AI Engineering from Scratch</a>, created and maintained by <a href="https://github.com/rohitg00" target="_blank" rel="noopener">Rohit Ghumare</a> and contributors.</span></aside><article class="lesson-article">' + html + '</article>';
 
         document.title = extractTitle(md) + ' - AI Engineering from Scratch';
         updateLessonSeo(extractTitle(md), md);
@@ -1965,6 +2086,7 @@
         if (window.mountLessonFigures) window.mountLessonFigures(el);
         renderAIPanels();
         buildTOC();
+        setTimeout(restoreReadingPosition, 500);
 
         document.querySelectorAll('a[href^="#"]').forEach(function (link) {
           link.addEventListener('click', function (e) {
@@ -2997,6 +3119,7 @@
         var container = document.getElementById('aiPanels');
         if (!container || !lessonPath) return;
 
+        renderMaterialsPanel(container);
         renderOutputsPanel(container);
         renderCodePanel(container);
         renderQuizPanel(container);
@@ -3060,11 +3183,52 @@
         return firstLine ? firstLine.trim().substring(0, 120) : '';
       }
 
+      function renderMaterialsPanel(container) {
+        var materials = currentLessonIndex >= 0 ? flatLessons[currentLessonIndex].materials : null;
+        if (!materials) return;
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel';
+        var links = [];
+        if (materials.lesson) links.push({ label: 'Lesson notes', path: materials.lesson, detail: 'Complete narrative' });
+        if (materials.quiz) links.push({ label: 'Quiz source', path: materials.quiz, detail: 'All assessment questions' });
+        (materials.extras || []).forEach(function (file) {
+          links.push({ label: file.name, path: file.path, detail: formatSize(file.size) });
+        });
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">M</div><div class="ai-panel-title">Complete Lesson Pack</div></div>';
+        html += '<div class="ai-panel-subtitle">Nothing omitted: notes, quiz, ' + materials.code.length + ' code files, ' + materials.outputs.length + ' outputs, and lesson extras</div>';
+        html += '<div class="output-cards">';
+        links.forEach(function (item) {
+          html += '<div class="output-card"><div class="output-badge other">Material</div><div class="output-card-name">' + escapeHtml(item.label) + '</div><div class="output-desc">' + escapeHtml(item.detail) + '</div><div class="output-actions"><a class="output-btn" href="' + escapeAttr(item.path) + '" target="_blank" rel="noopener">Open</a></div></div>';
+        });
+        html += '</div>';
+        panel.innerHTML = html;
+        container.appendChild(panel);
+      }
+
       function renderOutputsPanel(container) {
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
         panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">O</div><div class="ai-panel-title">What This Lesson Ships</div></div><div class="ai-panel-subtitle">Prompts, skills, and artifacts you can use right now</div><div id="outputsContent" class="panel-loading">Loading outputs...</div>';
         container.appendChild(panel);
+
+        var localOutputs = currentLessonIndex >= 0 && flatLessons[currentLessonIndex].materials ? flatLessons[currentLessonIndex].materials.outputs : [];
+        if (localOutputs && localOutputs.length) {
+          var localHtml = '<div class="output-cards">';
+          localOutputs.forEach(function (file) {
+            var type = classifyOutput(file.name);
+            var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? 'Skill' : 'Output';
+            var artifact = typeof ARTIFACTS !== 'undefined' ? ARTIFACTS.find(function (item) { return file.path.endsWith(item.file); }) : null;
+            localHtml += '<div class="output-card">';
+            localHtml += '<div class="output-badge ' + type + '">' + badgeText + '</div>';
+            localHtml += '<div class="output-card-name">' + escapeHtml(file.name) + '</div>';
+            localHtml += '<div class="output-desc">' + escapeHtml(artifact && artifact.description ? artifact.description : 'Included with this lesson Â· ' + formatSize(file.size)) + '</div>';
+            localHtml += '<div class="output-actions"><a class="output-btn" href="' + escapeAttr(file.path) + '" target="_blank" rel="noopener">Open artifact</a></div>';
+            localHtml += '</div>';
+          });
+          localHtml += '</div>';
+          document.getElementById('outputsContent').innerHTML = localHtml;
+          return;
+        }
 
         ghApiFetch(lessonPath + '/outputs', function (err, data) {
           var el = document.getElementById('outputsContent');
@@ -3123,6 +3287,35 @@
         panel.className = 'ai-panel';
         panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Executable files from this lesson</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
         container.appendChild(panel);
+
+        var localCode = currentLessonIndex >= 0 && flatLessons[currentLessonIndex].materials ? flatLessons[currentLessonIndex].materials.code : [];
+        if (localCode && localCode.length) {
+          var localCodeHtml = '<div class="code-cards">';
+          localCode.forEach(function (file) {
+            var icon = langIcon(file.name);
+            var cmd = langCommand(file.name);
+            var repoPath = file.path.replace(/^course\//, '');
+            var runCmd = cmd + ' ' + repoPath;
+            localCodeHtml += '<div class="code-card">';
+            localCodeHtml += '<div class="code-card-header"><span class="code-lang-icon">' + icon + '</span><span class="code-card-name">' + escapeHtml(repoPath.split('/').slice(-2).join('/')) + '</span></div>';
+            localCodeHtml += '<div class="code-card-size">' + formatSize(file.size) + '</div>';
+            localCodeHtml += '<div class="code-card-run">' + escapeHtml(runCmd) + '</div>';
+            localCodeHtml += '<div class="code-card-actions"><a class="code-card-btn" href="' + escapeAttr(file.path) + '" target="_blank" rel="noopener">Open file</a><button class="code-card-btn code-card-copy" data-command="' + escapeAttr(runCmd) + '">Copy command</button></div>';
+            localCodeHtml += '</div>';
+          });
+          localCodeHtml += '</div>';
+          var localCodeEl = document.getElementById('codeContent');
+          localCodeEl.innerHTML = localCodeHtml;
+          localCodeEl.querySelectorAll('.code-card-copy').forEach(function (button) {
+            button.addEventListener('click', function () {
+              navigator.clipboard.writeText(button.getAttribute('data-command')).then(function () {
+                button.textContent = 'Copied!';
+                setTimeout(function () { button.textContent = 'Copy command'; }, 1500);
+              });
+            });
+          });
+          return;
+        }
 
         ghApiFetch(lessonPath + '/code', function (err, data) {
           var el = document.getElementById('codeContent');
@@ -3345,17 +3538,21 @@
 
         html += '<div class="learning-timeline">';
         if (hiddenBefore > 0) {
+          var hiddenBeforeDone = lessonsInPhase.slice(0, startIdx).every(function (item) {
+            return window.AIFSProgress && window.AIFSProgress.isLessonComplete(item.flat.path);
+          });
           html += '<span class="timeline-ellipsis" title="' + hiddenBefore + ' earlier lessons">&laquo; ' + hiddenBefore + '</span>';
-          html += '<div class="timeline-line done"></div>';
+          html += '<div class="timeline-line ' + (hiddenBeforeDone ? 'done' : '') + '"></div>';
         }
         visible.forEach(function (item, vIdx) {
           var idx = startIdx + vIdx;
           var isCurrent = idx === currentIdxInPhase;
-          var isPrev = idx < currentIdxInPhase;
-          var cls = isCurrent ? 'current' : isPrev ? 'prev' : '';
+          var isDone = window.AIFSProgress && window.AIFSProgress.isLessonComplete(item.flat.path);
+          var cls = isCurrent ? 'current' : isDone ? 'prev' : '';
 
           if (vIdx > 0) {
-            var lineCls = idx <= currentIdxInPhase ? (idx === currentIdxInPhase ? 'active' : 'done') : '';
+            var previousDone = window.AIFSProgress && window.AIFSProgress.isLessonComplete(visible[vIdx - 1].flat.path);
+            var lineCls = previousDone && isDone ? 'done' : (isCurrent && previousDone ? 'active' : '');
             html += '<div class="timeline-line ' + lineCls + '"></div>';
           }
 
@@ -3374,7 +3571,9 @@
         }
         html += '</div>';
 
-        var completedCount = currentIdxInPhase + 1;
+        var completedCount = lessonsInPhase.filter(function (item) {
+          return window.AIFSProgress && window.AIFSProgress.isLessonComplete(item.flat.path);
+        }).length;
         var totalCount = lessonsInPhase.length;
         var pct = Math.round((completedCount / totalCount) * 100);
 
@@ -3406,6 +3605,8 @@
 
         var html = '<div class="ai-panel-header"><div class="ai-panel-icon">N</div><div class="ai-panel-title">Continue Learning</div></div>';
         html += '<div class="continue-panel">';
+        var isComplete = window.AIFSProgress && window.AIFSProgress.isLessonComplete(lessonPath);
+        html += '<button type="button" class="btn btn-primary" id="lessonCompleteToggle">' + (isComplete ? 'Completed - mark unfinished' : 'Mark lesson complete') + '</button>';
 
         if (!next || !next.path) {
           html += '<div class="phase-finished">\u2705 You finished this phase!</div>';
@@ -3424,6 +3625,18 @@
 
         panel.innerHTML = html;
         container.appendChild(panel);
+        var completeToggle = document.getElementById('lessonCompleteToggle');
+        if (completeToggle && window.AIFSProgress) {
+          completeToggle.addEventListener('click', function () {
+            if (window.AIFSProgress.isLessonComplete(lessonPath)) {
+              window.AIFSProgress.unmarkLessonComplete(lessonPath);
+              completeToggle.textContent = 'Mark lesson complete';
+            } else {
+              window.AIFSProgress.markLessonComplete(lessonPath);
+              completeToggle.textContent = 'Completed - mark unfinished';
+            }
+          });
+        }
       }
 
       function escapeHtml(str) {
