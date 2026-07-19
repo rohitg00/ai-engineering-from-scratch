@@ -13,7 +13,9 @@
   document.addEventListener('DOMContentLoaded', function () {
     initThemeToggle();
     populateStats();
+    renderLearningCommand();
     renderPhases();
+    initCourseUniverse();
     initStaggerIndex();
     initModal();
     initCopyButton();
@@ -50,18 +52,21 @@
       var lessons = PHASES[i].lessons;
       totalLessons += lessons.length;
       for (var j = 0; j < lessons.length; j++) {
-        var staticDone = lessons[j].status === 'complete';
         var userDone = false;
         if (hasProgress && lessons[j].url) {
           var lp = window.AIFSProgress.extractPath(lessons[j].url);
           if (lp) userDone = window.AIFSProgress.isLessonComplete(lp);
         }
-        if (staticDone || userDone) completeLessons++;
+        if (userDone) completeLessons++;
       }
     }
     var completePhases = 0;
     for (var p = 0; p < PHASES.length; p++) {
-      if (PHASES[p].status === 'complete') completePhases++;
+      var phaseLessons = PHASES[p].lessons;
+      if (phaseLessons.length && phaseLessons.every(function (lesson) {
+        var path = lesson.url && hasProgress ? window.AIFSProgress.extractPath(lesson.url) : '';
+        return path && window.AIFSProgress.isLessonComplete(path);
+      })) completePhases++;
     }
     return {
       lessons: totalLessons,
@@ -113,13 +118,12 @@
       var total = p.lessons.length;
       var done = 0;
       for (var j = 0; j < p.lessons.length; j++) {
-        var staticDone = p.lessons[j].status === 'complete';
         var userDone = false;
         if (hasProgress && p.lessons[j].url) {
           var lp = window.AIFSProgress.extractPath(p.lessons[j].url);
           if (lp) userDone = window.AIFSProgress.isLessonComplete(lp);
         }
-        if (staticDone || userDone) done++;
+        if (userDone) done++;
       }
       var statusClass = p.status.replace(/ /g, '-');
       var roman = toRoman(p.id);
@@ -150,6 +154,177 @@
         newRows[r].classList.add('in-view', 'visible');
       }
     }
+  }
+
+  function courseLessons() {
+    var out = [];
+    for (var i = 0; i < PHASES.length; i++) {
+      for (var j = 0; j < PHASES[i].lessons.length; j++) {
+        var lesson = PHASES[i].lessons[j];
+        var path = lesson.url && window.AIFSProgress ? window.AIFSProgress.extractPath(lesson.url) : '';
+        if (path) out.push({ phase: PHASES[i], lesson: lesson, path: path });
+      }
+    }
+    return out;
+  }
+
+  function renderLearningCommand() {
+    var card = document.getElementById('learningCommand');
+    if (!card || !window.AIFSProgress) return;
+    var lessons = courseLessons();
+    if (!lessons.length) return;
+
+    var state = window.AIFSProgress.getState();
+    var completed = 0;
+    for (var i = 0; i < lessons.length; i++) {
+      if (state.lessons[lessons[i].path] && state.lessons[lessons[i].path].completedAt) completed++;
+    }
+    var overallPct = Math.round((completed / lessons.length) * 100);
+    var recent = window.AIFSProgress.getMostRecentLesson();
+    var recentIndex = -1;
+    if (recent) {
+      for (var r = 0; r < lessons.length; r++) {
+        if (lessons[r].path === recent.path) { recentIndex = r; break; }
+      }
+    }
+
+    var targetIndex = recentIndex >= 0 ? recentIndex : 0;
+    if (recentIndex >= 0 && window.AIFSProgress.isLessonComplete(lessons[recentIndex].path)) {
+      for (var n = recentIndex + 1; n < lessons.length; n++) {
+        if (!window.AIFSProgress.isLessonComplete(lessons[n].path)) { targetIndex = n; break; }
+      }
+    }
+    var target = lessons[targetIndex];
+    var targetProgress = window.AIFSProgress.getLessonProgress(target.path);
+    var readingPct = Math.round(targetProgress.scrollPercent || 0);
+
+    var ring = document.getElementById('learningProgressRing');
+    var pctEl = document.getElementById('learningProgressPct');
+    var kicker = document.getElementById('learningCommandKicker');
+    var title = document.getElementById('learningCommandTitle');
+    var meta = document.getElementById('learningCommandMeta');
+    var link = document.getElementById('continueLearning');
+    if (ring) ring.style.setProperty('--progress', (overallPct * 3.6) + 'deg');
+    if (pctEl) pctEl.textContent = overallPct + '%';
+    if (kicker) kicker.textContent = recent ? 'Continue Â· Phase ' + String(target.phase.id).padStart(2, '0') : 'Start Â· Phase ' + String(target.phase.id).padStart(2, '0');
+    if (title) title.textContent = target.lesson.name;
+    if (meta) meta.textContent = completed + ' of ' + lessons.length + ' lessons completed' + (readingPct > 1 ? ' Â· resume at ' + readingPct + '%' : '') + '. Progress stays saved on this device.';
+    if (link) {
+      link.href = 'lesson.html?path=' + encodeURIComponent(target.path) + (readingPct > 1 ? '&resume=1' : '');
+      link.textContent = readingPct > 1 ? 'Resume lesson' : (recent ? 'Continue learning' : 'Start course');
+    }
+  }
+
+  function initCourseUniverse() {
+    var scene = document.getElementById('courseUniverse');
+    var canvas = document.getElementById('courseUniverseCanvas');
+    var nodeLayer = document.getElementById('courseUniverseNodes');
+    if (!scene || !canvas || !nodeLayer || typeof PHASES === 'undefined') return;
+
+    var ctx = canvas.getContext('2d');
+    var nodes = [];
+    var points = [];
+    var rotationX = -0.18;
+    var rotationY = -0.45;
+    var dragging = false;
+    var previousX = 0;
+    var previousY = 0;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    for (var i = 0; i < PHASES.length; i++) {
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'course-universe-node phase-card';
+      button.setAttribute('data-phase', i);
+      button.setAttribute('aria-label', 'Open Phase ' + PHASES[i].id + ': ' + PHASES[i].name);
+      button.title = 'Phase ' + PHASES[i].id + ' Â· ' + PHASES[i].name;
+      button.textContent = 'P' + String(PHASES[i].id).padStart(2, '0');
+      var phaseDone = PHASES[i].lessons.length > 0 && PHASES[i].lessons.every(function (lesson) {
+        var path = lesson.url && window.AIFSProgress ? window.AIFSProgress.extractPath(lesson.url) : '';
+        return path && window.AIFSProgress.isLessonComplete(path);
+      });
+      if (phaseDone) button.classList.add('done');
+      nodeLayer.appendChild(button);
+      nodes.push(button);
+
+      var angle = (i / PHASES.length) * Math.PI * 4.2;
+      var radius = 175 + (i % 3) * 31;
+      points.push({ x: Math.cos(angle) * radius, y: (i - (PHASES.length - 1) / 2) * 19, z: Math.sin(angle) * radius });
+    }
+
+    function project(point) {
+      var cosY = Math.cos(rotationY), sinY = Math.sin(rotationY);
+      var x1 = point.x * cosY - point.z * sinY;
+      var z1 = point.x * sinY + point.z * cosY;
+      var cosX = Math.cos(rotationX), sinX = Math.sin(rotationX);
+      var y1 = point.y * cosX - z1 * sinX;
+      var z2 = point.y * sinX + z1 * cosX;
+      var scale = 650 / (650 - z2);
+      return { x: x1 * scale, y: y1 * scale, z: z2, scale: scale };
+    }
+
+    function resize() {
+      var rect = scene.getBoundingClientRect();
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function draw() {
+      var rect = scene.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      var projected = points.map(project);
+      var styles = getComputedStyle(document.documentElement);
+      ctx.strokeStyle = styles.getPropertyValue('--blueprint').trim() || '#3553ff';
+      ctx.globalAlpha = 0.32;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var i = 0; i < projected.length; i++) {
+        var p = projected[i];
+        var px = rect.width / 2 + p.x;
+        var py = rect.height / 2 + p.y;
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      for (var n = 0; n < nodes.length; n++) {
+        var pt = projected[n];
+        var scale = Math.max(0.62, Math.min(1.28, pt.scale));
+        nodes[n].style.transform = 'translate(-50%, -50%) translate3d(' + pt.x.toFixed(1) + 'px,' + pt.y.toFixed(1) + 'px,0) scale(' + scale.toFixed(2) + ')';
+        nodes[n].style.opacity = String(Math.max(0.45, Math.min(1, 0.72 + pt.z / 700)));
+        nodes[n].style.zIndex = String(Math.round(pt.z + 300));
+      }
+    }
+
+    function frame() {
+      if (!dragging) rotationY += 0.0014;
+      draw();
+      if (!reduced) window.requestAnimationFrame(frame);
+    }
+
+    scene.addEventListener('pointerdown', function (event) {
+      dragging = true;
+      previousX = event.clientX;
+      previousY = event.clientY;
+      scene.setPointerCapture(event.pointerId);
+    });
+    scene.addEventListener('pointermove', function (event) {
+      if (!dragging) return;
+      rotationY += (event.clientX - previousX) * 0.008;
+      rotationX = Math.max(-0.8, Math.min(0.55, rotationX - (event.clientY - previousY) * 0.005));
+      previousX = event.clientX;
+      previousY = event.clientY;
+      if (reduced) draw();
+    });
+    scene.addEventListener('pointerup', function () { dragging = false; });
+    scene.addEventListener('pointercancel', function () { dragging = false; });
+    window.addEventListener('resize', function () { resize(); draw(); });
+    resize();
+    frame();
   }
 
   function toRoman(num) {
@@ -301,6 +476,7 @@
         renderModalLessons(PHASES[currentPhaseIdx]);
       }
       populateStats();
+      renderLearningCommand();
       renderPhases();
     });
   }
