@@ -3,11 +3,12 @@
 
 Requires Python 3.10+. Stdlib only.
 
-catalog.json is filesystem-truth (rebuilt by scripts/build_catalog.py and
-checked in CI). The README, however, sprinkles hardcoded counts ("428
-lessons", "373 skills, 99 prompts, ...") that drift every time the
-curriculum grows or shrinks. This script pins each hardcoded count to a
-field in catalog.json's `totals` block and fails when they disagree.
+catalog.json is filesystem-truth (rebuilt by scripts/build_catalog.py in CI,
+or built ephemerally when the file is absent locally). The README, however,
+sprinkles hardcoded counts ("428 lessons", "373 skills, 99 prompts, ...") that
+drift every time the curriculum grows or shrinks. This script pins each
+hardcoded count to a field in catalog.json's `totals` block and fails when they
+disagree.
 
 Usage:
     python3 scripts/check_readme_counts.py            # exit 1 on any drift
@@ -121,8 +122,14 @@ class Mismatch:
 
 
 def load_totals() -> dict[str, int]:
-    with CATALOG_PATH.open(encoding="utf-8") as fh:
-        catalog = json.load(fh)
+    if CATALOG_PATH.exists():
+        with CATALOG_PATH.open(encoding="utf-8") as fh:
+            catalog = json.load(fh)
+    else:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from build_catalog import build_catalog
+
+        catalog = build_catalog()
     totals = catalog.get("totals")
     if not isinstance(totals, dict):
         raise SystemExit("catalog.json is missing the 'totals' block")
