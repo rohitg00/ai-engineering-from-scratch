@@ -45,7 +45,7 @@ pip install datasets huggingface_hub
 ```python
 from datasets import load_dataset
 
-dataset = load_dataset("imdb")
+dataset = load_dataset("stanfordnlp/imdb")
 print(dataset)
 print(dataset["train"][0])
 ```
@@ -72,7 +72,7 @@ Streaming gives you an `IterableDataset`. You process rows as they arrive. Memor
 The `datasets` library uses Apache Arrow under the hood. You can convert to other formats depending on what your pipeline needs.
 
 ```python
-dataset = load_dataset("imdb", split="train")
+dataset = load_dataset("stanfordnlp/imdb"), split="train")
 
 dataset.to_csv("imdb_train.csv")
 dataset.to_json("imdb_train.json")
@@ -81,12 +81,12 @@ dataset.to_parquet("imdb_train.parquet")
 
 Format comparison:
 
-| Format | Size | Read Speed | Best For |
-|--------|------|-----------|----------|
-| CSV | Large | Slow | Human readability, spreadsheets |
-| JSON | Large | Slow | APIs, nested data |
-| Parquet | Small | Fast | Analytics, columnar queries |
-| Arrow | Small | Fastest | In-memory processing (what `datasets` uses internally) |
+| Format  | Size  | Read Speed | Best For                                               |
+| ------- | ----- | ---------- | ------------------------------------------------------ |
+| CSV     | Large | Slow       | Human readability, spreadsheets                        |
+| JSON    | Large | Slow       | APIs, nested data                                      |
+| Parquet | Small | Fast       | Analytics, columnar queries                            |
+| Arrow   | Small | Fastest    | In-memory processing (what `datasets` uses internally) |
 
 For AI work, Parquet is the best storage format. Arrow is what you work with in memory. CSV and JSON are for interchange.
 
@@ -101,7 +101,7 @@ Every ML project needs three splits:
 Some datasets come pre-split. When they don't, split them yourself:
 
 ```python
-dataset = load_dataset("imdb", split="train")
+dataset = load_dataset("stanfordnlp/imdb") split="train")
 
 split = dataset.train_test_split(test_size=0.2, seed=42)
 train_val = split["train"].train_test_split(test_size=0.125, seed=42)
@@ -173,11 +173,11 @@ git commit -m "Track training data with DVC"
 
 DVC creates small `.dvc` files that point to your data. The data itself lives in S3, GCS, or another remote storage backend.
 
-| Approach | Complexity | Best For |
-|----------|-----------|----------|
-| .gitignore | Low | Personal projects, downloaded data you can re-fetch |
-| Git LFS | Medium | Teams sharing model weights via git |
-| DVC | High | Reproducible experiments, large datasets, teams |
+| Approach   | Complexity | Best For                                            |
+| ---------- | ---------- | --------------------------------------------------- |
+| .gitignore | Low        | Personal projects, downloaded data you can re-fetch |
+| Git LFS    | Medium     | Teams sharing model weights via git                 |
+| DVC        | High       | Reproducible experiments, large datasets, teams     |
 
 For this course, `.gitignore` is enough. Use DVC when you need to reproduce exact experiments across machines.
 
@@ -207,14 +207,14 @@ For this course, local storage is sufficient. Cloud storage becomes relevant whe
 
 ## Datasets Used in This Course
 
-| Dataset | Lessons | Size | What It Teaches |
-|---------|---------|------|----------------|
-| IMDB | Tokenization, classification | 84 MB | Text classification basics |
-| WikiText | Language modeling | 181 MB | Next-token prediction |
-| SQuAD | QA systems | 35 MB | Question answering, spans |
-| Common Crawl (subset) | Embeddings | Varies | Large-scale text processing |
-| MNIST | Vision basics | 21 MB | Image classification fundamentals |
-| COCO (subset) | Multimodal | Varies | Image-text pairs |
+| Dataset               | Lessons                      | Size   | What It Teaches                   |
+| --------------------- | ---------------------------- | ------ | --------------------------------- |
+| IMDB                  | Tokenization, classification | 84 MB  | Text classification basics        |
+| WikiText              | Language modeling            | 181 MB | Next-token prediction             |
+| SQuAD                 | QA systems                   | 35 MB  | Question answering, spans         |
+| Common Crawl (subset) | Embeddings                   | Varies | Large-scale text processing       |
+| MNIST                 | Vision basics                | 21 MB  | Image classification fundamentals |
+| COCO (subset)         | Multimodal                   | Varies | Image-text pairs                  |
 
 You do not need to download all of these now. Each lesson specifies what it needs.
 
@@ -231,6 +231,7 @@ This downloads a small dataset, converts it, splits it, and prints a summary.
 ## Ship It
 
 This lesson produces:
+
 - `code/data_utils.py` - reusable data loading and caching utility
 - `outputs/prompt-data-helper.md` - prompt for finding the right dataset for a task
 
@@ -243,12 +244,12 @@ This lesson produces:
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Dataset split | "Training data" | A named subset (train/val/test) used at different stages of the ML lifecycle |
-| Streaming | "Load it lazily" | Processing data row by row from a remote source without downloading the full dataset |
-| Parquet | "Compressed CSV" | A columnar file format optimized for analytical queries and storage efficiency |
-| Arrow | "Fast dataframe" | An in-memory columnar format used internally by the datasets library for zero-copy reads |
-| Git LFS | "Git for big files" | An extension that stores large files outside the git repo while keeping pointers in version control |
-| DVC | "Git for data" | A version control system for datasets and models that integrates with cloud storage |
-| Cache | "Already downloaded" | A local copy of previously fetched data, stored at ~/.cache/huggingface/ by default |
+| Term          | What people say      | What it actually means                                                                              |
+| ------------- | -------------------- | --------------------------------------------------------------------------------------------------- |
+| Dataset split | "Training data"      | A named subset (train/val/test) used at different stages of the ML lifecycle                        |
+| Streaming     | "Load it lazily"     | Processing data row by row from a remote source without downloading the full dataset                |
+| Parquet       | "Compressed CSV"     | A columnar file format optimized for analytical queries and storage efficiency                      |
+| Arrow         | "Fast dataframe"     | An in-memory columnar format used internally by the datasets library for zero-copy reads            |
+| Git LFS       | "Git for big files"  | An extension that stores large files outside the git repo while keeping pointers in version control |
+| DVC           | "Git for data"       | A version control system for datasets and models that integrates with cloud storage                 |
+| Cache         | "Already downloaded" | A local copy of previously fetched data, stored at ~/.cache/huggingface/ by default                 |
