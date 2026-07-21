@@ -111,10 +111,10 @@ def run_code(code, language="python"):
     for node in ast.walk(tree):
         if isinstance(node, (ast.Import, ast.ImportFrom)):
             return {"error": True, "message": "Forbidden operation: import statements not allowed", "code": "SECURITY_VIOLATION"}
-        if isinstance(node, ast.Attribute):
-            return {"error": True, "message": "Forbidden operation: attribute access not allowed", "code": "SECURITY_VIOLATION"}
-        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in _UNSAFE_BUILTINS:
-            return {"error": True, "message": f"Forbidden operation: {node.func.id}() not allowed", "code": "SECURITY_VIOLATION"}
+        if isinstance(node, ast.Attribute) and node.attr.startswith("__") and node.attr.endswith("__"):
+            return {"error": True, "message": "Forbidden operation: dunder attribute access not allowed", "code": "SECURITY_VIOLATION"}
+        if isinstance(node, ast.Name) and node.id in _UNSAFE_BUILTINS:
+            return {"error": True, "message": f"Forbidden operation: {node.id} not allowed", "code": "SECURITY_VIOLATION"}
     try:
         local_vars = {}
         exec(
