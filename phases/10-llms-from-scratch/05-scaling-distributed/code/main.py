@@ -220,11 +220,10 @@ def training_cost_estimator(
     if num_gpus is None:
         mem = memory_calculator(params_billions, sharding="fsdp", num_gpus=1)
         num_gpus = max(1, int(np.ceil(mem["per_gpu_total_gb"] / spec["memory_gb"])) * 2)
-
-    verify = memory_calculator(params_billions, sharding="fsdp", num_gpus=num_gpus)
-    while verify["per_gpu_total_gb"] > spec["memory_gb"]:
-        num_gpus *= 2
         verify = memory_calculator(params_billions, sharding="fsdp", num_gpus=num_gpus)
+        while verify["per_gpu_total_gb"] > spec["memory_gb"] and num_gpus < 65536:
+            num_gpus *= 2
+            verify = memory_calculator(params_billions, sharding="fsdp", num_gpus=num_gpus)
 
     total_gpu_seconds = flops_total / (flops_per_gpu_per_sec * num_gpus)
     total_gpu_hours = total_gpu_seconds / 3600
