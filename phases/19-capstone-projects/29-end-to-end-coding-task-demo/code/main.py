@@ -535,6 +535,7 @@ class CodingAgentPolicy:
         self.last_test_stderr = ""
         self.identified_bug_file: str | None = None
         self.identified_fix: str | None = None
+        self.tests_green = False
 
     def next_action(self, last_obs: Observation | None) -> tuple[str, tuple[str, ...], str]:
         """Return (tool, argv, payload) for the next action.
@@ -575,6 +576,7 @@ class CodingAgentPolicy:
             return
         if self.state == "RUN_TESTS" and tool == "run_tests":
             if exit_code == 0:
+                self.tests_green = True
                 self.state = "HALT"
                 return
             self.last_test_stderr = text
@@ -600,6 +602,7 @@ class CodingAgentPolicy:
             self.state = "VERIFY"
             return
         if self.state == "VERIFY" and tool == "run_tests":
+            self.tests_green = exit_code == 0
             self.state = "HALT"
             return
         # Default: do not advance.
@@ -707,8 +710,12 @@ class AgentRun:
         ) as chat_span:
             for step_index in range(self.step_budget):
                 if policy.state == "HALT":
-                    halted_reason = "policy reached HALT"
-                    solved = True
+                    solved = policy.tests_green
+                    halted_reason = (
+                        "policy reached HALT"
+                        if solved
+                        else "policy reached HALT with tests still failing"
+                    )
                     break
                 tool, argv, payload = policy.next_action(last_obs)
                 if tool == "noop":
