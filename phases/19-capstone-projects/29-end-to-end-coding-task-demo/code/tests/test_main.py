@@ -150,6 +150,22 @@ class EndToEndTests(unittest.TestCase):
             report.observation_tokens, report.max_observation_budget
         )
 
+    def test_agent_solves_when_verify_lands_on_the_last_permitted_step(self) -> None:
+        runner = AgentRun(
+            repo_root=self.repo,
+            chain=self.chain,
+            sandbox=self.sandbox,
+            builder=self.builder,
+            observation_budget=8000,
+            step_budget=5,
+        )
+        report = runner.run()
+        self.assertEqual(len(report.steps), 5)
+        self.assertEqual(report.steps[-1].tool, "run_tests")
+        self.assertEqual(report.steps[-1].exit_code, 0)
+        self.assertTrue(report.solved, msg=report.halted_reason)
+        self.assertEqual(report.halted_reason, "policy reached HALT")
+
     def test_agent_emits_one_chat_span_and_one_per_tool_call(self) -> None:
         runner = AgentRun(
             repo_root=self.repo,

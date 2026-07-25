@@ -709,14 +709,6 @@ class AgentRun:
             },
         ) as chat_span:
             for step_index in range(self.step_budget):
-                if policy.state == "HALT":
-                    solved = policy.tests_green
-                    halted_reason = (
-                        "policy reached HALT"
-                        if solved
-                        else "policy reached HALT with tests still failing"
-                    )
-                    break
                 tool, argv, payload = policy.next_action(last_obs)
                 if tool == "noop":
                     halted_reason = "policy emitted noop"
@@ -792,6 +784,14 @@ class AgentRun:
                     break
 
                 policy.observe(tool, exit_code, text)
+                if policy.state == "HALT":
+                    solved = policy.tests_green
+                    halted_reason = (
+                        "policy reached HALT"
+                        if solved
+                        else "policy reached HALT with tests still failing"
+                    )
+                    break
 
             else:
                 halted_reason = halted_reason or "step budget exhausted"
