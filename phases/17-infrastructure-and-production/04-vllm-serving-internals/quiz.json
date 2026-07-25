@@ -1,6 +1,6 @@
 {
   "lesson": "04-vllm-serving-internals",
-  "title": "vLLM Serving Internals: PagedAttention, Continuous Batching, Chunked Prefill",
+  "title": "Serving Engine Internals — PagedAttention, Continuous Batching, Chunked Prefill",
   "questions": [
     {
       "stage": "pre",

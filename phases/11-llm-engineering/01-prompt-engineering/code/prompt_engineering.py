@@ -154,15 +154,15 @@ MODEL_CONFIGS = {
     },
     "claude-3.5-sonnet": {
         "provider": "anthropic",
-        "model": "claude-3-5-sonnet-20241022",
+        "model": "claude-sonnet-5",
         "max_tokens": 2048,
-        "context_window": 200_000,
+        "context_window": 1_000_000,
     },
     "gemini-1.5-pro": {
         "provider": "google",
-        "model": "gemini-1.5-pro",
+        "model": "gemini-2.5-pro",
         "max_tokens": 2048,
-        "context_window": 2_000_000,
+        "context_window": 1_000_000,
     },
 }
 

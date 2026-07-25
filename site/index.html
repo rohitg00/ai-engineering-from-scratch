@@ -489,6 +489,88 @@
       padding-left: 8px;
     }
 
+    .books {
+      padding: 40px 0 8px;
+      border-top: 1px solid var(--rule-soft);
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .book-card {
+      border: 1px solid var(--rule-soft);
+      background: var(--code-bg);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .book-card .vol {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      color: var(--blueprint);
+    }
+
+    .book-card h3 {
+      font-family: var(--font-body);
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--ink);
+    }
+
+    .book-card p {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      flex: 1;
+    }
+
+    .book-card .dl {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .book-card .dl a {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--blueprint);
+      border: 1px solid var(--blueprint);
+      padding: 4px 10px;
+      text-decoration: none;
+    }
+
+    .book-card .dl a:hover {
+      background: var(--blueprint);
+      color: var(--bg);
+    }
+
+    .books-note {
+      margin-top: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: var(--ink-mute);
+    }
+
+    .books-note a { color: var(--blueprint); }
+
+    @media (max-width: 900px) {
+      .books-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .books-grid { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 900px) {
       .manual-masthead { padding: 80px 0 16px; }
       .preface { padding: 32px 0; }
@@ -626,7 +708,7 @@
     }
 
 
-    /* Figure card (makingsoftware aesthetic) */
+    /* Figure card */
     .figure-card {
       border: 1px solid var(--rule-soft);
       background: var(--bg);
@@ -674,6 +756,7 @@
       </a>
       <nav class="header-nav">
         <a href="#contents">Contents</a>
+        <a href="#books">Books</a>
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
@@ -789,6 +872,43 @@
       </div>
     </div>
 
+
+    <section class="books container" id="books">
+      <div class="toc-title reveal reveal--left">The book edition · six volumes</div>
+      <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">The course, compiled. EPUB and PDF built from the same lessons and attached to every GitHub release. The site stays the living edition — every chapter links back here for the animated figures, quizzes, and code.</div>
+      <div class="books-grid" id="booksGrid"></div>
+      <div class="books-note">Links resolve to the newest <a href="https://github.com/rohitg00/ai-engineering-from-scratch/releases" target="_blank" rel="noopener">GitHub release</a> · rebuilt by CI from the lessons on every release · <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/book/README.md" target="_blank" rel="noopener">how it's made</a></div>
+    </section>
+
+    <script>
+      (function () {
+        var grid = document.getElementById('booksGrid');
+        if (!grid) return;
+        var DL_BASE = 'https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol';
+        var volumes = [
+          { n: 1, slug: 'foundations', title: 'Foundations', subtitle: 'Math, Tooling, and Classical Machine Learning', phases: '00–02' },
+          { n: 2, slug: 'deep-learning', title: 'Deep Learning', subtitle: 'Networks, Vision, and Speech', phases: '03, 04, 06' },
+          { n: 3, slug: 'language', title: 'Language', subtitle: 'NLP Foundations and the Transformer', phases: '05, 07' },
+          { n: 4, slug: 'llms', title: 'Large Language Models', subtitle: 'Generation, Reinforcement, Pretraining, and Engineering', phases: '08–11' },
+          { n: 5, slug: 'agents', title: 'Agents', subtitle: 'Multimodality, Protocols, Autonomy, and Swarms', phases: '12–16' },
+          { n: 6, slug: 'production', title: 'Production', subtitle: 'Infrastructure, Safety, and Capstones', phases: '17–19' }
+        ];
+        var html = '';
+        volumes.forEach(function (v, i) {
+          var base = DL_BASE + v.n + '-' + v.slug;
+          html += '<div class="book-card reveal"' + (i > 0 ? ' style="--stagger-delay: ' + (i * 60) + 'ms;"' : '') + '>';
+          html += '<span class="vol">VOL_00' + v.n + '</span>';
+          html += '<h3>' + v.title + '</h3>';
+          html += '<p>' + v.subtitle + ' · phases ' + v.phases + '</p>';
+          html += '<div class="dl">';
+          html += '<a href="' + base + '.epub">EPUB</a>';
+          html += '<a href="' + base + '.pdf">PDF</a>';
+          html += '</div>';
+          html += '</div>';
+        });
+        grid.innerHTML = html;
+      })();
+    </script>
 
     <section class="colophon container">
       <div class="colophon-grid">

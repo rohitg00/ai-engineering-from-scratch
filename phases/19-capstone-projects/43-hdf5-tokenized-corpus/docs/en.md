@@ -120,7 +120,7 @@ Production patterns:
 
 ## Further Reading
 
-- [HDF5 chunking documentation](https://docs.hdfgroup.org/hdf5/v1_14/) - the chunked, resizable dataset layout this lesson uses
+- [HDF5 chunking documentation](https://support.hdfgroup.org/documentation/hdf5/latest/hdf5_chunking.html) - the chunked, resizable dataset layout this lesson uses
 - [h5py user guide](https://docs.h5py.org/en/stable/) - Python bindings for HDF5
 - [NumPy memory mapping](https://numpy.org/doc/stable/reference/generated/numpy.memmap.html) - the read-side primitive HDF5 exposes through h5py
 - Phase 19 · 42 - the downloader whose output this lesson tokenizes

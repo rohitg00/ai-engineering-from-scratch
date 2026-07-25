@@ -92,6 +92,14 @@ npm install -g pnpm
 node -e "console.log('Node', process.version)"
 ```
 
+**macOS / Apple Silicon (M1/M2/M3/M4):** If the installer stops with `Error: Cannot install under Rosetta 2 in ARM default prefix (/opt/homebrew)`, your terminal is running under Rosetta 2 (`arch` prints `i386`) while Homebrew is a native arm64 build. Install fnm forcing arm64, wire it into your shell, then rerun the commands above from `fnm install 22`:
+
+```bash
+arch -arm64 brew install fnm
+echo 'eval "$(fnm env --use-on-cd)"' >> ~/.zshrc
+source ~/.zshrc
+```
+
 ### Step 4: Rust
 
 For performance-critical lessons (inference, systems).

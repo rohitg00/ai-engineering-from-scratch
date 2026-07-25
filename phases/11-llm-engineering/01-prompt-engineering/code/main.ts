@@ -112,8 +112,8 @@ type ModelConfig = {
 
 const MODEL_CONFIGS: Readonly<Record<string, ModelConfig>> = {
   "gpt-4o": { provider: "openai", model: "gpt-4o", maxTokens: 2048, contextWindow: 128_000 },
-  "claude-3.5-sonnet": { provider: "anthropic", model: "claude-3-5-sonnet-20241022", maxTokens: 2048, contextWindow: 200_000 },
-  "gemini-1.5-pro": { provider: "google", model: "gemini-1.5-pro", maxTokens: 2048, contextWindow: 2_000_000 },
+  "claude-3.5-sonnet": { provider: "anthropic", model: "claude-sonnet-5", maxTokens: 2048, contextWindow: 1_000_000 },
+  "gemini-1.5-pro": { provider: "google", model: "gemini-2.5-pro", maxTokens: 2048, contextWindow: 1_000_000 },
 };
 
 type BuiltPrompt = {

@@ -2,6 +2,7 @@ import asyncio
 import hashlib
 import json
 import math
+import os
 import random
 import re
 import time
@@ -14,9 +15,23 @@ from typing import AsyncGenerator
 
 
 class ModelName(Enum):
-    CLAUDE_SONNET = "claude-sonnet-4-20250514"
+    CLAUDE_SONNET = "claude-sonnet-5"
     GPT_4O = "gpt-4o"
     GPT_4O_MINI = "gpt-4o-mini"
+
+
+def resolve_primary_model() -> ModelName:
+    override = (os.environ.get("LLM_MODEL") or "").strip()
+    if not override:
+        return ModelName.CLAUDE_SONNET
+    for model in ModelName:
+        if model.value == override:
+            return model
+    known = ", ".join(m.value for m in ModelName)
+    raise ValueError(f"LLM_MODEL={override!r} is not in the pricing registry (known: {known})")
+
+
+PRIMARY_MODEL = resolve_primary_model()
 
 
 MODEL_PRICING = {
@@ -25,7 +40,7 @@ MODEL_PRICING = {
     ModelName.GPT_4O_MINI: {"input": 0.15, "output": 0.60},
 }
 
-FALLBACK_CHAIN = [ModelName.CLAUDE_SONNET, ModelName.GPT_4O, ModelName.GPT_4O_MINI]
+FALLBACK_CHAIN = [PRIMARY_MODEL] + [m for m in ModelName if m is not PRIMARY_MODEL]
 
 
 @dataclass
@@ -132,7 +147,7 @@ PROMPT_TEMPLATES = {
                 "Be specific. Reference line numbers.\n\n"
                 "Code:\n```\n{code}\n```\n\nReview:"
             ),
-            model=ModelName.CLAUDE_SONNET,
+            model=PRIMARY_MODEL,
             max_output_tokens=2048,
         ),
     },

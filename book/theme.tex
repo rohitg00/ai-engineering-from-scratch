@@ -1,0 +1,47 @@
+% Site theme for the PDF edition: blueprint blue on cream paper, mono accents.
+\usepackage{xcolor}
+\definecolor{blueprint}{RGB}{53,83,255}
+\definecolor{cream}{RGB}{250,250,245}
+\definecolor{ink}{RGB}{26,26,26}
+\definecolor{inksoft}{RGB}{85,85,85}
+\definecolor{inkmute}{RGB}{119,119,119}
+\definecolor{shadecolor}{RGB}{243,243,236}
+\pagecolor{cream}
+\color{ink}
+
+\usepackage{fancyhdr}
+\newcommand{\bookfootL}{\ttfamily\scriptsize\color{blueprint}\href{https://aiengineeringfromscratch.com}{AIENGINEERINGFROMSCRATCH.COM}}
+\newcommand{\bookfootR}{\ttfamily\scriptsize\color{inksoft}\thepage}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\ttfamily\scriptsize\color{inkmute}\MakeUppercase{\leftmark}}
+\fancyfoot[L]{\bookfootL}
+\fancyfoot[R]{\bookfootR}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.6pt}
+\renewcommand{\footrule}{{\color{blueprint}\hrule width\headwidth height\footrulewidth}}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[L]{\bookfootL}%
+  \fancyfoot[R]{\bookfootR}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0.6pt}%
+}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\color{ink}}
+  {\ttfamily\normalsize\bfseries\color{blueprint}CHAPTER \thechapter}
+  {10pt}
+  {\huge}
+  [\vspace{6pt}{\color{blueprint}\titlerule[1.5pt]}]
+\titleformat{name=\chapter,numberless}[display]
+  {\normalfont\bfseries\color{ink}}
+  {}
+  {0pt}
+  {\huge}
+  [\vspace{6pt}{\color{blueprint}\titlerule[1.5pt]}]
+\titlespacing*{\chapter}{0pt}{-10pt}{28pt}
+\titleformat{\section}{\normalfont\Large\bfseries\color{ink}}{\thesection}{1em}{}
+
+\AtBeginDocument{\hypersetup{linkcolor=blueprint, urlcolor=blueprint, citecolor=blueprint}}

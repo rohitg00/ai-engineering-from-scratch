@@ -15,7 +15,7 @@ To train it end-to-end on a whole sequence in parallel, you need each position's
 
 The causal mask does this. It is a single upper-triangular matrix of `-inf` values added to attention scores before softmax. After softmax, those positions become 0. Each position can attend only to itself and earlier positions. And because you apply it once to the whole sequence, you get N parallel next-token predictions in one forward pass.
 
-GPT-1 (2018), GPT-2 (2019), GPT-3 (2020), GPT-4 (2023), GPT-5 (2024), Claude, Llama, Qwen, Mistral, DeepSeek, Kimi — they are all decoder-only causal transformers with the same core loop. Just bigger, better data, and better RLHF.
+GPT-1 (2018), GPT-2 (2019), GPT-3 (2020), GPT-4 (2023), GPT-5 (2025), Claude, Llama, Qwen, Mistral, DeepSeek, Kimi — they are all decoder-only causal transformers with the same core loop. What separates them is data quality, scale and architectural refinements, and post-training (SFT, RLHF, DPO, and their successors).
 
 ## The Concept
 
@@ -33,6 +33,44 @@ M[i, j] = -inf    if j > i
 Add `M` to the raw attention scores before softmax. `exp(-inf) = 0`, so masked positions contribute zero weight. Each row of the attention matrix is a probability distribution over previous positions only.
 
 Implementation cost: one `torch.tril()` call. Time to compute: nanoseconds. Impact on the field: everything.
+
+### Where the triangle comes from
+
+The mask is usually presented as a patch bolted onto attention. Run the derivation in the other direction and it stops being mysterious: attention is the third refinement of a prefix average, and the triangle is the loop bounds of that average, written as a matrix.
+
+**Stage 1 — prefix average.** The dumbest causal summary of a sequence: position `i` becomes the mean of positions `0…i`. As a loop, that is `out[i] = X[:i+1].mean(0)`. The same computation is one matrix multiply. Take a lower-triangular matrix of ones, divide each row by its count, multiply:
+
+```python
+import numpy as np
+
+A = np.tril(np.ones((n, n)))
+A = A / A.sum(axis=1, keepdims=True)
+out = A @ X
+```
+
+Row `i` of `A` is `[1/(i+1), …, 1/(i+1), 0, …, 0]`. The zeros above the diagonal are the causality. Nothing about the future was masked out; the future was never in the sum.
+
+**Stage 2 — learned weights.** A uniform average treats every past token as equally relevant. Replace the ones with a learned score matrix `S`. Now rows no longer sum to one by construction, so normalize each row with softmax instead of dividing by the count. Softmax never outputs an exact zero, which breaks causality — unless the future scores go in as `-inf`, because `exp(-inf) = 0`:
+
+```python
+def softmax(x, axis):
+    e = np.exp(x - np.max(x, axis=axis, keepdims=True))
+    return e / e.sum(axis=axis, keepdims=True)
+
+S = S + np.triu(np.full((n, n), -np.inf), k=1)
+A = softmax(S, axis=1)
+out = A @ X
+```
+
+Same triangle, same row-stochastic matrix, same one matmul. The `-inf` mask is not new machinery. It is stage 1's zero entries, translated into softmax's input domain.
+
+**Stage 3 — content-dependent weights.** In stage 2, `S` is fixed after training: position 7 always weighs position 3 the same, whatever the tokens say. Let the scores depend on the tokens themselves: `S = Q @ K.T / sqrt(d_k)`. Nothing else changes. Mask, softmax, matmul — identical.
+
+Three stages, one invariant: a lower-triangular row-stochastic matrix times the sequence. Uniform average, learned static weights, content-dependent weights. The mask was never added to attention. It survived from the average.
+
+```figure
+mask-derivation
+```
 
 ### Parallel training, serial inference
 

@@ -1,4 +1,4 @@
-/* figures.js — large-scale animated SVG explainers in the makingsoftware.com style.
+/* figures.js — large-scale animated SVG explainers in the reference-manual style.
    Auto-mount: <div data-figure="tokenizer-bpe"></div>
    Catalog:
      tokenizer-bpe        — text → words → BPE merges, watching merges learned live

@@ -1,6 +1,6 @@
 {
   "lesson": "07-memory-virtual-context-memgpt",
-  "title": "Memory: Virtual Context and MemGPT",
+  "title": "Agent Memory — Virtual Context and Memory Paging",
   "questions": [
     {
       "stage": "pre",

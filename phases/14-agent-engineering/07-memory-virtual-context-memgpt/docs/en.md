@@ -1,6 +1,6 @@
-# Memory: Virtual Context and MemGPT
+# Agent Memory — Virtual Context and Memory Paging
 
-> Context windows are finite. Conversations, documents, and tool traces are not. MemGPT (Packer et al., 2023) frames this as OS virtual memory — main context is RAM, external store is disk, the agent pages between them. This is the pattern every 2026 memory system inherits.
+> Context windows are finite. Conversations, documents, and tool traces are not. The fix is OS virtual memory restated — main context is RAM, external store is disk, the agent pages between them. MemGPT (Packer et al., 2023) named the pattern; many production memory systems build on it.
 
 **Type:** Build
 **Languages:** Python (stdlib)
@@ -26,9 +26,9 @@ Bigger windows help but do not fix this. Mem0's 2025 paper measured that 128k-wi
 
 ## The Concept
 
-### MemGPT: the OS analogy
+### The OS analogy
 
-Packer et al. (arXiv:2310.08560, v2 Feb 2024) map context management to operating-system virtual memory:
+MemGPT (Packer et al., arXiv:2310.08560, v2 Feb 2024) maps context management to operating-system virtual memory:
 
 | OS concept | MemGPT concept | 2026 production analog |
 |------------|---------------|------------------------|
@@ -58,7 +58,7 @@ Canonical memory tool surface:
 - `archival_memory_search(query, top_k)` — retrieve from the external store.
 - `conversation_search(query)` — scan past turns.
 
-### Where MemGPT ends and Letta begins
+### Where the paper ends and production begins
 
 In September 2024 MemGPT became Letta. The research repo (`cpacker/MemGPT`) remains; Letta extends the design:
 
@@ -106,6 +106,25 @@ Every production memory system today is a MemGPT variant:
 
 Pick one by operational shape (self-hosted, managed, framework-integrated), not by the core pattern — the core pattern is MemGPT.
 
+### The shape of agent memory
+
+Paging solves capacity. It does not decide what to store. Four memory types recur across production systems, each answering a different question:
+
+- **Working memory** — what matters right now? The in-context tier: current task, recent turns, pinned core sections. The prompt itself.
+- **Episodic memory** — what happened? Past turns and trajectories, stored with session and turn references, replayable on demand.
+- **Semantic memory** — what is true? Facts about the user, the domain, the world, updated and deduplicated as they change.
+- **Procedural memory** — how do I do this? Learned routines, preferences, and rules that steer future behavior rather than recall.
+
+Open-source implementations pick different points of attack:
+
+| Type | Implementation | How it tackles it |
+|------|----------------|-------------------|
+| Working | MemGPT / Letta | Pages content in and out of a fixed prompt budget via memory tools (this lesson, Lesson 08) |
+| Episodic | Zep | Temporal knowledge graph — facts carry validity intervals, so "what was true when" is queryable |
+| Semantic | Mem0 | Extraction pipeline that dedupes and updates facts across vector, KV, and graph stores (Lesson 09) |
+| Semantic + procedural | LangMem | Background extraction of facts and behavioral rules into a store the agent consults between turns |
+| Episodic + semantic | agentmemory | Captures sessions as they run, consolidates them into typed, searchable records |
+
 ## Ship It
 
 `outputs/skill-virtual-memory.md` is a reusable skill that produces a correct two-tier memory scaffold (main + archival + tool surface) for any target runtime, with eviction policy and citation fields wired in.
@@ -137,3 +156,7 @@ Pick one by operational shape (self-hosted, managed, framework-integrated), not 
 - [Letta, Memory Blocks blog](https://www.letta.com/blog/memory-blocks) — the three-tier evolution
 - [Anthropic, Effective context engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — treating context as a budget
 - [Chhikara et al., Mem0 (arXiv:2504.19413)](https://arxiv.org/abs/2504.19413) — hybrid production memory on top of this pattern
+- [Zep (getzep/zep)](https://github.com/getzep/zep) — temporal knowledge-graph memory from the taxonomy table
+- [Mem0 (mem0ai/mem0)](https://github.com/mem0ai/mem0) — the extraction pipeline behind Lesson 09's hybrid store
+- [LangMem (langchain-ai/langmem)](https://github.com/langchain-ai/langmem) — background extraction of facts and behavioral rules
+- [agentmemory (rohitg00/agentmemory)](https://github.com/rohitg00/agentmemory) — session capture consolidated into typed, searchable records

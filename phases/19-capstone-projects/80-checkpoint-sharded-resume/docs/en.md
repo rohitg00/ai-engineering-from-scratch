@@ -127,7 +127,7 @@ Lesson 81 saves a sharded checkpoint of the end-to-end DDP+ZeRO run and reloads 
 
 ## Further Reading
 
-- [DeepSpeed checkpointing](https://www.deepspeed.ai/tutorials/checkpointing/)
+- [DeepSpeed checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html)
 - [PyTorch torch.distributed.checkpoint](https://pytorch.org/docs/stable/distributed.checkpoint.html)
 - [POSIX rename atomicity](https://pubs.opengroup.org/onlinepubs/9699919799/functions/rename.html)
 - Phase 19 Lesson 78 - the ZeRO state this checkpoint is shaped to save

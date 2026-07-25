@@ -4,7 +4,7 @@
 
 **Type:** Learn
 **Languages:** Python (stdlib, toy memory and throughput comparison across formats)
-**Prerequisites:** Phase 10 · 13 (Quantization foundations), Phase 17 · 04 (vLLM Serving Internals)
+**Prerequisites:** Phase 10 · 13 (Quantization foundations), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 
 ## Learning Objectives

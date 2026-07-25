@@ -1,6 +1,6 @@
-# CrewAI: Role-Based Crews and Flows
+# Role-Based Agent Teams — Roles, Tasks, Processes
 
-> CrewAI is the 2026 role-based multi-agent framework. Four primitives: Agent, Task, Crew, Process. Two top-level shapes: Crews (autonomous, role-based collaboration) and Flows (event-driven, deterministic). The docs are blunt: "for any production-ready application, start with a Flow."
+> Four primitives: Agent, Task, Crew, Process. Two top-level shapes: Crews (autonomous, role-based collaboration) and Flows (event-driven, deterministic). CrewAI is the 2026 reference implementation, and its docs are blunt: "for any production-ready application, start with a Flow."
 
 **Type:** Learn + Build
 **Languages:** Python (stdlib)
@@ -108,13 +108,13 @@ CrewAI ships four memory types out of the box. They compose: a Crew can enable a
 
 Enable on the Crew with `memory=True` or per-type config. Backed by an embeddings provider you configure (defaults to OpenAI, swappable to local). Memory is one of the places CrewAI earns its keep against thinner frameworks; pure LangGraph requires you to wire each of these yourself.
 
-### When CrewAI fits
+### When role-based teams fit
 
 - Three to six agents with named roles and a collaborative workflow. Drafting, reviewing, planning, brainstorming.
 - Routing where the LLM's judgment about the next step is part of the value (Hierarchical).
 - Anywhere the team is happier reading `role + goal + backstory` than reading a graph definition.
 
-### When CrewAI does not fit
+### When they do not
 
 - Deterministic DAGs with strict ordering. Use LangGraph (Lesson 13). The graph shape is the right abstraction; CrewAI's role framing is friction.
 - Sub-second latency budgets. Hierarchical adds round trips. Even Sequential serializes prompts that include backstories and prior outputs.

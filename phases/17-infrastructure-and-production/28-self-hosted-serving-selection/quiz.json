@@ -1,6 +1,6 @@
 {
   "lesson": "28-self-hosted-serving-selection",
-  "title": "Self-Hosted Serving Selection — llama.cpp, Ollama, TGI, vLLM, SGLang",
+  "title": "Self-Hosted Serving Selection — Matching Engine to Hardware and Scale",
   "questions": [
     {
       "stage": "pre",
