@@ -1851,12 +1851,16 @@
         }, { passive: true });
       }
 
-      function fetchLesson(path) {
-        // Fetch docs from the branch this site was built from (set by build.js
-        // via build-meta.js), so PR preview deploys render their own lesson
-        // edits instead of always pulling main. Falls back to main.
+      // Fetch docs from the branch this site was built from (set by build.js
+      // via build-meta.js), so PR preview deploys render their own lesson
+      // edits instead of always pulling main. Falls back to main.
+      function rawContentBase() {
         var ref = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
-        var base = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ref + '/';
+        return 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ref + '/';
+      }
+
+      function fetchLesson(path) {
+        var base = rawContentBase();
         var rawUrl = base + path + '/docs/en.md';
         var quizUrl = base + path + '/quiz.json';
 
@@ -3228,10 +3232,50 @@
         ];
       }
 
+      // Maps a lesson's own quiz.json ({question, options, correct, explanation})
+      // into the {q, opts, answer, explain} shape this panel renders.
+      function normalizeLessonQuiz(data) {
+        var questions = Array.isArray(data) ? data : (data && data.questions);
+        if (!Array.isArray(questions)) return [];
+        return questions
+          .filter(function (q) { return q && q.question && Array.isArray(q.options); })
+          .map(function (q) {
+            return { q: q.question, opts: q.options, answer: q.correct, explain: q.explanation || '' };
+          });
+      }
+
       function renderQuizPanel(container) {
-        var questions = getQuizQuestions();
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">Q</div><div class="ai-panel-title">Test Your Understanding</div></div>' +
+          '<div class="ai-panel-subtitle">Did you get it?</div>' +
+          '<div id="quizPanelBody" class="panel-loading">Loading quiz...</div>';
+        container.appendChild(panel);
+
+        if (!lessonPath) {
+          renderQuizPanelBody(getQuizQuestions());
+          return;
+        }
+
+        var expectedLessonPath = lessonPath;
+        var quizUrl = rawContentBase() + expectedLessonPath + '/quiz.json';
+        fetch(quizUrl)
+          .then(function (res) { return res.ok ? res.json() : null; })
+          .catch(function () { return null; })
+          .then(function (data) {
+            // If the user navigated to a different lesson while this fetch
+            // was in flight, don't overwrite the newer panel with stale data.
+            if (expectedLessonPath !== lessonPath) return;
+            var questions = normalizeLessonQuiz(data);
+            // Fall back to the generic topic-based questions only if this
+            // lesson has no quiz.json of its own (or it failed to load).
+            renderQuizPanelBody(questions.length ? questions : getQuizQuestions());
+          });
+      }
+
+      function renderQuizPanelBody(questions) {
+        var bodyEl = document.getElementById('quizPanelBody');
+        if (!bodyEl) return;
 
         var phase = '';
         if (currentLessonIndex >= 0) {
@@ -3239,9 +3283,7 @@
           phase = fl.phaseSlug || '';
         }
 
-        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">Q</div><div class="ai-panel-title">Test Your Understanding</div></div>';
-        html += '<div class="ai-panel-subtitle">Did you get it?</div>';
-        html += '<div class="quiz-container" id="quizContainer">';
+        var html = '<div class="quiz-container" id="quizContainer">';
 
         var letters = ['A', 'B', 'C', 'D'];
         questions.forEach(function (q, qi) {
@@ -3264,8 +3306,7 @@
         html += '<div class="quiz-deeper">Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed</div>';
         html += '</div>';
 
-        panel.innerHTML = html;
-        container.appendChild(panel);
+        bodyEl.outerHTML = html;
 
         window._quizData = questions;
         window._quizAnswered = 0;
