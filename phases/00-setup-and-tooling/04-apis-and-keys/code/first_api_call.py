@@ -4,6 +4,7 @@ import urllib.request
 
 
 def call_with_sdk():
+    """Make an LLM API call using the official Anthropic Python SDK."""
     try:
         import anthropic
     except ImportError:
@@ -12,7 +13,7 @@ def call_with_sdk():
 
     client = anthropic.Anthropic()
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-6",
         max_tokens=256,
         messages=[{"role": "user", "content": "What is a neural network in one sentence?"}]
     )
@@ -21,6 +22,7 @@ def call_with_sdk():
 
 
 def call_raw_http():
+    """Make a raw HTTP API call to Anthropic's Messages endpoint using urllib."""
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         print("Set ANTHROPIC_API_KEY environment variable first")
@@ -33,7 +35,7 @@ def call_raw_http():
         "anthropic-version": "2023-06-01",
     }
     body = json.dumps({
-        "model": "claude-sonnet-4-20250514",
+        "model": "claude-sonnet-4-6",
         "max_tokens": 256,
         "messages": [{"role": "user", "content": "What is a neural network in one sentence?"}],
     }).encode()

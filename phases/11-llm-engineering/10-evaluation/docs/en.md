@@ -741,7 +741,7 @@ if __name__ == "__main__":
 #
 # providers:
 #   - openai:gpt-4o
-#   - anthropic:messages:claude-sonnet-4-20250514
+#   - anthropic:messages:claude-sonnet-4-6
 #
 # tests:
 #   - vars:
