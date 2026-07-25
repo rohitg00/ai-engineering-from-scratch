@@ -48,57 +48,77 @@ Three things to remember:
 git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 ```
+### Step 2: Configure ssh keys
 
-### Step 2: The daily workflow
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
 
+### Step 3: Fork this course
+
+Learn about forking:
+https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
+
+Fork this repo:
+https://github.com/rohitg00/ai-engineering-from-scratch
+
+
+### Step 4: Clone
+
+Replace {YOUR_USERNAME} with your GitHub username.
 ```bash
-git status
-git add file.py
-git commit -m "Add perceptron implementation"
-git push origin main
+git clone git@github.com:{YOUR_USERNAME}/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch/
 ```
 
-### Step 3: Branching for experiments
+### Step 5: Set origin and upstream repo
 
 ```bash
-git checkout -b experiment/new-optimizer
-
-# ... make changes, commit ...
-
-git checkout main
-git merge experiment/new-optimizer
+git remote set-url origin git@github.com:{YOUR_USERNAME}/ai-engineering-from-scratch.git
+git remote add upstream git@github.com:rohitg00/ai-engineering-from-scratch.git
 ```
 
-### Step 4: Working with this course repo
+### Step 6: Create a new branch
 
+This will be used to save your progress.
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-
 git checkout -b my-progress
-# work through lessons, commit your code
+```
+
+### Step 7: Test and push
+
+```bash
+cd phases/00-setup-and-tooling/02-git-and-collaboration/
+```
+Create any file.
+```bash
+git add file.py
+git commit -m "first test commit"
 git push origin my-progress
 ```
 
-## Use It
+### Step 8: Keep your fork updated
 
-For this course, you need exactly these commands:
+```bash
+git fetch upstream main
+git merge upstream/main # update local main branch with upstream
+git checkout my-progress
+git merge main # merge updated main branch on top of my-progress branch
+```
+
+### Other useful commands
 
 | Command | When |
 |---------|------|
-| `git clone` | Get the course repo |
-| `git add` + `git commit` | Save your work |
-| `git push` | Back it up to GitHub |
-| `git checkout -b` | Try something without breaking main |
+| `git restore --staged <file_path>` | Undo `git add` and unstage files |
+| `git reset --soft HEAD~1` | Undo `git commit` and keep files staged |
+| `git reset HEAD~1` | Undo `git commit` and unstage files |
 | `git log --oneline` | See what you've done |
+
 
 That's it. You don't need rebase, cherry-pick, or submodules for this course.
 
 ## Exercises
 
-1. Clone this repo, create a branch called `my-progress`, make a file, commit it, push it
-2. Create a `.gitignore` that excludes model checkpoint files (`.pt`, `.pth`, `.safetensors`)
-3. Look at the commit history of this repo with `git log --oneline` and read how lessons were added
+1. Look at the commit history of this repo with `git log --oneline` and read how lessons were added
 
 ## Key Terms
 
