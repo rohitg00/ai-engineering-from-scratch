@@ -3087,6 +3087,7 @@
 
         ghApiFetch(lessonPath + '/outputs', function (err, data) {
           var el = document.getElementById('outputsContent');
+          if (!el) return;
           if (err || !data || !Array.isArray(data) || data.length === 0) {
             el.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); el.appendChild(fb);
             return;
@@ -3145,6 +3146,7 @@
 
         ghApiFetch(lessonPath + '/code', function (err, data) {
           var el = document.getElementById('codeContent');
+          if (!el) return;
           if (err || !data || !Array.isArray(data) || data.length === 0) {
             el.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); el.appendChild(fb);
             return;
@@ -3265,11 +3267,15 @@
         panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">Q</div><div class="ai-panel-title">Test Your Understanding</div></div><div id="quizContent"><div class="panel-loading">Loading questions...</div></div>';
         container.appendChild(panel);
 
-        lessonQuizPromise.then(function (data) {
-          var questions = lessonQuizPanelQuestions(data);
-          if (!questions.length) questions = getQuizQuestions();
-          fillQuizPanel(panel.querySelector('#quizContent'), questions);
-        });
+        if (lessonQuizPromise) {
+          lessonQuizPromise.then(function (data) {
+            var questions = lessonQuizPanelQuestions(data);
+            if (!questions.length) questions = getQuizQuestions();
+            fillQuizPanel(panel.querySelector('#quizContent'), questions);
+          });
+        } else {
+          fillQuizPanel(panel.querySelector('#quizContent'), getQuizQuestions());
+        }
       }
 
       function fillQuizPanel(body, questions) {
