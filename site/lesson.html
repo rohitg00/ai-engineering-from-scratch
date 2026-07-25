@@ -3085,11 +3085,11 @@
         panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">O</div><div class="ai-panel-title">What This Lesson Ships</div></div><div class="ai-panel-subtitle">Prompts, skills, and artifacts you can use right now</div><div id="outputsContent" class="panel-loading">Loading outputs...</div>';
         container.appendChild(panel);
 
+        var outputsEl = panel.querySelector('#outputsContent');
         ghApiFetch(lessonPath + '/outputs', function (err, data) {
-          var el = document.getElementById('outputsContent');
-          if (!el) return;
+          if (!outputsEl || !outputsEl.parentNode) return;
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            el.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); el.appendChild(fb);
+            outputsEl.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); outputsEl.appendChild(fb);
             return;
           }
 
@@ -3134,7 +3134,7 @@
             });
           });
           html += '</div>';
-          el.innerHTML = html;
+          outputsEl.innerHTML = html;
         });
       }
 
@@ -3144,11 +3144,11 @@
         panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Executable files from this lesson</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
         container.appendChild(panel);
 
+        var codeEl = panel.querySelector('#codeContent');
         ghApiFetch(lessonPath + '/code', function (err, data) {
-          var el = document.getElementById('codeContent');
-          if (!el) return;
+          if (!codeEl || !codeEl.parentNode) return;
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            el.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); el.appendChild(fb);
+            codeEl.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); codeEl.appendChild(fb);
             return;
           }
 
@@ -3167,8 +3167,8 @@
             html += '</div>';
           });
           html += '</div>';
-          el.innerHTML = html;
-          el.querySelectorAll('.code-card-copy').forEach(function (btn) {
+          codeEl.innerHTML = html;
+          codeEl.querySelectorAll('.code-card-copy').forEach(function (btn) {
             btn.addEventListener('click', function () {
               var command = btn.getAttribute('data-command');
               navigator.clipboard.writeText(command).then(function () {
