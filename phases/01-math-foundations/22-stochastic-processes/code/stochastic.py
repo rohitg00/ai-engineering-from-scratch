@@ -47,7 +47,7 @@ class MarkovChain:
         eigenvalues, eigenvectors = np.linalg.eig(self.P.T)
         idx = np.argmin(np.abs(eigenvalues - 1.0))
         stationary = np.real(eigenvectors[:, idx])
-        stationary = np.clip(stationary, 0, None)
+        stationary = np.abs(stationary)
         total = stationary.sum()
         if total > 0:
             stationary = stationary / total
