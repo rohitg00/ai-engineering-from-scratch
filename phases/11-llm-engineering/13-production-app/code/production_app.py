@@ -14,7 +14,7 @@ from typing import AsyncGenerator
 
 
 class ModelName(Enum):
-    CLAUDE_SONNET = "claude-sonnet-4-20250514"
+    CLAUDE_SONNET = "claude-sonnet-5"
     GPT_4O = "gpt-4o"
     GPT_4O_MINI = "gpt-4o-mini"
 

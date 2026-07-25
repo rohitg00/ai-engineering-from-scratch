@@ -12,7 +12,7 @@ def call_with_sdk():
 
     client = anthropic.Anthropic()
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-5",
         max_tokens=256,
         messages=[{"role": "user", "content": "What is a neural network in one sentence?"}]
     )
@@ -33,7 +33,7 @@ def call_raw_http():
         "anthropic-version": "2023-06-01",
     }
     body = json.dumps({
-        "model": "claude-sonnet-4-20250514",
+        "model": "claude-sonnet-5",
         "max_tokens": 256,
         "messages": [{"role": "user", "content": "What is a neural network in one sentence?"}],
     }).encode()
