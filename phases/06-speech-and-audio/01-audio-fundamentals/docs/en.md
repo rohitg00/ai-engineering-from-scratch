@@ -46,6 +46,10 @@ Get these right and the rest of Phase 6 is tractable. Get them wrong and even Wh
 
 **Framing + window.** We do not FFT an entire clip. We chop it into overlapping *frames* (typically 25 ms with 10 ms hop), multiply each frame by a window function (Hann, Hamming) to kill edge discontinuities, then FFT each frame. This is the Short-Time Fourier Transform (STFT). Lesson 02 picks up from here.
 
+```figure
+mel-scale
+```
+
 ## Build It
 
 ### Step 1: read a clip and plot the waveform

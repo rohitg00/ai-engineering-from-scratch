@@ -81,6 +81,10 @@ Engineering rule: treat correlation IDs as load-bearing. Swap them and you get w
 
 Tool execution is the sandbox boundary. See Lesson 09 for detail. Short version: every tool should specify read/write surface, network access, timeout, memory cap. Generic `run_shell(cmd)` is a red flag; specific `git_status()` is safer.
 
+```figure
+tool-routing
+```
+
 ## Build It
 
 `code/main.py` implements a production-shape tool registry:

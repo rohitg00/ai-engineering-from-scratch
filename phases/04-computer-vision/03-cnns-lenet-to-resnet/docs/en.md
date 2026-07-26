@@ -151,6 +151,10 @@ When the skip has to cross a downsample (stride=2), the identity path is replace
 
 The idea was not really about image classification. It was about turning deep networks from "cross-your-fingers and hope gradients survive" into a reliable, scalable engineering tool. Every transformer you will read about next phase has the exact same skip connection in every block. Without ResNet, there is no GPT.
 
+```figure
+pooling
+```
+
 ## Build It
 
 ### Step 1: LeNet-5

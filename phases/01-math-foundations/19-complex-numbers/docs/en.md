@@ -267,6 +267,10 @@ graph LR
     U1 --> A3
 ```
 
+```figure
+roots-of-unity
+```
+
 ## Build It
 
 ### Step 1: Complex class

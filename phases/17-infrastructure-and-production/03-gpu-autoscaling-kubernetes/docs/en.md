@@ -4,7 +4,7 @@
 
 **Type:** Learn
 **Languages:** Python (stdlib, toy queue-depth autoscaler simulator)
-**Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 04 (vLLM Serving Internals)
+**Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 
 ## Learning Objectives
@@ -93,6 +93,10 @@ Cold-start mitigation (Phase 17 · 10) is where node provisioning time becomes u
 - KAI Scheduler prevents partial-allocation waste — 7-of-8 trap.
 - `DCGM_FI_DEV_GPU_UTIL` as HPA signal: broken; use queue depth or KV utilization.
 - Karpenter `WhenEmptyOrUnderutilized`: terminates running GPU jobs. Use `WhenEmpty + consolidateAfter: 1h` for inference.
+
+```figure
+autoscaling
+```
 
 ## Use It
 

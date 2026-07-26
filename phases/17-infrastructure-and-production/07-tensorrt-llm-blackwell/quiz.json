@@ -1,6 +1,6 @@
 {
   "lesson": "07-tensorrt-llm-blackwell",
-  "title": "TensorRT-LLM on Blackwell with FP8 and NVFP4",
+  "title": "Hardware-Specialized Inference Compilation — FP8 and NVFP4 on Blackwell",
   "questions": [
     {
       "stage": "pre",

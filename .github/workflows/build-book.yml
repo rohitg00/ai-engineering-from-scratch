@@ -1,0 +1,68 @@
+name: build-book
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "phases/**"
+      - "book/**"
+      - "scripts/build_book.py"
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  book:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install pandoc
+        run: |
+          curl -sL https://github.com/jgm/pandoc/releases/download/3.10.1/pandoc-3.10.1-1-amd64.deb -o /tmp/pandoc.deb
+          echo "b419369915e0f3181be0afdb040ec8ecc6b70e72e5992652a0d83aed9e6bc109  /tmp/pandoc.deb" | sha256sum -c -
+          sudo dpkg -i /tmp/pandoc.deb
+
+      - name: Install mermaid renderer
+        continue-on-error: true
+        run: npm install -g @mermaid-js/mermaid-cli
+
+      - name: Install xelatex
+        if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q texlive-xetex texlive-fonts-recommended fonts-dejavu librsvg2-bin
+
+      - name: Build EPUB volumes
+        if: github.event_name == 'push'
+        run: python3 scripts/build_book.py
+
+      - name: Build EPUB and PDF volumes
+        if: github.event_name != 'push'
+        run: python3 scripts/build_book.py --pdf
+
+      - name: Upload EPUBs
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-epub
+          path: dist/book/*.epub
+          retention-days: 30
+
+      - name: Upload PDFs
+        if: github.event_name != 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-pdf
+          path: dist/book/*.pdf
+          retention-days: 90
+
+      - name: Attach to release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$RELEASE_TAG" dist/book/*.epub dist/book/*.pdf --clobber

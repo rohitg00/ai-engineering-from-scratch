@@ -254,6 +254,10 @@ Sampling means drawing random values from a distribution. In ML:
 
 Sampling from arbitrary distributions requires techniques like inverse transform sampling, rejection sampling, or the reparameterization trick (used in VAEs).
 
+```figure
+gaussian-pdf
+```
+
 ## Build It
 
 ### Step 1: Probability basics

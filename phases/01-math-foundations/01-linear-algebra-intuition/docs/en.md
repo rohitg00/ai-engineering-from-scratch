@@ -178,6 +178,10 @@ This is how QR decomposition works internally. Q is the orthonormal basis, R cap
 - Computing eigenvalues (QR algorithm)
 - Least-squares regression (the standard numerical method)
 
+```figure
+eigen-directions
+```
+
 ## Build It
 
 ### Step 1: Vectors from scratch (Python)

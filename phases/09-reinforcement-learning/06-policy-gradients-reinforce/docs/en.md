@@ -52,6 +52,10 @@ i.e., score of the taken action minus its expected value under the policy.
 
 **Gaussian policy for continuous actions.** `π_θ(a | s) = N(μ_θ(s), σ_θ(s))`. `∇ log N(a; μ, σ)` has a closed form. That is all Phase 9 · 07's SAC needs.
 
+```figure
+policy-gradient-landscape
+```
+
 ## Build It
 
 ### Step 1: softmax policy network

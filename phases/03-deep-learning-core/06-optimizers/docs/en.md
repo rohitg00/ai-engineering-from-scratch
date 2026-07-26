@@ -164,6 +164,10 @@ flowchart TD
     Type -->|"Don't know yet"| Default["Start with AdamW<br/>lr=3e-4, wd=0.01"]
 ```
 
+```figure
+optimizer-trajectory
+```
+
 ## Build It
 
 ### Step 1: Vanilla SGD

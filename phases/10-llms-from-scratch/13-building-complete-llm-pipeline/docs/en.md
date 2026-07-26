@@ -193,6 +193,10 @@ Most frontier teams converged on the same skeleton.
 
 The numbers change every six months. The skeleton does not.
 
+```figure
+beam-search
+```
+
 ## Build It
 
 The lesson's code is an orchestrator and a manifest checker, not twelve training scripts. Each stage is simulated with a placeholder that produces an output artifact with the correct shape and hash. Running the orchestrator end-to-end proves the pipeline's plumbing works before you burn GPU money on the real stages.

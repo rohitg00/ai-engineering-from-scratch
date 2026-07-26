@@ -139,6 +139,10 @@ DeepSeek-R1 (2025) is a reasoning-training run on the V3 backbone. R1 uses the s
 
 DeepSeek-V4 (if it ships) is expected to keep MLA + MoE + MTP and add DSA (DeepSeek Sparse Attention), the successor to NSA from Phase 10 · 17. The lineage is stable: architecture-level innovations accumulate; each version turns additional knobs.
 
+```figure
+moe-routing
+```
+
 ## Use It
 
 `code/main.py` is the parameter calculator specialized to DeepSeek-V3's shape. Run it, compare its output to the paper's numbers, and use it on hypothetical variants (256 experts vs 512, top-8 vs top-16, MLA rank 512 vs 1024).

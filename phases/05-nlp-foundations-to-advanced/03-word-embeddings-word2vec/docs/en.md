@@ -36,6 +36,10 @@ one-hot(center) ── W ──▶ hidden (d-dim) ── W' ──▶ softmax(vo
 
 The trick: softmax over 100k words is prohibitively expensive. Word2Vec uses **negative sampling** to turn it into a binary classification task. Predict "did this context word appear near this center word, yes or no". Sample a handful of negative (non-co-occurring) words per training pair instead of computing softmax over the whole vocabulary.
 
+```figure
+word-vector-arithmetic
+```
+
 ## Build It
 
 ### Step 1: training pairs from a corpus

@@ -142,6 +142,10 @@ The optimal hyperparameter value is where the validation score peaks.
 
 **Testing too often**: every time you look at test performance and adjust, you overfit to the test set. The test set is single-use.
 
+```figure
+precision-recall-threshold
+```
+
 ## Build It
 
 ### Step 1: Train/validation/test split

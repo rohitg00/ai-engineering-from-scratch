@@ -172,6 +172,10 @@ The trend is clear: each method eliminates one more piece of complexity. RLHF ne
 
 **Neural Magic / nm-chat (2024):** Applied DPO to multiple open-source models, consistently showing 5-15% improvement on alignment benchmarks over SFT-only baselines.
 
+```figure
+dpo-loss
+```
+
 ## Build It
 
 ### Step 1: Preference Dataset

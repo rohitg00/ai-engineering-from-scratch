@@ -44,6 +44,10 @@ Reorganize: `V_new = V_old + α · (target - V_old)` with `α = 1/n`. Swap `1/n`
 
 Converges to `Q*` and `π*` with probability 1 under mild conditions (every pair visited infinitely often, `α` satisfies Robbins-Monro).
 
+```figure
+epsilon-greedy
+```
+
 ## Build It
 
 ### Step 1: rollout → list of (s, a, r)

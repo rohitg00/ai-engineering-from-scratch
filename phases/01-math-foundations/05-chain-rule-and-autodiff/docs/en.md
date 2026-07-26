@@ -163,6 +163,10 @@ PyTorch internally:
 
 The graph is dynamic (define-by-run). A new graph is built on every forward pass. This is why PyTorch supports control flow (if/else, loops) inside models.
 
+```figure
+chain-rule
+```
+
 ## Build It
 
 ### Step 1: The Value class

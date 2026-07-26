@@ -35,6 +35,10 @@ Rule of thumb:
 - **Fast inference against GPT vocab:** tiktoken (cl100k_base, o200k_base).
 - **Both:** HF Tokenizers — one library, training + serving.
 
+```figure
+bpe-merge
+```
+
 ## Build It
 
 ### Step 1: BPE from scratch

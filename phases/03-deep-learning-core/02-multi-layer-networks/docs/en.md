@@ -146,6 +146,10 @@ graph LR
 
 Neural networks are composable. You can stack them, chain them, run them in parallel. A Whisper model uses an encoder network to process audio and a separate decoder network to generate text. Modern LLMs are decoder-only. BERT is encoder-only. T5 is encoder-decoder. The architecture choice defines what the model can do.
 
+```figure
+mlp-forward
+```
+
 ## Build It
 
 Pure Python. No numpy. Every matrix operation written from scratch.

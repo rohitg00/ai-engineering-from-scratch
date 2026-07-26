@@ -223,6 +223,10 @@ where w_i = 1 / distance_i
 
 KNN regression produces piecewise-constant (or piecewise-smooth with weighting) predictions. It cannot extrapolate beyond the range of the training data. If the training targets are all between 0 and 100, KNN will never predict 200.
 
+```figure
+knn-smoothness
+```
+
 ## Build It
 
 ### Step 1: Distance functions

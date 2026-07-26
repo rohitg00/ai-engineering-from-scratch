@@ -73,6 +73,10 @@ And unlike the 2018 stack, it is Flash-Attention-native. Inference is 2–3× fa
 | Zero-shot entailment (NLI) | Classifier head on top of encoder |
 | Reranker for RAG | Cross-encoder scoring, 10x faster than LLM rerankers |
 
+```figure
+transformer-residual
+```
+
 ## Build It
 
 ### Step 1: masking logic

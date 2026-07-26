@@ -2,7 +2,7 @@
 
 > Your network compiled. It ran. It produced a number. The number is wrong and nothing crashed. Welcome to the hardest kind of debugging -- the kind where there is no error message.
 
-**Type:** Practice
+**Type:** Build
 **Languages:** Python, PyTorch
 **Prerequisites:** Phase 03 Lessons 01-10 (especially backpropagation, loss functions, optimizers)
 **Time:** ~90 minutes
@@ -206,6 +206,10 @@ These are the bugs that waste the most collective hours in the PyTorch community
 | Training acc = test acc but both low | Underfitting | Bigger model, more layers, more features |
 | Gradients all zero | Dead ReLUs or detached computation graph | Switch to LeakyReLU, check `.requires_grad` |
 | Out of memory during training | Batch too large or graph not freed | Reduce batch size, use `torch.no_grad()` for eval |
+
+```figure
+learning-curves
+```
 
 ## Build It
 

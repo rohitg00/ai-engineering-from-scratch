@@ -114,6 +114,10 @@ If `a, b` are competing first-token candidates and `c, d, e, f` are second-token
 
 Production shops typically report 2-3× wall-clock speedup on chat, 3-5× on code generation, and near-zero on creative writing.
 
+```figure
+speculative-decoding
+```
+
 ## Build It
 
 `code/main.py`:

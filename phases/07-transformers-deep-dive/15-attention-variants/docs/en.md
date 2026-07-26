@@ -82,6 +82,10 @@ Reported results (Microsoft 2024): 5–10% lower perplexity, 1.5–2× longer ef
 | Native Sparse (DeepSeek-V3.2) | O(N · active fraction) | O(N) | within 0.05 ppl | DeepSeek-V3.2, 2025 |
 | Differential | O(2·N²) | O(2N) | -5 to -10% ppl | DIFF Transformer, early 2026 models |
 
+```figure
+gqa-kv-sharing
+```
+
 ## Build It
 
 See `code/main.py`. We implement a causal mask comparator that shows full, SWA, local+strided, and differential attention side by side on a toy sequence.

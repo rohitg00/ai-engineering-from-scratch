@@ -68,6 +68,10 @@ eval:
 - Guardrails: Llama Guard 4 input/output classifier, NeMo Guardrails v0.12 policy, Presidio PII scrub
 - Compliance: role-based access labels on chunks; jurisdiction tags for GDPR/HIPAA
 
+```figure
+canary-rollout
+```
+
 ## Build It
 
 1. **Ingestion.** Parse your corpus (1000-10000 documents for a serious build) with Unstructured or docling. For scanned / visual-heavy pages, route through ColPali. Produce chunks with summaries, role-labels, jurisdiction tags.
@@ -146,9 +150,9 @@ answer:
 - [Harvey AI](https://www.harvey.ai) — reference legal production stack
 - [Glean enterprise search](https://www.glean.com) — reference RAG at enterprise scale
 - [Mendable documentation](https://mendable.ai) — developer-docs RAG reference
-- [LlamaCloud Parse + Index](https://docs.llamaindex.ai/en/stable/examples/llama_cloud/llama_parse/) — managed ingestion
+- [LlamaCloud Parse + Index](https://docs.cloud.llamaindex.ai/llamaparse/getting_started) — managed ingestion
 - [Anthropic prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) — the cost-lever reference
 - [RAGAS 0.2 documentation](https://docs.ragas.io/) — the canonical RAG eval framework
 - [Arize Phoenix](https://github.com/Arize-ai/phoenix) — reference drift observability
-- [Llama Guard 4](https://ai.meta.com/research/publications/llama-guard-4/) — 2026 safety classifier
+- [Llama Guard 4](https://www.llama.com/docs/model-cards-and-prompt-formats/llama-guard-4/) — 2026 safety classifier
 - [NeMo Guardrails v0.12](https://docs.nvidia.com/nemo-guardrails/) — policy rail framework

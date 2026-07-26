@@ -38,7 +38,7 @@ Everyone speaks OpenAI-shape. The routing gateway exposes `/v1/chat/completions`
 
 ### Model aliases
 
-Instead of `claude-3-5-sonnet-20251022`, your code says `our_smart_model`. The gateway maps aliases to real models. When Anthropic ships Claude 4, you change the alias server-side; your code does not touch a thing.
+Instead of a pinned snapshot id, your code says `our_smart_model`. The gateway maps aliases to real models. When a provider ships a new generation, you change the alias server-side; your code does not touch a thing.
 
 ### Fallback chains
 

@@ -179,6 +179,10 @@ Most production RAG systems use these parameters:
 - **Indexing throughput**: 100-1,000 documents per second with API embeddings
 - **Query latency**: 50-200ms for retrieval, 500-3000ms for generation
 
+```figure
+rag-chunking
+```
+
 ## Build It
 
 ### Step 1: Document Chunking
@@ -358,7 +362,7 @@ client = anthropic.Anthropic()
 
 def generate(prompt):
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-5",
         max_tokens=1024,
         messages=[{"role": "user", "content": prompt}]
     )

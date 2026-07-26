@@ -73,6 +73,10 @@ Where `m_h` is a head-specific slope (e.g. `1 / 2^(8·h/H)`). Closer tokens get 
 
 RoPE won because it slots into attention without changing the architecture, encodes relative position, and its `base` hyperparameter gives a clean knob for long-context fine-tuning.
 
+```figure
+rope-explorer
+```
+
 ## Build It
 
 ### Step 1: sinusoidal encoding

@@ -195,6 +195,10 @@ The connection is deeper than analogy:
 
 **Model comparison is Bayesian.** Bayesian information criterion (BIC), marginal likelihood, and Bayes factors all use Bayesian reasoning to choose between models without overfitting.
 
+```figure
+bayes-update
+```
+
 ## Build It
 
 ### Step 1: Bayes theorem function

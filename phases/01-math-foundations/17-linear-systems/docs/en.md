@@ -386,6 +386,10 @@ Every method in this lesson appears in production ML:
 
 **Feature engineering.** The condition number of X^T X tells you if your features are collinear. If kappa is large, drop features or add regularization.
 
+```figure
+linear-system-conditioning
+```
+
 ## Build It
 
 ### Step 1: Gaussian elimination with partial pivoting

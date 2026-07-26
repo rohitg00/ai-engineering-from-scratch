@@ -56,6 +56,10 @@ This is where every attention implementation goes wrong the first time. Read slo
 
 **One Bahdanau / Luong gotcha worth naming.** Bahdanau uses `s_{t-1}` (the decoder state *before* generating the current word). Luong uses `s_t` (the state *after*). Mixing them up produces subtly wrong gradients that are extremely hard to debug. Pick one paper and stick to its convention.
 
+```figure
+attention-heatmap
+```
+
 ## Build It
 
 ### Step 1: additive (Bahdanau) attention

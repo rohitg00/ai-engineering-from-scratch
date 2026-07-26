@@ -513,15 +513,15 @@ MODEL_CONFIGS = {
     },
     "claude-3.5-sonnet": {
         "provider": "anthropic",
-        "model": "claude-3-5-sonnet-20241022",
+        "model": "claude-sonnet-5",
         "max_tokens": 2048,
-        "context_window": 200_000,
+        "context_window": 1_000_000,
     },
     "gemini-1.5-pro": {
         "provider": "google",
-        "model": "gemini-1.5-pro",
+        "model": "gemini-2.5-pro",
         "max_tokens": 2048,
-        "context_window": 2_000_000,
+        "context_window": 1_000_000,
     },
 }
 
@@ -952,7 +952,7 @@ The assistant prefill (`"{"`) forces Claude to continue producing JSON without a
 
 Gemini processes system instructions as part of the model configuration, not as a message. The 2M token context window means you can include massive few-shot example sets that would not fit in GPT-4o or Claude.
 
-### LangChain: Provider-Agnostic Prompts
+### Provider-Agnostic Prompt Templates
 
 ```python
 # from langchain_core.prompts import ChatPromptTemplate

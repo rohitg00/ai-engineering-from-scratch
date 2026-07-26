@@ -63,6 +63,10 @@ STaR is old. But the pattern reappears everywhere in 2025-2026. RL on verifiable
 
 Understanding STaR makes all of these click. It is the minimum-viable self-improvement loop.
 
+```figure
+reflection-loop
+```
+
 ## Use It
 
 `code/main.py` runs a simulated STaR loop on a toy arithmetic task. You can watch:

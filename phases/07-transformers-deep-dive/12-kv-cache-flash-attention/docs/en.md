@@ -118,6 +118,10 @@ Continuous batching (first shipped in Orca, now in vLLM, TensorRT-LLM, SGLang): 
 
 vLLM's headline feature. KV cache is allocated in 16-token blocks; a page table maps logical positions to physical blocks. Lets you share KV across parallel samples (beam search, parallel sampling), hot-swap prefixes for prompt caching, and defragment memory. 4× throughput improvement over naive contiguous allocation.
 
+```figure
+flash-attention-memory
+```
+
 ## Build It
 
 See `code/main.py`. We implement:

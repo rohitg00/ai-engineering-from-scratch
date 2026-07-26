@@ -43,6 +43,10 @@ This is the Stable Diffusion recipe. SD 1.x / 2.x used an 860M U-Net over `64×6
 
 The trend: replace U-Net with DiT (transformer over latent patches), scale the text encoder (T5 beats CLIP for prompt adherence), increase latent channels (4 → 16 gives more detail headroom).
 
+```figure
+noise-schedule
+```
+
 ## Build It
 
 `code/main.py` stacks a toy 1-D "VAE" (identity encoder + decoder, for demonstration; a real VAE would be a conv net) on top of the DDPM from Lesson 06 and adds class conditioning with classifier-free guidance. It shows that the same diffusion loss works whether you run on raw 1-D values or on encoded values — the key insight.

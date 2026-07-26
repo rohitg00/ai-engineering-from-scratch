@@ -53,6 +53,10 @@ In 2026 GANs are no longer the SOTA generator (diffusion and flow matching ate t
 | 2022 | StyleGAN-XL | Conditional, class-aware, larger scale. |
 | 2024 | R3GAN | Rebrands with stronger regularization; works on 1024² without tricks. |
 
+```figure
+gan-minimax
+```
+
 ## Build It
 
 `code/main.py` trains a tiny GAN on 1-D data: a mixture of two Gaussians. Generator and discriminator are single-hidden-layer MLPs. We implement forward, backward, and the minimax loop by hand. The goal is to see the two key failure modes (mode collapse + vanishing gradient) as they happen.

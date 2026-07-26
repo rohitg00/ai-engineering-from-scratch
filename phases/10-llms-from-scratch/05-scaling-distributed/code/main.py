@@ -223,8 +223,11 @@ def training_cost_estimator(
 
     verify = memory_calculator(params_billions, sharding="fsdp", num_gpus=num_gpus)
     while verify["per_gpu_total_gb"] > spec["memory_gb"]:
+        if verify["activations_gb"] >= spec["memory_gb"]:
+            break
         num_gpus *= 2
         verify = memory_calculator(params_billions, sharding="fsdp", num_gpus=num_gpus)
+    fits_in_gpu_memory = verify["per_gpu_total_gb"] <= spec["memory_gb"]
 
     total_gpu_seconds = flops_total / (flops_per_gpu_per_sec * num_gpus)
     total_gpu_hours = total_gpu_seconds / 3600
@@ -240,6 +243,7 @@ def training_cost_estimator(
         "wall_clock_days": wall_clock_hours / 24,
         "total_gpu_hours": total_gpu_hours * num_gpus,
         "estimated_cost": total_cost,
+        "fits_in_gpu_memory": fits_in_gpu_memory,
     }
 
 

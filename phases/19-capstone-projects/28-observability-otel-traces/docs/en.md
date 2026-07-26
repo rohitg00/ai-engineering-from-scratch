@@ -47,6 +47,10 @@ The exporter writes JSONL. One JSON object per line. This is the simplest possib
 
 Metrics live next to traces. A counter increments on each tool call: `tools_called_total{tool="read_file"}`. A histogram records the observed latency: `tool_latency_ms{tool="read_file"}`. Both serialise into Prometheus text exposition format, which is the de-facto standard for pull-based metrics.
 
+```figure
+trace-spans
+```
+
 ## Architecture
 
 ```mermaid

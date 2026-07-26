@@ -148,6 +148,10 @@ For perspective: tokenizing 15 trillion tokens for Llama 3 pre-training at 1 mil
 
 You are building in Python to understand the algorithm. In production, you would use a compiled implementation and only touch the Python wrapper.
 
+```figure
+weight-tying
+```
+
 ## Build It
 
 ### Step 1: Byte-Level Encoding

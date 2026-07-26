@@ -27,6 +27,10 @@ Three operational choices drive real-world MT quality.
 - **Model size.** NLLB-200 distilled 600M fits on a laptop. NLLB-200 3.3B is the published production default. 54.5B is the research ceiling.
 - **Decoding.** Beam width 4-5 for general content. Length penalty to avoid too-short output. Constrained decoding when you need terminology consistency.
 
+```figure
+seq2seq-alignment
+```
+
 ## Build It
 
 ### Step 1: a pretrained MT call

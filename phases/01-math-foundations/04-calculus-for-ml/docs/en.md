@@ -388,6 +388,10 @@ Each weight update:
 
 The forward pass computes the prediction and loss. The backward pass computes the gradient of the loss with respect to every weight. Then every weight takes a small step downhill. Repeat for millions of steps. That is deep learning.
 
+```figure
+derivative-tangent
+```
+
 ## Build It
 
 ### Step 1: Numerical derivative from scratch

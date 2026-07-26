@@ -1,6 +1,6 @@
 {
   "lesson": "06-sglang-radixattention",
-  "title": "SGLang and RadixAttention for Prefix-Heavy Workloads",
+  "title": "Prefix-Cache Serving — RadixAttention and KV Reuse",
   "questions": [
     {
       "stage": "pre",

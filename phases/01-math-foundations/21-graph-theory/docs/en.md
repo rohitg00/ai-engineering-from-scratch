@@ -241,6 +241,10 @@ graph LR
 | Spectral clustering | Unsupervised node grouping |
 | PageRank | Node importance, web search |
 
+```figure
+graph-degree-distribution
+```
+
 ## Build It
 
 ### Step 1: Graph class from scratch

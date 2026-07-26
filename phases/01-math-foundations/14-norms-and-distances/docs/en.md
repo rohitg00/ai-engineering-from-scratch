@@ -423,6 +423,10 @@ Product quant.    Compress vectors, search       FAISS (memory-constrained)
 
 HNSW (Hierarchical Navigable Small World) is the dominant algorithm in modern vector databases. It builds a multi-layer graph where each node connects to its approximate nearest neighbors. Search starts at the top layer (sparse, long jumps) and descends to the bottom layer (dense, short jumps).
 
+```figure
+norm-unit-balls
+```
+
 ## Build It
 
 ### Step 1: All norm and distance functions

@@ -102,6 +102,10 @@ In practice: export PyTorch -> ONNX -> pick the runtime for the target. ONNX is 
 
 Quantise all of these to INT8 unless you have a specific reason not to.
 
+```figure
+cnn-param-count
+```
+
 ## Build It
 
 ### Step 1: Measure latency correctly

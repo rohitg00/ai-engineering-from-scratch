@@ -282,6 +282,10 @@ for inputs, targets in loader:
 | Learning curve | You built it | Moderate | Steep (functional paradigm) |
 | Production use | Toy problems | Meta, OpenAI, Anthropic, HF | Google DeepMind, Midjourney |
 
+```figure
+dropout-mask
+```
+
 ## Build It
 
 A 3-layer MLP trained on MNIST using only PyTorch primitives. No high-level wrappers. No `torchvision.datasets`. We download and parse the raw data ourselves.

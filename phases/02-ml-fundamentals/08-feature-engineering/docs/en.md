@@ -104,6 +104,10 @@ More features is not always better. Irrelevant features add noise, increase trai
 
 **Why selection matters:** A model with 10 good features will usually outperform a model with 10 good features and 90 noisy ones. The noisy features give the model opportunities to overfit on training data patterns that do not generalize.
 
+```figure
+feature-scaling
+```
+
 ## Build It
 
 ### Step 1: Numerical transforms from scratch

@@ -29,6 +29,10 @@ This is worth studying for two reasons. First, the context-vector bottleneck is 
 
 Attention (lesson 10) fixes this by letting the decoder look at *every* encoder hidden state, not just the last one. That is the whole pitch.
 
+```figure
+lstm-gates
+```
+
 ## Build It
 
 ### Step 1: an encoder

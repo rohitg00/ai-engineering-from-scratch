@@ -388,6 +388,10 @@ Fix: use `torch.nn.functional.log_softmax()` which implements log-sum-exp intern
 Cause: float16 cannot represent gradient magnitudes below 6e-8 or activations above 65,504.
 Fix: use mixed precision with loss scaling (AMP), or use bfloat16 instead.
 
+```figure
+logsumexp-stability
+```
+
 ## Build It
 
 ### Step 1: Demonstrate floating point precision limits

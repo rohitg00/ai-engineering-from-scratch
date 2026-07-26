@@ -61,6 +61,10 @@ The workshop summary (openreview.net/pdf?id=OsPQ6zTQXV) identifies four current 
 3. Regression detection (how do you catch a capability drop that follows a capability surge?).
 4. Inter-cycle audit (who checks the cycle before the next one starts?).
 
+```figure
+world-model-rollout
+```
+
 ## Use It
 
 `code/main.py` simulates a two-process race: capability improvement and alignment improvement. Each cycle applies configurable rates with noise. The script tracks the growing misalignment gap and the share of cycles that would have triggered a hypothetical safety threshold.

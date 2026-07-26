@@ -275,6 +275,10 @@ A common misconception: zero-padding a signal before FFT improves frequency reso
 
 True frequency resolution depends only on the observation time T = N / fs. To resolve two frequencies separated by delta_f, you need at least T = 1 / delta_f seconds of data. No amount of zero-padding changes this fundamental limit.
 
+```figure
+fourier-synthesis
+```
+
 ## Build It
 
 ### Step 1: DFT from scratch

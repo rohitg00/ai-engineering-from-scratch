@@ -437,6 +437,10 @@ The connection to the methods in this lesson:
 
 The entire image generation process is iterative sampling: start from noise, and at each step, sample a slightly less noisy version conditioned on the learned denoising model.
 
+```figure
+monte-carlo-pi
+```
+
 ## Build It
 
 ### Step 1: Uniform and inverse CDF sampling

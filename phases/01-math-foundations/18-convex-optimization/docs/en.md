@@ -381,6 +381,10 @@ Pure Newton's method is impractical for large models. Several approximations mak
 | Adam | O(n) | O(n) | Deep learning default |
 | K-FAC | O(n) | O(n) per layer | Research, large-batch training |
 
+```figure
+convex-vs-nonconvex
+```
+
 ## Build It
 
 ### Step 1: Convexity checker

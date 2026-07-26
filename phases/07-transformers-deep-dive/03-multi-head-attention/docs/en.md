@@ -38,6 +38,10 @@ Multi-head attention is the default every transformer in 2026 ships with. The on
 
 GQA is the modern default because it cuts KV-cache memory by a factor of `N/G` while keeping nearly full quality. MLA goes further by compressing K/V into a latent space, then projecting back at compute time — costs FLOPs, saves a lot more memory.
 
+```figure
+multihead-split
+```
+
 ## Build It
 
 ### Step 1: split heads from the single-head attention we already have

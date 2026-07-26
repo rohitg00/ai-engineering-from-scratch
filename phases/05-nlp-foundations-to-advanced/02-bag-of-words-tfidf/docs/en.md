@@ -32,6 +32,10 @@ Where `TF` is term frequency in the document, `df` is document frequency (how ma
 
 Key property: both produce sparse vectors with interpretable axes. You can look at a trained classifier's weights and read which words push a document toward each class. You cannot do this with a 768-dimensional BERT embedding.
 
+```figure
+bow-tfidf
+```
+
 ## Build It
 
 ### Step 1: build the vocabulary

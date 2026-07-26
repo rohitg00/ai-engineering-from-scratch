@@ -26,6 +26,10 @@ Naive Bayes is the dumbest model that works. Assume every feature is independent
 
 Logistic regression fixes the independence assumption. It learns a weight per feature, including negative weights. `not good` as a bigram feature gets a negative weight. Naive Bayes cannot do that for bigrams it has never labeled.
 
+```figure
+sentiment-logits
+```
+
 ## Build It
 
 ### Step 1: a real mini-dataset

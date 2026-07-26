@@ -218,6 +218,10 @@ graph TD
     style Done fill:#0f3460,stroke:#16213e,color:#fff
 ```
 
+```figure
+lora-params
+```
+
 ## Build It
 
 We implement LoRA from scratch in pure PyTorch. No libraries. No magic. You'll build the LoRA layer, inject it into a model, train it, and merge the weights back.

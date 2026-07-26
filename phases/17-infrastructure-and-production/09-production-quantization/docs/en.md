@@ -4,7 +4,7 @@
 
 **Type:** Learn
 **Languages:** Python (stdlib, toy memory and throughput comparison across formats)
-**Prerequisites:** Phase 10 · 13 (Quantization foundations), Phase 17 · 04 (vLLM Serving Internals)
+**Prerequisites:** Phase 10 · 13 (Quantization foundations), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 
 ## Learning Objectives
@@ -95,6 +95,10 @@ Chain-of-thought, math, code-gen with long context — these suffer visibly from
 - Reasoning workload: FP8.
 - Blackwell datacenter, validated quality: NVFP4 + FP8 KV.
 - Ambiguous: run a 1,000-sample eval on each candidate format.
+
+```figure
+gpu-memory-breakdown
+```
 
 ## Use It
 

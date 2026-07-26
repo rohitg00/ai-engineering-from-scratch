@@ -44,6 +44,10 @@ The architecture progression:
 - **BiLSTM-CRF.** Neural features instead of hand-crafted. LSTM reads the sentence both directions, CRF layer on top enforces consistent tag sequences.
 - **Transformer-based.** Fine-tune BERT with a token-classification head. Best accuracy. Most compute.
 
+```figure
+ner-bio-tagging
+```
+
 ## Build It
 
 ### Step 1: BIO tagging helpers

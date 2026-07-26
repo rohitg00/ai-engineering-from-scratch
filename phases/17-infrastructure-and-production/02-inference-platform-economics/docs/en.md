@@ -4,7 +4,7 @@
 
 **Type:** Learn
 **Languages:** Python (stdlib, toy per-call economics comparator)
-**Prerequisites:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 04 (vLLM Serving Internals)
+**Prerequisites:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 
 ## Learning Objectives
@@ -89,6 +89,10 @@ Every platform above vLLM and SGLang claims a custom engine. FireAttention, RayT
 - Baseten valuation: $5B (Series E, Jan 2026, $300M round).
 - Modal valuation: $1.1B (Series B, 2025).
 - Per-minute beats per-token above ~30% sustained utilization.
+
+```figure
+cost-per-token
+```
 
 ## Use It
 

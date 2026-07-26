@@ -122,6 +122,10 @@ Clustering naturally supports anomaly detection:
 - **DBSCAN**: noise points are anomalies by definition
 - **GMM**: points with low probability under all Gaussians are anomalies
 
+```figure
+kmeans-step
+```
+
 ## Build It
 
 ### Step 1: K-Means from scratch

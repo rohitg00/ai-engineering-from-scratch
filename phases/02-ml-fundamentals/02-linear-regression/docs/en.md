@@ -147,6 +147,10 @@ Cost = MSE + lambda * sum(w_i^2)
 
 The penalty term discourages large weights. The hyperparameter lambda controls the tradeoff: higher lambda means smaller weights and more regularization. This is covered in depth in a later lesson. For now, know that it exists and why it helps.
 
+```figure
+linear-regression-fit
+```
+
 ## Build It
 
 ### Step 1: Generate sample data

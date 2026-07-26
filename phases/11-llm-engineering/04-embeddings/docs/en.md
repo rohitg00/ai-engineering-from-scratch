@@ -215,6 +215,10 @@ Binary quantization converts each float to a single bit: positive values become 
 
 The accuracy hit is around 5-10% on retrieval recall. The common pattern: binary quantization for the first-pass search over millions of vectors, then rescore the top-1000 with full-precision vectors. This gets you 95%+ of full-precision accuracy at 32x less memory.
 
+```figure
+cosine-similarity
+```
+
 ## Build It
 
 We build a semantic search engine from scratch. No vector database. No external embedding API. Pure Python with numpy for the math.

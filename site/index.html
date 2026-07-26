@@ -489,6 +489,88 @@
       padding-left: 8px;
     }
 
+    .books {
+      padding: 40px 0 8px;
+      border-top: 1px solid var(--rule-soft);
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .book-card {
+      border: 1px solid var(--rule-soft);
+      background: var(--code-bg);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .book-card .vol {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      color: var(--blueprint);
+    }
+
+    .book-card h3 {
+      font-family: var(--font-body);
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--ink);
+    }
+
+    .book-card p {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      flex: 1;
+    }
+
+    .book-card .dl {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .book-card .dl a {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--blueprint);
+      border: 1px solid var(--blueprint);
+      padding: 4px 10px;
+      text-decoration: none;
+    }
+
+    .book-card .dl a:hover {
+      background: var(--blueprint);
+      color: var(--bg);
+    }
+
+    .books-note {
+      margin-top: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: var(--ink-mute);
+    }
+
+    .books-note a { color: var(--blueprint); }
+
+    @media (max-width: 900px) {
+      .books-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .books-grid { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 900px) {
       .manual-masthead { padding: 80px 0 16px; }
       .preface { padding: 32px 0; }
@@ -550,16 +632,142 @@
       }
     }
 
+    @media (max-width: 600px) {
+      html,
+      body {
+        overflow-x: hidden;
+      }
+
+      .manual-masthead.container,
+      .preface.container,
+      .stat-block.container,
+      .toc.container,
+      .colophon.container {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .manual-masthead {
+        padding-top: 76px;
+      }
+
+      .manual-meta-row {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 20px;
+        gap: 6px;
+      }
+
+      .manual-title {
+        font-size: clamp(2.45rem, 12vw, 3.7rem);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .manual-tagline {
+        max-width: 34ch;
+        line-height: 1.48;
+        hyphens: none;
+        -webkit-hyphens: none;
+      }
+
+      .manual-attribution {
+        line-height: 1.45;
+      }
+
+      .masthead-cta {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .masthead-btn {
+        width: 100%;
+        justify-content: center;
+        min-width: 0;
+      }
+
+      .masthead-btn svg {
+        flex-shrink: 0;
+      }
+
+      .masthead-btn span {
+        min-width: 0;
+      }
+
+      .masthead-btn-count {
+        flex-shrink: 0;
+      }
+
+      .preface-body {
+        font-size: 1rem;
+        line-height: 1.62;
+        text-align: left;
+        hyphens: none;
+        -webkit-hyphens: none;
+      }
+
+      .preface-body p:first-of-type::first-letter {
+        float: none !important;
+        font-family: inherit !important;
+        font-size: inherit !important;
+        line-height: inherit !important;
+        padding: 0 !important;
+        color: inherit !important;
+      }
+
+      .stat-row {
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .stat-row-bar {
+        grid-column: 1 / -1;
+      }
+
+      .toc-row {
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 8px 12px;
+        padding: 14px 12px;
+        margin-bottom: 8px;
+        border: 1px solid var(--rule-soft);
+        background: rgba(107, 142, 255, 0.04);
+      }
+
+      .toc-row .toc-meta {
+        grid-column: 2;
+        min-width: 0;
+        text-align: left;
+      }
+
+      .toc-list {
+        border-top: none;
+      }
+
+      .toc-name {
+        font-size: 1.12rem;
+        line-height: 1.1;
+      }
+    }
+
     @media (max-width: 480px) {
-      .manual-masthead { padding: 72px 0 12px; }
+      .manual-masthead { padding: 70px 0 12px; }
       .preface { padding: 24px 0; }
       .stat-block { padding: 24px 0; }
       .toc { padding: 24px 0 32px; }
       .colophon { padding: 24px 0; }
 
+      .manual-masthead.container,
+      .preface.container,
+      .stat-block.container,
+      .toc.container,
+      .colophon.container {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
       .manual-title {
-        font-size: clamp(2.4rem, 14vw, 3.6rem);
-        line-height: 0.92;
+        font-size: clamp(2.05rem, 11vw, 2.75rem);
+        line-height: 1;
       }
 
       .manual-meta-row {
@@ -570,12 +778,18 @@
       }
 
       .manual-tagline {
-        font-size: 0.96rem;
+        font-size: 1rem;
+        line-height: 1.45;
         margin: 16px 0 4px;
       }
 
+      .manual-attribution {
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+
       .ascii-rule {
-        margin: 16px 0;
+        margin: 18px 0 !important;
       }
 
       .preface-eyebrow,
@@ -590,8 +804,12 @@
       }
 
       .preface-body p:first-of-type::first-letter {
-        font-size: 2.8rem;
-        padding: 0.04em 0.1em 0 0;
+        float: none !important;
+        font-family: inherit !important;
+        font-size: inherit !important;
+        line-height: inherit !important;
+        padding: 0 !important;
+        color: inherit !important;
       }
 
       .stat-row {
@@ -610,9 +828,9 @@
       }
 
       .toc-row {
-        grid-template-columns: 30px 1fr auto;
+        grid-template-columns: auto minmax(0, 1fr);
         gap: 8px;
-        padding: 10px 0;
+        padding: 13px 12px;
       }
 
       .toc-name {
@@ -626,7 +844,7 @@
     }
 
 
-    /* Figure card (makingsoftware aesthetic) */
+    /* Figure card */
     .figure-card {
       border: 1px solid var(--rule-soft);
       background: var(--bg);
@@ -674,9 +892,11 @@
       </a>
       <nav class="header-nav">
         <a href="#contents">Contents</a>
+        <a href="#books">Books</a>
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
+        <a href="about.html">About</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
@@ -789,6 +1009,43 @@
     </div>
 
 
+    <section class="books container" id="books">
+      <div class="toc-title reveal reveal--left">The book edition · six volumes</div>
+      <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">The course, compiled. EPUB and PDF built from the same lessons and attached to every GitHub release. The site stays the living edition — every chapter links back here for the animated figures, quizzes, and code.</div>
+      <div class="books-grid" id="booksGrid"></div>
+      <div class="books-note">Links resolve to the newest <a href="https://github.com/rohitg00/ai-engineering-from-scratch/releases" target="_blank" rel="noopener">GitHub release</a> · rebuilt by CI from the lessons on every release · <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/book/README.md" target="_blank" rel="noopener">how it's made</a></div>
+    </section>
+
+    <script>
+      (function () {
+        var grid = document.getElementById('booksGrid');
+        if (!grid) return;
+        var DL_BASE = 'https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol';
+        var volumes = [
+          { n: 1, slug: 'foundations', title: 'Foundations', subtitle: 'Math, Tooling, and Classical Machine Learning', phases: '00–02' },
+          { n: 2, slug: 'deep-learning', title: 'Deep Learning', subtitle: 'Networks, Vision, and Speech', phases: '03, 04, 06' },
+          { n: 3, slug: 'language', title: 'Language', subtitle: 'NLP Foundations and the Transformer', phases: '05, 07' },
+          { n: 4, slug: 'llms', title: 'Large Language Models', subtitle: 'Generation, Reinforcement, Pretraining, and Engineering', phases: '08–11' },
+          { n: 5, slug: 'agents', title: 'Agents', subtitle: 'Multimodality, Protocols, Autonomy, and Swarms', phases: '12–16' },
+          { n: 6, slug: 'production', title: 'Production', subtitle: 'Infrastructure, Safety, and Capstones', phases: '17–19' }
+        ];
+        var html = '';
+        volumes.forEach(function (v, i) {
+          var base = DL_BASE + v.n + '-' + v.slug;
+          html += '<div class="book-card reveal"' + (i > 0 ? ' style="--stagger-delay: ' + (i * 60) + 'ms;"' : '') + '>';
+          html += '<span class="vol">VOL_00' + v.n + '</span>';
+          html += '<h3>' + v.title + '</h3>';
+          html += '<p>' + v.subtitle + ' · phases ' + v.phases + '</p>';
+          html += '<div class="dl">';
+          html += '<a href="' + base + '.epub">EPUB</a>';
+          html += '<a href="' + base + '.pdf">PDF</a>';
+          html += '</div>';
+          html += '</div>';
+        });
+        grid.innerHTML = html;
+      })();
+    </script>
+
     <section class="colophon container">
       <div class="colophon-grid">
         <div class="colophon-eyebrow reveal reveal--left">Colophon</div>
@@ -809,6 +1066,7 @@
       <p>© 2026 · open source · free forever</p>
       <div class="footer-links">
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
+        <a href="about.html">About</a>
         <a href="catalog.html">Catalog</a>
         <a href="glossary.html">Glossary</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report</a>

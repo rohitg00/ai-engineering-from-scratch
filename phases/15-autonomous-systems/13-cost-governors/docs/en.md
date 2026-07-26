@@ -41,7 +41,7 @@ A single monthly cap catches a runaway agent only after the wallet is gone. A si
 - **Bad release** (new version uses 5x tokens): caught by weekly / monthly cap.
 - **Legitimate surge** (real demand, not a bug): caught by hour / day cap with clear log.
 
-### Claude Code's budget surface
+### A harness budget surface
 
 The Claude Code Agent SDK exposes (public docs):
 
@@ -98,5 +98,5 @@ The real case in the Microsoft docs: an e-commerce agent whose monthly cost trip
 - [Anthropic Claude Code Agent SDK — agent loop and budgets](https://code.claude.com/docs/en/agent-sdk/agent-loop) — `max_turns`, `max_budget_usd`, tool allowlists.
 - [Microsoft Agent Framework — human-in-the-loop and governance](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) — cost-governor checkpoints.
 - [Anthropic — Claude Managed Agents overview](https://platform.claude.com/docs/en/managed-agents/overview) — provider-side cost controls.
-- [Anthropic — Prompt caching (Claude API docs)](https://platform.claude.com/docs/en/prompt-caching) — caching mechanics.
+- [Anthropic — Prompt caching (Claude API docs)](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) — caching mechanics.
 - [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — cost profile for long-horizon agents.

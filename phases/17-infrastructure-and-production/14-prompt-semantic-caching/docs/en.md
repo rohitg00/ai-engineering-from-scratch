@@ -6,7 +6,7 @@
 
 **Type:** Learn
 **Languages:** Python (stdlib, toy two-layer cache simulator)
-**Prerequisites:** Phase 17 · 04 (vLLM Serving Internals), Phase 17 · 06 (SGLang RadixAttention)
+**Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 06 (SGLang RadixAttention)
 **Time:** ~60 minutes
 
 ## Learning Objectives

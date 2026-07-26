@@ -245,6 +245,10 @@ This is expensive (5 outer folds x 5 inner folds x 27 grid points = 675 model fi
 
 **When in doubt:** random search with 2x the number of hyperparameters as trials (e.g., 6 hyperparameters = 12+ trials minimum). You will be surprised how often random search with 50 trials beats carefully designed grid search.
 
+```figure
+k-fold-cv
+```
+
 ## Build It
 
 ### Step 1: Grid Search from Scratch

@@ -109,6 +109,10 @@ Aggregate accuracy hides imbalance. A 90-10 binary classifier that always predic
 - **Top-1 / Top-5** — whether the correct class is in the top 1 or top 5 predictions; Top-5 matters for ImageNet because classes like "Norwich terrier" vs "Norfolk terrier" are genuinely ambiguous.
 - **Calibration (ECE)** — does a 0.8 confidence prediction get it right 80% of the time? Modern networks are systematically over-confident; fix with temperature scaling or label smoothing.
 
+```figure
+receptive-field
+```
+
 ## Build It
 
 ### Step 1: A deterministic synthetic dataset

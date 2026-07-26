@@ -71,8 +71,10 @@ git merge experiment/new-optimizer
 
 ### Step 4: Working with this course repo
 
+You can't push to the course repo itself — only maintainers have write access. Fork it on GitHub first (the Fork button, top right) so `origin` points at your own copy:
+
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+git clone https://github.com/YOUR-USERNAME/ai-engineering-from-scratch.git
 cd ai-engineering-from-scratch
 
 git checkout -b my-progress
@@ -96,7 +98,7 @@ That's it. You don't need rebase, cherry-pick, or submodules for this course.
 
 ## Exercises
 
-1. Clone this repo, create a branch called `my-progress`, make a file, commit it, push it
+1. Fork this repo, clone your fork, create a branch called `my-progress`, make a file, commit it, push it
 2. Create a `.gitignore` that excludes model checkpoint files (`.pt`, `.pth`, `.safetensors`)
 3. Look at the commit history of this repo with `git log --oneline` and read how lessons were added
 
