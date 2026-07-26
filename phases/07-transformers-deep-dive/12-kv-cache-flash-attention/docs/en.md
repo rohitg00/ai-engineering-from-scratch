@@ -174,7 +174,7 @@ Bit-identical output to `softmax(qK) V` in one shot, but at any time the working
 
 ### Step 3: compare naive vs cached decoding on 100-token generation
 
-Count attention operations. Naive: `O(N²)` = 5050. Cached: `O(N)` = 100. The code prints both.
+Count K,V computations. Naive: `O(N²)` = 5050, because it rebuilds the whole prefix every step. Cached: `O(N)` = 100, one per token. The code prints both, alongside the attention key/value reads — those stay `O(N²)` = 5050 either way, since attention still scans the whole prefix. The cache saves recomputation, not the attention scan.
 
 ## Use It
 
