@@ -127,7 +127,7 @@ def _coverage_findings(art: Artifacts, floor: float) -> list[Finding]:
     if current < floor:
         findings.append(Finding("coverage.below_floor", "block",
                                 f"coverage {current:.2%} below floor {floor:.0%}"))
-    delta = previous - current
+    delta = round(previous - current, 9)
     if delta > COVERAGE_REGRESSION_DELTA:
         findings.append(Finding("coverage.regression", "block",
                                 f"coverage dropped {delta:.2%} (prev {previous:.2%} -> {current:.2%})"))
