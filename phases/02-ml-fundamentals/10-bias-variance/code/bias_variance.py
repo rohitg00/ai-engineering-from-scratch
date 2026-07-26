@@ -58,7 +58,7 @@ def bias_variance_decomposition(
         mean_pred = predictions.mean(axis=0)
         bias_sq = np.mean((mean_pred - y_true) ** 2)
         variance = np.mean(predictions.var(axis=0))
-        total_error = np.mean(np.mean((predictions - y_true) ** 2, axis=1))
+        total_error = np.mean(np.mean((predictions - y_true) ** 2, axis=1)) + noise_std ** 2
 
         results[degree] = {
             "bias_sq": bias_sq,
