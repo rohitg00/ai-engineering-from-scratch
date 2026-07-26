@@ -92,7 +92,7 @@ def decode_cached(all_K, all_V, all_queries):
     for q, k, v in zip(all_queries, all_K, all_V):
         cache.append(k, v)
         out = attention_full(q, cache.K, cache.V)
-        ops += len(cache)
+        ops += 1
         outputs.append(out)
     return outputs, ops
 
@@ -105,7 +105,7 @@ def kv_cache_bytes(N, n_layers, n_heads_kv, d_head, dtype=2):
 def main():
     rng = random.Random(42)
     d_head = 8
-    N = 10
+    N = 100
 
     # Random Q, K, V for a 10-token sequence, one head.
     all_Q = [[rng.gauss(0, 1) for _ in range(d_head)] for _ in range(N)]
@@ -117,12 +117,12 @@ def main():
 
     print(f"=== naive vs KV-cached decoding on N={N} tokens ===")
     print(f"naive attention ops:  {naive_ops}  (O(N^2) = {N * (N + 1) // 2})")
-    print(f"cached attention ops: {cached_ops}  (O(N) with per-step cost, unchanged)")
+    print(f"cached attention ops: {cached_ops}  (O(N) = {N})")
     print("outputs match (max abs diff over all tokens):",
           f"{max(abs(a - b) for va, vb in zip(naive, cached) for a, b in zip(va, vb)):.2e}")
     print()
-    print("* naive has same per-step cost; saving comes from not REcomputing earlier")
-    print("  hidden states. counting K,V recomputes would make naive O(N^2) in matmuls.")
+    print("* naive recomputes K,V for the whole prefix each step; cached computes")
+    print("  each token's K,V exactly once and reuses them.")
     print()
 
     print("=== tiled-softmax (Flash) vs standard softmax agreement ===")
