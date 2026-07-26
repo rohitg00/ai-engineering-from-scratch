@@ -15,7 +15,7 @@ On top of that, attention itself moves a lot of data. Standard attention materia
 
 Two optimizations, both from Dao et al., pushed frontier inference from "slow" to "fast":
 
-1. **KV cache.** Store the K and V vectors of every prefix token. Each new token's attention is one query against the cached keys. Inference reduces from `O(N²)` to `O(N)` per generation step.
+1. **KV cache.** Store the K and V vectors of every prefix token. Each new token's attention is one query against the cached keys. **K,V recomputation** drops from `O(N²)` to `O(N)` over the whole generation — one projection per token instead of rebuilding the prefix every step. The attention scan itself stays `O(N²)`: each step still reads the entire cache.
 2. **Flash Attention.** Tile the attention computation so the full N×N matrix never hits HBM. All of softmax + matmul happens in SRAM. 2–4× wall-clock speedup on A100; 5–10× on H100 with FP8.
 
 By 2026 both are universal. Every production inference stack (vLLM, TensorRT-LLM, SGLang, llama.cpp) assumes them. Every frontier model ships with Flash Attention enabled.
@@ -126,8 +126,8 @@ flash-attention-memory
 
 See `code/main.py`. We implement:
 
-1. A naive `O(N²)` incremental decoder.
-2. A `O(N)` KV-cached decoder.
+1. A naive incremental decoder that rebuilds the prefix K,V every step — `O(N²)` K,V work.
+2. A KV-cached decoder that computes each token's K,V once — `O(N)` K,V work, with the same `O(N²)` attention reads.
 3. A tiled softmax that simulates Flash Attention's running-max algorithm.
 
 ### Step 1: KV cache
