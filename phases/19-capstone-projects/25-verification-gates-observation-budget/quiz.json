@@ -1,78 +1,78 @@
 {
   "lesson": "phase-19/25-verification-gates-observation-budget",
-  "title": "Verification Gates and the Observation Budget",
+  "title": "Doğrulama Kapıları ve Gözlem Bütçesi",
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading the lesson: which of these is the strongest reason a harness needs a deterministic gate chain rather than a model-as-judge?",
+      "question": "Dersi okumadan önce: Bir koşumun yargıç olarak model yerine deterministik bir kapı zincirine ihtiyaç duymasının en güçlü nedeni aşağıdakilerden hangisidir?",
       "options": [
-        "Models are too slow to act as judges in production.",
-        "Determinism makes the deny reason auditable and the chain replayable.",
+        "Modeller üretimde jüri olarak hareket edemeyecek kadar yavaş.",
+        "Determinizm, reddetme nedenini denetlenebilir ve zinciri tekrar oynanabilir hale getirir.",
         "A model-as-judge always produces hallucinated allow decisions.",
-        "Gate chains let the model write its own policy."
+        "Kapı zincirleri modelin kendi politikasını yazmasına izin verir."
       ],
       "correct": 1,
-      "explanation": "Audit trails and reproducibility are the practical wins. A judge model can also be wired in, but the structural gate needs to be deterministic so the decision can be reproduced and reviewed."
+      "explanation": "Denetim izleri ve tekrarlanabilirlik pratik kazançlardır. Bir yargıç modeli de bağlanabilir, ancak kararın yeniden üretilebilmesi ve gözden geçirilebilmesi için yapısal kapının belirleyici olması gerekir."
     },
     {
       "stage": "check",
-      "question": "Why does the lesson run WhitelistGate before BudgetGate in the chain?",
+      "question": "Ders neden zincirde BudgetGate'ten önce WhitelistGate'i çalıştırıyor?",
       "options": [
-        "Whitelist denials are cheaper, so short-circuiting them avoids the expensive ledger sum.",
-        "BudgetGate cannot run until at least one tool has been called.",
-        "Whitelist must always be the last gate by convention.",
-        "Order does not matter because GateChain randomises evaluation order."
+        "Beyaz liste reddi daha ucuzdur, bu nedenle kısa devre yaptırmak pahalı defter tutarını önler.",
+        "BudgetGate, en az bir araç çağrılıncaya kadar çalışamaz.",
+        "Beyaz liste her zaman geleneksel olarak son kapı olmalıdır.",
+        "GateChain değerlendirme sırasını rastgele belirlediğinden sıra önemli değildir."
       ],
       "correct": 0,
-      "explanation": "Cheap denials run first. WhitelistGate is O(1) hash lookup. BudgetGate has to sum the ledger. Short-circuiting on whitelist avoids that work when the call is structurally illegal."
+      "explanation": "Ucuz inkarlar ilk sırada yer alır. WhitelistGate, O(1) karma aramasıdır. BudgetGate'in defteri toplaması gerekiyor. Beyaz listede kısa devre yapılması, çağrı yapısal olarak yasa dışı olduğunda bu çalışmayı önler."
     },
     {
       "stage": "check",
-      "question": "An ObservationLedger has recorded a 60-token observation from read_file. The harness then refuses a subsequent call. What does the ledger record about the refusal?",
+      "question": "An ObservationLedger has recorded a 60-token observation from read_file. The harness then refuses a subsequent call. Reddetmeyle ilgili defterde ne yazıyor?",
       "options": [
         "A zero-token Observation row tagged refused.",
-        "Nothing. The ledger only records successful observations.",
-        "A negative-token Observation row representing the refusal cost.",
-        "The refusal is appended as a synthetic Observation with the refuser's name."
+        "Hiç bir şey. Defter yalnızca başarılı gözlemleri kaydeder.",
+        "Reddetme maliyetini temsil eden negatif jetonlu bir Gözlem satırı.",
+        "Reddetme, reddedenin adının yer aldığı sentetik bir Gözlem olarak eklenir."
       ],
       "correct": 1,
-      "explanation": "The ledger records observations the model has seen. A refusal produces a GateDecision, not an Observation. Refusal counts live alongside the ledger, not inside it."
+      "explanation": "Defter, modelin gördüğü gözlemleri kaydeder. Bir ret, bir Gözlem değil, bir Geçit Kararı üretir. Reddedilen sayımlar defterin içinde değil yanında yer alır."
     },
     {
       "stage": "check",
-      "question": "RecencyGate.window is set to 3. The ledger's latest_turn is 5. A new ToolCall arrives on turn 10. What happens?",
+      "question": "RecencyGate.window 3'e ayarlanmıştır. Defterin en son_dönüşü 5'tir. 10. virajda yeni bir ToolCall gelir. Ne olur?",
       "options": [
-        "The gate allows: the call is on the latest turn.",
-        "The gate denies: gap of 5 exceeds window of 3.",
-        "The gate allows: window applies to ledger size, not turn gap.",
-        "The gate raises an exception because the ledger is stale."
+        "Kapı şunları sağlar: çağrı en son dönüştedir.",
+        "Kapı reddediyor: 5'lik boşluk 3'lük pencereyi aşıyor.",
+        "Geçit şunları sağlar: pencere, açıklığın değişmesine değil, genel muhasebe boyutuna uygulanır.",
+        "Defter eski olduğundan geçit bir istisna oluşturur."
       ],
       "correct": 1,
-      "explanation": "RecencyGate compares (call.turn - ledger.latest_turn) against the window. 10 - 5 = 5, which is greater than 3, so the gate denies."
+      "explanation": "RecencyGate, (call.turn - ledger.latest_turn) pencereyle karşılaştırır. 10 - 5 = 5, 3'ten büyüktür, dolayısıyla kapı bunu reddeder."
     },
     {
       "stage": "post",
-      "question": "You want to add a per-call output cap (no single observation may exceed 8000 tokens). Where does this gate logically belong in the chain?",
+      "question": "Çağrı başına çıkış sınırı eklemek istiyorsunuz (hiçbir gözlem 8000 jetonu geçemez). Bu kapı mantıksal olarak zincirde nereye ait?",
       "options": [
-        "Before WhitelistGate, since size is the cheapest property to check.",
+        "WhitelistGate'ten önce, boyut kontrol edilmesi en ucuz özellik olduğundan.",
         "After BudgetGate, since cumulative budget always dominates.",
-        "It cannot be a gate because the size is only known after the tool runs.",
-        "Inside the BudgetGate so the limits compose."
+        "Bu bir kapı olamaz çünkü boyutu ancak alet çalıştırıldıktan sonra bilinir.",
+        "BudgetGate'in içinde sınırlar oluşur."
       ],
       "correct": 2,
-      "explanation": "The output size is not known at gate-evaluation time. The harness applies the cap after the tool runs, by truncating the observation before the model sees it. Gates evaluate inputs, not outputs."
+      "explanation": "Çıkış boyutu geçit değerlendirme zamanında bilinmemektedir. Kablo demeti, model görmeden önce gözlemi keserek, alet çalıştıktan sonra başlığı uygular. Gates, çıktıları değil girdileri değerlendirir."
     },
     {
       "stage": "post",
-      "question": "A reviewer asks you to prove that the agent never fired a denied tool call during a session. Which artifact do you point them at?",
+      "question": "Gözden geçiren kişi sizden, temsilcinin oturum sırasında hiçbir zaman reddedilen bir araç çağrısını başlatmadığını kanıtlamanızı ister. Onları hangi esere yönlendiriyorsunuz?",
       "options": [
-        "The ObservationLedger snapshot, which only contains successful observations.",
-        "The list of ChainOutcome records, which contains every per-call decision with deny reasons.",
-        "The pytest output, which records test pass/fail.",
-        "The model's chat transcript, which contains its own self-report."
+        "Yalnızca başarılı gözlemleri içeren ObservationLedger anlık görüntüsü.",
+        "Reddetme nedenleriyle birlikte her arama başına kararı içeren ChainOutcome kayıtlarının listesi.",
+        "Testin başarılı/başarısız olduğunu kaydeden pytest çıktısı.",
+        "Modelin kendi öz raporunu içeren sohbet metni."
       ],
       "correct": 1,
-      "explanation": "ChainOutcome records carry per-call decisions and deny reasons. The ledger and transcript can support the claim, but the auditable artifact is the chain decisions."
+      "explanation": "ChainOutcome kayıtları, çağrı başına kararları ve reddetme nedenlerini taşır. Defter ve tutanak iddiayı destekleyebilir ancak denetlenebilir yapıt zincir kararlarıdır."
     }
   ]
 }
