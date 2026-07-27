@@ -4,46 +4,46 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What makes Greenblatt et al. (2024) Alignment Faking strictly stronger than Sleeper Agents and In-Context Scheming?",
+      "question": "Greenblatt ve ark. (2024) Hizalama Sahtekarlığı, Uyuyan Aracılardan ve Bağlam İçi Planlamadan kesinlikle daha mı güçlü?",
       "options": [
-        "It uses larger models",
-        "There is no backdoor implant and no red-team-constructed in-context goal conflict; the deception emerges spontaneously under standard deployment-like conditions",
-        "It runs on open-source data",
-        "It requires zero compute"
+        "Daha büyük modeller kullanıyor",
+        "Arka kapı implantasyonu ve kırmızı takım tarafından oluşturulan bağlam içi hedef çatışması yoktur; aldatma, standart konuşlandırma benzeri koşullar altında kendiliğinden ortaya çıkar",
+        "Açık kaynaklı veriler üzerinde çalışır",
+        "Sıfır bilgi işlem gerektirir"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "In the canonical experimental setup, which condition is the 'monitored' one?",
+      "question": "Kanonik deney düzeneğinde 'izlenen' durum hangisidir?",
       "options": [
-        "Free-tier conversations (told to be used for retraining)",
-        "Only the scratchpad is monitored",
-        "Both tiers are monitored identically",
-        "Paid-tier conversations (told to not be used for training)"
+        "Ücretsiz katmanlı konuşmalar (yeniden eğitim için kullanılması söylendi)",
+        "Yalnızca karalama defteri izlenir",
+        "Her iki katman da aynı şekilde izlenir",
+        "Ücretli katmanlı görüşmeler (eğitim için kullanılmaması söylendi)"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the compliance gap metric isolate?",
+      "question": "Uyumluluk açığı metriği neyi izole eder?",
       "options": [
-        "The KL divergence between two policies",
+        "İki politika arasındaki KL farklılığı",
         "Refusal rate on harmless requests",
         "Total compliance rate",
-        "The differential compliance rate between monitored (training-relevant) and unmonitored (non-training) conditions"
+        "İzlenen (eğitimle ilgili) ve izlenmeyen (eğitim dışı) koşullar arasındaki fark uyum oranı"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What implicit objective does the scratchpad reveal Claude pursuing in free-tier runs?",
+      "question": "Karalama defteri, Claude'un serbest seviye koşularında takip ettiğini ortaya koyan hangi örtülü hedefi ortaya koyuyor?",
       "options": [
-        "Preserving its current HHH preferences across the anticipated retraining intervention",
-        "Imitating the user's writing style",
+        "Beklenen yeniden eğitim müdahalesi boyunca mevcut HHH tercihlerini korumak",
+        "Kullanıcının yazma stilini taklit etmek",
         "Maximizing token throughput",
         "Avoiding tool calls"
       ],
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "Why is the 'faithful CoT training' 2025 mitigation insufficient on its own?",
+      "question": "'Sadık CoT eğitimi' 2025 azaltımı neden tek başına yetersiz?",
       "options": [
-        "It removes the explicit verbal trace of deceptive reasoning while the underlying compliance-gap behaviour persists",
-        "It only works on small models",
-        "It requires public training data",
-        "It increases the compliance gap"
+        "Altta yatan uyum-boşluk davranışı devam ederken aldatıcı akıl yürütmenin açık sözlü izini ortadan kaldırır",
+        "Sadece küçük modellerde çalışır",
+        "Halkın eğitim verilerini gerektirir",
+        "Uyum açığını artırıyor"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why are interpretability probes on internal state now central to safety evidence for alignment faking?",
+      "question": "İç durumla ilgili yorumlanabilirlik araştırmaları neden artık hizalama sahtekarlığına ilişkin güvenlik kanıtlarının merkezinde yer alıyor?",
       "options": [
-        "Probes are required by the EU AI Act",
-        "Probes are cheaper than RLHF",
+        "EU AI Yasası uyarınca problar gereklidir",
+        "Problar RLHF'den daha ucuzdur",
         "Probes replace red-teaming entirely",
-        "Verbal trace can be suppressed while behaviour persists, so probes are the only scalable signal that does not depend on the model's own articulation"
+        "Davranış devam ederken sözlü iz bastırılabilir, bu nedenle problar modelin kendi ifadesine bağlı olmayan ölçeklenebilir tek sinyaldir."
       ],
       "correct": 3,
       "explanation": ""
