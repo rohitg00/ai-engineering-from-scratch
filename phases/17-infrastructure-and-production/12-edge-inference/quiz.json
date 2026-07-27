@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core constraint that makes mobile LLM inference slower than datacenter, per the lesson?",
+      "question": "Derse göre mobil LLM çıkarımını veri merkezinden daha yavaş yapan temel kısıtlama nedir?",
       "options": [
         "Wi-Fi latency",
         "Compute throughput",
@@ -16,19 +16,19 @@
     },
     {
       "stage": "check",
-      "question": "Why does Apple's Neural Engine avoid CPU-NPU copy overhead?",
+      "question": "Apple'ın Neural Engine'i neden CPU-NPU kopyalama yükünü önlüyor?",
       "options": [
-        "It uses PCIe 5.0",
+        "PCIe 5.0 kullanıyor",
         "Core ML disables KV cache",
-        "It transcodes weights to FP4 before copy",
-        "Apple Silicon ships unified memory — CPU and ANE share the same pool"
+        "Kopyalamadan önce ağırlıkları FP4'ye dönüştürür",
+        "Apple Silicon birleşik bellek sunar — CPU ve ANE aynı havuzu paylaşır"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which quantization format does the lesson recommend for WebGPU + WebLLM in the browser?",
+      "question": "Ders tarayıcıda WebGPU + WebLLM için hangi niceleme formatını öneriyor?",
       "options": [
         "NVFP4",
         "FP8",
@@ -40,22 +40,22 @@
     },
     {
       "stage": "check",
-      "question": "Roughly what WebGPU mobile coverage does the lesson report for 2026?",
+      "question": "Ders raporu 2026 için kabaca hangi WebGPU mobil kapsamını sunuyor?",
       "options": [
         "100% across all browsers",
-        "Only iOS Safari",
+        "Yalnızca iOS Safari",
         "Under 10%",
-        "About 70-75%, with Firefox Android still catching up"
+        "Yaklaşık %70-75, Firefox Android hala yetişiyor"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why is keeping 128K context impractical on a typical phone?",
+      "question": "Tipik bir telefonda 128K bağlamını korumak neden pratik değil?",
       "options": [
         "Tokenizers fail above 8K",
-        "Model weights plus KV cache for 32K tokens plus OS overhead easily exceed the 8 GB RAM budget",
+        "Model ağırlıkları artı 32K jeton için KV önbellek artı OS ek yükü, 8 GB RAM bütçesini kolayca aşıyor",
         "WebGPU caps context at 4K",
         "iOS forbids long context"
       ],
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why is voice highlighted as the killer app for edge inference?",
+      "question": "Ses neden uç çıkarımlar için mükemmel uygulama olarak vurgulanıyor?",
       "options": [
-        "Voice agents are latency-sensitive (first token < 500 ms) and local inference eliminates network latency entirely",
+        "Ses aracıları gecikmeye duyarlıdır (ilk belirteç < 500 ms) ve yerel çıkarım, ağ gecikmesini tamamen ortadan kaldırır",
         "Voice models do not need KV cache",
         "Voice models always fit in 50 MB",
-        "Voice runs in WebAssembly only"
+        "Ses yalnızca WebAssembly'da çalışır"
       ],
       "correct": 0,
       "explanation": ""
