@@ -1,10 +1,10 @@
 {
   "lesson": "76-collective-ops-from-scratch",
-  "title": "Collective Ops From Scratch",
+  "title": "Sıfırdan Toplu Operasyonlar",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the per-rank bandwidth cost of ring allreduce for a tensor of T bytes on N ranks?",
+      "question": "N sıradaki T baytlık bir tensör için ring allreduce'un sıra başına bant genişliği maliyeti nedir?",
       "options": [
         "T bytes",
         "N * T bytes",
@@ -12,67 +12,67 @@
         "T log2(N) bytes"
       ],
       "correct": 2,
-      "explanation": "Ring allreduce moves N-1 chunks of size T/N twice (reduce-scatter then allgather); the per-rank total is 2T(N-1)/N, independent of cluster size."
+      "explanation": "Halka hepsini azalt, T/N boyutundaki N-1 parçalarını iki kez hareket ettirir (azalt-dağılım sonra hepsini topla); sıralama başına toplam, küme boyutundan bağımsız olarak 2T(N-1)/N'dir."
     },
     {
       "stage": "pre",
-      "question": "Why is the queue mesh in this lesson an honest stand-in for NCCL on a real cluster?",
+      "question": "Bu dersteki kuyruk ağı neden gerçek bir kümede NCCL için dürüst bir vekildir?",
       "options": [
-        "It runs on CUDA cores",
-        "It hardware-offloads reductions",
-        "It implements the same wire pattern (ordered point-to-point sends around a ring), only the medium differs",
-        "It compresses messages"
+        "CUDA çekirdeklerinde çalışır",
+        "Donanım yükünü azaltır",
+        "Aynı kablo modelini uygular (bir halka etrafında noktadan noktaya sıralı gönderimler), yalnızca ortam farklıdır",
+        "Mesajları sıkıştırır"
       ],
       "correct": 2,
-      "explanation": "Algorithmic correctness depends on the wire pattern, not the medium; the queue ring exposes the same race shapes and chunk schedule as NCCL ring allreduce."
+      "explanation": "Algoritmik doğruluk ortama değil tel desenine bağlıdır; kuyruk halkası, NCCL halkası allreduce ile aynı yarış şekillerini ve yığın programını ortaya çıkarır."
     },
     {
       "stage": "check",
-      "question": "After the reduce-scatter half of ring allreduce, what does rank r hold?",
+      "question": "Allreduce halkasının azalt-dağılım yarısından sonra, r rütbesi ne tutar?",
       "options": [
         "Nothing",
-        "The full tensor unreduced",
-        "The reduced sum for one chunk (one Nth of the tensor)",
-        "The reduced sum for two chunks"
+        "Tam tensör azaltılmamış",
+        "Bir parça için azaltılmış toplam (tensörün N'de biri)",
+        "İki parça için azaltılmış toplam"
       ],
       "correct": 2,
-      "explanation": "Reduce-scatter parks the sum of one chunk on one rank; the allgather half then rotates those completed chunks around the ring."
+      "explanation": "Azaltma-dağılım, bir parçanın toplamını bir sıraya park eder; daha sonra tüm toplayan yarım, tamamlanan parçaları halkanın etrafında döndürür."
     },
     {
       "stage": "check",
-      "question": "Why use tree broadcast instead of N-1 direct sends from the source?",
+      "question": "Kaynaktan N-1 doğrudan gönderimler yerine neden ağaç yayını kullanılsın?",
       "options": [
         "Trees use less memory",
-        "Trees double the holder set per round; depth is log2(N) so latency scales as log not N",
-        "Trees are mandatory in PyTorch",
+        "Ağaçlar tur başına tutucu setini iki katına çıkarır; derinlik log2(N) olduğundan gecikme N olarak değil log olarak ölçeklenir",
+        "PyTorch'ta ağaçlar zorunludur",
         "Direct sends drop packets"
       ],
       "correct": 1,
-      "explanation": "log2(N) hops dominate when latency per hop is the bottleneck; N-1 sequential sends pay that latency floor N times."
+      "explanation": "Atlama başına gecikme darboğaz olduğunda log2(N) atlamalar baskındır; N-1 sıralı gönderimler bu gecikme tabanını N kez öder."
     },
     {
       "stage": "check",
-      "question": "Why verify against torch.distributed gloo on the same input?",
+      "question": "Neden aynı girişte torch.distributed gloo'ya karşı doğrulama yapmalısınız?",
       "options": [
-        "Gloo is faster",
-        "Gloo is the legal reference for collective semantics; byte-equal output proves your algorithm agrees with the spec before it runs on a real cluster",
+        "Gloo daha hızlı",
+        "Gloo, kolektif anlambilimin yasal referansıdır; bayt-eşit çıktı, algoritmanızın gerçek bir kümede çalıştırılmadan önce spesifikasyonla aynı fikirde olduğunu kanıtlar",
         "Gloo writes JSONL automatically",
         "Gloo requires no setup"
       ],
       "correct": 1,
-      "explanation": "Without a reference, the primitive looks correct until step 10000 of a real training run; gloo gives byte-equal ground truth on CPU."
+      "explanation": "Referans olmadan, ilkel, gerçek bir eğitim çalışmasının 10000. adımına kadar doğru görünüyor; gloo, CPU üzerinde bayt-eşit temel gerçeği verir."
     },
     {
       "stage": "post",
-      "question": "When does tree allreduce win over ring allreduce?",
+      "question": "Ağaç allreduce ne zaman ring allreduce'a karşı kazanır?",
       "options": [
         "Always",
-        "When messages are large",
-        "Small messages or high-latency links; the log2(N) hop count beats the bandwidth term 2T(N-1)/N below the crossover",
+        "Mesajlar büyük olduğunda",
+        "Küçük mesajlar veya yüksek gecikmeli bağlantılar; log2(N) atlama sayısı, geçişin altındaki bant genişliği terimini 2T(N-1)/N yener",
         "Never"
       ],
       "correct": 2,
-      "explanation": "NCCL picks ring above ~1 MB and tree below; the crossover is bandwidth-versus-latency on the given cluster topology."
+      "explanation": "NCCL, ~1 MB'nin üzerindeki halkayı ve altındaki ağacı seçer; geçiş, belirli küme topolojisinde bant genişliğine karşı gecikmedir."
     }
   ]
 }
