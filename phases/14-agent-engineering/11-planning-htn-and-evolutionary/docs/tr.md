@@ -16,9 +16,9 @@
 
 ## Sorun
 
-ReWOO (Ders 02), Planla ve Yürüt ve ReAct çoğu agent planlamayı kapsar. İyi ele almadıkları iki vaka:
+ReWOO (Ders 02), Planla ve Yürüt ve ReAct çoğu agent planlamasını kapsar. İyi ele almadıkları iki vaka:
 
-1. **Doğruluğu kanıtlanabilir planlar.** Programlama, uçuş rotası, uyumluluk iş akışları — planın yapısı gereği sağlam olması gerekir. Bazen bir adımı halüsinasyona uğratan akıcı bir Yüksek Lisans planı kabul edilemez.
+1. **Doğruluğu kanıtlanabilir planlar.** Programlama, uçuş rotası, uyumluluk iş akışları — planın yapı itibarıyla sağlam olması gerekir. Bazen bir adımı halüsinasyona uğratan akıcı bir Yüksek Lisans planı kabul edilemez.
 2. **Makine tarafından kontrol edilebilen uygunluk işleviyle optimizasyonlar.** Matris çarpımı, zamanlama buluşsal yöntemleri, derleyici geçişleri — amaç "doğru bir plan" değil "en iyi plan"dır.
 
 HTN planlama ve AlphaEvolve iki farklı sorunu çözüyor. Her ikisi de Yüksek Lisans'ı yedek parça olarak değil, yükseltici olarak kullanıyor.
@@ -34,7 +34,7 @@ Bir HTN:
 - **Operatörler** — önkoşulları ve etkileri olan ilkel eylemler.
 - **Devlet** — bir dizi gerçek.
 
-Planlama: Bir hedef görev ve bir başlangıç ​​durumu verildiğinde, önkoşulları sırayla karşılanan ilkel operatörlere ayrıştırma bulun.
+Planlama: Bir hedef görev ve bir başlangıç durumu verildiğinde, önkoşulları sırayla karşılanan ilkel operatörlere ayrıştırma bulun.
 
 HTN, LLM'lerden daha eskidir ve hala doğru olduğu kanıtlanabilen planlar için referanstır.
 
@@ -89,10 +89,10 @@ Zor kısıtlama: uygunluk fonksiyonu makine tarafından kontrol edilebilir olmal
 
 ## İnşa Et
 
-`code/main.py` iki oyuncak uyguluyor:
+`code/main.py` iki oyuncak uygular:
 
-- Operatörler, yöntemler, ön koşullar, efektler ve bileşik bir görevle hiçbir yöntem eşleşmediğinde devreye giren bir `LLMFallback` içeren bir stdlib HTN planlayıcı. "LLM" komut dosyası içeren bir ayrıştırıcıdır, dolayısıyla planlayıcı çevrimdışı çalışır.
-- Aritmetik programlar üzerinde stdlib evrimsel arama: bir test kümesinde çıktısı `|f(x) - target|` değerini en aza indiren ifadeleri büyütün. Değerlendirici deterministtir.
+- Operatörler, yöntemler, ön koşullar, efektler ve hiçbir yöntem bir bileşik görevle eşleşmediğinde devreye giren bir `LLMFallback` içeren bir stdlib HTN planlayıcısı. "LLM" komut dosyası içeren bir ayrıştırıcıdır, dolayısıyla planlayıcı çevrimdışı çalışır.
+- Aritmetik programlar üzerinde stdlib evrimsel arama: bir test seti üzerinde çıktısı `|f(x) - target|`'yi en aza indiren ifadeleri büyütün. Değerlendirici deterministtir.
 
 Çalıştır:
 
@@ -107,7 +107,7 @@ python3 code/main.py
 - **HTN planlayıcıları** — `pyhop`, `SHOP3` veya alana özel politika uygulaması için kendinizinkini oluşturun.
 - **ChatHTN** — araştırma kodu; desen (sembolik + LLM geri dönüşü) herhangi bir HTN planlayıcıya temiz bir şekilde bağlanır.
 - **AlphaEvolve** — DeepMind makalesi; model (topluluk + değerlendirici) tekrarlanabilir. OpenEvolve ve benzeri açık kaynak çatallar ortaya çıkıyor.
-- **Agent frameworks** — hiçbiri birinci sınıf HTN veya AlphaEvolve'u henüz sunmuyor. Bunu bir altagent veya arka plan çalışanı olarak oluşturun.
+- **Agent framework'ler** — henüz hiçbiri birinci sınıf HTN veya AlphaEvolve'u sunmamaktadır. Bunu bir subagent veya arka plan çalışanı olarak oluşturun.
 
 ## Gönderin
 
@@ -116,7 +116,7 @@ python3 code/main.py
 ## Egzersizler
 
 1. HTN planlayıcıyı geri izlemeyle genişletin: Bir operatörün sonkoşulu çalışma zamanında başarısız olduğunda geri dönün ve sonraki yöntemi deneyin.
-2. ChatHTN'ye bir LLM yöntemi önbelleği ekleyin: LLM, `T` görevini `P` durum modelinde ayrıştırdığında, sonucu saklayın. Bir sonraki çağrıda ilk olarak yöntem kitaplığını yeniden kontrol edin.
+2. ChatHTN'ye bir LLM yöntemi önbelleği ekleyin: LLM, `T` görevini `P` durum modelinde ayrıştırdığında sonucu saklayın. Bir sonraki çağrıda ilk olarak yöntem kitaplığını yeniden kontrol edin.
 3. Evrimsel arama değerlendiricisini gerçek bir test paketiyle değiştirin. 20 test senaryosunu geçen bir sıralama işlevi geliştirin; nesilleri yakınlaşmaya rapor edin.
 4. AlphaEvolve'un değerlendirici tasarım notlarını okuyun. Önemsediğiniz bir alan adı için bir değerlendirici tasarlayın (SQL sorgu optimizasyonu, test paketi minimizasyonu, deployment YAML).
 5. Birleştir: Bir bileşik görevi alt görevlere ayırmak için HTN'yi kullanın, ardından her alt görevin ilkel operatöründe evrimsel aramayı kullanın. Nerede parlıyor, nerede aşırı mühendislik yapıyor?
@@ -125,7 +125,7 @@ python3 code/main.py
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| HTN | "Hiyerarşik planlayıcı" | Operatörler, önkoşullar ve efektlerle görev ayrıştırma |
+| HTN | "Hiyerarşik planlayıcı" | Operatörler, önkoşullar ve efektlerle görev ayrıştırması |
 | Yöntem | "Ayrıştırma kuralı" | Bileşik bir görevi alt görevlere ayırmanın yolu |
 | Operatör | "İlkel eylem" | Ön koşulu ve etkisi olan somut adım |
 | SohbetHTN | "LLM + HTN" | Sembolik planlayıcı hiçbir yöntem eşleşmediğinde LLM'ye sorar |
@@ -137,4 +137,4 @@ python3 code/main.py
 
 - [Gopalakrishnan ve diğerleri, ChatHTN (arXiv:2505.11814)](https://arxiv.org/abs/2505.11814) — sembolik + LLM hibrit planlayıcı
 - [Novikov ve diğerleri, AlphaEvolve (arXiv:2506.13131)](https://arxiv.org/abs/2506.13131) — LLM mutasyonlarıyla evrimsel kod araması
-- [Antropik, Etkili Bina Oluşturma Agents](https://www.anthropic.com/research/building-effective-agents) — basit bir döngüye karşı bir planlayıcıya ne zaman ulaşılmalı
+- [Antropik, Etkili Agent'ler Oluşturma](https://www.anthropic.com/research/building-effective-agents) — basit bir döngüye karşı bir planlayıcıya ne zaman ulaşılmalı
