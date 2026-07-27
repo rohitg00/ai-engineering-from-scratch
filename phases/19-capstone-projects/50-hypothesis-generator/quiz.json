@@ -4,43 +4,43 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the generator produce a ranked queue instead of a single hypothesis?",
+      "question": "Jeneratör neden tek bir hipotez yerine sıralı bir kuyruk üretiyor?",
       "options": [
-        "Because the parser cannot read a single block",
-        "Because the runner needs depth so it can pop the next hypothesis when the first one fails",
-        "Because the mock model only emits lists",
-        "Because the embedding requires more than one input"
+        "Çünkü ayrıştırıcı tek bir bloğu okuyamıyor",
+        "Çünkü koşucunun derinliğe ihtiyacı vardır, böylece ilki başarısız olduğunda bir sonraki hipotezi ortaya koyabilir.",
+        "Çünkü sahte model yalnızca listeler yayınlıyor",
+        "Çünkü gömme birden fazla girdi gerektiriyor"
       ],
       "correct": 1,
-      "explanation": "The point of generating a queue is to amortise sampling cost across the loop. When the first hypothesis fails the runner pops the next without a fresh sampling pass."
+      "explanation": "Bir kuyruk oluşturmanın amacı, döngü boyunca örnekleme maliyetini amortismana tabi tutmaktır. İlk hipotez başarısız olduğunda koşucu yeni bir örnekleme geçişi olmadan bir sonraki hipotezi atar."
     },
     {
       "stage": "pre",
-      "question": "What does the temperature ramp accomplish on each pass?",
+      "question": "Sıcaklık rampası her geçişte ne işe yarar?",
       "options": [
-        "It raises the parser tolerance",
-        "It widens the sampling distribution so later drafts can land further from the seed",
-        "It increases the embedding dimension",
-        "It triples the seed value"
+        "Ayrıştırıcı toleransını artırır",
+        "Örnekleme dağılımını genişleterek daha sonraki taslakların tohumdan daha uzağa inmesini sağlar",
+        "Gömme boyutunu artırır",
+        "Tohum değerini üç katına çıkarır"
       ],
       "correct": 1,
-      "explanation": "Higher temperature widens the sampling distribution. The ramp encourages each pass to drift further so the novelty filter has something to do."
+      "explanation": "Daha yüksek sıcaklık örnekleme dağılımını genişletir. Rampa, her geçişi daha da sürüklenmeye teşvik eder, böylece yenilik filtresinin yapacak bir işi olur."
     },
     {
       "stage": "check",
-      "question": "When does the novelty filter reject a draft?",
+      "question": "Yenilik filtresi bir taslağı ne zaman reddeder?",
       "options": [
-        "When its rank score is below the threshold",
-        "When its minimum cosine distance to any prior survivor falls below the novelty threshold",
-        "When its parser passes but its tag count is wrong",
-        "When its draft pass is greater than the queue length"
+        "Sıralama puanı eşiğin altında olduğunda",
+        "Önceki hayatta kalanlardan herhangi birine olan minimum kosinüs mesafesi yenilik eşiğinin altına düştüğünde",
+        "Ayrıştırıcısı başarılı ancak etiket sayısı yanlış olduğunda",
+        "Taslak geçişi kuyruk uzunluğundan büyük olduğunda"
       ],
       "correct": 1,
-      "explanation": "Novelty is the minimum distance to prior survivors. If that distance is below the threshold the draft is a near duplicate and is dropped."
+      "explanation": "Yenilik, daha önce hayatta kalanlara olan minimum mesafedir. Bu mesafe eşiğin altındaysa draft neredeyse kopya olur ve düşürülür."
     },
     {
       "stage": "check",
-      "question": "Which three components combine in the rank score?",
+      "question": "Sıralama puanında hangi üç bileşen birleşiyor?",
       "options": [
         "Latency, throughput, cost",
         "Novelty, specificity, testability",
@@ -48,31 +48,31 @@
         "Variables, metric, baseline length"
       ],
       "correct": 1,
-      "explanation": "The rank score is a weighted sum of novelty, specificity, and testability. Each sub score lives between zero and one."
+      "explanation": "Sıra puanı yenilik, özgüllük ve test edilebilirliğin ağırlıklı toplamıdır. Her alt puan sıfır ile bir arasında yaşar."
     },
     {
       "stage": "check",
-      "question": "Why is the mock language model keyed on a temperature bucket rather than the raw float?",
+      "question": "Sahte dil modeli neden ham şamandıra yerine sıcaklık kümesine kilitlendi?",
       "options": [
-        "Because floats cannot be hashed",
-        "Because buckets make the schedule discrete so a small temperature change can pick a different scripted draft",
-        "Because the parser needs an integer",
-        "Because the embedding requires it"
+        "Çünkü kayan noktalara karma işlemi uygulanamaz",
+        "Kovalar programı ayrık hale getirdiğinden, küçük bir sıcaklık değişikliği farklı bir komut dosyası taslağını seçebilir",
+        "Çünkü ayrıştırıcının bir tamsayıya ihtiyacı var",
+        "Çünkü yerleştirme bunu gerektiriyor"
       ],
       "correct": 1,
-      "explanation": "Buckets discretise the continuous schedule. Two adjacent temperatures can map to different buckets and pull different drafts from the scripted bank, which is how the mock simulates varied sampling."
+      "explanation": "Kovalar sürekli programı ayrıklaştırır. İki bitişik sıcaklık, farklı kovalarla eşleşebilir ve yazılı kümeden farklı taslaklar çekebilir; bu, sahtenin çeşitli örneklemeyi nasıl simüle ettiğini gösterir."
     },
     {
       "stage": "check",
-      "question": "What happens if every draft from the mock model fails the parser?",
+      "question": "Sahte modelin her taslağı ayrıştırıcıda başarısız olursa ne olur?",
       "options": [
-        "The generator raises a hard error",
-        "The queue is empty and each pass logs a parse rejection so the failure mode is auditable",
-        "The runner retries with a fresh prompt",
-        "The novelty threshold is lowered automatically"
+        "Jeneratör zor bir hata veriyor",
+        "Kuyruk boş ve her geçiş bir ayrıştırma reddini günlüğe kaydediyor, böylece hata modu denetlenebilir",
+        "Koşucu yeni bir istemle yeniden dener",
+        "Yenilik eşiği otomatik olarak düşürülür"
       ],
       "correct": 1,
-      "explanation": "Parser failures are recorded as logs with a parse reject reason. The queue can come back empty without crashing the loop, and the logs explain why."
+      "explanation": "Ayrıştırıcı hataları, ayrıştırma reddetme nedeni ile günlük olarak kaydedilir. Kuyruk, döngüyü bozmadan boş olarak geri dönebilir ve günlükler bunun nedenini açıklar."
     }
   ]
 }
