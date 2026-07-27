@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does under-refusal measure?",
+      "question": "Yetersiz reddetme neyi ölçer?",
       "options": [
-        "How often the model answers prompts labeled unsafe",
-        "How often the model refuses prompts labeled safe",
-        "How many tokens the model emits per response",
-        "The cost of the API call per prompt"
+        "Modelin, güvensiz olarak etiketlenen istemlere ne sıklıkta yanıt verdiği",
+        "Modelin güvenli olarak etiketlenen istemleri ne sıklıkta reddettiği",
+        "Modelin yanıt başına kaç token yaydığı",
+        "İstem başına API çağrısının maliyeti"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "Why use a mock LLM rather than a real model for this lesson?",
+      "question": "Bu ders için neden gerçek bir model yerine sahte bir LLM kullanalım ki?",
       "options": [
-        "Because real models are not allowed in capstones",
-        "So the same input yields the same output across runs, making code changes attributable to known causes",
-        "Because mock LLMs are more accurate than real ones",
-        "Because the lesson requires GPU hardware"
+        "Çünkü kapak taşlarında gerçek modellere izin verilmiyor",
+        "Böylece aynı girdi, çalıştırmalar boyunca aynı çıktıyı verir ve kod değişikliklerinin bilinen nedenlere atfedilebilir olmasını sağlar",
+        "Çünkü sahte LLM'ler gerçek olanlardan daha doğrudur",
+        "Çünkü ders GPU donanımı gerektiriyor"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Given safe prompt count = 30, refused safe count = 5, what is over-refusal rate?",
+      "question": "Güvenli istem sayısı = 30, reddedilen güvenli sayım = 5 verildiğinde aşırı reddetme oranı nedir?",
       "options": [
         "0.50",
         "0.17",
@@ -40,23 +40,23 @@
     },
     {
       "stage": "check",
-      "question": "What does Expected Calibration Error (ECE) measure here?",
+      "question": "Beklenen Kalibrasyon Hatası (ECE) burada neyi ölçer?",
       "options": [
-        "The fraction of refusals on unsafe prompts",
-        "The gap between the model's stated confidence and its observed accuracy, binned across confidence ranges",
-        "The total token count across all responses",
-        "The number of regex rules that fired"
+        "Güvenli olmayan istemler nedeniyle reddedilenlerin oranı",
+        "Modelin belirtilen güvenirliği ile gözlemlenen doğruluğu arasındaki güven aralığı arasındaki boşluk",
+        "Tüm yanıtlardaki toplam jeton sayısı",
+        "Tetiklenen normal ifade kurallarının sayısı"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does the framework join unsafe prompts against the lesson 82 taxonomy?",
+      "question": "Çerçeve neden 82. ders sınıflandırmasına karşı güvenli olmayan istemleri birleştiriyor?",
       "options": [
-        "To re-run the lesson 82 corpus loader",
-        "To report under-refusal per attack category so the team sees which boundary the model leaks on",
-        "To raise the severity of every prompt by one",
+        "Ders 82 derlem yükleyicisini yeniden çalıştırmak için",
+        "Ekibin modelin hangi sınırda sızdığını görebilmesi için saldırı kategorisi başına yetersiz ret durumunu raporlamak",
+        "Her istemin ciddiyetini birer birer artırmak için",
         "To remove duplicates"
       ],
       "correct": 1,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does the framework return both under-refusal and over-refusal rather than a single safety score?",
+      "question": "Çerçeve neden tek bir güvenlik puanı yerine hem yetersiz ret hem de aşırı ret sonucunu döndürüyor?",
       "options": [
-        "Because Python dataclasses prefer multiple fields",
-        "Because they are two opposite errors and a single number hides whichever one is worse on a given build",
-        "Because under-refusal is only used in CI",
-        "Because over-refusal is computed by a different team"
+        "Çünkü Python veri sınıfları birden fazla alanı tercih eder",
+        "Çünkü bunlar iki zıt hatadır ve belirli bir yapıda hangisinin daha kötü olduğunu tek bir sayı gizler",
+        "Çünkü eksik reddetme yalnızca CI'de kullanılıyor",
+        "Çünkü aşırı ret farklı bir ekip tarafından hesaplanıyor"
       ],
       "correct": 1,
       "explanation": ""
