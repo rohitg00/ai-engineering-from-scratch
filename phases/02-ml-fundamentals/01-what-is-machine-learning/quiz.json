@@ -2,46 +2,46 @@
   {
     "id": "ml-intro-pre-1",
     "stage": "pre",
-    "question": "In supervised learning, what does the model receive during training?",
+    "question": "Denetimli öğrenmede model eğitim sırasında ne alır?",
     "options": [
-      "Only input data with no labels",
-      "Input-output pairs where the correct answer is provided",
-      "A reward signal for each action taken",
+      "Yalnızca etiketi olmayan verileri girin",
+      "Doğru cevabın verildiği giriş-çıkış çiftleri",
+      "Yapılan her eylem için bir ödül sinyali",
       "A set of rules written by a human expert"
     ],
     "correct": 1,
-    "explanation": "Supervised learning trains on input-output pairs (labeled data). The model learns to map inputs to known correct outputs."
+    "explanation": "Giriş-çıkış çiftleri (etiketli veriler) üzerinde denetimli öğrenme trenleri. Model, girdileri bilinen doğru çıktılarla eşleştirmeyi öğrenir."
   },
   {
     "id": "ml-intro-pre-2",
     "stage": "pre",
-    "question": "What is the purpose of splitting data into training and test sets?",
+    "question": "Verileri eğitim ve test setlerine bölmenin amacı nedir?",
     "options": [
       "To make training faster by using less data",
-      "To have backup data in case the training data is lost",
-      "To evaluate whether the model generalizes to data it has never seen during training",
-      "To balance the classes in the dataset"
+      "Eğitim verilerinin kaybolması durumunda yedek verilere sahip olmak",
+      "Modelin eğitim sırasında hiç görmediği verilere genelleme yapıp yapmadığını değerlendirmek",
+      "Veri kümesindeki sınıfları dengelemek için"
     ],
     "correct": 2,
-    "explanation": "The test set measures generalization. If you evaluate on training data, you measure memorization, not learning."
+    "explanation": "Test seti genellemeyi ölçer. Eğitim verileri üzerinden değerlendirme yaparsanız öğrenmeyi değil ezberlemeyi ölçersiniz."
   },
   {
     "id": "ml-intro-post-1",
     "stage": "post",
-    "question": "A model gets 98% accuracy on training data but 55% on test data. What is this an example of?",
+    "question": "Bir model, eğitim verilerinde %98, test verilerinde ise %55 doğruluk elde eder. Bu neyin örneği?",
     "options": [
-      "Underfitting: the model is too simple",
-      "Overfitting: the model memorized training noise instead of learning general patterns",
-      "Data drift: the test distribution changed",
-      "Good generalization: the model learned the true patterns"
+      "Yetersiz uyum: model çok basit",
+      "Aşırı uyum: model, genel kalıpları öğrenmek yerine eğitim gürültüsünü ezberledi",
+      "Veri kayması: test dağılımı değişti",
+      "İyi genelleme: model gerçek kalıpları öğrendi"
     ],
     "correct": 1,
-    "explanation": "A large gap between training accuracy (high) and test accuracy (low) is the hallmark of overfitting. The model memorized the training data."
+    "explanation": "Eğitim doğruluğu (yüksek) ile test doğruluğu (düşük) arasındaki büyük fark, aşırı uyumun ayırt edici özelliğidir. Model eğitim verilerini ezberledi."
   },
   {
     "id": "ml-intro-post-2",
     "stage": "post",
-    "question": "An e-commerce site wants to group customers into segments based on purchase behavior without any predefined labels. Which type of ML is this?",
+    "question": "Bir e-ticaret sitesi, önceden tanımlanmış herhangi bir etiket olmaksızın, satın alma davranışına göre müşterileri segmentlere ayırmak ister. Bu hangi tür ML?",
     "options": [
       "Supervised learning (classification)",
       "Supervised learning (regression)",
@@ -49,19 +49,19 @@
       "Reinforcement learning"
     ],
     "correct": 2,
-    "explanation": "Finding natural groupings in data without predefined labels is clustering, which is a form of unsupervised learning."
+    "explanation": "Önceden tanımlanmış etiketler olmadan verilerde doğal gruplamalar bulmak, denetimsiz öğrenmenin bir biçimi olan kümelemedir."
   },
   {
     "id": "ml-intro-post-3",
     "stage": "post",
-    "question": "Which scenario is NOT a good use case for machine learning?",
+    "question": "Hangi senaryo NOT makine öğrenimi için iyi bir kullanım örneğidir?",
     "options": [
-      "Predicting customer churn from historical behavior data",
+      "Geçmiş davranış verilerinden müşteri kaybının tahmin edilmesi",
       "Detecting fraudulent transactions in a stream of millions of payments",
-      "Converting temperatures from Celsius to Fahrenheit",
+      "Sıcaklıkları Celsius'tan Fahrenheit'e dönüştürme",
       "Classifying images of skin lesions as benign or malignant"
     ],
     "correct": 2,
-    "explanation": "Celsius to Fahrenheit is a fixed formula (F = 9/5 * C + 32). Simple, well-defined rules do not need ML. ML adds complexity with no benefit."
+    "explanation": "Santigrat'tan Fahrenhayt'a sabit bir formüldür (F = 9/5 * C + 32). Basit, iyi tanımlanmış kuralların ML'ye ihtiyacı yoktur. ML hiçbir fayda sağlamadan karmaşıklığı artırır."
   }
 ]
