@@ -25,6 +25,17 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         (self.source / "phases/00-test/README.tr.md").write_text("# Aşama 00\n")
         (self.source / "docs").mkdir()
         (self.source / "docs/turkish-export-sync.md").write_text("# Sync\n")
+        site = self.source / "site"
+        site.mkdir()
+        source_site = MODULE_PATH.parents[1] / "site"
+        for name in export_tr.SITE_FILES:
+            (site / name).write_text(
+                (source_site / name).read_text(encoding="utf-8"), encoding="utf-8"
+            )
+        for name in ("index.html", "lesson.html"):
+            (site / name).write_text(
+                (source_site / name).read_text(encoding="utf-8"), encoding="utf-8"
+            )
         (self.source / "LICENSE").write_text(
             "MIT License\n\nCopyright (c) 2026 Rohit Ghumare\n"
         )
@@ -78,23 +89,25 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         self.assertNotIn("<animate", banner)
 
         local_site = (target / "index.html").read_text()
-        self.assertIn('<html lang="tr">', local_site)
-        self.assertIn("AI Engineering<br>From Scratch", local_site)
-        self.assertIn('id="search"', local_site)
-        self.assertIn("Öğrenme Rotası", local_site)
-        self.assertIn('class="phase-no">01', local_site)
-        self.assertIn("toLocaleLowerCase('tr-TR')", local_site)
-        self.assertIn('id="theme-toggle"', local_site)
-        self.assertIn("localStorage.getItem('curriculum-theme')", local_site)
-        self.assertIn('id="reader"', local_site)
-        self.assertIn("new TextDecoder('utf-8')", local_site)
-        self.assertIn("renderMarkdown(markdown)", local_site)
-        self.assertIn("mermaid.esm.min.mjs", local_site)
-        self.assertIn('<div class="mermaid">', local_site)
-        self.assertIn("renderLessonDiagrams(lesson)", local_site)
-        self.assertIn("phases/00-test/01-lesson/docs/tr.md", local_site)
-        self.assertIn("1 aşama", local_site)
-        self.assertIn("<strong>1</strong><span>Türkçe ders", local_site)
+        self.assertIn('<html lang="tr"', local_site)
+        self.assertIn("Müfredatın tamamı", local_site)
+        self.assertIn("ai-engineering-from-scratch-tr.git", local_site)
+        self.assertNotIn("va.vercel-scripts.com", local_site)
+
+        lesson_site = (target / "lesson.html").read_text()
+        self.assertIn("lesson-sidebar", lesson_site)
+        self.assertIn("lesson-nav-bottom", lesson_site)
+        self.assertIn("renderQuiz", lesson_site)
+        self.assertIn("mermaid-modal-overlay", lesson_site)
+        self.assertIn("path + '/docs/tr.md'", lesson_site)
+        self.assertNotIn("path + '/docs/en.md'", lesson_site)
+
+        data = (target / "data.js").read_text()
+        self.assertIn('"name":"Türkçe"', data)
+        self.assertIn('"lang":"Türkçe"', data)
+        self.assertIn('"url":"phases/00-test/01-lesson/"', data)
+        self.assertTrue((target / "style.css").is_file())
+        self.assertTrue((target / "progress.js").is_file())
 
     def test_export_refuses_existing_destination(self):
         target = Path(self.temp.name) / "target"

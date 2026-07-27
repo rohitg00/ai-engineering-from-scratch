@@ -24,6 +24,16 @@ EXCLUDED_DIRS = {
 EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".coverage"}
 ALLOWED_LESSON_ENTRIES = {"code", "outputs", "assets", "quiz.json"}
 LOCAL_LINK = re.compile(r"!?\[[^\]]*\]\(([^)#?]+)(?:#[^)]*)?\)")
+SITE_FILES = {
+    "app.js", "cmdpalette.js", "header.js", "progress.js", "style.css",
+    "about.html", "catalog.html", "glossary.html", "prereqs.html",
+    "figures.js", "lesson-figures.js", "figures-math.js", "figures-ml.js",
+    "figures-dl.js", "figures-vision-speech.js", "figures-transformers.js",
+    "figures-genai-rl.js", "figures-llms-systems.js",
+    "figures-agents-alignment.js", "figures-math2.js", "figures-nlp2.js",
+    "figures-llms2.js", "figures-infra.js", "figures-frontier.js",
+    "figures-history.js",
+}
 
 
 def build_turkish_curriculum_banner() -> str:
@@ -246,6 +256,90 @@ def build_phase_readme(phase: Path, lessons: list[Path]) -> str:
         lines.append(f"- [{name}]({lesson.name}/docs/tr.md)")
     lines.append("")
     return "\n".join(lines)
+
+
+def build_site_data(source: Path, phases: dict[Path, list[Path]]) -> str:
+    """Build the original site's catalogue schema from Turkish-only content."""
+    records = []
+    for index, (phase, lessons) in enumerate(phases.items()):
+        phase_title = title(source / phase / "README.tr.md")
+        phase_title = re.sub(r"^(?:Aşama|Phase)\s+\d+\s*[:—-]?\s*", "", phase_title)
+        lesson_records = []
+        for lesson in lessons:
+            markdown = (lesson / "docs" / "tr.md").read_text(encoding="utf-8")
+            hook = next(
+                (
+                    line.lstrip("> ").strip()
+                    for line in markdown.splitlines()
+                    if line.startswith("> ") and line.lstrip("> ").strip()
+                ),
+                "",
+            )
+            lesson_records.append({
+                "name": title(lesson / "docs" / "tr.md"),
+                "status": "complete",
+                "type": "Ders",
+                "lang": "Türkçe",
+                "url": lesson.relative_to(source).as_posix() + "/",
+                "summary": hook,
+                "keywords": "",
+            })
+        records.append({
+            "id": index,
+            "name": phase_title,
+            "status": "complete",
+            "desc": f"{len(lesson_records)} Türkçe ders",
+            "url": phase.as_posix() + "/",
+            "lessons": lesson_records,
+        })
+    return (
+        "// Türkçe dışa aktarma betiği tarafından üretildi; elle düzenlemeyin.\n"
+        "const PHASES = "
+        + json.dumps(records, ensure_ascii=False, separators=(",", ":"))
+        + ";\nconst GLOSSARY = [];\n"
+    )
+
+
+def export_original_site(
+    source: Path, destination: Path, phases: dict[Path, list[Path]]
+) -> None:
+    """Export the source repository's UX shell, localized for local Turkish files."""
+    site = source / "site"
+    for name in SITE_FILES:
+        shutil.copy2(site / name, destination / name)
+
+    index = (site / "index.html").read_text(encoding="utf-8")
+    index = re.sub(
+        r'\s*<script defer src="https://va\.vercel-scripts\.com/[^"]+"></script>',
+        "",
+        index,
+    )
+    index = index.replace(
+        "git clone https://github.com/rohitg00/ai-engineering-from-scratch.git",
+        "git clone https://github.com/ademiru/ai-engineering-from-scratch-tr.git",
+    )
+    (destination / "index.html").write_text(index, encoding="utf-8")
+
+    lesson = (site / "lesson.html").read_text(encoding="utf-8")
+    lesson = lesson.replace('<script src="build-meta.js"></script>', "")
+    lesson = lesson.replace(
+        "var base = 'https://raw.githubusercontent.com/rohitg00/"
+        "ai-engineering-from-scratch/' + ref + '/';\n"
+        "        var rawUrl = base + path + '/docs/en.md';\n"
+        "        var quizUrl = base + path + '/quiz.json';",
+        "var rawUrl = path + '/docs/tr.md';\n"
+        "        var quizUrl = path + '/quiz.json';",
+    )
+    lesson = lesson.replace(
+        "var REPO_TREE = 'https://github.com/rohitg00/"
+        "ai-engineering-from-scratch/tree/main/';",
+        "var REPO_TREE = 'https://github.com/ademiru/"
+        "ai-engineering-from-scratch-tr/tree/main/';",
+    )
+    (destination / "lesson.html").write_text(lesson, encoding="utf-8")
+    (destination / "data.js").write_text(
+        build_site_data(source, phases), encoding="utf-8"
+    )
 
 
 def build_local_site_index(
@@ -596,9 +690,7 @@ def export(source: Path, destination: Path, revision: str) -> dict[str, object]:
     (destination / "README.md").write_text(
         build_readme(source, phases, revision), encoding="utf-8"
     )
-    (destination / "index.html").write_text(
-        build_local_site_index(source, phases, revision), encoding="utf-8"
-    )
+    export_original_site(source, destination, phases)
     shutil.copy2(source / "docs" / "turkish-export-sync.md", destination / "SENKRONIZASYON.md")
     manifest = validate(destination, len(lessons), revision)
     (destination / "MANIFEST.json").write_text(
