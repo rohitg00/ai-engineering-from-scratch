@@ -258,6 +258,109 @@ Rastgele dağılımlardan örnekleme, ters dönüşüm örneklemesi, reddetme ö
 gaussian-pdf
 ```
 
+## Derin Matematik: Olasılığı Modelleme Dili Olarak Kurmak
+
+Olasılık, yalnızca “bir olayın olma yüzdesi” değildir. Eksik bilgi altında
+tutarlı çıkarım yapmanın matematiksel dilidir. Bir olasılık modeli üç parçadan
+oluşur: olası sonuçlar kümesi \(\Omega\), ilgilendiğimiz olaylar ve her olaya
+\([0,1]\) aralığında değer veren \(P\) ölçüsü. Bu ölçü
+\(P(\Omega)=1\) ve ayrık olaylar için toplamsallık koşullarını sağlar.
+
+### Yoğunluk neden olasılık değildir?
+
+Sürekli bir değişkende tek bir noktanın olasılığı sıfırdır:
+\(P(X=x)=0\). Olasılık, yoğunluk fonksiyonunun bir aralık üzerindeki alanıdır:
+
+\[
+P(a\le X\le b)=\int_a^b f_X(x)\,dx.
+\]
+
+Bu nedenle bir PDF değeri 1'den büyük olabilir; yasak olan yoğunluğun değil,
+toplam alanın 1'den farklı olmasıdır. Örneğin \([0,0.5]\) üzerinde sabit
+\(f(x)=2\) geçerli bir yoğunluktur, çünkü alan \(2\times0.5=1\)'dir.
+
+### Beklenen değer uzun dönem ortalamasından daha geneldir
+
+Ayrık durumda
+
+\[
+\mathbb{E}[g(X)]=\sum_x g(x)P(X=x),
+\]
+
+sürekli durumda ise toplamın yerini integral alır. Bu tanım, model eğitimindeki
+risk minimizasyonunu açıklar:
+
+\[
+R(\theta)=\mathbb{E}_{(X,Y)\sim p_{\text{veri}}}
+[\ell(f_\theta(X),Y)].
+\]
+
+Elimizde gerçek dağılım olmadığı için bu beklentiyi veri kümesi ortalamasıyla
+yaklaştırırız. Mini-batch gradyanı da tam gradyanın gürültülü fakat uygun
+koşullarda yansız bir tahminidir. “Loss neden ortalanıyor?” sorusunun kesin
+cevabı budur.
+
+### Varyansı cebirsel olarak açın
+
+\[
+\operatorname{Var}(X)
+=\mathbb{E}[(X-\mu)^2]
+=\mathbb{E}[X^2]-\mathbb{E}[X]^2.
+\]
+
+Son eşitlik, kareyi açıp beklentinin doğrusallığını kullanarak elde edilir.
+Bağımsız \(n\) örneğin ortalaması için
+
+\[
+\operatorname{Var}(\bar X)=\frac{\sigma^2}{n}.
+\]
+
+Standart hata bu yüzden \(1/\sqrt n\) hızında azalır. Hatayı yarıya indirmek
+için iki değil yaklaşık dört kat örnek gerekir. Bu sonuç veri toplama maliyetini
+planlarken doğrudan kullanılabilir.
+
+### Koşullama ve bağımsızlık
+
+\[
+P(A\mid B)=\frac{P(A\cap B)}{P(B)}
+\]
+
+ifadesi, örnek uzayını \(B\) gerçekleşmiş gibi yeniden normalize eder.
+\(A\) ve \(B\) bağımsızsa \(P(A\mid B)=P(A)\); fakat koşullu bağımsızlık çok
+daha ince bir kavramdır. İki değişken, üçüncü bir değişken bilindiğinde bağımsız
+olabilir veya tam tersine koşullama sahte bir ilişki yaratabilir. Nedensel
+modellerde “korelasyon gördüm” ile “müdahale edersem sonuç değişir” arasındaki
+fark burada başlar.
+
+### Log-olabilirlik ve çapraz entropi aynı hikâyedir
+
+Bağımsız gözlemler için olabilirlik çarpımdır:
+
+\[
+L(\theta)=\prod_{i=1}^n p_\theta(y_i\mid x_i).
+\]
+
+Logaritma monoton olduğu için en büyük noktayı değiştirmeden çarpımı toplama
+dönüştürür:
+
+\[
+\log L(\theta)=\sum_i\log p_\theta(y_i\mid x_i).
+\]
+
+Negatif log-olabilirliği küçültmek, sınıflandırmada çapraz entropiyi küçültmekle
+aynıdır. Böylece “istatistiksel tahmin” ve “sinir ağı loss'u” iki ayrı konu
+olmaktan çıkar. `log_softmax` kullanılması da yalnızca hız için değil,
+çok küçük olasılıkların sıfıra yuvarlanmasını önlemek içindir.
+
+### Anlama kontrolü
+
+1. \(f(x)=3x^2\), \(0\le x\le1\) yoğunluğunun normalize olduğunu gösterin ve
+   \(P(X>0.5)\)'i integral ile hesaplayın.
+2. Bağımsız 100 ölçümün ortalamasının standart hatasını 10 kat azaltmak için
+   kaç ölçüm gerektiğini türetin.
+3. `softmax` çıktısındaki doğru sınıf olasılığı \(0.8\)'den \(0.4\)'e düştüğünde
+   negatif log-olabilirliğin ne kadar değiştiğini hesaplayıp yorumlayın.
+
 ## İnşa Et
 
 ### 1. Adım: Olasılığın temelleri

@@ -117,6 +117,116 @@ Her modern framework bunu otomatik olarak yapar. Bunu anlamak, şekiller yanlı�
 vector-projection
 ```
 
+## Derin Matematik: Bir Matris Neden Dönüşümdür?
+
+Bir matrisi yalnızca sayı tablosu olarak okumak, işlemi yapmayı öğretir fakat neden
+çalıştığını açıklamaz. \(A\in\mathbb{R}^{m\times n}\) matrisi aslında
+\(\mathbb{R}^n\) uzayındaki bir vektörü \(\mathbb{R}^m\) uzayına taşıyan doğrusal
+bir fonksiyondur:
+
+\[
+T_A(x)=Ax.
+\]
+
+“Doğrusal” sözcüğünün kesin anlamı iki koşuldur:
+
+\[
+T_A(x+y)=T_A(x)+T_A(y), \qquad T_A(cx)=cT_A(x).
+\]
+
+Bu iki eşitlik, dönüşümün toplama ve ölçekleme yapısını koruduğunu söyler. Bu
+yüzden \(x=x_1e_1+\cdots+x_ne_n\) biçimindeki her vektör için yalnızca baz
+vektörlerinin nereye gittiğini bilmek yeterlidir:
+
+\[
+Ax=x_1Ae_1+\cdots+x_nAe_n.
+\]
+
+Burada \(Ae_j\), \(A\)'nın \(j\). sütunudur. Başka bir deyişle matrisin sütunları,
+girdi uzayının baz yönlerinin çıktı uzayında nereye taşındığını kaydeder. Bu,
+matris çarpımını ezberlenen satır-sütun kuralından çıkarıp geometrik bir
+mekanizmaya dönüştürür.
+
+### Çarpımı iki farklı ama eşdeğer biçimde okuyun
+
+\[
+A=
+\begin{bmatrix}
+2&-1\\
+1&3
+\end{bmatrix},
+\qquad
+x=
+\begin{bmatrix}
+4\\2
+\end{bmatrix}.
+\]
+
+Satır bakışı, her çıktı koordinatını bir iç çarpım olarak verir:
+
+\[
+Ax=
+\begin{bmatrix}
+(2,-1)\cdot(4,2)\\
+(1,3)\cdot(4,2)
+\end{bmatrix}
+=
+\begin{bmatrix}
+6\\10
+\end{bmatrix}.
+\]
+
+Sütun bakışı ise aynı sonucu dönüşmüş bazların birleşimi olarak üretir:
+
+\[
+Ax=4
+\begin{bmatrix}2\\1\end{bmatrix}
++2
+\begin{bmatrix}-1\\3\end{bmatrix}
+=
+\begin{bmatrix}6\\10\end{bmatrix}.
+\]
+
+İlk okuma bir nöronun “girdiye ne kadar uyduğunu”, ikinci okuma ise çıktının
+hangi öğrenilmiş yönlerden kurulduğunu gösterir. İkisini de kullanabilmek,
+attention projeksiyonlarını ve embedding katmanlarını yorumlarken önemlidir.
+
+### Determinant ve tersin profesyonel yorumu
+
+İki boyutta \(|\det A|\), dönüşümden sonra birim karenin alanıdır. İşaret,
+yönelimin korunup korunmadığını; sıfır değeri ise en az bir boyutun çöktüğünü
+gösterir. \(\det A=0\) olduğunda farklı girdiler aynı çıktıya gidebilir. Bilgi
+kaybolduğu için tek bir \(A^{-1}\) dönüşümüyle girdiyi geri kazanmak imkânsızdır.
+
+Uygulamada “determinant sıfır değilse sorun yok” demek yeterli değildir.
+Determinant sıfıra çok yakınsa veya en büyük ve en küçük tekil değerlerin oranı
+çok büyükse matris kötü koşulludur. Küçük ölçüm hataları çözümde büyüyebilir.
+Bu nedenle üretim kodunda açıkça ters almak yerine çoğunlukla `solve`, QR ya da
+SVD tabanlı çözücüler tercih edilir.
+
+### Sinir ağı bağlantısı: \(Wx+b\)
+
+\(W\), öğrenilmiş doğrusal dönüşümdür; \(b\), dönüşümün orijinden geçme
+zorunluluğunu kaldıran ötelemedir. Bir etkinleştirme fonksiyonu olmadan ardışık
+iki katman yine tek bir afin dönüşüme indirgenir:
+
+\[
+W_2(W_1x+b_1)+b_2=(W_2W_1)x+(W_2b_1+b_2).
+\]
+
+Bu türetim, derin ağların neden ReLU, GELU veya sigmoid gibi doğrusal olmayan
+işlevlere ihtiyaç duyduğunu kesin olarak açıklar: doğrusal olmayanlık yoksa
+katman sayısı artsa bile temsil gücü artmaz.
+
+### Anlama kontrolü
+
+1. \(A\) matrisi \(3\times5\), \(x\) vektörü \(5\times1\) ise sonuç neden
+   \(3\times1\)'dir? Yanıtı hem satır hem sütun bakışıyla açıklayın.
+2. \(W_2W_1\) ile \(W_1W_2\)'nin genellikle neden farklı olduğunu, dönüşümlerin
+   uygulanma sırasına bağlayın.
+3. Bir ağırlık matrisinin iki sütunu aynıysa hangi giriş bilgisinin ayırt
+   edilemeyeceğini gösteren iki farklı vektör bulun.
+
 ## İnşa Et
 
 ### Adım 1: Vektör sınıfı

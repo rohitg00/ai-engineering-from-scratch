@@ -92,6 +92,12 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         self.assertIn('<html lang="tr"', local_site)
         self.assertIn("Müfredatın tamamı", local_site)
         self.assertIn("ai-engineering-from-scratch-tr.git", local_site)
+        self.assertIn('href="https://github.com/ademiru"', local_site)
+        self.assertIn("@ademiru GitHub", local_site)
+        self.assertLess(
+            local_site.index("GitHub'da yıldızla"),
+            local_site.index("@ademiru GitHub"),
+        )
         self.assertNotIn("va.vercel-scripts.com", local_site)
 
         lesson_site = (target / "lesson.html").read_text()

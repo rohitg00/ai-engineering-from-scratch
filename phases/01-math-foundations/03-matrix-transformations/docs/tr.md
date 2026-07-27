@@ -236,6 +236,92 @@ det = -1:  area preserved but orientation flipped (reflection)
 matrix-transform
 ```
 
+## Derin Matematik: Dönüşümü Baz, Spektrum ve Koşullulukla Okumak
+
+Bir doğrusal dönüşümün geometrisini anlamanın üç tamamlayıcı yolu vardır:
+sütunlar baz vektörlerinin görüntüsünü, özvektörler değişmeyen yönleri, tekil
+vektörler ise en çok ve en az gerilen dik yönleri gösterir. Bu üç bakış aynı
+matrisi farklı sorular için okunabilir kılar.
+
+### Bileşimde sıra neden ters görünür?
+
+\(x\)'e önce \(A\), sonra \(B\) uygulandığında sonuç
+
+\[
+x \xrightarrow{A} Ax \xrightarrow{B} B(Ax)=(BA)x
+\]
+
+olur. Sağdaki matris önce çalışır. Örneğin önce \(x\) ekseninde iki kat
+ölçekleyip sonra 90 derece döndürmek ile önce döndürüp sonra dünya koordinatının
+\(x\) ekseninde ölçeklemek aynı değildir. Genel olarak \(BA\neq AB\). Neural
+network katmanlarının sırası da bu nedenle değiştirilemez.
+
+### Özdeğer denklemini ezberlemeden türetin
+
+Bir yön dönüşüm altında değişmiyor, yalnızca \(\lambda\) kadar ölçekleniyorsa
+
+\[
+Av=\lambda v.
+\]
+
+Tüm terimleri bir tarafa taşıyalım:
+
+\[
+(A-\lambda I)v=0.
+\]
+
+Sıfırdan farklı bir \(v\) çözümünün bulunabilmesi için \(A-\lambda I\)'nin
+terslenemez olması gerekir. Dolayısıyla
+
+\[
+\det(A-\lambda I)=0.
+\]
+
+\(A=\begin{bmatrix}2&1\\1&2\end{bmatrix}\) için bu denklem
+\((2-\lambda)^2-1=0\) olur; kökler \(3\) ve \(1\)'dir. Karşılık gelen yönler
+\((1,1)\) ve \((1,-1)\)'dir. Dönüşüm ilk yönü üç kat büyütür, ikinci yönü
+korur. Sayısal sonuç artık geometrik bir cümleye dönüşmüştür.
+
+### Her matris özvektörlerle güvenle açıklanamaz
+
+Özayrışım yalnızca yeterli sayıda doğrusal bağımsız özvektör varsa
+\(A=V\Lambda V^{-1}\) biçimindedir. Simetrik gerçek matrislerde bu yapı çok
+güzeldir: özvektörler ortonormal seçilebilir ve \(A=Q\Lambda Q^\top\) olur.
+Fakat genel matrislerde karmaşık özdeğerler, eksik özvektörler veya kötü
+koşullanmış \(V\) görülebilir.
+
+SVD bu noktada daha genel bir araçtır:
+
+\[
+A=U\Sigma V^\top.
+\]
+
+Bu eşitlik her gerçek matris için vardır. \(V^\top\) girdiyi dik bir baza
+döndürür, \(\Sigma\) eksenleri tekil değerlerle ölçekler, \(U\) sonucu çıktı
+uzayına döndürür. En küçük tekil değer sıfıra yakınsa dönüşüm bir yöndeki
+bilgiyi neredeyse ezer. Koşul sayısı
+\(\kappa_2(A)=\sigma_{\max}/\sigma_{\min}\), sayısal hassasiyetin doğrudan
+ölçüsüdür.
+
+### Yapay zekâda neden önemlidir?
+
+- Attention katmanındaki \(W_Q,W_K,W_V\) matrisleri temsili farklı alt uzaylara
+  taşır; çarpım sırası hangi uzayda benzerlik ölçüldüğünü belirler.
+- Bir recurrent dönüşüm tekrar tekrar uygulanırsa \(|\lambda|>1\) yönleri
+  büyür, \(|\lambda|<1\) yönleri söner. Bu, patlayan ve kaybolan gradyanların
+  spektral açıklamasıdır.
+- PCA, kovaryans matrisinin en büyük özdeğerli yönlerini seçer; düşük rank
+  yaklaşımı ise SVD'nin en büyük tekil değerlerini korur.
+
+### Anlama kontrolü
+
+1. \(R\) bir döndürme, \(S\) yatay ölçekleme matrisi olsun. Bir kare üzerinde
+   \(RS\) ve \(SR\)'yi çizerek farkı açıklayın.
+2. Bir matrisin determinantı 1 iken koşul sayısı neden yine çok büyük olabilir?
+   \(\operatorname{diag}(1000,0.001)\) üzerinden düşünün.
+3. Özdeğer ile tekil değer arasındaki farkı “değişmeyen yön” ve “en fazla
+   gerilen yön” ifadeleriyle kendi cümlelerinizle yazın.
+
 ## İnşa Et
 
 ### Adım 1: Matrisleri sıfırdan dönüştürme (Python)
