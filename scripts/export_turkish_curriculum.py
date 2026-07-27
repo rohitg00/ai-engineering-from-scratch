@@ -25,6 +25,54 @@ ALLOWED_LESSON_ENTRIES = {"code", "outputs", "assets", "quiz.json"}
 LOCAL_LINK = re.compile(r"!?\[[^\]]*\]\(([^)#?]+)(?:#[^)]*)?\)")
 
 
+def build_rgb_ascii_banner() -> str:
+    """Return a self-contained, animated SVG banner for the public README."""
+    art = (
+        "████████╗██╗   ██╗██████╗ ██╗  ██╗ ██████╗███████╗\n"
+        "╚══██╔══╝██║   ██║██╔══██╗██║ ██╔╝██╔════╝██╔════╝\n"
+        "   ██║   ██║   ██║██████╔╝█████╔╝ ██║     █████╗  \n"
+        "   ██║   ██║   ██║██╔══██╗██╔═██╗ ██║     ██╔══╝  \n"
+        "   ██║   ╚██████╔╝██║  ██║██║  ██╗╚██████╗███████╗\n"
+        "   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝"
+    )
+    tspans = "\n".join(
+        (
+            f'      <tspan x="60" y="45">{line}</tspan>'
+            if index == 0
+            else f'      <tspan x="60" dy="30">{line}</tspan>'
+        )
+        for index, line in enumerate(art.splitlines())
+    )
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="310" viewBox="0 0 1200 310" role="img" aria-labelledby="title desc">
+  <title id="title">Türkçeleştirilmiş AI Engineering from Scratch</title>
+  <desc id="desc">RGB renkleri akan profesyonel ASCII başlık</desc>
+  <defs>
+    <linearGradient id="rgb" x1="-100%" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#ff3b30"/>
+      <stop offset=".2" stop-color="#ffcc00"/>
+      <stop offset=".4" stop-color="#34c759"/>
+      <stop offset=".6" stop-color="#00c7ff"/>
+      <stop offset=".8" stop-color="#5856d6"/>
+      <stop offset="1" stop-color="#ff2d55"/>
+      <animate attributeName="x1" values="-100%;100%" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="x2" values="0%;200%" dur="4s" repeatCount="indefinite"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-30%" width="140%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="310" rx="22" fill="#070b14"/>
+  <rect x="2" y="2" width="1196" height="306" rx="20" fill="none" stroke="url(#rgb)" stroke-width="4"/>
+  <g fill="url(#rgb)" filter="url(#glow)" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="24" font-weight="700" xml:space="preserve">
+{tspans}
+  </g>
+  <text x="600" y="254" text-anchor="middle" fill="url(#rgb)" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="30" font-weight="800" letter-spacing="8">TÜRKÇELEŞTİRİLMİŞ</text>
+  <text x="600" y="286" text-anchor="middle" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15" letter-spacing="3">AI ENGINEERING · SIFIRDAN ÜRETİME</text>
+</svg>
+"""
+
+
 def lesson_dirs(root: Path) -> list[Path]:
     return sorted(p for p in root.glob(LESSONS) if (p / "docs" / "en.md").is_file())
 
@@ -54,6 +102,11 @@ def build_readme(
     lesson_count = sum(len(lessons) for lessons in phases.values())
     phase_count = len(phases)
     lines = [
+        '<p align="center">',
+        '  <img src="assets/turkcelestirilmis-rgb.svg" '
+        'alt="TÜRKÇELEŞTİRİLMİŞ — RGB ASCII başlık" width="100%">',
+        "</p>",
+        "",
         "# AI Engineering from Scratch — Türkçe",
         "",
         "> Yapay zekâ mühendisliğini matematik temellerinden üretim sistemlerine kadar,",
@@ -164,6 +217,10 @@ def export(source: Path, destination: Path, revision: str) -> dict[str, object]:
     phases: dict[Path, list[Path]] = {}
     destination.mkdir(parents=True)
     shutil.copy2(source / "LICENSE", destination / "LICENSE")
+    (destination / "assets").mkdir()
+    (destination / "assets" / "turkcelestirilmis-rgb.svg").write_text(
+        build_rgb_ascii_banner(), encoding="utf-8"
+    )
     for lesson in lessons:
         relative = lesson.relative_to(source)
         target = destination / relative
