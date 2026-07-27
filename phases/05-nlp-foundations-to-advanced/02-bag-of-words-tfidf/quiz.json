@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does Bag of Words throw away?",
+      "question": "Kelime Torbası neyi çöpe atıyor?",
       "options": [
         "Token order",
         "Vocabulary size",
@@ -12,13 +12,13 @@
         "Punctuation"
       ],
       "correct": 0,
-      "explanation": "BoW counts tokens per document but discards their sequence."
+      "explanation": "BoW, belge başına belirteçleri sayar ancak sırasını göz ardı eder."
     },
     {
       "stage": "pre",
-      "question": "Why scale TF by an IDF factor?",
+      "question": "Neden TF'yi IDF faktörüyle ölçeklendirmelisiniz?",
       "options": [
-        "Words that appear in every document carry little discriminative signal and should be downweighted",
+        "Her belgede yer alan kelimeler çok az ayırt edici işaret taşır ve ağırlıkları azaltılmalıdır.",
         "To normalize document length",
         "To accelerate training",
         "To remove punctuation"
@@ -28,31 +28,31 @@
     },
     {
       "stage": "check",
-      "question": "In the smoothed IDF formula log((N+1)/(df+1)) + 1, what does the trailing +1 ensure?",
+      "question": "Düzleştirilmiş IDF formülü log((N+1)/(df+1)) + 1'de, sondaki +1 neyi garanti eder?",
       "options": [
         "Faster computation",
-        "A word that appears in every document still has IDF 1 instead of 0",
-        "Compatibility with raw counts",
-        "Numerical stability for large N"
+        "Her belgede görünen bir sözcükte hâlâ 0 yerine IDF 1 var",
+        "Ham sayımlarla uyumluluk",
+        "Büyük N için sayısal kararlılık"
       ],
       "correct": 1,
-      "explanation": "The +1 keeps ubiquitous words at IDF=1 so they are not zeroed out, matching scikit-learn's default."
+      "explanation": "+1, her yerde bulunan kelimeleri IDF=1'de tutar, böylece sıfırlanmazlar, bu da scikit-learn'ün varsayılan ayarıyla eşleşir."
     },
     {
       "stage": "check",
-      "question": "Why L2-normalize TF-IDF rows before cosine similarity?",
+      "question": "L2- neden TF-IDF satırlarını kosinüs benzerliğinden önce normalleştirsin?",
       "options": [
         "To convert sparse vectors to dense",
-        "To compress the vocabulary",
+        "Kelime dağarcığını sıkıştırmak için",
         "To remove zero entries",
-        "Longer documents would otherwise dominate similarity scores; normalization puts all docs on the unit hypersphere"
+        "Aksi takdirde daha uzun belgeler benzerlik puanlarına hakim olacaktır; normalleştirme tüm dokümanları birim hiperküresine yerleştirir"
       ],
       "correct": 3,
-      "explanation": "L2 normalization removes document-length bias and turns cosine similarity into a dot product."
+      "explanation": "L2 normalleştirme, belge uzunluğu sapmasını ortadan kaldırır ve kosinüs benzerliğini nokta çarpımına dönüştürür."
     },
     {
       "stage": "check",
-      "question": "Which TfidfVectorizer setting is risky to enable for sentiment analysis?",
+      "question": "Duyarlılık analizi için hangi TfidfVectorizer ayarının etkinleştirilmesi risklidir?",
       "options": [
         "stop_words='english'",
         "ngram_range=(1, 2)",
@@ -60,11 +60,11 @@
         "sublinear_tf=True"
       ],
       "correct": 0,
-      "explanation": "English stopword lists drop negations like 'not', which carry sentiment signal."
+      "explanation": "İngilizce engellenecek kelime listeleri, duyarlılık sinyali taşıyan 'değil' gibi olumsuzlukları bırakır."
     },
     {
       "stage": "post",
-      "question": "Which task does TF-IDF still win in 2026?",
+      "question": "TF-IDF 2026'da hala hangi görevi kazanıyor?",
       "options": [
         "Open-ended dialogue",
         "Machine translation",
@@ -72,23 +72,23 @@
         "Image captioning"
       ],
       "correct": 2,
-      "explanation": "TF-IDF beats embeddings when word presence is the signal and explainability or speed matter."
+      "explanation": "TF-IDF, kelimenin varlığı sinyal ve açıklanabilirlik veya hız meselesi olduğunda yerleştirmeleri yener."
     },
     {
       "stage": "post",
-      "question": "Why does TF-IDF fail on the pair 'The movie was not good' vs 'The movie was excellent'?",
+      "question": "TF-IDF neden 'Film iyi değildi' ve 'Film mükemmeldi' ikilisinde başarısız oluyor?",
       "options": [
-        "TF-IDF cannot handle stopwords",
+        "TF-IDF engellenecek sözcükleri işleyemez",
         "TF-IDF requires bigrams to work",
-        "Embeddings overlap is too high",
-        "Both documents share most tokens; bag-of-words has no notion of negation or word order"
+        "Gömme örtüşmesi çok yüksek",
+        "Her iki belge de çoğu jetonu paylaşıyor; kelime çantasının olumsuzluk veya kelime sırası kavramı yoktur"
       ],
       "correct": 3,
-      "explanation": "Without word order or syntactic context, BoW cannot model that 'not' flips the sentiment of 'good'."
+      "explanation": "Kelime sırası veya sözdizimsel bağlam olmadan BoW, 'değil'in 'iyi' duygusunu tersine çevireceğini modelleyemez."
     },
     {
       "stage": "post",
-      "question": "What is the TF-IDF weighted embedding hybrid?",
+      "question": "TF-IDF ağırlıklı gömme hibriti nedir?",
       "options": [
         "Using TF-IDF weights as a pooling weight over per-token embeddings before averaging",
         "Running PCA on TF-IDF then re-embedding",
@@ -96,7 +96,7 @@
         "Training BERT on TF-IDF features"
       ],
       "correct": 0,
-      "explanation": "The hybrid weights each token's embedding by its TF-IDF score and averages, blending semantic capacity with rare-word emphasis."
+      "explanation": "Hibrit, anlamsal kapasiteyi nadir sözcük vurgusuyla harmanlayarak, her bir tokenin yerleştirilmesini TF-IDF puanı ve ortalamalarına göre ağırlıklandırıyor."
     }
   ]
 }
