@@ -4,99 +4,99 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does LDA assume about each document?",
+      "question": "LDA her belge hakkında ne varsayıyor?",
       "options": [
-        "Each document belongs to exactly one topic",
-        "Documents are sentences",
-        "Each document is a mixture of topics; each topic is a distribution over words",
-        "Documents are independent of topics"
+        "Her belge tam olarak bir konuya aittir",
+        "Belgeler cümlelerdir",
+        "Her belge konuların bir karışımıdır; her konu kelimelere göre bir dağılımdır",
+        "Belgeler konulardan bağımsızdır"
       ],
       "correct": 2,
-      "explanation": "LDA's generative story is mixed-membership: each doc has a topic distribution, each topic a word distribution."
+      "explanation": "LDA'nin üretken hikayesi karma üyeliktir: her belgenin bir konu dağılımı, her konunun bir kelime dağılımı vardır."
     },
     {
       "stage": "pre",
-      "question": "What does BERTopic use to form topic clusters?",
+      "question": "BERTopic konu kümeleri oluşturmak için ne kullanıyor?",
       "options": [
-        "Direct softmax over the vocabulary",
-        "Encode docs with a sentence transformer, reduce dimensionality with UMAP, then cluster with HDBSCAN",
+        "Kelime dağarcığı üzerinde doğrudan softmax",
+        "Dokümanları bir cümle dönüştürücüyle kodlayın, UMAP ile boyutluluğu azaltın, ardından HDBSCAN ile kümeleyin",
         "Run BM25 followed by k-means",
         "Train an LSTM end-to-end"
       ],
       "correct": 1,
-      "explanation": "BERTopic = embeddings + UMAP + HDBSCAN, with class-based TF-IDF for topic words."
+      "explanation": "BERTopic = yerleştirmeler + UMAP + HDBSCAN, konu sözcükleri için sınıf tabanlı TF-IDF ile."
     },
     {
       "stage": "check",
-      "question": "Why does scikit-learn's LDA expect raw counts (CountVectorizer), not TF-IDF?",
+      "question": "Scikit-learn'ün LDA'si neden TF-IDF değil de ham sayımlar (CountVectorizer) bekliyor?",
       "options": [
-        "TF-IDF is too slow",
-        "LDA's probabilistic model is defined over integer term counts; TF-IDF distorts the underlying distribution",
-        "LDA cannot handle floats",
+        "TF-IDF çok yavaş",
+        "LDA'nin olasılıksal modeli tamsayı terim sayıları üzerinden tanımlanır; TF-IDF temel dağıtımı bozuyor",
+        "LDA şamandıraları işleyemez",
         "Memory limits"
       ],
       "correct": 1,
-      "explanation": "LDA likelihood assumes counts; feeding TF-IDF values violates the model assumption."
+      "explanation": "LDA olasılık sayımları varsayar; TF-IDF değerlerinin beslenmesi model varsayımını ihlal eder."
     },
     {
       "stage": "check",
-      "question": "What does HDBSCAN's -1 label mean in a BERTopic output?",
+      "question": "BERTopic çıktısında HDBSCAN'nin -1 etiketi ne anlama geliyor?",
       "options": [
         "A reserved category",
-        "An outlier cluster of documents the density-based algorithm could not confidently assign",
+        "Yoğunluğa dayalı algoritmanın güvenle atayamadığı aykırı bir belge kümesi",
         "Stopword cluster",
         "Top topic"
       ],
       "correct": 1,
-      "explanation": "HDBSCAN marks unclustered points with -1; in BERTopic these are documents that did not fit any topic."
+      "explanation": "HDBSCAN kümelenmemiş noktaları -1 ile işaretler; BERTopic'te bunlar hiçbir konuya uymayan belgelerdir."
     },
     {
       "stage": "check",
-      "question": "Which coherence metric is the common default for topic-model evaluation?",
+      "question": "Konu modeli değerlendirmesi için ortak varsayılan tutarlılık metriği hangisidir?",
       "options": [
         "BLEU",
         "Accuracy",
-        "Perplexity only",
+        "Yalnızca şaşkınlık",
         "c_v coherence via NPMI over sliding windows of top topic words"
       ],
       "correct": 3,
-      "explanation": "c_v coherence (Roder et al., 2015) is the canonical automatic topic-coherence metric."
+      "explanation": "c_v tutarlılığı (Roder ve diğerleri, 2015), kanonik otomatik konu tutarlılığı ölçüsüdür."
     },
     {
       "stage": "post",
-      "question": "When is LDA usually a better fit than BERTopic?",
+      "question": "LDA ne zaman genellikle BERTopic'ten daha iyi uyum sağlar?",
       "options": [
         "On short tweets",
-        "Long documents where mixed-membership topic distributions are useful and embeddings would truncate input",
-        "When embeddings are noisy",
-        "When you need a single topic per document"
+        "Karma üyelikli konu dağılımlarının faydalı olduğu ve yerleştirmelerin girdiyi kısalttığı uzun belgeler",
+        "Gömmeler gürültülü olduğunda",
+        "Belge başına tek bir konuya ihtiyacınız olduğunda"
       ],
       "correct": 1,
-      "explanation": "Long documents benefit from LDA's mixed-membership model; BERT encoders truncate inputs."
+      "explanation": "Uzun belgeler LDA'nin karma üyelik modelinden yararlanır; BERT kodlayıcılar girişleri keser."
     },
     {
       "stage": "post",
-      "question": "Why does BERTopic typically win on short text (tweets, headlines)?",
+      "question": "BERTopic neden genellikle kısa metinlerde (tweetler, manşetler) kazanıyor?",
       "options": [
-        "Short text has fewer topics",
-        "It is faster",
-        "Semantic similarity in embedding space captures meaning where bag-of-words counts are too sparse",
-        "It supports more languages"
+        "Kısa metinde daha az konu var",
+        "Daha hızlı",
+        "Yerleştirme alanındaki semantik benzerlik, kelime çantası sayımlarının çok seyrek olduğu durumlarda anlamı yakalar",
+        "Daha fazla dili destekler"
       ],
       "correct": 2,
-      "explanation": "BERT embeddings provide semantic similarity for short text where word-overlap statistics fail."
+      "explanation": "BERT yerleştirmeleri, sözcük örtüşme istatistiklerinin başarısız olduğu kısa metinler için anlamsal benzerlik sağlar."
     },
     {
       "stage": "post",
-      "question": "What is a common LDA failure mode for which you should monitor topics?",
+      "question": "Konuları izlemeniz gereken ortak LDA hata modu nedir?",
       "options": [
-        "Document mixtures that sum to 1",
-        "Topics that match labeled categories perfectly",
-        "Junk topics that absorb stopwords or extremely frequent terms",
-        "Topics with too few documents"
+        "Toplamı 1 olan karışımları belgeleyin",
+        "Etiketli kategorilerle mükemmel şekilde eşleşen konular",
+        "Engellenen kelimeleri veya son derece sık kullanılan terimleri tüketen gereksiz konular",
+        "Çok az belge içeren konular"
       ],
       "correct": 2,
-      "explanation": "LDA can create junk topics that absorb stopwords; tighter min_df/max_df and stopword filtering mitigate."
+      "explanation": "LDA, engellenecek sözcükleri emen önemsiz konular oluşturabilir; daha sıkı min_df/max_df ve stopword filtreleme hafifletir."
     }
   ]
 }
