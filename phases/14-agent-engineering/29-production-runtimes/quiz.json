@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What are the six runtime shapes the lesson lists?",
+      "question": "Ders listelerini şekillendiren altı çalışma zamanı nedir?",
       "options": [
         "Request-response, streaming, durable execution, queue-based, event-driven, scheduled",
         "Read, write, exec, fork, exit, wait",
@@ -12,71 +12,71 @@
         "Map, filter, reduce, fold, scan, group"
       ],
       "correct": 0,
-      "explanation": "These are the six runtime shapes; pick a shape before picking a framework."
+      "explanation": "Bunlar altı çalışma zamanı şeklidir; Bir çerçeve seçmeden önce bir şekil seçin."
     },
     {
       "stage": "pre",
-      "question": "When is request-response a poor fit?",
+      "question": "İstek-yanıt ne zaman zayıf bir uyumdur?",
       "options": [
         "On a 1-second classification",
-        "When the task takes longer than about 30 seconds and users hang up while workers pile up",
+        "Görev yaklaşık 30 saniyeden uzun sürdüğünde ve çalışanlar yığılırken kullanıcılar telefonu kapattığında",
         "On REST APIs",
         "On internal services"
       ],
       "correct": 1,
-      "explanation": "Synchronous HTTP is only viable for short tasks; long tasks need queue/durable/event shapes."
+      "explanation": "Senkron HTTP yalnızca kısa görevler için uygundur; uzun görevler kuyruk/dayanıklı/olay şekillerine ihtiyaç duyar."
     },
     {
       "stage": "check",
-      "question": "What is durable execution's core property?",
+      "question": "Dayanıklı uygulamanın temel özelliği nedir?",
       "options": [
         "Faster inference",
-        "State is checkpointed after every step so the runtime can resume from the last successful step on failure",
+        "Arıza durumunda çalışma zamanının son başarılı adımdan devam edebilmesi için durum her adımdan sonra kontrol noktasına konur",
         "Lower token cost",
         "Native voice support"
       ],
       "correct": 1,
-      "explanation": "Checkpoint-and-resume is the differentiator; LangGraph is the lesson's reference."
+      "explanation": "Kontrol noktası ve özgeçmiş, farklılaştırıcıdır; LangGraph dersin referansıdır."
     },
     {
       "stage": "check",
-      "question": "Which Anthropic observation justifies queue-based runtimes for long-horizon agents?",
+      "question": "Hangi Antropik gözlem, uzun vadeli aracılar için kuyruk tabanlı çalışma sürelerini haklı çıkarır?",
       "options": [
         "Tasks always complete in 5 seconds",
-        "Computer use announcement: dozens-to-hundreds of steps per task is normal",
+        "Bilgisayar kullanımı duyurusu: Görev başına onlarca ila yüzlerce adım normaldir",
         "Tasks must run synchronously",
         "Cron solves everything"
       ],
       "correct": 1,
-      "explanation": "Anthropic flagged dozens-to-hundreds of steps per task as normal; that workload needs queues or durable runtimes."
+      "explanation": "Antropik, görev başına düzinelerce ila yüzlerce adımı normal olarak işaretledi; iş yükünün kuyruklara veya dayanıklı çalışma sürelerine ihtiyacı var."
     },
     {
       "stage": "check",
-      "question": "What does the lesson mean by 'observability is load-bearing'?",
+      "question": "'Gözlemlenebilirlik yük taşır' derken ders ne anlama geliyor?",
       "options": [
-        "Logs are pretty",
-        "Without OTel GenAI spans and a Langfuse/Phoenix/Opik backend you cannot debug a multi-step agent that failed at step 40",
+        "Günlükler çok güzel",
+        "OTel GenAI yayılmaları ve Langfuse/Phoenix/Opik arka ucu olmadan, 40. adımda başarısız olan çok adımlı bir aracının hatalarını ayıklayamazsınız",
         "Disk gets full",
-        "Providers require it for billing"
+        "Sağlayıcılar faturalandırma için bunu gerektiriyor"
       ],
       "correct": 1,
-      "explanation": "Observability is not optional for multi-step agents; it is the difference between debugging and replaying from scratch."
+      "explanation": "Çok adımlı etmenler için gözlemlenebilirlik isteğe bağlı değildir; hata ayıklama ile sıfırdan tekrar oynatma arasındaki farktır."
     },
     {
       "stage": "post",
-      "question": "Why must queue workers have a dead-letter queue (DLQ)?",
+      "question": "Neden kuyruktaki çalışanların bir teslim edilmeyen mektup kuyruğu (DLQ) olması gerekiyor?",
       "options": [
         "Without DLQ, failed jobs vanish silently",
-        "DLQ is required by AWS",
+        "DLQ, AWS tarafından gereklidir",
         "DLQ makes jobs faster",
-        "DLQ is encrypted"
+        "DLQ şifrelenmiştir"
       ],
       "correct": 0,
-      "explanation": "Failed jobs without DLQ disappear; DLQ is the parking lot for failed jobs."
+      "explanation": "DLQ olmadan başarısız olan işler kaybolur; DLQ başarısız işlerin park yeridir."
     },
     {
       "stage": "post",
-      "question": "What does the lesson recommend pairing cron-shaped agents with?",
+      "question": "Ders cron şeklindeki ajanların neyle eşleştirilmesini öneriyor?",
       "options": [
         "GPU autoscalers",
         "Durable execution so a failing nightly run resumes next tick",
@@ -84,7 +84,7 @@
         "WebRTC"
       ],
       "correct": 1,
-      "explanation": "Cron + durable execution recovers cleanly from failed scheduled runs."
+      "explanation": "Cron + dayanıklı yürütme, başarısız programlanmış çalıştırmalardan temiz bir şekilde kurtarılır."
     }
   ]
 }
