@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is gather-then-write the wrong checkpoint pattern at scale?",
+      "question": "Neden geniş ölçekte yanlış topla-sonra-yaz kontrol noktası modeli kullanılıyor?",
       "options": [
-        "It looks ugly",
-        "All state passes through rank 0; write bandwidth is the slowest single link, not the aggregate, so a TB-scale write takes hours",
-        "It uses too much CPU",
-        "It needs special hardware"
+        "Çirkin görünüyor",
+        "Tüm eyaletler 0. sıradan geçer; yazma bant genişliği en yavaş tek bağlantıdır, toplam değil, bu nedenle TB-ölçekli yazma saatler sürer",
+        "Çok fazla CPU kullanıyor",
+        "Özel donanıma ihtiyacı var"
       ],
       "correct": 1,
-      "explanation": "Sharded write scales with cluster size: 64 ranks writing in parallel finish in 1/64 the time of one rank writing the gathered state."
+      "explanation": "Küme boyutuna sahip parçalanmış yazma ölçekleri: 64 sıralı paralel yazma, toplanmış durumu bir sıralı yazma süresinin 1/64'ünde tamamlar."
     },
     {
       "stage": "pre",
-      "question": "What does the manifest record that the shard files cannot?",
+      "question": "Bildiri, parça dosyalarının yapamadığı neyi kaydeder?",
       "options": [
         "Random numbers",
-        "world_size, schema version, per-shard sha256, and shard ownership; gives the loader a contract to validate before touching state",
+        "world_size, şema sürümü, parça başına sha256 ve parça sahipliği; yükleyiciye duruma dokunmadan önce doğrulaması için bir sözleşme verir",
         "Filesystem name",
         "Hostname"
       ],
       "correct": 1,
-      "explanation": "Without the manifest the loader has to guess which shard belongs to which rank and trust the file count is right."
+      "explanation": "Bildirim olmadan, yükleyicinin hangi parçanın hangi seviyeye ait olduğunu tahmin etmesi ve dosya sayısının doğru olduğuna güvenmesi gerekir."
     },
     {
       "stage": "check",
-      "question": "Why write to <name>.tmp and rename instead of writing directly?",
+      "question": "Neden doğrudan yazmak yerine <name>.tmp dosyasına yazıp yeniden adlandırmalısınız?",
       "options": [
         "Faster",
-        "POSIX rename within a filesystem is atomic: a crash mid-write leaves the previous file untouched. Direct writes can leave half-finished checkpoints that poison the next resume",
+        "POSIX dosya sistemi içindeki yeniden adlandırma atomiktir: yazma sırasında meydana gelen bir çökme, önceki dosyaya dokunulmadan kalır. Doğrudan yazmalar, bir sonraki özgeçmişi zehirleyen yarım kalmış kontrol noktaları bırakabilir",
         "Required by torch",
         "Saves memory"
       ],
       "correct": 1,
-      "explanation": "Without atomic write a partial save plus an updated manifest pointing at it corrupts state on the next load."
+      "explanation": "Atomik yazma olmadan, kısmi bir kaydetme artı buna işaret eden güncellenmiş bir bildirim, bir sonraki yükte durumu bozar."
     },
     {
       "stage": "check",
-      "question": "What does sha256 per shard defend against?",
+      "question": "Parça başına sha256 neye karşı savunma yapar?",
       "options": [
         "Network attacks",
-        "Partial or corrupted writes; verifying the hash on load catches truncated shards before they touch model state",
+        "Kısmi veya bozuk yazmalar; yükteki karmanın doğrulanması, kesilmiş parçaları model durumuna dokunmadan önce yakalar",
         "Slowdown",
         "Memory leak"
       ],
       "correct": 1,
-      "explanation": "Without sha256 verification a truncated shard loads silently and corrupts the optimiser, surfacing later as NaN loss."
+      "explanation": "Sha256 doğrulaması olmadan, kesik bir parça sessizce yüklenir ve optimize ediciyi bozar, daha sonra NaN kaybı olarak ortaya çıkar."
     },
     {
       "stage": "check",
-      "question": "Why does the load path reject a world_size mismatch loudly?",
+      "question": "Yükleme yolu neden world_size uyumsuzluğunu yüksek sesle reddediyor?",
       "options": [
         "Cosmetic",
-        "Resuming a 4-rank shard layout on 8 ranks silently misassigns shards; loud rejection forces the operator to use the cross-world-size rebalance path",
+        "4 aşamalı bir parça düzenini 8 aşamada sessizce sürdürmek, parçacıkların yanlış atanmasına neden olur; yüksek sesle reddetme, operatörü dünya çapında yeniden dengeleme yolunu kullanmaya zorlar",
         "Easier to code",
-        "Hardware needs it"
+        "Donanımın buna ihtiyacı var"
       ],
       "correct": 1,
-      "explanation": "The cross-world-size rebalance is a separate operation; silently splicing wrong sized shards corrupts state."
+      "explanation": "Dünya çapındaki yeniden dengeleme ayrı bir işlemdir; Yanlış boyuttaki parçaların sessizce eklenmesi durumu bozar."
     },
     {
       "stage": "post",
-      "question": "Why does production rotate checkpoints (keep last K)?",
+      "question": "Üretim neden kontrol noktalarını dönüşümlü olarak kullanıyor (son K'yı koru)?",
       "options": [
         "Aesthetic",
-        "Without rotation the disk fills mid-run and the next checkpoint fails; rotation deletes the oldest before writing the new one, bounding disk usage",
+        "Dönme olmadan disk çalışmanın ortasını doldurur ve bir sonraki kontrol noktası başarısız olur; döndürme, yenisini yazmadan önce en eskisini siler ve disk kullanımını sınırlar",
         "Compression",
-        "It does not"
+        "öyle değil"
       ],
       "correct": 1,
-      "explanation": "Real runs keep 3-5 recent checkpoints; the oldest is dropped before each new save so the disk budget is fixed."
+      "explanation": "Gerçek koşular 3-5 güncel kontrol noktasını korur; Her yeni kayıttan önce en eskisi çıkarılır, böylece disk bütçesi sabitlenir."
     }
   ]
 }
