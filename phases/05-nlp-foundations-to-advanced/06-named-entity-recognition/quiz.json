@@ -4,94 +4,94 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is BIO tagging?",
+      "question": "BIO etiketleme nedir?",
       "options": [
-        "Per-token labels: B-TYPE for entity start, I-TYPE for inside, O for outside",
+        "Jeton başına etiketler: varlık başlangıcı için B-TYPE, iç kısım için I-TYPE, dış kısım için O",
         "A binary entity vs non-entity scheme",
         "A tokenization style",
         "A tree representation of entities"
       ],
       "correct": 0,
-      "explanation": "BIO turns span extraction into token classification with B/I/O prefixes."
+      "explanation": "BIO, yayılma çıkarımını B/I/O önekleriyle belirteç sınıflandırmasına dönüştürür."
     },
     {
       "stage": "pre",
-      "question": "Why are rule-based gazetteers brittle in production NER?",
+      "question": "Kural tabanlı düzenleyiciler üretimde neden kırılgandır NER?",
       "options": [
-        "They require GPUs",
-        "They are slow",
-        "They have zero coverage on new entities and cannot disambiguate (e.g. Apple fruit vs company)",
-        "They cannot handle multi-token entities"
+        "GPU'lara ihtiyaç duyarlar",
+        "Yavaşlar",
+        "Yeni varlıklar üzerinde sıfır kapsama sahiptirler ve belirsizliği netleştiremezler (örneğin, Apple Fruit vs. Company)",
+        "Çok tokenli varlıkları idare edemezler"
       ],
       "correct": 2,
-      "explanation": "Gazetteers can match known strings but cannot disambiguate sense or generalize to unseen names."
+      "explanation": "Gazetteers bilinen dizeleri eşleştirebilir, ancak anlamı netleştiremez veya görünmeyen adlara genelleme yapamaz."
     },
     {
       "stage": "check",
-      "question": "What is the key advantage of a CRF over an HMM for NER?",
+      "question": "NER için CRF'nin HMM'ye göre temel avantajı nedir?",
       "options": [
-        "CRFs avoid the Viterbi algorithm",
+        "CRF'ler Viterbi algoritmasından kaçınır",
         "CRFs never need training data",
-        "CRFs are discriminative and can mix arbitrary features (shape, capitalization, neighbors)",
-        "CRFs are faster"
+        "CRF'ler ayrımcıdır ve isteğe bağlı özellikleri (şekil, büyük harf kullanımı, komşular) karıştırabilir",
+        "CRF'ler daha hızlıdır"
       ],
       "correct": 2,
-      "explanation": "CRFs are discriminative and let you condition on rich, overlapping features."
+      "explanation": "CRF'ler ayırt edicidir ve zengin, örtüşen özellikleri koşullandırmanıza olanak tanır."
     },
     {
       "stage": "check",
-      "question": "In a BiLSTM-CRF architecture, what role does the CRF layer play?",
+      "question": "BiLSTM-CRF mimarisinde CRF katmanı hangi rolü oynar?",
       "options": [
         "Performs tokenization",
         "Enforces valid BIO tag sequences by modeling tag-to-tag transitions on top of LSTM emissions",
-        "Pretrains the LSTM",
+        "LSTM'yi önceden eğitir",
         "Replaces embeddings"
       ],
       "correct": 1,
-      "explanation": "The CRF on top of LSTM features models inter-label dependencies and rules out illegal sequences."
+      "explanation": "LSTM'nin üstündeki CRF, etiketler arası bağımlılıkları modeller ve yasa dışı dizileri ortadan kaldırır."
     },
     {
       "stage": "check",
-      "question": "Why must NER be evaluated with entity-level F1, not token-level F1?",
+      "question": "NER neden belirteç düzeyindeki F1 ile değil de varlık düzeyindeki F1 ile değerlendirilmeli?",
       "options": [
-        "Entity-level F1 is easier to compute",
+        "Varlık düzeyinde F1'nin hesaplanması daha kolaydır",
         "Predicted spans must match true spans exactly; token-level F1 overstates accuracy by counting partial matches",
-        "Token-level F1 cannot handle BIO",
-        "Entity-level F1 is required by HuggingFace"
+        "Token düzeyindeki F1, BIO'yi işleyemez",
+        "Varlık düzeyinde F1, HuggingFace için gereklidir"
       ],
       "correct": 1,
-      "explanation": "Span exact-match is the meaningful metric; token-level F1 inflates scores via partial overlap."
+      "explanation": "Span tam eşleşmesi anlamlı bir ölçümdür; belirteç düzeyindeki F1, kısmi örtüşme yoluyla puanları artırır."
     },
     {
       "stage": "post",
-      "question": "What does aggregation_strategy='simple' do in the HuggingFace NER pipeline?",
+      "question": "Aggregation_strategy='simple' HuggingFace NER hattında ne yapar?",
       "options": [
-        "Lowercases the output",
+        "Çıktıyı küçük harfe çevirir",
         "Skips tokenization",
-        "Merges contiguous B-X and I-X tokens into a single span",
-        "Returns only the most confident entity"
+        "Bitişik B-X ve I-X belirteçlerini tek bir aralıkta birleştirir",
+        "Yalnızca kendine en çok güvenen varlığı döndürür"
       ],
       "correct": 2,
-      "explanation": "It merges contiguous BIO tokens of the same type into span-level entities."
+      "explanation": "Aynı türdeki bitişik BIO belirteçlerini yayılma düzeyi varlıklar halinde birleştirir."
     },
     {
       "stage": "post",
-      "question": "Why does standard BIO fail on nested entities?",
+      "question": "Standart BIO neden iç içe geçmiş varlıklarda başarısız oluyor?",
       "options": [
         "BIO requires a transformer",
-        "BIO is a flat per-token scheme and cannot express two overlapping spans of different types",
-        "BIO cannot represent multi-token entities",
-        "BIO drops the type label"
+        "BIO, jeton başına düz bir şemadır ve farklı türden iki örtüşen yayılma alanını ifade edemez",
+        "BIO çoklu token varlıklarını temsil edemez",
+        "BIO tip etiketini kaldırır"
       ],
       "correct": 1,
-      "explanation": "BIO assigns one label per token; nested spans need multi-pass or span-based models."
+      "explanation": "BIO jeton başına bir etiket atar; iç içe geçmiş açıklıkların çoklu geçişli veya açıklık tabanlı modellere ihtiyacı vardır."
     },
     {
       "stage": "post",
-      "question": "When does classical NER (CRF or BiLSTM-CRF) still beat an LLM in 2026?",
+      "question": "Klasik NER (CRF veya BiLSTM-CRF) 2026'da hala ne zaman LLM'yi yenecek?",
       "options": [
         "On nested entities",
-        "Whenever the input is in English",
+        "Giriş İngilizce olduğunda",
         "On open-domain narrative",
         "Under tight latency budgets, abundant labels, stable ontologies, or non-generative regulatory constraints"
       ],
