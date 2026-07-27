@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What problem does MCP (Model Context Protocol) solve for AI agents?",
-      "options": ["It provides a standard format for training data", "It gives agents a standard way to discover and use tools exposed by external servers, without hardcoding tool implementations", "It encrypts communication between agents", "It compresses large context windows to fit in smaller models"],
+      "question": "MCP (Model Bağlam Protokolü), AI aracıları için hangi sorunu çözer?",
+      "options": [
+        "Eğitim verileri için standart bir format sağlar",
+        "Aracılara, harici sunucular tarafından kullanıma sunulan araçları sabit kodlama aracı uygulamaları olmadan keşfetmeleri ve kullanmaları için standart bir yol sağlar.",
+        "Aracılar arasındaki iletişimi şifreler",
+        "Büyük bağlam pencerelerini daha küçük modellere sığacak şekilde sıkıştırır"
+      ],
       "correct": 1,
-      "explanation": "MCP standardizes tool access: a server exposes tools with JSON schemas, and any MCP-compatible agent can discover and call them. This decouples tool implementation from agent code."
+      "explanation": "MCP, araç erişimini standartlaştırır: bir sunucu, JSON şemalarına sahip araçları açığa çıkarır ve herhangi bir MCP- uyumlu aracı, bunları keşfedip çağırabilir. Bu, araç uygulamasını aracı kodundan ayırır."
     },
     {
       "stage": "pre",
-      "question": "What is the difference between MCP and A2A?",
-      "options": ["MCP is for Python agents and A2A is for JavaScript agents", "MCP connects agents to tools (agent-to-tool), while A2A connects agents to other agents (agent-to-agent) for task delegation", "MCP is synchronous and A2A is asynchronous", "MCP is open source and A2A is proprietary"],
+      "question": "MCP ve A2A arasındaki fark nedir?",
+      "options": [
+        "MCP Python aracıları içindir ve A2A JavaScript aracıları içindir",
+        "MCP aracıları araçlara (aracıdan araca) bağlarken, A2A görev delegasyonu için aracıları diğer aracılara (aracıdan aracıya) bağlar",
+        "MCP senkrondur ve A2A asenkrondur",
+        "MCP açık kaynaktır ve A2A tescillidir"
+      ],
       "correct": 1,
-      "explanation": "MCP is the protocol for tool access (an agent calls a tool). A2A is the protocol for agent collaboration (an agent delegates a task to another agent). They solve different layers of the communication problem."
+      "explanation": "MCP, araca erişim protokolüdür (bir aracı, bir aracı çağırır). A2A, aracı işbirliği protokolüdür (bir aracı, bir görevi başka bir aracıya devreder). İletişim sorununun farklı katmanlarını çözerler."
     },
     {
       "stage": "post",
-      "question": "In A2A, what is an 'agent card' and why is it important?",
-      "options": ["A visual dashboard showing agent performance metrics", "A JSON document at a well-known URL that describes an agent's capabilities, skills, and endpoint, enabling other agents to discover and delegate tasks to it", "A security credential that authenticates an agent's identity", "A configuration file that sets the agent's system prompt"],
+      "question": "A2A'de 'temsilci kartı' nedir ve neden önemlidir?",
+      "options": [
+        "A visual dashboard showing agent performance metrics",
+        "Tanınmış bir URL adresindeki, bir aracının yeteneklerini, becerilerini ve uç noktasını açıklayan, diğer aracıların görevleri keşfedip ona devretmesine olanak tanıyan bir JSON belgesi",
+        "Bir aracının kimliğini doğrulayan bir güvenlik kimlik bilgisi",
+        "Aracının sistem istemini ayarlayan bir yapılandırma dosyası"
+      ],
       "correct": 1,
-      "explanation": "The agent card (hosted at /.well-known/agent.json) is how agents advertise themselves. It lists skills, supported input/output formats, and the task endpoint. Other agents read this card to decide whether and how to delegate work."
+      "explanation": "Temsilci kartı (/.well-known/agent.json adresinde barındırılır), aracıların kendilerini tanıtma yöntemidir. Becerileri, desteklenen giriş/çıkış formatlarını ve görev uç noktasını listeler. Diğer temsilciler, işin devredilip devredilmeyeceğine ve nasıl devredileceğine karar vermek için bu kartı okur."
     },
     {
       "stage": "post",
-      "question": "Why do multi-agent systems need structured communication protocols instead of just passing strings between agents?",
-      "options": ["Strings are too large to send over HTTP", "Structured protocols provide type safety, discoverability, error handling, and interoperability between agents built by different teams with different frameworks", "String parsing is computationally expensive for LLMs", "Structured protocols are required by all cloud providers"],
+      "question": "Çok etmenli sistemler neden yalnızca etmenler arasında dizileri aktarmak yerine yapılandırılmış iletişim protokollerine ihtiyaç duyuyor?",
+      "options": [
+        "Dizeler HTTP üzerinden gönderilemeyecek kadar büyük",
+        "Yapılandırılmış protokoller, farklı çerçevelere sahip farklı ekipler tarafından oluşturulan aracılar arasında tür güvenliği, keşfedilebilirlik, hata yönetimi ve birlikte çalışabilirlik sağlar",
+        "Dize ayrıştırma, LLM'ler için hesaplama açısından pahalıdır",
+        "Yapılandırılmış protokoller tüm bulut sağlayıcıları tarafından gereklidir"
+      ],
       "correct": 1,
-      "explanation": "Without structured contracts, agents from different teams misinterpret each other's output, error handling is ad-hoc, and there is no way to discover what another agent can do. Protocols provide the shared language that makes multi-agent systems reliable."
+      "explanation": "Yapılandırılmış sözleşmeler olmadan, farklı ekiplerden temsilciler birbirlerinin çıktılarını yanlış yorumlarlar, hata yönetimi geçicidir ve başka bir temsilcinin ne yapabileceğini keşfetmenin bir yolu yoktur. Protokoller, çok etmenli sistemleri güvenilir kılan ortak dili sağlar."
     },
     {
       "stage": "post",
-      "question": "How does ACP (Agent Communication Protocol) differ from A2A in its design goals?",
-      "options": ["ACP is faster than A2A for real-time applications", "ACP focuses on enterprise auditability with full message history and compliance tracking, while A2A focuses on lightweight task delegation", "ACP only works within a single organization while A2A works across organizations", "ACP uses WebSockets while A2A uses HTTP"],
+      "question": "ACP (Ajan İletişim Protokolü) tasarım hedeflerinde A2A'den nasıl farklıdır?",
+      "options": [
+        "ACP, gerçek zamanlı uygulamalar için A2A'den daha hızlıdır",
+        "ACP, tam mesaj geçmişi ve uyumluluk takibi ile kurumsal denetlenebilirliğe odaklanırken, A2A hafif görev dağıtımına odaklanır",
+        "ACP yalnızca tek bir kuruluş içinde çalışırken A2A kuruluşlar arasında çalışır",
+        "ACP uses WebSockets while A2A uses HTTP"
+      ],
       "correct": 1,
-      "explanation": "ACP was designed for enterprise environments where every agent interaction must be auditable, traceable, and compliant. A2A is simpler and focuses on getting tasks done. ACP adds the governance layer that regulated industries require."
+      "explanation": "ACP, her aracı etkileşiminin denetlenebilir, izlenebilir ve uyumlu olması gereken kurumsal ortamlar için tasarlanmıştır. A2A daha basittir ve görevlerin yapılmasına odaklanır. ACP, düzenlemeye tabi endüstrilerin ihtiyaç duyduğu yönetişim katmanını ekler."
     }
   ]
 }
