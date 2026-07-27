@@ -34,6 +34,15 @@ TURKISH_QUIZ_COPY = re.compile(
     r"[çğıöşüÇĞİÖŞÜ]|(?i:\b(?:nedir|nasıl|hangi|neden|doğru|yanlış|aşağıdaki|"
     r"için|ile|olan|olarak|değildir|verildiğinde)\b)"
 )
+FORBIDDEN_SITE_COPY = {
+    "Did you get it?": "Anladınız mı?",
+    "Perfect score!": "Kusursuz sonuç!",
+    "Great work!": "Harika iş!",
+    "Keep studying!": "Çalışmaya devam edin!",
+    "' correct'": "' doğru'",
+    "&larr; Previous": "&larr; Önceki",
+    "Next &rarr;": "Sonraki &rarr;",
+}
 SITE_FILES = {
     "app.js", "cmdpalette.js", "header.js", "progress.js", "style.css",
     "about.html", "catalog.html", "glossary.html", "prereqs.html",
@@ -358,6 +367,23 @@ def export_original_site(
         "ai-engineering-from-scratch/tree/main/';",
         "var REPO_TREE = 'https://github.com/ademiru/"
         "ai-engineering-from-scratch-tr/tree/main/';",
+    )
+    for english, turkish in FORBIDDEN_SITE_COPY.items():
+        lesson = lesson.replace(english, turkish)
+    lesson = re.sub(
+        r"      function getQuizQuestions\(\) \{.*?"
+        r"(?=      function lessonQuizPanelQuestions\(data\) \{)",
+        """      function getQuizQuestions() {
+        return [
+          { q: 'Bu dersin temel amacı nedir?', opts: ['Konuyu uygulayarak öğrenmek', 'Yalnızca terimleri ezberlemek', 'Kodu çalıştırmadan okumak', 'Testleri atlamak'], answer: 0, explain: 'Her ders, kavramı anlayıp çalışan bir uygulamayla pekiştirmenizi amaçlar.' },
+          { q: 'Bir örneği değiştirmeden önce en doğru adım hangisidir?', opts: ['Testleri silmek', 'Çalışma mantığını anlamak', 'Çıktıyı tahmin etmek', 'Hataları yok saymak'], answer: 1, explain: 'Önce örneğin çalışma mantığını anlamak, güvenli ve bilinçli değişiklik yapmanızı sağlar.' },
+          { q: 'Öğrenmeyi kalıcı hâle getirmek için ne yapmalısınız?', opts: ['Yalnızca başlığı okumak', 'Uygulamayı çalıştırıp sonucu incelemek', 'Soruları atlamak', 'Koddan kaçınmak'], answer: 1, explain: 'Kodu çalıştırmak, sonucu incelemek ve soruları yanıtlamak bilgiyi uygulamaya dönüştürür.' }
+        ];
+      }
+
+""",
+        lesson,
+        flags=re.DOTALL,
     )
     (destination / "lesson.html").write_text(lesson, encoding="utf-8")
     (destination / "data.js").write_text(
@@ -781,6 +807,16 @@ def validate(root: Path, expected_lessons: int, revision: str) -> dict[str, obje
         raise ValueError(
             "İngilizce quiz metni kaldı: " + "; ".join(english_quiz_copy[:10])
         )
+    lesson_site = root / "lesson.html"
+    if lesson_site.is_file():
+        site_text = lesson_site.read_text(encoding="utf-8")
+        remaining_site_copy = [
+            phrase for phrase in FORBIDDEN_SITE_COPY if phrase in site_text
+        ]
+        if remaining_site_copy:
+            raise ValueError(
+                "İngilizce arayüz metni kaldı: " + ", ".join(remaining_site_copy)
+            )
     files = [p for p in root.rglob("*") if p.is_file()]
     return {
         "schema_version": 1,

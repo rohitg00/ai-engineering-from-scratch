@@ -108,6 +108,13 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         self.assertIn("mermaid-modal-overlay", lesson_site)
         self.assertIn("path + '/docs/tr.md'", lesson_site)
         self.assertNotIn("path + '/docs/en.md'", lesson_site)
+        self.assertIn("Anladınız mı?", lesson_site)
+        self.assertIn("Kusursuz sonuç!", lesson_site)
+        self.assertIn("&larr; Önceki", lesson_site)
+        self.assertIn("Sonraki &rarr;", lesson_site)
+        self.assertNotIn("Did you get it?", lesson_site)
+        self.assertNotIn("Perfect score!", lesson_site)
+        self.assertNotIn("What does a dot product", lesson_site)
 
         data = (target / "data.js").read_text()
         self.assertIn('"name":"Türkçe"', data)
