@@ -1,14 +1,14 @@
 {
   "lesson": "22-load-testing-llm-apis",
-  "title": "Load Testing LLM APIs — Why k6 and Locust Lie",
+  "title": "Yük Testi LLM API'leri — Neden k6 ve Locust Lie",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the GIL trap in Locust-based LLM load testing?",
+      "question": "Locust tabanlı LLM yük testindeki GIL tuzağı nedir?",
       "options": [
-        "Locust only works on Windows",
-        "Locust does not support HTTP",
-        "Client-side tokenization runs under the Python GIL and queues behind request generation, inflating reported inter-token latency",
+        "Locus yalnızca Windows'ta çalışır",
+        "Locust HTTP'yi desteklemiyor",
+        "İstemci tarafı tokenleştirme, Python GIL altında çalışır ve istek oluşturmanın arkasında kuyruklara girerek bildirilen tokenlar arası gecikmeyi artırır",
         "Locust requires CUDA"
       ],
       "correct": 2,
@@ -16,47 +16,47 @@
     },
     {
       "stage": "check",
-      "question": "What is the prompt-uniformity trap?",
+      "question": "Hızlı tekdüzelik tuzağı nedir?",
       "options": [
-        "Uniform prompts always slow the server down",
-        "Sampling from a real distribution under-represents long prompts",
+        "Tek tip istemler her zaman sunucuyu yavaşlatır",
+        "Gerçek bir dağıtımdan örnekleme uzun istemleri yeterince temsil etmiyor",
         "Uniform prompts require streaming",
-        "Looping the same prompt makes prefix caching look like full concurrent decode, inflating reported throughput"
+        "Aynı istemin döngüye alınması, önek önbelleğe alma işleminin tam eşzamanlı kod çözme gibi görünmesini sağlar ve rapor edilen verimi artırır"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which four load patterns does the lesson recommend?",
+      "question": "Ders hangi dört yük modelini öneriyor?",
       "options": [
-        "Constant 1 RPS for 10 days",
+        "10 gün boyunca sabit 1 RPS",
         "Manual click tests",
         "Steady-state, ramp, spike, soak",
-        "Burst only"
+        "Yalnızca patlama"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does the lesson recommend building a realistic prompt distribution?",
+      "question": "Ders gerçekçi bir bilgi istemi dağıtımı oluşturmayı nasıl öneriyor?",
       "options": [
-        "Sample from a real distribution using mean and stddev (for example LLMPerf's --mean-input-tokens / --stddev-input-tokens) or replay real traffic",
+        "Ortalama ve stddev kullanarak gerçek bir dağıtımdan örnek alın (örneğin LLPerf'in --mean-input-tokens / --stddev-input-tokens) veya gerçek trafiği yeniden oynatın",
         "Random characters per request",
         "Hand-write 5 prompts and shuffle",
-        "Always use the same prompt to maximize cache hits"
+        "Önbellek isabetlerini en üst düzeye çıkarmak için her zaman aynı istemi kullanın"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which 2026 tool combination is positioned as best for CI/CD SLA gates and Kubernetes-native distributed runs?",
+      "question": "CI/CD SLA geçitleri ve Kubernetes'te yerel dağıtılmış çalıştırmalar için hangi 2026 araç kombinasyonu en iyi olarak konumlandırılmıştır?",
       "options": [
-        "k6 v2026.1.0 with the k6 Operator 1.0 GA (TestRun / PrivateLoadZone CRDs)",
-        "guidellm only",
-        "Vegeta only",
+        "k6 Operatör 1.0 GA (TestRun / PrivateLoadZone CRD'ler) ile k6 v2026.1.0",
+        "sadece rehberlik",
+        "Yalnızca sebze",
         "Locust 2.43.3 stock"
       ],
       "correct": 0,
@@ -64,7 +64,7 @@
     },
     {
       "stage": "post",
-      "question": "Which failure mode does the soak load pattern catch?",
+      "question": "Islatma yükü modeli hangi arıza modunu yakalıyor?",
       "options": [
         "Memory leaks, connection-pool drift, and observability overflow over hours",
         "Cold-start tail",
