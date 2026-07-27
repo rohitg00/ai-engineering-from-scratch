@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the derivative of a function at a point tell you?",
-      "options": ["The value of the function at that point", "The rate of change (slope) of the function at that point", "The area under the function up to that point", "The maximum value the function can reach"],
+      "question": "Bir fonksiyonun bir noktadaki türevi size ne anlatır?",
+      "options": [
+        "Fonksiyonun o andaki değeri",
+        "Fonksiyonun o noktadaki değişim oranı (eğimi)",
+        "Bu noktaya kadar fonksiyonun altındaki alan",
+        "Fonksiyonun ulaşabileceği maksimum değer"
+      ],
       "correct": 1,
-      "explanation": "The derivative f'(x) measures how much the output changes per unit change in input. Geometrically, it is the slope of the tangent line at that point."
+      "explanation": "Türev f'(x), girdideki birim değişiklik başına çıktının ne kadar değiştiğini ölçer. Geometrik olarak bu noktadaki teğet doğrunun eğimidir."
     },
     {
       "stage": "pre",
-      "question": "What is a gradient in the context of machine learning?",
-      "options": ["A measure of model accuracy", "A vector of all partial derivatives that points in the direction of steepest ascent", "The learning rate used during training", "The difference between predicted and actual values"],
+      "question": "Makine öğrenimi bağlamında gradyan nedir?",
+      "options": [
+        "A measure of model accuracy",
+        "Tüm kısmi türevlerin en dik yükseliş yönünü gösteren bir vektörü",
+        "Eğitim sırasında kullanılan öğrenme oranı",
+        "Tahmin edilen ve gerçek değerler arasındaki fark"
+      ],
       "correct": 1,
-      "explanation": "The gradient collects every partial derivative into one vector. It points in the direction that increases the function fastest. To minimize loss, you move opposite the gradient."
+      "explanation": "Gradyan her kısmi türevi tek bir vektörde toplar. Fonksiyonu en hızlı arttıran yönü işaret eder. Kaybı en aza indirmek için eğimin tersi yönde hareket edersiniz."
     },
     {
       "stage": "post",
-      "question": "In gradient descent, what does the update rule 'w = w - lr * dL/dw' accomplish?",
-      "options": ["It increases the loss to test model robustness", "It adjusts each weight in the direction that reduces the loss, scaled by the learning rate", "It resets the weight to its initial value minus the gradient", "It normalizes the weight to have magnitude 1"],
+      "question": "Degrade inişte 'w = w - lr * dL/dw' güncelleme kuralı neyi başarır?",
+      "options": [
+        "Model sağlamlığını test etme kaybını artırır",
+        "Her ağırlığı, öğrenme oranına göre ölçeklenerek kaybı azaltacak yönde ayarlar.",
+        "Ağırlığı başlangıç ​​değerine eksi eğime sıfırlar",
+        "Ağırlığı 1 büyüklüğüne sahip olacak şekilde normalleştirir"
+      ],
       "correct": 1,
-      "explanation": "dL/dw tells you which direction increases the loss. Subtracting it (times the learning rate) moves the weight in the direction that decreases the loss. This is repeated for every weight in the model."
+      "explanation": "dL/dw size hangi yönün kaybı arttırdığını söyler. Bunu çıkarmak (öğrenme oranının çarpımı), ağırlığı kaybı azaltacak yönde hareket ettirir. Bu, modeldeki her ağırlık için tekrarlanır."
     },
     {
       "stage": "post",
-      "question": "Why can't Newton's method (which uses the Hessian matrix) be directly applied to neural networks with millions of parameters?",
-      "options": ["Newton's method only works for convex functions", "The Hessian is an N x N matrix, requiring O(N^2) storage and O(N^3) computation per step, which is intractable for millions of parameters", "Newton's method requires analytical derivatives which cannot be computed for neural networks", "Newton's method converges too slowly for deep networks"],
+      "question": "Newton'un (Hessian matrisini kullanan) yöntemi neden milyonlarca parametreli sinir ağlarına doğrudan uygulanamıyor?",
+      "options": [
+        "Newton'un yöntemi yalnızca dışbükey fonksiyonlar için işe yarar",
+        "Hessian, adım başına O(N^2) depolama ve O(N^3) hesaplaması gerektiren bir N x N matrisidir ve milyonlarca parametre için zorludur.",
+        "Newton'un yöntemi sinir ağları için hesaplanamayan analitik türevler gerektirir",
+        "Newton'un yöntemi derin ağlar için çok yavaş yakınsıyor"
+      ],
       "correct": 1,
-      "explanation": "For N=1 million parameters, the Hessian has 1 trillion entries. Computing and inverting it is impossible. This is why we use first-order methods (SGD, Adam) that approximate second-order information cheaply."
+      "explanation": "N=1 milyon parametre için Hessian'ın 1 trilyon girişi vardır. Hesaplamak ve tersine çevirmek imkansızdır. Bu nedenle ikinci dereceden bilgiye ucuz bir şekilde yaklaşan birinci dereceden yöntemleri (SGD, Adam) kullanıyoruz."
     },
     {
       "stage": "post",
-      "question": "What is the numerical (central difference) approximation for f'(x)?",
-      "options": ["f(x+h) / h", "(f(x+h) - f(x)) / h", "(f(x+h) - f(x-h)) / (2*h)", "f(x) * h"],
+      "question": "f'(x)'in sayısal (merkezi fark) yaklaşımı nedir?",
+      "options": [
+        "f(x+h) / h",
+        "(f(x+h) - f(x)) / h",
+        "(f(x+h) - f(x-h)) / (2*h)",
+        "f(x) * h"
+      ],
       "correct": 2,
-      "explanation": "The central difference (f(x+h) - f(x-h)) / (2h) is more accurate than the forward difference because it averages the slope on both sides of x, canceling out the leading error term."
+      "explanation": "Merkezi fark (f(x+h) - f(x-h)) / (2h), ileri farktan daha doğrudur çünkü x'in her iki tarafındaki eğimin ortalamasını alır ve baştaki hata terimini iptal eder."
     }
   ]
 }
