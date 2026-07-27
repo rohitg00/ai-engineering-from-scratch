@@ -2,20 +2,20 @@
   {
     "id": "hptune-pre-1",
     "stage": "pre",
-    "question": "What is the difference between a parameter and a hyperparameter?",
+    "question": "Bir parametre ile hiperparametre arasındaki fark nedir?",
     "options": [
-      "Parameters are set by the user; hyperparameters are learned during training",
-      "Parameters are learned during training (weights, biases); hyperparameters are set before training starts (learning rate, max depth)",
-      "There is no difference; they are synonyms",
-      "Parameters apply to neural networks only; hyperparameters apply to tree models"
+      "Parametreler kullanıcı tarafından ayarlanır; hiperparametreler eğitim sırasında öğrenilir",
+      "Parametreler eğitim sırasında öğrenilir (ağırlıklar, sapmalar); hiperparametreler eğitim başlamadan önce ayarlanır (öğrenme hızı, maksimum derinlik)",
+      "Hiçbir fark yok; onlar eş anlamlıdır",
+      "Parametreler yalnızca sinir ağları için geçerlidir; hiperparametreler ağaç modellerine uygulanır"
     ],
     "correct": 1,
-    "explanation": "Parameters are learned by the optimization algorithm during training (e.g., weights). Hyperparameters are set before training and control how learning happens (e.g., learning rate, regularization strength)."
+    "explanation": "Parametreler eğitim sırasında optimizasyon algoritması tarafından öğrenilir (örneğin ağırlıklar). Hiperparametreler eğitimden önce ayarlanır ve öğrenmenin nasıl gerçekleştiğini kontrol eder (ör. öğrenme hızı, düzenleme gücü)."
   },
   {
     "id": "hptune-pre-2",
     "stage": "pre",
-    "question": "Grid search over 4 hyperparameters with 5 values each requires how many evaluations?",
+    "question": "Her biri 5 değere sahip 4 hiperparametre üzerinde ızgara araması kaç değerlendirme gerektirir?",
     "options": [
       "20",
       "25",
@@ -23,45 +23,45 @@
       "4"
     ],
     "correct": 2,
-    "explanation": "Grid search evaluates every combination: 5^4 = 625. This exponential scaling is why grid search becomes impractical with many hyperparameters."
+    "explanation": "Izgara araması her kombinasyonu değerlendirir: 5^4 = 625. Bu üstel ölçeklendirme, ızgara aramasının birçok hiper parametreyle pratik olmamasının nedenidir."
   },
   {
     "id": "hptune-post-1",
     "stage": "post",
-    "question": "Why does random search often outperform grid search with the same evaluation budget?",
+    "question": "Rastgele arama neden genellikle aynı değerlendirme bütçesiyle grid aramasından daha iyi performans gösteriyor?",
     "options": [
       "Random search uses a better optimization algorithm",
-      "Most hyperparameters have low effective dimensionality, so random search covers the important ones more densely",
-      "Random search always finds the global optimum",
-      "Grid search cannot handle continuous hyperparameters"
+      "Çoğu hiperparametrenin etkili boyutu düşüktür, bu nedenle rastgele arama önemli olanları daha yoğun bir şekilde kapsar",
+      "Rastgele arama her zaman global optimumu bulur",
+      "Izgara araması sürekli hiperparametreleri işleyemez"
     ],
     "correct": 1,
-    "explanation": "Usually only 1-2 hyperparameters matter for a given problem. Grid search wastes evaluations varying unimportant ones. Random search gives unique values for every parameter per trial, covering important dimensions more densely."
+    "explanation": "Belirli bir problem için genellikle yalnızca 1-2 hiperparametre önemlidir. Izgara araması, önemsiz değerlendirmeleri boşa harcar. Rastgele arama, önemli boyutları daha yoğun bir şekilde kapsayan, her deneme için her parametre için benzersiz değerler verir."
   },
   {
     "id": "hptune-post-2",
     "stage": "post",
-    "question": "In Bayesian optimization, what does the acquisition function balance?",
+    "question": "Bayes optimizasyonunda satın alma fonksiyonu dengesi nedir?",
     "options": [
       "Training speed and model accuracy",
       "Exploitation (searching near known good points) and exploration (searching uncertain regions)",
-      "The number of features and the number of samples",
-      "Bias and variance in the surrogate model"
+      "Özellik sayısı ve örnek sayısı",
+      "Taşıyıcı modelde önyargı ve varyans"
     ],
     "correct": 1,
-    "explanation": "The acquisition function decides where to evaluate next by balancing exploitation (near known good results) and exploration (where the surrogate model is uncertain). This directs search more efficiently than random."
+    "explanation": "Edinme işlevi, kullanım (bilinen iyi sonuçlara yakın) ve keşif (vekil modelin belirsiz olduğu durumlarda) arasında denge kurarak bir sonraki değerlendirmenin nerede yapılacağına karar verir. Bu, aramayı rastgele olmaktan daha verimli bir şekilde yönlendirir."
   },
   {
     "id": "hptune-post-3",
     "stage": "post",
-    "question": "You tune hyperparameters using the test set and report the best test performance. What is wrong with this approach?",
+    "question": "Test setini kullanarak hiperparametreleri ayarlarsınız ve en iyi test performansını bildirirsiniz. Bu yaklaşımın neresi yanlış?",
     "options": [
-      "Nothing -- this is standard practice",
-      "You overfitted to the test set; the reported performance is optimistic and will not generalize",
-      "The test set should be used for training, not tuning",
-      "Hyperparameters should only be integers"
+      "Hiçbir şey - bu standart bir uygulamadır",
+      "Test setine gereğinden fazla uyum sağladınız; rapor edilen performans iyimserdir ve genellenmeyecektir",
+      "Test seti ayarlama için değil eğitim için kullanılmalıdır",
+      "Hiperparametreler yalnızca tam sayı olmalıdır"
     ],
     "correct": 1,
-    "explanation": "Tuning on the test set means you selected hyperparameters that happen to perform well on those specific samples. This is overfitting to the test set. Use a validation set for tuning and reserve the test set for final evaluation."
+    "explanation": "Test setinde ayarlama yapmak, söz konusu belirli numunelerde iyi performans gösteren hiperparametreleri seçtiğiniz anlamına gelir. Bu, test setine gereğinden fazla uyuyor. Ayarlama için bir doğrulama seti kullanın ve test setini son değerlendirme için ayırın."
   }
 ]
