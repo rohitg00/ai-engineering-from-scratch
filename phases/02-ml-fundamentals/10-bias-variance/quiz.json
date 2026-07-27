@@ -2,66 +2,66 @@
   {
     "id": "biasvar-pre-1",
     "stage": "pre",
-    "question": "A linear model is used to fit a clearly curved (quadratic) relationship. Which error component dominates?",
+    "question": "Açıkça kavisli (ikinci dereceden) bir ilişkiye uymak için doğrusal bir model kullanılır. Hangi hata bileşeni baskındır?",
     "options": [
-      "Variance: the model changes too much with different training data",
-      "Bias: the model is too rigid to capture the true nonlinear pattern",
-      "Irreducible noise: the data is too noisy",
-      "None: the model should fit perfectly"
+      "Varyans: model farklı eğitim verileriyle çok fazla değişiyor",
+      "Önyargı: Model gerçek doğrusal olmayan modeli yakalayamayacak kadar katıdır",
+      "İndirgenemez gürültü: veriler çok gürültülü",
+      "Yok: Model tam olarak uymalı"
     ],
     "correct": 1,
-    "explanation": "A linear model cannot capture a quadratic curve no matter how much data it sees. This systematic error from wrong model assumptions is bias. The model underfits."
+    "explanation": "Doğrusal bir model, ne kadar veri görürse görsün ikinci dereceden bir eğriyi yakalayamaz. Yanlış model varsayımlarından kaynaklanan bu sistematik hata önyargıdır. Model yetersiz kalıyor."
   },
   {
     "id": "biasvar-pre-2",
     "stage": "pre",
-    "question": "The bias-variance decomposition of expected error has three terms. Which one cannot be reduced by any model?",
+    "question": "Beklenen hatanın yanlılık-varyans ayrıştırması üç terime sahiptir. Hangisi herhangi bir modelle azaltılamaz?",
     "options": [
       "Bias squared",
       "Variance",
       "Irreducible noise (sigma squared)",
-      "All three can be reduced to zero"
+      "Üçü de sıfıra indirilebilir"
     ],
     "correct": 2,
-    "explanation": "Irreducible noise comes from randomness in the data itself (measurement error, missing variables). No model can predict noise. Expected error = bias^2 + variance + irreducible noise."
+    "explanation": "İndirgenemez gürültü, verinin kendisindeki rastgelelikten kaynaklanır (ölçüm hatası, eksik değişkenler). Hiçbir model gürültüyü tahmin edemez. Beklenen hata = önyargı^2 + varyans + indirgenemez gürültü."
   },
   {
     "id": "biasvar-post-1",
     "stage": "post",
-    "question": "Adding L2 regularization to a model increases bias and decreases variance. Why is this useful?",
+    "question": "Bir modele L2 düzenlemesinin eklenmesi önyargıyı artırır ve varyansı azaltır. Bu neden faydalıdır?",
     "options": [
-      "It always improves both training and test accuracy",
-      "The reduction in variance can outweigh the increase in bias, lowering total error",
+      "Her zaman hem eğitim hem de test doğruluğunu artırır",
+      "Varyanstaki azalma, sapmadaki artıştan daha ağır basabilir ve toplam hatayı azaltabilir",
       "L2 regularization eliminates irreducible noise",
-      "It makes the model faster to train"
+      "Modelin eğitilmesini daha hızlı hale getirir"
     ],
     "correct": 1,
-    "explanation": "Regularization trades a small increase in bias for a larger decrease in variance. When a model is overfitting (high variance), this tradeoff reduces total error even though bias goes up slightly."
+    "explanation": "Düzenleme, varyansta daha büyük bir azalma için önyargıda küçük bir artış sağlar. Bir model aşırı uyum sağladığında (yüksek varyans), bu ödünleşim, önyargı biraz artsa bile toplam hatayı azaltır."
   },
   {
     "id": "biasvar-post-2",
     "stage": "post",
-    "question": "A model has training error = 2% and test error = 25%. What is the most likely diagnosis?",
+    "question": "Bir modelin eğitim hatası = %2 ve test hatası = %25'tir. En olası tanı nedir?",
     "options": [
-      "High bias (underfitting): the model is too simple",
-      "High variance (overfitting): the model memorized training data and fails to generalize",
-      "High irreducible noise: the data is too noisy",
-      "The model is perfectly calibrated"
+      "Yüksek önyargı (yetersiz uyum): model çok basit",
+      "Yüksek varyans (aşırı uyum): model eğitim verilerini ezberledi ve genellemede başarısız oldu",
+      "İndirgenemez yüksek gürültü: veriler çok gürültülü",
+      "Model mükemmel şekilde kalibre edilmiştir"
     ],
     "correct": 1,
-    "explanation": "Low training error + high test error + large gap = high variance (overfitting). The model fits training-specific noise. Remedies: regularize, reduce complexity, get more data."
+    "explanation": "Düşük eğitim hatası + yüksek test hatası + büyük boşluk = yüksek varyans (aşırı uyum). Model, eğitime özel gürültüye uygundur. Çözümler: Düzenleyin, karmaşıklığı azaltın, daha fazla veri elde edin."
   },
   {
     "id": "biasvar-post-3",
     "stage": "post",
-    "question": "You train the same model architecture on 50 different random training subsets and observe that predictions vary wildly between them. What does this indicate?",
+    "question": "Aynı model mimarisini 50 farklı rastgele eğitim alt kümesi üzerinde eğitiyorsunuz ve tahminlerin bunlar arasında büyük farklılıklar gösterdiğini gözlemliyorsunuz. Bu neyi gösteriyor?",
     "options": [
-      "High bias: the model consistently misses the true pattern",
-      "High variance: the model is sensitive to which specific training data it sees",
-      "High irreducible noise: the target variable is random",
-      "The learning rate is too high"
+      "Yüksek önyargı: model sürekli olarak gerçek modeli kaçırıyor",
+      "Yüksek varyans: Model hangi spesifik eğitim verisini gördüğüne duyarlıdır",
+      "Yüksek indirgenemez gürültü: hedef değişken rastgeledir",
+      "Öğrenme oranı çok yüksek"
     ],
     "correct": 1,
-    "explanation": "Variance measures how much predictions change when trained on different data subsets. Wildly different predictions across subsets is the definition of high variance."
+    "explanation": "Varyans, farklı veri alt kümeleri üzerinde eğitim verildiğinde tahminlerin ne kadar değiştiğini ölçer. Alt kümeler arasında çılgınca farklı tahminler, yüksek varyansın tanımıdır."
   }
 ]
