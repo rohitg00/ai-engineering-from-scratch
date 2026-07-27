@@ -1,6 +1,6 @@
 # Türkçe Yerelleştirme Rehberi
 
-Bu belge, **AI Engineering from Scratch** içeriğinin kişisel Türkçe sürümü için
+Bu belge, **AI Engineering from Scratch** içeriğinin Türkçe topluluk sürümü için
 editoryal standardı tanımlar. Amaç teknik İngilizceyi görünmez kılmak değil,
 kavramları doğru İngilizce adlarıyla öğretirken açıklamaları doğal ve anlaşılır
 Türkçe sunmaktır.
