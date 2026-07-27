@@ -1,22 +1,22 @@
 {
   "lesson": "phase-19/27-eval-harness-fixture-tasks",
-  "title": "Eval Harness with Fixture Tasks",
+  "title": "Fikstür Görevleri ile Eva Harness",
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading the lesson: which property does a good agent eval verifier need above all others?",
+      "question": "Dersi okumadan önce: İyi bir aracı değerlendirme doğrulayıcısının her şeyden önce hangi özelliğe ihtiyacı vardır?",
       "options": [
-        "Speed in the millisecond range.",
+        "Milisaniye aralığında hız.",
         "Determinism across runs.",
-        "A natural-language explanation of the verdict.",
-        "Coverage of every line of the candidate's code."
+        "Kararın doğal dilde açıklaması.",
+        "Aday kodunun her satırının kapsamı."
       ],
       "correct": 1,
-      "explanation": "Determinism is what makes a regression detectable. A non-deterministic verifier turns every red into a coin flip."
+      "explanation": "Determinizm, bir regresyonu tespit edilebilir kılan şeydir. Deterministik olmayan bir doğrulayıcı her kırmızıyı yazı tura atmaya dönüştürür."
     },
     {
       "stage": "check",
-      "question": "A candidate scores 3 passes in 5 samples on a single task. What value does the lesson's pass@5 formula return (rounded to two decimals)?",
+      "question": "Bir aday, tek bir görevde 5 örnekte 3 geçiş puanı alır. Dersin pass@5 formülü hangi değeri döndürür (iki ondalığa yuvarlanır)?",
       "options": [
         "0.60",
         "0.99",
@@ -24,55 +24,55 @@
         "1.00"
       ],
       "correct": 1,
-      "explanation": "pass@k = 1 - (1 - p)^k = 1 - (1 - 0.6)^5 = 1 - 0.4^5 = 1 - 0.01024 = 0.98976, which rounds to 0.99. The raw per-sample rate (0.6) is the value option (a) names, but the formula amplifies it across k samples."
+      "explanation": "pass@k = 1 - (1 - p)^k = 1 - (1 - 0,6)^5 = 1 - 0,4^5 = 1 - 0,01024 = 0,98976, bu da 0,99'a yuvarlanır. Örnek başına ham oran (0,6), değer seçeneği (a) adlarıdır, ancak formül bunu k örnekte güçlendirir."
     },
     {
       "stage": "check",
-      "question": "Why does the lesson include both pass@1 and pass@k in the report?",
+      "question": "Ders neden raporda pass@1 ve pass@k'yi içeriyor?",
       "options": [
-        "pass@1 is the value users see in the dashboard; pass@k is for internal debugging.",
-        "pass@k can hide a model that is right only one in many samples, so pass@1 anchors the result to first-attempt quality.",
-        "pass@k and pass@1 are mathematically identical for k > 1.",
-        "pass@1 is the version supported by the verifier registry; pass@k is reserved for future verifiers."
+        "pass@1, kullanıcıların kontrol panelinde gördüğü değerdir; pass@k dahili hata ayıklama içindir.",
+        "pass@k, birçok örnekte yalnızca bir tanesi doğru olan bir modeli gizleyebilir, bu nedenle pass@1, sonucu ilk deneme kalitesine bağlar.",
+        "pass@k ve pass@1 k > 1 için matematiksel olarak aynıdır.",
+        "pass@1, doğrulayıcı kayıt defteri tarafından desteklenen sürümdür; pass@k gelecekteki doğrulayıcılara ayrılmıştır."
       ],
       "correct": 1,
-      "explanation": "pass@k makes models that get the answer once in many tries look strong; pass@1 is the first-attempt floor. Reporting both prevents over-claiming."
+      "explanation": "pass@k, birçok denemede bir kez yanıt alan modellerin güçlü görünmesini sağlar; pass@1 ilk deneme katıdır. Her ikisinin de raporlanması aşırı hak talebinde bulunulmasını önler."
     },
     {
       "stage": "check",
-      "question": "The harness calls _prepare_scratch before every sample. Why is that important for pass@k > 1?",
+      "question": "Kablo demeti her numuneden önce _prepare_scratch'i çağırır. pass@k > 1 için bu neden önemlidir?",
       "options": [
-        "It avoids race conditions on shared temp directories.",
-        "It ensures each sample starts from the buggy setup, not the previous sample's output.",
-        "It is purely a performance optimisation.",
-        "It is only relevant for shell verifiers."
+        "Paylaşılan geçici dizinlerdeki yarış koşullarını önler.",
+        "Her örneğin önceki örneğin çıktısından değil hatalı kurulumdan başlamasını sağlar.",
+        "Bu tamamen bir performans optimizasyonudur.",
+        "Yalnızca kabuk doğrulayıcıları için geçerlidir."
       ],
       "correct": 1,
-      "explanation": "Without a fresh scratch, sample N+1 starts from sample N's output. The harness would measure 'second-attempt cleanup' rather than first-attempt success."
+      "explanation": "Yeni bir çizik olmadan, örnek N+1, örnek N'nin çıktısından başlar. Emniyet kemeri, ilk denemedeki başarıdan ziyade 'ikinci denemedeki temizliği' ölçecek."
     },
     {
       "stage": "post",
-      "question": "You add a new verifier 'pytest_passes' that runs pytest in the scratch dir. Which existing verifier should you base it on?",
+      "question": "Karalama dizininde pytest'i çalıştıran yeni bir 'pytest_passes' doğrulayıcı eklersiniz. Hangi mevcut doğrulayıcıyı temel almalısınız?",
       "options": [
-        "file_equals, because pytest writes a results file.",
-        "regex_match, because pytest output contains the word 'passed'.",
-        "shell_exit_zero, because pytest signals pass via exit code 0.",
-        "It is impossible to express pytest as a verifier."
+        "file_equals, çünkü pytest bir sonuç dosyası yazar.",
+        "regex_match, çünkü pytest çıktısı 'geçti' kelimesini içeriyor.",
+        "Shell_exit_zero, çünkü pytest sinyalleri çıkış kodu 0 üzerinden geçer.",
+        "Pytest'i doğrulayıcı olarak ifade etmek imkansızdır."
       ],
       "correct": 2,
-      "explanation": "pytest exits 0 on pass and non-zero on failure. shell_exit_zero is the right primitive. Production wiring routes the call through the sandbox from lesson 26."
+      "explanation": "pytest başarılı olduğunda 0'dan çıkar ve başarısız olduğunda sıfırdan farklı olur. Shell_exit_zero doğru ilkeldir. Üretim kablolaması, çağrıyı 26. dersteki korumalı alan üzerinden yönlendirir."
     },
     {
       "stage": "post",
-      "question": "A reviewer asks: 'is this regression in the model or in the harness?' Which artifact answers that question?",
+      "question": "Bir incelemeci şu soruyu sorar: 'Bu gerileme modelde mi yoksa donanımda mı?' Hangi eser bu soruyu yanıtlıyor?",
       "options": [
-        "The agent's chain-of-thought transcript.",
-        "The per-task, per-sample SampleResult plus the verifier detail message.",
-        "The verifier registry source code.",
-        "The fixture JSON files."
+        "Temsilcinin düşünce zinciri metni.",
+        "Görev başına, örnek başına SampleResult artı doğrulayıcı ayrıntı mesajı.",
+        "Doğrulayıcı kayıt defteri kaynak kodu.",
+        "Fikstür JSON dosyaları."
       ],
       "correct": 1,
-      "explanation": "Per-sample latency, verifier detail, and pass/fail let you triage: same fixtures, different verdicts, so the model changed; same verdicts but different latency, so something else moved."
+      "explanation": "Örnek başına gecikme, doğrulayıcı ayrıntısı ve başarılı/başarısız, önceliklendirme yapmanıza olanak tanır: aynı fikstürler, farklı kararlar, dolayısıyla model değişti; aynı kararlar ama farklı gecikmeler, yani başka bir şey hareket etti."
     }
   ]
 }
