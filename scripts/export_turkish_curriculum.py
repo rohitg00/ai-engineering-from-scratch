@@ -25,9 +25,9 @@ ALLOWED_LESSON_ENTRIES = {"code", "outputs", "assets", "quiz.json"}
 LOCAL_LINK = re.compile(r"!?\[[^\]]*\]\(([^)#?]+)(?:#[^)]*)?\)")
 
 
-def build_rgb_ascii_banner() -> str:
-    """Return the repository's self-contained animated SVG banner."""
-    return (ROOT / "assets" / "turkcelestirilmis-rgb.svg").read_text(encoding="utf-8")
+def build_turkish_curriculum_banner() -> str:
+    """Return the repository's self-contained, static SVG banner."""
+    return (ROOT / "assets" / "turkce-mufredat-v2.svg").read_text(encoding="utf-8")
 
 
 def lesson_dirs(root: Path) -> list[Path]:
@@ -60,8 +60,8 @@ def build_readme(
     phase_count = len(phases)
     lines = [
         '<p align="center">',
-        '  <img src="assets/turkcelestirilmis-rgb.svg" '
-        'alt="TÜRKÇELEŞTİRİLMİŞ — RGB ASCII başlık" width="100%">',
+        '  <img src="assets/turkce-mufredat-v2.svg" '
+        'alt="AI Engineering from Scratch — Türkçe Müfredat" width="100%">',
         "</p>",
         "",
         "# AI Engineering from Scratch — Türkçe",
@@ -175,8 +175,8 @@ def export(source: Path, destination: Path, revision: str) -> dict[str, object]:
     destination.mkdir(parents=True)
     shutil.copy2(source / "LICENSE", destination / "LICENSE")
     (destination / "assets").mkdir()
-    (destination / "assets" / "turkcelestirilmis-rgb.svg").write_text(
-        build_rgb_ascii_banner(), encoding="utf-8"
+    (destination / "assets" / "turkce-mufredat-v2.svg").write_text(
+        build_turkish_curriculum_banner(), encoding="utf-8"
     )
     for lesson in lessons:
         relative = lesson.relative_to(source)

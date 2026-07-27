@@ -46,12 +46,12 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         self.assertIn("## Bir ders nasıl çalışılır?", readme)
         self.assertIn("## Dağıtım güvenceleri", readme)
         self.assertIn("`abc123`", readme)
-        self.assertIn("assets/turkcelestirilmis-rgb.svg", readme)
+        self.assertIn("assets/turkce-mufredat-v2.svg", readme)
 
-        banner = (target / "assets/turkcelestirilmis-rgb.svg").read_text()
-        self.assertIn("TÜRKÇELEŞTİRİLMİŞ", banner)
-        self.assertIn('id="rgb"', banner)
-        self.assertIn('repeatCount="indefinite"', banner)
+        banner = (target / "assets/turkce-mufredat-v2.svg").read_text()
+        self.assertIn("TÜRKÇE", banner)
+        self.assertIn("20 AŞAMA", banner)
+        self.assertNotIn("<animate", banner)
 
     def test_export_refuses_existing_destination(self):
         target = Path(self.temp.name) / "target"
