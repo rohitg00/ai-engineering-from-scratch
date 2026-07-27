@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the critic score across five fixed dimensions instead of returning a freeform paragraph?",
+      "question": "Eleştirmen neden serbest biçimli bir paragraf döndürmek yerine beş sabit boyuta göre puan veriyor?",
       "options": [
-        "Because models cannot generate paragraphs reliably",
-        "Because a fixed vector lets the harness detect per-dimension regressions across rounds",
-        "Because LaTeX requires a score field",
-        "Because the reviser only accepts JSON"
+        "Çünkü modeller paragrafları güvenilir bir şekilde oluşturamıyor",
+        "Çünkü sabit bir vektör, koşumun turlar boyunca boyut başına gerilemeleri tespit etmesine olanak tanır",
+        "Çünkü LaTeX bir puan alanı gerektiriyor",
+        "Çünkü gözden geçiren kişi yalnızca JSON'yi kabul eder"
       ],
       "correct": 1,
-      "explanation": "A fixed dimension vector turns critique into structured data the harness can compare across rounds. Freeform criticism is unverifiable; vectors make regressions visible."
+      "explanation": "Sabit boyutlu bir vektör, eleştiriyi koşumun turlar arasında karşılaştırabileceği yapılandırılmış verilere dönüştürür. Serbest biçimli eleştiri doğrulanamaz; vektörler regresyonları görünür kılar."
     },
     {
       "stage": "pre",
-      "question": "In what order does the loop check stop conditions at the end of a round?",
+      "question": "Döngü, turun sonunda durma koşullarını hangi sırayla kontrol eder?",
       "options": [
         "Budget, then plateau, then target",
         "Target, then plateau, then budget",
@@ -24,55 +24,55 @@
         "Whichever fires first by random tie-break"
       ],
       "correct": 1,
-      "explanation": "Target met wins (the work is done). Then plateau (no more progress is achievable). Then budget (hard cap). The order makes the result deterministic when more than one condition could fire."
+      "explanation": "Hedefe ulaşıldı kazanır (iş yapılır). Sonra plato (artık ilerleme sağlanamaz). Daha sonra bütçe (sert sınır) Birden fazla koşulun tetiklenebileceği durumlarda sıra, sonucu deterministik hale getirir."
     },
     {
       "stage": "check",
-      "question": "Why does plateau detection require two consecutive flat rounds rather than one?",
+      "question": "Plato tespiti neden bir yerine iki ardışık düz tur gerektiriyor?",
       "options": [
-        "Because the dataclass requires a list",
-        "Because deterministic scoring still has noise per round; one flat round is not enough signal",
-        "Because the model returns nondeterministic scores",
-        "Because the dashboard expects two points"
+        "Çünkü veri sınıfı bir liste gerektiriyor",
+        "Çünkü deterministik puanlamada hala tur başına gürültü vardır; tek bir tur yeterli sinyal değil",
+        "Çünkü model belirleyici olmayan puanlar döndürüyor",
+        "Çünkü kontrol paneli iki nokta bekliyor"
       ],
       "correct": 1,
-      "explanation": "Even a deterministic scorer's output changes round to round depending on which suggestions were applied. Requiring two flat rounds filters that noise."
+      "explanation": "Deterministik bir puanlayıcının çıktısı bile hangi önerilerin uygulandığına bağlı olarak turdan tura değişir. İki düz tur gerektiren bu gürültüyü filtreler."
     },
     {
       "stage": "check",
-      "question": "What does the reviser receive as input each round?",
+      "question": "Gözden geçiren kişi her turda girdi olarak ne alır?",
       "options": [
-        "The full Critique object including scores",
-        "The paper and the list of Suggestion records",
+        "Skorları içeren tam Critique nesnesi",
+        "Makale ve Öneri kayıtlarının listesi",
         "A model-generated paragraph",
-        "The raw LaTeX source"
+        "Ham LaTeX kaynağı"
       ],
       "correct": 1,
-      "explanation": "Reviser.__call__ takes (paper, suggestions). Each Suggestion carries a dimension, target section, and an edit instruction. The reviser does not see scores. That separation lets either side be swapped without touching the other."
+      "explanation": "Reviser.__call__ alır (kağıt, öneriler). Her Öneri bir boyut, hedef bölüm ve bir düzenleme talimatı taşır. Revizör puanları görmez. Bu ayırma, her iki tarafın diğerine dokunmadan değiştirilmesine olanak tanır."
     },
     {
       "stage": "post",
-      "question": "What does the trace contain for each round?",
+      "question": "İz her tur için ne içeriyor?",
       "options": [
-        "Just the final paper draft",
+        "Sadece son makale taslağı",
         "Round number, score vector, mean, suggestions applied, verdict",
-        "The model prompt and completion",
-        "Only the convergence verdict"
+        "Model istemi ve tamamlanması",
+        "Sadece yakınsama kararı"
       ],
       "correct": 1,
-      "explanation": "The trace is the per-round event log. Dashboards render it as a score-over-time chart; the next stage reads it to decide whether the branch is worth keeping."
+      "explanation": "İzleme, tur başına olay günlüğüdür. Gösterge tabloları bunu zaman içindeki puan tablosu olarak işler; bir sonraki aşamada şubenin tutulmaya değer olup olmadığına karar vermek için onu okur."
     },
     {
       "stage": "post",
-      "question": "A critic that keeps emitting suggestions that never improve any score will produce which terminal verdict?",
+      "question": "Skoru asla yükseltmeyen öneriler yayan bir eleştirmen hangi nihai kararı verecektir?",
       "options": [
-        "target, because the budget hides the bug",
-        "plateau or budget, because the harness will catch the lack of progress",
-        "converged, because suggestions were applied",
-        "An exception, because the loop crashes"
+        "hedef, çünkü bütçe hatayı gizliyor",
+        "plato veya bütçe, çünkü koşum takımı ilerleme eksikliğini yakalayacak",
+        "öneriler uygulandığı için yakınlaştı",
+        "Bir istisna çünkü döngü çöküyor"
       ],
       "correct": 1,
-      "explanation": "Either plateau (two flat rounds) or budget (hard cap) fires. Both verdicts surface the bug. The loop never silently succeeds."
+      "explanation": "Ya plato (iki düz tur) ya da bütçe (hard cap) yangınları. Her iki karar da hatayı ortaya çıkarıyor. Döngü asla sessizce başarılı olmaz."
     }
   ]
 }
