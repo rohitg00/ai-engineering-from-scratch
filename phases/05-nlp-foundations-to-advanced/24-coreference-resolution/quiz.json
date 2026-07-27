@@ -4,34 +4,34 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the goal of coreference resolution?",
+      "question": "Coreference çözümlemesinin amacı nedir?",
       "options": [
-        "Cluster all mentions (named, nominal, pronominal) that refer to the same real-world entity",
+        "Gerçek dünyadaki aynı varlığa gönderme yapan tüm ifadeleri (adlandırılmış, nominal, zamirsel) kümeleyin",
         "Tag parts of speech",
         "Extract relations",
         "Translate pronouns to nouns"
       ],
       "correct": 0,
-      "explanation": "Coref clusters mention spans that all refer to the same entity."
+      "explanation": "Coref kümeleri, tümü aynı varlığa atıfta bulunan aralıklardan bahseder."
     },
     {
       "stage": "pre",
-      "question": "Which type of expression is a 'nominal' mention?",
+      "question": "Hangi tür ifade 'nominal' bir sözdür?",
       "options": [
-        "A proper noun only",
-        "A noun phrase such as 'the CEO' or 'the company'",
+        "Yalnızca özel bir isim",
+        "'CEO' veya 'şirket' gibi bir isim ifadesi",
         "A pronoun like 'she'",
         "A verb"
       ],
       "correct": 1,
-      "explanation": "Nominal mentions are noun phrases like 'the company'; pronominal mentions are pronouns."
+      "explanation": "Nominal ifadeler 'şirket' gibi isim cümleleridir; Zamirden bahsedenler zamirdir."
     },
     {
       "stage": "check",
-      "question": "What is the modern (Lee et al., 2017) coref architecture?",
+      "question": "Modern (Lee ve diğerleri, 2017) coref mimarisi nedir?",
       "options": [
         "BM25 retrieval",
-        "Rule-based syntactic parsing only",
+        "Yalnızca kural tabanlı sözdizimsel ayrıştırma",
         "Decision trees",
         "End-to-end span-based: enumerate spans, score mentions, then score antecedent probabilities and cluster greedily"
       ],
@@ -40,7 +40,7 @@
     },
     {
       "stage": "check",
-      "question": "What does CoNLL F1 average?",
+      "question": "CoNLL F1'nin ortalaması nedir?",
       "options": [
         "F1 across languages",
         "MUC, B-cubed, and CEAF-phi4 F1 scores",
@@ -48,55 +48,55 @@
         "Precision and recall"
       ],
       "correct": 1,
-      "explanation": "CoNLL F1 is the mean of MUC, B-cubed, and CEAF-phi4 metrics."
+      "explanation": "CoNLL F1, MUC, B-cubed ve CEAF-phi4 metriklerinin ortalamasıdır."
     },
     {
       "stage": "check",
-      "question": "What is bridging anaphora?",
+      "question": "Köprü anaforası nedir?",
       "options": [
         "A mistranslation",
-        "An implicit reference like 'the wheels' implying the wheels of a previously mentioned car",
-        "A pronoun before its referent",
+        "Daha önce bahsedilen bir arabanın tekerleklerini ima eden 'tekerlekler' gibi örtülü bir referans",
+        "Göndergesinden önce bir zamir",
         "A pronoun without an antecedent"
       ],
       "correct": 1,
-      "explanation": "Bridging links a mention to a part-of or related entity that was implied but not explicitly stated."
+      "explanation": "Köprüleme, bir sözü ima edilen ancak açıkça belirtilmeyen bir parçaya veya ilgili varlığa bağlar."
     },
     {
       "stage": "post",
-      "question": "Why is LLM-only coref unreliable on long documents?",
+      "question": "Uzun belgelerde LLM-only coref neden güvenilmez?",
       "options": [
-        "LLMs cannot read text",
+        "Yüksek Lisans'lar metni okuyamıyor",
         "Tokenizers fail",
         "Single-call LLMs over-merge or silently drop mentions across 50+ paragraphs; require sliding-window plus merge",
         "Coref requires a CFG"
       ],
       "correct": 2,
-      "explanation": "Long-doc LLM coref degrades; sliding-window with cross-window merging mitigates."
+      "explanation": "Uzun belgeli LLM coref bozulur; Çapraz pencere birleştirmeli kayan pencere hafifletir."
     },
     {
       "stage": "post",
-      "question": "Why merge coref clusters into NER results before downstream tasks?",
+      "question": "Aşağı yönlü görevlerden önce neden coref kümelerini NER sonuçlarıyla birleştirmelisiniz?",
       "options": [
         "Required by Wikidata",
         "To increase token count",
         "Lower latency",
-        "So downstream tasks see one entity per cluster rather than one per surface mention, dramatically improving coverage"
+        "Böylece aşağı yönlü görevler, her yüzeyde bahsedilen bir varlık yerine küme başına bir varlık görür ve kapsamı önemli ölçüde artırır"
       ],
       "correct": 3,
       "explanation": "Without merging, NER counts each surface form separately and misses 60-80% of entity mentions."
     },
     {
       "stage": "post",
-      "question": "Why are hard-coded gender rules a fragility in coref systems?",
+      "question": "Sabit kodlanmış cinsiyet kuralları neden çekirdek sistemlerde kırılganlık yaratıyor?",
       "options": [
-        "They break on non-binary referents, organizations, and animals; learned scoring is more robust",
-        "They require GPU",
-        "They run too fast",
-        "They cannot use POS tags"
+        "İkili olmayan referansları, organizasyonları ve hayvanları kırıyorlar; öğrenilmiş puanlama daha sağlamdır",
+        "GPU gerektirirler",
+        "Çok hızlı koşuyorlar",
+        "POS etiketlerini kullanamazlar"
       ],
       "correct": 0,
-      "explanation": "Gender heuristics fail in demographically diverse text; learned models are preferred."
+      "explanation": "Cinsiyet buluşsal yöntemleri demografik açıdan çeşitlilik gösteren metinlerde başarısız oluyor; öğrenilen modeller tercih edilmektedir."
     }
   ]
 }
