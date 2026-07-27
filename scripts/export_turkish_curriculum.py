@@ -378,6 +378,10 @@ def build_local_site_index(
     .lesson code {{ padding:.12em .3em; background:var(--soft); font:500 .85em var(--mono) }}
     .lesson pre code {{ padding:0; background:transparent }}
     .lesson a {{ color:var(--blue) }}
+    .lesson .mermaid {{ margin:1.75em 0; overflow:auto; padding:20px;
+      border:1px solid var(--rule); background:var(--soft); text-align:center }}
+    .lesson .mermaid svg {{ max-width:100%; height:auto }}
+    .lesson .mermaid-error {{ text-align:left; white-space:pre-wrap }}
     .lesson-error {{ padding:28px; border:1px solid #c33 }}
     body.reader-open {{ overflow:hidden }}
     footer {{ padding:28px 0 44px; border-top:1px solid var(--ink); color:var(--muted);
@@ -437,6 +441,22 @@ def build_local_site_index(
     </div></div>
     <article class="lesson" id="lesson" tabindex="-1"></article>
   </section>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({{startOnLoad:false,securityLevel:'strict',theme:'base'}});
+    window.renderLessonDiagrams=async container=>{{
+      const diagrams=container.querySelectorAll('.mermaid:not([data-processed])');
+      if(!diagrams.length) return;
+      try {{ await mermaid.run({{nodes:diagrams}}); }}
+      catch(error) {{
+        diagrams.forEach(node=>{{
+          if(!node.dataset.processed) node.classList.add('mermaid-error');
+        }});
+        console.error('Mermaid diyagramı oluşturulamadı',error);
+      }}
+    }};
+    window.renderLessonDiagrams(document.querySelector('#lesson'));
+  </script>
   <script>
     const input=document.querySelector('#search'), phases=[...document.querySelectorAll('.phase')];
     const root=document.documentElement, themeButton=document.querySelector('#theme-toggle');
@@ -476,7 +496,10 @@ def build_local_site_index(
       .replace(/\\[([^\\]]+)\\]\\(([^)]+)\\)/g,'<a href="$2">$1</a>');
     const renderMarkdown=source=>{{
       const code=[]; source=source.replace(/```([^\\n]*)\\n([\\s\\S]*?)```/g,(_,lang,body)=>{{
-        code.push(`<pre><code class="language-${{escapeHtml(lang.trim())}}">${{escapeHtml(body)}}</code></pre>`);
+        const language=lang.trim().toLocaleLowerCase('en-US');
+        code.push(language==='mermaid'
+          ? `<div class="mermaid">${{escapeHtml(body)}}</div>`
+          : `<pre><code class="language-${{escapeHtml(lang.trim())}}">${{escapeHtml(body)}}</code></pre>`);
         return `\\n@@CODE${{code.length-1}}@@\\n`;
       }});
       const lines=source.replace(/\\r/g,'').split('\\n'), out=[]; let list=null, paragraph=[];
@@ -507,6 +530,7 @@ def build_local_site_index(
         const response=await fetch(path); if(!response.ok) throw new Error(`HTTP ${{response.status}}`);
         const markdown=new TextDecoder('utf-8').decode(await response.arrayBuffer());
         lesson.innerHTML=renderMarkdown(markdown);
+        if(window.renderLessonDiagrams) await window.renderLessonDiagrams(lesson);
         lesson.querySelectorAll('a').forEach(a=>{{
           if(!/^(?:https?:|#|mailto:)/.test(a.getAttribute('href')||''))
             a.href=new URL(a.getAttribute('href'),new URL(path,location.href)).href;

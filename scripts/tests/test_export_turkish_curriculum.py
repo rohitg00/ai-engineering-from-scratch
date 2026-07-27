@@ -16,7 +16,9 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         lesson = self.source / "phases/00-test/01-lesson"
         (lesson / "docs").mkdir(parents=True)
         (lesson / "docs/en.md").write_text("# English\n")
-        (lesson / "docs/tr.md").write_text("# Türkçe\n")
+        (lesson / "docs/tr.md").write_text(
+            "# Türkçe\n\n```mermaid\nflowchart LR\n  A --> B\n```\n"
+        )
         (lesson / "code").mkdir()
         (lesson / "code/main.py").write_text("print('ok')\n")
         (lesson / "quiz.json").write_text("{}\n")
@@ -87,6 +89,9 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         self.assertIn('id="reader"', local_site)
         self.assertIn("new TextDecoder('utf-8')", local_site)
         self.assertIn("renderMarkdown(markdown)", local_site)
+        self.assertIn("mermaid.esm.min.mjs", local_site)
+        self.assertIn('<div class="mermaid">', local_site)
+        self.assertIn("renderLessonDiagrams(lesson)", local_site)
         self.assertIn("phases/00-test/01-lesson/docs/tr.md", local_site)
         self.assertIn("1 aşama", local_site)
         self.assertIn("<strong>1</strong><span>Türkçe ders", local_site)
