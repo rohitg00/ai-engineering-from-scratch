@@ -1,6 +1,6 @@
 # Kendini Geliştirme ve ELEŞTİRME: Yinelemeli Çıktı İyileştirmesi
 
-> Self-Refine (Madaan ve diğerleri, 2023), bir LLM'yi bir döngü içinde üç rolde (oluşturma, geri bildirim, iyileştirme) kullanır. Ortalama kazanç: 7 görevde mutlak +20. CRITIC (Gou ve diğerleri, 2023), doğrulamayı harici araçlar aracılığıyla yönlendirerek geri bildirim adımını güçlendirir. 2026'da bu model her framework'de "değerlendirici-optimizer" (Antropik) veya bir korkuluk döngüsü (OpenAI Agents SDK) olarak gönderilir.
+> Self-Refine (Madaan ve diğerleri, 2023), bir LLM'yi bir döngü içinde üç rolde (oluşturma, geri bildirim, iyileştirme) kullanır. Ortalama kazanç: 7 görevde mutlak +20. CRITIC (Gou ve diğerleri, 2023), doğrulamayı harici araçlar aracılığıyla yönlendirerek geri bildirim adımını güçlendirir. 2026'da bu model her framework'de "değerlendirici-iyileştirici" (Antropik) veya bir korkuluk döngüsü (OpenAI Agent SDK) olarak gönderilir.
 
 **Tür:** Yapım
 **Diller:** Python (stdlib)
@@ -9,14 +9,14 @@
 
 ## Öğrenme Hedefleri
 
-- Kendini İyileştirme'nin üç prompt'sini belirtin (oluşturma, geri bildirim, hassaslaştırma) ve geçmişin hassaslaştırma prompt için neden önemli olduğunu açıklayın.
+- Self-Refine'ın üç prompt'sini (oluşturma, geri bildirim, iyileştirme) belirtin ve geçmişin prompt iyileştirmesi için neden önemli olduğunu açıklayın.
 - CRITIC'in kritik görüşünü açıklayın: Yüksek Lisans'lar, harici temellendirme olmadan kendi kendini doğrulama konusunda güvenilmezdir.
 - Geçmişi ve isteğe bağlı harici doğrulayıcıyı içeren bir stdlib Self-Refine döngüsü uygulayın.
-- Bu modeli Anthropic'in "değerlendirici-optimizer" iş akışına ve OpenAI Agent'nin SDK'sının çıkış korkuluklarına eşleyin.
+- Bu modeli Anthropic'in "değerlendirici-optimizer" iş akışına ve OpenAI Agents SDK'nın çıkış korkuluklarına eşleyin.
 
 ## Sorun
 
-Bir agent neredeyse doğru olan bir cevap üretir. Belki bir kod satırında sözdizimi hatası vardır. Belki özet çok uzun olabilir. Belki bir plan uç bir durumu kaçırıyor olabilir. İstediğiniz şey şu: agent kendi çıktısını eleştirir, sonra düzeltir.
+Bir agent neredeyse doğru olan bir cevap üretir. Belki bir kod satırında sözdizimi hatası vardır. Belki özet çok uzun olabilir. Belki bir plan uç bir durumu kaçırıyor olabilir. İstediğiniz şey şu: agent kendi çıktısını eleştirir ve sonra düzeltir.
 
 Self-Refine, bunun tek bir modelle, eğitim verisi olmadan, RL olmadan çalıştığını gösterir. Ancak bir sorun var: Yüksek Lisans'lar somut gerçekleri doğrulama konusunda kötü. CRITIC düzeltmeyi adlandırır; doğrulama adımını harici araçlar (arama, kod yorumlayıcı, hesap makinesi, test çalıştırıcı) aracılığıyla yönlendirir.
 
@@ -44,7 +44,7 @@ Başlık: GPT-4 dahil 7 görevde (matematik, kod, kısaltma, diyalog) ortalama +
 
 ### ELEŞTİRİ (Gou ve diğerleri, arXiv:2305.11738, v4 Şubat 2024)
 
-Self-Refine'ın zayıflığı: geri bildirim adımı, bir Yüksek Lisans puanının kendisidir. Gerçeklere dayalı iddialar açısından bu güvenilmezdir (halüsinasyon, onu üreten modele genellikle ikna edici görünür). CRITIC, `feedback(task, output)`'yi `verify(task, output, tools)` ile değiştirir; burada {`tools` şunları içerir:
+Self-Refine'ın zayıflığı: geri bildirim adımı, bir Yüksek Lisans puanının kendisidir. Gerçeklere dayalı iddialar açısından bu güvenilmezdir (halüsinasyon, onu üreten modele genellikle ikna edici görünür). CRITIC, `feedback(task, output)`'yi `verify(task, output, tools)` ile değiştirir; burada `tools` şunları içerir:
 
 - Gerçek iddialar için bir arama motoru.
 - Kod doğruluğu için bir kod yorumlayıcısı.
@@ -71,26 +71,26 @@ Anthropic'in Aralık 2024'teki gönderisi bunu beş iş akışı modelinden biri
 - Değerlendirici: çıktıyı puanlar ve bir eleştiri üretir.
 - Optimizer: eleştiriye göre çıktıyı revize eder.
 
-Değerlendiriciyi geçene kadar döngü yapın. Bu, Anthropic'in çerçevelemesinde Kendini İyileştirme/Eleştirmedir. Anthropic'in eklediği kritik mühendislik detayı: Değerlendirici ve optimize edici prompt'ler önemli ölçüde farklı olmalıdır, böylece model yalnızca onay işaretiyle kalmaz.
+Değerlendiriciyi geçene kadar döngü yapın. Bu, Anthropic'in çerçevelemesinde Kendini İyileştirme/Eleştirmedir. Anthropic'in eklediği kritik mühendislik detayı: Değerlendirici ve optimize edici prompt'ler önemli ölçüde farklı olmalı, böylece model yalnızca onay işaretiyle kalmamalı.
 
-### OpenAI Agent'nin SDK çıkış korkulukları
+### OpenAI Agents SDK çıkış korkulukları
 
-OpenAI Agent'nin SDK'sı bu modeli "çıkış korkulukları" olarak sunar. Korkuluk, bir agent'nin son çıktısı üzerinde çalışan bir doğrulayıcıdır. Eğer korkuluk takılırsa (`OutputGuardrailTripwireTriggered`'yi yükseltirse), çıkış reddedilir ve agent yeniden deneyebilir. Korkuluklar araçları çağırabilir (CRITIC tarzı) veya saf işlevler (Kendini İyileştirme tarzı) olabilir.
+OpenAI Agent SDK'sı bu modeli "çıkış korkulukları" olarak sunar. Korkuluk, agent'nin son çıktısı üzerinde çalışan bir doğrulayıcıdır. Korkuluk açılırsa (`OutputGuardrailTripwireTriggered`'yi yükseltirse), çıkış reddedilir ve agent yeniden deneyebilir. Korkuluklar araçları çağırabilir (CRITIC tarzı) veya saf işlevler (Kendini İyileştirme tarzı) olabilir.
 
 ### 2026 tuzakları
 
-- **Lastik damga döngüleri.** Aynı prompt stiliyle üretim ve eleştiri yapan aynı model, "bana iyi görünüyor" konusunda birleşiyor. Eleştiri için yapısal olarak farklı prompt'ler veya daha küçük, ucuz bir model kullanın.
-- **Aşırı hassaslaştırma.** Her hassaslaştırma geçişi gecikme ve tokens ekler. Bütçe 1-3 geçer; bundan sonra gerçek kişi tarafından yapılan incelemeye geçin.
+- **Lastik damga döngüleri.** Aynı prompt stiliyle üretim ve eleştiri yapan aynı model, "bana güzel görünüyor" noktasında birleşiyor. Eleştiri için yapısal olarak farklı prompt'leri veya daha küçük, ucuz bir modeli kullanın.
+- **Aşırı ayrıntılandırma.** Her ayrıntılandırma geçişi gecikme ve token'ler ekler. Bütçe 1-3 geçer; bundan sonra gerçek kişi tarafından yapılan incelemeye geçin.
 - **Önemsiz görevlerde CRITIC.** Harici bir doğrulayıcı yoksa, CRITIC Kendini Arıtmaya dönüşür; saplama doğrulayıcı için gecikme ücreti ödemeyin.
 
 ## İnşa Et
 
-`code/main.py` bir oyuncak görevinde Kendini İyileştirme ve KRİTİK'i uyguluyor: bir konuya göre kısa bir madde listesi hazırlıyor. Doğrulayıcı formatı kontrol eder (her biri 60 karakterin altında olan 3 madde işareti). CRITIC, bilinen halüsinasyonları cezalandıran harici bir "gerçek doğrulayıcı" ekler.
+`code/main.py`, bir oyuncak görevinde Self-Refine ve CRITIC'i uyguluyor: bir konuya göre kısa bir madde listesi oluşturmak. Doğrulayıcı formatı kontrol eder (her biri 60 karakterin altında olan 3 madde işareti). CRITIC, bilinen halüsinasyonları cezalandıran harici bir "gerçek doğrulayıcı" ekler.
 
 Bileşenler:
 
 - `generate` — senaryolu yapımcı.
-- `feedback` — Yüksek Lisans tarzı özeleştiri.
+- `feedback` — LLM tarzı özeleştiri.
 - `verify_external` — CRITIC tarzı temelli doğrulayıcı.
 - `refine` — geçmişte verilen çıktıyı yeniden yazar.
 - Durdurma koşulu — doğrulayıcı geçer veya maksimum 4 yineleme.
@@ -101,23 +101,23 @@ Bileşenler:
 python3 code/main.py
 ```
 
-Self-Refine ve CRITIC çalıştırmalarını karşılaştırın. CRITIC, Self-Refine'in kaçırdığı gerçek bir hatayı yakalar çünkü harici doğrulayıcı, özeleştirinin yapmadığı temele sahiptir.
+Self-Refine ve CRITIC çalıştırmalarını karşılaştırın. CRITIC, Self-Refine'in gözden kaçırdığı gerçek bir hatayı yakalar çünkü harici doğrulayıcı, özeleştirinin yapmadığı temele sahiptir.
 
 ## Kullan onu
 
-Anthropic'in değerlendirici-iyileştiricisi, Claude dostu dildeki bu kalıptır. OpenAI Agent'nin SDK'sının çıkış korkulukları CRITIC şeklindedir (korkuluklar araçları çağırabilir). LangGraph, Self-Refine gibi okunan bir yansıma düğümü gönderir. Google'ın Gemini 2.5 Bilgisayar Kullanımı, CRITIC varyantı olan adım başına bir güvenlik değerlendiricisi ekler: her eylem, gerçekleştirilmeden önce doğrulanır.
+Anthropic'in değerlendirici-iyileştiricisi, Claude dostu dildeki bu kalıptır. OpenAI Agents SDK'nın çıkış korkulukları CRITIC şeklindedir (korkuluklar araçları çağırabilir). LangGraph, Self-Refine gibi okunan bir yansıma düğümü gönderir. Google'ın Gemini 2.5 Bilgisayar Kullanımı, CRITIC varyantı olan adım başına bir güvenlik değerlendiricisi ekler: her eylem, gerçekleştirilmeden önce doğrulanır.
 
 ## Gönderin
 
-`outputs/skill-refine-loop.md`, görev şekli, doğrulayıcı kullanılabilirliği ve yineleme bütçesi dikkate alınarak bir değerlendirici-optimizasyon döngüsü yapılandırır. Oluşturucu, değerlendirici/doğrulayıcı ve optimize edici için prompt'ler ve ayrıca bir durdurma politikası yayar.
+`outputs/skill-refine-loop.md`, görev şekli, doğrulayıcı kullanılabilirliği ve yineleme bütçesi dikkate alınarak bir değerlendirici-optimizasyon döngüsü yapılandırır. Oluşturucu, değerlendirici/doğrulayıcı ve optimize edici için prompt'lerin yanı sıra bir durdurma politikası yayar.
 
 ## Egzersizler
 
 1. Oyuncağı max_iterations=1 ile çalıştırın. CRITIC hala yardımcı oluyor mu?
-2. Harici doğrulayıcıyı gürültülü bir tanesiyle değiştirin (%30 rastgele yanlış pozitif). Döngü ne yapar? Bu, çoğu korkuluk istifinin 2026 gerçeğidir.
+2. Harici doğrulayıcıyı gürültülü olanla değiştirin (%30 rastgele yanlış pozitif). Döngü ne yapar? Bu, çoğu korkuluk istifinin 2026 gerçeğidir.
 3. Bir "farklı modellerde üretici-eleştirisi" varyantını uygulayın: büyük model üretir, küçük model eleştirisi. Aynı modeli geçiyor mu?
 4. CRITIC Bölüm 3'ü okuyun (arXiv:2305.11738 v4). Üç doğrulama aracı kategorisini adlandırın ve her biri için bir örnek verin.
-5. OpenAI Agent'nin SDK'sını `output_guardrails` CRITIC'in doğrulayıcı rolüyle eşleştirin. SDK neyi yanlış yapıyor ve neyi doğru yapıyor?
+5. OpenAI Agent SDK'nın `output_guardrails`'sini CRITIC'in doğrulayıcı rolüyle eşleyin. SDK neyi yanlış yapıyor ve neyi doğru yapıyor?
 
 ## Anahtar Terimler
 
@@ -126,15 +126,15 @@ Anthropic'in değerlendirici-iyileştiricisi, Claude dostu dildeki bu kalıptır
 | Kendini İyileştirme | "Kendini düzelten Yüksek Lisans" | Oluştur -> geri bildirim -> geçmişle birlikte tek bir modelde döngüyü iyileştirin |
 | ELEŞTİRİ | "Araca dayalı doğrulama" | Geri bildirimi harici bir doğrulayıcıyla değiştirin (arama, kod, hesaplama, testler) |
 | Değerlendirici-Optimize Edici | "Antropik iş akışı modeli" | İki rol - değerlendirici puanları, optimize edici revizyonları - yakınsamaya bağlı |
-| Çıkış korkuluğu | "Post-hoc kontrol" | OpenAI Agent'nin, bir agent çıktı ürettikten sonra çalışan SDK doğrulayıcısı |
+| Çıkış korkuluğu | "Post-hoc kontrol" | agent çıktı ürettikten sonra çalışan OpenAI Agent'nin SDK doğrulayıcısı |
 | Adımı doğrulayın | "Eleştiri aşaması" | Yük taşıma kararı: temelli veya öz değerlendirmeli |
-| Geçmişi hassaslaştır | "Modelin zaten denediği şey" | Önceki çıktılar + eleştiriler prompt'yi iyileştirmek için başa eklendi; düşüş ve kalite çöküşleri |
-| Lastik damga döngüsü | "Kendi kendine anlaşma başarısızlığı" | Same-prompt eleştirisi "iyi görünüyor" ifadesini döndürür; yapısal olarak farklı prompt'larla düzeltme |
+| Geçmişi hassaslaştır | "Modelin zaten denediği şey" | prompt'yi iyileştirmek için önceki çıktılar + eleştiriler eklendi; düşüş ve kalite çöküşleri |
+| Lastik damga döngüsü | "Kendi kendine anlaşma başarısızlığı" | Aynı prompt eleştirisi "iyi görünüyor" sonucunu veriyor; yapısal olarak farklı prompt'lerle düzeltme |
 | Durdurma koşulu | "Yakınsama testi" | Doğrulayıcı başarılı oldu VEYA geri bildirim yok VE yineleme sınırı; asla tek koşullu |
 
 ## Daha Fazla Okuma
 
-- [Madaan ve diğerleri, Self-Refine (arXiv:2303.17651)](https://arxiv.org/abs/2303.17651) — kanonik makale
+- [Madaan ve diğerleri, Self-Refine (arXiv:2303.17651)](https://arxiv.org/abs/2303.17651) — standart makale
 - [Gou ve diğerleri, CRITIC (arXiv:2305.11738)](https://arxiv.org/abs/2305.11738) — araca dayalı doğrulama
-- [Antropik, Etkili Agentler Oluşturma](https://www.anthropic.com/research/building-effective-agents) — değerlendirici-optimizasyon iş akışı modeli
-- [OpenAI Agents SDK docs](https://openai.github.io/openai-agents-python/) — CRITIC şekilli doğrulayıcılar olarak korkulukların çıktısını alın
+- [Antropik, Etkili Agent'ler Oluşturma](https://www.anthropic.com/research/building-effective-agents) — değerlendirici-optimizasyon iş akışı modeli
+- [OpenAI Agents SDK docs](https://openai.github.io/openai-agents-python/) — CRITIC şekilli doğrulayıcılar olarak korkulukların çıktısı
