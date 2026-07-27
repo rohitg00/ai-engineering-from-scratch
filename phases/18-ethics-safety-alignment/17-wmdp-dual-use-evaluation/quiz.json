@@ -4,10 +4,10 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the 'yellow zone' criterion that WMDP uses for question selection?",
+      "question": "WMDP'nin soru seçimi için kullandığı 'sarı bölge' kriteri nedir?",
       "options": [
-        "Open internet content with no expert review",
-        "Synthesis recipes for dangerous compounds",
+        "Uzman incelemesi olmadan internet içeriğini açın",
+        "Tehlikeli bileşikler için sentez tarifleri",
         "Proximate, enabling knowledge of a harmful process without being a direct synthesis recipe",
         "Multilingual math reasoning"
       ],
@@ -16,7 +16,7 @@
     },
     {
       "stage": "check",
-      "question": "Which three domains does WMDP cover?",
+      "question": "WMDP hangi üç alanı kapsıyor?",
       "options": [
         "Privacy, bias, watermarking",
         "Vision, audio, text",
@@ -28,19 +28,19 @@
     },
     {
       "stage": "check",
-      "question": "What does RMU (the WMDP companion method) do?",
+      "question": "RMU (WMDP tamamlayıcı yöntemi) ne yapar?",
       "options": [
-        "Replaces PPO with DPO during alignment",
+        "Hizalama sırasında PPO'yi DPO ile değiştirir",
         "Generates harmful images",
-        "Trains a new tokenizer for dual-use content",
-        "Representation Misdirection for Unlearning: reduces WMDP scores to near-random while preserving general capability (e.g., MMLU) within a few points"
+        "Çift kullanımlı içerik için yeni bir tokenizer eğitiyor",
+        "Öğrenmeyi Unutma için Temsil Yanlış Yönlendirmesi: WMDP puanlarını neredeyse rastgele bir seviyeye düşürürken, genel yeteneği (örneğin, MMLU) birkaç puan içinde korur"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What number did Anthropic's 2025 bioweapon-acquisition trial report as 'uplift,' and what did it imply for ASL-3?",
+      "question": "Anthropic'in 2025'teki biyolojik silah edinme deneme raporunda 'artış' olarak hangi sayı ortaya çıktı ve bu ASL-3 için ne anlama geliyordu?",
       "options": [
         "100x; ASL-5 reached",
         "2.53x; insufficient to rule out ASL-3",
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "What is the distinction between novice-relative uplift and expert-absolute capability?",
+      "question": "Acemi-göreceli yükselme ile uzman-mutlak yetenek arasındaki fark nedir?",
       "options": [
-        "Novice-relative is the multiplicative help over status-quo (e.g., internet search) for non-experts; expert-absolute is the maximum information a motivated expert can extract from the model",
-        "Novice-relative is a benchmark; expert-absolute is a license",
-        "They are synonyms",
-        "Both are measured only via MCQ"
+        "Acemi-göreceli, uzman olmayanlar için statükoya (örneğin internet araması) göre çoğaltıcı yardımdır; uzman-mutlak, motivasyonu yüksek bir uzmanın modelden çıkarabileceği maksimum bilgidir",
+        "Acemi akraba bir ölçüttür; uzman-mutlak bir lisanstır",
+        "Bunlar eş anlamlıdır",
+        "Her ikisi de yalnızca MCQ aracılığıyla ölçülür"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which is NOT a measurement pitfall when interpreting WMDP scores as deployment risk?",
+      "question": "WMDP puanlarını dağıtım riski olarak yorumlarken NOT hangi ölçüm tuzağıdır?",
       "options": [
         "Procurement and equipment barriers",
         "Elicitation resistance (whether safety filters block extraction)",
-        "Tacit knowledge needed for execution that is not captured by MCQ",
-        "The model's open-source license"
+        "Yürütme için gerekli olan ve MCQ tarafından yakalanmayan örtülü bilgi",
+        "Modelin açık kaynak lisansı"
       ],
       "correct": 3,
       "explanation": ""
