@@ -1,10 +1,10 @@
 {
   "lesson": "10-cold-start-mitigation",
-  "title": "Cold Start Mitigation for Serverless LLMs",
+  "title": "Sunucusuz LLM'ler için Soğuk Başlatmanın Azaltılması",
   "questions": [
     {
       "stage": "pre",
-      "question": "Roughly how long does a cold start typically take for a 70B model on a fresh node without mitigations?",
+      "question": "Azaltma olmadan yeni bir düğümdeki 70B modeli için soğuk başlatma genellikle ne kadar sürer?",
       "options": [
         "Over 1 hour",
         "30-60 seconds",
@@ -16,19 +16,19 @@
     },
     {
       "stage": "check",
-      "question": "Which AWS-side feature does the lesson recommend for pre-seeding container images so step-2 image pull disappears?",
+      "question": "2. adımdaki görüntü çekmenin ortadan kalkması için kapsayıcı görüntülerin ön tohumlaması için ders hangi AWS-side özelliğini önerir?",
       "options": [
-        "Bottlerocket dual-volume architecture referenced from EC2NodeClass",
+        "EC2NodeClass'tan başvurulan Bottlerocket çift hacimli mimari",
         "ECS task definitions",
         "Spot fleet placement",
-        "EBS volume snapshots only"
+        "Yalnızca EBS birim anlık görüntüleri"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which Modal feature provides the closest thing to a \"warm GPU boot in seconds\" by deserializing post-load state directly into HBM?",
+      "question": "Hangi Modal özelliği, yükleme sonrası durumu doğrudan HBM'ye seri durumdan çıkararak \"saniyeler içinde sıcak bir GPU önyüklemesine\" en yakın şeyi sağlar?",
       "options": [
         "Tiered NVMe-to-DRAM loading",
         "Live migration",
@@ -40,21 +40,21 @@
     },
     {
       "stage": "check",
-      "question": "Why does live migration transfer input tokens rather than KV cache between nodes?",
+      "question": "Neden canlı geçiş, düğümler arasında KV önbelleği yerine giriş belirteçlerini aktarıyor?",
       "options": [
-        "Live migration is required by GDPR",
-        "Input tokens have larger entropy",
-        "KV cache is encrypted and cannot move",
-        "Recomputing KV on the destination is cheaper than transferring GB of KV cache over the network"
+        "GDPR canlı geçiş gerektiriyor",
+        "Giriş jetonlarının entropisi daha büyük",
+        "KV önbellek şifrelendi ve taşınamıyor",
+        "Hedefte KV'yi yeniden hesaplamak, KV önbelleğinin GB'sini ağ üzerinden aktarmaktan daha ucuzdur"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which serverless layer trades direct GPU cost for predictable readiness by keeping at least one replica live?",
+      "question": "Hangi sunucusuz katman, en az bir kopyayı canlı tutarak GPU maliyetini öngörülebilir hazırlık için yönlendirir?",
       "options": [
-        "Warm pool with min_workers >= 1",
+        "Min_workers >= 1 ile sıcak havuz",
         "Tiered loading",
         "Bottlerocket pre-seeding",
         "Live migration"
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does the lesson say cold-start mitigation must be stacked across layers rather than picked as a single tool?",
+      "question": "Ders neden soğuk başlatmayı azaltmanın tek bir araç olarak seçilmek yerine katmanlar halinde istiflenmesi gerektiğini söylüyor?",
       "options": [
         "No single layer eliminates every step (node provision, image pull, weights load, engine init); stacking layers compresses each step",
-        "It is a regulatory requirement",
-        "Modal owns the entire stack",
-        "All five layers are bundled in vLLM"
+        "Bu düzenleyici bir gerekliliktir",
+        "Modal yığının tamamına sahip",
+        "Beş katmanın tümü vLLM'de paketlenmiştir"
       ],
       "correct": 0,
       "explanation": ""
