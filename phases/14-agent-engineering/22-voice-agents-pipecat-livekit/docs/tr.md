@@ -1,6 +1,6 @@
 # Ses Agent'ler: Pipecat ve LiveKit
 
-> Ses agent'ler 2026'da birinci sınıf bir üretim kategorisidir. Pipecat size Python çerçeve tabanlı bir işlem hattı (VAD → STT → LLM → TTS → taşıma) sunar. LiveKit Agent, yapay zeka modellerini WebRTC üzerinden kullanıcılarla buluşturuyor. Üretim gecikmesi, premium yığınlar için uçtan uca 450-600 ms'ye ulaşmayı hedefliyor.
+> Ses agent'ler 2026'da birinci sınıf bir üretim kategorisidir. Pipecat size Python çerçeve tabanlı bir işlem hattı (VAD → STT → LLM → TTS → taşıma) sunar. LiveKit Agents, yapay zeka modellerini WebRTC üzerinden kullanıcılarla buluşturuyor. Üretim gecikmesi, premium yığınlar için uçtan uca 450-600 ms'ye ulaşmayı hedefliyor.
 
 **Tür:** Öğren
 **Diller:** Python (stdlib)
@@ -11,8 +11,8 @@
 
 - Pipecat'in çerçeve tabanlı boru hattını açıklayın: DOWNSTREAM (kaynak→sink) ve UPSTREAM (kontrol).
 - Kurallı ses boru hattı aşamalarını ve Pipecat desteklerini taşıyanları adlandırın.
-- LiveKit Agent'nin iki ses agent sınıfını (MultimodalAgent, VoicePipelineAgent) ve her birinin ne zaman uyduğunu açıklayın.
-- 2026 üretim gecikmesi beklentilerini ve bunların mimari seçimlerini nasıl yönlendirdiğini özetleyin.
+- LiveKit Agent'lerin iki sesli agent sınıfını (MultimodalAgent, VoicePipelineAgent) ve her birinin ne zaman uygun olduğunu açıklayın.
+- 2026 üretim gecikme beklentilerini ve bunların mimari seçimlerini nasıl yönlendirdiğini özetleyin.
 
 ## Sorun
 
@@ -25,9 +25,9 @@ Ses agent'ler, TTS'nin cıvatalandığı bir metin döngüsü değildir. Gecikme
 - Python çerçeve tabanlı ardışık düzen framework.
 - `Frame` → `FrameProcessor` zinciri.
 - İki akış yönü:
-- **AŞAĞI AKIŞ** — kaynak → havuz (ses girişi, TTS çıkışı).
-- **UPSTREAM** — geri bildirim ve kontrol (iptal, ölçümler, katılım).
-- `PipelineTask`, olaylar (`on_pipeline_started`, {`on_pipeline_finished`, `on_idle_timeout`) ve metrikler/izleme/RTVI gözlemcileri ile yaşam döngüsünü yönetir.
+  - **AŞAĞI AKIŞ** — kaynak → havuz (ses girişi, TTS çıkışı).
+  - **UPSTREAM** — geri bildirim ve kontrol (iptal, ölçümler, katılım).
+- `PipelineTask`, olaylar (`on_pipeline_started`, `on_pipeline_finished`, `on_idle_timeout`) ve ölçümler/izleme/RTVI gözlemcileri ile yaşam döngüsünü yönetir.
 
 Tipik boru hattı:
 
@@ -42,10 +42,10 @@ Pipecat Flows, yapılandırılmış konuşmalar (durum makineleri) ekler. Pipeca
 ### LiveKit Agent'ler (livekit/agent'ler)
 
 - AI modellerini WebRTC üzerinden kullanıcılara köprüler.
-- Anahtar kavramlar: `Agent`, `AgentSession`, {`entrypoint`, `AgentServer`.
+- Anahtar kavramlar: `Agent`, `AgentSession`, `entrypoint`, `AgentServer`.
 - İki sesli agent sınıfı:
-- **Çok modluAgent** — OpenAI Gerçek Zamanlı veya eşdeğeri aracılığıyla doğrudan ses.
-- **VoicePipelineAgent** — STT → Yüksek Lisans → TTS kademesi; metin düzeyinde kontrol sağlar.
+  - **MultimodalAgent** — OpenAI Gerçek Zamanlı veya eşdeğeri yoluyla doğrudan ses.
+  - **VoicePipelineAgent** — STT → Yüksek Lisans → TTS kademesi; metin düzeyinde kontrol sağlar.
 - transformer modeli aracılığıyla anlamsal dönüş tespiti.
 - Yerel MCP entegrasyonu.
 - SIP aracılığıyla telefon.
@@ -66,7 +66,7 @@ Vapi (optimize edilmiş premium yığında ~450–600 ms) ve Retell (180 test ç
 
 - VAD: 20–60 ms
 - STT kısmi: 100–250 ms
-- Yüksek Lisans ilk token: 150–400ms
+- Yüksek Lisans ilk token: 150–400 ms
 - TTS ilk ses: 100–200 ms
 - Aktarım RTT'si: 30–80 ms
 
@@ -92,13 +92,13 @@ python3 code/main.py
 ## Kullan onu
 
 - Tam kontrol için **Pipecat** — özel işlemciler, öncelikli Python, takılabilir sağlayıcılar.
-- **WebRTC öncelikli deployment'ler ve telefon için LiveKit Agent'ler**.
-- WebRTC ekibi olmayan, barındırılan ses agent'ler için **Vapi / Retell**.
-- **Doğrudan ses girişi/ses çıkışı için **OpenAI Realtime / Gemini Live** (MultimodalAgent).
+- WebRTC'nin ilk deployment'leri ve telefon için **LiveKit Agent'ler**.
+- WebRTC ekibi olmayan, barındırılan ses agent'ler için **Vapi / Yeniden Anlat**.
+- Doğrudan ses girişi/ses çıkışı için **OpenAI Realtime / Gemini Live** (MultimodalAgent).
 
 ## Gönderin
 
-`outputs/skill-voice-pipeline.md`, VAD + STT + LLM + TTS + taşıma artı mavna elleçleme özelliklerine sahip Pipecat şeklinde bir ses hattının iskelesini kuruyor.
+`outputs/skill-voice-pipeline.md`, VAD + STT + LLM + TTS + taşıma artı mavna elleçleme özelliklerine sahip Pipecat şekilli bir ses boru hattının iskelesini kurar.
 
 ## Egzersizler
 
@@ -124,6 +124,6 @@ python3 code/main.py
 ## Daha Fazla Okuma
 
 - [Pipecat docs](https://docs.pipecat.ai/getting-started/introduction) — çerçeve tabanlı ardışık düzen, işlemciler, aktarımlar
-- [LiveKit Agents dokümanları](https://docs.livekit.io/agents/) — WebRTC + temel ses öğeleri
+- [LiveKit Agent belgeleri](https://docs.livekit.io/agents/) — WebRTC + temel ses öğeleri
 - [Vapi](https://vapi.ai/) — yönetilen ses platformu
 - [Retell AI](https://www.retellai.com/) — yönetilen ses, gecikme-benchmarked
