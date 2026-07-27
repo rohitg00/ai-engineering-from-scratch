@@ -29,6 +29,10 @@ This shift from "programming rules" to "learning from data" is the core of machi
 Traditional programming and machine learning solve problems in opposite directions.
 
 ```mermaid
+---
+config:
+  htmlLabels: false
+---
 flowchart LR
     subgraph Traditional["Traditional Programming"]
         direction LR
