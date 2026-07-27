@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "When does EU AI Act enforcement for high-risk systems begin?",
+      "question": "Yüksek riskli sistemler için EU AI Yasasının uygulanması ne zaman başlıyor?",
       "options": [
         "February 2, 2025",
         "August 2, 2026",
@@ -16,47 +16,47 @@
     },
     {
       "stage": "check",
-      "question": "Which two-tier fine ceiling does the EU AI Act define?",
+      "question": "EU AI Yasası hangi iki katmanlı ince tavanı tanımlıyor?",
       "options": [
-        "Up to €1M flat for any violation",
-        "Up to €100K for any violation",
-        "Up to €15M or 3% global annual turnover for high-risk-system obligations (Art. 99(4)); up to €35M or 7% for prohibited AI practices (Art. 99(3))",
-        "No financial penalties, only takedown orders"
+        "Herhangi bir ihlal durumunda 1 milyon Euro'ya kadar sabit tutar",
+        "Herhangi bir ihlal durumunda 100.000 Euro'ya kadar",
+        "Yüksek riskli sistem yükümlülükleri için 15 milyon Euro'ya kadar veya yıllık %3 küresel ciro (Mad. 99(4)); yasaklanmış AI uygulamaları için 35 milyon Euro'ya veya %7'ye kadar (Mad. 99(3))",
+        "Mali ceza yok, yalnızca yayından kaldırma emirleri var"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is post-processing PII cleanup not a defensible GDPR posture?",
+      "question": "İşlem sonrası PII temizleme neden savunulabilir bir GDPR duruşu değil?",
       "options": [
-        "It is too slow at scale",
+        "Ölçek olarak çok yavaş",
         "GDPR forbids redaction entirely",
-        "Post-processing is identical to real-time",
-        "The model already saw the data, so real-time inference-layer redaction (before the LLM call) is the defensible 2026 standard"
+        "İşlem sonrası gerçek zamanlı ile aynıdır",
+        "Model zaten verileri gördü, dolayısıyla gerçek zamanlı çıkarım katmanı redaksiyonu (LLM çağrısından önce) savunulabilir 2026 standardıdır"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the practical difference between SOC 2 Type I and Type II?",
+      "question": "SOC 2 Tip I ve Tip II arasındaki pratik fark nedir?",
       "options": [
         "Type I requires HIPAA BAA",
-        "Type I is more rigorous than Type II",
+        "Tip I, Tip II'den daha titizdir",
         "Type I attests controls designed and documented; Type II attests controls operating effectively over 6-12 months",
-        "Type II is for startups only"
+        "II tipi yalnızca yeni başlayanlar içindir"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does cross-framework control mapping aim to deliver?",
+      "question": "Çerçeveler arası kontrol haritalaması neyi sağlamayı amaçlıyor?",
       "options": [
-        "One control policy that satisfies multiple framework requirements (e.g. access logging maps to ISO 27001 A.5.15-5.18, GDPR Art. 32, HIPAA §164.312(a))",
+        "Çoklu çerçeve gereksinimlerini karşılayan tek bir kontrol politikası (örneğin, ISO 27001 A.5.15-5.18, GDPR Madde 32, HIPAA §164.312(a)'ya erişim günlüğü haritaları)",
         "Eliminating audits",
-        "Replacing all frameworks with ISO 42001",
+        "Tüm çerçevelerin ISO 42001 ile değiştirilmesi",
         "More distinct controls per framework"
       ],
       "correct": 0,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "What does the lesson recommend for HIPAA + LLM workloads?",
+      "question": "Ders HIPAA + LLM iş yükleri için ne önerir?",
       "options": [
-        "HIPAA does not apply to LLMs",
+        "HIPAA Yüksek Lisans (LLM) için geçerli değildir",
         "Never send PHI to an external AI service without a signed BAA; all three hyperscalers and major LLM API providers offer BAAs",
-        "Use only on-prem models, never managed",
-        "Ship PHI to any provider; BAA is optional"
+        "Yalnızca şirket içi modelleri kullanın; hiçbir zaman yönetilmeyin",
+        "PHI'yi herhangi bir sağlayıcıya gönderin; BAA isteğe bağlıdır"
       ],
       "correct": 1,
       "explanation": ""
