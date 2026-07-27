@@ -88,3 +88,30 @@ identifier'lar ve teknik davranış değiştirilmez.
 6. Başlık, metadata, erişilebilirlik etiketi ve navigasyon metni çevrilmiş mi?
 7. Sayfa dar ekran, klavye kullanımı ve screen reader akışında çalışıyor mu?
 
+## Tekrarlanabilir çeviri iş akışı
+
+Çeviri doğrudan kaynak dosyada yapılmaz. Aşağıdaki komut, ders veya aşama
+kapsamındaki çevrilebilir satırları JSON paketi olarak çıkarır. Inline code,
+URL, denklem ve identifier'lar `{{P0}}` biçiminde değişmez placeholder'lara
+dönüştürülür; fenced code block'lar pakete hiç alınmaz.
+
+```bash
+python3 scripts/localize_curriculum.py prepare \
+  --scope phases/01-foundations/01-dev-environment \
+  --output translation-tr.json
+```
+
+Paket içindeki yalnızca `translation` alanları çevrilir. Placeholder'ların
+sırası ve yazımı değiştirilmez. Paket uygulandığında dersler `docs/tr.md`,
+aşamalar ise `README.tr.md` olarak üretilir:
+
+```bash
+python3 scripts/localize_curriculum.py apply translation-tr.json
+python3 scripts/localize_curriculum.py check --report coverage-tr.json
+```
+
+`check`, kaynak/çeviri çiftlerindeki kod, denklem, identifier ve URL
+invariant'larını; ayrıca bu rehberdeki korunacak terimleri doğrular. Rapor,
+503 ders ile aşama sayfalarının toplam ve çevrilmiş sayılarını, kapsam
+yüzdesini ve ihlalleri JSON olarak verir. `coverage-tr.json` bir çalışma
+çıktısıdır; repoya eklenmez.
