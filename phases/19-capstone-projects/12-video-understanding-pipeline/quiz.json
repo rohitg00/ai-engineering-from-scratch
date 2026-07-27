@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is a scene-level index still needed even when a long-context VLM can read a 2-hour video natively?",
+      "question": "Uzun bağlamlı bir VLM 2 saatlik bir videoyu yerel olarak okuyabildiğinde bile sahne düzeyinde bir dizine neden hâlâ ihtiyaç duyuluyor?",
       "options": [
-        "Long-context VLMs cannot stream output",
+        "Uzun bağlamlı VLM'ler çıktı akışını gerçekleştiremez",
         "Vector indexes do not support video files",
-        "Ingesting 100 hours of video into a queryable corpus needs scene-level retrieval, even when individual videos can be read whole",
-        "Scene cuts are the only thing a VLM understands"
+        "100 saatlik videoyu sorgulanabilir bir derlemin içine almak, tek tek videolar bütünüyle okunabilse bile, sahne düzeyinde erişim gerektirir",
+        "Bir VLM'nin anladığı tek şey sahne kesmeleridir"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "Which three vector types does each scene get in the multi-vector index?",
+      "question": "Her sahne çoklu vektör indeksinde hangi üç vektör tipini alıyor?",
       "options": [
         "Caption embedding, keyframe embedding, and transcript embedding",
         "Audio waveform, mel-spectrogram, and MFCCs",
@@ -28,43 +28,43 @@
     },
     {
       "stage": "check",
-      "question": "How are results from the three retrieval streams merged at query time?",
+      "question": "Üç alma akışından elde edilen sonuçlar sorgu zamanında nasıl birleştirilir?",
       "options": [
-        "By picking the caption hit only",
+        "Yalnızca hit başlığını seçerek",
         "By averaging cosine similarities",
-        "Via reciprocal rank fusion across the three ranked lists",
-        "By taking the union without scoring"
+        "Üç sıralı listede karşılıklı sıralama füzyonu yoluyla",
+        "Puan almadan birliği alarak"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the temporal grounding step refine inside the top scene?",
+      "question": "Zamansal topraklama adımı üst sahnede neyi geliştiriyor?",
       "options": [
-        "The transcript word timestamps from Whisper",
-        "The number of vectors stored in Qdrant",
-        "The (start, end) timestamp window that contains the answer",
-        "The keyframe embedding dimensionality"
+        "Whisper'dan transkript kelime zaman damgaları",
+        "Qdrant'ta depolanan vektörlerin sayısı",
+        "Yanıtı içeren (başlangıç, bitiş) zaman damgası penceresi",
+        "Ana kare yerleştirme boyutluluğu"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which question class is reported separately because it is a known hallucination hotspot?",
+      "question": "Bilinen bir halüsinasyon sıcak noktası olduğu için hangi soru sınıfı ayrı olarak rapor edilir?",
       "options": [
         "Descriptive questions about scenery",
         "Speaker identification questions",
         "Translation questions",
-        "Counting and action-type questions, where VLMs miscount or mis-order events"
+        "VLM'lerin olayları yanlış saydığı veya yanlış sıraladığı sayma ve eylem türü sorular"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which grounding metric does the rubric measure on a held-out set?",
+      "question": "Değerlendirme listesi uzatılmış bir kümede hangi temel ölçüyü ölçer?",
       "options": [
         "Temporal-grounding intersection-over-union (IoU)",
         "Acceptance rate",
@@ -76,12 +76,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does the pipeline require cited timestamps in answers?",
+      "question": "İşlem hattı neden yanıtlarda belirtilen zaman damgalarına ihtiyaç duyuyor?",
       "options": [
-        "They reduce the embedding dimension",
-        "Timestamps are required by Whisper output",
-        "Timestamps are required by Qdrant payloads",
-        "They let the viewer jump to the exact (video_id, start, end) so users can verify the claim"
+        "Gömme boyutunu azaltırlar",
+        "Whisper çıktısı için zaman damgaları gereklidir",
+        "Qdrant yükleri için zaman damgaları gereklidir",
+        "Kullanıcıların iddiayı doğrulayabilmesi için izleyicinin tam bilgiye (video_id, başlangıç, bitiş) geçmesine olanak tanırlar"
       ],
       "correct": 3,
       "explanation": ""
