@@ -4,35 +4,35 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does SWE-bench's evaluator check on a candidate patch?",
+      "question": "SWE-bench'in değerlendiricisi aday yamada neyi kontrol ediyor?",
       "options": [
-        "BLEU score against the reference fix",
+        "Referans düzeltmeye göre BLEU puanı",
         "Previously failing tests now pass (FAIL_TO_PASS) and previously passing tests still pass (PASS_TO_PASS)",
         "Patch length under 200 lines",
         "Patch passes a separate LLM judge"
       ],
       "correct": 1,
-      "explanation": "The harness gates on test transitions: bug-revealing tests must flip while regression tests must stay green."
+      "explanation": "Test geçişlerindeki koşum kapıları: hata ortaya çıkaran testler ters çevrilmeli, regresyon testleri ise yeşil kalmalıdır."
     },
     {
       "stage": "pre",
-      "question": "Why does SWE-bench Verified exist?",
+      "question": "SWE-bench Verified neden var?",
       "options": [
-        "It runs faster",
+        "Daha hızlı çalışır",
         "OpenAI's 500-task human-curated subset removes ambiguous issues and unreliable tests",
-        "It includes more languages",
-        "It uses a different patch format"
+        "Daha fazla dil içerir",
+        "Farklı bir yama formatı kullanıyor"
       ],
       "correct": 1,
-      "explanation": "Verified is the cleaner subset for credible reporting."
+      "explanation": "Doğrulanmış, güvenilir raporlama için daha temiz bir alt kümedir."
     },
     {
       "stage": "check",
-      "question": "What did SWE-bench+ find about successful patches?",
+      "question": "SWE-bench+ başarılı yamalar hakkında ne buldu?",
       "options": [
-        "32.67% leaked solution text in the issue and 31.08% had suspiciously weak test coverage",
+        "%32,67'si sorundaki çözüm metnini sızdırdı ve %31,08'inin test kapsamı şüpheli derecede zayıftı",
         "All patches were memorized",
-        "There is no contamination",
+        "Kirlenme yok",
         "Patches always exceeded 1000 lines"
       ],
       "correct": 0,
@@ -40,19 +40,19 @@
     },
     {
       "stage": "check",
-      "question": "What is GAIA's design philosophy?",
+      "question": "GAIA'nin tasarım felsefesi nedir?",
       "options": [
-        "Hard for humans, easy for AI",
-        "Conceptually simple for humans (about 92%) but hard for AI (early GPT-4 with plugins: about 15%)",
+        "İnsanlar için zor, AI için kolay",
+        "Kavramsal olarak insanlar için basit (yaklaşık %92), ancak AI için zor (eklentilerle birlikte ilk GPT-4: yaklaşık %15)",
         "Pure benchmark of vector retrieval",
-        "Only single-turn questions"
+        "Yalnızca tek turlu sorular"
       ],
       "correct": 1,
-      "explanation": "GAIA is intentionally easy-for-humans, hard-for-AI, testing reasoning + tools + modality."
+      "explanation": "GAIA kasıtlı olarak insanlar için kolay, AI için zor olup akıl yürütmeyi + araçları + yöntemi test eder."
     },
     {
       "stage": "check",
-      "question": "Which is NOT one of AgentBench's environment categories?",
+      "question": "AgentBench'in ortam kategorilerinden biri olan NOT hangisidir?",
       "options": [
         "Code (Bash, DB, KG)",
         "Games (Alfworld, LTP)",
@@ -60,14 +60,14 @@
         "Gradient (RL, IRL)"
       ],
       "correct": 3,
-      "explanation": "AgentBench covers code, games, web, and open-ended generation. There is no gradient category."
+      "explanation": "AgentBench kodu, oyunları, web'i ve açık uçlu nesli kapsar. Degrade kategorisi yoktur."
     },
     {
       "stage": "post",
-      "question": "What does the lesson identify as the wrong way to report SWE-bench numbers?",
+      "question": "Ders SWE-bench sayılarını bildirmenin yanlış yolu olarak neyi tanımlıyor?",
       "options": [
         "Reporting per-repo breakdowns",
-        "Reporting one aggregate number without mentioning Verified or SWE-bench+ context",
+        "Doğrulanmış veya SWE-bench+ bağlamından bahsetmeden toplu bir sayının raporlanması",
         "Reporting step counts",
         "Reporting wall-clock"
       ],
@@ -76,7 +76,7 @@
     },
     {
       "stage": "post",
-      "question": "Which dimension do these benchmarks NOT measure?",
+      "question": "Bu kıyaslamalar NOT hangi boyutu ölçüyor?",
       "options": [
         "Real-world operational cost (tokens, wall-clock), adversarial safety, and your own domain",
         "Test transitions",
@@ -84,7 +84,7 @@
         "Step counts"
       ],
       "correct": 0,
-      "explanation": "Benchmarks aggregate; they do not capture cost, adversarial robustness, or your domain."
+      "explanation": "Karşılaştırmaların toplamı; maliyeti, rakiplerin sağlamlığını veya etki alanınızı yansıtmazlar."
     }
   ]
 }
