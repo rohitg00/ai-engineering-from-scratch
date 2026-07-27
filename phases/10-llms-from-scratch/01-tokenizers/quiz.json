@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the primary purpose of a tokenizer in an LLM pipeline?",
-    "options": ["To remove stop words from text", "To convert text into a sequence of integers that the model can process", "To translate text between languages", "To compress text for storage"],
+    "question": "LLM boru hattındaki tokenlaştırıcının birincil amacı nedir?",
+    "options": [
+      "Durdurulan sözcükleri metinden kaldırmak için",
+      "Metni modelin işleyebileceği bir tam sayı dizisine dönüştürmek için",
+      "Metni diller arasında çevirmek için",
+      "Metni depolama amacıyla sıkıştırmak için"
+    ],
     "correct": 1,
-    "explanation": "LLMs process numbers, not text. The tokenizer converts every character, word, and symbol into integer IDs from a fixed vocabulary. This conversion is not neutral -- it determines how the model 'sees' language.",
+    "explanation": "Yüksek Lisans'lar metni değil sayıları işler. Belirteç, her karakteri, kelimeyi ve sembolü sabit bir sözcük dağarcığından tam sayı kimliklerine dönüştürür. Bu dönüşüm tarafsız değildir; modelin dili nasıl 'gördüğünü' belirler.",
     "stage": "pre"
   },
   {
-    "question": "What does BPE (Byte Pair Encoding) do to build its vocabulary?",
-    "options": ["Splits text into individual characters only", "Iteratively merges the most frequent adjacent pair of tokens until reaching the target vocabulary size", "Uses a dictionary lookup for whole words", "Randomly assigns IDs to substrings"],
+    "question": "BPE (Bayt Çifti Kodlama) sözcük dağarcığını geliştirmek için ne yapar?",
+    "options": [
+      "Metni yalnızca tek tek karakterlere böler",
+      "Hedef sözcük boyutuna ulaşana kadar en sık görülen bitişik belirteç çiftini yinelemeli olarak birleştirir",
+      "Tüm kelimeler için sözlük araması kullanır",
+      "Randomly assigns IDs to substrings"
+    ],
     "correct": 1,
-    "explanation": "BPE starts with individual bytes/characters and repeatedly merges the most common adjacent pair. 'th' + 'e' becomes 'the'. After thousands of merges, common words become single tokens while rare words are split into subword pieces.",
+    "explanation": "BPE ayrı baytlar/karakterlerle başlar ve en yaygın bitişik çifti tekrar tekrar birleştirir. 'th' + 'e', ​​'the' olur. Binlerce birleştirmenin ardından yaygın sözcükler tek bir simge haline gelirken, nadir sözcükler ise alt sözcük parçalarına bölünür.",
     "stage": "pre"
   },
   {
-    "question": "Why does vocabulary size create a tradeoff in LLM design?",
-    "options": ["Larger vocabularies always perform better", "Too small creates long sequences (more computation); too large wastes embedding parameters on rare tokens", "Vocabulary size doesn't affect model performance", "Smaller vocabularies are always more efficient"],
+    "question": "Kelime büyüklüğü LLM tasarımında neden bir ödünleşim yaratıyor?",
+    "options": [
+      "Larger vocabularies always perform better",
+      "Too small creates long sequences (more computation); too large wastes embedding parameters on rare tokens",
+      "Vocabulary size doesn't affect model performance",
+      "Daha küçük kelimeler her zaman daha etkilidir"
+    ],
     "correct": 1,
-    "explanation": "Small vocabulary (e.g., character-level) means every word is many tokens, increasing sequence length and computation. Large vocabulary wastes parameters on tokens that rarely appear in training data. Most LLMs use 32K-100K tokens.",
+    "explanation": "Kelime dağarcığının az olması (örneğin, karakter düzeyinde), her kelimenin çok sayıda belirteçten oluşması anlamına gelir, bu da dizi uzunluğunu ve hesaplamayı artırır. Geniş kelime dağarcığı, eğitim verilerinde nadiren görülen belirteçlerdeki parametreleri boşa harcar. Çoğu LLM 32K-100K token kullanır.",
     "stage": "post"
   },
   {
-    "question": "What problem does byte-level fallback solve in tokenization?",
-    "options": ["It speeds up tokenization", "It ensures any input (emoji, rare scripts, binary data) can be encoded without 'unknown' tokens", "It reduces vocabulary size", "It improves model accuracy"],
+    "question": "Bayt düzeyindeki geri dönüş, simgeleştirmede hangi sorunu çözer?",
+    "options": [
+      "Tokenizasyonu hızlandırır",
+      "Herhangi bir girdinin (emoji, nadir komut dosyaları, ikili veriler) 'bilinmeyen' belirteçler olmadan kodlanabilmesini sağlar",
+      "Kelime boyutunu azaltır",
+      "Model doğruluğunu artırır"
+    ],
     "correct": 1,
-    "explanation": "With byte-level fallback, the tokenizer can fall back to raw byte values (256 possible) for any character not in the vocabulary. This guarantees complete coverage -- no input is ever 'unknown.'",
+    "explanation": "Bayt düzeyinde geri dönüş ile belirteç, sözcük dağarcığında olmayan herhangi bir karakter için ham bayt değerlerine (256 mümkün) geri dönebilir. Bu, tam kapsamı garanti eder; hiçbir girdi asla 'bilinmeyen' değildir.",
     "stage": "post"
   },
   {
-    "question": "How does the tokenizer affect non-English language performance in LLMs?",
-    "options": ["Tokenizers work equally well for all languages", "Languages underrepresented in training data get worse token merges, requiring more tokens per word and wasting context window", "Non-English text is always character-tokenized", "Tokenization doesn't affect language performance"],
+    "question": "Belirteç, LLM'lerde İngilizce dışındaki dil performansını nasıl etkiler?",
+    "options": [
+      "Belirteçler tüm dillerde eşit derecede iyi çalışır",
+      "Languages underrepresented in training data get worse token merges, requiring more tokens per word and wasting context window",
+      "İngilizce olmayan metinler her zaman karakter bazlıdır",
+      "Tokenization doesn't affect language performance"
+    ],
     "correct": 1,
-    "explanation": "BPE merges are learned from training data. If Japanese text is 5% of the corpus, Japanese characters get fewer merges, requiring 2-5x more tokens per word than English. This effectively shrinks the context window for non-English text.",
+    "explanation": "BPE birleştirmeleri eğitim verilerinden öğrenilir. Japonca metin metnin %5'ini oluşturuyorsa Japonca karakterler daha az birleştirme alır ve İngilizce'ye göre kelime başına 2-5 kat daha fazla belirteç gerektirir. Bu, İngilizce olmayan metinler için bağlam penceresini etkili bir şekilde daraltır.",
     "stage": "post"
   }
 ]
