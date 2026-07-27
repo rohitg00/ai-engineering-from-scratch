@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "You benchmark a model and report 'average 12ms per image on a 4090'. What is missing?",
-      "options": ["Nothing; that is a complete benchmark", "Percentiles (p50/p95/p99), warmup discipline, and CUDA synchronisation; a mean alone hides tail latency and may measure kernel dispatch instead of kernel execution", "The model size", "The dataset name"],
+      "question": "Bir modeli karşılaştırırsınız ve '4090'da görüntü başına ortalama 12 ms' rapor edersiniz. Ne eksik?",
+      "options": [
+        "Hiç bir şey; bu tam bir kıyaslama",
+        "Percentiles (p50/p95/p99), warmup discipline, and CUDA synchronisation; a mean alone hides tail latency and may measure kernel dispatch instead of kernel execution",
+        "Model boyutu",
+        "Veri kümesi adı"
+      ],
       "correct": 1,
-      "explanation": "Production latency is measured in percentiles because real-time systems fail on tails, not averages. Without warmup, JIT compilation inflates the first few measurements. Without torch.cuda.synchronize, GPU kernel launches return before the kernel finishes, so you measure dispatch, not execution. All three have to be right for the number to be meaningful."
+      "explanation": "Üretim gecikmesi yüzdelik dilimlerle ölçülür çünkü gerçek zamanlı sistemler ortalamalarda değil kuyruklarda başarısız olur. Isınma olmadan JIT derlemesi ilk birkaç ölçümü şişirir. torch.cuda.synchronize olmadan, GPU çekirdeği, çekirdek tamamlanmadan önce dönüşü başlatır, böylece yürütmeyi değil gönderimi ölçersiniz. Sayının anlamlı olması için üçünün de doğru olması gerekir."
     },
     {
       "stage": "pre",
-      "question": "FLOPs and on-device latency do not correlate perfectly. Why?",
-      "options": ["FLOPs counters are broken", "Different operations have different hardware friendliness; depthwise convolutions may have lower FLOPs but are memory-bound on GPUs, while dense convolutions use Tensor Cores efficiently. Memory bandwidth, kernel launch overhead, and cache behaviour also shape latency beyond raw FLOPs", "FLOPs ignore batch size", "PyTorch counts FLOPs incorrectly"],
+      "question": "FLOP'lar ve cihaz üzerindeki gecikme mükemmel bir şekilde ilişkili değildir. Neden?",
+      "options": [
+        "FLOP sayaçları bozuldu",
+        "Farklı işlemler farklı donanım dostu özelliklere sahiptir; derinlemesine evrişimler daha düşük FLOP'lara sahip olabilir ancak GPU'larda belleğe bağlıdır, yoğun evrişimler ise Tensör Çekirdeklerini verimli bir şekilde kullanır. Bellek bant genişliği, çekirdek başlatma yükü ve önbellek davranışı da ham FLOP'ların ötesindeki gecikmeyi şekillendirir",
+        "FLOPs ignore batch size",
+        "PyTorch counts FLOPs incorrectly"
+      ],
       "correct": 1,
-      "explanation": "FLOPs is a cheap proxy. Wall-clock latency depends on how well an operation matches the hardware's strengths: dense matmuls pin Tensor Cores; depthwise convs stall on memory bandwidth; attention stalls on sequence-length^2 memory reads. For architecture search FLOPs is useful; for deployment decisions measure on the target device."
+      "explanation": "FLOP'lar ucuz bir proxy'dir. Duvar saati gecikmesi, bir işlemin donanımın güçlü yönleriyle ne kadar iyi eşleştiğine bağlıdır: yoğun matmul pimi Tensör Çekirdekleri; derinlemesine dönüşümler bellek bant genişliğinde durur; dizi uzunluğu^2 bellek okumalarında dikkat durur. Mimari arama için FLOP'lar faydalıdır; Dağıtım kararları için hedef cihazda ölçüm yapın."
     },
     {
       "stage": "post",
-      "question": "Post-training static INT8 quantisation typically loses how much accuracy on ImageNet-class vision models?",
-      "options": ["5-10 percentage points", "0.1-1 percentage points when properly calibrated; batch-norm-fused conv models are particularly well-behaved under INT8", "Always 0; it is lossless", "20+ points; unusable"],
+      "question": "Eğitim sonrası statik INT8 nicemleme genellikle ImageNet sınıfı görüş modellerinde doğruluğu ne kadar kaybeder?",
+      "options": [
+        "5-10 percentage points",
+        "Düzgün kalibre edildiğinde yüzde 0,1-1 puan; toplu normla birleştirilmiş dönüşüm modelleri INT8 kapsamında özellikle iyi davranır",
+        "Her zaman 0; kayıpsızdır",
+        "20+ points; unusable"
+      ],
       "correct": 1,
-      "explanation": "Static PTQ on well-calibrated vision models loses a fraction of a point to about 1 point. The bigger loss modes are (a) insufficient calibration data, (b) quantising activations with extreme outliers (fix with per-channel quantisation or clipping), (c) un-fused BatchNorm layers. When those are handled, INT8 is essentially free."
+      "explanation": "İyi kalibre edilmiş görüş modellerindeki statik PTQ, bir puanın kesirini kaybederek yaklaşık 1 puana düşer. Daha büyük kayıp modları şunlardır: (a) yetersiz kalibrasyon verileri, (b) uç değerlere sahip aktivasyonların nicelendirilmesi (kanal başına niceleme veya kırpma ile düzeltme), (c) kaynaşmamış BatchNorm katmanları. Bunlar ele alındığında INT8 aslında ücretsizdir."
     },
     {
       "stage": "post",
-      "question": "Your mobile app needs a vision model under 10MB with sub-10ms latency. Which backbone do you pick?",
-      "options": ["ResNet-50", "MobileNetV3-Small or EfficientNet-Lite-B0 quantised to INT8; both target this budget and compile cleanly to TFLite / Core ML", "ViT-Base", "ConvNeXt-Large"],
+      "question": "Mobil uygulamanız, 10 ms'nin altında gecikme süresine sahip, 10 MB'ın altında bir görüntü modeline ihtiyaç duyar. Hangi omurgayı seçersiniz?",
+      "options": [
+        "ResNet-50",
+        "MobileNetV3-Small veya EfficientNet-Lite-B0, INT8'ye nicemlenmiştir; her ikisi de bu bütçeyi hedefliyor ve TFLite / Core ML'ye temiz bir şekilde derleniyor",
+        "ViT-Base",
+        "ConvNeXt-Large"
+      ],
       "correct": 1,
-      "explanation": "Mobile vision shipping in 2026 is still dominated by MobileNetV3 and EfficientNet-Lite variants because they were designed for this budget: depthwise convs, h-swish, squeeze-excite, quantisation-aware from day one. ResNet-50 and ViT-Base are 100MB+ in FP32 and 25MB+ in INT8, blowing the size budget before latency is even measured."
+      "explanation": "2026'da mobil görüntü sevkıyatı hâlâ MobileNetV3 ve EfficientNet-Lite çeşitlerinin hakimiyetinde çünkü bunlar bu bütçe için tasarlandılar: ilk günden itibaren derinlemesine dönüşümler, h-swish, sıkma-heyecanlandırma, niceleme farkındalığı. ResNet-50 ve ViT-Base, FP32'de 100 MB+ ve INT8'de 25 MB+ olup, gecikme daha ölçülmeden boyut bütçesini aşar."
     },
     {
       "stage": "post",
-      "question": "You export a PyTorch model to ONNX with opset 17 and it fails with 'Unsupported operator'. What are the most likely causes?",
-      "options": ["The ONNX library is outdated", "(1) A custom op that has no ONNX mapping; (2) a non-deterministic control-flow path that tracing cannot capture; (3) a tensor-scalar interaction that is implicit in Python but has no ONNX equivalent. Fixes: replace the op, use `torch.jit.script` for control flow, or upgrade opset", "The model has too many parameters", "The input shape is wrong"],
+      "question": "Bir PyTorch modelini opset 17 ile ONNX'ye aktarıyorsunuz ve 'Desteklenmeyen operatör' ile başarısız oluyor. En olası nedenler nelerdir?",
+      "options": [
+        "ONNX kütüphanesi güncel değil",
+        "(1) ONNX eşlemesi olmayan özel bir işlem; (2) izlemenin yakalayamayacağı, deterministik olmayan bir kontrol akışı yolu; (3) Python'da örtük olan ancak ONNX eşdeğeri olmayan bir tensör-skaler etkileşimi. Düzeltmeler: op'u değiştirin, kontrol akışı için `torch.jit.script` kullanın veya opset'i yükseltin",
+        "Modelin çok fazla parametresi var",
+        "Giriş şekli yanlış"
+      ],
       "correct": 1,
-      "explanation": "ONNX export is tracing by default, so anything that tracing cannot capture — runtime control flow, Python-level branches, custom CUDA ops — fails. Most failures are a single node that has no ONNX equivalent (often a tiny custom op or a call to torch.special.*). The fix is either replacing the op, switching to `torch.jit.script`, or moving to a newer opset where the op exists."
+      "explanation": "ONNX dışa aktarma varsayılan olarak izlemedir, bu nedenle izlemenin yakalayamadığı her şey (çalışma zamanı kontrol akışı, Python düzeyindeki dallar, özel CUDA işlemleri) başarısız olur. Çoğu hata, ONNX eşdeğeri olmayan tek bir düğümden kaynaklanır (genellikle küçük bir özel işlem veya torch.special.* çağrısı). Düzeltme ya op'u değiştirmek, `torch.jit.script`'ye geçmek ya da op'un mevcut olduğu daha yeni bir opset'e geçmektir."
     }
   ]
 }
