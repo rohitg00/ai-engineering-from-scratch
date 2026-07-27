@@ -2,31 +2,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why do AI projects need a separate virtual environment?",
+      "question": "AI projeleri neden ayrı bir sanal ortama ihtiyaç duyuyor?",
       "options": [
         "Virtual environments make code run faster",
-        "They isolate dependencies so different projects don't conflict",
+        "Farklı projelerin çakışmaması için bağımlılıkları izole ederler",
         "Python requires virtual environments to import packages",
         "Virtual environments provide GPU access"
       ],
       "correct": 1,
-      "explanation": "Virtual environments isolate package versions per project. Without them, upgrading PyTorch for one project can break another that depends on an older version."
+      "explanation": "Sanal ortamlar proje başına paket sürümlerini izole eder. Bunlar olmadan, bir proje için PyTorch'u yükseltmek, daha eski bir sürüme bağlı olan başka bir projeyi bozabilir."
     },
     {
       "stage": "pre",
-      "question": "What does CUDA provide for AI workloads?",
+      "question": "CUDA, AI iş yükleri için ne sağlar?",
       "options": [
-        "A Python package manager for ML libraries",
-        "A web framework for deploying models",
-        "Parallel computing on NVIDIA GPUs for matrix operations",
-        "A container runtime for model serving"
+        "ML kitaplıkları için bir Python paket yöneticisi",
+        "Modelleri dağıtmak için bir web çerçevesi",
+        "Matris işlemleri için NVIDIA GPU'larda paralel hesaplama",
+        "Model sunumu için kapsayıcı çalışma zamanı"
       ],
       "correct": 2,
-      "explanation": "CUDA is NVIDIA's parallel computing platform that lets you run matrix operations on thousands of GPU cores simultaneously. PyTorch and TensorFlow use it under the hood."
+      "explanation": "CUDA, NVIDIA'nin binlerce GPU çekirdeğinde aynı anda matris işlemlerini yürütmenize olanak tanıyan paralel hesaplama platformudur. PyTorch ve TensorFlow bunu başlık altında kullanıyor."
     },
     {
       "stage": "post",
-      "question": "In the four-layer environment stack, which layer must be installed first?",
+      "question": "Dört katmanlı ortam yığınında ilk önce hangi katmanın kurulması gerekir?",
       "options": [
         "AI/ML Libraries (PyTorch, JAX)",
         "Package Managers (pip, npm, cargo)",
@@ -34,23 +34,23 @@
         "System Foundation (OS, shell, GPU drivers)"
       ],
       "correct": 3,
-      "explanation": "You install bottom-up: system foundation first (OS, drivers), then package managers, then language runtimes, then AI libraries. Each layer depends on the one below."
+      "explanation": "Aşağıdan yukarıya doğru yüklersiniz: önce sistem temelini (OS, sürücüler), ardından paket yöneticilerini, ardından dil çalışma zamanlarını ve ardından AI kitaplıklarını. Her katman aşağıdakine bağlıdır."
     },
     {
       "stage": "post",
-      "question": "What is the purpose of uv in a Python AI project?",
+      "question": "Python AI projesinde uv'nin amacı nedir?",
       "options": [
         "A GPU monitoring tool",
         "An ultra-fast Python package installer and resolver",
         "A neural network visualization library",
-        "A CUDA compiler for custom kernels"
+        "Özel çekirdekler için bir CUDA derleyicisi"
       ],
       "correct": 1,
-      "explanation": "uv is a fast Python package installer written in Rust. It replaces pip with much faster dependency resolution and installation, often 10-100x faster."
+      "explanation": "uv, Rust'ta yazılmış hızlı bir Python paket yükleyicisidir. Pip'i çok daha hızlı bağımlılık çözünürlüğü ve kurulumuyla değiştirir, genellikle 10-100 kat daha hızlıdır."
     },
     {
       "stage": "post",
-      "question": "How do you verify that PyTorch can access your GPU?",
+      "question": "PyTorch'un GPU'nize erişebildiğini nasıl doğrularsınız?",
       "options": [
         "import torch; print(torch.__version__)",
         "nvidia-smi --query",
@@ -58,7 +58,7 @@
         "python -c 'import gpu'"
       ],
       "correct": 2,
-      "explanation": "torch.cuda.is_available() returns True if PyTorch can access CUDA GPUs. On Apple Silicon, use torch.backends.mps.is_available() for Metal Performance Shaders."
+      "explanation": "torch.cuda.is_available(), PyTorch CUDA GPU'lara erişebiliyorsa True değerini döndürür. Apple Silicon'da Metal Performans Gölgelendiricileri için torch.backends.mps.is_available() kullanın."
     }
   ]
 }
