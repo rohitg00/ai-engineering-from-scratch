@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "post",
-      "question": "What discount does Anthropic apply to cache reads versus the base input rate?",
+      "question": "Anthropic, önbellek okumalarına temel giriş hızına göre ne kadar indirim uygular?",
       "options": [
         "25% off",
         "50% off",
@@ -16,11 +16,11 @@
     },
     {
       "stage": "post",
-      "question": "Why must dynamic timestamps go below the cache breakpoint, not above it?",
+      "question": "Dinamik zaman damgaları neden önbellek kesme noktasının üstüne değil de altına gitmeli?",
       "options": [
-        "Caches only hit when the prefix is byte-identical; a changing timestamp breaks the match for everything after it",
-        "Timestamps confuse the tokenizer",
-        "They cost more tokens than static text",
+        "Önbellekler yalnızca önek baytla aynı olduğunda çalışır; değişen bir zaman damgası, kendisinden sonraki her şey için eşleşmeyi bozar",
+        "Zaman damgaları belirteci karıştırır",
+        "Statik metinden daha fazla jetona mal oluyorlar",
         "Anthropic explicitly rejects timestamps in cached blocks"
       ],
       "correct": 0,
@@ -28,11 +28,11 @@
     },
     {
       "stage": "post",
-      "question": "OpenAI's prompt caching is configured how?",
+      "question": "OpenAI'nin istemi önbelleğe alması nasıl yapılandırılır?",
       "options": [
         "Explicit cache_control markers",
         "A CachedContent API you create and reference",
-        "Automatic prefix matching with no configuration",
+        "Yapılandırma olmadan otomatik önek eşleştirme",
         "A system-level flag you toggle per project"
       ],
       "correct": 2,
@@ -40,11 +40,11 @@
     },
     {
       "stage": "post",
-      "question": "For Anthropic, what write premium does the 1-hour extended TTL cost vs the 5-minute default?",
+      "question": "Anthropic için, 1 saatlik uzatılmış TTL'nin 5 dakikalık varsayılan yazma ücretine göre yazma primi nedir?",
       "options": [
         "Same",
-        "2x the write premium (50% over baseline)",
-        "4x the write premium",
+        "2 kat daha fazla yazma primi (temel değerin %50'si)",
+        "4 kat yazma primi",
         "No write premium"
       ],
       "correct": 1,
@@ -52,7 +52,7 @@
     },
     {
       "stage": "post",
-      "question": "How many reuses are needed to break even on Anthropic's 25% write premium?",
+      "question": "Anthropic'in %25'lik yazma primini telafi etmek için kaç yeniden kullanıma ihtiyaç var?",
       "options": [
         "1",
         "2",
