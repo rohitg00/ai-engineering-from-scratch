@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is Promptable Concept Segmentation (PCS), introduced by SAM 3?",
+      "question": "SAM 3 tarafından tanıtılan İstemli Konsept Segmentasyonu (PCS) nedir?",
       "options": [
         "Segmenting all instances of a concept described by a short noun phrase or image exemplar in a single forward pass, returning masks plus unique instance IDs",
         "A visual prompt (point/box) segmentation like classic SAM",
         "A multi-step chain of a detector followed by SAM",
-        "A tracking-only mode"
+        "Yalnızca izleme modu"
       ],
       "correct": 0,
-      "explanation": "PCS is SAM 3's signature capability. You pass 'yellow school bus' or an image exemplar of a bus; SAM 3 returns every matching instance with its own mask and unique ID, plus a presence score. Classic SAM needed one prompt per instance; PCS produces all matches end-to-end."
+      "explanation": "PCS, SAM 3'ün imza yeteneğidir. 'Sarı okul otobüsü'nün veya bir otobüs örneğinin yanından geçersiniz; SAM 3, eşleşen her örneği kendi maskesi ve benzersiz ID'nin yanı sıra bir varlık puanıyla döndürür. Klasik SAM örnek başına bir istem gerektiriyordu; PCS tüm eşleşmeleri uçtan uca üretir."
     },
     {
       "stage": "pre",
-      "question": "Why keep a decoupled detector + SAM 2 pipeline (Grounded SAM 2) in 2026 if SAM 3 already does text-prompted segmentation?",
+      "question": "SAM 3 zaten metin komutlu segmentasyon yapıyorsa neden 2026'da ayrıştırılmış bir dedektör + SAM 2 boru hattını (Topraklanmış SAM 2) tutalım ki?",
       "options": [
-        "Grounded SAM 2 is always more accurate",
-        "Modularity \u2014 you can swap in different open-vocabulary detectors (DINO-X, Florence-2, Grounding DINO 1.5) for different domains, license constraints, or threshold behaviour; SAM 3's architecture is monolithic",
-        "SAM 3 does not support video",
-        "SAM 3 is only available in the cloud"
+        "Topraklanmış SAM 2 her zaman daha doğrudur",
+        "Modülerlik — farklı alanlar, lisans kısıtlamaları veya eşik davranışı için farklı açık kelime dedektörlerini (DINO-X, Florence-2, Topraklama DINO 1.5) değiştirebilirsiniz; SAM 3'ün mimarisi yekparedir",
+        "SAM 3 videoyu desteklemiyor",
+        "SAM 3 yalnızca bulutta mevcuttur"
       ],
       "correct": 1,
-      "explanation": "Grounded SAM 2 is a composition of a detector and SAM 2 with frozen weights. That modularity is sometimes exactly what you need \u2014 a medical-imaging detector, a license-friendly detector, or tight threshold control. SAM 3 is more accurate end-to-end for common use but harder to customise. Both have production roles in 2026."
+      "explanation": "Topraklanmış SAM 2, bir dedektör ve donmuş ağırlıklara sahip SAM 2'den oluşan bir bileşimdir. Bu modülerlik bazen tam olarak ihtiyacınız olan şeydir: tıbbi görüntüleme dedektörü, lisans dostu bir dedektör veya sıkı eşik kontrolü. SAM 3, ortak kullanım için uçtan uca daha doğrudur ancak özelleştirilmesi daha zordur. Her ikisinin de 2026'da üretim rolleri olacak."
     },
     {
       "stage": "post",
-      "question": "SAM 3's presence head produces what?",
+      "question": "SAM 3'ün varlık kafası ne üretir?",
       "options": [
-        "The list of candidate bounding boxes",
+        "Aday sınırlayıcı kutuların listesi",
         "A tracking memory bank",
-        "A scalar probability that the queried concept exists in the image, decoupled from localisation; lets the model say 'not present' cleanly and reduces false positives on absent concepts",
-        "The final mask"
+        "Sorgulanan kavramın görüntüde yerelleştirmeden ayrılmış olarak var olduğuna dair skaler bir olasılık; modelin temiz bir şekilde \"mevcut değil\" demesini sağlar ve mevcut olmayan kavramlarla ilgili yanlış pozitifleri azaltır",
+        "Son maske"
       ],
       "correct": 2,
-      "explanation": "The presence head separates the 'is this here?' decision from the 'where is it?' decision. A model that must produce boxes whenever asked tends to hallucinate matches for absent concepts. With a presence head, SAM 3 can return zero detections cleanly. This also improves discrimination between closely related prompts (e.g., 'a player in white' vs 'a player in red')."
+      "explanation": "Varlık başlığı 'burası burada mı?' 'Nerede?' karar. İstendiğinde kutu üretmek zorunda olan bir model, eksik konseptler için eşleşmeler halüsinasyonuna eğilimlidir. Varlık kafasıyla SAM 3, sıfır algılamayı temiz bir şekilde döndürebilir. Bu aynı zamanda yakından ilişkili istemler arasındaki ayrımcılığı da geliştirir (örneğin, 'beyazlı bir oyuncu' ve 'kırmızılı bir oyuncu')."
     },
     {
       "stage": "post",
-      "question": "SAM 3.1 Object Multiplex (March 2026) introduced a shared-memory mechanism for tracking. What does it replace?",
+      "question": "SAM 3.1 Object Multiplex (Mart 2026), izleme için bir paylaşılan bellek mekanizmasını kullanıma sundu. Neyin yerini alıyor?",
       "options": [
         "SAM 2 altogether",
-        "Per-instance separate memory banks; Multiplex collapses them into one shared memory with per-instance queries so tracking N objects runs substantially faster while keeping accuracy",
-        "The whole presence head",
-        "The ViT backbone"
+        "Örnek başına ayrı bellek bankaları; Multiplex, bunları örnek başına sorgularla tek bir paylaşılan belleğe daraltır, böylece N nesneyi izleme, doğruluğu korurken önemli ölçüde daha hızlı çalışır",
+        "Bütün varlığın başı",
+        "ViT omurgası"
       ],
       "correct": 1,
-      "explanation": "Prior SAM 2 / SAM 3 tracking maintained one memory bank per tracked instance, so cost grew linearly with object count. Object Multiplex introduces a single shared memory plus per-instance queries that fetch instance-specific features. Many-instance tracking is now efficient \u2014 essential for crowds and dense multi-object scenes."
+      "explanation": "Önceki SAM 2 / SAM 3 izleme, izlenen örnek başına bir bellek bankasını koruyordu, bu nedenle maliyet, nesne sayısıyla doğrusal olarak arttı. Object Multiplex, tek bir paylaşılan belleğin yanı sıra örneğe özgü özellikleri getiren örnek başına sorgular sunar. Çok örnekli izleme artık verimli; kalabalıklar ve yoğun çok nesneli sahneler için çok önemli."
     },
     {
       "stage": "post",
-      "question": "You need real-time open-vocabulary DETECTION (boxes only, no masks) on an edge device. Which 2026 model family is the right choice?",
+      "question": "Bir uç cihazda gerçek zamanlı açık kelime DETECTION'ye (yalnızca kutular, maske yok) ihtiyacınız var. Hangi 2026 model ailesi doğru seçim?",
       "options": [
         "SAM 3",
         "A custom CLIP + detector chain",
         "Grounded SAM 2",
-        "YOLO-World (and related real-time open-vocab detectors); SAM 3 produces masks and is heavier, while YOLO-World is designed specifically for boxes at high fps on edge hardware"
+        "YOLO-World (ve ilgili gerçek zamanlı açık kelime algılayıcıları); SAM 3 maske üretir ve daha ağırdır; YOLO-World ise uç donanımda yüksek fps'deki kutular için özel olarak tasarlanmıştır"
       ],
       "correct": 3,
-      "explanation": "YOLO-World and similar models (OV-DINO, LLMDet) are real-time open-vocabulary detectors. They do not produce masks but they hit 30-60 fps at 640x640 on modest GPUs. SAM 3 is the right choice when masks and tracking matter. Always match tool weight to the task: detection-only is fine without mask overhead."
+      "explanation": "YOLO-World ve benzer modeller (OV-DINO, LLMDet) gerçek zamanlı açık kelime dedektörleridir. Maske üretmiyorlar ama mütevazı GPU'larda 640x640'ta 30-60 fps'ye ulaşıyorlar. Maskeler ve takip önemli olduğunda SAM 3 doğru seçimdir. Alet ağırlığını her zaman göreve göre eşleştirin: maske yükü olmadan yalnızca algılama iyidir."
     }
   ]
 }

@@ -4,22 +4,22 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does a capstone matter when each lesson already had its own tests?",
+      "question": "Her dersin zaten kendi testleri varken bitirme taşı neden önemlidir?",
       "options": [
         "Cosmetic",
-        "Composition is a separate property: pieces can pass unit tests but the integration deadlocks, the loss diverges, or the memory grows when they run together",
+        "Kompozisyon ayrı bir özelliktir: Parçalar birim testlerini geçebilir ancak entegrasyon çıkmazları, kayıplar farklılaşır veya birlikte çalıştıklarında hafıza büyür",
         "Slower",
         "Easier to grade"
       ],
       "correct": 1,
-      "explanation": "End-to-end tests catch wiring bugs that no piece tests in isolation: rendezvous, barrier order, gather contracts."
+      "explanation": "Uçtan uca testler, hiçbir parçanın tek başına test edemediği kablolama hatalarını yakalar: buluşma, bariyer düzeni, sözleşme toplama."
     },
     {
       "stage": "pre",
-      "question": "What four invariants does the demo verify?",
+      "question": "Demo hangi dört değişmezi doğruluyor?",
       "options": [
         "Speed",
-        "(a) loss runs to step 20 without NaN, (b) every rank's parameter norm agrees, (c) per-rank optimiser memory equals the ZeRO-1 formula, (d) the step-10 checkpoint reloads byte-equal",
+        "(a) kayıp, NaN olmadan adım 20'ye kadar gider, (b) her aşamanın parametre normu kabul eder, (c) aşama başına optimize edici belleği Sıfır-1 formülüne eşittir, (d) adım 10 kontrol noktası bayta eşit olarak yeniden yüklenir",
         "Tokens per second",
         "Hardware"
       ],
@@ -28,51 +28,51 @@
     },
     {
       "stage": "check",
-      "question": "Why is the model a tiny GPT instead of an MLP?",
+      "question": "Model neden MLP yerine küçük GPT?",
       "options": [
         "Look fancy",
-        "GPT adds LayerNorm running statistics, embedding gradient shape, and softmax+cross-entropy edge cases that an MLP would hide",
+        "GPT, LayerNorm çalıştırma istatistiklerini, gömme degrade şeklini ve MLP'nin gizleyeceği softmax+çapraz entropi uç durumlarını ekler",
         "Faster",
         "Required"
       ],
       "correct": 1,
-      "explanation": "MLP gradient sync was verified in lesson 77; the capstone needs a model with more edge cases to prove composition under realistic ops."
+      "explanation": "MLP degrade senkronizasyonu ders 77'de doğrulandı; gerçekçi operasyonlar altında kompozisyonu kanıtlamak için kapak taşının daha fazla uç duruma sahip bir modele ihtiyacı var."
     },
     {
       "stage": "check",
-      "question": "What does self-terminating mean in this context?",
+      "question": "Bu bağlamda kendi kendini sonlandırmanın anlamı nedir?",
       "options": [
         "Process kills itself",
-        "Fixed step count (20), exit 0 on completion, no human in the loop; if any piece deadlocks the demo never returns and CI catches it",
+        "Sabit adım sayısı (20), tamamlandığında 0'dan çık, döngüde insan yok; herhangi bir parça çıkmaza girerse demo asla geri dönmez ve CI onu yakalar",
         "Crash recovery",
         "Manual"
       ],
       "correct": 1,
-      "explanation": "A bounded run with exit 0 lets the test rig assert termination; while-True loops mask deadlocks."
+      "explanation": "Çıkışı 0 olan sınırlı bir çalışma, test donanımının sonlandırma iddiasında bulunmasına olanak tanır; while-True döngüleri kilitlenmeleri maskeler."
     },
     {
       "stage": "check",
-      "question": "How does the demo combine DDP and ZeRO?",
+      "question": "Demo DDP ve ZeRO'yu nasıl birleştiriyor?",
       "options": [
         "Both at once",
-        "DDP-style broadcast at init for parameter sync, ZeRO-1's reduce_scatter+allgather replaces optimiser.step; DDP gradient allreduce is subsumed into ZeRO's reduce_scatter",
-        "DDP only",
-        "ZeRO only"
+        "Parametre senkronizasyonu için başlangıçta DDP- tarzı yayın, ZeRO-1'in reduce_scatter+allgather'ı optimizer.step'in yerini alıyor; DDP degrade allreduce, ZeRO'nun azalt_scatter'ına dahil edilir",
+        "Yalnızca DDP",
+        "Yalnızca sıfır"
       ],
       "correct": 1,
-      "explanation": "ZeRO-1 owns the gradient sync via reduce_scatter, so DDP's separate allreduce is not needed; the broadcast at init is the only DDP-specific call that survives."
+      "explanation": "ZeRO-1, reduc_scatter aracılığıyla degrade senkronizasyonuna sahiptir, bu nedenle DDP'nin ayrı allreduce'ına gerek yoktur; başlangıçtaki yayın hayatta kalan tek DDP-'ye özgü çağrıdır."
     },
     {
       "stage": "post",
-      "question": "Why does production use wall-clock checkpoint cadence instead of step count?",
+      "question": "Prodüksiyon neden adım sayımı yerine duvar saati kontrol noktası temposunu kullanıyor?",
       "options": [
         "Looks cleaner",
-        "Step time varies with sequence length and microbatch count; a 10-minute cadence catches the same compute regardless of model size",
+        "Adım süresi, dizi uzunluğuna ve mikro parti sayısına göre değişir; 10 dakikalık tempo, model boyutundan bağımsız olarak aynı hesaplamayı yakalar",
         "Faster",
         "Required by NCCL"
       ],
       "correct": 1,
-      "explanation": "The lesson uses step-based for clarity; production runs typically save every 5-15 minutes of wall-clock."
+      "explanation": "Derste netlik sağlamak amacıyla adım bazlı kullanım kullanılmaktadır; üretim çalışmaları genellikle her 5-15 dakikada bir duvar saatinden tasarruf sağlar."
     }
   ]
 }

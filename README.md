@@ -1,8 +1,14 @@
 <p align="center">
+  <img src="assets/turkcelestirilmis-rgb.svg" alt="TÜRKÇELEŞTİRİLMİŞ — RGB ASCII başlık" width="100%">
+</p>
+
+<p align="center">
   <img src="assets/banner.svg" alt="AI Engineering from Scratch — reference manual banner" width="100%">
 </p>
 
 <p align="center">
+  <a href="README.tr.md">Türkçe</a>
+  &nbsp;·&nbsp;
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
   <a href="ROADMAP.md"><img src="https://img.shields.io/badge/lessons-503-3553ff?style=flat-square&labelColor=fafaf5" alt="503 lessons"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>

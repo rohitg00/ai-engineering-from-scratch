@@ -2,66 +2,66 @@
   {
     "id": "featsel-pre-1",
     "stage": "pre",
-    "question": "Why can adding more features actually make a model perform worse?",
+    "question": "Neden daha fazla özellik eklemek aslında bir modelin daha kötü performans göstermesine neden olabilir?",
     "options": [
       "More features always improve model accuracy",
-      "Irrelevant features add noise, increase overfitting risk, and dilute the signal from useful features",
-      "Models have a hard limit on the number of features they can accept",
-      "More features make the model run out of memory"
+      "Alakasız özellikler gürültüye neden olur, aşırı uyum riskini artırır ve kullanışlı özelliklerden gelen sinyali zayıflatır",
+      "Modellerin kabul edebilecekleri özellik sayısı konusunda kesin bir sınırı vardır",
+      "Daha fazla özellik modelin hafızasının tükenmesine neden oluyor"
     ],
     "correct": 1,
-    "explanation": "Irrelevant features give the model opportunities to overfit on noise in the training data. They increase dimensionality, making the data sparser and distances less meaningful (curse of dimensionality)."
+    "explanation": "Alakasız özellikler, modele eğitim verilerindeki gürültüye aşırı uyum sağlama fırsatları verir. Boyutsallığı arttırırlar, verileri daha seyrek hale getirirler ve mesafeleri daha az anlamlı hale getirirler (boyutsallığın laneti)."
   },
   {
     "id": "featsel-pre-2",
     "stage": "pre",
-    "question": "What is the key difference between filter and wrapper feature selection methods?",
+    "question": "Filtre ve sarmalayıcı özellik seçim yöntemleri arasındaki temel fark nedir?",
     "options": [
       "Filter methods use a model to evaluate features; wrapper methods use statistics",
       "Filter methods score features using statistics without a model; wrapper methods train a model to evaluate feature subsets",
-      "Filter methods are always more accurate than wrapper methods",
-      "Wrapper methods can only select one feature at a time"
+      "Filtre yöntemleri her zaman sarma yöntemlerinden daha doğrudur",
+      "Sarma yöntemleri aynı anda yalnızca bir özelliği seçebilir"
     ],
     "correct": 1,
-    "explanation": "Filter methods (variance threshold, mutual information, correlation) score features with statistical measures. Wrapper methods (RFE, forward selection) train models repeatedly to evaluate different feature subsets."
+    "explanation": "Filtre yöntemleri (varyans eşiği, karşılıklı bilgi, korelasyon) istatistiksel ölçümlerle özellikleri puanlar. Sarmalayıcı yöntemler (RFE, ileri seçim), farklı özellik alt kümelerini değerlendirmek için modelleri tekrar tekrar eğitir."
   },
   {
     "id": "featsel-post-1",
     "stage": "post",
-    "question": "Mutual information can detect relationships that Pearson correlation cannot. What kind?",
+    "question": "Karşılıklı bilgi, Pearson korelasyonunun tespit edemediği ilişkileri tespit edebilir. Ne tür?",
     "options": [
-      "Linear relationships between continuous features",
+      "Sürekli özellikler arasındaki doğrusal ilişkiler",
       "Nonlinear relationships such as quadratic or periodic dependencies",
-      "Relationships between categorical features only",
-      "Relationships that require more than 1000 data points"
+      "Yalnızca kategorik özellikler arasındaki ilişkiler",
+      "1000'den fazla veri noktası gerektiren ilişkiler"
     ],
     "correct": 1,
-    "explanation": "Pearson correlation only measures linear association. A quadratic relationship (y = x^2) has zero correlation but high mutual information. MI captures any statistical dependency between variables."
+    "explanation": "Pearson korelasyonu yalnızca doğrusal ilişkiyi ölçer. İkinci dereceden bir ilişkinin (y = x^2) sıfır korelasyonu vardır ancak karşılıklı bilgisi yüksektir. MI değişkenler arasındaki her türlü istatistiksel bağımlılığı yakalar."
   },
   {
     "id": "featsel-post-2",
     "stage": "post",
-    "question": "L1 (Lasso) regularization performs feature selection as part of training. How?",
+    "question": "L1 (Kement) düzenlemesi, eğitimin bir parçası olarak özellik seçimini gerçekleştirir. Nasıl?",
     "options": [
-      "It removes features with low variance before training starts",
-      "It drives the weights of irrelevant features to exactly zero, effectively eliminating them from the model",
-      "It ranks features by correlation with the target",
-      "It trains separate models for each feature"
+      "Eğitim başlamadan önce düşük varyansa sahip özellikleri kaldırır",
+      "İlgisiz özelliklerin ağırlıklarını tam olarak sıfıra indirerek bunları modelden etkili bir şekilde ortadan kaldırır",
+      "Özellikleri hedefle korelasyona göre sıralar",
+      "Her özellik için ayrı modeller eğitir"
     ],
     "correct": 1,
-    "explanation": "L1 regularization adds |w| penalty to the loss. The geometry of the L1 constraint (diamond shape) causes some weight solutions to land exactly at zero, producing sparse models that automatically select features."
+    "explanation": "L1 düzenlemesi |w|'yi ekler yenilginin cezası. L1 kısıtlamasının geometrisi (elmas şekli), bazı ağırlık çözümlerinin tam olarak sıfıra inmesine neden olarak özellikleri otomatik olarak seçen seyrek modeller üretir."
   },
   {
     "id": "featsel-post-3",
     "stage": "post",
-    "question": "RFE removes the least important feature and retrains. Why is this better than just removing all low-importance features at once?",
+    "question": "RFE en az önemli özelliği kaldırır ve yeniden eğitir. Bu neden tüm düşük öneme sahip özelliklerin aynı anda kaldırılmasından daha iyidir?",
     "options": [
-      "It is not better -- removing all at once is always preferred",
-      "Feature importances change as features are removed, so iterative removal accounts for interactions between features",
+      "Daha iyi değil; hepsini bir kerede kaldırmak her zaman tercih edilir",
+      "Özellikler kaldırıldıkça özelliğin önemi değişir, bu nedenle yinelemeli kaldırma, özellikler arasındaki etkileşimleri hesaba katar",
       "RFE uses a different importance metric than single-step removal",
-      "Removing one at a time is only necessary for neural networks"
+      "Birer birer kaldırmak yalnızca sinir ağları için gereklidir"
     ],
     "correct": 1,
-    "explanation": "Feature importances are relative. When a correlated feature is removed, the importance of its counterpart may increase. Iterative removal lets the model reassess importances at each step, capturing these interactions."
+    "explanation": "Özelliğin önemi görecelidir. İlişkili bir özellik kaldırıldığında karşılığının önemi artabilir. Yinelemeli kaldırma, modelin her adımda önemleri yeniden değerlendirmesine ve bu etkileşimleri yakalamasına olanak tanır."
   }
 ]

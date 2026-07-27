@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "For matrix multiplication (m x n) @ (n x p), what must be true about the dimensions?",
-      "options": ["m must equal p", "The inner dimensions n must match", "All dimensions must be equal", "m must be greater than p"],
+      "question": "Matris çarpımı (m x n) @ (n x p) için boyutlar hakkında ne doğru olmalıdır?",
+      "options": [
+        "m must equal p",
+        "İç boyutlar n eşleşmelidir",
+        "All dimensions must be equal",
+        "m must be greater than p"
+      ],
       "correct": 1,
-      "explanation": "Matrix multiplication requires the number of columns in the first matrix (n) to equal the number of rows in the second matrix (n). The result has shape (m x p)."
+      "explanation": "Matris çarpımı, birinci matristeki (n) sütun sayısının ikinci matristeki (n) satır sayısına eşit olmasını gerektirir. Sonuç (m x p) şeklindedir."
     },
     {
       "stage": "pre",
-      "question": "What is the identity matrix?",
-      "options": ["A matrix of all ones", "A square matrix with ones on the diagonal and zeros elsewhere that acts as the multiplicative identity", "A matrix where every element is unique", "The transpose of any given matrix"],
+      "question": "Kimlik matrisi nedir?",
+      "options": [
+        "A matrix of all ones",
+        "Çarpımsal kimlik görevi gören, köşegeninde birlerin ve başka yerlerde sıfırların bulunduğu bir kare matris",
+        "Her öğenin benzersiz olduğu bir matris",
+        "Verilen herhangi bir matrisin devriği"
+      ],
       "correct": 1,
-      "explanation": "The identity matrix I has ones on the diagonal and zeros everywhere else. Multiplying any matrix by I returns the original matrix unchanged, like multiplying a number by 1."
+      "explanation": "Birim matris I'in köşegeninde birler ve diğer her yerinde sıfırlar vardır. Herhangi bir matrisin I ile çarpılması, bir sayının 1 ile çarpılması gibi orijinal matrisi değişmeden döndürür."
     },
     {
       "stage": "post",
-      "question": "What is the key difference between element-wise multiplication and matrix multiplication?",
-      "options": ["Element-wise is faster while matrix multiplication is more accurate", "Element-wise multiplies matching positions (same shape required), matrix multiplication takes dot products of rows and columns (inner dimensions must match)", "They produce the same result but use different notation", "Element-wise only works on vectors while matrix multiplication works on matrices"],
+      "question": "Eleman bazında çarpma ile matris çarpımı arasındaki temel fark nedir?",
+      "options": [
+        "Öğe bazında daha hızlıdır, matris çarpımı ise daha doğrudur",
+        "Element-wise multiplies matching positions (same shape required), matrix multiplication takes dot products of rows and columns (inner dimensions must match)",
+        "Aynı sonucu üretirler ancak farklı gösterim kullanırlar",
+        "Eleman bazında yalnızca vektörler üzerinde çalışır, matris çarpımı ise matrisler üzerinde çalışır"
+      ],
       "correct": 1,
-      "explanation": "Element-wise (Hadamard) product multiplies corresponding elements and requires identical shapes. Matrix multiplication computes dot products between rows and columns with the rule (m,n)@(n,p)=(m,p)."
+      "explanation": "Eleman bazında (Hadamard) ürün karşılık gelen elemanları çoğaltır ve aynı şekilleri gerektirir. Matris çarpımı, (m,n)@(n,p)=(m,p) kuralıyla satırlar ve sütunlar arasındaki nokta çarpımları hesaplar."
     },
     {
       "stage": "post",
-      "question": "In the expression 'output = relu(W @ x + b)', what role does broadcasting play?",
-      "options": ["It broadcasts the computation across multiple GPUs", "It automatically stretches the bias vector b to match the shape of W @ x so they can be added", "It converts the data types of W and x to match", "It repeats the relu activation across all elements"],
+      "question": "'Çıktı = relu(W @ x + b)' ifadesinde yayıncılığın rolü nedir?",
+      "options": [
+        "Hesaplamayı birden fazla GPU'ya yayınlar",
+        "Toplanabilmeleri için önyargı vektörü b'yi W @ x'in şekline uyacak şekilde otomatik olarak genişletir",
+        "W ve x veri türlerini eşleşecek şekilde dönüştürür",
+        "Tüm öğelerde relu aktivasyonunu tekrarlar"
+      ],
       "correct": 1,
-      "explanation": "W @ x produces a column vector, and b is also a vector. Broadcasting stretches b across the batch dimension if needed, allowing element-wise addition without explicit shape matching."
+      "explanation": "W @ x bir sütun vektörü üretir ve b de bir vektördür. Yayınlama, gerekirse toplu boyut boyunca b'yi genişleterek açık şekil eşleştirmesi olmadan öğe bazında eklemeye olanak tanır."
     },
     {
       "stage": "post",
-      "question": "What does a determinant of zero for a matrix indicate?",
-      "options": ["The matrix has all zero entries", "The matrix is singular: it crushes at least one dimension, cannot be inverted, and has no unique solution", "The matrix is the identity matrix", "The matrix performs a rotation"],
+      "question": "Bir matrisin sıfır determinantı ne anlama gelir?",
+      "options": [
+        "Matrisin tamamı sıfır girdiye sahip",
+        "Matris tekildir: en az bir boyutu ezer, tersine çevrilemez ve benzersiz bir çözümü yoktur.",
+        "Matris birim matristir",
+        "Matris bir dönüş gerçekleştirir"
+      ],
       "correct": 1,
-      "explanation": "A zero determinant means the transformation collapses space by at least one dimension (e.g., mapping 2D to a line). The matrix has no inverse, and linear systems using it have either no solution or infinitely many."
+      "explanation": "Sıfır determinantı, dönüşümün alanı en az bir boyut kadar daralttığı anlamına gelir (örneğin, 2B'yi bir çizgiyle eşlemek). Matrisin tersi yoktur ve onu kullanan doğrusal sistemlerin ya çözümü yoktur ya da sonsuz sayıda çözümü vardır."
     }
   ]
 }

@@ -4,43 +4,43 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does a Vision Transformer use patches instead of feeding one pixel per token?",
+      "question": "Vision Transformer neden jeton başına bir piksel beslemek yerine yamalar kullanıyor?",
       "options": [
-        "Patches are required by PyTorch",
+        "PyTorch için yamalar gereklidir",
         "Pixel-per-token sequences explode attention compute quadratically and lose tractability at typical resolutions",
         "Patches improve image quality",
-        "It avoids using a tokenizer"
+        "Tokenizer kullanmaktan kaçınır"
       ],
       "correct": 1,
-      "explanation": "A 224x224 image is 150528 pixel tokens. Attention is quadratic in length, so 16x16 patching shrinks the sequence to 196 tokens and makes the model tractable."
+      "explanation": "224x224 görüntü 150528 piksel jetondur. Dikkatin uzunluğu ikinci dereceden olduğundan 16x16 yama, diziyi 196 jetona daraltır ve modeli izlenebilir hale getirir."
     },
     {
       "stage": "pre",
-      "question": "What is the relationship between Conv2d with kernel = stride = patch_size and flatten-then-linear?",
+      "question": "Conv2d ile kernel = stride = patch_size ve düzleştirme-sonra-doğrusal arasındaki ilişki nedir?",
       "options": [
-        "They produce different outputs",
-        "Conv2d is a faster way to spell the same linear projection over each patch",
+        "Farklı çıktılar üretiyorlar",
+        "Conv2d, her yama üzerinde aynı doğrusal projeksiyonu hecelemenin daha hızlı bir yoludur",
         "Conv2d adds non-linearity",
-        "Flatten-then-linear is impossible"
+        "Önce düzleştir sonra doğrusal imkansızdır"
       ],
       "correct": 1,
-      "explanation": "Each Conv2d output location dot-products the patch pixels with one filter, which is identical to flatten-then-linear."
+      "explanation": "Her Conv2d çıktı konumu, yama piksellerini tek bir filtreyle noktasal olarak üretir; bu, düzleştirme ve ardından doğrusallaştırmayla aynıdır."
     },
     {
       "stage": "check",
-      "question": "Why is the 2D sinusoidal position embedding deterministic instead of learned?",
+      "question": "2B sinüzoidal konum neden öğrenilmek yerine deterministik bir şekilde gömülüyor?",
       "options": [
-        "Learned positions are illegal",
-        "Fixed sin/cos signals interpolate cleanly to grids the model never saw, which is useful when resolution changes",
-        "It saves disk space",
-        "Random init is required"
+        "Öğrenilen pozisyonlar yasa dışıdır",
+        "Sabit sinüs/cos sinyalleri, modelin hiç görmediği ızgaralara temiz bir şekilde enterpolasyon yapıyor; bu, çözünürlük değiştiğinde kullanışlıdır",
+        "Disk alanından tasarruf sağlar",
+        "Rastgele başlatma gerekli"
       ],
       "correct": 1,
-      "explanation": "Fixed sinusoidal positions are deterministic across resolutions and let the same encoder run on inputs it was not trained on."
+      "explanation": "Sabit sinüzoidal konumlar, çözünürlükler arasında belirleyicidir ve aynı kodlayıcının üzerinde eğitim verilmeyen girişlerde çalışmasına izin verir."
     },
     {
       "stage": "check",
-      "question": "What is the output sequence length of a 224x224 image with patch_size=16 and one CLS token?",
+      "question": "Patch_size=16 ve bir CLS belirtecine sahip 224x224 görüntünün çıktı dizisi uzunluğu nedir?",
       "options": [
         "196",
         "197",
@@ -48,31 +48,31 @@
         "256"
       ],
       "correct": 1,
-      "explanation": "224/16 = 14, so 14x14 = 196 patches, plus one CLS token for 197 total tokens."
+      "explanation": "224/16 = 14, yani 14x14 = 196 yama artı toplam 197 jeton için bir CLS jetonu."
     },
     {
       "stage": "check",
-      "question": "Why is reconstruction (unfold then unflatten) a useful sanity check on the patch front end?",
+      "question": "Yeniden yapılandırma (açıp sonra düzleştirme) neden yamanın ön ucunda yararlı bir akıl sağlığı kontrolüdür?",
       "options": [
-        "It improves accuracy",
-        "Round-tripping pixels through patch-flatten with no projection must equal the input; failure means the unfold math is wrong",
-        "It is required by ONNX",
-        "It speeds up inference"
+        "Doğruluğu artırır",
+        "Hiçbir projeksiyon olmadan yama düzleştirme yoluyla gidiş dönüş pikselleri girişe eşit olmalıdır; başarısızlık, açılan matematiğin yanlış olduğu anlamına gelir",
+        "ONNX tarafından gereklidir",
+        "Çıkarımı hızlandırır"
       ],
       "correct": 1,
-      "explanation": "The patch step is invertible without projection. If the round-trip drifts, the unfold logic is bugged and the rest of the encoder is unsafe."
+      "explanation": "Yama adımı projeksiyon olmadan tersine çevrilebilir. Gidiş-dönüş sürüklenirse açılma mantığı bozulur ve kodlayıcının geri kalanı güvensiz olur."
     },
     {
       "stage": "post",
-      "question": "What changes when you swap a learned position embedding for the 2D sinusoidal one in this lesson?",
+      "question": "Bu derste öğrenilmiş bir konum yerleştirmeyi 2 boyutlu sinüzoidal konumla değiştirdiğinizde ne değişir?",
       "options": [
         "Nothing changes",
-        "Learned positions can fit a fixed resolution slightly better; sinusoidal positions transfer to new resolutions without retraining",
+        "Öğrenilen konumlar sabit bir çözünürlüğe biraz daha iyi uyum sağlayabilir; sinüzoidal konumlar yeniden eğitim gerektirmeden yeni çözünürlüklere aktarılır",
         "Sinusoidal positions cost more parameters",
-        "Sinusoidal positions are random per step"
+        "Sinüzoidal konumlar adım başına rastgeledir"
       ],
       "correct": 1,
-      "explanation": "Learned positions are flexible at one resolution. Sinusoidal positions cost zero parameters and survive resolution shifts."
+      "explanation": "Öğrenilen pozisyonlar tek bir çözünürlükte esnektir. Sinüzoidal konumlar sıfır parametreye mal olur ve çözünürlük değişimlerine dayanır."
     }
   ]
 }

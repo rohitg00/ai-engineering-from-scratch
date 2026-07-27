@@ -8,6 +8,9 @@ on:
       - "scripts/audit_lessons.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
+      - "scripts/localize_curriculum.py"
+      - "scripts/tests/test_localize_curriculum.py"
+      - "docs/translation-guide-tr.md"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
@@ -20,6 +23,9 @@ on:
       - "scripts/audit_lessons.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
+      - "scripts/localize_curriculum.py"
+      - "scripts/tests/test_localize_curriculum.py"
+      - "docs/translation-guide-tr.md"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
@@ -42,6 +48,10 @@ jobs:
           python-version: "3.12"
       - name: run scripts/audit_lessons.py
         run: python3 scripts/audit_lessons.py
+      - name: test Turkish localization pipeline
+        run: python3 -m unittest scripts.tests.test_localize_curriculum -v
+      - name: validate Turkish curriculum pages
+        run: python3 scripts/localize_curriculum.py check
 
   readme-counts-sync:
     name: README counts auto-fix (main only)

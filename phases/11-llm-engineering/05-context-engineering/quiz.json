@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the difference between prompt engineering and context engineering?",
-    "options": ["They are the same thing", "A prompt is the user's query; context is everything in the model's window: system prompt, tools, retrieved docs, history, and the prompt itself", "Context engineering is about database design", "Prompt engineering is more advanced"],
+    "question": "Anında mühendislik ile bağlam mühendisliği arasındaki fark nedir?",
+    "options": [
+      "Onlar aynı şey",
+      "Bilgi istemi kullanıcının sorgusudur; bağlam, modelin penceresindeki her şeydir: sistem istemi, araçlar, alınan belgeler, geçmiş ve istemin kendisi",
+      "Bağlam mühendisliği veritabanı tasarımıyla ilgilidir",
+      "Hızlı mühendislik daha gelişmiştir"
+    ],
     "correct": 1,
-    "explanation": "Prompt engineering focuses on crafting the user instruction. Context engineering manages the entire input to the model: what goes in, what stays out, in what order, and how to allocate the limited context window.",
+    "explanation": "Hızlı mühendislik, kullanıcı talimatlarının hazırlanmasına odaklanır. Bağlam mühendisliği, modele gelen girdinin tamamını yönetir: neyin içeri girdiği, neyin dışarıda kaldığı, hangi sırayla ve sınırlı bağlam penceresinin nasıl tahsis edileceği.",
     "stage": "pre"
   },
   {
-    "question": "Why does context window order matter for LLM performance?",
-    "options": ["It doesn't -- LLMs process all tokens equally", "LLMs have recency and primacy biases, paying more attention to the beginning and end of the context window", "Alphabetical order helps the model search faster", "Order only matters for code"],
+    "question": "Bağlam penceresi sırası LLM performansı için neden önemlidir?",
+    "options": [
+      "Öyle değil - LLM'ler tüm jetonları eşit şekilde işler",
+      "Yüksek Lisans'ların güncellik ve öncelik önyargıları vardır ve bağlam penceresinin başlangıcına ve sonuna daha fazla dikkat edilir",
+      "Alfabetik sıra, modelin daha hızlı aranmasına yardımcı olur",
+      "Sipariş yalnızca kod için önemlidir"
+    ],
     "correct": 1,
-    "explanation": "Research shows LLMs attend more to the start and end of the context window ('lost in the middle' phenomenon). Placing the most important information at the beginning or end of context improves utilization.",
+    "explanation": "Araştırmalar yüksek lisans öğrencilerinin bağlam penceresinin başlangıcına ve sonuna daha fazla odaklandığını gösteriyor (\"ortada kaybolma\" olgusu). En önemli bilgiyi bağlamın başına veya sonuna yerleştirmek kullanımı artırır.",
     "stage": "pre"
   },
   {
-    "question": "A coding assistant uses 22,700 tokens of a 128K context window. Why is budget management still important?",
-    "options": ["128K should be enough for any use case", "Long conversations, large code files, and retrieved documentation can quickly fill the window; without budget management, critical context gets truncated", "Token counting is inaccurate", "Only the prompt matters"],
+    "question": "Bir kodlama asistanı, 128K bağlam penceresinin 22.700 jetonunu kullanır. Bütçe yönetimi neden hala önemlidir?",
+    "options": [
+      "128K her türlü kullanım durumu için yeterli olmalıdır",
+      "Uzun konuşmalar, büyük kod dosyaları ve alınan belgeler pencereyi hızla doldurabilir; bütçe yönetimi olmadan kritik bağlam kesintiye uğrar",
+      "Jeton sayımı hatalı",
+      "Yalnızca istem önemlidir"
+    ],
     "correct": 1,
-    "explanation": "22,700 tokens is the baseline. A 50-turn conversation adds 30K+ tokens. Retrieving a large codebase adds 50K+. Tool call results add more. Without active management, the window fills and oldest context is lost.",
+    "explanation": "Temel değer 22.700 tokendır. 50 turluk bir konuşma 30.000'den fazla jeton ekler. Büyük bir kod tabanının alınması 50K+ ekler. Araç çağrısı sonuçları daha fazlasını ekler. Aktif yönetim olmadan pencere dolar ve en eski içerik kaybolur.",
     "stage": "post"
   },
   {
-    "question": "What is the sliding window strategy for conversation history?",
-    "options": ["Moving the model to a different server", "Keeping only the N most recent turns in context and dropping older turns, optionally summarizing them first", "Processing the conversation in fixed-size chunks", "Expanding the context window dynamically"],
+    "question": "Konuşma geçmişi için kayan pencere stratejisi nedir?",
+    "options": [
+      "Modeli farklı bir sunucuya taşıma",
+      "Bağlamda yalnızca en yeni N dönüşü tutmak ve eski dönüşleri bırakmak, isteğe bağlı olarak önce bunları özetlemek",
+      "Konuşmayı sabit boyutlu parçalar halinde işlemek",
+      "Bağlam penceresini dinamik olarak genişletme"
+    ],
     "correct": 1,
-    "explanation": "Sliding window keeps the K most recent conversation turns in full context. Older turns are either dropped or replaced with a summary. This bounds memory usage while preserving the most relevant recent context.",
+    "explanation": "Kayan pencere, en son K konuşma dönüşünü tam bağlamda tutar. Daha eski dönüşler ya bırakılır ya da bir özet ile değiştirilir. Bu, en güncel bağlamı korurken bellek kullanımını sınırlar.",
     "stage": "post"
   },
   {
-    "question": "How should a context assembler allocate tokens across components?",
-    "options": ["Equal allocation to each component", "Dynamically based on query type: a simple question needs less retrieval context; a complex question needs more, with generation headroom always reserved", "Maximize retrieval context always", "Minimize system prompt tokens"],
+    "question": "Bir bağlam derleyici, belirteçleri bileşenler arasında nasıl tahsis etmelidir?",
+    "options": [
+      "Equal allocation to each component",
+      "Dinamik olarak sorgu türüne dayalıdır: Basit bir soru daha az erişim bağlamına ihtiyaç duyar; karmaşık bir soru daha fazlasını gerektirir; nesil boşluğu her zaman saklıdır",
+      "Maximize retrieval context always",
+      "Minimize system prompt tokens"
+    ],
     "correct": 1,
-    "explanation": "A simple factual question might need 500 tokens of retrieved context. A complex analysis might need 10,000. A good context assembler adjusts allocation dynamically while always reserving headroom for the model's response.",
+    "explanation": "Basit bir olgusal soru, 500 jetonluk bağlamın alınmasını gerektirebilir. Karmaşık bir analizin 10.000'e ihtiyacı olabilir. İyi bir bağlam derleyici, tahsisi dinamik olarak ayarlarken, modelin yanıtı için her zaman boşluk bırakır.",
     "stage": "post"
   }
 ]

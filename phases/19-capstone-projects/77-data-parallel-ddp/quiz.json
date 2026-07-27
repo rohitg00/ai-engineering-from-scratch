@@ -1,78 +1,78 @@
 {
   "lesson": "77-data-parallel-ddp",
-  "title": "Data Parallel DDP From Scratch",
+  "title": "Veri Paralel DDP Sıfırdan",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does DDP broadcast parameters at construction instead of relying on the same seed across ranks?",
+      "question": "DDP neden kademeler arasında aynı tohuma güvenmek yerine inşaat sırasında parametreleri yayınlıyor?",
       "options": [
-        "Broadcast is faster than seeding",
+        "Yayın, tohumlamadan daha hızlıdır",
         "Same-seed init drifts by float epsilon across ranks; broadcast guarantees byte-equal weights before training starts",
         "PyTorch forbids same-seed init",
         "Broadcast saves memory"
       ],
       "correct": 1,
-      "explanation": "Float ops on different hardware (or even different process orders) can differ at the bit level. A broadcast from rank 0 is the only way to get byte-equal weights everywhere."
+      "explanation": "Farklı donanımlardaki (hatta farklı işlem sıralarındaki) kayan işlemler bit düzeyinde farklılık gösterebilir. Sıra 0'dan başlayan bir yayın, her yerde bayt eşitliğine sahip ağırlıklar elde etmenin tek yoludur."
     },
     {
       "stage": "pre",
-      "question": "What does DDP do after backward and before optimizer.step?",
+      "question": "DDP, geri adımdan sonra ve optimizer.step'ten önce ne yapar?",
       "options": [
         "Nothing",
         "Saves a checkpoint",
-        "Allreduce-SUM every parameter's gradient and divide by world_size to get the mean gradient",
+        "Allreduce-SUM her parametrenin eğimini azaltın ve ortalama eğimi elde etmek için dünya boyutuna bölün",
         "Broadcasts logits"
       ],
       "correct": 2,
-      "explanation": "The mean gradient is invariant to world_size so a learning rate tuned at one rank works at N ranks."
+      "explanation": "Ortalama gradyan world_size ile değişmez, dolayısıyla bir dereceye ayarlanan öğrenme oranı N seviyede işe yarar."
     },
     {
       "stage": "check",
-      "question": "Why divide by world_size after allreduce-SUM instead of using allreduce-MEAN?",
+      "question": "Neden allreduce-MEAN kullanmak yerine allreduce-SUM'den sonra world_size'ye göre bölelim?",
       "options": [
-        "Allreduce-MEAN does not exist in gloo",
-        "Division by world_size on each rank is a local op; allreduce-MEAN would be implemented the same way under the hood",
+        "Allreduce-MEAN Gloo'da mevcut değil",
+        "Her sıralamada dünya boyutuna göre bölme işlemi yerel bir işlemdir; allreduce-MEAN, kaputun altında aynı şekilde uygulanacaktır",
         "Division produces NaN",
-        "world_size is unknown"
+        "dünya_boyutu bilinmiyor"
       ],
       "correct": 1,
-      "explanation": "Both approaches yield the same arithmetic. NCCL ships allreduce-AVG since 2.10; gloo does not, so divide locally after SUM."
+      "explanation": "Her iki yaklaşım da aynı aritmetiği verir. NCCL, 2.10'dan beri allreduce-AVG'yi gönderiyor; Gloo bunu yapmaz, bu nedenle SUM'den sonra yerel olarak bölün."
     },
     {
       "stage": "check",
-      "question": "What does gradient bucketing in production DDP achieve?",
+      "question": "DDP üretimde degrade paketleme neyi başarıyor?",
       "options": [
         "Quantises gradients to int8",
-        "Coalesces many small allreduces into one large allreduce, amortising the per-call latency floor",
+        "Birçok küçük tümünü tek bir büyük hepsi azaltımda birleştirir ve arama başına gecikme tabanını amorti eder",
         "Frees gradient memory",
         "Skips backward"
       ],
       "correct": 1,
-      "explanation": "A 1B-parameter model has thousands of grad tensors; one allreduce per tensor pays gloo or NCCL latency thousands of times."
+      "explanation": "1B parametreli bir modelde binlerce dereceli tensör bulunur; tensör başına bir allreduce binlerce kez kasvet veya NCCL gecikme süresi öder."
     },
     {
       "stage": "check",
-      "question": "Why does no_sync() exist in PyTorch DDP?",
+      "question": "no_sync() neden PyTorch DDP'de mevcut?",
       "options": [
         "To turn off DDP",
-        "Gradient accumulation over K microbatches needs to skip the post-backward allreduce for K-1 of them; no_sync wraps that pause",
+        "K adet mikro seri üzerindeki gradyan birikiminin, bunların K-1'si için geri-sonrası tüm azaltma işlemini atlaması gerekir; no_sync bu duraklamayı tamamlar",
         "To switch backends",
         "To debug"
       ],
       "correct": 1,
-      "explanation": "Without no_sync the allreduce fires K times per accumulated step and throughput drops to the floor."
+      "explanation": "no_sync olmadan allreduce, birikmiş adım başına K kez yangın çıkarır ve verim tabana düşer."
     },
     {
       "stage": "post",
-      "question": "Why does this lesson's reference implementation walk every rank's micro-batch sequentially in one process?",
+      "question": "Bu dersin referans uygulaması neden her aşamanın mikro partisini tek bir süreçte sırayla yürütüyor?",
       "options": [
-        "Single-process is faster",
-        "It gives a byte-equal baseline: the sequential mean gradient must equal DDP's allreduced mean gradient at every step",
-        "It is the only way to use gloo",
-        "It saves memory"
+        "Tek işlem daha hızlıdır",
+        "Bayta eşit bir taban çizgisi verir: sıralı ortalama gradyan, her adımda DDP'nin tamamı azaltılmış ortalama gradyanına eşit olmalıdır",
+        "Gloo'yu kullanmanın tek yolu bu",
+        "Bellekten tasarruf sağlar"
       ],
       "correct": 1,
-      "explanation": "Equivalence to the reference loop is the load-bearing correctness test; without it gradient sync bugs hide until step 10000."
+      "explanation": "Referans döngüsüne eşdeğerlik, yük taşıma doğruluğu testidir; o olmadan degrade senkronizasyon hataları 10000. adıma kadar gizlenir."
     }
   ]
 }

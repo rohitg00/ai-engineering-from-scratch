@@ -1,78 +1,78 @@
 {
   "lesson": "48-distributed-fsdp-ddp",
-  "title": "Distributed Data Parallel and FSDP from Scratch",
+  "title": "Sıfırdan Dağıtılmış Veri Paralel ve FSDP",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which two collective ops are the core of a from-scratch DDP wrapper?",
+      "question": "Sıfırdan bir DDP sarmalayıcının çekirdeği hangi iki kolektif operasyondur?",
       "options": [
         "send and recv",
-        "broadcast at construction so every rank starts from the same parameters, and all_reduce after backward so every rank ends with the averaged gradient",
-        "reduce_scatter only",
+        "inşaat sırasında yayın yapın, böylece her sıra aynı parametrelerden başlar ve geriden sonra all_reduce yapılır, böylece her sıra ortalama eğimle biter",
+        "yalnızca azalt_scatter",
         "barrier and barrier"
       ],
       "correct": 1,
-      "explanation": "Broadcast at init keeps ranks in sync at step zero. All-reduce after backward keeps them in sync at every step that follows."
+      "explanation": "Başlangıçta yayın, sıfır adımında sıraları senkronize halde tutar. Geriye doğru tümünü azaltma, takip eden her adımda bunları senkronize tutar."
     },
     {
       "stage": "pre",
-      "question": "Why does this lesson work on CPU without CUDA?",
+      "question": "Bu ders neden CUDA olmadan CPU üzerinde çalışıyor?",
       "options": [
-        "It is a stub",
-        "torch.distributed ships a gloo backend that runs collectives over plain sockets, so torch.multiprocessing workers on CPU form a real process group; only the device tag changes on a GPU box",
-        "It uses simulated tensors",
-        "It does not use torch.distributed at all"
+        "Bu bir saplama",
+        "torch.distributed, kolektifleri düz soketler üzerinden çalıştıran bir kasvetli arka uç gönderir, böylece CPU üzerindeki torch.multiprocessing çalışanları gerçek bir süreç grubu oluşturur; GPU kutusunda yalnızca cihaz etiketi değişir",
+        "Simüle edilmiş tensörler kullanır",
+        "Torch.distributed'ı hiç kullanmıyor"
       ],
       "correct": 1,
-      "explanation": "Gloo is the CPU collective backend. The same call sites work on nccl on GPU; the API surface is identical."
+      "explanation": "Gloo, CPU kolektif arka ucudur. Aynı çağrı siteleri GPU'deki nccl üzerinde de çalışır; API yüzeyi aynıdır."
     },
     {
       "stage": "check",
-      "question": "What does the manual_all_reduce_matches_single_process test prove?",
+      "question": "manual_all_reduce_matches_single_process testi neyi kanıtlıyor?",
       "options": [
         "Nothing",
-        "That summing per-rank gradients and dividing by world_size recovers the gradient a single process would compute on the concatenated input, within floating point noise",
-        "That the optimizer converges",
-        "That CUDA is unnecessary"
+        "Sıra başına gradyanların toplanması ve world_size'ye bölünmesi, kayan nokta gürültüsü dahilinde tek bir işlemin birleştirilmiş giriş üzerinde hesaplayacağı gradyanı kurtarır",
+        "Optimize edicinin yakınsaması",
+        "CUDA gereksizdir"
       ],
       "correct": 1,
-      "explanation": "The cross entropy mean reduction on the full batch equals the average of per-rank means. Sum-and-divide is the right operation; the test makes that visible."
+      "explanation": "Tam partideki çapraz entropi ortalama azalması, sıra başına ortalamaların ortalamasına eşittir. Toplama ve bölme doğru işlemdir; test bunu görünür kılıyor."
     },
     {
       "stage": "check",
-      "question": "What does the FSDP sketch in this lesson do per parameter on every forward pass?",
+      "question": "Bu dersteki FSDP taslağı her ileri geçişte parametre başına ne yapar?",
       "options": [
         "Nothing",
-        "Pads the flat parameter to a multiple of world_size, slices, all_gathers the slices on every rank, drops the pad, and verifies the reconstruction matches the original",
-        "Re-initializes the parameter",
+        "Flat parametresini world_size, Slices'in katlarına kadar doldurur, her sıralamadaki dilimleri all_gathers yapar, pad'i bırakır ve yeniden yapılanmanın orijinalle eşleştiğini doğrular",
+        "Parametreyi yeniden başlatır",
         "Computes a hash"
       ],
       "correct": 1,
-      "explanation": "Each rank owns 1/world_size of every parameter. The gather rebuilds the full tensor for compute; production FSDP overlaps the gather with the previous layer's work."
+      "explanation": "Her sıralama, her parametrenin 1/world_size değerine sahiptir. Toplama, hesaplama için tam tensörü yeniden oluşturur; üretim FSDP, önceki katmanın çalışmasıyla toplamayı örtüşüyor."
     },
     {
       "stage": "check",
-      "question": "Why is the gloo all_gather sized to world_size equal-size shards even when the parameter length is not divisible by world_size?",
+      "question": "Parametre uzunluğu world_size'ye bölünemediğinde bile neden gloo all_gather'ın boyutu world_size eşit boyutlu parçalarla ölçülüyor?",
       "options": [
-        "Gloo's all_gather requires equal output tensor sizes per rank, so the flat parameter is right-padded to a multiple of world_size before slicing and the padding is dropped after the gather",
-        "It is a bug",
-        "It speeds up the network",
+        "Gloo'nun all_gather'ı, sıralama başına eşit çıkış tensör boyutları gerektirir, bu nedenle düz parametre, dilimlemeden önce world_size'nin bir katına kadar sağa doldurulur ve toplamadan sonra dolgu bırakılır.",
+        "Bu bir hata",
+        "Ağı hızlandırır",
         "Random choice"
       ],
       "correct": 0,
-      "explanation": "Gloo (and nccl) all_gather expects same-size outputs. Padding is the cheapest fix; the sketch trims the result back to the original length."
+      "explanation": "Gloo (ve nccl) all_gather aynı boyutta çıktılar bekler. Dolgu en ucuz çözümdür; çizim sonucu orijinal uzunluğa geri döndürür."
     },
     {
       "stage": "post",
-      "question": "Reading the demo output, param_sum_spread near zero across ranks tells you what?",
+      "question": "Demo çıktısını okuduğunuzda param_sum_spread sıfıra yakın sıralamalar size ne anlatıyor?",
       "options": [
-        "That the loss is low",
-        "That every rank ended the run at the same parameter values, which means the broadcast at construction and the all-reduce after every backward both worked; if either was broken the spread would grow over steps",
-        "That the network is fast",
+        "Kayıpların düşük olması",
+        "Her sıralamanın çalışmayı aynı parametre değerlerinde bitirmesi, bu da yapım aşamasında yayın ve her geriden sonra tamamen azaltmanın işe yaradığı anlamına gelir; eğer biri kırılırsa spread adım adım büyüyecekti",
+        "Ağın hızlı olması",
         "Nothing meaningful"
       ],
       "correct": 1,
-      "explanation": "DDP's invariant is parameter parity across ranks. The spread is the audit; the demo asserts it stays under 1e-3."
+      "explanation": "DDP'nin değişmezi sıralar arası parametre eşitliğidir. Yayılım denetimdir; demo 1e-3'ün altında kaldığını iddia ediyor."
     }
   ]
 }

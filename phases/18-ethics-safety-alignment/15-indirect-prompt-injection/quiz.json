@@ -4,22 +4,22 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What distinguishes indirect prompt injection (IPI) from direct prompt injection?",
+      "question": "Dolaylı anlık enjeksiyonu (IPI) doğrudan anlık enjeksiyondan ayıran nedir?",
       "options": [
-        "IPI requires fine-tuning the target model",
-        "IPI embeds instructions inside external content (web pages, emails, tool outputs) that the agent consumes during normal operation, without the attacker touching the user's prompt",
-        "IPI is a synonym for jailbreaking",
-        "IPI only works on multimodal models"
+        "IPI, hedef modelde ince ayar yapılmasını gerektirir",
+        "IPI, saldırganın kullanıcının istemine dokunmasına gerek kalmadan aracının normal çalışma sırasında tükettiği harici içeriğin (web sayfaları, e-postalar, araç çıktıları) içine talimatlar yerleştirir",
+        "IPI jailbreak yapmanın eş anlamlısıdır",
+        "IPI yalnızca multimodal modellerde çalışır"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which of these is NOT one of the three IPI delivery vectors listed in the lesson?",
+      "question": "Bunlardan hangisi NOT derste listelenen üç IPI dağıtım vektöründen biridir?",
       "options": [
         "Retrieval-augmented generation (poisoned retrieval)",
-        "Direct system-prompt edits by the user",
+        "Kullanıcı tarafından doğrudan sistem isteminde yapılan düzenlemeler",
         "Tool output",
         "Inbox / document workflows"
       ],
@@ -28,22 +28,22 @@
     },
     {
       "stage": "check",
-      "question": "Why do user-input filters miss IPI?",
+      "question": "Kullanıcı giriş filtreleri neden IPI'yi kaçırıyor?",
       "options": [
-        "Filters cannot read JSON",
-        "User-input filters are case-sensitive",
-        "The payload never appears in the user's input; it appears in retrieved or tool-supplied content",
-        "Filters only run after the model responds"
+        "Filtreler JSON'yi okuyamıyor",
+        "Kullanıcı giriş filtreleri büyük/küçük harfe duyarlıdır",
+        "Yük hiçbir zaman kullanıcının girişinde görünmez; alınan veya araç tarafından sağlanan içerikte görünüyor",
+        "Filtreler yalnızca model yanıt verdikten sonra çalışır"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the central principle of Information Flow Control (IFC) for AI agents?",
+      "question": "AI temsilcileri için Bilgi Akışı Kontrolünün (IFC) temel prensibi nedir?",
       "options": [
         "Encrypt all retrieved content",
-        "Use only single-turn prompts",
+        "Yalnızca tek dönüşlü istemleri kullanın",
         "Disable all tools by default",
         "Label content by source as trusted or untrusted; actions triggered by untrusted content must be ratified by trusted input before execution"
       ],
@@ -52,19 +52,19 @@
     },
     {
       "stage": "post",
-      "question": "What did Nasr et al. (October 2025, 'The Attacker Moves Second') find about 12 published IPI defenses with adaptive attacks?",
+      "question": "Nasr ve ark. (Ekim 2025, 'Saldırgan İkinci Hareket Ediyor') uyarlanabilir saldırılara sahip yaklaşık 12 yayınlanmış IPI savunması buldunuz mu?",
       "options": [
         "Adaptive attacks were too expensive to evaluate",
-        "Their reported near-zero ASR held under adaptive attack",
-        "Only one defense was broken",
-        "Adaptive attacks (gradient, RL, random search, human red-team) broke >90% of them despite their original near-zero ASR claims"
+        "Rapor edilen sıfıra yakın ASR uyarlanabilir saldırı altında tutuluyor",
+        "Sadece bir savunma kırıldı",
+        "Uyarlanabilir saldırılar (gradyan, RL, rastgele arama, insan kırmızı takımı), orijinal sıfıra yakın ASR iddialarına rağmen bunların %90'ından fazlasını kırdı"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Where does prompt injection rank in the 2025 OWASP LLM Top 10?",
+      "question": "Hızlı enjeksiyon 2025 OWASP LLM İlk 10'da nerede yer alıyor?",
       "options": [
         "Not listed",
         "LLM01 (top, #1 application-layer threat)",

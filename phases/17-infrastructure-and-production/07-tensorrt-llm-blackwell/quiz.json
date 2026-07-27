@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Roughly what is the per-million-tokens cost gap the lesson reports between Blackwell + TRT-LLM + Dynamo and H100 + vLLM on a comparable 120B-class workload?",
+      "question": "Benzer bir 120B sınıfı iş yükünde Blackwell + TRT-LLM + Dynamo ve H100 + vLLM arasındaki ders raporlarında milyon token başına maliyet farkı kabaca nedir?",
       "options": [
         "About 100x",
         "About 7x",
@@ -16,10 +16,10 @@
     },
     {
       "stage": "check",
-      "question": "Why does the lesson recommend keeping KV cache in FP8 rather than NVFP4 on Blackwell?",
+      "question": "Ders neden KV önbelleğinin Blackwell'deki NVFP4 yerine FP8'de tutulmasını öneriyor?",
       "options": [
-        "NVFP4 KV cache is not yet supported in any engine",
-        "FP8 is the only precision NVLink 5 supports",
+        "NVFP4 KV önbellek henüz hiçbir motorda desteklenmiyor",
+        "FP8, NVLink 5'in desteklediği tek hassas üründür",
         "KV cache spans a wide dynamic range; FP4 quantization causes catastrophic accuracy loss in attention scores",
         "FP8 uses less memory than FP4"
       ],
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "Which Blackwell feature does TRT-LLM exploit so models can be loaded without a post-training conversion step?",
+      "question": "Modellerin eğitim sonrası dönüştürme adımı olmadan yüklenebilmesi için TRT-LLM hangi Blackwell özelliğini kullanıyor?",
       "options": [
         "Day-0 FP4 weights shipped by model providers",
         "INT2 weights via bitsandbytes",
@@ -40,19 +40,19 @@
     },
     {
       "stage": "check",
-      "question": "What is the dominant tradeoff of choosing the TRT-LLM stack per the lesson?",
+      "question": "Ders başına TRT-LLM yığınını seçmenin baskın tercihi nedir?",
       "options": [
-        "It cannot serve MoE models",
-        "It requires fully autonomous remediation",
-        "It locks you into NVIDIA hardware — no AMD, no Intel, no ARM",
-        "It only works at small scale"
+        "MEB modellerine hizmet veremez",
+        "Tamamen otonom iyileştirme gerektirir",
+        "Sizi NVIDIA donanımına kilitler — AMD yok, Intel yok, ARM yok",
+        "Sadece küçük ölçekte çalışır"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which precision combination does the lesson describe as the typical Blackwell config?",
+      "question": "Derste tipik Blackwell konfigürasyonu olarak hangi hassas kombinasyon tanımlanmaktadır?",
       "options": [
         "Weights FP4, KV cache FP4, attention in INT8",
         "Everything in BF16",
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "For reasoning-heavy workloads where NVFP4 weight conversion drops MATH accuracy a few points, what does the lesson advise?",
+      "question": "NVFP4 ağırlık dönüşümünün MATH doğruluğunu birkaç puan düşürdüğü muhakeme ağırlıklı iş yükleri için ders ne önerir?",
       "options": [
         "Switch to AMD MI300X",
         "Disable speculative decoding",
-        "Validate task quality on your eval set per model; teams often use FP8 weights + FP4 activations or stay on H200 with FP8 throughout",
-        "Ship NVFP4 anyway because the cost win dominates"
+        "Her model için değerlendirme kümenizde görev kalitesini doğrulayın; ekipler sıklıkla FP8 ağırlıkları + FP4 aktivasyonlarını kullanır veya süreç boyunca FP8 ile H200 üzerinde kalırlar",
+        "Yine de NVFP4'yi gönderin çünkü maliyet kazancı hakimdir"
       ],
       "correct": 2,
       "explanation": ""

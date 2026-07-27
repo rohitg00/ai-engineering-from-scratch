@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "A YOLO detector with grid 13x13, 3 anchors per cell, and 20 classes produces a head output of shape (N, 13, 13, 3, 25). Why is the last dimension 25?",
-      "options": ["4 box coords + 1 bias + 20 classes", "4 box coords + 1 objectness + 20 classes = 5 + C", "25 is the number of classes in COCO", "It is padding to the next power of 2"],
+      "question": "13x13 ızgaralı, hücre başına 3 ankorlu ve 20 sınıflı bir YOLO dedektörü, şekilli bir kafa çıktısı üretir (N, 13, 13, 3, 25). Son boyut neden 25?",
+      "options": [
+        "4 box coords + 1 bias + 20 classes",
+        "4 box coords + 1 objectness + 20 classes = 5 + C",
+        "25, COCO'deki sınıf sayısıdır",
+        "2'nin bir sonraki kuvvetine kadar dolgu yapıyor"
+      ],
       "correct": 1,
-      "explanation": "Every anchor emits four box regression targets (tx, ty, tw, th), one objectness score, and C class logits. For YOLO-style detectors the per-anchor dimension is always 5 + C. On COCO with 80 classes it is 85; on PASCAL VOC with 20 it is 25."
+      "explanation": "Her çapa dört kutu regresyon hedefi (tx, ty, tw, th), bir nesnelik puanı ve C sınıfı logitler yayar. YOLO- tarzı dedektörler için ankraj başına boyut her zaman 5 + C'dir. 80 sınıflı COCO'de bu 85'tir; PASCAL VOC'de 20 ile 25'tir."
     },
     {
       "stage": "pre",
-      "question": "Why does YOLO predict tx, ty through a sigmoid before adding the grid cell?",
-      "options": ["To normalise them to [0, 1] so the centre stays inside the cell and cannot escape to a neighbouring cell's territory", "Sigmoid is required by the convolution", "To prevent NaN during training", "To make the box larger"],
+      "question": "YOLO neden ızgara hücresini eklemeden önce bir sigmoid aracılığıyla tx, ty'yi tahmin ediyor?",
+      "options": [
+        "Merkezin hücre içinde kalması ve komşu hücrenin bölgesine kaçamaması için bunları [0, 1]'e normalleştirmek",
+        "Evrişim için sigmoid gereklidir",
+        "To prevent NaN during training",
+        "Kutuyu büyütmek için"
+      ],
       "correct": 0,
-      "explanation": "sigmoid(tx) is in [0, 1], so (sigmoid(tx) + cell_x) * stride places the centre somewhere inside the cell at column cell_x. This constraint keeps each cell responsible for only the objects centred within its own area, which is the assumption that makes grid-based training stable."
+      "explanation": "sigmoid(tx) [0, 1]'dedir, dolayısıyla (sigmoid(tx) + cell_x) * adım merkezi hücrenin içinde hücre_x sütunundaki bir yere yerleştirir. Bu kısıtlama, her hücreyi yalnızca kendi alanı içinde merkezlenen nesnelerden sorumlu tutar; bu da ızgara tabanlı eğitimi istikrarlı kılan varsayımdır."
     },
     {
       "stage": "post",
-      "question": "Your detector predicts 15 boxes around a single object after the head. You apply NMS with iou_threshold=0.45 and get back 1 box. What did NMS do?",
-      "options": ["It averaged all 15 predictions", "It sorted the 15 boxes by score, kept the highest-scoring, and deleted every box whose IoU with it exceeded 0.45; the other 14 all overlapped the winner above the threshold so one remained", "It picked a random survivor", "It merged the boxes geometrically"],
+      "question": "Dedektörünüz kafadan sonra tek bir nesnenin etrafında 15 kutu olduğunu tahmin eder. NMS'yi iou_threshold=0,45 ile uygularsınız ve 1 kutu geri alırsınız. NMS ne yaptı?",
+      "options": [
+        "15 tahminin tamamının ortalamasını aldı",
+        "15 kutuyu puana göre sıraladı, en yüksek puanı korudu ve IoU'su 0,45'i aşan her kutuyu sildi; diğer 14'ünün tümü eşiğin üzerindeki kazananla örtüştü, böylece biri kaldı",
+        "Rastgele hayatta kalan birini seçti",
+        "Kutuları geometrik olarak birleştirdi"
+      ],
       "correct": 1,
-      "explanation": "NMS is a greedy deduplication: sort by score, keep the top, remove everything close to it (IoU > threshold), repeat. It does not merge or average. That is why detection latency benchmarks include NMS time and why modern models like RT-DETR replace it with a learned alternative."
+      "explanation": "NMS açgözlü bir tekilleştirmedir: puana göre sıralayın, en üstte tutun, ona yakın olan her şeyi kaldırın (IoU > eşik), tekrarlayın. Birleşmez veya ortalama yapmaz. Bu nedenle algılama gecikmesi kıyaslamaları NMS süresini içerir ve RT-DETR gibi modern modellerin bunu öğrenilmiş bir alternatifle değiştirmesinin nedeni budur."
     },
     {
       "stage": "post",
-      "question": "Your model has mAP@0.5 = 0.75 but mAP@0.5:0.95 = 0.32. What is the most accurate interpretation?",
-      "options": ["The model is broken; mAP@0.5 must equal mAP@0.5:0.95", "The model finds the right objects but its boxes are not tightly localised — fine at IoU 0.5, fail at IoU 0.7+", "The dataset has too many classes", "The inference threshold is too high"],
+      "question": "Modelinizde mAP@0,5 = 0,75 ancak mAP@0,5:0,95 = 0,32 var. En doğru yorum nedir?",
+      "options": [
+        "Model bozuldu; mAP@0.5, mAP@0.5:0.95'e eşit olmalıdır",
+        "Model doğru nesneleri buluyor ancak kutuları sıkı bir şekilde konumlandırılmamış; IoU 0,5'te sorun yok, IoU 0,7+'de başarısız",
+        "Veri kümesinde çok fazla sınıf var",
+        "Çıkarım eşiği çok yüksek"
+      ],
       "correct": 1,
-      "explanation": "mAP@0.5 is lenient about localisation; mAP@0.5:0.95 averages over strict thresholds up to 0.95. A big gap between the two means the boxes are in roughly the right place but not tight. Typical fixes: CIoU/DIoU box loss, higher-resolution features, anchor sets better tuned to the dataset."
+      "explanation": "mAP@0.5 yerelleştirme konusunda hoşgörülüdür; mAP@0,5:0,95 ortalamaları, 0,95'e kadar katı eşiklerin üzerindedir. İkisi arasındaki büyük boşluk, kutuların kabaca doğru yerde olduğu ancak sıkı olmadığı anlamına gelir. Tipik düzeltmeler: CIoU/DIoU kutu kaybı, daha yüksek çözünürlük özellikleri, veri kümesine daha iyi ayarlanmış bağlantı kümeleri."
     },
     {
       "stage": "post",
-      "question": "YOLO loss weights lambda_coord=5.0 and lambda_noobj=0.5 roughly mirror the original paper. What do these ratios encode?",
-      "options": ["GPU memory trade-offs", "The fact that most cells have no object, so the no-object cells must be downweighted or they would dominate the total loss; and the fact that box regression is a smaller-scale loss than cross-entropy, so it needs upweighting to produce comparable gradients", "Random choices the authors never justified", "The number of anchors per cell"],
+      "question": "YOLO kayıp ağırlıkları lambda_coord=5,0 ve lambda_noobj=0,5 kabaca orijinal kağıdı yansıtır. Bu oranlar neyi kodluyor?",
+      "options": [
+        "GPU memory trade-offs",
+        "Çoğu hücrenin hiçbir nesnesi olmadığı gerçeği, bu nedenle nesne olmayan hücrelerin ağırlığının azaltılması gerekir, aksi takdirde toplam kayıpta baskın olurlar; ve kutu regresyonunun çapraz entropiye göre daha küçük ölçekli bir kayıp olduğu, dolayısıyla karşılaştırılabilir gradyanlar üretmek için ağırlığın arttırılması gerektiği gerçeği",
+        "Yazarların asla haklı göstermediği rastgele seçimler",
+        "Hücre başına bağlantı sayısı"
+      ],
       "correct": 1,
-      "explanation": "In a 13x13 grid there are 169 cells, usually with one to five objects. The 160+ empty cells all contribute objectness loss; without a small lambda_noobj they would overwhelm the positive signal. Conversely, MSE box loss is numerically small next to cross-entropy, so lambda_coord > 1 keeps its gradients comparable. Both ratios are about balancing per-component gradient magnitudes."
+      "explanation": "13x13'lük bir ızgarada, genellikle bir ila beş nesne içeren 169 hücre vardır. 160'tan fazla boş hücrenin tümü nesnellik kaybına katkıda bulunur; küçük bir lambda_noobj olmadan pozitif sinyali bastırırlar. Tersine, MSE kutu kaybı çapraz entropinin yanında sayısal olarak küçüktür, dolayısıyla lambda_coord > 1 gradyanlarını karşılaştırılabilir tutar. Her iki oran da bileşen başına gradyan büyüklüklerinin dengelenmesiyle ilgilidir."
     }
   ]
 }

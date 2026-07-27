@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What distinguishes a JSON-RPC notification from a request on the wire?",
+      "question": "Bir JSON-RPC bildirimini telgraftaki bir istekten ayıran şey nedir?",
       "options": [
         "Different jsonrpc version field",
-        "Notifications omit the id field; servers must not respond to them",
+        "Bildirimler kimlik alanını atlar; sunucular bunlara yanıt vermemelidir",
         "Notifications use a different method namespace",
-        "Notifications are wrapped in an array"
+        "Bildirimler bir diziye sarılır"
       ],
       "correct": 1,
-      "explanation": "Absence of id is the only marker. Servers do not respond, because there is no id to correlate against."
+      "explanation": "Kimlik yokluğu tek işarettir. İlişkilendirilecek bir kimlik olmadığından sunucular yanıt vermiyor."
     },
     {
       "stage": "pre",
-      "question": "Why is newline-delimited JSON sufficient for stdio framing?",
+      "question": "Yeni satırla ayrılmış JSON neden stdio çerçeveleme için yeterli?",
       "options": [
-        "Because JSON does not allow literal newlines inside strings without escaping, so each object can be one line",
-        "Because pipes guarantee newline atomicity",
-        "Because UTF-8 has no newline byte",
-        "Because the spec mandates it"
+        "JSON, dizelerin içinde kaçmadan gerçek yeni satırlara izin vermediğinden, her nesne bir satır olabilir",
+        "Çünkü borular yeni satır atomikliğini garanti eder",
+        "Çünkü UTF-8'de yeni satır baytı yok",
+        "Çünkü spesifikasyon bunu zorunlu kılıyor"
       ],
       "correct": 0,
-      "explanation": "json.dumps emits a single line per object; literal newlines inside strings are escaped. That makes \\n a safe record separator."
+      "explanation": "json.dumps nesne başına tek bir satır yayar; dizelerin içindeki gerçek yeni satırlardan kaçılır. Bu \\n'yi güvenli bir kayıt ayırıcı haline getirir."
     },
     {
       "stage": "check",
-      "question": "Which error code does the transport return when JSON parsing fails?",
+      "question": "JSON ayrıştırması başarısız olduğunda aktarım hangi hata kodunu döndürür?",
       "options": [
         "-32600",
         "-32700",
@@ -36,55 +36,55 @@
         "-32601"
       ],
       "correct": 1,
-      "explanation": "-32700 is Parse error. The response id is null because no id could be extracted."
+      "explanation": "-32700 Ayrıştırma hatasıdır. Hiçbir kimlik çıkarılamadığı için yanıt kimliği boş."
     },
     {
       "stage": "check",
-      "question": "If a handler raises a plain ValueError, what does the transport return?",
+      "question": "Bir işleyici düz bir ValueError oluşturursa aktarım ne döndürür?",
       "options": [
         "Method not found (-32601)",
         "Invalid params (-32602)",
-        "Internal error (-32603) with the exception class name in data",
-        "It does not return; the connection drops"
+        "Verilerdeki istisna sınıfı adıyla dahili hata (-32603)",
+        "Geri dönmez; bağlantı düşüyor"
       ],
       "correct": 2,
-      "explanation": "Unmapped exceptions surface as -32603. data.exception preserves the class name for the client."
+      "explanation": "Eşlenmemiş istisnalar -32603 olarak ortaya çıkar. data. Exception istemcinin sınıf adını korur."
     },
     {
       "stage": "check",
-      "question": "What does the server return when a batch contains only notifications?",
+      "question": "Bir toplu iş yalnızca bildirimler içerdiğinde sunucu ne döndürür?",
       "options": [
         "An empty array",
-        "Nothing — no bytes are written",
-        "One null per notification",
+        "Hiçbir şey — bayt yazılmıyor",
+        "Bildirim başına bir null",
         "A single null response"
       ],
       "correct": 1,
-      "explanation": "Spec rule: if every entry is a notification, the server stays silent."
+      "explanation": "Özel kural: Her giriş bir bildirim ise sunucu sessiz kalır."
     },
     {
       "stage": "post",
-      "question": "A line with broken JSON arrives in the middle of a session. What happens to subsequent lines?",
+      "question": "Seansın ortasında bozuk JSON içeren bir çizgi geliyor. Sonraki satırlara ne olur?",
       "options": [
-        "The transport closes the stream",
-        "They are buffered until the broken line is retried",
-        "The transport writes a -32700 response and continues reading the next line as fresh",
-        "They are all rejected with -32600"
+        "Taşıma akışı kapatıyor",
+        "Kırık çizgi yeniden denenene kadar ara belleğe alınırlar",
+        "Taşıma -32700 yanıtını yazar ve sonraki satırı yeni olarak okumaya devam eder",
+        "Hepsi -32600 ile reddedildi"
       ],
       "correct": 2,
-      "explanation": "The framing layer must not poison the stream. One parse error means one error response and the loop continues."
+      "explanation": "Çerçeveleme katmanı akışı zehirlememelidir. Bir ayrıştırma hatası, bir hata yanıtı anlamına gelir ve döngü devam eder."
     },
     {
       "stage": "post",
-      "question": "Why does the transport not consult the tool registry directly?",
+      "question": "Aktarım neden doğrudan takım kaydına başvurmuyor?",
       "options": [
-        "Because the registry is async",
-        "To keep the transport layer JSON-RPC-shaped only; the handler stitches transport to registry",
-        "Because the registry holds secrets",
-        "Because the transport runs in a different process"
+        "Kayıt defteri eşzamansız olduğundan",
+        "Taşıma katmanını yalnızca JSON-RPC- şeklinde tutmak için; işleyici taşımayı kayıt defterine diker",
+        "Çünkü kayıt defteri sırları barındırıyor",
+        "Çünkü taşıma farklı bir süreçte gerçekleşiyor"
       ],
       "correct": 1,
-      "explanation": "The transport speaks the wire. The dispatcher (next lesson) is where transport meets registry meets timeout."
+      "explanation": "Taşıma teli konuşuyor. Dağıtıcı (sonraki ders), aktarımın kayıt defteriyle zaman aşımı ile buluştuğu yerdir."
     }
   ]
 }

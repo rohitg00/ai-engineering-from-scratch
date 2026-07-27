@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-labelledby="title desc">
+  <title id="title">AI Engineering from Scratch — Türkçe Müfredat</title>
+  <desc id="desc">Yirmi aşamalı Türkçe yapay zekâ mühendisliği müfredatı</desc>
+  <rect width="1200" height="400" rx="28" fill="#f4f0e8"/>
+  <path d="M0 28Q0 0 28 0h1144q28 0 28 28v344q0 28-28 28H0z" fill="none" stroke="#171717" stroke-width="3"/>
+  <rect x="0" y="0" width="18" height="400" rx="9" fill="#e30a17"/>
+
+  <g fill="#171717" font-family="Arial, Helvetica, sans-serif">
+    <text x="72" y="72" font-size="18" font-weight="700" letter-spacing="3.5">TÜRKÇE • AÇIK KAYNAK • UYGULAMALI</text>
+    <text x="68" y="155" font-size="68" font-weight="900" letter-spacing="-3">AI ENGINEERING</text>
+    <text x="68" y="220" font-size="68" font-weight="900" letter-spacing="-3">FROM SCRATCH</text>
+  </g>
+
+  <g transform="translate(888 62)">
+    <circle cx="105" cy="105" r="105" fill="#e30a17"/>
+    <circle cx="87" cy="105" r="58" fill="#f4f0e8"/>
+    <circle cx="106" cy="105" r="47" fill="#e30a17"/>
+    <path d="M148 78l8 17 19 2-14 13 4 19-17-9-17 9 3-19-14-13 20-2z" fill="#f4f0e8"/>
+  </g>
+
+  <path d="M68 265H1132" stroke="#171717" stroke-width="3"/>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="68" y="321" fill="#e30a17" font-size="36" font-weight="900" letter-spacing=".5">SIFIRDAN ÜRETİME</text>
+    <text x="68" y="355" fill="#4a4742" font-size="19" font-weight="600">Matematikten otonom sistemlere, eksiksiz yapay zekâ mühendisliği rotası.</text>
+    <g transform="translate(898 296)">
+      <rect width="234" height="64" rx="12" fill="#171717"/>
+      <text x="117" y="28" text-anchor="middle" fill="#f4f0e8" font-size="14" font-weight="700" letter-spacing="2">20 AŞAMA</text>
+      <text x="117" y="49" text-anchor="middle" fill="#f4f0e8" font-size="14" font-weight="700" letter-spacing="2">503 DERS</text>
+    </g>
+  </g>
+</svg>

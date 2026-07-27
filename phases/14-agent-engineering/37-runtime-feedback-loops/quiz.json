@@ -4,87 +4,87 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the feedback runner force the agent to do?",
+      "question": "Geri bildirim çalıştırıcısı aracıyı ne yapmaya zorluyor?",
       "options": [
         "React to imagined output",
-        "React to facts: structured stdout/stderr/exit/duration records captured into the loop on every command",
+        "Gerçeklere tepki verin: her komutta döngüye yakalanan yapılandırılmış stdout/stderr/exit/süre kayıtları",
         "Skip verification",
         "Use a different model"
       ],
       "correct": 1,
-      "explanation": "The runner closes the gap between 'tests passed' (imagined) and 'tests actually ran and exited zero' (recorded)."
+      "explanation": "Koşucu, 'geçilen testler' (hayal edilen) ile 'gerçekte yürütülen ve sıfırdan çıkan testler' (kaydedilen) arasındaki boşluğu kapatır."
     },
     {
       "stage": "pre",
-      "question": "How does feedback differ from telemetry?",
+      "question": "Geri bildirimin telemetriden farkı nedir?",
       "options": [
-        "Telemetry is paid",
-        "Feedback is for the next turn of this run; telemetry is for operators reviewing runs across time (different files, different retention)",
+        "Telemetri ücretli",
+        "Geri bildirim bu çalışmanın bir sonraki turu içindir; telemetri, zaman içindeki çalışmaları (farklı dosyalar, farklı saklama) inceleyen operatörler içindir",
         "Telemetry uses OTel; feedback uses GraphQL",
-        "They are the same thing"
+        "Onlar aynı şey"
       ],
       "correct": 1,
-      "explanation": "Both share fields but live in different files with different retention; feedback is intra-run, telemetry is cross-run."
+      "explanation": "Her ikisi de alanları paylaşıyor ancak farklı saklama değerlerine sahip farklı dosyalarda yaşıyor; geri bildirim çalışma içidir, telemetri ise çapraz çalışmadır."
     },
     {
       "stage": "check",
-      "question": "Which field MUST appear in every feedback record?",
+      "question": "Her geri bildirim kaydında hangi MUST alanı görünüyor?",
       "options": [
         "model_id",
-        "exit_code (and a null exit must refuse to advance the loop)",
+        "çıkış_kodu (ve boş bir çıkışın döngüyü ilerletmeyi reddetmesi gerekir)",
         "embedding_vector",
         "prompt_cache_token"
       ],
       "correct": 1,
-      "explanation": "exit_code is the unambiguous success signal; null exit means no progress."
+      "explanation": "çıkış_kodu kesin bir başarı sinyalidir; null çıkış, ilerleme olmadığı anlamına gelir."
     },
     {
       "stage": "check",
-      "question": "How does the runner truncate large outputs?",
+      "question": "Koşucu büyük çıktıları nasıl keser?",
       "options": [
         "Random sampling",
-        "Deterministic head + tail with a 'truncated N lines' marker so the same output always produces the same record",
-        "First 10 lines only",
-        "Compresses with gzip"
+        "'Kesilmiş N satır' işaretçisiyle deterministik baş + kuyruk, böylece aynı çıktı her zaman aynı kaydı üretir",
+        "Yalnızca ilk 10 satır",
+        "Gzip ile sıkıştırır"
       ],
       "correct": 1,
-      "explanation": "Deterministic truncation keeps records replayable while bounding token cost; tails carry the failure summary."
+      "explanation": "Deterministik kesme, jeton maliyetini sınırlarken kayıtları tekrar oynatılabilir halde tutar; kuyruklar arıza özetini taşır."
     },
     {
       "stage": "check",
-      "question": "Why redact at write time rather than read time?",
+      "question": "Neden okuma zamanı yerine yazma zamanında düzeltme yapmalısınız?",
       "options": [
         "Compression",
-        "The file on disk is what an attacker reaches; redacting only on read leaves secrets in JSONL files",
+        "Diskteki dosya, saldırganın ulaştığı dosyadır; yalnızca okuma sırasında redaksiyon yapmak JSONL dosyalarında sırlar bırakır",
         "Read-time redaction breaks JSON",
-        "It is faster"
+        "Daha hızlı"
       ],
       "correct": 1,
-      "explanation": "Redact lines matching Bearer, password=, api_key=, AKIA..., xox[baprs]- before append; auditing the patterns quarterly."
+      "explanation": "Bearer, şifre=, api_key=, AKIA..., xox[baprs]- ile eşleşen satırları eklemeden önce çıkartın; kalıpları üç ayda bir denetlemek."
     },
     {
       "stage": "post",
-      "question": "What does parent_command_id give the workbench?",
+      "question": "Parent_command_id çalışma tezgahına ne veriyor?",
       "options": [
         "Cheaper inference",
-        "Retries link to their parent attempt so the reviewer and audit see the failure chain; without it retries look like independent successes",
+        "Gözden geçirenin ve denetimin başarısızlık zincirini görmesi için üst girişimine bağlantıyı yeniden dener; o olmadan yeniden denemeler bağımsız başarılara benziyor",
         "Faster file I/O",
         "Lower memory"
       ],
       "correct": 1,
-      "explanation": "Parent linkage makes retry chains visible to the reviewer (Lesson 39) and the verification gate."
+      "explanation": "Ana bağlantı, yeniden deneme zincirlerinin gözden geçiren kişi (Ders 39) ve doğrulama kapısı tarafından görünür olmasını sağlar."
     },
     {
       "stage": "post",
-      "question": "Why cap feedback_record.jsonl at 1 MB with rotation?",
+      "question": "Feedback_record.jsonl'ı neden rotasyonla 1 MB'de sınırlamalısınız?",
       "options": [
-        "JSON does not handle larger files",
-        "The agent only reads the current file; rotation keeps runtime cost bounded while CI artifacts capture the full set",
-        "Disks are too slow",
-        "The provider charges per byte"
+        "JSON daha büyük dosyaları işlemez",
+        "Aracı yalnızca geçerli dosyayı okur; CI yapıtları tüm seti yakalarken rotasyon çalışma zamanı maliyetini sınırlı tutar",
+        "Diskler çok yavaş",
+        "Sağlayıcı bayt başına ücret alır"
       ],
       "correct": 1,
-      "explanation": "Bounded current file + rotated history is the same pattern logrotate uses; predictable cost in the hot loop."
+      "explanation": "Sınırlandırılmış mevcut dosya + döndürülmüş geçmiş, logrotate'in kullandığı modelin aynısıdır; Sıcak döngüde öngörülebilir maliyet."
     }
   ]
 }

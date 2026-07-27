@@ -4,55 +4,55 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does dialogue state tracking maintain across turns?",
+      "question": "Diyalog durumu takibi dönüşler arasında neyi korur?",
       "options": [
-        "A free-text history only",
-        "A slot-value dictionary representing the user's current goal, updated after every turn",
-        "An embedding of the conversation",
+        "Yalnızca serbest metin geçmişi",
+        "Kullanıcının mevcut hedefini temsil eden, her turdan sonra güncellenen bir slot değeri sözlüğü",
+        "Konuşmanın yerleştirilmesi",
         "A POS-tagged transcript"
       ],
       "correct": 1,
-      "explanation": "DST keeps a structured slot-value map that the backend can act on."
+      "explanation": "DST, arka ucun üzerinde işlem yapabileceği yapılandırılmış bir slot değeri haritası tutar."
     },
     {
       "stage": "pre",
-      "question": "What does Joint Goal Accuracy (JGA) measure?",
+      "question": "Ortak Hedef Doğruluğu (JGA) neyi ölçer?",
       "options": [
-        "Fraction of turns where every slot is exactly correct (all-or-nothing)",
+        "Her slotun tam olarak doğru olduğu dönüş oranı (ya hep ya hiç)",
         "Average slot accuracy",
         "Latency per turn",
         "Cosine similarity"
       ],
       "correct": 0,
-      "explanation": "JGA is the strict per-turn match across all slots; per-slot accuracy is more lenient."
+      "explanation": "JGA, tüm slotlarda tur başına sıkı bir maçtır; yuva başına doğruluk daha yumuşaktır."
     },
     {
       "stage": "check",
-      "question": "Why does regenerating the whole state from history each turn handle user corrections naturally?",
+      "question": "Neden her seferinde geçmişten tüm durumu yeniden oluşturmak, kullanıcı düzeltmelerini doğal bir şekilde ele alıyor?",
       "options": [
-        "It uses fewer tokens",
-        "It runs on GPU",
-        "It avoids embeddings",
-        "Reading the full history lets the model re-derive the final state including 'actually...' corrections without explicit rollback logic"
+        "Daha az jeton kullanır",
+        "GPU'de çalışır",
+        "Yerleştirmeleri önler",
+        "Tüm geçmişi okumak, modelin, açık bir geri alma mantığı olmaksızın 'aslında...' düzeltmeleri de dahil olmak üzere son durumu yeniden türetmesine olanak tanır"
       ],
       "correct": 3,
-      "explanation": "Full-history regeneration absorbs corrections by recomputing the final state from the entire conversation."
+      "explanation": "Tam geçmişin yenilenmesi, tüm konuşmanın son durumunu yeniden hesaplayarak düzeltmeleri emer."
     },
     {
       "stage": "check",
-      "question": "Which 2026 pattern gives a guaranteed-valid slot dict in 5 lines of code?",
+      "question": "Hangi 2026 modeli, 5 satırlık kodda garantili geçerli bir slot diktesi verir?",
       "options": [
         "Hand-written regex",
         "BM25 retrieval",
-        "LLM + Instructor + Pydantic schema with constrained or validated output",
+        "LLM + Eğitmen + Kısıtlanmış veya doğrulanmış çıktılı Pydantic şeması",
         "TF-IDF classifier"
       ],
       "correct": 2,
-      "explanation": "Pydantic schema + Instructor validates the LLM's state output against the slot ontology automatically."
+      "explanation": "Pydantic schema + Instructor, LLM'nin durum çıktısını yuva ontolojisine göre otomatik olarak doğrular."
     },
     {
       "stage": "check",
-      "question": "Why version your DST schema?",
+      "question": "DST şemanızı neden versiyonlamanız gerekiyor?",
       "options": [
         "Adding new slots post-hoc invalidates older training data and breaks longitudinal evaluation",
         "Required by JSON",
@@ -64,39 +64,39 @@
     },
     {
       "stage": "post",
-      "question": "Why must DST for compliance-sensitive domains include a rule-based check alongside LLM extraction?",
+      "question": "Uyumluluk açısından hassas alanlar için DST neden LLM çıkarmanın yanı sıra kural tabanlı bir kontrol içermelidir?",
       "options": [
         "Rules avoid embeddings",
-        "LLM-only DST can mis-extract destructive parameters (amount, account, date); a rules layer enforces deterministic constraints",
-        "LLMs are slower",
-        "Rules are multilingual"
+        "LLM-yalnızca DST yıkıcı parametreleri (tutar, hesap, tarih) yanlış şekilde çıkarabilir; bir kural katmanı deterministik kısıtlamaları zorlar",
+        "LLM'ler daha yavaştır",
+        "Kurallar çok dillidir"
       ],
       "correct": 1,
-      "explanation": "Compliance domains require deterministic enforcement; rules catch slot errors that LLMs introduce."
+      "explanation": "Uyumluluk alanları deterministik uygulama gerektirir; kurallar, Yüksek Lisans'ın getirdiği slot hatalarını yakalar."
     },
     {
       "stage": "post",
-      "question": "What is the cost concern with regenerating state on every turn via LLM?",
+      "question": "LLM aracılığıyla her fırsatta durumu yeniden oluşturmanın maliyet kaygısı nedir?",
       "options": [
-        "Re-reading the full history each turn yields O(n^2) total token usage; cap or summarize older turns",
+        "Her turda tüm geçmişi yeniden okumak O(n^2) toplam jeton kullanımını sağlar; Eski dönüşleri sınırlayın veya özetleyin",
         "More embeddings",
         "Cosine costs",
         "Embedding drift"
       ],
       "correct": 0,
-      "explanation": "Full-history regeneration is quadratic in turns; cap history or use rolling summaries."
+      "explanation": "Tam geçmişin yenilenmesi sırayla ikinci dereceden gerçekleşir; geçmişi sınırlayın veya yuvarlanan özetleri kullanın."
     },
     {
       "stage": "post",
-      "question": "Why are explicit confirmation flows required before destructive backend actions?",
+      "question": "Yıkıcı arka uç eylemlerinden önce neden açık onay akışları gerekiyor?",
       "options": [
         "Latency",
         "Confirmation increases JGA",
         "Required by tokenizers",
-        "Even good DST has nonzero slot-error rates; a deterministic confirmation prevents wrong-account or wrong-amount actions"
+        "İyi DST bile sıfırdan farklı yuva hatası oranlarına sahiptir; Belirleyici bir onay, yanlış hesap veya yanlış tutar işlemlerini önler"
       ],
       "correct": 3,
-      "explanation": "Destructive actions need user confirmation because DST is never error-free."
+      "explanation": "Yıkıcı eylemler kullanıcı onayına ihtiyaç duyar çünkü DST hiçbir zaman hatasız değildir."
     }
   ]
 }

@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What architectural difference distinguishes an action-conditioned world model (Genie 3) from a pure video generation model (Sora 2)?",
-      "options": ["Action-conditioned models are smaller", "Pure video generators condition on a prompt at t=0 and roll out; action-conditioned world models take a latent or explicit action per frame so the user can steer the rollout mid-generation", "Only the training datasets differ", "World models only work on 3D scenes"],
+      "question": "Eyleme dayalı bir dünya modelini (Genie 3) saf bir video oluşturma modelinden (Sora 2) ayıran mimari fark nedir?",
+      "options": [
+        "Aksiyon koşullu modeller daha küçüktür",
+        "Saf video oluşturucular t=0'da bir komut istemiyle koşullanır ve kullanıma sunulur; eylem koşullu dünya modelleri, çerçeve başına gizli veya açık bir eylem gerçekleştirir, böylece kullanıcı, neslin ortasında kullanıma sunmayı yönlendirebilir",
+        "Yalnızca eğitim veri kümeleri farklı",
+        "Dünya modelleri yalnızca 3B sahnelerde çalışır"
+      ],
       "correct": 1,
-      "explanation": "Sora 2 is autoregressive on spacetime tokens; its prompt sets the scene but you cannot change direction mid-rollout. Genie 3 infers or takes a latent action at each step and conditions the next-frame prediction on it, letting the user interact with the simulated world. This interactivity is what makes a model a 'world simulator' rather than a video generator."
+      "explanation": "Sora 2, uzay-zaman belirteçleri üzerinde otoregresiftir; istemi sahneyi belirler ancak sunumun ortasında yönü değiştiremezsiniz. Genie 3, her adımda gizli bir eylem çıkarır veya alır ve bir sonraki kare tahminini buna göre koşullandırarak kullanıcının simüle edilmiş dünyayla etkileşime girmesine olanak tanır. Bu etkileşim, bir modeli bir video oluşturucudan ziyade bir 'dünya simülatörü' yapan şeydir."
     },
     {
       "stage": "pre",
-      "question": "Divided attention in a video transformer means what?",
-      "options": ["Half the tokens are masked", "Each block does a temporal attention (same spatial position, across frames) followed by a spatial attention (same frame, across positions); this factorises cost from O((T*H*W)^2) into O((H*W)*T^2) + O(T*(H*W)^2) — dramatically cheaper than the joint product", "Only half the layers run attention", "Attention is split across GPUs"],
+      "question": "Bir video dönüştürücüde bölünmüş dikkat ne anlama gelir?",
+      "options": [
+        "Jetonların yarısı maskelendi",
+        "Her blok zamansal bir dikkat (kareler arasında aynı uzamsal konum) ve ardından uzamsal bir dikkat (konumlar arasında aynı çerçeve) gerçekleştirir; bu, maliyeti O((T*H*W)^2)'den O((H*W)*T^2) + O(T*(H*W)^2)'ye kadar faktörlere ayırır — ortak üründen önemli ölçüde daha ucuz",
+        "Katmanların yalnızca yarısı dikkat çekiyor",
+        "Dikkat GPU'lar arasında bölünmüş durumda"
+      ],
       "correct": 1,
-      "explanation": "Full joint attention over spacetime tokens is prohibitive: for T=150 temporal tokens and a 60x45 spatial grid (2700 spatial tokens), the joint (T*H*W)^2 ≈ 1.6e11 pairs. Divided attention runs temporal attention at each spatial position (H*W * T^2 ≈ 6.1e7) and spatial attention at each timestep (T * (H*W)^2 ≈ 1.1e9) — multiple orders of magnitude less. TimeSformer introduced this pattern; almost every 2026 video DiT (Sora, Wan, HunyuanVideo) uses a divided or window variant."
+      "explanation": "Uzay-zaman belirteçleri üzerinde tam ortak dikkat engelleyicidir: T=150 zamansal belirteçler ve 60x45 uzamsal ızgara (2700 uzamsal belirteçler) için eklem (T*H*W)^2 ≈ 1,6e11 çifti. Bölünmüş dikkat, zamansal dikkati her uzamsal konumda (H*W * T^2 ≈ 6,1e7) ve uzamsal dikkati her zaman adımında (T * (H*W)^2 ≈ 1,1e9) çalıştırır — birden çok büyüklük sırası daha azdır. TimeSformer bu modeli tanıttı; neredeyse her 2026 video DiT (Sora, Wan, HunyuanVideo) bölünmüş veya pencereli bir varyant kullanır."
     },
     {
       "stage": "post",
-      "question": "Sora 2's 2026 release advertised better physical plausibility. Which specific failure modes did this target?",
-      "options": ["Colour balance and contrast", "Weight, balance, object permanence, cause-and-effect — the model now handles dropped objects, characters colliding, and 'failures on purpose' (a missed jump) more believably than Sora 1", "Text rendering inside images", "Video length"],
+      "question": "Sora 2'nin 2026 sürümü daha iyi fiziksel inandırıcılığın reklamını yaptı. Bu, hangi spesifik arıza modlarını hedef aldı?",
+      "options": [
+        "Colour balance and contrast",
+        "Ağırlık, denge, nesne kalıcılığı, neden-sonuç - model artık düşen nesneleri, karakterlerin çarpışmasını ve 'kasıtlı başarısızlıkları' (kaçırılan atlama) Sora 1'den daha inandırıcı bir şekilde ele alıyor",
+        "Resimlerin içinde metin oluşturma",
+        "Video length"
+      ],
       "correct": 1,
-      "explanation": "Prior-generation video models famously failed on spaghetti-eating, drinking from glasses, and persistent-object scenes — hands would pass through objects, items would disappear mid-action. Sora 2 explicitly advertises improvements on weight, balance, object permanence, and cause-and-effect, measured against internal and public plausibility benchmarks. These are the dominant quality failures the field is still working on."
+      "explanation": "Önceki nesil video modellerinin spagetti yeme, bardaktan su içme ve kalıcı nesne sahneleri konusunda başarısız olduğu biliniyordu; eller nesnelerin içinden geçiyordu ve öğeler aksiyonun ortasında kayboluyordu. Sora 2, dahili ve genel kabul edilebilirlik kriterlerine göre ölçülen ağırlık, denge, nesne kalıcılığı ve neden-sonuç konularındaki iyileştirmeleri açıkça tanıtıyor. Bunlar, alanın hâlâ üzerinde çalıştığı baskın kalite hatalarıdır."
     },
     {
       "stage": "post",
-      "question": "In the emerging robotics stack (VLM + video generation + inverse dynamics), what does the inverse dynamics model do?",
-      "options": ["It generates the next frame", "It takes a pair (current observation, desired next observation from the video model) and outputs the low-level motor action that would connect them; this closes the loop between imagined rollouts and actual actuation", "It trains the VLM", "It labels training data"],
+      "question": "Ortaya çıkan robotik yığınında (VLM + video oluşturma + ters dinamikler), ters dinamik modeli ne yapar?",
+      "options": [
+        "Bir sonraki kareyi oluşturur",
+        "Bir çift alır (mevcut gözlem, video modelinden istenen sonraki gözlem) ve bunları birbirine bağlayacak düşük seviyeli motor hareketini çıktı olarak verir; bu, hayal edilen kullanıma sunmalar ile gerçek çalıştırma arasındaki döngüyü kapatır",
+        "VLM'yi eğitiyor",
+        "Eğitim verilerini etiketler"
+      ],
       "correct": 1,
-      "explanation": "The VLM plans, the video model imagines, and the inverse dynamics model turns imagination into motor commands. Given two consecutive observations, inverse dynamics asks: what action produced this transition? This three-component stack lets a robot train largely in a learned simulator, using the video model to generate data and the inverse dynamics model to execute."
+      "explanation": "VLM planlar, video modeli hayal eder ve ters dinamik modeli, hayal gücünü motor komutlara dönüştürür. Ardışık iki gözlem verildiğinde ters dinamik şu soruyu sorar: Bu geçişi hangi eylem yarattı? Bu üç bileşenli yığın, bir robotun veri oluşturmak için video modelini ve yürütmek için ters dinamik modelini kullanarak büyük ölçüde öğrenilmiş bir simülatörde eğitim almasına olanak tanır."
     },
     {
       "stage": "post",
-      "question": "Autonomous-driving teams use world models (Cosmos-Drive, Gaia-2, DrivingWorld) to replace what cost?",
-      "options": ["Actual fleet insurance", "Expensive real-world data collection for rare or dangerous corner cases (pedestrian jaywalks, icy roads, unusual vehicles); synthesised driving video provides on-demand training and evaluation data for those scenarios", "Road tolls", "Vehicle depreciation"],
+      "question": "Otonom sürüş ekipleri, hangi maliyetin yerine dünya modellerini (Cosmos-Drive, Gaia-2, DrivingWorld) kullanıyor?",
+      "options": [
+        "Actual fleet insurance",
+        "Nadir veya tehlikeli köşe durumları (yayaların kırmızı ışıkta geçmesi, buzlu yollar, sıra dışı araçlar) için pahalı gerçek dünya veri toplama; sentezlenmiş sürüş videosu, bu senaryolar için isteğe bağlı eğitim ve değerlendirme verileri sağlar",
+        "Road tolls",
+        "Vehicle depreciation"
+      ],
       "correct": 1,
-      "explanation": "Collecting corner-case driving data takes millions of real-world miles. Cosmos-Drive, Gaia-2, and DrivingWorld generate it conditioned on trajectories and maps. Teams use this data to expand training sets, evaluate planners in reproducible conditions, and de-risk scenarios they cannot ethically drive in reality. Replacing a fraction of real-world collection with synthesis is one of the clearest production wins for video world models in 2026."
+      "explanation": "Köşe durumunda sürüş verilerinin toplanması gerçek hayatta milyonlarca kilometre yol alır. Cosmos-Drive, Gaia-2 ve DrivingWorld bunu yörüngelere ve haritalara göre oluşturuyor. Ekipler bu verileri eğitim setlerini genişletmek, planlamacıları tekrarlanabilir koşullarda değerlendirmek ve gerçekte etik olarak yürütemeyecekleri risk azaltma senaryolarını değerlendirmek için kullanır. Gerçek dünyadaki koleksiyonun bir kısmını sentezle değiştirmek, 2026'da video dünyası modelleri açısından prodüksiyondaki en net kazanımlardan biri."
     }
   ]
 }

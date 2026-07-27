@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is the integration test the only honest grade of a six-component RAG pipeline?",
+      "question": "Entegrasyon testi neden altı bileşenli RAG boru hattının tek dürüst derecesidir?",
       "options": [
-        "The chunker is the only component that matters",
-        "Each stage's isolated metric does not predict the system's metric because each stage interacts with the next; the only valid grade is the whole pipeline run end to end against the same qrels",
-        "Production servers cannot run individual stage tests",
-        "The components run on different machines"
+        "Parçalayıcı önemli olan tek bileşendir",
+        "Her aşamanın yalıtılmış metriği sistemin ölçüsünü tahmin etmez çünkü her aşama bir sonrakiyle etkileşime girer; geçerli tek not, tüm hattın aynı qrel'lere karşı uçtan uca çalıştırılmasıdır",
+        "Üretim sunucuları bireysel aşama testlerini çalıştıramaz",
+        "Bileşenler farklı makinelerde çalışır"
       ],
       "correct": 1,
-      "explanation": "Isolated wins do not compose; the pipeline is graded on the joint output."
+      "explanation": "İzole galibiyetler oluşmaz; boru hattı ortak çıktıya göre derecelendirilir."
     },
     {
       "stage": "pre",
-      "question": "What is the role of refuse-on-low-confidence in the answer generator?",
+      "question": "Cevap oluşturucuda düşük güveni reddetmenin rolü nedir?",
       "options": [
-        "It logs every refusal to disk",
-        "It returns 'I do not know' when the reranker top-1 score sits below a corpus-specific threshold, preventing hallucinated answers when the retrieved context does not address the query",
-        "It blocks queries longer than 100 tokens",
-        "It triggers a re-retrieval with a different chunker"
+        "Diske yapılan her reddi günlüğe kaydeder",
+        "Yeniden sıralayanın ilk 1 puanı, derleme özgü bir eşiğin altına düştüğünde 'Bilmiyorum' ifadesini döndürür ve alınan bağlam sorguyu ele almadığında halüsinasyonlu yanıtları önler",
+        "100 jetondan uzun sorguları engeller",
+        "Farklı bir parçalayıcı ile yeniden alımı tetikler"
       ],
       "correct": 1,
-      "explanation": "A consistently low rank-1 score is the model telling you nothing in the corpus answers this query; refuse rather than hallucinate."
+      "explanation": "Sürekli olarak düşük bir derece-1 puanı, bu sorguyu yanıtlayan derlemde size hiçbir şey söylemeyen modeldir; Halüsinasyon görmek yerine reddedin."
     },
     {
       "stage": "check",
-      "question": "Why are the rerank training triples kept disjoint from the eval queries?",
+      "question": "Yeniden sıralama eğitim üçlüleri neden değerlendirme sorgularından ayrı tutuluyor?",
       "options": [
         "To save GPU memory",
-        "To prevent train-test leakage; if the eval queries overlap the rerank training set the eval looks magical and the regression test does not catch real drift",
-        "Because the cross-encoder requires distinct vocabularies",
-        "Because RRF cannot fuse overlapping lists"
+        "Tren testi sızıntısını önlemek için; değerlendirme sorguları yeniden sıralama eğitim seti ile örtüşüyorsa değerlendirme büyülü görünür ve regresyon testi gerçek sapmayı yakalayamaz",
+        "Çapraz kodlayıcı farklı sözcükler gerektirdiğinden",
+        "Çünkü RRF çakışan listeleri birleştiremez"
       ],
       "correct": 1,
-      "explanation": "Strict separation is the basic hygiene; otherwise the rerank metric does not predict production behavior."
+      "explanation": "Kesin ayırım temel hijyendir; aksi takdirde yeniden sıralama metriği üretim davranışını tahmin etmez."
     },
     {
       "stage": "check",
-      "question": "What is the purpose of the self-terminating demo's exit code?",
+      "question": "Kendi kendini sonlandıran demo çıkış kodunun amacı nedir?",
       "options": [
         "Cosmetic",
-        "It encodes pass/fail against the metric thresholds; a CI smoke test can plug the demo into the pipeline and gate the merge on a non-zero exit",
-        "It is required by Python",
-        "The reranker uses it as a training signal"
+        "Metrik eşiklere göre başarılı/başarısızı kodlar; CI duman testi, demoyu boru hattına bağlayabilir ve birleşmeyi sıfır olmayan bir çıkışa kapatabilir",
+        "Python tarafından gereklidir",
+        "Yeniden sıralayan kişi bunu bir eğitim sinyali olarak kullanır"
       ],
       "correct": 1,
-      "explanation": "Exit code 0 means thresholds met; non-zero means regression. That is the contract a CI gate consumes."
+      "explanation": "Çıkış kodu 0, eşiklerin karşılandığı anlamına gelir; sıfır olmaması regresyon anlamına gelir. Bu, bir CI kapısının tükettiği sözleşmedir."
     },
     {
       "stage": "check",
-      "question": "What does a citation anchor look like in this pipeline?",
+      "question": "Bu ardışık düzende bir alıntı çapası nasıl görünür?",
       "options": [
         "[doc_id:chunk_index]",
-        "Markdown link with the source URL",
+        "URL kaynağıyla işaretleme bağlantısı",
         "JSON-RPC envelope",
-        "The literal embedding vector"
+        "Gerçek gömme vektörü"
       ],
       "correct": 0,
-      "explanation": "The generator emits the (doc_id, chunk_index) tuple as an anchor so a downstream UI or auditor can map every claim back to its source chunk."
+      "explanation": "Oluşturucu (doc_id, chunk_index) tuple'ını bir çapa olarak yayar, böylece aşağı yöndeki bir UI veya denetçi her iddiayı kaynak öbeğine geri eşleyebilir."
     },
     {
       "stage": "post",
-      "question": "Which failure mode is invisible to the mock generator and must be tested with a real LLM before shipping?",
+      "question": "Sahte jeneratör tarafından hangi arıza modu görünmez ve nakliyeden önce gerçek bir LLM ile test edilmesi gerekir?",
       "options": [
         "Latency",
-        "Hallucination: the mock generator only emits text from retrieved chunks and cannot invent content; a real LLM can ignore the chunks and generate ungrounded answers",
+        "Halüsinasyon: Sahte oluşturucu yalnızca alınan parçalardan metin yayar ve içerik icat edemez; gerçek bir LLM, parçaları görmezden gelebilir ve temelsiz yanıtlar üretebilir",
         "Tokenization",
         "Vector index size"
       ],
       "correct": 1,
-      "explanation": "The mock cannot test the generator's safety against hallucinated content; only a real model swap-in can."
+      "explanation": "Sahte, jeneratörün halüsinasyonlu içeriğe karşı güvenliğini test edemez; yalnızca gerçek bir model takası yapılabilir."
     }
   ]
 }

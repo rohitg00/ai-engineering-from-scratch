@@ -2,64 +2,64 @@
   {
     "id": "timeseries-pre-1",
     "stage": "pre",
-    "question": "Why is a random train/test split invalid for time series data?",
+    "question": "Zaman serisi verileri için rastgele eğitim/test ayrımı neden geçersiz?",
     "options": [
-      "Random splits make the dataset too small",
-      "Random splits leak future information into the training set, allowing the model to cheat",
-      "Time series data cannot be split at all",
-      "Random splits only work for classification problems"
+      "Rastgele bölünmeler veri kümesini çok küçük yapar",
+      "Rastgele bölmeler gelecekteki bilgileri eğitim setine sızdırarak modelin hile yapmasına olanak tanır",
+      "Zaman serisi verileri hiçbir şekilde bölünemez",
+      "Rastgele bölmeler yalnızca sınıflandırma problemlerinde işe yarar"
     ],
     "correct": 1,
-    "explanation": "In a random split, future data points can end up in the training set while past points are in the test set. The model then uses future information to predict the past, giving falsely optimistic results."
+    "explanation": "Rastgele bir bölünmede, gelecekteki veri noktaları eğitim setinde yer alırken geçmiş noktalar test setinde yer alabilir. Model daha sonra geçmişi tahmin etmek için gelecekteki bilgileri kullanıyor ve hatalı iyimser sonuçlar veriyor."
   },
   {
     "id": "timeseries-pre-2",
     "stage": "pre",
-    "question": "What does it mean for a time series to be stationary?",
+    "question": "Bir zaman serisinin durağan olması ne anlama gelir?",
     "options": [
-      "The values never change over time",
-      "Its statistical properties (mean, variance, autocorrelation) do not change over time",
-      "It has no seasonal patterns",
-      "It always trends upward"
+      "Değerler zamanla asla değişmez",
+      "İstatistiksel özellikleri (ortalama, varyans, otokorelasyon) zamanla değişmez",
+      "Mevsimsel desenleri yoktur",
+      "Her zaman yukarı yönlü eğilim gösterir"
     ],
     "correct": 1,
-    "explanation": "A stationary series has constant mean, variance, and autocorrelation structure over time. Most forecasting methods assume stationarity. Non-stationary series need differencing or detrending first."
+    "explanation": "Durağan bir seri zaman içinde sabit ortalama, varyans ve otokorelasyon yapısına sahiptir. Çoğu tahmin yöntemi durağanlığı varsayar. Durağan olmayan serilerin öncelikle farkının alınması veya trendinin düşürülmesi gerekir."
   },
   {
     "id": "timeseries-post-1",
     "stage": "post",
-    "question": "What is the purpose of differencing a time series?",
+    "question": "Bir zaman serisinin farkını almanın amacı nedir?",
     "options": [
-      "To increase the number of data points",
-      "To remove trend and make the series stationary by modeling changes between consecutive values",
-      "To convert regression into classification",
-      "To normalize the values between 0 and 1"
+      "Veri noktalarının sayısını artırmak için",
+      "Ardışık değerler arasındaki değişimleri modelleyerek trendi ortadan kaldırmak ve seriyi durağan hale getirmek",
+      "Regresyonun sınıflandırmaya dönüştürülmesi",
+      "0 ile 1 arasındaki değerleri normalleştirmek için"
     ],
     "correct": 1,
-    "explanation": "Differencing replaces each value with the change from the previous value: diff[t] = value[t] - value[t-1]. This removes trend, making the series closer to stationary."
+    "explanation": "Fark alma, her değeri önceki değerdeki değişiklikle değiştirir: fark[t] = değer[t] - değer[t-1]. Bu trendi ortadan kaldırarak seriyi durağanlığa yaklaştırıyor."
   },
   {
     "id": "timeseries-post-2",
     "stage": "post",
-    "question": "Lag features convert a time series into a supervised learning problem. What is a lag-3 feature for predicting y[t]?",
+    "question": "Gecikme özellikleri bir zaman serisini denetimli öğrenme problemine dönüştürür. Y[t]'yi tahmin etmek için gecikme-3 özelliği nedir?",
     "options": [
-      "The average of the next 3 values: (y[t+1] + y[t+2] + y[t+3]) / 3",
-      "The value 3 time steps ago: y[t-3]",
-      "The 3rd derivative of the series",
-      "The difference between the current value and 3 steps ahead"
+      "Sonraki 3 değerin ortalaması: (y[t+1] + y[t+2] + y[t+3]) / 3",
+      "3 zaman adımı önceki değer: y[t-3]",
+      "Serinin 3. türevi",
+      "Mevcut değer ile 3 adım ileri arasındaki fark"
     ],
     "correct": 1,
-    "explanation": "A lag-3 feature is y[t-3]: the value 3 time steps in the past. Using past values as input features lets standard ML models (regression, trees) make time series predictions without specialized algorithms."
+    "explanation": "Bir gecikme-3 özelliği y[t-3]'tür: geçmişteki 3 zaman adımının değeri. Giriş özellikleri olarak geçmiş değerleri kullanmak, standart ML modellerinin (regresyon, ağaçlar) özel algoritmalar olmadan zaman serisi tahminleri yapmasına olanak tanır."
   },
   {
     "id": "timeseries-post-3",
     "stage": "post",
-    "question": "Walk-forward validation splits time data into expanding or sliding windows. Why is this better than K-fold CV for time series?",
+    "question": "İleriye doğru doğrulama, zaman verilerini genişleyen veya kayan pencerelere böler. Bu neden zaman serileri için K-fold CV'den daha iyi?",
     "options": [
-      "Walk-forward is faster to compute",
-      "Walk-forward respects temporal order, training only on past data and testing on future data, preventing lookahead bias",
-      "K-fold CV cannot be used on numeric data",
-      "Walk-forward uses more data for training"
+      "İleriye doğru hesaplamak daha hızlıdır",
+      "İleriye doğru ilerleme, zamansal sıraya saygı gösterir, yalnızca geçmiş veriler üzerinde eğitim yapar ve gelecekteki veriler üzerinde test yapar, ileriye dönük önyargıyı önler",
+      "K-fold CV sayısal verilerde kullanılamaz",
+      "İleriye doğru eğitim için daha fazla veri kullanılır"
     ],
     "correct": 1,
     "explanation": "Walk-forward validation always trains on past data and tests on future data, mimicking real-world deployment. K-fold CV shuffles data, potentially training on future to predict past (temporal leakage)."

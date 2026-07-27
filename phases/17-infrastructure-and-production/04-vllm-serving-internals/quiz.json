@@ -4,43 +4,43 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the main problem classic static batching has with mixed-length requests?",
+      "question": "Klasik statik toplu işlemin karışık uzunluklu isteklerle ilgili ana sorunu nedir?",
       "options": [
-        "It only works with FP4",
-        "It requires NVLink between every GPU",
-        "It cannot use GPUs at all",
-        "Padding to the longest prompt and longest output wastes memory and stalls the whole batch on the slowest sequence"
+        "Yalnızca FP4 ile çalışır",
+        "Her GPU arasında NVLink gerektirir",
+        "GPU'ları hiçbir şekilde kullanamaz",
+        "En uzun istem ve en uzun çıktıya dolgu yapmak hafızayı boşa harcar ve tüm partiyi en yavaş sırada durdurur"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does PagedAttention reduce KV cache fragmentation from 60-80% to under 4%?",
+      "question": "PagedAttention, KV önbellek parçalanmasını %60-80'den %4'ün altına nasıl düşürür?",
       "options": [
         "By disabling KV cache entirely",
         "By compressing weights to INT4",
         "By allocating KV cache in fixed-size blocks (default 16 tokens) referenced through a per-sequence block table",
-        "By holding the full prompt in CPU RAM"
+        "CPU RAM içindeki tam istemi basılı tutarak"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What invariant defines continuous batching in vLLM's V1 scheduler?",
+      "question": "vLLM'nin V1 zamanlayıcısında sürekli gruplamayı hangi değişmez tanımlar?",
       "options": [
-        "The scheduler runs once per request and the batch never changes",
-        "Each request gets its own dedicated GPU stream",
-        "The scheduler waits 10 ms windows to fill a batch before running",
-        "The scheduler runs once per decode iteration, admitting finished sequences out and waiting ones in"
+        "Zamanlayıcı istek başına bir kez çalışır ve toplu iş hiçbir zaman değişmez",
+        "Her istek kendi özel GPU akışını alır",
+        "Zamanlayıcı, çalıştırmadan önce bir toplu işlemi doldurmak için 10 ms pencere bekler",
+        "Zamanlayıcı, kod çözme yinelemesi başına bir kez çalışır, bitmiş dizileri kabul eder ve bekleyenleri içeri alır."
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which latency metric does chunked prefill primarily protect under mixed load?",
+      "question": "Parçalı önceden doldurma, karma yük altında öncelikli olarak hangi gecikme metriğini korur?",
       "options": [
         "Mean throughput",
         "Cold-start time",
@@ -52,11 +52,11 @@
     },
     {
       "stage": "post",
-      "question": "In vLLM v0.18.0, which speculative-decoding variant remains compatible with --enable-chunked-prefill?",
+      "question": "vLLM v0.18.0'da hangi spekülatif kod çözme değişkeni --enable-chunked-prefill ile uyumlu olmaya devam ediyor?",
       "options": [
-        "EAGLE-1 only",
-        "N-gram GPU speculative decoding in the V1 scheduler",
-        "No speculative decoding is compatible",
+        "Yalnızca EAGLE-1",
+        "N-gram GPU V1 zamanlayıcıda spekülatif kod çözme",
+        "Hiçbir spekülatif kod çözme uyumlu değildir",
         "Draft-model speculative decoding"
       ],
       "correct": 1,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does chunked prefill not in isolation increase mean throughput?",
+      "question": "Parçalı önceden doldurma neden tek başına verim artışı anlamına gelmiyor?",
       "options": [
-        "It runs on a different GPU than decode",
-        "It uses speculative decoding under the hood",
-        "It compresses weights more aggressively",
-        "It only reduces decode-time jitter; the throughput win in practice comes from keeping decode sequences alive during long prefills, not from changing the work done"
+        "Kod çözme işleminden farklı bir GPU üzerinde çalışır",
+        "Kaputun altında spekülatif kod çözme kullanır",
+        "Ağırlıkları daha agresif bir şekilde sıkıştırır",
+        "Yalnızca kod çözme süresindeki titreşimi azaltır; Uygulamadaki verim artışı, yapılan işi değiştirmekten değil, uzun ön doldurmalar sırasında kod çözme dizilerini canlı tutmaktan gelir"
       ],
       "correct": 3,
       "explanation": ""

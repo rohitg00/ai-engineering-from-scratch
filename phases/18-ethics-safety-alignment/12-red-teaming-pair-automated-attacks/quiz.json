@@ -4,55 +4,55 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is manual red-teaming insufficient for evaluating frontier models?",
+      "question": "Sınır modellerini değerlendirmek için manuel kırmızı ekip oluşturma neden yetersiz?",
       "options": [
-        "It does not scale; attack success rate needs a statistical sample against a moving target with every model release",
-        "Manual prompts are always blocked by filters",
+        "Ölçeklenmiyor; Saldırı başarı oranı, her model sürümünde hareketli bir hedefe karşı istatistiksel bir örneğe ihtiyaç duyar",
+        "Manuel istemler her zaman filtreler tarafından engellenir",
         "Manual testing produces too many false positives",
-        "Manual testers cannot read model outputs"
+        "Manuel test cihazları model çıktılarını okuyamıyor"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does PAIR stand for, and what does it do?",
+      "question": "PAIR neyi temsil eder ve ne işe yarar?",
       "options": [
-        "Prompt Automatic Iterative Refinement; an attacker LLM iteratively proposes jailbreaks for a target, with prior attempts as in-context feedback",
+        "Hızlı Otomatik Yinelemeli İyileştirme; bir saldırgan LLM, önceki denemeleri bağlam içi geri bildirim olarak kullanarak, tekrar tekrar bir hedef için jailbreak yapılmasını önerir",
         "Pairwise Adversarial Inference Routing; routes attacks across models",
         "Pre-Action Inspection Reasoning; a defensive scaffolding",
-        "Persuasive Adversarial Iterative Reward; replaces RM with a persuader"
+        "İkna Edici Çelişkili Yinelemeli Ödül; RM'yi bir ikna ediciyle değiştirir"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is PAIR more efficient than GCG for a black-box target?",
+      "question": "Kara kutu hedefi için PAIR neden GCG'den daha verimlidir?",
       "options": [
         "PAIR uses a larger attacker model than GCG",
-        "GCG only attacks open-source models",
-        "GCG requires white-box gradient access and produces unreadable suffixes that cannot use in-context feedback; PAIR is black-box and natural-language with in-context learning",
-        "PAIR ignores the target's response"
+        "GCG yalnızca açık kaynaklı modellere saldırır",
+        "GCG, beyaz kutu degrade erişimi gerektirir ve bağlam içi geri bildirimi kullanamayan, okunamayan son ekler üretir; PAIR, bağlam içi öğrenmeye sahip kara kutu ve doğal dildir",
+        "PAIR hedefin tepkisini yok sayar"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why must Attack Success Rate (ASR) be reported with both a query budget and a judge identity?",
+      "question": "Saldırı Başarı Oranı (ASR) neden hem sorgu bütçesi hem de yargıç kimliğiyle raporlanmalıdır?",
       "options": [
-        "Because judges always agree",
-        "Because budgets are set by JailbreakBench only",
-        "Because ASR varies with how many queries the attacker is allowed and with which LLM judges a response as a jailbreak",
-        "Because ASR is required by export-control regulations"
+        "Çünkü yargıçlar her zaman aynı fikirdedir",
+        "Çünkü bütçeler yalnızca JailbreakBench tarafından belirleniyor",
+        "Çünkü ASR, saldırganın kaç sorguya izin verdiğine ve LLM'nin bir yanıtı jailbreak olarak değerlendirdiği sorguya göre değişir.",
+        "Çünkü ihracat kontrol düzenlemeleri ASR'yi zorunlu kılıyor"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which of these automated attacks is best described as 'tree-of-attacks with pruning'?",
+      "question": "Bu otomatik saldırılardan hangisi 'budamalı saldırı ağacı' olarak en iyi şekilde tanımlanır?",
       "options": [
         "TAP",
         "GCG",
@@ -64,7 +64,7 @@
     },
     {
       "stage": "post",
-      "question": "Which standardized benchmark uses 510 behaviours across 7 categories with semantic and functional harm tests?",
+      "question": "Hangi standartlaştırılmış kıyaslama, anlamsal ve işlevsel zarar testleriyle birlikte 7 kategoride 510 davranışı kullanır?",
       "options": [
         "JailbreakBench",
         "HarmBench",

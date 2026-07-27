@@ -4,23 +4,23 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core idea of model cascading?",
+      "question": "Model basamaklandırmanın temel fikri nedir?",
       "options": [
-        "Run two models in parallel and average the outputs",
+        "İki modeli paralel olarak çalıştırın ve çıktıların ortalamasını alın",
         "Always route by random weight",
-        "Run every request on the most expensive model first",
-        "Run a cheap model first, escalate to a frontier model only on low confidence or refusal"
+        "Her isteği önce en pahalı modelde çalıştırın",
+        "Önce ucuz bir model çalıştırın, yalnızca düşük güven veya reddedilme durumunda sınır modeline geçin"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which four signals does the lesson list for routing decisions?",
+      "question": "Ders, yönlendirme kararları için hangi dört sinyali listeliyor?",
       "options": [
-        "Task classification, prompt length, embedding similarity to known-hard set, and self-confidence from a first-pass",
-        "Token count only",
-        "User tier only",
+        "Görev sınıflandırması, bilgi istemi uzunluğu, bilinen zor kümeye benzerlik ve ilk geçişten itibaren özgüven",
+        "Yalnızca jeton sayısı",
+        "Yalnızca kullanıcı katmanı",
         "GPU temperature, fan speed, room humidity, time of day"
       ],
       "correct": 0,
@@ -28,10 +28,10 @@
     },
     {
       "stage": "check",
-      "question": "What is the expected latency profile of a cascade router?",
+      "question": "Kademeli bir yönlendiricinin beklenen gecikme profili nedir?",
       "options": [
         "Always slower by 10x",
-        "Identical to the frontier model",
+        "Sınır modeliyle aynı",
         "About 1.2x median latency (cheap run plus verify), about 2x on escalated requests (~10% of traffic)",
         "Always faster than pre-route"
       ],
@@ -40,9 +40,9 @@
     },
     {
       "stage": "check",
-      "question": "Which routing pattern adds 5-10ms latency up front and is fastest overall?",
+      "question": "Hangi yönlendirme modeli önceden 5-10 ms gecikme ekler ve genel olarak en hızlıdır?",
       "options": [
-        "Pre-route with a classifier",
+        "Bir sınıflandırıcıyla ön rota oluşturma",
         "Ensemble route",
         "Cascade",
         "Random round-robin"
@@ -52,23 +52,23 @@
     },
     {
       "stage": "post",
-      "question": "What is cheap-model drift in routing?",
+      "question": "Yönlendirmede ucuz model kayması nedir?",
       "options": [
-        "The cheap model becomes more expensive",
-        "Cascade falls through to frontier 100% of the time",
-        "Task distribution shifts but the trained router keeps sending requests to the cheap model, silently degrading quality",
-        "A latency drift in the cheap model"
+        "Ucuz model daha pahalı hale geliyor",
+        "Cascade, zamanın %100'ünde sınıra düşüyor",
+        "Görev dağılımı değişiyor ancak eğitimli yönlendirici ucuz modele istek göndermeye devam ediyor, bu da kaliteyi sessizce düşürüyor",
+        "Ucuz modelde gecikme kayması"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which guard does the lesson recommend to catch routing drift?",
+      "question": "Yönlendirme sapmasını yakalamak için ders hangi korumayı öneriyor?",
       "options": [
-        "Only offline eval sets",
+        "Yalnızca çevrimdışı değerlendirme kümeleri",
         "Disable routing in production",
-        "Quarterly engineering review only",
+        "Yalnızca üç aylık mühendislik incelemesi",
         "Online quality metrics — thumbs-up/down per route, LLM-judge on held-out samples, escalation rate, refusal rate"
       ],
       "correct": 3,

@@ -1,61 +1,61 @@
 {
   "lesson": "44-cosine-lr-warmup",
-  "title": "Cosine LR with Linear Warmup",
+  "title": "Doğrusal Isınma ile Kosinüs LR",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the cosine-with-warmup schedule start at zero rather than at lr_max?",
+      "question": "Isınma ile kosinüs programı neden lr_max yerine sıfırdan başlıyor?",
       "options": [
-        "Because lr_max is illegal at step zero",
-        "The first thousand updates are noisy; a linear ramp from zero to lr_max gives the optimizer a small effective step size while running estimates stabilise",
-        "Because Adam requires it",
+        "Çünkü lr_max sıfır adımda yasa dışıdır",
+        "İlk bin güncelleme gürültülüdür; sıfırdan lr_max'a doğrusal bir rampa, tahminleri çalıştırırken optimize ediciye küçük bir etkili adım boyutu verir",
+        "Çünkü Adem bunu gerektiriyor",
         "Random tradition"
       ],
       "correct": 1,
-      "explanation": "Warmup keeps brittle early updates small; the model otherwise either diverges or plateaus."
+      "explanation": "Warmup, kırılgan erken güncellemeleri küçük tutar; aksi takdirde model ya ıraksar ya da sabit kalır."
     },
     {
       "stage": "check",
-      "question": "Why is the schedule implemented as a single function over step rather than three glued segments?",
+      "question": "Program neden üç yapıştırılmış bölüm yerine adım üzerinden tek bir işlev olarak uygulanıyor?",
       "options": [
-        "Single functions are smaller",
-        "A glued schedule loses one boundary the first time lr_max is changed; the single function evaluates the same closed-form expression and preserves continuity at warmup and total endpoints",
-        "Linters require it",
+        "Tek işlevler daha küçüktür",
+        "Yapıştırılmış bir zamanlama lr_max ilk kez değiştirildiğinde bir sınırını kaybeder; tek işlev aynı kapalı form ifadesini değerlendirir ve ısınma ve toplam uç noktalarda sürekliliği korur",
+        "Linter bunu gerektiriyor",
         "Random"
       ],
       "correct": 1,
-      "explanation": "Continuity at lr(warmup_steps) and lr(total_steps) follows from the closed form."
+      "explanation": "lr(warmup_steps) ve lr(total_steps)'deki süreklilik kapalı formdan kaynaklanmaktadır."
     },
     {
       "stage": "check",
-      "question": "What happens for step > total_steps in the schedule?",
+      "question": "Zamanlamadaki adım > toplam_adımlar için ne olur?",
       "options": [
-        "It throws an exception",
-        "It pins at lr_min; the schedule does not extrapolate, and trainers that need to extend training change total_steps explicitly",
-        "It returns nan",
-        "It wraps around"
+        "Bir istisna atar",
+        "lr_min'e sabitlenir; program tahminde bulunmaz ve eğitimi uzatması gereken eğitmenler total_steps'i açıkça değiştirir",
+        "Nan'i döndürür",
+        "Etrafı sarar"
       ],
       "correct": 1,
       "explanation": "A pinned floor keeps an overshooting trainer in a documented state instead of crashing."
     },
     {
       "stage": "check",
-      "question": "Why log gradient L2 norm next to the learning rate?",
+      "question": "Neden öğrenme oranının yanına gradyan L2 normunu kaydedelim?",
       "options": [
-        "It looks pretty",
-        "The norm is the other half of training health: a divergent run spikes its norm before the loss; a too-aggressive peak shows up as a norm that stays high after warmup",
-        "Adam requires it",
+        "Güzel görünüyor",
+        "Norm, antrenman sağlığının diğer yarısıdır: Farklı bir koşu, kayıptan önce normunu yükseltir; aşırı agresif bir zirve, ısınmadan sonra yüksek kalan bir norm olarak ortaya çıkıyor",
+        "Adem bunu gerektiriyor",
         "Tradition"
       ],
       "correct": 1,
-      "explanation": "Co-logging makes pathological schedules visible at run time, not after the fact."
+      "explanation": "Ortak kayıt, patolojik programları olaydan sonra değil, çalışma zamanında görünür hale getirir."
     },
     {
       "stage": "post",
-      "question": "Why configure warmup_steps as a fraction of total_steps in production?",
+      "question": "Neden Warmup_steps'i üretimdeki total_steps'in bir kesri olarak yapılandırmalısınız?",
       "options": [
-        "Fractions are cleaner",
-        "A fixed warmup count that suits a 20k-step run is essentially no warmup in a 200M-step run; the fraction (typical 1-3 percent) scales with training duration",
+        "Kesirler daha temizdir",
+        "20k adımlık bir koşuya uygun olan sabit bir ısınma sayısı, aslında 200M adımlık bir koşuda ısınma sayılmaz; kesir (tipik olarak yüzde 1-3) eğitim süresine göre ölçeklenir",
         "Random preference",
         "Hardware requirement"
       ],
@@ -64,15 +64,15 @@
     },
     {
       "stage": "post",
-      "question": "Why is a non-zero lr_min typical in production?",
+      "question": "Üretimde neden sıfır olmayan bir lr_min tipiktir?",
       "options": [
         "Adam requires non-zero",
-        "A floor near 10 percent of lr_max keeps the optimizer learning during the long tail; an lr_min of zero produces a curve that looks good and a model that has not finished training",
+        "lr_max'ın yüzde 10'una yakın bir taban, optimize edicinin uzun kuyruk sırasında öğrenmesini sağlar; lr_min sıfır değeri, iyi görünen bir eğri ve eğitimi tamamlamamış bir model üretir",
         "Numerical stability",
         "Backward compatibility"
       ],
       "correct": 1,
-      "explanation": "The tail of the schedule is where late-stage refinements land; zeroing it wastes that signal."
+      "explanation": "Programın kuyruğu, son aşamadaki iyileştirmelerin gerçekleştiği yerdir; sıfırlamak bu sinyali boşa harcar."
     }
   ]
 }

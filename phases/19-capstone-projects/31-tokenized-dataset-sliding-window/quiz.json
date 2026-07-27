@@ -1,22 +1,22 @@
 {
   "lesson": "31-tokenized-dataset-sliding-window",
-  "title": "Tokenized Dataset with Sliding Window",
+  "title": "Kayan Pencereli Tokenleştirilmiş Veri Kümesi",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the shape contract for a causal LM training batch?",
+      "question": "Nedensel bir LM eğitim grubu için şekil sözleşmesi nedir?",
       "options": [
-        "(B, T) input ids and (B, T) target ids where target is the input shifted left by one",
-        "(B, V) one-hot vectors over the vocabulary",
-        "(B, T, T) attention masks with the input ids on the diagonal",
+        "(B, T) giriş kimlikleri ve (B, T) hedef kimlikleri; burada hedef, girişin bir birim sola kaydırıldığı yerdir",
+        "(B, V) kelime dağarcığı üzerinde tek sıcak vektörler",
+        "(B, T, T) giriş kimliklerinin çaprazda yer aldığı dikkat maskeleri",
         "(B, 2) input id and label pairs"
       ],
       "correct": 0,
-      "explanation": "Causal LM training reads (B, T) input ids and predicts the same shape of target ids, where target[t] = input[t+1]."
+      "explanation": "Nedensel LM eğitimi (B, T) giriş kimliklerini okur ve hedef kimliklerinin aynı şeklini tahmin eder; burada hedef[t] = giriş[t+1]."
     },
     {
       "stage": "check",
-      "question": "How many windows of length T+1 fit in an id stream of length N with stride S?",
+      "question": "Adım S olan N uzunluğundaki bir kimlik akışına T+1 uzunluğunda kaç pencere sığar?",
       "options": [
         "N // (T + 1)",
         "max(0, 1 + (N - (T + 1)) // S)",
@@ -24,55 +24,55 @@
         "N - T - S"
       ],
       "correct": 1,
-      "explanation": "The first window starts at 0. Subsequent windows start at multiples of S. The last window must still cover T+1 ids."
+      "explanation": "İlk pencere 0'dan başlar. Sonraki pencereler S'nin katlarından başlar. Son pencere yine de T+1 kimliklerini kapsamalıdır."
     },
     {
       "stage": "check",
-      "question": "What effect does halving the stride have on the dataset?",
+      "question": "Adımın yarıya indirilmesinin veri kümesi üzerindeki etkisi nedir?",
       "options": [
-        "It halves the number of training examples per epoch",
-        "It roughly doubles the number of training examples per epoch",
-        "It has no effect because windows never overlap",
-        "It removes overlap between consecutive windows"
+        "Dönem başına eğitim örneklerinin sayısını yarıya indirir",
+        "Bu, çağ başına eğitim örneklerinin sayısını kabaca iki katına çıkarır",
+        "Hiçbir etkisi yoktur çünkü pencereler hiçbir zaman üst üste gelmez",
+        "Ardışık pencereler arasındaki örtüşmeyi ortadan kaldırır"
       ],
       "correct": 1,
-      "explanation": "A smaller stride produces more overlapping windows, increasing the example count and the boundary diversity at the cost of more compute per epoch."
+      "explanation": "Daha küçük bir adım, daha fazla örtüşen pencere oluşturarak örnek sayısını ve sınır çeşitliliğini artırarak dönem başına daha fazla işlem maliyetine neden olur."
     },
     {
       "stage": "check",
-      "question": "Why pass an explicit torch.Generator to the DataLoader?",
+      "question": "Neden açık bir torch.Generator'ı DataLoader'a iletmelisiniz?",
       "options": [
-        "It speeds up data loading",
-        "It removes the need for batch padding",
-        "It makes the shuffle deterministic across runs with the same seed",
-        "It enables multi-GPU training"
+        "Veri yüklemeyi hızlandırır",
+        "Toplu doldurma ihtiyacını ortadan kaldırır",
+        "Aynı tohumla çalıştırmalar arasında karıştırmayı deterministik hale getirir",
+        "Çoklu GPU eğitimine olanak sağlar"
       ],
       "correct": 2,
-      "explanation": "A seeded generator reproduces the same shuffle. Reruns with the same seed see batches in the same order, which is required for fair hyperparameter comparison."
+      "explanation": "Tohumlu bir oluşturucu aynı karıştırmayı yeniden üretir. Aynı tohumla yapılan tekrar çalıştırmalarda, partilerin aynı sırada görülmesi, adil hiperparametre karşılaştırması için gereklidir."
     },
     {
       "stage": "post",
-      "question": "Why does the dataset return (input[:-1], input[1:]) from each window of size T+1?",
+      "question": "Veri kümesi neden T+1 boyutundaki her pencereden (giriş[:-1], giriş[1:]) geri dönüyor?",
       "options": [
-        "It throws away one id to save memory",
-        "It implements the shift-by-one target so the loss measures next-token prediction",
-        "It removes a special token from the input",
-        "It is a quirk of PyTorch tensor indexing"
+        "Bellekten tasarruf etmek için bir kimliği atar",
+        "Birer birer kaydırma hedefini uygular, böylece kayıp bir sonraki jeton tahminini ölçer",
+        "Girişten özel bir jetonu kaldırır",
+        "Bu PyTorch tensör indekslemenin bir tuhaflığıdır"
       ],
       "correct": 1,
-      "explanation": "The target at position t is the input at position t+1. Slicing the window into [:-1] and [1:] expresses that contract."
+      "explanation": "t konumundaki hedef, t+1 konumundaki girdidir. Pencereyi [:-1] ve [1:] şeklinde dilimlemek bu sözleşmeyi ifade eder."
     },
     {
       "stage": "post",
-      "question": "Why does the lesson drop incomplete trailing windows rather than padding them?",
+      "question": "Ders neden tamamlanmamış sondaki pencereleri doldurmak yerine bırakıyor?",
       "options": [
-        "Padding would change the vocabulary size",
-        "Dropping keeps every example the same length so no loss mask is needed",
-        "Padded tokens are not supported by the model",
-        "Dropped data is recovered by the next epoch"
+        "Dolgu kelime dağarcığının boyutunu değiştirir",
+        "Bırakma her örneği aynı uzunlukta tutar, böylece kayıp maskesine gerek kalmaz",
+        "Yastıklı jetonlar model tarafından desteklenmiyor",
+        "Bırakılan veriler bir sonraki çağda kurtarılır"
       ],
       "correct": 1,
-      "explanation": "All examples are exactly T tokens long by construction, so the batch is a clean rectangular tensor and the loss applies uniformly without a mask."
+      "explanation": "Tüm örnekler, yapı gereği tam olarak T jeton uzunluğundadır, dolayısıyla parti temiz bir dikdörtgen tensördür ve kayıp, maskesiz eşit şekilde uygulanır."
     }
   ]
 }

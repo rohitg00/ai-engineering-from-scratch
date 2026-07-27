@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What are Letta's three memory tiers?",
+      "question": "Letta'nın üç bellek katmanı nedir?",
       "options": [
         "Cache, KV, archival",
         "Core, recall, archival",
@@ -16,19 +16,19 @@
     },
     {
       "stage": "pre",
-      "question": "Which production problem does sleep-time compute target?",
+      "question": "Uyku zamanı hesaplaması hangi üretim problemini hedefler?",
       "options": [
-        "Tail latency from doing memory consolidation on the critical path",
+        "Kritik yolda bellek birleştirme işleminden kaynaklanan kuyruk gecikmesi",
         "Higher accuracy on math problems",
         "Lower embedding cost",
         "Faster JSON parsing"
       ],
       "correct": 0,
-      "explanation": "Sleep-time moves prune/summarize/reconcile off the user-facing path, so primary responses stay fast."
+      "explanation": "Uyku süresi, kullanıcının karşılaştığı yoldan budama/özetleme/uzlaştırma işlemlerini gerçekleştirir, böylece birincil yanıtlar hızlı kalır."
     },
     {
       "stage": "check",
-      "question": "Which property is NOT a memory block field in Letta?",
+      "question": "Hangi özellik NOT Letta'da bir bellek bloğu alanıdır?",
       "options": [
         "label",
         "value",
@@ -36,23 +36,23 @@
         "embedding_model_version"
       ],
       "correct": 3,
-      "explanation": "Blocks carry id, label, value, limit, description; embedding model version is not part of the block schema."
+      "explanation": "Bloklar kimlik, etiket, değer, limit, açıklama taşır; model versiyonunun gömülmesi blok şemasının bir parçası değil."
     },
     {
       "stage": "check",
-      "question": "Why can the sleep-time agent run a stronger model than the primary?",
+      "question": "Uyku zamanı aracısı neden birincilden daha güçlü bir model çalıştırabiliyor?",
       "options": [
-        "It receives a private API key",
-        "It is off the critical path, so it is not latency-constrained",
-        "It is exempt from rate limits",
+        "Özel bir API anahtarı alır",
+        "Kritik yolun dışında olduğundan gecikme kısıtlaması yoktur",
+        "Oran sınırlamalarından muaftır",
         "Memory ops cost half tokens"
       ],
       "correct": 1,
-      "explanation": "Because it does not block user responses, the sleep-time agent can be slower and more expensive."
+      "explanation": "Kullanıcı yanıtlarını engellemediği için uyku zamanı aracısı daha yavaş ve daha pahalı olabilir."
     },
     {
       "stage": "check",
-      "question": "What pattern do the Human and Persona blocks generalize to?",
+      "question": "İnsan ve Persona blokları hangi kalıba genellenir?",
       "options": [
         "Vector embeddings",
         "Arbitrary user-defined typed editable blocks (Task, Project, Safety, ...)",
@@ -60,23 +60,23 @@
         "OS processes"
       ],
       "correct": 1,
-      "explanation": "Letta generalizes the two MemGPT blocks to any user-defined block with id, label, value, limit, description."
+      "explanation": "Letta, iki MemGPT bloğunu kimlik, etiket, değer, limit ve açıklama içeren kullanıcı tanımlı herhangi bir bloğa genelleştirir."
     },
     {
       "stage": "post",
-      "question": "What is silent drift in this pattern?",
+      "question": "Bu modelde sessiz sürüklenme nedir?",
       "options": [
-        "A primary agent never seeing that the sleep-time agent rewrote a block underneath it; fix with versioning and visible diffs",
+        "Birincil ajan, uyku zamanı ajanının altına bir bloğu yeniden yazdığını asla görmez; sürüm oluşturma ve görünür farklarla düzeltme",
         "Slow disk writes",
         "Embedding model upgrades",
         "Rate-limit jitter"
       ],
       "correct": 0,
-      "explanation": "Versioning blocks and surfacing diffs in the trace makes sleep-time rewrites visible to the primary loop."
+      "explanation": "İzdeki sürüm oluşturma blokları ve yüzeye çıkan farklar, uyku zamanı yeniden yazma işlemlerinin birincil döngü tarafından görünür olmasını sağlar."
     },
     {
       "stage": "post",
-      "question": "What replaced inline `Thought:` tokens and the send_message/heartbeat pattern in Letta V1?",
+      "question": "Letta V1'deki satır içi `Thought:` belirteçlerinin ve send_message/kalp atışı modelinin yerini ne aldı?",
       "options": [
         "Native reasoning emitted on a separate channel and passed through turns",
         "A second LLM dedicated to thoughts",

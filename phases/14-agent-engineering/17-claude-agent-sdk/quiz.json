@@ -1,22 +1,22 @@
 {
   "lesson": "17-claude-agent-sdk",
-  "title": "The Harness as a Library — Subagents and Session Store",
+  "title": "Bir Kütüphane Olarak Harness - Alt Aracılar ve Oturum Mağazası",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the difference between the Anthropic Client SDK and the Claude Agent SDK?",
+      "question": "Antropik İstemci SDK ile Claude Ajanı SDK arasındaki fark nedir?",
       "options": [
-        "Client SDK is raw Messages API; Agent SDK is the Claude Code harness shape with built-in tools, MCP, hooks, subagents, and session store",
-        "Client SDK is paid; Agent SDK is free",
-        "Client SDK is for Python only",
-        "There is no difference"
+        "İstemci SDK ham Mesajlar API; Agent SDK, yerleşik araçlar, MCP, kancalar, alt aracılar ve oturum deposu içeren Claude Code koşum şeklidir",
+        "Müşteri SDK ödenir; Ajan SDK ücretsizdir",
+        "İstemci SDK yalnızca Python içindir",
+        "Hiçbir fark yok"
       ],
       "correct": 0,
-      "explanation": "Client SDK gives you the loop; Agent SDK ships the loop pre-built."
+      "explanation": "İstemci SDK size döngüyü verir; Ajan SDK döngüyü önceden oluşturulmuş olarak gönderir."
     },
     {
       "stage": "pre",
-      "question": "What are the two documented purposes of subagents?",
+      "question": "Alt aracıların belgelenen iki amacı nedir?",
       "options": [
         "Parallelization and context isolation",
         "Caching and rate limiting",
@@ -24,11 +24,11 @@
         "Authn and authz"
       ],
       "correct": 0,
-      "explanation": "Subagents run independent work concurrently and preserve the orchestrator's context budget by isolating context."
+      "explanation": "Alt temsilciler eş zamanlı olarak bağımsız çalışmalar yürütür ve bağlamı izole ederek orkestratörün bağlam bütçesini korur."
     },
     {
       "stage": "check",
-      "question": "Which method is NOT part of the session store surface?",
+      "question": "NOT oturum deposu yüzeyinin parçası olan yöntem hangisidir?",
       "options": [
         "append",
         "load",
@@ -36,11 +36,11 @@
         "compile_prompt"
       ],
       "correct": 3,
-      "explanation": "Session store ships append, load, list_sessions, delete, list_subkeys; compile_prompt is not a session API."
+      "explanation": "Oturum deposu; ekleme, yükleme, liste_sessions, silme, liste_alt anahtarları; compile_prompt bir API oturumu değil."
     },
     {
       "stage": "check",
-      "question": "Which is NOT a Claude Agent SDK lifecycle hook?",
+      "question": "NOT hangisi bir Claude Agent SDK yaşam döngüsü kancasıdır?",
       "options": [
         "PreToolUse",
         "PostToolUse",
@@ -48,43 +48,43 @@
         "PreEmbedding"
       ],
       "correct": 3,
-      "explanation": "Hooks include PreToolUse, PostToolUse, SessionStart/End, UserPromptSubmit, PreCompact, Stop, Notification. PreEmbedding is not a hook."
+      "explanation": "Kancalar arasında PreToolUse, PostToolUse, SessionStart/End, UserPromptSubmit, PreCompact, Stop, Notification bulunur. PreEmbedding bir kanca değildir."
     },
     {
       "stage": "check",
-      "question": "How does trace context propagate across the agent and CLI subprocess?",
+      "question": "İzleme bağlamı aracı ve CLI alt süreci boyunca nasıl yayılır?",
       "options": [
-        "Through the file system",
-        "Through W3C trace context headers passed into the CLI subprocess",
-        "Only via the provider's dashboard",
-        "Through environment variables only"
+        "Dosya sistemi aracılığıyla",
+        "W3C izleme bağlamı başlıkları aracılığıyla CLI alt sürecine aktarıldı",
+        "Yalnızca sağlayıcının kontrol paneli aracılığıyla",
+        "Yalnızca ortam değişkenleri aracılığıyla"
       ],
       "correct": 1,
-      "explanation": "OTel spans on the caller propagate into the CLI subprocess via W3C trace context, so the whole multi-process run is one trace."
+      "explanation": "OTel, arayanın W3C izleme bağlamı aracılığıyla CLI alt işlemine yayılmasını kapsar, böylece tüm çoklu işlem çalıştırması tek bir izlemedir."
     },
     {
       "stage": "post",
-      "question": "What is subagent over-spawn and when does it happen?",
+      "question": "Alt ajanın aşırı doğması nedir ve ne zaman olur?",
       "options": [
-        "Spawning 100 subagents for 100 tiny tasks where overhead dominates; batch instead",
+        "Genel giderlerin hakim olduğu 100 küçük görev için 100 alt temsilci oluşturmak; bunun yerine toplu",
         "Forgetting to close subagents",
         "Spawning before SessionStart",
         "Spawning more subagents than CPU cores"
       ],
       "correct": 0,
-      "explanation": "Subagents have overhead; batch small tasks instead of spawning one each."
+      "explanation": "Alt temsilcilerin ek yükleri var; Her birini birer tane oluşturmak yerine küçük görevleri toplu olarak yapın."
     },
     {
       "stage": "post",
-      "question": "What does Claude Managed Agents trade off against the self-hosted SDK?",
+      "question": "Claude Managed Agent'lar, kendi kendine barındırılan SDK'ye karşı ne gibi avantajlar sağlar?",
       "options": [
-        "Control for managed infrastructure (long-running async, built-in prompt caching, built-in compaction)",
-        "Latency for cost",
-        "Tools for memory",
-        "Tracing for streaming"
+        "Yönetilen altyapı kontrolü (uzun süre çalışan eşzamansız, yerleşik istem önbelleğe alma, yerleşik sıkıştırma)",
+        "Maliyet gecikmesi",
+        "Bellek için araçlar",
+        "Akış için izleme"
       ],
       "correct": 0,
-      "explanation": "Managed Agents is the hosted alternative for long-running async work; less control, less ops surface."
+      "explanation": "Yönetilen Aracılar, uzun süreli eşzamansız çalışmaya yönelik barındırılan alternatiftir; daha az kontrol, daha az işlem yüzeyi."
     }
   ]
 }

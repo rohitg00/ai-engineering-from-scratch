@@ -2,19 +2,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the adjacency matrix A[i][j] = 1 represent?",
+      "question": "Bitişiklik matrisi A[i][j] = 1 neyi temsil eder?",
       "options": [
-        "Node i has degree j",
-        "There is an edge from node i to node j",
-        "Node i and node j have the same label",
-        "The shortest path from i to j has length 1"
+        "Düğüm i, j derecesine sahiptir",
+        "i düğümünden j düğümüne bir kenar var",
+        "Düğüm i ve düğüm j aynı etikete sahip",
+        "i'den j'ye en kısa yolun uzunluğu 1'dir"
       ],
       "correct": 1,
-      "explanation": "The adjacency matrix is the core representation of a graph. A[i][j] = 1 means there is an edge connecting node i to node j. For undirected graphs, the matrix is symmetric (A[i][j] = A[j][i])."
+      "explanation": "Bitişiklik matrisi bir grafiğin temel temsilidir. A[i][j] = 1, i düğümünü j düğümüne bağlayan bir kenar olduğu anlamına gelir. Yönsüz grafikler için matris simetriktir (A[i][j] = A[j][i])."
     },
     {
       "stage": "pre",
-      "question": "What data structure does BFS use and what does it find?",
+      "question": "BFS hangi veri yapısını kullanıyor ve ne buluyor?",
       "options": [
         "Stack; finds connected components",
         "Queue; finds shortest paths in unweighted graphs",
@@ -22,43 +22,43 @@
         "Hash map; finds duplicate nodes"
       ],
       "correct": 1,
-      "explanation": "BFS uses a queue (FIFO) to explore all neighbors at distance k before moving to distance k+1. This guarantees that the first time a node is discovered, it is via a shortest path from the source."
+      "explanation": "BFS, k+1 mesafesine geçmeden önce k mesafesindeki tüm komşuları keşfetmek için bir kuyruk (FIFO) kullanır. Bu, bir düğümün ilk kez keşfedilmesinde kaynaktan en kısa yoldan olmasını garanti eder."
     },
     {
       "stage": "post",
-      "question": "The graph Laplacian L = D - A of a connected graph has how many zero eigenvalues?",
+      "question": "Bağlantılı bir grafiğin Laplace L = D - A grafiğinde kaç tane sıfır özdeğer vardır?",
       "options": [
         "Zero",
-        "Exactly one",
-        "Equal to the number of nodes",
-        "Equal to the number of edges"
+        "Kesinlikle bir",
+        "Düğüm sayısına eşit",
+        "Kenar sayısına eşit"
       ],
       "correct": 1,
-      "explanation": "The number of zero eigenvalues of the Laplacian equals the number of connected components. A connected graph has exactly one connected component, so exactly one zero eigenvalue. A graph with k disconnected pieces has k zero eigenvalues."
+      "explanation": "Laplace'ın sıfır özdeğerlerinin sayısı bağlı bileşenlerin sayısına eşittir. Bağlı bir grafiğin tam olarak bir bağlı bileşeni vardır, yani tam olarak bir sıfır özdeğeri vardır. Birbiriyle bağlantısız k adet parça içeren bir grafiğin k sıfır özdeğeri vardır."
     },
     {
       "stage": "post",
-      "question": "In GNN message passing, what does h_v^(k+1) = sigma(W * mean({h_u^(k) : u in neighbors(v)})) compute?",
+      "question": "GNN mesaj geçişinde, h_v^(k+1) = sigma(W * mean({h_u^(k) : neighbors(v)})) içindeki u ne hesaplar?",
       "options": [
-        "The shortest path from v to all other nodes",
-        "A new feature vector for node v by aggregating neighbor features, transforming with learned weights, and applying a nonlinearity",
-        "The degree of node v at layer k+1",
-        "The PageRank score of node v"
+        "V'den diğer tüm düğümlere giden en kısa yol",
+        "Komşu özellikleri toplayarak, öğrenilen ağırlıklarla dönüştürerek ve doğrusal olmayan bir durum uygulayarak v düğümü için yeni bir özellik vektörü",
+        "k+1 katmanındaki v düğümünün derecesi",
+        "V düğümünün PageRank puanı"
       ],
       "correct": 1,
-      "explanation": "Each node collects features from its neighbors (mean aggregation), multiplies by a learned weight matrix W, and applies an activation function sigma. After k rounds, each node has information from its k-hop neighborhood."
+      "explanation": "Her düğüm komşularından özellikler toplar (ortalama toplama), öğrenilen ağırlık matrisi W ile çarpılır ve bir aktivasyon fonksiyonu sigma uygular. K turdan sonra her düğüm kendi k-hop mahallesinden bilgi alır."
     },
     {
       "stage": "post",
-      "question": "How does spectral clustering use the Fiedler vector (eigenvector of the second-smallest eigenvalue of L)?",
+      "question": "Spektral kümeleme Fiedler vektörünü (L'nin ikinci en küçük özdeğerinin özvektörü) nasıl kullanır?",
       "options": [
-        "Nodes with the largest Fiedler vector entries form one cluster",
-        "Nodes with positive Fiedler vector values go in one group, nodes with negative values go in the other",
-        "The Fiedler vector is used as edge weights",
-        "The Fiedler vector determines the number of clusters"
+        "En büyük Fiedler vektör girişine sahip düğümler bir küme oluşturur",
+        "Pozitif Fiedler vektör değerlerine sahip düğümler bir gruba, negatif değerlere sahip düğümler ise diğer gruba girer",
+        "Fiedler vektörü kenar ağırlıkları olarak kullanılır",
+        "Fiedler vektörü küme sayısını belirler"
       ],
       "correct": 1,
-      "explanation": "The Fiedler vector encodes the smoothest non-trivial function on the graph. Nodes in the same tightly-connected cluster get similar values, while nodes separated by a bottleneck get values with opposite signs. The sign split partitions the graph into two clusters."
+      "explanation": "Fiedler vektörü grafikteki en düzgün önemsiz olmayan fonksiyonu kodlar. Aynı sıkı bağlı kümedeki düğümler benzer değerler alırken, darboğazla ayrılan düğümler zıt işaretli değerler alır. İşaret bölünmesi grafiği iki kümeye ayırır."
     }
   ]
 }

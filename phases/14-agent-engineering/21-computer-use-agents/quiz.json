@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What input does Claude computer use take, and what does it emit?",
+      "question": "Claude bilgisayarı hangi girdiyi kullanıyor ve ne yayıyor?",
       "options": [
         "Accessibility tree in, keyboard/mouse commands out",
         "Screenshots in (vision-based), keyboard/mouse commands out",
@@ -12,35 +12,35 @@
         "JSON in, SQL out"
       ],
       "correct": 1,
-      "explanation": "Claude reads pixels and emits keyboard/mouse actions; no OS accessibility API is used."
+      "explanation": "Claude pikselleri okur ve klavye/fare eylemlerini yayar; OS erişilebilirliği yok API kullanılmıyor."
     },
     {
       "stage": "pre",
-      "question": "What is Gemini 2.5 Computer Use's distinguishing safety feature?",
+      "question": "Gemini 2.5 Bilgisayar Kullanımının ayırt edici güvenlik özelliği nedir?",
       "options": [
-        "A per-step safety service that assesses each action before execution and rejects unsafe ones",
+        "Yürütülmeden önce her eylemi değerlendiren ve güvenli olmayanları reddeden, adım başına bir güvenlik hizmeti",
         "Hard-coded WAF rules",
         "Mandatory CAPTCHAs",
-        "Read-only mode by default"
+        "Varsayılan olarak salt okunur mod"
       ],
       "correct": 0,
       "explanation": "Gemini 2.5 Computer Use ships a per-step safety classifier as a defining feature."
     },
     {
       "stage": "check",
-      "question": "What does the lesson identify as untrusted input across all three models?",
+      "question": "Ders, üç modelin tamamında neyi güvenilmeyen girdi olarak tanımlıyor?",
       "options": [
-        "Only HTTPS responses",
+        "Yalnızca HTTPS yanıtları",
         "Screenshots, DOM text, tool outputs, PDF content, anything retrieved",
-        "Only PDF content",
-        "Nothing; everything is trusted"
+        "Yalnızca PDF içeriği",
+        "Hiç bir şey; her şeye güveniliyor"
       ],
       "correct": 1,
-      "explanation": "Only direct user instructions count as permission; everything else is untrusted."
+      "explanation": "Yalnızca doğrudan kullanıcı talimatları izin olarak sayılır; geri kalan her şeye güvenilmez."
     },
     {
       "stage": "check",
-      "question": "Which OSWorld / WebArena numbers does the lesson cite for OpenAI CUA at launch?",
+      "question": "Ders lansman sırasında OpenAI CUA için hangi OSWorld/WebArena numaralarından bahsediyor?",
       "options": [
         "OSWorld 38.1%, WebArena 58.1%, WebVoyager 87%",
         "OSWorld 0%, WebArena 0%",
@@ -48,39 +48,39 @@
         "Numbers not reported"
       ],
       "correct": 0,
-      "explanation": "Those were the launch numbers cited."
+      "explanation": "Bunlar belirtilen lansman numaralarıydı."
     },
     {
       "stage": "check",
-      "question": "Which defense pattern is NOT in the 2026 convergence list?",
+      "question": "2026 yakınsama listesinde NOT hangi savunma modelidir?",
       "options": [
         "Per-step safety classifier",
         "Allowlist/blocklist of navigation targets",
-        "Human-in-the-loop for sensitive actions",
+        "Hassas eylemler için döngüdeki insan",
         "Auto-clicking through dialogs to save time"
       ],
       "correct": 3,
-      "explanation": "Auto-clicking dialogs is the opposite of safe; the lesson recommends explicit confirmation."
+      "explanation": "Diyalogların otomatik olarak tıklatılması güvenli olmanın tam tersidir; ders açık bir onay önerir."
     },
     {
       "stage": "post",
-      "question": "What is the principal attack the lesson highlights against computer-use agents?",
+      "question": "Dersin bilgisayar kullanan aracılara karşı vurguladığı temel saldırı nedir?",
       "options": [
         "Network outages",
-        "A malicious page or PDF embedding instructions in retrieved content that the model treats as user intent",
+        "Modelin kullanıcı amacı olarak ele aldığı, alınan içeriğe kötü amaçlı bir sayfa veya PDF yerleştirilmiş talimatlar",
         "Slow rendering",
         "OS update lag"
       ],
       "correct": 1,
-      "explanation": "Trusting screenshots or DOM text as permission is the canonical indirect-prompt-injection failure."
+      "explanation": "İzin olarak ekran görüntülerine veya DOM metnine güvenmek, kurallı dolaylı istem ekleme hatasıdır."
     },
     {
       "stage": "post",
-      "question": "When is human-in-the-loop confirmation specifically recommended?",
+      "question": "Döngüdeki insan onayı özellikle ne zaman önerilir?",
       "options": [
-        "On read-only navigation",
+        "Salt okunur gezinmede",
         "On sensitive actions like login, purchase, file delete",
-        "Only when the model asks",
+        "Yalnızca model sorduğunda",
         "Never"
       ],
       "correct": 1,

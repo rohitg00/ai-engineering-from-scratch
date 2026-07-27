@@ -4,43 +4,43 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the operational difference between early fusion and late fusion in vision-language modeling?",
+      "question": "Görme dili modellemesinde erken füzyon ile geç füzyon arasındaki operasyonel fark nedir?",
       "options": [
         "Early fusion runs first in wall-clock time",
-        "Early fusion concatenates image and text tokens into one sequence; late fusion keeps them separate and bridges via cross-attention at each block",
+        "Erken füzyon, görüntü ve metin belirteçlerini tek bir dizide birleştirir; geç birleşme onları ayrı tutar ve her blokta çapraz dikkat yoluyla köprü kurar",
         "Late fusion uses more memory",
-        "Early fusion is illegal"
+        "Erken füzyon yasa dışıdır"
       ],
       "correct": 1,
-      "explanation": "Chameleon and Emu3 are early-fusion; Flamingo and BLIP-2 are late-fusion. The architectural choice changes mask shapes and KV caching."
+      "explanation": "Chameleon ve Emu3 erken füzyondur; Flamingo ve BLIP-2 geç füzyondur. Mimari seçim, maske şekillerini ve KV önbelleğe almayı değiştirir."
     },
     {
       "stage": "pre",
-      "question": "In a decoder block with both self-attention and cross-attention, which one uses a causal mask?",
+      "question": "Hem kişisel dikkatin hem de çapraz dikkatin olduğu bir kod çözücü bloğunda hangisi nedensel bir maske kullanır?",
       "options": [
         "Both",
-        "Self-attention only; the image is fully observed and cross-attention has no temporal order",
-        "Cross-attention only",
+        "Yalnızca kendine dikkat; görüntü tamamen gözlenir ve çapraz dikkatin zamansal bir sırası yoktur",
+        "Yalnızca çapraz dikkat",
         "Neither"
       ],
       "correct": 1,
-      "explanation": "Text generation is autoregressive, so text self-attention is causal. Image tokens are all visible before any text is decoded."
+      "explanation": "Metin üretimi otoregresiftir, dolayısıyla metnin kendine dikkati nedenseldir. Görüntü belirteçlerinin tümü, herhangi bir metnin kodu çözülmeden önce görünür."
     },
     {
       "stage": "check",
-      "question": "Why is the cross-attention KV cache built once per image?",
+      "question": "Çapraz dikkat KV önbelleği neden görüntü başına bir kez oluşturuldu?",
       "options": [
         "PyTorch requires caching",
-        "Image keys and values do not change as text is decoded, so projecting memory once and reusing the K and V across all decode steps is the whole inference speedup",
+        "Metnin kodu çözüldükçe görüntü anahtarları ve değerleri değişmez; bu nedenle belleğin bir kez yansıtılması ve tüm kod çözme adımlarında K ve V'nin yeniden kullanılması, tüm çıkarım hızlandırmasıdır.",
         "Caching saves disk space",
-        "It avoids using the GPU"
+        "GPU'nin kullanılmasını önler"
       ],
       "correct": 1,
-      "explanation": "The vision encoder runs once. Its KV projection is computed once. Each text token reuses the cache for free."
+      "explanation": "Görüntü kodlayıcı bir kez çalışır. KV projeksiyonu bir kez hesaplanır. Her metin belirteci, önbelleği ücretsiz olarak yeniden kullanır."
     },
     {
       "stage": "check",
-      "question": "What is the output shape of cross-attention when text length is Nt=10 and image length is Nv=197 with hidden=256?",
+      "question": "Metin uzunluğu Nt=10 ve resim uzunluğu Nv=197 ve gizli=256 olduğunda çapraz dikkatin çıktı şekli nedir?",
       "options": [
         "(B, 197, 256)",
         "(B, 10, 256)",
@@ -48,31 +48,31 @@
         "(B, 207, 256)"
       ],
       "correct": 1,
-      "explanation": "Cross-attention output shape follows the query stream, so output is (B, Nt, hidden) regardless of key length."
+      "explanation": "Çapraz dikkat çıkış şekli sorgu akışını takip eder, dolayısıyla anahtar uzunluğu ne olursa olsun çıkış (B, Nt, gizli) olur."
     },
     {
       "stage": "check",
-      "question": "Why is no mask used on cross-attention?",
+      "question": "Çapraz dikkatte neden maske kullanılmıyor?",
       "options": [
-        "Masks are too expensive",
-        "The image is fully observed before text generation begins; every text position may attend to every patch",
-        "PyTorch does not support cross masks",
+        "Maskeler çok pahalı",
+        "Görüntü, metin oluşturma başlamadan önce tamamen gözlemlenir; her metin konumu her yamaya eşlik edebilir",
+        "PyTorch çapraz maskeleri desteklemiyor",
         "Masks always cause NaN"
       ],
       "correct": 1,
-      "explanation": "There is no temporal order on image patches and no leakage to prevent, so cross-attention sees the whole image."
+      "explanation": "Görüntü yamalarında zamansal bir düzen yoktur ve engellenmesi gereken bir sızıntı yoktur, dolayısıyla çapraz dikkat görüntünün tamamını görür."
     },
     {
       "stage": "post",
-      "question": "Which extension would you add to recover Flamingo-style stability during training?",
+      "question": "Antrenman sırasında Flamingo tarzı stabiliteyi yeniden kazanmak için hangi uzantıyı eklersiniz?",
       "options": [
-        "Drop the self-attention layer",
-        "Insert a learned tanh gate on the cross-attention residual so the model can start from text-only behavior and grow into the image stream",
-        "Remove the FFN",
-        "Use only one attention head"
+        "Kişisel dikkat katmanını bırakın",
+        "Modelin salt metin davranışından başlayıp görüntü akışına doğru büyüyebilmesi için çapraz dikkat kalıntısına öğrenilmiş bir tanh kapısı ekleyin",
+        "FFN'yi çıkarın",
+        "Yalnızca bir dikkat başlığı kullanın"
       ],
       "correct": 1,
-      "explanation": "Flamingo's tanh gate starts at zero, recovers text-only behavior at init, and gives the model a smooth ramp into cross-attention."
+      "explanation": "Flamingo'nun tanh kapısı sıfırdan başlar, başlangıçta salt metin davranışını kurtarır ve modele çapraz dikkat için yumuşak bir rampa sağlar."
     }
   ]
 }

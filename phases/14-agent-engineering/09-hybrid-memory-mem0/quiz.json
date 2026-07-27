@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which query class does a KV store handle best?",
+      "question": "Bir KV mağazası hangi sorgu sınıfını en iyi şekilde işler?",
       "options": [
         "Semantic similarity over long conversations",
         "Direct fact lookup keyed by (user, type, entity)",
@@ -12,11 +12,11 @@
         "Temporal queries valid-at-time"
       ],
       "correct": 1,
-      "explanation": "KV is O(1) on exact keys; vector is for similarity, graph is for relationships."
+      "explanation": "KV, tam tuşlarda O(1)'dir; vektör benzerlik içindir, grafik ise ilişkiler içindir."
     },
     {
       "stage": "pre",
-      "question": "What are the three stores Mem0 writes in parallel on each add()?",
+      "question": "Mem0'ın her add() üzerinde paralel olarak yazdığı üç mağaza nelerdir?",
       "options": [
         "Vector, KV, graph",
         "Cache, queue, log",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "What three dimensions feed Mem0's fusion score?",
+      "question": "Mem0'ın füzyon puanını hangi üç boyut besliyor?",
       "options": [
         "Relevance, importance, recency",
         "Precision, recall, F1",
@@ -36,35 +36,35 @@
         "Confidence, perplexity, BLEU"
       ],
       "correct": 0,
-      "explanation": "Score is a weighted sum of relevance, importance, and recency; weights tune per product."
+      "explanation": "Puan, alaka düzeyi, önem ve güncelliğin ağırlıklı toplamıdır; ağırlıklar ürün başına ayarlanır."
     },
     {
       "stage": "check",
-      "question": "What does Mem0g do when an incoming fact contradicts an existing edge?",
+      "question": "Gelen bir gerçek mevcut bir üstünlükle çeliştiğinde Mem0g ne yapar?",
       "options": [
-        "Deletes the edge",
-        "Marks the existing edge invalid but does not delete it, so temporal queries can still traverse",
+        "Kenarı siler",
+        "Mevcut kenarı geçersiz olarak işaretler ancak silmez, böylece zamansal sorgular hâlâ geçiş yapabilir",
         "Raises an exception",
-        "Rewrites the user_id"
+        "user_id'yi yeniden yazar"
       ],
       "correct": 1,
-      "explanation": "Soft invalidation preserves history for temporal (valid-at-time) queries."
+      "explanation": "Geçici geçersiz kılma, geçici (o sırada geçerli) sorguların geçmişini korur."
     },
     {
       "stage": "check",
-      "question": "Why does the lesson recommend tuning fusion weights per product?",
+      "question": "Ders neden ürün başına füzyon ağırlıklarının ayarlanmasını öneriyor?",
       "options": [
-        "Providers require it",
-        "Recency dominates for chat agents while importance dominates for compliance agents and relevance dominates for retrieval agents",
+        "Sağlayıcılar bunu gerektirir",
+        "Sohbet temsilcileri için güncellik hakimdir; uyumluluk temsilcileri için önem, geri çağırma temsilcileri için ise alaka hakimdir.",
         "Vector libraries reject equal weights",
-        "It is required by Apache 2.0"
+        "Apache 2.0 için gereklidir"
       ],
       "correct": 1,
-      "explanation": "Different products want different bias on relevance/importance/recency; one set of weights does not fit all."
+      "explanation": "Farklı ürünler, alaka düzeyi/önem/güncellik konusunda farklı önyargılar ister; tek bir ağırlık seti herkese uymaz."
     },
     {
       "stage": "post",
-      "question": "What is the scope taxonomy Mem0 uses?",
+      "question": "Mem0'ın kullandığı kapsam sınıflandırması nedir?",
       "options": [
         "Public, private, secret",
         "User, session, agent",
@@ -72,19 +72,19 @@
         "Read, write, admin"
       ],
       "correct": 1,
-      "explanation": "Scopes are user (cross-session), session (one thread), agent (per-instance state)."
+      "explanation": "Kapsamlar kullanıcı (oturumlar arası), oturum (bir iş parçacığı), aracı (örnek başına durum) şeklindedir."
     },
     {
       "stage": "post",
-      "question": "What is embedding drift in this pattern, and how does the lesson recommend mitigating it?",
+      "question": "Bu modele sürüklenmeyi dahil eden şey nedir ve ders bunun azaltılmasını nasıl öneriyor?",
       "options": [
         "Vectors get encrypted; rotate keys",
-        "Vector retrieval quality degrades as the corpus grows; periodically re-embed the top-N most used records",
+        "Korpus büyüdükçe vektör alma kalitesi düşer; en çok kullanılan ilk N kaydı periyodik olarak yeniden yerleştirin",
         "Embeddings overflow integers; switch to float64",
-        "The embedding API changes URL; pin a domain"
+        "Gömme API, URL'yi değiştirir; alan adını sabitlemek"
       ],
       "correct": 1,
-      "explanation": "Periodic re-embedding of hot records keeps retrieval quality steady as the corpus grows."
+      "explanation": "Sıcak kayıtların periyodik olarak yeniden yerleştirilmesi, külliyat büyüdükçe alma kalitesinin sabit kalmasını sağlar."
     }
   ]
 }

@@ -4,67 +4,67 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the role of the encoder in a 2014-style seq2seq model?",
+      "question": "2014 tarzı seq2seq modelinde kodlayıcının rolü nedir?",
       "options": [
         "Computes attention weights",
         "Performs beam search",
-        "Reads the source and produces a fixed-size context vector summarizing it",
+        "Kaynağı okur ve onu özetleyen sabit boyutlu bir bağlam vektörü üretir",
         "Generates target tokens"
       ],
       "correct": 2,
-      "explanation": "The encoder RNN compresses the source into a final hidden state used by the decoder."
+      "explanation": "RNN kodlayıcı, kaynağı kod çözücü tarafından kullanılan son gizli duruma sıkıştırır."
     },
     {
       "stage": "pre",
-      "question": "What is teacher forcing during seq2seq training?",
+      "question": "Seq2seq eğitimi sırasında öğretmenin zorlaması nedir?",
       "options": [
         "Adding a teacher network during inference",
-        "Doubling the batch size",
-        "Feeding the ground-truth previous token (instead of the model's prediction) as decoder input",
+        "Parti boyutunun iki katına çıkarılması",
+        "Kod çözücü girişi olarak temel gerçek önceki jetonun (modelin tahmini yerine) beslenmesi",
         "Manually labeling each decoder step"
       ],
       "correct": 2,
-      "explanation": "Teacher forcing stabilizes training by using true previous tokens; without it early errors cascade."
+      "explanation": "Öğretmenin zorlaması, önceki gerçek belirteçleri kullanarak eğitimi istikrara kavuşturur; o olmadan erken hatalar art arda gelir."
     },
     {
       "stage": "check",
-      "question": "Why does fixed context-vector seq2seq accuracy fall as input length grows?",
+      "question": "Giriş uzunluğu arttıkça sabit bağlam vektörü sıra2seq doğruluğu neden düşüyor?",
       "options": [
         "Padding tokens accumulate",
         "Cross-entropy diverges",
-        "All information about the source must fit in a single fixed-size encoder hidden state, which loses detail on long inputs",
+        "Kaynak hakkındaki tüm bilgiler tek bir sabit boyutlu kodlayıcı gizli durumuna sığmalıdır; bu, uzun girişlerde ayrıntıyı kaybeder",
         "Vocabulary becomes too large"
       ],
       "correct": 2,
-      "explanation": "The fixed context-vector bottleneck means long inputs cannot be losslessly summarized."
+      "explanation": "Sabit bağlam vektörü darboğazı, uzun girdilerin kayıpsız bir şekilde özetlenemeyeceği anlamına gelir."
     },
     {
       "stage": "check",
-      "question": "What is exposure bias?",
+      "question": "Maruz kalma yanlılığı nedir?",
       "options": [
-        "Bias from class imbalance",
+        "Sınıf dengesizliğinden kaynaklanan önyargı",
         "Bias in encoder embeddings",
         "Annotator disagreement",
-        "The train/inference gap from training on ground-truth tokens but generating from the model's own predictions at inference"
+        "Temel gerçeklik belirteçleri üzerinde eğitimden kaynaklanan ancak çıkarımda modelin kendi tahminlerinden üretilen eğitim/çıkarım boşluğu"
       ],
       "correct": 3,
-      "explanation": "The model never practiced recovering from its own mistakes during training, so errors cascade at inference."
+      "explanation": "Model, eğitim sırasında hiçbir zaman kendi hatalarını düzeltmeye çalışmadı, bu nedenle hatalar çıkarımda art arda sıralanıyor."
     },
     {
       "stage": "check",
-      "question": "Why does beam search often outperform greedy decoding for generation?",
+      "question": "Işın araması neden çoğunlukla nesiller boyu açgözlü kod çözmeden daha iyi performans gösteriyor?",
       "options": [
-        "Beam search keeps the top-k partial sequences alive at each step instead of irrevocably committing to one token",
+        "Işın araması, geri dönülemez bir şekilde tek bir jetona bağlı kalmak yerine, her adımda en üstteki kısmi dizileri canlı tutar",
         "Beam search avoids exposure bias",
-        "Beam search is faster",
-        "Beam search lowers the loss"
+        "Işın araması daha hızlı",
+        "Işın araması kaybı azaltır"
       ],
       "correct": 0,
-      "explanation": "Greedy commits per step; beam search explores multiple hypotheses, then picks the best complete one."
+      "explanation": "Açgözlü adım başına taahhütte bulunur; ışın araması birden fazla hipotezi araştırır ve ardından en iyi olanı seçer."
     },
     {
       "stage": "post",
-      "question": "Which architectural family replaced RNN seq2seq for general generation tasks?",
+      "question": "Genel üretim görevleri için RNN seq2seq'in yerini hangi mimari aile aldı?",
       "options": [
         "Transformer encoder-decoder models (BART, T5, mBART, NLLB)",
         "Graph neural networks",
@@ -76,24 +76,24 @@
     },
     {
       "stage": "post",
-      "question": "What does scheduled sampling do?",
+      "question": "Planlı örnekleme ne işe yarar?",
       "options": [
-        "Anneals the teacher-forcing ratio downward during training so the model learns to recover from its own predictions",
+        "Modelin kendi tahminlerinden kurtulmayı öğrenmesi için eğitim sırasında öğretmen zorlama oranını aşağıya çeker",
         "Schedules learning-rate decay",
-        "Reorders the training set",
+        "Eğitim setini yeniden sıralar",
         "Adds random noise to embeddings"
       ],
       "correct": 0,
-      "explanation": "Scheduled sampling gradually mixes in model predictions to close the train/inference gap."
+      "explanation": "Planlı örnekleme, eğitim/çıkarım açığını kapatmak için model tahminlerini kademeli olarak birleştirir."
     },
     {
       "stage": "post",
-      "question": "Why does greedy decoding alone often fail for user-facing generation?",
+      "question": "Açgözlü kod çözme neden tek başına kullanıcıya yönelik nesil için sıklıkla başarısız oluyor?",
       "options": [
-        "It cannot use embeddings",
-        "It always picks <EOS> first",
-        "Greedy can repeat or loop and cannot backtrack from a locally good but globally poor token choice",
-        "It requires more memory"
+        "Gömmeleri kullanamaz",
+        "Her zaman önce <EOS>'yi seçer",
+        "Açgözlü tekrarlayabilir veya döngü yapabilir ve yerel olarak iyi ancak küresel olarak zayıf bir token seçiminden geri adım atamaz",
+        "Daha fazla hafıza gerektirir"
       ],
       "correct": 2,
       "explanation": "Greedy decoding's irrevocable per-step choice causes loops and repetition without beam search or sampling."

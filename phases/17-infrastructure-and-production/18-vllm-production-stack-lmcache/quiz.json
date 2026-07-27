@@ -4,9 +4,9 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What problem does LMCache primarily address in a vLLM deployment?",
+      "question": "LMCache, vLLM dağıtımında öncelikli olarak hangi sorunu çözer?",
       "options": [
-        "KV cache pressure in HBM causing preemption and re-prefill of the same prefixes",
+        "HBM'deki KV önbellek baskısı, aynı öneklerin önceden alınmasına ve yeniden doldurulmasına neden oluyor",
         "Tokenizer GIL contention",
         "Network egress filtering",
         "Cold-start image pull"
@@ -16,7 +16,7 @@
     },
     {
       "stage": "check",
-      "question": "What vLLM API introduced pluggable KV cache backends?",
+      "question": "Hangi vLLM API, takılabilir KV önbellek arka uçlarını kullanıma sundu?",
       "options": [
         "Prefix-caching flag",
         "PagedAttention v2",
@@ -28,10 +28,10 @@
     },
     {
       "stage": "check",
-      "question": "What does the vLLM 0.11.0 (January 2026) release add to the KV offload path?",
+      "question": "vLLM 0.11.0 (Ocak 2026) sürümü KV boşaltma yoluna ne ekler?",
       "options": [
-        "An asynchronous offload path so the engine does not block on offload in the common case",
-        "Synchronous-only offload",
+        "Yaygın durumda motorun boşaltma sırasında bloke olmaması için eşzamansız bir boşaltma yolu",
+        "Yalnızca eşzamanlı boşaltma",
         "Mandatory FP8 KV cache",
         "Removal of LMCache support"
       ],
@@ -40,23 +40,23 @@
     },
     {
       "stage": "check",
-      "question": "When should you pick LMCache over native CPU offload?",
+      "question": "Yerel CPU boşaltma yerine LMCache'i ne zaman seçmelisiniz?",
       "options": [
-        "When multiple engines share prefixes across tenants, LoRA variants, or repeated RAG context, so cross-engine reuse pays",
-        "When you want to disable KV caching entirely",
-        "When a single engine has HBM pressure and no prefix sharing",
-        "When you are running on CPU only"
+        "Birden fazla motor kiracılar, LoRA varyantları veya tekrarlanan RAG bağlamı arasında önekleri paylaştığında, motorlar arası yeniden kullanım karşılığını verir",
+        "KV önbelleğe almayı tamamen devre dışı bırakmak istediğinizde",
+        "Tek bir motorda HBM basıncı olduğunda ve önek paylaşımı olmadığında",
+        "Yalnızca CPU üzerinde çalıştırdığınızda"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What happens to LMCache benefit when KV footprint stays well below HBM?",
+      "question": "KV ayak izi HBM'nin oldukça altında kaldığında LMCache avantajına ne olur?",
       "options": [
         "LMCache automatically disables",
-        "It still doubles throughput",
-        "Configs match baseline with roughly 3-5% overhead and no real benefit",
+        "Verimi hâlâ iki katına çıkarıyor",
+        "Yapılandırmalar, yaklaşık %3-5 ek yük ile temel çizgiyle eşleşir ve gerçek bir fayda sağlamaz",
         "Engine crashes"
       ],
       "correct": 2,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does LMCache compose with disaggregated serving (Phase 17 · 17)?",
+      "question": "LMCache neden ayrıştırılmış sunumla oluşuyor (Aşama 17 · 17)?",
       "options": [
-        "Because LMCache replaces NIXL",
-        "KV transferred from prefill to decode lands in LMCache; later queries can pull from LMCache and skip prefill, so the cache-aware router can pick an engine whose local or LMCache-shared cache matches",
-        "Because LMCache runs on the same GPU as the engine",
-        "It does not — they are mutually exclusive"
+        "Çünkü LMCache NIXL'nin yerini alıyor",
+        "KV, LMCache'deki ön doldurmadan kod çözme alanlarına aktarıldı; daha sonraki sorgular LMCache'den çekebilir ve ön doldurmayı atlayabilir, böylece önbelleği tanıyan yönlendirici, yerel veya LMCache ile paylaşılan önbelleği eşleşen bir motoru seçebilir.",
+        "Çünkü LMCache motorla aynı GPU üzerinde çalışıyor",
+        "Değil; onlar birbirini dışlıyor"
       ],
       "correct": 1,
       "explanation": ""

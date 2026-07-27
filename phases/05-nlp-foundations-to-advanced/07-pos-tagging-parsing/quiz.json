@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the goal of POS tagging?",
+      "question": "POS etiketlemenin amacı nedir?",
       "options": [
         "Detect sentiment",
-        "Translate the sentence",
+        "Cümleyi çevir",
         "Extract named entities",
         "Assign a grammatical category (noun, verb, etc.) to each token"
       ],
       "correct": 3,
-      "explanation": "POS tagging labels each token with its part of speech."
+      "explanation": "POS etiketleme, her jetonu kendi konuşma kısmıyla etiketler."
     },
     {
       "stage": "pre",
-      "question": "Which tagset is the default for cross-lingual work?",
+      "question": "Diller arası çalışmalar için varsayılan etiket kümesi hangisidir?",
       "options": [
         "Penn Treebank",
         "Stanford Dependencies",
@@ -28,33 +28,33 @@
     },
     {
       "stage": "check",
-      "question": "What does a bigram HMM POS tagger model?",
+      "question": "Bigram HMM POS etiketleme modeli nedir?",
       "options": [
-        "P(tags) only",
+        "Yalnızca P(tags)",
         "Dependency parses",
         "Embedding similarities",
-        "P(tag | previous tag) transitions plus P(word | tag) emissions, decoded with Viterbi"
+        "Viterbi ile kodu çözülen P(tag | previous tag) geçişleri artı P(word | tag) emisyonları"
       ],
       "correct": 3,
-      "explanation": "Bigram HMM uses tag transitions and word emissions; Viterbi finds the highest-probability sequence."
+      "explanation": "Bigram HMM etiket geçişlerini ve kelime emisyonlarını kullanır; Viterbi en yüksek olasılıklı diziyi buluyor."
     },
     {
       "stage": "check",
-      "question": "What does the Viterbi algorithm compute for an HMM tagger?",
+      "question": "Viterbi algoritması bir HMM etiketleyici için ne hesaplıyor?",
       "options": [
-        "The single highest-probability tag sequence via dynamic programming over the tag lattice",
-        "The transition matrix",
-        "The marginal probability of each tag",
-        "The forward probabilities only"
+        "Etiket kafesi üzerinden dinamik programlama aracılığıyla en yüksek olasılıklı tek etiket dizisi",
+        "Geçiş matrisi",
+        "Her etiketin marjinal olasılığı",
+        "Yalnızca ileri olasılıklar"
       ],
       "correct": 0,
-      "explanation": "Viterbi finds the argmax sequence with O(n * |T|^2) dynamic programming."
+      "explanation": "Viterbi, O(n * |T|^2) dinamik programlamayla argmax dizisini buluyor."
     },
     {
       "stage": "check",
-      "question": "What does dependency parsing produce?",
+      "question": "Bağımlılık ayrıştırma ne üretir?",
       "options": [
-        "A tree where each word has one head word and a labeled grammatical relation",
+        "Her kelimenin bir baş kelimeye ve etiketli bir gramer ilişkisine sahip olduğu bir ağaç",
         "A flat BIO sequence",
         "A constituency tree of NP/VP/PP labels",
         "A coreference chain"
@@ -64,35 +64,35 @@
     },
     {
       "stage": "post",
-      "question": "Why is the accuracy ceiling on PTB POS tagging around 97-98%?",
+      "question": "PTB POS'nin doğruluk tavanı neden %97-98 civarında etiketleniyor?",
       "options": [
-        "Models cannot exceed 98% in any task",
+        "Modeller hiçbir görevde %98'i aşamaz",
         "Universal Dependencies caps at 98%",
-        "Human annotators only agree about 97% of the time, so models above ~98% may be overfitting test data",
+        "İnsan açıklama yapanlar zamanın yalnızca %97'sinde hemfikirdir, bu nedenle ~%98'in üzerindeki modeller test verilerine gereğinden fazla uyuyor olabilir",
         "Hardware limitations"
       ],
       "correct": 2,
-      "explanation": "Annotator disagreement bounds the achievable accuracy; very high numbers often signal overfitting."
+      "explanation": "Açıklayıcının anlaşmazlığı ulaşılabilir doğruluğu sınırlar; çok yüksek sayılar genellikle aşırı uyumun işaretidir."
     },
     {
       "stage": "post",
-      "question": "Why does POS tagging still matter in 2026 LLM pipelines?",
+      "question": "POS etiketlemesi neden 2026 LLM işlem hatlarında hala önemli?",
       "options": [
-        "LLMs cannot run without it",
+        "LLM'ler onsuz çalışamaz",
         "Lemmatization, aspect-based sentiment, query decomposition, structured-output validation, and cross-lingual transfer all still consume POS or dependency parses",
-        "Required for tokenization",
+        "Tokenizasyon için gerekli",
         "Replaces transformers"
       ],
       "correct": 1,
-      "explanation": "POS and dependency parses feed many structured downstream tasks even when LLMs generate the prose."
+      "explanation": "POS ve bağımlılık ayrıştırmaları, Yüksek Lisans'lar düzyazıyı oluşturduğunda bile birçok yapılandırılmış alt akış görevini besler."
     },
     {
       "stage": "post",
-      "question": "Which library should you reach for in most production POS / parse tasks?",
+      "question": "Çoğu üretim POS / ayrıştırma görevinde hangi kütüphaneye ulaşmalısınız?",
       "options": [
         "scikit-learn",
         "NumPy",
-        "spaCy (or stanza/trankit for top accuracy or wider language coverage)",
+        "spaCy (veya en yüksek doğruluk veya daha geniş dil kapsamı için dörtlük/trankit)",
         "Roll your own parser"
       ],
       "correct": 2,

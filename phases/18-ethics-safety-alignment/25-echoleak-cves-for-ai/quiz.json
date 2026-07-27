@@ -1,34 +1,34 @@
 {
   "lesson": "25-echoleak-cves-for-ai",
-  "title": "EchoLeak and the Emergence of CVEs for AI",
+  "title": "EchoLeak ve AI için CVE'lerin Ortaya Çıkışı",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which best describes EchoLeak (CVE-2025-32711)?",
+      "question": "Hangisi EchoLeak'i (CVE-2025-32711) en iyi şekilde tanımlar?",
       "options": [
         "A jailbreak via long-context shot stuffing",
         "A supply-chain attack on PyPI",
         "A hardware vulnerability in NPUs",
-        "A zero-click AI command-injection flaw in Microsoft 365 Copilot (CVE-2025-32711, CVSS 9.3) causing unauthorized network information disclosure, with exfiltration via a CSP allowlisted/trusted Microsoft domain"
+        "Microsoft 365 Copilot'taki (CVE-2025-32711, CVSS 9.3) sıfır tıklamalı AI komut ekleme kusuru, CSP izin verilenler listesindeki/güvenilir Microsoft etki alanı üzerinden sızdırmayla yetkisiz ağ bilgilerinin ifşa edilmesine neden oluyor"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What makes EchoLeak 'zero-click'?",
+      "question": "EchoLeak'i 'sıfır tıklama' yapan şey nedir?",
       "options": [
-        "The victim does not have to open the email; Copilot retrieves it as RAG context during routine queries and the injected instructions execute",
-        "It requires the user to click a link in a Teams chat",
-        "It runs in the operating-system kernel",
-        "It requires three clicks but no typing"
+        "Mağdurun e-postayı açmasına gerek yoktur; Yardımcı pilot, rutin sorgular sırasında bunu RAG bağlamı olarak alır ve enjekte edilen talimatlar yürütülür.",
+        "Kullanıcının Teams sohbetindeki bir bağlantıya tıklamasını gerektirir",
+        "İşletim sistemi çekirdeğinde çalışır",
+        "Üç tıklama gerektirir ancak yazma gerektirmez"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Aim Labs frames EchoLeak as 'LLM Scope Violation'. What three boundaries must each be controlled independently?",
+      "question": "Aim Labs, EchoLeak'i 'LLM Kapsam İhlali' olarak nitelendiriyor. Hangi üç sınırın her biri bağımsız olarak kontrol edilmelidir?",
       "options": [
         "Retrieval, scope, output",
         "Network, disk, memory",
@@ -40,11 +40,11 @@
     },
     {
       "stage": "check",
-      "question": "How did Microsoft/GitHub fix CamoLeak (CVSS 9.6, GitHub Copilot Chat)?",
+      "question": "Microsoft/GitHub CamoLeak'i (CVSS 9.6, GitHub Copilot Chat) nasıl düzeltti?",
       "options": [
         "Added an XPIA prompt-injection filter",
-        "Disabled image rendering entirely in Copilot Chat (cost: usability) because the alternative attack surface could not be bounded",
-        "Switched the model to Llama Guard",
+        "Alternatif saldırı yüzeyi sınırlandırılamadığı için Copilot Chat'te görüntü oluşturma tamamen devre dışı bırakıldı (maliyet: kullanılabilirlik)",
+        "Modeli Llama Guard olarak değiştirdim",
         "Increased context size"
       ],
       "correct": 1,
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "What pattern in severity calibration did the EchoLeak disclosure reveal?",
+      "question": "EchoLeak'in ifşası şiddet kalibrasyonunda hangi modeli ortaya çıkardı?",
       "options": [
-        "Vendors over-rated the initial CVSS score",
-        "Vendors initially rated EchoLeak low (information disclosure); Aim Labs's MFA-code exfiltration proof-of-concept escalated the rating to 9.3 — defenders must push for comprehensive PoC for AI-specific vulnerabilities",
-        "All AI CVEs are automatically rated 10.0",
-        "Severity ratings are decided by OWASP only"
+        "Tedarikçiler başlangıçtaki CVSS puanını olduğundan fazla değerlendirdi",
+        "Satıcılar başlangıçta EchoLeak'i düşük olarak derecelendirdi (bilgi açıklaması); Aim Labs'ın MFA-code sızma kavram kanıtı, derecelendirmeyi 9,3'e yükseltti; savunucuların AI-'ye özgü güvenlik açıklarına yönelik kapsamlı PoC için çabalaması gerekiyor",
+        "Tüm AI CVE'ler otomatik olarak 10,0 olarak derecelendirilir",
+        "Önem derecelerine yalnızca OWASP tarafından karar verilir"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Where do NIST and OWASP rank prompt injection as of 2024/2025?",
+      "question": "NIST ve OWASP, 2024/2025 itibarıyla hızlı enjeksiyonu nerede sıralıyor?",
       "options": [
-        "NIST AI SPD 2024 frames prompt injection as a major information-security risk for generative AI; OWASP 2025 ranks it LLM01 (top application-layer threat)",
+        "NIST AI SPD 2024 çerçeveleri, üretken AI için büyük bir bilgi güvenliği riski olarak hızlı enjeksiyonu; OWASP 2025, onu LLM01 (en üst uygulama katmanı tehdidi) olarak sıralıyor",
         "NIST: outside scope; OWASP: not listed",
         "NIST: minor; OWASP: bottom of list",
-        "Both call it a Tier-2 risk only"
+        "Her ikisi de buna yalnızca Kademe-2 riski diyor"
       ],
       "correct": 0,
       "explanation": ""

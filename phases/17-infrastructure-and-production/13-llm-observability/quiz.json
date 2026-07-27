@@ -4,9 +4,9 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "How does the lesson split the 2026 LLM observability market?",
+      "question": "Ders 2026 LLM gözlemlenebilirlik pazarını nasıl bölüyor?",
       "options": [
-        "Development platforms (bundled with evals/prompts/sessions) versus gateway/telemetry tools",
+        "Geliştirme platformları (değerlendirmeler/istemler/oturumlarla birlikte gelir) ve ağ geçidi/telemetri araçları",
         "On-prem versus cloud",
         "Vendor versus open source",
         "Python versus TypeScript"
@@ -16,7 +16,7 @@
     },
     {
       "stage": "check",
-      "question": "Which tool does the lesson position as MIT-licensed core with strong self-host story and 50K events/month free cloud tier?",
+      "question": "Ders, güçlü kendi kendine barındırma hikayesine ve ayda 50.000 etkinlik ücretsiz bulut katmanına sahip MIT-lisanslı çekirdek olarak hangi aracı konumlandırıyor?",
       "options": [
         "LangSmith",
         "Phoenix",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "What is Arize AX's main scale claim relative to monolithic observability stacks like Datadog?",
+      "question": "Arize AX'nin Datadog gibi monolitik gözlemlenebilirlik yığınlarına ilişkin ana ölçek iddiası nedir?",
       "options": [
         "Always more expensive",
         "Roughly 100x cheaper at scale via zero-copy Iceberg/Parquet integration",
@@ -40,19 +40,19 @@
     },
     {
       "stage": "check",
-      "question": "What does the lesson call the wrong instrumentation layer for portability?",
+      "question": "Derste taşınabilirlik için yanlış enstrümantasyon katmanına ne ad veriliyor?",
       "options": [
-        "Instrumenting inside your agent framework, since it couples you to that framework",
+        "Sizi bu çerçeveye bağladığı için temsilci çerçevenizin içinde enstrümantasyon",
         "Sampling at 5% on successes",
         "Using OpenTelemetry GenAI semantic conventions",
-        "Instrumenting at the HTTP/OpenAI-SDK layer"
+        "HTTP/OpenAI-SDK katmanında enstrümantasyon"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which OpenTelemetry conventions does the lesson identify as the 2026 interop layer between observability tools?",
+      "question": "Ders, gözlemlenebilirlik araçları arasındaki 2026 birlikte çalışma katmanı olarak hangi OpenTelemetry kurallarını tanımlıyor?",
       "options": [
         "OTel messaging semantic conventions",
         "OTel database semantic conventions",
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does the lesson argue full-trace retention does not scale past 1M requests/day?",
+      "question": "Derste neden tam izlemeyi elde tutmanın günde 1 milyon istekten daha yüksek bir ölçeklendirme yapmadığı tartışılıyor?",
       "options": [
-        "Retention storage costs more than the LLM calls themselves; teams must sample (e.g. 100% errors, 100% high-cost, 5% successes)",
+        "Saklama depolaması, LLM'nin kendi deyimiyle daha pahalıdır; takımların örnekleme yapması gerekir (örneğin %100 hata, %100 yüksek maliyet, %5 başarı)",
         "OpenTelemetry caps trace volume",
-        "Vendors block it",
-        "Phoenix only supports 1M traces"
+        "Satıcılar engelliyor",
+        "Phoenix yalnızca 1 milyon izi destekler"
       ],
       "correct": 0,
       "explanation": ""

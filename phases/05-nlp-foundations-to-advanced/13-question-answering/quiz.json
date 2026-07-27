@@ -4,59 +4,59 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does extractive QA predict?",
+      "question": "Çıkarıcı QA neyi öngörüyor?",
       "options": [
         "A generated natural-language answer",
-        "A confidence score only",
-        "Start and end token indices of the answer span within a given passage",
+        "Yalnızca güven puanı",
+        "Belirli bir pasajdaki yanıt aralığının başlangıç ​​ve bitiş belirteç endeksleri",
         "A retrieved passage ID"
       ],
       "correct": 2,
-      "explanation": "Extractive QA outputs the span of the passage that contains the answer."
+      "explanation": "Çıkarıcı QA, cevabı içeren pasajın açıklığını verir."
     },
     {
       "stage": "pre",
-      "question": "What two components define a basic RAG pipeline?",
+      "question": "Temel bir RAG boru hattını hangi iki bileşen tanımlar?",
       "options": [
         "An encoder and a decoder trained jointly",
         "A reranker and a translator",
         "Tokenizer and POS tagger",
-        "A retriever (find relevant passages) and a reader (extract or generate the answer)"
+        "Bir alıcı (ilgili pasajları bulun) ve bir okuyucu (cevabı çıkarın veya oluşturun)"
       ],
       "correct": 3,
-      "explanation": "RAG = retriever (finds relevant context) plus reader (answers from it)."
+      "explanation": "RAG = alıcı (ilgili bağlamı bulur) artı okuyucu (bundan gelen yanıtlar)."
     },
     {
       "stage": "check",
-      "question": "On SQuAD, what does Exact Match (EM) measure?",
+      "question": "SQuAD'da Tam Eşleşme (EM) neyi ölçer?",
       "options": [
         "Edit distance",
         "Per-word overlap",
-        "Whether the prediction matches the reference exactly after normalization (lowercase, strip punctuation, remove articles)",
+        "Normalleştirmeden sonra tahminin referansla tam olarak eşleşip eşleşmediği (küçük harf, noktalama işaretini kaldırma, makaleleri kaldırma)",
         "Token-level F1"
       ],
       "correct": 2,
-      "explanation": "EM is strict equality after a defined normalization step; partial matches score zero."
+      "explanation": "EM, tanımlanmış bir normalizasyon adımından sonra tam eşitliktir; kısmi maçlar sıfır puan alır."
     },
     {
       "stage": "check",
-      "question": "What does deepset/roberta-base-squad2 add over a SQuAD 1.1 model?",
+      "question": "Deepset/roberta-base-squad2, SQuAD 1.1 modeline ne katıyor?",
       "options": [
         "Multilingual support",
-        "Training on unanswerable questions so the model can predict a null answer",
+        "Modelin boş bir yanıtı tahmin edebilmesi için yanıtlanamayan sorular üzerinde eğitim",
         "Bigger context window",
         "Cross-lingual retrieval"
       ],
       "correct": 1,
-      "explanation": "SQuAD 2.0 includes unanswerable items; models trained on it can predict 'no answer'."
+      "explanation": "SQuAD 2.0 yanıtlanamayan öğeleri içerir; bunun üzerinde eğitilen modeller 'cevap yok' tahmininde bulunabilir."
     },
     {
       "stage": "check",
-      "question": "Which RAGAS dimension targets hallucinations specifically?",
+      "question": "Hangi RAGAS boyutu özellikle halüsinasyonları hedefliyor?",
       "options": [
         "Answer relevance",
         "Context recall",
-        "Faithfulness, measured by NLI entailment between answer claims and retrieved context",
+        "Yanıt iddiaları ile alınan bağlam arasındaki NLI gerekliliğiyle ölçülen doğruluk",
         "Context precision"
       ],
       "correct": 2,
@@ -64,39 +64,39 @@
     },
     {
       "stage": "post",
-      "question": "Why should you measure retrieval recall before evaluating reader accuracy?",
+      "question": "Okuyucu doğruluğunu değerlendirmeden önce neden geri çağırmayı ölçmelisiniz?",
       "options": [
         "Required by transformers",
         "Recall determines ROUGE",
-        "Reader latency depends on it",
-        "If the correct passage is not in the top-k, the reader cannot succeed regardless of how good it is"
+        "Okuyucu gecikmesi buna bağlıdır",
+        "Doğru pasaj ilk-k'de değilse okuyucu ne kadar iyi olursa olsun başarılı olamaz."
       ],
       "correct": 3,
-      "explanation": "A reader cannot answer when the right passage is missing; retrieval recall bounds reader performance."
+      "explanation": "Doğru pasaj eksik olduğunda okuyucu cevap veremez; geri çağırma okuyucunun performansını sınırlar."
     },
     {
       "stage": "post",
-      "question": "Which prompt pattern reduces hallucinations in RAG generation?",
+      "question": "Hangi yönlendirme modeli RAG neslinde halüsinasyonları azaltır?",
       "options": [
-        "Telling the model to answer only from the provided context and to reply 'I don't know' when the context is insufficient",
+        "Modele yalnızca sağlanan bağlamdan yanıt vermesini ve bağlam yetersiz olduğunda 'Bilmiyorum' yanıtını vermesini söylemek",
         "Including more passages",
-        "Asking the model to be creative",
-        "Removing the question"
+        "Modelden yaratıcı olmasını istemek",
+        "Soruyu kaldırmak"
       ],
       "correct": 0,
       "explanation": "Grounding + explicit refusal instructions cuts hallucination rates substantially."
     },
     {
       "stage": "post",
-      "question": "When is extractive QA still preferred over generative RAG in 2026?",
+      "question": "Çıkarıcı QA, 2026'da üretken RAG'ye ne zaman hala tercih edilir?",
       "options": [
         "Conversational QA",
-        "Regulated domains (legal, medical, audit) where literal quotation from authoritative sources is required",
+        "Yetkili kaynaklardan birebir alıntı yapılmasının gerekli olduğu düzenlenmiş alanlar (hukuk, tıbbi, denetim)",
         "Multilingual support",
         "Open-domain trivia"
       ],
       "correct": 1,
-      "explanation": "Extractive QA gives verbatim quotes from an authoritative corpus, which compliance contexts demand."
+      "explanation": "Çıkarıcı QA, uyumluluk bağlamlarının gerektirdiği yetkili bir derlemden kelimesi kelimesine alıntılar verir."
     }
   ]
 }

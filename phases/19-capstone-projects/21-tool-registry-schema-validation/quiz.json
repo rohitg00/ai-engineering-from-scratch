@@ -1,22 +1,22 @@
 {
   "lesson": "21-tool-registry-schema-validation",
-  "title": "Tool Registry with Schema Validation",
+  "title": "Şema Doğrulamalı Araç Kaydı",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why register a tool's schema separately from its handler?",
+      "question": "Neden bir aracın şemasını işleyicisinden ayrı olarak kaydettirmelisiniz?",
       "options": [
-        "Because schemas have to live in YAML",
-        "So the validator stays pure data, and the handler stays opaque code",
-        "Because handlers cannot return JSON",
-        "Because schemas must be compiled"
+        "Çünkü şemaların YAML'de yaşaması gerekiyor",
+        "Böylece doğrulayıcı saf veri olarak kalır ve işleyici opak kod olarak kalır",
+        "Çünkü işleyiciler JSON değerini döndüremez",
+        "Çünkü şemaların derlenmesi gerekiyor"
       ],
       "correct": 1,
-      "explanation": "Keeping the schema as data and the handler as code lets the validator be a pure function over the schema tree."
+      "explanation": "Şemayı veri olarak ve işleyiciyi kod olarak tutmak, doğrulayıcının şema ağacı üzerinde saf bir işlev olmasını sağlar."
     },
     {
       "stage": "check",
-      "question": "Which keywords are intentionally outside the subset this lesson implements?",
+      "question": "Hangi anahtar kelimeler kasıtlı olarak bu dersin uyguladığı alt kümenin dışındadır?",
       "options": [
         "type, properties, required",
         "minLength, maxLength, pattern",
@@ -24,35 +24,35 @@
         "items, enum"
       ],
       "correct": 2,
-      "explanation": "The omitted keywords add cycles and reference resolution. We keep the subset linear so the validator stays a single recursive walk."
+      "explanation": "Atlanan anahtar kelimeler döngüleri ve referans çözünürlüğünü ekler. Doğrulayıcının tek bir özyinelemeli yürüyüşte kalması için alt kümeyi doğrusal tutuyoruz."
     },
     {
       "stage": "check",
-      "question": "Why does register() reject duplicates by default?",
+      "question": "register() neden kopyaları varsayılan olarak reddediyor?",
       "options": [
-        "Because the registry cannot store more than one record per name",
-        "Silent overwrites are the cause of production tool catalog drift",
-        "Because the schema cannot be re-validated",
-        "Because handlers cannot be replaced"
+        "Kayıt defteri ad başına birden fazla kayıt depolayamadığı için",
+        "Sessiz üzerine yazma işlemleri, üretim aracı kataloğunun kaymasının nedenidir",
+        "Çünkü şema yeniden doğrulanamıyor",
+        "Çünkü işleyiciler değiştirilemez"
       ],
       "correct": 1,
-      "explanation": "Forcing override=True surfaces the case where two parts of the code intend to own the same tool name."
+      "explanation": "Forcing override=True, kodun iki bölümünün aynı araç adına sahip olmayı amaçladığı durumu ortaya çıkarır."
     },
     {
       "stage": "check",
-      "question": "What does the validator do when a schema specifies type integer but receives the value True?",
+      "question": "Bir şema tür tamsayısını belirttiğinde ancak Doğru değerini aldığında doğrulayıcı ne yapar?",
       "options": [
-        "Treats it as 1 and passes",
-        "Returns a type error because bool is not integer in this validator",
+        "1 olarak kabul eder ve geçer",
+        "Bu doğrulayıcıda bool tamsayı olmadığı için bir tür hatası döndürür",
         "Raises an unhandled exception",
         "Coerces to integer silently"
       ],
       "correct": 1,
-      "explanation": "Python bool is a subclass of int, but the validator filters bool out of the integer check. JSON booleans and integers are distinct."
+      "explanation": "Python bool is a subclass of int, but the validator filters bool out of the integer check. JSON Boole değerleri ve tamsayılar farklıdır."
     },
     {
       "stage": "post",
-      "question": "When the input object is {'user': {'email': 0}} and the schema requires user.email to be a string, what is the error path?",
+      "question": "Giriş nesnesi {'user': {'email': 0}} olduğunda ve şema user.email'in bir dize olmasını gerektirdiğinde, hata yolu nedir?",
       "options": [
         "/",
         "/user",
@@ -60,19 +60,19 @@
         "user.email"
       ],
       "correct": 2,
-      "explanation": "JSON pointer encodes the descent through user then email as /user/email."
+      "explanation": "JSON işaretçisi, iniş işlemini kullanıcı aracılığıyla kodlar ve ardından /user/email olarak e-postayla gönderir."
     },
     {
       "stage": "post",
-      "question": "Why is the registry not a security boundary?",
+      "question": "Kayıt defteri neden bir güvenlik sınırı değil?",
       "options": [
-        "Because handlers can still misbehave after validation passes",
-        "Because handlers are async",
-        "Because the schema is JSON",
-        "Because the registry is in-process"
+        "Çünkü işleyiciler doğrulama geçtikten sonra da hatalı davranışlarda bulunabilirler",
+        "İşleyiciler eşzamansız olduğundan",
+        "Çünkü şema JSON",
+        "Kayıt işlemi devam ettiği için"
       ],
       "correct": 0,
-      "explanation": "The registry checks shape. Behavior, timeouts, and isolation belong to the dispatcher and the sandbox."
+      "explanation": "Kayıt defteri şekli kontrol eder. Davranış, zaman aşımları ve izolasyon, dağıtıcıya ve korumalı alana aittir."
     }
   ]
 }

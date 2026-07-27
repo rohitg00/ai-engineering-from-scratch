@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does 'optimization' mean in the context of training a neural network?",
-      "options": ["Making the code run faster", "Finding the model weights that minimize the loss function", "Reducing the number of parameters in the model", "Choosing the best hardware for training"],
+      "question": "Bir sinir ağının eğitimi bağlamında 'optimizasyon' ne anlama gelir?",
+      "options": [
+        "Kodun daha hızlı çalışmasını sağlama",
+        "Kayıp fonksiyonunu en aza indiren model ağırlıklarının bulunması",
+        "Modeldeki parametre sayısının azaltılması",
+        "Eğitim için en iyi donanımı seçme"
+      ],
       "correct": 1,
-      "explanation": "Training a neural network IS optimization. The loss function measures how wrong the model is, and optimization finds the weight values that make it as small as possible."
+      "explanation": "Bir sinir ağı IS optimizasyonunun eğitimi. Kayıp fonksiyonu modelin ne kadar yanlış olduğunu ölçer ve optimizasyon onu mümkün olduğu kadar küçük yapan ağırlık değerlerini bulur."
     },
     {
       "stage": "pre",
-      "question": "What happens if the learning rate is too large during gradient descent?",
-      "options": ["Training converges faster to the global minimum", "The optimizer overshoots the minimum and the loss diverges (bounces or increases)", "The gradients become zero", "The model automatically reduces the learning rate"],
+      "question": "Gradyan iniş sırasında öğrenme oranı çok büyük olursa ne olur?",
+      "options": [
+        "Eğitim küresel minimuma daha hızlı yaklaşıyor",
+        "Optimize edici minimum değeri aşar ve kayıp farklılaşır (geri döner veya artar)",
+        "Degradeler sıfır olur",
+        "Model öğrenme oranını otomatik olarak azaltır"
+      ],
       "correct": 1,
-      "explanation": "A learning rate that is too large causes each step to overshoot the valley, potentially bouncing between walls or diverging entirely. The loss increases instead of decreasing."
+      "explanation": "Çok büyük bir öğrenme oranı, her adımın vadiyi aşmasına, potansiyel olarak duvarlar arasında sıçramasına veya tamamen sapmasına neden olur. Kayıp azalmak yerine artıyor."
     },
     {
       "stage": "post",
-      "question": "How does Adam differ from vanilla gradient descent?",
-      "options": ["Adam uses a fixed learning rate while GD uses adaptive rates", "Adam tracks running averages of gradients and squared gradients to give each weight its own adaptive learning rate", "Adam computes exact second derivatives while GD uses first derivatives", "Adam processes the full dataset per step while GD uses mini-batches"],
+      "question": "Adem'in vanilya gradyan inişinden farkı nedir?",
+      "options": [
+        "Adam uses a fixed learning rate while GD uses adaptive rates",
+        "Adam, her ağırlığa kendi uyarlanabilir öğrenme oranını vermek için gradyanların ve kareli gradyanların ortalamalarını izler",
+        "Adam computes exact second derivatives while GD uses first derivatives",
+        "Adam adım başına tüm veri kümesini işlerken GD mini gruplar kullanıyor"
+      ],
       "correct": 1,
-      "explanation": "Adam maintains per-weight first moment (gradient direction) and second moment (gradient magnitude) estimates. Dividing by sqrt(second moment) gives small steps for weights with large gradients and large steps for weights with small gradients."
+      "explanation": "Adam, ağırlık başına birinci moment (gradyan yönü) ve ikinci moment (gradyan büyüklüğü) tahminlerini korur. sqrt(second moment)'ye bölmek, büyük eğimlere sahip ağırlıklar için küçük adımlar ve küçük eğimlere sahip ağırlıklar için büyük adımlar verir."
     },
     {
       "stage": "post",
-      "question": "Why is the noise in mini-batch SGD considered beneficial rather than just a nuisance?",
-      "options": ["Noise reduces memory usage during training", "Noise helps the optimizer escape shallow local minima and saddle points that a noiseless optimizer would get stuck in", "Noise is not beneficial; it always slows convergence", "Noise makes the loss function convex"],
+      "question": "Mini parti SGD'deki gürültü neden sadece bir sıkıntı değil de faydalı olarak değerlendiriliyor?",
+      "options": [
+        "Noise reduces memory usage during training",
+        "Gürültü, optimize edicinin, gürültüsüz bir optimize edicinin takılıp kalabileceği sığ yerel minimumlardan ve eyer noktalarından kaçmasına yardımcı olur",
+        "Gürültü faydalı değildir; her zaman yakınsamayı yavaşlatır",
+        "Gürültü, kayıp fonksiyonunu dışbükey yapar"
+      ],
       "correct": 1,
-      "explanation": "The stochastic noise from random mini-batches provides random perturbations that can push the optimizer out of shallow local minima and saddle points, leading to better generalization."
+      "explanation": "Rastgele mini gruplardan gelen stokastik gürültü, optimize ediciyi sığ yerel minimum ve eyer noktalarından dışarı itebilen rastgele pertürbasyonlar sağlayarak daha iyi genellemeye yol açar."
     },
     {
       "stage": "post",
-      "question": "What does a cosine annealing learning rate schedule do?",
-      "options": ["Increases the learning rate throughout training following a cosine curve", "Starts with a high learning rate and smoothly decreases it following a cosine curve, with optional warmup", "Alternates the learning rate between two fixed values", "Sets the learning rate to the cosine of the current epoch number"],
+      "question": "Kosinüs tavlama öğrenme oranı çizelgesi ne işe yarar?",
+      "options": [
+        "Kosinüs eğrisini takip ederek eğitim boyunca öğrenme oranını artırır",
+        "Yüksek bir öğrenme oranıyla başlar ve isteğe bağlı ısınmayla kosinüs eğrisini takip ederek bu hızı sorunsuz bir şekilde azaltır",
+        "Öğrenme oranını iki sabit değer arasında değiştirir",
+        "Öğrenme oranını geçerli dönem sayısının kosinüsüne ayarlar"
+      ],
       "correct": 1,
-      "explanation": "Cosine annealing smoothly reduces the learning rate from lr_max to lr_min following a half-cosine curve. This provides large steps early for fast progress and small steps late for fine convergence."
+      "explanation": "Kosinüs tavlaması, yarım kosinüs eğrisini izleyerek öğrenme oranını lr_max'tan lr_min'e sorunsuz bir şekilde azaltır. Bu, hızlı ilerleme için erken büyük adımlar ve hassas yakınsama için geç küçük adımlar sağlar."
     }
   ]
 }

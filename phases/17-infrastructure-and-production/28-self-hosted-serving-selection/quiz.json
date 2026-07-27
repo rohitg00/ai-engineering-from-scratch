@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which engine does the lesson pick as the dev-laptop one-command default?",
+      "question": "Ders, geliştirici dizüstü bilgisayarın tek komutlu varsayılanı olarak hangi motoru seçiyor?",
       "options": [
         "TGI",
         "Ollama",
@@ -16,31 +16,31 @@
     },
     {
       "stage": "check",
-      "question": "What 2025 event changes the default away from TGI for new projects?",
+      "question": "Hangi 2025 olayı yeni projeler için varsayılanı TGI'den uzaklaştırır?",
       "options": [
         "TGI was acquired by Anthropic",
         "TGI raised prices",
         "TGI dropped CUDA support",
-        "TGI entered maintenance mode on December 11, 2025 — only bug fixes going forward"
+        "TGI, 11 Aralık 2025'te bakım moduna girdi — bundan sonra yalnızca hata düzeltmeleri yapılacak"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which hardware constraint forces llama.cpp and excludes vLLM / TRT-LLM?",
+      "question": "Hangi donanım kısıtlaması llama.cpp'yi zorlar ve vLLM / TRT-LLM'yi hariç tutar?",
       "options": [
         "Apple M4",
         "AMD MI300X",
         "NVIDIA Hopper",
-        "CPU only (no accelerator)"
+        "Yalnızca CPU (hızlandırıcı yok)"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which engine does the lesson position for agentic multi-turn and prefix-heavy workloads thanks to RadixAttention?",
+      "question": "RadixAttention sayesinde ajansal çok dönüşlü ve önek ağırlıklı iş yükleri için ders konumu hangi motordur?",
       "options": [
         "Ollama",
         "llama.cpp",
@@ -52,11 +52,11 @@
     },
     {
       "stage": "post",
-      "question": "What dev-to-prod pipeline does the lesson recommend on the same GGUF or HF weights?",
+      "question": "Ders aynı GGUF veya HF ağırlıkları için hangi geliştirmeden üretime üretim hattını öneriyor?",
       "options": [
-        "Only TRT-LLM, top to bottom",
+        "Yalnızca TRT-LLM, yukarıdan aşağıya",
         "Ollama in dev and Ollama in prod",
-        "Ollama in dev, llama.cpp in staging, vLLM (or SGLang for prefix-heavy) in prod",
+        "Dev'de Ollama, aşamalandırmada llama.cpp, prod'da vLLM (veya önek ağırlıklı için SGLang)",
         "TGI everywhere"
       ],
       "correct": 2,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why is Ollama discouraged for shared production?",
+      "question": "Ollama neden ortak üretimden vazgeçiyor?",
       "options": [
-        "It is closed source",
-        "It only runs on Windows",
-        "Go HTTP serialization adds overhead, concurrency management is simpler than vLLM, and OpenTelemetry support lags",
-        "It cannot load GGUF"
+        "Kapalı kaynaktır",
+        "Yalnızca Windows'ta çalışır",
+        "Go HTTP serileştirme ek yük getirir, eşzamanlılık yönetimi vLLM'den daha basittir ve OpenTelemetry desteğinde gecikmeler olur",
+        "GGUF yüklenemiyor"
       ],
       "correct": 2,
       "explanation": ""

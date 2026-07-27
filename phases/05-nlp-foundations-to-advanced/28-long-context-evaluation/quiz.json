@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the original NIAH benchmark measure?",
+      "question": "Orijinal NIAH karşılaştırma testi neyi ölçüyor?",
       "options": [
         "Tokenizer fertility",
-        "Whether the model can retrieve a planted fact at controlled depths across a long context",
+        "Modelin, uzun bir bağlamda kontrollü derinliklerde yerleşik bir gerçeği elde edip edemeyeceği",
         "Embedding cosine drift",
-        "Multi-hop reasoning only"
+        "Yalnızca çok atlamalı akıl yürütme"
       ],
       "correct": 1,
-      "explanation": "NIAH = needle in a haystack: plant a fact, ask the model to retrieve it, sweep depth and length."
+      "explanation": "NIAH = samanlıkta iğne: bir olguyu dikin, modelden onu almasını isteyin, derinliği ve uzunluğu tarayın."
     },
     {
       "stage": "pre",
-      "question": "Why is the advertised context window often very different from the usable context?",
+      "question": "Reklamı yapılan içerik penceresi neden genellikle kullanılabilir bağlamdan çok farklı?",
       "options": [
-        "Attention degrades with length and task; spec-sheet maximums rarely hold under multi-hop or reasoning loads",
+        "Dikkat uzunluk ve görev arttıkça azalır; teknik özellik sayfası maksimumları çoklu atlama veya mantık yükleri altında nadiren geçerli olur",
         "Tokenizers truncate",
         "Embeddings overflow",
         "Beam search slows"
       ],
       "correct": 0,
-      "explanation": "Effective context for reasoning is usually 25-50% of the advertised max."
+      "explanation": "Muhakeme için etkili bağlam genellikle reklamı yapılan maksimum değerin %25-50'sidir."
     },
     {
       "stage": "check",
-      "question": "What does RULER add over NIAH?",
+      "question": "RULER, NIAH'ye ne ekler?",
       "options": [
         "Translation tasks",
         "Faster inference",
@@ -36,67 +36,67 @@
         "Thirteen task types across retrieval, multi-hop tracing, aggregation, and QA at multiple context lengths"
       ],
       "correct": 3,
-      "explanation": "RULER expands NIAH into a multi-task long-context benchmark catching models that saturate NIAH but fail elsewhere."
+      "explanation": "RULER, NIAH'yi, NIAH'yi doyuran ancak başka yerlerde başarısız olan çok görevli, uzun bağlamlı bir karşılaştırmalı değerlendirme modeline dönüştürüyor."
     },
     {
       "stage": "check",
-      "question": "What is the 'lost in the middle' effect?",
+      "question": "'Ortada kaybolma' etkisi nedir?",
       "options": [
-        "Models under-attend to content placed in the middle of long inputs; depth=0.5 often performs worse than depth=0 or 1",
+        "Modeller, uzun girdilerin ortasına yerleştirilen içeriğe yeterince ilgi göstermiyor; derinlik=0,5 genellikle derinlik=0 veya 1'den daha kötü performans gösterir",
         "Models reorder tokens",
-        "Models forget the first token",
+        "Modeller ilk jetonu unutuyor",
         "Models lose punctuation"
       ],
       "correct": 0,
-      "explanation": "Mid-context content is least attended; sweeping depth exposes the U-shaped accuracy curve."
+      "explanation": "Orta bağlam içeriğine en az katılım sağlanır; süpürme derinliği U- şeklindeki doğruluk eğrisini ortaya çıkarır."
     },
     {
       "stage": "check",
-      "question": "Why must NIAH-only evaluation be supplemented with multi-hop tests?",
+      "question": "Neden NIAH-only değerlendirmesinin çok atlamalı testlerle desteklenmesi gerekiyor?",
       "options": [
-        "Multi-hop is faster",
+        "Çoklu atlama daha hızlıdır",
         "NIAH lacks ground truth",
-        "NIAH cannot run on long context",
-        "Frontier models can ace single-needle retrieval but still fail multi-hop variable-tracing or aggregation tasks"
+        "NIAH uzun bağlamda çalışamaz",
+        "Sınır modelleri tek iğneli erişimde başarılı olabilir ancak yine de çok atlamalı değişken izleme veya toplama görevlerinde başarısız olur"
       ],
       "correct": 3,
-      "explanation": "Retrieval pass does not imply reasoning pass; multi-hop benchmarks expose the real ceiling."
+      "explanation": "Geri alma geçişi akıl yürütme geçişi anlamına gelmez; çok atlamalı kıyaslamalar gerçek tavanı ortaya koyuyor."
     },
     {
       "stage": "post",
-      "question": "What does NoLiMa stress?",
+      "question": "NoLiMa neyi vurguluyor?",
       "options": [
         "Streaming output",
         "Latency",
         "Tokenization",
-        "Needles that share no literal tokens with the query, so retrieval requires a semantic reasoning step"
+        "Sorguyla hiçbir değişmez belirteci paylaşmayan iğneler, bu nedenle alma işlemi anlamsal bir akıl yürütme adımı gerektirir"
       ],
       "correct": 3,
-      "explanation": "NoLiMa removes lexical overlap so the model must reason rather than match keywords."
+      "explanation": "NoLiMa sözcüksel örtüşmeyi ortadan kaldırır, böylece modelin anahtar kelimeleri eşleştirmek yerine akıl yürütmesi gerekir."
     },
     {
       "stage": "post",
-      "question": "What two numbers should a long-context spec sheet report?",
+      "question": "Uzun bağlamlı bir teknik özellik sayfası hangi iki sayıyı rapor etmelidir?",
       "options": [
         "Effective retrieval length (e.g. 90% NIAH pass) and effective reasoning length (e.g. 70% multi-hop pass)",
-        "GPU memory and latency only",
-        "Only the advertised max",
-        "Tokens per second only"
+        "GPU yalnızca bellek ve gecikme",
+        "Yalnızca reklamı yapılan maksimum",
+        "Yalnızca saniye başına jetonlar"
       ],
       "correct": 0,
-      "explanation": "Distinguishing retrieval-effective from reasoning-effective length is essential for real-world claims."
+      "explanation": "Geri getirme etkili uzunluğunu akıl yürütme etkili uzunluktan ayırmak, gerçek dünyadaki iddialar için çok önemlidir."
     },
     {
       "stage": "post",
-      "question": "Why measure time-to-first-token at long context lengths?",
+      "question": "Neden uzun bağlam uzunluklarında ilk jetona kadar geçen süreyi ölçüyorsunuz?",
       "options": [
-        "1M-token prefills can take tens of seconds; accuracy alone hides product-impacting latency",
-        "Tokenization is slow",
+        "1 milyon jetonun önceden doldurulması onlarca saniye sürebilir; Doğruluk tek başına ürünü etkileyen gecikmeyi gizler",
+        "Tokenizasyon yavaş",
         "Required by RAG",
-        "Beam search depends on it"
+        "Işın araması buna bağlıdır"
       ],
       "correct": 0,
-      "explanation": "Long prompts have huge prefill costs; latency must be tracked alongside accuracy."
+      "explanation": "Uzun istemlerin önceden doldurma maliyetleri yüksektir; gecikmenin doğrulukla birlikte izlenmesi gerekir."
     }
   ]
 }

@@ -1,10 +1,10 @@
 {
   "lesson": "32-minimal-agent-workbench",
-  "title": "The Minimal Agent Workbench",
+  "title": "Minimal Ajan Tezgahı",
   "questions": [
     {
       "stage": "pre",
-      "question": "What three files form the smallest useful workbench?",
+      "question": "En küçük kullanışlı çalışma tezgahını hangi üç dosya oluşturur?",
       "options": [
         "AGENTS.md (router), agent_state.json (state), task_board.json (queue)",
         "README.md, CHANGELOG.md, LICENSE",
@@ -12,59 +12,59 @@
         "Dockerfile, Makefile, .gitignore"
       ],
       "correct": 0,
-      "explanation": "A short router, durable state, and a task queue are the floor."
+      "explanation": "Kısa bir yönlendirici, dayanıklı durum ve görev kuyruğu zemindir."
     },
     {
       "stage": "pre",
-      "question": "What is the lesson's framing of AGENTS.md?",
+      "question": "AGENTS.md dersinin çerçevesi nedir?",
       "options": [
         "A 3000-line onboarding manual",
-        "A short router that points at deeper docs and the state and board",
+        "Daha derin belgelere, eyalete ve yönetim kuruluna işaret eden kısa bir yönlendirici",
         "A pure prompt-cache key",
-        "A secret kept out of the repo"
+        "Deponun dışında saklanan bir sır"
       ],
       "correct": 1,
-      "explanation": "AGENTS.md is a router, not a manual; long manuals get ignored."
+      "explanation": "AGENTS.md bir kılavuz değil, bir yönlendiricidir; uzun kılavuzlar göz ardı ediliyor."
     },
     {
       "stage": "check",
-      "question": "What does Augment Code's data say about a good AGENTS.md?",
+      "question": "Augment Code'un verileri iyi bir AGENTS.md hakkında ne söylüyor?",
       "options": [
-        "It has no measurable effect",
-        "A good AGENTS.md gives a quality jump equivalent to upgrading from Haiku to Opus; a bad one is worse than no file",
+        "Ölçülebilir bir etkisi yok",
+        "İyi bir AGENTS.md, Haiku'dan Opus'a yükseltmeye eşdeğer kalitede bir sıçrama sağlar; kötü bir dosya hiç dosya olmamasından daha kötüdür",
         "Length always helps",
-        "Only Claude reads it"
+        "Bunu yalnızca Claude okur"
       ],
       "correct": 1,
-      "explanation": "Augment Code's measurement: best files are model-upgrade-shaped, worst are worse than nothing."
+      "explanation": "Augment Code'un ölçümü: en iyi dosyalar model yükseltme şeklindedir, en kötüsü ise hiç yoktan kötüdür."
     },
     {
       "stage": "check",
-      "question": "Why does the lesson recommend file-backed state over chat-history state?",
+      "question": "Ders neden sohbet geçmişi durumu yerine dosya destekli durumu öneriyor?",
       "options": [
-        "Disk is cheaper",
-        "Chat history is volatile; the file survives session death, conversation trimming, and tool resets",
-        "Files are smaller",
-        "It is required by SOC 2"
+        "Disk daha ucuz",
+        "Sohbet geçmişi değişkendir; dosya oturumun sona ermesinden, konuşmanın kesilmesinden ve araç sıfırlamalarından kurtulur",
+        "Dosyalar daha küçük",
+        "SOC 2 tarafından gereklidir"
       ],
       "correct": 1,
-      "explanation": "Sessions die and chat gets trimmed; the file is the durable system of record."
+      "explanation": "Oturumlar ölür ve sohbet kesilir; dosya dayanıklı kayıt sistemidir."
     },
     {
       "stage": "check",
-      "question": "What does the lesson say happens when conflicting instructions land in AGENTS.md?",
+      "question": "Ders, AGENTS.md'ye çelişkili talimatlar geldiğinde ne olacağını söylüyor?",
       "options": [
         "Latency drops",
-        "Conflicting instructions silently drop the agent from interactive to greedy mode (AMBIG-SWE: 48.8% to 28% resolve rate)",
+        "Çakışan talimatlar, aracıyı etkileşimli moddan açgözlü moda sessizce düşürür (AMBIG-SWE: %48,8 ila %28 çözüm oranı)",
         "Cost rises slightly",
         "Nothing"
       ],
       "correct": 1,
-      "explanation": "AMBIG-SWE measured a large resolve-rate drop when contradictions appear; number priorities instead."
+      "explanation": "AMBIG-SWE, çelişkiler ortaya çıktığında çözüm oranında büyük bir düşüş ölçtü; bunun yerine öncelikleri numaralandırın."
     },
     {
       "stage": "post",
-      "question": "Why does the lesson recommend cross-tool symlinks like CLAUDE.md -> AGENTS.md?",
+      "question": "Ders neden CLAUDE.md -> AGENTS.md gibi araçlar arası sembolik bağlantıları öneriyor?",
       "options": [
         "To save bytes",
         "So a single source of truth fans out to every coding agent without forking",
@@ -72,19 +72,19 @@
         "To satisfy MIT"
       ],
       "correct": 1,
-      "explanation": "Symlinks (or Nx-style generators) keep one canonical source across Claude Code, Codex, Cursor, Copilot, etc."
+      "explanation": "Sembolik bağlantılar (veya Nx tarzı oluşturucular), Claude Code, Codex, Cursor, Copilot vb. genelinde tek bir kanonik kaynağı tutar."
     },
     {
       "stage": "post",
-      "question": "What pattern do nested AGENTS.md files follow?",
+      "question": "Yuvalanmış AGENTS.md dosyaları hangi modeli izliyor?",
       "options": [
-        "Only the root file is read",
-        "Walk from the working file toward the repo root, concatenate every AGENTS.md found on the way (nearest wins; sub-directories extend root)",
+        "Yalnızca kök dosya okunur",
+        "Çalışma dosyasından repo köküne doğru ilerleyin, yolda bulunan her AGENTS.md'yi birleştirin (en yakın kazançlar; alt dizinler kökü genişletir)",
         "Random selection",
         "Alphabetical merge"
       ],
       "correct": 1,
-      "explanation": "OpenAI ships 88 AGENTS.md files across its main repo; tools concatenate nearest-up-tree."
+      "explanation": "OpenAI, ana deposunda 88 AGENTS.md dosyası gönderiyor; araçlar en yakın ağacı birleştirir."
     }
   ]
 }

@@ -1,37 +1,62 @@
 [
   {
-    "question": "What happens if you initialize all weights in a neural network to zero?",
-    "options": ["The network trains normally but slowly", "All neurons compute identical outputs and receive identical gradients, so the network has only 1 effective neuron per layer", "The network diverges", "Zero init is the recommended default"],
+    "question": "Bir sinir ağındaki tüm ağırlıkları sıfıra ayarlarsanız ne olur?",
+    "options": [
+      "Ağ normal fakat yavaş bir şekilde eğitiliyor",
+      "Tüm nöronlar aynı çıktıları hesaplar ve aynı gradyanları alır, böylece ağda katman başına yalnızca 1 etkili nöron bulunur",
+      "Ağ farklılaşıyor",
+      "Sıfır başlatma önerilen varsayılan değerdir"
+    ],
     "correct": 1,
-    "explanation": "With zero weights, every neuron in a layer computes the same function, receives the same gradient, and updates identically. This 'symmetry' means hundreds of parameters behave as one.",
+    "explanation": "Sıfır ağırlıkla katmandaki her nöron aynı işlevi hesaplar, aynı gradyanı alır ve aynı şekilde güncellenir. Bu 'simetri', yüzlerce parametrenin tek bir parametre gibi davranması anlamına gelir.",
     "stage": "pre"
   },
   {
-    "question": "Why does the scale of random weight initialization matter?",
-    "options": ["Larger weights train faster", "If variance is too high, activations explode; if too low, activations vanish -- both prevent training", "Scale only matters for the output layer", "It doesn't matter as long as weights are nonzero"],
+    "question": "Rastgele ağırlık başlatma ölçeği neden önemlidir?",
+    "options": [
+      "Larger weights train faster",
+      "Varyans çok yüksekse aktivasyonlar patlar; çok düşükse aktivasyonlar kaybolur; her ikisi de eğitimi engeller",
+      "Ölçek yalnızca çıktı katmanı için önemlidir",
+      "Ağırlıklar sıfırdan farklı olduğu sürece sorun yok"
+    ],
     "correct": 1,
-    "explanation": "Each layer multiplies variance by fan_in * Var(w). If this product is > 1, signal explodes exponentially through layers. If < 1, it vanishes. Proper initialization keeps this product at exactly 1.",
+    "explanation": "Her katman varyansı fan_in * Var(w) ile çarpar. Bu çarpım > 1 ise sinyal katmanlar boyunca üstel olarak patlar. < 1 ise yok olur. Doğru başlatma bu ürünü tam olarak 1'de tutar.",
     "stage": "pre"
   },
   {
-    "question": "What is the formula for Kaiming/He initialization variance?",
-    "options": ["Var(w) = 1/fan_in", "Var(w) = 2/fan_in", "Var(w) = 2/(fan_in + fan_out)", "Var(w) = 1/(fan_in + fan_out)"],
+    "question": "Kaiming/He başlatma varyansının formülü nedir?",
+    "options": [
+      "Var(w) = 1/fan_in",
+      "Var(w) = 2/fan_in",
+      "Var(w) = 2/(fan_in + fan_out)",
+      "Var(w) = 1/(fan_in + fan_out)"
+    ],
     "correct": 1,
-    "explanation": "Kaiming init uses Var(w) = 2/fan_in. The factor of 2 compensates for ReLU zeroing half the activations (negative values become 0), which effectively halves the fan_in.",
+    "explanation": "Kaiming init, Var(w) = 2/fan_in'i kullanır. 2 faktörü, ReLU'nun aktivasyonların yarısını sıfırlamasını telafi eder (negatif değerler 0 olur), bu da fan_in'i etkili bir şekilde yarıya indirir.",
     "stage": "post"
   },
   {
-    "question": "When should you use Xavier/Glorot initialization instead of Kaiming/He?",
-    "options": ["Always -- Xavier is universally better", "When using sigmoid or tanh activations, which don't zero half the outputs like ReLU", "When training on small datasets", "When using Adam optimizer"],
+    "question": "Kaiming/He yerine Xavier/Glorot başlatmayı ne zaman kullanmalısınız?",
+    "options": [
+      "Her zaman -- Xavier evrensel olarak daha iyi",
+      "ReLU gibi çıktıların yarısını sıfırlamayan sigmoid veya tanh aktivasyonları kullanıldığında",
+      "Küçük veri kümeleri üzerinde eğitim alırken",
+      "Adam optimize ediciyi kullanırken"
+    ],
     "correct": 1,
-    "explanation": "Xavier init uses Var(w) = 2/(fan_in + fan_out), designed for activations that are roughly linear near zero (sigmoid, tanh). Kaiming's extra factor of 2 compensates for ReLU's half-zeroing, which Xavier doesn't need.",
+    "explanation": "Xavier init, sıfıra yakın kabaca doğrusal olan (sigmoid, tanh) aktivasyonlar için tasarlanmış Var(w) = 2/(fan_in + fan_out) kullanır. Kaiming'in ekstra 2 faktörü, Xavier'in ihtiyaç duymadığı ReLU'nun yarı sıfırlanmasını telafi ediyor.",
     "stage": "post"
   },
   {
-    "question": "Why does GPT-2 scale residual layer weights by 1/sqrt(2N)?",
-    "options": ["To speed up training", "Each residual addition increases variance, so scaling prevents the accumulated signal from growing unbounded through N layers", "To reduce the number of parameters", "To improve tokenization"],
+    "question": "GPT-2 neden artık katman ağırlıklarını 1/sqrt(2N) oranında ölçeklendiriyor?",
+    "options": [
+      "To speed up training",
+      "Her artık ekleme, varyansı artırır, böylece ölçeklendirme, biriken sinyalin N katman boyunca sınırsız büyümesini önler",
+      "Parametre sayısını azaltmak için",
+      "To improve tokenization"
+    ],
     "correct": 1,
-    "explanation": "Residual connections add sublayer output to the input: x = x + sublayer(x). Each addition increases variance. With N residual layers, variance grows proportionally to N. Scaling by 1/sqrt(2N) keeps the signal stable.",
+    "explanation": "Artık bağlantılar girişe alt katman çıkışı ekler: x = x + sublayer(x). Her ekleme varyansı artırır. N artık katmanla varyans, N ile orantılı olarak büyür. 1/sqrt(2N) oranında ölçeklendirme, sinyali sabit tutar.",
     "stage": "post"
   }
 ]

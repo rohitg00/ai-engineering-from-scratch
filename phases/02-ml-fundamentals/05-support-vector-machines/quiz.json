@@ -2,66 +2,66 @@
   {
     "id": "svm-pre-1",
     "stage": "pre",
-    "question": "What are support vectors in an SVM?",
+    "question": "SVM'deki destek vektörleri nelerdir?",
     "options": [
-      "All data points in the training set",
-      "The training points closest to the decision boundary that determine the hyperplane",
-      "The feature vectors after kernel transformation",
-      "The weight vectors learned during training"
+      "Eğitim setindeki tüm veri noktaları",
+      "Hiperdüzlemi belirleyen karar sınırına en yakın eğitim noktaları",
+      "Çekirdek dönüşümünden sonraki özellik vektörleri",
+      "Eğitim sırasında öğrenilen ağırlık vektörleri"
     ],
     "correct": 1,
-    "explanation": "Support vectors are the training points that lie exactly on the margin boundaries. They are the only points that determine the decision hyperplane. Removing non-support-vector points does not change the boundary."
+    "explanation": "Destek vektörleri, tam olarak marj sınırlarında yer alan eğitim noktalarıdır. Karar hiperdüzlemini belirleyen tek noktalar bunlardır. Destek vektörü olmayan noktaların kaldırılması sınırı değiştirmez."
   },
   {
     "id": "svm-pre-2",
     "stage": "pre",
-    "question": "What does the SVM maximize when finding the decision boundary?",
+    "question": "Karar sınırını bulurken SVM neyi maksimuma çıkarır?",
     "options": [
-      "The number of correctly classified training points",
-      "The margin -- the distance between the decision boundary and the nearest points of each class",
-      "The total distance from all points to the boundary",
-      "The complexity of the decision boundary"
+      "Doğru sınıflandırılmış eğitim noktalarının sayısı",
+      "Kenar boşluğu – karar sınırı ile her sınıfın en yakın noktaları arasındaki mesafe",
+      "Tüm noktalardan sınıra kadar olan toplam mesafe",
+      "Karar sınırının karmaşıklığı"
     ],
     "correct": 1,
-    "explanation": "SVMs find the hyperplane that maximizes the margin between the two classes. A wider margin leads to better generalization on unseen data."
+    "explanation": "SVM'ler iki sınıf arasındaki marjı maksimuma çıkaran hiperdüzlemi bulur. Daha geniş bir marj, görünmeyen veriler üzerinde daha iyi genellemeye yol açar."
   },
   {
     "id": "svm-post-1",
     "stage": "post",
-    "question": "What happens when you increase the C parameter in an SVM?",
+    "question": "SVM'de C parametresini artırdığınızda ne olur?",
     "options": [
-      "The margin gets wider and more misclassifications are allowed",
-      "The margin gets narrower, fewer misclassifications are tolerated, and the model may overfit",
-      "The kernel function changes from linear to RBF",
-      "The number of support vectors always increases"
+      "Marj genişler ve daha fazla yanlış sınıflandırmaya izin verilir",
+      "Marj daralır, daha az yanlış sınıflandırma tolere edilir ve model gereğinden fazla uyum sağlayabilir",
+      "Çekirdek işlevi doğrusaldan RBF'ye değişir",
+      "Destek vektörlerinin sayısı her zaman artar"
     ],
     "correct": 1,
-    "explanation": "Large C penalizes misclassifications heavily, producing a narrow margin that closely fits the training data. This can lead to overfitting. Small C allows more violations for a wider, more regularized margin."
+    "explanation": "Büyük C, eğitim verilerine yakından uyan dar bir marj oluşturarak yanlış sınıflandırmaları ağır bir şekilde cezalandırır. Bu, aşırı uyum sağlamaya yol açabilir. Küçük C, daha geniş, daha düzenli bir marj için daha fazla ihlale izin verir."
   },
   {
     "id": "svm-post-2",
     "stage": "post",
-    "question": "How does the kernel trick enable SVMs to learn nonlinear boundaries?",
+    "question": "Çekirdek hilesi SVM'lerin doğrusal olmayan sınırları öğrenmesini nasıl sağlar?",
     "options": [
-      "It replaces the SVM with a neural network",
-      "It computes dot products in a high-dimensional space without explicitly mapping data to that space",
-      "It removes outliers from the dataset before training",
-      "It adds polynomial features to the input data directly"
+      "SVM'yi bir sinir ağıyla değiştiriyor",
+      "Yüksek boyutlu bir uzaydaki nokta çarpımlarını, verileri o uzaya açıkça eşlemeden hesaplar",
+      "Eğitimden önce aykırı değerleri veri kümesinden kaldırır",
+      "Doğrudan giriş verilerine polinom özellikleri ekler"
     ],
     "correct": 1,
-    "explanation": "The kernel trick replaces every dot product x_i . x_j with K(x_i, x_j), computing the dot product in a high-dimensional (even infinite-dimensional for RBF) feature space without ever constructing it."
+    "explanation": "Çekirdek numarası her x_i nokta ürününün yerini alır. K(x_i, x_j) ile x_j, yüksek boyutlu (hatta RBF için sonsuz boyutlu) bir özellik uzayında nokta çarpımı hiç oluşturmadan hesaplıyor."
   },
   {
     "id": "svm-post-3",
     "stage": "post",
-    "question": "Hinge loss is zero when y * f(x) >= 1. What does this mean in terms of classification?",
+    "question": "Y * f(x) >= 1 olduğunda menteşe kaybı sıfırdır. Bu, sınıflandırma açısından ne anlama gelir?",
     "options": [
-      "The point is misclassified",
-      "The point is correctly classified and lies outside the margin",
-      "The point is exactly on the decision boundary",
-      "The point is a noise sample that should be ignored"
+      "Konu yanlış sınıflandırılmış",
+      "Nokta doğru şekilde sınıflandırılmış ve kenar boşluğunun dışında bulunuyor",
+      "Mesele tam olarak karar sınırında",
+      "Önemli olan göz ardı edilmesi gereken bir gürültü örneğidir"
     ],
     "correct": 1,
-    "explanation": "When y * f(x) >= 1, the point is correctly classified AND lies on or beyond the margin boundary. Only points inside the margin or misclassified (y * f(x) < 1) contribute to the hinge loss."
+    "explanation": "Y * f(x) >= 1 olduğunda, nokta doğru şekilde sınıflandırılır AND kenar boşluğu sınırının üzerinde veya ötesinde yer alır. Yalnızca kenar boşluğunun içindeki veya yanlış sınıflandırılan noktalar (y * f(x) < 1) menteşe kaybına katkıda bulunur."
   }
 ]

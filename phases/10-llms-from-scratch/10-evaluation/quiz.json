@@ -1,37 +1,62 @@
 [
   {
-    "question": "Why have benchmarks like MMLU become less useful for comparing frontier models?",
-    "options": ["They test the wrong subjects", "Frontier models have saturated MMLU (scoring 86-89%), compressing the leaderboard to a range where differences are statistical noise", "MMLU was designed for smaller models", "The questions are too easy"],
+    "question": "MMLU gibi kıyaslamalar neden sınır modellerinin karşılaştırılmasında daha az kullanışlı hale geldi?",
+    "options": [
+      "Yanlış konuları test ediyorlar",
+      "Sınır modelleri doymuş MMLU'ye sahiptir (%86-89 puan) ve skor tablosunu farklılıkların istatistiksel gürültü olduğu bir aralığa sıkıştırır",
+      "MMLU daha küçük modeller için tasarlandı",
+      "Sorular çok kolay"
+    ],
     "correct": 1,
-    "explanation": "When GPT-4, Claude 3, and Llama 3 all score 86-89% on MMLU, a 1-point difference is not meaningful. The benchmark no longer discriminates between models, yet it still dominates leaderboard culture.",
+    "explanation": "GPT-4, Claude 3 ve Llama 3'ün tümü MMLU'de %86-89 puan aldığında 1 puanlık fark anlamlı değildir. Karşılaştırma artık modeller arasında ayrım yapmıyor ancak yine de liderlik tablosu kültürüne hakim durumda.",
     "stage": "pre"
   },
   {
-    "question": "What is Goodhart's Law in the context of LLM evaluation?",
-    "options": ["A law about model scaling", "When a measure becomes a target, it ceases to be a good measure -- models and teams optimize for benchmarks instead of real capabilities", "A rule about learning rate schedules", "A theorem about attention mechanisms"],
+    "question": "LLM değerlendirmesi bağlamında Goodhart Yasası nedir?",
+    "options": [
+      "A law about model scaling",
+      "Bir ölçü hedef haline geldiğinde iyi bir ölçü olmaktan çıkar; modeller ve ekipler gerçek yetenekler yerine kıyaslamalara göre optimizasyon yapar",
+      "A rule about learning rate schedules",
+      "A theorem about attention mechanisms"
+    ],
     "correct": 1,
-    "explanation": "Labs optimize for benchmark scores (data contamination, benchmark-specific prompting). The score goes up, but real-world capability doesn't necessarily improve. Your own task-specific eval is the only reliable measure.",
+    "explanation": "Laboratuvarlar kıyaslama puanları için optimizasyon yapar (veri kirliliği, karşılaştırmaya özgü yönlendirme). Puan artıyor ancak gerçek dünyadaki yetenekler mutlaka artmıyor. Kendi göreve özel değerlendirmeniz tek güvenilir ölçümdür.",
     "stage": "pre"
   },
   {
-    "question": "What is the LLM-as-judge evaluation approach?",
-    "options": ["Having a human judge evaluate every response", "Using a strong LLM (e.g., GPT-4) to score responses against rubrics, replacing expensive human evaluation at scale", "Training a separate classifier for evaluation", "Using the model to evaluate itself"],
+    "question": "LLM-as-hakim değerlendirme yaklaşımı nedir?",
+    "options": [
+      "Having a human judge evaluate every response",
+      "Using a strong LLM (e.g., GPT-4) to score responses against rubrics, replacing expensive human evaluation at scale",
+      "Değerlendirme için ayrı bir sınıflandırıcının eğitilmesi",
+      "Modelin kendisini değerlendirmek için kullanılması"
+    ],
     "correct": 1,
-    "explanation": "LLM-as-judge uses a capable model to score responses against defined criteria. It's cheaper and faster than human evaluation, though it has biases (e.g., preferring verbose responses) that must be calibrated.",
+    "explanation": "LLM-as-judge, yanıtları tanımlanmış kriterlere göre puanlamak için yetenekli bir model kullanır. Kalibre edilmesi gereken önyargılara (örneğin, ayrıntılı yanıtları tercih etme) sahip olmasına rağmen, insan değerlendirmesinden daha ucuz ve daha hızlıdır.",
     "stage": "post"
   },
   {
-    "question": "Why is building a custom evaluation suite important rather than relying on public benchmarks?",
-    "options": ["Public benchmarks are always wrong", "Public benchmarks test general capabilities; your application has specific requirements that only a custom eval can measure", "Custom evals are easier to build", "Public benchmarks are too expensive"],
+    "question": "Genel kıyaslamalara güvenmek yerine özel bir değerlendirme paketi oluşturmak neden önemlidir?",
+    "options": [
+      "Herkese açık kıyaslamalar her zaman yanlıştır",
+      "Kamu kıyaslamaları genel yetenekleri test eder; uygulamanızın yalnızca özel bir değerlendirmenin ölçebileceği özel gereksinimleri var",
+      "Özel değerlendirmelerin oluşturulması daha kolaydır",
+      "Kamu kıyaslamaları çok pahalı"
+    ],
     "correct": 1,
-    "explanation": "A model scoring 90% on MMLU might fail on your specific task (e.g., extracting dates from legal documents in your format). Only a custom eval with your data, your edge cases, and your success criteria measures what matters.",
+    "explanation": "MMLU'de %90 puan alan bir model, spesifik görevinizde (örneğin, kendi formatınızdaki yasal belgelerden tarih çıkarmak) başarısız olabilir. Yalnızca verilerinizi, uç durumlarınızı ve başarı kriterlerinizi içeren özel bir değerlendirme neyin önemli olduğunu ölçer.",
     "stage": "post"
   },
   {
-    "question": "What is data contamination in the context of LLM benchmarks?",
-    "options": ["When training data is corrupted", "When benchmark questions appear in the model's pre-training data, inflating scores without reflecting true capability", "When the model generates incorrect data", "When evaluation data is mislabeled"],
+    "question": "LLM kıyaslamaları bağlamında veri kirliliği nedir?",
+    "options": [
+      "Eğitim verileri bozulduğunda",
+      "Modelin eğitim öncesi verilerinde kıyaslama soruları göründüğünde, gerçek yeteneği yansıtmadan puanların şişirilmesi",
+      "Model yanlış veri ürettiğinde",
+      "Değerlendirme verileri yanlış etiketlendiğinde"
+    ],
     "correct": 1,
-    "explanation": "If MMLU questions appeared in the training corpus, the model memorized the answers rather than reasoning about them. This inflates scores and makes benchmark comparisons unreliable. It's a growing problem as training corpora expand.",
+    "explanation": "Eğitim külliyatında MMLU soruları ortaya çıkarsa model, yanıtlar hakkında akıl yürütmek yerine yanıtları ezberledi. Bu, puanları şişirir ve kıyaslama karşılaştırmalarını güvenilmez hale getirir. Eğitim derlemleri genişledikçe bu büyüyen bir sorundur.",
     "stage": "post"
   }
 ]

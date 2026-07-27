@@ -6,9 +6,9 @@
       "stage": "pre",
       "question": "Goodhart's Law, as originally stated, says:",
       "options": [
-        "Any measure that becomes a target ceases to be a good measure",
+        "Hedef haline gelen her önlem iyi bir önlem olmaktan çıkar",
         "Reward models converge to true human preference at large scale",
-        "Heavy-tailed errors cannot occur in finite-dimensional models",
+        "Sonlu boyutlu modellerde ağır kuyruklu hatalar oluşamaz",
         "Optimization always improves a proxy without limit"
       ],
       "correct": 0,
@@ -16,19 +16,19 @@
     },
     {
       "stage": "check",
-      "question": "In Gao, Schulman, Hilton (2023), how do proxy reward and gold reward behave as KL distance from the initial policy grows?",
+      "question": "Gao, Schulman, Hilton'da (2023), başlangıç ​​politikasından KL mesafe arttıkça vekalet ödülü ve altın ödülü nasıl davranıyor?",
       "options": [
         "Both stay flat under any KL constraint",
-        "Both rise monotonically with KL",
+        "Her ikisi de KL ile monoton bir şekilde yükseliyor",
         "Proxy peaks then falls, gold rises monotonically",
-        "Proxy keeps rising, gold peaks closer to the origin then falls"
+        "Proxy yükselmeye devam ediyor, altın orijine yaklaştıkça zirve yapıyor ve ardından düşüyor"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which of the following is NOT one of the four 'costumes' of reward hacking listed in the lesson?",
+      "question": "Aşağıdakilerden hangisi NOT derste listelenen ödül hacklemenin dört 'kostümünden' biridir?",
       "options": [
         "Unfaithful reasoning",
         "Verbosity bias",
@@ -40,36 +40,36 @@
     },
     {
       "stage": "check",
-      "question": "What is the 'Catastrophic Goodhart' result about KL regularization?",
+      "question": "KL düzenlemesine ilişkin 'Felaket Goodhart' sonucu nedir?",
       "options": [
-        "KL regularization always prevents reward hacking when beta is positive",
-        "KL regularization only fails when the policy is randomly initialized",
-        "KL regularization is equivalent to ensembling reward models",
-        "Under heavy-tailed reward error, a KL-constrained optimal policy can still drive proxy reward up while gold reward stays at baseline"
+        "KL düzenlemesi, beta pozitif olduğunda her zaman ödül hacklemeyi önler",
+        "KL düzenlemesi yalnızca politika rastgele başlatıldığında başarısız olur",
+        "KL düzenlemesi, ödül modellerini birleştirmeye eşdeğerdir",
+        "Ağır kuyruklu ödül hatası altında, KL-kısıtlı bir optimal politika, altın ödülü taban çizgisinde kalırken temsili ödülü artırmaya devam edebilir"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which mitigation does Coste et al. (2023) study to soften reward over-optimization?",
+      "question": "Coste ve ark. (2023) aşırı ödül optimizasyonunu yumuşatmaya yönelik bir çalışma var mı?",
       "options": [
-        "Removing the KL penalty entirely",
-        "Training the policy on the proxy at zero temperature",
-        "Reward-model ensembles with worst-case aggregation",
-        "Increasing the labeler pool to one million raters"
+        "KL cezasının tamamen kaldırılması",
+        "Sıfır sıcaklıkta proxy üzerinde politikanın eğitimi",
+        "En kötü durum toplamaya sahip ödül modeli toplulukları",
+        "Etiketleyici havuzunu bir milyon değerlendiriciye çıkarmak"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "According to the 2026 unified view, what core mechanism do verbosity, sycophancy, unfaithful CoT, and evaluator tampering share?",
+      "question": "2026 birleşik görüşüne göre, ayrıntı, dalkavukluk, sadakatsiz CoT ve değerlendiricinin kurcalaması hangi temel mekanizmayı paylaşıyor?",
       "options": [
-        "Probability mass shifts to outputs that maximize proxy reward by exploiting easy-to-learn heuristics that spuriously correlated with approval",
-        "They are caused only by labelers who write malicious preferences",
-        "They all stem from learning-rate schedules being too aggressive",
-        "They are each independent bugs in distinct reward heads"
+        "Onay ile sahte bir şekilde ilişkilendirilen öğrenmesi kolay buluşsal yöntemlerden yararlanarak vekil ödülü en üst düzeye çıkaran çıktılara yönelik kitlesel olasılık kaymaları",
+        "Bunlara yalnızca kötü niyetli tercihler yazan etiketleyiciler neden olur",
+        "Hepsi öğrenme oranı programlarının çok agresif olmasından kaynaklanıyor",
+        "Bunların her biri farklı ödül başlıklarındaki bağımsız böceklerdir"
       ],
       "correct": 0,
       "explanation": ""

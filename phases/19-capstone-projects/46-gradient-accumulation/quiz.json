@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the effective batch identity that gradient accumulation expresses?",
+      "question": "Gradyan birikiminin ifade ettiği etkili parti kimliği nedir?",
       "options": [
         "effective_batch = micro_batch / accum_steps",
         "effective_batch = micro_batch * accum_steps",
         "effective_batch = micro_batch + accum_steps",
-        "effective_batch = world_size only"
+        "active_batch = yalnızca dünya_boyutu"
       ],
       "correct": 1,
-      "explanation": "Micro batch is what fits in memory; accumulation steps are how many forward + backward passes pile gradients into the same buffer before one optimizer step."
+      "explanation": "Mikro toplu hafızaya sığan şeydir; birikim adımları, bir optimize edici adımdan önce aynı ara belleğe kaç ileri + geri geçişin yığın degradelerini temsil eder."
     },
     {
       "stage": "pre",
-      "question": "Why must the loss be divided by accum_steps before backward on each micro batch?",
+      "question": "Kayıp neden her mikro partide geriye doğru gitmeden önce accum_steps'e bölünmelidir?",
       "options": [
-        "It makes the loss curve prettier",
-        "PyTorch sums gradients into param.grad by default, so without the division the accumulated gradient is N times too large and the optimizer step is N times too aggressive",
-        "It avoids NaNs",
-        "It is required for mixed precision only"
+        "Kayıp eğrisini daha güzel hale getirir",
+        "PyTorch, varsayılan olarak degradeleri param.grad'a toplar; bu nedenle, bölme olmadan, birikmiş degrade N kat fazla büyük olur ve optimize edici adım N kat fazla agresif olur",
+        "NaN'leri önler",
+        "Yalnızca karışık hassasiyet için gereklidir"
       ],
       "correct": 1,
-      "explanation": "The accumulation buffer is a sum. Per-micro-batch scaling by 1/N pushes that sum back into the same scale a single full-batch backward would produce."
+      "explanation": "Biriktirme tamponu bir toplamdır. Mikro parti başına 1/N oranında ölçeklendirme, bu toplamı, tek bir tam parti geriye doğru üretilecek olan aynı ölçeğe geri iter."
     },
     {
       "stage": "check",
-      "question": "When does the optimizer step run inside the accumulation loop?",
+      "question": "Optimize edici adım ne zaman birikim döngüsü içinde çalışır?",
       "options": [
         "After every micro batch",
-        "Only after the last micro batch in the accumulation window",
-        "Twice per window for safety",
-        "Never; the optimizer is replaced"
+        "Yalnızca birikim penceresindeki son mikro gruptan sonra",
+        "Güvenlik için pencere başına iki kez",
+        "Asla; optimize edici değiştirildi"
       ],
       "correct": 1,
-      "explanation": "Stepping mid-accumulation contaminates every parameter the rest of the run depends on. The optimizer step fires once per effective batch."
+      "explanation": "Birikimin ortasında adım atmak, çalışmanın geri kalanının bağlı olduğu her parametreyi kirletir. Optimize edici adım, etkili parti başına bir kez tetiklenir."
     },
     {
       "stage": "check",
-      "question": "What does the no_sync context wrap on a real multi-GPU run?",
+      "question": "Gerçek bir çoklu GPU çalıştırmasında no_sync bağlamı sarması nedir?",
       "options": [
-        "The forward pass",
-        "The optimizer step",
-        "The non-final micro batches, so the gradient all-reduce only fires after the last backward instead of N times",
-        "The data loader"
+        "İleri geçiş",
+        "Optimize edici adım",
+        "Nihai olmayan mikro gruplar, dolayısıyla degradenin tümü azaltılır, N kez yerine yalnızca son geriden sonra ateşlenir",
+        "Veri yükleyici"
       ],
       "correct": 2,
-      "explanation": "DDP's no_sync skips the gradient collective. Wrapping all but the last micro batch turns N collectives per effective step into one."
+      "explanation": "DDP'nin no_sync özelliği degrade kolektifini atlıyor. Son mikro parti dışındaki tüm partilerin paketlenmesi, etkili adım başına N kolektifi tek bir partiye dönüştürür."
     },
     {
       "stage": "check",
-      "question": "What does the equivalence_check function in main.py assert?",
+      "question": "Main.py dosyasındaki equalence_check işlevi neyi öne sürüyor?",
       "options": [
-        "That the loss converges",
-        "That a single full-batch backward and an accum_steps chunked backward with loss / N produce the same gradient buffer and the same post-step parameters up to a small tolerance",
-        "That throughput is constant",
-        "That gradients are zero"
+        "Kayıpların yakınlaşması",
+        "Tek bir tam toplu geriye doğru ve kayıp / N ile geriye doğru parçalanmış accum_steps'in, küçük bir toleransa kadar aynı degrade arabelleğini ve aynı adım sonrası parametreleri ürettiği",
+        "Bu verim sabittir",
+        "Bu eğimler sıfırdır"
       ],
       "correct": 1,
-      "explanation": "The assertion bound is max-abs-diff under 1e-4. Without the loss scaling the diff blows up; with the scaling it sits at floating point noise."
+      "explanation": "İddia sınırı 1e-4'ün altında max-abs-diff'tir. Kayıp ölçeklendirmesi olmadan fark patlar; ölçeklendirme ile kayan nokta gürültüsünde oturur."
     },
     {
       "stage": "post",
-      "question": "Reading the throughput against effective batch curve, what stays roughly constant and what scales?",
+      "question": "Etkin parti eğrisine göre verim okunduğunda, ne kabaca sabit kalır ve ne ölçeklenir?",
       "options": [
-        "Samples per second drops with larger effective batch",
-        "Samples per second saturates near the hardware limit while wall time per optimizer step scales linearly with accum_steps; optimizer steps per second is what falls",
-        "Both metrics scale linearly with accum",
-        "Throughput goes up because the model gets faster"
+        "Daha büyük etkili partiyle saniye başına düşen numuneler",
+        "Saniye başına örnek sayısı donanım sınırına yakın bir düzeyde dolarken, optimizasyon adımı başına duvar süresi accum_steps ile doğrusal olarak ölçeklenir; saniyedeki optimize edici adım sayısı düşen şeydir",
+        "Her iki ölçüm de birikimle doğrusal olarak ölçeklenir",
+        "Model hızlandıkça verim artıyor"
       ],
       "correct": 1,
-      "explanation": "Each micro batch costs the same forward + backward. Accumulation buys statistical smoothing per optimizer step, not raw throughput; the curve is a useful reality check against folklore."
+      "explanation": "Her mikro partinin ileri + geri maliyeti aynıdır. Birikim, ham çıktıyı değil, optimizasyon adımı başına istatistiksel yumuşatmayı satın alır; Eğri folklora karşı kullanışlı bir gerçeklik kontrolüdür."
     }
   ]
 }

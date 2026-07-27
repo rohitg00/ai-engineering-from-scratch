@@ -4,21 +4,21 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "How did the 2024-2025 bio-uplift narrative evolve?",
+      "question": "2024-2025 biyo-yükselme anlatısı nasıl gelişti?",
       "options": [
-        "It stayed unchanged across 2024-2025",
-        "From 'no uplift' to 'mild uplift'",
-        "From 'severe uplift' to 'no measurable uplift'",
-        "From 'mild uplift' (2024) to 'on the cusp of meaningfully helping novices create known biological threats' (April 2025) to '2.53x uplift insufficient to rule out ASL-3' (Anthropic 2025)"
+        "2024-2025 döneminde değişmeden kaldı",
+        "'Artış yok'tan 'hafif artış'a",
+        "'Ciddi artış'tan 'ölçülebilir artış yok'a",
+        "'Hafif artış'tan (2024) 'acemilerin bilinen biyolojik tehditler oluşturmasına anlamlı bir şekilde yardımcı olmanın eşiğinde'ye (Nisan 2025) ve '2,53 kat artış ASL-3'yi dışlamak için yetersiz'e (Antropik 2025) kadar"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What did Anthropic's November 2025 cyber threat report find?",
+      "question": "Anthropic'in Kasım 2025 siber tehdit raporunda neler ortaya çıktı?",
       "options": [
-        "Chinese-linked state actors used Claude's agentic coding tool to automate 80-90% of a cyberattack campaign, with human intervention only in 4-6 steps",
+        "Çin bağlantılı devlet aktörleri, yalnızca 4-6 adımda insan müdahalesiyle bir siber saldırı kampanyasının %80-90'ını otomatikleştirmek için Claude'un aracılı kodlama aracını kullandı",
         "Frontier models refused all cyber tasks",
         "Cyberattacks remained entirely manual",
         "Open-source models exceeded frontier capability"
@@ -28,23 +28,23 @@
     },
     {
       "stage": "check",
-      "question": "How are vision-enabled frontier models eroding the chem/bio execution gap?",
+      "question": "Görme özellikli sınır modelleri kimya/biyoloji uygulama açığını nasıl aşındırıyor?",
       "options": [
-        "By replacing all lab equipment with virtual simulators",
+        "Tüm laboratuvar ekipmanlarını sanal simülatörlerle değiştirerek",
         "By generating fake protocols",
         "By observing wet-lab video and providing real-time protocol correction; OpenAI's December 2025 demonstration showed GPT-5 iterating on wet-lab experiments at 79x efficiency improvement via AI-driven protocol optimization",
-        "By increasing context length only"
+        "Yalnızca bağlam uzunluğunu artırarak"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why has nuclear-domain uplift remained bounded relative to bio/chem/cyber?",
+      "question": "Nükleer alan yükselişi neden biyo/kimya/sibere göre sınırlı kaldı?",
       "options": [
-        "Nuclear is the easiest domain to attack with AI",
-        "The threat model is dominated by fissile-material acquisition (a non-informational, procurement-and-equipment bottleneck), so AI uplift on the information layer provides limited novice uplift in practice",
-        "All nuclear information has been removed from training data",
+        "Nükleer, AI ile saldırılması en kolay alandır",
+        "Tehdit modelinde bölünebilir malzeme edinimi hakimdir (bilgi amaçlı olmayan, tedarik ve ekipman darboğazı), dolayısıyla bilgi katmanındaki AI yükseltmesi uygulamada sınırlı acemi artışı sağlar",
+        "Tüm nükleer bilgiler eğitim verilerinden kaldırıldı",
         "Frontier models refuse to discuss physics"
       ],
       "correct": 1,
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "What does the novice-relative vs expert-absolute asymmetry imply for safety cases?",
+      "question": "Acemi-akraba ve uzman-mutlak asimetrisi güvenlik durumları için ne anlama geliyor?",
       "options": [
-        "Both are perfectly addressed by RLHF",
-        "Addressing only novice uplift (input filters, refusals, uncertainty) is insufficient for expert-absolute control; additional measures like elicitation-hardening, capability unlearning, and control protocols are needed",
-        "Only novice uplift matters",
-        "Expert-absolute capability is automatically zero"
+        "Her ikisi de RLHF tarafından mükemmel bir şekilde ele alınmıştır",
+        "Yalnızca acemi yükselişini (girdi filtreleri, retler, belirsizlik) ele almak, uzman-mutlak kontrol için yetersizdir; Ortaya çıkarma-sertleştirme, yetenek öğrenmeyi iptal etme ve kontrol protokolleri gibi ek önlemlere ihtiyaç vardır",
+        "Yalnızca acemilerin gelişimi önemlidir",
+        "Uzman-mutlak yetenek otomatik olarak sıfırdır"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is OpenAI's 'trusted access' pilot in the cyber dual-use context?",
+      "question": "Siber çift kullanım bağlamında OpenAI'nin 'güvenilir erişim' pilotu nedir?",
       "options": [
-        "A patch for CVE-2025-32711",
+        "CVE-2025-32711 için bir yama",
         "An open-source release of GPT-5",
         "Closing all API access",
-        "Granting vetted security organisations (incident-response firms, government) capability access for defensive dual-use work, creating an access asymmetry that favours defenders if it scales"
+        "İncelenmiş güvenlik kuruluşlarına (olay müdahale firmaları, hükümet) defansif çift kullanımlı çalışmalar için yetenek erişimi verilmesi, ölçeklenmesi durumunda savunucuların lehine bir erişim asimetrisi yaratılması"
       ],
       "correct": 3,
       "explanation": ""

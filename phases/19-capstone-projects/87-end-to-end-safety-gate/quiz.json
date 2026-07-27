@@ -4,72 +4,72 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Where do the three checkpoints sit in the request lifecycle?",
+      "question": "Üç kontrol noktası istek yaşam döngüsünde nerede bulunur?",
       "options": [
-        "All three run after the model finishes",
-        "Pre-gen runs on the prompt before the model, during-gen filters the stream, post-gen runs on the completed output",
-        "All three run before the model is called",
-        "Only post-gen runs; pre-gen and during-gen are aliases"
+        "Üçü de model bittikten sonra çalışır",
+        "Üretim öncesi modelden önceki komut isteminde çalışır, oluşturma sırasında akışı filtreler, üretim sonrası ise tamamlanan çıktı üzerinde çalışır",
+        "Üçü de model çağrılmadan önce çalıştırılır",
+        "Yalnızca gen sonrası çalıştırmalar; gen öncesi ve gen sırasında takma adlardır"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What is the goal of during-gen filtering?",
+      "question": "Üretim sırasında filtrelemenin amacı nedir?",
       "options": [
-        "To translate the output to another language",
-        "To buffer chunks and terminate the stream early when a known harmful continuation appears, before the user sees it",
+        "Çıktıyı başka bir dile çevirmek için",
+        "Bilinen bir zararlı devamı ortaya çıktığında, kullanıcı bunu görmeden önce parçaları arabelleğe almak ve akışı sonlandırmak için",
         "To increase token throughput",
-        "To replace the prompt with a refusal"
+        "İstemi bir ret ile değiştirmek için"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does the aggregator decide the final action?",
+      "question": "Toplayıcı nihai eyleme nasıl karar verir?",
       "options": [
-        "By averaging the confidences of every signal",
-        "By taking the maximum severity across detector, token-filter, classifier, and rules signals and mapping it to block, redact, warn, or allow",
-        "By calling the model a second time",
-        "By looking only at the rules engine"
+        "Her sinyalin güvenirliğinin ortalamasını alarak",
+        "Dedektör, belirteç filtresi, sınıflandırıcı ve kural sinyallerinde maksimum ciddiyeti alarak ve bunu engellemek, düzenlemek, uyarmak veya izin vermek için eşleyerek",
+        "Modeli ikinci kez çağırarak",
+        "Yalnızca kural motoruna bakarak"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does the gate emit a structured RequestTrace per request?",
+      "question": "Kapı neden istek başına yapılandırılmış bir requestTrace yayınlıyor?",
       "options": [
-        "To slow the system down",
-        "To give a reviewer a per-checkpoint audit trail so a regression in any layer can be traced to the right module",
+        "Sistemi yavaşlatmak için",
+        "Herhangi bir katmandaki gerilemenin doğru modüle kadar izlenebilmesi için incelemeciye her kontrol noktası için bir denetim izi sağlamak",
         "To replace logging",
-        "To replicate the trace into the prompt"
+        "İzlemeyi bilgi istemine kopyalamak için"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What happens when pre-gen confidence exceeds the block threshold?",
+      "question": "Üretim öncesi güven blok eşiğini aştığında ne olur?",
       "options": [
-        "The model is still called for completeness",
-        "The gate returns the policy refusal and skips during-gen and post-gen entirely",
-        "The gate raises an exception",
-        "The gate lowers the threshold and retries"
+        "Modelin hâlâ eksiksiz olması isteniyor",
+        "Kapı, politika reddini döndürür ve nesil sırasında ve nesil sonrasını tamamen atlar",
+        "Kapı bir istisna yaratıyor",
+        "Kapı eşiği düşürür ve yeniden dener"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why does the demo intentionally let some encoding-trick prompts reach during-gen?",
+      "question": "Demo neden bazı kodlama hilesi istemlerinin üretim sırasında ulaşmasına kasıtlı olarak izin veriyor?",
       "options": [
-        "Because encoding tricks are not real attacks",
-        "Because the input pipeline does not always normalize them in time; the during-gen filter is the defense in depth that catches the leaked continuation",
-        "Because the model refuses them anyway",
-        "Because the rules engine handles encoding"
+        "Çünkü kodlama hileleri gerçek saldırılar değil",
+        "Çünkü girdi hattı bunları her zaman zamanla normalleştirmez; gen sırasındaki filtre, sızdırılan devamı yakalayan derinlemesine savunmadır",
+        "Çünkü model zaten onları reddediyor",
+        "Çünkü kural motoru kodlamayı yönetir"
       ],
       "correct": 1,
       "explanation": ""

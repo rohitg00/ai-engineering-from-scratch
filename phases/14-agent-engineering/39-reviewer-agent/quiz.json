@@ -1,22 +1,22 @@
 {
   "lesson": "39-reviewer-agent",
-  "title": "Reviewer Agent: Separate Builder from Marker",
+  "title": "İnceleme Aracısı: Oluşturucuyu İşaretleyiciden Ayırın",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why cannot the builder reliably grade its own work?",
+      "question": "İnşaatçı neden kendi işini güvenilir bir şekilde derecelendiremiyor?",
       "options": [
-        "It runs out of tokens",
-        "Acceptance is necessary but not sufficient; problem-fit, scope discipline, documented assumptions, and handoff readiness need a different role with different inputs",
-        "It loses authentication",
-        "The model rejects self-grading"
+        "Jetonları bitti",
+        "Kabul gerekli ama yeterli değil; problem uyumu, kapsam disiplini, belgelenmiş varsayımlar ve devir hazırlığı, farklı girdilerle farklı bir role ihtiyaç duyar",
+        "Kimlik doğrulamasını kaybeder",
+        "Model kendi kendine derecelendirmeyi reddediyor"
       ],
       "correct": 1,
-      "explanation": "The gap between builder and reviewer is where reliability lives; acceptance only proves a weaker version."
+      "explanation": "Oluşturucu ile inceleyen arasındaki boşluk güvenilirliğin yaşadığı yerdir; kabul yalnızca daha zayıf bir versiyonu kanıtlar."
     },
     {
       "stage": "pre",
-      "question": "Which is NOT one of the five rubric dimensions?",
+      "question": "NOT beş değerlendirme tablosu boyutundan biri hangisidir?",
       "options": [
         "Problem fit",
         "Scope discipline",
@@ -24,26 +24,26 @@
         "Inference latency"
       ],
       "correct": 3,
-      "explanation": "The five are problem fit, scope discipline, assumptions, verification quality, handoff readiness."
+      "explanation": "Beşi; problem uyumu, kapsam disiplini, varsayımlar, doğrulama kalitesi, devir hazırlığıdır."
     },
     {
       "stage": "check",
-      "question": "What does role separation require?",
+      "question": "Rol ayrımı neyi gerektirir?",
       "options": [
         "A different model",
-        "A different system prompt and different inputs; the same model can play both roles if posture changes and the reviewer has no write access to the diff",
+        "Farklı bir sistem istemi ve farklı girişler; duruş değişirse ve gözden geçirenin farka yazma erişimi yoksa aynı model her iki rolü de oynayabilir",
         "Different physical hardware",
         "A new account"
       ],
       "correct": 1,
-      "explanation": "Discipline is in posture and inputs, not in the model identity."
+      "explanation": "Disiplin model kimliğinde değil, duruşta ve girdilerdedir."
     },
     {
       "stage": "check",
-      "question": "What does Cloudflare's 2026 review architecture look like?",
+      "question": "Cloudflare'in 2026 inceleme mimarisi neye benziyor?",
       "options": [
-        "One big reviewer",
-        "Up to seven specialist reviewers in parallel under a Review Coordinator that deduplicates findings; top-tier model only for the coordinator, cheaper tiers for specialists",
+        "Büyük bir yorumcu",
+        "Bulguları tekilleştiren bir İnceleme Koordinatörü altında paralel olarak en fazla yedi uzman incelemeci; Yalnızca koordinatör için en üst seviye model, uzmanlar için daha ucuz seviyeler",
         "Round-robin two reviewers",
         "Single sequential LLM"
       ],
@@ -52,7 +52,7 @@
     },
     {
       "stage": "check",
-      "question": "Which of these is NOT one of the four LLM-judge biases the lesson lists?",
+      "question": "Bunlardan hangisi NOT ders listelerindeki dört LLM-yargı önyargısından biridir?",
       "options": [
         "Position bias (A,B vs B,A ordering inconsistency)",
         "Verbosity bias (longer outputs score higher)",
@@ -60,31 +60,31 @@
         "Vector locality"
       ],
       "correct": 3,
-      "explanation": "The four are position, verbosity, self-preference, authority; vector locality is not one of them."
+      "explanation": "Dördü konum, ayrıntı, kişisel tercih ve otoritedir; vektör yerelliği bunlardan biri değil."
     },
     {
       "stage": "post",
-      "question": "What is a calibration set?",
+      "question": "Kalibrasyon seti nedir?",
       "options": [
         "A new training corpus",
-        "10-20 historical task close-outs with known correct verdicts; rerun on every prompt change; if reviewer agreement falls below 80%, fix the rubric before shipping",
+        "Bilinen doğru kararlarla 10-20 tarihi görev kapanışı; her istem değişikliğinde yeniden çalıştırın; İncelemecinin sözleşmesi %80'in altına düşerse gönderimden önce dereceli puanlama anahtarını düzeltin",
         "An A/B test fixture",
         "A vector index"
       ],
       "correct": 1,
-      "explanation": "Calibration sets keep the reviewer honest; if agreement drifts you fix the rubric, not the data."
+      "explanation": "Kalibrasyon setleri incelemeciyi dürüst tutar; eğer anlaşma bozulursa verileri değil değerlendirme tablosunu düzeltirsiniz."
     },
     {
       "stage": "post",
-      "question": "Where does the reviewer's report integrate with the rest of the workbench?",
+      "question": "İncelemecinin raporu çalışma tezgahının geri kalanıyla nerede bütünleşiyor?",
       "options": [
-        "It replaces verification",
-        "It bundles into the handoff packet (Lesson 40); human review starts from the report, not from a blank page",
-        "It overrides the gate",
-        "It only goes to the manager"
+        "Doğrulamanın yerini alır",
+        "Aktarma paketine dahil edilir (Ders 40); Gerçek kişi tarafından yapılan inceleme boş bir sayfadan değil rapordan başlar",
+        "Kapıyı geçersiz kılar",
+        "Sadece yöneticiye gidiyor"
       ],
       "correct": 1,
-      "explanation": "The review report feeds the handoff so the next session and the human reviewer start from a written verdict."
+      "explanation": "İnceleme raporu aktarımı besler, böylece bir sonraki oturum ve insan incelemeci yazılı bir kararla başlar."
     }
   ]
 }

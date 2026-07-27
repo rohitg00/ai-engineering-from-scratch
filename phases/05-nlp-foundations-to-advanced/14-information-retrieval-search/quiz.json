@@ -4,99 +4,99 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does BM25 score a document on?",
+      "question": "BM25 bir belgeyi neye göre puanlıyor?",
       "options": [
-        "Edit distance to the query",
+        "Sorguya olan mesafeyi düzenleyin",
         "Term frequency, IDF, and document-length-normalized presence of query terms",
-        "Embedding cosine to the query",
-        "PageRank over the corpus"
+        "Sorguya kosinüs katıştırma",
+        "Bütünleşik PageRank"
       ],
       "correct": 1,
       "explanation": "BM25 weighs TF saturation, IDF, and length normalization to score lexical matches."
     },
     {
       "stage": "pre",
-      "question": "What is the main weakness of dense-only retrieval that BM25 catches?",
+      "question": "BM25'nin yakaladığı yalnızca yoğun alımın temel zayıflığı nedir?",
       "options": [
         "Multilingual queries",
         "Latency",
         "Long documents",
-        "Exact keyword and identifier matches (product codes, error strings, named entities) that semantic embeddings can miss"
+        "Semantik yerleştirmelerin kaçırabileceği tam anahtar kelime ve tanımlayıcı eşleşmeler (ürün kodları, hata dizeleri, adlandırılmış varlıklar)"
       ],
       "correct": 3,
-      "explanation": "Dense embeddings can blur identifiers and exact strings; BM25 nails them."
+      "explanation": "Yoğun yerleştirmeler tanımlayıcıları ve kesin dizeleri bulanıklaştırabilir; BM25 onları çiviliyor."
     },
     {
       "stage": "check",
-      "question": "Why does Reciprocal Rank Fusion (RRF) ignore raw scores from each retriever?",
+      "question": "Karşılıklı Sıralama Füzyonu (RRF) neden her alıcının ham puanlarını göz ardı ediyor?",
       "options": [
         "RRF requires probabilities",
-        "Raw scores are illegal to use",
+        "Ham puanların kullanılması yasa dışıdır",
         "Speeds up sorting",
-        "BM25 and dense scores live in different scales; using only rank positions makes the fusion robust to calibration"
+        "BM25 ve yoğun puanlar farklı ölçeklerde yaşanır; yalnızca sıralama konumlarının kullanılması, füzyonun kalibrasyona karşı dayanıklı olmasını sağlar"
       ],
       "correct": 3,
-      "explanation": "RRF uses 1/(k + rank), so the two scoring systems' scales do not have to match."
+      "explanation": "RRF 1/(k + derece) kullanır, dolayısıyla iki puanlama sisteminin ölçeğinin eşleşmesi gerekmez."
     },
     {
       "stage": "check",
-      "question": "Why run a cross-encoder reranker only on the top-30 fused results?",
+      "question": "Çapraz kodlayıcı yeniden sıralamasını neden yalnızca en iyi 30 birleştirilmiş sonuçta çalıştıralım?",
       "options": [
         "Rerankers reduce recall",
-        "Top-30 is required by FAISS",
-        "Cross-encoders are required at every step",
-        "Cross-encoders are slow per pair; amortizing them on a small candidate pool gives high accuracy with acceptable latency"
+        "FAISS tarafından ilk 30'a girilmesi zorunludur",
+        "Her adımda çapraz kodlayıcılar gereklidir",
+        "Çapraz kodlayıcılar çift başına yavaştır; bunları küçük bir aday havuzunda amorti etmek, kabul edilebilir gecikme süresiyle yüksek doğruluk sağlar"
       ],
       "correct": 3,
-      "explanation": "Cross-encoders score query+doc jointly; running them only on the small fused candidate pool keeps latency manageable."
+      "explanation": "Çapraz kodlayıcılar sorgu+belgeyi ortaklaşa puanlar; bunları yalnızca küçük birleştirilmiş aday havuzunda çalıştırmak gecikmeyi yönetilebilir hale getirir."
     },
     {
       "stage": "check",
-      "question": "Which metric is most important to optimize for RAG retrievers?",
+      "question": "RAG alıcıları optimize etmek için en önemli ölçüm hangisidir?",
       "options": [
         "BLEU",
         "Throughput",
-        "Recall@k, since the reader cannot answer if the correct passage is missing from the top-k",
+        "Recall@k, üst-k'de doğru pasajın eksik olması durumunda okuyucu cevap veremeyeceği için",
         "Latency"
       ],
       "correct": 2,
-      "explanation": "If the right passage is not in the retrieved top-k, the reader is guaranteed to fail."
+      "explanation": "Alınan üst-k'de doğru pasaj yoksa okuyucunun başarısız olması garantidir."
     },
     {
       "stage": "post",
-      "question": "Where do most production RAG failures originate, per 2026 industry experience?",
+      "question": "2026 sektör deneyimine göre çoğu üretim hatası RAG nereden kaynaklanıyor?",
       "options": [
         "Reranker tuning",
-        "Ingestion and chunking, not the model; bad context defeats good readers",
+        "Model değil, alım ve parçalama; Kötü bağlam iyi okuyucuları yener",
         "Prompt verbosity",
-        "The LLM choice"
+        "LLM seçimi"
       ],
       "correct": 1,
-      "explanation": "Roughly 80% of RAG failures trace to chunking and ingestion quality, not the generative model."
+      "explanation": "RAG hatalarının kabaca %80'i üretken modelden değil parçalama ve alım kalitesinden kaynaklanmaktadır."
     },
     {
       "stage": "post",
-      "question": "What is the 'parent-doc' retrieval pattern?",
+      "question": "'Ebeveyn-doc' alma modeli nedir?",
       "options": [
-        "Pick the longest document",
-        "Retrieve small child chunks for precision, then expand to the parent block when multiple children from the same parent appear, preserving context",
-        "Embed only parent documents",
-        "Use parent doc embeddings only"
+        "En uzun belgeyi seç",
+        "Hassasiyet için küçük alt parçaları alın, ardından aynı ebeveynden birden fazla çocuk göründüğünde bağlamı koruyarak ana bloğa genişletin",
+        "Yalnızca üst belgeleri gömün",
+        "Yalnızca üst belge yerleştirmelerini kullan"
       ],
       "correct": 1,
-      "explanation": "Child-level retrieval is precise; expanding to the parent preserves the surrounding context the reader needs."
+      "explanation": "Çocuk düzeyinde erişim kesindir; ebeveyne doğru genişlemek okuyucunun ihtiyaç duyduğu çevre bağlamını korur."
     },
     {
       "stage": "post",
-      "question": "When should you ship three-way retrieval (BM25 + dense + SPLADE)?",
+      "question": "Üç yönlü alımı ne zaman göndermelisiniz (BM25 + yoğun + SPLADE)?",
       "options": [
-        "Only on under 1000 documents",
-        "Only for English-only corpora",
-        "When infrastructure supports learned-sparse indexes and queries mix proper nouns with semantic intent",
+        "Yalnızca 1000'in altındaki belgelerde",
+        "Yalnızca yalnızca İngilizce derlemler için",
+        "Altyapı öğrenilmiş seyrek dizinleri desteklediğinde ve sorgular özel isimleri anlamsal niyetle karıştırdığında",
         "Always"
       ],
       "correct": 2,
-      "explanation": "Three-way retrieval outperforms two-way in 2026 benchmarks for mixed lexical-semantic queries, given SPLADE infrastructure."
+      "explanation": "Üç yönlü erişim, SPLADE altyapısı göz önüne alındığında, karma sözcüksel-anlamsal sorgular için 2026 karşılaştırmalarında iki yoldan daha iyi performans gösteriyor."
     }
   ]
 }

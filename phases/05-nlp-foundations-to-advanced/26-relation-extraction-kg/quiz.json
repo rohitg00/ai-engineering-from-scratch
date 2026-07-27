@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the atomic unit of a knowledge graph?",
+      "question": "Bilgi grafiğinin atom birimi nedir?",
       "options": [
         "A POS tag",
         "A (subject, relation, object) triple",
@@ -12,11 +12,11 @@
         "A sentence"
       ],
       "correct": 1,
-      "explanation": "KGs store information as (s, r, o) triples; aggregated triples form the graph."
+      "explanation": "KG'ler bilgiyi (s, r, o) üçlüsü olarak saklar; toplanmış üçlüler grafiği oluşturur."
     },
     {
       "stage": "pre",
-      "question": "What does AEVS stand for in 2026 relation extraction?",
+      "question": "2026 ilişki çıkarımında AEVS neyi temsil ediyor?",
       "options": [
         "Anchor-Extraction-Verification-Supplement: anchor spans, extract triples, verify against source, supplement coverage",
         "Auto-Encoder Vector Search",
@@ -24,35 +24,35 @@
         "Aggregated Entity-Value Schema"
       ],
       "correct": 0,
-      "explanation": "AEVS is the 2026 hallucination-mitigation framework for grounded RE."
+      "explanation": "AEVS, topraklanmış RE için 2026 halüsinasyon azaltma çerçevesidir."
     },
     {
       "stage": "check",
-      "question": "Why must each triple carry source provenance (doc id + span)?",
+      "question": "Neden her üçlü kaynak kaynağını (belge kimliği + yayılma alanı) taşımalıdır?",
       "options": [
-        "Provenance lets you audit triples and reject hallucinations whose spans do not match the source text",
-        "It speeds up extraction",
-        "Provenance changes the ontology",
-        "Provenance is required by SPARQL"
+        "Provenance, üçlüleri denetlemenize ve kapsamları kaynak metinle eşleşmeyen halüsinasyonları reddetmenize olanak tanır",
+        "Ekstraksiyonu hızlandırır",
+        "Kaynak ontolojiyi değiştirir",
+        "SPARQL tarafından kaynak gereklidir"
       ],
       "correct": 0,
-      "explanation": "Provenance enables auditing and is the core of AEVS-style hallucination detection."
+      "explanation": "Kaynak, denetimi mümkün kılar ve AEVS- tarzı halüsinasyon tespitinin temelini oluşturur."
     },
     {
       "stage": "check",
-      "question": "What does canonicalization of relations do?",
+      "question": "İlişkilerin kanonikleştirilmesi ne işe yarar?",
       "options": [
-        "Maps surface verb phrases (e.g. 'was born in', 'is a native of') onto a fixed property id so the graph is queryable",
+        "Grafiğin sorgulanabilir olması için yüzeydeki fiil ifadelerini (ör. 'doğum yeri', 'yerlisi') sabit bir özellik kimliğiyle eşleştirir",
         "Removes triples",
         "Adds embeddings",
-        "Translates the document"
+        "Belgeyi çevirir"
       ],
       "correct": 0,
-      "explanation": "Canonicalization collapses paraphrases into canonical KG property ids."
+      "explanation": "Kanonikleştirme, açıklamaları standart KG özellik kimliklerine daraltır."
     },
     {
       "stage": "check",
-      "question": "Why does relation extraction usually need coreference resolution first?",
+      "question": "İlişki çıkarımı neden genellikle öncelikle çekirdek referans çözümüne ihtiyaç duyar?",
       "options": [
         "Pronouns like 'he founded Apple' must be resolved to a named entity before triple extraction",
         "Coref adds embeddings",
@@ -60,27 +60,27 @@
         "Coref normalizes case"
       ],
       "correct": 0,
-      "explanation": "Without coref, RE attaches relations to pronouns instead of the underlying named entity."
+      "explanation": "Coref olmadan RE, altta yatan adlandırılmış varlık yerine zamirlere ilişkiler ekler."
     },
     {
       "stage": "post",
-      "question": "Which choice trades open IE recall for graph queryability?",
+      "question": "Hangi seçenek, grafik sorgulanabilirliği için IE geri çağırma işlemlerini açar?",
       "options": [
         "Skipping NER",
         "Random sampling of triples",
-        "Embedding-only graphs",
-        "Mapping open-IE relations onto a closed ontology (e.g. Wikidata properties) before merging into the KG"
+        "Yalnızca yerleştirme grafikleri",
+        "Açık IE ilişkilerini KG ile birleştirmeden önce kapalı bir ontolojiye (örneğin, Wikidata özellikleri) eşleme"
       ],
       "correct": 3,
-      "explanation": "Closed ontologies make the graph queryable; the canonicalization step pays for itself downstream."
+      "explanation": "Kapalı ontolojiler grafiği sorgulanabilir hale getirir; kanonikleştirme adımı aşağı yönde kendini amorti eder."
     },
     {
       "stage": "post",
-      "question": "Why do many production KGs use temporal qualifiers (start/end time)?",
+      "question": "Neden birçok üretim KG'si geçici niteleyiciler (başlangıç/bitiş zamanı) kullanıyor?",
       "options": [
         "Faster SPARQL",
         "Required by RDF",
-        "Many relations are time-bounded (employer, spouse, role); qualifiers prevent 'forever true' claims that go stale",
+        "Pek çok ilişkinin süresi sınırlıdır (işveren, eş, rol); niteleyiciler bayatlayan 'sonsuza kadar doğru' iddialarını önler",
         "To remove NIL entities"
       ],
       "correct": 2,
@@ -88,15 +88,15 @@
     },
     {
       "stage": "post",
-      "question": "What is REBEL?",
+      "question": "REBEL nedir?",
       "options": [
         "A vector database",
-        "A seq2seq relation extractor that outputs triples already in Wikidata property ids",
+        "Zaten Wikidata özellik kimliklerinde bulunan üçlüleri çıkaran bir seq2seq ilişki çıkarıcısı",
         "A tokenizer",
         "A coreference model"
       ],
       "correct": 1,
-      "explanation": "REBEL (Babelscape) is a seq2seq RE model trained on distantly supervised Wikidata triples."
+      "explanation": "REBEL (Babelscape), uzaktan denetlenen Wikiveri üçlüleri üzerinde eğitilmiş bir seq2seq RE modelidir."
     }
   ]
 }

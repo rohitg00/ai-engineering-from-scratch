@@ -4,10 +4,10 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does WebArena self-host its four target apps?",
+      "question": "WebArena neden dört hedef uygulamasını kendi kendine barındırıyor?",
       "options": [
         "To save money",
-        "To pin reproducible versions so evaluation is execution-based and not flaky",
+        "Tekrarlanabilir sürümleri sabitlemek, böylece değerlendirmenin yürütme tabanlı olması ve kesintili olmaması",
         "To run on GPUs",
         "To avoid TLS"
       ],
@@ -16,19 +16,19 @@
     },
     {
       "stage": "pre",
-      "question": "Why does OSWorld use real OS screenshots rather than accessibility APIs?",
+      "question": "OSWorld neden erişilebilirlik API'leri yerine gerçek OS ekran görüntülerini kullanıyor?",
       "options": [
-        "Accessibility APIs are too fast",
-        "Screenshots force the agent to do real GUI grounding in 1920x1080, matching production constraints",
+        "Erişilebilirlik API'leri çok hızlı",
+        "Ekran görüntüleri, aracıyı 1920x1080'de üretim kısıtlamalarına uygun gerçek GUI temellendirme yapmaya zorlar",
         "Accessibility APIs leak PII",
         "Screenshots cost less"
       ],
       "correct": 1,
-      "explanation": "Screenshot-driven evaluation forces pixel-to-element grounding, the actual production constraint."
+      "explanation": "Ekran görüntüsü odaklı değerlendirme, gerçek üretim kısıtlaması olan pikselden öğeye topraklamayı zorlar."
     },
     {
       "stage": "check",
-      "question": "What two primary failure modes does OSWorld surface?",
+      "question": "OSWorld hangi iki temel hata modunu ortaya çıkarıyor?",
       "options": [
         "Latency and bandwidth",
         "GUI grounding and operational knowledge",
@@ -36,14 +36,14 @@
         "Hallucination and refusal"
       ],
       "correct": 1,
-      "explanation": "Grounding (pixel-to-element) and operational knowledge (menus, shortcuts) are the headline blockers."
+      "explanation": "Temelleme (pikselden öğeye) ve operasyonel bilgi (menüler, kısayollar) başlık engelleyicilerdir."
     },
     {
       "stage": "check",
-      "question": "What does OSWorld-Human add on top of the base benchmark?",
+      "question": "OSWorld-Human temel kıyaslamanın üstüne ne ekliyor?",
       "options": [
         "More tasks",
-        "Manually curated gold action trajectories that surface a 1.4-2.7x agent step-inefficiency gap",
+        "1,4-2,7x temsilci adımı verimsizlik açığını ortaya çıkaran, manuel olarak seçilmiş altın eylem yörüngeleri",
         "A larger screen resolution",
         "A new OS"
       ],
@@ -52,39 +52,39 @@
     },
     {
       "stage": "check",
-      "question": "Which release-time number does the lesson cite for WebArena?",
+      "question": "Derste WebArena için hangi yayın zamanı numarası belirtiliyor?",
       "options": [
         "Best GPT-4 agent 14.41% success vs human 78.24%",
-        "Best agent at 99% with human at 100%",
-        "Best agent at 50% with human at 50%",
-        "Best agent at 0% across the board"
+        "%100 insan ile %99 ile en iyi ajan",
+        "%50'de insanla %50'de en iyi ajan",
+        "Genel olarak %0 ile en iyi temsilci"
       ],
       "correct": 0,
-      "explanation": "The 14.41% vs 78.24% gap is the WebArena release-time number."
+      "explanation": "%14,41 ile %78,24 arasındaki fark, WebArena'nın yayınlanma süresi sayısıdır."
     },
     {
       "stage": "post",
-      "question": "What does the lesson warn happens with screenshot-only evaluation when the agent uses DOM or accessibility APIs?",
+      "question": "Aracı DOM veya erişilebilirlik API'lerini kullandığında yalnızca ekran görüntüsü değerlendirmesinde ders uyarısı ne olur?",
       "options": [
         "Nothing changes",
-        "You miss the grounding challenge OSWorld is designed to measure",
-        "You exceed the rate limit",
+        "OSWorld'ün ölçmek için tasarladığı temel mücadeleyi kaçırıyorsunuz",
+        "Oran sınırını aştınız",
         "Tests pass trivially"
       ],
       "correct": 1,
-      "explanation": "Evaluating an accessibility-API agent on screenshot-only benchmarks skips the grounding test."
+      "explanation": "Erişilebilirlik API aracısını yalnızca ekran görüntüsü karşılaştırmalarında değerlendirmek temel testini atlar."
     },
     {
       "stage": "post",
-      "question": "Why is ignoring trajectory length a benchmarking failure?",
+      "question": "Yörünge uzunluğunu göz ardı etmek neden bir kıyaslama hatasıdır?",
       "options": [
-        "It hides cost and inefficiency that success rate alone misses (the 1.4-2.7x gap OSWorld-Human surfaces)",
+        "Başarı oranının tek başına kaçırdığı maliyet ve verimsizliği gizler (1,4-2,7x OSWorld-Human yüzeyleri arasındaki fark)",
         "Trajectory length always matches gold",
-        "Trajectories are not measurable",
-        "Length is the only metric that matters"
+        "Yörüngeler ölçülemez",
+        "Uzunluk önemli olan tek ölçüdür"
       ],
       "correct": 0,
-      "explanation": "Two agents at 60% success can differ 2-3x in steps; cost and efficiency only show up if you measure trajectory length."
+      "explanation": "%60 başarıya sahip iki ajan, adımlarda 2-3 kat farklılık gösterebilir; maliyet ve verimlilik yalnızca yörünge uzunluğunu ölçerseniz ortaya çıkar."
     }
   ]
 }

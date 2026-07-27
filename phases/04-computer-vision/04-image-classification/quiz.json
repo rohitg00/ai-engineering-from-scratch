@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Your model outputs raw logits of shape (N, C). You write `loss = cross_entropy(softmax(logits), y)`. What goes wrong?",
-      "options": ["Nothing — that is the correct API", "cross_entropy re-applies softmax inside, so you end up computing softmax(softmax(logits)), producing nearly-uniform probabilities and useless gradients", "cross_entropy raises a ValueError about the shape", "Accuracy drops by exactly 1/C"],
+      "question": "Modeliniz ham şeklin (N, C) logitlerini çıkarır. `loss = cross_entropy(softmax(logits), y)` yazıyorsunuz. Ne yanlış gidiyor?",
+      "options": [
+        "Hiçbir şey — bu doğru API",
+        "cross_entropy, softmax'ı içeride yeniden uygular, böylece softmax(softmax(logits)'yi hesaplarsınız, bu da neredeyse tekdüze olasılıklar ve işe yaramaz gradyanlar üretir",
+        "cross_entropy, şekil hakkında bir ValueError oluşturur",
+        "Accuracy drops by exactly 1/C"
+      ],
       "correct": 1,
-      "explanation": "PyTorch's cross_entropy expects raw logits — it fuses log_softmax and NLL internally for numerical stability. Applying softmax first gives softmax(softmax(x)), which compresses logits toward uniform and makes gradients nearly zero. Training loss looks plausible for a few steps then stalls. Always pass raw logits."
+      "explanation": "PyTorch'un cross_entropy'si ham logitleri bekler; sayısal kararlılık için log_softmax ve NLL'yi dahili olarak birleştirir. Softmax'ın uygulanması ilk önce logitleri tek biçime doğru sıkıştıran ve gradyanları neredeyse sıfır yapan softmax(softmax(x)) değerini verir. Antrenman kaybı birkaç adım için makul görünüyor, ardından duruyor. Her zaman ham logitleri iletin."
     },
     {
       "stage": "pre",
-      "question": "You evaluate a 10-class classifier and get 92% accuracy. Class 0 has 9,000 examples; classes 1-9 share 1,000 examples (roughly 111 each, 10,000 total). What does the headline number hide?",
-      "options": ["Nothing — accuracy is accuracy", "The model could be predicting class 0 for every input and still score 90% (9000/10000); the remaining 2% could come from any other class. Per-class precision/recall tells you what is really happening", "The validation loss is wrong", "The model is definitely over-fitting"],
+      "question": "10 sınıflı bir sınıflandırıcıyı değerlendirirsiniz ve %92 doğruluk elde edersiniz. Sınıf 0'da 9.000 örnek bulunur; 1-9. sınıflar 1.000 örnek paylaşıyor (her biri yaklaşık 111, toplam 10.000). Başlık numarası neyi gizliyor?",
+      "options": [
+        "Hiçbir şey — doğruluk doğruluktur",
+        "Model, her girdi için sınıf 0'ı tahmin ediyor olabilir ve yine de %90 (9000/10000) puan alıyor olabilir; kalan %2'lik kısım başka herhangi bir sınıftan gelebilir. Sınıf başına kesinlik/geri çağırma size gerçekte ne olduğunu anlatır",
+        "Doğrulama kaybı yanlış",
+        "Model kesinlikle çok uygun"
+      ],
       "correct": 1,
-      "explanation": "On a 9000/1000 split (90/10 imbalance with 10,000 total examples), always predicting the majority class gets 9000/10000 = 90% accuracy. A 92% number could hide nine minority classes at roughly 20% accuracy each. Per-class precision, recall, F1, and the confusion matrix are the diagnostics that surface this, which is why aggregate accuracy alone never justifies shipping a classifier."
+      "explanation": "9000/1000'lik bir bölünmede (toplam 10.000 örnekle 90/10 dengesizliği), çoğunluk sınıfının tahmin edilmesi her zaman 9000/10000 = %90 doğruluk elde eder. %92'lik bir sayı, her biri kabaca %20 doğrulukla dokuz azınlık sınıfını gizleyebilir. Sınıf başına hassasiyet, geri çağırma, F1 ve karışıklık matrisi bunu ortaya çıkaran teşhislerdir; bu nedenle toplam doğruluk tek başına bir sınıflandırıcının gönderilmesini hiçbir zaman haklı çıkarmaz."
     },
     {
       "stage": "post",
-      "question": "Mixup replaces one-hot labels with interpolated soft targets like lambda * y_i + (1-lambda) * y_j. Why does this help generalisation?",
-      "options": ["It doubles the effective batch size", "The model is forced to produce smooth predictions between classes instead of memorising hard one-hot targets, which improves both calibration and test accuracy", "It lets you train with a larger learning rate", "It guarantees zero train loss"],
+      "question": "Mixup, tek sıcak etiketleri lambda * y_i + (1-lambda) * y_j gibi enterpolasyonlu yumuşak hedeflerle değiştirir. Bu neden genellemeye yardımcı oluyor?",
+      "options": [
+        "Etkin parti boyutunu iki katına çıkarır",
+        "Model, tek sıcak hedefleri ezberlemek yerine sınıflar arasında düzgün tahminler üretmeye zorlanır; bu da hem kalibrasyonu hem de test doğruluğunu artırır",
+        "Daha yüksek bir öğrenme oranıyla antrenman yapmanızı sağlar",
+        "Sıfır tren kaybını garanti eder"
+      ],
       "correct": 1,
-      "explanation": "Training against hard one-hot targets pushes logits to be arbitrarily sharp at each training point, which hurts calibration and invites overfitting. Mixup's convex combination of inputs and labels forces the classifier to behave smoothly between training points, which is a reasonable prior for natural image classes and consistently improves test accuracy without extra data."
+      "explanation": "Sert tek sıcak hedeflere karşı eğitim, logitlerin her eğitim noktasında keyfi olarak keskin olmasına neden olur, bu da kalibrasyona zarar verir ve fazla uyum sağlamaya neden olur. Mixup'ın dışbükey girdi ve etiket kombinasyonu, sınıflandırıcıyı eğitim noktaları arasında sorunsuz davranmaya zorlar; bu, doğal görüntü sınıfları için makul bir önceliktir ve ekstra veri olmadan test doğruluğunu sürekli olarak artırır."
     },
     {
       "stage": "post",
-      "question": "You swap `RandomCrop(32, padding=4, padding_mode='zeros')` for `padding_mode='reflect'` on CIFAR-10. Why is reflect better here?",
-      "options": ["Reflect pad is faster", "Zero padding creates hard black borders that the model learns to depend on; reflect pad mirrors the edge pixels so augmented crops look like natural photographs", "Reflect pad changes the output size", "Reflect pad is required by batch normalization"],
+      "question": "`RandomCrop(32, padding=4, padding_mode='zeros')`'yi CIFAR-10'deki `padding_mode='reflect'` ile değiştirirsiniz. Burada yansıtmak neden daha iyi?",
+      "options": [
+        "Yansıtma pedi daha hızlıdır",
+        "Sıfır dolgu, modelin güvenmeyi öğrendiği sert siyah kenarlıklar oluşturur; Reflect pad, kenar piksellerini yansıtır, böylece artırılmış ürünler doğal fotoğraflar gibi görünür",
+        "Yansıtma pedi çıktı boyutunu değiştirir",
+        "Toplu normalleştirme için yansıtma pedi gereklidir"
+      ],
       "correct": 1,
-      "explanation": "Zero-padded crops have visible black borders that leak information about crop position into the features. The network can learn to look at the corner and implicitly undo the augmentation. Reflect pad mirrors real content, so every crop still looks like a natural image and the network cannot cheat on the augmentation."
+      "explanation": "Sıfır dolgulu mahsuller, mahsul konumu hakkındaki bilgileri özelliklere sızdıran görünür siyah kenarlıklara sahiptir. Ağ, köşeye bakmayı ve dolaylı olarak büyütme işlemini geri almayı öğrenebilir. Reflect pad gerçek içeriği yansıtır, böylece her ürün hala doğal bir görüntü gibi görünür ve ağ, büyütme konusunda hile yapamaz."
     },
     {
       "stage": "post",
-      "question": "You train a classifier and the confusion matrix shows most errors are class 3 predicted as class 5 and class 5 predicted as class 3. What is the single most impactful next step?",
-      "options": ["Add more training data across all classes equally", "Increase batch size", "Look at a sample of class-3 and class-5 images that confuse the model; the two classes may be genuinely ambiguous, mislabelled, or visually similar in a way that calls for a targeted augmentation or a re-labelled training set", "Switch from SGD to Adam"],
+      "question": "Bir sınıflandırıcıyı eğitiyorsunuz ve karışıklık matrisi, çoğu hatanın sınıf 5 olarak tahmin edilen sınıf 3 ve sınıf 3 olarak tahmin edilen sınıf 5 olduğunu gösteriyor. Bir sonraki en etkili adım nedir?",
+      "options": [
+        "Add more training data across all classes equally",
+        "Increase batch size",
+        "Modeli karıştıran sınıf-3 ve sınıf-5 görüntülerinin bir örneğine bakın; iki sınıf gerçekten belirsiz, yanlış etiketlenmiş veya hedefe yönelik bir genişletme veya yeniden etiketlenmiş bir eğitim seti gerektirecek şekilde görsel olarak benzer olabilir",
+        "SGD'den Adam'a geçiş"
+      ],
       "correct": 2,
-      "explanation": "A confusion matrix concentrated on one off-diagonal pair means the failure mode is specific. The right action is to inspect those images: you often find mislabelled data, near-duplicate classes, or a simple invariance the model has not learnt. Blanket changes (more data, new optimizer) rarely help when the failure is this localised."
+      "explanation": "Köşegen dışı bir çift üzerinde yoğunlaşan bir karışıklık matrisi, arıza modunun spesifik olduğu anlamına gelir. Doğru eylem bu görüntüleri incelemektir: genellikle yanlış etiketlenmiş veriler, neredeyse yinelenen sınıflar veya modelin öğrenmediği basit bir değişmezlik bulursunuz. Arıza bu kadar lokalize olduğunda kapsamlı değişiklikler (daha fazla veri, yeni optimize edici) nadiren yardımcı olur."
     }
   ]
 }

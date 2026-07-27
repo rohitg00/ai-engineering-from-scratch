@@ -2,24 +2,24 @@
   {
     "id": "trees-pre-1",
     "stage": "pre",
-    "question": "What does Gini impurity measure at a decision tree node?",
+    "question": "Bir karar ağacı düğümünde Gini safsızlığı neyi ölçer?",
     "options": [
-      "The depth of the node in the tree",
-      "The probability of misclassifying a randomly chosen sample given the class distribution at that node",
-      "The total number of samples at the node",
-      "The correlation between features"
+      "Ağaçtaki düğümün derinliği",
+      "O düğümdeki sınıf dağılımı göz önüne alındığında rastgele seçilen bir örneğin yanlış sınıflandırılma olasılığı",
+      "Düğümdeki toplam örnek sayısı",
+      "Özellikler arasındaki korelasyon"
     ],
     "correct": 1,
-    "explanation": "Gini impurity = 1 - sum(p_k^2). It measures how often a randomly chosen sample would be misclassified if labeled according to the class distribution at that node. Pure node = 0."
+    "explanation": "Gini safsızlığı = 1 - sum(p_k^2). Rastgele seçilen bir örneğin o düğümdeki sınıf dağılımına göre etiketlenmesi durumunda ne sıklıkta yanlış sınıflandırılacağını ölçer. Saf düğüm = 0."
   },
   {
     "id": "trees-pre-2",
     "stage": "pre",
-    "question": "What is the main advantage of tree-based models over neural networks for tabular data?",
+    "question": "Tablo verileri için ağaç tabanlı modellerin sinir ağlarına göre temel avantajı nedir?",
     "options": [
-      "Trees can process images and text natively",
-      "Trees always have lower bias than neural networks",
-      "Trees handle mixed feature types, require less preprocessing, and are more interpretable",
+      "Ağaçlar görüntüleri ve metni yerel olarak işleyebilir",
+      "Ağaçlar her zaman sinir ağlarından daha düşük önyargıya sahiptir",
+      "Ağaçlar karışık özellik türlerini işler, daha az ön işleme gerektirir ve daha yorumlanabilirdir",
       "Trees train faster on GPU hardware"
     ],
     "correct": 2,
@@ -28,20 +28,20 @@
   {
     "id": "trees-post-1",
     "stage": "post",
-    "question": "Why does a random forest use both bootstrap sampling AND random feature subsets at each split?",
+    "question": "Rastgele bir orman neden her bölünmede AND rastgele özellik alt kümesinin her ikisini de önyükleme örneklemesi kullanıyor?",
     "options": [
-      "To speed up training by reducing the dataset size",
-      "To create diverse, decorrelated trees so that averaging reduces variance without increasing bias",
+      "Veri kümesi boyutunu azaltarak eğitimi hızlandırmak",
+      "Ortalamanın önyargıyı artırmadan varyansı azaltacağı şekilde çeşitli, ilişkisiz ağaçlar oluşturmak",
       "To ensure each tree sees every data point at least once",
-      "To reduce the depth of individual trees"
+      "Tek tek ağaçların derinliğini azaltmak için"
     ],
     "correct": 1,
-    "explanation": "Both sources of randomness make the trees diverse. Without feature randomization, all trees would split on the same dominant feature. Diversity is what makes averaging effective at reducing variance."
+    "explanation": "Her iki rastgelelik kaynağı da ağaçları çeşitlendirir. Özellik rastgeleleştirmesi olmasaydı, tüm ağaçlar aynı baskın özelliğe göre bölünürdü. Çeşitlilik, ortalamayı varyansın azaltılmasında etkili kılan şeydir."
   },
   {
     "id": "trees-post-2",
     "stage": "post",
-    "question": "A node contains 8 dogs and 2 cats. What is its Gini impurity?",
+    "question": "Bir düğümde 8 köpek ve 2 kedi var. Gini safsızlığı nedir?",
     "options": [
       "0.0",
       "0.20",
@@ -49,19 +49,19 @@
       "0.50"
     ],
     "correct": 2,
-    "explanation": "Gini = 1 - (0.8^2 + 0.2^2) = 1 - (0.64 + 0.04) = 0.32. The node is mostly dogs but not pure, so Gini is between 0 (pure) and 0.5 (max for binary)."
+    "explanation": "Gini = 1 - (0,8^2 + 0,2^2) = 1 - (0,64 + 0,04) = 0,32. Düğüm çoğunlukla köpektir ancak saf değildir, dolayısıyla Gini 0 (saf) ile 0,5 (ikili için maksimum) arasındadır."
   },
   {
     "id": "trees-post-3",
     "stage": "post",
-    "question": "MDI (Mean Decrease in Impurity) feature importance is biased toward which type of feature?",
+    "question": "MDI (Safsızlıkta Ortalama Azalma) özelliğinin önemi, hangi özellik türüne yöneliktir?",
     "options": [
-      "Binary features with only two values",
-      "Features with low variance",
-      "High-cardinality features with many possible split points",
-      "Features that are highly correlated with the target"
+      "Yalnızca iki değere sahip ikili özellikler",
+      "Düşük varyansa sahip özellikler",
+      "Birçok olası bölünme noktasına sahip yüksek kardinaliteli özellikler",
+      "Hedefle yüksek düzeyde ilişkili olan özellikler"
     ],
     "correct": 2,
-    "explanation": "MDI is biased toward high-cardinality features because they offer more possible split points, giving them more chances to reduce impurity by luck. Permutation importance is more reliable."
+    "explanation": "MDI, yüksek kardinaliteli özelliklere karşı önyargılıdır çünkü bunlar daha fazla olası bölünme noktası sunar ve onlara şans eseri safsızlığı azaltma şansı verir. Permütasyon önemi daha güvenilirdir."
   }
 ]

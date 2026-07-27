@@ -4,23 +4,23 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does an n-gram language model estimate?",
+      "question": "Bir n-gram dil modeli neyi tahmin eder?",
       "options": [
-        "Edit distance between words",
+        "Kelimeler arasındaki mesafeyi düzenleyin",
         "P(label | document)",
         "Document embeddings",
-        "P(next word | previous n-1 words) from count statistics"
+        "Sayım istatistiklerinden P(next word | previous n-1 words)"
       ],
       "correct": 3,
       "explanation": "An n-gram LM models P(w | last n-1 words) via counted occurrences."
     },
     {
       "stage": "pre",
-      "question": "What problem does smoothing solve in n-gram models?",
+      "question": "N-gram modellerinde yumuşatma hangi sorunu çözer?",
       "options": [
         "Numerical precision",
         "Memory usage",
-        "Zero-probability assignment to n-grams unseen in training, which collapses sentence likelihoods to zero",
+        "Eğitimde görülmeyen n-gramlara sıfır olasılık ataması, cümle olasılıklarını sıfıra indirir",
         "Tokenization mismatch"
       ],
       "correct": 2,
@@ -28,55 +28,55 @@
     },
     {
       "stage": "check",
-      "question": "What insight makes Kneser-Ney smoothing better than naive absolute discounting?",
+      "question": "Kneser-Ney'in yumuşatılmasını saf mutlak indirimden daha iyi kılan içgörü nedir?",
       "options": [
-        "It estimates the lower-order distribution with continuation probability (number of distinct contexts a word appears in) instead of raw frequency",
-        "It uses TF-IDF",
-        "It uses bigger n",
-        "It uses gradient descent"
+        "Ham frekans yerine devam olasılığı (bir kelimenin göründüğü farklı bağlamların sayısı) ile alt düzey dağılımı tahmin eder",
+        "TF-IDF kullanıyor",
+        "Daha büyük n kullanır",
+        "Gradyan inişini kullanır"
       ],
       "correct": 0,
-      "explanation": "Continuation probability gives credit for context diversity, not just raw count."
+      "explanation": "Devam olasılığı yalnızca ham sayıma değil, bağlam çeşitliliğine de değer verir."
     },
     {
       "stage": "check",
-      "question": "What does perplexity measure?",
+      "question": "Şaşkınlık neyi ölçer?",
       "options": [
-        "exp of the average negative log-likelihood per token on a held-out test set; lower is better",
+        "uzatılmış bir test setinde token başına ortalama negatif log olasılığının exp'si; daha düşük daha iyidir",
         "Number of distinct n-grams",
         "Cross-entropy of labels",
         "Throughput of generation"
       ],
       "correct": 0,
-      "explanation": "Perplexity = exp(- mean log P); lower means the model is less surprised by the test text."
+      "explanation": "Şaşkınlık = exp(- mean log P); düşük olması, modelin test metnine daha az şaşırdığı anlamına gelir."
     },
     {
       "stage": "check",
-      "question": "Why must train and test sets use identical tokenization when comparing perplexity numbers?",
+      "question": "Eğitim ve test kümeleri, şaşkınlık sayılarını karşılaştırırken neden aynı simgeleştirmeyi kullanmalıdır?",
       "options": [
         "Required by gradient descent",
         "To avoid OOV",
-        "Perplexity depends on the tokenization scheme; mismatched tokenizers produce noncomparable scores",
+        "Karışıklık, tokenizasyon şemasına bağlıdır; uyumsuz tokenizerler karşılaştırılamaz puanlar üretir",
         "To control batch size"
       ],
       "correct": 2,
-      "explanation": "Different tokenizations change the token count and likelihood, making perplexity values incomparable."
+      "explanation": "Farklı tokenizasyonlar token sayısını ve olasılığını değiştirerek şaşkınlık değerlerini karşılaştırılamaz hale getirir."
     },
     {
       "stage": "post",
-      "question": "Why do generated trigram-LM sentences feel locally fluent but globally incoherent?",
+      "question": "Oluşturulan trigram-LM cümleleri neden yerel olarak akıcı ama genel olarak tutarsız geliyor?",
       "options": [
-        "They drop punctuation",
+        "Noktalama işaretlerini bırakıyorlar",
         "Beam search fails",
-        "Local trigram context guides each next word but the model has no long-range memory beyond n-1 tokens",
-        "They use Laplace smoothing"
+        "Yerel trigram bağlamı her bir sonraki kelimeye rehberlik eder ancak modelin n-1 jetonun ötesinde uzun menzilli hafızası yoktur",
+        "Laplace yumuşatma kullanıyorlar"
       ],
       "correct": 2,
-      "explanation": "Conditioning only on the last n-1 tokens makes long-range coherence accidental."
+      "explanation": "Yalnızca son n-1 jeton üzerinde koşullandırma, uzun menzilli tutarlılığı tesadüfi hale getirir."
     },
     {
       "stage": "post",
-      "question": "Where do n-gram models still ship in production in 2026?",
+      "question": "N-gram modelleri 2026'da hâlâ nerede üretiliyor?",
       "options": [
         "Multilingual translation",
         "Open-domain chatbots",
@@ -88,15 +88,15 @@
     },
     {
       "stage": "post",
-      "question": "Why is computing an n-gram baseline before declaring a neural LM 'good' still recommended?",
+      "question": "Nöral bir LM 'iyi' olduğunu bildirmeden önce neden bir n-gram taban çizgisi hesaplamak hala tavsiye ediliyor?",
       "options": [
-        "It speeds up training",
+        "Eğitimi hızlandırır",
         "Required by ROUGE",
-        "It removes OOV",
-        "If a transformer LM does not beat a tuned Kneser-Ney baseline by a wide margin on the same tokenization, something is off in the training pipeline"
+        "OOV'yi kaldırır",
+        "Eğer bir transformatör LM aynı tokenizasyonda ayarlanmış Kneser-Ney taban çizgisini geniş bir farkla geçemezse, eğitim hattında bir şeyler ters gidiyor demektir"
       ],
       "correct": 3,
-      "explanation": "KN baselines are surprisingly strong; a neural LM should win by a large margin or you have a bug."
+      "explanation": "KN taban çizgileri şaşırtıcı derecede güçlü; sinirsel bir LM büyük bir farkla kazanmalıdır, yoksa bir hatanız var."
     }
   ]
 }

@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the fundamental design difference between PyTorch and JAX?",
-    "options": ["PyTorch is faster", "PyTorch mutates tensors eagerly while JAX compiles pure functions without side effects", "JAX doesn't support GPUs", "PyTorch doesn't support automatic differentiation"],
+    "question": "PyTorch ve JAX arasındaki temel tasarım farkı nedir?",
+    "options": [
+      "PyTorch daha hızlı",
+      "PyTorch mutates tensors eagerly while JAX compiles pure functions without side effects",
+      "JAX doesn't support GPUs",
+      "PyTorch doesn't support automatic differentiation"
+    ],
     "correct": 1,
-    "explanation": "PyTorch uses eager execution with mutable state (e.g., tensor.grad is modified in place). JAX embraces functional programming: functions are pure, state is explicit, and jit compilation optimizes entire computation graphs.",
+    "explanation": "PyTorch, değişken durumla istekli yürütmeyi kullanır (örneğin, tensor.grad yerinde değiştirilir). JAX işlevsel programlamayı benimser: işlevler saftır, durum açıktır ve jit derlemesi tüm hesaplama grafiklerini optimize eder.",
     "stage": "pre"
   },
   {
-    "question": "What does jax.jit do?",
-    "options": ["It adds dropout regularization", "It compiles a Python function into optimized XLA code that runs much faster than interpreted Python", "It initializes model weights", "It computes gradients"],
+    "question": "jax.jit ne işe yarar?",
+    "options": [
+      "Bırakma düzenlemesini ekler",
+      "Bir Python işlevini, yorumlanmış Python'dan çok daha hızlı çalışan, optimize edilmiş XLA kodunda derler",
+      "Model ağırlıklarını başlatır",
+      "Gradyanları hesaplar"
+    ],
     "correct": 1,
-    "explanation": "jax.jit traces a function and compiles it to XLA (Accelerated Linear Algebra) machine code. The first call is slow (compilation), but subsequent calls run the optimized compiled version.",
+    "explanation": "jax.jit bir fonksiyonun izini sürer ve onu XLA (Hızlandırılmış Doğrusal Cebir) makine koduna derler. İlk çağrı yavaştır (derleme), ancak sonraki çağrılar optimize edilmiş derlenmiş sürümü çalıştırır.",
     "stage": "pre"
   },
   {
-    "question": "What does jax.vmap do?",
-    "options": ["Vectorizes a function to run over a batch dimension without writing explicit loops", "Validates model architecture", "Manages GPU memory", "Computes second-order gradients"],
+    "question": "Jax.vmap ne işe yarar?",
+    "options": [
+      "Vectorizes a function to run over a batch dimension without writing explicit loops",
+      "Validates model architecture",
+      "Manages GPU memory",
+      "Computes second-order gradients"
+    ],
     "correct": 0,
-    "explanation": "jax.vmap automatically vectorizes a function written for a single example to process an entire batch. You write code for one sample and vmap handles batching, often more efficiently than manual batch loops.",
+    "explanation": "jax.vmap, tek bir örnek için yazılmış bir işlevi tüm toplu işlemi işlemek üzere otomatik olarak vektörleştirir. Bir örnek için kod yazarsınız ve vmap, toplu işlemleri genellikle manuel toplu döngülerden daha verimli bir şekilde gerçekleştirir.",
     "stage": "post"
   },
   {
-    "question": "How does JAX handle model state (weights) differently than PyTorch?",
-    "options": ["JAX stores weights on CPU only", "JAX requires explicit state passing -- weights are function arguments, not mutable object attributes", "JAX doesn't support trainable weights", "JAX and PyTorch handle state identically"],
+    "question": "JAX, model durumunu (ağırlıklar) PyTorch'tan nasıl farklı şekilde ele alıyor?",
+    "options": [
+      "JAX, ağırlıkları yalnızca CPU'de saklar",
+      "JAX açık durum geçişini gerektirir; ağırlıklar değişken nesne nitelikleri değil, işlev bağımsız değişkenleridir",
+      "JAX doesn't support trainable weights",
+      "JAX and PyTorch handle state identically"
+    ],
     "correct": 1,
-    "explanation": "In PyTorch, weights live inside nn.Module objects and are mutated in place. In JAX, weights are passed explicitly as function arguments and returned as new values. No mutation, no hidden state.",
+    "explanation": "PyTorch'ta ağırlıklar nn.Module nesnelerinin içinde bulunur ve yerinde mutasyona uğrar. JAX'de ağırlıklar açıkça işlev bağımsız değişkenleri olarak iletilir ve yeni değerler olarak döndürülür. Mutasyon yok, gizli durum yok.",
     "stage": "post"
   },
   {
-    "question": "When would you choose JAX over PyTorch?",
-    "options": ["For quick prototyping of small models", "When training at massive scale on TPU pods, where compilation and functional transforms provide significant speedups", "When you need the largest ecosystem of pretrained models", "For deployment on mobile devices"],
+    "question": "PyTorch yerine ne zaman JAX'yi seçersiniz?",
+    "options": [
+      "Küçük modellerin hızlı prototiplenmesi için",
+      "Derleme ve işlevsel dönüşümlerin önemli hızlanmalar sağladığı TPU bölmeleri üzerinde büyük ölçekte eğitim verirken",
+      "Önceden eğitilmiş modellerden oluşan en büyük ekosisteme ihtiyaç duyduğunuzda",
+      "Mobil cihazlarda dağıtım için"
+    ],
     "correct": 1,
-    "explanation": "JAX excels at scale: jit compilation eliminates Python overhead, pmap handles multi-device parallelism naturally, and XLA optimization across the full computation graph gives significant speedups on TPU clusters.",
+    "explanation": "JAX ölçekte öne çıkıyor: jit derlemesi Python ek yükünü ortadan kaldırıyor, pmap çoklu cihaz paralelliğini doğal bir şekilde ele alıyor ve tam hesaplama grafiğinde XLA optimizasyonu, TPU kümelerinde önemli hızlanmalar sağlıyor.",
     "stage": "post"
   }
 ]

@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why can diffusion training pick any timestep t directly instead of simulating the forward Markov chain step by step?",
-      "options": ["It is an approximation that ignores the intermediate steps", "Because the composition of many Gaussian additions still yields a Gaussian, giving a closed-form q(x_t|x_0) = N(sqrt(alpha_bar_t) x_0, (1 - alpha_bar_t) I) that you can sample in one step", "Because x_t is independent of x_0", "It is required by PyTorch's autograd"],
+      "question": "Difüzyon eğitimi ileri Markov zincirini adım adım simüle etmek yerine neden herhangi bir zaman adımını doğrudan seçebiliyor?",
+      "options": [
+        "Ara adımları göz ardı eden bir yaklaşımdır",
+        "Çünkü birçok Gauss toplamasının bileşimi hala bir Gaussian verir ve tek adımda örnekleyebileceğiniz kapalı formlu q(x_t|x_0) = N(sqrt(alpha_bar_t) x_0, (1 - alpha_bar_t) I) verir.",
+        "Çünkü x_t, x_0'dan bağımsızdır",
+        "PyTorch'un otomatik geçişi için gereklidir"
+      ],
       "correct": 1,
-      "explanation": "Repeated Gaussian additions close up analytically. The cumulative product alpha_bar_t encodes 'how much signal is left after t steps', and you can sample x_t directly without running the chain. This is why diffusion training is O(1) per step rather than O(T)."
+      "explanation": "Tekrarlanan Gauss toplamaları analitik olarak yakınlaşır. Kümülatif alpha_bar_t ürünü 't adımdan sonra ne kadar sinyal kaldığını' kodlar ve zinciri çalıştırmadan x_t'yi doğrudan örnekleyebilirsiniz. Difüzyon eğitiminin O(T) yerine adım başına O(1) olmasının nedeni budur."
     },
     {
       "stage": "pre",
-      "question": "What does a DDPM's neural network actually predict?",
-      "options": ["The next image x_{t-1} directly", "The noise epsilon that was added at step t, from which x_{t-1}'s mean is derived analytically", "The class label of the input", "The signal-to-noise ratio"],
+      "question": "DDPM'nin sinir ağı aslında neyi öngörüyor?",
+      "options": [
+        "Sonraki resim doğrudan x_{t-1}",
+        "x_{t-1}'in ortalamasının analitik olarak türetildiği, t adımında eklenen gürültü epsilon",
+        "Girişin sınıf etiketi",
+        "Sinyal-gürültü oranı"
+      ],
       "correct": 1,
-      "explanation": "DDPM parameterises the model to predict epsilon. Given the noise prediction and the noise schedule, x_{t-1}'s Gaussian mean and variance are closed-form. Predicting epsilon instead of x_0 or x_{t-1} simplifies the loss to a plain MSE and gives numerically better gradients."
+      "explanation": "DDPM epsilon'u tahmin etmek için modeli parametreleştirir. Gürültü tahmini ve gürültü programı göz önüne alındığında, x_{t-1}'in Gauss ortalaması ve varyansı kapalı formdadır. X_0 veya x_{t-1} yerine epsilon'u tahmin etmek, kaybı düz bir MSE'ye basitleştirir ve sayısal olarak daha iyi gradyanlar verir."
     },
     {
       "stage": "post",
-      "question": "Why does DDIM achieve similar sample quality to DDPM with ~20x fewer steps?",
-      "options": ["DDIM changes the training objective", "DDIM reformulates sampling as a deterministic ODE whose trajectory can be discretised with far fewer steps while hitting nearly the same endpoint; no retraining required", "DDIM uses a faster model architecture", "DDIM generates smaller images"],
+      "question": "DDIM neden ~20 kat daha az adımla DDPM'ye benzer örnek kalitesi elde ediyor?",
+      "options": [
+        "DDIM eğitim hedefini değiştirdi",
+        "DDIM örneklemeyi, neredeyse aynı uç noktaya ulaşırken çok daha az adımla yörüngesi ayrıklaştırılabilen deterministik bir ODE olarak yeniden formüle eder; yeniden eğitime gerek yok",
+        "DDIM uses a faster model architecture",
+        "DDIM generates smaller images"
+      ],
       "correct": 1,
-      "explanation": "DDIM's key observation is that the reverse process, when re-parameterised deterministically, becomes an ODE that a few steps approximate well. The model (weights and loss) is unchanged from DDPM; only the sampler differs. A DDPM checkpoint can be used with a DDIM, DPM-Solver, or Euler sampler interchangeably."
+      "explanation": "DDIM'nin temel gözlemi, ters sürecin, deterministik olarak yeniden parametrelendirildiğinde, birkaç adımın iyi bir şekilde yaklaştığı bir ODE haline gelmesidir. Model (ağırlıklar ve kayıp) DDPM'den farklı değildir; yalnızca örnekleyici farklıdır. Bir DDPM kontrol noktası, DDIM, DPM-Solver veya Euler örnekleyiciyle birbirinin yerine kullanılabilir."
     },
     {
       "stage": "post",
-      "question": "You plot `alpha_bar_t` for a linear beta schedule with T=1000 and see it drops to near-zero by t=600. Why does this matter?",
-      "options": ["It does not matter", "The last 40% of timesteps add almost no signal; training those timesteps teaches the network to denoise noise that is already approximately N(0, I), which wastes capacity. Cosine or sigmoid schedules fix this by spreading the noise injection more evenly", "alpha_bar_t must be zero at the end", "PyTorch requires a linear schedule"],
+      "question": "`alpha_bar_t`'yi T=1000 olan doğrusal bir beta çizelgesi için çizersiniz ve t=600'e kadar sıfıra yakın bir değere düştüğünü görürsünüz. Bu neden önemli?",
+      "options": [
+        "Önemli değil",
+        "Zaman adımlarının son %40'ı neredeyse hiç sinyal eklemiyor; bu zaman adımlarını eğitmek, ağa zaten yaklaşık N(0, I) olan ve kapasiteyi boşa harcayan gürültüyü gidermeyi öğretir. Kosinüs veya sigmoid programları, gürültü enjeksiyonunu daha eşit bir şekilde yayarak bunu düzeltir",
+        "alpha_bar_t sonunda sıfır olmalıdır",
+        "PyTorch requires a linear schedule"
+      ],
       "correct": 1,
-      "explanation": "Linear beta schedules finish the diffusion process too early. By t=600 the signal is already destroyed; training and sampling through t=600-1000 adds nothing. Cosine schedules (Nichol & Dhariwal) keep signal around longer, which is why modern models use them, especially at lower resolutions."
+      "explanation": "Doğrusal beta programları yayılma sürecini çok erken bitirir. t=600'e gelindiğinde sinyal zaten yok olmuştur; t=600-1000 üzerinden eğitim ve örnekleme hiçbir şey eklemez. Kosinüs programları (Nichol ve Dhariwal) sinyali daha uzun süre tutar, bu nedenle modern modeller bunları özellikle düşük çözünürlüklerde kullanır."
     },
     {
       "stage": "post",
-      "question": "Why does time conditioning get added to the U-Net via a sinusoidal embedding instead of a one-hot timestep?",
-      "options": ["One-hot vectors are too large", "A sinusoidal embedding is smooth in t, which lets the network interpolate between timesteps it has not seen exactly and encodes scale information the architecture can use additively at multiple depths", "Sinusoidal is required by BatchNorm", "One-hot would violate the chain rule"],
+      "question": "U-Net'e zaman koşullandırma neden tek sıcak zaman adımı yerine sinüzoidal yerleştirme yoluyla ekleniyor?",
+      "options": [
+        "Tek sıcak vektörler çok büyük",
+        "Sinüzoidal bir yerleştirme t'de düzgündür; bu, ağın tam olarak görmediği zaman adımları arasında enterpolasyon yapmasına olanak tanır ve mimarinin birden fazla derinlikte ek olarak kullanabileceği ölçek bilgisini kodlar",
+        "BatchNorm tarafından sinüzoidal gereklidir",
+        "Tek atış zincir kuralını ihlal eder"
+      ],
       "correct": 1,
-      "explanation": "Sinusoidal embeddings give the network a continuous representation of t at multiple frequencies. Any timestep is a unique point in that embedding space, and nearby timesteps are nearby embeddings. That lets the model generalise across all T values with far fewer parameters than a learned per-timestep embedding. Same idea as transformer positional encoding."
+      "explanation": "Sinüzoidal yerleştirmeler, ağa çoklu frekanslarda t'nin sürekli bir temsilini verir. Herhangi bir zaman adımı, bu yerleştirme alanındaki benzersiz bir noktadır ve yakındaki zaman adımları, yakındaki yerleştirmelerdir. Bu, modelin, öğrenilen zaman adımı başına yerleştirmeden çok daha az parametreyle tüm T değerleri boyunca genelleştirilmesine olanak tanır. Transformatör konumsal kodlamasıyla aynı fikir."
     }
   ]
 }

@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the Fourier transform do to a signal?",
+      "question": "Fourier dönüşümü bir sinyale ne yapar?",
       "options": [
-        "Compresses the signal to use less storage",
-        "Decomposes the signal into sine waves of different frequencies, amplitudes, and phases",
-        "Removes noise from the signal",
-        "Converts the signal from analog to digital"
+        "Daha az depolama alanı kullanmak için sinyali sıkıştırır",
+        "Sinyali farklı frekans, genlik ve fazdaki sinüs dalgalarına ayrıştırır",
+        "Sinyaldeki gürültüyü giderir",
+        "Sinyali analogdan dijitale dönüştürür"
       ],
       "correct": 1,
-      "explanation": "The Fourier transform converts a signal from the time domain to the frequency domain. Each frequency coefficient X[k] tells you the amplitude and phase of a sine wave at frequency k. The signal is re-expressed as a sum of these sine waves."
+      "explanation": "Fourier dönüşümü, bir sinyali zaman alanından frekans alanına dönüştürür. Her frekans katsayısı X[k] size k frekansındaki sinüs dalgasının genliğini ve fazını söyler. Sinyal bu sinüs dalgalarının toplamı olarak yeniden ifade edilir."
     },
     {
       "stage": "pre",
-      "question": "What is the time complexity of the Fast Fourier Transform (FFT) compared to the direct DFT?",
+      "question": "Doğrudan DFT ile karşılaştırıldığında Hızlı Fourier Dönüşümünün (FFT) zaman karmaşıklığı nedir?",
       "options": [
-        "Both are O(N^2)",
-        "FFT is O(N log N), DFT is O(N^2)",
-        "FFT is O(N), DFT is O(N log N)",
-        "FFT is O(log N), DFT is O(N)"
+        "İkisi de O(N^2)",
+        "FFT, O(N log N)'dir, DFT, O(N^2)'dir",
+        "FFT, O(N)'dir, DFT, O(N log N)'dir",
+        "FFT, O(log N)'dir, DFT, O(N)'dir"
       ],
       "correct": 1,
-      "explanation": "The direct DFT computes N outputs, each summing over N inputs: O(N^2). The Cooley-Tukey FFT splits the signal into even/odd halves recursively, doing O(N) work at each of log2(N) levels, giving O(N log N). For N = 1 million, this is 20 million vs 1 trillion operations."
+      "explanation": "Doğrudan DFT, her biri N giriş üzerinden toplayan N çıkışı hesaplar: O(N^2). Cooley-Tukey FFT, sinyali yinelemeli olarak çift/tek yarılara böler, O(N)'nin log2(N) seviyelerinin her birinde çalışmasını sağlayarak O(N log N)'yi verir. N = 1 milyon için bu, 20 milyona karşı 1 trilyon işlemdir."
     },
     {
       "stage": "post",
-      "question": "What does the convolution theorem state?",
+      "question": "Evrişim teoremi neyi ifade ediyor?",
       "options": [
-        "Convolution in the time domain equals addition in the frequency domain",
-        "Convolution in the time domain equals pointwise multiplication in the frequency domain",
-        "Convolution always increases the length of a signal",
-        "Convolution and correlation are identical operations"
+        "Zaman alanındaki evrişim, frekans alanındaki toplamaya eşittir",
+        "Zaman alanındaki evrişim, frekans alanındaki noktasal çarpmaya eşittir",
+        "Evrişim her zaman bir sinyalin uzunluğunu artırır",
+        "Evrişim ve korelasyon aynı işlemlerdir"
       ],
       "correct": 1,
-      "explanation": "The convolution theorem states that convolution in the time domain equals pointwise multiplication in the frequency domain: x * h = IFFT(FFT(x) . FFT(h)). This is why FFT-based convolution is O(N log N) instead of O(N*M) for large kernels."
+      "explanation": "Evrişim teoremi, zaman alanındaki evrişimin, frekans alanındaki noktasal çarpıma eşit olduğunu belirtir: x * h = IFFT(FFT(x) . FFT(h)). FFT- tabanlı evrişimin büyük çekirdekler için O(N*M) yerine O(N log N) olmasının nedeni budur."
     },
     {
       "stage": "post",
-      "question": "Why does zero-padding a signal before FFT NOT increase the true frequency resolution?",
+      "question": "FFT NOT'den önce bir sinyalin sıfır doldurulması neden gerçek frekans çözünürlüğünü artırıyor?",
       "options": [
-        "Zero-padding introduces noise that cancels the improvement",
-        "Zero-padding interpolates between existing frequency bins but cannot reveal frequency detail absent from the original samples",
-        "Zero-padding only works for power-of-2 signal lengths",
-        "The FFT algorithm ignores zero-padded samples"
+        "Sıfır dolgu, iyileştirmeyi iptal eden gürültüyü ortaya çıkarır",
+        "Sıfır dolgu, mevcut frekans bölmeleri arasında enterpolasyon yapar ancak orijinal numunelerde bulunmayan frekans ayrıntılarını ortaya çıkaramaz",
+        "Sıfır doldurma yalnızca 2'nin gücü sinyal uzunlukları için işe yarar",
+        "FFT algoritması sıfır dolgulu örnekleri yok sayar"
       ],
       "correct": 1,
-      "explanation": "True frequency resolution depends on the observation time T = N/fs. Zero-padding adds more frequency bins (finer grid) but only interpolates the existing spectrum — it gives a smoother-looking result without resolving frequencies closer than 1/T Hz apart."
+      "explanation": "Gerçek frekans çözünürlüğü T = N/fs gözlem süresine bağlıdır. Sıfır dolgu, daha fazla frekans bölmesi (daha ince ızgara) ekler, ancak yalnızca mevcut spektrumun enterpolasyonunu yapar; 1/T Hz'den daha yakın frekansları çözümlemeden daha düzgün görünen bir sonuç verir."
     },
     {
       "stage": "post",
-      "question": "In the original Transformer's sinusoidal positional encodings, why are different dimension pairs assigned geometrically spaced frequencies?",
+      "question": "Orijinal Transformer'ın sinüzoidal konumsal kodlamalarında neden farklı boyut çiftlerine geometrik olarak aralıklı frekanslar atanmıştır?",
       "options": [
-        "It reduces the computational cost of attention",
+        "Dikkatin hesaplama maliyetini azaltır",
         "Each frequency provides a different resolution — high frequencies encode fine position, low frequencies encode coarse position, giving each position a unique fingerprint",
-        "Geometric spacing is required by the FFT algorithm",
-        "It ensures all encoding values are between 0 and 1"
+        "FFT algoritması geometrik aralık gerektirir",
+        "Tüm kodlama değerlerinin 0 ile 1 arasında olmasını sağlar"
       ],
       "correct": 1,
-      "explanation": "High-frequency dimensions change rapidly with position (fine resolution), while low-frequency dimensions change slowly (coarse resolution). Together, the multi-frequency encoding gives every position a unique pattern — similar to how Fourier coefficients uniquely identify a signal."
+      "explanation": "Yüksek frekanslı boyutlar konumla birlikte hızla değişir (iyi çözünürlük), düşük frekanslı boyutlar ise yavaş değişir (kaba çözünürlük). Çoklu frekans kodlaması, Fourier katsayılarının bir sinyali benzersiz şekilde tanımlamasına benzer şekilde, her konuma benzersiz bir model verir."
     }
   ]
 }

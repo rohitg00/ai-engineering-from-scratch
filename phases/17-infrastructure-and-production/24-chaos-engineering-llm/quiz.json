@@ -1,14 +1,14 @@
 {
   "lesson": "24-chaos-engineering-llm",
-  "title": "Chaos Engineering for LLM Production",
+  "title": "LLM Üretimi için Kaos Mühendisliği",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which five prerequisites does the lesson require before running chaos in production?",
+      "question": "Üretimde kaosu çalıştırmadan önce ders hangi beş önkoşulu gerektiriyor?",
       "options": [
         "Slack channel, sticker pack, mascot, hashtag, blog post",
         "SLI/SLO, observability, automated rollback, structured runbooks, on-call",
-        "Vector database only",
+        "Yalnızca vektör veritabanı",
         "Three frontier models"
       ],
       "correct": 1,
@@ -16,11 +16,11 @@
     },
     {
       "stage": "check",
-      "question": "Which four planes does the chaos architecture have, plus the feedback loop?",
+      "question": "Kaos mimarisi hangi dört düzleme ve geri besleme döngüsüne sahiptir?",
       "options": [
         "Ingest, transform, store, serve",
         "Train, eval, deploy, archive",
-        "Control, target, safety, observability — with feedback into SLO adjustments",
+        "Kontrol, hedef, güvenlik, gözlemlenebilirlik — SLO ayarlamalarına geri bildirimle birlikte",
         "Frontend, backend, mobile, web"
       ],
       "correct": 2,
@@ -28,45 +28,45 @@
     },
     {
       "stage": "check",
-      "question": "What does the burn-rate alert guardrail do during chaos experiments?",
+      "question": "Kaos deneyleri sırasında yanma hızı uyarı korkuluğu ne yapar?",
       "options": [
         "Disables observability",
-        "Auto-promotes the experiment to production",
-        "Speeds up the experiment",
-        "Pauses the experiment when daily error-budget burn exceeds roughly 2x expected"
+        "Denemeyi otomatik olarak üretime yükseltir",
+        "Deneyi hızlandırır",
+        "Günlük hata bütçesi kullanımı yaklaşık olarak beklenenin 2 katını aştığında denemeyi duraklatır"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which is an LLM-specific chaos experiment listed in the lesson?",
+      "question": "Derste listelenen LLM-'ye özgü bir kaos deneyi hangisidir?",
       "options": [
         "Drop all DNS",
         "Random fan-speed reduction",
-        "KV eviction storm that forces vLLM block-budget saturation",
-        "Reboot the entire datacenter"
+        "KV vLLM blok bütçe doygunluğunu zorlayan tahliye fırtınası",
+        "Tüm veri merkezini yeniden başlatın"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which cadence does the lesson recommend for chaos exercises?",
+      "question": "Ders kaos egzersizleri için hangi kadansı öneriyor?",
       "options": [
-        "Weekly small canary, monthly game day with postmortem, quarterly cross-team resilience audit",
+        "Haftalık küçük kanarya, ölüm sonrası aylık oyun günü, üç ayda bir ekipler arası dayanıklılık denetimi",
         "Daily full-prod outages",
         "Never",
-        "Yearly only"
+        "Yalnızca yıllık"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What LLM-specific failure mode does the malformed-prompt experiment uncover?",
+      "question": "Hatalı biçimlendirilmiş bilgi istemi denemesi hangi LLM-'ye özgü hata modunu ortaya çıkarır?",
       "options": [
-        "Tokenizer stalls that lock up a worker on inputs like deeply nested unicode or huge UTF-8 codepoints",
+        "Derinlemesine yuvalanmış unicode veya büyük UTF-8 kod noktaları gibi girdilerde bir çalışanı kilitleyen tokenizer duraklamaları",
         "Disk I/O contention",
         "GPU undervolt",
         "Network packet loss"

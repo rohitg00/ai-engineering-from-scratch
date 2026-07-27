@@ -4,55 +4,55 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the writer declare sections, figures, and citations as data before any prose is written?",
+      "question": "Yazar neden herhangi bir düz yazı yazılmadan önce bölümleri, şekilleri ve alıntıları veri olarak beyan ediyor?",
       "options": [
-        "Because LaTeX requires a forward declaration",
-        "Because the structure is the contract: the harness can validate completeness before prose generation",
-        "Because the model needs a system prompt",
-        "Because BibTeX cannot resolve forward references"
+        "Çünkü LaTeX ileri bildirim gerektirir",
+        "Çünkü yapı sözleşmedir: koşum takımı düz yazı oluşturulmadan önce bütünlüğü doğrulayabilir",
+        "Çünkü modelin bir sistem istemine ihtiyacı var",
+        "Çünkü BibTeX ileri referansları çözemez"
       ],
       "correct": 1,
-      "explanation": "Structure-first lets the harness validate uniqueness, citation coverage, and figure coverage before invoking the prose generator. The skeleton is the contract."
+      "explanation": "Önce yapı, düzyazı oluşturucuyu başlatmadan önce koşumun benzersizliği, alıntı kapsamını ve şekil kapsamını doğrulamasını sağlar. İskelet sözleşmedir."
     },
     {
       "stage": "pre",
-      "question": "What does the figure-injection step produce from an experiment manifest?",
+      "question": "Şekil yerleştirme adımı bir deney bildiriminden ne üretir?",
       "options": [
-        "A PDF compiled from artifacts",
-        "A list of Figure records with stable ids and paths normalised to the paper directory",
-        "A model prompt with figure descriptions",
+        "Yapılardan derlenen bir PDF",
+        "Kağıt dizinine normalleştirilmiş kararlı kimliklere ve yollara sahip Şekil kayıtlarının bir listesi",
+        "Şekil açıklamalarını içeren bir model istemi",
         "A bibliography stub"
       ],
       "correct": 1,
-      "explanation": "read_experiment_manifest returns Figure records. Ids are deterministic, paths are normalised, captions come from the manifest."
+      "explanation": "read_experiment_manifest, Şekil kayıtlarını döndürür. Kimlikler deterministiktir, yollar normalleştirilmiştir, altyazılar bildirimden gelir."
     },
     {
       "stage": "check",
-      "question": "Which validation failure raises PaperValidationError before any file is written?",
+      "question": "Hangi doğrulama hatası herhangi bir dosya yazılmadan önce PaperValidationError hatasına neden olur?",
       "options": [
         "An odd number of authors",
-        "A section that cites a key not declared in the bibliography",
+        "Kaynakçada belirtilmeyen bir anahtara atıfta bulunan bölüm",
         "An abstract longer than 200 words",
-        "A figure path that does not exist on disk"
+        "Diskte bulunmayan bir şekil yolu"
       ],
       "correct": 1,
-      "explanation": "Missing bibliography keys, duplicate figure ids, empty title, empty abstract, and unknown figure refs all raise PaperValidationError. Existence on disk is not enforced because the LaTeX compiler enforces it later."
+      "explanation": "Eksik kaynakça anahtarları, yinelenen şekil kimlikleri, boş başlık, boş özet ve bilinmeyen şekil referanslarının tümü PaperValidationError'a neden olur. LaTeX derleyicisi bunu daha sonra zorunlu kıldığından diskteki varlık zorunlu kılınmaz."
     },
     {
       "stage": "check",
-      "question": "Why is the prose generator a callable injected into PaperWriter rather than a method on it?",
+      "question": "Düzyazı oluşturucu neden üzerinde bir yöntem yerine PaperWriter'a enjekte edilen bir çağrılabilir?",
       "options": [
-        "Because Python does not allow methods to take Paper as an argument",
-        "Because tests can swap a deterministic MockProseGenerator for a model call without touching the writer",
-        "Because LaTeX requires a callback",
-        "Because the dataclass cannot hold state"
+        "Çünkü Python yöntemlerin Paper'ı argüman olarak almasına izin vermiyor",
+        "Çünkü testler, yazara dokunmadan deterministik bir MockProseGenerator'ı bir model çağrısıyla değiştirebilir",
+        "Çünkü LaTeX geri aramayı gerektirir",
+        "Çünkü veri sınıfı durumu tutamaz"
       ],
       "correct": 1,
-      "explanation": "The writer takes the prose generator as a dependency. The test substitutes MockProseGenerator. Production substitutes a model call. The writer is unchanged."
+      "explanation": "Yazar, düzyazı oluşturucuyu bir bağımlılık olarak alır. Test, MockProseGenerator'ın yerine geçer. Üretim, model çağrısının yerini alır. Yazar değişmedi."
     },
     {
       "stage": "post",
-      "question": "What three files does PaperWriter.write emit on success?",
+      "question": "PaperWriter.write başarı durumunda hangi üç dosyayı yayınlar?",
       "options": [
         "paper.tex, paper.pdf, references.bib",
         "paper.tex, references.bib, manifest.json",
@@ -60,19 +60,19 @@
         "manifest.json, prose.txt, paper.pdf"
       ],
       "correct": 1,
-      "explanation": "paper.tex is the LaTeX source. references.bib is the bibliography. manifest.json is the structured artifact the critic loop reads next."
+      "explanation": "paper.tex LaTeX kaynağıdır. references.bib bibliyografyadır. manifest.json, eleştirmen döngüsünün daha sonra okuyacağı yapılandırılmış yapıdır."
     },
     {
       "stage": "post",
-      "question": "Why is the manifest part of the writer's contract instead of just the LaTeX file?",
+      "question": "Neden yalnızca LaTeX dosyası yerine yazarın sözleşmesinin açık kısmı yer alıyor?",
       "options": [
-        "Because LaTeX is too large to parse",
-        "Because downstream tooling (critics, dashboards) reads structured manifests, not LaTeX",
-        "Because manifest.json is the only file BibTeX accepts",
-        "Because LaTeX compilers reject untyped sections"
+        "Çünkü LaTeX ayrıştırılamayacak kadar büyük",
+        "Çünkü aşağı yönlü araçlar (eleştirmenler, kontrol panelleri) LaTeX'i değil, yapılandırılmış bildirimleri okur",
+        "Çünkü manifest.json BibTeX'in kabul ettiği tek dosyadır",
+        "LaTeX derleyicileri yazılmamış bölümleri reddettiği için"
       ],
       "correct": 1,
-      "explanation": "The manifest is a stable interface for downstream stages. Critics and dashboards inspect manifest.json. LaTeX is the human-readable artifact, not the machine interface."
+      "explanation": "Manifest, aşağı akış aşamaları için kararlı bir arayüzdür. Eleştirmenler ve kontrol panelleri manifest.json'u inceler. LaTeX, makine arayüzü değil, insan tarafından okunabilen bir yapıdır."
     }
   ]
 }

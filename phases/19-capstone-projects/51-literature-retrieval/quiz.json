@@ -4,43 +4,43 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the retrieval client run a BM25 pass and a citation graph pass?",
+      "question": "Alma istemcisi neden bir BM25 geçişi ve bir alıntı grafiği geçişi çalıştırıyor?",
       "options": [
-        "Because BM25 needs the graph to build its index",
-        "Because lexical hits miss foundational papers with different vocabulary, and graph hits miss papers that share no citation with the seed",
-        "Because the mock APIs require it",
-        "Because the parser fails otherwise"
+        "Çünkü BM25'nin indeksini oluşturmak için grafiğe ihtiyacı var",
+        "Çünkü sözcüksel isabetler farklı kelime dağarcığı içeren temel makaleleri kaçırırken, grafik isabetleri tohumla hiçbir alıntıyı paylaşmayan makaleleri kaçırıyor",
+        "Çünkü sahte API'ler bunu gerektiriyor",
+        "Aksi takdirde ayrıştırıcı başarısız olacağından"
       ],
       "correct": 1,
-      "explanation": "Each pass catches what the other misses. Lexical covers shared vocabulary; the graph covers ancestor and descendant papers regardless of vocabulary."
+      "explanation": "Her geçişte diğerinin kaçırdığı şey yakalanır. Sözcüksel, paylaşılan sözcükleri kapsar; grafik, kelime dağarcığına bakılmaksızın ata ve soyundan gelen makaleleri kapsar."
     },
     {
       "stage": "pre",
-      "question": "Why is the citation graph traversal capped at two hops?",
+      "question": "Alıntı grafiği geçişi neden iki atlamayla sınırlanıyor?",
       "options": [
-        "Because beyond two hops the result set tends to drift off topic and overwhelm downstream ranking",
-        "Because the Python recursion limit forbids three hops",
-        "Because BM25 only scores two hops away",
-        "Because the corpus only stores two layers of citations"
+        "Çünkü iki atlamanın ötesinde sonuç kümesi konudan sapma ve alt sıralamayı bunaltma eğilimindedir",
+        "Çünkü Python özyineleme limiti üç atlamayı yasaklıyor",
+        "Çünkü BM25 yalnızca iki atlama ötede gol atıyor",
+        "Çünkü derlem yalnızca iki alıntı katmanını saklıyor"
       ],
       "correct": 0,
-      "explanation": "Two hops is the practical ceiling. Three hops blows up the result set on a connected graph and rarely returns more on topic papers."
+      "explanation": "İki atlama pratik tavandır. Üç atlama, bağlantılı bir grafikteki sonuç kümesini havaya uçurur ve nadiren konu makalelerinde daha fazlasını döndürür."
     },
     {
       "stage": "check",
-      "question": "What does idf evaluate to for a term that appears in every document?",
+      "question": "Her belgede görünen bir terim için idf neyle değerlendirilir?",
       "options": [
         "A large positive value",
         "A value near zero",
         "Negative infinity",
-        "Undefined; the BM25 implementation skips it"
+        "Tanımlanmamış; BM25 uygulaması bunu atlıyor"
       ],
       "correct": 1,
-      "explanation": "When df equals N the numerator and denominator inside the log are close, and the +1 keeps the term non negative but small. The contribution of universally common terms is near zero."
+      "explanation": "df, N'ye eşit olduğunda, log içindeki pay ve payda birbirine yakındır ve +1, terimi negatif olmayan ancak küçük tutar. Evrensel olarak ortak terimlerin katkısı sıfıra yakındır."
     },
     {
       "stage": "check",
-      "question": "Which keys does the merge step use to dedup hits from the two passes?",
+      "question": "Birleştirme adımı, iki geçişteki isabetleri tekilleştirmek için hangi anahtarları kullanır?",
       "options": [
         "Title text",
         "Stable paper id",
@@ -48,31 +48,31 @@
         "BM25 score bucket"
       ],
       "correct": 1,
-      "explanation": "Paper id is the stable handle. Title and author are duplicated across versions, year alone is ambiguous."
+      "explanation": "Kağıt kimliği sabit tutamaçtır. Başlık ve yazar sürümler arasında kopyalanıyor, yalnızca yıl belirsiz."
     },
     {
       "stage": "check",
-      "question": "What does graph_score return for a paper that is two hops from the seed set?",
+      "question": "Graph_score, tohum kümesinden iki atlama olan bir kağıt için ne döndürür?",
       "options": [
         "Zero",
         "0.3 by default",
         "1.0 by default",
-        "The BM25 score divided by ten"
+        "BM25 puanının ona bölümü"
       ],
       "correct": 1,
-      "explanation": "The default graph score schedule is 1.0 at zero hops, 0.6 at one hop, 0.3 at two hops, and zero beyond that."
+      "explanation": "Varsayılan grafik puanı programı sıfır atlamada 1,0, bir atlamada 0,6, iki atlamada 0,3 ve bunun ötesinde sıfırdır."
     },
     {
       "stage": "check",
-      "question": "Why is the corpus loaded once into a RetrievalClient instead of refetched per query?",
+      "question": "Derlem neden sorgu başına yeniden getirilmek yerine bir RetrievalClient'a bir kez yükleniyor?",
       "options": [
-        "Because the mock APIs are slow on every call",
-        "Because the BM25 index and citation graph are built once at construction time and reused across queries",
-        "Because the parser is global",
-        "Because the recency score requires it"
+        "Çünkü sahte API'ler her çağrıda yavaştır",
+        "Çünkü BM25 dizini ve alıntı grafiği, yapım sırasında bir kez oluşturulduğu ve sorgular arasında yeniden kullanıldığı için",
+        "Ayrıştırıcı global olduğundan",
+        "Çünkü yenilik puanı bunu gerektiriyor"
       ],
       "correct": 1,
-      "explanation": "Index construction is the expensive step. Reusing the index amortises that cost across every query the client handles."
+      "explanation": "Endeks oluşturma pahalı bir adımdır. Dizinin yeniden kullanılması, istemcinin işlediği her sorgunun maliyetini amorti eder."
     }
   ]
 }

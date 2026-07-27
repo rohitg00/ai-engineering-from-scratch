@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is a Language Server Protocol (LSP)?",
-      "options": ["A protocol for transferring files between editors", "A standard for editors to receive type info, completions, and diagnostics from a language-specific server", "A compression format for source code files", "A network protocol for remote pair programming"],
+      "question": "Dil Sunucusu Protokolü (LSP) nedir?",
+      "options": [
+        "Editörler arasında dosya aktarımı için bir protokol",
+        "Editörlerin dile özgü bir sunucudan tür bilgileri, tamamlamalar ve teşhisler almasına yönelik bir standart",
+        "Kaynak kodu dosyaları için bir sıkıştırma formatı",
+        "Uzaktan çift programlama için bir ağ protokolü"
+      ],
       "correct": 1,
-      "explanation": "LSP is a standardized protocol that lets editors communicate with language servers for features like autocomplete, type checking, and error diagnostics, regardless of the editor used."
+      "explanation": "LSP, kullanılan düzenleyiciden bağımsız olarak editörlerin otomatik tamamlama, tür kontrolü ve hata teşhisi gibi özellikler için dil sunucularıyla iletişim kurmasına olanak tanıyan standartlaştırılmış bir protokoldür."
     },
     {
       "stage": "pre",
-      "question": "Why is format-on-save useful for team projects?",
-      "options": ["It reduces file sizes by removing whitespace", "It ensures consistent code style across all contributors without manual formatting", "It catches runtime bugs before the code is executed", "It compresses the code for faster git operations"],
+      "question": "Kaydedildiğinde biçimlendirme ekip projeleri için neden faydalıdır?",
+      "options": [
+        "Boşlukları kaldırarak dosya boyutlarını azaltır",
+        "Manuel biçimlendirmeye gerek kalmadan tüm katkıda bulunanlar arasında tutarlı kod stili sağlar",
+        "Kod yürütülmeden önce çalışma zamanı hatalarını yakalar",
+        "Daha hızlı git işlemleri için kodu sıkıştırır"
+      ],
       "correct": 1,
-      "explanation": "Format-on-save runs a formatter (like Black or Ruff) every time you save, ensuring all code follows the same style conventions regardless of who wrote it."
+      "explanation": "Kaydetme sırasında biçimlendirme, her kaydettiğinizde bir biçimlendiriciyi (Black veya Ruff gibi) çalıştırır ve kimin yazdığına bakılmaksızın tüm kodların aynı stil kurallarına uymasını sağlar."
     },
     {
       "stage": "post",
-      "question": "Which VS Code extension enables editing code on a remote GPU machine as if it were local?",
-      "options": ["GitLens", "Pylance", "Remote SSH", "Debugpy"],
+      "question": "Hangi VS Kod uzantısı, uzak bir GPU makinesinde sanki yerelmiş gibi kod düzenlemeye olanak sağlar?",
+      "options": [
+        "GitLens",
+        "Pylance",
+        "Remote SSH",
+        "Debugpy"
+      ],
       "correct": 2,
-      "explanation": "Remote SSH installs a lightweight VS Code server on the remote machine and streams the UI to your local editor, letting you edit files, run terminals, and debug remotely."
+      "explanation": "Uzak SSH, uzak makineye hafif bir VS Kod sunucusu yükler ve UI'yi yerel düzenleyicinize aktararak dosyaları düzenlemenize, terminalleri çalıştırmanıza ve uzaktan hata ayıklamanıza olanak tanır."
     },
     {
       "stage": "post",
-      "question": "Why should 'notebook.output.scrolling' be enabled in VS Code settings for AI work?",
-      "options": ["It enables horizontal scrolling for wide dataframes", "It prevents training loop output (thousands of lines) from exploding the output panel", "It allows scrolling between notebook cells with the mouse wheel", "It enables smooth scrolling animations in the editor"],
+      "question": "AI çalışması için VS Kod ayarlarında 'notebook.output.scrolling' neden etkinleştirilmelidir?",
+      "options": [
+        "Geniş veri çerçeveleri için yatay kaydırmayı sağlar",
+        "Eğitim döngüsü çıkışının (binlerce satır) çıkış panelini patlatmasını önler",
+        "Fare tekerleği ile dizüstü bilgisayar hücreleri arasında gezinmeye olanak tanır",
+        "Düzenleyicide düzgün kaydırmalı animasyonlar sağlar"
+      ],
       "correct": 1,
-      "explanation": "Training loops can print thousands of lines of output. Without output scrolling, the notebook output panel grows unbounded, making the notebook unusable."
+      "explanation": "Eğitim döngüleri binlerce satırlık çıktı yazdırabilir. Çıktı kaydırma olmadığında, dizüstü bilgisayar çıktı paneli sınırsız bir şekilde büyüyerek dizüstü bilgisayarı kullanılamaz hale getirir."
     },
     {
       "stage": "post",
-      "question": "What does setting 'python.analysis.typeCheckingMode' to 'basic' in VS Code accomplish?",
-      "options": ["It enables syntax highlighting for Python files", "It catches wrong argument types and tensor shape mismatches before running the code", "It formats Python code according to PEP 8 standards", "It enables Python 3.12 language features"],
+      "question": "VS Kodunda 'python.analiz.typeCheckingMode'u 'temel' olarak ayarlamak ne işe yarar?",
+      "options": [
+        "Python dosyaları için sözdiziminin vurgulanmasını sağlar",
+        "Kodu çalıştırmadan önce yanlış argüman türlerini ve tensör şekli uyuşmazlıklarını yakalar",
+        "Python kodunu PEP 8 standartlarına göre formatlar.",
+        "Python 3.12 dil özelliklerini etkinleştirir"
+      ],
       "correct": 1,
-      "explanation": "Basic type checking with Pylance flags type mismatches, wrong argument types, and incorrect API parameters at edit time, catching bugs before you run a potentially expensive training script."
+      "explanation": "Düzenleme sırasında Pylance bayraklarıyla temel tür kontrolü, tür uyumsuzluklarını, yanlış bağımsız değişken türlerini ve yanlış API parametrelerini kullanarak, olası pahalı bir eğitim komut dosyasını çalıştırmadan önce hataları yakalar."
     }
   ]
 }

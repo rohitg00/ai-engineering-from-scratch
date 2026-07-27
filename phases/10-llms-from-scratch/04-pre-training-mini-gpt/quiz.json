@@ -1,37 +1,62 @@
 [
   {
-    "question": "What training objective does GPT use during pre-training?",
-    "options": ["Masked language modeling (predicting masked tokens)", "Next-token prediction: given previous tokens, predict the next one", "Sentence classification", "Image-text alignment"],
+    "question": "GPT eğitim öncesi sırasında hangi eğitim hedefini kullanıyor?",
+    "options": [
+      "Masked language modeling (predicting masked tokens)",
+      "Sonraki jeton tahmini: Önceki jetonlar göz önüne alındığında, sonraki jetonları tahmin edin",
+      "Sentence classification",
+      "Image-text alignment"
+    ],
     "correct": 1,
-    "explanation": "GPT is a causal (autoregressive) language model trained with next-token prediction. Given tokens [t1, t2, ..., tn], it learns to predict tn+1. The loss is cross-entropy between predicted and actual next tokens.",
+    "explanation": "GPT, sonraki belirteç tahminiyle eğitilmiş nedensel (otoregresif) bir dil modelidir. Verilen jetonlar [t1, t2, ..., tn], tn+1'i tahmin etmeyi öğrenir. Kayıp, tahmin edilen ve gerçek sonraki tokenler arasındaki çapraz entropidir.",
     "stage": "pre"
   },
   {
-    "question": "How many transformer layers, attention heads, and embedding dimensions does GPT-2 Small (124M) have?",
-    "options": ["6 layers, 6 heads, 512 dims", "12 layers, 12 heads, 768 dims", "24 layers, 16 heads, 1024 dims", "48 layers, 25 heads, 1600 dims"],
+    "question": "GPT-2 Small (124M) kaç tane transformatör katmanına, dikkat başlığına ve yerleştirme boyutuna sahiptir?",
+    "options": [
+      "6 layers, 6 heads, 512 dims",
+      "12 layers, 12 heads, 768 dims",
+      "24 layers, 16 heads, 1024 dims",
+      "48 layers, 25 heads, 1600 dims"
+    ],
     "correct": 1,
-    "explanation": "GPT-2 Small has 12 transformer layers, 12 attention heads per layer, and 768-dimensional embeddings. This architecture has 124 million parameters and can be trained on a single GPU in a few hours.",
+    "explanation": "GPT-2 Small'da 12 dönüştürücü katman, katman başına 12 dikkat başlığı ve 768 boyutlu yerleştirmeler bulunur. Bu mimari 124 milyon parametreye sahiptir ve tek bir GPU üzerinde birkaç saat içinde eğitilebilmektedir.",
     "stage": "pre"
   },
   {
-    "question": "What is the role of the causal attention mask in GPT?",
-    "options": ["It prevents attention to padding tokens", "It prevents each token from attending to future tokens, ensuring the model can only use past context for predictions", "It masks out low-confidence attention scores", "It reduces memory usage during training"],
+    "question": "GPT'de nedensel dikkat maskesinin rolü nedir?",
+    "options": [
+      "Dolgu belirteçlerine dikkat edilmesini önler",
+      "Her bir tokenın gelecekteki tokenlarla ilgilenmesini önleyerek modelin tahminler için yalnızca geçmiş bağlamı kullanabilmesini sağlar",
+      "Düşük güven dikkat puanlarını maskeliyor",
+      "Antrenman sırasında hafıza kullanımını azaltır"
+    ],
     "correct": 1,
-    "explanation": "The causal mask is a triangular matrix that sets future positions to -infinity before softmax. Token at position 5 can attend to positions 1-5 but not 6+. This ensures the model generates tokens left-to-right.",
+    "explanation": "Nedensel maske, gelecekteki konumları softmax'tan önce -sonsuza ayarlayan üçgen bir matristir. 5. konumdaki token, 1-5. konumlara katılabilir ancak 6+'ya katılamaz. Bu, modelin soldan sağa belirteçler oluşturmasını sağlar.",
     "stage": "post"
   },
   {
-    "question": "What does 'temperature' control during text generation?",
-    "options": ["The speed of generation", "The randomness of token selection: lower temperature makes outputs more deterministic, higher makes them more diverse", "The number of tokens generated", "The model's confidence threshold"],
+    "question": "Metin oluşturma sırasında 'sıcaklık' neyi kontrol eder?",
+    "options": [
+      "Nesil hızı",
+      "Belirteç seçiminin rastgeleliği: düşük sıcaklık çıktıları daha belirleyici hale getirir, yüksek sıcaklık ise onları daha çeşitli hale getirir",
+      "Üretilen jeton sayısı",
+      "Modelin güven eşiği"
+    ],
     "correct": 1,
-    "explanation": "Temperature divides logits before softmax. Temperature=0.1 makes the distribution very peaked (nearly deterministic). Temperature=1.0 is the training distribution. Temperature>1.0 flattens it, increasing randomness.",
+    "explanation": "Sıcaklık logitleri softmax'tan önce böler. Sıcaklık=0,1, dağılımın çok yüksek olmasını sağlar (neredeyse deterministik). Sıcaklık=1,0 eğitim dağılımıdır. Sıcaklık>1,0 onu düzleştirerek rastgeleliği artırır.",
     "stage": "post"
   },
   {
-    "question": "Why does pre-training require significantly more compute than fine-tuning?",
-    "options": ["Pre-training uses larger batch sizes", "Pre-training processes trillions of tokens from scratch to learn general language patterns, while fine-tuning adjusts an already-capable model on thousands of examples", "Pre-training uses a different architecture", "Fine-tuning doesn't use gradients"],
+    "question": "Ön eğitim neden ince ayardan çok daha fazla bilgi işlem gerektiriyor?",
+    "options": [
+      "Pre-training uses larger batch sizes",
+      "Ön eğitim, genel dil kalıplarını öğrenmek için trilyonlarca jetonu sıfırdan işlerken ince ayar, halihazırda yetenekli bir modeli binlerce örnek üzerinde ayarlar.",
+      "Pre-training uses a different architecture",
+      "Fine-tuning doesn't use gradients"
+    ],
     "correct": 1,
-    "explanation": "Pre-training builds all language knowledge from random weights over trillions of tokens. Fine-tuning starts from these learned weights and adjusts them on a much smaller dataset (thousands to millions of examples).",
+    "explanation": "Ön eğitim, tüm dil bilgisini trilyonlarca jetonun üzerindeki rastgele ağırlıklardan oluşturur. İnce ayar, öğrenilen bu ağırlıklardan başlar ve bunları çok daha küçük bir veri kümesinde (binlerce ila milyonlarca örnek) ayarlar.",
     "stage": "post"
   }
 ]

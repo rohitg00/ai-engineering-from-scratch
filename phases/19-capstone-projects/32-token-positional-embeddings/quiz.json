@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What shape does the embedding stage produce from (B, T) ids?",
+      "question": "Gömme aşaması (B, T) kimliklerinden hangi şekli üretir?",
       "options": [
         "(B, T)",
         "(B, V)",
-        "(B, T, D) where D is the model dimension",
-        "(B, T, V) where V is the vocabulary size"
+        "(B, T, D) burada D model boyutudur",
+        "(B, T, V) burada V kelime büyüklüğüdür"
       ],
       "correct": 2,
-      "explanation": "Each id is mapped to a D-dimensional vector. The batch keeps B and T and gains a new feature dimension D."
+      "explanation": "Her kimlik bir D- boyutlu vektöre eşlenir. Toplu iş B ve T'yi korur ve yeni bir özellik boyutu D kazanır."
     },
     {
       "stage": "check",
-      "question": "How are token and positional embeddings composed in this lesson?",
+      "question": "Bu derste belirteç ve konumsal yerleştirmeler nasıl oluşturulur?",
       "options": [
-        "By concatenation along the feature axis",
-        "By elementwise sum, broadcasting the position vector across the batch",
+        "Özellik ekseni boyunca birleştirme yoluyla",
+        "Öğe bazında toplamla, konum vektörünün toplu iş boyunca yayınlanması",
         "By an extra linear projection",
-        "By taking the elementwise maximum"
+        "Element bazında maksimum alınarak"
       ],
       "correct": 1,
-      "explanation": "The two tensors of shape (B, T, D) and (T, D) are summed. Broadcasting replicates the positional table across the batch axis."
+      "explanation": "(B, T, D) ve (T, D) şeklindeki iki tensör toplanır. Yayınlama, konumsal tabloyu toplu iş ekseni boyunca çoğaltır."
     },
     {
       "stage": "check",
-      "question": "How many learnable parameters does a SinusoidalPositionalEmbedding contribute?",
+      "question": "SinusoidalPositionalEmbedding kaç tane öğrenilebilir parametreye katkıda bulunur?",
       "options": [
         "max_context_length",
         "max_context_length * d_model",
@@ -36,11 +36,11 @@
         "Zero"
       ],
       "correct": 3,
-      "explanation": "The sinusoidal table is computed from a formula and stored as a buffer. It contributes no parameters."
+      "explanation": "Sinüzoidal tablo bir formülden hesaplanır ve tampon olarak saklanır. Hiçbir parametreye katkıda bulunmaz."
     },
     {
       "stage": "check",
-      "question": "Which positional encoding cannot accept a sequence longer than its construction limit?",
+      "question": "Hangi konumsal kodlama, yapım sınırından daha uzun bir diziyi kabul edemez?",
       "options": [
         "Sinusoidal positional embedding",
         "Learned positional embedding",
@@ -48,31 +48,31 @@
         "Neither"
       ],
       "correct": 2,
-      "explanation": "In this lesson implementation, both classes enforce max_context_length at forward time. Learned is inherently table-bounded; sinusoidal here is also bounded because it uses a prebuilt table."
+      "explanation": "Bu ders uygulamasında, her iki sınıf da ileri zamanda max_context_length'i uygular. Öğrenilen doğası gereği tabloyla sınırlıdır; Burada sinüzoidal de sınırlıdır çünkü önceden oluşturulmuş bir tablo kullanır."
     },
     {
       "stage": "post",
-      "question": "Why does the sinusoidal scheme use both sin and cos on adjacent feature pairs?",
+      "question": "Sinüzoidal şema neden bitişik özellik çiftlerinde hem günah hem de cos kullanıyor?",
       "options": [
-        "Because sin alone is not periodic",
-        "Because cos by itself cannot be backpropagated through",
-        "So that the vector at position p+k is a linear function of the vector at position p",
-        "Because it doubles the parameter count"
+        "Çünkü günah tek başına periyodik değildir",
+        "Çünkü tek başına geriye yayılamaz",
+        "Böylece p+k konumundaki vektör, p konumundaki vektörün doğrusal bir fonksiyonu olur.",
+        "Çünkü parametre sayısını iki katına çıkarır"
       ],
       "correct": 2,
-      "explanation": "Pairing sin and cos at the same wavelength means a position shift by k is a rotation, which is a linear map. Attention can then learn relative offsets through linear projections."
+      "explanation": "Sin ve cos'un aynı dalga boyunda eşleştirilmesi, k kadar konum kaymasının bir rotasyon olduğu anlamına gelir, bu doğrusal bir haritadır. Dikkat daha sonra doğrusal projeksiyonlar yoluyla göreceli sapmaları öğrenebilir."
     },
     {
       "stage": "post",
-      "question": "Why does the embedding backward pass only update rows of the token table that appeared in the batch?",
+      "question": "Geriye doğru yerleştirme geçişi neden yalnızca grupta görünen belirteç tablosunun satırlarını güncelliyor?",
       "options": [
-        "PyTorch only stores gradients for non-zero entries",
-        "Rows not touched in the forward pass produce zero gradient by the chain rule",
-        "The optimizer skips rows it has not seen",
-        "Token ids are stored in a sparse data structure"
+        "PyTorch yalnızca sıfır olmayan girişler için degradeleri saklar",
+        "İleri geçişte dokunulmayan satırlar, zincir kuralına göre sıfır eğim üretir",
+        "Optimize edici görmediği satırları atlar",
+        "Belirteç kimlikleri seyrek bir veri yapısında depolanır"
       ],
       "correct": 1,
-      "explanation": "A row that did not contribute to any output has zero derivative for the loss, so its gradient is zero for that step."
+      "explanation": "Herhangi bir çıktıya katkıda bulunmayan bir satırın kayıp için sıfır türevi vardır, dolayısıyla o adım için gradyanı sıfırdır."
     }
   ]
 }

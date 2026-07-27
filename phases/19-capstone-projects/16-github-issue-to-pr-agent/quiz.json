@@ -4,11 +4,11 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "How is the async cloud coding agent triggered in production?",
+      "question": "Eşzamansız bulut kodlama aracısı üretimde nasıl tetiklenir?",
       "options": [
-        "A long-lived SSH session into a VM",
+        "VM'de uzun ömürlü bir SSH oturumu",
         "A GitHub webhook fired by an issue label or PR comment, dispatched to a sandbox worker",
-        "A scheduled cron job hitting the repo",
+        "Depoya isabet eden planlanmış bir cron işi",
         "A manual file upload"
       ],
       "correct": 1,
@@ -16,11 +16,11 @@
     },
     {
       "stage": "pre",
-      "question": "Why must the agent run with a short-lived GitHub App installation token rather than a personal access token?",
+      "question": "Aracının neden kişisel erişim belirteci yerine kısa ömürlü bir GitHub Uygulaması yükleme belirteciyle çalışması gerekiyor?",
       "options": [
         "Apps avoid GitHub rate limits entirely",
-        "App tokens grant fine-grained, scoped, short-lived credentials suited for per-task workers",
-        "Personal access tokens cannot open PRs",
+        "Uygulama belirteçleri, görev başına çalışanlar için uygun, ayrıntılı, kapsamlı, kısa ömürlü kimlik bilgileri sağlar",
+        "Kişisel erişim belirteçleri PR'leri açamaz",
         "Apps require less code than PATs"
       ],
       "correct": 1,
@@ -28,60 +28,60 @@
     },
     {
       "stage": "check",
-      "question": "Which two protections prevent the agent from clobbering main?",
+      "question": "Hangi iki koruma, ajanın ana saldırısını engeller?",
       "options": [
         "Requiring a captcha per push",
-        "Branch protection enforcing no direct push or force-push to main, with the app not on the bypass list",
-        "Encrypting the repo before clone",
-        "Disabling git on the worker"
+        "Uygulamanın bypass listesinde olmaması nedeniyle ana bağlantıya doğrudan gönderme veya zorla gönderme yapılmasını gerektirmeyen dal koruması",
+        "Repoyu klonlamadan önce şifrelemek",
+        "Çalışanda git'i devre dışı bırakma"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is path-scoped protection for .github/workflows enforced at the worker rather than as a GitHub App permission?",
+      "question": ".github/workflows için yol kapsamlı koruma neden GitHub Uygulaması izni yerine çalışana uygulanıyor?",
       "options": [
-        "Workflows are stored outside the repo",
-        "Path scoping is impossible in any form",
-        "GitHub App permissions are not path-scoped, so the worker's allow-list check on the proposed diff is the right place to enforce it",
-        ".github/workflows is a virtual path"
+        "İş akışları deponun dışında depolanır",
+        "Yol kapsamının belirlenmesi hiçbir biçimde imkansızdır",
+        "GitHub Uygulama izinleri yol kapsamlı olmadığından, çalışanın önerilen fark üzerindeki izin verilenler listesi kontrolü, bunu uygulamak için doğru yerdir",
+        ".github/workflows sanal bir yoldur"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What gating happens after the agent loop concludes, before opening a PR?",
+      "question": "Aracı döngüsü sona erdikten sonra, bir PR açılmadan önce hangi geçitleme olur?",
       "options": [
-        "The reviewer model rewrites the diff",
-        "Full CI runs in the sandbox; coverage delta is computed; PRs with a regression beyond a threshold are labeled needs-review",
-        "The PR opens immediately with no checks",
-        "The repo is force-pushed to main"
+        "Gözden geçiren model farkı yeniden yazar",
+        "CI'nin tamamı korumalı alanda çalışır; kapsama deltası hesaplanır; Bir eşiğin ötesinde gerileme gösteren PR'ler ihtiyaç incelemesi olarak etiketlenir",
+        "PR hiçbir kontrole gerek kalmadan hemen açılıyor",
+        "Repo zorla ana konuma itildi"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which budget knobs does the dispatcher enforce per repo per day?",
+      "question": "Sevk görevlisi repo başına günlük olarak hangi bütçe düğmelerini uygular?",
       "options": [
-        "Only a wall-clock cap",
+        "Sadece bir duvar saati kapağı",
         "Unlimited PRs and unlimited cost",
         "A dollar ceiling per PR plus a maximum number of PRs per repo per day",
-        "Only a turn cap"
+        "Sadece bir dönüş başlığı"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What goes into the PR body that the agent posts?",
+      "question": "Temsilcinin gönderdiği PR gövdesine neler giriyor?",
       "options": [
-        "Only the diff",
-        "Rationale, diff summary, trace URL, cost, and turn count so reviewers can audit and follow up",
-        "A generated changelog only",
-        "Nothing; the PR has an empty body"
+        "Yalnızca fark",
+        "Gözden geçirenlerin denetleyebilmesi ve takip edebilmesi için gerekçe, fark özeti, izleme URL, maliyet ve dönüş sayısı",
+        "Yalnızca oluşturulan bir değişiklik günlüğü",
+        "Hiç bir şey; PR'nin boş bir gövdesi var"
       ],
       "correct": 1,
       "explanation": ""

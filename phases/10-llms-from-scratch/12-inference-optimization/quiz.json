@@ -1,37 +1,62 @@
 [
   {
-    "question": "What are the two phases of LLM inference?",
-    "options": ["Training and evaluation", "Prefill (processes the prompt in parallel, compute-bound) and decode (generates tokens one at a time, memory-bound)", "Encoding and decoding", "Forward and backward"],
+    "question": "LLM çıkarımının iki aşaması nedir?",
+    "options": [
+      "Training and evaluation",
+      "Önceden doldurma (istemi paralel olarak, hesaplamaya bağlı olarak işler) ve kod çözme (belirteçleri teker teker üretir, belleğe bağlı)",
+      "Encoding and decoding",
+      "Forward and backward"
+    ],
     "correct": 1,
-    "explanation": "Prefill processes all prompt tokens in parallel (limited by compute). Decode generates tokens autoregressively one at a time (limited by memory bandwidth for loading model weights). Different optimizations target each phase.",
+    "explanation": "Önceden doldurma, tüm bilgi istemi belirteçlerini paralel olarak işler (işlemle sınırlıdır). Kod çözme, jetonları otomatik olarak birer birer üretir (model ağırlıklarının yüklenmesi için bellek bant genişliği ile sınırlıdır). Her aşamayı farklı optimizasyonlar hedefler.",
     "stage": "pre"
   },
   {
-    "question": "What does KV-cache eliminate during autoregressive generation?",
-    "options": ["The need for attention masks", "Redundant recomputation of key and value vectors for all previous tokens at each generation step", "The embedding lookup", "The softmax computation"],
+    "question": "KV-cache, otoregresif oluşturma sırasında neyi ortadan kaldırır?",
+    "options": [
+      "Dikkat maskesi ihtiyacı",
+      "Her nesil adımında önceki tüm belirteçler için anahtar ve değer vektörlerinin yedekli olarak yeniden hesaplanması",
+      "Yerleştirme araması",
+      "Softmax hesaplaması"
+    ],
     "correct": 1,
-    "explanation": "Without KV-cache, generating token N requires recomputing attention keys and values for all N-1 previous tokens. KV-cache stores these vectors, so each new token only computes its own K and V, saving O(N) computation per step.",
+    "explanation": "KV-cache olmadan, N belirteci oluşturmak, önceki tüm N-1 belirteçleri için dikkat anahtarlarının ve değerlerinin yeniden hesaplanmasını gerektirir. KV-cache bu vektörleri saklar, böylece her yeni belirteç yalnızca kendi K ve V'sini hesaplayarak adım başına O(N) hesaplamasından tasarruf sağlar.",
     "stage": "pre"
   },
   {
-    "question": "What is continuous batching and why does it improve throughput?",
-    "options": ["Processing all requests in one large batch", "Dynamically adding and removing requests from the running batch as they start and finish, instead of waiting for the entire batch to complete", "Using larger batch sizes", "Batching across multiple models"],
+    "question": "Sürekli toplu işlem nedir ve verimi neden artırır?",
+    "options": [
+      "Tüm istekleri tek bir büyük grupta işliyoruz",
+      "Tüm grubun tamamlanmasını beklemek yerine, çalışan gruptan istekler başlarken ve biterken dinamik olarak ekleme ve kaldırma",
+      "Using larger batch sizes",
+      "Batching across multiple models"
+    ],
     "correct": 1,
-    "explanation": "In static batching, a short request holds its batch slot until the longest request finishes. Continuous batching immediately fills completed slots with new requests, keeping the GPU busy and improving overall throughput.",
+    "explanation": "Statik toplu işlemde, kısa bir istek, en uzun istek bitene kadar toplu iş yuvasını tutar. Sürekli toplu işlem, tamamlanan yuvaları anında yeni isteklerle doldurarak GPU'yi meşgul tutar ve genel verimi artırır.",
     "stage": "post"
   },
   {
-    "question": "What problem does PagedAttention (used in vLLM) solve?",
-    "options": ["It speeds up the attention computation", "It manages KV-cache memory in fixed-size blocks like virtual memory, eliminating fragmentation from variable-length sequences", "It reduces model size", "It improves tokenization speed"],
+    "question": "PagedAttention (vLLM'de kullanılır) hangi sorunu çözer?",
+    "options": [
+      "Dikkat hesaplamasını hızlandırır",
+      "KV-cache belleğini sanal bellek gibi sabit boyutlu bloklarda yöneterek değişken uzunluklu dizilerden parçalanmayı ortadan kaldırır",
+      "Model boyutunu küçültür",
+      "Tokenizasyon hızını artırır"
+    ],
     "correct": 1,
-    "explanation": "KV-cache for variable-length sequences causes memory fragmentation (wasted gaps between allocations). PagedAttention allocates KV-cache in fixed blocks and maps them with a page table, like OS virtual memory.",
+    "explanation": "Değişken uzunluklu diziler için KV-cache, bellek parçalanmasına (tahsisler arasında boşa harcanan boşluklar) neden olur. PagedAttention, KV-cache'i sabit bloklara ayırır ve bunları OS sanal bellek gibi bir sayfa tablosuyla eşler.",
     "stage": "post"
   },
   {
-    "question": "What is speculative decoding?",
-    "options": ["Generating multiple responses and picking the best", "Using a small draft model to propose multiple tokens that the large model verifies in parallel, speeding up generation", "Predicting which tokens the user wants", "Caching frequently generated sequences"],
+    "question": "Spekülatif kod çözme nedir?",
+    "options": [
+      "Birden fazla yanıt oluşturma ve en iyisini seçme",
+      "Büyük modelin paralel olarak doğruladığı birden fazla token önermek için küçük bir taslak model kullanmak, üretimi hızlandırır",
+      "Kullanıcının hangi tokenleri istediğini tahmin etme",
+      "Caching frequently generated sequences"
+    ],
     "correct": 1,
-    "explanation": "A small fast model generates N candidate tokens. The large model verifies all N in a single forward pass (parallel). If K tokens are accepted, you've generated K tokens in the time of roughly 1 large-model step.",
+    "explanation": "Küçük bir hızlı model, N aday token üretir. Büyük model tüm N'yi tek bir ileri geçişte (paralel) doğrular. K token kabul edilirse, yaklaşık 1 büyük model adımında K token oluşturmuş olursunuz.",
     "stage": "post"
   }
 ]

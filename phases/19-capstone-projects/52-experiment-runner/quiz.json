@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the runner spawn a subprocess instead of importing the experiment script in process?",
+      "question": "Koşucu neden süreçteki deneme komut dosyasını içe aktarmak yerine bir alt süreç oluşturuyor?",
       "options": [
-        "Because Python disallows nested imports",
-        "Because a separate process gives the runner a kill handle on timeout or memory limits and isolates crashes from the orchestrator",
-        "Because the metrics format requires it",
-        "Because subprocess is faster than import"
+        "Python iç içe içe aktarmaya izin vermediğinden",
+        "Çünkü ayrı bir süreç, koşucuya zaman aşımı veya bellek sınırları konusunda bir kill tanıtıcısı verir ve çökmeleri orkestratörden yalıtır.",
+        "Çünkü metrik formatı bunu gerektiriyor",
+        "Çünkü alt süreç içe aktarmadan daha hızlıdır"
       ],
       "correct": 1,
-      "explanation": "A separate process is the simplest isolation the language ships. The parent retains a kill handle and an independent address space, so a crashing experiment cannot take the orchestrator with it."
+      "explanation": "Ayrı bir süreç, dilin gönderdiği en basit izolasyondur. Ebeveyn bir öldürme tanıtıcısını ve bağımsız bir adres alanını korur, bu nedenle çöken bir deney orkestratörü de yanına alamaz."
     },
     {
       "stage": "pre",
-      "question": "Why is the memory cap described as soft?",
+      "question": "Bellek kapağı neden yumuşak olarak tanımlanıyor?",
       "options": [
-        "Because it only applies to the heap, not the stack",
-        "Because the poller has a non zero interval, so a process can spike above the cap between polls and the runner only acts on the next observation",
-        "Because the operating system always overrides it",
-        "Because numpy ignores the cap"
+        "Çünkü bu yığın için değil yalnızca yığın için geçerlidir",
+        "Anketçi sıfır olmayan bir aralığa sahip olduğundan, bir süreç anketler arasında sınırın üzerine çıkabilir ve koşucu yalnızca bir sonraki gözleme göre hareket eder",
+        "Çünkü işletim sistemi her zaman onu geçersiz kılar",
+        "Çünkü numpy sınırı görmezden geliyor"
       ],
       "correct": 1,
-      "explanation": "The cap is enforced by polling, not by an in kernel limit. The poller interval is the resolution of the cap, and short spikes can briefly exceed the cap before the next observation."
+      "explanation": "Üst sınır, çekirdek içi sınırla değil, yoklamayla uygulanır. Poller aralığı, başlığın çözünürlüğüdür ve kısa ani artışlar, bir sonraki gözlemden önce sınırı kısa süreliğine aşabilir."
     },
     {
       "stage": "check",
-      "question": "Which terminal label does the runner return when stdout has the metrics but the exit code is non zero?",
+      "question": "Stdout metriklere sahip olduğunda ancak çıkış kodu sıfır olmadığında koşucu hangi terminal etiketini döndürür?",
       "options": [
         "ok",
         "timeout",
@@ -36,43 +36,43 @@
         "crash"
       ],
       "correct": 3,
-      "explanation": "Terminal is ok only when exit code is zero and metrics parsed. A non zero exit code is crash even if some metrics were captured before the failure."
+      "explanation": "Terminal yalnızca çıkış kodu sıfır olduğunda ve ölçümler ayrıştırıldığında sorun yoktur. Sıfır olmayan bir çıkış kodu, bazı ölçümler hatadan önce yakalanmış olsa bile kilitlenmedir."
     },
     {
       "stage": "check",
-      "question": "How does the runner identify the final metrics blob inside stdout?",
+      "question": "Koşucu stdout içindeki son ölçüm bloğunu nasıl tanımlar?",
       "options": [
-        "It reads the first json line",
-        "It reads the last json line whose keys cover the required metric_keys; earlier covering lines become intermediate metrics",
-        "It scans stderr for json",
-        "It expects exactly one line of output"
+        "İlk json satırını okur",
+        "Anahtarları gerekli metrik_anahtarları kapsayan son json satırını okur; daha önceki kaplama çizgileri ara metrikler haline gelir",
+        "Json için stderr'i tarar",
+        "Tam olarak bir satır çıktı bekliyor"
       ],
       "correct": 1,
-      "explanation": "Final metrics are the last line that parses as json and includes every required key. Earlier covering lines are kept as intermediate metrics for learning curves."
+      "explanation": "Son metrikler, json olarak ayrıştırılan ve gerekli her anahtarı içeren son satırdır. Önceki kaplama çizgileri, öğrenme eğrileri için ara ölçümler olarak tutulur."
     },
     {
       "stage": "check",
-      "question": "Why does the ablation helper sweep one knob at a time rather than a full factorial?",
+      "question": "Ablasyon asistanı neden tam faktöriyel yerine tek seferde tek bir düğmeyi tarıyor?",
       "options": [
-        "Because the runner cannot launch more than one subprocess",
-        "Because one knob at a time produces a clean axis the evaluator can plot, while full factorial blows up exponentially and confuses interpretation",
-        "Because numpy does not support the cartesian product",
-        "Because the seed only varies along one knob"
+        "Çünkü koşucu birden fazla alt süreci başlatamaz.",
+        "Her seferinde bir düğme, değerlendiricinin çizebileceği temiz bir eksen ürettiğinden, tam faktöriyel katlanarak artar ve yorumlamayı karıştırır.",
+        "Numpy kartezyen çarpımı desteklemediğinden",
+        "Çünkü tohum yalnızca bir düğme boyunca değişiklik gösterir"
       ],
       "correct": 1,
-      "explanation": "Single knob sweeps keep the result interpretable. Full factorial costs scale exponentially with the number of knobs and the resulting table is hard to read."
+      "explanation": "Tek düğmeli taramalar sonucun yorumlanabilir olmasını sağlar. Tam faktöriyel maliyetler, düğme sayısına göre üstel olarak ölçeklenir ve ortaya çıkan tablonun okunması zordur."
     },
     {
       "stage": "check",
-      "question": "What guarantee does forwarding spec.seed into config['__seed'] give the evaluator?",
+      "question": "Spec.seed'in config['__seed'] dosyasına iletilmesi değerlendiriciye hangi garantiyi verir?",
       "options": [
         "Faster wall time",
         "Lower memory consumption",
-        "Determinism, so a re run with the same seed produces identical metrics and the evaluator can detect real changes from random noise",
+        "Determinizm, yani aynı tohumla yeniden çalıştırma aynı ölçümleri üretir ve değerlendirici rastgele gürültüden gerçek değişiklikleri tespit edebilir",
         "A free significance test"
       ],
       "correct": 2,
-      "explanation": "The seed pins random initialisation in the experiment. Two runs with the same seed produce identical metrics, which is what lets the evaluator distinguish a real regression from a different draw."
+      "explanation": "Deneyde tohum pimlerinin rastgele başlatılması. Aynı tohumla yapılan iki çalışma aynı metrikleri üretir; bu da değerlendiricinin gerçek bir regresyonu farklı bir çekilişten ayırt etmesine olanak tanır."
     }
   ]
 }

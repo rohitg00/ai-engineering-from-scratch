@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core role of an AI gateway in the lesson?",
+      "question": "AI ağ geçidinin dersteki temel rolü nedir?",
       "options": [
         "A model fine-tuning service",
-        "A vector database for retrieval",
-        "A logging-only sidecar",
-        "A process sitting between apps and model providers that consolidates routing, fallback, retries, rate limits, secret references, observability, and guardrails behind one API"
+        "Geri alma için bir vektör veritabanı",
+        "Yalnızca günlüğe kaydetme amaçlı bir yardımcı araç",
+        "Yönlendirmeyi, geri dönüşü, yeniden denemeleri, hız sınırlarını, gizli referansları, gözlemlenebilirliği ve korkulukları tek bir API arkasında birleştiren uygulamalar ve model sağlayıcılar arasında yer alan bir süreç"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What scale ceiling does Kong's benchmark report for LiteLLM?",
+      "question": "Kong'un LiteLLM için raporunun tavan ölçeği ne kadar?",
       "options": [
-        "It tops out at 50 RPS",
-        "It breaks down around ~2000 RPS with 8 GB memory and cascading failures under sustained load",
-        "It scales linearly past 10k RPS",
-        "LiteLLM cannot be benchmarked"
+        "50 RPS ile zirveye çıkıyor",
+        "8 GB bellek ve sürekli yük altında ardışık arızalarla ~2000 RPS civarında bozuluyor",
+        "10k'yi geçecek şekilde doğrusal olarak ölçeklenir RPS",
+        "LiteLLM karşılaştırılamaz"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Per the Kong benchmark on equivalent CPU, how much faster is Kong AI Gateway than Portkey and LiteLLM?",
+      "question": "Eşdeğer CPU üzerindeki Kong karşılaştırmasına göre Kong AI Gateway, Portkey ve LiteLLM'den ne kadar daha hızlıdır?",
       "options": [
         "228% faster than Portkey and 859% faster than LiteLLM",
         "About 10% and 20% faster",
@@ -40,7 +40,7 @@
     },
     {
       "stage": "check",
-      "question": "Which gateway does the lesson position with 20-40 ms latency overhead and guardrails / PII redaction / jailbreak detection focus?",
+      "question": "20-40 ms gecikme ek yükü ve korkuluklar / PII redaksiyon / jailbreak tespiti ile ders konumu hangi ağ geçidine odaklanıyor?",
       "options": [
         "Kong AI Gateway",
         "LiteLLM",
@@ -52,9 +52,9 @@
     },
     {
       "stage": "post",
-      "question": "What does the lesson say is the forcing function for self-hosted vs managed gateway decisions?",
+      "question": "Ders, şirket içinde barındırılan ve yönetilen ağ geçidi kararları için zorlama işlevi hakkında ne söylüyor?",
       "options": [
-        "Whether the gateway is open source",
+        "Ağ geçidinin açık kaynak olup olmadığı",
         "Number of supported providers",
         "Cost per request",
         "Data residency requirements"
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Which gateways stay within budget when the SLA is TTFT P99 < 100 ms?",
+      "question": "SLA, TTFT P99 < 100 ms olduğunda hangi ağ geçitleri bütçe dahilinde kalır?",
       "options": [
         "Any gateway",
-        "Only Portkey",
-        "Only LiteLLM",
-        "Kong (~3-8 ms) or Cloudflare/Vercel edge gateways (~1-3 ms); Portkey at 20-40 ms is too heavy"
+        "Yalnızca Anahtar",
+        "Yalnızca LiteLLM",
+        "Kong (~3-8 ms) veya Cloudflare/Vercel uç ağ geçitleri (~1-3 ms); 20-40 ms'deki anahtar çok ağır"
       ],
       "correct": 3,
       "explanation": ""

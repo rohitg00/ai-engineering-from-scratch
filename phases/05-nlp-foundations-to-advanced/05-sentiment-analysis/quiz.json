@@ -4,59 +4,59 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is 'The food was not great' a hard case for naive BoW classifiers?",
+      "question": "'Yemek harika değildi' ifadesi neden saf BoW sınıflandırıcıları için zor bir durum?",
       "options": [
-        "It has no punctuation",
-        "It mixes English and French",
-        "Negation flips meaning, but bag of words discards the link between 'not' and 'great'",
-        "It contains too few tokens"
+        "Noktalama işareti yok",
+        "İngilizce ve Fransızcayı karıştırıyor",
+        "Olumsuzluk anlamı tersine çevirir, ancak bir yığın kelime 'değil' ve 'harika' arasındaki bağlantıyı ortadan kaldırır",
+        "Çok az jeton içeriyor"
       ],
       "correct": 2,
-      "explanation": "BoW cannot bind 'not' to the word it negates, so the classifier misses the polarity flip."
+      "explanation": "BoW, olumsuzladığı kelimeye \"değil\" ifadesini bağlayamaz, bu nedenle sınıflandırıcı polarite değişimini kaçırır."
     },
     {
       "stage": "pre",
-      "question": "What two steps make up classical sentiment analysis?",
+      "question": "Klasik duygu analizini hangi iki adım oluşturur?",
       "options": [
         "Translate, then classify",
         "Embed, then cluster",
-        "Represent (vectorize text) and classify (linear model on the vector)",
+        "Temsil edin (metni vektörleştirin) ve sınıflandırın (vektör üzerinde doğrusal model)",
         "Search, then rank"
       ],
       "correct": 2,
-      "explanation": "Classical sentiment is feature extraction followed by a linear classifier."
+      "explanation": "Klasik duygu, özellik çıkarımı ve ardından doğrusal bir sınıflandırıcıdır."
     },
     {
       "stage": "check",
-      "question": "Why does Naive Bayes work despite its 'naive' independence assumption?",
+      "question": "Naive Bayes 'saf' bağımsızlık varsayımına rağmen neden çalışıyor?",
       "options": [
-        "With sparse text features and moderate data the classifier mostly cares which side each word leans toward, not exact joint probabilities",
+        "Seyrek metin özellikleri ve orta düzey verilerle sınıflandırıcı, kesin ortak olasılıkları değil, çoğunlukla her kelimenin hangi tarafa yöneldiğini önemser",
         "Naive Bayes secretly learns interactions",
-        "The assumption is actually true for text",
+        "Varsayım aslında metin için doğrudur",
         "Laplace smoothing fixes dependence"
       ],
       "correct": 0,
-      "explanation": "Even with wrong independence, leaning-direction information per word is enough to classify well."
+      "explanation": "Yanlış bağımsızlıkla bile, kelime başına eğilme yönü bilgisi iyi sınıflandırma için yeterlidir."
     },
     {
       "stage": "check",
-      "question": "Why include 'NOT_' prefixed tokens during preprocessing?",
+      "question": "Ön işleme sırasında neden 'NOT_' önek belirteçleri dahil edilmeli?",
       "options": [
         "To normalize case",
-        "To stem the words",
-        "To turn 'good' versus 'NOT_good' into separate features that the classifier can weight oppositely",
-        "To shrink the vocabulary"
+        "Kelimeleri köklendirmek için",
+        "'İyi' ile 'İyi DEĞİL'i, sınıflandırıcının zıt şekilde ağırlıklandırabileceği ayrı özelliklere dönüştürmek",
+        "Kelime dağarcığını daraltmak için"
       ],
       "correct": 2,
-      "explanation": "Negation scoping splits negated forms into distinct features so a BoW classifier can model the flip."
+      "explanation": "Olumsuzlama kapsamı, olumsuzlanmış formları farklı özelliklere böler, böylece BoW sınıflandırıcısı çevirmeyi modelleyebilir."
     },
     {
       "stage": "check",
-      "question": "Why is removing stopwords risky for sentiment analysis?",
+      "question": "Duyarlılık analizi için engellenecek kelimeleri kaldırmak neden risklidir?",
       "options": [
-        "Negation words ('not', 'no', 'never') are usually treated as stopwords but carry sentiment signal",
-        "Stopword lists are too long",
-        "It increases sparsity",
+        "Olumsuzluk sözcükleri ('değil', 'hayır', 'asla') genellikle engellenecek sözcükler olarak değerlendirilir ancak duyarlılık sinyali taşırlar",
+        "Engellenecek kelime listeleri çok uzun",
+        "Seyrekliği artırır",
         "Stopword removal breaks tokenization"
       ],
       "correct": 0,
@@ -64,23 +64,23 @@
     },
     {
       "stage": "post",
-      "question": "Which metric should you report when sentiment classes are imbalanced?",
+      "question": "Duygu sınıfları dengesiz olduğunda hangi ölçümü rapor etmelisiniz?",
       "options": [
         "Macro-F1 (mean of per-class F1s, equal-weighted)",
         "Accuracy alone",
         "Mean squared error",
-        "Micro-F1 only"
+        "Yalnızca Mikro-F1"
       ],
       "correct": 0,
-      "explanation": "Macro-F1 forces the minority class to count; accuracy or micro-F1 hides it."
+      "explanation": "Macro-F1 azınlık sınıfını saymaya zorlar; doğruluk veya mikro-F1 onu gizler."
     },
     {
       "stage": "post",
-      "question": "When should you skip classical models and reach for a transformer for sentiment?",
+      "question": "Ne zaman klasik modelleri atlayıp duyarlılık için bir transformatöre ulaşmalısınız?",
       "options": [
-        "When you have under 100 examples",
-        "When latency is critical",
-        "When you need explainability",
+        "100'ün altında örneğiniz olduğunda",
+        "Gecikme kritik olduğunda",
+        "Açıklanabilirliğe ihtiyaç duyduğunuzda",
         "Sarcasm detection, long shifting documents, aspect-based sentiment, or low-resource languages"
       ],
       "correct": 3,
@@ -88,15 +88,15 @@
     },
     {
       "stage": "post",
-      "question": "Why is L2 regularization important for logistic regression on text?",
+      "question": "Metin üzerinde lojistik regresyon için L2 düzenlemesi neden önemlidir?",
       "options": [
         "Required to compute gradients",
         "Avoids ReLU dead units",
         "Speeds up matrix inversion",
-        "Sparse high-dimensional text features otherwise let the model memorize training examples"
+        "Seyrek yüksek boyutlu metin özellikleri, aksi takdirde modelin eğitim örneklerini ezberlemesine izin verir"
       ],
       "correct": 3,
-      "explanation": "L2 prevents overfitting in the sparse-feature, high-dimensional regime of text."
+      "explanation": "L2, metnin seyrek özellikli, yüksek boyutlu düzenine aşırı sığmayı önler."
     }
   ]
 }

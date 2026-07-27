@@ -1,37 +1,62 @@
 [
   {
-    "question": "What does RAG stand for and what problem does it solve?",
-    "options": ["Random Augmented Generation -- generating random outputs", "Retrieval-Augmented Generation -- giving LLMs access to external knowledge they weren't trained on", "Recurrent Attention Generation -- improving attention mechanisms", "Reduced Architecture Generation -- making models smaller"],
+    "question": "RAG neyi temsil ediyor ve hangi sorunu çözüyor?",
+    "options": [
+      "Random Augmented Generation -- generating random outputs",
+      "Erişimle Artırılmış Nesil - Yüksek Lisans'lara eğitim almadıkları harici bilgilere erişim olanağı sağlar",
+      "Recurrent Attention Generation -- improving attention mechanisms",
+      "Reduced Architecture Generation -- making models smaller"
+    ],
     "correct": 1,
-    "explanation": "RAG retrieves relevant documents from an external knowledge base and adds them to the prompt. This gives the LLM access to up-to-date, domain-specific information without retraining.",
+    "explanation": "RAG ilgili belgeleri harici bir bilgi tabanından alır ve bunları istemlere ekler. Bu, LLM'nin yeniden eğitim gerektirmeden güncel, alana özgü bilgilere erişmesini sağlar.",
     "stage": "pre"
   },
   {
-    "question": "Why is RAG preferred over fine-tuning for most knowledge-grounded applications?",
-    "options": ["RAG produces better models", "RAG is cheaper, instantly updatable when documents change, and provides source attribution -- fine-tuning is expensive and becomes stale", "Fine-tuning doesn't work", "RAG uses less memory"],
+    "question": "Bilgiye dayalı uygulamaların çoğu için ince ayar yerine neden RAG tercih ediliyor?",
+    "options": [
+      "RAG produces better models",
+      "RAG daha ucuzdur, belgeler değiştiğinde anında güncellenebilir ve kaynak ilişkilendirme sağlar; ince ayar pahalıdır ve eskimiş hale gelir",
+      "Fine-tuning doesn't work",
+      "RAG uses less memory"
+    ],
     "correct": 1,
-    "explanation": "Fine-tuning costs thousands of dollars, produces a static model that becomes stale as documents change, and offers no source attribution. RAG updates instantly (just update the document store), costs only embedding + storage, and can cite its sources.",
+    "explanation": "İnce ayarın maliyeti binlerce dolara mal olur, belgeler değiştikçe eskiyen statik bir model üretir ve hiçbir kaynak ilişkilendirmesi sunmaz. RAG anında güncellenir (yalnızca belge deposunu güncelleyin), yalnızca yerleştirme + depolama maliyeti vardır ve kaynaklarını belirtebilir.",
     "stage": "pre"
   },
   {
-    "question": "What is the correct order of steps in a basic RAG pipeline?",
-    "options": ["Generate, retrieve, embed, chunk", "Chunk documents, embed chunks, store in vector DB, embed query, retrieve similar chunks, generate answer with context", "Embed query, generate answer, retrieve documents", "Store documents, query the LLM, add documents to response"],
+    "question": "Temel bir RAG işlem hattındaki adımların doğru sırası nedir?",
+    "options": [
+      "Generate, retrieve, embed, chunk",
+      "Belgeleri parçalayın, parçaları yerleştirin, DB vektöründe saklayın, sorguyu yerleştirin, benzer parçaları alın, bağlamla birlikte yanıt oluşturun",
+      "Embed query, generate answer, retrieve documents",
+      "Belgeleri saklayın, LLM'yi sorgulayın, yanıta belgeler ekleyin"
+    ],
     "correct": 1,
-    "explanation": "Ingestion: chunk documents -> embed chunks -> store in vector DB. Query time: embed the user's query -> retrieve top-K similar chunks -> add chunks to prompt -> generate answer grounded in retrieved context.",
+    "explanation": "Alma: yığın belgeler -> parçaları yerleştirme -> DB vektöründe saklama. Sorgu zamanı: kullanıcının sorgusunu gömün -> en iyi K benzer parçaları alın -> istemlere parçalar ekleyin -> alınan bağlama dayalı yanıt oluşturun.",
     "stage": "post"
   },
   {
-    "question": "What is a common failure mode in basic RAG systems?",
-    "options": ["The LLM refuses to answer", "The retrieved chunks are semantically similar to the query but don't contain the actual answer (e.g., returning 'revenue strategy' when asked for 'Q3 revenue numbers')", "The vector database crashes", "The embeddings are too large"],
+    "question": "Temel RAG sistemlerinde yaygın bir arıza modu nedir?",
+    "options": [
+      "LLM yanıt vermeyi reddediyor",
+      "Alınan parçalar anlamsal olarak sorguya benzer ancak gerçek yanıtı içermez (örneğin, 'Q3 gelir numaraları' istendiğinde 'gelir stratejisi'ni döndürmek)",
+      "Vektör veritabanı çöküyor",
+      "Gömmeler çok büyük"
+    ],
     "correct": 1,
-    "explanation": "Semantic search finds text that 'sounds like' the query, not necessarily text that 'answers' it. A query about revenue might retrieve chunks discussing revenue strategy rather than the chunk containing the actual number.",
+    "explanation": "Anlamsal arama, sorguya 'yanıt veren' metni değil, sorguya 'benzeyen' metni bulur. Gelirle ilgili bir sorgu, gerçek sayıyı içeren parça yerine, gelir stratejisini tartışan parçaları getirebilir.",
     "stage": "post"
   },
   {
-    "question": "How do you evaluate RAG quality?",
-    "options": ["By checking if the LLM produces any output", "Using both retrieval metrics (did we find the right chunks?) and generation metrics (is the answer faithful to the retrieved context?)", "By measuring response time only", "By counting the number of retrieved documents"],
+    "question": "RAG kalitesini nasıl değerlendiriyorsunuz?",
+    "options": [
+      "LLM'nin herhangi bir çıktı üretip üretmediğini kontrol ederek",
+      "Hem geri alma metriklerini (doğru parçaları bulduk mu?) hem de oluşturma metriklerini (cevap alınan bağlama sadık mı?) kullanarak",
+      "Yalnızca yanıt süresini ölçerek",
+      "Alınan belge sayısını sayarak"
+    ],
     "correct": 1,
-    "explanation": "RAG evaluation has two parts: retrieval quality (precision/recall of retrieved chunks against ground truth) and generation quality (faithfulness to context, relevance to query, no hallucination beyond retrieved information).",
+    "explanation": "RAG değerlendirmesinin iki bölümü vardır: geri alma kalitesi (geri alınan parçaların kesin gerçeğe karşı geri çağrılması/geri çağrılması) ve oluşturma kalitesi (bağlama bağlılık, sorguyla uygunluk, alınan bilgilerin ötesinde halüsinasyon olmaması).",
     "stage": "post"
   }
 ]

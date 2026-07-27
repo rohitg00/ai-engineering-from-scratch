@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What single architectural idea did AlexNet (2012) introduce that made training deep CNNs practical on GPUs?",
-      "options": ["Residual connections", "Replacing tanh with ReLU, which does not saturate and speeds convergence by roughly 6x", "Batch normalization", "Depthwise separable convolutions"],
+      "question": "AlexNet (2012), derin CNN'lerin GPU'larda eğitilmesini pratik hale getiren hangi mimari fikri ortaya attı?",
+      "options": [
+        "Residual connections",
+        "Tanh'ın, doymayan ve yakınsamayı yaklaşık 6 kat hızlandıran ReLU ile değiştirilmesi",
+        "Batch normalization",
+        "Depthwise separable convolutions"
+      ],
       "correct": 1,
-      "explanation": "AlexNet's biggest training speedup came from ReLU. Tanh saturates for large positive or negative inputs, which kills gradients and caps the depth you can train. ReLU is piecewise linear, does not saturate for positive inputs, and was the single change that took training from weeks to days. Dropout and GPU parallelism mattered, but ReLU is the one that unlocked depth."
+      "explanation": "AlexNet'in en büyük eğitim hızı ReLU'dan geldi. Tanh, büyük pozitif veya negatif girdileri doyurur, bu da eğimleri ortadan kaldırır ve antrenman yapabileceğiniz derinliği sınırlar. ReLU parçalı doğrusaldır, pozitif girdilere doymaz ve eğitimi haftalarca günler süren tek değişiklikti. Bırakma ve GPU paralellik önemliydi, ancak derinliğin kilidini açan ReLU'dur."
     },
     {
       "stage": "pre",
-      "question": "Why did VGG prefer stacks of 3x3 convolutions over a single larger kernel?",
-      "options": ["Smaller kernels run faster on CPU", "Two 3x3 convs cover the same 5x5 receptive field with fewer parameters (18C^2 vs 25C^2) and one extra ReLU between them", "3x3 convs are rotation-invariant; 5x5 is not", "Larger kernels cannot be trained with SGD"],
+      "question": "VGG neden tek bir daha büyük çekirdek yerine 3x3 evrişim yığınlarını tercih etti?",
+      "options": [
+        "Smaller kernels run faster on CPU",
+        "İki 3x3 dönüşüm, aynı 5x5 alıcı alanı daha az parametreyle (18C^2 vs 25C^2) ve aralarında bir ekstra ReLU ile kaplar",
+        "3x3 dönüşümler dönüşle değişmez; 5x5 değil",
+        "Daha büyük çekirdekler SGD ile eğitilemez"
+      ],
       "correct": 1,
-      "explanation": "Two stacked 3x3 convs see the same 5x5 patch as one 5x5 conv, but use fewer parameters (2 * 3 * 3 * C^2 = 18C^2 compared to 25C^2) and include an additional non-linearity. That extra ReLU increases expressive power. VGG turned this observation into an entire architecture with exactly one block type repeated."
+      "explanation": "İki yığılmış 3x3 dönüşüm, bir 5x5 dönüşümle aynı 5x5 yamasını görür, ancak daha az parametre kullanır (25C^2'ye kıyasla 2 * 3 * 3 * C^2 = 18C^2) ve ek bir doğrusal olmama özelliği içerir. Bu ekstra ReLU ifade gücünü artırır. VGG bu gözlemi tam olarak tek bir blok tipinin tekrarlandığı bütün bir mimariye dönüştürdü."
     },
     {
       "stage": "post",
-      "question": "ResNet introduced residual connections as y = F(x) + x. What problem does this solve?",
-      "options": ["Overfitting in the classifier head", "Vanishing activations in layers with ReLU", "The degradation problem — past ~20 plain conv layers, training loss starts getting worse because the optimizer struggles to learn an identity mapping through many non-linear layers", "Memory consumption during backprop"],
+      "question": "ResNet, artık bağlantıları y = F(x) + x olarak tanıttı. Bu hangi sorunu çözer?",
+      "options": [
+        "Sınıflandırıcı kafasında aşırı uyum",
+        "ReLU ile katmanlardaki aktivasyonların ortadan kaldırılması",
+        "Bozulma sorunu - yaklaşık 20 düz dönüşüm katmanından sonra, optimizasyon aracı birçok doğrusal olmayan katman üzerinden kimlik eşlemesini öğrenmekte zorlandığı için eğitim kaybı daha da kötüleşmeye başlıyor",
+        "Memory consumption during backprop"
+      ],
       "correct": 2,
-      "explanation": "Before ResNet, training loss started increasing past about 20 layers even though the network had more capacity — the degradation problem. A residual block can trivially represent identity by driving F to zero, giving the optimizer a safe default. With that escape hatch, every extra block can make the network slightly better, which is how 100+ layer networks became trainable."
+      "explanation": "ResNet'ten önce, ağın kapasitesi daha fazla olmasına rağmen eğitim kaybı yaklaşık 20 katmanı aşmaya başlamıştı; bu da bozulma sorunuydu. Bir artık blok, F'yi sıfıra sürerek, optimize ediciye güvenli bir varsayılan değer vererek kimliği önemsiz bir şekilde temsil edebilir. Bu kaçış kapısıyla, her ekstra blok ağı biraz daha iyi hale getirebilir, bu da 100'den fazla katmanlı ağların nasıl eğitilebilir hale geldiğini gösterir."
     },
     {
       "stage": "post",
-      "question": "In a ResNet BasicBlock with in_channels=64, out_channels=128, stride=2, what is the role of the shortcut branch?",
-      "options": ["It is always identity; the main branch handles the shape change", "It is a 1x1 conv with stride 2 that matches the output channels and spatial size of the main branch so the two can be added", "It is a max-pool that halves the spatial dimension", "It is a placeholder that is removed at inference time"],
+      "question": "in_channels=64, out_channels=128, stride=2 olan bir ResNet BasicBlock'ta kısayol dalının rolü nedir?",
+      "options": [
+        "Her zaman kimliktir; ana dal şekil değişikliğini yönetir",
+        "Bu, çıkış kanallarına ve ana dalın uzamsal boyutuna uyan adım 2'ye sahip 1x1 dönüşümdür, böylece ikisi eklenebilir",
+        "Uzaysal boyutu yarıya indiren bir maksimum havuzdur",
+        "Çıkarım anında kaldırılan bir yer tutucudur"
+      ],
       "correct": 1,
-      "explanation": "When a block changes channel count or spatial stride, the identity path cannot be added directly to the main branch because shapes differ. The shortcut becomes a 1x1 conv with stride=2 and C_out output channels, optionally followed by batch norm. Pass-through identity is used only when in_c == out_c and stride == 1."
+      "explanation": "Bir blok kanal sayısını veya uzamsal adımı değiştirdiğinde, şekiller farklı olduğundan kimlik yolu doğrudan ana dala eklenemez. Kısayol, isteğe bağlı olarak toplu normun izlediği stride=2 ve C_out çıkış kanallarına sahip 1x1 dönüşüm haline gelir. Geçiş kimliği yalnızca in_c == out_c ve stride == 1 olduğunda kullanılır."
     },
     {
       "stage": "post",
-      "question": "ResNet-18 has ~11.7M parameters and matches or beats VGG-16 (138M params) on ImageNet. What does this imply about VGG?",
-      "options": ["VGG's kernels were too small to learn good features", "Most of VGG's parameters are wasted in the fully connected head and the redundant depth past the point where residual connections would let each layer contribute", "VGG was trained with a worse optimizer", "VGG's accuracy on ImageNet has been measured incorrectly"],
+      "question": "ResNet-18, ~11,7M parametreye sahiptir ve ImageNet'te VGG-16 (138M parametre) ile eşleşir veya onu geçer. Bu VGG hakkında ne anlama geliyor?",
+      "options": [
+        "VGG's kernels were too small to learn good features",
+        "VGG'nin parametrelerinin çoğu, tamamen bağlı kafada ve artık bağlantıların her katmanın katkıda bulunmasına izin vereceği noktayı aşan yedek derinlikte boşa harcanıyor",
+        "VGG daha kötü bir optimize ediciyle eğitildi",
+        "VGG'nin ImageNet'teki doğruluğu yanlış ölçüldü"
+      ],
       "correct": 1,
-      "explanation": "VGG-16's parameter count is dominated by its giant fully connected classifier (three dense layers on 25088 activations), and its plain deep stack cannot add layers as efficiently as a residual stack. ResNet-18 replaces the FC head with global average pool plus one linear layer and uses residual blocks, which together give roughly 12x parameter efficiency at similar accuracy."
+      "explanation": "VGG-16'nin parametre sayımı, devasa, tamamen bağlantılı sınıflandırıcısı (25088 aktivasyonda üç yoğun katman) tarafından yönetilir ve düz derin yığını, artık yığın kadar verimli bir şekilde katman ekleyemez. ResNet-18, FC kafasını küresel ortalama havuz artı bir doğrusal katmanla değiştirir ve birlikte benzer doğrulukta kabaca 12 kat parametre verimliliği sağlayan artık blokları kullanır."
     }
   ]
 }

@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the difference between a probability mass function (PMF) and a probability density function (PDF)?",
-      "options": ["PMFs are used for continuous variables, PDFs for discrete variables", "PMFs give exact probabilities for discrete outcomes, while PDFs give densities for continuous variables that must be integrated over an interval to get probability", "There is no difference; they are the same concept with different names", "PMFs always sum to 0.5, PDFs integrate to 1"],
+      "question": "Olasılık kütle fonksiyonu (PMF) ile olasılık yoğunluk fonksiyonu (PDF) arasındaki fark nedir?",
+      "options": [
+        "PMF'ler sürekli değişkenler için, PDF'ler ise ayrık değişkenler için kullanılır",
+        "PMF'ler ayrık sonuçlar için kesin olasılıklar verirken, PDF'ler olasılık elde etmek için bir aralıkta entegre edilmesi gereken sürekli değişkenlerin yoğunluklarını verir.",
+        "Hiçbir fark yok; farklı isimlerle aynı kavramdırlar",
+        "PMFs always sum to 0.5, PDFs integrate to 1"
+      ],
       "correct": 1,
-      "explanation": "For discrete variables, the PMF gives P(X=k) directly. For continuous variables, the PDF f(x) is a density -- P(a<=X<=b) requires integrating f(x) from a to b. The density at a single point is not a probability."
+      "explanation": "Ayrık değişkenler için PMF doğrudan P(X=k)'yi verir. Sürekli değişkenler için, PDF f(x) bir yoğunluktur -- P(a<=X<=b), f(x)'nin a'dan b'ye entegre edilmesini gerektirir. Tek bir noktadaki yoğunluk bir olasılık değildir."
     },
     {
       "stage": "pre",
-      "question": "What does the Central Limit Theorem state?",
-      "options": ["All data follows a normal distribution", "The mean of many independent random samples converges to a normal distribution regardless of the source distribution", "Large datasets always have low variance", "The probability of rare events decreases as sample size increases"],
+      "question": "Merkezi Limit Teoremi neyi ifade ediyor?",
+      "options": [
+        "All data follows a normal distribution",
+        "Birçok bağımsız rastgele örneğin ortalaması, kaynak dağılımından bağımsız olarak normal dağılıma yakınsar",
+        "Büyük veri kümeleri her zaman düşük varyansa sahiptir",
+        "Örneklem büyüklüğü arttıkça nadir olayların olasılığı azalır"
+      ],
       "correct": 1,
-      "explanation": "The CLT says that the average of many independent random variables approaches a Gaussian, no matter what the original distribution looks like. This explains why the normal distribution appears everywhere."
+      "explanation": "CLT, orijinal dağılım nasıl görünürse görünsün, birçok bağımsız rastgele değişkenin ortalamasının bir Gaussian'a yaklaştığını söylüyor. Bu normal dağılımın neden her yerde göründüğünü açıklıyor."
     },
     {
       "stage": "post",
-      "question": "Why does softmax subtract the maximum logit before exponentiating (the 'softmax trick')?",
-      "options": ["To make all probabilities equal", "To prevent numerical overflow from exponentiating large numbers while producing mathematically identical results", "To normalize the logits to have mean zero", "To speed up the computation by reducing the number of exponentiations"],
+      "question": "Softmax neden üstelleştirmeden önce maksimum logit'i çıkarıyor ('softmax hilesi')?",
+      "options": [
+        "To make all probabilities equal",
+        "Matematiksel olarak aynı sonuçları üretirken sayısal taşmanın büyük sayıları üstel almasını önlemek için",
+        "Logitleri sıfır ortalamaya sahip olacak şekilde normalleştirmek",
+        "Üs sayısını azaltarak hesaplamayı hızlandırmak"
+      ],
       "correct": 1,
-      "explanation": "exp(100) overflows to infinity. Subtracting max(logits) shifts all values so the largest is 0. exp(0)=1 is safe. The subtraction cancels out in the normalization, giving identical probabilities."
+      "explanation": "exp(100) sonsuza taşar. max(logits)'nin çıkarılması tüm değerleri en büyüğü 0 olacak şekilde kaydırır. exp(0)=1 güvenlidir. Normalizasyonda çıkarma işlemi birbirini götürerek aynı olasılıkları verir."
     },
     {
       "stage": "post",
-      "question": "Cross-entropy loss for classification simplifies to -log(q(true_class)). What does this mean intuitively?",
-      "options": ["Multiply the predicted probabilities by the true labels", "Penalize the model based on how low its predicted probability is for the correct class -- lower prediction means higher loss", "Average the log probabilities across all classes", "Compute the entropy of the true distribution"],
+      "question": "Sınıflandırma için çapraz entropi kaybı -log(q(true_class)) şeklinde basitleştirilir. Bu sezgisel olarak ne anlama geliyor?",
+      "options": [
+        "Tahmin edilen olasılıkları gerçek etiketlerle çarpın",
+        "Doğru sınıf için tahmin olasılığının ne kadar düşük olduğuna bağlı olarak modeli cezalandırın; daha düşük tahmin, daha yüksek kayıp anlamına gelir",
+        "Tüm sınıflardaki günlük olasılıklarının ortalamasını alın",
+        "Gerçek dağılımın entropisini hesaplayın"
+      ],
       "correct": 1,
-      "explanation": "If the model predicts 0.9 for the correct class, loss = -log(0.9) = 0.105 (low). If it predicts 0.01, loss = -log(0.01) = 4.6 (high). The loss punishes low confidence in the correct answer."
+      "explanation": "Model doğru sınıf için 0,9 öngörüyorsa kayıp = -log(0.9) = 0,105 (düşük). 0,01 öngörüyorsa kayıp = -log(0.01) = 4,6 (yüksek). Kayıp, doğru cevaba duyulan güvenin azalmasını cezalandırır."
     },
     {
       "stage": "post",
-      "question": "Why do language models work with log probabilities instead of raw probabilities?",
-      "options": ["Log probabilities are easier to interpret visually", "Multiplying many small probabilities causes numerical underflow to zero; log probabilities convert products to sums, avoiding this", "Log probabilities are required by the transformer architecture", "Raw probabilities cannot represent values less than 0.01"],
+      "question": "Dil modelleri neden ham olasılıklar yerine log olasılıklarıyla çalışıyor?",
+      "options": [
+        "Günlük olasılıklarının görsel olarak yorumlanması daha kolaydır",
+        "Birçok küçük olasılığın çarpılması sayısal akışın sıfıra düşmesine neden olur; log olasılıkları ürünleri toplamlara dönüştürür, bu da bundan kaçınır",
+        "Günlük olasılıkları trafo mimarisi tarafından gereklidir",
+        "Ham olasılıklar 0,01'den küçük değerleri temsil edemez"
+      ],
       "correct": 1,
-      "explanation": "P(sentence) = P(word1) * P(word2) * ... quickly underflows to 0.0 with float64. Log P(sentence) = log P(word1) + log P(word2) + ... stays in a finite range. Products become sums."
+      "explanation": "P(sentence) = P(word1) * P(word2) * ... float64 ile hızla 0,0'ın altına düşer. Günlük P(sentence) = günlük P(word1) + günlük P(word2) + ... sonlu bir aralıkta kalır. Ürünler toplam haline gelir."
     }
   ]
 }

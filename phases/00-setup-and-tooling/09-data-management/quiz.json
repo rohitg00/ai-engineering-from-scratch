@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is it important to have separate train, validation, and test splits in machine learning?",
-      "options": ["To make the dataset smaller so training is faster", "To evaluate model performance on unseen data and prevent overfitting", "To ensure each split uses a different file format", "To distribute data across multiple GPUs"],
+      "question": "Makine öğreniminde ayrı eğitim, doğrulama ve test bölümlerine sahip olmak neden önemlidir?",
+      "options": [
+        "Eğitimin daha hızlı olması için veri kümesini küçültmek",
+        "To evaluate model performance on unseen data and prevent overfitting",
+        "To ensure each split uses a different file format",
+        "To distribute data across multiple GPUs"
+      ],
       "correct": 1,
-      "explanation": "The training set teaches the model, the validation set tunes hyperparameters during training, and the test set provides a final unbiased evaluation on data the model has never seen."
+      "explanation": "Eğitim seti modeli öğretir, doğrulama seti eğitim sırasında hiperparametreleri ayarlar ve test seti, modelin daha önce görmediği veriler üzerinde son, tarafsız bir değerlendirme sağlar."
     },
     {
       "stage": "pre",
-      "question": "What is the Hugging Face Hub primarily used for in AI/ML workflows?",
-      "options": ["Hosting and sharing datasets, models, and ML artifacts", "Running GPU training jobs in the cloud", "Managing Python virtual environments", "Version controlling source code like GitHub"],
+      "question": "Hugging Face Hub, AI/ML iş akışlarında öncelikli olarak ne için kullanılır?",
+      "options": [
+        "Hosting and sharing datasets, models, and ML artifacts",
+        "GPU eğitim işlerini bulutta çalıştırma",
+        "Managing Python virtual environments",
+        "Version controlling source code like GitHub"
+      ],
       "correct": 0,
-      "explanation": "Hugging Face Hub is a platform for hosting and sharing pre-trained models, datasets, and ML demos. The 'datasets' library provides a standard way to load data from it."
+      "explanation": "Hugging Face Hub, önceden eğitilmiş modelleri, veri kümelerini ve ML demolarını barındırmak ve paylaşmak için kullanılan bir platformdur. 'Veri kümeleri' kitaplığı, ondan veri yüklemek için standart bir yol sağlar."
     },
     {
       "stage": "post",
-      "question": "What advantage does the Parquet format have over CSV for storing ML datasets?",
-      "options": ["Parquet files are human-readable in any text editor", "Parquet uses columnar storage for smaller file sizes and faster read speeds", "Parquet supports more data types than CSV", "Parquet files can be edited in spreadsheet applications"],
+      "question": "ML veri kümelerini depolamak için Parquet formatının CSV'ye göre ne gibi avantajı vardır?",
+      "options": [
+        "Parke dosyaları herhangi bir metin düzenleyicide insan tarafından okunabilir",
+        "Parke, daha küçük dosya boyutları ve daha yüksek okuma hızları için sütunlu depolamayı kullanır",
+        "Parquet supports more data types than CSV",
+        "Parke dosyaları elektronik tablo uygulamalarında düzenlenebilir"
+      ],
       "correct": 1,
-      "explanation": "Parquet is a columnar binary format that compresses better than CSV and enables fast column-level reads. It is the preferred storage format for ML datasets."
+      "explanation": "Parke, CSV'den daha iyi sıkıştıran ve sütun düzeyinde hızlı okumalara olanak tanıyan sütunlu bir ikili formattır. ML veri kümeleri için tercih edilen depolama formatıdır."
     },
     {
       "stage": "post",
-      "question": "What does 'streaming=True' do when loading a dataset with the Hugging Face datasets library?",
-      "options": ["Downloads the dataset faster using parallel connections", "Loads data row by row without downloading the full dataset to disk", "Converts the dataset to a streaming video format", "Enables real-time updates as new data is added to the Hub"],
+      "question": "Hugging Face veri kümeleri kitaplığıyla bir veri kümesi yüklenirken 'streaming=True' ne yapar?",
+      "options": [
+        "Paralel bağlantılar kullanarak veri kümesini daha hızlı indirir",
+        "Tüm veri kümesini diske indirmeden verileri satır satır yükler",
+        "Veri kümesini akışlı video formatına dönüştürür",
+        "Hub'a yeni veriler eklendikçe gerçek zamanlı güncellemeleri etkinleştirir"
+      ],
       "correct": 1,
-      "explanation": "Streaming mode creates an IterableDataset that fetches rows on demand. Memory usage stays constant regardless of dataset size, which is essential for datasets too large to fit on disk."
+      "explanation": "Akış modu, isteğe bağlı olarak satırları getiren bir IterableDataset oluşturur. Bellek kullanımı, diske sığmayacak kadar büyük veri kümeleri için gerekli olan veri kümesi boyutundan bağımsız olarak sabit kalır."
     },
     {
       "stage": "post",
-      "question": "When should you use DVC (Data Version Control) instead of just .gitignore for large files?",
-      "options": ["When your dataset is smaller than 1 MB", "When you need to reproduce exact experiments across machines with versioned data", "When you are working alone on a personal project", "When you only have CSV files in your project"],
+      "question": "Büyük dosyalar için yalnızca .gitignore yerine DVC'yi (Veri Sürümü Kontrolü) ne zaman kullanmalısınız?",
+      "options": [
+        "Veri kümeniz 1'den küçük olduğunda MB",
+        "Sürüm verileriyle makineler arasında tam deneyleri yeniden oluşturmanız gerektiğinde",
+        "Kişisel bir proje üzerinde yalnız çalıştığınızda",
+        "Projenizde yalnızca CSV dosyalarınız olduğunda"
+      ],
       "correct": 1,
-      "explanation": "DVC tracks data versions with small pointer files in git while storing the actual data in remote storage (S3, GCS). It ensures anyone can reproduce your exact experiment with the same data."
+      "explanation": "DVC, gerçek verileri uzak depolama biriminde (S3, GCS) saklarken, git'teki küçük işaretçi dosyalarıyla veri sürümlerini izler. Herkesin aynı verilerle tam denemenizi yeniden oluşturabilmesini sağlar."
     }
   ]
 }

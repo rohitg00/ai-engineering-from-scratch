@@ -4,43 +4,43 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading the lesson: what is the practical benefit of writing your harness's spans in the OTel GenAI attribute shape?",
+      "question": "Dersi okumadan önce: Emniyet kemerinizin açıklıklarını OTel GenAI nitelik şeklinde yazmanın pratik faydası nedir?",
       "options": [
         "OTel spans compress better on disk.",
-        "Every OTel-compatible backend can read them without a custom parser.",
-        "OTel is a Python-only standard, so the harness gets type hints.",
-        "It is required by HIPAA."
+        "Her OTel uyumlu arka uç, bunları özel bir ayrıştırıcı olmadan okuyabilir.",
+        "OTel yalnızca Python'a özgü bir standarttır, bu nedenle koşum takımı tür ipuçları alır.",
+        "HIPAA tarafından gereklidir."
       ],
       "correct": 1,
-      "explanation": "The conventions are a contract with the wider ecosystem. Honeycomb, Grafana Tempo, Jaeger, and Datadog all parse gen_ai.* attributes out of the box."
+      "explanation": "Sözleşmeler daha geniş ekosistemle yapılan bir sözleşmedir. Honeycomb, Grafana Tempo, Jaeger ve Datadog'un tümü gen_ai.* niteliklerini kutudan çıkarır çıkarmaz ayrıştırır."
     },
     {
       "stage": "check",
-      "question": "An exception is raised inside a SpanBuilder.span() context. What does the lesson's builder record?",
+      "question": "SpanBuilder.span() bağlamı içinde bir istisna oluşturuldu. Dersin oluşturucusu neyi kaydediyor?",
       "options": [
-        "The span is dropped to avoid polluting the trace.",
-        "status=ERROR, status_message includes the exception type and message, and an 'exception' event is appended.",
-        "status remains UNSET and the exception is silently swallowed.",
-        "The span is renamed to 'error'."
+        "İzin kirlenmesini önlemek için aralık düşürülür.",
+        "status=ERROR, status_message istisna türünü ve mesajını içerir ve bir 'istisna' olayı eklenir.",
+        "durum UNSET olarak kalır ve istisna sessizce yutulur.",
+        "Yayılma 'hata' olarak yeniden adlandırıldı."
       ],
       "correct": 1,
-      "explanation": "Status ERROR plus an exception event matches the OTel spec. The exception is re-raised so caller code can react."
+      "explanation": "Durum ERROR artı bir istisna olayı OTel spesifikasyonuyla eşleşiyor. Arayan kodunun tepki verebilmesi için istisna yeniden oluşturulur."
     },
     {
       "stage": "check",
-      "question": "The Prometheus exposition for a histogram includes _bucket, _sum, and _count lines. Why are bucket counts cumulative (each le bucket includes all smaller buckets)?",
+      "question": "Bir histogramın Prometheus gösterimi _bucket, _sum ve _count satırlarını içerir. Kova sayıları neden kümülatiftir (her dosya paketi tüm küçük kovaları içerir)?",
       "options": [
-        "Cumulative counts let the scraper compute per-bucket counts via subtraction without storing all observations.",
-        "Cumulative counts are the only format Grafana supports.",
-        "They are not cumulative; the lesson's exposition is non-standard.",
+        "Kümülatif sayımlar, kazıyıcının tüm gözlemleri saklamadan kova başına sayıları çıkarma yoluyla hesaplamasına olanak tanır.",
+        "Kümülatif sayımlar Grafana'nın desteklediği tek formattır.",
+        "Bunlar kümülatif değildir; dersin anlatımı standart değildir.",
         "Cumulative counts reduce floating-point error."
       ],
       "correct": 0,
-      "explanation": "Prometheus' design choice: a backend reads cumulative counts and computes per-bucket differences. This lets the time series be a simple monotonic counter per bucket."
+      "explanation": "Prometheus'un tasarım tercihi: Bir arka uç, kümülatif sayıları okur ve paket başına farklılıkları hesaplar. Bu, zaman serisinin kova başına basit, monoton bir sayaç olmasını sağlar."
     },
     {
       "stage": "check",
-      "question": "The harness wraps a tool execution in a span. Which attribute keys identify it as a tool call under the GenAI conventions?",
+      "question": "Kablo demeti bir aletin yürütülmesini bir aralıkta sarar. Hangi özellik anahtarları bunu GenAI kuralları kapsamında bir araç çağrısı olarak tanımlar?",
       "options": [
         "gen_ai.system + gen_ai.request.model.",
         "gen_ai.tool.name + gen_ai.tool.call.id.",
@@ -48,31 +48,31 @@
         "operation + tool.name."
       ],
       "correct": 1,
-      "explanation": "gen_ai.tool.name and gen_ai.tool.call.id are the canonical keys for tool executions in the GenAI conventions."
+      "explanation": "gen_ai.tool.name ve gen_ai.tool.call.id, GenAI sözleşmelerindeki araç yürütmeleri için kanonik anahtarlardır."
     },
     {
       "stage": "post",
-      "question": "You want to query 'what is the p95 latency of read_file calls'. Which artifact do you query?",
+      "question": "'Read_file çağrılarının p95 gecikmesi nedir' diye sorgulamak istiyorsunuz. Hangi eseri sorguluyorsunuz?",
       "options": [
         "Each span's duration_ms in traces.jsonl, parsed by a script.",
-        "The Prometheus histogram tool_latency_ms{tool=\"read_file\"} scraped over a window.",
-        "The counter tools_called_total, divided by the time window.",
-        "The status_message field of the span."
+        "Prometheus histogramı tool_latency_ms{tool=\"read_file\"} bir pencerenin üzerinden geçti.",
+        "Araçlar_çağrılan_toplam sayacının zaman penceresine bölümü.",
+        "Aralığın status_message alanı."
       ],
       "correct": 1,
-      "explanation": "Histograms are the right tool for percentiles. The counter only counts; the trace contains raw spans but is not pre-aggregated."
+      "explanation": "Histogramlar yüzdelikler için doğru araçtır. Sayaç yalnızca sayılır; iz ham aralıklar içeriyor ancak önceden toplanmış değil."
     },
     {
       "stage": "post",
-      "question": "A reviewer asks why the lesson hand-rolls instead of importing opentelemetry-sdk. Which answer is correct?",
+      "question": "Bir incelemeci, opentelemetry-sdk'yi içe aktarmak yerine neden dersin elle işlendiğini soruyor. Hangi cevap doğrudur?",
       "options": [
-        "The SDK does not support GenAI conventions.",
-        "Hand-rolling teaches the wire format; the SDK can drop in later with the same attribute keys.",
-        "Hand-rolling is faster at runtime.",
-        "The SDK requires a network connection at import time."
+        "SDK, GenAI kurallarını desteklemez.",
+        "Elle haddeleme tel formatını öğretir; SDK daha sonra aynı özellik anahtarlarıyla devreye girebilir.",
+        "Elle haddeleme çalışma zamanında daha hızlıdır.",
+        "SDK, içe aktarma sırasında bir ağ bağlantısı gerektirir."
       ],
       "correct": 1,
-      "explanation": "The conventions are stable across implementations. The hand-rolled version exists for clarity; production wires in the SDK and reuses the same gen_ai.* keys."
+      "explanation": "Sözleşmeler uygulamalar arasında kararlıdır. Netlik sağlamak amacıyla elle haddelenmiş versiyonu mevcuttur; üretim kablolarını SDK'de kullanır ve aynı gen_ai.* anahtarlarını yeniden kullanır."
     }
   ]
 }

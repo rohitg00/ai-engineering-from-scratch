@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "post",
-      "question": "What three primitives does an MCP server expose?",
+      "question": "Bir MCP sunucusu hangi üç temel öğeyi ortaya çıkarır?",
       "options": [
         "Functions, types, classes",
         "Tools, resources, prompts",
@@ -16,19 +16,19 @@
     },
     {
       "stage": "post",
-      "question": "What wire format does MCP use?",
+      "question": "MCP hangi kablo formatını kullanıyor?",
       "options": [
         "GraphQL over HTTP",
-        "gRPC with protobuf",
+        "protobuf ile gRPC",
         "JSON-RPC 2.0",
-        "REST with OpenAPI"
+        "OpenAPI ile REST"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which metadata field signals a tool mutates state and should require human approval?",
+      "question": "Hangi meta veri alanı bir aracın durumunu değiştirdiğini ve insan onayı gerektirmesi gerektiğini işaret eder?",
       "options": [
         "readonly: false",
         "mutating: true",
@@ -40,11 +40,11 @@
     },
     {
       "stage": "post",
-      "question": "What is the 2025-06-18 transport that replaced the earlier SSE-only remote transport?",
+      "question": "Önceki SSE-only uzaktan aktarımının yerini alan 2025-06-18 aktarımı nedir?",
       "options": [
         "WebTransport",
         "Streamable HTTP",
-        "WebSocket-only",
+        "Yalnızca WebSocket",
         "gRPC bidi"
       ],
       "correct": 1,
@@ -52,12 +52,12 @@
     },
     {
       "stage": "post",
-      "question": "When should a tool be split into its own MCP server instead of staying inline?",
+      "question": "Bir araç ne zaman satır içi kalmak yerine kendi MCP sunucusuna bölünmelidir?",
       "options": [
-        "When it is called fewer than 10 times per day",
-        "When it is called from two or more hosts and is read-only/cacheable",
-        "When it returns more than 1KB of data",
-        "Never; MCP is only for local dev"
+        "Günde 10 defadan az arandığında",
+        "İki veya daha fazla ana bilgisayardan çağrıldığında ve salt okunur/önbelleğe alınabildiğinde",
+        "1 KB'tan fazla veri döndürdüğünde",
+        "Asla; MCP yalnızca yerel geliştiriciler içindir"
       ],
       "correct": 1,
       "explanation": ""

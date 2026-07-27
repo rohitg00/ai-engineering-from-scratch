@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the detector return for a prompt?",
+      "question": "Dedektör bir istem için ne döndürür?",
       "options": [
-        "A boolean block decision only",
-        "A list of every rule in the rulebase",
+        "Yalnızca boolean blok kararı",
+        "Kural tabanındaki her kuralın listesi",
         "A category and a confidence in [0, 1]",
-        "The model's full system prompt"
+        "Modelin tam sistem istemi"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "Why does normalize run before substring and regex rules?",
+      "question": "Normalleştirme neden alt dize ve normal ifade kurallarından önce çalışıyor?",
       "options": [
-        "Because regex is slower than substring",
-        "Because normalize lowers the file size on disk",
-        "Because normalize exposes hidden tokens such as base64, rot13, and zero-width insertions to the downstream rules",
-        "Because the standard library forbids running rules on the original text"
+        "Çünkü regex alt dizeden daha yavaştır",
+        "Çünkü normalleştirme diskteki dosya boyutunu azaltır",
+        "Çünkü normalleştirme, base64, rot13 ve sıfır genişlikli eklemeler gibi gizli belirteçleri aşağı akış kurallarına maruz bırakır",
+        "Çünkü standart kütüphane orijinal metinde kuralların çalıştırılmasını yasaklıyor"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Given true positives = 6, false positives = 2 for category C, what is precision?",
+      "question": "C kategorisi için gerçek pozitifler = 6, yanlış pozitifler = 2 verildiğinde kesinlik nedir?",
       "options": [
         "0.50",
         "0.60",
@@ -40,11 +40,11 @@
     },
     {
       "stage": "check",
-      "question": "Why is the benign prompt corpus part of the evaluation?",
+      "question": "İyi huylu istem derlemi neden değerlendirmenin bir parçası?",
       "options": [
-        "To inflate the accuracy number",
+        "Doğruluk numarasını şişirmek için",
         "To measure false-positive rate on safe text and catch over-broad rules",
-        "To pre-train the rules",
+        "Kuralları önceden eğitmek için",
         "To compute recall on attacks"
       ],
       "correct": 1,
@@ -52,11 +52,11 @@
     },
     {
       "stage": "check",
-      "question": "What does the analyze method do when no rule fires?",
+      "question": "Hiçbir kural tetiklenmediğinde analiz yöntemi ne yapar?",
       "options": [
-        "Returns the category benign with confidence 0.0",
+        "İyi huylu kategoriyi güvenle 0,0 döndürür",
         "Raises an exception",
-        "Returns the category of the most recent rule attempted",
+        "En son denenen kuralın kategorisini döndürür",
         "Returns a random category"
       ],
       "correct": 0,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does this lesson argue the detector is not the safety gate?",
+      "question": "Bu ders neden dedektörün güvenlik kapısı olmadığını tartışıyor?",
       "options": [
-        "Because the detector is implemented in Python",
-        "Because the detector is one signal among several the gate will compose, with each signal trading precision against recall differently",
-        "Because the detector is too fast to be useful",
-        "Because the rules are stored as data"
+        "Çünkü dedektör Python'da uygulandı",
+        "Dedektör, kapının oluşturacağı birçok sinyalden biri olduğundan, her sinyalin geri çağırmaya karşı hassasiyeti farklı şekilde değişir.",
+        "Çünkü dedektör kullanışlı olamayacak kadar hızlıdır",
+        "Çünkü kurallar veri olarak saklanıyor"
       ],
       "correct": 1,
       "explanation": ""

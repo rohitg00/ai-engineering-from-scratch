@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is an API key used for when calling an LLM service?",
-      "options": ["Encrypting the data sent to the server", "Authenticating your identity and authorizing requests", "Compressing requests to reduce bandwidth", "Selecting which programming language the server uses"],
+      "question": "LLM hizmetini çağırırken kullanılan API anahtarı nedir?",
+      "options": [
+        "Sunucuya gönderilen verilerin şifrelenmesi",
+        "Authenticating your identity and authorizing requests",
+        "Compressing requests to reduce bandwidth",
+        "Sunucunun hangi programlama dilini kullanacağını seçme"
+      ],
       "correct": 1,
-      "explanation": "An API key is a unique string that identifies your account, authorizes your requests, and allows the provider to track usage and billing."
+      "explanation": "API anahtarı, hesabınızı tanımlayan, isteklerinizi yetkilendiren ve sağlayıcının kullanımı ve faturalamayı izlemesine olanak tanıyan benzersiz bir dizedir."
     },
     {
       "stage": "pre",
-      "question": "Why should API keys never be hardcoded directly in source code?",
-      "options": ["Hardcoded keys make the code run slower", "They can be accidentally committed to git and exposed publicly", "Python cannot read string literals longer than 50 characters", "API providers block keys that appear in source files"],
+      "question": "API anahtarları neden hiçbir zaman doğrudan kaynak koduna sabit kodlanmamalıdır?",
+      "options": [
+        "Sabit kodlanmış tuşlar kodun daha yavaş çalışmasını sağlar",
+        "Yanlışlıkla git'e gönderilebilir ve kamuya açıklanabilirler",
+        "Python 50 karakterden uzun dize değişmezlerini okuyamaz",
+        "API sağlayıcıları kaynak dosyalarda görünen anahtarları engeller"
+      ],
       "correct": 1,
-      "explanation": "Hardcoded keys in source code risk being committed to version control and pushed to public repositories, where they can be scraped and abused by others."
+      "explanation": "Kaynak kodundaki sabit kodlu anahtarlar, sürüm kontrolüne tabi tutulma ve başkaları tarafından kazınıp kötüye kullanılabilecekleri halka açık depolara itilme riski taşır."
     },
     {
       "stage": "post",
-      "question": "What is the recommended way to store API keys for local development?",
-      "options": ["In a Python variable at the top of your script", "In a .env file that is listed in .gitignore", "In the README.md for easy access", "In the requirements.txt alongside package versions"],
+      "question": "Yerel geliştirme için API anahtarlarını saklamanın önerilen yolu nedir?",
+      "options": [
+        "Komut dosyanızın üst kısmındaki bir Python değişkeninde",
+        ".gitignore'da listelenen bir .env dosyasında",
+        "Kolay erişim için README.md'de",
+        "Paket sürümlerinin yanı sıra gereksinimler.txt dosyasında"
+      ],
       "correct": 1,
-      "explanation": "A .env file stores keys as environment variables and should be added to .gitignore so it is never committed to version control. SDKs read keys from environment variables automatically."
+      "explanation": "Bir .env dosyası, anahtarları ortam değişkenleri olarak saklar ve hiçbir zaman sürüm kontrolüne bağlı kalmaması için .gitignore'a eklenmelidir. SDK'lar ortam değişkenlerinden anahtarları otomatik olarak okur."
     },
     {
       "stage": "post",
-      "question": "In the raw HTTP API call to Anthropic, which header carries the API key?",
-      "options": ["Authorization: Bearer sk-ant-...", "x-api-key: sk-ant-...", "Content-Type: application/json", "anthropic-version: 2023-06-01"],
+      "question": "Anthropic'e yapılan ham HTTP API çağrısında hangi başlık API anahtarını taşıyor?",
+      "options": [
+        "Authorization: Bearer sk-ant-...",
+        "x-api-key: sk-ant-...",
+        "Content-Type: application/json",
+        "anthropic-version: 2023-06-01"
+      ],
       "correct": 1,
-      "explanation": "Anthropic's API uses the 'x-api-key' header for authentication, not the more common 'Authorization: Bearer' pattern. This is specific to their API design."
+      "explanation": "Anthropic'in API'si, kimlik doğrulama için daha yaygın olan 'Yetkilendirme: Taşıyıcı' modelini değil, 'x-api-key' başlığını kullanır. Bu onların API tasarımına özeldir."
     },
     {
       "stage": "post",
-      "question": "What happens when you exceed an API's rate limit?",
-      "options": ["Your API key is permanently revoked", "The server returns an error (typically HTTP 429) and you must wait before retrying", "Your request is queued and processed later automatically", "The API silently drops your request with no response"],
+      "question": "API'nin oran sınırını aştığınızda ne olur?",
+      "options": [
+        "API anahtarınız kalıcı olarak iptal edildi",
+        "Sunucu bir hata döndürüyor (genellikle HTTP 429) ve yeniden denemeden önce beklemeniz gerekiyor",
+        "İsteğiniz kuyruğa alınır ve daha sonra otomatik olarak işlenir",
+        "API, isteğinizi yanıt vermeden sessizce iptal eder"
+      ],
       "correct": 1,
-      "explanation": "Rate limiting returns HTTP 429 (Too Many Requests). You need to wait and retry, typically with exponential backoff. Rate limits prevent abuse and ensure fair usage."
+      "explanation": "Hız sınırlaması HTTP 429 (Çok Fazla İstek) sonucunu verir. Genellikle üstel geri çekilmeyle beklemeniz ve yeniden denemeniz gerekir. Oran limitleri kötüye kullanımı önler ve adil kullanımı sağlar."
     }
   ]
 }

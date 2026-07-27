@@ -4,43 +4,43 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does chain-of-thought struggle on Game of 24?",
+      "question": "Game of 24'te düşünce zinciri neden zorlanıyor?",
       "options": [
-        "The model cannot multiply integers",
-        "A linear walk cannot backtrack when an early step is wrong, so later steps compound the error",
-        "The prompt is too short",
-        "CoT requires a calculator tool that GPT-4 lacks"
+        "Model tam sayıları çarpamaz",
+        "Doğrusal bir yürüyüş, erken bir adım yanlış olduğunda geriye doğru izleyemez; dolayısıyla daha sonraki adımlar hatayı artırır",
+        "İstem çok kısa",
+        "CoT, GPT-4'de bulunmayan bir hesap makinesi aracı gerektirir"
       ],
       "correct": 1,
-      "explanation": "Without branching, a wrong early subexpression poisons the rest of the chain; the paper measures only 4 percent for CoT."
+      "explanation": "Dallanma olmadan yanlış bir erken alt ifade zincirin geri kalanını zehirler; makale CoT için yalnızca yüzde 4'ü ölçüyor."
     },
     {
       "stage": "pre",
-      "question": "What is a node in a Tree of Thoughts search?",
+      "question": "Düşünce Ağacı aramasındaki düğüm nedir?",
       "options": [
-        "A token produced by the model",
-        "A coherent intermediate step or thought, with K possible child expansions",
+        "Model tarafından üretilen bir jeton",
+        "K olası alt genişletmeyle tutarlı bir ara adım veya düşünce",
         "A weight update during fine-tuning",
-        "A tool registered with the runtime"
+        "Çalışma zamanına kayıtlı bir araç"
       ],
       "correct": 1,
-      "explanation": "ToT treats reasoning as a tree where each node is an intermediate thought that can expand into K children."
+      "explanation": "ToT, akıl yürütmeyi, her düğümün K çocuğa kadar genişleyebilecek bir ara düşünce olduğu bir ağaç gibi ele alır."
     },
     {
       "stage": "check",
-      "question": "Which of these three is NOT one of LATS's roles for the LLM?",
+      "question": "Bu üçünden hangisi NOT, LATS'nin LLM için rollerinden biridir?",
       "options": [
-        "Policy that proposes next actions",
-        "Value function that scores partial trajectories",
-        "Self-reflector that writes reflections on failure",
-        "Optimizer that updates model weights between rollouts"
+        "Sonraki eylemleri öneren politika",
+        "Kısmi yörüngeleri puanlayan değer fonksiyonu",
+        "Başarısızlık üzerine düşünceleri yazan öz yansıtıcı",
+        "Kullanıma sunmalar arasında model ağırlıklarını güncelleyen optimizer"
       ],
       "correct": 3,
-      "explanation": "LATS is gradient-free; the three LLM roles are policy, value, and self-reflector. There are no weight updates."
+      "explanation": "LATS degradesizdir; üç LLM rolü politika, değer ve öz yansıtıcıdır. Ağırlık güncellemesi yok."
     },
     {
       "stage": "check",
-      "question": "Name the four MCTS phases the lesson lists.",
+      "question": "Ders listelerindeki dört MCTS aşamasını adlandırın.",
       "options": [
         "Sample, Score, Sort, Submit",
         "Select, Expand, Simulate, Backpropagate",
@@ -52,39 +52,39 @@
     },
     {
       "stage": "check",
-      "question": "In UCT, what is the role of the exploration constant c?",
+      "question": "UCT'de keşif sabiti c'nin rolü nedir?",
       "options": [
-        "It scales the value estimate Q",
-        "It weights the exploration term sqrt(ln N / n) against the exploitation term Q",
-        "It sets the maximum tree depth",
-        "It controls the number of rollouts"
+        "Değer tahmini Q'yu ölçeklendirir",
+        "sqrt(ln N / n) keşif terimini Q kullanım terimine göre ağırlıklandırır",
+        "Maksimum ağaç derinliğini ayarlar",
+        "Kullanıma sunma sayısını kontrol eder"
       ],
       "correct": 1,
-      "explanation": "c balances exploitation (Q) against the exploration term; tune per task."
+      "explanation": "c sömürüyü (Q) arama süresine göre dengeler; göreve göre ayar yapın."
     },
     {
       "stage": "post",
-      "question": "When is search actively harmful compared to a single trajectory?",
+      "question": "Arama, tek bir yörüngeyle karşılaştırıldığında ne zaman aktif olarak zararlıdır?",
       "options": [
-        "When the evaluator is noisy and there is a single right answer, so the search converges on a good-scoring wrong answer",
-        "When the task involves multiple correct answers",
-        "Whenever tokens are cheap",
-        "When the task is code generation"
+        "Değerlendirici gürültülü olduğunda ve tek bir doğru cevap olduğunda, arama iyi puan alan bir yanlış cevaba yaklaşır.",
+        "Görev birden fazla doğru cevabı içerdiğinde",
+        "Jetonların ucuz olduğu zamanlar",
+        "Görev kod oluşturmak olduğunda"
       ],
       "correct": 0,
-      "explanation": "A noisy value function plus a single correct answer is exactly when search overfits to the noise."
+      "explanation": "Gürültülü bir değer fonksiyonu artı tek bir doğru cevap, tam olarak aramanın gürültüye fazla uyum sağladığı zamandır."
     },
     {
       "stage": "post",
-      "question": "Roughly how much more token usage should you budget for ToT on Game of 24 compared with CoT?",
+      "question": "Game of 24'te ToT için CoT'ye kıyasla kabaca ne kadar daha fazla token kullanımına bütçe ayırmalısınız?",
       "options": [
         "About 2x",
         "About 10x",
         "100x to 1000x",
-        "Less than CoT because of pruning"
+        "Budama nedeniyle CoT'den daha az"
       ],
       "correct": 2,
-      "explanation": "The lesson cites 100-1000x token cost for ToT on Game of 24 versus CoT."
+      "explanation": "Ders, Game of 24'te CoT'ye karşı ToT için 100-1000x token maliyetinden bahsediyor."
     }
   ]
 }

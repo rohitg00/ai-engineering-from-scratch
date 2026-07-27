@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What are the five primitives of the OpenAI Agents SDK?",
+      "question": "OpenAI Aracıları SDK'nin beş temel öğesi nedir?",
       "options": [
         "Agent, Handoff, Guardrail, Session, Tracing",
         "Node, Edge, Reducer, Checkpointer, Subgraph",
@@ -12,11 +12,11 @@
         "Tool, Prompt, Model, Memory, Trace"
       ],
       "correct": 0,
-      "explanation": "The SDK ships these five primitives."
+      "explanation": "SDK bu beş ilkel ürünü gönderiyor."
     },
     {
       "stage": "pre",
-      "question": "How does the model see a handoff?",
+      "question": "Model bir aktarmayı nasıl görüyor?",
       "options": [
         "As a custom HTTP endpoint",
         "As a tool named transfer_to_<agent_name>",
@@ -24,11 +24,11 @@
         "As a special token"
       ],
       "correct": 1,
-      "explanation": "Handoffs are exposed as tools with the transfer_to_<agent> name shape."
+      "explanation": "Aktarımlar, transfer_to_<agent> adı şekline sahip araçlar olarak gösterilir."
     },
     {
       "stage": "check",
-      "question": "Which three guardrail types does the SDK ship?",
+      "question": "SDK hangi üç korkuluk tipini gönderiyor?",
       "options": [
         "Input, output, and tool guardrails",
         "Pre, post, and inline guardrails",
@@ -40,48 +40,48 @@
     },
     {
       "stage": "check",
-      "question": "What is the difference between parallel and blocking guardrails?",
+      "question": "Paralel ve bloke korkuluklar arasındaki fark nedir?",
       "options": [
-        "Parallel runs alongside the main LLM (lower latency, wastes tokens on trip); blocking runs first (no wasted tokens on trip)",
-        "Blocking is asynchronous; parallel is synchronous",
+        "Paralel ana LLM ile birlikte çalışır (daha düşük gecikme süresi, yolculuk sırasında jeton israfı); önce engelleme çalışır (yolculukta jeton israfı olmaz)",
+        "Engelleme eş zamanlı değildir; paralel eşzamanlıdır",
         "Parallel costs more money always",
-        "Blocking only works on output"
+        "Engelleme yalnızca çıktıda çalışır"
       ],
       "correct": 0,
-      "explanation": "Parallel optimizes latency at the cost of wasted tokens when tripped; blocking saves tokens but adds latency."
+      "explanation": "Paralel, tetiklendiğinde jetonların boşa gitmesi pahasına gecikmeyi optimize eder; engelleme belirteçleri kaydeder ancak gecikmeyi artırır."
     },
     {
       "stage": "check",
-      "question": "How is tracing enabled in the SDK?",
+      "question": "SDK'de izleme nasıl etkinleştirilir?",
       "options": [
         "Off by default; enable per agent",
         "On by default; OPENAI_AGENTS_DISABLE_TRACING=1 opts out",
-        "Only via OpenTelemetry collector",
-        "Only on the hosted dashboard"
+        "Yalnızca OpenTelemetry toplayıcı aracılığıyla",
+        "Yalnızca barındırılan kontrol panelinde"
       ],
       "correct": 1,
-      "explanation": "Spans for LLM, tool, handoff, and guardrail emit by default; an env var disables them."
+      "explanation": "LLM için açıklıklar, alet, aktarma ve korkuluk varsayılan olarak yayılır; env var bunları devre dışı bırakır."
     },
     {
       "stage": "post",
-      "question": "What is handoff drift and how does the lesson recommend mitigating it?",
+      "question": "Aktarma sapması nedir ve ders bunun azaltılmasını nasıl öneriyor?",
       "options": [
         "Tracing falls behind; reduce span volume",
-        "Agent A hands off to B which hands back to A in a loop; add a hop counter",
+        "Ajan A, B'ye dağıtır ve o da bir döngü içinde A'ya geri verir; atlama sayacı ekle",
         "Sessions overflow; archive old ones",
         "Guardrails desync; retrain"
       ],
       "correct": 1,
-      "explanation": "A hop counter caps transfer chains before they loop indefinitely."
+      "explanation": "Bir atlama sayacı, zincirleri süresiz olarak döngüye girmeden önce aktarır."
     },
     {
       "stage": "post",
-      "question": "Why are built-in tools a guardrail gap?",
+      "question": "Yerleşik aletler neden bir korkuluk boşluğudur?",
       "options": [
-        "They are slower than function tools",
-        "Tool guardrails only fire on function tools; built-in tools (file reader, web fetch) need separate policy",
-        "They cannot be traced",
-        "They do not support handoffs"
+        "İşlev araçlarından daha yavaştırlar",
+        "Alet korkulukları yalnızca işlev aletleriyle ateşlenir; yerleşik araçların (dosya okuyucu, web getirme) ayrı bir politikaya ihtiyacı vardır",
+        "Takip edilemezler",
+        "Devir teslimi desteklemiyorlar"
       ],
       "correct": 1,
       "explanation": "Per-tool guardrails cover function tools; built-in tools require a separate policy layer."

@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is a Jupyter notebook?",
-      "options": ["A text editor for writing Python scripts", "An interactive document that mixes executable code cells with markdown text and inline outputs", "A version control system for data science projects", "A package manager for Python libraries"],
+      "question": "Jüpyter not defteri nedir?",
+      "options": [
+        "Python komut dosyalarını yazmaya yönelik bir metin düzenleyici",
+        "Yürütülebilir kod hücrelerini işaretleme metni ve satır içi çıktılarla birleştiren etkileşimli bir belge",
+        "Veri bilimi projeleri için sürüm kontrol sistemi",
+        "Python kitaplıkları için bir paket yöneticisi"
+      ],
       "correct": 1,
-      "explanation": "A Jupyter notebook (.ipynb) is an interactive environment where you can write and execute code in cells, see outputs inline, and mix code with formatted text explanations."
+      "explanation": "Jupyter not defteri (.ipynb), hücrelere kod yazıp çalıştırabileceğiniz, çıktıları satır içi görebileceğiniz ve kodu biçimlendirilmiş metin açıklamalarıyla karıştırabileceğiniz etkileşimli bir ortamdır."
     },
     {
       "stage": "pre",
-      "question": "What does the Jupyter kernel do?",
-      "options": ["Formats markdown cells into HTML", "Runs the code in cells and keeps variables in memory between executions", "Manages file storage for the notebook", "Connects the notebook to GitHub for version control"],
+      "question": "Jüpyter çekirdeği ne işe yarar?",
+      "options": [
+        "İşaretleme hücrelerini HTML olarak biçimlendirir",
+        "Kodu hücrelerde çalıştırır ve değişkenleri yürütmeler arasında bellekte tutar",
+        "Dizüstü bilgisayar için dosya depolamayı yönetir",
+        "Sürüm kontrolü için dizüstü bilgisayarı GitHub'a bağlar"
+      ],
       "correct": 1,
-      "explanation": "The kernel is a separate Python process that executes cell code and maintains state (variables, imports) in memory. All cells in a notebook share the same kernel."
+      "explanation": "Çekirdek, hücre kodunu çalıştıran ve durumu (değişkenler, içe aktarmalar) bellekte tutan ayrı bir Python işlemidir. Bir not defterindeki tüm hücreler aynı çekirdeği paylaşır."
     },
     {
       "stage": "post",
-      "question": "What is the difference between %timeit and %%time magic commands?",
-      "options": ["%timeit measures wall time, %%time measures CPU time", "%timeit runs code many times and averages, %%time runs code once", "%timeit works on single lines, %%time works on the whole notebook", "There is no difference, they are aliases"],
+      "question": "%timeit ve %%time sihirli komutları arasındaki fark nedir?",
+      "options": [
+        "%timeit measures wall time, %%time measures CPU time",
+        "%timeit runs code many times and averages, %%time runs code once",
+        "%timeit tek satırda çalışır, %%time tüm not defterinde çalışır",
+        "Hiçbir fark yok, bunlar takma adlar"
+      ],
       "correct": 1,
-      "explanation": "%timeit runs the statement many times for a statistical average (good for microbenchmarks). %%time runs the cell once and reports wall time (good for training runs)."
+      "explanation": "%timeit, istatistiksel bir ortalama için ifadeyi birçok kez çalıştırır (mikro kıyaslamalar için iyidir). %%time hücreyi bir kez çalıştırır ve duvar süresini bildirir (eğitim çalışmaları için iyidir)."
     },
     {
       "stage": "post",
-      "question": "What is the most common cause of a notebook working on your machine but failing when someone runs it top to bottom?",
-      "options": ["Using a different Python version", "Out-of-order cell execution creating hidden dependencies on execution order", "Missing the %matplotlib inline magic command", "Using too many markdown cells"],
+      "question": "Bir dizüstü bilgisayarın makinenizde çalışıp, birisi onu yukarıdan aşağıya doğru çalıştırdığında arıza yapmasının en yaygın nedeni nedir?",
+      "options": [
+        "Using a different Python version",
+        "Out-of-order cell execution creating hidden dependencies on execution order",
+        "%matplotlib satır içi sihirli komutu eksik",
+        "Using too many markdown cells"
+      ],
       "correct": 1,
-      "explanation": "Running cells out of order creates hidden state dependencies. A variable might exist because you ran cell 5 before cell 2. Kernel > Restart & Run All verifies linear execution."
+      "explanation": "Hücrelerin sıra dışı çalıştırılması gizli durum bağımlılıkları oluşturur. 5. hücreyi 2. hücreden önce çalıştırdığınız için bir değişken mevcut olabilir. Çekirdek > Yeniden Başlat ve Tümünü Çalıştır, doğrusal yürütmeyi doğrular."
     },
     {
       "stage": "post",
-      "question": "When should you move code from a notebook into a .py script?",
-      "options": ["As soon as you write more than 10 lines of code", "When the code is a reusable utility, training pipeline, or production code", "Never -- notebooks are always better for AI work", "Only when you need to run on a GPU"],
+      "question": "Kodu ne zaman not defterinden .py betiğine taşımalısınız?",
+      "options": [
+        "As soon as you write more than 10 lines of code",
+        "Kod yeniden kullanılabilir bir yardımcı program, eğitim hattı veya üretim kodu olduğunda",
+        "Asla -- dizüstü bilgisayarlar iş için her zaman daha iyidir",
+        "Yalnızca GPU üzerinde çalıştırmanız gerektiğinde"
+      ],
       "correct": 1,
-      "explanation": "The rule is 'explore in notebooks, ship in scripts.' Reusable utilities, training pipelines, and anything running in production should be .py files. Notebooks are for exploration and prototyping."
+      "explanation": "Kural şu: 'Defterlerde keşfedin, komut dosyalarıyla gönderin.' Yeniden kullanılabilir yardımcı programlar, eğitim hatları ve üretimde çalışan her şey .py dosyaları olmalıdır. Defterler keşif ve prototip oluşturmak içindir."
     }
   ]
 }

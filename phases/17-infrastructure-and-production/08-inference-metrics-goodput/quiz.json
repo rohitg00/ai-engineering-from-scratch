@@ -4,10 +4,10 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which components dominate TTFT (time to first token)?",
+      "question": "TTFT'ye (ilk jetona ulaşma süresi) hangi bileşenler hakimdir?",
       "options": [
-        "Decode-only forward time",
-        "Disk I/O for weights",
+        "Yalnızca kod çözme ileri süresi",
+        "Ağırlıklar için disk G/Ç",
         "Tokenizer GIL overhead",
         "Queue time, network request time, and prefill time"
       ],
@@ -16,7 +16,7 @@
     },
     {
       "stage": "check",
-      "question": "Which metric does the lesson call the one that actually matters for product?",
+      "question": "Ders, ürün için gerçekten önemli olan metriği hangi metrik olarak adlandırıyor?",
       "options": [
         "GPU duty cycle",
         "Aggregate throughput in tokens per second",
@@ -28,31 +28,31 @@
     },
     {
       "stage": "check",
-      "question": "Why is mean the wrong statistic to report for LLM latency?",
+      "question": "LLM gecikmesi için raporlanacak istatistik neden yanlış?",
       "options": [
-        "Mean is never computable on streaming responses",
-        "Mean only works for prefill, not decode",
-        "LLM latency distributions are right-skewed; users routinely hit P99 outliers that mean hides",
-        "Mean is not supported by GenAI-Perf"
+        "Ortalama, akış yanıtlarında hiçbir zaman hesaplanamaz",
+        "Ortalama yalnızca ön doldurma için çalışır, kod çözme için değil",
+        "LLM gecikme dağılımları sağa çarpıktır; kullanıcılar rutin olarak gizlenme anlamına gelen P99 aykırı değerlere çarpıyor",
+        "Ortalama, GenAI-Perf tarafından desteklenmiyor"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why do GenAI-Perf and LLMPerf disagree on TPOT for the same run?",
+      "question": "GenAI-Perf ve LLPerf neden aynı çalıştırma için TPOT konusunda aynı fikirde değil?",
       "options": [
-        "GenAI-Perf only runs on Blackwell",
-        "GenAI-Perf excludes TTFT from the ITL calculation; LLMPerf includes it, so tool choice changes the number",
+        "GenAI-Perf yalnızca Blackwell'de çalışır",
+        "GenAI-Perf, TTFT'yi ITL hesaplamasının dışında tutar; LLMPerf bunu içerir, bu nedenle araç seçimi sayıyı değiştirir",
         "LLMPerf uses microseconds and GenAI-Perf uses milliseconds",
-        "They sample different requests"
+        "Farklı istekleri örnekliyorlar"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "For long-output requests (>500 tokens), which metric dominates end-to-end latency?",
+      "question": "Uzun çıkışlı istekler için (>500 jeton), uçtan uca gecikmeye hangi metrik hakimdir?",
       "options": [
         "TPOT times output length",
         "Cold-start time",
@@ -64,10 +64,10 @@
     },
     {
       "stage": "post",
-      "question": "Which set best captures the lesson's reasonable consumer-facing SLO for a 70B chat model in 2026?",
+      "question": "Hangi set, 2026'daki 70B sohbet modeli için dersin tüketiciye yönelik makul SLO değerini en iyi şekilde yakalıyor?",
       "options": [
-        "P50 only, no percentiles above",
-        "TTFT P99 800 ms, TPOT P99 25 ms, E2E P99 3 s for <300-token outputs, goodput >= 99%",
+        "Yalnızca P50, üzerinde yüzdelik dilim yok",
+        "TTFT P99 800 ms, TPOT P99 25 ms, E2E P99 3 s, <300 jetonlu çıkışlar için, iyi giriş >= %99",
         "TTFT P99 8s, TPOT P99 200ms, goodput 50%",
         "Mean TTFT 10 ms, mean TPOT 1 ms"
       ],

@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does a perplexity of 1.0 imply about a language model on the test corpus?",
+      "question": "1.0'lık bir şaşkınlık, test derlemindeki dil modeli hakkında ne anlama gelir?",
       "options": [
-        "The model assigns probability 1 to every actual token; it is a perfect model",
-        "The model is uniform over the vocabulary",
-        "The corpus is empty",
-        "The model is broken"
+        "Model, her gerçek jetona 1 olasılığını atar; mükemmel bir modeldir",
+        "Model kelime dağarcığı üzerinde aynıdır",
+        "Korpus boş",
+        "Modeli bozuldu"
       ],
       "correct": 0,
-      "explanation": "Perplexity equals exp(avg negative log-likelihood). When every token gets probability 1, the NLL is zero, and exp(0) is 1."
+      "explanation": "Şaşkınlık eşittir exp(avg negative log-likelihood). Her jetonun olasılığı 1 olduğunda, NLL sıfırdır ve exp(0) 1'dir."
     },
     {
       "stage": "pre",
-      "question": "Why does the harness require non-negative log-probabilities from the adapter?",
+      "question": "Kablo demeti neden adaptörden negatif olmayan log olasılıkları gerektiriyor?",
       "options": [
-        "Perplexity is undefined for negative values",
-        "Negative log-probabilities are non-negative by definition; receiving a negative value means the adapter sent log p, not -log p",
+        "Negatif değerler için şaşkınlık tanımsızdır",
+        "Negatif log olasılıkları tanım gereği negatif değildir; Negatif bir değer alınması bağdaştırıcının -log p değil, log p gönderdiği anlamına gelir",
         "Numpy crashes on negatives",
-        "The bin edges in ECE assume positivity"
+        "ECE'deki bölme kenarları pozitifliği varsayar"
       ],
       "correct": 1,
-      "explanation": "-log p of a probability is non-negative. A negative value is a contract violation that would silently give perplexity < 1, which is impossible."
+      "explanation": "Bir olasılığın -log p'si negatif değildir. Negatif bir değer, sessizce < 1 kafa karışıklığına neden olacak bir sözleşme ihlalidir ki bu imkansızdır."
     },
     {
       "stage": "check",
-      "question": "What does expected calibration error measure?",
+      "question": "Beklenen kalibrasyon hatası neyi ölçer?",
       "options": [
-        "The mean absolute distance between predicted and true labels",
-        "The average gap between bin-level confidence and bin-level accuracy, weighted by bin size",
-        "The variance of the softmax output",
-        "The cross-entropy of the predictions"
+        "Tahmin edilen ve gerçek etiketler arasındaki ortalama mutlak mesafe",
+        "Kutu boyutuna göre ağırlıklandırılmış, kutu düzeyinde güven ve kutu düzeyinde doğruluk arasındaki ortalama fark",
+        "Softmax çıkışının varyansı",
+        "Tahminlerin çapraz entropisi"
       ],
       "correct": 1,
-      "explanation": "ECE bins predictions by confidence, measures the gap between average confidence and average accuracy per bin, weights by bin size."
+      "explanation": "ECE, tahminleri güvenle gruplandırır, ortalama güven ile kutu başına ortalama doğruluk arasındaki boşluğu ölçer ve kutu boyutuna göre ağırlıkları ölçer."
     },
     {
       "stage": "check",
-      "question": "Why does the implementation also return populated_bins alongside the ECE value?",
+      "question": "Uygulama neden ECE değerinin yanında populated_bins değerini de döndürüyor?",
       "options": [
-        "It is required for reliability diagrams",
-        "It signals when too few bins are populated for the single number to be trustworthy",
-        "It is the denominator of the Brier score",
-        "It is needed by numpy"
+        "Güvenilirlik diyagramları için gereklidir",
+        "Tek bir numaranın güvenilir olması için çok az sayıda bölmenin doldurulduğunu bildirir",
+        "Brier skorunun paydasıdır",
+        "Numpy'nin ihtiyacı var"
       ],
       "correct": 1,
-      "explanation": "With few populated bins the ECE is dominated by noise. Reporting the populated count lets the runner refuse to publish a misleading single number."
+      "explanation": "Az sayıda dolu çöp kutusuyla ECE'de gürültü hakimdir. Doldurulan sayının raporlanması, koşucunun yanıltıcı tek bir sayı yayınlamayı reddetmesine olanak tanır."
     },
     {
       "stage": "check",
-      "question": "What does Brier score capture that ECE does not?",
+      "question": "Brier puanı ECE'nin yakalayamadığı neyi yakalıyor?",
       "options": [
-        "It is faster to compute",
-        "It penalises local miscalibration directly, since it is the per-prediction squared error",
-        "It does not need ground-truth labels",
-        "It works only on binary outcomes"
+        "Hesaplamak daha hızlıdır",
+        "Tahmin başına karesel hata olduğundan, yerel yanlış kalibrasyonu doğrudan cezalandırır.",
+        "Temel gerçeklik etiketlerine ihtiyaç duymaz",
+        "Yalnızca ikili sonuçlar üzerinde çalışır"
       ],
       "correct": 1,
-      "explanation": "ECE only looks at averages per bin. Brier squares the error per prediction, so it catches the case where bins cancel out on average but are individually miscalibrated."
+      "explanation": "ECE yalnızca kutu başına ortalamalara bakar. Brier tahmin başına hatanın karesini alır, böylece kutuların ortalama olarak iptal edildiği ancak bireysel olarak yanlış kalibre edildiği durumu yakalar."
     },
     {
       "stage": "post",
-      "question": "Why is calibration a per-model report rather than a per-task metric?",
+      "question": "Kalibrasyon neden göreve özel bir ölçüm yerine model başına bir rapordur?",
       "options": [
-        "Tasks do not have probabilities",
-        "Single tasks have too few predictions to estimate bin statistics; the report aggregates across the whole eval",
-        "Calibration is too slow to compute per task",
-        "ECE requires the runner to know the model architecture"
+        "Görevlerin olasılıkları yoktur",
+        "Tekli görevlerin bin istatistiklerini tahmin etmek için çok az tahmini var; rapor tüm değerlendirme boyunca toplanıyor",
+        "Kalibrasyon görev başına hesaplanamayacak kadar yavaş",
+        "ECE, koşucunun model mimarisini bilmesini gerektirir"
       ],
       "correct": 1,
-      "explanation": "Per-task calibration is dominated by noise. The runner pools confidence/correctness pairs across all tasks before computing ECE, Brier, and the reliability diagram."
+      "explanation": "Görev başına kalibrasyonda gürültü hakimdir. Koşucu, ECE, Brier ve güvenilirlik diyagramını hesaplamadan önce tüm görevlerdeki güven/doğruluk çiftlerini bir havuzda toplar."
     }
   ]
 }

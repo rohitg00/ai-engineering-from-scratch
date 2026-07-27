@@ -4,10 +4,10 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does layered safety in this capstone mean?",
+      "question": "Bu kapak taşındaki katmanlı güvenlik ne anlama geliyor?",
       "options": [
         "Manual review of every response",
-        "Running one strong classifier on the input only",
+        "Yalnızca girişte güçlü bir sınıflandırıcı çalıştırma",
         "A single rule-based regex over outputs",
         "Defense in depth across input sanitize, policy rails, classifier gate, model, output filter, and HITL tier"
       ],
@@ -16,7 +16,7 @@
     },
     {
       "stage": "pre",
-      "question": "Which classifier handles multilingual coverage across roughly 132 languages?",
+      "question": "Hangi sınıflandırıcı yaklaşık 132 dilde çok dilli kapsamı yönetir?",
       "options": [
         "Nemotron 3 Content Safety",
         "ShieldGemma-2",
@@ -28,43 +28,43 @@
     },
     {
       "stage": "check",
-      "question": "Why is over-refusal measured on a benign suite like XSTest?",
+      "question": "Aşırı reddetme neden XSTest gibi zararsız bir pakette ölçülüyor?",
       "options": [
         "To replace red-team scoring",
         "To benchmark token throughput",
-        "To certify the guardrail framework",
-        "To track false-positive blocks so the model stays helpful while improving harmlessness"
+        "Korkuluk çerçevesini onaylamak için",
+        "Yanlış pozitif blokları takip ederek modelin zararsızlığı artırırken faydalı kalmasını sağlamak"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the constitutional self-critique loop in this capstone?",
+      "question": "Bu kapak taşındaki anayasal özeleştiri döngüsü nedir?",
       "options": [
         "A reranker over candidate jailbreak prompts",
-        "An RLHF reward model trained from scratch",
+        "Sıfırdan eğitilmiş bir RLHF ödül modeli",
         "A single forward pass through Llama Guard 4",
-        "Critic LLM scores drafts against a written constitution, prompts the model rewrites the objected outputs, and SFT runs on the improved pairs"
+        "Eleştirmen LLM taslakları yazılı bir yapıya göre puanlar, modelin itiraz edilen çıktıları yeniden yazmasını sağlar ve SFT geliştirilmiş çiftler üzerinde çalışır"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How are successful jailbreaks scored for severity in the findings?",
+      "question": "Bulgulara göre başarılı jailbreak'ler ciddiyet açısından nasıl puanlanıyor?",
       "options": [
-        "By the model that produced the response",
-        "Using CVSS 4.0 with attack vector, complexity, and impact, plus a disclosure timeline",
-        "By raw token count of the prompt",
-        "On a hand-tuned 1-10 scale chosen by the operator"
+        "Yanıtı üreten modele göre",
+        "CVSS 4.0'ı saldırı vektörü, karmaşıklık ve etkinin yanı sıra bir açıklama zaman çizelgesiyle kullanma",
+        "İstemin ham belirteç sayısına göre",
+        "Operatör tarafından seçilen, elle ayarlanmış 1-10 arası ölçekte"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which six attack families does the red-team range run?",
+      "question": "Kırmızı takım poligonu hangi altı saldırı ailesini yönetiyor?",
       "options": [
         "BLEU, ROUGE, METEOR, BERTScore, CometKiwi, and chrF",
         "PAIR, TAP, GCG, encoding (ASCII/base64/rot13), multi-turn persona, and multilingual code-switch",
@@ -76,12 +76,12 @@
     },
     {
       "stage": "post",
-      "question": "Why is range automation (cron + alerts) part of the rubric?",
+      "question": "Menzil otomasyonu (cron + uyarılar) neden değerlendirme listesinin bir parçası?",
       "options": [
-        "Cron is the only way to call OPA",
+        "Cron, OPA'yi aramanın tek yoludur",
         "Continuous scheduled probes catch drift in attack success rate and over-refusal regressions over time",
-        "Manual runs are explicitly required",
-        "Automation is required to disable Llama Guard 4"
+        "Manuel çalıştırmalar açıkça gereklidir",
+        "Llama Guard 4'ü devre dışı bırakmak için otomasyon gereklidir"
       ],
       "correct": 1,
       "explanation": ""

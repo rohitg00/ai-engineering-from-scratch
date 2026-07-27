@@ -1,14 +1,14 @@
 {
   "lesson": "17-personal-ai-tutor",
-  "title": "Capstone 17 — Personal AI Tutor (Adaptive, Multimodal, with Memory)",
+  "title": "Capstone 17 — Kişisel AI Öğretmeni (Uyarlanabilir, Çok Modlu, Bellekli)",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does a Socratic tutor policy do when a learner asks for the answer outright?",
+      "question": "Bir öğrenci doğrudan cevabı istediğinde Sokratik öğretmen politikası ne yapar?",
       "options": [
-        "Asks a leading question that scaffolds the learner toward the answer",
-        "Logs the request and goes silent",
-        "Provides the answer immediately and moves on",
+        "Öğrenciyi cevaba doğru yönlendiren yönlendirici bir soru sorar",
+        "İsteği günlüğe kaydeder ve sessize alınır",
+        "Cevabı hemen verir ve devam eder",
         "Switches to a different concept node"
       ],
       "correct": 0,
@@ -16,23 +16,23 @@
     },
     {
       "stage": "pre",
-      "question": "Which structure does the curriculum graph encode?",
+      "question": "Müfredat grafiği hangi yapıyı kodluyor?",
       "options": [
-        "A directed graph of concepts with prerequisite edges, attached to OER content",
+        "OER içeriğine eklenen, önkoşul kenarları olan kavramların yönlendirilmiş grafiği",
         "A random shuffle of topics",
         "A flat list of unrelated concepts",
-        "Only the most recently studied node"
+        "Yalnızca en son incelenen düğüm"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the learner model update after each interaction?",
+      "question": "Öğrenci modeli her etkileşimden sonra neyi günceller?",
       "options": [
-        "The base LLM's weights",
-        "The COPPA retention policy",
-        "The curriculum graph schema",
+        "Temel LLM'nin ağırlıkları",
+        "COPPA saklama politikası",
+        "Müfredat grafik şeması",
         "Per-concept mastery probability via Bayesian knowledge tracing or a similar variant"
       ],
       "correct": 3,
@@ -40,11 +40,11 @@
     },
     {
       "stage": "check",
-      "question": "How is memory split between episodic and semantic stores?",
+      "question": "Bellek epizodik ve semantik depolar arasında nasıl bölünür?",
       "options": [
-        "Episodic holds every interaction; semantic holds compacted mistakes and preferences promoted from episodic",
-        "They are duplicates of the same data",
-        "Episodic is for the parent; semantic is for the learner",
+        "Epizodik her etkileşimi barındırır; Anlamsal, epizodik hatalardan öne çıkan sıkıştırılmış hataları ve tercihleri ​​içerir.",
+        "Bunlar aynı verilerin kopyalarıdır",
+        "Epizodik ebeveyn içindir; anlam bilgisi öğrenci içindir",
         "Episodic holds embeddings; semantic holds raw audio"
       ],
       "correct": 0,
@@ -52,35 +52,35 @@
     },
     {
       "stage": "check",
-      "question": "Which constraint shapes memory retention for K-12 learners?",
+      "question": "K-12 öğrencileri için hafızada tutmayı hangi kısıtlama şekillendirir?",
       "options": [
         "Retention based on model context length",
-        "Permanent retention with no deletion",
-        "GDPR only",
-        "COPPA-aware retention with auto-deletion after a defined window and parental access"
+        "Silinmeden kalıcı saklama",
+        "Yalnızca GDPR",
+        "COPPA-Tanımlanmış bir pencere ve ebeveyn erişiminden sonra otomatik silme ile yazılım saklama"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the structure of the efficacy study used to gate the deliverable?",
+      "question": "Teslimatı gerçekleştirmek için kullanılan etkililik çalışmasının yapısı nedir?",
       "options": [
         "Anonymous internet survey",
         "A 30-second AB test",
-        "Pre-test and post-test over two weeks with 10 learners, compared against a non-adaptive baseline cohort",
-        "A single one-hour session with one learner"
+        "Uyarlanabilir olmayan temel grupla karşılaştırıldığında, 10 öğrenciyle iki hafta boyunca ön test ve son test",
+        "Bir öğrenciyle bir saatlik tek bir oturum"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which multimodal input paths does the tutor expose to the learner?",
+      "question": "Öğretmen öğrenciye hangi çok modlu girdi yollarını sunuyor?",
       "options": [
-        "Text only",
-        "Photo only via a custom OCR model",
-        "Voice only with no text or photo",
+        "Yalnızca metin",
+        "Yalnızca özel bir OCR modeliyle fotoğraf",
+        "Metin veya fotoğraf olmadan yalnızca ses",
         "Text typed, voice via LiveKit + Whisper, and photo math via dots.ocr or PaliGemma 2"
       ],
       "correct": 3,

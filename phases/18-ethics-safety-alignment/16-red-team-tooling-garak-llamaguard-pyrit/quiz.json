@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What role does Llama Guard play in a typical 2026 deployment?",
+      "question": "Tipik bir 2026 dağıtımında Llama Guard nasıl bir rol oynuyor?",
       "options": [
-        "A reasoning scaffolder for chain-of-thought",
-        "A reward model for RLHF",
+        "Düşünce zinciri için akıl yürütme iskelesi",
+        "RLHF için bir ödül modeli",
         "A tokenizer alternative",
-        "An input and/or output safety classifier across MLCommons hazard categories, placed before and after the LLM"
+        "LLM'den önce ve sonra yerleştirilen, MLCommons tehlike kategorileri genelinde bir giriş ve/veya çıkış güvenlik sınıflandırıcısı"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Roughly how many MLCommons hazard categories does Llama Guard 3 cover?",
+      "question": "Llama Guard 3 yaklaşık olarak kaç MLCommons tehlike kategorisini kapsıyor?",
       "options": [
         "7",
         "3",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "How is Garak's architecture organized?",
+      "question": "Garak'ın mimarisi nasıl düzenlenmiştir?",
       "options": [
         "Tools, resources, prompts",
         "Embeddings, retrievers, rerankers",
@@ -40,36 +40,36 @@
     },
     {
       "stage": "check",
-      "question": "What is PyRIT primarily designed for, and how does it differ from Garak?",
+      "question": "PyRIT öncelikli olarak ne için tasarlanmıştır ve Garak'tan farkı nedir?",
       "options": [
-        "They are identical in scope and audience",
-        "PyRIT is a reward model trainer; Garak is a tokenizer",
+        "Kapsam ve hedef kitle bakımından aynıdırlar",
+        "PyRIT bir ödül modeli eğitmenidir; Garak bir tokenlaştırıcıdır",
         "PyRIT runs deep multi-turn campaigns (converter chains, orchestrators like Crescendo and TAP, scoring) while Garak runs thousands of single-turn probes",
-        "PyRIT is a Llama Guard variant; Garak is a Prompt-Guard variant"
+        "PyRIT bir Llama Guard çeşididir; Garak bir Prompt-Guard çeşididir"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the recommended 2026 default red-team stack configuration?",
+      "question": "Önerilen 2026 varsayılan kırmızı takım yığını yapılandırması nedir?",
       "options": [
-        "Replace LLM evaluation with manual review only",
+        "LLM değerlendirmesini yalnızca manuel incelemeyle değiştirin",
         "Use PAIR instead of any tooling",
-        "Put Llama Guard on both sides of the model, run Garak nightly for regression, and run PyRIT for pre-release campaigns",
-        "Run Garak once at launch only"
+        "Modelin her iki tarafına da Llama Guard'ı yerleştirin, regresyon için Garak'ı her gece çalıştırın ve yayın öncesi kampanyalar için PyRIT'i çalıştırın",
+        "Garak'ı yalnızca başlatma sırasında bir kez çalıştırın"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What evaluation pitfall is shared across Llama Guard, Garak, and PyRIT?",
+      "question": "Llama Guard, Garak ve PyRIT arasında hangi değerlendirme tuzağı paylaşılıyor?",
       "options": [
-        "Reported attack/defense rates depend on the judge identity and probe staleness; you must specify the judge and refresh probes as models are patched",
-        "They only work in English",
-        "They require white-box access",
-        "They cannot run on GPUs"
+        "Bildirilen saldırı/savunma oranları, hakimin kimliğine ve soruşturmanın bayatlığına bağlıdır; modeller yamalandıkça değerlendirmeyi belirtmeli ve araştırmaları yenilemelisiniz",
+        "Sadece İngilizce çalışıyorlar",
+        "Beyaz kutu erişimine ihtiyaç duyuyorlar",
+        "GPU'larda çalışamazlar"
       ],
       "correct": 0,
       "explanation": ""

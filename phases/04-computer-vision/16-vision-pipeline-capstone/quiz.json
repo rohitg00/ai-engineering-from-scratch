@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why do production vision pipelines use Pydantic models (or equivalent) at every stage boundary?",
-      "options": ["Pydantic is faster than dict access", "Typed schemas catch interface mismatches at the boundary; a detector returning (cx, cy, w, h) when the downstream expects (x1, y1, x2, y2) fails loudly with a validation error instead of silently producing empty crops", "Pydantic is required by FastAPI", "It helps with GPU allocation"],
+      "question": "Üretim vizyonu işlem hatları neden her aşama sınırında Pydantic modellerini (veya eşdeğerini) kullanıyor?",
+      "options": [
+        "Pydantic dict erişiminden daha hızlıdır",
+        "Yazılan şemalar sınırdaki arayüz uyumsuzluklarını yakalar; aşağı akış beklediğinde (x1, y1, x2, y2) geri dönen bir dedektör (cx, cy, w, h) sessizce boş mahsuller üretmek yerine doğrulama hatasıyla yüksek sesle başarısız olur",
+        "FastAPI için Pydantic gereklidir",
+        "GPU tahsisine yardımcı olur"
+      ],
       "correct": 1,
-      "explanation": "Silent interface bugs are the defining pain of ML pipelines. Every boundary has a coordinate system, a channel order, a value range, and a shape. Validating at the boundary with Pydantic turns every mismatch into an immediate error. The cost is a few microseconds; the savings are hours of debugging."
+      "explanation": "Sessiz arayüz hataları ML işlem hatlarının belirleyici sorunudur. Her sınırın bir koordinat sistemi, bir kanal düzeni, bir değer aralığı ve bir şekli vardır. Pydantic ile sınırda doğrulama yapmak, her uyumsuzluğu anında bir hataya dönüştürür. Maliyeti birkaç mikrosaniyedir; tasarruf saatlerce hata ayıklama anlamına gelir."
     },
     {
       "stage": "pre",
-      "question": "On a CPU-only vision pipeline, which stage is most often the biggest latency block?",
-      "options": ["The detector's final NMS", "Image preprocessing (JPEG decode, colour conversion, resize); it is CPU-bound and often dominates when no GPU is involved or when the GPU model is small", "Writing the JSON response", "Reading the HTTP request body"],
+      "question": "CPU-only görüş hattında, çoğunlukla en büyük gecikme bloğu hangi aşamadır?",
+      "options": [
+        "Dedektörün son NMS'si",
+        "Görüntü ön işleme (JPEG kod çözme, renk dönüştürme, yeniden boyutlandırma); CPU- bağlıdır ve GPU dahil olmadığında veya GPU modeli küçük olduğunda sıklıkla hakim olur",
+        "JSON yanıtını yazma",
+        "HTTP istek gövdesini okuma"
+      ],
       "correct": 1,
-      "explanation": "On CPU, preprocessing is frequently the biggest single cost. JPEG decode can take milliseconds, colour conversion more, resizing to model input another chunk. The rule is simple: profile before optimising. On GPU the detector typically dominates, but do not assume that on CPU."
+      "explanation": "CPU'de ön işleme genellikle en büyük tek maliyettir. JPEG kod çözme milisaniyeler sürebilir, renk dönüşümü daha fazla, model girişini başka bir parçaya göre yeniden boyutlandırma. Kural basit: optimizasyondan önce profil. GPU'de dedektör genellikle baskındır ancak CPU'de bunu varsaymayın."
     },
     {
       "stage": "post",
-      "question": "The pipeline classifier crashes when a detection has box size 3x4 pixels. What is the correct fix?",
-      "options": ["Add a global try/except and return empty classifications", "Set a min_crop threshold (e.g. 16 or 32 pixels) and skip classification for detections smaller than that; log the skip and include the detection in the response without a classification field", "Retrain the classifier on smaller images", "Increase batch size"],
+      "question": "Bir algılamanın kutu boyutu 3x4 piksel olduğunda ardışık düzen sınıflandırıcısı çöker. Doğru düzeltme nedir?",
+      "options": [
+        "Add a global try/except and return empty classifications",
+        "Bir min_crop eşiği belirleyin (örneğin 16 veya 32 piksel) ve bundan daha küçük tespitler için sınıflandırmayı atlayın; Atlamayı günlüğe kaydedin ve sınıflandırma alanı olmadan algılamayı yanıta dahil edin",
+        "Sınıflandırıcıyı daha küçük görüntüler üzerinde yeniden eğitin",
+        "Increase batch size"
+      ],
       "correct": 1,
-      "explanation": "Tiny crops are a legitimate failure mode: the classifier was trained on 224x224 inputs and cannot reliably classify 3-pixel patches. A threshold (min_crop) skips those, preserves the detection, and produces a complete, honest response. Generic try/except hides the condition; returning no classification at all hides real failures; the right move is a named, logged skip."
+      "explanation": "Küçük mahsuller meşru bir hata modudur: sınıflandırıcı 224x224 girişler üzerinde eğitilmiştir ve 3 piksellik yamaları güvenilir bir şekilde sınıflandıramaz. Bir eşik (min_crop) bunları atlar, algılamayı korur ve eksiksiz, dürüst bir yanıt üretir. Genel try/hariç durumu gizler; hiçbir sınıflandırma yapılmaması gerçek başarısızlıkları gizler; doğru hareket, adlandırılmış, günlüğe kaydedilmiş bir atlamadır."
     },
     {
       "stage": "post",
-      "question": "You add batching to the classifier (wait up to 10 ms, batch all pending crops, one GPU forward). What is the expected effect?",
-      "options": ["Latency strictly decreases", "Throughput increases significantly, per-request latency increases by up to the batching window (~10ms) plus a smaller amount from larger tensor ops; the right answer depends on whether the service is throughput-bound or latency-bound", "Throughput decreases because of the wait", "No effect"],
+      "question": "Sınıflandırıcıya toplu işlem eklersiniz (10 ms'ye kadar bekleyin, bekleyen tüm ürünleri toplu olarak toplayın, bir GPU ileri). Beklenen etki nedir?",
+      "options": [
+        "Latency strictly decreases",
+        "Verim önemli ölçüde artar, istek başına gecikme, toplu işlem penceresine kadar (~10 ms) artı daha büyük tensör operasyonlarından daha küçük bir miktar artar; doğru cevap, hizmetin üretime bağlı mı yoksa gecikmeye bağlı mı olduğuna bağlıdır",
+        "Bekleme nedeniyle verim düşüyor",
+        "No effect"
+      ],
       "correct": 1,
-      "explanation": "Batching is a throughput-latency trade. Each request waits up to the window, which adds latency. The batched forward pass is more efficient per image, so throughput scales with batch size. Use batching when QPS is high and individual latency has slack; avoid it when latency SLA is under 50ms."
+      "explanation": "Toplu işlem bir verim-gecikme ticaretidir. Her istek pencereye kadar bekler, bu da gecikmeyi artırır. Toplu ileri geçiş görüntü başına daha verimli olduğundan, iş hacmi toplu iş boyutuna göre ölçeklenir. QPS yüksek olduğunda ve bireysel gecikmede gevşeklik olduğunda toplu işlemi kullanın; SLA gecikme süresi 50 ms'nin altında olduğunda bundan kaçının."
     },
     {
       "stage": "post",
-      "question": "Your pipeline response is a 500 error when a user uploads a corrupted JPEG. How should you fix it?",
-      "options": ["Ignore it; the user will retry", "Catch image-decode failures early in preprocessing, return a 400 with a specific error code like 'image_decode_failed' so the client can retry with a different file instead of a 500 that implies server error", "Always return 200 with an empty result", "Move decoding to the classifier"],
+      "question": "Bir kullanıcı bozuk bir JPEG yüklediğinde ardışık düzen yanıtınız 500 hatadır. Bunu nasıl düzeltmelisiniz?",
+      "options": [
+        "Görmezden gelin; kullanıcı yeniden deneyecek",
+        "Görüntü kod çözme hatalarını ön işlemenin başlarında yakalayın, 'image_decode_failed' gibi belirli bir hata koduyla birlikte 400 döndürün, böylece istemci, sunucu hatası anlamına gelen 500 yerine farklı bir dosyayla yeniden deneyebilir",
+        "Her zaman boş bir sonuçla 200 döndürün",
+        "Kod çözmeyi sınıflandırıcıya taşı"
+      ],
       "correct": 1,
-      "explanation": "A 500 from corrupt user input is an API contract bug. Bad inputs should return 4xx so the client knows it is their problem; 5xx responses signal a server problem and trigger the client's retry logic with the same bad input, amplifying load. Named failure codes (image_decode_failed, image_too_large, unsupported_content_type) let clients react correctly."
+      "explanation": "Bozuk kullanıcı girişinden kaynaklanan 500, bir API sözleşme hatasıdır. Kötü girdiler 4xx döndürmelidir, böylece müşteri bunun kendi sorunu olduğunu anlayabilir; 5xx yanıtları bir sunucu sorununa işaret eder ve aynı hatalı girişle istemcinin yeniden deneme mantığını tetikleyerek yükü artırır. Adlandırılmış hata kodları (image_decode_failed, image_too_large, unsupported_content_type) istemcilerin doğru tepki vermesini sağlar."
     }
   ]
 }

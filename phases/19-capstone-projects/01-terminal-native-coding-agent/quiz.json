@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which loop shape do 2026 terminal coding agents share?",
+      "question": "2026 terminal kodlama aracıları hangi döngü şeklini paylaşıyor?",
       "options": [
         "Plan, act, observe, recover",
         "Encode, decode, sample, stream",
@@ -16,19 +16,19 @@
     },
     {
       "stage": "pre",
-      "question": "Why does the harness run each task inside an E2B or Daytona sandbox?",
+      "question": "Kablo demeti neden her görevi bir E2B veya Daytona sanal alanı içinde yürütüyor?",
       "options": [
-        "To isolate filesystem and tool execution from the host so the worktree can be torn down on completion",
+        "Çalışma ağacının tamamlandığında yıkılabilmesi için dosya sistemini ve araç yürütmeyi ana bilgisayardan yalıtmak",
         "To bypass model-provider rate limits",
         "To benchmark token throughput on cold caches",
-        "To enable GPU access for the agent loop"
+        "Aracı döngüsü için GPU erişimini etkinleştirmek için"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which built-in hook is the natural place to block destructive shell commands before they execute?",
+      "question": "Yıkıcı kabuk komutlarını yürütülmeden önce engelleyen doğal yer hangi yerleşik kancadır?",
       "options": [
         "PreToolUse",
         "SessionStart",
@@ -40,10 +40,10 @@
     },
     {
       "stage": "check",
-      "question": "The capstone caps each tool result at roughly 4k tokens. Which failure mode does that primarily prevent?",
+      "question": "Her bir aletin kapak taşı kapakları kabaca 4k jetonla sonuçlanır. Bu öncelikle hangi arıza modunu önler?",
       "options": [
         "Sandbox escape via malicious shell metacharacters",
-        "Context poisoning and runaway cost when a tool returns a large dump",
+        "Bir araç büyük bir döküm döndürdüğünde bağlam zehirlenmesi ve kontrolden çıkma maliyeti",
         "Stale plan state across resumed sessions",
         "Model overfitting to tool-call traces"
       ],
@@ -52,19 +52,19 @@
     },
     {
       "stage": "check",
-      "question": "What does the PreCompact hook do at the 150k-token mark?",
+      "question": "PreCompact kancası 150k jeton işaretinde ne yapar?",
       "options": [
-        "Cancels the run and refunds the user budget",
-        "Summarizes older turns into a prior-state block so the plan and new observations still fit",
-        "Force-pushes the current branch to back up progress",
-        "Switches the backing model to a smaller draft model"
+        "Çalıştırmayı iptal eder ve kullanıcı bütçesini iade eder",
+        "Planın ve yeni gözlemlerin hala uygun olması için eski dönüşleri önceki durum bloğuna özetler",
+        "İlerlemeyi yedeklemek için mevcut dalı zorla iter",
+        "Destek modelini daha küçük bir taslak modele geçirir"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which baseline does the capstone compare its harness against on a 30-issue SWE-bench Pro subset?",
+      "question": "Kapak taşı, donanımını 30 sayılık SWE-bench Pro alt kümesindeki hangi temel çizgiyle karşılaştırıyor?",
       "options": [
         "OpenCode",
         "mini-swe-agent",
@@ -76,7 +76,7 @@
     },
     {
       "stage": "post",
-      "question": "Which metric set is the deliverable measuring against?",
+      "question": "Teslim edilebilir ölçüm hangi metrik setine göre yapılıyor?",
       "options": [
         "WER, MOS, and first-audio-out",
         "Perplexity, BLEU, and ROUGE",

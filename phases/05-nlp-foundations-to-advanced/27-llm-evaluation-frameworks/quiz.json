@@ -4,22 +4,22 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why are Exact Match and token-F1 insufficient for evaluating modern LLM outputs?",
+      "question": "Tam Eşleştirme ve token-F1, modern LLM çıktılarını değerlendirmek için neden yetersiz?",
       "options": [
-        "They are too slow",
-        "They are not differentiable",
-        "They require GPUs",
-        "They miss semantic equivalence; 'June 29th, 2007' vs 'June 29, 2007' scores 0 EM despite being correct"
+        "Çok yavaşlar",
+        "Farklılaştırılamazlar",
+        "GPU'lara ihtiyaç duyarlar",
+        "Anlamsal eşdeğerliği kaçırıyorlar; '29 Haziran 2007' ve '29 Haziran 2007' doğru olmasına rağmen 0 EM puan alıyor"
       ],
       "correct": 3,
-      "explanation": "Exact-match/F1 cannot recognize paraphrases or formatting differences that humans would mark correct."
+      "explanation": "Tam eşleşme/F1, insanların doğru olarak işaretleyeceği açıklamaları veya biçimlendirme farklılıklarını tanıyamaz."
     },
     {
       "stage": "pre",
-      "question": "What does the RAGAS faithfulness metric measure?",
+      "question": "RAGAS sadakat metriği neyi ölçer?",
       "options": [
         "Retrieval recall",
-        "Whether each claim in the answer is entailed by the retrieved context, via NLI",
+        "Cevaptaki her bir iddianın, NLI yoluyla alınan bağlam tarafından gerektirilip gerektirmediği",
         "Latency",
         "Tokens per second"
       ],
@@ -28,71 +28,71 @@
     },
     {
       "stage": "check",
-      "question": "Why is judge-model calibration against human labels required before trusting scores?",
+      "question": "Puanlara güvenmeden önce neden insan etiketlerine göre yargıç modeli kalibrasyonu gerekiyor?",
       "options": [
-        "Required by the GDPR",
-        "If Spearman correlation between judge and human labels is too low (e.g. below 0.7), the score is noise rather than signal",
-        "Calibration speeds up the judge",
-        "Calibration is a tokenization issue"
+        "GDPR tarafından gerekli",
+        "Hakem ve insan etiketleri arasındaki Spearman korelasyonu çok düşükse (örneğin 0,7'nin altında), puan sinyalden ziyade gürültüdür",
+        "Kalibrasyon hakimi hızlandırır",
+        "Kalibrasyon bir tokenizasyon sorunudur"
       ],
       "correct": 1,
-      "explanation": "Without calibration, you cannot tell whether judge scores reflect quality or model bias."
+      "explanation": "Kalibrasyon olmadan hakem puanlarının kaliteyi mi yoksa model yanlılığını mı yansıttığını bilemezsiniz."
     },
     {
       "stage": "check",
-      "question": "What is self-evaluation bias in LLM-as-judge setups?",
+      "question": "LLM-as-yargıç kurulumlarında öz değerlendirme yanlılığı nedir?",
       "options": [
-        "Using the same LLM family to generate and judge inflates scores by 10-20% versus an independent judge",
+        "Oluşturmak ve yargılamak için aynı LLM ailesini kullanmak, bağımsız bir jüriye göre puanları %10-20 oranında artırır",
         "Lower latency",
         "Judges run faster on cached outputs",
         "Judges ignore system prompts"
       ],
       "correct": 0,
-      "explanation": "Same-family generator+judge biases scores upward; use a different model family for judging."
+      "explanation": "Aynı aileden gelen üretici+yargıç önyargılarının puanları artıyor; yargılamak için farklı bir model ailesi kullanın."
     },
     {
       "stage": "check",
-      "question": "What does G-Eval specifically add over a naive 'score 0-1' prompt?",
+      "question": "G-Eval, saf bir 'puan 0-1' istemine özellikle ne ekliyor?",
       "options": [
         "Bigger context",
         "Lower cost",
         "Multilingual scoring",
-        "An explicit chain-of-thought rubric with named evaluation steps, which yields more stable scores"
+        "Daha istikrarlı puanlar sağlayan, adlandırılmış değerlendirme adımlarına sahip açık bir düşünce zinciri değerlendirme tablosu"
       ],
       "correct": 3,
-      "explanation": "G-Eval's structured eval-steps produce more reliable scores than freeform 'rate it' prompts."
+      "explanation": "G-Eval'in yapılandırılmış değerlendirme adımları, serbest biçimli 'puanla' istemlerinden daha güvenilir puanlar üretir."
     },
     {
       "stage": "post",
-      "question": "Why is reporting only the aggregate mean score dangerous?",
+      "question": "Neden yalnızca toplam ortalama puanı bildirmek tehlikelidir?",
       "options": [
-        "Aggregates are too large",
-        "Aggregates ignore the judge",
+        "Agregalar çok büyük",
+        "Agregalar hakimi görmezden geliyor",
         "Aggregates need GPU",
-        "An 0.85 mean can hide 5% catastrophic failures; always inspect the bottom quantile"
+        "0,85'lik bir ortalama %5'lik yıkıcı arızaları gizleyebilir; her zaman alt yüzdelik dilimi inceleyin"
       ],
       "correct": 3,
       "explanation": "Means hide tail failures; surface bottom-10% to catch high-severity issues."
     },
     {
       "stage": "post",
-      "question": "Why pin the judge model + version in CI?",
+      "question": "Neden yargıç modeli + versiyonunu CI'ye sabitlemelisiniz?",
       "options": [
         "Required by Anthropic",
         "Lower cost",
         "Tokenizer drift",
-        "Upgrading the judge changes every metric; longitudinal comparison breaks without a frozen judge"
+        "Hakimin yükseltilmesi her ölçümü değiştirir; donmuş bir yargıç olmadan boylamsal karşılaştırma sona eriyor"
       ],
       "correct": 3,
-      "explanation": "A judge upgrade silently shifts the metric baseline; pinning preserves cross-run comparability."
+      "explanation": "Hakim yükseltmesi, ölçüm temel çizgisini sessizce değiştirir; sabitleme çapraz çalıştırma karşılaştırılabilirliğini korur."
     },
     {
       "stage": "post",
-      "question": "Where does DeepEval fit relative to RAGAS?",
+      "question": "DeepEval, RAGAS'ye göre nereye sığar?",
       "options": [
-        "DeepEval is pytest-for-LLMs (CI gates, G-Eval, hallucination metrics); RAGAS specializes in reference-free RAG monitoring",
-        "DeepEval is hosted only",
-        "DeepEval is a tokenizer",
+        "DeepEval, LLM'ler için pytest'tir (CI kapıları, G-Eval, halüsinasyon ölçümleri); RAGAS, referanssız RAG izleme konusunda uzmanlaşmıştır",
+        "DeepEval yalnızca barındırılır",
+        "DeepEval bir tokenlaştırıcıdır",
         "Replaces RAGAS entirely"
       ],
       "correct": 0,

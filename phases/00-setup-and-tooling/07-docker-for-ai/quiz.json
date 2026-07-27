@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the primary difference between a Docker container and a virtual machine?",
-      "options": ["Containers are slower but more secure than VMs", "Containers share the host OS kernel while VMs run their own full OS", "Containers can only run Linux while VMs support any OS", "There is no practical difference"],
+      "question": "Docker kapsayıcısı ile sanal makine arasındaki temel fark nedir?",
+      "options": [
+        "Konteynerler VM'lerden daha yavaş ancak daha güvenlidir",
+        "Konteynerler ana bilgisayar OS çekirdeğini paylaşırken VM'ler kendi tam OS'lerini çalıştırır",
+        "Konteynerler yalnızca Linux çalıştırabilirken VM'ler herhangi bir OS'yi destekler",
+        "Pratik bir fark yok"
+      ],
       "correct": 1,
-      "explanation": "Containers share the host kernel and isolate at the process level, making them start in seconds. VMs run a complete guest OS with its own kernel, requiring more resources and slower startup."
+      "explanation": "Konteynerler ana makine çekirdeğini paylaşır ve işlem düzeyinde izole ederek saniyeler içinde başlamalarını sağlar. VM'ler, daha fazla kaynak ve daha yavaş başlatma gerektiren, kendi çekirdeğiyle eksiksiz bir konuk OS çalıştırır."
     },
     {
       "stage": "pre",
-      "question": "What is a Dockerfile?",
-      "options": ["A configuration file for the Docker daemon", "A set of instructions for building a Docker image layer by layer", "A log file that records container activity", "A file that lists running containers"],
+      "question": "Docker dosyası nedir?",
+      "options": [
+        "Docker arka plan programı için bir yapılandırma dosyası",
+        "Katman katman Docker görüntüsü oluşturmaya yönelik bir dizi talimat",
+        "Konteyner etkinliğini kaydeden bir günlük dosyası",
+        "Çalışan kapsayıcıları listeleyen bir dosya"
+      ],
       "correct": 1,
-      "explanation": "A Dockerfile contains sequential instructions (FROM, RUN, COPY, etc.) that Docker executes to build an image. Each instruction creates a cached layer."
+      "explanation": "Bir Docker dosyası, Docker'ın bir görüntü oluşturmak için yürüttüğü sıralı talimatları (FROM, RUN, COPY, vb.) içerir. Her talimat önbelleğe alınmış bir katman oluşturur."
     },
     {
       "stage": "post",
-      "question": "Why are volume mounts critical for AI development with Docker?",
-      "options": ["Volumes make containers run faster by using host disk speed", "Volumes persist data (models, datasets, code) across container rebuilds so you don't re-download gigabytes each time", "Volumes are required for Python packages to install correctly", "Volumes allow multiple containers to share the same GPU"],
+      "question": "Docker ile AI geliştirme için birim montajları neden kritik öneme sahiptir?",
+      "options": [
+        "Volumes make containers run faster by using host disk speed",
+        "Volumes persist data (models, datasets, code) across container rebuilds so you don't re-download gigabytes each time",
+        "Python paketlerinin doğru şekilde kurulması için birimler gereklidir",
+        "Birimler birden fazla kapsayıcının aynı GPU'yi paylaşmasına olanak tanır"
+      ],
       "correct": 1,
-      "explanation": "Without volumes, everything inside a container is lost when it stops. Volume mounts map host directories into the container, so model weights (14+ GB) and datasets survive rebuilds."
+      "explanation": "Hacimler olmadan, bir kabın içindeki her şey durduğunda kaybolur. Birim, harita ana bilgisayar dizinlerini kapsayıcıya bağlar, böylece model ağırlıkları (14+ GB) ve veri kümeleri yeniden oluşturma işlemlerinde hayatta kalır."
     },
     {
       "stage": "post",
-      "question": "What does the NVIDIA Container Toolkit enable?",
-      "options": ["Installing CUDA drivers inside the container", "Exposing host GPUs to Docker containers via the --gpus flag", "Running NVIDIA GPU containers on AMD hardware", "Compiling CUDA code during the Docker build process"],
+      "question": "NVIDIA Container Toolkit neyi mümkün kılar?",
+      "options": [
+        "CUDA sürücülerini konteynerin içine kurma",
+        "Ana GPU'ları --gpus bayrağı aracılığıyla Docker kapsayıcılarına gösterme",
+        "Running NVIDIA GPU containers on AMD hardware",
+        "Docker derleme işlemi sırasında CUDA kodunu derlemek"
+      ],
       "correct": 1,
-      "explanation": "The NVIDIA Container Toolkit is a runtime hook that exposes host GPUs to containers. The CUDA toolkit lives inside the container, but the GPU driver is shared from the host."
+      "explanation": "NVIDIA Konteyner Araç Takımı, ana bilgisayar GPU'larını konteynerlere maruz bırakan bir çalışma zamanı kancasıdır. CUDA araç seti konteynerin içinde bulunur ancak GPU sürücüsü ana bilgisayardan paylaşılır."
     },
     {
       "stage": "post",
-      "question": "In a Docker Compose file for AI, how does the 'ai-dev' service reach the 'qdrant' vector database?",
-      "options": ["By using the host machine's IP address and port", "By using the service name 'qdrant' as the hostname, since Compose creates a shared network", "By mounting a shared volume between the two containers", "By configuring a VPN between the containers"],
+      "question": "AI için bir Docker Compose dosyasında 'ai-dev' hizmeti 'qdrant' vektör veritabanına nasıl ulaşır?",
+      "options": [
+        "Ana makinenin IP adresini ve bağlantı noktasını kullanarak",
+        "Compose paylaşılan bir ağ oluşturduğundan, ana bilgisayar adı olarak 'qdrant' hizmet adını kullanarak",
+        "İki kapsayıcı arasına paylaşılan bir birim monte ederek",
+        "Kapsayıcılar arasında bir VPN yapılandırarak"
+      ],
       "correct": 1,
-      "explanation": "Docker Compose automatically creates a shared network where services can reach each other by name. The ai-dev container connects to 'http://qdrant:6333' using the service name as hostname."
+      "explanation": "Docker Compose otomatik olarak servislerin birbirlerine isimleriyle ulaşabilecekleri paylaşımlı bir ağ oluşturur. ai-dev kapsayıcısı, hizmet adını ana bilgisayar adı olarak kullanarak 'http://qdrant:6333''ye bağlanır."
     }
   ]
 }

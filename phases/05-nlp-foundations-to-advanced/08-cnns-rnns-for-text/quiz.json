@@ -1,10 +1,10 @@
 {
   "lesson": "08-cnns-rnns-for-text",
-  "title": "CNNs and RNNs for Text",
+  "title": "Metin için CNN'ler ve RNN'ler",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is a 1D convolutional filter of width 3 over word embeddings effectively learning?",
+      "question": "Etkili bir şekilde öğrenen kelime yerleştirmeleri üzerinden genişlik 3'ün 1 boyutlu evrişimli filtresi nedir?",
       "options": [
         "A learnable bigram detector",
         "A position embedding",
@@ -16,79 +16,79 @@
     },
     {
       "stage": "pre",
-      "question": "Why does an LSTM use a cell state with mostly additive interactions?",
+      "question": "LSTM neden çoğunlukla katkı etkileşimli bir hücre durumu kullanıyor?",
       "options": [
         "Additive flow lets gradients propagate through long sequences without vanishing or exploding",
         "Faster softmax",
-        "It saves memory",
+        "Bellekten tasarruf sağlar",
         "To avoid matrix inversion"
       ],
       "correct": 0,
-      "explanation": "The cell-state highway keeps gradients stable across hundreds of steps, fixing vanishing-gradient issues."
+      "explanation": "Hücre durumu otoyolu, yüzlerce adım boyunca eğimleri sabit tutarak yok olan eğim sorunlarını giderir."
     },
     {
       "stage": "check",
-      "question": "Why does TextCNN use global max-pooling after the convolutional layer?",
+      "question": "TextCNN neden evrişimsel katmandan sonra global maksimum havuzlamayı kullanıyor?",
       "options": [
         "To enable backpropagation",
         "To remove embeddings",
         "To reduce vocabulary",
-        "Max-pool gives a fixed-size, position-invariant representation by selecting the strongest activation per filter"
+        "Maksimum havuz, filtre başına en güçlü aktivasyonu seçerek sabit boyutlu, konumdan bağımsız bir temsil sağlar"
       ],
       "correct": 3,
-      "explanation": "Global max-pool produces a fixed-size feature vector regardless of input length, with position invariance."
+      "explanation": "Global maksimum havuz, giriş uzunluğundan bağımsız olarak konum değişmezliği ile sabit boyutlu bir özellik vektörü üretir."
     },
     {
       "stage": "check",
-      "question": "What is the main advantage of a bidirectional RNN over a one-way RNN for sequence labeling?",
+      "question": "Sıra etiketleme için çift yönlü RNN'nin tek yönlü RNN'ye göre temel avantajı nedir?",
       "options": [
         "Faster training",
-        "Each token's representation sees both left and right context, which is essential for tagging",
+        "Her jetonun temsili, etiketleme için gerekli olan hem sol hem de sağ bağlamı görür",
         "Avoids embeddings",
         "Cheaper memory"
       ],
       "correct": 1,
-      "explanation": "Bidirectional networks concatenate forward + backward hidden states so labels can use full context."
+      "explanation": "Çift yönlü ağlar ileri + geri gizli durumları birleştirir, böylece etiketler tam bağlamı kullanabilir."
     },
     {
       "stage": "check",
-      "question": "Why does max-pooling over an LSTM's outputs often beat using just the last hidden state for classification?",
+      "question": "Neden bir LSTM'nin çıktıları üzerinden maksimum havuzlama, sınıflandırma için yalnızca son gizli durumu kullanmaktan daha başarılıdır?",
       "options": [
-        "Max-pool is differentiable; last-state is not",
-        "Information at the end of a long sequence tends to dominate the last state, hiding earlier evidence",
+        "Maksimum havuz türevlenebilir; son durum değil",
+        "Uzun bir dizinin sonundaki bilgi, önceki kanıtları gizleyerek son duruma hakim olma eğilimindedir.",
         "Max-pool removes capitalization",
         "Last-state pool ignores padding"
       ],
       "correct": 1,
-      "explanation": "Max-pool aggregates strongest signal across positions; last-state can lose earlier evidence."
+      "explanation": "Maksimum havuz, konumlar arasındaki en güçlü sinyali toplar; son durum daha önceki kanıtları kaybedebilir."
     },
     {
       "stage": "post",
-      "question": "Which limitation of LSTM/RNN encoder-decoders motivated attention?",
+      "question": "LSTM/RNN kodlayıcı-kod çözücülerin hangi sınırlaması dikkati çekti?",
       "options": [
-        "They require subword tokenizers",
-        "They cannot use embeddings",
-        "The decoder sees only a fixed-size encoder state, losing detail on long inputs; recurrence also serializes training",
-        "They cannot embed tokens"
+        "Alt kelime belirteçleri gerektirirler",
+        "Yerleştirmeleri kullanamazlar",
+        "Kod çözücü yalnızca sabit boyutlu bir kodlayıcı durumunu görür ve uzun girişlerde ayrıntıları kaybeder; yineleme aynı zamanda eğitimi de serileştirir",
+        "Jetonları yerleştiremezler"
       ],
       "correct": 2,
       "explanation": "Fixed-size summarization plus serial training were two failures attention removed."
     },
     {
       "stage": "post",
-      "question": "When does a TextCNN or BiLSTM still beat a transformer in 2026?",
+      "question": "TextCNN veya BiLSTM 2026'da ne zaman hala bir transformatörü yenebilir?",
       "options": [
         "On image inputs",
         "Edge / on-device, streaming token-by-token inputs, or tiny-data baselines",
-        "Whenever the dataset is multilingual",
-        "When latency requirements are extremely loose"
+        "Veri kümesi çok dilli olduğunda",
+        "Gecikme gereksinimleri son derece gevşek olduğunda"
       ],
       "correct": 1,
       "explanation": "Small architectures still win on edge inference, streaming inputs, and rapid baselines."
     },
     {
       "stage": "post",
-      "question": "What is the vanishing gradient problem in plain RNNs?",
+      "question": "Düz RNN'lerde kaybolan gradyan sorunu nedir?",
       "options": [
         "Repeated multiplication by recurrent weights smaller than 1 makes gradients toward early steps shrink toward zero",
         "Embedding matrix becomes singular",
@@ -96,7 +96,7 @@
         "Loss becomes negative"
       ],
       "correct": 0,
-      "explanation": "Long-product gradients vanish (or explode) without gating; this is why LSTMs and GRUs exist."
+      "explanation": "Uzun ürün gradyanları geçiş olmadan kaybolur (veya patlar); LSTM'lerin ve GRU'ların var olmasının nedeni budur."
     }
   ]
 }

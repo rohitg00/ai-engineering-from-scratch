@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the evaluator use a paired t test instead of comparing two single numbers?",
+      "question": "Değerlendirici neden iki tek sayıyı karşılaştırmak yerine eşleştirilmiş t testi kullanıyor?",
       "options": [
-        "Because numpy requires paired arrays",
-        "Because pairing the same seed across candidate and baseline isolates the configuration change from random initialisation noise",
-        "Because the runner cannot emit a single number",
-        "Because t tests are always required by IRB"
+        "Çünkü numpy eşleştirilmiş diziler gerektiriyor",
+        "Çünkü aynı çekirdeği aday ve taban çizgisi arasında eşleştirmek, konfigürasyon değişikliğini rastgele başlatma gürültüsünden izole eder",
+        "Çünkü koşucu tek bir sayı çıkaramaz",
+        "Çünkü IRB tarafından t testleri her zaman gereklidir"
       ],
       "correct": 1,
-      "explanation": "Pairing by seed cancels out random initialisation effects. The remaining difference is attributable to the configuration change, which is what the test measures."
+      "explanation": "Tohumla eşleştirme, rastgele başlatma etkilerini iptal eder. Kalan fark, testin ölçtüğü konfigürasyon değişikliğine atfedilebilir."
     },
     {
       "stage": "pre",
-      "question": "Why does the evaluator carry a direction field on every metric?",
+      "question": "Değerlendirici neden her ölçümde bir yön alanı taşır?",
       "options": [
-        "Because accuracy and loss point in opposite ways; the sign of the improvement depends on which direction is better for the metric being compared",
-        "Because the runner requires it",
-        "Because numpy needs the direction for variance",
-        "Because the parser expects it"
+        "Çünkü doğruluk ve kayıp zıt yönlere işaret eder; İyileşmenin işareti, karşılaştırılan metriğin hangi yönün daha iyi olduğuna bağlıdır",
+        "Çünkü koşucu bunu gerektirir",
+        "Çünkü numpy'nin varyans yönüne ihtiyacı var",
+        "Çünkü ayrıştırıcı bunu bekliyor"
       ],
       "correct": 0,
-      "explanation": "Higher is better metrics improve when they go up; lower is better metrics improve when they go down. The direction field tells the improvement function which sign convention to apply."
+      "explanation": "Daha yüksek, daha iyi ölçümler yükseldikçe iyileşir; ne kadar düşükse o kadar iyidir metrikler düştüklerinde iyileşir. Yön alanı, iyileştirme fonksiyonuna hangi işaret kuralının uygulanacağını bildirir."
     },
     {
       "stage": "check",
-      "question": "What does the verdict path return when |improvement| is below the threshold even if the p value is significant?",
+      "question": "|İyileştirme| yapıldığında karar yolu ne döndürür? p değeri anlamlı olsa bile eşiğin altında mı?",
       "options": [
         "improved",
         "regressed",
@@ -36,43 +36,43 @@
         "failed"
       ],
       "correct": 2,
-      "explanation": "A statistically significant change that is too small to act on is still noise from the loop's point of view. The threshold gate runs before the significance gate."
+      "explanation": "Eyleme geçilemeyecek kadar küçük olan istatistiksel olarak anlamlı bir değişiklik, döngünün bakış açısından hala gürültüdür. Eşik kapısı anlamlılık kapısından önce gelir."
     },
     {
       "stage": "check",
-      "question": "Why does the evaluator transform log scaled metrics before computing improvement?",
+      "question": "Değerlendirici, iyileştirmeyi hesaplamadan önce neden günlük ölçekli ölçümleri dönüştürüyor?",
       "options": [
-        "Because numpy logs are faster",
-        "Because perplexity and similar metrics grow exponentially with loss; transforming to log space makes a threshold like two percent meaningful across linear and log metrics",
-        "Because the p value depends on it",
-        "Because the runner only emits log scaled metrics"
+        "Çünkü numpy günlükleri daha hızlıdır",
+        "Çünkü şaşkınlık ve benzeri ölçümler kayıpla birlikte katlanarak artıyor; Günlük alanına dönüştürmek, doğrusal ve log metrikler genelinde yüzde iki gibi bir eşiği anlamlı hale getirir",
+        "Çünkü p değeri buna bağlıdır",
+        "Çünkü koşucu yalnızca log ölçekli ölçümler yayınlıyor"
       ],
       "correct": 1,
-      "explanation": "Perplexity is exp(loss). A small loss change is a large perplexity change. Taking the log keeps relative improvements comparable to linear metrics under one threshold."
+      "explanation": "Şaşkınlık exp(loss)'dir. Küçük bir kayıp değişimi, büyük bir şaşkınlık değişimidir. Günlüğün alınması, doğrusal metriklerle karşılaştırılabilir göreceli iyileştirmeleri tek bir eşik altında tutar."
     },
     {
       "stage": "check",
-      "question": "When does the paired t test helper return p_value = None?",
+      "question": "Eşleştirilmiş t testi yardımcısı ne zaman p_value = Yok değerini döndürür?",
       "options": [
-        "When the means are equal",
-        "When fewer than two paired samples are available",
-        "When the variance is zero",
-        "When the metric scale is log"
+        "Araçlar eşit olduğunda",
+        "İkiden az eşleştirilmiş örnek mevcut olduğunda",
+        "Varyans sıfır olduğunda",
+        "Metrik ölçek log olduğunda"
       ],
       "correct": 1,
-      "explanation": "The t distribution needs at least one degree of freedom. With n less than two there is no variance estimate and the helper returns None so the verdict path can mark the run as noise."
+      "explanation": "T dağılımı en az bir serbestlik derecesine ihtiyaç duyar. N'nin ikiden küçük olması durumunda herhangi bir varyans tahmini olmaz ve yardımcı Yok değerini döndürür, böylece karar yolu çalışmayı gürültü olarak işaretleyebilir."
     },
     {
       "stage": "check",
-      "question": "What happens if even one candidate result has a terminal label other than ok?",
+      "question": "Bir aday sonucunun bile tamam dışında bir terminal etiketi varsa ne olur?",
       "options": [
-        "The evaluator drops that seed and proceeds",
-        "The evaluator returns a failed verdict and records the bad terminals in the rationale",
-        "The evaluator retries the run",
-        "The evaluator falls back to a one sided test"
+        "Değerlendirici bu tohumu bırakır ve devam eder",
+        "Değerlendirici başarısız bir karar verir ve hatalı terminalleri gerekçeye kaydeder",
+        "Değerlendirici koşuyu yeniden dener",
+        "Değerlendirici tek taraflı bir teste geri döner"
       ],
       "correct": 1,
-      "explanation": "A failed run invalidates the candidate set. The evaluator short circuits the verdict path and returns failed with the offending terminals listed, so the orchestrator does not draw a conclusion from a crashed run."
+      "explanation": "Başarısız bir çalıştırma aday kümesini geçersiz kılar. Değerlendirici, karar yolunu kısa devre yapar ve sorunlu terminallerin listelenmesiyle başarısız geri dönüşler yapar, böylece orkestratör, çöken bir çalışmadan bir sonuç çıkarmaz."
     }
   ]
 }

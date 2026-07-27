@@ -4,55 +4,55 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the planner's responsibility in a plan-execute agent?",
+      "question": "Plan-yürütme aracısında planlamacının sorumluluğu nedir?",
       "options": [
-        "To call the dispatcher on each step",
-        "To produce an ordered list of typed steps the executor will run",
+        "Her adımda sevk görevlisini aramak için",
+        "Yürütücü, yazılan adımların sıralı bir listesini oluşturmak için çalışacaktır.",
         "To enforce timeouts",
-        "To handle the JSON-RPC transport"
+        "JSON-RPC aktarımını gerçekleştirmek için"
       ],
       "correct": 1,
-      "explanation": "Planner emits structured plans. The executor runs them. Mixing the two is the chain-of-thought trap this lesson is moving away from."
+      "explanation": "Planlayıcı yapılandırılmış planlar yayınlar. Yönetici onları çalıştırır. Bu ikisini karıştırmak, bu dersin uzaklaştığı düşünce zinciri tuzağıdır."
     },
     {
       "stage": "pre",
-      "question": "Why is expected_outcome part of the Step shape even though the executor does not check it?",
+      "question": "Yürütücü kontrol etmemesine rağmen neden beklenen_outcome Adım şeklinin bir parçası?",
       "options": [
-        "Because the dispatcher uses it as a cache key",
-        "Because it gives the replanner and tracers a stated success condition to read",
-        "Because the registry requires it",
-        "Because the model trains on it"
+        "Çünkü dağıtıcı bunu önbellek anahtarı olarak kullanıyor",
+        "Çünkü yeniden planlayıcıya ve izleyicilere okumak için belirtilen bir başarı koşulu verir",
+        "Çünkü kayıt defteri bunu gerektiriyor",
+        "Çünkü model bunun üzerinde çalışıyor"
       ],
       "correct": 1,
-      "explanation": "The replanner reads it when revising. The tracer renders it on the timeline. It is a human-readable contract on the step."
+      "explanation": "Yeniden planlayıcı revize ederken bunu okur. İzleyici bunu zaman çizelgesinde işler. Adımda insan tarafından okunabilen bir sözleşmedir."
     },
     {
       "stage": "check",
-      "question": "When a step fails and the replanner returns a new plan, what does the executor emit on the event stream?",
+      "question": "Bir adım başarısız olduğunda ve yeniden planlayıcı yeni bir plan döndürdüğünde, yürütücü olay akışında ne yayınlar?",
       "options": [
-        "Nothing — replan is silent",
-        "session.complete with status=failed",
-        "plan.diff with removed/added/revised step ids",
+        "Hiçbir şey — yeniden planlama sessiz",
+        "session.complete ile durum=başarısız",
+        "plan.diff kaldırılmış/eklenmiş/revize edilmiş adım kimlikleriyle",
         "tool.error followed by session.start"
       ],
       "correct": 2,
-      "explanation": "plan.diff makes the revision visible. A silent rewrite is the bug we are avoiding."
+      "explanation": "plan.diff revizyonu görünür hale getirir. Sessiz bir yeniden yazma, kaçındığımız hatadır."
     },
     {
       "stage": "check",
-      "question": "Why have both max_steps and max_replans as separate budgets?",
+      "question": "Neden hem max_steps hem de max_replans ayrı bütçelere sahip?",
       "options": [
-        "Because they measure different units. Steps cap total execution; replans cap how many times the planner is called.",
-        "Because asyncio requires both",
-        "Because the dispatcher rejects unbounded plans",
-        "Because the registry counts replans"
+        "Çünkü farklı birimleri ölçerler. Adımlar toplam yürütmeyi sınırlar; planlayıcının kaç kez çağrıldığını yeniden planlar.",
+        "Çünkü asyncio her ikisini de gerektirir",
+        "Çünkü dağıtıcı sınırsız planları reddediyor",
+        "Çünkü kayıt defteri yeniden planlamaları sayar"
       ],
       "correct": 0,
-      "explanation": "max_replans catches a planner that keeps returning the same broken plan. max_steps catches a runaway plan that keeps growing."
+      "explanation": "max_replans, aynı bozuk planı döndürmeye devam eden bir planlayıcıyı yakalar. max_steps büyümeye devam eden kontrolden çıkmış bir planı yakalar."
     },
     {
       "stage": "check",
-      "question": "Which reason is returned when the planner returns an empty list on the first call?",
+      "question": "Planlayıcı ilk çağrıda boş bir liste döndürdüğünde hangi sebep döndürülür?",
       "options": [
         "step_budget",
         "replan_budget",
@@ -60,23 +60,23 @@
         "no_plan"
       ],
       "correct": 3,
-      "explanation": "No plan, no execution. The session ends with reason=no_plan and status=failed."
+      "explanation": "Plan yok, uygulama yok. Oturum, Reason=no_plan ve status=failed ile sona erer."
     },
     {
       "stage": "post",
-      "question": "What is in PlanDiff.revised?",
+      "question": "PlanDiff.revised'de neler var?",
       "options": [
-        "Step ids that were in the old plan and are not in the new",
-        "Step ids in the new plan that were not in the old",
-        "Step ids whose tool_name or args changed between revisions",
-        "Step ids the planner asked to skip"
+        "Eski planda olan ve yeni planda olmayan adım kimlikleri",
+        "Yeni planda eski planda olmayan adım kimlikleri",
+        "Revizyonlar arasında tool_name veya argümanları değişen adım kimlikleri",
+        "Planlayıcının atlamak istediği adım kimlikleri"
       ],
       "correct": 2,
-      "explanation": "revised is the set of ids whose (tool_name, args) signature changed across the revision."
+      "explanation": "revize edilen, revizyon boyunca (tool_name, args) imzası değişen kimliklerin kümesidir."
     },
     {
       "stage": "post",
-      "question": "When the executor exhausts max_replans, what is the resulting SessionResult.reason?",
+      "question": "Yürütücü max_replans'ı tükettiğinde ortaya çıkan SessionResult.reason nedir?",
       "options": [
         "goal_met",
         "step_budget",
@@ -84,7 +84,7 @@
         "no_plan"
       ],
       "correct": 2,
-      "explanation": "replan_budget. The status is failed. History carries every step that ran, including the failures that triggered replans."
+      "explanation": "replan_budget. Durum başarısız. Tarih, yeniden planlamayı tetikleyen hatalar da dahil olmak üzere, yürütülen her adımı taşır."
     }
   ]
 }

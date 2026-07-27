@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why cannot a plain CNN process a point cloud directly?",
-      "options": ["Point clouds are too large", "A CNN assumes input pixels arranged on a regular grid with neighbourhood structure; a point cloud is an unordered set of points in R^3 with no grid and variable size, violating both assumptions", "CNNs only work on grayscale", "Point clouds require quaternions"],
+      "question": "Düz bir CNN neden bir nokta bulutunu doğrudan işleyemiyor?",
+      "options": [
+        "Nokta bulutları çok büyük",
+        "Bir CNN, giriş piksellerinin komşuluk yapısına sahip düzenli bir ızgara üzerinde düzenlendiğini varsayar; nokta bulutu, R^3'te ızgarası olmayan ve değişken boyutu olan, her iki varsayımı da ihlal eden sırasız bir nokta kümesidir",
+        "CNN'ler yalnızca gri tonlamada çalışır",
+        "Point clouds require quaternions"
+      ],
       "correct": 1,
-      "explanation": "CNN convolutions need a regular neighbourhood. A point cloud has neither a grid nor a fixed point count. Voxelising the cloud brings back a grid (used by 3D CNNs) but is memory-expensive. PointNet side-stepped this with a permutation-invariant architecture that treats each point independently then aggregates symmetrically."
+      "explanation": "CNN evrişimler düzenli bir mahalleye ihtiyaç duyar. Bir nokta bulutunun ne bir ızgarası ne de sabit bir nokta sayısı vardır. Bulutun vokselleştirilmesi, (3D CNN'ler tarafından kullanılan) bir ızgarayı geri getirir, ancak bellek açısından pahalıdır. PointNet, her noktayı bağımsız olarak ele alan ve ardından simetrik olarak toplayan permütasyonla değişmeyen bir mimariyle bunu bir adım öteye taşıdı."
     },
     {
       "stage": "pre",
-      "question": "What trick makes PointNet permutation-invariant over the input points?",
-      "options": ["Batch normalisation", "A shared MLP applied to every point independently, followed by a symmetric aggregation (max pool or sum); since the aggregation ignores point order, the whole network's output is order-invariant", "A special loss function", "Sorting the points before the forward pass"],
+      "question": "PointNet'i giriş noktaları üzerinde permütasyonu değişmez kılan hile nedir?",
+      "options": [
+        "Batch normalisation",
+        "Her noktaya bağımsız olarak uygulanan paylaşılan bir MLP, ardından simetrik bir toplama (maksimum havuz veya toplam); toplama nokta sırasını göz ardı ettiğinden, tüm ağın çıktısı sıra açısından değişmezdir",
+        "A special loss function",
+        "İleri geçişten önceki noktaları sıralama"
+      ],
       "correct": 1,
-      "explanation": "The symmetric-function trick is the core of every point-cloud network family since 2017. Run the same MLP on every point (same weights, no ordering dependence) and then aggregate with a function that does not depend on order. Max and sum are the two canonical choices; max is used by PointNet and most descendants."
+      "explanation": "Simetrik işlev hilesi, 2017'den bu yana her nokta bulutu ağ ailesinin temelidir. Her noktada aynı MLP'yi çalıştırın (aynı ağırlıklar, sıralama bağımlılığı yok) ve ardından sıraya bağlı olmayan bir işlevle toplayın. Maksimum ve toplam iki kanonik seçimdir; max, PointNet ve soyundan gelenlerin çoğu tarafından kullanılır."
     },
     {
       "stage": "post",
-      "question": "A vanilla NeRF MLP fed with raw (x, y, z) coordinates produces blurry results. What fixes it?",
-      "options": ["Adding more training data", "Positional encoding: project coordinates into Fourier features (sin/cos of 2^l * pi * x for multiple l) before the MLP; this lets the low-frequency-biased MLP represent high-frequency details", "Using 16-bit precision", "Switching to a CNN"],
+      "question": "Ham (x, y, z) koordinatlarıyla beslenen vanilya NeRF MLP bulanık sonuçlar üretir. Bunu ne düzeltir?",
+      "options": [
+        "Adding more training data",
+        "Konumsal kodlama: MLP'den önce koordinatları Fourier özelliklerine (çoklu l için sin/cos 2^l * pi * x) projelendirin; bu, düşük frekans önyargılı MLP'nin yüksek frekans ayrıntılarını temsil etmesini sağlar",
+        "Using 16-bit precision",
+        "Switching to a CNN"
+      ],
       "correct": 1,
-      "explanation": "MLPs are spectrally biased: they easily fit smooth functions and struggle with high frequencies. Positional encoding lifts each coordinate into a vector that already contains high-frequency signals. The MLP then has a much easier job of composing those features into sharp geometry and texture. The same trick is used in transformer positional encoding and in diffusion time embedding."
+      "explanation": "MLP'ler spektral olarak önyargılıdır: sorunsuz işlevlere kolayca uyum sağlarlar ve yüksek frekanslarla mücadele ederler. Konumsal kodlama, her koordinatı halihazırda yüksek frekanslı sinyaller içeren bir vektöre yükseltir. Böylece MLP'nin bu özellikleri keskin geometri ve dokuya dönüştürme işi çok daha kolay oluyor. Aynı hile, transformatör konumsal kodlamada ve difüzyon zamanı yerleştirmede de kullanılır."
     },
     {
       "stage": "post",
-      "question": "How is a NeRF rendered pixel computed?",
-      "options": ["As the output of the final MLP layer", "By casting a ray from the camera through the pixel, sampling N points along the ray, querying the MLP at each point for (density, colour), and compositing the samples with a volumetric rendering equation that accumulates alpha-weighted colours along the ray", "By looking up a precomputed voxel grid", "By running a convolution over a depth map"],
+      "question": "NeRF ile işlenmiş bir piksel nasıl hesaplanır?",
+      "options": [
+        "Son MLP katmanının çıktısı olarak",
+        "Kameradan piksele bir ışın göndererek, ışın boyunca N noktayı örnekleyerek, her noktada MLP'yi (yoğunluk, renk) sorgulayarak ve örnekleri ışın boyunca alfa ağırlıklı renkleri toplayan hacimsel bir oluşturma denklemiyle birleştirerek",
+        "By looking up a precomputed voxel grid",
+        "By running a convolution over a depth map"
+      ],
       "correct": 1,
-      "explanation": "NeRF rendering is classical volume rendering with a neural density field. For each pixel you pick a ray, sample along it, query (sigma, c) at each sample, and composite using (1 - exp(-sigma * delta)) alphas and cumulative transmittance. Backprop through this rendering step is what trains the MLP from 2D photos — no explicit 3D supervision ever appears."
+      "explanation": "NeRF oluşturma, sinir yoğunluğu alanına sahip klasik hacim oluşturmadır. Her piksel için bir ışın seçersiniz, onun boyunca örnek alırsınız, her örnekte sorgu (sigma, c) yaparsınız ve (1 - exp(-sigma * delta)) alfaları ve kümülatif geçirgenliği kullanarak birleştirirsiniz. MLP'yi 2D fotoğraflardan eğiten şey, bu işleme adımındaki geri destektir; hiçbir zaman açık bir 3D denetimi görünmez."
     },
     {
       "stage": "post",
-      "question": "Why has 3D Gaussian splatting largely replaced NeRF in production?",
-      "options": ["It produces higher-quality images", "It is an explicit representation (millions of 3D Gaussians with opacity and colour) that renders in real time via rasterisation instead of MLP queries on sampled rays; training is minutes instead of hours, rendering is 100x faster, and quality is comparable", "NeRFs were shown to be mathematically incorrect", "Gaussians are more compressible"],
+      "question": "Neden 3D Gauss sıçraması üretimde büyük ölçüde NeRF'nin yerini aldı?",
+      "options": [
+        "Daha kaliteli görüntüler üretir",
+        "Örneklenmiş ışınlar üzerinde MLP sorguları yerine rasterleştirme yoluyla gerçek zamanlı olarak işleyen açık bir temsildir (opaklık ve renk ile milyonlarca 3D Gaussian); eğitim saatler yerine dakikalar alır, görüntü oluşturma 100 kat daha hızlıdır ve kalite karşılaştırılabilir",
+        "NeRFs were shown to be mathematically incorrect",
+        "Gaussian'lar daha sıkıştırılabilir"
+      ],
       "correct": 1,
-      "explanation": "3D Gaussian Splatting (SIGGRAPH 2023) replaces the implicit MLP-based scene with an explicit cloud of 3D Gaussian primitives. Rendering becomes GPU rasterisation, which is orders of magnitude faster than per-pixel ray sampling through an MLP. Most 2026 NeRF products ship with Gaussian splatting or its successors; the NeRF paradigm still informs the training objective and the math."
+      "explanation": "3D Gauss Splatting (SIGGRAPH 2023), örtülü MLP- tabanlı sahneyi açık bir 3D Gauss temel öğeleri bulutuyla değiştirir. İşleme, GPU pikselleştirmeye dönüşür; bu, MLP yoluyla piksel başına ışın örneklemesinden çok daha hızlıdır. Çoğu 2026 NeRF ürünü Gauss sıçraması veya onun halefleri ile birlikte gönderilir; NeRF paradigması hâlâ eğitim hedefini ve matematiği bilgilendiriyor."
     }
   ]
 }

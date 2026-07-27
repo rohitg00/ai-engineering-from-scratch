@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What are CrewAI's four primitives?",
+      "question": "CrewAI'nin dört temel ilkesi nedir?",
       "options": [
         "Agent, Task, Crew, Process",
         "Node, Edge, Reducer, Checkpointer",
@@ -12,11 +12,11 @@
         "Tool, Prompt, Model, Memory"
       ],
       "correct": 0,
-      "explanation": "Agent, Task, Crew, and Process are the four primitives."
+      "explanation": "Temsilci, Görev, Ekip ve Süreç dört temel öğedir."
     },
     {
       "stage": "pre",
-      "question": "What is the recommended production starting point per the CrewAI docs?",
+      "question": "CrewAI belgelerine göre önerilen üretim başlangıç ​​noktası nedir?",
       "options": [
         "Crew",
         "Flow",
@@ -24,23 +24,23 @@
         "Hierarchical process"
       ],
       "correct": 1,
-      "explanation": "The docs say start production apps with Flows; fold Crews in as sub-steps when autonomy earns its cost."
+      "explanation": "Dokümanlar, üretim uygulamalarının Flows ile başlatıldığını söylüyor; Özerkliğin bedelini ödediğinde Mürettebatları alt adımlar halinde katlayın."
     },
     {
       "stage": "check",
-      "question": "What is the difference between a Crew and a Flow?",
+      "question": "Mürettebat ile Akış arasındaki fark nedir?",
       "options": [
-        "Crew is paid, Flow is free",
-        "Crew is autonomous and LLM-driven; Flow is event-driven, code-owned, deterministic and testable",
-        "Crew runs on GPUs only",
-        "Flow has no agents"
+        "Mürettebat ücretli, Flow ücretsizdir",
+        "Mürettebat özerktir ve LLM- güdümlüdür; Akış olay odaklı, koda ait, deterministik ve test edilebilir",
+        "Mürettebat yalnızca GPU'larla çalışır",
+        "Akışın aracısı yok"
       ],
       "correct": 1,
-      "explanation": "Crew is autonomy-first; Flow is determinism-first."
+      "explanation": "Mürettebat özerkliğe öncelik verir; Akış öncelikle determinizmdir."
     },
     {
       "stage": "check",
-      "question": "Which of these is NOT one of the four memory types CrewAI ships?",
+      "question": "Bunlardan hangisi NOT CrewAI gemilerinin dört bellek türünden biridir?",
       "options": [
         "Short-term",
         "Long-term",
@@ -48,11 +48,11 @@
         "Quantized"
       ],
       "correct": 3,
-      "explanation": "Short-term, long-term, entity, and contextual are the four. Quantized memory is not a CrewAI concept."
+      "explanation": "Kısa vadeli, uzun vadeli, varlık ve bağlamsal dördüdür. Nicelenmiş bellek bir CrewAI konsepti değildir."
     },
     {
       "stage": "check",
-      "question": "What is backstory bloat and how does the lesson recommend handling it?",
+      "question": "Arka plan şişkinliği nedir ve ders bununla nasıl başa çıkmayı öneriyor?",
       "options": [
         "Storing too many crews; archive old ones",
         "2000-word agent backstories push out context budget; keep them tight",
@@ -64,27 +64,27 @@
     },
     {
       "stage": "post",
-      "question": "When is Hierarchical process worth picking over Sequential?",
+      "question": "Hiyerarşik süreç ne zaman Sıralıyı seçmeye değer?",
       "options": [
         "Always",
-        "When you have 4+ specialists that need a manager Agent to route between them",
-        "When you have one task",
-        "When you do not have any tools"
+        "Aralarında yönlendirme yapacak bir yönetici Temsilciye ihtiyaç duyan 4'ten fazla uzmanınız olduğunda",
+        "Tek bir göreviniz olduğunda",
+        "Hiçbir aletiniz olmadığında"
       ],
       "correct": 1,
-      "explanation": "Hierarchical adds a manager Agent; only worthwhile when several specialists need dynamic routing."
+      "explanation": "Hiyerarşik bir yönetici Aracısı ekler; yalnızca birkaç uzmanın dinamik yönlendirmeye ihtiyaç duyduğu durumlarda değerlidir."
     },
     {
       "stage": "post",
-      "question": "Why does the lesson caution against using a free-form Crew in production?",
+      "question": "Ders neden üretimde serbest biçimli Mürettebat kullanılmasına karşı uyarıda bulunuyor?",
       "options": [
-        "Crews are unsupported",
-        "Output variability is high and debugging is painful without a Flow wrapper",
+        "Ekipler desteklenmiyor",
+        "Çıkış değişkenliği yüksektir ve Flow sarmalayıcı olmadan hata ayıklama zahmetlidir",
         "Crews cost more than Flows",
         "Crews lack memory"
       ],
       "correct": 1,
-      "explanation": "Crew autonomy makes prod replay and audit painful; wrap with a Flow when shipping."
+      "explanation": "Mürettebat özerkliği, prod tekrarı ve denetimini zahmetli hale getirir; Nakliye sırasında bir Akış ile sarın."
     }
   ]
 }

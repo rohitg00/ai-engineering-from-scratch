@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does vanilla self-attention scale the dot product by 1/sqrt(d_k)?",
-      "options": ["To make the output values between 0 and 1", "To prevent dot products from growing large in high dimensions, which would push softmax into regions with tiny gradients", "To normalize the query and key vectors to unit length", "To reduce the computational cost of the matrix multiplication"],
+      "question": "Vanilya kişisel dikkati neden nokta çarpımını 1/sqrt(d_k) oranında ölçeklendiriyor?",
+      "options": [
+        "Çıkış değerlerini 0 ile 1 arasında yapmak",
+        "Softmax'ı küçük gradyanlara sahip bölgelere itecek olan nokta ürünlerin yüksek boyutlarda büyümesini önlemek için",
+        "Sorgu ve anahtar vektörleri birim uzunluğa göre normalleştirmek için",
+        "Matris çarpımının hesaplama maliyetini azaltmak için"
+      ],
       "correct": 1,
-      "explanation": "When d_k is large, the dot product of random vectors grows proportionally to sqrt(d_k). Without scaling, softmax receives large inputs, producing near-one-hot outputs where gradients vanish."
+      "explanation": "d_k büyük olduğunda, rastgele vektörlerin nokta çarpımı sqrt(d_k) ile orantılı olarak büyür. Softmax, ölçeklendirme olmadan büyük girdiler alır ve degradelerin kaybolduğu neredeyse bire yakın çıktılar üretir."
     },
     {
       "stage": "pre",
-      "question": "What are the three projections in self-attention?",
-      "options": ["Input, hidden, and output", "Query, key, and value -- each a learned linear projection of the same input", "Encoder, decoder, and cross-attention", "Embedding, position, and segment"],
+      "question": "Öz-dikkatteki üç yansıma nedir?",
+      "options": [
+        "Input, hidden, and output",
+        "Sorgu, anahtar ve değer; her biri aynı girişin öğrenilmiş doğrusal projeksiyonudur",
+        "Encoder, decoder, and cross-attention",
+        "Embedding, position, and segment"
+      ],
       "correct": 1,
-      "explanation": "Self-attention projects the input through three different weight matrices to produce queries (what am I looking for?), keys (what do I contain?), and values (what do I output if matched?)."
+      "explanation": "Kişisel dikkat, sorguları (ne arıyorum?), anahtarları (neyi içeriyorum?) ve değerleri (eşleşirse ne çıktısı vereceğim?) üretmek için girdiyi üç farklı ağırlık matrisi aracılığıyla yansıtır."
     },
     {
       "stage": "post",
-      "question": "In multi-head attention with 8 heads and d_model=512, what is the dimension of each head?",
-      "options": ["512 -- each head sees the full dimension", "64 -- d_model is split evenly across heads (512/8=64)", "8 -- one dimension per head", "4096 -- each head expands the representation"],
+      "question": "8 başlı ve d_model=512 olan çok kafalı dikkatte her bir başın boyutu nedir?",
+      "options": [
+        "512 -- her kafa tam boyutu görür",
+        "64 -- d_model kafalara eşit olarak bölünmüştür (512/8=64)",
+        "8 - kafa başına bir boyut",
+        "4096 -- her başlık temsili genişletir"
+      ],
       "correct": 1,
-      "explanation": "Multi-head attention splits d_model into h heads, each operating on d_k = d_model/h dimensions. With 512/8 = 64 dimensions per head, the total computation cost equals single-head attention at full dimension."
+      "explanation": "Çok kafalı dikkat, d_model'i her biri d_k = d_model/h boyutlarında çalışan h kafalara böler. Kafa başına 512/8 = 64 boyut ile toplam hesaplama maliyeti, tam boyutta tek kafanın dikkatine eşittir."
     },
     {
       "stage": "post",
-      "question": "What does the causal mask in autoregressive attention prevent?",
-      "options": ["It prevents the model from attending to padding tokens", "It prevents each position from attending to future positions, ensuring the model can only use past context when predicting the next token", "It prevents attention weights from becoming too large", "It prevents the model from attending to its own position"],
+      "question": "Otoregresif dikkatteki nedensel maske neyi önler?",
+      "options": [
+        "Modelin dolgu belirteçlerine katılmasını engeller",
+        "Her bir pozisyonun gelecekteki pozisyonlara katılmasını önleyerek modelin bir sonraki jetonu tahmin ederken yalnızca geçmiş bağlamı kullanabilmesini sağlar",
+        "Dikkat ağırlıklarının çok büyük olmasını önler",
+        "Modelin kendi konumuna katılmasını engeller"
+      ],
       "correct": 1,
-      "explanation": "In autoregressive generation, token t must not see tokens t+1, t+2, etc. The causal mask sets future positions to -infinity before softmax, zeroing out their attention weights."
+      "explanation": "Otoregresif nesilde, token t, token t+1, t+2 vb.'yi görmemelidir. Nedensel maske, gelecekteki konumları softmax'tan önce -sonsuza ayarlayarak dikkat ağırlıklarını sıfırlar."
     },
     {
       "stage": "post",
-      "question": "Why does self-attention have O(n^2) complexity in sequence length n?",
-      "options": ["Because the model has n layers stacked on top of each other", "Because every token computes attention scores with every other token, producing an n x n attention matrix", "Because the feedforward layers after attention are quadratic", "Because backpropagation through attention requires n^2 gradient computations"],
+      "question": "Kişisel dikkatin neden dizi uzunluğu n olan O(n^2) karmaşıklığı var?",
+      "options": [
+        "Çünkü modelde üst üste yığılmış n katman var",
+        "Çünkü her jeton diğer jetonların dikkat puanlarını hesaplayarak n x n dikkat matrisi üretir",
+        "Çünkü dikkatten sonraki ileri besleme katmanları ikinci derecedendir",
+        "Çünkü dikkat yoluyla geriye yayılım n^2 gradyan hesaplaması gerektirir"
+      ],
       "correct": 1,
-      "explanation": "The QK^T matrix multiplication produces an n x n attention matrix where entry (i,j) is the attention from token i to token j. Both computation and memory scale as O(n^2), which is why long-context models need techniques like FlashAttention."
+      "explanation": "QK^T matris çarpımı, giriş (i,j)'nin i'den j'ye olan dikkat olduğu bir n x n dikkat matrisi üretir. O(n^2) olarak hem hesaplama hem de bellek ölçeği, bu nedenle uzun bağlam modellerinin FlashAttention gibi tekniklere ihtiyacı vardır."
     }
   ]
 }

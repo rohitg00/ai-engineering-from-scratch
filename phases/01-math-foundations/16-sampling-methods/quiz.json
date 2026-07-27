@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does temperature < 1.0 do to a language model's output distribution?",
+      "question": "Sıcaklık < 1,0 bir dil modelinin çıktı dağılımına ne yapar?",
       "options": [
-        "Makes the distribution more uniform (more random)",
-        "Sharpens the distribution, making the highest-probability token more likely",
-        "Removes all tokens except the top one",
-        "Has no effect on the output"
+        "Dağıtımı daha düzgün (daha rastgele) hale getirir",
+        "Dağılımı keskinleştirerek en yüksek olasılıklı tokenı daha olası hale getirir",
+        "En üstteki hariç tüm jetonları kaldırır",
+        "Çıkış üzerinde hiçbir etkisi yoktur"
       ],
       "correct": 1,
-      "explanation": "Temperature < 1.0 divides logits by a number less than 1, which amplifies differences between logits. After softmax, the highest-probability token gets an even larger share. Temperature approaches 0 gives greedy (argmax) decoding."
+      "explanation": "Sıcaklık < 1,0, logitleri 1'den küçük bir sayıya böler, bu da logitler arasındaki farkları artırır. Softmax'tan sonra en yüksek olasılıklı token daha da büyük bir pay alır. Sıcaklık 0'a yaklaştığında açgözlü (argmax) kod çözme sağlanır."
     },
     {
       "stage": "pre",
-      "question": "What is the key difference between top-k and top-p (nucleus) sampling?",
+      "question": "Üst-k ve üst-p (çekirdek) örnekleme arasındaki temel fark nedir?",
       "options": [
-        "Top-k is faster than top-p",
+        "Top-k, top-p'den daha hızlıdır",
         "Top-k keeps a fixed number of tokens; top-p keeps a variable number based on cumulative probability",
-        "Top-p only works with temperature = 1.0",
+        "Top-p yalnızca sıcaklık = 1,0 ile çalışır",
         "Top-k works on logits while top-p works on probabilities"
       ],
       "correct": 1,
-      "explanation": "Top-k always keeps exactly k tokens regardless of the probability distribution. Top-p adaptively keeps the smallest set of tokens whose cumulative probability exceeds p. When the model is confident, top-p keeps few tokens; when uncertain, it keeps many."
+      "explanation": "Top-k, olasılık dağılımına bakılmaksızın her zaman tam olarak k jetonu tutar. Top-p, kümülatif olasılığı p'yi aşan en küçük jeton kümesini uyarlanabilir bir şekilde tutar. Model kendinden emin olduğunda top-p az sayıda token tutar; belirsiz olduğunda çoğunu tutar."
     },
     {
       "stage": "post",
-      "question": "Why can't you backpropagate through a standard sampling operation z ~ N(mu, sigma^2)?",
+      "question": "Neden standart bir örnekleme işlemi z ~ N(mu, sigma^2) yoluyla geriye yayılım yapamıyorsunuz?",
       "options": [
-        "Normal distributions don't have gradients",
-        "The sampling operation is non-deterministic and has no well-defined derivative with respect to mu and sigma",
+        "Normal dağılımlarda gradyanlar yoktur",
+        "Örnekleme işlemi deterministik değildir ve mu ve sigma'ya göre iyi tanımlanmış bir türevi yoktur.",
         "PyTorch doesn't support normal distributions",
-        "The gradient is always exactly zero"
+        "Gradyan her zaman tam olarak sıfırdır"
       ],
       "correct": 1,
-      "explanation": "Sampling introduces a stochastic discontinuity — you can't compute d(sample)/d(mu) for a random draw. The reparameterization trick solves this by writing z = mu + sigma * epsilon (where epsilon ~ N(0,1)), making z a deterministic, differentiable function of mu and sigma."
+      "explanation": "Örnekleme stokastik bir süreksizlik ortaya çıkarır; rastgele bir çekiliş için d(sample)/d(mu)'yi hesaplayamazsınız. Yeniden parametrelendirme hilesi z = mu + sigma * epsilon (burada epsilon ~ N(0,1)) yazarak z'yi mu ve sigma'nın deterministik, türevlenebilir bir fonksiyonu haline getirerek bunu çözer."
     },
     {
       "stage": "post",
-      "question": "In Metropolis-Hastings MCMC, what happens if the proposal standard deviation is set much too large?",
+      "question": "Metropolis-Hastings MCMC'de teklifin standart sapması çok büyük ayarlanırsa ne olur?",
       "options": [
-        "The chain converges faster because it takes bigger steps",
-        "Most proposals land in low-probability regions and are rejected, so the chain barely moves",
-        "The stationary distribution changes to a uniform distribution",
-        "The burn-in period becomes zero"
+        "Zincir daha hızlı birleşir çünkü daha büyük adımlar atar",
+        "Tekliflerin çoğu düşük olasılıklı bölgelere ulaşıyor ve reddediliyor, dolayısıyla zincir zar zor hareket ediyor",
+        "Sabit dağılım düzgün bir dağılıma dönüşür",
+        "Yakma süresi sıfır olur"
       ],
       "correct": 1,
-      "explanation": "With a large proposal standard deviation, proposed points are far from the current position and likely land in low-probability regions. These are rejected, causing the chain to stay stuck at the current point. The optimal acceptance rate is about 23% for high-dimensional Gaussian proposals."
+      "explanation": "Büyük bir teklif standart sapması ile önerilen noktalar mevcut konumdan uzaktadır ve muhtemelen düşük olasılıklı bölgelere yerleşir. Bunlar reddedilir ve zincirin mevcut noktada takılı kalmasına neden olur. Yüksek boyutlu Gauss önerileri için optimum kabul oranı yaklaşık %23'tür."
     },
     {
       "stage": "post",
-      "question": "In rejection sampling, what happens to the acceptance rate as the dimensionality of the target distribution increases?",
+      "question": "Reddetme örneklemesinde hedef dağılımın boyutu arttıkça kabul oranına ne olur?",
       "options": [
-        "It stays constant regardless of dimension",
-        "It increases because there are more dimensions to accept in",
-        "It drops exponentially because most of the proposal volume gets rejected",
-        "It approaches 50% in all cases"
+        "Boyutu ne olursa olsun sabit kalır",
+        "Kabul edilecek daha fazla boyut olduğu için artar",
+        "Teklif hacminin çoğu reddedildiği için katlanarak düşüyor",
+        "Her durumda %50'ye yaklaşır"
       ],
       "correct": 2,
-      "explanation": "In high dimensions, the volume of the proposal distribution that overlaps with the target distribution shrinks exponentially. The bound M grows, and the acceptance rate (1/M) drops exponentially. This is the curse of dimensionality for rejection sampling."
+      "explanation": "Yüksek boyutlarda hedef dağılımla örtüşen teklif dağılımının hacmi katlanarak küçülür. Sınırlı M büyür ve kabul oranı (1/M) katlanarak düşer. Bu, ret örneklemesi için boyutluluğun lanetidir."
     }
   ]
 }

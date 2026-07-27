@@ -2,7 +2,7 @@
   {
     "id": "imbalanced-pre-1",
     "stage": "pre",
-    "question": "A fraud detection dataset has 99.9% legitimate transactions and 0.1% fraud. A model predicts 'legitimate' for every transaction. What is its accuracy?",
+    "question": "Bir sahtekarlık tespit veri kümesinde %99,9 meşru işlemler ve %0,1 sahtekarlık bulunur. Bir model her işlem için 'meşru' olanı tahmin eder. Doğruluğu nedir?",
     "options": [
       "50%",
       "0.1%",
@@ -10,12 +10,12 @@
       "100%"
     ],
     "correct": 2,
-    "explanation": "Accuracy = 999/1000 = 99.9%. The model catches zero fraud but looks great by accuracy. This is exactly why accuracy is dangerous for imbalanced datasets."
+    "explanation": "Doğruluk = 999/1000 = %99,9. Model sıfır sahtekarlık yakalıyor ancak doğruluk açısından harika görünüyor. Dengesiz veri kümeleri için doğruluğun tehlikeli olmasının nedeni tam olarak budur."
   },
   {
     "id": "imbalanced-pre-2",
     "stage": "pre",
-    "question": "Which metric would correctly identify the always-predict-negative model as useless?",
+    "question": "Hangi metrik, her zaman negatif tahmin edilen modeli işe yaramaz olarak doğru bir şekilde tanımlar?",
     "options": [
       "Accuracy (99.9%)",
       "Recall (0%) or F1 score (0%)",
@@ -23,45 +23,45 @@
       "True negative rate (100%)"
     ],
     "correct": 1,
-    "explanation": "Recall = TP/(TP+FN) = 0/total_positives = 0%. F1 = 2*0*0/(0+0) = 0. Both correctly show the model catches nothing in the positive class. Accuracy hides this failure."
+    "explanation": "Geri Çağırma = TP/(TP+FN) = 0/total_positives = %0. F1 = 2*0*0/(0+0) = 0. Her ikisi de doğru bir şekilde modelin pozitif sınıfta hiçbir şey yakalamadığını gösteriyor. Doğruluk bu başarısızlığı gizler."
   },
   {
     "id": "imbalanced-post-1",
     "stage": "post",
-    "question": "How does SMOTE generate synthetic minority samples?",
+    "question": "SMOTE sentetik azınlık örneklerini nasıl üretir?",
     "options": [
       "By duplicating existing minority samples exactly",
-      "By randomly generating points anywhere in the feature space",
-      "By interpolating between a minority sample and one of its K nearest minority neighbors",
-      "By flipping the labels of majority class samples"
+      "Özellik alanının herhangi bir yerinde rastgele noktalar oluşturarak",
+      "Bir azınlık örneği ile onun en yakın K azınlık komşusundan biri arasında enterpolasyon yaparak",
+      "Çoğunluk sınıfı örneklerinin etiketlerini çevirerek"
     ],
     "correct": 2,
-    "explanation": "SMOTE picks a minority point, selects one of its K nearest minority neighbors, and creates a new point on the line segment between them: new = x + rand(0,1) * (neighbor - x). This produces plausible, non-duplicate samples."
+    "explanation": "SMOTE bir azınlık noktası seçer, en yakın K azınlık komşusundan birini seçer ve aralarındaki doğru parçası üzerinde yeni bir nokta oluşturur: yeni = x + rand(0,1) * (komşu - x). Bu, makul, kopya olmayan örnekler üretir."
   },
   {
     "id": "imbalanced-post-2",
     "stage": "post",
-    "question": "You lower the classification threshold from 0.5 to 0.3 on an imbalanced dataset. What happens to precision and recall?",
+    "question": "Dengesiz bir veri kümesinde sınıflandırma eşiğini 0,5'ten 0,3'e düşürürsünüz. Kesinlik ve hatırlamaya ne olur?",
     "options": [
       "Both precision and recall increase",
       "Recall increases (more positives caught) but precision decreases (more false positives)",
       "Precision increases but recall decreases",
-      "Neither changes -- threshold only affects speed"
+      "Hiçbiri değişmez; eşik yalnızca hızı etkiler"
     ],
     "correct": 1,
-    "explanation": "Lowering the threshold means more samples are predicted positive. This catches more true positives (recall up) but also adds more false positives (precision down). Threshold tuning trades precision for recall."
+    "explanation": "Eşiğin düşürülmesi, daha fazla örneğin pozitif olarak tahmin edilmesi anlamına gelir. Bu, daha fazla gerçek pozitif (geri çağırma) yakalar ancak aynı zamanda daha fazla yanlış pozitif (hassasiyet aşağı) ekler. Eşik ayarı, geri çağırma için hassasiyeti değiştirir."
   },
   {
     "id": "imbalanced-post-3",
     "stage": "post",
-    "question": "Why is AUPRC (Area Under Precision-Recall Curve) more informative than AUC-ROC for highly imbalanced datasets?",
+    "question": "AUPRC (Hassaslık-Geri Çağırma Eğrisi Altındaki Alan), yüksek derecede dengesiz veri kümeleri için neden AUC-ROC'den daha bilgilendiricidir?",
     "options": [
-      "AUPRC is always higher than AUC-ROC",
-      "A random classifier has AUPRC equal to the positive class rate (e.g., 0.001), making improvements visible, while AUC-ROC starts at 0.5 regardless of imbalance",
-      "AUPRC does not require a threshold",
-      "AUC-ROC cannot be computed for imbalanced data"
+      "AUPRC her zaman AUC-ROC'den daha yüksektir",
+      "Rastgele bir sınıflandırıcı, AUPRC'nin pozitif sınıf oranına eşit olmasını sağlar (örneğin, 0,001), bu da iyileştirmeleri görünür kılar, AUC-ROC ise dengesizlikten bağımsız olarak 0,5'ten başlar",
+      "AUPRC eşik gerektirmez",
+      "AUC-ROC dengesiz veriler için hesaplanamaz"
     ],
     "correct": 1,
-    "explanation": "For imbalanced data, AUC-ROC can look deceptively good because the large number of true negatives inflates the true negative rate. AUPRC's baseline equals the positive rate, making real improvements in detecting the minority class much more apparent."
+    "explanation": "Dengesiz veriler için AUC-ROC aldatıcı derecede iyi görünebilir çünkü çok sayıda gerçek negatif gerçek negatif oranı şişirir. AUPRC'nin taban çizgisi pozitif orana eşit olup, azınlık sınıfının tespitinde gerçek iyileşmeleri çok daha belirgin hale getiriyor."
   }
 ]

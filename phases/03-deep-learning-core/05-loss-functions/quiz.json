@@ -1,37 +1,62 @@
 [
   {
-    "question": "What does the loss function represent in neural network training?",
-    "options": ["The number of incorrect predictions", "A differentiable measure of how wrong the model's predictions are, which the optimizer minimizes", "The size of the training dataset", "The learning rate schedule"],
+    "question": "Sinir ağı eğitiminde kayıp fonksiyonu neyi temsil eder?",
+    "options": [
+      "Yanlış tahminlerin sayısı",
+      "Optimize edicinin en aza indirdiği, modelin tahminlerinin ne kadar yanlış olduğuna ilişkin farklılaştırılabilir bir ölçüm",
+      "Eğitim veri kümesinin boyutu",
+      "Öğrenme oranı çizelgesi"
+    ],
     "correct": 1,
-    "explanation": "The loss function maps predictions and targets to a single scalar that the optimizer minimizes via gradient descent. It must be differentiable so gradients can be computed.",
+    "explanation": "Kayıp fonksiyonu, tahminleri ve hedefleri, optimize edicinin gradyan iniş yoluyla en aza indirdiği tek bir skalerle eşler. Gradyanların hesaplanabilmesi için türevlenebilir olması gerekir.",
     "stage": "pre"
   },
   {
-    "question": "Why is cross-entropy preferred over MSE for classification tasks?",
-    "options": ["Cross-entropy is faster to compute", "Cross-entropy punishes confident wrong predictions exponentially via -log(p), while MSE gives weak gradients near 0 and 1", "MSE only works for regression", "Cross-entropy doesn't require labels"],
+    "question": "Sınıflandırma görevleri için neden MSE yerine çapraz entropi tercih ediliyor?",
+    "options": [
+      "Çapraz entropinin hesaplanması daha hızlıdır",
+      "Cross-entropy punishes confident wrong predictions exponentially via -log(p), while MSE gives weak gradients near 0 and 1",
+      "MSE yalnızca regresyon için çalışır",
+      "Cross-entropy doesn't require labels"
+    ],
     "correct": 1,
-    "explanation": "When a model confidently predicts the wrong class (p near 0 for true class), -log(p) produces a huge loss and strong gradient. MSE produces weak gradients in the same situation because sigmoid is flat near 0 and 1.",
+    "explanation": "Bir model yanlış sınıfı güvenle tahmin ettiğinde (gerçek sınıf için p 0'a yakın), -log(p) büyük bir kayıp ve güçlü bir eğim üretir. MSE aynı durumda zayıf gradyanlar üretir çünkü sigmoid 0 ve 1 yakınında düzdür.",
     "stage": "pre"
   },
   {
-    "question": "What happens if you use MSE loss for binary classification?",
-    "options": ["Training diverges immediately", "The model can minimize loss by predicting 0.5 for everything, achieving MSE=0.25 without learning", "The model trains normally", "Gradients explode"],
+    "question": "İkili sınıflandırma için MSE kaybını kullanırsanız ne olur?",
+    "options": [
+      "Training diverges immediately",
+      "Model, her şey için 0,5 tahmin ederek kaybı en aza indirebilir ve öğrenmeden MSE=0,25 değerine ulaşabilir",
+      "Model normal şekilde antrenman yapıyor",
+      "Gradients explode"
+    ],
     "correct": 1,
-    "explanation": "With MSE on a balanced binary dataset, predicting 0.5 for every input gives MSE=0.25 -- the minimum achievable without discrimination. The model satisfies the loss without learning any useful patterns.",
+    "explanation": "Dengeli bir ikili veri kümesindeki MSE ile her giriş için 0,5'in tahmin edilmesi, ayrım yapılmadan elde edilebilecek minimum değer olan MSE=0,25'i verir. Model, herhangi bir yararlı kalıp öğrenmeden kaybı karşılar.",
     "stage": "post"
   },
   {
-    "question": "What does label smoothing do and why is it useful?",
-    "options": ["It removes noisy labels from the dataset", "It replaces hard 0/1 targets with soft values like 0.1/0.9, preventing overconfident predictions and improving generalization", "It applies a moving average to the loss", "It smooths the learning rate schedule"],
+    "question": "Etiket yumuşatma ne işe yarar ve neden faydalıdır?",
+    "options": [
+      "Gürültülü etiketleri veri kümesinden kaldırır",
+      "Kesin 0/1 hedeflerini 0,1/0,9 gibi yumuşak değerlerle değiştirerek aşırı güvenli tahminleri önler ve genellemeyi geliştirir",
+      "Kayba hareketli bir ortalama uygular",
+      "Öğrenme oranı programını düzgünleştirir"
+    ],
     "correct": 1,
-    "explanation": "Label smoothing changes targets from [0,0,1,0] to [0.025,0.025,0.925,0.025] (with alpha=0.1). This prevents the model from pushing logits to infinity to achieve hard targets, reducing overconfidence.",
+    "explanation": "Etiket yumuşatma, hedefleri [0,0,1,0]'dan [0,025,0,025,0,925,0,025]'e (alfa=0,1 ile) değiştirir. Bu, modelin zor hedeflere ulaşmak için logitleri sonsuza itmesini önleyerek aşırı güveni azaltır.",
     "stage": "post"
   },
   {
-    "question": "In contrastive loss (InfoNCE), what role does the temperature parameter play?",
-    "options": ["It controls the learning rate", "It controls how sharp the similarity distribution is -- lower temperature means harder separation between positives and negatives", "It sets the number of negative samples", "It determines the embedding dimension"],
+    "question": "Karşılaştırmalı kayıpta (InfoNCE), sıcaklık parametresi nasıl bir rol oynar?",
+    "options": [
+      "Öğrenme oranını kontrol eder",
+      "Benzerlik dağılımının ne kadar keskin olduğunu kontrol eder; daha düşük sıcaklık, pozitif ve negatifler arasındaki ayrımın daha zor olduğu anlamına gelir",
+      "Negatif örneklerin sayısını ayarlar",
+      "Gömme boyutunu belirler"
+    ],
     "correct": 1,
-    "explanation": "Temperature divides the similarity scores before softmax. Lower temperature (e.g., 0.07) creates a sharper distribution where the model must clearly separate positives from negatives. Higher temperature is more forgiving.",
+    "explanation": "Sıcaklık, softmax'tan önce benzerlik puanlarını böler. Daha düşük sıcaklık (örneğin, 0,07), modelin pozitifleri negatiflerden açıkça ayırması gereken daha keskin bir dağılım oluşturur. Daha yüksek sıcaklık daha bağışlayıcıdır.",
     "stage": "post"
   }
 ]

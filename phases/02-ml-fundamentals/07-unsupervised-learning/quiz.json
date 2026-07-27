@@ -2,66 +2,66 @@
   {
     "id": "unsupervised-pre-1",
     "stage": "pre",
-    "question": "What distinguishes unsupervised learning from supervised learning?",
+    "question": "Denetimsiz öğrenmeyi denetimli öğrenmeden ayıran nedir?",
     "options": [
       "Unsupervised learning uses more data",
-      "Unsupervised learning has no labeled outputs -- the algorithm finds structure on its own",
-      "Unsupervised learning only works with text data",
+      "Denetimsiz öğrenmenin etiketli çıktıları yoktur; algoritma yapıyı kendi başına bulur",
+      "Denetimsiz öğrenme yalnızca metin verileriyle çalışır",
       "Unsupervised learning always produces better results"
     ],
     "correct": 1,
-    "explanation": "In unsupervised learning, there are no labels. The algorithm discovers patterns, groupings, or structure in the data without being told what the correct output should be."
+    "explanation": "Denetimsiz öğrenmede etiket yoktur. Algoritma, doğru çıktının ne olması gerektiği söylenmeden verilerdeki kalıpları, gruplamaları veya yapıyı keşfeder."
   },
   {
     "id": "unsupervised-pre-2",
     "stage": "pre",
-    "question": "What does K-Means require you to specify before training?",
+    "question": "K-Anlamına gelir, eğitimden önce neyi belirtmenizi gerektirir?",
     "options": [
-      "The exact cluster centers",
-      "The number of clusters K",
-      "The labels for each data point",
-      "The distance metric to use"
+      "Tam küme merkezleri",
+      "Küme sayısı K",
+      "Her veri noktasına ilişkin etiketler",
+      "Kullanılacak mesafe ölçümü"
     ],
     "correct": 1,
-    "explanation": "K-Means requires the number of clusters K as input. It then iteratively assigns points to the nearest centroid and recomputes centroids until convergence."
+    "explanation": "K-Means, giriş olarak K kümesi sayısını gerektirir. Daha sonra noktaları yinelemeli olarak en yakın merkez noktasına atar ve yakınsamaya kadar merkez noktalarını yeniden hesaplar."
   },
   {
     "id": "unsupervised-post-1",
     "stage": "post",
-    "question": "K-Means fails on two interlocking half-moon shapes but DBSCAN succeeds. Why?",
+    "question": "K-Means birbirine kenetlenen iki yarım ay şeklinde başarısız oluyor ancak DBSCAN başarılı oluyor. Neden?",
     "options": [
       "DBSCAN uses more data than K-Means",
-      "DBSCAN finds clusters based on density, so it can discover arbitrary shapes, while K-Means assumes spherical clusters",
+      "DBSCAN, yoğunluğa dayalı kümeleri bulur, böylece rastgele şekilleri keşfedebilir; K-Means ise küresel kümeleri varsayar.",
       "DBSCAN always outperforms K-Means on every dataset",
-      "K-Means cannot handle 2D data"
+      "K-Means 2 boyutlu verileri işleyemez"
     ],
     "correct": 1,
-    "explanation": "K-Means assigns points to the nearest centroid, producing spherical (convex) clusters. DBSCAN grows clusters from dense regions, discovering any shape as long as the cluster is connected by density."
+    "explanation": "K-Means, noktaları en yakın merkez noktasına atar ve küresel (dışbükey) kümeler üretir. DBSCAN, küme yoğunlukla birbirine bağlı olduğu sürece herhangi bir şekli keşfederek yoğun bölgelerden kümeleri büyütür."
   },
   {
     "id": "unsupervised-post-2",
     "stage": "post",
-    "question": "What is the silhouette score measuring?",
+    "question": "Siluet puanı ne ölçüyor?",
     "options": [
-      "The total number of clusters found",
-      "How similar each point is to its own cluster compared to the nearest other cluster",
-      "The speed of the clustering algorithm",
-      "The percentage of outliers in the data"
+      "Bulunan toplam küme sayısı",
+      "En yakın diğer kümeyle karşılaştırıldığında her noktanın kendi kümesine ne kadar benzer olduğu",
+      "Kümeleme algoritmasının hızı",
+      "Verilerdeki aykırı değerlerin yüzdesi"
     ],
     "correct": 1,
-    "explanation": "Silhouette score = (b - a) / max(a, b), where a is mean intra-cluster distance and b is mean nearest-cluster distance. It ranges from -1 (wrong cluster) to +1 (well-clustered)."
+    "explanation": "Siluet puanı = (b - a) / max(a, b), burada a ortalama küme içi mesafe ve b ortalama en yakın küme mesafesidir. -1 (yanlış küme) ile +1 (iyi kümelenmiş) arasında değişir."
   },
   {
     "id": "unsupervised-post-3",
     "stage": "post",
-    "question": "How does a Gaussian Mixture Model differ from K-Means in its cluster assignments?",
+    "question": "Gauss Karışım Modeli, küme atamaları açısından K-Means'ten nasıl farklıdır?",
     "options": [
-      "GMM uses hard assignments where each point belongs to exactly one cluster",
-      "GMM gives soft (probabilistic) assignments where each point has a probability of belonging to each cluster",
-      "GMM does not use centroids at all",
-      "GMM only works with one-dimensional data"
+      "GMM, her noktanın tam olarak bir kümeye ait olduğu zor atamaları kullanır",
+      "GMM, her noktanın her kümeye ait olma olasılığının olduğu yumuşak (olasılıksal) atamalar verir",
+      "GMM ağırlık merkezlerini hiç kullanmıyor",
+      "GMM yalnızca tek boyutlu verilerle çalışır"
     ],
     "correct": 1,
-    "explanation": "K-Means assigns each point to exactly one cluster (hard). GMM computes the probability that each point belongs to each Gaussian component (soft), and can model elliptical, overlapping clusters."
+    "explanation": "K-Means her noktayı tam olarak bir kümeye (sabit) atar. GMM, her noktanın her Gauss bileşenine (yumuşak) ait olma olasılığını hesaplar ve eliptik, örtüşen kümeleri modelleyebilir."
   }
 ]

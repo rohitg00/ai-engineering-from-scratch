@@ -4,43 +4,43 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core substitution in Constitutional AI versus standard RLHF?",
+      "question": "Anayasal AI ile standart RLHF arasındaki temel değişiklik nedir?",
       "options": [
-        "It replaces the human preference labeler with an AI labeler that reads a list of principles",
-        "It replaces PPO with DPO",
-        "It uses synthetic prompts instead of real ones",
-        "It removes the reward model entirely"
+        "İnsan tercihi etiketleyicisini, ilkeler listesini okuyan bir AI etiketleyiciyle değiştirir.",
+        "PPO'yi DPO ile değiştirir",
+        "Gerçek istemler yerine sentetik istemler kullanır",
+        "Ödül modelini tamamen ortadan kaldırır"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the first (SFT) phase of Constitutional AI do?",
+      "question": "Anayasal AI'nin ilk (SFT) aşaması ne yapar?",
       "options": [
-        "Trains a reward model on AI-generated preferences only",
-        "Produces an initial response, critiques it under a sampled constitution principle, then revises and uses the revision as SFT target",
+        "Bir ödül modelini yalnızca AI-oluşturulan tercihlere göre eğitir",
+        "Bir ilk yanıt üretir, bunu örneklenmiş bir anayasa ilkesi kapsamında eleştirir, ardından revize eder ve revizyonu SFT hedefi olarak kullanır",
         "Generates synthetic principles by clustering labeler comments",
-        "Performs PPO with a constitution-derived reward"
+        "Anayasadan türetilmiş bir ödülle PPO gerçekleştirir"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the second (RLAIF) phase do?",
+      "question": "İkinci (RLAIF) aşama ne yapar?",
       "options": [
         "Skips PPO and applies a single supervised loss",
-        "Has humans re-label the SFT outputs",
-        "Distills the constitution into the tokenizer",
-        "Trains a reward model on AI-generated preferences from a feedback model and runs PPO against it"
+        "İnsanlar SFT çıktılarını yeniden etiketledi mi?",
+        "Anayasayı simgeleştiriciye damıtır",
+        "Bir geri bildirim modelinden AI- oluşturulan tercihler üzerine bir ödül modelini eğitir ve PPO'yi buna karşı çalıştırır"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the tier order in Anthropic's January 2026 four-tier Claude constitution?",
+      "question": "Anthropic'in Ocak 2026'daki dört kademeli Claude anayasasındaki kademe sırası nedir?",
       "options": [
         "Platform rules > avoid catastrophe > helpful > broadly ethical",
         "Broadly ethical > helpful > platform rules > avoid catastrophe",
@@ -52,7 +52,7 @@
     },
     {
       "stage": "post",
-      "question": "Which failure mode is NOT necessarily fixed by switching from RLHF to RLAIF?",
+      "question": "Hangi arıza modu NOT, RLHF'den RLAIF'ye geçiş yapılarak zorunlu olarak düzeltilir?",
       "options": [
         "Labeler psychological inconsistency",
         "Reward hacking / Goodhart's Law",
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "What is the headline shift between Constitutional Classifiers v1 and v2 (2026)?",
+      "question": "Anayasal Sınıflandırıcılar v1 ve v2 (2026) arasındaki başlık değişikliği nedir?",
       "options": [
-        "v2 increased compute overhead from 1% to 23.7%",
-        "v2 removed the classifier and relied on constitution alone",
-        "v2 only runs on input, not output",
-        "v2 dropped compute overhead from 23.7% to about 1% with low successful attack rate"
+        "v2, işlem yükünü %1'den %23,7'ye çıkardı",
+        "v2 sınıflandırıcıyı kaldırdı ve yalnızca yapıya güvendi",
+        "v2 yalnızca girişte çalışır, çıkışta değil",
+        "v2, düşük başarılı saldırı oranıyla işlem yükünü %23,7'den yaklaşık %1'e düşürdü"
       ],
       "correct": 3,
       "explanation": ""

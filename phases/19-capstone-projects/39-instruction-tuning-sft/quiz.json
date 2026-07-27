@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading: you give a vanilla base model the prompt 'What is the capital of France?'. It outputs 'And what about Italy and Spain too?'. Which best diagnoses the gap?",
+      "question": "Okumadan önce: Vanilya bazlı bir modele 'Fransa'nın başkenti nedir?' sorusunu veriyorsunuz. 'Peki ya İtalya ve İspanya da ne olacak?' çıktısını verir. Boşluğu en iyi hangisi teşhis eder?",
       "options": [
-        "The model is missing the fact about Paris.",
-        "The model has the language model behaviour but no instruction-following format contract.",
-        "The model needs a larger vocabulary.",
-        "The base model must be reset and pretrained again."
+        "Modelde Paris gerçeği eksik.",
+        "Model, dil modeli davranışına sahiptir ancak talimat takip eden format sözleşmesi yoktur.",
+        "Modelin daha geniş bir kelime dağarcığına ihtiyacı var.",
+        "Temel modelin sıfırlanması ve yeniden eğitilmesi gerekir."
       ],
       "correct": 1,
-      "explanation": "The base model can extend text but has never been shown that an instruction expects a corresponding response. SFT teaches the format contract: see instruction, emit response."
+      "explanation": "Temel model metni genişletebilir ancak bir talimatın buna karşılık gelen bir yanıt beklediği hiçbir zaman gösterilmemiştir. SFT format sözleşmesini öğretir: talimata bakın, yanıt verin."
     },
     {
       "stage": "check",
-      "question": "The collate function sets labels[i] = -100 on instruction positions and on padding positions. Why does PyTorch cross-entropy treat these positions correctly?",
+      "question": "Harmanlama işlevi, talimat konumlarında ve doldurma konumlarında labels[i] = -100 değerini ayarlar. PyTorch çapraz entropisi neden bu konumları doğru şekilde ele alıyor?",
       "options": [
         "Cross-entropy silently drops any negative target.",
-        "ignore_index=-100 is honoured by F.cross_entropy: those positions contribute zero loss and zero gradient.",
-        "The model output at those positions is set to NaN automatically.",
+        "görmezden_index=-100, F.cross_entropy tarafından onurlandırılmıştır: bu konumlar sıfır kayıp ve sıfır eğime katkıda bulunur.",
+        "Bu konumlardaki model çıktısı otomatik olarak NaN'ye ayarlanır.",
         "PyTorch normalises by sequence length so masked positions cancel out."
       ],
       "correct": 1,
-      "explanation": "ignore_index is a documented argument of F.cross_entropy. Targets equal to it contribute zero to loss and zero to gradients. -100 is the conventional default value."
+      "explanation": "görmezden_index, F.cross_entropy'nin belgelenmiş bir argümanıdır. Buna eşit hedefler kayıplara sıfır ve eğimlere sıfır katkıda bulunur. -100 geleneksel varsayılan değerdir."
     },
     {
       "stage": "check",
-      "question": "Why does `shifted_loss` slice `logits[:, :-1, :]` and `labels[:, 1:]` instead of using them at the same positions?",
+      "question": "`shifted_loss` neden `logits[:, :-1, :]` ve `labels[:, 1:]`'yi aynı konumlarda kullanmak yerine dilimliyor?",
       "options": [
-        "To make the tensors the same size after the collate step.",
-        "Because the model at position i predicts the token at position i+1 under the causal next-token objective.",
-        "To exclude the final padding position automatically.",
-        "It is an optional optimisation; using same-position labels also works."
+        "Harmanlama adımından sonra tensörleri aynı boyutta yapmak.",
+        "Çünkü i konumundaki model, nedensel sonraki token hedefi kapsamında i+1 konumundaki tokenı tahmin etmektedir.",
+        "Son dolgu konumunu otomatik olarak hariç tutmak için.",
+        "Bu isteğe bağlı bir optimizasyondur; aynı konumdaki etiketleri kullanmak da işe yarar."
       ],
       "correct": 1,
-      "explanation": "Causal LM trains position i to predict token i+1. The slice aligns the prediction at position i with the gold label at position i+1, which is the standard next-token objective."
+      "explanation": "Nedensel LM, i+1 jetonunu tahmin etmek için i konumunu eğitir. Dilim, i konumundaki tahmini, standart sonraki token hedefi olan i+1 konumundaki altın etiketle hizalar."
     },
     {
       "stage": "check",
-      "question": "You train without the mask: labels are equal to input_ids with no -100. The model trains but exact-match on the response is worse than with the mask. The most likely cause?",
+      "question": "Maske olmadan antrenman yaparsınız: etiketler -100 olmadan input_id'lere eşittir. Model eğitiliyor ancak yanıtın tam eşleşmesi maskeyle olduğundan daha kötü. En muhtemel sebep?",
       "options": [
-        "The optimiser overfits the response tokens.",
-        "Most of the gradient signal goes to predicting the instruction (the largest masked region was holding it back).",
-        "Cross-entropy is unstable when the loss includes specials.",
-        "The model cannot learn the boundary token without the mask."
+        "Optimize edici, yanıt belirteçlerini fazlasıyla doldurur.",
+        "Gradyan sinyalinin çoğu talimatı tahmin etmeye gidiyor (en büyük maskeli bölge onu geri tutuyordu).",
+        "Kayıp özel durumları da içerdiğinde çapraz entropi kararsızdır.",
+        "Model, maske olmadan sınır belirtecini öğrenemez."
       ],
       "correct": 1,
-      "explanation": "When instruction positions count toward the loss, they dominate the gradient because there are usually more of them than response tokens. The effective learning rate on the part you care about (the response) drops, and the model spends capacity reconstructing inputs the user always supplies."
+      "explanation": "Talimat pozisyonları kayıp olarak hesaba katıldığında, eğime hakim olurlar çünkü genellikle yanıt jetonlarından daha fazlası vardır. Önemsediğiniz kısmın (yanıt) etkili öğrenme oranı düşer ve model, kullanıcının her zaman sağladığı girdileri yeniden yapılandırmak için kapasiteyi harcar."
     },
     {
       "stage": "post",
-      "question": "Exact-match is 0.85 on the held-out set. A reviewer says the model paraphrases correct answers and exact-match misses those. Which metric do you add to capture this?",
+      "question": "Tam eşleşme, uzatılan sette 0,85'tir. Bir incelemeci, modelin doğru cevapları başka kelimelerle ifade ettiğini ve tam eşleşmenin bunları kaçırdığını söylüyor. Bunu yakalamak için hangi metriği eklersiniz?",
       "options": [
-        "Loss on the held-out set.",
-        "Token-level F1 against the reference, which credits overlap even when not character-identical.",
+        "Uzatılan sette kayıp.",
+        "Referansa karşı belirteç düzeyinde F1, karakterle aynı olmasa bile krediler örtüşür.",
         "Average sequence length.",
-        "Cross-entropy of the reference under the model."
+        "Model kapsamındaki referansın çapraz entropisi."
       ],
       "correct": 1,
-      "explanation": "Token-level F1 (counted between predicted and reference tokens after normalisation) credits the model for getting most of the answer right even when surface form differs. This is lesson 41's job."
+      "explanation": "Belirteç düzeyindeki F1 (normalleştirme sonrasında tahmin edilen ve referans belirteçler arasında sayılır), yüzey biçimi farklı olsa bile modelin yanıtın çoğunu doğru almasına itibar eder. Bu 41. dersin işi."
     },
     {
       "stage": "post",
-      "question": "You want to use the SFT model in a chatbot that supports multi-turn dialogue. What is the minimum change required to the data and the mask?",
+      "question": "SFT modelini çok turlu diyaloğu destekleyen bir sohbet robotunda kullanmak istiyorsunuz. Verilerde ve maskede gereken minimum değişiklik nedir?",
       "options": [
-        "None: SFT models always handle multi-turn out of the box.",
-        "Add a USER and ASSISTANT marker per turn, concatenate turns, and mask everything except the assistant turn currently being trained on.",
-        "Switch the loss to mean-squared error.",
-        "Increase the vocabulary."
+        "Yok: SFT modelleri her zaman çoklu dönüşleri kutudan çıkarır çıkarmaz işler.",
+        "Tur başına bir USER ve ASSISTANT işaretçisi ekleyin, dönüşleri birleştirin ve halihazırda üzerinde eğitim verilen asistan sırası dışındaki her şeyi maskeleyin.",
+        "Kaybı ortalama kare hatasına çevirin.",
+        "Kelime dağarcığını artırın."
       ],
       "correct": 1,
-      "explanation": "Multi-turn SFT generalises the single-turn template. Each turn gets a role marker. The mask is the union of all non-assistant positions plus padding. The training objective is unchanged."
+      "explanation": "Çok turlu SFT tek turlu şablonu genelleştirir. Her tur bir rol işaretçisi alır. Maske, asistan olmayan tüm pozisyonların ve dolgunun birleşimidir. Eğitim hedefi değişmedi."
     }
   ]
 }

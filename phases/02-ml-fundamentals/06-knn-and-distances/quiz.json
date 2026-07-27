@@ -2,25 +2,25 @@
   {
     "id": "knn-pre-1",
     "stage": "pre",
-    "question": "KNN is called a 'lazy learner.' What does that mean?",
+    "question": "KNN'ye 'tembel öğrenci' denir. Bu ne anlama gelir?",
     "options": [
-      "It converges slowly during training",
-      "It does no computation at training time and computes everything at prediction time",
-      "It uses a simplified version of the loss function",
-      "It only works on small datasets"
+      "Eğitim sırasında yavaş yavaş birleşir",
+      "Eğitim zamanında hesaplama yapmaz ve tahmin zamanında her şeyi hesaplar",
+      "Kayıp fonksiyonunun basitleştirilmiş bir versiyonunu kullanır",
+      "Yalnızca küçük veri kümelerinde çalışır"
     ],
     "correct": 1,
-    "explanation": "Lazy learning means KNN stores the training data and does no work during 'training.' All computation (distance calculations, voting) happens when a prediction is requested."
+    "explanation": "Tembel öğrenme, KNN'nin eğitim verilerini depoladığı ve 'eğitim' sırasında hiçbir iş yapmadığı anlamına gelir. Tüm hesaplamalar (mesafe hesaplamaları, oylama) bir tahmin istendiğinde gerçekleşir."
   },
   {
     "id": "knn-pre-2",
     "stage": "pre",
-    "question": "Why is feature scaling critical for KNN?",
+    "question": "KNN için özellik ölçeklendirme neden kritiktir?",
     "options": [
-      "KNN cannot handle negative numbers without scaling",
-      "Distance calculations are dominated by features with larger ranges, making scaling necessary for fair comparisons",
-      "Feature scaling reduces the number of neighbors needed",
-      "KNN uses gradient descent which requires normalized inputs"
+      "KNN negatif sayıları ölçekleme olmadan işleyemez",
+      "Mesafe hesaplamalarında daha geniş aralıklara sahip özellikler hakimdir, bu da adil karşılaştırmalar için ölçeklendirmeyi gerekli kılar",
+      "Özellik ölçeklendirme, ihtiyaç duyulan komşu sayısını azaltır",
+      "KNN, normalleştirilmiş girişler gerektiren gradyan inişini kullanır"
     ],
     "correct": 1,
     "explanation": "KNN relies on distances. A feature ranging 0-1000 will dominate a feature ranging 0-1 in distance calculations. Scaling puts all features on comparable ranges."
@@ -28,20 +28,20 @@
   {
     "id": "knn-post-1",
     "stage": "post",
-    "question": "In 100 dimensions with uniform random points, what happens to the ratio of max distance to min distance?",
+    "question": "Düzgün rastgele noktalara sahip 100 boyutta, maksimum mesafenin minimum mesafeye oranına ne olur?",
     "options": [
-      "It increases dramatically, making neighbors more distinct",
-      "It approaches 1, making all points nearly equidistant from each other",
-      "It stays the same as in 2 dimensions",
-      "It becomes negative due to numerical overflow"
+      "Önemli ölçüde artarak komşuları daha belirgin hale getiriyor",
+      "1'e yaklaşır ve tüm noktaların birbirine neredeyse eşit uzaklıkta olmasını sağlar",
+      "2 boyutta olduğu gibi aynı kalır",
+      "Sayısal taşma nedeniyle negatif olur"
     ],
     "correct": 1,
-    "explanation": "This is the curse of dimensionality. In high dimensions, distances converge: max_dist / min_dist approaches 1. When all points are equidistant, 'nearest' becomes meaningless."
+    "explanation": "Bu boyutluluğun lanetidir. Yüksek boyutlarda mesafeler yakınsar: max_dist / min_dist 1'e yaklaşır. Tüm noktalar eşit uzaklıkta olduğunda 'en yakın' anlamsız hale gelir."
   },
   {
     "id": "knn-post-2",
     "stage": "post",
-    "question": "Which distance metric is most appropriate for comparing text documents represented as TF-IDF vectors?",
+    "question": "TF-IDF vektörleri olarak temsil edilen metin belgelerini karşılaştırmak için hangi mesafe ölçümü en uygundur?",
     "options": [
       "L2 (Euclidean) distance",
       "L1 (Manhattan) distance",
@@ -49,19 +49,19 @@
       "Chebyshev distance"
     ],
     "correct": 2,
-    "explanation": "Cosine distance measures the angle between vectors, ignoring magnitude. For text, document length (magnitude) is noise -- direction captures meaning. Cosine consistently outperforms L1/L2 for text."
+    "explanation": "Kosinüs mesafesi, büyüklüğü göz ardı ederek vektörler arasındaki açıyı ölçer. Metin için belgenin uzunluğu (büyüklüğü) gürültüdür; yön, anlamı yakalar. Kosinüs, metin açısından sürekli olarak L1/L2'den daha iyi performans gösterir."
   },
   {
     "id": "knn-post-3",
     "stage": "post",
-    "question": "What happens to the KNN decision boundary as K increases from 1 to N (the full dataset size)?",
+    "question": "K 1'den N'ye (tam veri kümesi boyutu) arttıkça KNN karar sınırına ne olur?",
     "options": [
-      "The boundary becomes more complex and detailed",
-      "The boundary stays the same regardless of K",
-      "The boundary smooths out, eventually predicting the majority class for every point",
-      "The boundary becomes circular"
+      "Sınır daha karmaşık ve ayrıntılı hale gelir",
+      "Sınır, K'dan bağımsız olarak aynı kalır",
+      "Sınır düzeliyor ve sonunda her nokta için çoğunluk sınıfı tahmin ediliyor",
+      "Sınır dairesel hale gelir"
     ],
     "correct": 2,
-    "explanation": "K=1 produces jagged boundaries that follow every point (overfitting). As K increases, boundaries smooth out. K=N means every query considers all points, always predicting the majority class (maximum bias)."
+    "explanation": "K=1 her noktayı takip eden pürüzlü sınırlar üretir (aşırı uyum). K arttıkça sınırlar düzleşir. K=N, her sorgunun tüm noktaları dikkate aldığı ve her zaman çoğunluk sınıfını (maksimum önyargı) tahmin ettiği anlamına gelir."
   }
 ]

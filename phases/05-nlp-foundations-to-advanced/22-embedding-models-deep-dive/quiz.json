@@ -1,102 +1,102 @@
 {
   "lesson": "22-embedding-models-deep-dive",
-  "title": "Embedding Models — The 2026 Deep Dive",
+  "title": "Gömme Modelleri — 2026 Derinlemesine İnceleme",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is a dense embedding?",
+      "question": "Yoğun gömme nedir?",
       "options": [
         "A graph over documents",
         "A sparse weight per vocab token",
         "A token-level alignment matrix",
-        "One fixed-size vector per text where cosine similarity ranks passages by semantic proximity"
+        "Kosinüs benzerliğinin pasajları anlamsal yakınlığa göre sıraladığı metin başına bir sabit boyutlu vektör"
       ],
       "correct": 3,
-      "explanation": "Dense embeddings give one vector per text (typically 384-3072 dim); cosine ranks similarity."
+      "explanation": "Yoğun yerleştirmeler metin başına bir vektör verir (genellikle 384-3072 dim); kosinüs benzerliği sıralar."
     },
     {
       "stage": "pre",
-      "question": "What does Matryoshka Representation Learning enable?",
+      "question": "Matryoshka Temsil Öğrenimi neyi mümkün kılar?",
       "options": [
         "Multilingual training",
         "Faster softmax",
-        "Truncating a trained embedding to its first N dimensions and getting a still-useful smaller embedding",
+        "Eğitilmiş bir yerleştirmeyi ilk N boyutlarına kesmek ve hala kullanışlı olan daha küçük bir yerleştirme elde etmek",
         "Cross-encoder rescoring"
       ],
       "correct": 2,
-      "explanation": "Matryoshka training makes the first N dims of the vector standalone-useful, enabling cheap truncation."
+      "explanation": "Matryoshka eğitimi, vektörün ilk N sönüklüğünü bağımsız olarak kullanışlı hale getirerek ucuz kesmeye olanak tanır."
     },
     {
       "stage": "check",
-      "question": "How do multi-vector (ColBERT) embeddings score query-doc pairs?",
+      "question": "Çoklu vektör (ColBERT) yerleştirmeleri sorgu-belge çiftlerini nasıl puanlar?",
       "options": [
         "Cosine of mean-pooled token vectors",
         "Cross-entropy",
         "Earth-mover's distance",
-        "MaxSim: for each query token find the most similar document token, then sum the maxima"
+        "MaxSim: her sorgu jetonu için en benzer belge jetonunu bulun, ardından maksimumları toplayın"
       ],
       "correct": 3,
       "explanation": "ColBERT-style late interaction uses MaxSim across per-token vectors."
     },
     {
       "stage": "check",
-      "question": "What does BGE-M3 output simultaneously?",
+      "question": "BGE-M3 aynı anda ne çıktı veriyor?",
       "options": [
-        "Only a sparse vector",
-        "Only a dense vector",
-        "Dense, sparse, and multi-vector (colbert) representations from one model in a single inference",
-        "Only a colbert vector"
+        "Yalnızca seyrek bir vektör",
+        "Yalnızca yoğun bir vektör",
+        "Tek bir çıkarımda tek bir modelden yoğun, seyrek ve çoklu vektör (colbert) gösterimleri",
+        "Yalnızca bir colbert vektörü"
       ],
       "correct": 2,
-      "explanation": "BGE-M3 emits three retrieval modes from one model, useful for fused hybrid scoring."
+      "explanation": "BGE-M3, bir modelden, birleştirilmiş hibrit puanlama için yararlı olan üç alma modu yayar."
     },
     {
       "stage": "check",
-      "question": "Why must you re-normalize a Matryoshka-truncated vector before cosine similarity?",
+      "question": "Neden Matryoshka'nın kesik vektörünü kosinüs benzerliğinden önce yeniden normalleştirmeniz gerekiyor?",
       "options": [
         "Truncation breaks training",
-        "Truncation changes the vector norm; without re-normalizing, dot product no longer equals cosine",
+        "Kesme, vektör normunu değiştirir; yeniden normalleştirme olmadan nokta çarpım artık kosinüse eşit değildir",
         "Cosine ignores normalization",
-        "Required by FAISS only"
+        "Yalnızca FAISS tarafından gereklidir"
       ],
       "correct": 1,
       "explanation": "Re-normalizing after truncation restores unit norm so dot product equals cosine again."
     },
     {
       "stage": "post",
-      "question": "Why do BGE models often need a query-side prefix string?",
+      "question": "BGE modelleri neden sıklıkla sorgu tarafı önek dizisine ihtiyaç duyar?",
       "options": [
         "To compress queries",
         "Required by FAISS",
-        "BGE was trained with an explicit query prompt; omitting it costs 3-5 points recall",
+        "BGE, açık bir sorgu istemiyle eğitildi; bunu atlamak 3-5 puanlık hatırlamaya mal olur",
         "Prefixes change tokenizer behavior"
       ],
       "correct": 2,
-      "explanation": "BGE models expect a 'Represent this sentence for searching...' prefix on queries."
+      "explanation": "BGE modelleri, sorgularda 'Bu cümleyi arama için temsil et...' ön ekini bekler."
     },
     {
       "stage": "post",
-      "question": "Why is MTEB necessary but not sufficient for picking an embedding model?",
+      "question": "MTEB neden bir gömme modeli seçmek için gerekli ama yeterli değil?",
       "options": [
-        "MTEB only covers English",
+        "MTEB yalnızca İngilizce'yi kapsar",
         "MTEB ignores latency",
-        "Leaderboard ranks are average across many tasks; your specific domain may differ, so always benchmark on your data",
+        "Liderlik sıralaması birçok görevde ortalama düzeydedir; özel alan adınız farklı olabilir; bu nedenle her zaman verilerinizi karşılaştırın",
         "MTEB rewards bigger models"
       ],
       "correct": 2,
-      "explanation": "MTEB averages across tasks; domain-specific eval can flip the ranking."
+      "explanation": "MTEB görevler genelinde ortalamalar; alana özgü değerlendirme sıralamayı değiştirebilir."
     },
     {
       "stage": "post",
-      "question": "When should you add SPLADE sparse retrieval alongside dense embeddings?",
+      "question": "Yoğun yerleştirmelerin yanına SPLADE seyrek alımını ne zaman eklemelisiniz?",
       "options": [
-        "Whenever the encoder is multilingual",
-        "Whenever Matryoshka is used",
-        "When queries are keyword-heavy or contain identifiers/codes that dense embeddings blur",
-        "On small corpora only"
+        "Kodlayıcı çok dilli olduğunda",
+        "Matryoshka ne zaman kullanılırsa kullanılsın",
+        "Sorgular anahtar kelime ağırlıklı olduğunda veya yoğun yerleştirmeleri bulanıklaştıran tanımlayıcılar/kodlar içerdiğinde",
+        "Yalnızca küçük cisimlerde"
       ],
       "correct": 2,
-      "explanation": "SPLADE captures lexical/keyword matches that dense models can miss; fuse with dense via RRF."
+      "explanation": "SPLADE, yoğun modellerin kaçırabileceği sözcük/anahtar kelime eşleşmelerini yakalar; RRF aracılığıyla yoğun sigorta."
     }
   ]
 }

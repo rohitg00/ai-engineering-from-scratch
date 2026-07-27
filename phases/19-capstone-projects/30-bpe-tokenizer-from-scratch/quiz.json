@@ -1,78 +1,78 @@
 {
   "lesson": "30-bpe-tokenizer-from-scratch",
-  "title": "BPE Tokenizer From Scratch",
+  "title": "BPE Sıfırdan Tokenlaştırıcı",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does a byte-level BPE tokenizer start from a 256-symbol alphabet?",
+      "question": "Bayt düzeyindeki bir BPE belirteç oluşturucu neden 256 sembollü bir alfabeden başlıyor?",
       "options": [
-        "It guarantees any UTF-8 input can be represented before any merge is learned",
-        "It is the smallest alphabet that supports the English language",
-        "It matches the GPU warp size on most accelerators",
-        "It removes the need to store a merge table"
+        "Herhangi bir birleştirme öğrenilmeden önce herhangi bir UTF-8 girişinin temsil edilebileceğini garanti eder",
+        "İngilizce dilini destekleyen en küçük alfabedir",
+        "Çoğu hızlandırıcıdaki GPU çözgü boyutuyla eşleşir",
+        "Birleştirme tablosunu saklama ihtiyacını ortadan kaldırır"
       ],
       "correct": 0,
-      "explanation": "The 256 raw byte ids cover every possible UTF-8 input. No unknown token is ever required because any input can be expressed as a sequence of bytes."
+      "explanation": "256 ham bayt kimliği olası her UTF-8 girişini kapsar. Herhangi bir giriş bayt dizisi olarak ifade edilebildiği için hiçbir zaman bilinmeyen bir belirtece gerek yoktur."
     },
     {
       "stage": "check",
-      "question": "What does each BPE training step do?",
+      "question": "Her BPE eğitim adımı ne yapar?",
       "options": [
-        "Splits a random word and assigns it a new id",
-        "Counts adjacent symbol pairs across the corpus and merges the most frequent one",
-        "Decreases the vocabulary by removing the least common id",
+        "Rastgele bir kelimeyi böler ve ona yeni bir kimlik atar",
+        "Tümcedeki bitişik sembol çiftlerini sayar ve en sık görüleni birleştirir",
+        "En az yaygın olan kimliği kaldırarak kelime dağarcığını azaltır",
         "Trains a small neural network to score subwords"
       ],
       "correct": 1,
-      "explanation": "Each step finds the highest-frequency adjacent pair across the corpus, merges it into a new symbol, and records the merge."
+      "explanation": "Her adım, bütündeki en yüksek frekanslı bitişik çifti bulur, onu yeni bir sembolle birleştirir ve birleştirmeyi kaydeder."
     },
     {
       "stage": "check",
-      "question": "When encoding new text, in what order are merges applied?",
+      "question": "Yeni metni kodlarken birleştirmeler hangi sırayla uygulanır?",
       "options": [
         "In random order until none apply",
-        "By position in the input, left to right, regardless of training rank",
-        "By the rank the merge received during training, lowest rank first",
-        "By the bytes of the pair, sorted alphabetically"
+        "Eğitim sıralamasına bakılmaksızın, girişteki konuma göre, soldan sağa",
+        "Eğitim sırasında alınan birleştirme sıralamasına göre, en düşük sıralama ilk sırada olacak",
+        "Çiftin baytlarına göre, alfabetik olarak sıralanmıştır"
       ],
       "correct": 2,
-      "explanation": "Inference applies merges in the order they were learned. The earliest merge in the table wins when multiple merges could apply."
+      "explanation": "Çıkarım, birleştirmeleri öğrenildikleri sıraya göre uygular. Birden fazla birleştirme uygulanabildiğinde tablodaki en erken birleştirme kazanır."
     },
     {
       "stage": "check",
-      "question": "What is the encoder's behavior on a special-token string when allow_special is False?",
+      "question": "Allow_special False olduğunda kodlayıcının özel belirteç dizesindeki davranışı nedir?",
       "options": [
-        "It raises an error",
-        "It maps the string to its reserved id",
-        "It encodes the literal bytes of the string",
-        "It silently skips the string"
+        "Bir hata doğuruyor",
+        "Dizeyi ayrılmış kimliğiyle eşler",
+        "Dizenin gerçek baytlarını kodlar",
+        "Dizeyi sessizce atlar"
       ],
       "correct": 2,
-      "explanation": "With allow_special off, a string like <|endoftext|> is treated as raw bytes and goes through the merge loop like any other input."
+      "explanation": "Allow_special kapalıyken, <|endoftext|> gibi bir dize ham bayt olarak değerlendirilir ve diğer herhangi bir giriş gibi birleştirme döngüsünden geçer."
     },
     {
       "stage": "post",
-      "question": "Why does the decoder never need an unknown-token id?",
+      "question": "Kod çözücü neden hiçbir zaman bilinmeyen bir belirteç kimliğine ihtiyaç duymaz?",
       "options": [
-        "Every learned token is the concatenation of two known tokens, recursing down to single bytes",
-        "The encoder strips unknown tokens before decoding",
-        "The model rejects unknown ids during sampling",
-        "The decoder always returns the empty string for unknown ids"
+        "Öğrenilen her jeton, bilinen iki jetonun tek bayta kadar yinelenen birleşimidir",
+        "Kodlayıcı, kod çözmeden önce bilinmeyen belirteçleri çıkarır",
+        "Model, örnekleme sırasında bilinmeyen kimlikleri reddeder",
+        "Kod çözücü, bilinmeyen kimlikler için her zaman boş dizeyi döndürür"
       ],
       "correct": 0,
-      "explanation": "Every id resolves either to a raw byte or to two previously known ids. Recursive expansion always terminates in bytes, which decode to UTF-8."
+      "explanation": "Her kimlik ya bir ham bayta ya da önceden bilinen iki kimliğe çözümlenir. Özyinelemeli genişletme her zaman UTF-8 kodunu çözen baytlarla sona erer."
     },
     {
       "stage": "post",
-      "question": "What happens to the encoded length of a fixed sentence as the target vocabulary grows?",
+      "question": "Hedef sözcük dağarcığı büyüdükçe sabit bir cümlenin kodlanmış uzunluğuna ne olur?",
       "options": [
-        "It increases linearly with the vocabulary size",
-        "It stays constant because each id encodes a single byte",
-        "It tends to decrease because larger vocabularies cover more subwords",
-        "It oscillates randomly because BPE is non-deterministic"
+        "Kelime dağarcığı boyutuyla doğrusal olarak artar",
+        "Sabit kalır çünkü her kimlik tek bir baytı kodlar",
+        "Daha geniş kelime dağarcığı daha fazla alt kelimeyi kapsadığı için azalma eğilimindedir.",
+        "Rastgele salınım yapar çünkü BPE deterministik değildir"
       ],
       "correct": 2,
-      "explanation": "Larger vocabularies learn more merges, so common subwords collapse into single ids and the encoded sequence gets shorter."
+      "explanation": "Daha büyük kelime dağarcığı daha fazla birleştirme öğrenir, böylece ortak alt kelimeler tek kimliklere bölünür ve kodlanmış sıra kısalır."
     }
   ]
 }

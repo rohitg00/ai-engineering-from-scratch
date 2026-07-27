@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the downloader keep a separate .partial.json checkpoint per shard?",
+      "question": "İndirici neden parça başına ayrı bir .partial.json denetim noktası tutuyor?",
       "options": [
-        "To make the cache directory look organized",
-        "So a resumed download can verify the sha256 prefix over the verified bytes before appending, making silent corruption impossible",
-        "Because urllib requires it",
-        "To store the URL in case the shard file moves"
+        "Önbellek dizininin düzenli görünmesini sağlamak için",
+        "Böylece devam ettirilen bir indirme, eklemeden önce doğrulanan baytlar üzerinden sha256 önekini doğrulayabilir, böylece sessiz bozulmayı imkansız hale getirir",
+        "Çünkü urllib bunu gerektiriyor",
+        "Parça dosyasının taşınması durumunda URL'yi saklamak için"
       ],
       "correct": 1,
-      "explanation": "The checkpoint records verified_bytes and the sha256 of those bytes; resume only proceeds when the on-disk hash matches."
+      "explanation": "Denetim noktası, valid_bytes'i ve bu baytların sha256'sını kaydeder; devam ettirme yalnızca diskteki karma eşleştiğinde devam eder."
     },
     {
       "stage": "check",
-      "question": "What does the LSH band scheme buy that exact-hash dedup does not?",
+      "question": "LSH bant planı tam karma veri tekilleştirmesinin almadığı neyi satın alıyor?",
       "options": [
         "Constant memory usage",
-        "Sub-linear lookup that flags near-duplicates with high Jaccard similarity even when the documents differ by a few tokens",
+        "Belgeler birkaç simgesel farklılık gösterse bile neredeyse kopyaları yüksek Jaccard benzerliğiyle işaretleyen alt doğrusal arama",
         "Lossless compression",
         "Faster sha256 computation"
       ],
       "correct": 1,
-      "explanation": "MinHash plus LSH catches paraphrases and boilerplate variants that exact-hash dedup walks past."
+      "explanation": "MinHash plus LSH, tam hash tekilleştirmenin geçmişte kaldığı açıklamaları ve standart versiyonları yakalar."
     },
     {
       "stage": "check",
-      "question": "Why is the checkpoint written before the bytes are appended, not after?",
+      "question": "Denetim noktası neden baytlar eklenmeden önce yazılıyor, sonra yazılmıyor?",
       "options": [
-        "It is convenient",
-        "If the process dies between the write and the checkpoint update, the next resume reads a checkpoint that is behind the bytes and silently re-appends, corrupting the file",
-        "It is faster",
-        "It saves disk space"
+        "Uygundur",
+        "İşlem yazma ve kontrol noktası güncellemesi arasında sona ererse, bir sonraki özgeçmiş baytların arkasında bulunan bir kontrol noktasını okur ve sessizce yeniden eklenir, bu da dosyayı bozar",
+        "Daha hızlı",
+        "Disk alanından tasarruf sağlar"
       ],
       "correct": 1,
-      "explanation": "Checkpoint-first matches a write-ahead log: a crash leaves the verified offset trailing or equal to the file, never ahead."
+      "explanation": "Önce denetim noktası bir yazma öncesi günlüğüyle eşleşir: bir kilitlenme, doğrulanmış ofseti dosyanın arkasında veya ona eşit olarak bırakır, asla ileride bırakmaz."
     },
     {
       "stage": "check",
-      "question": "What is the role of the manifest sha256 lock file?",
+      "question": "Bildiri sha256 kilit dosyasının rolü nedir?",
       "options": [
-        "It speeds up reads",
-        "Downstream stages refuse to start unless the manifest content matches the pinned hash, closing the silent attack surface where an attacker edits one file",
-        "It records the date",
-        "It is a backup of the manifest"
+        "Okumayı hızlandırır",
+        "Manifest içeriği sabitlenmiş hash ile eşleşmediği sürece aşağı akış aşamaları başlamayı reddeder ve saldırganın bir dosyayı düzenlediği sessiz saldırı yüzeyini kapatır",
+        "Tarihi kaydediyor",
+        "Bu manifestonun bir yedeğidir"
       ],
       "correct": 1,
-      "explanation": "Pinning the manifest hash makes the link between code and data a content-addressed contract."
+      "explanation": "Bildiri karmasının sabitlenmesi, kod ve veriler arasındaki bağlantıyı içeriğe yönelik bir sözleşme haline getirir."
     },
     {
       "stage": "post",
-      "question": "Why is dedup placed upstream of tokenization rather than after?",
+      "question": "Tekilleştirme neden tokenizasyonun sonrasına değil de yukarısına yerleştiriliyor?",
       "options": [
-        "The tokenizer cannot read JSONL",
-        "Tokenization is expensive; running it twice on the same document doubles cost for no loss-curve benefit, so dropping duplicates first is strictly cheaper",
+        "Belirteç JSONL'yi okuyamıyor",
+        "Tokenleştirme pahalıdır; aynı belge üzerinde iki kez çalıştırmak, kayıp eğrisi avantajı olmadan maliyeti iki katına çıkarır, bu nedenle kopyaları ilk önce bırakmak kesinlikle daha ucuzdur",
         "Tokenizers reject duplicates",
-        "The tokenizer needs a vocabulary first"
+        "Tokenizer'ın öncelikle bir kelime dağarcığına ihtiyacı var"
       ],
       "correct": 1,
-      "explanation": "Dedup is the first stage where each duplicate-dropped document saves the tokenizer one pass."
+      "explanation": "Tekilleştirme, kopyalanan her belgenin tokenizer'ı bir geçişte kaydettiği ilk aşamadır."
     },
     {
       "stage": "post",
-      "question": "What does tombstoning a dropped duplicate preserve that a silent delete does not?",
+      "question": "Bırakılan bir kopyanın mezar taşı olarak işaretlenmesi, sessiz silme işleminin sağlamadığı neyi korur?",
       "options": [
         "Disk space",
-        "The link between the duplicate and the keeper it collided with, plus an audit trail that survives a later threshold change",
+        "Kopya ile çarpıştığı kaleci arasındaki bağlantı ve daha sonraki eşik değişikliğinden sonra hayatta kalan bir denetim izi",
         "Compression ratio",
         "Manifest sha256 stability"
       ],
       "correct": 1,
-      "explanation": "Tombstones let a future pass revisit the dedup threshold; deletes lose the evidence."
+      "explanation": "Mezar taşları gelecekteki bir geçişin tekilleştirme eşiğini yeniden ziyaret etmesine olanak tanır; siler delilleri kaybedersiniz."
     }
   ]
 }

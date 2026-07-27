@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the fundamental difference between a base language model and an instruction-tuned model?",
-    "options": ["They have different architectures", "A base model continues text patterns; an instruction-tuned model follows instructions and answers questions", "Instruction-tuned models are larger", "Base models are faster"],
+    "question": "Temel dil modeli ile talimata göre ayarlanmış model arasındaki temel fark nedir?",
+    "options": [
+      "Farklı mimarileri var",
+      "A base model continues text patterns; an instruction-tuned model follows instructions and answers questions",
+      "Talimat ayarlı modeller daha büyüktür",
+      "Temel modeller daha hızlıdır"
+    ],
     "correct": 1,
-    "explanation": "A base model trained with next-token prediction continues text patterns. Ask it a question and it may generate more questions. SFT teaches it to produce answers by training on (instruction, response) pairs.",
+    "explanation": "Sonraki belirteç tahminiyle eğitilmiş bir temel model, metin kalıplarını sürdürür. Ona bir soru sorun, daha fazla soru üretebilir. SFT ona (talimat, yanıt) çiftleri üzerinde eğitim vererek yanıtlar üretmeyi öğretir.",
     "stage": "pre"
   },
   {
-    "question": "What is the purpose of masking loss on non-assistant tokens during SFT?",
-    "options": ["To speed up training", "To train the model only to generate responses, not to memorize the instruction format or system prompts", "To reduce memory usage", "To prevent overfitting"],
+    "question": "SFT sırasında asistan olmayan tokenlardaki kaybı maskelemenin amacı nedir?",
+    "options": [
+      "To speed up training",
+      "Modeli, talimat formatını veya sistem istemlerini ezberlemek için değil, yalnızca yanıtlar oluşturmak üzere eğitmek",
+      "To reduce memory usage",
+      "To prevent overfitting"
+    ],
     "correct": 1,
-    "explanation": "During SFT, you want the model to learn how to respond, not how to reproduce the instruction. Loss masking sets the loss to 0 for system/user tokens so gradients only come from the assistant's response tokens.",
+    "explanation": "SFT sırasında modelin, talimatı nasıl yeniden üreteceğini değil, nasıl yanıt vereceğini öğrenmesini istiyorsunuz. Kayıp maskeleme, sistem/kullanıcı belirteçleri için kaybı 0'a ayarlar, böylece degradeler yalnızca asistanın yanıt belirteçlerinden gelir.",
     "stage": "pre"
   },
   {
-    "question": "What format does SFT training data typically follow?",
-    "options": ["Raw text documents", "Chat template with system, user, and assistant roles marked by special tokens", "Key-value pairs", "SQL queries and results"],
+    "question": "SFT eğitim verileri genellikle hangi formatı takip ediyor?",
+    "options": [
+      "Raw text documents",
+      "Özel belirteçlerle işaretlenmiş sistem, kullanıcı ve asistan rollerini içeren sohbet şablonu",
+      "Key-value pairs",
+      "SQL queries and results"
+    ],
     "correct": 1,
-    "explanation": "SFT data uses a structured chat format: a system prompt setting behavior, a user instruction, and an assistant response. Special tokens mark role boundaries so the model learns the conversational structure.",
+    "explanation": "SFT verileri yapılandırılmış bir sohbet formatı kullanır: bir sistem istemi ayar davranışı, bir kullanıcı talimatı ve bir asistan yanıtı. Özel belirteçler rol sınırlarını işaretleyerek modelin konuşma yapısını öğrenmesini sağlar.",
     "stage": "post"
   },
   {
-    "question": "Why might an SFT model produce lower perplexity on benchmarks but worse conversational quality?",
-    "options": ["The benchmarks are wrong", "SFT optimizes for pattern matching on training examples, not for the nuanced quality judgments humans care about -- that requires RLHF/DPO", "The model is too small", "The learning rate was wrong"],
+    "question": "Bir SFT modeli neden kıyaslamalarda daha az kafa karışıklığı yaratırken, konuşma kalitesinin daha kötü olmasına neden olabilir?",
+    "options": [
+      "Benchmarklar yanlış",
+      "SFT, insanların önemsediği incelikli kalite yargıları için değil, eğitim örneklerindeki model eşleştirmesi için optimize eder; bu da RLHF/DPO gerektirir",
+      "Model çok küçük",
+      "Öğrenme oranı yanlıştı"
+    ],
     "correct": 1,
-    "explanation": "SFT teaches the model to follow formats and produce plausible responses. It doesn't teach which response is better when multiple valid options exist. Human preference alignment (RLHF/DPO) addresses this gap.",
+    "explanation": "SFT, modele formatları takip etmeyi ve makul yanıtlar üretmeyi öğretir. Birden fazla geçerli seçenek mevcut olduğunda hangi yanıtın daha iyi olduğunu öğretmez. İnsan tercihi uyumu (RLHF/DPO) bu boşluğu giderir.",
     "stage": "post"
   },
   {
-    "question": "How many high-quality instruction-response pairs are typically needed for effective SFT?",
-    "options": ["Millions", "10,000 to 100,000 high-quality examples", "Fewer than 100", "Billions"],
+    "question": "Etkili SFT için genellikle kaç adet yüksek kaliteli talimat-yanıt çifti gereklidir?",
+    "options": [
+      "Millions",
+      "10,000 to 100,000 high-quality examples",
+      "Fewer than 100",
+      "Billions"
+    ],
     "correct": 1,
-    "explanation": "SFT is surprisingly data-efficient. Studies show that 10K-100K high-quality examples (like the Alpaca or LIMA datasets) can effectively teach instruction following. Quality matters far more than quantity.",
+    "explanation": "SFT şaşırtıcı derecede veri verimlidir. Araştırmalar, 10K-100K yüksek kaliteli örneklerin (Alpaka veya LIMA veri kümeleri gibi) aşağıdaki talimatları etkili bir şekilde öğretebileceğini gösteriyor. Nitelik nicelikten çok daha önemlidir.",
     "stage": "post"
   }
 ]

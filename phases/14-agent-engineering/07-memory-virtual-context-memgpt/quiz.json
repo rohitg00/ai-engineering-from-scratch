@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What OS analogy does MemGPT build on?",
+      "question": "MemGPT hangi OS benzetmesini temel alıyor?",
       "options": [
         "Processes and threads",
         "Virtual memory: main context as RAM, external store as disk, memory tools as page in and out",
@@ -16,19 +16,19 @@
     },
     {
       "stage": "pre",
-      "question": "Why do bigger context windows not fully solve memory?",
+      "question": "Daha büyük bağlam pencereleri neden belleği tam olarak çözmüyor?",
       "options": [
         "Providers cap them at 4k tokens",
-        "Overflow, dilution of attention, and lack of cross-session persistence still bite even with 128k windows",
+        "Taşma, dikkatin dağılması ve oturumlar arası kalıcılığın olmaması, 128k pencerelerde bile hala acı veriyor",
         "Long context costs nothing",
-        "The model refuses long input"
+        "Model uzun girişi reddediyor"
       ],
       "correct": 1,
-      "explanation": "Mem0 measured 128k-window baselines still missing facts a 4k agent with external memory catches; overflow, dilution, and persistence remain."
+      "explanation": "Mem0, 128k pencere taban çizgilerini ölçtü, harici bellek yakalamaları olan bir 4k aracısının hala eksik gerçekleri var; taşma, seyrelme ve kalıcılık kalır."
     },
     {
       "stage": "check",
-      "question": "Which of these is NOT one of MemGPT's canonical memory tools?",
+      "question": "Bunlardan hangisi NOT MemGPT'nin kanonik bellek araçlarından biridir?",
       "options": [
         "core_memory_append",
         "archival_memory_search",
@@ -36,23 +36,23 @@
         "gradient_memory_update"
       ],
       "correct": 3,
-      "explanation": "There is no gradient memory tool; the surface is core/archival/conversation operations."
+      "explanation": "Degrade hafıza aracı yoktur; yüzey çekirdek/arşiv/konuşma işlemleridir."
     },
     {
       "stage": "check",
-      "question": "What does the interrupt pattern do in MemGPT?",
+      "question": "MemGPT'de kesme düzeni ne işe yarar?",
       "options": [
-        "It halts the entire agent run on any error",
-        "Mid-conversation the agent invokes a memory tool, the runtime executes it, and the result splices into the next turn",
-        "It bypasses the context window entirely",
-        "It triggers a model retrain"
+        "Herhangi bir hata durumunda tüm aracı çalışmasını durdurur",
+        "Konuşmanın ortasında aracı bir bellek aracını çağırır, çalışma zamanı onu çalıştırır ve sonuç bir sonraki dönüşe eklenir",
+        "Bağlam penceresini tamamen atlar",
+        "Modelin yeniden eğitilmesini tetikler"
       ],
       "correct": 1,
-      "explanation": "Memory-as-interrupt: invoke memory tool, runtime fetches, result returns as a new observation on the next turn (like a Unix read())."
+      "explanation": "Kesinti olarak bellek: bellek aracını çağırır, çalışma zamanı getirir, sonuç bir sonraki turda yeni bir gözlem olarak geri döner (Unix read() gibi)."
     },
     {
       "stage": "check",
-      "question": "Which production system did MemGPT evolve into in 2024?",
+      "question": "MemGPT 2024'te hangi üretim sistemine dönüştü?",
       "options": [
         "Mem0",
         "Letta",
@@ -60,31 +60,31 @@
         "Pinecone"
       ],
       "correct": 1,
-      "explanation": "MemGPT became Letta in September 2024; the research repo cpacker/MemGPT still exists as the origin."
+      "explanation": "MemGPT, Eylül 2024'te Letta oldu; araştırma deposu cpacker/MemGPT hala kaynak olarak mevcuttur."
     },
     {
       "stage": "post",
-      "question": "What is memory poisoning in this context?",
+      "question": "Bu bağlamda hafıza zehirlenmesi nedir?",
       "options": [
-        "A bug that corrupts vector indices",
-        "An attacker's content gets stored as a memory note and is re-ingested on future recalls",
-        "Reading from disk when RAM is available",
+        "Vektör endekslerini bozan bir hata",
+        "Saldırganın içeriği bir anı notu olarak depolanır ve gelecekteki geri çağırmalarda yeniden kullanılır",
+        "RAM mevcut olduğunda diskten okuma",
         "Embedding model version drift"
       ],
       "correct": 1,
-      "explanation": "External memory is retrieved text; if attacker-reachable content lands in a memory note the agent re-ingests it next session."
+      "explanation": "Harici hafızadan metin alınır; Saldırganın erişebileceği içerik bir bellek notuna düşerse, aracı bunu bir sonraki oturumda yeniden alır."
     },
     {
       "stage": "post",
-      "question": "Why does the lesson say production memory systems are MemGPT variants?",
+      "question": "Ders neden üretim bellek sistemlerinin MemGPT çeşitleri olduğunu söylüyor?",
       "options": [
-        "They use the same vector DB",
-        "Letta, Mem0, Assistants threads, and Claude Agent SDK all run the two-tier (or more) paged-memory pattern; differences are operational shape",
-        "MemGPT owns the trademark",
-        "They share weights"
+        "Aynı DB vektörünü kullanıyorlar",
+        "Letta, Mem0, Assistants iş parçacıkları ve Claude Agent SDK'nin tümü iki katmanlı (veya daha fazla) sayfalanmış bellek modelini çalıştırır; farklılıklar operasyonel şekildir",
+        "MemGPT ticari markanın sahibidir",
+        "Ağırlıkları paylaşıyorlar"
       ],
       "correct": 1,
-      "explanation": "Pick by operational shape, not pattern; all share the MemGPT page in/out skeleton."
+      "explanation": "Modele göre değil, operasyonel şekle göre seçim yapın; hepsi MemGPT sayfasının giriş/çıkış iskeletini paylaşır."
     }
   ]
 }

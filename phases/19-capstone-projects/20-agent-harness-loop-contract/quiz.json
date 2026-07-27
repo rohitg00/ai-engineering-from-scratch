@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why model the harness loop as an explicit state machine rather than a while loop with flags?",
+      "question": "Neden koşum döngüsünü bayraklı bir while döngüsü yerine açık bir durum makinesi olarak modelleyesiniz ki?",
       "options": [
-        "It lets the harness reject illegal transitions in one place and replay sessions from the event log",
-        "It is faster on CPython",
-        "It avoids the need for tests",
-        "It is the only shape the model can call"
+        "Kablo demetinin yasa dışı geçişleri tek bir yerde reddetmesine ve oturumları olay günlüğünden tekrar oynatmasına olanak tanır",
+        "CPython'da daha hızlıdır",
+        "Test ihtiyacını ortadan kaldırır",
+        "Modelin arayabileceği tek şekil bu"
       ],
       "correct": 0,
-      "explanation": "A state machine puts the legality rules in one transition function. The same input sequence reproduces the same state, which is what makes session replay possible."
+      "explanation": "Bir durum makinesi, yasallık kurallarını tek bir geçiş fonksiyonuna yerleştirir. Aynı giriş sırası aynı durumu yeniden üretir; bu da oturumun tekrar oynatılmasını mümkün kılar."
     },
     {
       "stage": "pre",
-      "question": "What does a pull point in the loop represent?",
+      "question": "Döngüdeki çekme noktası neyi temsil eder?",
       "options": [
-        "A point where the loop yields control and waits for the caller to provide an input",
-        "A model call that returns a tool name",
-        "A timer that fires every N seconds",
-        "A hook subscriber that mutates payload"
+        "Döngünün kontrolü sağladığı ve arayanın bir girdi sağlamasını beklediği nokta",
+        "Bir araç adını döndüren model çağrısı",
+        "Her N saniyede bir tetiklenen bir zamanlayıcı",
+        "Yükü değiştiren bir kanca abonesi"
       ],
       "correct": 0,
-      "explanation": "Pull points are returns, not exceptions. The caller fetches what the harness asked for and calls resume()."
+      "explanation": "Çekme noktaları istisna değil geri dönüşlerdir. Arayan kişi emniyet kemerinin istediğini getirir ve resume()'yi çağırır."
     },
     {
       "stage": "check",
-      "question": "Which state is the only legal pull point for a tool call?",
+      "question": "Araç çağrısı için tek yasal çekme noktası hangi eyalettir?",
       "options": [
         "EXECUTING",
         "AWAITING_TOOL",
@@ -36,55 +36,55 @@
         "PLANNING"
       ],
       "correct": 1,
-      "explanation": "Only AWAITING_TOOL yields a tool pull point. EXECUTING transitions into it when a step requires a tool."
+      "explanation": "Yalnızca AWAITING_TOOL bir takım çekme noktası sağlar. EXECUTING, bir adım bir alet gerektirdiğinde buna geçiş yapar."
     },
     {
       "stage": "check",
-      "question": "What happens when a hook raises HookAbort in before_tool_call?",
+      "question": "Bir kanca before_tool_call'da HookAbort'u yükseltirse ne olur?",
       "options": [
-        "The session immediately transitions to DONE",
-        "The tool call is skipped, on_error fires, and the loop moves to REFLECTING",
-        "The hook is unregistered",
-        "The budget is reset"
+        "Oturum hemen DONE'ye geçiş yapar",
+        "Araç çağrısı atlanır, on_error tetiklenir ve döngü REFLECTING'ye taşınır",
+        "Kanca kayıtlı değil",
+        "Bütçe sıfırlandı"
       ],
       "correct": 1,
-      "explanation": "HookAbort cancels the in-flight tool dispatch, fires on_error with the abort reason, and continues."
+      "explanation": "HookAbort, uçuş sırasında takım gönderimini iptal eder, iptal nedeni ile birlikte on_error'u tetikler ve devam eder."
     },
     {
       "stage": "check",
-      "question": "Why are hooks and events kept as separate concerns?",
+      "question": "Kancalar ve olaylar neden ayrı konular olarak tutuluyor?",
       "options": [
-        "Because event types are bytes and hooks are strings",
-        "Hooks are imperative and can mutate or abort. Events are observational and append-only.",
-        "Because the audit script forbids subscribers",
-        "Because the event log cannot store dicts"
+        "Çünkü olay türleri bayttır ve kancalar dizedir",
+        "Kancalar zorunludur ve değişebilir veya iptal edilebilir. Olaylar gözlemseldir ve yalnızca ekleme amaçlıdır.",
+        "Çünkü denetim komut dosyası aboneleri yasaklıyor",
+        "Çünkü olay günlüğü dict'leri saklayamaz"
       ],
       "correct": 1,
-      "explanation": "Hooks change behavior. Events describe behavior. Mixing them couples policy and telemetry, which is the bug we are avoiding."
+      "explanation": "Kancalar davranışı değiştirir. Olaylar davranışı tanımlar. Çift politikası ve telemetriyi karıştırmak, kaçındığımız hatadır."
     },
     {
       "stage": "post",
-      "question": "When the wall-clock budget is exceeded, what is the next state?",
+      "question": "Duvar saati bütçesi aşıldığında sonraki durum nedir?",
       "options": [
-        "DONE — the session is terminated",
-        "EXECUTING — the loop retries",
-        "IDLE — a pull point is returned with a budget_exceeded reason",
-        "PLANNING — a fresh plan is drafted"
+        "DONE — oturum sonlandırıldı",
+        "EXECUTING — döngü yeniden denemeler yapar",
+        "IDLE — bütçenin aşılması nedeniyle bir çekme noktası döndürülür",
+        "PLANNING — yeni bir plan taslağı hazırlandı"
       ],
       "correct": 2,
-      "explanation": "Budget exhaustion is a yield. The harness transitions to IDLE, fires on_budget_exceeded, and returns a PullRequest so the caller can decide whether to extend or close."
+      "explanation": "Bütçe tükenmesi bir getiridir. Kablo demeti IDLE'ye geçiş yapar, on_budget_exceeded'i tetikler ve bir PullRequest döndürür, böylece arayan kişi uzatmaya mı yoksa kapatmaya mı karar verebilir."
     },
     {
       "stage": "post",
-      "question": "Why does this lesson stub out the planner instead of calling a model?",
+      "question": "Bu ders neden bir model çağırmak yerine planlayıcıyı devre dışı bırakıyor?",
       "options": [
-        "Because models are slow to call locally",
-        "To keep the loop contract testable and deterministic before any model is bound",
-        "Because models cannot return tool calls",
+        "Modellerin yerel olarak çağrılması yavaş olduğundan",
+        "Herhangi bir model bağlanmadan önce döngü sözleşmesinin test edilebilir ve deterministik olmasını sağlamak",
+        "Çünkü modeller araç çağrılarını geri döndüremez",
         "To save tokens"
       ],
       "correct": 1,
-      "explanation": "Pinning the loop contract first lets later lessons swap in real planners, registries, and dispatchers without renegotiating the state machine."
+      "explanation": "Döngü sözleşmesinin ilk olarak sabitlenmesi, durum makinesini yeniden müzakere etmeden daha sonraki derslerin gerçek planlayıcılar, kayıtlar ve dağıtıcılar arasında değiş tokuş edilmesine olanak tanır."
     }
   ]
 }

@@ -1,58 +1,58 @@
 {
   "lesson": "11-planning-htn-and-evolutionary",
-  "title": "Planning with HTN and Evolutionary Search",
+  "title": "HTN ve Evrimsel Arama ile Planlama",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does an HTN add over a free-form LLM plan?",
+      "question": "Bir HTN, serbest biçimli bir LLM planına ne ekler?",
       "options": [
-        "Provable correctness when operator preconditions and effects are enforced",
+        "Operatör ön koşulları ve etkileri uygulandığında kanıtlanabilir doğruluk",
         "Cheaper inference",
         "Shorter prompts",
         "Better embeddings"
       ],
       "correct": 0,
-      "explanation": "HTN's symbolic operators with preconditions and effects guarantee soundness by construction."
+      "explanation": "HTN'nin önkoşulları ve efektleri olan sembolik operatörleri, yapı itibariyle sağlamlığı garanti eder."
     },
     {
       "stage": "pre",
-      "question": "Which problem class is AlphaEvolve built for?",
+      "question": "AlphaEvolve hangi problem sınıfı için geliştirildi?",
       "options": [
         "Free-form prose generation",
-        "Optimizations with a machine-checkable, deterministic fitness function",
+        "Makine tarafından kontrol edilebilen, deterministik uygunluk işleviyle optimizasyonlar",
         "Multi-turn chat memory",
         "Vector search ranking"
       ],
       "correct": 1,
-      "explanation": "Evolutionary search needs a deterministic evaluator; AlphaEvolve targets domains where one exists."
+      "explanation": "Evrimsel araştırma deterministik bir değerlendiriciye ihtiyaç duyar; AlphaEvolve, var olan etki alanlarını hedefler."
     },
     {
       "stage": "check",
-      "question": "How does ChatHTN preserve plan soundness while using an LLM?",
+      "question": "ChatHTN, LLM kullanırken planın sağlamlığını nasıl koruyor?",
       "options": [
-        "It does not; soundness is best-effort",
-        "LLM suggestions only enter as candidate decompositions, validated against the operator schema; the symbolic layer owns correctness",
-        "It fine-tunes the LLM on HTN traces",
-        "It uses a vector database"
+        "Öyle değil; sağlamlık en iyi çabadır",
+        "LLM önerileri yalnızca operatör şemasına göre doğrulanmış aday ayrıştırmalar olarak girer; sembolik katman doğruluğun sahibidir",
+        "HTN izlerinde LLM'ye ince ayar yapar",
+        "Bir vektör veritabanı kullanır"
       ],
       "correct": 1,
-      "explanation": "The LLM expands the method library but cannot bypass operator preconditions and effects."
+      "explanation": "LLM, yöntem kitaplığını genişletir ancak operatör ön koşullarını ve etkilerini atlayamaz."
     },
     {
       "stage": "check",
-      "question": "Which AlphaEvolve result does the lesson cite?",
+      "question": "Ders hangi AlphaEvolve sonucuna atıfta bulunuyor?",
       "options": [
-        "First improvement over Strassen for 4x4 complex matrix multiplication in 56 years",
+        "56 yılda 4x4 karmaşık matris çarpımında Strassen'e göre ilk gelişme",
         "10x speedup of inference on Gemini",
         "Beating GPT-4 on HumanEval",
         "First proof of P=NP"
       ],
       "correct": 0,
-      "explanation": "AlphaEvolve found 48 scalar multiplications for 4x4 complex matmul, the first improvement on Strassen in 56 years."
+      "explanation": "AlphaEvolve, 4x4 karmaşık matmul için 48 skaler çarpım buldu; bu, Strassen'de 56 yıldaki ilk gelişmedir."
     },
     {
       "stage": "check",
-      "question": "Which element of an HTN is a primitive directly-executable action with preconditions and effects?",
+      "question": "HTN'nin hangi öğesi, önkoşulları ve etkileri olan ilkel, doğrudan yürütülebilir bir eylemdir?",
       "options": [
         "Task",
         "Method",
@@ -60,31 +60,31 @@
         "State"
       ],
       "correct": 2,
-      "explanation": "Operators are the primitives; methods decompose compound tasks; state is a set of facts."
+      "explanation": "Operatörler ilkellerdir; yöntemler bileşik görevleri ayrıştırır; devlet bir dizi gerçektir."
     },
     {
       "stage": "post",
-      "question": "What is the lesson's warning about AlphaEvolve without a real evaluator?",
+      "question": "Gerçek bir değerlendirici olmadan dersin AlphaEvolve hakkındaki uyarısı nedir?",
       "options": [
-        "It is slow",
-        "Asking an LLM whether the code is better is not a fitness function; the evaluator must be deterministic and fast",
-        "It violates Apache 2.0",
-        "It cannot run on GPUs"
+        "Yavaş",
+        "Bir LLM'ye kodun daha iyi olup olmadığını sormak bir uygunluk fonksiyonu değildir; Değerlendirici deterministik ve hızlı olmalıdır",
+        "Apache 2.0'ı ihlal ediyor",
+        "GPU'larda çalışamaz"
       ],
       "correct": 1,
-      "explanation": "Without a deterministic evaluator the search has no signal to converge on."
+      "explanation": "Deterministik bir değerlendirici olmadan, aramanın yakınlaşacağı bir sinyal yoktur."
     },
     {
       "stage": "post",
-      "question": "When should you reach for ReAct or ReWOO instead of HTN or AlphaEvolve?",
+      "question": "HTN veya AlphaEvolve yerine ReAct veya ReWOO'ya ne zaman ulaşmalısınız?",
       "options": [
-        "Never; HTN is strictly better",
-        "When you do not need formal soundness or a machine-checkable fitness; most agent tasks land here",
-        "When you have a GPU cluster available",
-        "When latency is below 100 ms"
+        "Asla; HTN kesinlikle daha iyi",
+        "Resmi sağlamlığa veya makine tarafından kontrol edilebilir bir uygunluğa ihtiyacınız olmadığında; ajan görevlerinin çoğu buraya geliyor",
+        "Kullanılabilir bir GPU kümeniz olduğunda",
+        "Gecikme 100 ms'nin altına düştüğünde"
       ],
       "correct": 1,
-      "explanation": "The lesson explicitly warns against over-engineering: most tasks do not need formal planning or evolutionary search."
+      "explanation": "Ders açıkça aşırı mühendisliğe karşı uyarıyor: çoğu görev resmi planlamaya veya evrimsel araştırmaya ihtiyaç duymaz."
     }
   ]
 }

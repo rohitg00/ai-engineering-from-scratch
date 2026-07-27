@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does timeout on a non-idempotent tool default to no retry?",
+      "question": "İdempotent olmayan bir araçta neden zaman aşımı varsayılan olarak yeniden deneme yapılmaz?",
       "options": [
-        "Because the dispatcher cannot measure non-idempotent calls",
-        "Because the tool may have partially committed; retry can duplicate the effect",
-        "Because non-idempotent handlers run faster",
-        "Because idempotency keys are slow"
+        "Çünkü dağıtıcı idempotent olmayan çağrıları ölçemez",
+        "Çünkü araç kısmen işlemiş olabilir; yeniden denemek efekti çoğaltabilir",
+        "Çünkü idempotent olmayan işleyiciler daha hızlı çalışır",
+        "Çünkü idempotency anahtarları yavaştır"
       ],
       "correct": 1,
-      "explanation": "Retrying a db.write that timed out at 4.9s can produce a second write. The dispatcher refuses unless the handler tells it the call is safe to repeat."
+      "explanation": "4,9 saniyede zaman aşımına uğrayan bir db.write dosyasını yeniden denemek ikinci bir yazma işlemine neden olabilir. İşleyici, çağrının tekrarlanmasının güvenli olduğunu söylemediği sürece sevk görevlisi reddeder."
     },
     {
       "stage": "pre",
-      "question": "What is the idempotency-key dedupe protecting against?",
+      "question": "İdempotency-key tekilleştirme neye karşı koruma sağlar?",
       "options": [
         "Slow networks",
-        "A retry that fires while the original call is still in flight",
+        "Orijinal çağrı hâlâ yayındayken gerçekleşen yeniden deneme",
         "Schema validation errors",
         "Process restarts"
       ],
       "correct": 1,
-      "explanation": "Without dedupe, a retry at 5s races a slow original still pending. The cache collapses both into one handler invocation."
+      "explanation": "Tekilleştirme olmadan, 5 saniyede yeniden deneme, yavaş orijinalin hala beklemede olmasına neden olur. Önbellek her ikisini de tek bir işleyici çağrısına daraltır."
     },
     {
       "stage": "check",
-      "question": "Which error kinds are eligible for retry in this dispatcher?",
+      "question": "Bu dağıtıcıda hangi hata türleri yeniden denemeye uygundur?",
       "options": [
         "schema and not_found",
         "internal and budget_exceeded",
@@ -36,35 +36,35 @@
         "All of them"
       ],
       "correct": 2,
-      "explanation": "Schema and not_found are deterministic. Internal masks an unknown handler bug. Budget exceeded is a yield. Only timeout-on-idempotent and explicit TransientError retry."
+      "explanation": "Schema ve not_found belirleyicidir. Dahili, bilinmeyen bir işleyici hatasını maskeler. Bütçenin aşılması bir getiridir. Yalnızca zaman aşımı ve açık TransientError yeniden denemesi."
     },
     {
       "stage": "check",
-      "question": "What does the semaphore around _run_with_retries protect?",
+      "question": "_run_with_retries etrafındaki semafor neyi korur?",
       "options": [
-        "The handler from itself",
-        "The backend from too many simultaneous calls fanned out by gather()",
-        "The validator",
-        "The retry counter"
+        "İşleyici kendisinden",
+        "gather() tarafından yayılan çok sayıda eşzamanlı çağrının arka ucu",
+        "Doğrulayıcı",
+        "Yeniden deneme sayacı"
       ],
       "correct": 1,
-      "explanation": "A gather of forty calls would open forty concurrent dispatches without the limit. The semaphore caps the wave."
+      "explanation": "Kırk çağrının toplanması, sınırsız olarak kırk eşzamanlı gönderimin açılmasına neden olur. Semafor dalgayı kapatır."
     },
     {
       "stage": "check",
-      "question": "Why is the idempotency key derived by the caller, not by the dispatcher?",
+      "question": "İdempotency anahtarı neden dağıtıcı tarafından değil de arayan tarafından türetiliyor?",
       "options": [
-        "Because Python hashes are unstable",
-        "Because deriving from args alone makes two semantically-different calls collide if they happen to share args",
-        "Because the registry would not have the key",
-        "Because the cache cannot store strings"
+        "Çünkü Python karmaları kararsız",
+        "Çünkü yalnızca argümanlardan türetmek, argümanları paylaşıyorlarsa anlamsal olarak farklı iki çağrının çarpışmasına neden olur",
+        "Çünkü kayıt defterinde anahtar olmayacaktı",
+        "Önbellek dizeleri saklayamadığı için"
       ],
       "correct": 1,
-      "explanation": "The caller knows the step id, the planner intent, the user. Args alone are not enough context to safely dedupe."
+      "explanation": "Arayan kişi adım kimliğini, planlayıcının amacını ve kullanıcıyı bilir. Bağımsız değişkenler tek başına güvenli bir şekilde tekilleştirme için yeterli bağlam değildir."
     },
     {
       "stage": "post",
-      "question": "Which JSON-RPC error code maps to a schema failure on dispatch?",
+      "question": "Hangi JSON-RPC hata kodu gönderim sırasındaki şema hatasıyla eşleşir?",
       "options": [
         "-32601",
         "-32602",
@@ -72,19 +72,19 @@
         "-32700"
       ],
       "correct": 1,
-      "explanation": "-32602 Invalid params. The dispatcher returns it before any handler runs."
+      "explanation": "-32602 Geçersiz parametreler. Dağıtıcı, herhangi bir işleyici çalıştırılmadan önce onu döndürür."
     },
     {
       "stage": "post",
-      "question": "After max_attempts is reached with timeouts on an idempotent tool, what is returned?",
+      "question": "İdempotent bir araçta zaman aşımları ile max_attempts'a ulaşıldıktan sonra ne döndürülür?",
       "options": [
-        "An exception is raised",
-        "DispatchOk with no result",
-        "DispatchError with kind=timeout and attempts==max_attempts",
-        "DispatchError with kind=internal"
+        "Bir istisna ortaya çıktı",
+        "DispatchOk, sonuç yok",
+        "tür=zaman aşımı ve deneme==max_attempts ile DispatchError",
+        "tür=dahili DispatchError"
       ],
       "correct": 2,
-      "explanation": "The dispatcher returns a typed error envelope. The kind reflects the last failure mode, attempts reflects how many tries it made."
+      "explanation": "Gönderici, yazılan bir hata zarfını döndürür. Tür, son başarısızlık modunu, denemeler ise kaç deneme yaptığını yansıtır."
     }
   ]
 }

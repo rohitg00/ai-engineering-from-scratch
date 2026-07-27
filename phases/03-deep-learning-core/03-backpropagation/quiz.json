@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the chain rule in the context of neural networks?",
-    "options": ["A rule for chaining layers together", "If y = f(g(x)), then dy/dx = f'(g(x)) * g'(x) -- multiply derivatives along the path", "A method for initializing weights", "A technique for batching data"],
+    "question": "Sinir ağları bağlamında zincir kuralı nedir?",
+    "options": [
+      "Katmanları birbirine zincirlemek için bir kural",
+      "Eğer y = f(g(x) ise, o zaman dy/dx = f'(g(x)) * g'(x) -- yol boyunca türevleri çarpın",
+      "Ağırlıkları başlatmak için bir yöntem",
+      "Verileri toplu hale getirmek için bir teknik"
+    ],
     "correct": 1,
-    "explanation": "The chain rule lets you compute the derivative of a composite function by multiplying the local derivatives at each step. Backpropagation applies this systematically through the computational graph.",
+    "explanation": "Zincir kuralı, her adımda yerel türevleri çarparak bileşik bir fonksiyonun türevini hesaplamanıza olanak tanır. Geri yayılım bunu hesaplamalı grafik aracılığıyla sistematik olarak uygular.",
     "stage": "pre"
   },
   {
-    "question": "Why is backpropagation more efficient than computing each gradient independently?",
-    "options": ["It uses less memory", "It computes all gradients in a single backward pass instead of one forward pass per parameter", "It only works on small networks", "It avoids using the chain rule"],
+    "question": "Geri yayılım neden her bir gradyanı bağımsız olarak hesaplamaktan daha verimlidir?",
+    "options": [
+      "Daha az bellek kullanır",
+      "Tüm degradeleri parametre başına bir ileri geçiş yerine tek bir geri geçişte hesaplar",
+      "Yalnızca küçük ağlarda çalışır",
+      "Zincir kuralını kullanmaktan kaçınır"
+    ],
     "correct": 1,
-    "explanation": "Computing gradients independently requires one forward pass per parameter (millions of passes for a large network). Backpropagation computes all gradients in one backward pass by reusing intermediate values stored during the forward pass.",
+    "explanation": "Degradelerin bağımsız olarak hesaplanması, parametre başına bir ileri geçiş gerektirir (büyük bir ağ için milyonlarca geçiş). Geri yayılım, ileri geçiş sırasında saklanan ara değerleri yeniden kullanarak tüm gradyanları tek bir geriye geçişte hesaplar.",
     "stage": "pre"
   },
   {
-    "question": "In the backward pass, why do we use '+=' instead of '=' when accumulating gradients?",
-    "options": ["It's a Python convention", "A value might be used in multiple operations, so its gradient is the sum of gradients from all paths", "It prevents overflow", "It makes the code run faster"],
+    "question": "Geriye doğru geçişte, degradeleri toplarken neden '=' yerine '+=' kullanıyoruz?",
+    "options": [
+      "Bu bir Python sözleşmesi",
+      "Bir değer birden fazla işlemde kullanılabilir; bu nedenle degradesi tüm yollardaki degradelerin toplamıdır",
+      "Taşmayı önler",
+      "Kodun daha hızlı çalışmasını sağlar"
+    ],
     "correct": 1,
-    "explanation": "When a Value is used as input to multiple operations (e.g., x used in both x*w1 and x*w2), its total gradient is the sum of the gradients flowing back from each operation. Using += accumulates these correctly.",
+    "explanation": "Bir Değer birden fazla işleme girdi olarak kullanıldığında (örneğin, hem x*w1 hem de x*w2'de kullanılan x), toplam gradyanı, her işlemden geri akan gradyanların toplamıdır. += kullanılması bunları doğru şekilde toplar.",
     "stage": "post"
   },
   {
-    "question": "What causes the vanishing gradient problem in deep sigmoid networks?",
-    "options": ["The learning rate is too small", "Sigmoid's derivative has a maximum of 0.25, so gradients shrink exponentially through layers", "The network has too many parameters", "The loss function is poorly chosen"],
+    "question": "Derin sigmoid ağlarda kaybolan gradyan sorununa ne sebep olur?",
+    "options": [
+      "Öğrenme oranı çok düşük",
+      "Sigmoid'in türevinin maksimum değeri 0,25'tir, dolayısıyla degradeler katmanlar boyunca katlanarak küçülür",
+      "Ağda çok fazla parametre var",
+      "Kayıp fonksiyonu kötü seçilmiş"
+    ],
     "correct": 1,
-    "explanation": "The sigmoid derivative peaks at 0.25 (when z=0). Each layer multiplies the gradient by at most 0.25, so after 10 layers the gradient is at most 0.25^10 = ~0.000001 of the original signal.",
+    "explanation": "Sigmoid türevi 0,25'te zirve yapar (z=0 olduğunda). Her katman, degradeyi en fazla 0,25 ile çarpar, dolayısıyla 10 katmandan sonra degrade, orijinal sinyalin en fazla 0,25^10 = ~0,000001'i kadar olur.",
     "stage": "post"
   },
   {
-    "question": "Why does topological sort matter in the backward pass?",
-    "options": ["It makes the code cleaner", "It ensures each node's gradient is fully accumulated before propagating to its children", "It speeds up the forward pass", "It reduces memory usage"],
+    "question": "Geri geçişte topolojik sıralama neden önemlidir?",
+    "options": [
+      "Kodu daha temiz hale getirir",
+      "Her düğümün eğiminin çocuklarına yayılmadan önce tamamen toplanmasını sağlar",
+      "İleri geçişi hızlandırır",
+      "Bellek kullanımını azaltır"
+    ],
     "correct": 1,
-    "explanation": "Topological sort ensures we process nodes in the correct order: a node's gradient must be fully accumulated from all downstream paths before we propagate through it. Without this ordering, gradients would be incomplete.",
+    "explanation": "Topolojik sıralama, düğümleri doğru sırayla işlememizi sağlar: bir düğümün eğimi, onun içinden geçmeden önce tüm aşağı akış yollarından tamamen toplanmalıdır. Bu sıralama olmasaydı degradeler eksik olurdu.",
     "stage": "post"
   }
 ]

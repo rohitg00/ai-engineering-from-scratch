@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the key difference between zero-shot and few-shot prompting?",
-    "options": ["Zero-shot is faster", "Zero-shot gives only the instruction; few-shot includes example input-output demonstrations before the actual query", "Few-shot uses a different model", "Zero-shot doesn't use a system prompt"],
+    "question": "Sıfır atışlı yönlendirme ile birkaç atışlı yönlendirme arasındaki temel fark nedir?",
+    "options": [
+      "Sıfır atış daha hızlıdır",
+      "Sıfır atış yalnızca talimat verir; birkaç çekim, gerçek sorgudan önce örnek giriş-çıkış gösterilerini içerir",
+      "Few-shot uses a different model",
+      "Zero-shot doesn't use a system prompt"
+    ],
     "correct": 1,
-    "explanation": "Few-shot prompting includes worked examples (demonstrations) that show the model the expected pattern. This is like showing someone how to fill out a form before asking them to fill out their own.",
+    "explanation": "Birkaç adımlık ipucu, modele beklenen modeli gösteren çalışılmış örnekleri (gösterileri) içerir. Bu, birine kendi formunu doldurmasını istemeden önce bir formu nasıl dolduracağını göstermeye benzer.",
     "stage": "pre"
   },
   {
-    "question": "What does 'Chain of Thought' prompting do?",
-    "options": ["It chains multiple API calls together", "It instructs the model to show intermediate reasoning steps before giving the final answer, improving accuracy on multi-step problems", "It connects multiple models in sequence", "It generates longer responses"],
+    "question": "'Düşünce Zinciri' yönlendirmesi ne işe yarar?",
+    "options": [
+      "Birden fazla API çağrısını birlikte zincirler",
+      "Modele son cevabı vermeden önce ara akıl yürütme adımlarını göstermesi talimatını vererek çok adımlı problemlerde doğruluğu artırır",
+      "Birden fazla modeli sırayla bağlar",
+      "Daha uzun yanıtlar üretir"
+    ],
     "correct": 1,
-    "explanation": "CoT prompting (e.g., 'Let's think step by step') gives the model 'scratch paper' to work through problems. On GSM8K math problems, this alone improved GPT-4o accuracy from 78% to 91%.",
+    "explanation": "CoT yönlendirmesi (örneğin, 'Adım adım düşünelim'), modele problemlerin üzerinde çalışması için 'karalama kağıdı' verir. GSM8K matematik problemlerinde yalnızca bu, GPT-4o doğruluğunu %78'den %91'e yükseltti.",
     "stage": "pre"
   },
   {
-    "question": "How does Tree-of-Thought differ from Chain-of-Thought?",
-    "options": ["It uses a tree data structure for storage", "It explores multiple reasoning paths in parallel and evaluates which path leads to the best answer", "It's just a longer chain of thought", "It uses a different model"],
+    "question": "Düşünce Ağacı'nın Düşünce Zinciri'nden farkı nedir?",
+    "options": [
+      "Depolama için ağaç veri yapısını kullanır",
+      "Birden fazla akıl yürütme yolunu paralel olarak araştırır ve hangi yolun en iyi cevaba yol açtığını değerlendirir.",
+      "Bu sadece daha uzun bir düşünce zinciri",
+      "Farklı bir model kullanıyor"
+    ],
     "correct": 1,
-    "explanation": "CoT follows a single reasoning path. Tree-of-Thought generates multiple candidate paths, evaluates them (possibly with the LLM itself), and selects the best one. This helps on problems where the first reasoning path might be wrong.",
+    "explanation": "CoT tek bir akıl yürütme yolunu izler. Düşünce Ağacı birden fazla aday yol oluşturur, bunları değerlendirir (muhtemelen LLM'nin kendisi ile) ve en iyisini seçer. Bu, ilk akıl yürütme yolunun yanlış olabileceği problemlerde yardımcı olur.",
     "stage": "post"
   },
   {
-    "question": "When selecting few-shot examples, what matters most?",
-    "options": ["Using as many examples as possible", "Choosing diverse examples that cover different cases and demonstrate the exact format and reasoning pattern you want", "Using the shortest examples", "Using examples from the test set"],
+    "question": "Birkaç çekimlik örnekleri seçerken en önemli olan nedir?",
+    "options": [
+      "Using as many examples as possible",
+      "Farklı vakaları kapsayan ve tam olarak istediğiniz formatı ve akıl yürütme modelini gösteren çeşitli örnekleri seçmek",
+      "En kısa örnekleri kullanma",
+      "Test setindeki örnekleri kullanma"
+    ],
     "correct": 1,
-    "explanation": "Example quality trumps quantity. 3-5 diverse, well-formatted examples that cover different edge cases teach the model the pattern better than 20 repetitive examples that waste context window tokens.",
+    "explanation": "Örnek niteliği nicelikten üstün gelir. Farklı uç durumları kapsayan 3-5 farklı, iyi biçimlendirilmiş örnek, modele bağlam penceresi belirteçlerini boşa harcayan 20 tekrarlı örnekten daha iyi bir model öğretir.",
     "stage": "post"
   },
   {
-    "question": "Why does CoT prompting improve accuracy even though the model has the same knowledge with or without it?",
-    "options": ["It activates hidden model capabilities", "Generating intermediate tokens creates a larger effective context for the final answer, allowing the model to condition on its own reasoning", "It uses more compute", "It changes the model weights"],
+    "question": "Model, onunla veya onsuz aynı bilgiye sahip olmasına rağmen neden CoT yönlendirmesi doğruluğu artırıyor?",
+    "options": [
+      "Gizli model yeteneklerini etkinleştirir",
+      "Ara belirteçlerin oluşturulması, nihai cevap için daha geniş ve etkili bir bağlam yaratarak modelin kendi muhakemesini koşullandırmasına olanak tanır.",
+      "Daha fazla bilgi işlem kullanıyor",
+      "Model ağırlıklarını değiştirir"
+    ],
     "correct": 1,
-    "explanation": "Without CoT, the model must jump directly to the answer in one token. With CoT, each intermediate step is a token the model conditions on for the next step. The model essentially 'thinks out loud,' building up to the answer.",
+    "explanation": "CoT olmadan modelin tek bir jetonla doğrudan cevaba atlaması gerekir. CoT ile her ara adım, bir sonraki adım için model koşullarının açıklandığı bir simgedir. Model aslında 'yüksek sesle düşünüyor' ve cevabı oluşturuyor.",
     "stage": "post"
   }
 ]

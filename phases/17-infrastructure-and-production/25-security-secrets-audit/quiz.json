@@ -4,23 +4,23 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the 2026 standard pattern for LLM service credentials?",
+      "question": "LLM hizmet kimlik bilgilerine yönelik 2026 standart modeli nedir?",
       "options": [
         "Store keys in a Slack channel",
         "Centralized vault pulled by an AI gateway at runtime via IAM role; rotate in vault and all apps pick up in minutes",
-        "Email the key to each engineer",
-        "Hardcode API keys in config files for speed"
+        "Anahtarı her mühendise e-postayla gönderin",
+        "Hız için yapılandırma dosyalarındaki sabit kodlu API anahtarları"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What rotation cadence does the lesson recommend for API keys, vault root tokens, and CI/CD credentials?",
+      "question": "Ders, API anahtarları, kasa kök belirteçleri ve CI/CD kimlik bilgileri için hangi dönüş ritmini önerir?",
       "options": [
-        "Within 90 days, automated where possible, logged and tracked when manual",
+        "90 gün içinde mümkün olduğunda otomatik hale getirilir, manuel olduğunda günlüğe kaydedilir ve izlenir",
         "Every 5 years",
-        "Only when leaked",
+        "Sadece sızdırıldığında",
         "Never"
       ],
       "correct": 0,
@@ -28,21 +28,21 @@
     },
     {
       "stage": "check",
-      "question": "Why is consistent tokenization (Mesh approach) used for PII scrubbing?",
+      "question": "PII temizleme için neden tutarlı tokenizasyon (Mesh yaklaşımı) kullanılıyor?",
       "options": [
-        "It uses less memory than regex",
-        "It encrypts the prompt to the model",
-        "It is required by ISO 27001",
-        "Same source value maps to the same placeholder, so the LLM preserves code and relationship semantics across the prompt"
+        "Regex'ten daha az bellek kullanır",
+        "Modele giden istemi şifreler",
+        "ISO 27001 uyarınca gereklidir",
+        "Aynı kaynak değeri aynı yer tutucuyla eşleşir, böylece LLM, komut istemi boyunca kod ve ilişki semantiğini korur"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What egress posture does the lesson recommend for LLM service subnets?",
+      "question": "Ders LLM hizmet alt ağları için hangi çıkış duruşunu öneriyor?",
       "options": [
-        "Whitelist a small set of domains (api.openai.com, api.anthropic.com, vector DB, vault) and drop everything else, with an allowlist-only DNS resolver",
+        "Yalnızca izin verilenler listesine eklenen DNS çözümleyiciyle küçük bir alan adını beyaz listeye ekleyin (api.openai.com, api.anthropic.com, vektör DB, kasa) ve geri kalan her şeyi bırakın",
         "Block all egress including providers",
         "Allow DNS but block HTTP",
         "Allow all outbound traffic"
@@ -52,11 +52,11 @@
     },
     {
       "stage": "post",
-      "question": "What did the 2026 Vercel supply-chain incident teach about CI/CD credentials?",
+      "question": "2026 Vercel tedarik zinciri olayı CI/CD kimlik bilgileri hakkında ne öğretti?",
       "options": [
-        "CI/CD credentials are prod-equivalent — store in vault, scope narrowly, rotate aggressively",
-        "CI/CD secrets cannot be stolen",
-        "CI/CD credentials are low-risk and can stay in env files",
+        "CI/CD kimlik bilgileri üretime eşdeğerdir; kasada saklayın, kapsamı dar bir şekilde kullanın, agresif bir şekilde döndürün",
+        "CI/CD sırları çalınamaz",
+        "CI/CD kimlik bilgileri düşük risklidir ve env dosyalarında kalabilir",
         "Vercel was unaffected"
       ],
       "correct": 0,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Which audit log fields does the lesson recommend keeping for every LLM call?",
+      "question": "Ders, her LLM çağrısı için hangi denetim günlüğü alanlarının tutulmasını önerir?",
       "options": [
-        "Just the raw prompt",
-        "Only the response",
+        "Sadece ham istem",
+        "Yalnızca yanıt",
         "Timestamp, user/tenant, prompt hash (not raw), model + version, token counts, cost, response hash, any guardrail trips",
-        "Only the cost"
+        "Yalnızca maliyet"
       ],
       "correct": 2,
       "explanation": ""

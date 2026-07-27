@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why run output-side classifiers if the input was already checked?",
+      "question": "Giriş zaten kontrol edilmişse neden çıkış tarafı sınıflandırıcıları çalıştıralım?",
       "options": [
-        "To make the system slower on purpose",
-        "Because any input bypass produces an output the user will see, and the output is the last place to catch it",
-        "Because input classifiers are deprecated",
-        "Because the standard library requires both"
+        "Sistemi bilerek yavaşlatmak",
+        "Herhangi bir giriş bypass'ı kullanıcının göreceği bir çıkış ürettiğinden ve çıkış onu yakalayacak en son yerdir.",
+        "Çünkü girdi sınıflandırıcıları kullanımdan kaldırıldı",
+        "Çünkü standart kütüphane her ikisini de gerektirir"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "Which three classifiers are wired in this lesson?",
+      "question": "Bu derste hangi üç sınıflandırıcı bağlanmıştır?",
       "options": [
         "Sentiment, language, length",
         "Toxicity, PII, instruction-leakage",
@@ -28,34 +28,34 @@
     },
     {
       "stage": "check",
-      "question": "What does the router do when one verdict is high and another is medium?",
+      "question": "Bir karar yüksek, diğeri orta olduğunda yönlendirici ne yapar?",
       "options": [
-        "Run only the medium action",
+        "Yalnızca orta eylemi çalıştır",
         "Run both actions in sequence",
-        "Take the maximum severity and apply that action; block dominates redact",
-        "Drop both verdicts and ship the original"
+        "Maksimum ciddiyeti alın ve bu eylemi uygulayın; blok redaksiyona hakimdir",
+        "Her iki kararı da bırakın ve orijinali gönderin"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is a Luhn check used inside the PII classifier?",
+      "question": "PII sınıflandırıcısında neden Luhn kontrolü kullanılıyor?",
       "options": [
-        "To translate digits into letters",
-        "To distinguish credit-card shaped digit runs from arbitrary digit sequences with low false positives",
-        "To compute the SSN",
-        "To compress the regex"
+        "Rakamları harflere çevirmek için",
+        "Kredi kartı şeklindeki rakam dizilerini, düşük yanlış pozitiflere sahip rastgele rakam dizilerinden ayırmak için",
+        "SSN'yi hesaplamak için",
+        "Regex'i sıkıştırmak için"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does the instruction-leakage classifier decide?",
+      "question": "Talimat sızıntısı sınıflandırıcısı nasıl karar verir?",
       "options": [
-        "By detecting curly braces in the output",
-        "By computing trigram cosine between the output and a known system prompt, with a threshold",
+        "Çıktıdaki küme parantezlerini tespit ederek",
+        "Çıkış ile bilinen bir sistem istemi arasındaki trigram kosinüs değerini bir eşikle hesaplayarak",
         "By calling another model",
         "By counting tokens"
       ],
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does the toxicity classifier check for negation in a small left window?",
+      "question": "Toksisite sınıflandırıcısı neden küçük bir sol pencerede olumsuzluğu kontrol ediyor?",
       "options": [
-        "To slow the regex down",
-        "To skip matches like 'you are not stupid' so the classifier does not over-redact common reassurances",
-        "To increase the false-positive rate",
-        "Because negation is required by Unicode"
+        "Regex'i yavaşlatmak için",
+        "Sınıflandırıcının genel güvenceleri gereğinden fazla düzeltmemesi için 'aptal değilsin' gibi eşleşmeleri atlamak",
+        "Yanlış pozitif oranını artırmak için",
+        "Çünkü Unicode tarafından olumsuzlama gerekli"
       ],
       "correct": 1,
       "explanation": ""

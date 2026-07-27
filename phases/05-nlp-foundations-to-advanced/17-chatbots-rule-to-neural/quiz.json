@@ -4,67 +4,67 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does a slot-filling state machine do in a rule-based chatbot?",
+      "question": "Slot doldurma durumu makinesi kural tabanlı bir sohbet robotunda ne yapar?",
       "options": [
         "Detects sarcasm",
-        "Picks the most fluent reply",
-        "Embeds the user message",
-        "Tracks which required parameters (date, destination, amount) are still missing and asks for them in sequence"
+        "En akıcı yanıtı seçer",
+        "Kullanıcı mesajını gömer",
+        "Gerekli parametrelerin (tarih, varış yeri, miktar) hala eksik olduğu parçalar ve bunları sırayla soruyor"
       ],
       "correct": 3,
-      "explanation": "Slot filling iteratively collects the structured parameters a task handler needs."
+      "explanation": "Yuva doldurma, bir görev işleyicisinin ihtiyaç duyduğu yapılandırılmış parametreleri yinelemeli olarak toplar."
     },
     {
       "stage": "pre",
-      "question": "Why is retrieval-based chat resistant to hallucination?",
+      "question": "Bilgi almaya dayalı sohbet neden halüsinasyona karşı dayanıklıdır?",
       "options": [
-        "It uses embeddings",
-        "It rejects all queries",
-        "It returns a canned response from a curated set rather than generating new text",
-        "It uses BM25"
+        "Gömmeler kullanır",
+        "Tüm sorguları reddeder",
+        "Yeni metin oluşturmak yerine, seçilmiş bir kümeden hazır yanıt döndürür",
+        "BM25 kullanıyor"
       ],
       "correct": 2,
       "explanation": "Retrieval surfaces pre-written answers; no generation means no fabricated content."
     },
     {
       "stage": "check",
-      "question": "What defines an LLM agent loop versus a single-shot LLM call?",
+      "question": "Tek seferlik LLM çağrısına karşı LLM aracı döngüsünü ne tanımlar?",
       "options": [
         "Use of greedy decoding",
         "Use of softmax",
-        "A controller that interleaves LLM calls with tool invocations until the model returns a final answer or the step budget is hit",
+        "Model son bir yanıt döndürene veya adım bütçesi dolana kadar LLM çağrılarını araç çağrılarıyla birleştiren bir denetleyici",
         "Bigger context window"
       ],
       "correct": 2,
-      "explanation": "Agents add a plan-act-observe loop with tool calls and a termination condition."
+      "explanation": "Aracılar, araç çağrıları ve sonlandırma koşuluyla bir planla-harekete geç-gözlemle döngüsü ekler."
     },
     {
       "stage": "check",
-      "question": "Why is hybrid routing (rules + retrieval + LLM agent) the 2026 production default?",
+      "question": "Hibrit yönlendirme neden (kurallar + alma + LLM aracısı) 2026 üretim varsayılanıdır?",
       "options": [
-        "It is cheaper to maintain",
-        "It removes the need for evaluation",
+        "Bakımı daha ucuz",
+        "Değerlendirme ihtiyacını ortadan kaldırır",
         "No single architecture handles every request well; rules cover destructive actions, retrieval covers FAQ, agents handle ambiguous open-ended queries",
-        "It avoids embeddings"
+        "Yerleştirmeleri önler"
       ],
       "correct": 2,
-      "explanation": "Hybrid systems use deterministic rules for risky actions and reserve LLM agents for open-ended queries."
+      "explanation": "Hibrit sistemler riskli eylemler için deterministik kurallar kullanır ve LLM aracılarını açık uçlu sorgular için ayırır."
     },
     {
       "stage": "check",
-      "question": "What is prompt injection?",
+      "question": "Hızlı enjeksiyon nedir?",
       "options": [
-        "A SQL injection variant only",
+        "Yalnızca SQL enjeksiyon çeşidi",
         "A type of tokenizer attack",
-        "Injecting tokens into embeddings",
-        "User-supplied (direct) or document-supplied (indirect) text that tries to override the system prompt or hijack the agent's behavior"
+        "Yerleştirmelere jeton enjekte etme",
+        "Sistem istemini geçersiz kılmaya veya aracının davranışını ele geçirmeye çalışan, kullanıcı tarafından sağlanan (doğrudan) veya belge tarafından sağlanan (dolaylı) metin"
       ],
       "correct": 3,
-      "explanation": "Prompt injection rewrites the agent's behavior via untrusted text in user input or tool outputs."
+      "explanation": "İstem enjeksiyonu, kullanıcı girişindeki veya araç çıkışlarındaki güvenilmeyen metin yoluyla aracının davranışını yeniden yazar."
     },
     {
       "stage": "post",
-      "question": "Which OWASP Top 10 (LLM Apps 2025) risk is ranked LLM01?",
+      "question": "Hangi OWASP İlk 10 (LLM Uygulamaları 2025) riski LLM01 olarak sıralanmıştır?",
       "options": [
         "Prompt injection (direct and indirect)",
         "Insecure deserialization",
@@ -72,28 +72,28 @@
         "SQL injection"
       ],
       "correct": 0,
-      "explanation": "Prompt injection is LLM01 in the OWASP LLM Apps Top 10 (2025)."
+      "explanation": "Hızlı enjeksiyon, OWASP LLM Uygulamaları İlk 10 (2025) listesinde LLM01'dir."
     },
     {
       "stage": "post",
-      "question": "What mitigation pattern reduces indirect prompt injection by separating planning from execution?",
+      "question": "Hangi azaltma modeli, planlamayı uygulamadan ayırarak dolaylı anlık enjeksiyonu azaltır?",
       "options": [
         "Shorter context",
-        "Plan-Verify-Execute: the agent plans first, verifies each action against the plan, then executes — preventing tool outputs from injecting new unplanned actions",
+        "Planla-Doğrula-Yürüt: aracı önce plan yapar, her eylemi plana göre doğrular, sonra yürütür; araç çıktılarının yeni planlanmamış eylemler eklemesini önler",
         "Bigger model",
         "Lower temperature"
       ],
       "correct": 1,
-      "explanation": "PVE checks each step against the agreed plan, so injected instructions from tool outputs are rejected."
+      "explanation": "PVE her adımı kararlaştırılan plana göre kontrol eder, böylece araç çıktılarından eklenen talimatlar reddedilir."
     },
     {
       "stage": "post",
-      "question": "Why must destructive actions (payments, deletions) route through a structured flow even in an LLM-agent system?",
+      "question": "Neden yıkıcı eylemlerin (ödemeler, silmeler) bir LLM-agent sisteminde bile yapılandırılmış bir akıştan geçmesi gerekiyor?",
       "options": [
-        "LLMs are slow",
-        "Beam search is unsafe",
-        "Tools cannot be called",
-        "Confident fabrication, prompt injection, and scope creep mean the LLM cannot be the sole authority for irreversible side effects"
+        "Yüksek Lisans'lar yavaş",
+        "Işınla arama güvenli değil",
+        "Araçlar çağrılamaz",
+        "Kendinden emin üretim, hızlı enjeksiyon ve kapsam kayması, LLM'nin geri dönüşü olmayan yan etkiler konusunda tek otorite olamayacağı anlamına gelir"
       ],
       "correct": 3,
       "explanation": "Hallucination and injection make irreversible actions through pure LLM agents unsafe; require deterministic confirmation flows."

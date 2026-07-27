@@ -4,11 +4,11 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is naive cosine search over raw chunks insufficient for cross-repo code retrieval?",
+      "question": "Çapraz repo kodu alımı için ham parçalar üzerinde saf kosinüs araması neden yetersiz?",
       "options": [
-        "It poisons results on generated code, monorepo duplication, and rarely imported symbols",
-        "Cosine similarity is undefined on code embeddings",
-        "Vector indexes cannot store payloads larger than 1KB",
+        "Oluşturulan kod, monorepo çoğaltması ve nadiren içe aktarılan sembollerle ilgili sonuçları zehirler",
+        "Kod yerleştirmelerde kosinüs benzerliği tanımsızdır",
+        "Vektör dizinleri 1 KB'tan büyük yükleri depolayamaz",
         "Embedding models do not see code as tokens"
       ],
       "correct": 0,
@@ -16,19 +16,19 @@
     },
     {
       "stage": "pre",
-      "question": "What does AST-aware chunking mean in the ingestion pipeline?",
+      "question": "AST-aware parçalama, besleme hattında ne anlama geliyor?",
       "options": [
-        "Compressing chunks with gzip before storage",
+        "Depolamadan önce parçaları gzip ile sıkıştırmak",
         "Dropping comments and whitespace before embedding",
         "Cutting at tree-sitter node boundaries such as function and class spans",
-        "Splitting code into fixed 256-token windows"
+        "Kodu sabit 256 jetonlu pencerelere bölme"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which three retrievable modalities does each chunk get in this pipeline?",
+      "question": "Her bir parça bu boru hattına hangi üç geri alınabilir yöntemle giriyor?",
       "options": [
         "Token IDs, syntax tree, and call graph",
         "AST, IR, and bytecode",
@@ -40,43 +40,43 @@
     },
     {
       "stage": "check",
-      "question": "What is the role of the cross-encoder reranker after the hybrid retrieval step?",
+      "question": "Hibrit alma adımından sonra çapraz kodlayıcı yeniden sıralamasının rolü nedir?",
       "options": [
-        "It rewrites the chunks to remove generated code",
-        "It re-embeds the query in a different model",
-        "It compresses the chunks before sending to the synthesizer",
-        "It scores each query-candidate pair together for higher accuracy than cosine alone"
+        "Oluşturulan kodu kaldırmak için parçaları yeniden yazar",
+        "Sorguyu farklı bir modele yeniden yerleştirir",
+        "Parçaları sentezleyiciye göndermeden önce sıkıştırır",
+        "Tek başına kosinüsten daha yüksek doğruluk için her sorgu-aday çiftini birlikte puanlar"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does the synthesizer reject answers without (repo/path:start-end) anchors?",
+      "question": "Sentezleyici neden (repo/yol:başlangıç-son) çapaları olmadan yanıtları reddediyor?",
       "options": [
-        "Citation faithfulness gates the answer so users can verify each claim",
-        "Anchors reduce token cost on the synthesis call",
-        "Anchors are needed for downstream BM25 reranking",
-        "Anchors are required by the vector database schema"
+        "Alıntı doğruluğu, kullanıcıların her bir iddiayı doğrulayabilmesi için yanıtı engeller",
+        "Çapalar sentez çağrısında belirteç maliyetini azaltır",
+        "Aşağı yönlü BM25 yeniden sıralama için çapalar gereklidir",
+        "Çapalar vektör veritabanı şeması tarafından gereklidir"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does incremental re-index require to stay under 60 seconds on a 50-file push?",
+      "question": "Artımlı yeniden indekslemenin 50 dosyalık bir gönderimde 60 saniyenin altında kalması için ne gerekir?",
       "options": [
-        "Re-embedding only chunks whose text changed and recomputing affected symbol edges",
-        "Re-embedding the full 2M-LOC corpus on each commit",
-        "Dropping the symbol graph entirely",
-        "Throwing away the BM25 index and rebuilding it from scratch"
+        "Yalnızca metni değişen parçaları yeniden yerleştirme ve etkilenen sembol kenarlarını yeniden hesaplama",
+        "Her işleme 2M-LOC derleminin tamamını yeniden yerleştirme",
+        "Sembol grafiğini tamamen bırakmak",
+        "BM25 endeksini çöpe atıp sıfırdan yeniden inşa etmek"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which metric measures whether retrieved claims are verifiable in the source?",
+      "question": "Hangi metrik, alınan taleplerin kaynakta doğrulanabilir olup olmadığını ölçer?",
       "options": [
         "MRR@10",
         "Citation faithfulness",

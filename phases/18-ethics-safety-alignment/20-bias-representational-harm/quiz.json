@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "How does the lesson distinguish representational harm from allocational harm?",
+      "question": "Ders temsili zararı tahsisatsal zarardan nasıl ayırıyor?",
       "options": [
-        "Representational harm only matters for vision models",
-        "Representational harm is stereotypes / erasure / demeaning portrayal; allocational harm is unequal material outcomes for a group",
-        "Representational is computational; allocational is statistical",
-        "Allocational harm only occurs offline"
+        "Temsili zarar yalnızca görme modelleri için önemlidir",
+        "Temsili zarar, stereotipler / silme / aşağılayıcı tasvirdir; tahsis zararı, bir grup için eşit olmayan maddi sonuçlardır",
+        "Temsil hesaplamaya dayalıdır; tahsis istatistikseldir",
+        "Tahsis zararı yalnızca çevrimdışı gerçekleşir"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which of these are the three evaluation-metric categories from Gallegos et al. 2024?",
+      "question": "Bunlardan hangisi Gallegos ve diğerlerinin sunduğu üç değerlendirme metriği kategorisidir? 2024?",
       "options": [
         "Pre-RLHF, mid-RLHF, post-RLHF",
         "Vision, audio, text",
@@ -28,48 +28,48 @@
     },
     {
       "stage": "check",
-      "question": "Why is intersectional fairness evaluation needed in addition to single-axis evaluation?",
+      "question": "Tek eksenli değerlendirmenin yanı sıra kesişimsel adalet değerlendirmesi neden gereklidir?",
       "options": [
-        "Intersectionality is the same as cross-validation",
-        "Single-axis measures are computationally cheaper",
-        "Single-axis is the only legally allowed approach",
-        "Bias that only emerges at intersections (e.g., gender x race) is missed by evaluations that look at one axis at a time"
+        "Kesişimsellik çapraz doğrulamayla aynıdır",
+        "Tek eksenli ölçümler hesaplama açısından daha ucuzdur",
+        "Tek eksenli yaklaşım yasal olarak izin verilen tek yaklaşımdır",
+        "Yalnızca kesişme noktalarında ortaya çıkan önyargılar (örneğin cinsiyet x ırk), aynı anda tek eksene bakan değerlendirmeler tarafından gözden kaçırılıyor"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does WinoIdentity (COLM 2025) introduce?",
+      "question": "WinoIdentity (COLM 2025) neyi tanıtıyor?",
       "options": [
         "An adversarial attack on demographic classifiers",
-        "A new tokenizer for identity terms",
-        "A replacement for WEAT in embedding space",
-        "Uncertainty-based intersectional fairness evaluation that compares the model's uncertainty over outcomes across intersectional identity tuples, not just point predictions"
+        "Kimlik terimleri için yeni bir belirteç",
+        "Gömme alanında WEAT'nin yerine geçen bir ürün",
+        "Yalnızca nokta tahminlerini değil, modelin kesişimsel kimlik grupları genelindeki sonuçlar üzerindeki belirsizliğini karşılaştıran, belirsizliğe dayalı kesişimsel adalet değerlendirmesi"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which of these is a mechanistic-interpretability approach to bias?",
+      "question": "Bunlardan hangisi önyargıya yönelik mekanik yorumlanabilirlik yaklaşımıdır?",
       "options": [
-        "Switching to DPO from PPO",
+        "PPO'den DPO'ye geçiş",
         "Identifying gender neurons in MLP layers, using SAEs to surface race-correlated features, or manipulating specific attention heads (UniBias)",
         "Adding more KL regularization",
-        "Re-labeling the training set"
+        "Eğitim setini yeniden etiketleme"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does the 10-year meta-critique (arXiv:2508.11067) argue about the bias literature?",
+      "question": "10 yıllık meta-eleştiri (arXiv:2508.11067) önyargı literatürü hakkında neyi tartışıyor?",
       "options": [
-        "It disproportionately focuses on binary-gender bias, neglecting other axes (disability, religion, migration status, multi-lingual identity) that may harm marginalized groups by neglect",
-        "It avoids quantitative methods",
-        "It overemphasizes intersectionality",
-        "It is balanced across all identity axes"
+        "İhmal yoluyla ötekileştirilmiş gruplara zarar verebilecek diğer eksenleri (engellilik, din, göç durumu, çok dilli kimlik) göz ardı ederek, orantısız bir şekilde ikili cinsiyet önyargısına odaklanıyor",
+        "Niceliksel yöntemlerden kaçınır",
+        "Kesişimselliği aşırı vurguluyor",
+        "Tüm kimlik eksenlerinde dengelidir"
       ],
       "correct": 0,
       "explanation": ""
