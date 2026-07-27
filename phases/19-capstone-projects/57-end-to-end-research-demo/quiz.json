@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the demo's job in this lesson?",
+      "question": "Demonun bu dersteki görevi nedir?",
       "options": [
-        "To replace the earlier lessons with a single new framework",
-        "To compose the primitives from the earlier lessons through plain Python imports",
-        "To benchmark the scheduler against a baseline",
+        "Önceki dersleri tek bir yeni çerçeveyle değiştirmek",
+        "Önceki derslerden basit Python içe aktarmaları yoluyla ilkelleri oluşturmak",
+        "Zamanlayıcıyı bir taban çizgisiyle karşılaştırmak için",
         "To call a real language model on each branch"
       ],
       "correct": 1,
-      "explanation": "The demo is a composition test. Each stage exists in its own lesson. The demo imports them and wires the report. No new framework, no new abstractions."
+      "explanation": "Demo bir kompozisyon testidir. Her aşama kendi dersinde mevcuttur. Demo bunları içe aktarır ve raporu aktarır. Yeni çerçeve yok, yeni soyutlama yok."
     },
     {
       "stage": "pre",
-      "question": "Why does the lesson load earlier lessons via importlib instead of a normal package import?",
+      "question": "Ders neden normal paket içe aktarımı yerine importlib aracılığıyla daha önceki dersleri yüklüyor?",
       "options": [
-        "Because importlib is faster",
-        "Because each earlier lesson is a standalone code/ folder, not an installed package; importlib loads them by file path",
-        "Because asyncio requires importlib",
-        "Because the lessons share a module name and would collide"
+        "Çünkü importlib daha hızlıdır",
+        "Çünkü önceki derslerin her biri kurulu bir paket değil, bağımsız bir kod/klasördür; importlib bunları dosya yoluna göre yükler",
+        "Çünkü asyncio importlib'i gerektiriyor",
+        "Çünkü dersler bir modül adını paylaşıyor ve çarpışıyor"
       ],
       "correct": 1,
-      "explanation": "The lessons are not installed packages. Each ships a main.py inside its own code/ folder. importlib.util.spec_from_file_location loads them by path without polluting the global module namespace."
+      "explanation": "Dersler yüklü paketler değildir. Her biri kendi kodu/klasörü içinde bir main.py gönderir. importlib.util.spec_from_file_location, genel modül ad alanını kirletmeden bunları yola göre yükler."
     },
     {
       "stage": "check",
-      "question": "How does the best-result picker decide between branches when more than one triggered a paper?",
+      "question": "Birden fazla makale tetiklendiğinde, en iyi sonucu seçen kişi dallar arasında nasıl karar verir?",
       "options": [
-        "It picks the branch with the most experiments run",
-        "It picks the branch with the highest mean reward, breaking ties alphabetically by branch id",
-        "It picks at random for fairness",
-        "It picks the first triggered branch"
+        "En çok deneme çalıştırılan dalı seçer",
+        "En yüksek ortalama ödüle sahip dalı seçer ve şube kimliğine göre alfabetik olarak bağları koparır.",
+        "Adil olmak için rastgele seçiyor",
+        "İlk tetiklenen dalı seçer"
       ],
       "correct": 1,
-      "explanation": "Highest mean wins. Ties break on branch id so the demo is deterministic. Random would defeat the determinism test."
+      "explanation": "En yüksek ortalama kazanır. Şube kimliğinde bağlar kopar, dolayısıyla demo deterministiktir. Rastgele, determinizm testini yenecektir."
     },
     {
       "stage": "check",
-      "question": "What error does the picker raise when the scheduler reports zero paper triggers?",
+      "question": "Zamanlayıcı sıfır kağıt tetikleyicisi bildirdiğinde toplayıcı hangi hatayı veriyor?",
       "options": [
         "ValueError",
-        "NoTriggerError, which short-circuits the demo before the writer runs",
+        "Yazar çalıştırılmadan önce demoda kısa devre yapan NoTriggerError",
         "PaperValidationError",
-        "It returns None"
+        "Yok değerini döndürür"
       ],
       "correct": 1,
-      "explanation": "NoTriggerError is the typed failure mode. Returning None would let the writer run on a malformed input and break later with a less actionable error."
+      "explanation": "NoTriggerError, yazılan hata modudur. Hiçbiri'nin döndürülmesi, yazarın hatalı biçimlendirilmiş bir giriş üzerinde çalışmasına ve daha sonra daha az işlem yapılabilir bir hatayla kesilmesine izin verir."
     },
     {
       "stage": "post",
-      "question": "Why does the demo run twice with the same seed in the determinism test?",
+      "question": "Determinizm testinde demo neden aynı tohumla iki kez çalışıyor?",
       "options": [
         "To exercise asyncio twice",
-        "To assert that the picked branch, reward, and paper section ids are identical across runs",
+        "Seçilen dal, ödül ve kağıt bölümü kimliklerinin çalıştırmalar arasında aynı olduğunu iddia etmek",
         "To catch a memory leak",
-        "To prove that the scheduler is fair"
+        "Zamanlayıcının adil olduğunu kanıtlamak için"
       ],
       "correct": 1,
-      "explanation": "Determinism is part of the contract. Two runs with the same seed must produce the same artifacts. The test pins that."
+      "explanation": "Determinizm sözleşmenin bir parçasıdır. Aynı tohumla yapılan iki çalıştırma aynı eserleri üretmelidir. Test bunu gösteriyor."
     },
     {
       "stage": "post",
-      "question": "What does the demo report contain after a successful run?",
+      "question": "Başarılı bir çalıştırmanın ardından demo raporu neler içerir?",
       "options": [
-        "Only the final LaTeX file",
+        "Yalnızca son LaTeX dosyası",
         "scheduler_report, best_branch, best_reward, critic_result, paper_manifest, and stop_reason",
-        "Just the experiment count and a status string",
+        "Yalnızca deneme sayısı ve durum dizesi",
         "A model prompt and completion log"
       ],
       "correct": 1,
-      "explanation": "Every stage's output is preserved. The report is a composition of upstream outputs, not a transformed summary. Downstream tooling reads the manifest; debuggers read the trace inside scheduler_report."
+      "explanation": "Her aşamanın çıktısı korunur. Rapor, dönüştürülmüş bir özet değil, yukarı yöndeki çıktıların bir bileşimidir. Aşağı akış araçları bildirimi okur; hata ayıklayıcılar, Scheduler_report içindeki izi okur."
     }
   ]
 }
