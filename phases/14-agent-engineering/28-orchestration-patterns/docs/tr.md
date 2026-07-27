@@ -1,62 +1,62 @@
 # Düzenleme Kalıpları: Denetleyici, Swarm, Hiyerarşik
 
-> 2026 framework'larda dört düzenleme modeli tekrarlanıyor: yönetici-işçi, sürü / eşler arası, hiyerarşik, tartışma. Anthropic'in rehberliği: "Bu, ihtiyaçlarınıza uygun doğru sistemi oluşturmakla ilgilidir." Basit başlayın; topolojiyi yalnızca tek bir agent artı beş iş akışı modeli yetersiz olduğunda ekleyin.
+> 2026 framework'de dört düzenleme modeli tekrarlanıyor: yönetici-çalışan, sürü / eşler arası, hiyerarşik, tartışma. Anthropic'in rehberliği: "Bu, ihtiyaçlarınıza uygun doğru sistemi oluşturmakla ilgilidir." Basit başlayın; topolojiyi yalnızca tek bir agent artı beş iş akışı modeli yetersiz olduğunda ekleyin.
 
 **Tür:** Öğren + Oluştur
 **Diller:** Python (stdlib)
-**Önkoşullar:** Aşama 14 · 12 (İş Akışı Modelleri), Aşama 14 · 25 (Çoklu-Agent Tartışması)
+**Önkoşullar:** Aşama 14 · 12 (İş Akışı Modelleri), Aşama 14 · 25 (Çoklu Agent Tartışması)
 **Süre:** ~60 dakika
 
 ## Öğrenme Hedefleri
 
-- Dört yinelenen orkestrasyon modelini ve her birinin ne zaman uyduğunu adlandırın.
+- Tekrarlanan dört orkestrasyon modelini ve her birinin ne zaman uyduğunu adlandırın.
 - 2026 LangChain önerisini açıklayın: araç çağrısı tabanlı denetim ve denetleyici kitaplıkları karşılaştırması.
 - Anthropic'in "doğru sistemi oluştur" kuralını ve bunun topoloji seçimini nasıl belirlediğini açıklayın.
 - Dördünü de stdlib'de ortak kodlu bir LLM'ye karşı uygulayın.
 
 ## Sorun
 
-Takımlar "multi-agent"'ye ihtiyaç duymadan ulaşır. framework'lar boyunca dört model tekrarlanıyor; Bunları adlandırabildiğinizde doğru olanı seçebilir veya topolojiyi tamamen atlayabilirsiniz.
+Ekipler ihtiyaç duymadan "multi-agent"ye ulaşır. framework'lerde dört model tekrarlanıyor; Bunları adlandırabildiğinizde doğru olanı seçebilir veya topolojiyi tamamen atlayabilirsiniz.
 
 ## Konsept
 
 ### Denetçi-işçi
 
-- Merkezi bir yönlendirme LLM'si uzman agent'lara gönderim yapar.
+- Merkezi bir yönlendirme LLM'si uzman agent'lere gönderilir.
 - Karar verir: kendine geri dön, uzmana devret, sonlandır.
 - Uzmanlar birbirleriyle konuşmazlar; tüm yönlendirmeler denetleyiciden geçer.
 
-Frameworks: LangGraph `create_supervisor`, Antropik orkestratör-işçiler, CrewAI Hiyerarşik Süreç.
+Frameworks: LangGraph `create_supervisor`, Antropik orkestratör-çalışanlar, CrewAI Hiyerarşik Süreç.
 
 **2026 LangChain önerisi:** denetimi `create_supervisor` yerine doğrudan araç çağrıları yoluyla yapın. Daha hassas bağlam mühendisliği kontrolü sağlar; her uzmanın tam olarak ne göreceğine siz karar verirsiniz.
 
 ### Sürü / eşler arası
 
-- Agent'ler doğrudan paylaşılan bir araç yüzeyi aracılığıyla dağıtılır.
+- Agent'ler doğrudan paylaşılan bir takım yüzeyi aracılığıyla dağıtılır.
 - Merkezi yönlendirici yok.
 - Yöneticiye göre daha düşük gecikme (daha az atlama).
 - Mantık yürütmek daha zor (tek bir kontrol noktası yok).
 
-Frameworks: LangGraph sürü topolojisi, OpenAI Agent'nin SDK aktarımları (tüm agent'ler diğerlerinin tümüne aktarılabildiğinde).
+Framework'ler: LangGraph sürü topolojisi, OpenAI Agent'lerin SDK aktarımları (tüm agent'ler diğerlerine aktarılabildiğinde).
 
 ### Hiyerarşik
 
 - Çalışanları yöneten alt denetçileri yöneten amirler.
 - LangGraph'ta iç içe alt grafikler olarak uygulandı; CrewAI'de iç içe geçmiş ekipler.
-- Operasyonel karmaşıklık pahasına büyük agent popülasyonlara ölçeklenir.
+- Operasyonel karmaşıklık pahasına büyük agent popülasyonlarına ölçeklenir.
 
 İhtiyacınız olduğunda: Tek bir denetçinin bağlam bütçesi tüm uzmanların tanımlarını tutamadığında.
 
-### Çekişme
+### Tartışma
 
 - Paralel teklifçiler + yinelemeli çapraz eleştiri (Ders 25).
-- Aslında düzenleme değil - daha fazla doğrulama - ancak framework saniyeler içinde bir topoloji seçeneği olarak ortaya çıkıyor.
+- Aslında düzenleme değil - daha fazla doğrulama - ancak framework'lerde bir topoloji seçeneği olarak görünüyor.
 
 ### Otonom ekipler ve deterministik akışlar
 
-CrewAI iki deployment modunu resmileştirir:
+CrewAI iki deployment modunu resmileştiriyor:
 
-- Deterministik olaya dayalı otomasyon için **Akış** (üretim için önerilen başlangıç ​​noktası).
+- Deterministik olaya dayalı otomasyon için **Akış** (üretim için önerilen başlangıç noktası).
 - Otonom rol tabanlı işbirliği için **Mürettebat**.
 
 Bu, yukarıdaki dört modele diktir ancak topolojiyle eşleşir: Akış genellikle denetleyici veya hiyerarşiktir; Mürettebat genellikle bir LLM yönlendiricisine sahip süpervizördür.
@@ -75,7 +75,7 @@ Karar sırası:
 
 ### Bu modelin yanlış gittiği yer
 
-- **Topoloji öncelikli düşünme.** Çoklu-agent'nin hangi sorunu çözdüğünü tanımlamadan önce "Çoklu-agent'ya ihtiyacımız var".
+- **Topoloji öncelikli düşünme.** Çoklu agent'nin hangi sorunu çözdüğünü belirlemeden önce "multi-agent'ye ihtiyacımız var".
 - **Sürü halinde zıplayan aktarımlar.** A -> B -> A -> B. Atlama sayaçlarını kullanın.
 - **Sahte hiyerarşi.** Üç katman çünkü "kurumsal"; iki gerçek takım. Yıkılmak.
 
@@ -86,7 +86,7 @@ Karar sırası:
 - `Supervisor` — merkezi yönlendirici.
 - `Swarm` — doğrudan aktarımla eşler arası.
 - `Hierarchical` — denetçilerin denetçileri.
-- `Debate` — paralel öneride bulunanlar + eleştiri.
+- `Debate` — paralel teklif sahipleri + eleştiri.
 
 Her kalıp aynı üç amaçlı görevi yerine getirir (geri ödeme / hata / satış). İz şekilleri farklılık gösterir.
 
@@ -101,7 +101,7 @@ python3 code/main.py
 ## Kullan onu
 
 - Denetleyici ve hiyerarşik (iç içe alt grafikler) için **LangGraph**.
-- **Araç olarak aktarım için OpenAI AgentSDK'sı** (yönetici şeklinde).
+- Araç olarak aktarım için **OpenAI Agent SDK'sı** (yönetici şeklinde).
 - Üretim belirleyiciliği için **CrewAI Flow**.
 - Tartışma için veya tam kontrol istediğinizde **Özel**.
 
@@ -115,7 +115,7 @@ python3 code/main.py
 2. Sürüye bir atlama sayacı ekleyin: 3 geçişten sonra reddedin. A->B->A'nın zıplamasını yakalıyor mu?
 3. 12 uzmandan oluşan bir alan için iki seviyeli hiyerarşik bir sistem oluşturun. Bağlam bütçesi yuvalama olmadan nerede başarısız olur?
 4. Üretime dayalı bir iş yükünde dört modelin profilini çıkarın. Hangi ölçümde hangisi kazanır (gecikme, maliyet, doğruluk, hata ayıklama yeteneği)?
-5. Anthropic'in "Etkili Agent'lar Oluşturmak" yazısını okuyun. Üretim akışlarınızın her birini dördünden biriyle eşleştirin. Temiz bir şekilde haritalanmayan var mı?
+5. Anthropic'in "Etkili Agent'ler Oluşturmak" yazısını okuyun. Üretim akışlarınızın her birini dördünden biriyle eşleştirin. Temiz bir şekilde haritalanmayan var mı?
 
 ## Anahtar Terimler
 
@@ -131,7 +131,7 @@ python3 code/main.py
 
 ## Daha Fazla Okuma
 
-- [Antropik, Etkili Agent'ler Oluşturma](https://www.anthropic.com/research/building-effective-agents) — beş model + agent vs iş akışı
-- [LangGraph'a genel bakış](https://docs.langchain.com/oss/python/langgraph/overview) — gözetmen, sürü, hiyerarşik
-- [CrewAI docs](https://docs.crewai.com/en/introduction) — Mürettebat ve Akış
+- [Antropik, Etkili Agent'ler Oluşturma](https://www.anthropic.com/research/building-effective-agents) — beş model + agent ve iş akışı karşılaştırması
+- [LangGraph'a genel bakış](https://docs.langchain.com/oss/python/langgraph/overview) — yönetici, sürü, hiyerarşik
+- [CrewAI belgeleri](https://docs.crewai.com/en/introduction) — Mürettebat ve Akış
 - [Du ve diğerleri, Society of Minds (arXiv:2305.14325)](https://arxiv.org/abs/2305.14325) — tartışma modeli
