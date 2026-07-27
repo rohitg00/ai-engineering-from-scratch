@@ -4,11 +4,11 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which best describes the original Mitchell et al. (2019) Model Card?",
+      "question": "Orijinal Mitchell ve ark.'nı en iyi tanımlayan şey. (2019) Model Kart?",
       "options": [
         "An OpenAPI specification",
-        "A 'nutrition label' for ML models: training data, intended use, factors, metrics, evaluation data, quantitative disaggregated analyses, ethical considerations, caveats",
-        "A model checkpoint manifest only",
+        "ML modelleri için bir 'beslenme etiketi': eğitim verileri, kullanım amacı, faktörler, ölçümler, değerlendirme verileri, nicel olarak ayrıştırılmış analizler, etik hususlar, uyarılar",
+        "Yalnızca bir model denetim noktası bildirimi",
         "A regulatory legal contract"
       ],
       "correct": 1,
@@ -16,11 +16,11 @@
     },
     {
       "stage": "check",
-      "question": "What did Oreamuno et al. (2023) find about ethical-considerations adoption in Hugging Face model cards?",
+      "question": "Oreamuno ve ark. (2023) Hugging Face model kartlarında etik hususların benimsendiğini buldunuz mu?",
       "options": [
         "Approximately 0.3% document ethical considerations",
         "Approximately 80% document ethical considerations",
-        "No model card has any text at all",
+        "Hiçbir model kartında herhangi bir metin yok",
         "All model cards document them"
       ],
       "correct": 0,
@@ -28,9 +28,9 @@
     },
     {
       "stage": "check",
-      "question": "What does Pushkarna et al. (Google 2022) Data Cards' telescopic / periscopic / microscopic layering provide?",
+      "question": "Pushkarna ve ark. ne anlama geliyor? (Google 2022) Veri Kartları teleskopik / periskopik / mikroskobik katmanlamayı sağlıyor mu?",
       "options": [
-        "A boundary-object framing where the same document serves different readers (non-experts, ML practitioners, auditors) via three zoom levels of detail",
+        "Aynı belgenin üç ayrıntı yakınlaştırma düzeyi aracılığıyla farklı okuyuculara (uzman olmayanlar, ML uygulayıcılar, denetçiler) hizmet ettiği bir sınır nesnesi çerçevelemesi",
         "A pre-RLHF audit checklist",
         "A telescope-themed visualization library",
         "A privacy-preserving query interface"
@@ -40,22 +40,22 @@
     },
     {
       "stage": "check",
-      "question": "What scope does a System Card cover that Model Cards do not?",
+      "question": "Model Kartların kapsamadığı sistem kartının kapsamı nedir?",
       "options": [
         "End-to-end AI system: model + safety stack + deployment context, including security capabilities, prompt-injection protection, data-exfiltration detection, alignment, and incident response",
-        "Only the dataset",
-        "Only the prompt template",
-        "Only the tokenizer"
+        "Yalnızca veri kümesi",
+        "Yalnızca bilgi istemi şablonu",
+        "Yalnızca belirteçleyici"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What did Liang et al. (2024) report about model-card detail and Hugging Face download rate?",
+      "question": "Liang ve diğerleri ne yaptı? (2024) model kartı ayrıntıları ve Hugging Face indirme oranı hakkında rapor?",
       "options": [
-        "Detailed model cards drive a +29.0% weekly download lift on HF for the treatment group vs control (diff-in-diff); adoption pressure is now market-driven, not only compliance-driven",
-        "Only ethical-considerations sections affected downloads",
+        "Ayrıntılı model kartları, tedavi grubu ve kontrol grubu (fark içindeki fark) için HF'de haftalık +%29,0 indirme artışı sağlıyor; benimseme baskısı artık yalnızca uyumluluk odaklı değil, pazar odaklı",
+        "İndirme işlemleri yalnızca etik hususlarla ilgili bölümler etkilendi",
         "Detail had no effect on downloads",
         "Detail decreased download rates"
       ],
@@ -64,11 +64,11 @@
     },
     {
       "stage": "post",
-      "question": "What does Laminator (Duddu et al. 2024) contribute to documentation?",
+      "question": "Laminatör (Duddu ve ark. 2024) belgelemeye ne gibi katkılar sağlar?",
       "options": [
         "An automated benchmarking harness",
-        "Verifiable attestations via hardware TEE / cryptographic signatures, so the card can carry a proof-of-claim instead of just a claim",
-        "A replacement for the Datasheets standard",
+        "Donanım TEE / kriptografik imzalar aracılığıyla doğrulanabilir tasdikler, böylece kart yalnızca bir iddia yerine iddia kanıtı taşıyabilir",
+        "Veri Sayfaları standardının yerine geçen bir ürün",
         "An LLM-based summary generator"
       ],
       "correct": 1,
