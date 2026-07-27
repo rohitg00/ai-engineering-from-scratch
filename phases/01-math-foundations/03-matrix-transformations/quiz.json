@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is an eigenvector of a matrix?",
-      "options": ["The largest row in the matrix", "A vector that the matrix only scales (never rotates) when multiplied", "A vector perpendicular to all columns of the matrix", "The diagonal entries of the matrix expressed as a vector"],
+      "question": "Bir matrisin özvektörü nedir?",
+      "options": [
+        "Matristeki en büyük satır",
+        "Matrisin yalnızca çarpıldığında ölçeklendirdiği (hiçbir zaman dönmediği) bir vektör",
+        "Matrisin tüm sütunlarına dik bir vektör",
+        "Bir vektör olarak ifade edilen matrisin köşegen girişleri"
+      ],
       "correct": 1,
-      "explanation": "An eigenvector v satisfies Av = lambda*v, meaning the matrix A only stretches v by the scalar factor lambda (the eigenvalue) without changing its direction."
+      "explanation": "Bir v özvektörü Av = lambda*v'yi karşılar, yani A matrisi v'yi yönünü değiştirmeden yalnızca skaler faktör lambda (özdeğer) kadar uzatır."
     },
     {
       "stage": "pre",
-      "question": "What does the determinant of a 2D transformation matrix represent geometrically?",
-      "options": ["The angle of rotation applied by the matrix", "The factor by which the matrix scales area", "The number of eigenvectors the matrix has", "The trace of the matrix"],
+      "question": "2 boyutlu dönüşüm matrisinin determinantı geometrik olarak neyi temsil eder?",
+      "options": [
+        "Matrisin uyguladığı dönme açısı",
+        "Matrisin alanı ölçeklendirdiği faktör",
+        "Matrisin sahip olduğu özvektörlerin sayısı",
+        "Matrisin izi"
+      ],
       "correct": 1,
-      "explanation": "The determinant measures how much the transformation scales area. det=1 preserves area (rotation), det=2 doubles area, det=0 crushes to a lower dimension, and det=-1 preserves area but flips orientation."
+      "explanation": "Belirleyici, dönüşümün alanının ne kadar ölçeklendiğini ölçer. det=1 alanı (döndürme) korur, det=2 alanı iki katına çıkarır, det=0 daha düşük bir boyuta sıkıştırır ve det=-1 alanı korur ancak yönlendirmeyi değiştirir."
     },
     {
       "stage": "post",
-      "question": "Why does the order of matrix transformations matter? (i.e., why is R @ S different from S @ R?)",
-      "options": ["Matrix addition is not commutative", "Matrix multiplication is not commutative: rotating then scaling gives a different result than scaling then rotating", "The determinants are different for each order", "One order produces a larger matrix than the other"],
+      "question": "Matris dönüşümlerinin sırası neden önemlidir? (yani R@S neden S@R'den farklıdır?)",
+      "options": [
+        "Matris toplama değişmeli değildir",
+        "Matris çarpımı değişmeli değildir: önce döndürme sonra ölçeklendirme, ölçeklendirme sonra döndürmeden farklı bir sonuç verir",
+        "Belirleyiciler her sipariş için farklıdır",
+        "Bir sipariş diğerinden daha büyük bir matris üretir"
+      ],
       "correct": 1,
-      "explanation": "Matrix multiplication is not commutative. Rotating (1,0) by 90 degrees then scaling by (2,0.5) gives (0,0.5), but scaling first then rotating gives (0,2). The geometric operations compose differently."
+      "explanation": "Matris çarpımı değişmeli değildir. (1,0)'ı 90 derece döndürmek, ardından (2,0,5) ile ölçeklemek (0,0,5) değerini verir, ancak önce ölçeklemek, sonra döndürmek (0,2) değerini verir. Geometrik işlemler farklı oluşur."
     },
     {
       "stage": "post",
-      "question": "In a recurrent neural network, what happens when the weight matrix has eigenvalues with magnitude greater than 1?",
-      "options": ["The network learns faster", "Outputs explode exponentially over time steps (exploding gradient problem)", "The network becomes more stable", "The eigenvalues converge to 1 over training"],
+      "question": "Tekrarlayan bir sinir ağında ağırlık matrisinin büyüklüğü 1'den büyük olan özdeğerleri olduğunda ne olur?",
+      "options": [
+        "Ağ daha hızlı öğrenir",
+        "Outputs explode exponentially over time steps (exploding gradient problem)",
+        "Ağ daha kararlı hale gelir",
+        "Özdeğerler eğitimde 1'e yakınsar"
+      ],
       "correct": 1,
-      "explanation": "Repeated multiplication by a matrix amplifies the eigenvalue directions. Eigenvalues > 1 cause exponential growth (exploding gradients), while eigenvalues < 1 cause exponential decay (vanishing gradients)."
+      "explanation": "Bir matris ile tekrarlanan çarpma, özdeğer yönlerini güçlendirir. Özdeğerler > 1 üstel büyümeye neden olur (patlayan gradyanlar), özdeğerler < 1 ise üstel bozulmaya (kaybolan gradyanlar) neden olur."
     },
     {
       "stage": "post",
-      "question": "The matrix A = [[2, 1], [1, 2]] has eigenvalues 3 and 1. What does eigendecomposition A = V @ D @ V^(-1) reveal?",
-      "options": ["A is equivalent to two rotations", "A stretches space by 3x along the [1,1] direction and leaves the [1,-1] direction unchanged", "A compresses all vectors by a factor of 2", "A has rank 1 and maps all vectors to a line"],
+      "question": "A = [[2, 1], [1, 2]] matrisinin özdeğerleri 3 ve 1'dir. Özbileşim A = V @ D @ V^(-1) neyi ortaya çıkarır?",
+      "options": [
+        "A iki dönüşe eşdeğerdir",
+        "A, alanı [1,1] yönünde 3 kat uzatır ve [1,-1] yönünü değiştirmeden bırakır",
+        "A compresses all vectors by a factor of 2",
+        "A'nın derecesi 1'dir ve tüm vektörleri bir çizgiye eşler"
+      ],
       "correct": 1,
-      "explanation": "The eigenvalue 3 with eigenvector [1,1] means A stretches 3x along the diagonal. The eigenvalue 1 with eigenvector [1,-1] means A leaves the anti-diagonal unchanged. D holds {3,1}, V holds the eigenvectors."
+      "explanation": "Özvektör [1,1] ile özdeğer 3, A'nın köşegen boyunca 3 kat uzandığı anlamına gelir. Özvektör [1,-1] ile özdeğer 1, A'nın anti-köşegeni değiştirmeden bıraktığı anlamına gelir. D, {3,1}'yi tutar, V ise özvektörleri tutar."
     }
   ]
 }
