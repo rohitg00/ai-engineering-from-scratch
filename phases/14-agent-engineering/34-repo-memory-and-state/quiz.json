@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the durability test that decides whether a piece of information belongs in repo memory?",
+      "question": "Bir bilginin repo hafızasına ait olup olmadığına karar veren dayanıklılık testi nedir?",
       "options": [
-        "Whether it is JSON",
-        "Whether it would be useful three months from now in a CI rerun; if yes, repo; if no, telemetry",
-        "Whether the user marked it as important",
-        "Whether it fits in 4 kB"
+        "İster JSON olsun",
+        "Bundan üç ay sonra CI'nin tekrar gösteriminin yararlı olup olmayacağı; evet ise repo; hayırsa telemetri",
+        "Kullanıcının bunu önemli olarak işaretleyip işaretlemediği",
+        "4 kB'ye sığıp sığmadığı"
       ],
       "correct": 1,
-      "explanation": "Repo memory is for durable, three-months-from-now-useful state; transient data is telemetry."
+      "explanation": "Repo belleği dayanıklı, şu andan itibaren üç ay boyunca kullanışlı bir durum içindir; geçici veriler telemetridir."
     },
     {
       "stage": "pre",
-      "question": "What schema field carries the agent's contract version?",
+      "question": "Aracının sözleşme sürümünü hangi şema alanı taşır?",
       "options": [
         "schema_version",
         "build_hash",
@@ -24,64 +24,64 @@
         "session_uuid"
       ],
       "correct": 0,
-      "explanation": "schema_version is the integer contract; the manager refuses to load from an unknown version."
+      "explanation": "schema_version tamsayı sözleşmesidir; yönetici bilinmeyen bir sürümden yükleme yapmayı reddediyor."
     },
     {
       "stage": "check",
-      "question": "How does atomic write work?",
+      "question": "Atomik yazma nasıl çalışır?",
       "options": [
-        "tempfile.mkstemp in the same directory, write, fsync, os.replace (atomic rename) over the target",
-        "Truncate-then-write to the target",
-        "Append-only with a CRC",
+        "tempfile.mkstemp aynı dizinde, hedefin üzerine yazın, fsync, os.replace (atomik yeniden adlandırma)",
+        "Hedefe kes-sonra-yaz",
+        "CRC ile yalnızca ekleme",
         "Encrypt and overwrite"
       ],
       "correct": 0,
-      "explanation": "Atomic rename on POSIX and Windows is what prevents partial-write corruption."
+      "explanation": "POSIX ve Windows'ta atomik yeniden adlandırma, kısmi yazma bozulmasını önleyen şeydir."
     },
     {
       "stage": "check",
-      "question": "Why are idempotency keys required for non-idempotent tool calls?",
+      "question": "İdempotent olmayan araç çağrıları için neden idempotency anahtarları gereklidir?",
       "options": [
-        "For billing",
-        "If the agent crashes after a tool call but before checkpointing the result, retry safely; log call ID before execution and skip the call on retry",
+        "Faturalandırma için",
+        "Aracı, bir araç çağrısından sonra ancak sonucu kontrol etmeden önce çökerse, güvenli bir şekilde yeniden deneyin; yürütmeden önce ID çağrısını günlüğe kaydedin ve yeniden denediğinizde çağrıyı atlayın",
         "To deduplicate logs",
         "To shorten output"
       ],
       "correct": 1,
-      "explanation": "pending_calls.jsonl carries the call IDs; recovery checks and skips already-executed work."
+      "explanation": "pending_calls.jsonl çağrı kimliklerini taşır; kurtarma, halihazırda yürütülen işi kontrol eder ve atlar."
     },
     {
       "stage": "check",
-      "question": "Where should large artifacts (CSVs, long transcripts, generated files) live relative to state?",
+      "question": "Büyük yapılar (CSV'ler, uzun transkriptler, oluşturulan dosyalar) duruma göre nerede bulunmalıdır?",
       "options": [
         "Inline in agent_state.json",
-        "As separate files (or object storage) with only the path kept in state, so checkpoints stay small and fast",
+        "Yalnızca yolun durumda tutulduğu ayrı dosyalar (veya nesne depolama alanı) olduğundan kontrol noktaları küçük ve hızlı kalır",
         "In environment variables",
-        "Concatenated into one giant log"
+        "Tek bir dev kütüğe birleştirildi"
       ],
       "correct": 1,
       "explanation": "Separate artifacts grow independently of state; checkpoints stay cheap to read and write."
     },
     {
       "stage": "post",
-      "question": "What does event sourcing for audit + snapshots for resume buy you?",
+      "question": "Denetim için olay kaynağı + özgeçmiş için anlık görüntüler size ne kazandırır?",
       "options": [
         "Lower disk usage",
-        "Replay agent decisions verbatim by reading the snapshot then replaying events after it; same shape as Postgres WAL",
+        "Anlık görüntüyü okuyarak ve ardından olayları tekrar oynatarak temsilci kararlarını kelimesi kelimesine yeniden oynatın; Postgres WAL ile aynı şekil",
         "Faster inference",
         "Native voice support"
       ],
       "correct": 1,
-      "explanation": "Append to state.events.jsonl on every mutation; periodically snapshot to state.json; replay events after the snapshot timestamp."
+      "explanation": "Her mutasyona state.events.jsonl dosyasını ekleyin; periyodik olarak state.json'a anlık görüntü; anlık görüntü zaman damgasından sonra olayları yeniden oynatın."
     },
     {
       "stage": "post",
-      "question": "What does the lesson say happens when schema_version mismatches?",
+      "question": "Ders, schema_version uyumsuzluğu olduğunda ne olacağını söylüyor?",
       "options": [
-        "The manager silently upgrades",
-        "The manager refuses to load until a migration script in tools/migrate_state.py runs",
-        "The state is deleted",
-        "The agent retries"
+        "Yönetici sessizce yükseltme yapar",
+        "Yönetici, Tools/migrate_state.py dosyasında bir geçiş komut dosyası çalıştırılana kadar yüklemeyi reddediyor",
+        "Durum silindi",
+        "Temsilci yeniden dener"
       ],
       "correct": 1,
       "explanation": "Schema migrations or refuse-to-load; never silent upgrade."
