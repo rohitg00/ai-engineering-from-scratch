@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core mechanism of HyDE (Hypothetical Document Embeddings)?",
+      "question": "HyDE'nin (varsayımsal belge yerleştirme) temel mekanizması nedir?",
       "options": [
-        "Embed the user query through a larger model",
-        "Generate a fake answer with an LLM, embed that hypothetical document, and retrieve against its vector instead of the query vector",
-        "Run the query through multiple retrievers and pick the best one",
-        "Hash the query and look it up in a cache"
+        "Kullanıcı sorgusunu daha büyük bir modele yerleştirme",
+        "LLM ile sahte bir yanıt oluşturun, bu varsayımsal belgeyi yerleştirin ve sorgu vektörü yerine vektörüne göre geri alın",
+        "Sorguyu birden fazla alıcı aracılığıyla çalıştırın ve en iyisini seçin",
+        "Sorguyu karmalayın ve önbellekte arayın"
       ],
       "correct": 1,
-      "explanation": "HyDE writes a document-shaped passage in the corpus voice and retrieves on that embedding; the query vector is replaced."
+      "explanation": "HyDE, derlem sesine belge şeklinde bir pasaj yazar ve bu yerleştirmeyi alır; sorgu vektörü değiştirilir."
     },
     {
       "stage": "pre",
-      "question": "Why is it acceptable for the LLM-generated hypothetical document in HyDE to be factually wrong?",
+      "question": "HyDE'de LLM-oluşturulan varsayımsal belgenin gerçekte yanlış olması neden kabul edilebilir?",
       "options": [
-        "The reranker repairs factual errors",
-        "The retriever cares about the token distribution, not factual correctness; the hypothetical's vector lands near the real passage",
-        "The user never sees the hypothetical",
-        "The LLM call is rolled back when wrong"
+        "Yeniden sıralama, gerçek hataları onarır",
+        "Alıcı, gerçek doğruluğu değil, jeton dağıtımını önemser; varsayımsalın vektörü gerçek geçişin yakınına iner",
+        "Kullanıcı varsayımsal olanı asla görmez",
+        "Yanlış olduğunda LLM çağrısı geri alınır"
       ],
       "correct": 1,
-      "explanation": "Retrieval is similarity in embedding space; if the hypothetical's vocabulary matches the corpus, the vector lands in the right region."
+      "explanation": "Geri getirme, uzayın yerleştirilmesindeki benzerliktir; eğer varsayımsalın kelime dağarcığı bütünle eşleşiyorsa, vektör doğru bölgeye yerleşir."
     },
     {
       "stage": "check",
-      "question": "What is the difference between multi-query expansion and query decomposition?",
+      "question": "Çoklu sorgu genişletme ile sorgu ayrıştırma arasındaki fark nedir?",
       "options": [
-        "Multi-query produces N paraphrases of the same question; decomposition produces sub-questions that together cover a multi-topic question",
+        "Çoklu sorgu aynı sorunun N sayıda farklı ifadesini üretir; ayrıştırma, birlikte çok konulu bir soruyu kapsayan alt sorular üretir",
         "Multi-query uses cosine; decomposition uses BM25",
         "Decomposition runs locally; multi-query requires a remote model",
-        "They are identical"
+        "Onlar aynı"
       ],
       "correct": 0,
-      "explanation": "Paraphrases preserve intent; sub-questions split a multi-topic query into independently answerable pieces."
+      "explanation": "Açıklamalar niyeti korur; alt sorular, çok konulu bir sorguyu bağımsız olarak yanıtlanabilen parçalara böler."
     },
     {
       "stage": "check",
-      "question": "When does query decomposition over-split and hurt retrieval?",
+      "question": "Sorgu ayrıştırması ne zaman aşırı bölünür ve geri almaya zarar verir?",
       "options": [
-        "When the query is atomic (single-topic), the decomposer invents fake sub-questions and the retrievals all return the same document with reduced rank",
-        "When the query is too long for the LLM",
-        "When the corpus is too small",
-        "When BM25 is disabled"
+        "Sorgu atomik (tek konu) olduğunda, ayrıştırıcı sahte alt sorular icat eder ve geri alma işlemlerinin tümü aynı belgeyi azaltılmış sıralamayla döndürür",
+        "Sorgu LLM için çok uzun olduğunda",
+        "Gövde çok küçük olduğunda",
+        "BM25 devre dışı bırakıldığında"
       ],
       "correct": 0,
-      "explanation": "Decomposing an atomic query splits it into fake sub-questions; their retrievals dilute the merge so the right document ranks lower."
+      "explanation": "Atomik bir sorgunun ayrıştırılması, onu sahte alt sorulara böler; onların geri alınması birleştirmeyi sulandırır, böylece doğru belge daha alt sıralarda yer alır."
     },
     {
       "stage": "check",
-      "question": "Why do the three rewriting strategies fuse with RRF rather than score interpolation?",
+      "question": "Üç yeniden yazma stratejisi neden puan enterpolasyonu yerine RRF ile birleşiyor?",
       "options": [
-        "RRF is the only operation supported by Python",
-        "Score interpolation requires per-corpus calibration; RRF combines rank-based contributions without calibration, which is required when fusing N retrievals from different rewrites",
-        "RRF runs on GPUs and score interpolation does not",
-        "Score interpolation cannot handle more than two lists"
+        "RRF Python tarafından desteklenen tek işlemdir",
+        "Puan enterpolasyonu, derlem başına kalibrasyon gerektirir; RRF, farklı yeniden yazmalardan N alımını birleştirirken gerekli olan, sıralamaya dayalı katkıları kalibrasyon olmadan birleştirir",
+        "RRF GPU'larda çalışır ve puan enterpolasyonu yapılmaz",
+        "Puan enterpolasyonu ikiden fazla listeyi işleyemez"
       ],
       "correct": 1,
-      "explanation": "Same argument as lesson 65; rank-based fusion does not need per-corpus alpha tuning and stays stable across rewriter outputs."
+      "explanation": "65. dersle aynı argüman; Dereceye dayalı füzyon, derlem başına alfa ayarına ihtiyaç duymaz ve yeniden yazma çıktıları arasında kararlı kalır."
     },
     {
       "stage": "post",
-      "question": "What is the latency floor when running all three rewriters in parallel?",
+      "question": "Üç yeniden yazıcının tümü paralel olarak çalıştırıldığında gecikme tabanı nedir?",
       "options": [
-        "The slowest single retrieval",
-        "One LLM call (the rewriters and retrievals run in parallel; the LLM call is the floor)",
+        "En yavaş tekli alım",
+        "Bir LLM çağrısı (yeniden yazanlar ve geri almalar paralel olarak çalışır; LLM çağrısı zemindir)",
         "Three LLM calls in series",
-        "Zero, because the rewriters cache everything"
+        "Sıfır, çünkü yeniden yazanlar her şeyi önbelleğe alır"
       ],
       "correct": 1,
-      "explanation": "All three rewriters fan out to a model call; if they run in parallel the floor is one model call latency, then the retrievals run in parallel after."
+      "explanation": "Her üç yeniden yazar da bir model çağrısına çıkıyor; paralel olarak çalışıyorlarsa taban bir model çağrı gecikmesidir, daha sonra geri alma işlemleri paralel olarak yürütülür."
     }
   ]
 }
