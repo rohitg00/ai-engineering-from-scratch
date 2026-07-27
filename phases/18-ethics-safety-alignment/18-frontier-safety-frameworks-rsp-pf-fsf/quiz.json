@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does Anthropic's ASL structure model itself on?",
+      "question": "Anthropic'in ASL yapısı neyi modelliyor?",
       "options": [
         "ITIL incident severities",
         "EU AI Act categories",
@@ -16,7 +16,7 @@
     },
     {
       "stage": "check",
-      "question": "Which OpenAI Preparedness Framework v2 criterion captures 'harm occurs fast or cannot be undone'?",
+      "question": "Hangi OpenAI Hazırlık Çerçevesi v2 kriteri 'zararın hızlı oluştuğunu veya geri alınamayacağını' ifade eder?",
       "options": [
         "Net-new",
         "Instantaneous-or-irremediable",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "Which Critical Capability Level was added to DeepMind's FSF v3.0 (September 2025)?",
+      "question": "DeepMind'ın FSF v3.0'ına (Eylül 2025) hangi Kritik Yetenek Düzeyi eklendi?",
       "options": [
         "Harmful Manipulation",
         "Cyber Uplift",
@@ -40,11 +40,11 @@
     },
     {
       "stage": "check",
-      "question": "What is a 'competitor-adjustment clause' in the 2025+ frontier safety frameworks?",
+      "question": "2025+ sınır güvenliği çerçevelerindeki 'rakip düzenleme maddesi' nedir?",
       "options": [
         "A provision allowing a lab to reduce safety requirements if peer labs ship without comparable safeguards",
         "An export-control exemption",
-        "A pricing rule for API access",
+        "API erişimi için fiyatlandırma kuralı",
         "A model-card disclosure requirement"
       ],
       "correct": 0,
@@ -52,7 +52,7 @@
     },
     {
       "stage": "post",
-      "question": "What are the three standard pillars of a safety case as described in the lesson?",
+      "question": "Derste anlatıldığı gibi bir emniyet durumunun üç standart dayanağı nedir?",
       "options": [
         "Speed, accuracy, cost",
         "Monitoring, illegibility, incapability",
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Which structural alignment exists across Anthropic's 'Capability Thresholds,' OpenAI's 'High Capability thresholds,' and DeepMind's 'Critical Capability Levels'?",
+      "question": "Anthropic'in 'Yetenek Eşikleri', OpenAI'nin 'Yüksek Yetenek eşikleri' ve DeepMind'ın 'Kritik Yetenek Düzeyleri' arasında hangi yapısal uyum mevcut?",
       "options": [
-        "Structural alignment: tiered frontier-capability thresholds with published evaluation criteria, even though terminology differs",
-        "None are publicly documented",
+        "Yapısal uyum: terminoloji farklı olsa da yayınlanmış değerlendirme kriterleriyle kademeli sınır yetenek eşikleri",
+        "Hiçbiri kamuya açık olarak belgelenmemiştir",
         "Identical terminology and numeric cutoffs",
-        "All three use the exact same evaluations"
+        "Üçü de tamamen aynı değerlendirmeleri kullanıyor"
       ],
       "correct": 0,
       "explanation": ""
