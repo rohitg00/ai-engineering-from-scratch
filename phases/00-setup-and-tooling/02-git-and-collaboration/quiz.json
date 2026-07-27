@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does 'version control' primarily help you do?",
-      "options": ["Speed up code execution", "Track changes to files over time and collaborate with others", "Compress files to save disk space", "Automatically fix bugs in your code"],
+      "question": "'Sürüm kontrolü' öncelikle ne yapmanıza yardımcı olur?",
+      "options": [
+        "Speed up code execution",
+        "Dosyalarda zaman içinde yapılan değişiklikleri izleyin ve başkalarıyla işbirliği yapın",
+        "Compress files to save disk space",
+        "Automatically fix bugs in your code"
+      ],
       "correct": 1,
-      "explanation": "Version control systems like git track every change made to files, allowing you to revert to previous states and collaborate with others on the same codebase."
+      "explanation": "Git gibi sürüm kontrol sistemleri, dosyalarda yapılan her değişikliği takip ederek önceki durumlara dönmenize ve aynı kod tabanında başkalarıyla işbirliği yapmanıza olanak tanır."
     },
     {
       "stage": "pre",
-      "question": "What is a 'repository' in the context of software development?",
-      "options": ["A cloud storage service like Google Drive", "A collection of files and their complete change history managed by version control", "A database for storing user data", "A package manager for installing libraries"],
+      "question": "Yazılım geliştirme bağlamında 'depo' nedir?",
+      "options": [
+        "A cloud storage service like Google Drive",
+        "Sürüm kontrolü tarafından yönetilen bir dosya koleksiyonu ve bunların tüm değişiklik geçmişi",
+        "Kullanıcı verilerini depolamak için bir veritabanı",
+        "Kitaplıkları yüklemek için bir paket yöneticisi"
+      ],
       "correct": 1,
-      "explanation": "A repository (repo) is a directory tracked by git that contains all project files along with the full history of changes made to those files."
+      "explanation": "Depo (repo), git tarafından izlenen ve tüm proje dosyalarının yanı sıra bu dosyalarda yapılan değişikliklerin tam geçmişini içeren bir dizindir."
     },
     {
       "stage": "post",
-      "question": "What is the correct sequence for saving and backing up your work in git?",
-      "options": ["git push, git add, git commit", "git commit, git add, git push", "git add, git commit, git push", "git clone, git add, git push"],
+      "question": "Çalışmanızı git'te kaydetmek ve yedeklemek için doğru sıra nedir?",
+      "options": [
+        "git push, git add, git commit",
+        "git commit, git add, git push",
+        "git add, git commit, git push",
+        "git clone, git add, git push"
+      ],
       "correct": 2,
-      "explanation": "First you stage changes with 'git add', then save a snapshot with 'git commit', then upload to the remote with 'git push'. This is the daily workflow."
+      "explanation": "İlk önce 'git add' ile değişiklikleri sahnelersiniz, ardından 'git commit' ile anlık görüntüyü kaydedersiniz, ardından 'git Push' ile uzaktan kumandaya yüklersiniz. Bu günlük iş akışıdır."
     },
     {
       "stage": "post",
-      "question": "What does 'git checkout -b experiment/new-optimizer' do?",
-      "options": ["Downloads a branch from GitHub called experiment/new-optimizer", "Creates a new branch named experiment/new-optimizer and switches to it", "Deletes the branch experiment/new-optimizer", "Reverts all files to match the experiment/new-optimizer branch"],
+      "question": "'git checkout -b deneme/yeni optimize edici' ne işe yarar?",
+      "options": [
+        "GitHub'dan Experiment/new-optimizer adlı bir dal indirir",
+        "Experiment/new-optimizer adında yeni bir dal oluşturur ve ona geçiş yapar",
+        "Dal denemesini/yeni optimize ediciyi siler",
+        "Tüm dosyaları deneme/yeni optimize edici dalıyla eşleşecek şekilde geri döndürür"
+      ],
       "correct": 1,
-      "explanation": "The '-b' flag creates a new branch with the given name and immediately switches to it, allowing you to experiment without affecting the main branch."
+      "explanation": "'-b' bayrağı, verilen adla yeni bir dal oluşturur ve hemen ona geçerek ana dalı etkilemeden deneme yapmanıza olanak tanır."
     },
     {
       "stage": "post",
-      "question": "Why should you add '.pt', '.pth', and '.safetensors' to your .gitignore?",
-      "options": ["They are Python test files that should not be committed", "They are model checkpoint files that are too large for git and can be re-generated", "They contain sensitive API keys", "Git cannot track binary files of any kind"],
+      "question": "Neden .gitignore dosyanıza '.pt', '.pth' ve '.safetensors' eklemelisiniz?",
+      "options": [
+        "Bunlar taahhüt edilmemesi gereken Python test dosyalarıdır",
+        "Bunlar git için çok büyük olan ve yeniden oluşturulabilen model kontrol noktası dosyalarıdır.",
+        "Hassas API anahtarları içerirler",
+        "Git hiçbir türden ikili dosyayı izleyemez"
+      ],
       "correct": 1,
-      "explanation": "Model checkpoint files (.pt, .pth, .safetensors) are often gigabytes in size. Git is not designed for large binary files, so these should be excluded and re-generated or stored separately."
+      "explanation": "Model kontrol noktası dosyalarının (.pt, .pth, .safetensors) boyutu genellikle gigabaytlardır. Git büyük ikili dosyalar için tasarlanmamıştır, bu nedenle bunların hariç tutulması ve yeniden oluşturulması veya ayrı olarak saklanması gerekir."
     }
   ]
 }
