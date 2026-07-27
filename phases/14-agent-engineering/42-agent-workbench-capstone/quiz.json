@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the capstone produce?",
+      "question": "Kapak taşı ne üretir?",
       "options": [
         "A research paper",
-        "A versioned drop-in directory (agent-workbench-pack/) with the seven surfaces plus a bin/install.sh that lays them down idempotently",
+        "Yedi yüzeye ve bunları bağımsız olarak yerleştiren bir bin/install.sh'ye sahip sürümlendirilmiş bir açılır dizin (agent-workbench-pack/)",
         "A new LLM",
         "A monitoring dashboard"
       ],
       "correct": 1,
-      "explanation": "The pack is the recipe; each install is a serving."
+      "explanation": "Paket tarifi; her yükleme bir sunumdur."
     },
     {
       "stage": "pre",
-      "question": "Which is NOT part of the pack layout?",
+      "question": "NOT paket düzeninin parçası hangisidir?",
       "options": [
         "AGENTS.md + docs/",
         "schemas/",
@@ -24,67 +24,67 @@
         "vendor_proprietary_weights/"
       ],
       "correct": 3,
-      "explanation": "Pack layout is AGENTS.md, docs/, schemas/, scripts/, bin/, README.md. The pack is framework- and vendor-agnostic."
+      "explanation": "Paket düzeni AGENTS.md, docs/, schemas/, scripts/, bin/, README.md şeklindedir. Paket çerçeveden ve satıcıdan bağımsızdır."
     },
     {
       "stage": "check",
-      "question": "Why does the pack carry a VERSION file?",
+      "question": "Paket neden VERSION dosyası taşıyor?",
       "options": [
-        "For SEO",
-        "Major bumps for schema/script changes that require migrations; minor for additions; patch for doc-only; the target repo records which version it was installed against",
+        "SEO için",
+        "Geçiş gerektiren şema/komut dosyası değişikliklerinde büyük artışlar; eklemeler için küçük; yalnızca dokümanlar için yama; hedef repo hangi sürüme karşı kurulduğunu kaydeder",
         "To track agent IQ",
         "To advertise on Hacker News"
       ],
       "correct": 1,
-      "explanation": "Same shape as npm, Cargo, pyproject.toml; VERSION is the contract, not the marketing."
+      "explanation": "Npm, Cargo, pyproject.toml ile aynı şekildedir; VERSION pazarlama değil sözleşmedir."
     },
     {
       "stage": "check",
-      "question": "What does cross-tool distribution look like in this pack?",
+      "question": "Bu pakette araçlar arası dağıtım nasıl görünüyor?",
       "options": [
         "Hard-code each tool's path",
-        "One source file with symlinks (ln -s AGENTS.md CLAUDE.md, .cursor/rules/, .github/copilot-instructions.md) so the same source fans out to every coding agent",
+        "Sembolik bağlantılara sahip tek bir kaynak dosyası (ln -s AGENTS.md CLAUDE.md, .cursor/rules/, .github/copilot-instructions.md), böylece aynı kaynak her kodlama aracısına yayılır",
         "Manual copy per tool",
         "A vendor lock per tool"
       ],
       "correct": 1,
-      "explanation": "Nx's nx ai-setup is the reference; the pack's installer does the same with symlinks."
+      "explanation": "Nx'in nx ai-kurulumu referanstır; paketin yükleyicisi sembolik bağlantılarla aynı şeyi yapar."
     },
     {
       "stage": "check",
-      "question": "How does the lesson recommend the uninstaller behave?",
+      "question": "Ders, kaldırıcının nasıl davranmasını öneriyor?",
       "options": [
         "Delete everything including state",
-        "Refuse on non-trivial state; never delete user agent_state.json, task_board.json, or outputs/; only remove schemas, scripts, docs, and AGENTS.md (with opt-out)",
-        "Delete only docs",
+        "Önemsiz olmayan durumu reddet; Agent_state.json, Task_board.json veya Outputs/ kullanıcılarını asla silmeyin; yalnızca şemaları, komut dosyalarını, belgeleri ve AGENTS.md'yi kaldırın (devre dışı bırakma seçeneğiyle)",
+        "Yalnızca dokümanları sil",
         "Disable git"
       ],
       "correct": 1,
-      "explanation": "State belongs to the user; the pack does not own it."
+      "explanation": "Durumu kullanıcıya aittir; paket ona sahip değil."
     },
     {
       "stage": "post",
-      "question": "What stays OUT of the pack?",
+      "question": "Paketten OUT geriye ne kaldı?",
       "options": [
         "Schemas",
-        "Project-specific tasks, vendor SDK calls, team onboarding prose — the pack is framework-agnostic and lives next to onboarding, not inside it",
+        "Projeye özel görevler, satıcı SDK çağrıları, ekibin işe alım süreci — paket çerçeveden bağımsızdır ve katılım sürecinin içinde değil, yanında yer alır",
         "Scripts",
-        "The installer"
+        "Yükleyici"
       ],
       "correct": 1,
-      "explanation": "Tasks belong on the target repo's board, not the pack; vendor SDK calls would lock the pack to one framework."
+      "explanation": "Görevler pakete değil, hedef deponun panosuna aittir; satıcı SDK çağrıları paketi tek bir çerçeveye kilitler."
     },
     {
       "stage": "post",
-      "question": "Through what channel does the pack ship to many coding agents at once?",
+      "question": "Paket aynı anda birçok kodlama temsilcisine hangi kanal aracılığıyla gönderiliyor?",
       "options": [
         "Hand-copy",
-        "SkillKit-style distribution (skillkit install agent-workbench-pack) lays it down across 32 AI agents from a single source",
+        "SkillKit tarzı dağıtım (skillkit kurulum aracısı-çalışma tezgahı paketi), tek bir kaynaktan 32 AI aracısına dağıtır",
         "Email attachment",
-        "GitHub release notes only"
+        "Yalnızca GitHub sürüm notları"
       ],
       "correct": 1,
-      "explanation": "Pack repo is the source of truth; SkillKit is the distribution channel; vendor lock-in collapses."
+      "explanation": "Pack repo gerçeğin kaynağıdır; SkillKit dağıtım kanalıdır; Satıcıya bağlılık çöker."
     }
   ]
 }
