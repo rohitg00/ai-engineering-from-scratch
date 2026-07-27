@@ -1,74 +1,74 @@
 {
   "lesson": "03-direct-preference-optimization-family",
-  "title": "The Direct Preference Optimization Family",
+  "title": "Doğrudan Tercih Optimizasyon Ailesi",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why can DPO skip training an explicit reward model?",
+      "question": "DPO neden açık bir ödül modeli eğitimini atlayabiliyor?",
       "options": [
-        "DPO trains its own reward model implicitly in a second optimization loop",
-        "The closed-form RLHF optimum lets you express reward as a log-ratio of policies, which substitutes into the Bradley-Terry loss",
-        "Preference data does not require a scalar reward",
-        "Bradley-Terry preferences happen to be invariant to the reward function"
+        "DPO, kendi ödül modelini ikinci bir optimizasyon döngüsünde örtülü olarak eğitiyor",
+        "Kapalı formdaki RLHF optimumu, ödülü Bradley-Terry kaybının yerine geçen politikaların log oranı olarak ifade etmenize olanak tanır",
+        "Tercih verileri skaler bir ödül gerektirmez",
+        "Bradley-Terry tercihleri ​​ödül işlevine göre değişmez"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What failure mode does IPO (Azar et al., 2024) primarily address in DPO?",
+      "question": "IPO (Azar ve diğerleri, 2024) DPO'de öncelikli olarak hangi arıza modunu ele alır?",
       "options": [
         "Requirement of paired data",
         "Reliance on a reference policy",
-        "Length bias of the chosen response",
-        "Unbounded implicit reward gap from tiny preference probabilities"
+        "Seçilen yanıtın uzunluk sapması",
+        "Küçük tercih olasılıklarından sınırsız örtülü ödül farkı"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "When would you reach for KTO over DPO?",
+      "question": "DPO üzerinden KTO'ye ne zaman ulaşacaksınız?",
       "options": [
-        "When you must guarantee zero implicit-reward drift",
-        "When you have unpaired single labels (desirable / undesirable) and want to use loss-aversion utilities",
-        "When you have only paired data with strong margins",
-        "When you want to remove the KL penalty entirely"
+        "Sıfır örtülü ödül sapmasını garanti etmeniz gerektiğinde",
+        "Eşlenmemiş tek etiketleriniz olduğunda (istenen / istenmeyen) ve kayıptan kaçınma yardımcı programlarını kullanmak istediğinizde",
+        "Yalnızca güçlü kenar boşluklarına sahip verileri eşleştirdiğinizde",
+        "KL cezasını tamamen kaldırmak istediğinizde"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which property is unique to SimPO compared to DPO?",
+      "question": "DPO ile karşılaştırıldığında hangi özellik SimPO'ya özgüdür?",
       "options": [
-        "It removes the reference policy and normalizes log-likelihood by sequence length",
-        "It drops the Bradley-Terry log-sigmoid for an identity mapping",
-        "It uses an odds-ratio loss with NLL",
-        "It keeps the reference policy and adds a margin"
+        "Referans politikasını kaldırır ve dizi uzunluğuna göre log olasılığını normalleştirir",
+        "Kimlik eşlemesi için Bradley-Terry log-sigmoid'ini bırakır",
+        "NLL ile oran oranı kaybı kullanır",
+        "Referans politikasını korur ve bir marj ekler"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the 'Degraded Chosen Response' problem in DPO that BPO targets?",
+      "question": "DPO'de BPO'nin hedeflediği 'Azaltılmış Seçilmiş Yanıt' sorunu nedir?",
       "options": [
-        "The chosen response is missing from the reference policy's support",
-        "The chosen response is sampled with low probability at inference",
-        "DPO can drive the chosen response's absolute log-prob down as long as the rejected log-prob falls faster",
-        "The chosen response becomes longer than the rejected"
+        "Seçilen yanıt, referans politikasının desteğinde eksik",
+        "Seçilen yanıt çıkarımda düşük olasılıkla örneklenir",
+        "DPO, reddedilen log-prob daha hızlı düştüğü sürece, seçilen yanıtın mutlak log-prob'unu aşağı çekebilir",
+        "Seçilen yanıt reddedilen yanıttan daha uzun oluyor"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Rafailov et al. (NeurIPS 2024) on scaling laws for direct alignment algorithms show:",
+      "question": "Rafailov ve ark. (NeurIPS 2024) doğrudan hizalama algoritmalarına yönelik ölçeklendirme yasaları şunu göstermektedir:",
       "options": [
-        "DAAs exhibit the same Gao et al. peak-and-collapse over-optimization shape on gold reward",
+        "DAA'lar aynı Gao ve ark. Altın ödülünde zirve ve çöküş aşırı optimizasyon şekli",
         "DAAs eliminate Goodhart by design",
-        "Over-optimization disappears when paired data exceeds 100k examples",
+        "Eşleştirilmiş veriler 100.000 örneği aştığında aşırı optimizasyon ortadan kalkar",
         "DPO over-optimizes but IPO and SimPO do not"
       ],
       "correct": 0,
