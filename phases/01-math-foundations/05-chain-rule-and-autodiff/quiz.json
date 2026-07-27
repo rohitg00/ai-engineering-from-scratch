@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the chain rule in calculus state?",
-      "options": ["The derivative of a sum is the sum of derivatives", "The derivative of composed functions is the product of their individual derivatives", "The integral of a product is the product of integrals", "Functions can only be differentiated if they are linear"],
+      "question": "Analiz durumunda zincir kuralı nedir?",
+      "options": [
+        "Bir toplamın türevi türevlerin toplamıdır",
+        "Bileşik fonksiyonların türevi, bireysel türevlerinin çarpımıdır",
+        "Bir ürünün integrali, integrallerin çarpımıdır",
+        "Fonksiyonlar ancak doğrusal olduklarında türevlenebilirler"
+      ],
       "correct": 1,
-      "explanation": "For y = f(g(x)), the chain rule says dy/dx = f'(g(x)) * g'(x). You multiply the derivatives at each link in the chain. This is the mathematical basis of backpropagation."
+      "explanation": "Y = f(g(x) için zincir kuralı şunu söyler: dy/dx = f'(g(x)) * g'(x). Zincirdeki her bağlantıdaki türevleri çarparsınız. Geri yayılımın matematiksel temeli budur."
     },
     {
       "stage": "pre",
-      "question": "What is a computational graph?",
-      "options": ["A plot of loss vs training steps", "A directed graph where nodes are operations and edges carry values forward or gradients backward", "A diagram showing the architecture of a neural network", "A graph database used for storing training data"],
+      "question": "Hesaplamalı grafik nedir?",
+      "options": [
+        "A plot of loss vs training steps",
+        "Düğümlerin işlemler olduğu ve kenarların değerleri ileriye veya geriye doğru eğimleri taşıdığı yönlendirilmiş bir grafik",
+        "Bir sinir ağının mimarisini gösteren bir diyagram",
+        "Eğitim verilerini depolamak için kullanılan bir grafik veritabanı"
+      ],
       "correct": 1,
-      "explanation": "A computational graph represents the sequence of operations in a computation. Data flows forward through the graph, and gradients flow backward during backpropagation."
+      "explanation": "Hesaplamalı bir grafik, bir hesaplamadaki işlemlerin sırasını temsil eder. Veriler grafikte ileri doğru akar ve geri yayılım sırasında gradyanlar geriye doğru akar."
     },
     {
       "stage": "post",
-      "question": "Why does PyTorch use reverse-mode autodiff (backpropagation) instead of forward-mode?",
-      "options": ["Reverse mode is more numerically accurate", "Reverse mode computes all gradients in one backward pass, while forward mode needs one pass per input variable -- neural networks have millions of inputs but one loss output", "Reverse mode uses less memory", "Forward mode cannot handle non-linear functions"],
+      "question": "PyTorch neden ileri mod yerine ters mod otomatik fark (geriye yayılım) kullanıyor?",
+      "options": [
+        "Ters mod sayısal olarak daha doğrudur",
+        "Ters mod tüm gradyanları tek bir geri geçişte hesaplarken, ileri mod giriş değişkeni başına bir geçişe ihtiyaç duyar - sinir ağlarında milyonlarca giriş vardır ancak bir kayıp çıkışı vardır",
+        "Reverse mode uses less memory",
+        "İleri mod doğrusal olmayan işlevleri işleyemez"
+      ],
       "correct": 1,
-      "explanation": "Neural networks have millions of weight inputs but produce a single scalar loss. Reverse mode needs one backward pass total. Forward mode would need one pass per weight -- millions of passes -- making it impractical."
+      "explanation": "Sinir ağları milyonlarca ağırlık girdisine sahiptir ancak tek bir skaler kayıp üretir. Ters modun toplamda bir geriye geçişe ihtiyacı vardır. İleri modun ağırlık başına bir geçişe (milyonlarca geçişe) ihtiyacı olması onu kullanışsız hale getiriyor."
     },
     {
       "stage": "post",
-      "question": "In the Value class autograd engine, why does the backward function use '+=' instead of '=' for accumulating gradients?",
-      "options": ["To average the gradients across multiple samples", "Because a value used in multiple operations receives gradient contributions from each one, which must be summed", "To prevent numerical overflow in the gradients", "Because Python does not support the '=' operator in closures"],
+      "question": "Değer sınıfı otograd motorunda, geriye doğru işlevi neden degradeleri toplamak için '=' yerine '+=' kullanıyor?",
+      "options": [
+        "Birden fazla örnekteki degradelerin ortalamasını almak için",
+        "Çünkü birden fazla işlemde kullanılan bir değer, her birinden, toplanması gereken gradyan katkıları alır.",
+        "Degradelerdeki sayısal taşmayı önlemek için",
+        "Çünkü Python kapanışlarda '=' operatörünü desteklemez"
+      ],
       "correct": 1,
-      "explanation": "When a value feeds into multiple operations (e.g., x used in both x*y and x+z), its total gradient is the sum of all incoming gradient contributions. Using '=' would overwrite earlier contributions."
+      "explanation": "Bir değer birden fazla işlemi beslediğinde (örneğin, hem x*y hem de x+z'de kullanılan x), toplam gradyan, gelen tüm gradyan katkılarının toplamıdır. '=' kullanılması daha önceki katkıların üzerine yazılmasına neden olur."
     },
     {
       "stage": "post",
-      "question": "What is gradient checking and when should you use it?",
-      "options": ["Checking that gradients are below a threshold to prevent exploding gradients", "Comparing autodiff gradients against numerical finite-difference gradients to verify correctness of the backward pass", "Checking that all parameters received non-zero gradients during training", "Monitoring gradient magnitudes during training to detect vanishing gradients"],
+      "question": "Gradyan kontrolü nedir ve ne zaman kullanmalısınız?",
+      "options": [
+        "Degradelerin patlamasını önlemek için degradelerin bir eşiğin altında olup olmadığının kontrol edilmesi",
+        "Geri geçişin doğruluğunu doğrulamak için otomatik fark gradyanlarını sayısal sonlu fark gradyanlarıyla karşılaştırma",
+        "Eğitim sırasında tüm parametrelerin sıfır olmayan gradyanlar alıp almadığının kontrol edilmesi",
+        "Monitoring gradient magnitudes during training to detect vanishing gradients"
+      ],
       "correct": 1,
-      "explanation": "Gradient checking computes numerical derivatives via (f(x+h) - f(x-h)) / 2h and compares them to autodiff gradients. Use it when adding new operations to your autograd engine or debugging training failures."
+      "explanation": "Gradyan kontrolü, sayısal türevleri (f(x+h) - f(x-h)) / 2h aracılığıyla hesaplar ve bunları otomatik fark gradyanlarıyla karşılaştırır. Autograd motorunuza yeni işlemler eklerken veya eğitim hatalarını ayıklarken bunu kullanın."
     }
   ]
 }
