@@ -1,46 +1,46 @@
 {
   "lesson": "60-projection-layer-modality-align",
-  "title": "Projection Layer for Modality Alignment",
+  "title": "Modalite Hizalaması için Projeksiyon Katmanı",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the vision encoder produce tokens that the text decoder cannot consume directly?",
+      "question": "Görüntü kodlayıcı neden metin kod çözücünün doğrudan tüketemeyeceği belirteçler üretiyor?",
       "options": [
-        "They are in a different file format",
-        "Image tokens live in a basis the encoder learned during vision pretraining with no correspondence to the decoder's word vectors",
-        "Image tokens are encrypted",
-        "Image tokens are too short"
+        "Farklı bir dosya formatındadırlar",
+        "Görüntü belirteçleri, kod çözücünün kelime vektörleriyle hiçbir eşleşme olmadan, görme ön eğitimi sırasında kodlayıcının öğrendiği bir temelde yaşar",
+        "Resim belirteçleri şifrelenir",
+        "Resim belirteçleri çok kısa"
       ],
       "correct": 1,
-      "explanation": "The two encoders learn independent bases; a bridge module is required to align them in a shared space."
+      "explanation": "İki kodlayıcı bağımsız bazları öğrenir; bunları ortak bir alanda hizalamak için bir köprü modülü gereklidir."
     },
     {
       "stage": "pre",
-      "question": "Why is the two-layer MLP enough for modality alignment in practice?",
+      "question": "İki katmanlı MLP pratikte modalite hizalaması için neden yeterli?",
       "options": [
         "PyTorch requires two layers",
-        "One non-linear bend (GELU) between two linear projections is empirically enough to align CLIP-style features with text embeddings",
-        "One-layer projections are forbidden",
-        "Deeper projections are illegal"
+        "İki doğrusal projeksiyon arasındaki doğrusal olmayan bir kıvrım (GELU), CLIP- stili özelliklerini metin yerleştirmelerle hizalamak için ampirik olarak yeterlidir",
+        "Tek katmanlı projeksiyonlar yasaktır",
+        "Daha derin projeksiyonlar yasa dışıdır"
       ],
       "correct": 1,
-      "explanation": "LLaVA and its descendants ship this two-layer MLP because the non-linearity fixes curvature mismatches a single linear cannot."
+      "explanation": "LLaVA ve onun soyundan gelenler, bu iki katmanlı MLP'yi gönderiyor çünkü doğrusal olmama, eğrilik uyumsuzluklarını tek bir doğrusallığın çözemeyeceği şekilde düzeltiyor."
     },
     {
       "stage": "check",
-      "question": "Why is the vision encoder frozen during this alignment stage?",
+      "question": "Bu hizalama aşamasında görüntü kodlayıcı neden donuyor?",
       "options": [
         "Frozen means faster wall time",
-        "The 86M-parameter encoder cannot be retrained on a small mock corpus; the 1.3M-parameter projection alone is light enough to align in minutes",
-        "PyTorch does not support training the encoder",
-        "The encoder is empty"
+        "86M parametreli kodlayıcı, küçük bir sahte derlemede yeniden eğitilemez; 1,3M parametreli projeksiyon tek başına dakikalar içinde hizalanacak kadar hafiftir",
+        "PyTorch kodlayıcının eğitilmesini desteklemiyor",
+        "Kodlayıcı boş"
       ],
       "correct": 1,
-      "explanation": "Freezing the encoder and text table makes the projection the only thing learning, which is the operational shape of every adapter-based VLM."
+      "explanation": "Kodlayıcının ve metin tablosunun dondurulması, projeksiyonu öğrenilen tek şey haline getirir; bu, her adaptör tabanlı VLM'nin operasyonel şeklidir."
     },
     {
       "stage": "check",
-      "question": "What does cosine_alignment_loss(image_emb, text_emb) return when the two vectors point in opposite directions?",
+      "question": "İki vektör zıt yönlere işaret ettiğinde cosine_alignment_loss(image_emb, text_emb) ne döndürür?",
       "options": [
         "0.0",
         "2.0",
@@ -48,31 +48,31 @@
         "Infinity"
       ],
       "correct": 1,
-      "explanation": "Loss is 1 - cos(angle). Antiparallel vectors have cos = -1, so the loss is 1 - (-1) = 2.0."
+      "explanation": "Kayıp 1 - cos(angle). Antiparalel vektörlerde cos = -1 vardır, dolayısıyla kayıp 1 - (-1) = 2,0'dır."
     },
     {
       "stage": "check",
-      "question": "Why does CLS pooling get used to produce a single image-level vector from 197 tokens?",
+      "question": "CLS havuzlama neden 197 jetondan tek bir görüntü düzeyinde vektör üretmek için kullanılıyor?",
       "options": [
         "PyTorch sums tokens automatically",
-        "Captions are one vector per sample so the image side also needs one vector; the CLS token is the encoder's built-in image summary",
-        "It saves disk space",
-        "Patch tokens are unused"
+        "Altyazılar örnek başına bir vektör olduğundan görüntü tarafının da bir vektöre ihtiyacı vardır; CLS belirteci, kodlayıcının yerleşik görüntü özetidir",
+        "Disk alanından tasarruf sağlar",
+        "Yama belirteçleri kullanılmıyor"
       ],
       "correct": 1,
-      "explanation": "Alignment is one image vector against one caption vector; CLS pooling produces that image vector with no extra parameters."
+      "explanation": "Hizalama, bir resim vektörüne karşı bir resim vektörüdür; CLS havuzlama, bu görüntü vektörünü hiçbir ekstra parametre olmadan üretir."
     },
     {
       "stage": "post",
-      "question": "Which production system maps most directly to the lesson 60 pattern?",
+      "question": "Hangi üretim sistemi ders 60 modeliyle en doğrudan eşleşir?",
       "options": [
         "PaLM",
-        "LLaVA 1.5: frozen vision encoder, frozen LLM, train only a two-layer MLP projection",
+        "LLaVA 1.5: dondurulmuş görüş kodlayıcı, dondurulmuş LLM, yalnızca iki katmanlı bir MLP projeksiyonunu eğitin",
         "AlphaFold",
         "Stable Diffusion"
       ],
       "correct": 1,
-      "explanation": "LLaVA's stage-one training is exactly this: a frozen encoder and LM with a two-layer MLP bridge as the sole trainable piece."
+      "explanation": "LLaVA'nın birinci aşama eğitimi tam olarak şudur: donmuş bir kodlayıcı ve eğitilebilir tek parça olarak iki katmanlı MLP köprüsüne sahip LM."
     }
   ]
 }
