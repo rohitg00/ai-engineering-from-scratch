@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the main advantage of DPO over RLHF?",
-    "options": ["DPO produces better models", "DPO eliminates the need for a separate reward model and PPO, training directly on preference pairs in a single loop", "DPO uses less training data", "DPO works without any preference data"],
+    "question": "DPO'nin RLHF'ye göre temel avantajı nedir?",
+    "options": [
+      "DPO produces better models",
+      "DPO, ayrı bir ödül modeline olan ihtiyacı ortadan kaldırır ve PPO, tek bir döngüde doğrudan tercih çiftleri üzerinde eğitim verir",
+      "DPO uses less training data",
+      "DPO works without any preference data"
+    ],
     "correct": 1,
-    "explanation": "RLHF requires training a reward model separately, then running PPO optimization. DPO folds both steps into a single training objective that directly optimizes the language model on preference pairs.",
+    "explanation": "RLHF, bir ödül modelinin ayrı olarak eğitilmesini ve ardından PPO optimizasyonunun çalıştırılmasını gerektirir. DPO, her iki adımı da tercih çiftleri üzerindeki dil modelini doğrudan optimize eden tek bir eğitim hedefinde birleştirir.",
     "stage": "pre"
   },
   {
-    "question": "What role does the reference model play in DPO?",
-    "options": ["It generates training data", "It serves as the anchor that prevents the trained model from diverging too far, similar to the KL penalty in RLHF", "It evaluates model quality", "It handles tokenization"],
+    "question": "Referans modeli DPO'de nasıl bir rol oynuyor?",
+    "options": [
+      "Eğitim verileri üretir",
+      "RLHF'deki KL cezasına benzer şekilde, eğitilen modelin çok fazla sapmasını önleyen bir çapa görevi görür.",
+      "Model kalitesini değerlendirir",
+      "Tokenizasyonu yönetir"
+    ],
     "correct": 1,
-    "explanation": "The DPO loss compares log probabilities under the trained policy and the reference (usually SFT) model. The reference model constrains how far the policy can drift, preventing reward hacking without explicit KL tuning.",
+    "explanation": "DPO kaybı, eğitilen politika ve referans (genellikle SFT) modeli kapsamındaki günlük olasılıklarını karşılaştırır. Referans modeli, politikanın ne kadar sürüklenebileceğini kısıtlayarak, açık KL ayarlaması yapılmadan ödül korsanlığını önler.",
     "stage": "pre"
   },
   {
-    "question": "What does the beta parameter in DPO control?",
-    "options": ["The learning rate", "How strongly the policy is constrained to stay close to the reference model -- higher beta means more conservative updates", "The batch size", "The number of training epochs"],
+    "question": "DPO'deki beta parametresi neyi kontrol eder?",
+    "options": [
+      "Öğrenme oranı",
+      "Politikanın referans modele yakın kalması ne kadar güçlü bir şekilde kısıtlanıyor? Daha yüksek beta, daha muhafazakar güncellemeler anlamına gelir",
+      "Toplu iş boyutu",
+      "Eğitim dönemi sayısı"
+    ],
     "correct": 1,
-    "explanation": "Beta scales the implicit KL divergence penalty. Beta=0.1 allows the model to diverge significantly from the reference (potentially better but riskier). Beta=0.5 keeps it close (safer but less learning).",
+    "explanation": "Beta, örtülü KL sapma cezasını ölçeklendirir. Beta=0,1, modelin referanstan önemli ölçüde sapmasına olanak tanır (potansiyel olarak daha iyi ancak daha riskli). Beta=0,5 onu yakın tutar (daha güvenli ancak daha az öğrenme).",
     "stage": "post"
   },
   {
-    "question": "How does DPO implicitly represent a reward model?",
-    "options": ["It doesn't -- DPO has no concept of reward", "The DPO loss function can be derived by showing that the optimal policy under a reward function is directly expressible through policy log probabilities", "It trains a hidden reward model inside the language model", "DPO uses the loss function as the reward"],
+    "question": "DPO örtülü olarak bir ödül modelini nasıl temsil ediyor?",
+    "options": [
+      "Öyle değil -- DPO'nin ödül kavramı yok",
+      "DPO kayıp fonksiyonu, bir ödül fonksiyonu altında optimal politikanın politika günlüğü olasılıkları yoluyla doğrudan ifade edilebildiğini göstererek türetilebilir.",
+      "Dil modelinin içinde gizli bir ödül modelini eğitir",
+      "DPO ödül olarak kayıp fonksiyonunu kullanır"
+    ],
     "correct": 1,
-    "explanation": "Rafailov et al. showed that the closed-form solution of the RLHF objective expresses the reward as a function of the policy's log-probabilities relative to the reference. DPO optimizes this directly, implicitly learning the reward.",
+    "explanation": "Rafailov ve ark. RLHF hedefinin kapalı form çözümünün, ödülü politikanın referansa göre log olasılıklarının bir fonksiyonu olarak ifade ettiğini gösterdi. DPO, ödülü dolaylı olarak öğrenerek bunu doğrudan optimize eder.",
     "stage": "post"
   },
   {
-    "question": "When might RLHF still be preferred over DPO?",
-    "options": ["Always -- RLHF is strictly better", "When you need a reusable reward model for evaluating multiple policies or when online data collection is beneficial", "When you have less preference data", "When training smaller models"],
+    "question": "RLHF ne zaman hala DPO'ye tercih edilebilir?",
+    "options": [
+      "Her zaman -- RLHF kesinlikle daha iyidir",
+      "Birden fazla politikayı değerlendirmek için yeniden kullanılabilir bir ödül modeline ihtiyaç duyduğunuzda veya çevrimiçi veri toplamanın faydalı olduğu durumlarda",
+      "Daha az tercih veriniz olduğunda",
+      "Daha küçük modelleri eğitirken"
+    ],
     "correct": 1,
-    "explanation": "DPO is offline (fixed preference data). RLHF allows online data collection where the reward model scores new generations, discovering reward-hacking patterns. A standalone reward model is also useful for evaluation and other policies.",
+    "explanation": "DPO çevrimdışı (sabit tercih verileri). RLHF, ödül modelinin yeni nesilleri puanladığı ve ödül hackleme kalıplarını keşfettiği çevrimiçi veri toplamaya olanak tanır. Bağımsız bir ödül modeli, değerlendirme ve diğer politikalar için de faydalıdır.",
     "stage": "post"
   }
 ]
