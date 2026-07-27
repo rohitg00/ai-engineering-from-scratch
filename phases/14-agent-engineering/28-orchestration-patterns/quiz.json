@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which four orchestration patterns does the lesson list?",
+      "question": "Ders hangi dört orkestrasyon modelini listeliyor?",
       "options": [
         "Supervisor-worker, swarm/peer-to-peer, hierarchical, debate",
         "Sequential, parallel, distributed, federated",
@@ -16,75 +16,75 @@
     },
     {
       "stage": "pre",
-      "question": "What is the 2026 LangChain recommendation regarding supervision?",
+      "question": "Denetimle ilgili 2026 LangChain önerisi nedir?",
       "options": [
         "Always use create_supervisor",
-        "Prefer direct tool calls over create_supervisor for finer context-engineering control",
+        "Daha hassas bağlam mühendisliği kontrolü için create_supervisor yerine doğrudan araç çağrılarını tercih edin",
         "Avoid supervision entirely",
         "Run supervisors on GPUs"
       ],
       "correct": 1,
-      "explanation": "Tool-call-based supervision gives you precise control over what each specialist sees."
+      "explanation": "Araç çağrısı tabanlı denetim, her uzmanın gördüğü şey üzerinde size hassas kontrol sağlar."
     },
     {
       "stage": "check",
-      "question": "What distinguishes a swarm from a supervisor-worker topology?",
+      "question": "Sürüyü yönetici-işçi topolojisinden ayıran şey nedir?",
       "options": [
         "Swarm uses GPUs",
-        "Swarm has no central router; agents hand off directly via a shared tool surface",
-        "Swarm is single-agent",
-        "Swarm runs on cron only"
+        "Swarm'ın merkezi bir yönlendiricisi yoktur; temsilciler, paylaşılan bir araç yüzeyi aracılığıyla doğrudan dağıtım yapar",
+        "Swarm tek ajandır",
+        "Swarm yalnızca cron üzerinde çalışır"
       ],
       "correct": 1,
-      "explanation": "Swarm is peer-to-peer; supervisor centralizes routing through one LLM."
+      "explanation": "Swarm eşler arasıdır; süpervizör yönlendirmeyi tek bir LLM aracılığıyla merkezileştirir."
     },
     {
       "stage": "check",
-      "question": "When is hierarchical orchestration justified?",
+      "question": "Hiyerarşik orkestrasyon ne zaman haklı çıkar?",
       "options": [
-        "Always; it scales for free",
-        "When a single supervisor's context budget cannot hold descriptions of all specialists",
-        "Only with GPUs",
-        "Never; it is an antipattern"
+        "Her zaman; ücretsiz olarak ölçeklenir",
+        "Tek bir denetçinin bağlam bütçesi tüm uzmanların tanımlarını tutamadığında",
+        "Yalnızca GPU'larla",
+        "Asla; bu bir anti-modeldir"
       ],
       "correct": 1,
-      "explanation": "Nested supervisors are for large specialist populations that exceed one supervisor's budget."
+      "explanation": "İç içe denetleyiciler, bir denetleyicinin bütçesini aşan büyük uzman popülasyonları içindir."
     },
     {
       "stage": "check",
-      "question": "What is the recommended decision order Anthropic supports?",
+      "question": "Anthropic'in desteklediği önerilen karar sırası nedir?",
       "options": [
-        "Always start with hierarchical multi-agent",
-        "Start with a single agent plus workflow patterns; add topology only when needed; supervisor before swarm before hierarchical; debate when accuracy beats cost",
-        "Start with debate",
-        "Start with swarm and contract toward single"
+        "Her zaman hiyerarşik çoklu aracıyla başlayın",
+        "Tek bir aracı artı iş akışı modelleriyle başlayın; yalnızca gerektiğinde topoloji ekleyin; hiyerarşiden önce sürüden önce süpervizör; Doğruluğun maliyeti ne zaman yendiğini tartışın",
+        "Tartışmayla başlayın",
+        "Sürüyle başlayın ve teke doğru daralın"
       ],
       "correct": 1,
-      "explanation": "Anthropic's guidance is to build the right system for your needs, not the most sophisticated."
+      "explanation": "Anthropic'in rehberliği, en gelişmiş sistemi değil, ihtiyaçlarınıza uygun doğru sistemi oluşturmaktır."
     },
     {
       "stage": "post",
-      "question": "What is fake hierarchy in this lesson?",
+      "question": "Bu derste sahte hiyerarşi nedir?",
       "options": [
         "Mislabelled YAML",
-        "Three layers of supervisors because 'enterprise' when there are only two actual teams; collapse it",
+        "Yalnızca iki gerçek ekip olduğunda 'girişim' nedeniyle üç katmanlı süpervizör; onu çökert",
         "An orchestrator written in TypeScript",
         "A test fixture"
       ],
       "correct": 1,
-      "explanation": "Layers that do not correspond to real teams add operational complexity without payoff."
+      "explanation": "Gerçek ekiplere karşılık gelmeyen katmanlar, hiçbir getirisi olmadan operasyonel karmaşıklığı artırır."
     },
     {
       "stage": "post",
-      "question": "How do you mitigate bouncing handoffs in a swarm (A -> B -> A -> B)?",
+      "question": "Bir sürüde sıçrayan aktarımları nasıl azaltırsınız (A -> B -> A -> B)?",
       "options": [
-        "Pin the temperature to 0",
+        "Sıcaklığı 0'a sabitleyin",
         "Add a hop counter and refuse after N transfers",
         "Disable tracing",
-        "Lower the rate limit"
+        "Oran sınırını düşürün"
       ],
       "correct": 1,
-      "explanation": "A hop counter caps swarm cycles before they loop indefinitely."
+      "explanation": "Bir atlama sayacı, sürü döngülerini süresiz olarak döngüye girmeden önce kapatır."
     }
   ]
 }
