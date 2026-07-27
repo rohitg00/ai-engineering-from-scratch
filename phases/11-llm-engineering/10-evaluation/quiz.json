@@ -1,37 +1,62 @@
 [
   {
-    "question": "Why is manually reading a few LLM outputs not a reliable evaluation method?",
-    "options": ["It takes too long", "Small samples miss failure modes that only appear at scale, and human judgment is inconsistent across reviewers and sessions", "Manual review is too expensive", "LLM outputs are always correct"],
+    "question": "Neden birkaç LLM çıktısını manuel olarak okumak güvenilir bir değerlendirme yöntemi değil?",
+    "options": [
+      "Çok uzun sürüyor",
+      "Küçük örnekler, yalnızca geniş ölçekte ortaya çıkan hata türlerini gözden kaçırıyor ve insan yargısı, incelemeciler ve oturumlar arasında tutarsız",
+      "Manuel inceleme çok pahalı",
+      "LLM çıkışları her zaman doğrudur"
+    ],
     "correct": 1,
-    "explanation": "Reading 10 outputs shows you 10 points in a distribution. A prompt change might improve 90% of outputs but break 10% of edge cases. Without systematic evaluation, you'll miss the regression until users report it.",
+    "explanation": "10 çıktıyı okumak size bir dağılımda 10 puan gösterir. Hızlı bir değişiklik, çıktıların %90'ını iyileştirebilir ancak uç durumların %10'unu bozabilir. Sistematik değerlendirme olmadan, kullanıcılar rapor edene kadar regresyonu kaçıracaksınız.",
     "stage": "pre"
   },
   {
-    "question": "What is regression testing in the context of LLM applications?",
-    "options": ["Testing linear regression models", "Running a fixed set of test cases after every change (prompt, model, parameters) to ensure quality hasn't degraded", "Testing on the training data", "Measuring model loss during training"],
+    "question": "LLM uygulamaları bağlamında regresyon testi nedir?",
+    "options": [
+      "Testing linear regression models",
+      "Running a fixed set of test cases after every change (prompt, model, parameters) to ensure quality hasn't degraded",
+      "Eğitim verilerinin test edilmesi",
+      "Measuring model loss during training"
+    ],
     "correct": 1,
-    "explanation": "Every prompt change, model swap, or temperature tweak changes the output distribution. Regression tests catch cases where a change that improves one area silently degrades another.",
+    "explanation": "Her hızlı değişiklik, model değişimi veya sıcaklık ayarı çıkış dağıtımını değiştirir. Regresyon testleri, bir alanı iyileştiren bir değişikliğin diğerini sessizce bozduğu durumları yakalar.",
     "stage": "pre"
   },
   {
-    "question": "What is the LLM-as-judge evaluation approach?",
-    "options": ["Having the model evaluate its own training loss", "Using a strong LLM to score outputs against rubrics, replacing expensive human evaluation while scaling to thousands of test cases", "Using the model's confidence scores", "Comparing two models' parameter counts"],
+    "question": "LLM-as-hakim değerlendirme yaklaşımı nedir?",
+    "options": [
+      "Modelin kendi eğitim kaybını değerlendirmesini sağlamak",
+      "Using a strong LLM to score outputs against rubrics, replacing expensive human evaluation while scaling to thousands of test cases",
+      "Modelin güven puanlarını kullanma",
+      "Comparing two models' parameter counts"
+    ],
     "correct": 1,
-    "explanation": "LLM-as-judge sends (input, output, rubric) to a strong model (e.g., GPT-4) which scores the output. It's cheaper and faster than human evaluation, though it has known biases (e.g., preferring verbose responses).",
+    "explanation": "LLM-as-yargıç, çıktıyı puanlayan güçlü bir modele (örneğin, GPT-4) (girdi, çıktı, değerlendirme listesi) gönderir. Bilinen önyargılara sahip olmasına rağmen (örneğin, ayrıntılı yanıtları tercih etmek), insan değerlendirmesinden daha ucuz ve daha hızlıdır.",
     "stage": "post"
   },
   {
-    "question": "What makes a good evaluation dataset for an LLM application?",
-    "options": ["As many examples as possible", "Diverse inputs covering common cases, edge cases, adversarial inputs, and expected outputs with clear rubrics", "Only the hardest examples", "Random samples from the internet"],
+    "question": "Bir LLM uygulaması için iyi bir değerlendirme veri kümesini oluşturan nedir?",
+    "options": [
+      "As many examples as possible",
+      "Ortak durumları, uç durumları, rakip girdileri ve beklenen çıktıları kapsayan açık değerlendirme listeleriyle çeşitli girdiler",
+      "Sadece en zor örnekler",
+      "İnternetten rastgele örnekler"
+    ],
     "correct": 1,
-    "explanation": "A good eval set covers the distribution: happy path cases, edge cases (empty input, very long input), adversarial inputs (prompt injection), and ambiguous queries. Each example has a clear expected output or scoring rubric.",
+    "explanation": "İyi bir değerlendirme seti dağıtımı kapsar: mutlu yol durumları, uç durumlar (boş giriş, çok uzun giriş), rakip girişler (istem enjeksiyonu) ve belirsiz sorgular. Her örneğin net bir beklenen çıktısı veya puanlama tablosu vardır.",
     "stage": "post"
   },
   {
-    "question": "How should you handle non-deterministic LLM outputs in evaluation?",
-    "options": ["Set temperature to 0 for all evaluations", "Run each test case multiple times and use aggregate metrics (pass rate, average score) to account for output variance", "Non-determinism doesn't affect evaluation", "Only evaluate the first output"],
+    "question": "Değerlendirmede deterministik olmayan LLM çıktılarını nasıl ele almalısınız?",
+    "options": [
+      "Tüm değerlendirmeler için sıcaklığı 0'a ayarlayın",
+      "Her test senaryosunu birden çok kez çalıştırın ve çıktı farkını hesaba katmak için toplu ölçümleri (geçme oranı, ortalama puan) kullanın",
+      "Non-determinism doesn't affect evaluation",
+      "Yalnızca ilk çıktıyı değerlendirin"
+    ],
     "correct": 1,
-    "explanation": "Even at temperature 0, some providers introduce sampling variation. Running each test 3-5 times and measuring pass rate or average score gives a more reliable picture than a single run that might hit a lucky/unlucky sample.",
+    "explanation": "Bazı sağlayıcılar 0 sıcaklıkta bile örnekleme varyasyonu sunar. Her testi 3-5 kez çalıştırmak ve geçme oranını veya ortalama puanı ölçmek, şanslı/şanssız bir numuneyi vurabilecek tek bir çalıştırmadan daha güvenilir bir resim verir.",
     "stage": "post"
   }
 ]
