@@ -1,12 +1,12 @@
 {
   "lesson": "20-shadow-canary-progressive",
-  "title": "Shadow Traffic, Canary Rollout, and Progressive Deployment for LLMs",
+  "title": "LLM'ler için Gölge Trafik, Canary Sunumu ve Aşamalı Dağıtım",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the right way to order shadow, canary, and A/B testing for an LLM rollout?",
+      "question": "LLM'nin kullanıma sunulması için gölge, kanarya ve A/B testi sipariş etmenin doğru yolu nedir?",
       "options": [
-        "Shadow (zero-impact compare), then canary (live traffic progressive with gates), then A/B for distinct alternatives once stability is confirmed",
+        "Gölge (sıfır etkili karşılaştırma), ardından kanarya (kapılarla aşamalı canlı trafik), ardından istikrar onaylandıktan sonra farklı alternatifler için A/B",
         "Skip shadow entirely",
         "Canary first, then shadow, then A/B",
         "A/B first, then shadow, then canary"
@@ -16,10 +16,10 @@
     },
     {
       "stage": "check",
-      "question": "Which set of five metrics does the lesson gate canary progressions on?",
+      "question": "Ders kapısı kanarya ilerlemeleri hangi beş ölçüm kümesine göre gerçekleşir?",
       "options": [
         "GPU temp, fan speed, queue depth, cost, latency",
-        "Accuracy on offline eval only",
+        "Yalnızca çevrimdışı değerlendirmede doğruluk",
         "Latency percentiles, cost per request, error/refusal rate, output length distribution, user-feedback rate",
         "Just throughput"
       ],
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "Roughly how much run-to-run accuracy variance does the lesson cite for identical inputs on LLMs?",
+      "question": "Ders, LLM'lerdeki aynı girdiler için kabaca ne kadar çalışmadan çalıştırmaya doğruluk farklılığından bahsediyor?",
       "options": [
         "Under 0.1%",
         "Identical outputs run-to-run",
@@ -40,10 +40,10 @@
     },
     {
       "stage": "check",
-      "question": "What is shadow mode for, in the lesson's framing?",
+      "question": "Dersin çerçevesinde gölge modu ne işe yarar?",
       "options": [
-        "Replacement for rollback",
-        "A complete quality test that replaces evals",
+        "Geri alma için değiştirme",
+        "Değerlendirmelerin yerini alan eksiksiz bir kalite testi",
         "Final production rollout step",
         "A smoke test catching cost blow-ups, length regressions, refusal changes, and hard errors — not a quality guarantee"
       ],
@@ -52,11 +52,11 @@
     },
     {
       "stage": "post",
-      "question": "What is the correct rollback design per the lesson?",
+      "question": "Derse göre doğru geri alma tasarımı nedir?",
       "options": [
-        "Wait for the next release window",
-        "Redeploy with new model digest, taking hours",
-        "Flip a policy flag and revert the pinned model digest in seconds — no redeploy",
+        "Bir sonraki sürüm penceresini bekleyin",
+        "Saatler süren yeni model özetiyle yeniden konuşlandırma",
+        "Bir politika bayrağını çevirin ve sabitlenmiş model özetini saniyeler içinde geri alın; yeniden konuşlandırmaya gerek yok",
         "Manual SSH to each pod"
       ],
       "correct": 2,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why is cost listed as a gate alongside latency and quality?",
+      "question": "Maliyet neden gecikme ve kalitenin yanında bir geçit olarak listeleniyor?",
       "options": [
-        "A 20% better model can be 3x more expensive per call; shipping that without a cost gate breaks unit economics",
-        "Cost is automatically capped by every provider",
-        "Cost is a vanity metric",
-        "Cost is the same across providers"
+        "%20 daha iyi bir model, çağrı başına 3 kat daha pahalı olabilir; maliyet kapısı olmadan birim ekonomiyi bozan nakliye",
+        "Maliyet her sağlayıcı tarafından otomatik olarak sınırlandırılır",
+        "Maliyet gösterişli bir ölçümdür",
+        "Maliyet sağlayıcılar arasında aynıdır"
       ],
       "correct": 0,
       "explanation": ""
