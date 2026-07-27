@@ -4,11 +4,11 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "How does Kirchenbauer-style (SynthID-text) token watermarking embed a signal?",
+      "question": "Kirchenbauer tarzı (SynthID-text) belirteç filigranlaması bir sinyali nasıl yerleştirir?",
       "options": [
-        "By modifying the prompt template",
-        "By encrypting the output with a public key",
-        "At each decoding step, hash the previous K tokens to partition the vocabulary into green/red sets and bias sampling toward green; detection counts green tokens via a z-score",
+        "Bilgi istemi şablonunu değiştirerek",
+        "Çıktıyı ortak anahtarla şifreleyerek",
+        "Her kod çözme adımında, sözcük dağarcığını yeşil/kırmızı kümelere bölmek ve örneklemeyi yeşile doğru önyargılı hale getirmek için önceki K belirteçlerini karmalayın; algılama, bir z-puanı aracılığıyla yeşil belirteçleri sayar",
         "By inserting a hidden HTML comment"
       ],
       "correct": 2,
@@ -16,47 +16,47 @@
     },
     {
       "stage": "check",
-      "question": "What is the primary limitation of text watermarks against paraphrase?",
+      "question": "Metin filigranlarının başka sözcüklerle ifade edilmesine karşı birincil sınırlaması nedir?",
       "options": [
-        "Rewording or paraphrasing the text destroys the green-token statistical signal",
-        "Paraphrase only affects image watermarks",
-        "Paraphrase strengthens the watermark",
-        "They actually survive paraphrase"
+        "Metni yeniden ifade etmek veya başka sözcüklerle ifade etmek yeşil belirteç istatistiksel sinyalini yok eder",
+        "Açıklama yalnızca resim filigranlarını etkiler",
+        "Açıklama filigranı güçlendirir",
+        "Aslında açıklamalarla hayatta kalıyorlar"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does Stable Signature (Fernandez et al., ICCV 2023) do?",
+      "question": "Kararlı İmza (Fernandez ve diğerleri, ICCV 2023) ne yapar?",
       "options": [
-        "Uses C2PA to sign the image at upload",
-        "Adds a visible watermark in the corner of the image",
-        "Fine-tunes the latent diffusion decoder so every generated image carries a fixed embedded message detectable from the latent",
-        "Signs the metadata with a private key"
+        "Yükleme sırasında resmi imzalamak için C2PA'yi kullanır",
+        "Resmin köşesine görünür bir filigran ekler",
+        "Gizli yayılma kod çözücüsüne ince ayar yaparak oluşturulan her görüntünün gizli kaynaktan algılanabilen sabit bir gömülü mesaj taşımasını sağlar.",
+        "Meta verileri özel bir anahtarla imzalar"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the May 2024 'Stable Signature is Unstable' result demonstrate?",
+      "question": "Mayıs 2024 'İstikrarlı İmza Kararsız' sonucu neyi gösteriyor?",
       "options": [
-        "The watermark is provably unforgeable",
-        "The watermark requires C2PA to function",
-        "The watermark fails only on JPEG compression",
-        "Post-generation fine-tuning of the decoder can remove the watermark while preserving image quality, undermining adversarial robustness"
+        "Filigranın taklit edilemez olduğu kanıtlanmıştır",
+        "Filigranın çalışması için C2PA gerekir",
+        "Filigran yalnızca JPEG sıkıştırmasında başarısız oluyor",
+        "Kod çözücünün üretim sonrası ince ayarı, görüntü kalitesini korurken filigranı kaldırabilir ve rakip sağlamlığı zayıflatabilir"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "How are C2PA metadata and watermarking complementary?",
+      "question": "C2PA meta verileri ve filigranlar nasıl tamamlayıcıdır?",
       "options": [
-        "They are interchangeable",
-        "Watermarks are signed by the same keys as C2PA",
-        "Metadata can be stripped but carries rich provenance chain; watermarks persist through transcoding but carry few bits; layered, they provide a usable provenance story",
+        "Bunlar değiştirilebilir",
+        "Filigranlar C2PA ile aynı anahtarlarla imzalanır",
+        "Meta veriler çıkarılabilir ancak zengin kaynak zinciri taşır; filigranlar kod dönüştürme yoluyla varlığını sürdürür ancak birkaç bit taşır; layered, they provide a usable provenance story",
         "C2PA replaces watermarks entirely"
       ],
       "correct": 2,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why is 'no SynthID signal' NOT proof of authenticity (human origin)?",
+      "question": "'SynthID sinyali yok' neden NOT orijinalliğin kanıtıdır (insan kaynaklı)?",
       "options": [
-        "Because SynthID only watermarks generations from SynthID-enabled models; content from any model without SynthID is unwatermarked by default",
-        "Because SynthID is closed-source",
-        "Because SynthID always produces false positives on human text",
-        "Because SynthID only works on Gemini outputs"
+        "Çünkü SynthID yalnızca SynthID-etkin modellerden nesillere filigran eklemektedir; SynthID'siz herhangi bir modelin içeriği varsayılan olarak filigransızdır",
+        "SynthID kapalı kaynak olduğundan",
+        "Çünkü SynthID her zaman insan metninde yanlış pozitifler üretir",
+        "Çünkü SynthID yalnızca Gemini çıkışlarında çalışır"
       ],
       "correct": 0,
       "explanation": ""
