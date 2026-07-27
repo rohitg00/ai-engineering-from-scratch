@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "When did the EU AI Act enter into force, and what category applied first?",
+      "question": "EU AI Yasası ne zaman yürürlüğe girdi ve ilk olarak hangi kategori uygulandı?",
       "options": [
         "August 2024; prohibited practices and AI literacy applied 2 February 2025",
-        "August 2026; only GPAI applied at force-date",
+        "Ağustos 2026; yürürlük tarihinde yalnızca GPAI uygulandı",
         "August 2025; all categories applied at once",
-        "January 2024; high-risk systems applied that day"
+        "Ocak 2024; o gün uygulanan yüksek riskli sistemler"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the maximum monetary penalty under the EU AI Act applicable from 2 August 2026?",
+      "question": "2 Ağustos 2026'dan itibaren geçerli olan EU AI Yasası kapsamındaki maksimum parasal ceza nedir?",
       "options": [
         "Unlimited",
         "Up to 1M EUR or 0.1% of global turnover",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "Which three chapters make up the GPAI Code of Practice (10 July 2025)?",
+      "question": "GPAI Uygulama Kurallarını (10 Temmuz 2025) hangi üç bölüm oluşturuyor?",
       "options": [
         "Training, Inference, Deployment",
         "Capability, Control, Compliance",
@@ -40,23 +40,23 @@
     },
     {
       "stage": "check",
-      "question": "What does the February 2025 UK AISI rebrand to 'AI Security Institute' signal?",
+      "question": "Şubat 2025 UK AISI'nin 'AI Güvenlik Enstitüsü' olarak yeniden markalanması ne sinyali veriyor?",
       "options": [
         "A narrower scope focused on frontier-capability security, dropping algorithmic bias and free-speech framings",
-        "Merger with the EU AI Office",
+        "EU AI Ofisi ile birleşme",
         "Closure of UK frontier evaluation",
-        "Expansion into algorithmic bias"
+        "Algoritmik önyargıya genişleme"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does the US CAISI rebrand (June 2025) signal in policy direction?",
+      "question": "US CAISI marka değişikliği (Haziran 2025) politika yönünde neye işaret ediyor?",
       "options": [
-        "Merger with FDA",
+        "FDA ile birleşme",
         "Stricter pre-deployment safety evaluation",
-        "A shift toward 'pro-growth AI policies,' with emphasis on standards and innovation support and reduced emphasis on pre-deployment evaluation",
+        "Standartlara ve yenilik desteğine vurgu yaparak ve dağıtım öncesi değerlendirmeye daha az vurgu yaparak 'büyüme yanlısı AI politikalarına' doğru bir geçiş",
         "Mandatory open-source release of frontier models"
       ],
       "correct": 2,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "What is the headline obligation in Korea's AI Framework Act (effective January 2026)?",
+      "question": "Kore'nin AI Çerçeve Yasasının (Ocak 2026'dan itibaren geçerli) ana yükümlülüğü nedir?",
       "options": [
-        "Identical adoption of the EU AI Act",
-        "Mandatory open-weights for all generative models",
+        "EU AI Yasasının aynı şekilde benimsenmesi",
+        "Tüm üretken modeller için zorunlu açık ağırlıklar",
         "Total prohibition of foreign AI providers",
-        "Article 12 establishes an AISI under MSIT and mandates local representatives, risk assessment, and safety measures for high-impact and generative AI"
+        "Madde 12, MSIT kapsamında bir AISI oluşturur ve yüksek etkili ve üretken AI için yerel temsilcileri, risk değerlendirmesini ve güvenlik önlemlerini zorunlu kılar"
       ],
       "correct": 3,
       "explanation": ""
