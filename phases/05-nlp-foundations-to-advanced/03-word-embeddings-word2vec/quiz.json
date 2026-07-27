@@ -1,99 +1,99 @@
 {
   "lesson": "03-word-embeddings-word2vec",
-  "title": "Word Embeddings — Word2Vec from Scratch",
+  "title": "Kelime Gömmeleri — Sıfırdan Word2Vec",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the distributional hypothesis?",
+      "question": "Dağıtım hipotezi nedir?",
       "options": [
-        "You shall know a word by the company it keeps",
-        "Words are uniformly distributed across documents",
-        "All words can be embedded in 300 dimensions",
-        "Frequent words carry the most meaning"
+        "Tuttuğu şirketten bir kelime bileceksin",
+        "Kelimeler belgeler arasında eşit şekilde dağıtılır",
+        "Tüm kelimeler 300 boyuta gömülebilir",
+        "Sık kullanılan kelimeler en fazla anlamı taşır"
       ],
       "correct": 0,
       "explanation": "Firth's (1957) distributional hypothesis: similar contexts imply similar meanings."
     },
     {
       "stage": "pre",
-      "question": "Why is plain softmax over the vocabulary impractical in Word2Vec?",
+      "question": "Düz softmax neden Word2Vec'te kelime dağarcığı üzerinde kullanışsız?",
       "options": [
-        "Computing softmax over 100k+ vocabulary terms is prohibitively expensive per training step",
-        "Softmax cannot model probabilities",
-        "Softmax has no gradient",
-        "It causes vanishing gradients"
+        "Softmax'ın 100.000'den fazla kelime terimini hesaplaması, eğitim adımı başına son derece pahalıdır",
+        "Softmax olasılıkları modelleyemez",
+        "Softmax'ın eğimi yok",
+        "Kaybolan degradelere neden olur"
       ],
       "correct": 0,
-      "explanation": "Full-vocabulary softmax is too expensive; negative sampling reformulates it as binary classification."
+      "explanation": "Tam kelime dağarcığı softmax çok pahalıdır; Negatif örnekleme bunu ikili sınıflandırma olarak yeniden formüle eder."
     },
     {
       "stage": "check",
-      "question": "What is the difference between skip-gram and CBOW?",
+      "question": "Skip-gram ve CBOW arasındaki fark nedir?",
       "options": [
         "Skip-gram uses bigrams; CBOW uses unigrams",
-        "Skip-gram predicts context words from the center; CBOW predicts the center from context",
-        "Skip-gram predicts the center word from context; CBOW does the reverse",
-        "Skip-gram trains a deep network; CBOW is shallow"
+        "Skip-gram bağlam sözcüklerini merkezden tahmin eder; CBOW bağlamdan merkezi tahmin ediyor",
+        "Skip-gram bağlamdan merkezdeki kelimeyi tahmin eder; CBOW bunun tersini yapar",
+        "Skip-gram derin bir ağı eğitiyor; CBOW sığdır"
       ],
       "correct": 1,
       "explanation": "Skip-gram: center -> context. CBOW: context -> center."
     },
     {
       "stage": "check",
-      "question": "In negative sampling, what is the objective for the positive pair (center, context)?",
+      "question": "Negatif örneklemede pozitif çiftin (merkez, bağlam) amacı nedir?",
       "options": [
-        "Maximize sigmoid(W[center] dot W'[context]) so it is close to 1",
+        "sigmoid(W[center] dot W'[context])'yi 1'e yakın olacak şekilde büyütün",
         "Force them to be orthogonal",
-        "Minimize their dot product",
-        "Decorrelate the vectors"
+        "Nokta çarpımlarını en aza indirin",
+        "Vektörlerin ilişkisini düzeltin"
       ],
       "correct": 0,
       "explanation": "Positive pairs train sigmoid near 1; sampled negatives train sigmoid near 0."
     },
     {
       "stage": "check",
-      "question": "After training Word2Vec, which weight matrix becomes the word embeddings?",
+      "question": "Word2Vec'i eğittikten sonra hangi ağırlık matrisi kelime yerleştirmeleri haline gelir?",
       "options": [
         "A separate post-training projection",
-        "The input-to-hidden W matrix (center-word table)",
+        "Gizli W matrisine giriş (merkez kelime tablosu)",
         "Both, multiplied together",
-        "The hidden-to-output W' matrix"
+        "Çıkışa gizli W' matrisi"
       ],
       "correct": 1,
-      "explanation": "The center-word table W is the standard embedding output; W' is often discarded or averaged in."
+      "explanation": "Merkezi kelime tablosu W standart gömme çıktısıdır; W' genellikle atılır veya ortalaması alınır."
     },
     {
       "stage": "post",
-      "question": "Why does Word2Vec fail on polysemy (e.g. 'bank')?",
+      "question": "Word2Vec neden çok anlamlılık (örneğin 'banka') konusunda başarısız oluyor?",
       "options": [
-        "The window size is too small",
-        "It ignores rare words",
+        "Pencere boyutu çok küçük",
+        "Nadir kelimeleri görmezden gelir",
         "Negative sampling drops rare meanings",
-        "It assigns one static vector per word, so 'river bank' and 'financial bank' share the same vector"
+        "Kelime başına bir statik vektör atar, dolayısıyla 'nehir bankası' ve 'finansal banka' aynı vektörü paylaşır"
       ],
       "correct": 3,
-      "explanation": "Static embeddings cannot disambiguate senses; contextual embeddings (ELMo/BERT) fix this."
+      "explanation": "Statik yerleştirmeler duyuları netleştiremez; bağlamsal yerleştirmeler (ELMo/BERT) bunu düzeltir."
     },
     {
       "stage": "post",
-      "question": "When would you still reach for Word2Vec over a transformer in 2026?",
+      "question": "2026'da bir transformatör üzerinden Word2Vec'e ne zaman ulaşacaksınız?",
       "options": [
-        "Lightweight, on-device, domain-specific retrieval where a single row lookup is the latency budget",
-        "When you need contextual disambiguation",
-        "When inputs are very long",
-        "When dialog quality matters"
+        "Tek satırlı aramanın gecikme bütçesini oluşturduğu hafif, cihaz üzerinde, alana özgü erişim",
+        "Bağlamsal belirsizliği gidermeye ihtiyaç duyduğunuzda",
+        "Girişler çok uzun olduğunda",
+        "Diyalog kalitesi önemli olduğunda"
       ],
       "correct": 0,
       "explanation": "Word2Vec wins on tiny latency budgets, on-device inference, or fast domain-specific training."
     },
     {
       "stage": "post",
-      "question": "What enables the famous analogy 'king - man + woman ~ queen'?",
+      "question": "Ünlü 'kral - erkek + kadın ~ kraliçe' benzetmesini mümkün kılan şey nedir?",
       "options": [
-        "The model encodes royalty as a flag bit",
+        "Model telif hakkını bir bayrak biti olarak kodlar",
         "Skip-gram trains on royal vocabularies",
-        "Vector arithmetic captures linear directions like 'royal' that transfer across genders",
-        "Cosine similarity is invariant to gender"
+        "Vektör aritmetiği, cinsiyetler arasında aktarılan 'kraliyet' gibi doğrusal yönleri yakalar",
+        "Kosinüs benzerliği cinsiyete göre değişmez"
       ],
       "correct": 2,
       "explanation": "Directions in embedding space encode relational features, so adding/subtracting moves systematically."
