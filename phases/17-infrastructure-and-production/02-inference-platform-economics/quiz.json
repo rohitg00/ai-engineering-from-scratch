@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which three market segments does the lesson use to organize 2026 inference vendors?",
+      "question": "Ders, 2026 çıkarım tedarikçilerini organize etmek için hangi üç pazar segmentini kullanıyor?",
       "options": [
         "Free, paid, enterprise",
         "Single-tenant, multi-tenant, on-prem",
@@ -16,7 +16,7 @@
     },
     {
       "stage": "check",
-      "question": "Around what sustained GPU utilization does per-minute billing (Baseten, Modal) start to beat per-token billing (Fireworks, Together)?",
+      "question": "GPU'nin sürekli kullanımı ne düzeyde olursa olsun, dakika başına faturalandırma (Baseten, Modal), jeton başına faturalamayı (Fireworks, Together) geride bırakmaya başlıyor mu?",
       "options": [
         "60%",
         "90%",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "Which platform is described as Python-native serverless with per-second billing and 2-4s cold starts after pre-warming?",
+      "question": "Hangi platform, saniye başına faturalandırma ve ön ısınmanın ardından 2-4 saniyelik soğuk başlatma özelliğine sahip Python'da yerel sunucusuz olarak tanımlanır?",
       "options": [
         "Baseten",
         "Modal",
@@ -40,19 +40,19 @@
     },
     {
       "stage": "check",
-      "question": "What is Fireworks's notable LoRA pricing differentiator?",
+      "question": "Fireworks'ün dikkate değer LoRA fiyatlandırma farklılaştırıcısı nedir?",
       "options": [
         "LoRA-served requests cost more than base model",
-        "LoRA is not supported at all",
+        "LoRA hiçbir şekilde desteklenmiyor",
         "LoRA requests require a separate dedicated GPU contract",
-        "LoRA-served requests are charged at the base model's per-token rate"
+        "LoRA tarafından sunulan istekler, temel modelin jeton başına ücreti üzerinden ücretlendirilir"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which platform fits a regulated healthcare customer that needs SOC 2 Type II, HIPAA-ready posture, and dedicated GPUs?",
+      "question": "SOC 2 Tip II, HIPAA-ready duruşu ve özel GPU'lara ihtiyaç duyan düzenlemeye tabi bir sağlık hizmetleri müşterisine hangi platform uygundur?",
       "options": [
         "Baseten",
         "Together",
@@ -64,11 +64,11 @@
     },
     {
       "stage": "post",
-      "question": "Why does the lesson argue that custom-engine claims are mostly marketing shade at the platform layer?",
+      "question": "Ders neden özel motor iddialarının çoğunlukla platform katmanında pazarlama gölgesi olduğunu savunuyor?",
       "options": [
-        "Per-token pricing is the only real differentiator",
-        "vLLM and SGLang represent roughly 80% of production open-source inference, so platform differentiation comes more from DX, attribution, and SLAs than engine",
-        "All custom engines are forks of TensorRT-LLM",
+        "Token başına fiyatlandırma tek gerçek farklılaştırıcıdır",
+        "vLLM ve SGLang, üretim açık kaynak çıkarımının kabaca %80'ini temsil eder; bu nedenle platform farklılaşması, motordan çok DX, ilişkilendirme ve SLA'lardan kaynaklanır.",
+        "Tüm özel motorlar TensorRT-LLM çatallarıdır",
         "Custom engines never outperform vLLM"
       ],
       "correct": 1,
