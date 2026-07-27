@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the reference GPT-2 small configuration this lesson reproduces?",
+      "question": "Bu dersin yeniden ürettiği GPT-2 küçük konfigürasyon referansı nedir?",
       "options": [
         "vocab 30000, context 512, d_model 512, 6 heads, 6 layers",
         "vocab 50257, context 1024, d_model 768, 12 heads, 12 layers, parameters near 124 million",
@@ -12,67 +12,67 @@
         "vocab 50000, context 4096, d_model 4096, 32 heads, 32 layers"
       ],
       "correct": 1,
-      "explanation": "GPT-2 small is the 124M parameter configuration; matching it confirms the wiring is correct."
+      "explanation": "GPT-2 küçük 124M parametre konfigürasyonudur; eşleştiğinde kablolamanın doğru olduğu onaylanır."
     },
     {
       "stage": "check",
-      "question": "What does weight tying mean in the model assembly?",
+      "question": "Model montajında ​​ağırlık bağlama ne anlama geliyor?",
       "options": [
-        "The token embedding and LM head share the exact same parameter tensor; the optimizer updates one matrix that serves both lookups and the output projection",
-        "Two different tensors with the same shape that get copied each step",
+        "Belirteç yerleştirme ve LM kafası tam olarak aynı parametre tensörünü paylaşır; optimize edici, hem aramalara hem de çıktı projeksiyonuna hizmet eden bir matrisi günceller",
+        "Her adımda kopyalanan, aynı şekle sahip iki farklı tensör",
         "A bias term shared across layers",
         "A constraint on attention heads"
       ],
       "correct": 0,
-      "explanation": "Setting lm_head.weight = tok_embed.weight shares storage; copying does not. Saves vocab times d_model parameters."
+      "explanation": "lm_head.weight ayarı = tok_embed.weight depolamayı paylaşır; kopyalama işe yaramaz. Kelime süreleri d_model parametrelerini kaydeder."
     },
     {
       "stage": "check",
-      "question": "How does generation slide its context window?",
+      "question": "Nesil bağlam penceresini nasıl kaydırır?",
       "options": [
-        "Truncates to half the context every step",
-        "Each step takes the last context_length tokens of the running sequence (prompt plus generated) and feeds those to the model",
-        "Pads to the maximum context with zeros",
-        "Restarts from the prompt every step"
+        "Her adımda bağlamı yarıya indirir",
+        "Her adım, çalışan dizinin son bağlam_uzunluk belirteçlerini (istem artı oluşturulan) alır ve bunları modele besler",
+        "Sıfırlarla maksimum bağlama yönelik pedler",
+        "Her adımda istemden yeniden başlar"
       ],
       "correct": 1,
-      "explanation": "Sliding window drops the oldest tokens once the running sequence overflows the context length."
+      "explanation": "Çalışan sıra bağlam uzunluğunu aştığında kayan pencere en eski belirteçleri bırakır."
     },
     {
       "stage": "check",
-      "question": "Why initialize the attention output projection and the second MLP linear at a smaller std than the rest?",
+      "question": "Neden dikkat çıkışı projeksiyonunu ve ikinci MLP doğrusalını diğerlerinden daha küçük bir standartta başlatalım?",
       "options": [
-        "It saves memory",
-        "Both feed directly into a residual add. Scaling their std by 1 over sqrt of 2 times num_layers keeps the residual stream in scale through twelve layers",
-        "The dataset requires it",
+        "Bellekten tasarruf sağlar",
+        "Her ikisi de doğrudan artık eklentiye beslenir. Std'lerini 1 bölü sqrt'nin 2 katı num_layers ile ölçeklendirmek, kalan akışı on iki katman boyunca aynı ölçekte tutar",
+        "Veri seti bunu gerektiriyor",
         "Top-k sampling needs smaller weights"
       ],
       "correct": 1,
-      "explanation": "Without the scaling, the residual stream grows with depth and pushes the final LayerNorm into a hot regime."
+      "explanation": "Ölçeklendirme olmadan, kalan akış derinlikle birlikte büyür ve son LayerNorm'u sıcak bir rejime iter."
     },
     {
       "stage": "post",
-      "question": "What does temperature do at sampling time?",
+      "question": "Sıcaklık örnekleme zamanında ne yapar?",
       "options": [
-        "Selects the optimizer learning rate",
-        "Divides the logits before softmax. T less than 1 sharpens the distribution toward greedy, T equal to 1 keeps the natural model distribution, T greater than 1 flattens",
-        "Adds dropout to the head",
-        "Scales the embeddings"
+        "Optimize edici öğrenme oranını seçer",
+        "Softmax'tan önceki logitleri böler. T'nin 1'den küçük olması dağılımı açgözlülüğe doğru keskinleştirir, T'nin 1'e eşit olması doğal model dağılımını korur, T 1'den büyük olması düzleştirir",
+        "Kafaya düşme ekler",
+        "Yerleştirmeleri ölçeklendirir"
       ],
       "correct": 1,
-      "explanation": "Temperature is the simplest knob; combined with top-k it controls how exploratory the generation is."
+      "explanation": "Sıcaklık en basit düğmedir; top-k ile birleştiğinde neslin ne kadar araştırmacı olduğunu kontrol eder."
     },
     {
       "stage": "post",
-      "question": "What does top-k filtering do before sampling?",
+      "question": "Top-k filtreleme örneklemeden önce ne yapar?",
       "options": [
-        "Picks the lowest k logits",
-        "Keeps the k logits with the highest values, masks the rest to negative infinity, then softmax over the survivors so multinomial sampling only sees the top k tokens",
+        "En düşük k logiti seçer",
+        "K logitlerini en yüksek değerlerde tutar, geri kalanını negatif sonsuza kadar maskeler, ardından hayatta kalanlar üzerinde softmax yapar, böylece çok terimli örnekleme yalnızca en üstteki k jetonlarını görür",
         "Removes all logits below zero",
-        "Caps the logits at k"
+        "Logitleri k'de kapatır"
       ],
       "correct": 1,
-      "explanation": "Top-k truncates the long tail before softmax; top_k=1 is greedy, larger k retains more diversity."
+      "explanation": "Top-k, softmax'tan önce uzun kuyruğu keser; top_k=1 açgözlüdür, daha büyük k daha fazla çeşitliliği korur."
     }
   ]
 }
