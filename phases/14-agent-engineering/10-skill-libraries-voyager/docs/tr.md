@@ -9,18 +9,18 @@
 
 ## Öğrenme Hedefleri
 
-- Voyager'ın üç bileşenini (otomatik müfredat, beceri kitaplığı, yinelemeli prompting) ve her birinin rolünü adlandırın.
+- Voyager'ın üç bileşenini (otomatik müfredat, beceri kütüphanesi, yinelemeli prompting) ve her birinin rolünü adlandırın.
 - Voyager'ın neden ilkel komutlar değil de eylem alanı kodunu yaptığını açıklayın.
 - Kayıt, erişim, kompozisyon ve hataya dayalı iyileştirme ile bir stdlib beceri kütüphanesi uygulayın.
-- Voyager'ın modelini 2026 Claude Agent SDK becerileri ve beceri seti ekosistemiyle eşleyin.
+- Voyager'ın modelini 2026 Claude Agent SDK becerileri ve beceri seti ekosistemiyle eşleştirin.
 
 ## Sorun
 
-Her oturumda her yeteneği sıfırdan yeniden oluşturan Agent'lar üç şeyi yanlış yapar:
+Her oturumda tüm yetenekleri sıfırdan yeniden oluşturan Agent'ler üç şeyi yanlış yapar:
 
-1. **tokens israfı.** Her görev aynı mantığı yeniden ortaya çıkarır.
+1. **token'leri boşa harcayın.** Her görev aynı mantığı yeniden ortaya çıkarır.
 2. **İlerleme kaybı.** A oturumunda öğrenilen bir düzeltme B oturumuna aktarılmaz.
-3. **Uzun vadeli kompozisyonda başarısız olun.** Karmaşık görevler, yetenek hiyerarşilerine ihtiyaç duyar; tek seferlik prompt'lar bunları ifade edemez.
+3. **Uzun vadeli kompozisyonda başarısız olun.** Karmaşık görevler, yetenek hiyerarşilerine ihtiyaç duyar; tek seferlik prompt'ler bunları ifade edemez.
 
 Voyager'ın cevabı: Her yeniden kullanılabilir yeteneği, bir kitaplıkta depolanan, benzerlik yoluyla geri alınabilen, diğer becerilerle birleştirilebilen ve yürütme geri bildirimi ile geliştirilebilen adlandırılmış bir kod parçası olarak ele alın.
 
@@ -28,17 +28,17 @@ Voyager'ın cevabı: Her yeniden kullanılabilir yeteneği, bir kitaplıkta depo
 
 ### Üç bileşen
 
-Voyager (arXiv:2305.16291) bir agent'yı aşağıdakiler etrafında yapılandırır:
+Voyager (arXiv:2305.16291) aşağıdakiler etrafında bir agent yapılandırır:
 
-1. **Otomatik müfredat.** Merak odaklı bir önerici, bir sonraki görevi agent'nin mevcut beceri seti ve ortam durumuna göre seçer. Keşif aşağıdan yukarıya doğru yapılır.
-2. **Beceri kütüphanesi.** Her beceri çalıştırılabilir koddur. Bir görev başarılı olduğunda yeni beceriler eklenir. Beceriler sorgudan açıklamaya benzerliğe göre alınır.
+1. **Otomatik müfredat.** Merak odaklı bir önerici, agent'nin mevcut beceri seti ve ortam durumuna göre bir sonraki görevi seçer. Keşif aşağıdan yukarıya doğru yapılır.
+2. **Beceri kütüphanesi.** Her beceri çalıştırılabilir koddur. Bir görev başarılı olduğunda yeni beceriler eklenir. Beceriler, sorgudan açıklamaya benzerliğe göre alınır.
 3. **Yinelemeli prompting mekanizması.** Başarısızlık durumunda, agent yürütme hatalarını, ortam geri bildirimini ve kendi kendini doğrulama çıktısını alır ve ardından beceriyi geliştirir.
 
 Minecraft değerlendirmesi (Wang ve diğerleri, 2024): 3,3 kat daha fazla benzersiz öğe, 8,5 kat daha hızlı taş aletler, 6,4 kat daha hızlı demir aletler, taban çizgilerine göre 2,3 kat daha uzun harita geçişi. Sayılar Minecraft'a özgüdür ancak desen aktarılır.
 
 ### Eylem alanı = kod
 
-Çoğu agent ilkel komutlar yayar. Voyager, JavaScript işlevlerini yayar. Bir beceri:
+agent'lerin çoğu ilkel komutlar yayar. Voyager, JavaScript işlevlerini yayar. Bir beceri:
 
 ```
 async function craftIronPickaxe(bot) {
@@ -51,7 +51,7 @@ async function craftIronPickaxe(bot) {
 
 Alt becerilerden oluşur. Açıklama ve embedding anahtarlanarak saklandı. prompt olarak değil, program olarak alındı.
 
-Bu, 2026 Claude Agent SDK becerisidir: adlandırılmış, geri alınabilir bir kod parçası artı agent'nin talep üzerine yükleyeceği talimatlar.
+Bu, 2026 Claude Agent SDK becerisidir: adlandırılmış, geri alınabilir bir kod parçası ve agent'nin talep üzerine yüklediği talimatlar.
 
 ### Beceri alımı
 
@@ -59,10 +59,10 @@ Yeni görev "elmas kazma yap." Agent:
 
 1. Görev açıklamasını ekler.
 2. En iyi benzer beceriler için beceri kitaplığını sorgular.
-3. `craftIronPickaxe`, `mineDiamond`, {`placeCraftingTable` vb.'yi alır.
+3. `craftIronPickaxe`, `mineDiamond`, `placeCraftingTable` vb.'yi alır.
 4. Alınan ilkellerden + yeni mantıktan yeni beceriyi oluşturur.
 
-Bu, MCP kaynaklarının (Aşama 13) ve Agent SDK becerilerinin uyguladığı kalıptır: mevcut göreve göre belirlenmiş bir bilgi/kod yüzeyi üzerinden erişim.
+Bu, MCP kaynaklarının (Aşama 13) ve Agent SDK becerilerinin uyguladığı kalıptır: geçerli göreve uygun bir bilgi/kod yüzeyi üzerinden erişim.
 
 ### Yinelemeli iyileştirme
 
@@ -70,7 +70,7 @@ Voyager'ın geri bildirim döngüsü:
 
 1. Agent bir beceri yazar.
 2. Beceri çevreye karşı çalışır.
-3. Üç sinyalden biri şunu döndürür: `success`, `error` (yığın izlemeli), {`self-verification failure`.
+3. Üç sinyalden biri geri döner: `success`, `error` (yığın izlemeli), `self-verification failure`.
 4. Agent sinyali bağlam olarak kullanarak beceriyi yeniden yazar.
 5. Başarıya veya maksimum tura kadar döngü yapın.
 
@@ -78,22 +78,22 @@ Bu, ortama dayalı doğrulamayla kod oluşturmaya uygulanan Kendi Kendini İyile
 
 ### Müfredat ve keşif
 
-Voyager'ın müfredat modülü, agent'nın sahip olduğu ve henüz yapmadığı şeylere dayanarak "göl yakınında bir barınak inşa etmek" gibi görevler önermektedir. Teklif sahibi, mevcut yeteneğin hemen üzerindeki bir görevi (keşif için en uygun nokta) seçmek için ortam durumu + beceri envanterini kullanır.
+Voyager'ın müfredat modülü, agent'nin sahip olduğu ve henüz yapmadığı şeylere dayanarak "gölün yakınında bir barınak inşa etmek" gibi görevler öneriyor. Teklif sahibi, mevcut yeteneğin hemen üzerindeki bir görevi (keşif için en uygun nokta) seçmek için ortam durumu + beceri envanterini kullanır.
 
-Üretim agent'leri için bu, "eksik olan" operatörü anlamına gelir: mevcut beceri kitaplığı ve alan adı göz önüne alındığında, henüz hangi becerileri kapsamıyoruz? Ekipler genellikle bunu müfredat incelemesi olarak manuel olarak uygular.
+Üretim agent'ler için bu, "eksik olan" operatörü anlamına gelir: mevcut beceri kitaplığı ve bir alan adı göz önüne alındığında, henüz hangi becerileri kapsamıyoruz? Ekipler genellikle bunu müfredat incelemesi olarak manuel olarak uygular.
 
 ### Bu modelin yanlış gittiği yer
 
 - **Beceri kitaplığı çürüyor.** Aynı beceri, biraz farklı açıklamalarla 10 kez eklendi. Yazma sırasında tekilleştirme ekleyin; alma yalnızca bir tane döndürür.
 - **Oluşturulmuş beceri kayması.** Ebeveyn becerisi, çocuğun gelişmiş olmasına bağlıdır. Sürüm becerileri; v1'e sabitlenmiş bir ebeveyn sihirli bir şekilde v3'ü algılamaz.
-- **Geri alma kalitesi.** Kitaplık birkaç yüzden fazla büyüdükçe beceri açıklamaları üzerinden vektör alma özelliği düşer. Etiket filtreleri ve katı kısıtlamalarla destek ("yalnızca `category=tooling` ile beceriler").
+- **Geri alma kalitesi.** Kitaplık birkaç yüzden fazla büyüdükçe beceri açıklamaları üzerinden vektör alma özelliği düşer. Etiket filtreleri ve katı kısıtlamalarla destek ("yalnızca `category=tooling` becerileri").
 
 ## İnşa Et
 
-`code/main.py` bir stdlib beceri kitaplığı uygular:
+`code/main.py` bir stdlib beceri kütüphanesi uygular:
 
 - `Skill` — ad, açıklama, kod (dize olarak), sürüm, etiketler, bağımlılıklar.
-- `SkillLibrary` — kaydedin, arayın (token çakışma), oluşturun (topolojik derinlik türleri) ve hassaslaştırın (güncellemede sürüm artışı).
+- `SkillLibrary` — kayıt olun, arayın (token üst üste bindirin), oluşturun (topolojik derinlik sıralaması) ve hassaslaştırın (güncelleme sırasında sürüm artışı).
 - Üç temel beceriyi kaydeden, dördüncüyü oluşturan, başarısızlığa uğrayan ve hassaslaştıran komut dosyasıyla yazılmış bir agent.
 
 Çalıştır:
@@ -106,21 +106,21 @@ python3 code/main.py
 
 ## Kullan onu
 
-- **Claude Agent SDK becerileri** (Antropik) — 2026 referansı: her becerinin bir açıklaması, kodu ve talimatları vardır; agent oturumu sırasında talep üzerine yüklendi.
-- **skillkit** (npm: skillkit) — 32'den fazla AI kodlama agent için çaprazagent beceri yönetimi.
-- **Özel beceri kitaplıkları** — alana özgü (veri agent'ler için SQL becerileri, alt agent'lar için Terraform becerileri). Voyager modeli küçülür.
-- **OpenAI Agent'nin SDK'sı `tools`** — alt uçta; her araç hafif bir beceridir.
+- **Claude Agent SDK becerileri** (Antropik) — 2026 referansı: her becerinin bir açıklaması, kodu ve talimatları vardır; agent oturumu sırasında talep üzerine yüklenir.
+- **skillkit** (npm: skillkit) — 32'den fazla AI kodlama agent için çapraz agent beceri yönetimi.
+- **Özel beceri kitaplıkları** — alana özgü (veri agent'ler için SQL becerileri, agent alt yapıları için Terraform becerileri). Voyager modeli küçülür.
+- **OpenAI Agents SDK `tools`** — alt uçta; her araç hafif bir beceridir.
 
 ## Gönderin
 
-`outputs/skill-skill-library.md`, herhangi bir hedef çalışma zamanı için kayıt, erişim, sürüm oluşturma ve iyileştirme ile Voyager şeklinde bir beceri kitaplığı oluşturur.
+`outputs/skill-skill-library.md`, herhangi bir hedef çalışma süresi için kablolu kayıt, erişim, sürüm oluşturma ve iyileştirme özelliklerine sahip Voyager şeklinde bir beceri kitaplığı oluşturur.
 
 ## Egzersizler
 
-1. `compose()`'ya bir bağımlılık döngüsü dedektörü ekleyin. A becerisi A'ya bağlı olan B'ye bağlı olduğunda ne olur? Hata mı uyarı mı?
-2. Beceri başına sürüm sabitlemeyi uygulayın. Bir ana beceri, `crafting@1` alt öğesini oluşturduğunda, `crafting@2` üzerinde yapılan bir iyileştirme, üst öğeyi sessizce yükseltmemelidir.
-3. token-overlap alımını cümle-transformers embedding'ler (veya bir BM25 stdlib impl) ile değiştirin. 50 beceriye sahip bir oyuncak kütüphanesinde geri kazanımı @5 ölçün.
-4. Bir "müfredat" agent ekleyin: mevcut kitaplık ve alan açıklaması göz önüne alındığında, 5 eksik beceriyi önerin. Haftalık olarak arayın.
+1. `compose()`'ye bir bağımlılık döngüsü algılayıcısı ekleyin. A becerisi A'ya bağlı olan B'ye bağlı olduğunda ne olur? Hata mı uyarı mı?
+2. Beceri başına sürüm sabitlemeyi uygulayın. Bir üst beceri alt `crafting@1`'yi oluşturduğunda, `crafting@2`'ye yapılan bir iyileştirme üst öğeyi sessizce yükseltmemelidir.
+3. token-overlap alımını cümle-transformer'ler embedding'ler (veya bir BM25 stdlib impl) ile değiştirin. 50 beceriye sahip bir oyuncak kütüphanesinde geri kazanımı @5 ölçün.
+4. Bir "müfredat" ekleyin agent: mevcut kitaplık ve alan tanımı verildiğinde, eksik olan 5 beceriyi önerin. Haftalık olarak arayın.
 5. Anthropic'in Claude Agent SDK beceri belgelerini okuyun. Oyuncak kitaplığını SDK'nın beceri şemasına taşıyın. Keşfedilebilirlikle ilgili ne gibi değişiklikler var?
 
 ## Anahtar Terimler
@@ -128,7 +128,7 @@ python3 code/main.py
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
 | Beceri | "Yeniden kullanılabilirlik" | Adlandırılmış kod parçası + açıklama, benzerliğe göre alınabilir |
-| Beceri kütüphanesi | "Agent nasıl yapılır anısı" | Aranabilir ve oluşturulabilir kalıcı beceriler deposu |
+| Beceri kütüphanesi | "Agent nasıl yapılır belleği" | Aranabilir ve oluşturulabilir kalıcı beceriler deposu |
 | Müfredat | "Görev teklif eden" | Mevcut yetenek açığına dayalı aşağıdan yukarıya hedef oluşturucu |
 | Kompozisyon | "Beceri DAG'ı" | Becerileri çağıran beceriler; yürütme sırasında topolojik olarak sıralanmıştır |
 | Yinelemeli iyileştirme | "Kendi kendini düzelten döngü" | Env geri bildirimi + hatalar + kendi kendini doğrulama bir sonraki sürüme geri katlanır |
@@ -139,5 +139,5 @@ python3 code/main.py
 
 - [Wang ve diğerleri, Voyager (arXiv:2305.16291)](https://arxiv.org/abs/2305.16291) — orijinal beceri kütüphanesi makalesi
 - [Claude Agent SDK'ya genel bakış](https://platform.claude.com/docs/en/agent-sdk/overview) — 2026 ürünü olarak beceriler
-- [Antropik, Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk) ile agent'ler oluşturma — pratikte beceriler ve altagent'lar
+- [Antropik, Claude Agent SDK ile agent Oluşturma](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk) — pratikte beceriler ve altagent'ler
 - [Madaan ve diğerleri, Self-Refine (arXiv:2303.17651)](https://arxiv.org/abs/2303.17651) — Voyager'ın altındaki iyileştirme döngüsü
