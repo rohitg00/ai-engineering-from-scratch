@@ -4,72 +4,72 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which best captures the difference between alignment and AI control?",
+      "question": "Hizalama ve AI kontrolü arasındaki farkı en iyi hangisi yakalar?",
       "options": [
-        "Alignment asks whether U is trustworthy; control asks whether we can safely use U without trusting it",
-        "Control replaces the loss function while alignment changes the optimizer",
-        "They are synonyms",
-        "Control is about hardware; alignment is about software"
+        "Hizalama, U'nun güvenilir olup olmadığını sorar; kontrol, U'ya güvenmeden güvenli bir şekilde kullanıp kullanamayacağımızı sorar",
+        "Hizalama optimize ediciyi değiştirirken kontrol, kayıp fonksiyonunun yerini alır",
+        "Bunlar eş anlamlıdır",
+        "Kontrol donanımla ilgilidir; hizalama yazılımla ilgilidir"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the AI Control threat model assume?",
+      "question": "AI Kontrol tehdit modeli neyi varsayar?",
       "options": [
-        "U is untrusted strong, T is trusted weak, H is bounded trusted human labor",
-        "U and T are both adversarial",
-        "All three resources (U, T, H) are trusted",
-        "Only U exists"
+        "U güvenilmeyen güçlü, T güvenilen zayıf, H sınırlı güvenilen insan emeğidir",
+        "U ve T'nin ikisi de düşman",
+        "Her üç kaynak da (U, T, H) güvenilirdir",
+        "Yalnızca U var"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the key risk in Untrusted Monitoring that Trusted Editing avoids?",
+      "question": "Güvenilir Düzenlemenin önlediği Güvenilmeyen İzlemedeki temel risk nedir?",
       "options": [
-        "Two instances of U can collude or share priors, so the protocol must spend budget on collusion-resistance",
-        "Humans cannot be audited",
+        "İki U örneği gizli anlaşma yapabilir veya öncelikleri paylaşabilir, bu nedenle protokolün gizli anlaşmaya karşı direnç için bütçe harcaması gerekir",
+        "İnsanlar denetlenemez",
         "Hardware contention",
-        "T cannot edit text"
+        "Metni düzenleyemiyorum"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "On the Greenblatt et al. (ICML 2024) code-backdoor task, what does Trusted Editing achieve relative to Untrusted Monitoring?",
+      "question": "Greenblatt ve ark. (ICML 2024) kod arka kapı görevi, Güvenilir Düzenleme, Güvenilmeyen İzlemeye kıyasla ne başarır?",
       "options": [
-        "It is strictly worse",
-        "It only wins at zero human budget",
-        "They are exactly equivalent",
-        "It strictly Pareto-dominates: higher usefulness at every safety level"
+        "Kesinlikle daha kötü",
+        "Yalnızca sıfır insan bütçesiyle kazanır",
+        "Tam olarak eşdeğerdirler",
+        "Kesinlikle Pareto hakimiyetine sahiptir: her güvenlik seviyesinde daha yüksek kullanışlılık"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which of the following is NOT one of the lesson's three fundamental limits of control?",
+      "question": "Aşağıdakilerden hangisi NOT dersin üç temel kontrol limitinden biridir?",
       "options": [
         "Trusted weak models eventually lag U",
         "Control produces aligned models as a byproduct",
         "Humans do not scale",
-        "Control may fail at higher capability levels if U can manipulate T or reason about H's audit distribution"
+        "U, T'yi manipüle edebilirse veya H'nin denetim dağıtımı hakkında mantık yürütebilirse, kontrol daha yüksek yetenek seviyelerinde başarısız olabilir"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does a Control Safety Case argue?",
+      "question": "Kontrol Güvenlik Durumu neyi tartışıyor?",
       "options": [
-        "That T is more capable than U",
-        "That under worst-case assumptions about U, the deployment protocol bounds the probability of an unacceptable outcome",
-        "That U is trustworthy",
-        "That the model passed a manual jailbreak test"
+        "T'nin U'dan daha yetenekli olduğunu",
+        "U ile ilgili en kötü durum varsayımları altında dağıtım protokolünün kabul edilemez bir sonuç olasılığını sınırladığı",
+        "U'nun güvenilir olduğunu",
+        "Modelin manuel jailbreak testini geçtiği"
       ],
       "correct": 1,
       "explanation": ""
