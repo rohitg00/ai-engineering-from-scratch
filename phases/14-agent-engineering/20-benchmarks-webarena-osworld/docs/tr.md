@@ -1,6 +1,6 @@
-# Benchmarks: WebArena ve OSWorld
+# Benchmark'ler: WebArena ve OSWorld
 
-> WebArena, web-agent özelliğini kendi kendine barındırılan dört uygulamada test eder. OSWorld, Ubuntu, Windows ve macOS'ta masaüstü-agent özelliğini test eder. Piyasaya sürüldüğünde (2023–2024) her ikisi de sınıfının en iyisi agent'ler ile insanlar arasında büyük bir uçurum olduğunu gösterdi. Boşluk daralıyor; arıza modları değişmedi.
+> WebArena, web-agent yeteneğini kendi kendine barındırılan dört uygulamada test eder. OSWorld, Ubuntu, Windows ve macOS'ta masaüstü agent özelliğini test eder. Piyasaya sürüldüğünde (2023–2024) her ikisi de sınıfının en iyisi agent'ler ile insanlar arasında büyük bir uçurum olduğunu gösterdi. Boşluk daralıyor; arıza modları değişmedi.
 
 **Tür:** Öğren
 **Diller:** Python (stdlib)
@@ -12,7 +12,7 @@
 - WebArena'nın kendi kendine barındırılan dört uygulamasını ve yürütmeye dayalı değerlendirmenin neden önemli olduğunu açıklayın.
 - OSWorld'ün neden erişilebilirlik API'leri yerine gerçek işletim sistemi ekran görüntülerini kullandığını açıklayın.
 - İki temel OSWorld arıza modunu adlandırın: GUI temeli ve operasyonel bilgi.
-- OSWorld-G ve OSWorld-Human'ın benchmark tabanına ne eklediğini özetleyin.
+- OSWorld-G ve OSWorld-Human'ın benchmark tabanına neler eklediğini özetleyin.
 
 ## Sorun
 
@@ -25,14 +25,14 @@ Genelci agent'ler araçları çağırabilir. Bir alışveriş ödemesini tamamla
 - Kendi kendine barındırılan dört web uygulamasında 812 uzun ufuklu görev: bir alışveriş sitesi, bir forum, GitLab benzeri bir geliştirme aracı, bir iş CMS'si.
 - Artı yardımcı programlar: harita, hesap makinesi, karalama defteri.
 - Değerlendirme, spor salonu API'leri aracılığıyla uygulamaya dayalıdır - sipariş verildi mi, sorun kapatıldı mı, CMS sayfası güncellendi mi?
-- Yayınlandığında: en iyi GPT-4 agent %14,41 başarıya ulaşırken insan %78,24 başarıya ulaştı.
+- Çıkışta: en iyi GPT-4 agent %14,41 başarıya ulaşırken insanda %78,24 başarı elde etti.
 
 Kendi kendine barındırılan çerçeveleme önemlidir - hedef uygulamalar sabitlendiğinden ve tekrar üretilebildiğinden benchmark düzensiz değildir.
 
 ### Uzantılar
 
 - **VisualWebArena** — başarının görüntülerin yorumlanmasına bağlı olduğu görsel temelli görevler (birinci sınıf gözlemler olarak ekran görüntüleri).
-- **AgentŞirket** (Aralık 2024) — terminal + kodlamayı ekler; daha çok gerçek bir uzaktan çalışma ortamına benziyor.
+- **TheAgentCompany** (Aralık 2024) — terminal + kodlamayı ekler; daha çok gerçek bir uzaktan çalışma ortamına benziyor.
 
 ### OSWorld (Xie ve diğerleri, NeurIPS 2024)
 
@@ -53,21 +53,21 @@ Kendi kendine barındırılan çerçeveleme önemlidir - hedef uygulamalar sabit
 
 ### Bu neden önemli?
 
-Claude bilgisayar kullanımı, OpenAI CUA, Gemini 2.5 Bilgisayar Kullanımı (Ders 21) hepsi WebArena ve OSWorld tarafından şekillendirilen iş yükleri konusunda eğitim vermektedir. benchmark'lar hedeftir; üretim modelleri gönderilen yanıttır.
+Claude bilgisayar kullanımı, OpenAI CUA, Gemini 2.5 Bilgisayar Kullanımı (Ders 21) hepsi WebArena ve OSWorld tarafından şekillendirilen iş yükleri konusunda eğitim vermektedir. benchmark'ler hedeftir; üretim modelleri gönderilen yanıttır.
 
-### benchmarkişlerin ters gittiği yer
+### benchmarking'in yanlış gittiği yer
 
-- **Yalnızca ekran görüntüsü değerlendirmeleri.** OSWorld ekran görüntüsüne dayalıdır; OSWorld'de DOM veya erişilebilirlik API'lerini kullanan bir agent'yi değerlendirmek temel zorluğu kaçırır.
+- **Yalnızca ekran görüntüsü değerlendirmeleri.** OSWorld ekran görüntüsüne dayalıdır; OSWorld'de DOM veya erişilebilirlik API'lerini kullanan bir agent'nin değerlendirilmesi temel zorluğu kaçırıyor.
 - **Yörünge uzunluğu göz ardı ediliyor.** Yalnızca başarı oranının puanlanması, 1,4-2,7x adım verimsizliği OSWorld-Human yüzeylerini kaçırıyor.
 - **Kendi kendine barındırılan eski uygulamalar.** WebArena'nın uygulamaları belirli sürümleri sabitler; Yeniden iyileştirme olmadan güncelleme karşılaştırılabilirliği bozar.
 
 ## İnşa Et
 
-`code/main.py` bir oyuncak ağ-agent koşum takımı uygular:
+`code/main.py` oyuncak ağ-agent koşum takımını uygular:
 
 - Minimal bir "alışveriş uygulaması" durum makinesi: list_items, add_to_cart, checkout.
 - 3 görev için altın yörüngeler.
-- Her görevi deneyen komut dosyasıyla yazılmış bir agent.
+- Her görevi deneyen komut dosyası içeren bir agent.
 - Uygulamaya dayalı değerlendirici (durum kontrolü) ve yörünge verimliliği ölçümü (adımlara karşı altın).
 
 Çalıştır:
@@ -81,18 +81,18 @@ python3 code/main.py
 ## Kullan onu
 
 - **WebArena Onaylı** sürekli değerlendirme için dahili bir kümede kendi kendine barındırılır.
-- **OSWorld** masaüstü agent'ler için bir VM filosunda.
-- **Bilgisayar kullanan agentlar** (Ders 21) — Claude, OpenAI CUA, Gemini — hepsi buna benzer iş yükleri konusunda eğitimlidir.
-- **Kendi ürün akışlarınız** — ilk 20 göreviniz için altın gidişatlarını yakalayın; onlara karşı haftalık olarak agents yürüt.
+- Masaüstü agent'ler için bir VM filosundaki **OSWorld**.
+- **Bilgisayar kullanımı agent'ler** (Ders 21) — Claude, OpenAI CUA, Gemini — tümü buna benzer iş yükleri konusunda eğitimlidir.
+- **Kendi ürün akışlarınız** — ilk 20 göreviniz için altın gidişatlarını yakalayın; haftalık olarak onlara karşı agent'leri çalıştırın.
 
 ## Gönderin
 
-`outputs/skill-web-desktop-harness.md`, yürütmeye dayalı değerlendirme ve yörünge verimliliği metriği ile bir web/masaüstü agent koşum takımı oluşturur.
+`outputs/skill-web-desktop-harness.md`, yürütme tabanlı değerlendirme ve yörünge verimliliği ölçümüne sahip bir web/masaüstü agent donanımı oluşturur.
 
 ## Egzersizler
 
 1. Oyuncak kemerini ikinci bir uygulamayla (forum) uzatın. 3 görev artı altın yörüngeleri yazın.
-2. Görev başına yörünge verimliliği raporlaması ekleyin. Oyuncağınızdaki agent altının üzerinde 1x, 2x veya 3x mi?
+2. Görev başına yörünge verimliliği raporlaması ekleyin. Oyuncağınızdaki agent altının 1x, 2x veya 3x üzerinde mi?
 3. Altın yörüngesinin asla kullanmadığı bir "dikkat dağıtıcı" aracı uygulayın. Komut dosyasıyla yazılan agent cazip geliyor mu?
 4. OSWorld-G'yi okuyun. Kendi değerlendirmelerinizde temellendirme hatalarını planlama hatalarından nasıl ayırırsınız?
 5. WebArena'nın uygulamalarını okuyun README. Sabitlenmiş uygulama sürümlerinden birini yükselttiğinizde ne bozulur?
