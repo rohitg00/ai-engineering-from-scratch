@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -127,6 +128,20 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         export_tr.export(self.source, target, "abc123")
         (target / "bad.md").write_text("[yok](missing.md)\n")
         with self.assertRaises(ValueError):
+            export_tr.validate(target, 1, "abc123")
+
+    def test_validation_rejects_english_quiz_copy(self):
+        target = Path(self.temp.name) / "target"
+        export_tr.export(self.source, target, "abc123")
+        quiz = target / "phases/00-test/01-lesson/quiz.json"
+        quiz.write_text(json.dumps({
+            "questions": [{
+                "question": "What does gradient descent minimize?",
+                "options": ["The loss", "The dataset"],
+                "explanation": "It minimizes the loss function.",
+            }]
+        }))
+        with self.assertRaisesRegex(ValueError, "İngilizce quiz metni kaldı"):
             export_tr.validate(target, 1, "abc123")
 
     def test_archives_are_reproducible(self):

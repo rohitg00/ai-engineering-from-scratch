@@ -24,6 +24,16 @@ EXCLUDED_DIRS = {
 EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".coverage"}
 ALLOWED_LESSON_ENTRIES = {"code", "outputs", "assets", "quiz.json"}
 LOCAL_LINK = re.compile(r"!?\[[^\]]*\]\(([^)#?]+)(?:#[^)]*)?\)")
+ENGLISH_QUIZ_COPY = re.compile(
+    r"\b(?:what|which|how|why|when|where|given|choose|explain|does|is|are|"
+    r"the|this|that|from|with|into|inside|between|following|correct|purpose|"
+    r"one|because|they|their|it|its|has|have|can|cannot|only|for)\b",
+    re.IGNORECASE,
+)
+TURKISH_QUIZ_COPY = re.compile(
+    r"[çğıöşüÇĞİÖŞÜ]|(?i:\b(?:nedir|nasıl|hangi|neden|doğru|yanlış|aşağıdaki|"
+    r"için|ile|olan|olarak|değildir|verildiğinde)\b)"
+)
 SITE_FILES = {
     "app.js", "cmdpalette.js", "header.js", "progress.js", "style.css",
     "about.html", "catalog.html", "glossary.html", "prereqs.html",
@@ -722,6 +732,35 @@ def validate(root: Path, expected_lessons: int, revision: str) -> dict[str, obje
         or p.name.startswith(("coverage.", ".coverage"))
     ]
     broken: list[str] = []
+    quiz_strings = 0
+    english_quiz_copy: list[str] = []
+    for quiz in sorted(root.glob("phases/*/*/quiz.json")):
+        payload = json.loads(quiz.read_text(encoding="utf-8"))
+
+        def inspect(value: object, key: str | None = None) -> None:
+            nonlocal quiz_strings
+            if isinstance(value, dict):
+                for child_key, child in value.items():
+                    inspect(child, child_key)
+            elif isinstance(value, list):
+                for child in value:
+                    inspect(child, key)
+            elif (
+                isinstance(value, str)
+                and key in {"title", "question", "q", "options", "choices", "explanation", "explain"}
+                and value.strip()
+            ):
+                quiz_strings += 1
+                if (
+                    re.search(r"\s", value.strip())
+                    and ENGLISH_QUIZ_COPY.search(value)
+                    and not TURKISH_QUIZ_COPY.search(value)
+                ):
+                    english_quiz_copy.append(
+                        f"{quiz.relative_to(root)} [{key}]: {value[:80]}"
+                    )
+
+        inspect(payload)
     markdown = list(root.rglob("*.md"))
     for doc in markdown:
         text = doc.read_text(encoding="utf-8")
@@ -738,6 +777,10 @@ def validate(root: Path, expected_lessons: int, revision: str) -> dict[str, obje
         raise ValueError(f"yasaklı dosyalar: {', '.join(str(p) for p in forbidden[:5])}")
     if broken:
         raise ValueError(f"kırık yerel bağlantılar: {', '.join(broken[:10])}")
+    if english_quiz_copy:
+        raise ValueError(
+            "İngilizce quiz metni kaldı: " + "; ".join(english_quiz_copy[:10])
+        )
     files = [p for p in root.rglob("*") if p.is_file()]
     return {
         "schema_version": 1,
@@ -747,6 +790,8 @@ def validate(root: Path, expected_lessons: int, revision: str) -> dict[str, obje
         "coverage_percent": 100.0,
         "markdown_files_checked": len(markdown),
         "broken_local_links": 0,
+        "quiz_strings_checked": quiz_strings,
+        "english_quiz_strings": 0,
         "files": len(files) + 1,
         "content_bytes": sum(p.stat().st_size for p in files),
     }
