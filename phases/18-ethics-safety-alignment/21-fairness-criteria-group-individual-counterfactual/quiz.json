@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which best matches the demographic-parity definition for groups A=a and A=a'?",
+      "question": "A=a ve A=a' grupları için demografik eşitlik tanımına en iyi hangisi uyuyor?",
       "options": [
         "Equal true-positive and false-positive rates across groups",
         "Equal predictive value across groups",
@@ -16,12 +16,12 @@
     },
     {
       "stage": "check",
-      "question": "What does the Chouldechova / Kleinberg-Mullainathan-Raghavan 2017 impossibility result say?",
+      "question": "Chouldechova / Kleinberg-Mullainathan-Raghavan 2017 imkansızlık sonucu ne diyor?",
       "options": [
-        "Group fairness is always achievable by re-weighting",
-        "Under unequal base rates, demographic parity, equalized odds, and conditional use accuracy equality cannot all hold simultaneously",
+        "Grup adaleti her zaman yeniden ağırlıklandırmayla sağlanabilir",
+        "Eşit olmayan taban oranlar altında, demografik eşitlik, eşitlenmiş oranlar ve koşullu kullanım doğruluğu eşitliğinin tümü aynı anda geçerli olamaz",
         "Counterfactual fairness implies demographic parity",
-        "Individual fairness implies counterfactual fairness for any DAG"
+        "Bireysel adalet herhangi bir DAG için karşıolgusal adalet anlamına gelir"
       ],
       "correct": 1,
       "explanation": ""
@@ -30,10 +30,10 @@
       "stage": "check",
       "question": "Dwork et al. 2012 define individual fairness via:",
       "options": [
-        "Demographic parity at the individual level",
+        "Bireysel düzeyde demografik eşitlik",
         "Equal accuracy across protected groups",
-        "A Lipschitz condition on the decision map relative to a task-specific similarity metric, so similar individuals get similar decisions",
-        "A causal DAG with a sensitive-attribute intervention"
+        "Benzer bireylerin benzer kararlar alması için göreve özgü benzerlik metriğine göre karar haritasında bir Lipschitz koşulu",
+        "Hassas nitelik müdahalesine sahip nedensel bir DAG"
       ],
       "correct": 2,
       "explanation": ""
@@ -43,33 +43,33 @@
       "question": "Counterfactual fairness (Kusner et al. 2017) requires:",
       "options": [
         "No causal assumptions",
-        "Equal Lipschitz constants for all groups",
-        "Only group-level statistics",
-        "A causal DAG; the decision is unchanged when the individual's sensitive attribute is counterfactually altered"
+        "Tüm gruplar için eşit Lipschitz sabitleri",
+        "Yalnızca grup düzeyindeki istatistikler",
+        "Nedensel bir DAG; bireyin hassas özelliği karşı olgusal olarak değiştirildiğinde karar değişmez"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why do backtracking counterfactuals (arXiv:2401.13935) matter for legal compliance?",
+      "question": "Karşı olguların (arXiv:2401.13935) geriye doğru izlenmesi yasal uyumluluk açısından neden önemlidir?",
       "options": [
-        "Instead of intervening on a protected attribute (which is legally problematic), they ask which combination of actual features would have produced the counterfactual outcome",
-        "They eliminate the need for any causal model",
-        "They replace embedding-based bias metrics",
-        "They prove the impossibility theorem is wrong"
+        "Korunan bir özelliğe müdahale etmek yerine (ki bu yasal olarak sorunludur), gerçek özelliklerin hangi kombinasyonunun karşı olgusal sonucu üretebileceğini soruyorlar",
+        "Herhangi bir nedensel modele olan ihtiyacı ortadan kaldırırlar",
+        "Gömmeye dayalı önyargı metriklerinin yerini alıyorlar",
+        "İmkansızlık teoreminin yanlış olduğunu kanıtlıyorlar"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does the ICLR Blogposts 2024 philosophical reconciliation argue?",
+      "question": "ICLR Blogposts 2024 felsefi uzlaşması neyi savunuyor?",
       "options": [
-        "The impossibility theorems are resolved by re-weighting",
-        "With an explicit causal graph, satisfying certain group-fairness measures entails counterfactual fairness, so the apparent opposition between families is partly an artifact of leaving the causal model implicit",
-        "Group and counterfactual fairness are unrelated",
-        "Only individual fairness is justifiable"
+        "İmkansızlık teoremleri yeniden ağırlıklandırılarak çözülür",
+        "Açık bir nedensel grafikle, belirli grup adaleti önlemlerinin karşılanması karşıolgusal adaleti gerektirir, dolayısıyla aileler arasındaki görünürdeki karşıtlık kısmen nedensel modeli örtük bırakmanın bir ürünüdür",
+        "Grup ve karşıolgusal adalet birbiriyle ilgisizdir",
+        "Yalnızca bireysel adalet haklı görülebilir"
       ],
       "correct": 1,
       "explanation": ""
