@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which ingest schema do Langfuse, Phoenix, and OpenLLMetry converge on?",
+      "question": "Langfuse, Phoenix ve OpenLLMetry hangi besleme şemasında birleşiyor?",
       "options": [
         "Proprietary JSON per vendor",
         "Prometheus exposition format",
@@ -16,11 +16,11 @@
     },
     {
       "stage": "pre",
-      "question": "Why separate ClickHouse and Postgres in the storage tier?",
+      "question": "Depolama katmanında ClickHouse ve Postgres'i neden ayırmalısınız?",
       "options": [
-        "They are interchangeable and one is chosen at random",
-        "Postgres is faster for span ingest",
-        "ClickHouse cannot store strings",
+        "Bunlar değiştirilebilir ve biri rastgele seçilir",
+        "Postgres yayılma alımı için daha hızlıdır",
+        "ClickHouse dizeleri saklayamıyor",
         "ClickHouse handles columnar analytics over spans while Postgres holds users, sessions, and app metadata"
       ],
       "correct": 3,
@@ -28,10 +28,10 @@
     },
     {
       "stage": "check",
-      "question": "What does the tail-sampling processor in the OpenTelemetry Collector do?",
+      "question": "OpenTelemetry Collector'daki kuyruk örnekleme işlemcisi ne yapar?",
       "options": [
-        "Decides whether to keep a trace after it completes, using rules like keep errors plus sample successes",
-        "Replays old traces into Postgres",
+        "Hataları saklama ve örnek başarıları gibi kuralları kullanarak izleme tamamlandıktan sonra tutulup tutulmayacağına karar verir",
+        "Eski izleri Postgres'te yeniden oynatır",
         "Streams every byte unconditionally",
         "Truncates spans below 100ms"
       ],
@@ -40,11 +40,11 @@
     },
     {
       "stage": "check",
-      "question": "How does the dashboard detect drift across weeks?",
+      "question": "Kontrol paneli haftalar boyunca sapmayı nasıl tespit ediyor?",
       "options": [
         "Computes PSI or KL divergence on pooled prompt embeddings and watches eval-score trends",
-        "Manual eyeballing of the dashboard",
-        "Reads the latest deploy timestamp",
+        "Kontrol panelinin manuel olarak gözlenmesi",
+        "En son dağıtım zaman damgasını okur",
         "Counts unique trace IDs"
       ],
       "correct": 0,
@@ -52,36 +52,36 @@
     },
     {
       "stage": "check",
-      "question": "What is the deliverable's MTTR target on an injected PII-leak regression?",
+      "question": "Enjekte edilen bir PII-leak regresyonunda teslim edilebilirin MTTR hedefi nedir?",
       "options": [
         "Under 1 hour",
         "Within 24 hours",
-        "Within the next on-call shift",
-        "Under 5 minutes from bug deployed to Slack alert"
+        "Bir sonraki çağrı vardiyasında",
+        "Hatanın Slack uyarısına dağıtılmasından itibaren 5 dakikadan az"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which SDK families must produce canonical GenAI spans to meet the trace-coverage rubric?",
+      "question": "Hangi SDK ailelerinin izleme kapsamı değerlendirme tablosunu karşılamak için kanonik GenAI aralıkları üretmesi gerekir?",
       "options": [
-        "Only vLLM",
+        "Yalnızca vLLM",
         "At least six: OpenAI, Anthropic, Google GenAI, LangChain, LlamaIndex, and vLLM",
-        "Any one SDK is enough",
-        "OpenAI and Anthropic only"
+        "Herhangi bir SDK yeterlidir",
+        "Yalnızca OpenAI ve Antropik"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "How are evaluation results linked back to the original LLM call?",
+      "question": "Değerlendirme sonuçları orijinal LLM çağrısına nasıl bağlanır?",
       "options": [
         "As a CSV emailed nightly",
-        "As Slack messages only",
-        "As a separate Postgres table with no trace ID",
-        "As eval spans written as children of the parent trace in ClickHouse"
+        "Yalnızca Slack mesajları olarak",
+        "İz bırakmayan ayrı bir Postgres tablosu olarak ID",
+        "ClickHouse'da üst izlemenin çocukları olarak yazılan değerlendirme aralıkları olarak"
       ],
       "correct": 3,
       "explanation": ""
