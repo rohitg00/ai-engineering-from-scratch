@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What three prompts make up a Self-Refine loop?",
+      "question": "Hangi üç istem, Kendini İyileştirme döngüsünü oluşturur?",
       "options": [
         "Plan, execute, solve",
         "Generate, feedback, refine",
@@ -12,35 +12,35 @@
         "Search, score, synthesize"
       ],
       "correct": 1,
-      "explanation": "Self-Refine uses one model in three roles: generate, feedback, refine."
+      "explanation": "Self-Refine, üç rolde bir model kullanır: oluşturma, geri bildirim, iyileştirme."
     },
     {
       "stage": "pre",
-      "question": "Why does Self-Refine require history on the refine step?",
+      "question": "Kendini İyileştirme neden iyileştirme adımında geçmişe ihtiyaç duyuyor?",
       "options": [
-        "Providers cache only on history",
-        "Without prior outputs and critiques the refine step repeats earlier mistakes; the ablation shows quality drops sharply",
-        "History is needed for billing",
-        "It speeds up token generation"
+        "Sağlayıcılar yalnızca geçmişi önbelleğe alır",
+        "Önceki çıktılar ve eleştiriler olmadan, iyileştirme adımı daha önceki hataları tekrarlar; ablasyon kalitenin keskin bir şekilde düştüğünü gösteriyor",
+        "Faturalandırma için geçmişe ihtiyaç var",
+        "Token üretimini hızlandırır"
       ],
       "correct": 1,
-      "explanation": "The refine prompt conditions on the full history so the model does not repeat its earlier errors."
+      "explanation": "Bilgi istemini tam geçmişe göre hassaslaştırarak modelin daha önceki hatalarını tekrarlamamasını sağlar."
     },
     {
       "stage": "check",
-      "question": "What does CRITIC change relative to Self-Refine?",
+      "question": "CRITIC, Kendini Arıtmaya göre neyi değiştirir?",
       "options": [
-        "It removes the refine step",
-        "It replaces the self-feedback step with an external tool-grounded verifier",
-        "It uses a larger model for generation",
-        "It runs the feedback step in parallel"
+        "İyileştirme adımını ortadan kaldırır",
+        "Kendi kendine geri bildirim adımını harici bir alet topraklamalı doğrulayıcıyla değiştirir",
+        "Nesil için daha büyük bir model kullanıyor",
+        "Geri bildirim adımını paralel olarak çalıştırır"
       ],
       "correct": 1,
-      "explanation": "CRITIC swaps self-critique for a verify step routed through search, code interpreter, calculator, or domain verifiers."
+      "explanation": "CRITIC, arama, kod yorumlayıcı, hesap makinesi veya etki alanı doğrulayıcıları yoluyla yönlendirilen bir doğrulama adımı için özeleştiriyi değiştirir."
     },
     {
       "stage": "check",
-      "question": "Which Anthropic workflow pattern matches Self-Refine and CRITIC in Claude-friendly language?",
+      "question": "Hangi Antropik iş akışı modeli, Claude dostu dilde Self-Refine ve CRITIC ile eşleşiyor?",
       "options": [
         "Router",
         "Prompt chain",
@@ -48,40 +48,40 @@
         "Parallel sampling"
       ],
       "correct": 2,
-      "explanation": "Anthropic names this pattern Evaluator-Optimizer: an evaluator scores, an optimizer revises, loop until convergence."
+      "explanation": "Antropik bu modele Değerlendirici-Optimize Edici adını verir: Bir değerlendirici puan alır, bir optimize edici revize eder, yakınsayana kadar döngü yapar."
     },
     {
       "stage": "check",
-      "question": "What is a rubber-stamp loop and how does the lesson recommend avoiding it?",
+      "question": "Lastik damga döngüsü nedir ve derste bundan nasıl kaçınılması öneriliyor?",
       "options": [
-        "A test that always passes; remove the test",
-        "Same model and same prompt critiquing its own output and approving it; use structurally different prompts or a separate smaller critic",
-        "A retry that always fails; raise the budget",
-        "A guardrail that times out; widen the timeout"
+        "Her zaman geçen bir sınav; testi kaldır",
+        "Aynı model ve aynı istem, kendi çıktısını eleştirip onaylıyor; yapısal olarak farklı istemler veya ayrı, daha küçük bir eleştirmen kullanın",
+        "Her zaman başarısız olan bir yeniden deneme; bütçeyi artırmak",
+        "Zaman aşımına uğrayan bir korkuluk; zaman aşımını genişlet"
       ],
       "correct": 1,
-      "explanation": "Same-style self-critique converges on 'looks good to me'; differentiate the evaluator from the optimizer."
+      "explanation": "Aynı tarzda özeleştiri 'bana iyi görünüyor' noktasında birleşiyor; Değerlendiriciyi optimize ediciden ayırın."
     },
     {
       "stage": "post",
-      "question": "Which SDK feature in OpenAI Agents SDK is CRITIC-shaped?",
+      "question": "OpenAI Agents SDK'deki hangi SDK özelliği CRITIC- şeklindedir?",
       "options": [
         "Handoffs",
         "Sessions",
-        "Output guardrails (which can call tools)",
+        "Çıkış korkulukları (araçları çağırabilen)",
         "Tracing"
       ],
       "correct": 2,
-      "explanation": "Output guardrails validate the final agent output and can call tools, matching CRITIC's verifier role."
+      "explanation": "Çıkış korkulukları, son aracı çıkışını doğrular ve CRITIC'nin doğrulayıcı rolüyle eşleşen araçları çağırabilir."
     },
     {
       "stage": "post",
-      "question": "What stop condition does the lesson recommend for 2026 evaluator-optimizer loops?",
+      "question": "Ders 2026 değerlendirici-iyileştirici döngüler için hangi durma koşulunu öneriyor?",
       "options": [
-        "Stop only when the verifier passes",
-        "Stop only when the model says 'fine'",
+        "Yalnızca doğrulayıcı başarılı olduğunda dur",
+        "Yalnızca model 'iyi' dediğinde durun",
         "Combine: verifier passes OR (model says fine AND iterations >= 2) OR iterations >= max_iterations",
-        "Never stop; let the agent self-improve indefinitely"
+        "Asla durma; temsilcinin süresiz olarak kendini geliştirmesine izin verin"
       ],
       "correct": 2,
       "explanation": "A combined condition avoids single-condition failure modes."
