@@ -4,47 +4,47 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the 2026 frontier prefer vision-first late interaction over OCR-then-text on financial PDFs and scientific papers?",
+      "question": "2026 sınırı neden OCR-ardından finansal PDF'ler ve bilimsel makaleler üzerine metin yerine vizyon öncelikli geç etkileşimi tercih ediyor?",
       "options": [
-        "Vision models are cheaper per page",
-        "OCR pipelines mangle rotated tables, dense equations, and chart imagery, losing half the signal",
-        "OCR is slower than rendering",
-        "OCR cannot run on GPUs"
+        "Vision modelleri sayfa başına daha ucuzdur",
+        "OCR boru hatları döndürülmüş tabloları, yoğun denklemleri ve grafik görüntülerini karıştırıp sinyalin yarısını kaybediyor",
+        "OCR oluşturmadan daha yavaştır",
+        "OCR GPU'larda çalışamaz"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What does late interaction mean in ColPali-style retrieval?",
+      "question": "ColPali tarzı erişimde geç etkileşim ne anlama geliyor?",
       "options": [
-        "Each query token scores against every patch token, and per-token maxima are summed via MaxSim",
-        "Embeddings are deferred until eval time",
-        "Embeddings are computed after the user clicks a result",
-        "The reranker only runs on the final candidate"
+        "Her sorgu jetonu her yama jetonuna göre puanlanır ve jeton başına maksimumlar MaxSim aracılığıyla toplanır",
+        "Yerleştirmeler değerlendirme zamanına kadar ertelenir",
+        "Yerleştirmeler, kullanıcı bir sonucu tıkladıktan sonra hesaplanır",
+        "Yeniden sıralama yalnızca son aday üzerinde çalışır"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Roughly how many patch vectors does a ColQwen embedding produce per page, and what storage problem does that create?",
+      "question": "Bir ColQwen yerleştirmesi sayfa başına yaklaşık olarak kaç yama vektörü üretir ve bu nasıl bir depolama sorunu yaratır?",
       "options": [
-        "Around 2048 patch vectors per page, ballooning raw storage compared with single-vector indexes",
+        "Sayfa başına yaklaşık 2048 yama vektörü, tek vektör dizinleriyle karşılaştırıldığında ham depolamayı artırıyor",
         "Exactly 128 vectors, fitting cleanly in any vector DB",
         "1 vector per page, no storage issue",
-        "16 vectors with negligible storage overhead"
+        "İhmal edilebilir depolama yüküne sahip 16 vektör"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does DocPruner do in this pipeline?",
+      "question": "DocPruner bu süreçte ne yapıyor?",
       "options": [
         "Removes duplicate PDF pages before ingestion",
-        "Compresses the multi-vector index by keeping high-signal patches at about 50% with negligible accuracy loss",
-        "Rewrites the query embedding for shorter vectors",
+        "İhmal edilebilir doğruluk kaybıyla yüksek sinyal yamalarını yaklaşık %50'de tutarak çoklu vektör indeksini sıkıştırır",
+        "Daha kısa vektörler için sorgu yerleştirmeyi yeniden yazar",
         "Crops bounding boxes around evidence regions"
       ],
       "correct": 1,
@@ -52,19 +52,19 @@
     },
     {
       "stage": "check",
-      "question": "Why is an OCR text channel still spliced in for some pages?",
+      "question": "Neden bazı sayfalara OCR metin kanalı hâlâ eklenmiş durumda?",
       "options": [
-        "It improves PDF rendering quality",
-        "VLMs cannot read images at 180 DPI",
-        "OCR is the primary retrieval modality",
-        "Equation-dense and table-heavy pages benefit from a text fallback alongside the image"
+        "PDF oluşturma kalitesini artırır",
+        "VLM'ler 180 DPI'deki görüntüleri okuyamıyor",
+        "OCR birincil erişim yöntemidir",
+        "Denklem yoğun ve tablo ağırlıklı sayfalar, görüntünün yanında bir metin geri dönüşünden yararlanır"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which benchmark does this capstone target for vision-first retrieval evaluation?",
+      "question": "Bu son nokta, vizyon öncelikli erişim değerlendirmesi için hangi kriteri hedefliyor?",
       "options": [
         "RewardBench-2",
         "SWE-bench Pro",
@@ -76,12 +76,12 @@
     },
     {
       "stage": "post",
-      "question": "What does the rubric mean by evidence-region grounding?",
+      "question": "Kanıt bölgesi temellendirmesi ile değerlendirme tablosu ne anlama geliyor?",
       "options": [
         "Compression ratio achieved by DocPruner",
-        "Re-ranker latency at the p99 tail",
+        "p99 kuyruğundaki yeniden sıralama gecikmesi",
         "Total number of pages retrieved per query",
-        "Fraction of cited bounding boxes that actually contain the answer span"
+        "Aslında cevap aralığını içeren alıntı yapılan sınırlayıcı kutuların oranı"
       ],
       "correct": 3,
       "explanation": ""
