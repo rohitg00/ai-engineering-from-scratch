@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is a GPU faster than a CPU for training neural networks?",
-      "options": ["GPUs have higher clock speeds than CPUs", "GPUs can perform thousands of parallel matrix operations simultaneously", "GPUs have more RAM than CPUs", "GPUs use a more efficient programming language"],
+      "question": "Sinir ağlarının eğitimi için GPU neden CPU'den daha hızlıdır?",
+      "options": [
+        "GPU'lar CPU'lardan daha yüksek saat hızlarına sahiptir",
+        "GPU'lar aynı anda binlerce paralel matris işlemini gerçekleştirebilir",
+        "GPU'larda CPU'lardan daha fazla RAM bulunur",
+        "GPUs use a more efficient programming language"
+      ],
       "correct": 1,
-      "explanation": "GPUs have thousands of cores optimized for parallel computation, making them ideal for the matrix multiplications that dominate neural network training."
+      "explanation": "GPU'lar paralel hesaplama için optimize edilmiş binlerce çekirdeğe sahiptir ve bu da onları sinir ağı eğitimine hakim olan matris çarpımları için ideal kılar."
     },
     {
       "stage": "pre",
-      "question": "What does VRAM refer to?",
-      "options": ["Virtual RAM used by the operating system for swap space", "Video RAM on the GPU, separate from system RAM", "The total RAM available across all devices", "A type of CPU cache memory"],
+      "question": "VRAM neyi ifade ediyor?",
+      "options": [
+        "İşletim sistemi tarafından takas alanı olarak kullanılan sanal RAM",
+        "GPU üzerindeki RAM videosu, RAM sisteminden ayrı",
+        "Tüm cihazlarda kullanılabilen toplam RAM",
+        "A type of CPU cache memory"
+      ],
       "correct": 1,
-      "explanation": "VRAM (Video RAM) is the dedicated memory on a GPU. It limits the size of models and batch sizes you can use during training, separate from your system's main RAM."
+      "explanation": "VRAM (Video RAM), GPU üzerindeki ayrılmış bellektir. Sisteminizin ana RAM'sinden ayrı olarak, eğitim sırasında kullanabileceğiniz modellerin boyutunu ve toplu iş boyutlarını sınırlar."
     },
     {
       "stage": "post",
-      "question": "What command verifies that your NVIDIA GPU is detected and shows its current status?",
-      "options": ["gpu --status", "nvidia-smi", "torch.cuda.list_devices()", "lspci | grep gpu"],
+      "question": "Hangi komut NVIDIA GPU cihazınızın algılandığını doğrular ve mevcut durumunu gösterir?",
+      "options": [
+        "gpu --status",
+        "nvidia-smi",
+        "torch.cuda.list_devices()",
+        "lspci | grep gpu"
+      ],
       "correct": 1,
-      "explanation": "nvidia-smi (NVIDIA System Management Interface) displays GPU utilization, memory usage, temperature, and running processes. It is the standard tool for verifying GPU availability."
+      "explanation": "nvidia-smi (NVIDIA Sistem Yönetim Arayüzü), GPU kullanımını, bellek kullanımını, sıcaklığı ve çalışma işlemlerini görüntüler. GPU kullanılabilirliğini doğrulamak için standart araçtır."
     },
     {
       "stage": "post",
-      "question": "When benchmarking GPU vs CPU matrix multiplication, why must you call torch.cuda.synchronize() before measuring GPU time?",
-      "options": ["To transfer data from CPU to GPU memory", "To ensure all GPU operations have completed before stopping the timer", "To reset the GPU clock speed to its base frequency", "To free unused GPU memory"],
+      "question": "GPU ile CPU matris çarpımını kıyaslarken, GPU süresini ölçmeden önce neden torch.cuda.synchronize()'yi çağırmalısınız?",
+      "options": [
+        "CPU'den GPU belleğine veri aktarmak için",
+        "Zamanlayıcıyı durdurmadan önce tüm GPU işlemlerinin tamamlandığından emin olmak için",
+        "GPU saat hızını temel frekansına sıfırlamak için",
+        "To free unused GPU memory"
+      ],
       "correct": 1,
-      "explanation": "GPU operations are asynchronous -- Python returns immediately while the GPU is still computing. synchronize() blocks until all GPU operations finish, giving accurate timing."
+      "explanation": "GPU işlemleri eşzamansızdır - GPU hala hesaplama yaparken Python hemen geri döner. synchronize(), tüm GPU işlemleri bitene kadar bloke ederek doğru zamanlama sağlar."
     },
     {
       "stage": "post",
-      "question": "Using the fp16 rule of thumb, approximately how many parameters can fit in 24 GB of VRAM?",
-      "options": ["24 billion parameters", "12 billion parameters", "6 billion parameters", "48 billion parameters"],
+      "question": "Fp16 temel kuralını kullanarak, VRAM'nin 24 GB'sine yaklaşık olarak kaç parametre sığabilir?",
+      "options": [
+        "24 billion parameters",
+        "12 billion parameters",
+        "6 billion parameters",
+        "48 billion parameters"
+      ],
       "correct": 1,
-      "explanation": "In fp16, each parameter uses 2 bytes. 24 GB / 2 bytes = 12 billion parameters. This is a rough estimate; actual usage includes activations, gradients, and optimizer states."
+      "explanation": "Fp16'da her parametre 2 bayt kullanır. 24 GB / 2 bayt = 12 milyar parametre. Bu kaba bir tahmindir; gerçek kullanım aktivasyonları, degradeleri ve optimize edici durumlarını içerir."
     }
   ]
 }
