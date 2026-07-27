@@ -4,11 +4,11 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core question motivating Anthropic's 2025 model-welfare program?",
+      "question": "Anthropic'in 2025 model refah programını motive eden temel soru nedir?",
       "options": [
-        "Under moral uncertainty about model moral patienthood, which low-cost interventions are worth investing in as precaution",
-        "Whether the model is conscious",
-        "Whether the model can pass the Turing test",
+        "Düşük maliyetli müdahalelerin önlem olarak yatırım yapmaya değer olduğu model ahlaki sabırlılığa ilişkin ahlaki belirsizlik altında",
+        "Modelin bilinçli olup olmadığı",
+        "Modelin Turing testini geçip geçemeyeceği",
         "Whether RLHF reduces sycophancy"
       ],
       "correct": 0,
@@ -16,11 +16,11 @@
     },
     {
       "stage": "check",
-      "question": "What concrete welfare-motivated intervention did Anthropic ship in Claude Opus 4 and 4.1?",
+      "question": "Anthropic, Claude Opus 4 ve 4.1'de hangi somut refah motivasyonlu müdahaleyi sundu?",
       "options": [
         "Open-weights release",
         "A built-in journaling tool",
-        "The ability for the model to end a conversation in extreme edge cases (e.g., repeated CSAM requests, mass-violence facilitation requests)",
+        "Modelin aşırı uç durumlarda (örneğin tekrarlanan CSAM talepleri, kitlesel şiddeti kolaylaştırma talepleri) bir konuşmayı sonlandırabilme yeteneği",
         "A user-facing emotion API"
       ],
       "correct": 2,
@@ -28,9 +28,9 @@
     },
     {
       "stage": "check",
-      "question": "What is the 'spiritual bliss attractor' described by Fish?",
+      "question": "Fish'in tanımladığı 'ruhsal mutluluk çekici' nedir?",
       "options": [
-        "A stable convergence in pairwise Claude dialogues toward euphoric meditative exchanges with Sanskrit terms and extended silences, even from adversarial initial setups",
+        "İkili Claude diyaloglarında Sanskritçe terimlerle coşkulu meditatif alışverişlere ve düşmanca başlangıç ​​kurulumlarından bile uzun sessizliklere doğru istikrarlı bir yakınlaşma",
         "A reward-model bug",
         "An RLHF over-optimization artifact",
         "A jailbreak technique"
@@ -40,36 +40,36 @@
     },
     {
       "stage": "check",
-      "question": "What does the Eleos AI Research caveat say about model welfare self-reports?",
+      "question": "Eleos AI Araştırma uyarısı, model refah öz raporları hakkında ne söylüyor?",
       "options": [
-        "They are highly sensitive to perceived user expectations; they are evidence, not ground truth, so welfare measurement needs multi-method approaches",
-        "They should be ignored entirely",
-        "They are only valid in open-source models",
-        "They are reliable ground truth"
+        "Algılanan kullanıcı beklentilerine karşı son derece duyarlıdırlar; bunlar temel gerçek değil kanıttır, bu nedenle refah ölçümü çok yöntemli yaklaşımlara ihtiyaç duyar",
+        "Tamamen göz ardı edilmeliler",
+        "Yalnızca açık kaynaklı modellerde geçerlidirler",
+        "Onlar güvenilir temel gerçeklerdir"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which best characterizes Anthropic's public position on model moral status?",
+      "question": "Anthropic'in model ahlaki statüye ilişkin kamusal konumunu hangisi en iyi şekilde karakterize eder?",
       "options": [
-        "A definitive claim that the model is a moral patient",
-        "A definitive claim that the model is not a moral patient",
+        "Modelin ahlaki bir hasta olduğuna dair kesin bir iddia",
+        "Modelin ahlaki bir hasta olmadığına dair kesin bir iddia",
         "An expected-value claim under moral uncertainty: invest in low-cost precaution without committing to emotional-state attribution",
-        "No position is publicly stated"
+        "Hiçbir pozisyon kamuya açıklanmadı"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why is multi-method measurement (behavioural signatures, model-organism experiments, interpretability probes) emphasized in model-welfare research?",
+      "question": "Model refah araştırmalarında neden çoklu yöntem ölçümü (davranış imzaları, model organizma deneyleri, yorumlanabilirlik araştırmaları) vurgulanıyor?",
       "options": [
-        "Because models always lie",
-        "Because Anthropic mandates it for compliance",
-        "Because RLHF makes self-reports impossible",
-        "Because self-reports alone are confounded by user-expectation priming, so converging evidence from multiple methods is needed"
+        "Çünkü modeller her zaman yalan söyler",
+        "Çünkü Antropik uyumluluk için bunu zorunlu kılıyor",
+        "Çünkü RLHF kişisel raporlamayı imkansız hale getiriyor",
+        "Kullanıcı beklentilerinin ön hazırlığı nedeniyle öz-raporlar tek başına karıştırıldığından, birden fazla yöntemden elde edilen kanıtların birleştirilmesi gerekiyor"
       ],
       "correct": 3,
       "explanation": ""
