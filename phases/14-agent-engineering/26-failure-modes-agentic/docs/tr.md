@@ -1,48 +1,48 @@
-# Arıza Modları: Neden AgentKopma
+# Arıza Modları: Neden Agent'ler Kırılıyor?
 
-> MASFT (Berkeley, 2025) 3 kategoride 14 çoklu-agent arıza modunu kataloglamaktadır. Microsoft'un Taksonomisi, mevcut yapay zeka hatalarının agentic ayarlarında nasıl arttığını belgeliyor. Endüstri alanı verileri tekrar eden beş modda birleşiyor: halüsinasyonlu eylemler, kapsam kayması, basamaklı hatalar, bağlam kaybı, aracın yanlış kullanımı.
+> MASFT (Berkeley, 2025) 3 kategoride 14 çoklu agent arıza modunu kataloglamaktadır. Microsoft'un Taksonomisi, mevcut AI hatalarının agentic ayarlarında nasıl arttığını belgeliyor. Endüstri alanı verileri tekrar eden beş modda birleşiyor: halüsinasyonlu eylemler, kapsam kayması, basamaklı hatalar, bağlam kaybı, aracın yanlış kullanımı.
 
 **Tür:** Öğren + Oluştur
 **Diller:** Python (stdlib)
-**Önkoşullar:** Aşama 14 · 05 (Kendini Geliştirme ve Eleştirme), Aşama 14 · 24 (Observability)
+**Önkoşullar:** Aşama 14 · 05 (Kendini İyileştirme ve KRİTİK), Aşama 14 · 24 (Observability)
 **Süre:** ~60 dakika
 
 ## Öğrenme Hedefleri
 
 - MASFT'ın üç arıza kategorisini ve her birinde en az dört spesifik modu adlandırın.
-- agentic hatasının neden mevcut AI hata modlarını (önyargı, halüsinasyon) güçlendirdiğini açıklayın.
+- agentic hatasının neden mevcut yapay zeka hata modlarını (önyargı, halüsinasyon) güçlendirdiğini açıklayın.
 - Sektörde tekrarlanan beş modu ve bunların azaltımlarını açıklayın.
-- agent izlemeyi hata modu etiketleriyle etiketleyen bir stdlib algılayıcı uygulayın.
+- agent izlemelerini hata modu etiketleriyle etiketleyen bir stdlib algılayıcı uygulayın.
 
 ## Sorun
 
-Ekipler, izlerin %90'ında çalışan agent'ları gönderir. %10'luk hatalar rastgele gürültü değildir; az sayıda tekrarlanan kategoriye girerler. Bunları adlandırdıktan sonra onları izleyebilir ve düzeltebilirsiniz.
+Ekipler, izlerin %90'ı üzerinde çalışan agent'leri gönderiyor. %10'luk hatalar rastgele gürültü değildir; az sayıda tekrarlanan kategoriye girerler. Bunları adlandırdıktan sonra onları izleyebilir ve düzeltebilirsiniz.
 
 ## Konsept
 
 ### MASFT (Berkeley, arXiv:2503.13657)
 
-Çoklu-Agent Sistem Arızası Taksonomisi. 14 arıza modu 3 kategoriye ayrılmıştır. Ek açıklama yapanlar arası Cohen'in Kappa 0.88'i — kategoriler güvenilir bir şekilde ayırt edilebilir.
+Çoklu Agent Sistem Arızası Taksonomisi. 14 arıza modu 3 kategoriye ayrılmıştır. Ek açıklama yapanlar arası Cohen'in Kappa 0.88'i — kategoriler güvenilir bir şekilde ayırt edilebilir.
 
-Ana iddia: başarısızlıklar, çoklu agent sistemlerdeki temel tasarım kusurlarıdır, daha iyi temel modellerle düzeltilmesi gereken Yüksek Lisans sınırlamaları değildir.
+Ana iddia: arızalar çoklu agent sistemlerindeki temel tasarım kusurlarıdır, daha iyi temel modellerle düzeltilmesi gereken LLM sınırlamaları değildir.
 
 ### Agentic Yapay Zeka Sistemlerinde Hata Modunun Microsoft Taksonomisi
 
-- Mevcut yapay zeka hataları (önyargı, halüsinasyon, veri sızıntısı) agentic ayarlarında artıyor.
+- Mevcut AI hataları (önyargı, halüsinasyon, veri sızıntısı) agentic ayarlarında artıyor.
 - Özerklikten yeni başarısızlıklar ortaya çıkıyor: geniş ölçekte istenmeyen eylemler, araçların yanlış kullanımı, görevin sapması.
 - Teknik inceleme, agentic ürünleri için risk kaydıdır.
 
 ### Agentic AI'deki Hataları Belirleme (arXiv:2603.06847)
 
-- Başarısızlıklar orkestrasyondan, iç durum gelişiminden ve çevre etkileşiminden kaynaklanır.
+- Başarısızlıklar orkestrasyondan, iç durum evriminden ve çevre etkileşiminden kaynaklanır.
 - Yalnızca "kötü kod" veya "kötü model çıktısı" değil.
 
-### Yüksek Lisans Agent Halüsinasyonlar Anketi (arXiv:2509.18970)
+### LLM Agent Halüsinasyonlar Araştırması (arXiv:2509.18970)
 
 İki temel tezahür:
 
-1. **Talimat Takip Sapması** — agent, prompt sistemini takip etmiyor.
-2. **Uzun Menzilli Bağlamsal Kötüye Kullanım** — agent daha önceki sıralardaki bağlamı unutur veya yanlış uygular.
+1. **Talimat Takip Sapması** — agent, prompt sistemini takip etmez.
+2. **Uzun Menzilli Bağlamsal Kötüye Kullanım** — agent daha önceki dönüşlerdeki bağlamı unutur veya yanlış uygular.
 
 Alt niyet hataları: İhmal (kaçırılan adım), Artıklık (tekrarlanan adım), Düzensizlik (sıra dışı adımlar).
 
@@ -50,13 +50,13 @@ Alt niyet hataları: İhmal (kaçırılan adım), Artıklık (tekrarlanan adım)
 
 Arize, Galileo, NimbleBrain 2024-2026 saha analizleri şu noktalarda birleşiyor:
 
-1. **Halüsinasyonlu eylemler.** Agent var olmayan bir aracı çağırır veya argümanlar üretir.
-2. **Kapsam kayması.** Agent görevi kullanıcının isteğinin ötesinde genişletir (ekstra PR'ler oluşturur, fazladan e-posta gönderir).
+1. **Halüsinasyonlu eylemler.** Agent, var olmayan bir aracı çağırır veya argümanlar üretir.
+2. **Kapsam kayması.** Agent, görevi kullanıcının isteğinin ötesine genişletir (ekstra PR'ler oluşturur, fazladan e-posta gönderir).
 3. **Basamaklı hatalar.** Bir yanlış çağrı, aşağı yönlü etkileri tetikler. Hayali bir SKU halüsinasyonu, çoklu sistem olayı olan dört API çağrısını tetikler.
 4. **Bağlam kaybı.** Uzun ufuklu görevler, erken dönüş kısıtlamalarını unutur.
 5. **Aletin yanlış kullanımı.** Yanlış argümanlarla doğru aracı veya tamamen yanlış aracı çağırır.
 
-Basamaklı öldürücüdür. Agent'lar "Başarısız oldum"u "görev imkansız"dan ayırt edemezler ve döngüyü kapatmak için sıklıkla 400 hatayla ilgili bir başarı mesajı halüsinasyonu görürler.
+Basamaklı öldürücüdür. Agent'ler "Başarısız oldum"u "görev imkansız"dan ayırt edemezler ve döngüyü kapatmak için sıklıkla 400 hatayla ilgili bir başarı mesajı halüsinasyonu görürler.
 
 ### Azaltma: her adımda kapılar
 
@@ -69,13 +69,13 @@ Bir akıl yürütme zincirinin her adımında otomatik doğrulama kapıları, or
 
 ### Arıza izlemenin yanlış gittiği yer
 
-- **Yalnızca etiketleme çöküyor.** Çoğu agent hatası, geçerli görünen çıktı üretir. İçerik düzeyinde kontrollere ihtiyaç var.
+- **Yalnızca etiketleme çöküyor.** agent hatalarının çoğu, geçerli görünen çıktılar üretir. İçerik düzeyinde kontrollere ihtiyaç var.
 - **Temel çizgi yok.** Sürüklenme tespitinin bilinen son faydaya ihtiyacı vardır; onsuz "bu daha da kötüye gidiyor" diyemezsiniz.
 - **Aşırı uyarı.** Her başarısızlık bir sayfa oluşturur. Küme ve hız sınırı.
 
 ## İnşa Et
 
-`code/main.py` bir stdlib hata modu etiketleyicisini uygular:
+`code/main.py` bir stdlib hata modu etiketleyicisi uygular:
 
 - Beş modu kapsayan sentetik bir iz dataset.
 - Mod başına dedektör işlevleri (araç çağrıları, çıkışlar, tekrarlanan eylemlerdeki imza modelleri).
@@ -91,13 +91,13 @@ python3 code/main.py
 
 ## Kullan onu
 
-- Üretim sürüklenme kümelenmesi için **Phoenix** (Ders 24).
+- Üretim sürüklenmesi kümelenmesi için **Phoenix** (Ders 24).
 - Oturum tekrarı + açıklama için **Langfuse**.
-- observability platformunuzun algılayamadığı alana özel imzalar için **Özel**.
+- observability platformunuzun algılayamadığı etki alanına özgü imzalar için **Özel**.
 
 ## Gönderin
 
-`outputs/skill-failure-detector.md`, alanınıza göre uyarlanmış ve bir izleme deposuna bağlanan hata modu algılayıcıları oluşturur.
+`outputs/skill-failure-detector.md`, bir izleme deposuna bağlanan, etki alanınıza göre uyarlanmış arıza modu dedektörleri üretir.
 
 ## Egzersizler
 
@@ -111,7 +111,7 @@ python3 code/main.py
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| MASFT | "Çoklu-agent başarısızlık sınıflandırması" | Berkeley 14 modlu sınıflandırma |
+| MASFT | "Multi-agent hata sınıflandırması" | Berkeley 14 modlu sınıflandırma |
 | Basamaklı hata | "Dalgalanma hatası" | Erken bir hata N adım boyunca yayılır |
 | Bağlam kaybı | "Kısıtlamayı unuttum" | Uzun ufuk dönüşü erken dönüş gerçeklerini düşürüyor |
 | Aracın yanlış kullanımı | "Yanlış araç / yanlış argümanlar" | Geçerli çağrı, yanlış çağrı |
@@ -123,6 +123,6 @@ python3 code/main.py
 ## Daha Fazla Okuma
 
 - [Cemri ve diğerleri, MASFT (arXiv:2503.13657)](https://arxiv.org/abs/2503.13657) — 14 arıza modu, 3 kategori
-- [Microsoft, Agentic Yapay Zeka Sistemlerinde](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-brand/documents/Taxonomy-of-Failure-Mode-in-Agentic-AI-Systems-Whitepaper.pdf) Başarısızlık Modunun Sınıflandırılması - risk kaydı
+- [Microsoft, Agentic Yapay Zeka Sistemlerinde Arıza Modunun Sınıflandırması](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-brand/documents/Taxonomy-of-Failure-Mode-in-Agentic-AI-Systems-Whitepaper.pdf) — risk kaydı
 - [Arize Phoenix](https://docs.arize.com/phoenix) — pratikte sürüklenme kümelemesi
-- [Antropik, Etkili Agentler Oluşturma](https://www.anthropic.com/research/building-effective-agents) — daha basit kalıplar modlardan tamamen kaçındığında
+- [Antropik, Etkili Agent'ler Oluşturma](https://www.anthropic.com/research/building-effective-agents) — daha basit desenler modlardan tamamen kaçındığında
