@@ -4,99 +4,99 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What did GloVe contribute over Word2Vec?",
+      "question": "GloVe, Word2Vec'e ne gibi katkılarda bulundu?",
       "options": [
-        "Direct factorization of the word-word co-occurrence matrix with a weighted loss",
+        "Kelime-kelime birlikte oluşum matrisinin ağırlıklı kayıpla doğrudan çarpanlara ayrılması",
         "Byte-level tokenization",
         "A deeper neural network",
         "Subword n-gram embeddings"
       ],
       "correct": 0,
-      "explanation": "GloVe factorizes the global co-occurrence matrix with a thoughtfully weighted log-loss."
+      "explanation": "GloVe, küresel birlikte oluşum matrisini dikkatlice ağırlıklandırılmış bir log kaybıyla çarpanlara ayırır."
     },
     {
       "stage": "pre",
-      "question": "What problem does FastText solve that Word2Vec and GloVe do not?",
+      "question": "FastText, Word2Vec ve GloVe'nin çözemediği hangi sorunu çözüyor?",
       "options": [
         "Reducing training cost",
         "Multilingual transfer",
-        "Producing vectors for unseen words by composing character n-grams",
+        "Karakter n-gramlarını oluşturarak görünmeyen kelimeler için vektörler üretmek",
         "Polysemy disambiguation"
       ],
       "correct": 2,
-      "explanation": "FastText composes a word vector from its subword n-grams, so OOV words still get a sensible vector."
+      "explanation": "FastText, alt sözcük n-gramlarından bir sözcük vektörü oluşturur, böylece OOV sözcükleri yine de anlamlı bir vektör elde eder."
     },
     {
       "stage": "check",
-      "question": "In GloVe, what role does the weighting function f(x) = (x/x_max)^alpha play?",
+      "question": "GloVe'de f(x) = (x/x_max)^alpha ağırlıklandırma fonksiyonu hangi rolü oynuyor?",
       "options": [
-        "Downweights extremely frequent pairs so they do not dominate the loss",
+        "Kaybı domine etmemeleri için son derece sık çiftlerin ağırlığını azaltır",
         "Selects negative samples",
         "Initializes weights randomly",
         "Normalizes vectors to unit length"
       ],
       "correct": 0,
-      "explanation": "The weighting prevents ubiquitous co-occurrences like (the, and) from dominating training."
+      "explanation": "Ağırlıklandırma, (the, ve) gibi her yerde bulunan ortak oluşumların eğitime hakim olmasını önler."
     },
     {
       "stage": "check",
-      "question": "How does the BPE merge step pick which pair to combine next?",
+      "question": "BPE birleştirme adımı bir sonraki adımda hangi çiftin birleştirileceğini nasıl seçer?",
       "options": [
         "A random pair",
-        "The lexicographically first pair",
-        "The most frequent adjacent token pair across the corpus",
-        "The pair with highest IDF"
+        "Sözlükbilimsel olarak ilk çift",
+        "Tümce genelinde en sık görülen bitişik token çifti",
+        "En yüksek IDF değerine sahip çift"
       ],
       "correct": 2,
-      "explanation": "BPE iteratively merges the most frequent adjacent pair."
+      "explanation": "BPE en sık görülen bitişik çifti yinelemeli olarak birleştirir."
     },
     {
       "stage": "check",
-      "question": "Why does GPT-2 use byte-level BPE?",
+      "question": "GPT-2 neden bayt düzeyinde BPE kullanıyor?",
       "options": [
         "Byte BPE skips merge training",
-        "The base vocabulary of 256 bytes covers any input, eliminating out-of-vocabulary entirely",
+        "256 baytlık temel kelime dağarcığı her türlü girişi kapsar ve kelime dağarcığı dışında kalanları tamamen ortadan kaldırır",
         "Bytes train faster than characters",
         "Bytes preserve casing implicitly"
       ],
       "correct": 1,
-      "explanation": "Starting from 256 bytes means every UTF-8 string tokenizes; nothing is OOV."
+      "explanation": "256 bayttan başlamak, her UTF-8 dizisinin simgeleştirildiği anlamına gelir; hiçbir şey OOV değil."
     },
     {
       "stage": "post",
-      "question": "Which tokenizer should you use when fine-tuning a pretrained transformer?",
+      "question": "Önceden eğitilmiş bir transformatöre ince ayar yaparken hangi tokenizer'ı kullanmalısınız?",
       "options": [
         "Always SentencePiece",
-        "The exact tokenizer the model shipped with; mismatch breaks the embeddings",
-        "Whichever has the largest vocabulary",
+        "Modelin birlikte gönderildiği tokenizer'ın tamamı; uyumsuzluk yerleştirmeleri bozar",
+        "Hangisi en geniş kelime dağarcığına sahipse",
         "Always byte-level BPE"
       ],
       "correct": 1,
-      "explanation": "Tokenizer-model mismatch silently corrupts inputs; always pair the shipped tokenizer with its model."
+      "explanation": "Tokenizer-model uyumsuzluğu girdileri sessizce bozar; gönderilen tokenizer'ı her zaman modeliyle eşleştirin."
     },
     {
       "stage": "post",
-      "question": "When would you pick FastText over GloVe for pretrained word vectors?",
+      "question": "Önceden eğitilmiş kelime vektörleri için ne zaman GloVe yerine FastText'i seçersiniz?",
       "options": [
-        "When you need a 50d model",
-        "For morphologically rich languages or domains with frequent neologisms and misspellings",
-        "When latency is tightest",
-        "When the corpus is very small"
+        "50d modeline ihtiyacınız olduğunda",
+        "Morfolojik açıdan zengin diller veya sık kullanılan yeni sözcükler ve yazım yanlışları olan alanlar için",
+        "Gecikmenin en yoğun olduğu zaman",
+        "Gövde çok küçük olduğunda"
       ],
       "correct": 1,
-      "explanation": "FastText's subword composition handles inflections, neologisms, and misspellings that GloVe cannot."
+      "explanation": "FastText'in alt kelime bileşimi, GloVe'nin yapamadığı çekimleri, neolojizmleri ve yazım hatalarını ele alır."
     },
     {
       "stage": "post",
-      "question": "What unit forms the base of WordPiece, BPE, and SentencePiece vocabularies?",
+      "question": "WordPiece, BPE ve SentencePiece sözcük dağarcığının temelini hangi birim oluşturur?",
       "options": [
         "Sentences",
         "Whole words",
         "Paragraphs",
-        "Subword pieces (characters, n-grams, or learned merges) below the word level"
+        "Kelime seviyesinin altındaki alt kelime parçaları (karakterler, n-gramlar veya öğrenilmiş birleştirmeler)"
       ],
       "correct": 3,
-      "explanation": "All three are subword tokenizers; they differ in how merges or pieces are learned, not in being subword."
+      "explanation": "Üçü de alt kelime belirteçleridir; alt kelime olmaları açısından değil, birleştirmelerin veya parçaların nasıl öğrenildiği açısından farklılık gösterirler."
     }
   ]
 }
