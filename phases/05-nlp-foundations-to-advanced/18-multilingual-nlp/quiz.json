@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does zero-shot cross-lingual transfer mean?",
+      "question": "Sıfır atışlı diller arası aktarım ne anlama geliyor?",
       "options": [
-        "Fine-tune a multilingual model on one source language and evaluate on a different language with no target-language labels",
+        "Çok dilli bir modele tek bir kaynak dilde ince ayar yapın ve hedef dil etiketleri olmadan farklı bir dilde değerlendirme yapın",
         "Translating without a translation model",
-        "Tokenizing with zero merges",
-        "Training with zero examples"
+        "Sıfır birleştirmeyle tokenleştirme",
+        "Sıfır örnekle eğitim"
       ],
       "correct": 0,
-      "explanation": "Zero-shot transfer: train on the source language, run on the target without target-language supervision."
+      "explanation": "Sıfır atış aktarımı: kaynak dil üzerinde eğitim alın, hedef dil denetimi olmadan hedef üzerinde çalıştırın."
     },
     {
       "stage": "pre",
-      "question": "Which model family ships as the standard 100-language cross-lingual baseline?",
+      "question": "Hangi model ailesi standart 100 dillik diller arası temel olarak gönderilir?",
       "options": [
         "GloVe",
         "GPT-2",
@@ -24,79 +24,79 @@
         "DistilBERT"
       ],
       "correct": 2,
-      "explanation": "XLM-R is the canonical 100-language pretrained baseline for cross-lingual classification."
+      "explanation": "XLM-R diller arası sınıflandırma için standart 100 dillik önceden eğitilmiş temeldir."
     },
     {
       "stage": "check",
-      "question": "Why does English-as-source not always give the best transfer for a non-English target?",
+      "question": "Kaynak olarak İngilizce neden İngilizce olmayan bir hedef için her zaman en iyi aktarımı vermiyor?",
       "options": [
-        "English has too little data",
-        "Language similarity (typology, script, morphology) predicts transfer quality; a closer high-resource source can outperform English",
+        "İngilizce'de çok az veri var",
+        "Dil benzerliği (tipoloji, yazı, morfoloji) aktarım kalitesini öngörür; daha yakın, yüksek kaynaklı bir kaynak İngilizce'den daha iyi performans gösterebilir",
         "English uses BPE",
-        "English is too short"
+        "İngilizce çok kısa"
       ],
       "correct": 1,
-      "explanation": "Typologically related sources (e.g. Hindi for Indic targets) often outperform English as a fine-tune source."
+      "explanation": "Tipolojik olarak ilgili kaynaklar (örneğin, Hintçe hedefler için Hintçe) ince ayarlı bir kaynak olarak genellikle İngilizceden daha iyi performans gösterir."
     },
     {
       "stage": "check",
-      "question": "What is the 'fertility tax' for low-resource languages?",
+      "question": "Düşük kaynaklı diller için 'doğurganlık vergisi' nedir?",
       "options": [
         "BPE refuses to train",
-        "Low-resource text tokenizes into more subwords per word than English, consuming context window, latency, and capacity",
+        "Düşük kaynaklı metin, kelime başına İngilizce'den daha fazla alt kelimeye dönüştürülerek bağlam penceresini, gecikmeyi ve kapasiteyi tüketir",
         "Smaller models train slower",
-        "Tokenizers cannot handle Unicode"
+        "Belirteçleyiciler Unicode'u işleyemez"
       ],
       "correct": 1,
       "explanation": "Long-tail languages tokenize at much higher fertility, eating context and training efficiency."
     },
     {
       "stage": "check",
-      "question": "Why is per-language evaluation required, not aggregated accuracy?",
+      "question": "Toplu doğruluk değil de neden dil bazında değerlendirme gerekiyor?",
       "options": [
         "Aggregates ignore tokenization",
-        "Aggregate numbers hide long-tail languages where a multilingual model can be far worse than its mean suggests",
-        "Aggregates only work on classification",
+        "Toplu sayılar, çok dilli bir modelin ortalamanın önerdiğinden çok daha kötü olabileceği uzun kuyruklu dilleri gizler",
+        "Toplamalar yalnızca sınıflandırma üzerinde çalışır",
         "Aggregates run faster"
       ],
       "correct": 1,
-      "explanation": "Aggregate accuracy masks poor performance on low-resource languages; per-language scores expose it."
+      "explanation": "Toplam doğruluk, düşük kaynaklı dillerdeki zayıf performansı maskeler; dil başına puanlar bunu ortaya koyuyor."
     },
     {
       "stage": "post",
-      "question": "Why is fine-tuning learning rate critical when adapting a multilingual model with few-shot data?",
+      "question": "Çok dilli bir modeli az sayıda veriyle uyarlarken öğrenme hızına ince ayar yapmak neden kritik öneme sahiptir?",
       "options": [
         "Lower LR wastes GPU",
         "Required by tokenizers",
-        "It changes the vocabulary",
-        "High LR can collapse the multilingual alignment and effectively reduce the model to English-only"
+        "Kelime dağarcığını değiştiriyor",
+        "Yüksek LR, çok dilli hizalamayı daraltabilir ve modeli etkili bir şekilde yalnızca İngilizce'ye indirgeyebilir"
       ],
       "correct": 3,
-      "explanation": "Excessive LR drifts the shared representation; conservative LR (~2e-5) preserves cross-lingual structure."
+      "explanation": "Aşırı LR paylaşılan gösterimi sürükler; muhafazakar LR (~2e-5) diller arası yapıyı korur."
     },
     {
       "stage": "post",
-      "question": "Which mitigation directly addresses tokenizer fertility for long-tail scripts?",
+      "question": "Hangi azaltma yöntemi, uzun kuyruklu komut dosyaları için tokenizer verimliliğini doğrudan ele alır?",
       "options": [
         "Skip stopwords",
         "Lower batch size",
-        "Use byte-fallback (SentencePiece byte_fallback=True) or a tokenizer with broader script coverage (e.g. XLM-V)",
+        "Bayt geri dönüş (SentencePiece byte_fallback=True) veya daha geniş komut dosyası kapsamına sahip bir belirteç kullanın (ör. XLM-V)",
         "More training epochs"
       ],
       "correct": 2,
-      "explanation": "Byte fallback and broader-vocab tokenizers reduce fertility and OOV for low-resource scripts."
+      "explanation": "Bayt geri dönüşü ve daha geniş kelime tokenizerleri verimliliği azaltır ve düşük kaynaklı komut dosyaları için OOV."
     },
     {
       "stage": "post",
-      "question": "When is a monolingual model from scratch worth trying instead of a multilingual one?",
+      "question": "Çok dilli bir model yerine sıfırdan tek dilli bir model ne zaman denemeye değer?",
       "options": [
-        "Always for English",
-        "When the target language has enough data to train a monolingual model that beats the multilingual baseline; test before assuming",
-        "Only for translation",
-        "Whenever the tokenizer is BPE"
+        "Her zaman İngilizce için",
+        "Hedef dil, çok dilli temel çizgiyi aşan tek dilli bir modeli eğitmek için yeterli veriye sahip olduğunda; varsaymadan önce test edin",
+        "Yalnızca çeviri için",
+        "Tokenizer BPE olduğunda"
       ],
       "correct": 1,
-      "explanation": "Sometimes monolingual training beats multilingual for high-resource targets; empirical comparison decides."
+      "explanation": "Bazen tek dilli eğitim, yüksek kaynak hedefleri için çok dilli eğitimi geride bırakır; ampirik karşılaştırma karar verir."
     }
   ]
 }
