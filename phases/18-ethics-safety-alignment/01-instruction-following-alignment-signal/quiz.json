@@ -1,62 +1,62 @@
 {
   "lesson": "01-instruction-following-alignment-signal",
-  "title": "Instruction-Following as Alignment Signal",
+  "title": "Hizalama Sinyali Olarak Talimat Takip",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does a raw pre-trained language model often respond to 'write a Python function that reverses a list' with another prompt instead of code?",
+      "question": "Neden önceden eğitilmiş ham bir dil modeli 'listeyi tersine çeviren bir Python işlevi yaz' sorusuna genellikle kod yerine başka bir komut istemiyle yanıt veriyor?",
       "options": [
-        "Its vocabulary lacks Python tokens",
-        "It cannot represent function signatures without fine-tuning",
-        "Its temperature defaults to zero",
-        "It is trained to complete web-style text, where prompts continue with more prompts"
+        "Kelime dağarcığında Python belirteçleri yok",
+        "İnce ayar yapılmadan işlev imzalarını temsil edemez",
+        "Sıcaklığı varsayılan olarak sıfırdır",
+        "Bilgi istemlerinin daha fazla bilgi istemiyle devam ettiği web tarzı metni tamamlamak için eğitilmiştir"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which loss does the InstructGPT reward model use over pairwise preference labels?",
+      "question": "InstructGPT ödül modeli ikili tercih etiketlerine göre hangi kaybı kullanır?",
       "options": [
         "Mean squared error on labeler scores",
         "Bradley-Terry: -log sigmoid(r(x, y_w) - r(x, y_l))",
-        "Hinge loss with a fixed margin",
-        "Cross-entropy between predicted and true reward"
+        "Sabit marjlı menteşe kaybı",
+        "Tahmin edilen ve gerçek ödül arasındaki çapraz entropi"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the KL penalty in stage 3 of InstructGPT primarily protecting against?",
+      "question": "InstructGPT'nin 3. aşamasındaki KL cezası öncelikli olarak neye karşı koruma sağlıyor?",
       "options": [
         "Catastrophic forgetting of tokenizer statistics",
         "Numerical instability in PPO gradient updates",
         "Overflowing context windows during sampling",
-        "The optimizer finding adversarial high-reward strings that exploit the reward model"
+        "Optimize edici, ödül modelinden yararlanan rakip yüksek ödül dizilerini buluyor"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What problem does PPO-ptx mix into the RL objective to mitigate?",
+      "question": "PPO-ptx, RL hedefiyle hangi sorunu hafifletiyor?",
       "options": [
-        "The reward model drifting during PPO",
-        "The KL term becoming negative",
-        "The alignment tax: regression on benchmarks RLHF did not target",
-        "Tokenizer mismatch between SFT and RM"
+        "Ödül modeli PPO sırasında sürükleniyor",
+        "KL terimi negatif oluyor",
+        "Uyum vergisi: RLHF'nin hedeflemediği karşılaştırma ölçütlerindeki gerileme",
+        "SFT ve RM arasındaki tokenizer uyumsuzluğu"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "A 1.3B InstructGPT was preferred over the 175B base GPT-3 about 70% of the time. What does this say about alignment and capability?",
+      "question": "Yaklaşık %70 oranında 175B bazı GPT-3 yerine 1.3B InstructGPT tercih edildi. Bu uyum ve yetenek hakkında ne söylüyor?",
       "options": [
-        "Alignment is a different axis from capability, and the base model sets the capability floor",
-        "Preference rates above 50% prove the proxy reward equals human values",
-        "Capability and alignment are the same axis at scale",
+        "Hizalama, yetenekten farklı bir eksendir ve temel model, yetenek tabanını belirler",
+        "%50'nin üzerindeki tercih oranları, vekalet ödülünün insani değerlere eşit olduğunu kanıtlıyor",
+        "Yetenek ve hizalama ölçekte aynı eksendir",
         "Bigger base models always lose to small aligned models"
       ],
       "correct": 0,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Which of the following is the reward model in InstructGPT initialized from?",
+      "question": "InstructGPT'deki ödül modeli aşağıdakilerden hangisinden başlatılmıştır?",
       "options": [
-        "A random scalar regressor with no pretraining",
-        "A separate encoder-only transformer",
-        "The base pre-trained model with the LM head intact",
-        "The SFT model with the LM head replaced by a scalar head"
+        "Ön eğitim gerektirmeyen rastgele bir skaler regresör",
+        "Ayrı bir yalnızca kodlayıcı transformatörü",
+        "LM kafası sağlam olan, önceden eğitilmiş temel model",
+        "LM kafanın yerini skaler kafanın aldığı SFT modeli"
       ],
       "correct": 3,
       "explanation": ""
