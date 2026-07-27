@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What license does Langfuse ship under after the June 2025 open-sourcing of formerly commercial modules?",
+      "question": "Langfuse, Haziran 2025'te önceden ticari olan modüllerin açık kaynaklı hale getirilmesinden sonra hangi lisans kapsamında gönderim yapıyor?",
       "options": [
         "GPLv3",
         "MIT",
@@ -12,11 +12,11 @@
         "Apache 2.0"
       ],
       "correct": 1,
-      "explanation": "Langfuse is MIT, including LLM-as-a-judge, annotation queues, prompt experiments, and Playground after June 2025."
+      "explanation": "Langfuse, Haziran 2025'ten sonra LLM-as-a-jure, ek açıklama kuyrukları, hızlı deneyler ve Oyun Alanı dahil olmak üzere MIT'dir."
     },
     {
       "stage": "pre",
-      "question": "What is Arize Phoenix strongest at according to the lesson?",
+      "question": "Derse göre Arize Phoenix'in en güçlü olduğu şey nedir?",
       "options": [
         "Prompt versioning",
         "Deep agent-specific evaluation: trace clustering, anomaly detection, RAG retrieval relevancy, OpenInference auto-instrumentation",
@@ -24,11 +24,11 @@
         "Static analysis of code"
       ],
       "correct": 1,
-      "explanation": "Phoenix focuses on behavioral drift and RAG evaluation with OpenInference auto-instrumentation."
+      "explanation": "Phoenix, OpenInference otomatik enstrümantasyonu ile davranışsal sapmaya ve RAG değerlendirmesine odaklanıyor."
     },
     {
       "stage": "check",
-      "question": "Which platform pairs automated prompt optimization with guardrails (PII redaction, topical constraints) and LLM-judge hallucination detection?",
+      "question": "Otomatik istem optimizasyonunu korkuluklarla (PII redaksiyon, güncel kısıtlamalar) ve LLM-judge halüsinasyon algılamayla eşleştiren platform hangisidir?",
       "options": [
         "Langfuse",
         "Phoenix",
@@ -36,11 +36,11 @@
         "Jaeger"
       ],
       "correct": 2,
-      "explanation": "Opik centers on the optimization + guardrail loop."
+      "explanation": "Opik, optimizasyon + korkuluk döngüsüne odaklanıyor."
     },
     {
       "stage": "check",
-      "question": "Which platform does the lesson recommend for an all-in-one with prompt management?",
+      "question": "Hızlı yönetime sahip hepsi bir arada cihaz için ders hangi platformu öneriyor?",
       "options": [
         "Langfuse",
         "Phoenix",
@@ -52,36 +52,36 @@
     },
     {
       "stage": "check",
-      "question": "What does the lesson say about vendor-published platform benchmarks?",
+      "question": "Ders, satıcı tarafından yayınlanan platform kıyaslamaları hakkında ne söylüyor?",
       "options": [
-        "They are definitive",
+        "Onlar kesindir",
         "Take them as directional; measure your own corpus",
-        "They are forbidden by OpenTelemetry",
-        "Only Opik's are reliable"
+        "OpenTelemetry tarafından yasaklanmıştır",
+        "Yalnızca Opik'ler güvenilirdir"
       ],
       "correct": 1,
-      "explanation": "Even the cited 14x gap between Opik and Langfuse should be measured on your own data before deciding."
+      "explanation": "Opik ve Langfuse arasında bahsedilen 14x fark bile karar vermeden önce kendi verileriniz üzerinden ölçülmelidir."
     },
     {
       "stage": "post",
-      "question": "Why is tracing without evaluation considered expensive logging?",
+      "question": "Değerlendirme olmadan izleme yapmak neden pahalı günlük kaydı olarak değerlendiriliyor?",
       "options": [
         "Disk costs more than CPU",
-        "You see runs but you do not score them, so regressions are invisible and bisection is impossible",
-        "Providers charge for spans",
-        "Spans cannot be replayed"
+        "Koşuları görüyorsunuz ancak puanlamıyorsunuz, dolayısıyla gerilemeler görünmez ve ikiye bölmek imkansızdır",
+        "Sağlayıcılar aralıklar için ücret alır",
+        "Aralıklar tekrar oynatılamaz"
       ],
       "correct": 1,
-      "explanation": "Evals are what turn traces into actionable quality signals."
+      "explanation": "Değerlendirmeler, izleri eyleme dönüştürülebilir kalite sinyallerine dönüştüren şeydir."
     },
     {
       "stage": "post",
-      "question": "What is the lesson's warning about self-rolled LLM-judges?",
+      "question": "Kendi kendine dönen LLM-judges hakkında dersin uyarısı nedir?",
       "options": [
-        "They are forbidden by Apache 2.0",
-        "CRITIC applies: judges need external grounding for factual verification or they rubber-stamp",
-        "They only work in TypeScript",
-        "They must run on GPUs"
+        "Apache 2.0 tarafından yasaklanmıştır",
+        "CRITIC geçerlidir: Yargıçların gerçeklerin doğrulanması için harici gerekçelere ihtiyacı vardır, aksi takdirde onaylarlar",
+        "Yalnızca TypeScript'te çalışırlar",
+        "GPU'larda çalışmalılar"
       ],
       "correct": 1,
       "explanation": "Without external tool-grounded verification, LLM-judges drift toward rubber-stamping (CRITIC, Lesson 5)."
