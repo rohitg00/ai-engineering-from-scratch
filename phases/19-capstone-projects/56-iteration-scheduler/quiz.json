@@ -4,67 +4,67 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the scheduler use UCB scoring instead of always picking the current best branch?",
+      "question": "Zamanlayıcı neden her zaman mevcut en iyi dalı seçmek yerine UCB puanlamasını kullanıyor?",
       "options": [
-        "Because UCB is faster to compute",
-        "Because greedy picks never explore; UCB balances exploitation with exploration",
-        "Because asyncio requires UCB",
-        "Because the queue cannot be sorted otherwise"
+        "Çünkü UCB'nin hesaplanması daha hızlıdır",
+        "Çünkü açgözlüler asla keşfetmez; UCB, sömürüyü keşifle dengeliyor",
+        "Çünkü asyncio UCB gerektirir",
+        "Çünkü sıra başka türlü sıralanamaz"
       ],
       "correct": 1,
-      "explanation": "Greedy locks onto the first lead. Uniform never exploits. UCB picks the leader while reserving capacity for less-explored branches via the sqrt(ln N / n) term."
+      "explanation": "Greedy ilk ipucuna kilitleniyor. Üniforma asla istismar etmez. UCB, sqrt(ln N / n) dönemi aracılığıyla kapasiteyi daha az keşfedilen dallara ayırırken lideri seçer."
     },
     {
       "stage": "pre",
-      "question": "What score does a branch with zero completed runs receive under UCB1?",
+      "question": "UCB1 kapsamında sıfır tamamlanmış çalıştırmaya sahip bir şube hangi puanı alır?",
       "options": [
         "Zero",
-        "The exploration constant c",
-        "Positive infinity, so untried branches are always picked first",
-        "The mean reward of all other branches"
+        "Keşif sabiti c",
+        "Pozitif sonsuzluk olduğundan denenmemiş dallar her zaman ilk olarak seçilir",
+        "Diğer tüm dalların ortalama ödülü"
       ],
       "correct": 2,
-      "explanation": "The lesson assigns +inf for runs=0. This guarantees every branch is tried at least once before any branch is revisited."
+      "explanation": "Ders, çalıştırmalar=0 için +inf değerini atar. Bu, herhangi bir şube tekrar ziyaret edilmeden önce her şubenin en az bir kez denenmesini garanti eder."
     },
     {
       "stage": "check",
-      "question": "How does the scheduler keep multiple slots busy?",
+      "question": "Zamanlayıcı birden fazla alanı nasıl meşgul tutar?",
       "options": [
-        "It runs the runner in a thread pool",
-        "It uses asyncio.create_task per dispatched hypothesis and awaits FIRST_COMPLETED on the in-flight set",
-        "It uses multiprocessing",
-        "It blocks the event loop on a sleep"
+        "Koşucuyu bir iş parçacığı havuzunda çalıştırır",
+        "Gönderilen hipotez başına asyncio.create_task'ı kullanır ve uçuş sırasındaki sette FIRST_COMPLETED'yi bekler.",
+        "Çoklu işlem kullanır",
+        "Uykudaki olay döngüsünü engeller"
       ],
       "correct": 1,
-      "explanation": "Each dispatched hypothesis becomes a task. The main loop waits on FIRST_COMPLETED so a finished slot is freed immediately and another hypothesis is dispatched."
+      "explanation": "Gönderilen her hipotez bir göreve dönüşür. Ana döngü FIRST_COMPLETED üzerinde bekler, böylece bitmiş bir yuva hemen serbest bırakılır ve başka bir hipotez gönderilir."
     },
     {
       "stage": "check",
-      "question": "When does the scheduler emit a paper.trigger for a branch?",
+      "question": "Zamanlayıcı bir şube için ne zaman bir paper.trigger yayınlar?",
       "options": [
-        "Every time a result lands on that branch",
-        "On the first result whose branch mean meets or exceeds the paper threshold, and only once per branch",
-        "Only at the end of the run",
-        "When the prune floor is hit"
+        "O şubeye her sonuç geldiğinde",
+        "Dal ortalaması kağıt eşiğini karşılayan veya aşan ilk sonuçta ve dal başına yalnızca bir kez",
+        "Sadece koşunun sonunda",
+        "Kuru erik zemine vurulduğunda"
       ],
       "correct": 1,
-      "explanation": "The trigger fires once per branch, the first time the branch's mean crosses the threshold. The paper_triggered flag on BranchStats prevents repeats."
+      "explanation": "Tetikleyici, dal başına bir kez, dalın ortalaması eşiği ilk kez geçtiğinde etkinleşir. BranchStats'taki paper_triggered bayrağı tekrarları önler."
     },
     {
       "stage": "post",
-      "question": "What happens to a branch whose mean reward stays below the prune floor after the minimum-runs threshold?",
+      "question": "Minimum çalıştırma eşiğinden sonra ortalama ödülü budama tabanının altında kalan bir şubeye ne olur?",
       "options": [
         "Nothing; UCB will eventually pick another branch",
-        "The branch is marked pruned and remaining hypotheses on that branch are removed from the queue",
-        "The scheduler raises an exception",
-        "The reward floor is lowered automatically"
+        "Dal budanmış olarak işaretlenir ve o dalda kalan hipotezler kuyruktan kaldırılır.",
+        "Zamanlayıcı bir istisna oluşturur",
+        "Ödül tabanı otomatik olarak düşürülür"
       ],
       "correct": 1,
-      "explanation": "Pruning removes the branch from future scheduling. Pruning is separate from the picker: UCB ranks, pruning culls."
+      "explanation": "Budama, şubeyi gelecekteki planlamadan çıkarır. Budama, toplayıcıdan ayrıdır: UCB sıralar, budama itlafları."
     },
     {
       "stage": "post",
-      "question": "Which two budgets does the scheduler enforce as hard limits?",
+      "question": "Planlayıcı kesin limitler olarak hangi iki bütçeyi uyguluyor?",
       "options": [
         "Memory and CPU",
         "max_experiments (total runs) and max_seconds (wall clock)",
@@ -72,7 +72,7 @@
         "paper triggers and prune count"
       ],
       "correct": 1,
-      "explanation": "Both fire as stop reasons. max_experiments caps total work. max_seconds caps wall time. The trace records which one stopped the run."
+      "explanation": "Her ikisi de durma nedeni olarak ateş ediyor. max_experiments toplam çalışmayı sınırlar. max_seconds duvar süresini sınırlar. İzleme, çalışmayı hangisinin durdurduğunu kaydeder."
     }
   ]
 }
