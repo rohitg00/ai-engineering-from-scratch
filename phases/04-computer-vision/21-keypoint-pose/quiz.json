@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why do pose models regress heatmaps instead of (x, y) coordinates directly?",
-      "options": ["Heatmaps are cheaper to compute", "The spatial structure of a conv feature map aligns with spatial output; a Gaussian heatmap target provides a smooth loss landscape that tolerates small localisation errors, whereas direct coordinate regression is brittle and loses spatial context", "Heatmaps are required by the COCO metric", "Coordinate regression produces NaN"],
+      "question": "Poz modelleri neden doğrudan (x, y) koordinatları yerine ısı haritalarını geriliyor?",
+      "options": [
+        "Isı haritalarının hesaplanması daha ucuzdur",
+        "Bir dönüşüm özelliği haritasının uzamsal yapısı, uzamsal çıktıyla hizalanır; Gauss ısı haritası hedefi, küçük yerelleştirme hatalarını tolere eden düzgün bir kayıp ortamı sağlarken, doğrudan koordinat regresyonu kırılgandır ve mekansal bağlamı kaybeder",
+        "COCO metriği ısı haritalarını zorunlu kılıyor",
+        "Coordinate regression produces NaN"
+      ],
       "correct": 1,
-      "explanation": "Regressing coordinates with MSE asks the network to reduce a 2D position to two scalars, losing the feature-map alignment that CNNs exploit. Heatmap regression gives the network a per-pixel loss that is smooth around the true location and preserves spatial priors. The empirical improvement over coordinate regression is large enough that every modern pose model uses heatmaps."
+      "explanation": "Koordinatların MSE ile geriletilmesi, ağdan 2 boyutlu konumu iki skalere düşürmesini ister ve CNN'lerin yararlandığı özellik haritası hizalamasını kaybeder. Isı haritası regresyonu, ağa gerçek konum çevresinde düzgün olan ve mekansal öncelikleri koruyan piksel başına bir kayıp sağlar. Koordinat regresyonu üzerindeki ampirik gelişme, her modern poz modelinin ısı haritalarını kullanmasına yetecek kadar büyüktür."
     },
     {
       "stage": "pre",
-      "question": "Top-down pose estimation vs bottom-up: which scales better with crowd size, and why?",
-      "options": ["Top-down, because each person uses a separate fast model", "Bottom-up, because it does one forward pass over the whole image then groups keypoints, so runtime is constant in the number of people", "They scale equally", "Top-down never scales"],
+      "question": "Yukarıdan aşağıya poz tahmini vs aşağıdan yukarıya: kalabalık boyutuna göre hangisi daha iyi ölçeklenir ve neden?",
+      "options": [
+        "Yukarıdan aşağıya, çünkü her kişi ayrı bir hızlı model kullanıyor",
+        "Aşağıdan yukarıya doğru, tüm görüntünün üzerinden bir ileri geçiş yaptığı ve ardından anahtar noktaları gruplandırdığı için çalışma süresi kişi sayısına göre sabittir",
+        "Eşit ölçekleniyorlar",
+        "Top-down never scales"
+      ],
       "correct": 1,
-      "explanation": "Top-down runs a per-person keypoint model after a person detector, so cost grows linearly with the number of people. Bottom-up (OpenPose, HigherHRNet) produces all keypoints and association fields in one pass, then groups them — constant time regardless of crowd density. The trade: top-down is more accurate per-person; bottom-up is faster in crowds."
+      "explanation": "Yukarıdan aşağıya, bir kişi algılayıcıdan sonra kişi başına bir anahtar nokta modeli çalıştırır, böylece maliyet, kişi sayısıyla doğrusal olarak artar. Aşağıdan yukarıya (OpenPose, HigherHRNet) tüm anahtar noktaları ve ilişkilendirme alanlarını tek geçişte üretir, ardından bunları gruplandırır - kalabalık yoğunluğundan bağımsız olarak sabit süre. Ticaret: yukarıdan aşağıya kişi başına daha doğrudur; Kalabalıklarda aşağıdan yukarıya doğru daha hızlıdır."
     },
     {
       "stage": "post",
-      "question": "What are Part Affinity Fields?",
-      "options": ["A scheduling algorithm", "2-channel unit-vector fields that encode the direction from one keypoint to another; integrating the PAF along a candidate line tells you whether two keypoints belong to the same instance, enabling bottom-up association without per-person detection", "A data augmentation technique", "A type of loss function"],
+      "question": "Parça İlgi Alanları Nedir?",
+      "options": [
+        "A scheduling algorithm",
+        "Bir anahtar noktadan diğerine yönü kodlayan 2 kanallı birim vektör alanları; PAF'yi bir aday çizgisi boyunca entegre etmek size iki anahtar noktanın aynı örneğe ait olup olmadığını söyler ve kişi başına algılama olmadan aşağıdan yukarıya ilişkilendirmeyi mümkün kılar",
+        "A data augmentation technique",
+        "A type of loss function"
+      ],
       "correct": 1,
-      "explanation": "Per connected keypoint pair (limb), predict a 2-channel field (x, y components of the unit vector pointing from one keypoint to the other). To match a candidate shoulder with a candidate elbow, integrate the PAF along the line joining them; higher integral = stronger match. This turns pose into a bipartite matching problem solvable in polynomial time."
+      "explanation": "Bağlı anahtar nokta çifti (uzuv) başına, 2 kanallı bir alanı (bir anahtar noktadan diğerine işaret eden birim vektörün x, y bileşenleri) tahmin edin. Aday omzunu aday dirsekle eşleştirmek için PAF'yi onları birleştiren çizgi boyunca entegre edin; daha yüksek integral = daha güçlü eşleşme. Bu, pozu polinom zamanında çözülebilen iki parçalı bir eşleştirme problemine dönüştürür."
     },
     {
       "stage": "post",
-      "question": "Why does sub-pixel refinement around the argmax meaningfully lift keypoint accuracy?",
-      "options": ["It smooths the heatmap", "Integer argmax rounds to the nearest grid cell; fitting a local parabola or using the offset dx = 0.25*(heatmap[y,x+1] - heatmap[y,x-1]) recovers the continuous peak position, often halving the L2 error for cleanly predicted keypoints", "It prevents overfitting", "It normalises the output"],
+      "question": "Argmax çevresindeki alt piksel iyileştirmesi neden anahtar nokta doğruluğunu anlamlı bir şekilde artırıyor?",
+      "options": [
+        "Isı haritasını düzeltir",
+        "Tamsayı argmax en yakın ızgara hücresine yuvarlanır; yerel bir parabol takmak veya dx = 0,25*(heatmap[y,x+1] - heatmap[y,x-1]) ofsetini kullanmak, sürekli tepe konumunu kurtarır ve genellikle temiz bir şekilde tahmin edilen anahtar noktalar için L2 hatasını yarıya indirir",
+        "Aşırı uyumu önler",
+        "Çıkışı normalleştirir"
+      ],
       "correct": 1,
-      "explanation": "A well-predicted heatmap has a smooth Gaussian peak whose centre is usually between grid cells. Integer argmax loses that sub-pixel information (up to 0.5 px error). Fitting a parabola or using the first-difference offset recovers the continuous peak. For sports analytics, medical landmarks, or anything requiring precise coordinates, this step is mandatory."
+      "explanation": "İyi tahmin edilen bir ısı haritası, merkezi genellikle ızgara hücreleri arasında olan düzgün bir Gauss zirvesine sahiptir. Tamsayı argmax, bu alt piksel bilgisini kaybeder (0,5 piksele kadar hata). Bir parabol yerleştirmek veya birinci fark uzaklığını kullanmak, sürekli zirveyi kurtarır. Spor analizleri, tıbbi önemli noktalar veya kesin koordinatlar gerektiren herhangi bir şey için bu adım zorunludur."
     },
     {
       "stage": "post",
-      "question": "OKS (Object Keypoint Similarity) is the pose-estimation analogue of what object-detection metric?",
-      "options": ["Inference latency", "IoU — both measure geometric match between prediction and ground truth, with OKS using keypoint distances weighted by each keypoint's annotation variance; COCO reports mAP@OKS 0.5:0.95 for pose", "Classification accuracy", "Cross-entropy loss"],
+      "question": "OKS (Nesne Anahtar Noktası Benzerliği), hangi nesne algılama metriğinin poz tahmin analoğudur?",
+      "options": [
+        "Inference latency",
+        "IoU - her ikisi de OKS ile her bir anahtar noktanın açıklama varyansı tarafından ağırlıklandırılan anahtar nokta mesafelerini kullanarak tahmin ve temel gerçek arasındaki geometrik eşleşmeyi ölçer; COCO poz için mAP@OKS 0,5:0,95 rapor ediyor",
+        "Classification accuracy",
+        "Cross-entropy loss"
+      ],
       "correct": 1,
-      "explanation": "OKS ranges 0 to 1 like IoU and plays the same role: it decides whether a prediction matches a ground-truth pose at a given strictness level. Each keypoint has a variance (COCO publishes them) that scales its contribution — invariant joints like nose and eyes weigh more than wrists, which are annotated less consistently. COCO Pose AP @ OKS 0.5:0.95 is the 2026 community benchmark."
+      "explanation": "OKS, IoU gibi 0 ile 1 arasında değişir ve aynı rolü oynar: bir tahminin, belirli bir kesinlik düzeyinde temel gerçek pozuyla eşleşip eşleşmediğine karar verir. Her kilit noktanın, katkısını ölçeklendiren bir farklılığı vardır (COCO bunları yayınlar). Burun ve gözler gibi değişmez eklemler, daha az tutarlı bir şekilde açıklanan bileklerden daha ağırdır. COCO Pose AP @ OKS 0.5:0.95, 2026 topluluk standardıdır."
     }
   ]
 }
