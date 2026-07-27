@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "You have 500 labelled images for a new task close to the ImageNet distribution. Which regime makes the most sense?",
-      "options": ["Train a ResNet-50 from scratch", "Freeze an ImageNet-pretrained backbone and train only a new linear head", "Fine-tune every layer with the same large LR", "Ignore pretrained weights; small datasets work best with small models"],
+      "question": "ImageNet dağıtımına yakın yeni bir görev için 500 etiketli görseliniz var. Hangi rejim en mantıklı?",
+      "options": [
+        "ResNet-50'yi sıfırdan eğitin",
+        "ImageNet ile önceden eğitilmiş bir omurgayı dondurun ve yalnızca yeni bir doğrusal kafa eğitin",
+        "Aynı büyük LR ile her katmana ince ayar yapın",
+        "Önceden eğitilmiş ağırlıkları göz ardı edin; küçük veri kümeleri küçük modellerle en iyi şekilde çalışır"
+      ],
       "correct": 1,
-      "explanation": "With 500 images you do not have enough signal to train a deep network from scratch or to safely fine-tune all layers end-to-end without destroying pretrained features. Freezing the backbone and training only a new head (linear probe) uses the pretrained features directly and is the standard recipe for small, close-domain datasets."
+      "explanation": "500 görüntüyle, derin bir ağı sıfırdan eğitmek veya önceden eğitilmiş özellikleri bozmadan tüm katmanları uçtan uca güvenli bir şekilde ince ayar yapmak için yeterli sinyale sahip değilsiniz. Omurganın dondurulması ve yalnızca yeni bir kafanın (doğrusal prob) eğitilmesi, önceden eğitilmiş özellikleri doğrudan kullanır ve küçük, yakın alan veri kümeleri için standart tariftir."
     },
     {
       "stage": "pre",
-      "question": "Why do early conv layers of an ImageNet-pretrained network transfer well to medical images even though ImageNet contains no X-rays?",
-      "options": ["PyTorch re-initialises early layers automatically", "Early layers encode generic visual primitives — edges, orientations, contrast — that are shared across almost any visual domain; only late layers specialise to ImageNet categories", "ImageNet secretly contains medical data", "Transfer only works when domains match"],
+      "question": "ImageNet önceden eğitilmiş bir ağın erken dönüşüm katmanları, ImageNet X-ray içermese bile neden tıbbi görüntülere iyi bir şekilde aktarılıyor?",
+      "options": [
+        "PyTorch re-initialises early layers automatically",
+        "İlk katmanlar, hemen hemen her görsel alanda paylaşılan genel görsel temelleri (kenarlar, yönelimler, kontrast) kodlar; yalnızca son katmanlar ImageNet kategorilerinde uzmanlaşır",
+        "ImageNet secretly contains medical data",
+        "Aktarım yalnızca alanlar eşleştiğinde çalışır"
+      ],
       "correct": 1,
-      "explanation": "Gabor-like filters and simple texture detectors are the features early CNN layers learn on any natural-image corpus. They reflect the statistics of light, shadow, and edges that hold across photography, medical imaging, microscopy, and satellite data. Late layers progressively specialise, which is why fine-tuning focuses on the last few blocks."
+      "explanation": "Gabor benzeri filtreler ve basit doku algılayıcıları, CNN katmanlarının herhangi bir doğal görüntü kümesinde öğrendiği ilk özelliklerdir. Fotoğrafçılık, tıbbi görüntüleme, mikroskopi ve uydu verileri genelinde geçerli olan ışık, gölge ve kenar istatistiklerini yansıtırlar. Geç katmanlar giderek uzmanlaşır, bu nedenle ince ayar son birkaç bloğa odaklanır."
     },
     {
       "stage": "post",
-      "question": "When fine-tuning end-to-end with discriminative learning rates, why should early layers get a smaller LR than late layers?",
-      "options": ["Early layers have fewer parameters", "Early layers encode general features you want to preserve; late layers encode task-specific features that must move; a smaller LR on early layers prevents feature drift and catastrophic forgetting", "PyTorch requires layer-wise LR for correctness", "A smaller LR in the early layers speeds up training"],
+      "question": "Ayırt edici öğrenme oranlarıyla uçtan uca ince ayar yapılırken neden ilk katmanlar geç katmanlara göre daha küçük bir LR elde etsin?",
+      "options": [
+        "İlk katmanların daha az parametresi vardır",
+        "İlk katmanlar, korumak istediğiniz genel özellikleri kodlar; geç katmanlar, taşınması gereken göreve özgü özellikleri kodlar; İlk katmanlarda daha küçük bir LR, özelliklerin kaymasını ve felaketle sonuçlanan unutmayı önler",
+        "PyTorch, doğruluk için katman bazında LR gerektirir",
+        "İlk katmanlardaki daha küçük LR eğitimi hızlandırır"
+      ],
       "correct": 1,
-      "explanation": "Early layers already encode the right visual primitives; you want tiny updates so those features are preserved. Late layers need to move toward the new task. One learning rate for the whole model forces a compromise that hurts both ends. Discriminative LRs let each stage move at its own pace, which is the empirical sweet spot for fine-tuning."
+      "explanation": "İlk katmanlar zaten doğru görsel temelleri kodluyor; bu özelliklerin korunması için küçük güncellemeler istiyorsunuz. Geç katmanların yeni göreve doğru ilerlemesi gerekiyor. Tüm model için tek bir öğrenme oranı, her iki tarafa da zarar veren bir uzlaşmaya zorlar. Ayrımcı LR'ler, her aşamanın kendi hızında hareket etmesine izin verir; bu, ince ayar için ampirik en uygun noktadır."
     },
     {
       "stage": "post",
-      "question": "You fine-tune a ResNet on a 10-class medical dataset of 800 grayscale images (replicated to 3 channels). Accuracy is 10% (random chance for 10 classes). What is the most likely cause?",
-      "options": ["You used the wrong loss function", "BatchNorm running statistics are from ImageNet RGB photos and badly mismatch the grayscale-medical distribution, so the first few BN layers produce noise that propagates forward", "ResNet cannot handle grayscale input", "800 images is simply too few for any transfer learning"],
+      "question": "800 gri tonlamalı görüntüden (3 kanala çoğaltılmış) oluşan 10 sınıflı bir tıbbi veri kümesi üzerinde bir ResNet'e ince ayar yaparsınız. Doğruluk %10'dur (10 sınıf için rastgele şans). En muhtemel sebep nedir?",
+      "options": [
+        "Yanlış kayıp fonksiyonunu kullandınız",
+        "BatchNorm çalıştırma istatistikleri ImageNet RGB fotoğraflarından alınmıştır ve gri tonlamalı tıbbi dağılımla büyük ölçüde uyumsuzdur, bu nedenle ilk birkaç BN katmanı ileriye doğru yayılan gürültü üretir",
+        "ResNet gri tonlamalı girişi işleyemiyor",
+        "800 görüntü herhangi bir transfer öğrenimi için çok az"
+      ],
       "correct": 1,
-      "explanation": "BatchNorm keeps running_mean and running_var from ImageNet. On a small, distribution-shifted dataset those buffers never adapt fast enough during a short fine-tune, and BN normalises activations with the wrong stats. Fixes: freeze BN statistics, switch to GroupNorm, or pretrain BN stats with a BN-only warmup pass on the target dataset."
+      "explanation": "BatchNorm, ImageNet'ten Running_mean ve Running_var'ı korur. Küçük, dağıtım kaydırmalı bir veri kümesinde bu arabellekler, kısa bir ince ayar sırasında hiçbir zaman yeterince hızlı uyum sağlamaz ve BN, yanlış istatistiklere sahip aktivasyonları normalleştirir. Düzeltmeler: BN istatistiklerini dondurun, GroupNorm'a geçin veya hedef veri kümesinde BN-only ısınma geçişiyle BN istatistiklerini önceden eğitin."
     },
     {
       "stage": "post",
-      "question": "You compare two runs: (a) linear probe on frozen ImageNet backbone, 82% accuracy; (b) end-to-end fine-tune, 78% accuracy. What should you conclude?",
-      "options": ["Fine-tuning is not helpful; ship the linear probe", "A fine-tune that ends below the linear probe is almost always a training bug — LR too high, BN mishandled, or scheduler/optimizer misconfigured; diagnose before concluding anything about transfer", "The dataset is too large", "Pretrained weights are bad"],
+      "question": "İki çalışmayı karşılaştırırsınız: (a) dondurulmuş ImageNet omurgası üzerinde doğrusal prob, %82 doğruluk; (b) uçtan uca ince ayar, %78 doğruluk. Ne sonuca varmalısınız?",
+      "options": [
+        "İnce ayarın faydası yoktur; doğrusal probu gönderin",
+        "Doğrusal probun altında biten bir ince ayar neredeyse her zaman bir eğitim hatasıdır - LR çok yüksek, BN yanlış yönetilmiş veya zamanlayıcı/optimizer yanlış yapılandırılmış; Transferle ilgili herhangi bir sonuca varmadan önce teşhis koyun",
+        "Veri kümesi çok büyük",
+        "Önceden eğitilmiş ağırlıklar kötüdür"
+      ],
       "correct": 1,
-      "explanation": "Fine-tuning should always beat or match the linear probe, since the linear probe is a special case of fine-tuning with backbone LR = 0. If fine-tune is worse, the pipeline is actively destroying pretrained features. The fix is to lower backbone LR, apply discriminative LRs, or freeze BN — not to abandon fine-tuning."
+      "explanation": "Doğrusal sonda, LR = 0 omurgasına sahip ince ayarın özel bir durumu olduğundan, ince ayar her zaman doğrusal sondayı geçmeli veya ona uymalıdır. İnce ayar daha kötüyse, boru hattı önceden eğitilmiş özellikleri aktif olarak yok ediyordur. Çözüm, LR omurgasını düşürmek, ayırt edici LR'ler uygulamak veya BN'yi dondurmak; ince ayardan vazgeçmemek."
     }
   ]
 }
