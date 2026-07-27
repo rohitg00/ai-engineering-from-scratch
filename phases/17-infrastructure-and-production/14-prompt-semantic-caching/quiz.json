@@ -4,21 +4,21 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the difference between L1 semantic caching and L2 prompt/prefix caching?",
+      "question": "L1 anlamsal önbelleğe alma ile L2 bilgi istemi/önek önbelleğe alma arasındaki fark nedir?",
       "options": [
-        "L1 skips the LLM entirely on embedding similarity hits; L2 reuses attention KV at the provider for repeated prefixes",
-        "L1 is provider-side and L2 is client-side",
+        "L1, benzerlik isabetlerini yerleştirme konusunda LLM'yi tamamen atlıyor; L2, tekrarlanan önekler için sağlayıcıdaki KV dikkatini yeniden kullanıyor",
+        "L1 sağlayıcı tarafındadır ve L2 müşteri tarafındadır",
         "L2 stores embeddings; L1 stores attention KV",
-        "L1 and L2 are the same"
+        "L1 ve L2 aynıdır"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which Anthropic mechanism marks blocks as cacheable for L2 prompt caching?",
+      "question": "Hangi Antropik mekanizma blokları L2 istem önbelleğe alma için önbelleğe alınabilir olarak işaretler?",
       "options": [
-        "Explicit cache_control attribute on the request blocks",
+        "İstek bloklarında açık önbellek_kontrol özelliği",
         "A separate /caches endpoint",
         "Filename suffixes in tool definitions",
         "An implicit prompt-length threshold"
@@ -28,23 +28,23 @@
     },
     {
       "stage": "check",
-      "question": "How does the parallelization anti-pattern inflate the bill?",
+      "question": "Paralelleştirme anti-örüntüsü faturayı nasıl şişiriyor?",
       "options": [
         "Parallel requests bypass batching",
         "Parallelization triggers a per-request guardrail charge",
-        "All parallel requests share one cache entry automatically",
-        "N parallel requests with the same prefix arrive before the first cache write completes, so each pays a write premium and gets zero discount"
+        "Tüm paralel istekler otomatik olarak bir önbellek girişini paylaşır",
+        "Aynı ön eke sahip N paralel istek, ilk önbelleğe yazma işlemi tamamlanmadan önce gelir, böylece her biri bir yazma primi öder ve sıfır indirim alır"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the dynamic-content anti-pattern in cacheable prefixes?",
+      "question": "Önbelleğe alınabilir öneklerdeki dinamik içerik anti-örüntüsü nedir?",
       "options": [
-        "Putting tool schemas in the prefix",
+        "Araç şemalarını öneke koyma",
         "Always streaming responses",
-        "Including content that changes every request (current time to the minute, request ID, randomized example order) inside the cacheable prefix, killing hit rate",
+        "Önbelleğe alınabilir önek içinde her isteği değiştiren içerik (dakikadan dakikaya geçerli zaman, istek ID, rastgele örnek sıra) dahil olmak üzere, isabet oranını öldürüyor",
         "Using too short a system prompt"
       ],
       "correct": 2,
@@ -52,11 +52,11 @@
     },
     {
       "stage": "post",
-      "question": "How can batch + cached input stack overnight to cut cost?",
+      "question": "Toplu + önbelleğe alınmış giriş, maliyeti azaltmak için bir gecede nasıl yığınlanabilir?",
       "options": [
-        "Batch only saves output cost",
+        "Toplu işlem yalnızca çıktı maliyetinden tasarruf sağlar",
         "Batch APIs give 50% off; cached input adds another ~10x; combined, overnight pipelines drop to ~10% of synchronous-uncached cost",
-        "Batch is incompatible with caching",
+        "Toplu iş, önbelleğe almayla uyumlu değil",
         "Caching disables batch eligibility"
       ],
       "correct": 1,
@@ -64,11 +64,11 @@
     },
     {
       "stage": "post",
-      "question": "What does the lesson say about semantic cache \"95% accuracy\" claims?",
+      "question": "Ders anlamsal önbellek \"%95 doğruluk\" iddiaları hakkında ne söylüyor?",
       "options": [
-        "95% is the OpenAI default cache hit rate",
-        "95% refers to match correctness, not hit rate; reported production hit rates range from ~10% (open chat) up to ~70% (structured FAQ)",
-        "95% is a vendor-documented hit-rate baseline",
+        "%95, OpenAI varsayılan önbellek isabet oranıdır",
+        "%95 isabet oranını değil eşleşme doğruluğunu ifade eder; bildirilen üretim isabet oranları ~%10'dan (açık sohbet) ~%70'e (yapılandırılmış FAQ) kadar değişmektedir.",
+        "%95, satıcı tarafından belgelenen isabet oranı temel çizgisidir",
         "95% means you should expect 95% cache hits"
       ],
       "correct": 1,
