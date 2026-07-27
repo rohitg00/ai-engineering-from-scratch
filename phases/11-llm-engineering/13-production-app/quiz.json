@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the biggest gap between an LLM demo and a production LLM application?",
-    "options": ["The model quality", "Infrastructure: error handling, streaming, cost tracking, rate limiting, fallbacks, observability, and graceful degradation under load", "The prompt quality", "The choice of API provider"],
+    "question": "LLM demosu ile üretim LLM uygulaması arasındaki en büyük fark nedir?",
+    "options": [
+      "Model kalitesi",
+      "Infrastructure: error handling, streaming, cost tracking, rate limiting, fallbacks, observability, and graceful degradation under load",
+      "Hızlı kalite",
+      "API sağlayıcının seçimi"
+    ],
     "correct": 1,
-    "explanation": "A demo calls an API and prints the response. Production must handle timeouts, provider outages, concurrent users, cost budgets, streaming delivery, logging, and graceful degradation. The model is the easy part.",
+    "explanation": "Bir demo API'yi çağırır ve yanıtı yazdırır. Üretimin zaman aşımlarını, sağlayıcı kesintilerini, eşzamanlı kullanıcıları, maliyet bütçelerini, akış dağıtımını, günlüğe kaydetmeyi ve hassas bozulmayı ele alması gerekir. Model işin kolay kısmı.",
     "stage": "pre"
   },
   {
-    "question": "Why is streaming token delivery important in production LLM applications?",
-    "options": ["It reduces cost", "Users perceive the first token arriving quickly as faster, even if total generation time is the same -- reducing perceived latency from seconds to milliseconds", "It uses less memory", "It improves model accuracy"],
+    "question": "LLM üretim uygulamalarında akış belirteci teslimatı neden önemlidir?",
+    "options": [
+      "Maliyeti azaltır",
+      "Kullanıcılar, toplam oluşturma süresi aynı olsa bile ilk tokenin daha hızlı geldiğini algılar ve algılanan gecikmeyi saniyelerden milisaniyelere düşürür.",
+      "Daha az bellek kullanır",
+      "Model doğruluğunu artırır"
+    ],
     "correct": 1,
-    "explanation": "Without streaming, users wait 3-10 seconds seeing nothing before the full response appears. With streaming, the first token arrives in ~200ms and text flows continuously, making the experience feel responsive.",
+    "explanation": "Akış olmadan, kullanıcılar tam yanıt görünmeden önce hiçbir şey görmeden 3-10 saniye beklerler. Akışla, ilk jeton yaklaşık 200 ms içinde ulaşır ve metin sürekli olarak akar, bu da deneyimin duyarlı olmasını sağlar.",
     "stage": "pre"
   },
   {
-    "question": "What should happen when your LLM API provider has an outage?",
-    "options": ["Show users an error page", "The application should automatically fall back to an alternative provider or return a graceful degraded response", "Retry indefinitely until the provider recovers", "Switch to a local model"],
+    "question": "LLM API sağlayıcınızda kesinti olduğunda ne olmalı?",
+    "options": [
+      "Show users an error page",
+      "Uygulama otomatik olarak alternatif bir sağlayıcıya geri dönmeli veya zarif, düşürülmüş bir yanıt döndürmelidir.",
+      "Sağlayıcı iyileşene kadar süresiz olarak yeniden deneyin",
+      "Switch to a local model"
+    ],
     "correct": 1,
-    "explanation": "Production systems need fallback strategies: try Provider B if Provider A fails, serve cached responses for common queries, or return a helpful 'temporarily unavailable' message. Never let a provider outage crash your application.",
+    "explanation": "Üretim sistemleri geri dönüş stratejilerine ihtiyaç duyar: Sağlayıcı A başarısız olursa Sağlayıcı B'yi deneyin, yaygın sorgular için önbelleğe alınmış yanıtlar sağlayın veya yararlı bir 'geçici olarak kullanılamıyor' mesajı döndürün. Sağlayıcı kesintisinin uygulamanızı çökertmesine asla izin vermeyin.",
     "stage": "post"
   },
   {
-    "question": "What observability metrics should a production LLM application track?",
-    "options": ["Only error counts", "Request latency (P50/P95/P99), cost per request, error rates, token usage, cache hit rates, and quality scores from automated evals", "Only model accuracy", "Only monthly cost"],
+    "question": "Bir üretim LLM uygulamasının hangi gözlemlenebilirlik ölçümlerini izlemesi gerekir?",
+    "options": [
+      "Yalnızca hata sayılır",
+      "İstek gecikmesi (P50/P95/P99), istek başına maliyet, hata oranları, belirteç kullanımı, önbellek isabet oranları ve otomatik değerlendirmelerden alınan kalite puanları",
+      "Yalnızca model doğruluğu",
+      "Yalnızca aylık maliyet"
+    ],
     "correct": 1,
-    "explanation": "Comprehensive observability covers: latency percentiles (for SLA compliance), cost tracking (for budget management), error rates (for reliability), token usage (for optimization), and quality metrics (for regression detection).",
+    "explanation": "Kapsamlı gözlemlenebilirlik şunları kapsar: gecikme yüzde dilimleri (SLA uyumluluğu için), maliyet takibi (bütçe yönetimi için), hata oranları (güvenilirlik için), belirteç kullanımı (optimizasyon için) ve kalite ölçümleri (regresyon tespiti için).",
     "stage": "post"
   },
   {
-    "question": "Why should you implement rate limiting in your LLM application?",
-    "options": ["To make the application seem exclusive", "To prevent individual users from exhausting your API budget, protect against abuse, and ensure fair access during high traffic", "To reduce model accuracy", "Rate limiting is only needed for free tiers"],
+    "question": "LLM uygulamanızda neden hız sınırlaması uygulamalısınız?",
+    "options": [
+      "Uygulamanın özel görünmesini sağlamak için",
+      "Bireysel kullanıcıların API bütçenizi tüketmesini önlemek, kötüye kullanıma karşı koruma sağlamak ve yoğun trafik sırasında adil erişimi sağlamak için",
+      "To reduce model accuracy",
+      "Hız sınırlaması yalnızca ücretsiz katmanlar için gereklidir"
+    ],
     "correct": 1,
-    "explanation": "Without rate limiting, a single user (or bot) can exhaust your daily API budget in minutes. Rate limiting protects your costs, prevents abuse, and ensures all users get reasonable response times during peak load.",
+    "explanation": "Oran sınırlaması olmadan, tek bir kullanıcı (veya bot) günlük API bütçenizi dakikalar içinde tüketebilir. Hız sınırlama, maliyetlerinizi korur, kötüye kullanımı önler ve tüm kullanıcıların yoğun yük sırasında makul yanıt süreleri almasını sağlar.",
     "stage": "post"
   }
 ]
