@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the limitation of basic top-k semantic search in RAG?",
-    "options": ["It's too slow", "It retrieves chunks that are semantically similar to the query but may not contain the actual answer, especially for ambiguous or multi-hop questions", "It can't handle large documents", "It requires GPU"],
+    "question": "RAG'deki temel top-k semantik aramanın sınırlaması nedir?",
+    "options": [
+      "Çok yavaş",
+      "Semantik olarak sorguya benzeyen ancak özellikle belirsiz veya çok atlamalı sorular için gerçek yanıtı içermeyebilecek parçaları alır.",
+      "Büyük belgeleri işleyemez",
+      "GPU gerektirir"
+    ],
     "correct": 1,
-    "explanation": "Basic semantic search matches surface-level meaning. 'What was revenue last quarter?' retrieves chunks about 'revenue strategy' (semantically similar) instead of the chunk saying '$47.2M in Q3 2025' (which uses 'earnings').",
+    "explanation": "Temel anlamsal arama, yüzey düzeyindeki anlamla eşleşir. 'Geçen çeyrekte gelir neydi?' 'Q3 2025'te 47,2 milyon dolar' ('kazanç' kullanan) yazan parça yerine 'gelir stratejisi' (anlamsal olarak benzer) ile ilgili parçaları alır.",
     "stage": "pre"
   },
   {
-    "question": "What is hybrid search in the context of RAG?",
-    "options": ["Using two different LLMs", "Combining BM25 keyword matching with semantic vector search to capture both exact terms and meaning-based relevance", "Searching across multiple databases", "Using both CPU and GPU for search"],
+    "question": "RAG bağlamında hibrit arama nedir?",
+    "options": [
+      "Using two different LLMs",
+      "Hem tam terimleri hem de anlam temelli alaka düzeyini yakalamak için BM25 anahtar kelime eşleşmesini semantik vektör aramayla birleştirmek",
+      "Searching across multiple databases",
+      "Arama için hem CPU hem de GPU kullanma"
+    ],
     "correct": 1,
-    "explanation": "BM25 catches exact keyword matches (e.g., '$47.2M' or 'Q3'). Semantic search catches meaning matches. Combining them with a reranker gives the best of both worlds: precision on specific terms plus recall on semantic variants.",
+    "explanation": "BM25, tam anahtar kelime eşleşmelerini yakalar (ör. '47,2 milyon ABD doları' veya 'Q3'). Anlamsal arama anlam eşleşmelerini yakalar. Bunları bir yeniden sıralamayla birleştirmek her iki dünyanın da en iyisini sağlar: belirli terimlerde kesinlik artı anlamsal değişkenlerde hatırlama.",
     "stage": "pre"
   },
   {
-    "question": "What does a cross-encoder reranker do in an advanced RAG pipeline?",
-    "options": ["It generates the final answer", "It takes (query, document) pairs and scores their relevance with higher accuracy than embedding similarity, reordering the initial retrieval results", "It encodes documents into vectors", "It splits documents into chunks"],
+    "question": "Çapraz kodlayıcı yeniden sıralayıcısı gelişmiş bir RAG işlem hattında ne yapar?",
+    "options": [
+      "Nihai cevabı oluşturur",
+      "(Sorgu, belge) çiftlerini alır ve benzerlikleri yerleştirmekten daha yüksek bir doğrulukla bunların alaka düzeyini puanlar, ilk erişim sonuçlarını yeniden sıralar.",
+      "Belgeleri vektörlere kodlar",
+      "Belgeleri parçalara ayırır"
+    ],
     "correct": 1,
-    "explanation": "Bi-encoder similarity (used for initial retrieval) is fast but approximate. A cross-encoder processes the full query-document pair together with cross-attention, giving much more accurate relevance scores for reranking the top candidates.",
+    "explanation": "İki kodlayıcı benzerliği (ilk erişim için kullanılır) hızlıdır ancak yaklaşıktır. Bir çapraz kodlayıcı, sorgu-belge çiftinin tamamını çapraz dikkat ile birlikte işler ve en iyi adayları yeniden sıralamak için çok daha doğru alaka puanları verir.",
     "stage": "post"
   },
   {
-    "question": "What is the HyDE (Hypothetical Document Embedding) query transformation technique?",
-    "options": ["Hiding the query from the model", "Using the LLM to generate a hypothetical answer, then embedding that answer as the search query instead of the original question", "Encrypting the query for privacy", "Expanding abbreviations in the query"],
+    "question": "HyDE (Varsayımsal Belge Gömme) sorgu dönüştürme tekniği nedir?",
+    "options": [
+      "Sorguyu modelden gizleme",
+      "Varsayımsal bir yanıt oluşturmak için LLM'yi kullanma ve ardından bu yanıtı orijinal soru yerine arama sorgusu olarak yerleştirme",
+      "Sorguyu gizlilik için şifreleme",
+      "Sorgudaki kısaltmaları genişletme"
+    ],
     "correct": 1,
-    "explanation": "The original query 'What was Q3 revenue?' might not embed close to the answer chunk. HyDE asks the LLM to generate a hypothetical answer ('Q3 revenue was approximately...'), then uses that as the search query, which embeds closer to actual answer-containing chunks.",
+    "explanation": "Orijinal sorgu 'Q3 geliri neydi?' cevap parçasının yakınına yerleştirilemeyebilir. HyDE, LLM'den varsayımsal bir yanıt üretmesini ister ('Q3 geliri yaklaşık olarak...') ve ardından bunu, gerçek yanıt içeren parçalara daha yakın olan arama sorgusu olarak kullanır.",
     "stage": "post"
   },
   {
-    "question": "Why does parent-child chunking improve RAG over flat chunking?",
-    "options": ["It's faster to index", "Small child chunks are used for precise retrieval, but the larger parent chunk is returned for context, preventing the 'lost context' problem", "It reduces the number of chunks", "It eliminates the need for embeddings"],
+    "question": "Ebeveyn-çocuk parçalama düz parçalamaya göre neden RAG'yi geliştiriyor?",
+    "options": [
+      "İndekslemek daha hızlıdır",
+      "Küçük alt parçalar hassas erişim için kullanılır, ancak daha büyük ana parça bağlam için döndürülür ve 'bağlam kaybı' sorunu önlenir",
+      "Parça sayısını azaltır",
+      "Gömme ihtiyacını ortadan kaldırır"
+    ],
     "correct": 1,
-    "explanation": "Small chunks (200 tokens) embed precisely but lack context. Large chunks (2000 tokens) have context but embed imprecisely. Parent-child uses small chunks for search accuracy but returns the parent chunk for generation context.",
+    "explanation": "Küçük parçalar (200 jeton) tam olarak yerleştirilmiş ancak içerikten yoksun. Büyük parçaların (2000 jeton) bağlamı vardır ancak kesin olmayan bir şekilde yerleştirilmiştir. Ebeveyn-çocuk, arama doğruluğu için küçük parçalar kullanır ancak nesil bağlamı için ana parçayı döndürür.",
     "stage": "post"
   }
 ]
