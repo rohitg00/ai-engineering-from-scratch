@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What signal does Toolformer use to decide whether to keep a candidate tool annotation?",
+      "question": "Toolformer, aday bir araç açıklamasının tutulup tutulmayacağına karar vermek için hangi sinyali kullanır?",
       "options": [
         "Human label agreement",
-        "Whether including the tool result reduces next-token loss on surrounding text",
-        "Whether the tool returns within 100 ms",
-        "Whether the tool emits valid JSON"
+        "Araç sonucunun dahil edilmesinin çevredeki metindeki sonraki simge kaybını azaltıp azaltmadığı",
+        "Aracın 100 ms içinde geri dönüp dönmeyeceği",
+        "Aracın geçerli JSON yayınlayıp yayınlamadığı"
       ],
       "correct": 1,
       "explanation": "Toolformer's self-supervised signal keeps annotations whose tool results lower next-token loss."
     },
     {
       "stage": "pre",
-      "question": "What is the BFCL V4 split that the lesson reports?",
+      "question": "Dersin bildirdiği BFCL V4 ayrımı nedir?",
       "options": [
         "100% single-turn",
         "40% agentic, 30% multi-turn, 10% live, 10% non-live, 10% hallucination",
@@ -24,47 +24,47 @@
         "33% agentic, 33% planning, 33% reflection"
       ],
       "correct": 1,
-      "explanation": "BFCL V4 weights are 40 agentic / 30 multi-turn / 10 live / 10 non-live / 10 hallucination."
+      "explanation": "BFCL V4 ağırlıkları 40 ajan / 30 çoklu dönüş / 10 canlı / 10 canlı olmayan / 10 halüsinasyondur."
     },
     {
       "stage": "check",
-      "question": "Why is a tool's description load-bearing?",
+      "question": "Bir aletin açıklaması neden yük taşıyor?",
       "options": [
-        "It is what the user sees in the UI",
-        "The model reads it to choose the right tool; bad descriptions are the top cause of wrong-tool failures",
-        "It controls billing buckets",
-        "It is required by JSON Schema"
+        "Kullanıcının UI'de gördüğü şey budur",
+        "Model, doğru aracı seçmek için bunu okur; Yanlış takım arızalarının en önemli nedeni kötü açıklamalardır",
+        "Faturalandırma gruplarını kontrol eder",
+        "JSON Şeması için gereklidir"
       ],
       "correct": 1,
-      "explanation": "Tool descriptions are the model's primary signal for tool selection; poor descriptions cause wrong-tool routing."
+      "explanation": "Takım açıklamaları, takım seçimi için modelin birincil sinyalidir; Kötü açıklamalar yanlış takım yönlendirmesine neden olur."
     },
     {
       "stage": "check",
-      "question": "What role does tool_use_id play in parallel tool calling?",
+      "question": "tool_use_id paralel araç çağrısında nasıl bir rol oynuyor?",
       "options": [
-        "It compresses the JSON payload",
-        "It correlates each tool result with its originating call so results returning out of order route correctly",
-        "It authorizes the call against an API key",
-        "It enables caching"
+        "JSON yükünü sıkıştırır",
+        "Her araç sonucunu kaynak çağrıyla ilişkilendirir, böylece sonuçlar sıra dışı rotadan doğru şekilde döner",
+        "Bir API anahtarına karşı çağrıya izin verir",
+        "Önbelleğe almayı sağlar"
       ],
       "correct": 1,
-      "explanation": "tool_use_id is the correlation token; swapping them routes results to the wrong call."
+      "explanation": "tool_use_id korelasyon belirtecidir; bunları değiştirmek sonuçları yanlış aramaya yönlendirir."
     },
     {
       "stage": "check",
-      "question": "Which class of failure does V3 state-based evaluation try to catch?",
+      "question": "V3 durum tabanlı değerlendirme hangi başarısızlık sınıfını yakalamaya çalışır?",
       "options": [
         "Token leakage",
-        "AST-matching tool calls that look right but leave the API in the wrong state",
+        "Doğru görünen ancak API'yi yanlış durumda bırakan AST-eşleştirme aracı çağrıları",
         "Slow tool execution",
         "Schema versioning drift"
       ],
       "correct": 1,
-      "explanation": "State-based evaluation checks the resulting API state (e.g. file actually created) rather than syntactic call matching."
+      "explanation": "Duruma dayalı değerlendirme, sözdizimsel çağrı eşleştirmesi yerine ortaya çıkan API durumunu (örneğin, gerçekten oluşturulan dosya) kontrol eder."
     },
     {
       "stage": "post",
-      "question": "Which 2026 problem does the lesson NOT list among the open ones for function calling?",
+      "question": "NOT dersi hangi 2026 problemini işlev çağırmaya açık problemler arasında listeliyor?",
       "options": [
         "Long-horizon tool chaining",
         "Dynamic decision-making across many tools",
@@ -72,19 +72,19 @@
         "Token-level decoding speed"
       ],
       "correct": 3,
-      "explanation": "The open problems are memory, dynamic decision-making, long-horizon chains, and hallucination detection; decoding speed is not on the list."
+      "explanation": "Açık sorunlar arasında hafıza, dinamik karar verme, uzun ufuk zincirleri ve halüsinasyon tespiti yer alıyor; kod çözme hızı listede yok."
     },
     {
       "stage": "post",
-      "question": "Why is a generic run_shell(cmd) tool called a red flag in this lesson?",
+      "question": "Bu derste genel bir run_shell(cmd) aracı neden kırmızı bayrak olarak adlandırılıyor?",
       "options": [
-        "It is slow",
-        "It widens the sandbox boundary; specific tools like git_status() bound read/write surface and risk",
-        "It cannot be called in parallel",
-        "Providers reject it"
+        "Yavaş",
+        "Korumalı alan sınırını genişletir; git_status() gibi belirli araçlar okuma/yazma yüzeyini ve riski sınırladı",
+        "Paralel olarak çağrılamaz",
+        "Sağlayıcılar bunu reddediyor"
       ],
       "correct": 1,
-      "explanation": "Narrow tools constrain the sandbox surface; a generic shell tool grants the full surface of the host."
+      "explanation": "Dar araçlar korumalı alan yüzeyini kısıtlar; genel bir kabuk aracı, ana bilgisayarın tüm yüzeyini sağlar."
     }
   ]
 }
