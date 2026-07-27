@@ -2,59 +2,59 @@
   {
     "id": "nb-pre-1",
     "stage": "pre",
-    "question": "What is the 'naive' assumption in Naive Bayes?",
+    "question": "Naive Bayes'teki 'naif' varsayım nedir?",
     "options": [
-      "The prior probability of each class is equal",
-      "All features are conditionally independent given the class label",
-      "The data is normally distributed",
-      "The model has no parameters to learn"
+      "Her sınıfın öncelikli olasılığı eşittir",
+      "Tüm özellikler sınıf etiketi göz önüne alındığında koşullu olarak bağımsızdır",
+      "Veriler normal dağılıyor",
+      "Modelin öğrenilecek parametresi yok"
     ],
     "correct": 1,
-    "explanation": "Naive Bayes assumes every feature is independent of every other feature, conditioned on the class. This is mathematically wrong (e.g., 'machine' and 'learning' co-occur) but works well in practice."
+    "explanation": "Naive Bayes, her özelliğin, sınıfa bağlı olarak diğer tüm özelliklerden bağımsız olduğunu varsayar. Bu matematiksel olarak yanlıştır (örneğin, 'makine' ve 'öğrenme' bir arada gerçekleşir) ancak pratikte işe yarar."
   },
   {
     "id": "nb-pre-2",
     "stage": "pre",
-    "question": "What does Laplace smoothing prevent in Naive Bayes?",
+    "question": "Naive Bayes'te Laplace yumuşatma neyi önler?",
     "options": [
       "Overfitting to large datasets",
-      "Zero probabilities for words never seen in a class during training",
+      "Eğitim sırasında sınıfta hiç görülmeyen kelimeler için sıfır olasılık",
       "Slow training on high-dimensional data",
-      "Class imbalance in the dataset"
+      "Veri kümesindeki sınıf dengesizliği"
     ],
     "correct": 1,
-    "explanation": "Without smoothing, a word that never appeared in 'spam' training emails would get P(word|spam) = 0, making the entire product zero regardless of other strong evidence. Laplace smoothing adds 1 to each count."
+    "explanation": "Düzeltilmeden, 'spam' eğitim e-postalarında hiç görünmeyen bir kelime P(word|spam) = 0 alır ve diğer güçlü kanıtlara bakılmaksızın tüm ürünü sıfır yapar. Laplace yumuşatma her sayıma 1 ekler."
   },
   {
     "id": "nb-post-1",
     "stage": "post",
-    "question": "The naive independence assumption is clearly wrong for text. Why does Naive Bayes still classify well?",
+    "question": "Saf bağımsızlık varsayımı metin için açıkça yanlıştır. Naive Bayes neden hala iyi sınıflandırma yapıyor?",
     "options": [
-      "It only works on very small vocabularies where independence holds",
-      "Classification only needs correct class rankings, not correct probability estimates, and the assumption introduces stable errors that affect all classes similarly",
-      "Modern implementations secretly remove the independence assumption",
-      "It only works when features are truly independent"
+      "Yalnızca bağımsızlığın geçerli olduğu çok küçük sözcükler üzerinde işe yarar",
+      "Sınıflandırma, doğru olasılık tahminlerine değil, yalnızca doğru sınıf sıralamasına ihtiyaç duyar ve varsayım, tüm sınıfları benzer şekilde etkileyen kararlı hatalara neden olur.",
+      "Modern uygulamalar bağımsızlık varsayımını gizlice ortadan kaldırıyor",
+      "Yalnızca özellikler gerçekten bağımsız olduğunda çalışır"
     ],
     "correct": 1,
-    "explanation": "NB needs to rank classes correctly, not estimate exact probabilities. The independence assumption is high bias but low variance, making it stable with limited data. Correlated features double-count evidence for the correct class too."
+    "explanation": "NB'nin kesin olasılıkları tahmin etmek yerine sınıfları doğru şekilde sıralaması gerekir. Bağımsızlık varsayımı yüksek yanlılık fakat düşük varyanslıdır, bu da onu sınırlı verilerle istikrarlı kılar. İlişkili özellikler, doğru sınıf için de çift sayımlı kanıt sağlar."
   },
   {
     "id": "nb-post-2",
     "stage": "post",
-    "question": "When should you use Multinomial NB versus Gaussian NB?",
+    "question": "Gaussian NB'ye karşı Multinomial NB'yi ne zaman kullanmalısınız?",
     "options": [
-      "Multinomial for regression, Gaussian for classification",
-      "Multinomial for word count/frequency features, Gaussian for continuous real-valued features",
-      "Multinomial for binary data, Gaussian for multi-class problems",
-      "They are interchangeable -- always use whichever is faster"
+      "Regresyon için çok terimli, sınıflandırma için Gaussian",
+      "Kelime sayısı/frekans özellikleri için çok terimli, sürekli gerçek değerli özellikler için Gaussian",
+      "İkili veriler için çok terimli, çok sınıflı problemler için Gaussian",
+      "Bunlar birbirleriyle değiştirilebilir; her zaman hangisi daha hızlıysa onu kullanın"
     ],
     "correct": 1,
-    "explanation": "Multinomial NB models feature counts (word frequencies in text). Gaussian NB assumes features follow normal distributions, suitable for continuous features like measurements or sensor readings."
+    "explanation": "Çok terimli NB modellerinde sayım (metin içindeki kelime sıklıkları) özelliği bulunur. Gaussian NB, ölçümler veya sensör okumaları gibi sürekli özellikler için uygun olan özelliklerin normal dağılımları takip ettiğini varsayar."
   },
   {
     "id": "nb-post-3",
     "stage": "post",
-    "question": "An email contains 'free' twice and 'money' once. In Multinomial NB with log probabilities, how is the spam score computed?",
+    "question": "Bir e-postada iki kez 'ücretsiz' ve bir kez 'para' ifadesi bulunur. Günlük olasılıkları olan Multinomial NB'de spam puanı nasıl hesaplanır?",
     "options": [
       "log P(spam) + log P(free|spam) + log P(money|spam)",
       "log P(spam) + 2 * log P(free|spam) + 1 * log P(money|spam)",
@@ -62,6 +62,6 @@
       "log P(spam) * 2 * log P(free|spam)"
     ],
     "correct": 1,
-    "explanation": "Multinomial NB multiplies the word likelihoods raised to their count. In log space: log P(spam) + 2*log P(free|spam) + 1*log P(money|spam). The word count acts as an exponent."
+    "explanation": "Çok terimli NB, yükseltilen kelime olasılıklarını sayımına göre çarpar. Günlük alanında: günlük P(spam) + 2*günlük P(free|spam) + 1*günlük P(money|spam). Kelime sayısı üs görevi görür."
   }
 ]
