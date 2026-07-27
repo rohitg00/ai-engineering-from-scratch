@@ -1,62 +1,62 @@
 {
   "lesson": "15-batch-apis",
-  "title": "Batch APIs — the 50% Discount as Industry Standard",
+  "title": "Toplu API'ler — Endüstri Standardı Olarak %50 İndirim",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the common batch-API offer across OpenAI, Anthropic, and Google in 2026?",
+      "question": "2026'da OpenAI, Anthropic ve Google genelinde ortak toplu-API teklifi nedir?",
       "options": [
-        "10% discount with 1-hour turnaround",
-        "90% discount with 7-day turnaround",
+        "1 saatlik geri dönüşle %10 indirim",
+        "7 günlük geri dönüşle %90 indirim",
         "Free if under 1k tokens",
-        "50% discount with 24-hour turnaround"
+        "24 saat içinde geri dönüş ile %50 indirim"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does \"24-hour turnaround\" actually guarantee in the lesson's framing?",
+      "question": "Dersin çerçevelenmesinde \"24 saatlik geri dönüş\" aslında neyi garanti ediyor?",
       "options": [
-        "24h is the cache TTL",
-        "The batch always takes 24 hours",
-        "The provider promises to return within 24 hours, with typical P50 around 2-6 hours",
-        "Only batches under 1k requests qualify"
+        "24 saat önbellektir TTL",
+        "Parti her zaman 24 saat sürer",
+        "Sağlayıcı 24 saat içinde geri dönmeyi vaat ediyor, tipik P50 ise 2-6 saat civarında",
+        "Yalnızca 1.000 talebin altındaki gruplar geçerli olur"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does stacking batch with cached input change the bill versus synchronous uncached on a shared-system-prompt workload?",
+      "question": "Önbelleğe alınmış girişle yığın yığını, paylaşılan sistem istemi iş yükünde eşzamanlı önbelleğe alınmamış duruma göre faturayı nasıl değiştirir?",
       "options": [
-        "It has no effect because caching is automatic",
-        "It only helps if the model is on Vertex",
-        "It can drop to roughly 10% of the synchronous-uncached baseline",
-        "It increases cost by 50%"
+        "Önbelleğe alma otomatik olduğundan hiçbir etkisi yoktur",
+        "Yalnızca model Vertex'teyse yardımcı olur",
+        "Eşzamanlı-önbelleğe alınmamış taban çizgisinin kabaca %10'una düşebilir",
+        "Maliyeti %50 artırır"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which workload-triage lane is wrong to default to in 2026 for content pipelines and offline labeling?",
+      "question": "İçerik ardışık düzenleri ve çevrimdışı etiketleme için 2026'da varsayılan olarak hangi iş yükü önceliklendirme yolunun kullanılması yanlıştır?",
       "options": [
-        "Interactive, because it sounds urgent",
-        "Batch, because the user does not see a 24h delay",
+        "İnteraktif, çünkü kulağa acil geliyor",
+        "Toplu işlem, çünkü kullanıcı 24 saatlik bir gecikme görmez",
         "Hybrid batch-and-cache",
-        "Semi-interactive with async queue"
+        "Eşzamansız kuyrukla yarı etkileşimli"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the output-schema trap across providers?",
+      "question": "Sağlayıcılar arasındaki çıktı şeması tuzağı nedir?",
       "options": [
-        "JSONL is unsupported by Anthropic",
-        "All providers use the same OpenAI JSONL format",
-        "Vertex requires Parquet only",
+        "JSONL Anthropic tarafından desteklenmiyor",
+        "Tüm sağlayıcılar aynı OpenAI JSONL biçimini kullanır",
+        "Vertex yalnızca Parke gerektirir",
         "Batch file formats differ per provider (OpenAI JSONL, Anthropic JSONL, Vertex BigQuery/GCS), so a portable client needs per-provider adapters"
       ],
       "correct": 3,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Per the lesson, what is the simplest decision rule for triaging a workload to batch?",
+      "question": "Derse göre, bir iş yükünün toplu işlere göre önceliklendirilmesi için en basit karar kuralı nedir?",
       "options": [
-        "If the prompt is under 1k tokens, batch it",
-        "If it uses tools, batch it",
-        "Batch only when the gateway requires it",
-        "If the user wouldn't notice a 24-hour delivery, always batch (and stack caching)"
+        "İstem 1k jetonun altındaysa toplu olarak toplayın",
+        "Araç kullanıyorsa toplu olarak kullanın",
+        "Yalnızca ağ geçidi gerektirdiğinde toplu işlem yapın",
+        "Kullanıcı 24 saatlik teslimatı fark etmezse her zaman toplu işlem yapın (ve yığın önbelleğe almayı)"
       ],
       "correct": 3,
       "explanation": ""
