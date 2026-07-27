@@ -4,47 +4,47 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the two-layer mechanism behind speculative decoding?",
+      "question": "Spekülatif kod çözmenin ardındaki iki katmanlı mekanizma nedir?",
       "options": [
         "Two target models alternate per token",
         "An embedding model and a synthesizer",
         "A retrieval cache and a reranker",
-        "A draft model proposes k candidate tokens; the target model verifies them in a single pass"
+        "Taslak bir model k tane aday token önerir; hedef model bunları tek geçişte doğrular"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What does EAGLE-3 do that ngram drafts do not?",
+      "question": "Ngram taslaklarının yapamadığı EAGLE-3 ne yapar?",
       "options": [
-        "It replaces the target model",
-        "It trains draft heads on the target model's hidden states for higher acceptance rates",
-        "It avoids tokenization entirely",
-        "It runs only on CPUs"
+        "Hedef modelin yerini alır",
+        "Daha yüksek kabul oranları için taslak başkanlarını hedef modelin gizli durumları konusunda eğitir",
+        "Tokenizasyonu tamamen önler",
+        "Yalnızca CPU'larda çalışır"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is p99 tail latency reported across batch sizes 1, 8, and 32?",
+      "question": "P99 kuyruk gecikmesi neden 1, 8 ve 32 toplu iş boyutlarında raporlanıyor?",
       "options": [
-        "Steady-state tokens-per-second can hide that the verify pass on rejection is more expensive than vanilla decoding",
-        "vLLM cannot serve batch sizes below 8",
-        "p99 only matters at batch size 32",
-        "Tail latency is independent of batch size"
+        "Saniye başına kararlı durum belirteçleri, reddedilme durumunda doğrulama geçişinin vanilya kod çözme işleminden daha pahalı olduğunu gizleyebilir",
+        "vLLM, 8'in altındaki toplu iş boyutlarını sunamaz",
+        "p99 yalnızca parti boyutu 32'de önemlidir",
+        "Kuyruk gecikmesi parti boyutundan bağımsızdır"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does acceptance rate drift when the traffic distribution shifts?",
+      "question": "Trafik dağılımı değiştiğinde kabul oranı neden değişiyor?",
       "options": [
         "vLLM rotates models hourly",
-        "Draft alignment depends on the input distribution: ShareGPT, code, and domain data exercise different patterns",
-        "The OS scheduler reshuffles GPU memory",
+        "Taslak hizalaması girdi dağıtımına bağlıdır: ShareGPT, kod ve etki alanı verileri farklı kalıpları kullanır",
+        "OS zamanlayıcı, GPU belleğini yeniden karıştırır",
         "Quantization changes at runtime"
       ],
       "correct": 1,
@@ -52,7 +52,7 @@
     },
     {
       "stage": "check",
-      "question": "Which Kubernetes HPA signal does the deployment scale on?",
+      "question": "Dağıtım hangi Kubernetes HPA sinyaline göre ölçekleniyor?",
       "options": [
         "Cluster autoscaler nodes",
         "CPU utilization",
@@ -64,11 +64,11 @@
     },
     {
       "stage": "post",
-      "question": "What does P-EAGLE add over serial EAGLE-3?",
+      "question": "P-EAGLE seri EAGLE-3'ye ne ekler?",
       "options": [
         "Quantization to FP4 weights",
-        "Removal of the target model",
-        "Parallel speculation across a tree of draft branches verified in one target pass",
+        "Hedef modelin kaldırılması",
+        "Tek bir hedef geçişte doğrulanan taslak dallar ağacındaki paralel spekülasyon",
         "Automatic dataset curation"
       ],
       "correct": 2,
@@ -76,7 +76,7 @@
     },
     {
       "stage": "post",
-      "question": "Which throughput target does the rubric demand against the non-speculative baseline?",
+      "question": "Spekülatif olmayan temele göre değerlendirme tablosu hangi çıktı hedefini talep ediyor?",
       "options": [
         "At least 2.5x at matched quality on two models",
         "Any improvement above baseline",
