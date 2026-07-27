@@ -251,19 +251,25 @@ def build_phase_readme(phase: Path, lessons: list[Path]) -> str:
 def build_local_site_index(
     source: Path, phases: dict[Path, list[Path]], source_revision: str
 ) -> str:
-    """Build a dependency-free landing page for local curriculum browsing."""
+    """Build a polished, dependency-free curriculum catalogue."""
     lesson_count = sum(len(lessons) for lessons in phases.values())
     cards = []
-    for phase, lessons in phases.items():
+    for number, (phase, lessons) in enumerate(phases.items(), 1):
         phase_title = html.escape(title(source / phase / "README.tr.md"))
         lesson_links = "".join(
-            f'<li><a href="{lesson.relative_to(source).as_posix()}/docs/tr.md">'
-            f"{html.escape(title(lesson / 'docs/tr.md'))}</a></li>"
+            f'<li data-lesson="{html.escape(title(lesson / "docs/tr.md").lower())}">'
+            f'<a href="{lesson.relative_to(source).as_posix()}/docs/tr.md">'
+            f'<span>{html.escape(title(lesson / "docs/tr.md"))}</span>'
+            '<span aria-hidden="true">↗</span></a></li>'
             for lesson in lessons
         )
         cards.append(
-            f'<details class="phase"><summary><span>{phase_title}</span>'
-            f"<strong>{len(lessons)} ders</strong></summary><ol>{lesson_links}</ol></details>"
+            f'<details class="phase" data-phase="{phase_title.lower()}">'
+            f'<summary><span class="phase-no">{number:02d}</span>'
+            f'<span class="phase-title">{phase_title}</span>'
+            f'<span class="phase-count">{len(lessons):02d} DERS</span>'
+            '<span class="phase-toggle" aria-hidden="true">+</span></summary>'
+            f'<ol>{lesson_links}</ol></details>'
         )
     return f"""<!doctype html>
 <html lang="tr">
@@ -271,41 +277,139 @@ def build_local_site_index(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>AI Engineering from Scratch — Türkçe</title>
+  <meta name="description" content="{len(phases)} aşama ve {lesson_count} Türkçe ders ile yapay zekâ mühendisliğini temelden öğrenin.">
   <style>
-    :root {{ color-scheme:dark; --bg:#07111f; --panel:#101d31; --line:#263a56;
-      --text:#e8f0fb; --muted:#9db0ca; --accent:#56d6c9 }}
-    * {{ box-sizing:border-box }} body {{ margin:0; font:16px/1.6 system-ui,sans-serif;
-      color:var(--text); background:radial-gradient(circle at top,#163152,var(--bg) 42%) }}
-    main {{ width:min(960px,92%); margin:auto; padding:32px 0 64px }}
-    header {{ text-align:center; margin-bottom:32px }} header img {{ width:100%; border-radius:18px }}
-    h1 {{ font-size:clamp(1.8rem,5vw,3rem); margin:.7em 0 .2em }}
-    .lead {{ color:var(--muted); max-width:680px; margin:auto }}
-    .stats {{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:22px 0 }}
-    .stats span {{ padding:7px 13px; border:1px solid var(--line); border-radius:999px;
-      background:#0b1728 }}
-    .phase {{ background:var(--panel); border:1px solid var(--line); border-radius:14px;
-      margin:12px 0; overflow:hidden }}
-    summary {{ cursor:pointer; display:flex; justify-content:space-between; gap:16px;
-      padding:18px 20px; font-size:1.05rem }}
-    summary strong {{ color:var(--accent); white-space:nowrap }}
-    ol {{ margin:0; padding:0 24px 20px 52px; columns:2; column-gap:40px }}
-    li {{ break-inside:avoid; padding:4px 0 }} a {{ color:#a9e9e3 }}
-    footer {{ text-align:center; color:var(--muted); margin-top:32px; font-size:.9rem }}
-    @media (max-width:640px) {{ ol {{ columns:1 }} }}
+    :root {{ --paper:#f5f3eb; --ink:#151515; --muted:#6b6a65; --rule:#cbc8bd;
+      --soft:#e7e4da; --blue:#244bff; --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+      --serif:Georgia,"Times New Roman",serif }}
+    * {{ box-sizing:border-box }}
+    html {{ scroll-behavior:smooth }}
+    body {{ margin:0; color:var(--ink); background:var(--paper); font:16px/1.55 var(--serif) }}
+    a {{ color:inherit }}
+    .shell {{ width:min(1180px,calc(100% - 40px)); margin:auto }}
+    .topbar {{ border-bottom:1px solid var(--ink); font:700 .7rem/1 var(--mono);
+      letter-spacing:.12em; text-transform:uppercase }}
+    .topbar .shell {{ min-height:48px; display:flex; align-items:center; justify-content:space-between; gap:20px }}
+    .brand {{ color:var(--blue); text-decoration:none }}
+    .topnav {{ display:flex; gap:24px }}
+    .topnav a {{ text-decoration:none }}
+    .topnav a:hover {{ color:var(--blue) }}
+    .hero {{ padding:82px 0 48px; border-bottom:1px solid var(--ink) }}
+    .eyebrow {{ margin:0 0 24px; color:var(--blue); font:700 .72rem/1 var(--mono);
+      letter-spacing:.16em; text-transform:uppercase }}
+    h1 {{ margin:0; max-width:1050px; color:var(--blue); font:700 clamp(3.6rem,10vw,8.7rem)/.78 var(--mono);
+      letter-spacing:-.075em; text-transform:uppercase }}
+    .hero-bottom {{ margin-top:44px; display:grid; grid-template-columns:1.4fr 1fr; gap:70px; align-items:end }}
+    .lead {{ margin:0; max-width:680px; font-size:clamp(1.15rem,2vw,1.45rem); line-height:1.5 }}
+    .hero-note {{ margin:0; padding-left:18px; border-left:3px solid var(--blue);
+      color:var(--muted); font:500 .78rem/1.7 var(--mono) }}
+    .stats {{ display:grid; grid-template-columns:repeat(3,1fr); border-bottom:1px solid var(--ink) }}
+    .stat {{ padding:28px 0; border-right:1px solid var(--rule) }}
+    .stat + .stat {{ padding-left:32px }}
+    .stat:last-child {{ border-right:0 }}
+    .stat strong {{ display:block; color:var(--blue); font:700 clamp(2rem,5vw,3.7rem)/1 var(--mono) }}
+    .stat span {{ display:block; margin-top:8px; color:var(--muted); font:700 .68rem/1 var(--mono);
+      letter-spacing:.13em; text-transform:uppercase }}
+    .catalogue {{ padding:58px 0 80px }}
+    .catalogue-head {{ display:grid; grid-template-columns:1fr minmax(280px,420px); gap:40px;
+      align-items:end; margin-bottom:24px }}
+    h2 {{ margin:0; font:700 clamp(2rem,5vw,4rem)/1 var(--mono); letter-spacing:-.05em; text-transform:uppercase }}
+    label {{ display:block; color:var(--muted); font:700 .66rem/1 var(--mono);
+      letter-spacing:.13em; text-transform:uppercase }}
+    input {{ width:100%; margin-top:10px; padding:13px 14px; border:1px solid var(--ink);
+      border-radius:0; outline:0; background:transparent; color:var(--ink); font:500 .88rem var(--mono) }}
+    input:focus {{ border-color:var(--blue); box-shadow:inset 0 0 0 1px var(--blue) }}
+    .phase {{ border-top:1px solid var(--ink) }}
+    .phase:last-of-type {{ border-bottom:1px solid var(--ink) }}
+    summary {{ display:grid; grid-template-columns:64px 1fr auto 28px; align-items:center; gap:18px;
+      padding:22px 8px; cursor:pointer; list-style:none }}
+    summary::-webkit-details-marker {{ display:none }}
+    summary:hover .phase-title {{ color:var(--blue) }}
+    .phase-no,.phase-count,.phase-toggle {{ font:700 .72rem/1 var(--mono) }}
+    .phase-no {{ color:var(--blue) }}
+    .phase-title {{ font:700 clamp(1.05rem,2.2vw,1.55rem)/1.2 var(--mono); text-transform:uppercase }}
+    .phase-count {{ color:var(--muted); letter-spacing:.08em }}
+    .phase-toggle {{ color:var(--blue); font-size:1.3rem; text-align:center; transition:transform .2s }}
+    details[open] .phase-toggle {{ transform:rotate(45deg) }}
+    ol {{ margin:0 0 26px 82px; padding:0; display:grid; grid-template-columns:1fr 1fr;
+      gap:0 34px; list-style:none; counter-reset:lesson }}
+    li {{ counter-increment:lesson; border-top:1px solid var(--soft) }}
+    li a {{ display:flex; justify-content:space-between; gap:15px; padding:11px 4px;
+      text-decoration:none; font-size:.94rem }}
+    li a:before {{ content:counter(lesson,decimal-leading-zero); color:var(--muted);
+      font:500 .66rem/1.8 var(--mono); margin-right:8px }}
+    li a span:first-child {{ flex:1 }}
+    li a span:last-child {{ color:var(--blue); opacity:0 }}
+    li a:hover {{ color:var(--blue) }}
+    li a:hover span:last-child {{ opacity:1 }}
+    .empty {{ display:none; padding:32px 0; color:var(--muted); font-style:italic }}
+    footer {{ padding:28px 0 44px; border-top:1px solid var(--ink); color:var(--muted);
+      font:500 .7rem/1.7 var(--mono); text-transform:uppercase; letter-spacing:.06em }}
+    footer .shell {{ display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap }}
+    footer a {{ color:var(--blue) }}
+    @media(max-width:760px) {{
+      .shell {{ width:min(100% - 24px,1180px) }} .topnav a:first-child {{ display:none }}
+      .hero {{ padding:54px 0 34px }} h1 {{ font-size:clamp(3rem,16vw,5.4rem) }}
+      .hero-bottom,.catalogue-head {{ grid-template-columns:1fr; gap:26px }}
+      .stats {{ grid-template-columns:1fr }} .stat,.stat + .stat {{ padding:18px 0; border-right:0;
+        border-bottom:1px solid var(--rule) }} .stat:last-child {{ border-bottom:0 }}
+      summary {{ grid-template-columns:38px 1fr 22px; gap:10px; padding:18px 2px }}
+      .phase-count {{ display:none }} ol {{ margin-left:48px; grid-template-columns:1fr }}
+    }}
   </style>
 </head>
-<body><main>
-  <header>
-    <img src="assets/turkce-mufredat-v2.svg" alt="Türkçe müfredat kapağı">
-    <h1>Türkçe AI mühendisliği müfredatı</h1>
-    <p class="lead">Matematik temellerinden üretim sistemlerine uzanan dersleri seçin ve öğrenmeye başlayın.</p>
-    <div class="stats"><span>{len(phases)} aşama</span><span>{lesson_count} ders</span>
-      <span>%100 Türkçe anlatım</span></div>
-  </header>
-  <section aria-label="Müfredat aşamaları">{''.join(cards)}</section>
-  <footer>Kaynak revizyon: <code>{html.escape(source_revision)}</code> ·
-    Ayrıntılar için <a href="README.md">README</a></footer>
-</main></body>
+<body>
+  <nav class="topbar"><div class="shell">
+    <a class="brand" href="#">AI ENGINEERING / TR</a>
+    <div class="topnav"><a href="#mufredat">Müfredat</a><a href="README.md">Kullanım rehberi ↗</a></div>
+  </div></nav>
+  <header class="hero"><div class="shell">
+    <p class="eyebrow">Açık kaynak · Uygulamalı · Türkçe</p>
+    <h1>AI Engineering<br>From Scratch</h1>
+    <div class="hero-bottom">
+      <p class="lead">Yapay zekâ sistemlerini yalnızca kullanmayın. Matematik temellerinden
+      agent mimarilerine kadar her katmanı elle kurun, test edin ve gerçekten anlayın.</p>
+      <p class="hero-note">Framework'ten önce temel mekanizma.<br>Teoriden sonra çalışan kod.<br>
+      Her derste yeniden kullanılabilir çıktı.</p>
+    </div>
+  </div></header>
+  <main>
+    <section class="stats shell" aria-label="Müfredat özeti">
+      <div class="stat"><strong>{len(phases):02d}</strong><span>Aşama</span></div>
+      <div class="stat"><strong>{lesson_count}</strong><span>Türkçe ders</span></div>
+      <div class="stat"><strong>%100</strong><span>Türkçe kapsam</span></div>
+    </section>
+    <section class="catalogue shell" id="mufredat">
+      <div class="catalogue-head">
+        <div><p class="eyebrow">İçindekiler</p><h2>Öğrenme Rotası</h2></div>
+        <label for="search">Ders veya aşama ara
+          <input id="search" type="search" placeholder="Örn. attention, agent, Python…" autocomplete="off">
+        </label>
+      </div>
+      <div id="phases" aria-live="polite">{''.join(cards)}</div>
+      <p class="empty" id="empty">Aramanızla eşleşen bir ders bulunamadı.</p>
+    </section>
+  </main>
+  <footer><div class="shell"><span>Kaynak revizyon · {html.escape(source_revision)}</span>
+    <span>AI Engineering from Scratch · <a href="README.md">Başlangıç rehberi</a></span></div></footer>
+  <script>
+    const input=document.querySelector('#search'), phases=[...document.querySelectorAll('.phase')];
+    const normalize=s=>s.toLocaleLowerCase('tr-TR').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'');
+    input.addEventListener('input',()=>{{
+      const query=normalize(input.value.trim()); let visible=0;
+      phases.forEach(phase=>{{
+        const phaseMatch=normalize(phase.dataset.phase).includes(query);
+        let matches=0;
+        phase.querySelectorAll('li').forEach(lesson=>{{
+          const match=!query||phaseMatch||normalize(lesson.dataset.lesson).includes(query);
+          lesson.hidden=!match; if(match) matches++;
+        }});
+        phase.hidden=matches===0; phase.open=Boolean(query&&matches); if(matches) visible++;
+      }});
+      document.querySelector('#empty').style.display=visible?'none':'block';
+    }});
+  </script>
+</body>
 </html>
 """
 

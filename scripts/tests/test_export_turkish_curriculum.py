@@ -77,10 +77,14 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
 
         local_site = (target / "index.html").read_text()
         self.assertIn('<html lang="tr">', local_site)
-        self.assertIn("Türkçe AI mühendisliği müfredatı", local_site)
+        self.assertIn("AI Engineering<br>From Scratch", local_site)
+        self.assertIn('id="search"', local_site)
+        self.assertIn("Öğrenme Rotası", local_site)
+        self.assertIn('class="phase-no">01', local_site)
+        self.assertIn("toLocaleLowerCase('tr-TR')", local_site)
         self.assertIn("phases/00-test/01-lesson/docs/tr.md", local_site)
         self.assertIn("1 aşama", local_site)
-        self.assertIn("1 ders", local_site)
+        self.assertIn("<strong>1</strong><span>Türkçe ders", local_site)
 
     def test_export_refuses_existing_destination(self):
         target = Path(self.temp.name) / "target"
