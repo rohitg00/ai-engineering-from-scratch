@@ -4,47 +4,47 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which field is the load-bearing one in a handoff packet?",
+      "question": "Aktarma paketindeki yük taşıyan alan hangisidir?",
       "options": [
         "summary",
-        "next_action (without it, the document is a status report, not a handoff)",
+        "next_action (bu olmadan belge bir aktarım değil, bir durum raporudur)",
         "commands_run",
         "verdict_pointer"
       ],
       "correct": 1,
-      "explanation": "A handoff with everything except next_action is a status report; the next concrete step is what makes the next session productive."
+      "explanation": "next_action dışında her şeyi içeren aktarım bir durum raporudur; Bir sonraki somut adım, bir sonraki oturumu verimli kılan şeydir."
     },
     {
       "stage": "pre",
-      "question": "Why are handoffs generated, not written?",
+      "question": "Aktarmalar neden yazılmıyor da üretiliyor?",
       "options": [
-        "Generators are faster",
-        "Hand-written handoffs get skipped on a hard day; the generator reads workbench artifacts and emits the packet, so the agent just leaves the workbench in a state the generator can summarize",
+        "Jeneratörler daha hızlı",
+        "Zor bir günde elle yazılan devirler atlanır; jeneratör çalışma tezgahı yapıtlarını okur ve paketi yayar, böylece aracı, çalışma tezgahını jeneratörün özetleyebileceği bir durumda bırakır",
         "Generators encrypt better",
-        "Apache 2.0 requires it"
+        "Apache 2.0 bunu gerektiriyor"
       ],
       "correct": 1,
-      "explanation": "Automation closes the gap between intention and consistency."
+      "explanation": "Otomasyon, niyet ve tutarlılık arasındaki boşluğu kapatır."
     },
     {
       "stage": "check",
-      "question": "Which two forms does the packet ship in?",
+      "question": "Paket hangi iki biçimde gönderilir?",
       "options": [
         "PDF and PNG",
-        "handoff.md (human-readable) and handoff.json (machine-readable, both from the same source artifacts; JSON wins on divergence)",
+        "handoff.md (insan tarafından okunabilir) ve handoff.json (makine tarafından okunabilir, her ikisi de aynı kaynak yapılardan; JSON farklılık durumunda kazanır)",
         "Email and Slack",
         "YAML and TOML"
       ],
       "correct": 1,
-      "explanation": "Markdown for humans, JSON for the next agent; both come from the same generator."
+      "explanation": "İnsanlar için indirim, sonraki ajan için JSON; ikisi de aynı jeneratörden geliyor."
     },
     {
       "stage": "check",
-      "question": "How does the lesson distinguish compaction from handoff?",
+      "question": "Ders, sıkıştırmayı aktarmadan nasıl ayırıyor?",
       "options": [
-        "They are the same",
-        "Compaction extends a session; handoff closes one cleanly and starts the next in fresh context. The packet is what makes that transition cheap",
-        "Compaction is paid, handoff is free",
+        "Onlar aynı",
+        "Sıkıştırma oturumu uzatır; aktarım birini temiz bir şekilde kapatır ve bir sonrakini yeni bağlamda başlatır. Paket, bu geçişi ucuz kılan şeydir",
+        "Sıkıştırma ücretlidir, devir ücretsizdir",
         "Handoff requires GPU"
       ],
       "correct": 1,
@@ -52,39 +52,39 @@
     },
     {
       "stage": "check",
-      "question": "What does the lesson recommend about when to wrap up a session?",
+      "question": "Ders, bir oturumun ne zaman tamamlanacağı konusunda ne öneriyor?",
       "options": [
         "At 100% context, then panic",
-        "Before 50-75% context budget, while context is intact; cheap to write before compression artifacts pollute state",
-        "Only at midnight",
-        "Only after a merge"
+        "%50-75 bağlam bütçesinden önce, bağlam sağlamken; Sıkıştırma eserleri durumu kirletmeden önce yazmak ucuz",
+        "Sadece gece yarısı",
+        "Yalnızca birleştirme sonrasında"
       ],
       "correct": 1,
-      "explanation": "Wrapping up early keeps the generator's inputs clean."
+      "explanation": "Erken bitirmek jeneratörün girişlerini temiz tutar."
     },
     {
       "stage": "post",
-      "question": "What does the lesson recommend trimming the feedback log to in the packet?",
+      "question": "Ders, paketteki geri bildirim günlüğünün ne şekilde kısaltılmasını öneriyor?",
       "options": [
-        "First K entries only",
-        "Last K entries plus every entry with a non-zero exit, so the packet stays small while the failure history survives",
+        "Yalnızca ilk K girişleri",
+        "Son K girişi artı sıfırdan farklı çıkışa sahip her giriş, böylece hata geçmişi devam ederken paket küçük kalır",
         "Random N entries",
-        "Only the most recent entry"
+        "Yalnızca en son giriş"
       ],
       "correct": 1,
-      "explanation": "Asymmetric trim: failures must survive; trivia at the tail is cheap to keep."
+      "explanation": "Asimetrik trim: arızalar devam etmelidir; kuyruktaki önemsiz şeyleri saklamak ucuzdur."
     },
     {
       "stage": "post",
-      "question": "What metadata makes coordination across multi-agent sessions work?",
+      "question": "Hangi meta veriler çoklu aracılı oturumlar arasında koordinasyonun çalışmasını sağlar?",
       "options": [
         "Top secret encryption",
-        "branch, last_known_good_commit, and status (active | superseded | archived); only one active handoff per branch and topic",
+        "şube, last_known_good_commit ve durum (etkin | değiştirildi | arşivlendi); dal ve konu başına yalnızca bir aktif aktarım",
         "A shared Slack channel",
         "A central queue"
       ],
       "correct": 1,
-      "explanation": "Stale handoffs are the dominant multi-agent failure; status + branch + LKG keep the active set small."
+      "explanation": "Bayat aktarımlar, baskın çoklu temsilci başarısızlığıdır; durum + dal + LKG aktif kümeyi küçük tutar."
     }
   ]
 }
