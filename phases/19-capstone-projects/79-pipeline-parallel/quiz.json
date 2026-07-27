@@ -4,34 +4,34 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the pipeline bubble?",
+      "question": "Boru hattı balonu nedir?",
       "options": [
         "A bug in NCCL",
-        "Idle time at start and end of the pipeline: stages with no work until the first microbatch reaches them, and after the last microbatch leaves",
+        "Boru hattının başlangıcında ve sonunda boşta kalma süresi: ilk mikro parti onlara ulaşana kadar ve son mikro parti ayrıldıktan sonra iş olmayan aşamalar",
         "Memory leak",
         "A network packet"
       ],
       "correct": 1,
-      "explanation": "With M microbatches and N stages, per-stage bubble is (N-1)/(M+N-1). Picking M much greater than N shrinks it."
+      "explanation": "M mikro partiler ve N aşamalarıyla, aşama başına kabarcık (N-1)/(M+N-1) şeklindedir. M'yi N'den çok daha büyük seçmek onu küçültür."
     },
     {
       "stage": "pre",
-      "question": "Why is GPipe's activation memory proportional to M?",
+      "question": "GPipe'ın aktivasyon hafızası neden M ile orantılıdır?",
       "options": [
         "Bug",
-        "All M microbatches' activations must be held until the matching backward; nothing frees until the drain begins",
+        "Tüm M mikro serilerin aktivasyonları geriye doğru eşleşene kadar tutulmalıdır; drenaj başlayana kadar hiçbir şey serbest kalmaz",
         "Compiler limit",
         "Hardware limit"
       ],
       "correct": 1,
-      "explanation": "GPipe fills the pipeline with all forwards before any backward. Each in-flight microbatch carries its activations until its backward starts."
+      "explanation": "GPipe, boru hattını herhangi bir geriden önce tüm ileri doğrularla doldurur. Uçuştaki her mikro parti, aktivasyonlarını geriye doğru başlayana kadar taşır."
     },
     {
       "stage": "check",
-      "question": "How does 1F1B improve over GPipe?",
+      "question": "1F1B, GPipe'a göre nasıl gelişir?",
       "options": [
         "Lower bubble",
-        "Same bubble but bounded activation memory; once mb 0's forward reaches the last stage, its backward begins and activations free",
+        "Aynı baloncuk fakat sınırlı aktivasyon hafızası; mb 0'ın ilerisi son aşamaya ulaştığında gerisi başlar ve aktivasyonları serbesttir",
         "Higher throughput",
         "Smaller model"
       ],
@@ -40,39 +40,39 @@
     },
     {
       "stage": "check",
-      "question": "Why is equal compute per stage more important than equal parameter count?",
+      "question": "Aşama başına eşit hesaplama neden eşit parametre sayısından daha önemlidir?",
       "options": [
         "Aesthetic",
-        "The slowest stage gates every cycle; other stages idle waiting for it. Embedding layers have many parameters but little compute, so partitioning by parameter count misbalances the pipeline",
+        "Her döngüde en yavaş aşama kapıları; diğer aşamalar boşta onu bekliyor. Katıştırma katmanlarında çok sayıda parametre bulunur ancak işlem miktarı azdır, bu nedenle parametre sayısına göre bölümlemek ardışık düzenin dengesini bozar",
         "Memory aligned",
         "Easier to code"
       ],
       "correct": 1,
-      "explanation": "Megatron-LM exposes --num-layers-per-stage as a list to allow uneven layer counts when per-layer cost differs."
+      "explanation": "Megatron-LM, katman başına maliyet farklı olduğunda eşit olmayan katman sayılarına izin vermek için --num-layers-per-stage'i bir liste olarak gösterir."
     },
     {
       "stage": "check",
-      "question": "What goes wrong if every stage calls send before recv?",
+      "question": "Her aşamada çağrılar recv'den önce gönderilirse ne olur?",
       "options": [
         "Memory leak",
-        "Deadlock on the wire; standard fix is to interleave even-rank send-first and odd-rank recv-first",
+        "Telde kilitlenme; standart düzeltme, çift sıralı gönder-önce ve tek sıralı al-ilk'i serpiştirmektir",
         "Slow",
         "Higher bubble"
       ],
       "correct": 1,
-      "explanation": "Synchronous send/recv pairs need one side to be receiving when the other sends. The lesson schedules ranks explicitly so the pattern is visible."
+      "explanation": "Senkronize gönderme/alma çiftlerinin bir tarafı gönderirken diğer tarafın alması gerekir. Ders programları açıkça sıralanır, böylece model görünür olur."
     },
     {
       "stage": "post",
-      "question": "Pipeline plus ZeRO-1 combines what two memory wins?",
+      "question": "Pipeline artı ZeRO-1 hangi iki hafızanın kazandığını birleştiriyor?",
       "options": [
         "Compression and quantisation",
-        "Per-stage parameter sharding (each rank only holds one stage of layers) plus per-rank optimiser sharding (each rank only holds 1/N of optimiser state for its stage)",
-        "Activation only",
+        "Aşama başına parametre parçalama (her sıralama yalnızca bir katman katmanını tutar) artı aşama başına optimize edici parçalama (her sıralama, kendi aşaması için yalnızca 1/N optimizer durumunu tutar)",
+        "Yalnızca etkinleştirme",
         "Nothing"
       ],
       "correct": 1,
-      "explanation": "Pipeline shards layers across ranks; ZeRO shards optimiser state within the data-parallel group at each pipeline rank. Both wins compound."
+      "explanation": "Boru hattı katmanları katmanlara ayırır; Her ardışık düzen seviyesindeki veri paralel grubu içindeki Sıfır parça optimizasyon durumu. Her ikisi de bileşik kazanır."
     }
   ]
 }
