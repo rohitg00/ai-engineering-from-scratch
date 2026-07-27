@@ -35,6 +35,18 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         self.assertTrue((target / "phases/00-test/01-lesson/code/main.py").is_file())
         self.assertFalse((target / "phases/00-test/01-lesson/docs/en.md").exists())
 
+    def test_generated_readme_is_a_complete_turkish_entry_point(self):
+        target = Path(self.temp.name) / "target"
+        export_tr.export(self.source, target, "abc123")
+        readme = (target / "README.md").read_text()
+        self.assertIn("1 aşama", readme)
+        self.assertIn("1 Türkçe ders", readme)
+        self.assertIn("## Hızlı başlangıç", readme)
+        self.assertIn("## Öğrenme rotası", readme)
+        self.assertIn("## Bir ders nasıl çalışılır?", readme)
+        self.assertIn("## Dağıtım güvenceleri", readme)
+        self.assertIn("`abc123`", readme)
+
     def test_export_refuses_existing_destination(self):
         target = Path(self.temp.name) / "target"
         target.mkdir()
