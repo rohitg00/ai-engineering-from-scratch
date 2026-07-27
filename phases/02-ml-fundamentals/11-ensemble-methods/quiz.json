@@ -2,20 +2,20 @@
   {
     "id": "ensemble-pre-1",
     "stage": "pre",
-    "question": "Why does combining multiple weak classifiers into an ensemble improve accuracy?",
+    "question": "Birden fazla zayıf sınıflandırıcıyı bir toplulukta birleştirmek neden doğruluğu artırıyor?",
     "options": [
-      "Each weak classifier memorizes a different part of the test set",
-      "If the classifiers make different errors, majority voting cancels out individual mistakes",
+      "Her zayıf sınıflandırıcı test setinin farklı bir bölümünü ezberler",
+      "Sınıflandırıcılar farklı hatalar yaparsa çoğunluk oyu bireysel hataları iptal eder",
       "Ensembles always use more training data than single models",
-      "Weak classifiers are always faster than strong classifiers"
+      "Zayıf sınıflandırıcılar her zaman güçlü sınıflandırıcılardan daha hızlıdır"
     ],
     "correct": 1,
-    "explanation": "The key is diversity. If classifiers make independent errors, majority voting means a wrong answer must fool more than half the models. Errors cancel out, and the ensemble accuracy exceeds any individual."
+    "explanation": "Önemli olan çeşitliliktir. Sınıflandırıcılar bağımsız hatalar yaparsa, çoğunluk oyu, yanlış bir cevabın modellerin yarısından fazlasını kandırması anlamına gelir. Hatalar ortadan kalkar ve topluluğun doğruluğu herhangi bir bireyi aşar."
   },
   {
     "id": "ensemble-pre-2",
     "stage": "pre",
-    "question": "What is the main difference between bagging and boosting?",
+    "question": "Torbalama ve güçlendirme arasındaki temel fark nedir?",
     "options": [
       "Bagging trains models in parallel on random subsets; boosting trains models sequentially, focusing on previous errors",
       "Bagging uses deep neural networks; boosting uses decision trees",
@@ -23,45 +23,45 @@
       "Bagging requires labeled data; boosting works unsupervised"
     ],
     "correct": 0,
-    "explanation": "Bagging trains models independently on bootstrap samples (parallel, reduces variance). Boosting trains models sequentially, with each new model focusing on the mistakes of the ensemble so far (reduces bias)."
+    "explanation": "Torbalama, önyükleme örneklerinde bağımsız olarak modelleri eğitir (paralel, varyansı azaltır). Her yeni model, topluluğun şimdiye kadarki hatalarına odaklanarak tren modellerini sırayla güçlendirmek (önyargıyı azaltır)."
   },
   {
     "id": "ensemble-post-1",
     "stage": "post",
-    "question": "In AdaBoost, what happens to the sample weight of a misclassified training point after each round?",
+    "question": "AdaBoost'ta her turdan sonra yanlış sınıflandırılmış bir eğitim noktasının örnek ağırlığına ne olur?",
     "options": [
-      "It stays the same",
-      "It increases, so the next weak learner focuses more on this hard example",
-      "It decreases, so the next learner ignores it",
-      "It is removed from the training set"
+      "Aynı kalıyor",
+      "Artıyor, böylece bir sonraki zayıf öğrenci bu zor örneğe daha fazla odaklanıyor",
+      "Azaldığı için bir sonraki öğrenci bunu görmezden gelir",
+      "Eğitim setinden çıkarıldı"
     ],
     "correct": 1,
-    "explanation": "AdaBoost increases the weights of misclassified samples after each round. This forces the next weak learner to pay more attention to the examples the ensemble currently gets wrong."
+    "explanation": "AdaBoost her turdan sonra yanlış sınıflandırılan örneklerin ağırlıklarını artırır. Bu, bir sonraki zayıf öğrenciyi topluluğun şu anda yanlış yaptığı örneklere daha fazla dikkat etmeye zorlar."
   },
   {
     "id": "ensemble-post-2",
     "stage": "post",
-    "question": "A random forest with 100 trees has the same test accuracy as 200 trees. Adding more trees to 500 also shows no improvement. Why?",
+    "question": "100 ağaçtan oluşan rastgele bir orman, 200 ağaçla aynı test doğruluğuna sahiptir. 500'e daha fazla ağaç eklemek de herhangi bir gelişme göstermez. Neden?",
     "options": [
-      "The random forest is underfitting and needs a different algorithm",
+      "Rastgele orman yetersiz uyuyor ve farklı bir algoritmaya ihtiyaç duyuyor",
       "After enough trees, variance reduction plateaus and adding more trees provides diminishing returns without increasing overfitting",
-      "500 trees is the maximum allowed",
-      "The trees are all identical so adding more has no effect"
+      "İzin verilen maksimum sayı 500 ağaçtır",
+      "Ağaçların hepsi aynı olduğundan daha fazlasını eklemenin hiçbir etkisi olmaz"
     ],
     "correct": 1,
-    "explanation": "Random forests do not overfit with more trees (unlike boosting). However, variance reduction plateaus once enough diverse trees have been averaged. More trees just add compute cost without improving accuracy."
+    "explanation": "Rastgele ormanlar daha fazla ağaçla fazla uyum sağlamaz (artırmanın aksine). Ancak, yeterince çeşitli ağaçların ortalaması alındıktan sonra varyans azalma platoları ortaya çıkar. Daha fazla ağaç, doğruluğu artırmadan yalnızca bilgi işlem maliyetini artırır."
   },
   {
     "id": "ensemble-post-3",
     "stage": "post",
-    "question": "Gradient boosting fits each new tree to what quantity?",
+    "question": "Gradyan artırma her yeni ağaca ne kadar uyuyor?",
     "options": [
-      "The original target values",
-      "The residuals (errors) of the current ensemble's predictions",
+      "Orijinal hedef değerler",
+      "Mevcut topluluğun tahminlerinin kalıntıları (hataları)",
       "Random subsets of features",
-      "The predictions of the previous tree"
+      "Önceki ağacın tahminleri"
     ],
     "correct": 1,
-    "explanation": "In gradient boosting, each new tree is trained to predict the residuals (negative gradient of the loss) of the current ensemble. This sequentially reduces the remaining error."
+    "explanation": "Gradyan artırmada, her yeni ağaç, mevcut topluluğun artıklarını (kayıpın negatif gradyanı) tahmin etmek için eğitilir. Bu, sırayla kalan hatayı azaltır."
   }
 ]
