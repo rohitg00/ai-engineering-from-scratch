@@ -1,22 +1,22 @@
 {
   "lesson": "26-failure-modes-agentic",
-  "title": "Failure Modes: Why Agents Break",
+  "title": "Başarısızlık Modları: Aracılar Neden Bozulur?",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is MASFT's central claim?",
+      "question": "MASFT'nin temel iddiası nedir?",
       "options": [
-        "Failures are random noise",
-        "Multi-agent failures are fundamental design flaws, not LLM limitations to be fixed with better base models",
-        "Failures vanish with bigger models",
-        "Failures are due to network outages"
+        "Arızalar rastgele gürültüdür",
+        "Çoklu aracı hataları, daha iyi temel modellerle düzeltilmesi gereken LLM sınırlamaları değil, temel tasarım kusurlarıdır",
+        "Daha büyük modellerle hatalar ortadan kalkar",
+        "Arızalar ağ kesintilerinden kaynaklanmaktadır"
       ],
       "correct": 1,
-      "explanation": "Berkeley's MASFT categorizes failures as design flaws; they do not disappear by scaling the base model."
+      "explanation": "Berkeley'in MASFT'si başarısızlıkları tasarım kusurları olarak sınıflandırıyor; temel modelin ölçeklendirilmesiyle kaybolmazlar."
     },
     {
       "stage": "pre",
-      "question": "Which is NOT one of the five recurring industry failure modes the lesson lists?",
+      "question": "NOT ders listelerindeki tekrarlanan beş endüstri başarısızlık modundan biri hangisidir?",
       "options": [
         "Hallucinated actions",
         "Scope creep",
@@ -24,26 +24,26 @@
         "Embedding versioning"
       ],
       "correct": 3,
-      "explanation": "The five are hallucinated actions, scope creep, cascading errors, context loss, tool misuse."
+      "explanation": "Beşi halüsinasyonlu eylemler, kapsam kayması, basamaklı hatalar, bağlam kaybı, aracın yanlış kullanımıdır."
     },
     {
       "stage": "check",
-      "question": "What is a cascading error in this lesson?",
+      "question": "Bu derste basamaklı hata nedir?",
       "options": [
         "An LLM rate-limit cascade",
-        "One wrong call triggers downstream effects across systems (a phantom SKU triggers four downstream API calls)",
+        "Tek bir yanlış çağrı, sistemler genelinde aşağı yönlü etkileri tetikler (hayalet bir SKU, dört aşağı yönlü API çağrısını tetikler)",
         "A cron failure",
         "A YAML parser error"
       ],
       "correct": 1,
-      "explanation": "Cascades amplify a single bad call into a multi-system incident; especially severe when agents fake success."
+      "explanation": "Basamaklar, tek bir hatalı çağrıyı çoklu sistem olayına dönüştürüyor; özellikle ajanlar başarıyı taklit ettiğinde çok şiddetlidir."
     },
     {
       "stage": "check",
-      "question": "Which two manifestations does the LLM Agent Hallucinations Survey list?",
+      "question": "LLM Ajan Halüsinasyon Araştırması hangi iki tezahürü listeliyor?",
       "options": [
         "Hot and cold tokens",
-        "Instruction-following Deviation and Long-range Contextual Misuse",
+        "Talimatlara Göre Sapma ve Uzun Vadeli Bağlamsal Kötüye Kullanım",
         "Greedy and beam search",
         "Soft and hard prompts"
       ],
@@ -52,39 +52,39 @@
     },
     {
       "stage": "check",
-      "question": "What does success hallucination mean?",
+      "question": "Başarı halüsinasyonu ne anlama geliyor?",
       "options": [
-        "The model is overconfident on benchmarks",
-        "The agent returns a success message even though the target state did not change (often on a 400 from a tool)",
-        "The user thinks success when none happened",
+        "Model kıyaslamalara aşırı güveniyor",
+        "Aracı, hedef durum değişmese bile bir başarı mesajı döndürür (genellikle bir araçtan 400'de)",
+        "Kullanıcı hiçbir şey olmadığında başarıyı düşünüyor",
         "A unit test passed"
       ],
       "correct": 1,
-      "explanation": "Re-probe environment state; agents commonly fake completion when they cannot distinguish 'I failed' from 'impossible'."
+      "explanation": "Ortam durumunu yeniden araştırın; temsilciler genellikle 'başarısız oldum'u 'imkansız'dan ayırt edemedikleri zaman tamamlama taklidi yaparlar."
     },
     {
       "stage": "post",
-      "question": "Why is tagging only crashes insufficient?",
+      "question": "Etiketleme neden yalnızca kilitlenmeleri yetersiz kılıyor?",
       "options": [
-        "Crashes are slow",
-        "Most agent failures produce valid-looking output that does not crash; content-level checks are needed",
+        "Çökmeler yavaş",
+        "Çoğu aracı hatası, çökmeyen geçerli görünümlü çıktılar üretir; içerik düzeyinde kontroller gerekli",
         "Crashes leak PII",
-        "Logging is paid"
+        "Günlük kaydı ücretlidir"
       ],
       "correct": 1,
-      "explanation": "Crash-based monitoring misses the bulk of agent failures, which are content-shaped."
+      "explanation": "Kilitlenme tabanlı izleme, içeriğe bağlı olan aracı hatalarının büyük kısmını gözden kaçırır."
     },
     {
       "stage": "post",
-      "question": "What mitigation does the lesson recommend at every step of a reasoning chain?",
+      "question": "Ders, akıl yürütme zincirinin her adımında hangi hafifletmeyi öneriyor?",
       "options": [
         "Add a sleep()",
-        "Automated verification gates that check factual grounding against environment state",
+        "Ortam durumuna göre gerçek temeli kontrol eden otomatik doğrulama kapıları",
         "Disable retries",
-        "Lower temperature only"
+        "Yalnızca daha düşük sıcaklık"
       ],
       "correct": 1,
-      "explanation": "Per-step gates (safety classifier, argument validation, CRITIC, state re-probe) catch failures before they cascade."
+      "explanation": "Adım başına kapılar (güvenlik sınıflandırıcı, bağımsız değişken doğrulama, CRITIC, durum yeniden araştırması) hataları basamaklanmadan önce yakalar."
     }
   ]
 }
