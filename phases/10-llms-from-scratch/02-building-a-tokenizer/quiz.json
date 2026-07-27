@@ -1,37 +1,62 @@
 [
   {
-    "question": "Why does a basic BPE tokenizer break on multilingual or code input?",
-    "options": ["BPE is inherently monolingual", "Without proper Unicode handling, byte fallback, and pre-tokenization regex, it produces incorrect or inefficient token sequences", "Multilingual text can't be tokenized", "BPE only works on ASCII"],
+    "question": "Temel bir BPE tokenizer çok dilli veya kod girişinde neden bozuluyor?",
+    "options": [
+      "BPE doğası gereği tek dillidir",
+      "Uygun Unicode işleme, bayt geri dönüşü ve tokenizasyon öncesi regex olmadan, yanlış veya verimsiz token dizileri üretir",
+      "Çok dilli metin belirtilemez",
+      "BPE yalnızca ASCII üzerinde çalışır"
+    ],
     "correct": 1,
-    "explanation": "A naive BPE implementation may not handle multi-byte Unicode characters, may merge across word boundaries incorrectly, and may not have byte-level fallback for characters outside the trained vocabulary.",
+    "explanation": "Saf bir BPE uygulaması, çok baytlı Unicode karakterleri işleyemeyebilir, sözcük sınırlarını yanlış bir şekilde birleştirebilir ve eğitilmiş sözcük dağarcığı dışındaki karakterler için bayt düzeyinde geri dönüşe sahip olmayabilir.",
     "stage": "pre"
   },
   {
-    "question": "What is the role of pre-tokenization regex in a production tokenizer?",
-    "options": ["It removes punctuation", "It splits text at word boundaries before BPE merges, preventing merges across spaces and word boundaries", "It compresses whitespace", "It converts text to lowercase"],
+    "question": "Bir üretim tokenizerinde tokenizasyon öncesi normal ifadenin rolü nedir?",
+    "options": [
+      "Noktalama işaretlerini kaldırır",
+      "BPE birleştirmeden önce metni kelime sınırlarında bölerek boşluklar ve kelime sınırları arasındaki birleştirmeleri önler",
+      "Boşlukları sıkıştırır",
+      "Metni küçük harfe dönüştürür"
+    ],
     "correct": 1,
-    "explanation": "Pre-tokenization regex splits text into chunks (typically at word boundaries, numbers, and punctuation) so BPE merges only happen within chunks. Without this, BPE could merge 'end' with the space before the next word.",
+    "explanation": "Belirteçlendirme öncesi normal ifade, metni parçalara ayırır (genellikle kelime sınırları, sayılar ve noktalama işaretlerinde), böylece BPE birleştirmeleri yalnızca parçalar içinde gerçekleşir. Bu olmadan, BPE 'son' sözcüğünü bir sonraki sözcükten önceki boşlukla birleştirebilir.",
     "stage": "pre"
   },
   {
-    "question": "What is a special token and why are tokenizers designed to handle them?",
-    "options": ["Tokens that appear frequently", "Reserved tokens like <|endoftext|> or [PAD] that control model behavior and must be encoded as single, specific IDs", "Tokens with the highest embedding values", "Tokens used only during evaluation"],
+    "question": "Özel token nedir ve tokenizerler neden bunları işlemek için tasarlandı?",
+    "options": [
+      "Sıklıkla görünen jetonlar",
+      "Model davranışını kontrol eden ve tek, spesifik kimlikler olarak kodlanması gereken <|endoftext|> veya [PAD] gibi ayrılmış belirteçler",
+      "En yüksek yerleştirme değerlerine sahip jetonlar",
+      "Yalnızca değerlendirme sırasında kullanılan jetonlar"
+    ],
     "correct": 1,
-    "explanation": "Special tokens serve structural purposes: marking document boundaries, padding sequences, indicating start/end of generation. They must be recognized and encoded as their exact IDs, not broken into subwords.",
+    "explanation": "Özel belirteçler yapısal amaçlara hizmet eder: belge sınırlarını işaretlemek, doldurma dizileri, oluşturmanın başlangıç/bitişini belirtmek. Alt kelimelere bölünmemeli, tam kimlikleri olarak tanınmalı ve kodlanmalıdırlar.",
     "stage": "post"
   },
   {
-    "question": "How do you evaluate whether a custom tokenizer is good?",
-    "options": ["By checking if it can tokenize your name", "By measuring compression ratio (tokens per character) across diverse text and comparing to established tokenizers like tiktoken", "By counting the vocabulary size", "By measuring encoding speed only"],
+    "question": "Özel bir tokenizerin iyi olup olmadığını nasıl değerlendiriyorsunuz?",
+    "options": [
+      "Adınızı simgeleştirip belirtemeyeceğini kontrol ederek",
+      "By measuring compression ratio (tokens per character) across diverse text and comparing to established tokenizers like tiktoken",
+      "Kelime boyutunu sayarak",
+      "Yalnızca kodlama hızını ölçerek"
+    ],
     "correct": 1,
-    "explanation": "Compression ratio (bytes per token or tokens per word) measures efficiency. A good tokenizer produces fewer tokens for the same text, which means more content fits in the context window. Compare across languages and domains.",
+    "explanation": "Sıkıştırma oranı (belirteç başına bayt veya sözcük başına belirteç) verimliliği ölçer. İyi bir belirteç aynı metin için daha az belirteç üretir, bu da bağlam penceresine daha fazla içeriğin sığması anlamına gelir. Diller ve alanlar arasında karşılaştırın.",
     "stage": "post"
   },
   {
-    "question": "Why is byte-level BPE preferred over word-level tokenization for modern LLMs?",
-    "options": ["It's faster", "It can represent any input without unknown tokens while still learning efficient subword merges for common patterns", "It produces smaller vocabularies", "Word-level tokenization is more accurate"],
+    "question": "Modern LLM'ler için neden bayt düzeyinde BPE, sözcük düzeyinde tokenizasyona tercih ediliyor?",
+    "options": [
+      "Daha hızlı",
+      "Bilinmeyen belirteçler olmadan herhangi bir girişi temsil edebilir ve aynı zamanda ortak kalıplar için verimli alt kelime birleştirmelerini öğrenmeye devam edebilir.",
+      "Daha küçük kelimeler üretir",
+      "Kelime düzeyinde tokenizasyon daha doğrudur"
+    ],
     "correct": 1,
-    "explanation": "Word-level tokenizers can't handle unseen words (producing [UNK] tokens). Byte-level BPE starts from raw bytes (guaranteeing coverage of any input) and learns merges for common sequences, balancing coverage with efficiency.",
+    "explanation": "Kelime düzeyinde belirteçler, görünmeyen sözcükleri işleyemez ([UNK] belirteçleri üreterek). Bayt düzeyinde BPE ham baytlardan başlar (herhangi bir girişin kapsanmasını garanti eder) ve kapsamı verimlilikle dengeleyerek ortak diziler için birleştirmeleri öğrenir.",
     "stage": "post"
   }
 ]
