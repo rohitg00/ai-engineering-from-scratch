@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What three labels does NLI assign to a (premise, hypothesis) pair?",
+      "question": "NLI bir (öncül, hipotez) çiftine hangi üç etiketi atar?",
       "options": [
         "Positive / negative / neutral",
         "True / false / unknown",
@@ -12,47 +12,47 @@
         "Cause / effect / unrelated"
       ],
       "correct": 2,
-      "explanation": "NLI is a 3-way classification over entailment, contradiction, and neutral."
+      "explanation": "NLI gereklilik, çelişki ve tarafsızlık üzerine 3 yönlü bir sınıflandırmadır."
     },
     {
       "stage": "pre",
-      "question": "How is NLI used as a zero-shot text classifier?",
+      "question": "NLI sıfır atışlı metin sınıflandırıcı olarak nasıl kullanılır?",
       "options": [
-        "Verbalize each candidate label as a hypothesis (e.g. 'This text is about sports') and pick the label with the highest entailment score",
+        "Her aday etiketini bir hipotez olarak sözlü olarak ifade edin (örneğin, 'Bu metin sporla ilgilidir') ve en yüksek gereklilik puanına sahip etiketi seçin",
         "By averaging embeddings",
         "By computing TF-IDF",
         "By prompting an LLM"
       ],
       "correct": 0,
-      "explanation": "NLI-as-classifier turns labels into hypotheses; the model picks the max-entailment label."
+      "explanation": "NLI-as sınıflandırıcısı, etiketleri hipotezlere dönüştürür; model maksimum gereklilik etiketini seçer."
     },
     {
       "stage": "check",
-      "question": "Why is NLI a faithfulness check for RAG outputs?",
+      "question": "NLI neden RAG çıktıları için bir doğruluk kontrolüdür?",
       "options": [
-        "It uses tokenizers",
-        "Checking whether the retrieved context entails each answer claim is exactly the formulation NLI was trained on",
-        "It is cheap",
-        "It is multilingual"
+        "Tokenizerleri kullanır",
+        "Alınan bağlamın her bir yanıt iddiasını içerip içermediğinin kontrol edilmesi, tam olarak NLI'nin üzerinde eğitim aldığı formülasyondur.",
+        "Ucuz",
+        "Çok dillidir"
       ],
       "correct": 1,
       "explanation": "Hallucination = answer claims not entailed by retrieved context; NLI directly measures entailment."
     },
     {
       "stage": "check",
-      "question": "What does the hypothesis-only baseline expose?",
+      "question": "Yalnızca hipoteze dayalı temel çizgi neyi ortaya çıkarır?",
       "options": [
         "Multilingual gaps",
         "Slow inference",
-        "Datasets where the hypothesis alone (without the premise) is predictive of the label, signalling label leakage",
+        "Tek başına hipotezin (öncül olmadan) etiketi tahmin ettiği ve etiket sızıntısına işaret ettiği veri kümeleri",
         "Tokenizer drift"
       ],
       "correct": 2,
-      "explanation": "A high hypothesis-only score on SNLI revealed annotation artifacts; useful for debugging your data."
+      "explanation": "SNLI'deki yüksek yalnızca hipotez puanı, açıklama eserlerini ortaya çıkardı; Verilerinizde hata ayıklamak için kullanışlıdır."
     },
     {
       "stage": "check",
-      "question": "Which NLI model family tops 2026 leaderboards as the standard workhorse?",
+      "question": "Hangi NLI model ailesi standart iş gücü olarak 2026 liderlik sıralamasında üst sıralarda yer alıyor?",
       "options": [
         "fastText",
         "Plain Word2Vec",
@@ -60,13 +60,13 @@
         "GPT-2"
       ],
       "correct": 2,
-      "explanation": "DeBERTa-v3 fine-tuned on MNLI and related corpora is the open NLI workhorse in 2026."
+      "explanation": "MNLI ve ilgili derlem üzerinde ince ayar yapılan DeBERTa-v3, 2026'daki açık NLI iş makinesidir."
     },
     {
       "stage": "post",
-      "question": "Why do sentence-level NLI models drop accuracy on document-length premises?",
+      "question": "Cümle düzeyindeki NLI modelleri neden belge uzunluğundaki tesislerde doğruluğu düşürüyor?",
       "options": [
-        "They were trained on short premises and fail at multi-sentence and multi-hop inference; DocNLI-tuned models handle longer inputs",
+        "Kısa öncüller üzerinde eğitildiler ve çok cümleli ve çok atlamalı çıkarımlarda başarısız oldular; DocNLI ayarlı modeller daha uzun girişleri yönetir",
         "Larger inputs run slower",
         "Documents trigger tokenizer drift",
         "Cosine similarity decays"
@@ -76,27 +76,27 @@
     },
     {
       "stage": "post",
-      "question": "Why can zero-shot accuracy swing 10+ points based on the hypothesis template?",
+      "question": "Sıfır atış doğruluğu neden hipotez şablonuna göre 10'dan fazla puan sallayabiliyor?",
       "options": [
-        "Models are sensitive to phrasing; e.g. 'This text is about {label}' vs '{label}' alone shifts entailment probabilities",
+        "Modeller ifadelere duyarlıdır; örneğin 'Bu metin {label} hakkındadır' ve '{label}' tek başına gereklilik olasılıklarını değiştirir",
         "Templates change tokenizer behavior",
         "Templates affect model weights",
-        "Templates change the label set"
+        "Şablonlar etiket kümesini değiştirir"
       ],
       "correct": 0,
-      "explanation": "Template wording materially shifts entailment scores; tune it on a small held-out set."
+      "explanation": "Şablon ifadeleri gereklilik puanlarını önemli ölçüde değiştirir; küçük bir sette akort yapın."
     },
     {
       "stage": "post",
-      "question": "What is a safe limit to claim about NLI for hallucination detection?",
+      "question": "Halüsinasyon tespiti için NLI hakkında iddiada bulunulabilecek güvenli sınır nedir?",
       "options": [
-        "It only works on English",
-        "It reduces hallucination as a faithfulness signal but does not eliminate it; combine with retrieval recall and human review",
-        "It eliminates hallucination",
-        "It requires LLMs"
+        "Yalnızca İngilizce'de çalışır",
+        "Sadakat sinyali olarak halüsinasyonu azaltır ancak ortadan kaldırmaz; geri çağırma ve insan incelemesi ile birleştirin",
+        "Halüsinasyonu ortadan kaldırır",
+        "Yüksek Lisans gerektirir"
       ],
       "correct": 1,
-      "explanation": "NLI is a useful signal but not a complete solution; pair with retrieval metrics and human spot-checks."
+      "explanation": "NLI yararlı bir sinyaldir ancak tam bir çözüm değildir; geri alma ölçümleri ve insan nokta kontrolleri ile eşleştirin."
     }
   ]
 }
