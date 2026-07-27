@@ -1,22 +1,22 @@
 {
   "lesson": "27-finops-llms",
-  "title": "FinOps for LLMs — Unit Economics and Multi-Tenant Attribution",
+  "title": "LLM'ler için FinOps — Birim Ekonomisi ve Çok Kiracılı İlişkilendirme",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does traditional FinOps break on LLM spend?",
+      "question": "Geleneksel FinOps neden LLM harcamalarında başarısız oluyor?",
       "options": [
         "LLMs don't cost money",
-        "LLM bills are always free",
+        "LLM faturaları her zaman ücretsizdir",
         "Cloud providers refuse to itemize",
-        "Costs are token-transactions rather than resource-uptime; tags don't auto-propagate from API calls and you must stamp user/task/tenant at the call site"
+        "Maliyetler, kaynak çalışma süresinden ziyade jeton işlemleridir; Etiketler, API çağrılarından otomatik olarak yayılmaz ve çağrı sitesinde kullanıcıyı/görevi/kiracıyı damgalamanız gerekir"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which three attribution dimensions does the lesson require instrumenting on day one?",
+      "question": "Dersin ilk gününde hangi üç ilişkilendirme boyutunun enstrümantasyonu gerekiyor?",
       "options": [
         "Per-user (user_id), per-task (task_id + route), per-tenant (tenant_id)",
         "Provider, model, API version",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "Which four token layers should be broken out in cost attribution?",
+      "question": "Maliyet ilişkilendirmesinde hangi dört jeton katmanı ayrılmalıdır?",
       "options": [
         "Prompt, tool, memory, response",
         "Input, output, network, disk",
@@ -40,7 +40,7 @@
     },
     {
       "stage": "check",
-      "question": "What is the kill-switch trigger in the enforcement ladder?",
+      "question": "Yaptırım merdivenindeki öldürme anahtarı tetikleyicisi nedir?",
       "options": [
         "Tenant spend z-score > 4 relative to baseline; auto-pause tenant and page on-call",
         "Latency P50 > 2s",
@@ -52,7 +52,7 @@
     },
     {
       "stage": "post",
-      "question": "Which unit metric does the lesson recommend instead of $/M tokens?",
+      "question": "Ders $/M jetonları yerine hangi birim metriğini önerir?",
       "options": [
         "Cost per gateway",
         "Cost per GPU-hour",
@@ -64,11 +64,11 @@
     },
     {
       "stage": "post",
-      "question": "Which attribution pattern does the lesson call the highest-accuracy one mature teams use?",
+      "question": "Ders, olgun ekiplerin kullandığı en yüksek doğruluk düzeyine sahip ilişkilendirme modeli olarak adlandırılıyor?",
       "options": [
         "Sampling and extrapolation",
         "Model-based allocation",
-        "Tag-and-aggregate only",
+        "Yalnızca etiketle ve topla",
         "Telemetry joiner — join traces to billing via trace IDs"
       ],
       "correct": 3,
