@@ -2,7 +2,7 @@
   {
     "id": "logreg-pre-1",
     "stage": "pre",
-    "question": "What is the range of the sigmoid function's output?",
+    "question": "Sigmoid fonksiyonunun çıktısının aralığı nedir?",
     "options": [
       "Negative infinity to positive infinity",
       "0 to 1 (exclusive)",
@@ -10,58 +10,58 @@
       "0 to positive infinity"
     ],
     "correct": 1,
-    "explanation": "The sigmoid function 1/(1+e^(-z)) outputs values strictly between 0 and 1, which can be interpreted as probabilities."
+    "explanation": "Sigmoid işlevi 1/(1+e^(-z)) kesin olarak 0 ile 1 arasındaki değerleri verir ve bunlar olasılıklar olarak yorumlanabilir."
   },
   {
     "id": "logreg-pre-2",
     "stage": "pre",
-    "question": "Why is logistic regression called 'regression' even though it is used for classification?",
+    "question": "Lojistik regresyon sınıflandırma amacıyla kullanılmasına rağmen neden 'regresyon' olarak adlandırılıyor?",
     "options": [
-      "It predicts continuous values that are then rounded",
-      "The name comes from the logistic (sigmoid) function it uses, not from regression analysis",
-      "It was originally designed for regression and later adapted",
-      "It minimizes mean squared error like linear regression"
+      "Daha sonra yuvarlanan sürekli değerleri tahmin eder",
+      "Ad, regresyon analizinden değil, kullandığı lojistik (sigmoid) işlevinden gelir.",
+      "Başlangıçta regresyon için tasarlandı ve daha sonra uyarlandı",
+      "Doğrusal regresyon gibi ortalama kare hatasını en aza indirir"
     ],
     "correct": 1,
-    "explanation": "The name comes from the logistic function (sigmoid). Despite the name, logistic regression is a classification algorithm that outputs class probabilities."
+    "explanation": "Adı lojistik fonksiyonundan (sigmoid) gelir. İsmine rağmen lojistik regresyon, sınıf olasılıklarının çıktısını veren bir sınıflandırma algoritmasıdır."
   },
   {
     "id": "logreg-post-1",
     "stage": "post",
-    "question": "Why is binary cross-entropy used instead of MSE for logistic regression?",
+    "question": "Lojistik regresyon için neden MSE yerine ikili çapraz entropi kullanılıyor?",
     "options": [
-      "Cross-entropy is faster to compute",
-      "MSE with sigmoid creates a non-convex cost surface with local minima, while cross-entropy is convex",
-      "MSE can only be used with linear models",
-      "Cross-entropy works only when the dataset is balanced"
+      "Çapraz entropinin hesaplanması daha hızlıdır",
+      "Sigmoidli MSE, yerel minimumlarla dışbükey olmayan bir maliyet yüzeyi oluştururken çapraz entropi dışbükeydir",
+      "MSE yalnızca doğrusal modellerle kullanılabilir",
+      "Çapraz entropi yalnızca veri kümesi dengelendiğinde çalışır"
     ],
     "correct": 1,
-    "explanation": "MSE combined with the sigmoid activation creates a non-convex cost surface with many local minima. Binary cross-entropy with sigmoid is convex, guaranteeing a single global minimum."
+    "explanation": "MSE, sigmoid aktivasyonuyla birleştiğinde birçok yerel minimuma sahip dışbükey olmayan bir maliyet yüzeyi oluşturur. Sigmoidli ikili çapraz entropi dışbükeydir ve tek bir küresel minimumu garanti eder."
   },
   {
     "id": "logreg-post-2",
     "stage": "post",
-    "question": "A spam filter has precision = 0.95 and recall = 0.60. What does this mean in practical terms?",
+    "question": "Bir spam filtresinin kesinliği = 0,95 ve geri çağırma = 0,60'tır. Pratik açıdan bu ne anlama geliyor?",
     "options": [
-      "95% of all emails are correctly classified, and 60% of spam is caught",
-      "When it flags an email as spam, it is correct 95% of the time, but it only catches 60% of actual spam",
-      "60% of flagged emails are spam, and 95% of all spam is caught",
-      "The model is 95% accurate on the test set and 60% on the training set"
+      "Tüm e-postaların %95'i doğru şekilde sınıflandırılıyor ve spam'lerin %60'ı yakalanıyor",
+      "Bir e-postayı spam olarak işaretlediğinde %95 oranında doğrudur ancak gerçek spam'in yalnızca %60'ını yakalar",
+      "İşaretlenen e-postaların %60'ı spamdır ve tüm spamların %95'i yakalanır",
+      "Modelin doğruluğu test setinde %95, eğitim setinde ise %60'tır."
     ],
     "correct": 1,
-    "explanation": "Precision = 0.95 means 95% of emails predicted as spam are actually spam (few false alarms). Recall = 0.60 means only 60% of actual spam is caught (40% slips through)."
+    "explanation": "Kesinlik = 0,95, spam olarak tahmin edilen e-postaların %95'inin aslında spam olduğu anlamına gelir (birkaç yanlış alarm). Geri çağırma = 0,60, gerçek spam'in yalnızca %60'ının yakalandığı anlamına gelir (%40'ı gözden kaçar)."
   },
   {
     "id": "logreg-post-3",
     "stage": "post",
-    "question": "In softmax regression for 4 classes, what is true about the output probabilities?",
+    "question": "4 sınıf için softmax regresyonunda çıktı olasılıkları hakkında hangisi doğrudur?",
     "options": [
-      "Each class gets an independent probability between 0 and 1",
-      "The four output probabilities sum to 1, and the class with the highest probability is the prediction",
-      "Only the top-2 classes receive nonzero probabilities",
-      "The outputs are raw scores, not probabilities"
+      "Her sınıf 0 ile 1 arasında bağımsız bir olasılık alır",
+      "Dört çıktı olasılığının toplamı 1'dir ve en yüksek olasılığa sahip sınıf tahmindir",
+      "Yalnızca en üstteki 2 sınıf sıfırdan farklı olasılıklar alır",
+      "Çıktılar olasılıklar değil, ham puanlardır"
     ],
     "correct": 1,
-    "explanation": "Softmax converts a vector of raw scores into probabilities that sum to 1. The predicted class is the one with the highest probability."
+    "explanation": "Softmax, ham puanlardan oluşan bir vektörü toplamı 1 olan olasılıklara dönüştürür. Tahmin edilen sınıf, en yüksek olasılığa sahip olan sınıftır."
   }
 ]
