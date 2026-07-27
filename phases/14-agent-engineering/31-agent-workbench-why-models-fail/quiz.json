@@ -1,22 +1,22 @@
 {
   "lesson": "31-agent-workbench-why-models-fail",
-  "title": "Agent Workbench Engineering: Why Capable Models Still Fail",
+  "title": "Ajan Tezgahı Mühendisliği: Yetenekli Modeller Neden Hala Başarısız?",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the lesson identify as the root cause of agent failures on real tasks?",
+      "question": "Ders, aracıların gerçek görevlerdeki başarısızlıklarının temel nedeni olarak neyi tanımlıyor?",
       "options": [
         "Insufficient model parameters",
-        "Workbench failures: missing surfaces around the model, not LLM limitations",
+        "Tezgah arızaları: LLM sınırlamaları değil, modelin etrafındaki eksik yüzeyler",
         "Slow network",
         "Outdated training data"
       ],
       "correct": 1,
-      "explanation": "The model is not wrong about Python; it is wrong about the work. Surfaces around the model are missing."
+      "explanation": "Model Python hakkında yanlış değil; iş konusunda yanlıştır. Modelin etrafındaki yüzeyler eksik."
     },
     {
       "stage": "pre",
-      "question": "What are the seven workbench surfaces the lesson names?",
+      "question": "Ders adlarındaki yedi çalışma tezgahı yüzeyi nelerdir?",
       "options": [
         "Instructions, state, scope, feedback, verification, review, handoff",
         "Train, eval, deploy, monitor, retrain, scale, retire",
@@ -24,11 +24,11 @@
         "Read, write, exec, fork, exit, wait, kill"
       ],
       "correct": 0,
-      "explanation": "The seven surfaces are instructions, state, scope, feedback, verification, review, handoff."
+      "explanation": "Yedi yüzey; talimatlar, durum, kapsam, geri bildirim, doğrulama, gözden geçirme ve aktarmadır."
     },
     {
       "stage": "check",
-      "question": "Which is NOT one of the eight distributed-systems primitives the lesson maps surfaces to?",
+      "question": "NOT dersin harita yüzeylerini oluşturan sekiz dağıtılmış sistem ilkelinden biri hangisidir?",
       "options": [
         "Function",
         "Worker",
@@ -36,55 +36,55 @@
         "Backpropagation"
       ],
       "correct": 3,
-      "explanation": "The eight primitives are function, worker, trigger, runtime, HTTP/RPC, queue, session persistence, authorization policy."
+      "explanation": "Sekiz temel öğe; işlev, çalışan, tetikleyici, çalışma zamanı, HTTP/RPC, kuyruk, oturum kalıcılığı, yetkilendirme politikasıdır."
     },
     {
       "stage": "check",
-      "question": "What did Vercel's reported harness change move success rate from and to?",
+      "question": "Vercel'in bildirdiği koşum takımı değişikliği başarı oranını neye ve neye taşıdı?",
       "options": [
         "20% to 60%",
-        "80% to 100%, by deleting 80% of the agent's tools",
+        "Temsilci araçlarının %80'ini silerek %80 ila %100",
         "0% to 100%, by switching models",
         "50% to 70%, by adding RAG"
       ],
       "correct": 1,
-      "explanation": "Deleting 80% of tools moved Vercel's agent from 80% to 100% success."
+      "explanation": "Araçların %80'inin silinmesi Vercel'in temsilcisini %80'den %100 başarıya taşıdı."
     },
     {
       "stage": "check",
-      "question": "What does Terminal Bench 2.0 demonstrate about model vs harness?",
+      "question": "Terminal Bench 2.0 model ve kablo demeti hakkında neyi gösteriyor?",
       "options": [
         "Models alone determine ranking",
-        "Same model moved from outside top 30 to rank five by changing only the harness",
+        "Aynı model, yalnızca koşum takımı değiştirilerek ilk 30'un dışından beşinci sıraya yükseldi",
         "Harness changes do not matter",
-        "Only GPUs matter"
+        "Yalnızca GPU'lar önemlidir"
       ],
       "correct": 1,
       "explanation": "LangChain's Anatomy of an Agent Harness: same model, harness change, 25+ rank jump."
     },
     {
       "stage": "post",
-      "question": "What does the lesson recommend doing when you hear new harness vocabulary?",
+      "question": "Yeni koşum takımı kelimeleri duyduğunuzda ders ne yapmanızı önerir?",
       "options": [
-        "Adopt the vocabulary verbatim",
+        "Kelime dağarcığını aynen benimseyin",
         "Translate back to primitives (function, worker, trigger, runtime, HTTP/RPC, queue, persistence, policy) before adopting",
-        "Reject it",
-        "Wait for OpenAI to standardize it"
+        "Reddet",
+        "OpenAI'nin standartlaştırmasını bekleyin"
       ],
       "correct": 1,
-      "explanation": "Reason from primitives, not vendor taxonomies; the vocabulary changes but the engineering does not."
+      "explanation": "Satıcı sınıflandırmalarından değil, ilkellerden gelen sebep; Kelime dağarcığı değişir ama mühendislik değişmez."
     },
     {
       "stage": "post",
-      "question": "Where does chat history sit relative to the workbench?",
+      "question": "Sohbet geçmişi çalışma tezgahına göre nerede duruyor?",
       "options": [
-        "Chat is the system of record",
-        "Chat is volatile; the repo is the system of record",
-        "Both are equivalent",
+        "Sohbet kayıt sistemidir",
+        "Sohbet geçicidir; repo kayıt sistemidir",
+        "Her ikisi de eşdeğerdir",
         "Neither matters"
       ],
       "correct": 1,
-      "explanation": "The loop closes on the state file, not on chat history."
+      "explanation": "Döngü, sohbet geçmişinde değil, durum dosyasında kapanır."
     }
   ]
 }
