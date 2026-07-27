@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does an efficient self-attention block use a single linear layer that outputs 3*D features?",
+      "question": "Etkili bir öz-dikkat bloğu neden 3*D özelliklerinin çıktısını veren tek bir doğrusal katman kullanıyor?",
       "options": [
-        "It enforces weight sharing between Q, K, and V",
-        "It is mathematically equivalent to three Linear(D, D) layers and runs as one matmul",
-        "It avoids the need for a causal mask",
-        "It reduces the model parameter count"
+        "Q, K ve V arasında ağırlık paylaşımını zorunlu kılar",
+        "Matematiksel olarak üç Linear(D, D) katmanına eşdeğerdir ve tek bir matmul olarak çalışır.",
+        "Nedensel bir maske ihtiyacını ortadan kaldırır",
+        "Model parametre sayısını azaltır"
       ],
       "correct": 1,
-      "explanation": "Stacking three (D, D) projection matrices into one (3D, D) matrix produces the same outputs, but the forward pass is a single accelerator-friendly matmul."
+      "explanation": "Üç (D, D) projeksiyon matrisinin bir (3D, D) matriste istiflenmesi aynı çıktıları üretir, ancak ileri geçiş tek bir hızlandırıcı dostu matmuldur."
     },
     {
       "stage": "check",
-      "question": "What is the relationship between d_model, n_heads, and d_head?",
+      "question": "d_model, n_heads ve d_head arasındaki ilişki nedir?",
       "options": [
         "d_head = d_model * n_heads",
         "d_head = d_model + n_heads",
         "d_head = d_model // n_heads and d_model must be divisible by n_heads",
-        "d_head is independent of d_model"
+        "d_head d_modelden bağımsızdır"
       ],
       "correct": 2,
-      "explanation": "The block splits d_model evenly across heads. The constraint d_model % n_heads == 0 is enforced at construction."
+      "explanation": "Blok, d_model'i kafalar arasında eşit şekilde böler. d_model % n_heads == 0 kısıtlaması inşaat sırasında uygulanır."
     },
     {
       "stage": "check",
-      "question": "What value goes into the scaling factor of scaled dot-product attention?",
+      "question": "Ölçeklendirilmiş nokta ürün dikkatinin ölçeklendirme faktörüne hangi değer dahildir?",
       "options": [
         "sqrt(d_model)",
         "sqrt(d_head)",
@@ -36,43 +36,43 @@
         "sqrt(seq_len)"
       ],
       "correct": 1,
-      "explanation": "Scores are divided by sqrt(d_head), the head dimension that the matmul contracts. This keeps the variance of the scores bounded as d_head grows."
+      "explanation": "Puanlar, matmulun daralttığı kafa boyutu olan sqrt(d_head)'ye bölünür. Bu, d_head büyüdükçe puanların varyansını sınırlı tutar."
     },
     {
       "stage": "check",
-      "question": "How does the causal mask enforce that position t cannot attend to position t+1?",
+      "question": "Nedensel maske, t konumunun t+1 konumuna katılamayacağını nasıl uygular?",
       "options": [
-        "By multiplying the keys at future positions by zero",
-        "By setting score entries above the diagonal to negative infinity before softmax",
-        "By removing future tokens from the input",
-        "By using a different attention head for the future"
+        "Gelecek konumlardaki tuşları sıfırla çarparak",
+        "Softmax'tan önce köşegen üzerindeki puan girişlerini negatif sonsuza ayarlayarak",
+        "Gelecekteki belirteçleri girdiden kaldırarak",
+        "Geleceğe yönelik farklı bir dikkat kafası kullanarak"
       ],
       "correct": 1,
       "explanation": "Setting future entries to -inf forces softmax to give them weight zero. Past and present positions retain a valid weight distribution."
     },
     {
       "stage": "post",
-      "question": "Why does the block end with a Linear(D, D) output projection after merging heads?",
+      "question": "Blok neden kafaları birleştirdikten sonra Linear(D, D) çıktı projeksiyonuyla bitiyor?",
       "options": [
-        "To allow the model to mix information across heads",
-        "To match the model's vocabulary size",
-        "To normalize the activations to mean zero",
-        "It is required for autograd to track gradients"
+        "Modelin bilgileri kafalar arasında karıştırmasına izin vermek için",
+        "Modelin kelime dağarcığı boyutunu eşleştirmek için",
+        "Aktivasyonları sıfır anlamına gelecek şekilde normalleştirmek için",
+        "Autograd'ın degradeleri takip edebilmesi için gereklidir"
       ],
       "correct": 0,
-      "explanation": "Without the output projection, head outputs would only ever combine in later layers. The projection gives the block one place to mix heads in the same step."
+      "explanation": "Çıktı projeksiyonu olmasaydı, kafa çıktıları yalnızca daha sonraki katmanlarda birleşirdi. Projeksiyon, bloğa aynı adımda kafaları karıştırmak için tek bir yer sağlar."
     },
     {
       "stage": "post",
-      "question": "What does an attention-weight matrix of shape (B, H, T, T) tell you?",
+      "question": "(B, H, T, T) şeklindeki dikkat ağırlığı matrisi size ne anlatıyor?",
       "options": [
-        "How many parameters each head has",
-        "Which key positions each query position attends to, per head, per batch element",
-        "The cosine similarity between query and value vectors",
-        "The output logits for the next token"
+        "Her kafanın kaç parametresi vardır?",
+        "Her sorgu pozisyonunun kişi başına ve toplu iş öğesi başına hangi anahtar konumlara katıldığı",
+        "Sorgu ve değer vektörleri arasındaki kosinüs benzerliği",
+        "Bir sonraki jetonun çıktı logları"
       ],
       "correct": 1,
-      "explanation": "Row t of the per-head matrix is the distribution over key positions used by query position t. Inspecting it shows where each head looks."
+      "explanation": "Kişi başına matrisin t satırı, sorgu konumu t tarafından kullanılan anahtar konumlar üzerindeki dağılımdır. Bunu incelemek her kafanın nereye baktığını gösterir."
     }
   ]
 }
