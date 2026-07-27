@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does Reflexion replace in standard reinforcement learning?",
+      "question": "Refleks, standart takviyeli öğrenmede neyin yerini alır?",
       "options": [
-        "Reward shaping with a constant reward",
-        "Gradient updates with natural-language reflections stored between trials",
-        "Policy networks with random search",
-        "Episodic memory with parametric memory"
+        "Sabit bir ödülle ödül şekillendirme",
+        "Denemeler arasında saklanan doğal dil yansımalarıyla kademeli güncellemeler",
+        "Rastgele arama özelliğine sahip politika ağları",
+        "Parametrik hafızalı epizodik hafıza"
       ],
       "correct": 1,
       "explanation": "Reflexion uses natural-language reflections in episodic memory instead of weight updates."
     },
     {
       "stage": "pre",
-      "question": "What three components define a Reflexion system?",
+      "question": "Hangi üç bileşen bir Yansıma sistemini tanımlar?",
       "options": [
         "Planner, Worker, Solver",
         "Actor, Evaluator, Self-Reflector",
@@ -24,11 +24,11 @@
         "Selector, Expander, Backpropagator"
       ],
       "correct": 1,
-      "explanation": "Reflexion factors the agent into an Actor that runs trajectories, an Evaluator that scores them, and a Self-Reflector that writes lessons."
+      "explanation": "Yansıma, aracıyı yörüngeleri yürüten bir Aktöre, bunları puanlayan bir Değerlendiriciye ve dersler yazan bir Öz-Düşünücüye dönüştürür."
     },
     {
       "stage": "check",
-      "question": "Which evaluator type uses an external binary signal like a unit test or a known correct answer?",
+      "question": "Hangi değerlendirici türü, birim testi veya bilinen doğru cevap gibi harici bir ikili sinyal kullanır?",
       "options": [
         "Heuristic",
         "Scalar",
@@ -36,47 +36,47 @@
         "Vote-based"
       ],
       "correct": 1,
-      "explanation": "Scalar evaluators read pass/fail signals from ground truth (ALFWorld success, HumanEval tests)."
+      "explanation": "Skaler değerlendiriciler temel gerçeklerden başarılı/başarısız sinyallerini okur (ALFWorld başarısı, HumanEval testleri)."
     },
     {
       "stage": "check",
-      "question": "Why is self-evaluation a weaker signal than scalar feedback?",
+      "question": "Öz değerlendirme neden skaler geribildirimden daha zayıf bir sinyaldir?",
       "options": [
-        "It is slower to compute",
-        "The model judging itself has no external grounding so it can rubber-stamp its own answer",
-        "It always requires a larger model",
-        "It cannot run on tools"
+        "Hesaplaması daha yavaş",
+        "Kendini değerlendiren modelin harici bir temeli yoktur, dolayısıyla kendi cevabını onaylayabilir",
+        "Her zaman daha büyük bir model gerektirir",
+        "Araçlar üzerinde çalışamaz"
       ],
       "correct": 1,
-      "explanation": "Self-eval lacks an external check, so a confident hallucination scores well; pair it with tool-grounded verification."
+      "explanation": "Kişisel değerlendirmenin dışsal bir kontrolü yoktur, dolayısıyla kendinden emin bir halüsinasyon iyi puan alır; bunu araca dayalı doğrulamayla eşleştirin."
     },
     {
       "stage": "check",
-      "question": "Which case does the lesson list as a place where Reflexion does NOT help?",
+      "question": "NOT'nin Refleks'in yardımcı olduğu bir yer olarak ders listesi hangi durumda?",
       "options": [
-        "Code generation where tests can score",
-        "An external transient failure like the network being down",
+        "Testlerin puan alabileceği kod oluşturma",
+        "Ağın kapalı olması gibi harici bir geçici arıza",
         "ALFWorld navigation tasks",
         "HotpotQA multi-hop questions"
       ],
       "correct": 1,
-      "explanation": "Reflecting on a transient external outage produces a reflection that does not help future runs."
+      "explanation": "Geçici bir harici kesinti üzerine düşünmek, gelecekteki çalıştırmalara yardımcı olmayan bir yansıma üretir."
     },
     {
       "stage": "post",
-      "question": "What is memory rot in the Reflexion pattern?",
+      "question": "Yansıma modelinde hafıza çürümesi nedir?",
       "options": [
-        "Losing reflections when the process restarts",
-        "Episodic buffer fills with obsolete or wrong reflections and slows or biases future trials",
-        "Reflections get encrypted by the provider",
-        "The reflection prompt exceeds the context window"
+        "Süreç yeniden başlatıldığında yansımalar kayboluyor",
+        "Bölümsel arabellek eski veya yanlış yansımalarla dolar ve gelecekteki denemeleri yavaşlatır veya önyargılı hale getirir",
+        "Yansımalar sağlayıcı tarafından şifrelenir",
+        "Yansıma istemi bağlam penceresini aşıyor"
       ],
       "correct": 1,
-      "explanation": "Accumulated stale or wrong reflections degrade behavior; mitigate with compaction or TTL."
+      "explanation": "Birikmiş eski veya yanlış yansımalar davranışı bozar; sıkıştırma veya TTL ile hafifletin."
     },
     {
       "stage": "post",
-      "question": "Which production pattern is the lesson's clearest match for Reflexion?",
+      "question": "Dersin Reflexion ile en net eşleşmesi hangi üretim modelidir?",
       "options": [
         "Cursor's apply-edits flow",
         "Claude Code's CLAUDE.md learnings prepended to future sessions",
@@ -84,7 +84,7 @@
         "Anthropic's prompt caching"
       ],
       "correct": 1,
-      "explanation": "CLAUDE.md learnings, pro-workflow's learn-rule, and Letta's sleep-time compute all externalize the episodic reflection buffer."
+      "explanation": "CLAUDE.md öğrenmeleri, iş akışı yanlısı öğrenme kuralı ve Letta'nın uyku zamanı hesaplamasının tümü epizodik yansıma arabelleğini dışsallaştırır."
     }
   ]
 }
