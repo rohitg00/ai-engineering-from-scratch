@@ -1,6 +1,6 @@
-# Üretim Agent Çalışma Zamanları — Hızlı Örnek Oluşturma ve Yazılı İş Akışları
+# Üretim Agent Çalışma Zamanları — Hızlı Örnekleme ve Yazılan İş Akışları
 
-> Bir üretim agent çalışma zamanı, prototip oluşturma framework'ların göz ardı ettiği şeyleri optimize eder: örnekleme maliyeti, yazılı iş akışı yüzeyleri ve sunuma hazır bir arka uç. 2026 eşleştirmesi: Agno (Python), mikrosaniyelik agent örneklemeyi ve durum bilgisi olmayan FastAPI arka uçlarını hedefler. Mastra, Vercel AI SDK alt katmanı üzerinde agent'leri, araçları, iş akışlarını, birleştirilmiş model yönlendirmeyi ve bileşik depolamayı sunar.
+> Üretim agent çalışma zamanı, prototipleme framework'lerin göz ardı ettiği şeyleri optimize eder: örnekleme maliyeti, yazılan iş akışı yüzeyleri ve sunuma hazır bir arka uç. 2026 eşleştirmesi: Agno (Python), mikrosaniyelik agent örneklemesini ve durum bilgisi olmayan FastAPI arka uçlarını hedefliyor. Mastra, Vercel AI SDK alt katmanında agent'leri, araçları, iş akışlarını, birleşik model yönlendirmeyi ve kompozit depolamayı sunar.
 
 **Tür:** Öğren
 **Diller:** Python, TypeScript
@@ -16,7 +16,7 @@
 
 ## Sorun
 
-LangGraph, AutoGen, CrewAI framework-ağırdır. "Çalışma zamanımda yalnızca agent loop, hızlı, hızlı" isteyen takımlar Agno (Python) veya Mastra'ya (TypeScript) ulaşır. Her ikisi de framework'nin sahip olduğu temel öğelerin bir kısmını saf hız ve çevredeki yığına daha sıkı uyum karşılığında takas eder.
+LangGraph, AutoGen ve CrewAI framework ağırlıklıdır. "Çalışma zamanımda hızlı, yalnızca agent loop" isteyen takımlar Agno (Python) veya Mastra'ya (TypeScript) ulaşır. Her ikisi de framework'ye ait bazı temel öğeleri ham hız ve çevredeki yığına daha sıkı uyum karşılığında takas ediyor.
 
 ## Konsept
 
@@ -24,19 +24,19 @@ LangGraph, AutoGen, CrewAI framework-ağırdır. "Çalışma zamanımda yalnızc
 
 - Python çalışma zamanı, eski adıyla Phi-data.
 - "Grafikler, zincirler veya karmaşık desenler yok; yalnızca saf python."
-- Dokümanlarından performans hedefleri: ~2μs agent örnekleme, agent başına ~3,75 KiB bellek, ~23 model sağlayıcı.
+- Dokümanlarından performans hedefleri: ~2μs agent örneklemesi, agent başına ~3,75 KiB bellek, ~23 model sağlayıcı.
 - Üretim yolu: durum bilgisi olmayan, oturum kapsamlı FastAPI arka ucu. Her istek yeni bir agent başlatır; oturum durumu bir DB'de yaşıyor.
-- Yerel çok modlu (metin, resim, ses, video, dosya) ve agentic RAG.
+- Yerel multimodal (metin, resim, ses, video, dosya) ve agentic RAG.
 
-Saniyede binlerce kısa ömürlü agent'niz (sohbet fanı girişi, değerlendirme ardışık düzenleri) olduğunda hız hedefleri önemlidir. Bir agent 10 dakika boyunca çalıştırıldığında daha az önem taşırlar.
+Saniyede binlerce kısa ömürlü agent'niz (sohbet fan girişi, değerlendirme ardışık düzenleri) olduğunda hız hedefleri önemlidir. Bir agent 10 dakika çalıştığında bunların önemi azalır.
 
 ### Mastra
 
 - Vercel AI SDK üzerine kurulu TypeScript.
-- Üç temel öğe: **Agents**, **Araçlar** (Zod tipi), **İş Akışları**.
+- Üç temel öğe: **Agent'ler**, **Araçlar** (Zod tipinde), **İş Akışları**.
 - Birleşik Model Yönlendirici — 94 sağlayıcıda 3.300'den fazla model (Mart 2026).
-- Bileşik depolama: bellek, iş akışları, farklı arka uçlara observability; ClickHouse observability için geniş ölçekte önerilir.
-- Kaynakta kullanılabilir kurumsal lisans kapsamında `ee/` dizinlerine sahip Apache 2.0.
+- Bileşik depolama: bellek, iş akışları, farklı arka uçlara observability; Geniş ölçekte observability için ClickHouse önerilir.
+- Kaynakta kullanılabilen kurumsal lisans kapsamında `ee/` dizinlerine sahip Apache 2.0.
 - Express, Hono, Fastify, Koa için sunucu adaptörleri; birinci sınıf Next.js ve Astro entegrasyonu.
 - Hata ayıklama için Mastra Studio'yu (localhost:4111) gönderir.
 - 22.000'den fazla GitHub yıldızı, 1.0'da (Ocak 2026) 300.000'den fazla haftalık npm indirme.
@@ -64,7 +64,7 @@ Saniyede binlerce kısa ömürlü agent'niz (sohbet fanı girişi, değerlendirm
 
 ## İnşa Et
 
-Bu ders öncelikle karşılaştırmalıdır; tek bir artifact kodu her iki framework'nin hakkını veremez. Yan yana bir oyuncak için bkz. `code/main.py`: minimum "bir agent çalıştır, çıktıyı aktar, oturumu sürdür" akışı iki kez uygulandı (bir kez Agno şeklinde, bir kez Mastra şeklinde).
+Bu ders öncelikle karşılaştırmalıdır; hiçbir artifact kodu, her iki framework'nin hakkını veremez. Yan yana bir oyuncak için `code/main.py`'ye bakın: minimum "bir agent çalıştırın, çıktıyı aktarın, oturumu sürdürün" akışı iki kez uygulandı (bir kez Agno şeklinde, bir kez Mastra şeklinde).
 
 Çalıştır:
 
@@ -82,7 +82,7 @@ Yapısal olarak farklı ama işlevsel olarak eşdeğer iki iz.
 
 ## Gönderin
 
-`outputs/skill-runtime-picker.md` yığın, gecikme bütçesi ve operasyonel şekle göre Agno, Mastra, LangGraph veya bir sağlayıcı SDK'sını seçer.
+`outputs/skill-runtime-picker.md`, yığın, gecikme bütçesi ve operasyonel şekle göre Agno, Mastra, LangGraph veya bir sağlayıcı SDK'sını seçer.
 
 ## Egzersizler
 
@@ -96,11 +96,11 @@ Yapısal olarak farklı ama işlevsel olarak eşdeğer iki iz.
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| Agno | "Hızlı Python agent'lar" | Durum bilgisi olmayan oturum kapsamlı agent çalışma zamanı |
-| Mastra | "Vercel AI SDK'sında TypeScript agent'ler" | Agent'lar + Araçlar + İş Akışları + Model Yönlendirici |
+| Agno | "Hızlı Python agent'ler" | Durum bilgisi olmayan oturum kapsamlı agent çalışma zamanı |
+| Mastra | "Vercel AI SDK'da TypeScript agent'ler" | Agent'ler + Araçlar + İş Akışları + Model Yönlendirici |
 | Birleşik Model Yönlendirici | "Çoklu sağlayıcı erişimi" | 94 sağlayıcıda 3.300'den fazla model için tek istemci |
-| Kompozit depolama | "Birden çok arka uç" | Bellek/iş akışları/observability her biri farklı bir mağazaya |
-| Mastra Stüdyo | "Yerel hata ayıklayıcı" | localhost:4111 agent'ları incelemek için kullanıcı arayüzü |
+| Kompozit depolama | "Birden çok arka uç" | Bellek/iş akışları/observability her biri farklı bir depoya |
+| Mastra Stüdyo | "Yerel hata ayıklayıcı" | localhost:4111 agent'leri incelemek için kullanıcı arayüzü |
 | Kaynak mevcut | "OSS Değil" | Lisans, kaynak okumaya izin verir ancak ticari kullanımı kısıtlar |
 
 ## Daha Fazla Okuma
@@ -108,4 +108,4 @@ Yapısal olarak farklı ama işlevsel olarak eşdeğer iki iz.
 - [Agno Agent Framework docs](https://www.agno.com/agent-framework) — performans hedefleri, FastAPI entegrasyonu
 - [Mastra docs](https://mastra.ai/docs) — temel öğeler, sunucu bağdaştırıcıları, Model Yönlendirici
 - [LangGraph'a genel bakış](https://docs.langchain.com/oss/python/langgraph/overview) — durum bilgisi olan grafik alternatifi
-- [Comet Opik](https://www.comet.com/site/products/opik/) — Mastra entegrasyonları tarafından alıntılanan observability karşılaştırma
+- [Comet Opik](https://www.comet.com/site/products/opik/) — Mastra entegrasyonları tarafından alıntılanan observability karşılaştırmaları
