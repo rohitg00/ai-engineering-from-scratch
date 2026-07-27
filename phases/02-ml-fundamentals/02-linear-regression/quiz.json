@@ -2,66 +2,66 @@
   {
     "id": "linreg-pre-1",
     "stage": "pre",
-    "question": "What does the learning rate control in gradient descent?",
+    "question": "Degrade inişte öğrenme hızı neyi kontrol eder?",
     "options": [
-      "The number of features used by the model",
-      "How many epochs the model trains for",
-      "The size of each parameter update step",
-      "The ratio of training to test data"
+      "Model tarafından kullanılan özelliklerin sayısı",
+      "Modelin kaç dönem boyunca eğitildiği",
+      "Her parametre güncelleme adımının boyutu",
+      "Eğitimin test verilerine oranı"
     ],
     "correct": 2,
-    "explanation": "The learning rate is a scalar that controls how much weights change per gradient descent step. Too large causes divergence, too small causes slow convergence."
+    "explanation": "Öğrenme oranı, gradyan iniş adımı başına ağırlığın ne kadar değiştiğini kontrol eden bir skalerdir. Çok büyük olması ayrışmaya neden olur, çok küçük olması ise yavaş yakınsamaya neden olur."
   },
   {
     "id": "linreg-pre-2",
     "stage": "pre",
-    "question": "What does R-squared = 0 mean for a regression model?",
+    "question": "Bir regresyon modeli için R-squared = 0 ne anlama gelir?",
     "options": [
-      "The model makes perfect predictions",
-      "The model is no better than always predicting the mean of the target",
-      "The model has negative error",
-      "The model has not been trained yet"
+      "Model mükemmel tahminler yapıyor",
+      "Model her zaman hedefin ortalamasını tahmin etmekten daha iyi değildir",
+      "Modelde negatif hata var",
+      "Model henüz eğitilmedi"
     ],
     "correct": 1,
-    "explanation": "R-squared = 0 means the model explains none of the variance in the target. It performs exactly as well as simply predicting the mean every time."
+    "explanation": "R-squared = 0, modelin hedefteki varyansların hiçbirini açıklamadığı anlamına gelir. Her seferinde ortalamayı tahmin etmenin yanı sıra tam olarak da performans gösterir."
   },
   {
     "id": "linreg-post-1",
     "stage": "post",
-    "question": "Why is feature scaling important for gradient descent in multiple linear regression?",
+    "question": "Çoklu doğrusal regresyonda gradyan inişinde özellik ölçeklendirme neden önemlidir?",
     "options": [
-      "It makes the model more interpretable",
-      "It prevents the cost surface from being elongated, allowing faster convergence",
-      "It reduces the number of features needed",
-      "It guarantees the model will find the global minimum"
+      "Modeli daha yorumlanabilir hale getirir",
+      "Maliyet yüzeyinin uzamasını önleyerek daha hızlı yakınsama sağlar",
+      "İhtiyaç duyulan özelliklerin sayısını azaltır",
+      "Modelin küresel minimumu bulacağını garanti eder"
     ],
     "correct": 1,
-    "explanation": "When features have very different scales, the cost surface becomes elongated. Gradient descent takes many more steps to converge. Standardizing features makes the surface more spherical."
+    "explanation": "Özellikler çok farklı ölçeklere sahip olduğunda maliyet yüzeyi uzar. Gradyan inişin yakınsaması için çok daha fazla adım gerekir. Standartlaştırma özellikleri yüzeyi daha küresel hale getirir."
   },
   {
     "id": "linreg-post-2",
     "stage": "post",
-    "question": "The normal equation gives optimal weights directly. Why would you prefer gradient descent instead?",
+    "question": "Normal denklem doğrudan optimal ağırlıkları verir. Bunun yerine neden degrade inişi tercih edersiniz?",
     "options": [
       "Gradient descent always gives more accurate results",
-      "The normal equation does not work for linear regression",
-      "Matrix inversion in the normal equation is O(n^3) in features, which is too slow for thousands of features",
-      "Gradient descent requires less memory than storing the data"
+      "Normal denklem doğrusal regresyon için çalışmıyor",
+      "Normal denklemdeki matrisin ters çevrilmesi, özelliklerde O(n^3)'dir ve bu, binlerce özellik için çok yavaştır.",
+      "Kademeli iniş, verileri depolamaktan daha az bellek gerektirir"
     ],
     "correct": 2,
-    "explanation": "The normal equation requires inverting X^T * X, which is O(n^3) in the number of features. For large feature counts, gradient descent is more efficient."
+    "explanation": "Normal denklem, özellik sayısında O(n^3) olan X^T * X'in ters çevrilmesini gerektirir. Büyük özellik sayıları için degrade iniş daha verimlidir."
   },
   {
     "id": "linreg-post-3",
     "stage": "post",
-    "question": "A degree-10 polynomial regression model fits training data perfectly (R^2 = 1.0) but has R^2 = 0.3 on test data. What should you do?",
+    "question": "Derece-10 polinom regresyon modeli, eğitim verilerine mükemmel bir şekilde uyar (R^2 = 1,0), ancak test verilerinde R^2 = 0,3'e sahiptir. Ne yapmalısın?",
     "options": [
-      "Increase the polynomial degree to 20 for even better training fit",
+      "Daha iyi antrenman uyumu için polinom derecesini 20'ye yükseltin",
       "Reduce model complexity (lower degree) or add regularization (Ridge) to prevent overfitting",
-      "Collect less training data so the model cannot memorize",
-      "Remove the test set and report training R^2 only"
+      "Modelin ezberleyememesi için daha az eğitim verisi toplayın",
+      "Test setini çıkarın ve yalnızca R^2 eğitimini raporlayın"
     ],
     "correct": 1,
-    "explanation": "Perfect training fit with poor test fit is overfitting. The fix is to reduce complexity (lower polynomial degree) or add regularization to penalize large weights."
+    "explanation": "Zayıf test uyumu ile mükemmel eğitim uyumu aşırı uyumdur. Çözüm, karmaşıklığı azaltmak (düşük polinom derecesi) veya büyük ağırlıkları cezalandırmak için düzenlileştirme eklemektir."
   }
 ]
