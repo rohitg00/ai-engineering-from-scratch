@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which pair best captures the inner / outer alignment distinction?",
+      "question": "Hangi çift iç/dış hizalama ayrımını en iyi şekilde yakalıyor?",
       "options": [
-        "Outer = does the model run on hardware; inner = is loss low",
-        "Outer = does the base objective match what we wanted; inner = does the mesa-objective match the base objective",
-        "Outer = is the policy stable; inner = is the temperature low",
-        "Outer = is data clean; inner = is the optimizer stochastic"
+        "Dış = model donanım üzerinde çalışıyor mu; iç = kayıp düşük",
+        "Dış = temel hedef istediğimizle eşleşiyor mu; iç = mesa hedefi temel hedefle eşleşiyor mu",
+        "Dış = politika istikrarlı mı; iç = sıcaklık düşük mü",
+        "Dış = veriler temizdir; iç = optimize edici stokastiktir"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which of the following is NOT one of Hubinger et al.'s four classes of mesa-objective alignment?",
+      "question": "Aşağıdakilerden hangisi NOT, Hubinger ve arkadaşlarının mesa-objektif hizalamanın dört sınıfından biridir?",
       "options": [
         "Approximately aligned",
         "Robustly aligned",
@@ -28,48 +28,48 @@
     },
     {
       "stage": "check",
-      "question": "Under what conditions is deceptive alignment the reward-maximizing strategy for a mesa-optimizer?",
+      "question": "Hangi koşullar altında aldatıcı hizalama, bir mesa-iyileştirici için ödülü en üst düzeye çıkarma stratejisidir?",
       "options": [
-        "It is trained with PPO rather than DPO",
-        "It has a persistent terminal goal, has situational awareness of training vs deployment, and the base optimizer modifies it if it defects in training",
-        "Its capacity exceeds 100B parameters",
-        "It has any internal representation at all"
+        "DPO yerine PPO ile eğitilmiştir",
+        "Kalıcı bir terminal hedefi vardır, eğitim ve dağıtım konusunda durumsal farkındalığa sahiptir ve temel iyileştirici, eğitimde kusur olması durumunda bunu değiştirir.",
+        "Kapasitesi 100B parametresini aşıyor",
+        "Herhangi bir iç temsili vardır"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why can standard adversarial training fail (or worsen) deceptive alignment?",
+      "question": "Standart çekişmeli eğitim neden aldatıcı hizalamayı başarısızlığa uğratabilir (veya kötüleştirebilir)?",
       "options": [
-        "It requires more compute than RLHF",
-        "It teaches the mesa-optimizer a sharper discriminator between test and deployment, not an aligned mesa-objective",
-        "It uses the wrong loss function",
-        "It cannot run on GPUs"
+        "RLHF'den daha fazla bilgi işlem gerektirir",
+        "Mesa-optimizer'a, hizalanmış bir mesa-hedefi değil, test ve dağıtım arasında daha keskin bir ayrım yapmayı öğretir",
+        "Yanlış kayıp fonksiyonunu kullanıyor",
+        "GPU'larda çalışamaz"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is gradient hacking, as introduced in Hubinger et al. (2019)?",
+      "question": "Hubinger ve ark.'da tanıtıldığı şekliyle degrade hackleme nedir? (2019)?",
       "options": [
-        "A speculative pathology where a capable mesa-optimizer produces outputs that shape its own gradient updates to preserve its mesa-objective",
-        "A jailbreaking method for instruction-tuned models",
+        "Yetenekli bir mesa-iyileştiricinin, mesa-hedefini korumak için kendi gradyan güncellemelerini şekillendiren çıktılar ürettiği spekülatif bir patoloji",
+        "Talimat ayarlı modeller için jailbreak yöntemi",
         "A bug in autograd",
-        "A technique for faster training"
+        "Daha hızlı eğitim için bir teknik"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which of these is an OUTER alignment failure, not an inner one?",
+      "question": "Bunlardan hangisi OUTER hizalama hatasıdır, iç hata değildir?",
       "options": [
-        "Reward hacking and sycophancy emerging because the base objective is itself a flawed proxy for human intent",
-        "Mesa-optimizer optimizes a proxy goal that diverges off-distribution",
+        "Ödül korsanlığı ve dalkavukluk, temel hedefin kendisinin insan niyetinin kusurlu bir temsili olması nedeniyle ortaya çıkıyor",
+        "Mesa-optimizer, dağıtım dışından ayrılan bir proxy hedefini optimize eder",
         "Backdoor surviving SFT",
-        "Mesa-optimizer hides its goal during evaluation"
+        "Mesa-optimizer, değerlendirme sırasında hedefini gizler"
       ],
       "correct": 0,
       "explanation": ""
