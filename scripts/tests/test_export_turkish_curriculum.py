@@ -43,11 +43,14 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         readme = (target / "README.md").read_text()
         self.assertIn("1 aşama", readme)
         self.assertIn("1 Türkçe ders", readme)
+        self.assertIn("## Bu müfredat kimin için?", readme)
         self.assertIn("## Hızlı başlangıç", readme)
+        self.assertIn("## Size uygun rota", readme)
         self.assertIn("## Öğrenme rotası", readme)
         self.assertIn("## Bir ders nasıl çalışılır?", readme)
         self.assertIn("## Dağıtım güvenceleri", readme)
         self.assertIn("## Kaynak ve atıf", readme)
+        self.assertIn("## Sık sorulan sorular", readme)
         self.assertIn(
             "https://github.com/rohitg00/ai-engineering-from-scratch", readme
         )
