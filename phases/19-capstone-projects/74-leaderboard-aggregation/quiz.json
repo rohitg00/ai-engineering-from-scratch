@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the aggregator require every input score to be in [0, 1]?",
+      "question": "Toplayıcı neden her giriş puanının [0, 1] cinsinden olmasını gerektiriyor?",
       "options": [
-        "It is the bin range for ECE",
-        "Without a common scale, a single metric with a 0-100 range dominates the per-model mean",
-        "Numpy requires it",
+        "ECE için kutu aralığıdır",
+        "Ortak bir ölçek olmadığında, 0-100 aralığına sahip tek bir metrik, model başına ortalamaya hakim olur",
+        "Numpy bunu gerektiriyor",
         "Markdown rendering expects two decimals"
       ],
       "correct": 1,
-      "explanation": "If pass-rate is in [0,1] and BLEU is in [0,100], the latter swamps the average. Normalisation belongs at the metric layer and is checked here."
+      "explanation": "Geçiş oranı [0,1] ise ve BLEU [0,100] ise, ikincisi ortalamayı batırır. Normalleştirme metrik katmana aittir ve burada kontrol edilir."
     },
     {
       "stage": "pre",
-      "question": "What information does mean score hide that win-rate exposes?",
+      "question": "Kazanma oranının ortaya çıkardığı ortalama puan hangi bilgileri gizler?",
       "options": [
-        "Whether the model is well calibrated",
-        "Per-task wins resist outliers and scale shifts; mean is sensitive to both",
-        "The number of tasks completed",
-        "The bootstrap interval"
+        "Modelin iyi kalibre edilmiş olup olmadığı",
+        "Görev başına kazanılan zaferler aykırı değerlere ve ölçek değişikliklerine direnir; ortalama her ikisine de duyarlıdır",
+        "Tamamlanan görev sayısı",
+        "Önyükleme aralığı"
       ],
       "correct": 1,
-      "explanation": "Win-rate counts task-by-task wins. A model can have a high mean from one easy task and still lose most pairwise comparisons."
+      "explanation": "Kazanma oranı, görev bazında galibiyetleri sayar. Bir model, tek bir kolay görevde yüksek bir ortalamaya sahip olabilir ve yine de çoğu ikili karşılaştırmayı kaybedebilir."
     },
     {
       "stage": "check",
-      "question": "How does bootstrap_mean_ci estimate the confidence interval?",
+      "question": "Bootstrap_mean_ci güven aralığını nasıl tahmin ediyor?",
       "options": [
-        "By assuming a normal distribution on the mean",
-        "By resampling task scores with replacement, computing the mean over each sample, then taking the alpha/2 and 1 - alpha/2 percentiles",
-        "By computing the standard deviation analytically",
+        "Ortalamanın normal dağılım gösterdiğini varsayarak",
+        "Görev puanlarını değiştirmeyle yeniden örnekleyerek, her örneğin ortalamasını hesaplayarak, ardından alfa/2 ve 1 - alfa/2 yüzdelik dilimlerini alarak",
+        "Standart sapmayı analitik olarak hesaplayarak",
         "By calling scipy.stats.bootstrap"
       ],
       "correct": 1,
-      "explanation": "Non-parametric percentile bootstrap on the per-task scores; no distributional assumption, no scipy."
+      "explanation": "Görev başına puanlarda parametrik olmayan yüzdelik önyükleme; dağıtım varsayımı yok, scipy yok."
     },
     {
       "stage": "check",
-      "question": "When does the pairwise diff CI report `significant`?",
+      "question": "CI ikili farkı ne zaman `significant` raporunu verir?",
       "options": [
-        "When the CI does not contain zero",
-        "When the mean difference is larger than 0.1",
-        "When both models have more than thirty tasks",
-        "When the win-rates are unequal"
+        "CI sıfır içermediğinde",
+        "Ortalama fark 0,1'den büyük olduğunda",
+        "Her iki modelin de otuzdan fazla görevi olduğunda",
+        "Kazanma oranları eşit olmadığında"
       ],
       "correct": 0,
-      "explanation": "A CI that strictly excludes zero means the difference is unlikely to be zero at the chosen level; that is the operational definition the lesson uses."
+      "explanation": "Sıfırı kesinlikle hariç tutan bir CI, farkın seçilen seviyede sıfır olma ihtimalinin düşük olduğu anlamına gelir; dersin kullandığı operasyonel tanım budur."
     },
     {
       "stage": "check",
-      "question": "Why is the pairwise bootstrap paired rather than independent?",
+      "question": "Çift yönlü önyükleme neden bağımsız olmak yerine eşleştirilmiş?",
       "options": [
-        "Independent bootstrap is illegal in Python",
-        "Paired bootstrap respects that the same task feeds both models; differences are computed task by task before resampling",
+        "Python'da bağımsız önyükleme yasa dışıdır",
+        "Eşleştirilmiş önyükleme, aynı görevin her iki modeli de beslemesine saygı duyar; farklılıklar yeniden örneklemeden önce göreve göre hesaplanır",
         "Paired bootstrap runs faster",
-        "Paired bootstrap is the only one numpy supports"
+        "Eşleştirilmiş önyükleme, tek numpy desteğidir"
       ],
       "correct": 1,
-      "explanation": "Paired bootstrap reduces noise: we sample over tasks, not over models, so the comparison is on the same task set every iteration."
+      "explanation": "Eşleştirilmiş önyükleme gürültüyü azaltır: modeller üzerinden değil, görevler üzerinden örnekleme yaparız, böylece karşılaştırma her yinelemede aynı görev kümesinde yapılır."
     },
     {
       "stage": "post",
-      "question": "Why does the aggregator return per-category means alongside the headline number?",
+      "question": "Toplayıcı neden başlık numarasının yanında kategori başına anlamına da geri dönüyor?",
       "options": [
-        "It is required by JSON Schema",
-        "Headline mean can mask category-level weakness (good overall, bad at code); per-category exposes that",
+        "JSON Şeması için gereklidir",
+        "Başlık ortalaması, kategori düzeyindeki zayıflığı maskeleyebilir (genel olarak iyi, kodda kötü); kategori başına şunu ortaya koyuyor",
         "Per-category means run faster than overall mean",
-        "Markdown rendering requires it"
+        "Markdown oluşturma bunu gerektirir"
       ],
       "correct": 1,
-      "explanation": "A model can win on aggregate by being okay everywhere or by dominating one category. Per-category breakdown lets the consumer see which."
+      "explanation": "Bir model, her yerde başarılı olarak veya bir kategoriye hakim olarak toplamda kazanabilir. Kategori başına döküm, tüketicinin hangisi olduğunu görmesini sağlar."
     }
   ]
 }
