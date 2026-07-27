@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is OpenAI's omni-moderation-latest (2024)?",
+      "question": "OpenAI'nin çok yönlü moderasyon-en son sürümü (2024) nedir?",
       "options": [
         "An RLHF reward model",
         "A reasoning-focused frontier model",
         "A C2PA watermarking endpoint",
-        "A GPT-4o-based moderation classifier that handles text and images in one call, returning a 13-category response schema (harassment, hate, self-harm, sexual, violence, illicit, with sub-categories), free for most developers"
+        "Tek çağrıda metin ve görselleri işleyen, 13 kategorili bir yanıt şeması (taciz, nefret, kendine zarar verme, cinsel, şiddet, yasa dışı, alt kategorilerle birlikte) döndüren, çoğu geliştirici için ücretsiz olan GPT-4o tabanlı bir denetleme sınıflandırıcısı"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which of these is NOT one of OpenAI Moderation's primary top-level categories?",
+      "question": "Bunlardan hangisi NOT OpenAI Moderation'ın birincil üst düzey kategorilerinden biridir?",
       "options": [
         "violence",
         "election-interference",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "What are the three layers of the standard 2026 moderation pattern?",
+      "question": "Standart 2026 denetleme modelinin üç katmanı nedir?",
       "options": [
         "Probe / detector / harness",
         "Tokenizer / model / detokenizer",
@@ -40,10 +40,10 @@
     },
     {
       "stage": "check",
-      "question": "What is Perspective API (Google Jigsaw) primarily designed to score?",
+      "question": "Perspective API (Google Jigsaw) öncelikli olarak puan almak için tasarlanmıştır?",
       "options": [
         "Watermark strength",
-        "Toxicity (with severe-toxicity, insult, profanity, threat, identity-attack sub-dimensions) as a pre-LLM-era content-moderation baseline",
+        "LLM-era öncesi içerik denetleme temeli olarak toksisite (şiddetli toksisite, hakaret, küfür, tehdit, kimlik saldırısı alt boyutlarıyla birlikte)",
         "Reasoning quality",
         "Reward over user satisfaction"
       ],
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "What is one failure mode of input-only moderation?",
+      "question": "Yalnızca giriş denetiminin bir hata modu nedir?",
       "options": [
-        "It cannot run on GPUs",
-        "It does not catch model output failures or hallucinations; encoding attacks (Lessons 12-14) can bypass input classifiers entirely",
-        "It always blocks legitimate content",
-        "It removes the need for output classifiers"
+        "GPU'larda çalışamaz",
+        "Model çıktı hatalarını veya halüsinasyonları yakalamaz; kodlama saldırıları (Ders 12-14) giriş sınıflandırıcılarını tamamen atlayabilir",
+        "Meşru içeriği her zaman engeller",
+        "Çıkış sınıflandırıcılarına olan ihtiyacı ortadan kaldırır"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the Azure Content Moderator deprecation and migration target?",
+      "question": "Azure Content Moderator'ın kullanımdan kaldırılması ve geçiş hedefi nedir?",
       "options": [
-        "Deprecated February 2024, retired March 15, 2027; migration target is Azure AI Content Safety (LLM-based, integrated with Azure OpenAI)",
+        "Şubat 2024'te kullanımdan kaldırıldı, 15 Mart 2027'de kullanımdan kaldırıldı; geçiş hedefi Azure AI İçerik Güvenliğidir (LLM- tabanlı, Azure OpenAI ile tümleşik)",
         "Replaced by Perspective API",
-        "Merged into Llama Guard 4",
-        "Deprecated immediately with no replacement"
+        "Llama Guard 4 ile birleştirildi",
+        "Değiştirilmeden derhal kullanımdan kaldırıldı"
       ],
       "correct": 0,
       "explanation": ""
