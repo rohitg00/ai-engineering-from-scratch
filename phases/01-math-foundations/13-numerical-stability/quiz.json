@@ -2,7 +2,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the approximate range of numbers that float32 can represent?",
+      "question": "Float32'nin temsil edebileceği yaklaşık sayı aralığı nedir?",
       "options": [
         "+/- 65,504",
         "+/- 3.4e38",
@@ -10,55 +10,55 @@
         "+/- 1.0e10"
       ],
       "correct": 1,
-      "explanation": "Float32 has an 8-bit exponent giving a range of approximately +/- 3.4e38. Float16 is limited to +/- 65,504, and float64 reaches +/- 1.8e308."
+      "explanation": "Float32, yaklaşık +/- 3,4e38 aralığı veren 8 bitlik bir üsse sahiptir. Float16 +/- 65.504 ile sınırlıdır ve float64 +/- 1.8e308'e ulaşır."
     },
     {
       "stage": "pre",
-      "question": "Why does 0.1 + 0.2 not equal 0.3 in floating-point arithmetic?",
+      "question": "Kayan nokta aritmetiğinde neden 0,1 + 0,2 0,3'e eşit değil?",
       "options": [
         "Python rounds all decimals to integers",
-        "0.1 and 0.2 cannot be represented exactly in binary floating point",
-        "The CPU has a bug in its addition circuit",
-        "0.3 is not a valid floating-point number"
+        "0,1 ve 0,2, ikili kayan noktada tam olarak temsil edilemez",
+        "CPU'nin ekleme devresinde bir hata var",
+        "0,3 geçerli bir kayan noktalı sayı değil"
       ],
       "correct": 1,
-      "explanation": "The number 0.1 is a repeating fraction in binary (like 1/3 in decimal). Float32 truncates it, so the stored value is approximately 0.100000001490116. The accumulated error makes the sum differ from 0.3."
+      "explanation": "0,1 sayısı ikili sistemde tekrarlanan bir kesirdir (ondalık sistemde 1/3 gibi). Float32 onu keser, böylece depolanan değer yaklaşık 0,100000001490116 olur. Birikmiş hata toplamı 0,3'ten farklı kılar."
     },
     {
       "stage": "post",
-      "question": "In the stable softmax implementation, why do you subtract max(logits) before exponentiating?",
+      "question": "Kararlı softmax uygulamasında, üstelleştirmeden önce neden max(logits)'yi çıkarıyorsunuz?",
       "options": [
-        "It makes the output probabilities more uniform",
-        "It prevents exp() from overflowing by ensuring the largest exponent is 0",
-        "It converts logits from float16 to float32",
-        "It normalizes the logits to have zero mean"
+        "Çıktı olasılıklarını daha düzgün hale getirir",
+        "En büyük üssün 0 olmasını sağlayarak exp()'nin taşmasını önler",
+        "Logitleri float16'dan float32'ye dönüştürür",
+        "Logitleri sıfır ortalamaya sahip olacak şekilde normalleştirir"
       ],
       "correct": 1,
-      "explanation": "After subtracting max(logits), the largest value is 0 and exp(0) = 1, which cannot overflow. All other values are negative, so their exponentials are less than 1. The probabilities are mathematically identical to the naive version."
+      "explanation": "max(logits) çıkarıldıktan sonra en büyük değer 0 olur ve taşma yapılamaz exp(0) = 1 olur. Diğer tüm değerler negatiftir, dolayısıyla üstel değerleri 1'den küçüktür. Olasılıklar matematiksel olarak basit versiyonla aynıdır."
     },
     {
       "stage": "post",
-      "question": "When using centered finite differences for gradient checking, what happens if the step size h is too small (e.g., 1e-15)?",
+      "question": "Gradyan kontrolü için merkezi sonlu farklar kullanıldığında, h adım boyutu çok küçükse (örneğin, 1e-15) ne olur?",
       "options": [
-        "The approximation becomes more accurate",
-        "Catastrophic cancellation destroys the result because f(x+h) and f(x-h) are nearly identical",
-        "The function evaluation becomes faster",
-        "The gradient automatically becomes zero"
+        "Yaklaşım daha doğru hale gelir",
+        "Felaket iptali sonucu yok eder çünkü f(x+h) ve f(x-h) neredeyse aynıdır",
+        "Fonksiyon değerlendirmesi daha hızlı hale gelir",
+        "Degrade otomatik olarak sıfır olur"
       ],
       "correct": 1,
-      "explanation": "When h is extremely small, f(x+h) and f(x-h) differ only in their last few significant digits. Subtracting them cancels the leading digits, leaving mostly rounding noise. Typical good values are h = 1e-5 to 1e-7."
+      "explanation": "h son derece küçük olduğunda, f(x+h) ve f(x-h) yalnızca son birkaç anlamlı basamağında farklılık gösterir. Bunları çıkarmak, baştaki rakamları iptal eder ve çoğunlukla yuvarlama gürültüsü bırakır. Tipik iyi değerler h = 1e-5 ila 1e-7'dir."
     },
     {
       "stage": "post",
-      "question": "Why is bfloat16 generally preferred over float16 for neural network training?",
+      "question": "Sinir ağı eğitimi için neden genellikle float16 yerine bfloat16 tercih edilir?",
       "options": [
-        "bfloat16 has more mantissa bits, giving better precision",
-        "bfloat16 has the same exponent range as float32, avoiding overflow on large activations without loss scaling",
+        "bfloat16'da daha fazla mantis biti bulunur ve bu da daha iyi hassasiyet sağlar",
+        "bfloat16, float32 ile aynı üs aralığına sahiptir ve kayıp ölçeklendirmesi olmadan büyük aktivasyonlarda taşmayı önler",
         "bfloat16 uses less memory than float16",
-        "bfloat16 is supported by more GPU architectures than float16"
+        "bfloat16, float16'ya göre daha fazla GPU mimarisi tarafından desteklenir"
       ],
       "correct": 1,
-      "explanation": "bfloat16 has 8 exponent bits (same as float32, range up to 3.4e38) while float16 has only 5 exponent bits (max ~65,504). During training, activations and gradients can exceed 65,504, causing float16 overflow. bfloat16 handles this without loss scaling."
+      "explanation": "bfloat16'da 8 üs bit bulunur (float32 ile aynı, 3.4e38'e kadar değişir), float16'da ise yalnızca 5 üs bit bulunur (maks ~65.504). Eğitim sırasında aktivasyonlar ve eğimler 65.504'ü aşabilir ve bu da float16 taşmasına neden olabilir. bfloat16 bunu kayıp ölçeklendirmesi olmadan halleder."
     }
   ]
 }
