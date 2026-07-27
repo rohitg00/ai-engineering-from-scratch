@@ -1,24 +1,24 @@
 {
   "lesson": "06-devops-troubleshooting-agent",
-  "title": "Capstone 06 — DevOps Troubleshooting Agent for Kubernetes",
+  "title": "Capstone 06 — Kubernetes için DevOps Sorun Giderme Aracısı",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the default permission posture for the troubleshooting agent's RBAC surface?",
+      "question": "Sorun giderme aracısının RBAC yüzeyi için varsayılan izin duruşu nedir?",
       "options": [
-        "Read-only by default, with destructive verbs gated behind a separate server and human approval",
-        "Namespace-admin in the affected namespace only",
-        "Equivalent to the on-call engineer",
-        "Cluster-admin so it can self-heal"
+        "Varsayılan olarak salt okunurdur; yıkıcı fiiller ayrı bir sunucunun ve insan onayının arkasında yer alır",
+        "Yalnızca etkilenen ad alanında ad alanı-yönetici",
+        "Çağrı mühendisine eşdeğer",
+        "Kendi kendini iyileştirebilmesi için küme yöneticisi"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What is the knowledge graph the agent walks during root cause analysis?",
+      "question": "Kök neden analizi sırasında temsilcinin yürüdüğü bilgi grafiği nedir?",
       "options": [
-        "Nodes are K8s objects plus telemetry sources; edges encode ownership, scheduling, and observation",
+        "Düğümler, K8 nesneleri artı telemetri kaynaklarıdır; kenarlar sahipliği, planlamayı ve gözlemi kodlar",
         "A flat list of recently restarted pods",
         "Prometheus metric names organized by team",
         "A graph of GitHub commits and PR reviews"
@@ -28,23 +28,23 @@
     },
     {
       "stage": "check",
-      "question": "How are root-cause hypotheses ranked for the Slack brief?",
+      "question": "Slack özeti için temel neden hipotezleri nasıl sıralanıyor?",
       "options": [
         "By an evidence score combining recency, specificity, graph-path length, and citation count",
         "By model log-probability alone",
         "By alphabetic alert name",
-        "By the order they were generated"
+        "Oluşturulma sırasına göre"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does the audit log record commands the agent considered as well as those executed?",
+      "question": "Denetim günlüğü kaydı neden yürütülenlerin yanı sıra dikkate alınan aracıya da komut veriyor?",
       "options": [
-        "Reviewers can catch near-misses where the agent almost ran a destructive command",
-        "ArgoCD only accepts considered commands",
-        "The Slack API needs both for delivery",
+        "Gözden geçirenler, aracının neredeyse yıkıcı bir komut çalıştırdığı ramak kala durumları yakalayabilir",
+        "ArgoCD yalnızca dikkate alınan komutları kabul eder",
+        "Slack API'nin teslimat için her ikisine de ihtiyacı var",
         "Replay attacks require both lists"
       ],
       "correct": 0,
@@ -52,23 +52,23 @@
     },
     {
       "stage": "check",
-      "question": "Which mechanism prevents the agent from rolling back unilaterally on a bad deploy?",
+      "question": "Hangi mekanizma, kötü bir dağıtım durumunda aracının tek taraflı olarak geri alınmasını engeller?",
       "options": [
-        "Destructive tools live on a separate MCP server behind an approval token from a Slack card",
-        "A second LLM-judge votes on the rollback",
-        "Branch protection on the GitOps repo",
-        "PagerDuty automatically pauses the deployment"
+        "Yıkıcı araçlar, bir Slack kartından alınan onay jetonunun arkasında ayrı bir MCP sunucusunda bulunur",
+        "Geri alma konusunda ikinci bir LLM-judge oyu",
+        "GitOps deposunda şube koruması",
+        "PagerDuty dağıtımı otomatik olarak duraklatır"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the p50 time-to-hypothesis target the rubric measures?",
+      "question": "Değerlendirme tablosu ölçümlerinde p50 hipoteze ulaşma süresi hedefi nedir?",
       "options": [
-        "Under the next on-call shift",
+        "Bir sonraki çağrı vardiyasında",
         "Under 1 hour",
-        "Under 5 minutes from alert to Slack brief",
+        "Uyarıdan Slack brifingine 5 dakikadan az süre",
         "Under 30 seconds"
       ],
       "correct": 2,
@@ -76,7 +76,7 @@
     },
     {
       "stage": "post",
-      "question": "How big is the synthetic incident suite used to score RCA accuracy?",
+      "question": "RCA doğruluğunu puanlamak için kullanılan sentetik olay paketi ne kadar büyük?",
       "options": [
         "1 scripted demo incident",
         "5 scenarios",
