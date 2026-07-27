@@ -282,6 +282,12 @@ def build_local_site_index(
     :root {{ --paper:#f5f3eb; --ink:#151515; --muted:#6b6a65; --rule:#cbc8bd;
       --soft:#e7e4da; --blue:#244bff; --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
       --serif:Georgia,"Times New Roman",serif }}
+    :root[data-theme="dark"] {{ --paper:#17171c; --ink:#f4f1e8; --muted:#aaa89f;
+      --rule:#45454c; --soft:#303037; --blue:#8da2ff }}
+    @media(prefers-color-scheme:dark) {{
+      :root:not([data-theme="light"]) {{ --paper:#17171c; --ink:#f4f1e8; --muted:#aaa89f;
+        --rule:#45454c; --soft:#303037; --blue:#8da2ff }}
+    }}
     * {{ box-sizing:border-box }}
     html {{ scroll-behavior:smooth }}
     body {{ margin:0; color:var(--ink); background:var(--paper); font:16px/1.55 var(--serif) }}
@@ -291,9 +297,13 @@ def build_local_site_index(
       letter-spacing:.12em; text-transform:uppercase }}
     .topbar .shell {{ min-height:48px; display:flex; align-items:center; justify-content:space-between; gap:20px }}
     .brand {{ color:var(--blue); text-decoration:none }}
-    .topnav {{ display:flex; gap:24px }}
+    .topnav {{ display:flex; align-items:center; gap:24px }}
     .topnav a {{ text-decoration:none }}
     .topnav a:hover {{ color:var(--blue) }}
+    .theme-toggle {{ width:36px; height:36px; padding:0; border:1px solid var(--ink);
+      border-radius:50%; color:var(--ink); background:transparent; cursor:pointer;
+      font:700 1rem/1 var(--mono) }}
+    .theme-toggle:hover {{ color:var(--paper); background:var(--ink) }}
     .hero {{ padding:82px 0 48px; border-bottom:1px solid var(--ink) }}
     .eyebrow {{ margin:0 0 24px; color:var(--blue); font:700 .72rem/1 var(--mono);
       letter-spacing:.16em; text-transform:uppercase }}
@@ -343,6 +353,33 @@ def build_local_site_index(
     li a:hover {{ color:var(--blue) }}
     li a:hover span:last-child {{ opacity:1 }}
     .empty {{ display:none; padding:32px 0; color:var(--muted); font-style:italic }}
+    .reader[hidden] {{ display:none }}
+    .reader {{ position:fixed; inset:0; z-index:20; overflow:auto; background:var(--paper) }}
+    .reader-bar {{ position:sticky; top:0; z-index:1; padding:12px 0; border-bottom:1px solid var(--rule);
+      background:var(--paper) }}
+    .reader-bar .shell {{ display:flex; align-items:center; justify-content:space-between; gap:20px }}
+    .reader-back {{ padding:9px 12px; border:1px solid var(--ink); color:var(--ink);
+      background:transparent; cursor:pointer; font:700 .72rem/1 var(--mono); text-transform:uppercase }}
+    .reader-back:hover {{ color:var(--paper); background:var(--ink) }}
+    .reader-path {{ overflow:hidden; color:var(--muted); font:500 .68rem/1 var(--mono);
+      text-overflow:ellipsis; white-space:nowrap }}
+    .lesson {{ width:min(820px,calc(100% - 40px)); margin:64px auto 100px; font-size:1.05rem }}
+    .lesson h1,.lesson h2,.lesson h3 {{ margin:2em 0 .7em; color:var(--ink); font-family:var(--mono);
+      line-height:1.15; letter-spacing:-.035em; text-transform:none }}
+    .lesson h1 {{ margin-top:0; color:var(--blue); font-size:clamp(2.2rem,6vw,4.5rem) }}
+    .lesson h2 {{ padding-bottom:.3em; border-bottom:1px solid var(--rule); font-size:1.8rem }}
+    .lesson h3 {{ font-size:1.25rem }}
+    .lesson p,.lesson ul,.lesson ol {{ margin:1em 0 }}
+    .lesson ul,.lesson ol {{ display:block; margin-left:1.5em; padding:0; list-style:revert; counter-reset:none }}
+    .lesson li {{ border:0; counter-increment:none }}
+    .lesson blockquote {{ margin:1.5em 0; padding:.2em 1.2em; border-left:3px solid var(--blue); color:var(--muted) }}
+    .lesson pre {{ overflow:auto; padding:18px; border:1px solid var(--rule); background:var(--soft);
+      font:500 .82rem/1.6 var(--mono) }}
+    .lesson code {{ padding:.12em .3em; background:var(--soft); font:500 .85em var(--mono) }}
+    .lesson pre code {{ padding:0; background:transparent }}
+    .lesson a {{ color:var(--blue) }}
+    .lesson-error {{ padding:28px; border:1px solid #c33 }}
+    body.reader-open {{ overflow:hidden }}
     footer {{ padding:28px 0 44px; border-top:1px solid var(--ink); color:var(--muted);
       font:500 .7rem/1.7 var(--mono); text-transform:uppercase; letter-spacing:.06em }}
     footer .shell {{ display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap }}
@@ -361,7 +398,8 @@ def build_local_site_index(
 <body>
   <nav class="topbar"><div class="shell">
     <a class="brand" href="#">AI ENGINEERING / TR</a>
-    <div class="topnav"><a href="#mufredat">Müfredat</a><a href="README.md">Kullanım rehberi ↗</a></div>
+    <div class="topnav"><a href="#mufredat">Müfredat</a><a href="README.md">Kullanım rehberi ↗</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Koyu temaya geç" title="Temayı değiştir">◐</button></div>
   </div></nav>
   <header class="hero"><div class="shell">
     <p class="eyebrow">Açık kaynak · Uygulamalı · Türkçe</p>
@@ -392,8 +430,29 @@ def build_local_site_index(
   </main>
   <footer><div class="shell"><span>Kaynak revizyon · {html.escape(source_revision)}</span>
     <span>AI Engineering from Scratch · <a href="README.md">Başlangıç rehberi</a></span></div></footer>
+  <section class="reader" id="reader" hidden aria-label="Ders okuyucu">
+    <div class="reader-bar"><div class="shell">
+      <button class="reader-back" id="reader-back" type="button">← Müfredata dön</button>
+      <span class="reader-path" id="reader-path"></span>
+    </div></div>
+    <article class="lesson" id="lesson" tabindex="-1"></article>
+  </section>
   <script>
     const input=document.querySelector('#search'), phases=[...document.querySelectorAll('.phase')];
+    const root=document.documentElement, themeButton=document.querySelector('#theme-toggle');
+    const savedTheme=localStorage.getItem('curriculum-theme');
+    if(savedTheme) root.dataset.theme=savedTheme;
+    const currentTheme=()=>root.dataset.theme||
+      (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    const updateThemeLabel=()=>{{
+      const next=currentTheme()==='dark'?'açık':'koyu';
+      themeButton.setAttribute('aria-label',`${{next[0].toLocaleUpperCase('tr-TR')+next.slice(1)}} temaya geç`);
+    }};
+    updateThemeLabel();
+    themeButton.addEventListener('click',()=>{{
+      const theme=currentTheme()==='dark'?'light':'dark';
+      root.dataset.theme=theme; localStorage.setItem('curriculum-theme',theme); updateThemeLabel();
+    }});
     const normalize=s=>s.toLocaleLowerCase('tr-TR').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'');
     input.addEventListener('input',()=>{{
       const query=normalize(input.value.trim()); let visible=0;
@@ -408,6 +467,67 @@ def build_local_site_index(
       }});
       document.querySelector('#empty').style.display=visible?'none':'block';
     }});
+    const reader=document.querySelector('#reader'), lesson=document.querySelector('#lesson');
+    const escapeHtml=s=>s.replace(/[&<>"]/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}}[c]));
+    const inline=s=>escapeHtml(s)
+      .replace(/`([^`]+)`/g,'<code>$1</code>')
+      .replace(/\\*\\*([^*]+)\\*\\*/g,'<strong>$1</strong>')
+      .replace(/\\*([^*]+)\\*/g,'<em>$1</em>')
+      .replace(/\\[([^\\]]+)\\]\\(([^)]+)\\)/g,'<a href="$2">$1</a>');
+    const renderMarkdown=source=>{{
+      const code=[]; source=source.replace(/```([^\\n]*)\\n([\\s\\S]*?)```/g,(_,lang,body)=>{{
+        code.push(`<pre><code class="language-${{escapeHtml(lang.trim())}}">${{escapeHtml(body)}}</code></pre>`);
+        return `\\n@@CODE${{code.length-1}}@@\\n`;
+      }});
+      const lines=source.replace(/\\r/g,'').split('\\n'), out=[]; let list=null, paragraph=[];
+      const flush=()=>{{ if(paragraph.length) out.push(`<p>${{inline(paragraph.join(' '))}}</p>`); paragraph=[]; }};
+      const closeList=()=>{{ if(list) out.push(`</${{list}}>`); list=null; }};
+      lines.forEach(line=>{{
+        const heading=line.match(/^(#{{1,6}})\\s+(.+)$/), bullet=line.match(/^\\s*[-*]\\s+(.+)$/);
+        const numbered=line.match(/^\\s*\\d+[.)]\\s+(.+)$/), quote=line.match(/^>\\s?(.*)$/);
+        const token=line.match(/^@@CODE(\\d+)@@$/);
+        if(token) {{ flush(); closeList(); out.push(code[Number(token[1])]); }}
+        else if(heading) {{ flush(); closeList(); const level=heading[1].length;
+          out.push(`<h${{level}}>${{inline(heading[2])}}</h${{level}}>`); }}
+        else if(bullet||numbered) {{ flush(); const type=bullet?'ul':'ol';
+          if(list!==type) {{ closeList(); out.push(`<${{type}}>`); list=type; }}
+          out.push(`<li>${{inline((bullet||numbered)[1])}}</li>`); }}
+        else if(quote) {{ flush(); closeList(); out.push(`<blockquote>${{inline(quote[1])}}</blockquote>`); }}
+        else if(!line.trim()) {{ flush(); closeList(); }}
+        else paragraph.push(line.trim());
+      }});
+      flush(); closeList(); return out.join('\\n');
+    }};
+    const closeReader=()=>{{ reader.hidden=true; document.body.classList.remove('reader-open');
+      if(location.hash.startsWith('#ders=')) history.pushState(null,'',location.pathname+location.search+'#mufredat'); }};
+    const openLesson=async(path,push=true)=>{{
+      reader.hidden=false; document.body.classList.add('reader-open');
+      document.querySelector('#reader-path').textContent=path; lesson.innerHTML='<p>Ders yükleniyor…</p>';
+      try {{
+        const response=await fetch(path); if(!response.ok) throw new Error(`HTTP ${{response.status}}`);
+        const markdown=new TextDecoder('utf-8').decode(await response.arrayBuffer());
+        lesson.innerHTML=renderMarkdown(markdown);
+        lesson.querySelectorAll('a').forEach(a=>{{
+          if(!/^(?:https?:|#|mailto:)/.test(a.getAttribute('href')||''))
+            a.href=new URL(a.getAttribute('href'),new URL(path,location.href)).href;
+        }});
+        lesson.focus(); window.scrollTo(0,0);
+        if(push) history.pushState({{lesson:path}},'',`#ders=${{encodeURIComponent(path)}}`);
+      }} catch(error) {{
+        lesson.innerHTML=`<div class="lesson-error"><h1>Ders açılamadı</h1><p>${{escapeHtml(error.message)}}</p>
+          <p>Bu sayfayı bir yerel web sunucusu üzerinden açtığınızdan emin olun.</p></div>`;
+      }}
+    }};
+    document.querySelector('#phases').addEventListener('click',event=>{{
+      const link=event.target.closest('a[href$="/docs/tr.md"]'); if(!link) return;
+      event.preventDefault(); openLesson(link.getAttribute('href'));
+    }});
+    document.querySelector('#reader-back').addEventListener('click',closeReader);
+    addEventListener('popstate',event=>{{
+      const path=location.hash.startsWith('#ders=')?decodeURIComponent(location.hash.slice(6)):null;
+      if(path) openLesson(path,false); else {{ reader.hidden=true; document.body.classList.remove('reader-open'); }}
+    }});
+    if(location.hash.startsWith('#ders=')) openLesson(decodeURIComponent(location.hash.slice(6)),false);
   </script>
 </body>
 </html>
