@@ -1,48 +1,48 @@
 {
   "lesson": "08-production-rag-chatbot",
-  "title": "Capstone 08 — Production RAG Chatbot for a Regulated Vertical",
+  "title": "Capstone 08 — Düzenlenmiş Dikey için Üretim RAG Chatbot",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does prompt caching matter so much in a regulated-domain RAG chatbot?",
+      "question": "Düzenlenmiş etki alanına sahip bir RAG sohbet robotunda istemi önbelleğe alma neden bu kadar önemli?",
       "options": [
-        "It removes the need for a vector database",
-        "At 60-80% hit rate it cuts per-query cost 3-5x by discounting stable prefix tokens",
-        "It eliminates hallucinations",
-        "It improves recall on the rerank stage"
+        "Bir vektör veritabanına olan ihtiyacı ortadan kaldırır",
+        "%60-80 isabet oranıyla, sabit önek belirteçlerini indirerek sorgu başına maliyeti 3-5 kat azaltır",
+        "Halüsinasyonları ortadan kaldırır",
+        "Yeniden sıralama aşamasında hatırlamayı geliştirir"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What goes into the cache header versus the uncached suffix of each request?",
+      "question": "Her isteğin önbelleğe alınmamış sonekine karşılık önbellek başlığına ne gider?",
       "options": [
         "Random text padding to hit cache size",
-        "Only the retrieved documents",
+        "Yalnızca alınan belgeler",
         "User question first, system prompt last",
-        "System prompt and static policies in the cache header, reranked context as cache extension, user question as the uncached suffix"
+        "Önbellek başlığındaki sistem istemi ve statik ilkeler, önbellek uzantısı olarak bağlam yeniden sıralandı, önbelleğe alınmamış sonek olarak kullanıcı sorusu"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does the retrieval layer respect jurisdiction tags like GDPR or HIPAA?",
+      "question": "Alma katmanı GDPR veya HIPAA gibi yetki alanı etiketlerine nasıl uyuyor?",
       "options": [
-        "It runs a separate index per country",
-        "It blocks the response after generation only",
-        "It rewrites the user question per region",
-        "Role and jurisdiction filters apply before the hybrid search merge so chunks outside the user's scope are never reranked"
+        "Ülke başına ayrı bir dizin çalıştırır",
+        "Yalnızca nesilden sonraki yanıtı engeller",
+        "Kullanıcı sorusunu bölgeye göre yeniden yazar",
+        "Rol ve yetki alanı filtreleri, hibrit arama birleştirmeden önce uygulanır, böylece kullanıcının kapsamı dışındaki parçalar hiçbir zaman yeniden sıralanmaz."
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which layered guardrail combination does the synthesis stage pass output through?",
+      "question": "Sentez aşaması çıktıyı hangi katmanlı korkuluk kombinasyonundan geçiriyor?",
       "options": [
-        "Only Llama Guard 4 on input",
+        "Girişte yalnızca Llama Guard 4",
         "Llama Guard 4, NeMo Guardrails policy rails, and Presidio PII scrub, plus citation enforcement",
         "Just an output PII regex",
         "A single LLM-judge faithfulness check"
@@ -52,22 +52,22 @@
     },
     {
       "stage": "check",
-      "question": "What does the drift dashboard alert on?",
+      "question": "Drift kontrol paneli uyarısı neyle ilgili?",
       "options": [
-        "A change in the underlying LLM provider",
+        "Temel LLM sağlayıcısında bir değişiklik",
         "Latency above 200ms",
-        "A retrieval-quality drop, for example a 5% week-over-week dip in nDCG or citation score",
-        "Any new document added to the index"
+        "Erişim kalitesinde düşüş (örneğin, nDCG veya alıntı puanında haftadan haftaya %5'lik düşüş)",
+        "Dizine eklenen herhangi bir yeni belge"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "How big is the golden set used to gate the deliverable's correctness rubric?",
+      "question": "Teslimatın doğruluk değerlendirme tablosunu geçmek için kullanılan altın set ne kadar büyük?",
       "options": [
         "5 demo queries",
-        "200 expert-labeled question/answer pairs with citations",
+        "Alıntılarla birlikte 200 uzman etiketli soru/cevap çifti",
         "20 questions",
         "2000 synthetic questions"
       ],
@@ -76,7 +76,7 @@
     },
     {
       "stage": "post",
-      "question": "Which RAGAS scores are tracked online per turn?",
+      "question": "Hangi RAGAS puanları tur başına çevrimiçi olarak izlenir?",
       "options": [
         "Throughput, GPU utilization, and queue depth",
         "BLEU, ROUGE, and METEOR",
