@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does a language model need preprocessing before training?",
+      "question": "Bir dil modelinin eğitimden önce neden ön işlemeye ihtiyacı var?",
       "options": [
         "Preprocessing improves GPU utilization",
         "Models consume discrete integer tokens, not raw text",
         "Models read strings directly",
-        "Preprocessing is required only for languages without whitespace"
+        "Ön işleme yalnızca boşluk içermeyen diller için gereklidir"
       ],
       "correct": 1,
       "explanation": "Models operate on integer token IDs; preprocessing bridges continuous language to discrete inputs."
     },
     {
       "stage": "pre",
-      "question": "Which preprocessing operation is rule-based suffix stripping?",
+      "question": "Hangi ön işleme işlemi kural tabanlı sonek çıkarma işlemidir?",
       "options": [
         "Stemming",
         "POS tagging",
@@ -24,11 +24,11 @@
         "Tokenization"
       ],
       "correct": 0,
-      "explanation": "Stemming chops suffixes with rules; it is fast but can be wrong."
+      "explanation": "Kurallı pirzola ekleri; hızlıdır ancak yanlış olabilir."
     },
     {
       "stage": "check",
-      "question": "What does the Porter stemmer step 1a return for the word 'ponies'?",
+      "question": "Porter'ın 1a kök kökü adımı 'midilli' sözcüğü için neyi geri getiriyor?",
       "options": [
         "ponies",
         "ponie",
@@ -36,11 +36,11 @@
         "poni"
       ],
       "correct": 3,
-      "explanation": "The 'ies' rule replaces the suffix with 'i', producing 'poni'; step 1b in real Porter cleans it up."
+      "explanation": "'İes' kuralı, son eki 'i' ile değiştirerek 'poni'yi üretir; Gerçek Porter'daki adım 1b bunu temizler."
     },
     {
       "stage": "check",
-      "question": "Why does lemmatization usually need a POS tag?",
+      "question": "Neden lemmatizasyon genellikle bir POS etiketine ihtiyaç duyar?",
       "options": [
         "Unicode handling",
         "Speed",
@@ -48,11 +48,11 @@
         "To reduce memory usage"
       ],
       "correct": 2,
-      "explanation": "Lemmas depend on grammatical role; without the tag the lookup is ambiguous."
+      "explanation": "Önemler gramer rolüne bağlıdır; etiketi olmadan arama belirsizdir."
     },
     {
       "stage": "check",
-      "question": "When translating NLTK Penn Treebank POS tags to WordNet tags, what does a tag starting with 'V' map to?",
+      "question": "NLTK Penn Treebank POS etiketlerini WordNet etiketlerine çevirirken 'V' ile başlayan bir etiket neyle eşleşir?",
       "options": [
         "'n' (noun)",
         "'v' (verb)",
@@ -64,39 +64,39 @@
     },
     {
       "stage": "post",
-      "question": "What is 'training/inference mismatch' in NLP preprocessing?",
+      "question": "NLP ön işlemesinde 'eğitim/çıkarım uyuşmazlığı' nedir?",
       "options": [
-        "Different batch sizes between train and test",
-        "Training and serving apply different preprocessing, so the model sees an unfamiliar distribution at inference",
+        "Eğitim ve test arasında farklı parti boyutları",
+        "Eğitim ve hizmet farklı ön işlemeler uyguladığından model çıkarımda alışılmadık bir dağılım görür",
         "A GPU memory issue",
         "Mixing tokenizer libraries within a notebook"
       ],
       "correct": 1,
-      "explanation": "Different preprocessing at training vs inference is the most common production NLP failure."
+      "explanation": "Eğitim ve çıkarımda farklı ön işleme işlemleri, en yaygın üretim NLP hatasıdır."
     },
     {
       "stage": "post",
-      "question": "Which tool would you reach for in a transformer pipeline instead of classical preprocessing?",
+      "question": "Transformatör hattında klasik ön işleme yerine hangi araca ulaşırsınız?",
       "options": [
         "NLTK word_tokenize",
-        "The model's own tokenizer (e.g. via tokenizers / transformers)",
+        "Modelin kendi tokenizer'ı (örneğin tokenizer'lar/transformatörler aracılığıyla)",
         "A regex tokenizer",
         "spaCy en_core_web_sm"
       ],
       "correct": 1,
-      "explanation": "Transformer models ship a paired tokenizer; classical preprocessing is bypassed."
+      "explanation": "Transformer modelleri eşleştirilmiş bir tokenizer gönderir; klasik ön işleme atlanır."
     },
     {
       "stage": "post",
-      "question": "Why pin NLTK and spaCy versions in requirements?",
+      "question": "Neden NLTK ve spaCy versiyonlarını gereksinimlere sabitlemelisiniz?",
       "options": [
         "License compatibility",
-        "Tokenizer and lemmatizer behavior shifts between minor releases, silently changing training distribution",
+        "Küçük sürümler arasında tokenizer ve lemmatizer davranışı değişiyor, eğitim dağıtımı sessizce değişiyor",
         "Older versions support more languages",
-        "Newer versions are slower"
+        "Yeni sürümler daha yavaştır"
       ],
       "correct": 1,
-      "explanation": "Library upgrades can change tokenization output, drifting from the training distribution."
+      "explanation": "Kütüphane yükseltmeleri, eğitim dağıtımından uzaklaşarak tokenizasyon çıktısını değiştirebilir."
     }
   ]
 }
