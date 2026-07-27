@@ -45,8 +45,11 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         self.assertIn("1 Türkçe ders", readme)
         self.assertIn("## Bu müfredat kimin için?", readme)
         self.assertIn("## Hızlı başlangıç", readme)
-        self.assertIn("### ✦ Yerel vitrini açın", readme)
-        self.assertIn("python -m http.server 8000", readme)
+        self.assertIn("### 2. Depo klasörüne girin", readme)
+        self.assertIn("cd ai-engineering-from-scratch-tr", readme)
+        self.assertIn("### 3. Yerel siteyi başlatın", readme)
+        self.assertIn("python3 -m http.server 8000", readme)
+        self.assertIn("### 4. Tarayıcıda açın", readme)
         self.assertIn("http://localhost:8000", readme)
         self.assertIn("## Size uygun rota", readme)
         self.assertIn("## Öğrenme rotası", readme)
@@ -71,6 +74,13 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         self.assertIn("503 DERS", banner)
         self.assertNotIn("435 DERS", banner)
         self.assertNotIn("<animate", banner)
+
+        local_site = (target / "index.html").read_text()
+        self.assertIn('<html lang="tr">', local_site)
+        self.assertIn("Türkçe AI mühendisliği müfredatı", local_site)
+        self.assertIn("phases/00-test/01-lesson/docs/tr.md", local_site)
+        self.assertIn("1 aşama", local_site)
+        self.assertIn("1 ders", local_site)
 
     def test_export_refuses_existing_destination(self):
         target = Path(self.temp.name) / "target"

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import gzip
 import hashlib
+import html
 import json
 import os
 import re
@@ -92,42 +93,49 @@ def build_readme(
         "",
         "## Hızlı başlangıç",
         "",
-        "### 1. Müfredatı edinin",
+        "### 1. Depoyu bilgisayarınıza alın",
         "",
-        "Git kullanıyorsanız depoyu klonlayın:",
+        "Terminali açın ve depoyu klonlayın:",
         "",
         "```bash",
         "git clone https://github.com/ademiru/ai-engineering-from-scratch-tr.git",
+        "```",
+        "",
+        "> **Git kullanmıyor musunuz?** En güncel `.tar.gz` arşivini indirin ve",
+        "> `ai-engineering-from-scratch-tr` adlı bir klasöre çıkarın.",
+        "",
+        "### 2. Depo klasörüne girin",
+        "",
+        "Klonlama veya arşivi çıkarma işlemi bitince terminalde şu komutu çalıştırın:",
+        "",
+        "```bash",
         "cd ai-engineering-from-scratch-tr",
         "```",
         "",
-        "Git kullanmıyorsanız en güncel `.tar.gz` arşivini indirip bir klasöre",
-        "çıkarmanız yeterlidir.",
+        "### 3. Yerel siteyi başlatın",
         "",
-        "### ✦ Yerel vitrini açın",
+        "Artık depo klasöründesiniz. Kurulum yapmadan yerel siteyi çalıştırın:",
         "",
-        "> **Müfredatı tarayıcınızda keşfedin**",
-        ">",
-        "> Depo klasöründeyken aşağıdaki komutu çalıştırın:",
-        ">",
-        "> ```bash",
-        "> python -m http.server 8000",
-        "> ```",
-        ">",
-        "> Ardından tarayıcınızda **[http://localhost:8000](http://localhost:8000)**",
-        "> adresini açın. Sunucuyu kapatmak için terminalde `Ctrl+C` tuşlarına basın.",
+        "```bash",
+        "python3 -m http.server 8000",
+        "```",
         "",
-        "Python komutu sisteminizde bulunamazsa `python3 -m http.server 8000` komutunu",
-        "kullanın. Sunucu açmadan ilerlemek isterseniz bu `README.md` dosyasını VS Code",
-        "ile açıp `Ctrl+Shift+V` (macOS: `Cmd+Shift+V`) ile önizleyebilirsiniz.",
+        "> Sunucu çalışırken bu terminal penceresini açık bırakın. Windows'ta",
+        "> `python3` bulunamazsa `python -m http.server 8000` komutunu deneyin.",
         "",
-        "### 2. İlk aşamayı açın",
+        "### 4. Tarayıcıda açın",
+        "",
+        "Tarayıcınızda **[http://localhost:8000](http://localhost:8000)** adresine",
+        "gidin. Karşınıza aşamaları ve dersleri gezebileceğiniz Türkçe müfredat",
+        "vitrini çıkar. Bitirdiğinizde terminale dönüp `Ctrl+C` ile siteyi kapatın.",
+        "",
+        "### 5. İlk aşamayı açın",
         "",
         f"[{title(source / next(iter(phases)) / 'README.tr.md')}]"
         f"({next(iter(phases)).as_posix()}/README.md) sayfasına gidin ve ilk dersi",
         "seçin.",
         "",
-        "### 3. İlk dersi tamamlayın",
+        "### 6. İlk dersi tamamlayın",
         "",
         "Her dersin Türkçe anlatımı `docs/tr.md` dosyasındadır. Uygulamalar ve testler",
         "aynı dersin `code/` dizininde yer alır; çalıştırma komutları ders içinde",
@@ -240,6 +248,68 @@ def build_phase_readme(phase: Path, lessons: list[Path]) -> str:
     return "\n".join(lines)
 
 
+def build_local_site_index(
+    source: Path, phases: dict[Path, list[Path]], source_revision: str
+) -> str:
+    """Build a dependency-free landing page for local curriculum browsing."""
+    lesson_count = sum(len(lessons) for lessons in phases.values())
+    cards = []
+    for phase, lessons in phases.items():
+        phase_title = html.escape(title(source / phase / "README.tr.md"))
+        lesson_links = "".join(
+            f'<li><a href="{lesson.relative_to(source).as_posix()}/docs/tr.md">'
+            f"{html.escape(title(lesson / 'docs/tr.md'))}</a></li>"
+            for lesson in lessons
+        )
+        cards.append(
+            f'<details class="phase"><summary><span>{phase_title}</span>'
+            f"<strong>{len(lessons)} ders</strong></summary><ol>{lesson_links}</ol></details>"
+        )
+    return f"""<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Engineering from Scratch — Türkçe</title>
+  <style>
+    :root {{ color-scheme:dark; --bg:#07111f; --panel:#101d31; --line:#263a56;
+      --text:#e8f0fb; --muted:#9db0ca; --accent:#56d6c9 }}
+    * {{ box-sizing:border-box }} body {{ margin:0; font:16px/1.6 system-ui,sans-serif;
+      color:var(--text); background:radial-gradient(circle at top,#163152,var(--bg) 42%) }}
+    main {{ width:min(960px,92%); margin:auto; padding:32px 0 64px }}
+    header {{ text-align:center; margin-bottom:32px }} header img {{ width:100%; border-radius:18px }}
+    h1 {{ font-size:clamp(1.8rem,5vw,3rem); margin:.7em 0 .2em }}
+    .lead {{ color:var(--muted); max-width:680px; margin:auto }}
+    .stats {{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:22px 0 }}
+    .stats span {{ padding:7px 13px; border:1px solid var(--line); border-radius:999px;
+      background:#0b1728 }}
+    .phase {{ background:var(--panel); border:1px solid var(--line); border-radius:14px;
+      margin:12px 0; overflow:hidden }}
+    summary {{ cursor:pointer; display:flex; justify-content:space-between; gap:16px;
+      padding:18px 20px; font-size:1.05rem }}
+    summary strong {{ color:var(--accent); white-space:nowrap }}
+    ol {{ margin:0; padding:0 24px 20px 52px; columns:2; column-gap:40px }}
+    li {{ break-inside:avoid; padding:4px 0 }} a {{ color:#a9e9e3 }}
+    footer {{ text-align:center; color:var(--muted); margin-top:32px; font-size:.9rem }}
+    @media (max-width:640px) {{ ol {{ columns:1 }} }}
+  </style>
+</head>
+<body><main>
+  <header>
+    <img src="assets/turkce-mufredat-v2.svg" alt="Türkçe müfredat kapağı">
+    <h1>Türkçe AI mühendisliği müfredatı</h1>
+    <p class="lead">Matematik temellerinden üretim sistemlerine uzanan dersleri seçin ve öğrenmeye başlayın.</p>
+    <div class="stats"><span>{len(phases)} aşama</span><span>{lesson_count} ders</span>
+      <span>%100 Türkçe anlatım</span></div>
+  </header>
+  <section aria-label="Müfredat aşamaları">{''.join(cards)}</section>
+  <footer>Kaynak revizyon: <code>{html.escape(source_revision)}</code> ·
+    Ayrıntılar için <a href="README.md">README</a></footer>
+</main></body>
+</html>
+"""
+
+
 def export(source: Path, destination: Path, revision: str) -> dict[str, object]:
     if destination.exists():
         raise ValueError(f"hedef zaten var: {destination}")
@@ -277,6 +347,9 @@ def export(source: Path, destination: Path, revision: str) -> dict[str, object]:
         )
     (destination / "README.md").write_text(
         build_readme(source, phases, revision), encoding="utf-8"
+    )
+    (destination / "index.html").write_text(
+        build_local_site_index(source, phases, revision), encoding="utf-8"
     )
     shutil.copy2(source / "docs" / "turkish-export-sync.md", destination / "SENKRONIZASYON.md")
     manifest = validate(destination, len(lessons), revision)
