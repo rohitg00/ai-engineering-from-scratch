@@ -1,22 +1,22 @@
 {
   "lesson": "phase-19/40-dpo-from-scratch",
-  "title": "Direct Preference Optimization from Scratch",
+  "title": "Sıfırdan Doğrudan Tercih Optimizasyonu",
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading: under the Bradley-Terry preference model, the probability a human prefers completion y_w to y_l given prompt x is sigmoid(r(x, y_w) - r(x, y_l)). What is the implication?",
+      "question": "Okumadan önce: Bradley-Terry tercih modeli altında, bir insanın x istemi verildiğinde y_w'yi y_l'ye tamamlamayı tercih etme olasılığı sigmoid(r(x, y_w) - r(x, y_l)'dir). Bunun anlamı nedir?",
       "options": [
-        "You must fit r before training the policy.",
-        "Only the difference in reward matters; any function added to both r(x, y_w) and r(x, y_l) cancels.",
-        "Bradley-Terry requires a normalising constant Z(x) that does not vanish.",
-        "Sigmoid is incompatible with maximum likelihood."
+        "Politikayı eğitmeden önce r'ye uymanız gerekir.",
+        "Yalnızca ödüldeki fark önemlidir; hem r(x, y_w) hem de r(x, y_l)'ye eklenen herhangi bir işlev iptal edilir.",
+        "Bradley-Terry, kaybolmayan bir normalleştirme sabiti Z(x)'ye ihtiyaç duyar.",
+        "Sigmoid maksimum olasılık ile uyumlu değil."
       ],
       "correct": 1,
-      "explanation": "The Bradley-Terry preference depends only on the reward difference. Anything common to both completions cancels. This is the structural reason DPO can avoid an explicit reward model: the prompt-only term in the optimal policy formula cancels."
+      "explanation": "Bradley-Terry tercihi yalnızca ödül farkına bağlıdır. Her iki tamamlamada da ortak olan herhangi bir şey iptal edilir. DPO'nin açık bir ödül modelinden kaçınabilmesinin yapısal nedeni budur: optimal politika formülündeki yalnızca istem terimi iptal edilir."
     },
     {
       "stage": "check",
-      "question": "The DPO loss for a single triple is -log sigmoid( beta * ( (logp_w_pol - logp_w_ref) - (logp_l_pol - logp_l_ref) ) ). If logp_w_pol = logp_w_ref and logp_l_pol = logp_l_ref, the loss equals?",
+      "question": "Tek bir üçlü için DPO kaybı -log sigmoid( beta * ( (logp_w_pol - logp_w_ref) - (logp_l_pol - logp_l_ref)) ) şeklindedir. logp_w_pol = logp_w_ref ve logp_l_pol = logp_l_ref ise kayıp eşit midir?",
       "options": [
         "0.",
         "log(2).",
@@ -24,55 +24,55 @@
         "-1."
       ],
       "correct": 1,
-      "explanation": "Both differences are zero, so the sigmoid argument is zero, the sigmoid value is 0.5, and -log(0.5) = log(2). This is the loss when the policy has not moved from the reference at all."
+      "explanation": "Her iki fark da sıfırdır, dolayısıyla sigmoid bağımsız değişkeni sıfırdır, sigmoid değeri 0,5'tir ve -log(0.5) = log(2)'dir. Bu, politikanın referanstan hiç ayrılmaması durumunda oluşan kayıptır."
     },
     {
       "stage": "check",
-      "question": "During DPO training, the chosen log-probability under the reference model changes between epochs because the policy diverges from it. True or false?",
+      "question": "DPO eğitimi sırasında, referans modeli kapsamında seçilen log-olasılığı, politika ondan farklılaştığı için dönemler arasında değişir. Doğru mu yanlış mı?",
       "options": [
-        "True: the reference drifts as the policy updates.",
-        "False: the reference is frozen; reference log-probs are computed once and reused.",
-        "True only when beta is non-zero.",
-        "False unless gradients are explicitly disabled with no_grad."
+        "Doğru: Politika güncellendikçe referans değişiyor.",
+        "Yanlış: referans dondurulmuştur; referans günlük probları bir kez hesaplanır ve yeniden kullanılır.",
+        "Yalnızca beta sıfırdan farklı olduğunda doğrudur.",
+        "Degradeler no_grad ile açıkça devre dışı bırakılmadığı sürece yanlıştır."
       ],
       "correct": 1,
-      "explanation": "The reference is frozen for the entire DPO run. Its parameters never update. The implementation either snapshots reference log-probs once or wraps the reference forward pass in no_grad with requires_grad=False set on its parameters."
+      "explanation": "Referans DPO çalıştırmasının tamamı için dondurulur. Parametreleri asla güncellenmez. Uygulama ya referans log-prob'larını bir kez anlık görüntüler ya da no_grad'daki referans ileri geçişini, kendi parametrelerinde require_grad=False ayarıyla sarar."
     },
     {
       "stage": "check",
-      "question": "Taking the gradient of L_DPO with respect to logp_w_pol (the policy's log-probability of the chosen completion), the sign is?",
+      "question": "L_DPO'nin logp_w_pol'e (politikanın seçilen tamamlanmanın log olasılığı) göre gradyanını aldığımızda işaret nedir?",
       "options": [
         "Positive (loss increases as chosen log-prob increases).",
         "Negative (loss decreases as chosen log-prob increases).",
-        "Zero (loss is independent of policy log-probs).",
-        "Indeterminate (depends on the reference)."
+        "Sıfır (kayıp, politika günlüğü sorunlarından bağımsızdır).",
+        "Belirsiz (referansa bağlıdır)."
       ],
       "correct": 1,
-      "explanation": "The gradient is -beta * (1 - sigmoid(z)), which is non-positive. Increasing the chosen log-probability decreases the loss, which is exactly the training signal we want."
+      "explanation": "Gradyan -beta * (1 - sigmoid(z)) olup pozitif değildir. Seçilen log olasılığının arttırılması, tam olarak istediğimiz eğitim sinyali olan kaybı azaltır."
     },
     {
       "stage": "post",
-      "question": "On your fixture the DPO loss decreases but the policy starts preferring shorter completions across the board, even when shorter is worse. The most likely cause?",
+      "question": "Fikstürünüzde DPO kaybı azalır ancak politika, daha kısa daha kötü olsa bile genel olarak daha kısa tamamlamaları tercih etmeye başlar. En muhtemel sebep?",
       "options": [
-        "The beta is too low.",
+        "Betası çok düşük.",
         "Length bias: longer sequences accumulate more log-probability terms (each negative), so sum-of-log-probs penalises length structurally.",
-        "The reference is not properly frozen.",
-        "The optimiser is using the wrong learning rate."
+        "Referans düzgün şekilde dondurulmamıştır.",
+        "Optimize edici yanlış öğrenme oranını kullanıyor."
       ],
       "correct": 1,
-      "explanation": "Sum-of-log-probabilities is biased toward shorter sequences because every additional token adds a negative log-probability term. The standard fix is to normalise log-probs by completion length when training and evaluating."
+      "explanation": "Log olasılıklarının toplamı daha kısa dizilere doğru eğilimlidir çünkü her ek belirteç negatif bir log olasılık terimi ekler. Standart düzeltme, eğitim ve değerlendirme sırasında log-prob'ları tamamlama uzunluğuna göre normalleştirmektir."
     },
     {
       "stage": "post",
-      "question": "You want to replace the sigmoid + log loss with the IPO variant (z - 1)^2. What is the practical effect on training dynamics?",
+      "question": "Sigmoid + log kaybını IPO değişkeni (z - 1)^2 ile değiştirmek istiyorsunuz. Antrenman dinamikleri üzerindeki pratik etkisi nedir?",
       "options": [
-        "It does not saturate the way the sigmoid loss does, which holds up better under noisy preference labels.",
-        "It is mathematically equivalent at all points.",
-        "It removes the need for the reference model entirely.",
-        "It requires no beta parameter."
+        "Gürültülü tercih etiketleri altında daha iyi dayanabilen sigmoid kaybının yaptığı gibi doyurmuyor.",
+        "Her noktada matematiksel olarak eşdeğerdir.",
+        "Referans modele olan ihtiyacı tamamen ortadan kaldırır.",
+        "Herhangi bir beta parametresi gerektirmez."
       ],
       "correct": 0,
-      "explanation": "IPO's squared loss does not saturate the way the sigmoid does, which helps when preference labels are noisy or when some triples are mis-labelled. Empirically it reduces over-optimisation on small preference datasets."
+      "explanation": "IPO'nin kare kaybı, sigmoid'in yaptığı gibi doyurulmaz; bu, tercih etiketleri gürültülü olduğunda veya bazı üçlüler yanlış etiketlendiğinde yardımcı olur. Ampirik olarak küçük tercih veri kümelerinde aşırı optimizasyonu azaltır."
     }
   ]
 }
