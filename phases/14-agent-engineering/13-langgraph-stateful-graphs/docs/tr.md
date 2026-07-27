@@ -12,13 +12,13 @@
 - LangGraph'ın temel modelini açıklayın: yazılan durum, işlev düğümleri, koşullu kenarlar ve düğüm sonrası kontrol noktalarına sahip durum makinesi.
 - Dokümanların öne çıkardığı dört özelliği adlandırın: dayanıklı yürütme, akış, döngüdeki insan, kapsamlı bellek.
 - LangGraph'ın desteklediği üç orkestrasyon topolojisini açıklayın: süpervizör, eşler arası (sürü), hiyerarşik (iç içe alt grafikler).
-- Yazılan durum, koşullu kenarlar ve denetim noktası/devam döngüsü ile bir stdlib durum grafiği uygulayın.
+- Yazılı durum, koşullu kenarlar ve denetim noktası/devam döngüsü içeren bir stdlib durum grafiği uygulayın.
 
 ## Sorun
 
 Agent'ler ve iş akışları aynı sorunu paylaşıyor: 40 adımlık bir çalıştırma 38. adımda başarısız olduğunda, baştan başlamak yerine 38. adımdan devam etmek istersiniz. İkinci sınıf durum modelleri, operatörlerin yeni çalıştırmaları varsayan bir kitaplık çevresinde yeniden denemeler yapmasına neden olur.
 
-LangGraph'ın tasarım cevabı: durum birinci sınıf bir nesnedir, mutasyonlar açıktır ve her düğümden sonra kontrol noktaları devam eder. Devam ettirmek bir `load_state(session_id)` çağrısıdır.
+LangGraph'ın tasarım yanıtı: durum birinci sınıf bir nesnedir, mutasyonlar açıktır ve her düğümden sonra kontrol noktaları devam eder. Devam bir `load_state(session_id)` çağrısıdır.
 
 ## Konsept
 
@@ -31,13 +31,13 @@ Bir grafik şu şekilde tanımlanır:
 - **Kenarlar.** Düğümler arasında koşullu veya doğrudan geçişler.
 - **Giriş ve çıkış.** `START` ve `END` nöbetçi düğümleri sınırı işaretler.
 
-Örnek: `classify`, `refund`, {`bug`, `sales`, `done` düğümlerine sahip bir agent — grafik olarak bir yönlendirme iş akışı.
+Örnek: `classify`, `refund`, `bug`, `sales`, `done` düğümlerine sahip bir agent — grafik olarak bir yönlendirme iş akışı.
 
-### Dayanıklı yürütme
+### Dayanıklı uygulama
 
 Her düğüm geri döndükten sonra çalışma zamanı durumu serileştirir ve bunu bir kontrol noktasına (SQLite, Postgres, Redis, özel) yazar. N adımındaki başarısızlık durumunda, çalışma zamanı `resume(session_id)` yapabilir ve N+1 adımından kesin durumla başlayabilir.
 
-LangGraph dokümanları, bunun önemli olduğu üretim kullanıcılarını açıkça vurgulamaktadır: Klarna, Uber, J.P. Morgan. İddia grafik şekli değil; grafik şekli artı kontrol noktasının kurtarmayı ucuz hale getirmesidir.
+LangGraph belgeleri, bunun önemli olduğu üretim kullanıcılarını açıkça vurgulamaktadır: Klarna, Uber, J.P. Morgan. İddia grafik şekli değil; grafik şekli artı kontrol noktasının kurtarmayı ucuz hale getirmesidir.
 
 ### Akış
 
@@ -47,13 +47,13 @@ Her düğüm kısmi çıktı sağlayabilir. Grafik, düğüm başına delta olay
 
 Düğümler arasındaki durumu inceleyin ve değiştirin. Uygulamalar: kritik bir düğümden önce duraklatın, durumu bir insana gösterin, değişiklikleri kabul edin, devam ettirin. Durum zaten serileştirilmiş olduğundan denetim işaretçisi bunu kolaylaştırır.
 
-### Hafıza
+### Bellek
 
 Kısa vadeli (bir çalıştırma içinde - durumdaki konuşma geçmişi) ve uzun vadeli (çalışmalar arasında - denetim noktası artı ayrı bir uzun vadeli depo aracılığıyla kalıcı). LangGraph, araçlar aracılığıyla harici bellek sistemleriyle (Mem0, özel) entegre olur.
 
 ### Üç topoloji
 
-1. **Süpervizör.** ​​Merkezi yönlendirici LLM, uzman altagent'lara gönderim yapar. `langgraph-supervisor` içinde `create_supervisor()` (yine de 2026'da LangChain ekibi daha fazla içerik kontrolü için bunun doğrudan araç çağrıları yoluyla yapılmasını önermektedir).
+1. **Süpervizör.** ​​Merkezi yönlendirici LLM, uzman alt agent'lere gönderim yapar. `langgraph-supervisor`'de `create_supervisor()` (gerçi 2026'daki LangChain ekibi daha fazla içerik kontrolü için bunun doğrudan araç çağrıları yoluyla yapılmasını öneriyor).
 2. **Sürü / eşler arası.** Agent'ler doğrudan paylaşılan bir araç yüzeyi aracılığıyla dağıtılır. Merkezi yönlendirici yok.
 3. **Hiyerarşik.** Alt denetçileri yöneten denetçiler, iç içe alt grafikler olarak uygulanır.
 
@@ -67,7 +67,7 @@ Kısa vadeli (bir çalıştırma içinde - durumdaki konuşma geçmişi) ve uzun
 
 `code/main.py` bir stdlib durum bilgisi grafiği uygular:
 
-- `State` — `messages`, {`step`, `route`, `output`, `human_approval` ile yazılan bir söz.
+- `State` — `messages`, `step`, `route`, `output`, `human_approval` ile yazılmış bir dikte.
 - `Node` — çağrılabilir durum alma ve bir güncelleme diktesi döndürme.
 - `StateGraph` — düğümler + kenarlar + koşullu kenarlar + çalıştır + devam ettir.
 - `SQLiteCheckpointer` (bellek içi sahte) — her düğümden sonra durumu serileştirir; `load(session_id)` geri yüklenir.
@@ -85,37 +85,37 @@ python3 code/main.py
 
 - **LangGraph** — referans, üretime hazır. `create_react_agent`, `create_supervisor` kullanın veya kendi grafiğinizi oluşturun.
 - **AutoGen v0.4** (Ders 14) — yüksek eşzamanlılık senaryoları için aktör modeli alternatifi.
-- **Claude Agent SDK** (Ders 17) — yerleşik oturum deposuna sahip yönetilen koşum takımı.
+- **Claude Agent SDK** (Ders 17) — yerleşik oturum deposuna sahip yönetimli donanım.
 - **Özel** — durum şekli veya denetim noktası arka ucu üzerinde tam kontrole ihtiyaç duyduğunuzda.
 
 ## Gönderin
 
-`outputs/skill-state-graph.md`, herhangi bir hedef çalışma zamanında, kontrol noktası oluşturma ve devam etme özelliğinin bağlı olduğu LangGraph şeklinde bir durum grafiği oluşturur.
+`outputs/skill-state-graph.md`, herhangi bir hedef çalışma zamanında kontrol noktası oluşturma ve devam etme özelliğinin bağlı olduğu LangGraph şeklinde bir durum grafiği oluşturur.
 
 ## Egzersizler
 
-1. Sınıflandırma güveni bir eşiğin altında olduğunda `classify`'dan `end`'ya koşullu bir kenar ekleyin. Bir insan {`route`'yi manuel olarak ayarladıktan sonra koşuya devam edin.
+1. Sınıflandırma güvenirliği bir eşiğin altında olduğunda `classify`'den `end`'ye koşullu bir kenar ekleyin. Bir insan `route`'yi manuel olarak ayarladıktan sonra çalışmayı sürdürün.
 2. SQLite benzeri sahteyi gerçek bir SQLite kontrol noktasıyla değiştirin. Adım başına serileştirme yükünü ölçün.
 3. Paralel kenarlar uygulayın: iki düğüm aynı anda çalışır, özel bir redüktörle birleştirilir. Değişmez devlet burada ne satın alıyor?
-4. `langgraph-supervisor` referansını okuyun. Oyuncağı `create_supervisor`'ya taşı. İz şekillerini karşılaştırın.
+4. `langgraph-supervisor` referansını okuyun. Oyuncağı `create_supervisor`'ye taşıyın. İz şekillerini karşılaştırın.
 5. Akış ekleyin: her düğüm, çalışırken kısmi durum sağlar. Deltaları geldiklerinde yazdırın.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| Durum grafiği | "Agent durum makinesi olarak" | Yazılan durum + düğümler + kenarlar + azaltıcılar |
+| Durum grafiği | "Durum makinesi olarak Agent" | Yazılan durum + düğümler + kenarlar + azaltıcılar |
 | Kontrol Noktası | "Kalıcılık arka ucu" | Her düğümden sonra durumu serileştirir; özgeçmişi etkinleştirir |
 | Redüktör | "Devlet birleşmesi" | Mevcut durumu bir düğümün güncellemesiyle birleştiren işlev |
 | Koşullu kenar | "Şube" | Durum fonksiyonu tarafından seçilen kenar |
 | Altyazı | "İç içe grafik" | Başka bir grafiğin içinde düğüm olarak kullanılan bir grafik |
 | Dayanıklı uygulama | "Başarısızlıktan devam et" | Son başarılı düğümde tam durumla yeniden başlatın |
-| Süpervizör | "Yönlendirici Yüksek Lisans" | Uzman altagent'lar için merkezi dağıtıcı |
-| sürüsü | "P2P agent'lar" | Agentpaylaşımlı araçlar aracılığıyla dağıtılır; merkezi yönlendirici yok |
+| Süpervizör | "Yönlendirici Yüksek Lisans" | Uzman alt birimler için merkezi dağıtıcıagent |
+| sürüsü | "P2P agent'ler" | Agent'ler paylaşılan araçlar aracılığıyla dağıtılır; merkezi yönlendirici yok |
 
 ## Daha Fazla Okuma
 
-- [LangGraph'a genel bakış](https://docs.langchain.com/oss/python/langgraph/overview) — referans dokümanları
+- [LangGraph'a genel bakış](https://docs.langchain.com/oss/python/langgraph/overview) — referans dokümanlar
 - [langgraph-supervisor reference](https://reference.langchain.com/python/langgraph/supervisor/) — denetleyici modeli API'si
 - [AutoGen v0.4, Microsoft Research](https://www.microsoft.com/en-us/research/articles/autogen-v0-4-reimagining-the-foundation-of-agentic-ai-for-scale-extensibility-and-robustness/) — aktör-model alternatifi
-- [Claude Agent SDK'ya genel bakış](https://platform.claude.com/docs/en/agent-sdk/overview) — oturum deposu ve altagent'lar
+- [Claude Agent SDK'ya genel bakış](https://platform.claude.com/docs/en/agent-sdk/overview) — oturum deposu ve altagent'ler
