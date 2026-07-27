@@ -2,7 +2,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the imaginary unit i defined by?",
+      "question": "Tanımladığım hayali birim nedir?",
       "options": [
         "i = sqrt(2)",
         "i^2 = -1",
@@ -10,11 +10,11 @@
         "i^2 = 1"
       ],
       "correct": 1,
-      "explanation": "The imaginary unit i is defined by the property i^2 = -1. It extends the real number line into a 2D plane. Geometrically, multiplying by i is a 90-degree rotation — two multiplications (i^2) give a 180-degree rotation, which is -1."
+      "explanation": "Sanal birim i, i^2 = -1 özelliği ile tanımlanır. Gerçek sayı doğrusunu 2 boyutlu bir düzleme genişletir. Geometrik olarak, i ile çarpmak 90 derecelik bir dönüştür; iki çarpma (i^2), 180 derecelik bir dönüş verir, yani -1."
     },
     {
       "stage": "pre",
-      "question": "What does Euler's formula e^(i*theta) equal?",
+      "question": "Euler formülü e^(i*theta) neye eşittir?",
       "options": [
         "theta + i",
         "cos(theta) + i*sin(theta)",
@@ -22,11 +22,11 @@
         "i^theta"
       ],
       "correct": 1,
-      "explanation": "Euler's formula states e^(i*theta) = cos(theta) + i*sin(theta). This connects complex exponentials to trigonometry and shows that e^(i*theta) traces the unit circle as theta varies."
+      "explanation": "Euler'in formülü e^(i*theta) = cos(theta) + i*sin(theta)'yi belirtir. Bu, karmaşık üstelleri trigonometriye bağlar ve teta değiştikçe e^(i*theta)'nın birim çemberi takip ettiğini gösterir."
     },
     {
       "stage": "post",
-      "question": "What is the result of (3 + 2i)(1 + 4i)?",
+      "question": "(3 + 2i)(1 + 4i)'nin sonucu nedir?",
       "options": [
         "3 + 8i",
         "4 + 6i",
@@ -38,19 +38,19 @@
     },
     {
       "stage": "post",
-      "question": "Why are complex numbers used in Rotary Position Embedding (RoPE) for transformers?",
+      "question": "Transformatörler için Döner Konum Gömme'de (RoPE) neden karmaşık sayılar kullanılıyor?",
       "options": [
-        "Complex numbers compress the position encoding to use less memory",
+        "Karmaşık sayılar, daha az bellek kullanacak şekilde konum kodlamasını sıkıştırır",
         "Multiplying query/key vectors by complex rotations encodes relative position as a rotation angle",
-        "Complex numbers are required by the attention softmax function",
+        "Karmaşık sayılar dikkat softmax işlevi için gereklidir",
         "RoPE uses imaginary numbers to handle negative positions"
       ],
       "correct": 1,
-      "explanation": "RoPE multiplies query and key vectors by complex rotation matrices e^(i*m*theta) where m is the position. The relative position between two tokens becomes a rotation angle, and attention naturally becomes sensitive to relative (not absolute) position through complex multiplication."
+      "explanation": "RoPE, sorgu ve anahtar vektörlerini karmaşık rotasyon matrisleri e^(i*m*theta) ile çarpar; burada m konumdur. İki jeton arasındaki göreceli konum, bir dönüş açısı haline gelir ve dikkat, karmaşık çarpma yoluyla doğal olarak göreceli (mutlak değil) konuma duyarlı hale gelir."
     },
     {
       "stage": "post",
-      "question": "The N-th roots of unity are N equally spaced points on the unit circle. What is their sum?",
+      "question": "Birliğin N-'inci kökleri birim çember üzerinde eşit aralıklı N noktadır. Bunların toplamı nedir?",
       "options": [
         "N",
         "1",
@@ -58,7 +58,7 @@
         "N/2"
       ],
       "correct": 2,
-      "explanation": "The N roots of unity are e^(2*pi*i*k/N) for k = 0, ..., N-1. They are symmetrically distributed around the unit circle, so their vector sum cancels out to zero. This symmetry property is what makes the DFT invertible."
+      "explanation": "k = 0, ..., N-1 için birliğin N kökü e^(2*pi*i*k/N)'dir. Birim çember etrafında simetrik olarak dağıldıklarından vektör toplamları sıfırlanır. Bu simetri özelliği DFT'yi ters çevrilebilir yapan şeydir."
     }
   ]
 }
