@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does 'entropy' measure in information theory?",
-      "options": ["The energy of a physical system", "The average surprise or uncertainty in a probability distribution", "The number of bits in a binary message", "The error rate of a communication channel"],
+      "question": "Bilgi teorisinde 'entropi' neyi ölçer?",
+      "options": [
+        "Fiziksel bir sistemin enerjisi",
+        "Bir olasılık dağılımındaki ortalama sürpriz veya belirsizlik",
+        "İkili mesajdaki bit sayısı",
+        "Bir iletişim kanalının hata oranı"
+      ],
       "correct": 1,
-      "explanation": "Entropy H(P) = -sum(p(x) * log(p(x))) measures the average amount of surprise across all outcomes. High entropy means high uncertainty (uniform distribution). Low entropy means the outcome is predictable."
+      "explanation": "Entropi H(P) = -sum(p(x) * log(p(x))) tüm sonuçlardaki ortalama sürpriz miktarını ölçer. Yüksek entropi, yüksek belirsizlik (düzgün dağılım) anlamına gelir. Düşük entropi, sonucun öngörülebilir olduğu anlamına gelir."
     },
     {
       "stage": "pre",
-      "question": "What is the cross-entropy loss commonly used for in neural networks?",
-      "options": ["Regression tasks with continuous outputs", "Classification tasks, measuring how far predicted probabilities are from true labels", "Generating new data samples", "Regularizing model weights to prevent overfitting"],
+      "question": "Sinir ağlarında yaygın olarak kullanılan çapraz entropi kaybı nedir?",
+      "options": [
+        "Sürekli çıkışlı regresyon görevleri",
+        "Tahmin edilen olasılıkların gerçek etiketlerden ne kadar uzakta olduğunu ölçen sınıflandırma görevleri",
+        "Generating new data samples",
+        "Regularizing model weights to prevent overfitting"
+      ],
       "correct": 1,
-      "explanation": "Cross-entropy loss H(P,Q) = -sum(p(x)*log(q(x))) measures the difference between the true distribution (labels) and the model's predicted distribution. It is THE standard loss for classification."
+      "explanation": "Çapraz entropi kaybı H(P,Q) = -sum(p(x)*log(q(x))) gerçek dağılım (etiketler) ile modelin tahmin edilen dağılımı arasındaki farkı ölçer. Sınıflandırma için THE standart kayıptır."
     },
     {
       "stage": "post",
-      "question": "Why is minimizing cross-entropy equivalent to minimizing KL divergence during training?",
-      "options": ["Because KL divergence is always zero during training", "Because cross-entropy = entropy + KL divergence, and the entropy of the true labels is constant, so minimizing cross-entropy minimizes KL divergence", "Because cross-entropy and KL divergence are the same formula", "Because the model's entropy equals zero at convergence"],
+      "question": "Çapraz entropiyi en aza indirmek neden eğitim sırasında KL sapmayı en aza indirmeye eşdeğerdir?",
+      "options": [
+        "Çünkü eğitim sırasında KL sapma her zaman sıfırdır",
+        "Çapraz entropi = entropi + KL ıraksaklığı ve gerçek etiketlerin entropisi sabit olduğundan, çapraz entropinin en aza indirilmesi KL ıraksamasını en aza indirir",
+        "Çünkü çapraz entropi ve KL ıraksaklık aynı formüldür",
+        "Çünkü modelin entropisi yakınsama anında sıfıra eşittir"
+      ],
       "correct": 1,
-      "explanation": "H(P,Q) = H(P) + D_KL(P||Q). Since the true distribution P doesn't change during training, H(P) is constant. Minimizing H(P,Q) is the same as minimizing D_KL(P||Q) -- pushing the model toward the true distribution."
+      "explanation": "H(P,Q) = H(P) + D_KL(P||Q). Gerçek dağılım P eğitim sırasında değişmediğinden H(P) sabittir. H(P,Q)'yi en aza indirmek, D_KL(P||Q)'yu en aza indirmekle aynıdır; yani modeli gerçek dağılıma doğru iter."
     },
     {
       "stage": "post",
-      "question": "A language model has perplexity 50 on a test set. What does this mean?",
-      "options": ["The model makes 50 errors per sentence", "On average, the model is as uncertain as if it were choosing uniformly from 50 possible next tokens at each step", "The model has 50 layers", "The model was trained for 50 epochs"],
+      "question": "Bir dil modelinin bir test setinde şaşkınlığı 50'dir. Bu ne anlama gelir?",
+      "options": [
+        "Model cümle başına 50 hata yapıyor",
+        "Ortalama olarak model, her adımda 50 olası sonraki token arasından eşit şekilde seçim yapıyormuşçasına belirsizdir.",
+        "Modelin 50 katmanı var",
+        "Model 50 dönem boyunca eğitildi"
+      ],
       "correct": 1,
-      "explanation": "Perplexity = e^(cross-entropy). A perplexity of 50 means the model's uncertainty at each token is equivalent to picking randomly from 50 equally likely options. Lower perplexity means better predictions."
+      "explanation": "Şaşkınlık = e^(çapraz entropi). 50'lik bir şaşkınlık, modelin her bir jetondaki belirsizliğinin, eşit olasılıklı 50 seçenek arasından rastgele seçim yapmaya eşdeğer olduğu anlamına gelir. Daha düşük şaşkınlık, daha iyi tahminler anlamına gelir."
     },
     {
       "stage": "post",
-      "question": "How does mutual information differ from Pearson correlation for feature selection?",
-      "options": ["Mutual information is faster to compute", "Mutual information detects any statistical dependency (linear or nonlinear) while correlation only detects linear relationships", "Pearson correlation works for any data type while mutual information only works for continuous data", "They always give the same feature rankings"],
+      "question": "Özellik seçimi açısından karşılıklı bilgi Pearson korelasyonundan nasıl farklıdır?",
+      "options": [
+        "Karşılıklı bilgilerin hesaplanması daha hızlıdır",
+        "Karşılıklı bilgi her türlü istatistiksel bağımlılığı (doğrusal veya doğrusal olmayan) algılarken, korelasyon yalnızca doğrusal ilişkileri algılar",
+        "Pearson korelasyonu herhangi bir veri türü için işe yararken, karşılıklı bilgi yalnızca sürekli veriler için işe yarar",
+        "Hep aynı özellik sıralamasını veriyorlar"
+      ],
       "correct": 1,
-      "explanation": "Mutual information I(X;Y) captures all statistical dependencies between variables, including nonlinear and non-monotonic ones. Pearson correlation only measures linear association, missing many important relationships."
+      "explanation": "Karşılıklı bilgi I(X;Y), doğrusal olmayan ve monotonik olmayanlar da dahil olmak üzere değişkenler arasındaki tüm istatistiksel bağımlılıkları yakalar. Pearson korelasyonu yalnızca doğrusal ilişkiyi ölçer ve birçok önemli ilişkiyi kaçırır."
     }
   ]
 }
