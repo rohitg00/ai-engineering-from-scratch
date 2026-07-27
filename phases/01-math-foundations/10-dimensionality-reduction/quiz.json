@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the 'curse of dimensionality'?",
-      "options": ["High-dimensional data takes too long to download", "As dimensions grow, distances become meaningless, volume concentrates in corners, and you need exponentially more data", "Neural networks cannot process data with more than 100 features", "High-dimensional data always contains noise"],
+      "question": "'Boyutsallığın laneti' nedir?",
+      "options": [
+        "High-dimensional data takes too long to download",
+        "As dimensions grow, distances become meaningless, volume concentrates in corners, and you need exponentially more data",
+        "Sinir ağları 100'den fazla özelliğe sahip verileri işleyemez",
+        "High-dimensional data always contains noise"
+      ],
       "correct": 1,
       "explanation": "In high dimensions, all pairwise distances converge to similar values, data points spread to corners, and maintaining sample density requires exponentially more data. Dimensionality reduction counteracts these effects."
     },
     {
       "stage": "pre",
-      "question": "What does PCA find?",
-      "options": ["The most important features by name", "The orthogonal directions of maximum variance in the data", "Clusters of similar data points", "The optimal number of features to keep"],
+      "question": "PCA ne buluyor?",
+      "options": [
+        "Ada göre en önemli özellikler",
+        "Verilerdeki maksimum varyansın ortogonal yönleri",
+        "Clusters of similar data points",
+        "Saklanacak optimum özellik sayısı"
+      ],
       "correct": 1,
-      "explanation": "PCA computes the eigenvectors of the covariance matrix, which are orthogonal directions ranked by how much data variance they capture. The first principal component points along the direction of maximum spread."
+      "explanation": "PCA, yakaladıkları veri varyansının miktarına göre sıralanan dik yönler olan kovaryans matrisinin özvektörlerini hesaplar. İlk ana bileşen maksimum yayılma yönünü işaret eder."
     },
     {
       "stage": "post",
-      "question": "After running PCA on 784-dimensional MNIST data with k=50 components, you find 95% of variance is captured. What does this tell you?",
-      "options": ["Only 50 pixels matter in each image", "The data effectively lives in a ~50-dimensional subspace; the remaining 734 dimensions are mostly noise or redundancy", "95% of images belong to the same class", "The model will achieve 95% accuracy"],
+      "question": "PCA'yi k=50 bileşenli 784 boyutlu MNIST verileri üzerinde çalıştırdıktan sonra varyansın %95'inin yakalandığını görürsünüz. Bu sana ne anlatıyor?",
+      "options": [
+        "Her görüntüde yalnızca 50 piksel önemlidir",
+        "Veriler etkin bir şekilde ~50 boyutlu bir alt uzayda yaşar; geri kalan 734 boyut çoğunlukla gürültü veya fazlalıktır",
+        "Görsellerin %95'i aynı sınıfa ait",
+        "Model %95 doğruluk elde edecek"
+      ],
       "correct": 1,
-      "explanation": "95% explained variance with 50 components means the essential structure of 784-dimensional data is captured by just 50 directions. The rest carries only 5% of the variation -- mostly noise."
+      "explanation": "50 bileşenle %95 açıklanan varyans, 784 boyutlu verinin temel yapısının yalnızca 50 yön tarafından yakalandığı anlamına gelir. Geri kalanı varyasyonun yalnızca %5'ini taşıyor; çoğunlukla gürültü."
     },
     {
       "stage": "post",
-      "question": "Why should you NOT use t-SNE as preprocessing before training a classifier?",
-      "options": ["t-SNE is too slow for large datasets", "t-SNE is designed for visualization only: it distorts global distances, is stochastic, and the output coordinates have no consistent meaning across runs", "t-SNE reduces data to exactly 2 dimensions which is too few", "t-SNE requires the labels to be known in advance"],
+      "question": "Bir sınıflandırıcıyı eğitmeden önce neden NOT ön işleme olarak t-SNE kullanmalısınız?",
+      "options": [
+        "t-SNE büyük veri kümeleri için çok yavaş",
+        "t-SNE yalnızca görselleştirme için tasarlanmıştır: küresel mesafeleri bozar, stokastiktir ve çıktı koordinatlarının çalıştırmalar arasında tutarlı bir anlamı yoktur",
+        "t-SNE, verileri tam olarak 2 boyuta indirir, bu da çok azdır",
+        "t-SNE, etiketlerin önceden bilinmesini gerektirir"
+      ],
       "correct": 1,
-      "explanation": "t-SNE preserves local neighborhoods but distorts global structure. Distances between clusters are meaningless, and different runs produce different layouts. Use PCA for preprocessing and t-SNE/UMAP only for visualization."
+      "explanation": "t-SNE yerel mahalleleri koruyor ancak küresel yapıyı bozuyor. Kümeler arasındaki mesafeler anlamsızdır ve farklı çalışmalar farklı düzenler oluşturur. Ön işleme için PCA'yi ve yalnızca görselleştirme için t-SNE/UMAP'yi kullanın."
     },
     {
       "stage": "post",
-      "question": "When would you choose kernel PCA over standard PCA?",
-      "options": ["When you have more samples than features", "When the data lies on a nonlinear manifold that standard PCA cannot separate, like concentric circles", "When you need the fastest possible computation", "When you want interpretable principal components"],
+      "question": "PCA standardı yerine PCA çekirdeğini ne zaman seçersiniz?",
+      "options": [
+        "Özelliklerden daha fazla örneğiniz olduğunda",
+        "Veriler, eşmerkezli daireler gibi standart PCA'nin ayıramadığı doğrusal olmayan bir manifold üzerinde yer aldığında",
+        "Mümkün olan en hızlı hesaplamaya ihtiyaç duyduğunuzda",
+        "Yorumlanabilir ana bileşenler istediğinizde"
+      ],
       "correct": 1,
-      "explanation": "Standard PCA finds linear subspaces. If data has nonlinear structure (e.g., two concentric rings), PCA projects both onto the same line. Kernel PCA maps data to a higher-dimensional space where the structure becomes linear."
+      "explanation": "Standart PCA doğrusal alt uzayları bulur. Verilerin doğrusal olmayan bir yapısı varsa (örneğin iki eşmerkezli halka), PCA her ikisini de aynı çizgiye yansıtır. Çekirdek PCA, verileri yapının doğrusal hale geldiği daha yüksek boyutlu bir alana eşler."
     }
   ]
 }
