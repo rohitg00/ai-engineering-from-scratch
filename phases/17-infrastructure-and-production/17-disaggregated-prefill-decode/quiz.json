@@ -4,11 +4,11 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why do prefill and decode want different optimal GPU configurations?",
+      "question": "Neden önceden doldurma ve kod çözme farklı optimum GPU yapılandırmaları istiyor?",
       "options": [
         "Prefill must run on AMD and decode on NVIDIA",
-        "Prefill is compute-bound on matmul throughput; decode is memory-bound on HBM bandwidth, so colocating them wastes one resource",
-        "They use different model weights",
+        "Önceden doldurma, matmul veriminde hesaplamaya bağlıdır; kod çözme, HBM bant genişliğinde belleğe bağlıdır, bu nedenle bunların aynı yerde konumlandırılması bir kaynağın israfına neden olur",
+        "Farklı model ağırlıkları kullanıyorlar",
         "Decode requires more network bandwidth"
       ],
       "correct": 1,
@@ -16,35 +16,35 @@
     },
     {
       "stage": "check",
-      "question": "What transport does NVIDIA Dynamo use to move KV cache between the prefill and decode pools?",
+      "question": "NVIDIA Dynamo, KV önbelleğini ön doldurma ve kod çözme havuzları arasında taşımak için hangi aktarımı kullanır?",
       "options": [
         "Plain HTTP",
-        "gRPC bidi only",
+        "yalnızca gRPC bidi",
         "Shared filesystem on NFS",
-        "NIXL (RDMA/InfiniBand when available, TCP fallback)"
+        "NIXL (mevcut olduğunda RDMA/InfiniBand, TCP yedek)"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "When does disaggregation NOT pay off according to the lesson?",
+      "question": "NOT ayrıştırma derse göre ne zaman işe yarar?",
       "options": [
         "MoE workloads on Blackwell",
-        "Multi-tenant serving with shared system prompts",
-        "RAG with 8K+ prefixes",
-        "Prompts under 512 tokens and outputs under 200 tokens, where the KV transfer tax dominates the gain"
+        "Paylaşılan sistem istemleriyle çok kiracılı hizmet",
+        "8K+ öneklerle RAG",
+        "KV transfer vergisinin kazanca hakim olduğu 512 tokenin altında istemler ve 200 tokenin altında çıktılar"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the core architectural difference between Dynamo and llm-d?",
+      "question": "Dynamo ve llm-d arasındaki temel mimari fark nedir?",
       "options": [
-        "Dynamo is open source; llm-d is closed",
+        "Dinamo açık kaynaktır; llm-d kapalı",
         "Dynamo runs on CPU; llm-d on GPU",
-        "Dynamo is a stack-above orchestrator over vLLM/SGLang/TRT-LLM; llm-d is Kubernetes-native with prefill/decode/router as independent Services",
+        "Dynamo, vLLM/SGLang/TRT-LLM üzerinde bir yığın üstü orkestratördür; llm-d, bağımsız Hizmetler olarak önceden doldurma/kod çözme/yönlendirici ile Kubernetes'te yereldir",
         "Dynamo requires AMD; llm-d requires NVIDIA"
       ],
       "correct": 2,
@@ -52,7 +52,7 @@
     },
     {
       "stage": "post",
-      "question": "Which Dynamo components automatically tune the prefill:decode ratio for an SLO?",
+      "question": "Hangi Dinamo bileşenleri bir SLO için önceden doldurma:kod çözme oranını otomatik olarak ayarlar?",
       "options": [
         "Sidecar proxy and Envoy filter",
         "Planner Profiler and SLA Planner",
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "How does disaggregation interact with cache-aware routing from Phase 17 · 11?",
+      "question": "Ayrıştırma, Aşama 17 · 11'deki önbellek bilinçli yönlendirmeyle nasıl etkileşime girer?",
       "options": [
         "Disaggregation disables KV cache reuse entirely",
-        "The cache-aware router can land a request on the decode pool already holding its prefix; on miss it flows prefill -> decode, so the two compound",
-        "They are mutually exclusive",
-        "Cache-aware routing is only for colocated serving"
+        "Önbelleği tanıyan yönlendirici, zaten önekini tutan kod çözme havuzuna bir istek gönderebilir; kaçırıldığında ön doldurma -> kodunu çözer, böylece iki bileşik",
+        "Bunlar birbirini dışlar",
+        "Önbelleğe duyarlı yönlendirme yalnızca ortak konumlandırılmış sunum içindir"
       ],
       "correct": 1,
       "explanation": ""
