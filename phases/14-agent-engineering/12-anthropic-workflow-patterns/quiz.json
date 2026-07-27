@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "How does Anthropic distinguish a workflow from an agent?",
+      "question": "Anthropic iş akışını bir aracıdan nasıl ayırır?",
       "options": [
         "Workflows use embeddings; agents use tools",
-        "Workflows are engineer-owned predefined graphs; agents are model-owned dynamic tool direction",
+        "İş akışları mühendisin sahip olduğu önceden tanımlanmış grafiklerdir; aracılar modele ait dinamik araç yönüdür",
         "Workflows run on CPUs; agents need GPUs",
-        "Workflows are stateless; agents are stateful"
+        "İş akışları durum bilgisine sahip değildir; ajanlar durum bilgisi sahibidir"
       ],
       "correct": 1,
-      "explanation": "Workflow = predefined code path the engineer owns; agent = the model owns the graph."
+      "explanation": "İş akışı = mühendisin sahip olduğu önceden tanımlanmış kod yolu; aracı = model grafiğin sahibidir."
     },
     {
       "stage": "pre",
-      "question": "What are the three capabilities of the augmented LLM that underpins all five patterns?",
+      "question": "Beş modelin tümünü destekleyen artırılmış LLM'nin üç yeteneği nelerdir?",
       "options": [
         "Search (retrieval), tools (actions), memory (persistence)",
         "Embeddings, fine-tuning, RAG",
@@ -24,11 +24,11 @@
         "Plan, execute, reflect"
       ],
       "correct": 0,
-      "explanation": "The atomic unit is one LLM with retrieval, tools, and memory wired in."
+      "explanation": "Atom birimi, erişim, araçlar ve hafızanın kablolu olduğu bir LLM'dir."
     },
     {
       "stage": "check",
-      "question": "Which is NOT one of the five Anthropic workflow patterns?",
+      "question": "NOT beş Antropik iş akışı modelinden biri hangisidir?",
       "options": [
         "Prompt chaining",
         "Routing",
@@ -36,11 +36,11 @@
         "Gradient distillation"
       ],
       "correct": 3,
-      "explanation": "The five are prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer. Gradient distillation is a training concept."
+      "explanation": "Beşi, hızlı zincirleme, yönlendirme, paralelleştirme, orkestratör-çalışanlar, değerlendirici-optimizasyondur. Gradyan damıtma bir eğitim konseptidir."
     },
     {
       "stage": "check",
-      "question": "Which two shapes does parallelization come in?",
+      "question": "Paralelleştirme hangi iki şekilde ortaya çıkar?",
       "options": [
         "Sync and async",
         "Sectioning (different chunks) and voting (same prompt N times, aggregate)",
@@ -48,11 +48,11 @@
         "Stateful and stateless"
       ],
       "correct": 1,
-      "explanation": "Parallelization is sectioning or voting; both fan out N calls and aggregate."
+      "explanation": "Paralelleştirme, bölümlere ayırma veya oylamadır; her ikisi de N çağrıyı dağıtır ve birleştirir."
     },
     {
       "stage": "check",
-      "question": "Which workflow pattern is Self-Refine generalized?",
+      "question": "Self-Refine hangi iş akışı modelinin genelleştirilmesidir?",
       "options": [
         "Prompt chaining",
         "Routing",
@@ -60,31 +60,31 @@
         "Evaluator-optimizer"
       ],
       "correct": 3,
-      "explanation": "Evaluator-optimizer is the Anthropic name for the Self-Refine / CRITIC iterative pattern."
+      "explanation": "Değerlendirici-iyileştirici, Kendini İyileştirme / CRITIC yinelemeli modelinin Antropik adıdır."
     },
     {
       "stage": "post",
-      "question": "When do workflows beat agents according to the lesson?",
+      "question": "Derse göre iş akışları aracıları ne zaman yener?",
       "options": [
         "Always",
-        "On predictable, cost-bounded, or compliance-bounded tasks where the graph can be enumerated and audited",
-        "Only for chat",
-        "Only on GPUs"
+        "Grafiğin numaralandırılabileceği ve denetlenebileceği öngörülebilir, maliyet sınırlı veya uyumlulukla sınırlı görevlerde",
+        "Sadece sohbet için",
+        "Yalnızca GPU'larda"
       ],
       "correct": 1,
-      "explanation": "Workflows are cheaper, easier to debug, and auditable; pick them when steps are knowable."
+      "explanation": "İş akışları daha ucuzdur, hata ayıklaması daha kolaydır ve denetlenebilirdir; Adımlar bilinebilir olduğunda bunları seçin."
     },
     {
       "stage": "post",
-      "question": "What is the lesson's recommended default starting point?",
+      "question": "Dersin önerilen varsayılan başlangıç ​​noktası nedir?",
       "options": [
         "A multi-agent framework",
-        "Direct API calls; add frameworks only when durable state, actor concurrency, or role templating earns its cost",
-        "Fine-tune the model",
+        "Doğrudan API çağrıları; Çerçeveleri yalnızca dayanıklı durum, aktör eşzamanlılığı veya rol şablonu oluşturma maliyetinin yüksek olduğu durumlarda ekleyin",
+        "Modele ince ayar yapın",
         "Build a custom MCTS"
       ],
       "correct": 1,
-      "explanation": "Schluntz and Zhang: start simple; add framework complexity only when justified."
+      "explanation": "Schluntz ve Zhang: basit başlayın; yalnızca gerekçeli olduğunda çerçeve karmaşıklığı ekleyin."
     }
   ]
 }
