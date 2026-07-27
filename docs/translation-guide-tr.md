@@ -97,7 +97,7 @@ dönüştürülür; fenced code block'lar pakete hiç alınmaz.
 
 ```bash
 python3 scripts/localize_curriculum.py prepare \
-  --scope phases/01-foundations/01-dev-environment \
+  --scope phases/00-setup-and-tooling/01-dev-environment \
   --output translation-tr.json
 ```
 
