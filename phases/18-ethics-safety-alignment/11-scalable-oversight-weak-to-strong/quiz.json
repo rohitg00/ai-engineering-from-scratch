@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core question the Superalignment agenda asks?",
+      "question": "Süper Hizalama gündeminin sorduğu temel soru nedir?",
       "options": [
-        "Can RLHF scale beyond 1B parameters?",
-        "Can adversarial training remove all backdoors?",
-        "Can a weaker overseer reliably supervise a stronger, aligned model?",
-        "Are humans more accurate than reward models?"
+        "RLHF 1B parametrelerinin ötesine ölçeklenebilir mi?",
+        "Rekabetçi eğitim tüm arka kapıları kaldırabilir mi?",
+        "Daha zayıf bir gözetmen, daha güçlü ve uyumlu bir modeli güvenilir bir şekilde denetleyebilir mi?",
+        "İnsanlar ödül modellerinden daha mı doğru?"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "In Burns et al. (2023) weak-to-strong generalization, what is the setup?",
+      "question": "Burns ve ark. (2023) zayıftan güçlüye genelleme, kurulum nedir?",
       "options": [
-        "A reward model is trained on synthetic data only",
+        "Bir ödül modeli yalnızca sentetik verilerle eğitilir",
         "Two strong models debate; a human judges",
-        "GPT-2 is fine-tuned on GPT-4 labels",
-        "A strong model (GPT-4 class) is fine-tuned on labels produced by a weak model (GPT-2 class) and its capability is measured against the strong supervised ceiling"
+        "GPT-2, GPT-4 etiketlerine göre hassas şekilde ayarlanmıştır",
+        "Güçlü bir modele (GPT-4 sınıfı), zayıf bir modelin (GPT-2 sınıfı) ürettiği etiketlere ince ayar yapılır ve kapasitesi, güçlü denetlenen tavana göre ölçülür."
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How is Performance Gap Recovered (PGR) defined?",
+      "question": "Performans Açığı Giderildi (PGR) nasıl tanımlanır?",
       "options": [
         "(ceiling - fine-tuned) / weak",
         "(fine-tuned - weak) / (ceiling - weak)",
@@ -40,7 +40,7 @@
     },
     {
       "stage": "check",
-      "question": "Which of the following is NOT a scalable-oversight mechanism listed in the lesson?",
+      "question": "Aşağıdakilerden hangisi derste listelenen ölçeklenebilir bir gözetim mekanizması olan NOT'dir?",
       "options": [
         "Task Decomposition",
         "Tokenizer Distillation",
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "How are scalable oversight and W2SG complementary?",
+      "question": "Ölçeklenebilir gözetim ve W2SG nasıl tamamlayıcıdır?",
       "options": [
-        "Scalable oversight improves the overseer's effective signal quality; W2SG closes the gap from whatever imperfect signal the overseer provides",
-        "They both target the same metric",
-        "They are mutually exclusive",
-        "They both require white-box access"
+        "Ölçeklenebilir gözetim, gözetmenin etkili sinyal kalitesini artırır; W2SG gözetmenin sağladığı kusurlu sinyal ile aradaki boşluğu kapatır",
+        "Her ikisi de aynı ölçümü hedefliyor",
+        "Bunlar birbirini dışlar",
+        "Her ikisi de beyaz kutu erişimi gerektirir"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the central assumption of the AI-safety-via-debate mechanism?",
+      "question": "AI-tartışma yoluyla güvenlik mekanizmasının temel varsayımı nedir?",
       "options": [
-        "Debate transcripts are always shorter than direct answers",
-        "Finding a convincing true answer is easier than finding a convincing false answer",
-        "The judge is more capable than the debaters",
-        "Both debaters always tell the truth"
+        "Tartışma metinleri her zaman doğrudan yanıtlardan daha kısadır",
+        "İkna edici bir doğru cevap bulmak, ikna edici bir yanlış cevap bulmaktan daha kolaydır",
+        "Hakim tartışmacılardan daha yeteneklidir",
+        "Her iki tartışmacı da her zaman doğruyu söyler"
       ],
       "correct": 1,
       "explanation": ""
