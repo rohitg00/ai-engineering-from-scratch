@@ -4,87 +4,87 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What single question does the verification gate answer?",
+      "question": "Doğrulama kapısı hangi tek soruyu yanıtlıyor?",
       "options": [
-        "Is the model fast?",
-        "Is this task actually complete? (reading scope, rule, feedback, and diff artifacts)",
-        "Is the prompt optimal?",
-        "Is the token budget healthy?"
+        "Model hızlı mı?",
+        "Bu görev gerçekten tamamlandı mı? (okuma kapsamı, kural, geri bildirim ve fark eserleri)",
+        "İstem optimal mi?",
+        "Token bütçesi sağlıklı mı?"
       ],
       "correct": 1,
-      "explanation": "The gate is a deterministic function over workbench artifacts producing a pass/fail verdict."
+      "explanation": "Kapı, başarılı/başarısız kararı üreten çalışma tezgahı eserleri üzerinde deterministik bir fonksiyondur."
     },
     {
       "stage": "pre",
-      "question": "Why must the gate be deterministic?",
+      "question": "Kapı neden deterministik olmak zorunda?",
       "options": [
-        "Determinism is free",
-        "The same artifact set must produce the same verdict every time; LLM judges belong in the reviewer (qualitative), not the gate (status)",
-        "Providers require it",
-        "It saves money"
+        "Determinizm ücretsizdir",
+        "Aynı yapı seti her seferinde aynı sonucu vermelidir; LLM jüri üyeleri, değerlendirmeye (durum) değil, hakeme (niteliksel) aittir",
+        "Sağlayıcılar bunu gerektirir",
+        "Para tasarrufu sağlar"
       ],
       "correct": 1,
-      "explanation": "Mixing model judgment into the gate collapses the deterministic/qualitative split."
+      "explanation": "Model yargısını kapıya karıştırmak deterministik/niteliksel ayrımı çökertir."
     },
     {
       "stage": "check",
-      "question": "What is the gate's override discipline?",
+      "question": "Geçidin geçersiz kılma disiplini nedir?",
       "options": [
-        "Anyone can override silently",
-        "Block-severity findings can only be overridden by a human with a recorded override_reason and overridden_by user id in a signed audit log",
+        "Herkes sessizce geçersiz kılabilir",
+        "Blok ciddiyeti bulguları yalnızca imzalı bir denetim günlüğünde override_reason ve overriden_by kullanıcı kimliği kayıtlı olan bir kişi tarafından geçersiz kılınabilir",
         "Override requires a manager email",
-        "Overrides are forbidden"
+        "Geçersiz kılmalar yasaktır"
       ],
       "correct": 1,
-      "explanation": "Signed overrides land in outputs/verification/overrides.jsonl; agent cannot self-override."
+      "explanation": "İmzalı geçersiz kılmalar çıktılar/verification/overrides.jsonl dosyasında yer alır; aracı kendi kendini geçersiz kılamaz."
     },
     {
       "stage": "check",
-      "question": "What is the Hybrid Norm pairing the lesson cites?",
+      "question": "Ders alıntılarını eşleştiren Hibrit Norm nedir?",
       "options": [
         "Hot/cold prompts",
-        "Verifiable rewards (tests, schemas, exit codes) answer 'did it solve the problem?'; LLM rubrics answer 'is it readable, secure, on-style?'",
+        "Doğrulanabilir ödüller (testler, şemalar, çıkış kodları) 'sorunu çözdü mü?' sorusunu yanıtlar; LLM değerlendirme listeleri 'okunabilir mi, güvenli mi, tarzına uygun mu?' sorusunu yanıtlıyor",
         "GPU and CPU split",
         "Cache vs no-cache"
       ],
       "correct": 1,
-      "explanation": "Anthropic 2026 guidance: gate runs the first class; reviewer (Lesson 39) runs the second."
+      "explanation": "Antropik 2026 rehberliği: kapı birinci sınıfta çalışır; gözden geçiren (Ders 39) ikinciyi çalıştırır."
     },
     {
       "stage": "check",
-      "question": "How does defense-in-depth layer the gates?",
+      "question": "Derinlemesine savunma kapıları nasıl katmanlandırır?",
       "options": [
         "Single gate at merge time",
-        "Pre-commit hook -> CI status check -> pre-tool authz hook -> pre-merge gate; each layer is deterministic so failure in one is caught by the next",
-        "Only IDE warnings",
-        "Only a chat reminder"
+        "Ön işleme kancası -> CI durum kontrolü -> ön araç kimlik doğrulama kancası -> ön birleştirme kapısı; her katman deterministik olduğundan birindeki başarısızlık diğer katman tarafından yakalanır",
+        "Yalnızca IDE uyarıları",
+        "Yalnızca sohbet hatırlatıcısı"
       ],
       "correct": 1,
-      "explanation": "Multiple non-bypassable layers catch what a single layer would miss."
+      "explanation": "Atlanamayan çoklu katmanlar, tek bir katmanın kaçırabileceği şeyleri yakalar."
     },
     {
       "stage": "post",
-      "question": "What does a coverage_floor check protect against?",
+      "question": "Coverage_floor kontrolü neye karşı koruma sağlar?",
       "options": [
         "Hot-path latency",
-        "Agents quietly deleting tests that fail; the gate fails if measured coverage drops below the floor or last merge by more than 1 percentage point",
+        "Aracılar başarısız olan testleri sessizce siliyor; Ölçülen kapsama alanı zeminin altına düşerse veya son birleşme yüzde 1'den fazla olursa geçit başarısız olur",
         "Cold starts",
         "Outdated lockfiles"
       ],
       "correct": 1,
-      "explanation": "Without a floor, agents can silently lower coverage to keep the verdict green."
+      "explanation": "Taban olmadan, ajanlar kararın yeşil kalmasını sağlamak için kapsama alanını sessizce azaltabilirler."
     },
     {
       "stage": "post",
-      "question": "When should --strict mode promote every warn to block?",
+      "question": "--strict modu ne zaman her uyarıyı engellemeye teşvik etmelidir?",
       "options": [
         "Always",
-        "Release branches, ship-blocking PRs, post-incident triage; not the daily default because strict-on-everything corrodes flow",
+        "Serbest bırakma şubeleri, gemi blokajı PR'leri, olay sonrası triyaj; günlük varsayılan değil çünkü her şeye katı davranmak akışı aşındırır",
         "Never",
-        "Only on Sundays"
+        "Sadece pazar günleri"
       ],
       "correct": 1,
-      "explanation": "--strict is opt-in by branch; reserve for high-stakes moments."
+      "explanation": "--strict şube bazında tercih edilir; Riskli anlar için rezerve edin."
     }
   ]
 }
