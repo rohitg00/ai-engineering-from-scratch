@@ -304,6 +304,7 @@ def export_original_site(
     source: Path, destination: Path, phases: dict[Path, list[Path]]
 ) -> None:
     """Export the source repository's UX shell, localized for local Turkish files."""
+    (destination / ".nojekyll").touch()
     site = source / "site"
     for name in SITE_FILES:
         shutil.copy2(site / name, destination / name)

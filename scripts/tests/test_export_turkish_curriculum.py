@@ -106,6 +106,7 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         self.assertIn('"name":"Türkçe"', data)
         self.assertIn('"lang":"Türkçe"', data)
         self.assertIn('"url":"phases/00-test/01-lesson/"', data)
+        self.assertTrue((target / ".nojekyll").is_file())
         self.assertTrue((target / "style.css").is_file())
         self.assertTrue((target / "progress.js").is_file())
 
