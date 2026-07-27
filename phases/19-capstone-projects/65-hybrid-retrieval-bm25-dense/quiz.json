@@ -1,78 +1,78 @@
 {
   "lesson": "65-hybrid-retrieval-bm25-dense",
-  "title": "Hybrid Retrieval with BM25 and Dense Embeddings",
+  "title": "BM25 ve Yoğun Gömmelerle Hibrit Geri Alma",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does a production RAG endpoint need both lexical and semantic retrieval at once?",
+      "question": "Neden bir üretim RAG uç noktasının aynı anda hem sözcüksel hem de anlamsal almaya ihtiyacı var?",
       "options": [
-        "Semantic retrieval is always more accurate",
-        "Lexical search is required by law for compliance",
-        "The query distribution mixes literal-identifier and paraphrased queries; one modality fails on each class",
-        "It halves the index size"
+        "Anlamsal erişim her zaman daha doğrudur",
+        "Uyumluluk için sözcüksel arama yasa gereği zorunludur",
+        "Sorgu dağıtımı, gerçek tanımlayıcı ve başka kelimelerle ifade edilen sorguları karıştırır; her sınıfta bir yöntem başarısız olur",
+        "İndeks boyutunu yarıya indirir"
       ],
       "correct": 2,
-      "explanation": "BM25 dominates on literal symbols; dense dominates on paraphrases. A real endpoint receives both classes from the same users."
+      "explanation": "BM25 gerçek sembollere hakimdir; Açıklamalarda yoğun hakimdir. Gerçek bir uç nokta, her iki sınıfı da aynı kullanıcılardan alır."
     },
     {
       "stage": "pre",
-      "question": "What is the BM25 parameter b at the default 0.75?",
+      "question": "Varsayılan 0,75'teki BM25 b parametresi nedir?",
       "options": [
-        "A multiplier on the IDF term",
-        "A length-normalization knob: longer documents are penalized but not linearly",
+        "IDF teriminde bir çarpan",
+        "Uzunluk normalleştirme düğmesi: daha uzun belgeler cezalandırılır ancak doğrusal olarak değil",
         "A query-time exponent on cosine similarity",
-        "The number of fields in the document"
+        "Belgedeki alanların sayısı"
       ],
       "correct": 1,
-      "explanation": "b interpolates between no length normalization (0) and full normalization (1); 0.75 is the published recommendation."
+      "explanation": "b, uzunluk normalizasyonunun olmadığı (0) ile tam normalizasyon (1) arasında enterpolasyon yapar; 0,75 yayınlanan öneridir."
     },
     {
       "stage": "check",
-      "question": "What does Reciprocal Rank Fusion compute for each candidate?",
+      "question": "Karşılıklı Sıra Füzyonu her aday için ne hesaplıyor?",
       "options": [
-        "Sum of 1 / (k + rank) across each ranked list that contains the candidate",
+        "Adayı içeren her sıralı listede 1 / (k + sıra) toplamı",
         "Product of cosine similarities across modalities",
-        "Average of the BM25 and dense scores after min-max normalization",
-        "The median rank across modalities"
+        "BM25 ortalaması ve minimum-maksimum normalizasyondan sonra yoğun puanlar",
+        "Modaliteler arasındaki ortalama sıralama"
       ],
       "correct": 0,
-      "explanation": "RRF sums 1 / (k + rank) contributions per ranked list; k = 60 is the published default."
+      "explanation": "RRF sıralı liste başına 1 / (k + sıra) katkının toplamını alır; k = 60 yayınlanan varsayılandır."
     },
     {
       "stage": "check",
-      "question": "Why is rank-based fusion preferred over a linear interpolation of BM25 and cosine scores?",
+      "question": "BM25 ve kosinüs puanlarının doğrusal enterpolasyonu yerine sıralamaya dayalı füzyon neden tercih ediliyor?",
       "options": [
-        "Cosine scores are unbounded",
-        "BM25 scores cannot be sorted",
-        "BM25 scores are unbounded and corpus-dependent; cosine is bounded in -1 to 1; the score scales are not comparable across corpora",
+        "Kosinüs puanları sınırsızdır",
+        "BM25 puanları sıralanamıyor",
+        "BM25 puanları sınırsızdır ve derle bağlıdır; kosinüs -1'den 1'e sınırlıdır; puan ölçekleri kurumlar arasında karşılaştırılamaz",
         "Linear interpolation requires GPU support"
       ],
       "correct": 2,
-      "explanation": "Score interpolation breaks every reindex because the score distributions shift; ranks are comparable across modalities by construction."
+      "explanation": "Puan dağılımları değiştiği için puan enterpolasyonu her yeniden dizini bozar; rütbeler yapıya göre yöntemler arasında karşılaştırılabilir."
     },
     {
       "stage": "check",
-      "question": "What happens to RRF when you make the constant k very small?",
+      "question": "k sabitini çok küçük yaptığınızda RRF'ye ne olur?",
       "options": [
-        "The top-1 contribution dominates the fusion; deep ranks contribute almost nothing",
-        "The fusion becomes equivalent to a linear score sum",
+        "İlk 1'deki katkı, füzyona hakimdir; derin rütbelerin neredeyse hiçbir katkısı yok",
+        "Füzyon doğrusal puan toplamına eşdeğer hale gelir",
         "Out-of-corpus terms get a positive score",
-        "The fusion ignores the second modality"
+        "Füzyon ikinci yöntemi göz ardı eder"
       ],
       "correct": 0,
-      "explanation": "Small k concentrates the rank-1 contribution; large k flattens the contribution curve and lets deep candidates vote."
+      "explanation": "Küçük k, 1. sıradaki katkıyı yoğunlaştırır; büyük k, katkı eğrisini düzleştirir ve derin adayların oy kullanmasına olanak tanır."
     },
     {
       "stage": "post",
-      "question": "Which failure mode does field weighting through token repetition specifically avoid?",
+      "question": "Belirteç tekrarı yoluyla alan ağırlıklandırma özellikle hangi hata modundan kaçınır?",
       "options": [
         "Out-of-vocabulary embeddings",
-        "Adding a second score-aggregation step at query time; the math stays identical and per-field-score combination logic is not needed",
+        "Sorgu zamanında ikinci bir puan toplama adımı ekleme; matematik aynı kalır ve alan başına puan kombinasyonu mantığına gerek yoktur",
         "BM25 IDF collapsing to zero",
         "Cosine similarity going negative"
       ],
       "correct": 1,
-      "explanation": "Repeating tokens at index time multiplies term frequency, which lets the BM25 scoring math stay one summation rather than a separate field-score combinator."
+      "explanation": "Belirteçlerin indeks zamanında tekrarlanması terim sıklığını çoğaltır, bu da BM25 puanlama matematiğinin ayrı bir alan puanı birleştiricisi yerine tek bir toplam olarak kalmasına olanak tanır."
     }
   ]
 }
