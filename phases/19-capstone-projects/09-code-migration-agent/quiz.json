@@ -4,33 +4,33 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the pipeline combine a deterministic substrate with an agent layer rather than using just one?",
+      "question": "Boru hattı neden yalnızca bir tane kullanmak yerine deterministik bir alt tabakayı bir aracı katmanla birleştiriyor?",
       "options": [
-        "OpenRewrite or libcst handles 70-80% of mechanical rewrites safely and cheaply, leaving the agent for the ambiguous long tail",
-        "Agents alone are faster than recipes",
-        "Deterministic recipes are slower than LLMs",
-        "Determinism is needed only for the build system"
+        "OpenRewrite veya libcst, mekanik yeniden yazma işlemlerinin %70-80'ini güvenli ve ucuz bir şekilde gerçekleştirerek aracıyı belirsiz uzun kuyrukla karşı karşıya bırakır",
+        "Ajanlar tek başına tariflerden daha hızlıdır",
+        "Deterministik tarifler LLM'lerden daha yavaştır",
+        "Determinizm yalnızca yapı sistemi için gereklidir"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What signal does the pipeline use as ground truth for a successful migration?",
+      "question": "İşlem hattı başarılı bir geçiş için temel gerçek olarak hangi sinyali kullanıyor?",
       "options": [
         "Agent self-grading on a rubric",
-        "Reviewer approval on the PR",
+        "PR üzerinde incelemeci onayı",
         "Diff size below a hard limit",
-        "Green CI in the sandbox without a coverage regression beyond a small threshold"
+        "Küçük bir eşiğin ötesinde kapsam regresyonu olmadan korumalı alanda yeşil CI"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which budget caps does the agent loop enforce per repo?",
+      "question": "Aracı döngüsü repo başına hangi bütçe sınırlarını uygular?",
       "options": [
-        "Unlimited time and cost; abort only on errors",
+        "Sınırsız zaman ve maliyet; yalnızca hatalarda iptal et",
         "No turn limit, $100 ceiling",
         "1 hour wall-clock and 100 turns",
         "30 minutes wall-clock, $8 cost, and 20 agent turns"
@@ -40,33 +40,33 @@
     },
     {
       "stage": "check",
-      "question": "What gate fires when coverage drops more than about 2% after migration?",
+      "question": "Geçişten sonra kapsama alanı yaklaşık %2'den fazla düştüğünde hangi kapı etkinleşir?",
       "options": [
-        "The reviewer is bypassed",
-        "The repo gets filed under a coverage_regression failure class instead of opening a clean PR",
-        "The deterministic substrate replays its recipes",
-        "The agent automatically force-pushes a fix"
+        "İncelemeci atlandı",
+        "Repo, temiz bir PR açmak yerine, kapsama_regresyon hatası sınıfı altında dosyalanıyor",
+        "Deterministik substrat kendi tariflerini tekrarlıyor",
+        "Aracı otomatik olarak bir düzeltmeyi zorunlu olarak iletir"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is the failure taxonomy treated as a deliverable rather than a side artifact?",
+      "question": "Başarısızlık sınıflandırması neden bir yan eser olarak değil de bir çıktı olarak değerlendiriliyor?",
       "options": [
-        "It replaces the test suite",
-        "It groups failed repos by class so future recipe authors can target the top failure modes",
-        "It is required by GitHub branch protection",
-        "It satisfies a compliance checklist"
+        "Test paketinin yerini alır",
+        "Başarısız depoları sınıfa göre gruplandırır, böylece gelecekteki tarif yazarları en önemli hata modlarını hedefleyebilir",
+        "GitHub şube koruması tarafından gereklidir",
+        "Bir uyumluluk kontrol listesini karşılar"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which public benchmark does the capstone target for Java 8 to 17 migration?",
+      "question": "Java 8'den 17'ye geçiş için kapsam taşı hangi genel kriteri hedefliyor?",
       "options": [
-        "MigrationBench from Amazon",
+        "Amazon'dan MigrationBench",
         "SWE-bench Pro",
         "MMLU-Pro",
         "ViDoRe v3"
@@ -76,12 +76,12 @@
     },
     {
       "stage": "post",
-      "question": "What does the agent integration rubric measure about the fix distribution?",
+      "question": "Aracı entegrasyon değerlendirme tablosu düzeltme dağıtımı hakkında neyi ölçer?",
       "options": [
-        "Tokenization speed of the source file",
-        "The number of force-pushes per repo",
+        "Kaynak dosyanın tokenizasyon hızı",
+        "Repo başına zorla itme sayısı",
         "Number of dependencies pinned",
-        "The fraction of fixes handled by OpenRewrite versus authored by the agent layer"
+        "OpenRewrite tarafından gerçekleştirilen düzeltmelerin oranı ve aracı katmanı tarafından yazılan düzeltmelerin oranı"
       ],
       "correct": 3,
       "explanation": ""
