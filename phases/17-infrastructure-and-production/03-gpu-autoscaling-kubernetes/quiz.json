@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which signal does HPA typically scale on by default that the lesson calls broken for vLLM-style serving?",
+      "question": "HPA, ders çağrılarının vLLM tarzı sunum için bozuk olduğu durumlarda genellikle varsayılan olarak hangi sinyali ölçeklendirir?",
       "options": [
         "Queue depth",
         "P99 TTFT",
@@ -16,11 +16,11 @@
     },
     {
       "stage": "check",
-      "question": "Which problem does gang scheduling in KAI Scheduler primarily prevent?",
+      "question": "KAI Zamanlayıcı'daki grup planlama öncelikle hangi sorunu önler?",
       "options": [
         "GPU memory fragmentation",
         "Tokenizer GIL contention",
-        "The partial-allocation trap where 7 of 8 GPUs sit idle waiting on the eighth",
+        "8 GPU'dan 7'sinin sekizinci sırada boşta beklediği kısmi tahsis tuzağı",
         "Cold-start latency"
       ],
       "correct": 2,
@@ -28,23 +28,23 @@
     },
     {
       "stage": "check",
-      "question": "Why is Karpenter's default consolidationPolicy WhenEmptyOrUnderutilized dangerous for inference GPU pools?",
+      "question": "Karpenter'in varsayılan konsolidasyon Politikası WhenEmptyOrUnderutilized GPU çıkarım havuzları için neden tehlikelidir?",
       "options": [
-        "It refuses to scale up under burst",
-        "It only consolidates spot instances",
-        "It terminates running GPU nodes to migrate pods, which evicts running requests and reloads weights",
-        "It prevents Karpenter from provisioning new nodes"
+        "Patlama altında ölçeklenmeyi reddediyor",
+        "Yalnızca spot örnekleri birleştirir",
+        "Çalışan istekleri ortadan kaldıran ve ağırlıkları yeniden yükleyen bölmeleri taşımak için çalışan GPU düğümlerini sonlandırır",
+        "Karpenter'in yeni düğümler sağlamasını engeller"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Roughly how much faster is Karpenter at provisioning a GPU node compared to Cluster Autoscaler?",
+      "question": "Karpenter GPU düğümünü sağlamada Cluster Autoscaler'a kıyasla kabaca ne kadar daha hızlı?",
       "options": [
         "Roughly 40% faster (~45-60s vs ~90-120s)",
         "About 10x slower",
-        "The same",
+        "Aynısı",
         "About 5% faster"
       ],
       "correct": 0,
@@ -52,23 +52,23 @@
     },
     {
       "stage": "post",
-      "question": "For disaggregated prefill / decode pods (Phase 17 · 17), which scaling signals does the lesson recommend?",
+      "question": "Ayrıştırılmış önceden doldurma / kod çözme bölmeleri (Aşama 17 · 17) için ders hangi ölçeklendirme sinyallerini önerir?",
       "options": [
-        "Manual scaling only",
+        "Yalnızca manuel ölçeklendirme",
         "A single HPA on duty cycle covering both pod classes",
-        "Queue depth for prefill pods and KV cache pressure for decode pods, as separate per-role HPAs",
-        "Cluster Autoscaler for both"
+        "Rol başına ayrı HPA'lar olarak önceden doldurma bölmeleri için kuyruk derinliği ve kod çözme bölmeleri için KV önbellek basıncı",
+        "Her ikisi için de Küme Otomatik Ölçekleyici"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which Karpenter disruption setting does the lesson recommend for an inference GPU pool to avoid evicting running jobs?",
+      "question": "Ders, çalışan işlerin çıkarılmasını önlemek amacıyla bir GPU çıkarım havuzu için hangi Karpenter kesinti ayarını önermektedir?",
       "options": [
-        "consolidationPolicy: WhenEmptyOrUnderutilized with consolidateAfter: 0s",
-        "consolidationPolicy: WhenEmpty with consolidateAfter: 1h",
-        "Always run with spot instances and no consolidation",
+        "consolidationPolicy: WhenEmptyOrUnderutilized ile consolidateAfter: 0s",
+        "consolidationPolicy: WhenEmpty ile consolidateAfter: 1h",
+        "Her zaman spot örneklerle çalıştırın ve birleştirme olmadan çalıştırın",
         "Disable Karpenter entirely"
       ],
       "correct": 1,
