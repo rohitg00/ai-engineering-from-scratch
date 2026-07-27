@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why store the tokenized corpus in a resizable, chunked HDF5 dataset rather than JSONL?",
+      "question": "Tokenleştirilmiş veri kümesini neden JSONL yerine yeniden boyutlandırılabilir, parçalı bir HDF5 veri kümesinde depolamalısınız?",
       "options": [
-        "HDF5 has a smaller logo",
-        "HDF5 offers chunked, integer-only, memory-mapped reads with O(1) random access; JSONL forces the parser onto every hot-path read",
-        "JSONL is deprecated",
+        "HDF5'nin logosu daha küçük",
+        "HDF5, O(1) rastgele erişimle parçalanmış, yalnızca tam sayı, bellek eşlemeli okumalar sunar; JSONL ayrıştırıcıyı her sıcak yol okumasına zorlar",
+        "JSONL kullanımdan kaldırıldı",
         "Random reasons"
       ],
       "correct": 1,
-      "explanation": "The dataloader wants a flat token stream with addressable slices; HDF5 supplies that natively."
+      "explanation": "Veri yükleyici, adreslenebilir dilimlere sahip düz bir jeton akışı ister; HDF5 bunu yerel olarak sağlıyor."
     },
     {
       "stage": "check",
-      "question": "What is the right rule for sizing the HDF5 chunk vs the trainer's window_size?",
+      "question": "HDF5 parçasını eğiticinin window_size boyutuna göre boyutlandırmak için doğru kural nedir?",
       "options": [
         "Always pick chunk=1",
-        "Set chunk to a multiple of window_size so each sample lands inside one or two chunks and reads stay page-cache aligned",
-        "Pick chunk equal to the document length",
-        "Pick the largest chunk that fits in RAM"
+        "Her bir örneğin bir veya iki parçanın içine girmesi ve sayfa önbelleğiyle aynı hizada kalması için okuma yapması için parçayı window_size'ın katlarına ayarlayın",
+        "Belge uzunluğuna eşit parça seç",
+        "RAM'ye uyan en büyük parçayı seçin"
       ],
       "correct": 1,
-      "explanation": "Mismatched chunks halve throughput because every sample straddles two chunks instead of one."
+      "explanation": "Eşleşmeyen parçalar verimi yarıya indirir çünkü her örnek bir yerine iki parçayı birleştirir."
     },
     {
       "stage": "check",
-      "question": "Why is token_count stored as an HDF5 attribute and not implied from dataset shape?",
+      "question": "Token_count neden bir HDF5 özelliği olarak saklanıyor ve veri kümesi şeklinden ima edilmiyor?",
       "options": [
-        "Attributes are pretty",
-        "The trailing chunk may be partially full; without the explicit attribute the reader walks past the real end into zero-padded tokens and the model learns to predict zero",
-        "Shapes are slow to read",
-        "Attributes are mandatory"
+        "Nitelikler güzel",
+        "Sondaki parça kısmen dolu olabilir; açık nitelik olmadan okuyucu gerçek ucu geçerek sıfır dolgulu jetonlara doğru yürür ve model sıfırı tahmin etmeyi öğrenir",
+        "Şekillerin okunması yavaş",
+        "Nitelikler zorunludur"
       ],
       "correct": 1,
-      "explanation": "The chunked layout sometimes leaves trailing slots; the attribute carries the truth."
+      "explanation": "Parçalanmış düzen bazen geride boşluklar bırakır; nitelik gerçeği taşır."
     },
     {
       "stage": "check",
-      "question": "What does the writer accomplish by buffering tokens to chunk_size before each resize?",
+      "question": "Yazar, her yeniden boyutlandırmadan önce belirteçleri chunk_size'ye ara belleğe alarak ne başarır?",
       "options": [
         "Saves a few CPU cycles",
-        "Writes are contiguous and chunk-aligned, avoiding the fragmentation that follows one-token-at-a-time resizes",
+        "Yazma işlemleri bitişik ve öbek hizalıdır, böylece tek seferde bir jetonun yeniden boyutlandırılmasının ardından gelen parçalanma önlenir",
         "Reduces vocabulary size",
         "Speeds up sha256"
       ],
       "correct": 1,
-      "explanation": "Buffer-then-extend at chunk size is the only way to keep HDF5 chunks contiguous on disk."
+      "explanation": "HDF5 parçalarını diskte bitişik tutmanın tek yolu, yığın boyutunda arabelleğe alma ve ardından genişletmedir."
     },
     {
       "stage": "post",
-      "question": "Why is swmr=True opened on the reader side, not on the writer side?",
+      "question": "Swmr=True neden yazar tarafında değil de okuyucu tarafında açılıyor?",
       "options": [
         "Random preference",
-        "Single-Writer-Multiple-Reader mode lets dataloader workers share the file safely; the writer needs no special mode because it writes one shard per process",
+        "Tek Yazarlı-Çoklu Okuyucu modu, veri yükleyici çalışanlarının dosyayı güvenli bir şekilde paylaşmasına olanak tanır; yazarın özel bir moda ihtiyacı yoktur çünkü işlem başına bir parça yazar",
         "Performance",
         "Security"
       ],
       "correct": 1,
-      "explanation": "Mixing the two modes is the most common cause of 'file is locked' failures."
+      "explanation": "İki modun karıştırılması 'dosya kilitli' hatalarının en yaygın nedenidir."
     },
     {
       "stage": "post",
-      "question": "What does the boundary token id exist to make explicit?",
+      "question": "Açıkça belirtmek için sınır belirteci kimliği nedir?",
       "options": [
         "Vocabulary size limits",
-        "Document boundaries within a packed window so the model is not silently trained on cross-document concatenation",
+        "Modelin belgeler arası birleştirme konusunda sessizce eğitilmemesi için paketlenmiş bir pencere içindeki sınırları belgeleyin",
         "Compression",
         "Random data"
       ],
       "correct": 1,
-      "explanation": "Without an explicit boundary the trainer learns boundaries as noise; with it the boundary becomes a usable separator."
+      "explanation": "Açık bir sınır olmadığında eğitmen sınırları gürültü olarak öğrenir; onunla birlikte sınır kullanışlı bir ayırıcı haline gelir."
     }
   ]
 }
