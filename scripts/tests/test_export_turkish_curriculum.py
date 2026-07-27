@@ -45,6 +45,9 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         self.assertIn("1 Türkçe ders", readme)
         self.assertIn("## Bu müfredat kimin için?", readme)
         self.assertIn("## Hızlı başlangıç", readme)
+        self.assertIn("### ✦ Yerel vitrini açın", readme)
+        self.assertIn("python -m http.server 8000", readme)
+        self.assertIn("http://localhost:8000", readme)
         self.assertIn("## Size uygun rota", readme)
         self.assertIn("## Öğrenme rotası", readme)
         self.assertIn("## Bir ders nasıl çalışılır?", readme)
@@ -65,6 +68,8 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         banner = (target / "assets/turkce-mufredat-v2.svg").read_text()
         self.assertIn("TÜRKÇE", banner)
         self.assertIn("20 AŞAMA", banner)
+        self.assertIn("503 DERS", banner)
+        self.assertNotIn("435 DERS", banner)
         self.assertNotIn("<animate", banner)
 
     def test_export_refuses_existing_destination(self):
