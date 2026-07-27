@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the '~' symbol represent in a Linux file path?",
-      "options": ["The root directory of the file system", "The current user's home directory", "The temporary files directory", "The directory where system programs are installed"],
+      "question": "Linux dosya yolunda '~' sembolü neyi temsil eder?",
+      "options": [
+        "Dosya sisteminin kök dizini",
+        "Geçerli kullanıcının ana dizini",
+        "Geçici dosyalar dizini",
+        "Sistem programlarının kurulu olduğu dizin"
+      ],
       "correct": 1,
-      "explanation": "The tilde (~) is a shortcut for the current user's home directory, typically /home/username on Linux. 'cd ~' takes you home from anywhere."
+      "explanation": "Tilde (~), geçerli kullanıcının ana dizini için bir kısayoldur; Linux'ta genellikle /home/username. 'cd ~' sizi her yerden evinize götürür."
     },
     {
       "stage": "pre",
-      "question": "What is the purpose of 'sudo' before a command?",
-      "options": ["It speeds up the command execution", "It runs the command with root (administrator) privileges", "It runs the command in a sandboxed environment", "It logs the command output to a system file"],
+      "question": "Bir komuttan önce 'sudo'nun amacı nedir?",
+      "options": [
+        "Komutun yürütülmesini hızlandırır",
+        "Komutu root (yönetici) ayrıcalıklarıyla çalıştırır",
+        "Komutu korumalı bir ortamda çalıştırır",
+        "Komut çıktısını bir sistem dosyasına kaydeder"
+      ],
       "correct": 1,
-      "explanation": "sudo (superuser do) temporarily elevates your privileges to root level for a single command. Required for system-level operations like installing packages with apt."
+      "explanation": "sudo (süper kullanıcı do), tek bir komut için ayrıcalıklarınızı geçici olarak kök düzeyine yükseltir. Apt ile paketlerin kurulması gibi sistem düzeyindeki işlemler için gereklidir."
     },
     {
       "stage": "post",
-      "question": "You get 'Permission denied' when trying to run a shell script. What command fixes this?",
-      "options": ["sudo rm script.sh", "chmod +x script.sh", "chown root script.sh", "mv script.sh /usr/bin/"],
+      "question": "Bir kabuk betiğini çalıştırmaya çalıştığınızda 'İzin reddedildi' mesajıyla karşılaşıyorsunuz. Hangi komut bunu düzeltir?",
+      "options": [
+        "sudo rm script.sh",
+        "chmod +x script.sh",
+        "chown root script.sh",
+        "mv script.sh /usr/bin/"
+      ],
       "correct": 1,
-      "explanation": "chmod +x adds execute permission to the file. Without the execute bit set, the shell refuses to run the script even if you own it."
+      "explanation": "chmod +x dosyaya yürütme izni ekler. Yürütme biti seti olmadan, kabuk, siz ona sahip olsanız bile betiği çalıştırmayı reddeder."
     },
     {
       "stage": "post",
-      "question": "On a remote GPU box, your training data fills the disk. Which command shows the largest directories consuming space?",
-      "options": ["ls -la /", "du -h --max-depth=1 / | sort -hr | head -20", "cat /proc/meminfo", "free -h"],
+      "question": "Uzak bir GPU kutusunda, eğitim verileriniz diski doldurur. Hangi komut yer kaplayan en büyük dizinleri gösterir?",
+      "options": [
+        "ls -la /",
+        "du -h --max-depth=1 / | sort -hr | head -20",
+        "cat /proc/meminfo",
+        "free -h"
+      ],
       "correct": 1,
-      "explanation": "du -h shows disk usage per directory, --max-depth=1 limits to top-level directories, and sort -hr sorts by size in descending order. This reveals which directories are consuming the most space."
+      "explanation": "du -h, dizin başına disk kullanımını gösterir, --max-length=1 üst düzey dizinleri sınırlar ve sort -hr, azalan düzende boyuta göre sıralama yapar. Bu, hangi dizinlerin en fazla alanı tükettiğini ortaya çıkarır."
     },
     {
       "stage": "post",
-      "question": "What is a key difference between the macOS and Linux versions of 'sed -i'?",
-      "options": ["Linux sed is faster than macOS sed", "macOS sed requires an empty string argument after -i ('sed -i \"\"'), while Linux does not", "Linux sed does not support regular expressions", "macOS sed cannot modify files in place"],
+      "question": "'Sed -i'nin macOS ve Linux sürümleri arasındaki önemli fark nedir?",
+      "options": [
+        "Linux sed, macOS sed'den daha hızlıdır",
+        "macOS sed, -i'den ('sed -i \"\"') sonra boş bir dize argümanı gerektirirken Linux bunu gerektirmez",
+        "Linux sed normal ifadeleri desteklemiyor",
+        "macOS sed dosyaları yerinde değiştiremez"
+      ],
       "correct": 1,
-      "explanation": "macOS uses BSD sed which requires 'sed -i \"\" pattern file', while Linux uses GNU sed which accepts 'sed -i pattern file'. This is a common gotcha when moving scripts between systems."
+      "explanation": "macOS, 'sed -i \"\" desen dosyası gerektiren BSD sed'i kullanırken Linux, 'sed -i desen dosyası'nı kabul eden GNU sed'i kullanır. Bu, komut dosyalarını sistemler arasında taşırken sık karşılaşılan bir durumdur."
     }
   ]
 }
