@@ -11,15 +11,15 @@
 
 İlgili üç savunma:
 
-1. **Sahtekarlığa karşı koruma / derin sahte algılama.** Bir ses klibi verildiğinde sentetik mi yoksa gerçek mi? ASVspoof benchmark'lar (ASVspoof 2019 → 2021 → 5) altın standarttır.
+1. **Sahtekarlığa karşı koruma / derin sahte algılama.** Verilen bir ses klibi sentetik mi yoksa gerçek mi? ASVspoof benchmark'ler (ASVspoof 2019 → 2021 → 5) altın standarttır.
 2. **Ses filigranı.** Oluşturulan sese, dedektörün daha sonra çıkarabileceği algılanamayan bir sinyal ekleyin. AudioSeal (Meta) ve WavMark açık seçeneklerdir.
-3. **Kimliği doğrulanmış kaynak.** Ses dosyalarının ve meta verilerin kriptografik olarak imzalanması. C2PA / İçerik Orijinalliği Girişimi.
+3. **Kimliği doğrulanmış kaynak.** Ses dosyalarının ve meta verilerin kriptografik olarak imzalanması. C2PA / İçerik Orijinallik Girişimi.
 
 Tespit, işbirliği yapmayan düşmanları ele alır. Filigranlama uyumluluğu yönetir; yapay zeka tarafından oluşturulan ses bu şekilde tanımlanabilir olmalıdır. Her ikisi de 2026'da gerekli.
 
 ## Konsept
 
-![Sahtekarlığa karşı koruma, filigran ekleme ve kaynak — üç savunma katmanı](../assets/spoofing-watermark.svg)
+![Sahtekarlığa karşı filigranlamaya karşı kökene karşı — üç savunma katmanı](../assets/spoofing-watermark.svg)
 
 ### ASVspoof 5 — 2024-2025 benchmark
 
@@ -30,13 +30,13 @@ Tespit, işbirliği yapmayan düşmanları ele alır. Filigranlama uyumluluğu y
 - **32 saldırı algoritması.** TTS + ses dönüşümü + düşmanca tedirginlik.
 - **İki parça.** Karşı tedbir (CM) bağımsız tespiti; Biyometrik sistemler için kimlik sahtekarlığına dayanıklı ASV (SASV).
 
-ASVspoof 5'te son teknoloji: ~%7,23 EER. Daha eski ASVspoof 2019 LA'de: %0,42 EER. Gerçek dünya deployment: Vahşi kliplerde %5-10 EER bekliyoruz.
+ASVspoof 5'te son teknoloji: ~%7,23 EER. Daha eski ASVspoof 2019 LA'de: %0,42 EER. Gerçek dünyadaki deployment: Vahşi kliplerde %5-10 EER bekliyoruz.
 
 ### AASIST ve RawNet2 — algılama modeli aileleri
 
 **AASIST** (2021, 2026'ya kadar güncellendi). Spektral özelliklere ilişkin grafik dikkati. ASVspoof 5 karşı önlem görevinde mevcut SOTA.
 
-**RawNet2.** Ham dalga biçimi + TDNN omurgası üzerinden evrişimli ön uç. Daha basit temel; fine-tuning ile hâlâ rekabet halindeyiz.
+**RawNet2.** Ham dalga biçimi + TDNN omurgası üzerinden evrişimli ön uç. Daha basit temel; fine-tuning ile hâlâ rekabetçiyiz.
 
 **NeXt-TDNN + SSL özellikleri.** 2025 modeli: ECAPA tarzı + WavLM özellikleri + odak kaybı. ASVspoof 2019 LA'da %0,42 EER'ye ulaştı.
 
@@ -158,15 +158,15 @@ Her nesil şunları gönderir: (1) filigran, (2) imzalı bildirim, (3) saklama p
 - **Kalibrasyon olmadan algılama.** AASIST, ASVspoof LA üst donanımları konusunda eğitilmiştir; gerçek dünyadaki doğruluk düşer. Alanınızda kalibre edin.
 - **Pitch-shift boşluğu.** Agresif perde kaydırma çoğu filigranı kaldırır. Algılama geri dönüşüne sahip olun.
 - **Meta verileri şeritleme ve yeniden barındırma.** C2PA, yeniden kodlamayla kolaylıkla atlanabilir. Her zaman kriptografik + algısal (filigran) savunmasını birlikte ekleyin.
-- **Algılama olarak canlılık.** Kullanıcıdan rastgele bir ifade söylemesini isteyin. Tekrarlama saldırılarını önler ancak gerçek zamanlı klonlamayı engellemez.
+- **Algılama olarak canlılık.** Kullanıcıdan rastgele bir ifade söylemesini isteyin. Tekrar saldırılarını önler ancak gerçek zamanlı klonlamayı engellemez.
 
 ## Gönderin
 
-`outputs/skill-spoof-defender.md` olarak kaydet. Bir ses oluşturma deployment için algılama modelini, filigranı, kaynak bildirimini ve operasyonel taktik kitabını seçin.
+`outputs/skill-spoof-defender.md` olarak kaydedin. Ses oluşturma deployment için algılama modeli, filigran, kaynak bildirimi ve operasyonel taktik kitabını seçin.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py` komutunu çalıştırın. Oyuncak dedektörü + oyuncak filigranı sentetik sese yerleştirme/algılama.
+1. **Kolay.** `code/main.py`'yi çalıştırın. Oyuncak dedektörü + oyuncak filigranı sentetik sese yerleştirme/algılama.
 2. **Orta.** `audioseal`'yi yükleyin, bir TTS çıkışına 16 bitlik bir veri gömün, kodu yeniden çözün. Sesi gürültüyle bozun ve Bit Kurtarma Doğruluğunu ölçün.
 3. **Zor.** ASVspoof 2019 LA'da RawNet2 veya AASIST'e ince ayar yapın. EER'yi ölçün. F5-TTS tarafından oluşturulan uzun bir dizi klip üzerinde test yapın; OOD tespitinin nasıl kötüleştiğini görün.
 
@@ -184,7 +184,7 @@ Her nesil şunları gönderir: (1) filigran, (2) imzalı bildirim, (3) saklama p
 
 ## Daha Fazla Okuma
 
-- [Todisco ve ark. (2024). ASVspoof 5](https://dl.acm.org/doi/10.1016/j.csl.2025.101825) — geçerli benchmark.
+- [Todisco ve ark. (2024). ASVspoof 5](https://dl.acm.org/doi/10.1016/j.csl.2025.101825) — mevcut benchmark.
 - [Defossez ve ark. (2024). AudioSeal](https://arxiv.org/abs/2401.17264) — varsayılan filigran.
 - [Chen ve ark. (2025). WaveVerify](https://arxiv.org/abs/2507.21150) — Geçici saldırılar için MoE dedektörü.
 - [Jung ve ark. (2022). AASIST](https://arxiv.org/abs/2110.01200) — SOTA algılama omurgası.

@@ -1,6 +1,6 @@
 # Konu Modelleme — LDA ve BERTopic
 
-> LDA: belgeler konuların karışımıdır, konular kelimelere göre dağılımlardır. BERTopic: belgeler embedding uzayında kümelenir, kümeler konulardır. Aynı amaç, farklı ayrıştırmalar.
+> LDA: belgeler konuların karışımıdır, konular kelimelere göre dağılımlardır. BERTopic: embedding alanındaki belgeler kümesi, kümeler konulardır. Aynı amaç, farklı ayrıştırmalar.
 
 **Tür:** Öğren
 **Diller:** Python
@@ -11,7 +11,7 @@
 
 10.000 müşteri destek bildiriminiz, 50.000 haber makaleniz veya 200.000 tweet'iniz var. Koleksiyonun neyle ilgili olduğunu okumadan bilmeniz gerekiyor. Etiketli kategorileriniz yok. Kaç kategorinin var olduğunu bile bilmiyorsun.
 
-Konu modelleme, denetim olmadan buna yanıt verir. Ona bir külliyat verin, küçük bir dizi tutarlı konu alın ve her belge için bu konuların bir dağılımını sağlayın.
+Konu modelleme, denetim olmadan buna yanıt verir. Ona bir külliyat verin, küçük bir dizi tutarlı konu alın ve her belge için bu konuların dağıtımını yapın.
 
 İki algoritmik aile hakimdir. LDA (2003) her belgeyi gizli konuların bir karışımı olarak ve her konuyu kelimelere göre bir dağılım olarak ele alır. Inference Bayesian'dır. Karma üyelikli konu atamalarına ve açıklanabilir kelime düzeyinde olasılık dağılımlarına ihtiyaç duyduğunuz durumlarda hâlâ üretimde gönderilir.
 
@@ -23,17 +23,17 @@ Bu ders her ikisi için de sezgi geliştirir ve belirli bir derleme için hangis
 
 ![LDA karışım modeli ve BERTopic kümelemesi](../assets/topic-modeling.svg)
 
-**LDA üretken hikayesi.** Her konu kelimeler üzerinden bir dağılımdır. Her belge konuların bir karışımıdır. Bir belgede bir sözcük oluşturmak için belgenin karışımından bir konuyu örnekleyin, ardından o konunun dağılımından bir sözcüğü örnekleyin. Inference bunu tersine çevirir: gözlemlenen kelimeler verildiğinde, belge başına konu dağılımını ve konu başına kelime dağılımını çıkarım. Çökmüş Gibbs örneklemesi veya değişken Bayes hesaplamayı yapar.
+**LDA üretken hikayesi.** Her konu kelimeler üzerinden bir dağılımdır. Her belge konuların bir karışımıdır. Bir belgede bir sözcük oluşturmak için belgenin karışımından bir konuyu örnekleyin, ardından o konunun dağılımından bir sözcüğü örnekleyin. Inference bunu tersine çevirir: Gözlemlenen sözcüklere göre, belge başına konu dağılımını ve konu başına sözcük dağılımını çıkarın. Çökmüş Gibbs örneklemesi veya değişken Bayes hesaplamayı yapar.
 
 Anahtar LDA çıkışı:
 
-- `doc_topic`: matris `(n_docs, n_topics)`, her satırın toplamı 1'dir (belgenin konu karışımı).
-- `topic_word`: matris `(n_topics, vocab_size)`, her satırın toplamı 1'dir (konunun kelime dağılımı).
+- `doc_topic`: `(n_docs, n_topics)` matrisi, her satırın toplamı 1'dir (belgenin konu karışımı).
+- `topic_word`: `(n_topics, vocab_size)` matrisi, her satırın toplamı 1'dir (konunun kelime dağılımı).
 
 **BERTopic boru hattı.**
 
-1. Her belgeyi bir transformer (e.g., `all-MiniLM-L6-v2`) cümlesiyle kodlayın. 384 loş vektörler.
-2. UMAP ile boyutsallığı ~5 boyuta düşürün. BERT embedding'ler kümelenme için fazla loş.
+1. Her belgeyi transformer (e.g., `all-MiniLM-L6-v2`) cümlesiyle kodlayın. 384 loş vektörler.
+2. UMAP ile boyutsallığı ~5 boyuta düşürün. BERT embedding'ler kümeleme için fazla loş.
 3. HDBSCAN ile kümeleyin. Yoğunluğa dayalı, değişken boyutlu kümeler ve "aykırı değer" etiketi üretir.
 4. Her küme için, en önemli kelimeleri çıkarmak üzere kümenin belgeleri üzerinde sınıf tabanlı TF-IDF'yi hesaplayın.
 
@@ -96,13 +96,13 @@ for topic_id in valid_topics[:5]:
     print(f"topic {topic_id}: {topic_model.get_topic(topic_id)[:10]}")
 ```
 
-`Topic != -1` üzerindeki filtre BERTopic'in aykırı değer grubunu düşürür (HDBSCAN belgeleri kümelenemedi). `min_topic_size`, HDBSCAN'ın minimum küme boyutunu kontrol eder; BERTopic'in kütüphane varsayılanı 10'dur. Bu örnek, dersin ölçeği için bunu açıkça 15'e ayarlar. 10.000'den fazla belge içeren derlemeler için sayıyı 50'ye veya 100'e yükseltin.
+`Topic != -1` üzerindeki filtre BERTopic'in aykırı değer kümesini düşürür (HDBSCAN belgeleri kümelenemez). `min_topic_size`, HDBSCAN'ın minimum küme boyutunu kontrol eder; BERTopic'in kütüphane varsayılanı 10'dur. Bu örnek, dersin ölçeği için bunu açıkça 15'e ayarlar. 10.000'den fazla belge içeren derlemeler için sayıyı 50'ye veya 100'e yükseltin.
 
 ### 3. Adım: değerlendirme
 
 Her iki yöntem de konu sözcüklerinin çıktısını verir. Sorun bu sözlerin tutarlı olup olmadığıdır.
 
-- **Konu tutarlılığı (c_v).** Kayan pencere bağlamları üzerinde en iyi kelime çiftlerinin NPMI'sini (normalleştirilmiş noktasal karşılıklı bilgi) birleştirir, puanları konu vektörleri halinde toplar ve bu vektörleri kosinüs benzerliği yoluyla karşılaştırır. Daha yüksek daha iyidir. `gensim.models.CoherenceModel`'yi `coherence="c_v"` ile kullanın.
+- **Konu tutarlılığı (c_v).** Kayan pencere bağlamlarında en iyi kelime çiftlerinin NPMI'sini (normalleştirilmiş noktasal karşılıklı bilgi) birleştirir, puanları konu vektörleri halinde toplar ve bu vektörleri kosinüs benzerliği yoluyla karşılaştırır. Daha yüksek daha iyidir. `gensim.models.CoherenceModel`'yi `coherence="c_v"` ile kullanın.
 - **Konu çeşitliliği.** Tüm konuların en çok kullanılan kelimeleri arasındaki benzersiz kelimelerin oranı. Daha yüksek daha iyidir (konular örtüşmez).
 - **Niteliksel inceleme.** Her konunun en önemli sözcüklerini okuyun. Gerçek bir şeyin adını veriyorlar mı? İnsan yargısı hala son savunma hattıdır.
 
@@ -110,27 +110,27 @@ Her iki yöntem de konu sözcüklerinin çıktısını verir. Sorun bu sözlerin
 
 | Durum | Seç |
 |-----------|------|
-| Kısa metin (tweetler, incelemeler, başlıklar) | BERKonu |
+| Kısa metin (tweetler, incelemeler, başlıklar) | BER Konusu |
 | Konu karışımları içeren uzun belgeler | LDA |
 | GPU yok / sınırlı işlem | LDA veya NMF |
 | Belge düzeyinde çok konulu dağıtımlara ihtiyacınız var | LDA |
 | Konu etiketleme için Yüksek Lisans entegrasyonu | BERTopic (doğrudan destek) |
-| Kaynak kısıtlı kenar deployment | LDA |
-| Maksimum anlamsal tutarlılık | BERKonu |
+| Kaynak kısıtlı uç deployment | LDA |
+| Maksimum anlamsal tutarlılık | BER Konusu |
 
-En büyük pratik husus belge uzunluğudur. BERT embedding'nin kesilmesi; LDA, uzunluğu ne olursa olsun çalışmayı sayar. embedding modelinin bağlamından daha uzun belgeler için yığın + toplama veya LDA kullanın.
+En büyük pratik husus belge uzunluğudur. BERT embedding'ler kesilir; LDA, uzunluğu ne olursa olsun çalışmayı sayar. embedding modelinin bağlamından daha uzun belgeler için yığın + toplama veya LDA kullanın.
 
 ## Kullan onu
 
 2026 yığını:
 
 - **BERTopic.** Kısa metin ve anlambilimin önemli olduğu her şey için varsayılandır.
-- **`gensim.models.LdaModel`.** Üretime yönelik klasik LDA, olgun, savaşta test edilmiş.
+- **`gensim.models.LdaModel`.** Üretim için klasik LDA, olgun, savaşta test edilmiş.
 - **`sklearn.decomposition.LatentDirichletAllocation`.** Deneyler için kolay LDA.
 - **NMF.** Negatif olmayan matris çarpanlarına ayırma. LDA'ya hızlı bir alternatif, kısa metinde karşılaştırılabilir kalite.
-- **Top2Vec.** BERTopic'e benzer tasarım. Daha küçük bir topluluk ama bazı benchmark'larda iyi.
+- **Top2Vec.** BERTopic'e benzer tasarım. Daha küçük bir topluluk ama bazı benchmark'lerde iyi.
 - **FASTopic.** Çok büyük şirketlerde BERTopic'ten daha yeni ve daha hızlı.
-- **LLM tabanlı etiketleme.** Herhangi bir kümelemeyi çalıştırın, ardından her kümeyi adlandırmak için bir model prompt.
+- **LLM tabanlı etiketleme.** Herhangi bir kümelemeyi çalıştırın, ardından her kümeyi adlandırmak için prompt bir model kullanın.
 
 ## Gönderin
 
@@ -158,8 +158,8 @@ Refuse BERTopic on documents longer than the embedding model's context window wi
 
 ## Egzersizler
 
-1. **Kolay.** LDA'yı 20 Haber Grubundaki dataset 5 konuya sığdırın. Konu başına en iyi 10 kelimeyi yazdırın. Her konuyu elle etiketleyin. Algoritma gerçek kategorileri buldu mu?
-2. **Orta.** BERTopic'i aynı 20 Haber Grubu alt kümesine sığdırın. Bulunan konuların sayısını, en çok kullanılan kelimeleri ve niteliksel tutarlılığı LDA'ya göre karşılaştırın. Hangisi gerçek kategorileri daha temiz bir şekilde ortaya çıkarır?
+1. **Kolay.** LDA'yı 20 Haber Grubu dataset'deki 5 konuya sığdırın. Konu başına en iyi 10 kelimeyi yazdırın. Her konuyu elle etiketleyin. Algoritma gerçek kategorileri buldu mu?
+2. **Orta.** BERTopic'i aynı 20 Haber Grubu alt kümesine sığdırın. Bulunan konu sayısını, en çok kullanılan kelimeleri ve niteliksel tutarlılığı LDA'ya göre karşılaştırın. Hangisi gerçek kategorileri daha temiz bir şekilde ortaya çıkarır?
 3. **Zor.** Derleminizde hem LDA hem de BERTopic için c_v tutarlılığını hesaplayın. Her birini 5, 10, 20, 50 konu ile çalıştırın. Konu tutarlılığı ve konu sayısı. Konu sayımlarında hangi yöntemin daha kararlı olduğunu bildirin.
 
 ## Anahtar Terimler
@@ -176,5 +176,5 @@ Refuse BERTopic on documents longer than the embedding model's context window wi
 
 - [Blei, Ng, Ürdün (2003). Gizli Dirichlet Tahsisi](https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf) — LDA belgesi.
 - [Grootendorst (2022). BERTopic: Sınıf tabanlı TF-IDF prosedürüyle sinirsel konu modellemesi](https://arxiv.org/abs/2203.05794) — BERTopic makalesi.
-- [Röder, İkisi de, Hinneburg (2015). Konu Tutarlılığı Önlemlerinin Alanını Keşfetmek](https://svn.aksw.org/papers/2015/WSDM_Topic_Evaluation/public.pdf) — c_v ve arkadaşları tanıtan makale.
+- [Röder, İkisi de, Hinneburg (2015). Konu Tutarlılığı Ölçütlerinin Uzayını Keşfetmek](https://svn.aksw.org/papers/2015/WSDM_Topic_Evaluation/public.pdf) — c_v ve arkadaşlarını tanıtan makale.
 - [BERTopic belgeleri](https://maartengr.github.io/BERTopic/) — üretim referansı. Mükemmel örnekler.

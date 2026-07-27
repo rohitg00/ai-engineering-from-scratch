@@ -9,42 +9,42 @@
 
 ## Öğrenme Hedefleri
 
-- Dondurulmuş görüntü kodlayıcı ile donmuş LLM arasındaki eğitilebilir darboğazın, maliyet ve kararlılık açısından uçtan uca fine-tuningı neden geride bıraktığını açıklayın.
+- Dondurulmuş görüntü kodlayıcı ile dondurulmuş LLM arasındaki eğitilebilir darboğazın, maliyet ve kararlılık açısından uçtan uca ince ayarı neden geride bıraktığını açıklayın.
 - Sabit bir dizi öğrenilebilir sorgunun harici görüntü özelliklerine katıldığı bir çapraz dikkat bloğu uygulayın.
 - BLIP-2'nin iki aşamalı ön eğitimini inceleyin: temsil (ITC + ITM + ITG), ardından üretken (donmuş kod çözücüyle LM kaybı).
 - Q-Former'ı LLaVA'da kullanılan daha basit MLP projektörle karşılaştırın ve her seçeneğin ne zaman kazanacağını tartışın.
 
 ## Sorun
 
-Görüntü başına 256 yama tokens sönük 1408 üreten donmuş bir ViT'niz var. token embeddings loş 4096 bekleyen donmuş bir 7B LLM'niz var. Açık köprü - 1408'den 4096'ya kadar doğrusal bir katman - işe yarıyor, ancak 256 yama token'nın tamamını LLM'nin bağlamına beslemek görüntü başına 256 ekstra token'ye mal oluyor. Yalnızca görsel yöntem tarafından 8192 token tüketilen 32 görüntüden oluşan bir grup.
+Görüntü başına 1408 loşluk 256 yama token üreten donmuş bir ViT'niz var. Dim 4096'nın token embedding'lerini bekleyen donmuş bir 7B LLM'niz var. Açık köprü - 1408'den 4096'ya kadar doğrusal bir katman - işe yarıyor, ancak 256 yama token'nin tamamını LLM'nin bağlamına beslemek, görüntü başına 256 ekstra token'ye mal oluyor. Yalnızca görsel yöntem tarafından tüketilen 8192 token değerindeki 32 görüntüden oluşan bir grup.
 
-BLIP-2 sorusu: 256-token görüntü temsilini çok daha az sayıda token saniyeye (örneğin 32) sıkıştırabilirken, LLM'nin resim hakkında altyazı yazması, soruları yanıtlaması ve gerekçe vermesi için yeterli bilgiyi koruyabilir misiniz? Ve bu köprüyü, donmuş omurgalara dokunmadan, eğitim maliyetini yalnızca köprünün parametrelerinde tutarak eğitebilir misiniz?
+BLIP-2 sorusu: 256-token görüntü temsilini çok daha az sayıda token'ye (örneğin 32) sıkıştırırken, LLM'nin resim yazısı, soruları yanıtlaması ve resimle ilgili gerekçe vermesi için yeterli bilgiyi koruyabilir misiniz? Ve bu köprüyü, donmuş omurgalara dokunmadan, eğitim maliyetini yalnızca köprünün parametrelerinde tutarak eğitebilir misiniz?
 
-Cevap: Bir Q-Former. ViT'nin yama token'larına çapraz katılım sağlayan 32 öğrenilebilir "sorgu" vektörü, LLM'nin tükettiği 32-token görsel özetini üretir. Toplam 188M parametre. LLM'ye hiç dokunmadan önce karşılaştırmalı, eşleştirme ve üretken hedeflerle eğitildi.
+Cevap: Bir Q-Former. ViT'nin yaması token'lere çapraz katılım sağlayan 32 öğrenilebilir "sorgu" vektörü, LLM'nin tükettiği 32-token görsel özetini üretir. Toplam 188M parametre. LLM'ye hiç dokunmadan önce karşılaştırmalı, eşleştirme ve üretken hedeflerle eğitildi.
 
 ## Konsept
 
 ### Öğrenilebilir sorgular
 
-Q-Former'ın temel numarası: Yüksek Lisans'ın metin token'lerinin görüntü yamalarıyla ilgilenmesine izin vermek yerine, 32 adet öğrenilebilir sorgu vektörü `Q` içeren yeni bir set tanıtın ve *onların* görüntü yamalarıyla ilgilenmesine izin verin. Sorgular modelin parametreleridir; eğitim sırasında öğrenilirler ve her görüntü için aynı 32 sorgu kullanılır.
+Q-Former'ın temel numarası: Yüksek Lisans'ın metni token'lerin görüntü yamalarıyla ilgilenmesine izin vermek yerine, yeni 32 öğrenilebilir sorgu vektörü `Q` kümesini tanıtın ve *onların* görüntü yamalarıyla ilgilenmesine izin verin. Sorgular modelin parametreleridir; eğitim sırasında öğrenilirler ve her görüntü için aynı 32 sorgu kullanılır.
 
-Çapraz dikkatin ardından, her sorgu görüntünün sıkıştırılmış bir özetini tutar - "ana nesneyi tanımlayın", "arka planı tanımlayın", "nesneleri sayın" vb. Sorgular tam anlamıyla anlamsal etiketler üzerinde uzmanlaşmaz; downstream kayıplarını azaltan kodlamayı öğrenirler.
+Çapraz dikkatin ardından, her sorgu görüntünün sıkıştırılmış bir özetini tutar - "ana nesneyi tanımlayın", "arka planı tanımlayın", "nesneleri sayın" vb. Sorgular tam anlamıyla anlamsal etiketler üzerinde uzmanlaşmaz; aşağı akış kayıplarını azaltan kodlamayı öğrenirler.
 
 ### Mimarlık
 
-Q-Former, iki yola sahip küçük bir transformer'dır (12 katman, ~100M parametre):
+Q-Former, iki yola sahip küçük bir transformer'dir (12 katman, ~100M parametre):
 
-1. Sorgu yolu: 32 sorgu vektörü self-attention (kendi aralarında) boyunca akar, ardından donmuş ViT'nin token yaması token'lar ve ardından FFN üzerinden çapraz dikkat yoluyla akar.
-2. Metin yolu: BERT benzeri bir metin kodlayıcı, self-attention ve FFN ağırlıklarını sorgu yolu ile paylaşır. Metin yolu için çapraz dikkat devre dışı bırakıldı.
+1. Sorgu yolu: 32 sorgu vektörü, kişisel dikkat (kendi aralarında) boyunca akar, ardından donmuş ViT yaması token'ler ve ardından FFN üzerinden çapraz dikkat yoluyla akar.
+2. Metin yolu: BERT benzeri bir metin kodlayıcı, kişisel dikkat ve FFN ağırlıklarını sorgu yolu ile paylaşır. Metin yolu için çapraz dikkat devre dışı bırakıldı.
 
-Eğitim zamanında her iki yol da çalışır. Sorgular ve metin, paylaşılan öz-dikkat yoluyla etkileşime girer; bu, sorguların, ona ihtiyaç duyan görevler (ITM, ITG) için metni koşullandırabileceği anlamına gelir. VLM aktarımı için inference zamanında, yalnızca sorgular akar ve 32 görsel token elde edilir.
+Eğitim zamanında her iki yol da çalışır. Sorgular ve metin, paylaşılan öz-dikkat yoluyla etkileşime girer; bu, sorguların, ona ihtiyaç duyan görevler (ITM, ITG) için metni koşullandırabileceği anlamına gelir. VLM aktarımı için inference zamanında yalnızca sorgular akar ve 32 görsel token elde edilir.
 
 ### İki aşamalı eğitim
 
 BLIP-2 iki aşamada ön eğitim alır:
 
 Aşama 1: temsil öğrenimi (LLM yok). Üç kayıp:
-- ITC (görüntü-metin karşılaştırmalı): Havuzlanmış sorgu token'lar ile metin CLS token arasındaki CLIP tarzı karşılaştırmalı.
+- ITC (görüntü-metin karşılaştırmalı): Birleştirilmiş sorgu token'ler ile CLS token metni arasındaki CLIP tarzı karşılaştırmalı.
 - ITM (resim-metin eşleştirme): ikili sınıflandırıcı — bu resim-metin çifti bir eşleşme mi? Sert-negatif-mayınlı.
 - ITG (görüntü temelli metin üretimi): sorgulara bağlı olarak metin üzerinde nedensel LM. Metin tarafından oluşturulabilen içeriği kodlamak için sorguları zorlar.
 
@@ -52,7 +52,7 @@ Yalnızca Q-Former trenleri. ViT donmuş durumda. LLM dahil değil.
 
 Aşama 2: üretken öğrenme. Dondurulmuş bir LLM (OPT-2.7B veya Flan-T5-XL, vb.) ekleyin. 32 sorgu çıkışını küçük bir doğrusal katman aracılığıyla LLM'nin embedding dim'ine yansıtın. Bunları prompt metninin başına ekleyin. Birleştirilmiş prompt + görüntü + altyazı dizisi üzerinde yalnızca doğrusal projeksiyonu ve Q-Former'ı LM kaybı konusunda eğitin.
 
-2. aşamadan sonra Q-Former + projeksiyonu tam görsel adaptör haline gelir. inference konumunda: görüntü → ViT → Q-Former → doğrusal proje → metne eklenmiş → donmuş LLM çıktıyı yayar.
+2. aşamadan sonra Q-Former + projeksiyonu tam görsel adaptör haline gelir. inference'de: görüntü → ViT → Q-Former → doğrusal proje → metne eklenmiş → dondurulmuş LLM çıktıyı yayar.
 
 ### Parametre ekonomisi
 
@@ -62,7 +62,7 @@ Kalite: BLIP-2, 50 kat daha küçük olmasına rağmen sıfır atışlı VQA'da 
 
 ### InstructBLIP ve talimatlara duyarlı Q-Former
 
-InstructBLIP (2023), Q-Former'ı ekstra bir girdiyle genişletiyor: talimat metninin kendisi. Çapraz dikkat zamanında, sorgular artık hem görüntü yamalarına hem de talimatlara erişebilir. Sorgular, tek bir sabit özeti öğrenmek yerine talimat başına uzmanlaşabilir ("arabaları say", "ruh halini tanımla"). Uzatılan görevlerde Benchmark kazanç sağlar.
+InstructBLIP (2023), Q-Former'ı ekstra bir girdiyle genişletiyor: talimat metninin kendisi. Çapraz dikkat zamanında, sorgular artık hem görüntü yamalarına hem de talimatlara erişebilir. Sorgular, tek bir sabit özeti öğrenmek yerine talimat başına uzmanlaşabilir ("arabaları say", "ruh halini tanımla"). Benchmark uzun süren görevlerde kazanç sağlar.
 
 ### MiniGPT-4 ve yalnızca projektör yaklaşımı
 
@@ -70,9 +70,9 @@ MiniGPT-4, Q-Former'ı korudu ancak diğer her şeyi dondururken yalnızca çık
 
 ### LLaVA neden daha basit hale geldi?
 
-LLaVA (2023, Ders 12.05), Q-Former'ı, her ViT yamasını token LLM alanına yansıtan düz 2 katmanlı bir MLP ile değiştirdi - 24x24 ızgara için görüntü başına 576 token, tümü LLM'ye beslenir. Daha kötü sıkıştırma ancak LLM'nin ham yamalara katılmasına izin verir. O zamanlar bu tartışmalıydı; 2023'ün sonlarında baskın hale geldi çünkü görsel talimat verileri (LLaVA-Instruct-150k), MLP'nin yeterli sinyali koruyacak şekilde eğitilebileceğini kanıtladı. Takas: LLaVA'nın bağlamı daha hızlı doluyor, ancak doğal olarak çoklu görüntü ve videoya ölçekleniyor.
+LLaVA (2023, Ders 12.05), Q-Former'ı, her ViT yamasını token LLM alanına yansıtan düz 2 katmanlı bir MLP ile değiştirdi - 24x24 ızgara için görüntü başına 576 token, tümü LLM'ye beslendi. Daha kötü sıkıştırma ancak LLM'nin ham yamalara katılmasına izin verir. O zamanlar bu tartışmalıydı; 2023'ün sonlarında baskın hale geldi çünkü görsel talimat verileri (LLaVA-Instruct-150k), MLP'nin yeterli sinyali koruyacak şekilde eğitilebileceğini kanıtladı. Takas: LLaVA'nın bağlamı daha hızlı doluyor, ancak doğal olarak çoklu görüntü ve videoya ölçekleniyor.
 
-2026'ya gelindiğinde alan ikiye bölünüyor: Q-Former, token bütçenin önemli olduğu yerlerde (uzun video, birçok resim) varlığını sürdürüyor; MLP projektör, token başına ham kalitenin öncelikli olduğu yerde hakimdir.
+2026'ya gelindiğinde alan ikiye bölünüyor: Q-Former, token bütçenin önemli olduğu yerlerde (uzun video, birçok resim) varlığını sürdürüyor; MLP projektör, token uyarınca ham kalitenin öncelikli olduğu yerlerde hakimdir.
 
 ### Kapılı çapraz dikkat: Flamingo, atası
 
@@ -85,23 +85,23 @@ Flamingo (Ders 12.04) BLIP-2'den önceydi ve aynı çapraz dikkat fikrini kullan
 - MLP projektör: LLaVA, LLaVA-NeXT, LLaVA-OneVision, Kambriyen-1.
 - Dikkat havuzu: VILA, PaliGemma.
 
-Dördü de geçerlidir. Karar vermeniz gereken soru, token bütçesiyle mi, yoksa token başına kaliteyle mi sınırlı olduğunuzdur.
+Dördü de geçerlidir. Karar vermeniz gereken soru, token bütçesiyle mi yoksa token başına kaliteyle mi sınırlı olduğunuzdur.
 
 ## Kullan onu
 
 `code/main.py`, stdlib Q-Former tarzı bir çapraz dikkat oluşturur:
 
-1. 256 görüntü yamasını tokens (dim 128) simüle edin.
+1. 256 görüntü yamasını token (dim 128) simüle edin.
 2. 32 öğrenilebilir sorguyu (dim 128) başlatın.
 3. Ölçeklendirilmiş nokta ürünü çapraz dikkati çalıştırın (sorgulardan Q, yamalardan K/V).
 4. Doğrusal bir katman yoluyla LLM-dim'e (512) yansıtın.
-5. 32 LLM'ye hazır görsel token'lerin çıktısını alın.
+5. 32 LLM'ye hazır görsel token'nin çıktısını alın.
 
 Tüm matematik saf Python'da (vektörler üzerinde iç içe döngüler). Oyuncak ama şekli doğru. Dikkat ağırlığı matrisi yazdırılır, böylece her sorgunun hangi yamalardan alındığını görebilirsiniz.
 
 ## Gönderin
 
-Bu ders `outputs/skill-modality-bridge-picker.md` üretir. Hedef VLM yapılandırması (görüntü kodlayıcı token sayısı, LLM bağlam bütçesi, deployment kısıtlamaları, kalite hedefi) verildiğinde, kısa bir gerekçeyle ve her köprü için bir parametre sayısı tahminiyle Q-Former, MLP ve Perceiver yeniden örnekleyicisini önerir.
+Bu ders `outputs/skill-modality-bridge-picker.md`'yi üretir. Hedef VLM yapılandırması (görüntü kodlayıcı token sayısı, LLM bağlam bütçesi, deployment kısıtlamaları, kalite hedefi) göz önüne alındığında, her köprü için kısa bir gerekçe ve parametre sayısı tahminiyle Q-Former, MLP ve Perceiver yeniden örnekleyicisini önerir.
 
 ## Egzersizler
 
@@ -113,26 +113,26 @@ Bu ders `outputs/skill-modality-bridge-picker.md` üretir. Hedef VLM yapılandı
 
 4. Q-Former'ın nasıl başlatıldığına ilişkin BLIP-2 belgesinin (arXiv:2301.12597) Bölüm 3.2'sini okuyun. BERT tabanından başlatmanın (rastgele değil) neden yakınsamayı hızlandırdığını açıklayın.
 
-5. 60 kareye örneklenmiş 1 FPS'de 10 dakikalık bir video için, kare başına token maliyetini (Q-Former → 32 tokens/kare) ve (MLP projektör → 576 tokens/kare) olarak hesaplayın. Hangisi 128k-token LLM context window'ye sığar?
+5. 60 kareye örneklenmiş 1 FPS'de 10 dakikalık bir video için, kare başına token maliyetini (Q-Former → 32 token/kare) ve (MLP projektör → 576 token/kare) olarak hesaplayın. Hangisi 128k-token LLM context window'ye sığar?
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| Q-Eski | "transformer sorgulanıyor" | Dondurulmuş ViT özelliklerine çapraz katılım sağlayan 32 öğrenilebilir sorgu vektörüne sahip küçük transformer |
+| Q-Eski | "transformer Sorgulanıyor" | Dondurulmuş ViT özelliklerine çapraz katılım sağlayan 32 öğrenilebilir sorgu vektörüne sahip küçük transformer |
 | Öğrenilebilir sorgular | "Görme için yumuşak prompt" | Çapraz dikkatin sorgu tarafı olarak hizmet eden sabit bir parametreler kümesi; model başına öğrenilir, tüm girdilerde paylaşılır |
 | Çapraz dikkat | "Q buradan, K/V oradan" | Sorgu, anahtar ve değerin farklı kaynaklardan geldiği yere dikkat edin; sorguların ViT yamalarından nasıl alındığı |
-| ITC | "Resim-metin karşılaştırmalı" | Q-Former havuzlanmış sorgularına uygulanan CLIP tarzı kayıp ile metin CLS |
+| ITC | "Resim-metin karşılaştırmalı" | Q-Former havuz sorgularına uygulanan CLIP tarzı kayıp ile metin CLS |
 | ITM | "Resim-metin eşleştirme" | Sabit negatif mayınlı çiftlerde ikili sınıflandırıcı; sorguları ince taneli uyumsuzlukları ayırt etmeye zorlar |
 | ITG | "Görüntüye dayalı metin oluşturma" | Metnin sorgulara göre oluşturulduğu nedensel LM kaybı; metin kodu çözülebilen içeriği kodlamak için sorguları zorlar |
 | İki aşamalı ön eğitim | "Temsil daha sonra üretken" | Aşama 1 yalnızca Q-Former'ı eğitir (ITC/ITM/ITG); Aşama 2 donmuş LLM'yi ekler ve yalnızca projeksiyonu eğitir + Q-Former |
-| Dondurulmuş omurga | "Fine-tuning yapmayın" | Görüntü kodlayıcı ve LLM ağırlıkları sabittir; sadece köprü trenleri |
+| Dondurulmuş omurga | "İnce ayar yapmayın" | Görüntü kodlayıcı ve LLM ağırlıkları sabittir; sadece köprü trenleri |
 | Projeksiyon kafası | "LLM dim'e Doğrusal" | Q-Former çıktısını LLM'nin embedding boyutuna eşleyen son doğrusal katman |
 | Algılayıcı yeniden örnekleyici | "Flamingo'nun versiyonu" | Flamingo tarafından tek bir köprü yerine her katmanda kullanılan benzer öğrenilebilir sorgu çapraz dikkati |
 
 ## Daha Fazla Okuma
 
-- [Li ve ark. — BLIP-2 (arXiv:2301.12597)](https://arxiv.org/abs/2301.12597) — ana makale.
+- [Li ve ark. — BLIP-2 (arXiv:2301.12597)](https://arxiv.org/abs/2301.12597) — ana kağıt.
 - [Li ve ark. — BLIP (arXiv:2201.12086)](https://arxiv.org/abs/2201.12086) — ITC/ITM/ITG üçlüsünün öncülü.
 - [Li ve ark. — ALBEF (arXiv:2107.07651)](https://arxiv.org/abs/2107.07651) — "sigortadan önce hizala" — 1. aşama eğitiminin kavramsal atası.
 - [Dai ve ark. — InstructBLIP (arXiv:2305.06500)](https://arxiv.org/abs/2305.06500) — talimatlara duyarlı Q-Former.

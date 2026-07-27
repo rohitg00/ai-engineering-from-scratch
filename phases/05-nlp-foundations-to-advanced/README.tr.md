@@ -1,5 +1,5 @@
-# Aşama 5: NLP — Temelden İleri Düzeye
+# Aşama 5: NLP — İleri Düzeyin Temelleri
 
-> Dil, zekâyla kurulan arayüzdür. Her katmanında ustalaşın.
+> Dil zekanın arayüzüdür. Her katmana hakim olun.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

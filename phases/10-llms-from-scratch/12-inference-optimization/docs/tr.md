@@ -1,6 +1,6 @@
 # Inference Optimizasyon
 
-> LLM inference'yi iki aşama tanımlar. Ön doldurma, prompt'nizi paralel olarak, hesaplamaya bağlı olarak işler. Kod çözme, belleğe bağlı olarak teker teker token'leri üretir. Her optimizasyon birini veya her ikisini birden hedefler.
+> İki aşama LLM inference'yi tanımlar. Önceden doldurma, prompt'nizi paralel olarak, hesaplamaya bağlı olarak işler. Decode, belleğe bağlı token'leri teker teker üretir. Her optimizasyon birini veya her ikisini birden hedefler.
 
 **Tür:** Yapım
 **Diller:** Python
@@ -9,20 +9,20 @@
 
 ## Öğrenme Hedefleri
 
-- Otoregresif token oluşturma sırasında gereksiz hesaplamayı ortadan kaldırmak için KV önbelleğini uygulayın
-- LLM inference'nin ön doldurma ve kod çözme aşamalarını ve neden her birinin farklı darboğazları olduğunu (hesaplamaya bağlı ve belleğe bağlı) açıklayın
+- Otoregresif token oluşturma sırasında gereksiz hesaplamayı ortadan kaldırmak için KV-önbellek uygulayın
+- LLM inference'nin ön doldurma ve kod çözme aşamalarını ve neden her birinin farklı darboğazlara sahip olduğunu (hesaplamaya bağlı ve belleğe bağlı) açıklayın
 - Eşzamanlı istekler altında GPU kullanımını en üst düzeye çıkarmak için sürekli toplu işlem ve PagedAttention kavramlarını uygulayın
-- inference optimizasyon tekniğini (KV-önbellek, spekülatif kod çözme, flaş dikkati) ve bunların verim/gecikme değişimlerini karşılaştırın
+- inference optimizasyon tekniklerini (KV-önbellek, spekülatif kod çözme, flaş dikkati) ve bunların verim/gecikme değişimlerini karşılaştırın
 
 ## Sorun
 
-Llama 3 70B'yi 4xA100 GPU'lara dağıtıyorsunuz. Tek bir kullanıcı saniyede ~50 tokens alır. Hızlı hissettiriyor. Daha sonra 100 kullanıcı aynı anda uç noktaya ulaştı. Verim 3 tokensn/saniye/kullanıcıya düşer. Aylık 25.000 ABD doları tutarındaki GPU faturanız, insan türlerinden daha yavaş yanıtlar veriyor.
+Llama 3 70B'yi 4xA100 GPU'lara dağıtıyorsunuz. Tek bir kullanıcı saniyede ~50 token alır. Hızlı hissettiriyor. Daha sonra 100 kullanıcı aynı anda uç noktaya ulaştı. Verim 3 token/saniye/kullanıcıya düşer. Aylık 25.000 ABD doları tutarındaki GPU faturanız, insan türlerinden daha yavaş yanıtlar veriyor.
 
 Modelin kendisi 1 kullanıcı ile 100 kullanıcı arasında değişiklik göstermemektedir. Aynı ağırlıklar, aynı mimari, aynı matematik. Değişen şey, işi nasıl planladığınızdır. Naif inference, kullanılabilir GPU hesaplamasının %90'ından fazlasını boşa harcar. token 47'yi bekleyen bir kullanıcı, GPU bellek veri yolu matmul'lar arasında boşta dururken toplu iş yuvasının tamamını açık tutar. Bu arada, yeni bir kullanıcının 2.000-token prompt'si bu ölü zamanı yararlı bilgi işlemle doldurabilir.
 
 Bu bir ölçeklendirme sorunu değil. Bu bir zamanlama problemidir. Bu dersteki teknikler (KV önbelleğe alma, sürekli toplu işlem, PagedAttention, spekülatif kod çözme, önek önbelleğe alma) aynı trafiğe hizmet veren $25k/month inference bill from a $5k/ay'ı ayıran şeydir.
 
-4xA100-80GB üzerinde Llama 3 70B'ye hizmet veren vLLM, düşük eşzamanlılıkta ~50 tokens/saniye/kullanıcı elde eder ve sürekli toplu işlem ve PagedAttention aracılığıyla 100 eşzamanlı istekte kullanıcı başına 15-25 TPS'yi sürdürür. Bu optimizasyonlar olmadan, aynı donanım aynı anda 5 TPS/kullanıcıya hizmet verir. Aynı GPU'lar, aynı model, 4 kat verim.
+4xA100-80GB üzerinde Llama 3 70B'ye hizmet veren vLLM, düşük eşzamanlılıkta ~50 token/saniye/kullanıcı elde eder ve sürekli toplu işlem ve PagedAttention aracılığıyla 100 eşzamanlı istekte 15-25 TPS/kullanıcıyı sürdürür. Bu optimizasyonlar olmadan, aynı donanım aynı anda 5 TPS/kullanıcıya hizmet verir. Aynı GPU'lar, aynı model, 4 kat verim.
 
 ## Konsept
 
@@ -30,9 +30,9 @@ Bu bir ölçeklendirme sorunu değil. Bu bir zamanlama problemidir. Bu dersteki 
 
 Her LLM inference isteğinin iki farklı aşaması vardır.
 
-**Önceden doldurma** prompt girişinin tamamını işler. Tüm token'ler bilinmektedir, dolayısıyla dikkat tüm dizi boyunca paralel olarak hesaplanabilir. Bu büyük bir matris çarpımıdır; GPU çekirdekleri meşgul kalır. Darboğaz hesaplamadır: donanımınızın saniyede kaç FLOPS sunabileceği. Bir A100 312 TFLOPS (BF16) yapar. 70B modelinde 4,096-token prompt için ön dolum, tek bir A100'de ~400 ms sürer.
+**Ön doldurma** prompt girişinin tamamını işler. Tüm token'ler bilinmektedir, dolayısıyla dikkat tüm dizi boyunca paralel olarak hesaplanabilir. Bu büyük bir matris çarpımıdır; GPU çekirdekleri meşgul kalır. Darboğaz hesaplamadır: donanımınızın saniyede kaç FLOPS sunabileceği. Bir A100 312 TFLOPS (BF16) yapar. 70B modelinde 4.096-token prompt için ön dolum, tek bir A100'de ~400 ms sürer.
 
-**Kod çözme**, token çıktılarını teker teker üretir. Her yeni token önceki tüm token'larla ilgilenir, ancak ileri geçiş başına yalnızca bir token üretilir. Ağırlık matrisleri ön doldurma sırasındakiyle aynı boyuttadır ancak bunları matris yerine tek bir vektörle çarpıyorsunuz. GPU çekirdekleri mikrosaniyeler içinde tamamlanır ve ardından bellekten bir sonraki ağırlık grubunun gelmesini bekler. Darboğaz bellek bant genişliğidir: model ağırlıklarını HBM'den hesaplama birimlerine ne kadar hızlı aktarabilirsiniz. A100'ün bant genişliği 2 TB/s'dir. FP16'daki 70B modeli 140 GB'dir. Tam modelin okunması bir kez 70 ms sürer; bu, tek bir kod çözme adımı için sizin katınızdır.
+**Kod çözme**, token çıktılarını teker teker üretir. Her yeni token, önceki token'lerin tümüne katılır, ancak ileri geçiş başına yalnızca bir token üretilir. Ağırlık matrisleri ön doldurma sırasındakiyle aynı boyuttadır ancak bunları matris yerine tek bir vektörle çarpıyorsunuz. GPU çekirdekleri mikrosaniyeler içinde tamamlanır ve ardından bellekten bir sonraki ağırlık grubunun gelmesini bekler. Darboğaz bellek bant genişliğidir: model ağırlıklarını HBM'den hesaplama birimlerine ne kadar hızlı aktarabilirsiniz. A100'ün bant genişliği 2 TB/s'dir. FP16'daki 70B modeli 140 GB'dir. Tam modelin okunması bir kez 70 ms sürer; bu, tek bir kod çözme adımı için sizin katınızdır.
 
 ```mermaid
 graph LR
@@ -55,15 +55,15 @@ graph LR
 ops:byte ratio = FLOPs per token / bytes read from memory
 ```
 
-4.096 token'lik bir toplu iş ile önceden doldurma sırasında, yüklenen ağırlık başına ~4.096 çarpma-biriktirme işlemi gerçekleştirirsiniz. Oran yüksek; hesaplamaya bağlısınız. Toplu iş boyutu 1 ile kod çözme sırasında, yüklenen ağırlık başına ~1 işlem gerçekleştirirsiniz. Oran düşük; hafızaya bağlısınız.
+4.096 token'lik bir grupla önceden doldurma sırasında, yüklenen ağırlık başına ~4.096 çarpma-biriktirme işlemi gerçekleştirirsiniz. Oran yüksek; hesaplamaya bağlısınız. Toplu iş boyutu 1 ile kod çözme sırasında, yüklenen ağırlık başına ~1 işlem gerçekleştirirsiniz. Oran düşük; hafızaya bağlısınız.
 
-Temel içgörü: *kod çözme belleğe bağlıdır çünkü tek bir token* üretmek için modelin tamamını okursunuz. Aşağıdaki her optimizasyon ya okuduklarınızı azaltır, okuma başına işlenen tokens grubunu artırır ya da okumaları tamamen engeller.
+Temel içgörü: *kod çözme belleğe bağlıdır çünkü tek bir token* üretmek için modelin tamamını okursunuz. Aşağıdaki her optimizasyon ya okuduklarınızı azaltır, okuma başına işlenen token grubunu artırır ya da okumaları tamamen engeller.
 
 ### KV Önbelleği
 
-Dikkat sırasında, her token'nin sorgusu, önceki her token'nin anahtar ve değer vektörlerine katılır. Önbelleğe alma olmadan, token N oluşturmak, token'lerden önceki tüm N-1 için anahtar ve değer projeksiyonlarının yeniden hesaplanmasını gerektirir. Token 1, token 2 oluşturulurken yansıtılır, sonra tekrar token 3 için, sonra tekrar token 4 için yansıtılır. token 1.000'e kadar, token 1'i toplam 999 kez yansıttınız.
+Dikkat sırasında, her token'nin sorgusu önceki token'nin anahtar ve değer vektörlerine katılır. Önbelleğe alma olmadan token N oluşturmak, önceki tüm N-1 token'ler için anahtar ve değer projeksiyonlarının yeniden hesaplanmasını gerektirir. Token 1, token 2 oluşturulurken yansıtılır, sonra tekrar token 3 için, ardından tekrar token 4 için yansıtılır. token 1.000 ile token 1'i toplam 999 kez yansıtmış olursunuz.
 
-KV önbelleği önceki tüm token'ların anahtar ve değer projeksiyonlarını saklar. token N'yi oluştururken, yalnızca token N'nin anahtarını ve değerini hesaplarsınız, ardından bunları 1'den N-1'e kadar token önbelleğe alınmış K/V ile birleştirirsiniz.
+KV önbelleği, önceki tüm token'lerden gelen anahtar ve değer projeksiyonlarını saklar. token N oluştururken, yalnızca token N'nin anahtarını ve değerini hesaplarsınız, ardından bunları token 1'den N-1'e kadar önbelleğe alınmış K/V ile birleştirirsiniz.
 
 ```mermaid
 graph TD
@@ -94,13 +94,13 @@ at 4,096 tokens: 320 KB * 4,096 = 1.28 GB
 at 128K tokens: 320 KB * 131,072 = 40 GB
 ```
 
-Llama 3 70B için 128K bağlamlı tek bir görüşme, 40 GB KV önbellek tüketir; bu da A100'ün belleğinin yarısı kadardır. Her biri 4K tokensaniyede 100 eşzamanlı kullanıcıyla, tek başına KV önbelleği 128 GB gerektirir. Bu nedenle KV önbellek yönetimi, inference optimizasyonunun temel sorunudur.
+Llama 3 70B için 128K bağlamlı tek bir konuşma, 40 GB KV önbellek tüketir; bu da A100'ün belleğinin yarısı kadardır. Her biri 4K token'de 100 eşzamanlı kullanıcıyla, tek başına KV önbelleği 128 GB gerektirir. Bu nedenle KV önbellek yönetimi, inference optimizasyonunun temel sorunudur.
 
 ### Sürekli Toplu İşleme
 
-Statik toplu işlem, N sayıda istek gelene kadar bekler, bunları birlikte işler ve yeni istekleri kabul etmeden önce *hepsi* bitene kadar bekler. Bir isteğin 500 token saniyeye ve diğerinin 10 saniyeye ihtiyacı varsa, kısa istek tamamlandıktan sonra 490 kod çözme adımı boyunca boşta kalır.
+Statik toplu işlem, N sayıda istek gelene kadar bekler, bunları birlikte işler ve yeni istekleri kabul etmeden önce *hepsi* bitene kadar bekler. Bir isteğin 500 token ve diğerinin 10 token'ye ihtiyacı varsa, kısa istek tamamlandıktan sonra 490 kod çözme adımı boyunca boşta kalır.
 
-Sürekli toplu işlem (yineleme düzeyinde toplu işlem de denir), herhangi bir istek tamamlanır tamamlanmaz toplu iş içine yeni istekler ekler. Toplu iş her kod çözme adımında yeniden değerlendirilir. 10 tokens sonra biten bir isteğin yerini hemen bir bekleme isteği alır.
+Sürekli toplu işlem (yineleme düzeyinde toplu işlem de denir), herhangi bir istek tamamlanır tamamlanmaz toplu iş içine yeni istekler ekler. Toplu iş her kod çözme adımında yeniden değerlendirilir. 10 token'den sonra biten bir isteğin yerini hemen bir bekleme isteği alır.
 
 ```mermaid
 sequenceDiagram
@@ -127,11 +127,11 @@ sequenceDiagram
 
 Verimlilik artışı, çıktı uzunluklarının ne kadar değiştiğine bağlıdır. Tekdüze uzunluklarla sürekli gruplama, statik gruplamayla eşleşir. Değişken uzunluklarla (genel durum), sürekli toplu işlem 2-5 kat daha yüksek verim sağlayabilir çünkü GPU yuvaları hiçbir zaman boş kalmaz.
 
-### PagedAttention
+### PagedDikkat
 
 Her isteğin KV önbelleği bitişik bir bellek bloğudur. İstekler gelip giderken bellek parçaları oluşur; tıpkı işletim sistemlerindeki RAM parçalanması gibi. 4K-token isteğinin 1,28 GB bitişik olması gerekir. Toplamda 2 GB ücretsiz alanınız olsa bile 1,28 GB *bitişik* alanınız olmayabilir. Ya hafızayı boşa harcarsınız ya da isteği reddedersiniz.
 
-PagedAttention (vLLM'den), işletim sistemi tarzı sanal belleği KV önbelleğine uygular. İstek başına bir bitişik blok tahsis etmek yerine, sabit boyutlu "sayfalar" (tipik olarak her biri 16 tokens) tahsis eder. Sayfalar fiziksel GPU belleğinin herhangi bir yerinde olabilir. Bir sayfa tablosu, her isteğin mantıksal sıra konumlarını fiziksel sayfa konumlarıyla eşleştirir.
+PagedAttention (vLLM'den), işletim sistemi tarzı sanal belleği KV önbelleğine uygular. İstek başına bir bitişik blok tahsis etmek yerine, sabit boyutlu "sayfalar" (tipik olarak her biri 16 token) tahsis eder. Sayfalar fiziksel GPU belleğinin herhangi bir yerinde olabilir. Bir sayfa tablosu, her isteğin mantıksal sıra konumlarını fiziksel sayfa konumlarıyla eşleştirir.
 
 ```mermaid
 graph TD
@@ -150,15 +150,15 @@ graph TD
     end
 ```
 
-PagedAttention ayrıca paylaşılan önekler için **yazarken kopyalamayı** da etkinleştirir. 50 istek aynı sistemi prompt paylaşıyorsa, söz konusu sistem prompt için KV önbellek sayfaları bir kez depolanır ve 50 isteğin tümü tarafından başvurulur. Yalnızca bir istek farklılaştığında (farklı kullanıcı mesajları) kendi sayfalarını alır. Bu, paylaşılan sistem prompt'lere sahip uygulamalar için bellek kullanımını önemli ölçüde azaltır.
+PagedAttention ayrıca paylaşılan önekler için **yazarken kopyalamayı** da etkinleştirir. 50 istek aynı prompt sistemini paylaşıyorsa, o sistem prompt için KV önbellek sayfaları bir kez depolanır ve 50 isteğin tümü tarafından başvurulur. Yalnızca bir istek farklılaştığında (farklı kullanıcı mesajları) kendi sayfalarını alır. Bu, paylaşılan sistem prompt'lere sahip uygulamalar için bellek kullanımını önemli ölçüde azaltır.
 
 vLLM, PagedAttention aracılığıyla sıfıra yakın bellek israfını (saf tahsiste ~%4'e karşı ~%60-80) rapor ediyor.
 
 ### Spekülatif Kod Çözme
 
-Kod çözme yavaştır çünkü sıralıdır -- bir token üretirsiniz, onu geri beslersiniz, bir sonrakini oluşturursunuz. Peki ya sonraki 5 token'yi ucuza tahmin edip hepsini bir kerede doğrulasaydınız?
+Kod çözme yavaştır çünkü sıralıdır; bir token oluşturursunuz, onu geri beslersiniz, bir sonrakini oluşturursunuz. Peki ya sonraki 5 token'yi ucuza tahmin edip hepsini bir kerede doğrulayabilseydiniz?
 
-Spekülatif kod çözme, K adet token adayı oluşturmak için küçük, hızlı bir **taslak model** kullanır. Büyük **hedef modeli** daha sonra tüm K adaylarını tek bir ileri geçişte işler (bu, paralel, hesaplamaya bağlı, verimli bir ön doldurmaya benzer). Hedef model, taslak modelin tahminleriyle uyumluysa, bir hedef ileri geçiş sırasında tüm K token'leri kabul edersiniz. Eğer j konumunda aynı fikirde değilse, 1'den j-1'e kadar olan token'ları kabul eder ve geri kalanını atarsınız.
+Spekülatif kod çözme, K adayı token'leri oluşturmak için küçük, hızlı bir **taslak model** kullanır. Büyük **hedef modeli** daha sonra tüm K adaylarını tek bir ileri geçişte işler (bu, bir ön doldurmaya benzer - paralel, hesaplamaya bağlı, verimli). Hedef model, taslak modelin tahminleriyle aynı fikirdeyse, bir hedef ileri geçiş sırasında tüm K token'leri kabul edersiniz. Eğer j pozisyonunda aynı fikirde değilse, 1'den j-1'e kadar olan token'leri kabul eder ve geri kalanını atarsınız.
 
 ```mermaid
 graph LR
@@ -179,7 +179,7 @@ Spekülatif kod çözmeye yönelik üç yaklaşım:
 | KARTAL (Li ve diğerleri) | Hafif kafa hedefe | %75-90 | ~%1 ekstra parametreler |
 | N-gram araması | Token n-gram tablosu | %40-60 | İhmal edilebilir |
 
-**EAGLE**, hedef modelin gizli durumlarının üstünde küçük bir otoregresif kafa eğitir. Hedef modelin ikinciden sonuncuya katman özelliklerini kullanarak sonraki token'nin embedding'sini tahmin eder. Hedef modelin (ayrı bir modelin değil) kendi temsilleri üzerinde çalıştığı için minimum ekstra bellekle daha yüksek kabul oranlarına ulaşır. EAGLE-2, aday sayısını bağlama göre ayarlayan dinamik bir taslak ağacı ekler.
+**EAGLE**, hedef modelin gizli durumlarının üstünde küçük bir otoregresif kafa eğitir. Hedef modelin ikinciden sonuncuya katman özelliklerini kullanarak bir sonraki token'nin embedding'sini tahmin eder. Hedef modelin (ayrı bir modelin değil) kendi temsilleri üzerinde çalıştığı için minimum ekstra bellekle daha yüksek kabul oranlarına ulaşır. EAGLE-2, aday sayısını bağlama göre ayarlayan dinamik bir taslak ağacı ekler.
 
 **N-gram spekülatif kod çözme**, mevcut bağlamdan veya önceden oluşturulmuş bir derlemeden n-gram devamlarının bir tablosunu tutar. Taslak, aynı konuşmada daha önce görünenlerle eşleşiyorsa (yinelenen modeller, kod, yapılandırılmış çıktı), sıfır neural network ek yük ile tetiklenir. Kabul oranları ortalama olarak daha düşüktür ancak spekülasyon başına maliyet aslında ücretsizdir.
 
@@ -187,13 +187,13 @@ Spekülatif kod çözme *matematiksel olarak kesindir*; çıktı dağıtımı, h
 
 ### Önek Önbelleğe Alma
 
-Birçok istek aynı öneki paylaşır. Bir sohbet robotu sistemi prompt. Bir RAG bağlam bloğu. Birkaç çekimlik örnek set. Önek önbelleğe alma olmadan, her istek bu paylaşılan token'ler için KV önbelleğini sıfırdan yeniden hesaplar.
+Birçok istek aynı öneki paylaşır. Bir sohbet robotu sistemi prompt. Bir RAG bağlam bloğu. Birkaç çekimlik örnek set. Önek önbelleğe alma olmadan her istek, bu paylaşılan token'ler için KV önbelleğini sıfırdan yeniden hesaplar.
 
 Önek önbelleğe alma, ortak önekler için KV önbelleğini saklar ve bunu istekler arasında yeniden kullanır. Bilinen bir önekle yeni bir istek geldiğinde, sistem önbelleğe alınan KV girişlerini kopyalar (veya referans verir) ve yalnızca benzersiz sonek için KV'yi hesaplar.
 
-Tüm istekler arasında paylaşılan 2.000-token sistem prompt için, ön ek önbelleğe alma, istek başına ~400 ms'lik önceden doldurma işlemini ortadan kaldırır. Saniyede 100 istek ile bu, saniyede 40 saniyelik GPU hesaplama tasarrufu sağlar; bu da birden fazla GPU'nun çalışma değerinden fazladır.
+Tüm istekler arasında paylaşılan 2.000 token prompt sistemi için ön ek önbelleğe alma, istek başına ~400 ms'lik önceden doldurma işlemini ortadan kaldırır. Saniyede 100 istek ile bu, saniyede 40 saniyelik GPU hesaplama tasarrufu sağlar; bu, birden fazla GPU'nun çalışma değerinden fazladır.
 
-SGLang'ın RadixAttention'ı, önekleri token içeriğine göre dizine ekleyen bir radix ağacı (trie) ile önek önbelleğe almayı uygular. Saklanan bir önekle eşleşen herhangi bir istek, KV önbelleğini ücretsiz olarak alır. Ağaç kısmi önek eşleşmelerine olanak sağlar -- eğer 2.000 önek token'den 1.500'ünü önbelleğe alınmış bir girişle paylaşırsanız, bu 1.500'ü yeniden kullanır ve yalnızca 500'ünü yeniden hesaplarsınız.
+SGLang'ın RadixAttention'ı, önekleri token içeriğine göre indeksleyen bir radix ağacı (trie) ile önek önbelleğe almayı uygular. Saklanan bir önekle eşleşen herhangi bir istek, KV önbelleğini ücretsiz olarak alır. Ağaç kısmi önek eşleşmelerine olanak tanır; 2.000 önek token'nin 1.500'ünü önbelleğe alınmış bir girişle paylaşırsanız, bu 1.500'ü yeniden kullanır ve yalnızca 500'ünü yeniden hesaplarsınız.
 
 ### Inference Motorlar
 
@@ -205,11 +205,11 @@ SGLang'ın RadixAttention'ı, önekleri token içeriğine göre dizine ekleyen b
 | SGLang | RadixAttention (önek önbelleğe alma), yapılandırılmış oluşturma | Çok turlu sohbet robotları, kısıtlı kod çözme |
 | TensorRT-LLM | NVIDIA çekirdek füzyonu, FP8 nicemleme | NVIDIA donanımında maksimum tek GPU çıkışı |
 
-**vLLM** varsayılan başlangıç ​​noktasıdır. En geniş model yelpazesini destekler, herhangi bir GPU satıcısında (NVIDIA, AMD, Intel) çalışır ve PagedAttention + sürekli toplu işlem sayesinde güçlü verim elde eder. OpenAI uyumlu API, onu herhangi bir OpenAI API çağrısının yerine kullanabileceğiniz anlamına gelir.
+**vLLM** varsayılan başlangıç noktasıdır. En geniş model yelpazesini destekler, herhangi bir GPU satıcısında (NVIDIA, AMD, Intel) çalışır ve PagedAttention + sürekli toplu işlem sayesinde güçlü verim elde eder. OpenAI uyumlu API, onu herhangi bir OpenAI API çağrısının yerine kullanabileceğiniz anlamına gelir.
 
 **SGLang** vLLM ile aynı temeller üzerine kuruludur ancak ön ek önbelleğe alma için RadixAttention ve yapılandırılmış LLM programları için alana özgü bir dil ekler. İş yükünüz çok turlu konuşmalar, araç kullanımı veya kısıtlı kod çözme (JSON çıkışı, normal ifade kılavuzlu oluşturma) içeriyorsa SGLang, önek yeniden kullanımı sayesinde genellikle vLLM'den 2-5 kat daha iyi performans gösterir.
 
-**TensorRT-LLM** modelleri optimize edilmiş NVIDIA GPU çekirdekleri halinde derler. İşlemleri (tek çekirdekte dikkat + doğrusal + etkinleştirme) birleştirir, H100 GPU'larda FP8 kullanır ve üretim için NVIDIA Triton Inference Sunucusu deployment ile entegre olur. NVIDIA donanımında en yüksek tek GPU verimine ulaşır ancak daha fazla kurulum gerektirir ve yalnızca NVIDIA GPU'larda çalışır.
+**TensorRT-LLM** modelleri optimize edilmiş NVIDIA GPU çekirdekleri halinde derler. İşlemleri (tek çekirdekte dikkat + doğrusal + etkinleştirme) birleştirir, H100 GPU'larda FP8 kullanır ve deployment üretimi için NVIDIA Triton Inference Sunucusu ile entegre olur. NVIDIA donanımında en yüksek tek GPU verimine ulaşır ancak daha fazla kurulum gerektirir ve yalnızca NVIDIA GPU'larda çalışır.
 
 Llama 3 70B (4xA100-80GB, BF16) için gerçek dünyadaki sayılar:
 
@@ -217,10 +217,10 @@ Llama 3 70B (4xA100-80GB, BF16) için gerçek dünyadaki sayılar:
 |--------|------|--------|---------------|
 | Verim (1 kullanıcı) | ~50 TPS | ~55 TPS | ~65 TPS |
 | Verim (100 kullanıcı) | ~2.500 toplam TPS | ~3.200 toplam TPS | ~3.000 toplam TPS |
-| İlkine kalan süre token | ~400ms | ~300ms (ön ek isabeti) | ~350ms |
+| İlk zamanı token | ~400ms | ~300ms (önek isabeti) | ~350ms |
 | Maksimum içerik | 128K | 128K | 128K |
 
-### Ops:Byte Framework
+### Operasyonlar: Bayt Framework
 
 Ölçmediğiniz şeyi optimize edemezsiniz. Ops:byte oranı size hesaplamaya mı yoksa belleğe mi bağlı olduğunuzu söyler; bu da hangi optimizasyonların önemli olduğunu belirler.
 
@@ -749,35 +749,35 @@ Bu ders şunları üretir:
 
 ## Egzersizler
 
-1. FP16, FP8 ve INT4 KV önbellek nicelemesini karşılaştırmak için KV önbellek profil oluşturucusunu değiştirin. 4K bağlamında Llama 3 70B için 4xA100-80 GB'nin her biri için maksimum eşzamanlı kullanıcı sayısını hesaplayın. INT4'e KV niceleme kullanıcı kapasitesinin kabaca 4 katı olmalıdır.
+1. FP16, FP8 ve INT4 KV önbellek nicelemesini karşılaştırmak için KV önbellek profil oluşturucusunu değiştirin. 4K bağlamında Llama 3 70B için 4xA100-80 GB'nin her biri için maksimum eşzamanlı kullanıcı sayısını hesaplayın. INT4'e KV nicelemesi kullanıcı kapasitesinin kabaca 4 katı olmalıdır.
 
-2. GPU kullanımını (adım başına doldurulan toplu iş yuvalarının oranı) izlemek için sürekli toplu işlem simülatörünü genişletin. Çıkış uzunlukları Pareto dağılımını takip eden (şekil=1,5, ölçek=20) 50 istekle hem statik hem de sürekli toplu işleme için zaman içindeki grafik kullanımı. Sürekli harmanlama %80'den fazla kullanım sağlamalıdır.
+2. GPU kullanımını (adım başına doldurulan toplu iş yuvalarının oranı) izlemek için sürekli toplu işlem simülatörünü genişletin. Çıkış uzunlukları Pareto dağılımını takip eden (şekil=1,5, ölçek=20) 50 istekle hem statik hem de sürekli toplu işleme için zaman içinde kullanım grafiği. Sürekli harmanlama %80'den fazla kullanım sağlamalıdır.
 
 3. KV önbelleğinin gruplandırılmış sorgu dikkati (GQA) sürümünü uygulayın; burada `num_kv_heads < num_query_heads`. Llama 3 70B, 64 sorgu kafası kullanır ancak yalnızca 8 KV kafası kullanır. Tam çoklu kafa dikkatine karşı bellek tasarrufunu hesaplayın (KV önbellek boyutunda 8 kat azalma).
 
 4. LRU tahliyesini kullanan bir önek önbelleği oluşturun. max_entries'i 500 olarak ayarlayın ve %60'ının 5 ortak önekten birini paylaştığı 1.000 istek oluşturun. İsabet oranını ölçün ve sınırsız önbellekle karşılaştırın. İyi tahliye ile isabet oranı %55'in üzerinde kalmalıdır.
 
-5. Ağaç tabanlı spekülasyon (EAGLE-2 stili) uygulamak için spekülatif kod çözme simülatörünü genişletin. Tek bir K taslak token zinciri yerine, bir aday ağacı oluşturun (e.g., 3 seviyenin her birinde 2 dal = 8 yaprak aday). Doğrulama turu başına kabul edilen toplam token sayısını doğrusal spekülasyonla karşılaştırın.
+5. Ağaç tabanlı spekülasyon (EAGLE-2 stili) uygulamak için spekülatif kod çözme simülatörünü genişletin. Tek bir K taslağı token zinciri yerine, bir aday ağacı oluşturun (e.g., 3 düzeyin her birinde 2 dal = 8 yaprak aday). Doğrulama turu başına kabul edilen toplam token'leri doğrusal spekülasyonla karşılaştırın.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| Ön Dolum | "prompt İşleniyor" | Dikkat tüm giriş token'ler üzerinde paralel olarak hesaplanıyor -- hesaplamaya bağlı çünkü tam matris çarpımı GPU çekirdeklerini meşgul ediyor |
-| Kod Çözme | "token'lar oluşturuluyor" | Her ileri geçişte bir token üretiliyor, her seferinde tam model ağırlıkları okunuyor - belleğe bağlı çünkü hesaplama sonraki ağırlıklar gelmeden önce bitiyor |
-| KV önbelleği | "Dikkat durumlarının önbelleğe alınması" | Önceki tüm token'lerin anahtar ve değer projeksiyonlarını, her kod çözme adımında yeniden hesaplanmamaları için saklamak -- hesaplama için hafızayı değiştirir |
+| Ön Dolum | "prompt İşleniyor" | Tüm giriş token'ler üzerinde paralel olarak hesaplama dikkati - tam matris çarpımı GPU çekirdeklerini meşgul ettiğinden hesaplamaya bağlıdır |
+| Kod Çözme | "token'ler Oluşturuluyor" | Her ileri geçişte bir token üretiliyor ve her seferinde tam model ağırlıkları okunuyor - hafızaya bağlı çünkü hesaplama sonraki ağırlıklar gelmeden önce bitiyor |
+| KV önbelleği | "Dikkat durumlarının önbelleğe alınması" | Önceki tüm token'ler için anahtar ve değer projeksiyonlarının saklanması, böylece her kod çözme adımında yeniden hesaplanmamaları -- hesaplama için hafızayı değiştirir |
 | Sürekli gruplama | "Dinamik toplu işlem" | Herhangi bir istek biter bitmez çalışan topluluğa yeni istekler ekleme, tüm toplu işi beklemek yerine her kod çözme yinelemesinde değerlendirme |
-| PagedAttention | "KV önbellek için sanal bellek" | KV önbelleğini bitişik bloklar yerine sabit boyutlu sayfalara ayırma, bellek parçalanmasını ortadan kaldırma ve paylaşılan önekler için yazarken kopyalamayı etkinleştirme |
-| Spekülatif kod çözme | "Taslak hazırla ve doğrula" | Birden fazla token önermek için hızlı bir taslak model kullanma, ardından hepsini tek bir hedef modelde doğrulama ileri geçiş - matematiksel olarak kesin, 2-3 kat hızlanma |
-| KARTAL | "Kendi kendine spekülatif kod çözme" | Hafif bir kafayı hedef modelin kendi gizli durumları konusunda eğiten ve ayrı bir taslak modele göre daha yüksek kabul oranları elde eden spekülatif bir kod çözme çeşidi |
-| Önek önbelleğe alma | "Sistem prompt KV'yi yeniden kullanma" | Yaygın önekler (sistem prompt'ler, birkaç çekimli örnekler) için hesaplanan KV önbellek girişlerini depolamak ve gereksiz ön doldurmayı atlamak için bunları isteklerde yeniden kullanmak |
-| İşlemler:bayt oranı | "Aritmetik yoğunluk" | Bilgi işlem işlemlerinin okunan bellek bayt sayısına oranı - iş yükünün hesaplamaya mı (yüksek oran) yoksa belleğe mi (düşük oran) bağlı olduğunu belirler |
-| İlkine kalan süre token | "TTFT" | Bir isteğin alınmasından ilk çıktının token üretilmesine kadar geçen gecikme -- uzun prompts |
+| PagedDikkat | "KV önbellek için sanal bellek" | KV önbelleğini bitişik bloklar yerine sabit boyutlu sayfalara ayırma, bellek parçalanmasını ortadan kaldırma ve paylaşılan önekler için yazarken kopyalamayı etkinleştirme |
+| Spekülatif kod çözme | "Taslak hazırla ve doğrula" | Birden fazla token önermek için hızlı bir taslak model kullanma ve ardından bunların hepsini tek bir hedef modelde doğrulama ileri geçiş - matematiksel olarak kesin, 2-3 kat hızlanma |
+| KARTAL | "Kendi kendine spekülatif kod çözme" | Hafif bir kafayı hedef modelin kendi gizli durumları konusunda eğiten ve ayrı bir taslak modele göre daha yüksek kabul oranlarına ulaşan spekülatif bir kod çözme çeşidi |
+| Önek önbelleğe alma | "Sistemi prompt KV yeniden kullanma" | Yaygın önekler (sistem prompt'ler, birkaç çekim örnekleri) için hesaplanan KV önbellek girişlerini depolama ve gereksiz ön doldurmayı atlamak için bunları isteklerde yeniden kullanma |
+| İşlemler:bayt oranı | "Aritmetik yoğunluk" | Bilgi işlem işlemlerinin okunan bellek bayt sayısına oranı - bir iş yükünün hesaplamaya mı (yüksek oran) yoksa belleğe mi (düşük oran) bağlı olduğunu belirler |
+| İlk zamanı token | "TTFT" | Bir isteğin alınmasından ilk çıktının üretilmesine kadar geçen gecikme token -- uzun prompt'ler için ön doldurma süresi hakimdir |
 
 ## Daha Fazla Okuma
 
-- Kwon ve diğerleri, "PagedAttention ile Büyük Dil Modeli Sunumu için Verimli Bellek Yönetimi" (2023) -- artık inference sunumu için endüstri standardı olan sayfalanmış KV önbellek yönetimini tanıtan vLLM makalesi
-- Leviathan ve diğerleri, "Spekülatif Kod Çözme yoluyla Transformer'lardan hızlı Inference" (2023) -- taslak doğrulama spekülasyonunun 2-3 kat hızlanma elde ederken tam hedef model dağılımları ürettiğini kanıtlayan temel makale
+- Kwon ve diğerleri, "PagedAttention ile Büyük Dil Modeli Hizmeti için Verimli Bellek Yönetimi" (2023) -- artık inference hizmeti için endüstri standardı olan sayfalanmış KV önbellek yönetimini tanıtan vLLM makalesi
+- Leviathan ve diğerleri, "Spekülatif Kod Çözme yoluyla Transformer'lerden Hızlı Inference" (2023) -- taslak doğrulama spekülasyonunun 2-3 kat hızlanma elde ederken tam hedef model dağılımları ürettiğini kanıtlayan temel makale
 - Li ve diğerleri, "EAGLE: Spekülatif Örnekleme, Özellik Belirsizliğinin Yeniden Düşünülmesini Gerektirir" (2024) - ayrı bir taslak model kullanmak yerine, hedef modelin kendi özellikleri üzerinde kafa eğiterek daha yüksek kabul oranlarına ulaşır
 - Zheng ve diğerleri, "SGLang: Yapılandırılmış Dil Modeli Programlarının Verimli Yürütülmesi" (2024) -- önek önbelleğe alma için RadixAttention'ı ve çok çağrılı LLM programları için bir programlama modelini tanıtıyor
-- Williams ve diğerleri, "Roofline: An Insightful Visual Performance Model for Multicore Architectures" (2009) -- bilgi işlem ve bellek darboğazları hakkında akıl yürütme için ops:byte framework'yı resmileştiren orijinal çatı çizgisi makalesi
+- Williams ve diğerleri, "Roofline: An Insightful Visual Performance Model for Multicore Architectures" (2009) -- hesaplama ve bellek darboğazları hakkında akıl yürütme için ops:byte framework'yi resmileştiren orijinal çatı hattı makalesi

@@ -1,107 +1,107 @@
-# Red-Teaming: PAIR and Automated Attacks
+# Kırmızı Takım Oluşturma: EŞLEŞTİRME ve Otomatik Saldırılar
 
-> Chao, Robey, Dobriban, Hassani, Pappas, Wong (NeurIPS 2023, arXiv:2310.08419). PAIR — Prompt Automatic Iterative Refinement — is the canonical automated black-box jailbreak. An attacker LLM with a red-team system prompt iteratively proposes jailbreaks for a target LLM, accumulating attempts and responses in its own chat history as in-context feedback. PAIR typically succeeds within 20 queries, orders of magnitude more efficient than GCG (Zou et al.'s token-level gradient search) and without requiring white-box access. PAIR is now a standard baseline in JailbreakBench (arXiv:2404.01318) and HarmBench, alongside GCG, AutoDAN, TAP, and Persuasive Adversarial Prompt.
+> Chao, Robey, Dobriban, Hassani, Pappas, Wong (NeurIPS 2023, arXiv:2310.08419). PAIR — Prompt Otomatik Yinelemeli İyileştirme — standart otomatik kara kutu jailbreak işlemidir. Kırmızı takım sistemine sahip bir saldırgan LLM prompt, hedef LLM için yinelemeli olarak jailbreak'ler önerir, girişimleri ve yanıtları bağlam içi geri bildirim olarak kendi sohbet geçmişinde biriktirir. PAIR genellikle 20 sorgu içinde başarılı olur; bu, GCG'den çok daha verimlidir (Zou ve arkadaşlarının token düzeyindeki gradient araması) ve beyaz kutu erişimi gerektirmeden. PAIR artık GCG, AutoDAN, TAP ve Persuasive Adversarial Prompt ile birlikte JailbreakBench (arXiv:2404.01318) ve HarmBench'te standart bir temeldir.
 
-**Type:** Build
-**Languages:** Python (stdlib, mock PAIR loop against a toy target)
-**Prerequisites:** Phase 18 · 01 (instruction-following), Phase 14 (agent engineering)
-**Time:** ~75 minutes
+**Tür:** Yapım
+**Diller:** Python (stdlib, oyuncak hedefe karşı sahte PAIR döngüsü)
+**Önkoşullar:** Aşama 18 · 01 (talimatları takip etme), Aşama 14 (agent mühendislik)
+**Süre:** ~75 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Describe the PAIR algorithm: attacker system prompt, iterative refinement, in-context feedback.
-- Explain why PAIR is strictly more efficient than GCG when the target is black-box.
-- Name four other automated-attack baselines (GCG, AutoDAN, TAP, PAP) and state one distinguishing feature of each.
-- Describe the JailbreakBench and HarmBench evaluation protocols and what "attack success rate" means under each.
+- PAIR algoritmasını açıklayın: saldırgan sistemi prompt, yinelemeli iyileştirme, bağlam içi geri bildirim.
+- Hedef kara kutu olduğunda PAIR'in neden GCG'den kesinlikle daha verimli olduğunu açıklayın.
+- Diğer dört otomatik saldırı temelini (GCG, AutoDAN, TAP, PAP) adlandırın ve her birinin ayırt edici bir özelliğini belirtin.
+- JailbreakBench ve HarmBench değerlendirme protokollerini ve her birinin altında "saldırı başarı oranının" ne anlama geldiğini açıklayın.
 
-## The Problem
+## Sorun
 
-Red-teaming used to be a manual activity. A small number of expert testers constructed adversarial prompts and tracked which ones worked. This does not scale: attack success rate needs a statistical sample, and the target is a moving target with every model release. PAIR operationalizes red-teaming as an optimization problem with a black-box target.
+Kırmızı takım oluşturma eskiden manuel bir aktiviteydi. Az sayıda uzman test uzmanı rakip prompt'lar oluşturdu ve hangilerinin işe yaradığını takip etti. Bu ölçeklenmez: Saldırı başarı oranı istatistiksel bir örneğe ihtiyaç duyar ve hedef, her model sürümünde hareketli bir hedeftir. PAIR, kırmızı takım oluşturmayı kara kutu hedefiyle bir optimizasyon problemi olarak işlevselleştirir.
 
-## The Concept
+## Konsept
 
-### PAIR algorithm
+### ÇİFT algoritması
 
-Inputs:
-- Target LLM T (the model we are attacking).
-- Judge LLM J (scores whether a response is a jailbreak).
-- Attacker LLM A (the red-team optimizer).
-- Goal string G: "respond with [harmful instruction]."
-- Budget K (usually 20 queries).
+Girişler:
+- LLM T'yi (saldırdığımız model) hedefleyin.
+- Yargıç LLM J (bir yanıtın jailbreak olup olmadığını puanlar).
+- Saldırgan LLM A (kırmızı takım iyileştiricisi).
+- Hedef dizisi G: "[zararlı talimat] ile yanıt verin."
+- Bütçe K (genellikle 20 sorgu).
 
-Loop, for k in 1..K:
-1. A is prompted with the goal G and the history of (prompt, response) pairs so far.
-2. A emits a new prompt p_k.
-3. Submit p_k to T; receive response r_k.
-4. J scores (p_k, r_k) on the goal.
-5. If score >= threshold, halt — jailbreak found.
-6. Else, append (p_k, r_k) to A's history; continue.
+Döngü, 1..K'deki k için:
+1. A, G hedefi ve (prompt, yanıt) çiftlerinin şu ana kadarki geçmişiyle promptedilir.
+2. A yeni bir prompt p_k yayar.
+3. p_k'yi T'ye gönderin; yanıt al r_k.
+4. J kaleye gol atar (p_k, r_k).
+5. Eğer puan >= eşik ise, durdurun — jailbreak bulundu.
+6. Aksi takdirde, A'nın geçmişine (p_k, r_k) ekleyin; devam etmek.
 
-Empirical result (NeurIPS 2023): >50% attack success rate against GPT-3.5-turbo, Llama-2-7B-chat; mean queries to success in the 10-20 range.
+Ampirik sonuç (NeurIPS 2023): GPT-3.5-turbo, Llama-2-7B-chat'e karşı >%50 saldırı başarı oranı; 10-20 aralığında başarıya giden ortalama sorgular.
 
-### Why PAIR is efficient
+### PAIR neden verimlidir?
 
-GCG (Zou et al. 2023) searches over adversarial token suffixes by gradient; it requires white-box model access and produces unreadable suffixes. PAIR is black-box and produces natural-language attacks that transfer across models. PAIR's in-context feedback lets the attacker learn from each rejection; GCG has no equivalent (each new token update has to rediscover prior progress).
+GCG (Zou ve ark. 2023), gradient ile karşıtsal token soneklerini arar; beyaz kutu model erişimi gerektirir ve okunamayan son ekler üretir. PAIR kara kutudur ve modeller arasında aktarım yapan doğal dil saldırıları üretir. PAIR'in bağlam içi geri bildirimi, saldırganın her reddedilmeden ders almasını sağlar; GCG'nin eşdeğeri yoktur (her yeni token güncellemesinin önceki ilerlemeyi yeniden keşfetmesi gerekir).
 
-### Related automated attacks
+### İlgili otomatik saldırılar
 
-- **GCG (Zou et al. 2023, arXiv:2307.15043).** Token-level gradient search for adversarial suffixes. White-box, transferable, produces unreadable strings.
-- **AutoDAN (Liu et al. 2023).** Evolutionary search over prompts, guided by a hierarchical objective.
-- **TAP (Mehrotra et al. 2024).** Tree-of-attacks with pruning — branches multiple PAIR-style rollouts.
-- **PAP (Zeng et al. 2024).** Persuasive Adversarial Prompts — encodes human persuasion techniques as prompt templates.
+- **GCG (Zou ve ark. 2023, arXiv:2307.15043).** Token düzeyinde gradient çekişmeli son ekleri arar. Aktarılabilir beyaz kutu, okunamayan dizeler üretir.
+- **AutoDAN (Liu ve diğerleri 2023).** Hiyerarşik bir hedefin rehberliğinde prompt'lar üzerinde evrimsel arama.
+- **TAP (Mehrotra ve ark. 2024).** Budama ile saldırı ağacı — birden fazla PAIR tarzı sunumu dallara ayırır.
+- **PAP (Zeng ve ark. 2024).** İkna Edici Çekişmeli Prompt'ler — insanı ikna etme tekniklerini prompt şablonları olarak kodlar.
 
-### JailbreakBench and HarmBench
+### JailbreakBench ve HarmBench
 
-Both (2024) standardize evaluation:
+Her ikisi de (2024) değerlendirmeyi standartlaştırıyor:
 
-- JailbreakBench (arXiv:2404.01318). 100 harmful behaviors across 10 OpenAI-policy categories. Attack success rate (ASR) as the primary metric. Requires a judge (GPT-4-turbo, Llama Guard, or StrongREJECT).
-- HarmBench (Mazeika et al. 2024). 510 behaviours across 7 categories, with semantic and functional harm tests. Compares 18 attacks against 33 models.
+- JailbreakBench (arXiv:2404.01318). 10 OpenAI politikası kategorisinde 100 zararlı davranış. Birincil ölçüm olarak saldırı başarı oranı (ASR). Bir hakem gerektirir (GPT-4-turbo, Llama Guard veya StrongREJECT).
+- HarmBench (Mazeika ve ark. 2024). Anlamsal ve işlevsel zarar testleri ile 7 kategoride 510 davranış. 18 saldırıyı 33 modelle karşılaştırır.
 
-ASR is usually reported at a fixed query budget. Comparing attacks requires matching budgets; a 90% ASR at 200 queries is not comparable to 85% ASR at 20.
+ASR genellikle sabit bir sorgu bütçesinde raporlanır. Saldırıları karşılaştırmak, bütçelerin eşleştirilmesini gerektirir; 200 sorgudaki %90 ASR, 20 sorgudaki %85 ASR ile karşılaştırılamaz.
 
-### Reason it matters for 2026 deployments
+### 2026 deployment'lar için önemli olmasının nedeni
 
-Every frontier lab now runs PAIR and TAP against production models before release. ASR trajectories appear in model cards (Lesson 26) and safety-case appendices (Lesson 18). The attack is not exotic — it is standard infrastructure.
+Artık her sınır laboratuvarı, piyasaya sürülmeden önce üretim modellerinde PAIR ve TAP çalıştırıyor. ASR yörüngeleri model kartlarında (Ders 26) ve güvenlik durumu eklerinde (Ders 18) görülmektedir. Saldırı egzotik değil; standart altyapıdır.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lesson 12 is the automated-attack foundation. Lesson 13 (Many-Shot Jailbreaking) is a complementary length-exploit. Lesson 14 (ASCII Art / Visual) is an encoding attack. Lesson 15 (Indirect Prompt Injection) is the 2026 production attack surface. Lesson 16 covers the defensive-tooling counterparts (Llama Guard, Garak, PyRIT).
+Ders 12, otomatik saldırının temelidir. Ders 13 (Çoklu Çekim Jailbreaking) tamamlayıcı bir uzunluk istismarıdır. Ders 14 (ASCII Sanat/Görsel) bir kodlama saldırısıdır. Ders 15 (Dolaylı Prompt Ekleme), 2026 üretim saldırı yüzeyidir. Ders 16 savunma araçlarının benzerlerini kapsar (Llama Guard, Garak, PyRIT).
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` builds a toy PAIR loop. The target is a mock classifier that refuses "obvious" harmful prompts (keyword-filter). The attacker is a rule-based refiner that tries paraphrase, roleplay-framing, and encoding. The judge scores the response. You watch the attacker succeed in ~5-15 iterations against the keyword filter and fail against a semantic filter.
+`code/main.py` bir oyuncak EŞLEŞTİRME döngüsü oluşturur. Hedef, "bariz" zararlı prompt'ları (anahtar kelime filtresi) reddeden sahte bir sınıflandırıcıdır. Saldırgan, açıklamayı, rol yapma çerçevelemeyi ve kodlamayı deneyen kural tabanlı bir arıtıcıdır. Hakim cevabı puanlıyor. Saldırganın anahtar kelime filtresine karşı ~5-15 yinelemede başarılı olduğunu ve anlamsal filtreye karşı başarısız olduğunu izlersiniz.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-attack-audit.md`. Given a red-team evaluation report, it audits: which attacks were run (PAIR, GCG, TAP, AutoDAN, PAP), at what budget each, with which judge, on which harmful-behaviour set (JailbreakBench, HarmBench, internal).
+Bu ders `outputs/skill-attack-audit.md` üretir. Kırmızı takım değerlendirme raporu verildiğinde, şunları denetler: hangi saldırılar gerçekleştirildi (PAIR, GCG, TAP, AutoDAN, PAP), her biri hangi bütçeyle, hangi yargıçla, hangi zararlı davranışlara göre ayarlandı (JailbreakBench, HarmBench, dahili).
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Measure mean-queries-to-success for the three built-in attacker strategies. Explain which target-defense assumption each exploits.
+1. `code/main.py`'yı çalıştırın. Üç yerleşik saldırgan stratejisi için ortalama sorguların başarıya ulaşmasını ölçün. Her birinin hangi hedef savunma varsayımından yararlandığını açıklayın.
 
-2. Implement a fourth attacker strategy (e.g., translation to another language, base64 encoding). Report the new mean-queries-to-success against the keyword-filter target and the semantic-filter target.
+2. Dördüncü saldırgan stratejisini uygulayın (e.g., başka bir dile çeviri, base64 kodlaması). Yeni ortalama sorguları anahtar kelime filtresi hedefine ve anlamsal filtre hedefine göre raporlayın.
 
-3. Read Chao et al. 2023 Figure 5 (PAIR vs GCG comparison). Describe two scenarios where GCG is preferred despite PAIR's efficiency advantage.
+3. Chao ve ark.'nı okuyun. 2023 Şekil 5 (PAIR ve GCG karşılaştırması). PAIR'in verimlilik avantajına rağmen GCG'nin tercih edildiği iki senaryoyu açıklayın.
 
-4. JailbreakBench reports ASR against a fixed goal set. Design an additional metric that measures attack diversity (variance in successful prompts). Explain why diversity matters for defense evaluation.
+4. JailbreakBench, ASR'yi sabit bir hedefe göre rapor eder. Saldırı çeşitliliğini (başarılı prompt'lardaki fark) ölçen ek bir ölçüm tasarlayın. Savunma değerlendirmesinde çeşitliliğin neden önemli olduğunu açıklayın.
 
-5. TAP (Mehrotra 2024) extends PAIR with branching + pruning. Sketch a TAP-style extension to `code/main.py` and describe the computational cost vs success-rate trade-off.
+5. TAP (Mehrotra 2024), PAIR'i dallanma + budama ile genişletir. `code/main.py` 'ye TAP tarzı bir uzantı çizin ve hesaplama maliyeti ile başarı oranı arasındaki dengeyi açıklayın.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| PAIR | "automated jailbreak" | Prompt Automatic Iterative Refinement; attacker-LLM + judge-LLM loop |
-| GCG | "gradient jailbreak" | White-box token-level gradient search for adversarial suffixes |
-| Attack success rate (ASR) | "% jailbreaks at k queries" | Primary metric; must be reported with query budget and judge identity |
-| Judge LLM | "the scorer" | LLM that grades whether a response satisfies the harmful goal |
-| JailbreakBench | "the evaluation" | Standardized harmful-behaviour set with tagged categories |
-| HarmBench | "the broader bench" | 510 behaviours, functional + semantic harm tests |
-| TAP | "tree of attacks" | PAIR with branching + pruning; better ASR at higher compute |
+| ÇİFT | "otomatik jailbreak" | Prompt Otomatik Yinelemeli İyileştirme; saldırgan-LLM + yargıç-LLM döngüsü |
+| GCG | "gradient jailbreak" | Çekişmeli sonekler için beyaz kutu token düzeyinde gradient arama |
+| Saldırı başarı oranı (ASR) | "K sorguda jailbreak yüzdesi" | Birincil metrik; sorgu bütçesi ve hakim kimliği ile raporlanmalıdır |
+| Yargıç Yüksek Lisans | "golcü" | Bir yanıtın zararlı hedefi karşılayıp karşılamadığını derecelendiren LLM |
+| JailbreakBench | "değerlendirme" | Etiketli kategorilerle standartlaştırılmış zararlı davranış kümesi |
+| HarmBench | "daha geniş tezgah" | 510 davranış, işlevsel + anlamsal zarar testleri |
+| DOKUN | "saldırı ağacı" | Dallanma + budama ile EŞLEŞTİRİN; daha yüksek bilgi işlemde daha iyi ASR |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Chao et al. — Jailbreaking Black Box LLMs in Twenty Queries (arXiv:2310.08419)](https://arxiv.org/abs/2310.08419) — PAIR paper, NeurIPS 2023
-- [Zou et al. — Universal and Transferable Adversarial Attacks on Aligned LLMs (arXiv:2307.15043)](https://arxiv.org/abs/2307.15043) — GCG paper
-- [Chao et al. — JailbreakBench (arXiv:2404.01318)](https://arxiv.org/abs/2404.01318) — standardized evaluation
-- [Mazeika et al. — HarmBench (ICML 2024)](https://arxiv.org/abs/2402.04249) — broader evaluation
+- [Chao ve ark. — Yirmi Sorguda Jailbreak Kara Kutu Yüksek Lisansı (arXiv:2310.08419)](https://arxiv.org/abs/2310.08419) — PAIR makalesi, NeurIPS 2023
+- [Zou ve ark. — Hizalanmış LLM'lere Yönelik Evrensel ve Aktarılabilir Çekişmeli Saldırılar (arXiv:2307.15043)](https://arxiv.org/abs/2307.15043) — GCG makalesi
+- [Chao ve ark. — JailbreakBench (arXiv:2404.01318)](https://arxiv.org/abs/2404.01318) — standartlaştırılmış değerlendirme
+- [Mazeika ve diğerleri. — HarmBench (ICML 2024)](https://arxiv.org/abs/2402.04249) — daha geniş değerlendirme

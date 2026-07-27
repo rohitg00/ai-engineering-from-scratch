@@ -1,36 +1,36 @@
-# A2A — Agent-to-Agent Protokolü
+# A2A — Agent'den Agent'ye Protokol
 
-> MCP, agent-araçtır. A2A (Agent2Agent), agent-to-agent'tur — farklı framework'lar üzerine kurulu opak agent'ların işbirliği yapmasına izin veren açık bir protokoldür. Nisan 2025'te Google tarafından piyasaya sürüldü, Haziran 2025'te Linux Vakfı'na bağışlandı ve AWS, Cisco, Microsoft, Salesforce, SAP ve ServiceNow dahil 150'den fazla destekçiyle Nisan 2026'da v1.0'a ulaştı. IBM'in ACP'sini benimsedi ve AP2 ödeme uzantısını ekledi. Bu derste Agent Kartı, Görev yaşam döngüsü ve iki aktarım bağlaması anlatılmaktadır.
+> MCP, agent'den takımadır. A2A (Agent2Agent), agent'den agent'ye — farklı framework'ler üzerine kurulu opak agent'lerin işbirliği yapmasına izin veren açık bir protokoldür. Nisan 2025'te Google tarafından piyasaya sürüldü, Haziran 2025'te Linux Vakfı'na bağışlandı ve AWS, Cisco, Microsoft, Salesforce, SAP ve ServiceNow dahil 150'den fazla destekçiyle Nisan 2026'da v1.0'ye ulaştı. IBM'in ACP'sini benimsedi ve AP2 ödeme uzantısını ekledi. Bu derste Agent Kartı, Görev yaşam döngüsü ve iki aktarım bağlaması anlatılmaktadır.
 
 **Tür:** Yapım
-**Diller:** Python (stdlib, Agent Kart + Görev koşum takımı)
+**Diller:** Python (stdlib, Agent Kart + Görev donanımı)
 **Önkoşullar:** Aşama 13 · 06 (MCP'nin temelleri), Aşama 13 · 08 (MCP istemcisi)
 **Süre:** ~75 dakika
 
 ## Öğrenme Hedefleri
 
-- agent-araca (MCP) kullanım örneklerini agent-to-agent (A2A) kullanım durumlarından ayırın.
+- agent'den takıma (MCP) kullanım örneklerini agent'den agent'ye (A2A) kullanım örneklerinden ayırın.
 - `/.well-known/agent.json` adresinde beceriler ve uç nokta meta verileri içeren bir Agent Kartı yayınlayın.
 - Görev yaşam döngüsünü yürütün (gönderildi → çalışıyor → giriş gerekli → tamamlandı / başarısız oldu / iptal edildi / reddedildi).
-- Çıktı olarak Parçalar (metin, dosya, veri) ve Artifact'lar içeren Mesajları kullanın.
+- Parçalar (metin, dosya, veri) ve Artifact'leri içeren Mesajları çıktı olarak kullanın.
 
 ## Sorun
 
-Bir müşteri hizmetinin agent, rapor yazma görevini uzman bir yazara agent devretmesi gerekiyor. A2A öncesi seçenekler:
+Bir müşteri hizmeti agent'nin rapor yazma görevini uzman bir yazar agent'ye devretmesi gerekir. A2A öncesi seçenekler:
 
 - Özel REST API'si. Çalışıyor ancak her eşleştirme tek seferliktir.
-- Paylaşılan kod tabanı. İki agent'nin aynı framework'yı çalıştırmasını gerektirir.
--MCP. Uymuyor: MCP, araçları çağırmak içindir, her bir agent'nin şeffaf olmayan iç muhakemesini korurken iki agent'nin işbirliği yapması için değil.
+- Paylaşılan kod tabanı. Aynı framework'yi çalıştırmak için iki agent gerekir.
+-MCP. Uymuyor: MCP, araçları çağırmak içindir, her agent'nin opak dahili mantığını korurken işbirliği yapan iki agent için değil.
 
-A2A boşluğu dolduruyor. Etkileşimi, yaşam döngüsü, mesajlar ve artifact'lar ile bir agent'nin diğerine bir Görev göndermesi olarak modeller. Çağrılan agent'nin dahili durumu opak kalır; arayan kişi yalnızca görev durumu geçişlerini ve nihai çıktıları görür.
+A2A boşluğu dolduruyor. Etkileşimi, yaşam döngüsü, mesajlar ve artifact'lerle birlikte bir agent'nin diğerine bir Görev göndermesi olarak modeller. Çağrılan agent'nin dahili durumu opak kalır; arayan kişi yalnızca görev durumu geçişlerini ve nihai çıktıları görür.
 
-A2A, "framework'lar arasındaki agent'lerin birbirleriyle konuşmasına izin ver" protokolüdür. MCP'nin yerini almaz; ikisi tamamlayıcıdır.
+A2A, "framework'ler arasındaki agent'lerin birbirleriyle konuşmasına izin ver" protokolüdür. MCP'nin yerini almaz; ikisi tamamlayıcıdır.
 
 ## Konsept
 
-### Agent Kartı
+### Agent Kart
 
-Her A2A uyumlu agent, `/.well-known/agent.json` adresinde bir kart yayınlar:
+Her A2A uyumlu agent, `/.well-known/agent.json`'de bir kart yayınlar:
 
 ```json
 {
@@ -54,9 +54,9 @@ Her A2A uyumlu agent, `/.well-known/agent.json` adresinde bir kart yayınlar:
 
 Keşif URL tabanlıdır: kartı alın, A2A uç noktasının URL'sini öğrenin, becerileri sıralayın.
 
-### İmzalı Agent Kart (AP2)
+### İmzalı Agent Kartları (AP2)
 
-AP2 uzantısı (Eylül 2025), Agent Kartlara şifreleme imzaları ekler. Bir yayıncı kendi kartını JWT ile imzalar; Tüketiciler doğruluyor. Kimliğe bürünmeyi önler.
+AP2 uzantısı (Eylül 2025), Agent Kartlarına şifreleme imzaları ekler. Bir yayıncı kendi kartını JWT ile imzalar; Tüketiciler doğruluyor. Kimliğe bürünmeyi önler.
 
 ### Görev yaşam döngüsü
 
@@ -71,7 +71,7 @@ submitted -> working -> completed | failed | canceled | rejected
 
 Bir mesaj bir veya daha fazla Parçayı taşır:
 
-- `text` — düz içerik.
+- `text` — sade içerik.
 - `file` — mimeType'lı base64 blobu.
 - `data` — yazılan JSON yükü (çağrılan agent için yapılandırılmış giriş).
 
@@ -88,9 +88,9 @@ Bir mesaj bir veya daha fazla Parçayı taşır:
 }
 ```
 
-### Artifacts
+### Artifact'ler
 
-Çıkışlar ham dizeler değil, Artifact'lardır. Artifact, adlandırılmış, yazılan bir çıktıdır:
+Çıkışlar ham dizeler değil, Artifact'lerdir. Artifact, adlandırılmış, yazılan bir çıktıdır:
 
 ```json
 {
@@ -100,7 +100,7 @@ Bir mesaj bir veya daha fazla Parçayı taşır:
 }
 ```
 
-Artifact'lar parçalar halinde yayınlanabilir. Arayan birikir.
+Artifact'ler parçalar halinde yayınlanabilir. Arayan birikir.
 
 ### İki aktarım bağlaması
 
@@ -111,34 +111,34 @@ Her iki bağlama da aynı mantıksal mesaj şeklini taşır.
 
 ### Opaklığın korunması
 
-Anahtar tasarım ilkesi: agent adı verilen şeyin iç durumu opaktır. Arayan kişi görev durumunu ve artifact'leri görür. Çağrılan agent'nin düşünce zinciri, araç çağrıları, alt-agent delegasyonu — hepsi görünmez. Bu, araç çağrılarının şeffaf olduğu MCP'den farklıdır.
+Temel tasarım ilkesi: agent adı verilen şeyin dahili durumu opaktır. Arayan kişi görev durumunu ve artifact'leri görür. agent adı verilen düşünce zinciri, araç çağrıları, agent alt heyeti — hepsi görünmez. Bu, araç çağrılarının şeffaf olduğu MCP'den farklıdır.
 
-Gerekçe: A2A, rakiplerin iç bilgileri açığa vurmadan işbirliği yapmasına olanak tanır. A2A, arayan kişi agent'nin hizmeti nasıl uyguladığını öğrenmeden "bu müşteri hizmetini agent ara" olabilir.
+Gerekçe: A2A, rakiplerin iç bilgileri açığa vurmadan işbirliği yapmasına olanak tanır. A2A, arayan kişi agent'nin hizmeti nasıl uyguladığını öğrenmeden "bu müşteri hizmetini agent olarak adlandırabilir".
 
 ### Zaman Çizelgesi
 
 - **2025-04-09.** Google, A2A'yı duyurdu.
 - **2025-06-23.** Linux Vakfı'na bağışlanmıştır.
 - **2025-08.** IBM'in ACP'sini kullanır.
-- **2025-09.** AP2 uzantısı (Agent Payments) gönderilir.
-- **2026-04.** v1.0 150'den fazla destekleyici kuruluşla birlikte yayınlandı.
+- **2025-09.** AP2 uzantısı (Agent Ödemeler) gönderilir.
+- **2026-04.** v1.0, 150'den fazla destekleyici kuruluşla birlikte piyasaya sürüldü.
 
 ### MCP ile İlişki
 
 | Boyut | MCP | A2A |
 |-----------|-----|-----|
-| Kullanım örneği | Agent-araca | Agent-to-agent |
+| Kullanım örneği | Agent-araca | Agent'den agent'ye |
 | Opaklık | Şeffaf araç çağrıları | Opak iç muhakeme |
 | Tipik arayan | Agent çalışma zamanı | Başka bir agent |
 | Devlet | Araç çağırma sonucu | Yaşam döngüsüne sahip görev |
-| Yetkilendirme | OAuth 2.1 (Aşama 13 · 16) | JWT İmzalı Agent Kart (AP2) |
-| Taşıma | Stdio / Streamable HTTP | HTTP / gRPC üzerinden JSON-RPC |
+| Yetkilendirme | OAuth 2.1 (Aşama 13 · 16) | JWT İmzalı Agent Kartlar (AP2) |
+| Taşıma | Stdio / Akış Yapılabilir HTTP | HTTP / gRPC üzerinden JSON-RPC |
 
-Belirli bir aracı çağırmak istediğinizde MCP'yi kullanın. Bir görevin tamamını başka bir agent'ya devretmek istediğinizde A2A'yı kullanın. Birçok üretim sistemi her ikisini de kullanır: bir agent, araç katmanı için MCP'yi ve işbirliği katmanı için A2A'yı kullanır.
+Belirli bir aracı çağırmak istediğinizde MCP'yi kullanın. Bir görevin tamamını başka bir agent'ye devretmek istediğinizde A2A'yı kullanın. Birçok üretim sistemi her ikisini de kullanır: agent, araç katmanı için MCP'yi ve işbirliği katmanı için A2A'yı kullanır.
 
 ## Kullan onu
 
-`code/main.py` minimum A2A donanımını uygular: bir araştırma agent kartını yayınlar, bir yazar agent PDF ve bir metin talimatı içeren parçalar içeren bir `tasks/send` alır, çalışma → input_required → çalışma → tamamlandı yoluyla geçiş yapar ve bir artifact metnini döndürür. Tüm stdlib; mesaj şekillerine odaklanmak için bellek içi aktarım kullanır.
+`code/main.py`, minimal bir A2A donanımını uygular: bir araştırma agent kartını yayınlar, bir yazar agent, PDF ve metin talimatı içeren parçalar içeren bir `tasks/send` alır, çalışma → input_required → çalışma → tamamlandı yoluyla geçişler yapar ve bir artifact metnini döndürür. Tüm stdlib; mesaj şekillerine odaklanmak için bellek içi aktarım kullanır.
 
 Neye bakmalı:
 
@@ -146,19 +146,19 @@ Neye bakmalı:
 - Görev kimliği ataması ve durum geçişleri.
 - Karışık tipte kısımlara sahip mesajlar.
 -Girdi gerektiren dal orta görev.
-- Artifact tamamlandığında geri dönüş.
+- Artifact tamamlandığında geri döner.
 
 ## Gönderin
 
-Bu ders `outputs/skill-a2a-agent-spec.md` üretir. Diğer agent'ler tarafından çağrılması gereken yeni bir agent verildiğinde, beceri Agent Kart JSON'unu, beceri şemasını ve uç nokta planını üretir.
+Bu ders `outputs/skill-a2a-agent-spec.md`'yi üretir. Diğer agent'ler tarafından çağrılması gereken yeni bir agent verildiğinde, beceri Agent Kart JSON'unu, beceri şemasını ve uç nokta planını üretir.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. Çağrılan agent'nin açıklama istediği giriş gerektiren duraklama dahil olmak üzere tüm Görev yaşam döngüsünü izleyin.
+1. `code/main.py`'yi çalıştırın. Çağrılan agent'nin açıklama istediği giriş gerektiren duraklama dahil olmak üzere tüm Görev yaşam döngüsünü izleyin.
 
 2. İmzalı bir Agent Kartı ekleyin. Kartın standart JSON'u üzerinden HMAC ile oturum açın. Bir doğrulayıcı yazın ve mutasyona uğramış bir kartta başarısız olduğunu doğrulayın.
 
-3. Görev akışını uygulayın: agent yazarı, SSE üzerinden üç artımlı artifact parça yayar ve çağıran bunları biriktirir.
+3. Görev akışını uygulayın: agent yazarı, SSE üzerinden üç artımlı artifact öbeği yayar ve arayan kişi bunları biriktirir.
 
 4. Bir MCP sunucusunu saran bir A2A agent tasarlayın. Her MCP aracını bir A2A becerisiyle eşleyin. Takaslara dikkat edin; hangi şeffaflık kayboluyor?
 
@@ -168,21 +168,21 @@ Bu ders `outputs/skill-a2a-agent-spec.md` üretir. Diğer agent'ler tarafından 
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| A2A | "Agent-to-Agent protokolü" | Opak agent işbirliği için açık protokol |
+| A2A | "Agent-Agent protokolü" | Opak agent işbirliği için açık protokol |
 | Agent Kart | "`.well-known/agent.json`" | agent'nin becerilerini ve uç noktasını açıklayan yayınlanmış meta veriler |
 | Beceri | "Çağrılabilir bir birim" | agent'nin desteklediği adlandırılmış bir işlem (MCP aracına analog) |
 | Görev | "Heyet birimi" | Yaşam döngüsü ve finali olan bir iş öğesi artifact |
 | Mesaj | "Görev girişi" | Parçaları Taşır (metin, dosya, veri) |
-| Bölüm | "Yazılan yığın" | Mesajın `text` / `file` / `data` öğesi |
+| Bölüm | "Yazılan yığın" | `text` / `file` / `data` mesajın öğesi |
 | Artifact | "Görev çıktısı" | Tamamlandığında döndürülen adlandırılmış, yazılan çıktı |
 | AP2 | "Agent Ödeme Protokolü" | Güven ve ödemeler için imzalı Agent Kart uzantısı |
-| Opaklık | "Kara kutu işbirliği" | agent adlı kişinin dahili bilgileri arayan kişiden gizlendi |
-| Giriş gerekli | "Görev duraklatma" | agent daha fazla bilgiye ihtiyaç duyduğunda yaşam döngüsü durumu |
+| Opaklık | "Kara kutu işbirliği" | agent adı verilen cihazın dahili bilgileri arayan kişiden gizlendi |
+| Giriş gerekli | "Görev duraklatma" | agent'nin daha fazla bilgiye ihtiyaç duyduğu yaşam döngüsü durumu |
 
 ## Daha Fazla Okuma
 
 - [a2a-protocol.org](https://a2a-protocol.org/latest/) — standart A2A spesifikasyonu
 - [a2aproject/A2A — GitHub](https://github.com/a2aproject/A2A) — referans uygulamaları ve SDK'lar
-- [Linux Foundation — A2A lansman basın bülteni](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents) — Haziran 2025 yönetim devri
-- [Google Cloud — A2A protokolü yükseltmesi](https://cloud.google.com/blog/products/ai-machine-learning/agent2agent-protocol-is-getting-an-upgrade) — yol haritası ve iş ortağı ivmesi
+- [Linux Foundation — A2A lansman basın bülteni](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents) — Haziran 2025 yönetim aktarımı
+- [Google Cloud — A2A protokol yükseltmesi](https://cloud.google.com/blog/products/ai-machine-learning/agent2agent-protocol-is-getting-an-upgrade) — yol haritası ve iş ortağı ivmesi
 - [Google Dev — A2A 1.0 kilometre taşı](https://discuss.google.dev/t/the-a2a-1-0-milestone-ensuring-and-testing-backward-compatibility/352258) — v1.0 sürüm notları ve geriye dönük uyumluluk kılavuzu

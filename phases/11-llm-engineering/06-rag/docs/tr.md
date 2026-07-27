@@ -1,18 +1,18 @@
 # RAG (Geri Alma-Artırılmış Nesil)
 
-> LLM'niz eğitim sınırına kadar her şeyi bilir. Şirketinizin dokümanları, kod tabanınız veya geçen haftanın toplantı notları hakkında hiçbir şey bilmiyor. RAG, ilgili belgeleri alıp bunları prompt içine doldurarak bu sorunu çözer. Üretim yapay zekasında en çok kullanılan modeldir. Bu kurstan bir şey inşa ederseniz, bir RAG boru hattı oluşturun.
+> LLM'niz eğitim sınırına kadar her şeyi bilir. Şirketinizin dokümanları, kod tabanınız veya geçen haftanın toplantı notları hakkında hiçbir şey bilmiyor. RAG, ilgili belgeleri alıp bunları prompt'ye yerleştirerek bu sorunu çözer. Üretim yapay zekasında en çok kullanılan modeldir. Bu kurstan bir şey inşa ederseniz, bir RAG boru hattı oluşturun.
 
 **Tür:** Yapım
 **Diller:** Python
-**Önkoşullar:** Aşama 10 (Sıfırdan LLM), Aşama 11 Dersleri 01-05
+**Önkoşullar:** Aşama 10 (Sıfırdan Yüksek Lisans), Aşama 11 Dersleri 01-05
 **Süre:** ~90 dakika
-**İlgili:** Altı parçalama algoritması için Aşama 5 · 23 (RAG için Parçalama Stratejileri) ve her birinin kazandığı zaman. Yerleştiriciyi seçmek için Aşama 5 · 22 (Embedding Modellerin Derinlemesine İncelemesi). Hibrit arama, yeniden sıralama ve sorgu dönüşümü için Aşama 11 · 07 (Gelişmiş RAG).
+**İlgili:** Altı parçalama algoritması için Aşama 5 · 23 (RAG için Parçalama Stratejileri) ve her birinin kazandığı zaman. Yerleştiriciyi seçmek için Aşama 5 · 22 (Embedding Modelleri Derinlemesine İnceleme). Hibrit arama, yeniden sıralama ve sorgu dönüşümü için Aşama 11 · 07 (Gelişmiş RAG).
 
 ## Öğrenme Hedefleri
 
-- Eksiksiz bir RAG ardışık düzeni oluşturun: belge yükleme, parçalama, embedding, vektör depolama, alma ve oluşturma
-- Uygun indekslemeyle bir vector database (ChromaDB, FAISS veya Pinecone) kullanarak anlamsal arama uygulayın
-- Bilgiye dayalı uygulamalar (maliyet, güncellik, ilişkilendirme) için neden RAG'ın fine-tuning yerine tercih edildiğini açıklayın
+- Eksiksiz bir RAG işlem hattı oluşturun: belge yükleme, parçalama, embedding, vektör depolama, alma ve oluşturma
+- Uygun indeksleme ile vector database (ChromaDB, FAISS veya Pinecone) kullanarak anlamsal arama uygulayın
+- Bilgiye dayalı uygulamalar (maliyet, tazelik, ilişkilendirme) için neden fine-tuning yerine RAG'ın tercih edildiğini açıklayın
 - Geri alma metriklerini (hassasiyet, geri çağırma) ve oluşturma metriklerini (sadıklık, uygunluk) kullanarak RAG kalitesini değerlendirin
 
 ## Sorun
@@ -21,7 +21,7 @@
 
 Fine-tuning bir çözümdür. LLM'yi alın, dahili belgeleriniz üzerinde eğitin ve güncellenmiş modeli dağıtın. Bu işe yarıyor ama ciddi sorunları var. Fine-tuning'nin bilgi işlem maliyeti binlerce dolara mal oluyor. Belge değiştiği anda model eskir. Modelin hangi kaynaktan alındığını bilmenin hiçbir yolu yok. Ve eğer şirket gelecek ay başka bir ürün grubu satın alırsa, yeniden ince ayar yaparsınız.
 
-RAG diğer çözümdür. Modele dokunmadan bırakın. Bir soru geldiğinde, belge deponuzda ilgili pasajları arayın, bunları sorudan önceki prompt alanına yapıştırın ve modelin bu pasajları bağlam olarak kullanarak yanıt vermesine izin verin. Belge deposu dakikalar içinde güncellenebilir. Tam olarak hangi belgelerin alındığını görebilirsiniz. Modelin kendisi asla değişmez. RAG'ın üretimdeki baskın model olmasının nedeni budur: daha ucuzdur, daha yenidir, daha denetlenebilirdir ve herhangi bir LLM ile çalışır.
+RAG diğer çözümdür. Modele dokunmadan bırakın. Bir soru geldiğinde belge deponuzda ilgili pasajları arayın, bunları sorudan önce prompt'ye yapıştırın ve modelin bu pasajları bağlam olarak kullanarak yanıt vermesine izin verin. Belge deposu dakikalar içinde güncellenebilir. Tam olarak hangi belgelerin alındığını görebilirsiniz. Modelin kendisi asla değişmez. RAG'ın üretimdeki baskın model olmasının nedeni budur: daha ucuzdur, daha yenidir, daha denetlenebilirdir ve herhangi bir LLM ile çalışır.
 
 ## Konsept
 
@@ -53,40 +53,40 @@ graph LR
     end
 ```
 
-Sorgu -> Al -> Artır prompt -> Oluştur. Her RAG sistemi bu modeli takip eder. Üretim RAG sistemleri arasındaki farklar her adımın ayrıntılarında yatmaktadır: nasıl parçalayacağınız, nasıl yerleştireceğiniz, nasıl arayacağınız ve prompt'yi nasıl oluşturacağınız.
+Sorgu -> Al -> Artır prompt -> Oluştur. Her RAG sistemi bu modeli takip eder. Üretim RAG sistemleri arasındaki farklar her adımın ayrıntılarında gizlidir: nasıl parçalara ayırırsınız, nasıl yerleştirirsiniz, nasıl ararsınız ve prompt'yi nasıl oluşturursunuz.
 
-### RAG Neden Fine-Tuning'ı Geçiyor?
+### RAG Neden Fine-Tuning'yi Geçiyor?
 
 | endişe | Fine-tuning | RAG |
 |---------|------------|-----|
-| Maliyet | $1,000-$Eğitim çalıştırması başına 100.000+ | $0.01-$Sorgu başına 0,10 (embedding + LLM) |
+| Maliyet | $1,000-$100.000+ eğitim çalıştırması başına | Sorgu başına $0.01-$0,10 (embedding + LLM) |
 | Tazelik | Yeniden eğitilene kadar bayat | Dokümanların yeniden indekslenmesiyle dakikalar içinde güncellendi |
 | Denetlenebilirlik | Yanıt kaynağına kadar izlenemiyor | Tam olarak alınan pasajları gösterebilir |
-| Halüsinasyon | Hala özgürce hallucination üretiyor | Alınan belgelerde gerekçeli |
+| Halüsinasyon | Hala özgürce halüsinasyon görüyor | Alınan belgelerde gerekçeli |
 | Veri gizliliği | Ağırlıklara dönüştürülen eğitim verileri | Belgeler vektör mağazanızda kalır |
 
 Fine-tuning modelin ağırlıklarını kalıcı olarak değiştirir. RAG, modelin içeriğini geçici olarak değiştirir. Çoğu uygulama için istediğiniz şey geçici içeriktir.
 
-fine-tuning'nin kazandığı tek durum: modelin tek başına prompting yoluyla elde edilemeyecek belirli bir tarzı, üslubu veya akıl yürütme modelini benimsemesine ihtiyaç duyduğunuzda. Gerçek bilgiye erişim konusunda RAG her zaman kazanır.
+fine-tuning'nin kazandığı tek durum: modelin tek başına prompting ile elde edilemeyecek belirli bir stil, üslup veya akıl yürütme modelini benimsemesine ihtiyaç duyduğunuzda. Gerçek bilgiye erişim konusunda RAG her zaman kazanır.
 
-### Embedding Modeller
+### Embedding Modelleri
 
-Bir embedding modeli, metni yoğun bir vektöre dönüştürür. Benzer metinler, bu yüksek boyutlu uzayda birbirine yakın vektörler üretir. "Şifremi nasıl sıfırlarım?" ve "Şifremi değiştirmem gerekiyor", birkaç kelime paylaşmalarına rağmen neredeyse aynı vektörleri üretiyor. "Paspasın üzerine oturan kedi" çok farklı bir vektör üretir.
+embedding modeli, metni yoğun bir vektöre dönüştürür. Benzer metinler, bu yüksek boyutlu uzayda birbirine yakın vektörler üretir. "Şifremi nasıl sıfırlarım?" ve "Şifremi değiştirmem gerekiyor", birkaç kelime paylaşmalarına rağmen neredeyse aynı vektörleri üretiyor. "Paspasın üzerine oturan kedi" çok farklı bir vektör üretir.
 
-Yaygın embedding modelleri (2026 serisi - tam analiz için Aşama 5 · 22'ye bakın):
+Yaygın embedding modelleri (2026 serisi — tam analiz için Aşama 5 · 22'ye bakın):
 
 | Modeli | Boyutlar | Sağlayıcı | Notlar |
 |-------|-----------|----------|-------|
-| text-embedding-3-small | 1536 (Matryoshka) | OpenAI | Çoğu kullanım durumu için en iyi fiyat/performans |
-| text-embedding-3-large | 3072 (Matryoshka) | OpenAI | Daha yüksek doğruluk, 256/512/1024'e kısaltılabilir |
-| İkizler burcu Embedding 2 | 3072 (Matryoshka) | Google | En iyi MTEB alımı; 8K bağlam |
+| metin-embedding-3-küçük | 1536 (Matryoshka) | OpenAI | Çoğu kullanım durumu için en iyi fiyat/performans |
+| metin-embedding-3-büyük | 3072 (Matryoshka) | OpenAI | Daha yüksek doğruluk, 256/512/1024'e kısaltılabilir |
+| İkizler Embedding 2 | 3072 (Matryoshka) | Google | En iyi MTEB alımı; 8K bağlam |
 | yolculuk-4 | 1024/2048 (Matryoshka) | Yapay Zeka Yolculuğu | Alan adı çeşitleri (kod, finans, hukuk) |
 | Tutarlı yerleştirme-v4 | 1024 (Matryoshka) | Tutarlı | Güçlü çok dilli, 128K içerik |
 | BGE-M3 | 1024 (yoğun + seyrek + ColBERT) | BAAI (açık ağırlık) | Bir modelden üç görünüm |
 | Qwen3-Embedding | 4096 (Matryoshka) | Alibaba (açık ağırlık) | En iyi açık ağırlık alma puanı |
 | hepsi-MiniLM-L6-v2 | 384 | Açık ağırlık (Cümle Transformers) | Prototipleme temel çizgisi |
 
-Bu ders için TF-IDF'yi kullanarak kendi basit embedding'mızı oluşturuyoruz. Üretim sistemlerinin kullandığı şey TF-IDF olduğu için değil, kavramı somutlaştırdığı için: metin girer, bir vektör çıkar, benzer metinler benzer vektörler üretir.
+Bu ders için TF-IDF'yi kullanarak kendi basit embedding'mizi oluşturuyoruz. Üretim sistemlerinin kullandığı şey TF-IDF olduğu için değil, kavramı somutlaştırdığı için: metin girer, bir vektör çıkar, benzer metinler benzer vektörler üretir.
 
 ### Vektör Benzerliği
 
@@ -114,25 +114,25 @@ Kosinüs benzerliği standarttır. Farklı uzunluklardaki belgeleri büyüklüğ
 
 ### Parçalama Stratejileri
 
-Belgeler tek vektör olarak yerleştirilemeyecek kadar uzun. 50 sayfalık bir PDF, düzinelerce konu içerdiğinden berbat bir embedding üretebilir. Bunun yerine belgeleri parçalara böler ve her parçayı ayrı ayrı gömersiniz.
+Belgeler tek vektör olarak yerleştirilemeyecek kadar uzun. 50 sayfalık bir PDF, düzinelerce konu içerdiğinden berbat bir embedding oluşturabilir. Bunun yerine belgeleri parçalara böler ve her parçayı ayrı ayrı gömersiniz.
 
-**Sabit boyutlu parçalama**: her N token saniyede bir bölün. Basit ve öngörülebilir. 50-token örtüşmesi olan 512-token öbeği, öbek 1'in tokens 0-511 olduğu, öbek 2'nin tokens 462-973 olduğu anlamına gelir, vb. Örtüşme, bir cümleyi şanssız bir sınırda bölmemenizi sağlar.
+**Sabit boyutlu parçalama**: her N token'yi bölün. Basit ve öngörülebilir. 50-token örtüşmesine sahip bir 512-token yığını, yığın 1'in tokens 0-511 olduğu, yığın 2'nin tokens 462-973 olduğu vb. anlamına gelir. Örtüşme, bir cümleyi şanssız bir sınırda bölmemenizi sağlar.
 
 **Anlamsal parçalama**: doğal sınırlarda bölünme. Paragraflar, bölümler veya işaretleme başlıkları. Her parça tutarlı bir anlam birimidir. Uygulanması daha karmaşıktır ancak daha iyi erişim sağlar.
 
-**Özyinelemeli parçalama**: Önce en büyük sınırdan (bölüm başlıkları) bölmeye çalışın. Bölüm hala çok büyükse paragraf sınırlarından bölün. Paragraf hala çok büyükse cümle sınırlarından bölün. Bu, LangChain RecursiveCharacterTextSplitter yaklaşımıdır ve pratikte iyi çalışır.
+**Özyinelemeli parçalama**: Önce en büyük sınırdan (bölüm başlıkları) bölmeye çalışın. Bölüm hâlâ çok büyükse paragraf sınırlarından bölün. Paragraf hala çok büyükse cümle sınırlarından bölün. Bu, LangChain RecursiveCharacterTextSplitter yaklaşımıdır ve pratikte iyi çalışır.
 
 Parça boyutu insanların düşündüğünden daha önemlidir:
 
-- Çok küçük (64-128 tokens): her parçanın içeriği eksik. "Geçen çeyrekte %15 arttı", "onun" ne anlama geldiğini bilmeden hiçbir şey ifade etmez.
-- Çok büyük (2048+ tokens): her parça birden fazla konuyu kapsıyor ve alaka düzeyini azaltıyor. Gelir verilerini aradığınızda, %10'u gelirle ve %90'ı çalışan sayısıyla ilgili bir yığın elde edersiniz.
-- Tatlı nokta (256-512 tokens): kendi kendine yetecek kadar bağlam, alakalı olacak kadar odaklanmış.
+- Çok küçük (64-128 token): her parçanın içeriği eksik. "Geçen çeyrekte %15 arttı", "onun" ne anlama geldiğini bilmeden hiçbir şey ifade etmez.
+- Çok büyük (2048+ token): her parça birden fazla konuyu kapsıyor ve alaka düzeyini azaltıyor. Gelir verilerini aradığınızda, %10'u gelirle ve %90'ı çalışan sayısıyla ilgili bir yığın elde edersiniz.
+- Tatlı nokta (256-512 token): kendi kendine yetecek kadar bağlam, alakalı olacak kadar odaklanmış.
 
-Çoğu üretim RAG sistemi, 50-token örtüşmeli 256-512 token parça kullanır. Anthropic'in RAG yönergeleri bu aralığı önermektedir.
+Çoğu üretim RAG sistemi, 50-token örtüşmeyle 256-512 token parçaları kullanır. Anthropic'in RAG yönergeleri bu aralığı önermektedir.
 
-### Vector Databases
+### Vector Database'ler
 
-embedding'lara sahip olduğunuzda, bunları saklayacak ve arayacak bir yere ihtiyacınız vardır. Seçenekler:
+embedding'lere sahip olduğunuzda, bunları saklayacak ve arayacak bir yere ihtiyacınız vardır. Seçenekler:
 
 | Veritabanı | Tür | Şunun için en iyisi |
 |----------|------|----------|
@@ -143,7 +143,7 @@ embedding'lara sahip olduğunuzda, bunları saklayacak ve arayacak bir yere ihti
 | pgvektör | Postgres uzantısı | Zaten Postgres kullanıyor |
 | Qdrant | Açık kaynak DB | Yüksek performanslı, kendi kendine barındırılan |
 
-Bu ders için basit bir bellek içi vektör deposu oluşturacağız. Vektörleri bir listede saklar ve kaba kuvvet kosinüs benzerliği araması yapar. Bu, düz indeksli FAISS'e eşdeğerdir. Yavaşlamadan önce belki 100.000 vektöre kadar ölçeklenebilir. Üretim sistemleri, milisaniyeler içinde milyonlarca vektörü aramak için HNSW gibi yaklaşık en yakın komşu (ANN) algoritmalarını kullanır.
+Bu ders için basit bir bellek içi vektör deposu oluşturacağız. Vektörleri bir listede saklar ve kaba kuvvet kosinüs benzerliği araması yapar. Bu, düz indeksli FAISS'e eşdeğerdir. Yavaşlamadan önce belki 100.000 vektöre ölçeklenir. Üretim sistemleri, milisaniyeler içinde milyonlarca vektörü aramak için HNSW gibi yaklaşık en yakın komşu (ANN) algoritmalarını kullanır.
 
 ### Tam Boru Hattı
 
@@ -172,11 +172,11 @@ Dizin oluşturma aşaması belge başına bir kez (veya belgeler güncellendiği
 Çoğu üretim RAG sistemi şu parametreleri kullanır:
 
 - **k = 5 ila 10** sorgu başına alınan parçalar
-- **Yığın boyutu = 256 ila 512 tokens**, 50-token örtüşme ile
-- **Bağlam bütçesi**: Sorgu başına 2.500-5.000 tokens alınan içerik
-- **Toplam prompt**: ~8.000-16.000 tokens (sistem prompt + alınan parçalar + konuşma geçmişi + kullanıcı sorgusu)
-- **Embedding boyut**: 384-3072 modele bağlı olarak
-- **Dizine ekleme verimi**: API embeddings ile saniyede 100-1.000 belge
+- **Yığın boyutu = 256 ila 512 token**, 50-token örtüşmesiyle
+- **Bağlam bütçesi**: Sorgu başına 2.500-5.000 token alınan içerik
+- **Toplam prompt**: ~8.000-16.000 token (sistem prompt + alınan parçalar + konuşma geçmişi + kullanıcı sorgusu)
+- **Embedding boyutu**: 384-3072 modele bağlı olarak
+- **Dizine ekleme verimi**: API embedding'lerle saniyede 100-1.000 belge
 - **Sorgu gecikmesi**: Alma için 50-200 ms, oluşturma için 500-3000 ms
 
 ```figure
@@ -202,7 +202,7 @@ def chunk_text(text, chunk_size=200, overlap=50):
 
 ### Adım 2: TF-IDF Embedding'ler
 
-Basit bir embedding fonksiyonu oluşturuyoruz. TF-IDF (Term Frekansı-Ters Belge Frekansı) sinirsel bir embedding değildir, ancak metni, kelimenin önemini yakalayacak şekilde vektörlere dönüştürür. Bir belgede sık kullanılan kelimeler daha yüksek TF'ye neden olur. Tümcedeki nadir kelimelerin IDF'si daha yüksek olur. Çarpım, önemli, ayırt edici kelimelerin yüksek değerlere sahip olduğu bir vektör verir.
+Basit bir embedding fonksiyonu oluşturuyoruz. TF-IDF (Term Frekansı-Ters Belge Frekansı), sinirsel bir embedding değildir, ancak metni, kelimenin önemini yakalayacak şekilde vektörlere dönüştürür. Bir belgede sık kullanılan kelimeler daha yüksek TF'ye neden olur. Tümcedeki nadir kelimelerin IDF'si daha yüksek olur. Çarpım, önemli, ayırt edici kelimelerin yüksek değerlere sahip olduğu bir vektör verir.
 
 ```python
 import math
@@ -253,9 +253,9 @@ def search(query_embedding, stored_embeddings, top_k=5):
     return scores[:top_k]
 ```
 
-### Adım 4: Prompt İnşaat
+### Adım 4: Prompt İnşaatı
 
-RAG'daki "artırılmış" şeyin gerçekleştiği yer burasıdır. Alınan parçaları alın, bunları bir prompt olarak biçimlendirin ve LLM'tan sağlanan bağlama göre yanıt vermesini isteyin.
+RAG'daki "artırılmış" şeyin gerçekleştiği yer burasıdır. Alınan parçaları alın, bunları bir prompt olarak biçimlendirin ve Yüksek Lisans'tan sağlanan bağlama göre yanıt vermesini isteyin.
 
 ```python
 def build_rag_prompt(query, retrieved_chunks):
@@ -353,7 +353,7 @@ def generate(prompt):
     return response.choices[0].message.content
 ```
 
-Veya Anthropic ile:
+Veya Antropik ile:
 
 ```python
 import anthropic
@@ -369,9 +369,9 @@ def generate(prompt):
     return response.content[0].text
 ```
 
-Boru hattı aynı. embedding fonksiyonunu değiştirin. Oluşturma işlevini değiştirin. Alma mantığı, parçalama, prompt yapısı -- hangi modeli kullanırsanız kullanın hepsi aynıdır.
+Boru hattı aynı. embedding işlevini değiştirin. Oluşturma işlevini değiştirin. Alma mantığı, parçalama, prompt yapısı; kullandığınız modellerden bağımsız olarak hepsi aynıdır.
 
-Geniş ölçekte vektör depolaması için kaba kuvvet aramasını uygun bir vector database ile değiştirin:
+Ölçekli vektör depolama için kaba kuvvet aramasını uygun bir vector database ile değiştirin:
 
 ```python
 import chromadb
@@ -390,13 +390,13 @@ results = collection.query(
 )
 ```
 
-Chroma, embedding'yı dahili olarak işler (varsayılan olarak all-MiniLM-L6-v2'yi kullanır) ve vektörleri yerel bir veritabanında saklar. Aynı model, farklı tesisat.
+Chroma, embedding'yi dahili olarak işler (varsayılan olarak all-MiniLM-L6-v2'yi kullanır) ve vektörleri yerel bir veritabanında saklar. Aynı model, farklı tesisat.
 
 ## Gönderin
 
 Bu ders şunları üretir:
-- `outputs/prompt-rag-architect.md` -- belirli kullanım örneklerine yönelik RAG sistemleri tasarlamak için bir prompt
-- `outputs/skill-rag-pipeline.md` -- agent'lara RAG ardışık düzenlerini nasıl oluşturup hatalarını ayıklayacaklarını öğreten bir beceri
+- `outputs/prompt-rag-architect.md` -- belirli kullanım durumları için RAG sistemlerini tasarlamaya yönelik bir prompt
+- `outputs/skill-rag-pipeline.md` -- agent'lere RAG işlem hatlarının nasıl oluşturulacağını ve hata ayıklanacağını öğreten bir beceri
 
 ## Egzersizler
 
@@ -404,33 +404,33 @@ Bu ders şunları üretir:
 
 2. Parça boyutlarıyla denemeler yapın: aynı belge kümesinde 50, 100, 200 ve 500 kelimeyi deneyin. Her boyut için aynı 5 sorguyu çalıştırın ve kaç tanesinin ilk 3'te ilgili bir parçayı döndürdüğünü sayın. Geri alma kalitesinin zirve yaptığı en uygun noktayı bulun.
 
-3. Her bir parçaya meta veriler ekleyin (kaynak belge adı, parça konumu). LLM'nin kaynaklarını belirtmesi için prompt şablonunu kaynak ilişkilendirmesini içerecek şekilde değiştirin.
+3. Her bir parçaya meta veriler ekleyin (kaynak belge adı, parça konumu). LLM'nin kaynaklarından alıntı yapması için prompt şablonunu kaynak ilişkilendirmesini içerecek şekilde değiştirin.
 
 4. Basit bir değerlendirme uygulayın: 10 soru-cevap çifti verildiğinde, her soruyu RAG kanalından geçirin ve alınan parçaların yüzde kaçının cevabı içerdiğini ölçün. Bu, k'deki geri çağırma işlemidir.
 
-5. Konuşmaya duyarlı bir RAG hattı oluşturun: son 3 değişimin geçmişini tutun ve bunları alınan parçaların yanında prompt'ya ekleyin. "Peki ya kurumsal?" gibi takip sorularıyla test edin. Fiyat sorduktan sonra.
+5. Konuşmaya duyarlı bir RAG işlem hattı oluşturun: son 3 değişimin geçmişini tutun ve bunları, alınan parçaların yanı sıra prompt'ye ekleyin. "Peki ya kurumsal?" gibi takip sorularıyla test edin. Fiyat sorduktan sonra.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| RAG | "Belgelerinizi okuyan yapay zeka" | İlgili belgeleri alın, bunları prompt dosyasına yapıştırın ve bu belgelere dayalı bir yanıt oluşturun |
+| RAG | "Belgelerinizi okuyan yapay zeka" | İlgili belgeleri alın, prompt'ye yapıştırın ve bu belgelere dayalı bir yanıt oluşturun |
 | Embedding | "Metni sayılara dönüştür" | Benzer anlamların benzer vektörler ürettiği metnin yoğun bir vektör temsili |
 | Vector database | "Yapay zeka için arama motoru" | Vektörleri depolamak ve benzerliğe göre en yakın komşuları bulmak için optimize edilmiş bir veri deposu |
-| Parçalama | "Belgeleri parçalara ayırın" | Her birinin bağımsız olarak gömülebilmesi ve alınabilmesi için belgeleri daha küçük bölümlere (genellikle 256-512 tokens) bölmek |
+| Parçalama | "Belgeleri parçalara ayırın" | Her birinin bağımsız olarak gömülebilmesi ve alınabilmesi için belgeleri daha küçük bölümlere (genellikle 256-512 token) ayırma |
 | Kosinüs benzerliği | "İki vektör ne kadar benzer" | İki vektör arasındaki açının kosinüsü; 1 = aynı yön, 0 = dik, -1 = zıt |
-| En iyi k alımı | "En iyi eşleşmeleri alın" | En benzer k parçayı vektör deposundan sorguya döndürün |
+| En iyi k alma | "En iyi eşleşmeleri alın" | En benzer k parçayı vektör deposundan sorguya döndürün |
 | Context window | "LLM'nin ne kadar metni görebileceği" | LLM'nin tek bir istekte işleyebileceği maksimum token sayısı; alınan parçalar buna sığmalıdır |
 | Artırılmış nesil | "Verilen bağlamı kullanarak yanıtla" | Yalnızca eğitimli bilgiye dayanmak yerine, alınan belgeleri bağlam olarak kullanarak yanıt oluşturmak |
 | TF-IDF | "Kelime önemi puanlaması" | Dönem Sıklığı çarpı Ters Belge Sıklığı; kelimeleri bir bütünlük içinde ne kadar ayırt edici olduklarına göre ağırlıklandırır |
-| İndeksleme | "Dokümanlar arama için hazırlanıyor" | Sorgu zamanında aranabilmeleri için embedding belgeleri parçalama ve depolamadan oluşan çevrimdışı süreç |
+| İndeksleme | "Dokümanlar arama için hazırlanıyor" | Sorgu zamanında aranabilmesi için belgeleri embedding olarak parçalama ve depolamadan oluşan çevrimdışı süreç |
 
 ## Daha Fazla Okuma
 
 - Lewis ve diğerleri, "Bilgi Yoğun NLP Görevleri için Alma-Artırılmış Üretim" (2020) -- Facebook Yapay Zeka Araştırması'nın, al ve sonra oluştur modelini resmileştiren orijinal RAG makalesi
-- Anthropic'in RAG belgeleri (docs.anthropic.com) -- parça boyutları, prompt yapısı ve değerlendirme için pratik yönergeler
+- Anthropic'in RAG belgeleri (docs.anthropic.com) -- yığın boyutları, prompt yapısı ve değerlendirme için pratik yönergeler
 - Çam Kozalağı Öğrenme Merkezi, "RAG Nedir?" -- üretim hususlarıyla birlikte RAG boru hattının net görsel açıklamaları
 - Sentence-BERT: Reimers & Gurevych (2019) -- tamamı MiniLM embedding modellerinin arkasındaki makale, anlamsal benzerlik için çift kodlayıcıların nasıl eğitileceğini gösteriyor
-- [Karpukhin ve diğerleri, "Açık Alan Soru Yanıtlaması için Yoğun Geçiş Erişimi" (EMNLP 2020)](https://arxiv.org/abs/2004.04906) -- Yoğun iki kodlayıcılı erişimin açık alan QA'da BM25'i geride bıraktığını kanıtlayan DPR makalesi ve modern RAG alıcıları için modeli belirledi.
-- [LlamaIndex Yüksek Düzey Kavramları](https://docs.llamaindex.ai/en/stable/getting_started/concepts.html) -- RAG ardışık düzenleri oluştururken bilinmesi gereken ana kavramlar: veri yükleyiciler, düğüm ayrıştırıcılar, dizinler, alıcılar, yanıt sentezleyiciler.
+- [Karpukhin ve diğerleri, "Açık Alan Soru Cevaplama için Yoğun Geçiş Erişimi" (EMNLP 2020)](https://arxiv.org/abs/2004.04906) -- Yoğun çift kodlayıcı alımının açık alan QA'da BM25'i geride bıraktığını kanıtlayan DPR makalesi ve modern RAG alıcıları için modeli belirledi.
+- [LlamaIndex Yüksek Düzey Kavramlar](https://docs.llamaindex.ai/en/stable/getting_started/concepts.html) -- RAG işlem hatları oluştururken bilinmesi gereken ana kavramlar: veri yükleyiciler, düğüm ayrıştırıcılar, dizinler, alıcılar, yanıt sentezleyiciler.
 - [LangChain RAG öğreticisi](https://python.langchain.com/docs/tutorials/rag/) -- zıt tadın orkestratörü; aynı al ve sonra oluştur modelinin çalıştırılabilirler zinciri görünümü.

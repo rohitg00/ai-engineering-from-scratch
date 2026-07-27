@@ -20,7 +20,7 @@ Fortune 500'de 30 onaylı MCP sunucusu, 5000 geliştirici, uyumluluk ve denetim 
 
 Ağ geçidi modeli:
 
-1. Ağ geçidi, geliştiricilerin bağlandığı tek bir Streamable HTTP uç noktası olarak çalışır.
+1. Ağ geçidi, geliştiricilerin bağlandığı tek bir Akış Yapılabilir HTTP uç noktası olarak çalışır.
 2. Ağ geçidi, her arka uç MCP sunucusunun kimlik bilgilerini tutar.
 3. Her geliştirici isteğinin kimliği ağ geçidinin kendi OAuth'u aracılığıyla doğrulanır ve kapsamı belirlenir.
 4. Ağ geçidi, politikayı uygulayarak çağrıyı arka uç sunucusuna yönlendirir.

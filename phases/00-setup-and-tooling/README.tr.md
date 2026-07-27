@@ -1,5 +1,5 @@
 # Aşama 0: Kurulum ve Araçlar
 
-> Sonraki her şey için geliştirme ortamınızı hazırlayın.
+> Ortamınızı bundan sonra olacak her şeye hazırlayın.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

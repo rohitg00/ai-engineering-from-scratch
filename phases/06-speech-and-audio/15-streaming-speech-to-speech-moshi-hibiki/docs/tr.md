@@ -1,6 +1,6 @@
 # Konuşmadan Konuşmaya Akış — Moshi, Hibiki ve Tam Çift Yönlü Diyalog
 
-> 2024-2026 ses yapay zekasını yeniden tanımladı. Moshi, 200 ms gecikmeyle aynı anda dinleyen ve konuşan tek bir model sunuyor. Hibiki konuşmadan konuşmaya çeviriyi parça parça yapıyor. Her ikisi de Mimi codec token'leri üzerinde birleşik bir tam çift yönlü mimari için ASR → Yüksek Lisans → TTS hattını terk ediyor. Bu yeni referans tasarımıdır.
+> 2024-2026 ses yapay zekasını yeniden tanımladı. Moshi, 200 ms gecikmeyle aynı anda dinleyen ve konuşan tek bir model sunuyor. Hibiki konuşmadan konuşmaya çeviriyi parça parça yapıyor. Her ikisi de Mimi codec'i token üzerinde birleşik bir tam çift yönlü mimari için ASR → Yüksek Lisans → TTS hattını terk ediyor. Bu yeni referans tasarımıdır.
 
 **Tür:** Öğren
 **Diller:** Python
@@ -9,11 +9,11 @@
 
 ## Sorun
 
-Ders 11 + 12'den oluşturulan her ses agent, 300-500 ms civarında temel bir gecikme tabanına sahiptir: VAD tetiklemeleri, STT işlemleri, LLM nedenleri, TTS üretir. Her aşamanın kendi minimum gecikme süresi vardır. Ayarlayabilir ve paralelleştirebilirsiniz ancak boru hattı şekli sizi sınırlıyor.
+Ders 11 + 12'den oluşturulan her agent sesinin 300-500 ms civarında temel bir gecikme tabanı vardır: VAD tetiklemeleri, STT işlemleri, LLM nedenleri, TTS oluşturur. Her aşamanın kendi minimum gecikme süresi vardır. Ayarlayabilir ve paralelleştirebilirsiniz ancak boru hattı şekli sizi sınırlıyor.
 
 Moshi (Kyutai, 2024-2026) farklı bir soru soruyor: Peki ya boru hattı yoksa? Ya bir model, gerekli bir aşama yerine bir ara "iç monolog" olarak metinle birlikte sesi alıp doğrudan, sürekli olarak ses çıkışı verirse?
 
-Cevap **tam çift yönlü konuşmadan konuşmaya**. Teorik gecikme süresi 160 ms (80 ms Mimi kare + 80 ms akustik gecikme). Tek bir L4 GPU'da pratik gecikme süresi 200 ms. Bu, sınıfının en iyisi ardışık düzene dayalı ses agent'in başardığının yarısıdır.
+Cevap **tam çift yönlü konuşmadan konuşmaya**. Teorik gecikme süresi 160 ms (80 ms Mimi kare + 80 ms akustik gecikme). Tek bir L4 GPU'da pratik gecikme süresi 200 ms. Bu, sınıfının en iyisi ardışık düzene sahip ses agent'nin elde edebileceğinin yarısıdır.
 
 ## Konsept
 
@@ -35,11 +35,11 @@ Cevap **tam çift yönlü konuşmadan konuşmaya**. Teorik gecikme süresi 160 m
 
 Kullanıcı sesi, Moshi sesi, Moshi metni olmak üzere üç akışın tümü paralel olarak çalışır. Moshi kullanıcıyı konuşurken duyabiliyor; kullanıcı araya girdiğinde kendini kesebilir; ana ifadesini bozmadan arka kanal ("mhm") yapabilir.
 
-**Derinlik transformer.** Bir çerçeve içinde, 8 kod kitabı paralel olarak tahmin edilmez; kod kitapları arası bağımlılıkları vardır. Küçük bir 2 katmanlı "derinlik transformer" bunları 80 ms içinde sırayla tahmin eder. Bu, AR codec LM'leri için standart çarpanlara ayırmadır (ayrıca VALL-E, VibeVoice tarafından da kullanılır).
+**Derinlik transformer.** Bir çerçeve içinde, 8 kod kitabı paralel olarak tahmin edilmez; kod kitapları arası bağımlılıkları vardır. Küçük bir 2 katmanlı "derinlik transformer" bunları 80 ms içinde sırayla tahmin eder. Bu, AR codec LM'leri için standart çarpanlara ayırmadır (aynı zamanda VALL-E, VibeVoice tarafından da kullanılır).
 
 ### Monolog içi metin neden yardımcı olur?
 
-Açık metin olmadan modelin, akustik akışındaki dili örtük olarak modellemesi gerekir. Moshi'nin içgörüsü: onu sesin yanı sıra metin token'ler de yayınlamaya zorlayın. Metin akışı aslında Moshi'nin söylediklerinin transkripsiyonudur. Bu, anlamsal tutarlılığı artırır, dil modeli kafasını değiştirmeyi kolaylaştırır ve size ücretsiz olarak transkript sağlar.
+Açık metin olmadan modelin, dili akustik akışında örtülü olarak modellemesi gerekir. Moshi'nin içgörüsü: sesin yanı sıra token metinlerini de yaymaya zorlamak. Metin akışı aslında Moshi'nin söylediklerinin transkripsiyonudur. Bu, anlamsal tutarlılığı artırır, dil modeli kafasını değiştirmeyi kolaylaştırır ve size ücretsiz olarak transkript sağlar.
 
 ### Hibiki: konuşmadan konuşmaya çeviri akışı
 
@@ -109,12 +109,12 @@ Her iki yön de aynı anda çalışır. Python asyncio veya Rust vadeli işlemle
 
 ### Adım 3: eğitim hedefi (kavramsal)
 
-Her 80 ms'lik kare için `t`:
+Her 80 ms'lik çerçeve için `t`:
 
 - Giriş: `user_mimi[0..t]`, `moshi_mimi[0..t-1]`, `moshi_text[0..t-1]`
 - Tahmin: `moshi_text[t]`, ardından `moshi_mimi[t, codebook_0..7]`
 
-Metin sesten önce tahmin edilir (iç monolog); sesin transformer derinliği dahilinde kod kitabı sıralı olarak tahmin edilmesi.
+Metin sesten önce tahmin edilir (iç monolog); sesin transformer derinliği dahilinde kod kitabı sıralı olduğu tahmin edilir.
 
 ### Adım 4: Moshi'nin kazandığı ve kazanamadığı yerler
 
@@ -126,7 +126,7 @@ Moshi kazanır:
 
 Moshi kazanmıyor:
 
-- Tool calling (bunun için eğitilmediniz; ayrı bir Yüksek Lisans yoluna ihtiyacınız var).
+- Tool calling (bunun için eğitilmedi; ayrı bir Yüksek Lisans yoluna ihtiyacınız var).
 - Uzun muhakeme (Moshi, Claude/GPT-4 değil, 8B benzeri bir diyalog modelidir).
 - Niş konularda gerçek doğruluk.
 - Çoğu üretim işletmesi kullanım senaryosu (2026'da hala boru hatları kullanılıyor).
@@ -138,7 +138,7 @@ Moshi kazanmıyor:
 | En düşük gecikmeli sesli yardımcı | Moşi |
 | Canlı çeviri görüşmesi | Hibiki |
 | Sesli demo / araştırma | Moshi, CSM |
-| Kurumsal agent araçlarla | Boru Hattı (Ders 12), Moshi değil |
+| Araçlarla kurumsal agent | Boru Hattı (Ders 12), Moshi değil |
 | Bağlamda özel sesli TTS | Susam CSM |
 | Konuşmadan konuşmaya, herhangi bir dilde | GPT-4o Realtime veya Gemini 2.5 Live (ticari) |
 
@@ -151,20 +151,20 @@ Moshi kazanmıyor:
 
 ## Gönderin
 
-`outputs/skill-duplex-pipeline.md` olarak kaydet. Ses-agent iş yükü için ardışık düzen ve tam çift yönlü mimariyi mantıklı bir şekilde seçin.
+`outputs/skill-duplex-pipeline.md` olarak kaydedin. Sesli agent iş yükü için boru hattını ve tam çift yönlü mimariyi seçmek mantıklıdır.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py` komutunu çalıştırın. İki akış + iç monolog mimarisini sembolik olarak simüle eder.
+1. **Kolay.** `code/main.py`'yi çalıştırın. İki akış + iç monolog mimarisini sembolik olarak simüle eder.
 2. **Orta.** Moshi'yi HuggingFace'ten çekin, sunucuyu çalıştırın, bir konuşmayı test edin. Kullanıcı konuşmasının sonundan Moshi yanıtının başlangıcına kadar duvar saati gecikmesini ölçün.
-3. **Zor.** Ders 12 ardışık düzeninizi agent alın ve eşleşen 20 test ifadesinde P50 gecikmesi ile Moshi'yi karşılaştırın. Bir boru hattının mimari açıdan ne zaman kazanacağını yazın.
+3. **Zor.** Ders 12'deki agent ardışık düzenini alın ve 20 eşleşen test ifadesinde P50 gecikmesini Moshi ile karşılaştırın. Bir boru hattının mimari açıdan ne zaman kazanacağını yazın.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
 | Tam çift yönlü | Aynı anda duyun ve konuşun | Aynı modelde aynı anda etkin olan iki ses akışı. |
-| İç monolog | Modelin metin akışı | Moshi, ses çıkışının yanında token metinlerini yayar. |
+| İç monolog | Modelin metin akışı | Moshi, ses çıkışının yanı sıra token metinlerini de yayar. |
 | Derinlik transformer | Kod kitapları arası tahminci | 80 ms'lik bir çerçeve içinde 8 kod kitabını tahmin eden küçük transformer. |
 | Mimi | Kyutai'nin kodeği | 12,5 Hz × 8 kod kitapları; anlamsal+akustik; Moshi'ye güç veriyor. |
 | S2S Akışı | Ses → canlı ses | Parça parça çeviri/diyalog, ardışık düzen aşamaları yok. |
@@ -177,4 +177,4 @@ Moshi kazanmıyor:
 - [Susam (2025). Esrarengiz ses vadisini geçmek](https://www.sesame.com/research/crossing_the_uncanny_valley_of_voice) — CSM spesifikasyonu.
 - [Kyutai — Moshi repo](https://github.com/kyutai-labs/moshi) — kurulum + sunucu.
 - [OpenAI — Gerçek Zamanlı API](https://platform.openai.com/docs/guides/realtime) — kapalı ticari eş.
-- [Kyutai — Gecikmeli Akış Modellemesi](https://github.com/kyutai-labs/delayed-streams-modeling) — STT/TTS framework başlık altında.
+- [Kyutai — Gecikmeli Akış Modellemesi](https://github.com/kyutai-labs/delayed-streams-modeling) — STT/TTS framework kaputun altında.

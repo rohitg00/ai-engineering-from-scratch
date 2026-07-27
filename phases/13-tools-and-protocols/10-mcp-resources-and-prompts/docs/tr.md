@@ -20,7 +20,7 @@ Bir not uygulaması için saf bir MCP sunucusu her şeyi araç olarak ortaya ç�
 
 - Modelin bağlamdan faydalanabilecek her sorgu için `notes_read`'yi çağırıp çağırmayacağına karar vermesi gerekir.
 - Salt okunur içeriğe abone olunamaz veya ana bilgisayarın yan paneline akış gerçekleştirilemez.
-- İstemci kullanıcı arayüzleri (Claude Desktop'ın kaynak eki paneli, Cursor'in "Dosyayı dahil et" seçicisi) verileri yüzeye çıkaramaz.
+- İstemci kullanıcı arayüzleri (Claude Desktop'ın kaynak eki paneli, İmleç'in "Dosyayı dahil et" seçicisi) verileri yüzeye çıkaramaz.
 
 Doğru bölünme: verileri bir kaynak olarak açığa çıkarın, mutasyona uğrayan veya hesaplanan eylemleri araç olarak ortaya çıkarın, yeniden kullanılabilir çok adımlı iş akışlarını prompt'ler olarak ortaya çıkarın. Her ilkelin kendi kullanıcı deneyimi olanağı ve erişim modeli vardır.
 

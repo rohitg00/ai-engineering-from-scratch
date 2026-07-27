@@ -1,4 +1,4 @@
-# Yapılandırılmış Çıktı — JSON Schema, Pydantic, Zod, Kısıtlı Kod Çözme
+# Yapılandırılmış Çıktı — JSON Şeması, Pydantic, Zod, Kısıtlı Kod Çözme
 
 > "Modelden nazikçe JSON'u iade etmesini isteyin", sınır modellerde bile yüzde 5 ila 15 oranında başarısız olur. Yapılandırılmış çıktılar, kısıtlı kod çözme ile bu boşluğu kapatır: modelin, şemayı ihlal edecek bir token yayması kelimenin tam anlamıyla engellenir. OpenAI'nin katı modu, Anthropic'in şema tipi araç kullanımı, Gemini'nin `responseSchema`'si, Pydantic AI'nın `output_type`'si ve Zod'un `.parse`'si aynı fikrin beş yüzey formudur. Bu ders, öğrencilerin her üretim çıkarma ardışık düzeni için kullanacakları şema doğrulayıcıyı ve katı mod sözleşmesini oluşturur.
 
@@ -9,7 +9,7 @@
 
 ## Öğrenme Hedefleri
 
-- Doğru kısıtlamaları (enum, min/max, gerekli, model) kullanarak bir çıkarma hedefi için bir JSON Schema 2020-12 yazın.
+- Doğru kısıtlamaları (enum, min/max, gerekli, model) kullanarak bir çıkarma hedefi için bir JSON Şeması 2020-12 yazın.
 - Neden katı mod ve kısıtlı kod çözmenin "nesilden sonra doğrulama"dan farklı garantiler verdiğini açıklayın.
 - Üç hata modunu ayırt edin: ayrıştırma hatası, şema ihlali, model reddi.
 - Yazılı onarım ve yazılı reddetme işlemleriyle birlikte bir çıkarma hattı gönderin.
@@ -24,11 +24,11 @@ Bir satın alma siparişi e-postasını okuyan bir agent'nin, serbest metni `{cu
 
 **Üçüncü yaklaşım: kısıtlı kod çözme.** Sağlayıcı, kod çözme zamanında şemayı zorlar. Geçersiz token'ler örnekleme dağıtımının dışında maskelenir. Çıktının ayrıştırılması ve doğrulanması garanti edilir. Başarısızlık tek bir moda indirgenir: reddetme (model, girdinin şemaya uymadığına karar verir).
 
-Her 2026 sınır sağlayıcısı bir tür üçüncü yaklaşımı gönderir.
+Her 2026 sınır sağlayıcısı bir çeşit üçüncü yaklaşım gönderiyor.
 
 - **OpenAI.** Modelin reddedilmesi durumunda yanıtta `response_format: {type: "json_schema", strict: true}` artı `refusal`.
-- **Anthropic.** `tool_use` girişlerinde şema uygulaması; `stop_reason: "refusal"` bir şey değildir, ancak hiçbir araç çağrısı olmayan `end_turn` sinyaldir.
-- **Gemini.** `responseSchema` istek düzeyinde; 2026'da Gemini, seçilen türler için token düzeyindeki dilbilgisi kısıtlamalarını sunuyor.
+- **Antropik.** `tool_use` girişlerinde şema uygulaması; `stop_reason: "refusal"` bir şey değildir, ancak hiçbir araç çağrısı olmayan `end_turn` sinyaldir.
+- **İkizler.** `responseSchema` istek düzeyinde; 2026'da Gemini, seçilen türler için token düzeyinde dilbilgisi kısıtlamaları sunuyor.
 - **Pydantic AI.** `output_type=InvoiceModel`, `InvoiceModel`'ye yazılan yapılandırılmış bir `RunResult` yayar.
 - **Zod (TypeScript).** Sağlayıcı çıktısını bir Zod şemasına göre doğrulayan çalışma zamanı ayrıştırıcısı; OpenAI'nin `beta.chat.completions.parse`'si ile eşleşir.
 
@@ -36,7 +36,7 @@ Ortak konu: şemayı bir kez ilan edin, uçtan uca uygulayın.
 
 ## Konsept
 
-### JSON Schema 2020-12 — ortak dil
+### JSON Şeması 2020-12 — ortak dil
 
 Her sağlayıcı JSON Schema 2020-12'yi kabul eder. En çok kullandığınız yapılar:
 
@@ -52,7 +52,7 @@ OpenAI katı modu üç gereksinim ekler: her özellik `required`, her yerde `add
 
 ### Pydantic, Python bağlaması
 
-Pydantic v2, `model_json_schema()` aracılığıyla veri sınıfı şeklindeki modellerden JSON Schema oluşturur. Pydantic AI bunu tamamlar ve şunu yazarsınız:
+Pydantic v2, `model_json_schema()` aracılığıyla veri sınıfı şeklindeki modellerden JSON Şeması oluşturur. Pydantic AI bunu tamamlar ve şunu yazarsınız:
 
 ```python
 class Invoice(BaseModel):
@@ -61,7 +61,7 @@ class Invoice(BaseModel):
     total_usd: Decimal
 ```
 
-ve agent framework, şemayı uçta OpenAI katı moduna, Anthropic `input_schema` veya Gemini `responseSchema`'ye dönüştürür. Modelin çıktısı, yazılan bir `Invoice` örneği olarak geri gelir. Doğrulama hataları, yazılan hata yollarıyla `ValidationError`'yi yükseltir.
+ve agent framework, şemayı uçta OpenAI katı moduna, Antropik `input_schema` veya Gemini `responseSchema`'ye dönüştürür. Modelin çıktısı, yazılan bir `Invoice` örneği olarak geri gelir. Doğrulama hataları, yazılan hata yollarıyla `ValidationError`'yi yükseltir.
 
 ### Zod, TypeScript bağlaması
 
@@ -89,7 +89,7 @@ Ticari sağlayıcılar perde arkasında bunlardan birini seçiyor. 2026'nın son
 
 ### Stratejiyi yeniden dene
 
-Katı modun dışında olduğunuzda (Anthropic araç kullanımı, katı olmayan OpenAI, eski Gemini), kurtarma modeli şöyledir:
+Katı modun dışında olduğunuzda (Antropik araç kullanımı, katı olmayan OpenAI, eski Gemini), kurtarma modeli şöyledir:
 
 ```
 generate -> parse -> validate -> if fail, inject error and retry, max 3x
@@ -103,7 +103,7 @@ Kısıtlı kod çözme küçük modellerde çalışır. Dilbilgisi uygulamasına
 
 ## Kullan onu
 
-`code/main.py`, stdlib'de minimum bir JSON Schema 2020-12 doğrulayıcı sunar (türler, gerekli, numaralandırma, min/maks, desen, öğeler, ekÖzellikler). Bir `Invoice` şemasını sarar ve doğrulayıcı aracılığıyla sahte bir LLM çıktısı çalıştırarak ayrıştırma hatasını, şema ihlalini ve ret yollarını gösterir. Sahte çıktıyı herhangi bir sağlayıcının üretimdeki gerçek tepkisiyle değiştirin.
+`code/main.py`, stdlib'de minimum bir JSON Şeması 2020-12 doğrulayıcı sunar (türler, gerekli, numaralandırma, min/maks, desen, öğeler, ekÖzellikler). Bir `Invoice` şemasını sarar ve doğrulayıcı aracılığıyla sahte bir LLM çıktısı çalıştırarak ayrıştırma hatasını, şema ihlalini ve ret yollarını gösterir. Sahte çıktıyı herhangi bir sağlayıcının üretimdeki gerçek tepkisiyle değiştirin.
 
 Neye bakmalı:
 
@@ -113,7 +113,7 @@ Neye bakmalı:
 
 ## Gönderin
 
-Bu ders `outputs/skill-structured-output-designer.md`'yi üretir. Serbest metin çıkarma hedefi (faturalar, destek biletleri, özgeçmişler vb.) göz önüne alındığında, beceri, katı modla uyumlu bir JSON Schema 2020-12 ve yazılan ret ve yeniden deneme işlemlerinin saplandığı şekilde onu yansıtan bir Pydantic modeli üretir.
+Bu ders `outputs/skill-structured-output-designer.md`'yi üretir. Serbest metin çıkarma hedefi (faturalar, destek biletleri, özgeçmişler vb.) göz önüne alındığında, beceri, katı modla uyumlu bir JSON Şeması 2020-12 ve yazılan ret ve yeniden deneme işlemlerinin saplandığı şekilde onu yansıtan bir Pydantic modeli üretir.
 
 ## Egzersizler
 
@@ -125,20 +125,20 @@ Bu ders `outputs/skill-structured-output-designer.md`'yi üretir. Serbest metin 
 
 4. Reddetme oranlarını ölçün. Çıkarılamaması gereken on girdi oluşturun (bir şarkı sözü, bir matematik kanıtı, boş bir e-posta) ve bunları katı modda gerçek bir sağlayıcı aracılığıyla çalıştırın. Reddedilenleri ve halüsinasyonlu çıktıları sayın. Bu, reddedilmeye duyarlı yeniden denemeler için temel gerçeğinizdir.
 
-5. OpenAI'nin yapılandırılmış çıktı kılavuzunu yukarıdan aşağıya okuyun. Düz JSON Schemanın izin verdiği katı modda açıkça yasakladığı yapıyı tanımlayın. Daha sonra, yasak yapıyı gereksiz yere kullanan bir şema tasarlayın ve onu tam uyumlu olacak şekilde yeniden düzenleyin.
+5. OpenAI'nin yapılandırılmış çıktı kılavuzunu yukarıdan aşağıya okuyun. Düz JSON Şemasının izin verdiği katı modda açıkça yasakladığı yapıyı tanımlayın. Daha sonra, yasak yapıyı gereksiz yere kullanan bir şema tasarlayın ve onu tam uyumlu olacak şekilde yeniden düzenleyin.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| JSON Schema 2020-12 | "Şema özellikleri" | IETF taslağı şema lehçesi her modern sağlayıcının konuştuğu dildir |
+| JSON Şeması 2020-12 | "Şema özellikleri" | IETF taslağı şema lehçesi her modern sağlayıcının konuştuğu dildir |
 | Katı mod | "Garantili şema" | Kısıtlı kod çözme yoluyla şemayı zorlayan OpenAI bayrağı |
 | Kısıtlı kod çözme | "Logit maskeleme" | Geçersiz sonraki token'leri maskeleyen kod çözme zamanı uygulaması |
 | Reddetme | "Model reddediliyor" | Giriş şemaya sığmadığında yazılan sonuç |
 | Ayrıştırma hatası | "Geçersiz JSON" | Çıktı JSON olarak ayrıştırılmadı; katı koşullar altında imkansız |
 | Şema ihlali | "Yanlış şekil" | Ayrıştırılmış ancak ihlal edilen türler / gerekli / numaralandırma / aralık |
 | `additionalProperties: false` | "Ekstralara izin verilmez" | Bilinmeyen alanları yasaklar; OpenAI'de gerekli katı |
-| Pydantic TabanModeli | "Yazılan çıktı" | JSON Schemanı yayınlayan ve doğrulayan Python sınıfı |
+| Pydantic TabanModeli | "Yazılan çıktı" | JSON Şemasını yayınlayan ve doğrulayan Python sınıfı |
 | Zod şeması | "TypeScript çıktı türü" | Sağlayıcı çıktı doğrulaması için TS çalışma zamanı şeması |
 | Dilbilgisi yaptırımı | "Açık ağırlıklar kısıtlı kod çözme" | Ana hatlarda/kılavuzda olduğu gibi FSM tabanlı logit maskeleme |
 

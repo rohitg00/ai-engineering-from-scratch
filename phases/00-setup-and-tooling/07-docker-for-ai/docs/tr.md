@@ -10,9 +10,9 @@
 ## Öğrenme Hedefleri
 
 - Docker dosyasından CUDA, PyTorch ve AI kitaplıklarıyla GPU özellikli bir Docker görüntüsü oluşturun
-- Kapsayıcı yeniden oluşturma işlemleri genelinde modelleri, dataset'leri ve kodları kalıcı kılmak için ana bilgisayar dizinlerini birimler halinde bağlayın
+- Modellerin, dataset'lerin ve kapsayıcı yeniden oluşturma işlemlerindeki kodun kalıcı olması için ana bilgisayar dizinlerini birimler halinde bağlayın
 - Kapların içindeki GPU'ları açığa çıkarmak için NVIDIA Container Toolkit'i yapılandırın
-- Docker Compose'u kullanarak çok hizmetli yapay zeka uygulamalarını (inference sunucu + vector database) düzenleyin
+- Docker Compose'u kullanarak çoklu hizmet yapay zeka uygulamalarını (inference sunucu + vector database) düzenleyin
 
 ## Sorun
 
@@ -41,11 +41,11 @@ graph TD
 
 ### Yapay zeka projeleri neden çoğu kişiden daha fazla Docker'a ihtiyaç duyuyor?
 
-1. **GPU sürücüleri hassastır.** CUDA 12.4 kodu CUDA 11.8'de çalışmaz. Docker, ana GPU sürücüsünü NVIDIA Container Toolkit aracılığıyla paylaşırken konteynerin içindeki CUDA araç kitini izole eder.
+1. **GPU sürücüleri hassastır.** CUDA 12.4 kodu CUDA 11.8'de çalışmaz. Docker, ana GPU sürücüsünü NVIDIA Container Toolkit aracılığıyla paylaşırken, konteynerin içindeki CUDA araç kitini izole eder.
 
 2. **Model ağırlıkları büyüktür.** 7B parametre modeli, fp16'da 14 GB'dir. Her yeniden oluşturduğunuzda yeniden indirmek istemezsiniz. Docker birimleri, ana bilgisayardan bir modeller dizini bağlamanıza olanak tanır.
 
-3. **Çok hizmetli mimariler yaygındır.** Gerçek bir yapay zeka uygulaması yalnızca bir Python betiği değildir. Bu bir inference sunucusu, RAG için bir vector database, belki bir web ön ucudur. Docker Compose bunların hepsini tek bir komutla düzenler.
+3. **Çoklu hizmet mimarileri yaygındır.** Gerçek bir yapay zeka uygulaması yalnızca bir Python betiği değildir. Bu bir inference sunucusu, RAG için bir vector database, belki bir web ön ucudur. Docker Compose bunların hepsini tek bir komutla düzenler.
 
 ### Anahtar kelimeler
 
@@ -88,7 +88,7 @@ sudo usermod -aG docker $USER
 # Log out and back in for group change to take effect
 ```
 
-Doğrulamak:
+Doğrulayın:
 
 ```bash
 docker --version
@@ -148,7 +148,7 @@ python:3.12-slim
 
 ### Adım 4: Yapay zeka geliştirme için bir Docker dosyası yazın
 
-İşte `code/Dockerfile` içindeki Docker dosyası. İçinden geçin:
+İşte `code/Dockerfile`'deki Docker dosyası. İçinden geçin:
 
 ```dockerfile
 FROM nvidia/cuda:12.4.1-devel-ubuntu22.04
@@ -304,7 +304,7 @@ cd phases/00-setup-and-tooling/07-docker-for-ai/code
 docker compose up -d
 ```
 
-Artık AI geliştirici kapsayıcınız hizmet adına göre `http://qdrant:6333` adresindeki vector database'ye ulaşabilir. Docker Compose otomatik olarak paylaşılan bir ağ oluşturur.
+Artık AI geliştirici konteyneriniz hizmet adına göre `http://qdrant:6333` adresindeki vector database'ye erişebilir. Docker Compose otomatik olarak paylaşılan bir ağ oluşturur.
 
 Bağlantıyı AI kapsayıcısının içinden test edin:
 
@@ -353,7 +353,7 @@ docker logs -f <container_id>
 
 Artık tekrarlanabilir bir yapay zeka geliştirme ortamınız var. Bu kursun geri kalanı için:
 
-- Geliştirme ortamınızı başlatmak için `docker compose up`'yi ve birlikte vector database'yi kullanın
+- Geliştirme ortamınızı ve vector database'yi birlikte başlatmak için `docker compose up` kullanın
 - Yeniden oluşturmalar arasında hiçbir şeyin kaybolmaması için kodunuzu, modellerinizi ve verilerinizi birimler halinde bağlayın
 - Bir ders yeni bir Python paketi gerektirdiğinde onu Dockerfile'a ekleyin ve yeniden oluşturun
 - Docker dosyanızı ekip arkadaşlarınızla paylaşın. Aynı ortamı elde ediyorlar.
@@ -364,10 +364,10 @@ Artık tekrarlanabilir bir yapay zeka geliştirme ortamınız var. Bu kursun ger
 
 ## Egzersizler
 
-1. Dockerfile'ı oluşturun ve konteynerin içinde `python -c "import torch; print(torch.__version__)"` komutunu çalıştırın
-2. Docker-compose yığınını başlatın ve Qdrant'a `http://qdrant:6333/collections` konumundaki AI kapsayıcısından erişilebildiğini doğrulayın.
-3. Dockerfile'a `flask` ekleyin, yeniden oluşturun ve 5000 numaralı bağlantı noktasında basit bir API sunucusu çalıştırın. Bağlantı noktasını `-p 5000:5000` ile eşleyin
-4. `docker images` ile görüntü boyutunu ölçün. Temel görüntüyü `devel` yerine `runtime` olarak değiştirmeyi deneyin ve boyutları karşılaştırın
+1. Dockerfile'ı oluşturun ve konteynerin içinde `python -c "import torch; print(torch.__version__)"`'yi çalıştırın
+2. Docker-compose yığınını başlatın ve Qdrant'a `http://qdrant:6333/collections` adresindeki AI kapsayıcısından erişilebildiğini doğrulayın.
+3. `flask`'yi Dockerfile'a ekleyin, yeniden oluşturun ve 5000 numaralı bağlantı noktasında basit bir API sunucusu çalıştırın. Bağlantı noktasını `-p 5000:5000` ile eşleyin
+4. Görüntü boyutunu `docker images` ile ölçün. Temel görüntüyü `devel`'den `runtime`'ye değiştirmeyi deneyin ve boyutları karşılaştırın
 
 ## Anahtar Terimler
 
@@ -375,6 +375,6 @@ Artık tekrarlanabilir bir yapay zeka geliştirme ortamınız var. Bu kursun ger
 |------|----------------|----------------------|
 | Konteyner | "Hafif VM" | Kendi dosya sistemi ve ağıyla ana bilgisayar çekirdeğini kullanan yalıtılmış bir süreç |
 | Görüntü katmanı | "Önbelleğe alınmış adım" | Her Dockerfile talimatı bir katman oluşturur. Değiştirilmemiş katmanlar önbelleğe alınır, bu nedenle yeniden oluşturma işlemleri hızlıdır. |
-| NVIDIA Konteyner Araç Takımı | "Docker'da GPU" | Ana GPU'ları `--gpus` bayrağı aracılığıyla kapsayıcılara gösteren bir çalışma zamanı kancası |
+| NVIDIA Konteyner Araç Takımı | "Docker'da GPU" | `--gpus` işareti aracılığıyla ana bilgisayar GPU'larını kapsayıcılara gösteren bir çalışma zamanı kancası |
 | Cilt montajı | "Paylaşılan klasör" | Ana bilgisayardaki kapsayıcıya eşlenen bir dizin. Konteyner durduktan sonra değişiklikler devam eder. |
 | Temel resim | "Başlangıç ​​noktası" | Dockerfile'ınızın üzerinde oluşturduğu `FROM` görüntüsü. Neyin önceden yüklendiğini belirler. |

@@ -137,6 +137,6 @@ Bu ders `outputs/skill-mcp-threat-model.md`'yi üretir. Bir MCP deployment veril
 
 - [Invariant Labs — MCP güvenliği: alet zehirlenmesi saldırıları](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) — standart alet zehirlenmesi yazısı
 - [arXiv 2603.22489](https://arxiv.org/abs/2603.22489) — saldırı başarısını ve savunma açıklarını ölçen akademik çalışma
-- [Ünite 42 — Model Context Protocol saldırı vektörleri](https://unit42.paloaltonetworks.com/model-context-protocol-attack-vectors/) — yedi sınıflı saldırı taksonomisi
+- [Ünite 42 — Model Bağlam Protokolü saldırı vektörleri](https://unit42.paloaltonetworks.com/model-context-protocol-attack-vectors/) — yedi sınıflı saldırı taksonomisi
 - [Microsoft — MCP'de dolaylı prompt enjeksiyonuna karşı koruma](https://developer.microsoft.com/blog/protecting-against-indirect-injection-attacks-mcp) — MELON ve müttefik savunmalar
 - [Simon Willison — MCP prompt enjeksiyon yazısı](https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/) — Endişeyi popüler hale getiren Nisan 2025 tarihli önemli gönderi

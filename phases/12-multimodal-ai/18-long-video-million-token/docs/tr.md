@@ -1,24 +1,24 @@
 # Milyon-Token Bağlamında Uzun Video Anlaması
 
-> 24 FPS'de, yama uygulanmış ve yerleştirilmiş 1 saatlik bir 4K video, yaklaşık 60 milyon tokens üretir. 2 saatlik bir podcast bölümünün yazıya geçirilmesi 30.000 tokensn'dir. Tam bir Blu-ray uzun metrajlı film, agresif havuzlamayla sıkıştırılmış olsa bile yüzbinlerce token'dir. Google'ın Gemini 1.5'i (Mart 2024) bu dönemi 10 milyonluktoken bağlamla açtı ve saatler süren videolarla samanlıkta iğne gibi güvenilir bir geri çağırma işlemi gerçekleştirdi. LWM (Liu ve diğerleri, Şubat 2024), halka dikkatin ölçeklendirme yolunu gösterdi. LongVILA ve Video-XL, beslemeyi daha da ölçeklendirdi. VideoAgent, agentic alımı için ham içeriği değiştirdi. Her yaklaşım, bilgi işlem, geri çağırma ve mühendislik karmaşıklığı konusunda farklı bir ödünleşimdir. Bu ders onları yan yana okuyor.
+> Yamalı ve gömülü, 24 FPS'de 1 saatlik 4K video yaklaşık 60 milyon token üretir. Kopyalanan 2 saatlik bir podcast bölümü 30.000 token'dir. Tam bir Blu-ray uzun metrajlı film, agresif havuzlamayla sıkıştırılmış olsa bile yüzbinlerce token'den oluşur. Google'ın Gemini 1.5'i (Mart 2024), bu dönemi 10 milyonluk token bağlamıyla açtı ve saatler süren videolarla samanlıkta iğne gibi güvenilir bir geri çağırma işlemi gerçekleştirdi. LWM (Liu ve diğerleri, Şubat 2024), halka dikkatin ölçeklendirme yolunu gösterdi. LongVILA ve Video-XL, beslemeyi daha da ölçeklendirdi. VideoAgent, agentic alımı için ham bağlamı değiştirdi. Her yaklaşım, bilgi işlem, geri çağırma ve mühendislik karmaşıklığı konusunda farklı bir ödünleşimdir. Bu ders onları yan yana okuyor.
 
 **Tür:** Yapım
-**Diller:** Python (stdlib, samanlıkta iğne simülatörü + agentic-alma yönlendiricisi)
-**Önkoşullar:** Aşama 12 · 17 (video geçici tokens)
+**Diller:** Python (stdlib, samanlıkta iğne simülatörü + agentic alma yönlendiricisi)
+**Önkoşullar:** Aşama 12 · 17 (zamansal video token'ler)
 **Süre:** ~180 dakika
 
 ## Öğrenme Hedefleri
 
-- Değişken FPS ve havuzlamada uzun biçimli video için toplam görsel-token sayısını hesaplayın.
+- Değişken FPS ve havuzlamada uzun biçimli video için toplam görsel-token sayımlarını hesaplayın.
 - Üç ölçeklendirme yolunu açıklayın: kaba bağlam (Gemini 1.5), dikkat çekme (LWM), token sıkıştırma (LongVILA / Video-XL).
-- Doğruluk ve gecikme açısından ham bağlam video VLM'leri ile agentic-geri alma video VLM'lerini (VideoAgent) karşılaştırın.
+- Ham bağlam video VLM'leri ile agentic erişim video VLM'lerini (VideoAgent) doğruluk ve gecikme açısından karşılaştırın.
 - 30 dakikalık bir video için samanlıkta iğne testi tasarlayın ve belirli bir dakikada hatırlamayı ölçün.
 
 ## Sorun
 
-384 native resolutionte Qwen2.5-VL boyutlu yamalardan oluşan tek bir kare ~729 tokens'dir. 3x3 havuzlamada bu, kare başına 81 tokens demektir. 1 FPS'de 30 dakikalık bir klip = 1800 kare = 145.800 tokens. 2025'e kadar açık VLM'lerle yapılabilir, sıkı. 2 FPS'de, 291.600 tokens — yalnızca en büyük bağlamlar uygundur.
+384 yerel çözünürlükte Qwen2.5-VL boyutlu yamalardan oluşan tek bir kare ~729 token'dir. 3x3 havuzlamada bu, kare başına 81 token demektir. 1 FPS'de 30 dakikalık bir klip = 1800 kare = 145.800 token. 2025'e kadar açık VLM'lerle yapılabilir, sıkı. 2 FPS'de 291.600 token — yalnızca en büyük bağlamlar uygundur.
 
-1 FPS'de 2 saatlik bir film 583k tokens'dir. Çoğu 2026 açık modelin ötesinde; Gemini 2.5 Pro veya daha agresif bir şekilde havuzlamayı gerektirir.
+1 FPS'de 2 saatlik bir film 583 bin token'dir. Çoğu 2026 açık modelin ötesinde; Gemini 2.5 Pro veya daha agresif havuzlama gerektirir.
 
 Üç ölçeklendirme yolu ortaya çıktı.
 
@@ -26,9 +26,9 @@
 
 ### Yol 1: Kaba bağlam (Gemini 1.5, Claude Opus)
 
-Donanımı soruna atın. İçeriği milyonlarca token'ye ölçeklendirin, her şeyi tek bir ileri geçişte işleyin.
+Donanımı soruna atın. Bağlamı milyonlarca token'ye ölçeklendirin, her şeyi tek bir ileri geçişte işleyin.
 
-Gemini 1.5 Pro, 1 milyon tokens ile piyasaya sürüldü; Gemini 1.5 Ultra'dan 10M'ye; 2026'daki Gemini 2.5 Pro, güvenilir bir şekilde saatlerce video çekiyor. Makale (arXiv:2403.05530) samanlıktaki iğnenin hatırlanma oranının %99,7 ile ~9,5 milyon tokens arasında olduğunu belgeliyor.
+Gemini 1.5 Pro, 1 milyon token ile piyasaya sürüldü; Gemini 1.5 Ultra'dan 10M'ye; 2026'daki Gemini 2.5 Pro, güvenilir bir şekilde saatlerce video çekiyor. Makale (arXiv:2403.05530), samanlıkta iğne bulma oranının %99,7 ile ~9,5 milyon token arasında olduğunu belgeliyor.
 
 Mühendislik: Bellek hiyerarşisine (yerel + genel + seyrek) ve uzun bağlam verimliliği için MoE uzman yönlendirmesine sahip özel bir dikkat uygulaması. Tüm ayrıntılarıyla yayınlanmadı. Açık kaynak değil.
 
@@ -38,21 +38,21 @@ Halka dikkati, uzun dizileri, her aygıtın bir parçayı tuttuğu bir "halka" i
 
 LWM (Liu ve diğerleri, 2024) 1M-token bağlam modelini bu şekilde eğitmiştir. Eğitim hesaplaması ikinci dereceden değil bağlamla doğrusal olarak ölçeklenir; dikkat üzerindeki ikinci dereceden vuruş halkanın cihazları genelinde amortismana tabi tutulur.
 
-LongVILA (arXiv:2408.10188) modeli VLM'lere uyarladı. Kare başına 192 tokens'de 1400 kare videolar = 268 bin bağlam, 8 yönlü paralellik üzerinden halka dikkati ile eğitilmiş.
+LongVILA (arXiv:2408.10188) modeli VLM'lere uyarladı. Kare başına 192 token'de 1400 kare videolar = 268k bağlam, 8 yönlü paralellik boyunca halka dikkatiyle eğitilmiş.
 
 ### Yol 3: Token sıkıştırma (Video-XL, LongVA)
 
 Kaba bağlamdan daha ucuz: LLM diziyi görmeden önce agresif bir şekilde sıkıştırın.
 
-Video-XL (arXiv:2409.14485) görsel bir özet token kullanır: N kareden oluşan her bir klip, N'ye katılan tek bir "özet" token üretir. inference noktasında, LLM klip başına bir özet token görür ve bağlamı büyük ölçüde daraltır.
+Video-XL (arXiv:2409.14485), token görsel özetini kullanır: N çerçeveden oluşan her klip, N üzerinden katılan tek bir "özet" token üretir. inference'de LLM, klip başına bir token özetini görür ve bağlamı büyük ölçüde daraltır.
 
 LongVA, "uzun içerik aktarımı" tekniğiyle LLM içeriğini 200k'den 2M'ye genişletiyor. Uzun bağlamlı metin üzerinde eğitim alın, paylaşılan gösterim aracılığıyla uzun bağlamlı videoya aktarın.
 
-Token sıkıştırma, ölçeklenebilirlik için belirli zaman damgalarında geri çağırmayı değiştirir. Model genel olarak ne olduğunu biliyor ancak bazen tam kareleri kaçırıyor.
+Token sıkıştırma, ölçeklenebilirlik için belirli zaman damgalarında geri çağırmayı ortadan kaldırır. Model genel olarak ne olduğunu biliyor ancak bazen tam kareleri kaçırıyor.
 
 ### Yol 4: Agentic alımı (VideoAgent)
 
-Videonun tamamını Yüksek Lisans'a beslemeyin. Bunun yerine, videoyu bir veritabanı olarak değerlendirin ve onu sorgulamak için bir LLM kullanın.
+Videonun tamamını Yüksek Lisans'a beslemeyin. Bunun yerine videoyu bir veritabanı olarak değerlendirin ve onu sorgulamak için bir Yüksek Lisans kullanın.
 
 VideoAgent (arXiv:2403.10517):
 
@@ -72,7 +72,7 @@ Metrik: Video uzunluğu ve işaretçi konumu boyunca @k'yi geri çağır.
 
 Gemini 2.5 Pro, 90 dakikaya kadar videolarda %99'dan fazla hatırlama puanı elde ediyor. Açık 72B modelleri (Qwen2.5-VL-72B, InternVL3-78B) 30 dakikada ~%85-90 puan alır ve 60'ı geçer.
 
-VideoAgent, ham bağlam modellerini 2+ saatte eşleştirebilir veya yenebilir, çünkü araç iyiyse geri alma iğneyi vurur.
+VideoAgent, ham bağlam modellerini 2 saatten fazla sürede eşleştirebilir veya yenebilir çünkü araç iyiyse geri alma iğneyi vurur.
 
 ### Hangi yolu seçmeli
 
@@ -80,7 +80,7 @@ Sınır doğruluğunda 15 dakikalık bir klip için: açık 72B + yerel bağlam 
 
 30 dakikadan 1 saate kadar içerik için: Açık içerik için LongVILA veya Video-XL; Gemini 2.5 Pro kapalı. Kalite çıtası önemlidir; sınırlar kapanır.
 
-2 saatten fazla içerik için: VideoAgent veya benzer erişim kalıpları. Alternatif olarak, daha küçük parçalara özetleyin ve hiyerarşik özetleri besleyin.
+2 saatten fazla içerik için: VideoAgent veya benzer alma modelleri. Alternatif olarak, daha küçük parçalara özetleyin ve hiyerarşik özetleri besleyin.
 
 ### 2026 üretim modeli
 
@@ -96,19 +96,19 @@ Bu, küresel anlayış için kaba bağlamı ve yerel ayrıntıya erişim için b
 
 `code/main.py`:
 
-- Değişken FPS + havuzlamada 1 dakikadan 3 saate kadar videolar için token bütçeyi hesaplar.
+- Değişen FPS + havuzlama koşullarında 1 dakikadan 3 saate kadar olan videolar için token bütçelerini hesaplar.
 - Samanlıktaki iğne koşusunu simüle eder: rastgele bir zaman damgasına bir işaretleyici enjekte edin, bir soru sorun, puan toplayın.
-- Downstreamlı bir VLM'ye beslenmek üzere belirli klipleri seçen bir agentic-geri alma yönlendirici simülatörü içerir.
+- Aşağı akışlı bir VLM'ye beslenmek üzere belirli klipleri seçen bir agentic alma yönlendirici simülatörü içerir.
 
 Bütçe tablosunu çalıştırın ve ölçek boşluğunu hissedin.
 
 ## Gönderin
 
-Bu ders `outputs/skill-long-video-strategy-planner.md` üretir. Video süresi ve sorgu karmaşıklığı göz önüne alındığında, kaba bağlam, sıkıştırma ve agentic alımı arasında seçim yapar ve gecikme + kalite beklentilerini hesaplar.
+Bu ders `outputs/skill-long-video-strategy-planner.md`'yi üretir. Video süresi ve sorgu karmaşıklığı göz önüne alındığında, kaba bağlam, sıkıştırma ve agentic alımı arasında seçim yapar ve gecikme + kalite beklentilerini hesaplar.
 
 ## Egzersizler
 
-1. 1 FPS'de, kare başına 81 tokensn'de 45 dakikalık bir ders. Toplam tokens? Hangi modellerin bağlamlarına uyuyor?
+1. 1 FPS'de, kare başına 81 token'de 45 dakikalık bir ders. Toplam token? Hangi modellerin bağlamlarına uyuyor?
 
 2. Samanlıkta iğne testi tasarlayın: işaretçiyi hangi dakikada enjekte ediyorsunuz ve sorgu formatı tam olarak nedir?
 
@@ -122,16 +122,16 @@ Bu ders `outputs/skill-long-video-strategy-planner.md` üretir. Video süresi ve
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| Kaba bağlam | "Sadece tokens daha" | Yüksek Lisans bağlamını milyonlarca token'ye ölçeklendirin; her şeyi tek geçişte işleyin |
+| Kaba bağlam | "Sadece daha fazla token" | LLM içeriğini milyonlarca token'ye ölçeklendirin; her şeyi tek geçişte işleyin |
 | Dikkat | "LWM tarzı paralel" | Her cihazın bir parçayı tuttuğu ve döndüğü dağıtılmış dikkat modeli |
-| Token sıkıştırma | "Özet token'ler" | LLM'den önce öğrenilmiş bir sıkıştırıcı aracılığıyla klip başına token saniyeyi azaltın |
+| Token sıkıştırma | "token'lerin Özeti" | LLM'den önce öğrenilmiş bir kompresör aracılığıyla klip başına token'leri azaltın |
 | Samanlıkta iğne | "NIH testi" | Rastgele bir noktaya benzersiz bir işaretleyici ekleyin ve modelden bunu test zamanında geri çağırmasını isteyin |
-| Agentic alımı | "Sorgu planlayıcı olarak Yüksek Lisans" | LLM, ilgili klipler için bir erişim aracı ister, bunları bir VLM aracılığıyla okur, yanıt oluşturur |
-| VideoAgent | "Video için alma modeli" | Kanonik agentic-geri alma tasarımı: soru -> araç -> klip -> cevap |
+| Agentic alma | "Sorgu planlayıcı olarak Yüksek Lisans" | LLM, ilgili klipler için bir erişim aracı ister, bunları bir VLM aracılığıyla okur, yanıt oluşturur |
+| VideoAgent | "Video için alma modeli" | Canonical agentic-geri alma tasarımı: soru -> araç -> klip -> cevap |
 
 ## Daha Fazla Okuma
 
-- [İkizler Takımı — İkizler 1.5 (arXiv:2403.05530)](https://arxiv.org/abs/2403.05530)
+- [Gemini Takımı — Gemini 1.5 (arXiv:2403.05530)](https://arxiv.org/abs/2403.05530)
 - [Liu ve ark. — LWM / RingAttention (arXiv:2402.08268)](https://arxiv.org/abs/2402.08268)
 - [Xue ve ark. — LongVILA (arXiv:2408.10188)](https://arxiv.org/abs/2408.10188)
 - [Shu ve ark. — Video-XL (arXiv:2409.14485)](https://arxiv.org/abs/2409.14485)

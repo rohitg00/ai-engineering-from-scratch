@@ -1,6 +1,6 @@
-# Üretim LLM Başvurusu Oluşturma
+# Üretim Yüksek Lisans Başvurusu Oluşturma
 
-> prompt'lar, embedding'lar, RAG ardışık düzenleri, function calling, önbelleğe alma katmanları ve guardrail'ler oluşturdunuz. Ayrı olarak. İzolasyonda. Hiç şarkı çalmadan gitar terazileri çalışmak gibi. Bu ders şarkıdır. Ders 01-12'deki her bileşeni üretime hazır tek bir hizmete bağlayacaksınız. Oyuncak değil. Demo değil. Gerçek trafiği yöneten, sorunsuz bir şekilde başarısız olan, token akışlarını gerçekleştiren, maliyetleri takip eden ve ilk 10.000 kullanıcısından sağ kurtulan bir sistem.
+> prompt'ler, embedding'ler, RAG işlem hatları, işlev çağırma, önbelleğe alma katmanları ve korkuluklar oluşturdunuz. Ayrı olarak. İzolasyonda. Hiç şarkı çalmadan gitar terazileri çalışmak gibi. Bu ders şarkıdır. Ders 01-12'deki her bileşeni üretime hazır tek bir hizmete bağlayacaksınız. Oyuncak değil. Demo değil. Gerçek trafiği yöneten, sorunsuz bir şekilde arızalanan, token akışını gerçekleştiren, maliyetleri takip eden ve ilk 10.000 kullanıcıdan sağ kurtulan bir sistem.
 
 **Tür:** Yapım (Sonlandırma Taşı)
 **Diller:** Python
@@ -10,9 +10,9 @@
 
 ## Öğrenme Hedefleri
 
-- Tüm Aşama 11 bileşenlerini (prompt'lar, RAG, function calling, önbelleğe alma, guardrail'ler) üretime hazır tek bir hizmete bağlayın
-- Akış token dağıtımını, hassas hata işlemeyi ve istek zaman aşımı yönetimini uygulayın
-- Uygulamaya observability ekleyin: istek günlüğü, maliyet takibi, gecikme yüzde dilimleri ve hata oranı gösterge tabloları
+- Tüm Faz 11 bileşenlerini (prompt'ler, RAG, işlev çağırma, önbelleğe alma, korkuluklar) üretime hazır tek bir hizmete bağlayın
+- Akışlı token teslimatını, hassas hata yönetimini ve istek zaman aşımı yönetimini uygulayın
+- observability'yi uygulamaya ekleyin: istek kaydı, maliyet takibi, gecikme yüzde dilimleri ve hata oranı gösterge tabloları
 - Uygulamayı durum kontrolleri, hız sınırlaması ve sağlayıcı kesintileri için bir geri dönüş stratejisiyle dağıtın
 
 ## Sorun
@@ -21,16 +21,16 @@ Bir LLM özelliği oluşturmak bir öğleden sonrayı alır. Bir LLM ürününü
 
 Boşluk zeka değildir. Altyapıdır. Prototipiniz OpenAI'yi çağırır, yanıt alır ve yazdırır. Dizüstü bilgisayarınızda çalışır. Sonra gerçek gelir:
 
-- Bir kullanıcı 50.000-token değerinde bir belge gönderir. context window'niz taştı.
+- Bir kullanıcı 50.000-token tutarında bir belge gönderir. context window'niz taşıyor.
 - İki kullanıcı aynı soruyu 4 saniye arayla soruyor. Her ikisini de ödersiniz.
 - API gece saat 2'de 500 hatası veriyor. Hizmetiniz çöküyor.
-- Bir kullanıcı modelden SQL oluşturmasını ister. Model, `DROP TABLE users` çıktısını verir.
+- Bir kullanıcı modelden SQL oluşturmasını ister. Model `DROP TABLE users` çıktısını verir.
 - Aylık faturanız 12.000$'a ulaşıyor ve buna hangi özelliğin sebep olduğu hakkında hiçbir fikriniz yok.
 - Tepki süresi ortalama 8 saniyedir. Kullanıcılar saat 3'ten sonra ayrılır.
 
-Bugün üretimde olan her LLM uygulaması (Perplexity, Cursor, ChatGPT, Notion AI) bu sorunları çözdü. prompt'lar konusunda daha akıllı davranarak değil. Mühendislik konusunda titiz davranarak.
+Bugün üretimde olan her Yüksek Lisans uygulaması (Perplexity, Cursor, ChatGPT, Notion AI) bu sorunları çözdü. prompt'ler konusunda daha akıllı davranarak değil. Mühendislik konusunda titiz davranarak.
 
-Bu kapak taşı. prompt yönetimi (L01-02), embedding'ler ve vektör arama (L04-07), function calling (L09), değerlendirme (L10), önbelleğe alma (L11), guardrail'ler (L12), akış, hata işleme, observability ve maliyet takibini entegre eden eksiksiz bir üretim LLM hizmeti oluşturacaksınız. Bir hizmet. Her bileşen birbirine kablolanmıştır.
+Bu kapak taşı. prompt yönetimi (L01-02), embedding'ler ve vektör arama (L04-07), işlev çağırma (L09), değerlendirme (L10), önbelleğe alma (L11), korkuluklar (L12), akış, hata işleme, observability ve maliyet takibini entegre eden eksiksiz bir üretim LLM hizmeti oluşturacaksınız. Bir hizmet. Her bileşen birbirine kablolanmıştır.
 
 ## Konsept
 
@@ -60,7 +60,7 @@ graph LR
     Eval --> Cost --> Resp
 ```
 
-İstek, kimlik doğrulamayı ve hız sınırlamasını yöneten bir API ağ geçidi aracılığıyla girer. Giriş guardrail'lerı, prompt yönlendiricisi doğru şablonu seçmeden önce prompt enjeksiyonunu ve yasaklı içeriği kontrol eder. Anlamsal bir önbellek, yakın zamanda benzer bir sorunun yanıtlanıp yanıtlanmadığını kontrol eder. Önbellek kaybı durumunda, LLM akış etkinleştirilmiş olarak çağrılır. Çıkış guardrail'lerı yanıtı doğrular. Değerlendirme kaydedici kalite ölçümlerini kaydeder. Maliyet takipçisi her token için hesap oluşturur. Yanıt müşteriye geri aktarılır.
+İstek, kimlik doğrulamayı ve hız sınırlamasını yöneten bir API ağ geçidi aracılığıyla girer. Giriş korkulukları, prompt yönlendirici doğru şablonu seçmeden önce prompt enjeksiyonunu ve yasaklı içeriği kontrol eder. Anlamsal bir önbellek, yakın zamanda benzer bir sorunun yanıtlanıp yanıtlanmadığını kontrol eder. Önbellek kaybı durumunda, LLM akış etkinleştirilmiş olarak çağrılır. Çıkış korkulukları yanıtı doğrular. Değerlendirme kaydedici kalite ölçümlerini kaydeder. Maliyet takipçisi her token'yi hesaplar. Yanıt müşteriye geri aktarılır.
 
 Yedi bileşen. Her biri zaten tamamladığınız bir derstir. Mühendislik kablolamadadır.
 
@@ -69,19 +69,19 @@ Yedi bileşen. Her biri zaten tamamladığınız bir derstir. Mühendislik kablo
 | Bileşen | Ders | Teknoloji | Amaç |
 |-----------|--------|------------|---------|
 | API Sunucusu | -- | FastAPI + Uvicorn | HTTP uç noktaları, SSE akışı, durum denetimleri |
-| Prompt Şablonlar | L01-02 | Jinja2 / dize şablonları | Değişken eklemeyle sürümlendirilmiş prompt yönetimi |
-| Embeddings | L04 | text-embedding-3-small | Önbellek ve RAG için anlamsal benzerlik |
+| Prompt Şablonları | L01-02 | Jinja2 / dize şablonları | Değişken enjeksiyonla sürümlendirilmiş prompt yönetimi |
+| Embedding'ler | L04 | metin-embedding-3-küçük | Önbellek ve RAG için anlamsal benzerlik |
 | Vektör Mağazası | L06-07 | Bellek içi (ürün: Çam Kozalağı/Qdrant) | Bağlam alımı için en yakın komşu araması |
 | İşlev Çağırma | L09 | Araç kaydı + JSON Şeması | Harici veri erişimi, yapılandırılmış eylemler |
 | Değerlendirme | L10 | Özel ölçümler + günlük kaydı | Yanıt kalitesi, gecikme, doğruluk takibi |
 | Önbelleğe alma | L11 | Anlamsal önbellek (embedding tabanlı) | Gereksiz LLM çağrılarından kaçının, maliyeti ve gecikmeyi azaltın |
-| Guardrail'ler | L12 | Regex + sınıflandırıcı kuralları | prompt eklemeyi, kişisel bilgileri, güvenli olmayan içeriği engelle |
+| Korkuluklar | L12 | Regex + sınıflandırıcı kuralları | prompt enjeksiyonunu, PII'yi, güvenli olmayan içeriği engelle |
 | Maliyet Takibi | L11 | Token sayaç + fiyatlandırma tablosu | Talep başına ve toplam maliyet muhasebesi |
-| Akış | -- | Sunucu Tarafından Gönderilen Olaylar (SSE) | Tokenby-token teslimat, ilk saniyenin altında token |
+| Akış | -- | Sunucu Tarafından Gönderilen Olaylar (SSE) | Token-by-token teslimatı, ikinciden kısa sürede ilk token |
 
 ### Yayın: Neden Önemlidir
 
-500 çıkış tokens içeren bir GPT-5 yanıtının tamamen oluşturulması 3-8 saniye sürer. Akış olmadan, kullanıcı tüm süre boyunca bir döndürücüye bakar. Akışla ilk token 200-500ms içinde ulaşır. Toplam süre aynı. Algılanan gecikme %90 oranında azalır.
+500 çıkışlı token'ye sahip bir GPT-5 yanıtının tamamen oluşturulması 3-8 saniye sürer. Akış olmadan, kullanıcı tüm süre boyunca bir döndürücüye bakar. Akışla ilk token 200-500 ms'de ulaşır. Toplam süre aynı. Algılanan gecikme %90 oranında azalır.
 
 ```mermaid
 sequenceDiagram
@@ -126,9 +126,9 @@ Attempt 4: 4s + random(0, 2.0s)
 Give up: return fallback response
 ```
 
-**Katman 2: Model hataları.** Model hatalı biçimlendirilmiş JSON döndürüyor, bir işlev adı sanrıları görüyor veya doğrulamayı geçemeyen bir çıktı üretiyor. Çözüm: düzeltilmiş bir prompt ile yeniden deneyin. Modelin kendi kendini düzeltebilmesi için hatayı yeniden deneme mesajına ekleyin.
+**Katman 2: Model hataları.** Model hatalı biçimlendirilmiş JSON döndürüyor, bir işlev adı halüsinasyonu görüyor veya doğrulamayı geçemeyen bir çıktı üretiyor. Çözüm: düzeltilmiş bir prompt ile yeniden deneyin. Modelin kendi kendini düzeltebilmesi için hatayı yeniden deneme mesajına ekleyin.
 
-**Katman 3: Uygulama hataları.** Aşağı yöndeki bir hizmete erişilemiyor, vektör deposu yavaş, bir guardrail bir istisna oluşturuyor. Çözüm: zarif bozulma. RAG bağlamı kullanılamıyorsa, bu olmadan devam edin. Önbellek kapalıysa onu atlayın. İkincil bir sistemin birincil akışı bozmasına asla izin vermeyin.
+**Katman 3: Uygulama hataları.** Aşağı yöndeki bir hizmete erişilemiyor, vektör deposu yavaş, bir korkuluk bir istisna oluşturuyor. Çözüm: zarif bozulma. RAG bağlamı kullanılamıyorsa, bu olmadan devam edin. Önbellek kapalıysa onu atlayın. İkincil bir sistemin birincil akışı bozmasına asla izin vermeyin.
 
 | Başarısızlık | Yeniden denemek ister misiniz? | Geri dönüş | Kullanıcı Etkisi |
 |---------|--------|----------|-------------|
@@ -136,7 +136,7 @@ Give up: return fallback response
 | API 500 (sunucu hatası) | Evet, 3 deneme | Yedek modele geçiş | Kullanıcıya şeffaf |
 | API zaman aşımı (>30s) | Evet, 1 deneme | Daha kısa prompt, daha küçük model | Biraz daha düşük kalite |
 | Bozuk çıktı | Evet, hata bağlamıyla | Ham metni döndür | Küçük biçimlendirme sorunları |
-| Guardrail bloğu | Hayır | İsteğin neden engellendiğini açıklayın | Hata mesajını temizle |
+| Korkuluk bloğu | Hayır | İsteğin neden engellendiğini açıklayın | Hata mesajını temizle |
 | Vektör deposu aşağı | Vektör mağazasında yeniden deneme yok | RAG bağlamını atla | Daha düşük kalite, hala işlevsel |
 | Önbellek aşağı | Önbellekte yeniden deneme yok | Doğrudan LLM çağrısı | Daha yüksek gecikme süresi, daha yüksek maliyet |
 
@@ -152,9 +152,9 @@ Her adımda kalite kullanılabilirliğe karşılık gelir. Kullanıcı her zaman
 
 Göremediğiniz şeyi geliştiremezsiniz. Her üretim LLM uygulamasının üç observability sütununa ihtiyacı vardır.
 
-**Yapılandırılmış günlük kaydı.** Her istek, aşağıdakileri içeren bir JSON günlük girişi üretir: istek kimliği, kullanıcı kimliği, prompt şablon adı, kullanılan model, giriş token'ler, çıkış token'ler, gecikme (ms), önbellek isabeti/kaçırması, guardrail başarılı/başarısızı, maliyet (USD) ve tüm hatalar.
+**Yapılandırılmış günlük kaydı.** Her istek, aşağıdakileri içeren bir JSON günlük girişi oluşturur: istek kimliği, kullanıcı kimliği, prompt şablon adı, kullanılan model, giriş token'ler, çıktı token'ler, gecikme (ms), önbellek isabeti/kaçırması, korkuluk başarılı/başarısızı, maliyet (USD) ve tüm hatalar.
 
-**İzleme.** Tek bir kullanıcı isteği 5-8 bileşene dokunur. OpenTelemetry izleri yolculuğun tamamını görmenizi sağlar: embedding ne kadar sürdü? Bir önbellek isabeti miydi? LLM görüşmesi ne kadar sürdü? Guardrail gecikmeyi artırdı mı? İzleme olmadan, üretim sorunlarının hatalarını ayıklamak tahmine dayalıdır.
+**İzleme.** Tek bir kullanıcı isteği 5-8 bileşene dokunur. OpenTelemetry izleri yolculuğun tamamını görmenizi sağlar: embedding ne kadar sürdü? Bir önbellek isabeti miydi? LLM görüşmesi ne kadar sürdü? Korkuluk gecikmeyi artırdı mı? İzleme olmadan, üretim sorunlarının hatalarını ayıklamak varsayımdan ibarettir.
 
 **Ölçüm kontrol paneli.** Her LLM ekibinin izlediği beş sayı:
 
@@ -163,14 +163,14 @@ Göremediğiniz şeyi geliştiremezsiniz. Her üretim LLM uygulamasının üç o
 | P50 gecikme | < 2s | Ortalama kullanıcı deneyimi |
 | P99 gecikme | < 10s | Kuyruk gecikmesi kayıplara neden oluyor |
 | Önbellek isabet oranı | > %30 | Doğrudan maliyet tasarrufu |
-| Guardrail blok oranı | < %5 | Çok yüksek = yanlış pozitifler kullanıcıları rahatsız ediyor |
+| Korkuluk blok oranı | < %5 | Çok yüksek = yanlış pozitifler kullanıcıları rahatsız ediyor |
 | Talep başına maliyet | <0,01$ | Birim ekonomisinin uygulanabilirliği |
 
-### A/B Testi Prompt'ler Üretimde
+### Üretimde Prompt'lerin A/B Testi
 
-prompt cihazınız çalıştığında bitmedi. Alternatifinden daha iyi performans gösterdiğini kanıtlayan verilere sahip olduğunuzda işlem tamamlanır.
+prompt'niz çalışırken bitmemiş demektir. Alternatifinden daha iyi performans gösterdiğini kanıtlayan verilere sahip olduğunuzda işlem tamamlanır.
 
-**Gölge modu.** Trafiğin %100'ünde yeni bir prompt çalıştırın ancak yalnızca sonuçları günlüğe kaydedin; bunları kullanıcılara göstermeyin. Kalite metriklerini mevcut prompt ile karşılaştırın. Kullanıcı riski yok, tam veri.
+**Gölge modu.** Trafiğin %100'ünde yeni bir prompt çalıştırın, ancak yalnızca sonuçları günlüğe kaydedin; bunları kullanıcılara göstermeyin. Kalite ölçümlerini mevcut prompt ile karşılaştırın. Kullanıcı riski yok, tam veri.
 
 **Yüzde kullanıma sunma.** Trafiğin %10'unu yeni prompt'ye yönlendirin. Metrikleri izleyin. Kalite aynıysa, önce %25'e, sonra %50'ye, sonra da %100'e yükseltin. Kalite düşerse anında geri alma.
 
@@ -193,11 +193,11 @@ Rastgele seçim değil, kullanıcı kimliğinin deterministik karmasını kullan
 
 ### Gerçek Mimari Örnekleri
 
-**Şaşırma.** Kullanıcı sorgusu girer. Bir arama motoru 10-20 web sayfasını getirir. Sayfalar parçalanır, gömülür ve yeniden sıralanır. İlk 5 parça RAG bağlamı haline gelir. LLM, gerçek zamanlı olarak geri aktarılan alıntılarla bir yanıt oluşturur. İki model: Arama sorgusunun yeniden formüle edilmesi için hızlı bir model, yanıt sentezi için güçlü bir model. Tahmini 50 milyondan fazla sorgu/gün.
+**Şaşırma.** Kullanıcı sorgusu girer. Bir arama motoru 10-20 web sayfasını getirir. Sayfalar parçalanır, gömülür ve yeniden sıralanır. İlk 5 parça RAG bağlamı haline gelir. LLM, gerçek zamanlı olarak geri aktarılan alıntılarla bir yanıt oluşturur. İki model: Arama sorgusunu yeniden formüle etmek için hızlı bir model, yanıt sentezi için güçlü bir model. Tahmini 50 milyondan fazla sorgu/gün.
 
-**İmleç.** Açık dosya, çevreleyen dosyalar, son düzenlemeler ve terminal çıktısı bağlamı oluşturur. Bir prompt yönlendirici karar verir: otomatik tamamlama için küçük model (İmleç-küçük, ~20ms), sohbet için büyük model (Claude Sonnet 4.6 / GPT-5, ~3s). Bağlam agresif bir şekilde sıkıştırılmıştır; dosyaların tamamı değil, yalnızca ilgili kod bölümleri. Kod tabanı embedding'lar uzun vadeli bağlam sağlar. Spekülatif düzenlemeler, tam dosyalar değil, akış farklılıklarıdır. MCP entegrasyonu, üçüncü taraf araçların, araç başına kod değişikliği olmadan takılmasına olanak tanır.
+**İmleç.** Açık dosya, çevreleyen dosyalar, son düzenlemeler ve terminal çıktısı bağlamı oluşturur. Bir prompt yönlendirici karar verir: otomatik tamamlama için küçük model (İmleç-küçük, ~20 ms), sohbet için büyük model (Claude Sonnet 4.6 / GPT-5, ~3s). Bağlam agresif bir şekilde sıkıştırılmıştır; dosyaların tamamı değil, yalnızca ilgili kod bölümleri. Codebase embedding'ler uzun vadeli bağlam sağlar. Spekülatif düzenlemeler, tam dosyalar değil, akış farklılıklarıdır. MCP entegrasyonu, üçüncü taraf araçların, araç başına kod değişikliği olmadan takılmasına olanak tanır.
 
-**ChatGPT.** Eklentiler, function calling ve MCP sunucuları, modelin web'e erişmesine, kod çalıştırmasına, görüntü oluşturmasına ve veritabanlarını sorgulamasına olanak tanır. Yönlendirme katmanı hangi yeteneklerin çağrılacağına karar verir. Bellek, oturumlar boyunca kullanıcı tercihlerini korur. prompt sistemi, prompt önbelleğe alma yoluyla önbelleğe alınan 1.500'den fazla token davranış kuralından oluşur. Birden fazla model farklı özellikler sunar: Sohbet için GPT-5, görüntüler için GPT-Image, ses için Whisper, derin muhakeme için o4-mini.
+**ChatGPT.** Eklentiler, işlev çağırma ve MCP sunucuları, modelin web'e erişmesine, kod çalıştırmasına, görüntü oluşturmasına ve veritabanlarını sorgulamasına olanak tanır. Yönlendirme katmanı hangi yeteneklerin çağrılacağına karar verir. Bellek, oturumlar boyunca kullanıcı tercihlerini korur. prompt sistemi, prompt önbelleğe alma yoluyla önbelleğe alınan 1.500'den fazla token davranış kuralından oluşur. Birden fazla model farklı özellikler sunar: Sohbet için GPT-5, görüntüler için GPT-Image, ses için Whisper, derin muhakeme için o4-mini.
 
 ### Ölçekleme
 
@@ -210,7 +210,7 @@ Rastgele seçim değil, kullanıcı kimliğinin deterministik karmasını kullan
 
 Anahtar ölçeklendirme modelleri:
 
-- **Her yerde eşzamansız.** Bir LLM çağrısında web sunucusu iş parçacığını asla engellemeyin. `asyncio` ve `httpx.AsyncClient` kullanın.
+- **Her yerde eşzamansız.** Bir LLM çağrısında web sunucusu iş parçacığını asla engellemeyin. `asyncio` ve `httpx.AsyncClient`'yi kullanın.
 - **Kuyruğa dayalı işleme.** Gerçek zamanlı olmayan görevler (özetleme, analiz) için kuyruğa gönderin (Redis, SQS) ve çalışanlarla işleyin. Bir iş kimliği verin, müşterinin anket yapmasına izin verin.
 - **Bağlantı havuzu oluşturma.** LLM sağlayıcılarına yönelik HTTP bağlantılarını yeniden kullanın. İstek başına yeni bir TLS bağlantısı oluşturmak 100-200 ms ekler.
 - **Yatay ölçeklendirme.** LLM uygulamaları CPU'ya değil, G/Ç'ye bağlıdır. Tek bir eşzamansız sunucu, 100'den fazla eşzamanlı isteği yönetir. Çekirdekleri değil sunucuları ölçeklendirin.
@@ -223,16 +223,16 @@ Gönderimi yapmadan önce aylık maliyetinizi tahmin edin. Bu e-tablo, iş model
 |----------|-------|--------|
 | Günlük Aktif Kullanıcı Sayısı (DAU) | 10.000 | Analitik |
 | Kullanıcı başına günlük sorgu sayısı | 5 | Ürün analitiği |
-| Sorgu başına ortalama giriş tokens | 1.500 | Ölçülen (sistem + içerik + kullanıcı) |
-| Sorgu başına ortalama çıktı tokens | 400 | Ölçülen |
-| 1M tokens başına giriş fiyatı | 5,00$ | OpenAI GPT-5 fiyatlandırması |
-| 1 Milyon tokens başına çıktı fiyatı | 15,00$ | OpenAI GPT-5 fiyatlandırması |
+| Sorgu başına ortalama giriş token | 1.500 | Ölçülen (sistem + içerik + kullanıcı) |
+| Sorgu başına ortalama çıktı token | 400 | Ölçülen |
+| 1 milyon token başına giriş fiyatı | 5,00$ | OpenAI GPT-5 fiyatlandırması |
+| 1 milyon token başına çıkış fiyatı | 15,00$ | OpenAI GPT-5 fiyatlandırması |
 | Önbellek isabet oranı | %35 | Önbellek ölçümlerinden ölçülmüştür |
 | Etkili günlük sorgular | 32.500 | 50.000 * (1 - 0,35) |
 
 **Aylık LLM maliyeti:**
-- Giriş: 32.500 sorgu/gün x 1.500 tokens x 30 gün / 1 milyon x $2.50 = **$3.656**
-- Çıktı: 32.500 sorgu/gün x 400 tokens x 30 gün / 1 milyon x $10.00 = **$3.900**
+- Giriş: 32.500 sorgu/gün x 1.500 token x 30 gün / 1 milyon x $2.50 = **$3.656**
+- Çıktı: 32.500 sorgu/gün x 400 token x 30 gün / 1 milyon x $10.00 = **$3.900**
 - **Toplam: $7,556/month** (with caching saving ~$4.070/ay)
 
 Önbelleğe alma olmadan aynı trafiğin maliyeti ayda 11.625 ABD dolarıdır. %35'lik önbellek isabet oranı, LLM maliyetlerinde %35 tasarruf sağlar. Ders 11'in var olmasının nedeni budur.
@@ -245,8 +245,8 @@ Gönderimi yapmadan önce aylık maliyetinizi tahmin edin. Bu e-tablo, iş model
 |---|------|----------|
 | 1 | API anahtarları kodda değil ortam değişkenlerinde saklanır | Güvenlik |
 | 2 | Kullanıcı başına hız sınırlaması (varsayılan olarak 10-50 istek/dak) | Koruma |
-| 3 | Giriş guardrail'lerı etkin (prompt enjeksiyon, PII) | Güvenlik |
-| 4 | Çıkış guardrail'lerı etkin (içerik filtreleme, format doğrulama) | Güvenlik |
+| 3 | Giriş korkulukları etkin (prompt enjeksiyon, PII) | Güvenlik |
+| 4 | Çıkış korkulukları etkin (içerik filtreleme, format doğrulama) | Güvenlik |
 | 5 | Anlamsal önbellek yapılandırıldı ve test edildi | Maliyet |
 | 6 | Tüm sohbet uç noktaları için akış etkinleştirildi | kullanıcı deneyimi |
 | 7 | Tüm LLM API çağrılarında üstel geri çekilme | Güvenilirlik |
@@ -254,7 +254,7 @@ Gönderimi yapmadan önce aylık maliyetinizi tahmin edin. Bu e-tablo, iş model
 | 9 | İstek kimlikleriyle yapılandırılmış günlük kaydı | Observability |
 | 10 | İstek ve kullanıcı başına maliyet takibi | İş |
 | 11 | Bağımlılık durumunu döndüren durum denetimi uç noktası | İşlemler |
-| 12 | Giriş ve çıkışta maksimum token limitler | Maliyet/Güvenlik |
+| 12 | Giriş ve çıkışta maksimum token sınırları | Maliyet/Güvenlik |
 | 13 | Tüm harici aramalarda zaman aşımı (varsayılan 30 saniye) | Güvenilirlik |
 | 14 | CORS yalnızca üretim etki alanları için yapılandırıldı | Güvenlik |
 | 15 | 100 eşzamanlı kullanıcının geçtiği yükleme testi | Performans |
@@ -266,8 +266,8 @@ Bu kapak taşı. Bir dosya. Her bileşen birbirine kablolanmıştır.
 Kod, aşağıdakilerle eksiksiz bir üretim LLM hizmeti oluşturur:
 - Durum kontrolleri ve CORS içeren FastAPI sunucusu
 - Sürüm oluşturma ve A/B testiyle Prompt şablon yönetimi
-- embedding'larda kosinüs benzerliğini kullanarak anlamsal önbelleğe alma
-- Giriş ve çıkış guardrail'lerı (prompt enjeksiyon, PII, içerik güvenliği)
+- embedding'lerde kosinüs benzerliğini kullanarak anlamsal önbelleğe alma
+- Giriş ve çıkış korkulukları (prompt enjeksiyon, PII, içerik güvenliği)
 - Akışlı (SSE) simüle edilmiş LLM çağrıları
 - Titreşim ve geri dönüş model zinciriyle üstel geri çekilme
 - Talep ve toplam başına maliyet takibi
@@ -472,7 +472,7 @@ def select_prompt(template_name, user_id, variables):
 
 ### Adım 3: Anlamsal Önbellek
 
-Semantik olarak benzer sorgularla eşleşen Embedding tabanlı önbellek. Farklı ifade edilen ancak aynı anlama gelen iki soru önbelleğe düşecek.
+Anlamsal olarak benzer sorgularla eşleşen Embedding tabanlı önbellek. Farklı ifade edilen ancak aynı anlama gelen iki soru önbelleğe düşecek.
 
 ```python
 def simple_embedding(text, dim=64):
@@ -553,7 +553,7 @@ class SemanticCache:
         }
 ```
 
-### Adım 4: Guardrail'ler
+### Adım 4: Korkuluklar
 
 Giriş doğrulama, LLM görmeden önce prompt enjeksiyonunu ve PII'yi yakalar. Çıkış doğrulama, güvenli olmayan içeriği kullanıcı görmeden yakalar. İki duvar. Hiçbir şey kontrolsüz geçmiyor.
 
@@ -628,9 +628,9 @@ def check_output_guardrails(text):
     return GuardrailResult(passed=True)
 ```
 
-### Adım 5: Yeniden Deneme ve Akış ile LLM Arayanı
+### Adım 5: Yeniden Deneme ve Akış ile Yüksek Lisans Arayanı
 
-Çekirdek LLM arayüzü. Başarısızlıklarda titremeyle birlikte üstel geri çekilme. Model zincirinde geri dönüş. token-by-token dağıtım için akış desteği.
+Çekirdek LLM arayüzü. Başarısızlıklarda titremeyle birlikte üstel geri çekilme. Model zincirinde geri dönüş. token-by-token dağıtımı için akış desteği.
 
 ```python
 def estimate_tokens(text):
@@ -1068,7 +1068,7 @@ Yukarıdaki demo bir komut dosyası olarak çalışır. Üretim için bunu uygun
 #     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
-Bunu gerçek bir sunucu olarak çalıştırmak için açıklamayı kaldırın ve bağımlılıkları yükleyin: `pip install fastapi uvicorn`. Otomatik olarak oluşturulan API belgeleri için `http://localhost:8000/docs` tuşuna basın.
+Bunu gerçek bir sunucu olarak çalıştırmak için bağımlılıkların açıklamasını kaldırın ve yükleyin: `pip install fastapi uvicorn`. Otomatik olarak oluşturulan API belgeleri için `http://localhost:8000/docs`'ye basın.
 
 ### Gerçek API Entegrasyonu
 
@@ -1103,7 +1103,7 @@ Simüle edilmiş LLM çağrılarını gerçek sağlayıcı SDK'larıyla değişt
 #             yield text
 ```
 
-### Liman işçisi Deployment
+### Docker Deployment
 
 ```dockerfile
 # FROM python:3.12-slim
@@ -1119,21 +1119,21 @@ Dört işçi. Her biri eşzamansız G/Ç'yi yönetir. 4 çalışanın bulunduğu
 
 ## Gönderin
 
-Bu ders, herhangi bir LLM uygulamasının mimarisini üretim kontrol listesine göre inceleyen yeniden kullanılabilir bir prompt olan `outputs/prompt-architecture-reviewer.md` üretir. Sisteminizin bir tanımını verin, o da bir boşluk analizi döndürecektir.
+Bu ders, herhangi bir LLM uygulamasının mimarisini üretim kontrol listesine göre inceleyen, yeniden kullanılabilir bir prompt olan `outputs/prompt-architecture-reviewer.md`'yi üretir. Sisteminizin bir tanımını verin, o da bir boşluk analizi döndürecektir.
 
-Aynı zamanda, bu dersteki her bileşeni belirli eşikler ve başarılı/başarısız kriterleriyle kapsayan, LLM başvurularının üretime gönderilmesi için bir karar framework olan `outputs/skill-production-checklist.md` üretir.
+Ayrıca, LLM uygulamalarının üretime gönderilmesine yönelik bir framework kararı olan `outputs/skill-production-checklist.md`'yi de üretir ve bu dersteki her bileşeni belirli eşikler ve başarılı/başarısız kriterleriyle kapsar.
 
 ## Egzersizler
 
-1. **RAG entegrasyonunu ekleyin.** 20 belgeyle basit bir bellek içi vektör deposu oluşturun. Şablon `rag_answer` olduğunda sorguyu gömün, en benzer 3 belgeyi bulun ve bunları bağlam olarak enjekte edin. Yanıt kalitesinin RAG bağlamı olsun veya olmasın nasıl değiştiğini ölçün. Alma gecikmesini LLM gecikmesinden ayrı olarak izleyin.
+1. **RAG entegrasyonunu ekleyin.** 20 belgeyle basit bir bellek içi vektör deposu oluşturun. Şablon `rag_answer` olduğunda sorguyu gömün, en benzer 3 belgeyi bulun ve bunları bağlam olarak enjekte edin. RAG bağlamı olsun veya olmasın yanıt kalitesinin nasıl değiştiğini ölçün. Alma gecikmesini LLM gecikmesinden ayrı olarak izleyin.
 
-2. **Gerçek function callingnı uygulayın.** Hizmete bir araç kaydı (Ders 09'dan) ekleyin. Bir kullanıcı harici veriler (hava durumu, hesaplama, arama) gerektiren bir soru sorduğunda, işlem hattı bunu algılamalı, aracı çalıştırmalı ve sonucu prompt'ye dahil etmelidir. Yanıta bir `tools_used` alanı ekleyin.
+2. **Gerçek işlev çağrısını uygulayın.** Hizmete bir araç kaydı (Ders 09'dan) ekleyin. Bir kullanıcı harici veriler (hava durumu, hesaplama, arama) gerektiren bir soru sorduğunda, işlem hattı bunu algılamalı, aracı çalıştırmalı ve sonucu prompt'ye eklemelidir. Yanıta bir `tools_used` alanı ekleyin.
 
-3. **Bir maliyet uyarı sistemi oluşturun.** Kullanıcı başına günlük maliyeti takip edin. Bir kullanıcı $0.50/day, switch them to `gpt-4o-mini`. When total daily cost exceeds $100'ü aştığında, acil durum modunu etkinleştirin: tekrarlanan sorgular için yalnızca önbellek yanıtları, diğer her şey için `gpt-4o-mini`, 2.000 giriş token saniyenin üzerindeki istekleri reddedin. Simüle edilmiş bir trafik artışıyla test edin.
+3. **Bir maliyet uyarı sistemi oluşturun.** Kullanıcı başına günlük maliyeti takip edin. Bir kullanıcı $0.50/day, switch them to `gpt-4o-mini`. When total daily cost exceeds $100 sınırını aştığında acil durum modunu etkinleştirin: tekrarlanan sorgular için yalnızca önbellek yanıtları, diğer her şey için `gpt-4o-mini`, 2.000 giriş token'nin üzerindeki istekleri reddedin. Simüle edilmiş bir trafik artışıyla test edin.
 
-4. **Geri alma ile prompt sürüm oluşturmayı uygulayın.** Tüm prompt sürümleri zaman damgalarıyla birlikte saklayın. prompt sürümü başına kalite ölçümlerini (gecikme, kullanıcı derecelendirmeleri, hata oranı) gösteren bir uç nokta ekleyin. Otomatik geri alma uygulayın: Yeni bir prompt sürümü, 100 istekte önceki sürüme göre 2 kat daha fazla hata oranına sahipse, otomatik olarak geri dönün.
+4. **Geri alma ile prompt sürüm oluşturmayı uygulayın.** Tüm prompt sürümlerini zaman damgalarıyla birlikte saklayın. prompt sürümüne göre kalite ölçümlerini (gecikme, kullanıcı derecelendirmeleri, hata oranı) gösteren bir uç nokta ekleyin. Otomatik geri alma uygulayın: Yeni bir prompt sürümü, 100 istekte önceki sürümün 2 katı hata oranına sahipse, otomatik olarak geri dönün.
 
-5. **OpenTelemetry izlemeyi ekleyin.** Her bileşeni (önbellek arama, guardrail kontrolü, LLM çağrısı, maliyet hesaplama) ayrı bir aralık olarak ölçün. Her aralık kendi süresini kaydeder. İzleri konsola aktarın. Her bileşenin toplam gecikmeye katkısı görünür olacak şekilde tek bir isteğe ilişkin tam izlemeyi gösterin.
+5. **OpenTelemetry izlemeyi ekleyin.** Her bileşeni (önbellek arama, korkuluk kontrolü, LLM çağrısı, maliyet hesaplama) ayrı bir aralık olarak ölçün. Her aralık kendi süresini kaydeder. İzleri konsola aktarın. Her bileşenin toplam gecikmeye katkısı görünür olacak şekilde tek bir isteğe ilişkin tam izlemeyi gösterin.
 
 ## Anahtar Terimler
 
@@ -1141,25 +1141,25 @@ Aynı zamanda, bu dersteki her bileşeni belirli eşikler ve başarılı/başar�
 |------|----------------|----------------------|
 | API Ağ Geçidi | "Ön uç" | Herhangi bir LLM mantığı çalıştırılmadan önce kimlik doğrulamayı, hız sınırlamayı, CORS'yi ve istek yönlendirmeyi yöneten giriş noktası |
 | Prompt Yönlendirici | "Şablon seçici" | İstek türüne, A/B deneme atamasına ve kullanıcı bağlamına göre doğru prompt şablonunu seçen mantık |
-| Anlamsal Önbellek | "Akıllı önbellek" | Tam dize eşleşmesi yerine embedding benzerliğine göre anahtarlanan bir önbellek -- farklı ifadelerle ifade edilen iki özdeş soru, önbelleğe alınmış aynı yanıtı döndürür |
-| SSE (Sunucu Tarafından Gönderilen Etkinlikler) | "Akış" | Sunucunun olayları istemciye ilettiği tek yönlü bir HTTP protokolü - OpenAI, Anthropic ve Google tarafından tokenby-token dağıtım için kullanılır |
+| Anlamsal Önbellek | "Akıllı önbellek" | Tam dize eşleşmesi yerine embedding benzerliğine göre anahtarlanan bir önbellek; farklı ifadelerle ifade edilen iki özdeş soru, önbelleğe alınmış aynı yanıtı döndürür |
+| SSE (Sunucu Tarafından Gönderilen Etkinlikler) | "Akış" | token-by-token teslimi için OpenAI, Anthropic ve Google tarafından kullanılan, sunucunun olayları istemciye ilettiği tek yönlü bir HTTP protokolü |
 | Üstel Gerileme | "Mantığı yeniden dene" | Tüm istemcilerin aynı anda yeniden denemesini önlemek için yeniden denemeler arasında (her seferinde ikiye katlanarak) rastgele titreşimle 1 saniye, 2 saniye, 4 saniye, 8 saniye bekleniyor |
 | Geri Dönüş Zinciri | "Model basamaklı" | Sırayla denenen modellerin sıralı listesi - birincil başarısız olduğunda daha ucuz veya daha uygun alternatiflere yönelin |
-| Zarif Bozulma | "Kısmi arıza yönetimi" | İkincil bir bileşen arızalandığında (önbellek, RAG, guardrail'ler), sistem çökmek yerine azaltılmış işlevsellikle devam eder |
-| İstek Başına Maliyet | "Birim Ekonomisi" | Tek bir kullanıcı isteği için toplam LLM harcaması (model fiyatlandırmasında giriş tokens + çıkış tokens) -- iş modelinizin işe yarayıp yaramayacağını belirleyen sayı |
-| Gölge Modu | "Karanlık lansman" | Yeni bir prompt veya modeli gerçek trafikte çalıştırmak, ancak yalnızca sonuçları günlüğe kaydetmek, bunları kullanıcılara göstermemek -- risksiz A/B testi |
-| Sağlık Kontrolü | "Hazırlık araştırması" | Trafiği yönlendirmek için yük dengeleyiciler ve Kubernetes tarafından kullanılan tüm bağımlılıkların (önbellek, LLM kullanılabilirliği, guardrail'ler) durumunu döndüren bir uç nokta |
+| Zarif Bozulma | "Kısmi arıza yönetimi" | İkincil bir bileşen arızalandığında (önbellek, RAG, korkuluklar), sistem çökmek yerine azaltılmış işlevsellikle devam eder |
+| İstek Başına Maliyet | "Birim Ekonomisi" | Tek bir kullanıcı isteği için toplam LLM harcaması (model fiyatlandırmasında giriş token'ler + çıkış token'ler) - iş modelinizin işe yarayıp yaramayacağını belirleyen sayı |
+| Gölge Modu | "Karanlık lansman" | Yeni bir prompt veya modelini gerçek trafikte çalıştırmak, ancak yalnızca sonuçları günlüğe kaydetmek, bunları kullanıcılara göstermemek -- risksiz A/B testi |
+| Sağlık Kontrolü | "Hazırlık araştırması" | Trafiği yönlendirmek için yük dengeleyiciler ve Kubernetes tarafından kullanılan, tüm bağımlılıkların (önbellek, LLM kullanılabilirliği, korkuluklar) durumunu döndüren bir uç nokta |
 
 ## Daha Fazla Okuma
 
-- [FastAPI Belgelendirmesi](https://fastapi.tiangolo.com/) -- yerel SSE akışı ve otomatik OpenAPI belgeleriyle bu derste kullanılan eşzamansız Python framework
+- [FastAPI Belgeleri](https://fastapi.tiangolo.com/) -- yerel SSE akışı ve otomatik OpenAPI belgeleriyle bu derste kullanılan eşzamansız Python framework
 - [OpenAI Üretim En İyi Uygulamaları](https://platform.openai.com/docs/guides/production-best-practices) -- en büyük LLM API sağlayıcısından hız sınırları, hata yönetimi ve ölçeklendirme kılavuzu
-- [Anthropic API Referansı](https://docs.anthropic.com/en/api/messages-streaming) -- sunucu tarafından gönderilen olaylar ve akış sırasında araç kullanımı da dahil olmak üzere Claude için akış uygulama ayrıntıları
+- [Antropik API Referansı](https://docs.anthropic.com/en/api/messages-streaming) -- sunucu tarafından gönderilen olaylar ve akış sırasında araç kullanımı da dahil olmak üzere Claude için akış uygulama ayrıntıları
 - [OpenTelemetry Python SDK](https://opentelemetry.io/docs/languages/python/) -- bir LLM işlem hattının her bileşenini denetlemek için kullanılan dağıtılmış izleme standardı
 - [GPTCache ile Anlamsal Önbelleğe Alma](https://github.com/zilliztech/GPTCache) -- bu dersteki kavramları geniş ölçekte uygulayan üretim anlamsal önbelleğe alma kitaplığı
-- [Hamel Husain, "Yapay Zeka Ürününüzün Değerlendirmeye İhtiyacı Var"](https://hamel.dev/blog/posts/evals/) -- LLM uygulamaları için değerlendirme odaklı geliştirme konusunda bu özetteki değerlendirme bileşenini tamamlayan eksiksiz kılavuz
-- [Eugene Yan, "LLM Tabanlı Sistemler Oluşturma Kalıpları"](https://eugeneyan.com/writing/llm-patterns/) -- büyük teknoloji şirketlerindeki üretim LLM deployment'larında görülen mimari modeller (guardrail'ler, RAG, önbelleğe alma, yönlendirme)
+- [Hamel Husain, "Yapay Zeka Ürününüzün Değerlendirmeye İhtiyacı Var"](https://hamel.dev/blog/posts/evals/) -- Yüksek Lisans uygulamaları için değerlendirme odaklı geliştirme konusunda bu kapsüldeki değerlendirme bileşenini tamamlayan eksiksiz kılavuz
+- [Eugene Yan, "LLM Tabanlı Sistemler Oluşturma Desenleri"](https://eugeneyan.com/writing/llm-patterns/) -- büyük teknoloji şirketlerindeki üretim LLM deployment'lerinde görülen mimari desenler (korkuluklar, RAG, önbelleğe alma, yönlendirme)
 - [vLLM belgeleri](https://docs.vllm.ai/) -- PagedAttention tabanlı sunum: bu derste FastAPI kapsülü altında kullanılan varsayılan, kendi kendine barındırılan inference katmanı.
-- [Sarılma Yüzü TGI](https://huggingface.co/docs/text-generation-inference/index) -- Metin Oluşturma Inference: Sürekli toplu işlem, Flash Attention ve Medusa spekülatif kod çözme özelliğine sahip Rust sunucusu; vLLM'nin HF-yerel alternatifi.
-- [NVIDIA TensorRT-LLM belgeleri](https://nvidia.github.io/TensorRT-LLM/) -- NVIDIA donanımındaki en yüksek aktarım hızına sahip yol; kurumsal deployment'lar için niceleme, hareket halinde toplu işleme ve FP8 çekirdekleri.
-- [Hamel Husain -- Gecikmeyi Optimize Etme: TGI vs vLLM vs CTranslate2 vs mlc](https://hamel.dev/notes/llm/inference/03_inference.html) -- ana sunum framework'lar arasında verim ve gecikme karşılaştırmasını ölçtü.
+- [Sarılma Yüzü TGI](https://huggingface.co/docs/text-generation-inference/index) -- Metin Oluşturma Inference: Sürekli toplu işleme, Flash Attention ve Medusa spekülatif kod çözme özelliğine sahip Rust sunucusu; vLLM'nin HF-yerel alternatifi.
+- [NVIDIA TensorRT-LLM belgeleri](https://nvidia.github.io/TensorRT-LLM/) -- NVIDIA donanımındaki en yüksek aktarım hızına sahip yol; kurumsal deployment'ler için niceleme, uçuş sırasında toplu işlem ve FP8 çekirdekleri.
+- [Hamel Husain -- Gecikmeyi Optimize Etme: TGI vs vLLM vs CTranslate2 vs mlc](https://hamel.dev/notes/llm/inference/03_inference.html) -- ana hizmet framework'ler genelinde aktarım hızı ve gecikme karşılaştırmasını ölçtü.

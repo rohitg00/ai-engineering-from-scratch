@@ -66,7 +66,7 @@ Değerlendirici üç bağımsız hesaplama yapar ve bunları karar yolunda birle
 
 Kayıpta şaşkınlık üsteldir. Kayıptaki 0,1'lik bir düşüş, şaşkınlıkta çok daha büyük bir düşüştür. Karışıklığı doğrudan iki yapılandırma arasında karşılaştırmak iyidir, ancak bunu tek bir raporda doğrusal metriklerle harmanlamak normalleştirme gerektirir.
 
-Ders, iyileştirmeyi hesaplamadan önce doğal logu alarak `scale` alanı `"log"` olan herhangi bir metriği normalleştirir. Eşik daha sonra günlük alanına uygulanır. Daha düşük olan daha iyi bir metrikte şaşkınlık oranının 32'den 28'e düşmesi `log(28) - log(32) = -0.133` olup, bu da yüzde iki eşiğinin oldukça üzerindedir.
+Ders, `scale` alanı `"log"` olan herhangi bir metriği, iyileştirmeyi hesaplamadan önce doğal logu alarak normalleştirir. Eşik daha sonra günlük alanına uygulanır. Şaşkınlık oranının 32'den 28'e düşmesi `log(28) - log(32) = -0.133`'nin daha düşük, daha iyi bir metrik olduğunu gösteriyor ve bu da yüzde iki eşiğinin oldukça üzerinde.
 
 ```text
 if scale == "log":
@@ -81,9 +81,9 @@ else:
 
 ## Tohum eşleştirilmiş testi başına
 
-Elli ikinci dersteki koşucu, çalıştırma başına bir son ölçüm blobu yayar. Eşleştirilmiş test için değerlendiricinin aday için tohum başına bir blob'a ve temel için tohum başına bir blob'a ihtiyacı vardır. Orkestratör, aynı denemeyi her iki konfigürasyon altında bir çekirdek listesinde çalıştırır ve değerlendiriciye iki `ExperimentResult` kayıt listesi verir.
+Elli ikinci dersteki koşucu, çalıştırma başına bir son ölçüm blobu yayar. Eşleştirilmiş test için değerlendiricinin aday için tohum başına bir blob'a ve temel için tohum başına bir blob'a ihtiyacı vardır. Orkestratör, aynı denemeyi her iki konfigürasyon altında bir çekirdek listesinde çalıştırır ve değerlendiriciye `ExperimentResult` kayıtlarının iki listesini verir.
 
-Değerlendirici bunları tohuma göre eşleştirir (çekirdek `result.metrics["seed"]`'da yaşar) ve istenen metriği yürütür. Eğer tohumlar iki listede eşleşmiyorsa, değerlendirici bir `PairingError` yükseltir. Orkestratörün yeniden çalıştırılması gerekir.
+Değerlendirici bunları tohuma göre eşleştirir (çekirdek `result.metrics["seed"]`'de yaşar) ve istenen metriğe göre hareket eder. Tohumlar iki listede eşleşmiyorsa değerlendirici `PairingError` değerini yükseltir. Orkestratörün yeniden çalıştırılması gerekir.
 
 ## Karar şekli
 
@@ -117,9 +117,9 @@ Gerekçe, orkestratörün hipotez kimliğine göre günlüğe kaydedebileceği t
 
 ## Kod nasıl okunur
 
-`code/main.py` , `MetricSpec`, `Verdict`, `Evaluator`'yi, t istatistiğini ve eksik beta yardımcılarını ve deterministik bir demoyu tanımlar. T testi saf stdlib matematiğinde uygulanır; numpy yalnızca metrik listesini okumak ve ortalamaları ve varyansları hesaplamak için kullanılır.
+`code/main.py`, `MetricSpec`, `Verdict`, `Evaluator`'yi, t istatistiğini ve eksik beta yardımcılarını ve deterministik bir demoyu tanımlar. T testi saf stdlib matematiğinde uygulanır; numpy yalnızca metrik listesini okumak ve ortalamaları ve varyansları hesaplamak için kullanılır.
 
-`code/tests/test_evaluator.py` iyileştirilmiş yolu, gerileyen yolu, gürültü yolunu (küçük iyileştirme), gürültü yolunu (düşük n), başarısız terminal yolunu, log normalize yolunu, bilinen bir referans değerine karşı t testini ve eşleştirme hatasını kapsar.
+`code/tests/test_evaluator.py` iyileştirilmiş yolu, gerileyen yolu, gürültü yolunu (küçük iyileştirme), gürültü yolunu (düşük n), arızalı terminal yolunu, log normalize yolunu, bilinen bir referans değerine karşı t testini ve eşleştirme hatasını kapsar.
 
 ## Bunun yeri neresi
 

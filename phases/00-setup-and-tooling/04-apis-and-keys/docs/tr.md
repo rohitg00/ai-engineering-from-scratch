@@ -16,7 +16,7 @@
 
 ## Sorun
 
-11. Aşamadan itibaren LLM API'lerini (Antropik, OpenAI, Google) arayacaksınız. Aşama 13-16'da bu API'leri döngüler halinde kullanan agent'lar oluşturacaksınız. API anahtarlarının nasıl çalıştığını, bunları nasıl güvenli bir şekilde saklayacağınızı ve ilk API çağrınızı nasıl yapacağınızı bilmeniz gerekir.
+11. Aşamadan itibaren LLM API'lerini (Antropik, OpenAI, Google) arayacaksınız. Aşama 13-16'da bu API'leri döngüler halinde kullanan agent'ler oluşturacaksınız. API anahtarlarının nasıl çalıştığını, bunları nasıl güvenli bir şekilde saklayacağınızı ve ilk API çağrınızı nasıl yapacağınızı bilmeniz gerekir.
 
 ## Konsept
 
@@ -45,7 +45,7 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 export OPENAI_API_KEY="sk-..."
 ```
 
-Veya bir `.env` dosyası kullanın (bunu `.gitignore` dosyasına ekleyin):
+Veya bir `.env` dosyası kullanın (bunu `.gitignore`'ye ekleyin):
 
 ```
 ANTHROPIC_API_KEY=sk-ant-...
@@ -125,9 +125,9 @@ Bu kurs için:
 
 | API'si | İhtiyacınız olduğunda | Ücretsiz katman |
 |-----|-----------------|-----------|
-| Antropik (Claude) | Aşama 11-16 (agentler, araçlar) | Kayıt sırasında 5$ kredi |
+| Antropik (Claude) | Aşamalar 11-16 (agent'ler, araçlar) | Kayıt sırasında 5$ kredi |
 | OpenAI | Aşama 11 (karşılaştırma) | Kayıt sırasında 5$ kredi |
-| Sarılma Yüzü | Aşama 4-10 (modeller, dataset'lar) | Ücretsiz |
+| Sarılma Yüzü | Aşama 4-10 (modeller, dataset'ler) | Ücretsiz |
 
 Şu anda hepsine ihtiyacınız yok. Ders gerektirdiğinde bunları kurun.
 
@@ -148,5 +148,5 @@ Bu ders şunları üretir:
 |------|----------------|----------------------|
 | API anahtarı | "API Şifresi" | Hesabınızı tanımlayan ve istekleri yetkilendiren benzersiz bir dize |
 | Oran sınırı | "Beni kısıtlıyorlar" | Kötüye kullanımı önlemek ve adil kullanımı sağlamak için dakika/saat başına maksimum talep |
-| Token | "Bir kelime" (API bağlamında) | Bir faturalandırma birimi: giriş ve çıkış token'lar ayrı ayrı sayılır ve ücretlendirilir |
-| Akış | "Gerçek zamanlı yanıtlar" | Yanıtın tamamını beklemek yerine yanıtı kelime kelime alma |
+| Token | "Bir kelime" (API bağlamında) | Faturalandırma birimi: giriş ve çıkış token'ler ayrı ayrı sayılır ve ücretlendirilir |
+| Akış | "Gerçek zamanlı yanıtlar" | Yanıtın tamamını beklemek yerine yanıtı sözcük sözcük alma |

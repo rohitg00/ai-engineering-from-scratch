@@ -11,11 +11,11 @@
 
 Üretken bir model, *numune kalitesi* ve *koşullandırma uyumuna* göre değerlendirilir. İkisinin de kapalı form ölçüsü yoktur. Modelinizin 10.000 görüntü oluşturması gerekiyor; bir şeyin onlara numaralar vermesi gerekiyor; model aileleri, çözünürlükler ve mimariler arasındaki sayılara güvenmek zorundasınız. 2014-2026 zorlu mücadelesinden üç ölçüt kurtuldu:
 
-- **FID (Fréchet Başlangıç ​​Mesafesi).** Bir Inception ağının özellik alanındaki iki dağıtım (gerçek ve oluşturulan) arasındaki mesafe. Daha düşük olması daha iyidir.
-- **CLIP puanı.** Oluşturulan bir görüntünün CLIP görüntüsü embedding ile bir prompt'nin CLIP metni embedding arasındaki kosinüs benzerliği. Daha yüksek daha iyidir. prompt uyumunu ölçer.
+- **FID (Fréchet Başlangıç Mesafesi).** Bir Inception ağının özellik alanındaki iki dağıtım (gerçek ve oluşturulan) arasındaki mesafe. Daha düşük olması daha iyidir.
+- **CLIP puanı.** Oluşturulan görüntünün CLIP görüntüsü embedding ile prompt'nin CLIP metni embedding arasındaki kosinüs benzerliği. Daha yüksek daha iyidir. prompt bağlılığını ölçer.
 - **İnsan tercihi.** Aynı prompt üzerinde iki modeli karşı karşıya getirin, insanların (veya GPT-4 sınıfı bir modelin) daha iyi olanı seçmesini sağlayın ve bir Elo puanı elde edin.
 
-Ayrıca şunu göreceksiniz: IS (başlangıç ​​puanı, büyük ölçüde kullanımdan kaldırıldı), KID, CMMD, ImageReward, PickScore, HPSv2, MJHQ-30k. Her biri öncekinin bir başarısızlığını düzeltir.
+Ayrıca şunu göreceksiniz: IS (başlangıç puanı, büyük ölçüde kullanımdan kaldırıldı), KID, CMMD, ImageReward, PickScore, HPSv2, MJHQ-30k. Her biri öncekinin bir başarısızlığını düzeltir.
 
 ## Konsept
 
@@ -26,7 +26,7 @@ Ayrıca şunu göreceksiniz: IS (başlangıç ​​puanı, büyük ölçüde ku
 Heusel ve ark. (2017). Adımlar:
 
 1. N adet gerçek görüntü ve N adet oluşturulan için Inception-v3 özelliklerini (2048-D) çıkarın.
-2. Her havuza bir Gaussian yerleştirin: ortalamayı `μ_r, μ_g` ve kovaryansı `Σ_r, Σ_g` hesaplayın.
+2. Her havuza bir Gaussian yerleştirin: `μ_r, μ_g` ortalamasını ve `Σ_r, Σ_g` kovaryansını hesaplayın.
 3. FID = `||μ_r - μ_g||² + Tr(Σ_r + Σ_g - 2 · (Σ_r · Σ_g)^0.5)`.
 
 Yorum: Özellik uzayında iki çok değişkenli Gaussian arasındaki Fréchet mesafesi. Daha düşük = daha benzer dağılımlar.
@@ -36,7 +36,7 @@ Arıza modları:
 - **Başlangıca bağımlı.** Inception-v3, ImageNet üzerinde eğitildi. ImageNet'ten uzak alanlar (yüzler, sanat, metin görselleri) anlamsız FID üretir. Etki alanına özgü bir özellik çıkarıcı kullanın.
 - **Oyun.** Başlangıç'a önceden gereğinden fazla uyum sağlamak, görsel kalitede iyileşme olmaksızın düşük FID sağlar. CMMD ile çırpın (aşağıda).
 
-### CLIP puanı — prompt bağlılık
+### CLIP puanı — prompt uyum
 
 Radford ve diğerleri. (2021). Oluşturulan bir görüntü için + prompt:
 
@@ -47,25 +47,25 @@ clip_score = cos_sim( CLIP_image(x_gen), CLIP_text(prompt) )
 Oluşturulan 30 bin görüntünün ortalaması → modeller arasında karşılaştırılabilir bir skaler değer.
 
 Arıza modları:
-- **CLIP'in kendi kör noktaları.** CLIP'in bileşimsel mantığı zayıftır ("mavi küre üzerinde kırmızı küp" çoğu zaman başarısız olur). Modeller, karmaşık prompt'ları gerçekten takip etmeden CLIP puanında iyi bir sıralamaya sahip olabilir.
-- **Kısa prompt sapması.** Kısa prompt'lerin doğada daha fazla CLIP görüntü eşleşmesi vardır. Daha uzun prompt'lar mekanik olarak daha düşük CLIP puanlarına sahiptir.
-- **Prompt oyun.** prompt'ye "yüksek kalite, 4k, başyapıt" eklemek, resim-metin bağlamayı iyileştirmeden CLIP puanını artırır.
+- **CLIP'in kendi kör noktaları.** CLIP'in bileşimsel mantığı zayıftır ("mavi küre üzerinde kırmızı küp" çoğu zaman başarısız olur). Modeller, karmaşık prompt'leri gerçekten takip etmeden CLIP puanında iyi sıralanabilir.
+- **Kısa prompt sapması.** Kısa prompt'lerin doğada daha fazla CLIP görüntüsü eşleşmesi vardır. Daha uzun prompt'ler mekanik olarak daha düşük CLIP puanlarına sahiptir.
+- **Prompt oyun.** prompt'ye "yüksek kalite, 4k, başyapıt"ın dahil edilmesi, görüntü-metin bağlamayı iyileştirmeden CLIP puanını artırır.
 
 CMMD (Jayasumana ve diğerleri, 2024) bunlardan bazılarını düzeltir: Inception yerine CLIP özelliklerini kullanır, Fréchet yerine maksimum ortalama tutarsızlığını kullanır. İnce kalite farklılıklarını tespit etmede daha iyi.
 
 ### İnsan tercihi — temel gerçek
 
-prompt'lardan oluşan bir havuz seçin. Model A ve model B ile oluşturun. Çiftleri insanlara (veya güçlü bir Yüksek Lisans jürisine) gösterin. Kazançları Elo veya Bradley-Terry skoruna toplayın. Benchmark'lar:
+prompt'lerden oluşan bir havuz seçin. Model A ve model B ile oluşturun. Çiftleri insanlara (veya güçlü bir Yüksek Lisans jürisine) gösterin. Kazançları Elo veya Bradley-Terry skoruna toplayın. Benchmark'ler:
 
-- **PartiPrompt'ler (Google)**: 1.600 çeşitli prompt'ler, 12 kategori.
+- **PartiPrompt'ler (Google)**: 1.600 farklı prompt, 12 kategori.
 - **HPSv2**: 107 bin insan ek açıklaması, yaygın olarak otomatik proxy olarak kullanılır.
-- **ImageReward**: 137k prompt-resim tercihi çifti, MIT lisanslı.
-- **PickScore**: Pick-a-Pic 2,6M tercihleri ​​üzerine eğitilmiştir.
-- **Chatbot-Arena tarzı resim arenaları**: https://imagearena.ai/ ve diğerleri.
+- **ImageReward**: 137k prompt-görüntü tercih çifti, MIT lisanslı.
+- **PickScore**: Pick-a-Pic 2,6M tercihleri üzerine eğitilmiştir.
+- **Chatbot-Arena tarzı görüntü arenaları**: https://imagearena.ai/ ve diğerleri.
 
 Arıza modları:
-- **Yargıç farklılığı.** Uzman olmayanların uzmanlardan farklı tercihleri ​​vardır. Her ikisini de kullanın.
-- **Prompt dağıtım.** Özenle seçilmiş prompt'ler bir aileyi tercih ediyor. Daima belgeleyin.
+- **Yargıç farklılığı.** Uzman olmayanların uzmanlardan farklı tercihleri vardır. Her ikisini de kullanın.
+- **Prompt dağıtımı.** Özenle seçilmiş prompt'ler bir aileyi tercih eder. Daima belgeleyin.
 - **Yüksek Lisans jürisi ödül hacklemesi.** GPT-4 jürisi güzel ama yanlış çıktılara kanıyor. İnsanla üçgen yapın.
 
 ## Birlikte kullanın
@@ -73,7 +73,7 @@ Arıza modları:
 Bir üretim değerlendirme raporu şunları içermelidir:
 
 1. Uzatılmış bir gerçek dağılıma (örnek kalitesi) karşı 10-30 bin örnek üzerinde FID.
-2. Aynı örneklerde CLIP puanı / CMMD ile prompt'leri (bağlılık).
+2. Aynı numunelerde CLIP puanı / CMMD ile prompt'leri (bağlılık).
 3. Kör bir arenada önceki modele kıyasla kazanma oranı (genel tercih).
 4. Arıza modu analizi: Bilinen sorunlar (el anatomisi, metin oluşturma, tutarlı nesne sayısı) için işaretlenen 50 rastgele örneklenmiş çıktı.
 
@@ -81,7 +81,7 @@ Herhangi bir ölçüm yalandır. Üç doğrulayıcı ölçüm + niteliksel incel
 
 ## İnşa Et
 
-`code/main.py`, sentetik "özellik vektörleri" üzerinde FID, CLIP-score-like ve Elo toplamayı uygular (Başlangıç ​​özellikleri için yedek olarak 4 boyutlu vektörleri kullanırız). Anlıyorsun:
+`code/main.py`, sentetik "özellik vektörleri" üzerinde FID, CLIP puanı benzeri ve Elo toplamayı uygular (Başlangıç özelliklerinin yerine geçenler olarak 4 boyutlu vektörleri kullanırız). Şunu görüyorsunuz:
 
 - Küçük bir N ve büyük bir N üzerinde FID hesaplaması — sapma.
 - Özellik havuzları arasındaki kosinüs benzerliği olarak "CLIP puanı".
@@ -123,8 +123,8 @@ def elo_update(r_a, r_b, winner, k=32):
 - **N=1000'de FID.** Sezgisel yöntem N=10k altında güvenilir değildir. Düşük N FID'yi bildiren makaleler oyun amaçlıdır.
 - **FID'nin çözünürlükler arasında karşılaştırılması.** Inception'ın 299×299 yeniden boyutlandırması özellik dağılımını değiştirir. Yalnızca eşleşen çözünürlükte karşılaştırın.
 - **Bir tohum rapor ediliyor.** Minimum 3 tohum çalıştırın. Rapor std.
-- **CLIP puanı negatif prompt'ler yoluyla enflasyona neden olur.** Bazı boru hatları, prompt'ye aşırı uyum sağlayarak CLIP'i artırır. Görsel doygunluğu kontrol edin.
-- **prompt örtüşmesinden kaynaklanan Elo önyargısı.** Her iki model de eğitim sırasında bir benchmark prompt gördüyse, Elo anlamsızdır. Uzatılmış prompt setleri kullanın.
+- **Negatif prompt'ler yoluyla CLIP puanı enflasyonu.** Bazı boru hatları, prompt'yi aşırı takarak CLIP'i güçlendirir. Görsel doygunluğu kontrol edin.
+- **prompt'den gelen Elo yanlılığı örtüşüyor.** Her iki model de eğitim sırasında bir benchmark prompt görürse, Elo anlamsızdır. Uzatılmış prompt setlerini kullanın.
 - **İnsanlar ücretli kalabalığı çarpık olarak değerlendiriyor.** Üretken, MTurk yorumcuları daha genç / teknoloji dostu olanı çarpıtıyor. İşe alınan sanat/tasarım uzmanlarıyla bir araya gelin.
 
 ## Kullan onu
@@ -142,42 +142,42 @@ Tek bir raporda dört sütunun tamamı = iddia. Herhangi biri tek başına = paz
 
 ## Gönderin
 
-`outputs/skill-eval-report.md`'yi kaydet. Skill, yeni bir model kontrol noktası + temel çizgisini alır ve tam bir değerlendirme planının çıktısını alır: örnek boyutları, ölçümler, hata modu araştırmaları, imzalama kriterleri.
+`outputs/skill-eval-report.md`'yi kaydedin. Skill, yeni bir model kontrol noktası + temel çizgisini alır ve tam bir değerlendirme planının çıktısını alır: örnek boyutları, ölçümler, hata modu araştırmaları, imzalama kriterleri.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py` komutunu çalıştırın. Aynı sentetik dağılımlarda N=100 ve N=1000'deki FID'yi karşılaştırın. Önyargı büyüklüğünü bildirin.
+1. **Kolay.** `code/main.py`'yi çalıştırın. Aynı sentetik dağılımlarda N=100 ve N=1000'deki FID'yi karşılaştırın. Önyargı büyüklüğünü bildirin.
 2. **Orta.** CMMD'yi sentetik CLIP tarzı özelliklerden uygulayın (formül için bkz. Jayasumana ve diğerleri, 2024). Kalite farklılıklarına karşı hassasiyeti FID ile karşılaştırın.
-3. **Zor.** HPSv2 kurulumunu kopyalayın: Pick-a-Pic alt kümesinden 1000 görüntü-prompt çifti alın, tercihlere göre küçük bir CLIP tabanlı puanlayıcıya ince ayar yapın ve bunun uzatılmış bir kümeyle uyumunu ölçün.
+3. **Zor.** HPSv2 kurulumunu kopyalayın: Pick-a-Pic alt kümesinden 1000 görüntü-prompt çifti alın, tercihlere göre küçük bir CLIP tabanlı puanlayıcıya ince ayar yapın ve bunun uzatılmış bir setle uyumunu ölçün.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
 | FID | "Fréchet Başlangıç ​​Mesafesi" | Gaussian'ın Fréchet mesafesi gerçek ve gen Başlangıç ​​özelliklerine uyuyor. |
-| KLİP puanı | "Metin-görüntü benzerliği" | CLIP görüntüsü ile embeddings metni arasındaki kosinüs benzerliği. |
+| KLİP puanı | "Metin-görüntü benzerliği" | CLIP görüntüsü ile embedding metni arasındaki kosinüs benzerliği. |
 | CMMD | "FID'nin değiştirilmesi" | CLIP özellikli MMD; daha az önyargılı, Gauss varsayımı yok. |
 | IS | "Başlangıç ​​puanı" | Deney KL(p(y|x) || p(y)); modern modellerle zayıf korelasyona sahiptir, kullanımdan kaldırılmıştır. |
 | HPSv2 / ImageReward / PickScore | "Öğrenilmiş tercih proxy'leri" | İnsan tercihlerine göre eğitilmiş küçük modeller; otomatik yargıç olarak kullanılır. |
 | Elo | "Satranç değerlendirmesi" | Bradley-Terry ikili galibiyetlerin toplamı. |
-| PartiPromptler | "benchmark prompt kümesi" | 12 kategoride Google tarafından seçilmiş 1.600 prompt. |
+| PartiPrompt'ler | "benchmark prompt seti" | 12 kategoride Google tarafından seçilen 1.600 prompt. |
 | FD-DINO | "Kendi kendine destekli değiştirme" | DINOv2 özelliklerini kullanan FD; ImageNet dışı alanlar için daha iyidir. |
 
 ## Üretim notu: değerlendirme de bir inference iş yüküdür
 
-FID'yi 10 bin örnek üzerinde çalıştırmak, 10 bin görüntü oluşturmak anlamına gelir. Tek bir L4 üzerinde 1024²'de 50 adımlı bir SDXL tabanı için bu, ~11 saatlik tek istek inference anlamına gelir. Değerlendirme bütçeleri gerçektir ve çerçeveleme tam olarak çevrimdışı-inference senaryosudur (verimliliği en üst düzeye çıkarın, TTFT'yi göz ardı edin):
+FID'yi 10 bin örnek üzerinde çalıştırmak, 10 bin görüntü oluşturmak anlamına gelir. Tek bir L4 üzerinde 1024²'de 50 adımlı bir SDXL tabanı için bu, ~11 saatlik tek istek inference anlamına gelir. Değerlendirme bütçeleri gerçektir ve çerçeveleme tam olarak çevrimdışı inference senaryosudur (verimliliği en üst düzeye çıkarın, TTFT'yi göz ardı edin):
 
-- **Zor toplu işlem yapın, gecikmeyi unutun.** Çevrimdışı değerlendirme = belleğe sığan en büyük boyutta statik toplu işlem. 80 GB H100'de `num_images_per_prompt=8` ile `pipe(...).images`, tekli istekten 4-6 kat daha hızlı duvar saatinde çalışır.
-- **Gerçek özellikleri önbelleğe alın.** Gerçek referans seti üzerinden Inception (FID) veya CLIP (CLIP-score, CMMD) özellik çıkarma işlemi *bir kez* çalıştırılır ve `.npz` olarak saklanır. Değerlendirme başına yeniden hesaplama yapmayın.
+- **Zor toplu işlem yapın, gecikmeyi unutun.** Çevrimdışı değerlendirme = belleğe sığan en büyük boyutta statik toplu işlem. 80 GB H100 üzerinde `num_images_per_prompt=8` ile `pipe(...).images`, tekli isteğe göre 4-6 kat daha hızlı duvar saatinde çalışır.
+- **Gerçek özellikleri önbelleğe alın.** Gerçek referans seti üzerinden Inception (FID) veya CLIP (CLIP-score, CMMD) özellik çıkarma *bir kez* çalıştırılır ve `.npz` olarak saklanır. Değerlendirme başına yeniden hesaplama yapmayın.
 
 CI / regresyon kapıları için: PR başına 500 örnekli bir alt kümede FID + CLIP skorunu çalıştırın (~30 dakika); her gece tam 10k FID + HPSv2 + Elo çalıştırın.
 
 ## Daha Fazla Okuma
 
-- [Heusel ve ark. (2017). İki Zaman Ölçeği Güncelleme Kuralı ile Eğitilen GAN'lar Yerel Nash Dengesine (FID)](https://arxiv.org/abs/1706.08500) — FID makalesi.
+- [Heusel ve ark. (2017). İki Zaman Ölçeği Güncelleme Kuralıyla Eğitilen GAN'lar Yerel Nash Dengesine (FID) Yakınsıyor](https://arxiv.org/abs/1706.08500) — FID makalesi.
 - [Jayasumana ve ark. (2024). FID'yi Yeniden Düşünmek: Görüntü Oluşturma için Daha İyi Bir Değerlendirme Metriğine Doğru (CMMD)](https://arxiv.org/abs/2401.09603) — CMMD.
 -[Radford ve ark. (2021). Doğal Dil Denetiminden (CLIP) Aktarılabilir Görsel Modellerin Öğrenilmesi](https://arxiv.org/abs/2103.00020) — CLIP.
 - [Wu ve ark. (2023). HPSv2: Kapsamlı Bir İnsan Tercihi Puanı](https://arxiv.org/abs/2306.09341) — HPSv2.
 - [Xu ve ark. (2023). ImageReward: Metinden Görüntü Oluşturmaya Yönelik İnsan Tercihlerini Öğrenmek ve Değerlendirmek](https://arxiv.org/abs/2304.05977) — ImageReward.
-- [Yu ve ark. (2023). İçerik Açısından Zengin Metinden Görüntüye Oluşturma için Otoregresif Modellerin Ölçeklenmesi (Parti + PartiPrompts)](https://arxiv.org/abs/2206.10789) — PartiPrompt'ler.
-- [Stein ve ark. (2023). Üretken model değerlendirme metriklerinin kusurlarını ortaya çıkarma](https://arxiv.org/abs/2306.04675) — başarısızlık modu araştırması.
+- [Yu ve ark. (2023). İçerik Açısından Zengin Metin-Görüntü Oluşturma için Otoregresif Modelleri Ölçeklendirme (Parti + PartiPrompts)](https://arxiv.org/abs/2206.10789) — PartiPrompts.
+- [Stein ve ark. (2023). Üretken model değerlendirme ölçümlerindeki kusurların ortaya çıkarılması](https://arxiv.org/abs/2306.04675) — hata modu araştırması.

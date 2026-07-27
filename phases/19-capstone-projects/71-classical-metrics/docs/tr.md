@@ -17,13 +17,13 @@
 
 ## Neden yeniden uygulama
 
-BLEU 28.3'ü bildiren makaleleri ve BLEU 0.283'ü bildiren başka makaleleri okuyacaksınız. ROUGE-L puanlarının iki kitaplık arasında on puanlık farklılık gösterdiğini göreceksiniz çünkü biri küçük harfe dönüşüyor, diğeri ise kesilmiyor. Kafanızın karışmasını önlemenin en hızlı yolu, metrikleri kendiniz yazmak, ardından tokenizer'ya karar verilen çizgiyi ve yumuşatmanın uygulandığı çizgiyi işaret etmektir. Bundan sonra, sayıları makaleler arasında karşılaştırmak, kütüphaneler hakkında tartışmak değil, ölçüm düzenini okumak meselesi haline gelir.
+BLEU 28.3'ü bildiren makaleleri ve BLEU 0.283'ü bildiren başka makaleleri okuyacaksınız. ROUGE-L puanlarının iki kitaplık arasında on puanlık farklılık gösterdiğini göreceksiniz çünkü biri küçük harfe dönüşüyor, diğeri ise kesilmiyor. Kafanızın karışmasını önlemenin en hızlı yolu, metrikleri kendiniz yazmak, ardından tokenizer'ye karar verilen çizgiyi ve yumuşatmanın uygulandığı çizgiyi işaret etmektir. Bundan sonra, sayıları makaleler arasında karşılaştırmak, kütüphaneler hakkında tartışmak değil, ölçüm düzenini okumak meselesi haline gelir.
 
-Stdlib artı numpy yeterlidir. BLEU sayıyor ve bir kelepçe. ROUGE-L dinamik programlamadır. F1, tokens üzerinde belirlenmiş bir kesişimdir. En zor kısım bir tokenizer seçmek ve ona bağlı kalmaktır.
+Stdlib artı numpy yeterlidir. BLEU sayıyor ve bir kelepçe. ROUGE-L dinamik programlamadır. F1, token'ler üzerinde belirlenmiş bir kavşaktır. En zor kısım bir tokenizer seçmek ve ona bağlı kalmaktır.
 
 ## Tokenizasyon
 
-tokenizer, `re.findall(r"\w+", text.lower())`'dır. Küçük harf, alfanümerik gösterimler, noktalama işaretleri. Bu dersteki her metrik tam olarak bu tokenizer'yi kullanır. Koşucunun seçim hakkı yoktur. tokenizer'ları değiştirirseniz farklı bir benchmark çalıştırıyorsunuz demektir.
+tokenizer, `re.findall(r"\w+", text.lower())`'dir. Küçük harf, alfanümerik gösterimler, noktalama işaretleri. Bu dersteki her metrik tam olarak bu tokenizer'yi kullanır. Koşucunun seçim hakkı yoktur. tokenizer'leri değiştirirseniz farklı bir benchmark çalıştırıyorsunuz demektir.
 
 ```python
 TOKEN_RE = re.compile(r"\w+", re.UNICODE)
@@ -31,7 +31,7 @@ def tokenize(text):
     return TOKEN_RE.findall(text.lower())
 ```
 
-Bu kasıtlı bir basitleştirmedir. Üretim kurulumları CJK'ye, kısaltmalara ve kod tanımlayıcılara önem verecektir. Dersin amacı tokenizer'nın bir düğme değil, bir sözleşme olduğudur.
+Bu kasıtlı bir basitleştirmedir. Üretim kurulumları CJK'ye, kısaltmalara ve kod tanımlayıcılara önem verecektir. Dersin amacı tokenizer'nin bir düğme değil, bir sözleşme olduğudur.
 
 ## Tam eşleşme
 
@@ -42,7 +42,7 @@ def exact_match(pred, targets):
 
 Görev başına 1,0 veya 0,0 değerini döndürür. dataset üzerinden toplam ortalamadır. Bu, aritmetik, MCQ ve kısa sınıflandırma görevleri için en güçlü araçtır.
 
-## Token-seviye F1
+## Token düzeyi F1
 
 Tahmin ve hedef için token çoklu kümesini kurun. Hassasiyet, tahminin çoklu kümesine bölünen çoklu küme kesişimidir. Geri çağırma, hedefin çoklu kümesine bölünen aynı kesişimdir. F1 harmonik ortalamadır. Uygulama, boş tahmin ve boş hedef uç durumlarını ele alır.
 
@@ -64,7 +64,7 @@ flowchart LR
 
 BLEU kanonik makine çevirisi ölçütüdür ve özetleme çalışmalarında hala karşımıza çıkmaktadır. Kullandığımız formülasyon, standart kısalık cezası ve değiştirilmiş n-gram sayımlarında ilave bir düzeltme ile birlikte korpus düzeyinde BLEU-4'tür, böylece tek bir eksik 4 gram, puanı sıfıra itmez.
 
-Her aday-referans çifti için, n eşittir 1, 2, 3, 4 için değiştirilmiş n-gram kesinliğini sayarız. Değiştirilmiş hassaslık, aday n-gram sayısını herhangi bir referanstaki o n-gramın maksimum sayısına göre keser, böylece aday bir cümleyi tekrarlayarak şişiremez. Dört hassasiyetin geometrik ortalaması, kısalık cezasıyla sarılır.
+Her aday-referans çifti için, n eşittir 1, 2, 3, 4 için değiştirilmiş n-gram kesinliğini sayarız. Değiştirilmiş hassaslık, aday n-gram sayısını herhangi bir referanstaki o n-gramın maksimum sayısına göre keser, böylece aday bir cümleyi tekrarlayarak şişirilemez. Dört hassasiyetin geometrik ortalaması, kısalık cezasıyla sarılır.
 
 ```mermaid
 flowchart TD
@@ -82,11 +82,11 @@ flowchart TD
     BP --> S
 ```
 
-Yumuşatma kuralı, Lin ve Och'un yöntem 1 olarak adlandırdığı kuraldır: günlüğü almadan önce her n-gram hassasiyetinin hem payına hem de paydasına bir ekleyin. Bu, bir referansın 4 gramla eşleşen bir değeri olmadığında ve uzun adaylarda yumuşatılmamış değere yakın kaldığında `log 0` 'yi önler.
+Yumuşatma kuralı, Lin ve Och'un yöntem 1 olarak adlandırdığı kuraldır: günlüğü almadan önce her n-gram hassasiyetinin hem payına hem de paydasına bir ekleyin. Bu, bir referansın eşleşen 4 gramı olmadığında ve uzun adaylarda yumuşatılmamış değere yakın kaldığında `log 0`'yi önler.
 
 ## ROUGE-L
 
-ROUGE-L aday ve referans token dizilerinin en uzun ortak alt dizisini karşılaştırır. LCS, bitişikliği zorlamadan kelime sırasını yakalar; bu nedenle varsayılan özetleme ölçüsüdür. LCS uzunluğunu standart bir dinamik programlama tablosuyla hesaplıyoruz, ardından geri çağırmayı `lcs / reference length` olarak, kesinliği `lcs / candidate length` olarak türetiyoruz ve simetrik F1 formu için betanın bire eşit olduğu F-beta ile birleştiriyoruz.
+ROUGE-L aday ve referans token dizilerinin en uzun ortak alt dizisini karşılaştırır. LCS, bitişikliği zorlamadan kelime sırasını yakalar; bu nedenle varsayılan özetleme ölçüsüdür. LCS uzunluğunu standart bir dinamik programlama tablosuyla hesaplıyoruz, ardından `lcs / reference length` olarak geri çağırmayı, `lcs / candidate length` olarak hassasiyeti türetiyoruz ve betanın simetrik F1 formu için bire eşit olduğu F-beta ile birleştiriyoruz.
 
 ```python
 def lcs_length(a, b):
@@ -103,13 +103,13 @@ def lcs_length(a, b):
 
 Numpy tablosu uygulamayı okunaklı hale getirir; saf Python listeleri de işe yarayacaktır. ROUGE-L'yi tercih eden görevler, görev başına O(n m) maliyetini öder. Bir milisaniyenin altında kalan tipik özet uzunlukları için.
 
-## Kesinlik
+## Doğruluk
 
-Çok hedefli sınıflandırma görevlerinde doğruluk, tek bir normalleştirilmiş hedefe karşı tam eşleşmeye indirgenir. Dispatcher'ın, koşucu içinde dize karşılaştırmalarına girmeden `metric_name` üzerinde gönderim yapabilmesi için onu ayrı bir işlev olarak kullanıma sunuyoruz.
+Çok hedefli sınıflandırma görevlerinde doğruluk, tek bir normalleştirilmiş hedefe karşı tam eşleşmeye indirgenir. Göndericinin, koşucunun içindeki dize karşılaştırmalarına girmeden `metric_name` üzerinden gönderim yapabilmesi için bunu ayrı bir işlev olarak kullanıma sunuyoruz.
 
 ## Sevkiyat sözleşmesi
 
-Tek giriş noktası `score(metric_name, prediction, targets)`'dır. `[0, 1]`'da bir kayan nokta döndürür. Koşucu metrik adına göre dallanmaz. Aramayı bırakır ve sonucu yazar. Bu, 75. dersin 70. dersteki görev spesifikasyonuna yapıştıracağı yüzeydir.
+Tek giriş noktası `score(metric_name, prediction, targets)`'dir. `[0, 1]`'de bir kayan nokta döndürür. Koşucu metrik adına göre dallanmaz. Aramayı bırakır ve sonucu yazar. Bu, 75. dersin 70. dersteki görev spesifikasyonuna yapıştıracağı yüzeydir.
 
 ```python
 def score(metric_name, pred, targets):
@@ -126,17 +126,17 @@ def score(metric_name, pred, targets):
     raise ValueError(f"unknown metric_name: {metric_name}")
 ```
 
-`code_exec` 72. derste işleniyor ve oradaki dağıtıcıya yerleştiriliyor.
+`code_exec` 72. derste işlenir ve oradaki dağıtıcıya yerleştirilir.
 
 ## Bu ders ne yapmaz
 
-Bir model çağırmaz. Bu, 70. dersteki süreç sonrası kuralların zaten yaptığının ötesinde nesilleri normalleştirmez. Güven aralıklarını hesaplamaz. BLEURT veya BERTScore (modele ihtiyaç duyan ve farklı bir ders yaşayanlar) yapmaz. Önemli olan tabandır: beş metrik, bir tokenizer, bir gönderme tablosu.
+Bir model çağırmaz. Bu, 70. dersteki süreç sonrası kuralların zaten yaptığının ötesinde nesilleri normalleştirmez. Güven aralıklarını hesaplamaz. BLEURT veya BERTScore (modele ihtiyaç duyan ve farklı bir ders yaşayanlar) yapmaz. Önemli olan tabandır: beş ölçüm, bir tokenizer, bir sevk tablosu.
 
 ## Kod nasıl okunur
 
-`main.py` , her metriği serbest bir işlev artı dağıtıcı olarak tanımlar. Referans vektörleri dosyanın alt kısmındaki `_reference_examples` bloğunda bulunur. Demo, dağıtıcıyı sekiz örnekle çalıştırıyor ve metrik başına puanları yazdırıyor. `code/tests/test_metrics.py` 'deki testler referans vektörlerini sabitler ve her uç durumu vurgular (boş tahmin, boş referans, paylaşılan token yok, tam eşleşme, tekrarlanan ifade kırpma).
+`main.py`, her ölçümü serbest bir işlev artı dağıtıcı olarak tanımlar. Referans vektörleri dosyanın altındaki `_reference_examples` bloğunda bulunur. Demo, dağıtıcıyı sekiz örnekle çalıştırıyor ve metrik başına puanları yazdırıyor. `code/tests/test_metrics.py`'deki testler referans vektörlerini sabitler ve her uç durumu vurgular (boş tahmin, boş referans, paylaşılan token yok, tam eşleşme, tekrarlanan ifade kırpma).
 
-`main.py` 'u yukarıdan aşağıya doğru okuyun. İşlevler karmaşıklığa göre sıralanır. kesin_eşleşme ve doğruluk her biri birer satırdır. F1 altı satırdır. BLEU ve ROUGE-L ağır parçalardır ve yumuşatma kuralı ve LCS yinelemesi hakkında ayrıntılı yorumlar içerirler.
+`main.py`'yi yukarıdan aşağıya okuyun. İşlevler karmaşıklığa göre sıralanır. kesin_eşleşme ve doğruluk her biri birer satırdır. F1 altı satırdır. BLEU ve ROUGE-L ağır parçalardır ve yumuşatma kuralı ve LCS yinelemesi hakkında ayrıntılı yorumlar içerirler.
 
 ## Daha ileri gidiyoruz
 

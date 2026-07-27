@@ -1,95 +1,95 @@
-# Bias and Representational Harm in LLMs
+# Yüksek Lisans'ta Önyargı ve Temsili Zarar
 
-> Gallegos, Rossi, Barrow, Tanjim, Kim, Dernoncourt, Yu, Zhang, Ahmed (Computational Linguistics 2024, arXiv:2309.00770). Foundational 2024 survey distinguishing representational harms (stereotypes, erasure) from allocational harms (unequal resource distribution) and categorizing evaluation metrics as embedding-based, probability-based, or generated-text-based. 2024-2025 empirical: An et al. (PNAS Nexus, March 2025) measure intersectional gender x race bias across GPT-3.5 Turbo, GPT-4o, Gemini 1.5 Flash, Claude 3.5 Sonnet, Llama 3-70B on automated resume evaluation for 20 entry-level jobs. WinoIdentity (COLM 2025, arXiv:2508.07111) introduces uncertainty-based fairness evaluation for intersectional identities. Yu & Ananiadou 2025 identify gender neurons in MLP layers; Ahsan & Wallace 2025 use SAEs to reveal clinical racial bias; Zhou et al. 2024 (UniBias) manipulates attention heads for debiasing. Meta-critique (arXiv:2508.11067): 10-year literature disproportionately focuses on binary-gender bias.
+> Gallegos, Rossi, Barrow, Tanjim, Kim, Dernoncourt, Yu, Zhang, Ahmed (Computational Linguistics 2024, arXiv:2309.00770). Temsili zararları (klişeler, silme) tahsis zararlarından (eşitsiz kaynak dağıtımı) ayıran ve değerlendirme metriklerini embedding tabanlı, olasılık tabanlı veya oluşturulan metin tabanlı olarak kategorize eden temel 2024 araştırması. 2024-2025 ampirik: An ve ark. (PNAS Nexus, Mart 2025), 20 giriş seviyesi iş için otomatik özgeçmiş değerlendirmesinde GPT-3.5 Turbo, GPT-4o, Gemini 1.5 Flash, Claude 3.5 Sonnet, Llama 3-70B genelinde kesişimsel cinsiyet x ırk önyargısını ölçtü. WinoIdentity (COLM 2025, arXiv:2508.07111), kesişimsel kimlikler için belirsizliğe dayalı adalet değerlendirmesini sunar. Yu ve Ananiadou 2025, MLP katmanlarındaki cinsiyet nöronlarını tanımlamaktadır; Ahsan ve Wallace 2025, klinik ırksal önyargıyı ortaya çıkarmak için SAE'leri kullanıyor; Zhou ve diğerleri. 2024 (UniBias), önyargıyı ortadan kaldırmak için dikkat kafalarını yönlendirir. Meta-eleştiri (arXiv:2508.11067): 10 yıllık literatür orantısız bir şekilde ikili cinsiyet önyargısına odaklanıyor.
 
-**Type:** Build
-**Languages:** Python (stdlib, toy embedding-based bias probe)
-**Prerequisites:** Phase 05 (word embeddings), Phase 18 · 01 (instruction following)
-**Time:** ~60 minutes
+**Tür:** Yapım
+**Diller:** Python (stdlib, toy embedding tabanlı önyargı araştırması)
+**Önkoşullar:** Aşama 05 (kelime embeddings), Aşama 18 · 01 (talimat takip ediyor)
+**Süre:** ~60 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Define representational vs allocational harm and give one example of each in an LLM deployment.
-- Name the three evaluation-metric categories from Gallegos et al. 2024 and describe one metric from each.
-- Describe intersectionality and why WinoIdentity's uncertainty-based fairness measurement addresses gaps in single-axis bias evaluation.
-- Describe two mechanistic-interpretability approaches to bias (gender neurons, SAE features, attention-head manipulation).
+- Temsil ve tahsis zararını tanımlayın ve her birine yüksek lisansta birer örnek verin deployment.
+- Gallegos ve diğerlerinin sunduğu üç değerlendirme metriği kategorisini adlandırın. 2024 ve her birinden bir metrik açıklayın.
+- Kesişimselliği ve WinoIdentity'nin belirsizliğe dayalı adalet ölçümünün neden tek eksenli önyargı değerlendirmesindeki boşlukları ele aldığını açıklayın.
+- Önyargıya yönelik iki mekanik yorumlanabilirlik yaklaşımını tanımlayın (cinsiyet nöronları, SAE özellikleri, dikkat-kafa manipülasyonu).
 
-## The Problem
+## Sorun
 
-The previous lessons cover deliberate harm (jailbreaks, scheming) and safety governance. Bias is harm that emerges without intent — from training data distributions, from prompt framing, from accumulated design choices. Measuring and reducing it is a distinct methodological challenge from adversarial robustness.
+Önceki dersler kasıtlı zarar verme (hapisten kaçış, entrika) ve güvenlik yönetimi konularını kapsıyordu. Önyargı, eğitim verisi dağıtımlarından, prompt çerçevelemeden, birikmiş tasarım tercihlerinden kasıtsız olarak ortaya çıkan zarardır. Bunu ölçmek ve azaltmak, rakip sağlamlıktan farklı bir metodolojik zorluktur.
 
-## The Concept
+## Konsept
 
-### Representational vs allocational
+### Temsili ve tahsisli
 
-- **Representational harm.** Stereotypes, erasure, demeaning portrayals. An LLM that depicts nurses as exclusively female is producing representational harm.
-- **Allocational harm.** Unequal material outcomes. An LLM that scores Black applicants' resumes systematically lower is producing allocational harm.
+- **Temsili zarar.** Kalıp yargılar, silme, aşağılayıcı tasvirler. Hemşireleri yalnızca kadın olarak tasvir eden bir yüksek lisans, temsili zarara yol açıyor.
+- **Tahsis zararı.** Eşit olmayan maddi sonuçlar. Siyah başvuru sahiplerinin özgeçmişlerini sistematik olarak daha düşük puanlayan bir Yüksek Lisans, tahsisat açısından zarar yaratıyor.
 
-These are not the same. A model can be "representationally unbiased" (produces diverse portrayals) while being "allocationally biased" (makes unequal recommendations). Evaluations need to measure both.
+Bunlar aynı değil. Bir model "temsil açısından tarafsız" olabilir (çeşitli tasvirler üretir), "tahsis açısından önyargılı" olabilir (eşit olmayan önerilerde bulunur). Değerlendirmelerin her ikisini de ölçmesi gerekir.
 
-### Three evaluation-metric categories (Gallegos et al. 2024)
+### Üç değerlendirme metriği kategorisi (Gallegos ve diğerleri 2024)
 
-- **Embedding-based.** WEAT-style tests on pre-RLHF embeddings. Measures statistical associations between identity terms and attribute terms. Limited: measures the representation, not the behaviour.
-- **Probability-based.** Log-likelihood of stereotype-confirming vs stereotype-violating completions. Decoder-side measurement. Captures some behavioural bias.
-- **Generated-text-based.** Downstream-task measurement on generated text. Resume-scoring, recommendation writing, dialogue. Most ecologically valid; hardest to reproduce.
+- **Embedding-tabanlı.** RLHF öncesi embedding'lerde WEAT tarzı testler. Kimlik terimleri ve öznitelik terimleri arasındaki istatistiksel ilişkileri ölçer. Sınırlı: Davranışı değil temsili ölçer.
+- **Olasılığa dayalı.** Basmakalıp yargıları doğrulayan ve stereotipleri ihlal eden tamamlamaların günlük olasılığı. Kod çözücü tarafı ölçümü. Bazı davranışsal önyargıları yakalar.
+- **Oluşturulan metin tabanlı.** Oluşturulan metin üzerinde aşağı yönlü görev ölçümü. Özgeçmiş puanlama, öneri yazma, diyalog. Ekolojik olarak en geçerli; çoğaltılması en zor olanıdır.
 
-### Intersectionality
+### Kesişimsellik
 
-Bias evaluation on "gender" misses the bias that only fires on (gender, race) pairs. An et al. 2025 find GPT-4o penalizes Black women in resume scoring more than Black men and more than white women separately. Single-axis evaluation cannot capture this.
+"Cinsiyet" konusundaki önyargı değerlendirmesi, yalnızca (cinsiyet, ırk) çiftlere yol açan önyargıyı gözden kaçırıyor. An ve ark. 2025 bulgusu GPT-4o, özgeçmişte Siyah kadınları Siyah erkeklerden ve beyaz kadınlardan ayrı ayrı daha fazla puan alarak cezalandırıyor. Tek eksenli değerlendirme bunu yakalayamaz.
 
-WinoIdentity (COLM 2025) introduces uncertainty-based intersectional fairness. It measures whether the model's uncertainty over outcomes differs across intersectional identity tuples — not just the point prediction. This catches cases where the model is equally wrong across groups but more uncertain for some, which produces different downstream allocation behaviour.
+WinoIdentity (COLM 2025) belirsizliğe dayalı kesişimsel adaleti tanıtıyor. Yalnızca nokta tahmininde değil, modelin sonuçlara ilişkin belirsizliğinin kesişimsel kimlik grupları arasında farklılık gösterip göstermediğini ölçer. Bu, modelin gruplar arasında eşit derecede yanlış olduğu, ancak bazıları için daha belirsiz olduğu ve bu durumun farklı alt dağıtım davranışları ürettiği durumları yakalar.
 
-### Mechanistic approaches
+### Mekanik yaklaşımlar
 
-2024-2025 interpretability work opens bias to mechanistic intervention:
+2024-2025 yorumlanabilirlik çalışması, mekanik müdahaleye karşı önyargıyı ortaya çıkarıyor:
 
-- **Gender neurons (Yu & Ananiadou 2025).** Specific MLP neurons correlate with gender-specific behaviours. Ablating these neurons reduces gender-gap metrics with limited capability cost.
-- **Clinical racial bias via SAEs (Ahsan & Wallace 2025).** Sparse autoencoder features decompose the internal representation into interpretable dimensions; race-correlated features can be identified and suppressed.
-- **UniBias (Zhou et al. 2024).** Attention-head manipulation for zero-shot debiasing. Specific heads amplify identity-class sensitivity; zeroing or re-weighting these heads reduces bias with no fine-tuning.
+- **Cinsiyet nöronları (Yu ve Ananiadou 2025).** Belirli MLP nöronları cinsiyete özgü davranışlarla ilişkilidir. Bu nöronların ortadan kaldırılması, sınırlı yetenek maliyetiyle cinsiyet farkı ölçümlerini azaltır.
+- **SAE'ler yoluyla klinik ırksal önyargı (Ahsan ve Wallace 2025).** Seyrek otomatik kodlayıcı özellikleri, dahili temsili yorumlanabilir boyutlara ayırır; ırkla ilişkili özellikler belirlenebilir ve bastırılabilir.
+- **UniBias (Zhou ve ark. 2024).** Sıfır atışta önyargı giderme için dikkat-kafa manipülasyonu. Belirli başlıklar kimlik sınıfı duyarlılığını artırır; bu kafaların sıfırlanması veya yeniden ağırlıklandırılması, fine-tuning olmadan önyargıyı azaltır.
 
-### The meta-critique
+### Meta eleştiri
 
-The 10-year literature review (arXiv:2508.11067, 2025) finds the field disproportionately focuses on binary-gender bias. Other axes — disability, religion, migration status, multi-lingual identity — receive far less attention. The meta-critique argues that narrow focus can harm marginalized groups by neglect: a model well-debiased on binary gender may be badly biased on dimensions nobody checked.
+10 yıllık literatür taraması (arXiv:2508.11067, 2025), alanın orantısız bir şekilde ikili cinsiyet önyargısına odaklandığını ortaya koyuyor. Diğer eksenler (engellilik, din, göç durumu, çok dilli kimlik) çok daha az ilgi görüyor. Meta-eleştiri, dar odaklanmanın marjinalleştirilmiş gruplara ihmal nedeniyle zarar verebileceğini savunuyor: ikili cinsiyet konusunda iyi bir şekilde önyargılı olan bir model, kimsenin kontrol etmediği boyutlar konusunda kötü bir şekilde önyargılı olabilir.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lessons 20-21 cover bias and fairness formally. Lesson 22 covers privacy. Lesson 23 covers watermarking. These are the user-harm layer complementing the earlier deception/safety layer.
+20-21. dersler resmi olarak önyargı ve adaleti ele alıyor. Ders 22 gizliliği kapsar. Ders 23 filigranlamayı kapsar. Bunlar, daha önceki aldatma/güvenlik katmanını tamamlayan kullanıcıya zarar katmanıdır.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` builds a toy embedding-based bias probe: measure WEAT-style distance between identity terms and attribute terms in a simple co-occurrence embedding. You can inject a bias and observe the metric fire; apply a simple debiasing operation and observe partial recovery.
+`code/main.py` , oyuncak embedding tabanlı bir önyargı probu oluşturur: basit bir birlikte oluşumda kimlik terimleri ve nitelik terimleri arasındaki WEAT tarzı mesafeyi ölçer embedding. Bir önyargı enjekte edebilir ve metrik ateşi gözlemleyebilirsiniz; basit bir önyargı giderme işlemi uygulayın ve kısmi iyileşmeyi gözlemleyin.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-bias-eval.md`. Given a model card or fairness claim, it audits the evaluation across the three metric categories (embedding, probability, generated-text), the intersectionality coverage, and the mechanism of any debiasing intervention.
+Bu ders `outputs/skill-bias-eval.md` üretir. Bir model kartı veya adalet iddiası verildiğinde, değerlendirmeyi üç metrik kategori (embedding, olasılık, oluşturulan metin), kesişimsellik kapsamı ve herhangi bir önyargı azaltıcı müdahale mekanizması genelinde denetler.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Report WEAT-style bias scores before and after the debiasing step. Explain why the metric does not drop to zero.
+1. `code/main.py`'yı çalıştırın. Önyargı giderme adımından önce ve sonra WEAT tarzı önyargı puanlarını rapor edin. Metriğin neden sıfıra düşmediğini açıklayın.
 
-2. Extend the probe with an intersectional test: (gender, race) x (career, family). Report cross-axis bias scores.
+2. Araştırmayı kesişimsel bir testle genişletin: (cinsiyet, ırk) x (kariyer, aile). Çapraz eksen sapması puanlarını bildirin.
 
-3. Read An et al. 2025 (PNAS Nexus). Identify the two intersectional effects they report that single-axis gender evaluation would miss.
+3. An ve ark.'yı okuyun. 2025 (PNAS Nexus). Tek eksenli toplumsal cinsiyet değerlendirmesinin kaçıracağını bildirdikleri iki kesişimsel etkiyi tanımlayın.
 
-4. Yu & Ananiadou 2025 identify gender neurons. Sketch a falsification experiment that would distinguish "these neurons cause gender bias" from "these neurons correlate with gender bias."
+4. Yu ve Ananiadou 2025 cinsiyet nöronlarını tanımlar. "Bu nöronlar cinsiyet yanlılığına neden oluyor" ifadesini "bu nöronlar cinsiyet yanlılığıyla ilişkilidir" ifadesinden ayıracak bir yanlışlama deneyi taslağı çizin.
 
-5. The meta-critique argues the field focuses too narrowly on binary gender. Pick one under-studied axis and describe a representational-harm measurement protocol for it.
+5. Meta-eleştiri, alanın ikili cinsiyete çok dar bir şekilde odaklandığını ileri sürüyor. Az çalışılmış bir eksen seçin ve bunun için temsili zarar ölçüm protokolünü tanımlayın.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| Representational harm | "stereotypes / erasure" | Biased portrayal of a group |
-| Allocational harm | "unequal decisions" | Biased material outcome for a group |
-| WEAT | "the embedding test" | Word Embedding Association Test; co-occurrence-based bias probe |
-| Intersectionality | "combined identity effects" | Bias that emerges at the intersection of multiple identity axes |
-| Gender neurons | "MLP bias neurons" | Specific neurons whose activations correlate with gender-specific behaviour |
-| SAE feature | "interpretable dimension" | Sparse-autoencoder-identified feature; useful for mechanistic bias analysis |
-| UniBias | "attention-head debiasing" | Zero-shot debiasing by reweighting attention heads |
+| Temsili zarar | "klişeler / silme" | Bir grubun taraflı tasviri |
+| Tahsis zararı | "eşit olmayan kararlar" | Bir grup için taraflı maddi sonuç |
+| WEAT | "embedding testi" | Kelime Embedding İlişkilendirme Testi; eş-oluşmaya dayalı önyargı araştırması |
+| Kesişme | "birleşik kimlik efektleri" | Çoklu kimlik eksenlerinin kesişiminde ortaya çıkan önyargı |
+| Cinsiyet nöronları | "MLP önyargı nöronları" | Aktivasyonları cinsiyete özgü davranışlarla ilişkili olan spesifik nöronlar |
+| SAE özelliği | "yorumlanabilir boyut" | Seyrek otomatik kodlayıcı tarafından tanımlanan özellik; mekanik sapma analizi için kullanışlıdır |
+| UniBias | "dikkatin önyargıdan arındırılması" | Dikkatleri yeniden ağırlıklandırarak sıfır atışla önyargı giderme |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Gallegos et al. — Bias and Fairness in LLMs: A Survey (arXiv:2309.00770, Computational Linguistics 2024)](https://arxiv.org/abs/2309.00770) — canonical survey
-- [An et al. — Intersectional resume-evaluation bias (PNAS Nexus, March 2025)](https://academic.oup.com/pnasnexus/article/4/3/pgaf089/8111343) — five-model intersectional study
-- [WinoIdentity — uncertainty-based intersectional fairness (arXiv:2508.07111, COLM 2025)](https://arxiv.org/abs/2508.07111) — new benchmark
-- [UniBias — attention-head manipulation (Zhou et al. 2024, ACL)](https://arxiv.org/abs/2405.20612) — zero-shot debiasing
+- [Gallegos ve ark. — Yüksek Lisans'ta Önyargı ve Adillik: Bir Anket (arXiv:2309.00770, Computational Linguistics 2024)](https://arxiv.org/abs/2309.00770) — kanonik anket
+- [An ve ark. — Kesişen özgeçmiş değerlendirme yanlılığı (PNAS Nexus, Mart 2025)](https://academic.oup.com/pnasnexus/article/4/3/pgaf089/8111343) — beş modelli kesişimsel çalışma
+- [WinoIdentity — belirsizliğe dayalı kesişimsel adalet (arXiv:2508.07111, COLM 2025)](https://arxiv.org/abs/2508.07111) — yeni benchmark
+- [UniBias — dikkat-kafa manipülasyonu (Zhou ve ark. 2024, ACL)](https://arxiv.org/abs/2405.20612) — sıfır atışlı önyargı giderme

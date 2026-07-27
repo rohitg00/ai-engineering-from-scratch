@@ -1,6 +1,6 @@
 # Uyumluluk — SOC 2, HIPAA, GDPR, PCI-DSS, AB AI Yasası, ISO 42001
 
-> Çoklu-framework kapsamı, 2026 kurumsal anlaşmalar için masa bahisleridir. **AB AI Yasası**: 1 Ağustos 2024'ten beri yürürlükte. Yüksek risk gereksinimlerinin çoğu 2 Ağustos 2026'da yürürlüğe girecek. Yüksek riskli sistem yükümlülükleri için 15 milyon Euro'ya veya küresel yıllık cironun %3'üne kadar para cezaları (Mad. 99(4)); yasaklanmış AI uygulamaları için 35 milyon Euro'ya veya %7'ye kadar (Mad. 99(3)). AB kullanıcılarına hizmet veriliyorsa küresel olarak geçerlidir. **Colorado Yapay Zeka Yasası**: 30 Haziran 2026'dan itibaren geçerlidir (SB25B-004 tarafından Şubat 2026'dan itibaren ertelenmiştir) — yüksek riskli sistemler için etki değerlendirmeleri, yapay zeka kararlarına itiraz etme hakkı. Kredi/istihdam/konut/eğitim açısından Virginia benzer. **SOC 2 Tip II**: fiili B2B AI gereksinimi (fintech için Tip I değil, Tip II). **GDPR**: Clearview AI'ye karşı belgelenen en büyük yapay zekaya özel para cezası 30,5 milyon Euro'dur (Dutch DPA, Eylül 2024); İtalyan Garante, Aralık 2024'te OpenAI'ye karşı 15 milyon Euro ihraç etti (daha sonra Mart 2026'da temyiz üzerine bozuldu). inference adresindeki gerçek zamanlı PII redaksiyonu savunulabilir standarttır; İşlem sonrası temizleme yeterli değildir. **HIPAA**: sağlık hizmetlerine bağlı — BAA olmadan harici AI hizmetlerine PHI gönderilemez. **PCI-DSS**: Yapay zeka etkileşim katmanı kapsamı, otomatik değil, yapılandırma + sözleşmeye dayalı anlaşmalar gerektirir. **ISO 42001**: ortaya çıkan yapay zeka yönetişim standardı, ISO 27001 ile birlikte büyüyen satın alma gereksinimi. Referans profili: OpenAI, ChatGPT ödeme bileşenleri için SOC 2 Tip 2, ISO/IEC 27001:2022, ISO/IEC 27701:2019, GDPR/CCPA/HIPAA (BAA)/FERPA, PCI-DSS'yi korur. Çapraz-framework eşleme denetim yorgunluğunu azaltır: ISO 27001 A.5.15-5.18, GDPR Art. 32, HIPAA §164.312(a).
+> Çoklu framework kapsamı, 2026 kurumsal anlaşma için masa bahisleridir. **AB Yapay Zeka Yasası**: 1 Ağustos 2024'ten beri yürürlükte. Yüksek risk gereksinimlerinin çoğu 2 Ağustos 2026'da yürürlüğe girecek. Yüksek riskli sistem yükümlülükleri için 15 milyon Euro'ya veya küresel yıllık cironun %3'üne kadar para cezaları (Mad. 99(4)); yasaklanmış AI uygulamaları için 35 milyon Euro'ya veya %7'ye kadar (Mad. 99(3)). AB kullanıcılarına hizmet veriliyorsa küresel olarak geçerlidir. **Colorado Yapay Zeka Yasası**: 30 Haziran 2026'dan itibaren geçerlidir (SB25B-004 tarafından Şubat 2026'dan itibaren ertelenmiştir) — yüksek riskli sistemler için etki değerlendirmeleri, yapay zeka kararlarına itiraz etme hakkı. Kredi/istihdam/konut/eğitim açısından Virginia benzer. **SOC 2 Tip II**: fiili B2B AI gereksinimi (fintech için Tip I değil, Tip II). **GDPR**: Clearview AI'ye karşı belgelenen en büyük yapay zekaya özel para cezası 30,5 milyon Euro'dur (Dutch DPA, Eylül 2024); İtalyan Garante, Aralık 2024'te OpenAI'ye karşı 15 milyon Euro ihraç etti (daha sonra Mart 2026'da temyiz üzerine bozuldu). inference'de gerçek zamanlı PII redaksiyonu savunulabilir standarttır; İşlem sonrası temizleme yeterli değildir. **HIPAA**: sağlık hizmetlerine bağlı — BAA olmadan harici AI hizmetlerine PHI gönderilemez. **PCI-DSS**: Yapay zeka etkileşim katmanı kapsamı, otomatik değil, yapılandırma + sözleşmeye dayalı anlaşmalar gerektirir. **ISO 42001**: ortaya çıkan yapay zeka yönetişim standardı, ISO 27001 ile birlikte büyüyen satın alma gereksinimi. Referans profili: OpenAI, ChatGPT ödeme bileşenleri için SOC 2 Tip 2, ISO/IEC 27001:2022, ISO/IEC 27701:2019, GDPR/CCPA/HIPAA (BAA)/FERPA, PCI-DSS'yi korur. Çapraz framework eşlemesi denetim yorgunluğunu azaltır: ISO 27001 A.5.15-5.18, GDPR Art. 32, HIPAA §164.312(a).
 
 **Tür:** Öğren
 **Diller:** (Python isteğe bağlıdır — uyumluluk politika + süreçtir, kod değildir)
@@ -9,16 +9,16 @@
 
 ## Öğrenme Hedefleri
 
-- Yüksek Lisans ürünleriyle alakalı yedi 2026 framework'yı numaralandırın ve her birini bir müşteri segmentiyle eşleştirin.
+- LLM ürünleriyle ilgili yedi 2026 framework'yi numaralandırın ve her birini bir müşteri segmentiyle eşleştirin.
 - AB AI Yasası uygulama zaman çizelgesini (Ağustos 2024'te yürürlükte; yüksek riskli uygulama Ağustos 2026) ve iki kademeli ceza tavanını (yüksek riskli yükümlülükler için 15 milyon Euro / %3, yasaklı uygulamalar için 35 milyon Euro / %7) belirtin.
-- İşleme sonrası PII temizliğinin GDPR için neden yeterli olmadığını açıklayın ve savunulabilir standart olarak gerçek zamanlı inference katmanı düzenlemesini adlandırın.
-- Çaprazframework kontrol eşlemesini açıklayın (e.g., ISO 27001 A.5.15-5.18 + GDPR Madde 32 + HIPAA §164.312(a)'ya göre erişim kontrolü eşlemeleri).
+- İşleme sonrası PII temizliğinin GDPR için neden yeterli olmadığını açıklayın ve savunulabilir standart olarak gerçek zamanlı inference katmanı redaksiyonunu adlandırın.
+- Çapraz framework kontrol haritalamasını açıklayın (e.g., ISO 27001 A.5.15-5.18 + GDPR Madde 32 + HIPAA §164.312(a)'ya erişim kontrolü haritaları).
 
 ## Sorun
 
-Kurumsal bir müşterinin satın alma işleminde SOC 2 Tip II, GDPR, HIPAA BAA, ISO 27001 ve "AB Yapay Zeka Yasası uyumluluk bildirimi" istenir. Ekibinizde SOC 2 Tip I var. Tip II'ye altı ay kaldı ve GDPR Madde 30 kayıtlarına başlamadınız.
+Kurumsal bir müşterinin satın alma işleminde SOC 2 Tip II, GDPR, HIPAA BAA, ISO 27001 ve "AB Yapay Zeka Yasası uyumluluk bildirimi" istenir. Ekibinizde SOC 2 Tip I var. Tip II'den altı ay sonrasınız ve GDPR Madde 30 kayıtlarına başlamadınız.
 
-Çoklu-framework kapsamı bir Yüksek Lisans sorunu değildir; bu, Yüksek Lisans'a özgü katmanlara sahip kurumsal bir SaaS sorunudur. 2026'daki tedarik ekipleri PDF yerine, framework başına satır ve kontrol başına sütun içeren bir matris istiyor.
+Çoklu framework kapsamı bir Yüksek Lisans sorunu değildir; LLM'ye özgü katmanlara sahip kurumsal bir SaaS sorunudur. 2026'daki tedarik ekipleri PDF yerine framework başına satır ve kontrol başına sütun içeren bir matris istiyor.
 
 ## Konsept
 
@@ -51,7 +51,7 @@ Para cezaları (Madde 99): yüksek riskli sistem yükümlülüklerinin ihlali ne
 
 - LLM çağrısından önce varlık tanıma.
 - Tutarlı tokenizasyon (Mesh yaklaşımı) anlambilimi korur.
-- Yalnızca düzeltilmiş prompt'ları + izin verilen ham katılımı depolayın.
+- Yalnızca düzenlenmiş prompt'leri + izin verilen ham katılımı depolayın.
 
 Son yaptırım: Clearview AI'ye karşı 30,5 milyon Euro (Hollanda DPA, Eylül 2024), bugüne kadar AI'ya özgü belgelenmiş en büyük GDPR cezasıdır; OpenAI'ye karşı 15 milyon avro (İtalya'nın Garante'si, Aralık 2024), LLM'ye özel en büyük para cezası olmasına rağmen Mart 2026'da temyizde bozuldu ve karar daha fazla inceleme altında. İşlem sonrası talepler denetimde başarısız oldu.
 
@@ -68,22 +68,22 @@ Tip II: Kontroller 6-12 ay boyunca etkili bir şekilde çalışır.
 
 Yaygın denetim etkenleri: erişim günlükleri (kim neyi gördü), değişiklik yönetimi (nasıl uygulandı), risk değerlendirmeleri (üç ayda bir), olay müdahalesi (test edildi mi?). Aşama 17 · 25'teki denetim günlüğü doğrudan yeniden kullanılabilir.
 
-### Çaprazframework eşleme
+### Çapraz framework eşleme
 
-Bir erişim kontrolü politikası birden fazla framework kontrolünü karşılar:
+Bir erişim kontrolü ilkesi birden fazla framework kontrolünü karşılar:
 
-| Kontrol | Frameworks |
+| Kontrol | Framework'ler |
 |---------|-----------|
-| Günlüğe erişim | ISO 27001 A.5.15-5.18, GDPR Md. 32, HIPAA §164.312(a) |
+| Günlüğe erişim | ISO 27001 A.5.15-5.18, GDPR Art. 32, HIPAA §164.312(a) |
 | Yönetim değişikliği | ISO 27001 A.8.32, PCI DSS Gerekliliği. 6, HIPAA ihlal bildirimi kapsamı |
-| Aktarım sırasında şifreleme | ISO 27001 A.8.24, GDPR Md. 32, HIPAA §164.312(e) |
+| Aktarım sırasında şifreleme | ISO 27001 A.8.24, GDPR Art. 32, HIPAA §164.312(e) |
 | Sırlar yönetimi | ISO 27001 A.8.19, PCI DSS Gerekliliği. 8, SOC 2 CC6.1 |
 
 Uyumluluk araçları (Drata, Vanta, Secureframe) bu eşlemeyi otomatikleştirir. Büyük ölçekte maliyete değer.
 
 ### ISO 42001 — ortaya çıkıyor
 
-2023'ün sonlarında yayınlandı. ISO 27001'in yanı sıra artan satın alma gereksinimi. Risk yönetimi, veri kalitesi, şeffaflık, insan gözetimi de dahil olmak üzere yapay zeka yönetişimi için Framework.
+2023'ün sonlarında yayınlandı. ISO 27001'in yanı sıra artan satın alma gereksinimi. Risk yönetimi, veri kalitesi, şeffaflık ve insan gözetimi de dahil olmak üzere yapay zeka yönetişimi için Framework.
 
 ### OpenAI'nin referans profili
 
@@ -98,21 +98,21 @@ OpenAI, ChatGPT ödeme bileşenleri için SOC 2 Tip 2, ISO/IEC 27001:2022, ISO/I
 - SOC 2 Tip II penceresi: 6-12 aylık kontrollerin çalıştırılması.
 - Colorado AI Yasası yürürlük tarihi: 30 Haziran 2026 (SB25B-004 tarafından Şubat 2026'dan ertelendi).
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` , Python'da bir uyumluluk eşleme e-tablosudur; bir kontrol verildiğinde, karşıladığı framework'lerı listeler.
+`code/main.py`, Python'da bir uyumluluk eşleme elektronik tablosudur; bir kontrol verildiğinde, karşıladığı framework'leri listeler.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-Bu ders `outputs/skill-compliance-matrix.md` üretir. Müşteri segmenti ve coğrafya dikkate alındığında gerekli framework'leri ve kontrolleri belirtir.
+Bu ders `outputs/skill-compliance-matrix.md`'yi üretir. Müşteri segmenti ve coğrafyası göz önüne alındığında, gerekli framework'leri ve kontrolleri belirtir.
 
 ## Egzersizler
 
 1. İlk kurumsal müşteriniz SOC 2 Tip II, HIPAA BAA, AB AI Yasası beyanına ihtiyaç duyar. Anlaşmayı kazanmak için geçerli minimum uyumluluk duruşu nedir?
-2. Üç varsayımsal LLM ürününü AB Yapay Zeka Yasası risk katmanları kapsamında sınıflandırın. Yüksek riskte ne gibi değişiklikler olur?
+2. Üç varsayımsal Yüksek Lisans ürününü AB Yapay Zeka Yasası risk katmanları kapsamında sınıflandırın. Yüksek riskte ne gibi değişiklikler olur?
 3. Yanlışlıkla PHI'yı BAA'sı olmayan bir sağlayıcıya gönderdiniz. Olay müdahalesini gözden geçirin.
-4. Orta ölçekli bir yapay zeka tedarikçisi için ISO 42001'in "2026'da gerekli" olup olmadığını tartışın.
-5. LLM denetim günlüğü alanlarınızı (Aşama 17 · 25) en az üç framework kontrolüyle eşleştirin.
+4. ISO 42001'in orta ölçekli bir yapay zeka tedarikçisi için "2026'da gerekli" olup olmadığını tartışın.
+5. LLM denetim günlüğü alanlarınızı (Aşama 17 · 25) en az üç framework kontrolüyle eşleyin.
 
 ## Anahtar Terimler
 
@@ -123,10 +123,10 @@ Bu ders `outputs/skill-compliance-matrix.md` üretir. Müşteri segmenti ve coğ
 | GDPR | "AB gizliliği" | Gerçek zamanlı PII redaksiyonu savunulabilir 2026 standardıdır |
 | AB Yapay Zeka Yasası | "AB AI kuralları" | Yüksek riskli yaptırım Ağustos 2026; 15 Milyon Avro / %3 (yüksek riskli yükümlülükler) — 35 Milyon Avro / %7 (yasaklanmış uygulamalar) |
 | Colorado Yapay Zeka Yasası | "ABD Yapay Zeka Eyalet Yasası" | 30 Haziran 2026'dan itibaren geçerli (SB25B-004 nedeniyle ertelendi); etki değerlendirmeleri |
-| ISO 42001 | "Yapay zeka yönetişimi" | Yapay zeka riski + şeffaflık için ortaya çıkan framework |
+| ISO 42001 | "Yapay zeka yönetişimi" | Yapay zeka riski + şeffaflığı için ortaya çıkan framework |
 | ISO 27001 | "güvenlik BGYS'si" | Bilgi Güvenliği Yönetim Sistemi temeli |
 | Uygunluk değerlendirmesi | "AB AI belge paketi" | Yüksek risk gereksinimi: belgeler, test etme, günlük kaydı |
-| Çapraz-framework eşleme | "tek kontrol, birçok çerçeve" | Tek politika birden fazla framework kontrolünü karşılar |
+| Çapraz framework eşleme | "tek kontrol, birçok çerçeve" | Tek politika birden fazla framework kontrolünü karşılar |
 
 ## Daha Fazla Okuma
 

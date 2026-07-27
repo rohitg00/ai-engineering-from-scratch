@@ -6,7 +6,7 @@
 **Diller:** Python
 **Önkoşullar:** Aşama 11, Ders 06 (RAG)
 **Süre:** ~90 dakika
-**İlgili:** Aşama 5 · 23 (RAG için Parçalama Stratejileri), Vectara/Anthropic benchmark'lerle birlikte altı parçalama algoritmasının tümünü kapsar: özyinelemeli, anlamsal, cümle, ana belge, geç parçalama, bağlamsal erişim. Bu ders şu temellere dayanmaktadır: karma arama, yeniden sıralama, sorgu dönüşümü.
+**İlgili:** Aşama 5 · 23 (RAG için Parçalama Stratejileri), Vectara/Antropik benchmark'ler ile altı parçalama algoritmasının tümünü kapsar: özyinelemeli, anlamsal, cümle, ana belge, geç parçalama, bağlamsal erişim. Bu ders şu temellere dayanmaktadır: karma arama, yeniden sıralama, sorgu dönüşümü.
 
 ## Öğrenme Hedefleri
 
@@ -19,13 +19,13 @@
 
 Ders 06'da temel bir RAG işlem hattı oluşturdunuz. Küçük bir derlemedeki basit sorular için işe yarar. Şimdi şunları deneyin:
 
-**Belirsiz sorgu**: "Geçen çeyrekte gelir neydi?" Semantik arama, gelir stratejisi, gelir tahminleri ve CFO'nun gelir artışına ilişkin düşünceleri hakkında parçalar getirir. Hepsi anlamsal olarak "gelir" kelimesine benzer. Hiçbiri gerçek sayıyı içermiyor. Doğru parçada "$47.2M in Q3 2025" but uses the word "earnings" instead of "revenue." The embedding model thinks "revenue strategy" is closer to the query than "Q3 earnings were $47,2 milyon" yazıyor.
+**Belirsiz sorgu**: "Geçen çeyrekte gelir neydi?" Semantik arama, gelir stratejisi, gelir tahminleri ve CFO'nun gelir artışına ilişkin düşünceleri hakkında parçalar getirir. Hepsi anlamsal olarak "gelir" kelimesine benzer. Hiçbiri gerçek sayıyı içermiyor. Doğru parçada "$47.2M in Q3 2025" but uses the word "earnings" instead of "revenue." The embedding model thinks "revenue strategy" is closer to the query than "Q3 earnings were $47.2M" yazıyor.
 
 **Çoklu atlamalı soru**: "Müşteri memnuniyeti puanında en yüksek artışı hangi takım elde etti?" Bu, her takımın memnuniyet puanlarını bulmayı, bunları karşılaştırmayı ve maksimum değeri belirlemeyi gerektirir. Hiçbir parça cevabı içermiyor. Bilgiler ekip raporlarına dağılmıştır.
 
-**Büyük derlem sorunu**: 2 milyon parçanız var. Doğru cevap 1,847,293 numaralı parçadadır. İlk 5'e ulaşmanız #14, #89,201, #1,200,000, #44 ve #901,333 parçalarını çekiyor. embedding uzayında kapatın, ancak hiçbiri cevabı içermiyor. Bu ölçekte, yaklaşık en yakın komşu araması, ilgili sonuçların en üstteki k'nin dışına itilmesine yetecek kadar hata ortaya çıkarır.
+**Büyük derlem sorunu**: 2 milyon parçanız var. Doğru cevap 1,847,293 numaralı parçadadır. İlk 5'e ulaşmanız #14, #89,201, #1,200,000, #44 ve #901,333 parçalarını çekiyor. embedding alanında kapatın, ancak hiçbiri yanıtı içermiyor. Bu ölçekte, yaklaşık en yakın komşu araması, ilgili sonuçların üst-k'nin dışına itilmesine yetecek kadar hata ortaya çıkarır.
 
-Temel RAG başarısız olur çünkü vektör benzerliği alaka düzeyiyle aynı değildir. Bir yığın, bir sorguyu yanıtlamak için kullanışlı olmasa da anlamsal olarak bir sorguya benzeyebilir. Gelişmiş RAG bu sorunu dört teknikle ele alır: hibrit arama (anahtar kelime eşleştirmesi ekleyin), yeniden sıralama (adayları daha dikkatli bir şekilde puanlayın), sorgu dönüşümü (aramadan önce sorguyu düzeltin) ve daha iyi parçalama (doğru ayrıntı düzeyinde erişim).
+Temel RAG başarısız olur çünkü vektör benzerliği alaka düzeyiyle aynı değildir. Bir yığın, onu yanıtlamak için kullanışlı olmasa da anlamsal olarak bir sorguya benzer olabilir. Gelişmiş RAG bu sorunu dört teknikle ele alır: hibrit arama (anahtar kelime eşleşmesi ekleyin), yeniden sıralama (adayları daha dikkatli puanlayın), sorgu dönüşümü (aramadan önce sorguyu düzeltin) ve daha iyi parçalama (doğru ayrıntı düzeyinde erişim).
 
 ## Konsept
 
@@ -59,17 +59,17 @@ RRF_score(d) = sum over rankings R:
 
 Burada k, en üst sıradaki sonucun baskın olmasını engelleyen bir sabittir (tipik olarak 60).
 
-Vektör aramada 1. ve BM25'te 5. sırada yer alan bir belge şunu alır: 1/(60+1) + 1/(60+5) = 0,0164 + 0,0154 = 0,0318
+Vektör aramada 1. ve BM25'te 5. sırada yer alan bir belge şunu elde eder: 1/(60+1) + 1/(60+5) = 0,0164 + 0,0154 = 0,0318
 
-Vektör aramada 3. ve BM25'te 2. sırada yer alan bir belge şunu alır: 1/(60+3) + 1/(60+2) = 0,0159 + 0,0161 = 0,0320
+Vektör aramada 3. ve BM25'te 2. sırada yer alan bir belge şunu elde eder: 1/(60+3) + 1/(60+2) = 0,0159 + 0,0161 = 0,0320
 
 RRF doğal olarak iki sinyali dengeler. Her iki listede de üst sıralarda yer alan belge en iyi puanı alır. Bir listede 1. sırada yer alan ancak diğerinde bulunmayan bir belge orta düzeyde bir puan alır. Bu sağlamdır çünkü ham puanları değil sıralamaları kullanır, dolayısıyla iki sistem arasındaki puan dağılımlarındaki farklılıklar önemli değildir.
 
 ### Yeniden sıralama
 
-Erişim (vektör, anahtar kelime veya hibrit) hızlıdır ancak kesin değildir. Çift kodlayıcılar kullanır: sorgu ve her belge bağımsız olarak gömülür ve ardından karşılaştırılır. embedding'lar bir kez hesaplanır ve önbelleğe alınır. Bu milyonlarca belgeye ölçeklenir.
+Erişim (vektör, anahtar kelime veya hibrit) hızlıdır ancak kesin değildir. Çift kodlayıcılar kullanır: sorgu ve her belge bağımsız olarak gömülür ve ardından karşılaştırılır. embedding'ler bir kez hesaplanır ve önbelleğe alınır. Bu milyonlarca belgeye ölçeklenir.
 
-Yeniden sıralamada çapraz kodlayıcılar kullanılır: sorgu ve aday belge, bir uygunluk puanı veren bir modele birlikte beslenir. Model, her iki metni aynı anda görüyor ve aralarındaki ince taneli etkileşimleri yakalayabiliyor. Çapraz kodlayıcı, "3. çeyrek kazançları neydi?" sorusunu anlayabilir. bir çift kodlayıcı bağlantıyı kaçırmış olsa bile "3. çeyrekte 47,2 milyon ABD doları" içeren bir yığınla oldukça alakalı.
+Yeniden sıralamada çapraz kodlayıcılar kullanılır: sorgu ve aday belge, bir uygunluk puanı veren bir modele birlikte beslenir. Model, her iki metni aynı anda görüyor ve aralarındaki ince taneli etkileşimleri yakalayabiliyor. Çapraz kodlayıcı "3. çeyrek kazançları neydi?" sorusunu anlayabilir. bir çift kodlayıcı bağlantıyı kaçırmış olsa bile "3. çeyrekte 47,2 milyon ABD doları" içeren bir yığınla oldukça alakalı.
 
 Takas: Çapraz kodlayıcılar, sorgu-belge çiftini birlikte işledikleri için çift kodlayıcılardan 100-1000 kat daha yavaştır. Bir milyon belge için çapraz kodlayıcı puanlarını önceden hesaplayamazsınız. Çözüm: Daha büyük bir aday kümesi alın (karma aramadan ilk 50'ye ulaşın), ardından son ilk 5'i elde etmek için çapraz kodlayıcıyla yeniden sıralama yapın.
 
@@ -89,13 +89,13 @@ Yaygın yeniden sıralama modelleri (2026 serisi):
 - Jina-Reranker-v2 Çok Dilli: açık ağırlık, 100'den fazla dil
 - bge-reranker-v2-m3: açık ağırlık, güçlü temel
 - çapraz kodlayıcı/ms-marco-MiniLM-L-6-v2: açık ağırlık, prototip oluşturmak için CPU üzerinde çalışır
-- ColBERTv2 / Jina-ColBERT-v2: geç etkileşimli çoklu vektör yeniden sıralayıcıları — puanlama zamanında O(docs) değil O(tokens)
+- ColBERTv2 / Jina-ColBERT-v2: geç etkileşimli çoklu vektör yeniden sıralamaları — puanlama zamanında O(docs) değil O(tokens)
 
 ### Sorgu Dönüşümü
 
-Bazen sorun erişimde değil sorgunun kendisindedir. "Yeni politika değişikliğiyle ilgili şey neydi?" berbat bir arama sorgusu. Belirli bir terim içermez. embedding belirsizdir. Hiçbir erişim sistemi bundan doğru belgeleri bulamaz.
+Bazen sorun, erişim değil, sorgunun kendisidir. "Yeni politika değişikliğiyle ilgili şey neydi?" berbat bir arama sorgusu. Belirli bir terim içermez. embedding belirsizdir. Hiçbir erişim sistemi bundan doğru belgeleri bulamaz.
 
-**Sorgunun yeniden yazılması**: Kullanıcının sorgusunu daha iyi bir arama sorgusuna dönüştürün. Bir LLM bunu yapabilir:
+**Sorgunun yeniden yazılması**: Kullanıcının sorgusunu daha iyi bir arama sorgusuna dönüştürün. Bir Yüksek Lisans bunu yapabilir:
 
 ```
 User: "What was that thing about the new policy change?"
@@ -111,7 +111,7 @@ within 60 days of purchase. Refunds are pro-rated based on the remaining
 subscription period and processed within 5-7 business days."
 ```
 
-Varsayımsal cevabı ekleyin ve buna benzer gerçek belgeleri arayın. Sezgi: Varsayımsal cevap, embedding uzayında gerçek cevaba orijinal sorudan daha yakın yaşar. Sorular ve cevaplar farklı dilsel yapılara sahiptir. Varsayımsal bir cevap oluşturarak, embedding'deki "soru alanı" ile "cevap alanı" arasındaki boşluğu doldurursunuz.
+Varsayımsal cevabı ekleyin ve buna benzer gerçek belgeleri arayın. Sezgi: Varsayımsal cevap embedding uzayında gerçek cevaba orijinal sorudan daha yakın yaşar. Sorular ve cevaplar farklı dilsel yapılara sahiptir. Varsayımsal bir cevap oluşturarak embedding'deki "soru alanı" ile "cevap alanı" arasındaki boşluğu doldurursunuz.
 
 HyDE, alımdan önce bir LLM çağrısı ekler. Bu, gecikmeyi 500-2000 ms artırır. Ham sorgularda alma kalitesi zayıf olduğunda buna değer.
 
@@ -119,7 +119,7 @@ HyDE, alımdan önce bir LLM çağrısı ekler. Bu, gecikmeyi 500-2000 ms artır
 
 Standart parçalama bir ödünleşimi zorunlu kılar: hassas erişim için küçük parçalar, yeterli bağlam için büyük parçalar. Ebeveyn-çocuk parçalaması bu ödünleşimi ortadan kaldırır.
 
-Geri alma için küçük parçaları (128 tokens) dizinle. Küçük bir parça alındığında, prompt için ana parçasını (512 tokens) döndürün. Küçük parça sorguyla tam olarak eşleşir. Ana parça, LLM'nin iyi bir cevap üretmesi için yeterli bağlam sağlar.
+Geri alma için küçük parçaları (128 token) dizinleyin. Küçük bir parça alındığında, prompt için ana parçasını (512 token) döndürün. Küçük parça sorguyla tam olarak eşleşir. Ana parça, LLM'nin iyi bir cevap üretmesi için yeterli bağlam sağlar.
 
 ```mermaid
 graph TD
@@ -154,7 +154,7 @@ Bir RAG sistemi kurdunuz. İşe yarayıp yaramadığını nasıl anlarsınız? �
 
 **Geri alma alaka düzeyi (Recall@k)**: Bilinen ilgili belgelere sahip bir dizi test sorusu için, ilgili belgelerin yüzde kaçı ilk k sonuçlarında görünüyor? Bir sorunun cevabı 47. parçadaysa, 47. parça ilk 5'te mi görünüyor?
 
-**Doğruluk**: Oluşturulan yanıt, alınan belgelere dayanıyor mu? Alınan parçalarda "60 günlük geri ödeme aralığı" yazıyorsa ve modelde "90 günlük geri ödeme aralığı" yazıyorsa bu bir sadakat hatasıdır. Model, doğru bağlama sahip olmasına rağmen hallucination üretti.
+**Doğruluk**: Oluşturulan yanıt, alınan belgelere dayanıyor mu? Alınan parçalarda "60 günlük geri ödeme aralığı" yazıyorsa ve modelde "90 günlük geri ödeme aralığı" yazıyorsa bu bir sadakat hatasıdır. Model, doğru bağlama sahip olmasına rağmen halüsinasyon gördü.
 
 **Cevap doğruluğu**: Oluşturulan cevap beklenen cevapla eşleşiyor mu? Bu uçtan uca ölçümdür. Alma kalitesi ile üretim kalitesini birleştirir.
 
@@ -450,7 +450,7 @@ def rerank_with_cohere(query, candidates, chunks, top_k=5):
     return [(candidates[r.index][0], r.relevance_score) for r in response.results]
 ```
 
-Gerçek LLM HyDE için:
+Gerçek Yüksek Lisans derecesine sahip HyDE için:
 
 ```python
 import anthropic
@@ -489,8 +489,8 @@ Alfa parametresi dengeyi kontrol eder: 0,0 = saf anahtar kelime (BM25), 1,0 = sa
 ## Gönderin
 
 Bu ders şunları üretir:
-- `outputs/prompt-advanced-rag-debugger.md` -- RAG kalite sorunlarını teşhis etmek ve düzeltmek için bir prompt
-- `outputs/skill-advanced-rag.md` -- hibrit arama ve yeniden sıralama ile üretim düzeyinde RAG oluşturmaya yönelik bir beceri
+- `outputs/prompt-advanced-rag-debugger.md` -- RAG kalite sorunlarını tanılamak ve düzeltmek için bir prompt
+- `outputs/skill-advanced-rag.md` - hibrit arama ve yeniden sıralama ile üretim düzeyinde RAG oluşturmaya yönelik bir beceri
 
 ## Egzersizler
 
@@ -500,9 +500,9 @@ Bu ders şunları üretir:
 
 3. Ders 06'daki basit oluşturma işlevini kullanarak tam bir HyDE hattı oluşturun. 5 test sorgusunun tamamında doğrudan sorgu araması ile HyDE araması arasındaki alma kalitesini (ilk 3 uygunluk) karşılaştırın. HyDE belirsiz sorgular için sonuçları iyileştirmelidir.
 
-4. Ebeveyn-çocuk parçalama stratejisini örnek belgeler üzerinde uygulayın. child_size=30 ve parent_size=100 kullanın. Alt parçalarla arama yapın ancak ana parçaları prompt içinde döndürün. Oluşturulan yanıtları chunk_size=50 ile standart parçalamayla karşılaştırın.
+4. Ebeveyn-çocuk parçalama stratejisini örnek belgeler üzerinde uygulayın. child_size=30 ve parent_size=100 kullanın. Alt parçalarla arama yapın ancak ana parçaları prompt'de döndürün. Oluşturulan yanıtları chunk_size=50 ile standart parçalamayla karşılaştırın.
 
-5. Bir değerlendirme oluşturun dataset: Bilinen yanıt parçalarına sahip 10 soru. (a) yalnızca vektör araması, (b) yalnızca BM25, (c) hibrit arama, (d) hibrit + yeniden sıralama için Recall@3, Recall@5 ve Recall@10'u ölçün. Sonuçları çizin ve yeniden sıralamanın en çok nerede yardımcı olacağını belirleyin.
+5. Bir değerlendirme oluşturun dataset: Cevapları bilinen 10 soru. (a) yalnızca vektör araması, (b) yalnızca BM25, (c) hibrit arama, (d) hibrit + yeniden sıralama için Recall@3, Recall@5 ve Recall@10'u ölçün. Sonuçları çizin ve yeniden sıralamanın en çok nerede yardımcı olacağını belirleyin.
 
 ## Anahtar Terimler
 
@@ -513,19 +513,19 @@ Bu ders şunları üretir:
 | Karşılıklı Sıra Füzyonu | "Sıralı listeleri birleştir" | Tüm listelerdeki her belge için 1/(k + sıra) toplayarak birden çok sıralı listeyi birleştirme |
 | Yeniden Sıralama | "İkinci geçiş puanlaması" | Bir aday kümesini ilk erişimden yeniden puanlamak için daha pahalı bir çapraz kodlayıcı modeli kullanma |
 | Çapraz kodlayıcı | "Ortak sorgu-belge modeli" | Bir sorguyu ve belgeyi tek bir girdi olarak alan, alaka puanı üreten bir model; çift ​​kodlayıcılardan daha doğru ancak tam derleme araması için çok yavaş |
-| Çift kodlayıcı | "Bağımsız embedding modeli" | Sorguları ve belgeleri bağımsız olarak yerleştiren bir model; hızlıdır çünkü embedding'ler önceden hesaplanır, ancak çapraz kodlayıcılardan daha az doğrudur |
+| Çift kodlayıcı | "Bağımsız embedding modeli" | Sorguları ve belgeleri bağımsız olarak yerleştiren bir model; hızlıdır çünkü embedding'ler önceden hesaplanır ancak çapraz kodlayıcılardan daha az hassastır |
 | HyDE | "Sahte yanıtla ara" | Sorguya varsayımsal bir yanıt oluşturun, onu yerleştirin ve buna benzer gerçek belgeleri arayın |
 | Ebeveyn-çocuk parçalaması | "Küçük arama, büyük bağlam" | Hassas erişim için küçük parçaları dizinleyin, ancak yeterli bağlam sağlamak için daha büyük ana parçayı döndürün |
 | Meta veri filtreleme | "Aramadan önce daraltın" | Arama alanını azaltmak için vektör aramasını çalıştırmadan önce belgeleri niteliklere (tarih, kaynak, kategori) göre filtreleme |
-| Sadakat | "Temelde kaldı mı?" | Oluşturulan yanıtın, modelin eğitim verilerinden hallucination üretmesinin aksine, alınan belgeler tarafından desteklenip desteklenmediği |
+| Sadakat | "Temelde kaldı mı?" | Oluşturulan yanıtın, modelin eğitim verilerinden halüsinasyona uğramasının aksine, alınan belgeler tarafından desteklenip desteklenmediği |
 
 ## Daha Fazla Okuma
 
 - Robertson ve Zaragoza, "The Probabilistic Relevance Framework: BM25 and Beyond" (2009) -- BM25 için kesin referans, formülün arkasındaki olasılıksal temelleri açıklıyor
 - Cormack ve diğerleri, "Reciprocal Rank Fusion Condorcet ve Bireysel Rank Öğrenme Yöntemlerinden Daha İyi Performans Gösteriyor" (2009) -- daha karmaşık füzyon yöntemlerini geride bıraktığını gösteren orijinal RRF makalesi
-- Gao ve diğerleri, "İlgili Etiketler Olmadan Hassas Zero-shot Yoğun Alma" (2022) -- varsayımsal belgelerin embedding'lerin herhangi bir eğitim verisi olmadan erişimi iyileştirdiğini gösteren HyDE makalesi
+- Gao ve diğerleri, "İlgili Etiketler Olmadan Hassas Sıfır Atış Yoğun Alma" (2022) -- varsayımsal belge embedding'lerin herhangi bir eğitim verisi olmadan almayı iyileştirdiğini gösteren HyDE makalesi
 - Nogueira ve Cho, "BERT ile Geçit Yeniden Sıralaması" (2019) -- BM25'in üzerinde çapraz kodlayıcı yeniden sıralamanın alma kalitesini önemli ölçüde artırdığını gösterdi
-- [Khattab ve diğerleri, "DSPy: Bildirimsel Dil Modeli Çağrılarını Kendini Geliştiren İşlem Hatlarına Derlemek" (2023)](https://arxiv.org/abs/2310.03714) -- prompt yapısını ve ağırlık seçimini, geri alma işlem hatları üzerinde bir optimizasyon sorunu olarak ele alır; bunu "prompt LLM" yerine "program LLMı" için okuyun.
+- [Khattab ve diğerleri, "DSPy: Bildirimsel Dil Modeli Çağrılarını Kendini Geliştiren İşlem Hatlarına Derlemek" (2023)](https://arxiv.org/abs/2310.03714) -- prompt yapısını ve ağırlık seçimini, geri alma işlem hatları üzerinde bir optimizasyon sorunu olarak ele alır; bunu "prompt LLM'ler" yerine "program LLM'ler" için okuyun.
 - [Edge ve diğerleri, "Yerelden Küresele: Sorgu Odaklı Özetlemeye Grafik RAG Yaklaşımı" (Microsoft Research 2024)](https://arxiv.org/abs/2404.16130) -- GraphRAG makalesi: varlık-ilişki çıkarımı + sorgu odaklı özetleme için Leiden topluluğu tespiti; küresel ve yerel erişim ayrımı.
-- [Asai ve diğerleri, "Self-RAG: Kendini Düşünme Yoluyla Alma, Oluşturma ve Eleştirmeyi Öğrenmek" (ICLR 2024)](https://arxiv.org/abs/2310.11511) -- yansıma token'larla kendini değerlendiren RAG; statik al-sonra-oluştur'u geçen agentic sınırı.
+- [Asai ve diğerleri, "Self-RAG: Kendini Düşünme Yoluyla Alma, Oluşturma ve Eleştirmeyi Öğrenmek" (ICLR 2024)](https://arxiv.org/abs/2310.11511) -- token'lerin yansımasıyla kendi kendini değerlendiren RAG; agentic sınırı, statik al-sonra oluştur'u geçiyor.
 - [LangChain Sorgu Oluşturma blogu](https://blog.langchain.dev/query-construction/) -- ön alım adımı olarak doğal dil sorgularının yapılandırılmış veritabanı sorgularına (Metinden SQL'e, Cypher) nasıl çevrileceği.

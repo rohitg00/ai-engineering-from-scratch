@@ -1,116 +1,116 @@
-# AI Control — Safety Despite Subversion
+# Yapay Zeka Kontrolü — Yıkılmaya Rağmen Güvenlik
 
-> Greenblatt, Shlegeris, Sachan, Roger (Redwood Research, arXiv:2312.06942, ICML 2024). Control reframes the safety question: given an untrusted strong model U that may be adversarially optimizing against you, what protocols let you extract useful work while bounding the probability of an unacceptable outcome? Resources are a trusted weaker model T, a budget of trusted human labor H, and the ability to edit U's outputs. Within this frame, Trusted Editing Pareto-dominates Untrusted Monitoring on code-backdoor tasks. The frame inherits worst-case assumptions from security engineering: safety is the probability that an adversarially chosen U cannot cause a concrete unacceptable outcome, measured under red-team pressure that stands in for U.
+> Greenblatt, Shlegeris, Sachan, Roger (Redwood Research, arXiv:2312.06942, ICML 2024). Control, güvenlik sorusunu yeniden çerçevelendiriyor: Size karşı rakip olarak optimizasyon yapan, güvenilmeyen güçlü bir U modeli göz önüne alındığında, hangi protokoller kabul edilemez bir sonuç olasılığını sınırlarken faydalı işler çıkarmanıza izin verir? Kaynaklar, güvenilir bir zayıf model T, güvenilir insan emeği H bütçesi ve U'nun çıktılarını düzenleme yeteneğidir. Bu çerçevede, Güvenilir Düzenleme, kod arka kapı görevlerinde Güvenilmeyen İzlemeye Pareto hakimdir. Çerçeve, güvenlik mühendisliğinden en kötü durum varsayımlarını devralmıştır: güvenlik, rakip olarak seçilen bir U'nun, U'nun yerine geçen kırmızı takım baskısı altında ölçülen, kabul edilemez somut bir sonuca neden olamama olasılığıdır.
 
-**Type:** Learn
-**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task)
-**Prerequisites:** Phase 18 · 07 (sleeper agents), Phase 18 · 08 (scheming), Phase 18 · 09 (alignment faking)
-**Time:** ~75 minutes
+**Tür:** Öğren
+**Diller:** Python (stdlib, arka kapı kodu görevinde güvenlik ve kullanışlılık sınırı)
+**Önkoşullar:** Aşama 18 · 07 (uyuyan agents), Aşama 18 · 08 (planlama), Aşama 18 · 09 (hizalama sahteciliği)
+**Süre:** ~75 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Define the AI Control threat model: untrusted strong model U, trusted weaker model T, trusted human budget H.
-- Describe the Trusted Editing protocol and why it Pareto-dominates Untrusted Monitoring on the ICML 2024 code-backdoor task.
-- Explain the difference between alignment (U is trustworthy) and control (U is not trustworthy and we are safe anyway).
-- State the three limits of control: humans do not scale, trusted weak models eventually lag, control does not produce trustworthy strong models.
+- Yapay Zeka Kontrolü tehdit modelini tanımlayın: güvenilmeyen güçlü model U, güvenilen daha zayıf model T, güvenilen insan bütçesi H.
+- Güvenilir Düzenleme protokolünü ve ICML 2024 kod arka kapı görevinde Güvenilmeyen İzlemede Pareto'nun neden baskın olduğunu açıklayın.
+- Hizalama (U güvenilirdir) ile kontrol (U güvenilir değildir ve biz zaten güvendeyiz) arasındaki farkı açıklayın.
+- Kontrolün üç sınırını belirtin: İnsanlar ölçeklenmez, güvenilen zayıf modeller eninde sonunda geride kalır, kontrol güvenilir güçlü modeller üretmez.
 
-## The Problem
+## Sorun
 
-Lessons 7-9 establish that a frontier model may be deceptively aligned, scheming, or faking alignment. The safety question re-frames: can we extract useful work from a model we do not trust, without giving it the opportunity to cause unacceptable outcomes? This is the control problem, and it is structured like classical security: assume worst-case adversary, design a protocol, measure the adversary's success rate under red-team pressure.
+7-9. Dersler, bir sınır modelinin aldatıcı bir şekilde hizalanabileceğini, planlanabileceğini veya sahte hizalanabileceğini ortaya koyuyor. Güvenlik sorusu yeniden çerçeveleniyor: Güvenmediğimiz bir modelden, ona kabul edilemez sonuçlara neden olma fırsatını vermeden yararlı işler çıkarabilir miyiz? Bu kontrol problemidir ve klasik güvenlik gibi yapılandırılmıştır: en kötü durumdaki rakibi varsayalım, bir protokol tasarlayın, kırmızı takım baskısı altında rakibin başarı oranını ölçün.
 
-## The Concept
+## Konsept
 
-### The threat model
+### Tehdit modeli
 
-Control assumes:
-- U — untrusted strong model. Capable. Possibly adversarial (the evaluation treats it as if it were).
-- T — trusted weaker model. Less capable, but known not to be adversarial.
-- H — trusted human labor. Small budget; does not scale.
+Kontrol şunları varsayar:
+- U — güvenilmeyen güçlü model. Yetenekli. Muhtemelen düşmanca (değerlendirme sanki öyleymiş gibi ele alıyor).
+- T — güvenilir, zayıf model. Daha az yetenekli, ancak düşman olmadığı biliniyor.
+- H — güvenilir insan emeği. Küçük bütçe; ölçeklenmiyor.
 
-The system must produce useful output using U. The adversary tries to cause a concrete unacceptable outcome (e.g., a backdoor in the shipped code) while maintaining a fraction of legitimate useful work to pass usefulness thresholds.
+Sistem, U kullanarak faydalı çıktı üretmelidir. Rakip, kullanışlılık eşiklerini geçmek için meşru yararlı çalışmanın bir kısmını korurken, somut kabul edilemez bir sonuca (e.g., gönderilen koddaki bir arka kapı) neden olmaya çalışır.
 
-Control gives up on trusting U. It asks what protocols maintain safety in U's absence of trust.
+Kontrol, U'ya güvenmeyi bırakır. U'nun güven eksikliği durumunda hangi protokollerin güvenliği sağladığını sorar.
 
-### The ICML 2024 backdoor task
+### ICML 2024 arka kapı görevi
 
-Prompts are competition-level coding problems. U produces a candidate solution. A hidden oracle flags if the solution contains a backdoor (a specific input that makes the code produce a wrong output). Red team controls U and is allowed to see all protocol internals. The protocol must maximize solved-problem rate while keeping backdoor-shipping rate below a threshold.
+Prompt'lar rekabet düzeyindeki kodlama sorunlarıdır. U aday çözüm üretiyor. Çözümün bir arka kapı (kodun yanlış bir çıktı üretmesine neden olan belirli bir giriş) içermesi durumunda gizli bir oracle işaretlenir. Kırmızı takım U'yu kontrol eder ve tüm protokol dahili bileşenlerini görmesine izin verilir. Protokol, arka kapı nakliye oranını bir eşiğin altında tutarken çözülen sorun oranını en üst düzeye çıkarmalıdır.
 
-### Four protocols compared
+### Dört protokol karşılaştırıldı
 
-- **Baseline:** ship U's output directly. Usefulness maxed. Safety minimal.
-- **Upfront auditing:** use H on all outputs. Safety maxed. Budget exhausted quickly.
-- **Untrusted Monitoring:** a second instance of U scores the first instance's output; H audits flagged outputs. Risk: the two U instances can collude.
-- **Trusted Editing:** T edits U's output on every query. If T is not confident, route to H.
+- **Temel:** U'nun çıktısını doğrudan gönderir. Yararlılık maksimuma ulaştı. Güvenlik minimum.
+- **Ön denetim:** tüm çıktılarda H kullanın. Güvenlik maksimuma çıkarıldı. Bütçe çabuk tükendi.
+- **Güvenilmeyen İzleme:** ikinci bir U örneği, ilk örneğin çıktısını puanlar; H işaretli çıktıları denetler. Risk: İki U örneği gizli anlaşma yapabilir.
+- **Güvenilir Düzenleme:** T, her sorguda U'nun çıktısını düzenler. T emin değilse H'ye yönlendirin.
 
-Greenblatt et al. find Trusted Editing Pareto-dominates Untrusted Monitoring: higher usefulness at every safety level.
+Greenblatt ve ark. Güvenilir Düzenlemeyi Bul Pareto hakimdir Güvenilmeyen İzleme: her güvenlik düzeyinde daha yüksek kullanışlılık.
 
-### Why Trusted Editing wins
+### Neden Güvenilir Düzenleme kazanıyor?
 
-Untrusted Monitoring requires that U's second instance cannot coordinate with the first. Collusion is possible via steganographic cues or shared training priors. The protocol has to invest budget in collusion-resistance (paraphrasing, obfuscation) that reduces the monitor's signal. Trusted Editing avoids collusion entirely because T is trusted — any edit T proposes is, by assumption, not adversarial. The cost is that T is less capable, so it may over-reject or miss subtle backdoors.
+Güvenilmeyen İzleme, U'nun ikinci örneğinin birinciyle koordine olamamasını gerektirir. Gizli anlaşma steganografik ipuçları veya paylaşılan eğitim öncelikleri yoluyla mümkündür. Protokolün, monitörün sinyalini azaltan gizli anlaşma direncine (başka kelimelerle ifade etme, şaşırtma) bütçe ayırması gerekiyor. Güvenilir Düzenleme, T'ye güvenildiğinden gizli anlaşmayı tamamen önler; T'nin önerdiği herhangi bir düzenleme, varsayım gereği, düşmanca değildir. Bunun maliyeti, T'nin daha az yetenekli olmasıdır, bu nedenle aşırı reddedebilir veya ince arka kapıları kaçırabilir.
 
-### The four protocol axes
+### Dört protokol ekseni
 
-1. Which role U plays: producer only, monitor, or both.
-2. Which role T plays: editor, monitor, or resampler.
-3. How H is allocated: uniform audit, random audit, or flag-directed audit.
-4. How much compute the protocol spends on collusion-resistance.
+1. U'nun oynadığı rol: yalnızca yapımcı, monitör veya her ikisi.
+2. T'nin oynadığı rol: editör, monitör veya yeniden örnekleyici.
+3. H nasıl tahsis edilir: tek tip denetim, rastgele denetim veya bayrağa yönelik denetim.
+4. Protokolün gizli anlaşmaya karşı direnç için ne kadar hesaplama harcadığı.
 
-### Alignment vs control
+### Hizalama ve kontrol
 
-- Alignment: "is U safe to trust?" Lessons 2, 4, 5, 6, 7, 8, 9 all bear on this.
-- Control: "can we use U safely without trusting it?" Lesson 10.
+- Hizalama: "U'ya güvenmek güvenli mi?" 2, 4, 5, 6, 7, 8, 9. derslerin hepsi bununla ilgilidir.
+- Kontrol: "U'ya güvenmeden güvenle kullanabilir miyiz?" Ders 10.
 
-Alignment is a property of the model. Control is a property of the deployment protocol. Control does not produce aligned models; it produces safe use of possibly-unaligned models. Both agendas are needed.
+Hizalama modelin bir özelliğidir. Kontrol, deployment protokolünün bir özelliğidir. Kontrol uyumlu modeller üretmez; muhtemelen hizalanmamış modellerin güvenli kullanımını sağlar. Her iki gündeme de ihtiyaç var.
 
-### Three fundamental limits
+### Üç temel sınır
 
-- Humans do not scale. The H budget is bounded by the number of humans willing to audit hard AI outputs.
-- Trusted weak models eventually lag. When T is much weaker than U, T's editing signal becomes noise.
-- Control is not alignment. Protocols that work at ASL-3 (Lesson 18) may not work at ASL-4 — if U can manipulate T or reason about H's audit distribution, control fails.
+- İnsanlar ölçeklenmez. H bütçesi, katı yapay zeka çıktılarını denetlemek isteyen insan sayısıyla sınırlıdır.
+- Güvenilir zayıf modeller eninde sonunda geride kalır. T, U'dan çok daha zayıf olduğunda, T'nin düzenleme sinyali gürültüye dönüşür.
+- Kontrol hizalama değildir. ASL-3'te çalışan protokoller (Ders 18) ASL-4'te çalışmayabilir; eğer U, T'yi manipüle edebilirse veya H'nin denetim dağıtımı hakkında mantık yürütebilirse, kontrol başarısız olur.
 
-### The 2025 development
+### 2025 gelişimi
 
-UK AISI and Redwood collaborate on Control Safety Cases (metr.org / redwoodresearch.org 2025): a control safety case argues that under worst-case assumptions about U, the protocol bounds the probability of an unacceptable outcome. Safety cases (Lesson 18) inherit the control frame.
+Birleşik Krallık AISI ve Redwood, Kontrol Güvenlik Durumları (metr.org / redwoodresearch.org 2025) üzerinde işbirliği yapıyor: bir kontrol güvenlik durumu, U hakkındaki en kötü durum varsayımları altında protokolün kabul edilemez bir sonuç olasılığını sınırladığını savunuyor. Güvenlik durumları (Ders 18) kontrol çerçevesini devralır.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lessons 6-9 describe the threat (deception is possible). Lesson 10 describes the defensive paradigm under the assumption that the threat is real. Lesson 11 describes the complementary offensive paradigm (make U trustworthy via scalable oversight).
+6-9. Dersler tehdidi açıklamaktadır (aldatma mümkündür). Ders 10, tehdidin gerçek olduğu varsayımı altında savunma paradigmasını anlatıyor. Ders 11, tamamlayıcı saldırı paradigmasını açıklamaktadır (ölçeklenebilir gözetim yoluyla U'yu güvenilir kılmak).
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` simulates the four protocols on a toy backdoor task. U produces outputs; a fraction are backdoored (red-team policy). T approves or edits. H is called on a budget. You can sweep the budget and the collusion parameter to reproduce the Pareto frontier in Greenblatt et al. 2024 Figure 2 (shape, not numbers).
+`code/main.py` bir oyuncak arka kapı görevindeki dört protokolü simüle eder. U çıktılar üretir; bir kısmı arka kapıya kapatılmıştır (kırmızı takım politikası). T onaylar veya düzenler. H bir bütçe için çağrıldı. Greenblatt ve diğerlerinde Pareto sınırını yeniden oluşturmak için bütçeyi ve gizli anlaşma parametresini tarayabilirsiniz. 2024 Şekil 2 (sayı değil şekil).
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-control-protocol-audit.md`. Given a deployment protocol description, it identifies the U / T / H roles, names the collusion vectors, and estimates the protocol's position on the usefulness-safety frontier under red-team pressure.
+Bu ders `outputs/skill-control-protocol-audit.md` üretir. Bir deployment protokol açıklaması verildiğinde, U/T/H rollerini tanımlar, gizli anlaşma vektörlerini adlandırır ve kırmızı takım baskısı altında protokolün kullanışlılık-güvenlik sınırındaki konumunu tahmin eder.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Reproduce the usefulness-safety frontier for Trusted Editing vs Untrusted Monitoring. Identify the budget regime in which Untrusted Monitoring's collusion assumption becomes pivotal.
+1. `code/main.py`'yı çalıştırın. Güvenilir Düzenleme ve Güvenilmeyen İzleme için kullanışlılık-güvenlik sınırını yeniden oluşturun. Güvenilmeyen İzleme'nin gizli anlaşma varsayımının önemli hale geldiği bütçe rejimini belirleyin.
 
-2. Add a new protocol: "T resamples with low temperature, then U edits T's output." Measure its position on the frontier. Why does this fail more catastrophically than Trusted Editing?
+2. Yeni bir protokol ekleyin: "T düşük sıcaklıkla yeniden örnekler, ardından U, T'nin çıktısını düzenler." Sınırdaki konumunu ölçün. Bu neden Güvenilir Düzenleme'den daha feci bir şekilde başarısız oluyor?
 
-3. The 2024 paper assumes U can see the protocol. Design a protocol that hides from U which outputs are being audited. What does this protocol require from the deployment infrastructure?
+3. 2024 belgesi U'nun protokolü görebildiğini varsaymaktadır. Hangi çıktıların denetlendiğini U'dan gizleyen bir protokol tasarlayın. Bu protokol deployment altyapısından ne gerektiriyor?
 
-4. Read Greenblatt et al. 2024 Section 7 (collusion). Propose a collusion-resistance measure and explain its expected usefulness cost.
+4. Greenblatt ve ark.'yı okuyun. 2024 Bölüm 7 (gizli anlaşma). Gizli anlaşmaya karşı bir direnç önlemi önerin ve beklenen fayda maliyetini açıklayın.
 
-5. Articulate a control safety case for a deployment that uses U = GPT-4-class, T = GPT-3.5-class, H = 1% of outputs audited. Identify the single strongest assumption the case depends on.
+5. U = GPT-4-sınıfı, T = GPT-3.5-sınıfı, H = denetlenen çıktıların %1'ini kullanan bir deployment için bir kontrol güvenlik durumu ifade edin. Vakanın dayandığı en güçlü tek varsayımı belirleyin.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| AI Control | "safety under subversion" | Protocol design that bounds unacceptable outcomes under a worst-case U |
-| Untrusted model (U) | "the strong model" | The capable model we want to extract work from but do not trust |
-| Trusted model (T) | "the weak model" | A weaker model, known not to be adversarial, used as editor/monitor |
-| Trusted human (H) | "the audit budget" | Bounded expert labor; expensive; the ground-truth signal |
-| Trusted Editing | "T edits U" | Protocol where T is the gate on U's outputs; H called on ambiguous outputs |
-| Untrusted Monitoring | "U monitors U" | Protocol where a second U instance scores outputs; collusion-resistant only with extra investment |
-| Control safety case | "the formal argument" | Written argument that a protocol bounds the adversary's success under worst-case U |
+| Yapay Zeka Kontrolü | "Yıkılma altında güvenlik" | Kabul edilemez sonuçları en kötü durum U altında sınırlayan protokol tasarımı |
+| Güvenilmeyen model (U) | "güçlü model" | İş çıkarmak istediğimiz ama güvenmediğimiz yetenekli model |
+| Güvenilir model (T) | "zayıf model" | Rakip olmadığı bilinen, editör/monitör olarak kullanılan daha zayıf bir model |
+| Güvenilir insan (H) | "denetim bütçesi" | Sınırlı uzman emeği; masraflı; temel gerçek sinyali |
+| Güvenilir Düzenleme | "T U'yu düzenler" | T'nin U'nun çıkışlarındaki kapı olduğu protokol; H belirsiz çıktılara çağrıda bulundu |
+| Güvenilmeyen İzleme | "U, U'yu izler" | İkinci bir U örneğinin çıktıları puanladığı protokol; yalnızca ekstra yatırımla gizli anlaşmalara dayanıklı |
+| Kontrol güvenlik kutusu | "resmi argüman" | Bir protokolün düşmanın başarısını en kötü durum U |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Greenblatt, Shlegeris, Sachan, Roger — AI Control (arXiv:2312.06942)](https://arxiv.org/abs/2312.06942) — the canonical ICML 2024 paper
-- [Redwood Research — Recent AI Control papers index](https://redwoodresearch.substack.com/) — 2024-2025 follow-ups
-- [UK AISI + METR — Control safety cases](https://metr.org/blog/2025-03-26-common-elements-of-frontier-ai-safety-policies/) — operationalization for frontier labs
-- [Hubinger et al. — Sleeper Agents (Lesson 7, arXiv:2401.05566)](https://arxiv.org/abs/2401.05566) — the threat model control assumes
+- [Greenblatt, Shlegeris, Sachan, Roger — AI Control (arXiv:2312.06942)](https://arxiv.org/abs/2312.06942) — kanonik ICML 2024 makalesi
+- [Redwood Research — En son AI Control makaleleri dizini](https://redwoodresearch.substack.com/) — 2024-2025 takipleri
+- [Birleşik Krallık AISI + METR — Güvenlik durumlarının kontrolü](https://metr.org/blog/2025-03-26-common-elements-of-frontier-ai-safety-policies/) — sınır laboratuvarları için operasyonelleştirme
+- [Hubinger ve ark. — Uyuyan Agent'ler (Ders 7, arXiv:2401.05566)](https://arxiv.org/abs/2401.05566) — tehdit modeli kontrolü şunu varsayar:

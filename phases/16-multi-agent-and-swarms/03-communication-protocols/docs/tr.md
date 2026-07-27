@@ -1,31 +1,31 @@
 # İletişim Protokolleri
 
-> Aynı dili konuşamayan Agent'lar takım değildir. Onlar boşluğa bağıran yabancılar.
+> Aynı dili konuşamayan Agent'ler takım değildir. Onlar boşluğa bağıran yabancılar.
 
 **Tür:** Yapım
 **Diller:** TypeScript
-**Önkoşullar:** Aşama 14 (Agent Mühendislik), Ders 16.01 (Neden Çoklu-Agent)
+**Önkoşullar:** Aşama 14 (Agent Mühendislik), Ders 16.01 (Neden Multi-Agent)
 **Süre:** ~120 dakika
 
 ## Öğrenme Hedefleri
 
-- agent'ların harici sunucular tarafından kullanıma sunulan araçları kullanabilmesi için MCP aracı keşfi ve çağrısını uygulayın
-- Bir agent'ın işi HTTP üzerinden diğerine devretmesine olanak tanıyan bir A2A agent kartı ve görev uç noktası oluşturun
+- agent'lerin harici sunucular tarafından kullanıma sunulan araçları kullanabilmesi için MCP aracı keşfi ve çağrısını uygulayın
+- Bir agent'nin işi HTTP üzerinden diğerine devretmesine olanak tanıyan bir A2A agent kartı ve görev uç noktası oluşturun
 - MCP (araç erişimi), A2A (agent-to-agent), ACP (kurumsal denetim) ve ANP'yi (merkezi olmayan güven) karşılaştırın ve hangi protokolün hangi sorunu çözdüğünü açıklayın
-- agent'larin MCP yoluyla araçları keşfettiği ve görevleri A2A aracılığıyla devrettiği tek bir sistemde birden fazla protokolü birbirine bağlayın
+- agent'lerin MCP aracılığıyla araçları keşfettiği ve görevleri A2A aracılığıyla devrettiği tek bir sistemde birden fazla protokolü bir araya getirin
 
 ## Sorun
 
-Sisteminizi birden fazla agent'a böldünüz. Bir araştırmacı, bir kodlayıcı, bir eleştirmen. Bireysel işlerinde harikalar. Ama artık birbirleriyle gerçekten konuşmalarına ihtiyacınız var.
+Sisteminizi birden fazla agent'ye böldünüz. Bir araştırmacı, bir kodlayıcı, bir eleştirmen. Bireysel işlerinde harikalar. Ama artık birbirleriyle gerçekten konuşmalarına ihtiyacınız var.
 
-İlk girişiminiz açık: ipleri dolaştırın. Araştırmacı bir metin bloğu döndürür, kodlayıcı ise onu elinden geldiğince ayrıştırır. Kodlayıcı bir araştırma özetini yanlış yorumlayana veya iki agent birbirini bekleyen çıkmaza girene veya işbirliği yapmak için farklı ekipler tarafından oluşturulan agent'lare ihtiyaç duyana kadar çalışır. Aniden "sadece dizeleri aktarın" dağılıyor.
+İlk girişiminiz açık: ipleri dolaştırın. Araştırmacı bir metin bloğu döndürür, kodlayıcı ise onu elinden geldiğince ayrıştırır. Kodlayıcı bir araştırma özetini yanlış yorumlayana veya iki agent birbirini bekleyen çıkmaza girene veya işbirliği yapmak için farklı ekipler tarafından oluşturulan agent'lere ihtiyaç duyana kadar çalışır. Aniden "sadece dizeleri aktarın" dağılıyor.
 
-Bu iletişim protokolü sorunudur. agent'ların nasıl bilgi alışverişinde bulunduklarına ilişkin ortak bir sözleşme olmadan, çokluagent sistemleri kırılgandır, denetlenemezdir ve kişisel olarak yazdığınız bir avuç agent'ın ötesine ölçeklendirmek imkansızdır.
+Bu iletişim protokolü sorunudur. agent'lerin nasıl bilgi alışverişinde bulunduğuna ilişkin ortak bir sözleşme olmadan, çoklu agent sistemleri kırılgandır, denetlenemezdir ve kişisel olarak yazdığınız bir avuç agent'nin ötesine ölçeklendirmek imkansızdır.
 
 Yapay zeka ekosistemi, her biri sorunun farklı bir bölümünü çözen dört protokolle yanıt verdi:
 
 - Araç erişimi için **MCP**
-- agent-to-agent işbirliği için **A2A**
+- agent-agent işbirliği için **A2A**
 - Kurumsal denetlenebilirlik için **ACP**
 - Merkezi olmayan kimlik ve güven için **ANP**
 
@@ -54,7 +54,7 @@ Onlar rakip değiller. Farklı seviyelerdeki farklı sorunları çözerler.
 
 ### MCP (Özet)
 
-MCP, Aşama 13'te derinlemesine ele alınmaktadır. Kısa özet: MCP, bir Yüksek Lisans'ın harici araçlara ve veri kaynaklarına nasıl bağlandığını standartlaştırır. Bu, agent (istemci)'nin bir sunucu tarafından kullanıma sunulan araçları keşfedip çağırdığı bir **istemci-sunucu** protokolüdür.
+MCP, Aşama 13'te derinlemesine ele alınmaktadır. Kısa özet: MCP, bir Yüksek Lisans'ın harici araçlara ve veri kaynaklarına nasıl bağlandığını standartlaştırır. Bu, agent'nin (istemci) bir sunucu tarafından kullanıma sunulan araçları keşfedip çağırdığı bir **istemci-sunucu** protokolüdür.
 
 ```mermaid
 sequenceDiagram
@@ -67,15 +67,15 @@ sequenceDiagram
     MCP1-->>Agent: result
 ```
 
-MCP, **agent-araç** iletişimidir. agent'larin birbirleriyle konuşmasına yardımcı olmuyor.
+MCP, **agent-araç** iletişimidir. agent'lerin birbirleriyle konuşmasına yardımcı olmuyor.
 
-### A2A (Agent2Agent Protokol)
+### A2A (Agent2Agent Protokolü)
 
-**Oluşturan:** Google (şu anda `lf.a2a.v1` adıyla Linux Foundation altında)
+**Oluşturan:** Google (şu anda `lf.a2a.v1` olarak Linux Foundation altında)
 **Özel sürüm:** 1.0.0
-**Sorun:** Otonom agent'lar nasıl işbirliği yapıyor, pazarlık yapıyor ve görevleri birbirlerine nasıl devrediyor?
+**Sorun:** Otonom agent'ler nasıl işbirliği yapıyor, pazarlık yapıyor ve görevleri birbirlerine devrediyor?
 
-A2A **eşler arası agent işbirliğinin** protokolüdür. MCP'nin bir agent'ı araçlara bağladığı yerde, A2A bir agent'ı diğer agent'lara bağlar. Her agent, iyi bilinen bir URL'de bir **Agent Kartı** yayınlar ve diğer agent'lar bunu keşfeder, müzakere eder ve görevleri ona devreder.
+A2A **eşler arası agent işbirliği** protokolüdür. MCP'nin bir agent'yi araçlara bağladığı yerde, A2A bir agent'yi diğer agent'lere bağlar. Her agent, iyi bilinen bir URL'de bir **Agent Kartı** yayınlar ve diğer agent'ler bunu keşfeder, müzakere eder ve görevleri ona devreder.
 
 #### A2A Nasıl Çalışır?
 
@@ -103,7 +103,7 @@ sequenceDiagram
 
 #### Gerçek Agent Kartı
 
-Bir A2A Agent Kartının vahşi doğada gerçekte nasıl göründüğü budur. `GET /.well-known/agent-card.json`'da servis edildi:
+Bir A2A Agent Kartının vahşi doğada gerçekte nasıl göründüğü budur. `GET /.well-known/agent-card.json`'de görev yaptı:
 
 ```json
 {
@@ -162,7 +162,7 @@ Bir A2A Agent Kartının vahşi doğada gerçekte nasıl göründüğü budur. `
 ```
 
 Dikkat edilmesi gereken önemli noktalar:
-- **Beceriler** bir agent'ın yapabileceği şeylerdir. Her birinin bir kimliği, etiketleri ve desteklenen giriş/çıkış MIME türleri vardır. Bir agent istemcisi, bu uzak agent'ın isteğini yerine getirip getiremeyeceğine bu şekilde karar verir.
+- **Beceriler** bir agent'nin yapabileceği şeylerdir. Her birinin bir kimliği, etiketleri ve desteklenen giriş/çıkış MIME türleri vardır. agent istemcisi bu uzak agent'nin isteğini yerine getirip getiremeyeceğine bu şekilde karar verir.
 - **supportedInterfaces** birden fazla protokol bağlamasını listeler. Tek bir agent aynı anda JSON-RPC, REST ve gRPC'yi konuşabilir.
 - **Güvenlik** kartın içine yerleştirilmiştir. Müşteri, tek bir istekte bulunmadan önce hangi yetkilendirmeye ihtiyacı olduğunu bilir.
 
@@ -193,13 +193,13 @@ stateDiagram-v2
     end note
 ```
 
-8 durumun tamamı (özellik aynı zamanda `UNSPECIFIED` 'yi bir nöbetçi olarak tanımlar, burada belirtilmemiştir):
+8 durumun tümü (şartname ayrıca `UNSPECIFIED`'yi bir nöbetçi olarak tanımlar, burada belirtilmemiştir):
 
-| Devlet | Terminal? | Anlamı |
+| Eyalet | Terminal? | Anlamı |
 |---|---|---|
 | `TASK_STATE_SUBMITTED` | Hayır | Onaylandı, henüz işlenmiyor |
 | `TASK_STATE_WORKING` | Hayır | Aktif olarak işleniyor |
-| `TASK_STATE_INPUT_REQUIRED` | Hayır | Agent'nin müşteriden daha fazla bilgiye ihtiyacı var |
+| `TASK_STATE_INPUT_REQUIRED` | Hayır | Agent'nin istemciden daha fazla bilgiye ihtiyacı var |
 | `TASK_STATE_AUTH_REQUIRED` | Hayır | Kimlik doğrulama gerekli |
 | `TASK_STATE_COMPLETED` | Evet | Başarıyla tamamlandı |
 | `TASK_STATE_FAILED` | Evet | Hatayla tamamlandı |
@@ -286,9 +286,9 @@ data: {"statusUpdate":{"taskId":"task-123","status":{"state":"TASK_STATE_COMPLET
 **Yaratan:** IBM / BeeAI
 **Özel sürüm:** 0.2.0 (OpenAPI 3.1.1)
 **Durum:** Linux Vakfı kapsamında A2A ile birleşme
-**Sorun:** agent'lar tam denetlenebilirlik, oturum sürekliliği ve yörünge takibi ile nasıl iletişim kuruyor?
+**Sorun:** agent'ler tam denetlenebilirlik, oturum sürekliliği ve yörünge izleme özellikleriyle nasıl iletişim kuruyor?
 
-ACP **kurumsal protokoldür**. Pek çok özette iddia edilenin aksine ACP, JSON-LD'yi **kullanmaz**. OpenAPI aracılığıyla tanımlanan basit bir REST/JSON API'sidir. Onu özel kılan şey **TrajectoryMetadata**'dır: her agent yanıtı, onu üreten akıl yürütme adımlarının ve araç çağrılarının ayrıntılı bir günlüğünü taşıyabilir.
+ACP **kurumsal protokoldür**. Pek çok özette iddia edilenin aksine ACP, JSON-LD'yi **kullanmaz**. OpenAPI aracılığıyla tanımlanan basit bir REST/JSON API'sidir. Onu özel kılan şey **TrajectoryMetadata**: Her agent yanıtı, onu üreten akıl yürütme adımlarının ve araç çağrılarının ayrıntılı bir günlüğünü taşıyabilir.
 
 ```mermaid
 sequenceDiagram
@@ -320,7 +320,7 @@ graph LR
     style E fill:#f3e8ff,stroke:#7c3aed
 ```
 
-**AgentManifesto**, A2A'nın Agent Kartından daha basittir:
+**AgentManifest**, A2A'nın Agent Kartından daha basittir:
 
 ```json
 {
@@ -346,12 +346,12 @@ graph LR
 
 #### Yaşam Döngüsünü Çalıştır
 
-ACP, "Görevler" yerine "Çalıştırmalar"ı kullanır. Bir Çalıştırma, üç modlu bir agent yürütmesidir:
+ACP, "Görevler" yerine "Çalıştırmalar"ı kullanır. Çalıştırma, üç modlu bir agent yürütmesidir:
 
 | Modu | Davranış |
 |---|---|
 | `sync` | Engelleme. Yanıt tam sonucu içerir. |
-| `async` | Hemen 202'yi döndürür. Durum için `GET /runs/{id}` 'a anket yapın. |
+| `async` | Hemen 202'yi döndürür. Durum için `GET /runs/{id}`'ye anket yapın. |
 | `stream` | SSE akışı. agent çalışırken olaylar tetiklenir. |
 
 ```mermaid
@@ -372,7 +372,7 @@ stateDiagram-v2
 
 #### Yörünge Meta Verileri (Denetim İzi)
 
-Bu, ACP'nin temel ayırt edici özelliğidir. Her mesaj bölümü, agent'ın tam olarak ne yaptığını gösteren meta verileri içerebilir:
+Bu, ACP'nin temel ayırt edici özelliğidir. Her mesaj bölümü, agent'nin tam olarak ne yaptığını gösteren meta verileri içerebilir:
 
 ```json
 {
@@ -393,7 +393,7 @@ Bu, ACP'nin temel ayırt edici özelliğidir. Her mesaj bölümü, agent'ın tam
 }
 ```
 
-Düzenlemeye tabi endüstriler için bu altındır. Her yanıt, kanıtlanabilir bir mantık zinciriyle birlikte gelir: Hangi araçlar çağrıldı, hangi girdiler kullanıldı, hangi çıktılar alındı. Kara kutu yok.
+Düzenlemeye tabi endüstriler için bu altındır. Her cevap kanıtlanabilir bir mantık zinciriyle birlikte gelir: Hangi araçlar çağrıldı, hangi girdiler kullanıldı, hangi çıktılar alındı. Kara kutu yok.
 
 ACP ayrıca kaynak ilişkilendirme için **CitationMetadata**'yı da destekler:
 
@@ -410,10 +410,10 @@ ACP ayrıca kaynak ilişkilendirme için **CitationMetadata**'yı da destekler:
 ### ANP (Agent Ağ Protokolü)
 
 **Yaratan:** Açık kaynak topluluğu (GaoWei Chang tarafından kuruldu)
-**Repo:** [github.com/agent-network-protocol/AgentNetworkProtocol](https://github.com/agent-network-protocol/AgentNetworkProtocol)
-**Sorun:** Farklı kuruluşlardan agent'lar merkezi bir otorite olmadan birbirlerine nasıl güveniyorlar?
+**Repo:** [github.com/agent-ağ-protokolü/AgentNetworkProtokolü](https://github.com/agent-network-protocol/AgentNetworkProtocol)
+**Sorun:** Farklı kuruluşlardaki agent'ler merkezi bir otorite olmadan birbirlerine nasıl güveniyorlar?
 
-ANP **merkezi olmayan kimlik protokolüdür**. W3C Merkezi Olmayan Tanımlayıcıları (DID'ler) ve uçtan uca şifrelemeyi kullanarak güven oluşturur. agent'lari bilinen uç noktalar aracılığıyla keşfettiğiniz A2A'dan farklı olarak ANP, agent'larin kimliklerini kriptografik olarak kanıtlamasına olanak tanır.
+ANP **merkezi olmayan kimlik protokolüdür**. W3C Merkezi Olmayan Tanımlayıcıları (DID'ler) ve uçtan uca şifrelemeyi kullanarak güven oluşturur. agent'leri bilinen uç noktalar aracılığıyla keşfettiğiniz A2A'dan farklı olarak ANP, agent'lerin kimliklerini kriptografik olarak kanıtlamasına olanak tanır.
 
 ANP'nin üç katmanı vardır:
 
@@ -443,7 +443,7 @@ graph TB
 
 #### DID Belgeleri (Gerçek Yapı)
 
-ANP, `did:wba` (Web Tabanlı Agent) adı verilen özel bir DID yöntemi kullanır. DID `did:wba:example.com:user:alice` , `https://example.com/user/alice/did.json` olarak çözümlenir:
+ANP, `did:wba` (Web Tabanlı Agent) adı verilen özel bir DID yöntemini kullanır. DID `did:wba:example.com:user:alice`, `https://example.com/user/alice/did.json`'ye çözümlenir:
 
 ```json
 {
@@ -495,7 +495,7 @@ Dikkat edilmesi gereken önemli noktalar:
 - **Anahtar ayırma** zorunludur. İmzalama anahtarları (secp256k1) şifreleme anahtarlarından (X25519) ayrıdır.
 - **`humanAuthorization`** ANP'ye özeldir. Bu anahtarlar kullanılmadan önce açık bir şekilde insan onayı (biyometrik, şifre, HSM) gerektirir. Fon transferi gibi yüksek riskli operasyonlar bu yoldan geçiyor.
 - **`keyAgreement`** anahtarları HPKE uçtan uca şifreleme (RFC 9180) için kullanılır.
-- **hizmet** bölümü Agent Açıklama belgesine bağlantı verir.
+- **hizmet** bölümü Agent Açıklama belgesine bağlanır.
 
 #### ANP'de Güven Nasıl Çalışır?
 
@@ -518,10 +518,10 @@ sequenceDiagram
 
 Güven üç kaynaktan gelir:
 1. **Alan düzeyinde TLS**, DID belge ana bilgisayarını doğrular
-2. **DID şifreleme imzaları** agent'ın kimliğini doğruladı
+2. **DID şifreleme imzaları** agent'nin kimliğini doğrular
 3. **En az güven ilkesi** yalnızca minimum izinleri verir
 
-Dedikoduya dayalı güven yayılımı veya PageRank puanlaması yoktur. Her agent'ı doğrudan DID'si aracılığıyla doğrularsınız.
+Dedikoduya dayalı güven yayılımı veya PageRank puanlaması yoktur. Her agent'yi doğrudan DID'si aracılığıyla doğrularsınız.
 
 #### Meta-Protokol Müzakereleri
 
@@ -548,9 +548,9 @@ sequenceDiagram
     Note over A,B: Agents dynamically generate code<br/>to handle the agreed format.<br/>Max 10 rounds, then timeout.
 ```
 
-agent'lar bir formatta anlaşıncaya kadar ileri geri giderler (en fazla 10 tur), ardından onu işlemek için dinamik olarak kod üretirler. Durum değerleri: `negotiating`, `rejected`, `accepted`, `timeout`.
+agent'ler bir format üzerinde anlaşıncaya kadar ileri geri gider (en fazla 10 tur), ardından onu işlemek için dinamik olarak kod üretir. Durum değerleri: `negotiating`, `rejected`, `accepted`, `timeout`.
 
-Bu, birbirini daha önce hiç görmemiş iki agent'ın, herhangi birinin önceden paylaşılan bir şema tanımlamasına gerek kalmadan nasıl iletişim kuracağını çözebileceği anlamına gelir.
+Bu, daha önce birbirini hiç görmemiş iki agent'nin, herhangi birinin önceden paylaşılan bir şema tanımlamasına gerek kalmadan nasıl iletişim kuracağını çözebileceği anlamına gelir.
 
 ### Karşılaştırma (Düzeltildi)
 
@@ -558,7 +558,7 @@ Bu, birbirini daha önce hiç görmemiş iki agent'ın, herhangi birinin öncede
 |---|---|---|---|---|
 | **Yaratan** | Antropik | Google / Linux Vakfı | IBM / BeeAI | Topluluk |
 | **Özellik formatı** | JSON-RPC | JSON-RPC / REST / gRPC | OpenAPI 3.1 (REST) ​​| JSON-RPC |
-| **Birincil kullanım** | Agent'den Araç'a | Agent - Agent | Agent - Agent | Agent - Agent |
+| **Birincil kullanım** | Agent'den Araca | Agent için Agent | Agent için Agent | Agent için Agent |
 | **Keşif** | Araç listesi | `/.well-known/agent-card.json` | `GET /agents`, `/.well-known/agent.yml` | `/.well-known/agent-descriptions`, DID hizmeti uç noktaları |
 | **Kimlik** | Örtülü (yerel) | Güvenlik şemaları (OAuth, mTLS) | Sunucu düzeyinde | E2EE ile W3C DID (`did:wba`) |
 | **Denetim takibi** | Yok | Temel (görev geçmişi) | TrajectoryMetadata (araç çağrıları, akıl yürütme) | Resmi olarak belirtilmemiş |
@@ -594,16 +594,16 @@ graph TB
     style AUDIT fill:#fef3c7,stroke:#d97706
 ```
 
-- **MCP** her agent'ı kendi araçlarına bağlar
-- **A2A** agent'lar (dahili ve harici) arasındaki işbirliğini yönetir
+- **MCP** her agent'yi kendi araçlarına bağlar
+- **A2A** agent'ler (dahili ve harici) arasındaki işbirliğini yönetir
 - **ACP** denetlenebilirlik için yanıtları yörünge meta verilerine sarar
-- **ANP**, kontrol etmediğiniz agent'lar için kimlik doğrulaması sağlar
+- **ANP**, kontrol etmediğiniz agent'ler için kimlik doğrulaması sağlar
 
-## Build It — Kendin Geliştir
+## İnşa Et
 
 ### Adım 1: Temel Mesaj Türleri
 
-Her multi-agent sistemi bir mesaj formatıyla başlar. Gerçek protokollerin kullandıklarıyla eşleşen türleri tanımlarız:
+Her çoklu agent sistemi bir mesaj formatıyla başlar. Gerçek protokollerin kullandıklarıyla eşleşen türleri tanımlarız:
 
 ```typescript
 import crypto from "node:crypto";
@@ -651,9 +651,9 @@ function textMessage(role: MessageRole, text: string): AgentMessage {
 }
 ```
 
-Uyarı: `MessagePart` tıpkı gerçek A2A ve ACP spesifikasyonları gibi çok modludur (metin, yapılandırılmış veriler, dosyalar). `TrajectoryEntry` , ACP'nin Yörünge Meta Verileri ile eşleşen mantık zincirini yakalar.
+Uyarı: `MessagePart`, tıpkı gerçek A2A ve ACP özellikleri gibi çok modludur (metin, yapılandırılmış veriler, dosyalar). `TrajectoryEntry`, ACP'nin TrajectoryMetadata'sıyla eşleşen akıl yürütme zincirini yakalar.
 
-### Adım 2: A2A Agent Kartı ve Kayıt Defteri
+### Adım 2: A2A Agent Kart ve Kayıt Defteri
 
 Gerçek A2A spesifikasyonuyla eşleşen agent keşfini oluşturun:
 
@@ -712,7 +712,7 @@ class AgentRegistry {
 }
 ```
 
-Bu, basit bir isim-yetenek haritasından önemli ölçüde daha zengindir. Tıpkı gerçek A2A spesifikasyonunun desteklediği gibi agent'ları beceri etiketlerine, giriş MIME türlerine veya ada göre keşfedebilirsiniz.
+Bu, basit bir isim-yetenek haritasından önemli ölçüde daha zengindir. agent'leri, tıpkı gerçek A2A teknik özelliklerinin desteklediği gibi beceri etiketlerine, giriş MIME türlerine veya ada göre keşfedebilirsiniz.
 
 ### Adım 3: A2A Görev Yaşam Döngüsü
 
@@ -1000,7 +1000,7 @@ class AuditableRunner {
 }
 ```
 
-Her agent yürütmesi tam bir denetim girişi üretir: içeri girenler, çıkanlar ve araç çağrılarının tam yörüngesi ve aradaki akıl yürütme adımları. agent, oturuma veya bireysel çalıştırmaya göre sorgulama yapabilirsiniz.
+Her agent yürütmesi tam bir denetim girişi üretir: içeri girenler, çıkanlar ve araç çağrılarının tam yörüngesi ve aradaki akıl yürütme adımları. agent'ye, oturuma veya bireysel çalıştırmaya göre sorgulama yapabilirsiniz.
 
 ### Adım 5: ANP Stili Kimlik Doğrulaması
 
@@ -1123,7 +1123,7 @@ function signPayload(identity: AgentIdentity, payload: string): string {
 }
 ```
 
-Bu, gerçek ANP kimlik modelini yansıtır: agent'lar ayrı kimlik doğrulama, anahtar anlaşması ve insan yetkilendirme anahtarlarına sahip DID belgelerine sahiptir. `IdentityRegistry` , DID çözümlemesini simüle eder (üretimde bu, agent'ın etki alanına HTTP getirilmesi olacaktır).
+Bu, gerçek ANP kimlik modelini yansıtır: agent'ler ayrı kimlik doğrulama, anahtar anlaşması ve insan yetkilendirme anahtarlarına sahip DID belgelerine sahiptir. `IdentityRegistry`, DID çözünürlüğünü simüle eder (üretimde bu, agent'nin etki alanına HTTP getirilmesi olacaktır).
 
 ### Adım 6: Protokol Ağ Geçidi
 
@@ -1422,27 +1422,27 @@ protocolDemo().catch((err) => {
 
 Protokoller mutlu yolu çözer. İşte üretimdeki kesintiler:
 
-**Şema kayması.** Agent A, bir Agent Kart reklamı `application/json` çıktısı yayınlar. Ancak JSON şeması sürümler arasında değişir. Agent B eski formatı ayrıştırır ve çöp olur. Düzeltme: Becerilerinizi ve çıktı şemalarınızı sürümlendirin. A2A spesifikasyonu bu nedenle Agent Kartlarda `version` 'yi destekler.
+**Şema kayması.** Agent A, `application/json` çıktısının reklamını yapan bir Agent Kart yayınlıyor. Ancak JSON şeması sürümler arasında değişir. Agent B eski formatı ayrıştırır ve çöp alır. Düzeltme: Becerilerinizi ve çıktı şemalarınızı sürümlendirin. A2A spesifikasyonu bu nedenle Agent Kartlarında `version`'yi destekler.
 
-**Durum makinesi ihlalleri.** Bir agent işleyicisi bir `completed` olayı üretir ve ardından daha fazla artifact'lar sağlamaya çalışır. Görev değişmez. Kodunuz güncellemeleri sessizce bırakır veya atar. Düzeltme: Teslim olmadan önce terminal durumunu kontrol edin. Yukarıdaki `TaskManager` bunu terminal durumlarından sonraki `break` ile zorlar.
+**Durum makinesi ihlalleri.** Bir agent işleyicisi bir `completed` olayı üretir ve ardından daha fazla artifact üretmeye çalışır. Görev değişmez. Kodunuz güncellemeleri sessizce bırakır veya atar. Düzeltme: Teslim olmadan önce terminal durumunu kontrol edin. Yukarıdaki `TaskManager`, bunu terminal durumlarından sonra `break` ile zorlar.
 
-**Güven çözümleme hataları.** Agent A, Agent B'nin DID'sini doğrulamaya çalışıyor, ancak Agent B'nin alan adı çalışmıyor. DID belgesi getirilemiyor. Başarısız bir şekilde mi açıyorsunuz (doğrulanmamış agent'lari kabul ediyorsunuz) yoksa başarısız mı kapatıyorsunuz (her şeyi reddediyorsunuz)? ANP, başarısızlığın en az güven ilkesiyle kapatılmasını önerir.
+**Güven çözümleme hataları.** Agent A, Agent B'nin DID'sini doğrulamaya çalışır, ancak Agent B'nin etki alanı kapalıdır. DID belgesi getirilemiyor. Açmada başarısız mı oluyorsunuz (doğrulanmamış agent'leri kabul ediyorsunuz) veya kapatmada başarısız mı oluyorsunuz (her şeyi reddediyorsunuz)? ANP, başarısızlığın en az güven ilkesiyle kapatılmasını önerir.
 
 **Yörünge şişkinliği.** ACP yörünge kaydı güçlü ancak pahalıdır. Çalıştırma başına 200 araç çağrısı yapan karmaşık bir agent, çok büyük denetim girişleri üretir. Düzeltme: yapılandırılabilir ayrıntı düzeylerinde günlük yörüngesi. Uyumluluk için araç adlarını ve GÇ'yi kaydedin, düzenlemeye tabi olmayan iş yükleri için akıl yürütme adımlarını atlayın.
 
-**Gürleyen sürüyü keşfedin.** Başlangıçta 50 agents'nin tümü `GET /agents` 'yi aynı anda sorguluyor. Düzeltme: Agent Kartlarını TTL ile önbelleğe alın, keşif aralıklarını kademeli hale getirin veya yoklama yerine push tabanlı kayıt kullanın.
+**Gürleyen sürüyü keşfedin.** 50 agent'nin tümü başlangıçta `GET /agents`'yi aynı anda sorguluyor. Düzeltme: Agent Kartlarını TTL ile önbelleğe alın, keşif aralıklarını kademeli hale getirin veya yoklama yerine push tabanlı kayıt kullanın.
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
 ### Gerçek Uygulamalar
 
-**A2A** en olgun olanıdır. Google'ın [resmi spesifikasyonu](https://github.com/google/A2A) Linux Vakfı kapsamında açık kaynaktır. Python ve TypeScript için SDK'lar. agent'larınızın dinamik keşif ve işbirliğine ihtiyacı varsa buradan başlayın.
+**A2A** en olgun olanıdır. Google'ın [resmi spesifikasyonu](https://github.com/google/A2A), Linux Foundation kapsamında açık kaynaktır. Python ve TypeScript için SDK'lar. agent'lerinizin dinamik keşif ve işbirliğine ihtiyacı varsa buradan başlayın.
 
-**ACP** A2A ile birleşiyor. IBM'in [BeeAI projesi](https://github.com/i-am-bee/acp) ACP'yi REST öncelikli bir alternatif olarak oluşturdu, ancak yörünge meta verisi kavramı A2A ekosistemi tarafından benimseniyor. Aktarım olarak A2A kullansanız bile ACP modellerini (yörünge günlüğü kaydı, yaşam döngüsünü çalıştırma) kullanın.
+**ACP** A2A ile birleşiyor. IBM'in [BeeAI projesi](https://github.com/i-am-bee/acp), ACP'yi REST öncelikli bir alternatif olarak oluşturdu, ancak yörünge meta verisi kavramı A2A ekosistemi tarafından özümseniyor. Aktarım olarak A2A kullansanız bile ACP modellerini (yörünge günlüğü kaydı, yaşam döngüsünü çalıştırma) kullanın.
 
-**ANP** en deneysel olanıdır. [Topluluk deposunda](https://github.com/agent-network-protocol/AgentNetworkProtocol) bir Python SDK'sı (AgentConnect) var. Meta-protokol müzakere konsepti gerçekten yenidir. Kuruluşlar arası agent deployment'lar için izlemeye değer.
+**ANP** en deneysel olanıdır. [Topluluk deposunda](https://github.com/agent-network-protocol/AgentNetworkProtocol) bir Python SDK'sı (AgentConnect) bulunur. Meta-protokol müzakere konsepti gerçekten yenidir. Organizasyonlar arası agent deployment'ler için izlemeye değer.
 
-**MCP** zaten 13. Aşama kapsamındadır. agent'ların araçları kullanmasını istiyorsanız, MCP standarttır.
+**MCP** zaten 13. Aşama kapsamındadır. agent'lerin araçları kullanmasını istiyorsanız MCP standarttır.
 
 ### Doğru Protokolü Seçmek
 
@@ -1467,44 +1467,44 @@ graph TD
     style BROKER fill:#e0e7ff,stroke:#4338ca
 ```
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
 Bu ders şunları üretir:
-- `code/main.ts` -- dört protokol modelinin tamamının uygulanmasını tamamlayın
+- `code/main.ts` -- dört protokol modelinin tamamının tam olarak uygulanması
 - `outputs/prompt-protocol-selector.md` -- sisteminiz için protokolleri seçmenize yardımcı olan bir prompt
 
 ## Egzersizler
 
-1. **Çok atlamalı görev delegasyonu.** `TaskManager` 'yi, bir agent işleyicisinin alt görevleri diğer agent'lare devredebileceği şekilde genişletin. Araştırmacı bir görev alır, "arama" ve "özetleme" alt görevlerini iki uzman agent'a devreder, her ikisinin de tamamlanmasını bekler ve ardından sonuçları kendi artifact'lariyle birleştirir.
+1. **Çok atlamalı görev atama.** `TaskManager`'yi, bir agent işleyicisinin alt görevleri diğer agent'lere devredebilmesini sağlayacak şekilde genişletin. Araştırmacı bir görev alır, "arama" ve "özetleme" alt görevlerini iki uzman agent'ye devreder, her ikisinin de tamamlanmasını bekler ve ardından sonuçları kendi artifact'lerinde birleştirir.
 
-2. **Akış denetim izi.** `AuditableRunner` 'yi akış modunu destekleyecek şekilde değiştirin. Tam sonucu beklemek yerine, yörünge girişleri eklendikçe gerçek zamanlı olarak `AuditEntry` güncellemesini sağlayın. Denetim anlık görüntüleri üreten bir eşzamansız oluşturucu kullanın.
+2. **Akış denetim takibi.** `AuditableRunner`'yi akış modunu destekleyecek şekilde değiştirin. Tam sonucu beklemek yerine, yörünge girişleri eklendikçe `AuditEntry` güncellemelerini gerçek zamanlı olarak sağlayın. Denetim anlık görüntüleri üreten bir eşzamansız oluşturucu kullanın.
 
-3. **DID rotasyonu.** `IdentityRegistry`'ya anahtar rotasyonu ekleyin. Bir agent, `previousDid` referansını korurken güncellenmiş anahtarlarla yeni bir DID belgesi yayınlayabilmelidir. Doğrulayıcılar, ek süre boyunca hem mevcut hem de önceki anahtardan gelen imzaları kabul etmelidir.
+3. **DID rotasyonu.** `IdentityRegistry`'ye anahtar rotasyonu ekleyin. Bir agent, `previousDid` referansını korurken güncellenmiş anahtarlarla yeni bir DID belgesi yayınlayabilmelidir. Doğrulayıcılar, ek süre boyunca hem mevcut hem de önceki anahtardan gelen imzaları kabul etmelidir.
 
-4. **Protokol anlaşması.** ANP'nin meta-protokol konseptini uygulayın. İki agent, aday formatlarıyla `protocolNegotiation` mesaj alışverişinde bulunur (e.g., "JSON-RPC konuşabiliyorum" vs "REST'i tercih ediyorum"). Maksimum 3 turdan sonra format veya mola üzerinde anlaşırlar. Kararlaştırılan format, hangi `TaskManager` veya `AuditableRunner` 'yi kullanacaklarını belirler.
+4. **Protokol anlaşması.** ANP'nin meta-protokol konseptini uygulayın. İki agent, aday formatlarla `protocolNegotiation` mesajları alışverişinde bulunur (e.g., "JSON-RPC konuşabiliyorum" ve "REST'i tercih ediyorum"). Maksimum 3 turdan sonra format veya mola üzerinde anlaşırlar. Kararlaştırılan format, hangi `TaskManager` veya `AuditableRunner`'yi kullanacaklarını belirler.
 
-5. **Hız sınırlı keşif.** Yapılandırılabilir bir TTL ile Agent Kart aramalarını önbelleğe alan ve saniyede agent başına keşif sorgularını sınırlayan bir `RateLimitedRegistry` sarmalayıcı ekleyin. Başlangıçta birbirini keşfeden 100 agent'lik gürleyen bir sürüyü simüle edin ve farkı ölçün.
+5. **Hız sınırlı keşif.** Yapılandırılabilir bir TTL ile Agent Kart aramalarını önbelleğe alan ve saniye başına agent başına keşif sorgularını sınırlayan bir `RateLimitedRegistry` sarmalayıcı ekleyin. Başlangıçta birbirini keşfeden 100 agent'den oluşan gürleyen bir sürüyü simüle edin ve farkı ölçün.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| MCP | "Yapay zeka araçlarına yönelik protokol" | agent'ların araçları keşfetmesi ve kullanması için bir istemci-sunucu protokolü. Agent-araca, agent-to-agent değil. |
-| A2A | "Google'ın agent protokolü" | Linux Vakfı kapsamında agent işbirliğine yönelik eşler arası bir protokol. Agent Kartlar aracılığıyla keşif, 9 durumlu görev yaşam döngüsü, SSE aracılığıyla akış. JSON-RPC, REST ve gRPC bağlamalarını destekler. |
+| MCP | "Yapay zeka araçlarına yönelik protokol" | agent'lerin araçları keşfetmesi ve kullanması için bir istemci-sunucu protokolü. Agent'den takıma, agent'den agent'ye değil. |
+| A2A | "Google'ın agent protokolü" | Linux Vakfı kapsamında agent işbirliğine yönelik eşler arası bir protokol. Agent Kartları aracılığıyla keşif, 9 durumlu görev yaşam döngüsü, SSE aracılığıyla akış. JSON-RPC, REST ve gRPC bağlamalarını destekler. |
 | AKP | "Kurumsal agent mesajlaşma" | IBM/BeeAI'nin agent için REST API'si TrajectoryMetadata ile çalışır: her yanıt, tüm akıl yürütme ve araç çağrıları zincirini taşır. A2A ile birleşiyor. |
-| ANAP | "Merkezi olmayan agent kimliği" | Kriptografik kimlik için `did:wba` (DID), E2EE için HPKE ve birbirini hiç görmemiş agent'lar için yapay zeka destekli meta-protokol anlaşması kullanan bir topluluk protokolü. |
-| Agent Kart | "Bir agent'ın kartviziti" | Becerileri, desteklenen MIME türlerini, güvenlik şemalarını ve protokol bağlantılarını açıklayan `/.well-known/agent-card.json` adresindeki bir JSON belgesi. |
-| YAPTIM | "Merkezi Olmayan Kimlik" | agent'ın kendi alanında barındırılan kriptografik olarak doğrulanabilir kimlikler için W3C standardı. ANP `did:wba` yöntemini kullanır. |
-| Yörünge Meta Verileri | "Denetim makbuzu" | ACP'nin akıl yürütme adımlarını, araç çağrılarını ve bunların girdilerini/çıktılarını her agent yanıtına ekleme mekanizması. |
-| Meta-protokol | "Agentnasıl konuşulacağı konusunda pazarlık yapıyor" | ANP'nin agent'larin veri formatları üzerinde dinamik olarak anlaşmak için doğal dili kullandığı ve ardından bunları işlemek için kod ürettiği yaklaşımı. |
+| ANAP | "Merkezi olmayan agent kimliği" | Kriptografik kimlik için `did:wba` (DID), E2EE için HPKE ve birbirini hiç görmemiş agent'ler için yapay zeka destekli meta protokol anlaşmasını kullanan bir topluluk protokolü. |
+| Agent Kart | "Bir agent'nin kartviziti" | `/.well-known/agent-card.json` adresinde becerileri, desteklenen MIME türlerini, güvenlik şemalarını ve protokol bağlantılarını açıklayan bir JSON belgesi. |
+| YAPTIM | "Merkezi Olmayan Kimlik" | agent'nin kendi etki alanında barındırılan kriptografik olarak doğrulanabilir kimlikler için W3C standardı. ANP, `did:wba` yöntemini kullanır. |
+| Yörünge Meta Verileri | "Denetim makbuzu" | ACP'nin akıl yürütme adımlarını, araç çağrılarını ve bunların giriş/çıkışlarını her agent yanıtına ekleme mekanizması. |
+| Meta-protokol | "Agent'ler nasıl konuşulacağı konusunda pazarlık yapıyor" | ANP'nin, agent'lerin veri formatları üzerinde dinamik olarak anlaşmak için doğal dili kullandığı ve ardından bunları işlemek için kod ürettiği yaklaşımı. |
 | Görev | "Bir iş birimi" | A2A'nın gönderimden tamamlanmaya kadar durum bilgisi olan nesne izleme çalışması. Bir kez değiştirilemez terminal. |
 
 ## Daha Fazla Okuma
 
 - [Google A2A spesifikasyonu](https://github.com/google/A2A) -- resmi spesifikasyon ve SDK'lar (v1.0.0, Linux Foundation)
-- [IBM/BeeAI ACP spesifikasyonu](https://github.com/i-am-bee/acp) -- agent çalıştırma ve yörünge meta verileri için OpenAPI 3.1 spesifikasyonu
+- [IBM/BeeAI ACP spesifikasyonu](https://github.com/i-am-bee/acp) -- agent çalıştırmaları ve yörünge meta verileri için OpenAPI 3.1 spesifikasyonu
 - [Agent Ağ Protokolü](https://github.com/agent-network-protocol/AgentNetworkProtocol) -- DID tabanlı kimlik, E2EE, meta protokol anlaşması
-- [Model Context Protokol belgeleri](https://modelcontextprotocol.io/) -- Anthropic'in MCP spesifikasyonu (Aşama 13'te ele alınmıştır)
+- [Model Bağlam Protokolü belgeleri](https://modelcontextprotocol.io/) -- Anthropic'in MCP spesifikasyonu (Aşama 13'te ele alınmıştır)
 - [W3C Merkezi Olmayan Tanımlayıcılar](https://www.w3.org/TR/did-core/) -- ANP'yi destekleyen kimlik standardı
 - [RFC 9180 (HPKE)](https://www.rfc-editor.org/rfc/rfc9180) -- ANP'nin E2EE için kullandığı şifreleme şeması
 - [FIPA Agent İletişim Dili](http://www.fipa.org/specs/fipa00061/SC00061G.html) -- modern agent protokollerinin akademik öncüsü

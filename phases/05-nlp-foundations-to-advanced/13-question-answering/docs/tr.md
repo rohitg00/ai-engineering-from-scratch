@@ -13,9 +13,9 @@ Bir kullanıcı "İlk iPhone ne zaman piyasaya sürüldü?" ve "29 Haziran 2007"
 
 Son on yılda QA'ya üç mimari hakim oldu.
 
-- **Çıkartmalı KG.** Bir soru ve cevabını içerdiği bilinen bir pasaj verildiğinde, pasajdaki cevap aralığının başlangıç ​​ve bitiş indekslerini bulun. SQuAD standart benchmark'dır.
+- **Çıkartmalı KG.** Bir soru ve cevabını içerdiği bilinen bir pasaj verildiğinde, pasajdaki cevap aralığının başlangıç ve bitiş indekslerini bulun. SQuAD standart benchmark'dir.
 - **Açık alan KG'si.** Pasaj verilmemiştir. Önce ilgili pasajı alın, ardından bir cevap çıkarın veya oluşturun. Bu, günümüzün her RAG boru hattının temelidir.
-- **Üretici / Kapalı Kitap QA.** Büyük bir dil modeli, parametrik belleğinden yanıt verir. Geri alma yok. inference ile en hızlı, gerçekler konusunda en az güvenilir.
+- **Üretici / Kapalı Kitap QA.** Büyük bir dil modeli, parametrik belleğinden yanıt verir. Geri alma yok. inference'de en hızlı, gerçekler konusunda en az güvenilir.
 
 2026'daki trend hibrit: En iyi birkaç pasajı alın, ardından prompt bu pasajlara dayalı olarak yanıt verecek üretken bir model. Bu RAG'dır ve 14. ders, geri almanın yarısını derinlemesine kapsamaktadır. Bu ders QA'nın yarısını oluşturur.
 
@@ -23,9 +23,9 @@ Son on yılda QA'ya üç mimari hakim oldu.
 
 ![QA mimarileri: çıkarımlı, erişimle zenginleştirilmiş, üretken](../assets/qa.svg)
 
-**Çıkartmalı.** Soruyu ve pasajı bir transformer (BERT ailesi) ile birlikte kodlayın. Cevabın başlangıç ​​ve bitiş token indeksini tahmin eden iki kafayı eğitin. Kayıp, geçerli konumlar üzerinden çapraz entropidir. Çıkış geçitten bir açıklıktır. Asla halüsinasyon görmez (yapısal olarak), pasajın cevaplayamayacağı soruları asla ele almaz (yapısal olarak).
+**Ekstraktif.** Soruyu ve pasajı transformer (BERT ailesi) ile birlikte kodlayın. Cevabın başlangıç ​​ve bitiş token endekslerini tahmin eden iki kafayı eğitin. Kayıp, geçerli konumlar üzerinden çapraz entropidir. Çıkış geçitten bir açıklıktır. Asla halüsinasyon görmez (yapısal olarak), pasajın cevaplayamayacağı soruları asla ele almaz (yapısal olarak).
 
-**Geri almayla artırılmış (RAG).** İki aşamalı. İlk olarak, bir avcı bir külliyatın en üstteki`k` pasajlarını bulur. İkincisi, okuyucu (çıkarıcı veya üretken) bu pasajları kullanarak cevabı üretir. Alıcı-okuyucu ayrımı, her birinin bağımsız olarak eğitilmesine ve değerlendirilmesine olanak tanır. Modern RAG genellikle aralarına bir yeniden sıralama ekler.
+**Geri almayla artırılmış (RAG).** İki aşamalı. İlk olarak, bir av köpeği bir külliyatın en üst `k` pasajlarını bulur. İkincisi, okuyucu (çıkarıcı veya üretken) bu pasajları kullanarak cevabı üretir. Alıcı-okuyucu ayrımı, her birinin bağımsız olarak eğitilmesine ve değerlendirilmesine olanak tanır. Modern RAG genellikle aralarına bir yeniden sıralama ekler.
 
 **Üretken.** Yalnızca kod çözücüye yönelik bir LLM (GPT, Claude, Llama), öğrenilen ağırlıklardan yanıt verir. Geri alma adımı yok. Yaygın bilgi konusunda mükemmel, nadir veya güncel gerçekler konusunda ise felaket. Halüsinasyon oranı, eğitim öncesi verilerdeki gerçek sıklığıyla ters orantılıdır.
 
@@ -52,7 +52,7 @@ print(answer)
 {'score': 0.98, 'start': 57, 'end': 70, 'answer': 'June 29, 2007'}
 ```
 
-`deepset/roberta-base-squad2`, cevaplanamayan soruları içeren SQuAD 2.0 konusunda eğitilmiştir. Varsayılan olarak, `question-answering` ardışık düzeni, modelin boş puanı kazansa bile en yüksek puan aralığını döndürür; otomatik olarak boş bir yanıt *döndürmez*. Açık bir "cevap yok" davranışı elde etmek için, ardışık düzen çağrısına `handle_impossible_answer=True` iletin: ardışık düzen, yalnızca boş puan her yayılma puanını aştığında boş bir yanıt döndürür. Her iki durumda da daima `score` alanını kontrol edin.
+`deepset/roberta-base-squad2`, cevaplanamayan soruları içeren SQuAD 2.0 üzerinde eğitilmiştir. Varsayılan olarak, `question-answering` işlem hattı, modelin boş puanı kazansa bile en yüksek puan aralığını döndürür; otomatik olarak boş bir yanıt *döndürmez*. Açık bir "cevap yok" davranışı elde etmek için `handle_impossible_answer=True`'yi ardışık düzen çağrısına iletin: ardışık düzen yalnızca boş puan her yayılma puanını aştığında boş bir yanıt döndürür. Her iki durumda da her zaman `score` alanını kontrol edin.
 
 ### Adım 2: almayla zenginleştirilmiş bir işlem hattı (taslak)
 
@@ -104,26 +104,26 @@ Answer using only the context above. If the context does not contain the answer,
     return llm(prompt)
 ```
 
-prompt modeli önemlidir. Modele açıkça bağlamı temel almasını ve bağlam yetersiz olduğunda "Bilmiyorum" demesini söylemek, saf prompting ile karşılaştırıldığında halüsinasyon oranlarını %40-60 oranında azaltır. Daha ayrıntılı modeller alıntıları, güven puanlarını ve yapılandırılmış çıkarımları ekler.
+prompt modeli önemlidir. Modele açıkça bağlam içinde temellenmesini ve bağlam yetersiz olduğunda "Bilmiyorum" yanıtını vermek, saf prompting ile karşılaştırıldığında halüsinasyon oranlarını %40-60 oranında azaltır. Daha ayrıntılı modeller alıntıları, güven puanlarını ve yapılandırılmış çıkarımları ekler.
 
 ### Adım 4: gerçek dünyayı yansıtan değerlendirme
 
-SQuAD **Tam Eşleşme (EM)** ve **token düzeyinde F1** kullanır. EM, normalleştirmeden sonra katı bir eşleşmedir (küçük harf, noktalama işareti, makaleleri kaldır) - ya tahmin tam olarak eşleşir ya da 0 puan alır. F1, tahmin ve referans arasındaki token örtüşmesi üzerinden hesaplanır ve kısmi kredi verir. Her iki yetersiz kredi yorumu: "29 Haziran 2007" ve "29 Haziran 2007" tipik olarak 0 EM alır (sıralı normalleştirmeyi kırar), ancak yine de çakışan token'lerden önemli miktarda F1 kazanır.
+SQuAD **Tam Eşleşme (EM)** ve **token düzeyinde F1** kullanır. EM, normalleştirmeden sonra katı bir eşleşmedir (küçük harf, noktalama işaretini kaldırma, makaleleri kaldırma) - ya tahmin tam olarak eşleşir ya da 0 puan alır. F1, tahmin ve referans arasındaki token örtüşmesi üzerinden hesaplanır ve kısmi kredi verir. Her iki yetersiz kredi yorumu: "29 Haziran 2007" ve "29 Haziran 2007" tipik olarak 0 EM alır (sıralı kırılma normalizasyonu) ancak yine de örtüşen token'lerden önemli miktarda F1 kazanır.
 
 Üretim QA'sı için:
 
 - **Cevap doğruluğu** (Metrikler anlamsal eşdeğerliği yakalayamadığından Yüksek Lisans veya insan değerlendirmesine göre değerlendirilir).
 - **Alıntı doğruluğu.** Alıntılanan pasaj aslında cevabı destekliyor mu? Oluşturulan alıntılar ve alınan pasajlar arasındaki dize eşleşmesiyle otomatik olarak kontrol edilmesi önemsizdir.
 - **Kalibrasyon reddi.** Cevap alınan pasajlarda olmadığında sistem doğru şekilde "Bilmiyorum" diyor mu? Yanlış güven oranını ölçün.
-- **Geri çağırma.** Okuyucuyu değerlendirmeden önce, toplayıcının yukarıya doğru geçiş yapıp yapmadığını ölçün-`k`. Okuyucu eksik bir pasajı düzeltemez.
+- **Geri çağırma.** Okuyucuyu değerlendirmeden önce, alıcının üst `k`'ye doğru geçişi sağlayıp sağlamadığını ölçün. Okuyucu eksik bir pasajı düzeltemez.
 
 ### RAGAS: 2026 üretim değerlendirmesi framework
 
-`RAGAS`, RAG sistemleri için özel olarak üretilmiştir ve 2026'da varsayılan gönderimdir. Altın referanslara ihtiyaç duymadan dört boyuta puan verir:
+`RAGAS`, RAG sistemleri için özel olarak üretilmiştir ve 2026'da varsayılan gönderimdir. Altın referanslar gerektirmeden dört boyuta puan verir:
 
 - **Sadakat.** Yanıttaki her iddia, alınan bağlamdan mı geliyor? NLI tabanlı gereklilik ile ölçülür. Birincil halüsinasyon ölçümünüz.
 - **Cevap alaka düzeyi.** Cevap soruyu ele alıyor mu? Cevaptan varsayımsal sorular üretilerek ve gerçek soruyla karşılaştırılarak ölçülür.
-- **Bağlam kesinliği.** Alınan parçaların hangi kısmı gerçekten alakalıydı? Düşük hassasiyet = prompt'da gürültü.
+- **Bağlam kesinliği.** Alınan parçaların hangi kısmı gerçekten alakalıydı? Düşük hassasiyet = prompt'de gürültü.
 - **Bağlam hatırlama.** Alınan set gerekli tüm bilgileri içeriyor mu? Düşük hatırlama = okuyucu başarılı olamaz.
 
 Referanssız puanlama, seçilmiş altın yanıtlar olmadan canlı prodüksiyon trafiğini değerlendirmenize olanak tanır. Tam eşleşme metriklerinin işe yaramadığı açık uçlu sorular için yüksek lisansı jüri olarak en üst sıraya koyun.
@@ -142,7 +142,7 @@ Referanssız puanlama, seçilmiş altın yanıtlar olmadan canlı prodüksiyon t
 | Konuşmalı QA (takip soruları) | Konuşma geçmişini içeren Yüksek Lisans + Her fırsatta RAG |
 | Son derece gerçekçi, denetime tabi alanlar | Yetkili bir külliyat üzerinden çıkarıcı; asla tek başına üretken değildir |
 
-Çıkarımsal QA'nın 2026'da modası geçmiş çünkü LLM'li RAG daha fazla vakayı ele alıyor. Hala gerçek anlamda alıntı yapılmasının gerekli olduğu bağlamlarda gönderilir: yasal araştırma, mevzuata uygunluk, denetim araçları.
+Çıkarıcı QA'nın 2026'da modası geçmiş çünkü LLM'li RAG daha fazla vakayı ele alıyor. Hala gerçek anlamda alıntı yapılmasının gerekli olduğu bağlamlarda gönderilir: yasal araştırma, mevzuata uygunluk, denetim araçları.
 
 ## Gönderin
 
@@ -181,13 +181,13 @@ Refuse closed-book LLM answers for regulatory or compliance-sensitive questions.
 | Çıkarıcı QA | Cevap aralığını bulun | Belirli bir pasajdaki cevabın başlangıç ​​ve bitiş indekslerini tahmin edin. |
 | Açık alan adı QA | Bir derleme üzerinde QA | Belirli bir geçiş yok; geri almalı ve sonra cevap vermelisiniz. |
 | RAG | Al ve oluştur | Alma-artırılmış nesil. Alıcı + okuyucu hattı. |
-| TAKIM | Kanonik benchmark | Stanford Soru Yanıtı Dataset. EM + F1 metrikleri. |
+| TAKIM | Kanonik benchmark | Stanford Soru Cevaplama Dataset. EM + F1 metrikleri. |
 | Halüsinasyon | Uydurma cevap | Okuyucu çıktısı, alınan içerik tarafından desteklenmiyor. |
 | Kalibrasyonun reddedilmesi | Ne zaman susmanız gerektiğini bilin | Cevap veremediğimde sistem doğru bir şekilde "Bilmiyorum" diyor. |
 
 ## Daha Fazla Okuma
 
-- [Rajpurkar ve ark. (2016). SQuAD: Metnin Makine Tarafından Anlaşılmasına Yönelik 100.000+ Soru](https://arxiv.org/abs/1606.05250) — benchmark makalesi.
-- [Karpukhin ve ark. (2020). Açık Alan QA için Yoğun Geçiş Erişimi](https://arxiv.org/abs/2004.04906) — DPR, QA için standart yoğun alıcı.
+- [Rajpurkar ve ark. (2016). SQuAD: Metnin Makineyle Anlaşılmasına Yönelik 100.000'den Fazla Soru](https://arxiv.org/abs/1606.05250) — benchmark makalesi.
+- [Karpukhin ve ark. (2020). Açık Alan Kalite Güvencesi için Yoğun Geçiş Erişimi](https://arxiv.org/abs/2004.04906) — DPR, Kalite Güvencesi için standart yoğun alıcı.
 - [Lewis ve ark. (2020). Bilgi Yoğun NLP Görevleri için Erişimle Artırılmış Üretim](https://arxiv.org/abs/2005.11401) — RAG adını veren makale.
-- [Gao ve ark. (2023). Büyük Dil Modelleri için Erişimle Artırılmış Üretim: Bir Anket](https://arxiv.org/abs/2312.10997) — kapsamlı RAG anketi.
+- [Gao ve ark. (2023). Büyük Dil Modelleri için Erişimle Artırılmış Üretim: Bir Anket](https://arxiv.org/abs/2312.10997) — kapsamlı RAG araştırması.

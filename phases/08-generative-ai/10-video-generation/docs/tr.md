@@ -20,23 +20,23 @@ Bunu çözen mimari, devasa (prompt, altyazı, video) dataset'ler üzerinde eği
 
 ## Konsept
 
-![Video dağıtımı: yamalama, DiT, kod çözme](../assets/video-generation.svg)
+![Video dağıtımı: düzeltme, DiT, kod çözme](../assets/video-generation.svg)
 
-### Patchleme
+### Düzeltme
 
-Videoyu 3D VAE (öğrenilmiş uzay-zaman sıkıştırması) ile kodlayın. Gizli şekil `[T_latent, H_latent, W_latent, C_latent]` şeklindedir. `[t_p, h_p, w_p]` boyutunda parçalara bölün. Sora tarzı modeller için, `t_p = 1` (kare başına yamalar) veya `t_p = 2` (her iki karede bir). 10 saniyelik bir 1080p video ~20.000-100.000 yamaya sıkıştırılır.
+Videoyu 3D VAE (öğrenilmiş uzay-zaman sıkıştırması) ile kodlayın. Gizli şekil `[T_latent, H_latent, W_latent, C_latent]`'dir. `[t_p, h_p, w_p]` boyutunda parçalara bölün. Sora tarzı modeller için, `t_p = 1` (kare başına yamalar) veya `t_p = 2` (her iki karede bir). 10 saniyelik bir 1080p video ~20.000-100.000 yamaya sıkıştırılır.
 
 ### Uzayzamansal DiT
 
-Bir transformer, yamaların düz sırasını işler. Her yamanın 3 boyutlu bir konumsal embedding'si (zaman + y + x) vardır. Dikkat genellikle çarpanlara ayrılır:
+Bir transformer yamaların düz sırasını işler. Her yamada 3 boyutlu konumsal bir embedding (zaman + y + x) bulunur. Dikkat genellikle çarpanlara ayrılır:
 
 - **Her karenin yamalarında **uzamsal dikkat**.
-- Aynı mekansal konumdaki kareler arasında **zamansal attention**.
+- Aynı mekansal konumdaki kareler arasında **geçici dikkat**.
 - **Tam 3D dikkat** 16-100 kat daha pahalıdır; yalnızca düşük çözünürlükte veya araştırmada kullanılır.
 
 ### Metin koşullandırma
 
-Büyük bir metin kodlayıcıyla çapraz dikkat (Sora için T5-XXL, CogVideoX-5B, T5-XXL kullanır). Uzun promptönemlidir — Sora'nın eğitim seti, klip başına ortalama 200 token saniye süren, GPT tarafından oluşturulmuş yoğun yeniden altyazılara sahipti.
+Büyük bir metin kodlayıcıyla çapraz dikkat (Sora için T5-XXL, CogVideoX-5B, T5-XXL kullanır). Uzun prompt'ler önemlidir — Sora'nın eğitim setinde, klip başına ortalama 200 token olan, GPT tarafından oluşturulmuş yoğun yeniden altyazılar vardı.
 
 ### Eğitim
 
@@ -44,7 +44,7 @@ Uzay-zamansal latentler üzerinde standart difüzyon kaybı (ε veya v tahmini).
 
 ## 2026 üretim ortamı
 
-| Model | Tarih | Maksimum süre | Maksimum çözünürlük | Ağırlıkları açmak mı? | Önemli |
+| Modeli | Tarih | Maksimum süre | Maksimum çözünürlük | Ağırlıkları açmak mı? | Önemli |
 |-------|------|--------------|---------|---------------|---------|
 | Sora (OpenAI) | 2024-02 | 60'lar | 1080p | Hayır | Dünya simülatör özelliklerini geniş ölçekte gösteren ilk model |
 | Sora Turbo | 2024-12 | 20'ler | 1080p | Hayır | Sora'nın üretimi 5 kat daha hızlı inference |
@@ -62,7 +62,7 @@ Açık ağırlıklar, boşluğu görüntü alanına göre daha hızlı kapatıyo
 
 ## İnşa Et
 
-`code/main.py`, temel uzay-zamansal DiT fikrini simüle eder: küçük bir sentetik videoyu yamalayın, yama başına bir konum embedding ekleyin ve yamalar üzerinde transformer tarzı bir dikkatle tüm sekansın gürültüsünü giderin. Uyuşukluk yok; saf Python. Bitişik çerçeveli yamalar bir gürültü gidericiyi ve embedding konumlarını paylaştığında, 1-B'de bile zamansal tutarlılığın ortaya çıktığını gösteriyoruz.
+`code/main.py`, çekirdek uzay-zamansal DiT fikrini simüle eder: küçük bir sentetik videoyu yamalayın, yama başına bir embedding konumu ekleyin ve yamalar üzerinde transformer tarzı bir dikkatle tüm sekansın gürültüsünü giderin. Uyuşukluk yok; saf Python. Bitişik çerçeve yamaları bir gürültü gidericiyi paylaştığında ve embedding konumlarını paylaştığında, 1 boyutluda bile zamansal tutarlılığın ortaya çıktığını gösteriyoruz.
 
 ### 1. Adım: sentetik bir 1 boyutlu "videoya" yama uygulayın
 
@@ -73,7 +73,7 @@ def make_video(T_frames=8, rng=None):
     return [base + 0.3 * t + rng.gauss(0, 0.1) for t in range(T_frames)]
 ```
 
-### Adım 2: kare başına embedding konumu
+### Adım 2: embedding'yi kare başına konumlandırın
 
 ```python
 def pos_embed(t, dim):
@@ -82,7 +82,7 @@ def pos_embed(t, dim):
 
 ### Adım 3: gürültü giderici tüm sıralamayı görür
 
-Her karenin gürültüsünü bağımsız olarak gidermek yerine, küçük ağımız tüm kare değerlerini + bunların embedding konumlarını birleştirir ve tüm kareler için gürültüyü ortak olarak tahmin eder.
+Her karenin gürültüsünü bağımsız olarak gidermek yerine, küçük ağımız tüm kare değerlerini + embedding konumlarını birleştirir ve tüm kareler için gürültüyü ortak olarak tahmin eder.
 
 ### Adım 4: zamansal tutarlılık testi
 
@@ -91,7 +91,7 @@ Eğitimden sonra bir video örneği alın. Çerçeveden çerçeveye deltayı öl
 ## Tuzaklar
 
 - **Kare başına bağımsız örnekleme = titreme.** Görüntü dağıtımını her karede ayrı ayrı çalıştırırsanız, her karenin gürültüsü bağımsız olduğundan çıktı titrer. Video dağıtımı, çerçeveleri dikkat veya paylaşılan gürültü yoluyla birleştirerek bu sorunu giderir.
-- **Saf 3D dikkat = OOM.** 10 saniyelik 1080p gizli bir ortamda tam 3D dikkat, yüz milyarlarca işlem anlamına gelir. Uzamsal + zamansal olarak çarpanlara ayırın.
+- **Saf 3D dikkat = OOM.** 10 saniyelik 1080p latentteki tam 3D dikkat, yüz milyarlarca işlem anlamına gelir. Uzamsal + zamansal olarak çarpanlara ayırın.
 - **Veri altyazıları boyuttan daha önemlidir.** Sora'nın önceki çalışmalarına göre yaptığı ana iyileştirme, yaklaşık 10 kat daha ayrıntılı altyazılar (GPT-4 yeniden etiketlenmiş klipler) üzerinde eğitim almasıydı. OpenAI'nin teknik raporu bu konuda açıktır.
 - **İlk kare koşullandırma.** Çoğu üretim modeli aynı zamanda görüntüyü ilk kare olarak kabul eder. Bu "görüntüden videoya" modudur; eğitim bu varyantı içerir.
 - **Fizik kayması.** Uzun klipler (>10 saniye) ince tutarsızlıklar biriktirir. Kayar pencere oluşturma + ana kare sabitleme yardımcı olur.
@@ -112,43 +112,43 @@ Kaliteli videonun saniye başına maliyeti 2024 ile 2026 arasında 20 kat düşt
 
 ## Gönderin
 
-`outputs/skill-video-brief.md`'yi kaydet. Skill bir video özeti alır (süre, en boy oranı, stil, kamera planı, konu tutarlılığı, ses) ve çıktılar: model + barındırma, prompt yapı iskelesi (kamera dili, konu açıklaması, hareket tanımlayıcılar), tohum + tekrar üretilebilirlik protokolü ve çerçeve düzeyinde bir QA kontrol listesi.
+`outputs/skill-video-brief.md`'yi kaydedin. Skill bir video özeti alır (süre, en boy oranı, stil, kamera planı, konu tutarlılığı, ses) ve çıktılar: model + barındırma, prompt iskele (kamera dili, konu açıklaması, hareket tanımlayıcıları), tohum + tekrar üretilebilirlik protokolü ve çerçeve düzeyinde QA kontrol listesi.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py`'da, (a) bağımsız kare başına örnekleme, (b) ortak dizi örnekleme için kareden kareye deltayı karşılaştırın. Deltaların ortalamasını ve varyansını bildirin.
+1. **Kolay.** `code/main.py`'de, (a) bağımsız kare başına örnekleme, (b) eklem dizisi örneklemesi için kareler arası deltayı karşılaştırın. Deltaların ortalamasını ve varyansını bildirin.
 2. **Orta.** Bir ilk kare koşulu ekleyin: belirli bir değere çerçeve 0'ı sabitleyin ve geri kalanını örnekleyin. Sabitlenen değerin nasıl yayıldığını ölçün.
-3. **Zor.** CogVideoX-2B'yi yerel bir GPU'da çalıştırmak için HuggingFace difüzörlerini kullanın. 6 saniyelik bir klip için 720p'de 20 inference adım süre. Darboğazı belirlemek için uzay-zamansal dikkatin profilini çıkarın.
+3. **Zor.** CogVideoX-2B'yi yerel bir GPU'da çalıştırmak için HuggingFace difüzörlerini kullanın. Zaman 6 saniyelik bir klip için 720p'de 20 inference adım. Darboğazı belirlemek için uzay-zamansal dikkatin profilini çıkarın.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
 | Video VAE | "3 boyutlu VAE" | `(T, H, W, C)` → uzay-zamansal gizliyi sıkıştıran kodlayıcı. |
-| Yamalar | "token'lar" | Gizli olanın sabit boyutlu 3 boyutlu blokları; DiT'ye giriş. |
+| Yamalar | "token'ler" | Gizli olanın sabit boyutlu 3 boyutlu blokları; DiT'ye giriş. |
 | Faktörlere ayrılmış dikkat | "Uzaysal + zamansal" | Dikkatinizi önce uzaya, sonra zamana yönlendirin; 3 boyutlu dikkatin tamamını atlayın. |
 | Görüntüden videoya (I2V) | "Bu fotoğrafı canlandırın" | Model bir resim + metin alır, ondan başlayan bir videonun çıktısını alır. |
 | Ana kare koşullandırma | "Ankraj çerçeveleri" | Videonun yayını kontrol etmek için belirli kareleri sabitleyin. |
 | Hareket fırçası | "Yön ipucu" | Kullanıcının görüntüye hareket vektörlerini boyadığı kullanıcı arayüzü girişi. |
-| Yeniden altyazı | "Yoğun altyazılar" | Eğitim kliplerini ayrıntılı prompt'larla yeniden etiketlemek için Yüksek Lisans kullanma. |
+| Yeniden altyazı | "Yoğun altyazılar" | Eğitim kliplerini ayrıntılı prompt'lerle yeniden etiketlemek için Yüksek Lisans kullanma. |
 | Titreme | "Geçici artifact" | Kareden kareye tutarsızlık; birleşik gürültü giderme ile sabitlenmiştir. |
 
-## Üretim notu: video latentleri bir bellek bant genişliği sorunudur
+## Üretim notu: gizli video, bellek bant genişliği sorunudur
 
-24 fps'de 10 saniyelik 1080p klip, 240 kare × 1920 × 1080 × 3 ≈ 1,5 GB ham pikseldir. 4× video VAE sıkıştırmasından (`2 × spatial × 2 × temporal`) sonra latent istek başına ~100 MB'dir. Bunu 1. partide 30 adım boyunca uzay-zamansal DiT üzerinden çalıştırın ve HBM üzerinden ~3 GB/adım hareket ediyorsunuz - darboğaz FLOP'lar değil, bellek bant genişliğidir.
+24 fps'de 10 saniyelik 1080p klip, 240 kare × 1920 × 1080 × 3 ≈ 1,5 GB ham pikseldir. 4× video VAE sıkıştırmasından (`2 × spatial × 2 × temporal`) sonra latent istek başına ~100 MB olur. Bunu 1. partide 30 adım boyunca uzay-zamansal DiT üzerinden çalıştırın ve HBM üzerinden ~3 GB/adım hareket ediyorsunuz - darboğaz FLOP'lar değil bellek bant genişliğidir.
 
-Üç prodüksiyon düğmesi, hepsi doğrudan prodüksiyon-inference literatür inference bölümünden:
+Üç üretim düğmesi, tamamı doğrudan üretim-inference literatürü inference bölümünden:
 
 - **DiT genelinde TP.** Metinden videoya modeller rutin olarak ≥10B parametrelerdir. 4 H100'de TP=4 standarttır; 405B sınıfı modeller için PP=2 × TP=2. Adım başına gecikme, TP ile tamamen azaltma duvarına kadar kabaca doğrusal olarak düşer.
-- **Çerçeve toplu işlemi = sürekli toplu iş.** Oluşturma zamanında video, kavramsal olarak dikkatle birbirine bağlanan bir kareler grubudur. Sürekli toplu işlem (hareket içi planlama) geçerlidir: model mimarisi kayan pencere oluşturmaya izin veriyorsa, `t-1` çerçevesi döndürülürken `t+1` çerçevesini oluşturmaya başlayın.
+- **Çerçeve toplu işlemi = sürekli toplu iş.** Oluşturma zamanında video, kavramsal olarak dikkatle birbirine bağlanan bir kareler grubudur. Sürekli toplu işlem (hareket içi planlama) geçerlidir: Model mimarisi kayan pencere oluşturmaya izin veriyorsa, `t-1` çerçevesi döndürülürken `t+1` çerçevesini oluşturmaya başlayın.
 - **Klip düzeyinde önceden doldurma önbelleği.** Görüntüden videoya için, ilk kare koşullandırma, LLM'nin prompt ön doldurmasına benzer: bunu bir kez hesaplayın, zamansal kod çözücü geçişleri boyunca yeniden kullanın. Bu etkili bir şekilde video için bir KV önbelleğidir.
 
 ## Daha Fazla Okuma
 
 - [Brooks ve ark. (2024). Dünya simülatörleri olarak video oluşturma modelleri](https://openai.com/index/video-generation-models-as-world-simulators/) — Sora teknik raporu.
-- [Yang ve ark. (2024). CogVideoX: Bir Uzmanla Metinden Videoya Yayılma Modelleri Transformer](https://arxiv.org/abs/2408.06072) — CogVideoX.
-- [Kong ve diğerleri. (2024). HunyuanVideo: Büyük Video Oluşturma Modelleri için Sistematik Bir Framework](https://arxiv.org/abs/2412.03603) — HunyuanVideo.
+- [Yang ve ark. (2024). CogVideoX: Uzman Transformer](https://arxiv.org/abs/2408.06072) ile Metinden Videoya Yayılma Modelleri — CogVideoX.
+- [Kong ve diğerleri. (2024). HunyuanVideo: Büyük Video Oluşturma Modelleri için Sistematik Framework](https://arxiv.org/abs/2412.03603) — HunyuanVideo.
 - [Genmo (2024). Mochi-1 Teknik Raporu](https://www.genmo.ai/blog/mochi) — Mochi-1.
 - [Alibaba (2025). WAN 2.2](https://wanvideo.io/) — SOTA'yı 2025'in ortalarında açın.
-- [Ho, Salimans, Gritsenko ve diğerleri. (2022). Video Yayılım Modelleri](https://arxiv.org/abs/2204.03458) — ufuk açıcı video yayılım makalesi.
+- [Ho, Salimans, Gritsenko ve diğerleri. (2022). Video Dağıtım Modelleri](https://arxiv.org/abs/2204.03458) — ufuk açıcı video dağıtım makalesi.
 - [Blattmann ve ark. (2023). Gizli Öğelerinizi Hizalayın (Video LDM)](https://arxiv.org/abs/2304.08818) — Kararlı Video Difüzyonunun atası.

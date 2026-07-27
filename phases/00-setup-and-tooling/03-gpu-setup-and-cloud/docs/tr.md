@@ -11,12 +11,12 @@
 
 - `nvidia-smi` ve PyTorch'un CUDA API'sini kullanarak yerel GPU kullanılabilirliğini doğrulayın
 - Ücretsiz bulut tabanlı deneyler için Google Colab'ı T4 GPU ile yapılandırın
-- CPU ve GPU'da Benchmark matris çarpımı ve hızlanmayı ölçün
+- CPU ve GPU'da Benchmark matris çarpımı ve hızı ölçme
 - Fp16 temel kuralını kullanarak VRAM'inize uyan en büyük modeli tahmin edin
 
 ## Sorun
 
-Aşama 1-3'teki derslerin çoğu CPU'da sorunsuz çalışır. Ancak CNN'leri, transformer'ları veya LLM'leri (aşama 4+) eğitmeye başladığınızda GPU hızlandırmaya ihtiyacınız vardır. CPU'da 8 saat süren bir eğitim çalışması GPU'da 10 dakika sürer.
+Aşama 1-3'teki derslerin çoğu CPU'da sorunsuz çalışır. Ancak CNN'leri, transformer'leri veya LLM'leri (aşama 4+) eğitmeye başladığınızda GPU hızlandırmaya ihtiyacınız vardır. CPU'da 8 saat süren bir eğitim çalışması GPU'da 10 dakika sürer.
 
 Üç seçeneğiniz var: yerel GPU, bulut GPU veya Google Colab (ücretsiz).
 
@@ -91,7 +91,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using: {device}")
 ```
 
-## Derleyin: GPU ve CPU benchmark
+## Oluşturun: GPU ve CPU benchmark
 
 ```python
 import torch
@@ -122,7 +122,7 @@ if torch.cuda.is_available():
 
 ## Egzersizler
 
-1. Yukarıdaki benchmark komutunu çalıştırın ve CPU ile GPU sürelerini karşılaştırın
+1. Yukarıdaki benchmark'yi çalıştırın ve CPU ile GPU sürelerini karşılaştırın
 2. GPU'nuz yoksa Google Colab'da çalıştırın ve karşılaştırın
 3. Ne kadar GPU belleğiniz olduğunu kontrol edin ve sığdırabileceğiniz en büyük modeli tahmin edin (temel kural: fp16 için parametre başına 2 bayt)
 

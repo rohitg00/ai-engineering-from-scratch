@@ -1,6 +1,6 @@
 # Multimodal RAG ve Çapraz Mod Alma
 
-> Vision-yerel belgesi RAG bir dilimdir. Üretim multimodal RAG daha da genişliyor; yolculuk planlaması ("bana doğal ışıklı sessiz bir vegan brunch bul"), tıbbi öncelik ("bu fotoğraf + bu notlarla eşleşen yaralanma hangisi"), e-ticaret ("benim bedenimde bu selfie'ye benzer kıyafetler") ve saha servisi ("bu motor sesini artı parçanın fotoğrafını teşhis edin") gibi iş akışları için metin, resim, ses ve video üzerinden erişim sağlıyor. Üç 2025 araştırması - Abootorabi ve diğerleri, Mei ve diğerleri, Zhao ve diğerleri. - alt problemleri kodladı: modlar arası erişim, geri alma füzyonu, nesil temellendirme, çok modlu değerlendirme. Bu derste anketler okunur ve bir üretim hattı tasarlanır.
+> Vision-yerel belgesi RAG bir dilimdir. Üretim multimodal RAG daha da genişliyor - yolculuk planlaması ("bana doğal ışıklı sessiz bir vegan brunch bulun"), tıbbi öncelik ("bu fotoğraf + bu notlarla eşleşen yaralanma hangisi"), e-ticaret ("benim bedenimde bu selfie'ye benzer kıyafetler") ve saha servisi ("bu motor sesini artı parçanın fotoğrafını teşhis edin") gibi iş akışları için metin, resim, ses ve video elde etme. Üç 2025 araştırması - Abootorabi ve diğerleri, Mei ve diğerleri, Zhao ve diğerleri. - alt problemleri kodladı: modlar arası erişim, geri alma füzyonu, nesil temellendirme, çok modlu değerlendirme. Bu derste anketler okunur ve bir üretim hattı tasarlanır.
 
 **Tür:** Yapım
 **Diller:** Python (stdlib, füzyon + topraklanmış jeneratörlü çapraz modlu alıcı)
@@ -16,9 +16,9 @@
 
 ## Sorun
 
-Tek yöntemli RAG çözülmüş bir modeldir: sorguyu yerleştirme, parçaları yerleştirme, geri alma, LLM'ye malzeme ekleme. Çok modlu RAG şunları gerektirir:
+Tek yöntemli RAG çözülmüş bir kalıptır: sorguyu yerleştirme, parçaları yerleştirme, geri alma, LLM'ye malzeme ekleme. Çok modlu RAG şunları gerektirir:
 
-1. Çoklu erişim başlıkları (her yöntemin uyumlu bir alanda embedding'lara ihtiyacı vardır).
+1. Çoklu geri alma başlıkları (her yöntemin uyumlu bir alanda embedding'lere ihtiyacı vardır).
 2. Yöntemler arasında erişim sonuçlarının birleştirilmesi.
 3. Modaliteler arasında kaynaklara atıfta bulunan nesil temellendirme.
 4. Çapraz mod sinyalini kapsayan değerlendirme metrikleri.
@@ -31,7 +31,7 @@ Tek yöntemli RAG çözülmüş bir modeldir: sorguyu yerleştirme, parçaları 
 
 A yöntemi sorgusu verildiğinde B yönteminin belgelerini alın. Üç model:
 
-1. Paylaşılan embedding alanı. CLIP ve CLAP, paylaşılan bir alanda metin + resim / metin + ses embedding'ler üretir. Modaliteler arasındaki kosinüs benzerliği doğrudan çalışır. CLIP eğitimli çiftlerle sınırlıdır.
+1. Paylaşılan embedding alanı. CLIP ve CLAP, paylaşılan bir alanda metin + görüntü / metin + ses embedding'ler üretir. Modaliteler arasındaki kosinüs benzerliği doğrudan çalışır. CLIP eğitimli çiftlerle sınırlıdır.
 
 2. Her modalite kodlayıcı + çeviri. Metin kodlayıcı + görüntü kodlayıcı + boşluklar arasında eşleme yapan küçük bir çevirmen modülü. Sen2Sen, Gupta ve ark. ve diğer 2024 tasarımları. Esnektir ancak karmaşıklığı artırır.
 
@@ -56,16 +56,16 @@ MoE füzyonu. Ağ yollarının modaliteye özel uzmanlara yönlendirilmesi. Fark
 LLM, her bir hak talebine hangi öğenin geri getirildiğini belirtmelidir. Çok modlu için:
 
 - Metin kaynağı: standart alıntı `[1]`.
-- Resim kaynağı: Kısa bir başlıkla birlikte `[img 3]`.
+- Resim kaynağı: Kısa bir başlıkla `[img 3]`.
 - Ses: `[audio 2 at 0:34]`.
 
-Jeneratörü temellendirmeye duyarlı verilerle eğitin: Eğitim hedefindeki her iddia, kaynak dizini ile etiketlenir. inference noktasında model doğal olarak alıntılar yayınlar.
+Jeneratörü temellendirmeye duyarlı verilerle eğitin: Eğitim hedefindeki her iddia, kaynak dizini ile etiketlenir. inference'de model doğal olarak alıntılar yayınlıyor.
 
 ### 2025 anketleri
 
 Abootorabi ve ark. (arXiv:2502.08826, "Herhangi Bir Yöntemde Sor"): multimodal RAG için sınıflandırma. Geri alma, füzyon ve oluşturmayı kapsar. En geniş kapsama alanı.
 
-Mei ve ark. (arXiv:2504.08748, "Çok Modlu RAG Araştırması"): alt görevlere (benchmark) ve hata modlarına odaklanır. Değerlendirme tasarımı için kullanışlıdır.
+Mei ve ark. (arXiv:2504.08748, "Multimodal RAG Araştırması"): benchmark alt görevlerine ve hata modlarına odaklanır. Değerlendirme tasarımı için kullanışlıdır.
 
 Zhao ve diğerleri. (arXiv:2503.18016): vizyon odaklı anket. ColPali ailesi çalışmalarında güçlü.
 
@@ -83,9 +83,9 @@ Boru hattı:
 
 1. Sorguyu ayrıştırın. "sessiz" → ses/inceleme anahtar sözcüğü; "vegan brunch" → menü öğesi; "doğal ışık" → görüntü özelliği.
 2. Modaliteye göre alma:
-- İncelemelerden metin alma: "vegan brunch, sessiz ortam."
-- Restoran fotoğraflarından görüntü alma: "doğal ışık, havadar."
-- Ortam sesi kliplerinde ses alımı: "düşük desibel, müzik yok."
+   - İncelemelerden metin alma: "vegan brunch, sessiz ortam."
+   - Restoran fotoğraflarından görüntü alma: "doğal ışık, havadar."
+   - Ortam sesi kliplerinde ses alımı: "düşük desibel, müzik yok."
 3. Sigorta puanları. Her restoranın bileşik puanı vardır.
 4. En iyi restoranlar → Tüm kanıtları içeren VLM oluşturucu → alıntılarla yanıtlayın.
 
@@ -93,7 +93,7 @@ Bu, text-RAG'ın çok ötesindedir. Her yöntem, metnin tek başına gözden ka�
 
 ### Agentic çok modlu RAG
 
-Çoklu atlama: İlk erişim yüksek güvenirliğe sahip yanıtlar getirmezse LLM yeniden formüle eder ve tekrar alır. AgentFaz 14'teki RAG kalıpları burada geçerlidir. Örnekler:
+Çoklu atlama: İlk erişim yüksek güvenirliğe sahip yanıtlar getirmezse LLM yeniden formüle eder ve tekrar alır. Aşama 14'teki Agentic RAG desenleri burada geçerlidir. Örnekler:
 
 - İlk 10'u alın → Yüksek Lisans "çok gürültülü, <40 dB için filtreleyin" diye sorar → yeniden alın.
 - Görüntüleri alın → LLM, bir menüye sahip olduğunu görür → menü metnini alın → yanıtlayın.
@@ -122,7 +122,7 @@ Hiçbir standart benchmark tüm yöntemleri kapsamaz. Çoğu makale, alana özg�
 
 ## Gönderin
 
-Bu ders `outputs/skill-multimodal-rag-designer.md` üretir. Çok modlu bir sorgu akışına sahip bir ürün spesifikasyonu verildiğinde, alıcıları, füzyonu, oluşturucuyu ve değerlendirmeyi tasarlar.
+Bu ders `outputs/skill-multimodal-rag-designer.md`'yi üretir. Çok modlu bir sorgu akışına sahip bir ürün spesifikasyonu verildiğinde, alıcıları, füzyonu, oluşturucuyu ve değerlendirmeyi tasarlar.
 
 ## Egzersizler
 
@@ -134,7 +134,7 @@ Bu ders `outputs/skill-multimodal-rag-designer.md` üretir. Çok modlu bir sorgu
 
 4. Seyahat planlayıcı multimodal RAG için bir değerlendirme spesifikasyonu tasarlayın. Hangi ölçümler görüntü hatırlamayı, ses hatırlamayı ve bileşik doğruluğunu kapsar?
 
-5. Agentic çok atlamalı RAG'nin gidiş-dönüş başına gecikme vergisi vardır. Hangi sorgu zorluğunda doğruluk artışı gecikmeyi haklı çıkarır?
+5. Agentic çok atlamalı RAG'ın gidiş-dönüş başına gecikme vergisi vardır. Hangi sorgu zorluğunda doğruluk artışı gecikmeyi haklı çıkarır?
 
 ## Anahtar Terimler
 
@@ -145,12 +145,12 @@ Bu ders `outputs/skill-multimodal-rag-designer.md` üretir. Çok modlu bir sorgu
 | MoE füzyonu | "Modalite odaklı uzmanlar" | Gating ağı, sorgu başına hangi yöntemin puanlarına güvenileceğini seçer |
 | Topraklanmış nesil | "Kaynaklarınızdan alıntı yapın" | Yanıttaki her iddia kaynak dizini ile etiketlendi |
 | MuRAG | "İlk çok modlu RAG" | Çok modlu RAG modelini oluşturan 2022 makalesi |
-| Agentçoklu atlama | "Yeniden formüle edin ve yeniden deneyin" | Yüksek Lisans, ilk geçiş güveni düşük olduğunda toplayıcıları yeniden sorguluyor |
+| Agentic çoklu atlama | "Yeniden formüle edin ve yeniden deneyin" | Yüksek Lisans, ilk geçiş güveni düşük olduğunda toplayıcıları yeniden sorguluyor |
 
 ## Daha Fazla Okuma
 
-- [Abootorabi ve ark. — Herhangi Bir Yöntemle Sor (arXiv:2502.08826)](https://arxiv.org/abs/2502.08826)
-- [Mei ve ark. — Çok Modlu RAG Araştırması (arXiv:2504.08748)](https://arxiv.org/abs/2504.08748)
-- [Zhao ve ark. — Vision RAG Anketi (arXiv:2503.18016)](https://arxiv.org/abs/2503.18016)
+- [Abootorabi ve ark. — Herhangi Bir Yöntemde Sor (arXiv:2502.08826)](https://arxiv.org/abs/2502.08826)
+- [Mei ve ark. — Multimodal RAG Araştırması (arXiv:2504.08748)](https://arxiv.org/abs/2504.08748)
+- [Zhao ve ark. — Vision RAG Araştırması (arXiv:2503.18016)](https://arxiv.org/abs/2503.18016)
 - [Chen ve ark. — MuRAG (arXiv:2210.02928)](https://arxiv.org/abs/2210.02928)
 - [Liu ve ark. — REACT (arXiv:2301.10382)](https://arxiv.org/abs/2301.10382)

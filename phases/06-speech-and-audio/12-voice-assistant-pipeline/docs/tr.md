@@ -30,8 +30,8 @@ Gecikme hedefi: kullanıcının dizüstü bilgisayar CPU'sunda konuşmasını bi
 1. **Ses yakalama.** Mikrofon → 16 kHz mono → 20 ms'lik parçalar. Genellikle Python'da `sounddevice` veya üretimde yerel AudioUnit/ALSA/WASAPI.
 2. **VAD (Ders 11).** Silero VAD @ eşik 0,5, minimum konuşma 250 ms, sessizlik kesintisi 500 ms. "Başlangıç" ve "bitiş" sinyalleri.
 3. **STT Yayını (Ders 4-5).** Whisper-streaming, Parakeet-TDT veya Deepgram Nova-3 (API). Kısmi + son transkriptler.
-4. **tool calling ile Yüksek Lisans.** GPT-4o / Claude 3.5 / Gemini 2.5 Flash. Araçlar için JSON şeması. token'ları yayınla.
-5. **TTS Akışı (Ders 7).** Kokoro-82M (en hızlı açık) veya Cartesia Sonic (ticari). 20 LLM tokens sonra TTS'yi başlatın.
+4. **tool calling ile Yüksek Lisans.** GPT-4o / Claude 3.5 / Gemini 2.5 Flash. Araçlar için JSON şeması. token'leri yayınlayın.
+5. **TTS Yayını (Ders 7).** Kokoro-82M (en hızlı açık) veya Cartesia Sonic (ticari). 20 LLM token'den sonra TTS'yi başlatın.
 6. **Oynatma.** Hoparlör çıkışı; Düşük bant genişliğine sahip ağlar için opus-encode.
 7. **Kesinti işleyicisi.** TTS oynatma sırasında VAD etkinleşirse oynatmayı durdurun, LLM'yi iptal edin, STT'yi yeniden başlatın.
 
@@ -48,7 +48,7 @@ Gecikme hedefi: kullanıcının dizüstü bilgisayar CPU'sunda konuşmasını bi
 | LiveKit + Deepgram + GPT-4o + Kartezya | 350-500 ms | ticari API | Sektör temerrüdü 2026 |
 | Pipecat + Whisper akışı + GPT-4o + Kokoro | 500-800 ms | çoğunlukla açık | Kendin Yap dostu |
 | Moshi (tam çift yönlü) | 200-300 ms | CC-BY 4.0 | Tek model; farklı mimari, ders 15 |
-| Vapi / Yeniden Anlat (yönetilen) | 300-500 ms | ticari | Başlatılması en hızlı; sınırlı kişiselleştirme |
+| Vapi / Yeniden Anlat (yönetilen) | 300-500 ms | ticari | Başlatılması en hızlı; sınırlı özelleştirme |
 | Whisper.cpp + llama.cpp + Kokoro-ONNX | çevrimdışı | aç | Gizlilik / kenar |
 
 ## İnşa Et
@@ -148,12 +148,12 @@ Yedi bileşenin tümünü saplama modelleriyle birleştiren çalıştırılabili
 
 ## Gönderin
 
-`outputs/skill-voice-assistant-architect.md` olarak kaydet. Bütçe + ölçek + dil + uyumluluk kısıtlamaları göz önüne alındığında, tam bir yığın spesifikasyonu oluşturun.
+`outputs/skill-voice-assistant-architect.md` olarak kaydedin. Bütçe + ölçek + dil + uyumluluk kısıtlamaları göz önüne alındığında, tam bir yığın spesifikasyonu oluşturun.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py` komutunu çalıştırın. Saplama modülleri ile uçtan uca bir tam dönüşü simüle eder ve aşama başına gecikmeyi yazdırır.
-2. **Orta.** STT saplamasını önceden kaydedilmiş bir `.wav` üzerinde gerçek bir Whisper modeliyle değiştirin. WER'yi ve uçtan uca gecikmeyi ölçün.
+1. **Kolay.** `code/main.py`'yi çalıştırın. Saplama modülleri ile uçtan uca bir tam dönüşü simüle eder ve aşama başına gecikmeyi yazdırır.
+2. **Orta.** STT saplamasını önceden kaydedilmiş `.wav`'de gerçek bir Whisper modeliyle değiştirin. WER'yi ve uçtan uca gecikmeyi ölçün.
 3. **Zor.** tool calling ekleyin: `get_weather` (herhangi bir API) ve `set_timer`'yi uygulayın. LLM'yi araçlara yönlendirin ve kullanıcı "5 dakikalık bir zamanlayıcı ayarlayın" dediğinde doğru işlevin etkinleştiğini ve sesli yanıtın bunu onayladığını doğrulayın.
 
 ## Anahtar Terimler
@@ -169,9 +169,9 @@ Yedi bileşenin tümünü saplama modelleriyle birleştiren çalıştırılabili
 
 ## Daha Fazla Okuma
 
-- [LiveKit — ses agent hızlı başlangıç](https://docs.livekit.io/agents/) — üretim düzeyinde referans.
-- [Pipecat — ses agent örnekleri](https://github.com/pipecat-ai/pipecat) — Kendin Yap dostu framework.
-- [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) — yönetilen ses yerel yolu.
+- [LiveKit — sesli agent hızlı başlangıç](https://docs.livekit.io/agents/) — üretim düzeyinde referans.
+- [Pipecat — sesli agent örnekleri](https://github.com/pipecat-ai/pipecat) — Kendin Yap dostu framework.
+- [OpenAI Gerçek Zamanlı API](https://platform.openai.com/docs/guides/realtime) — yönetilen ses yerel yolu.
 - [Kyutai Moshi](https://github.com/kyutai-labs/moshi) — tam çift yönlü referans (Ders 15).
-- [Porcupine uyandırma sözcüğü](https://picovoice.ai/products/porcupine/) — uyandırma sözcüğü geçişi.
+- [Pircupine uyandırma sözcüğü](https://picovoice.ai/products/porcupine/) — uyandırma sözcüğü geçitleme.
 - [Antropik — araç kullanım kılavuzu](https://docs.anthropic.com/en/docs/build-with-claude/tool-use) — Yüksek Lisans işlevinin çağrılması.

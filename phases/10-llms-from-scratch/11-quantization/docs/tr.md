@@ -16,15 +16,15 @@
 
 ## Sorun
 
-Llama 3 70B'nin 70 milyar parametresi vardır. Her parametre 16 bitlik kayan noktalı bir sayıdır. Bu 140 milyar bayttır. 140GB. Tek bir A100'de 80 GB VRAM bulunur. Tek bir GPU'da bırakın inference çalıştırmayı, ağırlıkları bile yükleyemezsiniz. Sadece bir modele hizmet verebilmek için her biri saat başına 2 ABD doları olan iki A100'e ihtiyacınız var.
+Llama 3 70B'nin 70 milyar parametresi vardır. Her parametre 16 bitlik kayan noktalı bir sayıdır. Bu 140 milyar bayttır. 140GB. Tek bir A100'de 80 GB VRAM bulunur. Bırakın inference'yi tek bir GPU'da çalıştırmayı, ağırlıkları bile yükleyemezsiniz. Sadece bir modele hizmet verebilmek için her biri saat başına 2 ABD doları olan iki A100'e ihtiyacınız var.
 
-Ancak parametre başına 16 bit israftır. Sıfıra yakın bir neural network kümesindeki çoğu ağırlık. FP16'nın tam dinamik aralığı (0,000000059'dan 65.504'e kadar) neredeyse tamamen kullanılmamaktadır. Llama 3 70B'deki ağırlıkların gerçek dağılımını ölçerseniz %95'inin -0,1 ile +0,1 arasında olduğunu görürsünüz. 4'e sığabilecek değerleri temsil etmek için 16 bit yazıyorsunuz.
+Ancak parametre başına 16 bit israftır. neural network kümesindeki çoğu ağırlık sıfıra yakındır. FP16'nın tam dinamik aralığı (0,000000059'dan 65.504'e kadar) neredeyse tamamen kullanılmamaktadır. Llama 3 70B'deki ağırlıkların gerçek dağılımını ölçerseniz %95'inin -0,1 ile +0,1 arasında olduğunu görürsünüz. 4'e sığabilecek değerleri temsil etmek için 16 bit yazıyorsunuz.
 
 Niceleme, yüksek hassasiyetli sayıları daha düşük hassasiyetli olanlarla değiştirir. FP16'dan FP8'e kadar bellek yarı yarıya azalır. FP16'dan INT4'e geçiş bunu dörtte bire indiriyor. 140 GB olan model 35 GB oluyor. Tek bir tüketici GPU'suna sığar. 2 bitlik nicelemeye itin (agresif, kayıplı, ancak bazı görevler için kullanılabilir) ve aynı model 16 GB'lık bir dizüstü bilgisayarda çalışır.
 
-Maliyet doğruluktur. Kaldırdığınız her parça bilgiyi yok eder. Soru, doğruluğu ne kadar ve nerede kaybettiğinizdir. İyi nicelenmiş bir INT4 modeli çoğu benchmark'da orijinalin kalitesinin %95-99'unu korur. INT4'e yönelik saf bir nicemleme, modeli tamamen yok edebilir. Fark tekniktir.
+Maliyet doğruluktur. Kaldırdığınız her parça bilgiyi yok eder. Soru, doğruluğu ne kadar ve nerede kaybettiğinizdir. İyi nicelenmiş bir INT4 modeli, çoğu benchmark'de orijinalin kalitesinin %95-99'unu korur. INT4'e yönelik saf bir nicemleme, modeli tamamen yok edebilir. Fark tekniktir.
 
-GPTQ ile Llama 3'ten INT4'e kadar olan topluluk nicemlemeleri, WikiText'te kabaca 1-2 şaşkınlık noktasının kaybolduğunu gösteriyor. Mistral, Mixtral 8x22B'nin FP8 kontrol noktalarını MMLU'da sıfır ölçülebilir kalite kaybıyla yayınladı. GGUF formatı, M serisi yongalara sahip MacBook'larda 70B modellerini çalıştıran llama.cpp'a güç verir. Niceleme bir hack değildir. 7B'den büyük her model için standart deployment yoludur.
+GPTQ ile Llama 3'ten INT4'e kadar olan topluluk nicemlemeleri, WikiText'te kabaca 1-2 şaşkınlık noktasının kaybolduğunu gösteriyor. Mistral, Mixtral 8x22B'nin FP8 kontrol noktalarını MMLU'da sıfır ölçülebilir kalite kaybıyla yayınladı. GGUF formatı, M serisi çiplere sahip MacBook'larda 70B modellerini çalıştıran llama.cpp'ye güç verir. Niceleme bir hack değildir. 7B'den büyük her model için standart deployment yoludur.
 
 ## Konsept
 
@@ -44,13 +44,13 @@ INT4:  [1 sign] [3 value]                   = 4  bits (16 levels total)
 
 **FP32** tam hassasiyettir. 23 mantis biti size yaklaşık 7 ondalık basamak hassasiyeti verir. Aralık: kabaca 1,2 x 10^-38 ila 3,4 x 10^38. Eğitim eskiden yalnızca FP32'de yapılıyordu. Bu hala birikim için geçerli (matris çarpımı sırasında toplamları çalıştırmak).
 
-**FP16** bitleri yarıya indirir. 10 mantis biti yaklaşık 3,3 ondalık basamak verir. Üs 5 bit'e küçülerek aralığı önemli ölçüde azaltır (maksimum değer ~65.504). Bu, (sıfırın yakınında kümelenen) ağırlıklar için iyidir ancak eğitim sırasında ani yükselişe geçebilecek aktivasyonlar ve gradient'ler için tehlikelidir. FP16 eğitimi, yetersiz akışı önlemek için kayıp ölçeklendirmeyi gerektirir.
+**FP16** bitleri yarıya indirir. 10 mantis biti yaklaşık 3,3 ondalık basamak verir. Üs 5 bit'e küçülerek aralığı önemli ölçüde azaltır (maksimum değer ~65.504). Bu, (sıfıra yakın kümelenen) ağırlıklar için iyidir, ancak eğitim sırasında ani artış gösterebilecek aktivasyonlar ve gradient'ler için tehlikelidir. FP16 eğitimi, yetersiz akışı önlemek için kayıp ölçeklendirmeyi gerektirir.
 
-**BF16** (Brain Float 16), FP32'deki 8 bitlik üssü korur ancak mantisi 7 bit'e kadar küçültür. FP32 ile aynı aralık, FP16'dan daha az hassasiyet. Google bunu özellikle deep learning için tasarladı. Sezgi: aralık, neural network'lar için hassasiyetten daha önemlidir. FP16'da sıfıra düşen 10^-20'lik gradient, BF16'da varlığını sürdürüyor. BF16'da 0,0734'e yuvarlanan 0,07342'lik ağırlık yeterince yakındır. Her modern antrenman koşusu BF16 veya BF16/FP32 karışımını kullanır.
+**BF16** (Brain Float 16), FP32'deki 8 bitlik üssü korur ancak mantisi 7 bit'e kadar küçültür. FP32 ile aynı aralık, FP16'dan daha az hassasiyet. Google bunu özellikle deep learning için tasarladı. Sezgi: neural network'ler için aralık hassasiyetten daha önemlidir. FP16'da sıfıra düşen 10^-20 gradient, BF16'da varlığını sürdürüyor. BF16'da 0,0734'e yuvarlanan 0,07342'lik ağırlık yeterince yakındır. Her modern antrenman koşusu BF16 veya BF16/FP32 karışımını kullanır.
 
 **FP8** iki farklı şekilde gelir. inference sırasındaki ağırlıklar ve aktivasyonlar için E4M3 (4 üs, 3 mantis) kullanılır. Menzilin hassasiyetten daha önemli olduğu eğitim sırasında gradient'ler için E5M2 (5 üs, 2 mantis) kullanılır. H100 GPU'lardaki FP8 inference, ihmal edilebilir kalite kaybıyla FP16'ya göre %30-50 hıza ulaşır.
 
-**INT8** bir tamsayı biçimidir. Üs yok, mantis yok. -128'den 127'ye kadar yalnızca 256 eşit aralıklı değer. Kayan nokta ağırlıklarını bu aralığa eşlemek için bir ölçek faktörüne ihtiyacınız vardır. Avantajı: tamsayı aritmetiği, kayan noktaya göre daha hızlıdır ve güç açısından daha verimlidir. A100'de INT8 matris çarpımı FP16 için 312 TFLOPS'a karşılık 624 TOPS'ta çalışır.
+**INT8** bir tamsayı biçimidir. Üs yok, mantis yok. -128'den 127'ye kadar yalnızca 256 eşit aralıklı değer. Kayan nokta ağırlıklarını bu aralığa eşlemek için bir ölçek faktörüne ihtiyacınız vardır. Avantajı: tamsayı aritmetiği, kayan nokta aritmetiğine göre daha hızlıdır ve güç açısından daha verimlidir. A100'de INT8 matris çarpımı FP16 için 312 TFLOPS'a karşılık 624 TOPS'ta çalışır.
 
 **INT4** daha da ileri gidiyor. Yalnızca 16 olası değer. Ölçek faktörü ağır yük taşır. Kalite tamamen ölçeği nasıl seçtiğinize ve hangi ağırlıkları ölçtüğünüze bağlıdır. En son teknolojiye sahip INT4 yöntemleri (GPTQ, AWQ), orijinal model kalitesinin %95'ini korur.
 
@@ -113,9 +113,9 @@ Bir modeldeki her şey kuantizasyona eşit derecede tolerans göstermez. Açık 
 
 **Ağırlıklar (en sağlam).** Model ağırlıkları eğitim sırasında yavaşça değişir ve kabaca sıfıra yakın bir Gauss dağılımını takip eder. İyi bir şekilde nicemlenirler. Kanal başına ölçeklere sahip INT8 ağırlıkları neredeyse kayıpsız sonuçlar üretir. INT4 daha karmaşık yöntemler gerektirir ancak işe yarar.
 
-**Aktivasyonlar (orta hassasiyet).** Aktivasyonlar, inference sırasında ağ üzerinden akan ara değerlerdir. Ağırlıklardan daha geniş dinamik aralığa sahiptirler ve aykırı değerler içerirler. Tek bir dikkat kafası, ortalamadan 100 kat daha büyük aktivasyon değerleri üretebilir. Bu aykırı değerler model kalitesi açısından kritik öneme sahiptir. Bunları nicelemek safça bilgiyi yok eder. Çözümler: Aykırı kanalları daha yüksek hassasiyette tutun (LLM.int8()), her-token veya kanal başına etkinleştirme ölçeklerini kullanın.
+**Etkinleştirmeler (orta düzeyde hassasiyet).** Etkinleştirmeler, inference sırasında ağ üzerinden akan ara değerlerdir. Ağırlıklardan daha geniş dinamik aralığa sahiptirler ve aykırı değerler içerirler. Tek bir dikkat kafası, ortalamadan 100 kat daha büyük aktivasyon değerleri üretebilir. Bu aykırı değerler model kalitesi açısından kritik öneme sahiptir. Bunları nicelemek safça bilgiyi yok eder. Çözümler: Aykırı kanalları daha yüksek hassasiyette tutun (LLM.int8()), token başına veya kanal başına etkinleştirme ölçekleri kullanın.
 
-**KV önbelleği (yüksek hassasiyet).** Anahtar/değer önbelleği, önceki tüm token'lerin dikkat durumlarını saklar. Uzun bağlam uzunluklarında KV önbelleği belleğe hakim olur. 32K bağlamındaki bir 70B modeli için FP16'da yalnızca KV önbelleği 40 GB'dir. KV önbelleğini FP8 veya INT8'e nicelemek, büyük miktarda bellek tasarrufu sağlar, ancak herhangi bir hata, gelecekteki tüm dikkat hesaplamalarında daha da artar. Kalite etkisi dizi uzunluğuna göre ölçeklenir.
+**KV önbelleği (yüksek hassasiyet).** Anahtar/değer önbelleği, önceki tüm token'lere ilişkin dikkat durumlarını saklar. Uzun bağlam uzunluklarında KV önbelleği belleğe hakim olur. 32K bağlamındaki bir 70B modeli için FP16'da yalnızca KV önbelleği 40 GB'dir. KV önbelleğini FP8 veya INT8'e nicelemek, büyük miktarda bellek tasarrufu sağlar, ancak herhangi bir hata, gelecekteki tüm dikkat hesaplamalarında daha da artar. Kalite etkisi dizi uzunluğuna göre ölçeklenir.
 
 **Dikkat logitleri (en hassas).** Dikkatteki softmax, girişlerindeki küçük değişikliklere karşı oldukça hassastır. Softmax öncesi logitteki 0,01'lik bir niceleme hatası, dikkat dağılımını anlamlı bir şekilde değiştirebilir. Çoğu niceleme şeması, diğer her şey nicelendiğinde bile dikkat hesaplamasını daha yüksek hassasiyette (FP16 veya BF16) tutar.
 
@@ -143,7 +143,7 @@ graph TD
 
 **Eğitim Sonrası Niceleme (PTQ)** önceden eğitilmiş bir modeli nicelendirir. Yeniden eğitim yok. FP16 ağırlıklarını alırsınız, ölçek faktörlerini hesaplarsınız, yuvarlar ve dağıtırsınız. Hızlı (dakikalardan saatlere kadar) ve ucuz. INT8 ve FP8 için iyi çalışır. INT4 için saf PTQ genellikle yuvarlama hatalarının birikmesi nedeniyle kötü bir şekilde başarısız olur. Gelişmiş PTQ yöntemleri (GPTQ, AWQ), niceleme hatasını en aza indirmek için kalibrasyon verilerini kullanır.
 
-**Kuantizasyon Farkındalık Eğitimi (QAT)**, eğitim sırasında ileri geçişe sahte nicemleme işlemleri ekler. Model, ağırlıklarını yuvarlama hatalarının küçük olduğu yerlere yerleştirmeyi öğrenir. Gradient'ler, düz tahmin aracını (STE) kullanarak sahte niceleme boyunca akar: yuvarlama işleminin gradient 1'e sahip olduğunu varsayalım. QAT, PTQ'dan daha iyi INT4 ve INT2 modelleri üretir ancak tam bir eğitim çalışması gerektirir. Google, Gemini'nin verimli sunumu için QAT'ı kullandı. Meta, bazı Llama deployment hedefleri için QAT kullandı.
+**Kuantizasyon Farkındalık Eğitimi (QAT)**, eğitim sırasında ileri geçişe sahte nicemleme işlemleri ekler. Model, ağırlıklarını yuvarlama hatalarının küçük olduğu yerlere yerleştirmeyi öğrenir. Gradient'ler, düz tahmin aracını (STE) kullanarak sahte niceleme üzerinden akar: yuvarlama işleminin gradient 1'e sahip olduğunu varsayalım. QAT, PTQ'dan daha iyi INT4 ve INT2 modelleri üretir ancak tam bir eğitim çalışması gerektirir. Google, Gemini'nin verimli sunumu için QAT'ı kullandı. Meta, bazı Lama deployment hedefleri için QAT kullandı.
 
 | Görünüş | PTQ | QAT |
 |--------|-----|-----|
@@ -156,11 +156,11 @@ graph TD
 
 ### GPTQ, AWQ, GGUF
 
-**GPTQ (GPT Niceleme)** tek seferlik bir PTQ yöntemidir. Hessian'ı (çıktının her ağırlığa ne kadar duyarlı olduğuna ilişkin ikinci dereceden bilgi) ölçmek için küçük bir kalibrasyon dataset (tipik olarak 128 örnek) kullanarak ağırlıkları her seferinde bir katman olarak nicemler. Hessian'ın önemli olduğunu söylediği ağırlıklar daha dikkatli bir şekilde ölçülür. GPTQ, INT4 nicelemesini LLM'ler için pratik hale getiren ilk yöntemdi. TheBloke on Hugging Face, yüzlerce modelin sayısallaştırılmış versiyonlarını yayınlayarak GPTQ'yu popüler hale getirdi.
+**GPTQ (GPT Niceleme)** tek seferlik bir PTQ yöntemidir. Hessian'ı (çıktının her ağırlığa ne kadar duyarlı olduğuna ilişkin ikinci dereceden bilgi) ölçmek için küçük bir dataset kalibrasyonu (tipik olarak 128 örnek) kullanarak ağırlıkları her seferinde bir katman olarak nicemler. Hessian'ın önemli olduğunu söylediği ağırlıklar daha dikkatli bir şekilde ölçülür. GPTQ, INT4 nicelemesini LLM'ler için pratik hale getiren ilk yöntemdi. TheBloke on Hugging Face, yüzlerce modelin sayısallaştırılmış versiyonlarını yayınlayarak GPTQ'yu popüler hale getirdi.
 
 **AWQ (Aktivasyon Farkında Ağırlık Niceleme)**, ağırlıkların küçük bir kısmının (yaklaşık %1) büyük aktivasyon değerleriyle çoğaldıkları için orantısız derecede önemli olduğunu gözlemler. AWQ, kalibrasyon verilerini kullanarak bu belirgin ağırlıkları tanımlar ve nicelemeden önce bunları ölçeklendirir (daha sonra karşılık gelen aktivasyonları ölçeklendirir). Bu, önemli ağırlıkları INT4 nicelemesinin doğru olduğu bir aralıkta tutar. AWQ genellikle GPTQ kalitesiyle eşleşir veya biraz daha üstündür ve uygulanması 1,5-2 kat daha hızlıdır.
 
-**GGUF (GPT Tarafından Oluşturulan Birleştirilmiş Format)**, llama.cpp ve ekosistemi tarafından kullanılan dosya formatıdır. Karışık nicelemeyi destekler: farklı katmanlar farklı bit genişliklerine sahiptir. İlk ve son katmanlar (embedding ve çıktı kafası) genellikle daha yüksek hassasiyette tutulur. Orta katmanlar INT4 veya INT3 alır. GGUF dosyaları bağımsızdır: ağırlıklar, tokenizer, meta verilerin tümü tek bir dosyadadır. Format, CPU inference ve Apple Silicon için tasarlanmıştır; burada tüm modelin belleğe yüklenmesi ve matris çarpımlarının CPU veya Metal GPU üzerinde çalıştırılması standart yoldur. Q4_K_M, kalite ve boyutu dengeleyen en popüler GGUF niceleme çeşididir.
+**GGUF (GPT Tarafından Oluşturulan Birleştirilmiş Format)**, llama.cpp ve ekosistemi tarafından kullanılan dosya formatıdır. Karışık nicelemeyi destekler: farklı katmanlar farklı bit genişliklerine sahiptir. İlk ve son katmanlar (embedding ve çıkış kafası) genellikle daha yüksek hassasiyette tutulur. Orta katmanlar INT4 veya INT3 alır. GGUF dosyaları bağımsızdır: ağırlıklar, tokenizer, meta veriler hepsi tek bir dosyada. Format, CPU inference ve Apple Silicon için tasarlanmıştır; burada tüm modelin belleğe yüklenmesi ve matris çarpımlarının CPU veya Metal GPU üzerinde çalıştırılması standart yoldur. Q4_K_M, kalite ve boyutu dengeleyen en popüler GGUF niceleme çeşididir.
 
 ```mermaid
 graph TD
@@ -189,25 +189,25 @@ graph TD
 
 Nicelenmiş modelinizin hala iyi olup olmadığını nasıl anlarsınız?
 
-**Şaşırma.** En yaygın ölçüm. Daha düşük olması daha iyidir. Hem orijinal hem de nicelenmiş model için uzatılmış bir dataset (WikiText-2 standarttır) üzerinde hesaplama karışıklığı. Delta size nicelemenin ne kadar bilgiyi yok ettiğini söyler. Temel kurallar: delta < 0,5 mükemmel, 0,5-1,0 iyi, 1,0-2,0 çoğu görev için kabul edilebilir, > 2,0 bir şeylerin ters gittiği anlamına gelir.
+**Şaşırma.** En yaygın ölçüm. Daha düşük olması daha iyidir. Hem orijinal hem de nicelenmiş model için uzatılmış bir dataset (WikiText-2 standarttır) üzerinde karmaşıklığı hesaplayın. Delta size nicelemenin ne kadar bilgiyi yok ettiğini söyler. Temel kurallar: delta < 0,5 mükemmel, 0,5-1,0 iyi, 1,0-2,0 çoğu görev için kabul edilebilir, > 2,0 bir şeylerin ters gittiği anlamına gelir.
 
-**Göreve özgü benchmark'ler.** Nicelenmiş modeli MMLU, HumanEval, GSM8K veya özel değerlendirme paketinizde çalıştırın. Orijinaliyle karşılaştırın. Niceleme farklı yetenekleri eşit olmayan şekilde etkiler. Matematik ve kod görevleri, genel bilgiden ziyade hassaslık kaybına daha duyarlıdır.
+**Göreve özel benchmark'ler.** Ölçülen modeli MMLU, HumanEval, GSM8K veya özel değerlendirme paketinizde çalıştırın. Orijinaliyle karşılaştırın. Niceleme farklı yetenekleri eşit olmayan şekilde etkiler. Matematik ve kod görevleri, genel bilgiden ziyade hassaslık kaybına daha duyarlıdır.
 
-**Çıktı karşılaştırması.** Aynı prompt'larda her iki modelden de yanıtlar oluşturun ve karşılaştırın. Hakim olarak Yüksek Lisans (Ders 10) burada iyi işliyor. Kazanma oranını hesaplayın: nicelenen model, prompts'nin kaçta kaç oranında orijinaliyle eşleşiyor veya onu geçiyor?
+**Çıktı karşılaştırması.** Aynı prompt'lerde her iki modelden de yanıtlar oluşturun ve karşılaştırın. Hakim olarak Yüksek Lisans (Ders 10) burada iyi işliyor. Kazanma oranını hesaplayın: nicelenen model, prompt'lerin ne kadarında orijinalle eşleşiyor veya onu geçiyor?
 
-**Gecikme ve aktarım hızı.** Modelleri daha hızlı ve daha ucuz hale getirmek için niceliklendirme mevcuttur. Saniyede token saniyeyi, ilk token'ye kadar geçen süreyi ve bellek kullanımını ölçün. Orijinalden daha yavaş olan nicelenmiş bir model, işe yaramazdan da kötüdür.
+**Gecikme ve aktarım hızı.** Modelleri daha hızlı ve daha ucuz hale getirmek için niceliklendirme mevcuttur. Saniye başına token sayısını, ilk token'ye kadar geçen süreyi ve bellek kullanımını ölçün. Orijinalden daha yavaş olan nicelenmiş bir model, işe yaramazdan da kötüdür.
 
-| Modeli | Biçim | Boyut | Şaşkınlık (WikiText-2) | MMLU | Tokensn/sn (A100) |
+| Modeli | Biçim | Boyut | Şaşkınlık (WikiText-2) | MMLU | Token sn/sn (A100) |
 |-------|--------|------|------------------------|------|-------------------|
-| Llama 3 70B | FP16 | 140 GB | 3.12 | %79,5 | 38 |
-| Llama 3 70B | FP8 | 70GB | 3.14 | %79,3 | 55 |
-| Llama 3 70B | GPTQ INT4 | 35GB | 4.32 | %77,8 | 72 |
-| Llama 3 70B | AWQ INT4 | 35GB | 4.18 | %78,1 | 75 |
-| Llama 3 70B | GGUF Q4_K_M | 40 GB | 4.25 | %77,9 | 28 (CPU) |
+| Lama 3 70B | FP16 | 140GB | 3.12 | %79,5 | 38 |
+| Lama 3 70B | FP8 | 70GB | 3.14 | %79,3 | 55 |
+| Lama 3 70B | GPTQ INT4 | 35GB | 4.32 | %77,8 | 72 |
+| Lama 3 70B | AWQ INT4 | 35GB | 4.18 | %78,1 | 75 |
+| Lama 3 70B | GGUF Q4_K_M | 40GB | 4.25 | %77,9 | 28 (CPU) |
 
 Desen: FP8 neredeyse bedava. INT4'ün maliyeti 1-2 MMLU puanıdır ancak verimi iki katına çıkarır ve belleği dörde böler. Neredeyse her deployment için bu ödünleşime değer.
 
-### Gerçek Sayılar
+### Real Numbers
 
 H100'de FP16'dan FP8'e: %30-50 inference hızlanma, < %0,1 kalite kaybı. Bu, hiç akıllıca olmayan bir kuantizasyondur. Her H100 deployment bunu kullanmalıdır.
 
@@ -215,7 +215,7 @@ FP16 - INT8 (LLM.int8()): 2 kat bellek azaltma, < %0,5 kalite kaybı. Karma duya
 
 FP16 - INT4 (GPTQ/AWQ): 4 kat bellek azaltma, modele ve yönteme bağlı olarak %1-3 kalite kaybı. Tek bir 48 GB GPU'da 70B modellerini etkinleştirir.
 
-FP16 - INT4 (GGUF Q4_K_M): 3,5 kat bellek azaltma, %1-2 kalite kaybı. CPU inference için optimize edildi. Q4_K_M'deki bir 70B modeli yaklaşık 40 GB'dir ve 64 GB'lık M3 Max'te 10-15 tokens/saniye hızında çalışır.
+FP16 - INT4 (GGUF Q4_K_M): 3,5 kat bellek azaltma, %1-2 kalite kaybı. CPU inference için optimize edilmiştir. Q4_K_M'deki bir 70B modeli yaklaşık 40 GB'dir ve 64 GB'lık M3 Max'te 10-15 token/saniye hızında çalışır.
 
 FP16'dan INT2'ye: 8x bellek azaltma, %5-15 kalite kaybı. Yalnızca bozulmayı tolere edebileceğiniz belirli dar görevler için uygundur. Araştırma sınırı, genel kullanım için üretime hazır değil.
 
@@ -313,7 +313,7 @@ def display_format_comparison(value):
 
 ### Adım 2: Simetrik Niceleme (Tensör Başına ve Kanal Başına)
 
-Temel kuantizasyon işlemleri. Tensör başına tüm matris için bir ölçek kullanır. Kanal başına, satır veya sütun başına bir ölçek kullanır.
+Temel kuantizasyon işlemleri. Tensör başına tüm matris için bir ölçek kullanır. Kanal başına, satır veya sütun başına bir ölçek kullanılır.
 
 ```python
 def quantize_symmetric(tensor, num_bits=8):
@@ -446,7 +446,7 @@ def bit_width_sweep(tensor):
 
 ### Adım 5: Hassasiyet Deneyi
 
-Bir transformer'nin farklı bölümlerinin nicelendirilmesini simüle edin ve hangi bileşenlerin en hassas olduğunu ölçün. Bu, duyarlılık hiyerarşisini gösterir: ağırlıklar < aktivasyonlar < KV önbellek < dikkat.
+Bir transformer'nin farklı parçalarının nicelendirilmesini simüle edin ve hangi bileşenlerin en hassas olduğunu ölçün. Bu, duyarlılık hiyerarşisini gösterir: ağırlıklar < aktivasyonlar < KV önbellek < dikkat.
 
 ```python
 def simulate_transformer_layer(input_data, weights, kv_scale=1.0):
@@ -829,7 +829,7 @@ vLLM, yerel olarak AWQ ve GPTQ modellerini destekler. Matris çarpımı sırası
 
 ## Gönderin
 
-Bu ders, doğru nicemleme stratejisini seçmek için bir framework kararı olan `outputs/skill-quantization.md`'yi üretir. Model boyutunuz, hedef donanımınız ve kalite gereksinimleriniz dikkate alındığında size hangi formatı, yöntemi ve doğrulama adımlarını kullanacağınızı söyler. Bellek bütçesi hesaplamalarını, bileşen başına hassasiyet önerilerini ve vLLM, llama.cpp ve TensorRT-LLM için deployment tarifleri içerir.
+Bu ders, doğru nicemleme stratejisini seçmek için bir framework kararı olan `outputs/skill-quantization.md`'yi üretir. Model boyutunuz, hedef donanımınız ve kalite gereksinimleriniz dikkate alındığında size hangi formatı, yöntemi ve doğrulama adımlarını kullanacağınızı söyler. Bellek bütçesi hesaplamalarını, bileşen başına hassasiyet önerilerini ve vLLM, llama.cpp ve TensorRT-LLM için deployment tariflerini içerir.
 
 ## Egzersizler
 
@@ -839,7 +839,7 @@ Bu ders, doğru nicemleme stratejisini seçmek için bir framework kararı olan 
 
 3. Kuantizasyona duyarlı eğitim için düz tahmin aracını (STE) uygulayın. Bir regresyon görevi üzerinde eğitilmiş basit iki katmanlı bir ağın ileri geçişine sahte niceleme/dekuantizasyon işlemleri ekleyin. Normal şekilde eğitilmiş bir model (daha sonra PTQ'dan INT4'e) ile başlangıçtan itibaren QAT ile eğitilmiş bir model arasındaki nihai kaybı karşılaştırın.
 
-4. LLM.int8()'dan esinlenerek aykırı değerlerin farkında olan bir niceleyici oluşturun. Aktivasyon büyüklüğünün ortalamanın 6 katını aştığı kanalları tespit edin. Bu kanalları FP16'da tutun ve geri kalan her şeyi INT8'e nicemleyin. 5. Adımdaki transformer katmanında uçtan uca kaliteyi değişen aykırı eşiklerle (3x, 6x, 10x) ölçün.
+4. LLM.int8()'den ilham alan, aykırı değerlerin farkında olan bir niceleyici oluşturun. Aktivasyon büyüklüğünün ortalamanın 6 katını aştığı kanalları tespit edin. Bu kanalları FP16'da tutun ve geri kalan her şeyi INT8'e nicemleyin. Değişen aykırı eşiklerle (3x, 6x, 10x) 5. Adımdaki transformer katmanında uçtan uca kaliteyi ölçün.
 
 5. Bir niceleme kalitesi kontrol paneli uygulayın. Bir ağırlık matrisi verildiğinde, hesaplayın ve görüntüleyin: ağırlık dağılım histogramını, niceleme hatası dağılımını, kanal başına ölçek faktörlerini, en kötü nicelenmiş kanalları (en yüksek yeniden yapılandırma hatası) ve 100 rastgele girişte orijinal ve nicelenmiş çıktılar arasındaki kosinüs benzerliğini. Hangi kanalların daha yüksek hassasiyette tutulması gerektiğini belirleyin.
 
@@ -847,7 +847,7 @@ Bu ders, doğru nicemleme stratejisini seçmek için bir framework kararı olan 
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| FP16 | "Yarı hassasiyet" | 5 üs biti ve 10 mantis biti ile 16 bitlik kayan nokta, maksimum değer 65.504, standart inference formatı |
+| FP16 | "Yarı hassasiyet" | 5 üs biti ve 10 mantis biti ile 16 bit kayan nokta, maksimum değer 65.504, standart inference formatı |
 | BF16 | "Beyin şamandırası" | 8 üs bitli (FP32 ile aynı aralık) ve 7 mantis bitli 16 bit kayan nokta, Google tarafından eğitim amaçlı tasarlandı |
 | FP8 | "Sekiz bitlik kayan nokta" | İki varyant: E4M3 (inference, daha fazla hassasiyet) ve E5M2 (eğitim, daha fazla menzil), H100'de yerel |
 | INT8 | "Sekiz bitlik tamsayı" | -128'den 127'ye kadar eşit aralıklı 256 değer, kayan noktalardan eşleme için bir ölçek faktörüne ihtiyaç duyar |
@@ -855,10 +855,10 @@ Bu ders, doğru nicemleme stratejisini seçmek için bir framework kararı olan 
 | Kanal başına nicemleme | "Satır başına bir ölçek" | Tensörün tamamı için bir ölçek yerine her çıkış kanalı için ayrı bir ölçek faktörü kullanır, hatayı önemli ölçüde azaltır |
 | GPTQ | "Hessian yöntemi" | Çıkış hatasını en aza indirmek için her seferinde bir katman olmak üzere ikinci dereceden bilgileri kullanan eğitim sonrası nicemleme |
 | AWQ | "Etkinleştirmeden haberdar" | Belirgin ağırlıkları (büyük aktivasyonlarla çarpılmış olanları) korumak için nicelemeden önce ölçeklendirir |
-| GGUF | "llama.cpp biçimi" | CPU ve Apple Silicon için optimize edilmiş, karışık hassasiyetli katmanlara sahip bağımsız model dosyası inference |
+| GGUF | "llama.cpp biçimi" | CPU ve Apple Silicon için optimize edilmiş, karma hassas katmanlara sahip bağımsız model dosyası inference |
 | PTQ | "Eğitimden sonra niceleme" | Eğitimli bir modelin ağırlıklarını, yeniden eğitim gerektirmeden hızlı ancak aşırı sıkıştırmada sınırlı olarak daha düşük hassasiyete dönüştürün |
-| QAT | "Eğitim sırasında niceleme" | Modelin yuvarlamayı tolere etmeyi öğrenmesi için ileri geçişe sahte nicemleme ekleyin, böylece INT4/INT2'de daha iyi olur |
-| Kalibrasyon verileri | "128 örnek" | Ölçek faktörlerini ayarlamak için aktivasyon istatistiklerini hesaplamak amacıyla model boyunca küçük bir dataset çalıştırılır |
+| QAT | "Eğitim sırasında niceleme" | Modelin yuvarlamayı tolere etmeyi öğrenmesi için ileri geçişe sahte niceleme ekleyin, böylece INT4/INT2'de daha iyi olur |
+| Kalibrasyon verileri | "128 örnek" | Ölçek faktörlerini ayarlamak için etkinleştirme istatistiklerini hesaplamak üzere model boyunca küçük bir dataset çalıştırılır |
 | Ölçek faktörü | "Çarpan" | Kayan nokta aralığı ile tam sayı aralığı arasında dönüştürme yapar: `float_val = int_val * scale` |
 | Şaşkınlık deltası | "Ne kadar kötü" | Orijinal ve nicelenmiş model arasındaki şaşkınlık farkı, < 0,5 mükemmel, > 2,0 bir sorundur |
 
@@ -866,6 +866,6 @@ Bu ders, doğru nicemleme stratejisini seçmek için bir framework kararı olan 
 
 - [Frantar ve diğerleri, 2022 -- "GPTQ: Üretken Önceden Eğitimli Transformer'ler için Doğru Eğitim Sonrası Niceleme"](https://arxiv.org/abs/2210.17323) -- Hessian kılavuzlu ağırlık yuvarlamayı kullanan LLM'ler için INT4 nicelemesini pratik hale getiren makale
 - [Lin ve diğerleri, 2023 -- "AWQ: LLM Sıkıştırma ve Hızlandırma için Etkinleştirme Farkında Ağırlık Nicelemesi"](https://arxiv.org/abs/2306.00978) -- nicelemeden önce ölçeklendirme yaparak, GPTQ'yu eşleştirerek veya yenerek göze çarpan ağırlıkları korur
-- [Dettmers ve diğerleri, 2022 -- "LLM.int8(): Ölçekte Transformer'ler için 8-bit Matris Çarpması"](https://arxiv.org/abs/2208.07339) -- FP16'daki aykırı özellikleri koruyan, kalite kaybı olmadan INT8 inference'yi etkinleştiren karışık duyarlıklı INT8
-- [Xiao ve diğerleri, 2023 -- "SmoothQuant: Büyük Dil Modelleri için Doğru ve Verimli Eğitim Sonrası Niceleme"](https://arxiv.org/abs/2211.10438) -- W8A8 deployment için niceleme zorluğunu aktivasyonlardan ağırlıklara geçirme
+- [Dettmers ve diğerleri, 2022 -- "LLM.int8(): Transformer'ler için Ölçekte 8-bit Matris Çarpması"](https://arxiv.org/abs/2208.07339) -- FP16'da aykırı özellikleri koruyan ve kalite kaybı olmadan INT8 inference'yi etkinleştiren karma duyarlıklı INT8
+- [Xiao ve diğerleri, 2023 -- "SmoothQuant: Büyük Dil Modelleri için Doğru ve Verimli Eğitim Sonrası Niceleme"](https://arxiv.org/abs/2211.10438) -- W8A8 deployment için niceleme zorluğunun aktivasyonlardan ağırlıklara taşınması
 - [Micikevicius ve diğerleri, 2022 -- "Deep Learning için FP8 Formatları"](https://arxiv.org/abs/2209.05433) -- E4M3 ve E5M2 formatlarını tanımlayan NVIDIA/ARM/Intel makalesi artık H100'de yereldir

@@ -1,29 +1,29 @@
 # LLM Başvurularını Değerlendirme ve Test Etme
 
-> Testler olmadan asla bir web uygulamasını dağıtamazsınız. Geri alma planı olmadan asla bir veritabanı geçişini göndermezsiniz. Ancak şu anda çoğu ekip LLM başvurularını 10 çıktıyı okuyup "evet, iyi görünüyor" diyerek gönderiyor. Bu değerlendirme değil. Bu umuttur. Umut bir mühendislik uygulaması değildir. Her prompt değişikliği, her model değişimi, her sıcaklık ayarı, çıktı dağıtımınızı bir avuç örnek okuyarak tahmin edemeyeceğiniz şekilde değiştirir. Değerlendirme, başvurunuzla sessiz bozulma arasında duran tek şeydir.
+> Testler olmadan asla bir web uygulamasını dağıtamazsınız. Geri alma planı olmadan asla bir veritabanı geçişini göndermezsiniz. Ancak şu anda çoğu ekip LLM başvurularını 10 çıktıyı okuyup "evet, iyi görünüyor" diyerek gönderiyor. Bu değerlendirme değil. Bu umuttur. Umut bir mühendislik uygulaması değildir. Her prompt değişikliği, her model değişimi, her sıcaklık ayarı, çıktı dağıtımınızı bir avuç örnek okuyarak tahmin edemeyeceğiniz şekillerde değiştirir. Değerlendirme, başvurunuzla sessiz bozulma arasında duran tek şeydir.
 
 **Tür:** Yapım
 **Diller:** Python
-**Önkoşullar:** Aşama 11 Ders 01 (Prompt Mühendislik), Ders 09 (İşlev Çağrısı)
+**Önkoşullar:** Aşama 11 Ders 01 (Prompt Mühendislik), Ders 09 (İşlev Çağırma)
 **Süre:** ~45 dakika
-**İlgili:** Aşama 5 · 27 (LLM Değerlendirmesi — RAGAS, DeepEval, G-Eval), framework düzeyindeki kavramları (NLI tabanlı doğruluk, yargıç kalibrasyonu, RAG dörtlü) kapsar. Aşama 5 · 28 (Uzun Bağlam Değerlendirmesi), bağlam uzunluğu regresyonu için NIAH / RULER / LongBench / MRCR'yi kapsar. Bu ders, LLM mühendisliğine özgü olana odaklanır: CI/CD entegrasyonu, maliyet kapılı değerlendirme çalıştırmaları, regresyon kontrol panelleri.
+**İlgili:** Aşama 5 · 27 (LLM Değerlendirmesi — RAGAS, DeepEval, G-Eval), framework düzeyindeki kavramları (NLI tabanlı doğruluk, yargıç kalibrasyonu, RAG dörtlü) kapsar. Aşama 5 · 28 (Uzun Bağlam Değerlendirmesi), bağlam uzunluğu regresyonu için NIAH / RULER / LongBench / MRCR'yi kapsar. Bu ders, Yüksek Lisans mühendisliğine özgü olana odaklanır: CI/CD entegrasyonu, maliyet kapılı değerlendirme çalıştırmaları, regresyon kontrol panelleri.
 
 ## Öğrenme Hedefleri
 
-- LLM uygulamanıza özel giriş-çıkış çiftleri, değerlendirme listeleri ve uç vakalarla bir değerlendirme dataset oluşturun
-- Yargıç olarak LLM, regex eşleştirme ve deterministik iddia kontrollerini kullanarak otomatik puanlama uygulayın
-- prompt'lar, modeller veya parametreler değiştiğinde kalite bozulmasını tespit eden regresyon testini ayarlayın
+- Yüksek Lisans uygulamanıza özel giriş-çıkış çiftleri, değerlendirme listeleri ve uç vakalarla bir dataset değerlendirmesi oluşturun
+- Yargıç olarak Yüksek Lisans, regex eşleştirme ve deterministik iddia kontrollerini kullanarak otomatik puanlama uygulayın
+- prompt'ler, modeller veya parametreler değiştiğinde kalite bozulmasını tespit eden regresyon testini ayarlayın
 - Kullanım durumunuz için neyin önemli olduğunu (doğruluk, üslup, format uyumluluğu, gecikme) yakalayan değerlendirme ölçümleri tasarlayın
 
 ## Sorun
 
-Müşteri desteği için bir RAG sohbet robotu oluşturursunuz. Demolarınızda harika çalışıyor. Sen gönder. İki hafta sonra birisi halüsinasyonları azaltmak için prompt sistemi değiştirdi. Değişiklik işe yarıyor; halüsinasyon oranı düşüyor. Ancak model artık %100 emin olmadığı herhangi bir şeyi yanıtlamayı reddettiği için yanıtların tamlığı da %34 düşüyor.
+Müşteri desteği için bir RAG sohbet robotu oluşturursunuz. Demolarınızda harika çalışıyor. Sen gönder. İki hafta sonra birisi halüsinasyonları azaltmak için prompt sistemini değiştirir. Değişiklik işe yarıyor; halüsinasyon oranı düşüyor. Ancak model artık %100 emin olmadığı herhangi bir şeyi yanıtlamayı reddettiği için yanıtların tamlığı da %34 düşüyor.
 
 11 gün boyunca kimse fark etmedi. Self servis kanalından elde edilen gelir düştü. Destek biletleri arttı.
 
-Bu, titreşimlere göre değerlendirme yaptığınızda varsayılan sonuçtur. Birkaç örneğe bakarsınız, güzel görünürler, birleştirirsiniz. Ancak LLM çıktıları stokastiktir. 5 test senaryosu üzerinde çalışan bir prompt, 6'sında başarısız olabilir. benchmark'larınızda %92 puan alan bir model, kullanıcılarınızın gerçekten karşılaştığı uç durumlarda %71 puan alabilir.
+Bu, titreşimlere göre değerlendirme yaptığınızda varsayılan sonuçtur. Birkaç örneğe bakarsınız, güzel görünürler, birleştirirsiniz. Ancak LLM çıktıları stokastiktir. 5 test senaryosu üzerinde çalışan bir prompt, 6'sında başarısız olabilir. benchmark'lerinizde %92 puan alan bir model, kullanıcılarınızın gerçekten karşılaştığı uç durumlarda %71 puan alabilir.
 
-Çözüm "daha dikkatli ol" değil. Düzeltme, her değişiklikte çalışan, çıktıları değerlendirme listelerine göre puanlayan, güven aralıklarını hesaplayan ve kalite gerilediğinde deployment'yi engelleyen otomatik değerlendirmedir.
+Çözüm "daha dikkatli ol" değil. Düzeltme, her değişiklikte çalışan, çıktıları değerlendirme listelerine göre puanlayan, güven aralıklarını hesaplayan ve kalite gerilediğinde deployment'yi engelleyen otomatik bir değerlendirmedir.
 
 Değerlendirme hoş bir şey değil. Bu masa kazıkları. Değerlendirmeler olmadan nakliye, kör dağıtımdır.
 
@@ -59,7 +59,7 @@ graph TD
 
 **Otomatik ölçümler** algoritmalar kullanarak çıktı metnini referans yanıtlarla karşılaştırır. BLEU n-gram örtüşmesini ölçer (başlangıçta makine çevirisi için). ROUGE, referans n-gramlarının hatırlanmasını ölçer (başlangıçta özetleme amaçlı). BERTScore anlamsal benzerliği ölçmek için BERT embedding'leri kullanır. Bunlar hızlı ve ucuzdur; saniyeler içinde 10.000 çıktı elde edebilirsiniz. Ama nüansı kaçırıyorlar. İki yanıtta sıfır kelime çakışması olabilir ve her ikisi de doğru olabilir. Bir yanıtın yüksek ROUGE değeri olabilir ve bağlamda tamamen yanlış olabilir.
 
-**Yargıç olarak LLM** çıktıları bir değerlendirme tablosuna göre derecelendirmek için güçlü bir model (GPT-5, Claude Opus 4.7, Gemini 3 Pro) kullanır. Bu, dize metriklerinin gözden kaçırdığı anlamsal kaliteyi (ilgililik, doğruluk, yararlılık, güvenlik) yakalar. Maliyetlidir (Claude Opus 4.7 ile ~$8 per 1,000 judge calls with GPT-5-mini, ~$25) ancak iyi tasarlanmış değerlendirme listeleri hakkındaki insan yargısıyla %82-88 oranında ilişkilidir - kalibrasyon tarifi için bkz. Aşama 5 · 27.
+**Yargıç olarak Yüksek Lisans**, çıktıları bir değerlendirme tablosuna göre derecelendirmek için güçlü bir model (GPT-5, Claude Opus 4.7, Gemini 3 Pro) kullanır. Bu, dize metriklerinin gözden kaçırdığı anlamsal kaliteyi (ilgililik, doğruluk, yararlılık, güvenlik) yakalar. Maliyetlidir (Claude Opus 4.7 ile ~$8 per 1,000 judge calls with GPT-5-mini, ~$25) ancak iyi tasarlanmış değerlendirme listeleri hakkındaki insan yargısıyla %82-88 oranında ilişkilidir - kalibrasyon tarifi için Aşama 5 · 27'ye bakın.
 
 **İnsan değerlendirmesi** altın standarttır ancak en yavaş ve en pahalı olanıdır. Bunu her işlemde çalıştırmak için değil, otomatik değerlendirmelerinizi kalibre etmek için ayırın.
 
@@ -67,14 +67,14 @@ graph TD
 |--------|-------|-------------------|------------------------|----------|
 | MAVİ/ROUGE | <1 saniye | 0 $ | %40-60 | Çeviri, özetleme temelleri |
 | BERTS Skoru | ~30 sn | 0 $ | %55-70 | Anlamsal benzerlik taraması |
-| Hakim olarak LLM (GPT-5-mini) | ~3 dk | ~8$ | %82-86 | Varsayılan CI yargıcı; ucuz, hızlı, kalibre edilmiş |
-| Hakim olarak LLM (Claude Opus 4.7) | ~5 dk | ~25$ | %85-88 | Yüksek riskli puanlama, güvenlik, retler |
-| Hakim olarak LLM (Gemini 3 Flash) | ~2 dk | ~3$ | %80-84 | En yüksek verimliliğe sahip yargıç; 1 milyondan fazla değerlendirme geçişi için |
+| Hakim olarak Yüksek Lisans (GPT-5-mini) | ~3 dk | ~8$ | %82-86 | Varsayılan CI yargıcı; ucuz, hızlı, kalibre edilmiş |
+| Hakim olarak Yüksek Lisans (Claude Opus 4.7) | ~5 dk | ~25$ | %85-88 | Yüksek riskli puanlama, güvenlik, retler |
+| Hakim olarak Yüksek Lisans (Gemini 3 Flash) | ~2 dk | ~3$ | %80-84 | En yüksek verimliliğe sahip yargıç; 1 milyondan fazla değerlendirme geçişi için |
 | RAGAS (NLI sadakati + yargıç) | ~5 dk | ~12$ | %85 | RAG'a özgü ölçümler (bkz. Aşama 5 · 27) |
 | DeepEval (G-Eval + Pytest) | ~4 dk | hakime bağlıdır | %80-88 | CI-yerel, PR başına regresyon kapıları |
 | İnsan uzmanı | ~2 saat | ~500$ | %100 (tanım gereği) | Kalibrasyon, uç durumlar, politika |
 
-### Yargıç Olarak LLM: Beygir
+### Yargıç Olarak Yüksek Lisans: Beygir
 
 Bu, %90 oranında kullanacağınız değerlendirme yöntemidir. Model basittir: Güçlü bir modele girdi, çıktı, isteğe bağlı bir referans yanıtı ve bir değerlendirme tablosu verin. Gol atmasını isteyin.
 
@@ -86,7 +86,7 @@ Dört kriter çoğu kullanım durumunu kapsar:
 
 **Yardımseverlik** (1-5): Kullanıcı bunu yararlı bulur mu? 1 puan, yanıtın hiçbir değer sağlamadığı anlamına gelir. 5 puan, kullanıcının bilgiler doğrultusunda hemen harekete geçebileceği anlamına gelir.
 
-**Güvenlik** (1-5): Çıktıda zararlı içerik, önyargı veya politika ihlalleri bulunmuyor mu? 1 puan, zararlı veya tehlikeli içerik barındırdığı anlamına gelir. 5 puan tamamen güvenli ve uygun anlamına gelir.
+**Güvenlik** (1-5): Çıktı zararlı içerik, önyargı veya politika ihlallerinden arınmış mı? 1 puan, zararlı veya tehlikeli içerik barındırdığı anlamına gelir. 5 puan tamamen güvenli ve uygun anlamına gelir.
 
 ### Değerlendirme Listesi Tasarımı
 
@@ -129,23 +129,23 @@ flowchart LR
 
 **Prompt**: Test senaryolarınızı tanımlayın. Her vakanın bir girişi (kullanıcı sorgusu + bağlam) ve isteğe bağlı olarak bir referans yanıtı vardır.
 
-**Çalıştır**: Modele karşı prompt komutunu yürütün. Çıktıları toplayın. Varyansı ölçmek istiyorsanız her test senaryosunu 1-3 kez çalıştırın.
+**Çalıştır**: prompt'yi modele karşı yürütün. Çıktıları toplayın. Varyansı ölçmek istiyorsanız her test senaryosunu 1-3 kez çalıştırın.
 
-**Topla**: Girişleri, çıkışları ve meta verileri (model, sıcaklık, zaman damgası, prompt sürümü) depolayın.
+**Topla**: Girişleri, çıkışları ve meta verileri (model, sıcaklık, zaman damgası, prompt sürümü) saklayın.
 
-**Puan**: Otomatik ölçümler, hakim olarak LLM veya her ikisini de içeren değerlendirme yönteminizi uygulayın.
+**Puan**: Otomatik ölçümler, hakim olarak Yüksek Lisans veya her ikisini de içeren değerlendirme yönteminizi uygulayın.
 
 **Karşılaştır**: Puanları bir taban çizgisiyle karşılaştırın. Temel, bilinen en son iyi sürümünüzdür. Farkın güven aralıklarını hesaplayın.
 
 **Karar verin**: Yeni sürüm istatistiksel olarak önemli ölçüde daha iyiyse (ya da daha kötü değilse), gönderin. Gerilerse bloklayın.
 
-### Dataset'ları değerlendirin: Vakıf
+### Eval Datasets: Temel
 
-dataset değerlendirmeniz yalnızca içindeki durumlar kadar iyidir. Üç tür test senaryosu önemlidir:
+Değerlendirmeniz dataset yalnızca içindeki vakalar kadar iyidir. Üç tür test senaryosu önemlidir:
 
-**Altın test seti** (50-100 örnek olay): Temel kullanım örneklerinizi temsil eden seçilmiş giriş-çıkış çiftleri. Bunlar regresyon testleriniz. Her prompt değişikliğin bunları geçmesi gerekir.
+**Altın test seti** (50-100 örnek olay): Temel kullanım örneklerinizi temsil eden seçilmiş giriş-çıkış çiftleri. Bunlar regresyon testleriniz. Her prompt değişikliğinin bunları geçmesi gerekir.
 
-**Karşıt örnekler** (20-50 vaka): Sisteminizi bozmak için tasarlanmış girdiler. Prompt eklemeler, uç durumlar, belirsiz sorgular, alan adınız dışındaki konularla ilgili sorular, zararlı içerik istekleri.
+**Karşıt örnekler** (20-50 vaka): Sisteminizi bozmak için tasarlanmış girdiler. Prompt enjeksiyonları, uç durumlar, belirsiz sorgular, alan adınız dışındaki konularla ilgili sorular, zararlı içerik istekleri.
 
 **Dağıtım örnekleri** (100-200 vaka): Gerçek üretim trafiğinden rastgele örnekler. Bunlar, kullanıcıların gerçekte sorduklarını yansıttıkları için seçilmiş testlerin gözden kaçırdığı sorunları yakalar.
 
@@ -169,19 +169,19 @@ deployment kararları vermeniz gereken herhangi bir değerlendirme için en az 2
 
 ### Regresyon Testi
 
-Her prompt değişikliğin öncesi/sonrası değerlendirmesi gerekir. Bu tartışılamaz.
+Her prompt değişikliğinin öncesi/sonrası değerlendirmesi gerekir. Bu tartışılamaz.
 
 İş akışı:
 1. Değerlendirme paketinizi mevcut (temel) prompt üzerinde çalıştırın - puanları saklayın
 2. prompt değişikliğini yapın
-3. Aynı değerlendirme paketini yeni prompt üzerinde çalıştırın
+3. Aynı değerlendirme paketini yeni prompt'de çalıştırın
 4. Puanları istatistiksel bir testle (eşleştirilmiş t testi veya önyükleme) karşılaştırın
 5. Herhangi bir kriterde istatistiksel olarak anlamlı bir gerileme yoksa - gönderin
-6. Regresyon tespit edilirse hangi test senaryolarının bozulduğunu ve nedenini araştırın
+6. Regresyon tespit edilirse hangi test senaryolarının kötüleştiğini ve nedenini araştırın
 
 ### Değerlendirmelerin Maliyeti
 
-LLM'ı hakem olarak kullanırken değerlendirmeler paraya mal olur. Bunun için bütçe.
+Yüksek Lisans'ı hakem olarak kullanırken değerlendirmeler paraya mal olur. Bunun için bütçe.
 
 | Boyutu değerlendirin | GPT-5-mini yargıç | Claude Opus 4.7 yargıç | İkizler 3 Flash yargıcı | Zaman |
 |-----------|------------------|-----------------------|----------------------|------|
@@ -200,7 +200,7 @@ GPT-5-mini ile her PR'de çalışan 200 vakalık değerlendirme paketinin maliye
 
 **Tek metrik saplantısı.** Yardımseverliği göz ardı ederken yalnızca doğruluk için optimizasyon yapmak kısa, teknik açıdan doğru ama işe yaramaz yanıtlar üretir. Her zaman birden fazla kriteri puanlayın.
 
-**Başlangıç ​​noktaları olmadan değerlendirme.** 4,2/5 puan tek başına hiçbir şey ifade etmez. Düne göre daha mı iyi yoksa daha mı kötü? Rakip prompt'den daha mı iyi, yoksa daha mı kötü? Daima karşılaştırın.
+**Başlangıç noktaları olmadan değerlendirme.** 4,2/5 puan tek başına hiçbir şey ifade etmez. Düne göre daha mı iyi yoksa daha mı kötü? Rakip prompt'den daha mı iyi, yoksa daha mı kötü? Daima karşılaştırın.
 
 **Zayıf bir hakem kullanmak.** Bir hakem olarak GPT-3.5 gürültülü, tutarsız puanlar üretir. GPT-4o veya Claude Sonnet'i kullanın. Hakimin en az değerlendirilen model kadar yetenekli olması gerekir.
 
@@ -210,11 +210,11 @@ Her şeyi sıfırdan inşa etmek zorunda değilsiniz. Bu araçlar değerlendirme
 
 | Araç | Ne işe yarar | Fiyatlandırma |
 |------|-------------|---------|
-| [promptfoo](https://promptfoo.dev) | Açık kaynaklı değerlendirme framework, YAML yapılandırması, yargıç olarak LLM, CI entegrasyonu | Ücretsiz (OSS) |
-| [Braintrust](https://braintrust.dev) | Puanlama, denemeler, dataset'lar, günlük kaydı içeren değerlendirme platformu | Ücretsiz katman, ardından kullanıma dayalı |
+| [promptfoo](https://promptfoo.dev) | Açık kaynaklı değerlendirme framework, YAML yapılandırması, yargıç olarak Yüksek Lisans, CI entegrasyonu | Ücretsiz (OSS) |
+| [Braintrust](https://braintrust.dev) | Puanlama, deneyler, dataset'ler ve günlük kaydı içeren Eval platformu | Ücretsiz katman, ardından kullanıma dayalı |
 | [LangSmith](https://smith.langchain.com) | LangChain'in değerlendirme/observability platformu, izleme, dataset'ler, açıklama | Ücretsiz katman, 39 ABD doları/ay+ |
-| [DeepEval](https://deepeval.com) | Python değerlendirmesi framework, 14+ metrik, Pytest entegrasyonu | Ücretsiz (OSS) |
-| [Arize Phoenix](https://phoenix.arize.com) | Açık kaynak observability + değerlendirmeler, izleme, aralık düzeyinde puanlama | Ücretsiz (OSS) |
+| [DeepEval](https://deepeval.com) | Python değerlendirme framework, 14+ ölçüm, Pytest entegrasyonu | Ücretsiz (OSS) |
+| [Arize Phoenix](https://phoenix.arize.com) | Açık kaynaklı observability + değerlendirmeler, izleme, aralık düzeyinde puanlama | Ücretsiz (OSS) |
 
 Bu derste her katmanı anlamanız için onu sıfırdan oluşturuyoruz. Üretimde bu araçlardan birini kullanın.
 
@@ -222,7 +222,7 @@ Bu derste her katmanı anlamanız için onu sıfırdan oluşturuyoruz. Üretimde
 
 ### Adım 1: Değerlendirme Veri Yapılarını Tanımlayın
 
-Temel türleri oluşturun: test senaryoları, değerlendirme sonuçları ve puanlama değerlendirme listeleri.
+Temel türleri oluşturun: test senaryoları, değerlendirme sonuçları ve puanlama listeleri.
 
 ```python
 import json
@@ -274,7 +274,7 @@ class EvalResult:
         return sum(s.score for s in self.scores) / len(self.scores)
 ```
 
-### Adım 2: LLM Hakem Puanlayıcıyı Oluşturun
+### Adım 2: Yüksek Lisans Hakem Puanlayıcıyı Oluşturun
 
 Bu, değerlendirme listelerine göre çıktıları puanlayan bir yargıç modelini simüle eder. Üretimde simülasyonu gerçek GPT-4o veya Claude API çağrılarıyla değiştirin.
 
@@ -759,7 +759,7 @@ if __name__ == "__main__":
 # View: promptfoo view
 ```
 
-promptfoo, sıfırdan değerlendirme hattına giden en hızlı yoldur. YAML yapılandırması, yerleşik yargıç olarak LLM, web görüntüleyici, CI dostu çıktı. Kullanıma hazır 15'ten fazla sağlayıcıyı ve JavaScript veya Python'da özel puanlama işlevlerini destekler.
+promptfoo sıfırdan değerlendirme hattına giden en hızlı yoldur. YAML yapılandırması, yerleşik yargıç olarak Yüksek Lisans, web görüntüleyici, CI dostu çıktı. Kullanıma hazır 15'ten fazla sağlayıcıyı ve JavaScript veya Python'da özel puanlama işlevlerini destekler.
 
 ### DeepEval Entegrasyonu
 
@@ -781,7 +781,7 @@ promptfoo, sıfırdan değerlendirme hattına giden en hızlı yoldur. YAML yap�
 # evaluate([test_case], [relevancy, faithfulness])
 ```
 
-DeepEval, Pytest ile bütünleşir. Test paketinizin bir parçası olarak değerlendirmeleri yürütmek için `deepeval test run test_evals.py` komutunu çalıştırın. Halüsinasyon tespiti, önyargı ve toksisite dahil 14 yerleşik ölçüm içerir.
+DeepEval, Pytest ile bütünleşir. Değerlendirmeleri test paketinizin bir parçası olarak yürütmek için `deepeval test run test_evals.py` komutunu çalıştırın. Halüsinasyon tespiti, önyargı ve toksisite dahil 14 yerleşik ölçüm içerir.
 
 ### CI/CD Entegrasyon Modeli
 
@@ -810,50 +810,50 @@ DeepEval, Pytest ile bütünleşir. Test paketinizin bir parçası olarak değer
 #           path: eval_results/
 ```
 
-prompts veya LLM koduna dokunan her PR'de değerlendirmeleri tetikleyin. Herhangi bir kriter eşiğin ötesine gerilerse birleştirmeyi engelleyin. Sonuçları incelenmek üzere artifact olarak yükleyin.
+Tetikleyici, prompt'lere veya LLM koduna dokunan her PR'yi değerlendirir. Herhangi bir kriter eşiğin ötesine gerilerse birleştirmeyi engelleyin. Sonuçları incelenmek üzere artifact olarak yükleyin.
 
 ## Gönderin
 
 Bu ders, değerlendirme değerlendirme listelerini tasarlamak için yeniden kullanılabilir bir prompt şablonu olan `outputs/prompt-eval-designer.md`'yi üretir. LLM başvurunuzun bir tanımını verin ve o, bağlantılı puanlama değerlendirme listeleri ile özel değerlendirme kriterleri üretsin.
 
-Aynı zamanda kullanım senaryonuza, bütçenize ve kalite gereksinimlerinize göre doğru değerlendirme stratejisini seçmenize yönelik bir karar olan `outputs/skill-eval-patterns.md`'yı da üretir framework.
+Aynı zamanda kullanım durumunuza, bütçenize ve kalite gereksinimlerinize göre doğru değerlendirme stratejisini seçmenize yönelik bir framework kararı olan `outputs/skill-eval-patterns.md`'yi de üretir.
 
 ## Egzersizler
 
-1. **BERTScore'u ekleyin.** embedding kelimesi kosinüs benzerliğini kullanarak basitleştirilmiş bir BERTScore uygulayın. Rastgele 50 boyutlu vektörlerle eşlenen 100 ortak kelimeden oluşan bir sözlük oluşturun. Referans ve hipotez tokens arasındaki ikili kosinüs benzerlik matrisini hesaplayın. Hassasiyeti, hatırlamayı ve F1'i hesaplamak için açgözlü eşleştirmeyi kullanın (her hipotez token en benzer referansı token ile eşleşir).
+1. **BERTScore'u ekleyin.** embedding kosinüs benzerliğini kullanarak basitleştirilmiş bir BERTScore uygulayın. Rastgele 50 boyutlu vektörlerle eşlenen 100 ortak kelimeden oluşan bir sözlük oluşturun. Referans ve hipotez token'ler arasındaki ikili kosinüs benzerlik matrisini hesaplayın. Hassasiyeti, geri çağırmayı ve F1'i hesaplamak için açgözlü eşleştirmeyi kullanın (her hipotez token en benzer referansı token ile eşleşir).
 
-2. **İkili karşılaştırma oluşturun.** Tek tek puanlama yapmak yerine, iki model çıktısını yan yana karşılaştıracak şekilde hakemi değiştirin. Aynı girdi ve iki çıktı göz önüne alındığında, yargıç hangi çıktının daha iyi olduğunu ve nedenini belirtmelidir. Baseline-v1 ve baseline-v2 ile test paketinizde ikili karşılaştırma yapın ve kazanma oranını güven aralıklarıyla hesaplayın.
+2. **İkili karşılaştırma oluşturun.** Yargıcı, iki model çıktısını tek tek puanlamak yerine yan yana karşılaştıracak şekilde değiştirin. Aynı girdi ve iki çıktı göz önüne alındığında, yargıç hangi çıktının daha iyi olduğunu ve nedenini belirtmelidir. Baseline-v1 ve baseline-v2 ile test paketinizde ikili karşılaştırma yapın ve kazanma oranını güven aralıklarıyla hesaplayın.
 
-3. **Katmanlı analiz uygulayın.** Test senaryolarını kategoriye göre gruplandırın (gerçek, teknik, güvenlik, kodlama, özetleme) ve güven aralıklarıyla kategori başına puanları hesaplayın. prompt sürümleri arasında hangi kategorilerin iyileştiğini ve hangilerinin gerilediğini belirleyin. Bir sistem belirli bir kategoride gerilerken genel olarak iyileşebilir.
+3. **Katmanlı analiz uygulayın.** Test senaryolarını kategoriye göre gruplandırın (gerçek, teknik, güvenlik, kodlama, özetleme) ve güven aralıklarıyla kategori başına puanları hesaplayın. prompt sürümleri arasında hangi kategorilerin geliştiğini ve hangilerinin gerilediğini belirleyin. Bir sistem belirli bir kategoride gerilerken genel olarak iyileşebilir.
 
 4. **Değerlendiriciler arası güvenilirliği ekleyin.** LLM hakemini her test senaryosunda 3 kez çalıştırın (farklı hakem "değerlendiricilerini" simüle edin). Üç çalıştırma arasında Cohen'in kappa'sını veya Krippendorff'un alfasını hesaplayın. Anlaşma 0,7'nin altındaysa değerlendirme listeniz çok belirsizdir; yeniden yazın.
 
-5. **Bir maliyet takip aracı oluşturun.** Her jüri görüşmesinin token kullanımını ve maliyetini takip edin. Yargıcın her girdisi orijinal prompt, model çıktısını ve değerlendirme tablosunu (~500 tokens girdi, ~100 tokens çıktı) içerir. Test takımınızdaki toplam değerlendirme maliyetini hesaplayın ve haftada 10 değerlendirme çalışmasını varsayarak aylık maliyeti projelendirin.
+5. **Bir maliyet takip aracı oluşturun.** token kullanımını ve her jüri görüşmesinin maliyetini takip edin. Jürinin her girişi orijinal prompt'yi, model çıktısını ve değerlendirme tablosunu (~500 token girişi, ~100 token çıkışı) içerir. Test takımınızdaki toplam değerlendirme maliyetini hesaplayın ve haftada 10 değerlendirme çalışmasını varsayarak aylık maliyeti projelendirin.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| Değerlendirme | "Test" | Otomatik ölçümler, LLM jürileri veya insan incelemesi kullanarak LLM çıktılarını tanımlanmış kriterlere göre sistematik olarak puanlamak |
-| Hakim olarak LLM | "Yapay zeka derecelendirmesi" | Çıktıları bir değerlendirme tablosuna göre puanlamak için güçlü bir model (GPT-4o, Claude) kullanmak - insan muhakemesi ile %80-85 arasında korelasyon sağlar |
+| Değerlendirme | "Test" | Otomatik ölçümler, Yüksek Lisans jürileri veya insan incelemesi kullanarak Yüksek Lisans çıktılarını tanımlanmış kriterlere göre sistematik olarak puanlamak |
+| Hakim olarak Yüksek Lisans | "Yapay zeka derecelendirmesi" | Çıktıları bir değerlendirme tablosuna göre puanlamak için güçlü bir model (GPT-4o, Claude) kullanmak - insan muhakemesi ile %80-85 arasında korelasyon sağlar |
 | Bölüm | "Puanlama kılavuzu" | Her puanın tam olarak ne anlama geldiğini tanımlayarak hakem farklılıklarını azaltan, her puan düzeyi (1-5) için bağlantılı açıklamalar |
 | ROUGE-L | "Metin çakışması" | Referansın ne kadarının çıktıda göründüğünü ölçen En Uzun Ortak Alt Diziye dayalı metrik - hatırlama odaklı |
 | Güven aralığı | "Hata çubukları" | Ölçülen puanınızın etrafında, ne kadar belirsizliğin kaldığını söyleyen bir aralık - daha az test vakasıyla daha geniş |
 | Regresyon testi | "Öncesi/sonrası" | deployment öncesinde kalite bozulmasını tespit etmek için aynı değerlendirme paketini eski ve yeni prompt sürümlerinde çalıştırmak |
 | Altın test seti | "Çekirdek değerlendirmeleri" | En önemli kullanım durumlarınızı temsil eden seçilmiş giriş-çıkış çiftleri - her değişiklik bu |
-| İkili karşılaştırma | "A'ya karşı B" | Hakeme iki çıktıyı gösterip hangisinin daha iyi olduğunu sormak terazi kalibrasyon sorunlarını ortadan kaldırır |
+| İkili karşılaştırma | "A vs B" | Hakeme iki çıktıyı gösterip hangisinin daha iyi olduğunu sormak terazi kalibrasyon sorunlarını ortadan kaldırır |
 | Önyükleme | "Yeniden Örnekleme" | Puanlarınızdan tekrar tekrar örnekleme yaparak güven aralıklarını tahmin etme - her dağıtımla çalışır |
 | Wilson aralığı | "Oran CI" | Küçük örneklem boyutlarında veya aşırı oranlarda bile doğru şekilde çalışan başarılı/başarısız oranları için bir güven aralığı |
 
 ## Daha Fazla Okuma
 
-- [Zheng ve diğerleri, 2023 -- "MT-Bench ve Chatbot Arena ile LLM'ı Hakim Olarak Değerlendirmek"](https://arxiv.org/abs/2306.05685) -- diğer LLM'lerı yargılamak için LLM'lerı kullanmaya ilişkin temel makale, MT-Bench'i ve ikili karşılaştırma protokolünü tanıtıyor
-- [promptfoo Documentation](https://promptfoo.dev/docs/intro) -- YAML yapılandırması, 15'ten fazla sağlayıcı, yargıç olarak LLM ve CI entegrasyonu ile en pratik açık kaynak değerlendirmesi framework
-- [DeepEval Dokümantasyonu](https://docs.confident-ai.com) -- 14'ten fazla metrik, Pytest entegrasyonu ve halüsinasyon tespiti ile Python'da yerel değerlendirme framework
-- [Braintrust Değerlendirme Kılavuzu](https://www.braintrust.dev/docs) -- deneme izleme, puanlama işlevleri ve dataset yönetimine sahip üretim değerlendirme platformu
-- [Ribeiro ve diğerleri, 2020 -- "Doğruluğun Ötesinde: NLP Modellerinin Kontrol Listesiyle Davranışsal Testi"](https://arxiv.org/abs/2005.04118) -- LLM değerlendirmesine uygulanabilir sistematik davranışsal test metodolojisi (minimum işlevsellik, değişmezlik, yönlü beklentiler)
+- [Zheng ve diğerleri, 2023 -- "MT-Bench ve Chatbot Arena ile Yüksek Lisans'ı Hakim Olarak Değerlendirmek"](https://arxiv.org/abs/2306.05685) -- diğer Yüksek Lisans'ları yargılamak için Yüksek Lisans'ları kullanmaya ilişkin temel makale, MT-Bench'i ve ikili karşılaştırma protokolünü tanıtıyor
+- [promptfoo Belgeleri](https://promptfoo.dev/docs/intro) -- YAML yapılandırması, 15'ten fazla sağlayıcı, yargıç olarak LLM ve CI entegrasyonu ile en pratik açık kaynaklı değerlendirme framework
+- [DeepEval Belgelendirmesi](https://docs.confident-ai.com) -- 14'ten fazla metrik, Pytest entegrasyonu ve halüsinasyon tespiti ile Python'da yerel değerlendirme framework
+- [Braintrust Değerlendirme Kılavuzu](https://www.braintrust.dev/docs) -- deney izleme, puanlama işlevleri ve dataset yönetimine sahip üretim değerlendirme platformu
+- [Ribeiro ve diğerleri, 2020 -- "Doğruluğun Ötesinde: NLP Modellerinin Kontrol Listesiyle Davranışsal Testi"](https://arxiv.org/abs/2005.04118) -- Yüksek Lisans değerlendirmesine uygulanabilir sistematik davranışsal test metodolojisi (minimum işlevsellik, değişmezlik, yönlü beklentiler)
 - [LMSYS Chatbot Arena](https://chat.lmsys.org) -- kullanıcıların model çıktıları üzerinde oy kullandığı canlı insan değerlendirme platformu, LLM'ler için en büyük ikili karşılaştırma dataset
-- [Es ve diğerleri, "RAGAS: Alma Artırılmış Üretimin Otomatik Değerlendirmesi" (EACL 2024 demo)](https://arxiv.org/abs/2309.15217) -- RAG için referanssız ölçümler (doğruluk, yanıt alaka düzeyi, bağlam hassasiyeti/hatırlama); Etiketleyiciler olmadan üretime ölçeklenen değerlendirme modeli.
-- [Liu ve diğerleri, "G-Eval: Better Human Alignment ile GPT-4'ü kullanan NLG Değerlendirmesi" (EMNLP 2023)](https://arxiv.org/abs/2303.16634) -- düşünce zinciri + yargıç protokolü olarak form doldurma; Her yargıç-kurucunun ihtiyaç duyduğu kalibrasyon ve önyargı sonuçları.
+- [Es ve diğerleri, "RAGAS: Alma Artırılmış Üretimin Otomatik Değerlendirmesi" (EACL 2024 demosu)](https://arxiv.org/abs/2309.15217) -- RAG için referanssız ölçümler (doğruluk, yanıt alaka düzeyi, bağlam hassasiyeti/hatırlama); Etiketleyiciler olmadan üretime ölçeklenen değerlendirme modeli.
+- [Liu ve diğerleri, "G-Eval: Better Human Alignment ile GPT-4 kullanarak NLG Değerlendirmesi" (EMNLP 2023)](https://arxiv.org/abs/2303.16634) -- düşünce zinciri + yargıç protokolü olarak form doldurma; Her yargıç-kurucunun ihtiyaç duyduğu kalibrasyon ve önyargı sonuçları.
 - [Hugging Face LLM Değerlendirme Kılavuzu](https://huggingface.co/spaces/OpenEvals/evaluation-guidebook) -- Open LLM Leaderboard'u sürdüren ekipten veri kontaminasyonu, metrik seçimi ve tekrarlanabilirlik konusunda pratik tavsiyeler.
-- [EleutherAI lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) -- otomatik benchmark'ler (MMLU, HellaSwag, TruthfulQA, BIG-Bench) için standart framework; Open LLM Liderlik Tablosunun arkasındaki motor.
+- [EleutherAI lm-değerlendirme-koşumu](https://github.com/EleutherAI/lm-evaluation-harness) -- otomatik benchmark'ler (MMLU, HellaSwag, TruthfulQA, BIG-Bench) için standart framework; Open LLM Liderlik Tablosunun arkasındaki motor.

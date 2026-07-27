@@ -17,7 +17,7 @@
 
 ## Giriş şekli
 
-Toplayıcı, `EvalRun` kaydının bir listesini tüketir:
+Toplayıcı, `EvalRun` kayıtlarının bir listesini kullanır:
 
 ```python
 @dataclass
@@ -29,7 +29,7 @@ class EvalRun:
     category: str
 ```
 
-75. dersteki koşucu, `(model, task)` çifti başına bir kayıt yayınlar. Toplayıcı, puanın nasıl üretildiğiyle ilgilenmez. Normalleşmenin zaten gerçekleşmiş olmasını bekliyor: her puan `[0, 1]` cinsindendir.
+75. dersteki koşucu `(model, task)` çifti başına bir kayıt yayınlar. Toplayıcı, puanın nasıl üretildiğiyle ilgilenmez. Normalleşmenin zaten gerçekleşmiş olmasını bekliyor: her puan `[0, 1]`'de.
 
 ## Çıktı
 
@@ -51,7 +51,7 @@ Skor tablosu satırı şunları içerir: `model_id`, `mean_score`, `mean_ci_lo`,
 
 ## Normalleştirme
 
-Eğer bir görev `[0, 1]` ve diğeri de `[0, 100]` puan alırsa, ikincisi sessizce ortalamaya hakim olur. Toplayıcı, her giriş puanının `[0, 1]` 'de bulunduğunu doğrular ve aksi takdirde çalışmayı reddeder. Düzeltme yukarı yönde çalışıyor: ölçüm zaten bir kesir döndürmelidir. 71'den 73'e kadar olan dersler bu sözleşmeyi uygular.
+Bir görev `[0, 1]`'de ve diğeri `[0, 100]`'de puan alırsa, ikincisi sessizce ortalamaya hakim olur. Toplayıcı, her giriş puanının `[0, 1]`'de bulunduğunu doğrular ve aksi takdirde çalışmayı reddeder. Düzeltme yukarı yönde çalışıyor: ölçüm zaten bir kesir döndürmelidir. 71'den 73'e kadar olan dersler bu sözleşmeyi uygular.
 
 ## Ortalama ve kazanma oranı
 
@@ -79,7 +79,7 @@ Emniyet kemeri her ikisini de rapor ediyor. 75. dersteki koşucu ortalama olarak
 
 ## Önyükleme güven aralıkları
 
-Model başına araçlar, görevler üzerinden önyükleme yeniden örneklemesi tarafından tahmin edilen bir güven aralığıyla birlikte gelir. Görev kimliklerini değiştirmeyle yeniden örnekliyoruz, yeniden örneklenen küme üzerinden ortalamayı hesaplıyoruz, `B` kez tekrarlıyoruz ve `alpha` seviyesindeki yüzdelik aralığını alıyoruz.
+Model başına araçlar, görevler üzerinden önyükleme yeniden örneklemesi tarafından tahmin edilen bir güven aralığıyla birlikte gelir. Görev kimliklerini değiştirmeyle yeniden örnekliyoruz, yeniden örneklenen küme üzerinden ortalamayı hesaplıyoruz, `B` kez tekrarlıyoruz ve `alpha` düzeyindeki yüzdelik aralığı alıyoruz.
 
 ```mermaid
 flowchart TD
@@ -95,7 +95,7 @@ flowchart TD
 
 İkili karşılaştırmalar için görev başına farkı `score_A - score_B` önyükleriz, yüzdelik aralığını alırız ve rapor ederiz. Kullanıcı aralığın sıfırı hariç tutup tutmadığını okur. Eğer öyleyse, fark alfa düzeyinde önemlidir. Aksi takdirde sıralama tablosu modelleri berabere kalmış olarak değerlendirir.
 
-Düşük seviyeli yardımcılar (`bootstrap_mean_ci`, `bootstrap_pairwise_diff`) varsayılan olarak `B=1000`'dır; genel toplayıcılar (`aggregate`, `pairwise_diffs`) varsayılan olarak `b=500` olarak ayarlanır, böylece demo ve testler hızlı kalır. Varsayılan alfa 0,05'tir. Ders, önyüklemeyi tamamen uyuşuk tutuyor, hiçbir şekilde scipy değil.
+Düşük seviyeli yardımcılar (`bootstrap_mean_ci`, `bootstrap_pairwise_diff`) varsayılan olarak `B=1000`'dir; genel toplayıcılar (`aggregate`, `pairwise_diffs`) varsayılan olarak `b=500`'yi kullanır, böylece demo ve testler hızlı kalır. Varsayılan alfa 0,05'tir. Ders, önyüklemeyi tamamen uyuşuk tutuyor, scipy yok.
 
 ## Kategoriler
 
@@ -117,14 +117,14 @@ Tablo ortalama puana göre sıralanmıştır. CI iki ondalık basamağa dönüş
 
 ## Bu ders ne yapmaz
 
-Modelleri çalıştırmaz. Metrik katmanı çağırmaz. Uyarlanabilir ECE veya diğer kalibrasyon çeşitlerini uygulamaz; bunlar 73. derstir. Görev ağırlıklandırmayı uygulamaz. Burada her görev aynı sayılır. Üretim skor tablolarının ağırlık görevleri; bu kancayı `weight` alanı boyunca açık bırakıyoruz ancak toplayıcıda onu yok sayıyoruz. İhtiyacınız olursa bir takip dersinde ağırlık ekleyin.
+Modelleri çalıştırmaz. Metrik katmanı çağırmaz. Uyarlanabilir ECE veya diğer kalibrasyon çeşitlerini uygulamaz; bunlar 73. derstir. Görev ağırlıklandırmayı uygulamaz. Burada her görev aynı sayılır. Üretim skor tablolarının ağırlık görevleri; bu kancayı `weight` alanında açık bırakıyoruz ancak toplayıcıda onu yok sayıyoruz. İhtiyacınız olursa bir takip dersinde ağırlık ekleyin.
 
 ## Kod nasıl okunur
 
-`main.py` , `EvalRun`, `LeaderboardRow`, `aggregate`, `bootstrap_mean_ci`, `bootstrap_pairwise_diff` ve `render_markdown`'yi tanımlar. Demo, üç model ve on iki görevden oluşan sentetik bir paket oluşturur, birleştirir ve lider tablosu ile ikili fark tablosunu yazdırır. `code/tests/test_leaderboard.py` 'deki testler önyüklemeyi, işaretleme oluşturmayı, kazanma oranı uç durumlarını ve boş giriş davranışını sabitler.
+`main.py`, `EvalRun`, `LeaderboardRow`, `aggregate`, `bootstrap_mean_ci`, `bootstrap_pairwise_diff` ve `render_markdown`'yi tanımlar. Demo, üç model ve on iki görevden oluşan sentetik bir paket oluşturur, birleştirir ve lider tablosu ile ikili fark tablosunu yazdırır. `code/tests/test_leaderboard.py`'deki testler önyüklemeyi, fiyat düşürme oluşturmayı, kazanma oranı uç durumlarını ve boş giriş davranışını belirler.
 
-`main.py` 'u yukarıdan aşağıya doğru okuyun. Veri şekli (EvalRun, LeaderboardRow) önce gelir, toplayıcı daha sonra, önyükleme üçüncü, oluşturma ise son sırada gelir. Her fonksiyonun odaklanmış bir sözleşmesi vardır.
+`main.py`'yi yukarıdan aşağıya okuyun. Veri şekli (EvalRun, LeaderboardRow) önce gelir, toplayıcı daha sonra, önyükleme üçüncü, oluşturma ise son sırada gelir. Her fonksiyonun odaklanmış bir sözleşmesi vardır.
 
 ## Daha ileri gidiyoruz
 
-Doğal bir sonraki adım, eşleştirilmemiş önyükleme yerine eşleştirilmiş görev önemidir. A ve B modelinin her ikisi de aynı yüz görevi yürütüyorsa uygun test, uyguladığımız görev bazında farklılıklara ilişkin eşleştirilmiş önyüklemedir. Bunun ötesinde, görev ailelerine saygı duyan hiyerarşik bir önyükleme istiyorsunuz (matematik problemleri birbirinden bağımsız değildir; aritmetik hata modeli bunlardan on tanesini etkiler). Bu bir takiptir. Bu dersin amacı, değerlendirmenin savunabileceğiniz bir sayıyı rapor etmesi için zemini doğru bir şekilde oluşturmaktır.
+Doğal bir sonraki adım, eşleştirilmemiş önyükleme yerine eşleştirilmiş görev önemidir. A ve B modelinin her ikisi de aynı yüz görevi yürütüyorsa, uygun test, uyguladığımız, göreve göre farklılıklara ilişkin eşleştirilmiş önyüklemedir. Bunun ötesinde, görev ailelerine saygı duyan hiyerarşik bir önyükleme istiyorsunuz (matematik problemleri birbirinden bağımsız değildir; aritmetik hata modeli onlardan on tanesini etkiler). Bu bir takiptir. Bu dersin amacı, değerlendirmenin savunabileceğiniz bir sayıyı rapor etmesi için zemini doğru bir şekilde oluşturmaktır.

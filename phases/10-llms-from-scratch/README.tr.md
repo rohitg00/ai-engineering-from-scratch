@@ -1,5 +1,5 @@
-# Aşama 10: Sıfırdan LLM'ler
+# Aşama 10: Sıfırdan Yüksek Lisans
 
-> Large Language Model'leri oluşturun, eğitin ve anlayın.
+> Büyük dil modelleri oluşturun, eğitin ve anlayın.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

@@ -1,6 +1,6 @@
 # Üretim Hizmet Yığını — KV Boşaltma ve Önbelleğe Duyarlı Yönlendirme
 
-> Bir üretim hizmet yığını yönlendiriciyi, motorları ve observability'yi tek bir Kubernetes deployment'e bağlar ve KV önbelleğini GPU'dan ayrılabilecek bir kaynak olarak görür. KV boşaltma, KV önbelleğini GPU belleğinden çıkarır ve onu sorgular ve motorlar (CPU DRAM, ardından disk/Ceph) genelinde yeniden kullanır. vLLM'nin üretim yığını deployment referansıdır; LMCache boşaltma katmanıdır. vLLM 0.11.0 KV Boşaltma Bağlayıcısı (Ocak 2026), bunu Bağlayıcı API'si (v0.9.0+) aracılığıyla eşzamansız ve takılabilir hale getirir. Boşaltma yolu genellikle istek yolundan gizlenir, ancak önbellek eksiklikleri ve promosyonlar uçtan uca gecikmeye neden olabilir. LMCache, paylaşılan önekler olmasa bile değerlidir; GPU'nun KV yuvaları tükendiğinde, önceden doldurulan istekler yeniden hesaplamak yerine CPU'dan geri yüklenebilir. 4 a3-highgpu-4g genelinde 16x H100 (80 GB HBM) üzerinde yayınlanan benchmark'lar: KV önbelleği HBM'yi aştığında, hem yerel CPU aktarımı hem de LMCache verimi önemli ölçüde artırır; düşük KV ayak izinde, tüm yapılandırmalar küçük ek yük ile temel çizgiyle eşleşir.
+> Yığın hizmet veren bir üretim, yönlendiriciyi, motorları ve observability'yi tek bir Kubernetes deployment'ye bağlar ve KV önbelleğini GPU'dan ayrılabilecek bir kaynak olarak görür. KV boşaltma, KV önbelleğini GPU belleğinden çıkarır ve onu sorgular ve motorlar (CPU DRAM, ardından disk/Ceph) genelinde yeniden kullanır. vLLM'nin üretim yığını deployment referansıdır; LMCache boşaltma katmanıdır. vLLM 0.11.0 KV Boşaltma Bağlayıcısı (Ocak 2026), bunu Bağlayıcı API'si (v0.9.0+) aracılığıyla eşzamansız ve takılabilir hale getirir. Boşaltma yolu genellikle istek yolundan gizlenir, ancak önbellek eksiklikleri ve promosyonlar uçtan uca gecikmeye neden olabilir. LMCache, paylaşılan önekler olmasa bile değerlidir; GPU'nun KV yuvaları tükendiğinde, önceden doldurulan istekler yeniden hesaplamak yerine CPU'dan geri yüklenebilir. 4 a3-highgpu-4g genelinde 16x H100 (80 GB HBM) üzerinde benchmark'ler yayınlandı: KV önbelleği HBM'yi aştığında, hem yerel CPU aktarımı hem de LMCache verimi önemli ölçüde artırır; düşük KV ayak izinde, tüm yapılandırmalar küçük ek yük ile temel çizgiyle eşleşir.
 
 **Tür:** Öğren
 **Diller:** Python (stdlib, oyuncak KV dökülme simülatörü)
@@ -10,28 +10,28 @@
 ## Öğrenme Hedefleri
 
 - vLLM üretim yığını katmanlarının diyagramını çizin: yönlendirici, motorlar, KV aktarımı, observability.
-- KV Boşaltma Bağlayıcı API'sini (v0.9.0+) ve 0.11.0 eşzamansız yolunun boşaltma gecikmesini nasıl gizlediğini açıklayın.
+- KV Boşaltma Bağlayıcısı API'sini (v0.9.0+) ve 0.11.0 eşzamansız yolunun boşaltma gecikmesini nasıl gizlediğini açıklayın.
 - LMCache CPU-DRAM'in ne zaman yardımcı olduğunu (KV > HBM) ve ne zaman ek yük getirdiğini (KV HBM'ye sığacak kadar küçük) ölçün.
-- deployment kısıtlamaları göz önüne alındığında yerel vLLM CPU aktarımı ve LMCache konektörü arasında seçim yapın.
+- deployment kısıtlamalarına göre yerel vLLM CPU yükü ve LMCache konektörü arasında seçim yapın.
 
 ## Sorun
 
-vLLM sunumunuz, eş zamanlılık arttığında GPU'ları önleme etkinlikleriyle birlikte %100 HBM'de gösterir. İstekler tahliye edilir, yeniden sıraya alınır ve siz aynı 2K-token prompt'u dakikada dört kez yeniden doldurursunuz. GPU hesaplaması gereksiz ön doldurmalara harcanır; iyi çıktı, ham çıktının oldukça altındadır.
+vLLM sunumunuz, eş zamanlılık arttığında GPU'ları önleme etkinlikleriyle birlikte %100 HBM'de gösterir. İstekler tahliye edilir, yeniden sıraya alınır ve siz aynı 2K-token prompt'yi dakikada dört kez yeniden doldurursunuz. GPU hesaplaması gereksiz ön doldurmalara harcanır; iyi çıktı, ham çıktının oldukça altındadır.
 
 Daha fazla GPU eklemenin maliyeti doğrusaldır. Daha fazla HBM eklemek mümkün değildir. Ancak CPU DRAM'i ucuzdur; bir sokette HBM'den daha kötü gecikme derecelerinde 512 GB+ bulunur ancak "geçici olarak sıcak" KV önbellek için iyidir.
 
-LMCache, KV önbelleğini CPU DRAM'e çıkararak, önceden ayrılan isteklerin hızlı bir şekilde kurtarılmasını sağlar ve motorlar arasında tekrarlanan önekler, her motorun yeniden doldurulmasına gerek kalmadan önbelleği paylaşır.
+LMCache, KV önbelleğini CPU DRAM'e ayıklayarak, öncelikli isteklerin hızlı bir şekilde kurtarılmasını sağlar ve motorlar arasında tekrarlanan önekler, her motorun yeniden doldurulmasına gerek kalmadan önbelleği paylaşır.
 
 ## Konsept
 
 ### vLLM üretim yığını
 
-`github.com/vllm-project/production-stack` , Kubernetes deployment referansıdır:
+`github.com/vllm-project/production-stack`, Kubernetes deployment referansıdır:
 
 - **Yönlendirici** — önbelleğe duyarlı (Aşama 17 · 11). KV olaylarını tüketir.
 - **Motorlar** — vLLM çalışanları. GPU başına veya TP/PP grubu başına bir tane.
 - **KV önbellek boşaltma** — LMCache deployment veya yerel bağlayıcı.
-- **Observability** — Prometheus kazıması, Grafana kontrol panelleri, OTel izleri.
+- **Observability** — Prometheus kazıması, Grafana gösterge tabloları, OTel izleri.
 - **Kontrol düzlemi** — hizmet keşfi, yapılandırma, güncellemeler devam ediyor.
 
 Dümen haritası + operatör olarak gönderilir.
@@ -48,19 +48,19 @@ vLLM 0.11.0 (Ocak 2026) eşzamansız bir yük boşaltma yolu ekler; boşaltma ar
 
 **LMCache konektörü**: küme ölçeğinde. Blokları paylaşılan bir LMCache sunucusunda (CPU DRAM + Ceph/S3 katmanı) saklar. Bloklara herhangi bir motor erişebilir. 16x H100 benchmark yayınlandı.
 
-Tek bir motor HBM basıncına sahip olduğunda yerel seçimi yapın. Birden fazla motor önekleri paylaştığında LMCache'i seçin (ortak sistem prompt'larle RAG, paylaşılan şablonlarla çok kiracılı).
+Tek bir motor HBM basıncına sahip olduğunda yerel seçimi yapın. Birden fazla motor önekleri paylaştığında LMCache'i seçin (ortak sistem prompt'lerle RAG, paylaşılan şablonlarla çok kiracılı).
 
 ### Benchmark davranışı
 
 16x H100 (80 GB HBM), 4 a3-highgpu-4g testine yayıldı:
 
-- Düşük KV ayak izi (kısa prompt'lar, düşük eşzamanlılık): tüm yapılandırmalar taban çizgisiyle eşleşir, LMCache ~%3-5 ek yük ekler.
+- Düşük KV ayak izi (kısa prompt'ler, düşük eşzamanlılık): tüm yapılandırmalar taban çizgisiyle eşleşir, LMCache ~%3-5 ek yük ekler.
 - Orta düzeyde kaplama alanı: LMCache, motorlarda öneklerin yeniden kullanılmasına yardımcı olmaya başlar.
 - KV, HBM'yi aşıyor: yerel CPU aktarımı ve LMCache, verimi önemli ölçüde artırıyor; LMCache, motorlar arası paylaşım nedeniyle daha büyük kazanç sağlar.
 
 ### LMCache belirleyici olduğunda
 
-- Sistem prompt'larin kiracılar arasında paylaşıldığı çok kiracılı hizmet.
+- Sistem prompt'lerin kiracılar arasında paylaşıldığı çok kiracılı hizmet.
 - Belge parçalarının sorgular arasında tekrarlandığı RAG.
 - Temel model KV'nin yeniden kullanımının gereksiz işleri ortadan kaldırdığı aynı temel üzerinde ince ayarlı değişkenler (LoRA).
 - Ön alım ağırlıklı iş yükleri: CPU'dan geri yükleme, yeniden doldurmadan daha ucuzdur.
@@ -69,7 +69,7 @@ Tek bir motor HBM basıncına sahip olduğunda yerel seçimi yapın. Birden fazl
 
 - Küçük HBM basıncı — herhangi bir fayda sağlamadan genel giderleri ödersiniz.
 - Kısa bağlamlar (<1K tokens) — aktarım süresi > yeniden doldurma.
-- Tek kiracılı tek-prompt iş yükü — yakalamanın yeniden kullanılması gerekmez.
+- Tek kiracılı tek prompt iş yükü — yakalamanın yeniden kullanılması gerekmez.
 
 ### Ayrıştırılmış sunumla entegrasyon
 
@@ -86,18 +86,18 @@ Aşama 17 · 17 ayrıştırılmış sunum + LMCache bileşikleri: Kullanılmadı
 zero-sharding
 ```
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` , LMCache ile ve LMCache olmadan, önleme açısından yoğun bir iş yükünü simüle eder. Raporların önceden doldurulması önlenir, üretim artışı sağlanır ve başa baş HBM kullanımı sağlanır.
+`code/main.py`, LMCache ile ve LMCache olmadan, önleme ağırlıklı iş yükünü simüle eder. Raporların önceden doldurulması önlenir, üretim artışı sağlanır ve başa baş HBM kullanımı sağlanır.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-Bu ders `outputs/skill-vllm-stack-decider.md` üretir. İş yükü şekli ve vLLM deployment göz önüne alındığında, yerel mi, LMCache mi, yoksa hiçbiri mi olduğuna karar verir.
+Bu ders `outputs/skill-vllm-stack-decider.md`'yi üretir. İş yükü şekli ve vLLM deployment göz önüne alındığında, yerel mi, LMCache mi, yoksa hiçbiri mi olduğuna karar verir.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. LMCache hangi HBM kullanımında ödeme yapmaya başlar?
-2. Bir kiracı, 200 sorgu/saatte 6K-token sistemini prompt paylaşır. Kiracı başına beklenen LMCache tasarrufunu hesaplayın.
+1. `code/main.py`'yi çalıştırın. LMCache hangi HBM kullanımında ödeme yapmaya başlar?
+2. Bir kiracı, 200 sorgu/saatte 6K-token sistemi prompt'yi paylaşır. Kiracı başına beklenen LMCache tasarrufunu hesaplayın.
 3. LMCache sunucusu tek bir hata noktasıdır. HA stratejisini tasarlayın (kopyalar, yerel stratejiye geri dönüş).
 4. LMCache, dönen diskteki Ceph'e depolanır. 70B FP8'de (500 MB) 4K-token KV için, yeniden doldurmaya karşı okuma süresi nedir?
 5. vLLM 0.11.0 eşzamansız yolunun "serbest" olup olmadığını tartışın; ek yük nerede saklanıyor?

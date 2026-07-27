@@ -1,5 +1,5 @@
-# Aşama 16: Multi-Agent Sistemler ve Sürüler
+# Aşama 16: Çoklu Agent ve Sürüler
 
-> Koordinasyon, belirme ve kolektif zekâ.
+> Koordinasyon, ortaya çıkma ve kolektif zeka.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

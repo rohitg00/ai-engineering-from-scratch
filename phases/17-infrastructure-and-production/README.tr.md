@@ -1,5 +1,5 @@
 # Aşama 17: Altyapı ve Üretim
 
-> AI sistemlerini gerçek dünyaya sunun. Ölçeklendirin, izleyin ve optimize edin.
+> Yapay zekayı gerçek dünyaya gönderin. Ölçeklendirin, izleyin, optimize edin.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

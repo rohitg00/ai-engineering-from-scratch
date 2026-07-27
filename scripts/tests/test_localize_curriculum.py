@@ -48,6 +48,14 @@ class LocalizationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "protected placeholders"):
             apply_bundle(bundle, self.root)
 
+    def test_apply_allows_natural_placeholder_reordering(self):
+        bundle = make_bundle([self.item], self.root)
+        unit = bundle["files"][0]["units"][1]
+        unit["translation"] = "Şuna bakın: {{P1}}; ardından {{P0}}."
+        apply_bundle(bundle, self.root)
+        result = self.item.target.read_text()
+        self.assertIn("$x+y$; ardından https://example.com/a", result)
+
     def test_apply_rejects_stale_source(self):
         bundle = make_bundle([self.item], self.root)
         self.source.write_text(self.source.read_text() + "\nChanged\n")

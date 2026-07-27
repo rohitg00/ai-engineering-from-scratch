@@ -1,6 +1,6 @@
 # AI Ağ Geçitleri — LiteLLM, Portkey, Kong AI Ağ Geçidi, Bifrost
 
-> Uygulamalarınız ve model sağlayıcılarınız arasında bir ağ geçidi bulunur. Temel özellikler sağlayıcı yönlendirme, geri dönüş, yeniden denemeler, hız sınırlama, gizli referanslar, observability, korkuluklardır. 2026'da pazar bölünmesi: **LiteLLM** 100'den fazla sağlayıcıya sahip, OpenAI uyumlu, ancak ~2000 RPS civarında (8 GB bellek, yayınlanan benchmark'larda ardışık hatalar) MIT OSS'dir; Python için en iyisi, <500 RPS, geliştirme/prototip oluşturma. **Portkey** kontrol düzleminde konumlandırılmıştır (korkuluklar, PII düzenlemesi, jailbreak tespiti, denetim izleri), Mart 2026'da Apache 2.0 açık kaynak olarak kullanılmıştır, 20-40 ms gecikme ek yükü, $49/mo production tier. **Kong AI Gateway** built on Kong Gateway — Kong's own benchmark on same 12 CPUs: 228% faster than Portkey, 859% faster than LiteLLM; $100/model/ay fiyatlandırma (Plus katmanında maksimum 5); Zaten Kong'daysanız kurumsal kullanıma uygundur. **Bifrost** (Maxim AI) — yapılandırılabilir geri çekilmeli otomatik yeniden denemeler, OpenAI 429'da Anthropic'e geri dönüş. **Cloudflare / Vercel AI Ağ Geçitleri** — yönetilen, sıfır operasyonlar, temel yeniden deneme. Veri yerleşimi kendi kendine barındırma kararını yönlendirir; Portkey ve Kong, OSS + isteğe bağlı yönetim ile ortada yer alıyor.
+> Uygulamalarınız ve model sağlayıcılarınız arasında bir ağ geçidi bulunur. Temel özellikler sağlayıcı yönlendirme, geri dönüş, yeniden denemeler, hız sınırlama, gizli referanslar, observability, korkuluklardır. 2026'da pazar dağılımı: **LiteLLM** 100'den fazla sağlayıcıya sahip, OpenAI uyumlu, ancak ~2000 RPS civarında (8 GB bellek, yayınlanan benchmark'lerde ardışık hatalar) MIT OSS'dir; Python için en iyisi, <500 RPS, geliştirme/prototip oluşturma. **Portkey** kontrol düzleminde konumlandırılmıştır (korkuluklar, PII düzenlemesi, jailbreak tespiti, denetim izleri), Mart 2026'da Apache 2.0 açık kaynak olarak kullanılmıştır, 20-40 ms gecikme ek yükü, $49/mo production tier. **Kong AI Gateway** built on Kong Gateway — Kong's own benchmark on same 12 CPUs: 228% faster than Portkey, 859% faster than LiteLLM; $100/model/ay fiyatlandırma (Plus katmanında maksimum 5); Zaten Kong'daysanız kurumsal kullanıma uygundur. **Bifrost** (Maxim AI) — yapılandırılabilir geri çekilmeli otomatik yeniden denemeler, OpenAI 429'da Anthropic'e geri dönüş. **Cloudflare / Vercel AI Ağ Geçitleri** — yönetilen, sıfır operasyonlar, temel yeniden deneme. Veri yerleşimi kendi kendine barındırma kararını yönlendirir; Portkey ve Kong, OSS + isteğe bağlı yönetim ile ortada yer alıyor.
 
 **Tür:** Öğren
 **Diller:** Python (stdlib, oyuncak ağ geçidi yönlendirme simülatörü)
@@ -9,16 +9,16 @@
 
 ## Öğrenme Hedefleri
 
-- Altı temel ağ geçidi özelliğini sıralayın (yönlendirme, geri dönüş, yeniden denemeler, hız sınırları, sırlar, observability, korkuluklar).
+- Altı temel ağ geçidi özelliğini (yönlendirme, geri dönüş, yeniden denemeler, hız sınırları, sırlar, observability, korkuluklar) numaralandırın.
 - Tavanları ölçeklendirmek ve senaryoları kullanmak için dört 2026 ağ geçidini (LiteLLM, Portkey, Kong AI, Bifrost) eşleyin.
-- Kong'dan benchmark alıntı yapın (%228'e karşı Portkey, %859'a karşı LiteLLM) ve >500 RPS için neden önemli olduğunu açıklayın.
+- Kong benchmark'den alıntı yapın (Portkey'e karşı %228, LiteLLM'ye karşı %859) ve >500 RPS için neden önemli olduğunu açıklayın.
 - Veri yerleşimi ve operasyon bütçesi göz önüne alındığında, kendi kendine barındırılan ve yönetilenleri seçin.
 
 ## Sorun
 
 Ürününüz OpenAI, Anthropic ve kendi kendine barındırılan bir Lamayı çağırır. Her sağlayıcının farklı bir SDK'sı, hata modeli, hız sınırı ve kimlik doğrulama şeması vardır. Yük devretme (OpenAI 429'lar ise Anthropic'i deneyin), tek bir kimlik bilgisi deposu, birleştirilmiş observability ve kiracı başına hız limitleri istiyorsunuz.
 
-Bunu uygulama katmanında yeniden tasarlamak, her hizmeti her sağlayıcıyla eşleştirir. Bir ağ geçidi katmanı, bunu sağlayıcılara dağıtan tek bir API (genellikle OpenAI uyumlu) ile tek bir işlemde birleştirir.
+Bunu uygulama katmanında yeniden tasarlamak, her hizmeti her sağlayıcıya bağlar. Bir ağ geçidi katmanı, bunu sağlayıcılara dağıtan tek bir API (genellikle OpenAI uyumlu) ile tek bir işlemde birleştirir.
 
 ## Konsept
 
@@ -35,7 +35,7 @@ Bunu uygulama katmanında yeniden tasarlamak, her hizmeti her sağlayıcıyla e�
 ### LiteLLM — MIT OSS, Python
 
 - 100'den fazla sağlayıcı, OpenAI uyumlu, yönlendirici yapılandırması, geri dönüş, temel observability.
-- Kong'un benchmark'sında 2000 RPS civarına düşüyor; 8 GB bellek alanı, sürekli yük altında ardışık arızalar.
+- Kong'un benchmark'sinde 2000 RPS civarına düşüyor; 8 GB bellek alanı, sürekli yük altında ardışık arızalar.
 - En uygun: Python uygulaması, <500 RPS, geliştirme/hazırlama ağ geçitleri, deneysel yönlendirme.
 - Maliyet: OSS için 0$; bulut ücretsiz katmanı mevcuttur.
 
@@ -44,7 +44,7 @@ Bunu uygulama katmanında yeniden tasarlamak, her hizmeti her sağlayıcıyla e�
 - Mart 2026 itibarıyla Apache 2.0 OSS. Korkuluklar, PII redaksiyonu, jailbreak tespiti, denetim izleri.
 - İstek başına 20-40 ms gecikme ek yükü.
 - Tutma + SLA ile üretim katmanı için aylık 49 ABD doları.
-- En uygun: korkuluklara ihtiyaç duyan düzenlenmiş endüstriler + observability paket.
+- En iyi uyum: korkuluklara ihtiyaç duyan düzenlemeye tabi endüstriler + observability paketi.
 
 ### Kong AI Ağ Geçidi — ölçekli oyun
 
@@ -80,11 +80,11 @@ Ağ geçidi gecikmesi doğrudan TTFT'ye eklenir. TTFT P99 için < 100 ms SLA, Ko
 
 ### Hız sınırı semantiği önemlidir
 
-Basit token-kova orta ölçeğe kadar çalışır. Çok kiracılı, kayan pencere + patlama izni + kiracı başına katmanlama gerektirir. LiteLLM, token-kovayı gönderir; Kong kayan pencereli gemiler; Portkey gemileri katmanlı.
+Basit token kovası orta ölçeğe kadar çalışır. Çok kiracılı, kayan pencere + patlama izni + kiracı başına katmanlama gerektirir. LiteLLM, token paketini gönderir; Kong kayan pencereli gemiler; Portkey gemileri katmanlı.
 
 ### Ağ Geçidi + observability + yönlendirme oluşturma
 
-Aşama 17 · 13 (observability) + 16 (model yönlendirme) + 19 (ağ geçitleri), üretimdeki aynı katmandır. Üçünü de kapsayan bir araç seçin veya bunları dikkatlice bağlayın: 2026 deployment'ların çoğu, bölünmüş roller için Helicone (observability) veya Portkey'i (korkuluklar) Kong (ölçek) ile birleştirir.
+Aşama 17 · 13 (observability) + 16 (model yönlendirme) + 19 (ağ geçitleri), üretimde aynı katmandır. Üçünü de kapsayan bir alet seçin veya bunları dikkatlice bağlayın: 2026 deployment'lerin çoğu, bölünmüş roller için Helicone (observability) veya Portkey'i (korkuluklar) Kong (ölçek) ile birleştirir.
 
 ### Hatırlamanız gereken sayılar
 
@@ -94,17 +94,17 @@ Aşama 17 · 13 (observability) + 16 (model yönlendirme) + 19 (ağ geçitleri),
 - Kong fiyatlandırması: 100$/model/ay, Plus katmanında maksimum 5.
 - Cloudflare/Vercel: Kenarda 1-3 ms ek yük.
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` , 429/5xx enjeksiyonu altında 3 sağlayıcı arasında geri dönüşle ağ geçidi yönlendirmesini simüle eder. Gecikmeyi, yeniden deneme oranını ve geri dönüş isabet oranını raporlar.
+`code/main.py`, 429/5xx enjeksiyonu altında 3 sağlayıcı arasında geri dönüşle ağ geçidi yönlendirmesini simüle eder. Gecikmeyi, yeniden deneme oranını ve geri dönüş isabet oranını raporlar.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-Bu ders `outputs/skill-gateway-picker.md` üretir. Ölçek, operasyon duruşu, uyumluluk, gecikme bütçesi göz önüne alındığında bir ağ geçidi seçer.
+Bu ders `outputs/skill-gateway-picker.md`'yi üretir. Ölçek, operasyon duruşu, uyumluluk, gecikme bütçesi göz önüne alındığında bir ağ geçidi seçer.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. OpenAI → Antropik → kendi kendine barındırılan seçeneğinden geri dönüşü yapılandırın. %5 sağlayıcı hata oranında beklenen isabet oranı nedir?
+1. `code/main.py`'yi çalıştırın. OpenAI → Antropik → kendi kendine barındırılan seçeneğinden geri dönüşü yapılandırın. %5 sağlayıcı hata oranında beklenen isabet oranı nedir?
 2. SLA'nız 300 ms'lik taban çizgisinde TTFT P99 < 200 ms'dir. Hangi ağ geçitleri bütçe dahilinde kalıyor?
 3. Bir sağlık hizmeti müşterisi, kendi kendine barındırılan + PII düzenleme + denetim gerektirir. Portkey OSS veya Kong'u seçin.
 4. LiteLLM ile Kong'u karşılaştırın: Bir ekip hangi RPS tavanına göre geçiş yapmalıdır?
@@ -117,7 +117,7 @@ Bu ders `outputs/skill-gateway-picker.md` üretir. Ölçek, operasyon duruşu, u
 | Ağ Geçidi | "API komisyoncusu" | Uygulamalar ve sağlayıcılar arasında işlem oturumu |
 | LiteLLM | "MIT'deki" | Python OSS, 100'den fazla sağlayıcı, 2K RPS'de ara veriyor |
 | Anahtar | "korkuluk ağ geçidi" | Kontrol düzlemi + observability, Apache 2.0 |
-| Kong AI Ağ Geçidi | "ölçek bir" | Kong Ağ Geçidi üzerine geliştirildi, benchmark lider |
+| Kong AI Ağ Geçidi | "ölçek bir" | Kong Gateway üzerine inşa edildi, benchmark lideri |
 | Bifrost | "Maxim'in geçidi" | Yeniden denemeler + Antropik geri dönüş tarifi |
 | Cloudflare AI Ağ Geçidi | "kenar yönetimli" | Uçta konuşlandırılan yönetilen ağ geçidi, sıfır işlem |
 | PII redaksiyonu | "veri temizleme" | Modele göndermeden önce Regex + NER maskesi |

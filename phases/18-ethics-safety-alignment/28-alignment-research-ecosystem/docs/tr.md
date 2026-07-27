@@ -1,112 +1,112 @@
-# Alignment Research Ecosystem — MATS, Redwood, Apollo, METR
+# Hizalama Araştırma Ekosistemi — MATS, Redwood, Apollo, METR
 
-> Five organisations define the 2026 non-lab alignment research layer. MATS (ML Alignment & Theory Scholars): 527+ researchers since late 2021, 180+ papers, 10K+ citations, h-index 47; summer 2024 cohort incorporated as 501(c)(3) with ~90 scholars and 40 mentors; 80% of pre-2025 alumni work on safety/security with 200+ at Anthropic, DeepMind, OpenAI, UK AISI, RAND, Redwood, METR, Apollo. Redwood Research: applied alignment lab founded by Buck Shlegeris; introduced AI Control (Lesson 10); collaborates with UK AISI on control safety cases. Apollo Research: pre-deployment scheming evaluations for frontier labs; authored In-Context Scheming (Lesson 8) and Towards Safety Cases for AI Scheming. METR (Model Evaluation and Threat Research): task-based capability evaluations, autonomous-task time-horizon studies; "Common Elements of Frontier AI Safety Policies" compares lab frameworks. Eleos AI Research: model-welfare pre-deployment evaluations (Lesson 19); conducted Claude Opus 4 welfare assessment.
+> Beş kuruluş 2026 laboratuvar dışı uyum araştırma katmanını tanımlamaktadır. MATS (ML Hizalama ve Teori Akademisyenleri): 2021'in sonlarından bu yana 527'den fazla araştırmacı, 180'den fazla makale, 10.000'den fazla alıntı, h-index 47; ~90 akademisyen ve 40 mentordan oluşan 501(c)(3) olarak birleştirilmiş 2024 yaz kohortu; 2025 öncesi mezunların %80'i, Anthropic, DeepMind, OpenAI, UK AISI, RAND, Redwood, METR, Apollo'da 200'den fazla kişiyle emniyet/güvenlik üzerinde çalışıyor. Redwood Research: Buck Shlegeris tarafından kurulan uygulamalı hizalama laboratuvarı; Yapay Zeka Kontrolü (Ders 10) tanıtıldı; Kontrol güvenliği vakaları konusunda Birleşik Krallık AISI ile işbirliği yapmaktadır. Apollo Araştırması: sınır laboratuvarları için ön-deployment planlama değerlendirmeleri; Bağlam İçi Planlama (Ders 8) ve Yapay Zeka Planlaması için Güvenlik Durumlarına Doğru'nun yazarıdır. METR (Model Değerlendirme ve Tehdit Araştırması): göreve dayalı yetenek değerlendirmeleri, otonom görev zaman-ufku çalışmaları; "Sınır Yapay Zeka Güvenlik Politikalarının Ortak Unsurları" laboratuvar framework'lerını karşılaştırır. Eleos Yapay Zeka Araştırması: model-refah ön-deployment değerlendirmeleri (Ders 19); Claude Opus 4 refah değerlendirmesini gerçekleştirdi.
 
-**Type:** Learn
-**Languages:** none
-**Prerequisites:** Phase 18 · 01-27 (prior Phase 18 lessons)
-**Time:** ~45 minutes
+**Tür:** Öğren
+**Diller:** yok
+**Önkoşullar:** Aşama 18 · 01-27 (önceki Aşama 18 dersleri)
+**Süre:** ~45 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Identify the five organisations of the non-lab alignment research ecosystem and their core output.
-- Describe MATS's scale (scholars, papers, h-index) and its role as a talent pipeline.
-- Describe Redwood's AI Control agenda and its partnership with UK AISI.
-- Describe METR's task-based evaluation methodology.
+- Laboratuvar dışı uyum araştırma ekosisteminin beş kuruluşunu ve bunların temel çıktılarını tanımlayın.
+- MATS'in ölçeğini (akademisyenler, makaleler, h-endeksi) ve yetenek kanalı olarak rolünü açıklayın.
+- Redwood'un Yapay Zeka Kontrol gündemini ve Birleşik Krallık AISI ile olan ortaklığını açıklayın.
+- METR'nin göreve dayalı değerlendirme metodolojisini açıklayın.
 
-## The Problem
+## Sorun
 
-The frontier labs (Lesson 18) produce safety evaluations internally and publish selected results. The ecosystem outside the labs is where the evaluations are validated, where novel failure modes are first discovered, and where talent is trained. Understanding the ecosystem helps interpret which research findings are trusted by whom.
+Sınır laboratuvarları (Ders 18) dahili olarak güvenlik değerlendirmeleri üretir ve seçilen sonuçları yayınlar. Laboratuvarların dışındaki ekosistem, değerlendirmelerin doğrulandığı, yeni hata türlerinin ilk keşfedildiği ve yeteneklerin eğitildiği yerdir. Ekosistemin anlaşılması, hangi araştırma bulgularına kimlerin güvendiğinin yorumlanmasına yardımcı olur.
 
-## The Concept
+## Konsept
 
-### MATS (ML Alignment & Theory Scholars)
+### MATS (ML Hizalama ve Teori Akademisyenleri)
 
-Started late 2021. Research mentorship program; scholars spend 10-12 weeks with a senior researcher on a specific alignment problem.
+2021'in sonlarında başladı. Araştırma mentorluğu programı; akademisyenler belirli bir uyum sorunu üzerinde kıdemli bir araştırmacıyla 10-12 hafta geçirirler.
 
-Scale (2026):
-- 527+ researchers since inception.
-- 180+ papers published.
-- 10K+ citations.
-- h-index 47.
-- Summer 2024: 90 scholars + 40 mentors; incorporated as 501(c)(3).
+Ölçek (2026):
+- Kuruluşundan bu yana 527'den fazla araştırmacı.
+- 180'den fazla makale yayınlandı.
+- 10.000'den fazla alıntı.
+- h-endeksi 47.
+- Yaz 2024: 90 akademisyen + 40 mentor; 501(c)(3) olarak dahil edilmiştir.
 
-Career outcomes: ~80% of pre-2025 alumni are working on safety/security. 200+ at Anthropic, DeepMind, OpenAI, UK AISI, RAND, Redwood, METR, Apollo.
+Kariyer sonuçları: 2025 öncesi mezunların ~%80'i emniyet/güvenlik üzerinde çalışıyor. Anthropic, DeepMind, OpenAI, UK AISI, RAND, Redwood, METR, Apollo'da 200+.
 
-### Redwood Research
+### Redwood Araştırması
 
-Applied alignment lab. Founded by Buck Shlegeris. Introduced the AI Control agenda (Lesson 10). Collaborates with UK AISI on control safety cases. Advises DeepMind and Anthropic on evaluation design.
+Uygulamalı hizalama laboratuvarı. Buck Shlegeris tarafından kuruldu. Yapay Zeka Kontrolü gündemi tanıtıldı (Ders 10). Kontrol güvenliği vakalarında Birleşik Krallık AISI ile işbirliği yapar. Değerlendirme tasarımı konusunda DeepMind ve Anthropic'e tavsiyelerde bulunur.
 
-Canonical papers: Greenblatt, Shlegeris et al., "AI Control" (arXiv:2312.06942, ICML 2024); Alignment Faking (Greenblatt, Denison, Wright et al., arXiv:2412.14093, joint with Anthropic).
+Kanonik makaleler: Greenblatt, Shlegeris ve diğerleri, "AI Control" (arXiv:2312.06942, ICML 2024); Hizalama Sahteciliği (Greenblatt, Denison, Wright ve diğerleri, arXiv:2412.14093, Anthropic ile ortak).
 
-Style: specific threat models, worst-case adversaries, concrete protocols that can be stress-tested.
+Tarz: Belirli tehdit modelleri, en kötü durumdaki rakipler, stres testine tabi tutulabilecek somut protokoller.
 
-### Apollo Research
+### Apollo Araştırması
 
-Pre-deployment scheming evaluations for frontier labs. Authored In-Context Scheming (Lesson 8, arXiv:2412.04984). Partner on 2025 OpenAI anti-scheming training collaboration. Produces Towards Safety Cases for AI Scheming (2024).
+Sınır laboratuvarları için ön-deployment planlama değerlendirmeleri. Bağlam İçi Planlama (Ders 8, arXiv:2412.04984) tarafından yazılmıştır. 2025 OpenAI planlama karşıtı eğitim işbirliğine ortak olun. Yapay Zeka Planlaması için Güvenlik Durumlarına Doğru Üretir (2024).
 
-Style: agentic-setting evaluations where deception can emerge; three-pillar decomposition (misalignment, goal-directedness, situational awareness).
+Stil: agentaldatmacanın ortaya çıkabileceği ortam değerlendirmeleri; üç sütunlu ayrıştırma (yanlış hizalama, hedefe yöneliklik, durumsal farkındalık).
 
-### METR (Model Evaluation and Threat Research)
+### METR (Model Değerlendirme ve Tehdit Araştırması)
 
-Task-based capability evaluations. Autonomous-task completion time-horizon studies. "Common Elements of Frontier AI Safety Policies" (metr.org/common-elements, 2025) compares lab frameworks.
+Görev bazlı yetenek değerlendirmeleri. Otonom görev tamamlama zaman-ufku çalışmaları. "Sınır Yapay Zeka Güvenlik Politikalarının Ortak Unsurları" (metr.org/common-elements, 2025) laboratuvar framework'lerını karşılaştırır.
 
-Co-author on AI Scheming safety-case sketch with Apollo.
+Apollo ile birlikte AI Scheming güvenlik durumu taslağının ortak yazarı.
 
-Style: long-horizon task evaluations, empirical capability measurement, framework synthesis.
+Tarz: uzun ufuklu görev değerlendirmeleri, ampirik yetenek ölçümü, framework sentezi.
 
-### Eleos AI Research
+### Eleos Yapay Zeka Araştırması
 
-Model-welfare pre-deployment evaluations. Conducted the Claude Opus 4 welfare assessment documented in section 5.3 of the system card. Provides the external methodology check for Lesson 19's welfare-relevant claims.
+Model refahı ön-deployment değerlendirmeleri. Sistem kartının 5.3 bölümünde belgelenen Claude Opus 4 refah değerlendirmesini gerçekleştirdi. Ders 19'un refahla ilgili iddiaları için harici metodoloji kontrolü sağlar.
 
-### The flow
+### Akış
 
-MATS trains researchers. Graduates go to Anthropic, DeepMind, OpenAI (lab safety teams) or to Redwood, Apollo, METR, Eleos (external evaluation). External evaluators partner with labs and with UK AISI / CAISI. Publications feed the ecosystem back to MATS for the next cohort.
+MATS araştırmacıları eğitiyor. Mezunlar Anthropic, DeepMind, OpenAI (laboratuvar güvenlik ekipleri) veya Redwood, Apollo, METR, Eleos'a (harici değerlendirme) giderler. Dış değerlendiriciler laboratuvarlarla ve Birleşik Krallık AISI / CAISI ile ortak çalışır. Yayınlar ekosistemi bir sonraki grup için MATS'e geri besliyor.
 
-### Why this layer matters
+### Bu katman neden önemlidir?
 
-Single-source evaluations are unreliable: labs evaluating their own models have a structural conflict of interest. External evaluators can raise and validate failure modes the lab may underreport. The 2024 Sleeper Agents paper (Lesson 7) was Anthropic + Redwood; Alignment Faking was Anthropic + Redwood; In-Context Scheming was Apollo; Anti-Scheming was Apollo + OpenAI. The multi-org structure is the quality control.
+Tek kaynaklı değerlendirmeler güvenilmezdir: Kendi modellerini değerlendiren laboratuvarlarda yapısal bir çıkar çatışması vardır. Harici değerlendiriciler, laboratuvarın eksik bildirebileceği arıza türlerini ortaya çıkarabilir ve doğrulayabilir. 2024 Sleeper Agent'nin makalesi (Ders 7) Antropik + Redwood'du; Hizalama Sahteciliği Antropik + Sekoya idi; Bağlam İçi Planlama Apollo'ydu; Anti-Scheming, Apollo + OpenAI idi. Çoklu organizasyon yapısı kalite kontrolüdür.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lessons 7-11 reference Redwood and Apollo work; Lesson 18 references METR's framework comparison; Lesson 19 references Eleos. Lesson 28 is the explicit organisational map for the ecosystem the rest of the Phase relies on.
+7-11. derslerde Redwood ve Apollo çalışmalarına atıfta bulunulur; Ders 18, METR'nin framework karşılaştırmasına atıfta bulunmaktadır; Ders 19 Eleos'a atıfta bulunuyor. Ders 28, Aşamanın geri kalanının dayandığı ekosistemin açık organizasyonel haritasıdır.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-No code. Read METR's "Common Elements of Frontier AI Safety Policies" as an example of how external synthesis adds value to lab-internal policy work.
+Kod yok. Harici sentezin laboratuvar içi politika çalışmalarına nasıl değer kattığının bir örneği olarak METR'nin "Sınır Yapay Zeka Güvenlik Politikalarının Ortak Unsurları" başlıklı makaleyi okuyun.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-ecosystem-map.md`. Given an alignment claim or evaluation, it identifies the organisation, the publication venue, and the methodological style, and cross-checks against known-counterpart organisations.
+Bu ders `outputs/skill-ecosystem-map.md` üretir. Bir uyum iddiası veya değerlendirmesi verildiğinde, kuruluşu, yayın yerini ve metodolojik stili tanımlar ve bilinen muadili kuruluşlarla çapraz kontroller yapar.
 
-## Exercises
+## Egzersizler
 
-1. Pick one paper from Lessons 7-15 and identify the organisations involved. Cross-check the authors against MATS alumni and current ecosystem affiliations.
+1. Ders 7-15'ten bir makale seçin ve ilgili kuruluşları belirleyin. Yazarları MATS mezunları ve mevcut ekosistem bağlantıları ile karşılaştırın.
 
-2. Read METR's "Common Elements of Frontier AI Safety Policies." Identify the three cross-lab convergences they emphasize and the two largest divergences.
+2. METR'nin "Sınır Yapay Zeka Güvenlik Politikalarının Ortak Unsurları"nı okuyun. Vurguladıkları üç laboratuvarlar arası yakınlaşmayı ve en büyük iki farklılığı tanımlayın.
 
-3. MATS career outcomes are ~80% safety/security. Argue whether this selection pressure is adaptive (trains the field) or biased (filters out heterodox positions).
+3. MATS kariyer sonuçları ~%80 emniyet/güvenliktir. Bu seçim baskısının uyarlanabilir (alanı eğitiyor) veya taraflı (heterodoks konumları filtreliyor) olup olmadığını tartışın.
 
-4. Redwood and Apollo both do control/scheming work but with different styles. Pick a failure mode and describe how each would investigate it.
+4. Redwood ve Apollo her ikisi de kontrol/planlama işi yapıyor ancak farklı tarzlarda. Bir arıza modu seçin ve her birinin bunu nasıl araştıracağını açıklayın.
 
-5. Eleos AI is the only pure model-welfare organisation. Design a hypothetical second organisation focused on a different welfare-adjacent question (cognitive liberty, robotic embodiment, etc.) and articulate its methodology.
+5. Eleos AI tek saf model refah organizasyonudur. Refahla ilgili farklı bir soruna (bilişsel özgürlük, robotik düzenleme vb.) odaklanan varsayımsal bir ikinci organizasyon tasarlayın ve metodolojisini ifade edin.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| MATS | "the mentorship program" | ML Alignment & Theory Scholars; 527+ researchers since 2021 |
-| Redwood Research | "the control lab" | Applied alignment; AI Control authors; UK AISI partner |
-| Apollo Research | "the scheming evals" | Pre-deployment scheming evaluations for frontier labs |
-| METR | "the task-horizon evals" | Task-based capability evaluations; framework synthesis |
-| Eleos AI | "the welfare lab" | Model-welfare pre-deployment evaluations |
-| Talent pipeline | "MATS -> labs" | MATS graduates flow to Anthropic, DM, OpenAI, Redwood, Apollo, METR |
-| External evaluation | "non-lab check" | Evaluation not done by the model's producer; adds credibility |
+| PASPASLAR | "mentorluk programı" | ML Hizalama ve Teori Akademisyenleri; 2021'den bu yana 527'den fazla araştırmacı |
+| Sekoya Araştırması | "kontrol laboratuvarı" | Uygulanan hizalama; AI Kontrol yazarları; Birleşik Krallık AISI ortağı |
+| Apollo Araştırması | "entrika değerlendirmeleri" | Sınır laboratuvarları için ön-deployment planlama değerlendirmeleri |
+| METR | "görev ufku değerlendirmeleri" | Görev bazlı yetenek değerlendirmeleri; framework sentezi |
+| Eleos AI | "refah laboratuvarı" | Model refahı ön-deployment değerlendirmeleri |
+| Yetenek hattı | "MATS -> laboratuvarlar" | MATS mezunları Anthropic, DM, OpenAI, Redwood, Apollo, METR'ye akın ediyor |
+| Dış değerlendirme | "laboratuar dışı kontrol" | Değerlendirme modelin yapımcısı tarafından yapılmadı; güvenilirlik katıyor |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [MATS (ML Alignment & Theory Scholars)](https://www.matsprogram.org/) — the mentorship program
-- [Redwood Research](https://www.redwoodresearch.org/) — AI Control papers
-- [Apollo Research](https://www.apolloresearch.ai/) — scheming evaluations
-- [METR — Common Elements of Frontier AI Safety Policies](https://metr.org/blog/2025-03-26-common-elements-of-frontier-ai-safety-policies/) — framework comparison
-- [Eleos AI Research](https://www.eleosai.org/research) — model welfare methodology
+- [MATS (ML Alignment & Theory Scholars)](https://www.matsprogram.org/) — mentorluk programı
+- [Redwood Research](https://www.redwoodresearch.org/) — Yapay Zeka Kontrol belgeleri
+- [Apollo Research](https://www.apolloresearch.ai/) — planlama değerlendirmeleri
+- [METR — Sınır Yapay Zeka Güvenlik Politikalarının Ortak Unsurları](https://metr.org/blog/2025-03-26-common-elements-of-frontier-ai-safety-policies/) — framework karşılaştırması
+- [Eleos Yapay Zeka Araştırması](https://www.eleosai.org/research) — model refah metodolojisi

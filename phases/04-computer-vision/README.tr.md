@@ -1,5 +1,5 @@
-# Aşama 4: Computer Vision
+# Aşama 4: Bilgisayarla Görme
 
-> Piksellerden anlamaya: görüntü, video ve 3D.
+> Piksellerden anlamaya — görüntü, video ve 3D.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

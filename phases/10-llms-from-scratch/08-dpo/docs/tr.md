@@ -10,7 +10,7 @@
 ## Öğrenme Hedefleri
 
 - Ayrı bir ödül modeli olmadan, tercih çiftlerinde bir dil modelini doğrudan optimize eden DPO eğitimi uygulayın
-- DPO loss function'yu türetin ve bunun politikanın günlük olasılıkları aracılığıyla örtülü olarak bir ödül modelini nasıl temsil ettiğini açıklayın
+- DPO loss function'yi türetin ve bunun politikanın günlük olasılıkları aracılığıyla örtülü olarak bir ödül modelini nasıl temsil ettiğini açıklayın
 - Eğitim kararlılığı, bilgi işlem maliyeti ve gerekli model sayısı açısından DPO ile RLHF'yi karşılaştırın
 - Eğitilen politikanın referans modelden ne kadar uzaklaştığını kontrol etmek için beta parametresini ayarlayın
 
@@ -20,11 +20,11 @@ Ders 07'de bir RLHF boru hattı inşa ettiniz. Üç aşama. Üç model. SFT mode
 
 Uygulamada, PPO eğitimi herkesin bildiği gibi dengesizdir. Küçük hiperparametre değişiklikleri eğitimin farklılaşmasına neden olur. Ödül modeli, insan tercihlerinin kusurlu bir temsilcisidir ve politika, onun zayıf noktalarından yararlanmanın yollarını bulur. KL cezası yardımcı olur ancak kendi ayarını gerektirir; çok düşük olursa ödül hackleme alırsınız, çok yüksek olursa model zorlukla öğrenir.
 
-Bu karmaşıklık, InstructGPT'nin yayınlanmasından sonra çoğu açık kaynaklı modelin yıllarca RLHF ile mücadele etmesinin nedenidir. Üç aşamalı boru hattı kırılgandır. Her aşamanın kendi hata modları ve hataların birleşimi vardır.
+Bu karmaşıklık, InstructGPT'nin yayınlanmasından sonra çoğu açık kaynaklı modelin yıllarca RLHF ile mücadele etmesinin nedenidir. Üç aşamalı boru hattı kırılgandır. Her aşamanın kendi hata modları ve hataların bileşimi vardır.
 
-Mayıs 2023'te Rafael Rafailov, Archit Sharma ve Stanford'daki meslektaşları "Doğrudan Tercih Optimizasyonu: Dil Modeliniz Gizlice Bir Ödül Modelidir" yayınladı. Temel fikir: ayrı bir ödül modeline ihtiyacınız yok. Optimum ödül fonksiyonu, dil modelinin kendi token olasılıkları tarafından matematiksel olarak belirlenir. Ödül modelini tamamen atlayabilir ve dil modelini doğrudan tercih çiftlerine göre optimize edebilirsiniz.
+Mayıs 2023'te Rafael Rafailov, Archit Sharma ve Stanford'daki meslektaşları "Doğrudan Tercih Optimizasyonu: Dil Modeliniz Gizlice Bir Ödül Modelidir" yayınladı. Temel fikir: ayrı bir ödül modeline ihtiyacınız yok. Optimum ödül işlevi, dil modelinin kendi token olasılıklarına göre matematiksel olarak belirlenir. Ödül modelini tamamen atlayabilir ve dil modelini doğrudan tercih çiftlerine göre optimize edebilirsiniz.
 
-DPO, RLHF'yi tek bir denetimli öğrenme adımına indirger. Bir model. Bir loss function. Bir eğitim döngüsü. Takviyeli öğrenme yok. DPO'yu geniş ölçekte kullanan ilk modellerden biri olan Zephyr-7B, birkaç benchmarks'de tam RLHF ile eğitilmiş modelleri eşleştirdi veya yendi. Meta, Llama 3'ün hizalama hattının bir parçası olarak DPO'yu kullandı. Anthropic, hizalama araştırmalarında DPO tarzı yöntemlere atıfta bulundu.
+DPO, RLHF'yi tek bir denetimli öğrenme adımına indirir. Bir model. Bir loss function. Bir eğitim döngüsü. Takviyeli öğrenme yok. DPO'yu geniş ölçekte kullanan ilk modellerden biri olan Zephyr-7B, çeşitli benchmark'lerde tam RLHF ile eğitilmiş modelleri eşleştirdi veya yendi. Meta, Llama 3'ün hizalama hattının bir parçası olarak DPO'yu kullandı. Anthropic, hizalama araştırmalarında DPO tarzı yöntemlere atıfta bulundu.
 
 ## Konsept
 
@@ -59,7 +59,7 @@ P(y_w > y_l | x) = sigmoid(R(x, y_w) - R(x, y_l))
                   = sigmoid(beta * (log pi(y_w|x)/pi_ref(y_w|x) - log pi(y_l|x)/pi_ref(y_l|x)))
 ```
 
-Z(x) terimleri birbirini götürür çünkü her iki yanıt da aynı prompt x'e bağlıdır. Geriye kalan yalnızca politika modelinin log olasılıklarının ve referans modelinin tercih edilen ve reddedilen yanıtlara ilişkin log olasılıklarının bir fonksiyonudur.
+Z(x) terimleri iptal edilir çünkü her iki yanıt da aynı prompt x koşuluna bağlıdır. Geriye kalan yalnızca politika modelinin log olasılıklarının ve referans modelinin tercih edilen ve reddedilen yanıtlara ilişkin log olasılıklarının bir fonksiyonudur.
 
 ### DPO Kaybı
 
@@ -126,7 +126,7 @@ graph TD
 | GPU belleği | PPO sırasında hafızada 3-4 model | 2 model (güncel + referans) |
 | Eğitim istikrarı | Hiperparametrelere duyarlı | Sağlam, SFT'ye benzer |
 
-DPO'nun eğitim sırasında bellekte iki modele ihtiyacı vardır: geçerli model ve donmuş referans. RLHF'nin üç veya dörde ihtiyacı vardır: politika, referans, ödül modeli ve isteğe bağlı olarak değer fonksiyonu temel çizgisi. 70B modeli için FP16'da her kopya 140 GB alır. Ödül modelinin ortadan kaldırılmasıyla elde edilen hafıza tasarrufu oldukça yüksektir.
+DPO'nun eğitim sırasında bellekte iki modele ihtiyacı vardır: geçerli model ve donmuş referans. RLHF'nin üç veya dörde ihtiyacı vardır: politika, referans, ödül modeli ve isteğe bağlı olarak değer fonksiyonu temel çizgisi. 70B modeli için FP16'da her kopya 140 GB alır. Ödül modelinin ortadan kaldırılmasıyla elde edilen hafıza tasarrufu oldukça önemlidir.
 
 ### DPO RLHF'yi Yendiğinde
 
@@ -134,23 +134,23 @@ DPO'nun eğitim sırasında bellekte iki modele ihtiyacı vardır: geçerli mode
 
 **Sınırlı işlem.** DPO, tam RLHF'nin yaklaşık üçte biri kadar hesaplama gerektirir (üç yerine bir eğitim döngüsü). Büyük GPU kümeleri olmayan ekipler için bu pratik bir seçimdir.
 
-**Hızlı yineleme.** Hangisinin en iyi modeli ürettiğini görmek için 10 farklı tercih dataset denemek ister misiniz? DPO, her deneyi saatler içinde çalıştırmanıza olanak tanır. RLHF, her dataset için ödül modelinin yeniden eğitilmesini gerektirir.
+**Hızlı yineleme.** Hangisinin en iyi modeli ürettiğini görmek için 10 farklı dataset tercihini denemek ister misiniz? DPO, her deneyi saatler içinde çalıştırmanıza olanak tanır. RLHF, her dataset için ödül modelinin yeniden eğitilmesini gerektirir.
 
 ### RLHF DPO'yu yendiğinde
 
 **Büyük ölçekli eğitim.** GPT-4 veya Claude ölçeğinde, RLHF'nin ayrı ödül modeli daha incelikli tercih sinyallerini yakalayabilir. Ödül modeli, karmaşık kalite kriterlerine uyum sağlayan öğrenilmiş bir loss function gibi davranır.
 
-**Karmaşık ödül sinyalleri.** "Daha iyi" birden fazla boyutu (yardımseverlik, zararsızlık, dürüstlük) içerdiğinde, bir ödül modeli bu çok amaçlı değiş tokuşu öğrenebilir. DPO, nedenini modellemeden her tercih çiftini ikili bir sinyal olarak ele alır (biri daha iyi, biri daha kötü).
+**Karmaşık ödül sinyalleri.** "Daha iyi" birden fazla boyutu (yardımseverlik, zararsızlık, dürüstlük) içerdiğinde, bir ödül modeli bu çok amaçlı ödünleşimi öğrenebilir. DPO, nedenini modellemeden her tercih çiftini ikili bir sinyal olarak ele alır (biri daha iyi, biri daha kötü).
 
-**Yinelemeli hizalama.** RLHF hatları, mevcut politikayla yeni yanıtlar üretebilir, insanların bunları derecelendirmesini sağlayabilir ve ödül modelini çevrimiçi bir döngüde yeniden eğitebilir. DPO, sabit dataset tercih çifti üzerinde çalışır. Anayasal AI (Antropik yaklaşım), RLHF'nin bu yinelemeli özelliğini kapsamlı bir şekilde kullanır.
+**Yinelemeli hizalama.** RLHF hatları, mevcut politikayla yeni yanıtlar üretebilir, insanların bunları derecelendirmesini sağlayabilir ve ödül modelini çevrimiçi bir döngüde yeniden eğitebilir. DPO, sabit bir dataset tercih çifti üzerinde çalışır. Anayasal AI (Antropik yaklaşım), RLHF'nin bu yinelemeli özelliğini kapsamlı bir şekilde kullanır.
 
 ### DPO'nun ötesinde: KTO, ORPO, SimPO
 
 DPO, basitleştirilmiş hizalama yöntemleri ailesine ilham verdi.
 
-**KTO (Kahneman-Tversky Optimizasyonu, 2024):** Çiftlere bile ihtiyacınız yok. KTO eşleştirilmemiş geri bildirimlerle çalışır; her yanıtı bir alternatifle karşılaştırmadan "iyi" veya "kötü" olarak etiketlemeniz yeterlidir. Bu, veri toplamayı önemli ölçüde basitleştirir. Ek açıklamalar yapanlara iki yanıt gösterip "hangisi daha iyi?" diye sormak yerine, bir yanıt gösterip "bu iyi mi?" diye sorarsınız. loss function, beklenti teorisinden kayıptan kaçınmayı uygular: kötü yanıtlar, iyi yanıtların ödüllendirildiğinden daha fazla cezalandırılır.
+**KTO (Kahneman-Tversky Optimizasyonu, 2024):** Çiftlere bile ihtiyacınız yok. KTO eşleştirilmemiş geri bildirimlerle çalışır; her yanıtı bir alternatifle karşılaştırmadan "iyi" veya "kötü" olarak etiketlemeniz yeterlidir. Bu, veri toplamayı önemli ölçüde basitleştirir. Açıklama yapanlara iki yanıt gösterip "hangisi daha iyi?" diye sormak yerine, tek bir yanıt gösterip "bu iyi mi?" diye sorarsınız. loss function, beklenti teorisinden kayıptan kaçınmayı uygular: kötü tepkiler, iyi tepkilerin ödüllendirilmesinden daha fazla cezalandırılır.
 
-**ORPO (Oran Oranı Tercih Optimizasyonu, 2024):** SFT ve hizalamayı tek bir eğitim adımında birleştirir. ORPO, önce SFT, ardından DPO yapmak yerine, SFT kaybını bir tercih sinyali içerecek şekilde değiştirir. Kaybın iki terimi vardır: tercih edilen yanıtlarda standart bir sonraki-token tahmin kaybı, artı tercih edilen ve reddedilen yanıt olasılıkları arasındaki boşluğu artıran bir olasılık oranı terimi. İki yerine bir eğitim döngüsü.
+**ORPO (Oran Oranı Tercih Optimizasyonu, 2024):** SFT ve hizalamayı tek bir eğitim adımında birleştirir. ORPO, önce SFT, ardından DPO yapmak yerine, SFT kaybını bir tercih sinyali içerecek şekilde değiştirir. Kaybın iki terimi vardır: tercih edilen yanıtlarda standart bir sonraki token tahmin kaybı ve ayrıca tercih edilen ve reddedilen yanıt olasılıkları arasındaki boşluğu artıran bir olasılık oranı terimi. İki yerine bir eğitim döngüsü.
 
 **SimPO (Basit Tercih Optimizasyonu, 2024):** Referans modelini tamamen ortadan kaldırır. Dondurulmuş bir referansa karşı log-olasılık oranlarını hesaplamak yerine SimPO, örtülü ödül olarak yanıtın ortalama log-olasılığını (uzunluğa göre normalleştirilmiş) kullanır. Bu, hafızadan tasarruf sağlar (referans modele gerek yoktur) ve eğitimi basitleştirir. Uzunluk normalizasyonu, modelin daha kısa yanıtları tercih etmesini engeller.
 
@@ -164,13 +164,13 @@ DPO, basitleştirilmiş hizalama yöntemleri ailesine ilham verdi.
 
 Trend açık: Her yöntem bir parça karmaşıklığı daha ortadan kaldırıyor. RLHF'nin bir ödül modeline ve PPO'ya ihtiyacı vardı. DPO her ikisini de ortadan kaldırdı. KTO eşleştirilmiş verileri ortadan kaldırdı. ORPO ayrı SFT aşamasını ortadan kaldırdı. SimPO referans modeli ortadan kaldırdı. Uyum vergisi (temel modelden uyumlu modele geçmenin bilgi işlem ve karmaşıklık maliyeti) düşmeye devam ediyor.
 
-### Gerçek DPO Deployment'lar
+### Gerçek DPO Deployment'ler
 
 **Zephyr-7B (HuggingFace, Ekim 2023):** Mistral 7B tabanı, UltraChat'te SFT (200K örnekler), ardından UltraFeedback'te DPO (60K tercih çiftleri). O zamanın en yüksek 7B modeli olan MT-Bench'te 6,47 puan aldı. Karşılaştırma için Llama 2 Chat 70B 6,86 puan aldı; bu, Zephyr'in yalnızca DPO hizalaması kullanarak kendi boyutunun 10 katı olan bir modelin %6'sı kadar yakınına ulaştığı anlamına geliyor.
 
 **Llama 3 (Meta, Nisan 2024):** İlk RLHF aşamalarından sonra kullanılan DPO. Kombinasyon, DPO ve RLHF'nin tamamlayıcı olabileceğini öne sürüyor - geniş hizalama için RLHF, hedeflenen iyileştirme için DPO.
 
-**Neural Magic / nm-chat (2024):** Birden fazla açık kaynak modele uygulanan DPO, yalnızca SFT taban çizgilerine göre benchmark hizalamalarında sürekli olarak %5-15 iyileşme gösterdi.
+**Neural Magic / nm-chat (2024):** Birden fazla açık kaynaklı modele uygulanan DPO, benchmark'lerin hizalanmasında yalnızca SFT taban çizgilerine göre sürekli olarak %5-15 iyileşme gösterdi.
 
 ```figure
 dpo-loss
@@ -180,7 +180,7 @@ dpo-loss
 
 ### Adım 1: Tercih Dataset
 
-RLHF ile aynı format -- (prompt, tercih edilen, reddedilen) üçlüler. DPO, bu verileri bir ara ödül modeli olmaksızın doğrudan tüketir.
+RLHF ile aynı format -- (prompt, tercih edilir, reddedilir) üçlüleri. DPO, bu verileri bir ara ödül modeli olmaksızın doğrudan tüketir.
 
 ```python
 import numpy as np
@@ -225,7 +225,7 @@ PREFERENCE_DATA = [
 
 ### Adım 2: Dizi Günlüğü Olasılığı
 
-DPO kaybı, prompt verilen bir yanıtın toplam log olasılığının hesaplanmasını gerektirir. Bu, modeli tam (prompt + yanıt) dizi üzerinde çalıştırmak ve her yanıtın token log olasılıklarını toplamak anlamına gelir.
+DPO kaybı, prompt verilen bir yanıtın toplam log olasılığının hesaplanmasını gerektirir. Bu, modeli tam (prompt + yanıt) dizisinde çalıştırmak ve her bir token yanıtının log olasılıklarını toplamak anlamına gelir.
 
 ```python
 def tokenize_sequence(text, vocab_size=256):
@@ -311,7 +311,7 @@ def dpo_loss(policy_logprob_preferred, policy_logprob_rejected,
 
 ### Adım 4: DPO Eğitim Döngüsü
 
-Standart denetimli bir eğitim döngüsü. PPO yok. Ödül modeli yok. Sadece pasları ve gradient güncellemeyi ilet.
+Standart denetimli bir eğitim döngüsü. PPO yok. Ödül modeli yok. Geçişleri ve gradient güncellemelerini iletmeniz yeterli.
 
 ```python
 def copy_model_weights(source, target):
@@ -620,15 +620,15 @@ if __name__ == "__main__":
 
 ## Gönderin
 
-Bu ders, kullanım durumunuz için doğru hizalama yöntemini (SFT, RLHF, DPO, KTO, ORPO, SimPO) seçmenize yardımcı olan `outputs/prompt-alignment-method-selector.md` -- bir prompt üretir. Veri kullanılabilirliğiniz, bilgi işlem bütçeniz ve uyum hedefleriniz göz önüne alındığında, bir yöntem ve eğitim planı önerir.
+Bu ders, kullanım durumunuz için doğru hizalama yöntemini (SFT, RLHF, DPO, KTO, ORPO, SimPO) seçmenize yardımcı olan bir prompt olan `outputs/prompt-alignment-method-selector.md`'yi üretir. Veri kullanılabilirliğiniz, bilgi işlem bütçeniz ve uyum hedefleriniz göz önüne alındığında, bir yöntem ve eğitim planı önerir.
 
 ## Egzersizler
 
-1. KTO'yu (Kahneman-Tversky Optimizasyonu) uygulayın. KTO'nun çiftlere ihtiyacı yoktur; her yanıtı "iyi" veya "kötü" olarak etiketlemeniz yeterlidir. İyi bir yanıt için kayıp `-log(sigmoid(beta * log_ratio))` ve kötü bir yanıt için kayıp `-log(1 - sigmoid(beta * log_ratio))` olup, kötü yanıt kaybı üzerindeki kayıptan kaçınma çarpanı (tipik olarak 1,5x). Aynı veriler üzerinde eğitim alın (bağımsız olarak "iyi" olarak tercih edilen ve "kötü" olarak reddedilen muamele) ve doğruluğu DPO ile karşılaştırın.
+1. KTO'yu (Kahneman-Tversky Optimizasyonu) uygulayın. KTO'nun çiftlere ihtiyacı yoktur; her yanıtı "iyi" veya "kötü" olarak etiketlemeniz yeterlidir. İyi bir yanıt için kayıp `-log(sigmoid(beta * log_ratio))`'dir ve kötü bir yanıt için kayıp, kötü yanıt kaybı üzerindeki kayıptan kaçınma çarpanıyla (tipik olarak 1,5x) `-log(1 - sigmoid(beta * log_ratio))`'dir. Aynı veriler üzerinde eğitim alın (bağımsız olarak "iyi" olarak tercih edilen ve "kötü" olarak reddedilen muamele) ve doğruluğu DPO ile karşılaştırın.
 
-2. Uzunluğa göre normalleştirilmiş DPO'yu uygulayın. Ham log olasılıkları yerine, tokens: `normalized_logprob = total_logprob / num_tokens` yanıtının sayısına bölün. Bu, modelin daha kısa yanıtları (toplam log-olasılığı daha yüksek olan) tercih etmesini engeller. Örtülü ödül marjlarını normalleştirmeli ve normalleştirmesiz karşılaştırın.
+2. Uzunluğa göre normalleştirilmiş DPO'yu uygulayın. Ham log olasılıkları yerine token yanıt sayısına bölün: `normalized_logprob = total_logprob / num_tokens`. Bu, modelin daha kısa yanıtları (toplam log-olasılığı daha yüksek olan) tercih etmesini engeller. Örtülü ödül marjlarını normalleştirmeli ve normalleştirmesiz karşılaştırın.
 
-3. ORPO tarzı birleştirilmiş kayıp oluşturun. DPO kaybına tercih edilen yanıta standart bir sonraki-token tahmin kaybını ekleyin: `L = L_sft(preferred) + alpha * L_dpo`. 0,1, 0,5 ve 1,0 alfa değerlerini deneyin. Birleşik kayıp, hem talimatları takip eden (SFT teriminden) hem de daha iyi yanıtları tercih eden (DPO teriminden) bir model üreterek ayrı bir SFT aşamasına olan ihtiyacı ortadan kaldırmalıdır.
+3. ORPO tarzı birleştirilmiş kayıp oluşturun. DPO kaybına tercih edilen yanıta standart bir next-token tahmin kaybı ekleyin: `L = L_sft(preferred) + alpha * L_dpo`. 0,1, 0,5 ve 1,0 alfa değerlerini deneyin. Birleşik kayıp, hem talimatları takip eden (SFT teriminden) hem de daha iyi yanıtları tercih eden (DPO teriminden) bir model üreterek ayrı bir SFT aşamasına olan ihtiyacı ortadan kaldırmalıdır.
 
 4. Yinelemeli DPO'yu uygulayın. DPO'yu 3 dönem boyunca çalıştırın, ardından eğitilen modelden yeni yanıtlar oluşturun, bunları yeni tercih çiftleri olarak orijinal tercih edilen yanıtlarla eşleştirin ve DPO'yu yeniden çalıştırın. Bu "kendi kendine oynama" sürecinin iki turu. Yinelemeli iyileştirmenin yardımcı olup olmadığını görmek için 1. tur ve 2. turdan sonra tercih doğruluğunu karşılaştırın.
 
@@ -650,9 +650,9 @@ Bu ders, kullanım durumunuz için doğru hizalama yöntemini (SFT, RLHF, DPO, K
 
 ## Daha Fazla Okuma
 
-- [Rafailov ve diğerleri, 2023 -- "Doğrudan Tercih Optimizasyonu: Dil Modeliniz Gizlice Bir Ödül Modelidir"](https://arxiv.org/abs/2305.18290) -- RLHF'den denetimli öğrenmeye uyumu basitleştiren DPO makalesi
-- [Tunstall ve diğerleri, 2023 -- "Zephyr: LM Hizalamasının Doğrudan Damıtması"](https://arxiv.org/abs/2310.16944) -- Zephyr-7B, UltraFeedback'teki DPO'nun benchmarks'deki RLHF ile eşleştiğini gösteriyor
+- [Rafailov ve diğerleri, 2023 -- "Doğrudan Tercih Optimizasyonu: Dil Modeliniz Gizlice Bir Ödül Modelidir"](https://arxiv.org/abs/2305.18290) -- RLHF'den denetimli öğrenmeye uyumlamayı basitleştiren DPO makalesi
+- [Tunstall ve diğerleri, 2023 -- "Zephyr: LM Hizalamasının Doğrudan Distilasyonu"](https://arxiv.org/abs/2310.16944) -- Zephyr-7B, UltraFeedback'teki DPO'nun benchmark'lerdeki RLHF ile eşleştiğini gösteriyor
 - [Ethayarajh ve diğerleri, 2024 -- "KTO: Olasılık Teorik Optimizasyonu Olarak Model Hizalaması"](https://arxiv.org/abs/2402.01306) -- eşleştirilmiş tercihlere olan ihtiyacı ortadan kaldırır
-- [Hong ve diğerleri, 2024 -- "ORPO: Referans Modeli Olmadan Monolitik Tercih Optimizasyonu"](https://arxiv.org/abs/2403.07691) -- SFT ve hizalamayı tek adımda birleştirmek
+- [Hong ve diğerleri, 2024 -- "ORPO: Referans Modeli Olmayan Monolitik Tercih Optimizasyonu"](https://arxiv.org/abs/2403.07691) -- SFT ve hizalamayı tek adımda birleştiriyor
 - [Meng ve diğerleri, 2024 -- "SimPO: Referanssız Ödüllü Basit Tercih Optimizasyonu"](https://arxiv.org/abs/2405.14734) -- referans modelini tamamen ortadan kaldırmak
 - [Llama 3 Teknik Raporu](https://arxiv.org/abs/2407.21783) -- Meta'nın RLHF ve DPO'yu birleştiren hizalama hattı

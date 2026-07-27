@@ -1,111 +1,111 @@
-# Data Provenance and Training-Data Governance
+# Veri Kaynağı ve Eğitim-Veri Yönetişimi
 
-> EU AI Act requires machine-readable opt-out standards for GPAI by August 2025 (via EU Copyright Directive TDM exception). California AB 2013 (signed 2024) — Generative AI training-data transparency requires developers to publish a summary of datasets with 12 mandated fields. 2025 DPA alignment on legitimate interest: Irish DPC (21 May 2025) accepts Meta's LLM training on first-party public EU/EEA adult content with safeguards after EDPB opinion; Cologne Higher Regional Court (23 May 2025) dismisses injunction; Hamburg DPA drops urgency; UK ICO (23 September 2025) issues a positive regulatory response to LinkedIn's AI-training safeguards (transparency, simplified opt-out, extended objection windows) and continues monitoring — not a formal clearance. Brazilian ANPD (2 July 2024) suspended Meta's processing over insufficient information transparency; the preventive measure was lifted on 30 August 2024 after Meta submitted a compliance plan. Key irreversibility problem: cookie-consent frameworks are designed for real-time, reversible tracking; once data is in model weights, surgical erasure is impossible — no practical GDPR right-to-erasure for trained neural networks. Compliance window is at collection time. Data Provenance Initiative (dataprovenance.org, Longpre, Mahari, Lee et al., "Consent in Crisis", July 2024): large-scale audit shows rapid decline of the AI data commons as publishers add robots.txt restrictions.
+> AB Yapay Zeka Yasası, Ağustos 2025'e kadar GPAI için makine tarafından okunabilir devre dışı bırakma standartlarını zorunlu kılmaktadır (AB Telif Hakkı Direktifi TDM istisnası yoluyla). California AB 2013 (2024'te imzalandı) — Üretken yapay zeka eğitim verileri şeffaflığı, geliştiricilerin 12 zorunlu alan içeren dataset'lerin bir özetini yayınlamasını gerektirir. Meşru menfaat konusunda 2025 DPA uyumu: İrlanda DPC (21 Mayıs 2025), Meta'nın birinci taraf herkese açık AB/AEA yetişkin içeriğine ilişkin LLM eğitimini, EDPB görüşünden sonra güvenlik önlemleriyle kabul etti; Köln Yüksek Bölge Mahkemesi (23 Mayıs 2025) ihtiyati tedbir kararını reddetti; Hamburg DPA aciliyetini kaldırdı; Birleşik Krallık ICO (23 Eylül 2025), LinkedIn'in yapay zeka eğitimi önlemlerine (şeffaflık, basitleştirilmiş devre dışı bırakma, uzatılmış itiraz pencereleri) olumlu bir düzenleyici yanıt yayınladı ve resmi bir izin değil, izlemeye devam ediyor. Brezilya ANPD (2 Temmuz 2024), yetersiz bilgi şeffaflığı nedeniyle Meta'nın işlemlerini askıya aldı; Meta'nın bir uyumluluk planı sunmasının ardından önleyici tedbir 30 Ağustos 2024'te kaldırıldı. Temel geri döndürülemezlik sorunu: Çerez onayı framework'ler gerçek zamanlı, geri döndürülebilir izleme için tasarlanmıştır; veriler model ağırlıklarında olduğunda, cerrahi olarak silmek imkansızdır; eğitimli neural network'lar için pratik bir GDPR silme hakkı yoktur. Uyumluluk penceresi tahsilat zamanındadır. Data Provenance Initiative (dataprovenance.org, Longpre, Mahari, Lee ve diğerleri, "Consent in Crisis", Temmuz 2024): büyük ölçekli denetim, yayıncılar robots.txt kısıtlamaları ekledikçe AI ortak veri kaynaklarında hızlı bir düşüş olduğunu gösteriyor.
 
-**Type:** Learn
-**Languages:** Python (stdlib, 12-field California AB 2013 scaffolding generator)
-**Prerequisites:** Phase 18 · 24 (regulatory), Phase 18 · 26 (cards)
-**Time:** ~60 minutes
+**Tür:** Öğren
+**Diller:** Python (stdlib, 12 alanlı California AB 2013 iskele oluşturucu)
+**Önkoşullar:** Aşama 18 · 24 (düzenleyici), Aşama 18 · 26 (kartlar)
+**Süre:** ~60 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Describe California AB 2013's 12 mandated fields for Generative AI training-data transparency.
-- State the 2025 DPA position on legitimate-interest LLM training (Irish DPC, UK ICO, Hamburg, Cologne).
-- Describe the irreversibility problem: why GDPR right-to-erasure has no practical equivalent for trained neural networks.
-- State the Data Provenance Initiative's "Consent in Crisis" finding.
+- Kaliforniya AB 2013'ün Üretken Yapay Zeka eğitimi-veri şeffaflığı için zorunlu olan 12 alanını açıklayın.
+- Meşru menfaatli LLM eğitimine ilişkin 2025 DPA pozisyonunu belirtin (İrlanda DPC, Birleşik Krallık ICO, Hamburg, Köln).
+- Geri döndürülemezlik sorununu açıklayın: GDPR'nin silme hakkının neden eğitimli neural network'lar için pratik bir eşdeğeri yok?
+- Veri Kanıt Girişimi'nin "Krizde Rıza" bulgusunu belirtin.
 
-## The Problem
+## Sorun
 
-Training-data governance is the upstream of every model card (Lesson 26) and regulatory obligation (Lesson 24). In 2024-2025, the regulatory landscape consolidated on three principles: opt-out infrastructure, per-dataset disclosure, and legitimate-interest accommodations for publicly available data. Providers that do not comply at collection time cannot remediate downstream.
+Eğitim verileri yönetişimi, her model kartın (Ders 26) ve düzenleyici yükümlülüğün (Ders 24) yukarı akışıdır. 2024-2025'te düzenleyici ortam üç prensipte birleştirildi: devre dışı bırakma altyapısı, dataset başına açıklama ve kamuya açık veriler için meşru menfaat düzenlemeleri. Toplama zamanında uymayan sağlayıcılar, alt yönde düzeltme yapamaz.
 
-## The Concept
+## Konsept
 
-### California AB 2013
+### Kaliforniya AB 2013
 
-Signed 2024. Documentation must be posted on or before January 1, 2026 for systems released on or after January 1, 2022. Section 3111(a) requires developers to publish a high-level summary of datasets used in training with 12 statutory items:
-1. Sources or owners of the datasets.
-2. Description of how the datasets further the intended purpose of the AI system.
-3. Number of data points in the datasets (general ranges acceptable; estimates for dynamic datasets).
-4. Description of the types of data points (label types for labeled datasets; general characteristics for unlabeled).
-5. Whether the datasets include any data protected by copyright, trademark, or patent, or are entirely in the public domain.
-6. Whether the datasets were purchased or licensed.
-7. Whether the datasets include personal information (per Cal. Civ. Code §1798.140(v)).
-8. Whether the datasets include aggregate consumer information (per Cal. Civ. Code §1798.140(b)).
-9. Cleaning, processing, or other modification by the developer, with intended purpose.
-10. Time period during which the data was collected, with notice if collection is ongoing.
-11. Dates the datasets were first used during development.
-12. Whether the system uses or continuously uses synthetic data generation.
+İmza tarihi: 2024. 1 Ocak 2022'de veya sonrasında piyasaya sürülen sistemler için belgeler 1 Ocak 2026'da veya öncesinde yayınlanmalıdır. Bölüm 3111(a), geliştiricilerin eğitimde kullanılan dataset'lerın 12 yasal öğeyle birlikte üst düzey bir özetini yayınlamasını gerektirir:
+1. dataset'lerın kaynakları veya sahipleri.
+2. dataset'lerın yapay zeka sisteminin amaçlanan amacına nasıl katkıda bulunduğunun açıklaması.
+3. dataset'lerdeki veri noktalarının sayısı (genel aralıklar kabul edilebilir; dinamik dataset'ler için tahminler).
+4. Veri noktası türlerinin açıklaması (etiketli dataset'ler için etiket türleri; etiketlenmemiş olanlar için genel özellikler).
+5. dataset'lerın telif hakkı, ticari marka veya patentle korunan herhangi bir veri içerip içermediği veya tamamen kamu malı olup olmadığı.
+6. dataset'lerın satın alınmış veya lisanslanmış olup olmadığı.
+7. dataset'lerın kişisel bilgileri içerip içermediği (Kal. Medeni Kanunu §1798.140(v) uyarınca).
+8. dataset'lerın toplu tüketici bilgilerini içerip içermediği (Kal. Medeni Kanun §1798.140(b) uyarınca).
+9. Geliştirici tarafından amaçlanan amaçla temizleme, işleme veya başka değişiklikler.
+10. Verilerin toplandığı dönem, eğer toplama devam ediyorsa bildirimde bulunmak suretiyle.
+11. dataset'lerın geliştirme sırasında ilk kullanıldığı tarihler.
+12. Sistemin sentetik veri üretimi kullanıp kullanmadığı veya sürekli olarak kullanıp kullanmadığı.
 
-Item 12 (synthetic data) is new relative to Gebru et al. 2018 datasheets. Item 7 (personal information) triggers Privacy Rights Act (CPRA) obligations. The statute exempts security/integrity, aircraft-operation, and federal-only national-security systems (Section 3111(b)).
+Madde 12 (sentetik veriler) Gebru ve arkadaşlarına göre yenidir. 2018 veri sayfaları. Madde 7 (kişisel bilgiler), Gizlilik Hakları Yasası (CPRA) yükümlülüklerini tetikler. Tüzük, güvenlik/bütünlük, uçak işletimi ve yalnızca federal ulusal güvenlik sistemlerini muaf tutar (Bölüm 3111(b)).
 
-### EU AI Act (Lesson 24) and TDM opt-out
+### AB Yapay Zeka Yasası (Ders 24) ve TDM kapsamı dışında kalma
 
-EU Copyright Directive text-and-data-mining exception allows training on publicly available content unless the rightholder opts out. EU AI Act GPAI Code of Practice Copyright chapter requires GPAI providers to respect machine-readable opt-out signals (robots.txt, C2PA "No AI Training" claim, etc.).
+AB Telif Hakkı Direktifi metin ve veri madenciliği istisnası, hak sahibi vazgeçmediği sürece kamuya açık içerik üzerinde eğitime izin verir. AB Yapay Zeka Yasası GPAI Uygulama Kuralları Telif Hakkı bölümü, GPAI sağlayıcılarının makine tarafından okunabilen devre dışı bırakma sinyallerine (robots.txt, C2PA "Yapay Zeka Eğitimi Yok" iddiası vb.) uymasını gerektirir.
 
-### 2025 DPA convergence on legitimate interest
+### 2025 DPA'nın meşru menfaate yakınlaşması
 
-Irish DPC (21 May 2025): Meta's plan to train on first-party public EU/EEA adult-user content accepted with safeguards after EDPB opinion. Cologne Higher Regional Court (23 May 2025) dismisses injunction against Meta: opt-out is sufficient. Hamburg DPA drops urgency procedure for EU-wide consistency. UK ICO (23 September 2025) issued a positive regulatory response — not a formal clearance — to LinkedIn's resumption of AI training with similar safeguards and ongoing monitoring.
+İrlanda DPC (21 Mayıs 2025): Meta'nın birinci taraf herkese açık AB/AEA yetişkin kullanıcı içeriğine ilişkin eğitim planı, EDPB'nin görüşü sonrasında güvenlik önlemleriyle kabul edildi. Köln Yüksek Bölge Mahkemesi (23 Mayıs 2025) Meta'ya yönelik ihtiyati tedbir kararını reddetti: çekilmek yeterlidir. Hamburg DPA, AB çapında tutarlılık için aciliyet prosedürünü kaldırdı. Birleşik Krallık ICO (23 Eylül 2025), LinkedIn'in yapay zeka eğitimini benzer önlemler ve sürekli izlemeyle yeniden başlatmasına resmi bir izin değil, olumlu bir düzenleyici yanıt yayınladı.
 
-Convergent principle: legitimate interest can justify training on publicly available first-party content with opt-out. Consent is not required.
+Yakınsaklık ilkesi: Meşru menfaat, halka açık birinci taraf içeriğine ilişkin devre dışı bırakma seçeneğiyle eğitim verilmesini haklı gösterebilir. Rıza gerekli değildir.
 
-### Brazilian ANPD (June 2024)
+### Brezilya ANPD (Haziran 2024)
 
-Suspended Meta's processing of Brazilian user data for AI training over insufficient information transparency. Different result than the EU DPAs — ANPD prioritized transparency over legitimate-interest admissibility.
+Yetersiz bilgi şeffaflığı nedeniyle Meta'nın yapay zeka eğitimi için Brezilya kullanıcı verilerini işlemesi askıya alındı. AB DPA'larından farklı sonuç — ANPD, meşru menfaatin kabul edilebilirliğinden ziyade şeffaflığa öncelik verdi.
 
-### The irreversibility problem
+### Geri döndürülemezlik sorunu
 
-Cookie-consent was designed for real-time, reversible tracking. Training data is different: once data enters model weights, surgical erasure is not possible. Retraining from scratch is the only complete remediation, and it is prohibitively expensive.
+Çerez onayı, gerçek zamanlı, geri döndürülebilir izleme için tasarlanmıştır. Eğitim verileri farklıdır: Veriler model ağırlıklarına girdikten sonra cerrahi olarak silmek mümkün değildir. Sıfırdan yeniden eğitim tek tam çözümdür ve aşırı derecede pahalıdır.
 
-Partial remediations:
-- **Unlearning.** Approximate removal; measured by MIA (Lesson 22).
-- **Influence function-based localization.** Identify weights most influenced by the data; selectively update.
-- **Fine-tune-suppression.** Train the model to refuse outputs derived from the data.
+Kısmi iyileştirmeler:
+- **Öğrenmeyi unutma.** Yaklaşık kaldırma; MIA ile ölçülmüştür (Ders 22).
+- **Fonksiyona dayalı yerelleştirmeyi etkileyin.** Verilerden en çok etkilenen ağırlıkları belirleyin; seçici olarak güncelleyin.
+- **İnce ayar engelleme.** Modeli, verilerden türetilen çıktıları reddedecek şekilde eğitin.
 
-None fully solve the problem. The compliance window is at collection time.
+Hiçbiri sorunu tam olarak çözmüyor. Uyumluluk penceresi toplama zamanındadır.
 
-### Data Provenance Initiative
+### Veri Kaynak Girişimi
 
-dataprovenance.org. Longpre, Mahari, Lee et al. "Consent in Crisis" (July 2024): large-scale audit of AI training data commons. Finding: publishers are adding robots.txt restrictions at an accelerating rate. The openly-trainable-upon commons is contracting rapidly. 2023 -> 2024 saw about 25% of the top training sources add some restriction. Implication: future training-data availability depends on new acquisition paradigms (licensing, synthetic generation, incentivized participation).
+dataprovenance.org. Longpre, Mahari, Lee ve diğerleri. "Krizde Rıza" (Temmuz 2024): Yapay zeka eğitim veri ortaklarının büyük ölçekli denetimi. Bulgu: yayıncılar artan bir oranda robots.txt kısıtlamaları ekliyor. Açıkça eğitilebilen ortak mallar hızla daralıyor. 2023 -> 2024'te en iyi eğitim kaynaklarının yaklaşık %25'inin bazı kısıtlamalar getirdiği görüldü. Sonuç: Gelecekteki eğitim verilerinin kullanılabilirliği, yeni edinim paradigmalarına (lisanslama, sentetik üretim, teşvikli katılım) bağlıdır.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lesson 26 is model-level documentation. Lesson 27 is dataset-level governance. Together they define the transparency layer. Lesson 28 maps the research ecosystem that works on these questions.
+Ders 26 model düzeyinde dokümantasyondur. Ders 27, dataset düzeyinde yönetişimdir. Birlikte şeffaflık katmanını tanımlarlar. Ders 28, bu sorular üzerinde çalışan araştırma ekosisteminin haritasını çıkarıyor.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` generates a California AB 2013-compliant 12-field dataset summary scaffold for a toy dataset. You can fill the fields and observe which ones trigger privacy or copyright follow-on obligations.
+`code/main.py` , bir oyuncak dataset için Kaliforniya AB 2013 uyumlu 12 alanlı bir dataset özet iskelesi oluşturur. Alanları doldurarak hangilerinin gizlilik veya telif hakkı takip yükümlülüklerini tetiklediğini gözlemleyebilirsiniz.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-provenance-check.md`. Given a dataset used in training, it checks for AB 2013 12-field coverage, opt-out infrastructure compliance, DPA alignment, and irreversibility-risk assessment.
+Bu ders `outputs/skill-provenance-check.md` üretir. Eğitimde kullanılan bir dataset verildiğinde, AB 2013 12 alan kapsamını, devre dışı kalma altyapısı uyumluluğunu, DPA uyumunu ve geri döndürülemezlik-risk değerlendirmesini kontrol eder.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Produce a 12-field summary for a toy dataset and identify which fields are under-specified.
+1. `code/main.py`'yı çalıştırın. Bir dataset oyuncağı için 12 alanlı bir özet oluşturun ve hangi alanların eksik belirtildiğini belirleyin.
 
-2. The EU Copyright Directive TDM opt-out is machine-readable. Propose a standard format for the opt-out signal and compare it to robots.txt and C2PA "No AI Training."
+2. AB Telif Hakkı Direktifi TDM'nin devre dışı bırakılması makine tarafından okunabilir. Opt-out sinyali için standart bir format önerin ve bunu robots.txt ve C2PA "Yapay Zeka Yok Eğitimi" ile karşılaştırın.
 
-3. Read the Data Provenance Initiative's "Consent in Crisis" (July 2024). Describe the three fastest-restricting content categories and argue one economic consequence.
+3. Data Provenance Initiative'in "Krizde Onam" (Temmuz 2024) başlıklı makalesini okuyun. En hızlı kısıtlanan üç içerik kategorisini tanımlayın ve bir ekonomik sonucu tartışın.
 
-4. The 2025 DPA alignment accepts legitimate interest for public-content training. Construct a scenario in which legitimate interest would not suffice and identify the legal basis a provider would need instead.
+4. 2025 DPA uyumu, kamuya açık içerikli eğitime yönelik meşru menfaati kabul etmektedir. Meşru menfaatin yeterli olmayacağı bir senaryo oluşturun ve bunun yerine sağlayıcının ihtiyaç duyacağı yasal dayanağı belirleyin.
 
-5. Sketch a training-data-provenance manifest that composes with the AB 2013 fields and a C2PA-signed provenance chain for each dataset. Identify one technical and one legal barrier.
+5. AB 2013 alanları ve her dataset için C2PA imzalı kaynak zincirinden oluşan bir eğitim-veri-kaynak bildirimi taslağı çizin. Bir teknik ve bir yasal engel belirleyin.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| AB 2013 | "the California law" | Generative AI training-data transparency; 12 mandated fields |
-| TDM exception | "text-and-data-mining" | EU Copyright Directive training-data exception with opt-out |
-| Legitimate interest | "the EU basis" | GDPR Article 6 basis that may justify training on public content |
-| Opt-out signal | "machine-readable no-train" | robots.txt, C2PA "No AI Training," TDM.Reservation |
-| Irreversibility | "cannot un-train" | Data in model weights is not surgically removable |
-| Unlearning | "approximate removal" | Post-training interventions to reduce model dependence on specific data |
-| Consent in Crisis | "the DPI audit" | July 2024 finding of accelerating robots.txt restrictions |
+| AB 2013 | "Kaliforniya kanunu" | Üretken yapay zeka eğitimi-veri şeffaflığı; 12 zorunlu alan |
+| TDM istisnası | "metin ve veri madenciliği" | AB Telif Hakkı Yönergesi eğitim verileri istisnası |
+| Meşru menfaat | "AB temeli" | GDPR Madde 6'nın kamuya açık içerikle ilgili eğitimi haklı gösterebilecek temeli |
+| Devre dışı kalma sinyali | "makine tarafından okunabilen trensiz" | robots.txt, C2PA "Yapay Zeka Eğitimi Yok", TDM.Reservation |
+| Geri döndürülemezlik | "eğitim iptal edilemiyor" | Model ağırlıklarındaki veriler cerrahi olarak çıkarılamaz |
+| Öğrenmeyi Unutma | "yaklaşık kaldırma" | Modelin belirli verilere bağımlılığını azaltmaya yönelik eğitim sonrası müdahaleler |
+| Krizde Rıza | "DPI denetimi" | robots.txt kısıtlamalarının hızlandırılmasına ilişkin Temmuz 2024 bulgusu |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [California AB 2013](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240AB2013) — Generative AI training-data transparency law
-- [EU AI Act + GPAI Code of Practice (Lesson 24)](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai) — Copyright chapter
-- [Longpre, Mahari, Lee et al. — Consent in Crisis (dataprovenance.org, July 2024)](https://www.dataprovenance.org/consent-in-crisis-paper) — DPI audit
-- [IAPP — EU Digital Omnibus GDPR amendments (2025)](https://iapp.org/news/a/eu-digital-omnibus-amendments-to-gdpr-to-facilitate-ai-training-miss-the-mark) — regulatory context
+- [California AB 2013](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240AB2013) — Üretken yapay zeka eğitimi-veri şeffaflığı yasası
+- [AB AI Yasası + GPAI Uygulama Kuralları (Ders 24)](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai) — Telif hakkı bölümü
+- [Longpre, Mahari, Lee ve diğerleri. — Krizde Onam (dataprovenance.org, Temmuz 2024)](https://www.dataprovenance.org/consent-in-crisis-paper) — DPI denetimi
+- [IAPP — EU Digital Omnibus GDPR değişiklikleri (2025)](https://iapp.org/news/a/eu-digital-omnibus-amendments-to-gdpr-to-facilitate-ai-training-miss-the-mark) — düzenleyici bağlam

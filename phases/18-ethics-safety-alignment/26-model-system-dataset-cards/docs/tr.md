@@ -1,120 +1,120 @@
-# Model, System, and Dataset Cards
+# Model, Sistem ve Dataset Kart
 
-> Three documentation formats structure AI transparency. Model Cards (Mitchell et al. 2019) — nutrition labels for models: training data, quantitative disaggregated analyses, ethical considerations, caveats; only 0.3% of Hugging Face model cards document ethical considerations (Oreamuno et al. 2023). Datasheets for Datasets (Gebru et al. 2018, CACM) — motivation, composition, collection process, labeling, distribution, maintenance; electronics-datasheet analogy. Data Cards (Pushkarna et al., Google 2022) — modular layered detail (telescopic, periscopic, microscopic) as boundary objects for diverse readers. 2024-2025 developments: automated generation via LLMs (CardGen, Liu et al. 2024); model-card detail correlates with up to 29% download increase on HF (Liang et al. 2024); verifiable attestations (Laminator, Duddu et al. 2024); sustainability reporting additions for carbon/water (Jouneaux et al. July 2025); EU/ISO regulatory cards emerging. System Cards (Sidhpurwala 2024; Meta system-level transparency; "Blueprints of Trust" arXiv:2509.20394) — end-to-end AI system documentation covering security capabilities, prompt-injection protection, data-exfiltration detection, alignment with human values.
+> Üç belge formatı yapay zeka şeffaflığını yapılandırır. Model Kartları (Mitchell ve diğerleri 2019) — modeller için beslenme etiketleri: eğitim verileri, niceliksel olarak ayrıştırılmış analizler, etik hususlar, uyarılar; Hugging Face model kartlarının yalnızca %0,3'ü etik hususları belgelemektedir (Oreamuno ve ark. 2023). Dataset'lar için veri sayfaları (Gebru ve diğerleri 2018, CACM) — motivasyon, kompozisyon, toplama süreci, etiketleme, dağıtım, bakım; elektronik-veri sayfası benzetmesi. Veri Kartları (Pushkarna ve diğerleri, Google 2022) — farklı okuyucular için sınır nesneleri olarak modüler katmanlı ayrıntı (teleskopik, periskopik, mikroskobik). 2024-2025 gelişmeleri: LLM'ler aracılığıyla otomatik üretim (CardGen, Liu ve diğerleri 2024); model kartı ayrıntısı, HF'de %29'a varan indirme artışıyla ilişkilidir (Liang ve ark. 2024); doğrulanabilir kanıtlar (Laminator, Duddu ve diğerleri 2024); karbon/su için sürdürülebilirlik raporu eklemeleri (Jouneaux ve diğerleri Temmuz 2025); AB/ISO düzenleme kartları ortaya çıkıyor. Sistem Kartları (Sidhpurwala 2024; Meta sistem düzeyinde şeffaflık; "Güven Planları" arXiv:2509.20394) — güvenlik özelliklerini, prompt-enjeksiyon korumasını, veri sızma tespitini, insani değerlerle uyumu kapsayan uçtan uca yapay zeka sistem belgeleri.
 
-**Type:** Build
-**Languages:** Python (stdlib, model-card + datasheet + system-card generator)
-**Prerequisites:** Phase 18 · 18 (safety frameworks), Phase 18 · 24 (regulatory)
-**Time:** ~60 minutes
+**Tür:** Yapım
+**Diller:** Python (stdlib, model kartı + veri sayfası + sistem kartı oluşturucu)
+**Önkoşullar:** Aşama 18 · 18 (güvenlik framework'ler), Aşama 18 · 24 (düzenleyici)
+**Süre:** ~60 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Describe the original Mitchell et al. 2019 model card and the Gebru et al. 2018 datasheet.
-- Describe Data Cards' telescopic/periscopic/microscopic layering.
-- Describe System Cards and their end-to-end coverage.
-- State three 2024-2025 developments (automated generation, verifiable attestations, sustainability reporting).
+- Orijinal Mitchell ve ark.'nı tanımlayın. 2019 model kart ve Gebru vd. 2018 veri sayfası.
+- Veri Kartlarının teleskopik/periskopik/mikroskobik katmanlamasını açıklayın.
+- Sistem Kartlarını ve bunların uçtan uca kapsamını açıklayın.
+- 2024-2025'e ilişkin üç gelişmeyi belirtin (otomatik üretim, doğrulanabilir tasdikler, sürdürülebilirlik raporlaması).
 
-## The Problem
+## Sorun
 
-Regulatory frameworks (Lesson 24) and lab safety policies (Lesson 18) both require documentation. Documentation formats evolved from model-specific (model cards) to dataset-specific (datasheets) to system-specific (system cards). Each addresses a different scope of transparency. The 2024-2025 automation and verifiable-attestation work addresses the long-standing adoption problem.
+Düzenleyici framework'ler (Ders 24) ve laboratuvar güvenliği politikalarının (Ders 18) her ikisi de belgelendirme gerektirir. Dokümantasyon formatları, modele özel (model kartları), dataset'ye özel (veri sayfaları), oradan da sisteme özel (sistem kartları) şekilde gelişti. Her biri farklı bir şeffaflık kapsamına hitap ediyor. 2024-2025 otomasyonu ve doğrulanabilir tasdik çalışması, uzun süredir devam eden benimseme sorununu ele alıyor.
 
-## The Concept
+## Konsept
 
-### Model Cards (Mitchell et al. 2019)
+### Model Kartlar (Mitchell ve diğerleri 2019)
 
-Sections:
-- Model details.
-- Intended use.
-- Factors (relevant demographic or environmental factors for evaluation).
-- Metrics.
-- Evaluation data.
-- Training data.
-- Quantitative analyses (disaggregated by factors).
-- Ethical considerations.
-- Caveats and recommendations.
+Bölümler:
+- Model ayrıntıları.
+- Kullanım amacı.
+- Faktörler (değerlendirme için ilgili demografik veya çevresel faktörler).
+- Metrikler.
+- Değerlendirme verileri.
+- Eğitim verileri.
+- Kantitatif analizler (faktörlere göre ayrıştırılmış).
+- Etik hususlar.
+- Uyarılar ve öneriler.
 
-Adoption problem: Oreamuno et al. 2023 audit of Hugging Face model cards found only 0.3% document ethical considerations.
+Evlat edinme sorunu: Oreamuno ve ark. Hugging Face model kartların 2023 denetiminde yalnızca %0,3'ünün etik hususları belgelediği bulundu.
 
-### Datasheets for Datasets (Gebru et al. 2018)
+### Dataset'lar için veri sayfaları (Gebru ve diğerleri 2018)
 
-Electronics-datasheet analogy. Sections:
-- Motivation (why was the dataset created).
-- Composition (what is in it).
-- Collection process (how was it assembled).
-- Labeling (if applicable).
-- Uses (intended, prohibited, risks).
-- Distribution.
-- Maintenance.
+Elektronik-veri sayfası benzetmesi. Bölümler:
+- Motivasyon (neden dataset oluşturuldu).
+- Kompozisyon (içinde ne var).
+- Toplama süreci (nasıl bir araya getirildi).
+- Etiketleme (varsa).
+- Kullanımlar (amaçlanan, yasaklanan, riskler).
+- Dağıtım.
+- Bakım.
 
-Published in CACM 2021. The datasheet is the upstream documentation; the model card depends on the datasheet being accurate.
+CACM 2021'de yayınlandı. Veri sayfası yukarı yöndeki belgelerdir; model kartı veri sayfasının doğru olmasına bağlıdır.
 
-### Data Cards (Pushkarna et al., Google 2022)
+### Veri Kartları (Pushkarna ve diğerleri, Google 2022)
 
-Modular layered detail. Three zoom levels:
-- **Telescopic.** High-level summary for non-experts.
-- **Periscopic.** Middle-level overview for ML practitioners.
-- **Microscopic.** Detailed feature-level documentation for auditors.
+Modüler katmanlı detay. Üç yakınlaştırma düzeyi:
+- **Teleskopik.** Uzman olmayanlar için üst düzey özet.
+- **Periskopik.** Makine öğrenimi uygulayıcıları için orta düzeyde genel bakış.
+- **Mikroskobik.** Denetleyiciler için ayrıntılı özellik düzeyinde belgeler.
 
-Boundary-object framing: different readers extract different information from the same document.
+Sınır-nesne çerçeveleme: farklı okuyucular aynı belgeden farklı bilgiler çıkarır.
 
-### System Cards
+### Sistem Kartları
 
-Scope: end-to-end AI system including model + safety stack + deployment context. Sections typically include:
-- Security capabilities.
-- Prompt-injection protection.
-- Data-exfiltration detection.
-- Alignment with stated human values.
-- Incident response.
+Kapsam: Model + güvenlik yığını + deployment bağlamını içeren uçtan uca yapay zeka sistemi. Bölümler genellikle şunları içerir:
+- Güvenlik yetenekleri.
+- Prompt-enjeksiyon koruması.
+- Veri sızıntısı tespiti.
+- Belirtilen insani değerlere uyum.
+- Olaya müdahale.
 
-Sidhpurwala 2024 and Meta system-level transparency work. "Blueprints of Trust" (arXiv:2509.20394) formalizes the System Card as the deployment-layer complement to Model Cards.
+Sidhpurwala 2024 ve Meta sistem düzeyinde şeffaflık çalışması. "Güven Planları" (arXiv:2509.20394), Sistem Kartını Model Kartların deployment-katman tamamlayıcısı olarak resmileştirir.
 
-### 2024-2025 developments
+### 2024-2025 gelişmeleri
 
-- **CardGen (Liu et al. 2024).** Automated model-card generation via LLMs; reports higher objectivity than many human-authored cards on the standardized Mitchell 2019 fields.
-- **Download correlation (Liang et al. 2024).** Detailed model cards correlate with up to 29% higher download rates on HF — adoption pressure is now market-driven, not only compliance-driven.
-- **Laminator (Duddu et al. 2024).** Verifiable attestations via hardware TEE / cryptographic signatures — allows the model card to carry a proof-of-claim, not just a claim.
-- **Sustainability (Jouneaux et al. July 2025).** Additions for carbon, water, and compute-energy footprint; emerging ISO standards.
-- **Regulatory cards.** EU AI Act (Lesson 24) GPAI Code of Practice Transparency chapter requires model cards as a compliance artifact.
+- **CardGen (Liu ve diğerleri 2024).** LLM'ler yoluyla otomatik model kart üretimi; standartlaştırılmış Mitchell 2019 alanlarında insan tarafından yazılan birçok karttan daha yüksek objektiflik rapor ediyor.
+- **İndirme korelasyonu (Liang ve ark. 2024).** Ayrıntılı model kartları, HF'de %29'a kadar daha yüksek indirme oranlarıyla ilişkilidir — benimseme baskısı artık yalnızca uyumluluk odaklı değil, pazar odaklıdır.
+- **Laminatör (Duddu ve ark. 2024).** Donanım TEE / kriptografik imzalar aracılığıyla doğrulanabilir tasdikler — model kartının yalnızca bir iddia değil, bir iddia kanıtı taşımasına olanak tanır.
+- **Sürdürülebilirlik (Jouneaux ve diğerleri Temmuz 2025).** Karbon, su ve bilgi işlem enerjisi ayak izine yönelik eklemeler; ortaya çıkan ISO standartları.
+- **Düzenleyici kartlar.** AB AI Yasası (Ders 24) GPAI Uygulama Kuralları Şeffaflık bölümü, uyumluluk olarak model kartları gerektirir artifact.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lessons 24-25 are regulatory and CVE layers. Lesson 26 is the documentation layer. Lesson 27 is training-data governance, which is the datasheet's upstream. Lesson 28 is the research ecosystem that produces evaluations referenced in cards.
+24-25. dersler düzenleyici ve CVE katmanlarıdır. Ders 26 dokümantasyon katmanıdır. Ders 27, veri sayfasının yukarı akışı olan eğitim-veri yönetimidir. Ders 28, kartlarda atıfta bulunulan değerlendirmeleri üreten araştırma ekosistemidir.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` generates a minimal model card, datasheet, and system card for a toy deployment. Each follows the canonical section structure. You can inspect the format and compare the three scopes.
+`code/main.py` , bir deployment oyuncağı için minimum model kartı, veri sayfası ve sistem kartını oluşturur. Her biri kanonik bölüm yapısını takip eder. Formatı inceleyebilir ve üç kapsamı karşılaştırabilirsiniz.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-card-audit.md`. Given a model card, datasheet, or system card, it audits section coverage, numerical disaggregation, and whether verifiable attestations are present.
+Bu ders `outputs/skill-card-audit.md` üretir. Bir model kartı, veri sayfası veya sistem kartı verildiğinde bölüm kapsamını, sayısal ayrıştırmayı ve doğrulanabilir kanıtların mevcut olup olmadığını denetler.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Inspect the generated cards. Identify sections that are weak (placeholder-only) and specify what evidence would strengthen them.
+1. `code/main.py`'yı çalıştırın. Oluşturulan kartları inceleyin. Zayıf olan bölümleri belirleyin (yalnızca yer tutucu) ve bunları hangi kanıtların güçlendireceğini belirtin.
 
-2. Extend the model card with a quantitative disaggregated analysis across two demographic groups (Lesson 20).
+2. Model kartını niceliksel olarak ayrıştırılmış bir analizle iki demografik gruba genişletin (Ders 20).
 
-3. Read Oreamuno et al. 2023 on the 0.3% adoption rate. Propose one structural change to the model card specification that would increase ethical-considerations adoption.
+3. Oreamuno ve ark.'nı okuyun. 2023'te %0,3 benimseme oranı. Model kartı spesifikasyonunda, etik hususların benimsenmesini artıracak bir yapısal değişiklik önerin.
 
-4. Laminator (Duddu et al. 2024) uses TEEs for verifiable attestations. Design a model-card field that carries a cryptographic attestation of an evaluation result and describe the verifier's role.
+4. Laminatör (Duddu ve ark. 2024) doğrulanabilir tasdikler için TEE'leri kullanır. Bir değerlendirme sonucunun kriptografik kanıtını taşıyan ve doğrulayıcının rolünü açıklayan bir model kart alanı tasarlayın.
 
-5. Write a System Card (System Card, not Model Card) for one of your past projects or a hypothetical deployment. Identify the highest-value section for third-party auditors.
+5. Geçmiş projelerinizden biri veya varsayımsal bir deployment için bir Sistem Kartı (Sistem Kartı, Model Kartı değil) yazın. Üçüncü taraf denetçiler için en yüksek değere sahip bölümü belirleyin.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| Model Card | "the Mitchell card" | Mitchell et al. 2019 standard documentation for ML models |
-| Datasheet | "the Gebru datasheet" | Gebru et al. 2018 standard documentation for datasets |
-| Data Card | "the Pushkarna card" | Google 2022 modular layered data documentation |
-| System Card | "the deployment card" | End-to-end AI system documentation including safety stack |
-| Boundary object | "different readers, one doc" | Data Cards framing: same document serves diverse audiences |
-| Verifiable attestation | "the Laminator attestation" | Cryptographic or TEE proof attached to a documentation claim |
-| Sustainability field | "carbon / water footprint" | Emerging 2025 addition for environmental accounting |
+| Modeli Kartı | "Mitchell kartı" | Mitchell ve ark. ML modelleri için 2019 standart belgeleri |
+| Veri Sayfası | "Gebru veri sayfası" | Gebru ve ark. dataset'ler için 2018 standart belgeleri |
+| Veri Kartı | "Pushkarna kartı" | Google 2022 modüler katmanlı veri belgeleri |
+| Sistem Kartı | "deployment kartı" | Güvenlik yığınını da içeren uçtan uca yapay zeka sistemi belgeleri |
+| Sınır nesnesi | "farklı okuyucular, tek belge" | Veri Kartları çerçevesi: aynı belge farklı hedef kitlelere hizmet ediyor |
+| Doğrulanabilir tasdik | "Laminatör onayı" | Belge talebine eklenen kriptografik veya TEE kanıtı |
+| Sürdürülebilirlik alanı | "karbon/su ayak izi" | Çevre muhasebesine yönelik 2025'te öne çıkan eklemeler |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Mitchell et al. — Model Cards for Model Reporting (arXiv:1810.03993, FAT* 2019)](https://arxiv.org/abs/1810.03993) — the canonical model card
-- [Gebru et al. — Datasheets for Datasets (CACM 2021, arXiv:1803.09010)](https://arxiv.org/abs/1803.09010) — datasheet paper
-- [Pushkarna et al. — Data Cards (Google 2022)](https://arxiv.org/abs/2204.01075) — layered data documentation
-- [Sidhpurwala et al. — Blueprints of Trust (arXiv:2509.20394)](https://arxiv.org/abs/2509.20394) — System Card formalization
+- [Mitchell ve ark. — Model Raporlama için Model Kartları (arXiv:1810.03993, FAT* 2019)](https://arxiv.org/abs/1810.03993) — kanonik model kartı
+- [Gebru ve ark. — Dataset'ler için veri sayfaları (CACM 2021, arXiv:1803.09010)](https://arxiv.org/abs/1803.09010) — veri sayfası kağıdı
+- [Pushkarna ve ark. — Veri Kartları (Google 2022)](https://arxiv.org/abs/2204.01075) — katmanlı veri dokümantasyonu
+- [Sidhpurwala ve ark. — Güven Planları (arXiv:2509.20394)](https://arxiv.org/abs/2509.20394) — Sistem Kartı resmileştirmesi

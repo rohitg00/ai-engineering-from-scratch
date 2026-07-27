@@ -1,6 +1,6 @@
-# Değerlendirme: Benchmarks, Evals, LM Harness
+# Değerlendirme: Benchmark'ler, Evals, LM Harness
 
-> Goodhart Yasası: Bir ölçü hedef haline geldiğinde iyi bir ölçü olmaktan çıkar. Her sınır laboratuvar oyunu benchmarks. MMLU puanları yükselirken modeller hâlâ "çilek"teki R sayısını güvenilir bir şekilde sayamıyor. Önemli olan tek değerlendirme SİZİN görevinizde, SİZİN verilerinizle yapacağınız değerlendirmedir.
+> Goodhart Yasası: Bir ölçü hedef haline geldiğinde iyi bir ölçü olmaktan çıkar. Tüm sınır laboratuvar oyunları benchmark'ler. MMLU puanları yükselirken modeller hâlâ "çilek"teki R sayısını güvenilir bir şekilde sayamıyor. Önemli olan tek değerlendirme SİZİN görevinizde, SİZİN verilerinizle yapacağınız değerlendirmedir.
 
 **Tür:** Yapım
 **Diller:** Python
@@ -9,8 +9,8 @@
 
 ## Öğrenme Hedefleri
 
-- Bir dil modeline karşı çoktan seçmeli ve açık uçlu benchmark'ları çalıştıran özel bir değerlendirme sistemi oluşturun
-- Standart benchmark'ların (MMLU, HumanEval) neden sınır modellerini doyurduğunu ve ayırt etmekte başarısız olduğunu açıklayın
+- Çoktan seçmeli ve açık uçlu benchmark'leri bir dil modeline göre çalıştıran özel bir değerlendirme sistemi oluşturun
+- Standart benchmark'lerin (MMLU, HumanEval) neden sınır modellerini doyurduğunu ve ayırt etmekte başarısız olduğunu açıklayın
 - Göreve özgü değerlendirmeleri uygun ölçümlerle uygulayın: tam eşleşme, F1, BLEU ve hakem olarak LLM puanlaması
 - Yalnızca herkese açık skor tablolarına güvenmek yerine, özel kullanım durumunuzu hedefleyen özel bir değerlendirme paketi tasarlayın
 
@@ -20,9 +20,9 @@ MMLU, 2020 yılında 57 konuda 15.908 soruyla yayınlandı. Üç yıl içinde s�
 
 Bu arada aynı modeller, 10 yaşındaki bir çocuğun düşünmeden yerine getirdiği görevlerde başarısız oluyor. Claude 3.5 MMLU'da %88,7 puan alan Sonnet, başlangıçta "çilek" kelimesindeki harfleri sayamadı; bu, sıfır dünya bilgisi ve sıfır muhakeme gerektiren, sadece karakter düzeyinde yineleme gerektiren bir görevdir. HumanEval, kod oluşturmayı 164 problemle test eder. Modeller %90'ın üzerinde puan alırken, herhangi bir genç geliştiricinin yakalayabileceği uç durumlarda çöken kodlar üretmeye devam ediyor.
 
-benchmark performansı ile gerçek dünya güvenilirliği arasındaki boşluk, Yüksek Lisans değerlendirmesinin temel sorunudur. Benchmark'ler size bir modelin benchmark üzerinde nasıl performans gösterdiğini anlatır. Size, belirli hata modlarınız altında, bu modelin belirli görevinizde, belirli verilerinizle nasıl performans göstereceği hakkında neredeyse hiçbir şey söylemezler. Bir müşteri destek botu oluşturuyorsanız MMLU'nun bir önemi yoktur. Bir kod asistanı oluşturuyorsanız HumanEval yalnızca işlev düzeyinde oluşturmayı kapsar; dosyalar arasında kodun hata ayıklaması, yeniden düzenlenmesi veya açıklanması hakkında hiçbir şey söylemez.
+benchmark performansı ile gerçek dünyadaki güvenilirlik arasındaki boşluk, LLM değerlendirmesinin temel sorunudur. Benchmark'ler size bir modelin benchmark'de nasıl performans gösterdiğini anlatır. Size, belirli hata modlarınız altında, bu modelin belirli görevinizde, belirli verilerinizle nasıl performans göstereceği hakkında neredeyse hiçbir şey söylemezler. Bir müşteri destek botu oluşturuyorsanız MMLU'nun bir önemi yoktur. Bir kod asistanı oluşturuyorsanız HumanEval yalnızca işlev düzeyinde oluşturmayı kapsar; dosyalar arasında kodun hata ayıklaması, yeniden düzenlenmesi veya açıklanması hakkında hiçbir şey söylemez.
 
-Özel değerlendirmelere ihtiyacınız var. benchmark'lar işe yaramaz oldukları için değil -- kaba model seçimi için faydalıdırlar -- fakat son değerlendirmenin deployment koşullarınıza tam olarak uyması gerektiği için.
+Özel değerlendirmelere ihtiyacınız var. benchmark'ler işe yaramaz olduğu için değil - kaba model seçimi için faydalıdırlar - ancak son değerlendirmenin deployment koşullarınıza tam olarak uyması gerektiği için.
 
 ## Konsept
 
@@ -30,11 +30,11 @@ benchmark performansı ile gerçek dünya güvenilirliği arasındaki boşluk, Y
 
 Her biri farklı maliyet ve sinyal kalitesine sahip üç değerlendirme kategorisi vardır.
 
-**Benchmarks** standartlaştırılmış test paketleridir. MMLU, HumanEval, SWE-bench, MATH, ARC, HellaSwag. benchmark'ya karşı bir model çalıştırırsınız ve bir puan alırsınız. Avantajı: Herkes aynı testi kullanır, böylece modelleri karşılaştırabilirsiniz. Dezavantajı: modeller ve eğitim verileri bu benchmark'ları giderek daha fazla kirletiyor. Laboratuvarlar, benchmark soruyu içeren veriler üzerinde eğitim verir. Puanlar artıyor. Yetenek olmayabilir.
+**Benchmark'ler** standartlaştırılmış test paketleridir. MMLU, HumanEval, SWE-bench, MATH, ARC, HellaSwag. benchmark'ye karşı bir model çalıştırıyorsunuz ve bir puan alıyorsunuz. Avantajı: Herkes aynı testi kullanır, böylece modelleri karşılaştırabilirsiniz. Dezavantajı: modeller ve eğitim verileri bu benchmark'leri giderek daha fazla kirletiyor. Laboratuvarlar, benchmark sorularını içeren veriler üzerinde eğitim verir. Puanlar artıyor. Yetenek olmayabilir.
 
 **Özel değerlendirmeler**, özel kullanım durumunuz için oluşturduğunuz test paketleridir. Girdileri, beklenen çıktıları ve puanlama işlevini tanımlarsınız. Yasal belge özetleyicisi yasal belgeler üzerinde değerlendirilir. Bir SQL oluşturucu veritabanı şemanızda değerlendirilir. Bunları oluşturmak pahalıdır ancak üretim performansını tahmin eden tek değerlendirmedir.
 
-**İnsan değerlendirmeleri** model çıktılarını yararlılık, doğruluk, akıcılık ve güvenlik gibi kriterlere göre değerlendirmek için ücretli ek açıklamaları kullanır. Otomatik puanlamanın başarısız olduğu açık uçlu görevler için altın standart. Chatbot Arena, 100'den fazla modelde 2 milyondan fazla insan tercihi oyu topladı. Dezavantajı: maliyet ($0.10-$yargı başına 2,00) ve hız (saatlerden günlere).
+**İnsan değerlendirmeleri** model çıktılarını yararlılık, doğruluk, akıcılık ve güvenlik gibi kriterlere göre değerlendirmek için ücretli ek açıklamaları kullanır. Otomatik puanlamanın başarısız olduğu açık uçlu görevler için altın standart. Chatbot Arena, 100'den fazla modelde 2 milyondan fazla insan tercihi oyu topladı. Dezavantajı: maliyet (yargı başına $0.10-$2,00) ve hız (saatlerden günlere).
 
 ```mermaid
 graph TD
@@ -53,25 +53,25 @@ graph TD
     style H fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-### Neden BenchmarkMola
+### Neden Benchmark'ler Kırılıyor?
 
 Üç mekanizma, benchmark puanlarının gerçek yeteneği yansıtmayı durdurmasına neden olur.
 
-**Veri kirliliği.** Eğitim kurumları interneti sıyırıyor. Benchmark soru internette yayınlanıyor. Modeller eğitim sırasında cevapları görür. Bu, geleneksel anlamda hile değildir; laboratuvarlar kasıtlı olarak benchmark verilerini içermez. Ancak web ölçeğinde kazıma, hariç tutmayı neredeyse imkansız hale getiriyor.
+**Veri kirliliği.** Eğitim kurumları interneti sıyırıyor. Benchmark soruları internette yayında. Modeller eğitim sırasında cevapları görür. Bu, geleneksel anlamda bir hile değildir; laboratuvarlar kasıtlı olarak benchmark verilerini içermez. Ancak web ölçeğinde kazıma, hariç tutmayı neredeyse imkansız hale getiriyor.
 
-**Test için öğretim.** Laboratuvarlar, eğitim karışımlarını benchmark performansına göre optimize eder. Eğitim karışımının %5'i MMLU tarzı çoktan seçmeliyse model, formatı ve cevap dağılımını öğrenir. MMLU 4 yönlü çoktan seçmeli bir sistemdir. Modeller, A/B/C/D genelinde yanıt dağılımının yaklaşık olarak aynı olduğunu öğrenir; bu, modelin yanıtı bilmediği durumlarda bile yardımcı olur.
+**Test için öğretme.** Laboratuvarlar, benchmark performansı için eğitim karışımlarını optimize eder. Eğitim karışımının %5'i MMLU tarzı çoktan seçmeliyse model, formatı ve cevap dağılımını öğrenir. MMLU 4 yönlü çoktan seçmeli bir sistemdir. Modeller, A/B/C/D genelinde yanıt dağılımının yaklaşık olarak aynı olduğunu öğrenir; bu, modelin yanıtı bilmediği durumlarda bile yardımcı olur.
 
-**Doygunluk.** Her sınır modeli bir benchmark üzerinde %85-90 puan aldığında, benchmark ayrım yapmayı bırakır. Soruların geri kalan %10-15'i belirsiz olabilir, yanlış etiketlenmiş olabilir veya belirsiz alan bilgisi gerektirebilir. MMLU'da %87'den %89'a iyileşme, modelin daha akıllı hale geldiği anlamına değil, iki belirsiz soruyu daha ezberlediği anlamına gelebilir.
+**Doygunluk.** Her sınır modeli benchmark'de %85-90 puan aldığında, benchmark ayrım yapmayı bırakır. Soruların geri kalan %10-15'i belirsiz olabilir, yanlış etiketlenmiş olabilir veya belirsiz alan bilgisi gerektirebilir. MMLU'da %87'den %89'a iyileşme, modelin daha akıllı hale geldiği anlamına değil, iki belirsiz soruyu daha ezberlediği anlamına gelebilir.
 
 ### Şaşkınlık: Hızlı Bir Durum Kontrolü
 
-Şaşkınlık, bir modelin token dizisiyle ne kadar şaşırdığını ölçer. Biçimsel olarak, üstelleştirilmiş ortalama negatif log-olasılıktır:
+Şaşkınlık, bir modelin token dizisinden ne kadar şaşırdığını ölçer. Biçimsel olarak, üstelleştirilmiş ortalama negatif log-olasılıktır:
 
 ```
 PPL = exp(-1/N * sum(log P(token_i | context)))
 ```
 
-10'luk bir şaşkınlık, modelin ortalama olarak her token konumunda 10 seçenek arasından tekdüze seçim yapmak kadar belirsiz olduğu anlamına gelir. Daha düşük olması daha iyidir. GPT-2, WikiText-103'te ~30'luk bir şaşkınlık elde ediyor. GPT-3 ~20 alır. Llama 3 8B ~7 alır.
+10'luk bir şaşkınlık, modelin ortalama olarak her token konumunda 10 seçenek arasından tek tip seçim yapmak kadar belirsiz olduğu anlamına gelir. Daha düşük olması daha iyidir. GPT-2, WikiText-103'te ~30'luk bir şaşkınlık elde ediyor. GPT-3 ~20 alır. Lama 3 8B ~7 alır.
 
 Şaşkınlık, aynı test kümesindeki modelleri karşılaştırmak için kullanışlıdır ancak kör noktaları vardır. Bir model, ortak kalıpları tahmin etmede iyiyken, nadir fakat önemli kalıplarda berbat olması nedeniyle düşük kafa karışıklığına sahip olabilir. Aynı zamanda talimatları takip etme, akıl yürütme veya olgusal doğruluk hakkında da hiçbir şey söylemez. Bunu nihai bir karar olarak değil, akıl sağlığı kontrolü olarak kullanın.
 
@@ -79,15 +79,15 @@ PPL = exp(-1/N * sum(log P(token_i | context)))
 
 Daha zayıf bir modelin çıktısını değerlendirmek için güçlü bir model kullanın. Fikir basit: GPT-4o veya Claude Sonnet'ten bir yanıtı doğruluk, yararlılık ve güvenlik açısından 1'den 5'e kadar derecelendirmelerini isteyin. Bu, GPT-4o-mini ile değerlendirme başına yaklaşık 0,01 ABD dolarıdır ve insan kararlarıyla şaşırtıcı derecede iyi bir korelasyon gösterir; çoğu görevde yaklaşık %80 anlaşma.
 
-prompt puanlaması modelden daha önemlidir. Belirsiz bir prompt ("Bu yanıtı derecelendirin") gürültülü puanlar üretir. Dereceli puanlama anahtarı içeren yapılandırılmış bir prompt ("Cevap gerçekten doğruysa ve bir kaynaktan alıntı yapıyorsa 5 puan, doğru ancak kaynaksızsa 4, kısmen doğruysa 3...") tutarlı, tekrarlanabilir puanlar üretir.
+Puanlama prompt modelden daha önemlidir. Belirsiz bir prompt ("Bu yanıtı derecelendirin") gürültülü puanlar üretir. Bir değerlendirme listesi içeren yapılandırılmış bir prompt ("Cevap gerçekten doğruysa ve bir kaynaktan alıntı yapıyorsa 5 puan, doğru ancak kaynaksızsa 4, kısmen doğruysa 3...") tutarlı, tekrarlanabilir puanlar üretir.
 
 Başarısızlık modları: Yargıç modelleri konum yanlılığı (ikili karşılaştırmalarda ilk yanıtı tercih eder), ayrıntı yanlılığı (daha uzun yanıtları tercih eder) ve kendi tercihini (GPT-4, GPT-4 çıktılarını eşdeğer Claude çıktılarından daha yüksek olarak değerlendirir) sergiler. Azaltıcı önlemler: rastgele sıralama, uzunluğa göre normalleştirme, değerlendirilen modelden farklı bir yargıç kullanma.
 
 ### İkili Karşılaştırmalardan ELO Derecelendirmeleri
 
-Chatbot Arena'nın yaklaşımı. Aynı prompt'ya farklı modellerden iki yanıt gösterin. Bir insan (veya LLM yargıcı) daha iyi olanı seçer. Bu karşılaştırmaların binlercesinden her model için bir ELO derecesi hesaplayın; satrançta kullanılan sistemin aynısı.
+Chatbot Arena'nın yaklaşımı. Farklı modellerden aynı prompt'ye verilen iki yanıtı gösterin. Bir insan (veya LLM yargıcı) daha iyi olanı seçer. Bu karşılaştırmaların binlercesinden her model için bir ELO derecesi hesaplayın; satrançta kullanılan sistemin aynısı.
 
-ELO'nun avantajları: göreceli sıralama, mutlak puanlamadan daha güvenilirdir, bağları daha iyi ele alır ve her çıktıyı bağımsız olarak puanlamaktan daha az karşılaştırmayla birleşir. 2026 başı itibarıyla, Chatbot Arena sıralamalarında GPT-4o, Claude 3.5 Sonnet ve Gemini 1.5 Pro birbirlerinden 20 ELO puanı uzakta en üstte yer alıyor.
+ELO'nun avantajları: göreceli sıralama, mutlak puanlamadan daha güvenilirdir, bağları daha iyi ele alır ve her çıktıyı bağımsız olarak puanlamaktan daha az karşılaştırmayla birleşir. 2026'nın başlarından itibaren Chatbot Arena sıralamalarında GPT-4o, Claude 3.5 Sonnet ve Gemini 1.5 Pro birbirlerinden 20 ELO puanı uzakta en üstte görünüyor.
 
 ```mermaid
 graph LR
@@ -106,13 +106,13 @@ graph LR
     style E fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-### Framework'ları değerlendir
+### Framework'leri değerlendirin
 
 **lm-evaluation-harness** (EleutherAI): standart açık kaynaklı değerlendirme framework. 200'den fazla benchmark'yi destekler. Herhangi bir Hugging Face modelini tek komutla MMLU, HellaSwag, ARC vb.'ye karşı çalıştırın. Open LLM Leaderboard tarafından kullanılır.
 
-**RAGAS**: özellikle RAG boru hatları için değerlendirme framework. Doğruluğu (cevap alınan bağlamla eşleşiyor mu?), alaka düzeyini (alınan bağlam soruyla alakalı mı?) ve yanıtın doğruluğunu ölçer.
+**RAGAS**: framework'nin özellikle RAG boru hatları için değerlendirilmesi. Doğruluğu (cevap alınan bağlamla eşleşiyor mu?), alaka düzeyini (alınan bağlam soruyla alakalı mı?) ve yanıtın doğruluğunu ölçer.
 
-**promptfoo**: prompt mühendisliği için yapılandırmaya dayalı değerlendirme. YAML'de test senaryolarını tanımlayın, birden fazla modelde çalıştırın, başarılı/başarısız raporu alın. prompts regresyon testi için kullanışlıdır -- bir prompt değişikliğinin mevcut test senaryolarını bozmadığından emin olun.
+**promptfoo**: prompt mühendisliği için yapılandırmaya dayalı değerlendirme. YAML'de test senaryolarını tanımlayın, birden fazla modelde çalıştırın, başarılı/başarısız raporu alın. prompt'lerin regresyon testi için kullanışlıdır -- prompt değişikliğinin mevcut test senaryolarını bozmadığından emin olun.
 
 ### Özel Değerlendirmeler Oluşturma
 
@@ -126,7 +126,7 @@ graph LR
 
 4. **Otomatikleştirin.** Her değerlendirme tek komutla çalışır. Manuel adım yok. Sonuçları zaman içinde karşılaştırmaya olanak tanıyan bir biçimde saklayın.
 
-5. **Zaman içinde takip edin.** Değerlendirme puanı tek başına anlamsızdır. Trend çizgisine ihtiyacınız var. Son prompt değişikliğinden sonra puan arttı mı? Model değiştirdikten sonra geriledi mi? Değerlendirmenizi prompt'larınızla birlikte sürümleyin.
+5. **Zaman içinde takip edin.** Değerlendirme puanı tek başına anlamsızdır. Trend çizgisine ihtiyacınız var. Son prompt değişikliğinden sonra puan arttı mı? Model değiştirdikten sonra geriledi mi? Değerlendirmenizi prompt'lerinizle birlikte sürümlendirin.
 
 | Değerlendirme Türü | Karar başına maliyet | İnsanlarla Anlaşma | Şunun için en iyisi |
 |-----------|------------------|----------------------|----------|
@@ -179,7 +179,7 @@ class EvalSuite:
 
 ### Adım 2: Puanlama İşlevleri
 
-Tam eşleşme, token F1 ve simüle edilmiş bir hakem olarak yüksek lisans puanlayıcısı oluşturun.
+Tam eşleşme, token F1 ve simüle edilmiş bir yüksek lisans hakemi puanlayıcısı oluşturun.
 
 ```python
 def exact_match(prediction, expected):
@@ -371,7 +371,7 @@ print_summary(summarize_results(results_good), "Model A (concise)")
 print_summary(summarize_results(results_bad), "Model B (verbose)")
 ```
 
-"İyi" model kesin cevaplar verir. "Kötü" model ayrıntılı açıklamalar verir. Tam eşleşme, ayrıntılı modeli ciddi şekilde cezalandırır. Token F1 ve yüksek lisans hakemi olarak daha bağışlayıcıdır. Bu, metrik seçiminin neden önemli olduğunu gösteriyor: Nasıl puanladığınıza bağlı olarak aynı model harika ya da berbat görünüyor.
+"İyi" model kesin cevaplar verir. "Kötü" model ayrıntılı açıklamalar verir. Tam eşleşme, ayrıntılı modeli ciddi şekilde cezalandırır. Token F1 ve yüksek lisans jürisi daha bağışlayıcıdır. Bu, metrik seçiminin neden önemli olduğunu gösteriyor: Nasıl puanladığınıza bağlı olarak aynı model harika ya da berbat görünüyor.
 
 ### Adım 7: ELO Turnuvası
 
@@ -418,7 +418,7 @@ for quality, label in [(0.9, "Strong model"), (0.7, "Medium model"), (0.4, "Weak
 
 ### lm-değerlendirme-koşumu (EleutherAI)
 
-benchmark'ları herhangi bir modelde çalıştırmak için standart araç.
+benchmark'leri herhangi bir modelde çalıştırmak için standart araç.
 
 ```python
 # pip install lm-eval
@@ -480,19 +480,19 @@ RAGAS, genel değerlendirmelerin neyi gözden kaçırdığını ölçer: modelin
 
 ## Gönderin
 
-Bu ders, herhangi bir görev için özel değerlendirme paketleri tasarlayan yeniden kullanılabilir bir prompt olan `outputs/prompt-eval-designer.md`'ı üretir. Ona bir görev tanımı verin; test senaryoları, puanlama fonksiyonları ve geçme/başarısızlık eşiği önerisi oluşturur.
+Bu ders, her görev için özel değerlendirme paketleri tasarlayan yeniden kullanılabilir bir prompt olan `outputs/prompt-eval-designer.md`'yi üretir. Ona bir görev tanımı verin; test senaryoları, puanlama fonksiyonları ve geçme/başarısızlık eşiği önerisi oluşturur.
 
-Aynı zamanda görev türünüze, bütçenize ve gecikme gereksinimlerinize göre doğru değerlendirme stratejisini seçmek için bir karar framework olan `outputs/skill-llm-evaluation.md` üretir.
+Ayrıca görev türünüze, bütçenize ve gecikme gereksinimlerinize göre doğru değerlendirme stratejisini seçmenize yönelik bir framework kararı olan `outputs/skill-llm-evaluation.md`'yi de üretir.
 
 ## Egzersizler
 
-1. Aynı girdiyi model boyunca 5 kez çalıştıran ve çıktıların ne sıklıkta eşleştiğini ölçen bir "tutarlılık" puanlayıcı ekleyin. Deterministik girdilere ilişkin tutarsız yanıtlar, hassas prompt'ları veya yüksek sıcaklık ayarlarını ortaya çıkarır.
+1. Aynı girdiyi model boyunca 5 kez çalıştıran ve çıktıların ne sıklıkta eşleştiğini ölçen bir "tutarlılık" puanlayıcı ekleyin. Belirleyici girdilere ilişkin tutarsız yanıtlar, hassas prompt'leri veya yüksek sıcaklık ayarlarını ortaya çıkarır.
 
-2. ELO izleyiciyi birden fazla hakem işlevini (tam eşleşme, F1, hakem olarak yüksek lisans) destekleyecek şekilde genişletin ve bunları ağırlıklandırın. Tam eşleşmeyi ağırlıklı olarak ağırlıklandırdığınızda ve F1'i ağırlıklı olarak ağırlıklandırdığınızda liderlik tablosunun nasıl değiştiğini karşılaştırın.
+2. ELO izleyiciyi birden fazla hakem işlevini (tam eşleşme, F1, hakem olarak yüksek lisans) destekleyecek şekilde genişletin ve bunları ağırlıklandırın. Tam eşleşmeyi ağırlıklı olarak ağırlıklandırdığınızda liderlik tablosunun nasıl değiştiğini, F1'i ağırlıklı olarak karşılaştırın.
 
 3. Belirli bir görev için bir değerlendirme paketi oluşturun: 5 kategoriye e-posta sınıflandırması. Uç vakalar (birden fazla kategoriye ait olabilecek e-postalar, boş e-postalar, diğer dillerdeki e-postalar) dahil olmak üzere çeşitli örnekler içeren 100 test senaryosu oluşturun. Farklı "modellerin" (kural tabanlı, anahtar kelime eşleştirme, simüle edilmiş LLM) nasıl performans gösterdiğini ölçün.
 
-4. Kontaminasyon tespitini uygulayın: Bir dizi değerlendirme sorusu ve bir eğitim derlemi verildiğinde, eğitim verilerinde değerlendirme sorularının (veya yakın açıklamaların) yüzde kaçının göründüğünü kontrol edin. Araştırmacılar benchmark geçerliliğini bu şekilde denetlerler.
+4. Kontaminasyon tespitini uygulayın: Bir dizi değerlendirme sorusu ve bir eğitim derlemi verildiğinde, eğitim verilerinde değerlendirme sorularının (veya yakın açıklamaların) yüzde kaçının göründüğünü kontrol edin. Araştırmacılar benchmark geçerliliğini bu şekilde denetler.
 
 5. Bir "model farkı" aracı oluşturun. İki model versiyonundan elde edilen değerlendirme sonuçları göz önüne alındığında, hangi belirli test senaryolarının iyileştiğini, hangilerinin gerilediğini ve hangilerinin aynı kaldığını vurgulayın. Bu, bir değişikliğin faydalı mı yoksa zararlı mı olduğunu anlamak için gerekli olan kod farkının değerlendirme eşdeğeridir.
 
@@ -503,17 +503,17 @@ Aynı zamanda görev türünüze, bütçenize ve gecikme gereksinimlerinize gör
 | MMLU | "benchmark" | Devasa Çok Görevli Dil Anlama - 57 konu genelinde 15.908 çoktan seçmeli soru, 2025'e kadar %88'in üzerine çıkacak |
 | İnsan Değerlendirmesi | "Kod değerlendirmesi" | 164 OpenAI'den Python işlev tamamlama sorunları, yalnızca yalıtılmış işlev oluşturmayı test eder |
 | SWE-bank | "Gerçek kodlama değerlendirmesi" | 12 Python deposundan 2.294 GitHub sorunu, test oluşturma da dahil olmak üzere uçtan uca hata düzeltmeyi ölçüyor |
-| Şaşkınlık | "Model ne kadar karışık" | exp(-avg(log P({{T0}__i verilen bağlam))) -- daha düşük, modelin gerçek tokens |
+| Şaşkınlık | "Model ne kadar karışık" | exp(-avg(log P(token_i verilen bağlam))) -- daha düşük, modelin gerçek token'lere daha yüksek olasılık atadığı anlamına gelir |
 | ELO derecelendirmesi | "Modeller için satranç sıralaması" | Chatbot Arena tarafından 100'den fazla modeli sıralamak için kullanılan, ikili galibiyet/mağlubiyet kayıtlarından hesaplanan göreceli beceri derecelendirmesi |
-| Hakim olarak Yüksek Lisans | "Yapay zekaya not vermek için yapay zekayı kullanma" | Güçlü bir model, daha zayıf bir modelin çıktılarını bir değerlendirme tablosuna göre puanlar; insan yargıçlarla ~%80 uyum sağlar ve ~0,01$/yargı |
-| Veri kirliliği | "Model testi gördü" | Eğitim verileri, gerçek yeteneği geliştirmeden puanları şişiren benchmark soruyu içeriyor |
+| Hakim olarak Yüksek Lisans | "Yapay zekaya not vermek için yapay zekayı kullanma" | Güçlü bir model, daha zayıf bir modelin çıktılarını bir değerlendirme tablosuna göre puanlar; insan yargıçlarla ~%80 anlaşmaya vararak ~0,01$/yargı |
+| Veri kirliliği | "Model testi gördü" | Eğitim verileri, gerçek yeteneği geliştirmeden puanları şişiren benchmark sorularını içeriyor |
 | Eval süit | "Bir sürü test" | Belirli bir yeteneği ölçen sürümlendirilmiş (girdi, beklenen_çıktı, puanlayıcı) üçlü koleksiyonu |
-| Geçiş oranı | "Yüzde kaçı doğru çıkıyor" | Bir eşiğin üzerinde puan alan değerlendirme vakalarının oranı -- güvenilirliği ölçtüğü için ortalama puandan daha fazla işlem yapılabilir |
+| Geçiş oranı | "Yüzde kaçı doğru çıkıyor" | Bir eşiğin üzerinde puan alan değerlendirme vakalarının oranı -- güvenilirliği ölçtüğü için ortalama puandan daha fazla eyleme dönüştürülebilir |
 | Chatbot Arenası | "Model sıralama web sitesi" | 2 milyondan fazla insan tercihi oyu ile LMSYS platformu, ELO derecelendirmeleri aracılığıyla en güvenilir LLM sıralamasını oluşturuyor |
 
 ## Daha Fazla Okuma
 
-- [Hendrycks ve diğerleri, 2021 -- "Measuring Massive Multitask Language Understanding"](https://arxiv.org/abs/2009.03300) -- MMLU makalesi, doygunluğuna rağmen hâlâ en çok alıntı yapılan LLM benchmark
-- [Chen ve diğerleri, 2021 -- "Kod Üzerinde Eğitimli Büyük Dil Modellerinin Değerlendirilmesi"](https://arxiv.org/abs/2107.03374) -- OpenAI'nin yerleşik kod oluşturma değerlendirme metodolojisi olan HumanEval makalesi
-- [Zheng ve diğerleri, 2023 -- "LLM'yi Yargıç Olarak Değerlendirmek"](https://arxiv.org/abs/2306.05685) -- pozisyon önyargısı ve ayrıntı yanlılığı bulguları dahil olmak üzere LLM'leri değerlendirmek için LLM'leri kullanmanın sistematik analizi
-- [LMSYS Chatbot Arena](https://chat.lmsys.org/) -- 2 milyondan fazla oy alan kitle kaynaklı model karşılaştırma platformu, gerçek dünyadaki en güvenilir LLM sıralaması
+- [Hendrycks ve diğerleri, 2021 -- "Measuring Massive Multitask Language Understanding"](https://arxiv.org/abs/2009.03300) -- MMLU makalesi, doygunluğuna rağmen hala en çok alıntı yapılan LLM benchmark
+- [Chen ve diğerleri, 2021 -- "Kod Üzerine Eğitilmiş Büyük Dil Modellerinin Değerlendirilmesi"](https://arxiv.org/abs/2107.03374) -- OpenAI'nin yerleşik kod oluşturma değerlendirme metodolojisi olan HumanEval makalesi
+- [Zheng ve diğerleri, 2023 -- "LLM'yi Yargıç Olarak Değerlendirmek"](https://arxiv.org/abs/2306.05685) -- pozisyon önyargısı ve ayrıntı yanlılığı bulguları dahil olmak üzere LLM'leri değerlendirmek için LLM'lerin kullanılmasına ilişkin sistematik analiz
+- [LMSYS Chatbot Arena](https://chat.lmsys.org/) -- 2 milyondan fazla oy alan kitle kaynaklı model karşılaştırma platformu, en güvenilir gerçek dünya LLM sıralaması

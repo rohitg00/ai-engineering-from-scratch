@@ -46,7 +46,7 @@ flowchart TB
     Critique --> Reason[overall reason str]
 ```
 
-Her öneri, iyileştirdiği boyutu, hedeflediği bölümü ve düzenleyicinin uygulayabileceği bir `edit` talimatını taşır. Revizör aynı zamanda aranabilir bir kişidir. Ders, düzenleme talimatını bölüme ekleme işlemi olarak yorumlayan deterministik bir düzenleyici sunar. Model odaklı bir düzenleyici, aynı alanı prompt olarak yorumlayacaktır. Sözleşme değişmiyor.
+Her öneri, iyileştirdiği boyutu, hedeflediği bölümü ve düzenleyicinin uygulayabileceği bir `edit` talimatını taşır. Revizör aynı zamanda aranabilir bir kişidir. Ders, düzenleme talimatını bölüme ekleme işlemi olarak yorumlayan deterministik bir düzenleyici sunar. Model odaklı bir gözden geçirici, aynı alanı prompt ile yorumlayacaktır. Sözleşme değişmiyor.
 
 ## Sırasıyla yakınsama kuralları
 
@@ -63,9 +63,9 @@ flowchart TB
     C -- no --> Next[Run round n plus 1]
 ```
 
-Hedef en katı durumdur: Döngü başarıya dönmeden önce beş boyutun her birinin (açıklık, yenilik, kanıt, metodoloji, ilgili_çalışma) `>= target_score` (varsayılan `8.0`) değerine ulaşması gerekir. Zayıf bir boyuta sahip yüksek bir ortalama yeterli değildir. Plato tespiti, mevcut turun ortalamasını önceki turun ortalamasıyla karşılaştırır. Art arda iki tur boyunca iyileştirme `plateau_epsilon` 'nin (varsayılan `0.1`) altındaysa döngüden `plateau` ile çıkar. Bütçe, turlarda sabit tavandır (varsayılan `5`) ve `budget` ile çıkar.
+Hedef en katı durumdur: Döngü başarıya dönmeden önce beş boyutun her birinin (açıklık, yenilik, kanıt, metodoloji, ilgili_çalışma) `>= target_score`'ye (varsayılan `8.0`) ulaşması gerekir. Zayıf bir boyuta sahip yüksek bir ortalama yeterli değildir. Plato tespiti, mevcut turun ortalamasını önceki turun ortalamasıyla karşılaştırır. Artış iki ardışık tur için `plateau_epsilon`'nin (varsayılan `0.1`) altındaysa döngü `plateau` ile çıkar. Bütçe, turlarda sabit bir üst sınırdır (varsayılan `5`) ve `budget` ile çıkar.
 
-Sıra önemlidir. Hedef, bütçeyi aşan plato galibiyetlerine karşı kazanır. Üçüncü tur aynı yinelemede hedefe ulaşırsa ve bu da bir plato tetiklerse sonuç `plateau` değil `target` olur.
+Sıra önemlidir. Hedef, bütçeyi aşan plato galibiyetlerine karşı kazanır. Üçüncü tur aynı yinelemede hedefe ulaşırsa, bu da bir plato tetikler, sonuç `plateau` değil `target` olur.
 
 ## Plato tespiti neden iki turda yapılıyor?
 
@@ -73,7 +73,7 @@ Tek yönlü bir plato gürültüdür. Gerçek bir eleştirmen, sabit bir taslakt
 
 ## Bu dersteki deterministik eleştiri
 
-Ders bir model çağırmaz. Gönderilen eleştirmen, bir taslağı üç sinyale dayalı olarak puanlayan çağrılabilir bir kişidir: ortalama bölüm gövdesi uzunluğu (netlik), şekil sayısı ve alıntı sayısı (kanıt) ve kağıt meta verilerinde bir `originality_tag` alanı (yenilik). Gözden geçiren kişi her puanı nasıl yukarıya doğru iteceğini bilir.
+Ders bir model çağırmaz. Gönderilen eleştirmen, bir taslağı üç sinyale dayalı olarak puanlayan çağrılabilir bir kişidir: ortalama bölüm gövdesi uzunluğu (netlik), rakam sayısı ve alıntı sayısı (kanıt) ve kağıt meta verileri üzerindeki bir `originality_tag` alanı (yenilik). Gözden geçiren kişi her puanı nasıl yukarıya doğru iteceğini bilir.
 
 ```text
 clarity      grows when the average section body length increases
@@ -113,16 +113,16 @@ Her tur, tur numarası, puan vektörü, öneri sayısı ve yakınsama kararıyla
 
 ## Kötü eleştirilere karşı koruma sağlayan bütçeler
 
-Puanı hiçbir zaman iyileştirmeyen öneriler üreten bir eleştirmen, döngüyü maksimum yineleme tavanına kilitleyecektir. İz bunu görünür kılıyor: beş tur, sabit puanlar, karar `budget`. Kullanıcı bunu taslak bir hata olarak değil, kritik bir hata olarak okur. Yalnızca son taslağı ortaya çıkaran alternatif, tanıyı gizler. Trace-first tasarımı bunu ortaya çıkarır.
+Puanı hiçbir zaman iyileştirmeyen öneriler üreten bir eleştirmen, döngüyü maksimum yineleme tavanına kilitleyecektir. İz bunu görünür kılıyor: beş tur, puanlar sabit, karar `budget`. Kullanıcı bunu taslak bir hata olarak değil, kritik bir hata olarak okur. Yalnızca son taslağı ortaya çıkaran alternatif, tanıyı gizler. Trace-first tasarımı bunu ortaya çıkarır.
 
 ## Kod nasıl okunur
 
-`code/main.py` , `Critique`, `Suggestion`, `Critic` protokolünü, `Reviser` protokolünü, `CriticLoop` ve deterministik eleştirmeni ve eşleşen bir düzenleyiciyi döndüren bir `make_deterministic_critic_pair` fabrikasını tanımlar. Dersin tek başına durması için minimum `Paper` şekli eklenmiştir.
+`code/main.py`, `Critique`, `Suggestion`, `Critic` protokolünü, `Reviser` protokolünü, `CriticLoop`'yi ve deterministik kritik ve eşleşen bir düzenleyiciyi döndüren bir `make_deterministic_critic_pair` fabrikasını tanımlar. Minimal bir `Paper` şekli dahil edilmiştir, böylece ders tek başına kalır.
 
-`code/tests/test_critic_loop.py` şunları kapsar: birinci turdan sonra monoton iyileştirme, ayarlanmış bir taslakta hedef yakınsaması, iki düz turdan sonra plato tespiti, hiçbir öneride iyileşme olmadığında bütçe tükenmesi, gözden geçiren tarafından öneri uygulaması ve izleme şekli.
+`code/tests/test_critic_loop.py` şunları kapsar: birinci turdan sonra monoton iyileştirme, ayarlanmış bir taslakta hedef yakınsaması, iki sabit turdan sonra plato tespiti, hiçbir öneri gelişmediğinde bütçe tükenmesi, düzeltmeyi yapan kişi tarafından öneri uygulaması ve izleme şekli.
 
 ## Daha ileri gidiyoruz
 
-Gerçek bir uygulamanın isteyeceği iki uzantı. Birincisi, boyut ağırlıkları: bir atölye çalışması için hazırlanan bir makale, yeniliğe metodolojiden daha fazla ağırlık verir; bir dergi bunun tersini ağırlıklandırır. Yakınsama kontrolü ağırlıklı bir ortalama haline gelir. İkincisi, eşleştirilmiş eleştirmenler: Bir eleştirmen puan verir, ikinci bir eleştirmen, gözden geçirenin önerilerini görmeden önce karara bağlar. İkisi de değer katıyor, ikisi de aynı `Critique` şeklinde oluşuyor.
+Gerçek bir uygulamanın isteyeceği iki uzantı. Birincisi, boyut ağırlıkları: bir atölye çalışması için hazırlanan bir makale, yeniliğe metodolojiden daha fazla ağırlık verir; bir dergi bunun tersini ağırlıklandırır. Yakınsama kontrolü ağırlıklı bir ortalama haline gelir. İkincisi, eşleştirilmiş eleştirmenler: Bir eleştirmen puan verir, ikinci bir eleştirmen, gözden geçirenin önerilerini görmeden önce karara bağlar. Her ikisi de değer katıyor ve her ikisi de aynı `Critique` şeklinde oluşuyor.
 
 Bahis skor vektörüdür. Eleştiri yapılandırıldıktan sonra diğer tüm iyileştirmeler, yakınsama kuralı, kontrol paneli, eşleştirilmiş eleştirmen döngüyü değiştirmeden devreye girer.

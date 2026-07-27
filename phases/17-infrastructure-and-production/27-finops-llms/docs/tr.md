@@ -1,6 +1,6 @@
 # LLM'ler için FinOps — Birim Ekonomisi ve Çok Kiracılı İlişkilendirme
 
-> LLM harcamalarında geleneksel FinOps molaları. Maliyetler, kaynak çalışma süresi değil, token-işlemlerdir. Etiketler eşlenmez; API çağrısı bir varlık değil, bir işlemdir. Mühendislik kararları (prompt tasarım, context window, çıktı uzunluğu) finansal kararlardır. 2026 başucu kitabının birinci günde araç için üç ilişkilendirme boyutu vardır: lisans fiyatlandırması ve genişletme için kullanıcı başına (`user_id`) , ürün yüzeyi maliyeti ve önceliklendirme için görev başına (`task_id` + `route`) , birim ekonomi ve yenileme için kiracı başına (`tenant_id`) . Dört token katman — prompt, araç, bellek, yanıt — bir paket harcamayı gizler. Çok kiracılı ürünler için yaptırım merdiveni: kiracı başına oran sınırları (beklenen zirvenin 2-3 katı, temizleme 429 + yeniden deneme); günlük harcama üst sınırı (1,5-3 kat sözleşmeli tavan; oran sıkılaştırmasını tetikler + uyarı); z-puanı > 4 (otomatik duraklatma + çağrı sırasında sayfa) harcamalarında anahtarları sonlandır. İlişkilendirme modelleri: etiketleme ve toplama, telemetri-birleştirici (izleme kimliği → faturalandırma; en yüksek doğruluk), örnekleme ve ekstrapolasyon, model tabanlı tahsis, olay kaynaklı, gerçek zamanlı akış. Birim metriği: çözümlenen sorgu başına maliyet, oluşturulan artifact başına maliyet - $/M tokens değil. Geriye dönük etiketleme her zaman ıskalar; istek üzerine enstrüman oluşturma.
+> LLM harcamalarında geleneksel FinOps molaları. Maliyetler, kaynak çalışma süresi değil, token işlemleridir. Etiketler eşlenmez; API çağrısı bir varlık değil, bir işlemdir. Mühendislik kararları (prompt tasarımı, context window, çıktı uzunluğu) finansal kararlardır. 2026 başucu kitabının birinci günde cihaza ilişkin üç ilişkilendirme boyutu vardır: lisans fiyatlandırması ve genişletme için kullanıcı başına (`user_id`), ürün yüzeyi maliyeti ve önceliklendirme için görev başına (`task_id` + `route`), birim ekonomi ve yenileme için kiracı başına (`tenant_id`). Dört token katmanı — prompt, araç, bellek, yanıt — bir bölme harcamayı gizler. Çok kiracılı ürünler için yaptırım merdiveni: kiracı başına oran sınırları (beklenen zirvenin 2-3 katı, temizleme 429 + yeniden deneme); günlük harcama üst sınırı (1,5-3 kat sözleşmeli tavan; oran sıkılaştırmasını tetikler + uyarı); z-puanı > 4 (otomatik duraklatma + çağrı sırasında sayfa) harcamalarında anahtarları sonlandır. İlişkilendirme modelleri: etiketleme ve toplama, telemetri-birleştirici (izleme kimliği → faturalandırma; en yüksek doğruluk), örnekleme ve ekstrapolasyon, model tabanlı tahsis, olay kaynaklı, gerçek zamanlı akış. Birim metriği: çözümlenen sorgu başına maliyet, oluşturulan artifact başına maliyet - $/M token değil. Geriye dönük etiketleme her zaman ıskalar; istek üzerine enstrüman oluşturma.
 
 **Tür:** Öğren
 **Diller:** Python (stdlib, acil anahtarlı oyuncak maliyet ilişkilendirme simülatörü)
@@ -12,7 +12,7 @@
 - LLM harcamalarında geleneksel FinOps'un (etiketler + kademeler) neden bozulduğunu açıklayın ve üç yeni ilişkilendirme boyutunu adlandırın.
 - Dört token katmanını (prompt, araç, bellek, yanıt) ve tek paket faturalandırmanın maliyeti neden gizlediğini sıralayın.
 - Çok kiracılı bir ürün için bir yaptırım merdiveni tasarlayın (oran → harcama sınırı → sonlandırma anahtarı).
-- $/M tokens yerine bir birim metrik seçin (çözülen sorgu başına maliyet / artifact).
+- $/M token yerine bir birim metrik seçin (çözülen sorgu başına maliyet / artifact).
 
 ## Sorun
 
@@ -20,7 +20,7 @@ Faturanızda 40.000$ yazıyor. Bilmiyorsun:
 - Hangi kiracı harcadı?
 - Hangi ürün özelliği buna neden oldu?
 - Herhangi bir kullanıcının kötü niyetli olup olmadığı.
-- Suçlu prompt şişkinliği mi, araç çağrıları mı yoksa hafıza amplifikasyonu mu?
+- Suçlu ister prompt şişkinliği, ister araç çağrıları, ister hafıza amplifikasyonu olsun.
 
 Sağlayıcı tarafında etiketleme ve toplama, etiketlerin satır öğelerine yayıldığı bulut kaynakları (EC2, S3) için çalışır. LLM API çağrıları otomatik etiketleme yapmaz; çağrı sitesinde kullanıcıyı/görevi/kiracıyı damgalamanız ve devam etmeniz gerekir. Geriye dönük ilişkilendirme her zaman uç durumları gözden kaçırır.
 
@@ -34,14 +34,14 @@ Sağlayıcı tarafında etiketleme ve toplama, etiketlerin satır öğelerine ya
 
 **Kiracı başına** (`tenant_id`): hangi müşterinin karlı olduğu. Birim ekonomisini, yenileme fiyatlandırmasını ve katman eşiklerini yönlendirir.
 
-İlk gün üçünü de arama yerinde çalıştırın. Geriye dönük her zaman daha kötüdür.
+İlk gün üçünü de arama yerinde kullanın. Geriye dönük her zaman daha kötüdür.
 
-### Dört token katman
+### Dört token katmanı
 
 | Katman | Örnek | Toplamın tipik yüzdesi |
 |-------|---------|---------------------|
 | Prompt | sistem + kullanıcı girişi | %40-60 |
-| Araç | araç çağrısı sonuçları geri beslendi | %20-40 (agent iş yükü) |
+| Araç | araç çağrısı sonuçları geri beslendi | %20-40 (agent iş yükleri) |
 | Bellek | önceki görüşme / alınan belgeler | %10-30 |
 | Yanıt | modeli çıktısı | %10-30 |
 
@@ -62,11 +62,11 @@ Dördünün birden bir araya getirilmesi optimizasyonun kör olmasına neden olu
 - **Örnekleme + ekstrapolasyon**: %5-10 örnekleyin, çarpın. Kaba harcamalar için uygun maliyetli; kuyrukları özlüyor.
 - **Modele dayalı tahsis**: maliyet etkeni çıkarımına yönelik regresyon. Etiketsiz eski veriler için.
 - **Olay kaynaklı**: bir akıştaki etkinlik olarak maliyet (Kafka / Kinesis). Gerçek zamanlı.
-- **Gerçek zamanlı akış**: kontrol paneli bir saniyeden kısa sürede güncellenir.
+- **Gerçek zamanlı akış**: kontrol paneli güncellemeleri bir saniyeden kısa sürede gerçekleşir.
 
 ### X başına maliyet birim metriktir
 
-$/M tokens satıcı konuşmasıdır. Ürün metrikleri:
+$/M tokens satıcının konuşmasıdır. Ürün metrikleri:
 
 - Çözümlenen destek bileti başına maliyet.
 - Oluşturulan makale başına maliyet.
@@ -103,44 +103,44 @@ Yığın: önbellek + toplu iş + rota + ağ geçidi. Dördüyle birlikte:
 - Ucuz modele geçiş (Aşama 17 · 16): %60 maliyet azalması.
 - Ağ geçidi verimliliği (Aşama 17 · 19): artıklık + yeniden denemeler.
 
-En iyi durum yığını: Saf başlangıç ​​değerinin ~%5-10'u. Çoğu takımın 2-3 kolu devrededir; çok azı dördünü de istifler.
+En iyi durum yığını: Saf başlangıç değerinin ~%5-10'u. Çoğu takımın 2-3 kolu devrededir; çok azı dördünü de istifler.
 
 ### Hatırlamanız gereken sayılar
 
 - İlişkilendirme boyutları: kullanıcı başına, görev başına, kiracı başına.
-- Dört token katman: prompt, araç, bellek, yanıt.
+- Dört token katmanı: prompt, araç, bellek, yanıt.
 - Kapatma anahtarı: z-puanını > 4 harcayın.
-- Birim metriği: $/M tokens değil, çözümlenen sorgu başına maliyet.
+- Birim metriği: çözümlenen sorgu başına maliyet, $/M token değil.
 - Yığılmış optimizasyonlar: Taban çizgisinin ~%5-10'u mümkün.
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` , üç katmanlı yaptırım merdiveni ile çok kiracılı bir LLM hizmetini simüle eder. İstismarcı bir kiracıya enjekte eder ve durdurma anahtarının ateşlendiğini gösterir.
+`code/main.py`, üç katmanlı uygulama merdiveni ile çok kiracılı bir LLM hizmetini simüle eder. İstismarcı bir kiracıya enjekte eder ve durdurma anahtarının ateşlendiğini gösterir.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-Bu ders `outputs/skill-finops-plan.md` üretir. Verilen ürün ve ölçek, ilişkilendirme şemasını ve uygulama merdivenini tasarlar.
+Bu ders `outputs/skill-finops-plan.md`'yi üretir. Verilen ürün ve ölçek, ilişkilendirme şemasını ve uygulama merdivenini tasarlar.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. Kill switch hangi z-puanında etkinleşir? Eşiği nasıl seçersiniz?
+1. `code/main.py`'yi çalıştırın. Kill switch hangi z-puanında etkinleşir? Eşiği nasıl seçersiniz?
 2. Kiracı başına, görev başına maliyet panosu tasarlayın. İlk olarak oluşturduğunuz 5 görünüm nedir?
 3. En büyük kiracınız birim ekonomisi açısından olumsuz. Müşteri etkisine göre sıralanan üç müdahale önerin.
-4. Bir destek ürünü için çözümlenen bilet başına maliyeti hesaplayın: 3 milyon tokens/bilet, ~800 bilet/gün, GPT-5 önbelleğe alma hızı.
+4. Bir destek ürünü için çözümlenen bilet başına maliyeti hesaplayın: 3 milyon token/bilet, ~800 bilet/gün, GPT-5 önbelleğe alınmış oran.
 5. Geriye dönük etiketlemenin işe yarayıp yaramayacağını tartışın. Ne zaman kabul edilebilir?
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| Kullanıcı başına ilişkilendirme | "kullanıcı düzeyinde maliyet" | Her aramaya `user_id` damgası vurulur |
+| Kullanıcı başına ilişkilendirme | "kullanıcı düzeyinde maliyet" | `user_id` her aramaya damgalanır |
 | Görev başına ilişkilendirme | "özellik maliyeti" | `task_id` + `route` ürün yüzeyini tanımlar |
 | Kiracı başına ilişkilendirme | "müşteri maliyeti" | `tenant_id`; tahrik ünitesi ekonomisi |
-| Dört token katman | "maliyet katmanları" | prompt + araç + hafıza + yanıt |
+| Dört token katmanı | "maliyet katmanları" | prompt + araç + bellek + yanıt |
 | Oran sınırı | "429 koruma" | Ağ geçidinde uygulanan kiracı tavanı |
 | Günlük harcama sınırı | "günlük tavan" | Kiracı kapsamlı bütçe ve uyarı |
 | Kapatma anahtarı | "otomatik duraklatma" | Harcama z-puanı > 4, otomatik askıya alma işlemini tetikler |
-| Çözümlenen başına maliyet | "ürün birimi metriği" | Maliyet, tokens'ye değil, ürün sonucuna bağlıdır |
+| Çözümlenen başına maliyet | "ürün birimi metriği" | Maliyet, token'lere değil, ürün sonucuna bağlıdır |
 | Telemetri marangozu | "fatura takibi" | En yüksek doğrulukta ilişkilendirme modeli |
 | Yığılmış optimizasyon | "önbellek+toplu+rota+ağ geçidi" | Tasarrufların ~%5-10'a kadar artırılması |
 
@@ -148,5 +148,5 @@ Bu ders `outputs/skill-finops-plan.md` üretir. Verilen ürün ve ölçek, iliş
 
 - [FinOps Vakfı — Yapay Zeka için FinOps'a Genel Bakış](https://www.finops.org/wg/finops-for-ai-overview/)
 - [FinOps Okulu — Birim Başına Maliyet 2026 Kılavuzu](https://finopsschool.com/blog/cost-per-unit/)
-- [Digital Applied — Yüksek Lisans Agent Maliyet İlişkilendirmesi 2026](https://www.digitalapplied.com/blog/llm-agent-cost-attribution-guide-production-2026)
+- [Dijital Uygulamalı — Yüksek Lisans Agent Maliyet İlişkilendirmesi 2026](https://www.digitalapplied.com/blog/llm-agent-cost-attribution-guide-production-2026)
 - [PointFive — Azure OpenAI'de Yönetilen Yüksek Lisanslar](https://www.pointfive.co/blog/finops-for-ai-economics-of-managed-llms-in-azure-open-ai)

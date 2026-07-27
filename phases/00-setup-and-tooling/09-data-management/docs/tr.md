@@ -9,14 +9,14 @@
 
 ## Öğrenme Hedefleri
 
-- Sarılma Yüzü `datasets` kitaplığını kullanarak dataset'ları yükleyin, yayınlayın ve önbelleğe alın
+- Hugging Face `datasets` kitaplığını kullanarak dataset'leri yükleyin, yayınlayın ve önbelleğe alın
 - CSV, JSON, Parquet ve Arrow formatları arasında dönüştürme yapın ve bunların geçişlerini açıklayın
 - Sabit rastgele tohumlarla tekrarlanabilir eğitim/doğrulama/test bölümleri oluşturun
-- Büyük modeli ve dataset dosyalarını `.gitignore`, Git LFS veya DVC kullanarak yönetin
+- `.gitignore`, Git LFS veya DVC kullanarak büyük modeli ve dataset dosyalarını yönetin
 
 ## Sorun
 
-Her yapay zeka projesi verilerle başlar. dataset'ları bulmanız, indirmeniz, formatlar arasında dönüştürmeniz, eğitim ve değerlendirme için ayırmanız ve deneylerin tekrarlanabilir olmasını sağlayacak şekilde sürümlendirmeniz gerekir. Bunu her seferinde manuel olarak yapmak yavaştır ve hataya açıktır. Tekrarlanabilir bir iş akışına ihtiyacınız var.
+Her yapay zeka projesi verilerle başlar. dataset'leri bulmanız, indirmeniz, formatlar arasında dönüştürmeniz, eğitim ve değerlendirme için ayırmanız ve deneylerin tekrarlanabilir olmasını sağlayacak şekilde sürümlendirmeniz gerekir. Bunu her seferinde manuel olarak yapmak yavaştır ve hataya açıktır. Tekrarlanabilir bir iş akışına ihtiyacınız var.
 
 ## Konsept
 
@@ -30,17 +30,17 @@ graph TD
     F --> G["Your Training Pipeline"]
 ```
 
-Sarılma Yüzü `datasets` kitaplığı, yapay zeka çalışması için veri yüklemenin standart yoludur. İndirme, önbelleğe alma, format dönüştürme ve kutudan çıktığı gibi akış işlemlerini gerçekleştirir.
+Hugging Face `datasets` kitaplığı, yapay zeka çalışması için veri yüklemenin standart yoludur. İndirme, önbelleğe alma, format dönüştürme ve kutudan çıktığı gibi akış işlemlerini gerçekleştirir.
 
 ## İnşa Et
 
-### 1. Adım: datasets kitaplığını yükleyin
+### Adım 1: datasets kitaplığını yükleyin
 
 ```bash
 pip install datasets huggingface_hub
 ```
 
-### Adım 2: Bir dataset yükleyin
+### Adım 2: dataset yükleyin
 
 ```python
 from datasets import load_dataset
@@ -50,11 +50,11 @@ print(dataset)
 print(dataset["train"][0])
 ```
 
-Bu, IMDB film incelemesini dataset indirir. İlk indirmenin ardından `~/.cache/huggingface/datasets/` konumundaki önbellekten yüklenir.
+Bu, IMDB film incelemesi dataset'yi indirir. İlk indirmenin ardından `~/.cache/huggingface/datasets/` adresindeki önbellekten yüklenir.
 
 ### 3. Adım: Büyük dataset'leri yayınlayın
 
-Bazı dataset'lar diske sığmayacak kadar büyük. Akış, her şeyi indirmeden bunları satır satır yükler.
+Bazı dataset'ler diske sığmayacak kadar büyük. Akış, her şeyi indirmeden bunları satır satır yükler.
 
 ```python
 dataset = load_dataset("wikimedia/wikipedia", "20220301.en", split="train", streaming=True)
@@ -65,11 +65,11 @@ for i, example in enumerate(dataset):
         break
 ```
 
-Akış size bir `IterableDataset` verir. Satırları geldikçe işlersiniz. Bellek kullanımı, dataset boyutundan bağımsız olarak sabit kalır.
+Akış size bir `IterableDataset` verir. Satırları geldikçe işlersiniz. Bellek kullanımı dataset boyutundan bağımsız olarak sabit kalır.
 
 ### Adım 4: Dataset formatları
 
-`datasets` kütüphanesi, Apache Arrow'u temel olarak kullanır. İşlem hattınızın ihtiyacına bağlı olarak diğer formatlara dönüştürebilirsiniz.
+`datasets` kitaplığı Apache Arrow'u kullanır. İşlem hattınızın ihtiyacına bağlı olarak diğer formatlara dönüştürebilirsiniz.
 
 ```python
 dataset = load_dataset("stanfordnlp/imdb", split="train")
@@ -98,7 +98,7 @@ Her ML projesinin üç bölüme ihtiyacı vardır:
 - **Doğrulama**: Eğitim sırasında ilerlemeyi kontrol edersiniz (genellikle %10)
 - **Test**: Eğitim tamamlandıktan sonra son değerlendirme (genellikle %10)
 
-Bazı dataset'lar önceden bölünmüş olarak gelir. Yapmadıklarında, onları kendiniz bölün:
+Bazı dataset'ler önceden bölünmüş olarak gelir. Yapmadıklarında, onları kendiniz bölün:
 
 ```python
 dataset = load_dataset("stanfordnlp/imdb", split="train")
@@ -132,7 +132,7 @@ model_dir = snapshot_download("sentence-transformers/all-MiniLM-L6-v2")
 print(f"Full model at: {model_dir}")
 ```
 
-Modeller `~/.cache/huggingface/hub/`'a önbelleğe alınır. Bir kez indirildikten sonra sonraki çalıştırmalarda anında yüklenirler.
+Modeller `~/.cache/huggingface/hub/`'ye önbelleğe alınır. Bir kez indirildikten sonra sonraki çalıştırmalarda anında yüklenirler.
 
 ### Adım 7: Büyük dosyaları işleyin
 
@@ -183,7 +183,7 @@ Bu kurs için `.gitignore` yeterlidir. Makineler arasında tam deneyleri yeniden
 
 ### Adım 8: Depolama düzenleri
 
-**Yerel depolama** ~10 GB'ın altındaki dataset'ler için çalışır. HF önbelleği bunu otomatik olarak yönetir.
+**Yerel depolama** ~10 GB'nin altındaki dataset'ler için çalışır. HF önbelleği bunu otomatik olarak yönetir.
 
 **Bulut depolama** daha büyük veya makineler arasında paylaşılan her şey içindir:
 
@@ -205,14 +205,14 @@ dvc push
 
 Bu kurs için yerel depolama yeterlidir. Uzak GPU örneklerinde ince ayar yaptığınızda bulut depolama uygun hale gelir.
 
-Bu Kursta ## Dataset Kullanıldı
+## Bu Kursta Kullanılan Dataset'ler
 
 | Dataset | Dersler | Boyut | Ne Öğretiyor |
 |---------|---------|------|----------------|
-| IMDB'si | Tokenleştirme, sınıflandırma | 84 MB | Metin sınıflandırmanın temelleri |
-| VikiMetin | Dil modelleme | 181 MB | Sonraki-token tahmin |
+| IMDB'si | Tokenleştirme, sınıflandırma | 84MB | Metin sınıflandırmanın temelleri |
+| VikiMetin | Dil modelleme | 181 MB | Sonraki-token tahmini |
 | TAKIM | Kalite Güvence sistemleri | 35MB | Soru yanıtlama, aralıklar |
-| Ortak Tarama (alt küme) | Embeddings | Değişir | Büyük ölçekli metin işleme |
+| Ortak Tarama (alt küme) | Embedding'ler | Değişir | Büyük ölçekli metin işleme |
 | MNİST | Vizyon temelleri | 21 MB | Görüntü sınıflandırmanın temelleri |
 | COCO (alt küme) | Çok modlu | Değişir | Resim-metin çiftleri |
 
@@ -232,12 +232,12 @@ Bu, küçük bir dataset indirir, dönüştürür, böler ve bir özet yazdırı
 
 Bu ders şunları üretir:
 - `code/data_utils.py` - yeniden kullanılabilir veri yükleme ve önbelleğe alma yardımcı programı
-- `outputs/prompt-data-helper.md` - prompt, bir görev için doğru dataset'yu bulmak için
+- `outputs/prompt-data-helper.md` - prompt, bir görev için doğru dataset'yi bulmak için
 
 ## Egzersizler
 
 1. `glue` dataset'yi `mrpc` yapılandırmasıyla yükleyin ve ilk 5 örneği inceleyin
-2. `c4` dataset akışını gerçekleştirin ve 10 saniyede kaç örnek işleyebileceğinizi sayın
+2. `c4` dataset akışını yapın ve 10 saniyede kaç örnek işleyebileceğinizi sayın
 3. dataset dosyasını Parke'ye dönüştürün ve dosya boyutunu CSV ile karşılaştırın
 4. Sabit bir tohumla 70/15/15 eğitim/val/test bölümü oluşturun ve boyutları doğrulayın
 
@@ -246,9 +246,9 @@ Bu ders şunları üretir:
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
 | Dataset bölünmüş | "Eğitim verileri" | ML yaşam döngüsünün farklı aşamalarında kullanılan adlandırılmış bir alt küme (eğitim/val/test) |
-| Akış | "Tembelce yükle" | dataset dosyasının tamamını indirmeden uzak bir kaynaktan gelen veriler satır satır işleniyor |
+| Akış | "Tembelce yükle" | dataset'nin tamamını indirmeden uzak bir kaynaktan verileri satır satır işlemek |
 | Parke | "Sıkıştırılmış CSV" | Analitik sorgular ve depolama verimliliği için optimize edilmiş sütunlu bir dosya formatı |
 | Ok | "Hızlı veri çerçevesi" | Sıfır kopyalı okumalar için datasets kitaplığı tarafından dahili olarak kullanılan bellek içi sütunlu format |
 | Git LFS | "Büyük dosyalar için Git" | İşaretçileri sürüm kontrolünde tutarken büyük dosyaları git deposunun dışında saklayan bir uzantı |
-| DVC | "Veri için Git" | dataset'lar ve modeller için bulut depolamayla entegre olan sürüm kontrol sistemi |
+| DVC | "Veri için Git" | dataset'ler ve modeller için bulut depolamayla entegre olan sürüm kontrol sistemi |
 | Önbellek | "Zaten indirildi" | Önceden getirilen verilerin yerel bir kopyası, varsayılan olarak ~/.cache/huggingface/ konumunda saklanır |

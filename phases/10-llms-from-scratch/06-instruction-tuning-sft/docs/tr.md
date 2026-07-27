@@ -1,6 +1,6 @@
 # Talimat Ayarlama (SFT)
 
-> Bir temel model sonraki token'yi tahmin eder. İşte bu. Talimatlara uymaz, soruları yanıtlamaz veya zararlı istekleri reddetmez. SFT, token tahmincisi ile kullanışlı bir asistan arasındaki köprüdür. Şu ana kadar konuştuğunuz her model (Claude, GPT, Llama Chat) bu adımdan geçti.
+> Bir temel model bir sonraki token'yi tahmin eder. İşte bu. Talimatlara uymaz, soruları yanıtlamaz veya zararlı istekleri reddetmez. SFT, token tahmincisi ile kullanışlı bir asistan arasındaki köprüdür. Şu ana kadar konuştuğunuz her model (Claude, GPT, Llama Chat) bu adımdan geçti.
 
 **Tür:** Yapım
 **Diller:** Python (numpy ile)
@@ -9,28 +9,28 @@
 
 ## Öğrenme Hedefleri
 
-- Temel dil modelini talimat takip eden bir asistana dönüştüren denetlenen fine-tuning (SFT) uygulamasını uygulayın
-- Sistem, kullanıcı ve asistan rolleri içeren sohbet şablonlarını kullanarak eğitim verilerini biçimlendirin ve asistan olmayan token'larda kaybı maskeleyin
+- Temel dil modelini talimat takip eden bir asistana dönüştüren denetimli fine-tuning (SFT) uygulamasını uygulayın
+- Sistem, kullanıcı ve asistan rolleri içeren sohbet şablonlarını kullanarak eğitim verilerini biçimlendirin ve asistan olmayan token'lerde maske kaybı
 - SFT'nin neden gerekli olduğunu açıklayın: temel modeller soruları yanıtlamak yerine metnin devamını sağlar
 - Uzatılmış bir talimat setinde temel model ile ince ayarlı model yanıtlarını karşılaştırarak SFT kalitesini değerlendirin
 
 ## Sorun
 
-Ders 04'te bir model eğittiniz. Bu model, bir dizi verildiğinde sonraki token'yi tahmin edebilir. Bunu "transformer mimarisi" ile beslerseniz "doğal dil işlemede devrim yarattı" şeklinde devam edebilir. Bu bir sonraki-token tahmincisi için etkileyici.
+Ders 04'te bir model eğittiniz. Bu model, bir dizi verildiğinde sonraki token'yi tahmin edebilir. Bunu "transformer mimarisi" ile beslerseniz "doğal dil işlemede devrim yarattı" şeklinde devam edebilir. Bir sonraki token tahmincisi için bu etkileyici.
 
-Şimdi şunu deneyin: besleyin "Fransa'nın başkenti nedir?" Temel model "Paris"e cevap vermiyor. Deseni devam ettiriyor. "Almanya'nın başkenti nedir? İspanya'nın başkenti nedir?" sorusunu üretebilir. çünkü soru listelerini içeren belgelerden öğrendi. Veya "birçok insanın sorduğu bir soru" ortaya çıkabilir çünkü bu makul bir sonraki-token devamıdır. Modelde *cevap verme* kavramı yoktur. Sadece *devam etmeyi* biliyor.
+Şimdi şunu deneyin: besleyin "Fransa'nın başkenti nedir?" Temel model "Paris"e cevap vermiyor. Deseni devam ettiriyor. "Almanya'nın başkenti nedir? İspanya'nın başkenti nedir?" sorusunu üretebilir. çünkü soru listelerini içeren belgelerden öğrendi. Veya "birçok insanın sorduğu bir soru" ortaya çıkabilir çünkü bu, token'nin bir sonraki makul devamıdır. Modelde *cevap verme* kavramı yoktur. Sadece *devam etmeyi* biliyor.
 
 Bu, GPT-3 (temel model, Haziran 2020'de yayınlandı) ile ChatGPT (talimatlara göre ayarlanmış, Kasım 2022'de yayınlandı) arasındaki boşluktur. Aynı mimari. Aynı ön eğitim. Aradaki fark, modele konuşma modelini takip etmeyi öğreten, dikkatlice hazırlanmış (talimat, yanıt) çiftlerin 20.000 ila 100.000'idir.
 
 Stanford Alpaca milyonlarca örneğe ihtiyacınız olmadığını kanıtladı. Mart 2023'te Llama 7B'de GPT-3.5 tarafından oluşturulan yalnızca 52.000 talimat-yanıt çiftinde ince ayar yaptılar. Toplam maliyet: $600. The result was a chatbot that could follow instructions, answer questions, and hold conversations. Not as good as ChatGPT, but shockingly close for $600 ve birkaç saatlik eğitim.
 
-Meta'nın Llama 2 Chat'i, ilk SFT aşamasında yalnızca ~27.000 yüksek kaliteli örnek kullandı. Temel fikir: nitelik nicelikten daha önemlidir. Yetenekli açıklayıcılar tarafından yazılan 27.000 örnek, internetten alınan 1 milyon gürültülü örneği geride bıraktı.
+Meta'nın Llama 2 Chat'i, ilk SFT aşamasında yalnızca ~27.000 yüksek kaliteli örnek kullandı. Temel fikir: nitelik nicelikten daha önemlidir. Yetenekli yorumcular tarafından yazılan 27.000 örnek, internetten alınan 1 milyon gürültülü örneği geride bıraktı.
 
 ## Konsept
 
 ### SFT Aslında Ne Yapar?
 
-Denetimli Fine-Tuning, eğitim öncesindeki aynı eğitim döngüsünü (ileri geçiş, hesaplama kaybı, geri geçiş, güncelleme ağırlıkları) ancak farklı türde verilerle sürdürür. Ham metin yerine yapılandırılmış konuşmalar üzerinde eğitim alırsınız:
+Denetimli Fine-Tuning, eğitim öncesi ile aynı eğitim döngüsünü (ileri geçiş, hesaplama kaybı, geri geçiş, güncelleme ağırlıkları) ancak farklı türde verilerle sürdürür. Ham metin yerine yapılandırılmış konuşmalar üzerinde eğitim alırsınız:
 
 ```json
 {
@@ -87,7 +87,7 @@ What is the capital of France?<|im_end|>
 The capital of France is Paris.<|im_end|>
 ```
 
-Rolleri sınırlamak için özel token'ler (`<|im_start|>`, `<|im_end|>`) kullanır. Bu token'lar, fine-tuning sırasında tokenizer'nin sözlüğüne eklenir. Qwen, Yi ve diğer birçok model ChatML'i kullanıyor.
+Rolleri sınırlamak için özel token'leri (`<|im_start|>`, `<|im_end|>`) kullanır. Bu token'ler, fine-tuning sırasında tokenizer'nin sözlüğüne eklenir. Qwen, Yi ve diğer birçok model ChatML'i kullanıyor.
 
 Her üç format da aynı şeyi başarıyor: Modele "talimat bu, yanıt bu, bu modeli öğren" diyorlar.
 
@@ -103,18 +103,18 @@ Bu nedenle 27.000 örnek yeterlidir. Örnek İngilizce öğretmiyorsunuz. Ona d�
 
 Bu, SFT'deki en önemli teknik detaydır ve çoğu eğitimde bunu atlar.
 
-Eğitim öncesi sırasında, her token'da kaybı hesaplarsınız. Model, dizideki her bir sonraki token'yi tahmin etmeyi öğrenir. SFT sırasında, yalnızca *yanıt* token'lardaki kaybı hesaplarsınız. token talimatları bağlam için oradadır, ancak model bunları yanlış "tahmin ettiği" için cezalandırılmaz.
+Eğitim öncesi sırasında, her token'deki kaybı hesaplarsınız. Model, dizideki her bir sonraki token'yi tahmin etmeyi öğrenir. SFT sırasında, yalnızca *yanıt* token'lerdeki kaybı hesaplarsınız. token talimatları bağlam için oradadır, ancak model bunları yanlış "tahmin ettiği" için cezalandırılmaz.
 
-Neden? Çünkü modelin talimat *oluşturmayı* öğrenmesini istemezsiniz. Talimatlara *yanıt vermeyi* öğrenmesini istiyorsunuz. token talimatlarındaki kaybı hesaplarsanız, modeli "Fransa'nın başkenti nedir?" tahmininde bulunacak şekilde eğitmiş olursunuz. sanki soruyu soran oydu. Bu, gradient sinyalini boşa harcar ve modelin rolü konusunda kafasını karıştırabilir.
+Neden? Çünkü modelin talimat *oluşturmayı* öğrenmesini istemezsiniz. Talimatlara *yanıt vermeyi* öğrenmesini istiyorsunuz. Eğer kaybı tokens talimatına göre hesaplıyorsanız, modeli "Fransa'nın başkenti nedir?" tahmininde bulunacak şekilde eğitiyorsunuz demektir. sanki soruyu soran oydu. Bu, gradient sinyalini boşa harcar ve modelin rolü konusunda kafa karıştırıcı olabilir.
 
-Uygulamada, bir kayıp maskesi yaratırsınız: yanıt token'ler için 1, talimat token'ler için 0. Ortalamayı almadan önce her-token kaybını bu maskeyle çarpın.
+Pratikte bir kayıp maskesi yaratırsınız: token yanıtı için 1, token talimatı için 0. Ortalamayı almadan önce token başına kaybı bu maskeyle çarpın.
 
 ```
 Tokens:    [SYS] You are helpful [USER] What is the capital? [ASST] Paris is the capital [EOS]
 Loss mask:   0    0    0     0      0     0   0  0     0       1     1    1   1     1      1
 ```
 
-Yalnızca `[ASST]`'dan sonraki token'ler kayba katkıda bulunur. Model, ileri geçiş sırasında konuşmanın tamamını görür (doğru yanıtı üretmek için talimata ihtiyaç duyar) ancak ağırlıklarını yalnızca yanıtı ne kadar iyi tahmin ettiğine bağlı olarak günceller.
+Yalnızca `[ASST]`'den sonraki token'ler kayba katkıda bulunur. Model, ileri geçiş sırasında konuşmanın tamamını görür (doğru yanıtı üretmek için talimata ihtiyaç duyar) ancak ağırlıklarını yalnızca yanıtı ne kadar iyi tahmin ettiğine bağlı olarak günceller.
 
 ### Eğitim Hiperparametreleri
 
@@ -124,14 +124,14 @@ SFT, ön eğitimden önemli ölçüde farklı hiperparametreler kullanır. Sıf�
 |-----------|---------------------------|---------------------|
 | Öğrenme oranı | 3e-4 (zirve) | 2e-5 |
 | Çağlar | 1 (tek geçişli veri) | 2 |
-| Parti boyutu | 4M tokens | 64 örnek |
+| Parti boyutu | 4M token | 64 örnek |
 | Isınma adımları | 2.000 | 0-100 |
 | Ağırlık azalması | 0.1 | 0.0-0.1 |
-| Veri boyutu | 2T tokens | 27.000 örnek |
+| Veri boyutu | 2T token'ler | 27.000 örnek |
 
-Öğrenme oranı SFT için 15 kat daha düşüktür. Bu çok kritik. fine-tuning sırasındaki yüksek öğrenme oranı, önceden eğitilmiş bilgiyi yok eder. Model öğrendiğini "unutur" ve küçük fine-tuning dataset'ye aşırı uyum sağlar. Bu felaket bir unutkanlıktır.
+Öğrenme oranı SFT için 15 kat daha düşüktür. Bu çok kritik. fine-tuning sırasındaki yüksek öğrenme oranı, önceden eğitilmiş bilgiyi yok eder. Model öğrendiklerini "unutuyor" ve küçük fine-tuning dataset'ye aşırı uyum sağlıyor. Bu felaket bir unutkanlıktır.
 
-İki dönem, modelin her eğitim örneğini iki kez gördüğü anlamına gelir. Küçük bir dataset üzerinde 3'ten fazla dönem ezberlemeye yol açar -- model, genelleme yapmak yerine eğitim örneklerini kelimesi kelimesine yeniden üretmeye başlar.
+İki dönem, modelin her eğitim örneğini iki kez gördüğü anlamına gelir. Küçük bir dataset üzerinde 3'ten fazla dönem ezberlemeye yol açar; model, genelleme yapmak yerine eğitim örneklerini kelimesi kelimesine yeniden üretmeye başlar.
 
 ### Felaketli Unutuş
 
@@ -143,15 +143,15 @@ Fine-tuning genel yetenekleri yok edebilir. Talimatları takip eden veriler üze
 
 2. **Kısa eğitim.** 1-3 dönem. Model fazla oturmadan önce durun.
 
-3. **Pre-training verilerini karıştırın.** Llama 2 Chat, ham pre-training verilerinin küçük bir yüzdesini (%2-5) SFT dataset'ine karıştırdı. Bu, model yeni talimat izleme davranışını öğrenirken genel yeteneklerini ona "hatırlatır".
+3. **Eğitim öncesi verileri karıştırın.** Llama 2 Chat, ham eğitim öncesi verilerinin küçük bir yüzdesini (%2-5) SFT dataset'ye karıştırdı. Bu, yeni talimat izleme davranışını öğrenirken modele genel yeteneklerini "hatırlatır".
 
 ### Gerçek Sayılar
 
 Fine-tuning 10.000 yüksek kaliteli talimat çiftinden oluşan bir 7B modeli, tek bir NVIDIA A100 80 GB GPU'da yaklaşık 1 saat sürer. İşte matematik:
 
-- 10.000 örnek x 512 tokensn ortalama = 5,12M tokensn
-- 2 dönem = toplam 10,24 milyon tokens
-- 7B modeli için A100 verimi fine-tuning: ~3.000 tokens/saniye
+- 10.000 örnek x 512 token ortalaması = 5,12 milyon token
+- 2 dönem = toplam 10,24 milyon token
+- 7B modeli fine-tuning için A100 verimi: ~3.000 tokens/saniye
 - 10,24M / 3.000 = ~3.400 saniye = ~57 dakika
 
 Mini GPT'miz (4 katman, 128 karartma) için eğitim neredeyse anında gerçekleşir. Önemli olan ölçeği değil mekaniği anlamaktır.
@@ -234,11 +234,11 @@ INSTRUCTION_DATA = [
 ]
 ```
 
-Sekiz örnek çok küçük. Stanford Alpaca 52.000 kullandı. Ancak ister 8 ister 52.000 olsun, mekanik aynıdır: tokenize, maskeleme, yalnızca yanıtlarda kayıp hesaplama.
+Sekiz örnek çok küçük. Stanford Alpaca 52.000 kullandı. Ancak mekanik, ister 8 ister 52.000 olsun aynıdır: tokenize, maske, yalnızca yanıtlarda hesaplama kaybı.
 
-### 2. Adım: TokenSohbet Şablonu ile Oluşturun
+### Adım 2: Sohbet Şablonu ile Tokenize
 
-Talimat-yanıt çiftlerini özel rol işaretleyicileriyle token dizilerine dönüştürün. İşaretçiler modele talimatın nerede bittiğini ve yanıtın nerede başladığını söyler.
+Özel rol işaretleyicileriyle talimat-yanıt çiftlerini token dizilerine dönüştürün. İşaretçiler modele talimatın nerede bittiğini ve yanıtın nerede başladığını söyler.
 
 ```python
 SPECIAL_TOKENS = {
@@ -280,11 +280,11 @@ def create_loss_mask(tokens):
     return mask
 ```
 
-Kayıp maskesinin tümü talimat token'lar için sıfırlardan ve yanıt token'ler için tümü birlerden oluşur. `RESP_START` token'nin kendisi 0 maskesi alır çünkü bu bir sınırlayıcıdır, yanıt içeriğinin bir parçası değildir.
+Kayıp maskesinin tamamı token talimatları için sıfırlardan ve token yanıtı için tamamı birlerden oluşur. `RESP_START` token'nin kendisi 0 maskesi alır çünkü bu, yanıt içeriğinin bir parçası değil, bir sınırlayıcıdır.
 
 ### Adım 3: Maskelenmiş Çapraz Entropi Kaybı
 
-Standart çapraz entropi, ancak kayıp maskesiyle çarpılır. Yalnızca token yanıtı gradient'ya katkıda bulunur.
+Standart çapraz entropi, ancak kayıp maskesiyle çarpılır. Yalnızca yanıt token'ler gradient'ye katkıda bulunur.
 
 ```python
 def masked_cross_entropy_loss(logits, targets, loss_mask):
@@ -309,7 +309,7 @@ def masked_cross_entropy_loss(logits, targets, loss_mask):
     return loss
 ```
 
-Payda `seq_len` değil, `num_response_tokens`'tır. Toplam dizi uzunluğuna bölerseniz, daha uzun talimatlar gradient sinyalini sulandırır. Yanıt token sayısına bölmek, talimat uzunluğundan bağımsız olarak yanıt başına token eşit ağırlık sağlar.
+Payda `seq_len` değil, `num_response_tokens`'dir. Toplam dizi uzunluğuna bölerseniz, daha uzun komutlar gradient sinyalini sulandırır. Yanıt token sayısına bölmek, talimat uzunluğundan bağımsız olarak token yanıt başına eşit ağırlık sağlar.
 
 ### Adım 4: SFT Eğitim Döngüsü
 
@@ -384,7 +384,7 @@ def sft_train(model, dataset, num_epochs=2, lr=2e-5, seq_len=64):
     return model, losses
 ```
 
-Öğrenme oranı 2e-5'tir ve Llama 2 Chat ile eşleşir. Bunu eğitim öncesi kullanılan 3e-4 ile karşılaştırın - 15 kat daha küçük. gradient maskelenmiştir: token talimatı sıfır gradient üretir. Yalnızca token yanıtı ağırlıkları iter.
+Öğrenme oranı 2e-5'tir ve Lama 2 Chat ile eşleşir. Bunu eğitim öncesi kullanılan 3e-4 ile karşılaştırın - 15 kat daha küçük. gradient maskelenmiştir: token'lerin talimatı sıfır gradient üretir. Yalnızca yanıt token'ler ağırlıkları zorlar.
 
 ### Adım 5: Temel ile SFT Modelini Karşılaştırın
 
@@ -439,7 +439,7 @@ def evaluate_instruction_following(model, instructions):
 
 ### Adım 6: Felaketli Unutmayı Ölçün
 
-Modelin SFT'den önceki ve sonraki sonraki-token tahmin yeteneğini karşılaştırın. SFT'nin genel yeteneklere zarar vermesi durumunda ham metindeki kayıp artacaktır.
+Modelin SFT'den önceki ve sonraki token tahmin yeteneğini karşılaştırın. SFT'nin genel yeteneklere zarar vermesi durumunda ham metindeki kayıp artacaktır.
 
 ```python
 def measure_forgetting(model, test_text, seq_len=64):
@@ -470,7 +470,7 @@ def measure_forgetting(model, test_text, seq_len=64):
     return total_loss / max(num_windows, 1)
 ```
 
-Gerçekte fine-tuning, bu ölçümü eğitim boyunca takip edersiniz. Ham metin kaybı %10-15'ten fazla artarsa ​​SFT'niz çok agresif demektir. Öğrenme oranını düşürün veya dönem sayısını azaltın.
+Gerçek fine-tuning'de bu ölçümü eğitim boyunca takip edeceksiniz. Ham metin kaybı %10-15'ten fazla artarsa ​​SFT'niz çok agresif demektir. Öğrenme oranını düşürün veya dönem sayısını azaltın.
 
 ## Kullan onu
 
@@ -564,17 +564,17 @@ The model learns to predict the next token given all previous tokens."""
 
 ## Gönderin
 
-Bu ders, SFT için talimat dataset'larını tasarlamanıza ve düzenlemenize yardımcı olan bir prompt olan `outputs/prompt-sft-data-curator.md`'yi üretir. Bir hedef yetenek verildiğinde (kod oluşturma, matematik, konuşma), format spesifikasyonları, kalite kriterleri ve çeşitlilik gereksinimleriyle birlikte bir veri toplama planı üretir.
+Bu ders, SFT için dataset talimatlarını tasarlamanıza ve düzenlemenize yardımcı olan bir prompt olan `outputs/prompt-sft-data-curator.md`'yi üretir. Hedef yetenek (kod oluşturma, matematik, konuşma) göz önüne alındığında, format spesifikasyonları, kalite kriterleri ve çeşitlilik gereksinimleriyle birlikte bir veri toplama planı üretir.
 
 ## Egzersizler
 
-1. Sistem prompt desteğini ekleyin. Bir sistem mesajını kabul etmek ve onu talimatın önüne eklemek için `tokenize_instruction_pair`'yi değiştirin. Farklı sistem prompt'leri olan 5 örnek oluşturun ("Sen bir şairsin", "Sen bir matematik öğretmenisin") ve modelin eğitim sırasında farklı sistem prompt'lerini gördüğünü doğrulayın.
+1. Sistem prompt desteğini ekleyin. Bir sistem mesajını kabul etmek ve talimatın önüne eklemek için `tokenize_instruction_pair`'yi değiştirin. Farklı sistem prompt'lerle 5 örnek oluşturun ("Sen bir şairsin", "Sen bir matematik öğretmenisin") ve modelin eğitim sırasında farklı sistem prompt'leri gördüğünü doğrulayın.
 
 2. Veri karıştırmayı uygulayın. Bir SFT dataset ve bir ham metin derlemi alan, ardından örneklerin %5'inin ham metin (maskeleme yok) ve %95'inin talimat çiftleri (maskeli) olduğu eğitim grupları üreten bir işlev oluşturun. 3 dönem çalıştırın ve unutma ölçümlerini saf SFT eğitimiyle karşılaştırın.
 
-3. Bir veri kalitesi puanlayıcı oluşturun. Her talimat-yanıt çifti için şunları hesaplayın: (a) tokens cinsinden yanıt uzunluğunu, (b) talimat-yanıt oranını, (c) sözcük dağarcığı çeşitliliğini (benzersiz tokens / toplam tokens). Yanıt uzunluğu < 10 tokens veya çeşitliliği < 0,3 olan örnekleri filtreleyin. Filtrelemenin nihai kaybı nasıl etkilediğini gösterin.
+3. Bir veri kalitesi puanlayıcı oluşturun. Her talimat-yanıt çifti için şunları hesaplayın: (a) token cinsinden yanıt uzunluğunu, (b) talimat-yanıt oranını, (c) kelime dağarcığı çeşitliliğini (benzersiz token'ler / toplam token'ler). Yanıt uzunluğu < 10 token veya çeşitlilik < 0,3 olan örnekleri filtreleyin. Filtrelemenin nihai kaybı nasıl etkilediğini gösterin.
 
-4. Çok yönlü konuşma eğitimini uygulayın. tokenizasyonunu 3 turlu konuşmaları yönetecek şekilde genişletin (kullanıcı-asistan-kullanıcı-asistan-kullanıcı-asistan). Kayıp maskesi üç asistan dönüşünü de kapsamalıdır. Bir örnek için token-maske hizalamasını yazdırarak maskenin doğru olduğunu doğrulayın.
+4. Çok yönlü konuşma eğitimini uygulayın. tokenization'ı 3 turlu konuşmaları yönetecek şekilde genişletin (kullanıcı-asistan-kullanıcı-asistan-kullanıcı-asistan). Kayıp maskesi üç asistan dönüşünü de kapsamalıdır. Bir örnek için token maskesi hizalamasını yazdırarak maskenin doğru olduğunu doğrulayın.
 
 5. Öğrenme oranlarını karşılaştırın. Aynı modeli lr=1e-4, lr=2e-5 ve lr=1e-6 ile üç kez eğitin. Kayıp eğrilerini çizin. 1e-4 koşusu hızlı bir başlangıç ​​alçalması ancak daha yüksek nihai kayıp (fazla uyum) göstermelidir. 1e-6 koşusu zorlukla hareket etmelidir. 2e-5 koşusu tatlı nokta olmalı.
 
@@ -582,19 +582,19 @@ Bu ders, SFT için talimat dataset'larını tasarlamanıza ve düzenlemenize yar
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| SFT | "Fine-tuning görüşmelerde" | Denetimli Fine-Tuning: kayıp yalnızca tokens yanıtında hesaplanan (talimat, yanıt) çiftler üzerinde devam eden eğitim |
+| SFT | "Konuşmalarda Fine-tuning" | Denetimli Fine-Tuning: kayıp yalnızca yanıta göre hesaplanan (talimat, yanıt) çiftler üzerinde sürekli eğitim tokens |
 | Talimat ayarlama | "Modele talimatlara uymayı öğretme" | Temel modelin yeni bilgiyi değil konuşma modelini öğrenmesi için açık talimat-yanıt çiftleri üzerine eğitim |
-| Kayıp maskeleme | "prompt yoksayılıyor" | token talimatı için kayıp sıfıra ayarlanıyor, böylece gradient'ler yalnızca token yanıt tahminlerinden akıyor |
+| Kayıp maskeleme | "prompt Yoksayılıyor" | token talimatı için kayıp sıfıra ayarlanıyor, böylece gradient'ler yalnızca token yanıt tahminlerinden akıyor |
 | ChatML | "Sohbet İşaretleme Dili" | Konuşma verilerindeki konuşmacı rollerini işaretlemek için `<\|im_start\|>` ve `<\|im_end\|>` sınırlayıcılarını kullanan bir token biçimi |
 | Alpaka formatı | "Stanford'un formatı" | 600 $'a mal olan 52K GPT-3.5 ile oluşturulmuş örnekler için kullanılan, talimat/giriş/çıkış alanlarına sahip bir JSON formatı |
-| Felaketsel unutma | "Model giderek aptallaşıyor" | Fine-tuning önceden eğitilmiş yetenekleri yok eder çünkü gradient güncellemeleri göreve özel kalıplarla genel bilginin üzerine yazar |
-| Ağırlık bağlama | "Paylaşılan embedding'lar" | Giriş token embedding'ler ve çıktı tahmin başlığı için aynı matrisin kullanılması, parametrelerin kaydedilmesi ve tutarlılığın iyileştirilmesi |
-| Sohbet şablonu | "prompt'yı nasıl biçimlendirirsiniz?" | Model için bir konuşmayı yapılandıran belirli token dizisi (rol işaretleri, sınırlayıcılar) |
+| Felaketsel unutma | "Model giderek aptallaşıyor" | Fine-tuning, önceden eğitilmiş yetenekleri yok eder çünkü gradient güncellemeleri, göreve özel kalıplarla genel bilginin üzerine yazar |
+| Ağırlık bağlama | "Paylaşılan embedding'ler" | Giriş token embedding'ler ve çıkış tahmin başlığı için aynı matrisin kullanılması, parametrelerin kaydedilmesi ve tutarlılığın iyileştirilmesi |
+| Sohbet şablonu | "prompt'yi nasıl biçimlendirirsiniz" | Model için bir konuşmayı yapılandıran belirli token dizisi (rol işaretleri, sınırlayıcılar) |
 
 ## Daha Fazla Okuma
 
 - [Ouyang ve diğerleri, 2022 -- "İnsan geri bildirimiyle talimatları takip etmek için dil modellerini eğitmek" (InstructGPT)](https://arxiv.org/abs/2203.02155) -- OpenAI'de talimat ayarlama + RLHF'yi tanıtan makale
-- [Taori ve diğerleri, 2023 -- "Stanford Alpaca: Talimatları Takip Eden LLaMA Modeli"](https://github.com/tatsu-lab/stanford_alpaca) -- 600$ karşılığında 52 bin talimat örneği, SFT'nin küçük dataset'lar üzerinde çalıştığını kanıtlıyor
+- [Taori ve diğerleri, 2023 -- "Stanford Alpaca: Talimatları Takip Eden LLaMA Modeli"](https://github.com/tatsu-lab/stanford_alpaca) -- 600 $ karşılığında 52 bin talimat örneği, SFT'nin küçük dataset'ler üzerinde çalıştığını kanıtlıyor
 - [Touvron ve diğerleri, 2023 -- "Llama 2: Açık Temel ve İnce Ayarlı Sohbet Modelleri"](https://arxiv.org/abs/2307.09288) -- Meta'nın 27K yüksek kaliteli örneklerle SFT + RLHF ardışık düzeni
-- [Chiang ve diğerleri, 2023 -- "Vicuna: GPT-4'ü Etkileyen Açık Kaynaklı Bir Chatbot"](https://lmsys.org/blog/2023-03-30-vicuna/) -- 70.000 ShareGPT sohbeti üzerine eğitim
-- [Zhou ve diğerleri, 2023 -- "LIMA: Hizalama için Daha Azı Daha Fazlasıdır"](https://arxiv.org/abs/2305.11206) -- dikkatlice seçilmiş 1.000 örneğin çok daha büyük dataset'lerdeki SFT ile eşleşebileceğini kanıtlıyor
+- [Chiang ve diğerleri, 2023 -- "Vicuna: GPT-4'ü Etkileyen Açık Kaynaklı Bir Chatbot"](https://lmsys.org/blog/2023-03-30-vicuna/) -- 70.000 ShareGPT sohbeti eğitimi
+- [Zhou ve diğerleri, 2023 -- "LIMA: Hizalama için Daha Azı Daha Fazlasıdır"](https://arxiv.org/abs/2305.11206) -- dikkatle seçilmiş 1000 örneğin çok daha büyük dataset'lerdeki SFT ile eşleşebileceğini kanıtlıyor

@@ -1,107 +1,107 @@
-# WMDP and Dual-Use Capability Evaluation
+# WMDP ve Çift Kullanım Yeteneği Değerlendirmesi
 
-> Li et al., "The WMDP Benchmark: Measuring and Reducing Malicious Use With Unlearning" (ICML 2024, arXiv:2403.03218). 4,157 multiple-choice questions across biosecurity (1,520), cybersecurity (2,225), and chemistry (412). Questions operate in the "yellow zone" — proximate enabling knowledge, filtered by multi-expert review and ITAR/EAR legal compliance. Dual purpose: proxy evaluation of dual-use capability, and unlearning benchmark (the companion RMU method reduces WMDP performance while preserving general capability). 2024-2025 field narrative: early OpenAI/Anthropic 2024 evaluations reported "mild uplift" over internet search; by April 2025, OpenAI's Preparedness Framework v2 said models are "on the cusp of meaningfully helping novices create known biological threats." Anthropic's bioweapon-acquisition trial showed 2.53x uplift, insufficient to rule out ASL-3.
+> Li ve diğerleri, "WMDP Benchmark: Öğrenmemeyle Kötü Amaçlı Kullanımın Ölçülmesi ve Azaltılması" (ICML 2024, arXiv:2403.03218). Biyogüvenlik (1.520), siber güvenlik (2.225) ve kimya (412) alanlarında 4.157 çoktan seçmeli soru. Sorular, birden fazla uzmanın incelemesi ve ITAR/EAR yasal uyumluluğu tarafından filtrelenen, yaklaşık etkinleştirme bilgisi olan "sarı bölgede" işler. İkili amaç: ikili kullanım özelliğinin proxy değerlendirmesi ve benchmark öğrenmesinin iptal edilmesi (yardımcı RMU yöntemi, genel yeteneği korurken WMDP performansını azaltır). 2024-2025 saha anlatımı: İlk OpenAI/Antropik 2024 değerlendirmeleri internet aramasında "hafif bir artış" olduğunu bildirdi; Nisan 2025 itibarıyla OpenAI'nin Hazırlık Framework v2'sinde modellerin "acemilerin bilinen biyolojik tehditleri oluşturmasına anlamlı bir şekilde yardımcı olmanın eşiğinde" olduğu belirtildi. Anthropic'in biyolojik silah edinme denemesi, ASL-3'ü dışlamak için yeterli olmayan 2,53 kat artış gösterdi.
 
-**Type:** Learn
-**Languages:** Python (stdlib, WMDP-shaped uplift evaluation harness)
-**Prerequisites:** Phase 18 · 16 (red-team tooling), Phase 14 (agent engineering)
-**Time:** ~60 minutes
+**Tür:** Öğren
+**Diller:** Python (stdlib, WMDP şekilli yükseltme değerlendirme donanımı)
+**Önkoşullar:** Aşama 18 · 16 (kırmızı takımla takımlama), Aşama 14 (agent mühendislik)
+**Süre:** ~60 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Describe WMDP's three domains, question counts, and "yellow zone" filter criterion.
-- Explain RMU and why WMDP is both an evaluation and an unlearning benchmark.
-- Describe the 2024-2025 uplift narrative: "mild uplift" -> "on the cusp" -> "insufficient to rule out ASL-3."
-- Distinguish novice-relative uplift from expert-absolute capability.
+- WMDP'nin üç alanını, soru sayısını ve "sarı bölge" filtre kriterini açıklayın.
+- RMU'yu ve WMDP'nin neden hem bir değerlendirme hem de öğrenmeyi bırakma benchmark olduğunu açıklayın.
+- 2024-2025 artış öyküsünü açıklayın: "hafif bir artış" -> "çıkışta" -> "ASL-3'ü dışlamak için yeterli değil."
+- Acemi-göreceli gelişmeyi, uzman-mutlak yetenekten ayırın.
 
-## The Problem
+## Sorun
 
-Dual-use capability is the measurement problem under every lab's frontier safety framework (Lesson 18). The question: does model X materially advance a novice's ability to cause mass harm in bio, chem, or cyber? Direct measurement (ask the model to actually produce harm) is illegal and unethical. Proxy measurement needs a benchmark the model cannot refuse (to produce honest capability numbers) but whose questions are not themselves harmful publications.
+Çift kullanım özelliği, her laboratuvarın sınır güvenliği framework kapsamındaki ölçüm problemidir (Ders 18). Soru şu: Model X, bir aceminin biyo, kimya veya siber alanda kitlesel zarara neden olma yeteneğini maddi olarak geliştiriyor mu? Doğrudan ölçüm (modelden gerçekten zarar vermesini istemek) yasa dışıdır ve etik değildir. Proxy ölçümü, modelin reddedemeyeceği (dürüst yetenek sayıları üretmek için) ancak soruları zararlı yayınlar olmayan bir benchmark'a ihtiyaç duyar.
 
-## The Concept
+## Konsept
 
-### The "yellow zone"
+### "Sarı bölge"
 
-Questions that require proximate, enabling knowledge of a harmful process without being a direct synthesis recipe. "What reagent catalyzes step 4 of [published pathway]?" not "how do I make [dangerous compound]?" Each question reviewed by multiple domain experts; filtered for ITAR/EAR export-control compliance.
+Doğrudan sentez tarifi olmadan, zararlı bir sürecin bilgisine olanak sağlayan, yakınlık gerektiren sorular. "[Yayınlanan yol]'un 4. adımınıagent yeniden katalize eden şey nedir?" "[tehlikeli bileşiği] nasıl yaparım?" değil Her soru birden fazla alan uzmanı tarafından incelenir; ITAR/EAR ihracat kontrolü uyumluluğu için filtrelendi.
 
-4,157 questions total:
-- Biosecurity: 1,520
-- Cybersecurity: 2,225
-- Chemistry: 412
+Toplam 4.157 soru:
+- Biyogüvenlik: 1.520
+- Siber güvenlik: 2.225
+- Kimya: 412
 
-Multiple-choice format. Models answer without being asked to assist with anything; capability can be measured without eliciting harmful behaviour.
+Çoktan seçmeli format. Modeller herhangi bir konuda yardımcı olmaları istenmeden cevap verir; Yetenek, zararlı davranışlara yol açmadan ölçülebilir.
 
-### RMU — Representation Misdirection for Unlearning
+### RMU — Öğrenmeyi Unutmak için Temsilin Yanlış Yönlendirilmesi
 
-The companion unlearning method. Applied to LLaMa-2-7B, reduced WMDP scores to near-random while preserving MMLU and other general-capability benchmarks within a few percentage points. The published method is the unlearning baseline for every subsequent bio-chem-cyber unlearning paper.
+Yardımcı öğrenme yöntemi. LLaMa-2-7B'ye uygulanarak WMDP puanları neredeyse rastgele seviyeye düşürülürken MMLU ve diğer genel yetenek benchmark'lar birkaç yüzde puanı içinde korundu. Yayınlanan yöntem, sonraki her biyo-kimya-siber öğrenmeyi bırakma makalesi için öğrenmeyi bırakmanın temel çizgisidir.
 
-### The 2024-2025 uplift narrative
+### 2024-2025'in yükseliş öyküsü
 
-Three phases:
+Üç aşama:
 
-1. **2024 "mild uplift."** Early OpenAI and Anthropic Preparedness/RSP evaluations reported small advantages over internet search for novices attempting bio-adjacent tasks. Public framing: frontier models help, but not substantially more than Google.
+1. **2024 "hafif bir iyileşme."** Erken OpenAI ve Antropik Hazırlık/RSP değerlendirmeleri, biyo-bitişik görevleri deneyen acemiler için internet aramasına göre küçük avantajlar bildirdi. Kamusal çerçeveleme: sınır modelleri yardımcı olur, ancak Google'dan çok daha fazla değil.
 
-2. **April 2025 "on the cusp."** OpenAI's Preparedness Framework v2 reported models "on the cusp of meaningfully helping novices create known biological threats." Not a capability claim — a warning that the cusp is close.
+2. **Nisan 2025 "başlangıçta."** OpenAI'nin Hazırlık Framework v2 raporunda "acemilerin bilinen biyolojik tehditler oluşturmasına anlamlı bir şekilde yardımcı olmanın eşiğinde" modeller rapor edildi. Bir yetenek iddiası değil, zirvenin yaklaştığı uyarısı.
 
-3. **Anthropic's 2025 bioweapon-acquisition trial.** Controlled study with novice participants, measured relative success at acquisition-phase tasks. Reported 2.53x uplift. Insufficient to rule out ASL-3 (Lesson 18) — the threshold for Anthropic's Responsible Scaling Policy tier 3 is met or approached.
+3. **Anthropic'in 2025 biyolojik silah edinme denemesi.** Acemi katılımcılarla yapılan kontrollü çalışma, edinme aşaması görevlerindeki göreceli başarıyı ölçtü. 2,53 kat artış bildirildi. ASL-3'ü hariç tutmak yeterli değil (Ders 18) — Anthropic'in Sorumlu Ölçeklendirme Politikası 3. kademe eşiğine ulaşıldı veya bu eşiklere yaklaşıldı.
 
-### Novice-relative vs expert-absolute
+### Acemi akraba vs mutlak uzman
 
-A crucial distinction:
+Çok önemli bir ayrım:
 
-- **Novice-relative uplift.** How much does the model help a non-expert? Multiplicative. The relative advantage is high because novices know little; even modest information helps.
-- **Expert-absolute capability.** How much information does the model produce at maximum effort? An expert can extract more than a novice. The absolute ceiling is high.
+- **Acemi göreceli olarak iyileşme.** Model, uzman olmayan birine ne kadar yardımcı oluyor? Çarpımsal. Göreceli avantaj yüksektir çünkü acemiler çok az şey bilir; mütevazı bilgiler bile yardımcı olur.
+- **Uzman-mutlak yetenek.** Model maksimum çabayla ne kadar bilgi üretiyor? Bir uzman bir acemiden daha fazlasını çıkarabilir. Mutlak tavan yüksektir.
 
-Safety cases (Lesson 18) target both: "the model cannot give a novice enough uplift to execute" plus "an expert cannot extract information from the model that is not already published."
+Güvenlik durumları (Ders 18) her ikisini de hedefler: "model, acemi bir kişiye uygulamaya yetecek kadar destek sağlayamaz" artı "bir uzman, modelden henüz yayınlanmamış bilgileri çıkaramaz."
 
-### The measurement pitfall
+### Ölçüm tuzağı
 
-WMDP is a capability proxy, not a deployment measurement. A model that scores high on WMDP may or may not be exploitable by a novice in practice, depending on:
-- Elicitation resistance (how hard is it to get the capability out without tripping safety filters)
-- Tacit knowledge (capability that requires wet-lab skill, not information)
-- Execution barriers (procurement, equipment)
+WMDP bir deployment ölçümü değil, bir yetenek proxy'sidir. WMDP'de yüksek puan alan bir model, aşağıdakilere bağlı olarak pratikte acemi biri tarafından kullanılabilir veya kullanılamayabilir:
+- Ortaya çıkma direnci (güvenlik filtrelerini tetiklemeden bu yeteneği ortaya çıkarmak ne kadar zor)
+- Örtülü bilgi (bilgi değil, ıslak laboratuvar becerisi gerektiren yetenek)
+- Uygulama engelleri (tedarik, ekipman)
 
-Anthropic's 2025 bioweapon-acquisition trial adds the novice-elicitation layer on top of WMDP-style capability: it measures actual task success, not multiple-choice capability.
+Anthropic'in 2025 biyolojik silah edinme denemesi, WMDP tarzı yeteneğin üzerine acemi-ortaya çıkarma katmanını ekliyor: çoktan seçmeli yeteneği değil, gerçek görev başarısını ölçer.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lessons 12-16 are attack and defense tooling on model outputs. Lesson 17 is the dual-use capability layer — the measurement that frontier safety frameworks (Lesson 18) evaluate. Lesson 30 closes the arc with the current 2026 cyber/bio/chem/nuclear uplift evidence.
+12-16. dersler, model çıktılarına ilişkin saldırı ve savunma araçlarıdır. Ders 17, ikili kullanım yeteneği katmanıdır — sınır güvenliği framework'lerin (Ders 18) değerlendirdiği ölçüm. Ders 30, mevcut 2026 siber/biyo/kimya/nükleer yükseliş kanıtlarıyla konuyu kapatıyor.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` builds a toy WMDP-shaped evaluation harness. A mock model is tested on category-binned questions; scores per domain are reported. A simple unlearning intervention (zero out domain-specific representation) reduces scores; you can measure the trade-off against general capability.
+`code/main.py` , oyuncak WMDP şeklinde bir değerlendirme donanımı oluşturuyor. Sahte bir model, kategori gruplu sorular üzerinde test edilir; scores per domain are reported. Basit bir öğrenmeyi durdurma müdahalesi (alanına özgü temsilin sıfırlanması) puanları azaltır; genel kapasiteye karşı dengeyi ölçebilirsiniz.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-wmdp-eval.md`. Given a dual-use capability claim ("our model does not meaningfully help with bioweapons"), it audits: which benchmarks were run, which refusal path was used for evaluation (raw completion vs policy-gated), and whether novice-elicitation studies complement the multiple-choice result.
+Bu ders `outputs/skill-wmdp-eval.md` üretir. İkili kullanım yeteneği iddiası göz önüne alındığında ("modelimiz biyolojik silahlara anlamlı bir şekilde yardımcı olmuyor"), hangi benchmark'larin çalıştırıldığını, değerlendirme için hangi ret yolunun kullanıldığını (ham tamamlama vs politika kapılı) ve acemi ortaya çıkarma çalışmalarının çoktan seçmeli sonucu tamamlayıp tamamlamadığını denetler.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Report per-domain accuracy before and after the toy unlearning step. Explain the general-capability trade-off.
+1. `code/main.py`'yı çalıştırın. Oyuncak öğrenme adımından önce ve sonra alan başına doğruluğu raporlayın. Explain the general-capability trade-off.
 
-2. Augment the toy WMDP with a fourth domain (e.g., radiological). Specify two illustrative question types in the yellow zone. Explain why crafting such questions is harder than adding MMLU-shaped questions.
+2. Oyuncak WMDP'yi dördüncü bir alanla (e.g., radyolojik) artırın. Sarı bölgede iki açıklayıcı soru türünü belirtin. Bu tür soruları hazırlamanın neden MMLU şeklindeki soruları eklemekten daha zor olduğunu açıklayın.
 
-3. Read WMDP 2024 Section 5 (RMU methodology). Sketch a simpler unlearning approach (e.g., suppress top-k neurons for domain content) and describe its expected general-capability cost.
+3. Read WMDP 2024 Section 5 (RMU methodology). Daha basit bir öğrenmeyi bırakma yaklaşımının taslağını çizin (e.g., etki alanı içeriği için en üstteki nöronları bastırın) ve bunun beklenen genel yetenek maliyetini açıklayın.
 
-4. Anthropic 2025's bioweapon-acquisition trial reports 2.53x uplift. Describe two ways this number could be biased upward (novice sample size, task fidelity) and two downward (elicitation ceiling, model safety gating).
+4. Antropik 2025'in biyolojik silah edinme denemesi 2,53 kat artış bildirdi. Bu sayının yukarıya doğru (acemi örneklem büyüklüğü, göreve uygunluk) ve aşağıya doğru (ortaya çıkarma tavanı, model güvenlik kapısı) iki yolunu açıklayın.
 
-5. Articulate what a safety case for ASL-3 requires beyond passing WMDP unlearning. Name at least two complementary elicitation studies.
+5. ASL-3 için bir güvenlik durumunun, WMDP öğrenmesini iptal etmenin ötesinde neleri gerektirdiğini açıklayın. En az iki tamamlayıcı ortaya çıkarma çalışmasını adlandırın.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| WMDP | "the dual-use benchmark" | 4,157 MCQ questions across bio/cyber/chem in the yellow zone |
-| Yellow zone | "enabling but not synthesis" | Proximate knowledge adjacent to harmful capability without being a synthesis recipe |
-| RMU | "the unlearning baseline" | Representation Misdirection for Unlearning; reduces WMDP scores, preserves general capability |
-| Novice-relative uplift | "how much it helps non-experts" | Multiplicative advantage over status-quo internet search for a novice |
-| Expert-absolute capability | "ceiling for experts" | Maximum information extractable from the model by a motivated expert |
-| Acquisition-phase task | "steps before synthesis" | Procurement, equipment, permits — the earliest parts of a harm pathway |
-| ITAR/EAR | "export-control compliance" | Legal frameworks that constrain publishing certain enabling knowledge |
+| WMDP | "the dual-use benchmark" | Sarı bölgede biyo/siber/kimya genelinde 4.157 ÇSS sorusu |
+| Sarı bölge | "etkinleştirme ama sentezleme değil" | Bir sentez tarifi olmadan zararlı yeteneğe bitişik yakın bilgi |
+| RMU | "öğrenmeyi unutmanın temel çizgisi" | Öğrenmeyi Unutma İçin Temsilin Yanlış Yönlendirilmesi; WMDP puanlarını azaltır, genel yeteneği korur |
+| Acemilere göre yükselme | "uzman olmayanlara ne kadar yardımcı oluyor" | Bir acemi için mevcut internet aramasına göre kat kat avantaj |
+| Uzman-mutlak yetenek | "uzmanlar için tavan" | Motivasyonlu bir uzman tarafından modelden elde edilebilecek maksimum bilgi |
+| Edinme aşaması görevi | "sentezden önceki adımlar" | Tedarik, ekipman, izinler — zarar yolunun ilk kısımları |
+| ITAR/KULAK | "ihracat kontrolü uyumluluğu" | Belirli etkinleştirme bilgilerinin yayınlanmasını kısıtlayan yasal framework'ler |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Li et al. — The WMDP Benchmark (arXiv:2403.03218, ICML 2024)](https://arxiv.org/abs/2403.03218) — the benchmark and RMU paper
-- [OpenAI — Preparedness Framework v2 (April 15, 2025)](https://openai.com/index/updating-our-preparedness-framework/) — "on the cusp" language
-- [Anthropic — Responsible Scaling Policy v3.0 (February 2026)](https://www.anthropic.com/responsible-scaling-policy) — ASL-3 bio threshold and acquisition trial results
-- [DeepMind — Frontier Safety Framework v3.0 (September 2025)](https://deepmind.google/blog/strengthening-our-frontier-safety-framework/) — bio-uplift CCL
+- [Li ve ark. — WMDP Benchmark (arXiv:2403.03218, ICML 2024)](https://arxiv.org/abs/2403.03218) — benchmark ve RMU belgesi
+- [OpenAI — Hazırlık Framework v2 (15 Nisan 2025)](https://openai.com/index/updating-our-preparedness-framework/) — "doğrulukta" dili
+- [Antropik — Sorumlu Ölçeklendirme Politikası v3.0 (Şubat 2026)](https://www.anthropic.com/responsible-scaling-policy) — ASL-3 biyo eşiği ve edinme deneme sonuçları
+- [DeepMind — Sınır Güvenliği Framework v3.0 (Eylül 2025)](https://deepmind.google/blog/strengthening-our-frontier-safety-framework/) — biyolojik iyileştirme CCL

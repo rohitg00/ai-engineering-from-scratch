@@ -1,6 +1,6 @@
 # Janus-Pro: Birleşik Multimodal Modeller için Ayrılmış Kodlayıcılar
 
-> Birleşik multimodal modellerin kaçınılmaz bir gerilimi vardır. Anlamak, anlamsal özellikler gerektirir - kavram düzeyinde bilgiler açısından zengin SigLIP veya DINOv2 çıktı vektörleri. Nesil, yeniden yapılandırma dostu kodlar istiyor; yeniden net piksellere dönüşen VQ token'ler. İki hedef tek bir kodlayıcıda uyumlu değildir. Janus (DeepSeek, Ekim 2024) ve Janus-Pro (DeepSeek, Ocak 2025), çözümün denemeyi bırakmak olduğunu savunuyor: iki kodlayıcıyı ayırın. transformer gövdesini görevler arasında paylaşın, ancak anlayışı SigLIP aracılığıyla ve oluşturmayı bir VQ tokenizer aracılığıyla yönlendirin. Janus-Pro, 7B'de GenEval'de DALL-E 3'ü yenerken, MMMU'da LLaVA'yı eşleştiriyor. Bu derste, biri başarısız olduğunda iki kodlayıcının neden çalıştığı anlatılmaktadır.
+> Birleşik multimodal modellerin kaçınılmaz bir gerilimi vardır. Anlamak, anlamsal özellikler gerektirir - kavram düzeyinde bilgiler açısından zengin SigLIP veya DINOv2 çıktı vektörleri. Nesil, yeniden yapılandırma dostu kodlar istiyor; yeniden net piksellere dönüşen VQ token'ler. İki hedef tek bir kodlayıcıda uyumlu değildir. Janus (DeepSeek, Ekim 2024) ve Janus-Pro (DeepSeek, Ocak 2025), çözümün denemeyi bırakmak olduğunu savunuyor: iki kodlayıcıyı ayırın. transformer gövdesini görevler arasında paylaşın, ancak anlayışı SigLIP aracılığıyla ve oluşturmayı bir VQ tokenizer aracılığıyla yönlendirin. Janus-Pro, 7B'de GenEval'de DALL-E 3'ü yenerken, MMMU'da LLaVA ile eşleşiyor. Bu derste, biri başarısız olduğunda iki kodlayıcının neden çalıştığı anlatılmaktadır.
 
 **Tür:** Yapım
 **Diller:** Python (stdlib, çift kodlayıcılı yönlendirme + paylaşılan gövde sinyali)
@@ -10,18 +10,18 @@
 ## Öğrenme Hedefleri
 
 - Tek bir paylaşılan kodlayıcının neden anlama veya üretim kalitesinden ödün verdiğini açıklayın.
-- Janus-Pro'nun yönlendirmesini açıklayın: Anlamak için giriş tarafında SigLIP özellikleri, üretim için hem giriş hem de çıkışta VQ token'lar.
+- Janus-Pro'nun yönlendirmesini açıklayın: Anlamak için giriş tarafında SigLIP özellikleri, üretim için hem giriş hem de çıkışta VQ token'ler.
 - Janus'un başaramadığı yerde Janus-Pro'nun başarılı olmasını sağlayan veri karışımı ölçeklendirmesinin izini sürün.
 - Ayrılmış (Janus-Pro), birleşik-sürekli (Transfüzyon) ve birleşik-ayrık (Show-o) mimarileri karşılaştırın.
 
 ## Sorun
 
-Birleşik modeller, anlayış ve nesil genelinde bir transformer gövdesini paylaşır. Önceki denemelerin (Bukalemun, Gösteri-o, Transfüzyon) tümü her iki yön için de tek bir görsel tokenizer kullanıyor. tokenizer bir uzlaşmadır:
+Birleşik modeller, anlama ve oluşturma açısından bir transformer gövdesini paylaşır. Önceki denemelerin (Bukalemun, Show-o, Transfüzyon) tümü her iki yön için tek bir görsel tokenizer kullanıyor. tokenizer bir uzlaşmadır:
 
 - Yeniden yapılandırma (oluşturma) için optimize edilmiştir: VQ-VAE, ince taneli piksel ayrıntılarını yakalar ancak zayıf anlamsal tutarlılığa sahip token'ler üretir.
-- Anlambilim (anlama) için optimize edilmiştir: SigLIP embedding'nin grup "kedi" görüntüleri, "kedi" token'lerin yakınındadır ancak iyi bir yeniden yapılanmaya izin vermez.
+- Anlambilim (anlama) için optimize edilmiştir: SigLIP embedding'ler "kedi" görüntülerini "kedi" token'lerin yakınında gruplandırır ancak iyi bir yeniden yapılanmaya izin vermez.
 
-Show-o ve Transfusion bunun bedelini tek yönde gözle görülür bir kalite vergisiyle ödüyor. Janus-Pro şunu sorar: Görevlerin farklı ihtiyaçları varken neden bir tokenizer'ye ihtiyaç duyasınız ki?
+Show-o ve Transfusion bunun bedelini tek yönde gözle görülür bir kalite vergisiyle ödüyor. Janus-Pro şunu soruyor: Görevlerin farklı ihtiyaçları varken neden bir tokenizer'ye ihtiyaç duyasınız ki?
 
 ## Konsept
 
@@ -30,18 +30,18 @@ Show-o ve Transfusion bunun bedelini tek yönde gözle görülür bir kalite ver
 Janus-Pro'nun mimarisi iki kodlayıcıyı ayırır:
 
 - Yolu anlamak. Giriş görüntüsü → SigLIP-SO400m → 2 katmanlı MLP → transformer gövdesi.
-- Nesil yolu. Giriş görüntüsü (mevcut bir görüntü üzerinde koşullandırılıyorsa) → VQ tokenizer → token kimlikleri → transformer gövdesi.
-- Çıkış üretimi. Görüntü token, transformer → VQ kod çözücü → pikseller tarafından tahmin edilir.
+- Nesil yolu. Giriş görüntüsü (mevcut bir görüntü üzerinde koşullandırılıyorsa) → VQ tokenizer → token Kimlikleri → transformer gövdesi.
+- Çıkış üretimi. transformer → VQ kod çözücü → pikseller tarafından tahmin edilen görüntü token'ler.
 
 transformer gövdesi paylaşılıyor. Vücudun yukarı ve aşağı yönündeki her şey göreve özeldir.
 
-Girişler, prompt biçimiyle netleştirilir: bir `<understand>` etiketi, SigLIP aracılığıyla yönlendirilir; `<generate>` VQ üzerinden geçiyor. Veya yönlendirme görevden örtülüdür.
+Girişler prompt formatıyla netleştirilir: bir `<understand>` etiketi SigLIP aracılığıyla yönlendirilir; `<generate>`, VQ üzerinden yönlendirilir. Veya yönlendirme görevden örtülüdür.
 
 ### Bu neden işe yarıyor?
 
-Kaybı anlamak, CLIP tarzı ön eğitimin anlamsal benzerlik için ayarladığı SigLIP özelliklerini alır. Giriş özelliklerinin görev için daha iyi olması nedeniyle modelin algısı benchmarkShow-o / Transfusion'a göre iyileşir.
+Kaybı anlamak, CLIP tarzı ön eğitimin anlamsal benzerlik için ayarladığı SigLIP özelliklerini alır. Modelin benchmark algısı Show-o / Transfusion'a göre daha iyi çünkü giriş özellikleri görev için daha iyi.
 
-Nesil kaybı, bir tokenizer'nin yeniden yapılandırma için ayarladığı VQ token'ları alır. VQ kodları pikselleri temiz bir şekilde oluşturduğundan görüntü kalitesi Show-o'ya göre daha iyi olur.
+Nesil kaybı, bir tokenizer'nin yeniden yapılandırma için ayarladığı VQ token'leri alır. VQ kodları pikselleri temiz bir şekilde oluşturduğundan görüntü kalitesi Show-o'ya göre daha iyi olur.
 
 Paylaşılan transformer gövdesi iki giriş dağılımını (SigLIP ve VQ) görür ve her ikisiyle de çalışmayı öğrenir. İddia: yeterli veri + yeterli parametre, vücut değişimi emer.
 
@@ -64,10 +64,10 @@ JanusFlow (arXiv 2411.07975), VQ oluşturma yolunu düzeltilmiş akış oluştur
 
 transformer gövdesi birleşik bir diziyi ancak iki giriş dağıtımıyla işler. Görevi şudur:
 
-- Anlamak için: SigLIP özelliklerini kullanın + metin token'ler → metni otomatik regresif olarak yayınlayın.
-- Oluşturma için: metin tokens + (isteğe bağlı görüntü VQ tokens) tüketin → görüntü VQ tokens'yi otomatik regresif olarak yayınlayın.
+- Anlamak için: SigLIP özelliklerini kullanın + token metinlerini kullanın → metni otomatik regresif olarak yayınlayın.
+- Oluşturma için: token metinlerini tüketin + (isteğe bağlı görüntü VQ token'ler) → VQ token görüntülerini otomatik regresif olarak yayınlayın.
 
-Gövdenin blok başına modaliteye özgü ağırlığı yoktur. Bu, Qwen veya Llama'nın içinde bulmayı bekleyeceğiniz transformer metin stili ve ayrıca iki giriş bağdaştırıcısıdır.
+Gövdenin blok başına modaliteye özgü ağırlığı yoktur. Bu, Qwen veya Llama'da bulmayı beklediğiniz metin stili transformer ve ayrıca iki giriş bağdaştırıcısıdır.
 
 İlginç bir şekilde bu, Janus-Pro'nun gövdesinin önceden eğitilmiş bir LLM'den başlatılabileceği anlamına geliyor. Janus-Pro, DeepSeek-MoE-7B'den başlatılır. Bu seçim önemlidir: Yüksek Lisans, sıfırdan bütünleşik modellerin ulaşmaya çalıştığı muhakeme yeteneğine katkıda bulunur.
 
@@ -79,7 +79,7 @@ InternVL-U (Ders 12.10) 2026'nın devamıdır. Şunları birleştirir:
 - Ayrılmış kodlayıcı yönlendirme (SigLIP giriş, VQ + difüzyon çıkışları).
 - Birleşik anlayış + oluşturma + düzenleme.
 
-InternVL-U, Janus-Pro'nun mimari seçimini daha büyük bir framework içinde birleştirir. Ayrıştırılmış kodlayıcı fikri artık geniş ölçekte birleştirilmiş modeller için varsayılandır.
+InternVL-U, Janus-Pro'nun mimari seçimini daha büyük bir framework'de birleştirir. Ayrıştırılmış kodlayıcı fikri artık geniş ölçekte birleştirilmiş modeller için varsayılandır.
 
 ### Sınırlamalar
 
@@ -95,20 +95,20 @@ Her ikisine de ihtiyaç duyan ürünler için Janus-Pro artık referans açık m
 
 - İki sahte kodlayıcı: SigLIP benzeri (256-dim anlamsal vektörler üretir) ve VQ benzeri (tam sayı kodları üretir).
 - Kodlayıcıyı görev etiketine göre seçen bir prompt yönlendirici.
-- Hangi kodlayıcının ürettiğine bakılmaksızın token dizisini işleyen, paylaşılan bir gövde (yedek).
+- token dizilerini hangi kodlayıcının ürettiğine bakılmaksızın işleyen, paylaşılan bir gövde (yedek).
 - Aşama 1'den (hizalama) aşama 3'e (talimat melodisi) ağırlıklı örnek çizelgesine geçiş.
 
 3 örnek için yönlendirilmiş yolları yazdırın: görüntü QA, T2I, görüntü düzenleme.
 
 ## Gönderin
 
-Bu ders `outputs/skill-decoupled-encoder-picker.md` üretir. Sınır ötesi kalitede birleşik üretim + anlayış isteyen bir ürün göz önüne alındığında, somut bir veri ölçeği önerisiyle Janus-Pro, JanusFlow veya InternVL-U'yu seçer.
+Bu ders `outputs/skill-decoupled-encoder-picker.md`'yi üretir. Sınır ötesi kalitede birleşik üretim + anlayış isteyen bir ürün göz önüne alındığında, somut bir veri ölçeği önerisiyle Janus-Pro, JanusFlow veya InternVL-U'yu seçer.
 
 ## Egzersizler
 
 1. Janus-Pro-7B, GenEval'de DALL-E 3'ü yendi. Bir 7B açık modelinin neden üretim açısından öncü bir özel modelle eşleşebildiğini, ancak anlama açısından eşleşemediğini açıklayın.
 
-2. Bir yönlendirici işlevi uygulayın: prompt metni verildiğinde, `understand` veya `generate` olarak sınıflandırın. "Açıkla ve sonra eskizini yap" gibi belirsiz prompt'lerle nasıl başa çıkıyorsun?
+2. Bir yönlendirici işlevi uygulayın: prompt metni verildiğinde, `understand` veya `generate` olarak sınıflandırın. "Açıkla ve sonra çiz" gibi belirsiz prompt'leri nasıl ele alırsınız?
 
 3. JanusFlow, VQ yolunu düzeltilmiş akışla değiştirir. transformer gövdesi şimdi ne çıktı veriyor ve kayıpta ne gibi değişiklikler oluyor?
 
@@ -120,10 +120,10 @@ Bu ders `outputs/skill-decoupled-encoder-picker.md` üretir. Sınır ötesi kali
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| Ayrılmış kodlama | "İki görsel kodlayıcı" | Yön başına tokenizer veya kodlayıcıyı ayırın: anlama için semantik, oluşturma için yeniden oluşturma |
+| Ayrılmış kodlama | "İki görsel kodlayıcı" | Yön başına ayrı tokenizer veya kodlayıcı: anlama için semantik, oluşturma için yeniden yapılandırma |
 | Paylaşılan gövde | "Bir transformer" | Tek transformer her iki kodlayıcının çıkışını işler; modaliteye özel ağırlık yok |
-| Anlamak için SigLIP | "Anlamsal özellikler" | CLIP ailesi vision tower, zengin kavramsal özellikler sağlar ancak kötü yeniden yapılanma sağlar |
-| Nesil için VQ | "Yeniden yapılanma kodları" | Kodu temiz bir şekilde piksellere dönüştüren vektör nicemli token'lar |
+| Anlamak için SigLIP | "Anlamsal özellikler" | CLIP ailesi görüş kulesi, zengin kavramsal özellikler sağlar ancak kötü yeniden yapılanma sağlar |
+| Nesil için VQ | "Yeniden yapılanma kodları" | Temiz bir şekilde piksellere geri dönüş yapan vektör nicemli token'ler |
 | JanusFlow | "Düzeltilmiş akışlı varyant" | VQ yerine sürekli akış uyumlu üretim kafasına sahip Janus-Pro |
 | Yönlendirme etiketi | "Görev etiketi" | Giriş kodlayıcısını seçen Prompt işaretçisi (`<understand>` / `<generate>`) |
 

@@ -39,7 +39,7 @@ graph TD
 
 VS Code önerilen düzenleyicidir. Ücretsizdir, her işletim sisteminde çalışır, birinci sınıf Jupyter dizüstü bilgisayar desteğine sahiptir ve uzantı ekosistemi, yapay zeka çalışmaları için ihtiyacınız olan her şeyi kapsar.
 
-Bunu [code.visualstudio.com](https://code.visualstudio.com/) adresinden indirin.
+[code.visualstudio.com](https://code.visualstudio.com/) adresinden indirin.
 
 Terminalden doğrulayın:
 
@@ -47,11 +47,11 @@ Terminalden doğrulayın:
 code --version
 ```
 
-MacOS'ta `code` bulunamazsa, VS Code'u açın, `Cmd+Shift+P` tuşuna basın, "Kabuk Komutu" yazın ve "PATH'e 'code' komutunu yükle" seçeneğini seçin.
+`code` macOS'ta bulunamazsa, VS Code'u açın, `Cmd+Shift+P` tuşuna basın, "Kabuk Komutu" yazın ve "PATH'e 'kod' komutunu yükle" seçeneğini seçin.
 
 ### 2. Adım: Temel Uzantıları Yükleyin
 
-Entegre terminali VS Code'da açın (her platformda `` Ctrl+` ``) ve AI çalışması için önemli olan uzantıları yükleyin:
+VS Code'daki entegre terminali açın (her platformda `` Ctrl+` ``) ve yapay zeka çalışması için önemli olan uzantıları yükleyin:
 
 ```bash
 code --install-extension ms-python.python
@@ -72,16 +72,16 @@ Her birinin yaptığı şey:
 | Pylance | Hızlı tip kontrolü, otomatik tamamlama, içe aktarma çözünürlüğü |
 | Jüpiter | Not defterlerini VS Code, değişken gezgini içinde çalıştırın |
 | GitLens | Kimin neyi değiştirdiğini görün, satır içi git suçlaması |
-| Uzak SSH | Uzak GPU kutusundaki bir klasörü sanki yerelmiş gibi açın |
+| Uzaktan SSH | Uzak GPU kutusundaki bir klasörü sanki yerelmiş gibi açın |
 | Hata ayıklama | Python için adım adım hata ayıklama |
 | Siyah Formatlayıcı | Kaydedildiğinde otomatik biçimlendirme, tutarlı stil |
 | fırfır | Hızlı tüylenme, yaygın hataları yakalar |
 
-Bu dersteki `code/.vscode/extensions.json` dosyası tam öneriler listesini içermektedir. Proje klasörünü açtığınızda, VS Code bunları yüklemeniz için prompt size yardımcı olacaktır.
+Bu dersteki `code/.vscode/extensions.json` dosyası tam öneriler listesini içerir. Proje klasörünü açtığınızda, VS Code prompt bunları yüklemenizi sağlayacaktır.
 
 ### 3. Adım: Ayarları Yapılandırın
 
-Bu dersteki ayarları `code/.vscode/settings.json`'dan kopyalayın veya bunları `Settings > Open Settings (JSON)` aracılığıyla manuel olarak uygulayın.
+Bu dersteki ayarları `code/.vscode/settings.json`'den kopyalayın veya `Settings > Open Settings (JSON)` aracılığıyla manuel olarak uygulayın.
 
 Yapay zekanın çalışması için temel ayarlar:
 
@@ -123,7 +123,7 @@ Yararlı kısayollar:
 | Eylem | macOS | Linux/Windows |
 |--------|-------|---------------|
 | Terminali değiştir | `` Ctrl+` `` | `` Ctrl+` `` |
-| Yeni terminal | `` Ctrl+Shift+` `` | `` Ctrl+Üst Karakter+` `` |
+| Yeni terminal | `` Ctrl+Shift+` `` | `` Ctrl+Shift+` `` |
 | Bölünmüş terminal | `Cmd+\` | `Ctrl+Shift+5` |
 
 Bölünmüş terminaller kullanışlıdır: biri komut dosyanızı çalıştırmak için, diğeri `nvidia-smi -l 1` veya `watch -n 1 nvidia-smi` ile GPU'yu izlemek için.
@@ -132,11 +132,11 @@ Bölünmüş terminaller kullanışlıdır: biri komut dosyanızı çalıştırm
 
 Bu yapay zeka çalışmalarının en önemli uzantısıdır. Uzak makinelerde (bulut VM'leri, laboratuvar sunucuları, Lambda, Vast.ai) eğitim yürüteceksiniz. Uzak SSH, sanki her şey yerelmiş gibi uzak dosya sistemini açmanıza, dosyaları düzenlemenize, terminalleri çalıştırmanıza ve hata ayıklamanıza olanak tanır.
 
-Kurmak:
+Kurulum:
 
 1. Uzak SSH uzantısını yükleyin (2. Adımda gerçekleştirilir).
-2. `Ctrl+Shift+P` (veya `Cmd+Shift+P`) tuşuna basın, "Uzak-SSH: Ana Bilgisayara Bağlan" yazın.
-3. `user@your-gpu-box-ip` girin.
+2. `Ctrl+Shift+P` (veya `Cmd+Shift+P`) tuşuna basın, "Uzaktan SSH: Ana Bilgisayara Bağlan" yazın.
+3. `user@your-gpu-box-ip`'yi girin.
 4. VS Code, sunucu bileşenini uzak makineye otomatik olarak yükler.
 
 Parolasız erişim için SSH anahtarlarını ayarlayın:
@@ -146,7 +146,7 @@ ssh-keygen -t ed25519 -C "your-email@example.com"
 ssh-copy-id user@your-gpu-box-ip
 ```
 
-Kolaylık sağlamak için ana bilgisayarı `~/.ssh/config`'a ekleyin:
+Kolaylık sağlamak için ana bilgisayarı `~/.ssh/config`'ye ekleyin:
 
 ```
 Host gpu-box
@@ -162,11 +162,11 @@ Artık `Remote-SSH: Connect to Host > gpu-box` anında bağlanıyor.
 
 ### İmleç
 
-[cursor.com](https://cursor.com), yerleşik yapay zeka kodu oluşturmaya sahip bir VS Code çatalıdır. Aynı uzantı ekosistemini ve ayarlar biçimini kullanır. İmleç kullanıyorsanız bu dersteki her şey hâlâ geçerlidir. Aynı `settings.json` ve `extensions.json`'yi içe aktarın.
+[cursor.com](https://cursor.com), yerleşik AI kod oluşturmaya sahip bir VS Code çatalıdır. Aynı uzantı ekosistemini ve ayarlar biçimini kullanır. İmleç kullanıyorsanız bu dersteki her şey hâlâ geçerlidir. Aynı `settings.json` ve `extensions.json`'yi içe aktarın.
 
 ### Rüzgar Sörfü
 
-[windsurf.com](https://windsurf.com) başka bir yapay zeka öncelikli VS Code çatalıdır. Aynı hikaye: aynı uzantılar, aynı ayar formatı, aynı Uzaktan SSH desteği.
+[windsurf.com](https://windsurf.com), başka bir yapay zeka öncelikli VS Code çatalıdır. Aynı hikaye: aynı uzantılar, aynı ayar formatı, aynı Uzaktan SSH desteği.
 
 ### Vim/Neovim
 
@@ -175,7 +175,7 @@ Zaten Vim veya Neovim kullanıyorsanız ve bu konuda üretkenseniz orada kalın.
 - Tip kontrolü için **pyright** veya **pylsp** (Mason veya manuel kurulum yoluyla)
 - Dil sunucusu entegrasyonu için **nvim-lspconfig**
 - Not defteri benzeri yürütme için **jupyter-vim** veya **erimiş-nvim**
-- **telescope.nvim** dosya/sembol araması için
+- Dosya/sembol araması için **telescope.nvim**
 - **yok-ls.nvim** biçimlendirme/astarlama için siyah ve fırfırlı
 
 Henüz Vim kullanmıyorsanız hemen başlamayın. Öğrenme eğrisi AI engineering öğrenmeyle rekabet edecek. VS Kodunu kullanın.
@@ -193,7 +193,7 @@ Bu kurulumla günlük iş akışınız şöyle görünür:
 ## Egzersizler
 
 1. VS Code'u ve 2. Adımda listelenen tüm uzantıları yükleyin
-2. Bu dersteki `settings.json` dosyasını VS Code yapılandırmanıza kopyalayın
+2. Bu dersteki `settings.json`'yi VS Code yapılandırmanıza kopyalayın
 3. Bir Python dosyası açın ve Pylance'in kayıt sırasında tür ipuçlarını ve Siyah formatları gösterdiğini doğrulayın
 4. Uzak bir makineye erişiminiz varsa Uzak SSH'yi kurun ve üzerinde bir klasör açın.
 

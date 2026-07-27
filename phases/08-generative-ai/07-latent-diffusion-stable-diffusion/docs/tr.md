@@ -1,6 +1,6 @@
-# Gizli Difüzyon ve Stable Diffusion
+# Gizli Difüzyon ve Kararlı Difüzyon
 
-> 512×512 görüntülerdeki piksel uzayı yayılımı, hesaplamaya dayalı bir savaş suçudur. Rombach ve ark. (2022), bir görüntü oluşturmak için 786k boyutun tamamına ihtiyacınız olmadığını, anlamsal yapıyı yakalamak için yeterli miktarda ve geri kalanı için ayrı bir kod çözücüye ihtiyacınız olduğunu fark etti. Bir VAE'nin gizli alanı içinde difüzyonu çalıştırın. Bu fikirden biri Stable Diffusiondur.
+> 512×512 görüntülerdeki piksel uzayı yayılımı hesaplamaya dayalı bir savaş suçudur. Rombach ve ark. (2022), bir görüntü oluşturmak için 786k boyutun tamamına ihtiyacınız olmadığını, anlamsal yapıyı yakalamak için yeterli miktarda ve geri kalanı için ayrı bir kod çözücüye ihtiyacınız olduğunu fark etti. Bir VAE'nin gizli alanı içinde difüzyonu çalıştırın. Bu fikirden biri Kararlı Difüzyondur.
 
 **Tür:** Yapım
 **Diller:** Python
@@ -13,7 +13,7 @@
 
 Bu FLOP'ların çoğu, algısal olarak önemsiz ayrıntıları - kayıplı bir VAE'nin sıkıştırabileceği yüksek frekanslı doku - ağ üzerinden itmeye gidiyor. Rombach'ın fikri: Bir VAE'yi bir kez eğitin (*ilk aşama*), dondurun ve difüzyonu tamamen 4 kanallı 64x64 gizli alanda çalıştırın (*ikinci aşama*). Aynı U-Net. Pikselin 1/16'sı. Karşılaştırılabilir kalite için ~64 kat daha az FLOP.
 
-Bu Stable Diffusion tarifidir. SD 1.x / 2.x, `64×64×4` latent üzerinden 860M U-Net kullandı, SDXL, `128×128×4` üzerinden 2,6B U-Net kullandı, SD3, U-Net'i akış eşleştirmeli Difüzyon Transformer (DiT) ile değiştirdi. Flux.1-dev (Black Forest Labs, 2024), 12B parametreli bir DiT-MMDiT gönderir. Hepsi aynı iki aşamalı alt tabaka üzerinde çalışır.
+Bu Kararlı Difüzyon tarifidir. SD 1.x / 2.x, `64×64×4` latentleri üzerinden 860M U-Net kullandı, SDXL, `128×128×4` üzerinden 2,6B U-Net kullandı, SD3, U-Net'i akış eşleştirmeli Difüzyon Transformer (DiT) ile değiştirdi. Flux.1-dev (Black Forest Labs, 2024), 12B parametreli bir DiT-MMDiT gönderir. Hepsi aynı iki aşamalı alt tabaka üzerinde çalışır.
 
 ## Konsept
 
@@ -21,19 +21,19 @@ Bu Stable Diffusion tarifidir. SD 1.x / 2.x, `64×64×4` latent üzerinden 860M 
 
 **İki aşamalı, ayrı ayrı eğitilmiştir.**
 
-1. **Aşama 1 — VAE.** Kodlayıcı `E(x) → z`, kod çözücü `D(z) → x`. Hedef sıkıştırma: Her uzamsal eksende 8x alt örnekleme + kanalları, toplam gizli boyut piksel sayısının ~1/16'sı olacak şekilde ayarlayın. Kayıp = yeniden yapılandırma (L1 + LPIPS algısal) + KL (küçük ağırlık dolayısıyla `z` çok fazla Gaussian'a zorlanmaz çünkü `z`'dan tam örneklemeye ihtiyacımız yoktur). Çoğu zaman düşmanca bir kayıpla eğitilirler, bu nedenle kodu çözülmüş görüntüler keskindir.
+1. **Aşama 1 — VAE.** Kodlayıcı `E(x) → z`, kod çözücü `D(z) → x`. Hedef sıkıştırma: Her uzamsal eksende 8x alt örnekleme + kanalları, toplam gizli boyut piksel sayısının ~1/16'sı olacak şekilde ayarlayın. Kayıp = yeniden yapılandırma (L1 + LPIPS algısal) + KL (küçük ağırlık dolayısıyla `z` çok fazla Gaussian'a zorlanmaz çünkü `z`'den tam örneklemeye ihtiyacımız yoktur). Çoğu zaman düşmanca bir kayıpla eğitilirler, bu nedenle kodu çözülmüş görüntüler keskindir.
 
-2. **Aşama 2 — `z` üzerinde yayılma.** `z = E(x_real)`'yi veri olarak değerlendirin. `z_t`'nin gürültüsünü gidermek için bir U-Net (veya DiT) eğitin. inference'da: difüzyon yoluyla `z_0`'ı örnekleyin, ardından `x = D(z_0)`'yi örnekleyin.
+2. **Aşama 2 — `z` üzerinde yayılma.** `z = E(x_real)`'yi veri olarak kabul edin. `z_t`'nin gürültüsünü gidermek için bir U-Net (veya DiT) eğitin. inference'de: difüzyon yoluyla `z_0`'yi örnekleyin, ardından `x = D(z_0)`'yi örnekleyin.
 
-**Metin düzenleme.** İki ek bileşen. Dondurulmuş bir metin kodlayıcı (SD 1.x için CLIP-L, SD 2/XL için CLIP-L+OpenCLIP-G, SD3 ve Flux için T5-XXL). Çapraz dikkat enjeksiyonu: her U-Net bloğu `[Q = image features, K = V = text tokens]`'yu alır ve onları karıştırır. token'lar metnin görüntüyü etkilemesinin tek yoludur.
+**Metin düzenleme.** İki ek bileşen. Dondurulmuş bir metin kodlayıcı (SD 1.x için CLIP-L, SD 2/XL için CLIP-L+OpenCLIP-G, SD3 ve Flux için T5-XXL). Çapraz dikkat enjeksiyonu: her U-Net bloğu `[Q = image features, K = V = text tokens]`'yi alır ve bunları karıştırır. token'ler metnin görüntüyü etkilemesinin tek yoludur.
 
-**loss function, Ders 06 ile aynıdır.** Gürültüde aynı DDPM/akış eşleşen MSE. Sadece veri alanını değiştirirsiniz.
+**loss function, Ders 06 ile aynıdır.** Gürültüde aynı DDPM / akış uyumlu MSE. Sadece veri alanını değiştirirsiniz.
 
 ## Mimari çeşitleri
 
-| Model | Yıl | Omurga | Gizli şekil | Metin kodlayıcı | Parametreler |
+| Modeli | Yıl | Omurga | Gizli şekil | Metin kodlayıcı | Parametreler |
 |-------|------|----------|--------------|--------------|--------|
-| SD 1.5 | 2022 | U-Net | 64×64×4 | KLİP-L (77 tokens) | 860M |
+| SD 1.5 | 2022 | U-Net | 64×64×4 | CLIP-L (77 tokens) | 860M |
 | SD 2.1 | 2022 | U-Net | 64×64×4 | OpenCLIP-H | 865M |
 | SDXL | 2023 | U-Net + arıtıcı | 128×128×4 | CLIP-L + OpenCLIP-G | 2.6B + 6.6B |
 | SDXL-Turbo | 2023 | Damıtılmış | 128×128×4 | aynı | 1-4 adımlı örnekleme |
@@ -41,7 +41,7 @@ Bu Stable Diffusion tarifidir. SD 1.x / 2.x, `64×64×4` latent üzerinden 860M 
 | Flux.1-dev | 2024 | MMDIT | 128×128×16 | T5-XXL + KLİP-L | 12B |
 | Flux.1-schnell | 2024 | MMDiT damıtılmış | 128×128×16 | T5-XXL + KLİP-L | 12B, 1-4 adım |
 
-Trend: U-Net'i DiT ile değiştirin (gizli yamalar üzerinde transformer), metin kodlayıcıyı ölçeklendirin (prompt uyumu için T5, CLIP'i geçer), gizli kanalları artırın (4 → 16, daha fazla ayrıntı payı sağlar).
+Trend: U-Net'i DiT ile değiştirin (gizli yamalar üzerinde transformer), metin kodlayıcıyı ölçeklendirin (T5, prompt uyumu için CLIP'i geçer), gizli kanalları artırın (4 → 16, daha fazla ayrıntı payı sağlar).
 
 ```figure
 noise-schedule
@@ -58,15 +58,15 @@ def encode(x):    return x * 0.5          # toy "compression" to smaller scale
 def decode(z):    return z * 2.0
 ```
 
-Gerçek bir VAE'nin ağırlık antrenmanları vardır. Pedagoji açısından bu doğrusal harita, difüzyonun `z` üzerinde orijinal veri uzayını umursamadan çalıştığını göstermek için yeterlidir.
+Gerçek bir VAE'nin ağırlık antrenmanları vardır. Pedagoji için bu doğrusal harita, difüzyonun `z` üzerinde orijinal veri alanını umursamadan çalıştığını göstermek için yeterlidir.
 
 ### Adım 2: `z`-uzayında yayılma
 
-Ders 06 ile aynı DDPM. Ağın gördüğü veri `z = E(x)`'dir. `z_0`'yi örnekledikten sonra `D(z_0)` ile kodunu çözün.
+Ders 06 ile aynı DDPM. Ağın gördüğü veriler `z = E(x)`'dir. `z_0`'yi örnekledikten sonra `D(z_0)` ile kodu çözün.
 
 ### 3. Adım: sınıflandırıcısız rehberlik
 
-Eğitim sırasında sınıf etiketini %10 oranında bırakın (boş bir token ile değiştirin). inference'da hem `ε_cond` hem de `ε_uncond`'yi hesaplayın, sonra:
+Eğitim sırasında sınıf etiketini %10 oranında bırakın (boş bir token ile değiştirin). inference'de hem `ε_cond` hem de `ε_uncond`'yi hesaplayın, ardından:
 
 ```python
 eps_cfg = (1 + w) * eps_cond - w * eps_uncond
@@ -76,7 +76,7 @@ eps_cfg = (1 + w) * eps_cond - w * eps_uncond
 
 ### Adım 4: metin koşullandırma (kavram, kod değil)
 
-Sınıf etiketini donmuş metin kodlayıcı çıktısıyla değiştirin. embedding metnini çapraz dikkat yoluyla U-Net'e gönderin:
+Sınıf etiketini dondurulmuş metin kodlayıcı çıktısıyla değiştirin. embedding metnini çapraz dikkat yoluyla U-Net'e gönderin:
 
 ```python
 h = h + CrossAttention(Q=h, K=text_embed, V=text_embed)
@@ -87,10 +87,10 @@ Bu, sınıf koşullu yayılma modeli ile Kararlı Yayılım arasındaki tek öne
 ## Tuzaklar
 
 - **VAE ölçeği uyumsuzluğu.** SD 1.x VAE'lerde kodlamadan sonra uygulanan bir ölçeklendirme sabiti (`scaling_factor ≈ 0.18215`) vardır. Bunu unutmak, U-Net'in son derece yanlış varyanslarla gizli bilgiler üzerinde eğitim almasına neden olur. Her kontrol noktası bir tane gönderir.
-- **Metin kodlayıcı kesinlikle yanlış.** SD3'ün >=128 tokens ile T5-XXL'ye ihtiyacı vardır ve yalnızca CLIP'e geri dönüş kayıplıdır. Her zaman `use_t5=True` veya prompt aslına uygunluk kraterlerini kontrol edin.
+- **Metin kodlayıcı kesinlikle yanlış.** SD3'ün >=128 token'ye sahip T5-XXL'ye ihtiyacı vardır ve yalnızca CLIP'e geri dönüş kayıplıdır. Her zaman `use_t5=True` veya prompt aslına uygunluk kraterlerini kontrol edin.
 - **Gizli alanları karıştırma.** SDXL, SD3 ve Flux'un tümü farklı VAE'ler kullanır. SDXL latentleri üzerinde eğitilmiş bir LoRA, SD3 üzerinde çalışmaz. Hugging Face difüzörleri 0.30+ uyumsuz kontrol noktalarını yüklemeyi reddediyor.
-- **CFG çok yüksek.** `w > 10` doymuş, yağlı görüntüler üretir ve çeşitlilik pahasına prompt'ye aşırı uyum sağlar. En tatlı nokta `w = 3-7`.
-- **Negatif prompt sızıntı yapıyor.** Boş negatif prompt boş token olur; doldurulmuş bir negatif prompt, `ε_uncond` olur. Bunlar aynı değil; bazı işlem hatları sessizce varsayılan değere döner.
+- **CFG çok yüksek.** `w > 10` doymuş, yağlı görüntüler üretir ve çeşitlilik pahasına prompt'ye aşırı uyum sağlar. Tatlı nokta `w = 3-7`'dir.
+- **Negatif prompt'ler sızdırıyor.** Boş negatif prompt, boş token olur; doldurulmuş bir negatif prompt, `ε_uncond` olur. Bunlar aynı değil; bazı işlem hatları sessizce varsayılan değere döner.
 
 ## Kullan onu
 
@@ -98,22 +98,22 @@ Bu, sınıf koşullu yayılma modeli ile Kararlı Yayılım arasındaki tek öne
 
 | Hedef | Önerilen omurga |
 |--------|----------------------|
-| Dar alan, eşleştirilmiş veriler, sıfırdan model eğitimi | SDXL ince ayarı (LoRA / tam) — en hızlı gönderim |
+| Dar etki alanı, eşleştirilmiş veriler, sıfırdan model eğitimi | SDXL ince ayarı (LoRA / tam) — en hızlı gönderim |
 | Açık alan adı metinden resme, açık ağırlıklar | Flux.1-dev (12B, Apache / ticari olmayan) veya SD3.5-Large |
 | En hızlı inference, açık ağırlıklar | Flux.1-schnell (1-4 adım, Apache) veya SDXL-Lightning |
-| En iyi prompt uyum, barındırılan | GPT-Resim / DALL-E 3 (hareketsiz), Midjourney v7, Resim 4 |
+| En iyi prompt uyumu, barındırılan | GPT-Resim / DALL-E 3 (hala), Yolculuğun Ortası v7, Resim 4 |
 | İş akışlarını düzenleyin | Flux.1-Kontext (Aralık 2024) — yerel olarak resim + metni kabul eder |
 | Araştırma, temel | SD 1.5 — eski ama iyi çalışılmış |
 
 ## Gönderin
 
-`outputs/skill-sd-prompter.md`'yi kaydet. Skill bir metin prompt + hedef stili alır ve çıktılar: model + kontrol noktası, CFG ölçeği, örnekleyici, negatif prompt, çözünürlük, isteğe bağlı ControlNet/IP-Adapter birleşimi ve adım başına QA kontrol listesi.
+`outputs/skill-sd-prompter.md`'yi kaydedin. Skill, prompt + hedef stili metnini alır ve çıktılar verir: model + kontrol noktası, CFG ölçeği, örnekleyici, negatif prompt, çözünürlük, isteğe bağlı ControlNet/IP Adaptörü birleşimi ve adım başına QA kontrol listesi.
 
 ## Egzersizler
 
 1. **Kolay.** `code/main.py`'yi `w ∈ {0, 1, 3, 7, 15}` kılavuzuyla çalıştırın. Ortalama örneği sınıfa göre kaydedin. Hangi `w` noktasında sınıf araçları gerçek veri ortalamalarını aşıyor?
 2. **Orta.** Oyuncak doğrusal kodlayıcıyı yeniden yapılandırma kaybı olan bir tanh-MLP kodlayıcı/kod çözücü çiftiyle değiştirin. Yeni latentler üzerinde difüzyonu yeniden eğitin. Numune kalitesi değişir mi?
-3. **Zor.** Difüzörlerle gerçek bir Stable Diffusion inference kurun: `sdxl-base` yükleyin, CFG=7 ile 30 Euler adımını çalıştırın, zamanlayın. Şimdi 4 adımla ve CFG=0 ile `sdxl-turbo`'ye geçin. Aynı konu, farklı kalite; neyin değiştiğini ve nedenini açıklayın.
+3. **Zor.** Difüzörlerle gerçek bir Kararlı Difüzyon inference ayarlayın: `sdxl-base`'yi yükleyin, CFG=7 ile 30 Euler adımını çalıştırın ve zamanlayın. Şimdi 4 adımlı ve CFG=0 ile `sdxl-turbo`'ye geçin. Aynı konu, farklı kalite; neyin değiştiğini ve nedenini açıklayın.
 
 ## Anahtar Terimler
 
@@ -122,28 +122,28 @@ Bu, sınıf koşullu yayılma modeli ile Kararlı Yayılım arasındaki tek öne
 | İlk aşama | "VAE" | Eğitimli kodlayıcı/kod çözücü çifti; 512²'yi 64²'ye sıkıştırır. |
 | İkinci aşama | "U-Net" | Gizli uzay üzerinde yayılma modeli. |
 | CFG | "Kılavuz ölçeği" | `(1+w)·ε_cond - w·ε_uncond`; koşullandırma gücünü ayarlar. |
-| Boş token | "prompt yerleştirmeyi boşalt" | `ε_uncond` için koşulsuz yerleştirme kullanıldı. |
+| Boş token | "prompt yerleştirmeyi boşalt" | `ε_uncond` için kullanılan koşulsuz yerleştirme. |
 | Çapraz dikkat | "Metin içeri nasıl girer?" | Her U-Net bloğu, token metinlerine K ve V olarak katılır. |
-| DiT | "Dağıtım Transformer" | U-Net'i gizli yamalar üzerinden bir transformer ile değiştirin; daha iyi ölçeklenir. |
+| DiT | "Dağıtım Transformer" | U-Net'i gizli yamalar üzerinden transformer ile değiştirin; daha iyi ölçeklenir. |
 | MMDIT | "Çok modlu DiT" | SD3'ün mimarisi: ortak dikkatle metin ve görüntü akışları. |
 | VAE ölçeklendirme faktörü | "Sihirli sayı" | Latentleri ~5,4'e bölerek difüzyonun birim varyans uzayında çalışmasını sağlar. |
 
 ## Üretim notu: Flux-12B'yi 8 GB tüketici GPU'sunda çalıştırmak
 
-referans Flux entegrasyonu standarttır "Tüketici GPU'm var, bunu gönderebilir miyim?" yemek tarifi. İşin püf noktası, difüzyon DiT'ye uygulanan aynı üç düğmeli tarif üretimi inference literatür listesidir:
+referans Flux entegrasyonu standarttır "Tüketici GPU'm var, bunu gönderebilir miyim?" yemek tarifi. İşin püf noktası, bir difüzyon DiT'ye uygulanan aynı üç düğmeli tarif üretimi inference literatür listeleridir:
 
 1. **Kademeli yükleme.** Flux'un VRAM'de hiçbir zaman bir arada bulunması gerekmeyen üç ağı vardır: T5-XXL metin kodlayıcı (fp32'de ~10 GB), CLIP-L (küçük), 12B MMDiT ve VAE. Önce prompt'yi kodlayın, kodlayıcıları *silin*, DiT'yi yükleyin, gürültüyü giderin, DiT'yi *silin*, VAE'yi yükleyin, kodu çözün. Tüketici 8 GB GPU'ları aynı anda yalnızca bir aşamaya sığar.
-2. **Bitsandbytes aracılığıyla 4-bit niceleme.** Hem T5 kodlayıcıda hem de DiT'de `BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype=torch.bfloat16)`. Belleği 8 kat keser, Aritra'nın benchmark'lerine (not defterinde bağlantılı) göre metinden görüntüye kalite düşüşü farkedilemez.
-3. **CPU boşaltma.** `pipe.enable_model_cpu_offload()`, her ileri geçiş ilerledikçe modülleri CPU ve GPU arasında otomatik olarak değiştirir. %10-20 gecikme ekler ancak işlem hattının tamamen çalışmasını sağlar.
+2. **bit ve bayt aracılığıyla 4 bit niceleme.** Hem T5 kodlayıcıda hem de DiT'de `BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype=torch.bfloat16)`. Belleği 8 kat keser, Aritra'nın benchmark'lerine (dizüstü bilgisayara bağlı) göre metinden görüntüye kalite düşüşü farkedilemez.
+3. **CPU boşaltma.** `pipe.enable_model_cpu_offload()`, her ileri geçiş ilerledikçe CPU ve GPU arasındaki modülleri otomatik olarak değiştirir. %10-20 gecikme ekler ancak işlem hattının tamamen çalışmasını sağlar.
 
-Bellek hesaplaması şu şekildedir: `10 GB T5 / 8 = 1.25 GB` nicelenmiş, `12 B params × 0.5 bytes = ~6 GB` nicelenmiş DiT artı aktivasyonlar. Stas00'ın terimleriyle bu, TP=1 inference'nin en uç noktasıdır — model paralelliği yok, maksimum nicemleme. Üretim için H100'lerde TP=2 veya TP=4'ü çalıştırırsınız; tek bir geliştirici dizüstü bilgisayar için tarif budur.
+Bellek hesaplaması şu şekildedir: `10 GB T5 / 8 = 1.25 GB` nicelenmiş, `12 B params × 0.5 bytes = ~6 GB` nicelenmiş DiT ve artı aktivasyonlar. Stas00'ın terimleriyle bu, TP=1 inference'nin en uç noktasıdır — model paralelliği yok, maksimum niceleme. Üretim için H100'lerde TP=2 veya TP=4'ü çalıştırırsınız; tek bir geliştirici dizüstü bilgisayar için tarif budur.
 
 ## Daha Fazla Okuma
 
 - [Rombach ve ark. (2022). Gizli Yayılma Modelleriyle Yüksek Çözünürlüklü Görüntü Sentezi](https://arxiv.org/abs/2112.10752) — Kararlı Yayılma.
 - [Podell ve ark. (2023). SDXL: Yüksek Çözünürlüklü Görüntü Sentezi için Gizli Yayılım Modellerinin Geliştirilmesi](https://arxiv.org/abs/2307.01952) — SDXL.
-- [Peebles ve Xie (2023). Transformers (DiT)](https://arxiv.org/abs/2212.09748) — DiT ile Ölçeklenebilir Difüzyon Modelleri.
-- [Esser ve ark. (2024). Yüksek Çözünürlüklü Görüntü Sentezi için Düzeltilmiş Akışı Ölçeklendirme Transformers](https://arxiv.org/abs/2403.03206) — SD3, MMDiT.
+- [Peebles ve Xie (2023). Transformer'ler (DiT)](https://arxiv.org/abs/2212.09748) — DiT ile Ölçeklenebilir Difüzyon Modelleri.
+- [Esser ve ark. (2024). Yüksek Çözünürlüklü Görüntü Sentezi için Düzeltilmiş Akış Transformer'leri Ölçeklendirme](https://arxiv.org/abs/2403.03206) — SD3, MMDiT.
 - [Ho ve Salimans (2022). Sınıflandırıcıdan Bağımsız Dağıtım Kılavuzu](https://arxiv.org/abs/2207.12598) — CFG.
 - [Laboratuvarlar (2024). Flux.1 — Kara Orman Laboratuvarları duyurusu](https://blackforestlabs.ai/announcing-black-forest-labs/) — Flux.1 ailesi.
 - [Sarılma Yüz Difüzörleri belgeleri](https://huggingface.co/docs/diffusers/index) — yukarıdaki her kontrol noktası için referans uygulaması.

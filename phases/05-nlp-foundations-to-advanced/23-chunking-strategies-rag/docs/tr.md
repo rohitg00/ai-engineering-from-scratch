@@ -1,6 +1,6 @@
 # RAG için Parçalama Stratejileri
 
-> Parçalama yapılandırması, alma kalitesini embedding modelinin seçimi kadar etkiler (Vectara NAACL 2025). Yanlış parçalama yapın ve hiçbir yeniden sıralama sizi kurtaramaz.
+> Parçalama konfigürasyonu, alma kalitesini embedding modelinin seçimi kadar etkiler (Vectara NAACL 2025). Yanlış parçalama yapın ve hiçbir yeniden sıralama sizi kurtaramaz.
 
 **Tür:** Yapım
 **Diller:** Python
@@ -9,17 +9,17 @@
 
 ## Sorun
 
-RAG sistemine 50 sayfalık bir sözleşme koyuyorsunuz. Kullanıcı şunu sorar: "Fesih hükmü nedir?" Alıcı, kapak sayfasını döndürür. Neden? Çünkü model 512-token parça üzerinde eğitilmiştir ve sonlandırma cümleciği, onu sorguya bağlayan hiçbir yerel anahtar kelime olmadan, bir sayfa sonuna bölünmüş olarak 20 sayfa içinde yer alır.
+RAG sistemine 50 sayfalık bir sözleşme koyuyorsunuz. Kullanıcı şunu sorar: "Fesih hükmü nedir?" Alıcı, kapak sayfasını döndürür. Neden? Çünkü model 512-token parçalar üzerinde eğitilmiştir ve sonlandırma cümleciği, onu sorguya bağlayan hiçbir yerel anahtar kelime olmadan, bir sayfa sonuna bölünmüş olarak 20 sayfa içinde yer alır.
 
-Çözüm "daha iyi bir embedding modeli satın almak" değildir. Düzeltme parçalanıyor. Ne kadar büyük? Örtüşmek? Nereden ayrılmalı? Çevreleyen bağlamla mı?
+Çözüm "daha iyi bir embedding modeli satın almak" değil. Düzeltme parçalanıyor. Ne kadar büyük? Örtüşmek? Nereden ayrılmalı? Çevreleyen bağlamla mı?
 
-Şubat 2026 benchmark'lar şaşırtıcı sonuçlar gösteriyor:
+Şubat 2026 benchmark'ler şaşırtıcı sonuçlar gösteriyor:
 
-- Vectara'nın 2026 çalışması: özyinelemeli 512-token parçalama, semantik parçalamayı %69 → %54 doğrulukla yendi.
+- Vectara'nın 2026 çalışması: özyinelemeli 512-token parçalama, anlamsal parçalamayı %69 → %54 doğrulukla yendi.
 - Doğal Sorunlarda SPLADE + Mistral-8B: örtüşme sıfır ölçülebilir fayda sağladı.
-- Bağlam uçurumu: Yanıt kalitesi 2.500 token saniyelik bağlam civarında keskin bir şekilde düşüyor.
+- Bağlam uçurumu: Yanıt kalitesi, bağlamın 2.500 token civarında keskin bir şekilde düşüyor.
 
-"Açık" yanıt (anlamsal parçalama, %20 örtüşme, 1000 tokens) genellikle yanlıştır. Bu ders altı stratejiye ilişkin sezgiyi geliştirir ve hangisine ne zaman ulaşacağınızı söyler.
+"Açık" cevap (anlamsal parçalama, %20 örtüşme, 1000 token) genellikle yanlıştır. Bu ders altı stratejiye ilişkin sezgiyi geliştirir ve hangisine ne zaman ulaşmanız gerektiğini söyler.
 
 ## Konsept
 
@@ -27,17 +27,17 @@ RAG sistemine 50 sayfalık bir sözleşme koyuyorsunuz. Kullanıcı şunu sorar:
 
 **Sabit parçalama.** Her N karakteri veya token'yi bölün. En basit temel. Cümlenin ortasında keser. İyi sıkıştırma, kötü tutarlılık.
 
-**Özyinelemeli.** LangChain'in `RecursiveCharacterTextSplitter`. Önce `\n\n`'ye, ardından `\n`'ye, ardından `.`'ye ve ardından boşluk bırakmayı deneyin. Temiz bir şekilde geri düşüyor. 2026 varsayılanı.
+**Özyinelemeli.** LangChain'in `RecursiveCharacterTextSplitter`'si. Önce `\n\n`'ye, ardından `\n`'ye, ardından `.`'ye ve ardından boşluğa bölmeyi deneyin. Temiz bir şekilde geri düşüyor. 2026 varsayılanı.
 
-**Anlamsal.** Her cümleyi ekleyin. Bitişik cümleler arasındaki kosinüs benzerliğini hesaplayın. Benzerliğin bir eşiğin altına düştüğü yerde bölün. Konu tutarlılığını korur. Yavaş; bazen geri getirmeyi zorlaştıran 40-token kadar küçük parçalar üretir.
+**Anlamsal.** Her cümleyi ekleyin. Bitişik cümleler arasındaki kosinüs benzerliğini hesaplayın. Benzerliğin bir eşiğin altına düştüğü yerde bölün. Konu tutarlılığını korur. Yavaş; bazen geri alımı zorlaştıran küçük 40-token parçaları üretir.
 
-**Cümle.** Cümle sınırlarına göre bölünmüş. Parça başına bir cümle veya N cümleden oluşan bir pencere. Maliyetin küçük bir kısmıyla ~5k tokens'ye kadar anlamsal parçalamayı eşleştirir.
+**Cümle.** Cümle sınırlarına göre bölünmüş. Parça başına bir cümle veya N cümleden oluşan bir pencere. Maliyetin çok altında bir maliyetle ~5k token'ye kadar anlamsal parçalamayı eşleştirir.
 
 **Parent-document.** Küçük alt öbekleri geri çağırmak için ve* daha büyük ana öbekleri bağlam için saklayın. Çocuk tarafından alın; ebeveyni geri ver. İncelikle bozulur: Kötü çocuk parçaları hâlâ makul ebeveynleri geri getirir.
 
-**Geç parçalama (2024).** Önce tüm belgeyi token düzeyinde gömün, ardından token embedding'leri embedding'ler halinde bir araya toplayın. Çapraz yığın bağlamını korur. Uzun bağlam katıştırıcılarla çalışır (BGE-M3, Jina v3). Daha yüksek hesaplama.
+**Geç parçalama (2024).** Önce tüm belgeyi token düzeyinde gömün, ardından token embedding'leri embedding yığınlarında havuzlayın. Çapraz yığın bağlamını korur. Uzun bağlam katıştırıcılarla çalışır (BGE-M3, Jina v3). Daha yüksek hesaplama.
 
-**Bağlamsal erişim (Antropik, 2024).** Her parçanın başına, belgedeki konumunun LLM tarafından oluşturulmuş bir özetini ekleyin ("Bu parça, sonlandırma hükümlerinin 3.2 bölümüdür..."). Anthropic'in kendi benchmark'sında %35-50 geri alma artışı. Endeksi pahalı.
+**Bağlamsal erişim (Antropik, 2024).** Her parçanın başına, belgedeki konumunun LLM tarafından oluşturulmuş bir özetini ekleyin ("Bu parça, sonlandırma hükümlerinin 3.2 bölümüdür..."). Anthropic'in kendi benchmark'sinde %35-50 geri alma artışı. Endeksi pahalı.
 
 ### Her varsayılanı aşan kural
 
@@ -45,9 +45,9 @@ Parça boyutunu sorgu türüyle eşleştirin:
 
 | Sorgu türü | Parça boyutu |
 |------------|-----------|
-| Factoid ("CEO'nun adı nedir?") | 256-512 tokens |
-| Analitik / çoklu atlama | 512-1024 tokens |
-| Tüm bölümün anlaşılması | 1024-2048 tokens |
+| Factoid ("CEO'nun adı nedir?") | 256-512 token'ler |
+| Analitik / çoklu atlama | 512-1024 token'ler |
+| Tüm bölümün anlaşılması | 1024-2048 token'ler |
 
 NVIDIA'nın 2026 benchmark. Parça, cevabı artı yerel bağlamı içerecek kadar büyük olmalı ve alıcının en üst K dönüşünün bağlam gürültüsünden ziyade cevaba odaklanmasını sağlayacak kadar küçük olmalıdır.
 
@@ -182,9 +182,9 @@ Her zaman benchmark. Derleminiz için "en iyi" strateji herhangi bir blog yazıs
 ## Tuzaklar
 
 - **Parçalama yalnızca factoid sorgularda değerlendirilir.** Çok atlamalı sorgular çok farklı kazananları ortaya çıkarır. Sorgu türü katmanlı bir değerlendirme kümesi kullanın.
-- **Minimum boyut olmadan anlamsal parçalama.** Geri çağırmayı zorlaştıran 40-token parça üretir. Her zaman `min_tokens`'yi uygula.
+- **Minimum boyut olmadan anlamsal parçalama.** Geri almayı zorlaştıran 40-token parçaları üretir. Her zaman `min_tokens`'yi zorunlu kılın.
 - **Kargo kültü olarak örtüşme.** 2026 çalışmaları, örtüşmenin genellikle sıfır fayda sağladığını ve endeks maliyetini iki katına çıkardığını ortaya koyuyor. Ölçün, varsaymayın.
-- **Min/maks uygulama yok.** 5 tokens veya 5000 tokens'lik parçaların her ikisi de alımı keser. Kelepçe.
+- **Minimum/maksimum uygulama yok.** 5 token veya 5000 token'lik parçaların her ikisi de alımı keser. Kelepçe.
 - **Belgeler arası parçalama.** Asla bir parçanın iki belgeye yayılmasına izin vermeyin. Her zaman belge başına parçalayın, ardından birleştirin.
 
 ## Kullan onu
@@ -193,9 +193,9 @@ Her zaman benchmark. Derleminiz için "en iyi" strateji herhangi bir blog yazıs
 
 | Durum | Strateji |
 |-----------|----------|
-| İlk yapı, bilinmeyen derlem | Özyinelemeli, 512 tokens, çakışma yok |
-| Gerçek Kalite Güvencesi | Yinelemeli, 256-512 tokens |
-| Analitik / çoklu atlama | Özyinelemeli, 512-1024 tokens + ana belge |
+| İlk yapı, bilinmeyen derlem | Özyinelemeli, 512 token, çakışma yok |
+| Gerçek Kalite Güvencesi | Özyinelemeli, 256-512 token |
+| Analitik / çoklu atlama | Özyinelemeli, 512-1024 token'ler + ana belge |
 | Yoğun çapraz referans (sözleşmeler, belgeler) | Geç parçalama veya bağlamsal erişim |
 | Konuşma / diyalog külliyatı | Sıra düzeyinde parçalar + hoparlör meta verileri |
 | Kısa ifadeler (tweetler, incelemeler) | Bir belge = bir yığın |
@@ -238,17 +238,17 @@ Refuse any chunking strategy without min/max chunk size enforcement. Refuse over
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
 | Parça | Bir belge parçası | Yerleştirilen, dizine eklenen ve alınan alt belge birimi. |
-| Örtüşme | Güvenlik marjı | Bitişik parçalar arasında N token paylaşılır; 2026 benchmark'larda genellikle işe yaramaz. |
+| Örtüşme | Güvenlik marjı | Bitişik parçalar arasında paylaşılan N token; 2026 benchmark'lerde genellikle işe yaramaz. |
 | Anlamsal parçalama | Akıllı parçalama | Bitişik cümle embedding benzerliğinin azaldığı yerde bölün. |
 | Ebeveyn belgesi | İki seviyeli erişim | Küçük çocukları alın, büyük ebeveynleri geri getirin. |
-| Geç parçalama | embedding'dan sonra parça | Dokümanın tamamını token düzeyinde gömün, öbek vektörleri halinde havuzlayın. |
+| Geç parçalama | embedding'den sonraki parça | Dokümanın tamamını token düzeyinde yerleştirin, yığın vektörleri halinde havuzlayın. |
 | Bağlamsal erişim | Antropik'in numarası | LLM tarafından oluşturulan özet, indekslemeden önce her bir parçanın başına eklenir. |
-| Bağlam uçurumu | 2500-token duvar | RAG'de (Ocak 2026) yaklaşık 2,5 bin bağlam tokens civarında kalite düşüşü gözlemlendi. |
+| Bağlam uçurumu | 2500-token duvar | RAG'da (Ocak 2026) yaklaşık 2,5 bin bağlam token'de kalite düşüşü gözlemlendi. |
 
 ## Daha Fazla Okuma
 
 - [Yepes ve ark. / LangChain — Özyinelemeli Karakter Bölme belgeleri](https://python.langchain.com/docs/how_to/recursive_text_splitter/) — üretimdeki varsayılan.
 - [Vectara (2024, NAACL 2025). Yapılandırmaları parçalama analizi](https://arxiv.org/abs/2410.13070) — parçalama, embedding seçimi kadar önemlidir.
-- [Jina AI — Uzun Bağlamda Geç Parçalama Embedding Modeller (2024)](https://jina.ai/news/late-chunking-in-long-context-embedding-models/) — geç parçalama makalesi.
-- [Antropik — Bağlamsal Geri Alma](https://www.anthropic.com/news/contextual-retrieval) — LLM tarafından oluşturulan bağlam önekleriyle %35-50 alma artışı.
-- [NVIDIA 2026 parça boyutu benchmark — Ön özet](https://blog.premai.io/rag-chunking-strategies-the-2026-benchmark-guide/) — sorgu türüne göre parça boyutu.
+- [Jina AI — Uzun Bağlam Embedding Modellerinde Geç Parçalama (2024)](https://jina.ai/news/late-chunking-in-long-context-embedding-models/) — geç parçalama kağıdı.
+- [Antropik — Bağlamsal Geri Alma](https://www.anthropic.com/news/contextual-retrieval) — LLM tarafından oluşturulan bağlam önekleriyle %35-50 alma iyileştirmesi.
+- [NVIDIA 2026 yığın boyutu benchmark — Ön özet](https://blog.premai.io/rag-chunking-strategies-the-2026-benchmark-guide/) — sorgu türüne göre yığın boyutu.

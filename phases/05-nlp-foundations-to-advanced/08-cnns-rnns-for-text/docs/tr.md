@@ -4,30 +4,30 @@ Metin için # CNN'ler ve RNN'ler
 
 **Tür:** Yapım
 **Diller:** Python
-**Önkoşullar:** Aşama 3 · 11 (PyTorch Giriş), Aşama 5 · 03 (Word Embeddings), Aşama 4 · 02 (Sıfırdan Evrişimler)
+**Önkoşullar:** Aşama 3 · 11 (PyTorch Giriş), Aşama 5 · 03 (Word Embedding), Aşama 4 · 02 (Sıfırdan Evrişimler)
 **Süre:** ~75 dakika
 
 ## Sorun
 
-TF-IDF ve Word2Vec, kelime sırasını göz ardı eden düz vektörler üretti. Bunların üzerine kurulu bir sınıflandırıcı, `dog bites man` ile `man bites dog`'yi ayırt edemedi. Kelime sırası bazen sinyali taşır.
+TF-IDF ve Word2Vec, kelime sırasını göz ardı eden düz vektörler üretti. Bunların üzerine inşa edilen bir sınıflandırıcı, `dog bites man`'yi `man bites dog`'den ayıramadı. Kelime sırası bazen sinyali taşır.
 
-transformer'lar gelmeden önce bu boşluğu iki mimari ailesi dolduruyordu.
+transformer'ler gelmeden önce bu boşluğu iki mimari ailesi doldurdu.
 
 **Metin için evrişimli ağlar (TextCNN).** embedding kelime dizileri üzerine 1 boyutlu evrişimler uygulayın. Genişliği 3 olan bir filtre, öğrenilebilir bir trigram dedektörüdür: üç kelimeyi kapsar ve bir puan verir. Çok ölçekli desenleri tespit etmek için farklı genişlikleri (2, 3, 4, 5) istifleyin. Maksimum havuzdan sabit boyutlu bir gösterime. Düz, paralel, hızlı.
 
-**Yinelenen ağlar (RNN, LSTM, GRU).** Bilgiyi ileri taşıyan gizli bir durumu koruyarak token'ları teker teker işleyin. Sıralı, hafıza taşıyan, esnek giriş uzunlukları. 2014'ten 2017'ye kadar dizi modellemeye hakim oldu, ardından dikkat çekti.
+**Yinelenen ağlar (RNN, LSTM, GRU).** Bilgileri ileriye taşıyan gizli bir durumu koruyarak token'leri teker teker işleyin. Sıralı, hafıza taşıyan, esnek giriş uzunlukları. 2014'ten 2017'ye kadar dizi modellemeye hakim oldu, ardından dikkat çekti.
 
 Bu ders her ikisini de oluşturur, ardından dikkati çeken başarısızlığın adını verir.
 
 ## Konsept
 
-**TextCNN** (Kim, 2014). Token'ler gömülür. Genişlik-`k` 1 boyutlu bir evrişim, bir filtreyi ardışık `k`-gram embedding'lar üzerinde kaydırarak bir özellik haritası üretir. Bu harita üzerinde küresel maksimum havuzlama en güçlü aktivasyonu seçer. Çeşitli filtre genişliklerinden maksimum havuzlanmış çıktıları birleştirin. Bir sınıflandırıcı kafasına besleyin.
+**TextCNN** (Kim, 2014). Token'ler gömülür. Genişlik `k` 1 boyutlu bir evrişim, bir filtreyi ardışık `k` gramlık embedding üzerinde kaydırarak bir özellik haritası oluşturur. Bu harita üzerinde küresel maksimum havuzlama en güçlü aktivasyonu seçer. Çeşitli filtre genişliklerinden maksimum havuzlanmış çıktıları birleştirin. Bir sınıflandırıcı kafasına besleyin.
 
 Neden işe yarıyor? Filtre öğrenilebilir bir n-gramdır. Maksimum havuzlama konumla değişmez, dolayısıyla "iyi değil" aynı özelliği incelemenin başında veya ortasında tetikler. Her biri 100 filtreli üç filtre genişliği size 300 öğrenilmiş n-gram dedektörü sağlar. Eğitim paraleldir; sıralı bağımlılık yok.
 
-**RNN.** Her `t` zaman adımında, gizli durum `h_t = f(W * x_t + U * h_{t-1} + b)`. `W`, `U`, `b`'yi zaman içinde paylaşın. `T` zamanındaki gizli durum tüm önekin özetidir. Sınıflandırma için, `h_1 ... h_T` (maks, ortalama veya son) genelinde havuz yapın.
+**RNN.** Her `t` zaman adımında, gizli durum `h_t = f(W * x_t + U * h_{t-1} + b)`. `W`, `U`, `b`'yi zaman içinde paylaşın. `T` zamanındaki gizli durum tüm önekin özetidir. Sınıflandırma için `h_1 ... h_T` (maksimum, ortalama veya son) genelinde havuz yapın.
 
-Düz RNN'ler gradient'ların kaybolmasından muzdariptir. **LSTM** neyin unutulacağına, neyin depolanacağına ve neyin çıktılanacağına karar veren kapılar ekleyerek gradient'leri uzun diziler boyunca stabilize eder. **GRU** LSTM'yi iki kapıyla basitleştirir; daha az parametreyle benzer şekilde performans gösterir.
+Düz RNN'ler gradient'lerin kaybolmasından muzdariptir. **LSTM** neyin unutulacağına, neyin saklanacağına ve neyin çıktısının alınacağına karar veren kapılar ekleyerek gradient'leri uzun diziler boyunca stabilize eder. **GRU** LSTM'yi iki kapıyla basitleştirir; daha az parametreyle benzer şekilde performans gösterir.
 
 **Çift yönlü RNN'ler** gizli durumları birleştirerek bir RNN'yi ileri ve diğerini geriye doğru çalıştırır. Her token'nin temsili hem sol hem de sağ bağlamı görür. Görevleri etiketlemek için gereklidir.
 
@@ -92,7 +92,7 @@ Son durum havuzu değil, dizi üzerindeki maksimum havuz. Sınıflandırma için
 
 ### 3. Adım: kaybolan gradient demosu (sezgi)
 
-Geçitlemesi olmayan basit bir RNN, uzun menzilli bağımlılıkları öğrenemez. Bir oyuncak görevi düşünün: token `A` dizisinin herhangi bir yerinde görünüp görünmeyeceğini tahmin edin. Eğer `A` 1 konumundaysa ve dizi 100 tokens uzunluğundaysa, kayıptan gelen gradient'nin tekrarlanan ağırlığın 99 çarpımı boyunca geri akması gerekir. Eğer ağırlık 1'den küçükse gradient kaybolur. 1'den fazla ise patlar.
+Geçitlemesi olmayan basit bir RNN, uzun vadeli bağımlılıkları öğrenemez. Bir oyuncak görevi düşünün: token `A`'nin bir dizide herhangi bir yerde görünüp görünmeyeceğini tahmin edin. `A` 1 konumundaysa ve dizi 100 token uzunluğundaysa, kayıptan gelen gradient'nin tekrarlayan ağırlığın 99 çarpımı boyunca geri akması gerekir. Ağırlık 1'den azsa gradient kaybolur. 1'den fazla ise patlar.
 
 ```python
 def vanishing_gradient_sim(seq_len, recurrent_weight=0.9):
@@ -115,13 +115,13 @@ LSTM'lerde bile üç sorun devam etti.
 2. **Kodlayıcı-kod çözücü kurulumlarında sabit boyutlu bağlam vektörü.** Kod çözücü, yalnızca kodlayıcının tüm giriş boyunca sıkıştırılmış son gizli durumunu görür. Uzun girişler ayrıntıları kaybeder. Ders 09 bunu doğrudan kapsar.
 3. **Uzak bağımlılık doğruluk tavanı.** LSTM'ler, düz RNN'lerden daha iyi performans gösterir ancak yine de belirli bilgileri 200'den fazla adımda yaymakta zorluk çeker.
 
-Dikkat üçünü de çözdü. Transformer'nin yinelemesi tamamen durduruldu. 10. ders pivottur.
+Dikkat üçünü de çözdü. Transformer'ler yinelenmeyi tamamen bıraktı. 10. ders pivottur.
 
 ## Kullan onu
 
 PyTorch'un `nn.LSTM`, `nn.GRU` ve `nn.Conv1d` üretime hazırdır. Eğitim kodu standarttır.
 
-Hugging Face, giriş katmanı olarak taktığınız önceden eğitilmiş embedding'leri sunar:
+Hugging Face, giriş katmanı olarak taktığınız önceden eğitilmiş embedding'leri gönderir:
 
 ```python
 from transformers import AutoModel
@@ -148,12 +148,12 @@ class BertCNN(nn.Module):
 
 Kısıtlamaya uygun olduğunda kontrol listesini kullanın.
 
-- **Kenar / cihaz üzerinde inference.** GloVe embedding'li TextCNN, transformer'dan 10-100 kat daha küçüktür. Dağıtım hedefiniz bir telefonsa bu yığındır.
-- **Akış/çevrimiçi sınıflandırma.** RNN aynı anda bir token'yi işler; transformer'ların tam diziye ihtiyacı var. Gerçek zamanlı gelen metinlerde LSTM'ler hâlâ kazanıyor.
+- **Edge / cihaz üzerinde inference.** GloVe embedding'lere sahip TextCNN, transformer'den 10-100 kat daha küçüktür. Dağıtım hedefiniz bir telefonsa bu yığındır.
+- **Akış/çevrimiçi sınıflandırma.** RNN aynı anda bir token'yi işler; transformer'lerin tam diziye ihtiyacı var. Gerçek zamanlı gelen metinlerde LSTM'ler hâlâ kazanıyor.
 - **Temel çizgiler için küçük modeller.** Yeni bir görevde hızlı yineleme. Bir TextCNN'yi CPU üzerinde 5 dakikada eğitin.
 - **Sınırlı verilerle dizi etiketleme.** BiLSTM-CRF (ders 06), 1k-10k etiketli cümleler için hâlâ üretim düzeyinde bir NER mimarisidir.
 
-Geriye kalan her şey bir transformer'ye gider.
+Geri kalan her şey bir transformer'ye gider.
 
 ## Gönderin
 
@@ -181,21 +181,21 @@ Refuse to recommend fine-tuning a transformer when data is under ~500 labeled ex
 
 1. **Kolay.** 3 sınıflı bir oyuncak dataset üzerinde bir TextCNN eğitin (verileri siz icat edin). Filtre genişliklerinin (2, 3, 4) ortalama olarak tek bir genişlikten (3) daha iyi performans gösterdiğini doğrulayın F1.
 2. **Orta.** LSTM sınıflandırıcısı için maksimum havuz, ortalama havuz ve son durum havuzunu uygulayın. Küçük bir dataset ile karşılaştırın; Hangi havuzlamanın kazandığını belgeleyin ve bunun nedenini hipotezleyin.
-3. **Zor.** Bir BiLSTM-CRF NER etiketleyici oluşturun (ders 06 ile bunu birleştirin). CoNLL-2003 konusunda eğitim alın. Ders 06'daki yalnızca CRF temel çizgisiyle ve bir BERT ince ayarıyla karşılaştırın. Egzersiz süresini, hafızayı ve F1'i raporlayın.
+3. **Zor.** Bir BiLSTM-CRF NER etiketleyici oluşturun (ders 06 ile bunu birleştirin). CoNLL-2003 konusunda eğitim alın. Ders 06'daki tek başına CRF temel çizgisiyle ve bir BERT ince ayarıyla karşılaştırın. Egzersiz süresini, hafızayı ve F1'i raporlayın.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
-| MetinCNN | metin için CNN | Küresel maksimum havuza sahip embeddings kelimesi üzerindeki 1 boyutlu evrişim yığını. Kim (2014). |
-| RNN | Tekrarlanan net | Gizli durum her zaman adımında güncellenir: `h_t = f(W x_t + U h_{t-1})`. |
+| MetinCNN | metin için CNN | Genel maksimum havuza sahip embedding kelimesi üzerindeki 1 boyutlu evrişim yığını. Kim (2014). |
+| RNN | Tekrarlanan net | Her zaman adımında güncellenen gizli durum: `h_t = f(W x_t + U h_{t-1})`. |
 | LSTM | Kapılı RNN | Giriş / unutma / çıkış kapıları + bir hücre durumu ekler. Uzun diziler boyunca istikrarlı bir şekilde eğitim verir. |
 | GRU | Daha basit LSTM | Üç yerine iki kapı. Benzer doğruluk, daha az parametre. |
-| Çift Yönlü | Her iki yön | İleri + geri RNN birleştirildi. Her token bağlamının her iki tarafını da görür. |
-| Kayboluyor gradient | Eğitim sinyali ölür | Düz RNN'lerde <1 ağırlıklarla tekrarlanan çarpma, erken adım gradient'leri etkili bir şekilde sıfır yapar. |
+| Çift Yönlü | Her iki yön | İleri + geri RNN birleştirildi. Her token, bağlamının her iki tarafını da görür. |
+| Kaybolan gradient | Eğitim sinyali ölür | Düz RNN'lerde <1 ağırlıklarla tekrarlanan çarpma, erken adım gradient'leri etkili bir şekilde sıfır yapar. |
 
 ## Daha Fazla Okuma
 
 - [Kim, Y. (2014). Cümle Sınıflandırması için Evrişimli Neural Network'ler](https://arxiv.org/abs/1408.5882) — TextCNN makalesi. Sekiz sayfa. Okunabilir.
-- [Hochreiter, S. ve Schmidhuber, J. (1997). Uzun Kısa Süreli Bellek](https://www.bioinf.jku.at/publications/older/2604.pdf) — LSTM makalesi. Beklenmedik bir şekilde berrak.
+- [Hochreiter, S. ve Schmidhuber, J. (1997). Uzun Kısa Süreli Bellek](https://www.bioinf.jku.at/publications/older/2604.pdf) — LSTM kağıdı. Beklenmedik bir şekilde berrak.
 - [Olah, C. (2015). LSTM Ağlarını Anlamak](https://colah.github.io/posts/2015-08-Understanding-LSTMs/) — LSTM'leri herkes için erişilebilir kılan diyagramlar.

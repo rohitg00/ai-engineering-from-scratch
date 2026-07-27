@@ -9,7 +9,7 @@
 
 ## Sorun
 
-Kullanıcı "biri para almak için yalan söylerse ne olur" yazar ve bunu gerçekten kapsayan yasayı bulmayı bekler: "Bölüm 420 IPC." Bir anahtar kelime araması onu tamamen gözden kaçırır (paylaşılan kelime dağarcığı yoktur). embedding'lar yasal metin konusunda eğitilmemişse anlamsal bir arama bunu kaçırır. Gerçek aramanın her ikisini de ele alması gerekir.
+Kullanıcı "biri para almak için yalan söylerse ne olur" yazar ve bunu gerçekten kapsayan yasayı bulmayı bekler: "Bölüm 420 IPC." Bir anahtar kelime araması onu tamamen gözden kaçırır (paylaşılan kelime dağarcığı yoktur). embedding'ler yasal metin konusunda eğitilmemişse anlamsal arama bunu kaçırır. Gerçek aramanın her ikisini de ele alması gerekir.
 
 IR, her RAG sisteminin, her arama çubuğunun, her doküman sitesinin belirsiz aramasının altındaki boru hattıdır. Üretimde çalışan 2026 mimarisi tek bir yöntem değildir. Her biri bir öncekinin başarısızlıklarını yakalayan tamamlayıcı yöntemler zinciridir.
 
@@ -24,9 +24,9 @@ Dört katman. İhtiyacınız olanları seçin.
 1. **Seyrek erişim (BM25).** Hızlı, tam eşleşmelerde hassas, anlambilim açısından berbat. Ters çevrilmiş bir indeksin üzerinden geçin. Milyonlarca belgede sorgu başına 10 ms'nin altında. Mevzuat referanslarını, ürün kodlarını, hata mesajlarını, adlandırılmış varlıkları size doğru şekilde ulaştırır.
 2. **Yoğun erişim.** Sorguyu ve belgeleri vektörler halinde kodlayın. En yakın komşu araması. Açıklamaları ve anlamsal benzerliği yakalar. Bir karakter farklılık gösteren tam anahtar kelime eşleşmelerini kaçırır. FAISS veya vektör DB ile sorgu başına 50-200 ms.
 3. **Füzyon.** Seyrek ve yoğundan sıralanmış listeleri birleştirin. Karşılıklı Sıralama Füzyonu (RRF), ham puanları (farklı ölçeklerde yaşayan) göz ardı etmesi ve yalnızca sıralama konumlarını kullanması nedeniyle kolay varsayılandır. Ağırlıklı füzyon, alanınız için bir sinyalin baskın olduğunu bildiğiniz durumlarda bir seçenektir.
-4. **Çapraz kodlayıcı yeniden sıralaması.** Füzyondan ilk 30'u alın. Bir çapraz kodlayıcı çalıştırın (sorgu + belge birlikte, her çifti puanlayın). İlk 5'i koruyun. Çapraz kodlayıcılar çift kodlayıcılara göre çift başına daha yavaştır ancak çok daha doğrudur. Bunları yalnızca ilk 30'da çalıştırarak amorti edersiniz.
+4. **Çapraz kodlayıcı yeniden sıralaması.** Füzyondan ilk 30'u alın. Çapraz kodlayıcı çalıştırın (sorgu + belge birlikte, her çifti puanlayın). İlk 5'i koruyun. Çapraz kodlayıcılar çift kodlayıcılara göre çift başına daha yavaştır ancak çok daha doğrudur. Bunları yalnızca ilk 30'da çalıştırarak amorti edersiniz.
 
-Üç yönlü erişim (BM25 + yoğun + SPLADE gibi öğrenilmiş-seyrek), 2026 benchmark'larda iki yoldan daha iyi performans gösterir ancak öğrenilmiş-seyrek dizinler için altyapıya ihtiyaç duyar. Çoğu takım için iki yönlü artı çapraz kodlayıcı yeniden sıralaması en uygun noktadır.
+Üç yönlü erişim (BM25 + yoğun + SPLADE gibi öğrenilmiş-seyrek), 2026 benchmark'de iki yoldan daha iyi performans gösterir ancak öğrenilmiş-seyrek dizinler için altyapıya ihtiyaç duyar. Çoğu takım için iki yönlü artı çapraz kodlayıcı yeniden sıralaması en uygun noktadır.
 
 ## İnşa Et
 
@@ -105,7 +105,7 @@ def dense_search(encoder, embeddings, query, top_k=10):
     return [(float(sims[i]), int(i)) for i in order]
 ```
 
-L2- embedding'leri nokta çarpımı kosinüse eşit olacak şekilde normalize edin. `all-MiniLM-L6-v2` 384 loştur, hızlıdır ve çoğu İngilizce bilgi alımı için yeterince güçlüdür. Çok dilli çalışmalar için `paraphrase-multilingual-MiniLM-L12-v2` kullanın. En yüksek doğruluk için, `bge-large-en-v1.5` veya `e5-large-v2`.
+Nokta çarpımı kosinüse eşit olacak şekilde embedding'leri L2-normalize edin. `all-MiniLM-L6-v2` 384-dim'dir, hızlıdır ve çoğu İngilizce bilgi alımı için yeterince güçlüdür. Çok dilli çalışmalar için `paraphrase-multilingual-MiniLM-L12-v2` kullanın. En yüksek doğruluk için `bge-large-en-v1.5` veya `e5-large-v2`.
 
 ### Adım 3: Karşılıklı Sıra Füzyonu
 
@@ -119,7 +119,7 @@ def reciprocal_rank_fusion(rankings, k=60):
     return [(score, doc_idx) for doc_idx, score in fused]
 ```
 
-`k=60` sabiti orijinal RRF makalesinden gelmektedir. Daha yüksek `k`, sıralama farklılıklarının katkısını düzleştirir; düşük `k` üst sıraların hakim olmasını sağlar. 60, yayınlanan varsayılan değerdir ve nadiren ayar gerektirir.
+`k=60` sabiti orijinal RRF kağıdından gelir. Daha yüksek `k`, sıralama farklılıklarının katkısını düzleştirir; daha düşük `k`, üst sıraların hakim olmasını sağlar. 60, yayınlanan varsayılan değerdir ve nadiren ayar gerektirir.
 
 ### Adım 4: karma arama + yeniden sıralama
 
@@ -152,7 +152,7 @@ def hybrid_search(query, bm25, encoder, dense_embeddings, corpus, top_k=5, pool_
 
 Özellikle RAG için, av köpeğinin **Recall@k**'si en önemli sayıdır. Alınan sette doğru pasaj yoksa okuyucunuz cevap veremez.
 
-Hata ayıklama ipucu: Başarısız sorgular için seyrek ve yoğun sıralamaları farklılaştırın. Biri doğru belgeyi bulurken diğeri bulamazsa, kelime uyumsuzluğu (düzeltme: eksik yarıyı ekleyin) veya anlamsal belirsizlik (düzeltme: daha iyi embedding'ler veya yeniden sıralama) var demektir.
+Hata ayıklama ipucu: Başarısız sorgular için seyrek ve yoğun sıralamaları farklılaştırın. Biri doğru belgeyi bulurken diğeri bulamazsa, kelime dağarcığı uyumsuzluğu (düzeltme: eksik yarıyı ekleyin) veya anlamsal belirsizlik (düzeltme: daha iyi embedding'ler veya yeniden sıralama) var demektir.
 
 ## Kullan onu
 
@@ -165,20 +165,20 @@ Hata ayıklama ipucu: Başarısız sorgular için seyrek ve yoğun sıralamalar�
 | 10 milyondan fazla belge | Hibrit destekli Qdrant / Weaviate / Vespa / Milvus. Çapraz kodlayıcı yeniden sıralamada ilk 30'da yer aldı. |
 | En iyi kalitede sınır | Üç yollu (BM25 + yoğun + SPLADE) + ColBERT geç etkileşim yeniden sıralaması |
 
-Neyi seçerseniz seçin, değerlendirme için bütçe ayırın. Uçtan uca RAG doğruluğunu benchmarksağlamadan önce Benchmark geri çağırma. Bir okuyucu, av köpeğinin kaçırdığı şeyi düzeltemez.
+Neyi seçerseniz seçin, değerlendirme için bütçe ayırın. benchmark'nin uçtan uca RAG doğruluğundan önce Benchmark geri çağırma. Bir okuyucu, av köpeğinin kaçırdığı şeyi düzeltemez.
 
 ### 2026 yapımı RAG'dan zorlukla kazanılan dersler
 
-- **RAG hatalarının %80'i modelden değil, alım ve parçalamadan kaynaklanır.** Ekipler haftalarca LLM'leri değiştirerek ve prompt'ları ayarlayarak geçirirken, alma işlemi her üç sorguda bir sessizce yanlış bağlamı döndürür. Önce parçalamayı düzeltin.
+- **RAG hatalarının %80'i modelden değil, alım ve parçalamadan kaynaklanır.** Ekipler, LLM'leri değiştirmek ve prompt'leri ayarlamak için haftalar harcarken, alma işlemi her üç sorguda bir sessizce yanlış bağlam döndürür. Önce parçalamayı düzeltin.
 - **Parçalama stratejisi parça boyutundan daha önemlidir.** Sabit boyutlu bölmeler, kesme tablolarını, kodu ve iç içe geçmiş başlıkları ayırır. Cümle uyumlu varsayılandır; Anlamsal veya LLM tabanlı parçalama, teknik belgeler ve ürün kılavuzları için karşılığını verir.
 - **Ebeveyn-doc modeli.** Hassasiyet için küçük "çocuk" parçalarını alın. Aynı ana bölümden birden fazla alt öğe göründüğünde, bağlamı korumak için üst bloğun yerini değiştirin. Bu, yeniden eğitim gerektirmeden yanıt kalitesini sürekli olarak artırır.
-- **k_rerank=3 genellikle optimaldir.** Yanıt kalitesini yükseltmeden token maliyet ve oluşturma gecikmesi ekleyen her fazladan parça geçişi. Sizin için k=8 hala k=3'ten daha iyiyse, yeniden sıralama düşük performans gösteriyor demektir.
-- **HyDE / sorgu genişletme.** Sorgudan varsayımsal bir yanıt oluşturun, onu yerleştirin ve alın. Kısa sorularla uzun belgeler arasındaki ifade boşluğunu kapatır. Eğitim gerektirmeyen ücretsiz hassas kaldırma.
-- **Bağlam bütçesi 8K tokens'nin altında.** Bu sınırdaki tutarlı isabetler, yeniden sıralama eşiğinin çok gevşek olduğu anlamına gelir.
-- **Her şeyin sürümü.** Prompt'ler, parçalama kuralları, embedding modeli, yeniden sıralama. Herhangi bir sapma sessizce yanıt kalitesini bozar. Güvenilirlik, bağlam hassasiyeti ve yanıtlanmamış soru oranı blok regresyonlarını kullanıcılar görmeden önce CI kapıları.
-- **Üç yönlü erişim (BM25 + yoğun + SPLADE gibi öğrenilmiş-seyrek), özellikle özel isimleri anlambilimle karıştıran sorgular için 2026 benchmark'larda iki yoldan daha iyi performans gösterir**. Altyapı SPLADE dizinlerini desteklediğinde gönderin.
+- **k_rerank=3 genellikle en uygunudur.** Yanıt kalitesini yükseltmeden token maliyetini ve oluşturma gecikmesini artıran her ekstra parça geçilir. Sizin için k=8 hala k=3'ten daha iyiyse, yeniden sıralama düşük performans gösteriyor demektir.
+- **HyDE / sorgu genişletme.** Sorgudan varsayımsal bir yanıt oluşturun, bunu yerleştirin ve alın. Kısa sorularla uzun belgeler arasındaki ifade boşluğunu kapatır. Eğitim gerektirmeyen ücretsiz hassas kaldırma.
+- **Bağlam bütçesi 8K token'nin altında.** Bu sınırdaki tutarlı isabetler, yeniden sıralama eşiğinin çok gevşek olduğu anlamına gelir.
+- **Sürüm her şeyi.** Prompt'ler, parçalama kuralları, embedding modeli, yeniden sıralama. Herhangi bir sapma sessizce yanıt kalitesini bozar. Güvenilirlik, bağlam hassasiyeti ve yanıtlanmamış soru oranı blok regresyonlarını kullanıcılar görmeden önce CI kapıları.
+- **Üç yönlü erişim (BM25 + yoğun + SPLADE gibi öğrenilmiş-seyrek), özellikle özel isimleri anlambilimle karıştıran sorgular için 2026 benchmark'de iki yoldan daha iyi performans gösterir**. Altyapı SPLADE dizinlerini desteklediğinde gönderin.
 
-Doğru geri getirme tasarımı, 2026 endüstri ölçümlerine göre halüsinasyonları %70-90 oranında azaltıyor. RAG performans kazanımlarının çoğu, fine-tuning modelinden değil, daha iyi erişimden kaynaklanmaktadır.
+Doğru geri getirme tasarımı, 2026 endüstri ölçümlerine göre halüsinasyonları %70-90 oranında azaltıyor. RAG performans kazanımlarının çoğu, fine-tuning modelinden değil, daha iyi erişimden kaynaklanır.
 
 ## Gönderin
 
@@ -208,7 +208,7 @@ Refuse to recommend dense-only for corpora with named entities, error codes, or 
 
 1. **Kolay.** Yukarıdaki `hybrid_search`'yi 500 belgelik bir derlem üzerinde uygulayın. 20 sorguyu test edin. Geri çağırmayı 5'te yalnızca BM25, yalnızca yoğun ve hibrit arasında karşılaştırın.
 2. **Orta.** MRR hesaplamasını ekleyin. Doğru olduğu bilinen bir belgeye sahip her test sorgusu için, BM25, yoğun ve karma sıralamalarda doğru belgenin sıralamasını bulun. Her biri için MRR'yi rapor edin.
-3. **Zor.** MultipleNegativesRankingLoss (Cümle Transformers) kullanarak alanınızdaki yoğun kodlayıcıya ince ayar yapın. 500 sorgu-belge çiftinden oluşan bir eğitim seti oluşturun. İnce ayar öncesi ve sonrası geri çağırmayı karşılaştırın.
+3. **Zor.** MultipleNegativesRankingLoss (Cümle Transformer'ler) kullanarak etki alanınızdaki yoğun bir kodlayıcıya ince ayar yapın. 500 sorgu-belge çiftinden oluşan bir eğitim seti oluşturun. İnce ayar öncesi ve sonrası geri çağırmayı karşılaştırın.
 
 ## Anahtar Terimler
 
@@ -224,7 +224,7 @@ Refuse to recommend dense-only for corpora with named entities, error codes, or 
 ## Daha Fazla Okuma
 
 - [Robertson ve Zaragoza (2009). Olasılıksal Uygunluk Framework: BM25 ve Ötesi](https://www.staff.city.ac.uk/~sbrp622/papers/foundations_bm25_review.pdf) — kesin BM25 tedavisi.
-- [Karpukhin ve ark. (2020). Açık Alan Kalite Güvencesi için Yoğun Geçiş Erişimi](https://arxiv.org/abs/2004.04906) — DPR, standart çift kodlayıcı.
-- [Formal ve diğerleri. (2021). SPLADE: Seyrek Sözcük ve Genişletme Modeli](https://arxiv.org/abs/2107.05720) — yoğun ile boşluğu kapatan öğrenilmiş seyrek avlayıcı.
-- [Cormack, Clarke, Büttcher (2009). Karşılıklı Sıralama Füzyonu, Condorcet ve bireysel Sıralama Öğrenme Yöntemlerinden daha iyi performans gösterir](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf) — RRF makalesi.
+- [Karpukhin ve ark. (2020). Açık Alan QA için Yoğun Geçiş Erişimi](https://arxiv.org/abs/2004.04906) — DPR, standart çift kodlayıcı.
+- [Formal ve diğerleri. (2021). SPLADE: Seyrek Sözcük ve Genişletme Modeli](https://arxiv.org/abs/2107.05720) — yoğun ile boşluğu kapatan öğrenilmiş seyrek av köpeği.
+- [Cormack, Clarke, Büttcher (2009). Karşılıklı Sıralama Füzyonu, Condorcet ve bireysel Sıralama Öğrenme Yöntemlerinden daha iyi performans gösterir](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf) — RRF kağıdı.
 - [Hattab ve Zaharia (2020). ColBERT: Verimli ve Etkili Geçiş Araması](https://arxiv.org/abs/2004.12832) — geç etkileşim erişimi.

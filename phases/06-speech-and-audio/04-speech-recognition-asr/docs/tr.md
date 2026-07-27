@@ -13,9 +13,9 @@
 
 Üç formülasyon bunu çözer:
 
-1. **CTC (Bağlantıcı Zamansal Sınıflandırma).** Özel bir *boş* dahil olmak üzere kare başına token olasılık yayar. Kod çözme sırasında tekrarları ve boşlukları daraltın. Otoregresif olmayan, hızlı. wav2vec 2.0, MMS tarafından kullanılır.
-2. **RNN-T (Tekrarlayan Neural Network Dönüştürücü).** Ortak ağ, verilen kodlayıcı çerçevesini ve önceki token'leri sonraki token tahmin eder. Yayınlanabilir. Google'ın cihaz içi ASR'si NVIDIA Parakeet tarafından kullanılır.
-3. **Kodlayıcı-kod çözücüye dikkat edin.** Kodlayıcı sesi gizli durumlara sıkıştırır, kod çözücü otomatik regresif olarak token'lar oluşturmak için çapraz katılım sağlar. Whisper, SeamlessM4T tarafından kullanılır.
+1. **CTC (Bağlantıcı Zamansal Sınıflandırma).** Özel bir *boşluk* dahil olmak üzere kare başına token olasılıkları yayınlayın. Kod çözme sırasında tekrarları ve boşlukları daraltın. Otoregresif olmayan, hızlı. wav2vec 2.0, MMS tarafından kullanılır.
+2. **RNN-T (Tekrarlayan Neural Network Dönüştürücü).** Ortak ağ, verilen kodlayıcı çerçevesini ve önceki token'leri sonraki token'yi tahmin eder. Yayınlanabilir. Google'ın cihaz içi ASR'si NVIDIA Parakeet tarafından kullanılır.
+3. **Kodlayıcı-kod çözücüye dikkat.** Kodlayıcı sesi gizli durumlara sıkıştırır, kod çözücü token'leri otomatik regresif olarak oluşturmak için çapraz katılım sağlar. Whisper, SeamlessM4T tarafından kullanılır.
 
 2026'da LibriSpeech test temizliğinde SOTA WER %1,4 (Parakeet-TDT-1.1B, NVIDIA) ve %1,58 (Whisper-Large-v3-turbo) oldu. Farklılıklar çok küçüktür; deployment farkları çok büyük.
 
@@ -23,21 +23,21 @@
 
 ![Üç ASR formülasyonu: CTC, RNN-T, dikkat kodlayıcı-kod çözücü](../assets/asr-formulations.svg)
 
-**CTC sezgisi.** Kodlayıcının `V+1` tokens (V karakterleri + boş) üzerinden `T` kare düzeyinde dağılımlar çıkarmasına izin verin. `U < T` uzunluğundaki `y` hedef dizesi için, `y`'ye daraltılan herhangi bir çerçeve hizalaması sayılır. Tüm bu hizalamaların CTC kaybı toplamı. Inference: kare başına argmax, tekrarları daralt, boşlukları kaldır.
+**CTC sezgisi.** Kodlayıcının `V+1` token'ler (V karakterleri + boş) üzerinden `T` çerçeve düzeyi dağılımlarını çıkarmasına izin verin. `U < T` uzunluğundaki `y` hedef dizesi için, `y`'ye daraltılan herhangi bir çerçeve hizalaması sayılır. Tüm bu hizalamaların CTC kaybı toplamı. Inference: kare başına argmax, tekrarları daralt, boşlukları kaldır.
 
 Avantajları: otoregresif olmayan, akışa uygun, sıfır bakış açısı. Dezavantajı: *koşullu bağımsızlık varsayımı* — her çerçeve tahmini diğerlerinden bağımsızdır, dolayısıyla dahili bir dil modeli yoktur. Işın arama veya sığ füzyon yoluyla harici bir LM ile sabitleyin.
 
-**RNN-T sezgisi.** token geçmişini yerleştiren bir *tahmin* ağı ve tahmin durumunu kodlayıcı çerçevesiyle `V+1` üzerinde ortak bir dağıtımda birleştiren bir *birleştirici* ekler (`+1` boştur/yayma yok). CTC'nin göz ardı ettiği koşullu bağımlılığı açıkça modeller. Akış yapılabilir çünkü her adım yalnızca geçmiş kareleri ve geçmiş token'leri koşullandırır.
+**RNN-T sezgisi.** token geçmişini içeren bir *tahmin edici* ağı ve tahminci durumunu kodlayıcı çerçevesiyle `V+1` üzerinden ortak bir dağıtımda birleştiren bir *birleştirici* ekler (`+1` boştur/yayma yapmaz). CTC'nin göz ardı ettiği koşullu bağımlılığı açıkça modeller. Akış yapılabilir çünkü her adım yalnızca geçmiş kareleri ve geçmiş token'leri koşullandırır.
 
-Avantajları: yayınlanabilir + dahili LM. Dezavantajı: eğitim daha karmaşıktır ve hafızaya ihtiyaç duyar (3 boyutlu kayıp kafesi); RNN-T kayıp çekirdekleri başlı başına bir kitaplık kategorisidir.
+Avantajları: yayınlanabilir + dahili LM. Dezavantajı: eğitim daha karmaşıktır ve hafızaya ihtiyaç duyar (3 boyutlu kayıp kafesi); RNN-T kayıp çekirdekleri başlı başına bir kütüphane kategorisidir.
 
-**Dikkat kodlayıcı-kod çözücü.** Log-mel çerçeveler üzerinde kodlayıcı (6-32 transformer katman). Kod çözücü (6-32 transformer katman), otomatik regresif olarak token'leri oluşturmak için kodlayıcı çıkışlarına çapraz katılım sağlar. Hizalama kısıtlaması yok; dikkat sesin herhangi bir yerine odaklanabilir. Dikkati kısıtlamadığınız sürece yayınlanamaz (yığınlanmış Whisper-Streaming, 2024).
+**Kodlayıcı-kod çözücüye dikkat.** Log-mel çerçeveleri üzerinde kodlayıcı (6-32 transformer katmanı). Kod çözücü (6-32 transformer katmanı), token'leri otomatik regresif olarak oluşturmak için kodlayıcı çıkışlarına çapraz katılım sağlar. Hizalama kısıtlaması yok; dikkat sesin herhangi bir yerine odaklanabilir. Dikkati kısıtlamadığınız sürece yayınlanamaz (yığınlanmış Whisper-Streaming, 2024).
 
 Avantajları: çevrimdışı ASR'de en yüksek kalite, standart seq2seq araçlarıyla eğitilmesi kolaydır. Dezavantajı: otoregresif gecikme, çıkış uzunluğuyla orantılıdır; mühendislik olmadan yayın yapılamaz.
 
 ### WER: tek sayı
 
-**Kelime Hata Oranı** = `(S + D + I) / N`, burada S=değiştirmeler, D=silmeler, I=eklemeler, N=referans kelime sayısı. Kelime düzeyinde Levenshtein düzenleme mesafesiyle eşleşir. Daha düşük olması daha iyidir. %20'nin üzerindeki bir WER genellikle kullanılamaz; %5'in altında okuma konuşması için insan eşitliğidir. Standart benchmark'larda 2026 sayıları:
+**Kelime Hata Oranı** = `(S + D + I) / N`, burada S=değiştirmeler, D=silmeler, I=eklemeler, N=referans kelime sayısı. Kelime düzeyinde Levenshtein düzenleme mesafesiyle eşleşir. Daha düşük olması daha iyidir. %20'nin üzerindeki bir WER genellikle kullanılamaz; %5'in altında okuma konuşması için insan eşitliğidir. Standart benchmark'lerde 2026 numara:
 
 | Modeli | LibriSpeech test-temiz | LibriSpeech testi-diğer | Boyut |
 |-------|------------------------|------------------------|------|
@@ -128,7 +128,7 @@ for chunk in streaming_audio():
     print(asr(chunk, return_timestamps=True))
 ```
 
-ASR akışı, parçalanmış kodlayıcı dikkatine ve aktarım durumuna ihtiyaç duyar; bunu destekleyen bir kitaplık kullanın (Parkeet için NeMo, `transformers` ardışık düzeni ile `chunk_length_s`).
+ASR akışı, parçalanmış kodlayıcı dikkatine ve aktarım durumuna ihtiyaç duyar; onu destekleyen bir kitaplık kullanın (Parakeet için NeMo, `chunk_length_s` ile `transformers` ardışık düzeni).
 
 ## Kullan onu
 
@@ -147,17 +147,17 @@ ASR akışı, parçalanmış kodlayıcı dikkatine ve aktarım durumuna ihtiyaç
 
 - **VAD yok.** Whisper'ı sessizlikte çalıştırmak halüsinasyonlara neden olur ("İzlediğiniz için teşekkürler!"). Daima VAD ile geçiş yapın.
 - **Karakter, kelime ve alt kelime WER.** Normalleştirmeden (küçük harf, noktalama işaretleri çıkarıldıktan sonra) kelime düzeyinde WER'yi rapor edin.
-- **Dil kimliği kayması.** Whisper'ın otomatik LID'si gürültülü klipleri Japonca veya Galce'ye yanlış yönlendirir; bildiğin zaman `language="en"`'yı zorla.
+- **Dil kimliği kayması.** Whisper'ın otomatik LID'si gürültülü klipleri Japonca veya Galce'ye yanlış yönlendirir; bildiğiniz zaman `language="en"`'yi zorlayın.
 - **Parçalanma olmadan uzun klipler.** Whisper'ın 30 saniyelik bir penceresi vardır. Daha uzun bir süre için `chunk_length_s=30, stride=5` kullanın.
 
 ## Gönderin
 
-`outputs/skill-asr-picker.md` olarak kaydet. Belirli bir deployment hedefi için modeli, kod çözme stratejisini, parçalamayı ve LM füzyonunu seçin.
+`outputs/skill-asr-picker.md` olarak kaydedin. Belirli bir deployment hedefi için modeli, kod çözme stratejisini, parçalamayı ve LM füzyonunu seçin.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py` komutunu çalıştırın. El yapımı bir CTC çıktısının kodunu açgözlülükle çözer ve bir referansa göre WER'yi hesaplar.
-2. **Orta.** 2. Adımdaki önek ağacı ışın aramasını doğru şekilde uygulayın (boş birleştirme kuralını hesaba katın). 10 örneklik bir sentetik dataset üzerinde açgözlü ile karşılaştırın.
+1. **Kolay.** `code/main.py`'yi çalıştırın. El yapımı bir CTC çıktısının kodunu açgözlülükle çözer ve bir referansa göre WER'yi hesaplar.
+2. **Orta.** 2. Adımdaki önek ağacı ışın aramasını doğru şekilde uygulayın (boş birleştirme kuralını hesaba katın). 10 örnekli sentetik dataset üzerinde açgözlüyle karşılaştırın.
 3. **Zor.** [LibriSpeech test-clean](https://www.openslr.org/12) üzerinde `whisper-large-v3-turbo` kullanın. İlk 100 ifadenin WER'sini hesaplayın. Yayınlanan sayılarla karşılaştırın.
 
 ## Anahtar Terimler
@@ -165,7 +165,7 @@ ASR akışı, parçalanmış kodlayıcı dikkatine ve aktarım durumuna ihtiyaç
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
 | CTC | Boş-token kaybı | Tüm çerçeveden token'ye hizalamalarda marjinal; AR olmayan. |
-| RNN-T | Akış kaybı | CTC + sonraki-token tahmincisi; Kelime sırasını yönetir. |
+| RNN-T | Akış kaybı | CTC + sonraki token tahmincisi; Kelime sırasını yönetir. |
 | Dikkat enc-dec | Fısıltı tarzı | Kodlayıcı + çapraz katılımlı kod çözücü; en iyi çevrimdışı kalite. |
 | WER | Bildirdiğiniz numara | Kelime düzeyinde `(S+D+I)/N`. |
 | Boş | boşluk | CTC'de "bu karede emisyon yok" sinyalini veren özel token. |
@@ -176,6 +176,6 @@ ASR akışı, parçalanmış kodlayıcı dikkatine ve aktarım durumuna ihtiyaç
 
 - [Graves ve ark. (2006). Bağlantıcı Geçici Sınıflandırma](https://www.cs.toronto.edu/~graves/icml_2006.pdf) — CTC makalesi.
 - [Mezarlar (2012). RNN'lerle Dizi Transdüksiyonu](https://arxiv.org/abs/1211.3711) — RNN-T makalesi.
--[Radford ve ark. / OpenAI (2022). Fısıltı: Büyük Ölçekli Zayıf Denetim aracılığıyla Güçlü Konuşma Tanıma](https://arxiv.org/abs/2212.04356) — 2022 tarihli standart makale; 2024'te v3-turbo uzantısı.
+-[Radford ve ark. / OpenAI (2022). Fısıltı: Büyük Ölçekli Zayıf Denetim aracılığıyla Sağlam Konuşma Tanıma](https://arxiv.org/abs/2212.04356) — 2022 standart makalesi; 2024'te v3-turbo uzantısı.
 - [NVIDIA NeMo — Parakeet-TDT kartı](https://huggingface.co/nvidia/parakeet-tdt-1.1b) — 2026 Açık ASR Skor Tablosu lideri.
 - [Sarılma Yüzü — ASR Skor Tablosunu Aç](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard) — 25'ten fazla modelde canlı benchmark.

@@ -9,9 +9,9 @@
 
 ## Sorun
 
-Ders 01, lemmatizasyonun konuşmanın bir parçası etiketine ihtiyaç duyduğunu vaat ediyordu. `running`'nin bir fiil olduğunu bilmeden, bir lemmatizer onu `run`'ye indirgeyemez. `better`'nin sıfat olduğunu bilmeden `good`'ye indirgenemez.
+Ders 01, lemmatizasyonun konuşmanın bir parçası etiketine ihtiyaç duyduğunu vaat ediyordu. `running`'nin bir fiil olduğunu bilmeden, bir lemmatizer onu `run`'ye indirgeyemez. `better`'nin bir sıfat olduğunu bilmeden `good`'ye indirgenemez.
 
-Bu söz bütün bir alt alanı gizledi. Konuşma bölümü etiketlemesi dil bilgisi kategorilerini atar. Sözdizimsel ayrıştırma, cümlenin ağaç yapısını kurtarır: hangi kelime hangisini değiştirir, hangi fiil hangi argümanları yönetir. Klasik NLP her ikisini de geliştirmek için yirmi yıl harcadı. Daha sonra deep learning bunları önceden eğitilmiş bir transformer üzerine bir token-sınıflandırma görevine daralttı ve araştırma topluluğu yoluna devam etti.
+Bu söz bütün bir alt alanı gizledi. Konuşma bölümü etiketlemesi dil bilgisi kategorilerini atar. Sözdizimsel ayrıştırma, cümlenin ağaç yapısını kurtarır: hangi kelime hangisini değiştirir, hangi fiil hangi argümanları yönetir. Klasik NLP her ikisini de geliştirmek için yirmi yıl harcadı. Daha sonra deep learning, bunları önceden eğitilmiş bir transformer'nin üstüne bir token sınıflandırma görevine daralttı ve araştırma topluluğu yoluna devam etti.
 
 Uygulanan topluluk değil. Her yapılandırılmış çıkarma hattı hala POS ve bağımlılık ağaçlarını kullanıyor. LLM tarafından oluşturulan JSON, gramer kısıtlamalarına göre doğrulanır. Soru yanıtlama sistemleri, bağımlılık ayrıştırmalarını kullanarak sorguları ayrıştırır. Makine çevirisi kalitesi değerlendiricileri ayrıştırma ağaçlarının hizalamasını kontrol eder.
 
@@ -19,7 +19,7 @@ Bilmeye değer. Bu derste etiket kümeleri, taban çizgileri ve sıfırdan uygul
 
 ## Konsept
 
-**POS etiketleme** her token'yi bir gramer kategorisiyle etiketler. **Penn Treebank (PTB)** etiket seti İngilizce varsayılandır. Sıradan okuyucunun titiz bulduğu ayrımları içeren 36 etiket: `NN` tekil isim, `NNS` çoğul isim, `NNP` tekil özel isim, `VBD` fiil geçmiş zaman, `VBZ` fiil 3. tekil şahıs şimdiki zaman vb. **Evrensel Bağımlılıklar (UD)** etiket kümesi daha geneldir (17 etiket) ve dilden bağımsızdır; diller arası çalışmanın varsayılanı haline geldi.
+**POS etiketleme** her token'yi bir gramer kategorisiyle etiketler. **Penn Treebank (PTB)** etiket seti İngilizce varsayılandır. Sıradan okuyucunun titiz bulduğu ayrımları içeren 36 etiket: `NN` tekil isim, `NNS` çoğul isim, `NNP` tekil özel isim, `VBD` fiil geçmiş zaman, `VBZ` fiil 3. tekil şimdiki zaman vb. **Evrensel Bağımlılıklar (UD)** etiket kümesi daha geneldir (17 etiket) ve dilden bağımsızdır; diller arası çalışmanın varsayılanı haline geldi.
 
 ```
 The/DET cats/NOUN were/AUX running/VERB at/ADP 3pm/NOUN ./PUNCT
@@ -142,19 +142,19 @@ def viterbi(tokens, transitions, emissions, tags, vocab, alpha=0.01):
     return [tags_list[j] for j in reversed(path)]
 ```
 
-Brown'daki Bigram HMM ~%93 doğruluğa ulaşıyor. %85'ten %93'e sıçrama çoğunlukla geçiş olasılıklarından kaynaklanmaktadır — model, `DET NOUN`'nin yaygın olduğunu ve `NOUN DET`'nin nadir olduğunu öğrenmektedir.
+Brown'daki Bigram HMM ~%93 doğruluğa ulaşıyor. %85'ten %93'e sıçrama çoğunlukla geçiş olasılıklarından kaynaklanıyor; model, `DET NOUN`'nin yaygın, `NOUN DET`'nin ise nadir olduğunu öğreniyor.
 
 ### 3. Adım: Modern etiketleyiciler bunu neden yendi?
 
-Geçiş + emisyon olasılıkları yereldir. `saw`'nin "testere aldım" cümlesindeki bir isim, "Filmi gördüm" cümlesindeki fiil olduğunu kavrayamıyorlar. Rastgele özelliklere sahip bir CRF (sonek, kelime şekli, kelimenin öncesi ve sonrası, kelimenin kendisi) ~%97'ye ulaşır. Bir BiLSTM-CRF veya transformer ~%98+'e ulaşır.
+Geçiş + emisyon olasılıkları yereldir. `saw`'nin "testere satın aldım" cümlesindeki bir isim, "Filmi gördüm" cümlesindeki fiil olduğunu kavrayamıyorlar. Rastgele özelliklere sahip bir CRF (sonek, kelime şekli, kelimenin öncesi ve sonrası, kelimenin kendisi) ~%97'ye ulaşır. BiLSTM-CRF veya transformer ~%98+ değerine ulaşır.
 
-Bu görevin tavanı, açıklama yapanların anlaşmazlığına göre belirlenir. İnsan yorumcular Penn Treebank hakkında %97 oranında hemfikir. %98'i aşan modeller muhtemelen test setine fazlasıyla uyuyor.
+Bu görevin tavanı, açıklama yapanların anlaşmazlığıyla belirlenir. İnsan yorumcular Penn Treebank hakkında %97 oranında hemfikir. %98'i aşan modeller muhtemelen test setine fazlasıyla uyuyor.
 
 ### Adım 4: bağımlılık ayrıştırma taslağı
 
 Sıfırdan tam bağımlılık ayrıştırma kapsam dışındadır; kanonik ders kitabı muamelesi Jurafsky ve Martin'dedir. Bilinmesi gereken iki klasik aile:
 
-- **Geçiş tabanlı** ayrıştırıcılar (yay istekli, yay standardı) kaydırma-azaltma ayrıştırıcısı gibi davranır: token'ları okur, bunları bir yığına kaydırır ve yay oluşturan azaltma eylemlerini uygular. Açgözlü kod çözme hızlıdır. Klasik uygulama MaltParser'dır. Modern sinirsel versiyon: Chen ve Manning'in geçiş tabanlı ayrıştırıcısı.
+- **Geçiş tabanlı** ayrıştırıcılar (yay istekli, yay standardı) kaydırma-azaltma ayrıştırıcısı gibi davranır: token'leri okur, bunları bir yığına kaydırır ve yaylar oluşturan azaltma eylemlerini uygular. Açgözlü kod çözme hızlıdır. Klasik uygulama MaltParser'dır. Modern sinirsel versiyon: Chen ve Manning'in geçiş tabanlı ayrıştırıcısı.
 - **Grafik tabanlı** ayrıştırıcılar (Eisner algoritması, Dozat-Manning biaffine) mümkün olan her başa bağımlı kenarı puanlar ve maksimum yayılan ağacı seçer. Daha yavaş ama daha doğru.
 
 Uygulamalı işlerin çoğu için spaCy'yi arayın:
@@ -184,7 +184,7 @@ at         tag=IN    pos=ADP    dep=prep       head=running
 
 Her üretim NLP kütüphanesi, standart bir işlem hattının parçası olarak POS ve bağımlılık ayrıştırıcılarını gönderir.
 
-- **spaCy** (`en_core_web_sm` / `md` / `lg` / `trf`). Hızlı, doğru, tokenleştirme + NER + lemmatizasyon ile entegre. `token.tag_` (Penn), `token.pos_` (UD), `token.dep_` (bağımlılık ilişkisi).
+- **spaCy** (`en_core_web_sm` / `md` / `lg` / `trf`). Hızlı, doğru, tokenizasyon + NER + lemmatizasyon ile entegre. `token.tag_` (Penn), `token.pos_` (UD), `token.dep_` (bağımlılık ilişkisi).
 - **Stanford NLP (dörtlük)**. Stanford'un CoreNLP'nin halefi. 60'tan fazla dilde son teknoloji.
 - **trank**. Transformer tabanlı, iyi UD doğruluğu.
 - **NLTK**. `pos_tag`. Kullanılabilir, yavaş, eski. Öğretmenlik için iyi.
@@ -194,7 +194,7 @@ Her üretim NLP kütüphanesi, standart bir işlem hattının parçası olarak P
 - **Lemmatizasyon.** Ders 01'in doğru şekilde lemmatize edilmesi için POS'a ihtiyaç vardır. Her zaman.
 - **LLM çıktılarından yapılandırılmış çıkarma.** Oluşturulan bir cümlenin gramer kısıtlamalarına (e.g., özne-fiil uyumu, gerekli değiştiriciler) uygun olduğunu doğrulayın.
 - **Görünüşe dayalı duyarlılık.** Bağımlılık ayrıştırmaları size hangi sıfatın hangi ismi değiştirdiğini söyler.
-- **Sorgu anlayışı.** "Wes Anderson tarafından yönetilen, başrolde Bill Murray'in oynadığı filmler" ayrıştırma yoluyla yapılandırılmış kısıtlamalara ayrıştırılır.
+- **Sorgu anlayışı.** "Bill Murray'in başrol oynadığı Wes Anderson tarafından yönetilen filmler" ayrıştırma yoluyla yapılandırılmış kısıtlamalara ayrıştırılır.
 - **Diller arası aktarım.** UD etiketleri ve bağımlılık ilişkileri dilden bağımsızdır ve yeni dillerin sıfır atışlı yapısal analizine olanak tanır.
 - **Düşük işlem hatları.** Bir transformer gönderemezseniz, POS + bağımlılık ayrıştırma + gazeteci sizi şaşırtıcı derecede ileri götürür.
 
@@ -242,5 +242,5 @@ Refuse to recommend rolling your own parser. Building parsers from scratch is a 
 
 - [Jurafsky ve Martin — Konuşma ve Dil İşleme, bölümler 8 ve 18](https://web.stanford.edu/~jurafsky/slp3/) — POS ve ayrıştırmanın standart ders kitabı uygulaması.
 - [Evrensel Bağımlılıklar projesi](https://universaldependencies.org/) — her çok dilli ayrıştırıcı tarafından kullanılan diller arası etiket kümesi ve ağaç bankası koleksiyonu.
-- [spaCy dilsel özellikler kılavuzu](https://spacy.io/usage/linguistic-features) — `Token`'da sunulan her özellik için pratik referans.
+- [spaCy dilsel özellikler kılavuzu](https://spacy.io/usage/linguistic-features) — `Token`'de sunulan her özellik için pratik referans.
 - [Chen ve Manning (2014). Neural Networks](https://nlp.stanford.edu/pubs/emnlp2014-depparser.pdf) kullanan Hızlı ve Doğru Bir Bağımlılık Ayrıştırıcısı — sinir ayrıştırıcılarını ana akım haline getiren makale.

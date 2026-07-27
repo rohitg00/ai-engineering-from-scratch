@@ -1,100 +1,100 @@
-# Fairness Criteria — Group, Individual, Counterfactual
+# Adillik Kriterleri — Grup, Bireysel, Karşı Olgusal
 
-> Three families structure the fairness literature. Group fairness: demographic parity, equalized odds, conditional use accuracy equality — equal rates across protected groups on average. Individual fairness (Dwork et al. 2012): similar individuals receive similar decisions; Lipschitz condition on the decision map. Counterfactual fairness (Kusner et al. 2017): a decision is fair to an individual if it is unchanged when sensitive attributes are counterfactually altered. 2024 theoretical result (NeurIPS 2024): there is an inherent CF-vs-accuracy trade-off; a model-agnostic method converts an optimal-but-unfair predictor into a CF one with bounded accuracy loss. Backtracking counterfactuals (arXiv:2401.13935, January 2024): new paradigm that avoids requiring interventions on legally protected attributes. Philosophical reconciliation (ICLR Blogposts 2024): with causal graphs, satisfying certain group fairness measures entails counterfactual fairness.
+> Adalet literatürünü üç aile yapılandırıyor. Grup adaleti: demografik eşitlik, eşit oranlar, koşullu kullanım doğruluğu eşitliği - korunan gruplar arasında ortalama olarak eşit oranlar. Bireysel adalet (Dwork ve ark. 2012): benzer bireyler benzer kararları alır; Karar haritasında Lipschitz koşulu. Karşıolgusal adalet (Kusner ve ark. 2017): Bir karar, hassas nitelikler karşıolgusal olarak değiştirildiğinde değişmediği takdirde birey için adildir. 2024 teorik sonucu (NeurIPS 2024): doğasında CF-doğruluk dengesi vardır; modelden bağımsız bir yöntem, optimal fakat adil olmayan bir tahminciyi, sınırlı doğruluk kaybı olan bir CF tahmincisine dönüştürür. Karşı olguların geriye doğru izlenmesi (arXiv:2401.13935, Ocak 2024): Yasal olarak korunan niteliklere müdahale edilmesini gerektirmeyen yeni paradigma. Felsefi uzlaşma (ICLR Blogposts 2024): nedensel grafiklerle, belirli grup adaleti önlemlerinin karşılanması, karşıolgusal adaleti gerektirir.
 
-**Type:** Learn
-**Languages:** Python (stdlib, three-criteria comparison)
-**Prerequisites:** Phase 18 · 20 (bias), Phase 02 (classical ML)
-**Time:** ~60 minutes
+**Tür:** Öğren
+**Diller:** Python (stdlib, üç kriterli karşılaştırma)
+**Önkoşullar:** Aşama 18 · 20 (önyargı), Aşama 02 (klasik ML)
+**Süre:** ~60 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- State the three group-fairness criteria (demographic parity, equalized odds, conditional use accuracy equality) and one impossibility result.
-- Describe individual fairness via the Dwork et al. 2012 Lipschitz formulation.
-- Describe counterfactual fairness and its causal-graph dependency.
-- Explain backtracking counterfactuals and why they sidestep the intervention-on-protected-attribute problem.
+- Üç grup adaleti kriterini (demografik eşitlik, eşitlenmiş oranlar, koşullu kullanım doğruluk eşitliği) ve bir imkansızlık sonucunu belirtin.
+- Bireysel adaleti Dwork ve diğerleri aracılığıyla tanımlayın. 2012 Lipschitz formülasyonu.
+- Karşıolgusal adaleti ve onun nedensel grafik bağımlılığını açıklayın.
+- Karşıt olguları geriye doğru izlemeyi ve korunan özniteliğe müdahale probleminden neden kaçındıklarını açıklayın.
 
-## The Problem
+## Sorun
 
-Lesson 20 was about measuring bias. Lesson 21 is about defining the fairness standard the measurement should serve. The three families give structurally different standards — a model can be group-fair and individual-unfair, counterfactually fair and group-unfair. Choosing a standard is a policy decision; no standard is universally optimal.
+20. ders önyargının ölçülmesiyle ilgiliydi. 21. Ders, ölçümün hizmet etmesi gereken adalet standardının tanımlanmasıyla ilgilidir. Üç aile yapısal olarak farklı standartlar veriyor; bir model grup açısından adil ve bireysel olarak adaletsiz, karşı olgusal olarak adil ve grup açısından adaletsiz olabilir. Bir standardın seçilmesi bir politika kararıdır; hiçbir standart evrensel olarak optimal değildir.
 
-## The Concept
+## Konsept
 
-### Group fairness
+### Grup adaleti
 
-- **Demographic parity.** P(Y=1 | A=a) = P(Y=1 | A=a') for all groups. Equal acceptance rates.
-- **Equalized odds.** P(Y=1 | Y*=y, A=a) = P(Y=1 | Y*=y, A=a'). Equal TPR and FPR across groups.
-- **Conditional use accuracy equality.** P(Y*=y | Y=y, A=a) = P(Y*=y | Y=y, A=a'). Equal predictive value across groups.
+- **Demografik eşitlik.** Tüm gruplar için P(Y=1 | A=a) = P(Y=1 | A=a'). Eşit kabul oranları.
+- **Eşitleştirilmiş oranlar.** P(Y=1 | Y*=y, A=a) = P(Y=1 | Y*=y, A=a'). Gruplar arasında eşit TPR ve FPR.
+- **Koşullu kullanım doğruluğu eşitliği.** P(Y*=y | Y=y, A=a) = P(Y*=y | Y=y, A=a'). Gruplar arasında eşit tahmin değeri.
 
-Impossibility (Chouldechova, Kleinberg-Mullainathan-Raghavan 2017): these three cannot be satisfied simultaneously under unequal base rates.
+İmkansızlık (Chouldechova, Kleinberg-Mullainathan-Raghavan 2017): bu üçü eşit olmayan baz oranlar altında aynı anda karşılanamaz.
 
-### Individual fairness
+### Bireysel adalet
 
-Dwork et al. 2012. A decision map f is individually fair with respect to a task-specific similarity metric d if |f(x) - f(x')| <= L * d(x, x') for some Lipschitz constant L. Similar individuals get similar decisions.
+Dwork ve ark. 2012. Bir f karar haritası, eğer |f(x) - f(x')| ise, göreve özgü benzerlik metriği d açısından bireysel olarak adildir. Bazı Lipschitz sabiti L için <= L * d(x, x') . Benzer bireyler benzer kararlar alırlar.
 
-Requires defining d. Policy question, not statistical.
+Tanımlamayı gerektirir d. Politika sorusu, istatistiksel değil.
 
-### Counterfactual fairness
+### Karşıolgusal adalet
 
-Kusner et al. 2017. A decision is counterfactually fair to individual i if, under a causal model of the population, the decision is unchanged when i's sensitive attributes are counterfactually altered.
+Kusner ve ark. 2017. Nüfusun nedensel bir modeli altında, i'nin hassas özellikleri karşı olgusal olarak değiştirildiğinde karar değişmiyorsa, bir karar birey i için karşıolgusal olarak adildir.
 
-Requires a causal DAG. The DAG is a modeling choice. Counterfactual fairness is only as justified as the DAG.
+Nedensel bir DAG gerektirir. DAG bir modelleme seçimidir. Karşıolgusal adalet ancak DAG kadar meşrudur.
 
-### The CF-vs-accuracy trade-off
+### CF-doğruluk dengesi
 
-NeurIPS 2024 theoretical: there is an inherent trade-off between counterfactual fairness and predictive accuracy. A model-agnostic method can convert an optimal-but-unfair predictor into a CF one, at a bounded accuracy cost. The accuracy cost depends on the magnitude of the sensitive-attribute coefficient in the optimal unfair predictor.
+NeurIPS 2024 teorik: Karşıolgusal adalet ile tahmine dayalı doğruluk arasında doğal bir denge vardır. Modelden bağımsız bir yöntem, sınırlı bir doğruluk maliyetiyle optimal ancak adil olmayan bir tahminciyi CF tahminciye dönüştürebilir. Doğruluk maliyeti, optimal adil olmayan tahmincideki hassas nitelik katsayısının büyüklüğüne bağlıdır.
 
-### Backtracking counterfactuals
+### Karşıt olguları geriye doğru izlemek
 
-arXiv:2401.13935 (January 2024). Traditional counterfactuals require interventions on the sensitive attribute — "would the decision change if this person had been a different gender." Legally, this is problematic: protected attributes cannot be intervened on in classification law.
+arXiv:2401.13935 (Ocak 2024). Geleneksel karşıolgusal yaklaşımlar, hassas niteliğe müdahale edilmesini gerektirir: "Bu kişi farklı bir cinsiyet olsaydı karar değişir miydi?" Yasal olarak bu sorunludur: Korunan niteliklere sınıflandırma hukukunda müdahale edilemez.
 
-Backtracking counterfactuals flip the direction: instead of intervening on the attribute, ask what combination of the individual's actual features would have produced the counterfactual outcome. This sidesteps the legal objection.
+Geriye doğru giden karşıolgusal ifadeler yönü tersine çevirir: niteliğe müdahale etmek yerine, bireyin gerçek özelliklerinin hangi kombinasyonunun karşıolgusal sonucu üretebileceğini sorun. Bu hukuki itirazı ortadan kaldırır.
 
-### Philosophical reconciliation
+### Felsefi uzlaşma
 
-ICLR Blogposts 2024. With a causal graph in hand, satisfying certain group-fairness measures entails counterfactual fairness. The three families are not orthogonal; they are different facets of the same underlying causal structure.
+ICLR Blogposts 2024. Eldeki nedensel bir grafikle, belirli grup adaleti önlemlerinin karşılanması karşıolgusal adaleti gerektirir. Üç aile birbirine dik değildir; bunlar aynı temel nedensel yapının farklı yönleridir.
 
-This does not resolve the impossibility theorems (unequal base rates still prevent simultaneous group fairness). But it shows the apparent opposition between "group" and "individual / counterfactual" is partially an artifact of not being explicit about the causal model.
+Bu, imkansızlık teoremlerini çözmez (eşit olmayan taban oranları hâlâ eş zamanlı grup adaletini engellemektedir). Ancak "grup" ile "bireysel/karşı-olgusal" arasındaki bariz karşıtlığın kısmen nedensel model hakkında açık olmama artifact olduğunu göstermektedir.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lesson 20 is bias measurement. Lesson 21 is fairness definition. Lesson 22 is privacy (differential privacy). Lesson 23 is watermarking. These are the allocation-adjacent lessons complementing the deception-adjacent Lessons 7-11.
+Ders 20 önyargı ölçümüdür. Ders 21 adaletin tanımıdır. Ders 22 mahremiyettir (diferansiyel mahremiyet). Ders 23 filigranlamadır. Bunlar, aldatmaya bitişik Dersler 7-11'i tamamlayan tahsise bitişik derslerdir.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` builds a toy binary-classification dataset with a sensitive attribute and unequal base rates. Compute demographic parity, equalized odds, and conditional use accuracy equality on a simple classifier. Observe the three metrics disagreeing. Apply a re-weighting for demographic parity and observe its cost on the other two.
+`code/main.py` , hassas bir özniteliğe ve eşit olmayan taban hızlarına sahip bir oyuncak ikili sınıflandırma dataset oluşturur. Basit bir sınıflandırıcıda demografik eşitliği, eşitlenmiş olasılıkları ve koşullu kullanım doğruluğu eşitliğini hesaplayın. Birbiriyle çelişen üç ölçümü gözlemleyin. Demografik eşitlik için yeniden ağırlıklandırma uygulayın ve bunun diğer ikisi üzerindeki maliyetini gözlemleyin.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-fairness-criterion.md`. Given a fairness claim or policy, identifies which criterion is being claimed, whether the model can satisfy the remaining criteria under the claimed unequal base rates, and what causal DAG the claim depends on.
+Bu ders `outputs/skill-fairness-criterion.md` üretir. Bir adalet iddiası veya politikası göz önüne alındığında, hangi kriterin iddia edildiğini, modelin iddia edilen eşit olmayan taban oranlar altında kalan kriterleri karşılayıp karşılayamayacağını ve iddianın hangi nedensel DAG'a bağlı olduğunu tanımlar.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Report the three group metrics on the default data. Apply the demographic-parity-targeted re-weighting and re-report.
+1. `code/main.py`'yı çalıştırın. Varsayılan verilerdeki üç grup metriğini raporlayın. Demografik eşitlik hedefli yeniden ağırlıklandırmayı uygulayın ve yeniden raporlayın.
 
-2. Implement the Dwork et al. 2012 individual-fairness metric using L2 on non-sensitive features. Report how many pairs violate Lipschitz with constant L=1.
+2. Dwork ve diğerlerini uygulayın. Hassas olmayan özelliklerde L2'yi kullanan 2012 bireysel adalet metriği. Kaç çiftin Lipschitz'i L=1 sabitiyle ihlal ettiğini bildirin.
 
-3. Read Kusner et al. 2017. Construct a simple two-feature causal DAG for resume scoring and identify the counterfactual-fairness condition it implies.
+3. Kusner ve ark.'nı okuyun. 2017. Puanlamayı sürdürmek için iki özellikli basit bir nedensel DAG oluşturun ve bunun ima ettiği karşı olgusal adalet koşulunu belirleyin.
 
-4. The 2024 backtracking-counterfactuals paper avoids intervention on protected attributes. Describe a scenario where this matters for legal compliance.
+4. 2024 tarihli geri izleme-karşı olgular belgesi, korunan niteliklere müdahaleyi önler. Bunun yasal uyumluluk açısından önemli olduğu bir senaryoyu açıklayın.
 
-5. The ICLR 2024 reconciliation argues group and counterfactual fairness are facets of the same structure. Pick two of the three criteria in `code/main.py` and state the causal assumption that would make them equivalent.
+5. ICLR 2024 uzlaşması, grup adaletinin ve karşıolgusal adaletin aynı yapının yönleri olduğunu ileri sürüyor. `code/main.py` 'daki üç kriterden ikisini seçin ve bunları eşdeğer kılacak nedensel varsayımı belirtin.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| Demographic parity | "equal rates" | P(Y=1 | A=a) equal across groups |
-| Equalized odds | "equal TPR/FPR" | Equal true-positive and false-positive rates across groups |
-| Conditional use accuracy | "equal PPV/NPV" | Equal predictive values across groups |
-| Individual fairness | "Lipschitz condition" | Similar individuals get similar decisions |
-| Counterfactual fairness | "causal alteration invariance" | Decision unchanged under counterfactual attribute alteration |
-| Backtracking counterfactual | "explain via actuals" | Counterfactual reasoned backward from outcome, not forward from attribute |
-| Impossibility theorem | "the three conflict" | Chouldechova / KMR 2017: group criteria mutually exclusive under unequal base rates |
+| Demografik eşitlik | "eşit oranlar" | P(Y=1 | A=a) gruplar arasında eşit |
+| Eşitlenmiş oranlar | "eşit TPR/FPR" | Gruplar arasında eşit doğru pozitif ve yanlış pozitif oranları |
+| Koşullu kullanım doğruluğu | "eşit PPV/NPV" | Gruplar arasında eşit tahmin değerleri |
+| Bireysel adalet | "Lipschitz durumu" | Benzer kişiler benzer kararlar alıyor |
+| Karşıolgusal adalet | "nedensel değişiklik değişmezliği" | Karşıolgusal nitelik değişikliği nedeniyle karar değişmedi |
+| Karşıolgusal geri izleme | "gerçekler aracılığıyla açıkla" | Karşıolgusal, nitelikten ileri değil, sonuçtan geriye doğru gerekçelendirilmiştir |
+| İmkansızlık teoremi | "üç çatışma" | Chouldechova / KMR 2017: eşit olmayan taban oranlar altında birbirini dışlayan grup kriterleri |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Dwork et al. — Fairness through Awareness (arXiv:1104.3913)](https://arxiv.org/abs/1104.3913) — individual fairness
-- [Kusner, Loftus, Russell, Silva — Counterfactual Fairness (arXiv:1703.06856)](https://arxiv.org/abs/1703.06856) — counterfactual fairness
-- [Chouldechova — Fair prediction with disparate impact (arXiv:1703.00056)](https://arxiv.org/abs/1703.00056) — impossibility
-- [Backtracking Counterfactuals (arXiv:2401.13935)](https://arxiv.org/abs/2401.13935) — new paradigm for protected-attribute interventions
+- [Dwork ve ark. — Farkındalık Yoluyla Adillik (arXiv:1104.3913)](https://arxiv.org/abs/1104.3913) — bireysel adalet
+- [Kusner, Loftus, Russell, Silva — Karşıolgusal Adalet (arXiv:1703.06856)](https://arxiv.org/abs/1703.06856) — karşıolgusal adalet
+- [Chouldechova — Farklı etkiye sahip adil tahmin (arXiv:1703.00056)](https://arxiv.org/abs/1703.00056) — imkansızlık
+- [Karşı Gerçekleri Geriye İzleme (arXiv:2401.13935)](https://arxiv.org/abs/2401.13935) — korumalı öznitelik müdahaleleri için yeni paradigma

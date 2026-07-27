@@ -1,6 +1,6 @@
-# A/B Testi Yüksek Lisans Özellikleri — GrowthBook, Statsig ve Vibes Sorunu
+# A/B Testi Yüksek Lisans Özellikleri — GrowthBook, Statsig ve Vibes Problemi
 
-> Geleneksel A/B testi, deterministik olmayan LLM'ler için tasarlanmamıştır. Kritik ayrım: değerlendirmeler "model işi yapabilir mi?" sorusunu yanıtlar. A/B testleri "kullanıcıların umurunda mı?" sorusunu yanıtlıyor Her ikisi de gereklidir; Vibe çeklerinde gönderim bitti. 2026'da test edilecekler: prompt mühendislik (ifadeler), model seçimi (GPT-4 vs GPT-3.5 vs OSS; doğruluk vs maliyet vs gecikme), üretim parametreleri (sıcaklık, en yüksek puan). Gerçek durumlar: Bir chatbot ödül modeli çeşidi, +%70 görüşme süresi ve +%30 kalıcılık sağladı; Nextdoor AI konu satırı deneyleri, ödül işlevi iyileştirmesinden sonra +%1 TO sağladı; Khan Academy Khanmigo, gecikme ve matematik doğruluğu ekseninde yinelendi. Platform ayrımı: **Statsig** (Eylül 2025'te OpenAI tarafından 1,1 milyar dolara satın alındı) — sıralı test, CUPED, hepsi bir arada. **GrowthBook** — açık kaynak, depoda yerel, Bayesian + Frequentist + Sıralı motorlar, CUPED, SRM kontrolleri, Benjamini-Hochberg + Bonferroni düzeltmeleri. Ambar-SQL tercihine ve "OpenAI tarafından edinilme"nin kuruluşunuz açısından önemli olup olmadığına göre seçim yaparsınız.
+> Geleneksel A/B testi, deterministik olmayan LLM'ler için tasarlanmamıştır. Kritik ayrım: değerlendirmeler "model işi yapabilir mi?" sorusunu yanıtlar. A/B testleri "kullanıcıların umurunda mı?" sorusunu yanıtlıyor Her ikisi de gereklidir; Vibe çeklerinde gönderim bitti. 2026'da test edilmesi gerekenler: prompt mühendislik (ifadeler), model seçimi (GPT-4 vs GPT-3.5 vs OSS; doğruluk vs maliyet vs gecikme), üretim parametreleri (sıcaklık, en yüksek puan). Gerçek durumlar: Bir chatbot ödül modeli çeşidi, +%70 görüşme süresi ve +%30 kalıcılık sağladı; Nextdoor AI konu satırı deneyleri, ödül işlevi iyileştirmesinden sonra +%1 TO sağladı; Khan Academy Khanmigo, gecikme ve matematik doğruluğu ekseninde yinelendi. Platform ayrımı: **Statsig** (Eylül 2025'te OpenAI tarafından 1,1 milyar dolara satın alındı) — sıralı test, CUPED, hepsi bir arada. **GrowthBook** — açık kaynak, depoda yerel, Bayesian + Frequentist + Sıralı motorlar, CUPED, SRM kontrolleri, Benjamini-Hochberg + Bonferroni düzeltmeleri. Ambar-SQL tercihine ve "OpenAI tarafından edinilme"nin kuruluşunuz açısından önemli olup olmadığına göre seçim yaparsınız.
 
 **Tür:** Öğren
 **Diller:** Python (stdlib, oyuncak sıralı test simülatörü)
@@ -10,13 +10,13 @@
 ## Öğrenme Hedefleri
 
 - Değerlendirmeleri ("model işi yapabilir mi") A/B testlerinden ("kullanıcıların umrunda mı") ayırın.
-- Test edilebilir üç ekseni (prompt, model, parametreler) numaralandırın ve her biri için metriği seçin.
+- Test edilebilir üç ekseni (prompt, model, parametreler) numaralandırın ve her biri için ölçüyü seçin.
 - CUPED, sıralı testler ve Benjamini-Hochberg çoklu karşılaştırma düzeltmelerini açıklayın.
 - Depo-SQL duruşuna ve kurumsal satın alma duruşuna göre Statsig veya GrowthBook'u seçin.
 
 ## Sorun
 
-Bir sistemi prompt elle ayarladınız. Daha iyi hissettiriyor. Sen gönder. Dönüşüm gürültüyle değişir. Ölçüyü suçluyorsun. Veya yeni bir model gönderdiniz ve dönüşüm değişmedi; modelin kalitesi mi düştü yoksa değişiklik tespit edilemeyecek kadar mı küçüktü? Bilmiyorsun çünkü A/B olmadan gönderim yaptın.
+prompt sistemini elle ayarladınız. Daha iyi hissettiriyor. Sen gönder. Dönüşüm gürültüyle değişir. Ölçüyü suçluyorsun. Veya yeni bir model gönderdiniz ve dönüşüm değişmedi; modelin kalitesi mi düştü yoksa değişiklik tespit edilemeyecek kadar mı küçüktü? Bilmiyorsun çünkü A/B olmadan gönderim yaptın.
 
 Değerlendirmeler, modelin etiketli bir kümede bir görevi yapıp yapamayacağını yanıtlar. Kullanıcıların çıktıyı tercih edip etmediğine cevap vermiyorlar. Yalnızca kontrollü bir çevrimiçi deney buna yanıt verir ve yalnızca deneyin yeterli güce sahip olması durumunda, determinizmi kontrol eder ve çoklu karşılaştırmaları düzeltir.
 
@@ -34,7 +34,7 @@ Her ikisi de gerekli. Değerlendirmeler maruz kalmadan önce gerilemeleri yakala
 
 1. **Prompt mühendisliği** — ifadeler, sistem-prompt yapısı, örnekler. Metrik: görev başarısı, kullanıcıyı elde tutma, maliyet/talep.
 2. **Model seçimi** — GPT-4 ile GPT-3.5-Turbo ve Llama-OSS karşılaştırması. Metrik: doğruluk (görev) + maliyet/istek + gecikme P99. Çok amaçlı.
-3. **Üretim parametreleri** — sıcaklık, en yüksek sıcaklık, maksimum_tokens. Metrik: göreve özgü (çıktı çeşitliliği vs determinizm).
+3. **Üretim parametreleri** — sıcaklık, en yüksek sıcaklık, max_tokens. Metrik: göreve özgü (çıktı çeşitliliği vs determinizm).
 
 ### CUPED — varyans azaltma
 
@@ -71,7 +71,7 @@ Atama karması, kullanıcıları varyantlara rastgele dağıtır. Eğer 50/50 b�
 
 ### Determinizmsizlik gücü karmaşıklaştırır
 
-Aynı prompt değişken çıktılar üretir. Geleneksel güç hesaplamaları IID gözlemlerini varsayar. LLM'nin determinizm dışı olması durumunda, etkili örnek boyutu nominalden daha düşüktür. Gerekli numune boyutunu güvenlik marjı olarak ~1,3-1,5x ile çarpın.
+Aynı prompt farklı çıktılar üretir. Geleneksel güç hesaplamaları IID gözlemlerini varsayar. LLM'nin determinizm dışı olması durumunda, etkili örnek boyutu nominalden daha düşüktür. Gerekli numune boyutunu güvenlik marjı olarak ~1,3-1,5x ile çarpın.
 
 ### Gerçek vaka sonuçları
 
@@ -90,17 +90,17 @@ Her kıdemli mühendis, A/B olmadan "daha iyi hissettirdiği" için gönderilen 
 - CUPED varyans azalması: %30-70.
 - Yüksek Lisans determinizm dışı → +%30-50 numune boyutu tamponu.
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` , sabit ve sıralı sınırlarla sıralı bir A/B testini simüle eder. Sıralılığın erken durmanıza nasıl olanak sağladığını gösterir.
+`code/main.py`, sabit ve sıralı sınırlarla sıralı bir A/B testini simüle eder. Sıralılığın erken durmanıza nasıl olanak sağladığını gösterir.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-Bu ders `outputs/skill-ab-plan.md` üretir. Özellik değişikliği, iş yükü, temel, seçim platformu, kapılar, örnek boyutu göz önüne alındığında.
+Bu ders `outputs/skill-ab-plan.md`'yi üretir. Özellik değişikliği, iş yükü, temel, seçim platformu, kapılar, örnek boyutu göz önüne alındığında.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. Temel %3'lük dönüşümle beklenen %5'lik bir artış için, %80'lik güç için örnek boyutu nedir?
+1. `code/main.py`'yi çalıştırın. Temel %3'lük dönüşümle beklenen %5'lik bir artış için, %80'lik güç için örnek boyutu nedir?
 2. Sağlık hizmetleri düzenlemelerine tabi bir şirket içi müşteri için Statsig veya GrowthBook'u seçin.
 3. Çözümlenen bildirim başına maliyet açısından GPT-4 ve GPT-3.5'i test eden bir A/B tasarlayın. Birincil metrik, korkuluk metriği, ikincil nedir?
 4. Kanaryanız geçer ancak A/B -%1,2 dönüşüm gösterir. Gönderim yapıyor musunuz? Yükseltme kriterlerini yazın.
@@ -125,7 +125,7 @@ Bu ders `outputs/skill-ab-plan.md` üretir. Özellik değişikliği, iş yükü,
 ## Daha Fazla Okuma
 
 - [GrowthBook — Yapay Zeka A/B Testi Nasıl Yapılır](https://blog.growthbook.io/how-to-a-b-test-ai-a-practical-guide/)
-- [Statsig — Prompts Ötesi: Veriye Dayalı Yüksek Lisans Optimizasyonu](https://www.statsig.com/blog/llm-optimization-online-experimentation)
+- [Statsig — Prompt'lerin Ötesinde: Veriye Dayalı Yüksek Lisans Optimizasyonu](https://www.statsig.com/blog/llm-optimization-online-experimentation)
 - [Statsig ve GrowthBook karşılaştırması](https://www.statsig.com/perspectives/ab-testing-feature-flags-comparison-tools)
 - [Deng ve ark. — KUPALI](https://www.exp-platform.com/Documents/2013-02-CUPED-ImprovingSensitivityOfControlledExperiments.pdf)
 - [Howard — Güven Dizileri](https://arxiv.org/abs/1810.08240)

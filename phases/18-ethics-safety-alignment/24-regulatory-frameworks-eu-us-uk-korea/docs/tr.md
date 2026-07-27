@@ -1,123 +1,123 @@
-# Regulatory Frameworks — EU, US, UK, Korea
+# Düzenleyici Framework'lar — AB, ABD, Birleşik Krallık, Kore
 
-> Four primary regulatory regimes define the 2026 AI governance landscape. EU AI Act (in force 1 August 2024) — prohibited practices and AI literacy from 2 February 2025; GPAI obligations from 2 August 2025; full applicability and Article 50 transparency 2 August 2026; legacy GPAI and embedded high-risk systems 2 August 2027; penalties up to 15M EUR or 3% of global turnover. GPAI Code of Practice (10 July 2025): three chapters — Transparency, Copyright, Safety and Security — 12 commitments; enforcement begins August 2026. UK AISI -> AI Security Institute (February 2025): rename signals narrower scope. US AISI -> CAISI (June 2025): Center for AI Standards and Innovation under NIST; shift toward pro-growth posture. Korean AI Framework Act (passed December 2024, effective January 2026): Article 12 establishes AISI under MSIT; mandates local representatives for foreign AI companies, risk assessment, safety measures for high-impact and generative AI.
+> Dört temel düzenleyici rejim, 2026 yapay zeka yönetişim ortamını tanımlıyor. AB Yapay Zeka Yasası (1 Ağustos 2024'te yürürlüğe girmiştir) — 2 Şubat 2025'ten itibaren yasaklanmış uygulamalar ve yapay zeka okuryazarlığı; 2 Ağustos 2025'ten itibaren GPAI yükümlülükleri; tam uygulanabilirlik ve Madde 50 şeffaflığı 2 Ağustos 2026; eski GPAI ve yerleşik yüksek riskli sistemler 2 Ağustos 2027; 15 milyon Euro'ya veya küresel cironun %3'üne kadar cezalar. GPAI Uygulama Kuralları (10 Temmuz 2025): üç bölüm - Şeffaflık, Telif Hakkı, Güvenlik ve Güvenlik - 12 taahhüt; uygulama Ağustos 2026'da başlıyor. Birleşik Krallık AISI -> Yapay Zeka Güvenlik Enstitüsü (Şubat 2025): sinyalleri daha dar kapsamlı olarak yeniden adlandırın. ABD AISI -> CAISI (Haziran 2025): NIST kapsamında Yapay Zeka Standartları ve Yenilik Merkezi; büyüme yanlısı duruşa doğru geçiş. Kore AI Framework Yasası (Aralık 2024'te kabul edildi, Ocak 2026'dan itibaren geçerli): 12. Madde, MSIT kapsamında AISI'yi kurar; Yabancı yapay zeka şirketleri için yerel temsilciler, risk değerlendirmesi, yüksek etkili ve üretken yapay zeka için güvenlik önlemlerini zorunlu kılar.
 
-**Type:** Learn
-**Languages:** none
-**Prerequisites:** Phase 18 · 18 (frontier frameworks), Phase 18 · 27 (data governance)
-**Time:** ~75 minutes
+**Tür:** Öğren
+**Diller:** yok
+**Önkoşullar:** Aşama 18 · 18 (sınır frameworks), Aşama 18 · 27 (veri yönetimi)
+**Süre:** ~75 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Describe the EU AI Act risk tiers (prohibited, high-risk, general-purpose, limited-risk) and the August 2025 / August 2026 / August 2027 timeline.
-- Describe the three chapters of the GPAI Code of Practice and which providers each binds.
-- Describe the 2025 rebrands: UK AISI -> AI Security Institute; US AISI -> CAISI; what each rebrand implies about policy direction.
-- State the core provision of Korea's AI Framework Act.
+- AB Yapay Zeka Yasası risk katmanlarını (yasaklanmış, yüksek riskli, genel amaçlı, sınırlı riskli) ve Ağustos 2025 / Ağustos 2026 / Ağustos 2027 zaman çizelgesini açıklayın.
+- GPAI Uygulama Kurallarının üç bölümünü ve her birinin hangi sağlayıcıları bağladığını açıklayın.
+- 2025'teki yeniden markalamaları açıklayın: Birleşik Krallık AISI -> Yapay Zeka Güvenlik Enstitüsü; ABD AISI -> CAISI; Her yeniden markalamanın politika yönelimi hakkında ne ifade ettiği.
+- Kore Yapay Zeka Framework Yasasının temel hükmünü belirtin.
 
-## The Problem
+## Sorun
 
-Lab frameworks (Lesson 18) are voluntary. Regulatory frameworks are compulsory. The 2024-2026 period saw the first wave of comprehensive AI regulation enter force. Deployers must map technical controls to regulatory obligations; the mapping differs by jurisdiction.
+Laboratuvar framework'ler (Ders 18) isteğe bağlıdır. Düzenleyici framework'ler zorunludur. 2024-2026 döneminde kapsamlı yapay zeka düzenlemelerinin ilk dalgasının yürürlüğe girdiği dönem görüldü. Dağıtımcıların teknik kontrolleri düzenleyici yükümlülüklerle eşleştirmesi gerekir; haritalama yetki alanına göre farklılık gösterir.
 
-## The Concept
+## Konsept
 
-### EU AI Act
+### AB Yapay Zeka Yasası
 
-**In force 1 August 2024.** Risk-tier structure:
+**1 Ağustos 2024'te yürürlüğe girmiştir.** Risk katmanı yapısı:
 
-- **Prohibited practices** (Article 5). Social scoring, real-time remote biometric identification in public (with law-enforcement exceptions), exploitative manipulation of vulnerable groups. Applied 2 February 2025.
-- **High-risk systems** (Annex III). Employment, education, credit, law enforcement, justice, migration. Require conformity assessment, risk management, logging, transparency.
-- **General-Purpose AI (GPAI) models**. Applied 2 August 2025. All GPAI providers have obligations; systemic-risk GPAI (>1e25 FLOP training compute) have additional obligations.
-- **Limited-risk systems**. Transparency obligations under Article 50 (AI-generated content labelling). Applied 2 August 2026.
+- **Yasaklı uygulamalar** (Madde 5). Sosyal puanlama, kamuya açık gerçek zamanlı uzaktan biyometrik tanımlama (kolluk kuvvetleri istisnaları hariç), savunmasız grupların sömürücü manipülasyonu. 2 Şubat 2025'te uygulandı.
+- **Yüksek riskli sistemler** (Ek III). İstihdam, eğitim, kredi, kolluk kuvvetleri, adalet, göç. Uygunluk değerlendirmesi, risk yönetimi, kayıt tutma ve şeffaflık gerektirir.
+- **Genel Amaçlı Yapay Zeka (GPAI) modelleri**. 2 Ağustos 2025'te uygulandı. Tüm GPAI sağlayıcılarının yükümlülükleri vardır; sistemik riskli GPAI'nin (>1e25 FLOP eğitim hesaplaması) ek yükümlülükleri vardır.
+- **Sınırlı riskli sistemler**. 50. Madde (Yapay Zeka tarafından oluşturulan içerik etiketleme) kapsamındaki şeffaflık yükümlülükleri. 2 Ağustos 2026'da uygulandı.
 
-Timeline:
-- 2 Feb 2025: prohibited practices + AI literacy.
-- 2 Aug 2025: GPAI + governance.
-- 2 Aug 2026: full applicability + Article 50 transparency + penalties up to 15M EUR / 3% global turnover.
-- 2 Aug 2027: legacy GPAI + embedded high-risk.
+Zaman çizelgesi:
+- 2 Şubat 2025: yasaklanmış uygulamalar + yapay zeka okuryazarlığı.
+- 2 Ağustos 2025: GPAI + yönetişim.
+- 2 Ağustos 2026: tam uygulanabilirlik + Madde 50 şeffaflığı + 15 milyon Euro'ya / %3 küresel ciroya kadar cezalar.
+- 2 Ağustos 2027: eski GPAI + yerleşik yüksek risk.
 
-Commission proposed adjusting the high-risk timeline to 16 months in late 2025.
+Komisyon, yüksek risk zaman çizelgesinin 2025 sonlarında 16 aya ayarlanmasını önerdi.
 
-### GPAI Code of Practice
+### GPAI Uygulama Kuralları
 
-Published 10 July 2025. Three chapters:
+10 Temmuz 2025'te yayınlandı. Üç bölüm:
 
-- **Transparency.** All GPAI providers.
-- **Copyright.** All GPAI providers.
-- **Safety and Security.** Systemic-risk GPAI providers (estimated 5-15 companies).
+- **Şeffaflık.** Tüm GPAI sağlayıcıları.
+- **Telif hakkı.** Tüm GPAI sağlayıcıları.
+- **Emniyet ve Güvenlik.** Sistemik riskli GPAI sağlayıcıları (tahmini 5-15 şirket).
 
-12 commitments total. A Signatory Taskforce chaired by the AI Office manages implementation. Enforcement begins 2 August 2026; until then, good-faith compliance is accepted.
+Toplam 12 taahhüt. Yapay Zeka Ofisi başkanlığındaki İmzacı Görev Gücü uygulamayı yönetir. Yürürlük 2 Ağustos 2026'da başlayacak; o zamana kadar iyi niyetli uyum kabul edilir.
 
-### Transparency Code for Article 50
+### Madde 50 için Şeffaflık Kodu
 
-First draft 17 December 2025. Second draft March 2026. Final version June 2026. Covers AI-generated content labelling including deepfakes — the regulatory layer that requires Lesson 23's watermarking technology.
+İlk taslak 17 Aralık 2025. İkinci taslak Mart 2026. Son sürüm Haziran 2026. Ders 23'ün filigran teknolojisini gerektiren düzenleyici katman olan deepfake'ler de dahil olmak üzere yapay zeka tarafından oluşturulan içerik etiketlemeyi kapsar.
 
-### UK AI Security Institute (February 2025)
+### Birleşik Krallık Yapay Zeka Güvenlik Enstitüsü (Şubat 2025)
 
-Renamed from AI Safety Institute. The rebrand narrows scope: drops algorithmic bias and free-speech framings; focuses on frontier capability security. Open-sourced the Inspect evaluation tool (May 2024). Collaborates with Redwood (Lesson 10) on control safety cases.
+AI Güvenlik Enstitüsü'nden yeniden adlandırıldı. Yeniden markalama kapsamı daraltıyor: algoritmik önyargıyı ve ifade özgürlüğü çerçevelerini ortadan kaldırıyor; Sınır yeteneği güvenliğine odaklanır. Inspect değerlendirme aracı açık kaynaklıdır (Mayıs 2024). Kontrol güvenliği vakaları konusunda Redwood (Ders 10) ile işbirliği yapar.
 
-### US CAISI (June 2025)
+### ABD CAISI (Haziran 2025)
 
-Trump administration transforms NIST's AI Safety Institute into the Center for AI Standards and Innovation. Shift toward "pro-growth AI policies" per VP Vance's Paris AI Action Summit remarks. Reduced emphasis on pre-deployment evaluation; emphasis on standards and innovation support. Domestic counterweight to EU AI Act's regulatory posture.
+Trump yönetimi, NIST'in Yapay Zeka Güvenliği Enstitüsünü Yapay Zeka Standartları ve Yenilik Merkezi'ne dönüştürüyor. Başkan Yardımcısı Vance'in Paris Yapay Zeka Eylem Zirvesi'nde yaptığı açıklamalara göre "büyüme yanlısı yapay zeka politikalarına" doğru geçiş yapın. deployment öncesi değerlendirmeye verilen önem azaltıldı; standartlara ve yenilik desteğine vurgu. AB Yapay Zeka Yasasının düzenleyici duruşuna yerel denge ağırlığı.
 
-### Korean AI Framework Act
+### Kore Yapay Zekası Framework Yasası
 
-Passed December 2024. Enacted January 2025. Effective January 2026. Consolidates 19 separate AI bills.
+Aralık 2024'te geçti. Ocak 2025'te yürürlüğe girdi. Ocak 2026'dan itibaren geçerli. 19 ayrı AI yasa tasarısını birleştiriyor.
 
-Article 12 establishes an AISI under the Ministry of Science and ICT (MSIT). Mandates:
-- Local representatives for foreign AI companies operating in Korea.
-- Risk assessment for "high-impact" AI systems.
-- Safety measures for generative AI and high-impact AI.
+Madde 12, Bilim ve BİT Bakanlığı (MSIT) bünyesinde bir AISI kurar. Yetkiler:
+- Kore'de faaliyet gösteren yabancı AI şirketlerinin yerel temsilcileri.
+- "Yüksek etkili" yapay zeka sistemleri için risk değerlendirmesi.
+- Üretken yapay zeka ve yüksek etkili yapay zeka için güvenlik önlemleri.
 
-First Asian jurisdiction with a comprehensive horizontal AI regulation.
+Kapsamlı bir yatay yapay zeka düzenlemesine sahip ilk Asya yargı yetkisi.
 
-### Cross-jurisdiction dynamics
+### Yetki alanları arası dinamikler
 
-- EU: strict, risk-tiered, heavy penalties. Benchmark for privacy-adjacent regulation.
-- US: innovation-favouring, decentralized, states (e.g., California AB 2013 — Lesson 27) fill federal gaps.
-- UK: narrow security focus, strong evaluation infrastructure.
-- Korea: MSIT-led, foreign-provider-focused.
+- AB: katı, risk kademeli, ağır cezalar. Gizliliğe bitişik düzenleme için Benchmark.
+- ABD: yeniliği destekleyen, merkezi olmayan eyaletler (e.g., California AB 2013 — Ders 27) federal boşlukları dolduruyor.
+- Birleşik Krallık: dar güvenlik odağı, güçlü değerlendirme altyapısı.
+- Kore: MSIT liderliğinde, yabancı sağlayıcı odaklı.
 
-Competing regulatory philosophies. Deployers in multiple jurisdictions have to comply with the strictest, which in 2026 is typically the EU AI Act.
+Rekabet eden düzenleyici felsefeler. Birden fazla yargı bölgesindeki dağıtımcıların en katı yasaya uyması gerekir; bu, 2026'da genellikle AB Yapay Zeka Yasası olacaktır.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lesson 18 is lab-voluntary governance; Lesson 24 is regulatory; Lesson 25 is an emerging class of CVEs for AI systems; Lessons 26-27 cover documentation (cards) and training-data governance.
+Ders 18 laboratuvarın gönüllü yönetimidir; Ders 24 düzenleyicidir; Ders 25, yapay zeka sistemleri için yeni ortaya çıkan bir CVE sınıfıdır; 26-27. dersler dokümantasyonu (kartlar) ve eğitim-veri yönetimini kapsar.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-No code. Read the EU AI Act primary sources: the regulation text, the GPAI Code of Practice, the UK AISI Inspect framework. Map your deployment to the applicable obligations for each jurisdiction.
+Kod yok. AB Yapay Zeka Yasasının birincil kaynaklarını okuyun: yönetmelik metni, GPAI Uygulama Kuralları, Birleşik Krallık AISI Inspect framework. deployment'nizi her yargı alanı için geçerli yükümlülüklerle eşleştirin.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-regulatory-map.md`. Given a deployment description, it maps the applicable jurisdictions, the tier classifications in each, the per-jurisdiction obligations, and the deadline structure.
+Bu ders `outputs/skill-regulatory-map.md` üretir. Bir deployment açıklaması verildiğinde, geçerli yargı bölgelerini, her birindeki kademe sınıflandırmalarını, yetki alanına göre yükümlülükleri ve son tarih yapısını haritalandırır.
 
-## Exercises
+## Egzersizler
 
-1. Read the EU AI Act (regulation 2024/1689) and the GPAI Code of Practice (10 July 2025). Identify three obligations that apply to every GPAI provider and three that apply only to systemic-risk GPAI.
+1. AB AI Yasasını (yönetmelik 2024/1689) ve GPAI Uygulama Kurallarını (10 Temmuz 2025) okuyun. Her GPAI sağlayıcısı için geçerli olan üç yükümlülüğü ve yalnızca sistemik riskli GPAI için geçerli olan üç yükümlülüğü belirleyin.
 
-2. A deployment is made by a US company, runs on EU infrastructure, and serves Korean users. Which three jurisdictions' rules apply, and which rule binds on each substantive question?
+2. deployment bir ABD şirketi tarafından üretilmiştir, AB altyapısı üzerinde çalışır ve Koreli kullanıcılara hizmet verir. Hangi üç yargı bölgesinin kuralları geçerlidir ve her bir temel soru için hangi kural bağlayıcıdır?
 
-3. The UK AI Security Institute's rename narrows scope. Argue for and against the narrower framing. Identify the policy assumption each position depends on.
+3. Birleşik Krallık Yapay Zeka Güvenlik Enstitüsü'nün yeniden adlandırılması kapsamı daraltıyor. Daha dar çerçevenin lehinde ve aleyhinde tartışın. Her pozisyonun bağlı olduğu politika varsayımını belirleyin.
 
-4. CAISI's "pro-growth" framing is a departure from the 2022-2024 AI safety institute model. Identify two measurable policy shifts that would follow from this framing.
+4. CAISI'nin "büyüme yanlısı" çerçevesi, 2022-2024 Yapay Zeka güvenlik enstitüsü modelinden bir sapmadır. Bu çerçeveden kaynaklanacak iki ölçülebilir politika değişikliğini belirleyin.
 
-5. Korea's AI Framework Act requires local representatives for foreign providers. Describe the operational implications for a Bay Area company serving Korean users.
+5. Kore'nin Yapay Zeka Framework Yasası, yabancı sağlayıcılar için yerel temsilciler gerektirir. Koreli kullanıcılara hizmet veren bir Körfez Bölgesi şirketi için operasyonel sonuçları açıklayın.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| EU AI Act | "the regulation" | Risk-tier-based horizontal AI regulation; in force Aug 2024 |
-| GPAI | "general-purpose AI" | Large foundation models; systemic-risk subset has additional obligations |
-| Article 50 | "transparency obligations" | AI-generated content labelling; applies Aug 2026 |
-| UK AISI | "AI Security Institute" | Renamed Feb 2025; narrower frontier-security focus |
-| CAISI | "US center for AI standards" | Renamed Jun 2025 from AI Safety Institute; pro-growth posture |
-| Korean AI Framework Act | "MSIT horizontal regulation" | First Asian comprehensive AI law; effective Jan 2026 |
-| Systemic-risk GPAI | "the 1e25 FLOP threshold" | Additional obligations tier; estimated 5-15 companies bound |
+| AB Yapay Zeka Yasası | "yönetmelik" | Risk kademesine dayalı yatay yapay zeka düzenlemesi; Ağustos 2024'te yürürlüğe giriyor |
+| GPAI | "genel amaçlı yapay zeka" | Büyük temel modelleri; sistemik risk alt kümesinin ek yükümlülükleri vardır |
+| Madde 50 | "şeffaflık yükümlülükleri" | Yapay zeka tarafından oluşturulan içerik etiketleme; Ağustos 2026'da geçerlidir |
+| İngiltere AISI | "Yapay Zeka Güvenlik Enstitüsü" | Şubat 2025'te yeniden adlandırıldı; daha dar sınır güvenliği odağı |
+| CAISI | "ABD Yapay Zeka Standartları Merkezi" | Haziran 2025'te AI Güvenlik Enstitüsü tarafından yeniden adlandırıldı; büyüme yanlısı duruş |
+| Kore Yapay Zekası Framework Yasası | "MSIT yatay düzenleme" | İlk Asya kapsamlı YZ yasası; Ocak 2026'dan itibaren geçerli |
+| Sistemik riskli GPAI | "1e25 FLOP eşiği" | Ek yükümlülükler katmanı; tahmini 5-15 şirket bağlı |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [EU AI Act text (Regulation 2024/1689)](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai) — the regulation and timeline
-- [GPAI Code of Practice (10 July 2025)](https://digital-strategy.ec.europa.eu/en/library/final-version-general-purpose-ai-code-practice) — three-chapter code
-- [UK AI Security Institute (renamed Feb 2025)](https://www.gov.uk/government/organisations/ai-security-institute) — official page
-- [CSET — South Korea AI Framework Act Analysis (2025)](https://cset.georgetown.edu/publication/south-korea-ai-law-2025/) — Korean framework analysis
+- [AB AI Yasası metni (Yönetmelik 2024/1689)](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai) — yönetmelik ve zaman çizelgesi
+- [GPAI Uygulama Kuralları (10 Temmuz 2025)](https://digital-strategy.ec.europa.eu/en/library/final-version-general-purpose-ai-code-practice) — üç bölümlü kod
+- [Birleşik Krallık Yapay Zeka Güvenlik Enstitüsü (adı Şubat 2025'te değiştirildi)](https://www.gov.uk/government/organisations/ai-security-institute) — resmi sayfa
+- [CSET — Güney Kore AI Framework Act Analysis (2025)](https://cset.georgetown.edu/publication/south-korea-ai-law-2025/) — Kore framework analizi

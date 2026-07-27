@@ -1,114 +1,114 @@
-# Moderation Systems — OpenAI, Perspective, Llama Guard
+# Moderasyon Sistemleri — OpenAI, Perspective, Llama Guard
 
-> Production moderation systems operationalize the safety policies defined in Lessons 12-16. OpenAI Moderation API: `omni-moderation-latest` (2024) built on GPT-4o classifies text + images in one call; 42% better on multilingual test set than prior version; the response schema returns 13 category booleans — harassment, harassment/threatening, hate, hate/threatening, illicit, illicit/violent, self-harm, self-harm/intent, self-harm/instructions, sexual, sexual/minors, violence, violence/graphic; free for most developers. Layered patterns: Input moderation (pre-generation), Output moderation (post-generation), Custom moderation (domain rules). Async parallel calls hide latency; placeholder responses on flag. Llama Guard 3/4 (Lesson 16): 14 MLCommons hazards, Code Interpreter Abuse, 8 languages (v3), multi-image (v4). Perspective API (Google Jigsaw): toxicity scoring predating the LLM-as-moderator wave; primarily single-dimension toxicity with severe-toxicity/insult/profanity variants; baseline for content-moderation research. Deprecations: Azure Content Moderator deprecated February 2024, retired February 2027, replaced by Azure AI Content Safety.
+> Üretim denetleme sistemleri, Dersler 12-16'da tanımlanan güvenlik politikalarını işler hale getirir. OpenAI Moderasyon API'si: GPT-4o üzerine kurulu `omni-moderation-latest` (2024), tek çağrıda metin + görselleri sınıflandırır; Çok dilli test setinde önceki versiyona göre %42 daha iyi; yanıt şeması 13 kategori boolean'ı döndürür: taciz, taciz/tehdit, nefret, nefret/tehdit, yasa dışı, yasa dışı/şiddet, kendine zarar verme, kendine zarar verme/niyet, kendine zarar verme/talimatlar, cinsel, cinsel/reşit olmayanlar, şiddet, şiddet/grafik; çoğu geliştirici için ücretsizdir. Katmanlı modeller: Giriş denetimi (oluşturma öncesi), Çıkış denetimi (oluşturma sonrası), Özel denetleme (etki alanı kuralları). Zaman uyumsuz paralel çağrılar gecikmeyi gizler; bayraktaki yer tutucu yanıtları. Llama Guard 3/4 (Ders 16): 14 MLCommons tehlikeleri, Code Interpreter Abuse, 8 dil (v3), çoklu görüntü (v4). Perspective API (Google Jigsaw): moderatör olarak LLM dalgasından önce gelen toksisite puanlaması; öncelikle şiddetli toksisite/hakaret/küfür çeşitleriyle tek boyutlu toksisite; içerik denetleme araştırması için temel. Kullanımdan kaldırılmalar: Azure İçerik Moderatörü Şubat 2024'te kullanımdan kaldırıldı, Şubat 2027'de kullanımdan kaldırıldı ve yerini Azure AI İçerik Güvenliği aldı.
 
-**Type:** Build
-**Languages:** Python (stdlib, three-layer moderation harness)
-**Prerequisites:** Phase 18 · 16 (Llama Guard / Garak / PyRIT)
-**Time:** ~60 minutes
+**Tür:** Yapım
+**Diller:** Python (stdlib, üç katmanlı denetim donanımı)
+**Önkoşullar:** Aşama 18 · 16 (Llama Guard / Garak / PyRIT)
+**Süre:** ~60 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Describe the OpenAI Moderation API's category taxonomy and how it differs from Llama Guard 3's MLCommons set.
-- Describe the three moderation-layer pattern (input, output, custom) and name one failure mode of each.
-- Describe Perspective API's position as a pre-LLM-era baseline and why it remains used in research.
-- State the Azure deprecation timeline.
+- OpenAI Moderation API'nin kategori sınıflandırmasını ve Llama Guard 3'ün MLCommons setinden ne kadar farklı olduğunu açıklayın.
+- Üç denetleme katmanı modelini (giriş, çıkış, özel) açıklayın ve her birinin bir hata modunu adlandırın.
+- Perspective API'nin Yüksek Lisans dönemi öncesi temel olarak konumunu ve araştırmada neden kullanılmaya devam ettiğini açıklayın.
+- Azure'un kullanımdan kaldırılması zaman çizelgesini belirtin.
 
-## The Problem
+## Sorun
 
-Lessons 12-16 describe attacks and defense tooling. Lesson 29 covers the deployed moderation systems that operationalize the defenses at the surface where users touch the product. The three-layer pattern is the 2026 default configuration.
+12-16. derslerde saldırılar ve savunma araçları anlatılmaktadır. Ders 29, kullanıcıların ürüne dokunduğu yüzeydeki savunmaları operasyonel hale getiren konuşlandırılmış denetleme sistemlerini kapsar. Üç katmanlı desen 2026 varsayılan yapılandırmasıdır.
 
-## The Concept
+## Konsept
 
-### OpenAI Moderation API
+### OpenAI Moderasyon API'si
 
-`omni-moderation-latest` (2024). Built on GPT-4o. Classifies text + images in one call. Free for most developers.
+`omni-moderation-latest` (2024). GPT-4o üzerine inşa edilmiştir. Tek çağrıda metin + görselleri sınıflandırır. Çoğu geliştirici için ücretsizdir.
 
-Categories (13 booleans in the response schema):
-- harassment, harassment/threatening
-- hate, hate/threatening
-- self-harm, self-harm/intent, self-harm/instructions
-- sexual, sexual/minors
-- violence, violence/graphic
-- illicit, illicit/violent
+Kategoriler (yanıt şemasında 13 boole):
+- Taciz, taciz/tehdit
+- nefret, nefret/tehdit
+- kendine zarar verme, kendine zarar verme/niyet, kendine zarar verme/talimatlar
+- cinsel, cinsel/reşit olmayanlar
+- şiddet, şiddet/grafik
+- yasa dışı, yasa dışı/şiddet içeren
 
-Multimodal support applies to `violence`, `self-harm`, and `sexual` but not `sexual/minors`; the rest are text-only.
+Multimodal destek `violence`, `self-harm` ve `sexual` için geçerlidir ancak `sexual/minors` için geçerli değildir; geri kalanı yalnızca metindir.
 
-For the code harness in `code/main.py` we collapse the `/threatening`, `/intent`, `/instructions`, and `/graphic` sub-categories into their top-level parents for pedagogical simplicity. Production code should use the full 13-category schema.
+`code/main.py` 'daki kod donanımı için, pedagojik basitlik amacıyla `/threatening`, `/intent`, `/instructions` ve `/graphic` alt kategorilerini üst düzey ebeveynlerine daraltıyoruz. Üretim kodu 13 kategorili şemanın tamamını kullanmalıdır.
 
-42% better on multilingual test set than the prior-generation moderation endpoint. Per-category scores; applications set thresholds.
+Çok dilli test setinde önceki nesil denetleme uç noktasına göre %42 daha iyi. Kategori başına puanlar; uygulamalar eşikleri belirler.
 
-### Llama Guard 3/4
+### Lama Muhafızı 3/4
 
-Covered in Lesson 16. 14 MLCommons hazard categories (organized differently from OpenAI's 13 response-schema booleans). Supports 8 languages (v3). Llama Guard 4 (April 2025) is natively multimodal, 12B.
+Ders 16'da ele alınmıştır. 14 MLCommons tehlike kategorisi (OpenAI'nin 13 yanıt şeması booleanından farklı şekilde düzenlenmiştir). 8 dili destekler (v3). Llama Guard 4 (Nisan 2025) doğal olarak çok modludur, 12B.
 
-The OpenAI and Llama Guard taxonomies overlap but diverge. OpenAI has "illicit" as a broad category; Llama Guard has "violent crimes" and "non-violent crimes" separately. Deployments pick based on their policy-taxonomy fit.
+OpenAI ve Llama Guard sınıflandırmaları örtüşüyor ancak farklılaşıyor. OpenAI'de geniş bir kategori olarak "yasadışı" vardır; Llama Guard'ın "şiddet içeren suçlar" ve "şiddet içermeyen suçlar" ayrı ayrı vardır. Deployment'nin seçimi politika sınıflandırma uyumuna göre yapılır.
 
-### Perspective API (Google Jigsaw)
+### Perspektif API'si (Google Yapboz)
 
-Toxicity scoring system predating the LLM-as-moderator wave (pre-2020). Categories: TOXICITY, SEVERE_TOXICITY, INSULT, PROFANITY, THREAT, IDENTITY_ATTACK. Single-dimension primary score (TOXICITY) with sub-dimension variants.
+Yüksek Lisans moderatör dalgasından (2020 öncesi) önce gelen toksisite puanlama sistemi. Kategoriler: ZEHİRLİLİK, ŞİDDETLİ_ZEHİRLİLİK, HAKARET, KÜFÜR, TEHDİT, KİMLİK_SALDIRI. Alt boyut değişkenleriyle birlikte tek boyutlu birincil puan (ZEHİRLİLİK).
 
-Widely used as a content-moderation research baseline because the API is stable, documented, and has years of calibration data. For modern LLM-adjacent use cases, Llama Guard or OpenAI Moderation is typically a better fit.
+API'nin kararlı olması, belgelenmesi ve yıllarca süren kalibrasyon verilerine sahip olması nedeniyle içerik denetimi araştırma temeli olarak yaygın şekilde kullanılır. Modern LLM'ye bitişik kullanım durumları için, Llama Guard veya OpenAI Moderation genellikle daha iyi bir seçimdir.
 
-### The three-layer pattern
+### Üç katmanlı desen
 
-1. **Input moderation.** Classify the user's prompt before generation. Reject if flagged. Latency: one classifier call.
-2. **Output moderation.** Classify the model's output before delivery. Replace with a refusal if flagged. Latency: one classifier call after generation.
-3. **Custom moderation.** Domain-specific rules (regex, allowlists, business policy). Runs at either input or output.
+1. **Giriş denetimi.** Oluşturmadan önce kullanıcının prompt'sini sınıflandırın. İşaretlenmişse reddet. Gecikme: bir sınıflandırıcı çağrısı.
+2. **Çıktı denetimi.** Teslimattan önce modelin çıktısını sınıflandırın. İşaretlenmişse ret ile değiştirin. Gecikme: nesilden sonra bir sınıflandırıcı çağrısı.
+3. **Özel denetleme.** Etki alanına özgü kurallar (regex, izin verilenler listeleri, iş politikası). Girişte veya çıkışta çalışır.
 
-The three layers are sequential by design: input moderation must complete before generation, and output moderation runs after generation. Parallelism applies within a layer — running multiple classifiers (e.g., OpenAI Moderation + Llama Guard + Perspective) concurrently on the same text hides per-classifier latency. As an optional optimization, a placeholder response ("one moment, checking...") may be shown while input moderation completes and token-1 streaming is deferred. Flag behaviour is configurable: refuse, sanitize, escalate to human review.
+Üç katman tasarım gereği sıralıdır: Giriş denetiminin üretimden önce tamamlanması gerekir ve çıkış denetimi üretimden sonra çalıştırılır. Paralellik bir katman içinde geçerlidir; aynı metin üzerinde birden fazla sınıflandırıcının (e.g., OpenAI Moderation + Llama Guard + Perspective) eşzamanlı olarak çalıştırılması, sınıflandırıcı başına gecikmeyi gizler. İsteğe bağlı bir optimizasyon olarak, giriş denetimi tamamlanırken ve token-1 akışı ertelenirken bir yer tutucu yanıtı ("bir dakika, kontrol ediliyor...") gösterilebilir. İşaretleme davranışı yapılandırılabilir: Reddet, sterilize et, insan incelemesine ilet.
 
-### Failure modes
+### Arıza modları
 
-- **Input only.** Does not catch output hallucinations (Lesson 12-14 encoding attacks bypass input classifiers).
-- **Output only.** Allows any input to reach the model; increases cost; surfaces internal reasoning to attacker.
-- **Custom only.** Not robust across categories; regexes are brittle.
+- **Yalnızca giriş.** Çıkış halüsinasyonlarını yakalamaz (Ders 12-14 kodlama saldırıları giriş sınıflandırıcılarını atlar).
+- **Yalnızca çıkış.** Herhangi bir girişin modele ulaşmasına izin verir; maliyeti artırır; Saldırganın iç muhakemesini ortaya çıkarır.
+- **Yalnızca özel.** Kategoriler arasında sağlam değildir; Regex'ler kırılgandır.
 
-Layered is the default. Belt-and-suspenders.
+Katmanlı varsayılandır. Kemer ve askılar.
 
-### Azure deprecation
+### Azure'un kullanımdan kaldırılması
 
-Azure Content Moderator: deprecated February 2024, retired February 2027. Replaced by Azure AI Content Safety, which is LLM-based and integrates with Azure OpenAI. The migration is a 2024-2027 field-level project for Azure deployments.
+Azure İçerik Moderatörü: Şubat 2024'te kullanımdan kaldırıldı, Şubat 2027'de kullanımdan kaldırıldı. Onun yerine LLM tabanlı olan ve Azure OpenAI ile entegre olan Azure AI İçerik Güvenliği getirildi. Geçiş, Azure deployment'lar için 2024-2027 alan düzeyinde bir projedir.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lesson 16 covers the moderation tooling in the red-team context. Lesson 29 covers deployed moderation. Lesson 30 closes with the current dual-use capability evidence.
+Ders 16, kırmızı takım bağlamında denetim araçlarının kullanımını kapsamaktadır. Ders 29 dağıtılan denetimi kapsar. Ders 30, mevcut ikili kullanım yeteneği kanıtıyla sona eriyor.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` builds a three-layer moderation harness: input moderator (keyword + category score), output moderator (same classifier on output), custom moderator (domain rules). You can run inputs through and observe which layer catches what.
+`code/main.py` üç katmanlı bir denetleme donanımı oluşturur: giriş moderatörü (anahtar kelime + kategori puanı), çıktı moderatörü (çıkışta aynı sınıflandırıcı), özel moderatör (etki alanı kuralları). Girişleri çalıştırabilir ve hangi katmanın neyi yakaladığını gözlemleyebilirsiniz.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-moderation-stack.md`. Given a deployment, it recommends a moderation stack configuration: which classifier at input, which at output, which custom rules, and what judge for edge cases.
+Bu ders `outputs/skill-moderation-stack.md` üretir. Bir deployment verildiğinde, bir denetleme yığını yapılandırması önerir: girişte hangi sınıflandırıcı, çıktıda hangisi, hangi özel kurallar ve uç durumlar için neyin yargılandığı.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Run a benign, borderline, and harmful input through all three layers. Report which layer fires for each.
+1. `code/main.py`'yı çalıştırın. İyi huylu, sınırda ve zararlı bir girdiyi üç katmandan da geçirin. Her biri için hangi katmanın tetiklendiğini bildirin.
 
-2. Extend the harness with Perspective-API-style toxicity scoring on a specific category. Compare its threshold behaviour to the category score.
+2. Belirli bir kategoride Perspektif API tarzı toksisite puanlamasıyla emniyet kemerini genişletin. Eşik davranışını kategori puanıyla karşılaştırın.
 
-3. Read the OpenAI Moderation API docs and the Llama Guard 3 category list. Map each OpenAI category to the closest Llama Guard categories. Identify three categories that do not cleanly map.
+3. OpenAI Moderation API belgelerini ve Llama Guard 3 kategori listesini okuyun. Her OpenAI kategorisini en yakın Llama Guard kategorileriyle eşleştirin. Temiz bir şekilde eşlenmeyen üç kategoriyi tanımlayın.
 
-4. Design a moderation stack for a code-assistant deployment (e.g., GitHub Copilot). Identify the categories most and least relevant and propose custom rules.
+4. Kod asistanı deployment (e.g., GitHub Copilot) için bir denetleme yığını tasarlayın. En çok ve en az alakalı kategorileri belirleyin ve özel kurallar önerin.
 
-5. Azure Content Moderator retires February 2027. Plan a migration to Azure AI Content Safety. Identify the highest-risk element of the migration.
+5. Azure Content Moderator, Şubat 2027'de kullanımdan kaldırılıyor. Azure AI İçerik Güvenliği'ne geçiş planlayın. Geçişin en yüksek riskli öğesini belirleyin.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| OpenAI Moderation | "omni-moderation-latest" | GPT-4o-based 13-category (text) classifier with partial multimodal support |
-| Perspective API | "Google Jigsaw toxicity" | Pre-LLM-era toxicity scoring baseline |
-| Llama Guard | "MLCommons 14-category" | Meta's hazard classifier (v3: 8B text, 8 langs; v4: 12B multimodal) |
-| Input moderation | "pre-generation filter" | Classifier on user prompt before model call |
-| Output moderation | "post-generation filter" | Classifier on model output before delivery |
-| Custom moderation | "domain rules" | Deployment-specific rules (regex, allowlist, policy) |
-| Layered moderation | "all three layers" | Standard production deployment pattern |
+| OpenAI Moderasyon | "çoklu-denetleme-en son" | Kısmi multimodal destekli GPT-4o tabanlı 13 kategorili (metin) sınıflandırıcı |
+| Perspektif API'si | "Google Yapboz toksisitesi" | Yüksek Lisans dönemi öncesi toksisite puanlama temeli |
+| Lama Muhafızı | "MLCommons 14-kategorisi" | Meta'nın tehlike sınıflandırıcısı (v3: 8B metin, 8 dil; v4: 12B multimodal) |
+| Giriş denetimi | "ön üretim filtresi" | Model çağrısından önce prompt kullanıcısındaki sınıflandırıcı |
+| Çıktı denetimi | "nesil sonrası filtre" | Teslimattan önce model çıktısına ilişkin sınıflandırıcı |
+| Özel denetleme | "etki alanı kuralları" | Deployment-belirli kurallar (regex, izin verilenler listesi, politika) |
+| Katmanlı denetleme | "üç katmanın tümü" | Standart üretim deployment modeli |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [OpenAI Moderation API docs](https://platform.openai.com/docs/api-reference/moderations) — omni-moderation endpoint
-- [Meta PurpleLlama + Llama Guard](https://github.com/meta-llama/PurpleLlama) — Llama Guard repo
-- [Google Jigsaw Perspective API](https://perspectiveapi.com/) — toxicity scoring
-- [Azure AI Content Safety](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/) — Azure replacement
+- [OpenAI Moderation API docs](https://platform.openai.com/docs/api-reference/moderations) — çok yönlü denetim uç noktası
+- [Meta PurpleLlama + Llama Guard](https://github.com/meta-llama/PurpleLlama) — Lama Guard deposu
+- [Google Jigsaw Perspective API](https://perspectiveapi.com/) — toksisite puanlaması
+- [Azure AI İçerik Güvenliği](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/) — Azure'un değiştirilmesi

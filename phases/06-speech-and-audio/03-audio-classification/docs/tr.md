@@ -11,17 +11,17 @@
 
 10 saniyelik bir klip alırsınız. Bilmek istiyorsun: "Bu nedir?" Şehir sesi (siren, tatbikat, köpek), konuşma komutu (evet/hayır/dur), dil kimliği (en/es/ar), konuşmacının duygusu (kızgın/nötr) veya çevresel ses (iç mekan/dış mekan, gevezelik). Bunların hepsi *ses sınıflandırmasıdır* ve 2026'da temel mimari olgunlaşmıştır: log-mel → CNN veya Transformer → softmax.
 
-Temel zorluk ağ değil. Bu veridir. Ses dataset'lerde acımasız sınıf dengesizliği, güçlü alan değişikliği (temiz ve gürültülü) ve etiket gürültüsü ("kentsel gevezelik" ve "restoran gürültüsü"ne kim karar verdi?) var. Sorunun %80'i, CNN'nin Transformer ile değiştirilmesi değil, iyileştirme, genişletme ve değerlendirmedir.
+Temel zorluk ağ değil. Bu veridir. Ses dataset'lerde acımasız sınıf dengesizliği, güçlü alan değişikliği (temiz ve gürültülü) ve etiket gürültüsü ("kentsel gevezelik" ve "restoran gürültüsü"ne kim karar verdi?) var. Sorunun %80'i, CNN'in Transformer ile değiştirilmesi değil, iyileştirme, geliştirme ve değerlendirmedir.
 
 ## Konsept
 
 ![Ses sınıflandırma merdiveni: MFCC'lerden AST'ye ve BEAT'lere kadar k-NN](../assets/audio-classification.svg)
 
-**MFCC'lerde k-NN (1990'ların temel çizgisi).** Klip başına MFCC'leri düzleştirin, etiketli bir bankayla kosinüs benzerliğini hesaplayın, en üstteki K'nın çoğunluk oyu döndürün. Temiz, küçük dataset'lerde şaşırtıcı derecede güçlü (Konuşma Komutları, ESC-50). GPU olmadan çalışır.
+**MFCC'lerde k-NN (1990'ların temeli).** Klip başına MFCC'leri düzleştirin, etiketli bir bankayla kosinüs benzerliğini hesaplayın, en üstteki K'nın çoğunluk oyu döndürün. Temiz, küçük dataset'lerde şaşırtıcı derecede güçlü (Konuşma Komutları, ESC-50). GPU olmadan çalışır.
 
-**log-mels üzerinde 2D CNN (2015-2019).** `(T, n_mels)` log-mel'i bir görüntü olarak ele alın. ResNet-18 veya VGG stilini uygulayın. Küresel ortalama, zaman eksenini havuzlayın. Sınıflar üzerinde Softmax. Hala çoğu 2026 kaggle yarışmasında temel çizgi.
+**log-mels'de 2D CNN (2015-2019).** `(T, n_mels)` log-mel'i bir görüntü olarak ele alın. ResNet-18 veya VGG stilini uygulayın. Küresel ortalama, zaman eksenini havuzlayın. Sınıflar üzerinde Softmax. Hala çoğu 2026 kaggle yarışmasında temel çizgi.
 
-**Audio Spectrogram Transformer, AST (2021-2024).** Log-mel'i yamalara ayırın (e.g. 16×16 yamalar), position embedding'leri ekleyin ve sonucu bir ViT'ye besleyin. Denetimli öğrenmede AudioSet için en gelişmiş yaklaşımlardan biridir (mAP 0.485).
+**Ses Spektrogramı Transformer, AST (2021-2024).** Log-mel'i yamalayın (e.g. 16×16 yamalar), embedding konumlarını ekleyin, bir ViT'ye besleyin. Denetimli öğrenme için AudioSet'teki son teknoloji (mAP 0.485).
 
 **BEAT'ler ve WavLM tabanı (2024-2026).** Milyonlarca saat süren, kendi kendini denetleyen ön eğitim. İhtiyaç duyacağınız denetlenen verilerin %1-10'unu kullanarak görevinize ince ayar yapın. 2026'da bu, konuşma dışı ses için varsayılan başlangıç ​​noktasıdır. BEATs-iter3, işlem miktarının 1/4'ünü kullanırken AudioSet'te AST'yi 1-2 mAP yener.
 
@@ -74,7 +74,7 @@ def summarize(mfcc_frames):
     return mean + var
 ```
 
-Basit ama güçlü: zaman içindeki ortalama + varyans, 13 katsayılı bir MFCC için 26-dim sabit embedding değerini verir. Anında çalışır. 2017 gibi yakın bir tarihte ESC-50'de en son teknolojiye sahip NN temellerini geçin.
+Basit ama güçlü: zaman içindeki ortalama + varyans, 13 katsayılı bir MFCC için 26-dim sabit embedding verir. Anında çalışır. 2017 gibi yakın bir tarihte ESC-50'de en son teknolojiye sahip NN temellerini geçin.
 
 ### Adım 3: k-NN
 
@@ -131,7 +131,7 @@ inputs = ext(audio, sampling_rate=16000, return_tensors="pt")
 logits = model(**inputs).logits
 ```
 
-BEAT'ler için `beats` kitaplığı aracılığıyla `microsoft/BEATs-base` kullanın; transformers API'si aynı şekildedir.
+BEAT'ler için `beats` kitaplığı aracılığıyla `microsoft/BEATs-base`'yi kullanın; transformers API'si aynı şekildedir.
 
 ## Kullan onu
 
@@ -146,17 +146,17 @@ BEAT'ler için `beats` kitaplığı aracılığıyla `microsoft/BEATs-base` kull
 | Çoklu etiket (AudioSet) | BCE kaybı + karışım + SpecAugment ile BEATs-iter3 |
 | Dil Kimliği | MMS-LID, SpeechBrain VoxLingua107 temel çizgisi |
 
-Karar kuralı: **yeni bir modelle değil, donmuş bir omurgayla başlayın**. Fine-tuning bir BEAT'in kafası size SOTA'nın %95'ini haftalar değil, saatler içinde kazandırır.
+Karar kuralı: **yeni bir modelle değil, donmuş bir omurgayla başlayın**. Fine-tuning BEAT'in kafası size SOTA'nın %95'ini haftalar değil, saatler içinde kazandırır.
 
 ## Gönderin
 
-`outputs/skill-classifier-designer.md` olarak kaydet. Belirli bir ses sınıflandırma görevi için mimariyi, genişletmeleri, sınıf dengesi stratejisini ve değerlendirme ölçüsünü seçin.
+`outputs/skill-classifier-designer.md` olarak kaydedin. Belirli bir ses sınıflandırma görevi için mimariyi, genişletmeleri, sınıf dengesi stratejisini ve değerlendirme ölçüsünü seçin.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py` komutunu çalıştırın. K-NN MFCC temel çizgisini 4 sınıflı sentetik dataset (farklı perdelerdeki saf tonlar) üzerinde eğitir. Karışıklık matrisini bildirin.
-2. **Orta.** `summarize`'yi [ortalama, var, çarpık, basıklık] ile değiştirin. 4 dakikalık havuzlama atımı aynı sentetik dataset üzerinde ortalama+değişken midir?
-3. **Zor.** `torchaudio` kullanarak, ESC-50 kat 1 üzerinde 2D CNN eğitin. 5 kat çapraz doğrulama doğruluğunu rapor edin. SpecAugment'i ekleyin (zaman maskesi = 20, frekans maskesi = 10) ve deltayı bildirin.
+1. **Kolay.** `code/main.py`'yi çalıştırın. K-NN MFCC temel çizgisini 4 sınıflı sentetik dataset (farklı perdelerdeki saf tonlar) üzerinde eğitir. Karışıklık matrisini bildirin.
+2. **Orta.** `summarize`'yi [ortalama, değişken, çarpık, basıklık] ile değiştirin. 4 dakikalık havuzlama atımı aynı sentetik dataset üzerinde +varlık anlamına mı geliyor?
+3. **Zor.** `torchaudio`'yi kullanarak ESC-50 kat 1 üzerinde 2D CNN eğitin. 5 kat çapraz doğrulama doğruluğunu bildirin. SpecAugment'i ekleyin (zaman maskesi = 20, frekans maskesi = 10) ve deltayı bildirin.
 
 ## Anahtar Terimler
 
@@ -173,7 +173,7 @@ Karar kuralı: **yeni bir modelle değil, donmuş bir omurgayla başlayın**. Fi
 ## Daha Fazla Okuma
 
 - [Gong, Chung, Cam (2021). AST: Ses Spektrogramı Transformer](https://arxiv.org/abs/2104.01778) — 2021–2024 kayıt mimarisi.
-- [Chen ve ark. (2022, rev. 2024). BEAT'ler: Akustik Tokenizers](https://arxiv.org/abs/2212.09058) ile Ses Ön Eğitimi — 2024+ varsayılanı.
+- [Chen ve ark. (2022, rev. 2024). BEAT'ler: Akustik Tokenizer'lerle Ses Ön Eğitimi](https://arxiv.org/abs/2212.09058) — 2024+ varsayılanı.
 - [Park ve ark. (2019). SpecAugment](https://arxiv.org/abs/1904.08779) — baskın ses artırma.
-- [Piczak (2015). ESC-50 dataset](https://github.com/karolpiczak/ESC-50) — yaşamaya devam eden 50-sınıf benchmark.
+- [Piczak (2015). ESC-50 dataset](https://github.com/karolpiczak/ESC-50) — Yaşamaya devam eden 50 sınıf benchmark.
 - [Gemmeke ve ark. (2017). AudioSet](https://research.google.com/audioset/) — 632 sınıfı YouTube sınıflandırması; hala altın standart.

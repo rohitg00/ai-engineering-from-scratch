@@ -16,7 +16,7 @@ Bir analist şunu okuyor: "Tim Cook, 2011'de Apple'ın CEO'su oldu." Dört gerç
 - `(Tim Cook, start_date, 2011)`
 - `(Apple, type, Organization)`
 
-İlişki Çıkarma (RE), serbest metni yapılandırılmış üçlülere `(subject, relation, object)` dönüştürür. Bir korpusta topladığınızda bir bilgi grafiğiniz olur. Toplayın ve sorgulayın; RAG, analitik veya uyumluluk denetimleri için bir muhakeme alt yapısına sahip olursunuz.
+İlişki Çıkarma (RE), serbest metni `(subject, relation, object)` yapılandırılmış üçlülere dönüştürür. Bir korpusta topladığınızda bir bilgi grafiğiniz olur. Toplayın ve sorgulayın; RAG, analitik veya uyumluluk denetimleri için bir muhakeme alt yapısına sahip olursunuz.
 
 2026 sorunu: Yüksek Lisans'lar ilişkileri coşkuyla çıkarıyor. Fazla coşkulu. Kaynak metnin desteklemediği üçlü halüsinasyonlar görüyorlar. Kaynağı olmadan, gerçek üçlüleri makul kurgudan ayıramazsınız. 2026'nın yanıtı AEVS tarzı sabitleme ve doğrulama işlem hatlarıdır.
 
@@ -28,9 +28,9 @@ Bir analist şunu okuyor: "Tim Cook, 2011'de Apple'ın CEO'su oldu." Dört gerç
 
 **Üç ekstraksiyon yaklaşımı.**
 
-1. **Kural/örüntü tabanlı.** Hearst kalıpları: "X gibi Y" → `(Y, isA, X)`. Ayrıca el yapımı normal ifade. Kırılgan, kesin, açıklanabilir.
+1. **Kural/örüntü tabanlı.** Hearst kalıpları: "Y gibi X" → `(Y, isA, X)`. Ayrıca el yapımı normal ifade. Kırılgan, kesin, açıklanabilir.
 2. **Denetimli sınıflandırıcı.** Bir cümlede iki varlık bahsi verildiğinde, ilişkiyi sabit bir kümeden tahmin edin. TACRED, ACE, KBP konusunda eğitim aldım. Standart 2015–2022.
-3. **Üretken LLM.** Prompt üçlü yayma modeli. Kutunun dışında çalışır. Kaynağına ihtiyacı var ya da makul görünen ıvır zıvır halüsinasyonu görüyor.
+3. **Generative LLM.** Prompt üçlü yayma modeli. Kutunun dışında çalışır. Kaynağına ihtiyacı var ya da makul görünen ıvır zıvır halüsinasyonu görüyor.
 
 **AEVS (Çapa-Çıkartma-Doğrulama-Ek, 2026).** Mevcut halüsinasyon azaltma framework:
 
@@ -61,7 +61,7 @@ PATTERNS = [
 ]
 ```
 
-Oyuncak çıkarıcının tamamı için `code/main.py` konusuna bakın. Hearst kalıpları, hata ayıklanabilir oldukları için hâlâ alana özgü işlem hatlarıyla gönderiliyor.
+Oyuncak çıkarıcının tamamı için `code/main.py`'ye bakın. Hearst kalıpları, hata ayıklanabilir oldukları için hâlâ alana özgü işlem hatlarıyla gönderiliyor.
 
 ### Adım 2: denetlenen ilişki sınıflandırması
 
@@ -79,7 +79,7 @@ triples = tok.batch_decode(output, skip_special_tokens=False)
 
 REBEL bir seq2seq ilişki çıkarıcısıdır: metin girişi, üçe katlanması, zaten Wikidata özellik kimliklerindedir. Uzaktan denetim verilerine göre ince ayar yapıldı. Standart açık ağırlıklar temel çizgisi.
 
-### 3. Adım: Sabitleme ile LLM-prompted çıkarma
+### Adım 3: Ankrajlı LLM-prompted çıkarma
 
 ```python
 prompt = f"""Extract (subject, relation, object) triples from the text.
@@ -96,7 +96,7 @@ Only include triples fully supported by the text. No inference beyond what is st
 """
 ```
 
-Döndürülen her yayılmayı kaynağa göre doğrulayın. `text[start:end] != triple_entity` olan her şeyi reddet. Bu, AEVS'nin minimal formundaki "doğrulama" adımıdır.
+Döndürülen her yayılmayı kaynağa göre doğrulayın. `text[start:end] != triple_entity`'nin bulunduğu her şeyi reddedin. Bu, AEVS'nin minimal formundaki "doğrulama" adımıdır.
 
 ### Adım 4: kapalı bir ontolojiye göre kanonikleştirme
 
@@ -153,7 +153,7 @@ Bu, her RAG-over-KG sisteminin atomudur. RDF üçlü depoları (Blazegraph, Virt
 |-----------|------|
 | Hızlı üretim, genel alan adı | Wikiveri kanonikleştirmesi ile REBEL veya LlamaPred |
 | Alana özel (biyomed, yasal) | SciREX tarzı alan adı ince ayarı + özel ontoloji |
-| LLM-promptdüzenlenmiş, denetlenmiş çıktı | AEVS boru hattı: bağlantı → ayıklama → doğrulama → ek |
+| LLM-prompted, denetlenmiş çıktı | AEVS boru hattı: bağlantı → ayıklama → doğrulama → ek |
 | Yüksek hacimli haberler IE | Desen tabanlı + denetimli hibrit |
 | Sıfırdan bir KG oluşturmak | IE + manuel kanonikleştirme geçişini açın |
 | Geçici KG | Niteleyicilerle çıkarma (başlangıç/bitiş zamanı, zaman içindeki nokta) |
@@ -187,7 +187,7 @@ Refuse any LLM-based RE pipeline without span verification (source provenance). 
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py`'daki kalıp çıkarıcıyı 5 haber makalesi cümlesi üzerinde çalıştırın. Elle kontrol hassasiyeti.
+1. **Kolay.** `code/main.py`'deki kalıp çıkarıcıyı 5 haber makalesi cümlesi üzerinde çalıştırın. Elle kontrol hassasiyeti.
 2. **Orta.** Aynı cümlelerde REBEL (veya küçük bir LLM) kullanın. Üçlüleri karşılaştırın. Hangi çıkarıcının hassasiyeti daha yüksektir? Daha yüksek hatırlama mı?
 3. **Zor.** AEVS hattını oluşturun: LLM ile çıkartın + yayılma alanlarını kaynağa göre doğrulayın. 50 Wikipedia tarzı cümle üzerinde doğrulama adımından önce ve sonra halüsinasyon oranını ölçün.
 
@@ -195,7 +195,7 @@ Refuse any LLM-based RE pipeline without span verification (source provenance). 
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
-| Üçlü | Özne-ilişki-nesne | Bir KG'nin atom birimi olan `(s, r, o)` demet. |
+| Üçlü | Özne-ilişki-nesne | Bir KG'nin atomik birimi olan `(s, r, o)` demet. |
 | IE'yi açın | Herhangi bir şeyi çıkarın | Kelime dağarcığı açık ilişki cümleleri; yüksek hatırlama, düşük hassasiyet. |
 | Kapalı ontoloji | Sabit şema | Sınırlı ilişki türleri kümesi (Wikidata, UMLS, FIBO). |
 | Kanonikleştirme | Her şeyi normalleştirin | Yüzey adlarını/ilişkilerini kanonik kimliklerle eşleyin. |
@@ -205,8 +205,8 @@ Refuse any LLM-based RE pipeline without span verification (source provenance). 
 
 ## Daha Fazla Okuma
 
-- [Mintz ve ark. (2009). Etiketli veriler olmadan ilişki çıkarma için uzaktan denetim](https://www.aclweb.org/anthology/P09-1113.pdf) — uzaktan denetim belgesi.
+- [Mintz ve ark. (2009). Etiketli veriler olmadan ilişki çıkarımı için uzaktan denetim](https://www.aclweb.org/anthology/P09-1113.pdf) — uzaktan denetim belgesi.
 - [Huguet Cabot, Navigli (2021). REBEL: Uçtan Uca Dil Oluşturma Yoluyla İlişki Çıkarma](https://aclanthology.org/2021.findings-emnlp.204.pdf) — seq2seq RE iş gücü.
-- [Wadden ve ark. (2019). Bağlamsallaştırılmış Yayılma Gösterimleriyle Varlık, İlişki ve Olay Çıkarma (DyGIE++)](https://arxiv.org/abs/1909.03546) — ortak IE.
-- [AEVS — Çapa-Çıkarma-Doğrulama-Eki framework](https://www.mdpi.com/2073-431X/15/3/178) — 2026 halüsinasyonu azaltma tasarımı.
+- [Wadden ve ark. (2019). Bağlamsallaştırılmış Yayılım Gösterimleriyle Varlık, İlişki ve Olay Çıkarma (DyGIE++)](https://arxiv.org/abs/1909.03546) — ortak IE.
+- [AEVS — Çapa-Çıkartma-Doğrulama-Ek framework](https://www.mdpi.com/2073-431X/15/3/178) — 2026 halüsinasyonu hafifletme tasarımı.
 - [Wikidata SPARQL öğreticisi](https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial) — kanonik grafik sorguları.

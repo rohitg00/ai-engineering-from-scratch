@@ -22,7 +22,7 @@ Varlık bağlama (EL), her bahsi bir bilgi tabanındaki benzersiz bir girişe ç
 1. **Aday oluşturma.** "Jordan" göz önüne alındığında hangi KB girişleri makuldür?
 2. **Belirsizliği giderme.** Bağlam göz önüne alındığında hangi aday doğru adaydır?
 
-Her iki adım da öğrenilebilir. Her ikisi de benchmarked. Birleşik boru hattı on yıldır istikrarlıydı; değişen şey, belirsizliği gidericinin kalitesiydi.
+Her iki adım da öğrenilebilir. Her ikisi de benchmarked'dir. Birleşik boru hattı on yıldır istikrarlıydı; değişen şey, belirsizliği gidericinin kalitesiydi.
 
 ## Konsept
 
@@ -34,13 +34,13 @@ Her iki adım da öğrenilebilir. Her ikisi de benchmarked. Birleşik boru hatt�
 
 1. **Önceki + bağlam (Milne ve Witten, 2008).** `P(entity | mention) × context-similarity(entity, text)`. İyi çalışıyor, hızlı, eğitim yok.
 2. **Embedding tabanlı (ESS / REL / Blink).** Bahsi + bağlamı kodlayın. Her adayın açıklamasını kodlayın. Maksimum kosinüsü seçin. 2020-2024 varsayılanı.
-3. **Üretimsel (TÜR, 2021; LLM tabanlı, 2023+).** Varlığın kanonik adının token-by-token kodunu çözün. Bir dizi geçerli varlık adı ile sınırlandırıldığından çıktının geçerli bir KB kimliği olması garanti edilir.
+3. **Üretimsel (TÜR, 2021; LLM tabanlı, 2023+).** Varlığın standart adının token-by-token kodunu çözün. Bir dizi geçerli varlık adı ile sınırlandırıldığından çıktının geçerli bir KB kimliği olması garanti edilir.
 
-**Uçtan uca ve işlem hattı karşılaştırması.** Modern modeller (ELQ, BLINK, ExtEnD, GENRE) NER + aday oluşturma + belirsizliği gidermeyi tek geçişte çalıştırır. Bileşenleri değiştirebildiğiniz için boru hattı sistemleri hâlâ üretimde hakim konumdadır.
+**Uçtan uca ve ardışık düzen.** Modern modeller (ELQ, BLINK, ExtEnD, GENRE) NER + aday oluşturma + belirsizliği gidermeyi tek geçişte çalıştırır. Bileşenleri değiştirebildiğiniz için boru hattı sistemleri hâlâ üretimde hakim konumdadır.
 
 ### İki ölçüm
 
-- **Bahsedilme geri çağırma (aday gen).** Altın oranı, aday listesinde doğru KB girişinin nerede göründüğünü belirtir. Boru hattının tamamı için zemin.
+- **Bahsetmeyi geri çağırma (aday gen).** Altının kesri, aday listesinde doğru KB girişinin nerede göründüğünü belirtir. Boru hattının tamamı için zemin.
 - **Belirsizliği giderme doğruluğu / F1.** Doğru adaylar göz önüne alındığında, ilk 1'in ne sıklıkla doğru olduğu.
 
 Her zaman ikisini de rapor edin. %80 aday geri çağırmada %99 netleştirme sağlayan bir sistem, %80'lik bir ardışık düzendir.
@@ -77,7 +77,7 @@ def disambiguate(mention, context, alias_index, entity_desc):
     return best, best_score
 ```
 
-Jaccard örtüşmesi bir oyuncaktır. embedding'lerdeki kosinüs benzerliğiyle değiştirin (transformer sürümü için `code/main.py` adım-2'ye bakın).
+Jaccard örtüşmesi bir oyuncaktır. embedding'lerde kosinüs benzerliğiyle değiştirin (transformer sürümü için `code/main.py` adım-2'ye bakın).
 
 ### Adım 3: embedding tabanlı (BLINK stili)
 
@@ -107,17 +107,17 @@ List the best Wikipedia title for this mention.
 Respond with JSON: {{"title": "..."}}"""
 ```
 
-Beyaz listeyle (Anahatlar `choice`) birleştirildiğinde bu, 2026'da gönderilecek en basit EL hattıdır.
+Beyaz listeyle (Outlines `choice`) birleştirildiğinde bu, 2026'da gönderilecek en basit EL boru hattıdır.
 
 ### Adım 5: AIDA-CoNLL'yi değerlendirin
 
-AIDA-CoNLL standart EL benchmark'dır: 1.393 Reuters makalesi, 34 bin bahsedilme, Wikipedia varlıkları. KB içi doğruluğunu (`P@1`) ve KB dışı NIL tespit oranını bildirin.
+AIDA-CoNLL standart EL benchmark'dir: 1.393 Reuters makalesi, 34 bin bahsedilme, Wikipedia varlıkları. KB içi doğruluğunu (`P@1`) ve KB dışı NIL tespit oranını bildirin.
 
 ## Tuzaklar
 
 - **NIL yönetimi.** Bazı sözlerden KB'de bahsedilmiyor (gelişmekte olan varlıklar, belirsiz insanlar). Sistemler yanlış varlığı tahmin etmek yerine NIL'yi tahmin etmelidir. Ayrı olarak ölçüldü.
-- **Sınır hatalarından bahsedin.** Yukarı akış NER kısmi aralıkları kaçırıyor ("Bank of America" ​​yalnızca "Banka" olarak etiketlendi). EL geri çağırma düşer.
-- **Popülerlik yanlılığı.** Eğitimli sistemler sık ​​rastlanan varlıkları aşırı tahmin ediyor. Bir ML makalesinde "Michael I. Jordan"dan söz edilmesi genellikle Jordan basketboluyla bağlantılıdır.
+- **Sınır hatalarından bahsedin.** Yukarı akış NER kısmi aralıkları kaçırıyor ("Bank of America" yalnızca "Banka" olarak etiketlendi). EL geri çağırma düşer.
+- **Popülerlik yanlılığı.** Eğitimli sistemler sık rastlanan varlıkları aşırı tahmin ediyor. Bir ML makalesinde "Michael I. Jordan"dan söz edilmesi genellikle Jordan basketboluyla bağlantılıdır.
 - **Dillerarası EL.** Çince metindeki sözlerin İngilizce Vikipedi öğeleriyle eşleştirilmesi. Çok dilli bir kodlayıcı veya çeviri adımı gerektirir.
 - **KB bayatlığı.** Yeni şirketler, etkinlikler, kişiler geçen yılın Wikipedia çöplüğünde yok. Üretim ardışık düzenlerinin bir yenileme döngüsüne ihtiyacı vardır.
 
@@ -163,9 +163,9 @@ Refuse any EL pipeline without a mention-recall baseline (you cannot evaluate a 
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py`'daki önceki+bağlam belirsizliğini gidericiyi 10 belirsiz söze (Paris, Ürdün, Apple) uygulayın. Doğru varlığı elle etiketleyin. Doğruluğu ölçün.
+1. **Kolay.** `code/main.py`'deki önceki+bağlam belirsizliğini gidericiyi 10 belirsiz söze (Paris, Ürdün, Apple) uygulayın. Doğru varlığı elle etiketleyin. Doğruluğu ölçün.
 2. **Orta.** 50 belirsiz bahsi transformer cümlesiyle kodlayın. Her adayın açıklamasını ekleyin. embedding tabanlı belirsizliği gidermeyi Jaccard bağlam örtüşmesiyle karşılaştırın.
-3. **Zor.** 1k varlıklı bir alan adı KB'si oluşturun (e.g. çalışanlar + şirketinizdeki ürünler). NER + EL'i uçtan uca uygulayın. 100 uzatılmış cümlenin hassasiyetini ölçün ve hatırlayın.
+3. **Zor.** 1k varlıklı bir alan adı KB (e.g. çalışanlar + şirketinizdeki ürünler) oluşturun. NER + EL'i uçtan uca uygulayın. 100 uzatılmış cümlenin hassasiyetini ölçün ve hatırlayın.
 
 ## Anahtar Terimler
 
@@ -182,7 +182,7 @@ Refuse any EL pipeline without a mention-recall baseline (you cannot evaluate a 
 ## Daha Fazla Okuma
 
 - [Milne, Witten (2008). Vikipedi ile Bağlantı Kurmayı Öğrenmek](https://www.cs.waikato.ac.nz/~ihw/papers/08-DM-IHW-LearningToLinkWithWikipedia.pdf) — temel önceki+bağlam yaklaşımı.
-- [Wu ve ark. (2020). Yoğun Varlık Alma (BLINK)](https://arxiv.org/abs/1911.03814) ile Sıfır Atışlı Varlık Bağlantısı — embedding tabanlı güçlü iş.
-- [De Cao ve ark. (2021). Otoregresif Varlık Alma (GENRE)](https://arxiv.org/abs/2010.00904) — kısıtlı kod çözme ile üretken EL.
+- [Wu ve ark. (2020). Yoğun Varlık Alma (BLINK) ile Sıfır Atışlı Varlık Bağlantısı](https://arxiv.org/abs/1911.03814) — embedding tabanlı güçlü çalışma.
+- [De Cao ve ark. (2021). Otoregresif Varlık Alma (TÜR)](https://arxiv.org/abs/2010.00904) — kısıtlı kod çözme ile üretken EL.
 - [Hoffart ve ark. (2011). Metindeki Adlandırılmış Varlıkların Güçlü Belirsizliğinin Giderilmesi (AIDA)](https://www.aclweb.org/anthology/D11-1072.pdf) — benchmark makalesi.
 - [REL: Devlerin Omuzlarında Duran Bir Varlık Bağlayıcı (2020)](https://arxiv.org/abs/2006.01969) — açık üretim yığını.

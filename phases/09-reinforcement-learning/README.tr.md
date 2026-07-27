@@ -1,5 +1,5 @@
-# Aşama 9: Reinforcement Learning
+# Aşama 9: Takviyeli Öğrenme
 
-> Yaparak öğrenen agent'lar. RLHF'nin temeli.
+> Yaparak öğrenen Agent'ler. RLHF'nin temeli.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

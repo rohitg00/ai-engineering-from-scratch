@@ -15,13 +15,13 @@ Bir chatbot oluşturdunuz. "Evet" cevabını verdi. Cevabın, alınan pasaj tara
 
 10.000 haber makalesini konularına göre sınıflandırmanız gerekiyor. Eğitim etiketiniz yok. Bir modeli tekrar kullanabilir misiniz?
 
-Her üç problem de Doğal Dile Inference indirgenir. NLI şunu sorar: Bir `t` öncülü ve bir `h` hipotezi verildiğinde, `h`, `t` tarafından zorunlu kılınıyor mu, çelişiyor mu, yoksa tarafsız mı (ilişkisiz)?
+Her üç sorun da Doğal Dil Inference'ye indirgenir. NLI şunu sorar: Bir `t` öncülü ve bir `h` hipotezi verildiğinde, `h`, `t` tarafından zorunlu kılınıyor mu, çelişkili mi yoksa tarafsız mı (ilgisiz)?
 
 - **Halüsinasyon kontrolü:** `t` = kaynak belge, `h` = özet iddia. Gereklilik değil = halüsinasyon.
-- **Geçerli KG:** `t` = alınan pasaj, `h` = oluşturulan yanıt. Gereklilik değil = fabrikasyon.
+- **Geçerli QA:** `t` = alınan pasaj, `h` = oluşturulan yanıt. Gereklilik değil = fabrikasyon.
 - **Sıfır atış sınıflandırması:** `t` = belge, `h` = sözlü etiket ("Bu sporla ilgilidir"). Gereklilik = öngörülen etiket.
 
-Bir görev, üç üretim kullanımı. Bu nedenle her RAG değerlendirmesi framework, başlık altında bir NLI modeli sunar.
+Bir görev, üç üretim kullanımı. Bu nedenle her RAG değerlendirmesi framework, kaputun altına bir NLI modeli gönderir.
 
 ## Konsept
 
@@ -29,22 +29,22 @@ Bir görev, üç üretim kullanımı. Bu nedenle her RAG değerlendirmesi framew
 
 **Üç etiket.**
 
-- **Gereklilik.** `t` → `h`. "Kedi minderin üzerinde", "Bir kedi var" anlamına gelir.
+- **Koşullar.** `t` → `h`. "Kedi minderin üzerinde", "Bir kedi var" anlamına gelir.
 - **Çelişki.** `t` → ¬`h`. "Kedi paspasın üstünde" ifadesi "Kedi yok" ifadesi ile çelişiyor.
 - **Nötr.** Her iki durumda da inference yok. "Kedi minderin üzerinde" ifadesi "Kedi aç" ifadesine karşı nötrdür.
 
-**Mantıksal gerektirme değil.** NLI *doğal* bir dildir inference — tipik bir insan okuyucunun çıkaracağı şey, katı bir mantık değildir. "John köpeğini gezdirdi" NLI'de "John'un bir köpeği var" anlamına gelir, ancak birinci dereceden katı mantık bunu ancak mülkiyeti aksiyomatik hale getirirseniz kabul eder.
+**Mantıksal gerektirme değil.** NLI *doğal* bir dildir inference — katı bir mantık değil, tipik bir insan okuyucunun çıkarımına göre. "John köpeğini gezdirdi" NLI'de "John'un bir köpeği var" anlamına gelir, ancak birinci dereceden katı mantık bunu ancak mülkiyeti aksiyomatize ettiğinizde kabul eder.
 
-**Datasets.**
+**Dataset'ler.**
 
 - **SNLI** (2015). 570 bin insan açıklamalı çift, tesis olarak resim başlıkları. Dar etki alanı.
 - **MultiNLI** (2017). 10 türde 433 bin çift. 2026'daki standart eğitim külliyatı.
 - **ANLI** (2019). Düşman NLI. İnsanlar mevcut modelleri kırmak için özel olarak tasarlanmış örnekler yazdılar. Daha güçlü.
-- **DocNLI, CONTROL** (2020–21). Belge uzunluğunda tesisler. Çoklu atlama ve uzun menzilli inference test eder.
+- **DocNLI, CONTROL** (2020–21). Belge uzunluğunda tesisler. Çok atlamalı ve uzun menzilli inference'yi test eder.
 
-**Mimari.** Bir transformer kodlayıcı (BERT, RoBERTa, DeBERTa) `[CLS] premise [SEP] hypothesis [SEP]` okur. `[CLS]` gösterimi 3 yönlü bir softmax'ı besler. MNLI üzerinde eğitim alın, uzatılmış benchmark'leri değerlendirin, dağıtımdaki çiftlerde %90'ın üzerinde doğruluk elde edin.
+**Mimari.** Bir transformer kodlayıcı (BERT, RoBERTa, DeBERTa) `[CLS] premise [SEP] hypothesis [SEP]` okur. `[CLS]` gösterimi 3 yönlü bir softmax'ı besler. MNLI üzerinde eğitim alın, uzatılmış benchmark'leri değerlendirin, dağıtım içi çiftlerde %90'ın üzerinde doğruluk elde edin.
 
-**NLI aracılığıyla sıfır atış.** Bir belge ve aday etiketleri verildiğinde, her etiketi bir hipoteze dönüştürün ("Bu metin sporla ilgilidir"). Her biri için gereklilik olasılığını hesaplayın. Maksimum değeri seçin. Hugging Face'in `zero-shot-classification` hattının arkasındaki mekanizma budur.
+**NLI aracılığıyla sıfır atış.** Bir belge ve aday etiketleri verildiğinde, her etiketi bir hipoteze dönüştürün ("Bu metin sporla ilgilidir"). Her biri için gereklilik olasılığını hesaplayın. Maksimum değeri seçin. Hugging Face'in `zero-shot-classification` boru hattının arkasındaki mekanizma budur.
 
 ## İnşa Et
 
@@ -67,7 +67,7 @@ print(result)
 #  {'label': 'contradiction', 'score': 0.01}]
 ```
 
-Üretim NLI'si için `facebook/bart-large-mnli` ve `microsoft/deberta-v3-large-mnli` açık varsayılanlardır. DeBERTa-v3 skor tablolarının zirvesinde.
+Üretim NLI için `facebook/bart-large-mnli` ve `microsoft/deberta-v3-large-mnli` açık varsayılanlardır. DeBERTa-v3 skor tablolarının zirvesinde.
 
 ### Adım 2: sıfır atış sınıflandırması
 
@@ -83,7 +83,7 @@ print(result)
 #  'scores': [0.92, 0.05, 0.02, 0.01]}
 ```
 
-Şablon "Bu örnek {label} ile ilgilidir." varsayılan olarak. `hypothesis_template` ile özelleştirin. Eğitim verisi gerekmez. Hayır fine-tuning. Kutunun dışında çalışır.
+Şablon "Bu örnek {label} ile ilgilidir." varsayılan olarak. `hypothesis_template` ile özelleştirin. Eğitim verisi gerekmez. fine-tuning yok. Kutunun dışında çalışır.
 
 ### Adım 3: RAG için doğruluk kontrolü
 
@@ -98,7 +98,7 @@ Bu, RAGAS sadakatinin özüdür. Oluşturulan yanıtı atomik iddialara bölün.
 
 ### Adım 4: elle haddelenmiş NLI sınıflandırıcısı (kavramsal)
 
-Yalnızca stdlib'e özgü bir oyuncak için bkz. `code/main.py`: öncül ve hipotez, sözcüksel örtüşme + olumsuzlama tespiti yoluyla karşılaştırılır. transformer modelleriyle rekabetçi değil — ancak görevin şeklini gösterir: iki metin içeri, 3 yönlü etiketleme, kayıp = `{entail, contradict, neutral}` üzerinden çapraz entropi.
+Yalnızca stdlib'e özgü bir oyuncak için `code/main.py`'ye bakın: öncül ve hipotez, sözcüksel örtüşme + olumsuzluk tespiti yoluyla karşılaştırılır. transformer modelleriyle rekabet edemez - ancak görevin şeklini gösterir: iki metin girişi, 3 yönlü etiketleme, kayıp = `{entail, contradict, neutral}` üzerinde çapraz entropi.
 
 ## Tuzaklar
 
@@ -106,7 +106,7 @@ Yalnızca stdlib'e özgü bir oyuncak için bkz. `code/main.py`: öncül ve hipo
 - **Sözcüksel örtüşme buluşsal yöntemi.** Alt dizi buluşsal yöntemi ("her alt dizi gereklidir") SNLI'yi geçer ancak HANS/ANLI'de başarısız olur. Rakip benchmark'leri kullanın.
 - **Belge uzunluğunda bozulma.** Tek cümlelik NLI modelleri, belge uzunluğu tesislerinde 20+ F1 düşer. Uzun bağlam için DocNLI tarafından eğitilmiş modelleri kullanın.
 - **Sıfır atış şablon hassasiyeti.** "Bu örnek, {label} ile ilgilidir" ve "{label}" ile "Konu {label}" ile ilgilidir, doğruluğu 10'dan fazla puan artırabilir. Şablonu ayarlayın.
-- **Etki alanı uyuşmazlığı.** MNLI genel İngilizce eğitimi verir. Hukuki, tıbbi ve bilimsel metinler, alana özgü NLI modellerine (e.g., SciNLI, MedNLI) ihtiyaç duyar.
+- **Etki alanı uyuşmazlığı.** MNLI genel İngilizce eğitimi verir. Yasal, tıbbi ve bilimsel metinler, alana özgü NLI modellerine (e.g., SciNLI, MedNLI) ihtiyaç duyar.
 
 ## Kullan onu
 
@@ -149,8 +149,8 @@ Refuse to ship zero-shot classification without a 100-example labeled sanity che
 
 ## Egzersizler
 
-1. **Kolay.** `facebook/bart-large-mnli`'yi üç sınıfın tamamını kapsayan 20 el yapımı (öncül, hipotez, etiket) üçlü üzerinde çalıştırın. Doğruluğu ölçün. Rakip "sonraki buluşsal" tuzaklar ekleyin ("Pastayı yemedim" vs "Pastayı yedim") ve kırılıp kırılmadığına bakın.
-2. **Orta.** Sıfır atış şablonunu `"This text is about {label}"` 100 AG Haber manşetlerindeki `"The topic is {label}"` ve `"{label}"` ile karşılaştırın. Doğruluk salınımını rapor edin.
+1. **Kolay.** `facebook/bart-large-mnli`'yi üç sınıfın tümünü kapsayan 20 el yapımı (öncül, hipotez, etiket) üçlü üzerinde çalıştırın. Doğruluğu ölçün. Rakip "sonraki buluşsal" tuzaklar ekleyin ("Pastayı yemedim" vs "Pastayı yedim") ve kırılıp kırılmadığına bakın.
+2. **Orta.** Sıfır atış şablonunu `"This text is about {label}"` ile 100 AG Haber manşetlerindeki `"The topic is {label}"` ve `"{label}"` ile karşılaştırın. Doğruluk salınımını rapor edin.
 3. **Zor.** Bir RAG doğruluk denetleyicisi oluşturun: atomik iddia ayrıştırması + iddia başına NLI. RAG tarafından oluşturulan 50 yanıtı altın bağlamla değerlendirin. El etiketlerine göre yanlış pozitif ve yanlış negatif oranları ölçün.
 
 ## Anahtar Terimler
@@ -167,8 +167,8 @@ Refuse to ship zero-shot classification without a 100-example labeled sanity che
 
 ## Daha Fazla Okuma
 
-- [Bowman ve ark. (2015). Doğal dil öğrenmek için geniş açıklamalı bir külliyat inference](https://arxiv.org/abs/1508.05326) — SNLI.
-- [Williams, Nangia, Bowman (2017). Inference](https://arxiv.org/abs/1704.05426) — MultiNLI aracılığıyla Cümleyi Anlamak için Geniş Kapsamlı Bir Zorluk Derlemi.
+- [Bowman ve ark. (2015). Doğal dil öğrenmeye yönelik geniş açıklamalı bir külliyat inference](https://arxiv.org/abs/1508.05326) — SNLI.
+- [Williams, Nangia, Bowman (2017). Inference](https://arxiv.org/abs/1704.05426) — MultiNLI Aracılığıyla Cümleyi Anlamak için Geniş Kapsamlı Bir Zorluk Derlemi.
 - [Nie ve ark. (2019). Çekişmeli NLI](https://arxiv.org/abs/1910.14599) — ANLI benchmark.
-- [Yin, Hay, Roth (2019). BenchmarkSıfır Atımlı Metin Sınıflandırması](https://arxiv.org/abs/1909.00161) — sınıflandırıcı olarak NLI.
+- [Yin, Hay, Roth (2019). Benchmarking Sıfır Atışlı Metin Sınıflandırması](https://arxiv.org/abs/1909.00161) — Sınıflandırıcı olarak NLI.
 - [O ve ark. (2021). DeBERTa: Çözülmüş Dikkat ile Kod Çözme özelliği geliştirilmiş BERT](https://arxiv.org/abs/2006.03654) — 2026 NLI'nın güçlü ürünü.

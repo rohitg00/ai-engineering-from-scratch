@@ -1,114 +1,114 @@
-# Watermarking — SynthID, Stable Signature, C2PA
+# Filigran Ekleme — SynthID, Kararlı İmza, C2PA
 
-> Three technologies structure 2026 AI-generated-content provenance. SynthID (Google DeepMind) — image watermarking launched August 2023, text+video May 2024 (Gemini + Veo), text open-sourced October 2024 via Responsible GenAI Toolkit, unified multi-media detector November 2025 alongside Gemini 3 Pro. Text watermarking adjusts next-token sampling probabilities imperceptibly; image/video watermarks survive compression, cropping, filters, frame-rate changes. Stable Signature (Fernandez et al., ICCV 2023, arXiv:2303.15435) — fine-tunes the latent diffusion decoder so every output contains a fixed message; cropped (10% of content) generated images detected >90% at FPR<1e-6. Follow-up "Stable Signature is Unstable" (arXiv:2405.07145, May 2024) — fine-tuning removes the watermark while preserving quality. C2PA — cryptographically signed, tamper-evident metadata standard (C2PA 2.2 Explainer 2025). Watermarking and C2PA are complementary: metadata can be stripped but carries richer provenance; watermarks persist through transcoding but carry less information.
+> Üç teknoloji, 2026'da yapay zeka tarafından oluşturulan içerik kaynağını yapılandırıyor. SynthID (Google DeepMind) — görüntü filigranı Ağustos 2023'te, metin+video Mayıs 2024'te (Gemini + Veo), Responsible GenAI Araç Seti aracılığıyla Ekim 2024'te açık kaynaklı metin, Gemini 3 Pro ile birlikte Kasım 2025'te birleşik multimedya dedektörü kullanıma sunuldu. Metin filigranı sonraki-token örnekleme olasılığını fark edilmeden ayarlar; görüntü/video filigranları sıkıştırma, kırpma, filtreler ve kare hızı değişikliklerinden etkilenmez. Kararlı İmza (Fernandez ve diğerleri, ICCV 2023, arXiv:2303.15435) — her çıkışın sabit bir mesaj içermesi için gizli yayılma kod çözücüsüne ince ayar yapar; kırpılmış (içeriğin %10'u) oluşturulan görüntüler FPR<1e-6'da >%90 olarak algılandı. "Kararlı İmza Kararsız" takibi (arXiv:2405.07145, Mayıs 2024) — fine-tuning kaliteyi korurken filigranı kaldırır. C2PA — kriptografik olarak imzalanmış, kurcalanmaya karşı korumalı meta veri standardı (C2PA 2.2 Açıklayıcı 2025). Filigranlama ve C2PA tamamlayıcıdır: meta veriler çıkarılabilir ancak daha zengin bir kaynak taşır; filigranlar kod dönüştürme yoluyla varlığını sürdürür ancak daha az bilgi taşır.
 
-**Type:** Build
-**Languages:** Python (stdlib, token-watermark embed + detect)
-**Prerequisites:** Phase 10 · 04 (sampling), Phase 01 · 09 (information theory)
-**Time:** ~75 minutes
+**Tür:** Yapım
+**Diller:** Python (stdlib, token-filigran yerleştirme + algılama)
+**Önkoşullar:** Aşama 10 · 04 (örnekleme), Aşama 01 · 09 (bilgi teorisi)
+**Süre:** ~75 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Describe token-level watermarking (SynthID-text style) and the mechanism by which it is detectable.
-- Describe Stable Signature and the 2024 removal attack that broke it.
-- State C2PA's role and why it is complementary to watermarking.
-- Describe the key limitations: model-specific signal, robustness under paraphrase, and meaning-preserving attacks (arXiv:2508.20228).
+- token düzeyindeki filigranı (SynthID-metin stili) ve bunun tespit edilebildiği mekanizmayı açıklayın.
+- Kararlı İmzayı ve onu bozan 2024 kaldırma saldırısını açıklayın.
+- C2PA'nın rolünü ve neden filigranlamayı tamamlayıcı olduğunu belirtin.
+- Temel sınırlamaları açıklayın: modele özgü sinyal, açıklama altında sağlamlık ve anlamı koruyan saldırılar (arXiv:2508.20228).
 
-## The Problem
+## Sorun
 
-2023-2024 saw deepfakes and AI-generated content enter political and consumer contexts at scale. Watermarking is the proposed technical provenance signal: mark generations at creation time, detect them later. 2025 evidence: no watermark is unconditionally robust, but layered with C2PA metadata the combination provides a usable provenance story.
+2023-2024, derin sahtekarlıkların ve yapay zeka tarafından oluşturulan içeriğin geniş ölçekte siyasi ve tüketici bağlamlarına girdiğine tanık oldu. Filigranlama, önerilen teknik kaynak sinyalidir: nesilleri oluşturma sırasında işaretleyin, daha sonra tespit edin. 2025 kanıtı: Hiçbir filigran koşulsuz olarak sağlam değildir, ancak C2PA meta verileriyle katmanlanan kombinasyon, kullanılabilir bir kaynak hikayesi sağlar.
 
-## The Concept
+## Konsept
 
-### Text watermarking (SynthID-text style)
+### Metin filigranı (SynthID-metin stili)
 
-The Kirchenbauer et al. 2023 mechanism, productionized by Google:
+Kirchenbauer ve ark. Google tarafından üretilen 2023 mekanizması:
 
-1. At each decoding step, hash the previous K tokens to produce a pseudorandom partition of the vocabulary into "green" and "red" sets.
-2. Bias sampling toward the green set by adding δ to green logits.
-3. The generation contains more green tokens than chance would produce.
+1. Her kod çözme adımında, sözcük dağarcığının sözde rastgele bir bölümünü "yeşil" ve "kırmızı" kümeler halinde oluşturmak için önceki K token'ları hashleyin.
+2. Yeşil logitlere δ ekleyerek yeşil kümeye doğru önyargılı örnekleme.
+3. Nesil, şansın üretebileceğinden daha fazla yeşil token içeriyor.
 
-Detection: rehash each prefix, count green tokens in the generation, compute a z-score. The z-score is >0 for watermarked text, ~0 for human text.
+Tespit: her öneki yeniden düzenleyin, nesildeki yeşil token'lari sayın, bir z puanı hesaplayın. Z-puanı filigranlı metin için >0, insan metni için ~0'dır.
 
-Properties:
-- Imperceptible to readers (δ is small enough that quality loss is minor).
-- Detectable with access to the vocabulary partition function.
-- Not robust to paraphrase — rewriting the text destroys the signal.
+Özellikler:
+- Okuyucular tarafından algılanamaz (δ, kalite kaybının çok az olmasını sağlayacak kadar küçüktür).
+- Kelime bölümü işlevine erişimle tespit edilebilir.
+- Başka sözcüklerle ifade etmeye dayanıklı değil — metnin yeniden yazılması sinyali yok eder.
 
-SynthID-text is open-sourced October 2024 via Google's Responsible GenAI Toolkit.
+SynthID-text, Google'ın Sorumlu GenAI Araç Seti aracılığıyla Ekim 2024'te açık kaynaklıdır.
 
-### Stable Signature (image)
+### Kararlı İmza (resim)
 
-Fernandez et al. ICCV 2023. Fine-tune the latent diffusion decoder so every generated image contains a fixed binary message embedded in the latent representation. Detection is decoded from the latent with a neural decoder. Cropped (to 10% of content) images detected >90% at FPR<1e-6.
+Fernandez ve ark. ICCV 2023. Gizli yayılma kod çözücüsüne ince ayar yapın, böylece oluşturulan her görüntü, gizli gösterime gömülü sabit bir ikili mesaj içerir. Tespitin kodu, sinirsel bir kod çözücüyle gizli durumdan çözülür. FPR<1e-6'da kırpılmış (içeriğin %10'una kadar) görüntüler >%90 olarak algılandı.
 
-May 2024 "Stable Signature is Unstable" (arXiv:2405.07145): fine-tuning the decoder removes the watermark while preserving image quality. Adversarial post-generation fine-tuning is cheap; the watermark's adversarial robustness is limited.
+Mayıs 2024 "Sabit İmza Kararsız" (arXiv:2405.07145): fine-tuning kod çözücü, görüntü kalitesini korurken filigranı kaldırır. Çelişkili nesil sonrası fine-tuning ucuzdur; filigranın rakiplere karşı dayanıklılığı sınırlıdır.
 
-### SynthID unified detector (November 2025)
+### SynthID birleştirilmiş dedektör (Kasım 2025)
 
-Alongside Gemini 3 Pro: a multi-media detector that reads SynthID signals from text, image, audio, and video in one API. Unifies the Google provenance stack.
+Gemini 3 Pro'nun yanı sıra: tek bir API'de metin, görüntü, ses ve videodan SynthID sinyallerini okuyan bir multimedya dedektörü. Google kaynak yığınını birleştirir.
 
 ### C2PA
 
-Coalition for Content Provenance and Authenticity. Cryptographically signed tamper-evident metadata standard. C2PA 2.2 Explainer (2025). A C2PA manifest records provenance claims (who created, when, what transformations) signed by the creator's key.
+İçerik Kaynağı ve Özgünlük Koalisyonu. Kriptografik olarak imzalanmış, kurcalanmaya karşı dayanıklı meta veri standardı. C2PA 2.2 Açıklayıcı (2025). Bir C2PA manifestosu, yaratıcının anahtarı tarafından imzalanan kaynak iddialarını (kim, ne zaman, hangi dönüşümleri yarattı) kaydeder.
 
-Complementary to watermarking:
-- Metadata can be stripped; watermarks cannot (easily).
-- Metadata is rich (full provenance chain); watermarks carry bits.
-- C2PA depends on platform adoption; watermarks embed automatically.
+Filigranlamayı tamamlayıcı:
+- Meta veriler çıkarılabilir; filigranlar (kolayca) yapamaz.
+- Meta veriler zengindir (tam kaynak zinciri); filigranlar bitler taşır.
+- C2PA platformun benimsenmesine bağlıdır; filigranlar otomatik olarak yerleştirilir.
 
-Google integrates both in Search, Ads, and "About this image."
+Google, hem Arama'ya, Reklamlara hem de "Bu resim hakkında"ya entegre olur.
 
-### Limitations
+### Sınırlamalar
 
-- **Model-specific.** SynthID watermarks generations from SynthID-enabled models. A generation from a model without SynthID is not watermarked, so "no SynthID signal" is not proof of authenticity.
-- **Paraphrase.** Text watermarks do not survive meaning-preserving paraphrase.
-- **Transformation attacks.** arXiv:2508.20228 (2025) shows meaning-preserving attacks that destroy both text watermarks and many image watermarks.
-- **Fine-tune removal.** Per "Stable Signature is Unstable," post-generation fine-tuning removes embedded watermarks.
+- **Modele özgü.** SynthID özellikli modellerden SynthID filigran nesilleri. SynthID'siz bir modelden gelen nesil filigranlı değildir, dolayısıyla "SynthID sinyali yok" orijinalliğin kanıtı değildir.
+- **Açıklama.** Metin filigranları, anlamı koruyan açıklamalardan etkilenmez.
+- **Dönüşüm saldırıları.** arXiv:2508.20228 (2025), hem metin filigranlarını hem de birçok resim filigranını yok eden, anlamı koruyan saldırıları gösterir.
+- **Kaldırma işleminde ince ayar yapın.** "Kararlı İmza Kararsızdır" uyarınca, nesil sonrası fine-tuning gömülü filigranları kaldırır.
 
-### EU AI Act Article 50
+### AB AI Yasası Madde 50
 
-Transparency Code for AI-generated content labeling (first draft December 2025, second draft March 2026, expected final June 2026 per the [European Commission status page](https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content)). The Code remains in draft as of April 2026 and the timeline is subject to change. The regulatory layer that requires the technical layer. Deepfakes must be labeled.
+Yapay zeka tarafından oluşturulan içerik etiketleme için Şeffaflık Kodu (ilk taslak Aralık 2025, ikinci taslak Mart 2026, [Avrupa Komisyonu durum sayfası](https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content) uyarınca son Haziran 2026'da bekleniyor). Kurallar Nisan 2026 itibarıyla taslak halindedir ve zaman çizelgesi değişebilir. Teknik katmanı gerektiren düzenleyici katman. Deepfake'ler etiketlenmelidir.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lessons 22-23 are about what the model emits (private data, provenance signal). Lesson 27 covers training-data governance. Lesson 24 is the regulatory framework that requires these technical measures.
+22-23. dersler modelin ne yaydığıyla ilgilidir (özel veriler, kaynak sinyali). Ders 27 eğitim-veri yönetimini kapsar. Ders 24, bu teknik önlemleri gerektiren düzenleyici framework'dir.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` builds a toy text watermark. Tokens are integers 0..N-1; watermarked sampling biases toward the hash-defined green set. A detector computes the green-token z-score. You can observe detection at 1000-token generations, watch paraphrase destroy the signal, and measure the false-positive rate on human text.
+`code/main.py` bir oyuncak metin filigranı oluşturur. Token'lar 0..N-1 tam sayılarıdır; karma tanımlı yeşil kümeye doğru filigranlı örnekleme önyargıları. Bir dedektör yeşil-token z-puanını hesaplar. 1000-token nesilde algılamayı gözlemleyebilir, yorumlamanın sinyali yok etmesini izleyebilir ve insan metnindeki yanlış pozitif oranını ölçebilirsiniz.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-provenance-audit.md`. Given a content deployment with a provenance claim, it audits: the watermark mechanism (if any), the C2PA signing chain (if any), the adversarial robustness of each, and the per-modality coverage.
+Bu ders `outputs/skill-provenance-audit.md` üretir. Kaynak iddiası olan bir deployment içeriği verildiğinde, şunları denetler: filigran mekanizması (varsa), C2PA imzalama zinciri (varsa), her birinin rakip sağlamlığı ve yöntem başına kapsam.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Report z-scores for watermarked 1000-token generation vs human-authored text. Identify the false-positive rate at the 95% confidence threshold.
+1. `code/main.py`'yı çalıştırın. Filigranlı 1000-token nesil ile insan tarafından yazılan metinlerin z puanlarını raporlayın. %95 güven eşiğinde yanlış pozitiflik oranını belirleyin.
 
-2. Implement a paraphrase attack that replaces 30% of tokens with synonyms. Re-measure the z-score.
+2. token'ların %30'unu eşanlamlılarla değiştiren bir açıklama saldırısı uygulayın. Z-puanını yeniden ölçün.
 
-3. Read Kirchenbauer et al. 2023 Section 6 on robustness. Why do text watermarks fail under paraphrase but image watermarks survive cropping?
+3. Kirchenbauer ve ark.'yı okuyun. 2023 Bölüm 6 sağlamlığa ilişkin. Metin filigranları neden başka kelimelerle ifade edildiğinde başarısız oluyor, ancak resim filigranları kırpılırken neden hayatta kalıyor?
 
-4. Design a deployment that uses SynthID-text + C2PA metadata. Describe the provenance chain a consumer sees. Identify one failure mode of each component.
+4. SynthID metni + C2PA meta verilerini kullanan bir deployment tasarlayın. Tüketicinin gördüğü menşe zincirini açıklayın. Her bileşenin bir arıza modunu tanımlayın.
 
-5. The 2024 "Stable Signature is Unstable" result shows fine-tuning removes the image watermark. Design a deployment control that limits this attack — for example, require signed releases of fine-tuned checkpoints.
+5. 2024 "Sabit İmza Kararsız" sonucu, fine-tuning'nin görüntü filigranını kaldırdığını gösterir. Bu saldırıyı sınırlayan bir deployment kontrolü tasarlayın; örneğin, ince ayarlı kontrol noktalarının imzalı sürümlerini zorunlu kılın.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| SynthID | "Google's watermark" | Cross-modal provenance signal; text, image, audio, video |
-| Token watermark | "Kirchenbauer-style" | Biased-sampling text watermark detectable via green-token z-score |
-| Stable Signature | "image watermark" | Fine-tuned-decoder watermark; ICCV 2023 |
-| C2PA | "the metadata standard" | Cryptographically signed tamper-evident provenance metadata |
-| Paraphrase robustness | "does rewording break it" | Text watermark property; currently limited |
-| Fine-tune removal | "adversarial unwatermark" | Attack that removes image watermark via decoder fine-tuning |
-| Cross-modal detector | "unified SynthID" | November 2025 unified API across modalities |
+| SynthID | "Google'ın filigranı" | Çapraz modal kaynak sinyali; metin, resim, ses, video |
+| Token filigranı | "Kirchenbauer tarzı" | Green-token z-score aracılığıyla tespit edilebilen önyargılı örneklemeli metin filigranı |
+| Kararlı İmza | "görüntü filigranı" | İnce ayarlı kod çözücü filigranı; ICCV 2023 |
+| C2PA | "meta veri standardı" | Şifrelenmiş olarak imzalanmış, kurcalanmaya açık kaynak meta verileri |
+| Açıklama sağlamlığı | "yeniden ifade etmek onu bozar mı?" | Metin filigranı özelliği; şu anda sınırlı |
+| İnce ayar kaldırma | "düşmanca filigransız" | fine-tuning kod çözücü aracılığıyla görüntü filigranını kaldıran saldırı |
+| Çapraz modal dedektör | "birleşik SynthID" | Kasım 2025, çeşitli yöntemlerde birleştirilmiş API |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Kirchenbauer et al. — A Watermark for Large Language Models (ICML 2023, arXiv:2301.10226)](https://arxiv.org/abs/2301.10226) — the token-watermark mechanism
-- [Fernandez et al. — Stable Signature (ICCV 2023, arXiv:2303.15435)](https://arxiv.org/abs/2303.15435) — image watermark paper
-- ["Stable Signature is Unstable" (arXiv:2405.07145)](https://arxiv.org/abs/2405.07145) — the removal attack
-- [Google DeepMind — SynthID](https://deepmind.google/models/synthid/) — the cross-modal watermark
-- [C2PA 2.2 Explainer (2025)](https://c2pa.org/specifications/specifications/2.2/explainer/Explainer.html) — metadata standard
+- [Kirchenbauer ve ark. — Büyük Dil Modelleri için Bir Filigran (ICML 2023, arXiv:2301.10226)](https://arxiv.org/abs/2301.10226) — token-filigran mekanizması
+- [Fernandez ve ark. — Kararlı İmza (ICCV 2023, arXiv:2303.15435)](https://arxiv.org/abs/2303.15435) — resim filigran kağıdı
+- ["Kararlı İmza Kararsız" (arXiv:2405.07145)](https://arxiv.org/abs/2405.07145) — kaldırma saldırısı
+- [Google DeepMind — SynthID](https://deepmind.google/models/synthid/) — modlar arası filigran
+- [C2PA 2.2 Açıklayıcı (2025)](https://c2pa.org/specifications/specifications/2.2/explainer/Explainer.html) — meta veri standardı

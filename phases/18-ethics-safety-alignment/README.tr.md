@@ -1,5 +1,5 @@
-# Aşama 18: Etik, Güvenlik ve Alignment
+# Aşama 18: Etik, Güvenlik ve Uyum
 
-> İnsanlığa yardımcı olan AI sistemleri oluşturun. Bu, isteğe bağlı değildir.
+> İnsanlığa yardımcı olan yapay zeka oluşturun. İsteğe bağlı değil.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

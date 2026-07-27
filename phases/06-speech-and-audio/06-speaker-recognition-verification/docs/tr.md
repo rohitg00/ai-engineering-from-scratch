@@ -1,6 +1,6 @@
 # Konuşmacı Tanıma ve Doğrulama
 
-> ASR "Ne dediler?" diye sorar. Konuşmacı tanıma "Bunu kim söyledi?" diye sorar. Matematik aynı görünüyor - embeddings artı kosinüs - ancak her üretim kararı tek bir EER numarasına bağlıdır.
+> ASR "Ne dediler?" diye sorar. Konuşmacı tanıma "Bunu kim söyledi?" diye sorar. Matematik aynı görünüyor - embedding artı kosinüs - ancak her üretim kararı tek bir EER numarasına bağlı.
 
 **Tür:** Yapım
 **Diller:** Python
@@ -19,7 +19,7 @@ Bir kullanıcı bir parola söylüyor. Şunu bilmek istiyorsunuz: iddia ettikler
 
 ![embedding + kosinüs + EER ile kayıt + doğrulama hattı](../assets/speaker-verification.svg)
 
-**Boru hattı.** Kayıt: hedef konuşmacının 5-30 saniyesini kaydedin; sabit boyutlu bir embedding hesaplayın (ECAPA-TDNN için 192-d, WavLM-large için 256-d). Doğrulama: embedding test ifadesini alın; kosinüs benzerliğini hesaplayın; bir eşikle karşılaştırın.
+**Boru hattı.** Kayıt: hedef konuşmacının 5-30 saniyesini kaydedin; sabit boyutlu bir embedding (ECAPA-TDNN için 192-d, WavLM-large için 256-d) hesaplayın. Doğrulama: embedding test ifadesini alın; kosinüs benzerliğini hesaplayın; bir eşikle karşılaştırın.
 
 **ECAPA-TDNN (2020, 2026'da hala baskın).** Vurgulanan Kanal Dikkati, Yayılma ve Toplama - Zaman Gecikmesi Neural Network. Sıkıştırma-uyarma, çok kafalı dikkat havuzu ve ardından 192-d'ye kadar doğrusal bir katman içeren 1D dönüşüm blokları. Additive Angular Margin kaybı (AAM-softmax) ile VoxCeleb 1+2 (2.700 hoparlör, 1,1 milyon ifade) eğitimi aldı.
 
@@ -27,13 +27,13 @@ Bir kullanıcı bir parola söylüyor. Şunu bilmek istiyorsunuz: iddia ettikler
 
 **x-vektörü (taban çizgisi).** TDNN + istatistik havuzu. Klasik; CPU/edge'de hala kullanışlıdır.
 
-**AAM-softmax.** Açısal alanda ek kenar boşluğu `m` ile standart softmax: Doğru sınıf için `cos(θ + m)`. Sınıflar arası açısal ayrımı zorlar. Tipik `m=0.2`, ölçek `s=30`.
+**AAM-softmax.** Açısal alanda ilave marj `m` ile standart softmax: Doğru sınıf için `cos(θ + m)`. Sınıflar arası açısal ayrımı zorlar. Tipik `m=0.2`, ölçek `s=30`.
 
 ### Puanlama
 
-- **Kayıt ve test embedding'ler arasındaki **kosinüs**. Eşik bazlı karar.
-- **PLDA (Olasılıksal LDA).** Proje embedding'leri, aynı konuşmacının farklı konuşmacıya karşı kapalı biçimli bir olasılık oranına sahip olduğu gizli bir uzaya yönlendirir. +%10–20 EER azaltımı için kosinüsün üstüne eklenir. Standart 2020 öncesi; artık yalnızca kapalı set kurulumlarında kullanılıyor.
-- **Puan normalleştirme.** `S-norm` veya `AS-norm`: her puanı bir grup sahte araç ve standarta göre normalleştirin. Alanlar arası değerlendirme için gereklidir.
+- Kayıt ve test embedding'ler arasındaki **kosinüs**. Eşik bazlı karar.
+- **PLDA (Olasılıksal LDA).** embedding'leri aynı konuşmacının farklı konuşmacıya karşı kapalı form olasılık oranına sahip olduğu gizli bir alana projelendirin. +%10–20 EER azaltımı için kosinüsün üstüne eklenir. Standart 2020 öncesi; artık yalnızca kapalı set kurulumlarında kullanılıyor.
+- **Puan normalleştirme.** `S-norm` veya `AS-norm`: her puanı bir grup sahte ortalama ve standarta göre normalleştirin. Alanlar arası değerlendirme için gereklidir.
 
 ### Bilmeniz gereken sayılar (2026)
 
@@ -51,7 +51,7 @@ Bir kullanıcı bir parola söylüyor. Şunu bilmek istiyorsunuz: iddia ettikler
 
 ## İnşa Et
 
-### 1. Adım: MFCC istatistiklerinden embedding oyuncağı
+### Adım 1: MFCC istatistiklerinden embedding oyuncak
 
 ```python
 def embed_mfcc_stats(signal, sr):
@@ -64,7 +64,7 @@ def embed_mfcc_stats(signal, sr):
     return mean + std  # 26-d
 ```
 
-Bir mil kadar SOTA değil - yalnızca öğretim için. `code/main.py` bunu sentetik konuşmacı verileri üzerinde kavram kanıtı olarak kullanıyor.
+Bir mil kadar SOTA değil - yalnızca öğretim için. `code/main.py` bunu sentetik hoparlör verilerine ilişkin bir kavram kanıtı olarak kullanır.
 
 ### Adım 2: kosinüs benzerliği + eşik
 
@@ -142,13 +142,13 @@ for turn, _, speaker in diarization.itertracks(yield_label=True):
 
 ## Gönderin
 
-`outputs/skill-speaker-verifier.md` olarak kaydet. Seçim modeli, kayıt protokolü, eşik ayarlama planı ve dolandırıcılık önlemleri.
+`outputs/skill-speaker-verifier.md` olarak kaydedin. Seçim modeli, kayıt protokolü, eşik ayarlama planı ve dolandırıcılık önlemleri.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py` komutunu çalıştırın. Sentetik "hoparlörler" (farklı ton profilleri) oluşturur, kaydolur, 100 çiftlik bir deneme listesine EER'yi hesaplar.
+1. **Kolay.** `code/main.py`'yi çalıştırın. Sentetik "hoparlörler" (farklı ton profilleri) oluşturur, kaydolur, 100 çiftlik bir deneme listesine EER'yi hesaplar.
 2. **Orta.** 30 VoxCeleb1 konuşmasında SpeechBrain ECAPA'yı kullanın (her biri 5 hoparlör × 6). EER'yi kosinüs ve PLDA ile hesaplayın.
-3. **Zor.** `pyannote.audio` ile tam kaydı oluşturun → günlük tutun → ardışık düzeni doğrulayın. AMI geliştirme setinde DER'yi değerlendirin.
+3. **Zor.** `pyannote.audio` ile tam kaydı oluşturun → günlük tutun → işlem hattını doğrulayın. AMI geliştirme setinde DER'yi değerlendirin.
 
 ## Anahtar Terimler
 
@@ -160,13 +160,13 @@ for turn, _, speaker in diarization.itertracks(yield_label=True):
 | Açık set | Bilinmeyen mümkün | Test seti kayıtlı olmayan konuşmacılar içerebilir. |
 | Kayıt | Kaydediliyor | Bir konuşmacının referansı embedding hesaplanıyor. |
 | AAM-softmax | Kayıp | İlave açısal kenar boşluğuna sahip Softmax; küme ayrılmasını zorlar. |
-| PLDA | Klasik puanlama | Olasılıksal LDA; embedding'ların üstünde olasılık-oran puanlaması. |
+| PLDA | Klasik puanlama | Olasılıksal LDA; embedding'lerin üstünde olasılık oranı puanlaması. |
 | DER | Günlükleştirme metriği | Günlükleştirme Hata Oranı — kaçırılan + yanlış alarm + karışıklık. |
 
 ## Daha Fazla Okuma
 
-- [Snyder ve ark. (2018). X-Vectors: Konuşmacı Tanıma için Sağlam DNN Embedding'ler](https://www.danielpovey.com/files/2018_icassp_xvectors.pdf) — klasik derin-embedding makalesi.
-- [Desplanques ve ark. (2020). ECAPA-TDNN](https://arxiv.org/abs/2005.07143) — baskın mimari 2020–2026.
+- [Snyder ve ark. (2018). X-Vectors: Konuşmacı Tanıma için Sağlam DNN Embedding'ler](https://www.danielpovey.com/files/2018_icassp_xvectors.pdf) — klasik derin embedding kağıdı.
+- [Desplanques ve diğerleri. (2020). ECAPA-TDNN](https://arxiv.org/abs/2005.07143) — 2020–2026'nın baskın mimarisi.
 - [Chen ve ark. (2022). WavLM: Tam Yığın Konuşma İşleme için Büyük Ölçekli Kendi Kendini Denetleyen Ön Eğitim](https://arxiv.org/abs/2110.13900) — SV ve günlük oluşturma için SSL omurgası.
 - [Bredin ve ark. (2023). pyannote.audio 3.1](https://github.com/pyannote/pyannote-audio) — üretim günlüğü + embedding yığını.
-- [VoxCeleb sıralama tablosu (2026'da güncellendi)](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/) — modeller arasındaki mevcut EER sıralamaları.
+- [VoxCeleb sıralama tablosu (2026'da güncellendi)](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/) — modeller genelinde mevcut EER sıralamaları.

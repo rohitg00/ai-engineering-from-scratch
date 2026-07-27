@@ -9,29 +9,29 @@
 
 ## Öğrenme Hedefleri
 
-- Mobil Yüksek Lisans inference'nin neden bellek bant genişliğine bağlı olduğunu ve bilgi işlemin neden ikincil olduğunu açıklayın.
+- Mobil LLM inference'nin neden bellek bant genişliğine bağlı olduğunu ve bilgi işlemin neden ikincil olduğunu açıklayın.
 - Dört uç hedefi (Apple ANE, Qualcomm Hexagon, WebGPU/WebLLM, NVIDIA Jetson) numaralandırın ve her birini bir kullanım senaryosuyla eşleştirin.
 - 2026 WebGPU kapsam boşluğunu (Firefox Android yakalıyor) ve Safari iOS 26 açılışını adlandırın.
 - Hedef başına bir niceleme formatı seçin (ANE için Core ML INT4 + FP16, Hexagon için QNN INT8/INT4, tarayıcı için WebGPU Q4, Jetson Thor için NVFP4).
 
 ## Sorun
 
-Bir müşteri cihazda bir sohbet robotu istiyor: önce ses, varsayılan olarak özel, çevrimdışı çalışıyor. MacBook Pro M3 Max'te Llama 3.1 8B Q4 ~55 tok/s hızında çalışıyor - gayet iyi. Bir iPhone 16 Pro'da aynı model 3 tok/s hızında çalışıyor; bu iyi değil. Snapdragon 8 Gen 3'e sahip orta sınıf bir Android'de, 7 tok/s. Tarayıcıda, Chrome Android v121+ üzerinde WebGPU aracılığıyla, cihaza bağlı olarak 4-8 ​​tok/s.
+Bir müşteri cihazda bir sohbet robotu istiyor: önce ses, varsayılan olarak özel, çevrimdışı çalışıyor. MacBook Pro M3 Max'te Llama 3.1 8B Q4 ~55 tok/s hızında çalışıyor - gayet iyi. Bir iPhone 16 Pro'da aynı model 3 tok/s hızla çalışıyor; bu iyi değil. Snapdragon 8 Gen 3'e sahip orta sınıf bir Android'de, 7 tok/s. Tarayıcıda, Chrome Android v121+ üzerinde WebGPU aracılığıyla, cihaza bağlı olarak 4-8 ​​tok/s.
 
-Verim farkı bir taşıma sorunu değildir. Bu, bant genişliği boşluğu çarpı niceleme formatı çarpı NPU'ya kullanıcı alanından erişilip erişilemediğidir. 2026'daki Edge inference dört farklı çözümü olan dört farklı problemdir.
+Verim farkı bir taşıma sorunu değildir. Bu, bant genişliği boşluğu çarpı niceleme formatı çarpı NPU'ya kullanıcı alanından erişilip erişilemediğidir. 2026'daki Edge inference, dört farklı çözümle dört farklı sorundur.
 
 ## Konsept
 
 ### Bant genişliği gerçek tavandır
 
-Kod çözme, her token için ağırlıkların tam setini okur. 4. çeyrekteki bir 7B modeli 3,5 GB'tır. 50 GB/sn hızında 3,5 GB okumak 70 ms sürer; bu, ~14 tok/s teorik tavandır. 90 GB/sn'de (üst düzey mobil DRAM) tavan ~25 tok/s'ye çıkar. Bu sayının altında hiçbir hesaplama miktarı yardımcı olmaz.
+Decode, her token için ağırlıkların tam setini okur. 4. çeyrekteki bir 7B modeli 3,5 GB'dir. 50 GB/sn hızında 3,5 GB okumak 70 ms sürer; bu, ~14 tok/s teorik tavandır. 90 GB/sn'de (üst düzey mobil DRAM) tavan ~25 tok/s'ye çıkar. Bu sayının altında hiçbir hesaplama miktarı yardımcı olmaz.
 
 3 TB/s hızında Veri Merkezi HBM3, aynı 3,5 GB'yi 1,2 ms'de temizler; tavan 830 tok/s'dir. Aynı model, aynı ağırlık. Farklı bellek alt sistemi.
 
 ### Apple Sinir Motoru (M4 / A18)
 
 - 38 TOPS'a kadar. Birleşik bellek (CPU ve ANE aynı havuzu paylaşır) — kopyalama yükü yoktur.
-- Core ML + `.mlmodel` derlenmiş modellerle veya PyTorch aracılığıyla Metal Performance Shader'lar (MPS) aracılığıyla erişim.
+- Core ML + `.mlmodel` derlenmiş modelleri veya PyTorch aracılığıyla Metal Performance Shader'lar (MPS) aracılığıyla erişim.
 - Llama.cpp Metal arka uç doğrudan ANE'yi değil MPS'yi kullanır; yerel ANE, Core ML dönüşümü gerektirir.
 - 2026'da iOS uygulamaları için en pratik yol: INT4 ağırlıkları + FP16 etkinleştirmeleriyle Core ML.
 
@@ -39,7 +39,7 @@ Kod çözme, her token için ağırlıkların tam setini okur. 4. çeyrekteki bi
 
 - 45 TOPS'a kadar. SoC'de CPU ve GPU ile entegre ancak ayrı bellek alanı.
 - QNN (Qualcomm Neural Network) SDK ve AI Hub, PyTorch/ONNX'ten dönüşüm sağlar.
-- Sohbet şablonları, Llama 3.2, Phi-3'ün tümü AI Hub'da birinci sınıf artifact'lar olarak gönderilir.
+- Sohbet şablonları, Llama 3.2 ve Phi-3'ün tümü AI Hub'da birinci sınıf artifact'ler olarak gönderilir.
 
 ### Intel / AMD NPU'lar (Lunar Lake, Ryzen AI 300)
 
@@ -66,17 +66,17 @@ Kod çözme, her token için ağırlıkların tam setini okur. 4. çeyrekteki bi
 |--------|--------|-------|
 | Elma ANE | INT4 ağırlıkları + FP16 aktivasyonları | Çekirdek ML dönüşüm yolu |
 | Qualcomm Altıgen | QNN INT8 / INT4 | AI Hub dönüştürücüler |
-| WebGPU / WebLLM | 4. Çeyrek MLC (q4f16_1) | `mlc_llm convert_weight` + derlenmiş `.wasm`; kullanın GGUF desteklenmiyor |
+| WebGPU / WebLLM | 4. Çeyrek MLC (q4f16_1) | `mlc_llm convert_weight` + derlenmiş `.wasm` kullanın; GGUF desteklenmiyor |
 | Jetson Orin Nano | 4. Çeyrek GGUF veya TRT-LLM INT4 | Belleğe bağlı |
 | Jetson AGX / Thor | NVFP4 + FP8 KV | Edge-LLM yolu |
 
 ### Uçtaki uzun bağlam tuzağı
 
-Llama 3.1'in 128K bağlamı bir veri merkezi özelliğidir. 8 GB RAM'e sahip bir telefonda, 32K tokens için 4 GB model + 2 GB KV önbellek + işletim sistemi yükü = OOM. Agresif KV nicelemesi (Q4 KV) kabul edilmedikçe Edge deployment'ler bağlamı 4K-8K'da tutar.
+Llama 3.1'in 128K bağlamı bir veri merkezi özelliğidir. 8 GB RAM'e sahip bir telefonda, 32K token'ler için 4 GB model + 2 GB KV önbellek + işletim sistemi yükü = OOM. Edge deployment'ler, agresif KV nicelemesi (Q4 KV) kabul edilmediği sürece bağlamı 4K-8K'da tutar.
 
 ### Voice harika bir uygulama
 
-Ses agent'lar gecikmeye duyarlıdır (ilk token < 500 ms). Yerel inference, ağ gecikmesini tamamen ortadan kaldırır. Konuşmayı metne dönüştürme (Whisper Turbo çeşitleri uçta çalışır) ile birleştirildiğinde, kenar inference üretim kalitesinde ses döngüsü haline gelir.
+Ses agent'ler gecikmeye duyarlıdır (ilk token < 500 ms). Yerel inference, ağ gecikmesini tamamen ortadan kaldırır. Konuşmayı metne dönüştürme (Whisper Turbo çeşitleri uçta çalışır) ile birleştirildiğinde inference, prodüksiyon kalitesinde ses döngüsü haline gelir.
 
 ### Hatırlamanız gereken sayılar
 
@@ -87,17 +87,17 @@ Ses agent'lar gecikmeye duyarlıdır (ilk token < 500 ms). Yerel inference, ağ 
 - Veri merkezi uç bant genişliği boşluğu: 30-50x.
 - WebGPU mobil kapsama alanı: ~%70-75 (Firefox Android gecikmesi).
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` uç hedefler boyunca bant genişliğine bağlı matematikten teorik kod çözme aktarım hızı tavanlarını hesaplar. Gözlemlenen benchmark'larle karşılaştırır ve darboğazın hesaplamanın değil bant genişliğinin olduğunu vurgular.
+`code/main.py`, uç hedefler boyunca bant genişliğine bağlı matematikten teorik kod çözme üretim tavanlarını hesaplar. Gözlemlenen benchmark'lerle karşılaştırılır ve darboğazın hesaplama değil bant genişliği olduğu vurgulanır.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-Bu ders `outputs/skill-edge-target-picker.md` üretir. Belirli bir platform (iOS/Android/tarayıcı/Jetson), model ve gecikme/bellek bütçesi, bir niceleme formatı ve dönüşüm hattını seçer.
+Bu ders `outputs/skill-edge-target-picker.md`'yi üretir. Belirli bir platform (iOS/Android/tarayıcı/Jetson), model ve gecikme/bellek bütçesi, bir niceleme formatı ve dönüşüm hattını seçer.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. Snapdragon 8 Gen 3 (~77 GB/s bant genişliği) üzerinde 4. çeyrekte 7B modeli için kod çözme tavanını hesaplayın. Gözlemlenen 6-8 tok/s ile karşılaştırın — çalışma zamanı verimli mi?
+1. `code/main.py`'yi çalıştırın. Snapdragon 8 Gen 3 (~77 GB/s bant genişliği) üzerinde 4. çeyrekte 7B modeli için kod çözme tavanını hesaplayın. Gözlemlenen 6-8 tok/s ile karşılaştırın — çalışma zamanı verimli mi?
 2. Android'deki WebGPU, Chrome v121+ gerektirir. Aynı OpenAI uyumlu API aracılığıyla sunucu tarafında eski tarayıcılar için bir yedek tasarlayın.
 3. iOS uygulamanızın 4K bağlam akışına ihtiyacı var. Hangi model/format kombinasyonu iPhone 16'da 4 GB aktif hafızanın altında kalmanızı sağlar?
 4. Jetson AGX Orin, gpt-oss-20b'yi 40 tok/s hızında çalıştırır. Jetson Nano yalnızca 3B'ye uyar. Ürününüz her ikisini de hedefliyorsa inference yığınını nasıl birleştirebilirsiniz?
@@ -120,9 +120,9 @@ Bu ders `outputs/skill-edge-target-picker.md` üretir. Belirli bir platform (iOS
 
 ## Daha Fazla Okuma
 
-- [Cihaz Üzerinde Yüksek Lisans Birliğin Durumu 2026](https://v-chandra.github.io/on-device-llms/) — yatay ve benchmark'lar.
+- [Cihaz Üzerinde Yüksek Lisans Birliğin Durumu 2026](https://v-chandra.github.io/on-device-llms/) — yatay ve benchmark'ler.
 - [NVIDIA Jetson Edge AI](https://developer.nvidia.com/blog/getting-started-with-edge-ai-on-nvidia-jetson-llms-vlms-and-foundation-models-for-robotics/) — Orin / AGX / Thor.
 - [NVIDIA TensorRT Edge-LLM](https://developer.nvidia.com/blog/accelerating-llm-and-vlm-inference-for-automotive-and-robotics-with-nvidia-tensorrt-edge-llm/) — 2026 uç bağlantı noktası duyurusu.
-- [WebLLM (arXiv:2412.15803)](https://arxiv.org/html/2412.15803v2) — tasarım ve benchmark'lar.
-- [Apple Core ML](https://developer.apple.com/documentation/coreml) — ANE-yerel dönüşüm.
+- [WebLLM (arXiv:2412.15803)](https://arxiv.org/html/2412.15803v2) — tasarım ve benchmark'ler.
+- [Apple Core ML](https://developer.apple.com/documentation/coreml) — ANE-yerel dönüştürme.
 - [Qualcomm AI Hub](https://aihub.qualcomm.com/) — Hexagon için önceden dönüştürülmüş modeller.

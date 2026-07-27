@@ -4,22 +4,22 @@
 
 **Tür:** Yapım
 **Diller:** Python
-**Önkoşullar:** Aşama 5 · 10 (Attention Mechanism), Aşama 5 · 04 (GloVe, FastText, Subword)
+**Önkoşullar:** Aşama 5 · 10 (Attention Mechanism), Aşama 5 · 04 (GloVe, FastText, Alt Kelime)
 **Süre:** ~75 dakika
 
 ## Sorun
 
 Bir model, bir dildeki cümleyi okur ve başka bir dildeki cümleyi üretir. Uzunluk değişir. Kelime sırası değişir. Bazı kaynak kelimeler birden fazla hedef kelimeyle eşleşir ve bunun tersi de geçerlidir. Deyimler birebir eşlemeyi reddeder. Fransızca'da "seni özledim" "tu me manques" anlamına gelir - kelimenin tam anlamıyla "benim için eksiksin." Hiçbir kelime düzeyinde hizalama bundan sağ çıkamaz.
 
-Makine çevirisi, NLP'yi kodlayıcı-kod çözücüleri, dikkati, transformer'ları ve en sonunda tüm Yüksek Lisans paradigmasını icat etmeye zorlayan görevdir. İleriye doğru atılan her adım, çeviri kalitesinin ölçülebilir olması ve insan ile makine arasındaki uçurumun inatçı olması nedeniyle gerçekleşti.
+Makine çevirisi, NLP'yi kodlayıcı-kod çözücüleri, dikkati, transformer'leri ve sonunda tüm Yüksek Lisans paradigmasını icat etmeye zorlayan görevdir. İleriye doğru atılan her adım, çeviri kalitesinin ölçülebilir olması ve insan ile makine arasındaki uçurumun inatçı olması nedeniyle gerçekleşti.
 
-Bu ders tarih dersini atlar ve 2026'nın çalışma hattını öğretir: önceden eğitilmiş çok dilli kodlayıcı-kod çözücü (NLLB-200 veya mBART), alt kelime tokenleştirme, ışın arama, BLEU ve chrF değerlendirmesi ve hala yakalanmadan üretime gönderilen bir avuç hata modu.
+Bu ders tarih dersini atlar ve 2026'nın çalışma hattını öğretir: önceden eğitilmiş çok dilli kodlayıcı-kod çözücü (NLLB-200 veya mBART), tokenizasyon alt kelimesi, ışın arama, BLEU ve chrF değerlendirmesi ve hala üretime yakalanmadan gönderilen bir avuç arıza modu.
 
 ## Konsept
 
-![MT boru hattı: tokenize → kodlamak → dikkatle kod çözme → detokenize](../assets/mt-pipeline.svg)
+![MT boru hattı: tokenize → kodlama → dikkatle kod çözme → detokenize](../assets/mt-pipeline.svg)
 
-Modern MT, paralel metin üzerinde eğitilmiş bir transformer kodlayıcı-kod çözücüdür. Kodlayıcı, kaynağı kendi dilinin tokenizasyonunda okur. Kod çözücü, kodlayıcının çapraz dikkat yoluyla çıktısını kullanarak her seferinde bir alt kelime olmak üzere hedefi oluşturur (ders 10). Kod çözme, açgözlü kod çözme tuzağından kaçınmak için ışın aramayı kullanır. Çıktı, tokenden arındırılır, gerçek dışılaştırılır ve bir referansa göre puanlanır.
+Modern MT, paralel metin üzerinde eğitilmiş bir transformer kodlayıcı-kod çözücüdür. Kodlayıcı, kaynağı kendi dilinin tokenizasyonunda okur. Kod çözücü, kodlayıcının çapraz dikkat yoluyla çıktısını kullanarak her seferinde bir alt kelime olmak üzere hedefi üretir (ders 10). Kod çözme, açgözlü kod çözme tuzağından kaçınmak için ışın aramayı kullanır. Çıktı detoken'ye dönüştürülür, gerçek dışı hale getirilir ve bir referansa göre puanlanır.
 
 Üç operasyonel seçenek, gerçek dünyadaki MT kalitesini artırır.
 
@@ -78,7 +78,7 @@ chrf = sacrebleu.corpus_chrf(hypotheses, references)
 print(f"BLEU: {bleu.score:.1f}  chrF: {chrf.score:.1f}")
 ```
 
-Her zaman `sacrebleu` kullanın. Puanların makaleler arasında karşılaştırılabilir olması için tokenleştirmeyi normalleştirir. Kendi BLEU hesaplamanızı yuvarlamak, benchmark'lerin ne kadar yanıltıcı olduğunu gösterir.
+Her zaman `sacrebleu` kullanın. Puanların makaleler arasında karşılaştırılabilir olması için tokenizasyonunu normalleştirir. Kendi BLEU hesaplamanızı yuvarlamak, benchmark'lerin ne kadar yanıltıcı olduğunu gösterir.
 
 ### Üç aşamalı değerlendirme hiyerarşisi (2026)
 
@@ -86,9 +86,9 @@ Modern makine çevirisi değerlendirmesi üç tamamlayıcı metrik ailesini kull
 
 - **Sezgisel** (BLEU, chrF). Hızlıdır, referansa dayalıdır, yorumlanabilirdir, ifadelere duyarsızdır. Eski karşılaştırma ve regresyon tespiti için kullanın.
 - **Öğrenildi** (COMET, BLEURT, BERTScore). İnsan muhakemesi üzerine eğitilmiş sinir modelleri; Çevirinin anlamsal benzerliğini kaynak ve referansla karşılaştırır. COMET, 2023'ten bu yana MT araştırmalarıyla en yüksek ilişkiye sahiptir ve kalitenin önemli olduğu 2026 üretim varsayılanıdır.
-- **Yargıç olarak yüksek lisans** (referanssız). Prompt çevirileri akıcılık, yeterlilik, üslup ve kültürel uygunluk açısından puanlamak için büyük bir model. Yargıç olarak GPT-4, değerlendirme listesi iyi tasarlandığında ~%80 oranında insan anlaşmasıyla eşleşir. Referansın bulunmadığı açık uçlu içerik için kullanın.
+- **Yargıç olarak yüksek lisans** (referanssız). Prompt Çevirileri akıcılık, yeterlilik, üslup ve kültürel uygunluk açısından puanlayan geniş bir model. Yargıç olarak GPT-4, değerlendirme listesi iyi tasarlandığında ~%80 oranında insan mutabakatına uyuyor. Referansın bulunmadığı açık uçlu içerik için kullanın.
 
-Pratik 2026 yığını: BLEU ve chrF için `sacrebleu`, COMET için `unbabel-comet` ve insana dönük son sinyal için prompted LLM. Üretim verilerine güvenmeden önce her ölçümü 50-100 insan etiketli örneğe göre kalibre edin.
+Pratik 2026 yığını: BLEU ve chrF için `sacrebleu`, COMET için `unbabel-comet` ve insana dönük son sinyal için bir prompted LLM. Üretim verilerine güvenmeden önce her ölçümü 50-100 insan etiketli örneğe göre kalibre edin.
 
 Referanssız metrikler (COMET-QE, BLEURT-QE, LLM-yargıç), referanssız çevirileri değerlendirmenize olanak tanır; bu, referans çevirilerin bulunmadığı uzun kuyruklu dil çiftleri için önemlidir.
 
@@ -97,14 +97,14 @@ Referanssız metrikler (COMET-QE, BLEURT-QE, LLM-yargıç), referanssız çeviri
 Yukarıdaki çalışma hattı, zamanın %80'inde akıcı bir şekilde çeviri yapacak ve geri kalan %20'sinde sessizce başarısız olacaktır. Adlandırılmış arıza modları:
 
 - **Halüsinasyon.** Model, kaynakta olmayan içeriği icat eder. Alışılmadık alan sözlüğünde yaygındır. Belirti: Çıktı akıcı ancak kaynağın belirtmediği gerçekleri iddia ediyor. Azaltma: etki alanı terimlerinde kısıtlı kod çözme, düzenlenmiş içerik üzerinde insan incelemesi, çıktının girdiden çok daha uzun süre izlenmesi.
-- **Hedef dışı nesil.** Model yanlış dile çevriliyor. NLLB, nadir dil çiftlerinde şaşırtıcı bir şekilde buna eğilimlidir. Azaltma: `forced_bos_token_id`'yi doğrulayın ve çıktıda her zaman bir dil kimliği modeli kontrolüyle kodu çözün.
-- **Terminoloji kayması.** "Kaydol", belge 1'de "s'inscrire" ve belge 2'de "creer un compte" haline gelir. Kullanıcı arayüzü metni ve kullanıcıya yönelik dizeler için tutarlılık, ham kaliteden daha önemlidir. Azaltma: sözlükle sınırlandırılmış kod çözme veya sözlük sonrası düzenleme.
+- **Hedef dışı nesil.** Model yanlış dile çevriliyor. NLLB, nadir dil çiftlerinde şaşırtıcı bir şekilde buna eğilimlidir. Azaltma: `forced_bos_token_id`'yi doğrulayın ve her zaman çıktıda bir dil kimliği modeli kontrolüyle kodu çözün.
+- **Terminoloji sapması.** "Kaydol", belge 1'de "s'inscrire" ve belge 2'de "creer un compte" haline gelir. Kullanıcı arayüzü metni ve kullanıcıya yönelik dizeler için tutarlılık, ham kaliteden daha önemlidir. Azaltma: sözlükle sınırlandırılmış kod çözme veya sözlük sonrası düzenleme.
 - **Biçimsel uyumsuzluk.** Fransızca "tu" ve "vous", Japonca nezaket düzeyleri. Model, eğitimde hangisi daha yaygınsa onu seçer. Müşteriye yönelik içerik için bu genellikle yanlıştır. Azaltma: Model destekliyorsa token formalitesine sahip prompt öneki veya yalnızca resmi korpora üzerinde küçük bir modele ince ayar yapın.
-- **Kısa girişte uzunluk patlaması.** Çok kısa giriş cümleleri genellikle aşırı uzun çevirilere neden olur çünkü uzunluk cezası ~5 kaynak tokens'nin altına düşer. Azaltma: kaynak uzunluğuyla orantılı kesin maksimum uzunluk sınırı.
+- **Kısa girişte uzunluk patlaması.** Çok kısa giriş cümleleri genellikle aşırı uzun çevirilere neden olur çünkü uzunluk cezası ~5 kaynak token'nin altına düşer. Azaltma: kaynak uzunluğuyla orantılı kesin maksimum uzunluk sınırı.
 
 ### Adım 4: Bir alan adı için fine-tuning
 
-Önceden eğitilmiş modeller geneldir. Yasal, tıbbi veya oyun diyalogu çevirisi, alana paralel verilerde fine-tuning'dan ölçülebilir şekilde faydalanır. Tarif egzotik değil:
+Önceden eğitilmiş modeller geneldir. Yasal, tıbbi veya oyun diyalogu çevirisi, alan paralel verileri üzerinde fine-tuning'den ölçülebilir şekilde faydalanır. Tarif egzotik değil:
 
 ```python
 from transformers import Trainer, TrainingArguments
@@ -143,11 +143,11 @@ MT için 2026 üretim yığını:
 |---------|---------------------------|
 | Herhangi birinden herhangi birine, 200 dil | `facebook/nllb-200-distilled-600M` (dizüstü bilgisayar) veya `nllb-200-3.3B` (üretim) |
 | İngilizce merkezli, yüksek kaliteli, 50 dil | `facebook/mbart-large-50-many-to-many-mmt` |
-| Kısa vadeli, ucuz inference, İngilizce-Fransızca/Almanca/İspanyolca | Helsinki-NLP / Marian modelleri |
+| Kısa vadede, ucuz inference, İngilizce-Fransızca/Almanca/İspanyolca | Helsinki-NLP / Marian modelleri |
 | Gecikme açısından kritik tarayıcı tarafı | ONNX-kuantumlanmış Marian (~50 MB) |
-| Maksimum kalite, ödemeye hazır | GPT-4 / Claude / Gemini, prompts |
+| Maksimum kalite, ödemeye hazır | GPT-4 / Claude / Gemini prompts çevirisiyle |
 
-Yüksek Lisans'lar artık 2026 itibarıyla çeşitli dil çiftlerinde, özellikle de deyimsel içerik ve uzun bağlam konusunda uzmanlaşmış makine çevirisi modellerinden daha iyi performans gösteriyor. Takas, token maliyet ve gecikme başına yapılır. Bağlam uzunluğu, biçimsel tutarlılık veya prompting aracılığıyla etki alanı uyarlaması aktarım hızından daha önemliyse bir Yüksek Lisans Diploması seçin.
+Yüksek Lisans'lar artık 2026 itibarıyla çeşitli dil çiftlerinde, özellikle de deyimsel içerik ve uzun bağlam konusunda uzmanlaşmış makine çevirisi modellerinden daha iyi performans gösteriyor. Takas token maliyet ve gecikme başına yapılır. Bağlam uzunluğu, biçimsel tutarlılık veya prompting aracılığıyla etki alanı uyarlaması, verimden daha önemli olduğunda bir Yüksek Lisans (LLM) seçin.
 
 ## Gönderin
 
@@ -176,8 +176,8 @@ Refuse to ship a translation without a language-ID check on output. Refuse to ev
 ## Egzersizler
 
 1. **Kolay.** `nllb-200-distilled-600M` kullanarak 5 cümlelik İngilizce paragrafı Fransızcaya ve tekrar İngilizceye çevirin. Gidiş-dönüş yolculuğunun orijinaline ne kadar yakın olduğunu ölçün. Kelime seçimi kaymasıyla anlamsal korumayı görmelisiniz.
-2. **Orta.** `fasttext lid.176` veya `langdetect` kullanarak çeviri çıktılarına bir dil kimliği kontrolü uygulayın. Hedef dışı nesillerin geri dönmeden yakalanması için MT çağrısına entegre edin.
-3. **Zor.** Seçtiğiniz 5.000 çift alan adı kümesinde `nllb-200-distilled-600M` üzerinde ince ayar yapın. fine-tuning öncesinde ve sonrasında uzatılmış bir sette BLEU'yu ölçün. Hangi tür cümlelerin geliştiğini, hangilerinin gerilediğini bildirin.
+2. **Orta.** `fasttext lid.176` veya `langdetect` kullanarak çeviri çıktılarına dil kimliği denetimi uygulayın. Hedef dışı nesillerin geri dönmeden yakalanması için MT çağrısına entegre edin.
+3. **Zor.** `nllb-200-distilled-600M`'de seçtiğiniz 5.000 çift alan adı kümesinde ince ayar yapın. fine-tuning öncesinde ve sonrasında uzatılmış bir sette BLEU'yu ölçün. Hangi tür cümlelerin geliştiğini, hangilerinin gerilediğini bildirin.
 
 ## Anahtar Terimler
 
@@ -185,7 +185,7 @@ Refuse to ship a translation without a language-ID check on output. Refuse to ev
 |------|-----------------|-----------------------|
 | BLEU | Çeviri puanı | Kısalık cezasıyla birlikte N gram hassasiyeti. [0, 100]. |
 | chrF | Karakter F-puanı | Karakter düzeyinde F puanı. Morfolojik açıdan zengin diller için daha duyarlıdır. |
-| NMT | Sinirsel MT | Transformer kodlayıcı-kod çözücü paralel metin üzerinde eğitildi. 2017+ varsayılanı. |
+| NMT | Sinirsel MT | Transformer paralel metin üzerinde eğitilmiş kodlayıcı-kod çözücü. 2017+ varsayılanı. |
 | NLLB | Geride Dil Kalmadı | Meta'nın 200 dilli MT model ailesi. |
 | Kısıtlı kod çözme | Kontrollü çıktı | Belirli token'leri veya n-gramları çıktıda görünmeye/görünmemeye zorlayın. |
 | Halüsinasyon | İçerik icat edildi | Kaynak tarafından desteklenmeyen model çıktısı. |
@@ -193,6 +193,6 @@ Refuse to ship a translation without a language-ID check on output. Refuse to ev
 ## Daha Fazla Okuma
 
 - [Costa-jussà ve ark. (2022). Geride Dil Kalmadı: İnsan Odaklı Makine Çevirisini Ölçeklendirmek](https://arxiv.org/abs/2207.04672) — NLLB makalesi.
-- [Post (2018). BLEU Puanlarının Raporlanmasında Açıklık Çağrısı](https://aclanthology.org/W18-6319/) — neden `sacrebleu` BLEU'yu raporlamanın tek doğru yoludur.
-- [Popović (2015). chrF: otomatik MT değerlendirmesi için karakter n-gram F puanı](https://aclanthology.org/W15-3049/) — chrF makalesi.
-- [Sarılma Yüz MT kılavuzu](https://huggingface.co/docs/transformers/tasks/translation) — pratik fine-tuning izlenecek yol.
+- [Post (2018). BLEU Puanlarının Raporlanmasında Netlik Çağrısı](https://aclanthology.org/W18-6319/) — `sacrebleu` neden BLEU'yu raporlamanın tek doğru yoludur.
+- [Popović (2015). chrF: otomatik MT değerlendirmesi için karakter n-gram F puanı](https://aclanthology.org/W15-3049/) — chrF kağıdı.
+- [Sarılma Yüzü MT kılavuzu](https://huggingface.co/docs/transformers/tasks/translation) — pratik fine-tuning izlenecek yol.

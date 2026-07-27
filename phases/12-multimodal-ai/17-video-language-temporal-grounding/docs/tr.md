@@ -1,6 +1,6 @@
-# Video Dili Modelleri: Zamansal Token'lar ve Grounding
+# Video Dili Modelleri: Geçici Token'ler ve Topraklama
 
-> Video bir fotoğraf yığını değildir. 5 saniyelik bir klipte, bir görüntü modelinin temsil edemeyeceği nedensel sıralama, eylem fiilleri ve olay zamanlaması bulunur. Video-LLaMA (Zhang ve diğerleri, Haziran 2023), görsel-işitsel topraklamaya sahip ilk açık video-LLM'yi piyasaya sürdü. VideoChat ve Video-LLaVA modeli ölçeklendirdi. 2025 yılına gelindiğinde Qwen2.5-VL'nin TMRoPE'si, sınıra özel modellerle aradaki açığı kapattı. Her sistem zamansal token'ları farklı şekilde çözdü; klip başına Q-former, kare başına concat-pool, token başına TMRoPE. Bu ders kalıpları okur, tek tip ve dinamik çerçeve örnekleyici oluşturur ve zamansal temellendirme görevlerini değerlendirir.
+> Video bir fotoğraf yığını değildir. 5 saniyelik bir klipte, bir görüntü modelinin temsil edemeyeceği nedensel sıralama, eylem fiilleri ve olay zamanlaması bulunur. Video-LLaMA (Zhang ve diğerleri, Haziran 2023), görsel-işitsel topraklamaya sahip ilk açık video-LLM'yi piyasaya sürdü. VideoChat ve Video-LLaVA modeli ölçeklendirdi. 2025 yılına gelindiğinde Qwen2.5-VL'nin TMRoPE'si, sınırdaki tescilli modellerle aradaki boşluğu kapattı. Her sistem geçici token'leri farklı şekilde çözdü; klip başına Q-former, çerçeve başına concat havuzu, token başına TMRoPE. Bu ders kalıpları okur, tek tip ve dinamik çerçeve örnekleyici oluşturur ve zamansal temellendirme görevlerini değerlendirir.
 
 **Tür:** Yapım
 **Diller:** Python (stdlib, çerçeve örnekleyici + zamana dayalı değerlendirici)
@@ -9,24 +9,24 @@
 
 ## Öğrenme Hedefleri
 
-- Zamansal konumsal kodlamanın video VLM performansını görüntü kodlayıcıdan bağımsız olarak neden değiştirdiğini açıklayın.
-- Saniyede tokens ile grounding doğruluğunu karşılaştırarak tek tip, dinamik FPS ve olaya dayalı kare örneklemeyi karşılaştırın.
-- Klip başına Q-former (Video-LLaMA) ile kare başına havuzlanmış (Video-LLaVA) ve token (Qwen2.5-VL) başına M-RoPE tasarımlarını açıklayın.
-- Dört videoyu benchmark adlandırın: VideoMME, TempCompass, EgoSchema, Video-MMMU.
+- Zamansal konumsal kodlamanın neden video VLM performansını görüntü kodlayıcıdan bağımsız olarak değiştirdiğini açıklayın.
+- Saniyede token ile topraklama doğruluğunu karşılaştırarak tekdüze, dinamik FPS ve olay odaklı kare örneklemeyi karşılaştırın.
+- Klip başına Q-former (Video-LLaMA), kare başına havuzlanmış (Video-LLaVA) ve token (Qwen2.5-VL) başına M-RoPE tasarımlarını açıklayın.
+- Dört videoya benchmark adını verin: VideoMME, TempCompass, EgoSchema, Video-MMMU.
 
 ## Sorun
 
-30 FPS'de 1 dakikalık bir video 1800 karedir. Çerçeve başına 196 görsel tokens (224'te ViT-B), yani 352k tokens, yani 2024 dönemi LLM bağlamından daha büyük.
+30 FPS'de 1 dakikalık bir video 1800 karedir. Kare başına 196 görsel token (224'te ViT-B), bu da 352 bin token anlamına geliyor; 2024 dönemi LLM bağlamından daha büyük.
 
 Üç azaltma stratejisi mevcuttur:
 
 1. Alt örnek kareler (içeriğe bağlı olarak 1-8 FPS).
-2. Her karenin yamasını token agresif bir şekilde havuzlayın (3x3 veya 4x4 çift doğrusal havuz).
-3. 16 karelik bir klip alan ve 64 tokens çıktı veren bir Q-former aracılığıyla sıkıştırın.
+2. Her karenin yamasını token'leri agresif bir şekilde havuzlayın (3x3 veya 4x4 çift doğrusal havuz).
+3. 16 karelik bir klip alan ve 64 token çıktısı veren bir Q-former aracılığıyla sıkıştırın.
 
-Her takas farklıdır. Alt örnekleme zamansal ayrıntıları kaybeder. Havuzlama, mekansal ayrıntıları kaybeder. Q-former ikisini de biraz kaybeder ama tokens kurtarır.
+Her takas farklıdır. Alt örnekleme zamansal ayrıntıları kaybeder. Havuzlama, mekansal ayrıntıları kaybeder. Q-former her ikisini de biraz kaybeder ancak token'leri kurtarır.
 
-Zamansal konum kodlaması diğer eksendir: Model, çerçeve 5'in çerçeve 6'dan önce geldiğini nasıl biliyor? Seçenekler arasında basit 1D geçici RoPE (Video-LLaMA), öğrenilmiş zamansal embedding'lar (Video-LLaVA) ve TMRoPE (Qwen2.5-VL, tam 3D) yer alır.
+Zamansal konum kodlaması diğer eksendir: Model, çerçeve 5'in çerçeve 6'dan önce geldiğini nasıl biliyor? Seçenekler arasında basit 1D geçici RoPE (Video-LLaMA), öğrenilmiş geçici embedding'ler (Video-LLaVA) ve TMRoPE (Qwen2.5-VL, tam 3D) bulunur.
 
 ## Konsept
 
@@ -48,12 +48,12 @@ Her ikisi de uzun videoyu işlemez. Her ikisi de 8-16 çerçeveli sistemlerdir.
 
 ### Qwen2.5-VL ve TMRoPE
 
-Qwen2.5-VL, TMRoPE — Zamansal-Modalite Döner Pozisyonu Embedding'yu tanıttı. Her token yaması bir (t, h, w) konumu taşır; burada t gerçek zaman damgasıdır (çerçeve dizini değil).
+Qwen2.5-VL, TMRoPE — Geçici Modalite Döner Konumu Embedding'yi tanıttı. Her token yaması bir (t, h, w) konumu taşır; burada t gerçek zaman damgasıdır (çerçeve dizini değil).
 
-Basit zamansal embedding ile temel farklar:
+Basit zamansal embedding'den temel farklar:
 
 - Mutlak zaman, indeks değil. Model "15. karede" değil "4.2 saniyede" görüyor.
-- Klip başına değil, token dönüş başına. Her görsel token, zaman damgasına göre bağımsız olarak döner.
+- Klip başına değil, token dönüşü başına. Her görsel token, zaman damgasına göre bağımsız olarak döner.
 - Dinamik FPS ile uyumludur. Burada 2 FPS ve orada 4 FPS'de örnekleme yaparsanız, TMRoPE eşit olmayan aralıkları yerel olarak yönetir.
 
 TMRoPE "kedi hangi saniyede atlar?" seçeneğini etkinleştirir. sorgular. Model "4,2 saniyede" çıktı verebilir. Video-LLaMA yalnızca "klibin başlarında" diyebildi.
@@ -64,17 +64,17 @@ Tek tip: N kareyi süre boyunca eşit şekilde örnekleyin. Basittir, hareket zi
 
 Dinamik FPS: Hareket yoğunluğuna göre uyarlamalı örnekleme. Optik akış veya çerçeve farklılaştırma, daha yoğun örnekleme için yüksek hareketli segmentleri seçer. Qwen2.5-VL bu konuda eğitim veriyor.
 
-Olay odaklı: hafif bir dedektör çalıştırın, eylemin gerçekleştiği yerde daha fazlasını örnekleyin. VideoAgent tarafından kullanılıyor.
+Olay odaklı: hafif bir dedektör çalıştırın, eylemin gerçekleştiği yerde daha fazlasını örnekleyin. VideoAgent tarafından kullanılır.
 
 Ana kare + bağlam: çekim sınırlarında örnek + birkaç bitişik kare. Sinematik içerik için kullanılır.
 
 ### Çerçeve başına havuzlama
 
-1 FPS ve kare başına 576 tokens, 5 dakikalık bir klip 172.800 tokens'dir. Qwen2.5-VL-72B'nin 128k bağlamıyla yapılabilir ancak pahalıdır.
+1 FPS ve kare başına 576 token ile 5 dakikalık bir klip 172.800 token'dir. Qwen2.5-VL-72B'nin 128k bağlamı ile yapılabilir ancak pahalıdır.
 
-3x3 çift doğrusal havuz kare başına 64 tokens'ye düşer -> 5 dakika boyunca 19.200 tokens. Çoğu görev için en uygun nokta.
+3x3 çift doğrusal havuz kare başına 64 token'ye düşer -> 5 dakika boyunca 19.200 token. Çoğu görev için en uygun nokta.
 
-Uzamsal ayrıntıların daha az önemli olduğu agent iş akışları için daha agresif bir şekilde havuz yapın (kare başına 6x6 -> 16 tokens).
+Uzamsal ayrıntıların daha az önemli olduğu agent iş akışları için daha agresif bir şekilde havuzlayın (kare başına 6x6 -> 16 token).
 
 ### Dört video benchmark
 
@@ -85,22 +85,22 @@ Uzamsal ayrıntıların daha az önemli olduğu agent iş akışları için daha
 
 Tam bir video-VLM değerlendirmesi dördünü de kapsar. Farklı eksenleri vurguluyorlar — TempCompass tamamen sıralamayla ilgilidir, EgoSchema yaklaşık 3+ dakika akıl yürütmeyle ilgilidir, VideoMME ise süreleri kapsar.
 
-### Grounding çıkış formatları
+### Topraklama çıkış formatları
 
-Zamansal grounding için çıkış formatları:
+Zamansal topraklama için çıkış formatları:
 
 - Serbest metin: "Kedi 4 saniye işaretinin etrafından atlar." Ayrıştırılması kolay ancak kesin değil.
-- Yapılandırılmış JSON: `{"event": "jump", "start": 4.1, "end": 4.3}`. Qwen2.5-VL bunu eğitiyor.
-- Token-tabanlı: yanıtla serpiştirilmiş özel `<time>4.1</time>` token'ler. Qwen2.5-VL'nin dahili biçimi.
+- Yapılandırılmış JSON: `{"event": "jump", "start": 4.1, "end": 4.3}`. Qwen2.5-VL bunu eğitir.
+- Token tabanlı: yanıtla serpiştirilmiş özel `<time>4.1</time>` token'ler. Qwen2.5-VL'nin dahili formatı.
 
-Token tabanlı, alt kullanım için en doğrudur. Qwen2.5-VL'nin JSON çıktı biçimi doğrudan ayrıştırılır.
+Token tabanlı, aşağı yönde kullanım için en doğrudur. Qwen2.5-VL'nin JSON çıkış formatı doğrudan ayrıştırılır.
 
 ### 2026'nın en iyi uygulaması
 
 2026'daki video VLM'ler için:
 
-- Kodlayıcı: M-RoPE veya TMRoPE (Qwen2.5-VL) ile SigLIP 2.
-- Kare örnekleme: maksimum kare sınırıyla dinamik FPS (harekete bağlı olarak 1-4).
+- Kodlayıcı: M-RoPE veya TMRoPE'li SigLIP 2 (Qwen2.5-VL).
+- Kare örnekleme: Maksimum kare sınırıyla dinamik FPS (harekete bağlı olarak 1-4).
 - Çerçeve başına havuzlama: 3x3 çift doğrusal.
 - Çıktı: zaman + olay alanlarıyla yapılandırılmış JSON.
 - Benchmarks: Genel olarak VideoMME + TempCompass; Uzun ufuk için EgoSchema.
@@ -115,7 +115,7 @@ Token tabanlı, alt kullanım için en doğrudur. Qwen2.5-VL'nin JSON çıktı b
 
 ## Gönderin
 
-Bu ders `outputs/skill-video-vlm-frame-planner.md` üretir. Bir video görevi verildiğinde (izleme, eylem tanıma, zamansal grounding, özetleme), çerçeve örnekleyiciyi, havuzlama faktörünü, çıktı formatını ve beklenen doğruluk katmanını seçer.
+Bu ders `outputs/skill-video-vlm-frame-planner.md`'yi üretir. Bir video görevi verildiğinde (izleme, eylem tanıma, zamansal topraklama, özetleme), çerçeve örnekleyiciyi, havuzlama faktörünü, çıktı formatını ve beklenen doğruluk katmanını seçer.
 
 ## Egzersizler
 
@@ -123,7 +123,7 @@ Bu ders `outputs/skill-video-vlm-frame-planner.md` üretir. Bir video görevi ve
 
 2. TMRoPE, basit bir geçici embedding tablosunun yapamayacağı spesifik olarak neyi ekler?
 
-3. Bir VLM'nin yaymayı öğrenebileceği zamansal grounding için bir JSON şeması yazın. Hata durumlarını dahil edin.
+3. Bir VLM'nin yaymayı öğrenebileceği zamansal topraklama için bir JSON şeması yazın. Hata durumlarını dahil edin.
 
 4. Video-LLaVA'nın "Projeksiyon Öncesi Hizalama" başlıklı 3. Bölümünü okuyun. Bu neden ayrı görüntü ve video kodlayıcıları eğitmekten daha iyidir?
 
@@ -133,12 +133,12 @@ Bu ders `outputs/skill-video-vlm-frame-planner.md` üretir. Bir video görevi ve
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| Geçici grounding | "Zamana göre yerelleştirilmiş yanıtlar" | VLM, bir olayın gerçekleştiği zamana ilişkin belirli bir zaman damgası aralığının çıktısını verir |
-| TMRoPE | "Zaman-Multimodal RoPE" | Qwen2.5-VL | tarafından kullanılan, mutlak zaman damgalarına sahip 3 boyutlu dönme konumu
+| Geçici topraklama | "Zamana göre yerelleştirilmiş yanıtlar" | VLM, bir olayın gerçekleştiği zamana ilişkin belirli bir zaman damgası aralığının çıktısını verir |
+| TMRoPE | "Zaman-Multimodal RoPE" | Qwen2.5-VL tarafından kullanılan, mutlak zaman damgalarına sahip 3 boyutlu döner konum |
 | Dinamik FPS | "Harekete duyarlı örnekleme" | Yüksek hareketli segmentlerde daha fazla kare, statik segmentlerde ise daha az kare örnekleyin |
 | Çerçeve havuzu | "Çerçeve başına uzamsal sıkıştırma" | Yüksek Lisans öncesinde çift doğrusal enterpolasyonla kare başına ekleri azaltın |
 | Video Q-eski | "Klip kompresörü" | Çapraz dikkat darboğazı N kareyi K öğrenilmiş sorguya eşliyor |
-| VideoMME | "Video tezgahı" | Kapsamlı kısa/orta/uzun video benchmark, 2500+ örnek |
+| VideoMME | "Video tezgahı" | Kapsamlı kısa/orta/uzun video benchmark, 2500'den fazla örnek |
 
 ## Daha Fazla Okuma
 

@@ -18,15 +18,15 @@
 
 Bir modele "Kuantum hesaplamayı açıklayın" diye sorun ve şunları üretebilir:
 
-**Yanıt A:** "Kuantum hesaplama, süperpozisyonda bulunabilen kübitleri kullanır, yani aynı anda 0, 1 veya her ikisi birden olabilir. Bu, kuantum bilgisayarlarının belirli hesaplamaları klasik bilgisayarlara göre katlanarak daha hızlı işlemesine olanak tanır. Anahtar algoritmalar arasında Shor'un büyük sayıları çarpanlara ayırma algoritması ve Grover'ın sıralanmamış veritabanlarında arama yapmaya yönelik algoritması bulunur."
+**Yanıt A:** "Kuantum hesaplama, süperpozisyonda bulunabilen kubitleri kullanır, yani aynı anda 0, 1 veya her ikisi birden olabilir. Bu, kuantum bilgisayarlarının belirli hesaplamaları klasik bilgisayarlardan katlanarak daha hızlı işlemesine olanak tanır. Anahtar algoritmalar arasında Shor'un büyük sayıları çarpanlara ayırma algoritması ve Grover'ın sıralanmamış veritabanlarında arama yapmaya yönelik algoritması bulunur."
 
 **Yanıt B:** "Kuantum hesaplama, kuantum mekaniksel fenomeni kullanan bir hesaplama türüdür. İlk olarak 1980'lerde önerildi. Richard Feynman, kuantum sistemlerinin kuantum bilgisayarları tarafından simüle edilebileceğini öne sürdü. O zamandan bu yana alan önemli ölçüde büyüdü. Artık birçok şirket kuantum bilgisayarlar üzerinde çalışıyor. IBM, Google ve diğerleri ilerleme kaydetti. Kuantum üstünlüğü Google tarafından 2019'da iddia edildi."
 
 Her iki yanıt da aslında doğrudur. Her ikisi de gramer açısından sağlamdır. Her ikisi de talimatlara uyuyor. Ancak Yanıt A açıkça daha iyi. Daha kısa, daha bilgilendirici ve daha iyi yapılandırılmıştır. Bir insan her zaman A'yı seçer.
 
-SFT bu ayrımı yakalayamıyor. Modeli "doğru" yanıtlara göre eğitir, ancak "bu yanıt bundan daha iyidir" diyen bir mekanizmaya sahip değildir. Her eğitim örneğini eşit derecede iyi olarak ele alır. Eğer A ve B'nin her ikisi de SFT dataset'da görünüyorsa, model her ikisinden de eşit şekilde öğrenecektir.
+SFT bu ayrımı yakalayamıyor. Modeli "doğru" yanıtlara göre eğitir, ancak "bu yanıt bundan daha iyidir" diyen bir mekanizmaya sahip değildir. Her eğitim örneğini eşit derecede iyi olarak ele alır. Hem A hem de B, SFT dataset'de görünüyorsa model her ikisinden de eşit şekilde öğrenir.
 
-RLHF bunu çözer. Bir insanın hangi tepkiyi tercih edeceğini tahmin etmek için bir ödül modeli eğitiyor ve ardından bu ödül sinyalini dil modelini daha yüksek kaliteli çıktılara doğru itmek için kullanıyor. InstructGPT (ChatGPT'nin öncüsü), GPT-3'ün yararlılığını, doğruluğunu ve zararsızlığını önemli ölçüde artırmak için RLHF'yi kullandı. OpenAI'nin dahili değerlendiricileri, InstructGPT'nin 135 kat daha küçük olmasına rağmen (1,3B ve 175B parametreleri) %85 oranında GPT-3 çıkışları yerine InstructGPT çıkışlarını tercih etti.
+RLHF bunu çözer. Bir insanın hangi tepkiyi tercih edeceğini tahmin etmek için bir ödül modeli eğitiyor, ardından bu ödül sinyalini dil modelini daha yüksek kaliteli çıktılara doğru itmek için kullanıyor. InstructGPT (ChatGPT'nin öncüsü), GPT-3'ün yararlılığını, doğruluğunu ve zararsızlığını önemli ölçüde artırmak için RLHF'yi kullandı. OpenAI'nin dahili değerlendiricileri, InstructGPT'nin 135 kat daha küçük olmasına rağmen (1,3B ve 175B parametreleri) %85 oranında GPT-3 çıkışları yerine InstructGPT çıkışlarını tercih etti.
 
 ## Konsept
 
@@ -36,7 +36,7 @@ RLHF tek bir antrenman koşusu değildir. Bu, her biri bir öncekinin üzerinde 
 
 **Aşama 1: SFT.** Talimat-yanıt çiftleri üzerinde temel bir model eğitin (Ders 06). Bu size talimatları takip edebilen ancak hangi yanıtların diğerlerinden daha iyi olduğunu bilmeyen bir model verir.
 
-**2. Aşama: Ödül Modeli.** İnsanların tercih verilerini toplayın: Açıklama yapanlara aynı prompt için iki yanıt gösterin ve "hangisi daha iyi?" diye sorun. Bu tercihleri ​​tahmin edecek bir model eğitin. Ödül modeli (prompt, yanıt) girdi olarak alır ve bir skaler puan çıktısı verir.
+**2. Aşama: Ödül Modeli.** İnsanların tercih verilerini toplayın: Açıklama yapanlara aynı prompt'ye verilen iki yanıtı gösterin ve "hangisi daha iyi?" diye sorun. Bu tercihleri ​​tahmin edecek bir model eğitin. Ödül modeli (prompt, yanıt) girdi olarak alır ve bir skaler puan çıktısı verir.
 
 **Aşama 3: PPO.** Dil modeli için bir eğitim sinyali oluşturmak üzere ödül modelini kullanın. Dil modeli yanıtlar üretir, ödül modeli bunları puanlar ve PPO, daha yüksek puanlı yanıtlar üretmek için dil modelini günceller. KL sapma cezası, dil modelinin SFT kontrol noktasından çok uzaklaşmasını önler.
 
@@ -72,11 +72,11 @@ graph TD
 
 ### Ödül Modeli
 
-Ödül modeli, puanlayıcı olarak yeniden tasarlanmış bir dil modelidir. SFT modelini alın, dil modelleme kafasını (sözcük dağarcığı üzerinde bir dağılım sağlayan) skaler bir kafayla (tek bir sayı çıkaran) değiştirin. Mimari son katmana kadar aynıdır.
+Ödül modeli, puanlayıcı olarak yeniden tasarlanmış bir dil modelidir. SFT modelini alın, dil modelleme kafasını (kelime dağarcığı üzerinde bir dağılım çıkaran) skaler bir kafayla (tek bir sayı çıkaran) değiştirin. Mimari son katmana kadar aynıdır.
 
 Giriş: bir yanıtla birleştirilmiş bir prompt. Çıktı: tek bir skaler ödül puanı.
 
-Eğitim verileri insan tercih çiftleridir. Her bir prompt için, ek açıklamalar yapanlar iki yanıt görür ve daha iyi olanı seçer. Bu, eğitim üçlüleri oluşturur: (prompt, tercih edilen_response, reddedilen_response).
+Eğitim verileri insan tercih çiftleridir. Her prompt için ek açıklamalar yapanlar iki yanıt görür ve daha iyi olanı seçer. Bu, eğitim üçlüleri oluşturur: (prompt, tercih edilen_response, reddedilen_response).
 
 loss function ikili tercihlerin Bradley-Terry modelini kullanır:
 
@@ -86,13 +86,13 @@ loss = -log(sigmoid(reward(preferred) - reward(rejected)))
 
 Bu anahtar denklemdir. `sigmoid(reward(A) - reward(B))`, A yanıtının B yanıtına göre tercih edilme olasılığını verir. Kayıp, ödül modelini tercih edilen yanıta daha yüksek bir puan atamaya iter.
 
-Mutlak puanlar yerine neden ikili karşılaştırmalar yapılıyor? Çünkü insanlar mutlak kalite puanları verme konusunda berbattır ("Bu yanıt 10 üzerinden 7,3 mü yoksa 7,5 mu?") ama göreceli karşılaştırmalarda çok iyidir ("A, B'den daha mı iyi?"). Bradley-Terry modeli göreceli karşılaştırmaları tutarlı bir mutlak puanlama sistemine dönüştürür.
+Neden mutlak puanlar yerine ikili karşılaştırmalar yapılıyor? Çünkü insanlar mutlak kalite puanları verme konusunda berbattır ("Bu yanıt 10 üzerinden 7,3 mü yoksa 7,5 mu?") ama göreceli karşılaştırmalarda çok iyidir ("A, B'den daha mı iyi?"). Bradley-Terry modeli göreceli karşılaştırmaları tutarlı bir mutlak puanlama sistemine dönüştürür.
 
 **InstructGPT numaraları:** OpenAI, 40 yükleniciden 33.000 karşılaştırma çifti topladı. Her karşılaştırma yaklaşık 5 dakika sürdü. Bu, ödül modeli eğitim verileri için 2.750 saatlik insan emeği anlamına gelir.
 
 ### PPO: Yakınsal Politika Optimizasyonu
 
-PPO bir takviyeli öğrenme algoritmasıdır. RLHF'de "ortam" ödül modelidir, "agent" dil modelidir ve "eylem" bir token üretmektedir.
+PPO bir takviyeli öğrenme algoritmasıdır. RLHF'de "ortam" ödül modelidir, "agent" dil modelidir ve "eylem" bir token oluşturmaktadır.
 
 Amaç:
 
@@ -102,7 +102,7 @@ maximize: E[R(prompt, response)] - beta * KL(policy || reference)
 
 İlk terim, modeli yüksek ödüllü yanıtlar üretmeye zorlar. İkinci terim (KL sapma cezası), modelin SFT kontrol noktasından çok fazla sapmasını önler.
 
-Neden KL cezası? Bu olmadan model dejenere çözümler bulur. Ödül modeli, sınırlı bir dataset insan tercihine göre eğitilir. Kör noktaları var. Dil modeli, ödül modelinde yüksek puan alan ancak aslında anlamsız olan çıktıları bularak bu kör noktalardan yararlanacaktır. Klasik örnekler:
+Neden KL cezası? Bu olmadan model dejenere çözümler bulur. Ödül modeli, insan tercihlerinin sınırlı bir dataset'sine göre eğitilir. Kör noktaları var. Dil modeli, ödül modelinde yüksek puan alan ancak aslında anlamsız olan çıktıları bularak bu kör noktalardan yararlanacaktır. Klasik örnekler:
 
 - Tekrarlanan "Ben çok yardımsever ve zararsızım!" yardımseverlik/zararsızlık ödül modellerinde yüksek puanlar
 - "Yüksek kalite" ile eşleşen ayrıntılı, resmi görünen ancak boş yanıtlar üretmek
@@ -110,7 +110,7 @@ Neden KL cezası? Bu olmadan model dejenere çözümler bulur. Ödül modeli, s�
 
 KL cezası şunu söylüyor: kendinizi geliştirebilirsiniz ancak tamamen farklı bir model olamazsınız. Zaten makul olan SFT sürümüne yakın durun. Çok uzağa giderseniz KL maliyeti ödüle hakim olur.
 
-**InstructGPT numaraları:** PPO eğitiminde lr=1,5e-5, KL katsayısı beta=0,02, 256 bin bölüm (prompt-yanıt çiftleri) ve grup başına 4 PPO dönemi kullanıldı. RLHF hattının tamamı bir GPU kümesinde birkaç gün sürdü.
+**InstructGPT numaraları:** PPO eğitiminde lr=1,5e-5, KL katsayısı beta=0,02, 256 bin bölüm (prompt-yanıt çiftleri) ve grup başına 4 PPO dönemi kullanıldı. RLHF hattının tamamı bir GPU kümesi üzerinde birkaç gün sürdü.
 
 ```mermaid
 graph LR
@@ -153,7 +153,7 @@ Kırpma, yıkıcı güncellemeleri önler. Tek bir yanıt alışılmadık derece
 
 ### Ödül Hackleme
 
-RLHF'nin karanlık tarafı. Dil modeli, insan tercihleri ​​için kusurlu bir temsil olan ödül modeline göre optimizasyon yapıyor. Dil modeli, ödülü en üst düzeye çıkarma konusunda daha iyi hale geldikçe, ödül modelinin zayıf yönlerinden yararlanmaya başlar.
+RLHF'nin karanlık tarafı. Dil modeli, insan tercihleri ​​için kusurlu bir temsil olan ödül modeline göre optimizasyon yapıyor. Dil modeli ödülü en üst düzeye çıkarmada daha iyi hale geldikçe, ödül modelinin zayıf yönlerinden yararlanmaya başlar.
 
 Yaygın arıza modları:
 
@@ -171,7 +171,7 @@ Azaltma stratejileri: daha güçlü KL cezası (modelin zayıf noktalardan yarar
 | Modeli | Karşılaştırma Çiftleri | Ek Açıklamacılar | RM Boyutu | PPO Adımları | KL Katsayısı |
 |-------|-----------------|------------|---------|-----------|----------|
 | GPT'yi öğretin | 33K | 40 | 6B | 256K | 0.02 |
-| Llama 2 Sohbet | ~1 milyon | açıklanmadı | 70B | açıklanmadı | 0.01 |
+| Lama 2 Sohbet | ~1 milyon | açıklanmadı | 70B | açıklanmadı | 0.01 |
 | Claude | açıklanmadı | açıklanmadı | açıklanmadı | açıklanmadı | açıklanmadı |
 | Antropik RLHF kağıdı | 22K | 20 | 52B | 50K | 0,001 |
 
@@ -228,7 +228,7 @@ Tercih edilen yanıtlar kısa ve doğrudandır. Reddedilen yanıtlar ortak başa
 
 ### Adım 2: Ödül Modeli Mimarisi
 
-Ödül modeli, mini GPT'deki transformer mimarisini yeniden kullanır, ancak sözcük boyutundaki çıktı kafasını tek bir skaler projeksiyonla değiştirir.
+Ödül modeli, mini GPT'deki transformer mimarisini yeniden kullanıyor ancak sözcük boyutundaki çıktı kafasını tek bir skaler projeksiyonla değiştiriyor.
 
 ```python
 import sys
@@ -263,7 +263,7 @@ class RewardModel:
         return reward
 ```
 
-Ödül modeli *son* token konumundaki gizli durumu alır ve bunu bir skalere yansıtır. Neden son token? Çünkü nedensel dikkat maskesi, son konumun önceki her token ile ilgilendiği anlamına gelir. Tüm (prompt, yanıt) dizisinin en eksiksiz temsiline sahiptir.
+Ödül modeli *son* token konumundaki gizli durumu alır ve bunu bir skalere yansıtır. Neden son token? Çünkü nedensel dikkat maskesi, son konumun önceki her token'ye katıldığı anlamına gelir. Tüm (prompt, yanıt) dizisinin en eksiksiz temsiline sahiptir.
 
 ### Adım 3: Bradley-Terry Kaybı
 
@@ -345,7 +345,7 @@ def train_reward_model(rm, preference_data, num_epochs=10, lr=1e-4, max_seq_len=
     return rm, losses, accuracies
 ```
 
-Doğruluk ölçütü basittir: Ödül modeli tercih çiftlerinin ne kadarını doğru sıralıyor? Rastgele bir model %50 puan alır. Temiz veriler üzerinde iyi eğitilmiş bir ödül modelinin %70'i aşması gerekir. InstructGPT'nin ödül modeli, uzun süreli karşılaştırmalarda yaklaşık %72 doğruluk elde etti; bu kulağa düşük gibi gelse de aslında iyidir; birçok tercih çifti insanlar için bile belirsizdir (açıklayıcılar arası anlaşma yaklaşık %73'tü).
+Doğruluk ölçüsü basittir: Ödül modeli tercih çiftlerinin hangi kısmını doğru şekilde sıralıyor? Rastgele bir model %50 puan alır. Temiz veriler üzerinde iyi eğitilmiş bir ödül modelinin %70'i aşması gerekir. InstructGPT'nin ödül modeli, uzun süreli karşılaştırmalarda yaklaşık %72 doğruluk elde etti; bu düşük gibi görünse de aslında iyidir; birçok tercih çifti insanlar için bile belirsizdir (açıklayıcılar arası anlaşma yaklaşık %73'tü).
 
 ### Adım 4: Basitleştirilmiş PPO Döngüsü
 
@@ -448,7 +448,7 @@ def ppo_training(policy_model, reference_model, reward_model, prompts,
     return policy_model, rewards_history, kl_history
 ```
 
-Çekirdek döngü: (1) bir prompt numunesi alır, (2) bir yanıt oluşturur, (3) bunu ödül modeliyle puanlar, (4) donmuş referansa karşı KL farklılığını hesaplar, (5) düzeltilmiş ödülü hesaplar (ödül eksi KL cezası), (6) politikayı günceller. Politika referanstan uzaklaştıkça KL cezası artar ve otomatik olarak ödül korsanlığı önlenir.
+Çekirdek döngü: (1) bir prompt örneği alın, (2) bir yanıt oluşturun, (3) bunu ödül modeliyle puanlayın, (4) donmuş referansa karşı KL farklılığını hesaplayın, (5) düzeltilmiş ödülü hesaplayın (ödül eksi KL cezası), (6) politikayı güncelleyin. Politika referanstan uzaklaştıkça KL cezası artar ve otomatik olarak ödül korsanlığı önlenir.
 
 ### Adım 5: Ödül Puanı Karşılaştırması
 
@@ -596,11 +596,11 @@ if __name__ == "__main__":
 
 ## Gönderin
 
-Bu ders, ödül modeli eğitim ardışık düzenlerini tasarlamak için bir prompt -- `outputs/prompt-reward-model-designer.md` üretir. Bir hedef davranış (yardımseverlik, kodlama yeteneği, güvenlik) verildiğinde, bir veri toplama protokolü, açıklayıcı yönergeler ve ödül modeli değerlendirme kriterleri üretilir.
+Bu ders, ödül modeli eğitim süreçlerini tasarlamak için bir prompt olan `outputs/prompt-reward-model-designer.md`'yi üretir. Bir hedef davranış (yardımseverlik, kodlama yeteneği, güvenlik) verildiğinde, bir veri toplama protokolü, açıklayıcı yönergeler ve ödül modeli değerlendirme kriterleri üretilir.
 
 ## Egzersizler
 
-1. Ödül modelini yalnızca son konum yerine tüm gizli durumların ortalamasını kullanacak şekilde değiştirin. Doğruluğu karşılaştırın. Ortalama havuzlama yaklaşımı her token'ya eşit ağırlık verirken, son konum yaklaşımı toplu bilgiye nedensel ilgiye dayanır. 6 tercih çiftini test edin ve hangi yaklaşımın daha yüksek doğruluk elde ettiğini rapor edin.
+1. Ödül modelini yalnızca son konum yerine tüm gizli durumların ortalamasını kullanacak şekilde değiştirin. Doğruluğu karşılaştırın. Ortalama havuzlama yaklaşımı her token'ye eşit ağırlık verirken, son konum yaklaşımı toplu bilgilere nedensel ilgiye dayanır. 6 tercih çiftini test edin ve hangi yaklaşımın daha yüksek doğruluk elde ettiğini rapor edin.
 
 2. Ödül modeli kalibrasyonunu uygulayın. Eğitimden sonra, tüm tercih çiftlerini ödül modeli üzerinden çalıştırın ve hesaplayın: (a) tercih edilen yanıtlar için ortalama ödül, (b) reddedilen yanıtlar için ortalama ödül, (c) marj (tercih edilen eksi reddedildi). İyi kalibre edilmiş bir modelin net bir marjı olmalıdır. Ardından 4 yeni tercih çifti ekleyin ve marjın görünmeyen verilerde tutulup tutulmadığını kontrol edin.
 
@@ -618,7 +618,7 @@ Bu ders, ödül modeli eğitim ardışık düzenlerini tasarlamak için bir prom
 | Ödül modeli | "Yanıtları puanlayan bir model" | Bradley-Terry kaybı |
 | Bradley-Terry | "Karşılaştırma modeli" | P(A > B) = sigmoid(puan(A) - puan(B)) olan, ikili tercihleri ​​tutarlı bir puanlama fonksiyonuna dönüştüren olasılıksal bir model |
 | PPO | "RL algoritması" | Yakınsal Politika Optimizasyonu: istikrarsızlığı önlemek için güncelleme boyutunu kısaltırken ödülü en üst düzeye çıkaracak şekilde politikayı günceller |
-| KL farklılığı | "İki dağıtım ne kadar farklı" | Politika modelinin token dağılımı ile referans modelininki arasındaki farkın ölçüsü - ödül korsanlığını önlemek için ceza olarak kullanılır |
+| KL farklılığı | "İki dağıtım ne kadar farklı" | Politika modelinin token dağılımı ile referans modelinin dağılımı arasındaki farkın ölçüsü - ödül korsanlığını önlemek için ceza olarak kullanılır |
 | KL penaltı | "Modeldeki tasma" | Beta * KL(politika \|\| referansı) ödül sinyalinden çıkarıldı - politikanın SFT kontrol noktasından çok uzaklaşmasını önler |
 | Ödül hackleme | "Ödülü kumarla oynamak" | Politika, ödül modelinin gerçekten iyileştirilmesi yerine zayıflıklarından yararlanılarak yozlaşmış yüksek ödüllü çıktılar bulduğunda |
 | Tercih çifti | "Hangisi daha iyi, A mı B mi?" | RLHF eğitim verilerinin temel birimi olan (prompt, tercih edilen_response, reddedilen_response)'den oluşan bir eğitim örneği |

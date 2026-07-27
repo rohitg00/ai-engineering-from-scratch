@@ -1,6 +1,6 @@
 # Anayasal Yapay Zeka ve Kuralların Geçersiz Kılmaları
 
-> Anthropic'in 22 Ocak 2026 Claude Anayasası 79 sayfadan oluşur ve CC0'dır. Kural bazlıdan mantığa dayalı hizalamaya geçer ve dört aşamalı bir öncelik hiyerarşisi oluşturur: (1) güvenlik ve insan gözetiminin desteklenmesi, (2) etik, (3) Antropik kurallar, (4) yardımseverlik. Davranışlar, operatörlerin ve kullanıcıların geçersiz kılamayacağı sabit kodlu yasaklara (biyolojik silah yükseltme, CSAM) ve operatörlerin tanımlanmış sınırlar dahilinde ayarlayabileceği yazılım kodlu varsayılanlara bölünmüştür. 2022 orijinali (Bai ve diğerleri), özeleştiri ve bir anayasaya karşı RLAIF yoluyla zararsızlığı eğitiyordu. Dürüst uyarı: Mantığa dayalı uyum, modelin ilkelerini beklenmedik durumlara genelleştirmesine dayanır. Anthropic'in 2023'teki katılımcı deneyi, kamu kaynaklı ve kurumsal ilkeler arasında ~%50 farklılık gösterdi; 2026 versiyonu bu bulguları içermiyordu.
+> Anthropic'in 22 Ocak 2026 Claude Anayasası 79 sayfadan oluşur ve CC0'dır. Kurala dayalıdan mantığa dayalı hizalamaya geçer ve dört aşamalı bir öncelik hiyerarşisi oluşturur: (1) güvenlik ve insan gözetiminin desteklenmesi, (2) etik, (3) Antropik kurallar, (4) yardımseverlik. Davranışlar, operatörlerin ve kullanıcıların geçersiz kılamayacağı sabit kodlu yasaklara (biyolojik silah yükseltme, CSAM) ve operatörlerin tanımlanmış sınırlar dahilinde ayarlayabileceği yazılım kodlu varsayılanlara bölünmüştür. 2022 orijinali (Bai ve diğerleri), özeleştiri ve bir anayasaya karşı RLAIF yoluyla zararsızlığı eğitiyordu. Dürüst uyarı: Mantığa dayalı uyum, modelin ilkelerini beklenmedik durumlara genelleştirmesine dayanır. Anthropic'in 2023'teki katılımcı deneyi, kamu kaynaklı ve kurumsal ilkeler arasında ~%50 farklılık gösterdi; 2026 versiyonu bu bulguları içermiyordu.
 
 **Tür:** Öğren
 **Diller:** Python (stdlib, dört katmanlı öncelikli çözümleyici)
@@ -9,11 +9,11 @@
 
 ## Sorun
 
-Alanlı bir agent, tasarımcılarının hiç görmediği girdileri görür. Hiçbir kural listesi bunları kapsayacak kadar uzun değildir. Hiçbir kural listesi bilgi işlem baskısı altında hızla uygulanabilecek kadar kısa değildir. Pratik soru: Bir agent'ı hem uzun vaka kuyruğunda hem de hızlı inference hayatta kalabilecek ilkelere nasıl hizalarsınız?
+Sahaya alınmış bir agent, tasarımcılarının hiç görmediği girdileri görür. Hiçbir kural listesi bunları kapsayacak kadar uzun değildir. Hiçbir kural listesi bilgi işlem baskısı altında hızla uygulanabilecek kadar kısa değildir. Pratik soru: agent'yi hem uzun vaka kuyruğunda hem de hızlı inference'de hayatta kalabilecek ilkelere nasıl hizalarsınız?
 
 Kural tabanlı hizalama (RBA): izin verilmeyen her şeyi listeleyin. Kontrol edilmesi hızlı, denetlenmesi kolay, güncel tutulması imkansız, sıklıkla tahmin etmediği yakın analogları aşırı reddediyor. Akla dayalı uyum (2026 Claude Anayasası): ilkeleri kodlayın, bırakın model akıl yürütsün. Görülmeyen durumlara göre ölçeklenen, denetlenmesi daha zor olan başarısızlık modu, kuralın kaçırılmasından ziyade ilkenin yanlış uygulanmasıdır.
 
-2026 Anayasası açık bir orta konum almaktadır. Yanlışlığı bağlama bağlı olmayan (biyolojik silahların artırılması, CSAM) sabit kodlu yasaklar RBA'dır: operatör veya kullanıcı talimatı ne olursa olsun asla. Geriye kalan her şey dört aşamalı bir hiyerarşi içerisinde mantığa dayalıdır: önce güvenlik ve insan gözetiminin desteklenmesi; ikinci olarak etik; Antropik olarak ilan edilen yönergeler üçüncü; yardımseverlik sonuncudur. Operatörler, yazılımla kodlanmış bölge içindeki varsayılanları ayarlayabilir ancak sabit kodlanmış yasaklara dokunamaz.
+2026 Anayasası açık bir orta konum almaktadır. Yanlışlığı bağlama bağlı olmayan (biyolojik silahların yükseltilmesi, CSAM) sabit kodlu yasaklar RBA'dır: operatör veya kullanıcı talimatı ne olursa olsun asla. Geriye kalan her şey dört aşamalı bir hiyerarşi içerisinde mantığa dayalıdır: önce güvenlik ve insan gözetiminin desteklenmesi; ikinci olarak etik; Antropik olarak ilan edilen yönergeler üçüncü; yardımseverlik sonuncudur. Operatörler, yazılımla kodlanmış bölge içindeki varsayılanları ayarlayabilir ancak sabit kodlanmış yasaklara dokunamaz.
 
 ## Konsept
 
@@ -34,7 +34,7 @@ Seviyeler çatıştığında daha yüksek olan kazanır. Bu, Unix öncelikleri v
 - Kritik altyapıya yönelik saldırılar
 - Doğrudan sorulduğunda kullanıcıların modelin kimliği konusunda aldatılması
 
-Operatör bunları geçersiz kılamaz. Kullanıcı bunları geçersiz kılamaz. Mümkün olduğunda model ağırlıkları düzeyinde (RLHF / Anayasal Yapay Zeka eğitimi) ve mümkün olmadığında inference katmanında uygulanırlar.
+Operatör bunları geçersiz kılamaz. Kullanıcı bunları geçersiz kılamaz. Mümkün olduğunda model ağırlıkları düzeyinde (RLHF / Anayasal AI eğitimi) ve mümkün olmadığında inference katmanında uygulanırlar.
 
 **Yazılım kodlu varsayılanlar (operatör tarafından ayarlanabilir):**
 - Yanıt uzunluğu varsayılanları
@@ -48,7 +48,7 @@ Operatör ayarlamaları beyan edilen bir sınır dahilinde gerçekleşir. Operat
 
 Orijinal Anayasal Yapay Zeka (Bai ve diğerleri, 2022) zararsızlığı eğitmiştir:
 
-1. Bir dizi prompt'a yanıtlar oluşturun.
+1. Bir dizi prompt'ye yanıtlar oluşturun.
 2. Modelden, bir anayasaya (açık ilkeler) karşı verilen her tepkiyi eleştirmesini isteyin.
 3. Eleştiriye göre yanıtı gözden geçirin.
 4. Revize edilen çiftlerde RLAIF (Yapay Zeka geri bildiriminden pekiştirmeli öğrenme).
@@ -73,31 +73,31 @@ Anthropic, 2023'te şirket tarafından yazılan bir anayasayı kamunun katkısı
 
 ### Sabit kodlanmış yasaklar neden gereklidir?
 
-Mantığa dayalı hizalama tek başına kuyruğu kapatamaz. Modelin bir önermeyi kabul etmesini sağlayabilen bir saldırgan (e.g., "biz lisanslı bir biyolojik silah araştırma laboratuvarıyız") çoğu zaman vaka mantığına bağlı geçmiş ilkelerden bahsedebilir. Sabit kodlu yasaklar öncül çerçeveye uymaz. Bunlar, hizalama katmanındaki Ders 14'ün "katı yapısal sınırıdır".
+Mantığa dayalı hizalama tek başına kuyruğu kapatamaz. Modelin bir önermeyi kabul etmesini sağlayabilen bir saldırgan (e.g., "Biz lisanslı bir biyolojik silah araştırma laboratuvarıyız") sıklıkla vaka mantığına bağlı geçmiş ilkelerden bahsedebilir. Sabit kodlu yasaklar öncül çerçeveye uymaz. Bunlar, hizalama katmanındaki Ders 14'ün "katı yapısal sınırıdır".
 
 ### Anayasanın yığında durduğu yer
 
-Anayasa, Ders 14'ün kapatma anahtarı değildir. Model katmanında yaşar: modelin ağırlıklarının neyi tercih edecek şekilde eğitildiği. Kapatma anahtarları ve kanarya token'lar çalışma zamanı katmanında yaşar: çalışma zamanının izin verdiği ölçüde. Her ikisi de gereklidir. Model ağırlıkları izin verildiği için tüm yanlış eylemleri tetikleyen bir çalışma zamanı, bir çalışma zamanı sorunudur. Çalışma zamanı aşırı kısıtlayıcı olduğundan tüm doğru eylemleri reddeden bir model, çalışma zamanı sorunudur. Katmanlar farklı sınıfları kapsar.
+Anayasa, Ders 14'ün kapatma anahtarı değildir. Model katmanında yaşar: modelin ağırlıklarının neyi tercih edecek şekilde eğitildiği. Kill switch'ler ve kanarya token'ler çalışma zamanı katmanında yaşar: çalışma zamanının izin verdiği ölçüde. Her ikisi de gereklidir. Model ağırlıkları izin verildiği için tüm yanlış eylemleri tetikleyen bir çalışma zamanı, bir çalışma zamanı sorunudur. Çalışma zamanı aşırı kısıtlayıcı olduğundan tüm doğru eylemleri reddeden bir model, çalışma zamanı sorunudur. Katmanlar farklı sınıfları kapsar.
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
 `code/main.py` minimum dört katmanlı öncelikli çözümleyici uygular. Çözümleyici, önerilen bir eylemi ve bir dizi ilke değerlendirmesini (güvenlik, etik, yönergeler, yardımseverlik) alır ve eylemi, bir reddi veya değiştirilmiş bir eylemi geri gönderir. Sürücü küçük bir vaka seti çalıştırır: İzin vermeyi temizle, izin vermemeyi temizle, kodlanmış yasaklama, katmanlar arasında belirsiz vaka.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-`outputs/skill-constitution-review.md` , bir deployment'nin yapısal katmanını denetler: neyin sabit kodlu olduğu, neyin yazılımsal kodlu olduğu, operatörün nerede ayarlama yapabileceği ve dört katmanlı hiyerarşinin gerçekte çözüm sırası olup olmadığı.
+`outputs/skill-constitution-review.md`, deployment'nin yapısal katmanını denetler: neyin sabit kodlu olduğu, neyin yazılımsal kodlu olduğu, operatörün nerede ayar yapabileceği ve dört katmanlı hiyerarşinin gerçekte çözünürlük sırası olup olmadığı.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. Yardımseverlik yüksek olduğunda bile sabit kodlu yasağın etkinleştiğini doğrulayın. Çözümleyiciyi, yardımseverliği ahlakın üstünde tutacak şekilde değiştirin; Arıza modunu gözlemleyin.
+1. `code/main.py`'yi çalıştırın. Yardımseverlik yüksek olduğunda bile sabit kodlu yasağın etkinleştiğini doğrulayın. Çözümleyiciyi, yardımseverliği ahlakın üstünde tutacak şekilde değiştirin; Arıza modunu gözlemleyin.
 
 2. Claude Anayasasını okuyun (kamuya açık, 79 sayfa, CC0). Yeterince belirtilmediğine inandığınız bir ilkeyi belirleyin. Spesifik belirsizliği açıklayan ve daha sıkı bir formülasyon öneren iki paragraf yazın.
 
-3. Müşteri desteği agent için yazılım kodlu bir varsayılan küme tasarlayın. Operatör neyi ayarlar? Operatör neye dokunamaz? Her sınırı gerekçelendirin.
+3. Müşteri desteği agent için yazılım kodlu bir varsayılan set tasarlayın. Operatör neyi ayarlar? Operatör neye dokunamaz? Her sınırı gerekçelendirin.
 
 4. Bai ve ark.'nı okuyun. 2022 CAI makalesi. Anayasal yapay zekanın eleştiri ve gözden geçirme döngüsünün genel kuraldan daha kötü bir sonuç üreteceği bir durumu açıklayın. Sınıfı tanımlayın.
 
-5. Anthropic'in 2023'teki katılımcı deneyi, kamusal ilkeler ile kurumsal ilkeler arasında ~%50 oranında farklılık olduğunu ortaya çıkardı. Bunun üretim deployment (e.g., siyasi tarafsızlık) açısından önemli olduğu bir kategori seçin. Sabit kodlu yasaklara dokunulmadan operatörlerin kendi değerlerini ifade etmelerine olanak tanıyan bir tasarım önerin.
+5. Anthropic'in 2023'teki katılımcı deneyi, kamusal ilkeler ile kurumsal ilkeler arasında ~%50 oranında farklılık olduğunu ortaya çıkardı. deployment (e.g., siyasi tarafsızlık) üretimi için bunun önemli olduğu bir kategori seçin. Sabit kodlanmış yasaklara dokunulmadan operatörlerin kendi değerlerini ifade etmelerine olanak tanıyan bir tasarım önerin.
 
 ## Anahtar Terimler
 
@@ -114,8 +114,8 @@ Anayasa, Ders 14'ün kapatma anahtarı değildir. Model katmanında yaşar: mode
 
 ## Daha Fazla Okuma
 
-- [Antropik — Claude'un Anayasası (Ocak 2026)](https://www.anthropic.com/news/claudes-constitution) — 79 sayfalık CC0 belgesi.
-- [Bai ve ark. — Anayasal Yapay Zeka: Yapay Zeka Geri Bildiriminden Zararsızlık](https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback) — 2022 orijinal.
-- [Antropik — Toplu Anayasal Yapay Zeka (2023)](https://www.anthropic.com/research/collective-constitutional-ai-aligning-a-language-model-with-public-input) — katılımcı deney.
+- [Antropik — Claude's Anayasası (Ocak 2026)](https://www.anthropic.com/news/claudes-constitution) — 79 sayfalık CC0 belgesi.
+- [Bai ve ark. — Anayasal Yapay Zeka: Yapay Zeka Geri Bildiriminden Gelen Zararsızlık](https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback) — 2022 orijinal.
+- [Antropik — Kolektif Anayasal Yapay Zeka (2023)](https://www.anthropic.com/research/collective-constitutional-ai-aligning-a-language-model-with-public-input) — katılımcı deney.
 - [Antropik — Sorumlu Ölçeklendirme Politikası v3.0](https://anthropic.com/responsible-scaling-policy/rsp-v3-0) — Anayasanın RSP yığınında yer aldığı yer.
-- [Antropik — Uygulamada agent özerkliğinin ölçülmesi](https://www.anthropic.com/research/measuring-agent-autonomy) — Anayasanın uzun ufuktaki deployment'lerdeki rolü.
+- [Antropik — agent özerkliğinin pratikte ölçülmesi](https://www.anthropic.com/research/measuring-agent-autonomy) — Anayasanın uzun vadeli deployment'lerdeki rolü.

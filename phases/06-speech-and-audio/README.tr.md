@@ -1,5 +1,5 @@
 # Aşama 6: Konuşma ve Ses
 
-> İnsan iletişiminin diğer yarısı. Duyun, anlayın ve konuşun.
+> İnsan iletişiminin diğer yarısı. Duyun, anlayın, konuşun.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

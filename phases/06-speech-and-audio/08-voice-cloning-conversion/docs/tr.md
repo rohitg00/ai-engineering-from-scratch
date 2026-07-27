@@ -24,7 +24,7 @@ Her ikisi de bir dalga biçimini (içerik, konuşmacı, prozodi) hesaba katar ve
 
 ![Ses klonlama ve dönüştürme: çarpanlara ayırma, hoparlörü değiştirme, yeniden birleştirme](../assets/voice-cloning.svg)
 
-**Sıfır atışlı klonlama.** Binlerce hoparlörle eğitilmiş bir modele 5 saniyelik bir klip aktarın. Hoparlör kodlayıcı, klibi bir hoparlöre embedding eşler; TTS kod çözücüsü bu embedding artı metnini şart koşar.
+**Sıfır atışlı klonlama.** Binlerce hoparlörle eğitilmiş bir modele 5 saniyelik bir klip aktarın. Hoparlör kodlayıcı, klibi bir hoparlör embedding ile eşleştirir; TTS kod çözücü koşulları bu embedding artı metin üzerinde gerçekleşir.
 
 Kullanan: F5-TTS (2024), YourTTS (2022), XTTS v2 (2024), OpenVoice v2 (2024).
 
@@ -32,14 +32,14 @@ Kullanan: F5-TTS (2024), YourTTS (2022), XTTS v2 (2024), OpenVoice v2 (2024).
 
 **Ses dönüştürme (VC).** İki aile:
 
-- **Tanıma sentezi.** İçerik temsilini (e.g., yumuşak fonem sonuncuları, PPG'ler) çıkarmak için ASR benzeri modeli çalıştırın, ardından hedef konuşmacıyla embedding yeniden sentezleyin. Dile ve aksana karşı dayanıklıdır. KNN-VC (2023), Diff-HierVC (2023) tarafından kullanılmaktadır.
-- **Çözme.** Darboğazdaki gizli alanda içeriği, konuşmacıyı ve prozodiyi ayıran bir otomatik kodlayıcı eğitin. embedding hoparlörünü inference ile değiştirin. Daha düşük kalite ama daha hızlı. AutoVC (2019), VITS-VC çeşitleri tarafından kullanılır.
+- **Tanıma sentezi.** İçerik temsilini (e.g., yumuşak fonem sonuncuları, PPG'ler) çıkarmak için ASR benzeri modeli çalıştırın, ardından hedef hoparlör embedding ile yeniden sentezleyin. Dile ve aksana karşı dayanıklıdır. KNN-VC (2023), Diff-HierVC (2023) tarafından kullanılmaktadır.
+- **Çözme.** Darboğazdaki gizli alanda içeriği, konuşmacıyı ve prozodiyi ayıran bir otomatik kodlayıcı eğitin. embedding hoparlörünü inference'den değiştirin. Daha düşük kalite ama daha hızlı. AutoVC (2019), VITS-VC çeşitleri tarafından kullanılır.
 
-**Sinirsel codec tabanlı klonlama (2024+).** VALL-E, VALL-E 2, NaturalSpeech 3, VoiceBox — sesi SoundStream / EnCodec'ten ayrı token'ler olarak ele alın, codec token'ler üzerinde büyük bir otoregresif veya akış eşleştirme modeli eğitin. Kısa prompt saniyelerde ElevenLabs'la karşılaştırılabilir kalite.
+**Nöral codec tabanlı klonlama (2024+).** VALL-E, VALL-E 2, NaturalSpeech 3, VoiceBox — sesi SoundStream / EnCodec'ten ayrı token'ler olarak ele alın, codec token'ler üzerinden büyük bir otoregresif veya akış eşleştirme modeli eğitin. Kısa prompt'lerde ElevenLabs ile karşılaştırılabilir kalite.
 
 ### Etik kısmı, cıvatalı bağlantı değil
 
-**Filigranlama.** PerTh (Perth) ve SilentCipher (2024), sese fark edilmeyecek şekilde ~16-32 bitlik bir kimlik yerleştirir. Yeniden kodlama, akış ve yaygın düzenlemelere rağmen hayatta kalır. Üretime hazır açık kaynak.
+**Filigran.** PerTh (Perth) ve SilentCipher (2024), sese fark edilmeyecek şekilde ~16-32 bitlik bir kimlik yerleştirir. Yeniden kodlama, akış ve yaygın düzenlemelere rağmen hayatta kalır. Üretime hazır açık kaynak.
 
 **Onay kapıları.** Klonlanan her çıktıyı doğrulanabilir bir izin kaydıyla eşleştirmesi gerekir. "Ben, Rohit, 2026-04-22 tarihinde bu sese X amacıyla yetki veriyorum." Kurcalanmaya açık bir kayıtta saklayın.
 
@@ -59,7 +59,7 @@ SECS > 0,70 çoğu dinleyici için genellikle hedeften ayırt edilemez.
 
 ## İnşa Et
 
-### Adım 1: Tanıma-sentezi ile ayrıştırma (main.py'da yalnızca kod demosu)
+### Adım 1: tanıma-sentez ile ayrıştırma (main.py'de yalnızca kod demosu)
 
 ```python
 def clone_pipeline(ref_audio, text, target_embedder, tts_model):
@@ -68,7 +68,7 @@ def clone_pipeline(ref_audio, text, target_embedder, tts_model):
     return vocoder(mel)
 ```
 
-Kavramsal olarak basit; uygulama kütlesi `tts_model` ve hoparlör kodlayıcıdadır.
+Kavramsal olarak basit; uygulama kütlesi `tts_model` ve hoparlör kodlayıcısındadır.
 
 ### Adım 2: F5-TTS ile sıfır atışlı klon
 
@@ -93,7 +93,7 @@ vc = KNNVC.load("wavlm-base-plus")
 out_wav = vc.convert(source="my_voice.wav", target_pool=["alice_1.wav", "alice_2.wav"])
 ```
 
-KNN-VC, kaynak ve hedef havuz için kare başına embedding'leri çıkarmak için WavLM'yi çalıştırır, ardından her kaynak kareyi havuzdaki en yakın komşusuyla değiştirir. Parametrik olmayan, bir dakikalık hedef konuşmayla çalışır.
+KNN-VC, kaynak ve hedef havuz için kare başına embedding'leri çıkarmak için WavLM'yi çalıştırır ve ardından her kaynak kareyi havuzdaki en yakın komşusuyla değiştirir. Parametrik olmayan, bir dakikalık hedef konuşmayla çalışır.
 
 ### Adım 4: filigran yerleştirin
 
@@ -141,11 +141,11 @@ def cloned_inference(text, ref_audio, consent_record):
 
 ## Gönderin
 
-`outputs/skill-voice-cloner.md` olarak kaydet. İzin kapısı + filigran + kalite hedefiyle bir klonlama veya dönüştürme ardışık düzeni tasarlayın.
+`outputs/skill-voice-cloner.md` olarak kaydedin. İzin kapısı + filigran + kalite hedefiyle bir klonlama veya dönüştürme ardışık düzeni tasarlayın.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py` komutunu çalıştırın. İki "hoparlör" değişimi öncesi ve sonrası arasındaki kosinüsü hesaplayarak hoparlör-embedding değişimini gösterir.
+1. **Kolay.** `code/main.py`'yi çalıştırın. İki "hoparlör" değiştirme öncesi ve sonrası arasındaki kosinüsü hesaplayarak hoparlör-embedding değişimini gösterir.
 2. **Orta.** Kendi sesinizi kopyalamak için OpenVoice v2'yi kullanın. Referans ve klon arasındaki SECS'yi ölçün. Whisper aracılığıyla CER'yi ölçün.
 3. **Zor.** SilentCipher filigranını 20 klona uygulayın, bunları 128 kbps MP3 kodlama+kod çözme yoluyla çalıştırın, yükü tespit edin. Bit doğruluğunu bildirin.
 
@@ -158,14 +158,14 @@ def cloned_inference(text, ref_audio, consent_record):
 | KNN-VC | En yakın komşu dönüşümü | Her kaynak çerçeveyi en yakın hedef havuz çerçevesiyle değiştirin. |
 | Sinir codec'i TTS | VALL-E tarzı | EnCodec/SoundStream token'ler üzerinden AR modeli. |
 | Filigran | Duyulmayan imza | Sese gömülü bitler yeniden kodlanarak hayatta kalır. |
-| SEC | Klonlama doğruluğu | Hedef ve klon hoparlör embedding'ler arasında kosinüs. |
+| SEC | Klonlama doğruluğu | Hedef ve klon hoparlör embedding'ler arasındaki kosinüs. |
 | AASİST | Deepfake dedektörü | Sahteciliğe karşı koruma modeli; sentezlenmiş konuşmayı algılar. |
 
 ## Daha Fazla Okuma
 
 - [Chen ve ark. (2024). F5-TTS](https://arxiv.org/abs/2410.06885) — açık kaynaklı SOTA sıfır atışlı klonlama.
 - [Baevski ve ark. / Microsoft (2023). VALL-E](https://arxiv.org/abs/2301.02111) ve [VALL-E 2 (2024)](https://arxiv.org/abs/2406.05370) — sinir kodlayıcı TTS.
-- [Qian ve diğerleri. (2019). AutoVC](https://arxiv.org/abs/1905.05879) — çözülmeye dayalı ses dönüşümü.
+- [Qian ve ark. (2019). AutoVC](https://arxiv.org/abs/1905.05879) — çözülme tabanlı ses dönüşümü.
 - [Baas, Waubert de Puiseau, Kamper (2023). KNN-VC](https://arxiv.org/abs/2305.18975) — erişim tabanlı VC.
 - [SilentCipher (2024) — Ses Filigranı](https://github.com/sony/silentcipher) — üretime hazır 32 bit ses filigranı.
-- [ASVspoof 2025 sonuçları](https://www.asvspoof.org/) — dedektör ve sentezleyici arasındaki silahlanma yarışı, 2026'da güncellendi.
+- [ASVspoof 2025 sonuçları](https://www.asvspoof.org/) — dedektör ile sentezleyici arasındaki silahlanma yarışı, 2026'da güncellendi.

@@ -1,6 +1,6 @@
-# Embedding Modeller — 2026'nın Ayrıntılı İncelemesi
+# Embedding Modelleri — 2026 Derinlemesine İnceleme
 
-> Word2Vec size kelime başına bir vektör verdi. Modern embedding modelleri size pasaj başına, diller arası, seyrek, yoğun ve çoklu vektör görünümlerine sahip, dizininize uyacak şekilde boyutlandırılmış bir vektör sunar. Yanlışı seçersen RAG'ın yanlış şeyi alır.
+> Word2Vec size kelime başına bir vektör verdi. Modern embedding modelleri size pasaj başına, diller arası, seyrek, yoğun ve çoklu vektör görünümlerine sahip, indeksinize uyacak şekilde boyutlandırılmış bir vektör sunar. Yanlışı seçersen RAG'ın yanlış şeyi alır.
 
 **Tür:** Öğren
 **Diller:** Python
@@ -9,13 +9,13 @@
 
 ## Sorun
 
-RAG sisteminiz %40 oranında yanlış geçişi bulur. Suçlu nadiren vector database veya prompt olur. embedding modelidir.
+RAG sisteminiz %40 oranında yanlış geçişi bulur. Suçlu nadiren vector database veya prompt'dir. embedding modelidir.
 
-2026'da bir embedding seçmek, beş eksen arasında seçim yapmak anlamına gelir:
+2026'da bir embedding seçmek, beş eksen arasından seçim yapmak anlamına gelir:
 
-1. **Yoğun vs seyrek vs çoklu vektör.** ​​Pasaj başına bir vektör veya token başına bir vektör veya seyrek ağırlıklı bir kelime torbası.
+1. **Yoğun vs seyrek vs çoklu vektör.** Pasaj başına bir vektör veya token başına bir vektör veya seyrek ağırlıklı bir kelime torbası.
 2. **Dil kapsamı.** Tek dilli İngilizce modeller hâlâ yalnızca İngilizce görevlerde kazanıyor. Çok dilli modeller, derlemler karıştırıldığında kazanır.
-3. **Bağlam uzunluğu.** 512 tokens vs 8.192 vs 32.768 — ve gerçek etkin kapasite genellikle reklamı yapılan maksimum değerin %60-70'idir.
+3. **Bağlam uzunluğu.** 512 token'ye karşı 8.192'ye karşı 32.768 — ve gerçek etkin kapasite genellikle reklamı yapılan maksimum değerin %60-70'idir.
 4. **Boyut bütçesi.** Tam hassasiyette 3.072 kayan nokta = vektör başına 12 KB. 100 milyon vektörde depolama ayda 1.300 ABD dolarıdır. Matryoshka'nın kesilmesi bunu 4 kat keser.
 5. **Açık ve barındırılan karşılaştırması.** Açık ağırlık, yığını ve verileri kontrol ettiğiniz anlamına gelir. Barındırılan, kontrolü her zaman en yeniye çevirdiğiniz anlamına gelir.
 
@@ -25,19 +25,19 @@ Bu ders, geçen çeyrekte popüler olana göre değil, kanıta göre seçim yapa
 
 ![Yoğun, seyrek ve çoklu vektör embedding'ler](../assets/embedding-modes.svg)
 
-**Yoğun embedding'lar.** Geçiş başına bir vektör (genellikle 384-3.072 boyut). Kosinüs benzerliği pasajları anlamsal yakınlığa göre sıralar. OpenAI `text-embedding-3-large`, BGE-M3 yoğun modu, Voyage-3. Varsayılan seçim.
+**Yoğun embedding'ler.** Geçiş başına bir vektör (genellikle 384-3.072 boyut). Kosinüs benzerliği pasajları anlamsal yakınlığa göre sıralar. OpenAI `text-embedding-3-large`, BGE-M3 yoğun mod, Voyage-3. Varsayılan seçim.
 
-**Seyrek embedding'ler.** SPLADE tarzı. Bir transformer, her token kelime bilgisi için bir ağırlık tahmin eder, ardından çoğunu sıfırlar. Sonuç |vocab| boyutunda seyrek bir vektördür. Sözcüksel eşleşmeyi (BM25 gibi) ancak öğrenilmiş terim ağırlıklarıyla yakalar. Anahtar kelime ağırlıklı sorgularda güçlü.
+**Seyrek embedding'ler.** SPLADE tarzı. Bir transformer, her token kelimesi için bir ağırlık tahmin eder ve ardından çoğunu sıfırlar. Sonuç |vocab| boyutunda seyrek bir vektördür. Sözcüksel eşleşmeyi (BM25 gibi) ancak öğrenilmiş terim ağırlıklarıyla yakalar. Anahtar kelime ağırlıklı sorgularda güçlü.
 
-**Çoklu vektör (geç etkileşim).** ColBERTv2, Jina-ColBERT. token başına bir vektör. MaxSim ile puanlama: her token sorgusu için, en benzer belgeyi token bulun, puanları toplayın. Depolamak ve puanlamak daha pahalıdır, ancak uzun sorgularda ve alana özgü derlemlerde kazanç sağlar.
+**Çoklu vektör (geç etkileşim).** ColBERTv2, Jina-ColBERT. token başına bir vektör. MaxSim ile puanlama: her token sorgusu için en benzer token belgesini bulun, puanları toplayın. Depolamak ve puanlamak daha pahalıdır, ancak uzun sorgularda ve alana özgü derlemlerde kazanç sağlar.
 
 **BGE-M3: üçü aynı anda.** Tek model, yoğun, seyrek ve çoklu vektör temsillerini eş zamanlı olarak üretir. Her biri bağımsız olarak sorgulanabilir; puanlar ağırlıklı toplam yoluyla birleştirilir. Tek bir kontrol noktasından esneklik istediğinizde 2026 varsayılanı.
 
-**Matryoshka Temsil Öğrenimi.** Vektörün ilk N boyutunun kullanışlı bir bağımsız embedding oluşturacak şekilde eğitildi. 1.536 dim vektörünü 256 dim'e kısaltın ve 6 kat depolama tasarrufu için ~%1 doğruluk ödeyin. OpenAI text-3, Cohere v4, Voyage-4, Jina v5, Gemini Embedding 2, Nomic v1.5+ tarafından desteklenir.
+**Matryoshka Temsil Öğrenimi.** Vektörün ilk N boyutunun kullanışlı, bağımsız bir embedding oluşturması için eğitildi. 1.536 dim vektörünü 256 dim'e kısaltın ve 6 kat depolama tasarrufu için ~%1 doğruluk ödeyin. OpenAI text-3, Cohere v4, Voyage-4, Jina v5, Gemini Embedding 2, Nomic v1.5+ tarafından desteklenir.
 
 ### MTEB liderlik tablosu kısmi bir hikaye anlatıyor
 
-Massive Text Embedding Benchmark — Lansmanda (2022) 8 görev türünde 56 görev, MTEB v2'de 100'den fazla göreve genişletildi. 2026'nın başlarında Gemini Embedding 2 zirveye ulaştı (67,71 MTEB-R). Cohere embed-v4 genel olarak önde (65,2 MTEB). BGE-M3 açık ağırlıkta çok dillilikte (63,0) liderdir. Skor tablosu gerekli ancak yeterli değil; alan adınızda her zaman benchmark.
+Massive Text Embedding Benchmark — Lansmanda (2022) 8 görev türünde 56 görev, MTEB v2'de 100'den fazla göreve genişletildi. 2026'nın başlarında Gemini Embedding 2, geri alımlarda zirveye yerleşti (67,71 MTEB-R). Cohere embed-v4 genel olarak önde (65,2 MTEB). BGE-M3 açık ağırlıkta çok dillilikte (63,0) liderdir. Skor tablosu gerekli ancak yeterli değil; alan adınızda her zaman benchmark.
 
 ### Üç katmanlı model
 
@@ -51,7 +51,7 @@ Massive Text Embedding Benchmark — Lansmanda (2022) 8 görev türünde 56 gör
 
 ## İnşa Et
 
-### Adım 1: temel — Cümle-BERT ile yoğun embedding'lar
+### Adım 1: temel — Cümle-BERT ile yoğun embedding'ler
 
 ```python
 from sentence_transformers import SentenceTransformer
@@ -129,7 +129,7 @@ Aday modellerinizi *temsilci* bir alt küme üzerinde çalıştırın. Liderlik 
 
 ### Adım 5: sıfırdan elle haddelenmiş kosinüs
 
-Bkz. `code/main.py`. Ortalama Hashing Hilesi embeddings (yalnızca stdlib). transformer embedding'lerle rekabetçi değildir ancak şu şekli gösterir: tokenize → vektör → normalleştir → nokta çarpım.
+Bkz. `code/main.py`. Ortalama Hashing Hilesi embedding'ler (yalnızca stdlib). transformer embedding'lerle rekabet etmez ancak şu şekli gösterir: tokenize → vektör → normalleştir → nokta çarpım.
 
 ## Tuzaklar
 
@@ -148,12 +148,12 @@ Bkz. `code/main.py`. Ortalama Hashing Hilesi embeddings (yalnızca stdlib). tran
 | Yalnızca İngilizce, hızlı, API | `text-embedding-3-large` veya `voyage-3-large` |
 | Açık ağırlık, İngilizce | `BAAI/bge-large-en-v1.5` |
 | Açık ağırlık, çok dilli | `BAAI/bge-m3` veya `Qwen3-Embedding-8B` |
-| Uzun içerik (32k+) | Voyage-3-large, Cohere embed-v4, Qwen3-Embedding-8B |
+| Uzun içerik (32k+) | Voyage-3-büyük, Cohere yerleştirme-v4, Qwen3-Embedding-8B |
 | Yalnızca CPU deployment | Nomic Embed v2 (137 milyon parametre, MoE) |
 | Depolama kısıtlamalı | Matryoshka-kesilmiş + int8 nicemleme |
 | Anahtar kelime ağırlıklı sorgular | SPLADE seyrek, yoğun |
 
-2026 modeli: BGE-M3 veya text-3-large ile başlayın, alanınızda MTEB ile değerlendirin, alana özgü bir modelin 3 puandan fazla kazanması durumunda takas yapın.
+2026 modeli: BGE-M3 veya text-3-large ile başlayın, alanınızda MTEB ile değerlendirin, alana özel bir modelin 3 puandan fazla kazanması durumunda takas yapın.
 
 ## Gönderin
 
@@ -182,7 +182,7 @@ Refuse recommendations that truncate Matryoshka to <64 dims without domain valid
 
 ## Egzersizler
 
-1. **Kolay.** 100 cümleyi `bge-small-en-v1.5` ile tam loşlukta (384), ardından Matryoshka 128'de kodlayın. 10 sorgudaki MRR düşüşünü ölçün.
+1. **Kolay.** 100 cümleyi `bge-small-en-v1.5` ile tam karanlıkta (384), ardından Matryoshka 128'de kodlayın. 10 sorgudaki MRR düşüşünü ölçün.
 2. **Orta.** Alanınızdaki 500 pasajda BGE-M3'ün yoğun, seyrek ve colbert değerlerini karşılaştırın. Recall@10'da hangisi kazanır? RRF füzyonu en iyi tekli modu yener mi?
 3. **Zor.** En önemli 2 alan görevinizdeki üç aday modelde MTEB'yi çalıştırın. MTEB puanını, 100 sorguluk bir grupta p99 gecikmesini ve 1 milyon $ sorguyu raporlayın. Pareto-optimal olanı seçin.
 
@@ -193,9 +193,9 @@ Refuse recommendations that truncate Matryoshka to <64 dims without domain valid
 | Yoğun embedding | vektör | Metin başına bir sabit boyutlu vektör. Sıralama için kosinüs benzerliği. |
 | Seyrek embedding | BM25'i öğrendim | Kelime başına bir ağırlık token; çoğunlukla sıfırlar; uçtan uca eğitilmiştir. |
 | Çoklu vektör | ColBERT tarzı | token başına bir vektör; MaxSim puanlaması; daha büyük indeks, daha iyi hatırlama. |
-| Matruşka | Rus bebek numarası | İlk N dim, kendi başına geçerli bir küçük embedding'tur. |
+| Matruşka | Rus bebek numarası | İlk N dim, kendi başına geçerli, daha küçük bir embedding'dir. |
 | METEB | benchmark | Massive Text Embedding Benchmark — Başlangıçta 56 görev, v2'de 100'den fazla görev. |
-| BEİR | Alma benchmark | 18 sıfır atışlı geri alma görevi; genellikle alanlar arası sağlamlık nedeniyle alıntılanır. |
+| BEİR | Geri alma benchmark | 18 sıfır atışlı geri alma görevi; genellikle alanlar arası sağlamlık nedeniyle alıntılanır. |
 | Asimetrik kodlama | Sorgu ≠ belge yolu | Model, sorgular ve belgeler için farklı projeksiyonlar kullanır. |
 
 ## Daha Fazla Okuma
@@ -204,5 +204,5 @@ Refuse recommendations that truncate Matryoshka to <64 dims without domain valid
 - [Muennighoff ve ark. (2022). MTEB: Massive Text Embedding Benchmark](https://arxiv.org/abs/2210.07316) — skor tablosu kağıdı.
 - [Chen ve ark. (2024). BGE-M3: Çok Dilli, Çok İşlevli, Çok Parçalılık](https://arxiv.org/abs/2402.03216) — birleşik üç modlu model.
 - [Kusupati ve ark. (2022). Matryoshka Temsil Öğrenimi](https://arxiv.org/abs/2205.13147) — boyut merdiveni eğitimi hedefi.
--[Santhanam ve ark. (2022). ColBERTv2: Hafif Geç Etkileşim Yoluyla Etkili ve Verimli Erişim](https://arxiv.org/abs/2112.01488) — üretimde geç etkileşim.
-- [Sarılma Yüzündeki MTEB lider tablosu](https://huggingface.co/spaces/mteb/leaderboard) — canlı sıralamalar.
+-[Santhanam ve ark. (2022). ColBERTv2: Hafif Geç Etkileşim aracılığıyla Etkili ve Verimli Erişim](https://arxiv.org/abs/2112.01488) — üretimde geç etkileşim.
+- [Sarılma Yüzünde MTEB lider tablosu](https://huggingface.co/spaces/mteb/leaderboard) — canlı sıralamalar.

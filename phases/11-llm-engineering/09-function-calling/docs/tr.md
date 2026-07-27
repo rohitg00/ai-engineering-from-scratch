@@ -1,18 +1,18 @@
 # İşlev Çağırma ve Araç Kullanımı
 
-> LLM'ler hiçbir şey yapamaz. Metin üretirler. Tüm yetenek budur. Hava durumunu kontrol edemez, bir veritabanını sorgulayamaz, e-posta gönderemez, kod çalıştıramaz veya bir dosyayı okuyamazlar. Gördüğünüz her "AI agent", hangi işlevin çağrılacağını söyleyen LLM üreten JSON'dur ve ardından kodunuz onu gerçekten çağırır. Model beyindir. Araçlar ellerdir. Function calling, onları birbirine bağlayan sinir sistemidir.
+> Yüksek Lisans'lar hiçbir şey yapamaz. Metin üretirler. Tüm yetenek budur. Hava durumunu kontrol edemez, bir veritabanını sorgulayamaz, e-posta gönderemez, kod çalıştıramaz veya bir dosyayı okuyamazlar. Gördüğünüz her "AI agent", hangi işlevin çağrılacağını söyleyen LLM üreten bir JSON'dur ve ardından kodunuz onu gerçekten çağırır. Model beyindir. Araçlar ellerdir. İşlev çağrısı, onları birbirine bağlayan sinir sistemidir.
 
 **Tür:** Yapım
 **Diller:** Python
 **Önkoşullar:** Aşama 11 Ders 03 (Yapılandırılmış Çıktılar)
 **Süre:** ~75 dakika
-**İlgili:** Aşama 11 · 14 (Model Bağlam Protokolü) — bir araç ana bilgisayarlar arasında paylaşıldığında, satır içi function callingndan bir MCP sunucusuna geçin. Bu ders satır içi durumu kapsar; MCP protokol durumunu kapsar.
+**İlgili:** Aşama 11 · 14 (Model Bağlam Protokolü) — bir araç ana bilgisayarlar arasında paylaşıldığında, satır içi işlev çağrısından bir MCP sunucusuna geçin. Bu ders satır içi durumu kapsar; MCP protokol durumunu kapsar.
 
 ## Öğrenme Hedefleri
 
-- Bir function calling döngüsü uygulayın: araç şemalarını tanımlayın, modelin araç çağrısı JSON'unu ayrıştırın, işlevleri yürütün ve sonuçları döndürün
+- Bir işlev çağırma döngüsü uygulayın: araç şemalarını tanımlayın, modelin araç çağrısı JSON'unu ayrıştırın, işlevleri yürütün ve sonuçları döndürün
 - Modelin güvenilir bir şekilde çağırabileceği net açıklamalara ve yazılı parametrelere sahip araç şemaları tasarlayın
-- Karmaşık sorguları yanıtlamak için birden fazla function callingnı zincirleyen çok dönüşlü bir agent loop oluşturun
+- Karmaşık sorguları yanıtlamak için birden fazla işlev çağrısını zincirleyen çok dönüşlü bir agent loop oluşturun
 - İşlev çağıran uç durumları ele alın: paralel takım çağrıları, hata yayılımı ve sonsuz takım döngülerinin önlenmesi
 
 ## Sorun
@@ -25,9 +25,9 @@ Bu, sorumluluk reddi beyanına bürünmüş bir halüsinasyondur. Model hava dur
 
 Doğru cevap, OpenWeatherMap API'sinin çağrılmasını, mevcut sıcaklığın alınmasını ve gerçek sayının döndürülmesini gerektirir. Model API'leri çağıramaz. Kodunuz bunu yapabilir. Eksik parça: modelin "Bu argümanlarla hava durumu API'sini çağırmam gerekiyor" demesine ve kodunuzun bunu yürütmesine ve sonucu geri göndermesine olanak tanıyan yapılandırılmış bir protokol.
 
-Bu function callingdır. Model, hangi işlevin hangi argümanlarla çağrılacağını açıklayan yapılandırılmış JSON çıktısı verir. Uygulamanız işlevi yürütür. Sonuç konuşmaya geri döner. Model, nihai cevabını üretmek için sonucu kullanır.
+Bu işlev çağrısıdır. Model, hangi işlevin hangi argümanlarla çağrılacağını açıklayan yapılandırılmış JSON çıktısı verir. Uygulamanız işlevi yürütür. Sonuç konuşmaya geri döner. Model, nihai cevabını üretmek için sonucu kullanır.
 
-Function calling olmadan LLM'ler ansiklopedilere dönüşür. Bununla birlikte agents olurlar.
+İşlev çağrısı olmadan Yüksek Lisans'lar ansiklopedilere dönüşür. Bununla birlikte agent olurlar.
 
 ## Konsept
 
@@ -85,20 +85,20 @@ Her araç, modele fonksiyonun ne yaptığını, hangi argümanları aldığını
 }
 ```
 
-`description` alanları kritiktir. Model, aracın ne zaman ve nasıl kullanılacağına karar vermek için bunları okur. "Hava durumunu alır" gibi belirsiz bir açıklama, "Bir şehrin mevcut hava durumunu alın. Sıcaklığı Santigrat cinsinden ve koşulları döndürür" ifadesinden daha kötü bir araç seçimine neden olur. Açıklama, araç seçimi için bir prompt şeklindedir.
+`description` alanları kritiktir. Model, aracın ne zaman ve nasıl kullanılacağına karar vermek için bunları okur. "Hava durumunu alır" gibi belirsiz bir açıklama, "Bir şehrin mevcut hava durumunu alın. Sıcaklığı Santigrat cinsinden ve koşulları döndürür" ifadesinden daha kötü bir araç seçimine neden olur. Açıklama, takım seçimi için bir prompt'dir.
 
 ### Sağlayıcı Karşılaştırması
 
-Her büyük sağlayıcı function callingnı destekler, ancak API yüzeyi farklıdır.
+Her büyük sağlayıcı işlev çağrısını destekler, ancak API yüzeyi farklıdır.
 
 | Sağlayıcı | API Parametresi | Araç Çağrı Formatı | Paralel Aramalar | Zorla Arama |
 |----------|--------------|-----------------|---------------|----------------|
 | OpenAI (GPT-5, o4) | `tools` | `tool_calls[].function` | Evet (tur başına birden fazla) | `tool_choice="required"` |
-| Anthropic (Claude 4.6/4.7) | `tools` | `content[].type="tool_use"` | Evet (birden fazla blok) | `tool_choice={"type":"any"}` |
+| Antropik (Claude 4.6/4.7) | `tools` | `content[].type="tool_use"` | Evet (birden fazla blok) | `tool_choice={"type":"any"}` |
 | Google (İkizler 3) | `function_declarations` | `functionCall` | Evet | `function_calling_config` |
 | Açık ağırlık (Llama 4, Qwen3, DeepSeek-V3) | Lama 4'te yerel `tools`; Diğerlerinde Hermes veya ChatML | Karışık | Modele bağlı | Prompt tabanlı veya destekleniyorsa `tool_choice` |
 
-2026 yılına gelindiğinde kapalı olan üç sağlayıcı, neredeyse aynı JSON-Şema tabanlı formatlarda birleşti. Llama 4, OpenAI'nin şekliyle eşleşen yerel bir `tools` alanıyla birlikte gelir. Açık ağırlıklı ince ayarlar hala farklılık göstermektedir; Hermes formatı (NousResearch), üçüncü taraf ince ayarlar için en yaygın olanıdır. Ana bilgisayarlar arasında paylaşılan araçlar için, satır içi function calling yerine MCP'yi (Aşama 11 · 14) tercih edin; sunucu hepsi için aynıdır.
+2026 yılına gelindiğinde kapalı olan üç sağlayıcı, neredeyse aynı JSON-Şema tabanlı formatlarda birleşti. Llama 4, OpenAI'nin şekliyle eşleşen yerel bir `tools` alanıyla birlikte gelir. Açık ağırlıklı ince ayarlar hala farklılık göstermektedir; Hermes formatı (NousResearch), üçüncü taraf ince ayarlar için en yaygın olanıdır. Ana bilgisayarlar arasında paylaşılan araçlar için, satır içi işlev çağrısı yerine MCP'yi (Aşama 11 · 14) tercih edin; sunucu hepsi için aynıdır.
 
 ### Araç Seçimi: Otomatik, Gerekli, Özel
 
@@ -121,23 +121,23 @@ GPT-4o ve Claude tek seferde birden fazla işlevi çağırabilir. Bir kullanıc�
 ]
 ```
 
-Kodunuz her ikisini de (ideal olarak aynı anda) yürütür, her iki sonucu da döndürür ve model tek bir yanıtı sentezler. Bu, gidiş dönüş sayısını 2'den 1'e düşürür. Sorgu başına 5-10 araç çağrısı olan agent'lar için paralel çağrı, gecikmeyi %60-80 oranında azaltır.
+Kodunuz her ikisini de (ideal olarak aynı anda) yürütür, her iki sonucu da döndürür ve model tek bir yanıtı sentezler. Bu, gidiş dönüş sayısını 2'den 1'e düşürür. Sorgu başına 5-10 araç çağrısı olan agent'ler için paralel çağrı, gecikmeyi %60-80 oranında azaltır.
 
 ### Yapılandırılmış Çıkışlar ve İşlev Çağrısı Karşılaştırması
 
-Ders 03 yapılandırılmış çıktıları kapsıyordu. Function calling aynı JSON Schema mekanizmasını kullanır ancak farklı bir amaç için kullanılır.
+Ders 03 yapılandırılmış çıktıları kapsıyordu. İşlev çağırma aynı JSON Schema mekanizmasını kullanır ancak farklı bir amaç için kullanılır.
 
 **Yapılandırılmış çıktılar**: Modeli belirli bir biçimde veri üretmeye zorlayın. Çıktı nihai üründür. Örnek: ürün bilgilerini metinden `{name, price, in_stock}` olarak çıkarın.
 
-**Function calling**: model, bir eylemi yürütme niyetini bildirir. Çıkış bir ara adımdır. Örnek: `get_weather(city="Tokyo")` -- model bir eylem talep ediyor, nihai yanıtı üretmiyor.
+**İşlev çağrısı**: model, bir eylemi yürütme niyetini bildirir. Çıkış bir ara adımdır. Örnek: `get_weather(city="Tokyo")` -- model bir eylem talep ediyor, nihai yanıtı üretmiyor.
 
-Veri çıkarmak istediğinizde yapılandırılmış çıktıları kullanın. Modelin harici sistemlerle etkileşime girmesini istediğinizde function callingyı kullanın.
+Veri çıkarmak istediğinizde yapılandırılmış çıktıları kullanın. Modelin harici sistemlerle etkileşime girmesini istediğinizde işlev çağırmayı kullanın.
 
 ### Güvenlik: Pazarlık Edilemez Kurallar
 
-Function calling, LLM'a verebileceğiniz en tehlikeli yetenektir. Model neyin yürütüleceğini seçer. Araç setiniz veritabanı sorguları içeriyorsa, model sorguları oluşturur. Kabuk komutları içeriyorsa model bunları yazar.
+İşlev çağırma, Yüksek Lisans'a verebileceğiniz en tehlikeli yetenektir. Model neyin yürütüleceğini seçer. Araç setiniz veritabanı sorguları içeriyorsa, model sorguları oluşturur. Kabuk komutları içeriyorsa model bunları yazar.
 
-**Kural 1: Model tarafından oluşturulan SQL'i asla doğrudan bir veritabanına iletmeyin.** Model, DROP TABLE, UNION enjeksiyonları veya her satırı döndüren sorgular oluşturabilir ve üretecektir. Her zaman parametrelendirin. Her zaman doğrulayın. Her zaman izin verilenler listesini kullanın.
+**Kural 1: Model tarafından oluşturulan SQL'i asla doğrudan bir veritabanına iletmeyin.** Model, DROP TABLE, UNION enjeksiyonları veya her satırı döndüren sorgular oluşturabilir ve üretecektir. Her zaman parametrelendirin. Her zaman doğrula. Her zaman izin verilenler listesini kullanın.
 
 **Kural 2: İzin verilenler listesi işlevleri.** Model yalnızca açıkça tanımladığınız işlevleri çağırabilir. Asla genel bir "herhangi bir işlevi ada göre çalıştır" aracı oluşturmayın. 50 dahili fonksiyonunuz varsa, yalnızca kullanıcının ihtiyaç duyduğu 5 tanesini gösterin.
 
@@ -149,7 +149,7 @@ Function calling, LLM'a verebileceğiniz en tehlikeli yetenektir. Model neyin y�
 
 ### Hata İşleme
 
-Araçlar başarısız oluyor. API'ler zaman aşımına uğradı. Veritabanları çöküyor. Dosyalar mevcut değil. Modelin, bir takımın ne zaman arızalandığını ve nedenini bilmesi gerekir.
+Araçlar başarısız oluyor. API'ler zaman aşımına uğradı. Veritabanları çöküyor. Dosyalar mevcut değil. Modelin bir aracın ne zaman arızalandığını ve nedenini bilmesi gerekir.
 
 Hataları istisnalar olarak değil, yapılandırılmış araç sonuçları olarak döndürün:
 
@@ -604,7 +604,7 @@ def run_demo():
 
 OpenAI, araç çağrılarını `response.choices[0].message.tool_calls` olarak döndürür. Her çağrının, sonucu döndürürken eklemeniz gereken bir `id` vardır. Model, sonuçları çağrılarla eşleştirmek için bu kimliği kullanır. GPT-4o, tek bir yanıtta birden fazla araç çağrısını geri döndürebilir; hepsini yineleyebilir ve yürütebilir.
 
-### Anthropic Araç Kullanımı
+### Antropik Araç Kullanımı
 
 ```python
 # import anthropic
@@ -644,7 +644,7 @@ OpenAI, araç çağrılarını `response.choices[0].message.tool_calls` olarak d
 # )
 ```
 
-Anthropic, araç çağrılarını `type: "tool_use"` ile içerik blokları olarak döndürür. Araç sonucu, `type: "tool_result"` içeren bir kullanıcı mesajına gider. Temel farklılığa dikkat edin: Anthropic, araç parametre tanımları için `input_schema` kullanırken, OpenAI `parameters` kullanır.
+Anthropic, `type: "tool_use"` ile araç çağrılarını içerik blokları olarak döndürür. Araç sonucu `type: "tool_result"` içeren bir kullanıcı mesajına gider. Temel farka dikkat edin: Anthropic, araç parametre tanımları için `input_schema`'yi kullanırken OpenAI, `parameters`'yi kullanır.
 
 ### MCP Entegrasyonu
 
@@ -673,9 +673,9 @@ MCP, takım uygulamasını takım tüketiminden ayırır. Postgres sunucusu SQL'
 
 ## Gönderin
 
-Bu ders, araç tanımlarını tasarlamak için yeniden kullanılabilir bir prompt şablonu olan `outputs/prompt-tool-designer.md`'yi üretir. Bir aracın ne yapmasını istediğinize dair bir açıklama verin; o da açıklamalar, türler ve kısıtlamalarla birlikte eksiksiz JSON Şeması tanımını üretecektir.
+Bu ders, araç tanımlarını tasarlamak için yeniden kullanılabilir bir prompt şablonu olan `outputs/prompt-tool-designer.md`'yi üretir. Bir aracın ne yapmasını istediğinize ilişkin bir açıklama verin; o da açıklamalar, türler ve kısıtlamalarla birlikte eksiksiz JSON Şeması tanımını üretecektir.
 
-Ayrıca, araç tasarımı, hata işleme, güvenlik ve sağlayıcıya özgü kalıpları kapsayan, üretimde function callingnın uygulanmasına yönelik bir karar olan `outputs/skill-function-calling-patterns.md` - bir karar framework üretir.
+Aynı zamanda `outputs/skill-function-calling-patterns.md` - üretimde işlev çağrısının uygulanmasına yönelik, araç tasarımı, hata yönetimi, güvenlik ve sağlayıcıya özel kalıpları kapsayan bir karar olan framework'yi de üretir.
 
 ## Egzersizler
 
@@ -685,32 +685,32 @@ Ayrıca, araç tasarımı, hata işleme, güvenlik ve sağlayıcıya özgü kal�
 
 3. **Çok adımlı bir agent oluşturun.** Bazı sorgular zincirleme araç çağrıları gerektirir: "Yapılandırma dosyasını okuyun ve bana hangi modelin yapılandırıldığını söyleyin, ardından bu modelin fiyatını web'de arayın." Model daha fazla araca gerek olmadığına karar verene kadar çalışan bir döngü uygulayın ve birikmiş sonuçları her karar adımına aktarın. Sonsuz döngüleri önlemek için 10 yinelemeyle sınırlayın.
 
-4. **Araç seçiminin doğruluğunu ölçün.** Beklenen araç adlarıyla 30 test sorgusu oluşturun. Karar fonksiyonunuzu 30'un tamamında çalıştırın ve doğru aracı seçme süresinin yüzde kaçının ölçtüğünü görün. Araçlar arasında en fazla karışıklığa hangi sorguların neden olduğunu belirleyin.
+4. **Araç seçiminin doğruluğunu ölçün.** Beklenen araç adlarıyla 30 test sorgusu oluşturun. Karar fonksiyonunuzu 30'un tamamında çalıştırın ve doğru aracı seçme süresinin yüzde kaçının ölçün. Araçlar arasında en fazla karışıklığa hangi sorguların neden olduğunu belirleyin.
 
-5. **Araç çağrısını önbelleğe almayı uygulayın.** Aynı araç 60 saniye içinde aynı argümanlarla çağrılırsa, yeniden çalıştırmak yerine önbelleğe alınan sonucu döndürün. `(tool_name, frozenset(args.items()))` ile anahtarlanmış bir sözlük kullanın. 20 sorgu içeren bir görüşmedeki önbellek isabet oranlarını ölçün.
+5. **Araç çağrısını önbelleğe almayı uygulayın.** Aynı araç 60 saniye içinde aynı argümanlarla çağrılırsa, yeniden yürütmek yerine önbelleğe alınan sonucu döndürün. `(tool_name, frozenset(args.items()))` tarafından anahtarlanan bir sözlük kullanın. 20 sorgu içeren bir görüşmedeki önbellek isabet oranlarını ölçün.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| Function calling | "Araç kullanımı" | Model, belirli bağımsız değişkenlerle çağrılacak bir işlevi açıklayan yapılandırılmış JSON çıktısı verir; bunu model değil, kodunuz yürütür |
+| İşlev çağırma | "Araç kullanımı" | Model, belirli bağımsız değişkenlerle çağrılacak bir işlevi açıklayan yapılandırılmış JSON çıktısı verir; bunu model değil, kodunuz yürütür |
 | Araç tanımı | "İşlev şeması" | Bir aracın adını, amacını, parametrelerini ve türlerini açıklayan bir JSON Schema nesnesi; model, aracın ne zaman ve nasıl kullanılacağına karar vermek için bunu okur |
 | Araç seçimi | "Arama modu" | Modelin bir aracı mı çağırması gerektiğini (gerekli), bir aracı mı çağıracağını (otomatik) veya belirli bir aracı mı çağırması gerektiğini (adlandırılmış) denetler |
-| Paralel arama | "Çoklu alet" | Model, tek bir turda birden fazla takım çağrısı çıkışı sağlayarak gidiş dönüşleri azaltır - GPT-4o ve Claude bunu desteklemektedir |
+| Paralel arama | "Çoklu alet" | Model, tek bir turda birden fazla takım çağrısı çıkışı sağlayarak gidiş dönüşleri azaltır - GPT-4o ve Claude'un her ikisi de bunu destekler |
 | Araç sonucu | "Fonksiyon çıkışı" | Bir aracın çalıştırılmasından elde edilen dönüş değeri, modelin yanıtında gerçek verileri kullanabilmesi için modele mesaj olarak geri gönderilir |
 | Argüman doğrulama | "Giriş kontrolü" | Aracı çalıştırmadan önce model tarafından oluşturulan bağımsız değişkenlerin beklenen türler, aralıklar ve kısıtlamalarla eşleştiğini doğrulama |
 | MCP | "Araç protokolü" | Model Bağlam Protokolü - Anthropic'in, uyumlu herhangi bir istemcinin keşfedip çağırabileceği sunucular aracılığıyla araçları kullanıma sunmaya yönelik açık standardı |
 | Agent loop | "ReAct döngüsü" | Model yanıt vermek için yeterli bilgiye sahip olana kadar model-karar-aracı, kod-yürütme-aracı, sonuç-geri bildirimlerinden oluşan yinelemeli döngü |
-| Alet zehirlenmesi | "Prompt araçları kullanarak ekleme" | Araç sonuçlarının, modelin davranışını değiştiren talimatları içerdiği ve tüm araç çıktılarını temizlediği bir saldırı |
+| Alet zehirlenmesi | "Aletler aracılığıyla Prompt enjeksiyonu" | Araç sonuçlarının, modelin davranışını değiştiren talimatları içerdiği ve tüm araç çıktılarını temizlediği bir saldırı |
 | Hız sınırlama | "Bütçeyi arayın" | Sonsuz döngüleri ve kontrolden çıkan API maliyetlerini önlemek için görüşme başına maksimum araç çağrısı sayısını ayarlama |
 
 ## Daha Fazla Okuma
 
-- [OpenAI İşlev Çağrı Kılavuzu](https://platform.openai.com/docs/guides/function-calling) -- paralel çağrılar, zorunlu çağrılar ve yapılandırılmış bağımsız değişkenler dahil olmak üzere GPT-4o ile araç kullanımına ilişkin kesin referans
-- [Anthropic Araç Kullanım Kılavuzu](https://docs.anthropic.com/en/docs/tool-use) -- Claude'un input_schema, çoklu araç yanıtları ve tool_choice yapılandırmasıyla araç kullanımı uygulaması
+- [OpenAI İşlev Çağırma Kılavuzu](https://platform.openai.com/docs/guides/function-calling) -- paralel çağrılar, zorunlu çağrılar ve yapılandırılmış bağımsız değişkenler de dahil olmak üzere GPT-4o ile araç kullanımına yönelik eksiksiz referans
+- [Antropik Araç Kullanım Kılavuzu](https://docs.anthropic.com/en/docs/tool-use) -- Claude'un input_schema, çoklu araç yanıtları ve tool_choice yapılandırmasıyla araç kullanımı uygulaması
 - [Model Bağlam Protokolü Belirtimi](https://modelcontextprotocol.io) -- sunucu/istemci mimarisiyle yapay zeka uygulamaları genelinde araçların birlikte çalışabilirliği için açık standart
-- [Schick ve diğerleri, 2023 -- "Toolformer: Dil Modelleri Araçları Kullanmayı Kendilerine Öğretebilir"](https://arxiv.org/abs/2302.04761) -- LLM'lerın harici araçları ne zaman ve nasıl çağıracaklarına karar verme konusunda eğitilmesine ilişkin temel makale
-- [Patil ve diğerleri, 2023 -- "Gorilla: Devasa API'lerle Bağlantılı Büyük Dil Modeli"](https://arxiv.org/abs/2305.15334) -- fine-tuning Halüsinasyonu azaltan 1.645 API genelinde doğru API çağrıları için LLM'ler
-- [Berkeley İşlev Çağrısı Skor Tablosu](https://gorilla.cs.berkeley.edu/leaderboard.html) -- GPT-4o, Claude, Gemini ve açık modeller genelinde function calling doğruluğunu karşılaştıran gerçek zamanlı benchmark
-- [Yao ve diğerleri, "ReAct: Dil Modellerinde Akıl Yürütme ve Harekete Geçme" (ICLR 2023)](https://arxiv.org/abs/2210.03629) -- her araç çağrısının etrafındaki dış agent loop olan Düşünce-Eylem-Gözlem döngüsü; Bu dersin bittiği yerde 14. Aşama başlıyor.
-- [Anthropic — Etkili agent'ler oluşturma (Aralık 2024)](https://www.anthropic.com/research/building-effective-agents) -- tek araç kullanımlı ilkelden oluşturulmuş beş birleştirilebilir model (prompt zincirleme, yönlendirme, paralelleştirme, orkestratör-çalışanlar, değerlendirici-optimizer).
+- [Schick ve diğerleri, 2023 -- "Toolformer: Language Models Can Teach Themself to Use Tools"](https://arxiv.org/abs/2302.04761) -- Yüksek Lisans'ların harici araçları ne zaman ve nasıl çağıracaklarına karar verme konusunda eğitilmesine ilişkin temel makale
+- [Patil ve diğerleri, 2023 -- "Gorilla: Devasa API'lerle Bağlantılı Büyük Dil Modeli"](https://arxiv.org/abs/2305.15334) -- Halüsinasyonu azaltan 1.645 API genelinde doğru API çağrıları için fine-tuning LLM'ler
+- [Berkeley İşlev Çağrısı Skor Tablosu](https://gorilla.cs.berkeley.edu/leaderboard.html) -- GPT-4o, Claude, Gemini ve açık modeller genelinde işlev çağırma doğruluğunu karşılaştıran gerçek zamanlı benchmark
+- [Yao ve diğerleri, "ReAct: Dil Modellerinde Sinerji Oluşturan Akıl Yürütme ve Harekete Geçme" (ICLR 2023)](https://arxiv.org/abs/2210.03629) -- her araç çağrısının etrafındaki dış agent loop olan Düşünce-Eylem-Gözlem döngüsü; Bu dersin bittiği yerde 14. Aşama başlıyor.
+- [Antropik — Etkili agent'ler oluşturma (Aralık 2024)](https://www.anthropic.com/research/building-effective-agents) -- tek araç kullanımlı ilkelden oluşturulmuş beş birleştirilebilir model (prompt zincirleme, yönlendirme, paralelleştirme, orkestratör-çalışanlar, değerlendirici-optimizer).

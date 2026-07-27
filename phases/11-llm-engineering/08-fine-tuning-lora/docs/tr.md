@@ -1,6 +1,6 @@
-# Fine-Tuning, LoRA ve QLoRA ile
+# LoRA ve QLoRA ile Fine-Tuning
 
-> Tam fine-tuning 7B modeli 56 GB VRAM gerektirir. Sende buna sahip değilsin. Çoğu şirket de öyle. LoRA, parametrelerin %1'inden daha azını eğiterek aynı modele 6 GB'ta ince ayar yapmanızı sağlar. Bu bir ödün değildir; çoğu görevde tam fine-tuning kalitesiyle eşleşir. Açık kaynaklı fine-tuning ekosisteminin tamamı bu tek numara üzerinde çalışıyor.
+> Tam fine-tuning 7B modeli 56 GB VRAM gerektirir. Sende buna sahip değilsin. Çoğu şirket de öyle. LoRA, parametrelerin %1'inden daha azını eğiterek aynı modele 6 GB'ta ince ayar yapmanızı sağlar. Bu bir uzlaşma değildir; çoğu görevde tam fine-tuning kalitesiyle eşleşir. Açık kaynaklı fine-tuning ekosisteminin tamamı bu tek numara üzerinde çalışıyor.
 
 **Tür:** Yapım
 **Diller:** Python
@@ -11,21 +11,21 @@
 ## Öğrenme Hedefleri
 
 - Düşük dereceli adaptör matrislerini (A ve B) önceden eğitilmiş bir modelin dikkat katmanlarına enjekte ederek LoRA'yı uygulayın
-- LoRA'nın tam fine-tuning'ye karşı parametre tasarrufunu hesaplayın: d_model boyutlarıyla rütbe r, d^2 yerine 2*r*d parametrelerini eğitir
+- LoRA'nın tam fine-tuning'ye karşı parametre tasarrufunu hesaplayın: d_model boyutları trenleri d^2 yerine 2*r*d parametreleriyle rütbe r
 - Tüketici GPU belleğine sığacak şekilde QLoRA (4 bit nicelenmiş taban + LoRA bağdaştırıcıları) kullanarak bir modele ince ayar yapın
-- deployment için LoRA ağırlıklarını temel modele geri birleştirin ve adaptörlü ve adaptörsüz inference hızını karşılaştırın
+- LoRA ağırlıklarını deployment için temel modele geri birleştirin ve inference hızını adaptörlü ve adaptörsüz karşılaştırın
 
 ## Sorun
 
 Temel bir modeliniz var. Lama 3 8B. Müşteri destek taleplerine şirketinizin sesiyle yanıt vermesini istiyorsunuz. Cevap SFT'dir. Ancak SFT'nin maliyet sorunu var.
 
-Tam fine-tuning modeldeki her parametreyi günceller. Llama 3 8B'nin 8 milyar parametresi vardır. Fp16'da her parametre 2 bayt alır. Bu sadece ağırlıkları yüklemek için 16GB'tır. Eğitim sırasında ayrıca gradient'lara (16GB), Adam için optimize edici durumlarına (momentum + varyans için 32GB) ve aktivasyonlara ihtiyacınız vardır. Toplam: Tek bir 8B modeli için yaklaşık 56 GB VRAM.
+Tam fine-tuning, modeldeki her parametreyi günceller. Llama 3 8B'nin 8 milyar parametresi vardır. Fp16'da her parametre 2 bayt alır. Bu sadece ağırlıkları yüklemek için 16GB'tır. Eğitim sırasında ayrıca gradient'lere (16 GB), Adam için optimize edici durumlarına (momentum + varyans için 32 GB) ve aktivasyonlara da ihtiyacınız vardır. Toplam: Tek bir 8B modeli için yaklaşık 56 GB VRAM.
 
 A100 80GB buna zar zor sığar. İki A100'ün maliyeti deney başına $3-4/hour on cloud providers. Training for 3 epochs on 50,000 examples takes 6-10 hours. That's $30-40'tır. Hiperparametreleri doğru şekilde belirlemek için 10 deney çalıştırın ve herhangi bir şeyi dağıtmadan önce 400 ABD doları harcadınız.
 
 Bunu Llama 3 70B'ye ölçeklendirdiğinizde rakamlar saçma olmaya başlıyor. Yalnızca ağırlıklar için 140 GB. Bir kümeye ihtiyacınız var. Deneme başına 100$+.
 
-Daha derin bir sorun da var. Tam fine-tuning modeldeki her ağırlığı değiştirir. Müşteri destek verilerine ince ayar yaparsanız modelin genel yeteneklerini düşürebilirsiniz. Buna felaket unutma denir. Model sizin görevinizde daha iyi hale gelirken, diğer her şeyde daha da kötüleşir.
+Daha derin bir sorun da var. Tam fine-tuning, modeldeki her ağırlığı değiştirir. Müşteri destek verilerine ince ayar yaparsanız modelin genel yeteneklerini düşürebilirsiniz. Buna felaket unutma denir. Model sizin görevinizde daha iyi hale gelirken, diğer her şeyde daha da kötüleşir.
 
 Daha az parametreyi eğiten, daha az bellek kullanan ve modelin mevcut bilgisini yok etmeyen bir yönteme ihtiyacınız var.
 
@@ -33,7 +33,7 @@ Daha az parametreyi eğiten, daha az bellek kullanan ve modelin mevcut bilgisini
 
 ### LoRA: Düşük Seviye Uyarlama
 
-Microsoft'tan Edward Hu ve meslektaşları, LoRA'yı Haziran 2021'de yayınladı. Makalenin öngörüsü: fine-tuning sırasındaki ağırlık güncellemelerinin içsel sıralaması düşük. 4096x4096 ağırlık matrisindeki 16,7 milyon parametrenin tamamını güncellemenize gerek yok. Güncellemedeki yararlı bilgiler, 16 veya 32. sıradaki bir matris tarafından yakalanabilir.
+Microsoft'tan Edward Hu ve meslektaşları, LoRA'yı Haziran 2021'de yayınladı. Makalenin içgörüsü: fine-tuning sırasındaki ağırlık güncellemelerinin içsel sıralaması düşük. 4096x4096 ağırlık matrisindeki 16,7 milyon parametrenin tamamını güncellemenize gerek yok. Güncellemedeki yararlı bilgiler, 16 veya 32. sıradaki bir matris tarafından yakalanabilir.
 
 İşte matematik. Standart bir doğrusal katman şunları hesaplar:
 
@@ -41,7 +41,7 @@ Microsoft'tan Edward Hu ve meslektaşları, LoRA'yı Haziran 2021'de yayınladı
 y = Wx
 ```
 
-Burada W bir d_out x d_in matrisidir. 4096x4096 dikkat projeksiyonu için bu 16.777.216 parametredir.
+Burada W bir d_out x d_in matrisidir. 4096x4096 dikkat projeksiyonu için bu 16.777.216 parametreye karşılık gelir.
 
 LoRA, W'yi dondurur ve düşük dereceli bir ayrıştırma ekler:
 
@@ -119,23 +119,23 @@ Hu ve ark. r=4'ün basit görevlere yönelik adaptasyonun çoğunu zaten yakalad
 
 ### QLoRA: 4-Bit Niceleme + LoRA
 
-Washington Üniversitesi'nden Tim Dettmers ve meslektaşları Mayıs 2023'te QLoRA'yı yayınladılar. Fikir: dondurulmuş temel modeli 4 bit hassasiyetle nicelemek, ardından fp16'daki LoRA adaptörlerini üstüne eklemek.
+Washington Üniversitesi'nden Tim Dettmers ve meslektaşları Mayıs 2023'te QLoRA'yı yayınladılar. Fikir: Dondurulmuş temel modeli 4 bit hassasiyetle nicelemek, ardından fp16'daki LoRA adaptörlerini üstüne eklemek.
 
 Bu, hafıza denklemini önemli ölçüde değiştirir:
 
 | Yöntem | Ağırlık Hafızası (7B) | Eğitim Belleği (7B) | GPU Gerekli |
 |--------|-------------------|---------------------|-------------|
-| Tam ince ayar (fp16) | 14 GB | ~56GB | 1x A100 80GB |
-| LoRA (fp16 tabanı) | 14 GB | ~18GB | 1x A100 40GB |
-| QLoRA (4 bitlik taban) | 3,5 GB | ~6GB | 1 adet RTX 3090 24 GB |
+| Tam ince ayar (fp16) | 14GB | ~56GB | 1x A100 80GB |
+| LoRA (fp16 tabanı) | 14GB | ~18GB | 1x A100 40GB |
+| QLoRA (4 bitlik taban) | 3,5GB | ~6GB | 1 adet RTX 3090 24 GB |
 
 QLoRA üç teknik katkı sağlar:
 
-**NF4 (Normal Float 4-bit)**: Özellikle neural network ağırlıkları için tasarlanmış yeni bir veri türü. Neural network ağırlıkları kabaca normal bir dağılım izler. NF4, 16 niceleme seviyesini standart bir normal dağılımın niceliklerine yerleştirir. Bu, normal olarak dağıtılan veriler için teorik olarak en uygun bilgidir. Tek tip 4 bit niceleme (INT4) veya standart Float4'ten daha az bilgi kaybeder.
+**NF4 (Normal Float 4-bit)**: neural network ağırlıkları için özel olarak tasarlanmış yeni bir veri türü. Neural network ağırlıkları kabaca normal bir dağılım izler. NF4, 16 niceleme seviyesini standart bir normal dağılımın niceliklerine yerleştirir. Bu, normal olarak dağıtılan veriler için teorik olarak en uygun bilgidir. Tek tip 4 bit niceleme (INT4) veya standart Float4'ten daha az bilgi kaybeder.
 
 **Çift niceleme**: Niceleme sabitlerinin kendisi bellek alır. 64 ağırlıktan oluşan her blok, bir fp32 ölçek faktörüne (4 bayt) ihtiyaç duyar. 7B modeli için bu fazladan 0,4 GB demektir. Çift niceleme, bu sabitleri fp8'e nicemleyerek yükü 0,1 GB'a düşürür. Küçük ama ekliyor.
 
-**Sayfalı optimize ediciler**: Eğitim sırasında, optimize edici durumları (Adam'ın momentumu ve varyansı) uzun dizilerde GPU belleğini aşabilir. Disk belleği optimize ediciler, GPU belleği tükendiğinde optimize edici durumlarını otomatik olarak CPU RAM'e sayfalamak ve gerektiğinde bunları geri sayfalamak için NVIDIA'nın birleşik belleğini kullanır. Bu, bir miktar verim pahasına OOM'un çökmesini önler.
+**Sayfalanmış optimize ediciler**: Eğitim sırasında, optimize edici durumları (Adam'ın momentumu ve varyansı) uzun dizilerde GPU belleğini aşabilir. Disk belleği optimize ediciler, GPU belleği tükendiğinde optimize edici durumlarını otomatik olarak CPU RAM'e sayfalamak ve gerektiğinde bunları geri sayfalamak için NVIDIA'nın birleşik belleğini kullanır. Bu, bir miktar verim pahasına OOM'un çökmesini önler.
 
 ### Kalite Sorusu
 
@@ -148,32 +148,32 @@ Parametrelerin azaltılması veya bazın nicelendirilmesi kaliteye zarar verir m
 | QLoRA r=16 (NF4) | 47,5 | 6.61 | 13.4 |
 | QLoRA r=64 (NF4) | 48.1 | 6.70 | 14.2 |
 
-r=16'daki LoRA çoğu benchmark'da tam fine-tuning'nın %1'i dahilindedir. r=16'daki QLoRA, yüzde birin bir kısmını daha kaybeder. r=64'teki QLoRA, %90 daha az bellek kullanırken aslında tam fine-tuning ile eşleşir.
+r=16'daki LoRA, çoğu benchmark'de tam fine-tuning'nin %1'i dahilindedir. r=16'daki QLoRA yüzde bir oranında daha kaybeder. r=64'teki QLoRA, %90 daha az bellek kullanırken aslında tam fine-tuning ile eşleşir.
 
 ### Gerçek Dünya Maliyetleri
 
-50.000 örnekte (3 dönem) Fine-tuning Lama 3 8B:
+50.000 örnekte Fine-tuning Llama 3 8B (3 dönem):
 
 | Yöntem | GPU | Zaman | Maliyet |
 |--------|-----|------|------|
 | Tam ince ayar | 2x A100 80GB | 8 saat | ~32$ |
 | LoRA r=16 | 1x A100 40GB | 4 saat | ~8$ |
-| QLoRA r=16 | 1 adet RTX 4090 24 GB | 6 saat | ~5$ |
-| QLoRA r=16 (Tembellikten Kurtul) | 1 adet RTX 4090 24 GB | 2,5 saat | ~2$ |
+| QLoRA r=16 | 1 adet RTX 4090 24GB | 6 saat | ~5$ |
+| QLoRA r=16 (Tembellikten Kurtul) | 1 adet RTX 4090 24GB | 2,5 saat | ~2$ |
 | QLoRA r=16 | 1x T4 16GB | 12 saat | ~4$ |
 
-Tek tüketici GPU'sundaki QLoRA'nın maliyeti öğle yemeğinden daha azdır. Açık ağırlıklı fine-tuning topluluğunun 2023'te patlama yaşamasının ve aşağıdaki her framework eğitimin 2026'da varsayılan olarak QLoRA göndermesinin nedeni budur.
+Tek tüketici GPU'sundaki QLoRA'nın maliyeti öğle yemeğinden daha azdır. Açık ağırlıklı fine-tuning topluluğunun 2023'te patlama yaşamasının ve aşağıdaki framework eğitimlerinin 2026'da varsayılan olarak QLoRA göndermesinin nedeni budur.
 
 ### 2026 PEFT yığını
 
 | Framework | Nedir | Ne zaman seç |
 |-----------|-----------|-----------|
-| **Sarılma Yüz PEFT'i** | Standart LoRA/QLoRA/DoRA/IA3 kitaplığı | Ham kontrol istiyorsunuz ve eğitim döngünüz zaten açık `transformers.Trainer` |
+| **Sarılma Yüz PEFT'i** | Standart LoRA/QLoRA/DoRA/IA3 kitaplığı | Ham kontrol istiyorsanız ve eğitim döngünüz zaten `transformers.Trainer` üzerindedir |
 | **TL** | HF'nin geri bildirimden takviye eğitmenleri (SFT, DPO, GRPO, PPO, ORPO) | SFT'den sonra DPO/GRPO'ya ihtiyacınız var; PEFT'in üzerine inşa edildi |
 | **Tembellikten kurtul** | İleri/geri geçişin Triton çekirdeğiyle yeniden yazılması | Doğruluk kaybı olmadan 2-5 kat hızlanma + yarım VRAM istiyorsunuz; Lama/Mistral/Qwen ailesi |
 | **Axolotl** | PEFT + TRL + DeepSpeed ​​+ Unsloth üzerinden YAML yapılandırma sarmalayıcısı | Tekrarlanabilir, sürüm kontrollü eğitim çalışmaları istiyorsunuz |
 | **LLaMA Fabrikası** | PEFT + TRL üzerinden GUI/CLI/API | Sıfır kodlu fine-tuning istiyorsunuz; 100'den fazla model ailesi destekleniyor |
-| **meşale melodisi** | Yerel PyTorch tarifleri, `transformers` bölüm yok | Minimum düzeyde ayrıntı istiyorsunuz ve kuruluşunuz zaten PyTorch'ta standartlaşıyor |
+| **meşale melodisi** | Yerel PyTorch tarifleri, `transformers` bölümü yok | Minimum düzeyde ayrıntı istiyorsunuz ve kuruluşunuz zaten PyTorch'ta standartlaşıyor |
 
 Temel kural: araştırma kullanımı veya tek seferlik deney → PEFT. Tekrarlanabilir üretim hattı → Unsloth çekirdekleri etkinleştirilmiş Axolotl. Tek kullanımlık prototip oluşturma → LLaMA-Factory.
 
@@ -183,7 +183,7 @@ Eğitimden sonra iki şeye sahip olursunuz: dondurulmuş temel model ve küçük
 
 1. **Bunları ayrı tutun**: Temel modeli yükleyin, adaptörü üste yükleyin. Farklı görevler için adaptörleri değiştirin. Bu, tek bir temel modelden birden fazla ince ayarlı varyantı bu şekilde sunarsınız.
 
-2. **Onları kalıcı olarak birleştirin**: W' = W + (alfa/r) * BA'yı hesaplayın ve sonucu yeni bir tam model olarak kaydedin. Birleştirilen model orijinaliyle aynı boyuttadır. inference ek yük yok. Yönetilecek adaptör yok.
+2. **Onları kalıcı olarak birleştirin**: W' = W + (alfa/r) * BA'yı hesaplayın ve sonucu yeni bir tam model olarak kaydedin. Birleştirilen model orijinaliyle aynı boyuttadır. inference ek yükü yok. Yönetilecek adaptör yok.
 
 Birden fazla göreve (müşteri destek bağdaştırıcısı, kod bağdaştırıcısı, çeviri bağdaştırıcısı) hizmet vermek için bunları ayrı tutun. Tek bir özel modeli dağıtmak için birleştirin.
 
@@ -195,13 +195,13 @@ Birden fazla bağdaştırıcıyı birleştirmek için gelişmiş birleştirme te
 
 ### İnce Ayar Yapılmaması Gerektiğinde
 
-Fine-tuning üçüncü seçenektir, ilk değil.
+Fine-tuning ilk değil üçüncü seçenektir.
 
-**İlk olarak: prompt mühendislik.** Daha iyi bir sistem yazın prompt. Few-shotli örnekler ekleyin. Düşünce zincirini kullanın. Bunun hiçbir maliyeti yoktur ve birkaç dakika sürer. Eğer promptile oraya %80 oranında ulaşırsanız, muhtemelen ince ayar yapmanıza gerek yoktur.
+**İlk olarak: prompt mühendisliği.** Daha iyi bir sistem olan prompt yazın. Birkaç çekimli örnekler ekleyin. Düşünce zincirini kullanın. Bunun hiçbir maliyeti yoktur ve birkaç dakika sürer. prompting sizi yolun %80'ine ulaştırırsa muhtemelen ince ayar yapmanıza gerek kalmaz.
 
 **İkincisi: RAG.** Modelin belirli verilerinizi (belgeler, bilgi tabanı, ürün kataloğu) bilmesi gerekiyorsa, bunları almak, bunları ağırlıklara dönüştürmekten daha ucuz ve bakımı daha kolaydır. Bkz. Ders 06.
 
-**Üçüncü: fine-tuning.** Modelin, prompting yoluyla elde edilemeyecek belirli bir stil, format veya akıl yürütme modelini benimsemesine ihtiyaç duyduğunuzda bunu kullanın. Tutarlı yapılandırılmış çıktıya ihtiyacınız olduğunda. Daha büyük bir modeli daha küçük bir modele ayırmanız gerektiğinde. Gecikme önemli olduğunda ve az sayıda prompt çekimden elde edilecek ekstra token'ları karşılayamayacağınız zaman.
+**Üçüncüsü: fine-tuning.** Modelin prompting aracılığıyla elde edilemeyecek belirli bir stil, format veya akıl yürütme modelini benimsemesine ihtiyaç duyduğunuzda bunu kullanın. Tutarlı yapılandırılmış çıktıya ihtiyacınız olduğunda. Daha büyük bir modeli daha küçük bir modele ayırmanız gerektiğinde. Gecikme önemli olduğunda ve birkaç çekimlik prompting ile ekstra token'leri karşılayamayacağınız zaman.
 
 ```mermaid
 graph TD
@@ -326,7 +326,7 @@ def merge_lora_weights(model):
             setattr(parent, child_name, module.linear)
 ```
 
-Birleştirme sonrasında LoRA katmanları kaybolur. Model, ağırlıklara yapılan uyarlamayla orijinaliyle aynı boyuttadır. inference ek yük yok.
+Birleştirme sonrasında LoRA katmanları kaybolur. Model, ağırlıklara yapılan uyarlamayla orijinaliyle aynı boyuttadır. inference ek yükü yok.
 
 ### Adım 6: Simüle edilmiş QLoRA Nicelemesi
 
@@ -504,13 +504,13 @@ trainer.train()
 model.save_pretrained("./lora-adapter")
 ```
 
-Kaydedilen adaptör 10-100 MB'dir. Temel modele dokunulmadan kalır. Tam modeli yeniden dağıtmadan adaptörleri Hugging Face Hub'da paylaşabilirsiniz.
+Kaydedilen adaptör 10-100 MB'tır. Temel modele dokunulmadan kalır. Tam modeli yeniden dağıtmadan adaptörleri Hugging Face Hub'da paylaşabilirsiniz.
 
 ## Gönderin
 
 Bu ders şunları üretir:
-- `outputs/prompt-lora-advisor.md` -- belirli göreviniz için LoRA sıralamasına, hedef modüllere ve hiper parametrelere karar vermenize yardımcı olan bir prompt
-- `outputs/skill-fine-tuning-guide.md` -- agents'e ne zaman ve nasıl ince ayar yapılacağına ilişkin karar ağacını öğreten bir beceri
+- `outputs/prompt-lora-advisor.md` — belirli göreviniz için LoRA sıralamasına, hedef modüllere ve hiper parametrelere karar vermenize yardımcı olan bir prompt
+- `outputs/skill-fine-tuning-guide.md` — agent'lere ne zaman ve nasıl ince ayar yapılacağına ilişkin karar ağacını öğreten bir beceri
 
 ## Egzersizler
 
@@ -522,17 +522,17 @@ Bu ders şunları üretir:
 
 4. **Çoklu adaptör sunumu.** İki LoRA adaptörünü farklı veri alt kümeleri (çift endeksler ve tek endeksler) üzerinde eğitin. Her iki adaptörü de kaydedin. Temel modeli bir kez yükleyin, ardından adaptörleri değiştirin ve her birinin aynı girişte farklı çıkışlar ürettiğini doğrulayın. Üretim sistemleri bu şekilde birden fazla ince ayarlı modele tek bir tabandan hizmet verir.
 
-5. **Birleştirme ve birleşmemiş inference.** Aynı 100 girişte LoRA modelinin merge_lora_weights öncesi ve sonrası çıktısını karşılaştırın. Çıkışların aynı olduğunu doğrulayın (1e-5 kayan nokta toleransı dahilinde). O zaman her ikisi için de benchmark inference hızı -- birleştirilmiş, iki yerine tek bir matris çarpımı olduğundan biraz daha hızlı olmalıdır.
+5. **Birleştirme ve birleşmemiş inference.** Aynı 100 girişte LoRA modelinin merge_lora_weights öncesi ve sonrası çıktısını karşılaştırın. Çıkışların aynı olduğunu doğrulayın (1e-5 kayan nokta toleransı dahilinde). O zaman benchmark inference her ikisinin de hızı - birleştirilmiş, iki yerine tek bir matris çarpımı olduğundan biraz daha hızlı olmalıdır.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| LoRA | "Verimli fine-tuning" | Düşük Sıralı Uyarlama: temel ağırlıkları dondurun, ürünü tam ağırlık güncellemesine yaklaşan iki küçük A ve B matrisini eğitin |
-| QLoRA | "Dizüstü bilgisayarda ince ayar yapın" | Niceleştirilmiş LoRA: temel modeli 4 bit NF4'e yükleyin, LoRA bağdaştırıcılarını en üstte fp16'da eğitin, 6 GB VRAM'de 7B fine-tuning'yi etkinleştirin |
+| LoRA | "Verimli fine-tuning" | Düşük Dereceli Uyarlama: temel ağırlıkları dondurun, ürünü tam ağırlık güncellemesine yaklaşan iki küçük A ve B matrisini eğitin |
+| QLoRA | "Dizüstü bilgisayarda ince ayar yapın" | Ölçülen LoRA: temel modeli 4 bit NF4'e yükleyin, LoRA adaptörlerini en üstte fp16'da eğitin, 6 GB VRAM'de 7B fine-tuning'yi etkinleştirin |
 | Sıra (r) | "Model ne kadar öğrenebilir" | A ve B matrislerinin iç boyutu; ifade gücünü ve parametre sayısını kontrol eder |
 | Alfa | "LoRA öğrenme oranı" | LoRA çıkışına uygulanan ölçeklendirme faktörü; alpha/r, uyarlamanın nihai çıktıya katkısını ölçeklendiriyor |
-| NF4 | "4-bit niceleme" | Normal Float 4: neural network ağırlıklar için ideal, normal dağılım niceliklerinde niceleme düzeylerine sahip 4 bitlik bir veri türü |
+| NF4 | "4-bit niceleme" | Normal Float 4: neural network ağırlıkları için ideal, normal dağılım niceliklerinde niceleme düzeylerine sahip 4 bitlik bir veri türü |
 | Adaptör | "Eğitimli küçük kısım" | LoRA A ve B matrisleri ayrı bir dosya (10-100 MB) olarak kaydedilir ve temel modelin herhangi bir kopyasının üstüne yüklenebilir |
 | Hedef modüller | "LoRA'ya hangi katmanlar" | LoRA adaptörlerinin eklendiği belirli doğrusal katmanlar (q_proj, v_proj vb.) |
 | Birleştirme | "Pişirin" | W + (alfa/r) * BA'nın hesaplanması ve orijinal ağırlığın değiştirilmesi, inference |
@@ -543,9 +543,9 @@ Bu ders şunları üretir:
 
 - Hu ve diğerleri, "LoRA: Low-Rank Adaptation of Large Language Models" (2021) -- düşük dereceli ayrıştırma yöntemini tanıtan orijinal makale, GPT-3 175B'de 4 gibi düşük bir dereceyle test edilmiştir
 - Dettmers ve diğerleri, "QLoRA: Efficient Finetuning of Quantized Language Models" (2023) -- tek bir 48 GB GPU'da 65B fine-tuning'yi etkinleştiren NF4, çift niceleme ve sayfalı optimize edicileri tanıtıyor
-- PEFT kitaplığı belgeleri (huggingface.co/docs/peft) -- LoRA, QLoRA ve Hugging Face ekosistemindeki diğer parametre açısından verimli yöntemler için standart kitaplık
+- PEFT kitaplığı belgeleri (huggingface.co/docs/peft) - LoRA, QLoRA ve Hugging Face ekosistemindeki diğer parametre açısından verimli yöntemler için standart kitaplık
 - Yadav ve diğerleri, "TIES-Merging: Modelleri Birleştirirken Girişimi Çözme" (2023) -- birden fazla LoRA bağdaştırıcısını kalite kaybı olmadan birleştirme teknikleri
 - [Rafailov ve diğerleri, "Doğrudan Tercih Optimizasyonu: Dil Modeliniz Gizlice Bir Ödül Modelidir" (NeurIPS 2023)](https://arxiv.org/abs/2305.18290) -- DPO türetme; SFT'den sonra gelen tercih ayarlama aşaması, ödül modeline ihtiyaç duymaz.
 - [TRL belgeleri](https://huggingface.co/docs/trl/) -- `SFTTrainer`, `DPOTrainer`, `KTOTrainer` ve PEFT/bitsandbytes/Unsloth ile entegrasyon yüzeyi için resmi referans.
-- [Unsloth belgeleri](https://docs.unsloth.ai/) -- fine-tuning verimi iki katına çıkaran ve belleği yarıya indiren çekirdekleri birleştirdi; TRL altındaki performans katmanı.
+- [Unsloth belgeleri](https://docs.unsloth.ai/) -- fine-tuning verimini ikiye katlayan ve belleği yarıya indiren çekirdekleri birleştirdi; TRL altındaki performans katmanı.
 - [Axolotl belgeleri](https://axolotl-ai-cloud.github.io/axolotl/) -- YAML ile yapılandırılmış çoklu GPU SFT/DPO/QLoRA eğiticisi; elle yazılan komut dosyalarına kod olarak yapılandırma alternatifi.

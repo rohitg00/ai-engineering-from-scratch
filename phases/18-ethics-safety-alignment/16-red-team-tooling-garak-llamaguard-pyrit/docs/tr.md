@@ -1,105 +1,105 @@
-# Red-Team Tooling — Garak, Llama Guard, PyRIT
+# Kırmızı Takım Takımlama — Garak, Llama Guard, PyrRIT
 
-> Three production tools frame the 2026 red-team stack. Llama Guard (Meta) — a Llama-3.1-8B classifier fine-tuned on 14 MLCommons hazard categories; the 2025 Llama Guard 4 is a 12B natively multimodal classifier pruned from Llama 4 Scout. Garak (NVIDIA) — open-source LLM vulnerability scanner with static, dynamic, and adaptive probes for hallucination, data leakage, prompt injection, toxicity, and jailbreaks. PyRIT (Microsoft) — multi-turn red-team campaigns with Crescendo, TAP, and custom converter chains for deep exploitation. Llama Guard 3 is documented in Meta's "Llama 3 Herd of Models" (arXiv:2407.21783); Llama Guard 3-1B-INT4 in arXiv:2411.17713; Garak's probe architecture in github.com/NVIDIA/garak. These tools are the 2026 production interface between red-team research (Lessons 12-15) and deployment (Lesson 17+).
+> Üç üretim aracı, 2026 kırmızı takım yığınını çerçeveliyor. Llama Guard (Meta) — 14 MLCommons tehlike kategorisine göre hassas şekilde ayarlanmış bir Llama-3.1-8B sınıflandırıcısı; 2025 Llama Guard 4, Llama 4 Scout'tan budanmış, 12B yerel multimodal bir sınıflandırıcıdır. Garak (NVIDIA) — halüsinasyon, veri sızıntısı, prompt enjeksiyonu, zehirlilik ve jailbreak'lere karşı statik, dinamik ve uyarlanabilir problara sahip açık kaynaklı LLM güvenlik açığı tarayıcısı. PyRIT (Microsoft) — Crescendo, TAP ve derin kullanım için özel dönüştürücü zincirleri içeren çok turlu kırmızı takım kampanyaları. Llama Guard 3, Meta'nın "Llama 3 Herd of Models" (arXiv:2407.21783) belgesinde belgelenmiştir; arXiv'de Llama Guard 3-1B-INT4:2411.17713; github.com/NVIDIA/garak'taki Garak'ın araştırma mimarisi. Bu araçlar, kırmızı takım araştırması (Ders 12-15) ve deployment (Ders 17+) arasındaki 2026 üretim arayüzüdür.
 
-**Type:** Build
-**Languages:** Python (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
-**Prerequisites:** Phase 18 · 12-15 (jailbreaks and IPI)
-**Time:** ~75 minutes
+**Tür:** Yapım
+**Diller:** Python (stdlib, araç mimarisi simülatörü ve Llama Guard tarzı sınıflandırıcı modeli)
+**Önkoşullar:** Aşama 18 · 12-15 (jailbreak'ler ve IPI)
+**Süre:** ~75 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Describe Llama Guard 3/4's position in the safety stack: input classifier, output classifier, or both.
-- Name the 14 MLCommons hazard categories and state one non-obvious one (Code Interpreter Abuse).
-- Describe Garak's probe architecture: probes, detectors, harnesses.
-- Describe PyRIT's multi-turn campaign structure and how it composes with Garak probes.
+- Llama Guard 3/4'ün güvenlik yığınındaki konumunu açıklayın: giriş sınıflandırıcı, çıkış sınıflandırıcı veya her ikisi.
+- 14 MLCommons tehlike kategorisini adlandırın ve açık olmayan bir tanesini belirtin (Kod Yorumlayıcının Kötüye Kullanımı).
+- Garak'ın sonda mimarisini tanımlayın: sondalar, dedektörler, donanımlar.
+- PyRIT'in çok yönlü kampanya yapısını ve Garak sondalarıyla nasıl birleştiğini açıklayın.
 
-## The Problem
+## Sorun
 
-Lessons 12-15 present the attack surface. Production deployments need repeatable, scalable evaluation. Three tools dominate 2026: Llama Guard (the defense classifier), Garak (the scanner), PyRIT (the campaign orchestrator). Each targets a different layer of the red-team lifecycle.
+12-15. dersler saldırı yüzeyini sunar. Üretim deployment'lerin tekrarlanabilir, ölçeklenebilir değerlendirmeye ihtiyacı vardır. 2026'ya üç araç hakim: Llama Guard (savunma sınıflandırıcı), Garak (tarayıcı), PyRIT (kampanya orkestratörü). Her biri kırmızı takım yaşam döngüsünün farklı bir katmanını hedefliyor.
 
-## The Concept
+## Konsept
 
-### Llama Guard (Meta)
+### Lama Muhafızı (Meta)
 
-Llama Guard 3 is a Llama-3.1-8B model fine-tuned for input/output classification over the MLCommons AILuminate 14 categories:
-- Violent crimes, non-violent crimes, sex-related, CSAM, defamation
-- Specialized advice, privacy, IP, indiscriminate weapons, hate
-- Suicide/self-harm, sexual content, elections, code-interpreter abuse
+Llama Guard 3, MLCommons AILuminate 14 kategorisine göre giriş/çıkış sınıflandırması için ince ayar yapılmış bir Llama-3.1-8B modelidir:
+- Şiddet içeren suçlar, şiddet içermeyen suçlar, cinsiyetle ilgili, CSAM, hakaret
+- Uzman tavsiyesi, gizlilik, fikri mülkiyet, ayrım gözetmeyen silahlar, nefret
+- İntihar/kendine zarar verme, cinsel içerik, seçimler, kod yorumlayıcısının kötüye kullanılması
 
-Supports 8 languages. Usage: place before the LLM (input moderation), after the LLM (output moderation), or both. The two uses generate different training distributions — Llama Guard 3 ships as a single model handling both.
+8 dili destekler. Kullanım: LLM'den önce (girdi moderasyonu), LLM'den sonra (çıktı moderasyonu) veya her ikisinde birden yerleştirin. Her iki kullanım da farklı eğitim dağılımları yaratıyor; Llama Guard 3, her ikisini de tek bir model olarak taşıyor.
 
-Llama Guard 3-1B-INT4 (arXiv:2411.17713, 440MB, ~30 tokens/s on mobile CPU) is the quantized edge variant.
+Llama Guard 3-1B-INT4 (arXiv:2411.17713, 440MB, mobil CPU'da ~30 tokens/s) kuantize edilmiş kenar çeşididir.
 
-Llama Guard 4 (April 2025) is 12B, natively multimodal, pruned from Llama 4 Scout. It replaces both the 8B text and 11B vision predecessors with one classifier that ingests text + images.
+Llama Guard 4 (Nisan 2025), doğal olarak multimodal olan 12B'dir ve Llama 4 Scout'tan budanmıştır. Hem 8B metin hem de 11B görüntü öncüllerini, metin + görüntüleri alan tek bir sınıflandırıcıyla değiştirir.
 
 ### Garak (NVIDIA)
 
-Open-source vulnerability scanner. Architecture:
-- **Probes.** Attack generators for hallucination, data leakage, prompt injection, toxicity, jailbreaks. Static (fixed prompts), dynamic (generated prompts), adaptive (responds to target output).
-- **Detectors.** Score outputs against expected failure modes — toxic, leaked, jailbroken.
-- **Harnesses.** Manage probe-detector pairs, run campaigns, generate reports.
+Açık kaynaklı güvenlik açığı tarayıcısı. Mimari:
+- **Sondalar.** Halüsinasyon, veri sızıntısı, prompt enjeksiyonu, zehirlilik, jailbreak'ler için saldırı oluşturucular. Statik (sabit prompt'lar), dinamik (oluşturulan prompt'lar), uyarlanabilir (hedef çıktıya yanıt verir).
+- **Dedektörler.** Çıktıları, zehirli, sızdırılmış, jailbreakli gibi beklenen hata modlarına göre puanlayın.
+- **Harnesses.** Prob-dedektör çiftlerini yönetin, kampanyalar yürütün, raporlar oluşturun.
 
-TrustyAI integrates Garak with the Llama-Stack shields (Prompt-Guard-86M input classifier, Llama-Guard-3-8B output classifier) for end-to-end shielded-target evaluation. Tier-based scoring (TBSA) replaces binary pass/fail — a model can pass at severity tier 3 and fail at severity tier 5 on the same probe.
+TrustyAI, uçtan uca korumalı hedef değerlendirmesi için Garak'ı Llama-Stack kalkanlarıyla (Prompt-Guard-86M giriş sınıflandırıcı, Llama-Guard-3-8B çıkış sınıflandırıcı) entegre eder. Katman tabanlı puanlama (TBSA), ikili başarılı/başarısızın yerini alır; bir model, aynı araştırmada önem düzeyi 3'te geçebilir ve önem düzeyi 5'te başarısız olabilir.
 
-### PyRIT (Microsoft)
+### PyrIT (Microsoft)
 
-Python Risk Identification Toolkit. Multi-turn red-team campaigns. Built around:
-- **Converters.** Transform a seed prompt — paraphrase, encode, translate, roleplay.
-- **Orchestrators.** Run the campaign: Crescendo (escalation), TAP (branching), RedTeaming (custom loop).
-- **Scoring.** LLM-as-judge or classifier-as-judge.
+Python Risk Tanımlama Araç Seti. Çok dönüşlü kırmızı takım kampanyaları. Etrafında inşa edilmiş:
+- **Dönüştürücüler.** Bir çekirdeği dönüştürün prompt — başka kelimelerle ifade edin, kodlayın, çevirin, rol oynayın.
+- **Orkestratörler.** Kampanyayı çalıştırın: Crescendo (yükseltme), TAP (dallanma), RedTeaming (özel döngü).
+- **Puanlama.** Yargıç olarak Yüksek Lisans veya yargıç olarak sınıflandırıcı.
 
-PyRIT is the heavier cousin of Garak. Garak runs thousands of single-turn probes; PyRIT runs deep multi-turn campaigns designed to break specific failure modes.
+PyrRIT, Garak'ın daha ağır kuzenidir. Garak binlerce tek dönüşlü sondayı çalıştırıyor; PyRIT, belirli başarısızlık modlarını kırmak için tasarlanmış derin, çok dönüşlü kampanyalar yürütür.
 
-### The stack
+### Yığın
 
-Put Llama Guard on both sides of the model. Run Garak nightly for regression. Run PyRIT for pre-release campaigns. This is the 2026 default configuration for most production deployments.
+Modelin her iki tarafına da Llama Guard'ı yerleştirin. Gerileme için Garak'ı her gece çalıştırın. Yayın öncesi kampanyalar için PyRIT'i çalıştırın. Bu, çoğu üretim deployment'ler için 2026 varsayılan yapılandırmasıdır.
 
-### Evaluation pitfalls
+### Değerlendirme tuzakları
 
-- **Judge identity.** All three tools can use an LLM judge; judge calibration drives reported ASRs (Lesson 12). Specify the judge alongside the tool.
-- **Probe staleness.** Garak probes age as models are patched against them. Adaptive probes (PAIR-shaped) age slower than static probes.
-- **Llama Guard FPR on benign content.** Early Llama Guard versions over-flagged political and LGBTQ+ content; Llama Guard 3/4 calibrations are improved but not calibrated per-deployment.
+- **Yargıç kimliği.** Her üç araç da bir Yüksek Lisans jürisi kullanabilir; kalibrasyon sürücülerinin rapor ettiği ASR'leri değerlendirin (Ders 12). Aracın yanında hakimi belirtin.
+- **Bayatlığı araştırın.** Garak, modeller onlara yamandıkça yaşlanmayı araştırıyor. Adaptif problar (ÇİFT şekilli) statik problara göre daha yavaş yaşlanır.
+- **İyi huylu içerik hakkında Llama Guard FPR.** İlk Llama Guard versiyonları siyasi ve LGBTQ+ içeriklerini aşırı işaretliyordu; Llama Guard 3/4 kalibrasyonları iyileştirildi ancak -deployment'ye göre kalibre edilmedi.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lessons 12-15 are the attack families. Lesson 16 is the production tooling. Lesson 17 (WMDP) is the evaluation for dual-use capability. Lesson 18 is the frontier safety frameworks that wrap these tools in a policy structure.
+12-15. dersler saldırı aileleridir. Ders 16 üretim araçlarıdır. Ders 17 (WMDP), ikili kullanım kapasitesinin değerlendirilmesidir. Ders 18, bu araçları bir politika yapısına saran sınır güvenliği framework'lerdir.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` builds a toy Llama Guard-style classifier (keyword + semantic features over 14 categories), a toy Garak harness (probe-detector loop), and a PyRIT-style multi-turn converter chain. You can run the three tools against a mock target and observe the different coverage signatures.
+`code/main.py` , oyuncak bir Llama Guard tarzı sınıflandırıcı (14 kategoride anahtar kelime + anlamsal özellikler), bir oyuncak Garak koşum takımı (sonda-dedektör döngüsü) ve bir PyRIT tarzı çok turlu dönüştürücü zinciri oluşturur. Üç aracı sahte bir hedefe karşı çalıştırabilir ve farklı kapsama imzalarını gözlemleyebilirsiniz.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-red-team-stack.md`. Given a deployment description, it names which of the three tools are appropriate, what to configure in each, and what regression cadence to run.
+Bu ders `outputs/skill-red-team-stack.md` üretir. Bir deployment açıklaması verildiğinde, üç araçtan hangisinin uygun olduğunu, her birinde neyin yapılandırılacağını ve hangi regresyon temposunun çalıştırılacağını belirtir.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Compare the Llama-Guard-style classifier's detection rate on single-turn vs multi-turn attacks.
+1. `code/main.py`'yı çalıştırın. Llama-Guard tarzı sınıflandırıcının tek dönüşlü ve çok dönüşlü saldırılardaki algılama oranını karşılaştırın.
 
-2. Implement a new Garak probe: a base64-encoded harmful request. Measure its detection by the Llama-Guard-style classifier.
+2. Yeni bir Garak araştırması uygulayın: base64 kodlu zararlı bir istek. Llama-Guard tarzı sınıflandırıcıyla tespitini ölçün.
 
-3. Extend the PyRIT-style converter chain with a "translate to French, then paraphrase" converter. Re-measure attack success.
+3. PyRIT tarzı dönüştürücü zincirini "Fransızcaya çevir, ardından başka sözcüklerle ifade et" dönüştürücüyle genişletin. Saldırı başarısını yeniden ölçün.
 
-4. Read Llama Guard 3's hazard-category list. Identify two categories where the training data would realistically produce high false-positive rates on legitimate developer content.
+4. Llama Guard 3'ün tehlike kategorisi listesini okuyun. Eğitim verilerinin meşru geliştirici içeriğinde gerçekçi bir şekilde yüksek hatalı pozitif oranlar üreteceği iki kategori belirleyin.
 
-5. Compare Garak and PyRIT's design principles. Argue for a deployment where each is the right tool.
+5. Garak ve PyrIT'in tasarım ilkelerini karşılaştırın. Her birinin doğru araç olduğu bir deployment için tartışın.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| Llama Guard | "the classifier" | Fine-tuned Llama-3.1-8B/4-12B safety classifier with 14 hazard categories |
-| Garak | "the scanner" | NVIDIA open-source vulnerability scanner; probes, detectors, harnesses |
-| PyRIT | "the campaign tool" | Microsoft multi-turn red-team orchestrator; converters, orchestrators, scoring |
-| Prompt-Guard | "the small classifier" | Meta's 86M prompt-injection classifier, paired with Llama Guard |
-| TBSA | "tier-based scoring" | Garak's tier-based pass/fail replacing binary outcomes |
-| Converter chain | "paraphrase + encode + ..." | PyRIT composition primitive for building multi-step attacks |
-| MLCommons hazard categories | "the 14 taxonomies" | Industry-standard taxonomy Llama Guard targets |
+| Lama Muhafızı | "sınıflandırıcı" | 14 tehlike kategorisine sahip hassas ayarlı Llama-3.1-8B/4-12B güvenlik sınıflandırıcısı |
+| Garak | "tarayıcı" | NVIDIA açık kaynaklı güvenlik açığı tarayıcısı; problar, dedektörler, donanımlar |
+| PyrIT | "kampanya aracı" | Microsoft çok dönüşlü kırmızı takım orkestratörü; dönüştürücüler, orkestratörler, skorlama |
+| Prompt-Muhafız | "küçük sınıflandırıcı" | Meta'nın 86M prompt-enjeksiyon sınıflandırıcısı, Llama Guard |
+| TBSA | "kademe bazlı puanlama" | Garak'ın ikili sonuçların yerini alan kademe bazlı başarılı/başarısız yöntemi |
+| Dönüştürücü zinciri | "açıklama + kodlama + ..." | Çok adımlı saldırılar oluşturmak için ilkel PyRIT bileşimi |
+| MLCommons tehlike kategorileri | "14 taksonomi" | Endüstri standardı sınıflandırma Llama Guard hedefleri |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Meta — Llama Guard 3 (in Llama 3 Herd paper, arXiv:2407.21783)](https://arxiv.org/abs/2407.21783) — the 8B classifier
-- [Meta — Llama Guard 3-1B-INT4 (arXiv:2411.17713)](https://arxiv.org/abs/2411.17713) — quantized mobile classifier
-- [NVIDIA Garak — GitHub](https://github.com/NVIDIA/garak) — the scanner repo and documentation
-- [Microsoft PyRIT — GitHub](https://github.com/Azure/PyRIT) — the campaign toolkit
+- [Meta — Llama Guard 3 (Llama 3 Herd makalesinde, arXiv:2407.21783)](https://arxiv.org/abs/2407.21783) — 8B sınıflandırıcısı
+- [Meta — Llama Guard 3-1B-INT4 (arXiv:2411.17713)](https://arxiv.org/abs/2411.17713) — nicemlenmiş mobil sınıflandırıcı
+- [NVIDIA Garak — GitHub](https://github.com/NVIDIA/garak) — tarayıcı deposu ve belgeler
+- [Microsoft PyRIT — GitHub](https://github.com/Azure/PyRIT) — kampanya araç seti

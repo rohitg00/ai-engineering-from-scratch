@@ -1,5 +1,5 @@
-# Aşama 14: Agent Engineering
+# Aşama 14: Agent Mühendislik
 
-> Modern AI engineering'in temeli. Agent'ları temel ilkelerden başlayarak oluşturun.
+> Modern AI engineering'nin özü. agent'leri ilk prensiplerden oluşturun.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

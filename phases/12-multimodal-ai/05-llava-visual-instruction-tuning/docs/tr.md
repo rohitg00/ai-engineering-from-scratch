@@ -1,6 +1,6 @@
 # LLaVA ve Görsel Talimat Ayarlama
 
-> LLaVA (Nisan 2023), gezegende en çok kopyalanan multimodal mimaridir. BLIP-2'nin Q-Former'ını 2 katmanlı bir MLP ile değiştirdi, Flamingo'nun kapılı çapraz dikkatini saf token birleştirmeyle değiştirdi ve GPT-4 tarafından salt metin altyazılarından oluşturulan 158k görsel talimat dönüşü konusunda eğitildi. 2023 ile 2026 yılları arasında bir VLM oluşturan herhangi bir uygulayıcı, LLaVA'nın bir çeşidini geliştirmiştir. LLaVA-1.5 AnyRes'i ekledi. LLaVA-NeXT'nin çözünürlüğü arttı. LLaVA-OneVision tek bir tarifte birleşik görüntü, çoklu görüntü ve video. Bu derste tarifi okur, projektörü uygular ve neden "daha basit olanın kazandığını" açıklar.
+> LLaVA (Nisan 2023), gezegende en çok kopyalanan multimodal mimaridir. BLIP-2'nin Q-Former'ını 2 katmanlı bir MLP ile değiştirdi, Flamingo'nun kapılı çapraz dikkatini saf token birleştirmeyle değiştirdi ve GPT-4 tarafından salt metin altyazılarından oluşturulan 158 bin görsel talimat dönüşü konusunda eğitim aldı. 2023 ile 2026 yılları arasında bir VLM oluşturan herhangi bir uygulayıcı, LLaVA'nın bir çeşidini geliştirmiştir. LLaVA-1.5 AnyRes'i ekledi. LLaVA-NeXT'nin çözünürlüğü arttı. LLaVA-OneVision tek bir tarifte birleşik görüntü, çoklu görüntü ve video. Bu derste tarif okunur, projektör uygulanır ve neden "daha basit olanın kazandığı" açıklanır.
 
 **Tür:** Yapım
 **Diller:** Python (stdlib, projektör + talimat şablonu oluşturucu)
@@ -9,20 +9,20 @@
 
 ## Öğrenme Hedefleri
 
-- ViT yama embedding'larını (dim 1024) bir LLM'nin embedding loş (dim 4096) ile eşleştiren 2 katmanlı bir MLP projektörü oluşturun.
+- ViT yamasını embedding'leri (dim 1024) bir LLM'nin embedding loş (dim 4096) ile eşleştiren 2 katmanlı bir MLP projektörü oluşturun.
 - LLaVA'nın iki aşamalı tarifini uygulayın: (1) 558k altyazı çiftinde projektör hizalaması, (2) 158k GPT-4 tarafından oluşturulan dönüşlerde görsel talimat ayarı.
-- Görüntü token yer tutucusu, sistem prompt ve kullanıcı/asistan dönüşleriyle bir LLaVA biçimli prompt oluşturun.
-- Q-Former'ın token-bütçe kazanmasına rağmen topluluğun neden Q-Former'dan MLP'ye geçtiğini açıklayın.
+- token görüntü yer tutucusu, prompt sistemi ve kullanıcı/asistan dönüşleriyle LLaVA formatlı bir prompt oluşturun.
+- Q-Former'ın token bütçe kazanmasına rağmen topluluğun neden Q-Former'dan MLP'ye geçtiğini açıklayın.
 
 ## Sorun
 
-BLIP-2'nin Q-Former'ı (Ders 12.03) bir görüntüyü 32 tokens'ye sıkıştırır. Temiz, verimli, benchmark'lar için iyi. Ama iki sorunu var.
+BLIP-2'nin Q-Former'ı (Ders 12.03) bir görüntüyü 32 token'ye sıkıştırır. Temiz, verimli, benchmark'ler için iyi. Ama iki sorunu var.
 
 Birincisi, Q-Former eğitilebilir ancak onun kaybı nihai görev değildir. Aşama 1, ITC+ITM+ITG'yi eğitiyor. Aşama 2, LM kaybını eğitir. Sorgular, LLM'nin daha sonra kodunu çözmesi gereken bazı ara temsilleri öğrenir. Darboğazda bilgi kaybolur.
 
 İkincisi, Q-Former 188M parametre alır ve LLaVA'nın 2023 ölçeğinde onu hedef LLM'nizle birlikte tasarlamanız gerekiyordu. LLM'yi değiştirin, Q-Former'ı yeniden eğitin. Görüntü kodlayıcıyı değiştirin, yeniden eğitin. Her kombinasyon ayrı bir Ar-Ge projesiydi.
 
-LLaVA'nın cevabı basitliği nedeniyle utanç vericiydi: ViT'nin 576 yamasını token alın, her birini 2 katmanlı bir MLP'den (`1024 → 4096 → 4096`) geçirin ve 576'nın tamamını LLM'nin giriş dizisine boşaltın. Darboğaz yok. Tuhaf hedefler üzerine 1. aşama ön eğitimi yok. Sadece MLP'yi doğrudan LM kaybı konusunda eğitin.
+LLaVA'nın cevabı basitliği nedeniyle utanç vericiydi: ViT'nin 576 yaması token'leri alın, her birini 2 katmanlı bir MLP'den (`1024 → 4096 → 4096`) geçirin ve 576'nın tamamını LLM'nin giriş dizisine boşaltın. Darboğaz yok. Tuhaf hedefler üzerine 1. aşama ön eğitimi yok. Sadece MLP'yi doğrudan LM kaybı konusunda eğitin.
 
 Veriler nereden geliyor? LLaVA'nın ikinci görüşü: talimat verilerini oluşturmak için GPT-4'ü (yalnızca metin) kullanın. GPT-4'e bir görsel için COCO başlığını ve sınırlayıcı kutu verilerini besleyin, konuşmalar, açıklamalar ve karmaşık akıl yürütme soruları üretmesini isteyin. 158 bin talimat-yanıt dönüşü ücretsiz. İnsan açıklaması yok.
 
@@ -37,7 +37,7 @@ Sonuç: Bir gün boyunca 8 A100'de çalışan, MMMU'da Flamingo'yu yenen ve topl
 - Projektör: GELU etkinleştirmeli 2 katmanlı MLP, `1024 → 4096 → 4096`.
 - Yüksek Lisans: Vicuna-13B (daha sonra Llama-3.1-8B).
 
-Bir görseli + metni prompt ilet:
+Bir görseli + metni ilet prompt:
 
 ```
 img -> ViT -> 576 patches of dim 1024
@@ -48,7 +48,7 @@ feed the full sequence to the LLM
 decode response
 ```
 
-Resim LLM içeriğinin 576 tokens'sini kaplıyor. 2048 bağlamında, metin için 1472 tokens kalır. 32k bağlamında bu bir yuvarlama hatasıdır.
+Görüntü LLM içeriğinin 576 token'sini kaplıyor. 2048 bağlamında, metin için 1472 token kalıyor. 32k bağlamında bu bir yuvarlama hatasıdır.
 
 ### Aşama 1: projektör hizalaması
 
@@ -64,9 +64,9 @@ Talimat verileri işin püf noktasıdır. Liu ve diğerleri. tarafından oluştu
 1. Bir COCO görüntüsü çekin.
 2. Metin açıklamasını çıkarın (5 insan altyazı + sınırlayıcı kutu listesi).
 3. Üç prompt şablonuyla GPT-4'e gönderin:
-- Konuşma: "Kullanıcı ile asistan arasında bu resim hakkında ileri geri bir diyalog oluşturun."
-- Ayrıntılı açıklama: "Resmin zengin ve ayrıntılı bir açıklamasını verin."
-- Karmaşık akıl yürütme: "Resim hakkında akıl yürütmeyi gerektiren bir soru sorun, ardından yanıtlayın."
+   - Konuşma: "Kullanıcı ile asistan arasında bu resim hakkında ileri geri bir diyalog oluşturun."
+   - Ayrıntılı açıklama: "Resmin zengin ve ayrıntılı bir açıklamasını verin."
+   - Karmaşık muhakeme: "Resim hakkında muhakeme gerektiren bir soru sorun, ardından cevaplayın."
 4. GPT-4'ün çıktısını (talimat, yanıt) çiftlerine ayrıştırın.
 
 Bunların hiçbiri görsele doğrudan dokunmuyor; yalnızca metin açıklaması. GPT-4 makul görüntü içeriğini halüsinasyona uğratıyor. Biraz gürültü vardı ama işe yaradı: Diyalogun kilidini açmak için 158 bin dönüş yeterliydi.
@@ -86,7 +86,7 @@ LLaVA-1.5 (Ekim 2023) eklendi:
 - 2048 → 32k bağlam.
 
 LLaVA-NeXT (Ocak 2024) şunu ekledi:
-- AnyRes: Yüksek çözünürlüklü görüntüleri 336x336 kırpmadan oluşan 2x2 veya 1x3 ızgaraya ve ayrıca bir global düşük çözünürlüklü küçük resme bölün. Her mahsul 576 tokens olur; resim başına toplamda yaklaşık 2880 görsel tokens. OCR ve grafik görevleri arttı.
+- AnyRes: Yüksek çözünürlüklü görüntüleri 336x336 kırpmadan oluşan 2x2 veya 1x3 ızgaraya ve ayrıca bir global düşük çözünürlüklü küçük resme bölün. Her mahsul 576 token olur; görüntü başına toplamda yaklaşık 2880 görsel token. OCR ve grafik görevleri arttı.
 - ShareGPT4V (yüksek kaliteli GPT-4V altyazıları) ile daha iyi talimat verileri karışımı.
 - Daha güçlü temel LLM'ler (Mistral-7B, Yi-34B).
 
@@ -98,7 +98,7 @@ Ders 12.08, OneVision'ı derinlemesine ele alıyor. Kısa versiyon: aynı projek
 
 | | Q-Eski (BLIP-2) | MLP (LLaVA) |
 |---|---|---|
-| Resim başına görsel token'ler | 32 | 576 (taban) veya 2880 (AnyRes) |
+| Resim başına görsel token | 32 | 576 (taban) veya 2880 (AnyRes) |
 | Eğitilebilir parametreler | 188M + LM | 40M + LM |
 | 1. Aşama mağlubiyeti | ITC+ITM+ITG | Yalnızca LM |
 | LLM girişli | Yeniden eğitim gerektirir | Minimum yeniden eğitimle değiştirme |
@@ -106,15 +106,15 @@ Ders 12.08, OneVision'ı derinlemesine ele alıyor. Kısa versiyon: aynı projek
 | Videosu | Garip | Doğal (kare başına birleştirme) |
 | Token bütçe | Küçük | Büyük |
 
-MLP basitlik ve token esneklik sayesinde kazanır. Q-Former token bütçeyle kazandı. 2023'ün sonlarına doğru token bütçesi artık bağlayıcı kısıtlama değildi (LLM bağlamları 32 bin-128 bin+'a yükseldi) ve basitlik hakim oldu.
+MLP basitlik ve token esneklik sayesinde kazanır. Q-Former, token bütçesiyle kazandı. 2023'ün sonlarında token bütçesi artık bağlayıcı kısıtlama olmaktan çıktı (LLM bağlamları 32k-128k+'ya yükseldi) ve basitlik hakim oldu.
 
-### prompt biçimi
+### prompt formatı
 
 ```
 A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. USER: <image> Describe this image in detail. ASSISTANT: The image shows ...
 ```
 
-`<image>` bir token yer tutucusudur. tokenizasyondan önce, 576 görsel token'lerle (veya 2880, AnyRes'le) değiştirilir. Tokenizer üzerinde eğitim verildiğinden biraz daha uzun bir dizi görüyor, ancak LLM yeni girdiyi ele alıyor çünkü aşama 1 bunu öğretiyor.
+`<image>` bir token yer tutucusudur. tokenization'dan önce, 576 görsel token (veya AnyRes ile 2880) ile değiştirilir. Tokenizer, üzerinde çalışıldığından biraz daha uzun bir sekans görüyor ancak Yüksek Lisans, yeni girdiyi ele alıyor çünkü aşama 1 bunu öğretiyor.
 
 ### Parametre ekonomisi
 
@@ -131,20 +131,20 @@ LLaVA-1.5-7B dökümü:
 `code/main.py` şunu uygular:
 
 1. Saf Python'da 2 katmanlı MLP projektör (oyuncak ölçeği için loş 16 → 32 → 32).
-2. prompt-bina hattı: sistem prompt + `<image>`, N öngörülen token'ler + kullanıcı sırası + asistan oluşturma yer tutucusu ile değiştirildi.
+2. prompt oluşturma hattı: prompt + `<image>` sistemi, N öngörülen token'ler + kullanıcı sırası + asistan oluşturma yer tutucusu ile değiştirildi.
 3. 576-token görsel bloğunun LLM bağlamında nasıl göründüğüne ilişkin bir görselleştirici (tüketilen 2k / 32k / 128k bağlam yüzdesi).
 
 ## Gönderin
 
-Bu ders `outputs/skill-llava-vibes-eval.md` üretir. Bir LLaVA ailesi kontrol noktası verildiğinde, 10-prompt titreşim değerlendirme paketini (3 altyazı, 3 VQA, 2 muhakeme, 2 ret) çalıştırır ve insan tarafından okunabilen bir puan kartı bildirir. benchmark değil; projektör ve LLM'nin iyi bağlandığını doğrulamak için bir duman testi.
+Bu ders `outputs/skill-llava-vibes-eval.md`'yi üretir. Bir LLaVA ailesi kontrol noktası göz önüne alındığında, 10-prompt titreşim değerlendirme paketini çalıştırır (3 altyazı, 3 VQA, 2 akıl yürütme, 2 ret) ve insan tarafından okunabilen bir puan kartı bildirir. benchmark değil; projektör ve LLM'nin iyi bağlandığını doğrulamak için bir duman testi.
 
 ## Egzersizler
 
-1. `1024 → 4096 → 4096`'daki 2 katmanlı MLP projektörü için eğitilebilir parametre sayısını hesaplayın. GELU ve önyargı ile LLaVA-13B'nin hangi kısmını temsil ediyor?
+1. `1024 → 4096 → 4096` adresindeki 2 katmanlı MLP projektörü için eğitilebilir parametre sayısını hesaplayın. GELU ve önyargı ile LLaVA-13B'nin hangi kısmını temsil ediyor?
 
 2. Bir "reddetme" durumu için bir LLaVA prompt oluşturun — görüntü özel bir kişiyi içeriyor. Beklenen asistan yanıtını yazın. LLaVA neden bu sıfır atışı reddetmeli ve bu reddi güçlendirmek için hangi eğitim verilerine ihtiyaç duyulacak?
 
-3. LLaVA-NeXT blogunun AnyRes bölümünü okuyun. AnyRes'te 1344x672'lik bir görüntü için görsel token sayısını hesaplayın. 336x336'daki 576 token tabanıyla karşılaştırın.
+3. LLaVA-NeXT blogunun AnyRes bölümünü okuyun. AnyRes'te 1344x672 görüntü için görsel token sayısını hesaplayın. 336x336'daki temel 576 token'lerle karşılaştırın.
 
 4. LLaVA aşama-1 projektörü, altyazılarda LM kaybıyla eğitilir. 1. aşamayı atlayıp doğrudan 2. aşamaya (görsel talimat ayarı) geçerseniz ne olur? Cevap için Prizmatik VLM ablasyonundan (arXiv:2402.07865) bahsedin.
 
@@ -155,10 +155,10 @@ Bu ders `outputs/skill-llava-vibes-eval.md` üretir. Bir LLaVA ailesi kontrol no
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
 | Projektör | "MLP köprüsü" | ViT dim'i LLM dim'e eşleyen GELU'lu 2 katmanlı MLP |
-| Resim token | "<image> yer tutucu" | Prompt işaretçisi, inference öncesinde N adet öngörülen görsel tokens ile değiştirildi |
+| Görüntü token | "<image> yer tutucu" | Prompt işaretleyicisi, inference'den önce N yansıtılan görsel token ile değiştirildi |
 | Görsel talimat ayarı | "LLaVA 2. aşama" | GPT-4 tarafından oluşturulan (resim, talimat, yanıt) üçlülere ilişkin eğitim |
 | Aşama 1 hizalaması | "Projektör ön eğitimi" | ViT ve LLM'yi dondurun, başlıklarda LM kaybıyla projektörü eğitin |
-| Herhangi Bir Res | "Çoklu mahsul döşeme" | Yüksek çözünürlüklü görüntüyü bir döşeme ızgarasına bölün ve her döşemenin görsel token'lerini |
+| Herhangi Bir Res | "Çoklu mahsul döşeme" | Yüksek çözünürlüklü görüntüyü bir döşeme ızgarasına bölün ve her döşemenin görsellerini birleştirin token |
 | LLaVA-Talimat | "GPT-4 tarafından oluşturulan" | COCO altyazılarından + GPT-4'ten sentezlenen 158 bin talimat-yanıt çifti |
 | Görüntü kodlayıcı donması | "Omurga kilitli" | CLIP ağırlıkları 1. aşamada güncellenmez, bazen 2. aşamada da güncellenmez |
 | PaylaşGPT4V | "Daha iyi altyazılar" | Daha yüksek kalitede hizalama için kullanılan, GPT-4V tarafından oluşturulan 1 milyon yoğun altyazı |
@@ -167,7 +167,7 @@ Bu ders `outputs/skill-llava-vibes-eval.md` üretir. Bir LLaVA ailesi kontrol no
 
 ## Daha Fazla Okuma
 
-- [Liu ve ark. — Görsel Talimat Ayarlama (arXiv:2304.08485)](https://arxiv.org/abs/2304.08485) — LLaVA makalesi.
+- [Liu ve ark. — Görsel Talimat Ayarlaması (arXiv:2304.08485)](https://arxiv.org/abs/2304.08485) — LLaVA makalesi.
 - [Liu ve ark. — Görsel Talimat Ayarlaması ile Geliştirilmiş Taban Çizgileri (arXiv:2310.03744)](https://arxiv.org/abs/2310.03744) — LLaVA-1.5.
 - [Chen ve ark. — ShareGPT4V (arXiv:2311.12793)](https://arxiv.org/abs/2311.12793) — yoğun altyazılar dataset.
 - [Karamcheti ve ark. — Prizmatik VLM'ler (arXiv:2402.07865)](https://arxiv.org/abs/2402.07865) — tasarım alanı ablasyonları.

@@ -9,14 +9,14 @@
 
 ## Sorun
 
-Görev odaklı bir diyalog sisteminde kullanıcının hedefi, bir dizi alan-değer çifti olarak kodlanır: `{cuisine: italian, area: north, price: moderate}`. Her kullanıcı sırası bir yuva ekleyebilir, değiştirebilir veya kaldırabilir. Sistem tüm konuşmayı okumalı ve mevcut durumu doğru bir şekilde çıkarmalıdır.
+Görev odaklı bir diyalog sisteminde kullanıcının hedefi, bir dizi slot-değer çifti olarak kodlanır: `{cuisine: italian, area: north, price: moderate}`. Her kullanıcı sırası bir yuva ekleyebilir, değiştirebilir veya kaldırabilir. Sistem tüm konuşmayı okumalı ve mevcut durumu doğru bir şekilde çıkarmalıdır.
 
 Tek bir slotta hata yaparsanız sistem yanlış restorana rezervasyon yapar, yanlış uçuşu planlar veya yanlış karttan ücret alır. DST, kullanıcının söylediği ile arka ucun yürüttüğü arasındaki bağlantıdır.
 
 Yüksek Lisans'lara rağmen 2026'da neden hala önemli:
 
 - Uyumluluğa duyarlı alanlar (bankacılık, sağlık hizmetleri, havayolu rezervasyonu), serbest biçimli oluşturma yerine deterministik slot değerleri gerektirir.
-- Araç kullanımı agent'ların API'leri çağırmadan önce hâlâ yuva çözümlemesi gerekiyor.
+- Araç kullanımı agent'lerin API'leri çağırmadan önce hala yuva çözünürlüğüne ihtiyacı vardır.
 - Çok turlu düzeltme göründüğünden daha zordur: "aslında hayır, perşembe günü yap."
 
 Modern boru hattı: klasik DST konseptleri + Yüksek Lisans çıkarıcıları + yapılandırılmış çıkışlı korkuluklar.
@@ -32,15 +32,15 @@ Modern boru hattı: klasik DST konseptleri + Yüksek Lisans çıkarıcıları + 
 - **Sınıflandırma.** Her (yuva, aday_değer) çifti için evet/hayır tahmininde bulunun. Kapalı sözcük yuvaları için çalışır. Standart 2020 öncesi.
 - **Nesil.** Diyalog verildiğinde, alan değerlerini serbest metin olarak oluşturun. Açık sözcük yuvaları için çalışır. Modern varsayılan.
 
-**Metrik.** Ortak Hedef Doğruluğu (JGA) — *her* slotun doğru olduğu dönüş oranı. Ya hep ya hiç. MultiWOZ 2.4 skor sıralaması 2026'da %83 civarına ulaştı.
+**Metrik.** Ortak Hedef Doğruluğu (JGA) — *her* slotun doğru olduğu dönüşlerin oranı. Ya hep ya hiç. MultiWOZ 2.4 liderlik tablosu 2026'da yaklaşık %83'e ulaştı.
 
 **Mimariler.**
 
 1. **Kural tabanlı (slot normal ifadesi + anahtar kelime).** Dar alanlar için güçlü temel. Hata ayıklanabilir.
 2. **TripPy / BERT-DST.** BERT kodlamasıyla kopya tabanlı oluşturma. LLM öncesi standart.
-3. **LDST (LLaMA + LoRA).** Etki alanı slotu prompting ile talimatlara göre ayarlanmış LLM. MultiWOZ 2.4'te ChatGPT düzeyinde kaliteye ulaşır.
+3. **LDST (LLaMA + LoRA).** prompting etki alanı yuvasına sahip, talimatlara göre ayarlanmış LLM. MultiWOZ 2.4'te ChatGPT düzeyinde kaliteye ulaşır.
 4. **Ontolojiden bağımsız (2024–26).** Şemayı atlayın; doğrudan slot adları ve değerleri oluşturun. Açık alan adlarını yönetir.
-5. **Prompt + yapılandırılmış çıktı (2024–26).** Pydantic şema + kısıtlı kod çözme ile LLM. 5 satır kod, üretime hazır.
+5. **Prompt + yapılandırılmış çıktı (2024–26).** Pydantic şema + kısıtlı kod çözme ile Yüksek Lisans. 5 satır kod, üretime hazır.
 
 ### Klasik arıza modları
 
@@ -139,11 +139,11 @@ def is_correction(utterance):
     return any(cue in utterance.lower() for cue in CORRECTION_CUES)
 ```
 
-Algılanan bir düzeltmede, ekleme yapmak yerine son güncellenen alanın üzerine yazın. Yüksek Lisans'ın yardımı olmadan doğru sonuca ulaşmak zor. Modern model: Her zaman LLM'nin aşamalı güncelleme yerine tüm durumu geçmişten yeniden oluşturmasına izin verin - bu doğal olarak düzeltmeleri halleder.
+Algılanan bir düzeltmede, ekleme yapmak yerine son güncellenen alanın üzerine yazın. Yüksek Lisans'ın yardımı olmadan doğru sonuca ulaşmak zor. Modern model: Aşamalı güncelleme yerine her zaman LLM'nin tüm durumu geçmişten yeniden oluşturmasına izin verin - bu doğal olarak düzeltmeleri halleder.
 
 ## Tuzaklar
 
-- **Tam geçmiş yenileme maliyeti.** LLM'nin her turda durumu yeniden oluşturmasına izin vermek O(n²) toplam tokens'ye mal olur. Geçmişi sınırlayın veya eski dönüşleri özetleyin.
+- **Tam geçmiş yenileme maliyeti.** LLM'nin her turda durumu yeniden oluşturmasına izin vermek toplam O(n²) token'ye mal olur. Geçmişi sınırlayın veya eski dönüşleri özetleyin.
 - **Şema kayması.** Post-hoc yeni slotların eklenmesi eski eğitim verilerini bozar. Şemanızı sürümlendirin.
 - **Büyük/küçük harf duyarlılığı.** "İtalyanca", "İtalyanca" ve "İTALYANCA" — her yerde normalleştirin.
 - **Örtülü devralma.** Kullanıcı daha önce "4 kişi için" seçeneğini belirtmişse, farklı bir zaman için yeni bir istek, kişileri temizlememelidir. Her zaman tam geçmişi aktarın.
@@ -189,9 +189,9 @@ Refuse LLM-only DST for compliance-sensitive slots without a rule-based secondar
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py`'da 3 yuva (mutfak, bölge, fiyat) için kural tabanlı durum izleyiciyi oluşturun. 10 el yapımı diyalog üzerinde test yapın. JGA'yı ölçün.
+1. **Kolay.** `code/main.py`'de 3 yuva (mutfak, bölge, fiyat) için kural tabanlı durum izleyiciyi oluşturun. 10 el yapımı diyalog üzerinde test yapın. JGA'yı ölçün.
 2. **Orta.** Eğitmen + Pydantic + küçük bir LLM ile aynı dataset. JGA'yı karşılaştırın. En zor dönüşleri inceleyin.
-3. **Zor.** Her ikisini de uygulayın ve yönlendirin: kural tabanlı birincil, kural tabanlı <2 yuvayı güvenle yayınladığında LLM geri dönüşü. Dönüş başına JGA ve inference maliyetinin birleşimini ölçün.
+3. **Zor.** Her ikisini de uygulayın ve yönlendirin: kural tabanlı birincil, kural tabanlı <2 yuvayı güvenle yayınladığında LLM geri dönüşü. JGA ve inference'nin birleşik dönüş başına maliyetini ölçün.
 
 ## Anahtar Terimler
 
@@ -207,8 +207,8 @@ Refuse LLM-only DST for compliance-sensitive slots without a rule-based secondar
 
 ## Daha Fazla Okuma
 
-- [Budzianowski ve ark. (2018). MultiWOZ — Büyük Ölçekli, Çok Etki Alanlı Oz Büyücüsü](https://arxiv.org/abs/1810.00278) — kanonik benchmark.
-- [Feng ve ark. (2023). LLM odaklı Diyalog Durumu Takibine (LDST) doğru](https://arxiv.org/abs/2310.14970) — DST için LLaMA + LoRA talimat ayarı.
+- [Budzianowski ve ark. (2018). MultiWOZ — Büyük Ölçekli Çok Etki Alanlı Oz Sihirbazı](https://arxiv.org/abs/1810.00278) — standart benchmark.
+- [Feng ve ark. (2023). LLM odaklı Diyalog Durumu İzlemeye (LDST) doğru](https://arxiv.org/abs/2310.14970) — DST için LLaMA + LoRA talimat ayarı.
 - [Heck ve ark. (2020). TripPy — Değerden Bağımsız Sinirsel Diyalog Durum Takibi için Üçlü Kopya Stratejisi](https://arxiv.org/abs/2005.02877) — kopya tabanlı DST iş makinesi.
 - [Kral, Flanigan (2024). LLM'lerle Denetimsiz Uçtan Uca Görev Odaklı Diyalog](https://arxiv.org/abs/2404.10753) — EM tabanlı denetimsiz TOD.
-- [MultiWOZ lider tablosu](https://github.com/budzianowski/multiwoz) — standart DST sonuçları.
+- [MultiWOZ lider tablosu](https://github.com/budzianowski/multiwoz) — kanonik DST sonuçları.

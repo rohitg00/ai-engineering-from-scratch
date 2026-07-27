@@ -155,7 +155,7 @@ MCP Uygulamaları 26 Ocak 2026'da gönderildi. Nisan 2026 itibarıyla istemci de
 
 - **Claude Masaüstü.** Ocak 2026'dan beri tam destek.
 - **ChatGPT.** Apps SDK (aynı temel MCP Apps protokolü) aracılığıyla tam destek.
-- **Cursor.** Beta; ayarlar aracılığıyla etkinleştirin.
+- **İmleç.** Beta; ayarlar aracılığıyla etkinleştirin.
 - **VS Kodu.** Yalnızca Insider derlemeleri.
 - **Kaz.** Tam destek.
 - **Zed, Rüzgar Sörfü.** Yol haritası oluşturuldu.

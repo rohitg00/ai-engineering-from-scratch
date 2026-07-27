@@ -2,14 +2,14 @@
 
 > Dinamik programlamanın bir modele ihtiyacı vardır. Monte Carlo'nun bölümlerden başka hiçbir şeye ihtiyacı yok. Politikayı çalıştırın, getirileri izleyin, ortalamasını alın. RL'deki en basit fikir ve aşağı yöndeki her şeyin kilidini açan fikir.
 
-**Tür:** Build
+**Tür:** Yapım
 **Diller:** Python
 **Önkoşullar:** Aşama 9 · 01 (MDP'ler), Aşama 9 · 02 (Dinamik Programlama)
 **Süre:** ~75 dakika
 
 ## Sorun
 
-Dinamik programlama zariftir ancak her durum ve eylem için `P(s' | s, a)` sorgulayabileceğinizi varsayar. Gerçek dünyada neredeyse hiçbir şey bu şekilde çalışmaz. Bir robot, eklem torkundan sonra kamera pikselleri üzerindeki dağılımı analitik olarak hesaplayamaz. Bir fiyatlandırma algoritması olası her müşteri tepkisine entegre olamaz. Bir LLM, bir token sonrasındaki olası tüm devamları sıralayamaz.
+Dinamik programlama zariftir ancak her durum ve eylem için `P(s' | s, a)`'yi sorgulayabileceğinizi varsayar. Gerçek dünyada neredeyse hiçbir şey bu şekilde çalışmaz. Bir robot, eklem torkundan sonra kamera pikselleri üzerindeki dağılımı analitik olarak hesaplayamaz. Bir fiyatlandırma algoritması olası her müşteri tepkisine entegre olamaz. Bir LLM, token'den sonraki olası tüm devamları sıralayamaz.
 
 Yalnızca ortamdan *örnekleme* yeteneğine ihtiyaç duyan bir yönteme ihtiyacınız var. İlkeyi çalıştırın. `s_0, a_0, r_1, s_1, a_1, r_2, …, s_T` yörüngesini alın. Değerleri tahmin etmek için kullanın. Orası Monte Carlo'dur.
 
@@ -17,7 +17,7 @@ DP'den MC'ye geçiş felsefi açıdan önemlidir: *bilinen model + tam yedekleme
 
 ## Konsept
 
-![Monte Carlo: kullanıma sunma, getirileri hesaplama, ortalama; ilk ziyaret vs her ziyaret](../assets/monte-carlo.svg)
+![Monte Carlo: kullanıma sunma, getirileri hesaplama, ortalama; ilk ziyaret ve her ziyaret](../assets/monte-carlo.svg)
 
 **Temel fikir, tek satırda:** `G^{(i)}(s)`'nin gözlemlendiği `V^π(s) = E_π[G_t | s_t = s] ≈ (1/N) Σ_i G^{(i)}(s)`, `π` politikası kapsamında `s`'ye yapılan ziyaretlerin ardından geri dönüyor.
 
@@ -27,19 +27,19 @@ DP'den MC'ye geçiş felsefi açıdan önemlidir: *bilinen model + tam yedekleme
 
 `V_n(s) = V_{n-1}(s) + (1/n) [G_n - V_{n-1}(s)]`
 
-`V_new = V_old + α · (target - V_old)`'yi `α = 1/n` ile yeniden düzenleyin. `1/n`'yi sabit bir adım boyutu `α ∈ (0, 1)` ile değiştirin ve `π`'deki değişiklikleri izleyen, durağan olmayan bir MC tahmincisi elde edin. Bu hareket, MC'den TD'ye ve her modern RL algoritmasına geçişin tamamıdır.
+Yeniden düzenleyin: `V_new = V_old + α · (target - V_old)`, `α = 1/n` ile. `1/n`'yi sabit adım boyutlu bir `α ∈ (0, 1)` ile değiştirin ve `π`'deki değişiklikleri izleyen durağan olmayan bir MC tahmin aracına sahip olun. Bu hareket, MC'den TD'ye ve her modern RL algoritmasına geçişin tamamıdır.
 
-**Keşif artık bir sorun haline geldi.** DP her eyalete numara vererek dokundu. MC yalnızca politika ziyaretlerini görür. Eğer `π` deterministik ise durum uzayının tüm bölgeleri asla örneklenmez ve değer tahminleri sonsuza kadar sıfırda kalır. Tarihsel sırayla üç düzeltme:
+**Keşif artık bir sorun haline geldi.** DP her eyalete numara vererek dokundu. MC yalnızca politika ziyaretlerini görür. `π` deterministik ise, durum uzayının tüm bölgeleri asla örneklenmez ve değer tahminleri sonsuza kadar sıfırda kalır. Tarihsel sırayla üç düzeltme:
 
 1. **Keşfetme başlar.** Her bölüme rastgele bir (s, a) çiftinden başlayın. Garanti kapsamı; pratikte gerçekçi değildir (bir robotu keyfi bir duruma "sıfırlayamazsınız").
-2. **ε-açgözlü.** Açgözlü davran w.r.t. mevcut Q, ancak `ε` olasılıkla rastgele bir eylem seç. Tüm durum-eylem çiftleri asimptotik olarak örneklenir.
-3. **İlke Dışı MC.** Bir davranış politikası `μ` kapsamında veri toplayın, önem örneklemesi yoluyla hedef politikası `π` hakkında bilgi edinin. Yüksek varyans, ancak DQN gibi tekrar oynatma arabellek yöntemlerine köprü oluşturur.
+2. **ε-açgözlü.** Açgözlü davranmak w.r.t. mevcut Q, ancak `ε` olasılığıyla rastgele bir eylem seçin. Tüm durum-eylem çiftleri asimptotik olarak örneklenir.
+3. **İlke dışı MC.** `μ` davranış politikası kapsamında verileri toplayın, önem örneklemesi yoluyla `π` hedef politikası hakkında bilgi edinin. Yüksek varyans, ancak DQN gibi tekrar oynatma arabellek yöntemlerine köprü oluşturur.
 
 **Monte Carlo Kontrolü.** Değerlendirin → geliştirin → değerlendirin, tıpkı politika yinelemesinde olduğu gibi, ancak değerlendirme örneklemeye dayalıdır:
 
-1. `π`'yı çalıştırın, bir bölüm alın.
+1. `π`'yi çalıştırın, bir bölüm alın.
 2. Gözlemlenen getirilerden `Q(s, a)`'yi güncelleyin.
-3. `π` ε-açgözlü w.r.t olsun. `Q`.
+3. `π`'yi ε-açgözlü w.r.t yapın. `Q`.
 4. Tekrar edin.
 
 Ilıman koşullar altında 1 olasılıkla `Q*` ve `π*`'ye yakınsar (her çift sonsuz sıklıkta ziyaret edilir, `α` Robbins-Monro'yu karşılar).
@@ -48,9 +48,9 @@ Ilıman koşullar altında 1 olasılıkla `Q*` ve `π*`'ye yakınsar (her çift 
 epsilon-greedy
 ```
 
-## Build It — Kendin İnşa Et
+## İnşa Et
 
-### Adım 1: kullanıma sunma → (s, a, r) ​​listesi
+### Adım 1: kullanıma sunma → (s, a, r) listesi
 
 ```python
 def rollout(env, policy, max_steps=200):
@@ -80,7 +80,7 @@ def returns_from(trajectory, gamma):
     return list(reversed(returns))
 ```
 
-Tek geçiş, `O(T)`. Geriye doğru yineleme `G_t = r_{t+1} + γ G_{t+1}` yeniden toplamayı önler.
+Tek geçiş, `O(T)`. Geriye doğru yinelenen `G_t = r_{t+1} + γ G_{t+1}` yeniden toplamayı önler.
 
 ### 3. Adım: ilk ziyaret MC değerlendirmesi
 
@@ -130,17 +130,17 @@ def mc_control(env, episodes, gamma=0.99, epsilon=0.1):
 
 ### Adım 5: DP altın standardıyla karşılaştırın
 
-`V^π` ile ilgili MC tahmininiz, Bölümler → ∞ olarak Ders 02'deki DP sonucuyla uyumlu olmalıdır. Uygulamada: 4×4 GridWorld'deki 50.000 bölüm sizi DP yanıtının `~0.1` yakınına getirir.
+`V^π`'ye ilişkin MC tahmininiz, bölümler → ∞ olarak Ders 02'deki DP sonucuyla uyumlu olmalıdır. Uygulamada: 4×4 GridWorld'deki 50.000 bölüm sizi DP yanıtının `~0.1` yakınına getirir.
 
 ## Tuzaklar
 
-- **Sonsuz bölümler.** MC, bölümlerin *sonlandırılmasını* gerektirir. Politikanız sonsuza kadar döngüye girebiliyorsa, `max_steps` sınırı koyun ve sınırı örtülü başarısızlık olarak değerlendirin. Rastgele bir politikaya sahip GridWorld rutin olarak zaman aşımına uğrar; bu normaldir, sadece doğru saydığınızdan emin olun.
-- **Varyans.** MC tam getirileri kullanır. Uzun bölümlerde farklılık çok büyüktür; sondaki şanssız bir ödül, `V(s_0)`'ı aynı miktarda değiştirir. TD yöntemleri (Ders 04) önyükleme yaparak bunu ortadan kaldırır.
-- **Devlet kapsamı.** Açgözlü MC, yeni bir Q'da yalnızca bir eylemi deneyecek. *Keşfetmelisiniz* (ε-açgözlü, keşfetmeye başlar, UCB).
+- **Sonsuz bölümler.** MC, bölümlerin *sonlandırılmasını* gerektirir. Politikanız sonsuza kadar döngüye girebiliyorsa, `max_steps` sınırı koyun ve sınırı örtülü hata olarak değerlendirin. Rastgele bir politikaya sahip GridWorld rutin olarak zaman aşımına uğrar; bu normaldir, sadece doğru saydığınızdan emin olun.
+- **Varyans.** MC tam getirileri kullanır. Uzun bölümlerde fark çok büyük; sondaki şanssız bir ödül, `V(s_0)`'yi aynı miktarda kaydırıyor. TD yöntemleri (Ders 04) önyükleme yaparak bunu ortadan kaldırır.
+- **Devlet kapsamı.** Açgözlü MC, yeni bir Q'da yalnızca bir eylemi deneyecek. *Keşfetmelisiniz* (ε-açgözlü, keşfetme başlar, UCB).
 - **Durağan olmayan politikalar.** `π` değişirse (MC kontrolünde olduğu gibi), eski getiriler farklı bir politikadan gelir. Constant-α MC bunu hallediyor; Örnek ortalamalı MC bunu yapmaz.
 - **Politika dışı önem örneklemesi.** `π(a|s)/μ(a|s)` ağırlıkları bir yörünge boyunca çoğalır. Farklılık ufukla birlikte patlar. Karar başına ağırlıklı IS ile sınırlayın veya TD'ye geçin.
 
-## Use It — Uygula
+## Kullan onu
 
 Monte Carlo yöntemlerinin 2026'daki rolü:
 
@@ -149,13 +149,13 @@ Monte Carlo yöntemlerinin 2026'daki rolü:
 | Kısa ufuk oyunları (blackjack, poker) | Bölümler doğal olarak sona eriyor; İadeler temiz. |
 | Günlüğe kaydedilen bir politikanın çevrimdışı değerlendirmesi | Saklanan yörüngeler üzerinden ortalama indirimli getiriler. |
 | Monte Carlo Ağacı Arama (AlphaZero) | Ağaçtan MC sunumları kılavuz seçimini bırakır. |
-| LLM RL değerlendirmesi | Belirli bir politika için örneklenen tamamlamalar üzerinden ortalama ödülü hesaplayın. |
+| Yüksek Lisans RL değerlendirmesi | Belirli bir politika için örneklenen tamamlamalar üzerinden ortalama ödülü hesaplayın. |
 | PPO'da temel tahmin | Avantaj hedefi `A_t = G_t - V(s_t)` bir MC `G_t` kullanır. |
 | RL'yi öğretmek | Gerçekten işe yarayan en basit algoritma — çekirdeği görmek için önyüklemeyi şeritleyin. |
 
 Modern derin RL algoritmaları (PPO, SAC), `n` adımlı dönüşler veya GAE aracılığıyla saf MC (tam dönüşler) ve saf TD (tek adımlı önyükleme) arasında enterpolasyon yapar. Her iki uç nokta da aynı tahmincinin örnekleridir.
 
-## Ship It — Ürüne Dönüştür
+## Gönderin
 
 `outputs/skill-mc-evaluator.md` olarak kaydet:
 
@@ -184,25 +184,25 @@ Refuse to run MC on non-episodic tasks without a finite horizon cap. Refuse to r
 
 1. **Kolay.** 4×4 GridWorld'de tek tip rastgele politikanın ilk ziyaret MC değerlendirmesini uygulayın. 10.000 bölüm çalıştırın. DP yanıtına karşı bölüm sayısının bir fonksiyonu olarak `V(0,0)` grafiğini çizin.
 2. **Orta.** `ε ∈ {0.01, 0.1, 0.3}` ile ε-açgözlü MC kontrolünü uygulayın. 20.000 bölümden sonraki ortalama getiriyi karşılaştırın. Eğri neye benziyor? Önyargı-varyans değiş tokuşu nerede yaşıyor?
-3. **Zor.** Önem örneklemesi ile *politika dışı* MC'yi uygulayın: tek tip rastgele politika `μ` altında veri toplayın, deterministik optimal politika `π` için `V^π`'yi tahmin edin. Düz IS ile karar başına IS ve ağırlıklı IS'yi karşılaştırın. Hangisinin varyansı en düşüktür?
+3. **Zor** *Politika dışı* MC'yi önem örneklemesi ile uygulayın: tek tip rastgele politika `μ` altında veri toplayın, deterministik optimal politika `π` için `V^π`'yi tahmin edin. Düz IS ile karar başına IS ve ağırlıklı IS'yi karşılaştırın. Hangisinin varyansı en düşüktür?
 
 ## Anahtar Terimler
 
-| Terim | İnsanlar ne diyor | Aslında ne anlama geliyor |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
 | Monte Carlo | "Rastgele örnekleme" | Dağıtımdan iid örneklerinin ortalamasını alarak beklentileri tahmin edin. |
-| Dönüş `G_t` | "Gelecekteki ödül" | `t`. adımdan bölüm sonuna kadar indirimli ödüllerin toplamı: `Σ_{k≥0} γ^k r_{t+k+1}`. |
+| Geri dön `G_t` | "Gelecekteki ödül" | `t` adımından bölüm sonuna kadar indirimli ödüllerin toplamı: `Σ_{k≥0} γ^k r_{t+k+1}`. |
 | İlk ziyaret MC | "Her durumu bir kez sayın" | Yalnızca bir bölümdeki ilk ziyaret değer tahminine katkıda bulunur. |
 | Her ziyarette MC | "Tüm ziyaretleri kullan" | Her ziyaret katkıda bulunur; biraz önyargılı ancak örnek açısından daha verimli. |
-| ε-açgözlü | "Keşif gürültüsü" | `1-ε` probuyla açgözlü eylemi seç; `ε` probuyla rastgele eylem. |
-| Önem örneklemesi | "Yanlış dağıtımdan örnekleme düzeltmesi" | `μ` verisinden `V^π` değerini tahmin etmek için getirileri `π(a\|s)/μ(a\|s)` ürün bazında yeniden ağırlıklandırın. |
+| ε-açgözlü | "Keşif gürültüsü" | `1-ε` ile açgözlü eylemi seçin; prob `ε` ile rastgele eylem. |
+| Önem örneklemesi | "Yanlış dağıtımdan örnekleme düzeltmesi" | `μ` verilerinden `V^π`'yi tahmin etmek için geri dönüşleri `π(a\|s)/μ(a\|s)` ürünlerine göre yeniden ağırlıklandırın. |
 | Politikaya ilişkin | "Kendi verilerimden öğrenin" | Hedef politikası = davranış politikası. Vanilya MC, PPO, SARSA. |
 | Politika dışı | "Başkasının verilerinden öğrenin" | Hedef politikası ≠ davranış politikası. Önemi örneklenmiş MC, Q-öğrenme, DQN. |
 
 ## Daha Fazla Okuma
 
 - [Sutton ve Barto (2018). Ch. 5 — Monte Carlo Yöntemleri](http://incompleteideas.net/book/RLbook2020.pdf) — kanonik tedavi.
-- [Singh ve Sutton (1996). Uygunluk İzlerini Değiştirerek Pekiştirmeli Öğrenme](https://link.springer.com/article/10.1007/BF00114726) — ilk ziyaret ve her ziyaret analizi.
+- [Singh ve Sutton (1996). Uygunluk İzlerini Değiştirerek Takviyeli Öğrenme](https://link.springer.com/article/10.1007/BF00114726) — ilk ziyaret ve her ziyaret analizi.
 - [Precup, Sutton, Singh (2000). Politika Dışı Politika Değerlendirmesi için Uygunluk İzlemeleri](http://incompleteideas.net/papers/PSS-00.pdf) — politika dışı MC ve sapma kontrolü.
 - [Mahmood ve ark. (2014). Politika Dışı Öğrenme için Ağırlıklandırılmış Önem Örneklemesi](https://arxiv.org/abs/1404.6362) — modern düşük varyanslı IS tahmin edicileri.
--[Tesauro (1995). TD-Gammon, Kendi Kendine Öğreten Bir Tavla Programı](https://dl.acm.org/doi/10.1145/203330.203343) — MC/TD'nin kendi kendine oynamasının insanüstü oyuna yaklaşmasının ilk büyük ölçekli ampirik gösterimi; Bu aşamanın ikinci yarısındaki her dersin kavramsal öncüsü.
+-[Tesauro (1995). TD-Gammon, Kendi Kendine Öğreten Bir Tavla Programı](https://dl.acm.org/doi/10.1145/203330.203343) — MC/TD'nin kendi kendine oynamasının insanüstü oyuna dönüştüğünün ilk büyük ölçekli ampirik gösterimi; Bu aşamanın ikinci yarısındaki her dersin kavramsal öncüsü.

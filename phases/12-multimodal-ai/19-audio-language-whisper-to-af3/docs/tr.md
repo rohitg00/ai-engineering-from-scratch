@@ -1,6 +1,6 @@
 # Ses-Dil Modelleri: Ses Flamingo 3 Arc'a Fısıltı
 
-> Whisper (Radford ve diğerleri, Aralık 2022) yerleşik konuşma tanıma — 680 bin saat zayıf denetimli çok dilli konuşma, basit bir kodlayıcı-kod çözücü transformer, sonraki her ASR sürümünde bundan alıntı yapılmasını sağlayan bir benchmark. Ancak tanınma, akıl yürütme değildir. "Bu kayıtta hangi enstrümanlar var" veya "konuşmacı hangi duyguyu ifade ediyor" veya "3. dakikada ne oldu?" gibi sorular, transkripsiyon değil, sesin anlaşılmasını gerektirir. Qwen-Audio, SALMONN, LTU ve NVIDIA'nın Audio Flamingo 3 (AF3, Temmuz 2025) bu yığını aşamalı olarak oluşturdu: Whisper sınıfı kodlayıcıları koruyun, Q-former'ları kullanın, sesli metin talimat verilerini eğitin, düşünce zinciri mantığı ekleyin. Bu ders konuyu ele alıyor.
+> Whisper (Radford ve diğerleri, Aralık 2022) yerleşik konuşma tanıma — 680 bin saat zayıf denetimli çok dilli konuşma, basit bir kodlayıcı-kod çözücü transformer, sonraki her ASR sürümünde bundan alıntı yapılmasını sağlayan bir benchmark. Ancak tanınma, akıl yürütme değildir. "Bu kayıtta hangi enstrümanlar var" veya "konuşmacı hangi duyguyu ifade ediyor" veya "3. dakikada ne oldu?" gibi sorular, transkripsiyon değil, sesin anlaşılmasını gerektirir. Qwen-Audio, SALMONN, LTU ve NVIDIA Audio Flamingo 3 (AF3, Temmuz 2025) bu yığını aşamalı olarak oluşturdu: Whisper sınıfı kodlayıcıları koruyun, Q-former'ları kullanın, sesli metin talimat verilerini eğitin, düşünce zinciri mantığı ekleyin. Bu ders konuyu ele alıyor.
 
 **Tür:** Yapım
 **Diller:** Python (stdlib, log-Mel spektrogramı + ses Q-former iskeleti)
@@ -20,9 +20,9 @@ Konuşma tanıma Whisper tarafından çözüldü. Sesin OCR'si bir üründür. A
 
 Üç belirgin rota:
 
-1. Cascade: Whisper transkripsiyonları, LLM transkript üzerinden nedenler. Saf konuşma senaryoları için çalışır. Müzik, çevresel ses, çoklu hoparlör çakışması ve duygu nedeniyle başarısız oluyor.
+1. Cascade: Whisper transkripsiyonları, LLM transkript üzerinden nedenler. Saf konuşma senaryoları için çalışır. Müzik, çevresel ses, çoklu hoparlör çakışması ve duygu durumlarında başarısız olur.
 
-2. Uçtan uca ses-LLM: bir ses kodlayıcı, transkripsiyonu atlayarak ses token'leri doğrudan bir LLM'ye besler. Akustik bilgileri (duygu, konuşmacı, çevre) korur. Yeni eğitim verilerine ihtiyaç var.
+2. Uçtan uca ses-LLM: bir ses kodlayıcı, ses token'leri transkripsiyonu atlayarak doğrudan bir LLM'ye besler. Akustik bilgileri (duygu, konuşmacı, çevre) korur. Yeni eğitim verilerine ihtiyaç var.
 
 3. Hibrit: hem yazıya dökebilen hem de akıl yürütebilen ses kodlayıcı + metin kod çözücü. Qwen-Audio ve Audio Flamingo bu rotayı seçiyor.
 
@@ -42,9 +42,9 @@ Sonuç: T'nin zaman çerçevelerinin sayısı olduğu 2 boyutlu bir şekil dizis
 
 ### Whisper'ın kodlayıcısı
 
-Whisper'ın kodlayıcısı, log-Mel spektrogramını bir zaman çerçevesi dizisi olarak işleyen 12 katmanlı ViT tarzı transformer'dır. Çıktı: zaman çerçevesi başına bir gizli durum vektörü.
+Whisper'ın kodlayıcısı, log-Mel spektrogramını bir zaman çerçevesi dizisi olarak işleyen 12 katmanlı ViT tarzı bir transformer'dir. Çıktı: zaman çerçevesi başına bir gizli durum vektörü.
 
-ASR için, Whisper'ın kod çözücüsü, kodlayıcı çıktısında koşullandırılmış token metinlerini üreten bir çapraz dikkat transformer'dir. Standart kodlayıcı-kod çözücü.
+ASR için Whisper'ın kod çözücüsü, kodlayıcı çıkışına göre koşullandırılmış token metinleri üreten çapraz dikkat transformer'dir. Standart kodlayıcı-kod çözücü.
 
 ALM'ler (ses-LLM'ler) için, kodlayıcı çıkışının farklı bir LLM'ye giriş olarak olmasını istersiniz. Model: Whisper kodlayıcı dondurulmuş, Q-former eğitilebilir, LLM dondurulmuş veya ayarlanmış.
 
@@ -52,19 +52,19 @@ ALM'ler (ses-LLM'ler) için, kodlayıcı çıkışının farklı bir LLM'ye giri
 
 Whisper, konuşmaya hakim veriler üzerinde eğitildi. Müzik ve çevresel ses için daha zayıftır.
 
-BEATs (Chen ve diğerleri, 2022), AudioSet üzerinde eğitim almış, kendi kendini denetleyen bir transformer'dır. Aynı parametre sayısında müzik ve ortam seslerini Whisper'dan daha iyi yakalar.
+BEATs (Chen ve diğerleri, 2022), AudioSet üzerinde eğitilmiş, kendi kendini denetleyen bir transformer'dir. Aynı parametre sayısında müzik ve ortam seslerini Whisper'dan daha iyi yakalar.
 
 AF-Whisper (Audio Flamingo 3'ün hibriti): ses girişi olarak concat Whisper + BEATs özellikleri. Fısıltı dilsel sinyali, BEAT ise akustik sinyali taşır.
 
 ### Ses Q-eski
 
-BLIP-2'nin görsel Q-former'ı ile aynı model. Sabit sayıda öğrenilebilir sorgu (genellikle 32 veya 64), ses kodlayıcının çıkış çerçeveleri üzerinde çapraz katılım sağlar. Sorgular LLM tarafından tüketilen ses token'ler haline gelir.
+BLIP-2'nin görsel Q-former'ı ile aynı model. Sabit sayıda öğrenilebilir sorgu (genellikle 32 veya 64), ses kodlayıcının çıkış çerçeveleri üzerinde çapraz katılım sağlar. Sorgular, LLM tarafından tüketilen ses token'ler haline gelir.
 
-Eğitim hizalama aşaması: Yalnızca Q-former, sesli metin çiftlerinde karşılaştırmalı + altyazı kayıpları (AudioCaps, Clotho). Talimat aşaması: uçtan uca, LLM'yi çözün, talimat verileri üzerinde eğitim alın.
+Eğitim hizalama aşaması: Yalnızca Q-former, sesli metin çiftlerinde karşılaştırmalı + altyazı kayıpları (AudioCaps, Clotho). Talimat aşaması: uçtan uca, LLM'yi çözün, talimat verileri üzerinde eğitim verin.
 
 ### Ark — SALMONN, Qwen-Audio, AF3
 
-SALMONN (Tang ve diğerleri, 2023): Whisper + BEAT'ler + Q-former + LLaMA. Ciddi muhakeme yeteneğine sahip ilk açık ses yüksek lisansı. MMAU'daki Benchmark'ler ~0,55 bileşik gösterir.
+SALMONN (Tang ve diğerleri, 2023): Whisper + BEAT'ler + Q-former + LLaMA. Ciddi muhakeme yeteneğine sahip ilk açık ses yüksek lisansı. MMAU'daki Benchmark'ler ~0,55 kompozit gösterir.
 
 Qwen-Audio (Chu ve diğerleri, 2023): daha zengin bir dataset üzerinde eğitilmiş, çok turlu diyalog için ayarlanmış benzer mimari. MMAU ~0.60.
 
@@ -72,7 +72,7 @@ LTU — Dinle, Düşün, Anla (Gong ve diğerleri, 2023): açık muhakeme verile
 
 Audio Flamingo 3 (Goel ve diğerleri, Temmuz 2025): mevcut açık SOTA. 8B LLM omurgası (Qwen2 7B), Fısıltı büyüklüğünde kodlayıcı concat BEAT'ler, 64 sorgulu Q-former, 1 milyondan fazla sesli metin talimat çifti üzerinde eğitim. MMAU 0.72, bazı alt görevlerde özel sınırlarla eşleşir.
 
-AF3 aynı zamanda ses için isteğe bağlı düşünce zincirini de sunar: model isteğe bağlı olarak nihai yanıttan önce token ("önce enstrümanları tanımlamama izin verin: ...") düşünmelerini yayabilir. Karmaşık akıl yürütme görevlerindeki doğruluk, düşünme etkinleştirildiğinde 3-5 puan artırır.
+AF3 ayrıca ses için isteğe bağlı düşünce zincirini de sunar: model, son yanıttan önce isteğe bağlı olarak düşünme token'ler ("önce enstrümanları tanımlamama izin verin: ...") yayabilir. Karmaşık akıl yürütme görevlerindeki doğruluk, düşünme etkinleştirildiğinde 3-5 puan artırır.
 
 ### Basamaklı vs uçtan uca
 
@@ -98,9 +98,9 @@ Yeni bir ses anlama ürünü için:
 
 Basamaklı daha ucuz ve daha basittir. Uçtan uca daha yeteneklidir.
 
-### MMAU — sesli muhakeme benchmark
+### MMAU — ses muhakemesi benchmark
 
-MMAU (Massive Multimodal Audio Understanding), 2024-2025 işitsel muhakemesidir benchmark:
+MMAU (Massive Multimodal Audio Understanding), 2024-2025 ses mantığı benchmark'dir:
 
 - Konuşma, müzik ve çevresel sesler genelinde 10.000 sesli metin QA çifti.
 - Sınıflandırmayı, zamansal akıl yürütmeyi, nedensel akıl yürütmeyi, açık uçlu QA'yı kapsar.
@@ -113,12 +113,12 @@ SOTA'yı (AF3) 0,72'de açın; tescilli sınır ~0,78 (Gemini 2.5 Pro, Claude Op
 `code/main.py`:
 
 - Stdlib'de log-Mel spektrogram hesaplamasını uygular: pencereleme, saf DFT, Mel filtre bankası.
-- Ses Q-former iskeleti: verilen kodlayıcı çıkış çerçeveleri, Q, K, V'yi hesaplar, dikkat eder ve N token'leri yayar.
+- Ses Q-eski iskeleti: verilen kodlayıcı çıkış çerçeveleri, Q, K, V'yi hesaplar, dikkat eder ve N token'leri yayar.
 - Bir oyuncak görevinde kademeli ve uçtan uca karşılaştırma.
 
 ## Gönderin
 
-Bu ders `outputs/skill-audio-llm-pipeline-picker.md` üretir. Bir ses görevi verildiğinde (transkripsiyon, müzik etiketleme, duygu inference, çok hoparlörlü günlük tutma, ortam sınıflandırması), basamaklı, uçtan uca AF3'ü veya hibriti seçer.
+Bu ders `outputs/skill-audio-llm-pipeline-picker.md`'yi üretir. Bir ses görevi verildiğinde (transkripsiyon, müzik etiketleme, duygu inference, çok hoparlörlü günlük tutma, ortam sınıflandırması), basamaklı, uçtan uca AF3'ü veya bir hibriti seçer.
 
 ## Egzersizler
 
@@ -139,10 +139,10 @@ Bu ders `outputs/skill-audio-llm-pipeline-picker.md` üretir. Bir ses görevi ve
 | Log-Mel spektrogramı | "Mel'in özellikleri" | Mel filtre bankalarından sonra log-büyüklük değerlerinin 2B (zaman, frekans) dizisi |
 | Ses Q-eski | "Ses Algılayıcısı" | Ses kodlayıcı çıkışından Yüksek Lisans'ı besleyen sabit uzunluklu sorgulara kadar çapraz dikkat darboğazı |
 | Kademeli | "ASR-sonra-LLM" | Whisper'ın yazıya döktüğü boru hattı ve LLM'nin gerekçelerini içeren bir metin; akustik bilgiyi kaybeder |
-| Uçtan uca | "Ses-LLM" | Ses özellikleri LLM'ye doğrudan Q-former aracılığıyla girer; akustik sinyali korur |
-| BEAT'ler | "Audio AudioSet kodlayıcı" | AudioSet'te SSL transformer eğitildi; müzik + çevresel sesler konusunda güçlü |
+| Uçtan uca | "Ses-Yüksek Lisans" | Ses özellikleri LLM'ye doğrudan Q-former aracılığıyla girer; akustik sinyali korur |
+| BEAT'ler | "Audio AudioSet kodlayıcı" | SSL transformer AudioSet üzerinde eğitilmiştir; müzik + çevresel sesler konusunda güçlü |
 | MMAU | "Ses muhakeme tezgahı" | Konuşma, müzik ve ortamda 10 bin QA çifti; 2024 değerlendirme standardı |
-| İsteğe bağlı düşünme | "Ses CoT" | Model isteğe bağlı olarak son yanıttan önce token'lerce mantık yürütebilir, doğruluğu 3-5 puan artırır |
+| İsteğe bağlı düşünme | "Ses CoT" | Model, isteğe bağlı olarak, son yanıttan önce token gerekçelerini yayınlayabilir, doğruluğu 3-5 puan artırır |
 
 ## Daha Fazla Okuma
 

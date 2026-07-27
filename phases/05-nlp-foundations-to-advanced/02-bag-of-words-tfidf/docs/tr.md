@@ -1,6 +1,6 @@
 # Kelime Torbası, TF-IDF ve Metin Gösterimi
 
-> Önce sayın, sonra düşünün. TF-IDF, 2026'da iyi tanımlanmış görevlerde hâlâ embedding'ları geride bırakıyor.
+> Önce sayın, sonra düşünün. TF-IDF, 2026'da iyi tanımlanmış görevlerde hala embedding'leri geride bırakıyor.
 
 **Tür:** Yapım
 **Diller:** Python
@@ -11,15 +11,15 @@
 
 Modelin sayılara ihtiyacı var. İpleriniz var.
 
-Her NLP boru hattının aynı soruyu yanıtlaması gerekir. Değişken uzunluktaki tokens akışını, bir sınıflandırıcının tüketebileceği sabit boyutlu bir vektöre nasıl dönüştürürüz? Alanın ulaştığı ilk cevap, işe yarayan en aptalca cevaptı. Kelimeleri say. Bir vektör yapın.
+Her NLP boru hattının aynı soruyu yanıtlaması gerekir. Değişken uzunluktaki bir token akışını, bir sınıflandırıcının tüketebileceği sabit boyutlu bir vektöre nasıl dönüştürürüz? Alanın ulaştığı ilk cevap, işe yarayan en aptalca cevaptı. Kelimeleri say. Bir vektör yapın.
 
-Bu vektör herhangi bir embedding modelinden daha fazla üretim NLP'si taşıdı. Spam filtreleri, konu sınıflandırıcıları, günlük anormallik tespiti, arama sıralaması (BM25'ten önce), duyarlılık analizinin ilk dalgası, akademik NLP benchmark'lerin ilk on yılı. 2026 uygulayıcı dar sınıflandırma görevlerinde hâlâ ilk sırada yer alıyor. Hızlıdır, yorumlanabilirdir ve genellikle kelime varlığının önemli olduğu görevlerde 400M parametreli embedding modelinden ayırt edilemez.
+Bu vektör herhangi bir embedding modelinden daha fazla üretim NLP'si taşıdı. Spam filtreleri, konu sınıflandırıcıları, günlük anormallik tespiti, arama sıralaması (BM25'ten önce), duygu analizinin ilk dalgası, akademik NLP benchmark'lerin ilk on yılı. 2026 uygulayıcı dar sınıflandırma görevlerinde hâlâ ilk sırada yer alıyor. Kelime varlığının önemli olduğu görevlerde hızlıdır, yorumlanabilir ve genellikle 400M parametreli embedding modelinden ayırt edilemez.
 
-Bu derste bir torba dolusu kelime ve ardından TF-IDF sıfırdan oluşturuluyor. Daha sonra scikit-learn'in aynı şeyi üç satırda yaptığını gösterir. Daha sonra embeddings'ye erişmenizi sağlayan başarısızlık modunu adlandırın.
+Bu derste bir torba dolusu kelime ve ardından TF-IDF sıfırdan oluşturuluyor. Daha sonra scikit-learn'in aynı şeyi üç satırda yaptığını gösterir. Daha sonra embedding'lere erişmenizi sağlayan arıza modunu adlandırın.
 
 ## Konsept
 
-**Bag of Word (BoW)** düzeni ortadan kaldırır. Her belge için, her bir kelime sözcüğünün kaç kez göründüğünü sayın. Vektör uzunluğu kelime büyüklüğüdür. Konum `i`, `i` kelimesinin sayısıdır.
+**Bag of Word (BoW)** düzeni ortadan kaldırır. Her belge için, her bir kelime sözcüğünün kaç kez göründüğünü sayın. Vektör uzunluğu kelime büyüklüğüdür. `i` konumu, `i` kelimesinin sayısıdır.
 
 **TF-IDF** BoW'u yeniden ağırlıklandırıyor. Her belgede görünen bir kelime bilgi verici değildir, bu nedenle onu küçültün. Tümcede nadir bulunan ancak tek bir belgede sık görülen bir kelime sinyaldir; bu nedenle ölçeği büyütün.
 
@@ -28,7 +28,7 @@ TF-IDF(w, d) = TF(w, d) * IDF(w)
              = count(w in d) / |d| * log(N / df(w))
 ```
 
-Burada `TF` belgedeki terim sıklığıdır, `df` belge sıklığıdır (kelimeyi kaç belge içerir), `N` toplam belgedir. `log`, her yerde bulunan kelimelerin ağırlığını sınırlı tutar.
+`TF` belgedeki terim sıklığıdır, `df` belge sıklığıdır (kelimeyi kaç belge içerir), `N` toplam belgedir. `log`, her yerde bulunan kelimelerin ağırlığını sınırlı tutar.
 
 Anahtar özellik: her ikisi de yorumlanabilir eksenlere sahip seyrek vektörler üretir. Eğitimli bir sınıflandırıcının ağırlıklarına bakabilir ve hangi kelimelerin bir belgeyi her bir sınıfa ittiğini okuyabilirsiniz. Bunu 768 boyutlu bir BERT embedding ile yapamazsınız.
 
@@ -50,7 +50,7 @@ def build_vocab(docs):
     return vocab
 ```
 
-Giriş: tokenözelleştirilmiş belgelerin listesi (herhangi bir kelime düzeyindeki tokenizer işe yarar; bu dersteki `code/main.py` basitleştirilmiş küçük harfli bir değişken kullanır). Çıktı: `{word: index}` dict. Kararlı ekleme sırası, kelime dizini 0'ın ilk belgede görülen ilk kelime olduğu anlamına gelir. Sözleşme değişiklik gösterir; scikit-learn alfabetik olarak sıralar.
+Giriş: tokenleştirilmiş belgelerin listesi (herhangi bir kelime düzeyinde tokenizer işe yarar; bu dersteki `code/main.py`, basitleştirilmiş bir küçük harf çeşidi kullanır). Çıktı: `{word: index}` dict. Kararlı ekleme sırası, kelime dizini 0'ın ilk belgede görülen ilk kelime olduğu anlamına gelir. Sözleşme değişiklik gösterir; scikit-learn alfabetik olarak sıralar.
 
 ### Adım 2: kelime çantası
 
@@ -71,7 +71,7 @@ def bag_of_words(docs, vocab):
 [[1, 1, 1, 1, 0], [2, 0, 0, 0, 1]]
 ```
 
-Satırlar belgelerdir. Sütunlar kelime dizinleridir. `[i][j]` girişi "`j` kelimesinin `i` belgesinde kaç kez geçtiğidir." Doküman 1'de iki kez `cat` var çünkü öyleydi. Doküman 0'da `ran` sıfır kez var çünkü yoktu.
+Satırlar belgelerdir. Sütunlar kelime dizinleridir. `[i][j]` girişi, "`i` belgesinde `j` kelimesinin kaç kez göründüğüdür." Doküman 1'de iki kez `cat` var çünkü öyleydi. Doküman 0'da `ran` sıfır kez var çünkü yoktu.
 
 ### Adım 3: terim sıklığı ve belge sıklığı
 
@@ -96,7 +96,7 @@ def inverse_document_frequency(df, n_docs):
     return [math.log((n_docs + 1) / (d + 1)) + 1 for d in df]
 ```
 
-Adlandırmaya değer iki yumuşatma numarası. `(n+1)/(d+1)`, `log(x/0)`'den kaçınır. Sondaki `+1`, her belgedeki bir kelimenin hala scikit-learn'in varsayılanıyla eşleşen IDF 1'e (0 değil) sahip olmasını sağlar. Diğer uygulamalar ham `log(N/df)` kullanır. Her ikisi de işe yarar; düzeltilmiş versiyon daha dost canlısıdır.
+Adlandırmaya değer iki yumuşatma numarası. `(n+1)/(d+1)`, `log(x/0)`'yi önler. Sondaki `+1`, her belgedeki bir kelimenin hala scikit-learn'in varsayılanıyla eşleşen IDF 1'e (0 değil) sahip olmasını sağlar. Diğer uygulamalar ham `log(N/df)` kullanır. Her ikisi de işe yarar; düzeltilmiş versiyon daha dost canlısıdır.
 
 ### Adım 4: TF-IDF
 
@@ -124,7 +124,7 @@ def tfidf(bow_matrix):
 >>> tfidf(bow)
 ```
 
-Üç belge, beş kelime bilgisi (`the`, `cat`, `sat`, `dog`, `ran`). `the` üçünde de görünüyor, dolayısıyla IDF'si düşük. `dog` bir tanesinde görünüyor, dolayısıyla IDF'si yüksek. Vektörler seyrektir (girişlerin çoğu küçüktür) ve ayırt edici sözcükler öne çıkar.
+Üç belge, beş kelime kelimesi (`the`, `cat`, `sat`, `dog`, `ran`). `the` üçünde de görünüyor, dolayısıyla IDF'si düşük. `dog` bir tanesinde göründüğünden IDF'si yüksektir. Vektörler seyrektir (girişlerin çoğu küçüktür) ve ayırt edici sözcükler öne çıkar.
 
 ### Adım 5: L2-satırları normalleştirin
 
@@ -158,7 +158,7 @@ tfidf = tfidf_vectorizer.fit_transform(docs)
 print(tfidf.toarray().round(3))
 ```
 
-`CountVectorizer` tek aramada tokenlaştırmayı, sözcük dağarcığını ve BoW'u yapar. `TfidfVectorizer`, IDF ağırlıklandırmasını ve L2 normalizasyonunu ekler. Her ikisi de seyrek matrisler döndürür. 100 bin belge için yoğun sürüm belleğe sığmaz; sınıflandırıcı yoğun talep edene kadar seyrek kalın.
+`CountVectorizer`, tek aramada tokenizasyon, kelime dağarcığı ve BoW işlemlerini yapar. `TfidfVectorizer`, IDF ağırlıklandırmasını ve L2 normalizasyonunu ekler. Her ikisi de seyrek matrisler döndürür. 100 bin belge için yoğun sürüm belleğe sığmaz; sınıflandırıcı yoğun talep edene kadar seyrek kalın.
 
 Her şeyi değiştiren düğmeler:
 
@@ -167,14 +167,14 @@ Her şeyi değiştiren düğmeler:
 | `ngram_range=(1, 2)` | Bigramları dahil edin. Genellikle sınıflandırmayı artırır. |
 | `min_df=2` | Kelimeleri 2'den az belgeye bırakın. Gürültülü verilerle ilgili kelime dağarcığını kısaltır. |
 | `max_df=0.95` | Dokümanların %95'inden fazlasında sözcükleri bırakın. Sabit kodlanmış bir liste olmadan engellenecek kelime kaldırma işlemini yaklaşık olarak gerçekleştirir. |
-| `stop_words="english"` | scikit-learn'in yerleşik engellenecek kelime listesi. Göreve bağlı — duyarlılık analizi, olumsuzlukları *düşürmemelidir*. |
-| `sublinear_tf=True` | `1 + log(tf)` değerini ham `tf` yerine kullanın. Bir terim aynı belgede birçok kez yinelendiğinde yararlıdır. |
+| `stop_words="english"` | scikit-learn'in yerleşik engellenecek kelime listesi. Göreve bağlı — duygu analizi, olumsuzlukları *düşürmemelidir*. |
+| `sublinear_tf=True` | Ham `tf` yerine `1 + log(tf)` kullanın. Bir terimin bir belgede birçok kez tekrarlanması durumunda yardımcı olur. |
 
 ### TF-IDF hala kazandığında (2026 itibariyle)
 
 - Spam tespiti, konu etiketleme, günlük anormalliklerini işaretleme. Önemli olan kelimenin varlığıdır; anlamsal nüans yoktur.
 - Düşük veri rejimleri (yüzlerce etiketli örnek). TF-IDF artı lojistik regresyonun ön eğitim maliyeti yoktur.
-- Gecikmenin önemli olduğu her yerde. TF-IDF artı doğrusal bir model mikrosaniyeler içinde yanıt verir. Embedding bir transformer aracılığıyla bir belge 10-100ms sürer.
+- Gecikmenin önemli olduğu her yerde. TF-IDF artı doğrusal bir model mikrosaniyeler içinde yanıt verir. Embedding transformer aracılığıyla bir belge 10-100ms sürer.
 - Tahminlerini açıklaması gereken sistemler. Sınıflandırıcının katsayılarını inceleyin. Bunun nedeni en iyi olumlu kelimelerdir.
 
 ### TF-IDF başarısız olduğunda
@@ -184,13 +184,13 @@ Anlamsal körlük başarısızlığı. Şu iki belgeyi düşünün:
 - "Film hiç iyi değildi."
 - "Film mükemmeldi."
 
-Bunlardan biri olumsuz, diğeri olumlu bir değerlendirmedir. TF-IDF örtüşmeleri tam olarak `{the, movie, was}` kümesidir. Bag-of-words sınıflandırıcısı, `not` sözcüğünün `good` yakınındayken etiketi tersine çevirdiğini ezberlemek zorundadır. Yeterli veriyle bunu öğrenebilir, ancak sözdizimini anlayan bir model kadar zarif biçimde değil.
+Bunlardan biri olumsuz bir eleştiri. Biri olumlu. TF-IDF örtüşmeleri tam olarak `{the, movie, was}`'dir. Bir kelime torbası sınıflandırıcısının, `good` yakınındaki `not` kelimesinin etiketi çevirdiğini ezberlemesi gerekir. Bunu yeterli veriyle öğrenebilir, ancak asla sözdizimini anlayan bir model kadar zarif bir şekilde öğrenemez.
 
-Diğer başarısızlık: inference kelimesinde sözcük dışı kelimeler. IMDb incelemeleri üzerine eğitilmiş bir BoW modelinin, eğer token eğitimde hiç görünmediyse, `Zoomer-approved` ile ne yapacağına dair hiçbir fikri yoktur. Alt kelime embedding'ler (ders 04) bunu halleder. TF-IDF bunu yapamaz.
+Diğer başarısızlık: inference'de sözcük dağarcığı dışında kalan kelimeler. IMDb incelemeleri üzerine eğitilmiş bir BoW modelinin, token eğitimde hiç görünmediyse `Zoomer-approved` ile ne yapacağına dair hiçbir fikri yoktur. Alt kelime embedding'ler (ders 04) bunu halleder. TF-IDF bunu yapamaz.
 
-### Hibrit: TF-IDF ağırlıklı embedding'lar
+### Hibrit: TF-IDF ağırlıklı embedding'ler
 
-Orta düzey veri sınıflandırması için 2026 pragmatik varsayılanı: embeddings kelimesine dikkat etmek için TF-IDF ağırlıklarını kullanın.
+Orta düzey veri sınıflandırması için 2026 pragmatik varsayılanı: embedding kelimesine dikkat etmek için TF-IDF ağırlıklarını kullanın.
 
 ```python
 def tfidf_weighted_embedding(doc, tfidf_scores, embedding_table, dim):
@@ -209,7 +209,7 @@ def tfidf_weighted_embedding(doc, tfidf_scores, embedding_table, dim):
     return [v / total_weight for v in vec]
 ```
 
-Anlamsal kapasiteyi embedding'lardan, nadir kelime vurgusunu ise TF-IDF'den alırsınız. Sınıflandırıcı, havuzlanmış vektör üzerinde eğitim alır. Bu, yaklaşık 50 bin etiketli örneğin altındaki duyarlılık, konu ve amaç sınıflandırması açısından tek başına daha iyi performans gösteriyor.
+embedding'lerden anlamsal kapasite ve TF-IDF'den nadir kelime vurgusu elde edersiniz. Sınıflandırıcı, havuzlanmış vektör üzerinde eğitim alır. Bu, yaklaşık 50 bin etiketli örneğin altındaki duyarlılık, konu ve amaç sınıflandırması açısından tek başına daha iyi performans gösteriyor.
 
 ## Gönderin
 
@@ -242,9 +242,9 @@ Example output:
 
 ## Egzersizler
 
-1. **Kolay.** `cosine_similarity(doc_vec_a, doc_vec_b)`'yi L2-normalize TF-IDF çıkışına uygulayın. Aynı belgelerin 1,0, ayrık sözcükler içeren belgelerin ise 0,0 puan aldığını doğrulayın.
-2. **Orta.** `n-gram` desteğini `bag_of_words` işlevine ekleyin. `n` parametresi `n`-gram sayılarını üretir. `n=2` ayarının `["the", "cat", "sat"]` girdisi üzerinde `["the cat", "cat sat"]` için bigram sayılarını ürettiğini test edin.
-3. **Zor.** GloVe 100d vektörlerini kullanarak yukarıdaki TF-IDF ağırlıklı-embedding hibritini oluşturun (bir kez indirin, önbellek). Sınıflandırma doğruluğunu, 20 Haber Grubundaki dataset düz TF-IDF ve düz ortalama havuzlu embedding'lerle karşılaştırın. Hangisinin nerede kazandığını bildirin.
+1. **Kolay.** `cosine_similarity(doc_vec_a, doc_vec_b)`'yi L2 normalleştirilmiş TF-IDF çıkışına uygulayın. Aynı belgelerin 1,0, ayrık sözcükler içeren belgelerin ise 0,0 puan aldığını doğrulayın.
+2. **Orta.** `bag_of_words`'ye `n-gram` desteği ekleyin. `n` parametresi `n` gramın üzerinde sayımlar üretir. `["the", "cat", "sat"]` üzerindeki `n=2`'nin `["the cat", "cat sat"]` için bigram sayımları ürettiğini test edin.
+3. **Zor.** GloVe 100d vektörlerini kullanarak yukarıdaki TF-IDF ağırlıklı-embedding hibritini oluşturun (bir kez indirin, önbellek). Sınıflandırma doğruluğunu, 20 dataset Haber Grubundaki düz TF-IDF ve düz ortalama havuzlu embedding'lerle karşılaştırın. Hangisinin nerede kazandığını bildirin.
 
 ## Anahtar Terimler
 
@@ -261,4 +261,4 @@ Example output:
 
 - [scikit-learn — metinden özellik çıkarma](https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction) — standart API referansı ve her düğmeyle ilgili notlar.
 - [Salton, G. ve Buckley, C. (1988). Otomatik metin alımında terim ağırlıklandırma yaklaşımları](https://www.sciencedirect.com/science/article/pii/0306457388900210) — TF-IDF'yi on yıl boyunca varsayılan yapan makale.
-- ["Neden TF-IDF Hala Embedding'ları Geçiyor" — Ashfaque Thonikkadavan (Medium)](https://medium.com/@cmtwskb/why-tf-idf-still-beats-embeddings-ad85c123e1b2) — 2026, eski yöntemin ne zaman kazandığını ve nedenini ele alacak.
+- ["TF-IDF Neden Embedding'leri Hala Yeniyor" — Ashfaque Thonikkadavan (Medium)](https://medium.com/@cmtwskb/why-tf-idf-still-beats-embeddings-ad85c123e1b2) — 2026, eski yöntemin ne zaman kazanacağını ve nedenini ele alacak.

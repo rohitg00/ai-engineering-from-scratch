@@ -9,7 +9,7 @@
 
 ## Öğrenme Hedefleri
 
-- Yalnızca metin üretebilen bir LLM'ın neden tek başına gerçek dünyaya karşı eylemde bulunamayacağını açıklayın.
+- Yalnızca metin üretebilen bir Yüksek Lisans'ın neden tek başına gerçek dünyaya karşı eylemde bulunamayacağını açıklayın.
 - Dört adımlı araç çağırma döngüsünü çizin (tanımlayın → karar verin → yürütün → gözlemleyin) ve her adımın sahibinin adını belirtin.
 - Bir araç açıklamasını üç bölüm halinde yazın: ad, JSON Şema girişi ve deterministik bir yürütücü işlevi.
 - Saf ve yan etkili araçları ayırt edin ve bölünmenin güvenlik açısından neden önemli olduğunu belirtin.
@@ -20,7 +20,7 @@ Bir LLM bir sonraki token üzerinden bir olasılık dağılımı yayar. Bu tüm 
 
 Bu boşluğu kapatmak araç arayüzünün amacıdır. Ana bilgisayar programı (agent çalışma zamanınız, Claude Desktop, ChatGPT, Cursor veya özel bir komut dosyası) modele çağrılabilir araçların bir listesini duyurur. Model, bir eylemin gerekli olduğuna karar verdiğinde, aracı ve onun argümanlarını adlandıran yapılandırılmış bir veri yayınlar. Ana bilgisayar bu yükü ayrıştırır, aracı gerçek anlamda çalıştırır ve sonucu geri bildirir. Döngü, model daha fazla çağrıya gerek olmadığına karar verene kadar devam eder.
 
-Bu sözleşmenin ilk sürümü Haziran 2023'te OpenAI'nin "işlevler" parametresi olarak yayınlandı. Anthropic'i Claude 2.1'de `tool_use` bloklarıyla takip etti. Gemini birkaç ay sonra `functionDeclarations`'yi ekledi. Artık her sağlayıcı aynı şekli ortaya koyuyor: JSON Schema tipinde bir araç listesi, bir JSON yükü aracı çağrısı. Model Context Protocol (Kasım 2024), sözleşmeyi her modele tek bir araç kaydı hizmet edecek şekilde genelleştirdi. A2A (Nisan 2026, v1.0), agent-agent delegasyonu için aynı temel öğeyi katmanlandırdı.
+Bu sözleşmenin ilk sürümü Haziran 2023'te OpenAI'nin "işlevler" parametresi olarak yayınlandı. Anthropic'i Claude 2.1'de `tool_use` bloklarıyla takip etti. Gemini birkaç ay sonra `functionDeclarations`'yi ekledi. Artık her sağlayıcı aynı şekli ortaya koyuyor: JSON Şeması tipinde bir araç listesi, bir JSON yükü aracı çağrısı. Model Bağlam Protokolü (Kasım 2024), sözleşmeyi her modele tek bir araç kaydı hizmet edecek şekilde genelleştirdi. A2A (Nisan 2026, v1.0), agent-agent delegasyonu için aynı temel öğeyi katmanlandırdı.
 
 Dört adımlı döngü tüm bunların altında yatan değişmezdir. Aşama 13'teki diğer her şey bir detaylandırmadır.
 
@@ -69,10 +69,10 @@ Meta'nın agent güvenliğine yönelik 2026 "İki Kuralı", tek bir dönüşün 
 
 | Bağlam | Kim açıklıyor | Kim karar veriyor | Kim idam eder |
 |---------|---------------|-------------|--------------|
-| Tek dönüşlü işlev çağırma (OpenAI/Anthropic/Gemini) | Uygulama geliştiricisi | LLM | Uygulama geliştiricisi |
-| MCP | MCP sunucusu | MCP istemcisi aracılığıyla LLM | MCP sunucusu |
+| Tek dönüşlü işlev çağırma (OpenAI/Anthropic/Gemini) | Uygulama geliştiricisi | Yüksek Lisans | Uygulama geliştiricisi |
+| MCP | MCP sunucusu | MCP istemcisi aracılığıyla Yüksek Lisans | MCP sunucusu |
 | A2A | Agent Kart yayıncısı | agent'nin aranması | agent olarak adlandırıldı |
-| Web tarayıcısı (işlev çağıran agent) | Tarayıcı uzantısı / WebMCP | LLM | Tarayıcı çalışma zamanı |
+| Web tarayıcısı (işlev çağıran agent) | Tarayıcı uzantısı / WebMCP | Yüksek Lisans | Tarayıcı çalışma zamanı |
 
 Her yerde aynı dört adım. Sütun adları değişir; yapı öyle değil.
 
@@ -86,7 +86,7 @@ Aşama 13 · 02, üç sağlayıcı API'sini yan yana ele alır. Aşama 13 · 04,
 
 ### Devre kesiciler
 
-Model çağrı göndermeyi bıraktığında veya ana bilgisayar maksimum dönüş sayısına ulaştığında döngü sona erer. Prodüksiyon sunucuları bunu 5 ila 20 dönüş arasına ayarladı. Bunun ötesinde, neredeyse kesinlikle modelin çıkamayacağı bir döngünün içindesiniz. Claude Code varsayılan olarak 20'dir; 10'a kadar OpenAI Asistanı; İmlecin agent modunu 25'e getirin.
+Model çağrı göndermeyi bıraktığında veya ana bilgisayar maksimum dönüş sayısına ulaştığında döngü sona erer. Prodüksiyon sunucuları bunu 5 ila 20 dönüş arasına ayarladı. Bunun ötesinde, neredeyse kesinlikle modelin çıkamayacağı bir döngünün içindesiniz. Claude Kodu varsayılan olarak 20'dir; 10'a kadar OpenAI Asistanı; İmlecin agent modunu 25'e getirin.
 
 Alternatif - sınırsız döngüler - her altı ayda bir "agent'nin bir gecede API çağrılarına 400 dolar harcadığı" ölümden sonra ortaya çıkıyor. Sınırsız gönderim yapmayın.
 
@@ -109,7 +109,7 @@ Geriye kalan her ders bu dört adımlı döngünün detaylandırılmasıdır. Bu
 Neye bakmalı:
 
 - Araç kayıt defterinde araç başına üç alan bulunur: ad, açıklama, şema ve yürütücü referansı.
-- Doğrulayıcı, yalnızca stdlib'de yazılmış minimum bir JSON Schema alt kümesidir (türler, gerekli, numaralandırma, min/maks). Aşama 13 · 04 daha dolgun bir tane gönderiyor.
+- Doğrulayıcı, yalnızca stdlib'de yazılmış minimum bir JSON Şeması alt kümesidir (türler, gerekli, numaralandırma, min/maks). Aşama 13 · 04 daha dolgun bir tane gönderiyor.
 - Döngü yineleme sayısını beşte sınırlar. Üretim agent'ler tam olarak bu tür bir devre kesiciye ihtiyaç duyar.
 
 ## Gönderin
@@ -122,11 +122,11 @@ Bu ders `outputs/skill-tool-interface-reviewer.md`'yi üretir. Bir taslak araç 
 
 2. Şema doğrulayıcıyı kırın. `arguments` nesnesinde gerekli bir alan eksik olan bir çağrıyı iletin ve yürütmeden önce ana bilgisayarın bu çağrıyı reddettiğini onaylayın. Daha sonra fazladan bilinmeyen bir alana sahip bir çağrıyı iletin. Karar verin: Toplantı sahibi reddetmeli mi yoksa görmezden mi gelmeli? Seçiminizi bir güvenlik argümanıyla gerekçelendirin.
 
-3. Donanımdaki her aleti saf veya sonuç olarak sınıflandırın. Gereken kayıt defteri girdilerine bir `consequential: true` bayrağı ekleyin ve sonuç niteliğindeki bir araç seçildiğinde "kullanıcıyla onaylanır" satırı yazdıracak şekilde döngüyü değiştirin. Bu, her üretim ana bilgisayarının ihtiyaç duyduğu onay kapısının şeklidir.
+3. Donanımdaki her aleti saf veya sonuç olarak sınıflandırın. İhtiyaç duyan kayıt defteri girdilerine bir `consequential: true` bayrağı ekleyin ve sonuç niteliğindeki bir araç seçildiğinde "kullanıcıyla onaylanır" satırı yazdıracak şekilde döngüyü değiştirin. Bu, her üretim ana bilgisayarının ihtiyaç duyduğu onay kapısının şeklidir.
 
-4. Favori istemciniz (Claude Desktop, Cursor, ChatGPT veya özel bir yığın) için yukarıdaki sağlayıcı sütunu tablosunu doldurarak dört adımlı döngüyü kağıda çizin. Aşama 13 · 06'daki MCP'ye özgü değişkenle çapraz referans.
+4. Dört adımlı döngüyü, favori istemciniz (Claude Desktop, Cursor, ChatGPT veya özel bir yığın) için yukarıdaki sağlayıcı sütunu tablosunu doldurarak kağıda çizin. Aşama 13 · 06'daki MCP'ye özgü değişkenle çapraz referans.
 
-5. OpenAI'nin işlev çağırma kılavuzunu yukarıdan aşağıya okuyun. İstekte yer alan ancak burada sunulan dört adımlı döngüde yer almayan tek alanı tanımlayın. Neler kattığını ve neden gerekli olmaktan ziyade kullanışlı olduğunu açıklayın.
+5. OpenAI'nin işlev çağırma kılavuzunu yukarıdan aşağıya okuyun. İstekte yer alan ancak burada sunulan dört adımlı döngüde yer almayan tek alanı tanımlayın. Neler kattığını ve neden gerekli olmaktan çok kullanışlı olduğunu açıklayın.
 
 ## Anahtar Terimler
 
@@ -146,7 +146,7 @@ Bu ders `outputs/skill-tool-interface-reviewer.md`'yi üretir. Bir taslak araç 
 ## Daha Fazla Okuma
 
 - [OpenAI — İşlev çağırma kılavuzu](https://platform.openai.com/docs/guides/function-calling) — OpenAI tarzı araç bildirimleri ve çağrı şekilleri için standart referans
-- [Anthropic — Araç kullanımına genel bakış](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview) — Claude'un `tool_use` / `tool_result` blok formatı
+- [Antropik — Araç kullanımına genel bakış](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview) — Claude'un `tool_use` / `tool_result` blok formatı
 - [Google — Gemini işlev çağrısı](https://ai.google.dev/gemini-api/docs/function-calling) — `functionDeclarations` ve Gemini'de paralel çağrı semantiği
-- [Model Context Protocol — Spesifikasyon 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25) — araç arayüzünün sağlayıcıdan bağımsız genellemesi
+- [Model Bağlam Protokolü — Spesifikasyon 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25) — araç arayüzünün sağlayıcıdan bağımsız genellemesi
 - [JSON Schema — 2020-12 sürüm notları](https://json-schema.org/draft/2020-12/release-notes) — her modern araç API'sinin konuştuğu şema lehçesi

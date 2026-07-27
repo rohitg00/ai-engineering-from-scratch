@@ -49,8 +49,8 @@ Fiyat korelasyon karmaşıklığıdır. Üç çağrı hatalı bir şekilde tamam
 ### Paralel etkinleştiriliyor
 
 - **OpenAI.** `parallel_tool_calls: true` varsayılan olarak açıktır. Seriyi zorlamak için `false`'yi ayarlayın.
-- **Anthropic.** `disable_parallel_tool_use: false` aracılığıyla paralel (Claude 3.5 ve üzeri sürümlerde varsayılan). Seri için `true`'yi ayarlayın.
-- **Gemini.** Her zaman paralel özellikli; `tool_config.function_calling_config.mode = "AUTO"` modelin karar vermesini sağlar.
+- **Antropik.** `disable_parallel_tool_use: false` aracılığıyla paralel (Claude 3.5 ve üzeri sürümlerde varsayılan). Seri için `true`'yi ayarlayın.
+- **İkizler.** Her zaman paralel özellikli; `tool_config.function_calling_config.mode = "AUTO"` modelin karar vermesini sağlar.
 
 Araçların sıralama bağımlılıkları olduğunda (`create_file` ardından `write_file`), bir çağrının çıkışı diğerinin girişini bilgilendirdiğinde veya hız sınırlayıcı yayılmayı yönetemediğinde paraleli devre dışı bırakın.
 
@@ -59,7 +59,7 @@ Araçların sıralama bağımlılıkları olduğunda (`create_file` ardından `w
 Modelin yaptığı her çağrının bir `id`'si vardır. Ana makinenin döndürdüğü her sonuç aynı kimliği içermelidir. Bu olmadan sonuçlar belirsizdir.
 
 - **OpenAI.** Her araç rolü mesajında `tool_call_id`.
-- **Anthropic.** Her `tool_result` bloğunda `tool_use_id`.
+- **Antropik.** Her `tool_result` bloğunda `tool_use_id`.
 - **Gemini.** Her `functionResponse`'de `id` (Gemini 3 ve üzeri; aynı adlı paralel aramalar için bozulan isme göre eşleşen Gemini 2).
 
 ### Aramaları aynı anda yürütme
@@ -75,7 +75,7 @@ Model yayınlandığında `arguments` parçalar halinde gelir. Üç paralel ça�
 Sağlayıcıya göre şekil:
 
 - **OpenAI.** Her parça `choices[0].delta.tool_calls[i].function.arguments`'dir (kısmi dize). Parça `index`'yi (çağrı listesindeki konum) taşır. Dizin başına biriktirirsiniz, ilk göründüğünde `id` okursunuz ve `finish_reason = "tool_calls"` olduğunda JSON'u ayrıştırırsınız.
-- **Anthropic.** Akış olayları `message_start`, ardından `tool_use` (kimlik, ad, boş giriş içeren) türüyle blok başına bir `content_block_start`'dir. `content_block_delta` olayları `input_json_delta` parçalarını taşır. `content_block_stop` her bloğu kapatır.
+- **Antropik.** Akış olayları `message_start`, ardından `tool_use` (kimlik, ad, boş giriş içeren) türüyle blok başına bir `content_block_start`'dir. `content_block_delta` olayları `input_json_delta` parçalarını taşır. `content_block_stop` her bloğu kapatır.
 - **Gemini.** `streamFunctionCallArguments` (Gemini 3 ve üstü), `functionCallId` ile parçalar yayar, böylece çağrılar temiz bir şekilde serpiştirilir. Gemini 3'ten önce akış, tek seferde tam bir çağrı döndürüyordu.
 
 ### Kısmi JSON ve erken ayrıştırma tuzağı
@@ -142,19 +142,19 @@ Bu ders `outputs/skill-parallel-call-safety-check.md`'yi üretir. Bir araç kayd
 |------|----------------|------------------------|
 | Paralel araç çağrıları | "Tek seferde yayma" | Model, tek bir asistan mesajında ​​birden fazla araç çağrısı yapıyor |
 | `parallel_tool_calls` | "OpenAI'nin bayrağı" | Çoklu çağrı emisyonunu etkinleştirme veya devre dışı bırakma |
-| `disable_parallel_tool_use` | "Anthropic'in tersi" | Devre dışı bırakma bayrağı; varsayılan olarak paralel etkindir |
+| `disable_parallel_tool_use` | "Antropik'in tersi" | Devre dışı bırakma bayrağı; varsayılan olarak paralel etkindir |
 | Araç çağrı kimliği | "Korelasyon tanıtıcısı" | Arama başına tanımlayıcı, sonuç mesajının yankılanması gerekir |
 | Akümülatör | "Akış arabelleği" | Kısmi `arguments` parçaları için kimlik başına dize arabelleği |
 | Sıra dışı tamamlama | "Önce en hızlı" | Paralel aramalar öngörülemeyen bir sırayla tamamlanır; kimlikler yapıştırıcıdır |
 | Bağımlılık grafiği | "Sıralama kısıtlamaları" | Çıktıları diğer araçların girdilerini besleyen araçlar; paralelleştirilemiyor |
 | Ayrıştırma-erken tuzak | "JSON.parse patladı" | Eksik bir `arguments` dizesi ayrıştırılmaya çalışılıyor |
-| `streamFunctionCallArguments` | "Gemini 3 özelliği" | Çağrı başına benzersiz kimliğe sahip akışlı argüman parçaları |
+| `streamFunctionCallArguments` | "İkizler 3 özelliği" | Çağrı başına benzersiz kimliğe sahip akışlı argüman parçaları |
 | Tamamlama emri yanıtı | "Hepsini beklemeyin" | Sonuçlar geldiğinde, kimliğe göre anahtarlanmış şekilde yanıtlayın |
 
 ## Daha Fazla Okuma
 
 - [OpenAI — Paralel işlev çağrısı](https://platform.openai.com/docs/guides/function-calling#parallel-function-calling) — varsayılan davranış ve devre dışı bırakma bayrağı
-- [Anthropic — Araç kullanımı: araç kullanımının uygulanması](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/implementing-tool-use) — `disable_parallel_tool_use` ve sonuç gruplama
+- [Antropik — Araç kullanımı: araç kullanımının uygulanması](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/implementing-tool-use) — `disable_parallel_tool_use` ve sonuç gruplama
 - [Google — Gemini işlevi paralel bölümü çağırıyor](https://ai.google.dev/gemini-api/docs/function-calling) — Gemini 3'ten kimlikle ilişkili paralel çağrılar
 - [OpenAI — Araçlarla akış yanıtları](https://platform.openai.com/docs/api-reference/responses-streaming) — OpenAI akışları için parçalanmış argümanların yeniden birleştirilmesi
-- [Anthropic — Mesaj akışı](https://docs.anthropic.com/en/api/messages-streaming) — `content_block_delta`, `input_json_delta` ile
+- [Antropik — Mesaj akışı](https://docs.anthropic.com/en/api/messages-streaming) — `content_block_delta`, `input_json_delta` ile

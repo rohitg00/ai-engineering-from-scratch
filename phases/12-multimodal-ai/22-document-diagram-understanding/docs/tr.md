@@ -1,6 +1,6 @@
 # Belge ve Diyagram Anlayışı
 
-> Belgeler fotoğraf değildir. Bir PDF, bilimsel makale, fatura veya el yazısı form, düz görsel anlayışın yakalayamayacağı düzen, tablolar, diyagramlar, dipnotlar, başlıklar ve anlamsal yapıya sahiptir. VLM öncesi yığın bir ardışık düzendi: Tesseract OCR + LayoutLMv3 + tablo çıkarma buluşsal yöntemi. VLM dalgası, bunu doğrudan yapılandırılmış işaretlemeyi yayan OCR içermeyen modellerle (Donut (2022), Nougat (2023), DocLLM (2023)) değiştirdi. 2026'ya gelindiğinde sınır yalnızca "sayfa görüntüsünü 2576 piksel native resolutionte Claude Opus 4.7'ye besliyor" ve yapılandırılmış işaretleme çıktısı ücretsiz olarak geliyor. Bu ders, belge yapay zekasının üç dönemlik seyrini ele alıyor.
+> Belgeler fotoğraf değildir. Bir PDF, bilimsel makale, fatura veya el yazısı form, düz görsel anlayışın yakalayamayacağı düzen, tablolar, diyagramlar, dipnotlar, başlıklar ve anlamsal yapıya sahiptir. VLM öncesi yığın bir ardışık düzendi: Tesseract OCR + LayoutLMv3 + tablo çıkarma buluşsal yöntemi. VLM dalgası, bunu doğrudan yapılandırılmış işaretlemeyi yayan OCR içermeyen modellerle (Donut (2022), Nougat (2023), DocLLM (2023)) değiştirdi. 2026'ya gelindiğinde sınır yalnızca "sayfa görüntüsünü 2576 piksel yerel çözünürlükte Claude Opus 4.7'ye besliyor" ve yapılandırılmış işaretleme çıktısı ücretsiz olarak geliyor. Bu ders, belge yapay zekasının üç dönemlik seyrini ele alıyor.
 
 **Tür:** Yapım
 **Diller:** Python (stdlib, düzene duyarlı belge ayrıştırıcı iskeleti)
@@ -34,7 +34,7 @@ Ham OCR metni atar ve geri kalanını kaybeder. Faturaları önemseyen bir siste
 Klasik yığın:
 
 1. PDF → sayfa başına resim.
-2. Tesseract (veya ticari OCR), kelime başına sınırlayıcı kutularla metni çıkarır.
+2. Tesseract (veya ticari OCR), kelime başına sınırlayıcı kutular içeren metni çıkarır.
 3. Düzen analizörü blokları tanımlar (başlık, tablo, paragraf).
 4. Tablo yapısı tanıyıcı tabloları ayrıştırır.
 5. Etki alanı kuralları + normal ifade çıkarma alanları.
@@ -66,9 +66,9 @@ Bunlar uzmandır, genelci değil. Bilimsel bir makaledeki çörek başarısız o
 
 Farklı bir parça. LayoutLMv3 (Huang ve diğerleri, arXiv:2204.08387) OCR'yi korur ancak düzen anlayışını ekler:
 
-- Üç giriş akışı: OCR metni tokens, her-token 2D sınırlayıcı kutu, görüntü yamaları.
+- Üç giriş akışı: OCR metni token'ler, token başına 2D sınırlayıcı kutular, görüntü yamaları.
 - Üç yöntemin tamamında maskelenmiş eğitim hedefi (maskeli metin, maskeli yamalar, maskeli düzen).
-- Downstream: sınıflandırma, varlık çıkarma, QA tablosu.
+- Aşağı akış: sınıflandırma, varlık çıkarma, QA tablosu.
 
 LayoutLMv3, OCR tabanlı belge anlayışının zirvesidir. Formlar ve faturalar konusunda güçlü. OCR yukarı akış gerektirir. Standartlaştırılmış belge benchmark'lerde en iyi VLM öncesi doğruluk.
 
@@ -100,7 +100,7 @@ OCR hatları hala şu konularda kazanıyor:
 
 ### Claude 4.7 / GPT-5 sınırı
 
-2576 piksellik yerel girişte, sınır VLM'leri insana yakın doğrulukla belge anlayışını gerçekleştirir. 2026 yılının başındaki benchmark sayıları:
+2576 piksellik yerel girişte, sınır VLM'leri insana yakın doğrulukla belge anlayışını gerçekleştirir. 2026 başlarındaki benchmark sayıları:
 
 - DocVQA: Claude 4.7 ~95.1, PaliGemma 2 ~88.4, Nougat ~77.3, ardışık düzen LayoutLMv3 ~83.
 - TabloQA: Claude 4.7 ~92.2, GPT-4V ~78.
@@ -131,13 +131,13 @@ Yeni bir belge yapay zeka projesi için:
 
 `code/main.py`:
 
-- Bir oyuncak düzenine duyarlı tokenizer: verilen (metin, bbox) çiftleri, LayoutLMv3 tarzı girdi üretir.
+- Oyuncak düzenine duyarlı bir tokenizer: verilen (metin, bbox) çiftleri, LayoutLMv3 tarzı girdi üretir.
 - Donut tarzı bir görev şeması oluşturucu: formlar için JSON şablonu.
-- OCR kanalı, Donut, Nougat ve VLM yerelinde sayfa başına token bütçenin karşılaştırması.
+- OCR kanalı, Donut, Nougat ve VLM yerelinde sayfa başına token bütçelerinin karşılaştırması.
 
 ## Gönderin
 
-Bu ders `outputs/skill-document-ai-stack-picker.md` üretir. Bir belge yapay zeka projesi (etki alanı, ölçek, kalite, düzenleyici) göz önüne alındığında, OCR işlem hattı, OCR içermeyen uzman ve VLM yerel arasında seçim yapar.
+Bu ders `outputs/skill-document-ai-stack-picker.md`'yi üretir. Bir belge yapay zeka projesi (etki alanı, ölçek, kalite, düzenleyici) göz önüne alındığında, OCR işlem hattı, OCR içermeyen uzman ve VLM yerel arasında seçim yapar.
 
 ## Egzersizler
 
@@ -157,8 +157,8 @@ Bu ders `outputs/skill-document-ai-stack-picker.md` üretir. Bir belge yapay zek
 |------|-----------------|------------------------|
 | OCR boru hattı | "Tesseract tarzı" | Aşama bazında yığın: algılama -> OCR -> düzen -> kurallar; deterministik, kırılgan |
 | OCR içermez | "Çörek tarzı" | Açık OCR'yi atlayan görüntüden çıktıya transformer; tek model |
-| Düzene duyarlı | "DüzenLM" | Giriş, her-token bbox koordinatını içerir; yöntemler arasında birleşik maskeleme |
-| VLM'de yerel | "Sınır VLM" | Sayfa görüntüsünü yüksek çözünürlükte doğrudan Claude/GPT/Qwen VLM'ye aktarın; boru hattı yok |
+| Düzene duyarlı | "DüzenLM" | Giriş, token bbox koordinatlarını içerir; yöntemler arasında birleşik maskeleme |
+| VLM-yerel | "Sınır VLM" | Sayfa görüntüsünü yüksek çözünürlükte doğrudan Claude/GPT/Qwen VLM'ye aktarın; boru hattı yok |
 | BelgeVQA | "Belge benchmark" | Belge MYK standardı; en çok alıntı yapılan puan |
 | İşaretleme çıktısı | "LaTeX / MD" | Serbest biçimli metin yerine yapılandırılmış çıktı biçimi; aşağı yönde otomasyona olanak sağlar |
 

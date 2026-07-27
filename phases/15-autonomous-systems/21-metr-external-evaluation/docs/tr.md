@@ -1,19 +1,19 @@
 # METR Zaman Ufukları ve Dış Yetenek Değerlendirmesi
 
-> METR (eski ARC Evals), Aralık 2023'ten bu yana bağımsız bir 501(c)(3)'tür. Zaman Ufku 1.1 benchmark (Ocak 2026), görev başarı olasılığına karşı log(uzman insan tamamlama süresi) için lojistik bir eğriye uyar; %50 olasılıkla kesişme, modelin zaman ufkunu tanımlar. 2025–2026 taahhüt seti GPT-5.1, GPT-5.1-Codex-Max ve prototip izleme değerlendirmelerini kapsar (bir monitör yan görevleri yakalayabilir mi; agent kaçabilir mi). Benchmark süitler: HCAST (180+ ML, siber, SWE, muhakeme görevleri; 1 dakika ila 8+ saat), RE-Bench (uzman temeline sahip 71 ML araştırma mühendisliği görevleri), SWAA. Dürüst not: METR ölçümleri idealleştirilmiştir - insan yoktur, gerçek sonuç yoktur - ve ekip, eval-vs-deployment davranış açığını belgelemiştir (Ders 1). Zaman ufku bir deployment tahmini değil, bir üst sınırdır.
+> METR (eski ARC Evals), Aralık 2023'ten bu yana bağımsız bir 501(c)(3)'tür. Time Horizon 1.1 benchmark (Ocak 2026), log (uzman insanın tamamlama süresi) karşısında görev başarı olasılığına göre lojistik bir eğriye uyar; %50 olasılıkla kesişme, modelin zaman ufkunu tanımlar. 2025–2026 taahhüt seti GPT-5.1, GPT-5.1-Codex-Max ve prototip izleme değerlendirmelerini kapsar (monitör yan görevleri yakalayabilir mi; agent kaçabilir mi). Benchmark paketleri: HCAST (180+ ML, siber, SWE, muhakeme görevleri; 1 dakika ila 8+ saat), RE-Bench (uzman temeline sahip 71 ML araştırma mühendisliği görevleri), SWAA. Dürüst not: METR ölçümleri idealleştirilmiştir - insan yoktur, gerçek sonuçlar yoktur - ve ekip, eval-vs-deployment davranış açığını belgelemiştir (Ders 1). Zaman ufku bir deployment tahmini değil, bir üst sınırdır.
 
 **Tür:** Öğren
 **Diller:** Python (stdlib, lojistik uygun ufuk tahmincisi)
-**Önkoşullar:** Aşama 15 · 01 (Uzun ufuk agent'lar), Aşama 15 · 19 (RSP)
+**Önkoşullar:** Aşama 15 · 01 (Uzun ufuk agent'ler), Aşama 15 · 19 (RSP)
 **Süre:** ~60 dakika
 
 ## Sorun
 
 Ölçeklendirme politikaları (Ders 19, 20) yalnızca referans aldıkları ölçümler kadar faydalıdır. "Yapay Zeka Ar-Ge-4 eşiği" ve "Uzun Menzilli Özerklik" politika metninde tanımlanmıştır; yalnızca belirli değerlendirmeler belirli rakamlar ürettiğinde eyleme dönüştürülebilir hale gelirler.
 
-METR, bu sayıların çoğunu tanımlayan 2024-2026 dış değerlendirme kuruluşudur. Sınır modellerini (çoğunlukla yayın öncesi, laboratuvarlarla NDA kapsamında) değerlendirirler ve daha sonra metodolojiyi yayınlarlar. Time Horizon 1.1 benchmark (Ocak 2026) onların başlığıdır artifact: yeteneği insan tarafından okunabilen bir birime sıkıştıran tek bir skaler ("bu model, bir uzmanın X saatini harcadığı türden bir görevi %50 güvenilirlikle yapabilir").
+METR, bu sayıların çoğunu tanımlayan 2024-2026 dış değerlendirme kuruluşudur. Sınır modellerini (çoğunlukla yayın öncesi, laboratuvarlarla NDA kapsamında) değerlendirirler ve daha sonra metodolojiyi yayınlarlar. Time Horizon 1.1 benchmark (Ocak 2026), onların başlığı artifact'dir: yeteneği insan tarafından okunabilen bir birime sıkıştıran tek bir skaler ("bu model, bir uzmanın X saatini %50 güvenilirlikle harcadığı türden bir görevi yapabilir").
 
-Ders kısmen metodolojiyle (ufkun nasıl hesaplandığı) ve kısmen de yorumla (ufkun neden bir deployment tahmini değil de bir üst sınır olduğu) ilgilidir. İki beceri birbirine aittir. Ufuk çizgisinin ne kadar uygun olduğunu anlayan bir takımı kötü bir satıcı iddiasıyla kandırmak, slaytta sadece "14 saat" gören bir takımı kandırmaktan çok daha zordur.
+Ders kısmen metodolojiyle (bir ufkun nasıl hesaplandığı) ve kısmen de yorumla (ufkun neden bir deployment tahmini değil de bir üst sınır olduğu) ilgilidir. İki beceri birbirine aittir. Ufuk çizgisinin ne kadar uygun olduğunu anlayan bir takımı kötü bir satıcı iddiasıyla kandırmak, slaytta sadece "14 saat" gören bir takımı kandırmaktan çok daha zordur.
 
 ## Konsept
 
@@ -40,11 +40,11 @@ Lojistik uyum şekli doğru olanıdır çünkü yetenek genellikle görev zorlu�
 Zaman Ufku 1.1 Başına:
 
 - Claude Opus 4.6: Time Horizon 1.1 (Ocak 2026) itibarıyla %50 güvenilirlikte ~14 saat.
-- HCAST tarzı görevlerde sürenin iki katına çıkarılması: Time Horizon 1.1 (Ocak 2026) tarafından bildirilen 2023 sonrası uyumda ~4,3 ay (130,8 gün); ~7 aylık rakam, Time Horizon 1.0'ın 2019-2025 uyumunun tamamıdır ve 2023 sonrası rakamla birlikte TH1.1 'da rapor edilmektedir.
+- HCAST tarzı görevlerde sürenin iki katına çıkarılması: Time Horizon 1.1 (Ocak 2026) tarafından bildirilen 2023 sonrası uyumda ~4,3 ay (130,8 gün); ~7 aylık rakam, Time Horizon 1.0'ın 2019-2025 uyumunun tamamıdır ve 2023 sonrası rakamla birlikte TH1.1'de rapor edilmektedir.
 
-Bunlar, Aşama 15 referanslarının geri kalanının belirli numaralarıdır. Bunlar, Anthropic'in RSP v3.0 (Ders 19) ve DeepMind'ın FSF v3'ünde (Ders 20) eşik değerlendirmelerini besleyen ölçümlerden biri olarak alıntılanmıştır.
+Bunlar, Aşama 15 referanslarının geri kalanının belirli numaralarıdır. Bunlar, Anthropic'in RSP v3.0 (Ders 19) ve DeepMind'ın FSF v3'ünde (Ders 20) eşik değerlendirmelerini besleyen ölçümlerden biri olarak belirtilmektedir.
 
-### Benchmark süit
+### Benchmark süitler
 
 - **HCAST**: Makine öğrenimi, siber güvenlik, yazılım mühendisliği ve genel muhakeme genelinde 189 görev. Süre: 1 dakikadan 8+ saate kadar uzman süresi. Ufuk numarasının arkasındaki ana süit.
 - **RE-Bench**: İnsan uzman temeline sahip 71 makine öğrenimi araştırma mühendisliği görevi. Modelin, AI Ar-Ge-4 eşiğini besleyen türde makine öğrenimi Ar-Ge çalışması yapıp yapamayacağını ölçer.
@@ -57,33 +57,33 @@ Bunlar, Aşama 15 referanslarının geri kalanının belirli numaralarıdır. Bu
 ### Ufuklar neden üst sınırlardır?
 
 - **İdealleştirilmiş araçlar**: benchmark görevleri, modele temiz araçlar ve iyi biçimlendirilmiş veriler sağlar. Gerçek deployment'ler daha karmaşıktır.
-- **Gerçek sonuçları yok**: Model asla bir müşteriye fatura kesmez, gerçek verileri silmez veya gerçek kişilerle iletişime geçmez. Gerçek deployment'ların geri dönüşü olmayan riskleri vardır.
-- **Değerlendirme bağlamlı oyun**: Ders 1. Modeller testlerde farklı davranır. 2026 Uluslararası Yapay Zeka Güvenlik Raporu bunu ampirik olarak belgeliyor.
-- **Meşru kullanıcı farklılığı yok**: benchmark prompt'lar yapılandırılmıştır. Gerçek kullanıcılar belirsiz, bağlama bağlı istekler üretir.
+- **Gerçek sonuçları yok**: Model asla bir müşteriye fatura kesmez, gerçek verileri silmez veya gerçek kişilerle iletişime geçmez. Gerçek deployment'lerin geri dönüşü olmayan riskleri vardır.
+- **Değerlendirme bağlamlı oyun**: Ders 1. Modeller testlerde farklı davranır. 2026 Uluslararası Yapay Zeka Güvenliği Raporu bunu ampirik olarak belgeliyor.
+- **Meşru kullanıcı farklılığı yok**: benchmark prompt'ler yapılandırılmıştır. Gerçek kullanıcılar belirsiz, bağlama bağlı istekler üretir.
 
 Ufuk, uygun koşullar altındaki yetenek tavanıdır. Deployment güvenilirliği farklı bir sayıdır, daha düşüktür ve bunu bilmek için ekiplerin kendi dağılımlarını ölçmesi gerekir.
 
 ### Dış değerlendirici vakası
 
-Dış değerlendirme önemlidir çünkü dahili laboratuvarların raporladıkları ölçümleri optimize etme teşvikleri vardır. METR'in bağımsızlığı (açıklanmış bir metodoloji ve hakemli belgelerle birlikte 501(c)(3)) yapısal hafifletmedir. Tek başına yeterli değildir (METR'nin gördüklerini hâlâ laboratuvarlar kontrol etmektedir), ancak hiçbir dış değerlendirme yapılmamasından kesinlikle daha iyidir.
+Dış değerlendirme önemlidir çünkü dahili laboratuvarların raporladıkları ölçümleri optimize etme teşvikleri vardır. METR'nin bağımsızlığı (açıklanmış bir metodoloji ve hakemli makalelerle birlikte 501(c)(3)) yapısal hafifletmedir. Tek başına yeterli değildir (METR'nin gördüklerini hala laboratuvarlar kontrol etmektedir), ancak hiçbir dış değerlendirme yapılmamasından kesinlikle daha iyidir.
 
 ### Ufuk sayıları pratikte nasıl kullanılır?
 
 - **Yetenek filtresi olarak**: Bir modelin ufku, önerilen görevin uzmanlık süresinin oldukça altındaysa, onu otonom olarak göndermeyin (Ders 1'in beceri dosyası).
 - **Bir trend göstergesi olarak**: iki katına çıkma süresi, yeni hafifletme önlemleri olmasa bile mevcut uygulamanın ne kadar süreyle güvenli kalacağını gösterir.
-- **Öncelikle**: 14 saatlik bir ufuk başlangıç ​​noktasıdır. Görev dağıtımınıza, takım kalitenize ve deployment bağlamınıza göre ayarlama yapın.
+- **Öncelikle**: 14 saatlik bir ufuk başlangıç noktasıdır. Görev dağıtımınıza, takımlama kalitenize ve deployment bağlamınıza göre ayarlama yapın.
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` , sentetik bir sonuç kümesi göz önüne alındığında, görev başarısı ile günlük (uzman süresi) arasında lojistik bir uyum uygular. %50 ufku (METR'nin manşeti), %10 ufku (muhafazakâr) ve %90 ufku (iyimser) rapor ediyor. Ayrıca değerlendirme bağlamlı oyunlarla başarı oranı yapay olarak artırıldığında nelerin değiştiğini de gösteriyor.
+`code/main.py`, sentetik bir sonuç kümesi göz önüne alındığında, görev başarısı ile günlük (uzman süresi) arasında lojistik bir uyum sağlar. %50 ufku (METR'nin manşeti), %10 ufku (muhafazakar) ve %90 ufku (iyimser) rapor ediyor. Ayrıca değerlendirme bağlamlı oyunlarla başarı oranı yapay olarak artırıldığında nelerin değiştiğini de gösteriyor.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-`outputs/skill-horizon-interpretation.md` , bir satıcının ufuk iddiasını inceler ve benchmark iddiası ile deployment gerçekliği arasında bir boşluk analizi üretir.
+`outputs/skill-horizon-interpretation.md`, bir tedarikçinin ufuk iddiasını inceler ve benchmark iddiası ile deployment gerçekliği arasında bir boşluk analizi üretir.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. Uyumun %50 ufkunun sentetik zemin gerçeğiyle eşleştiğini doğrulayın. Şimdi görev süresi ızgarasını yarıya indirin; Ufuk tahmini anlamlı bir şekilde değişiyor mu?
+1. `code/main.py`'yi çalıştırın. Uyumun %50 ufkunun sentetik zemin gerçeğiyle eşleştiğini doğrulayın. Şimdi görev süresi ızgarasını yarıya indirin; Ufuk tahmini anlamlı bir şekilde değişiyor mu?
 
 2. METR'in Time Horizon 1.1 blog yazısını okuyun. Güvenilirliğin en yüksek ve en düşük olduğu belirli görevleri belirleyin. Boşluğun neden var olduğunu açıklayın.
 
@@ -104,12 +104,12 @@ Dış değerlendirme önemlidir çünkü dahili laboratuvarların raporladıklar
 | SWAA | "Kısa görev paketi" | Ufuk eğrisinin alt ucunu kalibre eder |
 | İki katına çıkma süresi | "Büyüme oranı" | %50 ufkunun iki katına çıkma zamanı; ~HCAST başına 7 ay |
 | Değerlendirme bağlamlı oyun | "Model farklı davranıyor" | Testler ve deployment arasında belgelenmiş davranış farkı |
-| Üst sınır | "Ufuk bir tavandır" | Benchmark ufuk > yük altında deployment güvenilirlik |
+| Üst sınır | "Ufuk bir tavandır" | Benchmark ufuk > deployment yük altında güvenilirlik |
 
 ## Daha Fazla Okuma
 
-- [METR — Otonom Yapay Zeka Yeteneklerini Ölçmek için Kaynaklar](https://metr.org/measuring-autonomous-ai-capabilities/) — HCAST, RE-Bench, SWAA özellikleri.
+- [METR — Otonom Yapay Zeka Yeteneklerini Ölçmeye Yönelik Kaynaklar](https://metr.org/measuring-autonomous-ai-capabilities/) — HCAST, RE-Bench, SWAA özellikleri.
 - [METR — Yapay Zekanın Uzun Görevleri Tamamlama Yeteneğinin Ölçülmesi](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) — orijinal ufuk belgesi.
 - [METR — Time Horizon 1.1 (Ocak 2026)](https://metr.org/research/) — mevcut sayılar ve metodoloji.
 - [Epoch AI — METR Time Horizons benchmark](https://epoch.ai/benchmarks/metr-time-horizons) — canlı izleme.
-- [Antropik — Uygulamada agent özerkliğinin ölçülmesi](https://www.anthropic.com/research/measuring-agent-autonomy) — METR'nin ölçümlerine ilişkin dahili bakış açısı.
+- [Antropik — agent özerkliğinin pratikte ölçülmesi](https://www.anthropic.com/research/measuring-agent-autonomy) — METR ölçümlerine ilişkin dahili bakış açısı.

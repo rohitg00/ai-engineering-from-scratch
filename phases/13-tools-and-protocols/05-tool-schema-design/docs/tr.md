@@ -119,7 +119,7 @@ Açıklamalar modelin bağlamına birebir uyar. Kötü amaçlı bir sunucu gizli
 - **MCPToolBench++.** StableToolBench'i MCP sunucularını kapsayacak şekilde genişletir; keşif ve seçimi yakalar.
 - **SafeToolBench.** Rakip takım setleri (zehirli açıklamalar) altında güvenliği ölçer.
 
-Üçü de açık; Tam bir değerlendirme döngüsü, mütevazı bir GPU kurulumunda bir saatten kısa sürede çalışır. Bir tanesini CI'nıza ekleyin (değerlendirmeye dayalı geliştirme gelecekteki bir aşamada ele alınacaktır).
+Üçü de açık; Tam bir değerlendirme döngüsü, mütevazı bir GPU kurulumunda bir saatten kısa sürede çalışır. CI'nıza bir tane ekleyin (değerlendirmeye dayalı geliştirme gelecekteki bir aşamada ele alınacaktır).
 
 ## Kullan onu
 
@@ -152,7 +152,7 @@ Bu ders `outputs/skill-tool-schema-linter.md`'yi üretir. Herhangi bir araç kay
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| Araç şeması | "Giriş şekli" | Aracın bağımsız değişkenleri için JSON Schema |
+| Araç şeması | "Giriş şekli" | Aracın bağımsız değişkenleri için JSON Şeması |
 | Araç açıklaması | "Ne zaman kullanılmalı paragrafı" | Modelin seçim sırasında okuduğu doğal dildeki özet |
 | Atom aracı | "Tek araç, tek eylem" | Adı davranışını benzersiz şekilde tanımlayan bir araç |
 | Monolitik alet | "İsviçre Ordusu" | `action` dize bağımsız değişkenine sahip tek araç; seçim doğruluğu tankları |
@@ -168,5 +168,5 @@ Bu ders `outputs/skill-tool-schema-linter.md`'yi üretir. Herhangi bir araç kay
 - [Composio — AI agent'ler için araçlar nasıl oluşturulur: alan kılavuzu](https://composio.dev/blog/how-to-build-tools-for-ai-agents-a-field-guide) — adlandırma, açıklamalar ve ölçülen doğruluk artışları
 - [OneUptime — agent'ler için araç şemaları](https://oneuptime.com/blog/post/2026-01-30-tool-schemas/view) — üretimden parametre tasarım modelleri
 - [Databricks — Agent sistem tasarım modelleri](https://docs.databricks.com/aws/en/generative-ai/guide/agent-system-design-patterns) — ölçülebilir benchmark'lerle kayıt defteri düzeyinde tasarım
-- [Anthropic — Claude Agent SDK ile agent'ler oluşturma](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk) — Claude tabanlı agent'ler için açıklama modelleri
+- [Antropik — Claude Agent SDK ile agent'ler oluşturma](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk) — Claude tabanlı agent'ler için açıklama modelleri
 - [OpenAI — En iyi işlev çağırma uygulamaları](https://platform.openai.com/docs/guides/function-calling#best-practices) — açıklama uzunluğu, katı mod gereksinimleri, atomik araç kılavuzu

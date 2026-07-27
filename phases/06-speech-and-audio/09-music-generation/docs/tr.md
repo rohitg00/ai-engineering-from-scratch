@@ -1,6 +1,6 @@
 # Müzik Üretimi — MusicGen, Stable Audio, Suno ve Lisanslama Depremi
 
-> 2026 müzik nesli: Suno v5 ve Udio v4 reklamlara hakim; MusicGen, Stable Audio Open ve ACE-Step açık kaynak konusunda liderdir. Teknik sorun çoğunlukla çözüldü. Yasal sorun (Warner Music'e 500 milyon dolarlık anlaşma, UMG anlaşması) 2025-2026'da alanı yeniden şekillendirdi.
+> 2026 müzik nesli: Suno v5 ve Udio v4 reklamlara hakim; MusicGen, Stable Audio Open ve ACE-Step açık kaynakta liderdir. Teknik sorun çoğunlukla çözüldü. Yasal sorun (Warner Music'e 500 milyon dolarlık anlaşma, UMG anlaşması) 2025-2026'da alanı yeniden şekillendirdi.
 
 **Tür:** Yapım
 **Diller:** Python
@@ -12,16 +12,16 @@
 Metin → sözleri, vokalleri ve yapısını içeren 30 saniye ila 4 dakikalık bir müzik klibi. Üç alt problem:
 
 1. **Enstrümantal nesil.** "Ilık tuşlarla lo-fi hip-hop davulları" gibi metinler → ses. MusicGen, Sabit Ses, AudioLDM.
-2. **Şarkı üretimi (vokal + şarkı sözleri ile).** "Yağmurlu Teksas geceleri hakkında Country şarkısı" → tam ​​şarkı. Suno, Udio, YuE, ACE-Step.
+2. **Şarkı üretimi (vokal + şarkı sözleri ile).** "Yağmurlu Teksas geceleri hakkında Country şarkısı" → tam şarkı. Suno, Udio, YuE, ACE-Step.
 3. **Koşullu / kontrol edilebilir.** Mevcut bir klibi genişletin, bir köprüyü yeniden oluşturun, türü değiştirin, gövdeyi ayırın veya iç boyama yapın. Udio'nun iç boyama + gövde ayrımı, 2026'nın buna uygun özelliğidir.
 
 ## Konsept
 
-![Müzik üretimi: token-LM ve difüzyon, 2026 model haritası](../assets/music-generation.svg)
+![Müzik üretimi: token-LM ve yayılma, 2026 model haritası](../assets/music-generation.svg)
 
-### Token LM, sinir kodlayıcısı tokens üzerinden
+### Token LM, sinir kodlayıcı token'ler üzerinden
 
-Meta'nın **MusicGen** (2023, MIT) ve birçok türevi: metin/melodi embedding'ler üzerindeki koşul, EnCodec token'leri (32 kHz, 4 kod kitabı) otomatik regresif olarak tahmin eder, EnCodec ile kod çözer. 300M - 3.3B parametreleri. Güçlü temel; 30 saniye boyunca mücadele ediyor.
+Meta'nın **MusicGen** (2023, MIT) ve birçok türevi: metin/melodi embedding'lerdeki koşul, EnCodec token'leri (32 kHz, 4 kod kitabı) otomatik olarak tahmin eder, EnCodec ile kod çözer. 300M - 3.3B parametreleri. Güçlü temel; 30 saniye boyunca mücadele ediyor.
 
 **ACE-Step** (açık kaynak, Nisan 2026'da piyasaya sürülen 4B XL), bunu tam şarkılı şarkı sözü koşullandırmalı nesil için genişletiyor. Açık topluluğun Suno'ya en yakın olanı.
 
@@ -40,7 +40,7 @@ Kapalı ağırlıklar. Muhtemelen AR codec bileşeni LM + özel ses / davul / me
 - **FAD (Fréchet Audio Distance).** VGGish veya PANN özelliklerini kullanarak oluşturulan ve gerçek ses dağıtımı arasındaki Embedding düzeyindeki mesafe. Daha düşük olması daha iyidir. MusicGen küçük: MusicCaps'te 4,5 FAD; SOTA ~3.0.
 - **Müzikalite (öznel).** İnsan tercihi. Suno v5 ELO 1293 önde.
 - **Metin-ses hizalaması.** prompt ile çıktı arasındaki CLAP puanı.
-- **Müzikalite artifacts.** Vuruş dışı geçişler, vokal ifadelerde kayma, 30 saniyeden sonra yapı kaybı.
+- **Müzikalite artifact'ler.** Vuruş dışı geçişler, vokal ifadelerinde kayma, 30 saniyeden sonra yapı kaybı.
 
 ## 2026 model haritası
 
@@ -131,21 +131,21 @@ music = musicgen.generate([description], duration=30)
 
 ## 2026'da hâlâ gönderilecek tuzaklar
 
-- **Telif hakkı aklama prompt'lar.** "Taylor Swift tarzında şarkı" — ticari Suno/Udio artık bunları filtreliyor, açık modeller bu filtreyi kullanmıyor. Kendi filtre listenizi ekleyin.
+- **Telif hakkı aklama prompt'ler.** "Taylor Swift tarzında şarkı" — ticari Suno/Udio artık bunları filtreliyor, açık modeller bu filtreyi kullanmıyor. Kendi filtre listenizi ekleyin.
 - **30 saniyeyi aşan tekrarlama/sapma** AR modelleri döngüsü. Çoklu nesilleri çaprazlayın veya yapısal tutarlılık için ACE-Step'i kullanın.
-- **Tempo sapması.** Modeller BPM'den sapıyor. prompt içindeki BPM etiketlerini ve librosa'nın `beat_track` ile son filtresini kullanın.
+- **Tempo sapması.** Modeller BPM'den sapıyor. prompt'deki BPM etiketlerini kullanın ve librosa'nın `beat_track`'si ile son filtreyi kullanın.
 - **Vokal anlaşılırlığı.** Suno mükemmel; açık modeller genellikle kelimeler konusunda duygusaldır. Şarkı sözleri önemliyse ticari bir API kullanın veya ince ayar yapın.
 - **Mono çıkış.** Açık modeller mono veya sahte stereo oluşturur. Uygun bir stereo yeniden yapılandırmayla yükseltme (ezst, Cartesia'nın stereo difüzyonu).
 
 ## Gönderin
 
-`outputs/skill-music-designer.md` olarak kaydet. Bir müzik türü deployment için modeli, lisans stratejisini, uzunluk/yapı planını ve açıklama meta verilerini seçin.
+`outputs/skill-music-designer.md` olarak kaydedin. deployment müzik nesli için modeli, lisans stratejisini, uzunluk/yapı planını ve açıklama meta verilerini seçin.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py` komutunu çalıştırın. Bir müzik gen karikatürü olan ASCII sembolleri olarak "üretken" bir akor ilerlemesi + davul ritmi üretir. İsterseniz herhangi bir MIDI oluşturucu aracılığıyla oynatın.
-2. **Medium.** `audiocraft` yükleyin, MusicGen-small ile 4 tür prompt'de 10 saniyelik klipler oluşturun, FAD'yi bir referans tür setine göre ölçün.
-3. **Zor.** ACE-Step'i (veya MusicGen-melody) kullanarak, aynı melodinin farklı tını prompt'larla üç varyasyonunu oluşturun. Hizalamayı doğrulamak için CLAP'ın prompt ile benzerliğini hesaplayın.
+1. **Kolay.** `code/main.py`'yi çalıştırın. Bir müzik gen karikatürü olan ASCII sembolleri olarak "üretken" bir akor ilerlemesi + davul ritmi üretir. İsterseniz herhangi bir MIDI oluşturucu aracılığıyla oynatın.
+2. **Medium.** `audiocraft`'yi yükleyin, MusicGen-small ile 4 tür prompt'de 10 saniyelik klipler oluşturun, bir referans tür setine göre FAD'yi ölçün.
+3. **Zor.** ACE-Step'i (veya MusicGen-melodiyi) kullanarak, farklı tını prompt'lerle aynı melodinin üç varyasyonunu oluşturun. Hizalamayı doğrulamak için CLAP'ın prompt ile benzerliğini hesaplayın.
 
 ## Anahtar Terimler
 
@@ -161,8 +161,8 @@ music = musicgen.generate([description], duration=30)
 ## Daha Fazla Okuma
 
 - [Copet ve ark. (2023). MusicGen](https://arxiv.org/abs/2306.05284) — açık otoregresif benchmark.
-- [Evans ve ark. (2024). Sabit Ses Açık](https://arxiv.org/abs/2407.14358) — ses tasarımı varsayılanı.
-- [ACE-Step](https://github.com/ace-step/ACE-Step) — 4B tam şarkı oluşturucuyu aç, Nisan 2026.
-- [Suno v5 platform docs](https://suno.com) — ticari kalite lideri.
+- [Evans ve ark. (2024). Stabil Ses Açma](https://arxiv.org/abs/2407.14358) — ses tasarımı varsayılanı.
+- [ACE-Step](https://github.com/ace-step/ACE-Step) — açık 4B tam şarkı oluşturucu, Nisan 2026.
+- [Suno v5 platform belgeleri](https://suno.com) — ticari kalite lideri.
 - [AudioLDM2](https://arxiv.org/abs/2308.05734) — müzik + ses efektleri için gizli yayılma.
 - [WMG-Suno uzlaşma kapsamı](https://www.musicbusinessworldwide.com/suno-warner-music-settlement/) — Kasım 2025 emsali.

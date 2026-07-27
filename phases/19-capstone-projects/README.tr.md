@@ -1,5 +1,5 @@
 # Aşama 19: Bitirme Projeleri
 
-> Öğrendiğiniz her şeyi kanıtlayın. Portföy kalitesinde sistemler oluşturun.
+> Öğrendiğiniz her şeyi kanıtlayın. Portföy düzeyinde sistemler oluşturun.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

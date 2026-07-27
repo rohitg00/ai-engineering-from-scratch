@@ -1,6 +1,6 @@
-# Alt Kelime Tokenleştirme — BPE, WordPiece, Unigram, SentencePiece
+# Alt Kelime Tokenization — BPE, WordPiece, Unigram, SentencePiece
 
-> Kelime tokenizergörünmeyen kelimeler yüzünden boğuluyor. tokenizer karakterinin patlama dizisi uzunluğu. Alt kelime tokenizer'ler farkı bölüyor. Her modern LLM bir tane ile gönderilir.
+> Kelime tokenizer'ler görünmeyen kelimeler yüzünden boğuluyor. tokenizer karakteri dizi uzunluğunu artırır. Alt kelime tokenizer'ler farkı bölüyor. Her modern LLM bir tane ile gönderilir.
 
 **Tür:** Öğren
 **Diller:** Python
@@ -9,11 +9,11 @@
 
 ## Sorun
 
-Kelime dağarcığınızda 50.000 kelime var. Bir kullanıcı "untokenizable" yazar. tokenizer'niz `[UNK]` değerini döndürür. Modelin artık kelimeyle ilgili bir sinyali yok. Daha da kötüsü: Derleminizdeki yüzde 90'lık dilimdeki belgede 40 nadir kelime bulunur, bu da belge başına 40 bitlik bilginin atlandığı anlamına gelir.
+Kelime dağarcığınızda 50.000 kelime var. Bir kullanıcı "untokenizable" yazar. tokenizer'niz `[UNK]`'yi döndürür. Modelin artık kelimeyle ilgili bir sinyali yok. Daha da kötüsü: Derleminizdeki yüzde 90'lık dilimdeki belgede 40 nadir kelime bulunur, bu da belge başına 40 bitlik bilginin atlandığı anlamına gelir.
 
-Alt kelime token'leştirme bunu çözer. Yaygın kelimeler tek token'ler halinde kalır. Nadir kelimeler anlamlı parçalara ayrılıyor: `untokenizable` → `un`, `token`, `izable`. Eğitim verileri her şeyi kapsar çünkü herhangi bir dize sonuçta bir bayt dizisidir.
+Alt kelime tokenization bunu çözer. Ortak kelimeler tek token olarak kalır. Nadir kelimeler anlamlı parçalara ayrılıyor: `untokenizable` → `un`, `token`, `izable`. Eğitim verileri her şeyi kapsar çünkü herhangi bir dize sonuçta bir bayt dizisidir.
 
-2026'daki her sınır LLM, üç kitaplıktan (tiktoken, SentencePiece, HF Tokenizers) birine sarılmış üç algoritmadan (BPE, Unigram, WordPiece) biriyle gönderilir. Bir dil modelini seçmeden gönderemezsiniz.
+2026'daki her sınır LLM, üç kütüphaneden (tiktoken, SentencePiece, HF Tokenizers) birine sarılmış üç algoritmadan (BPE, Unigram, WordPiece) birinde gönderilir. Bir dil modelini seçmeden gönderemezsiniz.
 
 ## Konsept
 
@@ -21,17 +21,17 @@ Alt kelime token'leştirme bunu çözer. Yaygın kelimeler tek token'ler halinde
 
 **BPE (Bayt Çifti Kodlama).** Karakter düzeyinde bir kelime dağarcığıyla başlayın. Her bitişik çifti sayın. En sık görülen çifti yeni bir token ile birleştirin. Hedef sözcük boyutuna ulaşana kadar tekrarlayın. Baskın algoritma: GPT-2/3/4, Llama, Gemma, Qwen2, Mistral.
 
-**Bayt düzeyinde BPE.** Aynı algoritma ancak Unicode karakterler yerine ham baytlar (256 temel tokens) üzerinden. Sıfır `[UNK]` token saniyeyi garanti eder - herhangi bir bayt dizisi kodlaması. GPT-2 50.257 tokens (256 bayt + 50.000 birleştirme + 1 özel) kullanır.
+**Bayt düzeyinde BPE.** Aynı algoritma ancak Unicode karakterler yerine ham baytlar (256 temel token) üzerinden. Sıfır `[UNK]` token'yi garanti eder — herhangi bir bayt dizisi kodlaması. GPT-2, 50.257 token (256 bayt + 50.000 birleştirme + 1 özel) kullanır.
 
-**Unigram.** Geniş bir kelime dağarcığıyla başlayın. Her token'ye bir unigram olasılığı atayın. Kaldırılması derlem günlüğü olasılığını en az artıran token'leri yinelemeli olarak budayın. inference'da olasılıksal: tokenlaştırmaları örnekleyebilir (alt kelime düzenleme yoluyla veri artırma için kullanışlıdır). T5, mBART, ALBERT, XLNet, Gemma tarafından kullanılır.
+**Unigram.** Geniş bir kelime dağarcığıyla başlayın. Her token'ye bir unigram olasılık atayın. Kaldırılması derlem günlüğü olasılığını en az artıran token'leri yinelemeli olarak budayın. inference'de olasılıksal: tokenizasyonları örnekleyebilir (alt kelime düzenleme yoluyla veri artırma için kullanışlıdır). T5, mBART, ALBERT, XLNet, Gemma tarafından kullanılır.
 
 **WordPiece.** Ham sıklıktan ziyade eğitim derleminin olasılığını en üst düzeye çıkaran çiftleri birleştirin. BERT, DistilBERT, ELECTRA tarafından kullanılır.
 
-**SentencePiece ve tiktoken.** SentencePiece, sözcük dağarcığını (BPE veya Unigram) doğrudan ham Unicode metin üzerinde *eğiten*, boşlukları `▁` olarak kodlayan kitaplıktır. tiktoken, önceden oluşturulmuş sözcüklere karşı OpenAI'nin hızlı *kodlayıcısıdır*; antrenman yapmıyor.
+**SentencePiece ve tiktoken.** SentencePiece, boşlukları `▁` olarak kodlayarak doğrudan ham Unicode metin üzerinde sözcük dağarcığını (BPE veya Unigram) *eğiten* bir kitaplıktır. tiktoken, önceden oluşturulmuş sözcüklere karşı OpenAI'nin hızlı *kodlayıcısıdır*; antrenman yapmıyor.
 
 Temel kural:
 
-- **Yeni bir kelime dağarcığı eğitimi:** Cümle Parçası (çok dilli, öntokenoluşturma yok) veya HF Tokenizer'ler.
+- **Yeni bir kelime dağarcığı eğitimi:** Cümle Parçası (çok dilli, token öncesi yok) veya HF Tokenizer'ler.
 - **GPT kelime hazinesine karşı hızlı inference:** tiktoken (cl100k_base, o200k_base).
 - **Her ikisi de:** HF Tokenizer'ler — bir kitaplık, eğitim + hizmet.
 
@@ -100,9 +100,9 @@ print(sp.encode("untokenizable", out_type=str))
 # ['▁un', 'token', 'izable']
 ```
 
-Uyarı: ön-tokenleştirmeye gerek yoktur, `▁` olarak kodlanan alan, `character_coverage`, `<unk>` ile eşlenene karşı agresif nadir karakterlerin nasıl korunduğunu kontrol eder.
+Uyarı: önceden tokenleştirme gerekmez, `▁`, `character_coverage` olarak kodlanan alan, `<unk>` ile eşlenene karşı agresif derecede nadir karakterlerin nasıl korunduğunu kontrol eder.
 
-### Adım 4: OpenAI uyumlu kelimeler için tiktoken
+### Adım 4: OpenAI uyumlu sözcükler için tiktoken
 
 ```python
 import tiktoken
@@ -111,14 +111,14 @@ print(enc.encode("untokenizable"))        # [127340, 101028]
 print(len(enc.encode("Hello, world!")))   # 4
 ```
 
-Yalnızca kodlama. Hızlı (Rust arka ucu). Bayt sayma, maliyet tahmini, bağlam penceresi bütçeleme için GPT-4/5 tokenleştirmeyle tam eşleşme.
+Yalnızca kodlama. Hızlı (Rust arka ucu). Bayt sayma, maliyet tahmini, bağlam penceresi bütçeleme için GPT-4/5 tokenization ile tam eşleşme.
 
 ## 2026'da hâlâ gönderilecek tuzaklar
 
-- **Tokenizer sürüklenme.** A sözcüğü üzerinde eğitim, B sözcüğüne göre konuşlandırma. Token kimlikleri farklıdır; model çöp çıktısı veriyor. CI'daki `tokenizer.json` karma değerini kontrol edin.
-- **Boşluk belirsizliği.** BPE "merhaba" ve "merhaba" farklı token'lar üretir. Her zaman `add_special_tokens` ve `add_prefix_space`'yi açıkça belirtin.
-- **Çok dilli yetersiz eğitim.** İngilizce ağırlıklı derlem, Latince olmayan alfabeleri 5-10 kat daha fazla token'ye bölen kelime dağarcığı üretir. Aynı prompt, GPT-3.5'te Japonca/Arapça'da 5-10 kat daha pahalıdır. o200k_base bunu kısmen düzeltti.
-- **Emoji bölünür.** Tek bir emoji 5 token saniye sürebilir. Bütçeleme bağlamı sırasında kontrol noktası emojisinin kullanımı.
+- **Tokenizer drift.** Kelime A üzerinde eğitim, B kelimesine karşı uygulama. Token kimlikleri farklıdır; model çöp çıktısı veriyor. CI'daki `tokenizer.json` karma değerini kontrol edin.
+- **Boşluk belirsizliği.** BPE "merhaba" ve "merhaba" farklı token'ler üretir. Her zaman `add_special_tokens` ve `add_prefix_space`'yi açıkça belirtin.
+- **Çok dilli yetersiz eğitim.** İngilizce ağırlıklı derlem, Latince olmayan alfabeleri 5-10 kat daha fazla token'ye bölen kelime dağarcığı üretir. Aynı prompt, GPT-3.5'te Japonca/Arapça olarak 5-10 kat daha pahalıdır. o200k_base bunu kısmen düzeltti.
+- **Emoji bölünür.** Tek bir emoji 5 token alabilir. Bütçeleme bağlamı sırasında kontrol noktası emojisinin kullanımı.
 
 ## Kullan onu
 
@@ -126,11 +126,11 @@ Yalnızca kodlama. Hızlı (Rust arka ucu). Bayt sayma, maliyet tahmini, bağlam
 
 | Durum | Seç |
 |-----------|------|
-| Tek dilli bir modeli sıfırdan eğitmek | HF Tokenizer'lar (BPE) |
+| Tek dilli bir modeli sıfırdan eğitmek | HF Tokenizer'ler (BPE) |
 | Çok dilli bir modeli eğitmek | Cümle Parçası (Unigram, `character_coverage=0.9995`) |
-| OpenAI uyumlu bir API sunma | tiktoken (GPT-4+ için`o200k_base`) |
+| OpenAI uyumlu bir API sunma | tiktoken (GPT-4+ için `o200k_base`) |
 | Alana özgü kelime bilgisi (kod, matematik, protein) | Alan adı külliyatında özel BPE'yi eğitin, temel kelime dağarcığıyla birleştirin |
-| Kenar inference, küçük model | Unigram (daha küçük kelimeler daha iyi çalışır) |
+| Edge inference, küçük model | Unigram (daha küçük kelimeler daha iyi çalışır) |
 
 Kelime dağarcığı büyüklüğü bir ölçeklendirme kararıdır, sabit değil. Kaba buluşsal yöntem: <1B parametreleri için 32k, 1-10B için 50-100k, çok dilli/sınır için 200k+.
 
@@ -162,7 +162,7 @@ Refuse to train a character-coverage <0.995 tokenizer on corpora with rare-scrip
 ## Egzersizler
 
 1. **Kolay.** `code/main.py`'nin küçük külliyatı üzerinde 500 birleştirmeli bir BPE eğitin. Uzatılan üç kelimeyi kodlayın. Kaç tanesi tam olarak 1 token ve >1 token üretti?
-2. **Medium.** token sayımını, `cl100k_base`, `o200k_base` ile vocab=32k ile eğittiğiniz bir SentencePiece BPE arasındaki 100 İngilizce Wikipedia cümlesini karşılaştırın. Her birinin sıkıştırma oranını bildirin.
+2. **Orta.** token sayılarını `cl100k_base`, `o200k_base` ve vocab=32k ile eğittiğiniz bir SentencePiece BPE arasındaki 100 İngilizce Wikipedia cümlesini karşılaştırın. Her birinin sıkıştırma oranını bildirin.
 3. **Zor.** Aynı korpusu BPE, Unigram ve WordPiece ile eğitin. Her birini küçük bir duyarlılık sınıflandırıcısında kullanırken aşağı akış doğruluğunu ölçün. Seçim ibreyi 1 puan F1'den fazla hareket ettiriyor mu?
 
 ## Anahtar Terimler
@@ -174,13 +174,13 @@ Refuse to train a character-coverage <0.995 tokenizer on corpora with rare-scrip
 | Ünigram | Olasılıksal tokenizer | Log-olabilirlik kullanılarak büyük bir aday kümesinden elde edilen kuru erikler; T5, Gemma tarafından kullanılıyor. |
 | Cümle Parçası | Boşluk olan | BPE/Unigram'ı ham metin konusunda eğiten kütüphane; `▁` olarak kodlanmış alan. |
 | tiktoken | Hızlı olan | Önceden oluşturulmuş sözcükler için OpenAI'nin Rust destekli BPE kodlayıcısı. Eğitim yok. |
-| Listeyi birleştir | Sihirli sayılar | `(a, b) → ab` birleştirmelerin sıralı listesi; inference sırasıyla uygulanır. |
-| Karakter kapsamı | Ne kadar nadir çok nadir? | Eğitim derlemindeki tokenizer'nin kapsaması gereken karakter kesri; ~0,9995 tipik. |
+| Listeyi birleştir | Sihirli sayılar | `(a, b) → ab` birleştirmelerinin sıralı listesi; inference sırayla uygulanır. |
+| Karakter kapsamı | Ne kadar nadir çok nadir? | tokenizer'nin eğitim külliyatındaki karakterlerin kapsaması gereken kısmı; ~0,9995 tipik. |
 
 ## Daha Fazla Okuma
 
 - [Sennrich, Haddow, Birch (2015). Alt Kelime Birimleriyle Nadir Kelimelerin Nöral Makine Çevirisi](https://arxiv.org/abs/1508.07909) — BPE makalesi.
 -[Kudo (2018). Unigram Dil Modeli ile Alt Kelime Düzenlemesi](https://arxiv.org/abs/1804.10959) — Unigram makalesi.
 - [Kudo, Richardson (2018). SentencePiece: Basit ve dilden bağımsız bir alt kelime tokenizer](https://arxiv.org/abs/1808.06226) — kitaplık.
-- [Sarılma Yüzü — tokenizer'ların özeti](https://huggingface.co/docs/transformers/tokenizer_summary) — kısa referans.
+- [Sarılma Yüzü — tokenizer'lerin Özeti](https://huggingface.co/docs/transformers/tokenizer_summary) — kısa referans.
 - [OpenAI tiktoken repo](https://github.com/openai/tiktoken) — yemek kitabı + kodlama listesi.

@@ -1,4 +1,4 @@
-# Few-shot, Düşünce Zinciri, Düşünce Ağacı
+# Birkaç Atış, Düşünce Zinciri, Düşünce Ağacı
 
 > Bir modele ne yapması gerektiğini söylemek prompting'dir. Ona nasıl düşüneceğini göstermek mühendisliktir. Aynı modelde, aynı görevde, aynı verilerde %78 ile %91 doğruluk arasındaki fark daha iyi bir model değildir. Daha iyi bir akıl yürütme stratejisidir.
 
@@ -9,28 +9,28 @@
 
 ## Öğrenme Hedefleri
 
-- Görev doğruluğunu en üst düzeye çıkaran örnek gösterimleri seçip biçimlendirerek few-shotli prompting uygulayın
+- Görev doğruluğunu en üst düzeye çıkaran örnek gösterimleri seçip biçimlendirerek birkaç çekimlik prompting'i uygulayın
 - Matematik sözlü problemleri gibi çok adımlı problemlerde doğruluğu artırmak için düşünce zinciri (CoT) akıl yürütmesini uygulayın
-- Birden fazla akıl yürütme yolunu araştıran ve en iyi olanı seçen bir düşünce ağacı prompt oluşturun
-- Standart bir benchmark üzerinde zero-shota karşı few-shota karşı CoT'ye göre doğruluk artışını ölçün
+- Birden fazla akıl yürütme yolunu araştıran ve en iyi olanı seçen bir prompt düşünce ağacı oluşturun
+- Standart bir benchmark üzerinde sıfır atış, birkaç atış ve CoT'den doğruluk artışını ölçün
 
 ## Sorun
 
-Bir matematik dersi uygulaması geliştiriyorsunuz. prompt'ın şöyle diyor: "Bu kelime problemini çöz." GPT-5, standart ilkokul matematiği benchmark olan GSM8K'da %94 oranında doğru sonuç verir. Zaten zirveye ulaştığınızı düşünüyorsunuz. Yapmıyorsunuz - düşünce zinciri hala 3-4 puan ekliyor.
+Bir matematik dersi uygulaması geliştiriyorsunuz. prompt'niz şöyle diyor: "Bu kelime problemini çözün." GPT-5, standart ilkokul matematiği benchmark olan GSM8K'da %94 oranında doğru sonuç veriyor. Zaten zirveye ulaştığınızı düşünüyorsunuz. Yapmıyorsunuz - düşünce zinciri hala 3-4 puan ekliyor.
 
 Beş kelime ekleyin - "Adım adım düşünelim" - ve doğruluk %91'e çıkar. Birkaç çalışılmış örnek ekleyin ve %95'e ulaşır. Aynı model. Aynı sıcaklık. Aynı API maliyeti. Tek fark modele karalama kağıdı vermiş olmanızdır.
 
-Bu bir hack değil. Akıl yürütme böyle çalışır. İnsanlar çok adımlı problemleri tek bir zihinsel sıçramayla çözemezler. transformer'lar da öyle. Bir modeli ara token'ler oluşturmaya zorladığınızda, bu token'ler sonraki token'nin bağlamının parçası haline gelir. Her akıl yürütme adımı bir sonrakini besler. Model kelimenin tam anlamıyla cevaba giden yolu hesaplıyor.
+Bu bir hack değil. Akıl yürütme böyle çalışır. İnsanlar çok adımlı problemleri tek bir zihinsel sıçramayla çözemezler. transformer'ler de öyle. Bir modeli ara token'ler oluşturmaya zorladığınızda, bu token'ler bir sonraki token'nin bağlamının parçası haline gelir. Her akıl yürütme adımı bir sonrakini besler. Model kelimenin tam anlamıyla cevaba giden yolu hesaplıyor.
 
-Ancak "adım adım düşünün" son değil başlangıçtır. Peki ya beş muhakeme yolunu örneklediyseniz ve çoğunluk oyu alsanız? Modelin olasılıklar ağacını keşfetmesine, dalları değerlendirmesine ve budamasına izin verirseniz ne olur? Mantık yürütmeyi araç kullanımıyla birleştirirseniz ne olur? Bunlar varsayım değil. Bunlar, ölçülen iyileştirmelerle birlikte yayınlanmış tekniklerdir ve bu derste bunların hepsini oluşturacaksınız.
+Ancak "adım adım düşünün" son değil başlangıçtır. Beş muhakeme yolunu örnekleyip çoğunluk oyu alsanız ne olur? Modelin olasılıklar ağacını keşfetmesine, dalları değerlendirmesine ve budamasına izin verirseniz ne olur? Mantık yürütmeyi araç kullanımıyla birleştirirseniz ne olur? Bunlar varsayım değil. Bunlar, ölçülen iyileştirmelerle birlikte yayınlanmış tekniklerdir ve bu derste bunların hepsini oluşturacaksınız.
 
 ## Konsept
 
-### Zero-shot ve Few-shot: Örnekler Talimatları Geçtiğinde
+### Sıfır Atış ve Az Atış: Örnekler Talimatları Geçtiğinde
 
-Zero-shotlı prompting, modele bir görev verir, başka bir şey vermez. Az çekimli promptöncelikle örnekler veriyor.
+Sıfır atışlı prompting, modele bir görev verir, başka bir şey vermez. Birkaç çekimli prompting öncelikle bunun örneklerini veriyor.
 
-Wei ve diğerleri. (2022) bunu 8 benchmarks boyunca ölçtü. Duygu sınıflandırması gibi basit görevler için zero-shot ve few-shot birbirinin %2'si dahilinde gerçekleştirilir. Çok adımlı aritmetik ve sembolik akıl yürütme gibi karmaşık görevlerde, few-shot doğruluğu %10-25 oranında artırdı.
+Wei ve diğerleri. (2022) bunu 8 benchmark'de ölçtü. Duygu sınıflandırması gibi basit görevler için sıfır atış ve birkaç atış birbirinin %2'si dahilinde gerçekleştirilir. Çok adımlı aritmetik ve sembolik akıl yürütme gibi karmaşık görevlerde, birkaç vuruş doğruluğu %10-25 oranında artırdı.
 
 Sezgi: örnekler sıkıştırılmış talimatlardır. Çıktı formatını tanımlamak yerine onu gösterirsiniz. Akıl yürütme sürecini açıklamak yerine, onu gösterirsiniz. Model modeli, soyut talimatları yorumlamaktan ziyade örneklerle daha güvenilir bir şekilde eşleşir.
 
@@ -48,9 +48,9 @@ graph TD
     style F fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-**few-shot kazandığında:** formata duyarlı görevler, sınıflandırma, yapılandırılmış çıkarma, alana özgü jargon, modelin belirli bir kalıpla eşleşmesi gereken herhangi bir görev.
+**Birkaç atış kazandığında:** formata duyarlı görevler, sınıflandırma, yapılandırılmış çıkarma, alana özgü jargon, modelin belirli bir kalıpla eşleşmesi gereken herhangi bir görev.
 
-**Zero-shot kazandığında:** basit gerçeklere dayalı sorular, örneklerin yaratıcılığı sınırladığı yaratıcı görevler, iyi örnekler bulmanın iyi talimatlar yazmaktan daha zor olduğu görevler.
+**Sıfır atış kazandığında:** basit gerçeklere dayalı sorular, örneklerin yaratıcılığı sınırladığı yaratıcı görevler, iyi örnekler bulmanın iyi talimatlar yazmaktan daha zor olduğu görevler.
 
 ### Örnek Seçim: Benzer Vuruşlar Rastgele
 
@@ -60,7 +60,7 @@ Tüm örnekler eşit değildir. Hedef girdiye benzer örneklerin seçilmesi, sı
 2. **Etiket çeşitliliği**: örneklerinizdeki tüm çıktı kategorilerini kapsar
 3. **Zorluk eşleştirme**: hedef problemin karmaşıklık düzeyini eşleştirin
 
-Çoğu görev için en uygun örnek sayısı 3-5'tir. 3'ün altında model, modeli çıkarmak için yeterli sinyale sahip değildir. 5'in üzerinde, azalan getirilere ulaşırsınız ve context window tokens'yi boşa harcarsınız. Çok sayıda etiket içeren sınıflandırma için etiket başına bir örnek kullanın.
+Çoğu görev için en uygun örnek sayısı 3-5'tir. 3'ün altında model, modeli çıkarmak için yeterli sinyale sahip değildir. 5'in üzerinde, azalan getirilere ulaşırsınız ve context window token'leri boşa harcarsınız. Çok sayıda etiket içeren sınıflandırma için etiket başına bir örnek kullanın.
 
 ### Düşünce Zinciri: Modellere Karalama Kağıdı Vermek
 
@@ -83,11 +83,11 @@ graph LR
     style A2 fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-Bu neden mekanik olarak çalışıyor? Bir transformer'nin ürettiği her token, sonraki token için bağlam haline gelir. CoT olmadan modelin tüm akıl yürütmeyi tek bir ileri geçişin gizli durumuna sıkıştırması gerekir. CoT ile model, ara hesaplamaları tokens olarak dışsallaştırır. Her bir akıl yürütme token etkin hesaplama derinliğini genişletir.
+Bu neden mekanik olarak çalışıyor? Bir transformer'nin ürettiği her token, bir sonraki token için bağlam haline gelir. CoT olmadan modelin tüm akıl yürütmeyi tek bir ileri geçişin gizli durumuna sıkıştırması gerekir. CoT ile model, ara hesaplamaları token'ler olarak dışsallaştırır. token'nin her muhakemesi etkili hesaplama derinliğini genişletir.
 
 **GSM8K benchmark'ler (ilkokul matematik, 8,5K problemleri):**
 
-| Modeli | Zero-shot | Zero-shotlı CoT | Few-shotlı CoT |
+| Modeli | Sıfır Atış | Sıfır Atışlı CoT | Birkaç Atışlı CoT |
 |-------|-----------|---------------|--------------|
 | GPT-4o | %78 | %91 | %95 |
 | GPT-5 | %94 | %97 | %98 |
@@ -101,11 +101,11 @@ Bu neden mekanik olarak çalışıyor? Bir transformer'nin ürettiği her token,
 
 CoT'nin iki çeşidi:
 
-**Zero-shotlı CoT**: prompt'ya "Adım adım düşünelim" ifadesini ekleyin. Örneklere gerek yok. Kojima ve ark. (2022), bu tek cümlenin aritmetik, sağduyu ve sembolik akıl yürütme görevlerinde doğruluğu artırdığını gösterdi.
+**Sıfır atışlı CoT**: prompt'ye "Adım adım düşünelim" ifadesini ekleyin. Örneklere gerek yok. Kojima ve ark. (2022), bu tek cümlenin aritmetik, sağduyu ve sembolik akıl yürütme görevlerinde doğruluğu artırdığını gösterdi.
 
-**few-shotlı CoT**: muhakeme adımlarını içeren örnekler verin. Zero-shotlı CoT'den daha etkilidir çünkü model tam olarak beklediğiniz muhakeme formatını görür.
+**Az atışlı CoT**: muhakeme adımlarını içeren örnekler verin. Sıfır atışlı CoT'den daha etkilidir çünkü model tam olarak beklediğiniz muhakeme formatını görür.
 
-**CoT acıttığında**: basit olgusal hatırlama ("Fransa'nın başkenti nedir?"), tek adımlı sınıflandırma, hızın doğruluktan daha önemli olduğu görevler. CoT, sorgu başına 50-200 tokens'lik muhakeme yükü ekler. Yüksek verimli, düşük karmaşıklığa sahip görevler için bu, boşa harcanan maliyettir.
+**CoT acıttığında**: basit olgusal hatırlama ("Fransa'nın başkenti nedir?"), tek adımlı sınıflandırma, hızın doğruluktan daha önemli olduğu görevler. CoT, sorgu başına 50-200 token akıl yürütme yükü ekler. Yüksek verimli, düşük karmaşıklığa sahip görevler için bu, boşa harcanan maliyettir.
 
 ### Tutarlılık: Birçok Örnek Alın, Bir Kez Oy Verin
 
@@ -185,11 +185,11 @@ graph TD
 
 ToT'nin üç bileşeni vardır:
 
-1. **Düşünce üretme**: birden fazla adayın sonraki adımlarını üretin
+1. **Düşünce üretme**: birden fazla aday sonraki adım üretmek
 2. **Devlet değerlendirmesi**: her adaya puan verin (LLM'nin kendisini değerlendirici olarak kullanabilir)
 3. **Arama algoritması**: Ağaç boyunca BFS veya DFS, düşük puan alan dalları budayarak
 
-24'lü Oyun görevinde (24 yapmak için aritmetik kullanarak 4 sayıyı birleştirin), GPT-4 standart prompting ile sorunların %7,3'ünü çözer. CoT ile %4,0 (CoT aslında burada acı veriyor çünkü arama alanı geniş). ToT ile %74.
+24 Oyunu görevinde (24 yapmak için aritmetik kullanarak 4 sayıyı birleştirin), standart prompting ile GPT-4 sorunların %7,3'ünü çözer. CoT ile %4,0 (CoT aslında burada acı veriyor çünkü arama alanı geniş). ToT ile %74.
 
 ToT pahalıdır. Ağaçtaki her düğüm bir LLM çağrısı gerektirir. Dallanma faktörü 3 ve derinliği 3 olan bir ağaç, 39'a kadar LLM çağrısı gerektirir. Bunu yalnızca arama alanının geniş ancak değerlendirilebilir olduğu problemler için kullanın - planlama, bulmaca çözme, kısıtlamalarla yaratıcı problem çözme.
 
@@ -222,13 +222,13 @@ graph LR
     style F fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-ReAct, bilgi yoğun görevlerde saf CoT'den daha iyi performans gösterir çünkü mantığını gerçek verilere dayandırabilir. HotpotQA'da (çoklu atlamalı soru yanıtlama), GPT-4 ile ReAct %35,1 tam eşleşme elde ederken yalnızca CoT için %29,4 elde etti. Gerçek güç, akıl yürütme hatalarının gözlemlerle düzeltilmesidir; model, yürütmenin ortasında planını güncelleyebilir.
+ReAct, bilgi yoğun görevlerde saf CoT'den daha iyi performans gösterir çünkü mantığını gerçek verilere dayandırabilir. HotpotQA'da (çoklu atlamalı soru yanıtlama), GPT-4 ile ReAct %35,1 tam eşleşme elde ederken, yalnızca CoT için bu oran %29,4'tür. Gerçek güç, akıl yürütme hatalarının gözlemlerle düzeltilmesidir; model, yürütmenin ortasında planını güncelleyebilir.
 
-ReAct, modern yapay zeka agent'ların temelidir. Her agent framework (LangChain, CrewAI, AutoGen), Düşünce-Eylem-Gözlem döngüsünün bir çeşidini uygular. 14. Aşamada tam agent'lar oluşturacaksınız. Bu ders, prompting modelini kapsar.
+ReAct, modern AI agent'lerin temelidir. Her agent framework (LangChain, CrewAI, AutoGen), Düşünce-Eylem-Gözlem döngüsünün bazı varyantlarını uygular. 14. Aşamada tam agent'ler oluşturacaksınız. Bu ders prompting modelini kapsar.
 
 ### Yapılandırılmış Prompting: XML Etiketleri, Sınırlayıcılar, Başlıklar
 
-prompt'lar karmaşıklaştıkça yapı, modelin bölümleri karıştırmasını engeller. Üç yaklaşım:
+prompt'ler karmaşıklaştıkça yapı, modelin bölümleri karıştırmasını önler. Üç yaklaşım:
 
 **XML etiketleri** (Claude ile en iyi şekilde çalışır, her yerde sağlamdır):
 ```
@@ -280,7 +280,7 @@ Summarize the above in 3 bullet points.
 
 ### Prompt Zincirleme: Sıralı Ayrıştırma
 
-Bazı görevler tek bir prompt için fazla karmaşık. Prompt zincirleme bunları adımlara böler; burada bir prompt çıktısı bir sonrakinin girdisi olur.
+Bazı görevler tek bir prompt için fazla karmaşıktır. Prompt zincirleme bunları adımlara böler; burada bir prompt'nin çıktısı bir sonrakinin girdisi olur.
 
 ```mermaid
 graph LR
@@ -300,33 +300,33 @@ graph LR
     style F fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-Zincirleme üç nedenden dolayı single-prompt'yi yener:
+Zincirleme, tekli prompt'yi üç nedenden dolayı yener:
 
 1. **Her adım daha basittir**: Model, her şeyle hokkabazlık yapmak yerine tek bir odaklanmış görevi gerçekleştirir
 2. **Ara çıkışlar incelenebilir**: adımlar arasında doğrulama ve düzeltme yapabilirsiniz
-3. **Farklı adımlarda farklı modeller kullanılabilir**: çıkarım için ucuz bir model, muhakeme için pahalı bir model kullanın
+3. **Farklı adımlar farklı modeller kullanabilir**: çıkarım için ucuz bir model, muhakeme için pahalı bir model kullanın
 
 ### Performans Karşılaştırması
 
 | Tekniği | En İyisi | GSM8K Doğruluğu (GPT-5) | API Çağrıları | Token Genel gider | Karmaşıklık |
 |-----------|----------|------------------------|-----------|----------------|------------|
-| Zero-shot | Basit görevler | %94 | 1 | Yok | Önemsiz |
-| Few-shot | Biçim eşleştirme | %96 | 1 | 200-500 tokens | Düşük |
-| Zero-shotlı CoT | Hızlı muhakeme desteği | %97 | 1 | 50-200 tokens | Önemsiz |
-| Few-shotlı CoT | Maksimum tek arama doğruluğu | %98 | 1 | 300-600 tokens | Düşük |
-| Kendi Kendine Tutarlılık (N=5) | Yüksek riskli akıl yürütme | %98,5 | 5 | 5x token maliyet | Orta |
+| Sıfır Atış | Basit görevler | %94 | 1 | Yok | Önemsiz |
+| Birkaç Atış | Biçim eşleştirme | %96 | 1 | 200-500 token | Düşük |
+| Sıfır Atışlı CoT | Hızlı muhakeme desteği | %97 | 1 | 50-200 token | Önemsiz |
+| Birkaç Atışlı CoT | Maksimum tek arama doğruluğu | %98 | 1 | 300-600 token | Düşük |
+| Kendi Kendine Tutarlılık (N=5) | Yüksek riskli akıl yürütme | %98,5 | 5 | 5x token maliyeti | Orta |
 | Akıl yürütme modeli (o4-mini) | Anında CoT değişimi | %97 | 1 | gizli (2-10x dahili) | Önemsiz |
-| Düşünce Ağacı | Arama/planlama sorunları | Yok (24 Maçta %74) | 10-40+ | 10-40x token maliyet | Yüksek |
+| Düşünce Ağacı | Arama/planlama sorunları | Yok (24 Maçta %74) | 10-40+ | 10-40x token maliyeti | Yüksek |
 | Tepki | Bilgiye dayalı akıl yürütme | Yok (HotpotQA'da %35,1) | 3-10+ | Değişken | Yüksek |
-| Prompt Zincirleme | Karmaşık çok adımlı görevler | %96 (boru hattı) | 2-5 | 2-5x token maliyet | Orta |
+| Prompt Zincirleme | Karmaşık çok adımlı görevler | %96 (boru hattı) | 2-5 | 2-5x token maliyeti | Orta |
 
-Doğru teknik üç faktöre bağlıdır: doğruluk gereksinimi, gecikme bütçesi ve maliyet toleransı. Çoğu üretim sistemi için, 3 örnekli kendi kendine tutarlılık geri dönüşüne sahip few-shotlık CoT, kullanım durumlarının %90'ını kapsar.
+Doğru teknik üç faktöre bağlıdır: doğruluk gereksinimi, gecikme bütçesi ve maliyet toleransı. Çoğu üretim sistemi için, 3 örnekli kendi kendine tutarlılık geri dönüşüne sahip birkaç atışlık CoT, kullanım durumlarının %90'ını kapsar.
 
 ## İnşa Et
 
-Birkaç adımlık prompt, düşünce zinciri akıl yürütmeyi ve kendi kendine tutarlı oylamayı tek bir kanalda birleştiren bir matematik problemi çözücü oluşturacağız. Daha sonra zor problemler için düşünce ağacını ekleyeceğiz.
+Birkaç adımlık prompting'i, düşünce zinciri akıl yürütmeyi ve kendi kendine tutarlı oylamayı tek bir işlem hattında birleştiren bir matematik problemi çözücü oluşturacağız. Daha sonra zor problemler için düşünce ağacını ekleyeceğiz.
 
-Tam uygulama `code/advanced_prompting.py`'dadır. İşte temel bileşenler.
+Tam uygulama `code/advanced_prompting.py`'dedir. İşte temel bileşenler.
 
 ### Adım 1: Birkaç Çekim Örnek Mağazası
 
@@ -343,11 +343,11 @@ GSM8K_EXAMPLES = [
 ]
 ```
 
-Her örneğin üç bölümü vardır: soru, akıl yürütme zinciri ve son cevap. Akıl yürütme zinciri, normal few-shotli bir örneği CoT'nin few-shotli örneğine dönüştüren şeydir.
+Her örneğin üç bölümü vardır: soru, akıl yürütme zinciri ve son cevap. Akıl yürütme zinciri, normal birkaç çekimli bir örneği CoT'nin birkaç çekimli örneğine dönüştüren şeydir.
 
-### Adım 2: Düşünce Zinciri Prompt Oluşturucusu
+### Adım 2: Düşünce Zinciri Prompt Oluşturucu
 
-prompt oluşturucusu bir sistem mesajını, muhakeme zincirleriyle birkaç örnek örneği ve hedef soruyu tek bir prompt içinde birleştirir.
+prompt oluşturucusu bir sistem mesajını, muhakeme zincirleriyle birkaç örnek örneği ve hedef soruyu tek bir prompt'de birleştirir.
 
 ```python
 def build_cot_prompt(question, examples, num_examples=3):
@@ -426,7 +426,7 @@ def tree_of_thought_solve(question, client, model, breadth=3, depth=3):
     return extract_answer(best_thought), best_thought
 ```
 
-Değerlendiricinin kendisi bir LLM çağrısıdır. Modele şunu soruyorsunuz: "0,0'dan 1,0'a kadar bir ölçekte, bu akıl yürütme yolu sorunu çözmek için ne kadar umut verici?" Bu, ToT'nin temel anlayışıdır; model kendi kısmi çözümlerini değerlendirir.
+Değerlendiricinin kendisi bir Yüksek Lisans çağrısıdır. Modele şunu soruyorsunuz: "0,0'dan 1,0'a kadar bir ölçekte, bu akıl yürütme yolu sorunu çözmek için ne kadar umut verici?" Bu, ToT'nin temel anlayışıdır; model kendi kısmi çözümlerini değerlendirir.
 
 ### Adım 5: Tam Boru Hattı
 
@@ -453,9 +453,9 @@ Yükseltme mantığı: önce ucuzu (tek CoT) deneyin. Kendi kendine tutarlılık
 
 ## Kullan onu
 
-### Şablon Odaklı Birkaç Çekim Prompts
+### Şablon Odaklı Birkaç Çekim Prompt
 
-LangChain, prompt şablonları için yerleşik destek ve few-shot ve CoT modellerini basitleştiren çıktı ayrıştırma sağlar:
+LangChain, prompt şablonları için yerleşik destek ve birkaç çekim ve CoT modellerini basitleştiren çıktı ayrıştırma sağlar:
 
 ```python
 from langchain_core.prompts import FewShotPromptTemplate, PromptTemplate
@@ -478,7 +478,7 @@ chain = few_shot_prompt | llm
 result = chain.invoke({"input": "If a train travels 120 km in 2 hours..."})
 ```
 
-LangChain ayrıca anlamsal benzerlik seçimi için `ExampleSelector` sınıfına sahiptir:
+LangChain ayrıca anlamsal benzerlik seçimi için `ExampleSelector` sınıflarına da sahiptir:
 
 ```python
 from langchain_core.example_selectors import SemanticSimilarityExampleSelector
@@ -493,7 +493,7 @@ selector = SemanticSimilarityExampleSelector.from_examples(
 
 ### Derlenmiş Prompt'ler
 
-DSPy, prompt stratejilerini optimize edilebilir modüller olarak ele alır. CoT prompt'leri elle oluşturmak yerine bir imza tanımlarsınız ve DSPy'nin prompt'yi optimize etmesine izin verirsiniz:
+DSPy, prompting stratejilerini optimize edilebilir modüller olarak ele alır. CoT prompt'leri elle oluşturmak yerine bir imza tanımlayın ve DSPy'nin prompt'yi optimize etmesine izin verin:
 
 ```python
 import dspy
@@ -511,7 +511,7 @@ solver = MathSolver()
 result = solver(question="Janet's ducks lay 16 eggs per day...")
 ```
 
-DSPy'ın `ChainOfThought`'si otomatik olarak muhakeme izlerini ekler. `dspy.majority` kendi içinde tutarlılığı uygular:
+DSPy'ın `ChainOfThought`'si otomatik olarak akıl yürütme izlerini ekler. `dspy.majority` kendi kendine tutarlılığı uygular:
 
 ```python
 result = dspy.majority(
@@ -520,7 +520,7 @@ result = dspy.majority(
 )
 ```
 
-### Karşılaştırma: Sıfırdan ve Framework'lar
+### Karşılaştırma: Sıfırdan ve Framework'ler
 
 | Özellik | Sıfırdan (bu ders) | LangChain | DSPy |
 |---------|--------------------------|-----------|------|
@@ -535,19 +535,19 @@ result = dspy.majority(
 
 Bu ders iki artifact üretir.
 
-**1. Muhakeme Zinciri Prompt** (`outputs/prompt-reasoning-chain.md`): Kendi kendine tutarlılığa sahip few-shotlık CoT için üretime hazır bir prompt şablonu. Örneklerinizi ve sorunlu alanınızı ekleyin.
+**1. Reasoning Chain Prompt** (`outputs/prompt-reasoning-chain.md`): Kendi kendine tutarlılığa sahip birkaç çekimli CoT için üretime hazır bir prompt şablonu. Örneklerinizi ve sorunlu alanınızı ekleyin.
 
-**2. CoT Modeli Seçme Becerisi** (`outputs/skill-cot-patterns.md`): görev türüne, doğruluk gereksinimlerine ve maliyet kısıtlamalarına dayalı olarak doğru akıl yürütme tekniğini seçmeye yönelik bir karar framework.
+**2. CoT Modeli Seçme Becerisi** (`outputs/skill-cot-patterns.md`): görev türüne, doğruluk gereksinimlerine ve maliyet kısıtlamalarına dayalı olarak doğru muhakeme tekniğini seçmeye yönelik bir karar framework.
 
 ## Egzersizler
 
-1. **Boşluğu ölçün**: 10 GSM8K problemini alın. Her birini zero-shot, few-shot, zero-shot CoT ve few-shot CoT ile çözün. Her birinin doğruluğunu kaydedin. Hangi teknik modelinizde en büyük artışı sağlıyor?
+1. **Boşluğu ölçün**: 10 GSM8K problemini alın. Her birini sıfır atış, birkaç atış, sıfır atış CoT ve birkaç atış CoT ile çözün. Her birinin doğruluğunu kaydedin. Hangi teknik modelinizde en büyük artışı sağlıyor?
 
 2. **Örnek seçim deneyi**: Aynı 10 problem için rastgele örnek seçimi ile özenle seçilmiş benzer örnekleri karşılaştırın. Doğruluk farkını ölçün. Örnek niteliği hangi noktada örnek niceliğinden daha önemli?
 
-3. **Kendi kendine tutarlılık maliyet eğrisi**: 20 GSM8K problemi üzerinde N=1, 3, 5, 7, 10 ile kendi kendine tutarlılığı çalıştırın. Grafik doğruluğu ve maliyet (toplam tokens). Modeliniz için eğrinin dizi nerede?
+3. **Kendi kendine tutarlılık maliyet eğrisi**: 20 GSM8K problemi üzerinde N=1, 3, 5, 7, 10 ile kendi kendine tutarlılığı çalıştırın. Grafik doğruluğu ve maliyet (toplam token). Modeliniz için eğrinin dizi nerede?
 
-4. **ReAct döngüsü oluşturun**: İşlem hattını bir hesap makinesi aracıyla genişletin. Model bir matematik ifadesi oluşturduğunda, bunu Python'un `eval()` (sanal alanda) ile yürütün ve sonucu geri besleyin. Araç temelli akıl yürütmenin saf CoT'den daha iyi performans gösterip göstermediğini ölçün.
+4. **ReAct döngüsü oluşturun**: İşlem hattını bir hesap makinesi aracıyla genişletin. Model bir matematik ifadesi oluşturduğunda, bunu Python'un `eval()` (korumalı alanda) ile yürütün ve sonucu geri besleyin. Araç temelli akıl yürütmenin saf CoT'den daha iyi performans gösterip göstermediğini ölçün.
 
 5. **Yaratıcı görevler için Eğitmenlik Eğitimi**: Düşünce Ağacı çözücüyü yaratıcı bir yazma görevi için uyarlayın: "Hem komik hem de üzücü olan 6 kelimelik bir hikaye yazın." Değerlendirici olarak LLM'yi kullanın. Dallara ayrılan keşif, tek seferde oluşturmaya göre daha iyi yaratıcı çıktılar mı üretiyor?
 
@@ -555,22 +555,22 @@ Bu ders iki artifact üretir.
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| few-shot prompting | "Bazı örnekler verin" | Modelin çıktı biçimini ve davranışını sabitlemek için prompt'ye girdi-çıktı gösterimlerini dahil etmek |
-| Düşünce Zinciri | "Adım adım düşünmesini sağlayın" | Son bir cevap üretmeden önce modelin etkili hesaplamasını genişleten ara akıl yürütmeleri token ortaya çıkarmak |
+| Birkaç atış prompting | "Bazı örnekler verin" | Modelin çıkış formatını ve davranışını sabitlemek için prompt'ye giriş-çıkış gösterileri dahil |
+| Düşünce Zinciri | "Adım adım düşünmesini sağlayın" | Nihai bir yanıt üretmeden önce modelin etkili hesaplamasını genişleten ara akıl yürütme token'leri ortaya çıkarma |
 | Kendi Kendine Tutarlılık | "Birden çok kez çalıştır" | Sıcaklık > 0'da N farklı akıl yürütme yolunun örneklenmesi ve çoğunluk oyu ile en yaygın nihai cevabın seçilmesi |
 | Düşünce Ağacı | "Seçenekleri keşfetmesine izin verin" | Her kısmi çözümün değerlendirildiği ve yalnızca umut verici yolların genişletildiği akıl yürütme dalları üzerinde yapılandırılmış arama |
 | Tepki | "Düşünme + araç kullanımı" | Düşünce-Eylem-Gözlem döngüsünde akıl yürütme izlerini harici eylemlerle (arama, hesaplama, API çağrıları) serpiştirme |
 | Prompt zincirleme | "Adımlara bölün" | Karmaşık bir görevi, her çıkışın bir sonraki girişi beslediği sıralı prompt'lere ayırma |
-| Zero-shotlı CoT | "Sadece 'adım adım düşün'ü ekleyin" | Modelin gizli akıl yürütme yeteneğine dayanarak, herhangi bir örnek olmadan bir prompt'ye bir akıl yürütme tetikleyici cümlesi ekleme |
+| Sıfır atışlı CoT | "Sadece 'adım adım düşün'ü ekleyin" | Modelin gizli akıl yürütme yeteneğine dayanarak, herhangi bir örnek olmadan prompt'ye bir akıl yürütme tetikleyici cümlesi ekleme |
 
 ## Daha Fazla Okuma
 
-- [Düşünce Zinciri PromptGeniş Dil Modellerinde Akıl Yürütmeyi Ortaya Çıkarır](https://arxiv.org/abs/2201.11903) -- Wei ve ark. 2022. Google Brain'in orijinal CoT makalesi. Temel sonuçlar için 2-3. bölümleri okuyun.
-- [Kendi Kendine Tutarlılık, Dil Modellerinde Düşünce Zinciri Akıl Yürütmesini Geliştirir](https://arxiv.org/abs/2203.11171) -- Wang ve ark. 2023. Kendi kendine tutarlılık makalesi. Tablo 1'de ihtiyacınız olan tüm sayılar bulunmaktadır.
+- [Düşünce Zinciri Prompting Büyük Dil Modellerinde Akıl Yürütmeyi Ortaya Çıkarır](https://arxiv.org/abs/2201.11903) -- Wei ve ark. 2022. Google Brain'in orijinal CoT makalesi. Temel sonuçlar için 2-3. bölümleri okuyun.
+- [Kendi Tutarlılığı Dil Modellerinde Düşünce Akıl Yürütme Zincirini Geliştirir](https://arxiv.org/abs/2203.11171) -- Wang ve ark. 2023. Kendi kendine tutarlılık makalesi. Tablo 1'de ihtiyacınız olan tüm sayılar bulunmaktadır.
 - [Düşünce Ağacı: Büyük Dil Modelleriyle Kasıtlı Problem Çözme](https://arxiv.org/abs/2305.10601) -- Yao ve ark. 2023. ToT belgesi. 4. bölümdeki 24 Maçı sonuçları öne çıkanlar.
-- [ReAct: Dil Modellerinde Akıl Yürütme ve Eylemi Birleştirme](https://arxiv.org/abs/2210.03629) -- Yao ve ark. 2022. Modern yapay zeka agent'ların temeli. 3. Bölüm Düşünce-Eylem-Gözlem döngüsünü açıklamaktadır.
-- [Büyük Dil Modelleri Zero-shotlı Akıl Yürütücülerdir](https://arxiv.org/abs/2205.11916) -- Kojima ve ark. 2022. "Adım adım düşünelim" makalesi. Ne kadar basit olduğuna göre şaşırtıcı derecede etkili.
-- [DSPy: Bildirimsel Dil Modeli Çağrılarını Kendini Geliştiren İşlem Hatlarına Derlemek](https://arxiv.org/abs/2310.03714) -- Khattab ve ark. 2023. prompting'i bir derleme sorunu olarak ele alır. Manuel prompt mühendisliğinin ötesine geçmek istiyorsanız okuyun.
-- [OpenAI — Akıl yürütme modelleri kılavuzu](https://platform.openai.com/docs/guides/reasoning) -- düşünce zincirinin ne zaman dahili, token başına fiyatlandırılan "akıl yürütme" moduna karşı prompt düzeyindeki bir hileye dönüştüğü konusunda satıcı rehberliği.
-- [Lightman ve diğerleri, "Adım Adım Doğrulayalım" (2023)](https://arxiv.org/abs/2305.20050) -- bir zincirin her adımını derecelendiren ödül modellerini (PRM) işleyin; yalnızca sonuca dayalı ödülleri başaran akıl yürütme denetimi sinyali.
-- [Snell ve diğerleri, "LLM Test Süresi Hesaplamasını En İyi Şekilde Ölçeklendirmek" (2024)](https://arxiv.org/abs/2408.03314) -- CoT uzunluğunun, kendi kendine tutarlılık örneklemesinin ve MCTS'nin sistematik çalışması; Doğruluğun gecikmeden daha önemli olduğu durumlarda "adım adım düşünün".
+- [ReAct: Dil Modellerinde Akıl Yürütme ve Eylemi Birleştirme](https://arxiv.org/abs/2210.03629) -- Yao ve ark. 2022. Modern yapay zeka agent'lerin temeli. 3. Bölüm Düşünce-Eylem-Gözlem döngüsünü açıklamaktadır.
+- [Büyük Dil Modelleri Sıfır Atışlı Akıl Yürütücülerdir](https://arxiv.org/abs/2205.11916) -- Kojima ve ark. 2022. "Adım adım düşünelim" makalesi. Ne kadar basit olduğuna göre şaşırtıcı derecede etkili.
+- [DSPy: Bildirimsel Dil Modeli Çağrılarını Kendini Geliştiren İşlem Hatlarına Derlemek](https://arxiv.org/abs/2310.03714) -- Khattab ve diğerleri. 2023. prompting'i bir derleme sorunu olarak ele alır. Manuel prompt mühendisliğinin ötesine geçmek istiyorsanız okuyun.
+- [OpenAI — Akıl yürütme modelleri kılavuzu](https://platform.openai.com/docs/guides/reasoning) -- düşünce zincirinin ne zaman dahili, token başına fiyatlandırılan "akıl yürütme" moduna karşı prompt düzeyindeki bir numara haline geldiği konusunda satıcı rehberliği.
+- [Lightman ve diğerleri, "Adım Adım Doğrulayalım" (2023)](https://arxiv.org/abs/2305.20050) -- bir zincirin her adımını derecelendiren süreç ödül modelleri (PRM); yalnızca sonuca dayalı ödülleri başaran akıl yürütme denetimi sinyali.
+- [Snell ve diğerleri, "LLM Test Süresi Hesaplamasını En İyi Şekilde Ölçeklendirmek" (2024)](https://arxiv.org/abs/2408.03314) -- CoT uzunluğunun, kendi kendine tutarlılık örneklemesinin ve MCTS'nin sistematik çalışması; Doğruluk gecikmeden daha önemli olduğunda "adım adım düşünün" nereye gider?

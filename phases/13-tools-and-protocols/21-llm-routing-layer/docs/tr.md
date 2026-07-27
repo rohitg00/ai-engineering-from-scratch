@@ -10,7 +10,7 @@
 ## Öğrenme Hedefleri
 
 - Şirket içinde barındırılan, yönetilen ve üretim düzeyinde yönlendirme seçeneklerini birbirinden ayırın.
-- Tanımlanmış bir öncelik sırasına göre sağlayıcı hatalarını yeniden deneyen bir geri dönüş zinciri uygulayın.
+- Sağlayıcı hatalarını tanımlanmış bir öncelik sırasına göre yeniden deneyen bir geri dönüş zinciri uygulayın.
 - Sağlayıcılar genelinde istek başına maliyeti ve token kullanımını izleyin.
 - Belirli bir üretim kısıtlaması için LiteLLM, OpenRouter ve Portkey arasında karar verin.
 
@@ -22,11 +22,11 @@ Sağlayıcı yönlendirmesinin önemli olduğu senaryolar:
 
 2. **Yük devretme.** OpenAI'nin kötü bir saati var. Her istek başarısız olur. Yeniden konuşlandırmaya gerek kalmadan Anthropic'e otomatik geri dönüş istiyorsunuz.
 
-3. **Gecikme.** Canlı sohbet kullanıcı arayüzünün hızlı ilk-zamana-token ihtiyacı vardır. Bir toplu özetleyici bunu yapmaz. Gecikme HDS'sine göre yönlendirme.
+3. **Gecikme.** Canlı sohbet kullanıcı arayüzünün hızlı ilk token süresine ihtiyacı vardır. Bir toplu özetleyici bunu yapmaz. Gecikme HDS'sine göre yönlendirme.
 
 4. **Uyumluluk.** AB kullanıcıları AB bölgelerinde kalmalıdır. Bölgeye göre rota.
 
-5. **Deneme.** A/B aynı iş yükünde iki model. Test paketine göre rota.
+5. **Deneme.** Aynı iş yükünde A/B iki model. Test paketine göre rota.
 
 Tüm bunların entegrasyon başına elle kodlanması tekrarlanır. Yönlendirme ağ geçidi, OpenAI uyumlu bir API sağlar ve gerisini halleder.
 
@@ -34,7 +34,7 @@ Tüm bunların entegrasyon başına elle kodlanması tekrarlanır. Yönlendirme 
 
 ### OpenAI uyumlu proxy şekli
 
-Herkes OpenAI şeklinde konuşuyor. Yönlendirme ağ geçidi `/v1/chat/completions`'yi açığa çıkarır, OpenAI şemasını kabul eder ve Anthropic / Gemini / Cohere / Ollama / herhangi bir şeye dahili olarak proxy uygular. Müşteri umursamıyor.
+Herkes OpenAI şeklinde konuşuyor. Yönlendirme ağ geçidi `/v1/chat/completions`'yi açığa çıkarır, OpenAI şemasını kabul eder ve Anthropic / Gemini / Cohere / Ollama / herhangi bir şeye dahili olarak proxy'ler gönderir. Müşteri umursamıyor.
 
 ### Model takma adları
 
@@ -53,14 +53,14 @@ Ağ geçitleri bunu bir yapılandırmada tanımlar. Yeniden denemeler bütçeye 
 
 ### Anlamsal önbelleğe alma
 
-Aynı veya neredeyse aynı prompt'ler sağlayıcı yerine önbelleğe çarptı. Tekrarlanan agent loop'lardan elde edilen tasarruf yüzde 30 ila 60 arasında olabilir. Anahtarlar embedding tabanlıdır; neredeyse aynı prompt'lar bir önbellek yuvasını paylaşıyor.
+Aynı veya neredeyse aynı prompt'ler sağlayıcı yerine önbelleğe çarptı. Tekrarlanan agent loop'lerdeki tasarruf yüzde 30 ila 60 arasında olabilir. Anahtarlar embedding tabanlıdır; neredeyse aynı prompt'ler bir önbellek yuvasını paylaşır.
 
 ### Korkuluklar
 
 Ağ geçidi düzeyinde:
 
-- **PII düzenlemesi.** prompt'ları göndermeden önce normal ifade veya ML tabanlı geçiş.
-- **Politika ihlalleri.** Yasaklanmış içeriğe sahip prompt'leri reddedin.
+- **PII düzenlemesi.** prompt'leri göndermeden önce normal ifade veya ML tabanlı geçiş.
+- **Politika ihlalleri.** Yasaklı içeriğe sahip prompt'leri reddedin.
 - **Çıkış filtreleri.** Tamamlananları sızıntılara karşı fırçalayın.
 
 Portkey ve Kong'un her ikisi de inatçı korkuluklar sunuyor. LiteLLM bunları isteğe bağlı olarak bırakır.
@@ -80,11 +80,11 @@ Bir API anahtarı = bir ekip. Anahtar başına bütçeler, bir ekibin paylaşıl
 | Observability | Açık Telemetri | Kontrol Paneli | Tam OTel + PII redaksiyonu |
 | Şunun için en iyisi | Tam kontrol isteyen takımlar | Hızlı prototipleme | Uyumlu üretim |
 
-LiteLLM, bir SRE ekibiniz olduğunda ve veri egemenliği istediğinizde kazanır. Tek bir abonelik istediğinizde ve altyapı gerektirmediğinde OpenRouter kazanır. Portkey, korkuluklara ve kullanıma hazır uyumluluğa ihtiyaç duyduğunuzda kazanır.
+LiteLLM, bir SRE ekibiniz olduğunda ve veri egemenliği istediğinizde kazanır. Tek bir abonelik istediğinizde ve altyapıya ihtiyaç duymadığınızda OpenRouter kazanır. Portkey, korkuluklara ve kullanıma hazır uyumluluğa ihtiyaç duyduğunuzda kazanır.
 
 ### Maliyet takibi
 
-Her istek `provider`, `model`, `input_tokens`, `output_tokens` taşır. Model başına token fiyatlara göre çarpın (ağ geçidinin tuttuğu bir fiyatlandırma tablosundan alınır). Kullanıcı başına / ekip başına / proje başına toplama.
+Her istek `provider`, `model`, `input_tokens`, `output_tokens` taşır. Model başına token fiyatlarıyla çarpın (ağ geçidinin tuttuğu fiyatlandırma tablosundan alınır). Kullanıcı başına / ekip başına / proje başına toplama.
 
 ### MCP artı yönlendirme
 
@@ -94,32 +94,32 @@ Bir ağ geçidi hem LLM çağrılarını hem de MCP örnekleme isteklerini yönl
 
 - **Statik öncelik.** Listede ilk sırada; hataya düşmek.
 - **Yük dengeleme.** Yuvarlak veya ağırlıklı.
-- **Maliyet bilinci.** Gecikme/kaliteyi karşılayan en ucuz modeli seçin.
+- **Maliyet bilincinde.** Gecikme/kaliteyi karşılayan en ucuz modeli seçin.
 - **Gecikmeye duyarlı.** Son N dakikadaki en hızlı modeli seçin.
 - **Göreve duyarlı.** Prompt sınıflandırıcı, kodlamayı bir modele, özetlemeyi diğerine yönlendirir.
 
 ## Kullan onu
 
-`code/main.py` yaklaşık 150 satırda bir yönlendirme ağ geçidi uygular: OpenAI şeklindeki istekleri kabul eder, sağlayıcı başına taslaklara çevirir, öncelikli bir geri dönüş zinciri çalıştırır, istek başına maliyeti izler ve girişlere bir PII düzenleme geçişi uygular. Bunu üç senaryoyla çalıştırın: normal istek, birincil sağlayıcı kesintisinin geri dönüşü tetiklemesi, düzeltmeyle yakalanan PII sızıntısı.
+`code/main.py`, yaklaşık 150 satırlık bir yönlendirme ağ geçidi uygular: OpenAI şeklindeki istekleri kabul eder, sağlayıcı başına taslaklara çevirir, öncelikli bir geri dönüş zinciri çalıştırır, istek başına maliyeti izler ve girişlere bir PII düzenleme geçişi uygular. Üç senaryoyla çalıştırın: normal istek, birincil sağlayıcı kesintisinin geri dönüşü tetiklemesi, düzeltmeyle yakalanan PII sızıntısı.
 
 Neye bakmalı:
 
-- `ROUTES` dict: alias -> somut sağlayıcıların öncelik sırasına göre listesi.
+- `ROUTES` dict: takma ad -> somut sağlayıcıların öncelik sırasına göre listesi.
 - Geri dönüş döngüsü 5xx'te yeniden denenir.
-- Maliyet izleyici, token kullanımını model başına ücretlerle çarpar.
+- Maliyet takipçisi, token kullanımını model başına oranlarla çarpar.
 - PII redaktörü, iletmeden önce SSN şeklindeki desenleri temizler.
 
 ## Gönderin
 
-Bu ders `outputs/skill-routing-config-designer.md` üretir. Bir iş yükü profili (gecikme, maliyet, uyumluluk) verildiğinde, beceri LiteLLM / OpenRouter / Portkey'i seçer ve bir yönlendirme yapılandırması üretir.
+Bu ders `outputs/skill-routing-config-designer.md`'yi üretir. Bir iş yükü profili (gecikme, maliyet, uyumluluk) verildiğinde, beceri LiteLLM / OpenRouter / Portkey'i seçer ve bir yönlendirme yapılandırması üretir.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. Kesinti senaryosunu tetikleyin; Yedeklemenin ikinci sağlayıcıya ulaştığını ve maliyetin doğru şekilde ilişkilendirildiğini doğrulayın.
+1. `code/main.py`'yi çalıştırın. Kesinti senaryosunu tetikleyin; Yedeklemenin ikinci sağlayıcıya ulaştığını ve maliyetin doğru şekilde ilişkilendirildiğini doğrulayın.
 
 2. Anlamsal önbelleğe alma ekleyin: prompt'nin SHA256'sı bir arama anahtarıdır; önbellek isabetleri anında geri döner. Tekrarlanan bir aramada maliyet tasarrufunu ölçün.
 
-3. "kod ..." prompt'ları zekayı tercih eden bir takma ada ve "özetleme ..." prompt'leri hızı tercih eden bir takma ada yönlendiren bir prompt sınıflandırıcı ekleyin.
+3. "Kod..." prompt'leri zekayı destekleyen bir takma ada yönlendiren ve prompt'leri hızı tercih eden bir takma ada "özetleyen..." bir prompt sınıflandırıcı ekleyin.
 
 4. Ekip başına bütçe tasarlayın: Her ekibin aylık harcama sınırı vardır; ağ geçidi sınıra ulaşıldığında istekleri reddeder. Bir yaptırım ayrıntı düzeyi seçin (istek başına veya pencereli).
 
@@ -129,7 +129,7 @@ Bu ders `outputs/skill-routing-config-designer.md` üretir. Bir iş yükü profi
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| Yönlendirme ağ geçidi | "LLM vekili" | Birçok sağlayıcının önünde tek API yüzey katmanı |
+| Yönlendirme ağ geçidi | "Yüksek Lisans vekili" | Birçok sağlayıcının önünde tek API yüzey katmanı |
 | OpenAI uyumlu | "OpenAI şemasını konuşuyor" | `/v1/chat/completions` şeklini kabul eder, herhangi bir arka uca çevirir |
 | Model takma adı | "bizim_smart_modelimiz" | Kodunuzda ağ geçidinin somut bir modelle eşleştiği adı belirtin |
 | Geri dönüş zinciri | "Listeyi yeniden dene" | Başarısızlık durumunda denenen sağlayıcıların sıralı listesi |
@@ -145,6 +145,6 @@ Bu ders `outputs/skill-routing-config-designer.md` üretir. Bir iş yükü profi
 
 - [LiteLLM — docs](https://docs.litellm.ai/) — şirket içinde barındırılan yönlendirme ağ geçidi
 - [OpenRouter — hızlı başlangıç](https://openrouter.ai/docs/quickstart) — yönetilen yönlendirme SaaS'ı
-- [Portkey — docs](https://portkey.ai/docs) — korkuluklarla üretim yönlendirmesi
+- [Portkey — dokümanlar](https://portkey.ai/docs) — korkuluklarla üretim yönlendirme
 - [TrueFoundry — LiteLLM ve OpenRouter](https://www.truefoundry.com/blog/litellm-vs-openrouter) — karar kılavuzu
-- [Relayplane — LLM ağ geçidi karşılaştırması 2026](https://relayplane.com/blog/llm-gateway-comparison-2026) — tedarikçi anketi
+- [Relayplane — Yüksek Lisans ağ geçidi karşılaştırması 2026](https://relayplane.com/blog/llm-gateway-comparison-2026) — tedarikçi anketi

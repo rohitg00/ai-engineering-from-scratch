@@ -4,12 +4,12 @@
 
 **Tür:** Yapım
 **Diller:** Python
-**Önkoşullar:** Aşama 5 · 17 (Sohbet Robotları), Aşama 5 · 19 (Alt Kelime Tokenleştirme)
+**Önkoşullar:** Aşama 5 · 17 (Sohbet Robotları), Aşama 5 · 19 (Alt Kelime Tokenizasyon)
 **Süre:** ~60 dakika
 
 ## Sorun
 
-Bir sınıflandırıcı prompt bir LLM'dir: "{Pozitif, negatif, nötr}'den birini döndür." Model şu sonucu verir: "Duygular olumlu; bu inceleme son derece olumlu çünkü müşteri açıkça şunu belirtiyor ...". Ayrıştırıcınız çöküyor. Sınıflandırıcınızın F1'i 0,0'dır.
+Bir prompt sınıflandırıcısı bir LLM'dir: "{Pozitif, negatif, nötr}'den birini döndür." Model şu sonucu verir: "Duygular olumlu; bu inceleme son derece olumlu çünkü müşteri açıkça şunu belirtiyor ...". Ayrıştırıcınız çöküyor. Sınıflandırıcınızın F1'i 0,0'dır.
 
 Serbest biçimli üretim bir sözleşme değildir. Bu bir öneri. Bir üretim sisteminin bir sözleşmeye ihtiyacı vardır.
 
@@ -17,30 +17,30 @@ Serbest biçimli üretim bir sözleşme değildir. Bu bir öneri. Bir üretim si
 
 1. **Prompting.** Kibarca sor. "Yalnızca JSON nesnesini döndür." Sınır modellerde ~%80, daha küçük modellerde daha az çalışır.
 2. **Yerel yapılandırılmış çıktı API'leri.** OpenAI `response_format`, Antropik araç kullanımı, Gemini JSON modu. Desteklenen şemalarda güvenilir. Satıcı kilitli.
-3. **Kısıtlı kod çözme.** Modelin geçersiz token'ler *yayamaması* için her oluşturma adımında logitleri değiştirin. Yapı itibariyle %100 geçerlidir. Herhangi bir yerel modelde çalışır.
+3. **Kısıtlı kod çözme.** Modelin geçersiz token'leri *yayamaması* için her oluşturma adımında logitleri değiştirin. Yapı itibariyle %100 geçerlidir. Herhangi bir yerel modelde çalışır.
 
 Bu ders her üçü için de sezgi geliştirir ve neye ne zaman ulaşılacağını belirtir.
 
 ## Konsept
 
-![Kısıtlı kod çözme, her adımda geçersiz token'leri maskeliyor](../assets/constrained-decoding.svg)
+![Her adımda geçersiz token'leri maskeleyen kısıtlı kod çözme](../assets/constrained-decoding.svg)
 
-**Kısıtlı kod çözme nasıl çalışır?** Her nesil adımında LLM, tüm kelime dağarcığı (~100k tokens) üzerinden bir logit vektörü üretir. Model ile örnekleyici arasında bir *logit işlemci* bulunur. Hedef dilbilgisindeki mevcut konum (JSON Şeması, regex, bağlamdan bağımsız dilbilgisi) göz önüne alındığında hangi token'lerin geçerli olduğunu hesaplar ve tüm geçersiz token'lerin logitlerini negatif sonsuza ayarlar. Kalan logitlerin softmax'ı olasılık kütlesini yalnızca geçerli devamlara koyar.
+**Kısıtlı kod çözme nasıl çalışır?** Her nesil adımında LLM, tüm kelime dağarcığı (~100k token) üzerinden bir logit vektörü üretir. Model ile örnekleyici arasında bir *logit işlemci* bulunur. Hedef dilbilgisindeki geçerli konum (JSON Şeması, regex, bağlamdan bağımsız dilbilgisi) göz önüne alındığında hangi token'lerin geçerli olduğunu hesaplar ve tüm geçersiz token'lerin logitlerini negatif sonsuza ayarlar. Kalan logitler üzerindeki softmax, olasılık kütlesini yalnızca geçerli devamlara koyar.
 
 2026 yılındaki uygulamalar:
 
-- **Anahatlar.** JSON Şemasını veya normal ifadeyi sonlu durumlu bir makinede derler. Her token, bir O(1) geçerli-sonraki-token aramasını alır. FSM tabanlı olduğundan özyinelemeli şemaların düzleştirilmesi gerekir.
+- **Anahatlar.** JSON Şemasını veya normal ifadeyi sonlu durumlu bir makinede derler. Her token, bir O(1) geçerli-sonraki token aramasını alır. FSM tabanlı olduğundan özyinelemeli şemaların düzleştirilmesi gerekir.
 - **XGrammar / llguidance.** Bağlamdan bağımsız dilbilgisi motorları. Özyinelemeli JSON Şemasını yönetin. Sıfıra yakın kod çözme yükü. OpenAI, 2025 yapılandırılmış çıktı uygulamalarında rehberliğe itibar etti.
-- **vLLM destekli kod çözme.** Outlines, XGrammar veya lm-format-enforcer arka uçları aracılığıyla yerleşik `guided_json`, `guided_regex`, `guided_choice`, `guided_grammar`.
-- **Eğitmen.** Herhangi bir LLM üzerinde Pydantic tabanlı sarmalayıcı. Doğrulama hatası durumunda yeniden deneme yapılır. Çapraz sağlayıcı, ancak logit'leri değiştirmez; yeniden denemelere + yapılandırılmış çıktıya duyarlı prompt'lara dayanır.
+- **vLLM yönlendirmeli kod çözme.** Outlines, XGrammar veya lm-format-uygulayıcı arka uçları aracılığıyla yerleşik `guided_json`, `guided_regex`, `guided_choice`, `guided_grammar`.
+- **Eğitmen.** Herhangi bir LLM üzerinde Pydantic tabanlı sarmalayıcı. Doğrulama hatası durumunda yeniden deneme yapılır. Çapraz sağlayıcı, ancak logitleri değiştirmez; yeniden denemelere + yapılandırılmış çıktıya duyarlı prompt'lere dayanır.
 
 ### Mantığa aykırı sonuç
 
-Kısıtlı kod çözme, genellikle kısıtsız oluşturmaya göre *daha hızlıdır*. İki sebep. İlk olarak, sonraki-token arama alanını daraltır. İkincisi, akıllı uygulamalar zorunlu token'ler için token neslini tamamen atlar (`{"name": "` gibi iskele — her bayt belirlenir).
+Kısıtlı kod çözme, genellikle kısıtsız oluşturmaya göre *daha hızlıdır*. İki sebep. İlk olarak, bir sonraki token arama alanını daraltır. İkincisi, akıllı uygulamalar zorunlu token'ler için token oluşturmayı tamamen atlar (`{"name": "` gibi iskele — her bayt belirlenir).
 
 ### Size maliyeti olan tuzak
 
-Saha sırası önemlidir. `answer`'yi `reasoning`'nin önüne koyarsanız model, düşünmeden önce bir cevabı taahhüt eder. JSON geçerlidir. Cevap yanlış. Hiçbir doğrulama onu yakalayamaz.
+Saha sırası önemlidir. `answer`'yi `reasoning`'nin önüne koyarsanız model, düşünmeden önce bir yanıt verir. JSON geçerlidir. Cevap yanlış. Hiçbir doğrulama onu yakalayamaz.
 
 ```json
 // BAD
@@ -56,7 +56,7 @@ Saha sırası önemlidir. `answer`'yi `reasoning`'nin önüne koyarsanız model,
 
 ### Adım 1: sıfırdan normal ifadeyle kısıtlı oluşturma
 
-Bağımsız bir FSM uygulaması için bkz. `code/main.py`. 30 satırdaki ana fikir:
+Bağımsız bir FSM uygulaması için `code/main.py`'ye bakın. 30 satırdaki ana fikir:
 
 ```python
 def mask_logits(logits, valid_token_ids):
@@ -79,7 +79,7 @@ def generate_constrained(model, tokenizer, prompt, fsm):
     return tokenizer.decode(ids)
 ```
 
-FSM, gramerin şu ana kadar hangi kısımlarını tamamladığımızı takip ediyor. `valid_tokens(state, tokenizer)`, hangi token sözlüğünün kabul edilebilir bir yol bırakmadan FSM'de ilerleyebileceğini hesaplar.
+FSM, gramerin şu ana kadar hangi kısımlarını tamamladığımızı takip ediyor. `valid_tokens(state, tokenizer)`, hangi token sözlüğünün kabul edilebilir bir yol bırakmadan FSM'yi ilerletebileceğini hesaplar.
 
 ### Adım 2: JSON Şemasının Ana Hatları
 
@@ -153,7 +153,7 @@ Sunucu tarafı kısıtlı kod çözme. Desteklenen şemalar için Outlines ile g
 
 - **Özyinelemeli şemalar.** Ana hatlar, yinelemeyi sabit bir derinliğe kadar düzleştirir. Ağaç yapılı çıktılar (iç içe yorumlar, AST) XGrammar'a veya rehberliğe (CFG tabanlı) ihtiyaç duyar.
 - **Çok büyük numaralandırmalar.** 10.000 seçenekli numaralandırma yavaş derlenir veya zaman aşımına uğrar. Bir av köpeğine geçin: ilk önce en iyi adayları tahmin edin, bunlarla sınırlandırın.
-- **Dilbilgisi çok katı.** `date: "YYYY-MM-DD"` normal ifadesini zorlarsanız model, eksik tarihler için `"unknown"` çıktısını alamaz. Model bir tarih icat ederek bunu telafi ediyor. `null` veya bir nöbetçiye izin ver.
+- **Dilbilgisi çok katı.** `date: "YYYY-MM-DD"` regex'ini zorlarsanız model, eksik tarihler için `"unknown"` çıktısını alamaz. Model bir tarih icat ederek bunu telafi ediyor. `null`'ye veya bir nöbetçiye izin verin.
 - **Vaktinden önce taahhüt.** Yukarıdaki saha siparişi tuzağına bakın. Her zaman mantığı ilk sıraya koyun.
 - **Şema olmadan satıcı JSON modu.** Saf JSON modu yalnızca geçerli JSON'u garanti eder, *kullanım durumunuz* için geçerli değildir. Her zaman tam bir şema sağlayın.
 
@@ -196,15 +196,15 @@ Refuse any design that puts `answer` or `decision` before reasoning fields. Refu
 
 ## Egzersizler
 
-1. **Kolay.** Küçük bir open-weights modeli (e.g., Llama-3.2-3B) `Review(sentiment, confidence, evidence_span)` için constrained decoding kullanmadan prompt'layın. 100 değerlendirmede geçerli JSON olarak parse edilen çıktıların oranını ölçün.
+1. **Kolay.** Prompt, `Review(sentiment, confidence, evidence_span)` için kısıtlı kod çözme özelliği olmayan küçük bir açık ağırlıklı model (e.g., Llama-3.2-3B). 100 incelemede geçerli JSON olarak ayrıştırılan kesri ölçün.
 2. **Orta.** Outlines JSON moduyla aynı yapı. Uyumluluk oranını, gecikmeyi ve anlamsal doğruluğu karşılaştırın.
-3. **Zor.** Telefon numaraları (`\d{3}-\d{3}-\d{4}`) için sıfırdan normal ifadeyle sınırlandırılmış bir kod çözücü uygulayın. 1000 örnekte 0 geçersiz çıkışı doğrulayın.
+3. **Zor.** Telefon numaraları için sıfırdan normal ifadeyle sınırlandırılmış bir kod çözücü uygulayın (`\d{3}-\d{3}-\d{4}`). 1000 örnekte 0 geçersiz çıkışı doğrulayın.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
-| Kısıtlı kod çözme | Geçerli çıktıyı zorla | Her nesil adımında geçersiz-token logları maskele. |
+| Kısıtlı kod çözme | Geçerli çıktıyı zorla | Her oluşturma adımında geçersiz token günlüklerini maskeleyin. |
 | Logit işlemci | Kısıtlayan şey | İşlev: `(logits, state) -> masked_logits`. |
 | FSM | Sonlu durum makinesi | Derlenmiş gramer gösterimi; O(1) geçerli-sonraki-token araması. |
 | CFG | Bağlamdan bağımsız dilbilgisi | Özyinelemeyi işleyen dilbilgisi; FSM'den daha yavaş ama daha etkileyici. |
@@ -214,9 +214,9 @@ Refuse any design that puts `answer` or `decision` before reasoning fields. Refu
 
 ## Daha Fazla Okuma
 
-- [Willard, Louf (2023). LLM'ler için Verimli Rehberli Üretim](https://arxiv.org/abs/2307.09702) — Outlines makalesi.
+- [Willard, Louf (2023). LLM'ler için Verimli Kılavuzlu Üretim](https://arxiv.org/abs/2307.09702) — Outlines makalesi.
 - [XGrammar makalesi (2024)](https://arxiv.org/abs/2411.15100) — hızlı CFG tabanlı kısıtlı kod çözme.
 - [vLLM — Yapılandırılmış Çıkışlar](https://docs.vllm.ai/en/latest/features/structured_outputs.html) — inference sunucu entegrasyonu.
 - [OpenAI — Yapılandırılmış Çıkışlar kılavuzu](https://platform.openai.com/docs/guides/structured-outputs) — API referansı + kazanımlar.
 - [Eğitmen kitaplığı](https://python.useinstructor.com/) — Pydantic + sağlayıcılar arasında yeniden denemeler.
-- [JSONSchemaBench (2025)](https://arxiv.org/abs/2501.10868) — benchmark6 kısıtlı kod çözme frameworks.
+- [JSONSchemaBench (2025)](https://arxiv.org/abs/2501.10868) — benchmarking 6 kısıtlı kod çözme framework.

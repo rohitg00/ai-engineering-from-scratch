@@ -1,6 +1,6 @@
 # GloVe, FastText ve Alt Kelime Embedding'ler
 
-> Word2Vec kelime başına bir embedding eğitti. GloVe, birlikte meydana gelme matrisini çarpanlara ayırdı. FastText parçaları yerleştirdi. BPE, transformer'lara köprülendi.
+> Word2Vec, kelime başına bir embedding eğitti. GloVe, birlikte meydana gelme matrisini çarpanlara ayırdı. FastText parçaları yerleştirdi. BPE, transformer'lere köprülendi.
 
 **Tür:** Yapım
 **Diller:** Python
@@ -11,21 +11,21 @@
 
 Word2Vec iki açık soru bıraktı.
 
-İlk olarak, çevrimiçi atlama gramı güncellemeleri yapmak yerine, eş-oluşma matrisini doğrudan (LSA, HAL) çarpanlara ayıran paralel bir araştırma çizgisi vardı. Word2Vec'in yinelemeli yaklaşımı temelde daha mı iyiydi, yoksa iki yöntemin sayımları ele alma biçimi arasındaki artifact fark mıydı? **GloVe** şunu yanıtladı: özenle seçilmiş bir kayıpla matris çarpanlarına ayırma, Word2Vec'le eşleşir veya onu yener ve eğitim maliyeti daha azdır.
+İlk olarak, çevrimiçi atlama gramı güncellemeleri yapmak yerine, eş-oluşma matrisini doğrudan (LSA, HAL) çarpanlara ayıran paralel bir araştırma çizgisi vardı. Word2Vec'in yinelemeli yaklaşımı temelde daha mı iyiydi, yoksa artifact iki yöntemin sayımları nasıl ele aldığı arasındaki fark mıydı? **GloVe** şunu yanıtladı: özenle seçilmiş bir kayıpla matris çarpanlarına ayırma, Word2Vec'le eşleşir veya onu yener ve eğitim maliyeti daha azdır.
 
-İkincisi, her iki yöntemin de daha önce hiç görmediği kelimelerle ilgili bir hikayesi yoktu. `Zoomer-approved`, `dogecoin`, geçen hafta türetilen herhangi bir özel isim, nadir bir kökün tüm çekimli biçimleri. **FastText** bunu embedding karakter n-gramıyla düzeltti: Bir kelime, morfemler de dahil olmak üzere parçalarının toplamıdır, dolayısıyla sözlükte yer almayan kelimeler bile anlamlı bir vektör alır.
+İkincisi, her iki yöntemin de daha önce hiç görmediği kelimelerle ilgili bir hikayesi yoktu. `Zoomer-approved`, `dogecoin`, geçen hafta türetilen herhangi bir özel isim, nadir bir kökün tüm çekimli biçimleri. **FastText** bunu embedding karakter n-gramlarıyla düzeltti: Bir kelime, morfemler de dahil olmak üzere parçalarının toplamıdır, dolayısıyla sözlük dışında kalan kelimeler bile mantıklı bir vektör alır.
 
-Üçüncüsü, transformers geldiğinde soru yeniden değişti. Kelime düzeyindeki sözcük dağarcığı yaklaşık bir milyon girişi kapsıyor; gerçek dil bundan daha açıktır. **Bayt çifti kodlama (BPE)** ve akrabaları, her şeyi kapsayan, sık kullanılan alt kelime birimlerinden oluşan bir kelime dağarcığı öğrenerek bu sorunu çözdü. Her modern LLM için her modern tokenizer, bir tokenizer alt kelimesidir.
+Üçüncüsü, transformer'ler geldiğinde soru yeniden değişti. Kelime düzeyindeki kelime dağarcığı yaklaşık bir milyon girişi sınırlıyor; gerçek dil bundan daha açıktır. **Bayt çifti kodlama (BPE)** ve akrabaları, her şeyi kapsayan sık kullanılan alt kelime birimlerinden oluşan bir kelime dağarcığı öğrenerek bu sorunu çözdü. Her modern LLM için her modern tokenizer, bir tokenizer alt kelimesidir.
 
 Bu derste üçü de anlatılıyor, ardından hangisine ne zaman ulaşılması gerektiği açıklanıyor.
 
 ## Konsept
 
-**GloVe (Küresel Vektörler).** `X` kelime-kelime birlikte oluşum matrisini oluşturun; burada `X[i][j]`, `j` kelimesinin `i` kelimesi bağlamında ne sıklıkta göründüğünü gösterir. Vektörleri `v_i · v_j + b_i + b_j ≈ log(X[i][j])` sağlayacak şekilde eğitin. Ağırlık kaybı o kadar sık ​​görülür ki çiftler baskın olmaz. Tamamlamak.
+**GloVe (Küresel Vektörler).** `X` kelime-kelime birlikte oluşum matrisini oluşturun; burada `X[i][j]`, `j` kelimesinin `i` kelimesi bağlamında ne sıklıkta göründüğünü gösterir. `v_i · v_j + b_i + b_j ≈ log(X[i][j])` olacak şekilde vektörleri eğitin. Ağırlık kaybı o kadar sık ​​görülür ki çiftler baskın olmaz. Tamamlamak.
 
 **Hızlı Metin.** Bir kelime, karakter n gramı artı kelimenin kendisinin toplamıdır. `where`, `<wh, whe, her, ere, re>, <where>` olur. Vektör kelimesi bu bileşen vektörlerinin toplamıdır. Word2Vec olarak eğitin. Faydası: görünmeyen kelimeler (`whereupon`) bilinen n-gramlardan oluşur.
 
-**BPE (Byte-Pair Encoding; bayt çifti kodlama).** Tek tek baytlardan (veya karakterlerden) oluşan bir vocabulary ile başlayın. Corpus'taki her bitişik çifti sayın. En sık çifti yeni bir token'da birleştirin. Bunu `k` yineleme boyunca tekrarlayın. Sonuçta `k + 256` token'lık bir vocabulary oluşur; `ing`, `tion` ve `the` gibi sık diziler tek token olurken nadir sözcükler tanıdık parçalara ayrılır. Böylece her cümle mutlaka token'lara dönüştürülebilir.
+**BPE (Bayt Çifti Kodlaması).** Bireysel baytlardan (veya karakterlerden) oluşan bir kelime dağarcığıyla başlayın. Derlemdeki her bitişik çifti sayın. En sık görülen çifti yeni bir token ile birleştirin. `k` yinelemeleri için tekrarlayın. Sonuç: sık dizilerin (`ing`, `tion`, `the`) tek token'ler olduğu ve nadir kelimelerin tanıdık parçalara bölündüğü `k + 256` token kelime dağarcığı. Her cümle token bir şeye dönüşür.
 
 ## İnşa Et
 
@@ -77,9 +77,9 @@ def glove_train(vocab, pair_counts, dim=16, epochs=100, lr=0.05, x_max=100, alph
     return W + W_tilde
 ```
 
-Adlandırmaya değer iki hareketli parça. Ağırlıklandırma fonksiyonu `f(x) = (x/x_max)^alpha`, çok sık görülen çiftlerin (`(the, and)` gibi) ağırlığını azaltır, böylece kayıpta baskın olmazlar. Son embedding, `W` (orta) ve `W_tilde` (bağlam) tablolarının toplamıdır. Her ikisini de toplamak, yalnızca birini kullanarak daha iyi performans gösterme eğiliminde olan yayınlanmış bir hiledir.
+Adlandırmaya değer iki hareketli parça. Ağırlıklandırma işlevi `f(x) = (x/x_max)^alpha`, çok sık görülen çiftlerin (`(the, and)` gibi) ağırlığını azaltır, böylece kayıpta baskın olmazlar. Son embedding, `W` (ortada) ve `W_tilde` (bağlam) tablolarının toplamıdır. Her ikisini de toplamak, yalnızca birini kullanarak daha iyi performans gösterme eğiliminde olan yayınlanmış bir hiledir.
 
-### FastText: alt kelimeye duyarlı embedding'lar
+### FastText: alt kelimeye duyarlı embedding'ler
 
 ```python
 def char_ngrams(word, n_min=3, n_max=6):
@@ -96,7 +96,7 @@ def char_ngrams(word, n_min=3, n_max=6):
 {'<where>', '<wh', 'whe', 'her', 'ere', 're>', '<whe', 'wher', 'here', 'ere>', '<wher', 'where', 'here>'}
 ```
 
-Her sözcük kendi n-gram kümesiyle (genellikle 3 ila 6 karakter) temsil edilir. embedding kelimesi, n-gram embedding'lerinin toplamıdır. Gram atlama eğitimi için bunu Word2Vec'in tek bir vektör kullandığı yere takın.
+Her sözcük kendi n-gram kümesiyle (genellikle 3 ila 6 karakter) temsil edilir. embedding kelimesi, n-gram embedding'lerin toplamıdır. Gram atlama eğitimi için bunu Word2Vec'in tek bir vektör kullandığı yere takın.
 
 ```python
 def fasttext_vector(word, ngram_table):
@@ -107,7 +107,7 @@ def fasttext_vector(word, ngram_table):
     return np.sum(vecs, axis=0)
 ```
 
-Görünmeyen bir kelime için, bazı n-gramları bilindiği sürece yine de bir vektör elde edersiniz. `whereupon`, `<wh`, `her`, `ere` ve `<where`'yi `where` ile paylaşır, böylece ikisi birbirine yakınlaşır.
+Görünmeyen bir kelime için, bazı n-gramları bilindiği sürece yine de bir vektör elde edersiniz. `whereupon`, `<wh`, `her`, `ere` ve `<where`'yi `where` ile paylaşıyor, böylece ikisi birbirine yakınlaşıyor.
 
 ### BPE: öğrenilmiş alt kelime sözlüğü
 
@@ -168,9 +168,9 @@ def apply_bpe(word, merges):
 ['low', 'est</w>']
 ```
 
-İlk yineleme en yaygın bitişik çifti birleştirir. Yeterli yinelemeden sonra sık görülen alt diziler (`low`, `est`, `tion`) tekli token'lere dönüşür ve nadir sözcükler temiz bir şekilde bölünür.
+İlk yineleme en yaygın bitişik çifti birleştirir. Yeterli yinelemeden sonra, sık görülen alt dizeler (`low`, `est`, `tion`) tek token'ler haline gelir ve nadir sözcükler temiz bir şekilde bozulur.
 
-Gerçek GPT / BERT / T5 tokenizer'ler 30k-100k birleştirmeleri öğrenir. Sonuç: herhangi bir metin tokenbilinen kimliklerin sınırlı uzunluklu bir dizisine dönüşür, hiçbir zaman OOV olmaz.
+Gerçek GPT / BERT / T5 tokenizer'ler 30k-100k birleştirmeyi öğrenir. Sonuç: token herhangi bir metin, bilinen kimliklerin sınırlı uzunluklu bir dizisine dönüştürülür, hiçbir zaman OOV olmaz.
 
 ## Kullan onu
 
@@ -184,7 +184,7 @@ print(ft.get_word_vector("whereupon").shape)
 print(ft.get_word_vector("zoomerapproved").shape)
 ```
 
-transformer döneminde BPE tarzı alt kelime tokenoluşturulması için:
+transformer döneminde BPE tarzı alt kelime tokenleştirme için:
 
 ```python
 from transformers import AutoTokenizer
@@ -205,7 +205,7 @@ print(tok.tokenize("unbelievably tokenized"))
 |-----------|------|
 | Önceden eğitilmiş genel amaçlı kelime vektörleri, OOV toleransı gerekmez | Eldiven 300d |
 | Önceden eğitilmiş genel amaçlı kelime vektörleri, yazım hatalarını / yeni sözcükleri / morfolojik açıdan zengin dilleri ele almalıdır | Hızlı Metin |
-| transformer (eğitim veya inference) | Model neyle birlikte gönderilirse tokenizer ne olursa olsun. Asla takas yapmayın. |
+| transformer (eğitim veya inference) ile ilgili her şey | Model neyle birlikte gönderilirse gönderilsin tokenizer. Asla takas yapmayın. |
 | Kendi dil modelinizi sıfırdan eğitmek | Önce kendi külliyatınızda bir BPE veya SentencePiece tokenizer eğitin |
 | Doğrusal modelle üretim metni sınıflandırması | Hala TF-IDF. Ders 02. |
 
@@ -236,22 +236,22 @@ Refuse to recommend training a custom tokenizer when the user is fine-tuning a p
 ## Egzersizler
 
 1. **Kolay.** `char_ngrams("playing")` ve `char_ngrams("played")`'yi çalıştırın. İki n-gram kümesinin Jaccard örtüşmesini hesaplayın. Önemli miktarda paylaşılan parçalar görmelisiniz (`pla`, `lay`, `play`), bu nedenle FastText morfolojik değişkenler arasında iyi aktarım yapar.
-2. **Orta.** Kelime dağarcığının gelişimini izlemek için `learn_bpe` öğesini genişletin. Birleştirme sayısının bir fonksiyonu olarak derlem başına karakter başına tokens grafiğini çizin. İlk başta hızlı sıkıştırmayı, token başına yaklaşık ~2-3 karakter asimptotu görmelisiniz.
-3. **Zor.** Shakespeare'in tüm eserleri üzerinde 1k birleştirme BPE'si eğitin. Yaygın kelimelerin tokenoluşturulmasını nadir özel isimlerle karşılaştırın. Önceki ve sonraki kelime başına ortalama token sayısını ölçün. Sizi şaşırtan şeyleri yazın.
+2. **Orta.** Kelime dağarcığının gelişimini izlemek için `learn_bpe`'yi genişletin. Birleştirme sayısının bir fonksiyonu olarak derlem karakteri başına token sayısını çizin. İlk başta hızlı sıkıştırmayı, token başına ~2-3 karaktere yakın asimptotu görmelisiniz.
+3. **Zor.** Shakespeare'in tüm eserleri üzerinde 1k birleştirme BPE'si eğitin. Yaygın kelimelerin tokenleştirilmesini nadir özel isimlerle karşılaştırın. Önceki ve sonraki kelime başına ortalama token sayısını ölçün. Sizi şaşırtan şeyleri yazın.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
-| Eş-oluşma matrisi | Kelime kelime sıklık tablosu | `X[i][j]` = `j` kelimesinin, `i` kelimesinin etrafındaki bir pencerede ne sıklıkta göründüğü. |
+| Eş-oluşma matrisi | Kelime kelime sıklık tablosu | `X[i][j]` = `j` kelimesinin `i` kelimesinin etrafındaki bir pencerede ne sıklıkta göründüğü. |
 | Alt Kelime | Tek kelimeyle | Bir karakter n-gramı (FastText) veya öğrenilmiş token (BPE/WordPiece/SentencePiece). |
-| BPE | Bayt çifti kodlama | Kelime dağarcığı hedef boyuta ulaşana kadar en sık kullanılan bitişik çiftlerin yinelemeli birleştirilmesi. |
+| BPE | Bayt çifti kodlama | Kelime dağarcığı hedef boyutuna ulaşana kadar en sık görülen bitişik çiftlerin yinelemeli birleştirilmesi. |
 | OOV | Kelime dağarcığı dışında | Modelin hiç görmediği kelime. Word2Vec/GloVe başarısız. FastText ve BPE bunu halleder. |
 | Bayt düzeyinde BPE | Ham baytlarda BPE | GPT-2'nin şeması. Kelime dağarcığı 256 baytla başlar, dolayısıyla hiçbir şey asla OOV değildir. |
 
 ## Daha Fazla Okuma
 
-- [Pennington, Socher, Manning (2014). GloVe: Kelime Temsili için Global Vektörler](https://nlp.stanford.edu/pubs/glove.pdf) — GloVe makalesi, yedi sayfa, hala kaybın en iyi türetimi.
+- [Pennington, Socher, Manning (2014). GloVe: Kelime Temsili için Küresel Vektörler](https://nlp.stanford.edu/pubs/glove.pdf) — GloVe makalesi, yedi sayfa, hala kaybın en iyi türetimi.
 - [Bojanowski ve ark. (2017). Kelime Vektörlerini Alt Kelime Bilgileriyle Zenginleştirme](https://arxiv.org/abs/1607.04606) — FastText.
 - [Sennrich, Haddow, Birch (2016). Alt Kelime Birimleriyle Nadir Kelimelerin Nöral Makine Çevirisi](https://arxiv.org/abs/1508.07909) — BPE'yi modern NLP'ye tanıtan makale.
-- [Sarılma Yüzü tokenizer özeti](https://huggingface.co/docs/transformers/tokenizer_summary) — BPE, WordPiece ve SentencePiece'in pratikte gerçekte ne kadar farklı olduğu.
+- [Sarılma Yüzü tokenizer özeti](https://huggingface.co/docs/transformers/tokenizer_summary) — BPE, WordPiece ve SentencePiece'in pratikte gerçekte nasıl farklılaştığı.

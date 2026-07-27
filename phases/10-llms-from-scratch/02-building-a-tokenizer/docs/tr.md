@@ -9,20 +9,20 @@
 
 ## Öğrenme Hedefleri
 
-- Unicode, boşluk normalleştirmesi ve özel token'leri işleyen üretim düzeyinde bir BPE tokenizer oluşturun
+- Unicode, boşluk normalleştirmesi ve özel token'leri yöneten üretim düzeyinde bir BPE tokenizer oluşturun
 - tokenizer'nin bilinmeyen token'ler olmadan herhangi bir girişi (emoji, CJK ve kod dahil) kodlayabilmesi için bayt düzeyinde geri dönüş uygulayın
-- BPE birleştirmelerini uygulamadan önce metni sözcük sınırlarında bölen ön-tokenleştirme normal ifade kalıpları ekleyin
+- BPE birleştirmelerini uygulamadan önce metni sözcük sınırlarında bölen tokenizasyon öncesi normal ifade kalıpları ekleyin
 - Bir külliyat üzerinde özel bir tokenizer eğitin ve çok dilli metinde tiktoken'ye göre sıkıştırma oranını değerlendirin
 
 ## Sorun
 
-Ders 01'deki BPE'niz tokenizer İngilizce metin üzerinde çalışır. Şimdi Japoncayı fırlatın. Veya emojiyi. Veya karışık sekme ve boşluklara sahip Python kodu.
+Ders 01'deki BPE tokenizer cihazınız İngilizce metin üzerinde çalışır. Şimdi Japoncayı fırlatın. Veya emojiyi. Veya karışık sekme ve boşluklara sahip Python kodu.
 
 Kırılıyor.
 
-BPE'nin yanlış olması değil, uygulamanın eksik olması nedeniyle. Bir tokenizer üretimi, herhangi bir kodlamadaki ham baytları işler, bölünmeden önce Unicode'u normalleştirir, asla birleştirilmeyen özel token'leri yönetir, alt kelime bölmeyle ön-tokenzincirlemeyi zincirler ve tüm bunları, 15 trilyon token'yu işleyen bir eğitim hattında darboğaz oluşturmayacak kadar hızlı yapar.
+BPE'nin yanlış olması değil, uygulamanın eksik olması nedeniyle. Üretim tokenizer, herhangi bir kodlamadaki ham baytları işler, bölünmeden önce Unicode'u normalleştirir, hiçbir zaman birleştirilmeyen özel token'leri yönetir, token öncesi ön kelimeyi alt kelime bölmeyle zincirler ve tüm bunları, 15 trilyon token'yi işleyen bir eğitim hattında darboğaz oluşturmayacak kadar hızlı yapar.
 
-GPT-2'nin tokenizer'si 50.257 token'ye sahiptir. Llama 3'te 128.256 var. GPT-4'ün yaklaşık 100.000'i var. Bunlar oyuncak numaraları değil. Bu sözcüklerin arkasındaki birleştirme tabloları yüzlerce gigabaytlık metin üzerinde eğitilmişti ve çevreleyen makineler (normalizasyon, öntokenizasyon, özel token enjeksiyonu, sohbet şablonu biçimlendirmesi) "merhaba dünya"yı işleyen bir tokenizer'yi tüm interneti yöneten birinden ayıran şeydir.
+GPT-2'nin tokenizer'sinde 50.257 token bulunur. Lama 3'te 128.256 var. GPT-4'ün yaklaşık 100.000'i var. Bunlar oyuncak numaraları değil. Bu sözlüklerin arkasındaki birleştirme tabloları yüzlerce gigabaytlık metin üzerinde eğitildi ve çevreleyen makineler (normalleştirme, token öncesi, özel token enjeksiyonu, sohbet şablonu biçimlendirmesi) "merhaba dünya"yı işleyen tokenizer'yi tüm interneti yöneten tokenizer'den ayıran şeydir.
 
 O makineyi sen yapacaksın.
 
@@ -30,7 +30,7 @@ O makineyi sen yapacaksın.
 
 ### Tam Boru Hattı
 
-Bir tokenizer üretimi tek bir algoritma değildir. Bu, her biri farklı bir sorunu çözen beş aşamadan oluşan bir boru hattıdır.
+tokenizer üretimi tek bir algoritma değildir. Bu, her biri farklı bir sorunu çözen beş aşamadan oluşan bir boru hattıdır.
 
 ```mermaid
 graph LR
@@ -52,23 +52,23 @@ Her aşamanın belirli bir görevi vardır:
 
 | Sahne | Ne İşe Yarar | Neden Önemlidir |
 |-------|-------------|----------------|
-| Normalleştir | NFKC Unicode, küçük harf isteğe bağlı, şerit vurgulu isteğe bağlı | "fi" bitişik harfler (U+FB01), "fi" (iki karakter) haline gelir. Bu olmadan aynı kelime farklı token'lar alır. |
-| Ön-TokenÖnceden Boyutlandır | BPE'den önce metni parçalara ayırın | BPE'nin sözcük sınırlarını aşarak birleşmesini engeller. "kedi" hiçbir zaman token "e c" üretmemelidir. |
+| Normalleştir | NFKC Unicode, küçük harf isteğe bağlı, şerit vurgulu isteğe bağlı | "fi" bitişik harfler (U+FB01), "fi" (iki karakter) haline gelir. Bu olmadan aynı kelime farklı token'ler alır. |
+| Tokenize öncesi | BPE'den önce metni parçalara ayırın | BPE'nin kelime sınırlarının ötesinde birleşmesini engeller. "kedi" asla bir token "e c" üretmemelidir. |
 | BPE Birleştirme | Öğrenilen birleştirme kurallarını bayt dizilerine uygulama | Çekirdek sıkıştırma. Ham baytları token alt kelimesine dönüştürür. |
-| Özel Token'lar | [BOS], [EOS], [PAD], sohbet şablonu işaretçilerini enjekte edin | Bu token'ların sabit kimlikleri var. BPE birleşmelerine asla katılmazlar. Modelin yapı olarak bunlara ihtiyacı var. |
-| Kimlik Eşleme | token dizesini tamsayı kimliklerine dönüştürün | Model dizeleri değil tam sayıları görür. |
+| Özel Token'ler | [BOS], [EOS], [PAD], sohbet şablonu işaretçilerini enjekte edin | Bu token'lerin sabit kimlikleri vardır. BPE birleşmelerine asla katılmazlar. Modelin yapı olarak bunlara ihtiyacı var. |
+| Kimlik Eşleme | token dizelerini tamsayı kimliklerine dönüştürün | Model dizeleri değil tam sayıları görür. |
 
 ### Bayt Düzeyinde BPE
 
-Ders 01'in tokenizer'si UTF-8 bayt üzerinde çalıştırılır. Bu doğru çağrıydı. Ancak önemli bir şeyi atladık: Bu baytlar geçerli UTF-8 olmadığında ne olur?
+Ders 01'in tokenizer'si UTF-8 bayt üzerinde çalıştırıldı. Bu doğru çağrıydı. Ancak önemli bir şeyi atladık: Bu baytlar geçerli UTF-8 olmadığında ne olur?
 
-Bayt düzeyinde BPE, mümkün olan her bayt değerini (0-255) geçerli bir token olarak ele alarak bu sorunu çözer. Temel kelime dağarcığınız tam olarak 256 giriştir. Herhangi bir dosya (metin, ikili dosya, bozuk) bilinmeyen bir token üretilmeden tokenözelleştirilebilir.
+Bayt düzeyinde BPE, mümkün olan her bayt değerini (0-255) geçerli bir token olarak ele alarak bu sorunu çözer. Temel kelime dağarcığınız tam olarak 256 giriştir. Herhangi bir dosya (metin, ikili, bozuk) bilinmeyen bir token üretilmeden token haline getirilebilir.
 
 GPT-2 bir numara ekledi: her baytı yazdırılabilir bir Unicode karakterle eşleyin, böylece sözcük dağarcığı insanlar tarafından okunabilir kalsın. Bayt 0x20 (boşluk), eşlemelerinde "G" karakteri haline gelir. Bu tamamen kozmetiktir. Algoritma umursamıyor.
 
 Gerçek güç: bayt düzeyinde BPE dünyadaki her dili yönetir. Çince karakterlerin her biri 3 UTF-8 bayttır. Japonca 3-4 bayt olabilir. Arapça, Devanagari, emoji; hepsi sadece bayt dizileri. BPE algoritması, bu bayt dizilerindeki kalıpları, İngilizce ASCII baytlarındaki kalıplarla tamamen aynı şekilde bulur.
 
-### ÖnTokenönleştirme
+### Tokenizasyon Öncesi
 
 BPE metninize dokunmadan önce onu parçalara ayırmanız gerekir. Bu, birleştirme algoritmasının sözcük sınırlarını kapsayan token'ler oluşturmasını engeller.
 
@@ -78,28 +78,28 @@ GPT-2, metni bölmek için bir normal ifade modeli kullanır:
 '(?:[sdmt]|ll|ve|re)| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+
 ```
 
-Bu model, kısaltmalara ("yapma", "yapma" + "'t'ye dönüşür"), isteğe bağlı baştaki boşluklara, sayılara, noktalama işaretlerine ve boşluklara sahip kelimelere bölünür. Baştaki boşluk kelimeye bağlı tutulur - böylece "kedi", ["the", " ", "cat"] değil, [" the", "cat"] olur.
+Bu kalıp, kısaltmalara ("yapma", "yapma" + "'t'ye dönüşür"), isteğe bağlı baştaki boşluklara, sayılara, noktalama işaretlerine ve boşluklara sahip kelimelere bölünür. Baştaki boşluk kelimeye bağlı tutulur - böylece "kedi", ["the", " ", "cat"] değil, [" the", "cat"] olur.
 
-Llama, regex'i tamamen atlayan SentencePiece'i kullanır. Ham bayt akışını uzun bir dizi olarak ele alır ve BPE algoritmasının sınırları belirlemesine olanak tanır. Bu daha basittir ancak BPE'ye çapraz kelime token'ler oluşturma konusunda daha fazla özgürlük verir.
+Llama, regex'i tamamen atlayan SentencePiece'i kullanır. Ham bayt akışını uzun bir dizi olarak ele alır ve BPE algoritmasının sınırları belirlemesine olanak tanır. Bu daha basittir ancak BPE'ye çapraz kelime token'ler oluşturma konusunda daha fazla özgürlük sağlar.
 
-Seçim önemlidir. GPT-2'nin regex'i, tokenizer'nin bir kelimenin sonundaki "the" ile bir sonraki kelimenin başındaki "the"nin birleşmesi gerektiğini öğrenmesini engeller. SentencePiece buna izin veriyor, bu da bazen daha verimli sıkıştırma ancak daha az yorumlanabilir token'ler üretiyor.
+Seçim önemlidir. GPT-2'nin regex'i, tokenizer'nin bir kelimenin sonundaki "the" ile bir sonraki kelimenin başındaki "the"nin birleşmesi gerektiğini öğrenmesini engeller. Bazen daha verimli sıkıştırma ancak daha az yorumlanabilir token'ler üreten SentencePiece buna izin verir.
 
-### Özel Token'lar
+### Özel Token'ler
 
-Her üretim tokenizer, yapısal işaretleyiciler için token kimliğini ayırır:
+Her üretim tokenizer, yapısal işaretleyiciler için token kimliklerini ayırır:
 
 | Token | Amaç | Kullanan |
 |-------|---------|---------|
-| `[BOS]` / `<s>` | Sıranın başlangıcı | Llama 3, GPT |
+| `[BOS]` / `<s>` | Sıranın başlangıcı | Lama 3, GPT |
 | `[EOS]` / `</s>` | Sıranın sonu | Tüm modeller |
 | `[PAD]` | Toplu hizalama için dolgu | BERT, T5 |
-| `[UNK]` | Bilinmeyen token (bayt düzeyinde BPE bunu ortadan kaldırır) | BERT, WordPiece |
+| `[UNK]` | Bilinmeyen token (bayt düzeyinde BPE bunu ortadan kaldırır) | BERT, Kelime Parçası |
 | `<\|im_start\|>` | Sohbet mesajı sınırı başlangıcı | ChatGPT, Qwen |
 | `<\|im_end\|>` | Sohbet mesajı sınır sonu | ChatGPT, Qwen |
-| `<\|user\|>` | Kullanıcı dönüş işaretçisi | Llama 3 |
-| `<\|assistant\|>` | Asistan dönüş işaretçisi | Llama 3 |
+| `<\|user\|>` | Kullanıcı dönüş işaretçisi | Lama 3 |
+| `<\|assistant\|>` | Asistan dönüş işaretçisi | Lama 3 |
 
-Özel token'lar asla BPE'ye göre bölünmez. Bunlar, birleştirme algoritması çalıştırılmadan tam olarak önce eşleştirilir, sabit kimlikleriyle değiştirilir ve çevreleyen metin normal şekilde tokenözelleştirilir.
+Özel token'ler hiçbir zaman BPE'ye göre bölünmez. Bunlar, birleştirme algoritması çalıştırılmadan tam olarak önce eşleştirilir, sabit kimlikleriyle değiştirilir ve çevresindeki metin normal şekilde token'ye dönüştürülür.
 
 ### Sohbet Şablonları
 
@@ -140,11 +140,11 @@ Hi there!<|im_end|>
 
 ### Hız
 
-Python üretim tokenoluşturulması için çok yavaş.
+Python, tokenizasyon üretimi için çok yavaş.
 
-tiktoken (OpenAI), Rust'ta Python bağlamalarıyla yazılmıştır. HuggingFace tokenizers aynı zamanda Pas'tır. SentencePiece C++'dır. Bunlar, saf Python'a göre 10-100 kat hızlanma sağlar.
+tiktoken (OpenAI), Python bağlamalarıyla Rust'ta yazılmıştır. HuggingFace tokenizers aynı zamanda Rust'tır. SentencePiece C++'tır. Bunlar, saf Python'a göre 10-100 kat hızlanma sağlar.
 
-Perspektif açısından: Llama 3 için token15 trilyon tokens'nin saniyede 1 milyon tokens hızında ön eğitimi (hızlı Python) 174 gün sürecektir. Saniyede 100 milyon tokens (Pas) ile 1,7 gün sürer.
+Perspektif açısından: token Llama 3 için 15 trilyon token'nin saniyede 1 milyon token hızında ön eğitimi (hızlı Python) 174 gün sürecektir. Saniyede 100 milyon token (Rust) ile 1,7 gün sürer.
 
 Algoritmayı anlamak için Python'da geliştiriyorsunuz. Üretimde derlenmiş bir uygulama kullanırsınız ve yalnızca Python sarmalayıcısına dokunursunuz.
 
@@ -156,7 +156,7 @@ weight-tying
 
 ### Adım 1: Bayt Düzeyinde Kodlama
 
-Temel. Herhangi bir dizeyi bir bayt dizisine dönüştürün, her baytı görüntülemek için yazdırılabilir bir karakterle eşleştirin ve işlemi tersine çevirin.
+Temel. Herhangi bir dizeyi bir bayt dizisine dönüştürün, her baytı görüntülenmek üzere yazdırılabilir bir karakterle eşleştirin ve işlemi tersine çevirin.
 
 ```python
 def bytes_to_tokens(text):
@@ -185,7 +185,7 @@ for label, text in texts:
 
 ### Adım 2: Regex ile Tokenizer öncesi
 
-GPT-2 normal ifade modelini kullanarak metni parçalara ayırın. Her parça BPE tarafından bağımsız olarak tokensize alınır.
+GPT-2 normal ifade modelini kullanarak metni parçalara ayırın. Her parça BPE tarafından bağımsız olarak token'ye dönüştürülür.
 
 ```python
 import re
@@ -204,7 +204,7 @@ def pre_tokenize(text):
     return [match.group() for match in GPT2_PATTERN.finditer(text)]
 ```
 
-`regex` modülü, Unicode özellik çıkışlarını destekler (harfler için `\p{L}`, sayılar için `\p{N}`). Standart kitaplık `re` modülü bunu yapmaz, bu nedenle ASCII karakter sınıflarına geri dönüyoruz. Çok dilli üretim tokenizer'ler için `regex`'yi yükleyin.
+`regex` modülü, Unicode özellik çıkışlarını destekler (harfler için `\p{L}`, sayılar için `\p{N}`). Standart kütüphane `re` modülü bunu yapmaz, bu nedenle ASCII karakter sınıflarına geri dönüyoruz. Çok dilli tokenizer üretimleri için `regex`'yi yükleyin.
 
 Deneyin:
 
@@ -213,11 +213,11 @@ print(pre_tokenize("Hello, world! Don't stop."))
 # [' Hello', ',', ' world', '!', " Don", "'t", ' stop', '.']
 ```
 
-Baştaki boşluk kelimeye bağlı kalır. Kasılmalar kesme işaretinde bölünüyor. Noktalama işaretleri kendi parçası haline gelir. BPE, bu sınırların ötesindeki token'leri hiçbir zaman birleştirmeyecektir.
+Baştaki boşluk kelimeye bağlı kalır. Kasılmalar kesme işaretinde bölünüyor. Noktalama işaretleri kendi parçası haline gelir. BPE, token'leri bu sınırların ötesinde asla birleştirmez.
 
 ### Adım 3: Bayt Dizilerinde BPE
 
-Ders 01'deki temel algoritma, ancak artık öncedentokenbireyselleştirilmiş parçalar üzerinde bağımsız olarak çalışıyor.
+Ders 01'deki çekirdek algoritma, ancak artık token öncesi parçalar üzerinde bağımsız olarak çalışıyor.
 
 ```python
 from collections import Counter
@@ -245,7 +245,7 @@ def apply_merge(byte_seq, pair, new_id):
 
 ### Adım 4: Özel Token İşleme
 
-Özel token'lerin tam eşleşmeye ve sabit kimliklere ihtiyacı vardır. BPE'yi tamamen atlıyorlar.
+Özel token'ler tam eşleşmeye ve sabit kimliklere ihtiyaç duyar. BPE'yi tamamen atlıyorlar.
 
 ```python
 class SpecialTokenHandler:
@@ -275,7 +275,7 @@ class SpecialTokenHandler:
 
 ### Adım 5: Tam Tokenizer Sınıfı
 
-Her şeyi birbirine zincirleyin: normalleştirin, özel token'lere bölün, ön-tokenoluşturun, BPE birleştirme, kimliklerle eşleyin.
+Her şeyi birbirine zincirleyin: normalleştirin, özel token'lere bölün, tokenize öncesi, BPE birleştirme, kimliklerle eşleyin.
 
 ```python
 import unicodedata
@@ -385,7 +385,7 @@ for text in test_texts:
 
 ### Gerçek Tokenizer'leri Karşılaştırma
 
-Llama 3, GPT-4 ve Mistral'den gerçek tokenizer'ları yükleyin. Her birinin aynı çok dilli paragrafı nasıl ele aldığını görün.
+Llama 3, GPT-4 ve Mistral'den gerçek tokenizer'leri yükleyin. Her birinin aynı çok dilli paragrafı nasıl ele aldığını görün.
 
 ```python
 import tiktoken
@@ -411,7 +411,7 @@ for name, tok in [("Llama 3", llama_tok), ("Mistral", mistral_tok)]:
     print(f"{name} ({len(tokens)} tokens): {pieces[:20]}...")
 ```
 
-Aynı metin için farklı token sayıları göreceksiniz. 128K kelime dağarcığına sahip Llama 3, ortak kalıpları birleştirme konusunda daha agresiftir. 100K ile GPT-4 ortada oturuyor. 32K'lı Mistral daha fazla token üretir ancak daha küçük bir embedding katmanına sahiptir.
+Aynı metin için farklı token sayılarını göreceksiniz. 128K kelime dağarcığına sahip Lama 3, ortak kalıpları birleştirme konusunda daha agresiftir. 100K ile GPT-4 ortada oturuyor. 32K'lı Mistral daha fazla token üretir ancak daha küçük bir embedding katmanına sahiptir.
 
 Takas her zaman aynıdır: Daha büyük kelime dağarcığı, daha kısa diziler ancak daha fazla parametre anlamına gelir.
 
@@ -421,27 +421,27 @@ Bu ders, üretim tokenizer'leri oluşturmak ve hata ayıklamak için bir prompt 
 
 ## Egzersizler
 
-1. **Kolay:** Herhangi bir token kimliği için ham baytları gösteren bir `get_token_bytes(id)` yöntemi ekleyin. En yaygın birleştirilmiş token'lerinizin gerçekte neyi temsil ettiğini incelemek için bunu kullanın.
-2. **Orta:** Boşluklara ve rakamlara bölünen ancak baştaki boşlukları koruyan Llama stili ön-tokenizer'yi uygulayın. Kelime dağarcığını aynı kaynaktaki GPT-2 normal ifade yaklaşımıyla karşılaştırın.
-3. **Zor:** `{"role": ..., "content": ...}` mesajların listesini alan ve Llama 3 sohbet formatı için doğru token sırasını üreten bir sohbet şablonu yöntemi ekleyin. HuggingFace uygulamasına karşı test edin.
+1. **Kolay:** Herhangi bir token kimliğinin ham baytlarını gösteren bir `get_token_bytes(id)` yöntemi ekleyin. En yaygın birleştirilmiş token'lerinizin gerçekte neyi temsil ettiğini incelemek için bunu kullanın.
+2. **Orta:** Boşluklara ve rakamlara bölünen ancak baştaki boşlukları koruyan Llama tarzı ön-tokenizer'yi uygulayın. Kelime dağarcığını aynı kaynaktaki GPT-2 normal ifade yaklaşımıyla karşılaştırın.
+3. **Zor:** `{"role": ..., "content": ...}` mesajlarının bir listesini alan ve Llama 3 sohbet formatı için doğru token sırasını üreten bir sohbet şablonu yöntemi ekleyin. HuggingFace uygulamasına karşı test edin.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| Bayt düzeyinde BPE | "Baytlarla çalışanTokenizer" | 256 bayt değerinden oluşan temel kelime dağarcığına sahip BPE - bilinmeyen token'ler olmadan her türlü girişi yönetir |
-| Öntokenönleştirme | "BPE'den önce bölme" | BPE'nin sözcük sınırlarını aşarak birleşmesini engelleyen normal ifade veya kural tabanlı bölme |
-| NFKC normalizasyonu | "Unicode temizleme" | Kanonik ayrıştırma ve ardından uyumluluk kompozisyonu - "fi" bitişik harfler "fi" olur, tam genişlikte "A", "A" olur |
-| Sohbet şablonu | "Mesajlar nasıl token'lara dönüşür?" | Rol/içerik mesajları listesini düz bir token dizisine dönüştürmek için tam format - modele özeldir ve eğitim formatıyla eşleşmelidir |
-| Özel token'lar | "Kontrol token'ler" | BPE'yi atlayan ayrılmış token kimlikleri -- [BOS], [EOS], [PAD], sohbet işaretçileri -- birleştirmeden önce tam olarak eşleşti |
-| Doğurganlık | "Tokens kelime başına" | Çıkış token'ların giriş kelimelerine oranı -- GPT-4'te İngilizce için 1,3, Korece için 2-3, daha yüksek olması bağlamın boşa harcandığı anlamına gelir |
+| Bayt düzeyinde BPE | "Baytlarla çalışan Tokenizer" | 256 bayt değerinden oluşan temel kelime dağarcığına sahip BPE - bilinmeyen token olmadan her türlü girişi yönetir |
+| tokenizasyon Öncesi | "BPE'den önce bölme" | BPE'nin kelime sınırlarını aşarak birleşmesini engelleyen normal ifade veya kural tabanlı bölme |
+| NFKC normalizasyonu | "Unicode temizleme" | Kanonik ayrıştırma ve ardından uyumluluk bileşimi - "fi" bitişik harfler "fi" olur, tam genişlikte "A", "A" olur |
+| Sohbet şablonu | "İletiler nasıl token haline gelir?" | Rol/içerik mesajları listesini düz bir token dizisine dönüştürmek için tam format - modele özeldir ve eğitim formatıyla eşleşmelidir |
+| Özel token'ler | "token'leri Denetle" | BPE'yi ([BOS], [EOS], [PAD], sohbet işaretleyicilerini) atlayan ayrılmış token kimlikleri, birleştirmeden önce tam olarak eşleşti |
+| Doğurganlık | "Kelime başına Token" | Çıkış token'lerin giriş sözcüklerine oranı -- GPT-4'te İngilizce için 1,3, Korece için 2-3, daha yüksek olması bağlamın boşa harcandığı anlamına gelir |
 | tiktoken | "OpenAI tokenizer" | Python bağlamalarıyla Rust BPE uygulaması - saf Python'dan 10-100 kat daha hızlı |
-| Tabloyu birleştir | "Sözlük" | Eğitim sırasında öğrenilen bayt çifti birleştirmelerinin sıralı listesi - bu, tokenizer'nin öğrenilen bilgisidir |
+| Tabloyu birleştir | "Sözlük" | Eğitim sırasında öğrenilen bayt çifti birleştirmelerinin sıralı listesi - bu tokenizer'nin öğrenilen bilgisidir |
 
 ## Daha Fazla Okuma
 
-- [OpenAI tiktoken source](https://github.com/openai/tiktoken) -- GPT-3.5/4 tarafından kullanılan Rust BPE uygulaması
+- [OpenAI tiktoken kaynağı](https://github.com/openai/tiktoken) -- GPT-3.5/4 tarafından kullanılan Rust BPE uygulaması
 - [HuggingFace tokenizers](https://github.com/huggingface/tokenizers) -- BPE, WordPiece, Unigram'ı destekleyen Rust tokenizer kitaplığı
-- [Llama 3 makalesi (Meta, 2024)](https://arxiv.org/abs/2407.21783) -- 128K kelime bilgisi ve tokenizer eğitimi hakkında ayrıntılar
-- [SentencePiece (Kudo & Richardson, 2018)](https://arxiv.org/abs/1808.06226) -- dilden bağımsız tokenizasyon
-- [GPT-2 tokenizer kaynak](https://github.com/openai/gpt-2/blob/master/src/encoder.py) -- orijinal bayttan Unicode'a eşleme
+- [Llama 3 makalesi (Meta, 2024)](https://arxiv.org/abs/2407.21783) -- 128K kelime bilgisi ve tokenizer eğitimiyle ilgili ayrıntılar
+- [SentencePiece (Kudo ve Richardson, 2018)](https://arxiv.org/abs/1808.06226) -- dilden bağımsız tokenization
+- [GPT-2 tokenizer kaynağı](https://github.com/openai/gpt-2/blob/master/src/encoder.py) -- orijinal bayttan Unicode'a eşleme

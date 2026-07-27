@@ -1,5 +1,5 @@
-# Aşama 1: Matematiksel Temeller
+# Aşama 1: Matematiğin Temelleri
 
-> Her AI algoritmasının ardındaki sezgiyi ders kitaplarıyla değil, kodla kavrayın.
+> Her yapay zeka algoritmasının ardındaki sezgi, ders kitaplarıyla değil kodla sağlanır.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

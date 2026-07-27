@@ -1,6 +1,6 @@
 # Uzun Bağlamlı Değerlendirme — NIAH, RULER, LongBench, MRCR
 
-> Gemini 3 Pro, 10M tokens'lik bağlamın reklamını yapar. 1M tokens'de 8 iğneli MRCR %26,3'e düşer. Reklamı yapıldı ≠ kullanılabilir. Uzun bağlam değerlendirmesi, gönderdiğiniz modelin gerçek kapasitesini size bildirir.
+> Gemini 3 Pro, 10 milyon token bağlamın tanıtımını yapar. 1 milyon token'de 8 iğneli MRCR %26,3'e düşüyor. Reklamı yapıldı ≠ kullanılabilir. Uzun bağlam değerlendirmesi, gönderdiğiniz modelin gerçek kapasitesini size bildirir.
 
 **Tür:** Öğren
 **Diller:** Python
@@ -9,7 +9,7 @@
 
 ## Sorun
 
-200 sayfalık bir sözleşmeniz var. Model, 1M-token bağlamını iddia ediyor. Sözleşmeyi yapıştırıp şunu soruyorsunuz: "Fesih maddesi nedir?" Model yanıt veriyor - ancak kapak sayfasından yanıt veriyor çünkü sonlandırma maddesi, modelin fiilen katıldığı yerden 120k tokens derinde bulunuyor.
+200 sayfalık bir sözleşmeniz var. Model, 1M-token bağlamını iddia ediyor. Sözleşmeyi yapıştırıp şunu soruyorsunuz: "Fesih maddesi nedir?" Model yanıt veriyor - ancak kapak sayfasından yanıt veriyor çünkü sonlandırma maddesi, modelin gerçekte katıldığı yerin 120 bin token ötesinde yer alıyor.
 
 Bu, 2026 bağlam-kapasite açığıdır. Teknik özellikler sayfalarında 1M veya 10M yazıyor. Gerçekte bunun %60-70'inin kullanılabilir olduğu ve "kullanılabilir"liğin göreve bağlı olduğu belirtiliyor.
 
@@ -17,19 +17,19 @@ Bu, 2026 bağlam-kapasite açığıdır. Teknik özellikler sayfalarında 1M vey
 - **Çoklu atlama / toplama:** çoğu modelde keskin bir şekilde ~128k'yi geçer.
 - **Dağınık gerçekler üzerinde akıl yürütmek:** başarısız olan ilk görev.
 
-Uzun bağlam değerlendirmesi bu eksenleri ölçer. Bu derste benchmark'lar, her birinin gerçekte neyi ölçtüğü ve alanınız için özel bir iğne testinin nasıl oluşturulacağı anlatılmaktadır.
+Uzun bağlam değerlendirmesi bu eksenleri ölçer. Bu derste benchmark'ler, her birinin gerçekte neyi ölçtüğü ve etki alanınız için özel bir iğne testinin nasıl oluşturulacağı anlatılmaktadır.
 
 ## Konsept
 
 ![NIAH temel çizgisi, RULER çoklu görevi, LongBench bütünsel](../assets/long-context-eval.svg)
 
-**Samanlıkta İğne (NIAH, 2023).** Uzun bir bağlamda kontrollü bir derinliğe bir gerçeği ("sihirli kelime ananastır") yerleştirin. Modelden onu almasını isteyin. Tarama derinliği × uzunluk. Orijinal uzun bağlam benchmark. Sınır modelleri artık bunu doyuruyor; bu gerekli ancak yeterli olmayan bir temeldir.
+**Samanlıkta İğne (NIAH, 2023).** Uzun bir bağlamda kontrollü bir derinliğe bir gerçeği ("sihirli kelime ananastır") yerleştirin. Modelden onu almasını isteyin. Tarama derinliği × uzunluk. Orijinal uzun bağlamlı benchmark. Sınır modelleri artık bunu doyuruyor; bu gerekli ancak yeterli olmayan bir temeldir.
 
 **RULER (Nvidia, 2024).** 4 kategoride 13 görev türü: alma (tek / çoklu anahtar / çoklu değer), çok atlamalı izleme (değişken izleme), toplama (ortak kelime sıklığı), QA. Yapılandırılabilir bağlam uzunluğu (4k - 128k+). NIAH'ı doyuran ancak çoklu atlamada başarısız olan modelleri ortaya çıkarır. 2024 sürümünde, 32k+ bağlam iddiasında bulunan 17 modelin yalnızca yarısı kaliteyi 32k'de korudu.
 
-**LongBench v2 (2024).** 503 çoktan seçmeli soru, 8k-2 milyon kelime bağlamı, altı görev kategorisi: tek belgeli QA, çoklu belgeli QA, uzun bağlam içi öğrenme, uzun diyalog, kod deposu, uzun yapılandırılmış veriler. Gerçek dünyadaki uzun bağlam davranışı için üretim benchmark.
+**LongBench v2 (2024).** 503 çoktan seçmeli soru, 8k-2 milyon kelime bağlamı, altı görev kategorisi: tek belgeli KG, çoklu belgeli KG, bağlam içi uzun öğrenme, uzun diyalog, kod deposu, uzun yapılandırılmış veriler. Gerçek dünyadaki uzun bağlam davranışı için üretim benchmark.
 
-**MRCR (Çok Yuvarlak Çekirdek Referans Çözünürlüğü).** Ölçekte çok turlu çekirdek referans. 8 iğneli, 24 iğneli, 100 iğneli çeşitleri. Dikkat azalmadan önce bir modelin kaç olguyla hokkabazlık yapabileceğini ortaya çıkarır.
+**MRCR (Çok Yuvarlak Çekirdek Referans Çözünürlüğü).** Ölçekte çok turlu çekirdek referans. 8 iğneli, 24 iğneli, 100 iğneli çeşitleri. Dikkatin azalmasından önce bir modelin kaç olguyla hokkabazlık yapabileceğini ortaya koyuyor.
 
 **NoLiMa.** "Sözcüksel olmayan iğne." İğne ve sorgu hiçbir gerçek örtüşmeyi paylaşmaz; Geri çağırma, bir adımlık anlamsal akıl yürütmeyi gerektirir. NIAH'tan daha zor.
 
@@ -39,7 +39,7 @@ Uzun bağlam değerlendirmesi bu eksenleri ölçer. Bu derste benchmark'lar, her
 
 ### Gerçekte ne rapor edilmeli
 
-- **Reklamı yapılan context window.** Teknik özellik sayfası numarası.
+- **Reklam yapılan context window.** Teknik özellik sayfası numarası.
 - **Etkili alma uzunluğu.** NIAH belirli bir eşikte geçer (e.g., %90).
 - **Etkili akıl yürütme uzunluğu.** Bu eşikte çoklu atlama veya toplama geçişi.
 - **Bozulma eğrisi.** Doğruluk ve bağlam uzunluğu, görev türüne göre çizilmiştir.
@@ -50,7 +50,7 @@ Teknik özellikler sayfanız için iki sayı: geri getirme açısından etkili v
 
 ### 1. Adım: alanınız için özel bir NIAH
 
-Bkz. `code/main.py`. The skeleton:
+Bkz. `code/main.py`. İskelet:
 
 ```python
 def build_haystack(filler_text, needle, depth_ratio, total_tokens):
@@ -80,7 +80,7 @@ def score_niah(model, haystack, question, expected):
     return 1 if expected.lower() in answer.lower() else 0
 ```
 
-Süpürme `depth_ratio` ∈ {0, 0,25, 0,5, 0,75, 1,0} × `total_tokens` ∈ {1k, 4k, 16k, 64k}. Isı haritasını çizin. Bu, hedef modelinizin NIAH kartıdır.
+Tarama `depth_ratio` ∈ {0, 0,25, 0,5, 0,75, 1,0} × `total_tokens` ∈ {1k, 4k, 16k, 64k}. Isı haritasını çizin. Bu, hedef modelinizin NIAH kartıdır.
 
 ### Adım 2: çok iğneli bir model
 
@@ -126,10 +126,10 @@ Kategori başına doğruluğu bildirin. Toplam puanlar görev düzeyindeki büy�
 
 ## Tuzaklar
 
-- **Yalnızca NIAH değerlendirmesi.** NIAH'ı 1 milyon tokensn'de geçmek, çoklu atlama hakkında hiçbir şey söylemez. Her zaman RULER'ı veya özel bir çok atlamalı testi çalıştırın.
+- **Yalnızca NIAH değerlendirmesi.** NIAH'ı 1 milyon token'de geçmek, çoklu atlama hakkında hiçbir şey söylemez. Her zaman RULER'ı veya özel bir çok atlamalı testi çalıştırın.
 - **Tekdüze derinlik örneklemesi.** Çoğu uygulamada yalnızca test derinliği=0,5. Test derinliği=0, 0,25, 0,5, 0,75, 1,0 — "ortada kaybolma" etkisi gerçektir.
 - **Dolgu maddesiyle sözcüksel örtüşme.** İğne, dolgu maddesiyle anahtar kelimeleri paylaşıyorsa, geri çağırma önemsiz hale gelir. NoLiMa tarzı üst üste binmeyen iğneler kullanın.
-- **Gecikme göz ardı ediliyor.** 1 milyon-token prompt saniyenin önceden doldurulması 30-120 saniye sürer. Doğrulukla birlikte ilk-token süresini ölçün.
+- **Gecikme göz ardı ediliyor.** 1M-token prompt'lerin önceden doldurulması 30-120 saniye sürer. Doğrulukla birlikte token'ye kadar geçen süreyi ölçün.
 - **Satıcının kendisi tarafından bildirilen sayılar.** OpenAI, Google, Anthropic'in tümü kendi puanlarını yayınlar. Kullanım durumunuzda her zaman bağımsız olarak yeniden çalıştırın.
 
 ## Kullan onu
@@ -138,14 +138,14 @@ Kategori başına doğruluğu bildirin. Toplam puanlar görev düzeyindeki büy�
 
 | Durum | Benchmark |
 |-----------|-----------|
-| Quick sanity check | Custom NIAH at 3 depths × 3 lengths |
-| Model selection for production | RULER (13 tasks) at your target length |
-| Real-world QA quality | LongBench v2 single-doc-QA subset |
-| Multi-hop reasoning | BABILong or custom variable-tracing |
-| Conversational / dialogue | MRCR 8-needle at your target length |
-| Model upgrade regression | Her yeni modelde çalışan sabit şirket içi NIAH + RULER koşum takımı |
+| Hızlı akıl sağlığı kontrolü | 3 derinlik × 3 uzunlukta özel NIAH |
+| Üretim için model seçimi | RULER (13 görev) hedef uzunlukta |
+| Gerçek dünya QA kalitesi | LongBench v2 tek belgeli QA alt kümesi |
+| Çok atlamalı akıl yürütme | BABILuzun veya özel değişken izleme |
+| Konuşma / diyalog | Hedef uzunlukta MRCR 8 iğne |
+| Model yükseltme regresyonu | Her yeni modelde çalışan sabit şirket içi NIAH + RULER koşum takımı |
 
-Üretim için genel kural: İstediğiniz uzunlukta NIAH + 1 muhakeme görevine sahip olana kadar bir context window'a asla güvenmeyin.
+Üretim için temel kural: İstediğiniz uzunlukta NIAH + 1 muhakeme görevine sahip olana kadar context window'ye asla güvenmeyin.
 
 ## Gönderin
 
@@ -174,9 +174,9 @@ Refuse to trust a context window from the model card alone. Refuse NIAH-only eva
 
 ## Egzersizler
 
-1. **Kolay.** 3 derinliğe (0,25, 0,5, 0,75) × 3 uzunluğa (1k, 4k, 16k) sahip bir NIAH oluşturun. Run on any model. Plot pass rate as a 3×3 heatmap.
-2. **Medium.** Add a 3-needle variant. Measure retrieval of all 3 at each length. Aynı uzunluktaki tek iğne geçiş hızıyla karşılaştırın.
-3. **Zor.** 64k dolguya gömülü değişken izleme görevi (X1 → X2 → X3, 3 atlamalı) oluşturun. Measure accuracy across 3 frontier models. Report effective reasoning length per model.
+1. **Kolay.** 3 derinliğe (0,25, 0,5, 0,75) × 3 uzunluğa (1k, 4k, 16k) sahip bir NIAH oluşturun. Herhangi bir modelde çalıştırın. Geçiş hızını 3×3 ısı haritası olarak çizin.
+2. **Orta.** 3 iğneli bir model ekleyin. Her uzunlukta 3'ünün de alınmasını ölçün. Aynı uzunluktaki tek iğne geçiş hızıyla karşılaştırın.
+3. **Zor.** 64k dolguya gömülü değişken izleme görevi (X1 → X2 → X3, 3 atlamalı) oluşturun. 3 sınır modelinde doğruluğu ölçün. Model başına etkili muhakeme uzunluğunu bildirin.
 
 ## Anahtar Terimler
 
@@ -184,16 +184,16 @@ Refuse to trust a context window from the model card alone. Refuse NIAH-only eva
 |------|-----------------|-----------------------|
 | NIAH | Samanlıkta iğne | Dolguya bir olgu yerleştirin ve modelden onu geri almasını isteyin. |
 | CETVEL | Steroidler üzerinde NIAH | Alma / çoklu atlama / toplama / QA genelinde 13 görev türü. |
-| Effective context | The real capacity | Doğruluğun hala eşiğin üzerinde olduğu uzunluk. |
-| Lost in the middle | Depth bias | Modeller, uzun girdilerin ortasında içeriğe yeterince ilgi göstermiyor. |
+| Etkili bağlam | Gerçek kapasite | Doğruluğun hala eşiğin üzerinde olduğu uzunluk. |
+| Ortada kayboldum | Derinlik sapması | Modeller, uzun girdilerin ortasında içeriğe yeterince ilgi göstermiyor. |
 | Çok iğneli | Aynı anda birçok gerçek | Çoklu bitkiler; tek başına geri getirmeyi değil, dikkat hokkabazlığını test eder. |
-| MRCR | Multi-round coref | 8, 24 veya 100 iğneli referans; dikkat doygunluğunu ortaya çıkarır. |
-| NoLiMa | Non-lexical needle | İğne ve sorgu hiçbir değişmez token'yi paylaşmaz; requires reasoning. |
+| MRCR | Çok yönlü çekirdek | 8, 24 veya 100 iğneli referans; dikkat doygunluğunu ortaya çıkarır. |
+| NoLiMa | Sözcüksel olmayan iğne | İğne ve sorgu hiçbir gerçek token'yi paylaşmaz; muhakeme gerektirir. |
 
 ## Daha Fazla Okuma
 
-- [Kamradt (2023). Haystack analizindeki iğne](https://github.com/gkamradt/LLMTest_NeedleInAHaystack) — orijinal NIAH deposu.
-- [Hsieh ve ark. (2024). CETVEL: Uzun Bağlamlı LM'lerinizin Gerçek Bağlam Boyutu Nedir?](https://arxiv.org/abs/2404.06654) — çoklu görev benchmark.
+- [Kamradt (2023). Haystack analizinde iğne](https://github.com/gkamradt/LLMTest_NeedleInAHaystack) — orijinal NIAH deposu.
+- [Hsieh ve ark. (2024). RULER: Uzun Bağlamlı LM'lerinizin Gerçek Bağlam Boyutu Nedir?](https://arxiv.org/abs/2404.06654) — çoklu görev benchmark.
 - [Bai ve ark. (2024). LongBench v2](https://arxiv.org/abs/2412.15204) — gerçek dünyadaki uzun bağlam değerlendirmesi.
 - [Modarressi ve ark. (2024). NoLiMa: Sözcüksel olmayan iğneler](https://arxiv.org/abs/2404.06666) — daha sert iğneler.
 - [Kuratov ve ark. (2024). BABILong](https://arxiv.org/abs/2406.10149) — samanlıkta akıl yürütme.

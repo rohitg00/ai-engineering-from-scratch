@@ -1,5 +1,5 @@
 # Aşama 15: Otonom Sistemler
 
-> İnsan müdahalesi olmadan güvenle çalışan agent'lar.
+> İnsan müdahalesi olmadan güvenli bir şekilde çalışan Agent'ler.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

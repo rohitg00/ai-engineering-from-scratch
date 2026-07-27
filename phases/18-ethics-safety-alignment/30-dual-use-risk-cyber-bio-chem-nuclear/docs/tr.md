@@ -1,116 +1,116 @@
-# Dual-Use Risk — Cyber, Bio, Chem, Nuclear Uplift
+# Çift Kullanımlı Risk — Siber, Biyo, Kimya, Nükleer Yükseltme
 
-> The 2026 dual-use picture, domain by domain. Bio/chem: Lesson 17 covers WMDP; Anthropic's bioweapon-acquisition trial (2.53x uplift) and OpenAI's April 2025 Preparedness Framework v2 warning ("on the cusp of meaningfully helping novices create known biological threats") mark the inflection point. Cyber (November 2025 Anthropic report): Chinese-linked state actors used Claude's agentic coding tool to automate up to 90% of a cyberattack campaign, with human intervention only in 4-6 steps; OpenAI "trusted access" pilot gives vetted security organisations capability access for defensive dual-use work. Chem/bio execution gap erosion: the classic defense was "information access alone is insufficient." Vision-enabled frontier models (GPT-5.2, Gemini 3 Pro, Claude Opus 4.5, Grok 4.1) can observe wet-lab video and provide real-time correction. December 2025: OpenAI demonstrated GPT-5 iterating on wet-lab experiments, achieving 79x efficiency improvement via AI-driven protocol optimization. Novice-vs-expert pattern: AI provides greater relative uplift to novices but greater absolute capability to experts.
+> Alan bazında 2026 çift kullanımlı resim. Biyo/kimya: Ders 17 WMDP'yi kapsar; Anthropic'in biyolojik silah edinme denemesi (2,53 kat artış) ve OpenAI'nin Nisan 2025 Hazırlık Framework v2 uyarısı ("acemilerin bilinen biyolojik tehditler oluşturmasına anlamlı bir şekilde yardımcı olmanın eşiğinde") dönüm noktasını işaret ediyor. Siber (Kasım 2025 Antropik rapor): Çin bağlantılı devlet aktörleri, yalnızca 4-6 adımda insan müdahalesiyle bir siber saldırı kampanyasının %90'a kadarını otomatikleştirmek için Claude'un agentic kodlama aracını kullandı; OpenAI "güvenilir erişim" pilotu, incelenmiş güvenlik kuruluşlarına savunma amaçlı çift kullanımlı çalışmalar için erişim yeteneği sağlar. Kimyasal/biyo uygulama açığı erozyonu: Klasik savunma şuydu: "Bilgiye erişim tek başına yetersizdir." Görüş özellikli sınır modelleri (GPT-5.2, Gemini 3 Pro, Claude Opus 4.5, Grok 4.1) ıslak laboratuvar videosunu gözlemleyebilir ve gerçek zamanlı düzeltme sağlayabilir. Aralık 2025: OpenAI, GPT-5'in ıslak laboratuvar deneylerinde yinelendiğini ve yapay zeka odaklı protokol optimizasyonu yoluyla 79 kat verimlilik artışı sağladığını gösterdi. Acemi-uzman modeli: Yapay zeka, acemilere göreceli olarak daha fazla gelişme sağlarken, uzmanlara daha fazla mutlak yetenek sağlar.
 
-**Type:** Learn
-**Languages:** none
-**Prerequisites:** Phase 18 · 17 (WMDP), Phase 18 · 18 (safety frameworks), Phase 18 · 28 (ecosystem)
-**Time:** ~75 minutes
+**Tür:** Öğren
+**Diller:** yok
+**Önkoşullar:** Aşama 18 · 17 (WMDP), Aşama 18 · 18 (güvenlik framework'ler), Aşama 18 · 28 (ekosistem)
+**Süre:** ~75 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Describe the 2024-2025 bio-uplift narrative: "mild uplift" -> "on the cusp" -> "2.53x uplift insufficient to rule out ASL-3."
-- Describe the November 2025 Anthropic cyber report: Chinese-linked automation at up to 90% of a cyberattack campaign.
-- Describe the chem/bio execution-gap erosion: vision-enabled real-time correction of wet-lab experiments.
-- State the novice-relative vs expert-absolute asymmetry and its implication for safety-case construction.
+- 2024-2025 biyo-yükseliş anlatısını açıklayın: "hafif artış" -> "çıkışta" -> "2,53 kat artış ASL-3'ü dışlamak için yeterli değil."
+- Kasım 2025 Antropik siber raporunu açıklayın: Bir siber saldırı kampanyasının %90'ına kadar Çin bağlantılı otomasyon.
+- Kimyasal/biyolojik uygulama-boşluk erozyonunu açıklayın: ıslak laboratuvar deneylerinin görme destekli gerçek zamanlı düzeltilmesi.
+- Acemi-akraba ve uzman-mutlak asimetrisini ve bunun güvenlik durumu inşası açısından önemini belirtin.
 
-## The Problem
+## Sorun
 
-Lesson 17 is the measurement methodology. Lesson 30 is the 2026 state of the measurement. The picture shifted materially between 2024 and late 2025: each domain crossed a threshold that the 2024 frameworks did not anticipate.
+Ders 17 ölçüm metodolojisidir. Ders 30 ölçümün 2026 halidir. Resim 2024 ile 2025 sonu arasında önemli ölçüde değişti: her alan, 2024 framework'lerin öngörmediği bir eşiği aştı.
 
-## The Concept
+## Konsept
 
-### Bio/chem uplift narrative
+### Biyo/kimyasal iyileştirme anlatımı
 
-Three phases (repeated from Lesson 17 for coherence):
+Üç aşama (tutarlılık için Ders 17'den tekrarlanmıştır):
 
-1. **2024 "mild uplift."** Early Preparedness/RSP evaluations reported small novice advantages over internet search.
-2. **April 2025 "on the cusp."** OpenAI PF v2 warned models were "on the cusp of meaningfully helping novices create known biological threats."
-3. **2025 Anthropic bioweapon-acquisition trial.** Controlled novice study; 2.53x uplift on acquisition-phase tasks; insufficient to rule out ASL-3.
+1. **2024 "hafif artış."** Erken Hazırlık/RSP değerlendirmeleri, internet aramasına göre acemilerin küçük avantajları olduğunu bildirdi.
+2. **Nisan 2025 "emirde."** OpenAI PF v2 modellerinin "acemilerin bilinen biyolojik tehditleri oluşturmasına anlamlı bir şekilde yardımcı olmanın eşiğinde olduğu" uyarısında bulundu.
+3. **2025 Antropik biyolojik silah edinme denemesi.** Kontrollü acemi çalışması; Edinim aşaması görevlerinde 2,53 kat artış; ASL-3'ü dışlamak için yeterli değil.
 
-The shift is qualitative: "mild" evolved into "plausibly enabling" within eighteen months, even without a capability breakthrough.
+Bu değişim nitelikseldir: "hafif", bir yetenek atılımı olmasa bile, on sekiz ay içinde "makul şekilde etkinleştirici"ye dönüştü.
 
-### Chem/bio execution-gap erosion
+### Kimyasal/biyo uygulama-boşluk erozyonu
 
-Historic defense: information is necessary but not sufficient; the skill of executing the protocol blocks novices. 2025 frontier models with vision break this defense partially:
+Tarihi savunma: Bilgi gerekli ama yeterli değil; Protokolü yürütme becerisi acemileri engeller. Vizyon sahibi 2025 öncü modelleri bu savunmayı kısmen kırıyor:
 
-- **Real-time protocol correction.** GPT-5.2, Gemini 3 Pro, Claude Opus 4.5, Grok 4.1 can observe wet-lab video and flag errors mid-procedure.
-- **December 2025 OpenAI demonstration.** GPT-5 iterating on wet-lab experiments achieves 79x efficiency improvement via protocol optimization.
+- **Gerçek zamanlı protokol düzeltmesi.** GPT-5.2, Gemini 3 Pro, Claude Opus 4.5, Grok 4.1 ıslak laboratuvar videosunu gözlemleyebilir ve prosedür ortasında hataları işaretleyebilir.
+- **Aralık 2025 OpenAI gösterimi.** Islak laboratuvar deneylerini yineleyen GPT-5, protokol optimizasyonu yoluyla 79 kat verimlilik artışı sağlıyor.
 
-The implication: execution-skill-as-defense is eroding. Procurement and equipment gaps remain, but the tacit-knowledge gap is narrowing.
+Bunun anlamı şu: Savunma olarak icra becerisi aşınıyor. Tedarik ve ekipman boşlukları devam ediyor ancak örtülü bilgi açığı daralıyor.
 
-### Cyber uplift (November 2025)
+### Siber yükseliş (Kasım 2025)
 
-Anthropic's November 2025 report: Chinese-linked state actors used Claude's agentic coding tool to automate 80-90% of a cyberattack campaign. Human intervention was required in only 4-6 steps.
+Anthropic'in Kasım 2025 raporu: Çin bağlantılı devlet aktörleri, bir siber saldırı kampanyasının %80-90'ını otomatikleştirmek için Claude'un agentic kodlama aracını kullandı. Sadece 4-6 adımda insan müdahalesi gerekiyordu.
 
-Implications:
-- Agentic coding is the attack-automation primitive. Previous AI cyber assistance was bounded at code-snippet level; agentic workflows integrate reconnaissance, exploitation, post-exploitation, and exfiltration.
-- The 4-6 human steps are the bottleneck; future capability gains would reduce that count.
-- Defensive dual-use: OpenAI's "trusted access" pilot provides vetted security organisations (established incident-response firms, government) with capability access for defense. Asymmetry in access favors defenders if the pilot scales.
+Çıkarımlar:
+- Agentic kodlaması saldırı otomasyonunun ilkeldir. Önceki yapay zeka siber yardımı kod pasajı düzeyinde sınırlıydı; agentic iş akışları keşif, sömürü, sömürü sonrası ve sızmayı entegre eder.
+- 4-6 insan adımı darboğazdır; gelecekteki yetenek kazanımları bu sayıyı azaltacaktır.
+- Savunma amaçlı ikili kullanım: OpenAI'nin "güvenilir erişim" pilotu, incelenmiş güvenlik kuruluşlarına (kurulmuş olay müdahale firmaları, hükümet) savunma için yetenek erişimi sağlar. Erişimdeki asimetri, pilotun teraziye çıkması halinde defans oyuncularının lehine olur.
 
-### Nuclear
+### Nükleer
 
-The least-analyzed of the four CBRN domains in public documentation. The threat model is different: fissile-material acquisition dominates the difficulty, not information. AI uplift on the information layer provides limited novice uplift in practice. No 2024-2025 major-lab report identifies a nuclear-specific threshold crossing.
+Kamuya açık belgelerde dört KBRN alanı arasında en az analiz edileni. Tehdit modeli farklıdır: zorluğa bilgi değil, bölünebilir malzeme edinimi hakimdir. Bilgi katmanındaki yapay zeka artışı, pratikte sınırlı acemi artışı sağlar. Hiçbir 2024-2025 büyük laboratuvar raporu, nükleere özgü bir eşik geçişini tanımlamıyor.
 
-### Novice-relative vs expert-absolute
+### Acemi akraba vs mutlak uzman
 
-A pattern across all four domains:
+Dört alanın tamamında bir model:
 
-- **Novice-relative uplift.** High. Multiplicative. Per Anthropic 2025 bio, 2.53x.
-- **Expert-absolute capability.** High ceiling. An expert extracts more than a novice because the expert knows what to ask and how to interpret.
+- **Acemi göreli iyileşme.** Yüksek. Çarpımsal. Antropik 2025 biyografisine göre, 2,53x.
+- **Uzman-mutlak yetenek.** Yüksek tavan. Bir uzman bir acemiden daha fazlasını çıkarır çünkü uzman neyi soracağını ve nasıl yorumlayacağını bilir.
 
-Implication for safety cases: addressing only novice uplift (via input filters, refusals, uncertainty) is insufficient for expert-absolute control. Additional measures required: elicitation-hardening, capability unlearning (Lesson 17), and control protocols (Lesson 10).
+Güvenlik durumlarına ilişkin çıkarım: Sadece acemi yükselişini ele almak (girdi filtreleri, retler, belirsizlik yoluyla) uzman mutlak kontrolü için yetersizdir. Gerekli ek önlemler: ortaya çıkarma-sertleştirme, yetenek öğreniminin iptal edilmesi (Ders 17) ve kontrol protokolleri (Ders 10).
 
-### Cross-domain synthesis
+### Alanlar arası sentez
 
-| Domain | 2024 | 2025 | Inflection |
+| Etki Alanı | 2024 | 2025 | Çekim |
 |---|---|---|---|
-| Bio | mild uplift | 2.53x uplift, ASL-3 approach | acquisition-phase automation |
-| Chem | mild uplift | execution-gap erosion via vision | real-time wet-lab correction |
-| Cyber | code assistance | 80-90% campaign automation | agentic coding |
-| Nuclear | limited | limited | material-access bottleneck holds |
+| Biyografi | hafif yükselme | 2,53 kat artış, ASL-3 yaklaşımı | satın alma aşaması otomasyonu |
+| Kimya | hafif yükselme | vizyon yoluyla uygulama boşluğu erozyonu | gerçek zamanlı ıslak laboratuvar düzeltmesi |
+| Siber | kod yardımı | %80-90 kampanya otomasyonu | agentic kodlama |
+| Nükleer | sınırlı | sınırlı | malzemeye erişim darboğazları |
 
-Three domains crossed thresholds. One remains bounded by non-informational barriers.
+Üç alan eşikleri aştı. Kişi bilgisel olmayan engellerle sınırlı kalır.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lesson 30 is the capstone: the current dual-use picture that every prior lesson contributes to measuring, limiting, or governing. Lessons 17-18 give the measurement and frameworks; Lessons 12-16 give the evaluation tooling; Lessons 24-25 give the regulatory and disclosure layer; Lesson 28 gives the research ecosystem. Lesson 30 is where the evidence lands.
+Ders 30, son noktadır: önceki her dersin ölçmeye, sınırlamaya veya yönetmeye katkıda bulunduğu mevcut çift kullanımlı resim. 17-18. derslerde ölçüm ve framework'ler verilmektedir; 12-16. derslerde değerlendirme araçları verilmektedir; 24-25. dersler düzenleme ve açıklama katmanını verir; Ders 28 araştırma ekosistemini verir. Ders 30, kanıtların geldiği yerdir.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-No code. Read the Anthropic November 2025 cyber report, OpenAI's Preparedness Framework v2 April 2025 update, and the Council on Strategic Risks 2025 AI x Bio wrapup.
+Kod yok. Anthropic Kasım 2025 siber raporunu, OpenAI'nin Hazırlık Framework v2 Nisan 2025 güncellemesini ve Stratejik Riskler Konseyi 2025 AI x Bio özetini okuyun.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-dual-use-triage.md`. Given a 2026 capability claim or incident report, it triages across the four domains and identifies whether the claim affects novice-relative uplift, expert-absolute capability, or both.
+Bu ders `outputs/skill-dual-use-triage.md` üretir. 2026'daki bir yetenek talebi veya olay raporu göz önüne alındığında, dört alan arasında önceliklendirme yapar ve iddianın acemi-göreceli gelişmeyi, uzman-mutlak yeteneği veya her ikisini birden etkileyip etkilemediğini belirler.
 
-## Exercises
+## Egzersizler
 
-1. Read Anthropic's November 2025 cyber report. Enumerate the 4-6 human-intervention steps and argue which would be first to automate in a next-generation model.
+1. Anthropic'in Kasım 2025 siber raporunu okuyun. 4-6 insan müdahalesi adımını sıralayın ve yeni nesil bir modelde hangisinin ilk önce otomatikleştirileceğini tartışın.
 
-2. The chem/bio execution gap is eroding via vision. Design an evaluation that measures tacit-knowledge uplift without crossing ITAR/EAR boundaries.
+2. Kimya/biyo uygulama farkı görme yoluyla aşınıyor. ITAR/EAR sınırlarını aşmadan örtülü bilgi artışını ölçen bir değerlendirme tasarlayın.
 
-3. Nuclear uplift appears bounded by material access. Argue for and against the position that a future AI breakthrough could shift this bottleneck.
+3. Nükleer yükselme, malzeme erişimiyle sınırlı görünüyor. Gelecekteki bir yapay zeka atılımının bu darboğazı değiştirebileceği görüşünü lehinde ve aleyhinde tartışın.
 
-4. Construct a safety case (Lesson 18 three-pillar) for a cyber-capable frontier model that bounds both novice and expert uplift.
+4. Hem acemi hem de uzman yükselişini sınırlayan siber yetenekli bir sınır modeli için bir güvenlik durumu (Ders 18 üç sütunlu) oluşturun.
 
-5. Pick one of the four domains and write a one-paragraph 2027 forecast based on the 2024-2025 trajectory. Identify the evidence that would falsify your forecast.
+5. Dört alandan birini seçin ve 2024-2025 gidişatını temel alan tek paragraflık bir 2027 tahmini yazın. Tahmininizi yanlışlayacak kanıtları belirleyin.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| Uplift | "AI helps attackers" | Increase in attacker capability attributable to AI assistance |
-| Novice-relative uplift | "multiplicative" | How much AI helps a novice vs status-quo |
-| Expert-absolute capability | "ceiling" | Maximum capability an expert can extract from the model |
-| Execution gap | "doing vs knowing" | Historical defense: tacit wet-lab skill blocks novices |
-| Agentic coding | "autonomous attacks" | Multi-step autonomous cyber-task execution |
-| Acquisition phase | "pre-synthesis steps" | Procurement, equipment, permit stages of a bio threat |
-| Trusted access | "defender-only pilot" | OpenAI 2025 program giving vetted defenders capability access |
+| Yükseliş | "Yapay zeka saldırganlara yardım ediyor" | Yapay zeka desteğine atfedilebilen saldırgan kapasitesinde artış |
+| Acemilere göre yükselme | "çarpımsal" | Statükoya karşı acemi birine yapay zeka ne kadar yardımcı oluyor |
+| Uzman-mutlak yetenek | "tavan" | Bir uzmanın modelden çıkarabileceği maksimum yetenek |
+| Uygulama boşluğu | "yapmak vs bilmek" | Tarihsel savunma: örtülü ıslak laboratuvar becerileri acemileri engelliyor |
+| Agentic kodlama | "otonom saldırılar" | Çok adımlı otonom siber görev yürütme |
+| Satın Alma Aşaması | "sentez öncesi adımlar" | Biyolojik tehdidin tedarik, ekipman, izin aşamaları |
+| Güvenilir erişim | "yalnızca savunma pilotu" | OpenAI 2025 programı, denetlenen savunuculara yetenek erişimi sağlıyor |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Anthropic — November 2025 cyber threat report](https://www.anthropic.com/news/disrupting-AI-espionage) — Chinese-linked campaign automation
-- [OpenAI — Preparedness Framework v2 (April 15, 2025)](https://openai.com/index/updating-our-preparedness-framework/) — bio "on the cusp"
-- [Anthropic — RSP v3.0 (February 2026)](https://www.anthropic.com/responsible-scaling-policy) — ASL-3 bio thresholds
-- [Council on Strategic Risks — 2025 AI x Bio wrapup](https://councilonstrategicrisks.org/2025/12/22/2025-aixbio-wrapped-a-year-in-review-and-projections-for-2026/) — year-end synthesis
+- [Antropik — Kasım 2025 siber tehdit raporu](https://www.anthropic.com/news/disrupting-AI-espionage) — Çin bağlantılı kampanya otomasyonu
+- [OpenAI — Hazırlık Framework v2 (15 Nisan 2025)](https://openai.com/index/updating-our-preparedness-framework/) — biyografi "doğru yolda"
+- [Antropik — RSP v3.0 (Şubat 2026)](https://www.anthropic.com/responsible-scaling-policy) — ASL-3 biyolojik eşikleri
+- [Stratejik Riskler Konseyi — 2025 AI x Biyografi özeti](https://councilonstrategicrisks.org/2025/12/22/2025-aixbio-wrapped-a-year-in-review-and-projections-for-2026/) — yıl sonu sentezi

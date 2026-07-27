@@ -1,110 +1,110 @@
-# Scalable Oversight and Weak-to-Strong Generalization
+# Ölçeklenebilir Gözetim ve Zayıftan Güçlüye Genelleme
 
-> Burns et al. (OpenAI Superalignment, "Weak-to-Strong Generalization", 2023) proposed a proxy for the superalignment problem: fine-tune a strong model using labels produced by a weaker model. If the strong model generalizes correctly from imperfect weak supervision, current human-scale alignment methods may extend to superhuman systems. Scalable oversight and W2SG are complementary. Scalable oversight (debate, recursive reward modeling, task decomposition) increases the overseer's effective capability so it can keep up with the model under oversight. W2SG ensures the strong model generalizes correctly from whatever imperfect supervision the overseer provides. Debate Helps W2SG (arXiv:2501.13124, January 2025) combines them.
+> Burns ve ark. (OpenAI Süper Hizalama, "Zayıftan Güçlüye Genelleştirme", 2023) süper hizalama sorunu için bir temsil önerdi: Daha zayıf bir model tarafından üretilen etiketleri kullanarak güçlü bir modele ince ayar yapın. Güçlü model, kusurlu zayıf denetimden doğru şekilde genelleme yaparsa, mevcut insan ölçeğindeki hizalama yöntemleri insanüstü sistemlere kadar genişletilebilir. Ölçeklenebilir gözetim ve W2SG tamamlayıcıdır. Ölçeklenebilir gözetim (tartışma, özyinelemeli ödül modelleme, görev ayrıştırma), gözetmenin etkili kapasitesini artırır, böylece gözetim altındaki modele ayak uydurabilir. W2SG, güçlü modelin gözetmenin sağladığı kusurlu denetimden doğru şekilde genelleme yapmasını sağlar. Tartışma W2SG'nin (arXiv:2501.13124, Ocak 2025) bunları birleştirmesine yardımcı olur.
 
-**Type:** Learn
-**Languages:** Python (stdlib, W2SG gap simulator)
-**Prerequisites:** Phase 18 · 01 (instruction-following), Phase 18 · 10 (AI Control), Phase 09 (RL foundations)
-**Time:** ~60 minutes
+**Tür:** Öğren
+**Diller:** Python (stdlib, W2SG boşluk simülatörü)
+**Önkoşullar:** Aşama 18 · 01 (talimatların takibi), Aşama 18 · 10 (Yapay Zeka Kontrolü), Aşama 09 (RL temelleri)
+**Süre:** ~60 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Define scalable oversight and weak-to-strong generalization and explain how they are complementary.
-- Describe the Burns et al. 2023 experimental setup: fine-tune GPT-4 using labels from GPT-2.
-- Explain the performance gap recovered (PGR) metric and what it measures.
-- State the three major scalable-oversight mechanisms (debate, recursive reward modeling, task decomposition) and one strength of each.
+- Ölçeklenebilir gözetimi ve zayıftan güçlüye genellemeyi tanımlayın ve bunların nasıl tamamlayıcı olduğunu açıklayın.
+- Burns ve diğerlerini tanımlayın. 2023 deneysel kurulumu: GPT-2'deki etiketleri kullanarak GPT-4'e ince ayar yapın.
+- Kurtarılan performans açığı (PGR) metriğini ve neyi ölçtüğünü açıklayın.
+- Üç ana ölçeklenebilir gözetim mekanizmasını (tartışma, yinelenen ödül modelleme, görev ayrıştırma) ve her birinin güçlü yönünü belirtin.
 
-## The Problem
+## Sorun
 
-Every alignment technique so far in Phase 18 assumes the overseer can evaluate the model's behaviour. When the model is superhuman, the overseer is the weak link. The superalignment question: can a weaker supervisor reliably produce a stronger, aligned model?
+18. Aşamada şimdiye kadarki her hizalama tekniği, denetçinin modelin davranışını değerlendirebileceğini varsayıyor. Model insanüstü olduğunda gözetmen zayıf halkadır. Süper hizalama sorusu: Daha zayıf bir denetçi, güvenilir bir şekilde daha güçlü, uyumlu bir model üretebilir mi?
 
-Burns et al. reduce this to an operationalized empirical setup: supervise strong with weak, measure how much of the strong model's capability survives the weak supervision. This is not a solution to superalignment — it is a proxy that lets us measure progress.
+Burns ve ark. bunu işlevselleştirilmiş ampirik bir düzene indirgeyin: güçlüyü zayıfla denetleyin, güçlü modelin kapasitesinin ne kadarının zayıf denetime dayandığını ölçün. Bu, aşırı hizalamaya bir çözüm değildir; ilerlemeyi ölçmemize olanak tanıyan bir temsilidir.
 
-## The Concept
+## Konsept
 
-### W2SG: the Burns et al. setup
+### W2SG: Burns ve ark. kurmak
 
-- Weak model: GPT-2 class.
-- Strong model: GPT-4 class.
-- Target: strong GPT-4 ceiling on the task.
+- Zayıf model: GPT-2 sınıfı.
+- Güçlü model: GPT-4 sınıfı.
+- Hedef: Görevde güçlü GPT-4 tavanı.
 
-Procedure:
-1. Get weak model's zero-shot predictions on a task.
-2. Fine-tune the strong model on weak-labeled data.
-3. Measure the strong fine-tuned model's accuracy.
+Prosedür:
+1. Zayıf modelin bir görevle ilgili sıfır atış tahminlerini alın.
+2. Zayıf etiketli veriler üzerinde güçlü modele ince ayar yapın.
+3. Güçlü ince ayarlı modelin doğruluğunu ölçün.
 
-Baselines: weak model's own accuracy, strong model's supervised ceiling on gold labels.
+Temel çizgiler: zayıf modelin kendi doğruluğu, güçlü modelin altın etiketlerde denetlenen tavanı.
 
-Gap metric: Performance Gap Recovered (PGR) = (fine-tuned - weak) / (ceiling - weak). PGR of 1.0 means weak supervision fully closes the gap; PGR of 0 means weak supervision did not help.
+Boşluk metriği: Giderilen Performans Farkı (PGR) = (ince ayar - zayıf) / (tavan - zayıf). 1,0'lık PGR, zayıf denetimin açığı tamamen kapattığı anlamına gelir; PGR'nin 0 olması, zayıf denetimin işe yaramadığı anlamına gelir.
 
-### Burns et al. empirical findings
+### Burns ve ark. ampirik bulgular
 
-Across NLP, chess-puzzle, and reward-modeling tasks, PGR was consistently positive: the strong model generalized beyond the weak supervisor's mistakes. Task-specific PGR varied from ~20% to ~80%. The strong model "understands" the intended task from imperfect labels, filling in with its pre-trained priors.
+NLP, satranç bulmacası ve ödül modelleme görevlerinde PGR sürekli olarak olumluydu: Güçlü model, zayıf denetçinin hatalarının ötesinde genelleştirildi. Göreve özgü PGR ~%20 ila ~%80 arasında değişmektedir. Güçlü model, kusurlu etiketlerden amaçlanan görevi "anlar" ve önceden eğitilmiş öncelikleriyle doldurur.
 
-Limitations Burns et al. note:
-- The weak-to-strong gap here is capability, not alignment. The weak model is aligned; a truly superhuman model might be aligned by a human but with a much larger capability gap.
-- The strong model's generalization may be more about task priors than about recovering ground-truth intent.
-- Eliciting the strong model's latent knowledge is the real problem; PGR measures a specific operationalization.
+Sınırlamalar Burns ve ark. Not:
+- Buradaki zayıf-güçlü fark uyum değil yetenektir. Zayıf model hizalanmıştır; Gerçek anlamda insanüstü bir model, bir insan tarafından hizalanabilir ancak çok daha büyük bir yetenek boşluğuna sahiptir.
+- Güçlü modelin genellemesi, temel gerçek niyetini kurtarmaktan ziyade görev öncelikleriyle ilgili olabilir.
+- Güçlü modelin gizli bilgisini ortaya çıkarmak asıl sorundur; PGR belirli bir operasyonelleştirmeyi ölçer.
 
-### Scalable oversight: three mechanisms
+### Ölçeklenebilir gözetim: üç mekanizma
 
-- **Debate (Irving et al. 2018).** Two instances of U argue opposite sides; the weak judge decides. The assumption: finding a convincing true answer is easier than finding a convincing false answer. Recent 2024-2025 work (Khan et al., Michael et al.) shows debate sometimes helps and sometimes does not, and whether it helps depends on task structure.
-- **Recursive Reward Modeling (Leike et al. 2018).** U helps the human train the reward model for U+1. The overseer's effective capability grows with the model's.
-- **Task Decomposition (Christiano, Shlegeris, Amodei 2018).** Decompose a hard task into sub-tasks the human can check, recursively. Assumes decomposability.
+- **Tartışma (Irving ve ark. 2018).** İki U örneği zıt tarafları tartışıyor; zayıf yargıç karar verir. Varsayım: İkna edici bir doğru cevap bulmak, ikna edici bir yanlış cevap bulmaktan daha kolaydır. Son 2024-2025 çalışmaları (Khan ve diğerleri, Michael ve diğerleri), tartışmanın bazen işe yarayıp bazen yaramadığını ve yardımcı olup olmadığının görev yapısına bağlı olduğunu gösteriyor.
+- **Özinelemeli Ödül Modellemesi (Leike ve diğerleri 2018).** U, insanın ödül modelini U+1 için eğitmesine yardımcı olur. Gözetmenin etkili kapasitesi modelinkiyle birlikte artar.
+- **Görev Ayrıştırma (Christiano, Shlegeris, Amodei 2018).** Zor bir görevi, insanın tekrar tekrar kontrol edebileceği alt görevlere ayırın. Ayrışabilirliği varsayar.
 
-Each mechanism assumes something about the structure of the task or the alignment of the intermediate components.
+Her mekanizma, görevin yapısı veya ara bileşenlerin hizalanması hakkında bir şeyler varsayar.
 
-### Why scalable oversight and W2SG are complementary
+### Ölçeklenebilir gözetim ve W2SG neden tamamlayıcıdır?
 
-Scalable oversight increases the overseer's effective signal quality.
-W2SG closes the gap from whatever imperfect signal the overseer can provide.
+Ölçeklenebilir gözetim, gözetmenin etkin sinyal kalitesini artırır.
+W2SG, gözetmenin sağlayabileceği kusurlu sinyaller arasındaki boşluğu kapatır.
 
-Lang et al. — Debate Helps Weak-to-Strong Generalization (arXiv:2501.13124) combines them: a debate protocol provides better weak labels, and the strong model is trained on those labels. Reported PGR gains on NLP tasks.
+Lang ve ark. — Tartışma Zayıftan Güçlüye Genellemeye Yardımcı Olur (arXiv:2501.13124) bunları birleştirir: bir tartışma protokolü daha iyi zayıf etiketler sağlar ve güçlü model bu etiketler üzerinde eğitilir. NLP görevlerinde bildirilen PGR kazanımları.
 
-### The organizational drama
+### Organizasyon draması
 
-OpenAI's Superalignment team dissolved in May 2024 after Jan Leike's departure to Anthropic. The agenda (scalable oversight, W2SG, automated alignment research) continued at Anthropic and at academic labs — MATS (Lesson 28), Redwood (Lesson 10), Apollo (Lesson 8), METR (Lesson 28). The organizational structure changed; the research questions did not.
+OpenAI'nin Superalignment ekibi, Jan Leike'nin Anthropic'e ayrılmasının ardından Mayıs 2024'te dağıldı. Gündem (ölçeklenebilir gözetim, W2SG, otomatik hizalama araştırması) Anthropic'te ve MATS (Ders 28), Redwood (Ders 10), Apollo (Ders 8), METR (Ders 28) akademik laboratuvarlarında devam etti. Organizasyon yapısı değişti; araştırma soruları olmadı.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lessons 6-10 describe the threat and the defensive paradigm under the assumption U is untrustworthy. Lesson 11 is the offensive paradigm: make the overseer strong enough to verify U's alignment. Lessons 12-16 then turn to the practical tooling of adversarial evaluation.
+6-10 arasındaki dersler, U'nun güvenilmez olduğu varsayımı altındaki tehdidi ve savunma paradigmasını açıklamaktadır. 11. Ders saldırgan paradigmadır: gözetmenin U'nun hizalamasını doğrulayacak kadar güçlü olmasını sağlayın. 12-16. dersler daha sonra çekişmeli değerlendirmenin pratik araçlarına dönüyor.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` simulates a W2SG fine-tune on a synthetic task. Weak labeler has 70% accuracy with structured errors; strong model has 95% ceiling on gold labels. You fine-tune the strong model on weak labels, measure PGR, and compare to strong-on-gold and weak-alone.
+`code/main.py` sentetik bir görevde W2SG ince ayarını simüle eder. Zayıf etiketleyici, yapılandırılmış hatalarda %70 doğruluğa sahiptir; güçlü model altın etiketlerde %95 tavana sahiptir. Zayıf etiketlerde güçlü modele ince ayar yapar, PGR'yi ölçer ve altın üzerinde güçlü ve tek başına zayıf ile karşılaştırırsınız.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-w2sg-pgr.md`. Given an oversight setup description, it identifies the weak supervisor, the strong model, the supervision quality, and computes (or requests) PGR. It flags whether the claim is "weak can supervise strong" or "weak + oversight mechanism can supervise strong."
+Bu ders `outputs/skill-w2sg-pgr.md` üretir. Bir gözetim kurulumu açıklaması verildiğinde, zayıf denetçiyi, güçlü modeli, denetim kalitesini tanımlar ve PGR'yi hesaplar (veya talep eder). İddianın "zayıf güçlüyü denetleyebilir" mi yoksa "zayıf + gözetim mekanizması güçlüyü denetleyebilir" mi olduğunu işaretler.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Report PGR for weak_accuracy = 0.60, 0.70, 0.80. Explain the shape of the PGR curve.
+1. `code/main.py`'yı çalıştırın. Zayıf_doğruluk için PGR'yi rapor edin = 0,60, 0,70, 0,80. PGR eğrisinin şeklini açıklayınız.
 
-2. Modify the weak labeler to have structured error (e.g., always wrong on a specific input class). Does PGR increase, decrease, or stay the same? Explain.
+2. Zayıf etiketleyiciyi yapısal hataya sahip olacak şekilde değiştirin (e.g., belirli bir giriş sınıfında her zaman yanlış). PGR artıyor mu, azalıyor mu yoksa aynı mı kalıyor? Açıklamak.
 
-3. Read Burns et al. 2023 Section 4.3 (NLP tasks). Reproduce the "confidence auxiliary loss" intuition: when the strong model is more confident than the weak labels, who wins?
+3. Burns ve ark.'nı okuyun. 2023 Bölüm 4.3 (NLP görevleri). "Güven yardımcı kaybı" sezgisini yeniden üretin: Güçlü model zayıf etiketlerden daha emin olduğunda kim kazanır?
 
-4. Design a scalable-oversight protocol that combines debate and task decomposition for a software-engineering task. Name one failure mode of each component and explain how the combination addresses or fails to address each.
+4. Bir yazılım mühendisliği görevi için tartışmayı ve görev ayrıştırmayı birleştiren ölçeklenebilir bir gözetim protokolü tasarlayın. Her bir bileşenin bir arıza modunu adlandırın ve kombinasyonun her birine nasıl hitap ettiğini veya başarısız olduğunu açıklayın.
 
-5. Articulate what would falsify the "weak-to-strong generalization is a viable path to superalignment" claim. Be specific about the empirical signature you would need to see.
+5. "Zayıftan güçlüye genelleme süper hizalamaya giden geçerli bir yoldur" iddiasını neyin yanlışlayabileceğini ifade edin. Görmeniz gereken ampirik imza konusunda spesifik olun.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| Scalable oversight | "making the overseer stronger" | Mechanisms that increase an overseer's ability to evaluate a more-capable model |
-| W2SG | "weak supervises strong" | Fine-tuning a strong model on weak labels and measuring the capability recovered |
-| PGR | "performance gap recovered" | (fine-tuned - weak) / (ceiling - weak); 1.0 = fully closed, 0 = no help |
-| Debate | "two U instances argue" | Scalable oversight mechanism where a weak judge picks between two U defenders |
-| RRM | "recursive reward modeling" | U helps train the reward model for U+1; overseer capability tracks U |
-| Task decomposition | "sub-tasks the human checks" | Break a hard task into sub-tasks the human can verify, recursively |
-| Superalignment | "aligning superhuman AI" | The research agenda concerned with aligning models the human cannot directly evaluate |
+| Ölçeklenebilir gözetim | "gözetmenin daha güçlü kılınması" | Bir gözetmenin daha yetenekli bir modeli değerlendirme yeteneğini artıran mekanizmalar |
+| W2SG | "zayıf güçlüyü denetler" | Fine-tuning zayıf etiketler üzerine güçlü bir model ve kurtarılan yeteneğin ölçülmesi |
+| PGR | "performans açığı düzeldi" | (ince ayarlı - zayıf) / (tavan - zayıf); 1,0 = tamamen kapalı, 0 = yardım yok |
+| Tartışma | "iki U örneği tartışıyor" | Zayıf bir hakemin iki ABD savunma oyuncusu arasında seçim yaptığı ölçeklenebilir gözetim mekanizması |
+| RRM | "özyinelemeli ödül modelleme" | U, U+1 için ödül modelinin eğitilmesine yardımcı olur; gözetmen kapasitesi U |
+| Görev ayrıştırması | "insanın denetlediği alt görevler" | Zor bir görevi, insanın yinelemeli olarak doğrulayabileceği alt görevlere bölün |
+| Süper Hizalama | "insanüstü yapay zekayı hizalama" | İnsanın doğrudan değerlendiremeyeceği modelleri hizalamayla ilgili araştırma gündemi |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Burns et al. — Weak-to-Strong Generalization (OpenAI 2023)](https://openai.com/index/weak-to-strong-generalization/) — the W2SG paper
-- [Irving, Christiano, Amodei — AI safety via debate (arXiv:1805.00899)](https://arxiv.org/abs/1805.00899) — the debate mechanism
-- [Leike et al. — Scalable agent alignment via reward modeling (arXiv:1811.07871)](https://arxiv.org/abs/1811.07871) — recursive reward modeling
-- [Khan et al. — Debating with More Persuasive LLMs Leads to More Truthful Answers (arXiv:2402.06782)](https://arxiv.org/abs/2402.06782) — 2024 empirical study of debate with stronger debaters
-- [Lang et al. — Debate Helps Weak-to-Strong Generalization (arXiv:2501.13124)](https://arxiv.org/abs/2501.13124) — 2025 combination of debate + W2SG
+- [Burns ve ark. — Zayıftan Güçlüye Genelleme (OpenAI 2023)](https://openai.com/index/weak-to-strong-generalization/) — W2SG makalesi
+- [Irving, Christiano, Amodei — Tartışma yoluyla yapay zeka güvenliği (arXiv:1805.00899)](https://arxiv.org/abs/1805.00899) — tartışma mekanizması
+- [Leike ve ark. — Ödül modelleme aracılığıyla ölçeklenebilir agent hizalaması (arXiv:1811.07871)](https://arxiv.org/abs/1811.07871) — özyinelemeli ödül modelleme
+- [Khan ve diğerleri. — Daha İkna Edici Yüksek Lisans Programlarıyla Tartışmak Daha Doğru Yanıtlara Yol Açar (arXiv:2402.06782)](https://arxiv.org/abs/2402.06782) — Daha güçlü tartışmacılarla yapılan 2024 ampirik tartışma çalışması
+- [Lang ve ark. — Tartışma Zayıftan Güçlüye Genellemeye Yardımcı Olur (arXiv:2501.13124)](https://arxiv.org/abs/2501.13124) — 2025 tartışma kombinasyonu + W2SG

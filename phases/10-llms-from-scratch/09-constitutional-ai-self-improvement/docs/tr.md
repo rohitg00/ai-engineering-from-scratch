@@ -20,7 +20,7 @@ RLHF'yi Ders 07'de ve DPO'yu Ders 08'de oluşturdunuz. Her ikisi de aynı pahal�
 
 2022 Anayasal Yapay Zeka makalesi basit bir soru sordu. Peki ya model tercih etiketlerini kendisi oluşturuyorsa? Ona yazılı ilkelerin bir listesini ("anayasa") verin ve kendi yanıtlarını eleştirmesini sağlayın. Eleştiriler eğitim sinyali haline gelir.
 
-2024'te DeepSeek bu fikri daha da ileri götürdü. Doğrulanabilir sonucu olan herhangi bir görev için (cevabı bilinen matematik, testleri geçen veya başarısız olan kod, kazanan veya kaybeden bir oyun) eleştiriyi tamamen atlayabileceğinizi gösterdiler. Birçok aday çözüm üretin. Her birini deterministik bir kuralla derecelendirin. Ödüller üzerinde bir politika-gradient algoritması çalıştırın. DeepSeek-R1, neredeyse hiç insan tercihi verisi olmadan ve o1 sınıfı akıl yürütme performansıyla eşleşerek bu şekilde eğitildi.
+2024'te DeepSeek bu fikri daha da ileri götürdü. Doğrulanabilir bir sonucu olan herhangi bir görev için (cevabı bilinen matematik, testleri geçen veya başarısız olan kod, kazanan veya kaybeden bir oyun) eleştirmeni tamamen atlayabileceğinizi gösterdiler. Birçok aday çözüm üretin. Her birini deterministik bir kuralla derecelendirin. Ödüller üzerinde bir politika-gradient algoritması çalıştırın. DeepSeek-R1, neredeyse hiç insan tercihi verisi olmadan ve o1 sınıfı akıl yürütme performansıyla eşleşerek bu şekilde eğitildi.
 
 Bu iki döngü (öznel davranış için Anayasal Yapay Zeka ve doğrulanabilir davranış için kurala dayalı RL) 2026'nın baskın uyum reçeteleridir. Eskiden RLHF'ye giden insan tercihi bütçesi artık çok daha küçük bir adımı karşılıyor: anayasayı seçmek ve ödül kurallarını seçmek.
 
@@ -30,7 +30,7 @@ Bu iki döngü (öznel davranış için Anayasal Yapay Zeka ve doğrulanabilir d
 
 Bai ve diğerleri. (2022) boru hattını iki aşamada yapılandırdı.
 
-**1. Aşama: Yapay Zeka Geri Bildiriminden Denetimli Öğrenme (SL-CAI).** Yararlı ancak muhtemelen zararlı olan bir SFT modeliyle başlayın. Zararlı olabilecek isteklerle Prompt. Her yanıt için, *aynı modelden* tepkisini anayasal bir ilkeye göre eleştirmesini isteyin, ardından revize edin. Gözden geçirilmiş yanıtlara ince ayar yapın. dataset (prompt, revize_response) çiftidir.
+**1. Aşama: Yapay Zeka Geri Bildiriminden Denetimli Öğrenme (SL-CAI).** Yararlı ancak muhtemelen zararlı olan bir SFT modeliyle başlayın. Prompt potansiyel olarak zararlı isteklerle. Her yanıt için, *aynı modelden* tepkisini anayasal bir ilkeye göre eleştirmesini isteyin, ardından revize edin. Gözden geçirilmiş yanıtlara ince ayar yapın. dataset (prompt, revize_response) çiftleridir.
 
 **2. Aşama: Yapay Zeka Geri Bildiriminden (RLAIF) Takviyeli Öğrenme.** Örnek yanıt çiftleri. Modele hangisinin anayasaya daha iyi uyduğunu sorun. İkili tercihler bir ödül modelini eğitir. Daha sonra bu ödülü kullanarak modelde PPO veya DPO'yu çalıştırın. RLHF'den temel fark: tercihler insanlardan değil modelden geliyordu.
 
@@ -80,7 +80,7 @@ L_PPO = E[min(r(theta) * A, clip(r(theta), 1-eps, 1+eps) * A)]
 
 burada `A` avantajdır ve genellikle öğrenilmiş değer ağı `V(s)` kullanılarak GAE ile tahmin edilir. Değer ağı, politikayla aynı boyutta ikinci bir modeldir. Belleği iki katına çıkarır ve kendi eğitim döngüsünü sunar.
 
-GRPO, değer işlevini atar. Her prompt için bir grup G yanıtını (tipik olarak G=16 veya 64) örnekler. Her yanıtın ödülü hesaplanır ve grup içinde normalleştirilir:
+GRPO, değer işlevini atar. Her prompt için bir grup G yanıtını örnekler (tipik olarak G=16 veya 64). Her yanıtın ödülü hesaplanır ve grup içinde normalleştirilir:
 
 ```
 A_i = (r_i - mean(r_1, ..., r_G)) / std(r_1, ..., r_G)
@@ -105,9 +105,9 @@ Kurala dayalı ödüllerden alacağınız sinyalin tam şekli budur:
 - **Biçimlendirme**: normal ifade, yanıtın gerekli XML etiketinde olup olmadığına karar verir.
 - **Çok adımlı ispatlar**: bir ispat asistanı (Lean, Coq) geçerliliğine karar verir.
 
-DeepSeek-R1-Zero yalnızca iki ödülle eğitildi: matematik benchmark'lerinde doğruluk ve format uyumu (cevap `<answer>` etiketleri içinde). İnsan tercihi yok. Eleştirmen modeli yok. DeepSeek makalesinin tanımladığı "aha anı" (kendi kendini kontrol etmeyi ve geri izlemeyi kendiliğinden öğrenen model), yalnızca seyrek kural ödülleri konusunda GRPO'dan ortaya çıktı.
+DeepSeek-R1-Zero yalnızca iki ödülle eğitildi: matematik benchmark'lerde doğruluk ve format uyumluluğu (cevap `<answer>` etiketleri içinde). İnsan tercihi yok. Eleştirmen modeli yok. DeepSeek makalesinin tanımladığı "aha anı" (kendi kendini kontrol etmeyi ve geri izlemeyi kendiliğinden öğrenen model), yalnızca seyrek kural ödülleri konusunda GRPO'dan ortaya çıktı.
 
-### Süreç Ödül Modelleri ve Sonuç Ödül Modelleri Karşılaştırması
+### Süreç Ödül Modelleri ve Sonuç Ödül Modelleri
 
 Hala bir tasarım seçeneğiniz var: son cevabı ödüllendirin (Sonuç Ödül Modeli, ORM) veya her ara adımı ödüllendirin (Süreç Ödül Modeli, PRM).
 
@@ -120,19 +120,19 @@ Hala bir tasarım seçeneğiniz var: son cevabı ödüllendirin (Sonuç Ödül M
 | Ödül hackleme riski | Aşağı | Daha yüksek (model PRM artifact'leri optimize eder) |
 | Kullanan | DeepSeek-R1, R1-Sıfır | OpenAI o1 (iddiaya göre), Math-Shepherd |
 
-2024-2025'teki fikir birliği, ORM'ler artı GRPO ölçeğinin PRM'lerden daha iyi olduğu yönündeydi. PRM'ler token başına örnek açısından daha verimlidir ancak pahalı adım etiketli veriler gerektirir ve kısayol davranışlarına (PRM'ye iyi görünen ancak kanıtı ilerletmeyen yazma adımları) dönüşme eğilimindedir. Çoğu takım için denenecek ilk şey ORM + GRPO'dur.
+2024-2025'teki fikir birliği, ORM'ler artı GRPO ölçeğinin PRM'lerden daha iyi olduğu yönündeydi. PRM'ler, token'ye göre örnek açısından daha verimlidir ancak pahalı adım etiketli veriler gerektirir ve kısayol davranışlarına (PRM'ye iyi görünen ancak kanıtı ilerletmeyen yazma adımları) dönüşme eğilimindedir. Çoğu takım için denenecek ilk şey ORM + GRPO'dur.
 
 ### Kişisel Gelişim: Geri Bildirim Çarpanı
 
 İki döngülü modele (eleştiri/revize ve kural ödülleriyle grupla ilgili RL) sahip olduğunuzda, bunları zincirleyebilirsiniz.
 
 1. Bir SFT modeliyle başlayın.
-2. prompt başına çok sayıda aday yanıtı oluşturun.
+2. prompt başına birçok aday yanıtı oluşturun.
 3. Bunları kurallara dayalı bir ödülle (doğrulanabilir görevler için) veya yapısal bir eleştiriyle (sübjektif görevler için) puanlayın.
 4. En iyi adayları yeni SFT verileri veya tercih çiftleri olarak tutun.
 5. İnce ayar yapın. Geliştirilmiş modelle 2. adıma gidin.
 
-DeepSeek, R1-Zero'dan sonra uygulandığında buna "reddetme örneklemesi fine-tuning" adını verdi. Antropik bu yöntemin daha eski bir versiyonunu "anayasal yapay zeka damıtma" olarak adlandırdı. Model şu şekildedir: her yineleme, halihazırda modelde bulunan sinyali güçlendirir. Yeni sinyal eklemez. Eğer model X sınıfı problemi hiç çözemezse, hiçbir kişisel gelişim bu yeteneği yaratmayacaktır.
+DeepSeek, R1-Zero'dan sonra uygulandığında buna "ret örneklemesi fine-tuning" adını verdi. Antropik bu yöntemin daha önceki bir versiyonunu "anayasal yapay zeka damıtma" olarak adlandırdı. Model şu şekildedir: her yineleme, halihazırda modelde bulunan sinyali güçlendirir. Yeni sinyal eklemez. Eğer model X sınıfı problemi hiç çözemezse, hiçbir kişisel gelişim bu yeteneği yaratmayacaktır.
 
 Tehlike modun çökmesidir. Kendi kendine oluşturulan veriler her zaman eğitim kümesinden daha dar bir dağılıma sahiptir. 3-5 turluk kendi kendini damıtmanın ardından modeller genellikle yaratıcı görevlerdeki çeşitliliği kaybeder, kendine aşırı güvenir ve karakteristik "Yapay Zeka sesi" (tekrarlanan ifadeler, kalıplaşmış yapı) sergiler. Üretim hatları, dağıtımın dürüst olmasını sağlamak için kendi kendine oluşturulan verileri küçük bir kısım taze insan verileriyle karıştırır.
 
@@ -224,11 +224,11 @@ def reward_format(response: str) -> float:
     return 1.0 if re.search(r"<answer>.*</answer>", response) else 0.0
 ```
 
-İki deterministik kural. Eğitim verisi yok. İnsan etiketi yok. Birleşik ödül `reward_math + 0.1 * reward_format` olup, doğruluğu gölgelemeden eksik formatı cezalandırmaktadır.
+İki deterministik kural. Eğitim verisi yok. İnsan etiketi yok. Birleşik ödül `reward_math + 0.1 * reward_format`'dir ve doğruluğu gölgelemeden eksik formatı cezalandırır.
 
 ### Adım 4: Grup Göreli Avantajı
 
-Aynı prompt'ya verilen bir grup yanıt için ödül listesi verildiğinde, z-puanını hesaplayın:
+Aynı prompt'ye verilen bir grup yanıt için ödül listesi verildiğinde z-puanını hesaplayın:
 
 ```python
 import numpy as np
@@ -240,7 +240,7 @@ def group_relative_advantage(rewards: list[float]) -> np.ndarray:
     return (r - r.mean()) / (r.std() + 1e-8)
 ```
 
-Gruptaki her örnek aynı ödüle sahipse avantaj sıfır olur ve hiçbir gradient sinyali akmaz. Bu bir özelliktir. Size prompt'nin mevcut politika için ya önemsiz bir şekilde çözüldüğünü ya da inanılmaz derecede zor olduğunu ve adımın onu atlaması gerektiğini söyler.
+Gruptaki her örnek aynı ödüle sahipse avantaj sıfır olur ve gradient sinyali akışı olmaz. Bu bir özelliktir. Size prompt'nin mevcut politika için ya önemsiz bir şekilde çözüldüğünü ya da inanılmaz derecede zor olduğunu ve adımın onu atlaması gerektiğini söyler.
 
 ### Adım 5: GRPO Güncellemesi
 
@@ -291,23 +291,23 @@ def self_improvement_round(prompts: list[str], policy_sampler, group_size: int =
 
 ## Kullan onu
 
-`code/main.py` çalıştırıldığında her iki döngü de uçtan uca çalıştırılır. CAI döngüsü, üzerinde ince ayar yapabileceğiniz küçük bir dizi (başlangıç, revize edilmiş) çift üretir. GRPO döngüsü, aritmetik problemler için prompt başına ödül istatistikleri üretir ve gruba bağlı avantajların, zayıf bir örnekleyicinin değer fonksiyonu veya insan etiketleri olmadan nasıl iyileşmesine olanak sağladığını gösterir.
+`code/main.py` çalıştırıldığında her iki döngü de uçtan uca çalıştırılır. CAI döngüsü, ince ayar yapabileceğiniz küçük bir dizi (başlangıç, revize edilmiş) çift üretir. GRPO döngüsü, aritmetik problemler için prompt başına ödül istatistikleri üretir ve gruba bağlı avantajların, zayıf bir örnekleyicinin bir değer fonksiyonu veya insan etiketleri olmadan nasıl iyileşmesine izin verdiğini gösterir.
 
 Önemli olan sayılar değil. Eğitimli bir modelle gerçek bir çalıştırmada, ödül ortalaması turlar arasında yükselmeli, ödül std'si pozitif kalmalı (sıfıra düşerse politika mod çökmüştür ve durmalısınız) ve referansa yönelik KL yavaş yavaş artmalıdır. Bu üç eğri (ödül artışı, std stabil, KL sınırlı) bir GRPO veya CAI boru hattı için üretim sağlık kontrolüdür.
 
 ## Gönderin
 
-Bu ders `outputs/skill-self-improvement-auditor.md` üretir. Önerilen bir kişisel gelişim hattını beslerseniz, pazarlık konusu olmayan kapıları zorlar: gerçekten doğrulanabilir bir ödül kuralı, referansa karşılık bir KL bütçesi, bir çeşitlilik tabanı ve bir insan-veri kotası. Herhangi bir dış temele dayanmadan "saf kişisel gelişim" olduğunu iddia eden bir döngüyü onaylamayı reddediyor.
+Bu ders `outputs/skill-self-improvement-auditor.md`'yi üretir. Önerilen bir kişisel gelişim hattını beslerseniz, pazarlık konusu olmayan kapıları zorlar: gerçekten doğrulanabilir bir ödül kuralı, referansa karşılık bir KL bütçesi, bir çeşitlilik tabanı ve bir insan-veri kotası. Herhangi bir dış temele dayanmadan "saf kişisel gelişim" olduğunu iddia eden bir döngüyü onaylamayı reddediyor.
 
 ## Egzersizler
 
 1. Adım 2'deki el yazısı eleştirisini bir Yüksek Lisans çağrısıyla değiştirin. Herhangi bir yerel sohbet modelini kullanın. Eleştirinin ve revizyonun, tepkiyi değiştirmeden bırakmak yerine gerçekte ne kadar iyileştirdiğini ölçün.
 
-2. Gerçeklik konusunda üçüncü bir anayasal ilke ekleyin. Gerçek iddialar (büyük harfler, tarihler) gerektiren prompt'ler üzerinde ardışık düzeni çalıştırın ve kaç revizyonun gerçek hataları ortadan kaldırdığını ve yenilerini tanıttığını ölçün.
+2. Gerçeklik konusunda üçüncü bir anayasal ilke ekleyin. Gerçek iddialar (büyük harfler, tarihler) gerektiren prompt'ler üzerinde işlem hattını çalıştırın ve kaç revizyonun gerçek hataları ortadan kaldırdığını ve yenilerini tanıttığını ölçün.
 
-3. CAI aşama 2 tarafından üretilen tercih çiftlerine DPO uygulayın. 20 prompt saniye ayırın, her biri iki yanıt oluşturun, eleştirmenin çift başına bir kazanan seçmesini sağlayın, ardından Ders 08'den DPO kaybını çalıştırın. Aynı veriler üzerinde GRPO yolunu karşılaştırın.
+3. CAI aşama 2 tarafından oluşturulan tercih çiftlerine DPO uygulayın. 20 prompt alın, her biri iki yanıt oluşturun, eleştirmenin çift başına bir kazanan seçmesini sağlayın, ardından Ders 08'den DPO kaybını çalıştırın. Aynı veriler üzerinde GRPO yolunu karşılaştırın.
 
-4. GRPO hedefine entropi düzenlemesini ekleyin. Alfa=0,01 olan `-alpha * entropy(policy)` terimi çeşitli örneklemeyi teşvik eder. 5 turluk kişisel gelişim boyunca modun çöküşünü geciktirip geciktirmediğini ölçün.
+4. GRPO hedefine entropi düzenlemesini ekleyin. Alfa=0,01 olan `-alpha * entropy(policy)` terimi, çeşitli örneklemeyi teşvik eder. 5 turluk kişisel gelişim boyunca modun çöküşünü geciktirip geciktirmediğini ölçün.
 
 5. İki adımlı bir aritmetik problemi için bir süreç ödül puanlayıcısı oluşturun. "(3+4)*5 nedir?" verildiğinde modelin ara 3+4=7 adımını göstermesi gerekir. Ara adımı son yanıttan ayrı olarak derecelendirin ve 10 tur boyunca PRM ağırlıklı GRPO'yu saf ORM ağırlıklı GRPO ile karşılaştırın.
 
@@ -317,7 +317,7 @@ Bu ders `outputs/skill-self-improvement-auditor.md` üretir. Önerilen bir kişi
 |------|----------------|----------------------|
 | Anayasal Yapay Zeka | "Model kendini hizalıyor" | İnsani tercih etiketlerinin çoğunu, yazılı bir anayasaya karşı model öz-yargılarla değiştiren iki aşamalı bir süreç (öz eleştiri + RLAIF) |
 | RLAIF | "İnsansız RLHF" | Yapay Zeka Geri Bildiriminden Takviyeli Öğrenme - Modelin kendisi tarafından oluşturulan tercihlere ilişkin PPO veya DPO |
-| GRPO | "Değer işlevi olmayan PPO" | Grup Göreceli Politika Optimizasyonu -- prompt başına G yanıtlarını örnekleyin, z puanlı grup ödüllerini avantaj olarak kullanın |
+| GRPO | "Değer işlevi olmayan PPO" | Grup Göreli Politika Optimizasyonu - prompt başına G yanıtlarını örnekleyin, z puanlı grup ödüllerini avantaj olarak kullanın |
 | ORM | "Cevabı ödüllendirin" | Sonuç Ödül Modeli - yalnızca son yanıtta tek bir skaler ödül |
 | PRM | "Her adımı ödüllendirin" | Süreç Ödül Modeli - genellikle adım etiketli verilerden eğitilen her ara akıl yürütme adımında ödül |
 | Kurala dayalı ödül | "Deterministik sınıflandırıcı" | Öğrenilmiş bir model olmadan ikili veya sayısal bir puan döndüren bir doğrulayıcı (regex, sympy, test paketi) |
@@ -332,5 +332,5 @@ Bu ders `outputs/skill-self-improvement-auditor.md` üretir. Önerilen bir kişi
 - [Shao ve diğerleri, 2024 -- "DeepSeekMath: Açık Dil Modellerinde Matematiksel Akıl Yürütmenin Sınırlarını Zorlamak"](https://arxiv.org/abs/2402.03300) -- GRPO'yu tanıtıyor
 - [DeepSeek-AI, 2025 -- "DeepSeek-R1: Yüksek Lisanslarda Güçlendirme Öğrenimi Yoluyla Muhakeme Yeteneğinin Teşvik Edilmesi"](https://arxiv.org/abs/2501.12948) -- R1 ve R1-Zero, GRPO + geniş ölçekte kural ödülleri
 - [Lightman ve diğerleri, 2023 -- "Adım Adım Doğrulayalım"](https://arxiv.org/abs/2305.20050) -- OpenAI'nin PRM800K'si ve süreç ödül modelleri örneği
-- [Wang ve diğerleri, 2024 -- "Math-Shepherd: Yüksek Lisans Lisanslarını İnsan Ek Açıklamaları Olmadan Adım Adım Doğrulayın ve Güçlendirin"](https://arxiv.org/abs/2312.08935) -- Monte Carlo sunumları aracılığıyla PRM'yi otomatik olarak etiketledi
-- [Huang ve diğerleri, 2024 -- "Geniş Dil Modelleri Henüz Kendi Kendini Düzeltebilen Akıl Yürütme Yapamıyor"](https://arxiv.org/abs/2310.01798) -- dışsal temel olmadan kişisel gelişime dair şüpheci karşıt görüş
+- [Wang ve diğerleri, 2024 -- "Math-Shepherd: Yüksek Lisans Lisanslarını İnsan Ek Açıklamaları Olmadan Adım Adım Doğrulayın ve Güçlendirin"](https://arxiv.org/abs/2312.08935) -- Monte Carlo sunumları aracılığıyla otomatik etiketli PRM
+- [Huang ve diğerleri, 2024 -- "Geniş Dil Modelleri Henüz Kendi Kendini Doğrulayan Akıl Yürütemez"](https://arxiv.org/abs/2310.01798) -- dışsal temel olmadan kişisel gelişime dair şüpheci karşıt görüş

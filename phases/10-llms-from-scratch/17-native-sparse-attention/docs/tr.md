@@ -1,6 +1,6 @@
-# Native Sparse Attention (DeepSeek NSA)
+# Yerli Seyrek Dikkat (DeepSeek NSA)
 
-> 64k tokens'de dikkat, kod çözme gecikmesinin %70-80'ini tüketir. Her açık model laboratuvarın bunu düzeltmek için bir planı vardır. DeepSeek'in NSA'sı (ACL 2025'in en iyi makalesi) sıkışıp kalmış olanıdır: üç paralel dikkat dalı — sıkıştırılmış iri taneli token'ler, seçici olarak tutulan ince taneli token'ler ve yerel bağlam için kayan pencereler — öğrenilmiş bir kapı aracılığıyla birleştirilmiştir. Donanımla uyumludur (çekirdek dostu), yerel olarak eğitilebilir (eğitim öncesi çalışır, inference'da cıvatalanmaz) ve 64k kod çözmede FlashAttention'dan daha hızlı çalışır ve tam dikkat kalitesiyle eşleşir veya onu geçer. Bu ders üç dalı uçtan uca oluşturur ve seyrekliğin neden uçtan uca türevlenebilir olduğunu gösterir.
+> 64 bin token'de dikkat, kod çözme gecikmesinin %70-80'ini tüketir. Her açık model laboratuvarın bunu düzeltmek için bir planı vardır. DeepSeek'in NSA'sı (ACL 2025'in en iyi makalesi) sıkışıp kalmış olanıdır: üç paralel dikkat dalı - sıkıştırılmış kaba taneli token'ler, seçici olarak tutulan ince taneli token'ler ve yerel bağlam için kayan pencereler - öğrenilmiş bir kapı aracılığıyla birleştirildi. Donanımla uyumludur (çekirdek dostudur), yerel olarak eğitilebilir (eğitim öncesi çalışır, inference'ye bağlanmaz) ve 64k kod çözmede FlashAttention'dan daha hızlı çalışır ve tam dikkat kalitesiyle eşleşir veya onu geçer. Bu ders üç dalı uçtan uca oluşturur ve seyrekliğin neden uçtan uca türevlenebilir olduğunu gösterir.
 
 **Tür:** Yapım
 **Diller:** Python (stdlib)
@@ -12,15 +12,15 @@
 - NSA'nın üç dikkat dalını ve her birinin neyi yakaladığını belirtin.
 - Önceki seyrek dikkat yöntemlerinin yalnızca inference olduğu halde, NSA'nın neden "yerel olarak eğitilebilir" olduğunu açıklayın.
 - Sıkıştırma blok boyutunun ve üst-k seçiminin bir fonksiyonu olarak, NSA'nın 64k bağlamında tam dikkat karşısında dikkat hesaplama tasarrufunu hesaplayın.
-- Üç dallı kombinasyonu stdlib Python'da kısa bir sentetik diziye uygulayın ve geçit ağırlıklarının davranışını doğrulayın.
+- Üç dallı kombinasyonu stdlib Python'da kısa bir sentetik dizide uygulayın ve geçit ağırlıklarının davranışını doğrulayın.
 
 ## Sorun
 
-N dizi uzunluğunda tam dikkat, katman başına `O(N^2)` zaman ve `O(N)` KV önbelleğe mal olur. 64k tokens'de, hesaplama ve bellek bant genişliği sayıları felaket düzeydedir. NSA belgesinden ölçülen teorik tahmin: Dikkat, 64k'de toplam kod çözme gecikmesinin %70-80'ini oluşturur. Aşağı yöndeki her şeye - TTFT, tokens/sn, milyon tokens başına maliyet - dikkat maliyeti hakimdir.
+N dizi uzunluğunda tam dikkat, `O(N^2)` zamanına ve katman başına `O(N)` KV önbelleğe mal olur. 64k token'de hesaplama ve bellek bant genişliği sayıları felaket düzeydedir. NSA belgesinden ölçülen teorik tahmin: dikkat, 64k'de toplam kod çözme gecikmesinin %70-80'ini oluşturur. Aşağı yöndeki her şeye - TTFT, tokens/sn, milyon token başına maliyet - dikkat maliyeti hakimdir.
 
-Az dikkat bunun bariz cevabıdır. Önceki girişimler iki gruba ayrılır. Sabit model seyrekliği (kayan pencere, adımlı, blok yerel) bilgiyi çöpe atar ve uzun menzilli geri çağırma görevlerinde başarısız olur. Inference-zaman seyrekliği (KV önbellek budama, H2O, StreamingLLM), yoğun dikkat üzerine önceden eğitilmiş bir modele uygulanır ve modelden hiçbir zaman bilgileri seyrek desen üzerinden yönlendirmesi istenmediği için potansiyel hızın yalnızca bir kısmını kurtarır.
+Az dikkat bunun bariz cevabıdır. Önceki girişimler iki gruba ayrılır. Sabit model seyrekliği (kayan pencere, adımlı, blok yerel) bilgiyi çöpe atar ve uzun menzilli geri çağırma görevlerinde başarısız olur. Inference-zaman seyrekliği (KV önbellek budaması, H2O, StreamingLLM), yoğun dikkatle önceden eğitilmiş bir modele uygulanır ve modelden hiçbir zaman bilgileri seyrek desen üzerinden yönlendirmesi istenmediği için potansiyel hızın yalnızca bir kısmını kurtarır.
 
-Yerel Seyrek Dikkat (Yuan ve diğerleri, DeepSeek + PKU + UW, ACL 2025 en iyi makale, arXiv:2502.11089) her ikisini de yapar: modelin ön eğitim sırasında öğrendiği, aslında inference değerinde işlem tasarrufu sağlayan çekirdek hizalı bir algoritma olarak uygulanan bir seyreklik modeli. Bundan iki yıl sonra, NSA veya onun doğrudan soyundan gelen bir kişi, tüm uzun bağlamlı sınır modellerinde varsayılan ilgi odağı olacak.
+Yerel Seyrek Dikkat (Yuan ve diğerleri, DeepSeek + PKU + UW, ACL 2025 en iyi makale, arXiv:2502.11089) her ikisini de yapar: modelin ön eğitim sırasında öğrendiği, aslında inference'de işlem tasarrufu sağlayan çekirdek hizalı bir algoritma olarak uygulanan bir seyreklik modeli. Bundan iki yıl sonra, NSA veya onun doğrudan soyundan gelen bir kişi, tüm uzun bağlamlı sınır modellerinde varsayılan ilgi odağı olacak.
 
 ## Konsept
 
@@ -28,11 +28,11 @@ Yerel Seyrek Dikkat (Yuan ve diğerleri, DeepSeek + PKU + UW, ACL 2025 en iyi ma
 
 Her sorgu için NSA, KV önbelleğinin üç farklı görünümüne karşı üç kez dikkat çeker:
 
-1. **Sıkıştırılmış dal.** Token'lar, `l` (genellikle 32 veya 64) boyutunda bloklar halinde gruplanır. Her blok, küçük bir öğrenilmiş MLP aracılığıyla tek bir token özetine sıkıştırılır. Sorgu bu sıkıştırılmış token'lere katılarak tüm dizinin kaba taneli bir görünümünü elde eder.
+1. **Sıkıştırılmış dal.** Token'ler, `l` (genellikle 32 veya 64) boyutunda bloklar halinde gruplanır. Her blok, küçük bir öğrenilmiş MLP aracılığıyla tek bir özet token halinde sıkıştırılır. Sorgu bu sıkıştırılmış token'lere katılarak tüm dizinin kaba taneli bir görünümünü elde eder.
 
-2. **Seçilen dal.** Sıkıştırılmış daldan alınan dikkat puanları kullanılarak mevcut sorguyla en alakalı en üstteki bloklar belirlenir. Bu bloklardaki ince taneli (sıkıştırılmamış) token'lar okunur ve sorgu bunların hepsine katılır. Seçim için yönlendirme sinyali olarak sıkıştırılmış dal dikkatini düşünün.
+2. **Seçili dal.** Sıkıştırılmış daldan alınan dikkat puanları kullanılarak mevcut sorguyla en alakalı en üstteki bloklar belirlenir. Bu bloklardaki ince taneli (sıkıştırılmamış) token'ler okunur ve sorgu bunların hepsine katılır. Seçim için yönlendirme sinyali olarak sıkıştırılmış dal dikkatini düşünün.
 
-3. **Sürgülü pencere dalı.** Sorgu, yerel bağlam için en son `W` token'lere (genellikle 512) katılır. Bu dal, diğer ikisinin gözden kaçırabileceği yapı ağırlıklı kısa menzilli kalıpları (sözdizimi, yerel referans) yakalar.
+3. **Sürgülü pencere dalı.** Sorgu, yerel bağlam için en yeni `W` token'lere (genellikle 512) katılır. Bu dal, diğer ikisinin gözden kaçırabileceği yapı ağırlıklı kısa menzilli kalıpları (sözdizimi, yerel referans) yakalar.
 
 Üç dal çıkışı, öğrenilen konum başına bir kapı aracılığıyla birleştirilir:
 
@@ -44,11 +44,11 @@ out = g_cmp * out_cmp + g_sel * out_sel + g_win * out_win
 
 ### Bu neden "yerel olarak eğitilebilir"
 
-Seçim adımı (üst-k bloklar) ayrıktır. Ayrık işlemler gradient akışını bozar. Önceki seyrek dikkat çalışmaları ya seçim yoluyla geri tepmeyi atladı (eğitimi sınırladı) ya da inference'da gerçek bir seyreklik sağlamayan sürekli gevşemeler kullandı.
+Seçim adımı (üst-k bloklar) ayrıktır. Ayrık işlemler gradient akışını keser. Önceki seyrek dikkat çalışmaları ya seçim yoluyla geri tepmeyi atladı (eğitimi sınırladı) ya da inference'de gerçek bir seyreklik sağlamayan sürekli gevşemeler kullandı.
 
-NSA bunu atlıyor: Sıkıştırılmış dal dikkati, tüm sekansta ayırt edilebilir, kaba taneli bir dikkattir. Top-k işlemi, hangi ince taneli blokların yükleneceğini seçmek için sıkıştırılmış daldaki en yüksek dikkat puanlarını yeniden kullanır. Gradient'nin sıkıştırılmış dal puanları boyunca akışı (hem sıkıştırılmış çıktıyı HEM seçim mantığını etkiler) ve seçilen blokların son çıktıya katkısı da farklılaştırılabilir. Türevlenemeyen `top_k` işlemi ileri hesaplamalı grafikte işlem yapılmaz; yalnızca bellekten hangi blokların yükleneceğini kontrol eder.
+NSA bunu atlıyor: Sıkıştırılmış dal dikkati, tüm sekansta ayırt edilebilir, kaba taneli bir dikkattir. Top-k işlemi, hangi ince taneli blokların yükleneceğini seçmek için sıkıştırılmış daldaki en yüksek dikkat puanlarını yeniden kullanır. Gradient'ler sıkıştırılmış dal puanları üzerinden akar (bu hem sıkıştırılmış çıktıyı HEM seçim mantığını etkiler) ve seçilen blokların nihai çıktıya katkısı da farklılaştırılabilir. Türevlenemeyen `top_k` işlemi, ileri hesaplamalı grafikte işlem yapılmaz; yalnızca bellekten hangi blokların yükleneceğini kontrol eder.
 
-Bu nedenle NSA eğitim öncesi uçtan uca kullanılabilir. Model, bilgileri üç dal boyunca ortaklaşa yönlendirmeyi öğrenir ve inference noktasında vaat edilen hızı gerçekten sağlayan seyrek bir model üretir.
+Bu nedenle NSA eğitim öncesi uçtan uca kullanılabilir. Model, bilgileri üç dal boyunca ortaklaşa yönlendirmeyi öğrenerek inference'de vaat edilen hızı gerçekten sağlayan seyrek bir model üretiyor.
 
 ### Donanımla uyumlu çekirdek
 
@@ -58,21 +58,21 @@ Makale, Triton çekirdeklerinin 64k kod çözmede FlashAttention'dan 9 kat daha 
 
 ### İşlem bütçesi
 
-`N` dizi uzunluğu olsun, `l` sıkıştırma blok boyutu olsun, `k` üst-k seçim sayısı olsun, `w` kayan pencere olsun, `b` seçilen blok boyutu olsun (genellikle `l` eşittir).
+`N` dizi uzunluğu, `l` sıkıştırma bloğu boyutu, `k` üst k seçim sayısı, `w` kayan pencere, `b` seçilen blok boyutu olsun (genellikle `l`'ye eşittir).
 
-- Sıkıştırılmış dal: Sorgu başına `O(N/l)` anahtar, yani toplam `O(N * N / l)`.
-- Seçilen dal: Sorgu başına `O(k * b)` anahtar, yani `O(N * k * b)`.
-- Kayan dal: Sorgu başına `O(w)` anahtar, yani `O(N * w)`.
+- Sıkıştırılmış dal: Sorgu başına `O(N/l)` anahtarlar, yani toplam `O(N * N / l)`.
+- Seçilen dal: Sorgu başına `O(k * b)` anahtarları, yani `O(N * k * b)`.
+- Kayar dal: sorgu başına `O(w)` anahtarlar, yani `O(N * w)`.
 
 Toplam: `O(N * (N/l + k*b + w))`.
 
-`N = 64k, l = 64, k = 16, b = 64, w = 512` ile: sorgu başına maliyet `1000 + 1024 + 512 = 2536 keys` olur. Tüm dikkat `64000 keys`'de. 25 kat işlem azaltma.
+`N = 64k, l = 64, k = 16, b = 64, w = 512` ile: sorgu başına maliyet `1000 + 1024 + 512 = 2536 keys`'dir. Tüm dikkat `64000 keys`'dedir. 25 kat işlem azaltma.
 
-`N = 128k, l = 64, k = 16, b = 64, w = 512` ile: sorgu başına maliyet `2000 + 1024 + 512 = 3536 keys` olur. Tüm dikkat `128000 keys`'de. 36x azalma. Fayda, dizi uzunluğuyla birlikte artar, asıl mesele de budur.
+`N = 128k, l = 64, k = 16, b = 64, w = 512` ile: sorgu başına maliyet `2000 + 1024 + 512 = 3536 keys`'dir. Tüm dikkat `128000 keys`'dedir. 36x azalma. Fayda, dizi uzunluğuyla birlikte artar, asıl mesele de budur.
 
 ### Nasıl karşılaştırılır?
 
-| Yöntem | Türevlenebilir | Gerçek inference hızlanma | Uzun menzilli geri çağırma |
+| Yöntem | Türevlenebilir | Gerçek inference hızlandırma | Uzun menzilli geri çağırma |
 |--------|---------------|----------------------|-------------------|
 | Yalnızca sürgülü pencere | evet | evet | başarısız |
 | Adımlı / blok-seyrek | evet | evet | kısmi |
@@ -88,15 +88,15 @@ sliding-window-attention
 
 ## İnşa Et
 
-`code/main.py` üç dalı kısa bir sentetik dizide uygular ve şunları gösterir:
+`code/main.py` üç dalı kısa bir sentetik dizide uygular ve şunu gösterir:
 
 - Sıkıştırma MLP'si (pedagojik netlik için basit bir ortalama havuz temel çizgisi kullanılır; gerçek NSA, öğrenilmiş bir MLP'yi kullanır).
 - Sıkıştırılmış dal puanlarına göre yönlendirilen en üstteki blok seçimi.
-- Son `w` token saniyedeki kayan pencere dikkati.
+- Son `w` token'lere ilişkin kayar pencere dikkati.
 - Geçitli kombinasyon.
 - Tam dikkatle karşılaştırılan bir hesaplama sayımı çıktısı.
 
-### Adım 1: token'ları bloklara sıkıştırın
+### Adım 1: token'leri bloklara sıkıştırın
 
 ```python
 def compress(K, l):
@@ -117,11 +117,11 @@ Sıkıştırılmış anahtarlara karşı sorgunun softmax dikkatini çalıştır
 
 ### Adım 3: üst-k blok seçimi
 
-`k` en yüksek puana sahip sıkıştırılmış blokların endekslerini seçin. Bu bloklardan orijinal sıkıştırılmamış token'ları yükleyin ve dikkatleri üzerlerine çekin.
+`k` en yüksek puana sahip sıkıştırılmış blokların endekslerini seçin. Orijinal sıkıştırılmamış token'leri bu bloklardan yükleyin ve dikkatinizi üzerlerine yönlendirin.
 
 ### Adım 4: kayan pencereye dikkat
 
-Son `w` token'ları alın ve onlara karşı standart dikkat gösterin.
+Son `w` token'leri alın ve onlara karşı standart dikkat gösterin.
 
 ### Adım 5: geçit + birleştirme
 
@@ -129,7 +129,7 @@ Sorgudaki küçük bir MLP, üç kapı ağırlığı üretir. Nihai çıktı, ü
 
 ### Adım 6: sayımı hesaplayın
 
-Her şube için sorgu başına katılan anahtar sayısını ve toplamı yazdırın. `N` ile karşılaştırın (tüm dikkat). `l = 32, k = 4, w = 128` içeren 1024-token sentetikte, NSA sorgu başına `32 + 128 + 128 = 288` anahtar görürken, tam dikkat için 1024 anahtar görüyor - 3,5 kat daha az.
+Her şube için sorgu başına katılan anahtar sayısını ve toplamı yazdırın. `N` (tam dikkat) ile karşılaştırın. NSA, `l = 32, k = 4, w = 128` içeren 1024-token sentetikte sorgu başına `32 + 128 + 128 = 288` anahtarlarını, tam dikkat için 1024'e kıyasla 3,5 kat daha az görüyor.
 
 ## Kullan onu
 
@@ -137,13 +137,13 @@ NSA, DeepSeek'in kendi uzun bağlamlı ön eğitim hattında nakliye yapıyor. N
 
 - **DeepSeek dahili**: yerel, yayınlanmış ağırlıklar NSA'yı veya onun halefi DSA'yı (Deepseek Sparse Attention) kullanır.
 - **vLLM**: DeepSeek-V3.x ağırlıkları için geliştirilmekte olan deneysel NSA desteği.
-- **SGLang**: NSA benchmarkyayınlandı; üretim yolu vLLM'yi takip eder.
-- **llama.cpp / CPU**: desteklenmiyor; Çekirdek ayrışmasının ek yükü CPU veriminde buna değmez.
+- **SGLang**: NSA benchmark'ler yayınlandı; üretim yolu vLLM'yi takip eder.
+- **llama.cpp / CPU**: desteklenmez; Çekirdek ayrışmasının ek yükü CPU veriminde buna değmez.
 
 NSA'ya ne zaman ulaşılmalıdır:
 
 - Ciddi bir bilgi işlem bütçesiyle 64k'den fazla bağlamı hedefleyen eğitim öncesi veya sürekli eğitim çalıştırması.
-- DeepSeek'in kendi uzun bağlam kontrol noktalarından Inference tanesi. Ağırlıklar NSA'ya özgüdür.
+- DeepSeek'in kendi uzun bağlam kontrol noktalarının Inference'si. Ağırlıklar NSA'ya özgüdür.
 
 Ne zaman yapılmamalı:
 
@@ -153,11 +153,11 @@ Ne zaman yapılmamalı:
 
 ## Gönderin
 
-Bu ders `outputs/skill-nsa-integrator.md` üretir. Uzun bağlamlı bir eğitim öncesi çalışma spesifikasyonu göz önüne alındığında, bir NSA entegrasyon planı üretir: sıkıştırma bloğu boyutu, üst k, kayan pencere, geçit MLP genişliği, çekirdek seçimi ve mimari değişikliği haklı çıkaracak belirli uzun bağlam değerlendirmeleri.
+Bu ders `outputs/skill-nsa-integrator.md`'yi üretir. Uzun bağlamlı bir eğitim öncesi çalışma spesifikasyonu göz önüne alındığında, bir NSA entegrasyon planı üretir: sıkıştırma bloğu boyutu, üst k, kayan pencere, kapı MLP genişliği, çekirdek seçimi ve mimari değişikliği haklı çıkaracak belirli uzun bağlam değerlendirmeleri.
 
 ## Egzersizler
 
-1. `code/main.py`'yi 1024-token sentetik üzerinde çalıştırın. `(l, k, w)`'yi üç ön ayar boyunca gezdirin ve hesaplama sayımlarını yazdırın. Samanlıkta iğne testinde tüm dikkati %95 geri çağırırken sorgu başına en düşük anahtar sayısını elde eden ön ayarı belirleyin.
+1. `code/main.py`'yi 1024-token sentetik üzerinde çalıştırın. `(l, k, w)`'yi üç ön ayarda gezdirin ve hesaplama sayımlarını yazdırın. Samanlıkta iğne testinde tüm dikkati %95 geri çağırırken sorgu başına en düşük anahtar sayısını elde eden ön ayarı belirleyin.
 
 2. Ortalama havuz kompresörünü küçük öğrenilmiş bir MLP (2 katmanlı, gizli 32) ile değiştirin. Sinyalin bir bloğun ortalaması olduğu sentetik bir görev üzerinde onu eğitin. Bekletilen verilerdeki ortalama havuz temel çizgisine göre şaşkınlık boşluğunu ölçün.
 
@@ -172,11 +172,11 @@ Bu ders `outputs/skill-nsa-integrator.md` üretir. Uzun bağlamlı bir eğitim �
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
 | Sıkıştırılmış şube | "Kaba görünüm" | Sorgu başına O(N/l) anahtarlarında genel bağlam sağlayan blok ortalamalı anahtarlara dikkat |
-| Seçilen şube | "En iyi bloklar" | En yüksek sıkıştırılmış dal puanlarına sahip `k` bloklara ayrıntılı dikkat |
-| Sürgülü pencere | "Yerel bağlam" | Kısa menzilli modeller için son `W` tokens'ye dikkat |
-| Yerel eğitilebilirlik | "İnternet açıkken ön antrenman yapın" | Seyreklik modeli ön eğitim sırasında öğrenilir, inference |
-| Sıkıştırma bloğu boyutu l | "Kaba görünüm için grup boyutu" | Tek bir özette kaç tane token birleştirilir; 32-64 tipik |
-| Üst-k | "Saklanacak bloklar" | Sıkıştırılmamış token'ları okunan sıkıştırılmış blok sayısı; 16 tipik |
+| Seçilen şube | "En iyi bloklar" | En yüksek sıkıştırılmış dal puanlarına sahip `k` bloklarına ayrıntılı dikkat |
+| Sürgülü pencere | "Yerel bağlam" | Kısa menzilli modeller için son `W` token'lere dikkat |
+| Yerel eğitilebilirlik | "İnternet açıkken ön antrenman yapın" | Seyreklik modeli eğitim öncesi sırasında öğrenilir, inference |
+| Sıkıştırma bloğu boyutu l | "Kaba görünüm için grup boyutu" | Tek bir özette kaç token birleştirildi; 32-64 tipik |
+| Üst-k | "Saklanacak bloklar" | Sıkıştırılmamış token'leri okunan sıkıştırılmış blok sayısı; 16 tipik |
 | Sürgülü pencere W | "Yerel ilgi alanı" | Tipik olarak 512; daha kısası yerel tutarlılığa zarar verir, daha uzun süre bilgi israfına neden olur |
 | Şube kapısı | "Üçü nasıl karıştırılır" | Üç şubenin katkılarını ağırlıklandıran pozisyon başına MLP çıktısı |
 | Donanım hizalaması | "Çekirdek dostu seyreklik" | Gerçek GPU çekirdeğinin teorik hızlanmaya ulaşması için seyrek desen seçildi |
@@ -186,7 +186,7 @@ Bu ders `outputs/skill-nsa-integrator.md` üretir. Uzun bağlamlı bir eğitim �
 
 - [Yuan ve ark. — Yerel Sparse Attention: Donanımla Uyumlu ve Yerel Olarak Eğitilebilir Sparse Attention (arXiv:2502.11089, ACL 2025 En İyi Makale)](https://arxiv.org/abs/2502.11089) — makale
 - [DeepSeek-V3 Teknik Raporu (arXiv:2412.19437)](https://arxiv.org/abs/2412.19437) — NSA'nın hedeflediği mimari ailesi
-- [Moonshot AI — MoBA: Uzun Bağlamlı Yüksek Lisanslar için Blok Dikkat Karışımı (arXiv:2502.13189)](https://arxiv.org/abs/2502.13189) — eşzamanlı çalışma, bloklar üzerinde MoE tarzı dikkat
-- [Beltagy ve ark. — Longformer: Uzun Belge Transformer (arXiv:2004.05150)](https://arxiv.org/abs/2004.05150) — kayan pencere kökenleri
--[Xiao ve ark. — StreamingLLM: Dikkat Gidericileri Olan Verimli Akış Dili Modelleri (arXiv:2309.17453)](https://arxiv.org/abs/2309.17453) — inference-zaman seyrekliği temel çizgisi NSA gelişiyor
+- [Moonshot AI — MoBA: Uzun Bağlamlı Yüksek Lisanslar için Blok Dikkat Karışımı (arXiv:2502.13189)](https://arxiv.org/abs/2502.13189) — eş zamanlı çalışma, bloklar üzerinde MoE tarzı dikkat
+- [Beltagy ve ark. — Longformer: The Long-Document Transformer (arXiv:2004.05150)](https://arxiv.org/abs/2004.05150) — kayan pencere kökenleri
+-[Xiao ve ark. — StreamingLLM: Dikkat Giderlerine Sahip Verimli Akış Dili Modelleri (arXiv:2309.17453)](https://arxiv.org/abs/2309.17453) — inference-zaman seyrekliği temel çizgisi NSA iyileşiyor
 - [Dao ve ark. — FlashAttention-2 (arXiv:2307.08691)](https://arxiv.org/abs/2307.08691) — tam dikkat temel NSA çekirdekleri 64k'de atıyor

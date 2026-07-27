@@ -1,6 +1,6 @@
 # Planla-Uygula Kontrol Akışı
 
-> Başarısızlığa dayanamayacak bir plan bir senaryodur. Yeniden planlayabilen bir komut dosyası bir agent'dır. İlk önce yeniden planlayıcıyı oluşturun.
+> Başarısızlığa dayanamayacak bir plan bir senaryodur. Yeniden planlayabilen bir komut dosyası agent'dir. İlk önce yeniden planlayıcıyı oluşturun.
 
 **Tür:** Yapım
 **Diller:** Python
@@ -16,7 +16,7 @@
 
 ## Düşünce zinciri yerine planlayın ve uygulayın
 
-Bir düşünce zinciri agent, token'lar yayar ve döngünün, araç çağrısının nerede biteceğini tahmin etmesini sağlar. Planla ve uygula agent ilk önce yapılandırılmış bir plan yayınlar, ardından her adımı deterministik olarak yürütür. Plan, emniyet kemerinin iç gözlemleyebileceği verilerdir. Yürütme, bu verileri bir dağıtıcı aracılığıyla çalıştıran donanımdır.
+Bir düşünce zinciri agent, token'ler yayar ve döngünün, araç çağrısının nerede biteceğini tahmin etmesini sağlar. Planla ve uygula agent ilk önce yapılandırılmış bir plan yayınlar, ardından her adımı deterministik olarak yürütür. Plan, emniyet kemerinin iç gözlemleyebileceği verilerdir. Yürütme, bu verileri bir dağıtıcı aracılığıyla çalıştıran donanımdır.
 
 İki parça. Plan üreten plancı. Planı yürüten bir uygulayıcı. İlginç olan, uygulayıcı başarısızlığa uğradığında ne olacağıdır. Üç seçenek:
 
@@ -26,7 +26,7 @@ Bir düşünce zinciri agent, token'lar yayar ve döngünün, araç çağrısın
 3. Replan        (hand the error to the planner, get a new plan from the cursor)
 ```
 
-Yeniden planlama, bir betiği agent'a dönüştüren plandır.
+Replan, bir betiği agent'ye dönüştüren programdır.
 
 ## Adım şekli
 
@@ -40,7 +40,7 @@ Step
   error           : str | None
 ```
 
-`expected_outcome` planlayıcının adımın yanında söylediği kısa bir cümledir. Yürütücü tarafından uygulanmaz. Bu iki şey içindir: Yeniden planlayıcı, planı revize ederken okur; olay akışı bunu yayar, böylece bir izleyici "bu adımın X yapması gerekiyordu" ifadesini gösterebilir.
+`expected_outcome`, planlayıcının adımın yanında söylediği kısa bir cümledir. Yürütücü tarafından uygulanmaz. Bu iki şey içindir: Yeniden planlayıcı, planı revize ederken okur; olay akışı bunu yayar, böylece bir izleyici "bu adımın X yapması gerekiyordu" ifadesini gösterebilir.
 
 ## Planlayıcı şekli
 
@@ -49,13 +49,13 @@ def planner(goal: str, history: list[Step], last_error: str | None) -> list[Step
     ...
 ```
 
-Saf bir işlev. `goal` kullanıcı hedefidir. `history` halihazırda yürütülen adımlardır (sonuçlar ve hatalar doldurulmuş olarak). `last_error` ilk aramada Yoktur ve sonraki her aramada en son hata mesajıdır. Planlayıcı imleçten başlayarak bir sonraki planı döndürür.
+Saf bir işlev. `goal` kullanıcı hedefidir. `history` halihazırda yürütülen adımlardır (sonuçlar ve hatalar doldurulmuş olarak). `last_error`, ilk aramada Yoktur ve sonraki her aramada en son hata mesajıdır. Planlayıcı imleçten başlayarak bir sonraki planı döndürür.
 
 Planlayıcının uygulayıcı hakkında bilgisi yoktur. Yeniden denemelerden haberi yok. Zaman aşımlarını bilmiyor. Bir plan üretir. Hepsi bu.
 
 ## Yürütücü
 
-Yürütücü küçük bir durum makinesidir. Her adım dağıtıcıdan geçer. Sonuç üç şeyden biridir: başarı, başarısızlık yeniden planlanabilir, başarısızlık ölümcül. Yeniden planlanabilir başarısızlıklar planlamacıya geri döner. Önemli hatalar (bütçenin aşılması, tavana ulaşılmasının yeniden planlanması) `FAILED` oturum sonucunu döndürür.
+Yürütücü küçük bir durum makinesidir. Her adım dağıtıcıdan geçer. Sonuç üç şeyden biridir: başarı, başarısızlık yeniden planlanabilir, başarısızlık ölümcül. Yeniden planlanabilir başarısızlıklar planlamacıya geri döner. Önemli hatalar (bütçenin aşılması, tavana ulaşılmasının yeniden planlanması) bir `FAILED` oturum sonucu döndürür.
 
 ```mermaid
 stateDiagram-v2
@@ -84,13 +84,13 @@ Bir izleyici veya kullanıcı arayüzü, bunu kaldırılan adımlarda üstü çi
 
 ## İki bütçe, ikisi de zor
 
-`max_steps` , yeniden planlamalar da dahil olmak üzere tüm oturum boyunca toplam adım yürütme işlemlerini sınırlar. Varsayılan on ikidir. İki kez yeniden planlama yapan ve her seferinde üç adım ekleyen doğrusal beş adımlı bir plan, on altı uygulamaya ulaşır ve bütçeyi aşar. Yürütücü yeniden planlamayı reddedecek ve BAŞARISIZ olarak geri dönecektir.
+`max_steps`, yeniden planlamalar da dahil olmak üzere tüm oturum boyunca toplam adım yürütme sayısını sınırlar. Varsayılan on ikidir. İki kez yeniden planlama yapan ve her seferinde üç adım ekleyen doğrusal beş adımlı bir plan, on altı uygulamaya ulaşır ve bütçeyi aşar. Yürütücü yeniden planlamayı reddedecek ve BAŞARISIZ olarak geri dönecektir.
 
-`max_replans` , ilk plandan sonra planlayıcının çağrılma sayısını sınırlar. Varsayılan beştir. Bu daha önemli sınırdır. Aynı bozuk planı art arda beş kez döndüren bir planlamacı, aksi takdirde adım bütçesi onu yakalayana kadar döngüye girer. Yeniden planların sınırlandırılması, başarısızlığın daha hızlı olmasını ve nedenini daha net hale getirir.
+`max_replans`, planlayıcının ilk plandan sonra çağrılma sayısını sınırlar. Varsayılan beştir. Bu daha önemli sınırdır. Aynı bozuk planı art arda beş kez döndüren bir planlamacı, aksi takdirde adım bütçesi onu yakalayana kadar döngüye girer. Yeniden planların sınırlandırılması, başarısızlığın daha hızlı olmasını ve nedenini daha net hale getirir.
 
 ## Bu dersteki deterministik planlayıcı
 
-Bu dersimizde model demiyoruz. Ders, `last_error`'a göre bir plan seçen deterministik bir planlayıcı sunar.
+Bu dersimizde model demiyoruz. Ders, `last_error`'ye dayalı bir plan seçen deterministik bir planlayıcı sunar.
 
 ```text
 last_error is None    -> emit a four-step plan
@@ -116,12 +116,12 @@ Yirminci dersteki koşum takımı döngüsü bunu doğrudan okuyabilir. Yirmi ü
 
 ## Kod nasıl okunur
 
-`code/main.py` , `PlanExecuteAgent`, `Step`, `PlanDiff`, `SessionResult` ve deterministik planlayıcıyı tanımlar. Yürütücü, bir `SessionResult` döndüren tek bir `run(goal)` yöntemidir. Plan farkı, adım kimlikleri ve `(tool_name, args)` tuple'ları karşılaştırılarak hesaplanır.
+`code/main.py`, `PlanExecuteAgent`, `Step`, `PlanDiff`, `SessionResult` ve deterministik planlayıcıyı tanımlar. Yürütücü, `SessionResult` döndüren tek bir `run(goal)` yöntemidir. Plan farkı, adım kimlikleri ve `(tool_name, args)` tanımlamaları karşılaştırılarak hesaplanır.
 
-`code/tests/test_agent.py` doğrusal bir başarıyı, bir kez yeniden planlama yapan bir orta plan başarısızlığını, `failed:replan_budget` döndüren yeniden planlama tükenmesini, adım bütçe tükenmesini ve plan farkı etkinlik biçimini kapsar.
+`code/tests/test_agent.py` doğrusal bir başarıyı, bir kez yeniden planlama yapan orta plan başarısızlığını, `failed:replan_budget` döndüren yeniden planlama tükenmesini, adım bütçe tükenmesini ve plan farkı olay formatını kapsar.
 
 ## Daha ileri gidiyoruz
 
-Bunu gerçek bir modele bağladığınızda isteyeceğiniz iki uzantı. Birincisi, kısmi plan önbelleğe alma: Bir plan altı adımdan ilk üçünde başarılı olup ardından başarısız olduğunda, ilk üçünü yeniden çalıştırmak istemezsiniz. Uygulayıcı zaten geçmişi tutuyor; planlamacının bunu okuması yeterli. İkincisi, paralel dallar: mevcut uygulayıcı kesinlikle sıralıdır. Bağımsız bir dal ( `next_step` yerine `gather_step` ) yayan bir planlayıcı, dağıtıcı aracılığıyla aynı anda iki araç çağrısını çalıştırabilir.
+Bunu gerçek bir modele bağladığınızda isteyeceğiniz iki uzantı. Birincisi, kısmi plan önbelleğe alma: Bir plan altı adımdan ilk üçünde başarılı olup ardından başarısız olduğunda, ilk üçünü yeniden çalıştırmak istemezsiniz. Uygulayıcı zaten geçmişi tutuyor; planlamacının bunu okuması yeterli. İkincisi, paralel dallar: mevcut uygulayıcı kesinlikle sıralıdır. Bağımsız bir dal (`next_step` yerine `gather_step`) yayan bir planlayıcı, dağıtıcı aracılığıyla aynı anda iki araç çağrısını çalıştırabilir.
 
 Her ikisi de gerçek karmaşıklığı artırır. Doğrusal yürütücü sabitlendikten sonra her ikisinin de eklenmesi daha kolaydır. Bu dersin yaptığı budur.

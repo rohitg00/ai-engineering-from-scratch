@@ -1,6 +1,6 @@
 # MCP Temelleri — İlkeller, Yaşam Döngüsü, JSON-RPC Tabanı
 
-> MCP'den önceki her entegrasyon tek seferlikti. İlk olarak Kasım 2024'te Anthropic tarafından gönderilen ve şu anda Linux Foundation'ın Agentic AI Foundation tarafından yönetilen Model Context Protocol, herhangi bir istemcinin herhangi bir sunucuyla konuşabilmesi için keşif ve çağrıyı standart hale getiriyor. 2025-11-25 spesifikasyonu, altı temel öğeyi (üç sunucu, üç istemci), üç aşamalı bir yaşam döngüsünü ve bir JSON-RPC 2.0 kablo formatını adlandırır. Bunları öğrenin ve bu aşamanın MCP bölümünün geri kalanı okumaya dönüşsün.
+> MCP'den önceki her entegrasyon tek seferlikti. İlk olarak Kasım 2024'te Anthropic tarafından gönderilen ve şu anda Linux Foundation'ın Agentic AI Foundation tarafından yönetilen Model Bağlam Protokolü, herhangi bir istemcinin herhangi bir sunucuyla konuşabilmesi için keşif ve çağrıyı standart hale getiriyor. 2025-11-25 spesifikasyonu, altı temel öğeyi (üç sunucu, üç istemci), üç aşamalı bir yaşam döngüsünü ve bir JSON-RPC 2.0 kablo formatını adlandırır. Bunları öğrenin ve bu aşamanın MCP bölümünün geri kalanı okumaya dönüşsün.
 
 **Tür:** Öğren
 **Diller:** Python (stdlib, JSON-RPC ayrıştırıcı)
@@ -134,7 +134,7 @@ Bu ders `outputs/skill-mcp-handshake-tracer.md`'yi üretir. Bir MCP istemci-sunu
 
 1. `code/main.py`'yi çalıştırın. Yetenek anlaşmasının gerçekleştiği satırı tanımlayın ve sunucunun `tools.listChanged` bildirmemesi durumunda nelerin değişeceğini açıklayın.
 
-2. Ayrıştırıcıyı `notifications/progress`'yi işleyecek şekilde genişletin. Mesaj şekli: `{method: "notifications/progress", params: {progressToken, progress, total}}`. Uzun süredir çalışan bir `tools/call` devam ederken bunu yayınlayın ve istemci işleyicisinin bir ilerleme çubuğu görüntüleyeceğini doğrulayın.
+2. Ayrıştırıcıyı `notifications/progress`'yi işleyecek şekilde genişletin. Mesaj şekli: `{method: "notifications/progress", params: {progressToken, progress, total}}`. Uzun süredir çalışan bir `tools/call` devam ederken bunu yayınlayın ve istemci işleyicisinin bir ilerleme çubuğu görüntüleyeceğini onaylayın.
 
 3. MCP 2025-11-25 teknik özelliklerini yukarıdan aşağıya okuyun — belgenin tamamı yaklaşık 80 sayfadır. Çoğu sunucunun ihtiyaç duymadığı tek yetenek bayrağını belirleyin. İpucu: Kaynak aboneliğiyle ilgilidir.
 
@@ -146,7 +146,7 @@ Bu ders `outputs/skill-mcp-handshake-tracer.md`'yi üretir. Bir MCP istemci-sunu
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| MCP | "Model Context Protocol" | Modelden araca keşif ve çağrı için açık protokol |
+| MCP | "Model Bağlam Protokolü" | Modelden araca keşif ve çağrı için açık protokol |
 | Sunucu ilkel | "Sunucunun ortaya çıkardığı şeyler" | araçlar (eylemler), kaynaklar (veriler), prompt'ler (şablonlar) |
 | İstemci ilkel | "Bir istemcinin sunucuların kullanmasına izin verdiği şey" | kökler (kapsam), örnekleme (LLM geri aramaları), ortaya çıkarma (kullanıcı girişi) |
 | JSON-RPC 2.0 | "Tel formatı" | Simetrik istek/yanıt/bildirim zarfları |
@@ -159,8 +159,8 @@ Bu ders `outputs/skill-mcp-handshake-tracer.md`'yi üretir. Bir MCP istemci-sunu
 
 ## Daha Fazla Okuma
 
-- [Model Context Protocol — Spesifikasyon 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25) — standart spesifikasyon belgesi
-- [Model Context Protocol — Mimari kavramlar](https://modelcontextprotocol.io/docs/concepts/architecture) — altı temel zihinsel model
-- [Anthropic — Model Context Protocolne Giriş](https://www.anthropic.com/news/model-context-protocol) — Kasım 2024 lansman gönderisi
+- [Model Bağlamı Protokolü — Spesifikasyon 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25) — standart spesifikasyon belgesi
+- [Model Bağlamı Protokolü — Mimari kavramlar](https://modelcontextprotocol.io/docs/concepts/architecture) — altı temel zihinsel model
+- [Antropik — Model Bağlam Protokolüne Giriş](https://www.anthropic.com/news/model-context-protocol) — Kasım 2024 lansman gönderisi
 - [MCP blogu — MCP'nin ilk yıl dönümü](https://blog.modelcontextprotocol.io/posts/2025-11-25-first-mcp-anniversary/) — bir yıllık geriye dönük değerlendirme ve 2025-11-25 spesifikasyon değişiklikleri
 - [WorkOS — MCP 2025-11-25 spesifikasyon güncellemesi](https://workos.com/blog/mcp-2025-11-25-spec-update) — SEP-1686, 1036, 1577, 835 ve 1724'ün özeti

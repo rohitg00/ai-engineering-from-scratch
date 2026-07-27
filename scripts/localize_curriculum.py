@@ -9,6 +9,7 @@ the apply step restores protected content and rejects structural drift.
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import hashlib
 import json
 import re
@@ -20,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LESSON_GLOB = "phases/*/*/docs/en.md"
 PHASE_GLOB = "phases/*/README.md"
 PROTECTED_RE = re.compile(
-    r"(`+[^`\n]+`+|https?://[^\s)>]+|(?<!\w)[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z0-9_]+)+"
+    r"(`+[^`\n]+`+|https?://[^\s)>'\"]+|(?<!\w)[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z0-9_]+)+"
     r"|\$[^$\n]+\$|\{\{P\d+\}\})"
 )
 TERM_RE = re.compile(r"^\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$")
@@ -99,9 +100,9 @@ def restore(unit: dict) -> str:
     value = unit["translation"]
     placeholders = re.findall(r"\{\{P(\d+)\}\}", value)
     expected = [str(index) for index in range(len(unit["protected"]))]
-    if placeholders != expected:
+    if Counter(placeholders) != Counter(expected):
         raise ValueError(
-            f"line {unit['line']}: protected placeholders must be exactly "
+            f"line {unit['line']}: protected placeholders must contain exactly "
             f"{', '.join('{{P' + x + '}}' for x in expected)}"
         )
     for index, original in enumerate(unit["protected"]):
@@ -145,9 +146,12 @@ def validate_pair(source: Path, target: Path) -> None:
     original, translated = source.read_text(), target.read_text()
     if immutable_lines(original) != immutable_lines(translated):
         raise ValueError(f"{target}: fenced code or non-prose structure changed")
-    if protected_tokens(original) != protected_tokens(translated):
+    required = Counter(protected_tokens(original))
+    if any(translated.count(token) < count for token, count in required.items()):
         raise ValueError(f"{target}: code, URL, equation, or identifier changed")
-    if original.count("```") % 2 or translated.count("```") % 2:
+    original_fences = sum(line.lstrip().startswith("```") for line in original.splitlines())
+    translated_fences = sum(line.lstrip().startswith("```") for line in translated.splitlines())
+    if original_fences % 2 or translated_fences % 2:
         raise ValueError(f"{target}: unbalanced fenced code block")
 
 

@@ -1,6 +1,6 @@
 # Llama Guard ve Giriş/Çıkış Sınıflandırması
 
-> Llama Guard 3 (Meta, Llama-3.1-8B tabanı, içerik güvenliği için ince ayar yapılmıştır) hem LLM girişlerini hem de çıkışlarını 8 dilde MLCommons 13 tehlike sınıflandırmasına göre sınıflandırır. 1B-INT4 nicemlenmiş bir varyant, mobil CPU'larda 30 tokens/sn'nin üzerinde çalışır. Llama Guard 4 çok modludur (resim + metin), S1–S14 kategori setine genişler (S14 Kod Yorumlayıcının Kötüye Kullanımı dahil) ve Llama Guard 3 8B/11B'nin hemen yerine geçen bir üründür. NVIDIA NeMo Guardrails v0.20.0 (Ocak 2026), giriş ve çıkış raylarının üstüne Colang diyalog akış raylarını ekler. Dürüst not: "LLM Korkuluklarında Prompt Enjeksiyon ve Jailbreak Tespitinin Atlanması" (Huang ve diğerleri, arXiv:2504.11168), Emoji Kaçakçılığının altı önde gelen koruma sisteminde %100 saldırı başarı oranına ulaştığını gösterdi; NeMo Guard Detect jailbreaklerde %72,54 ASR kaydetti. Classifiers are a layer, not a solution.
+> Llama Guard 3 (Meta, Llama-3.1-8B tabanı, içerik güvenliği için ince ayar yapılmıştır) hem LLM girişlerini hem de çıkışlarını 8 dilde MLCommons 13 tehlike sınıflandırmasına göre sınıflandırır. 1B-INT4 nicemlenmiş bir varyant, mobil CPU'larda 30'un üzerinde token/sn hızında çalışır. Llama Guard 4 çok modludur (resim + metin), S1–S14 kategori setine genişler (S14 Kod Yorumlayıcının Kötüye Kullanımı dahil) ve Llama Guard 3 8B/11B'nin hemen yerine geçen bir üründür. NVIDIA NeMo Guardrails v0.20.0 (Ocak 2026), giriş ve çıkış raylarının üstüne Colang diyalog akış raylarını ekler. Dürüst not: "LLM Korkuluklarında Prompt Enjeksiyon ve Jailbreak Tespitinin Atlanması" (Huang ve diğerleri, arXiv:2504.11168), Emoji Kaçakçılığının altı önde gelen güvenlik sisteminde %100 saldırı başarı oranına ulaştığını gösterdi; NeMo Guard Detect jailbreaklerde %72,54 ASR kaydetti. Sınıflandırıcılar bir çözüm değil, bir katmandır.
 
 **Tür:** Öğren
 **Diller:** Python (stdlib, kategori etiketli sınıflandırıcı simülatörü)
@@ -9,7 +9,7 @@
 
 ## Sorun
 
-LLM giriş ve çıkışlarına yönelik sınıflandırıcılar, agent yığınının en dar noktasında bulunur: her istek geçer, her yanıt geçer. İyi bir sınıflandırıcı katman hızlıdır, sınıflandırmaya dayalıdır ve küçük bir hesaplama maliyeti karşılığında bariz yanlış kullanımın büyük bir kısmını yakalar. Kötü bir sınıflandırıcı katmanı yanlış bir güvenlik duygusudur.
+LLM giriş ve çıkışlarına yönelik sınıflandırıcılar agent yığınının en dar noktasında bulunur: her istek geçer, her yanıt geçer. İyi bir sınıflandırıcı katman hızlıdır, sınıflandırmaya dayalıdır ve küçük bir hesaplama maliyeti karşılığında bariz yanlış kullanımın büyük bir kısmını yakalar. Kötü bir sınıflandırıcı katmanı yanlış bir güvenlik duygusudur.
 
 2024–2026 sınıflandırıcı yığını, üretime hazır küçük bir dizi seçenek üzerinde birleşti. Llama Guard (Meta), açık ağırlıkları Meta'nın Topluluk Lisansı altında göndermektedir. NeMo Guardrails (NVIDIA), izin veren lisanslı rayların yanı sıra diyalog akışı kuralları için Colang'ı da sunar. Her ikisi de bir temel modeliyle eşleşecek şekilde tasarlanmıştır, güvenlik davranışının yerini almaz.
 
@@ -24,7 +24,7 @@ Belgelenen başarısızlık yüzeyi de aynı derecede iyi haritalanmıştır. Ka
 - Hem girişleri hem de çıkışları sınıflandırır
 - MLCommons 13-tehlike sınıflandırması
 - 8 dil
-- 1B-INT4 kuantize edilmiş varyant, mobil CPU'larda >30 tok/s hızında çalışır
+- 1B-INT4 nicelenmiş varyantı mobil CPU'larda >30 tok/s hızında çalışır
 
 Taksonomi üründür. "S1 Şiddetli Suçlar" ve "S13 Seçimleri", modelin eğitildiği ortak bir kelime dağarcığıyla eşleşir. Aşağı akış sistemleri, kategoriye özgü eylemleri bağlayabilir: S1'i doğrudan engelleyin, S6'yı insan incelemesi için işaretleyin, S12'ye açıklama ekleyin ancak izin verin.
 
@@ -34,7 +34,7 @@ Taksonomi üründür. "S1 Şiddetli Suçlar" ve "S13 Seçimleri", modelin eğiti
 - Genişletilmiş sınıflandırma: S1–S14 (S14 Kod Yorumlayıcının Kötüye Kullanımı eklenir)
 - Llama Guard 3 8B/11B için çıkarılabilir yedek parça
 
-S14 bu aşama için önemlidir. Otonom kodlama agent'lar (Ders 9) sanal alanlarda kod yürütür (Ders 11); Özellikle kod yorumlayıcısının kötüye kullanımına yönelik bir sınıflandırıcı kategorisi, daha önceki sınıflandırmanın adlandırmadığı bir saldırı sınıfını yakalar.
+S14 bu aşama için önemlidir. Otonom kodlama agent'ler (Ders 9) sanal alanlarda kod yürütür (Ders 11); Özellikle kod yorumlayıcısının kötüye kullanımına yönelik bir sınıflandırıcı kategorisi, daha önceki sınıflandırmanın adlandırmadığı bir saldırı sınıfını yakalar.
 
 ### NeMo Korkulukları (NVIDIA)
 
@@ -56,7 +56,7 @@ Diyalog rayı katmanı farklılaştırıcıdır. Giriş/çıkış rayları tek t
 
 **Anlamsal açıklama**: Yasaklanan isteği yeni bir dilde yeniden ifade edin. fine-tuning sınıflandırıcısı her ifadeyi kapsayamaz.
 
-**NeMo Guard Detect**: Huang ve diğerlerinde benchmark jailbreak durumunda %72,54 ASR. kağıt. Bu, dikkatli saldırı gemileriyle yapılır; rastgele jailbreak'lerin sayısı çok daha düşüktür, ancak tavan açıkça "sıfır" değildir.
+**NeMo Guard Detect**: Huang ve ark.'da benchmark jailbreak'te %72,54 ASR. kağıt. Bu, dikkatli saldırı gemileriyle yapılır; rastgele jailbreak'lerin sayısı çok daha düşüktür, ancak tavan açıkça "sıfır" değildir.
 
 ### Sınıflandırıcıların kazandığı yer
 
@@ -74,7 +74,7 @@ Diyalog rayı katmanı farklılaştırıcıdır. Giriş/çıkış rayları tek t
 
 ### Derinlemesine savunma
 
-Bir sınıflandırıcı katmanı, yapısal katmanın altına (Ders 17), çalışma zamanı katmanının üstüne (Ders 10, 13, 14) yerleştirilir. Kompozisyon:
+Bir sınıflandırıcı katmanı, yapısal katmanın altına (Ders 17), çalışma zamanı katmanının üstüne (Ders 10, 13, 14) yerleşir. Kompozisyon:
 
 - **Ağırlıklar**: Anayasal yapay zeka ile eğitilmiş model. Açık kötüye kullanımı varsayılan olarak reddeder.
 - **Sınıflandırıcı**: Llama Guard / NeMo Guardrails. Açıkça kötüye kullanım durumunda hızlı reddetme; kategori yönlendirme.
@@ -83,17 +83,17 @@ Bir sınıflandırıcı katmanı, yapısal katmanın altına (Ders 17), çalış
 
 Hiçbir katman tek başına yeterli değildir. Katmanlar farklı saldırı sınıflarını kapsar.
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` , giriş-dönüş metni üzerinde 6 kategorili bir sınıflandırmaya sahip bir oyuncak sınıflandırıcıyı simüle eder. Aynı metin, emoji kaçakçılığıyla ve homoglif ikamesiyle ham olarak aktarılıyor; sınıflandırıcının isabet oranı Huang ve ark. kağıt belgeler. Sürücü ayrıca, giriş kabul edildiğinde bile çıkış raylarının bir çıkışı nasıl reddedeceğini de gösterir.
+`code/main.py`, giriş-dönüş metni üzerinde 6 kategorili bir sınıflandırmaya sahip bir oyuncak sınıflandırıcıyı simüle eder. Aynı metin, emoji kaçakçılığıyla ve homoglif ikamesiyle ham olarak aktarılıyor; sınıflandırıcının isabet oranı Huang ve ark. kağıt belgeler. Sürücü ayrıca, giriş kabul edildiğinde bile çıkış raylarının bir çıkışı nasıl reddedeceğini de gösterir.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-`outputs/skill-classifier-stack-audit.md` , bir deployment'nin sınıflandırıcı katmanını (model, sınıflandırma, giriş/çıkış rayları, diyalog rayları) denetler ve boşlukları işaretler.
+`outputs/skill-classifier-stack-audit.md`, deployment'nin sınıflandırıcı katmanını (model, sınıflandırma, giriş/çıkış rayları, diyalog rayları) denetler ve boşlukları işaretler.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. Sınıflandırıcının ham kötü amaçlı girdiyi yakaladığını ancak emoji kaçakçılığı sürümünü kaçırdığını doğrulayın. Bir normalleştirme adımı ekleyin ve yeni isabet oranını ölçün.
+1. `code/main.py`'yi çalıştırın. Sınıflandırıcının ham kötü amaçlı girdiyi yakaladığını ancak emoji kaçakçılığı sürümünü kaçırdığını doğrulayın. Bir normalleştirme adımı ekleyin ve yeni isabet oranını ölçün.
 
 2. MLCommons 13 tehlike sınıflandırmasını ve Llama Guard 4 S1–S14 listesini okuyun. Orijinal 13-tehlike setinde doğrudan eşlemesi olmayan S1-S14 kategorisini tanımlayın; S14 Kod Yorumlayıcısının Kötüye Kullanımının neden özellikle Aşama 15 ile ilgili olduğunu açıklayın.
 
@@ -101,7 +101,7 @@ Hiçbir katman tek başına yeterli değildir. Katmanlar farklı saldırı sın�
 
 4. Huang ve ark.'yı okuyun. (arXiv:2504.11168). Bir saldırı kategorisi seçin (emoji kaçakçılığı, homoglif, açıklama) ve bir hafifletme önerisinde bulunun. Azaltımın kendi başarısızlık modunu adlandırın.
 
-5. Jailbreak benchmark'larde NeMo Guard Detect için %72,54 ASR, düşman gemisi altında ölçülmüştür. Sıradan (düşmanca olmayan) kullanıcı dağıtımı altında sınıflandırıcı ASR'yi ölçen bir değerlendirme protokolü tasarlayın. Hangi sayıyı beklersiniz ve bu sayı neden ayrı bir önem taşıyor?
+5. Jailbreak benchmark'lerde NeMo Guard Detect için %72,54 ASR, düşman gemisi altında ölçülmüştür. Sıradan (düşmanca olmayan) kullanıcı dağıtımı altında sınıflandırıcı ASR'yi ölçen bir değerlendirme protokolü tasarlayın. Hangi sayıyı beklersiniz ve bu sayı neden ayrı bir önem taşıyor?
 
 ## Anahtar Terimler
 
@@ -121,5 +121,5 @@ Hiçbir katman tek başına yeterli değildir. Katmanlar farklı saldırı sın�
 - [İnan ve ark. — Llama Guard: LLM tabanlı Giriş-Çıkış Koruması](https://ai.meta.com/research/publications/llama-guard-llm-based-input-output-safeguard-for-human-ai-conversations/) — orijinal makale.
 - [Meta — Llama Guard 4 model kartı](https://www.llama.com/docs/model-cards-and-prompt-formats/llama-guard-4/) — çok modlu, S1–S14 taksonomisi.
 - [NVIDIA NeMo Guardrails (GitHub)](https://github.com/NVIDIA-NeMo/Guardrails) — v0.20.0 Ocak 2026.
-- [Huang ve ark. — LLM Guardrails'de Prompt Enjeksiyon ve Jailbreak Tespiti'nin atlanması](https://arxiv.org/abs/2504.11168) — Koruma sistemleri genelinde ASR numaraları.
-- [Antropik — Uygulamada agent özerkliğinin ölçülmesi](https://www.anthropic.com/research/measuring-agent-autonomy) — sınıflandırıcı artı çalışma zamanı çerçevelemesi.
+- [Huang ve ark. — LLM Korkuluklarında Prompt Enjeksiyon ve Jailbreak Algılamanın Atlanması](https://arxiv.org/abs/2504.11168) — Koruma sistemleri genelinde ASR numaraları.
+- [Antropik — agent özerkliğinin pratikte ölçülmesi](https://www.anthropic.com/research/measuring-agent-autonomy) — sınıflandırıcı artı çalışma zamanı çerçeveleme.

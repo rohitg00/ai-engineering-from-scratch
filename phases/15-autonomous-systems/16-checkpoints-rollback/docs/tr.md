@@ -9,11 +9,11 @@
 
 ## Sorun
 
-Kalıcı yürütme (Ders 12), çöken bir agent dosyasını devam ettirilebilir hale getirir. Öner-sonra-taahhüt et (Ders 15) onaylanmış bir eylemi denetlenebilir hale getirir. Bu ders de onlara katılıyor: Onaylanan bir eylem kısmen yürütüldüğünde, çöktüğünde ve devam ettiğinde ne olur? Geri alma ne zaman ve hangi duruma karşı çalışır?
+Dayanıklı yürütme (Ders 12), çöken bir agent'yi devam ettirilebilir hale getirir. Öner-sonra-taahhüt et (Ders 15) onaylanmış bir eylemi denetlenebilir hale getirir. Bu ders de onlara katılıyor: Onaylanan bir eylem kısmen yürütüldüğünde, çöktüğünde ve devam ettiğinde ne olur? Geri alma ne zaman ve hangi duruma karşı çalışır?
 
 Gerçek sistemler bunu farklı şekilde bağlar:
 
-- **LangGraph** PostgreSQL'e her grafik durumu geçişini kontrol eder. İşçinin çökmesi durumunda kira kontratı iptal edilir ve başka bir işçi en son kontrol noktasında görevine devam eder. İş akışları `interrupt()` üzerinde duraklatılıyor ve bu durum devam ediyor.
+- **LangGraph** PostgreSQL'e her grafik durumu geçişini kontrol eder. İşçinin çökmesi durumunda kira kontratı iptal edilir ve başka bir işçi en son kontrol noktasında görevine devam eder. İş akışları `interrupt()` üzerinde duraklatılır ve bu durum devam eder.
 - **Cloudflare Dayanıklı Nesneler** anahtar başına durumu saatler veya haftalar boyunca korur. Onaylanan eylem için hesaplamayı depolama alanıyla aynı konuma getirin.
 - **Microsoft Agent Framework** iş akışı API'sinde `Checkpoint` temel öğelerini kullanıma sunar; tekrar oynatma artı idempotency yeniden denemeleri kapsar.
 
@@ -23,7 +23,7 @@ Her durumda, gerçekten işe yarayan kombinasyon şudur: eşgüdüm anahtarı (�
 
 ### Her geçiş devam eder
 
-Grafik durumu geçişi, iş akışını adlandırılmış bir durumdan diğerine taşıyan herhangi bir adımdır. Naif uygulamalar yalnızca belirli taahhüt noktalarında devam eder; üretim uygulamaları her geçişte devam eder. Maliyet (ekstra birkaç yazma) güvenilirlik kazancıyla karşılaştırıldığında küçüktür (tekrar oynatma her yere ulaşır, kira geri kazanımı kesindir).
+Grafik durumu geçişi, iş akışını adlandırılmış bir durumdan diğerine taşıyan herhangi bir adımdır. Naif uygulamalar yalnızca belirli taahhüt noktalarında devam eder; üretim uygulamaları her geçişte devam eder. Maliyet (ekstra birkaç yazma) güvenilirlik kazancıyla karşılaştırıldığında küçüktür (tekrar oynatma her yerde olur, kira geri kazanımı kesindir).
 
 ### Kira geri kazanımı
 
@@ -31,7 +31,7 @@ Bir işçi kaza yaptığında iş akışı kaybolmaz; kira sözleşmesi (bu çal
 
 ### Yetkisizlik artı önkoşullar
 
-Idempotency tek başına yeterli değildir. Şunu düşünün: bir iş akışı " $100 from A to B when balance > $1000'i aktarmak" için onaylandı. İş akışı kaydedilir, yürütmenin ortasında çöker ve devam eder. Yalnızca kimlik anahtarı işaretlenirse ve yürütme devam ederse aktarım bir kez çalışır (doğru). Ancak çökme ve devam etme arasında A'nın bakiyesinin farklı bir iş akışı yoluyla 500 dolara düştüğünü düşünün. Yeterlilik kontrolü hala başarılı; önkoşul geçerli değildir. Önkoşul kontrolü olmadan, kredili mevduat hesabını gönderiyoruz.
+Idempotency tek başına yeterli değildir. Şunu düşünün: "$100 from A to B when balance > $1000 aktarımı" için bir iş akışı onaylandı. İş akışı kaydedilir, yürütmenin ortasında çöker ve devam eder. Yalnızca kimlik anahtarı işaretlenirse ve yürütme devam ederse aktarım bir kez çalışır (doğru). Ancak çökme ve devam etme arasında A'nın bakiyesinin farklı bir iş akışı yoluyla 500 dolara düştüğünü düşünün. Yeterlilik kontrolü hala başarılı; önkoşul geçerli değildir. Önkoşul kontrolü olmadan, kredili mevduat hesabını gönderiyoruz.
 
 Her sonuçsal eylemin her ikisine de ihtiyacı vardır:
 
@@ -42,7 +42,7 @@ Her sonuçsal eylemin her ikisine de ihtiyacı vardır:
 
 "Araç 200 döndürdü" doğrulama değildir. Gerçek doğrulama, hedef durumu yeniden okur ve gerçekte meydana gelen yan etkiyi doğrular. Desenler:
 
-- Veritabanı güncellemesi: `UPDATE ... RETURNING *` , ardından döndürülen satırın amaçlanan durumla eşleştiğini onaylayın.
+- Veritabanı güncellemesi: `UPDATE ... RETURNING *` ardından döndürülen satırın amaçlanan durumla eşleştiğini onaylayın.
 - E-posta gönderimi: gönderimden sonra mesaj kimliği için gönderilenler klasörünü kontrol edin.
 - Dosya yazma: dosyayı geri okuyun ve karma işlemi yapın.
 - API çağrısı: hedef kaynakta `GET` takibi.
@@ -51,9 +51,9 @@ Doğrulama başarısız olursa iş akışı bilinen bir bozuk durumdadır. Geri 
 
 ### Geri alma planları
 
-Öner-sonra-taahhüt etme (Ders 15) yöntemindeki her sonuçsal eylem bir geri alma planı taşır. Türler:
+Öner-sonra-taahhüt etme yöntemindeki (Ders 15) her sonuçta ortaya çıkan eylem bir geri alma planı taşır. Türler:
 
-- **Bant içi geri alma**: yan etkiyi doğrudan tersine çevirir ( `INSERT`'den sonra `DELETE` , gönderdikten sonra `Send-correction-email` ).
+- **Bant içi geri alma**: yan etkiyi doğrudan tersine çevirir (`INSERT`'den sonra `DELETE`, gönderdikten sonra `Send-correction-email`).
 - **Telafi edici işlem**: orijinali (standart SAGA modeli) etkisiz hale getiren yeni bir eylem.
 - **Bant dışı geri alma**: Bir insanı uyarır, iş akışını duraklatır, kötü durumu incelemeye bırakır.
 
@@ -80,19 +80,19 @@ Bu alandaki en yaygın üretim olayı:
 4. İş akışı devam eder; "onaylandı ancak taahhüt edilmedi" ifadesini görüyor; yeniden yürütür.
 5. Yan etki iki kez tetiklenir.
 
-Azaltma: yürütmeden önce "uçuş sırasında" niyetini sürdürün, bir kimliksizlik anahtarıyla yürütün, ardından yalnızca eylem sonrası doğrulama başarılı olduktan sonra "taahhüt edildi" olarak işaretleyin. Eylem tetiklenirse ve durum yazma işlemi başarısız olursa, doğrulamayı ve (gerekirse) yeniden başlatmayı bilirsiniz. Durum yazma işlemi başarılı olursa ve eylem başarısız olursa, kurtarma yolunu kullanarak tam olarak bir kez doğrular ve harekete geçersiniz.
+Azaltma: yürütmeden önce "uçuş sırasında" niyetini sürdürün, bir kimliksizlik anahtarıyla yürütün, ardından yalnızca eylem sonrası doğrulama başarılı olduktan sonra "taahhüt edildi" olarak işaretleyin. Eylem tetiklenirse ve durum yazma işlemi başarısız olursa, doğrulamayı ve (gerekirse) yeniden başlatmayı bilirsiniz. Durum yazma işlemi başarılı olursa ve eylem başarısız olursa, kurtarma yolu aracılığıyla tam olarak bir kez doğrular ve harekete geçersiniz.
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` , eksiklik, önkoşullar, doğrulama ve geri alma özelliklerine sahip kontrol noktalı bir iş akışı uygular. Sürücü dört senaryoyu simüle eder: temiz çalıştırma, kilitlenmeden sonra yeniden deneme (zamansızlık yakalamaları), önkoşul hatası (iş akışı tetiklenmeden iptal edilir), başarısızlığı doğrulama (geri alma tetiklenir).
+`code/main.py`, eksiklik, önkoşullar, doğrulama ve geri alma ile denetim noktalı bir iş akışı uygular. Sürücü dört senaryoyu simüle eder: temiz çalıştırma, kilitlenmeden sonra yeniden deneme (zamansızlık yakalamaları), önkoşul hatası (iş akışı tetiklenmeden iptal edilir), başarısızlığı doğrulama (geri alma tetiklenir).
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-`outputs/skill-rollback-rehearsal.md` , önerilen iş akışı için bir geri alma provası testi tasarlar ve denetim izi kalıcılığı açısından kontrol noktası arka ucunu denetler.
+`outputs/skill-rollback-rehearsal.md`, önerilen bir iş akışı için bir geri alma prova testi tasarlar ve denetim izi kalıcılığı açısından kontrol noktası arka ucunu denetler.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. Dört senaryoyu doğrulayın. İşleme sırasında kilitlenme durumu için, eylemin yeniden denemelerde tam olarak bir kez tetiklendiğini doğrulayın.
+1. `code/main.py`'yi çalıştırın. Dört senaryoyu doğrulayın. İşleme sırasında kilitlenme durumu için, eylemin yeniden denemelerde tam olarak bir kez tetiklendiğini doğrulayın.
 
 2. "Önce yapıldı olarak işaretle, sonra yap" modelini değiştirerek durum yazma işleminin eylemden sonra gerçekleşmesini sağlayın. Kilitlenme senaryosunu yeniden çalıştırın. Kaç tane yinelenen eylemin tetiklendiğini ölçün.
 
@@ -117,8 +117,8 @@ Azaltma: yürütmeden önce "uçuş sırasında" niyetini sürdürün, bir kimli
 
 ## Daha Fazla Okuma
 
-- [Microsoft Agent Framework — Denetim Noktası Oluşturma ve HITL](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) — Denetim noktası ilkelleri ve kira kurtarma.
+- [Microsoft Agent Framework — Denetim Noktası Oluşturma ve HITL](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) — Denetim noktası temel öğeleri ve kira kurtarma.
 - [Cloudflare Agents — Döngüdeki insan](https://developers.cloudflare.com/agents/concepts/human-in-the-loop/) — Durum alt katmanı olarak Dayanıklı Nesneler.
-- [AB Yapay Zeka Yasası — Madde 14: İnsan gözetimi](https://artificialintelligenceact.eu/article/14/) — düzenleyici temel.
-- [Antropik — Uygulamada agent özerkliğinin ölçülmesi](https://www.anthropic.com/research/measuring-agent-autonomy) — uzun vadeli iş akışları için güvenilirlik çerçevesi.
+- [AB AI Yasası — Madde 14: İnsan gözetimi](https://artificialintelligenceact.eu/article/14/) — düzenleyici temel.
+- [Antropik — agent özerkliğinin pratikte ölçülmesi](https://www.anthropic.com/research/measuring-agent-autonomy) — uzun ufuklu iş akışları için güvenilirlik çerçevesi.
 - [Antropik — Claude Code Agent SDK: agent loop](https://code.claude.com/docs/en/agent-sdk/agent-loop) — Claude Code Rutinleri için iş akışı şekli.

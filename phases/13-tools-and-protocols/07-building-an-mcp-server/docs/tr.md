@@ -167,8 +167,8 @@ Bu ders `outputs/skill-mcp-server-scaffolder.md`'yi üretir. Bir etki alanı (no
 
 ## Daha Fazla Okuma
 
-- [Model Context Protocol — Python SDK](https://github.com/modelcontextprotocol/python-sdk) — referans Python uygulaması
-- [Model Context Protocol — TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) — paralel TS uygulaması
+- [Model Bağlam Protokolü — Python SDK](https://github.com/modelcontextprotocol/python-sdk) — referans Python uygulaması
+- [Model Bağlam Protokolü — TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) — paralel TS uygulaması
 - [FastMCP — sunucu framework](https://gofastmcp.com/) — MCP sunucuları için dekoratör tarzı Python API'si
 - [MCP — Hızlı başlangıç sunucusu kılavuzu](https://modelcontextprotocol.io/quickstart/server) — SDK'lardan herhangi birini kullanan uçtan uca eğitim
 - [MCP — Sunucu araçları özellikleri](https://modelcontextprotocol.io/specification/2025-11-25/server/tools) — araçlar/* mesajları için tam referans

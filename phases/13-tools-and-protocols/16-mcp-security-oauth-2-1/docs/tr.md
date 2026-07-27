@@ -30,7 +30,7 @@ OAuth 2.1 yeni değil. Yeni olan, MCP'nin profilidir: belirli gerekli akışlar 
 
 ### Roller
 
-- **İstemci.** MCP istemcisi (Claude Masaüstü, Cursor vb.).
+- **İstemci.** MCP istemcisi (Claude Masaüstü, İmleç vb.).
 - **Kaynak sunucusu.** MCP sunucusu (notlar, GitHub, Postgres, her neyse).
 - **Yetkilendirme sunucusu.** token'leri yayınlar. Kaynak sunucusuyla aynı hizmet veya ayrı bir IdP (Auth0, Keycloak, Cognito) olabilir.
 

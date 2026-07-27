@@ -12,7 +12,7 @@
 - Linux dosya sisteminde gezinin ve temel dosya işlemlerini komut satırından gerçekleştirin
 - "İzin reddedildi" hatalarını çözmek için `chmod` ve `chown` ile dosya izinlerini yönetin
 - `apt` ile sistem paketlerini yükleyin ve yapay zeka çalışması için yeni bir GPU kutusu kurun
-- Uzak makinelerde çalışan geliştiricileri genellikle şaşırtan macOS-Linux farklılıklarını belirleyin
+- Uzak makinelerde çalışan geliştiricileri genellikle şaşırtan macOS'tan Linux'a olan farklılıkları belirleyin
 
 ## Sorun
 
@@ -35,7 +35,7 @@ graph TD
     root --> proc["proc/ and /sys/<br/>Virtual files — kernel and hardware info"]
 ```
 
-Ana dizininiz `~` veya `/home/your-username`. Yaptığınız neredeyse her şey burada oluyor.
+Ana dizininiz `~` veya `/home/your-username`'dir. Yaptığınız neredeyse her şey burada oluyor.
 
 ## Temel Komutlar
 
@@ -167,7 +167,7 @@ kill -9 12345               # Force kill (use when graceful doesn't work)
 nvidia-smi                  # GPU processes and memory usage
 ```
 
-systemd hizmetleri yönetir (arka plan servisleri). inference sunucu çalıştırıyorsanız bunu kullanacaksınız:
+systemd hizmetleri yönetir (arka plan servisleri). inference sunucularını çalıştırıyorsanız bunu kullanacaksınız:
 
 ```bash
 sudo systemctl start nginx          # Start a service
@@ -179,7 +179,7 @@ sudo systemctl enable nginx         # Start automatically on boot
 
 ## Disk Alanı
 
-GPU kutularında genellikle sınırlı disk alanı bulunur. Modeller ve dataset'lar burayı hızla dolduruyor.
+GPU kutularında genellikle sınırlı disk alanı bulunur. Modeller ve dataset'ler burayı hızla dolduruyor.
 
 ```bash
 df -h                       # Disk usage for all mounted drives
@@ -226,7 +226,7 @@ rsync -avz --progress ./data/ user@remote:/data/
 rsync -avz --progress user@remote:/results/ ./results/
 ```
 
-Büyük herhangi bir şey için `rsync` yerine `scp` kullanın. Yalnızca değiştirilen baytları aktarır ve kesintiye uğrayan bağlantıları yönetir.
+Büyük herhangi bir şey için `scp` yerine `rsync` kullanın. Yalnızca değiştirilen baytları aktarır ve kesintiye uğrayan bağlantıları yönetir.
 
 ## tmux: Oturumları Canlı Tutun
 
@@ -250,7 +250,7 @@ Her zaman tmux'un içinde uzun eğitim işleri yürütün. Her zaman.
 
 ## Windows Kullanıcıları için WSL2
 
-Windows kullanıyorsanız, WSL2 size çift önyükleme gerektirmeyen gerçek bir Linux ortamı sunar.
+Windows kullanıyorsanız WSL2 size çift önyükleme gerektirmeyen gerçek bir Linux ortamı sunar.
 
 ```bash
 # In PowerShell (admin)
@@ -260,7 +260,7 @@ wsl --install -d Ubuntu-24.04
 sudo apt update && sudo apt upgrade -y
 ```
 
-WSL2 gerçek bir Linux çekirdeği çalıştırır. Bu dersteki her şey onun içinde çalışır. Windows dosyalarınız WSL içinden `/mnt/c/Users/YourName/` konumunda.
+WSL2 gerçek bir Linux çekirdeği çalıştırır. Bu dersteki her şey onun içinde çalışır. Windows dosyalarınız WSL içinden `/mnt/c/Users/YourName/` konumundadır.
 
 GPU geçişi, Windows tarafında yüklü NVIDIA sürücüleri ile çalışır. Windows NVIDIA sürücüsünü (Linux sürücüsünü değil) yükleyin; CUDA, WSL2'de mevcut olacaktır.
 
@@ -270,14 +270,14 @@ MacOS'tan geliyorsanız sizi şaşırtacak şeyler:
 
 | macOS | Linux | Notlar |
 |-------|-------|-------|
-| `brew install` | `sudo apt install` | Bazen farklı paket adları. `brew install htop` ile `sudo apt install htop` aynı şekilde çalışır ancak `brew install readline` ile `sudo apt install libreadline-dev` arasında çalışmaz. |
-| `open file.txt` | `xdg-open file.txt` | Ancak uzak kutuda bir GUI'niz olmayacak. `cat` veya `less` kullanın. |
+| `brew install` | `sudo apt install` | Bazen farklı paket adları. `brew install htop` ve `sudo apt install htop` aynı şekilde çalışır ancak `brew install readline` ve `sudo apt install libreadline-dev` aynı şekilde çalışmaz. |
+| `open file.txt` | `xdg-open file.txt` | Ancak uzak kutuda bir GUI'niz olmayacak. `cat` veya `less`'yi kullanın. |
 | `pbcopy` / `pbpaste` | Mevcut değil | SSH üzerinden panoya/panodan geçiş mevcut değil. |
 | `~/.zshrc` | `~/.bashrc` | macOS varsayılan olarak zsh'dir. Çoğu Linux sunucusu bash kullanır. |
 | `/opt/homebrew/` | `/usr/bin/`, `/usr/local/bin/` | İkili dosyalar farklı yerlerde yaşar. |
 | `sed -i '' 's/a/b/' file` | `sed -i 's/a/b/' file` | macOS sed'in `-i`'den sonra boş bir dizeye ihtiyacı var. Linux bunu yapmaz. |
-| Büyük/küçük harfe duyarlı olmayan dosya sistemi | Büyük/küçük harfe duyarlı dosya sistemi | `Model.py` ve `model.py` Linux'ta iki farklı dosyadır. |
-| Satır sonları `\n` | Satır sonları `\n` | Aynı. Ancak Windows, bash komut dosyalarını bozan `\r\n`'yi kullanır. Düzeltmek için `dos2unix` komutunu çalıştırın. |
+| Büyük/küçük harfe duyarlı olmayan dosya sistemi | Büyük/küçük harfe duyarlı dosya sistemi | `Model.py` ve `model.py`, Linux'ta iki farklı dosyadır. |
+| Satır sonları `\n` | Satır sonları `\n` | Aynı. Ancak Windows, bash komut dosyalarını bozan `\r\n`'yi kullanıyor. Düzeltmek için `dos2unix`'yi çalıştırın. |
 
 ## Hızlı Referans Kartı
 
@@ -298,6 +298,6 @@ Sessions:       tmux new/attach/detach
 
 1. Herhangi bir Linux makinesine SSH girin (veya WSL2'yi açın) ve ana dizininize gidin. Bir proje klasörü oluşturun, içinde `touch` ile üç boş dosya oluşturun, ardından bunları `ls -la` ile listeleyin.
 2. `htop`'yi apt ile yükleyin, çalıştırın ve hangi işlemin en fazla belleği kullandığını belirleyin.
-3. Bir tmux oturumu başlatın, içinde `sleep 300` çalıştırın, bağlantıyı kesin, oturumları listeleyin ve yeniden ekleyin.
+3. Bir tmux oturumu başlatın, içinde `sleep 300` komutunu çalıştırın, oturumları ayırın, listeleyin ve yeniden ekleyin.
 4. Kullanılabilir disk alanını kontrol etmek için `df -h`'yi kullanın, ardından önbelleğinizde neyin yer kapladığını bulmak için `du -sh ~/.cache/*`'yi kullanın.
 5. `scp` kullanarak yerel makinenizdeki bir dosyayı uzaktaki bir makineye aktarın, ardından aynı aktarımı `rsync` ile yapın ve deneyimi karşılaştırın.

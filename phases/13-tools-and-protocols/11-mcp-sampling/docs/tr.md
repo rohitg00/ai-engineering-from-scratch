@@ -16,7 +16,7 @@
 
 ## Sorun
 
-Kod özetleme iş akışı için kullanışlı bir MCP sunucusunun şunları yapması gerekir: bir dosya ağacında gezinmek, hangi dosyaların okunacağını seçmek, bir özeti sentezlemek ve geri dönmek. LLM muhakemesi nerede gerçekleşir?
+Kod özetleme iş akışı için kullanışlı bir MCP sunucusunun şunları yapması gerekir: bir dosya ağacında gezinmek, hangi dosyaların okunacağını seçmek, bir özeti sentezlemek ve geri dönmek. Yüksek Lisans muhakemesi nerede gerçekleşir?
 
 Seçenek A: sunucu kendi LLM'sini çağırır. API anahtarı gerektirir, sunucu tarafında faturalanır, kullanıcı başına pahalıdır.
 
@@ -116,7 +116,7 @@ Kurallı kullanım durumu: kendi LLM erişimi olmayan bir kod özetleme MCP sunu
 
 Sunucu hiçbir zaman bir LLM API'sine dokunmaz. Müşterinin kullanıcısı tamamlamalar için kendi kimlik bilgilerini kullanarak ödeme yapar.
 
-### Güvenlik riskleri (Unit 42 açıklaması, 2026 1. Çeyrek)
+### Güvenlik riskleri (Birim 42 açıklaması, 2026 1. Çeyrek)
 
 - **Gizli örnekleme.** Örneklemeyi her zaman "oturum bağlamından kullanıcının e-postasıyla yanıtlama" ile çağıran bir araç. Aşama 13 · 15, saldırı vektörlerini kapsar.
 - **Örnekleme yoluyla kaynak hırsızlığı.** Sunucu, istemciden saldırganın yükünü özetlemesini ister ve kullanıcıya fatura keser.
@@ -162,7 +162,7 @@ Bu ders `outputs/skill-sampling-loop-designer.md`'yi üretir. LLM çağrıların
 | `sampling/createMessage` | "Yöntem" | Örnekleme istekleri için JSON-RPC yöntemi |
 | `modelPreferences` | "Model öncelikleri" | Maliyet / hız / zeka ağırlıkları artı isim ipuçları |
 | `includeContext` | "Oturumlar arası sızıntı" | Geçici olarak kullanımdan kaldırılan bağlam ekleme modu |
-| SEP-1577 | "Örneklemedeki araçlar" | Sunucuda barındırılan ReAct için örnekleme içindeki araçlara izin ver |
+| EYLÜL-1577 | "Örneklemedeki araçlar" | Sunucuda barındırılan ReAct için örnekleme içindeki araçlara izin ver |
 | Döngüdeki insan | "Kullanıcı onaylıyor" | İstemci, çalıştırmadan önce kullanıcıya örnekleme isteğini iletiyor |
 | Döngü bombası | "Kaçak örnekleme" | Sunucu tarafı sonsuz örnekleme döngüsü; istemcinin hız limiti olması gerekir |
 | Gizli örnekleme | "Gizli mantık" | Kötü amaçlı sunucu, prompt'leri örnekleme amacını gizler |
@@ -174,5 +174,5 @@ Bu ders `outputs/skill-sampling-loop-designer.md`'yi üretir. LLM çağrıların
 - [MCP — Kavramlar: Örnekleme](https://modelcontextprotocol.io/docs/concepts/sampling) — örneklemeye üst düzeyde genel bakış
 - [MCP — İstemci örnekleme spesifikasyonu 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/client/sampling) — standart `sampling/createMessage` şekli
 - [MCP — GitHub SEP-1577](https://github.com/modelcontextprotocol/modelcontextprotocol) — Örneklemedeki araçlar için Özel Gelişim Teklifi (deneysel)
-- [Unit 42 — MCP saldırı vektörleri](https://unit42.paloaltonetworks.com/model-context-protocol-attack-vectors/) — gizli örnekleme ve kaynak hırsızlığı modelleri
+- [Birim 42 — MCP saldırı vektörleri](https://unit42.paloaltonetworks.com/model-context-protocol-attack-vectors/) — gizli örnekleme ve kaynak hırsızlığı modelleri
 - [Speakeasy — MCP örnekleme çekirdek konsepti](https://www.speakeasy.com/mcp/core-concepts/sampling) — istemci tarafı kod örnekleriyle ayrıntılı bilgi

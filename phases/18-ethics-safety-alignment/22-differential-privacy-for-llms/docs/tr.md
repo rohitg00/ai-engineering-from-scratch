@@ -1,111 +1,111 @@
-# Differential Privacy for LLMs
+# Yüksek Lisans'lar için Farklı Gizlilik
 
-> DP-SGD remains the standard — noise-injected gradient updates provide formal (epsilon, delta) guarantees. Overhead in compute, memory, and utility is substantial; parameter-efficient DP fine-tuning (LoRA + DP-SGD) is the common 2025 configuration (ACM 2025). Two bodies of evidence in tension: canary-based membership inference (Duan et al., 2024) reports limited success against language models; training-data extraction (Carlini et al., 2021; Nasr et al., 2025) recovers substantial verbatim memorization. Resolution (arXiv:2503.06808, March 2025): the gap is in what is measured — inserted canaries vs "most extractable" data. New canary designs enable loss-based MIA without shadow models and yield the first nontrivial DP audit of an LLM trained on real data with realistic DP guarantees. Alternatives: PMixED (arXiv:2403.15638) — private prediction at inference time via mixture of experts on next-token distributions; DP synthetic data generation (Google Research 2024). Emerging attack: Differential Privacy Reversal via LLM Feedback — confidence-score leakage.
+> DP-SGD standart olmaya devam ediyor — gürültü enjeksiyonlu gradient güncellemeleri resmi (epsilon, delta) garantiler sağlıyor. Bilgi işlem, bellek ve fayda açısından ek yük oldukça fazladır; parametre açısından verimli DP fine-tuning (LoRA + DP-SGD), ortak 2025 yapılandırmasıdır (ACM 2025). Birbiriyle çelişen iki kanıt kümesi: kanarya temelli üyelik inference (Duan ve diğerleri, 2024), dil modellerine karşı sınırlı başarı bildirmektedir; eğitim-veri çıkarma (Carlini ve diğerleri, 2021; Nasr ve diğerleri, 2025), önemli ölçüde birebir ezberlemeyi kurtarır. Çözüm (arXiv:2503.06808, Mart 2025): boşluk, ölçülen verilerdedir; eklenen kanaryalar ve "en çok çıkarılabilen" veriler. Yeni kanarya tasarımları, gölge modelleri olmadan kayıp bazlı MIA'yı mümkün kılar ve gerçekçi DP garantileriyle gerçek veriler üzerinde eğitilmiş bir LLM'nin önemsiz olmayan ilk DP denetimini sağlar. Alternatifler: PMixED (arXiv:2403.15638) — sonraki-token dağıtımlarındaki uzmanların karışımı aracılığıyla inference zamanında özel tahmin; DP sentetik veri üretimi (Google Araştırması 2024). Ortaya çıkan saldırı: Yüksek Lisans Geri Bildirimi aracılığıyla Diferansiyel Gizliliğin Tersine Dönmesi — güven puanı sızıntısı.
 
-**Type:** Build
-**Languages:** Python (stdlib, DP-SGD noise-injection and ε-δ accountant demonstration)
-**Prerequisites:** Phase 01 · 09 (information theory), Phase 10 · 01 (large-model training)
-**Time:** ~60 minutes
+**Tür:** Yapım
+**Diller:** Python (stdlib, DP-SGD gürültü enjeksiyonu ve ε-δ muhasebeci gösterimi)
+**Önkoşullar:** Aşama 01 · 09 (bilgi teorisi), Aşama 10 · 01 (büyük model eğitimi)
+**Süre:** ~60 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Define (epsilon, delta)-differential privacy and state the DP-SGD recipe.
-- Explain the 2024-2025 tension: canary MIA vs training-data extraction give different pictures.
-- Describe PMixED and why inference-time private prediction is an alternative to DP training.
-- Describe the Differential Privacy Reversal via LLM Feedback attack.
+- (epsilon, delta)-diferansiyel gizliliği tanımlayın ve DP-SGD tarifini belirtin.
+- 2024-2025 gerilimini açıklayın: Kanarya MIA'ya karşı eğitim-veri çıkarma farklı resimler veriyor.
+- PMixED'i ve neden inference zamanlı özel tahminin DP eğitimine bir alternatif olduğunu açıklayın.
+- LLM Geribildirim saldırısı yoluyla Diferansiyel Gizliliğin Tersine Dönmesini açıklayın.
 
-## The Problem
+## Sorun
 
-LLMs memorize. Carlini et al. 2021 showed production language models reproduce verbatim training text on demand. DP is the formal defense: train so that the output is provably insensitive to any single training example. The 2024-2025 evidence shows DP-SGD is necessary but the deployed ε values may not match the threat model.
+Yüksek Lisans'lar ezberler. Carlini ve ark. 2021, üretim dili modellerinin talep üzerine eğitim metnini kelimesi kelimesine yeniden ürettiğini gösterdi. DP resmi savunmadır: çıktının herhangi bir eğitim örneğine duyarsız olacağı şekilde eğitin. 2024-2025 kanıtları DP-SGD'nin gerekli olduğunu ancak konuşlandırılan ε değerlerinin tehdit modeliyle eşleşmeyebileceğini gösteriyor.
 
-## The Concept
+## Konsept
 
-### (ε, δ)-differential privacy
+### (ε, δ)-diferansiyel gizlilik
 
-A randomized algorithm M is (ε, δ)-DP if for any two datasets differing in one example and any event S:
-P(M(D) in S) <= e^ε * P(M(D') in S) + δ.
+Rasgeleleştirilmiş bir M algoritması, eğer bir örnekte farklı olan herhangi iki dataset ve herhangi bir S olayı için (ε, δ)-DP'dir:
+P(M(D), S'de) <= e^ε * P(M(D'), S'de) + δ.
 
-Interpretation: the output distribution is close enough (parametrized by ε) that the contribution of any single individual cannot be reliably inferred, except with probability δ.
+Yorum: Çıktı dağılımı yeterince yakındır (ε ile parametrelendirilmiştir), herhangi bir bireyin katkısı, δ olasılığı hariç, güvenilir bir şekilde çıkarsanamaz.
 
 ### DP-SGD
 
-Abadi et al. 2016. The standard recipe:
-1. Sample a mini-batch.
-2. Compute per-example gradients.
-3. Clip each per-example gradient to a threshold C.
-4. Sum the clipped gradients and add Gaussian noise with std σ * C.
-5. Use the noisy sum to update parameters.
+Abadi ve ark. 2016. Standart tarif:
+1. Bir mini partiden numune alın.
+2. Örnek başına gradients'yi hesaplayın.
+3. Her örnek için gradient'yi bir C eşiğine kırpın.
+4. Kırpılan gradient'ları toplayın ve std σ * C ile Gauss gürültüsünü ekleyin.
+5. Parametreleri güncellemek için gürültülü toplamı kullanın.
 
-Privacy cost is tracked by an accountant (Moments Accountant, Rényi DP accountant). Reported ε values in the LLM literature vary widely by threat model, data sensitivity, and utility target; there is no universally "safe" default ε. Published examples span roughly ε ≈ 1–10 in some LLM training settings, but these are illustrative — not recommended defaults. Lower ε generally requires more noise and can increase utility loss.
+Gizlilik maliyeti bir muhasebeci (Moments Muhasebecisi, Rényi DP muhasebecisi) tarafından takip edilir. LLM literatüründe bildirilen ε değerleri, tehdit modeline, veri duyarlılığına ve fayda hedefine göre büyük ölçüde değişiklik gösterir; evrensel olarak "güvenli" bir varsayılan ε yoktur. Yayınlanan örnekler bazı LLM eğitim ortamlarında kabaca ε ≈ 1-10 aralığını kapsar, ancak bunlar açıklayıcıdır; önerilen varsayılanlar değildir. Daha düşük ε genellikle daha fazla gürültü gerektirir ve fayda kaybını artırabilir.
 
 ### LoRA + DP-SGD
 
-Full DP-SGD of a frontier model is prohibitive. LoRA (Hu et al. 2022) limits gradient updates to a small adapter, reducing per-example gradient storage. LoRA + DP-SGD is the common 2025 configuration. DP guarantees apply to the adapter; the base model is held fixed.
+Sınır modelinin tam DP-SGD'si engelleyicidir. LoRA (Hu ve diğerleri 2022), gradient güncellemelerini küçük bir adaptörle sınırlandırarak örnek başına gradient depolama alanını azaltır. LoRA + DP-SGD, ortak 2025 yapılandırmasıdır. DP garantileri adaptör için geçerlidir; temel model sabit tutulur.
 
-### The 2024-2025 tension
+### 2024-2025 gerilimi
 
-Two lines of evidence:
+İki satırlık kanıt:
 
-- **Canary MIA (Duan et al. 2024).** Insert unique canaries into training data, measure whether a membership-inference attacker can identify them. Reports limited success on language models. Suggests MIA is hard.
-- **Training-data extraction (Carlini 2021, Nasr et al. 2025).** Prompt the model with a prefix; measure whether it recovers verbatim text from training. Reports substantial memorization. Suggests MIA is easy in the relevant sense.
+- **Canary MIA (Duan ve ark. 2024).** Eğitim verilerine benzersiz kanaryalar ekleyin, üyelik-inference saldırganının bunları tanımlayıp tanımlayamayacağını ölçün. Dil modellerinde sınırlı başarı rapor eder. MIA'nın zor olduğunu öne sürüyor.
+- **Eğitim verilerinin çıkarılması (Carlini 2021, Nasr ve ark. 2025).** Prompt öneki olan model; eğitimden birebir metni kurtarıp kurtarmadığını ölçün. Önemli derecede ezberleme olduğunu bildirir. MIA'nın ilgili anlamda kolay olduğunu öne sürüyor.
 
-March 2025 resolution (arXiv:2503.06808): the two measure different things. MIA asks "is example e in D?" on inserted canaries. Extraction asks "what can I recover of D?" The "most extractable" example is what matters for privacy; canaries under-report this because they are not optimized to be extractable.
+Mart 2025 kararı (arXiv:2503.06808): ikisi farklı şeyleri ölçer. MIA "D'deki örnek e mi?" diye sorar. takılı kanaryalarda. Çıkarma "D'den ne kurtarabilirim?" diye sorar. "En çıkarılabilir" örnek gizlilik açısından önemli olandır; kanaryalar, çıkarılabilecek şekilde optimize edilmedikleri için bunu eksik rapor ediyor.
 
-New canary designs. Loss-based MIA without shadow models. First nontrivial DP audit of an LLM on real data with realistic DP guarantees.
+Yeni kanarya tasarımları. Gölge modelleri olmayan kayıp bazlı MIA. Gerçekçi DP garantileri ile gerçek veriler üzerinde bir Yüksek Lisans'ın ilk basit olmayan DP denetimi.
 
-### Alternatives to DP training
+### DP eğitimine alternatifler
 
-- **PMixED (arXiv:2403.15638).** Private prediction at inference time. Mixture of experts on next-token distributions; each expert sees a shard of training data; aggregation adds noise for DP. Avoids DP training entirely.
-- **DP synthetic data generation (Google Research 2024).** LoRA-fine-tune with DP-SGD, sample synthetic data, train a downstream classifier on the synthetic data.
+- **PMixED (arXiv:2403.15638).** inference zamanında özel tahmin. Sonraki-token dağıtımlarında uzmanlardan oluşan bir karışım; her uzman bir eğitim verisi parçası görür; toplama DP için gürültü ekler. DP eğitimini tamamen önler.
+- **DP sentetik veri oluşturma (Google Araştırma 2024).** DP-SGD ile LoRA'ya ince ayar yapın, sentetik verileri örnekleyin, sentetik veriler üzerinde bir aşağı akış sınıflandırıcıyı eğitin.
 
-Both sidestep the utility cost of full DP training at the cost of a different threat model.
+Her ikisi de, farklı bir tehdit modeli pahasına tam DP eğitiminin kullanım maliyetinden kaçınıyor.
 
-### Differential Privacy Reversal via LLM Feedback
+### Yüksek Lisans Geri Bildirimi aracılığıyla Farklı Gizliliğin Geri Alınması
 
-Emerging 2025 attack. Use a DP-trained model's confidence scores as an oracle to re-identify individuals. Even when outputs do not leak, confidence distributions can.
+2025 saldırısı ortaya çıkıyor. Bireyleri yeniden tanımlamak için DP tarafından eğitilmiş bir modelin güven puanlarını bir kehanet olarak kullanın. Çıktılar sızmasa bile güven dağılımları sızıntı yapabilir.
 
-The defense: do not expose confidences, or truncate/quantize them before exposure. This is an additional requirement beyond (ε, δ)-DP training.
+Savunma: Gizli bilgileri ifşa etmeyin veya ifşa etmeden önce bunları kesmeyin/nicelleştirmeyin. Bu (ε, δ)-DP eğitiminin ötesinde ek bir gerekliliktir.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lessons 20-21 are bias/fairness. Lesson 22 is privacy. Lesson 23 is provenance via watermarking. Lesson 27 covers the regulatory data-provenance layer.
+20-21. dersler önyargı/adalettir. Ders 22 mahremiyettir. Ders 23, filigranlama yoluyla kaynak sağlamadır. Ders 27, düzenleyici veri kaynağı katmanını kapsar.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` simulates DP-SGD on a toy binary-classification dataset. You can sweep the noise multiplier σ and the clipping norm C and track the (ε, δ) budget and the accuracy cost. A "canary attack" inserts a unique training example and measures whether a log-loss test can detect it before and after DP.
+`code/main.py` , oyuncak ikili sınıflandırma dataset üzerinde DP-SGD'yi simüle eder. Gürültü çarpanı σ'yu ve kırpma normu C'yi tarayabilir ve (ε, δ) bütçesini ve doğruluk maliyetini takip edebilirsiniz. Bir "kanarya saldırısı" benzersiz bir eğitim örneği ekler ve bir günlük kaybı testinin bunu DP'den önce ve sonra tespit edip edemediğini ölçer.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-dp-audit.md`. Given a DP claim on a language model deployment, it audits: the (ε, δ) values, the accountant used, the MIA evaluation protocol, and whether confidence-exposure vectors have been assessed.
+Bu ders `outputs/skill-dp-audit.md` üretir. deployment dil modeline ilişkin bir DP iddiası verildiğinde, şunları denetler: (ε, δ) değerleri, kullanılan muhasebeci, MIA değerlendirme protokolü ve güvene maruz kalma vektörlerinin değerlendirilip değerlendirilmediği.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Sweep σ in {0.5, 1.0, 2.0} and report the (ε, δ)-accuracy trade-off. Identify the point at which utility collapses.
+1. `code/main.py`'yı çalıştırın. σ'yu {0,5, 1,0, 2,0}'de tarayın ve (ε, δ)-doğruluk değiş tokuşunu rapor edin. Faydanın çöktüğü noktayı belirleyin.
 
-2. Implement a canary insertion and a log-loss test. Measure detection rate before and after DP-SGD at σ = 1.0.
+2. Bir kanarya yerleştirme ve günlük kaybı testi uygulayın. σ = 1,0'da DP-SGD'den önce ve sonra tespit oranını ölçün.
 
-3. Read Nasr et al. 2025 on training-data extraction. Why does extraction success not collapse under moderate ε? What does this imply about MIA-as-evaluation?
+3. Nasr ve ark.'yı okuyun. Eğitim verilerinin çıkarılmasıyla ilgili 2025. Çıkarma başarısı neden ılımlı ε altında çökmüyor? Bu, değerlendirme olarak MIA hakkında ne anlama geliyor?
 
-4. Design a deployment using PMixED (arXiv:2403.15638) that operates entirely at inference time. What is the threat model that PMixED addresses that DP-SGD does not?
+4. Tamamen inference zamanında çalışan PMixED (arXiv:2403.15638) kullanarak bir deployment tasarlayın. PMixED'in ele aldığı, ancak DP-SGD'nin ele almadığı tehdit modeli nedir?
 
-5. Sketch the DP Reversal via LLM Feedback attack. Design a countermeasure that limits confidence-score leakage and estimate its deployment cost.
+5. LLM Geribildirim saldırısı yoluyla DP Tersine Çevirmenin taslağını çizin. Güven puanı sızıntısını sınırlayan bir karşı önlem tasarlayın ve bunun deployment maliyetini tahmin edin.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| DP | "(ε, δ)-differential privacy" | Formal privacy: output distribution close under neighbouring-dataset change |
-| DP-SGD | "noise-injected SGD" | Gradient clipping + Gaussian noise addition; standard DP training |
-| LoRA + DP-SGD | "efficient private fine-tune" | DP-SGD on low-rank adapters; standard 2025 configuration |
-| MIA | "membership inference" | Attack that determines whether an example was in training data |
-| Canary | "inserted watermark example" | Unique training example used to measure DP leakage |
-| PMixED | "private inference mixture" | Inference-time DP via mixture-of-experts on next-token distributions |
-| DP Reversal | "confidence leakage attack" | Attack that uses a model's confidence as an oracle for re-identification |
+| DP | "(ε, δ)-diferansiyel gizlilik" | Biçimsel gizlilik: komşuluk-dataset değişikliği kapsamında çıktı dağıtımı kapandı |
+| DP-SGD | "gürültü enjekte edilmiş SGD" | Gradient kırpma + Gauss gürültüsü ekleme; standart DP eğitimi |
+| LoRA + DP-SGD | "verimli özel ince ayar" | Düşük dereceli adaptörlerde DP-SGD; standart 2025 konfigürasyonu |
+| MIA | "üyelik inference" | Bir örneğin eğitim verilerinde olup olmadığını belirleyen saldırı |
+| Kanarya | "filigran örneği eklendi" | DP kaçağını ölçmek için kullanılan benzersiz eğitim örneği |
+| PMixED | "özel inference karışımı" | Sonrakitoken dağıtımlarda uzmanların karışımı aracılığıyla Inference zamanlı DP |
+| DP Ters Çevirme | "güven sızıntısı saldırısı" | Yeniden tanımlama için bir modelin güvenini kehanet olarak kullanan saldırı |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Abadi et al. — DP-SGD (arXiv:1607.00133)](https://arxiv.org/abs/1607.00133) — the standard DP training algorithm
-- [Carlini et al. — Extracting Training Data (arXiv:2012.07805)](https://arxiv.org/abs/2012.07805) — the canonical extraction paper
-- [Duan et al. — Canary MIA on LLMs (arXiv:2402.07841, 2024)](https://arxiv.org/abs/2402.07841) — limited-success MIA
-- [Kowalczyk et al. — Auditing DP for LLMs (arXiv:2503.06808, March 2025)](https://arxiv.org/abs/2503.06808) — resolution of the tension
-- [PMixED (arXiv:2403.15638)](https://arxiv.org/abs/2403.15638) — inference-time private prediction
+- [Abadi ve ark. — DP-SGD (arXiv:1607.00133)](https://arxiv.org/abs/1607.00133) — standart DP eğitim algoritması
+- [Carlini ve ark. — Eğitim Verilerinin Çıkarılması (arXiv:2012.07805)](https://arxiv.org/abs/2012.07805) — standart çıkarma kağıdı
+- [Duan ve ark. — Yüksek Lisans'larda Canary MIA (arXiv:2402.07841, 2024)](https://arxiv.org/abs/2402.07841) — sınırlı başarılı MIA
+- [Kowalczyk ve ark. — Yüksek Lisanslar için DP'nin denetlenmesi (arXiv:2503.06808, Mart 2025)](https://arxiv.org/abs/2503.06808) — gerilimin çözümü
+- [PMixED (arXiv:2403.15638)](https://arxiv.org/abs/2403.15638) — inference zamanlı özel tahmin

@@ -9,10 +9,10 @@
 
 ## Öğrenme Hedefleri
 
-- Eğitim günlüklerini komut satırından filtrelemek ve işlemek için borulama, yönlendirmeler ve `grep` kullanın
+- Komut satırından eğitim günlüklerini filtrelemek ve işlemek için yönlendirmeleri, yönlendirmeleri ve `grep`'yi kullanın
 - Eşzamanlı eğitim ve GPU izleme için birden fazla bölmeyle kalıcı tmux oturumları oluşturun
-- `htop`, `nvtop` ve `nvidia-smi` ile sistem ve GPU kaynaklarını izleyin
-- SSH, `scp` ve `rsync` kullanarak yerel ve uzak makineler arasında dosya aktarın
+- `htop`, `nvtop` ve `nvidia-smi` ile sistemi ve GPU kaynaklarını izleyin
+- SSH, `scp` ve `rsync` kullanarak yerel ve uzak makineler arasında dosya aktarımı
 
 ## Sorun
 
@@ -212,11 +212,11 @@ watch -n1 nvidia-smi
 nvidia-smi --query-compute-apps=pid,name,used_memory --format=csv
 ```
 
-Kullanacağınız `htop` tuş ataması:
+Kullanacağınız `htop` tuş atamaları:
 - Sütuna göre sıralamak için `F6` veya `>` (bellek sızıntılarını bulmak için belleğe göre sıralayın)
-- `F5` ağaç görünümüne geçiş yapmak için (alt işlemlere bakın)
+- `F5` ağaç görünümünü değiştirmek için (alt işlemlere bakın)
 - `F9` bir süreci sonlandırmak için
-- `/` işlem adını aramak için
+- Bir işlem adını aramak için `/`
 
 ### Adım 6: Uzak GPU kutuları için SSH
 
@@ -277,7 +277,7 @@ alias ae='source .venv/bin/activate'
 alias watchloss='tail -f logs/*.log | grep --line-buffered "loss"'
 ```
 
-Setin tamamı için `code/shell_aliases.sh`'a bakınız.
+Setin tamamı için `code/shell_aliases.sh`'ye bakın.
 
 ### Adım 8: Ortak AI terminal modelleri
 
@@ -313,7 +313,7 @@ env | grep -i torch
 
 ## Kullan onu
 
-Bu kurs sırasında her araç şu şekilde devreye giriyor:
+Bu kurs sırasında her bir araç şu şekilde devreye giriyor:
 
 | Araç | Kullandığınızda |
 |------|----------------|
@@ -327,10 +327,10 @@ Bu kurs sırasında her araç şu şekilde devreye giriyor:
 
 ## Egzersizler
 
-1. tmux'u yükleyin, üç bölmeli bir oturum oluşturun ve birinde `htop`, diğerinde `watch -n1 date` ve üçüncüsünde bir Python betiği çalıştırın. Ayırın ve yeniden takın.
+1. tmux'u yükleyin, üç bölmeli bir oturum oluşturun ve birinde `htop`'yi, diğerinde `watch -n1 date`'yi ve üçüncüsünde bir Python betiğini çalıştırın. Ayırın ve yeniden takın.
 2. `code/shell_aliases.sh` takma adlarını kabuk yapılandırmanıza ekleyin ve `source ~/.zshrc` (veya `~/.bashrc`) ile yeniden yükleyin.
 3. `for i in $(seq 1 100); do echo "epoch $i loss: $(echo "scale=4; 1/$i" | bc)"; sleep 0.1; done > fake_train.log` ile sahte bir eğitim günlüğü oluşturun ve ardından yalnızca kayıp değerlerini çıkarmak için `grep`, `tail` ve `awk`'yi kullanın.
-4. Erişiminiz olan bir sunucu için bir SSH yapılandırma girişi ayarlayın (veya söz dizimini uygulamak için `localhost` kullanın).
+4. Erişiminiz olan bir sunucu için bir SSH yapılandırma girişi ayarlayın (veya söz dizimini uygulamak için `localhost`'yi kullanın).
 
 ## Anahtar Terimler
 

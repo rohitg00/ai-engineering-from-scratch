@@ -1,6 +1,6 @@
 # Üretim Niceleme — AWQ, GPTQ, GGUF K-quant'ları, FP8, MXFP4/NVFP4
 
-> Niceleme formatı evrensel bir seçim değildir; donanımın, hizmet veren motorun ve iş yükünün bir fonksiyonudur. GGUF Q4_K_M veya Q5_K_M, llama.cpp ve Ollama aracılığıyla sağlanan CPU'ya ve uç noktaya sahiptir. Aynı tabanda çoklu LoRA'ya ihtiyaç duyduğunuzda vLLM'de GPTQ kazanır. Marlin-AWQ çekirdeklerine sahip AWQ, veri merkezi üretimi için 2026 varsayılanı olan INT4'te en iyi Pass@1 ile 7B sınıfı modelde ~741 tok/s sunar. FP8, Hopper, Ada ve Blackwell'in ortasında kalıyor; neredeyse kayıpsız ve geniş çapta destekleniyor. NVFP4 ve MXFP4 (Blackwell mikro ölçeklendirme) agresiftir ve blok başına doğrulama gerektirir. İki tuzak takımı ısırır: dataset kalibrasyonu deployment alanıyla eşleşmelidir ve KV önbelleği, ağırlık nicelemesinden ayrıdır - "modelim şu anda 4 GB" AWQ dersi, üretim toplu boyutlarında 10-30 GB KV önbelleğini unutur.
+> Niceleme formatı evrensel bir seçim değildir; donanımın, hizmet veren motorun ve iş yükünün bir fonksiyonudur. GGUF Q4_K_M veya Q5_K_M, llama.cpp ve Ollama aracılığıyla sağlanan CPU'ya ve uç noktaya sahiptir. Aynı tabanda çoklu LoRA'ya ihtiyaç duyduğunuzda vLLM'de GPTQ kazanır. Marlin-AWQ çekirdeklerine sahip AWQ, veri merkezi üretimi için 2026 varsayılanı olan INT4'te en iyi Pass@1 ile 7B sınıfı modelde ~741 tok/s sunar. FP8, Hopper, Ada ve Blackwell'in ortasında kalıyor; neredeyse kayıpsız ve geniş çapta destekleniyor. NVFP4 ve MXFP4 (Blackwell mikro ölçeklendirme) agresiftir ve blok başına doğrulama gerektirir. İki tuzak takımı ısırır: dataset kalibrasyonu, deployment alanıyla eşleşmelidir ve KV önbelleği, ağırlık nicelemesinden ayrıdır - "modelim şu anda 4 GB" olan AWQ dersi, üretim toplu boyutlarında 10-30 GB KV önbelleğini unutur.
 
 **Tür:** Öğren
 **Diller:** Python (stdlib, oyuncak belleği ve formatlar arası performans karşılaştırması)
@@ -18,7 +18,7 @@
 
 Niceleme, belleği ve HBM bant genişliğini azaltır; bu da kod çözmenin tam olarak ihtiyaç duyduğu şeydir. FP16 70B modeli 140 GB ağırlığa sahiptir. Ağırlıkları INT4'e (AWQ veya GPTQ) nicelendirdiğinizde model 35 GB olur — KV önbellek için yeri olan bir H100'e sığar; bu önemlidir, çünkü 2k bağlamlı 128 eşzamanlı dizide tek başına KV önbelleği 20-30 GB'dir.
 
-Ancak kuantizasyon ücretsiz değildir. Agresif niceleme, özellikle muhakeme ağırlıklı görevlerde kaliteyi düşürür. Farklı formatlar farklı motorlarla çalışır. Farklı donanımlar doğal olarak farklı hassasiyetleri destekler. 2026 formatındaki hayvanat bahçesi gerçektir ve başka birinin seçimini kopyalayamazsınız; yığınınıza göre seçim yapmanız gerekir.
+Ancak kuantizasyon ücretsiz değildir. Agresif nicemleme, özellikle muhakeme ağırlıklı görevlerde kaliteyi düşürür. Farklı formatlar farklı motorlarla çalışır. Farklı donanımlar yerel olarak farklı hassasiyetleri destekler. 2026 formatındaki hayvanat bahçesi gerçektir ve başka birinin seçimini kopyalayamazsınız; yığınınıza göre seçim yapmanız gerekir.
 
 ## Konsept
 
@@ -35,7 +35,7 @@ Ancak kuantizasyon ücretsiz değildir. Agresif niceleme, özellikle muhakeme a�
 
 ### GGUF — CPU/uç varsayılanı
 
-GGUF, başlı başına bir niceleme şeması değil, bir dosya formatıdır; K-quant varyantlarını (Q2_K, Q3_K_M, Q4_K_M, Q5_K_M, Q6_K, Q8_0) tek bir kapta paketler. Q4_K_M ve Q5_K_M üretim varsayılanlarıdır; 4-5 bitte BF16'ya yakın kalite. llama.cpp açık ara en hızlı CPU inference motoru olduğundan CPU veya uç hizmet için en iyi seçimdir.
+GGUF, başlı başına bir niceleme şeması değil, bir dosya formatıdır; K-quant varyantlarını (Q2_K, Q3_K_M, Q4_K_M, Q5_K_M, Q6_K, Q8_0) tek bir kapta paketler. Q4_K_M ve Q5_K_M üretim varsayılanlarıdır; 4-5 bitte BF16'ya yakın kalite. llama.cpp açık ara en hızlı CPU inference motoru olduğundan CPU veya uç hizmet için en iyi seçim.
 
 vLLM'de verimlilik cezası: 7B'de ~93 tok/s — format, GPU çekirdekleri için optimize edilmemiştir. deployment hedefi CPU/edge olduğunda GGUF'u kullanın. Aksi halde değil.
 
@@ -66,7 +66,7 @@ Uyarılar:
 
 ### Kalibrasyon tuzağı
 
-AWQ ve GPTQ bir kalibrasyon dataset gerektirir - genellikle C4 veya WikiText. Etki alanı modellerinde (kod, tıbbi, yasal), genel web metninde kalibrasyon yapmak, algoritmanın hangi ağırlıkların korunacağı konusunda yanlış kararlar almasına olanak tanır. HumanEval'deki Pass@1 birkaç puan düşürebilir.
+AWQ ve GPTQ, dataset kalibrasyonunu gerektirir - genellikle C4 veya WikiText. Etki alanı modellerinde (kod, tıbbi, yasal), genel web metninde kalibrasyon yapmak, algoritmanın hangi ağırlıkların korunacağı konusunda yanlış kararlar almasına olanak tanır. HumanEval'deki Pass@1 birkaç puan düşürebilir.
 
 Çözüm: Alan içi verilere göre kalibre etme. Yüzlerce alan örneği genellikle yeterlidir. Göndermeden önce değerlendirme setini test edin.
 
@@ -100,19 +100,19 @@ Düşünce zinciri, matematik, uzun bağlamlı kod oluşturma; bunlar agresif ku
 gpu-memory-breakdown
 ```
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` , çeşitli model boyutları için bellek ayak izini (ağırlıklar + KV + aktivasyonlar) ve altı formattaki göreceli verimi hesaplar. KV önbelleğinin nerede hakim olduğunu, ağırlık sıkıştırmanın nerede işe yaradığını ve FP8'in nerede güvenli seçim olduğunu gösterir.
+`code/main.py`, çeşitli model boyutları için altı formatta bellek ayak izini (ağırlıklar + KV + aktivasyonlar) ve göreceli verimi hesaplar. KV önbelleğinin nerede hakim olduğunu, ağırlık sıkıştırmanın nerede işe yaradığını ve FP8'in nerede güvenli seçim olduğunu gösterir.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-Bu ders `outputs/skill-quantization-picker.md` üretir. Donanım, model boyutu, iş yükü türü ve kalite toleransı göz önüne alındığında bir format seçer ve bir kalibrasyon/doğrulama planı oluşturur.
+Bu ders `outputs/skill-quantization-picker.md`'yi üretir. Donanım, model boyutu, iş yükü türü ve kalite toleransı göz önüne alındığında bir format seçer ve bir kalibrasyon/doğrulama planı oluşturur.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. 128'de 2k bağlamıyla eş zamanlı bir 70B modeli için, her format için toplam HBM'yi hesaplayın. Hangi format bir H100 80GB'a sığmanızı sağlar?
+1. `code/main.py`'yi çalıştırın. 128'de 2k bağlamıyla eş zamanlı bir 70B modeli için, her format için toplam HBM'yi hesaplayın. Hangi format bir H100 80GB'a sığmanızı sağlar?
 2. 7B kodlamalı bir modeliniz var. Bir format seçin ve gerekçelendirin. Kalite toleransı konusunda yanılıyorsanız iyileşme yolu nedir?
-3. Bir tıbbi alan modeli için AWQ'yu kalibre etmek için gereken kalibrasyon-dataset boyutunu hesaplayın. Neden daha fazla veri her zaman daha iyi değildir?
+3. Tıbbi bir alan modeli için AWQ'yu kalibre etmek için gereken kalibrasyon-dataset boyutunu hesaplayın. Neden daha fazla veri her zaman daha iyi değildir?
 4. Marlin-AWQ çekirdek belgesini veya sürüm notlarını okuyun. AWQ'nun 7B'de neden 741 tok/s'ye ulaştığını, ham GPTQ'nun ise ~712'ye ulaştığını üç cümleyle açıklayın.
 5. KV'yi BF16'da tutmak yerine AWQ ağırlıklarını FP8 KV önbelleğiyle birleştirmek ne zaman anlamlı olur?
 
@@ -132,9 +132,9 @@ Bu ders `outputs/skill-quantization-picker.md` üretir. Donanım, model boyutu, 
 
 ## Daha Fazla Okuma
 
-- [VRLA Tech — LLM Niceleme 2026](https://vrlatech.com/llm-quantization-explained-int4-int8-fp8-awq-and-gptq-in-2026/) — karşılaştırmalı benchmark'lar.
+- [VRLA Tech — LLM Niceleme 2026](https://vrlatech.com/llm-quantization-explained-int4-int8-fp8-awq-and-gptq-in-2026/) — karşılaştırmalı benchmark'ler.
 - [Jarvis Labs — vLLM Niceleme Tam Kılavuzu](https://jarvislabs.ai/blog/vllm-quantization-complete-guide-benchmarks) — formata göre üretim sayıları.
-- [PremAI — GGUF vs AWQ vs GPTQ vs bitsandbytes 2026](https://blog.premai.io/llm-quantization-guide-gguf-vs-awq-vs-gptq-vs-bitsandbytes-compared-2026/) — format bazında seçme.
+- [PremAI — GGUF vs AWQ vs GPTQ vs bitsandbytes 2026](https://blog.premai.io/llm-quantization-guide-gguf-vs-awq-vs-gptq-vs-bitsandbytes-compared-2026/) — format bazında toplama.
 - [vLLM docs — Niceleme](https://docs.vllm.ai/en/latest/features/quantization/index.html) — desteklenen formatlar ve işaretler.
-- [AWQ makalesi (arXiv:2306.00978)](https://arxiv.org/abs/2306.00978) — orijinal AWQ formülasyonu.
-- [GPTQ makalesi (arXiv:2210.17323)](https://arxiv.org/abs/2210.17323) — orijinal GPTQ formülasyonu.
+- [AWQ kağıdı (arXiv:2306.00978)](https://arxiv.org/abs/2306.00978) — orijinal AWQ formülasyonu.
+- [GPTQ kağıdı (arXiv:2210.17323)](https://arxiv.org/abs/2210.17323) — orijinal GPTQ formülasyonu.

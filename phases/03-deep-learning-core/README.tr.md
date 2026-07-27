@@ -1,5 +1,5 @@
-# Aşama 3: Deep Learning'in Temelleri
+# Aşama 3: Deep Learning Çekirdek
 
-> Neural network'leri temel ilkelerden başlayarak öğrenin. Kendiniz bir tane oluşturmadan framework kullanmayın.
+> İlk prensiplerden Neural network'ler. Kendiniz bir tane oluşturana kadar framework yok.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

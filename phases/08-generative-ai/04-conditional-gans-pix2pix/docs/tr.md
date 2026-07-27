@@ -9,19 +9,19 @@
 
 ## Sorun
 
-Koşulsuz bir GAN, rastgele yüzleri örnekler. Demo için yararlı, üretimde işe yaramaz. Şunları istiyorsunuz: *bir çizimi bir fotoğrafla eşleyin*, *bir haritayı havadan çekilmiş bir fotoğrafla eşleyin*, *gündüz sahnesini geceyle eşleyin*, *gri tonlamalı bir görüntüyü renklendirin*. Bunların hepsinde, size bir giriş görüntüsü `x` verilir ve bazı anlamsal karşılıklarla birlikte `y` çıktısını almanız gerekir. `x` başına pek çok makul `y` vardır. Ortalama kare hatası onları lapa haline getirir. Rakiplerin kaybı bunu yapmaz çünkü "gerçek gibi görünmek" keskindir.
+Koşulsuz bir GAN, rastgele yüzleri örnekler. Demo için yararlı, üretimde işe yaramaz. Şunları istiyorsunuz: *bir çizimi bir fotoğrafla eşleyin*, *bir haritayı havadan çekilmiş bir fotoğrafla eşleyin*, *gündüz sahnesini geceyle eşleyin*, *gri tonlamalı bir görüntüyü renklendirin*. Bunların hepsinde, size bir `x` giriş görüntüsü verilir ve `y`'yi bazı anlamsal yazışmalarla birlikte çıktılamanız gerekir. `x` başına pek çok makul `y` vardır. Ortalama kare hatası onları lapa haline getirir. Rakiplerin kaybı bunu yapmaz çünkü "gerçek gibi görünmek" keskindir.
 
-Koşullu GAN (Mirza ve Osindero, 2014), hem `G` hem de `D`'ye giriş olarak bir `c` koşulu ekler. Pix2Pix (Isola ve diğerleri, 2017) şu konuda uzmanlaşmıştır: durum tam giriş görüntüsüdür, oluşturucu bir U-Net'tir, ayırıcı *yama tabanlı* bir sınıflandırıcıdır (PatchGAN) ve kayıp çekişmeli + L1'dir. Bu tarif, *eşleştirilmiş veriler* üzerinde eğitildiğinden, dar görüntüden görüntüye etki alanlarında sıfırdan metinden görüntüye modellerden daha iyi performans gösterir; çünkü tam olarak ihtiyacınız olan sinyale sahipsiniz.
+Koşullu GAN (Mirza ve Osindero, 2014), hem `G` hem de `D`'ye girdi olarak bir `c` koşulu ekler. Pix2Pix (Isola ve diğerleri, 2017) şu konuda uzmanlaşmıştır: durum tam giriş görüntüsüdür, oluşturucu bir U-Net'tir, ayırıcı *yama tabanlı* bir sınıflandırıcıdır (PatchGAN) ve kayıp çekişmeli + L1'dir. Bu tarif, *eşleştirilmiş veriler* üzerinde eğitildiğinden, dar görüntüden görüntüye etki alanlarında sıfırdan metinden görüntüye modellerden daha iyi performans gösterir; çünkü tam olarak ihtiyacınız olan sinyale sahipsiniz.
 
 ## Konsept
 
 ![Pix2Pix: U-Net oluşturucu, PatchGAN ayırıcı](../assets/pix2pix.svg)
 
-**Koşullu G.** `G(x, z) → y`. Pix2Pix'te, `z`, G'nin içinde çıkar (giriş gürültüsü yok — Isola, açık gürültünün göz ardı edildiğini buldu).
+**Koşullu G.** `G(x, z) → y`. Pix2Pix'te, `z`, G'nin içinde bırakılır (giriş gürültüsü yok - Isola, açık gürültünün göz ardı edildiğini buldu).
 
-**Koşullu D.** `D(x, y) → [0, 1]`. Giriş *çifttir* (koşul, çıkış). Temel fark budur: D, yalnızca `y`'nin gerçek görünüp görünmediğini değil, `y`'nin `x` ile tutarlı olup olmadığına karar vermelidir.
+**Koşullu D.** `D(x, y) → [0, 1]`. Giriş *çifttir* (koşul, çıkış). Temel fark şudur: D, yalnızca `y`'nin gerçek görünüp görünmediğine değil, `y`'nin `x` ile tutarlı olup olmadığına karar vermelidir.
 
-**U-Net generator.** ​​Darboğaz boyunca atlama bağlantılarına sahip kodlayıcı-kod çözücü. Giriş ve çıkışın düşük seviyeli yapıyı (kenarlar, siluet) paylaştığı görevler için kritiktir. Atlamalar olmazsa yüksek frekanslı ayrıntılar kaybolur.
+**U-Net jeneratör.** Darboğaz boyunca atlama bağlantılarına sahip kodlayıcı-kod çözücü. Giriş ve çıkışın düşük seviyeli yapıyı (kenarlar, siluet) paylaştığı görevler için kritiktir. Atlamalar olmazsa yüksek frekanslı ayrıntılar kaybolur.
 
 **PatchGAN ayırıcı.** Tek bir gerçek/sahte puan çıktısı vermek yerine D, her hücrenin ~70×70 piksellik bir alıcı alanı değerlendirdiği bir `N×N` ızgarası çıktısı verir. Ortalama. Bu bir Markov rastgele alan varsayımıdır: gerçekçilik yereldir. Eğitmek çok daha hızlı, daha az parametre, daha keskin çıktı.
 
@@ -32,11 +32,11 @@ loss_G = -log D(x, G(x)) + λ · ||y - G(x)||_1
 loss_D = -log D(x, y) - log (1 - D(x, G(x)))
 ```
 
-L1 terimi eğitimi stabilize eder ve G'yi bilinen hedefe doğru iter. L1, L2'ye göre daha keskin kenarlar verir (medyanlar, ortalamalar değil). `λ = 100` Pix2Pix'in varsayılanıydı.
+L1 terimi eğitimi stabilize eder ve G'yi bilinen hedefe doğru iter. L1, L2'ye göre daha keskin kenarlar verir (medyanlar, ortalamalar değil). `λ = 100`, Pix2Pix'in varsayılanıydı.
 
 ## CycleGAN — çiftleriniz olmadığında
 
-Pix2Pix'in eşleştirilmiş `(x, y)` verisine ihtiyacı var. CycleGAN (Zhu ve diğerleri, 2017), ekstra bir kayıp pahasına bu gereksinimi ortadan kaldırır: *döngü tutarlılığı* kaybı. İki generator `G: X → Y` ve `F: Y → X`. Onları `F(G(x)) ≈ x` ve `G(F(y)) ≈ y` şekilde eğitin. Bu, eşleştirilmiş örnekler olmadan atları zebralara, yazdan kışa çevirmenize olanak tanır.
+Pix2Pix'in eşleştirilmiş `(x, y)` verilerine ihtiyacı var. CycleGAN (Zhu ve diğerleri, 2017), ekstra bir kayıp pahasına bu gereksinimi ortadan kaldırır: *döngü tutarlılığı* kaybı. İki jeneratör `G: X → Y` ve `F: Y → X`. Onları `F(G(x)) ≈ x` ve `G(F(y)) ≈ y` şeklinde eğitin. Bu, eşleştirilmiş örnekler olmadan atları zebralara, yazdan kışa çevirmenize olanak tanır.
 
 2026'da, eşleştirilmemiş görüntüden görüntüye geçiş çoğunlukla CycleGAN yerine difüzyon (ControlNet, IP-Adapter) yoluyla yapılıyor, ancak döngü tutarlılığı fikri neredeyse tüm eşleştirilmemiş alan uyarlama makalelerinde varlığını sürdürüyor.
 
@@ -66,7 +66,7 @@ for step in range(steps):
     update_G(noise, c)
 ```
 
-Generatorün, marjinal değil, *verilen koşul* için gerçek dağılımla eşleşmesi gerekir.
+Jeneratörün marjinal değil, *verilen koşul* için gerçek dağılımla eşleşmesi gerekir.
 
 ### Adım 3: sınıf başına çıktıyı doğrulayın
 
@@ -79,7 +79,7 @@ for c in [0, 1]:
 
 ## Tuzaklar
 
-- **Koşul göz ardı edilir.** G marjinalleştirmeyi öğrenir, D koşul sinyali zayıf olduğu için asla ceza vermez. Düzeltme: D koşulu daha agresif bir şekilde (sadece geç değil, erken katman), projeksiyon discriminatorsı kullanın (Miyato ve Koyama 2018).
+- **Koşul göz ardı edilir.** G marjinalleştirmeyi öğrenir, D koşul sinyali zayıf olduğundan asla ceza vermez. Düzeltme: D koşulu daha agresif bir şekilde (sadece geç değil, erken katman), projeksiyon ayırıcısı kullanın (Miyato ve Koyama 2018).
 - **L1'in ağırlığı çok düşük.** G, sadık çıktılar yerine keyfi, gerçek görünümlü çıktılara doğru sürükleniyor. Pix2Pix tarzı görevler için λ≈100 ile başlayın.
 - **L1 ağırlığı çok yüksek.** L1 hala bir L_p normu olduğundan G, bulanık çıktılar üretir. Eğitim stabil hale geldiğinde tavlayın.
 - **D'de temel gerçek sızıntısı.** Yalnızca `y`'yi değil, `(x, y)`'yi D girişi olarak birleştirin. Bu olmadan D tutarlılığı kontrol edemez.
@@ -95,22 +95,22 @@ Görüntüden görüntüye görevlerin 2026 durumu:
 | Taslak → fotoğraf, eşleştirilmemiş | Scribble koşullandırma modeline sahip ControlNet |
 | Semantik seg → fotoğraf | SPADE / GauGAN2 veya SD + ControlNet-Seg |
 | Stil aktarımı | IP Adaptörü veya LoRA ile Dağıtım; GAN yöntemleri eskidir |
-| Derinlik → fotoğraf | Stable Diffusion Üzerinden ControlNet Derinliği |
+| Derinlik → fotoğraf | Kararlı Difüzyon Üzerinden ControlNet Derinliği |
 | Süper çözünürlük | Real-ESRGAN (GAN), ESRGAN-Plus veya SD-Upscale (yayılım) |
 | Renklendirme | ColTran, difüzyon bazlı renklendiriciler veya Pix2Pix-color |
 | Gündüz → gece, mevsimler, hava durumu | CycleGAN veya ControlNet tabanlı |
 
-Pix2Pix, (a) binlerce eşleştirilmiş örneğiniz olduğunda, (b) görev dar ve tekrarlanabilir olduğunda ve (c) hızlı inference ihtiyacınız olduğunda doğru araç olmaya devam eder. Genel açık alan görevlerinde yayılma kazanır.
+Pix2Pix, (a) binlerce eşleştirilmiş örneğiniz olduğunda, (b) görev dar ve tekrarlanabilir olduğunda ve (c) hızlı inference'ye ihtiyacınız olduğunda doğru araç olmaya devam eder. Genel açık alan görevlerinde yayılma kazanır.
 
 ## Gönderin
 
-`outputs/skill-img2img-chooser.md`'yi kaydet. Skill bir görev tanımını, veri kullanılabilirliğini (eşleştirilmiş ve eşleşmemiş, N örnek) ve gecikme/kalite bütçesini alır ve ardından çıktılar verir: yaklaşım (Pix2Pix, CycleGAN, ControlNet varyantı, SDXL + IP Adaptörü), eğitim verileri gereksinimleri, inference maliyeti ve değerlendirme protokolü (LPIPS, FID, göreve özel).
+`outputs/skill-img2img-chooser.md`'yi kaydedin. Skill bir görev tanımını, veri kullanılabilirliğini (eşleştirilmiş ve eşleşmemiş, N örnek) ve gecikme/kalite bütçesini alır ve ardından çıktılar verir: yaklaşım (Pix2Pix, CycleGAN, ControlNet varyantı, SDXL + IP Adaptörü), eğitim verileri gereksinimleri, inference maliyeti ve değerlendirme protokolü (LPIPS, FID, göreve özel).
 
 ## Egzersizler
 
-1. **Kolay.** Üçüncü bir sınıf eklemek için `code/main.py` öğesini değiştirin. G'nin hala her sınıfın gürültüsünü doğru moda eşlediğini doğrulayın.
-2. **Orta.** 1-B ayarında L1'i algısal stil kaybıyla değiştirin (e.g. özellik çıkarıcı görevi gören küçük donmuş bir D). Koşullu dağılımın keskinliğini değiştirir mi?
-3. **Zor.** 1 boyutlu ortamda bir CycleGAN taslağı çizin: iki dağıtım, iki generator, döngü kaybı. Eşleştirilmiş veri olmadan bunlar arasında eşleme yapmayı öğrendiğini gösterin.
+1. **Kolay.** Üçüncü bir sınıf eklemek için `code/main.py`'yi değiştirin. G'nin hala her sınıfın gürültüsünü doğru moda eşlediğini doğrulayın.
+2. **Orta.** 1 boyutlu ayarda L1'i algısal stil kaybıyla değiştirin (e.g. özellik çıkarıcı görevi gören küçük donmuş bir D). Koşullu dağılımın keskinliğini değiştirir mi?
+3. **Zor.** 1 boyutlu ortamda bir CycleGAN taslağı çizin: iki dağıtım, iki jeneratör, döngü kaybı. Eşleştirilmiş veri olmadan bunlar arasında eşleme yapmayı öğrendiğini gösterin.
 
 ## Anahtar Terimler
 
@@ -126,7 +126,7 @@ Pix2Pix, (a) binlerce eşleştirilmiş örneğiniz olduğunda, (b) görev dar ve
 
 ## Üretim notu: Gecikmeye bağlı bir temel çizgi olarak Pix2Pix
 
-Verileri eşleştirdiğinizde ve dar bir göreve (çizgi → oluşturma, anlamsal harita → fotoğraf, gündüz → gece) sahip olduğunuzda, Pix2Pix'in tek seferlik inference özelliği, gecikme açısından difüzyonu büyüklük sırasına göre geride bırakır. Üretim karşılaştırması genellikle:
+Verileri eşleştirdiğinizde ve dar bir göreve sahip olduğunuzda (çizim → oluşturma, anlamsal harita → fotoğraf, gündüz → gece), Pix2Pix'in tek seferlik inference özelliği, gecikme açısından difüzyonu bir büyüklük sırasına göre geride bırakır. Üretim karşılaştırması genellikle:
 
 | Yol | Adımlar | Tek bir L4'te 512²'lik tipik gecikme |
 |------|-------|----------------------------------------|
@@ -139,9 +139,9 @@ Pix2Pix, statik gruplar halinde üretimde kazanır (her istek aynı FLOP'tur). Y
 
 ## Daha Fazla Okuma
 
-- [Mirza ve Osindero (2014). Koşullu Üretken Çekişmeli Ağlar](https://arxiv.org/abs/1411.1784) — cGAN makalesi.
-- [Isola ve diğerleri. (2017). Koşullu Çekişmeli Ağlarla Görüntüden Görüntüye Çeviri](https://arxiv.org/abs/1611.07004) — Pix2Pix.
+- [Mirza ve Osindero (2014). Koşullu Üretken Rekabetçi Ağlar](https://arxiv.org/abs/1411.1784) — cGAN makalesi.
+- [Isola ve ark. (2017). Koşullu Çekişmeli Ağlarla Görüntüden Görüntüye Çeviri](https://arxiv.org/abs/1611.07004) — Pix2Pix.
 - [Zhu ve ark. (2017). Döngüyle Tutarlı Çekişmeli Ağlar Kullanarak Eşleştirilmemiş Görüntüden Görüntüye Çeviri](https://arxiv.org/abs/1703.10593) — CycleGAN.
 - [Wang ve ark. (2018). Koşullu GAN'larla Yüksek Çözünürlüklü Görüntü Sentezi](https://arxiv.org/abs/1711.11585) — Pix2PixHD.
 - [Park ve ark. (2019). Uzamsal Olarak Uyarlanabilir Normalleştirme ile Semantik Görüntü Sentezi](https://arxiv.org/abs/1903.07291) — SPADE / GauGAN.
-- [Miyato ve Koyama (2018). Projeksiyon Discriminatorlı cGAN'lar](https://arxiv.org/abs/1802.05637) — projeksiyon D.
+- [Miyato ve Koyama (2018). Projeksiyon Ayırıcılı cGAN'lar](https://arxiv.org/abs/1802.05637) — projeksiyon D.

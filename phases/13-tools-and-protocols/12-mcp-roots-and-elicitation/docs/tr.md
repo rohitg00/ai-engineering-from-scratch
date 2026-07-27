@@ -158,10 +158,10 @@ Bu ders `outputs/skill-elicitation-form-designer.md`'yi üretir. Kullanıcı ona
 | `notifications/roots/list_changed` | "Kullanıcı kapsamı değiştirdi" | İstemci, kök kümesinin mutasyona uğradığını bildiriyor |
 | Ortaya Çıkarma | "Kullanıcıya görüşme sırasında sor" | Yapılandırılmış kullanıcı girişi için sunucu tarafından başlatılan istek |
 | `elicitation/create` | "Yöntem" | Ortaya çıkarma istekleri için JSON-RPC yöntemi |
-| Form modu | "Şema odaklı form" | İstemci arayüzünde form olarak işlenen Düz JSON Schema |
+| Form modu | "Şema odaklı form" | İstemci arayüzünde form olarak işlenen Düz JSON Şeması |
 | URL modu | "Tarayıcı yönlendirmesi" | SEP-1036 deneysel; bir URL açar ve bekler |
 | `accept` / `decline` / `cancel` | "Kullanıcı yanıtı sonuçları" | Sunucunun yönettiği üç dal |
-| Belirsizliği giderme | "Birini seç" | Bir aracın N adayı olduğunda yaygın ortaya çıkarma kullanım durumu |
+| Disambiguation | "Birini seç" | Bir aracın N adayı olduğunda yaygın ortaya çıkarma kullanım durumu |
 | Düz form | "Yalnızca üst düzey mülkler" | Ortaya çıkarma şemaları iç içe olamaz |
 
 ## Daha Fazla Okuma
@@ -170,4 +170,4 @@ Bu ders `outputs/skill-elicitation-form-designer.md`'yi üretir. Kullanıcı ona
 - [MCP — İstemci ortaya çıkarma spesifikasyonu](https://modelcontextprotocol.io/specification/draft/client/elicitation) — kanonik ortaya çıkarma referansı
 - [Cisco — MCP ortaya çıkarma, yapılandırılmış içerik, OAuth geliştirmelerindeki yenilikler](https://blogs.cisco.com/developer/whats-new-in-mcp-elicitation-structured-content-and-oauth-enhancements) — 2025/11/25 eklemelere ilişkin ayrıntılı açıklama
 - [MCP — GitHub SEP-1036](https://github.com/modelcontextprotocol/modelcontextprotocol) — URL modu ortaya çıkarma teklifi (deneysel, sürüklenme riski)
-- [The New Stack — Ortaya çıkarma, döngüdeki insanı yapay zeka araçlarına nasıl getiriyor](https://thenewstack.io/how-elicitation-in-mcp-brings-human-in-the-loop-to-ai-tools/) — UX izlenecek yol
+- [Yeni Yığın — Ortaya çıkarma, döngüdeki insanı yapay zeka araçlarına nasıl getiriyor](https://thenewstack.io/how-elicitation-in-mcp-brings-human-in-the-loop-to-ai-tools/) — UX izlenecek yol

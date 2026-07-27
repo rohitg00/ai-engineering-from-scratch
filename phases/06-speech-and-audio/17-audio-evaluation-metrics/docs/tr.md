@@ -13,7 +13,7 @@ Her ses görevinin, her biri farklı bir ekseni ölçen birden fazla ölçümü 
 
 | Görev | Birincil | İkincil |
 |------|---------|-----------|
-| ASR | WER | CER · RTFx · ilk-token gecikme |
+| ASR | WER | CER · RTFx · ilk token gecikmesi |
 | TTS | MOS / UTMOS | SECS · ASR'de gidiş-dönüş WER · CER · TTFA |
 | Ses klonlama | SECS (ECAPA kosinüs) | MOS · CER |
 | Konuşmacı doğrulaması | EER | minDCF · FAR / FRR çalışma noktasında |
@@ -25,7 +25,7 @@ Her ses görevinin, her biri farklı bir ekseni ölçen birden fazla ölçümü 
 
 ## Konsept
 
-![Ses değerlendirme matrisi — metrikler, görevler ve 2026 skor tabloları](../assets/eval-landscape.svg)
+![Sesli değerlendirme matrisi — metrikler, görevler ve 2026 skor tabloları](../assets/eval-landscape.svg)
 
 ### ASR ölçümleri
 
@@ -35,17 +35,17 @@ Her ses görevinin, her biri farklı bir ekseni ölçen birden fazla ölçümü 
 
 **RTFx (ters gerçek zaman faktörü).** Duvar saati saniyesi başına işlenen ses saniyesi. Daha yüksek daha iyidir. Parakeet-TDT 3380x'e ulaşıyor. Whisper-large-v3 ~30× değerindedir.
 
-**İlk-token gecikme.** Ses girişinden ilk transkript token'e kadar duvar saati. Akış için kritik. Deepgram Nova-3: ~150 ms.
+**İlk token gecikmesi.** Ses girişinden ilk transkript token'ye kadar duvar saati. Akış için kritik. Deepgram Nova-3: ~150 ms.
 
 ### TTS metrikleri
 
 **MOS (Ortalama Görüş Puanı).** 1-5 insan derecelendirmesi. Altın standart ama yavaş. Örnek başına 20'den fazla dinleyici, model başına 100'den fazla örnek toplayın.
 
-**UTMOS (2022-2026).** Öğrenilmiş MOS tahmincisi. Standart benchmark'larda insan MOS'u ile ~0,9 korelasyon gösterir. F5-TTS: UTMOS 3.95; temel gerçek: 4.08.
+**UTMOS (2022-2026).** Öğrenilmiş MOS tahmincisi. Standart benchmark'lerde insan MOS'u ile ~0,9 korelasyon gösterir. F5-TTS: UTMOS 3.95; temel gerçek: 4.08.
 
 **SECS (Hoparlör Kodlayıcı Kosinüs Benzerliği).** Ses klonlama için. ECAPA embedding referans ve klonlanmış çıktı arasında kosinüs. > 0,75 = tanınabilir klon.
 
-**ASR üzerinde gidiş-dönüş WER.** TTS çıkışı üzerinden Whisper'ı çalıştırın, giriş metnine göre WER'yi hesaplayın. Anlaşılabilirlik regresyonlarını yakalar. 2026 SOTA: < %2 CER.
+**ASR üzerinde gidiş-dönüş WER.** TTS çıkışı üzerinden Whisper'ı çalıştırın, giriş metnine göre WER'yi hesaplayın. Anlaşılabilirlik regresyonlarını yakalar. 2026 SOTA: <; %2 CER.
 
 **TTFA (ilk sese kadar geçen süre).** Duvar saati gecikmesi. Kokoro-82M: ~100 ms; F5-TTS: ~1 sn.
 
@@ -57,7 +57,7 @@ Her ses görevinin, her biri farklı bir ekseni ölçen birden fazla ölçümü 
 
 **EER (Eşit Hata Oranı).** Yanlış Kabul Oranının Yanlış Reddetme Oranına eşit olduğu eşik. VoxCeleb1-O'da ECAPA: %0,87.
 
-**minDCF (min. Tespit Maliyeti).** Seçilen bir işletim noktasında ağırlıklı maliyet (genellikle FAR=0,01). EER'den daha fazla üretimle ilgilidir.
+**minDCF (min. Tespit Maliyeti).** Seçilen bir çalışma noktasında ağırlıklı maliyet (genellikle FAR=0,01). EER'den daha fazla üretimle ilgilidir.
 
 ### Günlükleştirme
 
@@ -75,21 +75,21 @@ Dengesiz: **makro F1** + **sınıf başına geri çağırma**. Sınıf başına 
 
 ### Müzik üretimi
 
-**FAD (Fréchet Audio Distance).** Gerçek ve oluşturulan sesin VGGish-embedding dağılımları arasındaki mesafe. MusicCaps'te MusicGen-small: 4.5. MüzikLM: 4.0. Daha düşük.
+**FAD (Fréchet Audio Distance).** Gerçek ve oluşturulan sesin VGGish-embedding dağıtımları arasındaki mesafe. MusicCaps'te MusicGen-small: 4.5. MüzikLM: 4.0. Daha düşük.
 
 **CLAP Puanı.** CLAP embedding'leri kullanan metin-ses hizalama puanı. > 0,3 = makul hizalama.
 
 **MOS dinleme paneli.** Tüketici sınıfı müzik için hala son söz. TTS Arena'da Suno v5 ELO 1293 (eşleştirilmiş insan tercihlerinden).
 
-### Ses dili benchmarks
+### Ses dili benchmark'ler
 
-**MMAU (Massive Multi-Audio Understanding).** 10 bin ses-QA çifti.
+**MMAU (Massive Multi-Audio Understanding).** 10k ses-QA çifti.
 
 **MMAU-Pro.** 1800 sert öğe, dört kategori: konuşma / ses / müzik / çoklu ses. Rastgele şans 4 yönlüde %25. Gemini 2.5 Pro genel olarak ~%60; çoklu ses tüm modellerde ~%22.
 
 **LongAudioBench.** Anlamsal sorgular içeren çok dakikalık klipler. Audio Flamingo Next, Gemini 2.5 Pro'yu yener.
 
-**AudioCaps / Clotho.** Altyazı ekleme benchmarks. SPICE, CIDEr, FENSE ölçümleri.
+**AudioCaps / Clotho.** benchmark'lere altyazı ekleme. SPICE, CIDEr, FENSE ölçümleri.
 
 ### Konuşmadan konuşmaya akış
 
@@ -109,7 +109,7 @@ Dengesiz: **makro F1** + **sınıf başına geri çağırma**. Sınıf başına 
 | MMAU-Pro | LALM muhakemesi | `mmaubenchmark.github.io` |
 | Hoparlör Tezgahı / VoxSRC | Konuşmacı tanıma | `voxsrc.github.io` |
 | MMAU müzik alt kümesi | Müzik LALM | (MMAU dahilinde) |
-| DUYUN benchmark | Kendi kendini denetleyen ses | `hearbenchmark.com` |
+| benchmark'Yİ DUYUN | Kendi kendini denetleyen ses | `hearbenchmark.com` |
 
 ## İnşa Et
 
@@ -179,7 +179,7 @@ Her dağıtımı, her model güncellemesinde çalışan sabit bir değerlendirme
 
 1. **Puanlamadan önce normalleştirin.** Küçük harf, noktalama işareti-şerit, sayı-genişletme. Normalleştirme kuralını bildirin.
 2. **Ortalamaları değil, dağılımları rapor edin.** Gecikme için P50/P95/P99. Sınıflandırma için sınıf başına hatırlama. MMAU için kategori başına.
-3. **Bir kanonik genel benchmark çalıştırın.** Üretim verileriniz farklı olsa bile, Open ASR / TTS Arena / MMAU üzerinde raporlama, incelemecilerin elmaları elmalarla karşılaştırmasına olanak tanır.
+3. **Bir kanonik genel benchmark çalıştırın.** Üretim verileriniz farklı olsa bile, Open ASR / TTS Arena / MMAU üzerinde raporlama yapmak, incelemecilerin elmaları elmalarla karşılaştırmasına olanak tanır.
 
 ## Tuzaklar
 
@@ -187,17 +187,17 @@ Her dağıtımı, her model güncellemesinde çalışan sabit bir değerlendirme
 - **MOS panel önyargısı.** 20 Amazon Mechanical Turk çalışanı ≠ 20 hedef kullanıcı. Bahisler yüksekse bir alan adı paneli için ödeme yapın.
 - **FAD referans setine bağlıdır.** Modeller arasında aynı referans dağılımıyla karşılaştırın.
 - **Toplam WER.** Genel olarak %5'lik bir WER, aksanlı konuşmada %30 WER'yi gizleyebilir. Demografik dilime göre raporlayın.
-- **Genel benchmark doygunluğu.** Çoğu sınır modeli, standart benchmark'larda tavana yakındır. Trafiğinizi yansıtan şirket içi bir set oluşturun.
+- **Genel benchmark doygunluğu.** Çoğu sınır modeli, standart benchmark'lerde tavana yakındır. Trafiğinizi yansıtan şirket içi bir set oluşturun.
 
 ## Gönderin
 
-`outputs/skill-audio-evaluator.md` olarak kaydet. Herhangi bir ses modeli sürümü için metrikleri, benchmark'leri ve raporlama biçimini seçin.
+`outputs/skill-audio-evaluator.md` olarak kaydedin. Herhangi bir ses modeli sürümü için metrikleri, benchmark'leri ve raporlama formatını seçin.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py` komutunu çalıştırın. Oyuncak girişlerinde WER / CER / EER / SECS / FAD-ish / MMAU-ish'i hesaplayın.
-2. **Orta.** Bir TTS gidiş-dönüş WER koşum takımı oluşturun. Kokoro veya F5-TTS çıkışınızı Whisper aracılığıyla çalıştırın. 50 prompts üzerinden WER'yi hesaplayın. WER > %10 olan prompt'leri işaretleyin.
-3. **Zor.** Ders 10 LALM seçiminizi MMAU-Pro konuşma + çoklu ses alt kümelerine (her biri 50 öğe) göre puanlayın. Kategori başına doğruluğu raporlayın ve yayınlanan sayıyla karşılaştırın.
+1. **Kolay.** `code/main.py`'yi çalıştırın. Oyuncak girişlerinde WER / CER / EER / SECS / FAD-ish / MMAU-ish'i hesaplayın.
+2. **Orta.** Bir TTS gidiş-dönüş WER koşum takımı oluşturun. Kokoro veya F5-TTS çıkışınızı Whisper aracılığıyla çalıştırın. 50 prompt üzerinden WER'yi hesaplayın. prompt'leri WER ile işaretleyin > %10.
+3. **Zor.** 10. Ders LALM seçiminizi MMAU-Pro konuşma + çoklu ses alt kümelerine (her biri 50 öğe) göre puanlayın. Kategori başına doğruluğu raporlayın ve yayınlanan sayıyla karşılaştırın.
 
 ## Anahtar Terimler
 
@@ -210,7 +210,7 @@ Her dağıtımı, her model güncellemesinde çalışan sabit bir değerlendirme
 | SEC | Ses klonu benzerliği | Referans ve klon arasındaki ECAPA kosinüsü. |
 | EER | Konuşmacı doğrulama puanı | FAR = FRR olan eşik. |
 | DER | Günlükleştirme puanı | (FA + Kaçırılan + Karışıklık) / toplam. |
-| FAD | Müzik üretme kalitesi | VGGish embeddings üzerinde Fréchet mesafesi. |
+| FAD | Müzik üretme kalitesi | VGGish embedding'lerde Fréchet mesafesi. |
 | RTFx | Verim | Duvar saati saniyesi başına ses saniyesi. |
 
 ## Daha Fazla Okuma
@@ -221,4 +221,4 @@ Her dağıtımı, her model güncellemesinde çalışan sabit bir değerlendirme
 - [ASR Skor Tablosunu Aç](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard) — 2026 canlı sıralamaları.
 - [TTS Arena](https://huggingface.co/spaces/TTS-AGI/TTS-Arena) — insan oyu ile TTS skor tablosu.
 - [MMAU-Pro benchmark](https://mmaubenchmark.github.io/) — LALM akıl yürütme skor tablosu.
-- [HEAR benchmark](https://hearbenchmark.com/) — ses SSL'si benchmark'ler.
+- [HEAR benchmark](https://hearbenchmark.com/) — ses SSL benchmark'ler.

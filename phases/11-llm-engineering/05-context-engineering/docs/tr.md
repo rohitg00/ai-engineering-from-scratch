@@ -1,31 +1,31 @@
 # Bağlam Mühendisliği: Windows, Bütçeler, Bellek ve Erişim
 
-> Prompt mühendisliği bir alt kümedir. Bağlam mühendisliği oyunun tamamıdır. Prompt, yazdığınız bir dizedir. Bağlam ise sistem talimatları, getirilen belgeler, araç tanımları, konuşma geçmişi, few-shot örnekler ve prompt'un kendisi dahil olmak üzere modelin penceresine giren her şeydir. 2026'nın en iyi yapay zekâ mühendisleri bağlam mühendisleridir. Neyin gireceğine, neyin dışarıda kalacağına ve hangi sırayla sunulacağına karar verirler.
+> Prompt mühendislik bir alt kümedir. Bağlam mühendisliği oyunun tamamıdır. prompt yazdığınız bir dizedir. Context is everything that goes into the model's window: system instructions, retrieved documents, tool definitions, conversation history, few-shot examples, and the prompt itself. 2026'nın en iyi yapay zeka mühendisleri bağlam mühendisleridir. Neyin gireceğine, neyin dışarıda kalacağına ve hangi sırayla karar veriyorlar.
 
 **Tür:** Yapım
 **Diller:** Python
-**Önkoşullar:** Aşama 10 (Sıfırdan LLM), Aşama 11 Ders 01-02
+**Önkoşullar:** Aşama 10 (Sıfırdan Yüksek Lisans), Aşama 11 Ders 01-02
 **Süre:** ~90 dakika
 **İlgili:** Aşama 11 · 15 (Prompt Önbelleğe Alma) — önbellek dostu düzen, bağlam mühendisliğinin bir uzantısıdır. NIAH/RULER ile ortada kaybolmanın nasıl ölçüleceğine ilişkin Aşama 5 · 28 (Uzun Bağlam Değerlendirmesi).
 
 ## Öğrenme Hedefleri
 
-- Tüm context window bileşenler (sistem prompt, araçlar, geçmiş, alınan dokümanlar, üretim boşluğu) genelinde token bütçelerini hesaplayın
-- context window yönetim stratejisini uygulayın: konuşma geçmişi için kesme, özetleme ve kayan pencere
+- Tüm context window bileşenlerinde token bütçelerini hesaplayın (sistem prompt, araçlar, geçmiş, alınan belgeler, nesil boşluk payı)
+- context window yönetim stratejilerini uygulayın: konuşma geçmişi için kesme, özetleme ve kayan pencere
 - Modelin en alakalı bilgilere olan ilgisini en üst düzeye çıkarmak için bağlam bileşenlerini önceliklendirin ve sıralayın
-- Sorgu türüne ve kullanılabilir pencere alanına göre token'leri dinamik olarak tahsis eden bir bağlam birleştirici oluşturun
+- token'leri sorgu türüne ve kullanılabilir pencere alanına göre dinamik olarak tahsis eden bir bağlam birleştirici oluşturun
 
 ## Sorun
 
-Claude Opus 4.7'nin 200K token penceresi vardır (betada 1 milyon). GPT-5'te 400K var. Gemini 3 Pro'da 2M var. Lama 4, 10 milyon iddia ediyor. Bu sayılar siz onları doldurana kadar kulağa çok büyük geliyor.
+Claude Opus 4.7, 200K token penceresine sahiptir (betada 1M). GPT-5'te 400K var. Gemini 3 Pro'da 2M var. Lama 4, 10 milyon iddia ediyor. Bu sayılar siz onları doldurana kadar kulağa çok büyük geliyor.
 
-İşte bir kodlama asistanı için gerçek bir döküm. Sistem prompt: 500 tokens. 50 takım için takım tanımları: 8.000 tokens. Alınan belgeler: 4.000 tokens. Konuşma geçmişi (10 dönüş): 6.000 tokens. Mevcut kullanıcı sorgusu: 200 tokens. Üretim bütçesi (maksimum çıktı): 4.000 tokens. Toplam: 22.700 tokens. Bu, 128K pencerenin yalnızca %18'idir.
+İşte bir kodlama asistanı için gerçek bir döküm. Sistem prompt: 500 token. 50 takım için takım tanımları: 8.000 token. Alınan belgeler: 4.000 token. Konuşma geçmişi (10 dönüş): 6.000 token. Mevcut kullanıcı sorgusu: 200 token. Üretim bütçesi (maksimum çıkış): 4.000 token. Toplam: 22.700 token. Bu, 128K pencerenin yalnızca %18'idir.
 
-Ancak dikkat, bağlam uzunluğuyla doğrusal olarak ölçeklenmez. 128K tokens bağlamı olan bir model, ikinci dereceden dikkat maliyeti (vanil transformers'de O(n^2) öder, ancak çoğu üretim modeli etkili dikkat varyantlarını kullanır). Daha da önemlisi, erişim doğruluğu azalır. "Samanlıktaki İğne" testi, modellerin uzun bağlamların ortasına yerleştirilen bilgileri bulmakta zorlandığını gösteriyor. Liu ve arkadaşlarının araştırması. (2023), LLM'lerin uzun bağlamların başında ve sonunda bilgiyi neredeyse mükemmel bir doğrulukla aldığını, ancak ortaya yerleştirilen bilgiler için doğruluğun %10-20 düştüğünü (bağlamın %40-70'i konumları) gösterdi. Bu "ortada kaybolma" etkisi modele göre değişir ancak mevcut tüm mimarileri etkiler.
+Ancak dikkat, bağlam uzunluğuyla doğrusal olarak ölçeklenmez. 128K token bağlamına sahip bir model, ikinci dereceden dikkat maliyeti (olağan transformer'lerde O(n^2)) öder, ancak çoğu üretim modeli verimli dikkat varyantlarını kullanır). Daha da önemlisi, erişim doğruluğu azalır. "Samanlıktaki İğne" testi, modellerin uzun bağlamların ortasına yerleştirilen bilgileri bulmakta zorlandığını gösteriyor. Liu ve arkadaşlarının araştırması. (2023), LLM'lerin uzun bağlamların başında ve sonunda bilgiyi neredeyse mükemmel bir doğrulukla aldığını, ancak ortaya yerleştirilen bilgiler için doğruluğun %10-20 düştüğünü (bağlamın %40-70'i konumları) gösterdi. Bu "ortada kaybolma" etkisi modele göre değişir ancak mevcut tüm mimarileri etkiler.
 
-Pratik ders: 200K token'nin mevcut olması, 200K token'nin etkili olduğu anlamına gelmez. Dikkatlice seçilmiş bir 10K token bağlamı genellikle dökümlü bir 100K token bağlamından daha iyi performans gösterir. Bağlam mühendisliği, context window dahilinde sinyal-gürültü oranını maksimuma çıkarma disiplinidir.
+Pratik ders: 200 bin token'nin mevcut olması, 200 bin token kullanmanın etkili olduğu anlamına gelmez. Dikkatlice seçilmiş bir 10K token bağlamı çoğu zaman dökümlü bir 100K token bağlamından daha iyi performans gösterir. Bağlam mühendisliği, context window dahilinde sinyal-gürültü oranını en üst düzeye çıkarma disiplinidir.
 
-Pencereye koyduğunuz her token, daha alakalı bilgi taşıyabilecek bir token'nin yerini alır. Her alakasız araç tanımı, her bayat konuşma akışı, soruyu yanıtlamayan her metin parçası, modelin görevini biraz daha kötü yapmasına neden olur.
+Pencereye yerleştirdiğiniz her token, daha alakalı bilgiler taşıyabilecek bir token'nin yerini alır. Her alakasız araç tanımı, her bayat konuşma akışı, soruyu yanıtlamayan her metin parçası, modelin görevini biraz daha kötü yapmasına neden olur.
 
 ## Konsept
 
@@ -54,7 +54,7 @@ graph TD
     style G fill:#1a1a2e,stroke:#0f3460,color:#fff
 ```
 
-Her bileşen alan için rekabet eder. Daha fazla araç tanımı eklemek, konuşma geçmişi için daha az yer anlamına gelir. Daha fazla geri getirilen bağlam eklemek, few-shotli örnekler için daha az yer anlamına gelir. Bağlam mühendisliği, bu bütçeyi görev performansını en üst düzeye çıkarmak için tahsis etme sanatıdır.
+Her bileşen alan için rekabet eder. Daha fazla araç tanımı eklemek, konuşma geçmişi için daha az yer anlamına gelir. Daha fazla geri getirilen bağlamın eklenmesi, birkaç çekimli örnekler için daha az yer anlamına gelir. Bağlam mühendisliği, bu bütçeyi görev performansını en üst düzeye çıkarmak için tahsis etme sanatıdır.
 
 ### Ortada Kayıp
 
@@ -64,7 +64,7 @@ Liu ve diğerleri. (2023) bunu sistematik olarak test etti. İlgisiz 20 belgenin
 
 Bunun doğrudan mühendislik sonuçları vardır:
 
-- En önemli bilgiyi ilk sıraya koyun (sistem prompt, kritik talimatlar)
+- En önemli bilgiyi ilk sıraya koyun (prompt sistemi, kritik talimatlar)
 - Geçerli sorguyu ve en alakalı bağlamı en sona koyun (yenilik eğilimi yardımcı olur)
 - Bağlamın ortasını en düşük öncelikli bölge olarak ele alın
 - Ortaya bilgi eklemeniz gerekiyorsa, sondaki anahtar noktayı kopyalayın
@@ -89,25 +89,25 @@ graph LR
 
 ### Bağlam Bileşenleri
 
-**Sistem prompt**: kişiliği, kısıtlamaları ve davranış kurallarını belirler. Bu önce gider ve dönüşler boyunca sabit kalır. Claude Code, prompt sistemi için araç tanımları ve davranış talimatları dahil olmak üzere yaklaşık 6.000 tokens kullanır. Sıkı tut. prompt sistemindeki her kelime, her API çağrısında tekrarlanır.
+**Sistem prompt**: kişiliği, kısıtlamaları ve davranış kurallarını belirler. Bu önce gider ve dönüşler boyunca sabit kalır. Claude Code, prompt sistemi için araç tanımları ve davranış talimatları dahil olmak üzere yaklaşık 6.000 token kullanıyor. Sıkı tut. prompt sistemindeki her kelime, her API çağrısında tekrarlanır.
 
-**Araç tanımları**: her araç 50-200 tokens (ad, açıklama, parametre şeması) ekler. 150 tokens'de 50 aracın her biri, herhangi bir konuşma gerçekleşmeden önce 7.500 tokens'dir. Yalnızca mevcut sorguyla ilgili araçları içeren dinamik araç seçimi, bunu %60-80 oranında azaltabilir.
+**Araç tanımları**: her araç 50-200 token (ad, açıklama, parametre şeması) ekler. Herhangi bir konuşma gerçekleşmeden önce 150 token'deki 50 aracın her biri 7.500 token'dir. Yalnızca mevcut sorguyla ilgili araçları içeren dinamik araç seçimi, bunu %60-80 oranında azaltabilir.
 
-**Alınan içerik**: vector database'dan belgeler, arama sonuçları, dosya içerikleri. Erişimin kalitesi doğrudan yanıtın kalitesini belirler. Kötü geri alma, hiç almamaktan daha kötüdür; pencereyi gürültüyle doldurur ve modeli aktif olarak yanıltır.
+**Alınan içerik**: vector database'deki belgeler, arama sonuçları, dosya içerikleri. Erişimin kalitesi doğrudan yanıtın kalitesini belirler. Kötü geri alma, hiç almamaktan daha kötüdür; pencereyi gürültüyle doldurur ve modeli aktif olarak yanıltır.
 
-**Konuşma geçmişi**: önceki tüm kullanıcı mesajları ve asistan yanıtları. Konuşma uzunluğuyla doğrusal olarak büyür. Tur başına 200 tokensn hızla 50 turluk bir konuşma, 10.000 tokensn'lik geçmiş demektir. Çoğunun mevcut sorguyla alakası yok.
+**Konuşma geçmişi**: önceki tüm kullanıcı mesajları ve asistan yanıtları. Konuşma uzunluğuyla doğrusal olarak büyür. Tur başına 200 token ile 50 turluk bir konuşma, 10.000 token geçmişidir. Çoğunun mevcut sorguyla alakası yok.
 
 **Birkaç örnek**: istenen davranışı gösteren giriş/çıkış çiftleri. İyi seçilmiş iki ila üç örnek genellikle çıktı kalitesini binlerce token talimattan daha fazla artırır. Ama yer kaplıyorlar.
 
-**Nesil bütçesi**: modelin yanıtı için ayrılan token'lar. Pencereyi kapasitesine kadar doldurursanız modelin yanıt verecek yeri kalmaz. Üretim için en az 2.000-4.000 token ayırın.
+**Nesil bütçesi**: Modelin yanıtı için ayrılan token'ler. Pencereyi kapasitesine kadar doldurursanız modelin yanıt verecek yeri kalmaz. Oluşturma için en az 2.000-4.000 token ayırın.
 
 ### Bağlam Sıkıştırma Stratejileri
 
-**Geçmişi özetleme**: Önceki tüm dönüşleri kelimesi kelimesine tutmak yerine, konuşmayı periyodik olarak özetleyin. "X'i tartıştık, Y'ye karar verdik ve kullanıcı Z istiyor" 100 tokens içinde, 2.000 tokens süren 10 dönüşün yerini alır. Geçmiş bir eşiği (e.g., 5.000 tokens) aştığında özetlemeyi çalıştırın.
+**Geçmişi özetleme**: Önceki tüm dönüşleri kelimesi kelimesine tutmak yerine, konuşmayı periyodik olarak özetleyin. 100 token'deki "X'i tartıştık, Y'ye karar verdik ve kullanıcı Z istiyor", 2.000 token alan 10 dönüşün yerini alıyor. Geçmiş bir eşiği (e.g., 5.000 token) aştığında özetlemeyi çalıştırın.
 
-**İlgililik filtreleme**: Alınan her belgeyi geçerli sorguya göre puanlayın ve belgeleri bir eşiğin altına bırakın. 10 parça aldıysanız ancak yalnızca 3 tanesi alakalıysa, diğer 7 parçayı atın. 10 vasat parça yerine yüksek düzeyde alakalı parçaya sahip olmak daha iyidir.
+**İlgililik filtreleme**: Alınan her belgeyi geçerli sorguya göre puanlayın ve belgeleri bir eşiğin altına bırakın. 10 parça aldıysanız ancak yalnızca 3 tanesi alakalıysa, diğer 7 parçayı atın. 10 vasat parça yerine yüksek düzeyde alakalı 3 parçaya sahip olmak daha iyidir.
 
-**Araç budama**: Kullanıcının sorgu amacını sınıflandırın ve yalnızca bu amaç ile ilgili araçları ekleyin. Kod sorusunun takvim araçlarına ihtiyacı yoktur. Bir planlama sorusunun dosya sistemi araçlarına ihtiyacı yoktur. Bu, takım tanımlarını 8.000 tokens'den 1.000'e düşürebilir.
+**Araç budama**: Kullanıcının sorgu amacını sınıflandırın ve yalnızca bu amaç ile ilgili araçları ekleyin. Kod sorusunun takvim araçlarına ihtiyacı yoktur. Bir planlama sorusunun dosya sistemi araçlarına ihtiyacı yoktur. Bu, takım tanımlarını 8.000 token'den 1.000'e düşürebilir.
 
 **Yinelemeli özetleme**: Çok uzun belgeler için aşamalar halinde özetleyin. Önce her bölümü özetleyin, ardından özetleri özetleyin. 50 sayfalık bir belge, önemli noktaları yakalayan 500-token özete dönüşür.
 
@@ -115,11 +115,11 @@ graph LR
 
 Bağlam mühendisliği üç zaman dilimini kapsar.
 
-**Kısa süreli hafıza**: mevcut konuşma. Doğrudan context window'da saklanır. Her dönüşte büyür. Özetleme ve kesme ile yönetilir.
+**Kısa süreli hafıza**: mevcut konuşma. Doğrudan context window'de saklanır. Her dönüşte büyür. Özetleme ve kesme ile yönetilir.
 
 **Uzun süreli hafıza**: konuşmalar boyunca kalıcı olan gerçekler ve tercihler. "Kullanıcı TypeScript'i tercih ediyor." "Proje PostgreSQL kullanıyor." Bir veritabanında saklanır, oturum başlangıcında alınır. Claude Code bunu CLAUDE.md dosyalarında saklar. ChatGPT bunu kendi hafıza özelliğinde saklar.
 
-**Olaysal bellek**: alakalı olabilecek belirli geçmiş etkileşimler. "Geçen Salı, kimlik doğrulama modülünde benzer bir sorunun hatalarını ayıkladık." embeddings olarak saklanır, mevcut görüşme geçmiş bir bölümle eşleştiğinde alınır.
+**Olaysal bellek**: alakalı olabilecek belirli geçmiş etkileşimler. "Geçen Salı, kimlik doğrulama modülünde benzer bir sorunun hatalarını ayıkladık." embedding'ler olarak saklanır ve mevcut konuşma geçmiş bir bölümle eşleştiğinde alınır.
 
 ```mermaid
 graph TD
@@ -152,7 +152,7 @@ Temel fikir: farklı sorguların farklı bağlamlara ihtiyacı vardır. Statik b
 2. İlgili araçları seçin (tüm araçları değil)
 3. İlgili belgeleri alın (sabit bir dizi değil)
 4. İlgili geçmiş dönüşleri dahil edin (geçmişin tamamını değil)
-5. Görev türüne uygun few-shotlik örnekler ekleyin
+5. Görev türüne uygun birkaç çekimlik örnekler ekleyin
 6. Her şeyi önemine göre sıralayın: önce kritik, sonda önemli, ortada isteğe bağlı
 
 İyi bir yapay zeka uygulamasını harika bir uygulamadan ayıran şey budur. Model aynı. Bağlam farklılaştırıcıdır.
@@ -161,7 +161,7 @@ Temel fikir: farklı sorguların farklı bağlamlara ihtiyacı vardır. Statik b
 
 ### Adım 1: Token Sayacı
 
-Ölçemediğiniz şeyin bütçesini yapamazsınız. Basit bir token sayacı oluşturun (kesin sayı tokenizer'ya bağlı olduğundan boşluk bölmeyi kullanan yaklaşım).
+Ölçemediğiniz şeyin bütçesini yapamazsınız. Basit bir token sayacı oluşturun (tam sayı tokenizer'ye bağlı olduğundan boşluk bölmeyi kullanarak yaklaşık hesaplama yapın).
 
 ```python
 import json
@@ -179,7 +179,7 @@ def count_tokens_json(obj):
 
 ### Adım 2: Bağlam Bütçe Yöneticisi
 
-Temel soyutlama. Bütçe yöneticisi, her bir bileşenin kaç tane token kullandığını izler ve limitleri uygular.
+Temel soyutlama. Bir bütçe yöneticisi, her bir bileşenin kaç token kullandığını ve limitleri uyguladığını izler.
 
 ```python
 class ContextBudget:
@@ -267,7 +267,7 @@ def score_relevance(query, documents):
 
 ### Adım 4: Konuşma Geçmişi Sıkıştırıcısı
 
-token bütçesini geri almak için eski görüşme dönüşlerini özetleyin.
+token bütçesini geri almak için eski konuşma dönüşlerini özetleyin.
 
 ```python
 class ConversationManager:
@@ -527,64 +527,64 @@ def run_demo():
 
 ### Donanımla Yönetilen Bağlam
 
-Claude Code, bağlamı katmanlı bir yaklaşımla yönetir. prompt sistemi davranış kurallarını ve araç tanımlarını içerir (~6K tokens). Bir dosyayı açtığınızda içeriği bağlam olarak enjekte edilir. Arama yaptığınızda sonuçlar eklenir. Eski konuşma dönüşleri özetlenmiştir. CLAUDE.md, oturumlar boyunca kalıcı olan uzun süreli bellek sağlar.
+Claude Code, bağlamı katmanlı bir yaklaşımla yönetir. prompt sistemi davranış kurallarını ve araç tanımlarını içerir (~6K token). Bir dosyayı açtığınızda içeriği bağlam olarak enjekte edilir. Arama yaptığınızda sonuçlar eklenir. Eski konuşma dönüşleri özetlenmiştir. CLAUDE.md, oturumlar boyunca kalıcı olan uzun süreli bellek sağlar.
 
 Anahtar mühendislik kararı: Claude Code, kod tabanınızın tamamını bağlama dahil etmez. Talep üzerine ilgili dosyaları alır. Bu, pratikte bağlam mühendisliğidir.
 
 ### Dinamik İçerik Yükleme
 
-İmleç kod tabanınızın tamamını embedding'ler halinde dizine ekler. Bir sorgu yazdığınızda, vektör benzerliğini kullanarak en alakalı dosyaları ve kod bloklarını alır. Yalnızca bu parçalar context window'ya gider. 500K satırlık bir kod tabanı, en alakalı 5-10 kod bloğuna sıkıştırılır.
+İmleç kod tabanınızın tamamını embedding'lere indeksler. Bir sorgu yazdığınızda, vektör benzerliğini kullanarak en alakalı dosyaları ve kod bloklarını alır. Sadece bu parçalar context window'ye giriyor. 500K satırlık bir kod tabanı, en alakalı 5-10 kod bloğuna sıkıştırılır.
 
 Kalıp şu: her şeyi yerleştir, talep üzerine al, yalnızca önemli olanı dahil et.
 
 ### Yardımcı Uzun Süreli Bellek
 
-ChatGPT, kullanıcı tercihlerini ve gerçeklerini uzun süreli bellek olarak saklar. Her konuşma başlangıcında ilgili anılar alınır ve prompt sistemine dahil edilir. "Kullanıcı Python'u tercih ediyor" maliyeti 5 tokens'dir ancak konuşmalar boyunca yüzlerce tokens tekrarlanan talimattan tasarruf sağlar.
+ChatGPT, kullanıcı tercihlerini ve gerçeklerini uzun süreli bellek olarak saklar. Her konuşma başlangıcında ilgili anılar alınır ve prompt sistemine dahil edilir. "Kullanıcı Python'u tercih ediyor" maliyeti 5 token'dir ancak konuşmalar boyunca yüzlerce token tekrarlanan talimattan tasarruf sağlar.
 
 Bağlam Mühendisliği olarak ### RAG
 
-Alma-Artırılmış Üretim, bağlam mühendisliğinin resmileştirilmiş halidir. Bilgiyi modelin ağırlıklarına (eğitim) veya sisteme prompt (statik bağlam) doldurmak yerine, ilgili belgeleri sorgu zamanında alır ve bunları context window içine enjekte edersiniz. Tüm RAG ardışık düzeni (parçalama, embedding, alma, yeniden sıralama) tek bir sorunu çözmek için mevcuttur: doğru bilgiyi context window'ye koymak.
+Alma-Artırılmış Üretim, bağlam mühendisliğinin resmileştirilmiş halidir. Bilgiyi modelin ağırlıklarına (eğitim) veya prompt sistemine (statik bağlam) doldurmak yerine, ilgili belgeleri sorgulama zamanında alır ve bunları context window'ye enjekte edersiniz. Tüm RAG işlem hattı (parçalama, embedding, alma, yeniden sıralama) tek bir sorunu çözmek için mevcuttur: context window'ye doğru bilgiyi koymak.
 
 ## Gönderin
 
-Bu ders, bir bağlam derleme stratejisini denetleyen ve optimizasyonlar öneren yeniden kullanılabilir bir prompt olan `outputs/prompt-context-optimizer.md`'yi üretir. Sisteminizi prompt, araç sayısını, ortalama geçmiş uzunluğunu ve geri alma stratejisini besleyin; token israfını tanımlar ve iyileştirmeler önerir.
+Bu ders, bağlam derleme stratejisini denetleyen ve optimizasyonlar öneren yeniden kullanılabilir bir prompt olan `outputs/prompt-context-optimizer.md`'yi üretir. Sisteminize prompt, araç sayısını, ortalama geçmiş uzunluğunu ve alma stratejisini besleyin; token israfını tanımlar ve iyileştirmeler önerir.
 
-Ayrıca, görev türüne, context window boyutuna ve gecikme bütçesine dayalı olarak bağlam derleme işlem hatlarını tasarlamak için bir karar framework olan `outputs/skill-context-engineering.md` üretir.
+Ayrıca, görev türüne, context window boyutuna ve gecikme bütçesine dayalı olarak bağlam derleme işlem hatlarını tasarlamaya yönelik bir karar olan framework olan `outputs/skill-context-engineering.md`'yi de üretir.
 
 ## Egzersizler
 
 1. ContextBudget sınıfına bir "token atık dedektörü" ekleyin. Bütçenin %30'undan fazlasını kullanan bileşenleri işaretlemeli ve her bileşen türüne özel sıkıştırma stratejileri önermelidir (geçmişi özetleme, araçları budama, belgeleri yeniden sıralama).
 
-2. Geri alınan bağlam için anlamsal veri tekilleştirmeyi uygulayın. Alınan iki belge %80'den fazla benzerse (kelime örtüşmesi veya embedding'lerinin kosinüs benzerliği açısından), yalnızca yüksek puanlı olanı saklayın. Bunun ne kadar token bütçeyi kurtardığını ölçün.
+2. Geri alınan bağlam için anlamsal veri tekilleştirmeyi uygulayın. Alınan iki belge %80'den fazla benzerse (kelime çakışması veya embedding'lerinin kosinüs benzerliği açısından), yalnızca yüksek puanlı olanı saklayın. Bunun ne kadar token bütçesini kurtardığını ölçün.
 
-3. Bir "bağlam yeniden oynatma" aracı oluşturun. Bir konuşma metni verildiğinde, bunu ContextEngine aracılığıyla tekrar oynatın ve bütçe tahsisinin adım adım nasıl değiştiğini görselleştirin. Zaman içinde bileşen başına token kullanımının grafiğini çizin. Bağlamın sıkıştırılmaya başladığı dönüşü belirleyin.
+3. Bir "bağlam yeniden oynatma" aracı oluşturun. Bir konuşma metni verildiğinde, bunu ContextEngine aracılığıyla tekrar oynatın ve bütçe tahsisinin adım adım nasıl değiştiğini görselleştirin. Zaman içinde bileşen başına token kullanımının grafiğini çıkarın. Bağlamın sıkıştırılmaya başladığı dönüşü belirleyin.
 
-4. Önceliğe dayalı bir araç seçici uygulayın. İkili dahil etme/hariç tutma yerine, her araca geçerli sorguya bir alaka puanı atayın. Araç bütçesi tükenene kadar araçları azalan ilgi sırasına göre dahil edin. Görev performansını dahil edilen 5, 10, 20 ve 50 araçla karşılaştırın.
+4. Önceliğe dayalı bir araç seçici uygulayın. İkili dahil etme/hariç tutma yerine, her araca mevcut sorguya bir alaka puanı atayın. Araç bütçesi tükenene kadar araçları azalan ilgi sırasına göre dahil edin. Görev performansını dahil edilen 5, 10, 20 ve 50 araçla karşılaştırın.
 
-5. Çoklu strateji bağlamı sıkıştırıcısı oluşturun. Üç sıkıştırma stratejisini (kesme, özetleme, anahtar cümlelerin çıkarılması) uygulayın ve bunları 20 belgelik bir sette benchmark uygulayın. Sıkıştırma oranı ile bilgi saklama arasındaki dengeyi ölçün (sıkıştırılmış sürüm hâlâ sorgunun cevabını içeriyor mu?).
+5. Çoklu strateji bağlamı sıkıştırıcısı oluşturun. Üç sıkıştırma stratejisini (kesme, özetleme, anahtar cümlelerin çıkarılması) uygulayın ve bunları 20 belgelik bir sette benchmark yapın. Sıkıştırma oranı ile bilgi saklama arasındaki dengeyi ölçün (sıkıştırılmış sürüm hâlâ sorgunun cevabını içeriyor mu?).
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| Context window | "Modelin ne kadar okuyabildiği" | Modelin tek bir ileri geçişte işlediği maksimum tokens (giriş + çıkış) sayısı - GPT-5 için 400K, Claude Opus 4.7 için 200K (1M beta), Gemini 3 Pro için 2M |
-| Bağlam mühendisliği | "İleri düzey prompt mühendislik" | context window dosyasına neyin, hangi sırayla ve hangi öncelikte gireceğine karar verme disiplini, alma, sıkıştırma, araç seçimi ve bellek yönetimini kapsar |
-| Ortada kaybolmuş | "Modeller ortadaki şeyleri unutuyor" | LLM'ın bağlamın başlangıcına ve sonuna daha iyi katıldığını ve ortaya yerleştirilen bilgilerde %10-20 doğruluk düşüşü yaşadığını gösteren ampirik bulgu |
-| Token bütçe | "Kaç token kaldı" | Bileşen başına limitlerle birlikte bileşenler (sistem prompt, araçlar, geçmiş, alma, oluşturma) arasında context window kapasitesinin açık bir şekilde tahsisi |
-| Dinamik bağlam | "Eşyaları anında yükleme" | Amaç sınıflandırmasına, ilgili araç seçimine ve alma sonuçlarına göre her sorgu için context window'yi farklı şekilde bir araya getirme |
+| Context window | "Modelin ne kadar okuyabildiği" | Modelin tek bir ileri geçişte işlediği maksimum token (giriş + çıkış) sayısı - GPT-5 için 400K, Claude Opus 4.7 için 200K (1M beta), Gemini 3 Pro |
+| Bağlam mühendisliği | "İleri düzey prompt mühendisliği" | context window'ye neyin, hangi sırayla ve hangi öncelikte gireceğine karar verme disiplini, geri alma, sıkıştırma, araç seçimi ve bellek yönetimini kapsar |
+| Ortada kaybolmuş | "Modeller ortadaki şeyleri unutuyor" | Yüksek Lisans'ın bağlamın başlangıcına ve sonuna daha iyi katıldığını ve ortaya yerleştirilen bilgilerde %10-20 doğruluk düşüşü yaşadığını gösteren ampirik bulgu |
+| Token bütçe | "Kaç tane token kaldı" | context window kapasitesinin, bileşen başına limitlerle birlikte bileşenler (sistem prompt, araçlar, geçmiş, erişim, oluşturma) arasında açık bir şekilde tahsis edilmesi |
+| Dinamik bağlam | "Eşyaları anında yükleme" | Amaç sınıflandırmasına, ilgili araç seçimine ve alma sonuçlarına göre context window'yi her sorgu için farklı şekilde birleştirme |
 | Tarih özeti | "Konuşmayı sıkıştırmak" | Kelimenin tam anlamıyla eski konuşma dönüşlerini kısa bir özetle değiştirmek, önemli bilgileri korurken token maliyetini azaltmak |
 | Takım budama | "Yalnızca ilgili araçlar dahil" | Sorgu amacının sınıflandırılması ve yalnızca eşleşen araç tanımlarının dahil edilmesi, token aracının maliyetini %60-80 oranında azaltma |
-| Uzun süreli hafıza | "Oturumlar arasında hatırlama" | Bir veritabanında saklanan ve oturum başlangıcında alınan bilgiler ve tercihler -- CLAUDE.md, ChatGPT Belleği ve benzer sistemler |
-| Epizodik hafıza | "Belirli geçmiş olayları hatırlamak" | Geçmiş etkileşimler embedding olarak saklanır ve mevcut sorgu geçmiş bir görüşmeye benzer olduğunda alınır |
-| Üretim bütçesi | "Cevap için yer var" | Token, modelin çıktısı için ayrılmıştır -- eğer bağlam pencereyi tamamen doldurursa, modelin yanıt verecek yeri kalmaz |
+| Uzun süreli hafıza | "Oturumlar arasında hatırlama" | Bir veritabanında saklanan ve oturum başlangıcında alınan bilgiler ve tercihler - CLAUDE.md, ChatGPT Belleği ve benzer sistemler |
+| Epizodik hafıza | "Belirli geçmiş olayları hatırlamak" | Geçmiş etkileşimler embedding olarak saklanır ve mevcut sorgu geçmiş bir konuşmaya benzer olduğunda alınır |
+| Üretim bütçesi | "Cevap için yer var" | Modelin çıktısı için ayrılan Token'ler -- bağlam pencereyi tamamen doldurursa modelin yanıt verecek yeri kalmaz |
 
 ## Daha Fazla Okuma
 
-- [Liu ve diğerleri, 2023 -- "Lost in the Middle: How Language Models Use Long Contexts"](https://arxiv.org/abs/2307.03172) -- konuma bağlı dikkat üzerine kesin çalışma, modellerin uzun bağlamların ortasında bilgiyle boğuştuğunu gösteriyor
+- [Liu ve diğerleri, 2023 -- "Lost in the Middle: How Language Models Use Long Contexts"](https://arxiv.org/abs/2307.03172) -- modellerin uzun bağlamların ortasında bilgiyle boğuştuğunu gösteren, konuma bağlı dikkat üzerine kesin çalışma
 - [Anthropic'in Bağlamsal Erişim blog yazısı](https://www.anthropic.com/news/contextual-retrieval) -- Anthropic bağlama duyarlı parça alımına nasıl yaklaşıyor ve alma hatasını %49 oranında azaltıyor
 - [Simon Willison'ın "Bağlam Mühendisliği"](https://simonwillison.net/2025/Jun/27/context-engineering/) -- disipline isim veren ve onu prompt mühendisliğinden ayıran blog yazısı
-- [RAG ile ilgili LangChain belgeleri](https://python.langchain.com/docs/tutorials/rag/) -- içerik mühendisliği modeli olarak erişimle artırılmış oluşturmanın pratik uygulaması
+- [RAG ile ilgili LangChain belgeleri](https://python.langchain.com/docs/tutorials/rag/) -- bağlam mühendisliği modeli olarak geri almayla artırılmış oluşturmanın pratik uygulaması
 - [Greg Kamradt'ın Saman Yığınındaki İğne testi](https://github.com/gkamradt/LLMTest_NeedleInAHaystack) -- tüm önemli modellerde konuma bağlı alma hatalarını ortaya çıkaran benchmark
 - [Pope ve diğerleri, "Etkin Şekilde Ölçeklendirme Transformer Inference" (2022)](https://arxiv.org/abs/2211.05102) -- bağlam uzunluğunun neden belleği ve gecikmeyi artırdığı ve KV önbelleği, MQA ve GQA'nın bütçe hesaplamasını nasıl değiştirdiği.
-- [Agrawal ve diğerleri, "SARATHI: Verimli LLM Inference by Piggybacking Decodes with Chunked Prefills" (2023)](https://arxiv.org/abs/2308.16369) -- uzun prompt'leri TTFT'de pahalı, ancak TPOT'ta ucuz yapan inference'nin iki aşaması; bağlam paketleme değiş tokuşlarının ardındaki temel gerçek.
-- [Ainslie ve diğerleri, "GQA: Çok Kafalı Kontrol Noktalarından Genelleştirilmiş Çoklu Sorgu Transformer Modellerinin Eğitimi" (EMNLP 2023)](https://arxiv.org/abs/2305.13245) -- üretim kod çözücülerinde kalite kaybı olmadan KV belleğini 8 kat kesen gruplandırılmış sorgu dikkat makalesi.
+- [Agrawal ve diğerleri, "SARATHI: Efficient LLM Inference by Piggybacking Decodes with Chunked Prefills" (2023)](https://arxiv.org/abs/2308.16369) -- uzun prompt'leri TTFT'de pahalı, ancak TPOT'ta ucuz yapan inference'nin iki aşaması; bağlam paketleme değiş tokuşlarının ardındaki temel gerçek.
+- [Ainslie ve diğerleri, "GQA: Çok Kafalı Kontrol Noktalarından Genelleştirilmiş Çoklu Sorgu Transformer Modellerinin Eğitimi" (EMNLP 2023)](https://arxiv.org/abs/2305.13245) -- üretim kod çözücülerinde kalite kaybı olmadan KV belleğini 8 kat kesen gruplandırılmış sorgu dikkat kağıdı.

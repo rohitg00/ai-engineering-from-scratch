@@ -1,19 +1,19 @@
-# Gradient Kontrol Noktası Belirleme ve Aktivasyon Yeniden Hesaplaması
+# Gradient Kontrol Noktalama ve Aktivasyon Yeniden Hesaplaması
 
 > Backprop her ara aktivasyonu korur. 70B parametre ve 128K bağlamda, sıralama başına 3 TB etkinleştirme anlamına gelir. Kontrol noktası oluşturma, bellek için FLOP'ları değiştirir: kaydetmek yerine yeniden hesaplayın. Soru hangi segmentlerin bırakılacağıdır ve cevap "hepsi" değildir.
 
 **Tür:** Yapım
-**Diller:** Python (numpy ile, isteğe bağlı meşale)
+**Diller:** Python (numpy ile, isteğe bağlı meşale ile)
 **Önkoşullar:** Aşama 10 Ders 04 (Eğitim Öncesi Mini-GPT), Aşama 10 Ders 05 (Ölçeklendirme ve Dağıtılmış)
 **Süre:** ~70 dakika
 
 ## Sorun
 
-Bir transformer eğitimi, her katman için geriye doğru farklılaşan her operasyonun girdilerini saklar: dikkat girdileri, Q/K/V projeksiyonları, softmax çıktısı, FFN girdileri, norm çıktıları ve artık akış. Gizli boyutu `d`, dizi uzunluğu `L`, toplu `B` olan bir katman için bu, katman başına `12 * B * L * d` kayan sırasına göredir.
+transformer'yi eğitmek, her katman için geriye doğru farklılaştırılmış her operasyonun girişlerini saklar: dikkat girişleri, Q/K/V projeksiyonları, softmax çıkışı, FFN girişleri, norm çıkışları ve artık akış. Gizli boyutu `d`, sıra uzunluğu `L`, toplu `B` olan bir katman için bu, katman başına `12 * B * L * d` kayan sırasına göredir.
 
-`d=8192, L=8192, B=1` için bu, BF16'da 800 MB/katmandır. 64 katmanlı bir model, 51 GB'lik aktivasyon anlamına gelir - ve bu, mikro toplu boyutla çarpmadan önce, dikkat-softmax ara öğelerini (kafa başına `L^2`) eklemeden önce ve tensör-paralel kısmi kopyaları çarpanlarına ayırmadan öncedir.
+`d=8192, L=8192, B=1` için bu, BF16'da 800 MB/katmandır. 64 katmanlı bir model, 51 GB etkinleştirme anlamına gelir - ve bu, mikro toplu boyutla çarpmadan önce, dikkat-softmax ara öğelerini (kafa başına `L^2`) eklemeden ve tensör-paralel kısmi kopyaları çarpanlara ayırmadan öncedir.
 
-İki taraflı fatura: BF16 ağırlıkları artı optimize edici durumu 80 GB'a sığabilir, ancak aktivasyonlar sizi geçmeye zorlar. Gradient kontrol noktası oluşturma (diğer adıyla etkinleştirme yeniden hesaplaması) standart düzeltmedir. Çoğu aktivasyonu bırakın; geri almak için geri giderken ileriyi yeniden yapın. Maliyet: ekstra FLOP'lar. Faydası: Bellek, kontrol noktası bölümlerinin toplam katmanlara oranı kadar azalır.
+İki taraflı fatura: BF16 ağırlıkları artı optimize edici durumu 80 GB'a sığabilir, ancak aktivasyonlar sizi geçmeye zorlar. Gradient kontrol noktası oluşturma (aka etkinleştirme yeniden hesaplaması) standart düzeltmedir. Çoğu aktivasyonu bırakın; geri almak için geri giderken ileriyi yeniden yapın. Maliyet: ekstra FLOP'lar. Faydası: Bellek, kontrol noktası bölümlerinin toplam katmanlara oranı kadar azalır.
 
 Saf bir şekilde yapıldığında kontrol noktası oluşturma, adım başına kabaca %33 daha fazla ileri geçiş FLOP'una mal olur. İyi yapıldı - Korthikanti ve diğerlerinin "akıllı seçimi" uyarınca seçici kontrol noktası oluşturma. — %5 FLOP ek yükünün altında 5 kat bellek tasarrufu sağlarsınız. Ve FP8 matmul'ları, FSDP aktarımı ve uzman-paralel MoE ile bu gerçekten önemlidir: ne belleği ne de boşa giden bilgi işlem miktarını karşılayamazsınız.
 
@@ -21,27 +21,27 @@ Saf bir şekilde yapıldığında kontrol noktası oluşturma, adım başına ka
 
 ### Geriye Doğrunun Aslında İhtiyaç Duyduğu Şey
 
-`output = layer(input)`. Geriye doğru `grad_input` ve `grad_params` istiyor. Bunları hesaplamak için şunlara ihtiyaç vardır:
+`output = layer(input)`. Backward, `grad_input` ve `grad_params`'yi istiyor. Bunları hesaplamak için şunlara ihtiyaç vardır:
 
 - `input` (doğrusal katmanlar için `grad_params = input.T @ grad_output`'yi hesaplamak için)
 - bazı aktivasyon türevi ara ürünleri (ReLU/GELU/softmax'ın türevi aktivasyon değerine bağlıdır)
 
-İleri geçiş bunları otomatik olarak otograd grafiğinde saklar. Girişine ihtiyaç duyan her `tensor.retain_grad()` ve her operasyon bir referansı tutar.
+İleri geçiş bunları otomatik olarak otograd grafiğinde saklar. Her `tensor.retain_grad()` ve girişine ihtiyaç duyan her operasyon bir referansı tutar.
 
 ### Naif Tam Kontrol Noktalama
 
-Ağı `N` segmente bölün. İletme sırasında her segmente yalnızca *girdiyi* depolayın. Geriye doğru ara öğelere ihtiyaç duyulduğunda, bunları gerçekleştirmek için bölümün ileri geçişini yeniden çalıştırın ve ardından farklılaştırın.
+Ağı `N` segmentlerine bölün. İletme sırasında her segmente yalnızca *girdiyi* depolayın. Geriye doğru ara öğelere ihtiyaç duyulduğunda, bunları gerçekleştirmek için bölümün ileri geçişini yeniden çalıştırın ve ardından farklılaştırın.
 
 Örnek: 32 katmanlı transformer, her biri 1 katmandan oluşan 32 bölüme ayrılmıştır.
 
 - Bellek: 32 katman girişi (küçük) vs 32 * (katman başına etkinleştirme hacmi) (çok büyük).
 - Ekstra hesaplama: segment başına 1 ekstra ileri, i.e., ~%33 daha fazla ileri FLOP toplamı (geriye doğru 2x ileri olduğundan, tam adım 1 + 2 = 3 yerine 1 + 1 + 2 = 4 birim olur).
 
-Bu orijinal Chen ve ark. 2016 tarifi: Bellek ve hesaplamayı dengelemek için her `sqrt(L)` katmanda bir kontrol noktası. L=64 için bu 8 kontrol noktasıdır.
+Bu orijinal Chen ve ark. 2016 tarifi: Belleği ve hesaplamayı dengelemek için her `sqrt(L)` katmanında bir kontrol noktası. L=64 için bu 8 kontrol noktasıdır.
 
 ### Seçici Kontrol Noktası (Korthikanti 2022)
 
-Tüm aktivasyonların maliyeti aynı değildir. Dikkat softmax çıkışı `B*L*L*heads`'dır ve dizi uzunluğuyla birlikte *ikinci dereceden* büyür. FFN gizli aktivasyonu `B*L*4d`'dur ve doğrusal olarak büyür. Uzun diziler için softmax hakimdir.
+Tüm aktivasyonların maliyeti aynı değildir. Dikkat softmax çıkışı `B*L*L*heads`'dir ve dizi uzunluğuyla birlikte *ikinci dereceden* büyür. FFN gizli aktivasyonu `B*L*4d`'dir ve doğrusal olarak büyür. Uzun diziler için softmax hakimdir.
 
 Seçici kontrol noktası, depolaması ucuz olan aktivasyonları (doğrusal projeksiyonlar, artıklar) korur ve yalnızca pahalı olanları (dikkat) yeniden hesaplar. Yeniden hesaplamak için minimum FLOP ödersiniz ancak O(L^2) belleğini kaydedersiniz.
 
@@ -55,7 +55,7 @@ FSDP2, boşaltmayı birinci sınıf bir seçenek olarak sunar. GPU bellekte darb
 
 ### Maliyet Modelini Yeniden Hesaplayın
 
-`L` dışında her `k` katmanın saf kontrol noktasına sahip adım başına FLOP'lar:
+`L`'deki her `k` katmanını işaretleyen saf denetimli adım başına FLOP'lar:
 
 ```
 flops_fwd_normal = L * f_layer
@@ -78,23 +78,23 @@ overhead_selective = (3 + 0.15) / 3 - 1 = 0.05 = 5%
 
 ### Bellek Tasarruf Modeli
 
-Katman başına etkinleştirme hacmi: `A`. `L` katman için toplam etkinleştirme belleği: `L * A`.
+Katman başına etkinleştirme hacmi: `A`. `L` katmanları için toplam etkinleştirme belleği: `L * A`.
 
-Tam kontrol noktası (segment boyutu 1): yalnızca `L * input_volume` (standart bir transformer için ~`L * 1/10 A`) depolayın. ~`9 * L * A * 1/10` kaydeder.
+Tam kontrol noktası (segment boyutu 1): yalnızca `L * input_volume`'yi saklayın (standart bir transformer için ~`L * 1/10 A`). ~`9 * L * A * 1/10` kaydeder.
 
-Her `k` katmanı kontrol edin: `L/k * A` artı `k-1` katmanın değerini aktif segment içinde saklayın.
+Her `k` katmanını kontrol edin: `L/k * A` artı `k-1` katmanlarının değerini aktif segment içinde saklayın.
 
-`k = sqrt(L)` noktasında, bellek ve yeniden hesaplama maliyetinin her ikisi de `sqrt(L)` ile ölçeklenir; bu, tekdüze maliyetli katmanlar için en uygun dengedir.
+`k = sqrt(L)`'de bellek ve yeniden hesaplama maliyetinin her ikisi de `sqrt(L)` ile ölçeklenir; bu, tekdüze maliyetli katmanlar için en uygun dengedir.
 
 ### Kontrol Noktasına Ne Zaman Gidilmemeli
 
 - Boru hattı aşamasının en içteki katmanları halihazırda uçuş halindedir. Zaten bitirmeleri lazım.
-- Sahne alanının hesaplamasına hakim olmaları durumunda ilk ve son katmanlar (transformers içinde nadirdir).
-- Dikkat çekirdekleri zaten FlashAttention kullanıyor - Flash zaten softmax'ı hızlı bir şekilde yeniden hesaplıyor, bu nedenle ek katman düzeyinde kontrol noktası eklemenin üstüne çok az şey ekleniyor.
+- Sahne alanının hesaplamasına hakim olmaları durumunda ilk ve son katmanlar (transformer'lerde nadirdir).
+- Dikkat çekirdekleri zaten FlashAttention kullanıyor - Flash zaten softmax'ı hızlı bir şekilde yeniden hesaplıyor, bu nedenle katman düzeyinde ek kontrol noktası ekleme çok az şey ekliyor.
 
 ### Uygulama Modelleri
 
-1. **İşlev sarmalayıcı:** `torch.utils.checkpoint.checkpoint(fn, input)` içine bir segment sarın. PyTorch yalnızca `input`'yi saklar, geri kalan her şeyi geriye doğru yeniden hesaplar.
+1. **İşlev sarmalayıcı:** `torch.utils.checkpoint.checkpoint(fn, input)`'ye bir segment sarın. PyTorch yalnızca `input`'yi saklar, geri kalan her şeyi geriye doğru yeniden hesaplar.
 
 2. **Dekoratör tabanlı:** katmanları kontrol noktası olarak işaretlenebilir; eğitmen yapılandırma sırasında hangi bölümlerin sarılacağına karar verir.
 
@@ -106,7 +106,7 @@ Her `k` katmanı kontrol edin: `L/k * A` artı `k-1` katmanın değerini aktif s
 
 - **Tensör paralel:** kontrol noktası girdileri yeniden hesaplama sırasında toplanmalı veya yeniden dağıtılmalıdır; iletişim maliyetini yönetin.
 - **Ardışık düzen paralel:** tipik model, ters sıralı mikro partilerin etkinleştirme belleğini yeniden kullanabilmesi için her ardışık düzen aşamasının ilerisini kontrol noktasıdır.
-- **FP8 yeniden hesaplama:** Yeniden hesaplama sırasında güncellenen amax geçmişleri, orijinal ileridekilerle veya FP8 ölçek sapmalarıyla eşleşmelidir. Çoğu frameworks ölçeğin anlık görüntüsünü alır.
+- **FP8 yeniden hesaplama:** Yeniden hesaplama sırasında güncellenen amax geçmişleri, orijinal ileridekilerle veya FP8 ölçek sapmalarıyla eşleşmelidir. Çoğu framework ölçeğin anlık görüntüsünü alır.
 
 ## İnşa Et
 
@@ -257,36 +257,36 @@ def should_recompute(layer_type, activation_bytes, recompute_flops_ratio):
 ## Kullan onu
 
 - **torch.utils.checkpoint**: `from torch.utils.checkpoint import checkpoint` — PyTorch'taki standart sarmalayıcı. Bir işlevi sarar; yalnızca girdileri saklar, geriye doğru yeniden hesaplar.
-- **Megatron-Çekirdek aktivasyonunun yeniden hesaplanması**: `selective`, `full` ve `block` modlarını destekler. 2024+ sınır eğitiminde standart.
-- **FSDP2 boşaltma**: FSDP2'deki `offload_policy` ile `module.to_empty(device="cpu")`, yeniden hesaplama yerine CPU'ya aktivasyonları gerçekleştirir.
-- **DeepSpeed ​​Zero-Offload**: Optimize edici durumlar ve aktivasyonlar için kontrol noktası oluşturmayı tamamlayan CPU boşaltma.
+- **Megatron-Çekirdek etkinleştirme yeniden hesaplaması**: `selective`, `full` ve `block` modlarını destekler. 2024+ sınır eğitiminde standart.
+- **FSDP2 aktarımı**: FSDP2'deki `offload_policy` ile `module.to_empty(device="cpu")`, yeniden hesaplama yerine etkinleştirmeleri CPU'ya aktarır.
+- **DeepSpeed Zero-Offload**: Optimize edici durumlar ve aktivasyonlar için kontrol noktası oluşturmayı tamamlayan CPU boşaltma.
 
 ## Gönderin
 
-Bu ders, model yapılandırmanızı (katmanlar, gizli, sıra, toplu) ve kullanılabilir GPU belleğini alan ve katman başına bir yeniden hesaplama politikası (yok / seçici / tam / boşaltma) yayan bir `outputs/prompt-activation-recompute-policy.md` — bir prompt üretir.
+Bu ders, model yapılandırmanızı (katmanlar, gizli, sıralı, toplu) ve kullanılabilir GPU belleğini alan ve katman başına bir yeniden hesaplama ilkesi (yok / seçici / tam / boşaltma) yayan `outputs/prompt-activation-recompute-policy.md` — bir prompt üretir.
 
 ## Egzersizler
 
-1. Doğruluğunu doğrulayın. `model_forward` + `model_backward` (tam aktivasyonlar) ve `model_forward_checkpointed` + `model_backward_checkpointed` (segmentler) komutunu çalıştırın. Parametre gradient'ler makine hassasiyetiyle aynı olmalıdır.
+1. Doğruluğunu doğrulayın. `model_forward` + `model_backward` (tam aktivasyonlar) ile `model_forward_checkpointed` + `model_backward_checkpointed` (bölümler) karşılaştırmasını çalıştırın. gradient parametresi makine hassasiyetiyle aynı olmalıdır.
 
-2. Segment boyutunu `k` 1'den `L`'ye kadar tarayın. FLOP yükünü ve belleği çizin. Eğrinin dizini bulun.
+2. `k` segment boyutunu 1'den `L`'ye kadar tarayın. FLOP yükünü ve belleği çizin. Eğrinin dizini bulun.
 
 3. Seçici kontrol noktası oluşturmayı uygulayın: dikkat modülü girdisini saklayın, ancak ara öğelerini değil. Seq=8192'de 32 katmanlı bir model için FLOP yükünü ve tam katman kontrol noktasını ölçün.
 
 4. Boşaltma ekleyin. Segment girişlerini simüle edilmiş bir "CPU arabelleğine" (ayrı bir liste) kaydedin. "PCIe bant genişliğini" bayt/zaman olarak ölçün ve boşaltma ile yeniden hesaplama arasındaki başabaş noktasını bulun.
 
-5. Gerçek bir PyTorch transformer’ı `torch.utils.checkpoint` kullanarak ve kullanmadan benchmark edin. Belleği (`torch.cuda.max_memory_allocated` aracılığıyla) ve adım süresini ölçün.
+5. Benchmark `torch.utils.checkpoint` olan ve olmayan gerçek bir PyTorch transformer. Belleği (`torch.cuda.max_memory_allocated` aracılığıyla) ve adım süresini ölçün.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| Gradient kontrol noktası | "İleriye giderek bellekten tasarruf edin" | Yalnızca segment girişlerini saklayın; gradient-destek tensörlerini elde etmek için geriye doğru ara öğeleri yeniden hesaplayın |
+| Gradient kontrol noktası belirleme | "İleriye giderek bellekten tasarruf edin" | Yalnızca segment girişlerini saklayın; gradient-destek tensörlerini elde etmek için geriye doğru ara öğeleri yeniden hesaplayın |
 | Aktivasyon yeniden hesaplaması | "Kontrol noktası oluşturmayla aynı" | Aynı tekniğin HPC aromalı adı |
 | Segment boyutu (k) | "Kontrol noktası başına kaç katman" | Ara maddeleri birlikte bırakılan ve yeniden maddeleştirilen katman sayısı |
 | Seçici kontrol noktası oluşturma | "Korthkanti'nin numarası" | Yalnızca saklaması pahalı olan etkinleştirmeleri yeniden hesaplayın (softmax'a dikkat); ucuz olanları saklayın |
 | Tam kontrol noktası belirleme | "Saf versiyon" | Her segmentteki her katmanın ara ürünlerini yeniden hesaplayın |
-| Denetim noktalarını engelle | "İri taneli" | Kontrol noktasının tamamı transformer blok; en büyük ayrıntı düzeyi |
+| Denetim noktalarını engelle | "İri taneli" | Tüm transformer bloklarını kontrol noktası; en büyük ayrıntı düzeyi |
 | FLOP yükü | "Hesaplama vergisi" | Adım başına ekstra FLOP'lar = (FLOP'ları yeniden hesapla) / (ileri + arka FLOP'lar); %33 saf, %5 seçici |
 | Aktivasyon boşaltma | "CPU'ya Gönder" | Aktivasyonları ileri->geri boyunca CPU RAM'e taşıyın; yeniden hesaplamaya alternatif |
 | sqrt-L kuralı | "Klasik optimum" | Tekdüze maliyetli katmanlar için en uygun kontrol noktası aralığı sqrt(L) katmanlardır |
@@ -296,7 +296,7 @@ Bu ders, model yapılandırmanızı (katmanlar, gizli, sıra, toplu) ve kullanı
 
 - [Chen ve diğerleri, 2016 -- "Alt Doğrusal Bellek Maliyeti ile Derin Ağların Eğitimi"](https://arxiv.org/abs/1604.06174) -- gradient kontrol noktasını resmileştiren orijinal makale
 - [Korthikanti ve diğerleri, 2022 -- "Büyük Transformer Modellerinde Aktivasyon Yeniden Hesaplamasının Azaltılması"](https://arxiv.org/abs/2205.05198) -- seçici aktivasyon yeniden hesaplaması ve resmi maliyet analizi
-- [Pudipeddi ve diğerleri, 2020 -- "Yeni Bir Yürütme Algoritması Kullanarak Büyük Neural Network'leri Sabit Bellekle Eğitmek"](https://arxiv.org/abs/2002.05645) -- ters mod yeniden materyalleştirme yoluyla alternatif sabit bellek yaklaşımı
+- [Pudipeddi ve diğerleri, 2020 -- "Yeni Bir Yürütme Algoritması Kullanarak Sabit Bellekli Büyük Neural Network'leri Eğitmek"](https://arxiv.org/abs/2002.05645) -- ters mod yeniden materyalleştirme yoluyla alternatif sabit bellek yaklaşımı
 - [Ren ve diğerleri, 2021 -- "Sıfır Boşaltma: Milyar Ölçekli Model Eğitiminin Demokratikleştirilmesi"](https://arxiv.org/abs/2101.06840) -- geniş ölçekte etkinleştirme boşaltma
-- [PyTorch torch.utils.checkpoint dokümanları](https://pytorch.org/docs/stable/checkpoint.html) -- standart API
+- [PyTorch torch.utils.checkpoint belgeleri](https://pytorch.org/docs/stable/checkpoint.html) -- standart API
 - [Megatron-Çekirdek etkinleştirme yeniden hesaplama belgeleri](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/features/memory_optimizations.html) -- seçici, tam ve blok modları

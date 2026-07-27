@@ -4,7 +4,7 @@
 
 **Tür:** Öğren
 **Diller:** Python
-**Önkoşullar:** Aşama 6 · 04 (ASR), Aşama 12 · 03 (Görme-Dil Modelleri), Aşama 7 · 10 (Ses Transformers)
+**Önkoşullar:** Aşama 6 · 04 (ASR), Aşama 12 · 03 (Görüntü-Dil Modelleri), Aşama 7 · 10 (Ses Transformer'ler)
 **Süre:** ~45 dakika
 
 ## Sorun
@@ -16,7 +16,7 @@
 - **Müzik muhakemesi.** "Melodiyi hangi enstrümanlar çalıyor?"
 - **Uzun ses alımı.** "Eğitmen bu 90 dakikalık dersin neresinde gradient inişini açıkladı?"
 
-Bunların hepsine bir prompt ile cevap veren tek model, **ses dili modelidir** (LALM / ALM). Saf ASR'den ayrı olarak: LALM'ler yalnızca transkriptleri değil, serbest biçimli doğal dil yanıtlarını da üretir.
+Bunların hepsine tek bir prompt ile cevap veren tek model, **ses dili modelidir** (LALM / ALM). Saf ASR'den ayrı olarak: LALM'ler yalnızca transkriptleri değil, serbest biçimli doğal dil yanıtlarını da üretir.
 
 ## Konsept
 
@@ -27,7 +27,7 @@ Bunların hepsine bir prompt ile cevap veren tek model, **ses dili modelidir** (
 Her 2026 LALM aynı iskelete sahiptir:
 
 1. **Ses kodlayıcı.** Fısıltı kodlayıcı · BEAT'ler · CLAP · WavLM · veya model başına özel bir kodlayıcı.
-2. **Projektör.** ​​Ses kodlayıcı özelliklerini LLM'nin token embedding alanına bağlayan doğrusal veya MLP.
+2. **Projektör.** Ses kodlayıcı özelliklerini LLM'nin token embedding alanına bağlayan doğrusal veya MLP.
 3. **LLM.** Llama / Qwen / Gemma tabanlı kod çözücü. Aralıklı metin + ses token'leri alır; metin oluşturur.
 
 Eğitim:
@@ -78,11 +78,11 @@ Eğitim:
 - İnce taneli müzik teorisi (akor seviyesinin altında).
 - Uzun konuşmalarda konuşmacıya atfedilen muhakeme (10 dakikadan sonra bozulur).
 - Çoklu ses karşılaştırması (%22-26 rastgelenin biraz üzerindedir).
-- Gerçek zamanlı akış muhakemesi (çoğu çevrimdışı toplu inference).
+- Gerçek zamanlı akış muhakemesi (çoğu çevrimdışı toplu inference'dir).
 
 ## İnşa Et
 
-### Adım 1: sorgu Qwen2.5-Omni
+### Adım 1: Qwen2.5-Omni'yi sorgulayın
 
 ```python
 from transformers import AutoModelForCausalLM, AutoProcessor
@@ -121,7 +121,7 @@ class AudioProjector(nn.Module):
 
 İşte bu. Projektör genellikle 1-3 doğrusal katmandan oluşur. Bunu ASR çiftleri (ses → transkript) üzerinde eğitmek Aşama 1'in bahane görevidir.
 
-### 3. Adım: MMAU / LongAudioBench'i benchmarking
+### Adım 3: benchmarking MMAU / LongAudioBench
 
 ```python
 from datasets import load_dataset
@@ -144,25 +144,25 @@ Kategoriye göre (konuşma / ses / müzik / çoklu ses) ayrı ayrı raporlayın.
 | Serbest biçimli ses QA (açık) | Qwen2.5-Omni-7B |
 | Uzun seste en iyi açılış | Ses Flamingo Sonraki |
 | En iyi kapalı | İkizler 2.5 Pro |
-| Ses girişi / ses çıkışı agent | Qwen2.5-Omni veya GPT-4o Ses |
+| Ses girişi/ses çıkışı agent | Qwen2.5-Omni veya GPT-4o Ses |
 | Müzik muhakemesi | Ses Flamingo 3 veya 2 (müziğe özel AF-CLAP) |
-| Çağrı merkezi denetimi | Gemini 2.5 Pro, API aracılığıyla, politika belgeleriniz üzerinde RAG ile |
+| Çağrı merkezi denetimi | Politika belgeleriniz üzerinde RAG ile API aracılığıyla Gemini 2.5 Pro |
 
 ## Tuzaklar
 
 - **Çoklu sese aşırı güvenin.** Göreviniz "hangi klipte X var" gerektiriyorsa, rastgele şans düzeyindeki performans gerçektir.
 - **Uzun ses bozulması.** Son 10 dakikada çoğu modelin hoparlör özelliği bozuldu. Önce günlüğünü tutun (Ders 6), sonra özetleyin.
 - **Sessizlikte halüsinasyonlar.** Whisper kodlayıcısını kullanan LALM'ler tarafından devralınan aynı Whisper tarzı sorun. VAD kapısı.
-- **Benchmark isteğe göre seçim.** Satıcı blog gönderileri en iyi durum kategorilerini vurgular. MMAU-Pro çoklu ses alt kümesini kendiniz çalıştırın.
+- **Benchmark isteğe göre seçim.** Satıcı blog gönderileri en iyi durum kategorilerini öne çıkarıyor. MMAU-Pro çoklu ses alt kümesini kendiniz çalıştırın.
 
 ## Gönderin
 
-`outputs/skill-alm-picker.md` olarak kaydet. Belirli bir ses anlama görevi için LALM + benchmark alt kümesi + çıkış yöntemini (metin ve konuşma) seçin.
+`outputs/skill-alm-picker.md` olarak kaydedin. Belirli bir ses anlama görevi için LALM + benchmark alt kümesi + çıkış yöntemini (metin ve konuşma) seçin.
 
 ## Egzersizler
 
-1. **Kolay.** Oyuncak projektör desenini + (audio-embedding, text-token'lerin) → çıktı token'ların sahte LALM yönlendirmesini görmek için `code/main.py`'yi çalıştırın.
-2. **Orta.** 100 MMAU-Pro konuşma öğesi üzerinden Qwen2.5-Omni-7B puanını alın. Gazetenin bildirdiği sayıyla karşılaştırın.
+1. **Kolay.** Oyuncak projektör desenini + sahte LALM yönlendirmesini (audio-embedding, text-token'ler) görmek için `code/main.py`'yi çalıştırın → token'lerin çıktısını alın.
+2. **Orta.** 100 MMAU-Pro konuşma öğesi üzerinden Qwen2.5-Omni-7B puanı alın. Gazetenin bildirdiği sayıyla karşılaştırın.
 3. **Zor.** Minimal bir ses altyazısı temeli oluşturun: BEAT kodlayıcı + 2 katmanlı projektör + donmuş Llama-3.2-1B. AudioCaps'te yalnızca projektöre ince ayar yapın. Clotho-AQA'daki SALMONN ile karşılaştırın.
 
 ## Anahtar Terimler
@@ -181,6 +181,6 @@ Kategoriye göre (konuşma / ses / müzik / çoklu ses) ayrı ayrı raporlayın.
 - [Chu ve ark. (2024). Qwen2-Audio](https://arxiv.org/abs/2407.10759) — referans mimarisi.
 - [Alibaba (2025). Qwen2.5-Omni](https://huggingface.co/Qwen/Qwen2.5-Omni-7B) — konuşma içinde konuşma.
 - [NVIDIA (2025). Audio Flamingo 3](https://arxiv.org/abs/2507.08128) — açık uzun ses lideri.
-- [NVIDIA (2026). Audio Flamingo Sonraki](https://arxiv.org/abs/2604.10905) — LongAudioBench SOTA.
+- [NVIDIA (2026). Ses Flamingo Sonraki](https://arxiv.org/abs/2604.10905) — LongAudioBench SOTA.
 - [Tang ve ark. (2023). SALMONN](https://arxiv.org/abs/2310.13289) — çift kodlayıcı öncüsü.
 - [MMAU-Pro lider tablosu](https://mmaubenchmark.github.io/) — canlı 2026 sıralaması.

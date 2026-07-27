@@ -10,7 +10,7 @@
 ## Öğrenme Hedefleri
 
 - Jupyter uzantısıyla JupyterLab, Jupyter Notebook veya VS Code'u yükleyin ve başlatın
-- benchmark için sihirli komutları (`%timeit`, `%%time`, `%matplotlib inline`) kullanın ve satır içi görselleştirin
+- benchmark'ye sihirli komutları (`%timeit`, `%%time`, `%matplotlib inline`) kullanın ve satır içi görselleştirin
 - Not defterlerinin ve komut dosyalarının ne zaman kullanılacağını ayırt edin ve "not defterlerinde keşfedin, komut dosyalarını gönderin" iş akışını uygulayın
 - Yaygın dizüstü bilgisayar tuzaklarını tanımlayın ve bunlardan kaçının: sıra dışı yürütme, gizli durum ve bellek sızıntıları
 
@@ -50,8 +50,8 @@ Bu "tıkladığınız sıra ne olursa olsun" kısmı hem süper güç hem de aya
 
 | Arayüz | Yükle | Şunun için en iyisi |
 |-----------|---------|----------|
-| JupyterLab | `pip install jupyterlab` sonra `jupyter lab` | Tam IDE deneyimi, çoklu sekmeler, dosya tarayıcısı, terminal |
-| Jüpiter Not Defteri | `pip install notebook` sonra `jupyter notebook` | Basit, hafif, aynı anda bir dizüstü bilgisayar |
+| JupyterLab | `pip install jupyterlab` ardından `jupyter lab` | Tam IDE deneyimi, çoklu sekmeler, dosya tarayıcısı, terminal |
+| Jüpiter Not Defteri | `pip install notebook` ardından `jupyter notebook` | Basit, hafif, aynı anda bir dizüstü bilgisayar |
 | VS Kodu | "Jupyter" uzantısını yükleyin | Zaten editörünüzde, git entegrasyonu, hata ayıklama |
 
 Üçü de aynı `.ipynb` dosyasını okuyup yazıyor. Ne istersen onu seç. JupyterLab yapay zeka çalışmalarında en yaygın olanıdır.
@@ -63,13 +63,13 @@ jupyter lab
 
 ### Adım 2: Önemli klavye kısayolları
 
-İki modda çalışıyorsunuz. Komut modu için (soldaki mavi çubuk) `Escape` tuşuna, düzenleme modu için (yeşil çubuk) `Enter` tuşuna basın.
+İki modda çalışıyorsunuz. Komut modu için `Escape`'ye (soldaki mavi çubuk), düzenleme modu için `Enter`'ye (yeşil çubuk) basın.
 
 **Komut modu (en çok kullanılan):**
 
 | Anahtar | Eylem |
 |-----|--------|
-| `Shift+Enter` | Hücreyi çalıştır, sonrakine git |
+| `Shift+Enter` | Hücreyi çalıştır, sonrakine geç |
 | `A` | Yukarıya hücre ekle |
 | `B` | Aşağıya hücre ekle |
 | `DD` | Hücreyi sil |
@@ -86,7 +86,7 @@ jupyter lab
 | `Shift+Tab` | İşlev imzasını göster |
 | `Ctrl+/` | Yorumu değiştir |
 
-`Shift+Enter` günde bin kez kullanacağınız kelimedir. Önce bunu öğren.
+`Shift+Enter` günde bin kez kullanacağınız çözümdür. Önce bunu öğren.
 
 ### Adım 3: Hücre türleri
 
@@ -98,13 +98,13 @@ data = np.random.randn(1000)
 data.mean(), data.std()
 ```
 
-Çıkış: `(0.0032, 0.9987)`
+Çıktı: `(0.0032, 0.9987)`
 
 **İşaretleme hücreleri** biçimlendirilmiş metni oluşturur. Ne yaptığınızı ve nedenini belgelemek için bunları kullanın. Başlıkları, kalın, italik, LaTeX matematiğini (`$E = mc^2$`), tabloları ve resimleri destekler.
 
 ### Adım 4: Sihirli komutlar
 
-Bunlar Python değil. Bunlar, `%` (satır büyüsü) veya `%%` (hücre büyüsü) ile başlayan Jüpyter'e özgü komutlardır.
+Bunlar Python değil. Bunlar `%` (çizgi büyüsü) veya `%%` (hücre büyüsü) ile başlayan Jupyter'a özgü komutlardır.
 
 **Kodunuzu zamanlayın:**
 
@@ -112,16 +112,16 @@ Bunlar Python değil. Bunlar, `%` (satır büyüsü) veya `%%` (hücre büyüsü
 %timeit np.random.randn(10000)
 ```
 
-Çıkış: `45.2 us +/- 1.3 us per loop`
+Çıktı: `45.2 us +/- 1.3 us per loop`
 
 ```python
 %%time
 model.fit(X_train, y_train, epochs=10)
 ```
 
-Çıkış: `Wall time: 2.34 s`
+Çıktı: `Wall time: 2.34 s`
 
-`%timeit`, kodu birçok kez çalıştırır ve ortalamasını alır. `%%time` bunu bir kez çalıştırır. Mikrobenchmark'lar için `%timeit`'yi, eğitim çalışmaları için `%%time`'yi kullanın.
+`%timeit`, kodu birçok kez çalıştırır ve ortalamasını alır. `%%time` bunu bir kez çalıştırır. microbenchmark'ler için `%timeit`'yi, eğitim çalışmaları için `%%time`'yi kullanın.
 
 **Satır içi grafikleri etkinleştirin:**
 
@@ -129,7 +129,7 @@ model.fit(X_train, y_train, epochs=10)
 %matplotlib inline
 ```
 
-Her `plt.plot()` veya `plt.show()` artık doğrudan not defterinde işleniyor.
+Her `plt.plot()` veya `plt.show()` artık doğrudan dizüstü bilgisayarda işleniyor.
 
 **Paketleri dizüstü bilgisayardan ayrılmadan yükleyin:**
 
@@ -171,7 +171,7 @@ plt.title("Inline Plot")
 plt.show()
 ```
 
-Grafik hücrenin hemen altında görünür. Dizüstü bilgisayarların yapay zeka çalışmalarına hakim olmasının nedeni budur. Verileri, grafiği ve kodu bir arada görüyorsunuz.
+Grafik hücrenin hemen altında görünür. Dizüstü bilgisayarların yapay zeka çalışmalarına hakim olmasının nedeni budur. Veriyi, grafiği ve kodu bir arada görüyorsunuz.
 
 Görseller için:
 
@@ -201,9 +201,9 @@ Colab'ın yerel Jüpyter'den farklılıkları:
 
 | Not defterlerini şunun için kullanın: | Şunun için komut dosyalarını kullanın: |
 |-------------------|-----------------|
-| dataset'ı Keşfetmek | Eğitim hatları |
+| dataset'yi Keşfetmek | Eğitim hatları |
 | Bir modelin prototipinin oluşturulması | Yeniden kullanılabilir yardımcı programlar |
-| Sonuçları görselleştirme | `if __name__` ile herhangi bir şey |
+| Sonuçları görselleştirme | `if __name__` |
 | Çalışmanızın açıklanması | Belirli bir zamanlamaya göre çalışan kod |
 | Hızlı deneyler | Üretim kodu |
 | Kurs alıştırmaları | Paketler ve kütüphaneler |
@@ -213,8 +213,8 @@ Kural: **not defterlerinde keşfedin, komut dosyalarıyla gönderin**.
 Yapay zekada ortak bir iş akışı:
 1. Bir not defterindeki verileri keşfedin
 2. Modelinizin prototipini not defterine yazın
-3. Çalıştıktan sonra kodu `.py` dosyasına taşıyın
-4. Daha sonraki deneyler için bu `.py` dosyalarını tekrar not defterine aktarın
+3. Çalıştıktan sonra kodu `.py` dosyalarına taşıyın
+4. Daha ileri deneyler için bu `.py` dosyalarını tekrar dizüstü bilgisayara aktarın
 
 ### Yaygın tuzaklar
 
@@ -222,18 +222,18 @@ Yapay zekada ortak bir iş akışı:
 
 **Gizli durum.** Bir hücreyi siliyorsunuz ancak onun oluşturduğu değişken hâlâ bellekte. Dizüstü bilgisayar temiz görünüyor ancak bir hayalet hücreye bağlı. Düzeltme: Çekirdeği düzenli olarak yeniden başlatın.
 
-**Bellek sızıntısı.** 4 GB'lik bir dataset yükleniyor, bir model eğitiliyor, başka bir dataset yükleniyor. Hiçbir şey serbest bırakılmıyor. Düzeltme: `del variable_name` ve `gc.collect()` veya çekirdeği yeniden başlatın.
+**Bellek sızıntıları.** 4 GB dataset yükleniyor, bir model eğitiliyor, başka bir dataset yükleniyor. Hiçbir şey serbest bırakılmıyor. Düzeltme: `del variable_name` ve `gc.collect()` veya çekirdeği yeniden başlatın.
 
 ## Gönderin
 
 Bu ders şunları üretir:
-- Not defteri sorunlarının hatalarını ayıklamak için `outputs/prompt-notebook-helper.md`
+- Dizüstü bilgisayar sorunlarında hata ayıklamak için `outputs/prompt-notebook-helper.md`
 
 ## Egzersizler
 
-1. JupyterLab'ı açın, bir not defteri oluşturun ve 100.000 rastgele sayıdan oluşan bir dizi oluşturmak için liste kavrama ile numpy'yi karşılaştırmak üzere `%timeit` kullanın
+1. JupyterLab'ı açın, bir not defteri oluşturun ve 100.000 rastgele sayıdan oluşan bir dizi oluşturmak için liste kavrama ile numpy'yi karşılaştırmak için `%timeit` kullanın
 2. CSV yükleyen, veri çerçevesi görüntüleyen ve grafik çizen, işaretleme ve kod hücrelerine sahip bir not defteri oluşturun. Daha sonra yukarıdan aşağıya doğru çalıştığını doğrulamak için Çekirdek > Yeniden Başlat ve Tümünü Çalıştır'ı çalıştırın.
-3. Kodu `code/notebook_tips.py`'dan alın, Colab not defterine yapıştırın ve ücretsiz GPU ile çalıştırın
+3. Kodu `code/notebook_tips.py`'den alın, bir Colab not defterine yapıştırın ve ücretsiz bir GPU ile çalıştırın
 
 ## Anahtar Terimler
 
@@ -241,11 +241,11 @@ Bu ders şunları üretir:
 |------|----------------|----------------------|
 | Çekirdek | "Kodumu çalıştıran şey" | Hücreleri çalıştıran ve değişkenleri bellekte tutan ayrı bir Python işlemi |
 | Hücre | "Bir kod bloğu" | Bir not defterinde bağımsız olarak çalıştırılabilen bir birim, kod veya işaretleme |
-| Sihirli komut | "Jüpyter hileleri" | Dizüstü bilgisayar ortamını kontrol eden, `%` veya `%%` ön ekine sahip özel komutlar |
+| Sihirli komut | "Jüpyter hileleri" | Dizüstü bilgisayar ortamını denetleyen, `%` veya `%%` ön ekine sahip özel komutlar |
 | `.ipynb` | "Not defteri dosyası" | Hücreleri, çıktıları ve meta verileri içeren bir JSON dosyası. IPython Notebook Standları |
 
 ## Daha Fazla Okuma
 
-- Tüm özellik seti için [JupyterLab Docs](https://jupyterlab.readthedocs.io/)
+- Tüm özellik seti için [JupyterLab Dokümanları](https://jupyterlab.readthedocs.io/)
 - Colab'a özgü sınırlar ve özellikler için [Google Colab SSS](https://research.google.com/colaboratory/faq.html)
-- Uzman kullanıcı kısayolları için [28 Jupyter Not Defteri İpuçları](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/)
+- Uzman kullanıcı kısayolları için [28 Jupyter Dizüstü Bilgisayar İpuçları](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/)

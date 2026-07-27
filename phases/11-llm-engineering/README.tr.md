@@ -1,5 +1,5 @@
-# Aşama 11: LLM Engineering
+# Aşama 11: Yüksek Lisans Mühendisliği
 
-> LLM'leri üretim uygulamalarında çalıştırın.
+> Yüksek Lisans'ların üretim uygulamalarında çalışmaya başlamasını sağlayın.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

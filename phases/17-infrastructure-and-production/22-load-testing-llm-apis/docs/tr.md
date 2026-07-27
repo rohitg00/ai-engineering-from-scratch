@@ -1,24 +1,24 @@
-# LLM API'lerini Yük Testi — Neden k6 ve Locust Lie
+# Yük Testi Yüksek Lisans API'leri — Neden k6 ve Locust Lie
 
-> Geleneksel yük test cihazları akış yanıtları, değişken çıkış uzunlukları, token düzeyindeki ölçümler veya GPU doygunluğu için tasarlanmamıştır. İki tuzak çoğu takımı ısırır. GIL tuzağı: Locust'un token düzeyindeki ölçümü, yoğun eşzamanlılık altında istek oluşturmayla rekabet eden Python GIL altında tokenleştirmeyi çalıştırır; tokenbiriktirme biriktirme listesi daha sonra rapor edilen token arası gecikmeyi artırır; darboğaz sunucu değil, istemcinizdir. prompt-tekdüzelik tuzağı: bir döngüdeki özdeş prompt'lar, token dağılımı üzerinde bir noktayı test eder; gerçek trafiğin değişken uzunluğu ve çeşitli önek eşleşmeleri vardır. LLPerf bunu `--mean-input-tokens` + `--stddev-input-tokens` ile düzeltir. 2026'da araç haritalama: token düzeyinde doğruluk için LLM konusunda uzmanlaşmış (GenAI-Perf, LLMPerf, LLM-Locust,guillm); **k6 v2026.1.0** + **k6 Operator 1.0 GA (Eylül 2025)** — akış uyumlu, TestRun/PrivateLoadZone CRD'ler aracılığıyla Kubernetes'te yerel olarak dağıtılır, CI/CD geçitleri için en iyisi; Go için Vegeta sabit oranlı doygunluk; Locust 2.43.3 yalnızca akış için LLM-Locust uzantısıyla birlikte. Yükleme düzenleri: kararlı durum, rampa, ani artış (otomatik ölçeklendirme testi), ıslatma (bellek sızıntıları).
+> Geleneksel yük test cihazları akış yanıtları, değişken çıkış uzunlukları, token düzeyindeki ölçümler veya GPU doygunluğu için tasarlanmamıştır. İki tuzak çoğu takımı ısırır. GIL tuzağı: Locust'un token düzeyi ölçümü, yoğun eşzamanlılık altında istek oluşturmayla rekabet eden Python GIL altında tokenization'ı çalıştırır; tokenizasyon biriktirme listesi daha sonra bildirilen token arası gecikmeyi artırır; darboğaz sunucu değil, istemcinizdir. prompt-tekdüzelik tuzağı: bir döngüdeki özdeş prompt'ler, token dağılımındaki bir noktayı test eder; gerçek trafiğin değişken uzunluğu ve çeşitli önek eşleşmeleri vardır. LLPerf bunu `--mean-input-tokens` + `--stddev-input-tokens` ile düzeltir. 2026'da araç haritalama: token seviyesinde doğruluk için LLM'de uzmanlaşmış (GenAI-Perf, LLMPerf, LLM-Locust,guidellm); **k6 v2026.1.0** + **k6 Operator 1.0 GA (Eylül 2025)** — akış uyumlu, TestRun/PrivateLoadZone CRD'ler aracılığıyla Kubernetes'te yerel olarak dağıtılır, CI/CD geçitleri için en iyisi; Go için Vegeta sabit oranlı doygunluk; Locust 2.43.3 yalnızca akış için LLM-Locust uzantısıyla birlikte. Yükleme düzenleri: kararlı durum, rampa, ani artış (otomatik ölçeklendirme testi), ıslatma (bellek sızıntıları).
 
 **Tür:** Yapım
 **Diller:** Python (stdlib, oyuncak gerçekçi-prompt oluşturucu + gecikme toplayıcı)
-**Önkoşullar:** Aşama 17 · 08 (Inference Metrik), Aşama 17 · 03 (GPU Otomatik Ölçeklendirme)
+**Önkoşullar:** Aşama 17 · 08 (Inference Metrikleri), Aşama 17 · 03 (GPU Otomatik Ölçeklendirme)
 **Süre:** ~75 dakika
 
 ## Öğrenme Hedefleri
 
-- Genel yük test uzmanlarının LLM API'leri konusunda yalan söylemesine neden olan iki anti-örüntüyü (GIL tuzağı, prompt-tekdüzelik tuzağı) açıklayın.
-- Belirli bir amaç için bir araç seçin: LLPerf (benchmark çalıştırma), k6 + akış uzantısı (CI kapısı), kılavuz (büyük ölçekli sentetik), GenAI-Perf (NVIDIA referansı).
+- Genel yük test cihazlarının LLM API'leri için yalan söylemesine neden olan iki anti-örüntüyü (GIL tuzağı, prompt-tekdüzelik tuzağı) açıklayın.
+- Belirli bir amaç için bir araç seçin: LLPerf (benchmark çalıştırması), k6 + akış uzantısı (CI kapısı), kılavuzlama (büyük ölçekli sentetik), GenAI-Perf (NVIDIA referansı).
 - Dört yük modeli (sabit, rampa, ani yükselme, ıslatma) tasarlayın ve her birinin yakaladığı arıza modunu adlandırın.
-- Sabit uzunluk yerine token girişinin ortalama + stddev'ini kullanarak gerçekçi bir prompt dağılımı oluşturun.
+- Sabit uzunluk yerine token girişlerinin ortalama + stddev'ini kullanarak gerçekçi bir prompt dağılımı oluşturun.
 
 ## Sorun
 
 LLM uç noktanızı 500 eşzamanlı kullanıcı üzerinde k6-test ettiniz. Tuttu. Sen gönderdin. Üretimde 200 gerçek kullanıcıyla hizmet başarısız oldu; P99 TTFT patladı, GPU'lar sabitlendi.
 
-İki şey oldu. İlk olarak, k6 500 adet aynı prompt gönderdi; istek birleştirme ve önek önbelleğe alma işleminiz, aslında bir tanesini işlerken 500 eşzamanlı kod çözme işlemi yapıyormuşsunuz gibi görünmesini sağladı. İkincisi, k6, akış yanıtlarındaki inter-token gecikmesini gözün deneyimlediği şekilde izlemez; değişen aralıklarla gelen 500 tokens yerine tek bir HTTP bağlantısı görüyor.
+İki şey oldu. İlk olarak, k6 500 özdeş prompt gönderdi; istek birleştirme ve önek önbelleğe alma işleminiz, aslında bir tanesini işlerken 500 eşzamanlı kod çözme işlemi yapıyormuşsunuz gibi görünmesini sağladı. İkincisi, k6, akış yanıtlarındaki token arası gecikmeyi gözün deneyimlediği şekilde izlemiyor; değişen aralıklarla gelen 500 token yerine tek bir HTTP bağlantısı görüyor.
 
 LLM'ler için yük testi kendi disiplinidir.
 
@@ -26,15 +26,15 @@ LLM'ler için yük testi kendi disiplinidir.
 
 ### GIL tuzağı (Locust)
 
-Locust, Python'u kullanıyor ve GIL altında tokenistemci tarafında çalıştırıyor. Yüksek eşzamanlılık altında tokenizer istek oluşturmanın arkasında sıraya girer. Bildirilen token arası gecikme, istemci tarafı tokenizasyon biriktirme listesini içerir. Sunucunun yavaş olduğunu düşünüyorsunuz; bu test koşum takımı.
+Locust, Python'u kullanıyor ve tokenization istemci tarafını GIL altında çalıştırıyor. Yüksek eşzamanlılık altında tokenizer, istek oluşturmanın arkasında sıraya girer. Bildirilen token arası gecikme, istemci tarafı tokenizasyon biriktirme listesini içerir. Sunucunun yavaş olduğunu düşünüyorsunuz; bu test koşum takımı.
 
-Düzeltme: LLM-Locust uzantısı, tokenleştirmeyi ayrı işlemlere taşıyor veya derlenmiş dil koşum takımı kullanıyor (k6, LLPerf, tokenizers.rs kullanarak).
+Düzeltme: LLM-Locust uzantısı, tokenization'ı ayrı işlemlere taşıyor veya derlenmiş dil donanımı kullanıyor (k6, tokenizers.rs kullanan LLPerf).
 
-### prompt-tekdüzelik tuzağı
+### prompt tekdüzelik tuzağı
 
-Bilinen tüm yük test cihazları bir prompt yapılandırmanıza izin verir. 10.000 tekrardan oluşan bir döngü testinde her seferinde tam olarak aynı prompt gönderilir. Sunucu her seferinde aynı öneki görüyor; önek önbellek isabetleri %100'e yaklaşıyor, verim harika görünüyor.
+Bilinen tüm yük test cihazları bir prompt yapılandırmanıza izin verir. 10.000 yinelemeden oluşan bir döngü testinde, her seferinde tam olarak aynı prompt gönderilir. Sunucu her seferinde aynı öneki görüyor; önek önbellek isabetleri %100'e yaklaşıyor, verim harika görünüyor.
 
-Düzeltme: prompt dağılımından örnek. LLMPerf, `--mean-input-tokens 500 --stddev-input-tokens 150` — çeşitli uzunluklar, çeşitli içerik kullanır.
+Düzeltme: prompt dağıtımından örnek. LLPerf, `--mean-input-tokens 500 --stddev-input-tokens 150`'yi kullanır - çeşitli uzunluklar, çeşitli içerikler.
 
 ### Dört yükleme düzeni
 
@@ -45,7 +45,7 @@ Düzeltme: prompt dağılımından örnek. LLMPerf, `--mean-input-tokens 500 --s
 
 ### 2026 araç eşleme
 
-**LLMPerf** (Herhangi Bir Ölçek) — Python ancak Rust destekli tokenleştirme. Ortalama/stddev prompts. Akış uyumlu. Performans çalıştırmaları için en iyi varsayılan.
+**LLMPerf** (Anyscale) — Python ancak Rust destekli tokenization. Ortalama/stddev prompt'ler. Akış uyumlu. Performans çalıştırmaları için en iyi varsayılan.
 
 **NVIDIA GenAI-Perf** — NVIDIA'nın referansı. Triton istemcisini kullanır; kapsamlı metrik kapsamı. ITL'nin TTFT'yi hariç tuttuğunu unutmayın; LLMPerf bunu içerir. İki araç aynı sunucu için farklı TPOT üretir.
 
@@ -70,29 +70,29 @@ PR'de k6'yı şununla çalıştırın:
 - Kapı: P50/P95 TTFT, 5xx < %5, TPOT eşiğin altında.
 - İhlal üzerine yapıyı bozun.
 
-### Gerçekçi prompt dağılımı
+### Gerçekçi prompt dağıtımı
 
-Gerçek trafik örneklerinden (eğer varsa) veya yayınlanmış dağıtımlardan (e.g., Sohbet için ShareGPT prompt'lar, kod için HumanEval) oluşturun. Ortalama + stddev'i LLMPerf'e besleyin. Ne pahasına olursa olsun bir-bir-prompt ile döngüden kaçının.
+Gerçek trafik örneklerinden (varsa) veya yayınlanmış dağıtımlardan (e.g., sohbet için ShareGPT prompt'ler, kod için HumanEval) oluşturun. Ortalama + stddev'i LLMPerf'e besleyin. Ne pahasına olursa olsun bir-prompt ile döngüden kaçının.
 
 ### Hatırlamanız gereken sayılar
 
 - k6 Operatör 1.0 GA: Eylül 2025.
-- k6 v2026.1.0: akışa duyarlı metrikler.
+- k6 v2026.1.0: akışa duyarlı ölçümler.
 - Tipik LLPerf çalıştırması: X eşzamanlılığında 100-1000 istek.
 - Tipik CI kapısı: PR başına 30-50 yineleme.
 - Dört model: sabit, rampa, yükselme, ıslatma.
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` , gerçekçi prompt dağılımıyla bir yük testini simüle eder, etkili TPOT'u ölçer ve tekdüze-prompt tuzağını gösterir.
+`code/main.py`, gerçekçi prompt dağılımıyla bir yük testini simüle eder, etkili TPOT'u ölçer ve tek tip prompt tuzağını gösterir.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-Bu ders `outputs/skill-load-test-plan.md` üretir. Verilen iş yükü ve SLA, aracı seçer ve dört yük modelini tasarlar.
+Bu ders `outputs/skill-load-test-plan.md`'yi üretir. Verilen iş yükü ve SLA, aracı seçer ve dört yük modelini tasarlar.
 
 ## Egzersizler
 
-1. `code/main.py`'yı çalıştırın. Tek tip ve gerçekçi dağılımı karşılaştırın; fark nerede?
+1. `code/main.py`'yi çalıştırın. Tek tip ve gerçekçi dağılımı karşılaştırın; fark nerede?
 2. Bir CI geçidi için k6 komut dosyasını yazın: TTFT P95 < 800 ms, 100 eşzamanlı, çalışma süresi 5 dakika.
 3. Islatma testiniz belleğin saatte 50 MB büyüdüğünü gösteriyor. Üç nedeni ve aralarında seçim yapabileceğiniz araçları belirtin.
 4. 10 RPS'den 100 RPS'ye yükselme testi. Karpenter + vLLM üretim yığını mevcutsa beklenen iyileşme süresi nedir (Aşama 17 · 03 + 18)?
@@ -102,13 +102,13 @@ Bu ders `outputs/skill-load-test-plan.md` üretir. Verilen iş yükü ve SLA, ar
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
-| LLMPraf | "LLM koşum takımı" | Her ölçekteki benchmark aracı, akış uyumlu |
+| LLMPraf | "LLM koşum takımı" | Her ölçekte benchmark aracı, akış uyumlu |
 | GenAI-Perf | "NVIDIA aracı" | NVIDIA referans koşum takımı |
 | Yüksek Lisans-Locust | "LLM'ler için Keçiboynuzu" | Keçiboynuzu uzatma sabitleme GIL tuzağı |
 | kılavuz | "sentetik benchmark" | Büyük ölçekli sentetik alet |
 | k6 Operatörü | "K8s k6" | CRD tabanlı dağıtılmış k6 |
-| GIL tuzağı | "Python istemci yükü" | Tokenbiriktirme listesi rapor edilen gecikmeyi artırıyor |
-| Prompt-tekdüzelik tuzağı | "tek-prompt yalan" | Aynı prompt ile döngü önbelleğe isabet eder, verimi artırır |
+| GIL tuzağı | "Python istemci yükü" | Tokenizasyon biriktirme listesi bildirilen gecikmeyi artırıyor |
+| Prompt-tekdüzelik tuzağı | "tek-prompt yalan" | Aynı prompt ile döngü önbelleği vuruyor, verimi artırıyor |
 | Kararlı durum | "sabit yük" | N dakika boyunca düz RPS |
 | Rampa | "doğrusal yukarı" | Süre boyunca hedeflemek için 0 |
 | Başak | "patlama testi" | Ani çarpan sonra geri dön |
@@ -118,7 +118,7 @@ Bu ders `outputs/skill-load-test-plan.md` üretir. Verilen iş yükü ve SLA, ar
 
 - [TianPan — Yük Testi Yüksek Lisans Uygulamaları](https://tianpan.co/blog/2026-03-19-load-testing-llm-applications)
 - [PremAI — Yük Testi Yüksek Lisans Dereceleri 2026](https://blog.premai.io/load-testing-llms-tools-metrics-realistic-traffic-simulation-2026/)
-- [NVIDIA NIM — Yüksek Lisans'a Giriş Inference Benchmarking](https://docs.nvidia.com/nim/large-language-models/1.0.0/benchmarking.html)
+- [NVIDIA NIM — Yüksek Lisans Inference Benchmarking'e Giriş](https://docs.nvidia.com/nim/large-language-models/1.0.0/benchmarking.html)
 - [TrueFoundry — Yüksek Lisans-Locust](https://www.truefoundry.com/blog/llm-locust-a-tool-for-benchmarking-llm-performance)
 - [LLMPerf](https://github.com/ray-project/llmperf)
 - [k6 Operatörü](https://github.com/grafana/k6-operator)

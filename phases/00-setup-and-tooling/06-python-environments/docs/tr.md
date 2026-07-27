@@ -16,13 +16,13 @@
 
 ## Sorun
 
-Bir fine-tuning projesi için PyTorch 2.4'ü yüklediniz. Gelecek hafta farklı bir projenin CUDA yapısı sabitlendiğinden PyTorch 2.1'e ihtiyacı var. Küresel olarak yükseltme yaparsınız ve ilk proje bozulur. Seviyenizi düşürürsünüz ve ikincisi bozulur.
+Bir fine-tuning projesi için PyTorch 2.4'ü yüklersiniz. Gelecek hafta farklı bir projenin CUDA yapısı sabitlendiğinden PyTorch 2.1'e ihtiyacı var. Küresel olarak yükseltme yaparsınız ve ilk proje bozulur. Seviyenizi düşürürsünüz ve ikincisi bozulur.
 
 Bu bağımlılık cehennemidir. AI/ML çalışmalarında bu durum sürekli olarak gerçekleşir çünkü:
 
 - PyTorch, JAX ve TensorFlow'un her biri kendi CUDA bağlamalarını gönderir
-- Model kitaplıkları belirli framework sürümlerini sabitler
-- Global bir `pip install` daha önce orada olanın üzerine yazar
+- Model kitaplıkları belirli framework sürümlerini pinler
+- Küresel bir `pip install`, daha önce orada olanın üzerine yazar
 - CUDA 11.8 yapıları CUDA 12.x sürücüleriyle çalışmaz (ve tam tersi)
 
 Çözüm: Her proje, kendi paketleriyle kendi yalıtılmış ortamına sahip olur.
@@ -67,7 +67,7 @@ Paketleri yükleyin:
 uv pip install torch numpy
 ```
 
-Tek adımda `pyproject.toml` ile bir proje oluşturun:
+`pyproject.toml` ile tek adımda bir proje oluşturun:
 
 ```bash
 uv init my-ai-project
@@ -77,7 +77,7 @@ uv add torch numpy matplotlib
 
 ### Seçenek 2: venv (Yerleşik)
 
-`uv`'ı yükleyemiyorsanız Python, `venv` ile birlikte gelir:
+`uv`'yi yükleyemiyorsanız Python, `venv` ile birlikte gelir:
 
 ```bash
 python3 -m venv .venv
@@ -87,7 +87,7 @@ source .venv/bin/activate  # Linux/macOS
 pip install torch numpy
 ```
 
-`uv`'dan daha yavaştır ancak Python'un kurulu olduğu her yerde çalışır.
+`uv`'den daha yavaştır ancak Python'un kurulu olduğu her yerde çalışır.
 
 ### Seçenek 3: conda (İhtiyacınız Olduğunda)
 
@@ -108,7 +108,7 @@ conda activate myproject
 conda install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia
 ```
 
-Tek kural: Bir ortam için conda kullanıyorsanız, o ortamdaki tüm paketler için conda kullanın. `pip install`'yi bir conda env'ye karıştırmak, hata ayıklaması zahmetli olan bağımlılık çatışmalarına neden olur.
+Tek kural: Bir ortam için conda kullanıyorsanız, o ortamdaki tüm paketler için conda kullanın. `pip install`'yi bir conda env ile karıştırmak, hata ayıklamanın zahmetli olduğu bağımlılık çatışmalarına neden olur.
 
 ### Bu Kurs İçin: Aşama Başına Strateji
 
@@ -130,7 +130,7 @@ ai-engineering-from-scratch/
 │       └── .venv/            <-- API SDKs, no torch needed
 ```
 
-`code/env_setup.sh` dosyasındaki komut dosyası bu kurs için temel ortamı oluşturur.
+`code/env_setup.sh`'deki komut dosyası bu kurs için temel ortamı oluşturur.
 
 ## pyproject.toml Temel Bilgiler
 
@@ -250,7 +250,7 @@ Bu, repo kökünde çekirdek bağımlılıkları yüklenmiş ve doğrulanmış b
 
 ## Egzersizler
 
-1. `env_setup.sh` komutunu çalıştırın ve tüm kontrollerin başarılı olduğunu doğrulayın
+1. `env_setup.sh`'yi çalıştırın ve tüm kontrollerin başarılı olduğunu doğrulayın
 2. İkinci bir sanal ortam oluşturun, bu ortama farklı bir numpy sürümü yükleyin ve iki ortamın yalıtılmış olduğunu doğrulayın
 3. Hem PyTorch hem de Anthropic SDK'ya ihtiyaç duyan bir proje için bir `pyproject.toml` yazın
 4. Bir paketi kasıtlı olarak global olarak yükleyin (venv'yi etkinleştirmeden), nereye gittiğine dikkat edin ve ardından kaldırın

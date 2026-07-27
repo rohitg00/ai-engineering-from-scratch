@@ -11,7 +11,7 @@
 
 Ders 7'nin yarış simülatörü, küçük oran farklılıklarının büyük boşluklara dönüştüğünü gösterdi. Ders 4'ün DGM vaka çalışması, döngülerin aktif olarak kendi değerlendiricileriyle oyun oynayabileceğini gösterdi. Her iki sonuç da aynı mühendislik sorusuna işaret ediyor: Kısıtlamaların döngünün kendisi tarafından sessizce zayıflatılamayacak şekilde bir kişisel gelişim döngüsüne hangi kısıtlamaları koyabilirsiniz?
 
-ICLR 2026 RSI Atölye özeti (openreview.net/pdf?id=OsPQ6zTQXV) bu tür dört temel öğeyi tanımlar. Anthropic'in RSP v3.0 (Ders 19) ve DeepMind'ın FSF v3'ünün (Ders 20) her ikisi de yetenek eşiklerinde bunlara referans veriyor. Meta HyperAgent'in çalışması ve topluluğu framework, SAHOO (Mart 2026) gibi, üretimde alt kümeleri uygular.
+ICLR 2026 RSI Çalıştay özeti (openreview.net/pdf?id=OsPQ6zTQXV) bu tür dört temel öğeyi tanımlar. Anthropic'in RSP v3.0 (Ders 19) ve DeepMind'ın FSF v3'ünün (Ders 20) her ikisi de yetenek eşiklerinde bunlara referans veriyor. Meta HyperAgent'ler çalışır ve SAHOO (Mart 2026) gibi topluluk framework'ler üretimde alt kümeleri uygular.
 
 Dürüst çerçeveleme: bunlar hafifletici önlemlerdir. Bilgi-teorik sonuçlar, herhangi bir sistemin kendi halefi hakkında kanıtlayabileceği şeyleri sınırlar ve mevcut hiçbir tasarım sorunu resmi olarak kapatmaz. İyi sınırlanmış bir döngü sınırsız olandan daha güvenlidir, mutlak anlamda güvenli değildir.
 
@@ -19,7 +19,7 @@ Dürüst çerçeveleme: bunlar hafifletici önlemlerdir. Bilgi-teorik sonuçlar,
 
 ### İlkel 1: biçimsel değişmezler
 
-Değişmez, her kendi kendine değişiklikten önce ve sonra tutulması gereken bir özelliktir. Örnekler:
+Değişmez, her kendi kendini değiştirmeden önce ve sonra tutulması gereken bir özelliktir. Örnekler:
 
 - Çıktı dağıtımı sabit bir yapı başlığına göre koşullandırılmıştır (Ders 17).
 - Hiçbir alet çağrısı yetkisiz bir uç noktaya gitmez.
@@ -38,7 +38,7 @@ Hizalama çapası, döngünün düzenleme yüzeyinin dışına sabitlenmiş, dö
 - Bağımsız erişim kontrolüne sahip ayrı bir havuzda bulunan bir değerlendirici.
 - Bir insan tarafından imzalanan ve her döngüde yeniden doğrulanan bir araç izni bildirimi.
 
-Çapanın rolü nesnel sapmayı önlemektir. Döngü, hedefe ulaşma şeklini iyileştirebilir ancak hedefin ne olduğunu düzenleyemez.
+Çapanın rolü nesnel sapmayı önlemektir. Döngü, hedefe ulaşma şeklini geliştirebilir ancak hedefin ne olduğunu düzenleyemez.
 
 İnce hata modu: Döngünün düzenleyemeyeceği bir çapa, çapayı nasıl okuduğuna göre hareket eden bir döngü tarafından yine de yeniden yorumlanabilir. Anayasal yapay zeka (Ders 17) yeni durumlarla başa çıkmak için açıkça mantığa dayalıdır; bu akıl yürütme katmanı, yorum sürüklenmesinin yaşadığı yerdir. Çapalar gerekli, yeterli değil.
 
@@ -67,7 +67,7 @@ Kolmogorov karmaşıklığı ve Lob teoremi, bir sistemin kendisi hakkında neyi
 
 ### Çalışılmış bir örnek
 
-Bir agent'ın bir düzenleme önerdiğini varsayalım. Geçit yığını:
+Bir agent'nin bir düzenleme önerdiğini varsayalım. Geçit yığını:
 
 1. Değişmez kontroller: modül karmaları, araç izin bildirimi, yapısal başlık.
 2. Bağlantı kontrolü: amaç bildirimi onaylanmış sürümle eşleşir (bayt bazında veya anlamsal olarak).
@@ -76,17 +76,17 @@ Bir agent'ın bir düzenleme önerdiğini varsayalım. Geçit yığını:
 
 Düzenlemenin gerçekleşmesi için dördünün de geçmesi gerekiyor. Herhangi bir başarısızlık döngüyü duraklatır.
 
-## Use It — Hazır Araçla Uygula
+## Kullan onu
 
-`code/main.py` , Ders 4'teki DGM tarzı oyuncak üzerinde sınırlı bir kişisel gelişim döngüsü çalıştırıyor, ancak dört temel öğe üstte yer alıyor. Her temel öğe ayrı ayrı etkinleştirilebilir veya devre dışı bırakılabilir. Bunun kanıtı, her ilkelin belirli bir başarısızlık sınıfını yakaladığı ve bunlardan herhangi birinin kaldırılmasının bu başarısızlık sınıfının geçmesine izin verdiğidir.
+`code/main.py`, Ders 4'teki DGM tarzı oyuncak üzerinde sınırlı bir kişisel gelişim döngüsü çalıştırıyor, ancak dört temel öğe en üstte yer alıyor. Her temel öğe ayrı ayrı etkinleştirilebilir veya devre dışı bırakılabilir. Bunun kanıtı, her ilkelin belirli bir başarısızlık sınıfını yakaladığı ve bunlardan herhangi birinin kaldırılmasının bu başarısızlık sınıfının geçmesine izin verdiğidir.
 
-## Ship It — Kullanıma Sun
+## Gönderin
 
-`outputs/skill-bounded-loop-review.md` , önerilen bir sınırlı döngüyü denetler ve dört temel öğeden hangisini gerçekten uyguladığını ve iddialarını puanlar.
+`outputs/skill-bounded-loop-review.md`, önerilen bir sınırlı döngüyü denetler ve dört temel öğeden hangisini gerçekten uyguladığına karşı iddiaları puanlar.
 
 ## Egzersizler
 
-1. Tüm temel öğeler etkinken `code/main.py` komutunu çalıştırın. Hack'in kazanmasına izin vermeden döngünün birincil ölçümde hala geliştiğini doğrulayın.
+1. `code/main.py`'yi tüm temel öğeler etkinleştirilmiş olarak çalıştırın. Hack'in kazanmasına izin vermeden döngünün birincil ölçümde hala geliştiğini doğrulayın.
 
 2. Regresyon tespitini devre dışı bırakın. Bunun sessiz yetenek kaybının kabul edilmesine yol açacağı bir girdi oluşturun.
 
@@ -114,5 +114,5 @@ Düzenlemenin gerçekleşmesi için dördünün de geçmesi gerekiyor. Herhangi 
 - [ICLR 2026 RSI Atölyesi özeti (OpenReview)](https://openreview.net/pdf?id=OsPQ6zTQXV) — dört temel yakınsama.
 - [Antropik Sorumlu Ölçeklendirme Politikası v3.0](https://anthropic.com/responsible-scaling-policy/rsp-v3-0) — çok amaçlı yetenek eşikleri.
 - [DeepMind Frontier Safety Framework v3](https://deepmind.google/blog/strengthening-our-frontier-safety-framework/) — değişmez bir ilkel olarak aldatıcı hizalama izleme.
-- [Schmidhuber (2003). Gödel Makineleri](https://people.idsia.ch/~juergen/goedelmachine.html) — bu ilkellerin biçimsel-kanıt atası.
-- [Antropik — Claude Anayasası (Ocak 2026)](https://www.anthropic.com/news/claudes-constitution) — mantığa dayalı uyum noktası.
+- [Schmidhuber (2003). Gödel Makineleri](https://people.idsia.ch/~juergen/goedelmachine.html) — bu ilkellerin resmi-kanıt atası.
+- [Antropik — Claude'un Anayasası (Ocak 2026)](https://www.anthropic.com/news/claudes-constitution) — mantığa dayalı hizalama dayanağı.

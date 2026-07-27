@@ -1,23 +1,23 @@
 # Yapılandırılmış Çıkışlar: JSON, Şema Doğrulaması, Kısıtlı Kod Çözme
 
-> LLMınız bir dize döndürür. Uygulamanızın JSON'a ihtiyacı var. Bu boşluk, herhangi bir model halüsinasyondan daha fazla üretim sistemini çökertti. Yapılandırılmış çıktı, doğal dil ile yazılı veriler arasındaki köprüdür. Doğru anladığınızda LLM'niz güvenilir bir API haline gelir. Yanlış anlayın ve serbest metni sabahın 3'ünde regex ile ayrıştırıyorsunuz.
+> Yüksek Lisansınız bir dize döndürür. Uygulamanızın JSON'a ihtiyacı var. Bu boşluk, herhangi bir model halüsinasyondan daha fazla üretim sistemini çökertti. Yapılandırılmış çıktı, doğal dil ile yazılı veriler arasındaki köprüdür. Doğru anladığınızda LLM'niz güvenilir bir API haline gelir. Yanlış anlayın ve serbest metni sabahın 3'ünde regex ile ayrıştırıyorsunuz.
 
 **Tür:** Yapım
 **Diller:** Python
-**Önkoşullar:** Aşama 10, Dersler 01-05 (Sıfırdan LLM)
+**Önkoşullar:** Aşama 10, Dersler 01-05 (Sıfırdan Yüksek Lisans)
 **Süre:** ~90 dakika
-**İlgili:** Aşama 5 · 20 (Yapılandırılmış Çıkışlar ve Kısıtlı Kod Çözme), kod çözücü düzeyindeki teoriyi (FSM/CFG logit işlemciler, Ana Hatlar, XGrammar) kapsar. Bu ders üretim SDK yüzeyine odaklanır (OpenAI `response_format`, Anthropic araç kullanımı, Eğitmen) — API'nin altında neler olduğunu anlamak istiyorsanız önce Aşama 5 · 20'yi okuyun.
+**İlgili:** Aşama 5 · 20 (Yapılandırılmış Çıkışlar ve Kısıtlı Kod Çözme), kod çözücü düzeyindeki teoriyi (FSM/CFG logit işlemciler, Ana Hatlar, XGrammar) kapsar. Bu ders üretim SDK yüzeyine odaklanır (OpenAI `response_format`, Antropik araç kullanımı, Eğitmen) — API'nin altında neler olduğunu anlamak istiyorsanız önce Aşama 5 · 20'yi okuyun.
 
 ## Öğrenme Hedefleri
 
 - OpenAI ve Anthropic API parametrelerini kullanarak JSON modunu ve şema kısıtlı çıktıları uygulayın
 - Hatalı LLM çıktılarını reddeden ve hata geri bildirimiyle yeniden deneyen bir Pydantic doğrulama katmanı oluşturun
-- Kısıtlı kod çözmenin, son işleme gerek kalmadan token düzeyinde geçerli JSON'u nasıl zorladığını açıklayın
-- Yapılandırılmamış metni güvenilir bir şekilde yazılı veri yapılarına dönüştüren güçlü çıkarma prompt'lar tasarlayın
+- Kısıtlı kod çözmenin, sonradan işleme gerek kalmadan token düzeyinde geçerli JSON'u nasıl zorladığını açıklayın
+- Yapılandırılmamış metni güvenilir bir şekilde yazılı veri yapılarına dönüştüren güçlü çıkarma prompt'ler tasarlayın
 
 ## Sorun
 
-Bir LLM'ye şunu sorarsınız: "Bu metinden ürün adını, fiyatını ve stok durumunu çıkarın." Yanıt veriyor:
+Bir Yüksek Lisans öğrencisine şunu sorarsınız: "Bu metinden ürün adını, fiyatını ve stok durumunu çıkarın." Yanıt veriyor:
 
 ```
 The product is the Sony WH-1000XM5 headphones, which cost $348.00 and are currently in stock.
@@ -25,9 +25,9 @@ The product is the Sony WH-1000XM5 headphones, which cost $348.00 and are curren
 
 Bu tamamen doğru bir cevap. Ayrıca uygulamanız için tamamen işe yaramaz. Envanter sisteminizin `{"product": "Sony WH-1000XM5", "price": 348.00, "in_stock": true}`'ye ihtiyacı var. Belirli anahtarlara, belirli türlere ve belirli değer kısıtlamalarına sahip bir JSON nesnesine ihtiyacınız vardır. Bir cümleye ihtiyacınız yok.
 
-Saf çözüm: prompt dosyanıza "JSON'da Yanıt Ver" seçeneğini ekleyin. Bu, zamanın %90'ında işe yarar. Modelin diğer %10'u, JSON'u işaretleme kodu çitleri içine sarar veya "İşte JSON:" gibi bir başlangıç ​​ekler veya bir parantezi erken kapattığı için sözdizimsel olarak geçersiz JSON üretir. JSON ayrıştırıcınız çöküyor. Boru hattınız kopuyor. Try/hariç ve bir yeniden deneme döngüsü eklersiniz. Yeniden deneme bazen farklı veriler üretir. Artık ayrıştırma sorununun yanı sıra bir tutarlılık sorununuz var.
+Saf çözüm: prompt'nize "JSON'da Yanıt Ver" seçeneğini ekleyin. Bu, zamanın %90'ında işe yarar. Modelin diğer %10'u, JSON'u işaretleme kodu çitleri içine sarar veya "İşte JSON:" gibi bir giriş ekler veya bir parantezi erken kapattığı için sözdizimsel olarak geçersiz JSON üretir. JSON ayrıştırıcınız çöküyor. Boru hattınız kopuyor. Try/hariç ve bir yeniden deneme döngüsü eklersiniz. Yeniden deneme bazen farklı veriler üretir. Artık ayrıştırma sorununun yanı sıra bir tutarlılık sorununuz var.
 
-Bu bir prompt mühendislik sorunu değil. Bu bir kod çözme sorunudur. Model soldan sağa token'ler üretir. Her pozisyonda, 100.000'den fazla seçenekten oluşan bir kelime dağarcığı içinden en muhtemel sonraki token'yi seçer. Bu seçeneklerin çoğu, herhangi bir konumda geçersiz JSON üretecektir. Model az önce `{"price":` yayınlamışsa, sonraki token bir rakam, bir tırnak (string için), `null`, `true`, `false` veya bir negatif işaret olmalıdır. Bunun dışındaki her şey geçersiz JSON üretir. Kısıtlamalar olmadan, model, sözdizimsel olarak felaket derecede yanlış olan, son derece makul bir İngilizce kelimeyi seçebilir.
+Bu bir prompt mühendislik sorunu değildir. Bu bir kod çözme sorunudur. Model soldan sağa token'ler üretir. Her pozisyonda, 100.000'den fazla seçenekten oluşan bir kelime dağarcığı arasından en muhtemel sonraki token'yi seçer. Bu seçeneklerin çoğu, herhangi bir konumda geçersiz JSON üretecektir. Model az önce `{"price":` yayınladıysa, sonraki token bir rakam, bir tırnak (dize için), `null`, `true`, `false` veya bir negatif işaret olmalıdır. Bunun dışındaki her şey geçersiz JSON üretir. Kısıtlamalar olmadan, model, sözdizimsel olarak feci derecede yanlış olan, son derece makul bir İngilizce kelimeyi seçebilir.
 
 ## Konsept
 
@@ -50,13 +50,13 @@ graph LR
     style D fill:#1a1a2e,stroke:#0f3460,color:#fff
 ```
 
-**Prompt-tabanlı** ("Geçerli JSON'da yanıt ver"): yaptırım yok. Model genellikle uygundur ancak bazen uymaz. Güvenilirlik: ~%90. Başarısızlık modu: işaretleme çitleri, giriş metni, kesik çıktı, yanlış yapı.
+**Prompt tabanlı** ("Geçerli JSON'da yanıt verin"): yaptırım yok. Model genellikle uygundur ancak bazen uymaz. Güvenilirlik: ~%90. Başarısızlık modu: işaretleme çitleri, giriş metni, kesik çıktı, yanlış yapı.
 
-**JSON modu**: API, çıktının geçerli JSON olduğunu garanti eder. OpenAI'nin `response_format: { type: "json_object" }` özelliği bunu sağlar. Çıktı hatasız olarak ayrıştırılacaktır. Ancak beklediğiniz şemayla eşleşmeyebilir; fazladan anahtarlar, yanlış türler, eksik alanlar.
+**JSON modu**: API, çıktının geçerli JSON olduğunu garanti eder. OpenAI'nin `response_format: { type: "json_object" }`'si bunu sağlar. Çıktı hatasız olarak ayrıştırılacaktır. Ancak beklediğiniz şemayla eşleşmeyebilir; fazladan anahtarlar, yanlış türler, eksik alanlar.
 
-**Şema modu**: API bir JSON Şeması alır ve çıktının onunla eşleştiğini garanti eder. 2026'da tüm büyük sağlayıcılar bunu yerel olarak desteklemektedir: OpenAI'nin `response_format: { type: "json_schema", json_schema: {...} }` (aynı zamanda `tool_choice="required"` olarak), Anthropic'in `input_schema` ile araç kullanımı ve Gemini'nin `response_schema` + `response_mime_type: "application/json"`. Çıktı tam olarak belirttiğiniz anahtarlara, türlere ve kısıtlamalara sahiptir.
+**Şema modu**: API bir JSON Şeması alır ve çıktının onunla eşleştiğini garanti eder. 2026'da tüm büyük sağlayıcılar bunu yerel olarak destekliyor: OpenAI'nin `response_format: { type: "json_schema", json_schema: {...} }`'si (ayrıca `tool_choice="required"` olarak), Anthropic'in `input_schema` ile araç kullanımı ve Gemini'nin `response_schema` + `response_mime_type: "application/json"`. Çıktı tam olarak belirttiğiniz anahtarlara, türlere ve kısıtlamalara sahiptir.
 
-**Kısıtlı kod çözme**: oluşturma sırasında her token konumunda, kod çözücü geçersiz çıktı üretecek tüm token'leri maskeler. Şema bir sayı gerektiriyorsa ve model bir harf yayınlamak üzereyse, bu token olasılığı sıfıra ayarlanır. Model yalnızca geçerli çıktıya yol açan token'ları üretebilir. OpenAI'nin yapılandırılmış çıktı modunun ve Outlines ve Guidance gibi kitaplıkların temelde uyguladığı şey budur.
+**Kısıtlı kod çözme**: Oluşturma sırasında her token konumunda kod çözücü, geçersiz çıktı üretecek tüm token'leri maskeler. Şema bir sayı gerektiriyorsa ve model bir harf yayınlamak üzereyse token olasılığı sıfıra ayarlanır. Model yalnızca geçerli çıktıya yol açan token'ler üretebilir. OpenAI'nin yapılandırılmış çıktı modunun ve Outlines ve Guidance gibi kitaplıkların temelde uyguladığı şey budur.
 
 ### JSON Şeması: Sözleşme Dili
 
@@ -78,7 +78,7 @@ JSON Şeması, modele (veya doğrulama katmanına) çıktının hangi şekle sah
 }
 ```
 
-Bu şema şunları söylüyor: çıktı, bir `product` dizisi, negatif olmayan bir sayı `price`, bir boolean `in_stock` ve isteğe bağlı bir `categories` dizisi içeren bir nesne olmalıdır. Eşleşmeyen herhangi bir çıktı reddedilir.
+Bu şema şunları söylüyor: çıktı, `product` dizesine, negatif olmayan bir `price` sayısına, bir `in_stock` booleanına ve `categories` dizesinin isteğe bağlı bir dizisine sahip bir nesne olmalıdır. Eşleşmeyen herhangi bir çıktı reddedilir.
 
 Şemalar zor durumları ele alır: iç içe geçmiş nesneler, yazılan öğeler içeren diziler, numaralandırmalar (bir dizeyi belirli değerlerle sınırlandırma), desen eşleştirme (dizelerde normal ifade) ve birleştiriciler (polimorfik çıktılar için oneOf, anyOf, allOf).
 
@@ -100,7 +100,7 @@ Bu, yukarıdakiyle aynı JSON Şemasını üretir. Eğitmen kütüphanesi (ve Op
 
 ### İşlev Çağırma / Araç Kullanımı
 
-Aynı sorun için alternatif bir arayüz. Modelden doğrudan JSON üretmesini istemek yerine, "araçları" (işlevleri) yazılan parametrelerle tanımlarsınız. Model, yapılandırılmış argümanlara sahip bir function callingnın çıktısını verir. OpenAI buna "function calling" diyor. Anthropic buna "araç kullanımı" diyor. Sonuç aynı: yapılandırılmış veri.
+Aynı sorun için alternatif bir arayüz. Modelden doğrudan JSON üretmesini istemek yerine, "araçları" (işlevleri) yazılan parametrelerle tanımlarsınız. Model, yapılandırılmış argümanlara sahip bir işlev çağrısının çıktısını verir. OpenAI buna "işlev çağrısı" diyor. Antropik buna "araç kullanımı" diyor. Sonuç aynı: yapılandırılmış veri.
 
 ```mermaid
 graph TD
@@ -121,11 +121,11 @@ Modelin yalnızca parametreleri doldurmak değil, hangi işlevi çağıracağın
 
 ### Yaygın Arıza Modları
 
-Şema uygulamasıyla bile yapılandırılmış çıktılar, incelikli şekillerde başarısız olabilir.
+Şemanın uygulanmasıyla bile, yapılandırılmış çıktılar incelikli şekillerde başarısız olabilir.
 
-**Halüsinasyonlu değerler**: Çıktı şemayla eşleşiyor ancak icat edilmiş veriler içeriyor. Metinde 348 $ yazıldığında model `{"price": 299.99}` üretir. Şema doğrulaması bunu yakalayamıyor; tür doğru, değer yanlış.
+**Halüsinasyonlu değerler**: Çıktı şemayla eşleşiyor ancak icat edilmiş veriler içeriyor. Metinde 348$ yazıldığında model `{"price": 299.99}` üretir. Şema doğrulaması bunu yakalayamıyor; tür doğru, değer yanlış.
 
-**Enum karışıklığı**: bir alanı `["in_stock", "out_of_stock", "preorder"]` ile sınırlandırırsınız. Model, `"available"` çıktısını veriyor -- anlamsal olarak doğru, ancak izin verilen kümede değil. İyi kısıtlı kod çözme bunu önler. Prompt tabanlı yaklaşımlar bunu yapmaz.
+**Enum karışıklığı**: bir alanı `["in_stock", "out_of_stock", "preorder"]` ile sınırlandırırsınız. Model, `"available"` çıktısını veriyor - anlamsal olarak doğru, ancak izin verilen kümede değil. İyi kısıtlı kod çözme bunu önler. Prompt tabanlı yaklaşımlar bunu yapmaz.
 
 **İç içe geçmiş nesne derinliği**: Derinlemesine iç içe geçmiş şemalar (4+ düzey) daha fazla hata üretir. Her yuvalama düzeyi, modelin yapı izini kaybedebileceği başka bir yerdir.
 
@@ -137,7 +137,7 @@ Modelin yalnızca parametreleri doldurmak değil, hangi işlevi çağıracağın
 
 ### Adım 1: JSON Şema Doğrulayıcı
 
-Bir Python nesnesinin JSON Şeması ile eşleşip eşleşmediğini kontrol eden sıfırdan bir doğrulayıcı oluşturun. Uyumluluğu doğrulamak için çıkış tarafında çalışan şey budur.
+Bir Python nesnesinin bir JSON Şeması ile eşleşip eşleşmediğini kontrol eden sıfırdan bir doğrulayıcı oluşturun. Uyumluluğu doğrulamak için çıkış tarafında çalışan şey budur.
 
 ```python
 import json
@@ -263,7 +263,7 @@ def model_to_schema(name, fields):
 
 ### Adım 3: Kısıtlanmış Token Filtresi
 
-Kısıtlı kod çözmeyi simüle edin. Kısmi bir JSON dizesi ve bir şema verildiğinde, geçerli konumda hangi token kategorisinin geçerli olduğunu belirleyin.
+Kısıtlı kod çözmeyi simüle edin. Kısmi bir JSON dizesi ve bir şema verildiğinde, geçerli konumda hangi token kategorilerinin geçerli olduğunu belirleyin.
 
 ```python
 def next_valid_tokens(partial_json, schema):
@@ -449,7 +449,7 @@ def run_demo():
 
 OpenAI'nin yapılandırılmış çıktı modu dahili olarak kısıtlı kod çözmeyi kullanır. Modelin ürettiği her token'nin Pydantic şemasıyla eşleşen çıktı üretmesi garanti edilir. Yeniden denemeye gerek yok. Doğrulama gerekmez. Kısıtlama kod çözme sürecine dahil edilir.
 
-### Anthropic Araç Kullanımı
+### Antropik Araç Kullanımı
 
 ```python
 # import anthropic
@@ -476,7 +476,7 @@ OpenAI'nin yapılandırılmış çıktı modu dahili olarak kısıtlı kod çöz
 # )
 ```
 
-Anthropic, araç kullanımı yoluyla yapılandırılmış çıktı elde eder. Model, giriş_şeması ile eşleşen yapılandırılmış argümanlara sahip bir araç çağrısı yayar. Aynı sonuç, farklı API yüzeyi.
+Antropik, araç kullanımı yoluyla yapılandırılmış çıktı elde eder. Model, giriş_şeması ile eşleşen yapılandırılmış argümanlara sahip bir araç çağrısı yayar. Aynı sonuç, farklı API yüzeyi.
 
 ### Eğitmen Kitaplığı
 
@@ -504,21 +504,21 @@ Eğitmen herhangi bir LLM istemcisini sarar ve doğrulamayla birlikte otomatik y
 
 ## Gönderin
 
-Bu ders, şema tanımı verilen herhangi bir metinden yapılandırılmış verileri çıkaran yeniden kullanılabilir bir prompt şablonu olan `outputs/prompt-structured-extractor.md`'ı üretir. Ona bir JSON Şeması ve yapılandırılmamış metin besleyin; doğrulanmış JSON döndürecektir.
+Bu ders, şema tanımı verilen herhangi bir metinden yapılandırılmış verileri çıkaran yeniden kullanılabilir bir prompt şablonu olan `outputs/prompt-structured-extractor.md`'yi üretir. Ona bir JSON Şeması ve yapılandırılmamış metin besleyin; doğrulanmış JSON döndürecektir.
 
-Aynı zamanda sağlayıcınıza, güvenilirlik gereksinimlerine ve şema karmaşıklığına bağlı olarak doğru yapılandırılmış çıktı stratejisini seçmek için bir karar olan `outputs/skill-structured-outputs.md` - bir framework üretir.
+Aynı zamanda sağlayıcınıza, güvenilirlik gereksinimlerine ve şema karmaşıklığına bağlı olarak doğru yapılandırılmış çıktı stratejisini seçmek için bir framework kararı olan `outputs/skill-structured-outputs.md`'yi de üretir.
 
 ## Egzersizler
 
-1. Şema doğrulayıcıyı `oneOf`'yı destekleyecek şekilde genişletin (veriler birkaç şemadan tam olarak biriyle eşleşmelidir). Bu, polimorfik çıktıları yönetir; örneğin, farklı şekillere sahip bir `Product` veya bir `Service` nesnesi olabilen bir alan.
+1. Şema doğrulayıcıyı `oneOf`'yi destekleyecek şekilde genişletin (veriler birkaç şemadan tam olarak biriyle eşleşmelidir). Bu, polimorfik çıktıları (örneğin, farklı şekillere sahip bir `Product` veya `Service` nesnesi olabilecek bir alanı) yönetir.
 
 2. İki şemayı karşılaştıran ve bozulan değişiklikleri (kaldırılan gerekli alanlar, değiştirilen türler) ve kesilmeyen değişiklikleri (eklenen isteğe bağlı alanlar, gevşetilmiş kısıtlamalar) tanımlayan bir "şema farkı" aracı oluşturun. Bu, üretimdeki çıkarma şemalarınızı sürümlendirmek için gereklidir.
 
-3. Daha gerçekçi, kısıtlı bir kod çözme simülatörü uygulayın. Bir JSON Şeması ve 100 token'lik bir kelime dağarcığı (harfler, rakamlar, noktalama işaretleri, anahtar kelimeler) verildiğinde, her konumdaki geçersiz token'leri maskeleyerek nesil boyunca adım adım ilerleyin. Her adımda kelime dağarcığının yüzde kaçının geçerli olduğunu ölçün.
+3. Daha gerçekçi, kısıtlı bir kod çözme simülatörü uygulayın. Bir JSON Şeması ve 100 token'den (harfler, rakamlar, noktalama işaretleri, anahtar kelimeler) oluşan bir kelime dağarcığı verildiğinde, her konumdaki geçersiz token'leri maskeleyerek nesil boyunca adım adım ilerleyin. Her adımda kelime dağarcığının yüzde kaçının geçerli olduğunu ölçün.
 
 4. Bir çıkarma değerlendirme paketi oluşturun. Elle etiketlenmiş JSON çıktılarıyla 50 ürün açıklaması oluşturun. Çıkarma işlem hattınızı 50'nin tamamında çalıştırın ve tam eşleşmeyi, alan düzeyinde doğruluğu ve tür uyumluluğunu ölçün. Hangi alanların doğru şekilde çıkarılmasının en zor olduğunu belirleyin.
 
-5. Çıkarma hattınıza "güven puanları" ekleyin. Çıkarılan her alan için modelin ne kadar güvenilir olduğunu tahmin edin (token olasılıklara dayanarak veya çıkarma işlemini 3 kez çalıştırıp tutarlılığı ölçerek). Güvenilirliği düşük alanları gerçek kişilerin incelemesi için işaretleyin.
+5. Çıkarma hattınıza "güven puanları" ekleyin. Çıkarılan her alan için modelin ne kadar güvenilir olduğunu tahmin edin (token olasılıklarına dayanarak veya çıkarma işlemini 3 kez çalıştırıp tutarlılığı ölçerek). Güvenilirliği düşük alanları gerçek kişilerin incelemesi için işaretleyin.
 
 ## Anahtar Terimler
 
@@ -526,23 +526,23 @@ Aynı zamanda sağlayıcınıza, güvenilirlik gereksinimlerine ve şema karmaş
 |------|----------------|----------------------|
 | JSON modu | "JSON'u döndürür" | Sözdizimsel olarak geçerli JSON çıktısını garanti eden ancak belirli bir şemayı uygulamayan API bayrağı |
 | Yapılandırılmış çıktı | "JSON yazıldı" | Belirli bir JSON Şeması ile doğru anahtarlar, türler ve kısıtlamalarla eşleşen çıktı |
-| Kısıtlı kod çözme | "Kılavuzlu nesil" | Her token konumunda, geçersiz çıktı üretecek token'leri maskeleyin -- %100 şema uyumluluğunu garanti eder |
+| Kısıtlı kod çözme | "Kılavuzlu nesil" | Her token konumunda geçersiz çıktı oluşturabilecek token'leri maskeleyin; %100 şema uyumluluğunu garanti eder |
 | JSON Şeması | "Bir JSON şablonu" | JSON verilerinin yapısını, türlerini ve kısıtlamalarını açıklamaya yönelik bildirimsel bir dil (OpenAPI, JSON Forms vb. tarafından kullanılır) |
-| Pdantik | "Python veri sınıfları+" | JSON Şemaları oluşturmak için FastAPI ve Eğitmen tarafından kullanılan, tür doğrulamalı veri modellerini tanımlayan Python kitaplığı |
-| Function calling | "Araç kullanımı" | LLM, serbest metin yerine yapılandırılmış bir function calling (isim + yazılan argümanlar) üretir - OpenAI ve Anthropic'in ikisi de bunu destekler |
+| Pdantic | "Python veri sınıfları+" | JSON Şemaları oluşturmak için FastAPI ve Eğitmen tarafından kullanılan, tür doğrulamalı veri modellerini tanımlayan Python kitaplığı |
+| İşlev çağırma | "Araç kullanımı" | LLM, serbest metin yerine yapılandırılmış bir işlev çağrısı (isim + yazılan argümanlar) üretir - OpenAI ve Anthropic'in ikisi de bunu destekler |
 | eğitmen | "LLM'ler için Pydantic" | Doğrulama hatası durumunda otomatik yeniden denemeyle, doğrulanmış Pydantic örneklerini döndürmek için LLM istemcilerini saran Python kitaplığı |
-| Token maskeleme | "Kelimelerin filtrelenmesi" | Modelin bunları üretememesi için belirli token olasılıklarının üretim sırasında sıfıra ayarlanması |
+| Token maskeleme | "Kelimelerin filtrelenmesi" | Modelin bunları üretememesi için belirli token olasılıklarını oluşturma sırasında sıfıra ayarlamak |
 | Şema uyumluluğu | "Şekliyle eşleşiyor" | Çıktıda gerekli tüm alanlar, doğru türler, kısıtlamalar dahilinde değerler bulunur ve izin verilmeyen fazladan alan yoktur |
 | Döngüyü yeniden dene | "Çalışana kadar tekrar deneyin" | Doğrulama hatalarını modele geri gönderin ve çıktıyı düzeltmesini isteyin - Eğitmen bunu yapılandırılabilir maksimum |
 
 ## Daha Fazla Okuma
 
 - [OpenAI Yapılandırılmış Çıktılar Kılavuzu](https://platform.openai.com/docs/guides/structured-outputs) -- OpenAI API'sinde JSON Şeması tabanlı kısıtlı kod çözme için resmi belgeler
-- [Willard ve Louf, 2023 -- "Efficient Guided Generation for Large Language Models"](https://arxiv.org/abs/2307.09702) -- JSON Şemalarının token düzeyindeki kısıtlamalar için sonlu durum makinelerine nasıl derleneceğini açıklayan Outlines makalesi
-- [Eğitmen belgeleri](https://python.useinstructor.com/) -- Pydantic doğrulaması ve yeniden denemeleri olan herhangi bir LLM'den yapılandırılmış çıktılar almak için standart kitaplık
-- [Anthropic Araç Kullanım Kılavuzu](https://docs.anthropic.com/en/docs/tool-use) -- Claude, JSON Şeması input_schema ile araç kullanımı yoluyla yapılandırılmış çıktıyı nasıl uygular?
+- [Willard ve Louf, 2023 -- "Efficient Guided Generation for Large Language Models"](https://arxiv.org/abs/2307.09702) -- JSON Şemalarının token düzeyi kısıtlamalar için sonlu durum makinelerine nasıl derleneceğini açıklayan Outlines makalesi
+- [Eğitmen belgeleri](https://python.useinstructor.com/) -- Pydantic doğrulama ve yeniden denemelerle herhangi bir LLM'den yapılandırılmış çıktılar almak için standart kitaplık
+- [Antropik Araç Kullanım Kılavuzu](https://docs.anthropic.com/en/docs/tool-use) -- Claude, JSON Şeması input_schema ile araç kullanımı yoluyla yapılandırılmış çıktıyı nasıl uygular?
 - [JSON Şema spesifikasyonu](https://json-schema.org/) -- her büyük yapısal çıktı sistemi tarafından kullanılan şema dilinin tam spesifikasyonu
-- [Outlines kitaplığı](https://github.com/outlines-dev/outlines) -- sonlu durum makinelerine derlenmiş normal ifade ve JSON Şeması kullanan açık kaynaklı kısıtlı oluşturma
+- [Outlines kitaplığı](https://github.com/outlines-dev/outlines) -- sonlu durum makinelerine derlenen regex ve JSON Şemasını kullanan açık kaynaklı kısıtlı oluşturma
 - [Dong ve diğerleri, "XGrammar: Büyük Dil Modelleri için Esnek ve Verimli Yapılandırılmış Üretim Motoru" (MLSys 2025)](https://arxiv.org/abs/2411.15100) -- mevcut en gelişmiş dilbilgisi motoru; ~100 ns / token'de token'leri maskeleyen aşağı açılan otomat derlemesi.
-- [Beurer-Kellner ve diğerleri, "PromptProgramlamadır: Büyük Dil Modelleri için Bir Sorgu Dili" (LMQL)](https://arxiv.org/abs/2212.06094) -- LMQL kağıt çerçevelemesi, kod çözmeyi tür ve değer kısıtlamalarıyla bir sorgu dili olarak kısıtladı.
-- [Microsoft Rehberliği (framework docs)](https://github.com/guidance-ai/guidance) -- şablona dayalı kısıtlı oluşturma; Outlines ve XGrammar'ın satıcıdan bağımsız tamamlayıcısı.
+- [Beurer-Kellner ve diğerleri, "Prompting Is Programming: A Query Language for Large Language Models" (LMQL)](https://arxiv.org/abs/2212.06094) -- LMQL kağıt çerçevelemesi, kod çözmeyi tür ve değer kısıtlamalarıyla bir sorgu dili olarak kısıtladı.
+- [Microsoft Guidance (framework docs)](https://github.com/guidance-ai/guidance) -- şablon odaklı kısıtlı oluşturma; Outlines ve XGrammar'ın tedarikçiden bağımsız tamamlayıcısı.

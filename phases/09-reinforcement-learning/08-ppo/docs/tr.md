@@ -1,21 +1,21 @@
 # Yakınsal Politika Optimizasyonu (PPO)
 
-> A2C, bir güncellemeden sonra her sunumu iptal eder. PPO, gradient politikasını kırpılmış bir önem oranında sarar, böylece politika patlaması olmadan aynı veriler üzerinde 10'dan fazla dönem gerçekleştirebilirsiniz. Schulman ve ark. (2017). 2026'da hâlâ varsayılan politika-gradient algoritması.
+> A2C, bir güncellemeden sonra her sunumu iptal eder. PPO, gradient politikasını kısaltılmış bir önem oranıyla sarar, böylece politikada patlama olmadan aynı veriler üzerinde 10'dan fazla dönem gerçekleştirebilirsiniz. Schulman ve ark. (2017). 2026'da hala varsayılan politika gradient algoritması.
 
-**Tür:** Build
+**Tür:** Yapım
 **Diller:** Python
-**Önkoşullar:** Aşama 9 · 06 (REINFORCE), Aşama 9 · 07 (Aktör-Eleştirmen)
+**Önkoşullar:** Aşama 9 · 06 (GÜÇLENDİRME), Aşama 9 · 07 (Aktör-Eleştirmen)
 **Süre:** ~75 dakika
 
 ## Sorun
 
-A2C (Ders 07) politikaya bağlıdır: gradient `E_{π_θ}[A · ∇ log π_θ]`, *mevcut* `π_θ`'dan örneklenmiş veriler gerektirir. Bir güncelleme alın ve `π_θ` değişiklik yapın; kullandığınız veriler artık politika dışıdır. Tekrar kullandığınızda gradient'niz önyargılıdır.
+A2C (Ders 07) politikaya bağlıdır: gradient `E_{π_θ}[A · ∇ log π_θ]`, *geçerli* `π_θ`'den örneklenmiş veriler gerektirir. Bir güncelleme aldığınızda `π_θ` değişir; kullandığınız veriler artık politika dışıdır. Tekrar kullandığınızda gradient'niz önyargılıdır.
 
-Sunumlar pahalıdır. Atari'de 8 ortam × 128 adım = 1024 geçiş ve bir düzine saniyelik ortam süresi boyunca bir sunum. Bir gradient adımdan sonra bunu çöpe atmak israftır.
+Sunumlar pahalıdır. Atari'de 8 ortam × 128 adım = 1024 geçiş ve bir düzine saniyelik çevre süresi boyunca bir sunum. Bir gradient adımından sonra bunu çöpe atmak israftır.
 
-Güven Bölgesi Politikası Optimizasyonu (TRPO, Schulman 2015) ilk düzeltmeydi: eski ve yeni politika arasındaki KL farkının `δ` altında kalması için her güncellemeyi kısıtlayın. Teorik olarak temizdir ancak güncelleme başına eşlenik-gradient çözümü gerektirir. 2026'da TRPO'yu kimse yönetmiyor.
+Güven Bölgesi Politikası Optimizasyonu (TRPO, Schulman 2015) ilk düzeltmeydi: eski ve yeni politika arasındaki KL farklılığının `δ`'nin altında kalması için her güncellemeyi kısıtlayın. Teorik olarak temizdir ancak güncelleme başına eşlenik gradient çözümü gerektirir. 2026'da TRPO'yu kimse yönetmiyor.
 
-PPO (Schulman ve ark. 2017), katı güven bölgesi kısıtlamasının yerine basit, kırpılmış bir hedef koyar. Fazladan bir kod satırı. Kullanıma sunma başına on dönem. Eşlenik gradient yok. Yeterince iyi teorik garantiler. Dokuz yıl sonra, MuJoCo'dan RLHF'ye kadar her şey için hala varsayılan politika-gradient algoritmasıdır.
+PPO (Schulman ve ark. 2017), katı güven bölgesi kısıtlamasının yerine basit, kırpılmış bir hedef koyar. Fazladan bir kod satırı. Kullanıma sunma başına on dönem. Eşlenik gradient yok. Yeterince iyi teorik garantiler. Dokuz yıl sonra, MuJoCo'dan RLHF'ye kadar her şey için hala varsayılan politika gradient algoritmasıdır.
 
 ## Konsept
 
@@ -25,7 +25,7 @@ PPO (Schulman ve ark. 2017), katı güven bölgesi kısıtlamasının yerine bas
 
 `r_t(θ) = π_θ(a_t | s_t) / π_{θ_old}(a_t | s_t)`
 
-Bu, yeni politikanın verileri toplayan politikaya göre olasılık oranıdır. `r_t = 1` değişiklik olmadığı anlamına gelir. `r_t = 2`, yeni politikanın eski politikaya göre `a_t` alma olasılığının iki katı olduğu anlamına gelir.
+Bu, yeni politikanın verileri toplayan politikaya göre olasılık oranıdır. `r_t = 1` değişiklik yok anlamına gelir. `r_t = 2`, yeni politikanın `a_t`'yi alma olasılığının eski politikaya göre iki kat daha fazla olduğu anlamına gelir.
 
 **Kırpılmış vekil.**
 
@@ -33,8 +33,8 @@ Bu, yeni politikanın verileri toplayan politikaya göre olasılık oranıdır. 
 
 İki terim:
 
-- Eğer avantaj `A_t > 0` ve oran `1 + ε`'yi aşmaya çalışırsa, klip gradient'yi düzleştirir — iyi bir eylemi eski olasılığın üstüne `+ε` daha fazla itmeyin.
-- Eğer avantaj `A_t < 0` ve oran `1 - ε`'yi aşmaya çalışırsa (yani, kötü bir eylemi, onun kırpılmış azalmasına kıyasla daha olası hale getiririz), klip gradient'yi kapatır — kötü bir eylemi `-ε`'nin altına itmeyin.
+- `A_t > 0` avantajı ve oran `1 + ε`'yi aşmaya çalışırsa, klip gradient'yi düzleştirir — iyi bir eylemi eski olasılığın üzerine `+ε`'den daha ileriye itmeyin.
+- `A_t < 0` avantajı ve oran `1 - ε`'yi aşmaya çalışırsa (yani, kötü bir eylemi, kırpılmış azalmasına kıyasla daha olası hale getireceğiz), klip gradient'yi kapatır — kötü bir eylemi `-ε`'nin altına itmeyin.
 
 `min` diğer yönü yönetir: eğer oran *faydalı* yönde hareket etmişse, yine de gradient elde edersiniz (yan tarafta size zarar verecek hiçbir kırpma yoktur).
 
@@ -48,20 +48,20 @@ A2C ile aynı oyuncu-eleştirmen yapısı. Üç katsayı, genellikle `c_v = 0.5`
 
 **Eğitim döngüsü.**
 
-1. Her biri `T` adım için `N` paralel ortamda `N × T` geçişi toplayın.
+1. Her biri `T` adımları için `N` paralel ortamlar genelinde `N × T` geçişlerini toplayın.
 2. Avantajları (GAE) hesaplayın, bunları sabit olarak dondurun.
 3. `π_{θ_old}`'yi mevcut `π_θ`'nin anlık görüntüsü olarak dondurun.
-4. `K` dönem için, her `(s, a, A, V_target, log π_old(a|s))` mini grubu için:
-- `r_t(θ) = exp(log π_θ(a|s) - log π_old(a|s))`'yi hesapla.
-- `L^{CLIP}` + değer kaybı + entropi uygulayın.
-- Gradient adım.
+4. `K` dönemleri için, her `(s, a, A, V_target, log π_old(a|s))` mini grubu için:
+   - `r_t(θ) = exp(log π_θ(a|s) - log π_old(a|s))`'yi hesaplayın.
+   - `L^{CLIP}` + değer kaybı + entropi uygulayın.
+- Gradient adımı.
 5. Dağıtımı atın. 1. adıma dönün.
 
-`K = 10` ve 64'lük mini gruplar standart bir hiperparametre kümesidir. PPO sağlamdır: Kesin rakamlar nadiren ±%50 dahilinde önemlidir.
+`K = 10` ve 64'lük mini gruplar standart bir hiperparametre setidir. PPO sağlamdır: Kesin rakamlar nadiren ±%50 dahilinde önemlidir.
 
-**KL-cezası çeşidi.** Orijinal makale, uyarlanabilir bir KL cezası kullanan bir alternatif önerdi: `L = L^{PG} - β · KL(π_θ || π_old)` ve `β`, gözlemlenen KL'ye göre ayarlandı. Kırpma versiyonu baskın hale geldi; KL varyantı RLHF'de hayatta kalır (burada referans politikasına yönelik KL, zaten her zaman istediğiniz ayrı bir kısıtlamadır).
+**KL-ceza çeşidi.** Orijinal makale, uyarlanabilir bir KL cezası kullanan bir alternatif önerdi: `L = L^{PG} - β · KL(π_θ || π_old)` ve `β`, gözlemlenen KL'ye göre ayarlandı. Kırpma versiyonu baskın hale geldi; KL varyantı RLHF'de hayatta kalır (burada referans politikasına yönelik KL, zaten her zaman istediğiniz ayrı bir kısıtlamadır).
 
-## Build It — Kendin İnşa Et
+## İnşa Et
 
 ### 1. Adım: kullanıma sunma sırasında `log π_old(a | s)`'yi yakalayın
 
@@ -120,21 +120,21 @@ A2C'de olduğu gibi, eleştirmen hedefine standart MSE ve aktöre bir entropi bo
 
 Her güncellemede izlenecek üç şey:
 
-- **Ortalama KL** `E[log π_old - log π_θ]`. `[0, 0.02]`'da kalmalı. Eğer `0.1`'yi geçerse, `K_EPOCHS` veya `LR` azaltın.
-- **Kırpma fraksiyonu** — oranı `[1-ε, 1+ε]` dışında kalan numunelerin fraksiyonu. `~0.1-0.3` olmalıdır. Eğer `~0` ise, klip asla tetiklenmez → `LR` veya `K_EPOCHS`'yi yükseltir. Eğer `~0.5+` ise, kullanıma fazla uygun hale getiriyorsunuz → bunları azaltın.
-- **Açıklanan varyans** `1 - Var(V_target - V_pred) / Var(V_target)`. Eleştirmen kalite ölçüsü. Eleştirmen öğrendikçe 1'e doğru tırmanmalı.
+- **Ortalama KL** `E[log π_old - log π_θ]`. `[0, 0.02]`'de kalmalı. `0.1`'yi geçerse `K_EPOCHS` veya `LR`'yi azaltın.
+- **Kırpma payı** — oranı `[1-ε, 1+ε]` dışında kalan numunelerin kesri. `~0.1-0.3` olmalıdır. `~0` ise klip hiçbir zaman tetiklenmez → `LR` veya `K_EPOCHS`'yi yükseltin. `~0.5+` ise, kullanıma fazla uygun hale getiriyorsunuz → azaltın.
+- **Açıklanan fark** `1 - Var(V_target - V_pred) / Var(V_target)`. Eleştirmen kalite ölçüsü. Eleştirmen öğrendikçe 1'e doğru tırmanmalı.
 
 ## Tuzaklar
 
-- **Klip katsayısı yanlış ayarlanmış.** `ε = 0.2` fiili standarttır. `0.1`'a gitmek güncellemeleri çok çekingen hale getiriyor; `0.3+` istikrarsızlığa davetiye çıkarıyor.
-- **Çok fazla dönem.** `K > 20`, politikanın `π_old`'dan uzaklaşması nedeniyle rutin olarak istikrarsızlaşıyor. Özellikle büyük ağlar için dönemleri sınırlayın.
+- **Klip katsayısı yanlış ayarlandı.** `ε = 0.2` fiili standarttır. `0.1`'ye gitmek güncellemeleri çok çekingen hale getiriyor; `0.3+` istikrarsızlığa davetiye çıkarıyor.
+- **Çok fazla dönem.** `K > 20`, politikanın `π_old`'den uzaklaşması nedeniyle rutin olarak istikrarsızlaşıyor. Özellikle büyük ağlar için dönemleri sınırlayın.
 - **Ödül normalleştirmesi yok.** Büyük ödül ölçekleri klip aralığını tüketiyor. Avantajları hesaplamadan önce ödülleri normalleştirin (std'yi çalıştırarak).
-- **Avantaj normalleştirmesini unutuyoruz.** Toplu iş başına sıfır ortalama/birim standart normalleştirme standarttır. Bunu atlamak çoğu benchmark'da PPO'yu mahveder.
+- **Avantaj normalleştirmesini unutuyoruz.** Toplu iş başına sıfır ortalama/birim standart normalleştirme standarttır. Bunu atlamak çoğu benchmark'de PPO'yu mahveder.
 - **Öğrenme oranı azalmamıştır.** PPO, doğrusal LR'nin sıfıra azalmasından yararlanır. Sabit LR genellikle daha kötüdür.
 - **Önem oranı matematik hataları.** Sayısal kararlılık için her zaman `exp(log_new - log_old)`, `new / old` değil.
-- **Yanlış gradient işareti.** Taşıyıcıyı büyüt = *en aza indir* `-L^{CLIP}`. Ters çevrilmiş bir işaret en yaygın PPO hatasıdır.
+- **Yanlış gradient işareti.** Taşıyıcıyı büyüt = *küçült* `-L^{CLIP}`. Ters çevrilmiş bir işaret en yaygın PPO hatasıdır.
 
-## Use It — Uygula
+## Kullan onu
 
 PPO, şaşırtıcı sayıda alanda 2026'nın varsayılan RL algoritmasıdır:
 
@@ -142,14 +142,14 @@ PPO, şaşırtıcı sayıda alanda 2026'nın varsayılan RL algoritmasıdır:
 |----------|-------------|
 | MuJoCo / robotik kontrol | Gauss politikasıyla PPO, GAE(0,95) |
 | Atari / ayrık oyunlar | Kategorik politikaya sahip PPO, 128 adımlı kullanıma sunma |
-| LLM için RLHF | Referans modele KL cezası ile PPO, yanıt sonunda RM'den ödül |
-| Büyük ölçekli oyun agent'lar | IMPALA + PPO (AlphaStar, OpenAI Five) |
-| Muhakeme LLMı | GRPO (Ders 12) — Eleştirisiz PPO çeşidi |
+| Yüksek Lisans için RLHF | Referans modele KL cezası ile PPO, yanıt sonunda RM'den ödül |
+| Büyük ölçekli oyun agents | IMPALA + PPO (AlphaStar, OpenAI Five) |
+| Muhakeme Yüksek Lisansı | GRPO (Ders 12) — Eleştirisiz PPO çeşidi |
 | Yalnızca tercih verileri | DPO — PPO+KL'nin kapalı formda çökmesi, çevrimiçi örnekleme yok |
 
-PPO *kayıp şekli* (kırpılmış vekil + değer + entropi) DPO, GRPO ve hemen hemen her RLHF pipeline'ın iskelesidir.
+PPO *kayıp şekli* (kırpılmış vekil + değer + entropi) DPO, GRPO ve hemen hemen her RLHF boru hattının iskelesidir.
 
-## Ship It — Ürüne Dönüştür
+## Gönderin
 
 `outputs/skill-ppo-trainer.md` olarak kaydet:
 
@@ -176,16 +176,16 @@ Refuse `K > 30` or `ε > 0.3` (unsafe trust region). Refuse any PPO run without 
 
 ## Egzersizler
 
-1. **Kolay.** PPO'yu 4×4 GridWorld'de `ε=0.2, K=4` ile çalıştırın. Eşleşen env adımlarında örnek verimliliğini A2C (kullanım başına bir dönem) ile karşılaştırın.
-2. **Orta.** `K ∈ {1, 4, 10, 30}` süpürün. Dönüş ve env adımlarının grafiğini çizin ve güncelleme başına ortalama KL'yi izleyin. KL bu görevde hangi `K` anda patlayacak?
-3. **Zor.** Kırpılan vekil değişkeni uyarlanabilir bir KL cezasıyla değiştirin (`β` eğer `KL > 2·target` ise iki katına çıkar, `KL < target/2` ise yarıya indirilir). Nihai dönüşü, kararlılığı ve klipssizliği karşılaştırın.
+1. **Kolay.** `ε=0.2, K=4` ile 4×4 GridWorld'de PPO'yu çalıştırın. Eşleşen env adımlarında örnek verimliliğini A2C (kullanım başına bir dönem) ile karşılaştırın.
+2. **Orta.** `K ∈ {1, 4, 10, 30}`'yi tarayın. Dönüş ve env adımlarının grafiğini çizin ve güncelleme başına ortalama KL'yi izleyin. KL bu görevde hangi `K`'de patlıyor?
+3. **Zor.** Kırpılan vekil değişkeni uyarlanabilir bir KL cezasıyla değiştirin (`KL > 2·target` ise `β` iki katına çıkar, `KL < target/2` ise yarıya iner). Nihai dönüşü, kararlılığı ve klipssizliği karşılaştırın.
 
 ## Anahtar Terimler
 
-| Terim | İnsanlar ne diyor | Aslında ne anlama geliyor |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
 | Önem oranı | "r_t(θ)" | `π_θ(a\|s) / π_old(a\|s)`; verileri toplayan politikadan sapma. |
-| Kırpılmış vekil | "PPO'nun ana numarası" | `min(r·A, clip(r, 1-ε, 1+ε)·A)`; faydalı taraftaki klibi geçerek düz gradient. |
+| Kırpılmış vekil | "PPO'nun ana numarası" | `min(r·A, clip(r, 1-ε, 1+ε)·A)`; gradient'yi düz bir şekilde, faydalı taraftaki klibin ötesine geçirin. |
 | Güven bölgesi | "TRPO / PPO amacı" | Monoton iyileştirmeyi garanti etmek için her güncellemenin KL'sini sınırlayın. |
 | KL penaltı | "Yumuşak güven bölgesi" | Alternatif PPO: `L - β · KL(π_θ \|\| π_old)`. Uyarlanabilir `β`. |
 | Klip kesri | "Kırpma ne sıklıkla tetiklenir" | Teşhis — 0,1-0,3 olmalıdır; dışarısı yanlış ayarlanmış demektir. |
@@ -201,5 +201,5 @@ Refuse `K > 30` or `ε > 0.3` (unsafe trust region). Refuse any PPO run without 
 - [Ouyang ve ark. (2022). İnsan geri bildirimiyle talimatları takip edecek şekilde dil modellerini eğitmek](https://arxiv.org/abs/2203.02155) — InstructGPT; RLHF'de PPO tarifi.
 - [OpenAI Spinning Up — PPO](https://spinningup.openai.com/en/latest/algorithms/ppo.html) — PyTorch ile temiz, modern bir anlatım.
 - [CleanRL PPO uygulaması](https://github.com/vwxyzjn/cleanrl) — birçok makale tarafından kullanılan tek dosyalı PPO'ya referans.
-- [Hugging Face TRL — PPOTrainer](https://huggingface.co/docs/trl/main/en/ppo_trainer) — dil modellerinde PPO'nun üretim tarifi; Ders 09 (RLHF) ile birlikte okuyun.
-- [Engstrom ve ark. (2020). Derin Politikada Uygulama Önemlidir Gradient](https://arxiv.org/abs/2005.12729) — "37 kod düzeyinde optimizasyon" makalesi; hangi PPO hilelerinin yük taşıdığı ve hangilerinin folklor olduğu.
+- [Hugging Face TRL — PPOTrainer](https://huggingface.co/docs/trl/main/en/ppo_trainer) — dil modellerinde PPO üretim tarifi; Ders 09 (RLHF) ile birlikte okuyun.
+- [Engstrom ve ark. (2020). Derin Politikada Uygulama Önemlidir Gradients](https://arxiv.org/abs/2005.12729) — "37 kod düzeyinde optimizasyon" makalesi; hangi PPO hilelerinin yük taşıdığı ve hangilerinin folklor olduğu.

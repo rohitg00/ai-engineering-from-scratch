@@ -16,7 +16,7 @@
 
 ## Sorun
 
-İlk MCP uzaktan aktarımı (2024-11) HTTP+SSE idi: biri istemcinin POST'ları için ve diğeri sunucudan istemciye akış için Server-Sent Events kanalı olmak üzere iki uç nokta. İşe yaradı. Aynı zamanda beceriksizdi: oturum başına iki uç nokta, bazı CDN'lerin önündeki bozuk önbellekler ve bazı WAF'lerin agresif bir şekilde sonlandırdığı uzun ömürlü SSE bağlantılarına sıkı bir bağımlılık.
+İlk MCP uzaktan aktarımı (2024-11) HTTP+SSE idi: biri istemcinin POST'ları için ve diğeri sunucudan istemciye akış için Sunucu-Gönderilen Olaylar kanalı olmak üzere iki uç nokta. İşe yaradı. Aynı zamanda beceriksizdi: oturum başına iki uç nokta, bazı CDN'lerin önündeki bozuk önbellekler ve bazı WAF'lerin agresif bir şekilde sonlandırdığı uzun ömürlü SSE bağlantılarına sıkı bir bağımlılık.
 
 2025-03-26 spesifikasyonu bunu Akışlanabilir HTTP ile değiştirdi: bir uç nokta, istemci istekleri için POST, bir oturum akışı oluşturmak için GET, her ikisi de bir `Mcp-Session-Id` başlığını paylaşıyor. O zamandan bu yana oluşturulan veya taşınan her sunucu Akışlanabilir HTTP'yi kullanıyor. Eski SSE modu kullanımdan kaldırılıyor — Atlassian Rovo, 30 Haziran 2026'da bu modu kaldırdı; Keboola 1 Nisan 2026; 2026 sonuna kadar kalan kurumsal sunucuların çoğu.
 
@@ -71,7 +71,7 @@ Aşama 13 · 13, uzun süren çalışmaların tam oturumda yeniden bağlanma dur
 Hem eski hem de yeni sunucuları desteklemek isteyen bir istemci:
 
 1. `/mcp`'ye POST yapın.
-2. Yanıt JSON veya SSE ile `200 OK` ise bu, Streamable HTTP'dir.
+2. Yanıt JSON veya SSE ile `200 OK` ise bu, Akış Yapılabilir HTTP'dir.
 3. Yanıt, `Content-Type: text/event-stream` VE ikincil bir uç noktaya işaret eden bir `Location` başlığına sahip `200 OK` ise, bu eski HTTP+SSE'dir; `Location`'yi takip edin.
 
 ### Cloudflare, ngrok ve barındırma
@@ -80,7 +80,7 @@ Hem eski hem de yeni sunucuları desteklemek isteyen bir istemci:
 
 ### Ağ geçidi kompozisyonu
 
-Birden fazla MCP sunucusunu bir ağ geçidiyle ön plana çıkardığınızda (Aşama 13 · 17), ağ geçidi, oturum kimliklerini yeniden yazan ve yukarı akışı çoğullayan tek bir Streamable HTTP uç noktasıdır. Araçlar ağ geçidi katmanında birleştirilir; istemci tek bir mantıksal sunucu görür.
+Birden fazla MCP sunucusunu bir ağ geçidiyle ön plana çıkardığınızda (Aşama 13 · 17), ağ geçidi, oturum kimliklerini yeniden yazan ve yukarı akışı çoğullayan tek bir Akış Yapılabilir HTTP uç noktasıdır. Araçlar ağ geçidi katmanında birleştirilir; istemci tek bir mantıksal sunucu görür.
 
 ### Aktarım hatası modları
 
@@ -92,7 +92,7 @@ Birden fazla MCP sunucusunu bir ağ geçidiyle ön plana çıkardığınızda (A
 
 ### Akışlı HTTP ne zaman atlanmalı
 
-Bazı kuruluşlar, MCP sunucularını kendi ağları içindeki gRPC veya mesaj kuyruğu aktarımlarının arkasına yerleştirir. Bu standart değildir; MCP'nin özellikleri bunları resmi olarak tanımlamaz. Ağ geçitleri, gRPC'yi dahili olarak kullanırken MCP istemcilerine Streamable HTTP yüzeyi sunabilir. Dış yüzeyin spesifikasyonlara uygun olmasını sağlayın; ağ geçidi çevirinin sahibidir.
+Bazı kuruluşlar, MCP sunucularını kendi ağları içindeki gRPC veya mesaj kuyruğu aktarımlarının arkasına yerleştirir. Bu standart değildir; MCP'nin özellikleri bunları resmi olarak tanımlamaz. Ağ geçitleri, gRPC'yi dahili olarak kullanırken MCP istemcilerine Akış Yapılabilir bir HTTP yüzeyi sunabilir. Dış yüzeyin spesifikasyonlara uygun olmasını sağlayın; ağ geçidi çevirinin sahibidir.
 
 ## Kullan onu
 
@@ -106,7 +106,7 @@ Neye bakmalı:
 
 ## Gönderin
 
-Bu ders `outputs/skill-mcp-transport-migrator.md`'yi üretir. Bir HTTP+SSE (eski) MCP sunucusu göz önüne alındığında, beceri, oturum kimliği sürekliliği, Köken kontrolleri ve geriye dönük uyumlu araştırma desteği ile Streamable HTTP'ye bir geçiş planı üretir.
+Bu ders `outputs/skill-mcp-transport-migrator.md`'yi üretir. Bir HTTP+SSE (eski) MCP sunucusu göz önüne alındığında, beceri, oturum kimliği sürekliliği, Köken kontrolleri ve geriye dönük uyumlu araştırma desteği ile Akış Yapılabilir HTTP'ye bir geçiş planı üretir.
 
 ## Egzersizler
 
@@ -138,7 +138,7 @@ Bu ders `outputs/skill-mcp-transport-migrator.md`'yi üretir. Bir HTTP+SSE (eski
 ## Daha Fazla Okuma
 
 - [MCP — Temel aktarım spesifikasyonu 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports) — stdio ve Akışlı HTTP için standart referans
-- [MCP — Temel aktarım spesifikasyonu 2025-03-26](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports) — Streamable HTTP'yi tanıtan revizyon
+- [MCP — Temel aktarım spesifikasyonu 2025-03-26](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports) — Akış Yapılabilir HTTP'yi tanıtan revizyon
 - [Cloudflare — MCP aktarımı](https://developers.cloudflare.com/agents/model-context-protocol/transport/) — Çalışanlar tarafından barındırılan Akış yapılabilir HTTP kalıpları
 - [AWS — MCP taşıma mekanizmaları](https://builder.aws.com/content/35A0IphCeLvYzly9Sw40G1dVNzc/mcp-transport-mechanisms-stdio-vs-streamable-http) — deployment şekilleri arasında karşılaştırma
 - [Atlassian — HTTP+SSE kullanımdan kaldırma bildirimi](https://community.atlassian.com/forums/Atlassian-Remote-MCP-Server/HTTP-SSE-Deprecation-Notice/ba-p/3205484) — somut geçiş son tarihi örneği

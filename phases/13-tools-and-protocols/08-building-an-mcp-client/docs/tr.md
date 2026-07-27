@@ -52,7 +52,7 @@ Sunucu başına bir `Session` nesnesi şunları içerir:
 2. **Sessiz ilk gelen.** Daha sonraki sunucunun `search` özelliği öncekini geçersiz kılar. Riskli; çarpışmaları gizler.
 3. **Çarpışma reddi.** İkinci sunucuyu yüklemeyi reddedin; kullanıcıyı bilgilendirin. Güvenliğe duyarlı ana bilgisayarlar için en güvenlisi.
 
-Claude Desktop, sunucuya göre önek kullanır. Cursor, açık bir hatayla çarpışma reddini kullanır. VS Code MCP, sunucuya göre öneki de benimser.
+Claude Desktop, sunucuya göre önek kullanır. İmleç, açık bir hatayla çarpışma reddini kullanır. VS Code MCP, sunucuya göre öneki de benimser.
 
 ### Yönlendirme
 
@@ -129,14 +129,14 @@ Bu ders `outputs/skill-mcp-client-harness.md`'yi üretir. MCP sunucularının bi
 | Ad alanı çarpışması | "İki sunucu aynı araç" | Müşteri kopyanın önüne eklemeli, reddetmeli veya ilk gelen kopyayı kullanmalıdır |
 | Yönlendirme | "Bu çağrıyı kim alıyor?" | Araç adından sahip olunan sunucuya gönderim |
 | Arka plan okuyucusu | "Engellemeyen stdout" | Sunucu stdout'unu kuyruğa aktaran iş parçacığı veya görev |
-| Örnekleme geri arama | "Hizmet olarak LLM" | Sunucudan `sampling/createMessage` için istemci işleyicisi |
+| Örnekleme geri arama | "Hizmet olarak Yüksek Lisans" | Sunucudan `sampling/createMessage` için istemci işleyicisi |
 | `notifications/*_changed` | "İlkel mutasyona uğramış" | İstemcinin yeniden keşfetmesi veya yeniden okuması gerektiğinin sinyali |
 | Yeniden bağlanma politikası | "Sunucu öldüğünde" | Aktarım başarısız olduğunda anlambilimi yeniden başlatın |
 | Stdio oturumu | "Süreç = oturum" | Oturum kimliği yok; alt sürecin ömrü oturumdur |
 
 ## Daha Fazla Okuma
 
-- [Model Context Protocol — İstemci spesifikasyonu](https://modelcontextprotocol.io/specification/2025-11-25/client) — standart istemci davranışı
+- [Model Bağlam Protokolü — İstemci spesifikasyonu](https://modelcontextprotocol.io/specification/2025-11-25/client) — standart istemci davranışı
 - [MCP — Hızlı başlangıç istemci kılavuzu](https://modelcontextprotocol.io/quickstart/client) — Python SDK ile merhaba dünya istemci eğitimi
 - [MCP Python SDK — istemci modülü](https://github.com/modelcontextprotocol/python-sdk) — `ClientSession` ve `stdio_client` referansı
 - [MCP TypeScript SDK — İstemci](https://github.com/modelcontextprotocol/typescript-sdk) — TS paralel

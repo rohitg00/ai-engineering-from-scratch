@@ -1,5 +1,5 @@
-# Aşama 12: Multimodal AI
+# Aşama 12: Çok Modlu Yapay Zeka
 
-> Farklı modality'ler arasında gören, duyan, okuyan ve akıl yürüten modeller.
+> Çeşitli modaliteleri gören, duyan, okuyan ve mantık yürüten modeller.
 
-Tüm ders planı için [ROADMAP.md](../../ROADMAP.md) dosyasına bakın.
+Ders planının tamamı için [ROADMAP.md](../../ROADMAP.md) adresine bakın.

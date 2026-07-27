@@ -11,7 +11,7 @@
 
 Feed'inize 2.000 kelimelik bir haber makalesi düşüyor. Onu yakalamak için 120 kelimeye ihtiyacınız var. Makaleden en önemli üç cümleyi seçebilir (özetleyici) veya içeriği kendi kelimelerinizle yeniden yazabilirsiniz (soyutlayıcı). Her ikisine de özetleme denir. Bunlar tamamen farklı problemlerdir.
 
-Çıkarımsal özetleme bir sıralama problemidir. Her cümleyi puanlayın, üstteki-`k`'yi döndürün. Çıktı her zaman dilbilgiseldir çünkü kelimesi kelimesine kaldırılmıştır. Risk, makale boyunca dağıtılan içeriğin eksik olmasıdır.
+Çıkarımsal özetleme bir sıralama problemidir. Her cümleyi puanlayın, en üstteki `k`'yi döndürün. Çıktı her zaman dilbilgiseldir çünkü kelimesi kelimesine kaldırılmıştır. Risk, makale boyunca dağıtılan içeriğin eksik olmasıdır.
 
 Soyut özetleme bir nesil sorunudur. Bir transformer, girişe göre koşullandırılan yeni metin üretir. Çıktı akıcı ve sıkıştırıcıdır ancak kaynakta olmayan gerçekleri halüsinasyona uğratabilir. Risk kendinden emin bir imalattır.
 
@@ -23,9 +23,9 @@ Bu ders her ikisini de, her birinin sahip olduğu başarısızlık moduyla birli
 
 **Çıkartıcı.** Makaleyi, düğümlerin cümleler ve kenarların benzerlikler olduğu bir grafik olarak ele alın. Cümleleri diğer her şeyle ne kadar bağlantılı olduklarına göre puanlamak için grafik üzerinde PageRank'i (veya buna benzer bir şeyi) çalıştırın. En yüksek puanı alan cümleler özettir. Kanonik uygulama **TextRank**'tir (Mihalcea ve Tarau, 2004).
 
-**Soyut.** Belge özeti çiftlerinde transformer kodlayıcı-kod çözücüye (BART, T5, Pegasus) ince ayar yapın. inference noktasında model belgeyi okur ve çapraz dikkat yoluyla token-by-token özetini oluşturur. Pegasus özellikle, çok fazla fine-tuning gerektirmeden özetleme konusunda mükemmel kılan bir boşluk cümlesi ön eğitim hedefi kullanıyor.
+**Soyut.** Belge özeti çiftlerinde transformer kodlayıcı-kod çözücüye (BART, T5, Pegasus) ince ayar yapın. inference'de model belgeyi okur ve çapraz dikkat yoluyla token-by-token özetini oluşturur. Pegasus özellikle, çok fazla fine-tuning gerektirmeden özetleme konusunda mükemmel kılan bir boşluk cümlesi ön eğitim hedefi kullanıyor.
 
-**ROUGE** (Gisting Evaluation için Geri Çağırma Odaklı Yedek Çalışma) ile değerlendirme. ROUGE-1 ve ROUGE-2 puanları unigram ve bigram örtüşüyor. ROUGE-L en uzun ortak alt diziyi puanlar. Daha yüksek daha iyidir ancak 40 ROUGE-L "iyi"dir ve 50 "istisnai"dir. Her gazete üçünü de rapor ediyor. `rouge-score` paketini kullanın.
+**ROUGE** (Gisting Evaluation için Geri Çağırma Odaklı Yedek Çalışma) ile değerlendirme. ROUGE-1 ve ROUGE-2 puanları unigram ve bigram örtüşüyor. ROUGE-L en uzun ortak alt diziyi puanlar. Daha yüksek daha iyidir ancak 40 ROUGE-L "iyi" ve 50 "olağanüstü"dür. Her gazete üçünü de rapor ediyor. `rouge-score` paketini kullanın.
 
 ## İnşa Et
 
@@ -114,17 +114,17 @@ Daima köklendirmeyi kullanın. Bu olmadan, "koşmak" ve "koşmak" farklı kelim
 
 ROUGE yirmi yıldır baskın özetleme ölçütü olmuştur ve 2026'da tek başına yetersizdir. NLG makalelerinin büyük ölçekli bir meta-analizi şunu göstermiştir:
 
-- **BERTScore** (bağlamsal embedding benzerlik) 2023 boyunca ilerleme kaydetti ve artık çoğu özet makalesinde ROUGE ile birlikte rapor ediliyor.
+- **BERTScore** (bağlamsal embedding benzerliği) 2023 boyunca ilerleme kaydetti ve artık çoğu özet makalesinde ROUGE ile birlikte rapor ediliyor.
 - **BARTScore** değerlendirmeyi oluşturma olarak ele alır: özeti, önceden eğitilmiş bir BART'ın kaynağa göre atama olasılığına göre puanlayın.
-- **MoverScore** (Earth Mover'ın bağlamsal embedding'lar üzerindeki mesafesi), anlamsal örtüşmeyi ROUGE'den daha iyi yakaladığı için 2025 benchmark'lerin özetlemesinde en üst noktaya ulaştı.
-- **FactCC** ve **QA temelli sadakat** 2021-2023 arasında yaygındı ve artık bunların yerini sıklıkla **G-Eval** (tutarlılığı, tutarlılığı, akıcılığı, düşünce zinciri mantığıyla uygunluğu puanlayan bir GPT-4 prompt zinciri) aldı.
+- **MoverScore** (Earth Mover's Distance over bağlamsal embedding), anlamsal örtüşmeyi ROUGE'den daha iyi yakaladığı için 2025 benchmark özetlemesinde en üst noktaya ulaştı.
+- **FactCC** ve **QA temelli sadakat** 2021-2023 arasında yaygındı ve artık yerini sıklıkla **G-Eval** (tutarlılık, tutarlılık, akıcılık ve düşünce zinciri mantığıyla alaka düzeyini puanlayan bir GPT-4 prompt zinciri) aldı.
 - **G-Eval** ve benzeri yüksek lisans değerlendirme yaklaşımları, değerlendirme listeleri iyi tasarlandığında ~%80 oranında insan yargılarıyla örtüşmektedir.
 
 Üretim önerisi: eski karşılaştırma için ROUGE-L'yi, anlamsal örtüşme için BERTScore'u, tutarlılık ve gerçekçilik için G-Eval'i rapor edin. 50-100 insan etiketli özete göre kalibre edin.
 
 ### Adım 4: Gerçeklik sorunu
 
-Soyut özetler halüsinasyona eğilimlidir. Çıkarımsal özetler çok daha düşük bir halüsinasyon riski taşıyor çünkü çıktı kelimesi kelimesine kaynaktan kaldırılıyor, ancak kaynak cümleler bağlamdan arındırılmış, güncelliğini kaybetmiş veya sıra dışı alıntılanmışsa yine de yanıltıcı olabilir. Bu, üretim sistemlerinin hâlâ uyumluluğa bitişik içerik için çıkarım yöntemlerini tercih etmesinin en büyük nedenidir.
+Soyut özetler halüsinasyona eğilimlidir. Çıkarımsal özetler çok daha düşük bir halüsinasyon riski taşıyor çünkü çıktı kelimesi kelimesine kaynaktan kaldırılıyor, ancak kaynak cümleler bağlamdan arındırılmış, güncelliğini kaybetmiş veya sıra dışı alıntılanmışsa yine de yanıltıcı olabilir. Üretim sistemlerinin hâlâ uyumluluğa bitişik içerik için çıkarım yöntemlerini tercih etmesinin en büyük nedeni budur.
 
 Adlandırılacak halüsinasyon türleri:
 
@@ -136,7 +136,7 @@ Adlandırılacak halüsinasyon türleri:
 İşe yarayan değerlendirme yaklaşımları:
 
 - **FactCC.** Kaynak cümle ile özet cümle arasındaki gereklilik konusunda eğitilmiş bir ikili sınıflandırıcı. Gerçek/gerçek olmayan tahminlerde bulunur.
-- **Kaliteye dayalı gerçekçilik.** Yanıtları kaynakta bulunan bir KG modeli soruları sorun. Özet farklı yanıtları destekliyorsa işaretleyin.
+- **Kaliteye dayalı gerçeklik.** Yanıtları kaynakta bulunan bir Kalite Güvence modeli soruları sorun. Özet farklı yanıtları destekliyorsa işaretleyin.
 - **Varlık düzeyinde F1.** Kaynakta ve özette adlandırılmış varlıkları karşılaştırın. Yalnızca özette yer alan varlıklar şüphelidir.
 
 Gerçekliğin önemli olduğu, kullanıcının karşılaştığı herhangi bir şey için (haber, tıbbi, hukuki, finansal), çıkarımsal daha güvenli bir varsayılandır. Soyutlamanın döngüde bir gerçeklik kontrolüne ihtiyacı vardır.
@@ -149,7 +149,7 @@ Gerçekliğin önemli olduğu, kullanıcının karşılaştığı herhangi bir �
 |---------|-------------|
 | Haberler, 3-5 cümlelik özet, İngilizce | `facebook/bart-large-cnn` |
 | Bilimsel makaleler | `google/pegasus-pubmed` veya ayarlanmış bir T5 |
-| Çoklu belge, uzun biçim | 32k+ bağlamı olan herhangi bir Yüksek Lisans, prompted |
+| Çoklu belge, uzun biçim | 32k+ bağlamına sahip herhangi bir Yüksek Lisans, prompted |
 | Diyalog özeti | `philschmid/bart-large-cnn-samsum` |
 | Ekstraktif, inşaat nedeniyle düşük halüsinasyon riski | TextRank veya `sumy`'nin LSA'sı / LexRank |
 
@@ -182,7 +182,7 @@ Refuse abstractive summarization for medical, legal, financial, or regulated con
 ## Egzersizler
 
 1. **Kolay.** TextRank'i 5 haber makalesinde çalıştırın. İlk 3 cümleyi bir referans özetiyle karşılaştırın. ROUGE-L'yi ölçün. CNN/DailyMail tarzı makalelerde 30-45 ROUGE-L'yi görmelisiniz.
-2. **Orta.** Varlık düzeyinde gerçekçiliği uygulayın: adlandırılmış varlıkları kaynaktan ve özetten çıkarın (spaCy), özette kaynak varlıkların geri çağrılmasını ve özet varlıkların kaynağa göre kesinliğini hesaplayın. Yüksek hassasiyet ve düşük geri çağırma, güvenli ancak kısa ve öz anlamına gelir; düşük hassasiyet, halüsinasyon görmüş varlıklar anlamına gelir.
+2. **Orta.** Varlık düzeyinde gerçekçilik uygulayın: adlandırılmış varlıkları kaynaktan ve özetten çıkarın (spaCy), özette kaynak varlıkların geri çağrılmasını ve özet varlıkların kaynağa göre kesinliğini hesaplayın. Yüksek hassasiyet ve düşük geri çağırma, güvenli ancak kısa ve öz anlamına gelir; düşük hassasiyet, halüsinasyon görmüş varlıklar anlamına gelir.
 3. **Zor.** 50 CNN/DailyMail makalesinde BART-large-CNN'yi bir LLM (Claude veya GPT-4) ile karşılaştırın. ROUGE-L'yi, gerçekliği (F1 kuruluşuna göre) ve özet başına maliyeti rapor edin. Her birinin kazandığı yeri belgeleyin.
 
 ## Anahtar Terimler
@@ -198,8 +198,8 @@ Refuse abstractive summarization for medical, legal, financial, or regulated con
 
 ## Daha Fazla Okuma
 
-- [Mihalcea ve Tarau (2004). TextRank: Metinlere Düzen Getirmek](https://aclanthology.org/W04-3252/) — çıkarımsal kanonik makale.
+- [Mihalcea ve Tarau (2004). TextRank: Metinlere Düzen Getirmek](https://aclanthology.org/W04-3252/) — çıkarımsal kanonik kağıt.
 - [Lewis ve ark. (2019). BART: Sıradan Sıraya Gürültü Giderme Ön Eğitimi](https://arxiv.org/abs/1910.13461) — BART makalesi.
-- [Zhang ve ark. (2019). PEGASUS: Çıkarılmış Boşluk Cümleleriyle Ön Eğitim](https://arxiv.org/abs/1912.08777) — Pegasus ve boşluk cümlesi hedefi.
+- [Zhang ve ark. (2019). PEGASUS: Çıkartılmış Boşluk Cümleleriyle Ön Eğitim](https://arxiv.org/abs/1912.08777) — Pegasus ve boşluk cümlesi hedefi.
 - [Lin (2004). ROUGE: Özetlerin Otomatik Olarak Değerlendirilmesine Yönelik Bir Paket](https://aclanthology.org/W04-1013/) — ROUGE kağıdı.
 - [Maynez ve ark. (2020). Soyutlayıcı Özetlemede Sadakat ve Gerçeklik Üzerine](https://arxiv.org/abs/2005.00661) — olgusallık genel makalesi.

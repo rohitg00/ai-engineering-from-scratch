@@ -1,26 +1,26 @@
 # Mini GPT'nin Ön Eğitimi (124M Parametreleri)
 
-> GPT-2 Small'un 124 milyon parametresi vardır. Bu 12 transformer katman, 12 dikkat kafası ve 768 boyutlu embedding'dur. Birkaç saat içinde tek bir GPU üzerinde sıfırdan eğitebilirsiniz. Çoğu insan bunu asla yapmaz. Önceden eğitilmiş kontrol noktalarını kullanırlar. Ancak kendiniz eğitmezseniz, üzerine ürün oluşturduğunuz modelin içinde neler olduğunu gerçekten anlamıyorsunuz.
+> GPT-2 Small'un 124 milyon parametresi vardır. Bu, 12 transformer katmanı, 12 dikkat kafası ve 768 boyutlu embedding'dir. Birkaç saat içinde tek bir GPU üzerinde sıfırdan eğitebilirsiniz. Çoğu insan bunu asla yapmaz. Önceden eğitilmiş kontrol noktalarını kullanırlar. Ancak kendiniz eğitmezseniz, üzerine ürün oluşturduğunuz modelin içinde neler olduğunu gerçekten anlamıyorsunuz.
 
 **Tür:** Yapım
 **Diller:** Python (numpy ile)
-**Önkoşullar:** Aşama 10, Dersler 01-03 (Tokenizers, Bir Tokenizer Oluşturmak, Veri Boru Hatları)
+**Önkoşullar:** Aşama 10, Dersler 01-03 (Tokenizer'ler, Tokenizer Oluşturma, Veri İşlem Hatları)
 **Süre:** ~120 dakika
 
 ## Öğrenme Hedefleri
 
-- GPT-2 mimarisinin tamamını (124 milyon parametre) sıfırdan uygulayın: token embedding'ler, konumsal embedding'ler, transformer bloklar ve dil modeli başlığı
-- Çapraz entropi kaybıyla sonraki-token tahminini kullanarak bir metin külliyatı üzerinde bir GPT modeli eğitin
+- GPT-2 mimarisinin tamamını (124 milyon parametre) sıfırdan uygulayın: token embedding'ler, konumsal embedding'ler, transformer blokları ve dil modeli başlığı
+- Çapraz entropi kaybıyla sonraki token tahminini kullanarak bir metin topluluğu üzerinde bir GPT modeli eğitin
 - Sıcaklık örneklemesi ve top-k/top-p filtrelemeyle otoregresif metin oluşturmayı uygulayın
 - Eğitim kaybı eğrilerini izleyin ve modelin tutarlı dil kalıplarını öğrendiğini doğrulayın
 
 ## Sorun
 
-transformer'nin ne olduğunu biliyorsun. Diyagramları okudunuz. Beyaz tahtaya "İhtiyacınız olan tek şey dikkat" diyebilir ve "Çok Kafalı Dikkat" etiketli kutular çizebilirsiniz.
+transformer'nin ne olduğunu biliyorsunuz. Diyagramları okudunuz. Beyaz tahtaya "İhtiyacınız olan tek şey dikkat" diyebilir ve "Çok Kafalı Dikkat" etiketli kutular çizebilirsiniz.
 
 Bunların hiçbiri, bir model metin oluşturduğunda ne olacağını anladığınız anlamına gelmez.
 
-GPT-2 Small'da (ağırlık bağlamalı) 124.438.272 parametre bulunmaktadır. Bunların her biri bir eğitim döngüsü çalıştırılarak belirlendi: ileri geçiş, hesaplama kaybı, geri geçiş, güncelleme ağırlıkları. On iki transformer blok. Blok başına on iki dikkat kafası. 768 boyutlu bir embedding uzayı. 50.257 token'lik kelime dağarcığı. Model her token ürettiğinde, 124 milyon parametrenin tümü, bir token kimlik dizisini alan ve sonraki token üzerinde bir olasılık dağılımı üreten tek bir matris çarpım zincirine katılır.
+GPT-2 Small'da (ağırlık bağlamalı) 124.438.272 parametre bulunmaktadır. Bunların her biri bir eğitim döngüsü çalıştırılarak belirlendi: ileri geçiş, hesaplama kaybı, geri geçiş, güncelleme ağırlıkları. On iki transformer bloğu. Blok başına on iki dikkat kafası. 768 boyutlu bir embedding alanı. 50.257 token'den oluşan bir kelime dağarcığı. Model her token oluşturduğunda, 124 milyon parametrenin tümü, bir token kimlik dizisini alan ve bir sonraki token üzerinde bir olasılık dağılımı üreten tek bir matris çarpım zincirine katılır.
 
 Bunu hiç kendiniz yapmadıysanız, bir kara kutuyla çalışıyorsunuz demektir. API'yi kullanabilirsiniz. İnce ayar yapabilirsiniz. Ancak bir şeyler ters gittiğinde, model halüsinasyon gördüğünde, kendini tekrarladığında, talimatları takip etmeyi reddettiğinde, *neden* olduğuna dair hiçbir zihinsel modele sahip olmazsınız.
 
@@ -30,20 +30,20 @@ Bu ders GPT-2 Small'u sıfırdan oluşturur. PyTorch'ta değil. Numpy'de. Her ma
 
 ### GPT Mimarisi
 
-GPT otoregresif bir dil modelidir. "Otoregresif", her biri önceki tüm token'lere koşullandırılan, her defasında bir token ürettiği anlamına gelir. Mimari, transformer kod çözücü bloğundan oluşan bir yığındır.
+GPT otoregresif bir dil modelidir. "Otoregresif", her biri önceki tüm token'lere koşullandırılan bir seferde bir token ürettiği anlamına gelir. Mimari, transformer kod çözücü bloklarından oluşan bir yığındır.
 
-İşte token kimliklerden sonraki-token olasılıklara kadar tam hesaplama grafiği:
+İşte token kimliklerinden sonraki token olasılıklarına kadar tam hesaplama grafiği:
 
-1. Token kimlik gelir. Şekil: (batch_size, seq_len).
+1. Token kimlikleri gelir. Şekil: (batch_size, seq_len).
 2. Token embedding araması. Her kimlik 768 boyutlu bir vektörle eşleşir. Şekil: (batch_size, seq_len, 768).
-3. Konum embedding araması. Her konum (0, 1, 2, ...) 768 boyutlu bir vektöre eşlenir. Aynı şekil.
-4. token embedding'leri + konum embedding'leri ekleyin.
-5. 12 transformer bloktan geçin.
+3. embedding konum aramasını yapın. Her konum (0, 1, 2, ...) 768 boyutlu bir vektöre eşlenir. Aynı şekil.
+4. token embedding'leri + embedding konumlarını ekleyin.
+5. 12 transformer bloğundan geçin.
 6. Son katman normalizasyonu.
 7. Kelime büyüklüğüne doğrusal projeksiyon. Şekil: (batch_size, seq_len, vocab_size).
 8. Olasılıkları elde etmek için Softmax.
 
-Modelin tamamı budur. Kıvrım yok. Tekrarlama yok. Yalnızca embedding'lar, dikkat, ileri beslemeli ağlar ve katman normları 12 kez istiflendi.
+Modelin tamamı budur. Kıvrım yok. Tekrarlama yok. Yalnızca embedding'ler, dikkat, ileri beslemeli ağlar ve 12 kez yığılmış katman normları.
 
 ```mermaid
 graph TD
@@ -82,11 +82,11 @@ graph TD
 5. İleri Beslemeli Ağ (MLP)
 6. Artık bağlantı (girişi geri ekleyin)
 
-Artık bağlantılar kritiktir. Onlar olmadan, gradient'lar, backpropagation sırasında 1. bloğa ulaştıklarında yok olurlar. Onlarla, gradient'ler kayıptan doğrudan "atlama" yolu aracılığıyla herhangi bir katmana akabilir. Bu nedenle 12, 32 ve hatta 96 blok istifleyebilirsiniz (GPT-4'ün 120 blok kullandığı söyleniyor).
+Artık bağlantılar kritiktir. Bunlar olmadan, gradient'ler, backpropagation sırasında blok 1'e ulaştıklarında kaybolur. Onlarla, gradient'ler kayıptan doğrudan "atlama" yolu aracılığıyla herhangi bir katmana akabilir. Bu nedenle 12, 32 ve hatta 96 blok istifleyebilirsiniz (GPT-4'ün 120 blok kullandığı söyleniyor).
 
 ### Dikkat: Temel Mekanizma
 
-Öz-dikkat, her token'nin önceki her token'ye bakmasına ve her birine ne kadar dikkat edeceğine karar vermesine olanak tanır. İşte matematik.
+Kişisel dikkat, her token'nin önceki token'lere bakmasına ve her birine ne kadar dikkat edeceğine karar vermesine olanak tanır. İşte matematik.
 
 Her token konumu için girişten üç vektör hesaplayın:
 - **Sorgu (S)**: "Neyi arıyorum?"
@@ -104,7 +104,7 @@ attention_weights = softmax(attention_scores)
 output = attention_weights @ V
 ```
 
-Nedensel maske GPT'yi otoregresif yapan şeydir. Pozisyon 5, 0-5 arasındaki pozisyonlara katılabilir ancak 6, 7, 8 vb. pozisyonlara katılamaz. Bu, modelin eğitim sırasında gelecekteki token'lere bakarak "hile yapmasını" engeller.
+Nedensel maske GPT'yi otoregresif yapan şeydir. Pozisyon 5, 0-5 arasındaki pozisyonlara katılabilir ancak 6, 7, 8 vb. pozisyonlara katılamaz. Bu, modelin eğitim sırasında gelecekteki token'lere bakarak "hile yapmasını" önler.
 
 **Çok kafalı dikkat** 768 boyutlu alanı her biri 64 boyutlu 12 başa böler. Her kafa farklı bir dikkat modelini öğrenir. Bir kafa sözdizimsel ilişkileri (özne-fiil uyumu) ​​izleyebilir. Bir diğeri anlamsal benzerliği (eş anlamlılar) izleyebilir. Bir diğeri konumsal yakınlığı (yakındaki kelimeler) izleyebilir. 12 kafanın tümünün çıktıları birleştirilir ve 768 boyuta yansıtılır.
 
@@ -141,25 +141,25 @@ graph LR
     style V fill:#1a1a2e,stroke:#0f3460,color:#fff
 ```
 
-sqrt(d_k) -- sqrt(64) = 8 -- ile bölme ölçeklendirmedir. Bu olmadan, nokta çarpımları yüksek boyutlu vektörler için büyür ve softmax'ı gradient'ların neredeyse sıfır olduğu bölgelere iter. Bu, orijinal "İhtiyacınız Olan Tek Şey Dikkat" makalesindeki en önemli görüşlerden biriydi.
+sqrt(d_k) -- sqrt(64) = 8 -- ile bölme ölçeklendirmedir. Bu olmadan, nokta çarpımları yüksek boyutlu vektörler için büyür ve softmax'ı gradient'lerin neredeyse sıfır olduğu bölgelere iter. Bu, orijinal "İhtiyacınız Olan Tek Şey Dikkat" makalesindeki en önemli görüşlerden biriydi.
 
-### KV Önbelleği: Inference Neden Hızlı?
+### KV Önbelleği: Inference Neden Hızlıdır
 
-Eğitim sırasında tüm sıralamayı aynı anda işlersiniz. inference sırasında, her seferinde bir token üretirsiniz. Optimizasyon olmadan, token N'yi oluşturmak, önceki tüm N-1 token'ler için dikkatin yeniden hesaplanmasını gerektirir. Bu, oluşturulan token başına O(N^2) veya N uzunluğundaki bir dizi için toplam O(N^3)'tür.
+Eğitim sırasında tüm sıralamayı aynı anda işlersiniz. inference sırasında her seferinde bir token oluşturursunuz. Optimizasyon olmadan, token N'nin oluşturulması, önceki tüm N-1 token'ler için yeniden hesaplama dikkati gerektirir. Bu, oluşturulan token başına O(N^2) veya N uzunluğundaki bir dizi için toplam O(N^3)'tür.
 
-KV Cache bunu çözüyor. Her token için K ve V'yi hesapladıktan sonra bunları saklayın. token N+1 oluştururken, yalnızca yeni token için Q'yu hesaplamanız ve önceki tüm token'lerden önbelleğe alınmış K ve V'yi aramanız gerekir. Bu, K ve V hesaplaması için -token başına maliyeti O(N)'den O(1)'e düşürür. Dikkat puanı hesaplaması hala O(N)'dir çünkü önceki tüm pozisyonlara katılırsınız ancak girdide gereksiz matris çarpımlarından kaçınırsınız.
+KV Cache bunu çözüyor. Her token için K ve V'yi hesapladıktan sonra bunları saklayın. token N+1 oluştururken, yalnızca yeni token için Q'yu hesaplamanız ve önceki tüm token'lerden önbelleğe alınmış K ve V'yi aramanız gerekir. Bu, K ve V hesaplaması için token başına maliyeti O(N)'den O(1)'e düşürür. Dikkat puanı hesaplaması hala O(N)'dir çünkü önceki tüm pozisyonlara katılırsınız ancak girdide gereksiz matris çarpımlarından kaçınırsınız.
 
-12 katman ve 12 kafalı GPT-2 için KV önbelleği, token başına 2 (K + V) x 12 katman x 12 kafa x 64 sönük = 18.432 değer depolar. Bir 1024-token dizisi için bu, FP32'de yaklaşık 75 MB'tır. 128 katmanlı Llama 3 405B için tek bir diziye ait KV önbellek 10 GB'ı aşabilir. Uzun içerikli inference'nin belleğe bağlı olmasının nedeni budur.
+12 katmanlı ve 12 başlı GPT-2 için KV önbelleği, token başına 2 (K + V) x 12 katman x 12 kafa x 64 karartma = 18.432 değer depolar. Bir 1024-token dizisi için bu, FP32'de yaklaşık 75 MB'tır. 128 katmanlı Llama 3 405B için tek bir diziye ait KV önbellek 10 GB'ı aşabilir. Uzun bağlamlı inference'nin belleğe bağlı olmasının nedeni budur.
 
-### Ön Doldurma ve Kod Çözme: Inference'nin İki Aşaması
+### Önceden Doldurma ve Kod Çözme: Inference'nin İki Aşaması
 
 Bir LLM'ye prompt gönderdiğinizde, inference iki farklı aşamada gerçekleşir.
 
-**Ön Doldurma** prompt dosyanızın tamamını paralel olarak işler. Tüm token'ler bilinmektedir, dolayısıyla model aynı anda tüm konumlar için dikkati hesaplayabilir. Bu aşama hesaplamaya bağlıdır; GPU, matris çarpımlarını tam verimle yapar. A100'de 1000-token prompt için ön dolum yaklaşık 20-50 ms sürer.
+**Ön doldurma** prompt dosyanızın tamamını paralel olarak işler. Tüm token'ler bilinmektedir, dolayısıyla model aynı anda tüm konumlar için dikkati hesaplayabilir. Bu aşama hesaplamaya bağlıdır; GPU, matris çarpımlarını tam verimle yapar. A100'deki 1000-token prompt için ön dolum yaklaşık 20-50 ms sürer.
 
-**Kod Çözme** token'ları teker teker üretir. Her yeni token önceki tüm token'lere bağlıdır. Bu aşama belleğe bağlıdır; darboğaz, matris matematiğinin kendisinden değil, model ağırlıklarının ve GPU belleğinden KV önbelleğinin okunmasıdır. GPU'nun hesaplama çekirdekleri çoğunlukla boşta durup bellek okumalarını bekler. GPT-2 için, bellek bant genişliği kısıtlama olduğundan, matmulların kaç FLOP gerektirdiğine bakılmaksızın her kod çözme adımı yaklaşık olarak aynı süreyi alır.
+**Kod Çözme** token'leri birer birer oluşturur. Her yeni token, önceki tüm token'lere bağlıdır. Bu aşama belleğe bağlıdır; darboğaz, matris matematiğinin kendisinden değil, model ağırlıklarının ve GPU belleğinden KV önbelleğinin okunmasıdır. GPU'nun hesaplama çekirdekleri çoğunlukla boşta durup bellek okumalarını bekler. GPT-2 için, bellek bant genişliği kısıtlama olduğundan, matmulların kaç FLOP gerektirdiğine bakılmaksızın her kod çözme adımı yaklaşık olarak aynı süreyi alır.
 
-Bu ayrım üretim sistemleri için önemlidir. GPU hesaplamasıyla önceden doldurma aktarım hızı ölçekleri (daha fazla FLOPS = daha hızlı önceden doldurma). Kod çözme verimi bellek bant genişliğine göre ölçeklenir (daha hızlı bellek = daha hızlı kod çözme). Bu nedenle NVIDIA'nın H100'ü, A100'e kıyasla bellek bant genişliği iyileştirmelerine odaklandı; doğrudan token neslini hızlandırıyor.
+Bu ayrım üretim sistemleri için önemlidir. GPU hesaplamasıyla önceden doldurma aktarım hızı ölçekleri (daha fazla FLOPS = daha hızlı önceden doldurma). Kod çözme verimi bellek bant genişliğine göre ölçeklenir (daha hızlı bellek = daha hızlı kod çözme). Bu nedenle NVIDIA'nın H100'ü, A100'e göre bellek bant genişliği iyileştirmelerine odaklandı; token oluşumunu doğrudan hızlandırıyor.
 
 ```mermaid
 graph LR
@@ -194,7 +194,7 @@ graph LR
 
 ### Eğitim Döngüsü
 
-Bir Yüksek Lisans eğitimi almak sonraki-token tahmindir. tokens [0, 1, 2, ..., N-1] verildiğinde, tokens [1, 2, 3, ..., N]'yi tahmin edin. loss function, modelin tahmin edilen olasılık dağılımı ile gerçek sonraki token arasındaki çapraz entropidir.
+Yüksek Lisans eğitimi bir sonraki token tahminidir. token'ler [0, 1, 2, ..., N-1] verildiğinde, token'leri [1, 2, 3, ..., N] tahmin edin. loss function, modelin tahmin edilen olasılık dağılımı ile gerçek bir sonraki token arasındaki çapraz entropidir.
 
 Bir eğitim adımı:
 
@@ -209,8 +209,8 @@ Bir eğitim adımı:
 
 | Bileşen | Şekil | Parametreler |
 |-----------|-------|------------|
-| Token embeddings | (50257, 768) | 38.597.376 |
-| Konum embeddings | (1024, 768) | 786.432 |
+| Token embedding'ler | (50257, 768) | 38.597.376 |
+| Konum embedding'ler | (1024, 768) | 786.432 |
 | Blok başına dikkat (W_q, W_k, W_v, W_out) | 4 adet (768, 768) | 2.359.296 |
 | Blok başına FFN (yukarı + aşağı) | (768, 3072) + (3072, 768) | 4.718.592 |
 | Blok Başına Katman Normları (2x) | 2 x 768 x 2 | 3,072 |
@@ -222,9 +222,9 @@ Bir eğitim adımı:
 
 ## İnşa Et
 
-### Adım 1: Embedding Katman
+### Adım 1: Embedding Katmanı
 
-Token embedding'ler, 50.257 olası token'nin her birini 768 boyutlu bir vektöre eşler. Konum embedding'lar, her bir token'nin dizide nerede bulunduğuna ilişkin bilgi ekler. İkisi toplanır.
+Token embedding'ler, 50.257 olası token'nin her birini 768 boyutlu bir vektöre eşler. Konum embedding'ler, her bir token'nin dizide nerede bulunduğu hakkında bilgi ekler. İkisi toplanır.
 
 ```python
 import numpy as np
@@ -241,7 +241,7 @@ class Embedding:
         return tok_emb + pos_emb
 ```
 
-Başlatma için 0,02 standart sapma GPT-2 makalesinden gelmektedir. Çok büyük ve ilk ileri paslar, antrenmanın dengesini bozan aşırı değerler üretir. Çok küçük ve ilk çıkışlar tüm girişler için neredeyse aynı, bu da erken gradient sinyallerini işe yaramaz hale getiriyor.
+Başlatma için 0,02 standart sapma GPT-2 makalesinden gelmektedir. Çok büyük ve ilk ileri paslar, antrenmanın dengesini bozan aşırı değerler üretir. Çok küçük ve başlangıç ​​çıkışları tüm girişler için neredeyse aynı, bu da erken gradient sinyallerini işe yaramaz hale getiriyor.
 
 ### Adım 2: Nedensel Maskeyle Kişisel Dikkat
 
@@ -291,11 +291,11 @@ class MultiHeadAttention:
         return attn_out @ self.W_out
 ```
 
-Yeniden şekillendirme-yer değiştirme-yeniden şekillendirme dansı, çok kafalı dikkatin en kafa karıştırıcı kısmıdır. Olan şu: (batch, seq_len, 768) tensörü (batch, seq_len, 12, 64), ardından (batch, 12, seq_len, 64) olur. Artık 12 kafanın her birinin dikkati çekecek kendi (seq_len, 64) matrisi var. Dikkat ettikten sonra süreci tersine çeviririz: (batch, 12, seq_len, 64) olur (batch, seq_len, 12, 64) olur (batch, seq_len, 768).
+Yeniden şekillendirme-yer değiştirme-yeniden şekillendirme dansı, çok kafalı dikkatin en kafa karıştırıcı kısmıdır. Olan şu: (batch, seq_len, 768) tensörü (batch, seq_len, 12, 64), ardından (batch, 12, seq_len, 64) olur. Artık 12 başın her birinin dikkati çekecek kendi (seq_len, 64) matrisi var. Dikkat ettikten sonra süreci tersine çeviririz: (batch, 12, seq_len, 64) olur (batch, seq_len, 12, 64) olur (batch, seq_len, 768).
 
-### Adım 4: Transformer Blokla
+### Adım 4: Transformer Blok
 
-Tam bir transformer blok: KatmanNorm, artık ile çok kafalı dikkat, KatmanNorm, artık ile ileri besleme.
+Eksiksiz bir transformer bloğu: LayerNorm, artık ile çok kafalı dikkat, LayerNorm, artık ile ileri besleme.
 
 ```python
 class LayerNorm:
@@ -336,11 +336,11 @@ class TransformerBlock:
         return x
 ```
 
-İleri beslemeli ağ, 768 boyutlu girişi 3.072 boyuta (4x) genişletir, doğrusal olmayan bir durum uygular ve ardından 768'e geri yansıtır. Bu genişleme-daralma modeli, modele her konumda çalışmak için "daha geniş" bir dahili temsil sağlar. GPT-2, GELU aktivasyonunu kullanır, ancak burada basitlik amacıyla ReLU'yu kullanıyoruz; mimariyi anlamak açısından fark küçüktür.
+İleri beslemeli ağ, 768 boyutlu girişi 3.072 boyuta (4x) genişletir, doğrusal olmayan bir durum uygular ve ardından 768'e geri yansıtır. Bu genişleme-daralma modeli, modele her konumda çalışmak için "daha geniş" bir dahili temsil sağlar. GPT-2, GELU aktivasyonunu kullanır, ancak burada basitlik sağlamak amacıyla ReLU'yu kullanıyoruz; mimariyi anlamak açısından fark küçüktür.
 
 ### Adım 5: Tam GPT Modeli
 
-12 transformer bloğu istifleyin. Ön tarafa embedding katmanını ve arkaya çıktı projeksiyonunu ekleyin.
+12 transformer bloğunu istifleyin. embedding katmanını öne ve çıktı projeksiyonunu arkaya ekleyin.
 
 ```python
 class MiniGPT:
@@ -382,7 +382,7 @@ class MiniGPT:
         return total
 ```
 
-Ağırlık bağlantısına dikkat edin: `logits = x @ self.embedding.token_embed.T`. Çıkış projeksiyonu, token embedding matrisini (transpoze edilmiş) yeniden kullanır. Bu sadece parametre tasarrufu sağlayan bir numara değil. Bu, modelin tokens (embeddings)'yi anlamak ve bunları tahmin etmek (çıktı) için aynı vektör uzayını kullandığı anlamına gelir.
+Ağırlık bağlantısına dikkat edin: `logits = x @ self.embedding.token_embed.T`. Çıkış projeksiyonu token embedding matrisini (transpoze edilmiş) yeniden kullanır. Bu sadece parametre tasarrufu sağlayan bir numara değil. Bu, modelin token'leri (embedding'ler) anlamak ve bunları tahmin etmek (çıktı) için aynı vektör uzayını kullandığı anlamına gelir.
 
 ### Adım 6: Eğitim Döngüsü
 
@@ -432,9 +432,9 @@ def train_mini_gpt(text, vocab_size=256, embed_dim=128, num_heads=4,
     return model
 ```
 
-Kayıp, ln(vocab_size) yakınında başlar -- 256-token bayt düzeyindeki bir kelime dağarcığı için, yani ln(256) = 5,55. Rastgele bir model her token'ye eşit olasılık atar. Eğitim ilerledikçe kayıp azalır çünkü model ortak kalıpları tahmin etmeyi öğrenir: "t"den sonra "th", noktadan sonra boşluk vb.
+Kayıp, ln(vocab_size) yakınında başlar - 256-token bayt düzeyindeki bir kelime dağarcığı için, yani ln(256) = 5,55'tir. Rastgele bir model her token'ye eşit olasılık atar. Eğitim ilerledikçe kayıp azalır çünkü model ortak kalıpları tahmin etmeyi öğrenir: "t"den sonra "th", noktadan sonra boşluk vb.
 
-Üretimde, Adam optimize ediciyi gradient birikimi, öğrenme hızı ısınması ve gradient kırpma ile kullanırsınız. İleri-geçiş-kayıp-geriye-güncelleme döngüsü aynıdır. Optimize edici daha karmaşıktır.
+Üretimde, Adam optimizer'ı gradient birikimi, öğrenme hızı ısınması ve gradient kırpma ile kullanırsınız. İleri-geçiş-kayıp-geriye-güncelleme döngüsü aynıdır. Optimize edici daha karmaşıktır.
 
 ### Adım 7: Metin Oluşturma
 
@@ -460,7 +460,7 @@ def generate(model, prompt_tokens, max_new_tokens=100, temperature=0.8):
     return tokens
 ```
 
-Sıcaklık rastgeleliği kontrol eder. Sıcaklık 1.0 ham dağıtımı kullanır. Sıcaklık 0,5 onu keskinleştirir (daha belirleyicidir; model en iyi seçenekleri daha sık seçer). Sıcaklık 1,5 onu düzleştirir (daha rastgele -- düşük olasılıklı token'ların şansı daha yüksektir). Sıcaklık 0,0 açgözlü kod çözmedir (her zaman en yüksek olasılığı seçin token).
+Sıcaklık rastgeleliği kontrol eder. Sıcaklık 1.0 ham dağıtımı kullanır. Sıcaklık 0,5 onu keskinleştirir (daha belirleyicidir; model en iyi seçenekleri daha sık seçer). Sıcaklık 1,5 onu düzleştiriyor (daha rastgele -- düşük olasılıklı token'lerin şansı daha büyük oluyor). Sıcaklık 0,0 açgözlü kod çözmedir (her zaman en yüksek olasılığı token seçin).
 
 Modelin maksimum bağlam uzunluğu (GPT-2 için 1024) olması nedeniyle `tokens[-seq_len:]` penceresi gereklidir. Bu sınırı aştığınızda en eski token'leri bırakmalısınız. Bu herkesin bahsettiği "context window".
 
@@ -498,17 +498,17 @@ Küçük bir modele sahip küçük bir derlemde oluşturulan metin en iyi ihtima
 
 ## Gönderin
 
-Bu ders, herhangi bir GPT tarzı modeldeki mimari seçimlerini analiz eden bir prompt olan `outputs/prompt-gpt-architecture-analyzer.md`'ı üretir. Ona bir model kartı veya teknik rapor verin; parametre tahsisini, dikkat tasarımını ve ölçeklendirme kararlarını ayrıntılı olarak açıklayın.
+Bu ders, herhangi bir GPT stili modeldeki mimari seçimlerini analiz eden bir prompt olan `outputs/prompt-gpt-architecture-analyzer.md`'yi üretir. Ona bir model kartı veya teknik rapor verin ve parametre tahsisini, dikkat tasarımını ve ölçeklendirme kararlarını ayrıntılı olarak açıklayın.
 
 ## Egzersizler
 
-1. Modeli 12/12 yerine 24 katman ve 16 kafa kullanacak şekilde değiştirin. Parametreleri sayın. Derinliği iki katına çıkarmak, genişliği iki katına çıkarmakla (embedding boyut) nasıl karşılaştırılır?
+1. Modeli 12/12 yerine 24 katman ve 16 kafa kullanacak şekilde değiştirin. Parametreleri sayın. Derinliği iki katına çıkarmak, genişliği iki katına çıkarmakla (embedding boyutu) nasıl karşılaştırılır?
 
 2. GELU aktivasyon fonksiyonunu uygulayın (GELU(x) = x * 0,5 * (1 + erf(x / sqrt(2)))) ve ileri beslemeli ağda ReLU'yu değiştirin. Her aktivasyonda eğitimi 500 adım boyunca çalıştırın ve son kaybı karşılaştırın.
 
-3. Oluşturma işlevine bir KV önbelleği ekleyin. İlk ileri geçişten sonra her katman için K ve V tensörlerini saklayın ve bunları sonraki token'lar için yeniden kullanın. Hızlanmayı ölçün: önbellekle ve önbellek olmadan 200 token saniye oluşturun ve duvar saati süresini karşılaştırın.
+3. Oluşturma işlevine bir KV önbelleği ekleyin. İlk ileri geçişten sonra her katman için K ve V tensörlerini saklayın ve bunları sonraki token'ler için yeniden kullanın. Hızlanmayı ölçün: önbellekli ve önbelleksiz 200 token oluşturun ve duvar saati süresini karşılaştırın.
 
-4. Üst-k örneklemeyi uygulayın (yalnızca en yüksek olasılıklı k token'leri dikkate alın) ve üst-p örneklemeyi (çekirdek örnekleme: kümülatif olasılığı p'yi aşan en küçük token kümesini düşünün) uygulayın. 0,8 sıcaklıktaki çıktı kalitesini top-k=50 ve top-p=0,95 ile karşılaştırın.
+4. En üst k örneklemeyi (yalnızca en yüksek olasılıklı k token'leri dikkate alın) ve en üst p örneklemeyi (çekirdek örnekleme: kümülatif olasılığı p'yi aşan en küçük token kümesini düşünün) uygulayın. 0,8 sıcaklıktaki çıktı kalitesini top-k=50 ve top-p=0,95 ile karşılaştırın.
 
 5. Bir eğitim kaybı eğrisi çizicisi oluşturun. Modeli 1000 adım için eğitin ve kayıp-adım grafiğini çizin. Üç aşamayı tanımlayın: hızlı ilk iniş (ortak baytların öğrenilmesi), daha yavaş orta aşama (bayt kalıplarının öğrenilmesi) ve plato (küçük veri kümesine aşırı uyum). Bu eğrinin şekli, ister 128-dimli bir modeli, ister GPT-4'ü eğitiyor olun, aynıdır.
 
@@ -516,20 +516,20 @@ Bu ders, herhangi bir GPT tarzı modeldeki mimari seçimlerini analiz eden bir p
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| Otoregresif | "Her seferinde bir kelime üretir" | Her bir token çıkışı, önceki tüm token'lere koşullandırılır -- model, P(token _n \| {{T3} _0, ..., {{T4} _{n-1}) |
+| Otoregresif | "Her seferinde bir kelime üretir" | Her bir token çıkışı, önceki tüm token'lere göre koşullandırılır - model, P(token_n \| token_0, ..., token_{n-1}) |
 | Nedensel maske | "Geleceği göremiyor" | Eğitim sırasında gelecekteki konumlara dikkat edilmesini engelleyen -sonsuz değerlerin üst üçgen matrisi |
 | Çok kafalı dikkat | "Çoklu Dikkat Modelleri" | Q, K, V'yi paralel kafalara bölmek (e.g., GPT-2 için her biri 64 solukluk 12 kafa), böylece her kafa farklı ilişki türlerini öğrenebilir |
 | KV Önbellek | "Hız için önbelleğe alma" | Otoregresif oluşturma sırasında gereksiz hesaplamayı önlemek için önceki token'lerden hesaplanan Anahtar ve Değer tensörlerinin saklanması |
 | Ön Dolum | "prompt İşleniyor" | Tüm prompt token'lerin paralel olarak işlendiği ilk inference aşaması - GPU FLOPS'ta hesaplamaya bağlı |
-| Kod Çözme | "token'ler oluşturuluyor" | token'lerin teker teker oluşturulduğu ikinci inference aşaması - GPU bant genişliğinde belleğe bağlı |
-| Ağırlık bağlama | "embedding'lar paylaşılıyor" | Giriş token embedding'ler ve çıkış projeksiyon kafası için aynı matrisin kullanılması, GPT-2'de 38M parametre tasarrufu sağlar |
+| Kod Çözme | "token'ler Oluşturuluyor" | token'lerin teker teker oluşturulduğu ikinci inference aşaması - GPU bant genişliğinde belleğe bağlı |
+| Ağırlık bağlama | "embedding'leri Paylaşma" | Giriş token embedding'ler ve çıkış projeksiyon kafası için aynı matrisin kullanılması, GPT-2'de 38 milyon parametre tasarrufu sağlar |
 | Artık bağlantı | "Bağlantıyı atla" | Girişi doğrudan bir alt katmanın (x + alt katman(x)) çıkışına eklemek - derin ağlarda gradient akışını etkinleştirir |
 | Katman normalleştirme | "Aktivasyonların normalleştirilmesi" | Öğrenilebilir ölçek ve sapma parametreleriyle özellik boyutu boyunca ortalama 0 ve varyans 1 olacak şekilde normalleştirme |
-| Çapraz entropi kaybı | "Tahminler ne kadar yanlış" | -log(sonraki doğru token'ya atanan olasılık), tüm pozisyonların ortalaması alınır - standart LLM eğitim hedefi |
+| Çapraz entropi kaybı | "Tahminler ne kadar yanlış" | -log(sonraki doğru token'ye atanan olasılık), tüm pozisyonların ortalaması - standart LLM eğitim hedefi |
 
 ## Daha Fazla Okuma
 
 - [Radford ve diğerleri, 2019 -- "Dil Modelleri Denetimsiz Çoklu Görev Öğrenicileridir" (GPT-2)](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) -- 124M ila 1,5B parametre ailesini tanıtan GPT-2 makalesi
-- [Vaswani ve diğerleri, 2017 -- "Tek İhtiyacınız Olan Dikkat"](https://arxiv.org/abs/1706.03762) -- ölçekli nokta-ürün dikkati ve çok kafalı dikkat içeren orijinal transformer makalesi
+- [Vaswani ve diğerleri, 2017 -- "Tek İhtiyacınız Olan Dikkat"](https://arxiv.org/abs/1706.03762) -- ölçekli nokta ürün dikkati ve çok kafalı dikkat içeren orijinal transformer kağıdı
 - [Llama 3 Teknik Raporu](https://arxiv.org/abs/2407.21783) -- Meta, GPT mimarisini 16K GPU'larla 405B parametrelere nasıl ölçeklendirdi?
-- [Pope ve diğerleri, 2022 -- "Etkin Şekilde Ölçeklendirme Transformer Inference"](https://arxiv.org/abs/2211.05102) -- kod çözme ve KV önbellek analizine karşı ön doldurmayı resmileştiren makale
+- [Pope ve diğerleri, 2022 -- "Transformer Inference'yi Verimli Şekilde Ölçeklendirmek"](https://arxiv.org/abs/2211.05102) -- kod çözme ve KV önbellek analizine karşı ön doldurmayı resmileştiren makale

@@ -25,26 +25,26 @@ Moshi (Kyutai, 2024) 200 ms tam çift yönlü hıza ulaştı. GPT-4o-gerçek zam
 
 ## Konsept
 
-![Halka tamponu, VAD geçidi, kesinti ile ses akışı akışı](../assets/real-time.svg)
+![Halka arabelleği, VAD geçidi, kesinti ile ses akışı akışı](../assets/real-time.svg)
 
 **Çerçeve / yığın / pencere.** Gerçek zamanlı ses, sabit boyutlu bloklar halinde akar. Ortak seçim: 20 ms (16 kHz'de 320 örnek). Aşağı yöndeki her şey bu tempoya ayak uydurmak zorundadır.
 
 **Halka arabellek.** Sabit boyutlu dairesel arabellek. Üretici dizisi yeni çerçeveler yazar, tüketici dizisi okur. Sıcak yoldaki tahsisleri önler. Boyut ≈ maksimum gecikme süresi × örnekleme hızı; 2 saniyelik 16 kHz halka = 32.000 örnek.
 
-**VAD (Ses Etkinliği Algılama).** Gates aşağı yönde kimse konuşmadığında çalışır. Silero VAD 4.0 (2024), CPU'da 30 ms kare başına <1 ms çalışır. `webrtcvad` daha eski alternatiftir.
+**VAD (Ses Etkinliği Algılama).** Gates aşağı yönde kimse konuşmadığında çalışır. Silero VAD 4.0 (2024), CPU'da 30 ms kare başına <1 ms çalışır. `webrtcvad` daha eski bir alternatiftir.
 
 **Akış ASR'si.** Ses geldiğinde kısmi transkriptler yayınlayan modeller. Akış modunda Parakeet-CTC-0.6B (NeMo, 2024), 320 ms gecikmede %2–5 WER yapar. Whisper-Streaming (Macháček ve diğerleri, 2023), Whisper'ı yaklaşık 2 sn gecikmeyle yakın akış için parçalar.
 
 **Kesinti.** Asistan konuşurken kullanıcı konuştuğunda, (a) içeri girmeyi algılamanız, (b) TTS'yi durdurmanız, (c) kalan LLM çıkışını atmanız gerekir. Tümü 100 ms içinde veya kullanıcı sağır asistanı algılar.
 
-**WebRTC Opus aktarımı.** 20 ms kare, 48 kHz, uyarlanabilir bit hızı 8–128 kbps. Tarayıcı ve mobil cihazlar için standart. LiveKit, Daily.co, Pion, sesli uygulamalar oluşturmaya yönelik 2026 yığınlardır.
+**WebRTC Opus aktarımı.** 20 ms kare, 48 kHz, uyarlanabilir bit hızı 8–128 kbps. Tarayıcı ve mobil cihazlar için standart. LiveKit, Daily.co, Pion, sesli uygulamalar oluşturmaya yönelik 2026 yığındır.
 
 **Titreşim arabelleği.** Ağ paketleri sıra dışı/geç geliyor. Titreşim arabelleği yeniden sıralanır ve düzeltilir; çok küçük → duyulabilir boşluklar, çok büyük → gecikme. 60–80 ms tipik.
 
 ### Sık karşılaşılan sorunlar
 
 - **Konu çekişmesi.** Python'un GIL + ağır modelleri ses akışını aç bırakabilir. Bir C-geri çağırma ses kitaplığı (sounddevice, PortAudio) kullanın ve Python'u sıcak yoldan uzak tutun.
-- **Örnekleme hızı dönüştürme gecikmesi.** Ardışık düzen içinde yeniden örnekleme 5-20 ms ekler. Ya önceden yeniden örnekleme yapın ya da sıfır gecikmeli bir yeniden örnekleyici kullanın (PolyPhase, `soxr_hq`).
+- **Örnekleme hızı dönüştürme gecikmesi.** Ardışık düzen içinde yeniden örnekleme 5-20 ms ekler. Önceden yeniden örnekleme yapın veya sıfır gecikmeli bir yeniden örnekleyici kullanın (PolyPhase, `soxr_hq`).
 - **TTS hazırlama.** Kokoro gibi hızlı TTS'lerin bile ilk istek üzerine 100-200 ms'lik ısınması vardır. Önbellek modeli + ilk gerçek dönüşten önce yapay bir koşuyla ısıtın.
 - **Yankı iptali.** AEC olmadan, TTS çıkışı mikrofona yeniden girer ve botun kendi sesinde ASR'yi tetikler. WebRTC AEC3 açık kaynak varsayılanıdır.
 
@@ -119,7 +119,7 @@ class Dialog:
             speaker.write(tts_chunk)
 ```
 
-Eşzamansız G/Ç ve iptal edilebilir TTS akışına bağlıdır. Ses parçasındaki WebRTC peerconnection.stop() kanonik yoldur.
+Eşzamansız G/Ç ve iptal edilebilir TTS akışına bağlıdır. Ses kanalındaki WebRTC peerconnection.stop() kanonik yoldur.
 
 ## Kullan onu
 
@@ -139,17 +139,17 @@ Eşzamansız G/Ç ve iptal edilebilir TTS akışına bağlıdır. Ses parçasın
 
 - **Güvenlik amacıyla 500 ms ara belleğe alınıyor.** Ara bellek *gecikme tabanınızdır*. Küçült.
 - **İş dizileri sabitlenmiyor.** Kullanıcı arayüzünden daha düşük önceliğe sahip bir iş parçacığında sesli geri arama = yük altında hatalar.
-- **TTS parçaları çok küçük.** 200 ms'nin altındaki parçalar ses kodlayıcının artifact duyulabilir olmasını sağlar. 320 ms'lik parçalar tatlı noktadır.
+- **TTS parçaları çok küçük.** 200 ms'nin altındaki parçalar ses kodlayıcı artifact'lerin duyulabilir olmasını sağlar. 320 ms'lik parçalar tatlı noktadır.
 - **Titreşim arabelleği yok.** Gerçek ağlar titrektir; yumuşatmadan patlamalar elde edersiniz.
 - **Tek seferde hata işleme.** Ses hatları çökmeye dayanıklı olmalıdır. Bir istisna oturumu sonlandırır.
 
 ## Gönderin
 
-`outputs/skill-realtime-designer.md` olarak kaydet. Aşama başına somut gecikme bütçeleriyle gerçek zamanlı bir ses hattı tasarlayın.
+`outputs/skill-realtime-designer.md` olarak kaydedin. Aşama başına somut gecikme bütçeleriyle gerçek zamanlı bir ses hattı tasarlayın.
 
 ## Egzersizler
 
-1. **Kolay.** `code/main.py` komutunu çalıştırın. Bir halka tamponu + enerji VAD'sini simüle eder; 10 saniyelik sahte bir akış için sahne gecikmelerini yazdırır.
+1. **Kolay.** `code/main.py`'yi çalıştırın. Bir halka tamponu + enerji VAD'sini simüle eder; 10 saniyelik sahte bir akış için sahne gecikmelerini yazdırır.
 2. **Orta.** `sounddevice` kullanarak, mikrofonunuzu 20 ms karelerde işleyen ve her karede VAD durumunu yazdıran bir geçiş döngüsü oluşturun.
 3. **Zor.** `aiortc` ile tam çift yönlü yankı testi oluşturun: tarayıcı → WebRTC → Python → WebRTC → tarayıcı. 1 kHz darbeyle camdan cama gecikmeyi ölçün.
 
@@ -167,8 +167,8 @@ Eşzamansız G/Ç ve iptal edilebilir TTS akışına bağlıdır. Ses parçasın
 
 ## Daha Fazla Okuma
 
-- [Macháček ve ark. (2023). Whisper-Streaming](https://arxiv.org/abs/2307.14743) — parçalanmış, yakın akışlı Whisper.
+- [Macháček ve ark. (2023). Whisper-Streaming](https://arxiv.org/abs/2307.14743) — parçalanmış yakın akışlı Whisper.
 -[Kyutai (2024). Moshi](https://kyutai.org/Moshi.pdf) — tam çift yönlü 200 ms gecikme.
-- [LiveKit Agents framework (2024)](https://docs.livekit.io/agents/) — prodüksiyon ses agent orkestrasyonu.
+- [LiveKit Agents framework (2024)](https://docs.livekit.io/agents/) — üretim sesi agent orkestrasyonu.
 - [Silero VAD deposu](https://github.com/snakers4/silero-vad) — 1 ms'nin altında VAD, Apache 2.0.
 - [WebRTC AEC3 kağıdı](https://webrtc.googlesource.com/src/+/main/modules/audio_processing/aec3/) — açık kaynak altında yankı iptali.

@@ -13,11 +13,11 @@
 
 NER, her yapısal ekstraksiyon boru hattının altında yatan iş gücüdür. Özgeçmiş ayrıştırma, uyumluluk günlüğü taraması, tıbbi kayıtların anonimleştirilmesi, arama sorgusunun anlaşılması, chatbot yanıtlarının temellendirilmesi, yasal sözleşme çıkarma. Onu asla tam olarak göremezsiniz; her zaman ona bağlısın.
 
-Bu ders klasik yoldan (kural tabanlı, HMM, CRF) modern yola (BiLSTM-CRF, ardından transformers) doğru yürür. Her adım, kendisinden öncekinin belirli bir sınırlamasını çözer. Desen derstir.
+Bu ders klasik yoldan (kural tabanlı, HMM, CRF) modern yola (BiLSTM-CRF, ardından transformer'ler) doğru yürür. Her adım, kendisinden öncekinin belirli bir sınırlamasını çözer. Desen derstir.
 
 ## Konsept
 
-**BIO etiketleme** (veya BILOU), varlık çıkarma işlemini bir dizi etiketleme sorununa dönüştürür. Her bir token'yi `B-TYPE` (varlığın başlangıcı), `I-TYPE` (varlığın içinde) veya `O` (herhangi bir varlığın dışında) ile etiketleyin.
+**BIO etiketleme** (veya BILOU), varlık çıkarma işlemini bir dizi etiketleme sorununa dönüştürür. Her token'yi `B-TYPE` (varlığın başlangıcı), `I-TYPE` (varlık içi) veya `O` (herhangi bir varlığın dışında) ile etiketleyin.
 
 ```
 Apple    B-ORG
@@ -34,15 +34,15 @@ US       B-GPE
 .        O
 ```
 
-Çoklu-token varlık zinciri: `New B-GPE`, `York I-GPE`, `City I-GPE`. BIO'yu anlayan bir model, isteğe bağlı aralıkları çıkarabilir.
+Çoklu token varlık zinciri: `New B-GPE`, `York I-GPE`, `City I-GPE`. BIO'yu anlayan bir model, isteğe bağlı aralıkları çıkarabilir.
 
 Mimari ilerleme:
 
 - **Kural tabanlı.** Regex + gazetteer aramaları. Bilinen varlıklarda yüksek hassasiyet, yenilerinde sıfır kapsam.
 - **HMM.** Gizli Markov Modeli. Verilen etiketin token emisyon olasılığı, etiketten etikete geçiş olasılığı. Viterbi'nin şifresi çözüldü. Etiketli veriler üzerine eğitim verildi.
-- **CRF.** Koşullu Rastgele Alan. HMM'ye benzer ancak ayırt edicidir, böylece isteğe bağlı özellikleri (kelime şekli, büyük harf kullanımı, komşu kelimeler) karıştırabilirsiniz. Düşük kaynaklı deployment'lar için 2026'da hâlâ klasik üretim gücü.
+- **CRF.** Koşullu Rastgele Alan. HMM'ye benzer ancak ayırt edicidir, böylece isteğe bağlı özellikleri (kelime şekli, büyük harf kullanımı, komşu kelimeler) karıştırabilirsiniz. Düşük kaynaklı deployment'ler için 2026'da hâlâ klasik üretim gücü.
 - **BiLSTM-CRF.** El yapımı yerine sinirsel özellikler. LSTM cümleyi her iki yönde de okur, üstteki CRF katmanı tutarlı etiket dizilerini zorlar.
-- **Transformer-tabanlı.** BERT'e token-sınıflandırma başlığıyla ince ayar yapın. En iyi doğruluk. Çoğu işlem yapar.
+- **Transformer tabanlı.** token sınıflandırma başlığıyla BERT'e ince ayar yapın. En iyi doğruluk. Çoğu işlem yapar.
 
 ```figure
 ner-bio-tagging
@@ -120,7 +120,7 @@ def word_shape(word):
     return "".join(out)
 ```
 
-`word_shape("iPhone")`, `xXxxxx` değerini döndürür. `word_shape("USA-2024")`, `XXX-dddd` değerini döndürür. Büyük harf kullanım kalıpları özel isimler için yüksek sinyaldir.
+`word_shape("iPhone")`, `xXxxxx` değerini döndürür. `word_shape("USA-2024")`, `XXX-dddd`'yi döndürür. Büyük harf kullanım kalıpları özel isimler için yüksek sinyaldir.
 
 ### Adım 3: basit bir kural tabanlı + sözlük temeli
 
@@ -144,7 +144,7 @@ def rule_based_ner(tokens):
     return labels
 ```
 
-Üretim gazetleyicilerinde Wikipedia ve DBpedia'dan alınmış milyonlarca giriş var. Kapsama alanı iyi. Anlam ayrımı (`Apple` şirkete karşı meyve) berbat. Bu nedenle istatistiksel modeller kazandı.
+Üretim gazetleyicilerinde Wikipedia ve DBpedia'dan alınmış milyonlarca giriş var. Kapsama alanı iyi. Belirsizliğin giderilmesi (`Apple` şirkete karşı meyve) berbat. Bu nedenle istatistiksel modeller kazandı.
 
 ### Adım 4: CRF adımı (taslak, tam uygulama değil)
 
@@ -178,11 +178,11 @@ X_train = [to_features(s) for s in sentences_tokenized]
 crf.fit(X_train, bio_labels_train)
 ```
 
-`c1` ve `c2`, L1 ve L2 düzenlemesidir. `all_possible_transitions=True`, modelin yasadışı dizileri (e.g., `I-ORG` sonra `O`) olası olmadığını öğrenmesine izin verir; bu, bir CRF'nin siz kısıtlamayı yazmadan BIO tutarlılığını bu şekilde zorlar.
+`c1` ve `c2`, L1 ve L2 düzenlemesidir. `all_possible_transitions=True`, modelin yasadışı dizileri (`O`'den sonra e.g., `I-ORG`) öğrenmesine izin verir; bu, bir CRF'nin siz kısıtlamayı yazmadan BIO tutarlılığını bu şekilde zorlar.
 
 ### Adım 5: BiLSTM-CRF'nin kattıkları
 
-Özellikler öğrenilir. Girişler: token embeddings (GloVe veya fastText). LSTM soldan sağa ve sağdan sola okur. Birleştirilmiş gizli durumlar bir CRF çıkış katmanından geçer. CRF hâlâ etiket dizisi tutarlılığını zorunlu kılıyor; LSTM, el yapımı özellikleri öğrenilen özelliklerle değiştirir.
+Özellikler öğrenilir. Girişler: token embedding'ler (GloVe veya fastText). LSTM soldan sağa ve sağdan sola okur. Birleştirilmiş gizli durumlar bir CRF çıkış katmanından geçer. CRF hâlâ etiket dizisi tutarlılığını zorunlu kılıyor; LSTM, el yapımı özellikleri öğrenilen özelliklerle değiştirir.
 
 ```python
 import torch
@@ -225,7 +225,7 @@ iPhone               ORG
 US                   GPE
 ```
 
-`iPhone` öğesinin `ORG` olarak etiketlendiğine, `PRODUCT` olarak etiketlenmediğine dikkat edin — spaCy'nin küçük modelinde ürün varlıklarının kapsamı zayıftır. Büyük model (`en_core_web_lg`) daha iyi, transformer modeli (`en_core_web_trf`) ise daha da iyi sonuç verir.
+`PRODUCT` yerine `iPhone` etiketli `ORG`'ye dikkat edin — spaCy'nin küçük modeli zayıf ürün varlığı kapsamına sahiptir. Büyük model (`en_core_web_lg`) daha iyi sonuç verir. transformer modeli (`en_core_web_trf`) daha da iyisini yapıyor.
 
 BERT tabanlı NER için Sarılma Yüzü:
 
@@ -243,16 +243,16 @@ print(ner("Apple sued Google over its iPhone in the US."))
  {'entity_group': 'LOC', 'word': 'US', ...}]
 ```
 
-`aggregation_strategy="simple"`, bitişik B-X, I-X token'leri bir aralıkta birleştirir. Bu olmadan, token düzeyinde etiketler alırsınız ve kendinizi birleştirmeniz gerekir.
+`aggregation_strategy="simple"`, bitişik B-X, I-X token'leri bir yayılma alanında birleştirir. Bu olmadan token düzeyinde etiketler alırsınız ve kendinizi birleştirmeniz gerekir.
 
 ### Yüksek Lisans tabanlı NER (2026 seçeneği)
 
 Sıfır atımlı ve az atımlı LLM NER artık birçok alanda ince ayarlı modellerle rekabet edebiliyor ve etiketli veriler kıt olduğunda önemli ölçüde daha iyi.
 
-- **Sıfır atışlı prompting.** LLM'ye varlık türlerinin bir listesini ve örnek bir şema verin. JSON çıktısını isteyin. Kutunun dışında çalışır; yeni alanlarda doğruluk orta düzeydedir.
-- **ZeroTuneBio tarzı prompting.** Görevi aday çıkarma → anlam açıklaması → yargılama → yeniden kontrol olarak parçalara ayırın. Çok aşamalı bir prompt (tek seferlik değil), biyomedikal NER'de doğruluğu önemli ölçüde artırır. Aynı model hukuki, mali ve bilimsel alanlar için de geçerlidir.
-- **RAG ile dinamik prompting.** Her inference çağrısı için küçük, açıklamalı bir tohum kümesinden en benzer etiketli örnekleri alın; birkaç atışlık prompt'yı anında oluşturun. 2026 benchmark'larda bu, GPT-4 biyomedikal NER F1'i statik prompt'ye göre %11-12 oranında yükseltir.
-- **Varlık türüne göre ayrıştırma.** Uzun belgeler için, tüm varlık türlerini aynı anda ayıklayan tek bir çağrı, uzunluk arttıkça hatırlanma özelliğini kaybeder. Varlık türü başına bir çıkarma geçişi çalıştırın. Daha yüksek inference maliyet, önemli ölçüde daha yüksek doğruluk. Bu, klinik notlar ve yasal sözleşmeler için standart kalıptır.
+- **Sıfır atış prompting.** LLM'ye varlık türlerinin bir listesini ve örnek bir şema verin. JSON çıktısını isteyin. Kutunun dışında çalışır; yeni alanlarda doğruluk orta düzeydedir.
+- **ZeroTuneBio tarzı prompting.** Görevi aday çıkarma → anlam açıklaması → yargılama → yeniden kontrol olarak parçalara ayırın. Çok aşamalı prompt (tek seferlik değil), biyomedikal NER'de doğruluğu önemli ölçüde artırır. Aynı model hukuki, mali ve bilimsel alanlar için de geçerlidir.
+- **RAG ile dinamik prompting.** Her inference çağrısı için küçük açıklamalı bir çekirdek kümesinden en benzer etiketli örnekleri alın; Birkaç atışlık prompt'yi anında oluşturun. 2026 benchmark'lerde bu, GPT-4 biyomedikal NER F1'i statik prompting'e göre %11-12 oranında yükseltir.
+- **Varlık türüne göre ayrıştırma.** Uzun belgeler için, tüm varlık türlerini aynı anda ayıklayan tek bir çağrı, uzunluk arttıkça hatırlanma özelliğini kaybeder. Varlık türü başına bir çıkarma geçişi çalıştırın. Daha yüksek inference maliyeti, önemli ölçüde daha yüksek doğruluk. Bu, klinik notlar ve yasal sözleşmeler için standart kalıptır.
 
 2026 itibarıyla üretim önerisi: Eğitim verilerini toplamadan önce LLM sıfır atış temel çizgisiyle başlayın. Çoğu zaman F1, ince ayar yapmanıza gerek kalmayacak kadar iyidir.
 
@@ -268,7 +268,7 @@ LLM'ler mevcut olsa bile klasik NER şu durumlarda kazanır:
 ### Parçalandığı yer
 
 - **Alan değişikliği.** CoNLL tarafından eğitilmiş NER, yasal sözleşmeler konusunda bir gazeteciden daha kötü performans gösteriyor. Alanınızda ince ayar yapın.
-- **İç içe geçmiş varlıklar.** "Bank of America Tower" aynı anda bir ORG ve TESİS'tir. Standart BIO, örtüşen aralıkları temsil edemez. Yuvalanmış NER'e (çok geçişli veya yayılma tabanlı modeller) ihtiyacınız vardır.
+- **İç içe geçmiş varlıklar.** "Bank of America Tower" aynı anda bir ORG ve TESİS'tir. Standart BIO, örtüşen aralıkları temsil edemez. Yuvalanmış NER'e (çoklu geçişli veya yayılma tabanlı modeller) ihtiyacınız vardır.
 - **Uzun kuruluşlar.** "Amerika Birleşik Devletleri Federal Mevduat Sigorta Kurumu." Token düzeyindeki modeller bazen bunu böler. `aggregation_strategy` veya işlem sonrası kullanın.
 - **Seyrek türler.** DRUG_BRAND, ADVERSE_EVENT, DOSE gibi tıbbi NER etiketleri. Genel amaçlı modellerin hiçbir fikri yoktur. Scistacy ve BioBERT buradaki başlangıç ​​noktalarıdır.
 
@@ -298,24 +298,24 @@ Refuse to recommend fine-tuning a transformer for under 500 labeled examples unl
 
 ## Egzersizler
 
-1. **Kolay.** `bio_to_spans`'yi (`spans_to_bio`'nin tersi) uygulayın ve 10 cümle üzerinde gidiş-dönüş tutarlılığını doğrulayın.
-2. **Medium.** Yukarıdaki sklearn-crfsuite CRF'yi CoNLL-2003 İngilizce NER dataset üzerinde eğitin. `seqeval` kullanarak varlık bazında F1 raporlayın. Tipik sonuç: ~84 F1.
-3. **Zor.** Etki alanına özgü bir NER dataset (tıbbi, hukuki veya finansal) üzerinde `distilbert-base-cased` üzerinde ince ayar yapın. spaCy küçük modeliyle karşılaştırın. Veri sızıntısı kontrollerini belgeleyin ve sizi şaşırtan şeyleri yazın.
+1. **Kolay.** `bio_to_spans`'yi (`spans_to_bio`'nin tersi) uygulayın ve 10 cümlede gidiş-dönüş tutarlılığını doğrulayın.
+2. **Medium.** Yukarıdaki sklearn-crfsuite CRF'yi CoNLL-2003 İngilizce NER dataset üzerinde eğitin. `seqeval` kullanarak varlık başına F1'i raporlayın. Tipik sonuç: ~84 F1.
+3. **Zor.** Etki alanına özgü bir NER dataset (tıbbi, hukuki veya finansal) üzerinde `distilbert-base-cased`'de ince ayar yapın. spaCy küçük modeliyle karşılaştırın. Veri sızıntısı kontrollerini belgeleyin ve sizi şaşırtan şeyleri yazın.
 
 ## Anahtar Terimler
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
-| NER | İsimleri çıkar | token aralığını türlerle (KİŞİ, ORG, GPE, DATE, ...) etiketleyin. |
+| NER | İsimleri çıkar | token aralıklarını türlerle (KİŞİ, ORG, GPE, DATE, ...) etiketleyin. |
 | BİYOGRAFİ | Etiketleme şeması | `B-X` başlıyor, `I-X` devam ediyor, `O` dışarıda. |
-| BİLO | Daha iyi Biyografi | Daha temiz sınırlar için `L-X` (son), `U-X` (birim) ekler. |
+| BİLO | Daha iyi Biyografi | Daha temiz sınırlar için `L-X` (sonuncu), `U-X` (birim) ekler. |
 | CRF | Yapılandırılmış sınıflandırıcı | Yalnızca emisyonları değil, etiketler arasındaki geçişleri de modeller. Geçerli dizileri zorlar. |
 | İç içe NER | Çakışan varlıklar | Bir açıklık onun alt-açıklığından farklı bir varlıktır. BIO bunu ifade edemez. |
-| Varlık düzeyinde F1 | Uygun NER metriği | Tahmin edilen yayılmanın gerçek yayılmayla tam olarak eşleşmesi gerekir. Token-seviye F1 doğruluğu abartıyor. |
+| Varlık düzeyinde F1 | Uygun NER metriği | Tahmin edilen yayılmanın gerçek yayılmayla tam olarak eşleşmesi gerekir. Token düzeyindeki F1 doğruluğu abartıyor. |
 
 ## Daha Fazla Okuma
 
 - [Lample ve ark. (2016). Adlandırılmış Varlık Tanıma için Sinir Mimarileri](https://arxiv.org/abs/1603.01360) — BiLSTM-CRF makalesi. Kanonik.
-- [Devlin ve ark. (2018). BERT: Derin Çift Yönlü Transformer'lerin](https://arxiv.org/abs/1810.04805) ön eğitimi — standart hale gelen token-sınıflandırma modelini tanıtır.
-- [spaCy dil özellikleri — adlandırılmış varlıklar](https://spacy.io/usage/linguistic-features#named-entities) — `Doc.ents` ve `Span` üzerindeki her öznitelik için pratik referans.
+- [Devlin ve ark. (2018). BERT: Derin Çift Yönlü Transformer'lerin ön eğitimi](https://arxiv.org/abs/1810.04805) — standart hale gelen token sınıflandırma modelini tanıtır.
+- [spaCy dil özellikleri — adlandırılmış varlıklar](https://spacy.io/usage/linguistic-features#named-entities) — `Doc.ents` ve `Span`'deki her öznitelik için pratik referans.
 - [seqeval](https://github.com/chakki-works/seqeval) — doğru metrik kitaplığı. Her zaman kullanın.

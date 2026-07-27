@@ -103,11 +103,11 @@ Sunucu işlemi yeniden başlatıldığında:
 
 ### Eşzamansız görevler artı örnekleme
 
-Bir görevin kendisi `sampling/createMessage`'yi çağırabilir. Uzun süredir devam eden araştırma görevleri bu şekilde çalışır: sunucunun görev iş parçacığı, müşterinin modelini gerektiği gibi örneklerken, müşterinin kullanıcı arayüzü, görevi periyodik ilerleme güncellemeleriyle `working` olarak gösterir.
+Bir görevin kendisi `sampling/createMessage`'yi çağırabilir. This is how long-running research tasks work: the server's task thread samples the client's model as needed, while the client's UI shows the task as `working` with periodic progress updates.
 
 ### Bu neden deneysel
 
-SEP-1686, 2025-11-25'te gönderildi ancak daha geniş yol haritası üç açık sorunu ortaya koyuyor: dayanıklı abonelik temelleri, alt görevler (ebeveyn-çocuk görev ilişkileri) ve sonuç-TTL standardizasyonu. Spesifikasyonun 2026'ya kadar gelişmesini bekleyin. Üretim kodu, Görevleri yalnızca genel durum için kararlı olarak değerlendirmeli ve alt görevler için gelecekteki SDK değişikliklerine karşı koruma sağlamalıdır.
+SEP-1686 shipped in 2025-11-25 but the broader roadmap calls out three open issues: durable subscription primitives, subtasks (parent-child task relationships), and result-TTL standardization. Expect the spec to evolve through 2026. Production code should treat Tasks as stable only for the common case and guard against future SDK changes for subtasks.
 
 ## Kullan onu
 
@@ -122,7 +122,7 @@ Neye bakmalı:
 
 ## Gönderin
 
-Bu ders `outputs/skill-task-store-designer.md`'yi üretir. Uzun süre çalışan bir araç (araştırma, derleme, dışa aktarma) verildiğinde, beceri görev deposunu tasarlar (durum şekli, ttl, dayanıklılık), doğru görev Destek bayrağını seçer ve ilerleme bildirimlerinin taslağını çizer.
+Bu ders `outputs/skill-task-store-designer.md`'yi üretir. Given a long-running tool (research, build, export), the skill designs the task store (state shape, ttl, durability), picks the right taskSupport flag, and sketches progress notifications.
 
 ## Egzersizler
 
@@ -141,7 +141,7 @@ Bu ders `outputs/skill-task-store-designer.md`'yi üretir. Uzun süre çalışan
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|------------------------|
 | Görev | "Uzun süren araç çağrısı" | Zaman uyumsuz yürütme için `_meta.task` ile artırılan istek |
-| SEP-1686 | "Görev özellikleri" | 2025-11-25'te Görevler Ekleyen Özel Gelişim Teklifi |
+| EYLÜL-1686 | "Görev özellikleri" | 2025-11-25'te Görevler Ekleyen Özel Gelişim Teklifi |
 | `_meta.task` | "Görev zarfı" | Kimlik, durum, ttl içeren istek başına meta veriler |
 | görevDestek | "Araç bayrağı" | Alet başına `forbidden` / `optional` / `required` |
 | `tasks/status` | "Anket yöntemi" | Mevcut durumu ve isteğe bağlı ilerleme ipucunu getir |

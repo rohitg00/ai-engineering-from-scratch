@@ -1,27 +1,27 @@
 # Önbelleğe Alma, Hız Sınırlama ve Maliyet Optimizasyonu
 
-> Yapay zeka girişimlerinin çoğu kötü modellerden ölmez. Kötü birim ekonomisinden ölüyorlar. Tek bir GPT-4o çağrısının maliyeti bir kuruşun çok altındadır. Günde on arama yapan on bin kullanıcının, siz tek bir dolar ödemeden önce yalnızca tokengiriş ücreti 250 ABD dolarıdır. Hayatta kalan şirketler, her API çağrısını bir function calling olarak değil, finansal bir işlem olarak ele alan şirketlerdir.
+> Yapay zeka girişimlerinin çoğu kötü modellerden ölmez. Kötü birim ekonomisinden ölüyorlar. Tek bir GPT-4o çağrısının maliyeti bir kuruşun çok altındadır. Günde on arama yapan on bin kullanıcının token girişi için tek başına 250 dolar maliyeti var; siz tek bir dolar bile ödemeden önce. Hayatta kalan şirketler, her API çağrısını bir işlev çağrısı olarak değil, finansal bir işlem olarak ele alan şirketlerdir.
 
-**Tür:** Yapım
+**Type:** Build
 **Diller:** Python
 **Önkoşullar:** Aşama 11 Ders 09 (İşlev Çağırma)
 **Süre:** ~45 dakika
-**İlgili:** Aşama 11 · 15 (Prompt Önbelleğe Alma) — bu ders, uygulama katmanı önbelleğe almayı (anlamsal önbellek, tam karma önbellek, model yönlendirme) kapsar. Ders 15, sağlayıcı katmanı prompt önbelleğe almayı (Anthropic önbellek_kontrol, OpenAI otomatik, Gemini CachedContent) kapsar. Maliyeti %50-95 oranında azaltmak için her ikisini de birleştirin.
+**İlgili:** Aşama 11 · 15 (Prompt Önbelleğe Alma) — bu ders, uygulama katmanı önbelleğe almayı (anlamsal önbellek, tam karma önbellek, model yönlendirme) kapsar. Ders 15, sağlayıcı katmanı prompt önbelleğe almayı (Antropik önbellek_kontrolü, OpenAI otomatik, Gemini CachedContent) kapsar. Maliyeti %50-95 oranında azaltmak için her ikisini de birleştirin.
 
 ## Öğrenme Hedefleri
 
 - Yeni bir API çağrısı yapmak yerine önbellekten tekrarlanan veya benzer sorgular sunan anlamsal önbelleğe alma uygulayın
-- Sağlayıcılar genelinde istek başına maliyetleri hesaplayın ve token bilinçli hız sınırlaması ve bütçe uyarıları uygulayın
+- Sağlayıcılar genelinde istek başına maliyetleri hesaplayın ve token bilinçli hız sınırlaması ve bütçe uyarılarını uygulayın
 - prompt sıkıştırma, model yönlendirme (pahalı vs ucuz) ve yanıt önbelleğe alma ile bir maliyet optimizasyon katmanı oluşturun
 - Farklı sorgu türleri için tam eşleşme, anlamsal benzerlik ve önek önbelleğe almayı kullanarak katmanlı bir önbellekleme stratejisi tasarlayın
 
 ## Sorun
 
-Bir RAG sohbet robotu oluşturursunuz. Çok güzel çalışıyor. Kullanıcılar bunu seviyor.
+Bir RAG sohbet robotu oluşturursunuz. It works beautifully. Kullanıcılar bunu seviyor.
 
 Daha sonra fatura geliyor.
 
-GPT-5'in maliyeti milyon çıktı başına $5 per million input tokens and $15'tir. Claude Opus 4.7'nin maliyeti $15 input / $75 çıktı. Gemini 3 Pro'nun maliyeti $1.25 input / $5 çıktıdır. GPT-5-mini $0.25/$2'dir. Aşağıdaki fiyatlar örnek niteliğindedir; her zaman sağlayıcının mevcut fiyatlandırma sayfasını kontrol edin.
+GPT-5'in maliyeti milyon çıktı başına $5 per million input tokens and $15'tir. Claude Opus 4.7'nin maliyeti $15 input / $75 çıktısıdır. Gemini 3 Pro'nun $1.25 input / $5 çıktı maliyeti vardır. GPT-5-mini $0.25/$2'dir. Aşağıdaki fiyatlar örnek niteliğindedir; her zaman sağlayıcının mevcut fiyatlandırma sayfasını kontrol edin.
 
 İşte startupları öldüren matematik:
 
@@ -34,7 +34,7 @@ GPT-5'in maliyeti milyon çıktı başına $5 per million input tokens and $15't
 **Günlük çıktı maliyeti:** 10.000 x 10 x 500 / 1.000.000 x $10.00 = **$500/gün**
 **Aylık toplam:** **22.500$/ay**
 
-Bu sadece LLM. embedding'ları, vector database barındırmayı, altyapıyı ekleyin. Bir chatbot için ayda 30.000 dolara bakıyorsunuz.
+Bu sadece Yüksek Lisans. embedding'leri, vector database barındırma ve altyapıyı ekleyin. Bir chatbot için ayda 30.000 dolara bakıyorsunuz.
 
 Acımasız kısım: Bu sorguların %40-60'ı neredeyse kopyalardır. Kullanıcılar aynı soruları biraz farklı kelimelerle soruyorlar. Her istekte aynı olan prompt sisteminiz her seferinde faturalandırılır. RAG tarafından alınan bağlam belgeleri, aynı konuyu soran kullanıcılar arasında tekrarlanır.
 
@@ -42,7 +42,7 @@ Gereksiz hesaplamanın tam bedelini ödüyorsunuz.
 
 ## Konsept
 
-### LLM Çağrısının Maliyet Anatomisi
+### Yüksek Lisans Çağrısının Maliyet Anatomisi
 
 Her API çağrısının beş maliyet bileşeni vardır.
 
@@ -58,7 +58,7 @@ graph LR
     F --> G[Output Cost<br/>$10.00/1M tokens]
 ```
 
-Sistem prompt'ler sessiz katillerdir. Her istekle birlikte gönderilen 1.500-token'lik bir sistem prompt, hiç değişmeyen metin için $3.75 per million requests just for that prefix. At 100K requests per day, that is $375/gün -- 11.250 $/ay -- maliyete sahiptir.
+Sistem prompt'ler sessiz katildir. Her istekle birlikte gönderilen 1.500 token sistemi prompt'nin maliyeti hiç değişmeyen metin için $3.75 per million requests just for that prefix. At 100K requests per day, that is $375/gün - ayda 11.250 ABD dolarıdır.
 
 ### Sağlayıcı Önbelleğe Alma: Yerleşik İndirimler
 
@@ -66,11 +66,11 @@ Sistem prompt'ler sessiz katillerdir. Her istekle birlikte gönderilen 1.500-tok
 
 | Sağlayıcı | Mekanizma | İndirim | Asgari | Önbellek Süresi |
 |----------|-----------|----------|---------|----------------|
-| Anthropic | Açık önbellek_kontrol işaretleri | Önbellek isabetlerinde %90 (yazma sırasında ekstra %25 ödeyin) | 1.024 tokens (Sonnet/Opus), 2.048 (Haiku) | 5 dakikalık varsayılan; 1 saat uzatılmış (2 kat yazma primi) |
-| OpenAI | Otomatik önek eşleştirme | Önbellek isabetlerinde %50 | 1.024 tokens | 1 saate kadar en iyi çaba |
+| Antropik | Açık önbellek_kontrol işaretleri | Önbellek isabetlerinde %90 (yazma sırasında ekstra %25 ödeyin) | 1.024 token (Sonnet/Opus), 2.048 (Haiku) | 5 dakikalık varsayılan; 1 saat uzatılmış (2 kat yazma primi) |
+| OpenAI | Otomatik önek eşleştirme | Önbellek isabetlerinde %50 | 1.024 token | 1 saate kadar en iyi çaba |
 | Google İkizler | Açık Önbelleğe Alınmış İçerik API'si | ~%75 indirim (artı depolama) | 4.096 (Flaş) / 32.768 (Pro) | Kullanıcı tarafından yapılandırılabilir TTL |
 
-**Anthropic'in yaklaşımı** açıktır. prompt'nızın bölümlerini `cache_control: {"type": "ephemeral"}` ile işaretlersiniz. İlk istek %25 yazma primi öder. Aynı önekle yapılan sonraki talepler %90 indirim alır. Önbellek isabetlerinde maliyeti $0.005 normally costs $0,000625 olan 2.000-token sistem prompt. 100.000'den fazla istek, günde 437,50 ABD doları tasarruf sağlar.
+**Antropik'in yaklaşımı** açıktır. prompt'nizin bölümlerini `cache_control: {"type": "ephemeral"}` ile işaretlersiniz. İlk istek %25 yazma primi öder. Aynı önekle yapılan sonraki talepler %90 indirim alır. Önbellek isabetlerinde $0.005 normally costs $0,000625 maliyete sahip 2.000 token sistemi prompt. 100.000'den fazla istek, günde 437,50 ABD doları tasarruf sağlar.
 
 **OpenAI'nin yaklaşımı** otomatiktir. Önceki bir istekle eşleşen herhangi bir prompt öneki %50 indirim alır. İşaretçiye gerek yok. Takas: daha az indirim, daha az kontrol, ancak sıfır uygulama çabası.
 
@@ -91,7 +91,7 @@ flowchart TD
     D --> G
 ```
 
-embedding maliyetleri ihmal edilebilir düzeydedir. OpenAI'nin text-embedding-3-smale maliyeti milyon token başına 0,02 ABD dolarıdır. Önbelleği kontrol etmenin tam bir LLM çağrısıyla karşılaştırıldığında neredeyse hiçbir maliyeti yoktur.
+embedding maliyetleri ihmal edilebilir. OpenAI'nin text-embedding-3-smale'sinin maliyeti milyon token başına 0,02 dolar. Önbelleği kontrol etmenin tam bir LLM çağrısıyla karşılaştırıldığında neredeyse hiçbir maliyeti yoktur.
 
 ### Tam Önbelleğe Alma: Karma ve Eşleştirme
 
@@ -99,16 +99,16 @@ Deterministik çağrılar için (sıcaklık=0, aynı model, aynı prompt), tam �
 
 Bu aşağıdakiler için mükemmel çalışır:
 - Sistem prompt + sabit içerik + aynı kullanıcı sorguları
-- Aynı araç tanımlarıyla function calling
+- Aynı araç tanımlarıyla işlev çağrısı
 - Aynı belgenin birden çok kez işlendiği toplu işleme
 
 ### Oran Sınırlaması: Bütçenizi Korumak
 
 Hız sınırlaması sadece adaletle ilgili değildir. Bu hayatta kalmayla ilgili.
 
-**Token paket algoritması:** her kullanıcı, saniyede R hızıyla yeniden doldurulan N token'lik bir paket alır. Bir istek paketteki token'leri tüketir. Kova boşsa istek reddedilir. Bu, ortalama bir hızı uygularken patlamalara (tüm kovayı bir kerede kullanın) izin verir.
+**Token kova algoritması:** her kullanıcı, saniyede R hızında yeniden doldurulan N adet token paketi alır. Bir istek, paketteki token'leri tüketir. Kova boşsa istek reddedilir. Bu, ortalama bir hızı uygularken patlamalara (tüm kovayı bir kerede kullanın) izin verir.
 
-**Kullanıcı başına kotalar:** Kullanıcı katmanı başına günlük/aylık token limitleri ayarlayın.
+**Kullanıcı başına kotalar:** Kullanıcı katmanı başına günlük/aylık token limitlerini ayarlayın.
 
 | Seviye | Günlük Token Limiti | Maksimum İstek/dak | Model Erişimi |
 |------|------------------|------------------|-------------|
@@ -120,7 +120,7 @@ Hız sınırlaması sadece adaletle ilgili değildir. Bu hayatta kalmayla ilgili
 
 Her sorgunun GPT-4o'ya ihtiyacı yoktur.
 
-"Mağaza saat kaçta kapanıyor?" $10/M-output model. GPT-4o-mini at $0,60/M çıkışı gerektirmez, bunu mükemmel bir şekilde halleder. Claude Haiku 1,25$/milyon çıkışla bunu hallediyor. Basit bir sınıflandırıcı, ucuz sorguları ucuz modellere, karmaşık sorguları ise pahalı modellere yönlendirir.
+"Mağaza saat kaçta kapanıyor?" $10/M-output model. GPT-4o-mini at $0.60/M çıkışı gerektirmez, bunu mükemmel şekilde gerçekleştirir. Claude Haiku 1,25$/milyon çıkışla bunu hallediyor. Basit bir sınıflandırıcı, ucuz sorguları ucuz modellere, karmaşık sorguları ise pahalı modellere yönlendirir.
 
 ```mermaid
 flowchart TD
@@ -138,11 +138,11 @@ flowchart TD
 
 - Zaman damgası
 - Model adı
-- token'ları girin
-- Çıkış tokens
+- token'leri girin
+- token çıktısı
 - Gecikme (ms)
 - Hesaplanan maliyet ($)
-- Kullanıcı kimliği
+- Kullanıcı Kimliği
 - Önbellek isabeti/kaçırması
 - Talep kategorisi
 
@@ -158,7 +158,7 @@ Toplu işlemi şunun için kullanın:
 - Değerlendirme çalıştırmaları
 - Veri zenginleştirme hatları
 
-Şunlar için uygun değildir: kullanıcıya yönelik gerçek zamanlı sorgular (gecikme önemlidir).
+Şunun için değil: gerçek zamanlı, kullanıcıya yönelik sorgular (gecikme önemlidir).
 
 ### Bütçe Uyarıları ve Devre Kesiciler
 
@@ -177,13 +177,13 @@ Bu teknikleri sırasıyla uygulayın. Her katman öncekilerle birleşir.
 |-------|-----------|----------------|----------------------|
 | 1 | Sağlayıcı prompt önbelleğe alma | %30-50 | Düşük (önbellek işaretçileri ekleyin) |
 | 2 | Tam önbelleğe alma | %10-20 | Düşük (hash + dict) |
-| 3 | Anlamsal önbelleğe alma | %15-30 | Orta (embedding'lar + benzerlik) |
+| 3 | Anlamsal önbelleğe alma | %15-30 | Orta (embedding'ler + benzerlik) |
 | 4 | Model yönlendirme | %40-70 | Orta (sınıflandırıcı) |
-| 5 | Hız sınırlama | Bütçe koruması | Düşük (token paket) |
-| 6 | Prompt sıkıştırma | %10-30 | Orta (prompt'ları yeniden yazın) |
+| 5 | Hız sınırlama | Bütçe koruması | Düşük (token kova) |
+| 6 | Prompt sıkıştırma | %10-30 | Orta (prompt'leri yeniden yazın) |
 | 7 | Gruplama | Uygunluk oranlarında %50 | Düşük (toplu API) |
 
-1-5. katmanları uygulayan bir RAG uygulaması genellikle maliyetleri ayda $22,500/month to $4.000-6.000'den azaltır. Pist yakmak ile iş kurmak arasındaki fark budur.
+1-5. katmanları uygulayan bir RAG uygulaması genellikle maliyetleri $22,500/month to $4.000-6.000/ay'a kadar azaltır. Pist yakmak ile iş kurmak arasındaki fark budur.
 
 ### Gerçek Tasarruf: Öncesi ve Sonrası
 
@@ -191,21 +191,21 @@ Bu teknikleri sırasıyla uygulayın. Her katman öncekilerle birleşir.
 
 | Metrik | Optimizasyondan Önce | Optimizasyondan Sonra | Tasarruf |
 |--------|--------------------|--------------------|---------|
-| Aylık LLM maliyeti | $22,500 | $5.200 | %77 |
-| Sorgu başına ortalama maliyet | $0.0075 | $0,0017 | %77 |
+| Aylık LLM maliyeti | $22,500 | $5,200 | %77 |
+| Sorgu başına ortalama maliyet | $0.0075 | $0.0017 | %77 |
 | Önbellek isabet oranı | %0 | %52 | -- |
 | Mini'ye yönlendirilen sorgular | %0 | %65 | -- |
 | P95 gecikmesi | 2.800ms | 900 ms (önbellek isabeti: 50 ms) | %68 |
-| Aylık embedding maliyet | $0 | $180 | (yeni maliyet) |
+| Aylık embedding maliyeti | $0 | $180 | (yeni maliyet) |
 | Toplam aylık maliyet | $22,500 | $5,380 | %76 |
 
-Anlamsal önbelleğe almanın embedding maliyeti (ayda 180 ABD doları), önbellek isabetlerinden sonraki ilk saat içinde kendini amorti eder.
+Anlamsal önbelleğe almanın embedding maliyeti (ayda 180 ABD doları), önbellek isabetlerinin ilk saatinde kendini amorti eder.
 
 ## İnşa Et
 
 ### Adım 1: Maliyet Hesaplayıcı
 
-Başlıca modellerin mevcut fiyatlarını bilen bir token maliyet hesaplayıcısı oluşturun.
+Başlıca modellerin güncel fiyatlarını bilen bir token maliyet hesaplayıcısı oluşturun.
 
 ```python
 import hashlib
@@ -384,7 +384,7 @@ class SemanticCache:
 
 ### Adım 4: Hız Sınırlayıcı
 
-Kullanıcı başına kotalara sahip Token paket hızı sınırlayıcısı.
+Kullanıcı başına kotalara sahip Token paket hızı sınırlayıcı.
 
 ```python
 class TokenBucketRateLimiter:
@@ -750,7 +750,7 @@ if __name__ == "__main__":
 
 ## Kullan onu
 
-### Anthropic Prompt Önbelleğe Alma
+### Antropik Prompt Önbelleğe Alma
 
 ```python
 # import anthropic
@@ -797,7 +797,7 @@ if __name__ == "__main__":
 # print(f"Completion tokens: {response.usage.completion_tokens}")
 ```
 
-OpenAI otomatik olarak önbelleğe alınır. Son istekle eşleşen 1.024+ token'den oluşan herhangi bir prompt öneki %50 indirim alır. Kod değişikliğine gerek yok -- çalıştığını doğrulamak için yanıtta `prompt_tokens_details.cached_tokens` öğesini kontrol etmeniz yeterli.
+OpenAI otomatik olarak önbelleğe alınır. Son istekle eşleşen 1.024'ten fazla token'den oluşan herhangi bir prompt öneki %50 indirim alır. Kod değişikliğine gerek yok; çalıştığını doğrulamak için yanıttaki `prompt_tokens_details.cached_tokens`'yi kontrol etmeniz yeterli.
 
 ### OpenAI Toplu API'si
 
@@ -828,7 +828,7 @@ OpenAI otomatik olarak önbelleğe alınır. Son istekle eşleşen 1.024+ token'
 # print(f"Batch ID: {batch.id}, Status: {batch.status}")
 ```
 
-Toplu API, tüm token'larda sabit %50 indirim sağlar. Sonuçlar 24 saat içinde ulaşıyor. Gerçek zamanlı olmayan iş yükleri için mükemmeldir: değerlendirmeler, veri etiketleme, toplu özetleme.
+Batch API, tüm token'lerde sabit %50 indirim sağlar. Sonuçlar 24 saat içinde ulaşıyor. Gerçek zamanlı olmayan iş yükleri için mükemmeldir: değerlendirmeler, veri etiketleme, toplu özetleme.
 
 ### Redis ile Üretim Semantik Önbelleği
 
@@ -863,15 +863,15 @@ Toplu API, tüm token'larda sabit %50 indirim sağlar. Sonuçlar 24 saat içinde
 
 ## Gönderin
 
-Bu ders, LLM başvurunuzu analiz eden ve öngörülen tasarruflarla birlikte belirli maliyet optimizasyonları öneren yeniden kullanılabilir bir prompt olan `outputs/prompt-cost-optimizer.md`'ı üretir.
+Bu ders, LLM başvurunuzu analiz eden ve öngörülen tasarruflarla birlikte belirli maliyet optimizasyonları öneren, yeniden kullanılabilir bir prompt olan `outputs/prompt-cost-optimizer.md`'yi üretir.
 
-Aynı zamanda, kullanım durumunuz için doğru önbellekleme stratejisini, hız sınırlama yapılandırmasını ve model yönlendirme kurallarını seçmek için bir karar framework olan `outputs/skill-cost-patterns.md` üretir.
+Ayrıca, kullanım durumunuz için doğru önbellekleme stratejisini, hız sınırlama yapılandırmasını ve model yönlendirme kurallarını seçmek için bir framework kararı olan `outputs/skill-cost-patterns.md`'yi de üretir.
 
 ## Egzersizler
 
 1. **Anlamsal önbellek için LRU tahliyesini uygulayın.** En eski-ilk tahliyeyi en az kullanılanla değiştirin. Her giriş için son erişim zamanını takip edin ve önbellek dolduğunda en eski erişim zamanına sahip girişi çıkarın. 100 sorgu üzerinden iki strateji arasındaki isabet oranlarını karşılaştırın.
 
-2. **Bir maliyet tahmin aracı oluşturun.** API çağrılarının bir günlüğü (CostTracker günlükleri) göz önüne alındığında, aylık maliyeti son 7 günlük ortalamaya göre tahmin edin. Hafta içi/hafta sonu kalıplarını hesaba katın. Tahmini aylık maliyet bütçeyi %20'den fazla aşarsa bir uyarı tetikleyin.
+2. **Bir maliyet tahmin aracı oluşturun.** API çağrılarının bir günlüğü (CostTracker günlükleri) göz önüne alındığında, aylık maliyeti son 7 günlük ortalamaya göre tahmin edin. Hafta içi/hafta sonu kalıplarını hesaba katın. Öngörülen aylık maliyet bütçeyi %20'den fazla aşarsa bir uyarı tetikleyin.
 
 3. **Kademeli anlamsal önbelleğe alma uygulayın.** İki benzerlik eşiği kullanın: Yüksek güvenirliğe sahip isabetler için 0,98 (hemen geri dönün) ve orta güvenirliğe sahip isabetler için 0,90 (sorumluluk reddi beyanıyla geri dönün: "Önceki benzer bir soruya dayanarak..."). Her bir isabetin hangi seviyeden geldiğini takip edin ve kullanıcı memnuniyeti farklılıklarını ölçün.
 
@@ -883,26 +883,26 @@ Aynı zamanda, kullanım durumunuz için doğru önbellekleme stratejisini, hız
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| Prompt önbelleğe alma | "prompt sistemini önbelleğe al" | Tekrarlanan prompt öneklerinin indirim aldığı sağlayıcı düzeyinde önbelleğe alma (%90 Anthropic, %50 OpenAI) - OpenAI için kod değişikliği yok, Anthropic için açık işaretler |
-| Anlamsal önbelleğe alma | "Akıllı önbelleğe alma" | Embedding sorgu, geçmiş sorgularla benzerliği hesaplama ve benzerlik bir eşiği aşarsa önbelleğe alınmış yanıtı döndürme - tam eşleşmenin kaçırdığı açıklamaları yakalar |
-| Tam önbelleğe alma | "Karma önbelleğe alma" | Tam prompt (model + mesajlar + sıcaklık) karma işlemi yapmak ve aynı girişler için önbelleğe alınmış yanıtı döndürmek -- yalnızca sıcaklık=0 deterministik çağrılar için işe yarar |
-| Token paket | "Hız sınırlayıcı" | Her kullanıcının saniyede R hızıyla yeniden doldurulan N token'lik bir kümesine sahip olduğu bir algoritma, ortalama R | oranını uygularken N'ye kadar patlamalara izin verir.
+| Prompt önbelleğe alma | "prompt sistemini önbelleğe alın" | Tekrarlanan prompt öneklerinin indirim aldığı sağlayıcı düzeyinde önbellekleme (%90 Antropik, %50 OpenAI) - OpenAI için kod değişikliği yok, Antropik için açık işaretler |
+| Anlamsal önbelleğe alma | "Akıllı önbelleğe alma" | Embedding sorgu, geçmiş sorgularla benzerliği hesaplıyor ve benzerlik bir eşiği aşarsa önbelleğe alınmış yanıtı döndürüyor - tam eşleşmenin kaçırdığı açıklamaları yakalıyor |
+| Tam önbelleğe alma | "Karma önbelleğe alma" | prompt'nin tamamının (model + mesajlar + sıcaklık) karma hale getirilmesi ve aynı girişler için önbelleğe alınmış yanıtın döndürülmesi - yalnızca sıcaklık=0 deterministik çağrılar için işe yarar |
+| Token kova | "Hız sınırlayıcı" | Her kullanıcının saniyede R hızıyla yeniden doldurulan N token kümesine sahip olduğu bir algoritma, ortalama R | oranını uygularken N'ye kadar patlamalara izin verir.
 | Model yönlendirme | "Ucuz Skate yönlendirme" | Basit sorguları ucuz modellere (GPT-4o-mini, Haiku) ve karmaşık sorguları pahalı modellere (GPT-4o, Opus) göndermek için bir sınıflandırıcı kullanmak - model maliyetlerinde %40-70 tasarruf sağlar |
-| Maliyet takibi | "Ölçüm" | Her API çağrısını model, token'ler, gecikme, maliyet ve kullanıcı kimliğiyle günlüğe kaydediyor; böylece paranın tam olarak nereye gittiğini ve hangi özelliklerin pahalı olduğunu biliyorsunuz |
+| Maliyet takibi | "Ölçüm" | Her API çağrısını model, token'ler, gecikme süresi, maliyet ve kullanıcı kimliğiyle günlüğe kaydederek paranın tam olarak nereye gittiğini ve hangi özelliklerin pahalı olduğunu bilirsiniz |
 | Devre kesici | "Anahtarı sonlandır" | Harcama bütçe sınırına yaklaştığında hizmeti otomatik olarak düşürme (daha ucuz modeller, yalnızca önbelleğe alınmış) veya istekleri tamamen durdurma |
 | Toplu API | "Toplu indirim" | OpenAI'nin eşzamansız işlemesi %50 indirimli - 50.000'e kadar istek gönderin, sonuçları 24 saat içinde alın |
-| Prompt sıkıştırma | "Token diyet" | Anlamı korurken sistem prompt'leri ve bağlamı daha az token kullanacak şekilde yeniden yazmak - daha kısa prompt'ler daha az maliyetlidir ve genellikle daha iyi performans gösterir |
+| Prompt sıkıştırma | "Token diyeti" | Anlamı korurken daha az token kullanmak için sistem prompt'leri ve bağlamı yeniden yazma - daha kısa prompt'ler daha az maliyetlidir ve genellikle daha iyi performans gösterir |
 | Önbellek isabet oranı | "Önbellek verimliliği" | LLM'yi çağırmak yerine önbellekten sunulan isteklerin yüzdesi - %40-60, üretim sohbet robotları için tipiktir, orantılı olarak maliyetten tasarruf sağlar |
 
 ## Daha Fazla Okuma
 
-- [Anthropic Prompt Önbelleğe Alma Kılavuzu](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) -- Anthropic'in açık önbellek_kontrol işaretleyicileri, fiyatlandırması ve önbellek kullanım ömrü davranışına ilişkin resmi belgeler
+- [Anthropic Prompt Önbelleğe Alma Kılavuzu](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) -- Anthropic'in açık önbellek_kontrol işaretleyicileri, fiyatlandırması ve önbellek ömrü davranışına ilişkin resmi belgeler
 - [OpenAI Prompt Önbelleğe Alma](https://platform.openai.com/docs/guides/prompt-caching) -- OpenAI'nin otomatik önbelleğe alması, kullanım alanları aracılığıyla önbellek isabetlerinin nasıl doğrulanacağı ve minimum önek uzunlukları
-- [OpenAI Batch API](https://platform.openai.com/docs/guides/batch) -- Eşzamansız işleme, JSONL biçimi, 24 saatlik tamamlanma aralığı ve 50.000 istek limiti için %50 indirim
-- [GPTCache](https://github.com/zilliztech/GPTCache) -- birden fazla embedding arka ucu, vektör deposunu ve tahliye politikasını destekleyen açık kaynaklı anlamsal önbelleğe alma kitaplığı
-- [Martian Model Router](https://docs.withmartian.com) -- her sorguyu işleyebilecek en ucuz modeli otomatik olarak seçen üretim modeli yönlendirmesi
+- [OpenAI Batch API](https://platform.openai.com/docs/guides/batch) -- Eşzamansız işleme, JSONL biçimi, 24 saatlik tamamlama aralığı ve 50.000 istek limiti için %50 indirim
+- [GPTCache](https://github.com/zilliztech/GPTCache) -- birden fazla embedding arka ucunu, vektör depolarını ve tahliye politikalarını destekleyen açık kaynaklı anlamsal önbelleğe alma kitaplığı
+- [Martian Model Router](https://docs.withmartian.com) -- her sorguyu gerçekleştirebilecek en ucuz modeli otomatik olarak seçen üretim modeli yönlendirmesi
 - [Not Diamond](https://www.notdiamond.ai) -- Sağlayıcılar arasındaki maliyet/kalite değişimlerini optimize etmek için trafik modellerinizden öğrenen makine öğrenimi tabanlı model yönlendirici
 - [Helicone](https://www.helicone.ai) -- Proxy katmanı olarak maliyet izleme, önbelleğe alma, hız sınırlama ve bütçe uyarıları içeren LLM observability platformu
 - [Dean ve Barroso, "The Tail at Scale" (CACM 2013)](https://research.google/pubs/the-tail-at-scale/) -- gecikme, aktarım hızı, TTFT/TPOT yüzdelikleri ve korunan istekler; "Hala P95'i karşılayan en ucuz modeli seçin"in arkasındaki maliyet modeli.
 - [Kwon ve diğerleri, "PagedAttention ile Hizmet Veren Büyük Dil Modeli için Verimli Bellek Yönetimi" (SOSP 2023)](https://arxiv.org/abs/2309.06180) -- vLLM makalesi; Disk belleğine alınan KV-önbellek + sürekli toplu işlem, "önbellekleme ve maliyet" altındaki alt katman olan verim açısından neden saf sunucuları 24 kat geride bırakıyor?
-- [Dao ve diğerleri, "FlashAttention-2: Daha İyi Paralellik ve İş Bölümlendirmeyle Daha Hızlı Dikkat" (ICLR 2024)](https://arxiv.org/abs/2307.08691) -- prompt önbelleğe almaya dik çekirdek düzeyinde maliyet düşüşü; Tam maliyet eğrisi resmi için spekülatif kod çözme ve GQA ile birlikte okuyun.
+- [Dao ve diğerleri, "FlashAttention-2: Daha İyi Paralellik ve İş Bölümlendirmeyle Daha Hızlı Dikkat" (ICLR 2024)](https://arxiv.org/abs/2307.08691) -- prompt önbelleğe almaya dik çekirdek düzeyinde maliyet azaltma; Tam maliyet eğrisi resmi için spekülatif kod çözme ve GQA ile birlikte okuyun.

@@ -9,16 +9,16 @@
 
 ## Öğrenme Hedefleri
 
-- Llama 3, Mistral, Mixtral, Gemma 2, Qwen 2.5 ve DeepSeek-V3'ün config.json değerini okuyun ve her alanı açıklayın
-- Her modelin GPT-2 Small'a göre yaptığı spesifik mimari değişikliği adlandırın ve bunu ilk ilkelere göre gerekçelendirin
+- Llama 3, Mistral, Mixtral, Gemma 2, Qwen 2.5 ve DeepSeek-V3'ün config.json'sini okuyun ve her alanı açıklayın
+- Her modelin GPT-2 Small'a göre yaptığı belirli mimari değişikliği adlandırın ve bunu ilk ilkelere göre gerekçelendirin
 - Yalnızca yapılandırmasından herhangi bir açık model için parametre sayısını, KV önbellek boyutunu ve etkinleştirme belleğini hesaplayın
-- Gecikme, bellek ve yetenek kısıtlamalarına göre deployment hedefi için doğru açık modeli seçin
+- Gecikme, bellek ve yetenek kısıtlamaları dikkate alındığında deployment hedefi için doğru açık modeli seçin
 
 ## Sorun
 
 Ders 04'te 350 satır numpy yazdınız ve GPT-2 şeklinde bir modele sahip oldunuz. Llama 3 405B'nin 200 sayfalık teknik raporu bulunmaktadır. İçgüdüleriniz bunların farklı canavarlar olduğu yönünde. Değiller. 200 sayfa, aynı nesneyi beş veya altı iyi motive edilmiş değişiklikle ve ayrıca ölçeklendirmeyle ilgili binlerce uygulama ayrıntısıyla anlatıyor. İskelet - embedding, transformer bloklar, dikkat, MLP, norm, kafa - değişmedi.
 
-Bu ders bir farktır. Her büyük açık model ailesi için GPT-2'ye göre neyin değiştiğini, nedenini ve maliyetini tam olarak listeliyoruz. İşiniz bittiğinde yeni bir model kartını okuyabilir ve bunu zihinsel olarak GPT-2 temel çizgisine çevirebilirsiniz.
+Bu ders bir farktır. Her büyük açık model ailesi için GPT-2'ye göre neyin değiştiğini, nedenini ve maliyetini tam olarak listeliyoruz. İşiniz bittiğinde yeni bir model kartı okuyabilir ve onu zihinsel olarak GPT-2 temel çizgisine çevirebilirsiniz.
 
 Pratik getirisi şu ki, Meta Llama 5'i veya DeepSeek V4'ü yayınladığında yeni bir zihinsel modele ihtiyacınız olmayacak. Yapılandırmaya bakacak, iyi bilinen düğmelerden hangilerinin hareket ettiğini görecek ve bunun aşağı yönlü etkilerinin neler olduğunu bileceksiniz. 2026 mimarileri sınırlı bir araç kutusudur. Her yeni model farklı bir alt kümeyi seçer.
 
@@ -30,7 +30,7 @@ Tüm otoregresif açık modeller şunları paylaşır:
 
 - Token embedding matrisi (vocab_size x Hidden_dim).
 - N kod çözücü blok yığını: norm, kişisel dikkat, artık, norm, MLP, artık.
-- Vocab_size'ye yansıtılan son norm ve doğrusal kafa (genellikle embeddings ile ağırlığa bağlıdır).
+- Son norm ve vocab_size'ye yansıtılan doğrusal kafa (genellikle embedding'lerle ağırlık bağlantılıdır).
 - Nedensel maske, sonraki-token çapraz entropi kaybı.
 
 Şekil budur. Gerisi düğmelerdir.
@@ -46,7 +46,7 @@ Her 2024-2026 sınır açık modelinde aynı altı tasarım seçeneği tekrar te
 5. **Yoğun ve seyrek MLP.** Yoğun -> Uzmanların Karması.
 6. **Norm öncesi yerleştirme.** Norm öncesi konaklamalar. Post-norm bitti.
 
-Diğer her şey (öğrenme hızı çizelgesi, veri karışımı, toplu iş boyutu, bağlam uzunluğu) mimaride değil, eğitim yapılandırmasında bulunur. Altı düğme.
+Diğer her şey (öğrenme hızı çizelgesi, veri karışımı, toplu iş boyutu, bağlam uzunluğu) mimaride değil eğitim yapılandırmasında bulunur. Altı düğme.
 
 ### Düğme 1: RMSNorm
 
@@ -62,9 +62,9 @@ Maliyet: yok. Avantajı: küçük çıktı kazancı, daha basit kod.
 
 ### Düğme 2: Halat
 
-Öğrenilen konum embedding'lar, GPT-2'deki 1024 yuvalı bir arama tablosuydu. Bağlam 1025 tablonun sonundadır. Modeller eğitim sürelerinin ötesinde tahminde bulunamaz.
+Öğrenilen konum embedding'ler, GPT-2'de 1024 yuvalı bir arama tablosuydu. Bağlam 1025 tablonun sonundadır. Modeller eğitim sürelerinin ötesinde tahminde bulunamaz.
 
-Döner Konum Embedding (RoPE, Su ve diğerleri 2021), her Q ve K vektörünü dikkat nokta çarpımından önce çiftler halinde döndürerek konumu enjekte eder. Dönme açısı, konumun deterministik bir fonksiyonudur, dolayısıyla öğrenilecek veya bitecek hiçbir şey yoktur. Ölçeklendirme hileleriyle (NTK uyumlu enterpolasyon, YaRN), 8k bağlamında eğitilmiş bir model, mütevazı bir doğruluk kaybıyla inference'da 128k'ye kadar uzanabilir.
+Döner Konum Embedding (RoPE, Su ve diğerleri 2021), her Q ve K vektörünü dikkat nokta çarpımından önce çiftler halinde döndürerek konumu enjekte eder. Dönme açısı, konumun deterministik bir fonksiyonudur, dolayısıyla öğrenilecek veya bitecek hiçbir şey yoktur. Ölçeklendirme hileleriyle (NTK uyumlu enterpolasyon, YaRN), 8k bağlamında eğitilmiş bir model, mütevazı bir doğruluk kaybıyla inference'de 128k'ye kadar uzanabilir.
 
 ```
 q_rotated = rotate(q, angle(pos))
@@ -76,19 +76,19 @@ Her Llama, Mistral, Qwen, DeepSeek ve Gemma RoPE kullanır. Gemma 2 bir hibrit k
 
 ### Düğme 3: SwiGLU
 
-GPT-2'nin MLP'si `x -> gelu(xW1 + b1) -> (...)W2 + b2`. SwiGLU (Shazeer 2020), aktivasyonu kapılı bir ürünle değiştirir:
+GPT-2'nin MLP'si `x -> gelu(xW1 + b1) -> (...)W2 + b2`'dir. SwiGLU (Shazeer 2020), aktivasyonu kapılı bir ürünle değiştirir:
 
 ```
 SwiGLU(x) = (xW1) * sigmoid(xW1) * xV
 ```
 
-Swish aktivasyonu tarafından kapılanan bir yerine paralel iki projeksiyon. Parametre başına şaşkınlık konusunda ampirik olarak daha güçlü. Llama 2 bunu benimsedi ve herkes onu takip etti. MLP'nin gizli boyutu genellikle toplam parametre sayısı orijinal yoğun MLP ile eşleşecek şekilde ayarlanır: GPT-2 `ff_dim = 4 * hidden` kullanıyorsa, SwiGLU `ff_dim = (2/3) * 4 * hidden = 8/3 * hidden` kullanır.
+Swish aktivasyonu tarafından kapılanan bir yerine paralel iki projeksiyon. Parametre başına şaşkınlık konusunda ampirik olarak daha güçlü. Lama 2 bunu benimsedi ve herkes onu takip etti. MLP'nin gizli boyutu genellikle toplam parametre sayısı orijinal yoğun MLP ile eşleşecek şekilde ayarlanır: GPT-2 `ff_dim = 4 * hidden` kullanıyorsa, SwiGLU `ff_dim = (2/3) * 4 * hidden = 8/3 * hidden` kullanır.
 
 ### Düğme 4: Dikkat Kafa Paylaşımı
 
 GPT-2 kullanıldı **Çok Kafalı Dikkat (MHA)**: her kafanın kendi Q, K, V projeksiyonu vardır.
 
-**Çoklu Sorgu Dikkati (MQA, Shazeer 2019)** tüm kafalarda bir K ve bir V'yi paylaşır. KV önbelleğini num_heads oranında keser; bu, tipik bir modelde 12 ila 32 kat arası bir azalmadır. Sabit benchmark'lerde doğruluk biraz düşer.
+**Çoklu Sorgu Dikkati (MQA, Shazeer 2019)** tüm kafalarda bir K ve bir V'yi paylaşır. KV önbelleğini num_heads oranında keser; bu, tipik bir modelde 12 ila 32 kat arası bir azalmadır. Doğruluk, sert benchmark'lerde biraz düşer.
 
 **Gruplandırılmış Sorgu Dikkati (GQA, Ainslie ve diğerleri 2023)** orta yoldur: Q kafalarının G grupları bir K ve bir V'yi paylaşır. Llama 3 8B, 32 Q kafası ve 8 KV kafası (G=8) ile GQA kullanır, dolayısıyla KV önbelleği tam MHA'ya kıyasla 4 kat küçülür.
 
@@ -105,7 +105,7 @@ GPT-2 kullanıldı **Çok Kafalı Dikkat (MHA)**: her kafanın kendi Q, K, V pro
 
 ### Düğme 5: Uzmanların Karışımı
 
-Yoğun bir MLP, her token için tüm parametrelerini etkinleştirir. Bir MoE MLP'de blok başına K uzman ve token başına en iyi k uzmanları (genellikle ilk 2) seçen bir yönlendirici bulunur. Yalnızca bu uzmanların ağırlıkları bu token için bir ileri pas görüyor.
+Yoğun bir MLP, her token için tüm parametrelerini etkinleştirir. Bir MoE MLP'de blok başına K uzman ve token başına en iyi k uzmanları (genellikle ilk 2) seçen bir yönlendirici bulunur. Yalnızca uzmanların ağırlıkları bu token için ileri bir geçiş görüyor.
 
 ```
 router_logits = xW_r
@@ -113,7 +113,7 @@ indices, weights = top_k(router_logits, k=2)
 output = sum_i weights[i] * expert[indices[i]](x)
 ```
 
-Çekici tarafı: her biri 7B boyutunda 64 uzmana sahip olabilirsiniz (yani toplam parametre sayısı çok büyüktür), ancak token başına yalnızca 2 tanesini çalıştırabilirsiniz (böylece her-token hesaplama yoğun bir 7B modeliyle eşleşir). Mixtral 8x7B'nin toplam 47B parametresi vardır ancak token başına yalnızca 13B'yi etkinleştirir. DeepSeek-V3'ün toplam 671B parametresi vardır ancak token başına yalnızca 37B'yi etkinleştirir.
+Cazibe: token başına yalnızca 2 tanesini çalıştırırken (yani token başına hesaplama yoğun bir 7B modeliyle eşleşirken) her biri 7B boyutunda 64 uzmana sahip olabilirsiniz (yani toplam parametre sayısı çok büyüktür). Mixtral 8x7B'nin toplam 47B parametresi vardır ancak token başına yalnızca 13B'yi etkinleştirir. DeepSeek-V3'ün toplam 671B parametresi vardır ancak token başına yalnızca 37B'yi etkinleştirir.
 
 ```mermaid
 graph LR
@@ -132,7 +132,7 @@ graph LR
     style R fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-Artıları: aynı hesaplama, daha fazla parametre, daha iyi kapasite. Eksileri: Uzman belleğinin hâlâ bir yerlerde yaşaması gerekiyor (bu nedenle hizmet vermek, yoğun bir eşdeğerden daha fazla VRAM gerektirir), yönlendiricinin yük dengelemesi zordur ve fine-tuning hizalama sırasında yönlendiricinin kendi araştırma alanıdır.
+Artıları: aynı hesaplama, daha fazla parametre, daha iyi kapasite. Eksileri: Uzman belleğinin hâlâ bir yerlerde yaşaması gerekiyor (bu nedenle hizmet vermek, yoğun bir eşdeğerden daha fazla VRAM gerektirir), yönlendiricinin yük dengelemesi zordur ve hizalama sırasında yönlendiricinin fine-tuning kendi araştırma alanıdır.
 
 ### Düğme 6: Norm öncesi konaklamalar
 
@@ -145,11 +145,11 @@ Her alt katmandan sonra orijinal transformer uygulanan katman normu. GPT-2'den b
 | Modeli | Yıl | Toplam Parametreler | Etkin Parametreler | Norm | Aktivasyon | Pozisyon | Dikkat | MEB | Bağlam |
 |-------|------|-------------|---------------|------|-----------|----------|-----------|-----|---------|
 | GPT-2 Küçük | 2019 | 124M | 124M | Katman Normu | GEL | Öğrenildi | MHA (12 kafa) | hayır | 1k |
-| Llama 3 8B | 2024 | 8B | 8B | RMSNormu | SwiGLU | halat | DKG (32/8) | hayır | 128k |
-| Llama 3 70B | 2024 | 70B | 70B | RMSNormu | SwiGLU | halat | DKG (64/8) | hayır | 128k |
-| Llama 3 405B | 2024 | 405B | 405B | RMSNormu | SwiGLU | halat | DKG (128/16) | hayır | 128k |
-| Mistral 7B | 2023 | 7.2B | 7.2B | RMSNormu | SwiGLU | halat | GQA | hayır | 32 bin |
-| Karışımtral 8x7B | 2023 | 47B | 13B | RMSNormu | SwiGLU | halat | GQA | evet (8 uzman, ilk 2) | 32k |
+| Lama 3 8B | 2024 | 8B | 8B | RMSNormu | SwiGLU | halat | DKG (32/8) | hayır | 128k |
+| Lama 3 70B | 2024 | 70B | 70B | RMSNormu | SwiGLU | halat | DKG (64/8) | hayır | 128k |
+| Lama 3 405B | 2024 | 405B | 405B | RMSNormu | SwiGLU | halat | DKG (128/16) | hayır | 128k |
+| Mistral 7B | 2023 | 7.2B | 7.2B | RMSNormu | SwiGLU | halat | GQA | hayır | 32k |
+| Karışımtral 8x7B | 2023 | 47B | 13B | RMSNormu | SwiGLU | halat | GQA | evet (8 uzman, ilk 2) | 32 bin |
 | Gemma 2 9B | 2024 | 9B | 9B | RMSNorm (ön+sonra) | GeGLU | RoPE + sürgülü | GQA | hayır | 8k |
 | Qwen 2.5 72B | 2024 | 72B | 72B | RMSNormu | SwiGLU | HALAT (YaRN) | DKG (64/8) | hayır | 128k |
 | DeepSeek V2 236B | 2024 | 236B | 21B | RMSNormu | SwiGLU | halat | MLA | evet (160 uzman, ilk 6) | 128k |
@@ -159,7 +159,7 @@ Sütunları tarayın. RMSNorm evrenseldir. SwiGLU veya GeGLU kuzeni evrenseldir.
 
 ### config.json okuma
 
-Llama 3 8B yapılandırması:
+Lama 3 8B yapılandırması:
 
 ```
 {
@@ -177,17 +177,17 @@ Llama 3 8B yapılandırması:
 
 Her alan daha önce uyguladığınız bir şeye karşılık gelir.
 
-- `hidden_size`: embedding boyut.
+- `hidden_size`: embedding boyutu.
 - `intermediate_size`: MLP gizli boyutu (3,5x gizli -- SwiGLU matematiği).
 - `num_hidden_layers`: yığın derinliği.
 - `num_attention_heads`: Q tura.
-- `num_key_value_heads`: KV başkanları (GQA).
+- `num_key_value_heads`: KV kafaları (GQA).
 - `max_position_embeddings`: eğitim bağlamı uzunluğu.
 - `rope_theta`: RoPE temel frekansı. Meta, uzun bağlam ekstrapolasyonu için bunu varsayılan 10 bin'den 500 bin'e ölçeklendirdi.
 - `rms_norm_eps`: sayısal kararlılık.
-- `vocab_size`: tokens.
+- `vocab_size`: token'ler.
 
-Yalnızca bunlardan toplam parametreleri, KV önbelleğini ve tepe etkinleştirme belleğini hesaplarsınız. Tam formüller için `code/main.py` konusuna bakın.
+Yalnızca bunlardan toplam parametreleri, KV önbelleğini ve tepe etkinleştirme belleğini hesaplarsınız. Tam formüller için `code/main.py`'ye bakın.
 
 ### Etkinleştirme belleği bütçesi
 
@@ -237,9 +237,9 @@ config = {
 }
 ```
 
-Betik, mimariyi alan alan dolaşır, embedding için parametre sayımlarını, dikkati (GQA azaltımıyla), MLP'yi (SwiGLU genişletmesiyle), katman normlarını ve kafayı hesaplar. Daha sonra belirtilen bağlam uzunluğunda KV önbelleğini hesaplar ve bir özet yazdırır.
+Komut dosyası, mimariyi alan alan dolaşır, embedding için parametre sayımlarını, dikkati (GQA azaltmayla), MLP'yi (SwiGLU genişletmeyle), katman normlarını ve kafayı hesaplar. Daha sonra belirtilen bağlam uzunluğunda KV önbelleğini hesaplar ve bir özet yazdırır.
 
-Uygulama için `code/main.py`'a bakınız.
+Uygulama için `code/main.py`'ye bakın.
 
 ## Kullan onu
 
@@ -249,7 +249,7 @@ Ardından yerel olarak sahip olduğunuz herhangi bir model için bir yapılandı
 
 ## Gönderin
 
-Bu ders `outputs/skill-open-model-picker.md` üretir. Bir deployment hedefi (GPU türü, VRAM, bağlam uzunluğu, gecikme bütçesi) ve bir görev profili (sohbet, kod, akıl yürütme, uzun bağlam) verildiğinde, altı mimari düğme hakkında açık gerekçelerle birlikte açık bir model, Ders 11'den bir niceleme şeması ve Ders 12'den bir inference yığını önerir.
+Bu ders `outputs/skill-open-model-picker.md`'yi üretir. Bir deployment hedefi (GPU türü, VRAM, bağlam uzunluğu, gecikme bütçesi) ve bir görev profili (sohbet, kod, akıl yürütme, uzun bağlam) göz önüne alındığında, altı mimari düğme hakkında açık gerekçelerle birlikte açık bir model, Ders 11'den bir niceleme şeması ve Ders 12'den bir inference yığını önerir.
 
 ## Egzersizler
 
@@ -259,7 +259,7 @@ Bu ders `outputs/skill-open-model-picker.md` üretir. Bir deployment hedefi (GPU
 
 3. FP8 ve BF16'da 128k bağlamda Llama 3 405B için KV önbelleğini hesaplayın. FP8'de bu, BF16 sayısının yarısıdır. Tek bir 8xH100 düğümde kaç paralel dizi sunabilirsiniz (her biri 80 GB = toplam 640 GB, eksi ağırlık belleği)?
 
-4. Gemma 2, tam dikkat ve kayan pencere dikkat katmanlarını dönüşümlü olarak kullanır. Katmanların yarısı tam bağlam yerine 4096-token kayan pencere kullandığında KV önbelleğinin matematiğini yazın. Bu, toplam 8k bağlamda ne kadar bellek tasarrufu sağlıyor?
+4. Gemma 2, tam dikkat ve kayan pencere dikkat katmanlarını dönüşümlü olarak kullanır. Katmanların yarısı tam bağlam yerine 4096-token kayan pencere kullandığında KV önbelleğinin matematiğini yazın. Bu, toplam 8k bağlamda ne kadar bellek tasarrufu sağlar?
 
 5. Bu ders yazıldıktan sonra piyasaya sürülen yeni bir sınır açık modeli bulun. Altı düğmeden hangisini seçtiğini ve yedinci bir düğmeyi içerip sokmadığını belirleyin. Yeni bir mimari ortaya çıktığı anda müfredat güncelliğini yitirmiş gibi görünecektir; amaç, zihinsel modelinizi yeniden oluşturmadan tablonuzu güncellemektir.
 
@@ -267,24 +267,24 @@ Bu ders `outputs/skill-open-model-picker.md` üretir. Bir deployment hedefi (GPU
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|----------------|----------------------|
-| RMSNormu | "Anlamı olmayan LayerNorm" | Öğrenilmiş bir ölçekle yalnızca kök ortalama kareye göre normalleştirme — LayerNorm ile daha ucuz ve karşılaştırılabilir |
+| RMSNormu | "Anlamı olmayan LayerNorm" | Öğrenilmiş bir ölçekle yalnızca kök ortalama kareye göre normalleştirme - daha ucuz ve LayerNorm ile karşılaştırılabilir |
 | halat | "Döner konumlar" | Her Q ve K vektörünü konuma bağlı bir açıyla 2 boyutlu çiftler halinde döndürün; ölçeklendirme hileleriyle eğitim uzunluğunun ötesinde tahminler yapar |
-| SwiGLU | "Yeni MLP aktivasyonu" | Swish'li geçitli doğrusal ünite: `(xW1) * sigmoid(xW1) * xV` — her 2024+ açık modelde standart |
+| SwiGLU | "Yeni MLP aktivasyonu" | Swish'li geçitli lineer ünite: `(xW1) * sigmoid(xW1) * xV` — her 2024+ açık modelde standart |
 | GQA | "Orta noktaya dikkat" | Gruplandırılmış Sorgu Dikkati: Q kafalarından oluşan G grupları bir K ve bir V kafasını paylaşıyor — MQA'nın doğruluk payı olmadan KV önbelleğini küçültüyor |
 | MLA | "DeepSeek'in dikkati" | Çok Kafalı Gizli Dikkat: K/V'yi paylaşılan düşük dereceli bir gizliye sıkıştırın, kafa başına sıkıştırmayı açın — büyük modeller için en küçük KV önbelleği |
-| MEB | "Seyrek uzmanlar" | Uzmanların Karışımı: Blok başına N MLP, yönlendirici token başına en iyi k'yi seçer — çok büyük toplam parametreler, küçük aktif parametreler |
+| MEB | "Seyrek uzmanlar" | Uzmanların Karışımı: Blok başına N MLP, yönlendirici token başına en iyi k'yi seçer — büyük toplam parametreler, küçük aktif parametreler |
 | En iyi yönlendirme | "token başına k uzman seçin" | Yönlendirici, uzman başına bir puan hesaplar ve en yüksek k'yi etkinleştirir; tipik k, 2 (Mixtral) ila 8 (DeepSeek) |
-| YaRN | "Halatı Uzat" | Yine başka bir RoPE uzantısı — bağlamı inference zamanda 8k'den 128k+'ya genişletmek için döner açıları enterpolasyona tabi tutar |
-| Sürgülü pencere dikkati | "Her şeye katılmayın" | Her token yalnızca son W token'lere katılır — Gemma 2'de ve erken Mistral |'da kullanılan, token başına O(W) ile dikkat maliyetini üstlenir.
-| Aktif parametreler | "token başına ne çalışır?" | MoE modelleri için, token başına ileri geçiş gören parametre sayısı (toplam parametrelerden çok daha küçük) — her-token FLOP |
+| YaRN | "Halatı Uzat" | Yine başka bir RoPE uzantısı — inference zamanında bağlamı 8k'den 128k+'ya genişletmek için döner açıları enterpolasyona tabi tutar |
+| Sürgülü pencere dikkati | "Her şeye katılmayın" | Her token yalnızca son W token'lerle ilgilenir; Gemma 2 ve erken Mistral |'da kullanılan token başına dikkat maliyetini O(W) olarak üstlenir.
+| Aktif parametreler | "token başına ne çalışır?" | MoE modelleri için, token başına ileri geçiş gören parametre sayısı (toplam parametrelerden çok daha küçük) — token FLOP'ları yönetir |
 
 ## Daha Fazla Okuma
 
-- [Dubey ve diğerleri, 2024 -- "Llama 3 Sürü Modelleri"](https://arxiv.org/abs/2407.21783) -- yoğun Llama 3 ailesi için mimari ve eğitim referansı
+- [Dubey ve diğerleri, 2024 -- "The Llama 3 Herd of Models"](https://arxiv.org/abs/2407.21783) -- yoğun Llama 3 ailesi için mimari ve eğitim referansı
 - [DeepSeek-AI, 2024 -- "DeepSeek-V3 Teknik Raporu"](https://arxiv.org/abs/2412.19437) -- MLA artı yardımcı kayıpsız yük dengeleme artı 671B MoE
 - [Jiang ve diğerleri, 2024 -- "Uzmanların Karması"](https://arxiv.org/abs/2401.04088) -- kanonik MoE açık model makalesi
-- [Su ve diğerleri, 2021 -- "RoFormer: Döner Konumlu Embedding Geliştirilmiş Transformer"](https://arxiv.org/abs/2104.09864) -- RoPE makalesi
+- [Su ve diğerleri, 2021 -- "RoFormer: Döner Konumlu Embedding ile Geliştirilmiş Transformer"](https://arxiv.org/abs/2104.09864) -- RoPE makalesi
 - [Shazeer, 2020 -- "GLU Varyantları Transformer'yi İyileştiriyor"](https://arxiv.org/abs/2002.05202) -- SwiGLU, GeGLU ve arkadaşları
-- [Ainslie ve diğerleri, 2023 -- "GQA: Genelleştirilmiş Çoklu Sorgu Transformer Modellerinin Eğitimi"](https://arxiv.org/abs/2305.13245) -- DKG belgesi
-- [Gemma 2 Ekibi, 2024 -- "Gemma 2: Açık Dil Modellerini Pratik Boyutta Geliştirmek"](https://arxiv.org/abs/2408.00118) -- hibrit tam+kayma dikkat, norm öncesi+sonrası
-- [Qwen Ekibi, 2024 -- "Qwen 2.5 Teknik Raporu"](https://arxiv.org/abs/2412.15115) -- YaRN bağlam uzantısı ve uzun bağlamlı eğitim tarifleri
+- [Ainslie ve diğerleri, 2023 -- "GQA: Genelleştirilmiş Çoklu Sorgu Transformer Modellerinin Eğitimi"](https://arxiv.org/abs/2305.13245) -- GQA makalesi
+- [Gemma 2 Ekibi, 2024 -- "Gemma 2: Açık Dil Modellerini Pratik Boyutta İyileştirme"](https://arxiv.org/abs/2408.00118) -- hibrit tam+kayma dikkat, norm öncesi+sonrası
+- [Qwen Team, 2024 -- "Qwen 2.5 Teknik Raporu"](https://arxiv.org/abs/2412.15115) -- YaRN bağlam uzantısı ve uzun bağlam eğitim tarifleri

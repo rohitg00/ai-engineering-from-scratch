@@ -13,11 +13,11 @@ RAG sisteminiz yanıt veriyor: "29 Haziran 2007."
 Altın referans: "29 Haziran 2007."
 Tam Maç puanları 0. F1 puanları ~%75. Bir insan %100 puan alır.
 
-Şimdi 10.000 test durumuyla çarpın. Geri getirici, parçalama, prompt veya modelde yapılan her değişiklikle tekrar çarpın. Anlamı anlayan, ölçekte ucuza çalışan, regresyonlar konusunda yalan söylemeyen ve doğru hata modlarını ortaya çıkaran bir değerlendiriciye ihtiyacınız var.
+Şimdi 10.000 test durumuyla çarpın. Alıcı, parçalama, prompt veya modelde yapılan her değişiklikle tekrar çarpın. Anlamı anlayan, ölçekte ucuza çalışan, regresyonlar konusunda yalan söylemeyen ve doğru hata modlarını ortaya çıkaran bir değerlendiriciye ihtiyacınız var.
 
 2026'da bu soruna sahip üç framework var.
 
-- **RAGAS.** Alma-Artırılmış Nesil Değerlendirmesi. NLI + LLM-yargıç arka uçlarına sahip dört RAG ölçümü (sadıklık, cevap alaka düzeyi, bağlam hassasiyeti, bağlam hatırlama). Araştırma destekli, hafif.
+- **RAGAS.** Alma-Artırılmış Nesil Değerlendirmesi. NLI + LLM yargıç arka uçlarına sahip dört RAG ölçümü (sadıklık, cevap alaka düzeyi, bağlam hassasiyeti, bağlam hatırlama). Araştırma destekli, hafif.
 - **DeepEval.** LLM'ler için Pytest. G-Eval, görev tamamlama, halüsinasyon, önyargı ölçümleri. CI/CD-yerel.
 - **G-Eval.** Bir yöntem (ve bir DeepEval metriği): Düşünce zinciri, özel kriterler, 0-1 puan ile hakem olarak Yüksek Lisans.
 
@@ -27,13 +27,13 @@ Tam Maç puanları 0. F1 puanları ~%75. Bir insan %100 puan alır.
 
 ![Dört değerlendirme boyutu, yargıç olarak yüksek lisans mimarisi](../assets/llm-evaluation.svg)
 
-**Yargıç olarak Yüksek Lisans.** Statik bir ölçümü, bir değerlendirme tablosu verilen çıktıları puanlayan bir Yüksek Lisans ile değiştirin. Yüksek Lisans Hakimi `(query, context, answer)`, prompt'ya verildiğinde: "Sadakat konusunda 0-1 puan verin." Skoru geri ver.
+**Yargıç olarak Yüksek Lisans.** Statik bir ölçümü, bir değerlendirme tablosu verilen çıktıları puanlayan bir Yüksek Lisans ile değiştirin. Yüksek Lisans jürisi `(query, context, answer)` ve prompt'ye verildiğinde: "Sadakat konusunda 0-1 puan verin." Skoru geri ver.
 
-Neden işe yarıyor: Yüksek Lisans'lar, maliyetin çok küçük bir kısmıyla insan muhakemesine yaklaşır. GPT-4o-mini ~$0.003 per scored case enables 1000-sample regression eval runs for under $5'te.
+Neden işe yarıyor: Yüksek Lisans'lar, maliyetin çok küçük bir kısmıyla insan muhakemesine yaklaşır. ~$0.003 per scored case enables 1000-sample regression eval runs for under $5 konumunda GPT-4o-mini.
 
 Neden sessizce başarısız oluyor:
 
-1. **Yargıç önyargısı.** Jüri daha uzun yanıtları, kendi model ailesinden gelen yanıtları, prompt tarzıyla eşleşen yanıtları tercih eder.
+1. **Hakim önyargısı.** Jüri daha uzun cevapları, kendi model ailesinden gelen cevapları, prompt stiliyle eşleşen cevapları tercih eder.
 2. **JSON ayrıştırma hataları.** Kötü JSON → NaN puanı → sessizce toplamdan çıkarıldı. RAGAS kullanıcıları bu acıyı biliyor. Try/hariç + açık hata modlu kapı.
 3. **Model versiyonları üzerinde değişiklik.** Hakemin yükseltilmesi her ölçümü değiştirir. Yargıç modeli + versiyonunu dondurun.
 
@@ -137,7 +137,7 @@ metric.measure(test)
 print(metric.score, metric.reason)
 ```
 
-Değerlendirme adımları değerlendirme tablosudur. Açık adımlar, örtülü "0-1 puan" prompt'lardan daha kararlıdır.
+Değerlendirme adımları değerlendirme tablosudur. Açık adımlar, örtülü "puan 0-1" prompt'lerden daha kararlıdır.
 
 ### Adım 4: CI kapısı
 
@@ -161,7 +161,7 @@ Bir pytest dosyası olarak gönderin. Her PR'da çalıştırın. Regresyonlarda 
 
 ### Adım 5: oyuncağın sıfırdan değerlendirilmesi
 
-Bkz. `code/main.py`. Aslına uygunluk (cevap iddialarının bağlamla örtüşmesi) ve alaka düzeyi (cevap token'ların soru token'lerle örtüşmesi) için yalnızca Stdlib'e yönelik yaklaşımlar. Üretim değil. Şekli gösterir.
+Bkz. `code/main.py`. Doğruluk (cevap iddialarının bağlamla örtüşmesi) ve alaka düzeyi (token yanıtlarının token sorularıyla örtüşmesi) için yalnızca Stdlib'e yönelik yaklaşımlar. Üretim değil. Şekli gösterir.
 
 ## Tuzaklar
 
@@ -222,8 +222,8 @@ Refuse to rely on a judge untested against ≥50 human-labeled examples. Refuse 
 
 | Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|-----------------------|
-| Hakim olarak Yüksek Lisans | Yüksek Lisans ile Puanlama | Prompt bir değerlendirme tablosu verildiğinde çıktıları 0-1 arasında puanlamak için bir değerlendirme modeli. |
-| RAGAS | RAG metrik kütüphanesi | 4 referanssız RAG metriği içeren açık kaynaklı değerlendirme framework. |
+| Hakim olarak Yüksek Lisans | Yüksek Lisans ile Puanlama | Prompt Bir değerlendirme tablosu verildiğinde çıktıları 0-1 arasında puanlamak için bir değerlendirme modeli. |
+| RAGAS | RAG metrik kütüphanesi | 4 referanssız RAG ölçümüyle açık kaynaklı değerlendirme framework. |
 | Sadakat | Cevap temelli mi? | Alınan bağlamın gerektirdiği yanıt taleplerinin oranı. |
 | Bağlam hassasiyeti | Alınan parçalar alakalı mıydı? | Gerçekten önemli olan üst K parçalarının oranı. |
 | Bağlam hatırlama | Arama her şeyi buldu mu? | Alınan parçalar tarafından desteklenen altın yanıt taleplerinin bir kısmı. |
@@ -232,8 +232,8 @@ Refuse to rely on a judge untested against ≥50 human-labeled examples. Refuse 
 
 ## Daha Fazla Okuma
 
-- [Es ve ark. (2023). RAGAS: Alma Artırılmış Üretimin Otomatik Değerlendirmesi](https://arxiv.org/abs/2309.15217) — RAGAS makalesi.
+- [Es ve ark. (2023). RAGAS: Geri Alma Artırılmış Üretiminin Otomatik Değerlendirmesi](https://arxiv.org/abs/2309.15217) — RAGAS makalesi.
 - [Liu ve ark. (2023). G-Eval: Daha İyi İnsan Hizalaması ile GPT-4 kullanılarak NLG Değerlendirmesi](https://arxiv.org/abs/2303.16634) — G-Eval makalesi.
-- [DeepEval docs](https://deepeval.com/docs/metrics-introduction) — üretim yığınını aç.
+- [DeepEval docs](https://deepeval.com/docs/metrics-introduction) — üretim yığınını açın.
 - [Zheng ve ark. (2023). MT-Bench ve Chatbot Arena ile Yüksek Lisans Yüksek Lisansını Jüri Olarak Değerlendirmek](https://arxiv.org/abs/2306.05685) — önyargılar, kalibrasyon, sınırlar.
 - [MLflow GenAI Scorer](https://mlflow.org/blog/third-party-scorers) — RAGAS, DeepEval, Phoenix'i entegre eden framework'yi birleştiriyor.

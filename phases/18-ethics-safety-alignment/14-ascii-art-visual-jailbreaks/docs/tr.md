@@ -1,94 +1,94 @@
-# ASCII Art and Visual Jailbreaks
+# ASCII Sanat ve Görsel Jailbreak'ler
 
-> Jiang, Xu, Niu, Xiang, Ramasubramanian, Li, Poovendran, "ArtPrompt: ASCII Art-based Jailbreak Attacks against Aligned LLMs" (ACL 2024, arXiv:2402.11753). Mask the safety-relevant tokens in a harmful request, replace them with ASCII-art renderings of the same letters, and send the cloaked prompt. GPT-3.5, GPT-4, Gemini, Claude, Llama-2 all fail to robustly recognize ASCII-art tokens. The attack bypasses PPL (perplexity filters), Paraphrase defenses, and Retokenization. Related: the ViTC benchmark measures recognition of non-semantic visual prompts; StructuralSleight generalizes to Uncommon Text-Encoded Structures (trees, graphs, nested JSON) as a family of encoding attacks.
+> Jiang, Xu, Niu, Xiang, Ramasubramanian, Li, Poovendran, "ArtPrompt: Hizalanmış LLM'lere Karşı ASCII Sanat Tabanlı Jailbreak Saldırıları" (ACL 2024, arXiv:2402.11753). Zararlı bir istekte güvenlikle ilgili token'lari maskeleyin, bunları aynı harflerin ASCII çizimleriyle değiştirin ve gizlenmiş prompt'u gönderin. GPT-3.5, GPT-4, Gemini, Claude, Llama-2'nin tümü ASCII-art token'ları sağlam bir şekilde tanımada başarısız oluyor. Saldırı, PPL'yi (karmaşıklık filtreleri), Açıklama savunmalarını ve Yenidentokenleştirmeyi atlar. İlgili: ViTC benchmark anlamsal olmayan görsel prompt'larin tanınmasını ölçer; StructuralSleight, bir kodlama saldırıları ailesi olarak Yaygın Olmayan Metin Kodlu Yapıları (ağaçlar, grafikler, iç içe JSON) genelleştirir.
 
-**Type:** Build
-**Languages:** Python (stdlib, ArtPrompt token-masking harness)
-**Prerequisites:** Phase 18 · 12 (PAIR), Phase 18 · 13 (MSJ)
-**Time:** ~60 minutes
+**Tür:** Yapım
+**Diller:** Python (stdlib, ArtPrompt token-maskeleme koşum takımı)
+**Önkoşullar:** Aşama 18 · 12 (PAIR), Aşama 18 · 13 (MSJ)
+**Süre:** ~60 dakika
 
-## Learning Objectives
+## Öğrenme Hedefleri
 
-- Describe the ArtPrompt attack: word-identification step, ASCII-art substitution, final cloaked prompt.
-- Explain why standard defenses (PPL, Paraphrase, Retokenization) fail on ArtPrompt.
-- Define ViTC and describe what it measures.
-- Describe StructuralSleight as a generalization to arbitrary Uncommon Text-Encoded Structures.
+- ArtPrompt saldırısını açıklayın: kelime tanımlama adımı, ASCII-sanat değişikliği, son gizlenmiş prompt.
+- Standart savunmaların (PPL, Paraphrase, RetokenRetokenization) ArtPrompt'da neden başarısız olduğunu açıklayın.
+- ViTC'yi tanımlayın ve neyi ölçtüğünü açıklayın.
+- StructuralSleight'ı rastgele Yaygın Olmayan Metin Kodlu Yapılara yönelik bir genelleme olarak tanımlayın.
 
-## The Problem
+## Sorun
 
-Attacks via paraphrase and roleplay (Lesson 12) and via long context (Lesson 13) operate on the text-level pattern. ArtPrompt operates at the recognition level: the model does not parse the forbidden token. It parses an image rendered in characters. The safety filter sees harmless punctuation. The model sees a word.
+Açıklama ve rol yapma (Ders 12) ve uzun bağlam (Ders 13) yoluyla yapılan saldırılar, metin düzeyindeki model üzerinde çalışır. ArtPrompt tanıma seviyesinde çalışır: model yasaklı token'ı ayrıştırmaz. Karakterlerle oluşturulan bir görüntüyü ayrıştırır. Güvenlik filtresi zararsız noktalama işaretlerini görür. Model bir kelime görüyor.
 
-## The Concept
+## Konsept
 
-### ArtPrompt, two steps
+### SanatPrompt, iki adım
 
-Step 1. Word Identification. Given a harmful request, the attacker uses an LLM to identify the safety-relevant words (e.g., "bomb" in "how to make a bomb"). 
+Adım 1. Kelime Tanımlama. Zararlı bir istek verildiğinde, saldırgan güvenlikle ilgili kelimeleri (e.g., "bomba", "nasıl bomba yapılır") tanımlamak için bir LLM kullanır.
 
-Step 2. Cloaked Prompt Generation. Replace each identified word with its ASCII-art rendering (a 7x5 or 7x7 block of characters forming the letter shape). The model receives a grid of punctuation and spaces that a sufficiently capable model can recognize as the word; a safety filter sees only the grid.
+Adım 2. Gizlenmiş Prompt Nesli. Tanımlanan her sözcüğü ASCII resimli görselleştirmesiyle (harf şeklini oluşturan 7x5 veya 7x7 karakter bloğu) değiştirin. Model, yeterince yetenekli bir modelin kelime olarak tanıyabileceği bir noktalama işaretleri ve boşluklar tablosu alır; bir güvenlik filtresi yalnızca ızgarayı görür.
 
-Result: GPT-4, Gemini, Claude, Llama-2, GPT-3.5 all fail. Attack success rate above 75% on their benchmark subset.
+Sonuç: GPT-4, Gemini, Claude, Llama-2, GPT-3.5'in tümü başarısız. benchmark alt kümesinde saldırı başarı oranı %75'in üzerinde.
 
-### Why the standard defenses fail
+### Standart savunmalar neden başarısız oluyor?
 
-- **PPL (perplexity filter).** ASCII art has high perplexity — but so does all novel input. Threshold choices that block ArtPrompt also block legitimate structured input.
-- **Paraphrase.** Paraphrasing the prompt destroys the ASCII art. In practice, paraphrase LLMs often preserve or reconstruct the art.
-- **Retokenization.** Splitting tokens differently does not change that the model's vision is recognizing letter shapes.
+- **PPL (şaşkınlık filtresi).** ASCII sanatının karmaşıklığı yüksektir - ancak tüm yeni girdiler de öyle. ArtPrompt'yı engelleyen eşik seçenekleri aynı zamanda yasal yapılandırılmış girişi de engeller.
+- **Açıklama.** prompt'nın başka sözcüklerle ifade edilmesi ASCII resmini yok eder. Uygulamada, yüksek lisans eğitimleri sıklıkla sanatı korur veya yeniden yapılandırır.
+- **Yenidentokenleştirme.** token'lari farklı şekilde bölmek, modelin görüşünün harf şekillerini tanıdığını değiştirmez.
 
-The underlying issue is that safety filters are token- or semantic-level; ArtPrompt operates at the visual recognition level.
+Temel sorun, güvenlik filtrelerinin token- veya anlamsal düzeyde olmasıdır; ArtPrompt görsel tanıma düzeyinde çalışır.
 
 ### ViTC benchmark
 
-Recognition of non-semantic visual prompts. Measures the model's ability to read ASCII-art, wingdings, and other non-text-semantic visual content. ArtPrompt's effectiveness correlates with ViTC accuracy: the better the model reads visual text, the better ArtPrompt works on it. This is a capability-safety tradeoff.
+Anlamsal olmayan görsel prompt'larin tanınması. Modelin ASCII sanatı, kanatlar ve diğer metin dışı anlamsal görsel içeriği okuma yeteneğini ölçer. ArtPrompt'ın etkinliği ViTC doğruluğuyla ilişkilidir: model görsel metni ne kadar iyi okursa, ArtPrompt onun üzerinde o kadar iyi çalışır. Bu bir yetenek-güvenlik dengesidir.
 
-### StructuralSleight
+### Yapısal Hafiflik
 
-Generalizes ArtPrompt: Uncommon Text-Encoded Structures (UTES). Trees, graphs, nested JSON, CSV-in-JSON, diff-style code blocks. If a structure is rare in training safety data but parseable by the model, it can hide harmful content.
+Sanatı GenelleştirirPrompt: Yaygın Olmayan Metin Kodlu Yapılar (UTES). Ağaçlar, grafikler, iç içe JSON, JSON'da CSV, diff tarzı kod blokları. Bir yapı, eğitim güvenliği verilerinde nadirse ancak model tarafından ayrıştırılabilirse, zararlı içeriği gizleyebilir.
 
-The defense implication: safety must generalize across the structured representations the model can parse. The set is large and growing.
+Savunmanın anlamı: Güvenlik, modelin ayrıştırabileceği yapılandırılmış temsiller boyunca genelleştirilmelidir. Set büyük ve büyüyor.
 
-### Image-modality analog
+### Görüntü modalitesi analogu
 
-Visual LLMs (GPT-5.2, Gemini 3 Pro, Claude Opus 4.5, Grok 4.1) extend the attack surface. ArtPrompt-style attacks with actual images are stronger than ASCII-art analogs because image encoders produce richer signal.
+Görsel LLM'ler (GPT-5.2, Gemini 3 Pro, Claude Opus 4.5, Grok 4.1) saldırı yüzeyini genişletir. Gerçek görüntülerle yapılan ArtPrompt tarzı saldırılar, ASCII sanat analoglarından daha güçlüdür çünkü görüntü kodlayıcılar daha zengin sinyal üretir.
 
-### Where this fits in Phase 18
+### Bunun 18. Aşamada yeri nedir
 
-Lessons 12-14 describe three orthogonal attack vectors: iterative refinement (PAIR), context length (MSJ), and encoding (ArtPrompt/StructuralSleight). Lesson 15 shifts from model-centric attacks to system-boundary attacks (indirect prompt injection). Lesson 16 describes the defensive tooling response.
+12-14. Dersler üç ortogonal saldırı vektörünü tanımlar: yinelemeli iyileştirme (PAIR), bağlam uzunluğu (MSJ) ve kodlama (ArtPrompt/StructuralSleight). Ders 15, model merkezli saldırılardan sistem sınırı saldırılarına (dolaylı prompt enjeksiyon) geçiş yapar. Ders 16, savunma araçlarının tepkisini açıklamaktadır.
 
-## Use It
+## Use It — Hazır Araçla Uygula
 
-`code/main.py` builds a toy ArtPrompt. You can cloak specific words in a harmful query with ASCII-art glyphs, verify the cloaked string passes a keyword filter, and (optionally) decode the cloaked string back using a simple recognizer.
+`code/main.py` bir oyuncak SanatıPrompt yapıyor. Zararlı bir sorgudaki belirli kelimeleri ASCII-art glifleriyle gizleyebilir, gizlenmiş dizenin bir anahtar sözcük filtresinden geçtiğini doğrulayabilir ve (isteğe bağlı olarak) basit bir tanıyıcı kullanarak gizlenmiş dizenin kodunu geri çözebilirsiniz.
 
-## Ship It
+## Ship It — Kullanıma Sun
 
-This lesson produces `outputs/skill-encoding-audit.md`. Given a jailbreak-defense report, it enumerates the encoding attack families covered (ASCII art, base64, leet-speak, UTF-8 homoglyph, UTES) and the defense layer that catches each.
+Bu ders `outputs/skill-encoding-audit.md` üretir. Bir jailbreak savunma raporu verildiğinde, kapsanan kodlama saldırısı ailelerini (ASCII art, base64, leet-speak, UTF-8 homoglyph, UTES) ve her birini yakalayan savunma katmanını sıralar.
 
-## Exercises
+## Egzersizler
 
-1. Run `code/main.py`. Verify the cloaked string passes a simple keyword filter. Report the character-level change required.
+1. `code/main.py`'yı çalıştırın. Gizlenmiş dizenin basit bir anahtar kelime filtresinden geçtiğini doğrulayın. Gereken karakter düzeyindeki değişikliği bildirin.
 
-2. Implement a second encoding: base64 for the same target word. Compare the filter-bypass rate against ArtPrompt and the recovery difficulty.
+2. Aynı hedef kelime için ikinci bir kodlama uygulayın: base64. Filtre atlama oranını ArtPrompt ve kurtarma zorluğuyla karşılaştırın.
 
-3. Read Jiang et al. 2024 Section 4.3 (five-model results). Propose a reason why Claude's ArtPrompt-resistance is higher than Gemini's on the same benchmark.
+3. Jiang ve ark.'nı okuyun. 2024 Bölüm 4.3 (beş model sonuçları). Claude'un SanatPrompt-direncinin aynı benchmark üzerinde Gemini'ninkinden daha yüksek olmasının bir nedenini önerin.
 
-4. Design a pre-generation defense that detects ASCII-art-shaped regions in the prompt. Measure the false-positive rate on legitimate code, tables, and mathematical notation.
+4. prompt'da ASCII sanatı şeklindeki bölgeleri tespit eden bir nesil öncesi savunma tasarlayın. Meşru kod, tablolar ve matematiksel gösterimde yanlış pozitiflik oranını ölçün.
 
-5. StructuralSleight lists 10 encoding structures. Sketch a generalized defense that handles all 10 and estimate the compute cost per defended prompt.
+5. StructuralSleight 10 kodlama yapısını listeler. 10 savunmanın tamamını kapsayan genelleştirilmiş bir savunma taslağı çizin ve savunulan prompt başına hesaplama maliyetini tahmin edin.
 
-## Key Terms
+## Anahtar Terimler
 
-| Term | What people say | What it actually means |
+| Dönem | İnsanlar ne diyor | Aslında ne anlama geliyor |
 |------|-----------------|------------------------|
-| ArtPrompt | "the ASCII-art attack" | Two-step jailbreak that masks safety words with ASCII-art renderings |
-| Cloaking | "hide the word" | Replace a forbidden token with a visual representation the model reads but the filter does not |
-| UTES | "uncommon structure" | Uncommon Text-Encoded Structure — tree, graph, nested JSON, etc. used to smuggle content |
-| ViTC | "visual-text capability" | Benchmark for model's ability to read non-semantic visual encoding |
-| Perplexity filter | "PPL defense" | Reject prompts with high perplexity; fails because legitimate structured input also scores high |
-| Retokenization | "tokenizer shift defense" | Pre-process the prompt with a different tokenizer; fails because recognition is visual |
-| Homoglyph | "lookalike characters" | Unicode characters that look identical to Latin letters; bypass substring checks |
+| SanatPrompt | "ASCII sanatı saldırısı" | Güvenlik sözcüklerini ASCII sanat görselleriyle maskeleyen iki adımlı jailbreak |
+| Gizleme | "kelimeyi gizle" | Yasaklanmış bir token'ı, modelin okuduğu ancak filtrenin okumadığı görsel bir temsille değiştirin |
+| UTES | "yaygın olmayan yapı" | Yaygın Olmayan Metin Kodlu Yapı — içerik kaçakçılığı için kullanılan ağaç, grafik, iç içe JSON vb. |
+| ViTC | "görsel metin özelliği" | Modelin anlamsal olmayan görsel kodlamayı okuma yeteneği için Benchmark |
+| Şaşkınlık filtresi | "PPL savunması" | prompt'ları büyük bir şaşkınlıkla reddet; başarısız çünkü yasal yapılandırılmış girdi de yüksek puan alıyor |
+| YenidentokenKaldırma | "tokenizer vardiya savunması" | prompt'u farklı bir tokenizer ile önceden işleyin; başarısız oluyor çünkü tanıma görseldir |
+| Homoglif | "benzer karakterler" | Latin harfleriyle aynı görünen Unicode karakterler; alt dize kontrollerini atla |
 
-## Further Reading
+## Daha Fazla Okuma
 
-- [Jiang et al. — ArtPrompt (ACL 2024, arXiv:2402.11753)](https://arxiv.org/abs/2402.11753) — the ASCII-art jailbreak paper
-- [Li et al. — StructuralSleight (arXiv:2406.08754)](https://arxiv.org/abs/2406.08754) — UTES generalization
-- [Chao et al. — PAIR (Lesson 12, arXiv:2310.08419)](https://arxiv.org/abs/2310.08419) — complementary iterative attack
-- [Anil et al. — Many-shot Jailbreaking (Lesson 13)](https://www.anthropic.com/research/many-shot-jailbreaking) — complementary length attack
+- [Jiang ve ark. — ArtPrompt (ACL 2024, arXiv:2402.11753)](https://arxiv.org/abs/2402.11753) — ASCII-art jailbreak makalesi
+- [Li ve ark. — StructuralSleight (arXiv:2406.08754)](https://arxiv.org/abs/2406.08754) — UTES genellemesi
+- [Chao ve ark. — PAIR (Ders 12, arXiv:2310.08419)](https://arxiv.org/abs/2310.08419) — tamamlayıcı yinelemeli saldırı
+- [Anıl ve ark. — Çok atışlı Jailbreaking (Ders 13)](https://www.anthropic.com/research/many-shot-jailbreaking) — tamamlayıcı uzunluklu saldırı

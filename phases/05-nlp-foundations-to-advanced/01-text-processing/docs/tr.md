@@ -1,4 +1,4 @@
-# Metin İşleme — Tokenleştirme, Köklendirme, Lemmatizasyon
+# Metin İşleme — Tokenizasyon, Köklendirme, Lemmatizasyon
 
 > Dil süreklidir. Modeller ayrıktır. Ön işleme köprüdür.
 
@@ -13,19 +13,19 @@ Bir model "Kediler koşuyordu" ifadesini okuyamaz. Tam sayıları okur.
 
 Her NLP sistemi aynı üç soruyla açılır. Bir kelime nerede başlar? Kelimenin kökü nedir? "Koşmayı", "koşmayı", "koşmayı" işe yaradığı zaman aynı şeymiş gibi, işe yaramadığı zaman ise farklı şeyler olarak nasıl ele alırız?
 
-tokenizasyonunu yanlış yaparsanız model çöpten öğrenir. tokenizer'niz `don't`'yi bir token olarak, ancak `do n't`'yi iki olarak ele alırsa, eğitim dağılımı bölünür. Kök ayırıcınız `organization` ve `organ`'yi aynı köke daraltırsa konu modelleme ölür. Lemmatizer'ınızın konuşmanın bir parçası bağlamına ihtiyacı varsa ancak bunu geçemezseniz, fiiller isim olarak kabul edilir.
+tokenization'ı yanlış anladığınızda model çöpten öğrenir. tokenizer cihazınız `don't`'yi bir token olarak, ancak `do n't`'yi iki olarak ele alırsa eğitim dağıtımı bölünür. Kök parçanız `organization` ve `organ`'yi aynı gövdeye daraltırsa konu modelleme ölür. Lemmatizer'ınızın konuşmanın bir parçası bağlamına ihtiyacı varsa ancak bunu geçemezseniz, fiiller isim olarak kabul edilir.
 
-Bu ders, üç ön işleme adımını sıfırdan oluşturur, ardından NLTK ve spaCy'nin aynı işi nasıl yaptığını gösterir, böylece dengeleri görebilirsiniz.
+Bu ders üç ön işleme adımını sıfırdan oluşturur, ardından NLTK ve spaCy'nin aynı işi nasıl yaptığını gösterir, böylece dengeleri görebilirsiniz.
 
 ## Konsept
 
 Üç operasyon. Her birinin bir işi ve bir başarısızlık modu vardır.
 
-**Tokenization** bir dizeyi token'lere böler. "Token" kasıtlı olarak belirsizdir çünkü doğru ayrıntı düzeyi göreve bağlıdır. Klasik NLP için kelime düzeyinde. transformers için alt kelime. Boşluk içermeyen diller için karakter.
+**Tokenization** bir dizeyi token'lere böler. "Token" kasıtlı olarak belirsizdir çünkü doğru ayrıntı düzeyi göreve bağlıdır. Klasik NLP için kelime düzeyinde. transformer'ler için alt kelime. Boşluk içermeyen diller için karakter.
 
 **Stemming** son ekleri kurallara göre keser. Hızlı, agresif, aptal. `running -> run`. `organization -> organ`. İkincisi başarısızlık modudur.
 
-**Lemmatizasyon** dilbilgisi bilgisini kullanarak bir kelimeyi sözlük formuna indirger. Daha yavaştır, doğrudur, bir arama tablosuna veya morfolojik analizciye ihtiyaç duyar. `ran -> run` ("koşmak" kelimesinin "koşmak" fiilinin geçmiş zamanı olduğunu bilmesi gerekir). `better -> good` (karşılaştırmalı formları bilmesi gerekiyor).
+**Lemmatizasyon** dilbilgisi bilgisini kullanarak bir kelimeyi sözlük formuna indirger. Daha yavaştır, doğrudur, bir arama tablosuna veya morfolojik analizciye ihtiyaç duyar. `ran -> run` ("koşmak" kelimesinin "koşmak" fiilinin geçmiş zamanı olduğunu bilmesi gerekir). `better -> good` (karşılaştırmalı formları bilmesi gerekir).
 
 Temel kural. Hız önemli olduğunda ve gürültüyü tolere edebildiğinizde (arama indeksleme, kaba sınıflandırma) ilerleyin. Anlam önemli olduğunda (soru yanıtlama, anlamsal arama, kullanıcının okuyacağı her şey) Lemmatize edin.
 
@@ -35,9 +35,9 @@ edit-distance
 
 ## İnşa Et
 
-### Adım 1: normal ifade kelimesi tokenizer
+### Adım 1: normal ifade sözcüğü tokenizer
 
-En basit kullanışlı tokenizer, noktalama işaretini kendi token'leri olarak korurken alfanümerik olmayan karakterlere bölünür. Mükemmel değil, nihai değil ama tek satırda çalışıyor.
+En basit kullanışlı tokenizer, noktalama işaretlerini kendi token'leri olarak korurken alfasayısal olmayan karakterlere bölünür. Mükemmel değil, nihai değil ama tek satırda çalışıyor.
 
 ```python
 import re
@@ -46,14 +46,14 @@ def tokenize(text):
     return re.findall(r"[A-Za-z]+(?:'[A-Za-z]+)?|[0-9]+|[^\sA-Za-z0-9]", text)
 ```
 
-Öncelik sırasına göre üç model. İsteğe bağlı iç kesme işareti içeren kelimeler (`don't`, `it's`). Saf sayılar. Bağımsız bir token (noktalama işareti) olarak boşluk içermeyen, alfanümerik olmayan herhangi bir karakter.
+Öncelik sırasına göre üç desen. İsteğe bağlı iç kesme işareti olan sözcükler (`don't`, `it's`). Saf sayılar. Bağımsız bir token (noktalama işareti) olarak boşluk içermeyen, alfasayısal olmayan herhangi bir karakter.
 
 ```python
 >>> tokenize("The cats weren't running at 3pm.")
 ['The', 'cats', "weren't", 'running', 'at', '3', 'pm', '.']
 ```
 
-Dikkat edilmesi gereken arıza modları. `3pm`, `['3', 'pm']`'ye bölünür çünkü harf dizileri ve rakam dizileri arasında geçiş yaptık. Çoğu görev için yeterince iyi. URL'ler, e-postalar, hashtag'lerin hepsi bozuluyor. Üretim için genel desenlerden önce desenler ekleyin.
+Dikkat edilmesi gereken arıza modları. `3pm`, `['3', 'pm']`'ye ayrılıyor çünkü harf dizileri ve rakam dizileri arasında geçiş yaptık. Çoğu görev için yeterince iyi. URL'ler, e-postalar, hashtag'lerin hepsi bozuluyor. Üretim için genel desenlerden önce desenler ekleyin.
 
 ### Adım 2: Porter kök sapı (yalnızca adım 1a)
 
@@ -77,7 +77,7 @@ def stem_step_1a(word):
 ['caress', 'poni', 'caress', 'cat']
 ```
 
-Kuralları yukarıdan aşağıya okuyun. `ies -> i` kuralının sonucu `ponies -> poni` olur; `pony` olmaz. Real Porter'ın bunu düzelten 1b adımı vardır. Kurallar birbiriyle yarışır ve önce gelen kural kazanır. Sıralama, tek bir kuraldan daha önemlidir.
+Kuralları yukarıdan aşağıya okuyun. `ies -> i` kuralı, `pony` değil, `ponies -> poni`'nin nedenidir. Real Porter'ın sorunu çözecek 1b adımı var. Kurallar yarışıyor. Daha erken kurallar kazanır. Sıra herhangi bir kuraldan daha önemlidir.
 
 ### Adım 3: aramaya dayalı bir lemmatizer
 
@@ -119,7 +119,7 @@ def lemmatize(word, pos):
 'watched'
 ```
 
-Son vaka anahtar öğretme anıdır. `watched` tablomuzda değil ve geri dönüşümüz yalnızca `ing`'yi yönetiyor. Gerçek lemmatizasyon, `ed`, düzensiz fiilleri, karşılaştırmalı sıfatları, ses değişiklikleri olan çoğulları (`children -> child`) kapsar. Üretim sistemlerinin WordNet, spaCy'nin morfoloji oluşturucusu veya tam bir morfolojik analizör kullanmasının nedeni budur.
+Son vaka anahtar öğretme anıdır. `watched` tablomuzda yok ve geri dönüşümüz yalnızca `ing`'yi yönetiyor. Gerçek lemmatizasyon `ed`'yi, düzensiz fiilleri, karşılaştırmalı sıfatları, ses değişiklikleri olan çoğulları (`children -> child`) kapsar. Üretim sistemlerinin WordNet, spaCy'nin morfoloji oluşturucusu veya tam bir morfolojik analizör kullanmasının nedeni budur.
 
 ### Adım 4: bunları birleştirin
 
@@ -170,7 +170,7 @@ def nltk_pos_to_wordnet(tag):
 lemmas = [lemmatizer.lemmatize(t, nltk_pos_to_wordnet(tag)) for t, tag in tagged]
 ```
 
-`word_tokenize` kasılmaları, Unicode'u ve regex'inizin gözden kaçırdığı uç durumları yönetir. `PorterStemmer` beş aşamanın tamamını çalıştırıyor. `WordNetLemmatizer`, POS etiketinin NLTK'nin Penn Treebank şemasından WordNet'in kısaltma grubuna çevrilmesine ihtiyaç duyuyor. Yukarıdaki çeviri kabloları çoğu öğreticinin atladığı kısımdır.
+`word_tokenize` kasılmaları, Unicode'u ve regex'inizin kaçırdığı uç durumları yönetir. `PorterStemmer` beş aşamanın tamamını çalıştırır. `WordNetLemmatizer`, POS etiketinin NLTK'nin Penn Treebank şemasından WordNet'in kısaltma setine çevrilmesine ihtiyaç duyar. Yukarıdaki çeviri kabloları çoğu öğreticinin atladığı kısımdır.
 
 ### spaCy
 
@@ -192,7 +192,7 @@ running  run     VERB
 .        .       PUNCT
 ```
 
-spaCy tüm hattı `nlp(text)`'nin arkasına gizler. Tokenleştirme, POS etiketleme ve lemmatizasyon işlemlerinin tümü çalıştırılır. Geniş ölçekte NLTK'den daha hızlı. Kutunun dışında daha doğru. Bunun dezavantajı, bireysel bileşenleri kolayca değiştirememenizdir.
+spaCy, tüm boru hattını `nlp(text)`'nin arkasına gizler. Tokenizasyon, POS etiketleme ve lemmatizasyon işlemlerinin tümü çalışır. Geniş ölçekte NLTK'den daha hızlı. Kutunun dışında daha doğru. Bunun dezavantajı, bireysel bileşenleri kolayca değiştirememenizdir.
 
 ### Hangisini ne zaman seçmeli
 
@@ -200,19 +200,19 @@ spaCy tüm hattı `nlp(text)`'nin arkasına gizler. Tokenleştirme, POS etiketle
 |-----------|------|
 | Öğretme, araştırma, bileşenleri değiştirme | NLTK |
 | Üretim, çoklu dil, hız önemlidir | spaCy |
-| Transformer ardışık düzen (zaten modelin tokenizer'si ile tokenözelleştirme yapacaksınız) | `tokenizers` / `transformers` kullanın ve klasik ön işlemeyi atlayın |
+| Transformer işlem hattı (zaten modelin tokenizer'si ile tokenize edeceksiniz) | `tokenizers` / `transformers` kullanın ve klasik ön işlemeyi atlayın |
 
 ### Kimsenin sizi uyarmadığı iki arıza modu
 
 Çoğu öğretici algoritmaları öğretir ve durur. Gerçek bir ön işleme hattını iki şey rahatsız eder ve bunlar neredeyse hiçbir zaman ele alınmaz.
 
-**Tekrarlanabilirlik sapması.** NLTK ve spaCy, sürümler arasında tokenleştirme ve lemmatizer davranışını değiştirir. spaCy 2.x'te `['do', "n't"]` üreten şey, 3.x'te `["don't"]` üretebilir. Modeliniz tek bir dağıtım üzerinde eğitildi. Inference artık farklı bir cihazda çalışıyor. Doğruluk sessizce azalır ve kimse bunun nedenini bilmez. Kitaplık sürümlerini `requirements.txt` içinde sabitleyin. 20 örnek cümlenin beklenen tokenizasyonunu donduran bir ön işleme regresyon testi yazın. Her yükseltmede çalıştırın.
+**Tekrarlanabilirlik sapması.** NLTK ve spaCy, sürümler arasında tokenleştirme ve lemmatizer davranışını değiştirir. spaCy 2.x'te `['do', "n't"]`'yi üreten şey, 3.x'te `["don't"]`'yi üretebilir. Modeliniz tek bir dağıtım üzerinde eğitildi. Inference artık farklı bir sürümde çalışıyor. Doğruluk sessizce azalır ve kimse bunun nedenini bilmez. Kitaplık sürümlerini `requirements.txt`'ye sabitleyin. 20 örnek cümlenin beklenen tokenizasyonunu donduran bir ön işleme regresyon testi yazın. Her yükseltmede çalıştırın.
 
-**Eğitim / inference uyumsuzluğu.** Agresif ön işlemeyle eğitim verin (küçük harf, engellenecek sözcükleri kaldırma, kökten ayırma), ham kullanıcı girişine göre konuşlandırın, performans kraterini izleyin. Bu, en yaygın üretim NLP hatasıdır. Eğitim sırasında ön işleme yaparsanız, aynı işlevi inference sırasında da çalıştırmalısınız. Ön işlemeyi, hizmet veren ekibin yeniden yazdığı bir not defteri hücresi olarak değil, model paketinin içindeki bir işlev olarak gönderin.
+**Eğitim / inference uyumsuzluğu.** Agresif ön işleme (küçük harf, engellenen sözcüklerin kaldırılması, kökten ayırma) ile eğitim alın, ham kullanıcı girişine göre konuşlandırın, performans kraterini izleyin. Bu, en yaygın üretim NLP hatasıdır. Eğitim sırasında ön işleme yaparsanız inference sırasında aynı işlevi çalıştırmanız gerekir. Ön işlemeyi, hizmet veren ekibin yeniden yazdığı bir not defteri hücresi olarak değil, model paketinin içindeki bir işlev olarak gönderin.
 
 ## Gönderin
 
-Mühendislerin üç ders kitabı okumadan bir ön işleme stratejisi seçmelerine yardımcı olan yeniden kullanılabilir bir prompt.
+Mühendislerin üç ders kitabını okumadan bir ön işleme stratejisi seçmelerine yardımcı olan yeniden kullanılabilir bir prompt.
 
 `outputs/prompt-preprocessing-advisor.md` olarak kaydet:
 
@@ -236,8 +236,8 @@ Refuse to recommend stemming for user-visible text. Refuse to recommend lemmatiz
 
 ## Egzersizler
 
-1. **Kolay.** URL'leri tek token'ler olarak tutmak için `tokenize`'yi genişletin. Test: `tokenize("Visit https://example.com today.")` bir URL token üretmelidir.
-2. **Orta.** Porter adım 1b'yi uygulayın. Bir kelime sesli harf içeriyorsa ve `ed` veya `ing` ile bitiyorsa onu kaldırın. Çift ünsüz kuralını kullanın (`hopping -> hop`, `hopp` değil).
+1. **Kolay.** URL'leri tek token olarak tutmak için `tokenize`'yi genişletin. Test: `tokenize("Visit https://example.com today.")`, bir token URL'si üretmelidir.
+2. **Orta.** Porter adım 1b'yi uygulayın. Bir sözcük sesli harf içeriyorsa ve `ed` veya `ing` ile bitiyorsa onu kaldırın. Çift ünsüz kuralını kullanın (`hopp` değil, `hopping -> hop`).
 3. **Zor.** WordNet'i arama tablosu olarak kullanan ancak WordNet'te giriş olmadığında Porter köküne geri dönen bir lemmatizer oluşturun. Etiketli bir derlemedeki doğruluğu düz WordNet ve düz Porter'a göre ölçün.
 
 ## Anahtar Terimler
@@ -252,6 +252,6 @@ Refuse to recommend stemming for user-visible text. Refuse to recommend lemmatiz
 
 ## Daha Fazla Okuma
 
-- [Porter, M. F. (1980). Son ekleri kaldırmaya yönelik bir algoritma](https://tartarus.org/martin/PorterStemmer/def.txt) — beş sayfalık özgün makale hâlâ en açık anlatımdır.
-- [spaCy 101 — dilsel özellikler](https://spacy.io/usage/linguistic-features) — gerçek bir boru hattının nasıl kablolandığı.
-- [NLTK kitabı, bölüm 3](https://www.nltk.org/book/ch03.html) — tokenhenüz düşünmediğiniz son durum örnekleri.
+- [Porter, M.F. (1980). Son ekin çıkarılması için bir algoritma](https://tartarus.org/martin/PorterStemmer/def.txt) — orijinal makale, beş sayfa, hala en net açıklama.
+- [spaCy 101 — dil özellikleri](https://spacy.io/usage/linguistic-features) — gerçek bir boru hattının nasıl kablolandığı.
+- [NLTK kitabı, bölüm 3](https://www.nltk.org/book/ch03.html) — Henüz düşünmediğiniz tokenizasyon uç durumları.

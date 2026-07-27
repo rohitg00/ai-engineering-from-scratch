@@ -1,29 +1,29 @@
-# Embedding'lar ve Vektör Gösterimleri
+# Embedding'ler ve Vektör Gösterimleri
 
-> Metin ayrıktır. Matematik süreklidir. LLM'tan "benzer" belgeleri bulmasını, anlamları karşılaştırmasını veya anahtar kelimelerin ötesinde arama yapmasını istediğinizde, bu iki dünya arasında bir köprüye güveniyorsunuz demektir. Bu köprü bir embedding. embedding'ları anlamıyorsanız, modern yapay zekayı anlamıyorsunuz demektir. Sadece kullan.
+> Metin ayrıktır. Matematik süreklidir. Yüksek Lisans'tan "benzer" belgeleri bulmasını, anlamları karşılaştırmasını veya anahtar kelimelerin ötesinde arama yapmasını istediğinizde, bu iki dünya arasında bir köprüye güveniyorsunuz demektir. Bu köprü bir embedding. embedding'leri anlamıyorsanız, modern yapay zekayı anlamıyorsunuz demektir. Sadece kullan.
 
 **Tür:** Yapım
 **Diller:** Python
 **Önkoşullar:** Aşama 11, Ders 01 (Prompt Mühendislik)
 **Süre:** ~75 dakika
-**İlgili:** Aşama 5 · 22 (Embedding Modellerin Derinlemesine İncelemesi), yoğun, seyrek ve çoklu vektör, Matryoshka kesintisi ve eksen başına model seçimini kapsar. Bu ders üretim hattına (vektör veri tabanları, HNSW, benzerlik matematiği) odaklanır. Bir model seçmeden önce Aşama 5 · 22'yi okuyun.
+**İlgili:** Aşama 5 · 22 (Embedding Modelleri Derinlemesine İnceleme), yoğun, seyrek, çoklu vektör, Matryoshka kesintisi ve eksen başına model seçimini kapsar. Bu ders üretim hattına (vektör veri tabanları, HNSW, benzerlik matematiği) odaklanır. Bir model seçmeden önce Aşama 5 · 22'yi okuyun.
 
 ## Öğrenme Hedefleri
 
 - API sağlayıcıları ve açık kaynak modellerini kullanarak metin embedding'ler oluşturun ve aralarındaki kosinüs benzerliğini hesaplayın
 - embedding'lerin, anahtar kelime aramanın çözemediği sözcük dağarcığı uyumsuzluğu sorununu neden çözdüğünü açıklayın
 - Belgeleri tam anahtar kelime eşleşmesi yerine anlama göre alan anlamsal bir arama dizini oluşturun
-- Alma benchmark'leri (precision@k, geri çağırma) kullanarak embedding kalitesini değerlendirin ve göreviniz için doğru embedding modelini seçin
+- benchmark'leri (precision@k, geri çağırma) kullanarak embedding kalitesini değerlendirin ve göreviniz için doğru embedding modelini seçin
 
 ## Sorun
 
-10.000 destek biletiniz var. Bir müşteri "ödemem gerçekleşmedi" diye yazıyor. Benzer geçmiş biletleri bulmanız gerekiyor. Anahtar kelime araması, "ödeme" ve "tamamlanmadı" ifadelerini içeren biletleri bulur. "İşlem başarısız oldu", "ödeme reddedildi" ve "fatura hatası" gibi ifadeleri gözden kaçırıyor. Bu biletler tamamen aynı sorunu tamamen farklı kelimelerle anlatıyor.
+10.000 destek biletiniz var. Bir müşteri "ödemem gerçekleşmedi" diye yazıyor. Benzer geçmiş biletleri bulmanız gerekiyor. Anahtar kelime araması, "ödeme" ve "tamamlanmadı" ifadelerini içeren biletleri bulur. "İşlem başarısız oldu", "ücret reddedildi" ve "fatura hatası" gibi ifadeleri gözden kaçırıyor. Bu biletler tamamen aynı sorunu tamamen farklı kelimelerle anlatıyor.
 
 Bu kelime uyumsuzluğu sorunudur. İnsan dilinde aynı şeyi söylemenin onlarca yolu vardır. Anahtar kelime araması, her kelimeyi hiçbir anlamı olmayan bağımsız bir sembol olarak ele alır. "Reddedildi" ile "geçmedi"nin aynı kavramı ifade ettiğini bilemez.
 
-Benzerliği yazımın değil anlamın belirlediği bir metin temsiline ihtiyacınız var. "Ödemem gerçekleşmedi" ve "işlem reddedildi" ifadelerini matematiksel alanda birbirine yakın bir yere yerleştirirken, "ödeme" kelimesini paylaşmanıza rağmen "ödemem zamanında ulaştı" ifadesini çok uzağa itmenin bir yoluna ihtiyacınız var.
+Benzerliği yazımın değil anlamın belirlediği bir metin temsiline ihtiyacınız var. "Ödemem gerçekleşmedi" ve "işlem reddedildi" ifadelerini matematiksel alanda birbirine yakın bir yere yerleştirirken, "ödeme" kelimesini paylaşmanıza rağmen "ödemem zamanında ulaştı" ifadesini uzağa itmenin bir yoluna ihtiyacınız var.
 
-Bu temsil bir embedding'dır.
+Bu temsil bir embedding'dir.
 
 ## Konsept
 
@@ -31,11 +31,11 @@ Bu temsil bir embedding'dır.
 
 embedding, metnin anlamını temsil eden kayan nokta sayılarından oluşan yoğun bir vektördür. "Yoğun" kelimesi önemlidir; çoğu boyutun sıfır olduğu seyrek temsillerin (kelime çantası, TF-IDF) aksine, her boyut bilgi taşır.
 
-"Paspasın üzerinde oturan kedi" `[0.023, -0.041, 0.087, ..., 0.012]` gibi bir şeye dönüşür -- modele bağlı olarak 768 ila 3072 sayıdan oluşan bir liste. Bu sayılar anlamı kodlar. Onları asla doğrudan incelemezsiniz. Bunları karşılaştırırsınız.
+"Paspasın üzerinde oturan kedi" `[0.023, -0.041, 0.087, ..., 0.012]` gibi bir şeye dönüşür - modele bağlı olarak 768 ila 3072 sayıdan oluşan bir liste. Bu sayılar anlamı kodlar. Onları asla doğrudan incelemezsiniz. Bunları karşılaştırırsınız.
 
 ### Word2Vec Atılımı
 
-2013 yılında Tomas Mikolov ve Google'daki meslektaşları Word2Vec'i yayınladı. Temel içgörü: bir neural network'yi komşularından (veya bir kelimenin komşularından) bir kelimeyi tahmin etmesi için eğitin ve gizli katman ağırlıkları anlamlı vektör temsilleri haline gelir.
+2013 yılında Tomas Mikolov ve Google'daki meslektaşları Word2Vec'i yayınladı. Temel içgörü: neural network'yi komşularından (veya bir kelimenin komşularından) bir kelimeyi tahmin edecek şekilde eğitin; gizli katman ağırlıkları anlamlı vektör temsillerine dönüşür.
 
 Ünlü sonuç:
 
@@ -43,21 +43,21 @@ embedding, metnin anlamını temsil eden kayan nokta sayılarından oluşan yoğ
 king - man + woman = queen
 ```
 
-embedding kelimesindeki vektör aritmetiği anlamsal ilişkileri yakalar. "Erkek"ten "kadın"a doğru yön kabaca "kral"dan "kraliçe"ye doğru olan yönle aynıdır. Bu, alanın geometrinin anlamı kodlayabileceğini fark ettiği andı.
+embedding kelimesindeki vektör aritmetiği anlamsal ilişkileri yakalar. "Erkek"ten "kadın"a doğru yön kabaca "kral"dan "kraliçe"ye doğru yönle aynıdır. Bu, alanın geometrinin anlamı kodlayabileceğini fark ettiği andı.
 
-Word2Vec 300 boyutlu vektörler üretti. Bağlamdan bağımsız olarak her kelimeye bir vektör verildi. "Nehir bankası" ve "banka hesabı"ndaki "Banka" aynı embedding'ya sahipti. Bu sınırlama sonraki on yıllık araştırmayı yönlendirdi.
+Word2Vec 300 boyutlu vektörler üretti. Bağlamdan bağımsız olarak her kelimeye bir vektör verildi. "Nehir bankası" ve "banka hesabı"ndaki "Banka" aynı embedding'ye sahipti. Bu sınırlama sonraki on yıllık araştırmayı yönlendirdi.
 
 ### Kelimelerden Cümlelere
 
-Kelime embedding'ler tekli token'leri temsil eder. Üretim sistemlerinin tüm cümleleri, paragrafları veya belgeleri yerleştirmesi gerekir. Dört yaklaşım ortaya çıktı:
+Word embedding'ler tek token'leri temsil eder. Üretim sistemlerinin tüm cümleleri, paragrafları veya belgeleri yerleştirmesi gerekir. Dört yaklaşım ortaya çıktı:
 
-**Ortalama**: cümledeki tüm kelime vektörlerinin ortalamasını alın. Kısa metinler için ucuz, kayıplı ve şaşırtıcı derecede uygun. Kelime sırasını tamamen kaybeder -- "köpek adamı ısırır" ve "adam köpeği ısırır" aynı embedding'leri alır.
+**Ortalama**: cümledeki tüm kelime vektörlerinin ortalamasını alın. Kısa metinler için ucuz, kayıplı ve şaşırtıcı derecede uygun. Kelime sırasını tamamen kaybeder - "köpek adamı ısırır" ve "adam köpeği ısırır" aynı embedding'leri alır.
 
-**CLS token**: transformer modelleri (BERT, 2018), girdinin tamamını temsil eden özel bir [CLS] token embedding çıktısı verir. Ortalama almaktan daha iyi ama [CLS] token benzerlik için değil sonraki cümle tahmini için eğitilmişti.
+**CLS token**: transformer modelleri (BERT, 2018), tüm girişi temsil eden özel bir [CLS] token embedding çıkışı sağlar. Ortalama almaktan daha iyi ancak [CLS] token benzerlik için değil sonraki cümle tahmini için eğitildi.
 
 **Karşılaştırmalı öğrenme**: Modeli, benzer çiftleri bir araya getirecek ve farklı çiftleri birbirinden ayıracak şekilde açıkça eğitin. Cümle-BERT (Reimers & Gurevych, 2019) bu yaklaşımı kullandı ve modern embedding modellerinin temeli oldu. Verilen "Şifremi nasıl sıfırlarım?" ve "Şifremi değiştirmem gerekiyor", model bunların neredeyse aynı vektörlere sahip olması gerektiğini öğrenir.
 
-**Talimatlara göre ayarlanmış embeddings**: en son yaklaşım. E5 ve GTE gibi modeller, modele ne tür bir embedding üreteceğini söyleyen bir görev önekini ("search_query:", "search_document:") kabul eder. Bu, bir modelin birden fazla göreve hizmet etmesini sağlar.
+**Talimatlara göre ayarlanmış embedding'ler**: en son yaklaşım. E5 ve GTE gibi modeller, modele ne tür embedding üreteceğini söyleyen bir görev önekini ("search_query:", "search_document:") kabul eder. Bu, bir modelin birden fazla göreve hizmet etmesini sağlar.
 
 ```mermaid
 graph LR
@@ -81,22 +81,22 @@ graph LR
 
 Pazar, bir avuç üretim sınıfı seçeneğe yerleşmiş durumda (MTEB 2026'nın başlarındaki puanlar, MTEB v2):
 
-| Modeli | Sağlayıcı | Boyutlar | METEB | Bağlam | Maliyet / 1 Milyon tokens |
+| Modeli | Sağlayıcı | Boyutlar | METEB | Bağlam | Maliyet / 1 Milyon token |
 |-------|----------|-----------|------|---------|------------------|
-| İkizler burcu Embedding 2 | Google | 3072 (Matryoshka) | 67.7 (geri alma) | 8192 | 0,15$ |
+| İkizler Embedding 2 | Google | 3072 (Matryoshka) | 67.7 (geri alma) | 8192 | 0,15$ |
 | yerleştirme-v4 | Tutarlı | 1024 (Matryoshka) | 65.2 | 128K | 0,12$ |
 | yolculuk-4 | Yapay Zeka Yolculuğu | 1024/2048 (Matryoshka) | 66.8 | 32K | 0,12$ |
-| text-embedding-3-large | OpenAI | 3072 (Matryoshka) | 64.6 | 8192 | 0,13$ |
-| text-embedding-3-small | OpenAI | 1536 (Matryoshka) | 62.3 | 8192 | 0,02$ |
+| metin-embedding-3-büyük | OpenAI | 3072 (Matryoshka) | 64.6 | 8192 | 0,13$ |
+| metin-embedding-3-küçük | OpenAI | 1536 (Matryoshka) | 62.3 | 8192 | 0,02$ |
 | BGE-M3 | BAAI | 1024 (yoğun+seyrek+ColBERT) | 63.0 çok dilli | 8192 | Açık ağırlık |
 | Qwen3-Embedding | Alibaba | 4096 (Matryoshka) | 66.9 | 32K | Açık ağırlık |
 | Nomic-embed-v2 | Nomik | 768 (Matryoshka) | 63.1 | 8192 | Açık ağırlık |
 
-MTEB (Massive Text Embedding Benchmark) v2, alma, sınıflandırma, kümeleme, yeniden sıralama ve özetleme genelinde 100'den fazla görevi kapsar. Daha yüksek daha iyidir. 2026 yılına gelindiğinde, açık ağırlıklı modeller (Qwen3-Embedding, BGE-M3) çoğu eksende kapalı barındırılan modellerle eşleşiyor veya onları geçiyor. İkizler Embedding 2 saf geri kazanıma öncülük eder; Voyage/Cohere belirli alanlara öncülük eder (finans, hukuk, kod). Taahhüt etmeden önce daima kendi sorgularınızda benchmark.
+MTEB (Massive Text Embedding Benchmark) v2, alma, sınıflandırma, kümeleme, yeniden sıralama ve özetleme genelinde 100'den fazla görevi kapsar. Daha yüksek daha iyidir. 2026 yılına gelindiğinde, açık ağırlıklı modeller (Qwen3-Embedding, BGE-M3) çoğu eksende kapalı barındırılan modellerle eşleşiyor veya onları geçiyor. Gemini Embedding 2 saf geri kazanıma öncülük eder; Voyage/Cohere belirli alanlara öncülük eder (finans, hukuk, kod). Taahhüt etmeden önce daima kendi sorgularınızda benchmark.
 
 ### Benzerlik Metrikleri
 
-İki embedding vektör verildiğinde bunların ne kadar benzer olduğunu ölçmenin üç yolu vardır:
+İki embedding vektörü verildiğinde bunların ne kadar benzer olduğunu ölçmenin üç yolu vardır:
 
 **Kosinüs benzerliği**: iki vektör arasındaki açının kosinüsü. -1 (ters) ile 1 (aynı yön) arasında değişir. Büyüklüğü göz ardı eder; 10 kelimelik bir cümle ve 500 kelimelik bir belge aynı yönü işaret ediyorsa 1,0 puan alabilir. Bu, kullanım durumlarının %90'ı için varsayılandır.
 
@@ -121,14 +121,14 @@ Hangisi ne zaman kullanılır:
 | Metrik | Şu durumlarda kullanın | Ne zaman kaçının |
 |--------|----------|------------|
 | Kosinüs benzerliği | Farklı uzunluktaki metinlerin karşılaştırılması; çoğu geri alma görevi | Büyüklük bilgi taşır |
-| Nokta ürünü | Embedding'lar zaten normalleştirildi; maksimum hız | Vektörlerin büyüklükleri farklıdır |
+| Nokta ürün | Embedding'ler zaten normalleştirilmiştir; maksimum hız | Vektörlerin büyüklükleri farklıdır |
 | Öklid mesafesi | Kümeleme; mekansal en yakın komşu problemleri | Oldukça farklı uzunluklardaki belgeleri karşılaştırma |
 
-### Vector Database'lar ve HNSW
+### Vector Database'ler ve HNSW
 
 Kaba kuvvet benzerlik araması, sorguyu depolanan her vektörle karşılaştırır. 1536 boyuta sahip 1 milyon vektör, yani sorgu başına 1,5 milyar çarpma-ekleme işlemi anlamına gelir. Çok yavaş.
 
-Vector database'lar bunu Yaklaşık En Yakın Komşu (ANN) algoritmalarıyla çözüyorlar. Baskın algoritma HNSW'dir (Hiyerarşik Gezinilebilir Küçük Dünya):
+Vector database'ler bunu Yaklaşık En Yakın Komşu (ANN) algoritmalarıyla çözer. Baskın algoritma HNSW'dir (Hiyerarşik Gezinilebilir Küçük Dünya):
 
 1. Çok katmanlı bir vektör grafiği oluşturun
 2. Üst katmanlar seyrektir; uzak kümeler arasındaki uzun menzilli bağlantılar
@@ -162,15 +162,15 @@ graph TD
 
 ### Parçalama Stratejileri
 
-Belgeler tek vektör olarak yerleştirilemeyecek kadar uzun. 50 sayfalık bir PDF düzinelerce konuyu kapsar; embedding, belirli hiçbir şeye benzemeyen, her şeyin ortalaması haline gelir. Belgeleri parçalara böler ve her birini yerleştirirsiniz.
+Belgeler tek vektör olarak yerleştirilemeyecek kadar uzun. 50 sayfalık bir PDF düzinelerce konuyu kapsar; embedding, belirli hiçbir şeye benzemeyen her şeyin ortalaması haline gelir. Belgeleri parçalara böler ve her birini yerleştirirsiniz.
 
-**Sabit boyutlu parçalama**: her N token'yi M-token örtüşmesiyle bölün. Basit ve öngörülebilir. Belgelerin net bir yapısı olmadığında iyi çalışır. 50-token örtüşmeli 512-token yığını: 1. parça tokens 0-511'dir, 2. parça ise tokens 462-973'tür.
+**Sabit boyutlu parçalama**: her N token'yi M-token örtüşmesiyle bölün. Basit ve öngörülebilir. Belgelerin net bir yapısı olmadığında iyi çalışır. 50-token örtüşmesine sahip bir 512-token yığını: parça 1, tokens 0-511, parça 2, tokens 462-973'tür.
 
-**Cümle tabanlı parçalama**: cümle sınırlarında bölme, cümleleri token sınırına ulaşana kadar gruplandırma. Her parça en az bir tam cümleden oluşur. Sabit boyuttan daha iyidir çünkü asla bir düşünceyi ikiye bölmezsiniz.
+**Cümle tabanlı parçalama**: Cümle sınırlarında bölme, token sınırına ulaşana kadar cümleleri gruplama. Her parça en az bir tam cümleden oluşur. Sabit boyuttan daha iyidir çünkü asla bir düşünceyi ikiye bölmezsiniz.
 
-**Özyinelemeli parçalama**: Önce en büyük sınırdan (bölüm başlıkları) bölmeyi deneyin. Hala çok büyükse paragraf sınırlarını deneyin. Daha sonra cümle sınırları. Daha sonra karakter sınırlamaları. Bu LangChain'in `RecursiveCharacterTextSplitter`'sidir ve karma formatlı şirketler için iyi çalışır.
+**Özyinelemeli parçalama**: Önce en büyük sınırdan (bölüm başlıkları) bölmeyi deneyin. Hala çok büyükse paragraf sınırlarını deneyin. Daha sonra cümle sınırları. Daha sonra karakter sınırlamaları. Bu, LangChain'in `RecursiveCharacterTextSplitter`'sidir ve karma formatlı şirketler için iyi çalışır.
 
-**Anlamsal parçalama**: Her cümleyi yerleştirin, ardından embedding'ları benzer olan ardışık cümleleri gruplandırın. embedding benzerliği bir eşiğin altına düştüğünde yeni bir yığın başlatın. Pahalıdır (her cümleyi ayrı ayrı embedding gerektirir) ancak en tutarlı parçaları üretir.
+**Anlamsal parçalama**: Her cümleyi yerleştirin, ardından embedding'leri benzer olan ardışık cümleleri gruplandırın. embedding benzerliği bir eşiğin altına düştüğünde yeni bir yığın başlatın. Pahalıdır (her cümleyi ayrı ayrı embedding gerektirir) ancak en tutarlı parçaları üretir.
 
 | Strateji | Karmaşıklık | Kalite | Şunun için en iyisi |
 |----------|-----------|---------|----------|
@@ -179,13 +179,13 @@ Belgeler tek vektör olarak yerleştirilemeyecek kadar uzun. 50 sayfalık bir PD
 | Özyinelemeli | Orta | İyi | Markdown, HTML, karma belgeler |
 | Anlamsal | Yüksek | En İyi | Kritik erişim kalitesi |
 
-Çoğu sistem için en uygun nokta: 50-token örtüşme ile 256-512 token parça.
+Çoğu sistem için en uygun nokta: 50-token örtüşmesine sahip 256-512 token parçaları.
 
 ### Çift Kodlayıcılar ve Çapraz Kodlayıcılar
 
-Çift kodlayıcı, sorguyu ve belgeleri bağımsız olarak gömer ve ardından vektörleri karşılaştırır. Hızlı -- sorguyu bir kez yerleştirirsiniz ve önceden hesaplanmış embedding belgesiyle karşılaştırırsınız. Bu, geri almak için kullandığınız şeydir.
+Çift kodlayıcı, sorguyu ve belgeleri bağımsız olarak gömer ve ardından vektörleri karşılaştırır. Hızlı - sorguyu bir kez yerleştirirsiniz ve önceden hesaplanmış belge embedding'lerle karşılaştırırsınız. Bu, geri almak için kullandığınız şeydir.
 
-Çapraz kodlayıcı, sorguyu ve belgeyi tek bir giriş olarak alır ve bir alaka puanı verir. Yavaş - her sorgu-belge çiftini tam model boyunca işler. Ancak çok daha doğru çünkü sorgu ve belge token'lerine aynı anda katılabiliyor.
+Çapraz kodlayıcı, sorguyu ve belgeyi tek bir giriş olarak alır ve bir alaka puanı verir. Yavaş - her sorgu-belge çiftini tam model boyunca işler. Ancak çok daha doğru çünkü sorgulara katılabiliyor ve token'leri aynı anda belgeleyebiliyor.
 
 Üretim modeli: çift kodlayıcı ilk 100 adayı alır, çapraz kodlayıcı bunları ilk 10'a yeniden sıralar. Bu, geri alma ve ardından yeniden sıralama hattıdır.
 
@@ -201,11 +201,11 @@ Yeniden sıralama modelleri: Cohere Reranker 3,5 (1000 sorgu başına 2 ABD dola
 
 ### Matryoshka Embeddings
 
-Geleneksel embedding'lar ya hep ya hiçtir. 1536 boyutlu bir vektör 1536 kayan nokta kullanır. Yeniden eğitim almadan boyutu 256 boyuta indiremezsiniz.
+Geleneksel embedding'ler ya hep ya hiçtir. 1536 boyutlu bir vektör 1536 kayan nokta kullanır. Yeniden eğitim almadan boyutu 256 boyuta indiremezsiniz.
 
-Matryoshka Temsil Öğrenimi (Kusupati ve diğerleri, 2022) bunu düzeltir. Model, Rus iç içe geçmiş bebek gibi, ilk N boyutu en önemli bilgiyi yakalayacak şekilde eğitilmiştir. 1536-d Matryoshka embedding boyutunun 256'ya kesilmesi doğruluğu bir miktar kaybeder ancak işlevsel kalır.
+Matryoshka Temsil Öğrenimi (Kusupati ve diğerleri, 2022) bunu düzeltir. Model, tıpkı bir Rus iç içe geçmiş oyuncak bebek gibi, ilk N boyutu en önemli bilgiyi yakalayacak şekilde eğitilmiştir. 1536-d Matryoshka embedding'nin 256 boyuta kesilmesi doğruluğun bir kısmını kaybeder ancak işlevsel kalır.
 
-OpenAI'nin text-embedding-3-small ve text-embedding-3-large'si, `dimensions` parametresi aracılığıyla Matryoshka'nın kesilmesini destekler. 1536 yerine 256 boyutun talep edilmesi, depolamayı 6 kat azaltır ve MTEB benchmark'lerde kabaca %3-5 doğruluk kaybı olur.
+OpenAI'nin text-embedding-3-small ve text-embedding-3-large özellikleri, `dimensions` parametresi aracılığıyla Matryoshka'nın kesilmesini destekler. 1536 yerine 256 boyut talep etmek, MTEB benchmark'lerde yaklaşık %3-5 doğruluk kaybıyla depolamayı 6 kat azaltır.
 
 ### İkili Niceleme
 
@@ -221,7 +221,7 @@ cosine-similarity
 
 ## İnşa Et
 
-Sıfırdan anlamsal bir arama motoru oluşturuyoruz. Hayır vector database. Harici embedding API yok. Matematik için numpy ile saf Python.
+Sıfırdan anlamsal bir arama motoru oluşturuyoruz. vector database yok. Harici embedding API'si yok. Matematik için numpy ile saf Python.
 
 ### Adım 1: Metin Parçalama
 
@@ -257,9 +257,9 @@ def chunk_by_sentences(text, max_chunk_tokens=200):
     return chunks
 ```
 
-### Adım 2: Sıfırdan Embedding'lar Oluşturmak
+### Adım 2: Embedding'leri Sıfırdan Oluşturma
 
-L2 normalleştirmeli TF-IDF'yi kullanarak basit yoğun bir embedding uyguluyoruz. Bu bir sinirsel embedding değildir, ancak aynı sözleşmeyi takip eder: metin girer, sabit boyutlu vektör çıkar, benzer metinler benzer vektörler üretir.
+L2 normalleştirmeli TF-IDF kullanarak basit bir yoğun embedding uyguluyoruz. Bu sinirsel bir embedding değil, ancak aynı sözleşmeyi takip ediyor: metin girişi, sabit boyutlu vektör çıkışı, benzer metinler benzer vektörler üretir.
 
 ```python
 import math
@@ -438,7 +438,7 @@ full = openai_embed(["semantic search query"], dimensions=1536)
 compact = openai_embed(["semantic search query"], dimensions=256)
 ```
 
-256-d vektörü 6 kat daha az depolama kullanır. 10 milyon belge için bu 10 GB ve 61 GB'dir. Doğruluk kaybı standart benchmark'larda kabaca %3-5'tir.
+256-d vektörü 6 kat daha az depolama kullanır. 10 milyon belge için bu 10 GB ve 61 GB'dir. Doğruluk kaybı standart benchmark'lerde kabaca %3-5'tir.
 
 Cohere ile yeniden sıralama için:
 
@@ -464,13 +464,13 @@ model = SentenceTransformer("BAAI/bge-small-en-v1.5")
 embeddings = model.encode(["semantic search query", "another document"])
 ```
 
-Yapımızdaki VectorIndex sınıfı bunlardan herhangi biriyle çalışır. embedding fonksiyonunu değiştirin, arama mantığını koruyun.
+Yapımızdaki VectorIndex sınıfı bunlardan herhangi biriyle çalışır. embedding işlevini değiştirin, arama mantığını koruyun.
 
 ## Gönderin
 
 Bu ders şunları üretir:
-- `outputs/prompt-embedding-advisor.md` -- belirli kullanım durumları için embedding model ve stratejilerini seçmek için bir prompt
-- `outputs/skill-embedding-patterns.md` -- agent'lara, embedding'ları üretimde etkili bir şekilde nasıl kullanacaklarını öğreten bir beceri
+- `outputs/prompt-embedding-advisor.md` -- belirli kullanım durumları için embedding modellerini ve stratejilerini seçmek için bir prompt
+- `outputs/skill-embedding-patterns.md` -- agent'lere embedding'leri üretimde etkili bir şekilde nasıl kullanacaklarını öğreten bir beceri
 
 ## Egzersizler
 
@@ -480,7 +480,7 @@ Bu ders şunları üretir:
 
 3. **Matryoshka simülasyonu**: 500 boyutlu vektörler üreten bir SimpleEmbedder oluşturun. 50, 100, 200 ve 500 boyutlara kesin. Her kesmede geri çağırmanın nasıl bozulduğunu ölçün. Bu, gerçek eğitim numarasına ihtiyaç duymadan Matryoshka davranışını simüle eder.
 
-4. **İkili niceleme**: arama motorundan embedding'ları alın, bunları ikiliye dönüştürün (pozitifse 1, negatifse 0) ve Hamming mesafe aramasını uygulayın. İlk 10 sonucu tam duyarlı kosinüs benzerliğiyle karşılaştırın. Örtüşme yüzdesini ölçün.
+4. **İkili niceleme**: embedding'leri arama motorundan alın, bunları ikiliye dönüştürün (pozitifse 1, negatifse 0) ve Hamming mesafe aramasını uygulayın. İlk 10 sonucu tam duyarlı kosinüs benzerliğiyle karşılaştırın. Örtüşme yüzdesini ölçün.
 
 5. **Cümle tabanlı parçalama**: sabit boyutlu parçalamayı `chunk_by_sentences` ile değiştirin. Aynı sorguları çalıştırın ve alma puanlarını karşılaştırın. Cümle sınırlarına saygı duymak sonuçları iyileştirir mi?
 
@@ -494,20 +494,20 @@ Bu ders şunları üretir:
 | HNSW | "Hızlı vektör arama" | Hiyerarşik Gezinilebilir Küçük Dünya grafiği - O(log n) yaklaşık en yakın komşu aramasını mümkün kılan çok katmanlı yapı |
 | Çift kodlayıcı | "Ayrı olarak ekleyin, hızlı karşılaştırın" | Sorguyu ve belgeyi bağımsız olarak vektörlere kodlar; ön hesaplamaya ve hızlı erişime olanak sağlar |
 | Çapraz kodlayıcı | "Yavaş ama doğru yeniden sıralama" | Sorgu-belge çiftini tam model boyunca ortaklaşa işler; daha yüksek doğruluk, ön hesaplama gerektirmez |
-| Matryoshka embeddings | "Kesilebilir vektörler" | Embeddingilk N boyutun en önemli bilgileri yakalayacağı ve değişken boyutlu depolamaya olanak tanıyacak şekilde eğitilmiştir |
-| İkili nicemleme | "1 bit embedding'ler" | Hamming mesafe araması ile depolamayı 32 kat azaltmak için kayan nokta vektörlerini ikiliye (yalnızca işaret biti) dönüştürme |
-| Parçalama | "Belgeleri embedding için böl" | Her birinin bağımsız olarak yerleştirilebilmesi ve alınabilmesi için belgeleri 256-512 token segmente ayırma |
-| Vector database | "embedding'lar için arama motoru" | Vektörleri depolamak ve uygun ölçekte yaklaşık en yakın komşu aramasını gerçekleştirmek için optimize edilmiş veri deposu |
-| Karşılaştırmalı öğrenme | "Karşılaştırmalı eğitim" | Benzer embedding çiftlerini bir araya, farklı embedding çiftlerini ise birbirinden ayıran eğitim yaklaşımı |
-| METEB | "embedding benchmark" | Büyük Metin Embedding Benchmark -- 8 görevde 56 dataset; embedding modellerinin karşılaştırılması için standart |
+| Matryoshka embedding'ler | "Kesilebilir vektörler" | Embedding'ler, ilk N boyutun en önemli bilgileri yakalayacağı ve değişken boyutlu depolamaya olanak tanıyacak şekilde eğitildi |
+| İkili nicemleme | "1 bit embedding'ler" | Hamming mesafe aramasıyla depolamayı 32 kat azaltmak için kayan vektörleri ikiliye (yalnızca işaret biti) dönüştürme |
+| Parçalama | "embedding için belgeleri böl" | Her birinin bağımsız olarak gömülebilmesi ve alınabilmesi için belgeleri 256-512 token segmentlere ayırma |
+| Vector database | "embedding'ler için arama motoru" | Vektörleri depolamak ve uygun ölçekte yaklaşık en yakın komşu araması gerçekleştirmek için optimize edilmiş veri deposu |
+| Karşılaştırmalı öğrenme | "Karşılaştırmalı eğitim" | Benzer çift embedding'leri bir araya getiren ve farklı embedding çiftlerini birbirinden ayıran eğitim yaklaşımı |
+| METEB | "embedding benchmark" | Büyük Metin Embedding Benchmark -- 8 görevde 56 dataset; embedding modellerini karşılaştırma standardı |
 
 ## Daha Fazla Okuma
 
-- Mikolov ve diğerleri, "Vektör Uzayında Kelime Temsillerinin Verimli Tahmini" (2013) -- kral-kraliçe analojisiyle embedding devrimini başlatan Word2Vec makalesi
-- Reimers & Gurevych, "Cümle-BERT: Siyam BERT-Ağlarını kullanan Cümle Embedding'ler" (2019) -- cümle düzeyinde benzerlik için iki kodlayıcıların nasıl eğitileceği, modern embedding modellerinin temeli
-- Kusupati ve diğerleri, "Matryoshka Temsil Öğrenimi" (2022) -- OpenAI'nin metin-embedding-3 için benimsediği değişken boyutlu embedding'ların arkasındaki teknik
+- Mikolov ve diğerleri, "Vektör Uzayında Kelime Temsillerinin Verimli Tahmini" (2013) -- embedding devrimini kral-kraliçe analojisiyle başlatan Word2Vec makalesi
+- Reimers & Gurevych, "Cümle-BERT: Siyam BERT-Ağlarını kullanan Cümle Embedding'ler" (2019) -- cümle düzeyinde benzerlik için çift kodlayıcıların nasıl eğitileceği, modern embedding modellerinin temeli
+- Kusupati ve diğerleri, "Matryoshka Temsil Öğrenme" (2022) -- OpenAI'nin metin-embedding-3 için benimsediği değişken boyutlu embedding'lerin arkasındaki teknik
 - Malkov ve Yashunin, "Hiyerarşik Gezinilebilir Küçük Dünya Grafiklerini Kullanan Verimli ve Sağlam Yaklaşık En Yakın Komşu" (2018) -- HNSW makalesi, çoğu üretim vektör aramasının arkasındaki algoritma
-- OpenAI EmbeddingKılavuzu (platform.openai.com/docs/guides/embeddings) -- Matryoshka boyut küçültme dahil text-embedding-3 modelleri için pratik referans
-- MTEB Skor Tablosu (huggingface.co/spaces/mteb/leaderboard) -- görevler ve diller genelinde tüm embedding modellerini karşılaştıran canlı benchmark
-- [Muennighoff ve diğerleri, "MTEB: Massive Text Embedding Benchmark" (EACL 2023)](https://arxiv.org/abs/2210.07316) -- skor tablosunun rapor ettiği 8 görev kategorisini (sınıflandırma, kümeleme, çift sınıflandırma, yeniden sıralama, geri alma, STS, özetleme, çift metin madenciliği) tanımlayan benchmark; Herhangi bir METEB puanına güvenmeden önce okuyun.
-- [Cümle Transformerbelgeleri](https://www.sbert.net/) -- çift kodlayıcı ile çapraz kodlayıcı karşılaştırması, havuz oluşturma stratejileri ve bu dersin uyguladığı alma-bölme-yerleştirme-depolama RAG ardışık düzeni için kanonik referans.
+- OpenAI Embeddings Kılavuzu (platform.openai.com/docs/guides/embeddings) - Matryoshka boyut küçültme dahil text-embedding-3 modelleri için pratik referans
+- MTEB Lider Tablosu (huggingface.co/spaces/mteb/leaderboard) -- tüm embedding modellerini görevler ve diller arasında karşılaştıran canlı benchmark
+- [Muennighoff ve diğerleri, "MTEB: Massive Text Embedding Benchmark" (EACL 2023)](https://arxiv.org/abs/2210.07316) -- skor tablosunun bildirdiği 8 görev kategorisini (sınıflandırma, kümeleme, çift sınıflandırma, yeniden sıralama, geri alma, STS, özetleme, çift metin madenciliği) tanımlayan benchmark; Herhangi bir METEB puanına güvenmeden önce okuyun.
+- [Cümle Transformers belgeleri](https://www.sbert.net/) -- bu dersin uyguladığı çift kodlayıcı ve çapraz kodlayıcı, havuz oluşturma stratejileri ve alma-bölme-yerleştirme-depolama RAG ardışık düzeni için kanonik referans.
