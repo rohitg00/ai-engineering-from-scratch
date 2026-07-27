@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which quantization format does the lesson call the production default for CPU and edge serving?",
+      "question": "Ders, CPU ve uç hizmet için üretim varsayılanını hangi niceleme biçimi olarak adlandırıyor?",
       "options": [
         "FP8",
         "GGUF Q4_K_M / Q5_K_M",
@@ -16,11 +16,11 @@
     },
     {
       "stage": "check",
-      "question": "Which format is the lesson's pick for datacenter GPU serving when multi-LoRA is required in vLLM?",
+      "question": "vLLM'de çoklu LoRA gerektiğinde veri merkezi GPU'nin hizmet vermesi için dersin seçimi hangi formattır?",
       "options": [
         "GGUF Q4_K_M",
         "AWQ",
-        "GPTQ with Marlin kernels",
+        "Marlin çekirdekleri ile GPTQ",
         "NVFP4"
       ],
       "correct": 2,
@@ -28,31 +28,31 @@
     },
     {
       "stage": "check",
-      "question": "What is the \"my model is 4 GB now\" trap with AWQ?",
+      "question": "AWQ ile \"şimdiki modelim 4 GB\" tuzağı nedir?",
       "options": [
-        "AWQ is incompatible with vLLM",
+        "AWQ vLLM ile uyumlu değil",
         "AWQ requires INT8 KV cache",
-        "AWQ does not actually shrink weights",
-        "AWQ only shrinks weights; KV cache and activations are separate and can add 30-50 GB at production batch sizes"
+        "AWQ aslında ağırlıkları küçültmüyor",
+        "AWQ yalnızca ağırlıkları küçültür; KV önbellek ve etkinleştirmeler ayrıdır ve üretim partisi boyutlarında 30-50 GB ekleyebilir"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does calibrating AWQ on generic web text hurt domain models?",
+      "question": "AWQ'nin genel web metninde kalibre edilmesi neden etki alanı modellerine zarar veriyor?",
       "options": [
-        "It disables Marlin kernels",
-        "The algorithm makes wrong decisions about which weights to protect, dropping domain accuracy (for example several Pass@1 points on HumanEval)",
-        "It only works on AMD GPUs",
-        "It increases model size"
+        "Marlin çekirdeklerini devre dışı bırakır",
+        "Algoritma, hangi ağırlıkların korunacağı konusunda yanlış kararlar vererek etki alanı doğruluğunu düşürür (örneğin, HumanEval'de birkaç Pass@1 noktası)",
+        "Yalnızca AMD GPU'larda çalışır",
+        "Model boyutunu artırır"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "For a reasoning-heavy workload where quality is non-negotiable, which precision does the lesson recommend by default?",
+      "question": "Kalitenin tartışılamaz olduğu, mantık yürütmenin yoğun olduğu bir iş yükü için ders varsayılan olarak hangi hassasiyeti önerir?",
       "options": [
         "GPTQ INT4",
         "INT2 GGUF",
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Which 2026 quantization limitation does the lesson call out for NVFP4 in early 2026?",
+      "question": "Ders, 2026'nın başlarındaki NVFP4 için hangi 2026 kuantizasyon sınırlamasını çağrıştırıyor?",
       "options": [
         "No LoRA support yet",
         "Not supported on H100",
-        "Only runs on CPU",
-        "Cannot be combined with FP8 KV cache"
+        "Yalnızca CPU'de çalışır",
+        "FP8 KV önbellekle birleştirilemez"
       ],
       "correct": 0,
       "explanation": ""
