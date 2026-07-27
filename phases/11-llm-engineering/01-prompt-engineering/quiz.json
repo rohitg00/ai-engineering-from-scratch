@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the most common mistake people make when writing prompts for LLMs?",
-    "options": ["Using too many tokens", "Writing vague, underspecified instructions that leave the model guessing about format, scope, and constraints", "Using the wrong API", "Not using enough examples"],
+    "question": "Yüksek Lisans için bilgi istemleri yazarken insanların yaptığı en yaygın hata nedir?",
+    "options": [
+      "Using too many tokens",
+      "Modelin format, kapsam ve kısıtlamalar hakkında tahminde bulunmasına neden olan belirsiz, yeterince belirtilmemiş talimatlar yazmak",
+      "Yanlış API'yi kullanma",
+      "Not using enough examples"
+    ],
     "correct": 1,
-    "explanation": "LLMs follow instructions literally. 'Write me a marketing email' gives the model no constraints. Specifying tone, audience, length, format, and constraints produces dramatically better results.",
+    "explanation": "LLM'ler talimatları tam anlamıyla takip eder. 'Bana bir pazarlama e-postası yaz' modele hiçbir kısıtlama getirmez. Ton, hedef kitle, uzunluk, format ve sınırlamaların belirlenmesi çok daha iyi sonuçlar üretir.",
     "stage": "pre"
   },
   {
-    "question": "What are the four core components of an effective prompt?",
-    "options": ["Input, output, model, temperature", "Role, context, constraints, and output format", "System, user, assistant, function", "Query, document, answer, score"],
+    "question": "Etkili bir ipucunun dört temel bileşeni nedir?",
+    "options": [
+      "Input, output, model, temperature",
+      "Role, context, constraints, and output format",
+      "System, user, assistant, function",
+      "Query, document, answer, score"
+    ],
     "correct": 1,
-    "explanation": "Effective prompts specify: who the model should be (role), what it should know (context), what it should and shouldn't do (constraints), and how to structure the response (output format).",
+    "explanation": "Etkili yönlendirmeler şunları belirtir: modelin kim olması gerektiğini (rol), ne bilmesi gerektiğini (bağlam), ne yapması ve yapmaması gerektiğini (kısıtlamalar) ve yanıtın nasıl yapılandırılacağını (çıktı formatı).",
     "stage": "pre"
   },
   {
-    "question": "Why should you include output format instructions in your prompts?",
-    "options": ["It makes the prompt shorter", "Without format instructions, the model chooses its own structure, which varies between calls and is hard to parse programmatically", "It reduces API costs", "It prevents hallucination"],
+    "question": "İstemlerinize neden çıktı formatı talimatlarını eklemelisiniz?",
+    "options": [
+      "İstemi kısaltır",
+      "Biçim talimatları olmadan model, çağrılar arasında değişen ve programlı olarak ayrıştırılması zor olan kendi yapısını seçer.",
+      "API maliyetlerini azaltır",
+      "Halüsinasyonu önler"
+    ],
     "correct": 1,
-    "explanation": "LLMs are non-deterministic. Without explicit format instructions, one call might return bullet points, the next prose, the next markdown. Specifying format ensures consistent, parseable outputs.",
+    "explanation": "Yüksek Lisanslar deterministik değildir. Açık biçim talimatları olmadan, bir çağrı madde işaretlerini, sonraki düzyazıyı, sonraki işaretlemeyi döndürebilir. Formatın belirtilmesi tutarlı, ayrıştırılabilir çıktılar sağlar.",
     "stage": "post"
   },
   {
-    "question": "What is the purpose of a system prompt?",
-    "options": ["To authenticate the API call", "To set persistent behavioral rules, role, and constraints that apply to the entire conversation", "To define the model's architecture", "To compress the conversation history"],
+    "question": "Sistem isteminin amacı nedir?",
+    "options": [
+      "API çağrısının kimliğini doğrulamak için",
+      "Konuşmanın tamamına uygulanacak kalıcı davranış kuralları, rol ve kısıtlamalar belirlemek",
+      "Modelin mimarisini tanımlamak için",
+      "Konuşma geçmişini sıkıştırmak için"
+    ],
     "correct": 1,
-    "explanation": "The system prompt establishes the model's persona, rules, and constraints for the entire session. It runs before every user turn and is the primary mechanism for controlling model behavior in production.",
+    "explanation": "Sistem istemi, tüm oturum için modelin kişiliğini, kurallarını ve kısıtlamalarını belirler. Her kullanıcı dönüşünden önce çalışır ve üretimdeki model davranışını kontrol eden birincil mekanizmadır.",
     "stage": "post"
   },
   {
-    "question": "How should you test whether a prompt change actually improved output quality?",
-    "options": ["Read a few outputs and make a judgment call", "Run the prompt on a diverse test set and measure changes in defined metrics (accuracy, format compliance, relevance)", "Ask the model if it's doing better", "Check the API response time"],
+    "question": "Ani bir değişikliğin gerçekten çıktı kalitesini iyileştirip iyileştirmediğini nasıl test etmelisiniz?",
+    "options": [
+      "Read a few outputs and make a judgment call",
+      "İstemi çeşitli bir test setinde çalıştırın ve tanımlanan ölçümlerdeki değişiklikleri (doğruluk, format uyumluluğu, alaka düzeyi) ölçün",
+      "Modele daha iyi olup olmadığını sorun",
+      "API yanıt süresini kontrol edin"
+    ],
     "correct": 1,
-    "explanation": "Evaluating prompt changes on a handful of examples is unreliable. A systematic evaluation harness with diverse test cases and defined metrics shows whether changes help across the distribution, not just cherry-picked examples.",
+    "explanation": "Bir avuç örnek üzerinde anlık değişiklikleri değerlendirmek güvenilir değildir. Çeşitli test senaryoları ve tanımlanmış ölçümler içeren sistematik bir değerlendirme sistemi, değişikliklerin yalnızca seçilmiş örneklerde değil, dağıtım genelinde yardımcı olup olmadığını gösterir.",
     "stage": "post"
   }
 ]
