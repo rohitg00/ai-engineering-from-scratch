@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the runner spawn a fresh Python subprocess per candidate rather than calling exec inline?",
+      "question": "Koşucu neden exec satır içi çağırmak yerine aday başına yeni bir Python alt süreci oluşturuyor?",
       "options": [
-        "It is faster than exec",
-        "It avoids polluting builtins",
-        "It isolates timeouts, output overruns, and dangerous imports from the host eval process",
-        "exec is deprecated in modern Python"
+        "Exec'ten daha hızlıdır",
+        "Yapıların kirlenmesini önler",
+        "Ana bilgisayar değerlendirme sürecinden zaman aşımlarını, çıktı aşımlarını ve tehlikeli içe aktarmaları izole eder",
+        "exec modern Python'da kullanımdan kaldırıldı"
       ],
       "correct": 2,
-      "explanation": "An infinite loop or runaway memory allocation in candidate code crashes only the subprocess. The host eval keeps making progress."
+      "explanation": "Aday koddaki sonsuz döngü veya kaçak bellek tahsisi yalnızca alt işlemin çökmesine neden olur. Ev sahibi değerlendirmesi ilerleme kaydetmeye devam ediyor."
     },
     {
       "stage": "pre",
-      "question": "What is the score for a task with three assertions when two pass and one fails?",
+      "question": "Üç iddialı bir görevin, ikisi başarılı ve biri başarısız olduğunda puanı nedir?",
       "options": [
         "1.0",
         "0.667",
@@ -24,11 +24,11 @@
         "0.5"
       ],
       "correct": 1,
-      "explanation": "Score is passed divided by total. Two of three is 0.667. The exit code is assertion_fail."
+      "explanation": "Puan toplama bölünerek geçilir. Üçte ikisi 0,667. Çıkış kodu iddia_fail'dir."
     },
     {
       "stage": "check",
-      "question": "Which exit code does the runner return when the candidate code does not parse?",
+      "question": "Aday kodu ayrıştırılmadığında koşucu hangi çıkış kodunu döndürür?",
       "options": [
         "error",
         "assertion_fail",
@@ -36,43 +36,43 @@
         "syntax_error"
       ],
       "correct": 3,
-      "explanation": "compile() raises SyntaxError inside the runner, the inner script catches it and writes exit_code=syntax_error."
+      "explanation": "compile(), koşucunun içinde SyntaxError'ı yükseltir, iç komut dosyası onu yakalar ve çıkış_kodu=sözdizimi_hatasını yazar."
     },
     {
       "stage": "check",
-      "question": "Why is wall-clock timeout the load-bearing control rather than the import denylist?",
+      "question": "Neden duvar saati zaman aşımı, içe aktarma red listesi yerine yük taşıyan kontrol olarak kullanılıyor?",
       "options": [
-        "Imports cannot be denied in Python",
-        "Most failures are infinite loops, and a determined adversary can bypass any in-process denylist",
-        "subprocess.run does not support denylists",
-        "Wall-clock is checked at compile time"
+        "Python'da ithalat reddedilemez",
+        "Başarısızlıkların çoğu sonsuz döngülerden oluşur ve kararlı bir rakip, süreç içindeki herhangi bir reddedilme listesini atlayabilir",
+        "subprocess.run red listelerini desteklemiyor",
+        "Derleme zamanında duvar saati kontrol edilir"
       ],
       "correct": 1,
-      "explanation": "Denylists catch lazy code, timeouts catch infinite loops. The denylist is a backstop, the timeout is the floor."
+      "explanation": "Reddedilenler tembel kodları yakalar, zaman aşımları ise sonsuz döngüleri yakalar. Reddetme listesi bir geri dönüş noktasıdır, zaman aşımı ise zemindir."
     },
     {
       "stage": "check",
-      "question": "What does pass_at_k(n, c, k) return when n - c < k?",
+      "question": "pass_at_k(n, c, k), n - c < k olduğunda ne döndürür?",
       "options": [
-        "Zero, because the sample is undefined",
-        "One, because the sample must contain at least one passing solution",
-        "c / n, the empirical pass rate",
+        "Sıfır, çünkü örnek tanımsız",
+        "Bir, numunenin en az bir geçiş solüsyonu içermesi gerektiği için",
+        "c/n, ampirik geçiş oranı",
         "Raises ValueError"
       ],
       "correct": 1,
-      "explanation": "If there are fewer fails than the sample size, every sample of size k necessarily includes at least one pass, so the probability is 1."
+      "explanation": "Örnek boyutundan daha az başarısızlık varsa, k boyutundaki her örnek zorunlu olarak en az bir geçiş içerir, dolayısıyla olasılık 1'dir."
     },
     {
       "stage": "post",
-      "question": "How does the runner surface an output overflow, and why is the cap 256 KB?",
+      "question": "Koşucu nasıl bir çıkış taşması ortaya çıkarıyor ve başlık neden 256 KB?",
       "options": [
-        "Stdout from the subprocess is streamed; once the 256 KB running total is crossed the child is killed and the task is recorded as exit_code=error with detail \"output overflow\"",
-        "Stderr only; size matches the OS pipe default",
-        "The candidate source size, capped so generated code stays small",
-        "The score value, expressed as a percentage with two decimals"
+        "Alt süreçten Stdout akışı sağlanır; 256 KB toplamını aştığınızda çocuk öldürülür ve görev, \"çıkış taşması\" ayrıntısıyla birlikte çıkış_kodu=hata olarak kaydedilir",
+        "Yalnızca Stderr; boyut OS boru varsayılanıyla eşleşiyor",
+        "Aday kaynak boyutu, oluşturulan kodun küçük kalması için sınırlandırılmıştır",
+        "İki ondalık sayıyla yüzde olarak ifade edilen puan değeri"
       ],
       "correct": 0,
-      "explanation": "The cap protects the host. Candidate code that floods stdout gets killed mid-stream; the runner normalises the result under exit_code=error with detail \"output overflow\" rather than minting a new exit code."
+      "explanation": "Kapak, konağı korur. Stdout'a akın eden aday kodu, akışın ortasında öldürülür; koşucu, yeni bir çıkış kodu basmak yerine, çıkış_kodu=hata altındaki sonucu \"çıkış taşması\" ayrıntısıyla normalleştirir."
     }
   ]
 }
