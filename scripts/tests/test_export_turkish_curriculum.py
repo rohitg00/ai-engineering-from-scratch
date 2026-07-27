@@ -23,7 +23,9 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         (self.source / "phases/00-test/README.tr.md").write_text("# Aşama 00\n")
         (self.source / "docs").mkdir()
         (self.source / "docs/turkish-export-sync.md").write_text("# Sync\n")
-        (self.source / "LICENSE").write_text("MIT\n")
+        (self.source / "LICENSE").write_text(
+            "MIT License\n\nCopyright (c) 2026 Rohit Ghumare\n"
+        )
 
     def tearDown(self):
         self.temp.cleanup()
@@ -45,8 +47,17 @@ class ExportTurkishCurriculumTest(unittest.TestCase):
         self.assertIn("## Öğrenme rotası", readme)
         self.assertIn("## Bir ders nasıl çalışılır?", readme)
         self.assertIn("## Dağıtım güvenceleri", readme)
+        self.assertIn("## Kaynak ve atıf", readme)
+        self.assertIn(
+            "https://github.com/rohitg00/ai-engineering-from-scratch", readme
+        )
+        self.assertIn("Copyright (c) 2026 Rohit Ghumare", readme)
         self.assertIn("`abc123`", readme)
         self.assertIn("assets/turkce-mufredat-v2.svg", readme)
+        self.assertEqual(
+            (target / "LICENSE").read_text(),
+            (self.source / "LICENSE").read_text(),
+        )
 
         banner = (target / "assets/turkce-mufredat-v2.svg").read_text()
         self.assertIn("TÜRKÇE", banner)
