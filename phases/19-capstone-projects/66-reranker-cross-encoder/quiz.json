@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the architectural difference between a bi-encoder and a cross-encoder?",
+      "question": "Çift kodlayıcı ile çapraz kodlayıcı arasındaki mimari fark nedir?",
       "options": [
         "Bi-encoders use cosine; cross-encoders use dot product",
-        "Bi-encoders are trained; cross-encoders are not",
-        "A bi-encoder embeds query and document independently; a cross-encoder reads the concatenated (query, document) sequence with full attention across both",
-        "Cross-encoders run only on GPUs"
+        "Çift kodlayıcılar eğitilir; çapraz kodlayıcılar",
+        "Çift kodlayıcı, sorguyu ve belgeyi bağımsız olarak yerleştirir; bir çapraz kodlayıcı, birleştirilmiş (sorgu, belge) sırasını her ikisinde de tüm dikkatle okur",
+        "Çapraz kodlayıcılar yalnızca GPU'larda çalışır"
       ],
       "correct": 2,
-      "explanation": "Cross attention across the join is what gives the cross-encoder its precision; the bi-encoder never sees the query and document together."
+      "explanation": "Çapraz kodlayıcıya hassasiyetini veren şey birleştirme boyunca çapraz dikkattir; iki kodlayıcı hiçbir zaman sorguyu ve belgeyi birlikte görmez."
     },
     {
       "stage": "pre",
-      "question": "Why can a cross-encoder not be used as the primary retriever on a 10M-document corpus?",
+      "question": "Neden bir çapraz kodlayıcı, 10M'lik bir belge külliyatında birincil alıcı olarak kullanılamıyor?",
       "options": [
-        "It requires one forward pass per (query, document) pair, which is 10M passes per query",
-        "It cannot embed text",
-        "It does not support negative scores",
-        "It requires the CLS token at the end of the sequence"
+        "(Sorgu, belge) çifti başına bir ileri geçiş gerektirir; bu da sorgu başına 10 milyon geçiş anlamına gelir",
+        "Metin yerleştirilemez",
+        "Negatif puanları desteklemiyor",
+        "Dizinin sonunda CLS jetonunu gerektirir"
       ],
       "correct": 0,
-      "explanation": "Throughput collapses at corpus scale; the cross-encoder runs once per pair instead of once per document at index time."
+      "explanation": "Verim, külliyat ölçeğinde çöker; çapraz kodlayıcı, dizin zamanında belge başına bir kez yerine çift başına bir kez çalışır."
     },
     {
       "stage": "check",
-      "question": "What is the role of the N parameter in a two-stage retrieve-then-rerank pipeline?",
+      "question": "İki aşamalı alma ve yeniden sıralama hattındaki N parametresinin rolü nedir?",
       "options": [
-        "It is the number of layers in the cross-encoder",
-        "It is the number of candidates returned by the bi-encoder for the cross-encoder to rescore",
-        "It is the size of the vocabulary",
-        "It is the cross-encoder hidden dimension"
+        "Çapraz kodlayıcıdaki katman sayısıdır",
+        "Çapraz kodlayıcının yeniden puanlaması için iki kodlayıcı tarafından döndürülen adayların sayısıdır",
+        "Bu, kelime dağarcığının büyüklüğüdür.",
+        "Çapraz kodlayıcı gizli boyutudur"
       ],
       "correct": 1,
-      "explanation": "N is the rerank pool; it caps quality (cross-encoder cannot exceed bi-encoder recall at N) and latency (cross-encoder runs N forward passes)."
+      "explanation": "N, yeniden sıralama havuzudur; kaliteyi (çapraz kodlayıcı N'de iki kodlayıcı geri çağırmayı aşamaz) ve gecikmeyi (çapraz kodlayıcı N ileri geçiş çalıştırır) sınırlar."
     },
     {
       "stage": "check",
-      "question": "Why must you pick N strictly larger than K (typically 3x or more)?",
+      "question": "N'yi neden K'den kesinlikle daha büyük seçmelisiniz (genellikle 3x veya daha fazla)?",
       "options": [
-        "The cross-encoder requires N to be a multiple of K",
-        "If N equals K the cross-encoder cannot reorder, only reweight; rerank lift collapses to zero",
-        "Smaller N reduces the embedding dimensionality",
-        "BM25 requires it for the IDF computation"
+        "Çapraz kodlayıcı, N'nin K'nin katı olmasını gerektirir",
+        "N, K'ye eşitse çapraz kodlayıcı yeniden sıralayamaz, yalnızca yeniden ağırlıklandırır; Yeniden sıralama artışı sıfıra düşüyor",
+        "Daha küçük N, gömme boyutunu azaltır",
+        "BM25, IDF hesaplaması için bunu gerektirir"
       ],
       "correct": 1,
-      "explanation": "With N = K there is nothing to reorder; the cross-encoder's only job is to pick the right K out of N, which needs N > K."
+      "explanation": "N = K ile yeniden sıralanacak hiçbir şey yoktur; çapraz kodlayıcının tek işi N > K'ya ihtiyaç duyan N arasından doğru K'yı seçmektir."
     },
     {
       "stage": "check",
-      "question": "What does the cross-encoder's mean-pooling head do in this lesson?",
+      "question": "Çapraz kodlayıcının ortalama havuzlama kafası bu derste ne yapar?",
       "options": [
-        "Averages the last-layer outputs over non-pad positions and feeds a single linear head to produce one relevance scalar",
-        "Sums the embedding indices",
-        "Pools over the vocabulary distribution",
-        "Computes the softmax over the document positions"
+        "Son katman çıktılarının ped olmayan konumlara göre ortalamasını alır ve bir alaka skaleri üretmek için tek bir doğrusal kafayı besler",
+        "Gömme endekslerini toplar",
+        "Kelime dağılımı üzerindeki havuzlar",
+        "Softmax'ı belge konumları üzerinden hesaplar"
       ],
       "correct": 0,
-      "explanation": "Mean-pool over non-pad positions, then a single linear layer outputs the relevance score; CLS-pooling is an alternative with similar quality."
+      "explanation": "Pedsiz konumlar üzerinden ortalama havuz, ardından tek bir doğrusal katman, alaka puanının çıktısını verir; CLS-havuzlama benzer kalitede bir alternatiftir."
     },
     {
       "stage": "post",
-      "question": "Which production failure mode does logging the rank-1 cross-encoder score help detect?",
+      "question": "Derece 1 çapraz kodlayıcı puanının günlüğe kaydedilmesi hangi üretim hatası modunun tespit edilmesine yardımcı olur?",
       "options": [
-        "Out-of-domain queries: when the top-1 reranker score is below a corpus-specific threshold, the model is signalling that nothing in the corpus actually answers the query",
+        "Alan dışı sorgular: İlk 1'e giren yeniden sıralama puanı, derleme özgü bir eşiğin altında olduğunda, model, derlemdeki hiçbir şeyin aslında sorguya yanıt vermediğinin sinyalini verir",
         "Network outages",
-        "Vocabulary drift in the tokenizer",
-        "Index corruption in the bi-encoder"
+        "Tokenizer'da kelime dağarcığı kayması",
+        "İki kodlayıcıda dizin bozulması"
       ],
       "correct": 0,
-      "explanation": "A consistently low rank-1 score is the cross-encoder telling you the retrieved pool does not contain the answer; surface that to the LLM as low-confidence."
+      "explanation": "Sürekli olarak düşük bir derece 1 puanı, çapraz kodlayıcının size alınan havuzun yanıtı içermediğini söylemesidir; Bunu LLM'ye güven eksikliği olarak gösterin."
     }
   ]
 }
