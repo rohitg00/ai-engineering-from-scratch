@@ -4,43 +4,43 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading: a pretrained language model has a body with 5M parameters and an output head that projects to a 30K vocabulary. You want a 2-class classifier. Which is the most defensible first move?",
+      "question": "Okumadan önce: Önceden eğitilmiş bir dil modelinin 5M parametreli bir gövdesi ve 30K kelime dağarcığını yansıtan bir çıktı kafası vardır. 2 sınıflı bir sınıflandırıcı istiyorsunuz. En savunulabilir ilk hamle hangisidir?",
       "options": [
-        "Discard the body and train a new transformer from scratch on the 800-example labelled set.",
-        "Replace only the head with a 2-class linear layer and decide later whether to train the body.",
-        "Keep the original head but mask all but two output logits.",
-        "Freeze the head and train only the body."
+        "Gövdeyi atın ve 800 örnekli etiketli sette sıfırdan yeni bir transformatör eğitin.",
+        "Yalnızca kafayı 2 sınıflı doğrusal katmanla değiştirin ve vücudu eğitip eğitmeyeceğinize daha sonra karar verin.",
+        "Orijinal başlığı koruyun ancak iki çıktı logiti dışında tümünü maskeleyin.",
+        "Kafayı dondurun ve yalnızca gövdeyi eğitin."
       ],
       "correct": 1,
-      "explanation": "The body is the expensive part and encodes useful structure from pretraining. Swap the head first. Whether to freeze the body is a separate decision driven by data size and domain drift."
+      "explanation": "Vücut pahalı kısımdır ve ön eğitimden elde edilen faydalı yapıyı kodlar. Önce kafanı değiştir. Cesedin dondurulup dondurulmayacağı, veri boyutuna ve alan kaymasına bağlı olarak verilen ayrı bir karardır."
     },
     {
       "stage": "check",
-      "question": "Why does the lesson use mean pooling with an attention-mask weighting instead of a plain mean across the sequence axis?",
+      "question": "Ders neden sıralama ekseni boyunca düz bir ortalama yerine dikkat maskesi ağırlıklı bir havuzlama anlamına geliyor?",
       "options": [
-        "Plain mean is mathematically undefined for transformers.",
-        "Padding positions contribute irrelevant hidden states that would pull the pooled vector toward zero.",
-        "Mean pool requires masking by convention even when there are no pads.",
-        "Plain mean ignores the batch dimension."
+        "Düz ortalama transformatörler için matematiksel olarak tanımsızdır.",
+        "Doldurma konumları, havuzlanmış vektörü sıfıra doğru çekecek ilgisiz gizli durumlara katkıda bulunur.",
+        "Ortalama havuz, ped olmadığında bile geleneksel olarak maskeleme gerektirir.",
+        "Düz ortalama toplu iş boyutunu yok sayar."
       ],
       "correct": 1,
-      "explanation": "Padding tokens carry no signal but the body still produces hidden states for them. Without masking, padded positions corrupt the pooled representation, especially on short sequences in a batch padded to the longest example."
+      "explanation": "Dolgu belirteçleri sinyal taşımaz ancak vücut yine de onlar için gizli durumlar üretir. Maskeleme olmadan, dolgulu konumlar, özellikle en uzun örneğe kadar dolgulu bir toplu iş içindeki kısa dizilerde, havuzlanmış gösterimi bozar."
     },
     {
       "stage": "check",
-      "question": "In `train_classifier`, the optimiser is constructed with `[p for p in model.parameters() if p.requires_grad]`. What does this idiom enforce?",
+      "question": "`train_classifier`'de optimizer `[p for p in model.parameters() if p.requires_grad]` ile oluşturulmuştur. Bu deyim neyi zorunlu kılıyor?",
       "options": [
-        "It silently ignores the head when the body is frozen.",
-        "It tells PyTorch to autograd through frozen parameters anyway.",
-        "It builds the param group from only the trainable subset, so the head-only and full-FT cases share the same code path.",
-        "It is required by the Adam constructor."
+        "Vücut donduğunda sessizce kafayı görmezden gelir.",
+        "PyTorch'a yine de donmuş parametreler üzerinden otomatik geçiş yapmasını söyler.",
+        "Param grubunu yalnızca eğitilebilir alt kümeden oluşturur, böylece yalnızca kafa ve tam FT durumları aynı kod yolunu paylaşır.",
+        "Adam yapıcısı tarafından gereklidir."
       ],
       "correct": 2,
-      "explanation": "The optimiser only updates the parameters in its param list. By filtering on `requires_grad`, the same training function works for both regimes; the toggle is the freeze call, not the loop."
+      "explanation": "Optimize edici yalnızca kendi parametre listesindeki parametreleri günceller. `requires_grad`'ye göre filtreleme yapıldığında aynı eğitim işlevi her iki rejim için de çalışır; geçiş, döngü değil çağrının dondurulmasıdır."
     },
     {
       "stage": "check",
-      "question": "Precision is 0.9 and recall is 0.6 on the spam class. What is the F1?",
+      "question": "Spam sınıfında kesinlik 0,9 ve hatırlama 0,6'dır. F1 nedir?",
       "options": [
         "0.75",
         "0.72",
@@ -48,31 +48,31 @@
         "0.30"
       ],
       "correct": 1,
-      "explanation": "F1 is the harmonic mean of precision and recall: 2 * 0.9 * 0.6 / (0.9 + 0.6) = 1.08 / 1.5 = 0.72."
+      "explanation": "F1, hassasiyet ve geri çağırmanın harmonik ortalamasıdır: 2 * 0,9 * 0,6 / (0,9 + 0,6) = 1,08 / 1,5 = 0,72."
     },
     {
       "stage": "post",
-      "question": "You retrain the model with full fine-tuning at the same learning rate as head-only training. F1 collapses to 0.55 from 0.90. What is the most likely cause?",
+      "question": "Modeli, yalnızca kafa eğitimiyle aynı öğrenme oranında tam ince ayar ile yeniden eğitirsiniz. F1 0,90'dan 0,55'e düştü. En muhtemel sebep nedir?",
       "options": [
-        "The body parameters needed a smaller learning rate than the head.",
-        "Adam is incompatible with classification objectives.",
-        "Cross-entropy loss is not defined for two-class problems.",
+        "Vücut parametrelerinin kafadan daha küçük bir öğrenme oranına ihtiyacı vardı.",
+        "Adam sınıflandırma hedefleriyle bağdaşmıyor.",
+        "Çapraz entropi kaybı iki sınıflı problemler için tanımlanmamıştır.",
         "PyTorch silently disables gradients during full fine-tuning."
       ],
       "correct": 0,
-      "explanation": "A pretrained body usually needs a smaller learning rate than a fresh head. A common pattern is two parameter groups: high LR on the head, smaller LR on the body. The same LR for both destroys pretraining signal."
+      "explanation": "Önceden eğitilmiş bir vücut genellikle yeni bir kafadan daha küçük bir öğrenme oranına ihtiyaç duyar. Yaygın bir model iki parametre grubudur: kafada yüksek LR, gövdede daha küçük LR. Her ikisi için de aynı LR ön eğitim sinyalini yok eder."
     },
     {
       "stage": "post",
-      "question": "Your team wants to deploy the classifier and asks how to record which regime produced the production checkpoint. Which artifact answers that question reproducibly?",
+      "question": "Ekibiniz sınıflandırıcıyı dağıtmak istiyor ve üretim kontrol noktasını hangi rejimin oluşturduğunu nasıl kaydedeceğini soruyor. Hangi eser bu soruyu tekrarlanabilir bir şekilde yanıtlıyor?",
       "options": [
-        "The final loss value, since head-only loss is always higher than full-FT loss.",
-        "The `trainable` count in `TrainReport`, which differs by orders of magnitude between regimes.",
-        "The confusion matrix, which uniquely identifies the regime.",
-        "The precision-recall-F1 triple."
+        "Yalnızca kafa kaybı her zaman tam FT kaybından daha yüksek olduğundan nihai kayıp değeri.",
+        "`TrainReport`'deki `trainable` sayısı, rejimler arasında büyüklük sırasına göre farklılık gösterir.",
+        "Rejimi benzersiz bir şekilde tanımlayan kafa karışıklığı matrisi.",
+        "Hassas geri çağırma F1 üçlüsü."
       ],
       "correct": 1,
-      "explanation": "`trainable` records the number of parameters that received gradients during training. Head-only has on the order of `hidden * num_classes`; full FT has the whole model. The number is the audit trail."
+      "explanation": "`trainable`, eğitim sırasında gradyanları alan parametrelerin sayısını kaydeder. Yalnızca kafa `hidden * num_classes`'nin emriyle; tam FT tüm modele sahiptir. Numara denetim izidir."
     }
   ]
 }
