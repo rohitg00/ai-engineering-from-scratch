@@ -4,79 +4,79 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the key behavioral difference between extractive and abstractive summarization?",
+      "question": "Çıkarıcı ve soyutlayıcı özetleme arasındaki temel davranışsal fark nedir?",
       "options": [
         "Extractive uses TF-IDF; abstractive uses Word2Vec",
-        "Extractive returns sentences verbatim from the source; abstractive generates new text and can hallucinate",
-        "Extractive is multilingual only",
-        "Extractive is slower than abstractive"
+        "Çıkarıcı, kaynaktan cümleleri kelimesi kelimesine döndürür; soyutlayıcı yeni metin üretir ve halüsinasyon görebilir",
+        "Extractive yalnızca çok dillidir",
+        "Çıkarıcı soyutlayıcıdan daha yavaştır"
       ],
       "correct": 1,
       "explanation": "Extractive lifts sentences verbatim; abstractive rewrites and risks hallucination."
     },
     {
       "stage": "pre",
-      "question": "What does ROUGE measure?",
+      "question": "ROUGE neyi ölçer?",
       "options": [
         "Embedding similarity",
-        "N-gram and longest-common-subsequence overlap between system and reference summaries",
+        "N-gram ve sistem ile referans özetleri arasındaki en uzun ortak alt dizi örtüşmesi",
         "Reading time",
         "Token-level perplexity"
       ],
       "correct": 1,
-      "explanation": "ROUGE-1/2/L measure unigram, bigram, and LCS overlap with references."
+      "explanation": "ROUGE-1/2/L ölçü unigramı, bigramı ve LCS referanslarla örtüşmektedir."
     },
     {
       "stage": "check",
-      "question": "How does TextRank score sentences in extractive summarization?",
+      "question": "TextRank çıkarımsal özetlemede cümleleri nasıl puanlıyor?",
       "options": [
         "By raw word count",
         "By comparing to a reference summary",
-        "By running a PageRank-style iteration over a graph where edges are sentence-similarity weights",
-        "By embedding cosine to the question"
+        "Kenarların cümle benzerliği ağırlıkları olduğu bir grafik üzerinde PageRank tarzı bir yineleme çalıştırarak",
+        "Soruya kosinüs katarak"
       ],
       "correct": 2,
       "explanation": "TextRank uses PageRank over a sentence-similarity graph; highly connected sentences score highest."
     },
     {
       "stage": "check",
-      "question": "Why enable stemming when computing ROUGE?",
+      "question": "ROUGE'yi hesaplarken neden kökten ayırmayı etkinleştirmelisiniz?",
       "options": [
         "Without stemming, 'running' and 'run' count as different tokens and ROUGE undercounts true overlap",
         "To speed up ROUGE",
         "Stemming normalizes case",
-        "Stemming is required by the rouge-score package"
+        "Köklenme, allık puanı paketi için gereklidir"
       ],
       "correct": 0,
       "explanation": "Stemming merges morphological variants so ROUGE credits semantically equivalent forms."
     },
     {
       "stage": "check",
-      "question": "Which 2026 metric is purpose-built to detect summary hallucinations via NLI entailment?",
+      "question": "Hangi 2026 metriği NLI aracılığıyla özet halüsinasyonları tespit etmek için özel olarak oluşturulmuştur?",
       "options": [
         "BLEU",
         "ROUGE-L",
-        "Faithfulness checks (e.g. FactCC or RAGAS faithfulness) using NLI between source and summary claims",
+        "Kaynak ve özet iddialar arasında NLI kullanılarak doğruluk kontrolleri (örn. FactCC veya RAGAS doğruluk)",
         "chrF"
       ],
       "correct": 2,
-      "explanation": "NLI-based faithfulness scoring flags claims in the summary not entailed by the source."
+      "explanation": "Özette kaynağın gerektirmediği NLI- tabanlı sadakat puanlama işaretleri iddiaları."
     },
     {
       "stage": "post",
-      "question": "Why is extractive summarization preferred for compliance-adjacent content?",
+      "question": "Uyumluluğa bitişik içerik için neden çıkarımsal özetleme tercih ediliyor?",
       "options": [
-        "Outputs are lifted verbatim from the source, eliminating the abstractive hallucination class",
-        "It is faster",
+        "Çıktılar kaynaktan kelimesi kelimesine kaldırılarak soyut halüsinasyon sınıfı ortadan kaldırılıyor",
+        "Daha hızlı",
         "Extractive supports longer outputs",
-        "ROUGE scores are higher"
+        "ROUGE puanları daha yüksek"
       ],
       "correct": 0,
-      "explanation": "Verbatim extraction cannot invent content, which matters where factuality is regulated."
+      "explanation": "Verbatim çıkarma, gerçekliğin düzenlendiği yerde önemli olan içeriği icat edemez."
     },
     {
       "stage": "post",
-      "question": "Which of these is an abstractive hallucination type to monitor for?",
+      "question": "Bunlardan hangisi izlenmesi gereken soyut bir halüsinasyon türüdür?",
       "options": [
         "Punctuation drift",
         "Stopword removal",
@@ -84,16 +84,16 @@
         "Entity swap (e.g. 'John Smith' rendered as 'John Brown'), number drift, polarity flip, or fact invention"
       ],
       "correct": 3,
-      "explanation": "Entity swaps, numeric drift, polarity flips, and invented facts are the canonical abstractive failure modes."
+      "explanation": "Varlık takasları, sayısal kayma, kutup değişimleri ve icat edilen gerçekler, kanonik soyutlayıcı başarısızlık modlarıdır."
     },
     {
       "stage": "post",
-      "question": "When would you reach for a Pegasus checkpoint over BART-large-CNN?",
+      "question": "BART-large-CNN üzerindeki Pegasus kontrol noktasına ne zaman ulaşacaksınız?",
       "options": [
-        "When evaluating BLEU",
-        "When the input is short",
-        "When you need extractive output",
-        "For domains like scientific abstracts where Pegasus's gap-sentence pretraining objective is a closer fit"
+        "BLEU'yi değerlendirirken",
+        "Giriş kısa olduğunda",
+        "Çıkarıcı çıktıya ihtiyacınız olduğunda",
+        "Pegasus'un boşluklu cümle ön eğitim hedefinin daha uygun olduğu bilimsel özetler gibi alanlar için"
       ],
       "correct": 3,
       "explanation": "Pegasus's gap-sentence objective excels at long-form domain summarization (e.g. pubmed)."
