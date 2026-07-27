@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does ReAct's prompt grow quadratically with depth?",
+      "question": "ReAct'ın istemi neden derinlikle birlikte karesel olarak büyüyor?",
       "options": [
-        "The model re-tokenizes itself on every step",
-        "Each step carries the full prior context including every previous thought and observation",
-        "Tool schemas are duplicated per call",
-        "The provider charges per byte rather than per token"
+        "Model her adımda kendini yeniden tokenize ediyor",
+        "Her adım, önceki tüm düşünce ve gözlemleri içeren önceki bağlamın tamamını taşır",
+        "Araç şemaları çağrı başına çoğaltılır",
+        "Sağlayıcı, jeton başına değil bayt başına ücret alır"
       ],
       "correct": 1,
-      "explanation": "ReAct re-includes prior thoughts and observations on each step, making total prompt length grow with the square of the depth."
+      "explanation": "ReAct, her adımda önceki düşünceleri ve gözlemleri yeniden dahil ederek toplam istem uzunluğunun derinliğin karesiyle birlikte artmasını sağlar."
     },
     {
       "stage": "pre",
-      "question": "What is the three-role split that defines ReWOO?",
+      "question": "ReWOO'yu tanımlayan üç rol ayrımı nedir?",
       "options": [
         "Reader, Writer, Reviewer",
         "Planner, Workers, Solver",
@@ -24,11 +24,11 @@
         "Generator, Critic, Optimizer"
       ],
       "correct": 1,
-      "explanation": "ReWOO separates a Planner that emits a DAG, Workers that fetch evidence, and a Solver that composes the final answer."
+      "explanation": "ReWOO, bir DAG yayan Planlayıcıyı, kanıt getiren İşçileri ve nihai cevabı oluşturan bir Çözücüyü ayırır."
     },
     {
       "stage": "check",
-      "question": "What headline numbers does the paper report for ReWOO vs ReAct on HotpotQA?",
+      "question": "HotpotQA'da ReWOO ve ReAct karşılaştırması için makale hangi manşet numaralarını bildiriyor?",
       "options": [
         "~5x fewer tokens and +4 absolute accuracy",
         "~2x more tokens and +10 accuracy",
@@ -40,31 +40,31 @@
     },
     {
       "stage": "check",
-      "question": "What does a placeholder like #E1 inside a ReWOO plan node mean?",
+      "question": "ReWOO plan düğümünün içindeki #E1 gibi bir yer tutucu ne anlama gelir?",
       "options": [
         "An error code returned by worker 1",
-        "A reference substituted at dispatch time with the output of an earlier worker node",
-        "A retry counter for evidence fetching",
+        "Gönderim sırasında daha önceki bir çalışan düğümün çıktısıyla değiştirilen bir referans",
+        "Kanıt almak için yeniden deneme sayacı",
         "A planner version identifier"
       ],
       "correct": 1,
-      "explanation": "Plan nodes use evidence references like #E1, #E2 that the executor substitutes with the output of upstream workers."
+      "explanation": "Plan düğümleri, uygulayıcının yukarı akış çalışanlarının çıktısıyla değiştirdiği #E1, #E2 gibi kanıt referanslarını kullanır."
     },
     {
       "stage": "check",
-      "question": "Why does ReWOO localize failures better than ReAct?",
+      "question": "ReWOO neden arızaları ReAct'tan daha iyi yerelleştiriyor?",
       "options": [
-        "Workers crash the run on any error",
-        "An error in a worker becomes a string the Solver sees alongside the original plan, so degradation is per-node not per-step",
+        "İşçiler herhangi bir hata durumunda çalışmayı durdurur",
+        "Bir çalışandaki hata, Çözücünün orijinal planın yanında gördüğü bir dize haline gelir, dolayısıyla bozulma adım başına değil düğüm başına olur",
         "ReWOO retries every failed call up to ten times",
-        "The Planner re-emits a fresh DAG after every error"
+        "Planlayıcı her hatadan sonra yeni bir DAG'yi yeniden yayınlar"
       ],
       "correct": 1,
-      "explanation": "Per-node failure with the original plan in context lets the Solver degrade gracefully rather than reasoning mid-stream out of an error."
+      "explanation": "Bağlamda orijinal plandaki düğüm başına başarısızlık, Çözücünün akışın ortasında bir hatadan yola çıkarak mantık yürütmek yerine, sorunsuz bir şekilde bozulmasına olanak tanır."
     },
     {
       "stage": "post",
-      "question": "Which task shape best fits Plan-and-Act over plain ReWOO?",
+      "question": "Hangi görev şekli düz ReWOO'ya göre Planla ve Harekete Geç'e en uygun?",
       "options": [
         "A two-step factoid lookup",
         "A 40-step web or mobile navigation trajectory",
@@ -72,19 +72,19 @@
         "A pure arithmetic question"
       ],
       "correct": 1,
-      "explanation": "Plan-and-Act is built for long-horizon (over 30 steps) web and mobile agents where a single ReAct trajectory loses coherence."
+      "explanation": "Planla ve Harekete Geç, tek bir ReAct yörüngesinin tutarlılığını kaybettiği uzun ufuklu (30 adımdan fazla) web ve mobil aracılar için tasarlanmıştır."
     },
     {
       "stage": "post",
-      "question": "What does ReWOO's planner distillation result imply for production agents?",
+      "question": "ReWOO'nun planlayıcı damıtma sonucu üretim acenteleri için ne anlama geliyor?",
       "options": [
         "Frontier models must be used at every step",
-        "A small planner (around 7B) can match a large teacher because the planner never sees observations",
+        "Küçük bir planlayıcı (7B civarında) büyük bir öğretmenle eşleşebilir çünkü planlayıcı hiçbir zaman gözlemleri görmez",
         "Planning quality drops below 7B parameters",
         "Distillation requires gradient-based RL data"
       ],
       "correct": 1,
-      "explanation": "Because the planner does not see observations, plan traces from a large teacher transfer cleanly to a small fine-tuned planner."
+      "explanation": "Planlayıcı gözlemleri göremediği için, büyük bir öğretmenden alınan plan izleri küçük, ince ayarlı bir planlayıcıya temiz bir şekilde aktarılır."
     }
   ]
 }
