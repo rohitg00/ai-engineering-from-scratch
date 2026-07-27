@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which span name represents an agent run in the GenAI conventions?",
+      "question": "Hangi yayılma adı GenAI sözleşmelerinde çalıştırılan bir aracıyı temsil eder?",
       "options": [
         "agent.start",
         "invoke_agent (optionally suffixed by gen_ai.agent.name)",
@@ -12,11 +12,11 @@
         "agent_loop"
       ],
       "correct": 1,
-      "explanation": "invoke_agent is the canonical name; the agent's name attribute appears in the span name when set."
+      "explanation": "invoke_agent standart addır; aracının adı özelliği, ayarlandığında yayılma adında görünür."
     },
     {
       "stage": "pre",
-      "question": "Which three span categories does the GenAI SIG define?",
+      "question": "GenAI SIG hangi üç kapsam kategorisini tanımlıyor?",
       "options": [
         "Model/client, agent, tool",
         "Frontend, backend, db",
@@ -24,35 +24,35 @@
         "Latency, error, throughput"
       ],
       "correct": 0,
-      "explanation": "Model/client (LLM calls), agent (create/invoke), tool (per invocation) are the categories."
+      "explanation": "Model/istemci (LLM çağrıları), aracı (oluştur/çağır), araç (çağrı başına) kategorilerdir."
     },
     {
       "stage": "check",
-      "question": "When does an invoke_agent span use kind CLIENT vs INTERNAL?",
+      "question": "Bir invoke_agent yayılma alanı ne zaman CLIENT ve INTERNAL türünü kullanır?",
       "options": [
         "Always INTERNAL",
-        "CLIENT for remote agent services (OpenAI Assistants, Bedrock Agents); INTERNAL for in-process frameworks (LangChain, CrewAI, local ReAct)",
-        "CLIENT for HTTPS only",
+        "Uzak aracı hizmetleri için CLIENT (OpenAI Asistanları, Bedrock Ajanları); Süreç içi çerçeveler için INTERNAL (LangChain, CrewAI, yerel ReAct)",
+        "CLIENT yalnızca HTTPS için",
         "Always CLIENT"
       ],
       "correct": 1,
-      "explanation": "Remote agent calls are CLIENT; in-process agent runs are INTERNAL."
+      "explanation": "Uzak aracı çağrıları CLIENT'dir; süreç içi aracı çalıştırmaları INTERNAL'dir."
     },
     {
       "stage": "check",
-      "question": "What is the default rule for content capture (inputs and outputs)?",
+      "question": "İçerik yakalamanın (girişler ve çıkışlar) varsayılan kuralı nedir?",
       "options": [
         "Capture everything by default",
-        "Instrumentations SHOULD NOT capture by default; capture is opt-in via gen_ai.* attributes",
-        "Capture only output, never input",
-        "Capture only on errors"
+        "Enstrümantasyonlar SHOULD NOT varsayılan olarak yakalama; yakalama, gen_ai.* özellikleri aracılığıyla tercih edilebilir",
+        "Yalnızca çıktıyı yakalayın, asla girişi yakalayın",
+        "Yalnızca hataları yakalayın"
       ],
       "correct": 1,
-      "explanation": "Default-off content capture protects PII and secrets; opt-in is explicit."
+      "explanation": "Varsayılan olarak kapalı içerik yakalama, PII'yi ve sırları korur; katılım açıktır."
     },
     {
       "stage": "check",
-      "question": "Which attribute identifies the corpus or store consulted for a retrieval?",
+      "question": "Hangi özellik, erişim için başvurulan derlemi veya mağazayı tanımlar?",
       "options": [
         "gen_ai.provider.name",
         "gen_ai.request.model",
@@ -60,31 +60,31 @@
         "gen_ai.agent.name"
       ],
       "correct": 2,
-      "explanation": "gen_ai.data_source.id labels the RAG corpus or store hit by retrieval."
+      "explanation": "gen_ai.data_source.id, RAG derlemini veya alma sonucu ulaşılan mağazayı etiketler."
     },
     {
       "stage": "post",
-      "question": "What does the lesson recommend for storing prompt content in production?",
+      "question": "Ders, üretimde hızlı içerik depolamak için ne önerir?",
       "options": [
         "Capture full prompts on every span as plain text",
-        "Store content externally (S3, log store) and record reference IDs on the span instead",
+        "İçeriği harici olarak depolayın (S3, günlük deposu) ve bunun yerine referans kimliklerini yayılma alanına kaydedin",
         "Never store any content",
         "Encrypt prompts in span attributes"
       ],
       "correct": 1,
-      "explanation": "External storage with pointer IDs avoids PII leaking into traces that ops can read."
+      "explanation": "İşaretçi kimliklerine sahip harici depolama, PII'nin operasyonların okuyabileceği izlere sızmasını önler."
     },
     {
       "stage": "post",
-      "question": "How do you opt into the experimental stable preview of GenAI conventions?",
+      "question": "GenAI konvansiyonlarının deneysel kararlı önizlemesine nasıl katılabilirsiniz?",
       "options": [
-        "Edit the OTel collector config",
+        "OTel toplayıcı yapılandırmasını düzenleyin",
         "Set OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental",
-        "Rebuild the SDK from source",
-        "Pay for a license"
+        "SDK'yi kaynaktan yeniden oluşturun",
+        "Lisans için ödeme yapın"
       ],
       "correct": 1,
-      "explanation": "The env var pins the experimental conventions so attributes are not silently renamed."
+      "explanation": "env var deneysel kuralları sabitler, böylece nitelikler sessizce yeniden adlandırılmaz."
     }
   ]
 }
