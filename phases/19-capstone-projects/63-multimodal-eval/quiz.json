@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is training loss alone an insufficient measure of a multimodal model's quality?",
+      "question": "Eğitim kaybı neden tek başına çok modlu bir modelin kalitesinin yetersiz bir ölçüsüdür?",
       "options": [
-        "Loss is hard to compute",
-        "Training loss measures fit on the training distribution; eval surfaces (retrieval, VQA, captioning) measure whether the model generalizes to held-out tasks",
-        "Loss values are random",
-        "Loss is a string"
+        "Kaybın hesaplanması zordur",
+        "Eğitim kaybı ölçümleri eğitim dağılımına uygundur; değerlendirme yüzeyleri (geri alma, VQA, altyazı ekleme), modelin uzun süren görevlere genelleştirilip genelleştirilmediğini ölçer",
+        "Kayıp değerleri rastgeledir",
+        "Kayıp bir dizedir"
       ],
       "correct": 1,
-      "explanation": "Loss minimization is necessary but not sufficient. Held-out metrics on three task surfaces measure what the model can actually do."
+      "explanation": "Kayıpların minimizasyonu gerekli ancak yeterli değil. Üç görev yüzeyindeki metrikler, modelin gerçekte ne yapabileceğini ölçer."
     },
     {
       "stage": "pre",
-      "question": "What is R@5 measuring in a 100-sample retrieval eval?",
+      "question": "100 örnek alma değerlendirmesinde R@5 neyi ölçer?",
       "options": [
-        "The fifth caption is always correct",
-        "Fraction of queries whose correct match lands in the top 5 retrieved candidates out of 100",
+        "Beşinci başlık her zaman doğrudur",
+        "Doğru eşleşmesi 100 aday arasında alınan ilk 5 aday arasında yer alan sorguların oranı",
         "Five percent accuracy",
         "Five queries per second"
       ],
       "correct": 1,
-      "explanation": "R@K = fraction of queries with the target in the top K ranked candidates. Higher is better."
+      "explanation": "R@K = hedefin en üst K sıralamasında yer alan adaylar arasında olduğu sorguların oranı. Daha yüksek daha iyidir."
     },
     {
       "stage": "check",
-      "question": "Why does BLEU-4 take the geometric mean of 1- to 4-gram precisions instead of the arithmetic mean?",
+      "question": "BLEU-4 neden aritmetik ortalama yerine 1 ila 4 gram hassasiyetin geometrik ortalamasını alıyor?",
       "options": [
-        "Arithmetic is slower",
-        "Geometric mean is zero if any n-gram precision is zero, which is the strict matching property BLEU wants; smoothing handles the zero case",
-        "Geometric mean is bigger",
-        "PyTorch supports only geometric mean"
+        "Aritmetik daha yavaştır",
+        "Herhangi bir n-gram hassasiyeti sıfırsa geometrik ortalama sıfırdır; bu, BLEU'nin istediği sıkı eşleştirme özelliğidir; yumuşatma sıfır durumu işler",
+        "Geometrik ortalama daha büyük",
+        "PyTorch yalnızca geometrik ortalamayı destekler"
       ],
       "correct": 1,
-      "explanation": "The geometric mean enforces that ALL n-gram orders contribute; a 4-gram precision of zero collapses the score before smoothing."
+      "explanation": "Geometrik ortalama, ALL n-gram emirlerinin katkıda bulunduğunu zorlar; 4 gramlık sıfır hassasiyeti, düzeltmeden önce skoru çökertir."
     },
     {
       "stage": "check",
-      "question": "What does the brevity penalty in BLEU-4 protect against?",
+      "question": "BLEU-4'deki kısalık cezası neye karşı koruma sağlar?",
       "options": [
         "Long captions getting penalized",
-        "Short captions gaming high precision by emitting only safe high-frequency tokens; BP < 1 when generated < reference length",
+        "Yalnızca güvenli yüksek frekanslı jetonlar yayarak yüksek hassasiyetle oynanan kısa altyazılar; BP < 1, oluşturulduğunda < referans uzunluğu",
         "Memory leaks",
         "Tokenizer errors"
       ],
       "correct": 1,
-      "explanation": "Without BP a one-word caption matching one reference word would score 1.0. BP shrinks the score for too-short generations."
+      "explanation": "BP olmadan, bir referans kelimesiyle eşleşen tek kelimelik bir başlık 1,0 puan alacaktır. BP çok kısa nesiller için skoru küçültüyor."
     },
     {
       "stage": "check",
-      "question": "Why does multi-reference BLEU usually score higher than single-reference BLEU on the same generation?",
+      "question": "Çoklu referanslı BLEU neden aynı nesilde genellikle tek referanslı BLEU'den daha yüksek puan alıyor?",
       "options": [
-        "The math is different",
-        "Each n-gram in the generation can match any reference, so the clipped count is higher when more references are available",
-        "Single-reference is broken",
+        "Matematik farklıdır",
+        "Nesildeki her n-gram herhangi bir referansla eşleşebilir, dolayısıyla daha fazla referans mevcut olduğunda kırpılan sayı daha yüksek olur",
+        "Tek referans bozuk",
         "References cost extra memory"
       ],
       "correct": 1,
-      "explanation": "More references give the n-gram more chances to be matched; clipped counts grow and the precision rises."
+      "explanation": "Daha fazla referans, n-gramın eşleştirilmesi için daha fazla şans verir; kırpılan sayımlar artar ve hassasiyet artar."
     },
     {
       "stage": "post",
-      "question": "Which eval surface uses no model embeddings and only id-level matching?",
+      "question": "Hangi değerlendirme yüzeyi model yerleştirmeleri kullanmaz ve yalnızca kimlik düzeyinde eşleştirme kullanır?",
       "options": [
         "Retrieval",
-        "VQA exact match: a predicted answer id is compared directly to a reference id with no embedding step",
+        "VQA tam eşleşme: tahmin edilen yanıt kimliği, yerleştirme adımı olmadan doğrudan bir referans kimliğiyle karşılaştırılır",
         "BLEU-4",
         "Cosine similarity"
       ],
       "correct": 1,
-      "explanation": "VQA exact match is an integer comparison after the model emits its answer token; no embedding or similarity math involved."
+      "explanation": "VQA tam eşleşme, model yanıt jetonunu yayınladıktan sonra yapılan bir tamsayı karşılaştırmasıdır; hiçbir gömme veya benzerlik matematiği söz konusu değildir."
     }
   ]
 }
