@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the Hungarian algorithm do in tracking-by-detection?",
-      "options": ["It filters out low-confidence detections", "It solves the minimum-cost one-to-one assignment between tracks and detections — typically using 1 - IoU as cost — to match each track to at most one detection and vice versa", "It trains the detector", "It predicts future trajectories"],
+      "question": "Macar algoritması tespit yoluyla izlemede ne yapıyor?",
+      "options": [
+        "Güvenilirliği düşük tespitleri filtreler",
+        "Her bir izi en fazla bir algılamayla eşleştirmek için (genellikle maliyet olarak 1 - IoU kullanarak) izler ve algılamalar arasındaki minimum maliyetli bire bir atamayı çözer ve bunun tersi de geçerlidir.",
+        "Dedektörü eğitir",
+        "Gelecekteki yörüngeleri tahmin ediyor"
+      ],
       "correct": 1,
-      "explanation": "Every tracking-by-detection frame does an assignment problem: M tracks, N detections, find the best one-to-one match. Hungarian is the optimal polynomial algorithm for this. Cost is usually 1 - IoU (higher overlap = lower cost). scipy.optimize.linear_sum_assignment is the standard implementation. SORT, DeepSORT, ByteTrack, BoT-SORT all use it."
+      "explanation": "Her tespite göre izleme çerçevesi bir atama problemi yaratır: M iz, N tespit, en iyi bire bir eşleşmeyi bulun. Macarca bunun için en uygun polinom algoritmasıdır. Maliyet genellikle 1 - IoU'dur (daha yüksek örtüşme = daha düşük maliyet). scipy.optimize.linear_sum_questment standart uygulamadır. SORT, DeepSORT, ByteTrack, BoT-SORT'nin tümü bunu kullanıyor."
     },
     {
       "stage": "pre",
-      "question": "ByteTrack's distinguishing contribution is what?",
-      "options": ["A new backbone", "A second-stage association that tries to match leftover tracks to low-confidence detections, recovering short occlusions and IDs that standard trackers would lose by dropping those detections", "A new Kalman filter", "An appearance embedding"],
+      "question": "ByteTrack'in ayırt edici katkısı nedir?",
+      "options": [
+        "A new backbone",
+        "Kalan izleri düşük güvenilirliğe sahip tespitlerle eşleştirmeye çalışan, kısa tıkanmaları ve standart izleyicilerin bu tespitleri bırakarak kaybedeceği kimlikleri kurtaran ikinci aşama bir ilişkilendirme",
+        "A new Kalman filter",
+        "An appearance embedding"
+      ],
       "correct": 1,
-      "explanation": "Most trackers discard detections below a confidence threshold (~0.5). ByteTrack keeps them and runs a second Hungarian pass to try to match them to tracks that did not match any high-confidence detection. This recovers brief occlusions and crossings, lifting IDF1 significantly on MOT17 without any learned appearance features. Its simplicity makes it the default in Ultralytics and Roboflow Supervision."
+      "explanation": "Çoğu izleyici, güven eşiğinin (~0,5) altındaki tespitleri göz ardı eder. ByteTrack bunları tutar ve bunları herhangi bir yüksek güvenirlik tespitiyle eşleşmeyen parçalarla eşleştirmeye çalışmak için ikinci bir Macar geçişi çalıştırır. Bu, herhangi bir öğrenilmiş görünüm özelliği olmadan MOT17 üzerindeki IDF1'yi önemli ölçüde kaldırarak kısa kapanmaları ve geçişleri düzeltir. Sadeliği onu Ultralytics ve Roboflow Denetiminde varsayılan haline getirir."
     },
     {
       "stage": "post",
-      "question": "How does SAM 2's memory-based tracker avoid explicit Hungarian-style association?",
-      "options": ["It runs SORT internally", "It stores per-instance spatio-temporal features in a memory bank; on each new frame, cross-attention between memory and current features directly produces the mask of the same instance, with association implicit in the attention operation", "It uses a Kalman filter", "It requires hand-labelled IDs per frame"],
+      "question": "SAM 2'nin bellek tabanlı izleyicisi, açık Macar tarzı ilişkilendirmeyi nasıl önler?",
+      "options": [
+        "SORT'yi dahili olarak çalıştırır",
+        "Örnek başına uzay-zamansal özellikleri bir bellek bankasında saklar; her yeni karede, bellek ile mevcut özellikler arasındaki çapraz dikkat, doğrudan aynı örneğin maskesini üretir ve dikkat işleminde örtük olarak bulunan ilişkilendirmeyle birlikte",
+        "Kalman filtresi kullanıyor",
+        "Çerçeve başına elle etiketlenmiş kimlikler gerektirir"
+      ],
       "correct": 1,
-      "explanation": "SAM 2 replaces the detect-then-associate loop with a memory-conditional segmenter. The memory bank holds the instance's features from previous frames. At each new frame, the decoder cross-attends the new frame's features against the memory, and the resulting mask is the same instance — no external assignment step. This handles long occlusions gracefully because the memory stays even when the instance disappears for many frames."
+      "explanation": "SAM 2, algıla ve sonra ilişkilendir döngüsünü, bellek koşullu bölümleyiciyle değiştirir. Bellek bankası, örneğin önceki karelerdeki özelliklerini tutar. Her yeni karede kod çözücü, yeni karenin özelliklerine belleğe karşı çapraz katılım sağlar ve ortaya çıkan maske aynı örnektir; harici atama adımı yoktur. Bu, uzun kapanmaları sorunsuz bir şekilde ele alır çünkü örnek birçok kare boyunca kaybolduğunda bile bellek kalır."
     },
     {
       "stage": "post",
-      "question": "For surveillance video where keeping each person's ID consistent is the primary requirement, which metric should you report?",
-      "options": ["MOTA", "IDF1 — the harmonic mean of ID precision and recall; measures identity preservation over time rather than per-frame detection accuracy", "Top-1 accuracy", "FID"],
+      "question": "Her kişinin ID'sini tutarlı tutmanın birincil gereklilik olduğu gözetim videosu için hangi ölçümü rapor etmelisiniz?",
+      "options": [
+        "MOTA",
+        "IDF1 — ID hassasiyetinin ve geri çağırmanın harmonik ortalaması; kare başına algılama doğruluğu yerine zaman içinde kimliğin korunmasını ölçer",
+        "Top-1 accuracy",
+        "FID"
+      ],
       "correct": 1,
-      "explanation": "MOTA conflates detection and association errors, so a tracker with many false positives can hide its ID failures. IDF1 is designed for the 'who is who over time' question: it matches predicted tracks to ground-truth tracks globally across the whole video and computes F1 on the identity labels. For surveillance and crowd analytics, IDF1 is the metric to report; HOTA is the broader academic standard."
+      "explanation": "MOTA, algılama ve ilişkilendirme hatalarını birleştirir, böylece birçok yanlış pozitife sahip bir izleyici, ID hatalarını gizleyebilir. IDF1, 'zaman içinde kim kimdir' sorusu için tasarlanmıştır: tahmin edilen parçaları tüm video boyunca temel gerçek parçalarla eşleştirir ve kimlik etiketlerinde F1'yi hesaplar. Gözetleme ve kalabalık analitiği için IDF1 raporlanacak ölçümdür; HOTA daha geniş bir akademik standarttır."
     },
     {
       "stage": "post",
-      "question": "SAM 3.1 Object Multiplex (March 2026) introduces shared memory across many tracked instances. What does that enable?",
-      "options": ["Lower accuracy", "Efficient multi-object tracking — one shared memory bank with per-instance query tokens replaces N separate memory banks, so cost scales sub-linearly in number of instances and concert-crowd-sized scenes become tractable", "Cloud-only inference", "A new training objective"],
+      "question": "SAM 3.1 Object Multiplex (Mart 2026), izlenen birçok örnekte paylaşılan hafızayı kullanıma sunar. Bu neyi mümkün kılıyor?",
+      "options": [
+        "Lower accuracy",
+        "Verimli çok nesneli izleme — örnek başına sorgu belirteçlerine sahip bir paylaşılan bellek bankası, N ayrı bellek bankasının yerini alır, böylece maliyet örnek sayısında alt doğrusal olarak ölçeklenir ve konser kalabalığı boyutundaki sahneler izlenebilir hale gelir",
+        "Yalnızca bulut çıkarımı",
+        "A new training objective"
+      ],
       "correct": 1,
-      "explanation": "Pre-Multiplex SAM 2 / SAM 3 tracked each object with its own memory bank; cost scaled linearly with the number of instances. Multiplex (March 2026) introduces one shared memory with per-instance query tokens that fetch instance-specific features. Many-object tracking — crowds, traffic, warehouse workers — becomes efficient for the first time with a memory-based tracker."
+      "explanation": "Ön Çoklu SAM 2 / SAM 3 her nesneyi kendi bellek bankasıyla takip etti; maliyet, örnek sayısıyla doğrusal olarak ölçeklendirilir. Multiplex (Mart 2026), örneğe özgü özellikleri getiren, örnek başına sorgu belirteçlerine sahip bir paylaşılan belleği kullanıma sunuyor. Kalabalık, trafik, depo çalışanları gibi birçok nesnenin takibi, bellek tabanlı bir izleyiciyle ilk kez verimli hale geliyor."
     }
   ]
 }
