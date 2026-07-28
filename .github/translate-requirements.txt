@@ -1,0 +1,8 @@
+# Runtime for scripts/translate_lessons.py with the free NLLB-200 provider.
+# CPU-only and pinned so CI installs are reproducible: torch resolves from the
+# CPU wheel index, everything else from PyPI.
+--index-url https://download.pytorch.org/whl/cpu
+--extra-index-url https://pypi.org/simple
+torch==2.5.1
+transformers==4.46.3
+sentencepiece==0.2.0

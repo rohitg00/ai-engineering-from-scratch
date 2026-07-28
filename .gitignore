@@ -64,3 +64,7 @@ site/sitemap.xml
 site/llms.txt
 site/build-meta.js
 book/_build/
+
+# Machine translations are generated to a separate `translations` branch, never main.
+i18n/
+site/langs.js

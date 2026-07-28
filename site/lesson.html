@@ -1707,6 +1707,7 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </button>
+      <div id="langPicker"></div>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
         <span class="theme-icon" id="themeIcon">N</span>
       </button>
@@ -1744,6 +1745,8 @@
   </div>
 
   <script src="build-meta.js"></script>
+  <script src="langs.js"></script>
+  <script src="lang-picker.js"></script>
   <script src="data.js?v=20260525a"></script>
   <script src="progress.js?v=20260525a"></script>
   <script src="header.js?v=20260525a" defer></script>
@@ -1814,6 +1817,12 @@
           updateMermaidThemeAndRerender();
         });
       }
+
+      // lang-picker.js renders the switcher into #langPicker; when the reader
+      // chooses a language, re-fetch the current lesson in it (quiz stays English).
+      window.AIFS_onLangChange = function () {
+        if (typeof lessonPath !== 'undefined' && lessonPath) fetchLesson(lessonPath);
+      };
 
       var params = new URLSearchParams(window.location.search);
       var lessonPath = params.get('path');
@@ -1972,13 +1981,22 @@
 
       var lessonQuizPromise = null;
 
+      // language state (current lang + RTL direction) is owned by lang-picker.js
+      function currentLang() {
+        return window.AIFS_currentLang ? window.AIFS_currentLang() : 'en';
+      }
+
       function fetchLesson(path, retried) {
         // Fetch docs from the branch this site was built from (set by build.js
         // via build-meta.js), so PR preview deploys render their own lesson
         // edits instead of always pulling main. Falls back to main.
         var ref = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
         var base = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ref + '/';
-        var rawUrl = base + path + '/docs/en.md';
+        var enUrl = base + path + '/docs/en.md';
+        var lang = currentLang();
+        var docUrl = lang === 'en' ? enUrl
+          : 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/'
+            + lang + '/' + path + '/docs/' + lang + '.md';
         var quizUrl = base + path + '/quiz.json';
 
         if (!retried || !lessonQuizPromise) {
@@ -1987,10 +2005,17 @@
             .catch(function () { return null; });
         }
 
-        fetch(rawUrl)
+        fetch(docUrl)
           .then(function (res) {
-            if (!res.ok) throw new Error('fetch-failed');
-            return res.text();
+            if (res.ok) return res.text();
+            // translation not published yet -> fall back to canonical English
+            if (docUrl !== enUrl) {
+              return fetch(enUrl).then(function (r) {
+                if (!r.ok) throw new Error('fetch-failed');
+                return r.text();
+              });
+            }
+            throw new Error('fetch-failed');
           })
           .then(function (md) {
             try {

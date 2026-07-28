@@ -3,6 +3,16 @@
 </p>
 
 <p align="center">
+  <b>Read in your language:</b>
+  <a href="https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/zh/README.md">简体中文</a> ·
+  <a href="https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/hi/README.md">हिन्दी</a> ·
+  <a href="https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/es/README.md">Español</a> ·
+  <a href="https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/ar/README.md">العربية</a> ·
+  <a href="https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/tr/README.md">Türkçe</a>
+  <br><sub>machine-translated by CI to the <code>translations</code> branch; English is canonical. See <a href="docs/i18n.md">docs/i18n.md</a>.</sub>
+</p>
+
+<p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
   <a href="ROADMAP.md"><img src="https://img.shields.io/badge/lessons-503-3553ff?style=flat-square&labelColor=fafaf5" alt="503 lessons"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>

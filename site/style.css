@@ -1534,3 +1534,58 @@ body[data-palette-open] {
     display: none;
   }
 }
+
+/* ── language picker (reference-manual aesthetic) ───────────────────── */
+.lang-picker { position: relative; display: inline-flex; }
+.lang-picker-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em;
+  color: var(--ink-soft); background: transparent;
+  border: 1px solid var(--rule-soft); padding: 6px 10px; cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.lang-picker-btn:hover { color: var(--blueprint); border-color: var(--blueprint); }
+.lang-picker-btn:active { transform: scale(0.98); }
+.lang-glyph {
+  font-weight: 700; color: var(--blueprint); font-size: 0.7rem; letter-spacing: 0;
+}
+.lang-current { max-width: 12ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lang-caret { font-size: 0.6rem; color: var(--ink-mute); }
+
+.lang-panel {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 60;
+  width: 232px; background: var(--bg); border: 1px solid var(--blueprint);
+  box-shadow: 0 14px 40px rgba(26, 26, 26, 0.18);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.lang-panel[hidden] { display: none; }
+[dir="rtl"] .lang-panel { right: auto; left: 0; }
+.lang-panel-head {
+  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em;
+  color: var(--blueprint); padding: 10px 12px 6px; border-bottom: 1px solid var(--rule-soft);
+}
+.lang-filter {
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink);
+  background: var(--code-bg); border: none; border-bottom: 1px solid var(--rule-soft);
+  padding: 8px 12px; outline: none;
+}
+.lang-filter:focus { background: var(--blueprint-tint); }
+.lang-list { max-height: 300px; overflow-y: auto; }
+.lang-item {
+  display: flex; align-items: baseline; gap: 8px; width: 100%;
+  font-family: var(--font-body, Georgia, serif); font-size: 0.9rem; text-align: left;
+  color: var(--ink); background: transparent; border: none; cursor: pointer;
+  padding: 8px 12px; transition: background 0.12s ease, color 0.12s ease;
+}
+.lang-item:hover { background: var(--blueprint-tint); color: var(--blueprint); }
+.lang-item.is-current { color: var(--blueprint); }
+.lang-tick { width: 10px; color: var(--blueprint); font-size: 0.9rem; flex-shrink: 0; }
+.lang-native { flex: 1; }
+.lang-code {
+  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.06em;
+  color: var(--ink-mute); text-transform: uppercase;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lang-picker-btn, .lang-item { transition: none; }
+  .lang-picker-btn:active { transform: none; }
+}

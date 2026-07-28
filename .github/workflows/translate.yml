@@ -1,0 +1,126 @@
+name: translate
+
+# Machine-translates lesson prose with NLLB-200, a free open model that runs
+# inside the runner. No API key, no Vercel cost. Results are pushed to a
+# dedicated `translations` branch; main stays English-only.
+#
+# Never wastes work: each lesson is hash-cached. The cache is written per lesson
+# in the runner and published to the translations branch when the job finishes,
+# so a completed run re-translates only lessons whose English changed, and a
+# cancelled run resumes from the last published cache. One job per language keeps
+# every run well under the 6-hour limit and lets per-language caches merge.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "phases/**/docs/en.md"
+  workflow_dispatch:
+    inputs:
+      langs:
+        description: "space-separated language codes; blank = the ci:true set in languages.json"
+        default: ""
+
+concurrency:
+  group: translate
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      langs: ${{ steps.set.outputs.langs }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - id: set
+        env:
+          REQUESTED: ${{ github.event.inputs.langs }}
+        run: |
+          # every emitted code must exist in the registry; requested codes are
+          # intersected with it, so untrusted input can never reach matrix.lang
+          if [ -n "$REQUESTED" ]; then
+            JSON=$(jq -c --arg req "$REQUESTED" \
+              '($req | split(" ") | map(select(length > 0))) as $want
+               | [.languages[].code] as $known
+               | [$want[] | select(. as $c | $known | index($c))]' languages.json)
+          else
+            JSON=$(jq -c '[.languages[] | select(.ci == true) | .code]' languages.json)
+          fi
+          echo "langs=$JSON" >> "$GITHUB_OUTPUT"
+
+  translate:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    permissions:
+      contents: write
+    env:
+      NLLB_MODEL: facebook/nllb-200-distilled-600M
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        lang: ${{ fromJSON(needs.prepare.outputs.langs) }}
+    steps:
+      - name: Checkout main (English source)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: .github/translate-requirements.txt
+
+      - name: Cache the NLLB model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-${{ env.NLLB_MODEL }}
+
+      - name: Install NLLB runtime
+        run: pip install -r .github/translate-requirements.txt
+
+      - name: Restore this language's cache + output from translations branch
+        run: |
+          git fetch origin "+refs/heads/translations:refs/remotes/origin/translations" || true
+          mkdir -p i18n/${{ matrix.lang }}
+          if git cat-file -e origin/translations:i18n/${{ matrix.lang }} 2>/dev/null; then
+            git archive origin/translations i18n/${{ matrix.lang }} | tar -x || true
+          fi
+
+      - name: Translate changed lessons (NLLB-200, no key)
+        env:
+          TRANSLATE_PROVIDER: nllb
+        run: python3 scripts/translate_lessons.py --lang ${{ matrix.lang }}
+
+      - name: Publish this language to translations branch (race-safe)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LANG_CODE: ${{ matrix.lang }}
+        run: |
+          # checkout used persist-credentials:false, so authenticate the push
+          # explicitly with the job token rather than a stored credential
+          git remote set-url origin \
+            "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3 4 5; do
+            rm -rf ../pub && git worktree add --force -B translations ../pub origin/translations 2>/dev/null \
+              || git worktree add --force -b translations ../pub
+            rm -rf "../pub/i18n/$LANG_CODE"
+            mkdir -p ../pub/i18n
+            cp -r "i18n/$LANG_CODE" "../pub/i18n/$LANG_CODE"
+            ( cd ../pub
+              git add "i18n/$LANG_CODE"
+              git commit -m "chore(i18n): update $LANG_CODE NLLB-200 translations" || { echo "no changes"; exit 0; }
+              git push origin translations ) && exit 0
+            echo "push race, retrying ($attempt)"; git fetch origin "+refs/heads/translations:refs/remotes/origin/translations" || true; sleep $((RANDOM % 10 + 3))
+          done
+          echo "could not publish after retries" >&2; exit 1

@@ -94,11 +94,23 @@ def fence_end(src, i):
     return j
 
 
+BOOK_LANG = "en"  # set by --lang; selects translated source when available
+
+
+def _lesson_source(phase, lesson):
+    en = ROOT / "phases" / phase / lesson / "docs" / "en.md"
+    if BOOK_LANG != "en":
+        tr = ROOT / "i18n" / BOOK_LANG / "phases" / phase / lesson / "docs" / f"{BOOK_LANG}.md"
+        if tr.is_file():
+            return tr
+    return en
+
+
 def transform_lesson(phase, lesson_dir):
     lesson = lesson_dir.name
     u = urls_for(phase, lesson)
     has_quiz = (lesson_dir / "quiz.json").is_file()
-    src = (lesson_dir / "docs" / "en.md").read_text(encoding="utf-8").splitlines()
+    src = _lesson_source(phase, lesson).read_text(encoding="utf-8").splitlines()
 
     out = []
     balanced = True
@@ -311,7 +323,8 @@ def metadata(vol):
 def render(vol, md, chapters, pdf=False):
     DIST.mkdir(parents=True, exist_ok=True)
     meta = metadata(vol)
-    epub = DIST / f"aiefs-vol{vol['number']}-{vol['slug']}.epub"
+    suffix = "" if BOOK_LANG == "en" else f"-{BOOK_LANG}"
+    epub = DIST / f"aiefs-vol{vol['number']}-{vol['slug']}{suffix}.epub"
     cmd = [
         "pandoc", str(meta), str(md),
         "-o", str(epub),
@@ -324,6 +337,12 @@ def render(vol, md, chapters, pdf=False):
     ]
     subprocess.run(cmd, check=True, cwd=ROOT)
     results = [epub]
+    if pdf and BOOK_LANG in ("ar", "fa", "ur", "he"):
+        # right-to-left scripts need a bidi engine + Arabic/Hebrew fonts that the
+        # xelatex theme does not ship; the EPUB (above) handles RTL natively, so
+        # skip the PDF rather than emit a broken left-to-right one.
+        print(f"note: skipping {BOOK_LANG} PDF for {vol['slug']} (RTL not wired for PDF); EPUB produced", file=sys.stderr)
+        pdf = False
     if pdf:
         titlepage = BUILD / f"{vol['slug']}-titlepage.tex"
         titlepage.write_text(
@@ -338,7 +357,7 @@ def render(vol, md, chapters, pdf=False):
             .replace("@SUBTITLE@", vol["subtitle"]),
             encoding="utf-8",
         )
-        pdf_out = DIST / f"aiefs-vol{vol['number']}-{vol['slug']}.pdf"
+        pdf_out = DIST / f"aiefs-vol{vol['number']}-{vol['slug']}{suffix}.pdf"
         cmd_pdf = [
             "pandoc", str(md),
             "-o", str(pdf_out),
@@ -352,7 +371,7 @@ def render(vol, md, chapters, pdf=False):
             "--include-before-body", str(titlepage),
             "-M", f"title-meta={CONFIG['series']} Volume {vol['number']}: {vol['title']}",
             "-M", "author-meta=aiengineeringfromscratch.com",
-            "-M", "lang=en",
+            "-M", f"lang={BOOK_LANG}",
             "-V", "toc-title=Contents",
             "-V", "documentclass=book",
             "-V", "classoption=oneside,openany",
@@ -365,6 +384,18 @@ def render(vol, md, chapters, pdf=False):
             cmd_pdf += ["-V", f"mainfont={serif}"]
         if mono:
             cmd_pdf += ["-V", f"monofont={mono}"]
+        # CJK scripts need a matching font; DejaVu already covers
+        # Latin/Cyrillic/Greek/Devanagari for the other languages.
+        cjk_candidates = {
+            "zh": ["Noto Sans CJK SC", "Noto Serif CJK SC", "Source Han Serif SC"],
+            "zh-TW": ["Noto Sans CJK TC", "Noto Serif CJK TC", "Source Han Serif TC"],
+            "ja": ["Noto Sans CJK JP", "Noto Serif CJK JP", "Source Han Serif JP"],
+            "ko": ["Noto Sans CJK KR", "Noto Serif CJK KR", "Source Han Serif KR"],
+        }
+        if BOOK_LANG in cjk_candidates:
+            cjk = pick_font(cjk_candidates[BOOK_LANG])
+            if cjk:
+                cmd_pdf += ["-V", f"CJKmainfont={cjk}"]
         try:
             subprocess.run(cmd_pdf, check=True, cwd=ROOT)
             results.append(pdf_out)
@@ -386,11 +417,15 @@ def check_phases():
 
 
 def main():
+    global BOOK_LANG
     ap = argparse.ArgumentParser()
     ap.add_argument("--volume", help="build one volume by slug")
     ap.add_argument("--pdf", action="store_true", help="also render PDF via xelatex")
     ap.add_argument("--assemble-only", action="store_true", help="skip pandoc")
+    ap.add_argument("--lang", default="en",
+                    help="build a translated edition from i18n/<lang>/ (English fallback per lesson)")
     args = ap.parse_args()
+    BOOK_LANG = args.lang
 
     check_phases()
 

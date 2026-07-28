@@ -1,0 +1,251 @@
+{
+  "_comment": "Canonical language registry. English is the source. Adding a language here wires it into the translation script (scripts/translate_lessons.py) and the site switcher (via site/build.js -> site/langs.js). code = BCP-47-ish tag used in filenames and URLs; name = English name for the translation prompt; native = label shown in the switcher; ci = true means the auto push-triggered workflow builds this language (workflow_dispatch can still request any).",
+  "languages": [
+    {
+      "code": "en",
+      "name": "English",
+      "native": "English",
+      "source": true,
+      "nllb": "eng_Latn"
+    },
+    {
+      "code": "zh",
+      "name": "Simplified Chinese",
+      "native": "简体中文",
+      "nllb": "zho_Hans",
+      "ci": true
+    },
+    {
+      "code": "zh-TW",
+      "name": "Traditional Chinese",
+      "native": "繁體中文",
+      "nllb": "zho_Hant"
+    },
+    {
+      "code": "hi",
+      "name": "Hindi",
+      "native": "हिन्दी",
+      "nllb": "hin_Deva",
+      "ci": true
+    },
+    {
+      "code": "es",
+      "name": "Spanish",
+      "native": "Español",
+      "nllb": "spa_Latn",
+      "ci": true
+    },
+    {
+      "code": "ar",
+      "name": "Arabic",
+      "native": "العربية",
+      "nllb": "arb_Arab",
+      "ci": true
+    },
+    {
+      "code": "fr",
+      "name": "French",
+      "native": "Français",
+      "nllb": "fra_Latn"
+    },
+    {
+      "code": "pt",
+      "name": "Portuguese",
+      "native": "Português",
+      "nllb": "por_Latn"
+    },
+    {
+      "code": "bn",
+      "name": "Bengali",
+      "native": "বাংলা",
+      "nllb": "ben_Beng"
+    },
+    {
+      "code": "ru",
+      "name": "Russian",
+      "native": "Русский",
+      "nllb": "rus_Cyrl"
+    },
+    {
+      "code": "ja",
+      "name": "Japanese",
+      "native": "日本語",
+      "nllb": "jpn_Jpan"
+    },
+    {
+      "code": "de",
+      "name": "German",
+      "native": "Deutsch",
+      "nllb": "deu_Latn"
+    },
+    {
+      "code": "tr",
+      "name": "Turkish",
+      "native": "Türkçe",
+      "nllb": "tur_Latn",
+      "ci": true
+    },
+    {
+      "code": "ko",
+      "name": "Korean",
+      "native": "한국어",
+      "nllb": "kor_Hang"
+    },
+    {
+      "code": "it",
+      "name": "Italian",
+      "native": "Italiano",
+      "nllb": "ita_Latn"
+    },
+    {
+      "code": "vi",
+      "name": "Vietnamese",
+      "native": "Tiếng Việt",
+      "nllb": "vie_Latn"
+    },
+    {
+      "code": "id",
+      "name": "Indonesian",
+      "native": "Bahasa Indonesia",
+      "nllb": "ind_Latn"
+    },
+    {
+      "code": "th",
+      "name": "Thai",
+      "native": "ไทย",
+      "nllb": "tha_Thai"
+    },
+    {
+      "code": "pl",
+      "name": "Polish",
+      "native": "Polski",
+      "nllb": "pol_Latn"
+    },
+    {
+      "code": "uk",
+      "name": "Ukrainian",
+      "native": "Українська",
+      "nllb": "ukr_Cyrl"
+    },
+    {
+      "code": "nl",
+      "name": "Dutch",
+      "native": "Nederlands",
+      "nllb": "nld_Latn"
+    },
+    {
+      "code": "fa",
+      "name": "Persian",
+      "native": "فارسی",
+      "nllb": "pes_Arab"
+    },
+    {
+      "code": "ms",
+      "name": "Malay",
+      "native": "Bahasa Melayu",
+      "nllb": "zsm_Latn"
+    },
+    {
+      "code": "ta",
+      "name": "Tamil",
+      "native": "தமிழ்",
+      "nllb": "tam_Taml"
+    },
+    {
+      "code": "te",
+      "name": "Telugu",
+      "native": "తెలుగు",
+      "nllb": "tel_Telu"
+    },
+    {
+      "code": "mr",
+      "name": "Marathi",
+      "native": "मराठी",
+      "nllb": "mar_Deva"
+    },
+    {
+      "code": "ur",
+      "name": "Urdu",
+      "native": "اردو",
+      "nllb": "urd_Arab"
+    },
+    {
+      "code": "gu",
+      "name": "Gujarati",
+      "native": "ગુજરાતી",
+      "nllb": "guj_Gujr"
+    },
+    {
+      "code": "kn",
+      "name": "Kannada",
+      "native": "ಕನ್ನಡ",
+      "nllb": "kan_Knda"
+    },
+    {
+      "code": "he",
+      "name": "Hebrew",
+      "native": "עברית",
+      "nllb": "heb_Hebr"
+    },
+    {
+      "code": "el",
+      "name": "Greek",
+      "native": "Ελληνικά",
+      "nllb": "ell_Grek"
+    },
+    {
+      "code": "cs",
+      "name": "Czech",
+      "native": "Čeština",
+      "nllb": "ces_Latn"
+    },
+    {
+      "code": "ro",
+      "name": "Romanian",
+      "native": "Română",
+      "nllb": "ron_Latn"
+    },
+    {
+      "code": "hu",
+      "name": "Hungarian",
+      "native": "Magyar",
+      "nllb": "hun_Latn"
+    },
+    {
+      "code": "sv",
+      "name": "Swedish",
+      "native": "Svenska",
+      "nllb": "swe_Latn"
+    },
+    {
+      "code": "fi",
+      "name": "Finnish",
+      "native": "Suomi",
+      "nllb": "fin_Latn"
+    },
+    {
+      "code": "da",
+      "name": "Danish",
+      "native": "Dansk",
+      "nllb": "dan_Latn"
+    },
+    {
+      "code": "no",
+      "name": "Norwegian",
+      "native": "Norsk",
+      "nllb": "nob_Latn"
+    },
+    {
+      "code": "sw",
+      "name": "Swahili",
+      "native": "Kiswahili",
+      "nllb": "swh_Latn"
+    },
+    {
+      "code": "tl",
+      "name": "Filipino",
+      "native": "Filipino",
+      "nllb": "tgl_Latn"
+    }
+  ]
+}
