@@ -37,7 +37,7 @@ The self-hosted framing matters — the benchmark is not flaky because the targe
 
 ### ClawBench (2026)
 
-- A live-site complement to self-hosted WebArena: V1 has 153 tasks across 144 websites; V2 adds 130 tasks across everyday online workflows.
+- A live-site complement to self-hosted WebArena: the V1+V2 corpus has 283 tasks (V1 153 + V2 130) across 163 live websites and everyday online workflows.
 - Each run uses an isolated browser container and records five evidence layers: session replay, screenshots, HTTP traffic, browser actions, and agent messages.
 - A terminal-request interceptor checks the final service payload before irreversible writes, while the live sites expose agents to temporal drift that pinned apps avoid.
 - The trade-off is useful when designing an evaluation suite: controlled tasks improve repeatability; live tasks measure external validity but require drift monitoring and careful replay evidence.
@@ -118,7 +118,7 @@ Output: per-task success rate and trajectory efficiency, mirroring OSWorld-Human
 | OSWorld-G | "Grounding suite" | 564 grounding-only samples + training set |
 | OSWorld-Human | "Gold trajectories" | Manual expert action sequences to measure efficiency |
 | Trajectory efficiency | "Steps over gold" | Agent step count divided by human minimum |
-| ClawBench | "Live web benchmark" | 153 V1 tasks across 144 websites plus 130 V2 tasks, with isolated runs and five evidence layers |
+| ClawBench | "Live web benchmark" | 283 tasks across 163 live websites (V1 153 + V2 130), with isolated runs and five evidence layers |
 
 ## Further Reading
 
