@@ -1,6 +1,5 @@
 import sys
 import shutil
-import subprocess
 
 CHECKS = [
     ("Python 3.10+", lambda: sys.version_info >= (3, 10), f"Python {sys.version}"),
