@@ -1609,4 +1609,209 @@ body[data-palette-open] {
 @media (prefers-reduced-motion: reduce) {
   .lang-picker-btn, .lang-item { transition: none; }
   .lang-picker-btn:active { transform: none; }
+/* ============================================================
+   READ ALOUD (SpeechSynthesis)
+   ============================================================ */
+
+.tts-toggle .tts-wave-1,
+.tts-toggle .tts-wave-2 {
+  opacity: 0.55;
+}
+
+.tts-toggle.is-active {
+  border-color: var(--blueprint);
+  color: var(--blueprint);
+}
+
+.tts-toggle.is-active .tts-wave-1 {
+  animation: tts-wave 1.4s ease-in-out infinite;
+}
+
+.tts-toggle.is-active .tts-wave-2 {
+  animation: tts-wave 1.4s ease-in-out 0.25s infinite;
+}
+
+@keyframes tts-wave {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+.tts-reading {
+  background: var(--blueprint-tint);
+  box-shadow: -10px 0 0 var(--blueprint-tint), inset 3px 0 0 var(--blueprint);
+  border-radius: 1px;
+  transition: background 0.2s;
+}
+
+.tts-bar {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%) translateY(8px);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  max-width: calc(100vw - 24px);
+  flex-wrap: wrap;
+  justify-content: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--ink);
+  box-shadow: var(--shadow-hard);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.tts-bar.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.tts-btn {
+  background: transparent;
+  border: 1px solid var(--rule-soft);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 6px 9px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.tts-btn:hover {
+  border-color: var(--blueprint);
+  color: var(--blueprint);
+}
+
+.tts-btn-main {
+  min-width: 38px;
+  border-color: var(--ink);
+}
+
+.tts-btn-stop {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  padding: 7px 10px;
+}
+
+.tts-status {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 9ch;
+}
+
+.tts-field {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tts-select {
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--rule-soft);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 4px 6px;
+  max-width: 150px;
+  cursor: pointer;
+}
+
+.tts-select:focus-visible,
+.tts-btn:focus-visible {
+  outline: 2px solid var(--blueprint);
+  outline-offset: 1px;
+}
+
+@media (max-width: 720px) {
+  .tts-bar {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    transform: none;
+    max-width: none;
+    gap: 8px;
+  }
+
+  .tts-bar.is-visible {
+    transform: none;
+  }
+
+  .tts-field-voice {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tts-toggle.is-active .tts-wave-1,
+  .tts-toggle.is-active .tts-wave-2 {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+.tts-check {
+  accent-color: var(--blueprint);
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.tts-field-code {
+  gap: 4px;
+  cursor: pointer;
+}
+
+pre.tts-reading,
+.quiz-option.tts-reading {
+  box-shadow: inset 3px 0 0 var(--blueprint);
+}
+
+.tts-from-here {
+  position: absolute;
+  z-index: 950;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--ink);
+  color: var(--bg);
+  border: 1px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--blueprint);
+  white-space: nowrap;
+}
+
+.tts-from-here:hover {
+  background: var(--blueprint);
+  border-color: var(--blueprint);
+  color: #fff;
+}
+
+.tts-from-here[hidden] {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .tts-from-here {
+    font-size: 0.66rem;
+    padding: 7px 10px;
+  }
 }
