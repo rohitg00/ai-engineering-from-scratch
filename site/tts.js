@@ -69,9 +69,28 @@
   // Mermaid keeps its definition in a hidden <pre> next to the rendered SVG.
   var MERMAID_SOURCE = 'pre.mermaid-source';
 
+  // Storage throws instead of returning null when a browser blocks it
+  // (Safari with cookies off, sandboxed iframes), so every read goes through
+  // these — readCode() runs on the collection hot path and must never throw.
+  function lsGet(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function lsSet(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (e) {
+      // Storage disabled; the preference just won't persist.
+    }
+  }
+
   // Code read aloud is hard to follow — off unless the listener opts in.
   function readCode() {
-    return localStorage.getItem(CODE_KEY) === '1';
+    return lsGet(CODE_KEY) === '1';
   }
 
   // Prev/next lesson links are full page loads, so playback state has to
@@ -93,6 +112,13 @@
     } catch (e) {
       return false;
     }
+  }
+
+  var reducedMotion =
+    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function prefersReducedMotion() {
+    return !!(reducedMotion && reducedMotion.matches);
   }
 
   var state = {
@@ -256,6 +282,9 @@
   // Single-dash forms must still require a '>' so hyphenated ids stay intact.
   var ARROW = /(<?(?:-\.->?|-{2,3}[->xo]{0,2}|={2,3}[>xo]{0,2}|~{2,3}|-{1,2}>{1,2}|={1,2}>{1,2}))/;
 
+  // Same pattern, compiled once for splitting edge chains.
+  var ARROW_SPLIT = new RegExp(ARROW.source, 'g');
+
   var CLOSERS = { '[': ']', '(': ')', '{': '}' };
 
   function stripLabel(raw) {
@@ -407,7 +436,7 @@
       }
 
       if (ARROW.test(skeleton)) {
-        var tokens = skeleton.split(new RegExp(ARROW.source, 'g'));
+        var tokens = skeleton.split(ARROW_SPLIT);
         var nodes = [];
         var edgeLabels = [];
         for (var t = 0; t < tokens.length; t++) {
@@ -653,7 +682,7 @@
   }
 
   function selectedVoice() {
-    var wanted = localStorage.getItem(VOICE_KEY);
+    var wanted = lsGet(VOICE_KEY);
     var all = synth.getVoices() || [];
     if (wanted) {
       for (var i = 0; i < all.length; i++) {
@@ -668,7 +697,7 @@
     if (!els.voice) return;
     var list = voices();
     if (!list.length) return;
-    var current = localStorage.getItem(VOICE_KEY) || '';
+    var current = lsGet(VOICE_KEY) || '';
     var best = list[0];
     els.voice.innerHTML = '';
     var def = document.createElement('option');
@@ -688,7 +717,7 @@
   }
 
   function rate() {
-    var stored = parseFloat(localStorage.getItem(RATE_KEY));
+    var stored = parseFloat(lsGet(RATE_KEY));
     return stored >= 0.5 && stored <= 3 ? stored : 1;
   }
 
@@ -702,7 +731,9 @@
     el.classList.add('tts-reading');
     var box = el.getBoundingClientRect();
     if (box.top < 80 || box.bottom > window.innerHeight - 80) {
-      el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      // Auto-scrolling at every chunk boundary is the most motion-heavy part
+      // of the feature, so honour the same preference the CSS does.
+      el.scrollIntoView({ block: 'center', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
     }
   }
 
@@ -943,11 +974,16 @@
   }
 
   /**
-   * Chromium drops long-running synthesis after ~15s of wall time. Chunks are
-   * short enough to mostly avoid it; this watchdog covers the rest.
+   * Chromium drops long-running synthesis after ~15s of wall time. Chunking
+   * already avoids most of it; this watchdog covers the rest — but only on
+   * Chromium, since pause()/resume() is flaky elsewhere and would risk
+   * glitching playback that was working fine.
    */
+  var isChromium = /Chrom(e|ium)|Edg\//.test(navigator.userAgent || '');
+
   function startKeepAlive() {
     stopKeepAlive();
+    if (!isChromium) return;
     state.keepAlive = setInterval(function () {
       if (!state.playing || state.paused) return;
       if (!synth.speaking) return;
@@ -1079,7 +1115,7 @@
 
     els.rate.value = String(rate());
     els.rate.addEventListener('change', function () {
-      localStorage.setItem(RATE_KEY, els.rate.value);
+      lsSet(RATE_KEY, els.rate.value);
       if (state.playing) {
         // Rate only applies to a new utterance, so restart the current chunk.
         state.paused = false;
@@ -1089,7 +1125,7 @@
     });
 
     els.voice.addEventListener('change', function () {
-      localStorage.setItem(VOICE_KEY, els.voice.value);
+      lsSet(VOICE_KEY, els.voice.value);
       if (state.playing) {
         state.paused = false;
         synth.cancel();
@@ -1099,19 +1135,14 @@
 
     els.code.checked = readCode();
     els.code.addEventListener('change', function () {
-      localStorage.setItem(CODE_KEY, els.code.checked ? '1' : '0');
+      lsSet(CODE_KEY, els.code.checked ? '1' : '0');
       if (!state.playing) return;
       // Rebuild the queue and stay on the block currently being read.
       var anchor = state.chunks[state.index] && state.chunks[state.index].el;
       state.chunks = collect();
-      var at = 0;
-      for (var i = 0; i < state.chunks.length; i++) {
-        if (state.chunks[i].el === anchor) {
-          at = i;
-          break;
-        }
-      }
-      state.index = at;
+      // Switching Code off drops the <pre> being read out of the queue, so
+      // fall through to the next block instead of restarting from the top.
+      state.index = indexOfBlock(anchor);
       state.paused = false;
       synth.cancel();
       render();
@@ -1135,6 +1166,7 @@
     btn.id = 'ttsFromHere';
     btn.hidden = true;
     btn.innerHTML = '<span aria-hidden="true">▶</span> Read from here';
+    btn.title = 'Read from here (Alt+R)';
     // mousedown would clear the selection before the click lands.
     btn.addEventListener('mousedown', function (e) {
       e.preventDefault();
@@ -1212,6 +1244,11 @@
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && (state.playing || state.waiting)) stop();
+      // The chip sits at the end of the tab order, so keyboard users get a
+      // shortcut instead: Alt+R reads from wherever the selection starts.
+      if (e.altKey && !e.ctrlKey && !e.metaKey && (e.key === 'r' || e.key === 'R')) {
+        if (selectedBlock() && readFromSelection()) e.preventDefault();
+      }
     });
 
     autoResume();

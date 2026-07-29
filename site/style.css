@@ -1673,6 +1673,12 @@ body[data-palette-open] {
   transform: translateX(-50%) translateY(0);
 }
 
+/* display:flex would override the UA [hidden] rule, leaving the controls
+   focusable and the live region announced while the bar is invisible. */
+.tts-bar[hidden] {
+  display: none;
+}
+
 .tts-btn {
   background: transparent;
   border: 1px solid var(--rule-soft);
