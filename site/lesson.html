@@ -1985,8 +1985,12 @@
         // Reading in another language: prefer that language's translation of
         // the lesson (docs/zh.md) and fall back to English per-lesson, so a
         // partially translated curriculum stays fully readable.
-        var docLang = (window.I18N && window.I18N.lang) || 'en';
-        var localizedUrl = docLang === 'zh-Hant' ? base + path + '/docs/zh.md' : null;
+        // Locale tag -> the docs/<code>.md filename. CONTRIBUTING.md defines
+        // that convention with ISO 639-1 short codes (zh.md, ja.md, es.md),
+        // which deliberately differ from the site's fuller locale tags.
+        var DOC_CODE = { 'zh-Hant': 'zh' };
+        var docCode = DOC_CODE[(window.I18N && window.I18N.lang) || 'en'];
+        var localizedUrl = docCode ? base + path + '/docs/' + docCode + '.md' : null;
 
         if (!retried || !lessonQuizPromise) {
           lessonQuizPromise = fetch(quizUrl)

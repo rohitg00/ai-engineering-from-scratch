@@ -21,11 +21,11 @@ def load_data():
     out = subprocess.run(['node','-e',js], cwd=ROOT, capture_output=True, text=True, check=True)
     return json.loads(out.stdout)
 
-def emit(pairs, title):
+def emit(pairs, title, seen):
     lines = [f'\n  /* ── {title} ' + '─'*max(0, 58-len(title)) + ' */']
-    seen = set()
     for en, zh in pairs:
-        if not zh or not en or en in seen: continue
+        if not zh or not en or en in seen:
+            continue
         seen.add(en)
         k, v = json.dumps(en, ensure_ascii=False), json.dumps(zh, ensure_ascii=False)
         lines.append(f'  {k}:\n    {v},' if len(k)+len(v) > 92 else f'  {k}: {v},')
@@ -692,32 +692,8 @@ def main():
     target = ROOT / 'site' / 'i18n.zh-Hant.js'
     js = target.read_text(encoding='utf-8')
 
-    phase_pairs, title_pairs, gloss_pairs = [], [], []
-    for p in data['PHASES']:
-        zh = PHASES_ZH.get(p['id'])
-        if zh:
-            phase_pairs += [(p['name'], zh[0]), (p['desc'], zh[1])]
-        titles = TITLES_ZH.get(p['id'])
-        if titles:
-            lessons = p.get('lessons') or []
-            if len(titles) != len(lessons):
-                sys.exit(f"phase {p['id']}: {len(titles)} translations for {len(lessons)} lessons")
-            title_pairs += [(l['name'], t) for l, t in zip(lessons, titles)]
-
-    for g in data['GLOSSARY']:
-        zh = GLOSSARY_ZH.get(g['term'])
-        if not zh: continue
-        gloss_pairs += [(g['says'], zh[0]), (g['means'], zh[1])]
-
-    body = ''
-    if phase_pairs: body += emit(phase_pairs, 'Phases')
-    if title_pairs: body += emit(title_pairs, 'Lesson titles')
-    if gloss_pairs: body += emit(gloss_pairs, 'Glossary')
-
-    # Splice in ahead of the closing brace, replacing any previous generated run
-    # so the script is idempotent.
-    marker = '\n  /* ── GENERATED from data.js — regenerate with scripts/i18n_curriculum.py'
-    # Cut at any previous generated block, whatever its heading read.
+    # Split off any previous generated block first, so this script is idempotent
+    # and so the hand-written keys above it can be read back.
     cut = re.split(r'\n  /\* ── GENERATED', js, maxsplit=1)[0]
     if cut != js:
         head = cut
@@ -726,8 +702,51 @@ def main():
         assert head.endswith('};'), 'unexpected tail in i18n.zh-Hant.js'
         head = head[:-2]
     head = head.rstrip().rstrip(',')          # one comma, added back below
-    js = head + ',\n' + marker + ' ── */' + body + '\n};\n'
-    target.write_text(js, encoding='utf-8')
+
+    # Seed with the keys the hand-written section already defines: this is one
+    # flat namespace, and a repeat is a lint error even when the values agree.
+    seen = {
+        json.loads(k) if k.startswith('"') else k[1:-1].replace("\\'", "'")
+        for k in re.findall(r'^  (\'(?:[^\'\\]|\\.)*\'|"(?:[^"\\]|\\.)*"):', head, re.M)
+    }
+
+    phase_pairs, title_pairs, gloss_pairs = [], [], []
+    for phase in data['PHASES']:
+        zh = PHASES_ZH.get(phase['id'])
+        if zh:
+            phase_pairs += [(phase['name'], zh[0]), (phase['desc'], zh[1])]
+        titles = TITLES_ZH.get(phase['id'])
+        if not titles:
+            continue
+        lessons = phase.get('lessons') or []
+        if len(titles) != len(lessons):
+            sys.exit(
+                f"phase {phase['id']}: {len(titles)} translations "
+                f"for {len(lessons)} lessons"
+            )
+        title_pairs += [
+            (lesson['name'], title)
+            for lesson, title in zip(lessons, titles, strict=True)
+        ]
+
+    for term in data['GLOSSARY']:
+        zh = GLOSSARY_ZH.get(term['term'])
+        if not zh:
+            continue
+        gloss_pairs += [(term['says'], zh[0]), (term['means'], zh[1])]
+
+    body = ''
+    if phase_pairs:
+        body += emit(phase_pairs, 'Phases', seen)
+    if title_pairs:
+        body += emit(title_pairs, 'Lesson titles', seen)
+    if gloss_pairs:
+        body += emit(gloss_pairs, 'Glossary', seen)
+
+    marker = ('\n  /* ── GENERATED from data.js — regenerate with '
+              'scripts/i18n_curriculum.py ── */')
+    target.write_text(head + ',' + marker + body + '\n};\n', encoding='utf-8')
     print(f'phases {len(phase_pairs)}  titles {len(title_pairs)}  glossary {len(gloss_pairs)}')
+
 
 main()

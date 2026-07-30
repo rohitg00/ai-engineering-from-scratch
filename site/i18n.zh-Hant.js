@@ -102,7 +102,8 @@ window.I18N_ZH_HANT = {
   'Math, Tooling, and Classical Machine Learning': '數學、工具鏈與傳統機器學習',
   'Deep Learning': '深度學習',
   'Networks, Vision, and Speech': '網路架構、視覺與語音',
-  'Language': '語言',
+  /* Volume 3 is titled "Language" — already mapped under shared chrome above.
+     Keys are one flat namespace, not per-section, so it cannot repeat here. */
   'NLP Foundations and the Transformer': '自然語言處理基礎與 Transformer',
   'Large Language Models': '大型語言模型',
   'Generation, Reinforcement, Pretraining, and Engineering': '生成、強化學習、預訓練與工程實務',
@@ -223,7 +224,6 @@ window.I18N_ZH_HANT = {
   'Reference': '參考',
   'Project': '專案',
   'Combines': '整合',
-
   /* ── GENERATED from data.js — regenerate with scripts/i18n_curriculum.py ── */
   /* ── Phases ──────────────────────────────────────────────────── */
   "Setup & Tooling": "環境建置與工具鏈",
