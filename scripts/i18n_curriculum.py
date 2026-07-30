@@ -6,7 +6,7 @@ strings are read straight out of site/data.js and never retyped: a key can
 therefore never drift from what the site actually renders. Mismatched lesson
 counts fail loudly instead of silently shifting every title by one.
 """
-import json, re, subprocess, sys
+import ast, json, re, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -706,7 +706,7 @@ def main():
     # Seed with the keys the hand-written section already defines: this is one
     # flat namespace, and a repeat is a lint error even when the values agree.
     seen = {
-        json.loads(k) if k.startswith('"') else k[1:-1].replace("\\'", "'")
+        ast.literal_eval(k)
         for k in re.findall(r'^  (\'(?:[^\'\\]|\\.)*\'|"(?:[^"\\]|\\.)*"):', head, re.M)
     }
 
