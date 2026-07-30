@@ -63,4 +63,12 @@ catalog.json
 site/sitemap.xml
 site/llms.txt
 site/build-meta.js
+
+# Clean-URL redirect stubs generated per-deploy by scripts/pages_aliases.mjs
+# from vercel.json's rewrites. Pages-only; Vercel rewrites natively.
+site/glossary/
+site/catalog/
+site/path/
+site/roadmap/
+site/about/
 book/_build/
