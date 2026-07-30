@@ -128,6 +128,9 @@
     paused: false,
     // True between a lesson navigation and its content being ready to read.
     waiting: false,
+    // Bar shown as a single puck, and the drag-vs-click guard.
+    collapsed: false,
+    dragged: false,
     highlighted: null,
     utterance: null,
     keepAlive: null,
@@ -1026,6 +1029,8 @@
     if (!els.bar) return;
     els.bar.hidden = !active;
     els.bar.classList.toggle('is-visible', active);
+    // Collapsed, the puck's speaker icon is the only playback feedback left.
+    els.bar.classList.toggle('is-reading', active && !state.paused);
     if (!active) return;
     els.playPause.textContent = state.paused ? '▶' : '⏸';
     els.playPause.setAttribute('aria-label', state.paused ? 'Resume' : 'Pause');
@@ -1072,6 +1077,125 @@
     return btn;
   }
 
+  /* ------------------------------------------------- collapse and dragging */
+
+  var COLLAPSED_KEY = 'tts:collapsed';
+  var POS_KEY = 'tts:pos';
+  var DRAG_SLOP = 4;
+
+  /** Collapsed, the bar is just the speaker puck — click it to expand. */
+  function setCollapsed(on, quiet) {
+    state.collapsed = !!on;
+    if (!quiet) lsSet(COLLAPSED_KEY, on ? '1' : '0');
+    if (!els.bar) return;
+    els.bar.classList.toggle('is-collapsed', state.collapsed);
+    if (els.collapse) {
+      els.collapse.innerHTML = state.collapsed ? icon() : '▾';
+      els.collapse.setAttribute('aria-expanded', state.collapsed ? 'false' : 'true');
+      var label = state.collapsed ? 'Expand read aloud controls' : 'Collapse controls';
+      els.collapse.setAttribute('aria-label', label);
+      els.collapse.title = label + ' (drag to move)';
+    }
+    clampToViewport();
+  }
+
+  function savedPosition() {
+    try {
+      var raw = lsGet(POS_KEY);
+      if (!raw) return null;
+      var p = JSON.parse(raw);
+      if (typeof p.x !== 'number' || typeof p.y !== 'number') return null;
+      return p;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /** Pin the bar at viewport coordinates, replacing the default anchoring. */
+  function place(x, y, persist) {
+    if (!els.bar) return;
+    var w = els.bar.offsetWidth;
+    var h = els.bar.offsetHeight;
+    var maxX = Math.max(8, document.documentElement.clientWidth - w - 8);
+    var maxY = Math.max(8, window.innerHeight - h - 8);
+    var cx = Math.min(Math.max(8, x), maxX);
+    var cy = Math.min(Math.max(8, y), maxY);
+    els.bar.classList.add('is-placed');
+    els.bar.style.left = cx + 'px';
+    els.bar.style.top = cy + 'px';
+    if (persist) lsSet(POS_KEY, JSON.stringify({ x: cx, y: cy }));
+  }
+
+  function clampToViewport() {
+    if (!els.bar || !els.bar.classList.contains('is-placed')) return;
+    var rect = els.bar.getBoundingClientRect();
+    place(rect.left, rect.top, false);
+  }
+
+  /**
+   * Drag the bar anywhere over the article. Buttons and selects keep their own
+   * behaviour unless the pointer actually moves, so a collapsed puck can be
+   * both clicked and dragged.
+   */
+  function bindDrag(bar) {
+    var active = false;
+    var moved = false;
+    var startX = 0;
+    var startY = 0;
+    var originX = 0;
+    var originY = 0;
+
+    bar.addEventListener('pointerdown', function (e) {
+      if (e.button != null && e.button !== 0) return;
+      // Leave real controls alone while the bar is open; the puck is all
+      // button, so it has to be draggable too.
+      if (!state.collapsed && e.target.closest('select,input,option')) return;
+      var rect = bar.getBoundingClientRect();
+      active = true;
+      moved = false;
+      startX = e.clientX;
+      startY = e.clientY;
+      originX = rect.left;
+      originY = rect.top;
+    });
+
+    bar.addEventListener('pointermove', function (e) {
+      if (!active) return;
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      if (!moved && Math.abs(dx) < DRAG_SLOP && Math.abs(dy) < DRAG_SLOP) return;
+      if (!moved) {
+        moved = true;
+        bar.classList.add('is-dragging');
+        if (bar.setPointerCapture) bar.setPointerCapture(e.pointerId);
+      }
+      e.preventDefault();
+      place(originX + dx, originY + dy, false);
+    });
+
+    var end = function (e) {
+      if (!active) return;
+      active = false;
+      if (!moved) return;
+      bar.classList.remove('is-dragging');
+      if (bar.releasePointerCapture && e.pointerId != null) {
+        try {
+          bar.releasePointerCapture(e.pointerId);
+        } catch (err) {
+          // Capture may already be gone.
+        }
+      }
+      var rect = bar.getBoundingClientRect();
+      place(rect.left, rect.top, true);
+      // Swallow the click this drag is about to produce.
+      state.dragged = true;
+    };
+
+    bar.addEventListener('pointerup', end);
+    bar.addEventListener('pointercancel', end);
+    window.addEventListener('resize', clampToViewport);
+  }
+
   function buildBar() {
     var bar = document.createElement('div');
     bar.className = 'tts-bar';
@@ -1093,7 +1217,9 @@
       '<select class="tts-select" id="ttsVoice" aria-label="Voice"></select></label>' +
       '<label class="tts-field tts-field-code"><input type="checkbox" class="tts-check" id="ttsCode">' +
       '<span>Code</span></label>' +
-      '<button type="button" class="tts-btn tts-btn-stop" data-tts="stop" aria-label="Stop reading">Stop</button>';
+      '<button type="button" class="tts-btn tts-btn-stop" data-tts="stop" aria-label="Stop reading">Stop</button>' +
+      '<button type="button" class="tts-btn tts-btn-collapse" data-tts="collapse" ' +
+      'aria-label="Collapse controls" aria-expanded="true" title="Collapse (drag to move)">▾</button>';
     document.body.appendChild(bar);
 
     els.bar = bar;
@@ -1103,11 +1229,19 @@
     els.voice = bar.querySelector('#ttsVoice');
     els.code = bar.querySelector('#ttsCode');
 
+    els.collapse = bar.querySelector('[data-tts="collapse"]');
+
     bar.addEventListener('click', function (e) {
+      // A click that ended a drag should not also press the button under it.
+      if (state.dragged) {
+        state.dragged = false;
+        return;
+      }
       var target = e.target.closest('[data-tts]');
       if (!target) return;
       var action = target.getAttribute('data-tts');
-      if (action === 'playpause') state.paused ? resume() : pause();
+      if (action === 'collapse') setCollapsed(!state.collapsed);
+      else if (action === 'playpause') state.paused ? resume() : pause();
       else if (action === 'stop') stop();
       else if (action === 'next') jump(1);
       else if (action === 'prev') jump(-1);
@@ -1148,6 +1282,11 @@
       render();
       speakCurrent();
     });
+
+    bindDrag(bar);
+    setCollapsed(lsGet(COLLAPSED_KEY) === '1', true);
+    var pos = savedPosition();
+    if (pos) place(pos.x, pos.y, false);
 
     fillVoices();
     if (typeof synth.onvoiceschanged !== 'undefined') {

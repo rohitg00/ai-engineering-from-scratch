@@ -1821,3 +1821,92 @@ pre.tts-reading,
     padding: 7px 10px;
   }
 }
+
+/* --- floating: drag anywhere over the article --- */
+
+.tts-bar {
+  cursor: grab;
+  touch-action: none;
+}
+
+.tts-bar.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+  transition: none;
+}
+
+/* Once dragged, the bar is pinned to explicit coordinates instead of the
+   default bottom-centre anchoring. */
+.tts-bar.is-placed,
+.tts-bar.is-placed.is-visible {
+  bottom: auto;
+  transform: none;
+}
+
+.tts-bar .tts-btn,
+.tts-bar .tts-select,
+.tts-bar .tts-check {
+  cursor: pointer;
+}
+
+.tts-btn-collapse {
+  border-color: var(--rule-soft);
+  font-size: 0.72rem;
+  line-height: 1;
+  padding: 6px 8px;
+}
+
+/* --- collapsed: a single speaker puck --- */
+
+.tts-bar.is-collapsed {
+  padding: 0;
+  gap: 0;
+  flex-wrap: nowrap;
+}
+
+.tts-bar.is-collapsed > *:not(.tts-btn-collapse) {
+  display: none;
+}
+
+.tts-bar.is-collapsed .tts-btn-collapse {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tts-bar.is-collapsed .tts-btn-collapse:hover {
+  color: var(--blueprint);
+}
+
+.tts-bar.is-reading .tts-btn-collapse .tts-wave-1 {
+  animation: tts-wave 1.4s ease-in-out infinite;
+}
+
+.tts-bar.is-reading .tts-btn-collapse .tts-wave-2 {
+  animation: tts-wave 1.4s ease-in-out 0.25s infinite;
+}
+
+@media (max-width: 720px) {
+  /* The mobile rules stretch the bar edge to edge; a puck must not stretch. */
+  .tts-bar.is-collapsed {
+    left: auto;
+    right: 12px;
+    width: 42px;
+  }
+
+  .tts-bar.is-placed.is-collapsed {
+    right: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tts-bar.is-reading .tts-btn-collapse .tts-wave-1,
+  .tts-bar.is-reading .tts-btn-collapse .tts-wave-2 {
+    animation: none;
+    opacity: 1;
+  }
+}
