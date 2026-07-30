@@ -9,6 +9,11 @@ below:
 
 Verify with `python3 scripts/i18n_status.py --verify` before committing.
 
+**Scope: lesson prose only.** `quiz.json` and `outputs/*.md` deliberately stay English for now. Both
+are user-facing — `lesson.html` fetches the quiz and renders the output artifacts — so translating
+them would also require a loader change, since neither has a language variant the way `docs/zh.md`
+does. Out of scope until that's wanted.
+
 ## Mirror the English structure exactly
 
 Same heading outline at the same levels, same fenced blocks in the same order, same tables with the
