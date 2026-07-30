@@ -1,0 +1,72 @@
+name: pages
+
+# Publishes site/ to GitHub Pages using the same build Vercel runs
+# (vercel.json's buildCommand), so both hosts serve identical content.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "phases/**" # lesson summaries + keywords feed data.js
+      - "README.md"
+      - "ROADMAP.md"
+      - "glossary/**"
+      - "site/**"
+      - "vercel.json"
+      - "scripts/pages_aliases.mjs"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time. Never cancel a running deploy — a half-published
+# site is worse than a stale one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: build + deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Writes data.js, sitemap.xml, llms.txt and build-meta.js into site/.
+      # build.js reads the deploy's git ref to decide which branch lesson.html
+      # fetches docs/en.md from; VERCEL_GIT_COMMIT_REF is its documented input.
+      - name: build site
+        env:
+          VERCEL_GIT_COMMIT_REF: ${{ github.ref_name }}
+        run: node site/build.js
+
+      # Pages has no rewrite engine, so vercel.json's rewrites become
+      # redirect stubs.
+      - name: generate clean-URL aliases
+        run: node scripts/pages_aliases.mjs
+
+      # enablement: turns Pages on with source=Actions on the first run, so
+      # this workflow is the only setup step. Needs repo admin; if it fails,
+      # set Settings -> Pages -> Source to "GitHub Actions" by hand once.
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
