@@ -10,7 +10,7 @@
 ## 學習目標
 
 - 運用貝氏定理，從先驗、概似與證據算出後驗機率
-- 從零打造一個樸素貝氏文本分類器，加上 Laplace 平滑與對數空間計算
+- 從零打造一個單純貝氏文本分類器，加上 拉普拉斯平滑與對數空間計算
 - 比較 MLE 與 MAP 估計，並說明 MAP 為什麼等同於 L2 正則化
 - 用 Beta-Binomial 共軛先驗實作序列式貝氏更新，應用在 A/B 測試上
 
@@ -109,9 +109,9 @@ P(spam|"lottery") = 0.05 * 0.3 / 0.0157
 
 一個字就把機率從 30% 推到 95.5%。真正的垃圾郵件過濾器會同時對數百個字套用貝氏定理。
 
-### 樸素貝氏：獨立假設
+### 單純貝氏：獨立假設
 
-樸素貝氏把這套做法推廣到多個特徵上，方法是假設在給定類別的條件下，所有特徵都彼此條件獨立：
+單純貝氏把這套做法推廣到多個特徵上，方法是假設在給定類別的條件下，所有特徵都彼此條件獨立：
 
 ```
 P(class | feature_1, feature_2, ..., feature_n)
@@ -139,7 +139,7 @@ P("free"|spam) = (number of spam emails containing "free") / (total spam emails)
 
 這就是 MLE：選出讓觀測資料最有可能出現的參數值。你在最大化概似函式，而對離散計數來說，它就化簡成相對頻率。
 
-問題來了：如果某個字在訓練時從未出現在垃圾郵件裡，MLE 會給它機率零。一個沒見過的字就會把整個乘積歸零。用 Laplace 平滑來修：
+問題來了：如果某個字在訓練時從未出現在垃圾郵件裡，MLE 會給它機率零。一個沒見過的字就會把整個乘積歸零。用 拉普拉斯平滑來修：
 
 ```
 P(word|class) = (count(word, class) + 1) / (total_words_in_class + vocabulary_size)
@@ -213,7 +213,7 @@ result = bayes(prior=0.0001, likelihood=0.99, false_positive_rate=0.01)
 print(f"P(sick|positive) = {result:.4f}")
 ```
 
-### 步驟 2：樸素貝氏分類器
+### 步驟 2：單純貝氏分類器
 
 ```python
 import math
@@ -315,7 +315,7 @@ show_top_words(classifier, "ham")
 
 ## 框架應用
 
-Scikit-learn 內建了可直接上生產環境的樸素貝氏實作：
+Scikit-learn 內建了可直接上生產環境的單純貝氏實作：
 
 ```python
 from sklearn.feature_extraction.text import CountVectorizer
@@ -337,7 +337,7 @@ for msg, pred in zip(test_messages, predictions):
 
 ## 產出交付
 
-這裡打造的 NaiveBayes 類別展示了完整流程：分詞、用 Laplace 平滑做機率估計、在對數空間做預測。`code/bayes.py` 裡的程式碼可以端到端跑完，除了 Python 標準函式庫之外沒有任何依賴。
+這裡打造的 NaiveBayes 類別展示了完整流程：分詞、用 拉普拉斯平滑做機率估計、在對數空間做預測。`code/bayes.py` 裡的程式碼可以端到端跑完，除了 Python 標準函式庫之外沒有任何依賴。
 
 ### 共軛先驗
 
@@ -459,8 +459,8 @@ A/B 測試其實就是換了個外貌的貝氏推論。
 | 概似 | 「資料吻合得有多好」 | P(evidence\|hypothesis)。在某個特定假設之下，觀測到的資料有多可能出現。 |
 | 後驗 | 「我更新後的信念」 | P(hypothesis\|evidence)。先驗乘上概似，再做正規化。 |
 | 證據 | 「那個正規化常數」 | 跨所有假設的 P(data)。確保後驗的總和為 1。 |
-| 樸素貝氏 | 「那個簡單的文本分類器」 | 假設在給定類別下各特徵彼此獨立的分類器。儘管假設是錯的，效果卻很好。 |
-| Laplace 平滑 | 「加一平滑」 | 給每個特徵都加上一個小小的計數，避免沒見過的資料造成機率為零。 |
+| 單純貝氏 | 「那個簡單的文本分類器」 | 假設在給定類別下各特徵彼此獨立的分類器。儘管假設是錯的，效果卻很好。 |
+| 拉普拉斯平滑 | 「加一平滑」 | 給每個特徵都加上一個小小的計數，避免沒見過的資料造成機率為零。 |
 | MLE | 「直接用頻率就好」 | 選出最大化 P(data\|parameters) 的參數。沒有先驗。資料少時可能過度擬合。 |
 | MAP | 「加了先驗的 MLE」 | 選出最大化 P(data\|parameters) * P(parameters) 的參數。等同於加了正則化的 MLE。 |
 | 對數機率 | 「在對數空間裡算」 | 用 log(P) 取代 P，避免乘上很多小數字時發生浮點下溢。 |
@@ -469,6 +469,6 @@ A/B 測試其實就是換了個外貌的貝氏推論。
 ## 延伸閱讀
 
 - [3Blue1Brown: Bayes' theorem](https://www.youtube.com/watch?v=HZGCoVF3YvM) —— 用醫學檢驗例子做的視覺化說明
-- [Stanford CS229: Generative Learning Algorithms](https://cs229.stanford.edu/notes2022fall/cs229-notes2.pdf) —— 樸素貝氏及其與判別式模型的關聯
+- [Stanford CS229: Generative Learning Algorithms](https://cs229.stanford.edu/notes2022fall/cs229-notes2.pdf) —— 單純貝氏及其與判別式模型的關聯
 - [Think Bayes](https://greenteapress.com/wp/think-bayes/) —— 免費書，用 Python 程式碼講貝氏統計
 - [scikit-learn Naive Bayes](https://scikit-learn.org/stable/modules/naive_bayes.html) —— 生產級實作，以及各個變體的適用時機
