@@ -57,12 +57,11 @@ jobs:
       - name: generate clean-URL aliases
         run: node scripts/pages_aliases.mjs
 
-      # enablement: turns Pages on with source=Actions on the first run, so
-      # this workflow is the only setup step. Needs repo admin; if it fails,
-      # set Settings -> Pages -> Source to "GitHub Actions" by hand once.
+      # One-time manual setup, deliberately not automated: GITHUB_TOKEN cannot
+      # create a Pages site (configure-pages' `enablement` input 404s), so set
+      # Settings -> Pages -> Source to "GitHub Actions" once per repo. This
+      # step fails with "Get Pages site failed / Not Found" until you do.
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
