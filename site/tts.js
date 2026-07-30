@@ -1187,8 +1187,10 @@
       }
       var rect = bar.getBoundingClientRect();
       place(rect.left, rect.top, true);
-      // Swallow the click this drag is about to produce.
-      state.dragged = true;
+      // Swallow the click a completed drag is about to produce. A cancelled
+      // gesture emits no click, so arming the guard there would eat the next
+      // real one instead.
+      state.dragged = e.type === 'pointerup';
     };
 
     bar.addEventListener('pointerup', end);
