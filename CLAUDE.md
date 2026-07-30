@@ -2,6 +2,36 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Where work goes — always this fork
+
+This checkout is **`yennanliu/ai-engineering-from-scratch`**, a fork of `rohitg00/ai-engineering-from-scratch`.
+
+**Always branch, open pull requests, and merge inside this fork.** Every PR targets
+`yennanliu/ai-engineering-from-scratch` → its own `main`
+(<https://github.com/yennanliu/ai-engineering-from-scratch/pulls>). Never open a PR against
+`rohitg00/…` unless the user explicitly asks to contribute upstream.
+
+Three things go wrong when a PR is aimed upstream instead:
+
+- Upstream deploys via Vercel, which refuses to build previews for forks — every fork PR gets a
+  permanent red `Vercel — Authorization required to deploy.` that only the upstream owner can clear.
+- The diff picks up fork-only files upstream has no use for, and "cleaning up" that diff means
+  deleting them — which then **breaks this fork when the branch is merged back into `main`**.
+- Review happens on someone else's schedule for a change that only needs to land here.
+
+Fork-only files that must survive every merge into `main` (upstream does not have them, so never
+delete them to tidy an upstream diff):
+
+| File | Deleting it breaks |
+|---|---|
+| `.github/workflows/pages.yml` | the entire GitHub Pages deployment |
+| `scripts/pages_aliases.mjs` | `/catalog`, `/glossary`, `/path`, `/roadmap`, `/about` clean URLs |
+| `.gitignore` alias-stub block | leaves generated redirect stubs untracked-but-dirty |
+| `CLAUDE.md` | this file |
+
+Before merging any branch into `main`, check that it deletes nothing:
+`git diff --diff-filter=D --name-only main..<branch>` must come back empty.
+
 ## What this repo is
 
 A curriculum, not an application. 503 lessons across 20 phases (`phases/00-…` → `phases/19-…`),
