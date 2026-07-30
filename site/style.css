@@ -44,6 +44,16 @@
   --dot-color: var(--paper-rule);
 }
 
+/* Traditional Chinese: the Latin faces carry no Han glyphs, so append CJK
+   families to each stack. Without this the browser picks its own last-resort
+   font per element and the page loses its typographic voice. Set by i18n.js,
+   which writes lang="zh-Hant" onto <html>. */
+html[lang^="zh"] {
+  --font-display: 'VT323', ui-monospace, 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', monospace;
+  --font-body: 'Source Serif 4', 'Source Serif Pro', 'Noto Serif TC', 'Songti TC', 'PingFang TC', 'Microsoft JhengHei', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', monospace;
+}
+
 [data-theme="dark"] {
   --bg: #0a0d1a;
   --bg-surface: #131830;
