@@ -11,6 +11,19 @@ This checkout is **`yennanliu/ai-engineering-from-scratch`**, a fork of `rohitg0
 (<https://github.com/yennanliu/ai-engineering-from-scratch/pulls>). Never open a PR against
 `rohitg00/…` unless the user explicitly asks to contribute upstream.
 
+**Every change lands through a PR in this fork — not a direct push to `main`.** Work on a branch,
+push the branch, and open the PR against this fork's `main`.
+
+⚠️ **`gh` cannot create that PR.** The CLI is authenticated as a different account
+(`jerryliu7777`) that has read-only access here, while `git push` succeeds because it uses the
+repo owner's SSH identity. `gh pr create` therefore fails with
+`GraphQL: must be a collaborator (createPullRequest)` — the same reason `gh pr close` fails on
+upstream PRs. Don't retry it; push the branch and hand over the compare link instead:
+
+```
+https://github.com/yennanliu/ai-engineering-from-scratch/compare/main...<branch>?expand=1
+```
+
 Three things go wrong when a PR is aimed upstream instead:
 
 - Upstream deploys via Vercel, which refuses to build previews for forks — every fork PR gets a
@@ -158,6 +171,31 @@ Lesson bodies are per-lesson files: `lesson.html` prefers `docs/zh.md` when the 
 and falls back to `docs/en.md` per lesson, so translated lessons light up as they land (the
 `docs/<lang>.md` convention `CONTRIBUTING.md` already documents). Language resolution is
 `?lang=` > `localStorage` > `navigator.language`; the toggle is injected next to `#themeToggle`.
+
+### Translating a lesson body
+
+`lesson.html` fetches lesson markdown at runtime from
+`raw.githubusercontent.com/<repo>/<ref>/…`, where `<repo>` comes from `window.__AIFS_REPO` in the
+generated `build-meta.js`. `build.js` resolves it from `GITHUB_REPOSITORY` (set by Actions), else the
+`origin` remote, else upstream. **This is why a fork's own lesson edits are visible at all** — before
+it existed the slug was hardcoded to `rohitg00`, so any `docs/zh.md` added here was fetched from
+upstream, never found, and silently fell back to English.
+
+When adding a `docs/zh.md`, mirror the English file's structure exactly — same headings (they build
+the on-page TOC), same fenced blocks, same links and image paths. Two things must stay **verbatim**
+or the page loses functionality:
+
+- ```` ```figure ```` fences and the widget name inside them — that string is what
+  `lesson-figures.js` mounts an interactive widget onto.
+- Code blocks: they mirror `code/main.*`, so translating them would let the prose drift from the
+  code the lesson actually ships.
+
+ASCII diagrams inside fences stay English too: CJK glyphs are double-width and would break the
+alignment. Verify parity before committing — heading count, fence count, figure names, links and
+image paths should all match `en.md`.
+
+`docs/zh.md` is invisible to the rest of the toolchain: `audit_lessons.py` only checks `en.md`, and
+`build.js` extracts summaries and keywords from `en.md` only. Nothing regenerates or validates it.
 
 ### Site JS layout
 

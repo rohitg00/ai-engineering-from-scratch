@@ -1837,7 +1837,12 @@
       var currentPhaseIndex = -1;
       var currentLessonIndex = -1;
       var flatLessons = [];
-      var REPO_TREE = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/';
+      // Repo this deploy was built from (build-meta.js). A fork serves its own
+      // lesson markdown; upstream is only the fallback for an unbuilt checkout.
+      var REPO = (typeof window !== 'undefined' && window.__AIFS_REPO)
+        ? window.__AIFS_REPO
+        : 'rohitg00/ai-engineering-from-scratch';
+      var REPO_TREE = 'https://github.com/' + REPO + '/tree/main/';
 
       if (typeof PHASES !== 'undefined') {
         for (var i = 0; i < PHASES.length; i++) {
@@ -1979,7 +1984,7 @@
         // via build-meta.js), so PR preview deploys render their own lesson
         // edits instead of always pulling main. Falls back to main.
         var ref = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
-        var base = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ref + '/';
+        var base = 'https://raw.githubusercontent.com/' + REPO + '/' + ref + '/';
         var rawUrl = base + path + '/docs/en.md';
         var quizUrl = base + path + '/quiz.json';
         // Reading in another language: prefer that language's translation of
@@ -3163,7 +3168,7 @@
           cb(null, ghApiCache[apiPath]);
           return;
         }
-        fetch('https://api.github.com/repos/rohitg00/ai-engineering-from-scratch/contents/' + apiPath, {
+        fetch('https://api.github.com/repos/' + REPO + '/contents/' + apiPath, {
           headers: { 'Accept': 'application/vnd.github.v3+json' }
         }).then(function (res) {
           if (!res.ok) throw new Error(res.status);
@@ -3237,7 +3242,7 @@
               installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
             } else if (type === 'skill') {
               var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
-              installHint = 'npx skills add rohitg00/ai-engineering-from-scratch --skill ' + skillName;
+              installHint = 'npx skills add ' + REPO + ' --skill ' + skillName;
             }
 
             html += '<div class="output-card">';
