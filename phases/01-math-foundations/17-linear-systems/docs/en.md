@@ -111,7 +111,7 @@ Back substitute:
   2*x1 + 2 + 2 = 8 --> x1 = 2
 ```
 
-Gaussian elimination costs O(n^3) operations. For a 1000x1000 system, that is about a billion floating-point operations. Fast, but you can do better if you need to solve multiple systems with the same A.
+Gaussian elimination costs $O(n^3)$ operations. For a 1000x1000 system, that is about a billion floating-point operations. Fast, but you can do better if you need to solve multiple systems with the same A.
 
 ### Partial pivoting: why it matters
 
@@ -146,17 +146,18 @@ A = L @ U
 | 2  3  1 |   | 1  2  1 |   | 0  0  -2 |
 ```
 
-Why factor instead of just eliminating? Because once you have L and U, solving Ax = b for any new b costs only O(n^2):
+Why factor instead of just eliminating? Because once you have L and U, solving Ax = b for any new b costs only $O(n^2)$:
 
-```
-Ax = b
-LUx = b
-Let y = Ux:
-  Ly = b    (forward substitution, O(n^2))
-  Ux = y    (back substitution, O(n^2))
-```
+$$
+\begin{aligned}
+Ax &= b \\
+LUx &= b \\
+\text{let } y = Ux: \quad Ly &= b \quad (\text{forward substitution, } O(n^2)) \\
+Ux &= y \quad (\text{back substitution, } O(n^2))
+\end{aligned}
+$$
 
-The O(n^3) cost is paid once during factorization. Every subsequent solve is O(n^2). If you need to solve 1000 systems with the same A but different b vectors, LU saves a factor of 1000/3 in total work.
+The $O(n^3)$ cost is paid once during factorization. Every subsequent solve is $O(n^2)$. If you need to solve 1000 systems with the same A but different b vectors, LU saves a factor of 1000/3 in total work.
 
 With partial pivoting, you get PA = LU where P is a permutation matrix recording the row swaps.
 
@@ -164,7 +165,7 @@ With partial pivoting, you get PA = LU where P is a permutation matrix recording
 
 QR decomposition factors A into an orthogonal matrix Q and an upper triangular matrix R: A = QR.
 
-An orthogonal matrix has the property Q^T Q = I. Its columns are orthonormal vectors. Multiplying by Q preserves lengths and angles.
+An orthogonal matrix has the property $Q^T Q = I$. Its columns are orthonormal vectors. Multiplying by Q preserves lengths and angles.
 
 ```
 A = Q @ R
@@ -178,27 +179,24 @@ To solve Ax = b:
   Back substitute to get x.
 ```
 
-QR is numerically more stable than LU for solving least-squares problems. The Gram-Schmidt process builds Q column by column:
+QR is numerically more stable than LU for solving least-squares problems. The Gram-Schmidt process builds Q column by column, given columns $a_1, a_2, \dots$ of A:
 
-```
-Given columns a1, a2, ... of A:
-
-q1 = a1 / ||a1||
-
-q2 = a2 - (a2 . q1) * q1        (subtract projection onto q1)
-q2 = q2 / ||q2||                (normalize)
-
-q3 = a3 - (a3 . q1) * q1 - (a3 . q2) * q2
-q3 = q3 / ||q3||
-
-R[i][j] = qi . aj    for i <= j
-```
+$$
+\begin{aligned}
+q_1 &= a_1 / \|a_1\| \\
+q_2 &= a_2 - (a_2 \cdot q_1)\, q_1 \quad (\text{subtract projection onto } q_1) \\
+q_2 &= q_2 / \|q_2\| \quad (\text{normalize}) \\
+q_3 &= a_3 - (a_3 \cdot q_1)\, q_1 - (a_3 \cdot q_2)\, q_2 \\
+q_3 &= q_3 / \|q_3\| \\
+R_{ij} &= q_i \cdot a_j \quad \text{for } i \leq j
+\end{aligned}
+$$
 
 Each step removes the component along all previous q vectors, leaving only the new orthogonal direction.
 
 ### Cholesky decomposition
 
-When A is symmetric (A = A^T) and positive definite (all eigenvalues positive), you can factor it as A = L L^T where L is lower triangular. This is the Cholesky decomposition.
+When A is symmetric ($A = A^T$) and positive definite (all eigenvalues positive), you can factor it as $A = L L^T$ where L is lower triangular. This is the Cholesky decomposition.
 
 ```
 A = L @ L^T
@@ -215,28 +213,27 @@ Cholesky is twice as fast as LU and requires half the storage. It only works for
 - Covariance matrices are symmetric positive semi-definite (positive definite with regularization).
 - The kernel matrix in Gaussian processes is symmetric positive definite.
 - The Hessian of a convex function at a minimum is symmetric positive definite.
-- A^T A is always symmetric positive semi-definite.
+- $A^T A$ is always symmetric positive semi-definite.
 
-In Gaussian processes, you factor the kernel matrix K with Cholesky, then solve K alpha = y to get the predictive mean. The Cholesky factor also gives you the log-determinant for the marginal likelihood: log det(K) = 2 * sum(log(diag(L))).
+In Gaussian processes, you factor the kernel matrix K with Cholesky, then solve $K \alpha = y$ to get the predictive mean. The Cholesky factor also gives you the log-determinant for the marginal likelihood: $\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$.
 
 ### Least squares: when Ax = b has no exact solution
 
-If A is m x n with m > n (more equations than unknowns), the system is overdetermined. There is no exact solution. Instead, you minimize the squared error:
+If A is $m \times n$ with $m > n$ (more equations than unknowns), the system is overdetermined. There is no exact solution. Instead, you minimize the squared error:
 
-```
-minimize ||Ax - b||^2
+$$
+\text{minimize } \|Ax - b\|^2
+$$
 
-This is the sum of squared residuals:
-  sum((A[i,:] @ x - b[i])^2 for i in range(m))
-```
+This is the sum of squared residuals $\sum_{i} (A_{i,:} \cdot x - b_i)^2$.
 
 The minimizer satisfies the normal equations:
 
-```
+$$
 A^T A x = A^T b
-```
+$$
 
-Derivation: expand ||Ax - b||^2 = (Ax - b)^T (Ax - b) = x^T A^T A x - 2 x^T A^T b + b^T b. Take the gradient with respect to x, set it to zero: 2 A^T A x - 2 A^T b = 0.
+Derivation: expand $\|Ax - b\|^2 = (Ax - b)^T (Ax - b) = x^T A^T A x - 2 x^T A^T b + b^T b$. Take the gradient with respect to $x$, set it to zero: $2 A^T A x - 2 A^T b = 0$.
 
 ```
 Original system (overdetermined, 4 equations, 2 unknowns):
@@ -249,7 +246,7 @@ Normal equations:
 A^T A = | 4  10 |    A^T b = | 22 |
         | 10 30 |            | 63 |
 
-Solve: x = [1.5, 1.7]
+Solve: x = [1.5, 1.6]
 
 This is linear regression. x[0] is the intercept, x[1] is the slope.
 ```
@@ -258,33 +255,35 @@ This is linear regression. x[0] is the intercept, x[1] is the slope.
 
 The connection is exact. In linear regression, your data matrix X has one row per sample and one column per feature. Your target vector y has one entry per sample. The weight vector w satisfies:
 
-```
-X^T X w = X^T y
-w = (X^T X)^(-1) X^T y
-```
+$$
+\begin{aligned}
+X^T X w &= X^T y \\
+w &= (X^T X)^{-1} X^T y
+\end{aligned}
+$$
 
 This is the closed-form solution to linear regression. Every call to `sklearn.linear_model.LinearRegression.fit()` computes this (or an equivalent via QR or SVD).
 
-Add a regularization term lambda * I to the matrix and you get ridge regression:
+Add a regularization term $\lambda I$ to the matrix and you get ridge regression:
 
-```
-(X^T X + lambda * I) w = X^T y
-w = (X^T X + lambda * I)^(-1) X^T y
-```
+$$
+\begin{aligned}
+(X^T X + \lambda I) w &= X^T y \\
+w &= (X^T X + \lambda I)^{-1} X^T y
+\end{aligned}
+$$
 
-The regularization makes the matrix better conditioned (easier to invert accurately) and prevents overfitting by shrinking the weights toward zero. The matrix X^T X + lambda * I is always symmetric positive definite when lambda > 0, so you can use Cholesky to solve it.
+The regularization makes the matrix better conditioned (easier to invert accurately) and prevents overfitting by shrinking the weights toward zero. The matrix $X^T X + \lambda I$ is always symmetric positive definite when $\lambda > 0$, so you can use Cholesky to solve it.
 
 ### Pseudoinverse (Moore-Penrose)
 
-The pseudoinverse A+ generalizes matrix inversion to non-square and singular matrices. For any matrix A:
+The pseudoinverse $A^+$ generalizes matrix inversion to non-square and singular matrices. For any matrix A:
 
-```
-x = A+ b
+$$
+x = A^+ b \quad \text{where } A^+ = V \Sigma^+ U^T \quad (\text{computed via SVD})
+$$
 
-where A+ = V Sigma+ U^T    (computed via SVD)
-```
-
-Sigma+ is formed by taking the reciprocal of each nonzero singular value and transposing the result. If A = U Sigma V^T, then A+ = V Sigma+ U^T.
+$\Sigma^+$ is formed by taking the reciprocal of each nonzero singular value and transposing the result. If $A = U \Sigma V^T$, then $A^+ = V \Sigma^+ U^T$.
 
 ```
 A = U Sigma V^T        (SVD)
@@ -297,9 +296,9 @@ A+ = V Sigma+ U^T
 ```
 
 The pseudoinverse gives the minimum-norm least-squares solution. If the system has:
-- One solution: A+ b gives it.
-- No solution: A+ b gives the least-squares solution.
-- Infinite solutions: A+ b gives the one with the smallest ||x||.
+- One solution: $A^+ b$ gives it.
+- No solution: $A^+ b$ gives the least-squares solution.
+- Infinite solutions: $A^+ b$ gives the one with the smallest $\|x\|$.
 
 NumPy's `np.linalg.lstsq` and `np.linalg.pinv` both use the SVD internally.
 
@@ -307,11 +306,11 @@ NumPy's `np.linalg.lstsq` and `np.linalg.pinv` both use the SVD internally.
 
 The condition number measures how sensitive the solution is to small changes in the input. For a matrix A, the condition number is:
 
-```
-kappa(A) = ||A|| * ||A^(-1)|| = sigma_max / sigma_min
-```
+$$
+\kappa(A) = \|A\| \cdot \|A^{-1}\| = \frac{\sigma_{\max}}{\sigma_{\min}}
+$$
 
-where sigma_max and sigma_min are the largest and smallest singular values.
+where $\sigma_{\max}$ and $\sigma_{\min}$ are the largest and smallest singular values.
 
 ```
 Well-conditioned (kappa ~ 1):        Ill-conditioned (kappa ~ 10^15):
@@ -323,11 +322,11 @@ small change in x                    huge change in x
 ```
 
 Rules of thumb:
-- kappa < 100: safe, solution is accurate.
-- kappa ~ 10^k: you lose about k digits of precision from your floating-point arithmetic.
-- kappa ~ 10^16 (for float64): the solution is meaningless. The matrix is effectively singular.
+- $\kappa < 100$: safe, solution is accurate.
+- $\kappa \sim 10^k$: you lose about $k$ digits of precision from your floating-point arithmetic.
+- $\kappa \sim 10^{16}$ (for float64): the solution is meaningless. The matrix is effectively singular.
 
-In ML, ill-conditioning happens when features are nearly collinear. Regularization (adding lambda * I) improves the condition number from sigma_max / sigma_min to (sigma_max + lambda) / (sigma_min + lambda).
+In ML, ill-conditioning happens when features are nearly collinear. For the regularized normal equations, adding $\lambda I$ changes the condition number from $\sigma_{\max}^2 / \sigma_{\min}^2$ to $(\sigma_{\max}^2 + \lambda) / (\sigma_{\min}^2 + \lambda)$.
 
 ### Iterative methods: conjugate gradient
 
@@ -362,29 +361,29 @@ The convergence rate depends on the condition number. Better conditioned systems
 
 | Method | Requirements | Cost | Use case |
 |--------|-------------|------|----------|
-| Gaussian elimination | Square, nonsingular A | O(n^3) | One-off solve of a square system |
-| LU decomposition | Square, nonsingular A | O(n^3) factor + O(n^2) solve | Multiple solves with the same A |
-| QR decomposition | Any A (m >= n) | O(mn^2) | Least squares, numerically stable |
-| Cholesky | Symmetric positive definite A | O(n^3/3) | Covariance matrices, Gaussian processes, ridge regression |
-| Normal equations | Overdetermined (m > n) | O(mn^2 + n^3) | Linear regression (small n) |
-| SVD / pseudoinverse | Any A | O(mn^2) | Rank-deficient systems, minimum-norm solutions |
-| Conjugate gradient | Symmetric positive definite, sparse A | O(n * k * nnz) | Large sparse systems, k = iterations |
+| Gaussian elimination | Square, nonsingular A | $O(n^3)$ | One-off solve of a square system |
+| LU decomposition | Square, nonsingular A | $O(n^3)$ factor + $O(n^2)$ solve | Multiple solves with the same A |
+| QR decomposition | Any A ($m \geq n$) | $O(mn^2)$ | Least squares, numerically stable |
+| Cholesky | Symmetric positive definite A | $O(n^3/3)$ | Covariance matrices, Gaussian processes, ridge regression |
+| Normal equations | Overdetermined ($m > n$) | $O(mn^2 + n^3)$ | Linear regression (small n) |
+| SVD / pseudoinverse | Any A | $O(mn^2)$ | Rank-deficient systems, minimum-norm solutions |
+| Conjugate gradient | Symmetric positive definite, sparse A | $O(n \cdot k \cdot nnz)$ | Large sparse systems, k = iterations |
 
 ### Connection to ML
 
 Every method in this lesson appears in production ML:
 
-**Linear regression.** The closed-form solution solves the normal equations X^T X w = X^T y. This is done via Cholesky (if n is small) or QR (if numerical stability matters) or SVD (if the matrix might be rank-deficient).
+**Linear regression.** The closed-form solution solves the normal equations $X^T X w = X^T y$. This is done via Cholesky (if n is small) or QR (if numerical stability matters) or SVD (if the matrix might be rank-deficient).
 
-**Ridge regression.** Adds lambda * I to X^T X. The regularized system (X^T X + lambda * I) w = X^T y is always solvable via Cholesky because X^T X + lambda * I is symmetric positive definite for lambda > 0.
+**Ridge regression.** Adds $\lambda I$ to $X^T X$. The regularized system $(X^T X + \lambda I) w = X^T y$ is always solvable via Cholesky because $X^T X + \lambda I$ is symmetric positive definite for $\lambda > 0$.
 
-**Gaussian processes.** The predictive mean requires solving K alpha = y where K is the kernel matrix. Cholesky factorization of K is the standard approach. The log marginal likelihood uses log det(K) = 2 sum(log(diag(L))).
+**Gaussian processes.** The predictive mean requires solving $K \alpha = y$ where K is the kernel matrix. Cholesky factorization of K is the standard approach. The log marginal likelihood uses $\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$.
 
 **Neural network initialization.** Orthogonal initialization uses QR decomposition to create weight matrices whose columns are orthonormal. This prevents signal collapse in deep networks.
 
 **Preconditioning.** Large-scale optimizers use incomplete Cholesky or incomplete LU as preconditioners for conjugate gradient solvers.
 
-**Feature engineering.** The condition number of X^T X tells you if your features are collinear. If kappa is large, drop features or add regularization.
+**Feature engineering.** The condition number of $X^T X$ tells you if your features are collinear. If $\kappa$ is large, drop features or add regularization.
 
 ```figure
 linear-system-conditioning
@@ -545,7 +544,7 @@ This lesson produces:
 
 1. Solve the system `[[1,2,3],[4,5,6],[7,8,10]] x = [6, 15, 27]` using your Gaussian elimination, your LU solver, and `np.linalg.solve`. Verify all three give the same answer within floating-point tolerance.
 
-2. Generate a 50x5 random matrix X and target y = X @ w_true + noise. Solve for w using normal equations, QR (via `np.linalg.qr`), SVD (via `np.linalg.svd`), and `np.linalg.lstsq`. Compare all four solutions. Measure the condition number of X^T X and explain how it affects which method you trust.
+2. Generate a 50x5 random matrix X and target y = X @ w_true + noise. Solve for w using normal equations, QR (via `np.linalg.qr`), SVD (via `np.linalg.svd`), and `np.linalg.lstsq`. Compare all four solutions. Measure the condition number of $X^T X$ and explain how it affects which method you trust.
 
 3. Create a nearly singular matrix by making two columns almost identical (e.g., column 2 = column 1 + 1e-10 * noise). Compute its condition number. Solve Ax = b with and without regularization (add 0.01 * I). Compare the solutions and residuals. Explain why regularization helps.
 
@@ -558,20 +557,20 @@ This lesson produces:
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
 | Linear system | "Solve for x" | A set of linear equations Ax = b. Finding x means finding the input that produces output b under transformation A. |
-| Gaussian elimination | "Row reduce" | Systematically zero out entries below the diagonal using row operations, producing an upper triangular system solvable by back substitution. O(n^3). |
+| Gaussian elimination | "Row reduce" | Systematically zero out entries below the diagonal using row operations, producing an upper triangular system solvable by back substitution. $O(n^3)$. |
 | Partial pivoting | "Swap rows for stability" | Before eliminating in column k, swap the row with the largest absolute value in that column to the pivot position. Prevents division by small numbers. |
-| LU decomposition | "Factor into triangles" | Write A = LU where L is lower triangular (stores multipliers) and U is upper triangular (the eliminated matrix). Amortizes the O(n^3) cost over multiple solves. |
-| QR decomposition | "Orthogonal factorization" | Write A = QR where Q has orthonormal columns and R is upper triangular. More stable than LU for least squares. |
-| Cholesky decomposition | "Square root of a matrix" | For symmetric positive definite A, write A = LL^T. Half the cost of LU. Used for covariance matrices, kernel matrices, and ridge regression. |
-| Least squares | "Best fit when exact is impossible" | Minimize the sum of squared residuals ||Ax - b||^2 when the system is overdetermined (more equations than unknowns). |
-| Normal equations | "The calculus shortcut" | A^T A x = A^T b. Setting the gradient of ||Ax - b||^2 to zero. This IS the closed-form solution to linear regression. |
-| Pseudoinverse | "Inversion for non-square matrices" | A+ = V Sigma+ U^T via SVD. Gives the minimum-norm least-squares solution for any matrix, square or rectangular, singular or not. |
-| Condition number | "How trustworthy is this answer" | kappa = sigma_max / sigma_min. Measures sensitivity to input perturbations. Lose about log10(kappa) digits of precision. |
-| Ridge regression | "Regularized least squares" | Solve (X^T X + lambda I) w = X^T y. Adding lambda I improves conditioning and shrinks weights toward zero. Prevents overfitting. |
+| LU decomposition | "Factor into triangles" | Write $A = LU$ where L is lower triangular (stores multipliers) and U is upper triangular (the eliminated matrix). Amortizes the $O(n^3)$ cost over multiple solves. |
+| QR decomposition | "Orthogonal factorization" | Write $A = QR$ where Q has orthonormal columns and R is upper triangular. More stable than LU for least squares. |
+| Cholesky decomposition | "Square root of a matrix" | For symmetric positive definite A, write $A = LL^T$. Half the cost of LU. Used for covariance matrices, kernel matrices, and ridge regression. |
+| Least squares | "Best fit when exact is impossible" | Minimize the sum of squared residuals $\|Ax - b\|^2$ when the system is overdetermined (more equations than unknowns). |
+| Normal equations | "The calculus shortcut" | $A^T A x = A^T b$. Setting the gradient of $\|Ax - b\|^2$ to zero. This IS the closed-form solution to linear regression. |
+| Pseudoinverse | "Inversion for non-square matrices" | $A^+ = V \Sigma^+ U^T$ via SVD. Gives the minimum-norm least-squares solution for any matrix, square or rectangular, singular or not. |
+| Condition number | "How trustworthy is this answer" | $\kappa = \sigma_{\max} / \sigma_{\min}$. Measures sensitivity to input perturbations. Lose about $\log_{10}(\kappa)$ digits of precision. |
+| Ridge regression | "Regularized least squares" | Solve $(X^T X + \lambda I) w = X^T y$. Adding $\lambda I$ improves conditioning and shrinks weights toward zero. Prevents overfitting. |
 | Conjugate gradient | "Iterative Ax=b for big matrices" | An iterative solver for symmetric positive definite systems. Converges in at most n steps. Practical for large sparse systems where factorization is too expensive. |
-| Overdetermined system | "More data than parameters" | m > n in an m-by-n system. No exact solution exists. Least squares finds the best approximation. This is every regression problem. |
-| Back substitution | "Solve from the bottom up" | Given an upper triangular system, solve the last equation first, then substitute backward. O(n^2). |
-| Forward substitution | "Solve from the top down" | Given a lower triangular system, solve the first equation first, then substitute forward. O(n^2). Used in the L step of LU solves. |
+| Overdetermined system | "More data than parameters" | $m > n$ in an m-by-n system. No exact solution exists. Least squares finds the best approximation. This is every regression problem. |
+| Back substitution | "Solve from the bottom up" | Given an upper triangular system, solve the last equation first, then substitute backward. $O(n^2)$. |
+| Forward substitution | "Solve from the top down" | Given a lower triangular system, solve the first equation first, then substitute forward. $O(n^2)$. Used in the L step of LU solves. |
 
 ## Further Reading
 

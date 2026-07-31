@@ -26,14 +26,16 @@ Gao, Schulman, Hilton (2023) measured this directly. Train a "gold" reward model
 
 Goodhart's original formulation: "When a measure becomes a target, it ceases to be a good measure." Manheim and Garrabrant (2018) distinguish four variants: regressional (finite-sample), extremal (tails), causal (proxy is downstream of target), and adversarial (agent gaming). For RLHF, extremal + adversarial are the dominant modes.
 
-Gao et al. give a functional form. Let `d = sqrt(KL(pi || pi_init))`. Let `R_proxy(d)` be mean proxy reward and `R_gold(d)` mean gold reward. Empirically:
+Gao et al. give a functional form. Let $d = \sqrt{KL(\pi \mid\mid \pi_{init})}$. Let $R_{proxy}(d)$ be mean proxy reward and $R_{gold}(d)$ mean gold reward. Empirically:
 
-```
-R_proxy(d) = alpha * d - beta_proxy * d^2
-R_gold(d)  = alpha * d - beta_gold  * d^2
-```
+$$
+\begin{aligned}
+R_{proxy}(d) &= \alpha \cdot d - \beta_{proxy} \cdot d^2 \\
+R_{gold}(d)  &= \alpha \cdot d - \beta_{gold}  \cdot d^2
+\end{aligned}
+$$
 
-with `beta_gold > beta_proxy`. Both rise from zero KL, both peak, the gold peak is closer to the origin. At large `d`, gold falls below baseline even while proxy keeps climbing. The proxy-gold gap has the same signature across BoN sampling, PPO, and SFT-to-best.
+with $\beta_{gold} > \beta_{proxy}$. Both rise from zero KL, both peak, the gold peak is closer to the origin. At large $d$, gold falls below baseline even while proxy keeps climbing. The proxy-gold gap has the same signature across BoN sampling, PPO, and SFT-to-best.
 
 This is the "over-optimization curve." It is not a bug in a specific reward model. It is the shape of the problem.
 
@@ -101,7 +103,7 @@ This lesson produces `outputs/skill-reward-hack-auditor.md`. Given a trained RLH
 | Gold reward | "what we actually want" | The target the proxy is a noisy measurement of; in practice, a larger-sample RM or human eval |
 | Proxy reward | "the RM" | The scalar used during training; by construction, it is what the optimizer sees |
 | Over-optimization curve | "the reward-hacking U-curve" | Proxy climbs, gold peaks then falls as KL from initial policy grows |
-| KL budget | "how far we can drift" | `sqrt(KL(pi \|\| pi_init))`; Gao et al. plot reward against this |
+| KL budget | "how far we can drift" | $\sqrt{KL(\pi \mid\mid \pi_{init})}$; Gao et al. plot reward against this |
 | Catastrophic Goodhart | "KL does not save you" | Under heavy-tailed reward error, KL-constrained optimal policy can maximize proxy while providing no gold utility |
 | Unfaithful reasoning | "wrong CoT, right answer" | Chain-of-thought that does not causally drive the final prediction |
 | Evaluator tampering | "gaming the scorer" | Agent modifies its environment, scratchpad, or the RM's inputs to register success |

@@ -228,7 +228,7 @@ Before you ship, estimate your monthly cost. This spreadsheet decides if your bu
 | Input price per 1M tokens | $5.00 | OpenAI GPT-5 pricing |
 | Output price per 1M tokens | $15.00 | OpenAI GPT-5 pricing |
 | Cache hit rate | 35% | Measured from cache metrics |
-| Effective daily queries | 32,500 | 50,000 * (1 - 0.35) |
+| Effective daily queries | 32,500 | $50{,}000 \times (1 - 0.35)$ |
 
 **Monthly LLM cost:**
 - Input: 32,500 queries/day x 1,500 tokens x 30 days / 1M x $2.50 = **$3,656**

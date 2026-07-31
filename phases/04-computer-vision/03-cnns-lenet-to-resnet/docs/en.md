@@ -72,7 +72,7 @@ stack:   conv 3x3 -> conv 3x3 -> pool 2x2
 repeat:  16 or 19 conv layers
 ```
 
-Two 3x3 convs see the same 5x5 input area as one 5x5 conv but with fewer parameters (2*9*C^2 = 18C^2 vs 25*C^2) and an extra ReLU in between. VGG turned this observation into an entire architecture. The simplicity — one block type, repeated — made it the reference point for everything that came after.
+Two 3x3 convs see the same 5x5 input area as one 5x5 conv but with fewer parameters ($2 \cdot 9 \cdot C^2 = 18C^2$ vs $25 \cdot C^2$) and an extra ReLU in between. VGG turned this observation into an entire architecture. The simplicity — one block type, repeated — made it the reference point for everything that came after.
 
 Cost: 138M parameters, slow to train, expensive at inference.
 
@@ -103,16 +103,19 @@ Each branch specialises — 1x1 for channel mixing, 3x3 for local texture, 5x5 f
 
 By 2015, VGG-19 worked and VGG-32 did not. Depth was supposed to help, but past ~20 layers both training and test loss got worse. That is not overfitting. That is the optimiser failing to find useful weights because gradients shrink multiplicatively through every layer.
 
-```
 Plain deep network:
-  y = f_L( f_{L-1}( ... f_1(x) ... ) )
+
+$$
+y = f_L( f_{L-1}( \dots f_1(x) \dots ) )
+$$
 
 Gradient wrt early layer:
-  dL/dW_1 = dL/dy * df_L/df_{L-1} * ... * df_2/df_1 * df_1/dW_1
 
-Each multiplicative term has magnitude roughly (weight magnitude) * (activation gain).
-Stack 100 of them with gains < 1 and the gradient is effectively zero.
-```
+$$
+\frac{\partial L}{\partial W_1} = \frac{\partial L}{\partial y} \cdot \frac{\partial f_L}{\partial f_{L-1}} \cdot \dots \cdot \frac{\partial f_2}{\partial f_1} \cdot \frac{\partial f_1}{\partial W_1}
+$$
+
+Each multiplicative term has magnitude roughly (weight magnitude) $\times$ (activation gain). Stack 100 of them with gains $< 1$ and the gradient is effectively zero.
 
 VGG worked at 19 layers because batch norm (published simultaneously) kept activations well-scaled. But even batch norm could not rescue depth beyond 30-ish layers.
 
@@ -120,12 +123,14 @@ VGG worked at 19 layers because batch norm (published simultaneously) kept activ
 
 He, Zhang, Ren, Sun proposed one change that fixed everything:
 
-```
-standard block:   y = F(x)
-residual block:   y = F(x) + x
-```
+$$
+\begin{aligned}
+\text{standard block:} \quad & y = F(x) \\
+\text{residual block:} \quad & y = F(x) + x
+\end{aligned}
+$$
 
-The `+ x` means the layer can always choose to do nothing by driving `F(x)` to zero. A 1,000-layer ResNet is now at most as bad as a 1-layer network, because every extra block has a trivial escape hatch. With that guarantee, the optimiser is willing to make every block *slightly* useful — and slightly useful, stacked 100 times, is state-of-the-art.
+The `+ x` means the layer can always choose to do nothing by driving $F(x)$ to zero. A 1,000-layer ResNet is now at most as bad as a 1-layer network, because every extra block has a trivial escape hatch. With that guarantee, the optimiser is willing to make every block *slightly* useful — and slightly useful, stacked 100 times, is state-of-the-art.
 
 ```mermaid
 flowchart LR
@@ -377,7 +382,7 @@ This lesson produces:
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
 | Backbone | "The model" | The stack of convolutional blocks that produces the feature map fed to the task head |
-| Residual connection | "Skip connection" | `y = F(x) + x`; lets the optimiser learn identity by setting F to zero, which makes arbitrary depth trainable |
+| Residual connection | "Skip connection" | $y = F(x) + x$; lets the optimiser learn identity by setting $F$ to zero, which makes arbitrary depth trainable |
 | BasicBlock | "Two 3x3 convs with a skip" | The ResNet-18/34 building block: conv-BN-ReLU-conv-BN-add-ReLU |
 | Bottleneck | "1x1 down, 3x3, 1x1 up" | The ResNet-50/101/152 block; cheap at high channel counts because the 3x3 runs on a reduced width |
 | Degradation problem | "Deeper is worse" | Past ~20 plain conv layers, both training and test error increase; solved by residual connections, not by more data |

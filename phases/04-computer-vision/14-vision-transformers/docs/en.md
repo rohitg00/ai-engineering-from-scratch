@@ -80,24 +80,26 @@ The embedding is a parameter of the model; gradient-based training adapts it to 
 
 Standard. Multi-head self-attention, MLP, residual connections, pre-LayerNorm.
 
-```
-x = x + MSA(LN(x))
-x = x + MLP(LN(x))
+$$
+\begin{aligned}
+x &= x + \text{MSA}(\text{LN}(x)) \\
+x &= x + \text{MLP}(\text{LN}(x))
+\end{aligned}
+$$
 
-MLP is two-layer with GELU: Linear(d -> 4d) -> GELU -> Linear(4d -> d)
-```
+MLP is two-layer with GELU: $\text{Linear}(d \to 4d) \to \text{GELU} \to \text{Linear}(4d \to d)$
 
 ViT-B/16 stacks 12 of these blocks, each with 12 attention heads, totalling 86M parameters.
 
 ### Why pre-LN
 
-Early transformers used post-LN (`x = LN(x + sublayer(x))`) and struggled to train past 6-8 layers without warmup. Pre-LN (`x = x + sublayer(LN(x))`) trains deeper networks stably without warmup. Every ViT and every modern LLM uses pre-LN.
+Early transformers used post-LN ($x = \text{LN}(x + \text{sublayer}(x))$) and struggled to train past 6-8 layers without warmup. Pre-LN ($x = x + \text{sublayer}(\text{LN}(x))$) trains deeper networks stably without warmup. Every ViT and every modern LLM uses pre-LN.
 
 ### Patch size trade-off
 
 - 16x16 patches -> 196 tokens, standard.
 - 32x32 patches -> 49 tokens, faster but lower resolution.
-- 8x8 patches -> 784 tokens, finer but O(n^2) attention cost scales badly.
+- 8x8 patches -> 784 tokens, finer but $O(n^2)$ attention cost scales badly.
 
 Bigger patches = fewer tokens = faster but less spatial detail. SwinV2 uses 4x4 patches in hierarchical windows.
 
@@ -257,7 +259,7 @@ This lesson produces:
 | Patch embedding | "The first conv" | A conv with kernel size = stride = patch size; turns the image into a grid of token embeddings |
 | Class token | "[CLS]" | A learned vector prepended to the token sequence; its final output is the global image representation |
 | Positional embedding | "Learned pos" | A learned vector added to every token so the transformer knows where each patch came from |
-| Pre-LN | "LayerNorm before sublayer" | The stable transformer variant: `x + sublayer(LN(x))` instead of `LN(x + sublayer(x))` |
+| Pre-LN | "LayerNorm before sublayer" | The stable transformer variant: $x + \text{sublayer}(\text{LN}(x))$ instead of $\text{LN}(x + \text{sublayer}(x))$ |
 | Multi-head attention | "Parallel attention" | Standard transformer attention split into num_heads independent subspaces, concatenated afterwards |
 | ViT-B/16 | "Base, patch 16" | The canonical size: dim=768, depth=12, heads=12, patch_size=16, image=224; ~86M params |
 | DeiT | "Data-efficient ViT" | ViT trained on ImageNet-1k alone with strong augmentation; proved large pretraining datasets are not strictly required |

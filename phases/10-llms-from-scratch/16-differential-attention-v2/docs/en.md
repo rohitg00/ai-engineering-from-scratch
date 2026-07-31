@@ -16,7 +16,7 @@
 
 ## The Problem
 
-Standard softmax attention has a mathematical property that turns into an operational headache at scale. For a query `q`, the attention weights are `softmax(qK^T / sqrt(d))`. Softmax can never produce exact zeros — every non-matching token gets some positive mass. That residual mass is noise, and it scales with context length. At 128k tokens, even if each non-matching token gets only 0.001% of the probability, 127,999 of them combined contribute about 12% of the total. The model has to learn to route around a noise floor that grows with context.
+Standard softmax attention has a mathematical property that turns into an operational headache at scale. For a query $q$, the attention weights are $\text{softmax}(qK^T / \sqrt{d})$. Softmax can never produce exact zeros — every non-matching token gets some positive mass. That residual mass is noise, and it scales with context length. At 128k tokens, even if each non-matching token gets only 0.001% of the probability, 127,999 of them combined contribute about 12% of the total. The model has to learn to route around a noise floor that grows with context.
 
 Empirically this shows up as attention-head interference: hallucinated citations in long-context RAG, lost-in-the-middle failures on 100k-token retrieval tasks, and subtle accuracy degradation on needle-in-haystack benchmarks past 32k. The Differential Transformer paper (arXiv:2410.05258, ICLR 2025) measured the gap: DIFF Transformers hit lower perplexity, higher long-context accuracy, and fewer hallucinations than same-size baselines.
 
@@ -26,38 +26,40 @@ DIFF V1 had three problems that kept it out of frontier pre-training pipelines. 
 
 ### The noise floor of softmax
 
-For a query `q` and keys `K = [k_1, ..., k_N]`, attention weights are:
+For a query $q$ and keys $K = [k_1, \ldots, k_N]$, attention weights are:
 
-```
-w_i = exp(q . k_i / sqrt(d)) / sum_j exp(q . k_j / sqrt(d))
-```
+$$
+w_i = \frac{\exp(q \cdot k_i / \sqrt{d})}{\sum_j \exp(q \cdot k_j / \sqrt{d})}
+$$
 
-No `w_i` is ever zero. If `k_i` is completely unrelated to `q`, the score `q . k_i` is not 0 — it fluctuates around zero with variance `||q||^2 / d`. After softmax normalization, each unrelated token still contributes `O(1/N)` to the weighted sum. The total contribution of unrelated tokens is `O((N-1)/N) = O(1)` — not a small quantity.
+No $w_i$ is ever zero. If $k_i$ is completely unrelated to $q$, the score $q \cdot k_i$ is not 0 — it fluctuates around zero with variance $\|q\|^2 / d$. After softmax normalization, each unrelated token still contributes $O(1/N)$ to the weighted sum. The total contribution of unrelated tokens is $O((N-1)/N) = O(1)$ — not a small quantity.
 
 What the model wants is something like a hard top-k: high weight on matching tokens, near-zero weight everywhere else. Softmax is too smooth to do that directly.
 
 ### The differential idea
 
-Split each head's Q and K projections into two: Q = (Q_1, Q_2) and K = (K_1, K_2). Compute two attention maps:
+Split each head's Q and K projections into two: $Q = (Q_1, Q_2)$ and $K = (K_1, K_2)$. Compute two attention maps:
 
-```
-A_1 = softmax(Q_1 K_1^T / sqrt(d))
-A_2 = softmax(Q_2 K_2^T / sqrt(d))
-```
+$$
+\begin{aligned}
+A_1 &= \text{softmax}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \text{softmax}(Q_2 K_2^T / \sqrt{d})
+\end{aligned}
+$$
 
 Output:
 
-```
-DiffAttn = (A_1 - lambda * A_2) V
-```
+$$
+\text{DiffAttn} = (A_1 - \lambda A_2) V
+$$
 
 The subtraction cancels whatever noise distribution the two maps share. If both maps have roughly uniform weight on the 127k unrelated tokens (which they will, at random initialization), those cancel. The signal — peaked weight on the few actually relevant tokens — only cancels if it appears in both maps at the same magnitude, which it will not once the model trains.
 
-`lambda` is a learnable scalar per head, parameterized as `lambda = exp(lambda_q1 dot lambda_k1) - exp(lambda_q2 dot lambda_k2) + lambda_init`. It can be negative. `lambda_init` defaults to a small positive number like 0.8.
+$\lambda$ is a learnable scalar per head, parameterized as $\lambda = \exp(\lambda_{q1} \cdot \lambda_{k1}) - \exp(\lambda_{q2} \cdot \lambda_{k2}) + \lambda_{\text{init}}$. It can be negative. $\lambda_{\text{init}}$ defaults to a small positive number like 0.8.
 
 ### Why this matches headed noise-canceling
 
-Think of two noisy microphones recording the same voice. Both pick up the speaker plus correlated background noise. Subtract one from the other and the shared noise drops out. The voice survives because the two signals differ in phase or amplitude by enough to prevent full cancellation. The per-head `lambda` learns exactly this balance.
+Think of two noisy microphones recording the same voice. Both pick up the speaker plus correlated background noise. Subtract one from the other and the shared noise drops out. The voice survives because the two signals differ in phase or amplitude by enough to prevent full cancellation. The per-head $\lambda$ learns exactly this balance.
 
 ### V1 vs V2: the diff
 
@@ -182,9 +184,9 @@ This lesson produces `outputs/skill-diff-attention-integrator.md`. Given a model
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Differential attention | "Two softmaxes minus each other" | Split Q, K into two halves, compute two softmax maps, subtract the second (scaled by lambda) from the first, then multiply by V |
-| Noise floor | "The non-zero tail of softmax" | The O(1/N) weight softmax puts on every unrelated token, which sums to O(1) across long contexts |
-| lambda | "The subtraction scale" | Per-head learnable scalar parameterized as `exp(lq1.lk1) - exp(lq2.lk2) + lambda_init`; can be negative |
+| Differential attention | "Two softmaxes minus each other" | Split Q, K into two halves, compute two softmax maps, subtract the second (scaled by $\lambda$) from the first, then multiply by V |
+| Noise floor | "The non-zero tail of softmax" | The $O(1/N)$ weight softmax puts on every unrelated token, which sums to $O(1)$ across long contexts |
+| lambda | "The subtraction scale" | Per-head learnable scalar parameterized as $\exp(l_{q1} \cdot l_{k1}) - \exp(l_{q2} \cdot l_{k2}) + \lambda_{\text{init}}$; can be negative |
 | DIFF V1 | "The ICLR 2025 version" | Original Differential Transformer; halves head dim to preserve parameter count, needs custom kernel, slower decode |
 | DIFF V2 | "The January 2026 fix" | Doubles Q heads keeping KV heads; matches baseline decode speed and works with FlashAttention |
 | Per-head RMSNorm | "The V1 stabilizer" | Extra norm V1 applied after the difference; V2 removed it to prevent late-training instability |

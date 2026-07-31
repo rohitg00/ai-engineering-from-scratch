@@ -41,14 +41,13 @@ flowchart LR
 
 Take one image, apply two random augmentations, get two views. Feed both through the same encoder plus a projection head. Minimise a loss that says "these two embeddings should be close" and "this embedding should be far from every other image's embeddings in the batch."
 
-```
-Loss for positive pair (z_i, z_j) among 2N views per batch:
+Loss for positive pair $(z_i, z_j)$ among $2N$ views per batch:
 
-   L_ij = -log( exp(sim(z_i, z_j) / tau) / sum_k in batch \ {i} exp(sim(z_i, z_k) / tau) )
+$$
+L_{ij} = -\log\left( \frac{\exp(\text{sim}(z_i, z_j) / \tau)}{\sum_{k \in \text{batch} \setminus \{i\}} \exp(\text{sim}(z_i, z_k) / \tau)} \right)
+$$
 
-sim = cosine similarity
-tau = temperature (0.1 standard)
-```
+where $\text{sim}$ is cosine similarity and $\tau$ is the temperature (0.1 standard).
 
 This is the InfoNCE loss. It requires many negatives per positive, so batch size matters — SimCLR needs 512-8192. MoCo introduced a momentum queue of past batches to decouple negative count from batch size.
 
@@ -56,12 +55,13 @@ This is the InfoNCE loss. It requires many negatives per positive, so batch size
 
 Two networks with the same architecture: student and teacher. The teacher is an exponential moving average (EMA) of the student's weights. Both see augmented views of the image. The student's output is trained to match the teacher's — no explicit negatives.
 
-```
-loss = CE( student_output(view_1),  teacher_output(view_2) )
-     + CE( student_output(view_2),  teacher_output(view_1) )
-
-teacher_weights = m * teacher_weights + (1 - m) * student_weights   (m ≈ 0.996)
-```
+$$
+\begin{aligned}
+\text{loss} &= \text{CE}\big( \text{student\_output}(\text{view}_1),\ \text{teacher\_output}(\text{view}_2) \big) \\
+&\quad + \text{CE}\big( \text{student\_output}(\text{view}_2),\ \text{teacher\_output}(\text{view}_1) \big) \\
+\text{teacher\_weights} &= m \cdot \text{teacher\_weights} + (1 - m) \cdot \text{student\_weights} \quad (m \approx 0.996)
+\end{aligned}
+$$
 
 Why it does not collapse to "predict a constant": the teacher's output is centred (subtract per-dimension mean) and sharpened (divide by small temperature). Centering prevents one dimension from dominating; sharpening prevents output collapse to uniform.
 
@@ -173,7 +173,7 @@ print(f"InfoNCE with identical pairs:  {loss_same:.3f}")
 print(f"InfoNCE with random pairs:     {loss_random:.3f}")
 ```
 
-Identical pairs should give a low loss (close to 0 for a large batch and cold temperature). Random pairs should give log(2N-1) = ~log(31) = ~3.4 with a 16-pair batch.
+Identical pairs should give a low loss (close to 0 for a large batch and cold temperature). Random pairs should give $\log(2N-1) \approx \log(31) \approx 3.4$ with a 16-pair batch.
 
 ### Step 4: MAE-style masking
 
@@ -227,7 +227,7 @@ This lesson produces:
 
 ## Exercises
 
-1. **(Easy)** Verify that InfoNCE loss drops when you decrease temperature for well-aligned embeddings and rises when you decrease temperature for random embeddings. Produce a plot `tau in [0.05, 0.1, 0.2, 0.5]` vs loss.
+1. **(Easy)** Verify that InfoNCE loss drops when you decrease temperature for well-aligned embeddings and rises when you decrease temperature for random embeddings. Produce a plot $\tau \in [0.05, 0.1, 0.2, 0.5]$ vs loss.
 2. **(Medium)** Implement a DINO-style centre buffer. Show that without the centring, the student collapses to a constant vector within a few epochs.
 3. **(Hard)** Train MAE on CIFAR-100 using the TinyUNet from Lesson 10 as the backbone. Report linear-probe accuracy at 10, 50, and 200 epochs. Show that a MAE-pretrained linear probe beats a from-scratch supervised linear probe on the same 1,000-image subset.
 

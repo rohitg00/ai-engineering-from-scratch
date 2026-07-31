@@ -96,7 +96,7 @@ Relative error: 19.2%
 
 That is a 19% relative error from a single subtraction. In ML, this happens whenever you:
 
-- Compute variance of data with a large mean: `E[x^2] - E[x]^2` when E[x] is large
+- Compute variance of data with a large mean: $E[x^2] - E[x]^2$ when $E[x]$ is large
 - Subtract nearly equal log-probabilities
 - Compute finite-difference gradients with too-small epsilon
 
@@ -141,23 +141,25 @@ Computing `log(sum(exp(x_i)))` directly is numerically dangerous. If any `x_i` i
 
 The trick: subtract the maximum value before exponentiating.
 
-```
-log(sum(exp(x_i))) = max(x) + log(sum(exp(x_i - max(x))))
-```
+$$
+\log\left(\sum_i \exp(x_i)\right) = \max(x) + \log\left(\sum_i \exp(x_i - \max(x))\right)
+$$
 
 Why this works: after subtracting `max(x)`, the largest exponent is `exp(0) = 1`. No overflow is possible. At least one term in the sum is 1, so the sum is at least 1, and `log(1) = 0`. No underflow to `-inf` is possible.
 
 Proof:
 
-```
-log(sum(exp(x_i)))
-= log(sum(exp(x_i - c + c)))                    (add and subtract c)
-= log(sum(exp(x_i - c) * exp(c)))               (exp(a+b) = exp(a)*exp(b))
-= log(exp(c) * sum(exp(x_i - c)))               (factor out exp(c))
-= c + log(sum(exp(x_i - c)))                    (log(a*b) = log(a) + log(b))
-```
+$$
+\begin{aligned}
+\log\left(\sum_i \exp(x_i)\right)
+&= \log\left(\sum_i \exp(x_i - c + c)\right) && \text{(add and subtract } c\text{)} \\
+&= \log\left(\sum_i \exp(x_i - c) \cdot \exp(c)\right) && (\exp(a+b) = \exp(a)\exp(b)) \\
+&= \log\left(\exp(c) \cdot \sum_i \exp(x_i - c)\right) && \text{(factor out } \exp(c)\text{)} \\
+&= c + \log\left(\sum_i \exp(x_i - c)\right) && (\log(ab) = \log(a) + \log(b))
+\end{aligned}
+$$
 
-Set `c = max(x)` and overflow is eliminated.
+Set $c = \max(x)$ and overflow is eliminated.
 
 This trick appears everywhere in ML:
 - Softmax normalization
@@ -170,9 +172,9 @@ This trick appears everywhere in ML:
 
 Softmax converts logits to probabilities:
 
-```
-softmax(x_i) = exp(x_i) / sum(exp(x_j))
-```
+$$
+\text{softmax}(x_i) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}
+$$
 
 Without the trick, logits of [100, 101, 102] cause overflow:
 
@@ -242,19 +244,19 @@ Analytical gradients (from backpropagation) can have bugs. Numerical gradient ch
 
 The centered difference formula:
 
-```
-df/dx ~= (f(x + h) - f(x - h)) / (2h)
-```
+$$
+\frac{df}{dx} \approx \frac{f(x + h) - f(x - h)}{2h}
+$$
 
-This is O(h^2) accurate, much better than the forward difference `(f(x+h) - f(x)) / h` which is only O(h).
+This is $O(h^2)$ accurate, much better than the forward difference $\frac{f(x+h) - f(x)}{h}$ which is only $O(h)$.
 
 Choosing h: too large and the approximation is wrong. Too small and catastrophic cancellation destroys the answer. `h = 1e-5` to `1e-7` is typical.
 
 The check: compute the relative difference between analytical and numerical gradients.
 
-```
-relative_error = |grad_analytical - grad_numerical| / max(|grad_analytical|, |grad_numerical|, 1e-8)
-```
+$$
+\text{relative\_error} = \frac{|\text{grad}_\text{analytical} - \text{grad}_\text{numerical}|}{\max(|\text{grad}_\text{analytical}|, |\text{grad}_\text{numerical}|, 10^{-8})}
+$$
 
 Rules of thumb:
 - relative_error < 1e-7: perfect, gradient is correct
@@ -350,9 +352,9 @@ Layer 50: values in [0, inf]
 
 Normalization recenters and rescales activations at every layer:
 
-```
-LayerNorm(x) = (x - mean(x)) / (std(x) + epsilon) * gamma + beta
-```
+$$
+\text{LayerNorm}(x) = \frac{x - \text{mean}(x)}{\text{std}(x) + \epsilon} \cdot \gamma + \beta
+$$
 
 The `epsilon` (typically 1e-5) prevents division by zero when all activations are identical. The learned parameters `gamma` and `beta` let the network restore any scale it needs.
 
@@ -364,7 +366,7 @@ This keeps values in a numerically safe range throughout the network, preventing
 Cause: logits grew too large, softmax overflowed. Or learning rate is too high and weights diverged.
 Fix: use stable softmax (max subtraction), reduce learning rate, add gradient clipping.
 
-**Bug: Loss is stuck at log(num_classes).**
+**Bug: Loss is stuck at $\log(\text{num\_classes})$.**
 Cause: model outputs are near-uniform probabilities. Often means gradients are vanishing or the model is not learning at all.
 Fix: check that data labels are correct, verify the loss function, check for dead ReLUs.
 
@@ -568,13 +570,13 @@ These stable implementations reappear in Phase 3 when building the training loop
 
 ## Exercises
 
-1. **Catastrophic cancellation.** Compute the variance of [1000000.0, 1000001.0, 1000002.0] using the naive formula `E[x^2] - E[x]^2` in float32. Then compute it using Welford's online algorithm. Compare the errors against the true variance (0.6667).
+1. **Catastrophic cancellation.** Compute the variance of [1000000.0, 1000001.0, 1000002.0] using the naive formula $E[x^2] - E[x]^2$ in float32. Then compute it using Welford's online algorithm. Compare the errors against the true variance (0.6667).
 
-2. **Precision hunt.** Find the smallest positive float32 value `x` such that `1.0 + x == 1.0` in Python. This is the machine epsilon. Verify it matches `numpy.finfo(numpy.float32).eps`.
+2. **Precision hunt.** Find the smallest positive float32 value `x` such that `1.0 + x > 1.0` in float32. This is the machine epsilon. Verify it matches `numpy.finfo(numpy.float32).eps`.
 
 3. **Log-sum-exp edge cases.** Test your `logsumexp_stable` function with: (a) all values equal, (b) one value much larger than the rest, (c) all values very negative (-1000). Verify it gives correct results where the naive version fails.
 
-4. **Gradient checking a neural network layer.** Implement a single linear layer `y = Wx + b` and its analytical backward pass. Use `numerical_gradient` to verify correctness for a 3x2 weight matrix.
+4. **Gradient checking a neural network layer.** Implement a single linear layer $y = Wx + b$ and its analytical backward pass. Use `numerical_gradient` to verify correctness for a 3x2 weight matrix.
 
 5. **Loss scaling experiment.** Simulate training with float16: create random gradients in the range [1e-9, 1e-3], convert to float16, and measure what fraction become zero. Then apply loss scaling (multiply by 1024), convert to float16, scale back, and measure the zero fraction again.
 
@@ -583,7 +585,7 @@ These stable implementations reappear in Phase 3 when building the training loop
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
 | IEEE 754 | "The float standard" | International standard defining binary floating point formats, rounding rules, and special values (inf, nan). Every modern CPU and GPU implements it. |
-| Machine epsilon | "The precision limit" | The smallest value e such that 1.0 + e != 1.0 in a given float format. For float32, it is about 1.19e-7. |
+| Machine epsilon | "The precision limit" | The smallest value $e$ such that $1.0 + e \neq 1.0$ in a given float format. For float32, it is about 1.19e-7. |
 | Catastrophic cancellation | "Precision loss from subtraction" | When subtracting nearly equal floating point numbers, significant digits cancel and rounding noise dominates the result. |
 | Overflow | "Number too big" | A result exceeds the maximum representable value and becomes inf. exp(89) overflows float32. |
 | Underflow | "Number too small" | A result is closer to zero than the smallest representable positive number and becomes 0.0. exp(-104) underflows float32. |

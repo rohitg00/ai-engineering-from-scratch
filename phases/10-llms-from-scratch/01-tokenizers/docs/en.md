@@ -135,10 +135,12 @@ GPT-2 introduced this approach. The base vocabulary covers every possible byte. 
 
 WordPiece looks similar to BPE but picks merges differently. Instead of raw frequency, it maximizes the likelihood of the training data:
 
-```
-BPE merge criterion:      count(A, B)
-WordPiece merge criterion: count(AB) / (count(A) * count(B))
-```
+$$
+\begin{aligned}
+\text{BPE merge criterion:} \quad & \text{count}(A, B) \\
+\text{WordPiece merge criterion:} \quad & \frac{\text{count}(AB)}{\text{count}(A) \cdot \text{count}(B)}
+\end{aligned}
+$$
 
 BPE asks: "Which pair appears most often?" WordPiece asks: "Which pair appears together more often than you would expect by chance?" This subtle difference produces different vocabularies. WordPiece favors merges where co-occurrence is surprising, not just frequent.
 
@@ -461,7 +463,7 @@ This lesson produces `outputs/prompt-tokenizer-analyzer.md` -- a reusable prompt
 |------|----------------|----------------------|
 | Token | "A word" | A unit in the model's vocabulary -- could be a character, subword, word, or multi-word chunk |
 | BPE | "Some compression thing" | Byte Pair Encoding -- iteratively merge the most frequent adjacent pair of tokens until the target vocabulary size is reached |
-| WordPiece | "BERT's tokenizer" | Like BPE but merges maximize the likelihood ratio count(AB)/(count(A)*count(B)) instead of raw frequency |
+| WordPiece | "BERT's tokenizer" | Like BPE but merges maximize the likelihood ratio $\text{count}(AB)/(\text{count}(A) \cdot \text{count}(B))$ instead of raw frequency |
 | SentencePiece | "A tokenizer library" | A language-agnostic tokenizer that operates on raw Unicode without pre-tokenization, supporting BPE and Unigram algorithms |
 | Vocabulary size | "How many words it knows" | The total number of unique tokens: GPT-2 has 50,257, BERT has 30,522, Llama 3 has 128,256 |
 | Fertility | "Not a tokenizer term" | Average number of tokens per word -- measures tokenizer efficiency across languages (1.0 is perfect, 3.0 means the model works three times harder) |

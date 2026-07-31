@@ -9,7 +9,7 @@
 
 ## The Problem
 
-Scaled dot-product attention is order-blind. The attention matrix `softmax(Q K^T / √d) V` is computed from pairwise similarities. Shuffle the rows of `X`, get the rows of the output shuffled the same way. Nothing inside attention cares about position.
+Scaled dot-product attention is order-blind. The attention matrix $\text{softmax}(Q K^T / \sqrt{d}) V$ is computed from pairwise similarities. Shuffle the rows of `X`, get the rows of the output shuffled the same way. Nothing inside attention cares about position.
 
 That is not a bug in a bag-of-words model. For language, code, audio, video — anything where order carries meaning — it is fatal.
 
@@ -29,10 +29,12 @@ As of 2026, essentially every frontier open model uses RoPE: Llama 2/3/4, Qwen 2
 
 Pre-compute a fixed matrix `PE` of shape `(max_len, d_model)`:
 
-```
-PE[pos, 2i]   = sin(pos / 10000^(2i / d_model))
-PE[pos, 2i+1] = cos(pos / 10000^(2i / d_model))
-```
+$$
+\begin{aligned}
+PE[pos, 2i]   &= \sin(pos / 10000^{2i / d_{model}}) \\
+PE[pos, 2i+1] &= \cos(pos / 10000^{2i / d_{model}})
+\end{aligned}
+$$
 
 Then `X' = X + PE[:N]` before attention. Each dimension is a sinusoid at a different frequency. The model learns to read position from the phase pattern. Fails beyond `max_len`: nothing told the model what happens at position 2048 when it only saw positions 0–2047.
 
@@ -40,14 +42,15 @@ Then `X' = X + PE[:N]` before attention. Each dimension is a sinusoid at a diffe
 
 Rotate the Q and K vectors (not embeddings). For a pair of dimensions `(2i, 2i+1)`:
 
-```
-[q'_2i    ]   [ cos(pos·θ_i)  -sin(pos·θ_i) ] [q_2i   ]
-[q'_2i+1  ] = [ sin(pos·θ_i)   cos(pos·θ_i) ] [q_2i+1 ]
+$$
+\begin{bmatrix} q'_{2i} \\ q'_{2i+1} \end{bmatrix} = \begin{bmatrix} \cos(pos \cdot \theta_i) & -\sin(pos \cdot \theta_i) \\ \sin(pos \cdot \theta_i) & \cos(pos \cdot \theta_i) \end{bmatrix} \begin{bmatrix} q_{2i} \\ q_{2i+1} \end{bmatrix}
+$$
 
-θ_i = base^(-2i / d_head),  base = 10000 by default
-```
+$$
+\theta_i = base^{-2i / d_{head}}, \quad base = 10000 \text{ by default}
+$$
 
-Apply the same rotation to keys with position `pos_k`. The dot product `q'_m · k'_n` becomes a function of `(m - n)` alone. That is: **the attention score depends only on the relative distance**, even though the rotation was keyed off absolute positions. Beautiful trick.
+Apply the same rotation to keys with position $pos_k$. The dot product $q'_m \cdot k'_n$ becomes a function of $(m - n)$ alone. That is: **the attention score depends only on the relative distance**, even though the rotation was keyed off absolute positions. Beautiful trick.
 
 Extending RoPE: `base` can be scaled (NTK-aware, YaRN, LongRoPE) to extrapolate to longer contexts without retraining. Llama 3 extended from 8K to 128K context this way.
 
@@ -55,11 +58,11 @@ Extending RoPE: `base` can be scaled (NTK-aware, YaRN, LongRoPE) to extrapolate 
 
 Skip the embedding trick. Bias the attention scores directly:
 
-```
-attn_score[i, j] = (q_i · k_j) / √d  -  m_h · |i - j|
-```
+$$
+\text{attn\_score}[i, j] = (q_i \cdot k_j) / \sqrt{d} - m_h \cdot |i - j|
+$$
 
-Where `m_h` is a head-specific slope (e.g. `1 / 2^(8·h/H)`). Closer tokens get boosted; far tokens get penalized. No training-time cost. The paper shows length extrapolation beats sinusoidal and matches RoPE on its original trained length.
+Where $m_h$ is a head-specific slope (e.g. $1 / 2^{8 \cdot h/H}$). Closer tokens get boosted; far tokens get penalized. No training-time cost. The paper shows length extrapolation beats sinusoidal and matches RoPE on its original trained length.
 
 ### What to pick in 2026
 
@@ -113,7 +116,7 @@ def apply_rope(x, pos, base=10000):
     return out
 ```
 
-Crucial: apply the same function to Q at position `m` and K at position `n`. Their dot product picks up a `cos((m-n)·θ_i)` factor on every coordinate pair. Attention learns relative position for free.
+Crucial: apply the same function to Q at position `m` and K at position `n`. Their dot product picks up a $\cos((m-n) \cdot \theta_i)$ factor on every coordinate pair. Attention learns relative position for free.
 
 ### Step 3: ALiBi slopes and bias
 
@@ -146,7 +149,7 @@ model = AutoModel.from_pretrained("meta-llama/Llama-3.2-3B")
 
 **Long-context tricks in 2026:**
 
-- **NTK-aware interpolation.** Rescale `base` to `base * (scale_factor)^(d/(d-2))` when extending from 4K to 16K+.
+- **NTK-aware interpolation.** Rescale `base` to $base \cdot (scale\_factor)^{d/(d-2)}$ when extending from 4K to 16K+.
 - **YaRN.** Smarter interpolation that preserves attention entropy on long contexts. Llama 3.1 128K uses it.
 - **LongRoPE.** Microsoft's 2024 method that uses evolutionary search to pick per-dimension scale factors. Phi-3-Long uses it.
 - **Position interpolation + fine-tuning.** Just shrink positions by the extension factor and fine-tune for 1–5B tokens. Surprisingly effective.
@@ -168,7 +171,7 @@ See `outputs/skill-positional-encoding-picker.md`. The skill picks an encoding s
 | Positional encoding | "Tells attention about order" | Any signal added to embeddings or attention that encodes position. |
 | Sinusoidal | "The original one" | `sin/cos` at geometric frequencies added to embeddings; doesn't extrapolate. |
 | RoPE | "Rotary embeddings" | Rotate Q, K by position-dependent angle; dot product encodes relative distance. |
-| ALiBi | "Linear bias trick" | Add `-m·\|i-j\|` to attention scores; no embedding needed, great extrapolation. |
+| ALiBi | "Linear bias trick" | Add $-m \cdot \vert i-j \vert$ to attention scores; no embedding needed, great extrapolation. |
 | base | "RoPE's knob" | The frequency scaler in RoPE; increase to extend context at inference. |
 | NTK-aware | "A RoPE scaling trick" | Rescale `base` so high-frequency dims aren't squeezed when context expands. |
 | YaRN | "The fancy one" | Per-dimension interpolation+extrapolation that preserves attention entropy. |

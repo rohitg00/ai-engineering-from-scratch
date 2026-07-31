@@ -173,9 +173,9 @@ For most modern CNNs you feed RGB. You meet other spaces when:
 
 Grayscale from RGB is a weighted sum, not an average, because the human eye is more sensitive to green than to red or blue:
 
-```
-Y = 0.299 R + 0.587 G + 0.114 B       (ITU-R BT.601, the classic weights)
-```
+$$
+Y = 0.299\,R + 0.587\,G + 0.114\,B \qquad \text{(ITU-R BT.601, the classic weights)}
+$$
 
 ### Aspect ratio, resizing, and interpolation
 

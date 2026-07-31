@@ -9,7 +9,7 @@
 
 ## Learning Objectives
 
-- Derive the forward noising process `x_0 -> x_1 -> ... -> x_T` and explain why the closed-form `q(x_t | x_0)` holds for any t
+- Derive the forward noising process $x_0 \to x_1 \to \dots \to x_T$ and explain why the closed-form $q(x_t \mid x_0)$ holds for any $t$
 - Implement a DDPM-style training objective that regresses the noise added at each step, and a sampler that walks back from pure noise to an image
 - Build a time-conditioned U-Net (small enough to train on CPU) that predicts the noise for any timestep
 - Explain the difference between DDPM and DDIM sampling, and when each is appropriate (Lesson 23 covers flow matching and rectified flow in depth)
@@ -26,35 +26,33 @@ This lesson builds the minimal DDPM: forward noising, backward denoising, traini
 
 ### The forward process
 
-Take an image `x_0`. Add a tiny amount of Gaussian noise to get `x_1`. Add a tiny amount more to get `x_2`. Keep going for T steps until `x_T` is nearly indistinguishable from pure Gaussian noise.
+Take an image $x_0$. Add a tiny amount of Gaussian noise to get $x_1$. Add a tiny amount more to get $x_2$. Keep going for T steps until $x_T$ is nearly indistinguishable from pure Gaussian noise.
 
-```
-q(x_t | x_{t-1}) = N(x_t; sqrt(1 - beta_t) * x_{t-1},  beta_t * I)
-```
+$$
+q(x_t \mid x_{t-1}) = \mathcal{N}(x_t; \sqrt{1 - \beta_t} \cdot x_{t-1},\; \beta_t I)
+$$
 
-`beta_t` is a small variance schedule, typically linear from 0.0001 to 0.02 over T=1000 steps. Each step slightly shrinks the signal and injects fresh noise.
+$\beta_t$ is a small variance schedule, typically linear from 0.0001 to 0.02 over T=1000 steps. Each step slightly shrinks the signal and injects fresh noise.
 
 ### The closed-form jump
 
-Adding noise one step at a time is a Markov chain, but the math folds: you can sample `x_t` directly from `x_0` in one step.
+Adding noise one step at a time is a Markov chain, but the math folds: you can sample $x_t$ directly from $x_0$ in one step.
 
-```
-Define alpha_t = 1 - beta_t
-Define alpha_bar_t = prod_{s=1..t} alpha_s
+$$
+\begin{aligned}
+&\text{Define } \alpha_t = 1 - \beta_t \\
+&\text{Define } \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s \\[4pt]
+\text{Then:}\quad & q(x_t \mid x_0) = \mathcal{N}(x_t; \sqrt{\bar{\alpha}_t} \cdot x_0,\; (1 - \bar{\alpha}_t) I) \\[4pt]
+\text{Equivalently:}\quad & x_t = \sqrt{\bar{\alpha}_t} \cdot x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \epsilon \\
+&\text{where } \epsilon \sim \mathcal{N}(0, I)
+\end{aligned}
+$$
 
-Then:
-  q(x_t | x_0) = N(x_t; sqrt(alpha_bar_t) * x_0,  (1 - alpha_bar_t) * I)
-
-Equivalently:
-  x_t = sqrt(alpha_bar_t) * x_0 + sqrt(1 - alpha_bar_t) * epsilon
-  where epsilon ~ N(0, I)
-```
-
-This single equation is the whole reason diffusion is practical. During training you pick a random `t`, sample `x_t` directly from `x_0`, and train in one step — no simulation of the full Markov chain needed.
+This single equation is the whole reason diffusion is practical. During training you pick a random $t$, sample $x_t$ directly from $x_0$, and train in one step — no simulation of the full Markov chain needed.
 
 ### The reverse process
 
-The forward process is fixed. The reverse process `p(x_{t-1} | x_t)` is what the neural network learns. Diffusion models do not predict `x_{t-1}` directly; they predict the noise `epsilon` added at step t, and the math derives `x_{t-1}` from it.
+The forward process is fixed. The reverse process $p(x_{t-1} \mid x_t)$ is what the neural network learns. Diffusion models do not predict $x_{t-1}$ directly; they predict the noise $\epsilon$ added at step t, and the math derives $x_{t-1}$ from it.
 
 ```mermaid
 flowchart LR
@@ -78,18 +76,18 @@ flowchart LR
 
 For every training step:
 
-1. Sample a real image `x_0`.
-2. Sample a timestep `t` uniformly from [1, T].
-3. Sample noise `epsilon ~ N(0, I)`.
-4. Compute `x_t = sqrt(alpha_bar_t) * x_0 + sqrt(1 - alpha_bar_t) * epsilon`.
-5. Predict `epsilon_theta(x_t, t)` with the network.
-6. Minimise `|| epsilon - epsilon_theta(x_t, t) ||^2`.
+1. Sample a real image $x_0$.
+2. Sample a timestep $t$ uniformly from $[1, T]$.
+3. Sample noise $\epsilon \sim \mathcal{N}(0, I)$.
+4. Compute $x_t = \sqrt{\bar{\alpha}_t} \cdot x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \epsilon$.
+5. Predict $\epsilon_\theta(x_t, t)$ with the network.
+6. Minimise $\lVert \epsilon - \epsilon_\theta(x_t, t) \rVert^2$.
 
 That is it. The neural network learns to predict the noise at any timestep. The loss is MSE. There is no adversarial game, no collapse, no oscillation.
 
 ### The sampler (DDPM)
 
-To generate: start from `x_T ~ N(0, I)` and walk backwards one step at a time.
+To generate: start from $x_T \sim \mathcal{N}(0, I)$ and walk backwards one step at a time.
 
 ```
 for t = T, T-1, ..., 1:
@@ -111,7 +109,7 @@ Training is the same. Sampling changes. DDIM (Song et al., 2020) defines a deter
 
 ### Time conditioning
 
-The network `epsilon_theta(x_t, t)` needs to know which timestep it is denoising. Modern diffusion models inject `t` via sinusoidal time embeddings (same idea as positional encoding in transformers) that get added to feature maps at every U-Net level.
+The network $\epsilon_\theta(x_t, t)$ needs to know which timestep it is denoising. Modern diffusion models inject $t$ via sinusoidal time embeddings (same idea as positional encoding in transformers) that get added to feature maps at every U-Net level.
 
 ```
 t_embedding = sinusoidal(t)
@@ -301,9 +299,9 @@ This lesson produces:
 
 ## Exercises
 
-1. **(Easy)** Visualise the forward process: take one image and plot `x_t` at `t in [0, 100, 250, 500, 750, 1000]`. Verify that `x_1000` looks like pure Gaussian noise.
+1. **(Easy)** Visualise the forward process: take one image and plot $x_t$ at $t \in \{0, 100, 250, 500, 750, 1000\}$. Verify that $x_{1000}$ looks like pure Gaussian noise.
 2. **(Medium)** Train the TinyUNet on the synthetic-circles dataset for 20 epochs and sample 16 circles. Compare DDPM (1000 steps) and DDIM (50 steps) sampling — do they produce similar images from the same noise seed?
-3. **(Hard)** Implement a cosine noise schedule (Nichol & Dhariwal, 2021): `alpha_bar_t = cos^2((t/T + s) / (1 + s) * pi / 2)`. Train the same model with linear and cosine schedules and show that cosine gives better samples at low step counts.
+3. **(Hard)** Implement a cosine noise schedule (Nichol & Dhariwal, 2021): $\bar{\alpha}_t = \cos^2\left(\frac{t/T + s}{1 + s} \cdot \frac{\pi}{2}\right)$. Train the same model with linear and cosine schedules and show that cosine gives better samples at low step counts.
 
 ## Key Terms
 
@@ -311,10 +309,10 @@ This lesson produces:
 |------|----------------|----------------------|
 | Forward process | "Add noise over time" | Fixed Markov chain that corrupts an image into Gaussian noise over T steps |
 | Reverse process | "Denoise step by step" | Learned distribution that walks back from noise to image |
-| Epsilon prediction | "Predict the noise" | The training target: `epsilon_theta(x_t, t)` predicts the noise added at step t |
+| Epsilon prediction | "Predict the noise" | The training target: $\epsilon_\theta(x_t, t)$ predicts the noise added at step t |
 | Beta schedule | "Noise amounts" | Sequence of T small variances that define how much noise enters per step |
-| alpha_bar_t | "Cumulative retain factor" | Product of (1 - beta_s) up to time t; bigger t means less signal left |
-| DDPM sampler | "Ancestral, stochastic" | Samples each x_{t-1} from its conditional Gaussian; 1000 steps |
+| $\bar{\alpha}_t$ | "Cumulative retain factor" | Product of $(1 - \beta_s)$ up to time t; bigger t means less signal left |
+| DDPM sampler | "Ancestral, stochastic" | Samples each $x_{t-1}$ from its conditional Gaussian; 1000 steps |
 | DDIM sampler | "Deterministic, fast" | Rewrites sampling as a deterministic ODE; 20-100 steps with similar quality |
 | Time conditioning | "Tell the model which t" | Sinusoidal embedding of t injected into the U-Net so it knows the noise level |
 

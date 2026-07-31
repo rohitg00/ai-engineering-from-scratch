@@ -30,9 +30,9 @@ When something unlikely happens, it carries more information. A coin landing hea
 
 The information content of an event with probability p is:
 
-```
-I(x) = -log(p(x))
-```
+$$
+I(x) = -\log(p(x))
+$$
 
 Using log base 2 gives you bits. Using natural log gives you nats. Same idea, different units.
 
@@ -50,16 +50,18 @@ Certain events carry zero information. You already knew they would happen.
 
 Entropy is the expected surprise across all possible outcomes of a distribution.
 
-```
-H(P) = -sum( p(x) * log(p(x)) )  for all x
-```
+$$
+H(P) = -\sum_{x} p(x) \log(p(x))
+$$
 
 A fair coin has maximum entropy for a binary variable: 1 bit. A biased coin (99% heads) has low entropy: 0.08 bits. You already know what will happen, so each flip tells you almost nothing.
 
-```
-Fair coin:    H = -(0.5 * log2(0.5) + 0.5 * log2(0.5)) = 1.0 bit
-Biased coin:  H = -(0.99 * log2(0.99) + 0.01 * log2(0.01)) = 0.08 bits
-```
+$$
+\begin{aligned}
+\text{Fair coin:} \quad & H = -(0.5 \log_2(0.5) + 0.5 \log_2(0.5)) = 1.0 \text{ bit} \\
+\text{Biased coin:} \quad & H = -(0.99 \log_2(0.99) + 0.01 \log_2(0.01)) = 0.08 \text{ bits}
+\end{aligned}
+$$
 
 Entropy measures the irreducible uncertainty in a distribution. You cannot compress below it.
 
@@ -67,17 +69,17 @@ Entropy measures the irreducible uncertainty in a distribution. You cannot compr
 
 Cross-entropy measures the average surprise when you use distribution Q to encode events that actually come from distribution P.
 
-```
-H(P, Q) = -sum( p(x) * log(q(x)) )  for all x
-```
+$$
+H(P, Q) = -\sum_{x} p(x) \log(q(x))
+$$
 
 P is the true distribution (the labels). Q is your model's predictions. If Q matches P perfectly, cross-entropy equals entropy. Any mismatch makes it larger.
 
 In classification, P is a one-hot vector (the true class has probability 1, everything else 0). This simplifies cross-entropy to:
 
-```
-H(P, Q) = -log(q(true_class))
-```
+$$
+H(P, Q) = -\log(q(\text{true\_class}))
+$$
 
 That is the entire cross-entropy loss formula for classification. Maximize the predicted probability of the correct class.
 
@@ -85,23 +87,27 @@ That is the entire cross-entropy loss formula for classification. Maximize the p
 
 KL divergence measures how much extra surprise you get from using Q instead of P.
 
-```
-D_KL(P || Q) = sum( p(x) * log(p(x) / q(x)) )  for all x
-             = H(P, Q) - H(P)
-```
+$$
+\begin{aligned}
+D_{KL}(P \parallel Q) &= \sum_{x} p(x) \log\left(\frac{p(x)}{q(x)}\right) \\
+&= H(P, Q) - H(P)
+\end{aligned}
+$$
 
 Cross-entropy is entropy plus KL divergence. Since entropy of the true distribution is constant during training, minimizing cross-entropy is the same as minimizing KL divergence. You are pushing your model's distribution toward the true distribution.
 
-KL divergence is not symmetric: D_KL(P || Q) != D_KL(Q || P). It is not a true distance metric.
+KL divergence is not symmetric: $D_{KL}(P \parallel Q) \neq D_{KL}(Q \parallel P)$. It is not a true distance metric.
 
 ### Mutual Information
 
 Mutual information measures how much knowing one variable tells you about another.
 
-```
-I(X; Y) = H(X) - H(X|Y)
-        = H(X) + H(Y) - H(X, Y)
-```
+$$
+\begin{aligned}
+I(X; Y) &= H(X) - H(X \mid Y) \\
+&= H(X) + H(Y) - H(X, Y)
+\end{aligned}
+$$
 
 If X and Y are independent, mutual information is zero. Knowing one tells you nothing about the other. If they are perfectly correlated, mutual information equals the entropy of either variable.
 
@@ -109,37 +115,37 @@ In feature selection, high mutual information between a feature and the target m
 
 ### Conditional Entropy
 
-H(Y|X) measures how much uncertainty remains about Y after you observe X.
+$H(Y \mid X)$ measures how much uncertainty remains about Y after you observe X.
 
-```
-H(Y|X) = H(X,Y) - H(X)
-```
+$$
+H(Y \mid X) = H(X,Y) - H(X)
+$$
 
 Two extremes:
-- If X completely determines Y, then H(Y|X) = 0. Knowing X eliminates all uncertainty about Y. Example: X = temperature in Celsius, Y = temperature in Fahrenheit.
-- If X tells you nothing about Y, then H(Y|X) = H(Y). Knowing X does not reduce your uncertainty at all. Example: X = coin flip, Y = tomorrow's weather.
+- If X completely determines Y, then $H(Y \mid X) = 0$. Knowing X eliminates all uncertainty about Y. Example: X = temperature in Celsius, Y = temperature in Fahrenheit.
+- If X tells you nothing about Y, then $H(Y \mid X) = H(Y)$. Knowing X does not reduce your uncertainty at all. Example: X = coin flip, Y = tomorrow's weather.
 
-Conditional entropy is always non-negative and never exceeds H(Y):
+Conditional entropy is always non-negative and never exceeds $H(Y)$:
 
-```
-0 <= H(Y|X) <= H(Y)
-```
+$$
+0 \leq H(Y \mid X) \leq H(Y)
+$$
 
-In machine learning, conditional entropy appears in decision trees. At each split, the algorithm picks the feature X that minimizes H(Y|X) -- the feature that removes the most uncertainty about the label Y.
+In machine learning, conditional entropy appears in decision trees. At each split, the algorithm picks the feature X that minimizes $H(Y \mid X)$ -- the feature that removes the most uncertainty about the label Y.
 
 ### Joint Entropy
 
-H(X,Y) is the entropy of the joint distribution of X and Y together.
+$H(X,Y)$ is the entropy of the joint distribution of X and Y together.
 
-```
-H(X,Y) = -sum sum p(x,y) * log(p(x,y))   for all x, y
-```
+$$
+H(X,Y) = -\sum_{x} \sum_{y} p(x,y) \log(p(x,y))
+$$
 
 Key property:
 
-```
-H(X,Y) <= H(X) + H(Y)
-```
+$$
+H(X,Y) \leq H(X) + H(Y)
+$$
 
 Equality holds when X and Y are independent. If they share information, the joint entropy is less than the sum of individual entropies. The "missing" entropy is exactly the mutual information.
 
@@ -167,30 +173,32 @@ graph TD
 ```
 
 The relationships:
-- H(X,Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)
-- I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)
-- H(X,Y) = H(X) + H(Y) - I(X;Y)
+- $H(X,Y) = H(X) + H(Y \mid X) = H(Y) + H(X \mid Y)$
+- $I(X;Y) = H(X) - H(X \mid Y) = H(Y) - H(Y \mid X)$
+- $H(X,Y) = H(X) + H(Y) - I(X;Y)$
 
 ### Mutual Information (Deep Dive)
 
-Mutual information I(X;Y) quantifies how much knowing one variable reduces uncertainty about the other.
+Mutual information $I(X;Y)$ quantifies how much knowing one variable reduces uncertainty about the other.
 
-```
-I(X;Y) = H(X) - H(X|Y)
-       = H(Y) - H(Y|X)
-       = H(X) + H(Y) - H(X,Y)
-       = sum sum p(x,y) * log(p(x,y) / (p(x) * p(y)))
-```
+$$
+\begin{aligned}
+I(X;Y) &= H(X) - H(X \mid Y) \\
+&= H(Y) - H(Y \mid X) \\
+&= H(X) + H(Y) - H(X,Y) \\
+&= \sum_{x} \sum_{y} p(x,y) \log\left(\frac{p(x,y)}{p(x) \, p(y)}\right)
+\end{aligned}
+$$
 
 Properties:
-- I(X;Y) >= 0 always. You never lose information by observing something.
-- I(X;Y) = 0 if and only if X and Y are independent.
-- I(X;Y) = I(Y;X). It is symmetric, unlike KL divergence.
-- I(X;X) = H(X). A variable shares all its information with itself.
+- $I(X;Y) \geq 0$ always. You never lose information by observing something.
+- $I(X;Y) = 0$ if and only if X and Y are independent.
+- $I(X;Y) = I(Y;X)$. It is symmetric, unlike KL divergence.
+- $I(X;X) = H(X)$. A variable shares all its information with itself.
 
 **Mutual information for feature selection.** In ML, you want features that are informative about the target. Mutual information gives you a principled way to rank features:
 
-1. For each feature X_i, compute I(X_i; Y) where Y is the target variable.
+1. For each feature $X_i$, compute $I(X_i; Y)$ where Y is the target variable.
 2. Rank features by MI score.
 3. Keep the top k features.
 
@@ -198,19 +206,19 @@ This works for any relationship between feature and target -- linear, nonlinear,
 
 | Method | Detects | Computational cost | Handles categorical? |
 |--------|---------|-------------------|---------------------|
-| Pearson correlation | Linear relationships | O(n) | No |
-| Spearman correlation | Monotonic relationships | O(n log n) | No |
-| Mutual information | Any statistical dependency | O(n log n) with binning | Yes |
+| Pearson correlation | Linear relationships | $O(n)$ | No |
+| Spearman correlation | Monotonic relationships | $O(n \log n)$ | No |
+| Mutual information | Any statistical dependency | $O(n \log n)$ with binning | Yes |
 
 ### Label Smoothing and Cross-Entropy
 
 Standard classification uses hard targets: [0, 0, 1, 0]. The true class gets probability 1, everything else gets 0. Label smoothing replaces these with soft targets:
 
-```
-soft_target = (1 - epsilon) * hard_target + epsilon / num_classes
-```
+$$
+\text{soft\_target} = (1 - \epsilon) \cdot \text{hard\_target} + \frac{\epsilon}{\text{num\_classes}}
+$$
 
-With epsilon = 0.1 and 4 classes:
+With $\epsilon = 0.1$ and 4 classes:
 - Hard target:  [0, 0, 1, 0]
 - Soft target:  [0.025, 0.025, 0.925, 0.025]
 
@@ -224,9 +232,9 @@ Why this helps:
 
 The cross-entropy loss with label smoothing becomes:
 
-```
-L = (1 - epsilon) * CE(hard_target, prediction) + epsilon * H_uniform(prediction)
-```
+$$
+L = (1 - \epsilon) \cdot \text{CE}(\text{hard\_target}, \text{prediction}) + \epsilon \cdot H_{\text{uniform}}(\text{prediction})
+$$
 
 The second term penalizes predictions that are far from uniform -- a direct regularization on confidence.
 
@@ -236,13 +244,15 @@ Three perspectives, same conclusion.
 
 **Information theory view.** Cross-entropy measures how many bits you waste by using your model's distribution instead of the true distribution. Minimizing it makes your model the most efficient encoder of reality.
 
-**Maximum likelihood view.** For N training samples with true classes y_i:
+**Maximum likelihood view.** For N training samples with true classes $y_i$:
 
-```
-Likelihood     = product( q(y_i) )
-Log-likelihood = sum( log(q(y_i)) )
-Negative log-likelihood = -sum( log(q(y_i)) )
-```
+$$
+\begin{aligned}
+\text{Likelihood} &= \prod_{i} q(y_i) \\
+\text{Log-likelihood} &= \sum_{i} \log(q(y_i)) \\
+\text{Negative log-likelihood} &= -\sum_{i} \log(q(y_i))
+\end{aligned}
+$$
 
 That last line is cross-entropy loss. Minimizing cross-entropy = maximizing the likelihood of the training data under your model.
 
@@ -258,16 +268,18 @@ log base e   -> nats      (machine learning convention)
 log base 10  -> hartleys  (rarely used)
 ```
 
-1 nat = 1/ln(2) bits = 1.4427 bits. PyTorch and TensorFlow use natural log (nats) by default.
+$1 \text{ nat} = \frac{1}{\ln(2)} \text{ bits} = 1.4427 \text{ bits}$. PyTorch and TensorFlow use natural log (nats) by default.
 
 ### Perplexity
 
 Perplexity is the exponential of cross-entropy. It tells you the effective number of equally likely choices the model is uncertain between.
 
-```
-Perplexity = 2^H(P,Q)   (if using bits)
-Perplexity = e^H(P,Q)   (if using nats)
-```
+$$
+\begin{aligned}
+\text{Perplexity} &= 2^{H(P,Q)} \quad \text{(if using bits)} \\
+\text{Perplexity} &= e^{H(P,Q)} \quad \text{(if using nats)}
+\end{aligned}
+$$
 
 A language model with perplexity 50 is, on average, as confused as if it had to pick uniformly from 50 possible next tokens. Lower is better.
 
@@ -445,7 +457,7 @@ You built from scratch what `torch.nn.CrossEntropyLoss()` does internally. Now y
 
 2. A model outputs logits [5.0, 2.0, 0.5] for a sample with true class 1. Compute the cross-entropy loss by hand, then verify with your `cross_entropy_loss` function. What logits would give zero loss?
 
-3. Show that KL divergence is not symmetric. Pick two distributions P and Q and compute D_KL(P || Q) and D_KL(Q || P). Explain why they differ.
+3. Show that KL divergence is not symmetric. Pick two distributions P and Q and compute $D_{KL}(P \parallel Q)$ and $D_{KL}(Q \parallel P)$. Explain why they differ.
 
 4. Build a function that computes perplexity for a sequence of token predictions. Given a list of (true_token_index, predicted_logits) pairs, return the perplexity of the sequence.
 
@@ -453,7 +465,7 @@ You built from scratch what `torch.nn.CrossEntropyLoss()` does internally. Now y
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Information content | "Surprise" | The number of bits (or nats) needed to encode an event: -log(p) |
+| Information content | "Surprise" | The number of bits (or nats) needed to encode an event: $-\log(p)$ |
 | Entropy | "Randomness" | The average surprise across all outcomes of a distribution. Measures irreducible uncertainty. |
 | Cross-entropy | "The loss function" | Average surprise when using model distribution Q to encode events from true distribution P. |
 | KL divergence | "Distance between distributions" | Extra bits wasted by using Q instead of P. Equals cross-entropy minus entropy. Not symmetric. |

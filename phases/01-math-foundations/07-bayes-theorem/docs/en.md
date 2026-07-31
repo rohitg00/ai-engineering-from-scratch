@@ -30,25 +30,25 @@ If you build ML systems without understanding this, you will misinterpret model 
 
 You already know from Lesson 06 that conditional probability is:
 
-```
-P(A|B) = P(A and B) / P(B)
-```
+$$
+P(A \mid B) = \frac{P(A \text{ and } B)}{P(B)}
+$$
 
 And symmetrically:
 
-```
-P(B|A) = P(A and B) / P(A)
-```
+$$
+P(B \mid A) = \frac{P(A \text{ and } B)}{P(A)}
+$$
 
-Both expressions share the same numerator: P(A and B). Set them equal and rearrange:
+Both expressions share the same numerator: $P(A \text{ and } B)$. Set them equal and rearrange:
 
-```
-P(A and B) = P(A|B) * P(B) = P(B|A) * P(A)
-
-Therefore:
-
-P(A|B) = P(B|A) * P(A) / P(B)
-```
+$$
+\begin{aligned}
+P(A \text{ and } B) &= P(A \mid B) \cdot P(B) = P(B \mid A) \cdot P(A) \\
+\text{Therefore:} \\
+P(A \mid B) &= \frac{P(B \mid A) \cdot P(A)}{P(B)}
+\end{aligned}
+$$
 
 That is Bayes' theorem. Four quantities, one equation.
 
@@ -56,36 +56,36 @@ That is Bayes' theorem. Four quantities, one equation.
 
 | Part | Name | What it means |
 |------|------|---------------|
-| P(A\|B) | Posterior | Your updated belief about A after seeing evidence B |
-| P(B\|A) | Likelihood | How probable the evidence B is if A is true |
-| P(A) | Prior | Your belief about A before seeing any evidence |
-| P(B) | Evidence | Total probability of seeing B under all possibilities |
+| $P(A \mid B)$ | Posterior | Your updated belief about A after seeing evidence B |
+| $P(B \mid A)$ | Likelihood | How probable the evidence B is if A is true |
+| $P(A)$ | Prior | Your belief about A before seeing any evidence |
+| $P(B)$ | Evidence | Total probability of seeing B under all possibilities |
 
-The evidence term P(B) acts as a normalizer. You can expand it using the law of total probability:
+The evidence term $P(B)$ acts as a normalizer. You can expand it using the law of total probability:
 
-```
-P(B) = P(B|A) * P(A) + P(B|not A) * P(not A)
-```
+$$
+P(B) = P(B \mid A) \cdot P(A) + P(B \mid \lnot A) \cdot P(\lnot A)
+$$
 
 ### Medical test example
 
 A disease affects 1 in 10,000 people. The test is 99% accurate (catches 99% of sick people, gives false positives 1% of the time).
 
-```
-P(sick)          = 0.0001     (prior: disease is rare)
-P(positive|sick) = 0.99       (likelihood: test catches it)
-P(positive|healthy) = 0.01    (false positive rate)
-
-P(positive) = P(positive|sick) * P(sick) + P(positive|healthy) * P(healthy)
-            = 0.99 * 0.0001 + 0.01 * 0.9999
-            = 0.000099 + 0.009999
-            = 0.010098
-
-P(sick|positive) = P(positive|sick) * P(sick) / P(positive)
-                 = 0.99 * 0.0001 / 0.010098
-                 = 0.0098
-                 = 0.98%
-```
+$$
+\begin{aligned}
+P(\text{sick}) &= 0.0001 \quad \text{(prior: disease is rare)} \\
+P(\text{positive} \mid \text{sick}) &= 0.99 \quad \text{(likelihood: test catches it)} \\
+P(\text{positive} \mid \text{healthy}) &= 0.01 \quad \text{(false positive rate)} \\[6pt]
+P(\text{positive}) &= P(\text{positive} \mid \text{sick}) \cdot P(\text{sick}) + P(\text{positive} \mid \text{healthy}) \cdot P(\text{healthy}) \\
+&= 0.99 \cdot 0.0001 + 0.01 \cdot 0.9999 \\
+&= 0.000099 + 0.009999 \\
+&= 0.010098 \\[6pt]
+P(\text{sick} \mid \text{positive}) &= \frac{P(\text{positive} \mid \text{sick}) \cdot P(\text{sick})}{P(\text{positive})} \\
+&= \frac{0.99 \cdot 0.0001}{0.010098} \\
+&= 0.0098 \\
+&= 0.98\%
+\end{aligned}
+$$
 
 Less than 1%. The prior dominates. When a condition is rare, even accurate tests produce mostly false positives. This is why doctors order confirmation tests.
 
@@ -93,19 +93,19 @@ Less than 1%. The prior dominates. When a condition is rare, even accurate tests
 
 You receive an email containing the word "lottery". Is it spam?
 
-```
-P(spam)                = 0.3      (30% of email is spam)
-P("lottery"|spam)      = 0.05     (5% of spam emails contain "lottery")
-P("lottery"|not spam)  = 0.001    (0.1% of legitimate emails contain "lottery")
-
-P("lottery") = 0.05 * 0.3 + 0.001 * 0.7
-             = 0.015 + 0.0007
-             = 0.0157
-
-P(spam|"lottery") = 0.05 * 0.3 / 0.0157
-                  = 0.955
-                  = 95.5%
-```
+$$
+\begin{aligned}
+P(\text{spam}) &= 0.3 \quad \text{(30\% of email is spam)} \\
+P(\text{"lottery"} \mid \text{spam}) &= 0.05 \quad \text{(5\% of spam emails contain "lottery")} \\
+P(\text{"lottery"} \mid \text{not spam}) &= 0.001 \quad \text{(0.1\% of legitimate emails contain "lottery")} \\[6pt]
+P(\text{"lottery"}) &= 0.05 \cdot 0.3 + 0.001 \cdot 0.7 \\
+&= 0.015 + 0.0007 \\
+&= 0.0157 \\[6pt]
+P(\text{spam} \mid \text{"lottery"}) &= \frac{0.05 \cdot 0.3}{0.0157} \\
+&= 0.955 \\
+&= 95.5\%
+\end{aligned}
+$$
 
 One word shifts the probability from 30% to 95.5%. A real spam filter applies Bayes across hundreds of words simultaneously.
 
@@ -113,58 +113,57 @@ One word shifts the probability from 30% to 95.5%. A real spam filter applies Ba
 
 Naive Bayes extends this to multiple features by assuming all features are conditionally independent given the class:
 
-```
-P(class | feature_1, feature_2, ..., feature_n)
-  = P(class) * P(feature_1|class) * P(feature_2|class) * ... * P(feature_n|class)
-    / P(feature_1, feature_2, ..., feature_n)
-```
+$$
+P(\text{class} \mid \text{feature}_1, \text{feature}_2, \ldots, \text{feature}_n)
+= \frac{P(\text{class}) \cdot P(\text{feature}_1 \mid \text{class}) \cdot P(\text{feature}_2 \mid \text{class}) \cdots P(\text{feature}_n \mid \text{class})}{P(\text{feature}_1, \text{feature}_2, \ldots, \text{feature}_n)}
+$$
 
 The "naive" part is the independence assumption. In text, word occurrences are not independent ("New" and "York" are correlated). But the assumption works surprisingly well in practice because the classifier only needs to rank classes, not produce calibrated probabilities.
 
 Since the denominator is the same for all classes, you can skip it and just compare numerators:
 
-```
-score(class) = P(class) * product of P(feature_i | class)
-```
+$$
+\text{score}(\text{class}) = P(\text{class}) \cdot \prod_i P(\text{feature}_i \mid \text{class})
+$$
 
 Pick the class with the highest score.
 
 ### Maximum likelihood estimation (MLE)
 
-How do you get P(feature|class) from training data? Count.
+How do you get $P(\text{feature} \mid \text{class})$ from training data? Count.
 
-```
-P("free"|spam) = (number of spam emails containing "free") / (total spam emails)
-```
+$$
+P(\text{"free"} \mid \text{spam}) = \frac{\text{number of spam emails containing "free"}}{\text{total spam emails}}
+$$
 
 This is MLE: choose the parameter values that make the observed data most likely. You are maximizing the likelihood function, which for discrete counts reduces to relative frequency.
 
 Problem: if a word never appears in spam during training, MLE gives it probability zero. One unseen word kills the entire product. Fix this with Laplace smoothing:
 
-```
-P(word|class) = (count(word, class) + 1) / (total_words_in_class + vocabulary_size)
-```
+$$
+P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class}) + 1}{\text{total\_words\_in\_class} + \text{vocabulary\_size}}
+$$
 
 Adding 1 to every count ensures no probability is ever zero.
 
 ### Maximum a posteriori (MAP)
 
-MLE asks: what parameters maximize P(data|parameters)?
+MLE asks: what parameters maximize $P(\text{data} \mid \text{parameters})$?
 
-MAP asks: what parameters maximize P(parameters|data)?
+MAP asks: what parameters maximize $P(\text{parameters} \mid \text{data})$?
 
 By Bayes' theorem:
 
-```
-P(parameters|data) proportional to P(data|parameters) * P(parameters)
-```
+$$
+P(\text{parameters} \mid \text{data}) \propto P(\text{data} \mid \text{parameters}) \cdot P(\text{parameters})
+$$
 
 MAP adds a prior over the parameters themselves. If you believe parameters should be small, you encode that as a prior that penalizes large values. This is identical to L2 regularization in ML. The "ridge" penalty in ridge regression is literally a Gaussian prior on the weights.
 
 | Estimation | Optimizes | ML equivalent |
 |------------|-----------|---------------|
-| MLE | P(data\|params) | Unregularized training |
-| MAP | P(data\|params) * P(params) | L2 / L1 regularization |
+| MLE | $P(\text{data} \mid \text{params})$ | Unregularized training |
+| MAP | $P(\text{data} \mid \text{params}) \cdot P(\text{params})$ | L2 / L1 regularization |
 
 ### Bayesian vs frequentist: the practical difference
 
@@ -189,7 +188,7 @@ The connection is deeper than analogy:
 
 **Priors are regularization.** A Gaussian prior on weights is L2 regularization. A Laplace prior is L1. Every time you add a regularization term, you are making a Bayesian statement about what parameter values you expect.
 
-**Posteriors are uncertainty.** A single predicted probability tells you nothing about how confident the model is in that estimate. Bayesian methods give you a distribution: "I think P(spam) is between 0.8 and 0.95."
+**Posteriors are uncertainty.** A single predicted probability tells you nothing about how confident the model is in that estimate. Bayesian methods give you a distribution: "I think $P(\text{spam})$ is between 0.8 and 0.95."
 
 **Bayes updates are online learning.** Today's posterior becomes tomorrow's prior. When your model sees new data, it updates its beliefs incrementally instead of retraining from scratch.
 
@@ -345,27 +344,29 @@ When the prior and posterior belong to the same family of distributions, the pri
 
 | Likelihood | Conjugate Prior | Posterior | Example |
 |-----------|----------------|-----------|---------|
-| Bernoulli | Beta(a, b) | Beta(a + successes, b + failures) | Coin flip bias estimation |
-| Normal (known variance) | Normal(mu_0, sigma_0) | Normal(weighted mean, smaller variance) | Sensor calibration |
-| Poisson | Gamma(a, b) | Gamma(a + sum of counts, b + n) | Modeling arrival rates |
-| Multinomial | Dirichlet(alpha) | Dirichlet(alpha + counts) | Topic modeling, language models |
+| Bernoulli | $\text{Beta}(a, b)$ | $\text{Beta}(a + \text{successes}, b + \text{failures})$ | Coin flip bias estimation |
+| Normal (known variance) | $\text{Normal}(\mu_0, \sigma_0)$ | $\text{Normal}(\text{weighted mean, smaller variance})$ | Sensor calibration |
+| Poisson | $\text{Gamma}(a, b)$ | $\text{Gamma}(a + \text{sum of counts}, b + n)$ | Modeling arrival rates |
+| Multinomial | $\text{Dirichlet}(\alpha)$ | $\text{Dirichlet}(\alpha + \text{counts})$ | Topic modeling, language models |
 
 Why this matters: without conjugate priors, you need Monte Carlo sampling or variational inference to approximate the posterior. With conjugate priors, you just update two numbers.
 
-The Beta distribution is the most common conjugate prior in practice. Beta(a, b) represents your belief about a probability parameter. The mean is a/(a+b). The larger a+b, the more concentrated (confident) the distribution.
+The Beta distribution is the most common conjugate prior in practice. $\text{Beta}(a, b)$ represents your belief about a probability parameter. The mean is $a/(a+b)$. The larger $a+b$, the more concentrated (confident) the distribution.
 
 Special cases of the Beta prior:
-- Beta(1, 1) = uniform. You have no opinion about the parameter.
-- Beta(10, 10) = peaked at 0.5. You strongly believe the parameter is near 0.5.
-- Beta(1, 10) = skewed toward 0. You believe the parameter is small.
+- $\text{Beta}(1, 1)$ = uniform. You have no opinion about the parameter.
+- $\text{Beta}(10, 10)$ = peaked at 0.5. You strongly believe the parameter is near 0.5.
+- $\text{Beta}(1, 10)$ = skewed toward 0. You believe the parameter is small.
 
 The update rule is dead simple:
 
-```
-Prior:     Beta(a, b)
-Data:      s successes, f failures
-Posterior: Beta(a + s, b + f)
-```
+$$
+\begin{aligned}
+\text{Prior:} \quad & \text{Beta}(a, b) \\
+\text{Data:} \quad & s \text{ successes}, \ f \text{ failures} \\
+\text{Posterior:} \quad & \text{Beta}(a + s, b + f)
+\end{aligned}
+$$
 
 No integrals. No sampling. Just addition.
 
@@ -376,19 +377,19 @@ Bayesian inference is naturally sequential. Today's posterior becomes tomorrow's
 Concrete example: estimating whether a coin is fair.
 
 **Day 1: No data yet.**
-Start with Beta(1, 1) -- a uniform prior. You have no opinion.
+Start with $\text{Beta}(1, 1)$ -- a uniform prior. You have no opinion.
 - Prior mean: 0.5
-- Prior is flat across [0, 1]
+- Prior is flat across $[0, 1]$
 
 **Day 2: Observe 7 heads, 3 tails.**
-Posterior = Beta(1 + 7, 1 + 3) = Beta(8, 4)
-- Posterior mean: 8/12 = 0.667
+Posterior $= \text{Beta}(1 + 7, 1 + 3) = \text{Beta}(8, 4)$
+- Posterior mean: $8/12 = 0.667$
 - Evidence suggests the coin is biased toward heads
 
 **Day 3: Observe 5 more heads, 5 more tails.**
 Use yesterday's posterior as today's prior.
-Posterior = Beta(8 + 5, 4 + 5) = Beta(13, 9)
-- Posterior mean: 13/22 = 0.591
+Posterior $= \text{Beta}(8 + 5, 4 + 5) = \text{Beta}(13, 9)$
+- Posterior mean: $13/22 = 0.591$
 - The balanced new data pulled the estimate back toward 0.5
 
 ```mermaid
@@ -398,7 +399,7 @@ graph LR
     C -->|"5H, 5T"| D["Posterior 2<br/>Beta(13,9)<br/>mean = 0.59"]
 ```
 
-The order of observations does not matter. Beta(1,1) updated with all 12 heads and 8 tails at once gives Beta(13, 9) -- the same result. Sequential updating and batch updating are mathematically equivalent. But sequential updating lets you make decisions at each step without storing raw data.
+The order of observations does not matter. $\text{Beta}(1,1)$ updated with all 12 heads and 8 tails at once gives $\text{Beta}(13, 9)$ -- the same result. Sequential updating and batch updating are mathematically equivalent. But sequential updating lets you make decisions at each step without storing raw data.
 
 This is the foundation of online learning in production ML systems. Thompson sampling for bandits, incremental recommendation systems, and streaming anomaly detectors all use this pattern.
 
@@ -410,22 +411,22 @@ Setup: you are testing two button colors. Variant A (blue) and variant B (green)
 
 The Bayesian A/B test:
 
-1. **Prior.** Start with Beta(1, 1) for both variants. No prior preference.
+1. **Prior.** Start with $\text{Beta}(1, 1)$ for both variants. No prior preference.
 2. **Data.** Variant A: 50 clicks out of 1000 views. Variant B: 65 clicks out of 1000 views.
 3. **Posteriors.**
-   - A: Beta(1 + 50, 1 + 950) = Beta(51, 951). Mean = 0.051
-   - B: Beta(1 + 65, 1 + 935) = Beta(66, 936). Mean = 0.066
-4. **Decision.** Compute P(B > A) -- the probability that B's true conversion rate is higher than A's.
+   - A: $\text{Beta}(1 + 50, 1 + 950) = \text{Beta}(51, 951)$. Mean $= 0.051$
+   - B: $\text{Beta}(1 + 65, 1 + 935) = \text{Beta}(66, 936)$. Mean $= 0.066$
+4. **Decision.** Compute $P(B > A)$ -- the probability that B's true conversion rate is higher than A's.
 
-Computing P(B > A) analytically is hard. But Monte Carlo makes it trivial:
+Computing $P(B > A)$ analytically is hard. But Monte Carlo makes it trivial:
 
-```
+```text
 1. Draw 100,000 samples from Beta(51, 951)  -> samples_A
 2. Draw 100,000 samples from Beta(66, 936)  -> samples_B
 3. P(B > A) = fraction of samples where B > A
 ```
 
-If P(B > A) > 0.95, you ship variant B. If it is between 0.05 and 0.95, you keep collecting data. If P(B > A) < 0.05, you ship variant A.
+If $P(B > A) > 0.95$, you ship variant B. If it is between 0.05 and 0.95, you keep collecting data. If $P(B > A) < 0.05$, you ship variant A.
 
 Advantages over frequentist A/B testing:
 - You get a direct probability statement: "there is a 97% chance B is better"
@@ -435,35 +436,35 @@ Advantages over frequentist A/B testing:
 
 | Aspect | Frequentist A/B | Bayesian A/B |
 |--------|----------------|--------------|
-| Output | p-value | P(B > A) |
+| Output | p-value | $P(B > A)$ |
 | Interpretation | "How surprising is this data if A=B?" | "How likely is B better than A?" |
 | Early stopping | Inflates false positives | Safe at any point (given a well-chosen prior and correctly specified model) |
 | Prior knowledge | Not used | Encoded as Beta prior |
-| Decision rule | p < 0.05 | P(B > A) > threshold |
+| Decision rule | $p < 0.05$ | $P(B > A) > \text{threshold}$ |
 
 ## Exercises
 
-1. **Multiple tests.** A patient tests positive twice on independent tests (both 99% accurate, disease prevalence 1 in 10,000). What is P(sick) after both tests? Use the posterior from the first test as the prior for the second.
+1. **Multiple tests.** A patient tests positive twice on independent tests (both 99% accurate, disease prevalence 1 in 10,000). What is $P(\text{sick})$ after both tests? Use the posterior from the first test as the prior for the second.
 
 2. **Smoothing impact.** Run the spam classifier with smoothing values of 0.01, 0.1, 1.0, and 10.0. How do the top word probabilities change? What happens with smoothing=0 and a word that appears only in ham?
 
-3. **Add features.** Extend the NaiveBayes class to also use message length (short/long) as a feature alongside word counts. Estimate P(short|spam) and P(short|ham) from the training data and fold it into the prediction score.
+3. **Add features.** Extend the NaiveBayes class to also use message length (short/long) as a feature alongside word counts. Estimate $P(\text{short} \mid \text{spam})$ and $P(\text{short} \mid \text{ham})$ from the training data and fold it into the prediction score.
 
-4. **MAP by hand.** Given observed data (7 heads in 10 coin flips), compute the MAP estimate of the bias using a Beta(2,2) prior. Compare it to the MLE estimate (7/10).
+4. **MAP by hand.** Given observed data (7 heads in 10 coin flips), compute the MAP estimate of the bias using a $\text{Beta}(2,2)$ prior. Compare it to the MLE estimate ($7/10$).
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Prior | "My initial guess" | P(hypothesis) before observing evidence. In ML: the regularization term. |
-| Likelihood | "How well the data fits" | P(evidence\|hypothesis). How probable the observed data is under a specific hypothesis. |
-| Posterior | "My updated belief" | P(hypothesis\|evidence). The prior multiplied by the likelihood, then normalized. |
-| Evidence | "The normalizing constant" | P(data) across all hypotheses. Ensures the posterior sums to 1. |
+| Prior | "My initial guess" | $P(\text{hypothesis})$ before observing evidence. In ML: the regularization term. |
+| Likelihood | "How well the data fits" | $P(\text{evidence} \mid \text{hypothesis})$. How probable the observed data is under a specific hypothesis. |
+| Posterior | "My updated belief" | $P(\text{hypothesis} \mid \text{evidence})$. The prior multiplied by the likelihood, then normalized. |
+| Evidence | "The normalizing constant" | $P(\text{data})$ across all hypotheses. Ensures the posterior sums to 1. |
 | Naive Bayes | "That simple text classifier" | A classifier that assumes features are independent given the class. Works well despite the false assumption. |
 | Laplace smoothing | "Add-one smoothing" | Adding a small count to every feature to prevent zero probabilities from unseen data. |
-| MLE | "Just use the frequencies" | Choose parameters that maximize P(data\|parameters). No prior. Can overfit with small data. |
-| MAP | "MLE with a prior" | Choose parameters that maximize P(data\|parameters) * P(parameters). Equivalent to regularized MLE. |
-| Log-probability | "Work in log space" | Using log(P) instead of P to avoid floating-point underflow when multiplying many small numbers. |
+| MLE | "Just use the frequencies" | Choose parameters that maximize $P(\text{data} \mid \text{parameters})$. No prior. Can overfit with small data. |
+| MAP | "MLE with a prior" | Choose parameters that maximize $P(\text{data} \mid \text{parameters}) \cdot P(\text{parameters})$. Equivalent to regularized MLE. |
+| Log-probability | "Work in log space" | Using $\log(P)$ instead of $P$ to avoid floating-point underflow when multiplying many small numbers. |
 | False positive | "A wrong alarm" | The test says positive, but the true state is negative. Drives the base rate fallacy. |
 
 ## Further Reading
