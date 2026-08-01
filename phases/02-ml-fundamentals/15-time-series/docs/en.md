@@ -234,6 +234,10 @@ For most practical problems, start with recursive for short horizons (1-5 steps)
 | Too many lag features | "More history is better" | Use ACF to determine relevant lags |
 | Not differencing | "The model will figure it out" | Tree models handle trends; linear models need stationarity |
 
+```figure
+f3-series-decompose
+```
+
 ## Build It
 
 The code in `code/time_series.py` implements the core building blocks from scratch.

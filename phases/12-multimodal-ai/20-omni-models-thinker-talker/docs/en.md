@@ -93,6 +93,10 @@ At 16kHz speech with 50 Hz base speech tokens, you need 50 speech tokens per sec
 
 This is why small dedicated Talker models exist rather than "just use the main model."
 
+```figure
+l5-thinker-talker
+```
+
 ## Use It
 
 `code/main.py`:

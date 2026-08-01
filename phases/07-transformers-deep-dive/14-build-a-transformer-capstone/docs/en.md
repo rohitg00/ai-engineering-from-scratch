@@ -75,6 +75,10 @@ On a Mac M2 laptop, a 4-layer, 4-head, d_model=128 GPT trained for 2,000 steps o
 - Sampled output looks Shakespeare-shaped: archaic words, line breaks, proper names like "ROMEO:" emerge.
 - Val loss (held-out final 10% of text) tracks training loss closely; no overfitting at this size/budget.
 
+```figure
+n5-block-stack
+```
+
 ## Build It
 
 This lesson uses PyTorch. Install `torch` (CPU build is fine). See `code/main.py`. The script handles:

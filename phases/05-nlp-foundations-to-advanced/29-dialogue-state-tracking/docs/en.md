@@ -50,6 +50,10 @@ The modern pipeline: classical DST concepts + LLM extractors + structured-output
 - **Correction.** "Actually make it 7 pm." Must update time without clearing other slots.
 - **Coreference to previous system utterance.** "Yes, that one." Which "that"?
 
+```figure
+n5-slot-tracker
+```
+
 ## Build It
 
 ### Step 1: rule-based slot extractor

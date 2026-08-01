@@ -91,6 +91,10 @@ If the new model is distinctly different (different behavior, different cost cur
 - Cost gate: >20% above baseline is a breach.
 - Rollback: seconds, not hours.
 
+```figure
+i4-canary-ramp
+```
+
 ## Use It
 
 `code/main.py` simulates a canary rollout with injected regressions. Reports which stage the rollout halts at and which gate triggered.

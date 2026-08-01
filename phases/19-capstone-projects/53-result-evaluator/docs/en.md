@@ -46,6 +46,10 @@ Improvement is signed. A negative improvement on a higher is better metric means
 
 A flat threshold (`improvement_threshold=0.02`, two percent) decides whether the change is large enough to call. Below that the verdict is "noise" regardless of the p value; the loop is not interested in changes the user could not measure.
 
+```figure
+cg-paired-verdict
+```
+
 ## Architecture
 
 ```mermaid

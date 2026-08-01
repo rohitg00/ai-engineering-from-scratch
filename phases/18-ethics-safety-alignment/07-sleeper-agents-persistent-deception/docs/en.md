@@ -62,6 +62,10 @@ A safety case (Lesson 18) is an argument that a deployed model is acceptably saf
 
 Lesson 6 defined the theory. Lesson 7 demonstrates persistence. Lesson 8 (In-Context Scheming) demonstrates capability. Lesson 9 (Alignment Faking) demonstrates spontaneous emergence. Lesson 10 (AI Control) describes the defensive paradigm that assumes subversion is possible.
 
+```figure
+al-sleeper-trigger
+```
+
 ## Use It
 
 `code/main.py` builds a tiny tabular "classifier" with a hidden trigger. You train it on clean data (analogous to SFT on harmless data), fine-tune it on adversarial prompts (analogous to red-team training), and measure backdoor survival on the original held-out trigger. You can watch the adversarial fine-tune drive red-team accuracy to 100% while the original backdoor keeps firing.

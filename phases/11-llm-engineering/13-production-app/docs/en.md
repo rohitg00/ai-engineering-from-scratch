@@ -259,6 +259,10 @@ Without caching, the same traffic costs $11,625/month. A 35% cache hit rate save
 | 14 | CORS configured for production domains only | Security |
 | 15 | Load test with 100 concurrent users passing | Performance |
 
+```figure
+l5-prod-app-paths
+```
+
 ## Build It
 
 This is the capstone. One file. Every component wired together.

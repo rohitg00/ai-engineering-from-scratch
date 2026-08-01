@@ -91,6 +91,10 @@ A production pipeline handles each of these without writing generic `try/except`
 
 A production service serves multiple clients. Batching detections and classifications across requests multiplies throughput. The trade-off: extra latency from waiting for a batch to fill. Typical setup: collect requests for up to 20ms, batch together, process, distribute responses. `torchserve` and `triton` do this natively; small services with predictable load roll their own micro-batcher.
 
+```figure
+v4-vision-pipeline
+```
+
 ## Build It
 
 ### Step 1: Data contracts

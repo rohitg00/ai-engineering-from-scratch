@@ -56,6 +56,10 @@ Telemetry (Phase 14 · 23, OTel GenAI conventions) is for human operators review
 
 If the runner errors before capturing exit, the record carries `exit_code: null` and `error: <reason>`. The agent loop must refuse to claim success on a `null` exit. No exit, no progress.
 
+```figure
+wb-feedback-loop
+```
+
 ## Build It
 
 `code/main.py` implements:

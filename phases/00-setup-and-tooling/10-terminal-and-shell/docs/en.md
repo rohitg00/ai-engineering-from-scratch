@@ -35,6 +35,10 @@ graph TD
 
 Three things running at once. One terminal. You can detach, go home, SSH back in, and reattach. The training keeps running.
 
+```figure
+s0-shell-pipeline
+```
+
 ## Build It
 
 ### Step 1: Know your shell

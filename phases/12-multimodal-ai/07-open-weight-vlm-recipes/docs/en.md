@@ -98,6 +98,10 @@ Given the evidence, the default open-VLM recipe for a new project in 2026:
 
 Every one of those defaults traces back to a measured ablation in the papers cited at the end of this lesson.
 
+```figure
+l5-vlm-recipe-knobs
+```
+
 ## Use It
 
 `code/main.py` is an ablation table parser and recipe picker. It encodes the MM1 and Idefics2 ablation tables (condensed) and lets you query:

@@ -14,6 +14,10 @@
 - Emit a plan diff on each revision so a downstream tracer or UI can show why the plan changed.
 - Enforce two budgets: a hard step ceiling and a hard replan ceiling.
 
+```figure
+cg-plan-replan
+```
+
 ## Plan and execute, not chain-of-thought
 
 A chain-of-thought agent emits tokens and lets the loop guess where the tool call ends. A plan-and-execute agent emits a structured plan first, then executes each step deterministically. The plan is data the harness can introspect. The execution is the harness running that data through a dispatcher.

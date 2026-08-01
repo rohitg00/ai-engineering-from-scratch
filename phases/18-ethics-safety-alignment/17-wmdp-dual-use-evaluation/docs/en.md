@@ -67,6 +67,10 @@ Anthropic's 2025 bioweapon-acquisition trial adds the novice-elicitation layer o
 
 Lessons 12-16 are attack and defense tooling on model outputs. Lesson 17 is the dual-use capability layer — the measurement that frontier safety frameworks (Lesson 18) evaluate. Lesson 30 closes the arc with the current 2026 cyber/bio/chem/nuclear uplift evidence.
 
+```figure
+al-wmdp-yellow-zone
+```
+
 ## Use It
 
 `code/main.py` builds a toy WMDP-shaped evaluation harness. A mock model is tested on category-binned questions; scores per domain are reported. A simple unlearning intervention (zero out domain-specific representation) reduces scores; you can measure the trade-off against general capability.

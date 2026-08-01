@@ -65,6 +65,10 @@ Put Llama Guard on both sides of the model. Run Garak nightly for regression. Ru
 
 Lessons 12-15 are the attack families. Lesson 16 is the production tooling. Lesson 17 (WMDP) is the evaluation for dual-use capability. Lesson 18 is the frontier safety frameworks that wrap these tools in a policy structure.
 
+```figure
+al-guard-stack
+```
+
 ## Use It
 
 `code/main.py` builds a toy Llama Guard-style classifier (keyword + semantic features over 14 categories), a toy Garak harness (probe-detector loop), and a PyRIT-style multi-turn converter chain. You can run the three tools against a mock target and observe the different coverage signatures.

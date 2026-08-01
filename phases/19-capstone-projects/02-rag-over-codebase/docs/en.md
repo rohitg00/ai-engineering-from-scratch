@@ -62,6 +62,10 @@ git push --> webhook --> ingest worker (LlamaIndex Workflow)
 - Symbol graph: Neo4j (managed) or kuzu (embedded) for import and call edges
 - Observability: Langfuse spans per retrieval + synthesis step
 
+```figure
+ce-hybrid-retrieval
+```
+
 ## Build It
 
 1. **Ingestion walker.** Iterate git history on every push hook. Collect changed files. For each file, parse with tree-sitter, extract function and class nodes with their full source span. Emit chunk records `{repo, path, start_line, end_line, symbol, body}`.

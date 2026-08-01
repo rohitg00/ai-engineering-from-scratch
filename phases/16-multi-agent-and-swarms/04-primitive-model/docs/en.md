@@ -111,6 +111,10 @@ Once the primitives are fixed, the remaining design decisions are:
 
 All implementable on top of the primitives. None of them are new primitives.
 
+```figure
+a5-primitive-radar
+```
+
 ## Build It
 
 `code/main.py` implements the four primitives in ~150 lines of stdlib Python. No real LLM — each agent is a scripted policy so the focus stays on the coordination structure.

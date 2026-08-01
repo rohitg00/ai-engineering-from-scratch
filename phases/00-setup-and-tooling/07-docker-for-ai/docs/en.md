@@ -73,6 +73,10 @@ Inference Container
   Runs behind a load balancer in production.
 ```
 
+```figure
+s0-image-layers
+```
+
 ## Build It
 
 ### Step 1: Install Docker

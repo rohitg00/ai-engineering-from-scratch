@@ -82,6 +82,10 @@ The 2025 follow-up (LLaVA-OneVision-1.5, arXiv 2509.23661) is "fully open" in tr
 
 Qwen2.5-VL (Lesson 12.09) makes different choices. It uses M-RoPE and dynamic FPS instead of fixed pooling. Its budget scales with input — a 1-minute video uses more tokens than a 5-second video. LLaVA-OneVision fixes the budget and scales the pooling. Both work; they trade configurability for predictability.
 
+```figure
+l5-onevision-budget
+```
+
 ## Use It
 
 `code/main.py` is a curriculum and budget planner for a OneVision-style VLM. Given a token budget per sample and a target scenario mix (say 40% single-image, 30% multi-image, 30% video), it:

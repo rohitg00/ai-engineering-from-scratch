@@ -132,6 +132,10 @@ Tools like SkillKit and similar cross-agent distribution layers translate a sing
 
 All three compose: the agent reads AGENTS.md on session start, the user invokes a skill, the skill's instructions include MCP tool calls, the agent dispatches via an MCP client.
 
+```figure
+t3-skill-layers
+```
+
 ## Use It
 
 `code/main.py` ships a stdlib SKILL.md parser and loader. It discovers skills under `./skills/`, parses the YAML frontmatter plus markdown body, and produces a dict keyed by skill name. It then simulates an agent loop that invokes `release-notes-writer` by name.

@@ -50,6 +50,10 @@ This lesson ships four gates:
 
 The observation ledger is the bookkeeping. Every successful tool call writes one row: tool name, turn, tokens emitted, cumulative. The ledger answers two questions: how much has the model seen total, and how much has it seen of tool X. The budget gate reads the first. A per-tool budget gate, which you will write as an exercise, reads the second.
 
+```figure
+cg-gate-chain
+```
+
 ## Architecture
 
 ```mermaid

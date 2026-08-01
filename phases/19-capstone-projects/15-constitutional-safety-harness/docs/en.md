@@ -73,6 +73,10 @@ output: CVSS-scored findings + disclosure timeline + before/after harmlessness d
 - PII scrub: Presidio
 - Target: an 8B instruction-tuned model or one of the other capstones' RAG chatbots
 
+```figure
+cf-safety-stack
+```
+
 ## Build It
 
 1. **Target setup.** Stand up an 8B instruction-tuned model on vLLM (or reuse a RAG chatbot from another capstone). This is the app under test.

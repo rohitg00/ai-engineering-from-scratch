@@ -100,6 +100,10 @@ Refuse to reach for a framework before you can draw the graph, the org chart, th
 | Thousands of parallel fanouts with reducers | LangGraph + `Send` | The only one with a first-class parallel-dispatch API. |
 | Quick prototype, no framework commitment | Plain Python + provider SDK | No framework is the fastest framework. |
 
+```figure
+l5-framework-fit
+```
+
 ## Exercises
 
 1. **Easy.** Take the same task — "research Anthropic's headquarters, write a 200-word brief, cite sources" — and implement it in LangGraph (four nodes: plan, search, write, cite) and in CrewAI (three roles: researcher, writer, editor). Report token cost per run and lines of code.

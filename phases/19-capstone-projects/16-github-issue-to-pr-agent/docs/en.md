@@ -65,6 +65,10 @@ GitHub issue labeled `@agent fix` or PR comment
 - Observability: Langfuse with per-PR trace archive linked from the PR body
 - Budget: per-repo daily dollar ceiling; max PRs per repo per day
 
+```figure
+cf-issue-to-pr
+```
+
 ## Build It
 
 1. **GitHub App.** Fine-grained installation token: issues read+write, pull_requests write, contents read+write, workflows read. Branch protection (the only surface that can do this) enforces "no direct push to `main`" and "no force-push"; the app is not in the bypass list. The worker enforces "no writes under `.github/workflows`" as an allow-list check on the proposed diff, since GitHub App permissions are not path-scoped.

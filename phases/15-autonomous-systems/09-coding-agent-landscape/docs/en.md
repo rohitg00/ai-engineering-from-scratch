@@ -66,6 +66,10 @@ The OpenHands authors and Epoch AI both flag that SWE-bench Verified has an easy
 
 Implication for choosing an agent: run a Pro-like subset of your own bug backlog. The score that matters is the score on tasks representative of what you ship.
 
+```figure
+a5-scaffold-delta
+```
+
 ## Use It
 
 `code/main.py` compares two toy agent scaffolds on a fixed mini-task distribution:

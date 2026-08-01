@@ -63,6 +63,10 @@ production apps:
 - UI: Next.js 15 App Router + Recharts + server actions
 - SDKs supported out of the box: OpenAI, Anthropic, Google GenAI, LangChain, LlamaIndex, vLLM
 
+```figure
+ce-otel-drift
+```
+
 ## Build It
 
 1. **Collector config.** OpenTelemetry Collector with the OTLP HTTP receiver, a tail-sampler keeping 100% of errored traces and 10% of successes, and exporters to ClickHouse and S3.

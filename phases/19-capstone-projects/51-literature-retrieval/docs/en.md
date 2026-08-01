@@ -36,6 +36,10 @@ Paper
 
 The references and citations fields form the directed citation graph. The two mock APIs return overlapping but not identical fields, so the corpus loader unions them on `id`.
 
+```figure
+cg-citation-hops
+```
+
 ## Architecture
 
 ```mermaid

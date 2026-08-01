@@ -54,6 +54,10 @@ NCCL runs over PCIe and NVLink with hardware-offloaded reductions. On CPU you do
 
 Every primitive lands with a unit test that compares its output against `torch.distributed` initialised with the gloo backend on the same tensor across the same world size. If your ring allreduce diverges from gloo by more than float32 epsilon, the test fails. Verification against a reference implementation is non-negotiable; without it the primitive looks correct until step 10000 of a real training run.
 
+```figure
+ci-ring-allreduce
+```
+
 ## Build It
 
 `code/main.py` implements:

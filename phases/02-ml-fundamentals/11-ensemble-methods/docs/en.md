@@ -181,6 +181,10 @@ The simplest ensemble. Just combine predictions directly.
 - **Hard voting:** Majority vote on class labels.
 - **Soft voting:** Average predicted probabilities, pick the class with highest average probability. Usually better because it uses confidence information.
 
+```figure
+f3-ensemble-average
+```
+
 ## Build It
 
 ### Step 1: Decision Stump (Base Learner)

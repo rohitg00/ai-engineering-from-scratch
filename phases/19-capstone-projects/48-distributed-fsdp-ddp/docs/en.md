@@ -74,6 +74,10 @@ The memory win is exact: per-rank memory for parameters drops to 1/N. The cost i
 
 CUDA is the production target, but the same code paths exist on CPU. `gloo` is the CPU collective backend. It is slower than `nccl` on GPUs by orders of magnitude, but the API surface is identical. The lesson's process group is initialized with `backend="gloo"` and ranks are spawned with `torch.multiprocessing` rather than `torchrun`; both end up at the same `torch.distributed` calls. On a multi-GPU node, the only changes are `backend="nccl"`, device tensors, and `torchrun` to launch.
 
+```figure
+cg-allreduce-ring
+```
+
 ## Build It
 
 `code/main.py` is the runnable artifact.

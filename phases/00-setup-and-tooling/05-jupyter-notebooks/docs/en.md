@@ -42,6 +42,10 @@ graph LR
 
 That "whatever order you click" part is both the superpower and the foot-gun.
 
+```figure
+s0-cell-order
+```
+
 ## Build It
 
 ### Step 1: Pick your interface

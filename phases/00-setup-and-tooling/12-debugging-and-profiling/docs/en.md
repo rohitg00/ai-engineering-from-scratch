@@ -33,6 +33,10 @@ graph TD
 
 Most people jump straight to level 3 (staring at TensorBoard). But 80% of AI bugs live at levels 1 and 2.
 
+```figure
+s0-flame-hot
+```
+
 ## Build It
 
 ### Part 1: Print Debugging (Yes, It Works)

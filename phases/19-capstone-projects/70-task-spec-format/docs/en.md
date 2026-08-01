@@ -15,6 +15,10 @@
 - Implement a strict validator that rejects malformed records before they reach the runner.
 - Ship a 10-task fixture set that exercises every branch of the spec so the validator has something real to chew on.
 
+```figure
+ci-task-spec-gate
+```
+
 ## Why a frozen spec
 
 A research codebase will accumulate eval scripts faster than it accumulates tests. Six months in, every notebook has its own JSON shape, every metric is reimplemented twice, and nothing can be compared across runs. The fix is boring. Pick a schema. Write a validator. Reject everything else. That is what this lesson does.

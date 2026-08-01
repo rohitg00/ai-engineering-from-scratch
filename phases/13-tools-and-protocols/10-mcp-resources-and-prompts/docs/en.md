@@ -97,6 +97,10 @@ Cost of subscriptions: per-session state on the server (who is subscribed to wha
 
 Prompts in MCP are not system prompts. The host's system prompt (its own operating instructions) and MCP prompts (server-supplied templates invoked by user) live side by side. A well-behaved client never lets a server prompt override its own system prompt; it layers them.
 
+```figure
+t3-primitive-sort
+```
+
 ## Use It
 
 `code/main.py` extends the notes server from Lesson 07 with:

@@ -34,6 +34,10 @@ Every API call has:
 3. A request body (what you want)
 4. A response body (what you get back)
 
+```figure
+s0-secret-inject
+```
+
 ## Build It
 
 ### Step 1: Store API keys safely

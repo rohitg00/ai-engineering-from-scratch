@@ -105,6 +105,10 @@ Full fine-tuning of a 70B VLM is out of reach for most teams. LoRA (rank 16-64) 
 
 Current VLMs score 50-60% on spatial reasoning benchmarks (above-below, left-right, counting, distance). If your use case depends on "which object is on top of which," validate heavily — generic VLM performance is below human. Better-than-VLM alternatives for pure spatial tasks: a specialised keypoint / pose estimator, a depth model, or a detection model with box geometry post-processed.
 
+```figure
+v4-vlm-projector
+```
+
 ## Build It
 
 ### Step 1: The projector

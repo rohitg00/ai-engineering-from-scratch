@@ -103,6 +103,10 @@ The aggregate is a weighted mean of normalised eval scores. Each eval reports it
 
 Weights are configurable. The default mix is 0.2 perplexity, 0.3 exact-match, 0.3 token F1, 0.2 judge. The choice of weights is a product decision; the lesson exposes the knob so you can experiment.
 
+```figure
+cg-eval-quadrant
+```
+
 ## Architecture
 
 ```mermaid

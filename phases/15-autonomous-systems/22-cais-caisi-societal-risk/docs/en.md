@@ -77,6 +77,10 @@ The running theme of Phase 15 — defense in depth — applies at the societal l
 
 This is the final synthesis for the phase: every previous lesson is one layer in a stack whose completeness matters more than any single layer's strength.
 
+```figure
+a5-four-risks
+```
+
 ## Use It
 
 `code/main.py` implements a small risk-inventory tool. Given a proposed deployment, it tags the deployment against the four-risk categories and returns a mitigation checklist. It's a reading aid for the framework, not a substitute for human judgment.

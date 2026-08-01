@@ -117,6 +117,10 @@ Always report both. A model that scores 78% clip / 82% video is relying heavily 
 - **UCF-101**, **HMDB-51** — older, smaller, still reported.
 - **AVA** — action *localisation* in space and time; harder than classification.
 
+```figure
+v4-video-temporal
+```
+
 ## Build It
 
 ### Step 1: Frame sampler

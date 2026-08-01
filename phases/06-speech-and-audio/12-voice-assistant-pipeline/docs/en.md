@@ -51,6 +51,10 @@ Latency target: first TTS audio byte within 800 ms of the user finishing their u
 | Vapi / Retell (managed) | 300-500 ms | commercial | Fastest to launch; limited customization |
 | Whisper.cpp + llama.cpp + Kokoro-ONNX | offline | open | Privacy / edge |
 
+```figure
+v4-voice-latency
+```
+
 ## Build It
 
 ### Step 1: mic capture with chunking (pseudocode)

@@ -103,6 +103,10 @@ Supply-chain attack: compromised CI/CD credentials exfiltrated env vars across t
 - Vercel 2026: CI/CD creds compromised → thousands of customer env vars leaked.
 - Audit log retention: SOC 2 = 1 year, HIPAA = 6 years.
 
+```figure
+i4-vault-rotation
+```
+
 ## Use It
 
 `code/main.py` implements a toy PII scrubber with consistent tokenization and an append-only audit log.

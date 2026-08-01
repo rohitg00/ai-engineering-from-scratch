@@ -46,6 +46,10 @@ The sandbox has four refusal axes: name, argv, path, structure. Each axis is a p
 
 The `SandboxResult` exit codes are the conventional ones: 0 success, non-zero failure, plus three sentinel codes for denied (-100), timed_out (-101), and truncated (the exit code is the real one, with a flag set). Downstream lessons read this structured result rather than parsing stderr.
 
+```figure
+cg-path-jail
+```
+
 ## Architecture
 
 ```mermaid

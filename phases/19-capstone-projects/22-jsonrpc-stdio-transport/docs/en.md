@@ -14,6 +14,10 @@
 - Handle one parse error per line without poisoning the rest of the stream.
 - Build a self-terminating demo using io.BytesIO so the lesson runs without spawning a child process.
 
+```figure
+cf-jsonrpc-frames
+```
+
 ## Why JSON-RPC stays the lingua franca
 
 A coding agent in 2026 talks to maybe twelve tool servers in a single session. Each server is a separate process or a remote endpoint. The wire format has been the same since 2013. JSON-RPC 2.0 is two-page spec. It survives because the alternatives (gRPC, HTTP per call, custom binary) all impose a tradeoff JSON-RPC does not: they pick either streaming or batching or transport-coupling. JSON-RPC is symmetric across stdio, sockets, websockets, and HTTP, and a client can drive a server it has never seen if both honor the spec.

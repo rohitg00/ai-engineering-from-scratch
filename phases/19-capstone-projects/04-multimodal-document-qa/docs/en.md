@@ -59,6 +59,10 @@ query ----+----> retrieve top-k pages (MaxSim)
 - Evaluation: ViDoRe v3 benchmark, M3DocVQA for multi-page reasoning
 - Viewer UI: Next.js 15 with canvas overlay for evidence regions
 
+```figure
+ce-late-interaction
+```
+
 ## Build It
 
 1. **Ingest.** Walk a corpus of 10k PDF pages across 10-Ks, scientific papers, and scanned documents. Render each page to a 1536x2048 PNG. Persist `{doc_id, page_num, image_path}`.

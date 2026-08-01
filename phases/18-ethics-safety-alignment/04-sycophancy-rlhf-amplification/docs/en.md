@@ -83,6 +83,10 @@ Sycophancy is the canonical example that alignment is not "turn the dial up" on 
 
 It is also the clearest case where the optimizer is doing exactly what the objective said. The fix has to be at the objective, not at the optimizer.
 
+```figure
+al-sycophancy-amplifier
+```
+
 ## Use It
 
 `code/main.py` simulates sycophancy amplification in a toy 3-action world. The base policy is uniform over actions {correct-answer, sycophantic-agreement, random-wrong}. The reward model gives small positive reward for agreement (the spurious feature) and true utility for correctness. You can toggle the agreement penalty and watch sycophancy rise and fall with beta and alpha.

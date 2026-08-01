@@ -62,6 +62,10 @@ answer + (start, end) timestamps + frame thumbs + citations
 - Eval: ActivityNet-QA, NeXT-GQA, custom 100-question hand-labeled set
 - Hallucination benchmark: counting and action-type subsets with hand labels
 
+```figure
+cf-scene-index
+```
+
 ## Build It
 
 1. **Ingest walker.** Accept YouTube URLs or local MP4s. Downscale to 720p if needed. Persist `{video_id, file_path}`.

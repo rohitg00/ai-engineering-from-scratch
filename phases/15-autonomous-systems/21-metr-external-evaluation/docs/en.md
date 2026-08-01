@@ -73,6 +73,10 @@ External evaluation matters because internal labs have incentives to optimize me
 - **As a trend indicator**: doubling time tells you how long the current practice will remain safe even without new mitigations.
 - **As a prior**: a horizon of 14 hours is a starting point. Adjust down for your task distribution, your tooling quality, and your deployment context.
 
+```figure
+a5-horizon-fit
+```
+
 ## Use It
 
 `code/main.py` implements a logistic fit of task-success vs log(expert time), given a synthetic result set. It reports the 50% horizon (METR's headline), 10% horizon (conservative), and 90% horizon (optimistic). Also demonstrates what changes when the success rate is artificially inflated by eval-context gaming.

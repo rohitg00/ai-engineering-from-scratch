@@ -78,6 +78,10 @@ Anthropic's response: the intervention is low-cost; the attractor is documented 
 
 Lesson 18 is the lab governance layer. Lesson 19 is the lab-welfare layer — an orthogonal investment in model experience rather than model behaviour. Lessons 20-23 cover bias, privacy, and watermarking, which are the user-side analogs.
 
+```figure
+an-welfare-endchat
+```
+
 ## Use It
 
 No code. Read the Anthropic "Exploring Model Welfare" announcement (April 2025) and the Chalmers et al. expert report. Form your own view on where the low-regret line sits.

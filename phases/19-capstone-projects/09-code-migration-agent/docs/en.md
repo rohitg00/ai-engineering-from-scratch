@@ -63,6 +63,10 @@ file under failure class + attach repro
 - Observability: Langfuse + trace bundle per repo with every diff chunk
 - Dashboard: failure-taxonomy dashboard with per-class counts and exemplar diffs
 
+```figure
+ce-migration-funnel
+```
+
 ## Build It
 
 1. **Recipe pass.** Run OpenRewrite (Java) or libcst (Python) recipes first. Catch the 70-80% of migrations that are mechanical. Commit as "recipe" commit.

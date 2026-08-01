@@ -80,6 +80,10 @@ Without OpenTelemetry GenAI spans (Lesson 23) plus a Langfuse/Phoenix/Opik backe
 - **Opaque background work.** Background agent runs without trace export. Failures are invisible until the user reports them.
 - **Skipping durable state.** Any run > 30 seconds where you can't afford to restart needs durable execution.
 
+```figure
+wb-runtime-shapes
+```
+
 ## Build It
 
 `code/main.py` is a stdlib multi-shape demo:

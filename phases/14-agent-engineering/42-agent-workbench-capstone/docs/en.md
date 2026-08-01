@@ -83,6 +83,10 @@ A short `bin/install.sh` (or `bin/install.py`):
 
 The pack carries a `VERSION` file. Schema bumps and script changes that require migrations bump the major. Doc-only changes bump the patch. The target repo's `agent_state.json` records which pack version it was initialized against.
 
+```figure
+wb-pack-install
+```
+
 ## Build It
 
 `code/main.py` assembles the pack into `outputs/agent-workbench-pack/` next to the lesson, seeded with the schemas and scripts from the previous lessons in this mini-track and the docs you already wrote.

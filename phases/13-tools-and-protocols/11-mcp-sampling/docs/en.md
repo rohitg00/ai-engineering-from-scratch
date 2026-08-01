@@ -122,6 +122,10 @@ The server never touches an LLM API. The client's user pays for the completions 
 - **Resource theft via sampling.** Server asks client to summarize an attacker's payload, bills the user.
 - **Loop bombs.** Server calls sampling in a tight loop. Clients MUST enforce per-session rate limits.
 
+```figure
+t3-sampling-flip
+```
+
 ## Use It
 
 `code/main.py` ships a fake server-to-client sampling harness. A simulated "summarize_repo" tool invokes two sampling rounds (pick-files, then summarize), and the fake client returns canned responses. The harness shows:

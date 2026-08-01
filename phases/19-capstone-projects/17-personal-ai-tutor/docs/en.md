@@ -72,6 +72,10 @@ learner device
 - Safety: Llama Guard 4 + custom age-appropriate filter
 - Eval: Bloom-level question generation, pre/post test harness, efficacy study tooling
 
+```figure
+cf-tutor-loop
+```
+
 ## Build It
 
 1. **Curriculum graph.** Build a Neo4j of 50-150 concept nodes (e.g., K-12 algebra from "number line" to "quadratic formula") with prerequisite edges. Attach OER content per node (Open Textbook, OpenStax).
