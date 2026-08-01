@@ -17,12 +17,12 @@
     "stage": "pre",
     "question": "What is the key difference between filter and wrapper feature selection methods?",
     "options": [
-      "Filter methods use a model to evaluate features; wrapper methods use statistics",
       "Filter methods score features using statistics without a model; wrapper methods train a model to evaluate feature subsets",
+      "Filter methods use a model to evaluate features; wrapper methods use statistics",
       "Filter methods are always more accurate than wrapper methods",
       "Wrapper methods can only select one feature at a time"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "Filter methods (variance threshold, mutual information, correlation) score features with statistical measures. Wrapper methods (RFE, forward selection) train models repeatedly to evaluate different feature subsets."
   },
   {
@@ -31,11 +31,11 @@
     "question": "Mutual information can detect relationships that Pearson correlation cannot. What kind?",
     "options": [
       "Linear relationships between continuous features",
-      "Nonlinear relationships such as quadratic or periodic dependencies",
       "Relationships between categorical features only",
+      "Nonlinear relationships such as quadratic or periodic dependencies",
       "Relationships that require more than 1000 data points"
     ],
-    "correct": 1,
+    "correct": 2,
     "explanation": "Pearson correlation only measures linear association. A quadratic relationship (y = x^2) has zero correlation but high mutual information. MI captures any statistical dependency between variables."
   },
   {
@@ -44,11 +44,11 @@
     "question": "L1 (Lasso) regularization performs feature selection as part of training. How?",
     "options": [
       "It removes features with low variance before training starts",
-      "It drives the weights of irrelevant features to exactly zero, effectively eliminating them from the model",
+      "It trains separate models for each feature",
       "It ranks features by correlation with the target",
-      "It trains separate models for each feature"
+      "It drives the weights of irrelevant features to exactly zero, effectively eliminating them from the model"
     ],
-    "correct": 1,
+    "correct": 3,
     "explanation": "L1 regularization adds |w| penalty to the loss. The geometry of the L1 constraint (diamond shape) causes some weight solutions to land exactly at zero, producing sparse models that automatically select features."
   },
   {

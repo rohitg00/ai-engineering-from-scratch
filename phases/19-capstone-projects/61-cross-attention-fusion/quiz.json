@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "In a decoder block with both self-attention and cross-attention, which one uses a causal mask?",
       "options": [
-        "Both",
         "Self-attention only; the image is fully observed and cross-attention has no temporal order",
+        "Both",
         "Cross-attention only",
         "Neither"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Text generation is autoregressive, so text self-attention is causal. Image tokens are all visible before any text is decoded."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why is the cross-attention KV cache built once per image?",
       "options": [
         "PyTorch requires caching",
-        "Image keys and values do not change as text is decoded, so projecting memory once and reusing the K and V across all decode steps is the whole inference speedup",
         "Caching saves disk space",
+        "Image keys and values do not change as text is decoded, so projecting memory once and reusing the K and V across all decode steps is the whole inference speedup",
         "It avoids using the GPU"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "The vision encoder runs once. Its KV projection is computed once. Each text token reuses the cache for free."
     },
     {
@@ -43,11 +43,11 @@
       "question": "What is the output shape of cross-attention when text length is Nt=10 and image length is Nv=197 with hidden=256?",
       "options": [
         "(B, 197, 256)",
-        "(B, 10, 256)",
+        "(B, 207, 256)",
         "(B, 10, 197)",
-        "(B, 207, 256)"
+        "(B, 10, 256)"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Cross-attention output shape follows the query stream, so output is (B, Nt, hidden) regardless of key length."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Which extension would you add to recover Flamingo-style stability during training?",
       "options": [
-        "Drop the self-attention layer",
         "Insert a learned tanh gate on the cross-attention residual so the model can start from text-only behavior and grow into the image stream",
+        "Drop the self-attention layer",
         "Remove the FFN",
         "Use only one attention head"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Flamingo's tanh gate starts at zero, recovers text-only behavior at init, and gives the model a smooth ramp into cross-attention."
     }
   ]

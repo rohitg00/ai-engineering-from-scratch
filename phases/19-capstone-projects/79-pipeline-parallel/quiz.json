@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "Why is GPipe's activation memory proportional to M?",
       "options": [
-        "Bug",
         "All M microbatches' activations must be held until the matching backward; nothing frees until the drain begins",
+        "Bug",
         "Compiler limit",
         "Hardware limit"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "GPipe fills the pipeline with all forwards before any backward. Each in-flight microbatch carries its activations until its backward starts."
     },
     {
@@ -31,11 +31,11 @@
       "question": "How does 1F1B improve over GPipe?",
       "options": [
         "Lower bubble",
-        "Same bubble but bounded activation memory; once mb 0's forward reaches the last stage, its backward begins and activations free",
         "Higher throughput",
+        "Same bubble but bounded activation memory; once mb 0's forward reaches the last stage, its backward begins and activations free",
         "Smaller model"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Megatron-LM and PipeDream use 1F1B to bound activation memory by pipeline depth, not microbatch count."
     },
     {
@@ -43,11 +43,11 @@
       "question": "Why is equal compute per stage more important than equal parameter count?",
       "options": [
         "Aesthetic",
-        "The slowest stage gates every cycle; other stages idle waiting for it. Embedding layers have many parameters but little compute, so partitioning by parameter count misbalances the pipeline",
+        "Easier to code",
         "Memory aligned",
-        "Easier to code"
+        "The slowest stage gates every cycle; other stages idle waiting for it. Embedding layers have many parameters but little compute, so partitioning by parameter count misbalances the pipeline"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Megatron-LM exposes --num-layers-per-stage as a list to allow uneven layer counts when per-layer cost differs."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Pipeline plus ZeRO-1 combines what two memory wins?",
       "options": [
-        "Compression and quantisation",
         "Per-stage parameter sharding (each rank only holds one stage of layers) plus per-rank optimiser sharding (each rank only holds 1/N of optimiser state for its stage)",
+        "Compression and quantisation",
         "Activation only",
         "Nothing"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Pipeline shards layers across ranks; ZeRO shards optimiser state within the data-parallel group at each pipeline rank. Both wins compound."
     }
   ]

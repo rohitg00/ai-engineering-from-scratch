@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What three components define a Voyager agent?",
       "options": [
-        "Encoder, decoder, value head",
         "Automatic curriculum, skill library, iterative prompting",
+        "Encoder, decoder, value head",
         "Planner, executor, judge",
         "Retriever, generator, ranker"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Voyager structures the agent around curriculum, skill library, and iterative prompting."
     },
     {
@@ -31,11 +31,11 @@
       "question": "What three signals can return from a skill execution attempt?",
       "options": [
         "Pass, fail, retry",
-        "Success, error (with stack trace), self-verification failure",
         "Green, yellow, red",
+        "Success, error (with stack trace), self-verification failure",
         "Heartbeat, ack, nack"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Voyager's iterative prompting mechanism is driven by these three signals folded back into the next version."
     },
     {
@@ -43,11 +43,11 @@
       "question": "How does the automatic curriculum pick the next task?",
       "options": [
         "Random uniform over the action space",
-        "Just above current capability, based on environment state and skill inventory (the exploration sweet spot)",
+        "User-supplied list only",
         "Always the hardest available task",
-        "User-supplied list only"
+        "Just above current capability, based on environment state and skill inventory (the exploration sweet spot)"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "The proposer aims for tasks just above current capability so progress is steady."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Why does the lesson recommend dedup on write for the skill library?",
       "options": [
-        "Disk is expensive",
         "Without dedup, the same skill gets added many times with slightly different descriptions; retrieval should return one canonical version",
+        "Disk is expensive",
         "Providers reject duplicates",
         "Git blocks duplicates"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Near-duplicate descriptions collapse to a single canonical skill so retrieval stays clean."
     },
     {
@@ -79,11 +79,11 @@
       "question": "What problem does composed-skill drift describe?",
       "options": [
         "A skill stops compiling after a Python upgrade",
-        "A parent skill silently picks up a refined child version it was never tested against; fix by pinning skill versions",
         "Skills get encrypted in storage",
+        "A parent skill silently picks up a refined child version it was never tested against; fix by pinning skill versions",
         "Retrieval returns nothing"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Without version pinning, a refinement to a child silently changes the parent's behavior."
     }
   ]

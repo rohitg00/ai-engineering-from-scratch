@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What is R@5 measuring in a 100-sample retrieval eval?",
       "options": [
-        "The fifth caption is always correct",
         "Fraction of queries whose correct match lands in the top 5 retrieved candidates out of 100",
+        "The fifth caption is always correct",
         "Five percent accuracy",
         "Five queries per second"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "R@K = fraction of queries with the target in the top K ranked candidates. Higher is better."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why does BLEU-4 take the geometric mean of 1- to 4-gram precisions instead of the arithmetic mean?",
       "options": [
         "Arithmetic is slower",
-        "Geometric mean is zero if any n-gram precision is zero, which is the strict matching property BLEU wants; smoothing handles the zero case",
         "Geometric mean is bigger",
+        "Geometric mean is zero if any n-gram precision is zero, which is the strict matching property BLEU wants; smoothing handles the zero case",
         "PyTorch supports only geometric mean"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "The geometric mean enforces that ALL n-gram orders contribute; a 4-gram precision of zero collapses the score before smoothing."
     },
     {
@@ -43,11 +43,11 @@
       "question": "What does the brevity penalty in BLEU-4 protect against?",
       "options": [
         "Long captions getting penalized",
-        "Short captions gaming high precision by emitting only safe high-frequency tokens; BP < 1 when generated < reference length",
+        "Tokenizer errors",
         "Memory leaks",
-        "Tokenizer errors"
+        "Short captions gaming high precision by emitting only safe high-frequency tokens; BP < 1 when generated < reference length"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Without BP a one-word caption matching one reference word would score 1.0. BP shrinks the score for too-short generations."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Which eval surface uses no model embeddings and only id-level matching?",
       "options": [
-        "Retrieval",
         "VQA exact match: a predicted answer id is compared directly to a reference id with no embedding step",
+        "Retrieval",
         "BLEU-4",
         "Cosine similarity"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "VQA exact match is an integer comparison after the model emits its answer token; no embedding or similarity math involved."
     }
   ]

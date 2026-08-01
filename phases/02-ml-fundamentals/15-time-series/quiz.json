@@ -17,12 +17,12 @@
     "stage": "pre",
     "question": "What does it mean for a time series to be stationary?",
     "options": [
-      "The values never change over time",
       "Its statistical properties (mean, variance, autocorrelation) do not change over time",
+      "The values never change over time",
       "It has no seasonal patterns",
       "It always trends upward"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "A stationary series has constant mean, variance, and autocorrelation structure over time. Most forecasting methods assume stationarity. Non-stationary series need differencing or detrending first."
   },
   {
@@ -31,11 +31,11 @@
     "question": "What is the purpose of differencing a time series?",
     "options": [
       "To increase the number of data points",
-      "To remove trend and make the series stationary by modeling changes between consecutive values",
       "To convert regression into classification",
+      "To remove trend and make the series stationary by modeling changes between consecutive values",
       "To normalize the values between 0 and 1"
     ],
-    "correct": 1,
+    "correct": 2,
     "explanation": "Differencing replaces each value with the change from the previous value: diff[t] = value[t] - value[t-1]. This removes trend, making the series closer to stationary."
   },
   {
@@ -44,11 +44,11 @@
     "question": "Lag features convert a time series into a supervised learning problem. What is a lag-3 feature for predicting y[t]?",
     "options": [
       "The average of the next 3 values: (y[t+1] + y[t+2] + y[t+3]) / 3",
-      "The value 3 time steps ago: y[t-3]",
+      "The difference between the current value and 3 steps ahead",
       "The 3rd derivative of the series",
-      "The difference between the current value and 3 steps ahead"
+      "The value 3 time steps ago: y[t-3]"
     ],
-    "correct": 1,
+    "correct": 3,
     "explanation": "A lag-3 feature is y[t-3]: the value 3 time steps in the past. Using past values as input features lets standard ML models (regression, trees) make time series predictions without specialized algorithms."
   },
   {

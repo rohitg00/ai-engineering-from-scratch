@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "In what order does the loop check stop conditions at the end of a round?",
       "options": [
-        "Budget, then plateau, then target",
         "Target, then plateau, then budget",
+        "Budget, then plateau, then target",
         "Plateau, then target, then budget",
         "Whichever fires first by random tie-break"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Target met wins (the work is done). Then plateau (no more progress is achievable). Then budget (hard cap). The order makes the result deterministic when more than one condition could fire."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why does plateau detection require two consecutive flat rounds rather than one?",
       "options": [
         "Because the dataclass requires a list",
-        "Because deterministic scoring still has noise per round; one flat round is not enough signal",
         "Because the model returns nondeterministic scores",
+        "Because deterministic scoring still has noise per round; one flat round is not enough signal",
         "Because the dashboard expects two points"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Even a deterministic scorer's output changes round to round depending on which suggestions were applied. Requiring two flat rounds filters that noise."
     },
     {
@@ -43,11 +43,11 @@
       "question": "What does the reviser receive as input each round?",
       "options": [
         "The full Critique object including scores",
-        "The paper and the list of Suggestion records",
+        "The raw LaTeX source",
         "A model-generated paragraph",
-        "The raw LaTeX source"
+        "The paper and the list of Suggestion records"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Reviser.__call__ takes (paper, suggestions). Each Suggestion carries a dimension, target section, and an edit instruction. The reviser does not see scores. That separation lets either side be swapped without touching the other."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "A critic that keeps emitting suggestions that never improve any score will produce which terminal verdict?",
       "options": [
-        "target, because the budget hides the bug",
         "plateau or budget, because the harness will catch the lack of progress",
+        "target, because the budget hides the bug",
         "converged, because suggestions were applied",
         "An exception, because the loop crashes"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Either plateau (two flat rounds) or budget (hard cap) fires. Both verdicts surface the bug. The loop never silently succeeds."
     }
   ]

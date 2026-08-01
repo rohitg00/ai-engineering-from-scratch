@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What is the per-step wire pattern of ZeRO stage 1?",
       "options": [
-        "One allreduce",
         "One reduce_scatter on gradients plus one allgather on updated parameters",
+        "One allreduce",
         "One broadcast",
         "Nothing"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Reduce_scatter delivers each rank only its gradient shard; allgather distributes the updated parameter shards back. Total bytes equal allreduce, memory is divided by N."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why is the per-step bandwidth the same as DDP?",
       "options": [
         "Magic",
-        "Allreduce equals reduce_scatter plus allgather in bandwidth; ZeRO splits that into two halves on different data",
         "ZeRO uses compression",
+        "Allreduce equals reduce_scatter plus allgather in bandwidth; ZeRO splits that into two halves on different data",
         "It is not the same"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Ring allreduce is implemented as reduce_scatter then allgather. ZeRO does the same two operations but the allgather rotates the updated parameters, not the summed gradient."
     },
     {
@@ -43,11 +43,11 @@
       "question": "For a 7B model with Adam in mixed precision on 8 ranks, what is the memory drop vs vanilla DDP?",
       "options": [
         "10%",
-        "Around 65% (vanilla 16P vs ZeRO-1 4P + 12P/N = 5.5P)",
+        "0%",
         "99%",
-        "0%"
+        "Around 65% (vanilla 16P vs ZeRO-1 4P + 12P/N = 5.5P)"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Vanilla: 2P + 2P + 4P + 4P + 4P = 16P. ZeRO-1: 2P + 2P + (4P+4P+4P)/8 = 5.5P. Drop is (16-5.5)/16 = 65.6%."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Why does ZeRO require the optimiser state checkpoint to record which rank owns which shard?",
       "options": [
-        "Cosmetic",
         "Without per-rank ownership the saved state is unreadable at restart; resuming on the same world size needs to put the right shard back on the right rank",
+        "Cosmetic",
         "It does not",
         "Compression"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Lesson 80 builds the sharded checkpoint manifest precisely so a ZeRO run can resume on the same topology."
     }
   ]

@@ -17,12 +17,12 @@
     "stage": "pre",
     "question": "A temperature of 90F is normal in summer but anomalous in winter. What type of anomaly is this?",
     "options": [
-      "Point anomaly",
       "Contextual anomaly",
+      "Point anomaly",
       "Collective anomaly",
       "Statistical anomaly"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "A contextual anomaly is a value that is unusual given its context (time, location). The value itself might be normal in a different context. Same data point, different interpretation based on surrounding conditions."
   },
   {
@@ -31,11 +31,11 @@
     "question": "The Z-score method flags points more than 3 standard deviations from the mean. When does this approach fail?",
     "options": [
       "When the data is perfectly normally distributed",
-      "When the data is multimodal, skewed, or when outliers in the training data inflate the mean and std",
       "When there are exactly 3 anomalies in the dataset",
+      "When the data is multimodal, skewed, or when outliers in the training data inflate the mean and std",
       "When the features are standardized"
     ],
-    "correct": 1,
+    "correct": 2,
     "explanation": "Z-score assumes a single Gaussian distribution. It fails on multimodal data (multiple clusters), skewed distributions, and when outliers in training data shift the mean/std, making real anomalies harder to detect."
   },
   {
@@ -44,11 +44,11 @@
     "question": "How does Isolation Forest detect anomalies differently from distance-based methods?",
     "options": [
       "It uses neural networks instead of trees",
-      "It isolates points using random splits; anomalies require fewer splits to isolate because they are few and different",
+      "It only works on text data",
       "It computes distances to every other point in the dataset",
-      "It only works on text data"
+      "It isolates points using random splits; anomalies require fewer splits to isolate because they are few and different"
     ],
-    "correct": 1,
+    "correct": 3,
     "explanation": "Isolation Forest randomly partitions data with tree splits. Anomalies, being rare and different, end up isolated (in their own leaf) with fewer splits. Short average path length = more anomalous."
   },
   {

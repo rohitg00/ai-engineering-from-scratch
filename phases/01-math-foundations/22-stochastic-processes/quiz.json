@@ -16,12 +16,12 @@
       "stage": "pre",
       "question": "In a 1D random walk, how does the expected distance from the origin scale with the number of steps n?",
       "options": [
-        "Linearly: proportional to n",
         "As the square root: proportional to sqrt(n)",
+        "Linearly: proportional to n",
         "Logarithmically: proportional to log(n)",
         "It stays constant regardless of n"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Each step is +/-1 with equal probability. The variance after n steps is n, so the standard deviation (typical distance from origin) is sqrt(n). After 10,000 steps, the expected distance is about 100, not 10,000."
     },
     {
@@ -29,11 +29,11 @@
       "question": "What is the stationary distribution of a Markov chain?",
       "options": [
         "The initial distribution of states",
-        "The distribution that does not change under the transition matrix: pi * P = pi",
         "The distribution of states after exactly one transition",
+        "The distribution that does not change under the transition matrix: pi * P = pi",
         "The uniform distribution over all states"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "The stationary distribution pi satisfies pi * P = pi — applying the transition matrix leaves it unchanged. It represents the long-run fraction of time spent in each state. For an irreducible, aperiodic chain, any initial distribution converges to pi."
     },
     {
@@ -41,11 +41,11 @@
       "question": "In Langevin dynamics x_{t+1} = x_t - dt * grad(U) + sqrt(2*T*dt) * z, what happens as temperature T approaches 0?",
       "options": [
         "The process becomes a pure random walk",
-        "The process becomes pure gradient descent (deterministic optimization)",
+        "The process freezes at the initial position",
         "The process diverges to infinity",
-        "The process freezes at the initial position"
+        "The process becomes pure gradient descent (deterministic optimization)"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "At T = 0, the noise term sqrt(2*T*dt)*z vanishes, leaving x_{t+1} = x_t - dt * grad(U), which is standard gradient descent. At high T, the noise dominates and the process is nearly a random walk. Intermediate T balances exploration and exploitation."
     },
     {

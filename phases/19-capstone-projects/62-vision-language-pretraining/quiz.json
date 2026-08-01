@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "In InfoNCE for a batch of N pairs, how many positive pairs and negative pairs are formed?",
       "options": [
-        "1 positive and N negatives",
         "N positives along the diagonal of the similarity matrix and N*(N-1) negatives off-diagonal",
+        "1 positive and N negatives",
         "N positives and N negatives",
         "N^2 positives"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "The N matching pairs sit on the diagonal; everything off-diagonal is a negative."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why is the contrastive temperature usually a learned parameter?",
       "options": [
         "PyTorch requires it",
-        "Hand-tuning is fragile; letting tau learn allows the model to find the right softmax peakedness as the embedding scale evolves during training",
         "Learned tau is faster on GPU",
+        "Hand-tuning is fragile; letting tau learn allows the model to find the right softmax peakedness as the embedding scale evolves during training",
         "It avoids using Adam"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "CLIP introduced learned log-tau so the contrastive softmax stays in the useful regime as embedding norms grow."
     },
     {
@@ -43,11 +43,11 @@
       "question": "Which sub-modules receive gradient from the LM loss but not from the contrastive loss?",
       "options": [
         "The vision encoder",
-        "The cross-attention decoder",
+        "The text-side encoder",
         "The MLP projector",
-        "The text-side encoder"
+        "The cross-attention decoder"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Contrastive loss does not touch the decoder; LM loss does not touch the text-side mean-pool encoder."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Why is a 50-step demo on synthetic data enough to call the lesson complete?",
       "options": [
-        "The model reaches state of the art at 50 steps",
         "The demo proves the gradient plumbing works end to end; production training shape is identical but runs for millions of steps on real data",
+        "The model reaches state of the art at 50 steps",
         "50 steps is the maximum supported",
         "Real data would change the architecture"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "The dynamics demonstrated (both losses decrease, no NaN, stable tau) are the same dynamics a billion-image run would show; just scaled up."
     }
   ]

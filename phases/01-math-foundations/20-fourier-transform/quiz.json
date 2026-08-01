@@ -16,12 +16,12 @@
       "stage": "pre",
       "question": "What is the time complexity of the Fast Fourier Transform (FFT) compared to the direct DFT?",
       "options": [
-        "Both are O(N^2)",
         "FFT is O(N log N), DFT is O(N^2)",
+        "Both are O(N^2)",
         "FFT is O(N), DFT is O(N log N)",
         "FFT is O(log N), DFT is O(N)"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "The direct DFT computes N outputs, each summing over N inputs: O(N^2). The Cooley-Tukey FFT splits the signal into even/odd halves recursively, doing O(N) work at each of log2(N) levels, giving O(N log N). For N = 1 million, this is 20 million vs 1 trillion operations."
     },
     {
@@ -29,11 +29,11 @@
       "question": "What does the convolution theorem state?",
       "options": [
         "Convolution in the time domain equals addition in the frequency domain",
-        "Convolution in the time domain equals pointwise multiplication in the frequency domain",
         "Convolution always increases the length of a signal",
+        "Convolution in the time domain equals pointwise multiplication in the frequency domain",
         "Convolution and correlation are identical operations"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "The convolution theorem states that convolution in the time domain equals pointwise multiplication in the frequency domain: x * h = IFFT(FFT(x) . FFT(h)). This is why FFT-based convolution is O(N log N) instead of O(N*M) for large kernels."
     },
     {
@@ -41,11 +41,11 @@
       "question": "Why does zero-padding a signal before FFT NOT increase the true frequency resolution?",
       "options": [
         "Zero-padding introduces noise that cancels the improvement",
-        "Zero-padding interpolates between existing frequency bins but cannot reveal frequency detail absent from the original samples",
+        "The FFT algorithm ignores zero-padded samples",
         "Zero-padding only works for power-of-2 signal lengths",
-        "The FFT algorithm ignores zero-padded samples"
+        "Zero-padding interpolates between existing frequency bins but cannot reveal frequency detail absent from the original samples"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "True frequency resolution depends on the observation time T = N/fs. Zero-padding adds more frequency bins (finer grid) but only interpolates the existing spectrum — it gives a smoother-looking result without resolving frequencies closer than 1/T Hz apart."
     },
     {

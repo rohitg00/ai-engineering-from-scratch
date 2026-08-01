@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What is the goal of during-gen filtering?",
       "options": [
-        "To translate the output to another language",
         "To buffer chunks and terminate the stream early when a known harmful continuation appears, before the user sees it",
+        "To translate the output to another language",
         "To increase token throughput",
         "To replace the prompt with a refusal"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": ""
     },
     {
@@ -31,11 +31,11 @@
       "question": "How does the aggregator decide the final action?",
       "options": [
         "By averaging the confidences of every signal",
-        "By taking the maximum severity across detector, token-filter, classifier, and rules signals and mapping it to block, redact, warn, or allow",
         "By calling the model a second time",
+        "By taking the maximum severity across detector, token-filter, classifier, and rules signals and mapping it to block, redact, warn, or allow",
         "By looking only at the rules engine"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": ""
     },
     {
@@ -43,11 +43,11 @@
       "question": "Why does the gate emit a structured RequestTrace per request?",
       "options": [
         "To slow the system down",
-        "To give a reviewer a per-checkpoint audit trail so a regression in any layer can be traced to the right module",
+        "To replicate the trace into the prompt",
         "To replace logging",
-        "To replicate the trace into the prompt"
+        "To give a reviewer a per-checkpoint audit trail so a regression in any layer can be traced to the right module"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": ""
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Why does the demo intentionally let some encoding-trick prompts reach during-gen?",
       "options": [
-        "Because encoding tricks are not real attacks",
         "Because the input pipeline does not always normalize them in time; the during-gen filter is the defense in depth that catches the leaked continuation",
+        "Because encoding tricks are not real attacks",
         "Because the model refuses them anyway",
         "Because the rules engine handles encoding"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": ""
     }
   ]

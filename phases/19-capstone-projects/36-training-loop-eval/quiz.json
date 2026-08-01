@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What does evaluate_model do that the training step does not?",
       "options": [
-        "It runs the optimizer",
         "It runs a fixed number of validation batches under no_grad and with dropout disabled, returning a reproducible mean loss",
+        "It runs the optimizer",
         "It changes the model weights",
         "It computes gradients twice"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Held out evaluation needs no gradients, no dropout, and a fixed slice of validation data to be reproducible across runs."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Which AdamW parameters get weight decay?",
       "options": [
         "Every parameter equally",
-        "Matrix-shaped tensors (linear weights, embedding tables) receive weight decay; scale, shift, and bias tensors receive zero decay",
         "Only the LM head",
+        "Matrix-shaped tensors (linear weights, embedding tables) receive weight decay; scale, shift, and bias tensors receive zero decay",
         "Only the LayerNorm scales"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Putting decay on a LayerNorm scale drives the scale to zero and breaks normalization; the split is a standard production pattern."
     },
     {
@@ -43,11 +43,11 @@
       "question": "What shape does the warmup-plus-cosine schedule trace from step 0 to the final step?",
       "options": [
         "Constant",
-        "Linear ramp from zero to max over warmup_steps, then cosine decay from max to min_lr over the remaining steps",
+        "Step function",
         "Exponential growth",
-        "Step function"
+        "Linear ramp from zero to max over warmup_steps, then cosine decay from max to min_lr over the remaining steps"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Warmup populates optimizer state; cosine decay tapers the step size so the final phase fine-tunes the weights."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Why log per step records as JSONL instead of pickled state?",
       "options": [
-        "JSONL is required by the optimizer",
         "JSONL records are durable across refactors, greppable, plottable in thirty lines, and survive crashes; pickled state ties you to the module layout that produced it",
+        "JSONL is required by the optimizer",
         "JSONL trains faster",
         "JSONL uses less GPU memory"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Any crash leaves a readable artifact; resume reads the last step; tooling on top is trivial."
     }
   ]

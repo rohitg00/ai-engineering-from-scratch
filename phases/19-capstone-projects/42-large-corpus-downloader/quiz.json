@@ -18,12 +18,12 @@
       "stage": "check",
       "question": "What does the LSH band scheme buy that exact-hash dedup does not?",
       "options": [
-        "Constant memory usage",
         "Sub-linear lookup that flags near-duplicates with high Jaccard similarity even when the documents differ by a few tokens",
+        "Constant memory usage",
         "Lossless compression",
         "Faster sha256 computation"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "MinHash plus LSH catches paraphrases and boilerplate variants that exact-hash dedup walks past."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why is the checkpoint written before the bytes are appended, not after?",
       "options": [
         "It is convenient",
-        "If the process dies between the write and the checkpoint update, the next resume reads a checkpoint that is behind the bytes and silently re-appends, corrupting the file",
         "It is faster",
+        "If the process dies between the write and the checkpoint update, the next resume reads a checkpoint that is behind the bytes and silently re-appends, corrupting the file",
         "It saves disk space"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Checkpoint-first matches a write-ahead log: a crash leaves the verified offset trailing or equal to the file, never ahead."
     },
     {
@@ -43,11 +43,11 @@
       "question": "What is the role of the manifest sha256 lock file?",
       "options": [
         "It speeds up reads",
-        "Downstream stages refuse to start unless the manifest content matches the pinned hash, closing the silent attack surface where an attacker edits one file",
+        "It is a backup of the manifest",
         "It records the date",
-        "It is a backup of the manifest"
+        "Downstream stages refuse to start unless the manifest content matches the pinned hash, closing the silent attack surface where an attacker edits one file"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Pinning the manifest hash makes the link between code and data a content-addressed contract."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "What does tombstoning a dropped duplicate preserve that a silent delete does not?",
       "options": [
-        "Disk space",
         "The link between the duplicate and the keeper it collided with, plus an audit trail that survives a later threshold change",
+        "Disk space",
         "Compression ratio",
         "Manifest sha256 stability"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Tombstones let a future pass revisit the dedup threshold; deletes lose the evidence."
     }
   ]

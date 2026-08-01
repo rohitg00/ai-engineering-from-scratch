@@ -17,12 +17,12 @@
     "stage": "pre",
     "question": "Why is logistic regression called 'regression' even though it is used for classification?",
     "options": [
-      "It predicts continuous values that are then rounded",
       "The name comes from the logistic (sigmoid) function it uses, not from regression analysis",
+      "It predicts continuous values that are then rounded",
       "It was originally designed for regression and later adapted",
       "It minimizes mean squared error like linear regression"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "The name comes from the logistic function (sigmoid). Despite the name, logistic regression is a classification algorithm that outputs class probabilities."
   },
   {
@@ -31,11 +31,11 @@
     "question": "Why is binary cross-entropy used instead of MSE for logistic regression?",
     "options": [
       "Cross-entropy is faster to compute",
-      "MSE with sigmoid creates a non-convex cost surface with local minima, while cross-entropy is convex",
       "MSE can only be used with linear models",
+      "MSE with sigmoid creates a non-convex cost surface with local minima, while cross-entropy is convex",
       "Cross-entropy works only when the dataset is balanced"
     ],
-    "correct": 1,
+    "correct": 2,
     "explanation": "MSE combined with the sigmoid activation creates a non-convex cost surface with many local minima. Binary cross-entropy with sigmoid is convex, guaranteeing a single global minimum."
   },
   {
@@ -44,11 +44,11 @@
     "question": "A spam filter has precision = 0.95 and recall = 0.60. What does this mean in practical terms?",
     "options": [
       "95% of all emails are correctly classified, and 60% of spam is caught",
-      "When it flags an email as spam, it is correct 95% of the time, but it only catches 60% of actual spam",
+      "The model is 95% accurate on the test set and 60% on the training set",
       "60% of flagged emails are spam, and 95% of all spam is caught",
-      "The model is 95% accurate on the test set and 60% on the training set"
+      "When it flags an email as spam, it is correct 95% of the time, but it only catches 60% of actual spam"
     ],
-    "correct": 1,
+    "correct": 3,
     "explanation": "Precision = 0.95 means 95% of emails predicted as spam are actually spam (few false alarms). Recall = 0.60 means only 60% of actual spam is caught (40% slips through)."
   },
   {

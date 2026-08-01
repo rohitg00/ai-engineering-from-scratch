@@ -18,12 +18,12 @@
       "stage": "check",
       "question": "Why is the schedule implemented as a single function over step rather than three glued segments?",
       "options": [
-        "Single functions are smaller",
         "A glued schedule loses one boundary the first time lr_max is changed; the single function evaluates the same closed-form expression and preserves continuity at warmup and total endpoints",
+        "Single functions are smaller",
         "Linters require it",
         "Random"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Continuity at lr(warmup_steps) and lr(total_steps) follows from the closed form."
     },
     {
@@ -31,11 +31,11 @@
       "question": "What happens for step > total_steps in the schedule?",
       "options": [
         "It throws an exception",
-        "It pins at lr_min; the schedule does not extrapolate, and trainers that need to extend training change total_steps explicitly",
         "It returns nan",
+        "It pins at lr_min; the schedule does not extrapolate, and trainers that need to extend training change total_steps explicitly",
         "It wraps around"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "A pinned floor keeps an overshooting trainer in a documented state instead of crashing."
     },
     {
@@ -43,11 +43,11 @@
       "question": "Why log gradient L2 norm next to the learning rate?",
       "options": [
         "It looks pretty",
-        "The norm is the other half of training health: a divergent run spikes its norm before the loss; a too-aggressive peak shows up as a norm that stays high after warmup",
+        "Tradition",
         "Adam requires it",
-        "Tradition"
+        "The norm is the other half of training health: a divergent run spikes its norm before the loss; a too-aggressive peak shows up as a norm that stays high after warmup"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Co-logging makes pathological schedules visible at run time, not after the fact."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Why is a non-zero lr_min typical in production?",
       "options": [
-        "Adam requires non-zero",
         "A floor near 10 percent of lr_max keeps the optimizer learning during the long tail; an lr_min of zero produces a curve that looks good and a model that has not finished training",
+        "Adam requires non-zero",
         "Numerical stability",
         "Backward compatibility"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "The tail of the schedule is where late-stage refinements land; zeroing it wastes that signal."
     }
   ]

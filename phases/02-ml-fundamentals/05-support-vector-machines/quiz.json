@@ -17,12 +17,12 @@
     "stage": "pre",
     "question": "What does the SVM maximize when finding the decision boundary?",
     "options": [
-      "The number of correctly classified training points",
       "The margin -- the distance between the decision boundary and the nearest points of each class",
+      "The number of correctly classified training points",
       "The total distance from all points to the boundary",
       "The complexity of the decision boundary"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "SVMs find the hyperplane that maximizes the margin between the two classes. A wider margin leads to better generalization on unseen data."
   },
   {
@@ -31,11 +31,11 @@
     "question": "What happens when you increase the C parameter in an SVM?",
     "options": [
       "The margin gets wider and more misclassifications are allowed",
-      "The margin gets narrower, fewer misclassifications are tolerated, and the model may overfit",
       "The kernel function changes from linear to RBF",
+      "The margin gets narrower, fewer misclassifications are tolerated, and the model may overfit",
       "The number of support vectors always increases"
     ],
-    "correct": 1,
+    "correct": 2,
     "explanation": "Large C penalizes misclassifications heavily, producing a narrow margin that closely fits the training data. This can lead to overfitting. Small C allows more violations for a wider, more regularized margin."
   },
   {
@@ -44,11 +44,11 @@
     "question": "How does the kernel trick enable SVMs to learn nonlinear boundaries?",
     "options": [
       "It replaces the SVM with a neural network",
-      "It computes dot products in a high-dimensional space without explicitly mapping data to that space",
+      "It adds polynomial features to the input data directly",
       "It removes outliers from the dataset before training",
-      "It adds polynomial features to the input data directly"
+      "It computes dot products in a high-dimensional space without explicitly mapping data to that space"
     ],
-    "correct": 1,
+    "correct": 3,
     "explanation": "The kernel trick replaces every dot product x_i . x_j with K(x_i, x_j), computing the dot product in a high-dimensional (even infinite-dimensional for RBF) feature space without ever constructing it."
   },
   {

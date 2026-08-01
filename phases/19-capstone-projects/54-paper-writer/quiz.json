@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What does the figure-injection step produce from an experiment manifest?",
       "options": [
-        "A PDF compiled from artifacts",
         "A list of Figure records with stable ids and paths normalised to the paper directory",
+        "A PDF compiled from artifacts",
         "A model prompt with figure descriptions",
         "A bibliography stub"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "read_experiment_manifest returns Figure records. Ids are deterministic, paths are normalised, captions come from the manifest."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Which validation failure raises PaperValidationError before any file is written?",
       "options": [
         "An odd number of authors",
-        "A section that cites a key not declared in the bibliography",
         "An abstract longer than 200 words",
+        "A section that cites a key not declared in the bibliography",
         "A figure path that does not exist on disk"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Missing bibliography keys, duplicate figure ids, empty title, empty abstract, and unknown figure refs all raise PaperValidationError. Existence on disk is not enforced because the LaTeX compiler enforces it later."
     },
     {
@@ -43,11 +43,11 @@
       "question": "Why is the prose generator a callable injected into PaperWriter rather than a method on it?",
       "options": [
         "Because Python does not allow methods to take Paper as an argument",
-        "Because tests can swap a deterministic MockProseGenerator for a model call without touching the writer",
+        "Because the dataclass cannot hold state",
         "Because LaTeX requires a callback",
-        "Because the dataclass cannot hold state"
+        "Because tests can swap a deterministic MockProseGenerator for a model call without touching the writer"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "The writer takes the prose generator as a dependency. The test substitutes MockProseGenerator. Production substitutes a model call. The writer is unchanged."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Why is the manifest part of the writer's contract instead of just the LaTeX file?",
       "options": [
-        "Because LaTeX is too large to parse",
         "Because downstream tooling (critics, dashboards) reads structured manifests, not LaTeX",
+        "Because LaTeX is too large to parse",
         "Because manifest.json is the only file BibTeX accepts",
         "Because LaTeX compilers reject untyped sections"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "The manifest is a stable interface for downstream stages. Critics and dashboards inspect manifest.json. LaTeX is the human-readable artifact, not the machine interface."
     }
   ]

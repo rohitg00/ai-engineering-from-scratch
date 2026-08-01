@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What is the relationship between Conv2d with kernel = stride = patch_size and flatten-then-linear?",
       "options": [
-        "They produce different outputs",
         "Conv2d is a faster way to spell the same linear projection over each patch",
+        "They produce different outputs",
         "Conv2d adds non-linearity",
         "Flatten-then-linear is impossible"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Each Conv2d output location dot-products the patch pixels with one filter, which is identical to flatten-then-linear."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why is the 2D sinusoidal position embedding deterministic instead of learned?",
       "options": [
         "Learned positions are illegal",
-        "Fixed sin/cos signals interpolate cleanly to grids the model never saw, which is useful when resolution changes",
         "It saves disk space",
+        "Fixed sin/cos signals interpolate cleanly to grids the model never saw, which is useful when resolution changes",
         "Random init is required"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Fixed sinusoidal positions are deterministic across resolutions and let the same encoder run on inputs it was not trained on."
     },
     {
@@ -43,11 +43,11 @@
       "question": "What is the output sequence length of a 224x224 image with patch_size=16 and one CLS token?",
       "options": [
         "196",
-        "197",
+        "256",
         "224",
-        "256"
+        "197"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "224/16 = 14, so 14x14 = 196 patches, plus one CLS token for 197 total tokens."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "What changes when you swap a learned position embedding for the 2D sinusoidal one in this lesson?",
       "options": [
-        "Nothing changes",
         "Learned positions can fit a fixed resolution slightly better; sinusoidal positions transfer to new resolutions without retraining",
+        "Nothing changes",
         "Sinusoidal positions cost more parameters",
         "Sinusoidal positions are random per step"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Learned positions are flexible at one resolution. Sinusoidal positions cost zero parameters and survive resolution shifts."
     }
   ]

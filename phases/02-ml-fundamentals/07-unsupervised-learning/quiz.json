@@ -17,12 +17,12 @@
     "stage": "pre",
     "question": "What does K-Means require you to specify before training?",
     "options": [
-      "The exact cluster centers",
       "The number of clusters K",
+      "The exact cluster centers",
       "The labels for each data point",
       "The distance metric to use"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "K-Means requires the number of clusters K as input. It then iteratively assigns points to the nearest centroid and recomputes centroids until convergence."
   },
   {
@@ -31,11 +31,11 @@
     "question": "K-Means fails on two interlocking half-moon shapes but DBSCAN succeeds. Why?",
     "options": [
       "DBSCAN uses more data than K-Means",
-      "DBSCAN finds clusters based on density, so it can discover arbitrary shapes, while K-Means assumes spherical clusters",
       "DBSCAN always outperforms K-Means on every dataset",
+      "DBSCAN finds clusters based on density, so it can discover arbitrary shapes, while K-Means assumes spherical clusters",
       "K-Means cannot handle 2D data"
     ],
-    "correct": 1,
+    "correct": 2,
     "explanation": "K-Means assigns points to the nearest centroid, producing spherical (convex) clusters. DBSCAN grows clusters from dense regions, discovering any shape as long as the cluster is connected by density."
   },
   {
@@ -44,11 +44,11 @@
     "question": "What is the silhouette score measuring?",
     "options": [
       "The total number of clusters found",
-      "How similar each point is to its own cluster compared to the nearest other cluster",
+      "The percentage of outliers in the data",
       "The speed of the clustering algorithm",
-      "The percentage of outliers in the data"
+      "How similar each point is to its own cluster compared to the nearest other cluster"
     ],
-    "correct": 1,
+    "correct": 3,
     "explanation": "Silhouette score = (b - a) / max(a, b), where a is mean intra-cluster distance and b is mean nearest-cluster distance. It ranges from -1 (wrong cluster) to +1 (well-clustered)."
   },
   {

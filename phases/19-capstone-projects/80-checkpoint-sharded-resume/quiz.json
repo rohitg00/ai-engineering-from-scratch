@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What does the manifest record that the shard files cannot?",
       "options": [
-        "Random numbers",
         "world_size, schema version, per-shard sha256, and shard ownership; gives the loader a contract to validate before touching state",
+        "Random numbers",
         "Filesystem name",
         "Hostname"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Without the manifest the loader has to guess which shard belongs to which rank and trust the file count is right."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why write to <name>.tmp and rename instead of writing directly?",
       "options": [
         "Faster",
-        "POSIX rename within a filesystem is atomic: a crash mid-write leaves the previous file untouched. Direct writes can leave half-finished checkpoints that poison the next resume",
         "Required by torch",
+        "POSIX rename within a filesystem is atomic: a crash mid-write leaves the previous file untouched. Direct writes can leave half-finished checkpoints that poison the next resume",
         "Saves memory"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Without atomic write a partial save plus an updated manifest pointing at it corrupts state on the next load."
     },
     {
@@ -43,11 +43,11 @@
       "question": "What does sha256 per shard defend against?",
       "options": [
         "Network attacks",
-        "Partial or corrupted writes; verifying the hash on load catches truncated shards before they touch model state",
+        "Memory leak",
         "Slowdown",
-        "Memory leak"
+        "Partial or corrupted writes; verifying the hash on load catches truncated shards before they touch model state"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Without sha256 verification a truncated shard loads silently and corrupts the optimiser, surfacing later as NaN loss."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Why does production rotate checkpoints (keep last K)?",
       "options": [
-        "Aesthetic",
         "Without rotation the disk fills mid-run and the next checkpoint fails; rotation deletes the oldest before writing the new one, bounding disk usage",
+        "Aesthetic",
         "Compression",
         "It does not"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Real runs keep 3-5 recent checkpoints; the oldest is dropped before each new save so the disk budget is fixed."
     }
   ]

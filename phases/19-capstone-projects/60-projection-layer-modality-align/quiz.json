@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "Why is the two-layer MLP enough for modality alignment in practice?",
       "options": [
-        "PyTorch requires two layers",
         "One non-linear bend (GELU) between two linear projections is empirically enough to align CLIP-style features with text embeddings",
+        "PyTorch requires two layers",
         "One-layer projections are forbidden",
         "Deeper projections are illegal"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "LLaVA and its descendants ship this two-layer MLP because the non-linearity fixes curvature mismatches a single linear cannot."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why is the vision encoder frozen during this alignment stage?",
       "options": [
         "Frozen means faster wall time",
-        "The 86M-parameter encoder cannot be retrained on a small mock corpus; the 1.3M-parameter projection alone is light enough to align in minutes",
         "PyTorch does not support training the encoder",
+        "The 86M-parameter encoder cannot be retrained on a small mock corpus; the 1.3M-parameter projection alone is light enough to align in minutes",
         "The encoder is empty"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Freezing the encoder and text table makes the projection the only thing learning, which is the operational shape of every adapter-based VLM."
     },
     {
@@ -43,11 +43,11 @@
       "question": "What does cosine_alignment_loss(image_emb, text_emb) return when the two vectors point in opposite directions?",
       "options": [
         "0.0",
-        "2.0",
+        "Infinity",
         "1.0",
-        "Infinity"
+        "2.0"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Loss is 1 - cos(angle). Antiparallel vectors have cos = -1, so the loss is 1 - (-1) = 2.0."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Which production system maps most directly to the lesson 60 pattern?",
       "options": [
-        "PaLM",
         "LLaVA 1.5: frozen vision encoder, frozen LLM, train only a two-layer MLP projection",
+        "PaLM",
         "AlphaFold",
         "Stable Diffusion"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "LLaVA's stage-one training is exactly this: a frozen encoder and LM with a two-layer MLP bridge as the sole trainable piece."
     }
   ]

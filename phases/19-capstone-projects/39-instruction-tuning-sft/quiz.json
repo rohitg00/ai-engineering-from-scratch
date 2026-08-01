@@ -18,12 +18,12 @@
       "stage": "check",
       "question": "The collate function sets labels[i] = -100 on instruction positions and on padding positions. Why does PyTorch cross-entropy treat these positions correctly?",
       "options": [
-        "Cross-entropy silently drops any negative target.",
         "ignore_index=-100 is honoured by F.cross_entropy: those positions contribute zero loss and zero gradient.",
+        "Cross-entropy silently drops any negative target.",
         "The model output at those positions is set to NaN automatically.",
         "PyTorch normalises by sequence length so masked positions cancel out."
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "ignore_index is a documented argument of F.cross_entropy. Targets equal to it contribute zero to loss and zero to gradients. -100 is the conventional default value."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why does `shifted_loss` slice `logits[:, :-1, :]` and `labels[:, 1:]` instead of using them at the same positions?",
       "options": [
         "To make the tensors the same size after the collate step.",
-        "Because the model at position i predicts the token at position i+1 under the causal next-token objective.",
         "To exclude the final padding position automatically.",
+        "Because the model at position i predicts the token at position i+1 under the causal next-token objective.",
         "It is an optional optimisation; using same-position labels also works."
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Causal LM trains position i to predict token i+1. The slice aligns the prediction at position i with the gold label at position i+1, which is the standard next-token objective."
     },
     {
@@ -43,11 +43,11 @@
       "question": "You train without the mask: labels are equal to input_ids with no -100. The model trains but exact-match on the response is worse than with the mask. The most likely cause?",
       "options": [
         "The optimiser overfits the response tokens.",
-        "Most of the gradient signal goes to predicting the instruction (the largest masked region was holding it back).",
+        "The model cannot learn the boundary token without the mask.",
         "Cross-entropy is unstable when the loss includes specials.",
-        "The model cannot learn the boundary token without the mask."
+        "Most of the gradient signal goes to predicting the instruction (the largest masked region was holding it back)."
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "When instruction positions count toward the loss, they dominate the gradient because there are usually more of them than response tokens. The effective learning rate on the part you care about (the response) drops, and the model spends capacity reconstructing inputs the user always supplies."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "You want to use the SFT model in a chatbot that supports multi-turn dialogue. What is the minimum change required to the data and the mask?",
       "options": [
-        "None: SFT models always handle multi-turn out of the box.",
         "Add a USER and ASSISTANT marker per turn, concatenate turns, and mask everything except the assistant turn currently being trained on.",
+        "None: SFT models always handle multi-turn out of the box.",
         "Switch the loss to mean-squared error.",
         "Increase the vocabulary."
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Multi-turn SFT generalises the single-turn template. Each turn gets a role marker. The mask is the union of all non-assistant positions plus padding. The training objective is unchanged."
     }
   ]

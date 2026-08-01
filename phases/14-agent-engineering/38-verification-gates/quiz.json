@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "Why must the gate be deterministic?",
       "options": [
-        "Determinism is free",
         "The same artifact set must produce the same verdict every time; LLM judges belong in the reviewer (qualitative), not the gate (status)",
+        "Determinism is free",
         "Providers require it",
         "It saves money"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Mixing model judgment into the gate collapses the deterministic/qualitative split."
     },
     {
@@ -31,11 +31,11 @@
       "question": "What is the gate's override discipline?",
       "options": [
         "Anyone can override silently",
-        "Block-severity findings can only be overridden by a human with a recorded override_reason and overridden_by user id in a signed audit log",
         "Override requires a manager email",
+        "Block-severity findings can only be overridden by a human with a recorded override_reason and overridden_by user id in a signed audit log",
         "Overrides are forbidden"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Signed overrides land in outputs/verification/overrides.jsonl; agent cannot self-override."
     },
     {
@@ -43,11 +43,11 @@
       "question": "What is the Hybrid Norm pairing the lesson cites?",
       "options": [
         "Hot/cold prompts",
-        "Verifiable rewards (tests, schemas, exit codes) answer 'did it solve the problem?'; LLM rubrics answer 'is it readable, secure, on-style?'",
+        "Cache vs no-cache",
         "GPU and CPU split",
-        "Cache vs no-cache"
+        "Verifiable rewards (tests, schemas, exit codes) answer 'did it solve the problem?'; LLM rubrics answer 'is it readable, secure, on-style?'"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Anthropic 2026 guidance: gate runs the first class; reviewer (Lesson 39) runs the second."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "What does a coverage_floor check protect against?",
       "options": [
-        "Hot-path latency",
         "Agents quietly deleting tests that fail; the gate fails if measured coverage drops below the floor or last merge by more than 1 percentage point",
+        "Hot-path latency",
         "Cold starts",
         "Outdated lockfiles"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Without a floor, agents can silently lower coverage to keep the verdict green."
     },
     {
@@ -79,11 +79,11 @@
       "question": "When should --strict mode promote every warn to block?",
       "options": [
         "Always",
-        "Release branches, ship-blocking PRs, post-incident triage; not the daily default because strict-on-everything corrodes flow",
         "Never",
+        "Release branches, ship-blocking PRs, post-incident triage; not the daily default because strict-on-everything corrodes flow",
         "Only on Sundays"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "--strict is opt-in by branch; reserve for high-stakes moments."
     }
   ]

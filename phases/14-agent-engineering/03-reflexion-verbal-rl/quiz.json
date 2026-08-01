@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What three components define a Reflexion system?",
       "options": [
-        "Planner, Worker, Solver",
         "Actor, Evaluator, Self-Reflector",
+        "Planner, Worker, Solver",
         "Generator, Critic, Optimizer",
         "Selector, Expander, Backpropagator"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Reflexion factors the agent into an Actor that runs trajectories, an Evaluator that scores them, and a Self-Reflector that writes lessons."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Which evaluator type uses an external binary signal like a unit test or a known correct answer?",
       "options": [
         "Heuristic",
-        "Scalar",
         "Self-evaluated",
+        "Scalar",
         "Vote-based"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Scalar evaluators read pass/fail signals from ground truth (ALFWorld success, HumanEval tests)."
     },
     {
@@ -43,11 +43,11 @@
       "question": "Why is self-evaluation a weaker signal than scalar feedback?",
       "options": [
         "It is slower to compute",
-        "The model judging itself has no external grounding so it can rubber-stamp its own answer",
+        "It cannot run on tools",
         "It always requires a larger model",
-        "It cannot run on tools"
+        "The model judging itself has no external grounding so it can rubber-stamp its own answer"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Self-eval lacks an external check, so a confident hallucination scores well; pair it with tool-grounded verification."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "What is memory rot in the Reflexion pattern?",
       "options": [
-        "Losing reflections when the process restarts",
         "Episodic buffer fills with obsolete or wrong reflections and slows or biases future trials",
+        "Losing reflections when the process restarts",
         "Reflections get encrypted by the provider",
         "The reflection prompt exceeds the context window"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Accumulated stale or wrong reflections degrade behavior; mitigate with compaction or TTL."
     },
     {
@@ -79,11 +79,11 @@
       "question": "Which production pattern is the lesson's clearest match for Reflexion?",
       "options": [
         "Cursor's apply-edits flow",
-        "Claude Code's CLAUDE.md learnings prepended to future sessions",
         "OpenAI's batch API",
+        "Claude Code's CLAUDE.md learnings prepended to future sessions",
         "Anthropic's prompt caching"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "CLAUDE.md learnings, pro-workflow's learn-rule, and Letta's sleep-time compute all externalize the episodic reflection buffer."
     }
   ]

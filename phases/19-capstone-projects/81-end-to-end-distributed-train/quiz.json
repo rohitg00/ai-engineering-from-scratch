@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What four invariants does the demo verify?",
       "options": [
-        "Speed",
         "(a) loss runs to step 20 without NaN, (b) every rank's parameter norm agrees, (c) per-rank optimiser memory equals the ZeRO-1 formula, (d) the step-10 checkpoint reloads byte-equal",
+        "Speed",
         "Tokens per second",
         "Hardware"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Each invariant catches a different composition bug: NaN catches divergence, norm-agree catches sync drift, memory catches sharding bugs, checkpoint catches write atomicity."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why is the model a tiny GPT instead of an MLP?",
       "options": [
         "Look fancy",
-        "GPT adds LayerNorm running statistics, embedding gradient shape, and softmax+cross-entropy edge cases that an MLP would hide",
         "Faster",
+        "GPT adds LayerNorm running statistics, embedding gradient shape, and softmax+cross-entropy edge cases that an MLP would hide",
         "Required"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "MLP gradient sync was verified in lesson 77; the capstone needs a model with more edge cases to prove composition under realistic ops."
     },
     {
@@ -43,11 +43,11 @@
       "question": "What does self-terminating mean in this context?",
       "options": [
         "Process kills itself",
-        "Fixed step count (20), exit 0 on completion, no human in the loop; if any piece deadlocks the demo never returns and CI catches it",
+        "Manual",
         "Crash recovery",
-        "Manual"
+        "Fixed step count (20), exit 0 on completion, no human in the loop; if any piece deadlocks the demo never returns and CI catches it"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "A bounded run with exit 0 lets the test rig assert termination; while-True loops mask deadlocks."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Why does production use wall-clock checkpoint cadence instead of step count?",
       "options": [
-        "Looks cleaner",
         "Step time varies with sequence length and microbatch count; a 10-minute cadence catches the same compute regardless of model size",
+        "Looks cleaner",
         "Faster",
         "Required by NCCL"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "The lesson uses step-based for clarity; production runs typically save every 5-15 minutes of wall-clock."
     }
   ]
