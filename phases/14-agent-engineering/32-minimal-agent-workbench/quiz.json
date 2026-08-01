@@ -6,72 +6,72 @@
       "stage": "pre",
       "question": "What three files form the smallest useful workbench?",
       "options": [
-        "AGENTS.md (router), agent_state.json (state), task_board.json (queue)",
-        "README.md, CHANGELOG.md, LICENSE",
         "model.py, prompts.py, tools.py",
-        "Dockerfile, Makefile, .gitignore"
+        "Dockerfile, Makefile, .gitignore",
+        "AGENTS.md (router), agent_state.json (state), task_board.json (queue)",
+        "README.md, CHANGELOG.md, LICENSE"
       ],
-      "correct": 0,
+      "correct": 2,
       "explanation": "A short router, durable state, and a task queue are the floor."
     },
     {
       "stage": "pre",
       "question": "What is the lesson's framing of AGENTS.md?",
       "options": [
-        "A 3000-line onboarding manual",
-        "A short router that points at deeper docs and the state and board",
+        "A secret kept out of the repo",
         "A pure prompt-cache key",
-        "A secret kept out of the repo"
+        "A short router that points at deeper docs and the state and board",
+        "A 3000-line onboarding manual"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "AGENTS.md is a router, not a manual; long manuals get ignored."
     },
     {
       "stage": "check",
       "question": "What does Augment Code's data say about a good AGENTS.md?",
       "options": [
-        "It has no measurable effect",
         "A good AGENTS.md gives a quality jump equivalent to upgrading from Haiku to Opus; a bad one is worse than no file",
         "Length always helps",
-        "Only Claude reads it"
+        "Only Claude reads it",
+        "It has no measurable effect"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Augment Code's measurement: best files are model-upgrade-shaped, worst are worse than nothing."
     },
     {
       "stage": "check",
       "question": "Why does the lesson recommend file-backed state over chat-history state?",
       "options": [
+        "Files are smaller",
         "Disk is cheaper",
         "Chat history is volatile; the file survives session death, conversation trimming, and tool resets",
-        "Files are smaller",
         "It is required by SOC 2"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Sessions die and chat gets trimmed; the file is the durable system of record."
     },
     {
       "stage": "check",
       "question": "What does the lesson say happens when conflicting instructions land in AGENTS.md?",
       "options": [
-        "Latency drops",
-        "Conflicting instructions silently drop the agent from interactive to greedy mode (AMBIG-SWE: 48.8% to 28% resolve rate)",
         "Cost rises slightly",
-        "Nothing"
+        "Nothing",
+        "Latency drops",
+        "Conflicting instructions silently drop the agent from interactive to greedy mode (AMBIG-SWE: 48.8% to 28% resolve rate)"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "AMBIG-SWE measured a large resolve-rate drop when contradictions appear; number priorities instead."
     },
     {
       "stage": "post",
       "question": "Why does the lesson recommend cross-tool symlinks like CLAUDE.md -> AGENTS.md?",
       "options": [
-        "To save bytes",
-        "So a single source of truth fans out to every coding agent without forking",
+        "To satisfy MIT",
         "To pass auditing",
-        "To satisfy MIT"
+        "So a single source of truth fans out to every coding agent without forking",
+        "To save bytes"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Symlinks (or Nx-style generators) keep one canonical source across Claude Code, Codex, Cursor, Copilot, etc."
     },
     {

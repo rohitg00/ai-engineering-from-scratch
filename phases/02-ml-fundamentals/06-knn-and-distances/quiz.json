@@ -5,11 +5,11 @@
     "question": "KNN is called a 'lazy learner.' What does that mean?",
     "options": [
       "It converges slowly during training",
-      "It does no computation at training time and computes everything at prediction time",
       "It uses a simplified version of the loss function",
+      "It does no computation at training time and computes everything at prediction time",
       "It only works on small datasets"
     ],
-    "correct": 1,
+    "correct": 2,
     "explanation": "Lazy learning means KNN stores the training data and does no work during 'training.' All computation (distance calculations, voting) happens when a prediction is requested."
   },
   {
@@ -18,11 +18,11 @@
     "question": "Why is feature scaling critical for KNN?",
     "options": [
       "KNN cannot handle negative numbers without scaling",
-      "Distance calculations are dominated by features with larger ranges, making scaling necessary for fair comparisons",
+      "KNN uses gradient descent which requires normalized inputs",
       "Feature scaling reduces the number of neighbors needed",
-      "KNN uses gradient descent which requires normalized inputs"
+      "Distance calculations are dominated by features with larger ranges, making scaling necessary for fair comparisons"
     ],
-    "correct": 1,
+    "correct": 3,
     "explanation": "KNN relies on distances. A feature ranging 0-1000 will dominate a feature ranging 0-1 in distance calculations. Scaling puts all features on comparable ranges."
   },
   {
@@ -43,12 +43,12 @@
     "stage": "post",
     "question": "Which distance metric is most appropriate for comparing text documents represented as TF-IDF vectors?",
     "options": [
-      "L2 (Euclidean) distance",
-      "L1 (Manhattan) distance",
+      "Chebyshev distance",
       "Cosine distance",
-      "Chebyshev distance"
+      "L2 (Euclidean) distance",
+      "L1 (Manhattan) distance"
     ],
-    "correct": 2,
+    "correct": 1,
     "explanation": "Cosine distance measures the angle between vectors, ignoring magnitude. For text, document length (magnitude) is noise -- direction captures meaning. Cosine consistently outperforms L1/L2 for text."
   },
   {
@@ -58,10 +58,10 @@
     "options": [
       "The boundary becomes more complex and detailed",
       "The boundary stays the same regardless of K",
-      "The boundary smooths out, eventually predicting the majority class for every point",
-      "The boundary becomes circular"
+      "The boundary becomes circular",
+      "The boundary smooths out, eventually predicting the majority class for every point"
     ],
-    "correct": 2,
+    "correct": 3,
     "explanation": "K=1 produces jagged boundaries that follow every point (overfitting). As K increases, boundaries smooth out. K=N means every query considers all points, always predicting the majority class (maximum bias)."
   }
 ]

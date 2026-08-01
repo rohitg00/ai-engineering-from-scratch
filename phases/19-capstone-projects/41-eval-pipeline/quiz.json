@@ -18,12 +18,12 @@
       "stage": "check",
       "question": "The perplexity eval sums per-token negative log-likelihood over non-pad positions and divides by the total non-pad token count. Why not average per-batch perplexities instead?",
       "options": [
+        "Perplexity is undefined for batched data.",
         "Averaging per-batch perplexities is mathematically equivalent.",
-        "Averaging per-batch perplexities under-weights short sequences (their per-batch ppl carries more variance) and produces a biased aggregate.",
         "Batches contain padded tokens that must always be averaged.",
-        "Perplexity is undefined for batched data."
+        "Averaging per-batch perplexities under-weights short sequences (their per-batch ppl carries more variance) and produces a biased aggregate."
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Per-token aggregation is the textbook definition and avoids batch-size and length biases. Per-batch averaging is a common bug; on a fixture with varying sequence lengths it produces a different number from the correct one."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Token F1 returns 1.0 when both prediction and reference are empty. Which other case must return a specific value?",
       "options": [
         "When pred is empty but reference is non-empty, F1 must be 1.0.",
+        "When pred contains exactly one matching token, F1 must be 0.5.",
         "When pred is non-empty but reference is empty, F1 must be undefined.",
-        "When only one of pred or reference is empty, F1 must be 0.0.",
-        "When pred contains exactly one matching token, F1 must be 0.5."
+        "When only one of pred or reference is empty, F1 must be 0.0."
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": "Empty-empty is a vacuous match. Mixed empty-non-empty is the unambiguous miss case: there is content on one side and nothing on the other. The SQuAD convention is F1 = 0 in that case."
     },
     {
@@ -55,23 +55,23 @@
       "question": "You swap the mock judge for a real frontier-model judge. What is the minimum change to the pipeline?",
       "options": [
         "Rewrite the aggregator to accept a different score range.",
-        "Replace the `judge_fn` argument to `judge_eval` with a function that has the same signature: (instruction, prediction, reference) -> JudgeVerdict.",
         "Add a new entry to DEFAULT_WEIGHTS.",
+        "Replace the `judge_fn` argument to `judge_eval` with a function that has the same signature: (instruction, prediction, reference) -> JudgeVerdict.",
         "Migrate the entire eval suite to async I/O."
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "The judge interface is `(instruction, prediction, reference) -> JudgeVerdict`. Any function with that signature drops in. The pipeline is decoupled from the judge implementation by that boundary, which is the point."
     },
     {
       "stage": "post",
       "question": "Your aggregate score is 0.72, but exact-match is 0.40 and judge is 4.5/5. Which trade-off is the model making?",
       "options": [
-        "The model is hitting the gold string exactly less often, but the judge thinks the open-form answers are decent.",
-        "The model is overfitting on the LM corpus.",
         "The aggregate is mis-computed.",
-        "The judge is mis-aligned with exact-match by definition."
+        "The model is overfitting on the LM corpus.",
+        "The judge is mis-aligned with exact-match by definition.",
+        "The model is hitting the gold string exactly less often, but the judge thinks the open-form answers are decent."
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": "Low EM with high judge suggests paraphrase: the answers are right in substance but not character-for-character with the gold. This is exactly the dimension that EM misses and judge captures. The trade-off is informative, not a bug."
     }
   ]

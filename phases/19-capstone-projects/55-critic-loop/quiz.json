@@ -7,32 +7,32 @@
       "question": "Why does the critic score across five fixed dimensions instead of returning a freeform paragraph?",
       "options": [
         "Because models cannot generate paragraphs reliably",
-        "Because a fixed vector lets the harness detect per-dimension regressions across rounds",
+        "Because the reviser only accepts JSON",
         "Because LaTeX requires a score field",
-        "Because the reviser only accepts JSON"
+        "Because a fixed vector lets the harness detect per-dimension regressions across rounds"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "A fixed dimension vector turns critique into structured data the harness can compare across rounds. Freeform criticism is unverifiable; vectors make regressions visible."
     },
     {
       "stage": "pre",
       "question": "In what order does the loop check stop conditions at the end of a round?",
       "options": [
-        "Budget, then plateau, then target",
-        "Target, then plateau, then budget",
         "Plateau, then target, then budget",
-        "Whichever fires first by random tie-break"
+        "Budget, then plateau, then target",
+        "Whichever fires first by random tie-break",
+        "Target, then plateau, then budget"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Target met wins (the work is done). Then plateau (no more progress is achievable). Then budget (hard cap). The order makes the result deterministic when more than one condition could fire."
     },
     {
       "stage": "check",
       "question": "Why does plateau detection require two consecutive flat rounds rather than one?",
       "options": [
-        "Because the dataclass requires a list",
-        "Because deterministic scoring still has noise per round; one flat round is not enough signal",
         "Because the model returns nondeterministic scores",
+        "Because deterministic scoring still has noise per round; one flat round is not enough signal",
+        "Because the dataclass requires a list",
         "Because the dashboard expects two points"
       ],
       "correct": 1,
@@ -42,12 +42,12 @@
       "stage": "check",
       "question": "What does the reviser receive as input each round?",
       "options": [
-        "The full Critique object including scores",
-        "The paper and the list of Suggestion records",
+        "The raw LaTeX source",
         "A model-generated paragraph",
-        "The raw LaTeX source"
+        "The full Critique object including scores",
+        "The paper and the list of Suggestion records"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Reviser.__call__ takes (paper, suggestions). Each Suggestion carries a dimension, target section, and an edit instruction. The reviser does not see scores. That separation lets either side be swapped without touching the other."
     },
     {
@@ -55,23 +55,23 @@
       "question": "What does the trace contain for each round?",
       "options": [
         "Just the final paper draft",
-        "Round number, score vector, mean, suggestions applied, verdict",
+        "Only the convergence verdict",
         "The model prompt and completion",
-        "Only the convergence verdict"
+        "Round number, score vector, mean, suggestions applied, verdict"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "The trace is the per-round event log. Dashboards render it as a score-over-time chart; the next stage reads it to decide whether the branch is worth keeping."
     },
     {
       "stage": "post",
       "question": "A critic that keeps emitting suggestions that never improve any score will produce which terminal verdict?",
       "options": [
+        "converged, because suggestions were applied",
         "target, because the budget hides the bug",
         "plateau or budget, because the harness will catch the lack of progress",
-        "converged, because suggestions were applied",
         "An exception, because the loop crashes"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Either plateau (two flat rounds) or budget (hard cap) fires. Both verdicts surface the bug. The loop never silently succeeds."
     }
   ]

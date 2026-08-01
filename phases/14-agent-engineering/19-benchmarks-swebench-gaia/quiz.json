@@ -6,9 +6,9 @@
       "stage": "pre",
       "question": "What does SWE-bench's evaluator check on a candidate patch?",
       "options": [
-        "BLEU score against the reference fix",
-        "Previously failing tests now pass (FAIL_TO_PASS) and previously passing tests still pass (PASS_TO_PASS)",
         "Patch length under 200 lines",
+        "Previously failing tests now pass (FAIL_TO_PASS) and previously passing tests still pass (PASS_TO_PASS)",
+        "BLEU score against the reference fix",
         "Patch passes a separate LLM judge"
       ],
       "correct": 1,
@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "Why does SWE-bench Verified exist?",
       "options": [
+        "It includes more languages",
         "It runs faster",
         "OpenAI's 500-task human-curated subset removes ambiguous issues and unreliable tests",
-        "It includes more languages",
         "It uses a different patch format"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Verified is the cleaner subset for credible reporting."
     },
     {
@@ -31,9 +31,9 @@
       "question": "What did SWE-bench+ find about successful patches?",
       "options": [
         "32.67% leaked solution text in the issue and 31.08% had suspiciously weak test coverage",
-        "All patches were memorized",
+        "Patches always exceeded 1000 lines",
         "There is no contamination",
-        "Patches always exceeded 1000 lines"
+        "All patches were memorized"
       ],
       "correct": 0,
       "explanation": "SWE-bench+ flagged solution leakage and weak coverage on a large fraction of successful patches."
@@ -43,23 +43,23 @@
       "question": "What is GAIA's design philosophy?",
       "options": [
         "Hard for humans, easy for AI",
-        "Conceptually simple for humans (about 92%) but hard for AI (early GPT-4 with plugins: about 15%)",
         "Pure benchmark of vector retrieval",
-        "Only single-turn questions"
+        "Only single-turn questions",
+        "Conceptually simple for humans (about 92%) but hard for AI (early GPT-4 with plugins: about 15%)"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "GAIA is intentionally easy-for-humans, hard-for-AI, testing reasoning + tools + modality."
     },
     {
       "stage": "check",
       "question": "Which is NOT one of AgentBench's environment categories?",
       "options": [
-        "Code (Bash, DB, KG)",
         "Games (Alfworld, LTP)",
         "Web (WebShop, Mind2Web)",
-        "Gradient (RL, IRL)"
+        "Gradient (RL, IRL)",
+        "Code (Bash, DB, KG)"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": "AgentBench covers code, games, web, and open-ended generation. There is no gradient category."
     },
     {
@@ -78,12 +78,12 @@
       "stage": "post",
       "question": "Which dimension do these benchmarks NOT measure?",
       "options": [
-        "Real-world operational cost (tokens, wall-clock), adversarial safety, and your own domain",
         "Test transitions",
+        "Step counts",
         "Per-task success",
-        "Step counts"
+        "Real-world operational cost (tokens, wall-clock), adversarial safety, and your own domain"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": "Benchmarks aggregate; they do not capture cost, adversarial robustness, or your domain."
     }
   ]

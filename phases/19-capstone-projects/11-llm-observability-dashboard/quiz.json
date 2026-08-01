@@ -6,12 +6,12 @@
       "stage": "pre",
       "question": "Which ingest schema do Langfuse, Phoenix, and OpenLLMetry converge on?",
       "options": [
-        "Proprietary JSON per vendor",
         "Prometheus exposition format",
         "OpenTelemetry GenAI semantic conventions over OTLP HTTP",
+        "Proprietary JSON per vendor",
         "Plain CSV log files"
       ],
-      "correct": 2,
+      "correct": 1,
       "explanation": ""
     },
     {
@@ -20,10 +20,10 @@
       "options": [
         "They are interchangeable and one is chosen at random",
         "Postgres is faster for span ingest",
-        "ClickHouse cannot store strings",
-        "ClickHouse handles columnar analytics over spans while Postgres holds users, sessions, and app metadata"
+        "ClickHouse handles columnar analytics over spans while Postgres holds users, sessions, and app metadata",
+        "ClickHouse cannot store strings"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": ""
     },
     {
@@ -42,12 +42,12 @@
       "stage": "check",
       "question": "How does the dashboard detect drift across weeks?",
       "options": [
+        "Counts unique trace IDs",
         "Computes PSI or KL divergence on pooled prompt embeddings and watches eval-score trends",
         "Manual eyeballing of the dashboard",
-        "Reads the latest deploy timestamp",
-        "Counts unique trace IDs"
+        "Reads the latest deploy timestamp"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": ""
     },
     {
@@ -56,31 +56,31 @@
       "options": [
         "Under 1 hour",
         "Within 24 hours",
-        "Within the next on-call shift",
-        "Under 5 minutes from bug deployed to Slack alert"
+        "Under 5 minutes from bug deployed to Slack alert",
+        "Within the next on-call shift"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which SDK families must produce canonical GenAI spans to meet the trace-coverage rubric?",
       "options": [
-        "Only vLLM",
-        "At least six: OpenAI, Anthropic, Google GenAI, LangChain, LlamaIndex, and vLLM",
+        "OpenAI and Anthropic only",
         "Any one SDK is enough",
-        "OpenAI and Anthropic only"
+        "Only vLLM",
+        "At least six: OpenAI, Anthropic, Google GenAI, LangChain, LlamaIndex, and vLLM"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "How are evaluation results linked back to the original LLM call?",
       "options": [
+        "As a separate Postgres table with no trace ID",
         "As a CSV emailed nightly",
         "As Slack messages only",
-        "As a separate Postgres table with no trace ID",
         "As eval spans written as children of the parent trace in ClickHouse"
       ],
       "correct": 3,

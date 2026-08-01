@@ -6,24 +6,24 @@
       "stage": "pre",
       "question": "Why does the generator produce a ranked queue instead of a single hypothesis?",
       "options": [
-        "Because the parser cannot read a single block",
         "Because the runner needs depth so it can pop the next hypothesis when the first one fails",
         "Because the mock model only emits lists",
-        "Because the embedding requires more than one input"
+        "Because the embedding requires more than one input",
+        "Because the parser cannot read a single block"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "The point of generating a queue is to amortise sampling cost across the loop. When the first hypothesis fails the runner pops the next without a fresh sampling pass."
     },
     {
       "stage": "pre",
       "question": "What does the temperature ramp accomplish on each pass?",
       "options": [
-        "It raises the parser tolerance",
         "It widens the sampling distribution so later drafts can land further from the seed",
         "It increases the embedding dimension",
+        "It raises the parser tolerance",
         "It triples the seed value"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Higher temperature widens the sampling distribution. The ramp encourages each pass to drift further so the novelty filter has something to do."
     },
     {
@@ -54,12 +54,12 @@
       "stage": "check",
       "question": "Why is the mock language model keyed on a temperature bucket rather than the raw float?",
       "options": [
-        "Because floats cannot be hashed",
         "Because buckets make the schedule discrete so a small temperature change can pick a different scripted draft",
+        "Because the embedding requires it",
         "Because the parser needs an integer",
-        "Because the embedding requires it"
+        "Because floats cannot be hashed"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Buckets discretise the continuous schedule. Two adjacent temperatures can map to different buckets and pull different drafts from the scripted bank, which is how the mock simulates varied sampling."
     },
     {
@@ -68,8 +68,8 @@
       "options": [
         "The generator raises a hard error",
         "The queue is empty and each pass logs a parse rejection so the failure mode is auditable",
-        "The runner retries with a fresh prompt",
-        "The novelty threshold is lowered automatically"
+        "The novelty threshold is lowered automatically",
+        "The runner retries with a fresh prompt"
       ],
       "correct": 1,
       "explanation": "Parser failures are recorded as logs with a parse reject reason. The queue can come back empty without crashing the loop, and the logs explain why."

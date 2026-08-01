@@ -6,10 +6,10 @@
       "stage": "pre",
       "question": "What three labels does NLI assign to a (premise, hypothesis) pair?",
       "options": [
-        "Positive / negative / neutral",
         "True / false / unknown",
+        "Cause / effect / unrelated",
         "Entailment / contradiction / neutral",
-        "Cause / effect / unrelated"
+        "Positive / negative / neutral"
       ],
       "correct": 2,
       "explanation": "NLI is a 3-way classification over entailment, contradiction, and neutral."
@@ -18,22 +18,22 @@
       "stage": "pre",
       "question": "How is NLI used as a zero-shot text classifier?",
       "options": [
+        "By prompting an LLM",
         "Verbalize each candidate label as a hypothesis (e.g. 'This text is about sports') and pick the label with the highest entailment score",
-        "By averaging embeddings",
         "By computing TF-IDF",
-        "By prompting an LLM"
+        "By averaging embeddings"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": "NLI-as-classifier turns labels into hypotheses; the model picks the max-entailment label."
     },
     {
       "stage": "check",
       "question": "Why is NLI a faithfulness check for RAG outputs?",
       "options": [
-        "It uses tokenizers",
-        "Checking whether the retrieved context entails each answer claim is exactly the formulation NLI was trained on",
         "It is cheap",
-        "It is multilingual"
+        "Checking whether the retrieved context entails each answer claim is exactly the formulation NLI was trained on",
+        "It is multilingual",
+        "It uses tokenizers"
       ],
       "correct": 1,
       "explanation": "Hallucination = answer claims not entailed by retrieved context; NLI directly measures entailment."
@@ -42,24 +42,24 @@
       "stage": "check",
       "question": "What does the hypothesis-only baseline expose?",
       "options": [
-        "Multilingual gaps",
+        "Tokenizer drift",
         "Slow inference",
-        "Datasets where the hypothesis alone (without the premise) is predictive of the label, signalling label leakage",
-        "Tokenizer drift"
+        "Multilingual gaps",
+        "Datasets where the hypothesis alone (without the premise) is predictive of the label, signalling label leakage"
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": "A high hypothesis-only score on SNLI revealed annotation artifacts; useful for debugging your data."
     },
     {
       "stage": "check",
       "question": "Which NLI model family tops 2026 leaderboards as the standard workhorse?",
       "options": [
-        "fastText",
-        "Plain Word2Vec",
         "DeBERTa-v3 variants fine-tuned on MNLI/FEVER/ANLI",
-        "GPT-2"
+        "Plain Word2Vec",
+        "GPT-2",
+        "fastText"
       ],
-      "correct": 2,
+      "correct": 0,
       "explanation": "DeBERTa-v3 fine-tuned on MNLI and related corpora is the open NLI workhorse in 2026."
     },
     {
@@ -68,8 +68,8 @@
       "options": [
         "They were trained on short premises and fail at multi-sentence and multi-hop inference; DocNLI-tuned models handle longer inputs",
         "Larger inputs run slower",
-        "Documents trigger tokenizer drift",
-        "Cosine similarity decays"
+        "Cosine similarity decays",
+        "Documents trigger tokenizer drift"
       ],
       "correct": 0,
       "explanation": "Training distribution mismatch: single-sentence NLI models lose 20+ F1 on document-length inputs."
@@ -78,24 +78,24 @@
       "stage": "post",
       "question": "Why can zero-shot accuracy swing 10+ points based on the hypothesis template?",
       "options": [
+        "Templates change the label set",
         "Models are sensitive to phrasing; e.g. 'This text is about {label}' vs '{label}' alone shifts entailment probabilities",
         "Templates change tokenizer behavior",
-        "Templates affect model weights",
-        "Templates change the label set"
+        "Templates affect model weights"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": "Template wording materially shifts entailment scores; tune it on a small held-out set."
     },
     {
       "stage": "post",
       "question": "What is a safe limit to claim about NLI for hallucination detection?",
       "options": [
-        "It only works on English",
         "It reduces hallucination as a faithfulness signal but does not eliminate it; combine with retrieval recall and human review",
+        "It only works on English",
         "It eliminates hallucination",
         "It requires LLMs"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "NLI is a useful signal but not a complete solution; pair with retrieval metrics and human spot-checks."
     }
   ]

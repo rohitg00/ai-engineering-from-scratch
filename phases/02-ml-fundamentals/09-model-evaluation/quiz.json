@@ -17,12 +17,12 @@
     "stage": "pre",
     "question": "A dataset has 95% negative and 5% positive samples. A model predicts 'negative' for every sample. What is its accuracy?",
     "options": [
-      "50%",
-      "5%",
+      "0%",
       "95%",
-      "0%"
+      "50%",
+      "5%"
     ],
-    "correct": 2,
+    "correct": 1,
     "explanation": "Accuracy = correct predictions / total = 950/1000 = 95%. This shows why accuracy is misleading for imbalanced data -- a useless model looks great."
   },
   {
@@ -30,12 +30,12 @@
     "stage": "post",
     "question": "In K-fold cross-validation with K=5, how many times is each data point used for validation?",
     "options": [
-      "5 times",
       "Exactly once",
+      "5 times",
       "It depends on the random seed",
       "Never -- all data is used for training"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "In K-fold CV, data is split into K equal folds. Each fold is used as the validation set exactly once while the remaining K-1 folds are used for training."
   },
   {
@@ -43,10 +43,10 @@
     "stage": "post",
     "question": "A learning curve shows training score = 0.95 and validation score = 0.60 that does not improve with more data. What should you try?",
     "options": [
-      "Collect more training data",
+      "Increase the learning rate",
       "Use a simpler model or add regularization to reduce variance (overfitting)",
       "Remove the validation set to give the model more training data",
-      "Increase the learning rate"
+      "Collect more training data"
     ],
     "correct": 1,
     "explanation": "A large gap between training (high) and validation (low) scores is high variance (overfitting). The fix is a simpler model, more regularization, or techniques like dropout -- not more data if the gap persists."

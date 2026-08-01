@@ -4,12 +4,12 @@
     "stage": "pre",
     "question": "Why does combining multiple weak classifiers into an ensemble improve accuracy?",
     "options": [
+      "Weak classifiers are always faster than strong classifiers",
       "Each weak classifier memorizes a different part of the test set",
-      "If the classifiers make different errors, majority voting cancels out individual mistakes",
       "Ensembles always use more training data than single models",
-      "Weak classifiers are always faster than strong classifiers"
+      "If the classifiers make different errors, majority voting cancels out individual mistakes"
     ],
-    "correct": 1,
+    "correct": 3,
     "explanation": "The key is diversity. If classifiers make independent errors, majority voting means a wrong answer must fool more than half the models. Errors cancel out, and the ensemble accuracy exceeds any individual."
   },
   {
@@ -17,12 +17,12 @@
     "stage": "pre",
     "question": "What is the main difference between bagging and boosting?",
     "options": [
+      "Bagging requires labeled data; boosting works unsupervised",
       "Bagging trains models in parallel on random subsets; boosting trains models sequentially, focusing on previous errors",
-      "Bagging uses deep neural networks; boosting uses decision trees",
       "Bagging reduces bias; boosting reduces variance",
-      "Bagging requires labeled data; boosting works unsupervised"
+      "Bagging uses deep neural networks; boosting uses decision trees"
     ],
-    "correct": 0,
+    "correct": 1,
     "explanation": "Bagging trains models independently on bootstrap samples (parallel, reduces variance). Boosting trains models sequentially, with each new model focusing on the mistakes of the ensemble so far (reduces bias)."
   },
   {
@@ -30,12 +30,12 @@
     "stage": "post",
     "question": "In AdaBoost, what happens to the sample weight of a misclassified training point after each round?",
     "options": [
-      "It stays the same",
       "It increases, so the next weak learner focuses more on this hard example",
       "It decreases, so the next learner ignores it",
+      "It stays the same",
       "It is removed from the training set"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "AdaBoost increases the weights of misclassified samples after each round. This forces the next weak learner to pay more attention to the examples the ensemble currently gets wrong."
   },
   {
@@ -43,12 +43,12 @@
     "stage": "post",
     "question": "A random forest with 100 trees has the same test accuracy as 200 trees. Adding more trees to 500 also shows no improvement. Why?",
     "options": [
-      "The random forest is underfitting and needs a different algorithm",
       "After enough trees, variance reduction plateaus and adding more trees provides diminishing returns without increasing overfitting",
       "500 trees is the maximum allowed",
-      "The trees are all identical so adding more has no effect"
+      "The trees are all identical so adding more has no effect",
+      "The random forest is underfitting and needs a different algorithm"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "Random forests do not overfit with more trees (unlike boosting). However, variance reduction plateaus once enough diverse trees have been averaged. More trees just add compute cost without improving accuracy."
   },
   {
@@ -56,12 +56,12 @@
     "stage": "post",
     "question": "Gradient boosting fits each new tree to what quantity?",
     "options": [
+      "The predictions of the previous tree",
       "The original target values",
-      "The residuals (errors) of the current ensemble's predictions",
       "Random subsets of features",
-      "The predictions of the previous tree"
+      "The residuals (errors) of the current ensemble's predictions"
     ],
-    "correct": 1,
+    "correct": 3,
     "explanation": "In gradient boosting, each new tree is trained to predict the residuals (negative gradient of the loss) of the current ensemble. This sequentially reduces the remaining error."
   }
 ]

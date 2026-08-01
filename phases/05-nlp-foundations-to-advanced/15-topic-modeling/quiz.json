@@ -18,10 +18,10 @@
       "stage": "pre",
       "question": "What does BERTopic use to form topic clusters?",
       "options": [
-        "Direct softmax over the vocabulary",
-        "Encode docs with a sentence transformer, reduce dimensionality with UMAP, then cluster with HDBSCAN",
         "Run BM25 followed by k-means",
-        "Train an LSTM end-to-end"
+        "Encode docs with a sentence transformer, reduce dimensionality with UMAP, then cluster with HDBSCAN",
+        "Train an LSTM end-to-end",
+        "Direct softmax over the vocabulary"
       ],
       "correct": 1,
       "explanation": "BERTopic = embeddings + UMAP + HDBSCAN, with class-based TF-IDF for topic words."
@@ -30,10 +30,10 @@
       "stage": "check",
       "question": "Why does scikit-learn's LDA expect raw counts (CountVectorizer), not TF-IDF?",
       "options": [
-        "TF-IDF is too slow",
-        "LDA's probabilistic model is defined over integer term counts; TF-IDF distorts the underlying distribution",
         "LDA cannot handle floats",
-        "Memory limits"
+        "LDA's probabilistic model is defined over integer term counts; TF-IDF distorts the underlying distribution",
+        "Memory limits",
+        "TF-IDF is too slow"
       ],
       "correct": 1,
       "explanation": "LDA likelihood assumes counts; feeding TF-IDF values violates the model assumption."
@@ -42,9 +42,9 @@
       "stage": "check",
       "question": "What does HDBSCAN's -1 label mean in a BERTopic output?",
       "options": [
-        "A reserved category",
-        "An outlier cluster of documents the density-based algorithm could not confidently assign",
         "Stopword cluster",
+        "An outlier cluster of documents the density-based algorithm could not confidently assign",
+        "A reserved category",
         "Top topic"
       ],
       "correct": 1,
@@ -55,23 +55,23 @@
       "question": "Which coherence metric is the common default for topic-model evaluation?",
       "options": [
         "BLEU",
+        "c_v coherence via NPMI over sliding windows of top topic words",
         "Accuracy",
-        "Perplexity only",
-        "c_v coherence via NPMI over sliding windows of top topic words"
+        "Perplexity only"
       ],
-      "correct": 3,
+      "correct": 1,
       "explanation": "c_v coherence (Roder et al., 2015) is the canonical automatic topic-coherence metric."
     },
     {
       "stage": "post",
       "question": "When is LDA usually a better fit than BERTopic?",
       "options": [
-        "On short tweets",
-        "Long documents where mixed-membership topic distributions are useful and embeddings would truncate input",
         "When embeddings are noisy",
-        "When you need a single topic per document"
+        "When you need a single topic per document",
+        "Long documents where mixed-membership topic distributions are useful and embeddings would truncate input",
+        "On short tweets"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Long documents benefit from LDA's mixed-membership model; BERT encoders truncate inputs."
     },
     {
@@ -79,9 +79,9 @@
       "question": "Why does BERTopic typically win on short text (tweets, headlines)?",
       "options": [
         "Short text has fewer topics",
-        "It is faster",
+        "It supports more languages",
         "Semantic similarity in embedding space captures meaning where bag-of-words counts are too sparse",
-        "It supports more languages"
+        "It is faster"
       ],
       "correct": 2,
       "explanation": "BERT embeddings provide semantic similarity for short text where word-overlap statistics fail."
@@ -90,10 +90,10 @@
       "stage": "post",
       "question": "What is a common LDA failure mode for which you should monitor topics?",
       "options": [
-        "Document mixtures that sum to 1",
         "Topics that match labeled categories perfectly",
+        "Topics with too few documents",
         "Junk topics that absorb stopwords or extremely frequent terms",
-        "Topics with too few documents"
+        "Document mixtures that sum to 1"
       ],
       "correct": 2,
       "explanation": "LDA can create junk topics that absorb stopwords; tighter min_df/max_df and stopword filtering mitigate."

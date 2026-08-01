@@ -6,36 +6,36 @@
       "stage": "pre",
       "question": "Why is manual red-teaming insufficient for evaluating frontier models?",
       "options": [
+        "Manual testers cannot read model outputs",
         "It does not scale; attack success rate needs a statistical sample against a moving target with every model release",
         "Manual prompts are always blocked by filters",
-        "Manual testing produces too many false positives",
-        "Manual testers cannot read model outputs"
+        "Manual testing produces too many false positives"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "What does PAIR stand for, and what does it do?",
       "options": [
-        "Prompt Automatic Iterative Refinement; an attacker LLM iteratively proposes jailbreaks for a target, with prior attempts as in-context feedback",
-        "Pairwise Adversarial Inference Routing; routes attacks across models",
         "Pre-Action Inspection Reasoning; a defensive scaffolding",
-        "Persuasive Adversarial Iterative Reward; replaces RM with a persuader"
+        "Persuasive Adversarial Iterative Reward; replaces RM with a persuader",
+        "Pairwise Adversarial Inference Routing; routes attacks across models",
+        "Prompt Automatic Iterative Refinement; an attacker LLM iteratively proposes jailbreaks for a target, with prior attempts as in-context feedback"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Why is PAIR more efficient than GCG for a black-box target?",
       "options": [
-        "PAIR uses a larger attacker model than GCG",
-        "GCG only attacks open-source models",
         "GCG requires white-box gradient access and produces unreadable suffixes that cannot use in-context feedback; PAIR is black-box and natural-language with in-context learning",
-        "PAIR ignores the target's response"
+        "PAIR ignores the target's response",
+        "GCG only attacks open-source models",
+        "PAIR uses a larger attacker model than GCG"
       ],
-      "correct": 2,
+      "correct": 0,
       "explanation": ""
     },
     {
@@ -43,35 +43,35 @@
       "question": "Why must Attack Success Rate (ASR) be reported with both a query budget and a judge identity?",
       "options": [
         "Because judges always agree",
-        "Because budgets are set by JailbreakBench only",
         "Because ASR varies with how many queries the attacker is allowed and with which LLM judges a response as a jailbreak",
+        "Because budgets are set by JailbreakBench only",
         "Because ASR is required by export-control regulations"
       ],
-      "correct": 2,
+      "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which of these automated attacks is best described as 'tree-of-attacks with pruning'?",
       "options": [
-        "TAP",
         "GCG",
+        "TAP",
         "PAP",
         "AutoDAN"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which standardized benchmark uses 510 behaviours across 7 categories with semantic and functional harm tests?",
       "options": [
-        "JailbreakBench",
-        "HarmBench",
+        "TruthfulQA",
         "WMDP",
-        "TruthfulQA"
+        "HarmBench",
+        "JailbreakBench"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": ""
     }
   ]

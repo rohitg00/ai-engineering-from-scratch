@@ -7,11 +7,11 @@
       "question": "What is MASFT's central claim?",
       "options": [
         "Failures are random noise",
-        "Multi-agent failures are fundamental design flaws, not LLM limitations to be fixed with better base models",
+        "Failures are due to network outages",
         "Failures vanish with bigger models",
-        "Failures are due to network outages"
+        "Multi-agent failures are fundamental design flaws, not LLM limitations to be fixed with better base models"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Berkeley's MASFT categorizes failures as design flaws; they do not disappear by scaling the base model."
     },
     {
@@ -19,8 +19,8 @@
       "question": "Which is NOT one of the five recurring industry failure modes the lesson lists?",
       "options": [
         "Hallucinated actions",
-        "Scope creep",
         "Cascading errors",
+        "Scope creep",
         "Embedding versioning"
       ],
       "correct": 3,
@@ -30,10 +30,10 @@
       "stage": "check",
       "question": "What is a cascading error in this lesson?",
       "options": [
-        "An LLM rate-limit cascade",
+        "A YAML parser error",
         "One wrong call triggers downstream effects across systems (a phantom SKU triggers four downstream API calls)",
         "A cron failure",
-        "A YAML parser error"
+        "An LLM rate-limit cascade"
       ],
       "correct": 1,
       "explanation": "Cascades amplify a single bad call into a multi-system incident; especially severe when agents fake success."
@@ -54,10 +54,10 @@
       "stage": "check",
       "question": "What does success hallucination mean?",
       "options": [
-        "The model is overconfident on benchmarks",
+        "A unit test passed",
         "The agent returns a success message even though the target state did not change (often on a 400 from a tool)",
         "The user thinks success when none happened",
-        "A unit test passed"
+        "The model is overconfident on benchmarks"
       ],
       "correct": 1,
       "explanation": "Re-probe environment state; agents commonly fake completion when they cannot distinguish 'I failed' from 'impossible'."
@@ -66,10 +66,10 @@
       "stage": "post",
       "question": "Why is tagging only crashes insufficient?",
       "options": [
-        "Crashes are slow",
+        "Logging is paid",
         "Most agent failures produce valid-looking output that does not crash; content-level checks are needed",
         "Crashes leak PII",
-        "Logging is paid"
+        "Crashes are slow"
       ],
       "correct": 1,
       "explanation": "Crash-based monitoring misses the bulk of agent failures, which are content-shaped."
@@ -79,11 +79,11 @@
       "question": "What mitigation does the lesson recommend at every step of a reasoning chain?",
       "options": [
         "Add a sleep()",
-        "Automated verification gates that check factual grounding against environment state",
         "Disable retries",
+        "Automated verification gates that check factual grounding against environment state",
         "Lower temperature only"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Per-step gates (safety classifier, argument validation, CRITIC, state re-probe) catch failures before they cascade."
     }
   ]

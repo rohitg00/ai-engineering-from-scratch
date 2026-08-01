@@ -6,10 +6,10 @@
       "stage": "pre",
       "question": "What does the capstone produce?",
       "options": [
-        "A research paper",
+        "A monitoring dashboard",
         "A versioned drop-in directory (agent-workbench-pack/) with the seven surfaces plus a bin/install.sh that lays them down idempotently",
-        "A new LLM",
-        "A monitoring dashboard"
+        "A research paper",
+        "A new LLM"
       ],
       "correct": 1,
       "explanation": "The pack is the recipe; each install is a serving."
@@ -18,45 +18,45 @@
       "stage": "pre",
       "question": "Which is NOT part of the pack layout?",
       "options": [
-        "AGENTS.md + docs/",
+        "vendor_proprietary_weights/",
         "schemas/",
-        "scripts/",
-        "vendor_proprietary_weights/"
+        "AGENTS.md + docs/",
+        "scripts/"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": "Pack layout is AGENTS.md, docs/, schemas/, scripts/, bin/, README.md. The pack is framework- and vendor-agnostic."
     },
     {
       "stage": "check",
       "question": "Why does the pack carry a VERSION file?",
       "options": [
-        "For SEO",
-        "Major bumps for schema/script changes that require migrations; minor for additions; patch for doc-only; the target repo records which version it was installed against",
         "To track agent IQ",
-        "To advertise on Hacker News"
+        "For SEO",
+        "To advertise on Hacker News",
+        "Major bumps for schema/script changes that require migrations; minor for additions; patch for doc-only; the target repo records which version it was installed against"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Same shape as npm, Cargo, pyproject.toml; VERSION is the contract, not the marketing."
     },
     {
       "stage": "check",
       "question": "What does cross-tool distribution look like in this pack?",
       "options": [
-        "Hard-code each tool's path",
         "One source file with symlinks (ln -s AGENTS.md CLAUDE.md, .cursor/rules/, .github/copilot-instructions.md) so the same source fans out to every coding agent",
         "Manual copy per tool",
+        "Hard-code each tool's path",
         "A vendor lock per tool"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Nx's nx ai-setup is the reference; the pack's installer does the same with symlinks."
     },
     {
       "stage": "check",
       "question": "How does the lesson recommend the uninstaller behave?",
       "options": [
-        "Delete everything including state",
-        "Refuse on non-trivial state; never delete user agent_state.json, task_board.json, or outputs/; only remove schemas, scripts, docs, and AGENTS.md (with opt-out)",
         "Delete only docs",
+        "Refuse on non-trivial state; never delete user agent_state.json, task_board.json, or outputs/; only remove schemas, scripts, docs, and AGENTS.md (with opt-out)",
+        "Delete everything including state",
         "Disable git"
       ],
       "correct": 1,
@@ -66,24 +66,24 @@
       "stage": "post",
       "question": "What stays OUT of the pack?",
       "options": [
+        "Scripts",
         "Schemas",
         "Project-specific tasks, vendor SDK calls, team onboarding prose — the pack is framework-agnostic and lives next to onboarding, not inside it",
-        "Scripts",
         "The installer"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Tasks belong on the target repo's board, not the pack; vendor SDK calls would lock the pack to one framework."
     },
     {
       "stage": "post",
       "question": "Through what channel does the pack ship to many coding agents at once?",
       "options": [
-        "Hand-copy",
         "SkillKit-style distribution (skillkit install agent-workbench-pack) lays it down across 32 AI agents from a single source",
         "Email attachment",
+        "Hand-copy",
         "GitHub release notes only"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Pack repo is the source of truth; SkillKit is the distribution channel; vendor lock-in collapses."
     }
   ]

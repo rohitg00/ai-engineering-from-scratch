@@ -17,23 +17,23 @@
       "question": "Which of these ML problems has a convex loss landscape?",
       "options": [
         "Training a 3-layer neural network with ReLU activations",
-        "Logistic regression with cross-entropy loss",
+        "Matrix factorization for recommendation",
         "k-means clustering",
-        "Matrix factorization for recommendation"
+        "Logistic regression with cross-entropy loss"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Logistic regression has a convex loss (log-loss is convex in the weights). Neural networks, k-means, and matrix factorization are all non-convex. For convex problems, any local minimum is the global minimum."
     },
     {
       "stage": "post",
       "question": "Newton's method converges to the minimum of f(x) = 5x^2 + 3x + 1 in how many steps?",
       "options": [
+        "About 100 steps",
         "1 step (it is exact for quadratic functions)",
         "About 10 steps",
-        "About 100 steps",
         "It depends on the learning rate"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": "Newton's method fits a local quadratic approximation and jumps to its minimum. For an actual quadratic function, the approximation is exact, so Newton's method converges in a single step regardless of the starting point."
     },
     {
@@ -52,10 +52,10 @@
       "stage": "post",
       "question": "Why does SGD find good solutions in non-convex neural network landscapes despite the lack of convexity guarantees?",
       "options": [
-        "Neural networks are secretly convex in high dimensions",
         "SGD always finds the global minimum",
+        "The loss function is irrelevant to model performance",
         "In high dimensions, most critical points are saddle points (not bad local minima), and SGD noise helps escape them",
-        "The loss function is irrelevant to model performance"
+        "Neural networks are secretly convex in high dimensions"
       ],
       "correct": 2,
       "explanation": "In high-dimensional parameter spaces, random critical points are overwhelmingly saddle points. The few local minima that exist tend to have loss values close to the global minimum. SGD's stochastic noise helps escape saddle points, and overparameterization smooths the landscape."

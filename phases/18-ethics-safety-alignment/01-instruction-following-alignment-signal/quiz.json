@@ -6,24 +6,24 @@
       "stage": "pre",
       "question": "Why does a raw pre-trained language model often respond to 'write a Python function that reverses a list' with another prompt instead of code?",
       "options": [
-        "Its vocabulary lacks Python tokens",
-        "It cannot represent function signatures without fine-tuning",
         "Its temperature defaults to zero",
-        "It is trained to complete web-style text, where prompts continue with more prompts"
+        "Its vocabulary lacks Python tokens",
+        "It is trained to complete web-style text, where prompts continue with more prompts",
+        "It cannot represent function signatures without fine-tuning"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Which loss does the InstructGPT reward model use over pairwise preference labels?",
       "options": [
+        "Cross-entropy between predicted and true reward",
         "Mean squared error on labeler scores",
-        "Bradley-Terry: -log sigmoid(r(x, y_w) - r(x, y_l))",
         "Hinge loss with a fixed margin",
-        "Cross-entropy between predicted and true reward"
+        "Bradley-Terry: -log sigmoid(r(x, y_w) - r(x, y_l))"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": ""
     },
     {
@@ -31,23 +31,23 @@
       "question": "What is the KL penalty in stage 3 of InstructGPT primarily protecting against?",
       "options": [
         "Catastrophic forgetting of tokenizer statistics",
-        "Numerical instability in PPO gradient updates",
+        "The optimizer finding adversarial high-reward strings that exploit the reward model",
         "Overflowing context windows during sampling",
-        "The optimizer finding adversarial high-reward strings that exploit the reward model"
+        "Numerical instability in PPO gradient updates"
       ],
-      "correct": 3,
+      "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "What problem does PPO-ptx mix into the RL objective to mitigate?",
       "options": [
-        "The reward model drifting during PPO",
-        "The KL term becoming negative",
         "The alignment tax: regression on benchmarks RLHF did not target",
-        "Tokenizer mismatch between SFT and RM"
+        "Tokenizer mismatch between SFT and RM",
+        "The KL term becoming negative",
+        "The reward model drifting during PPO"
       ],
-      "correct": 2,
+      "correct": 0,
       "explanation": ""
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Which of the following is the reward model in InstructGPT initialized from?",
       "options": [
-        "A random scalar regressor with no pretraining",
-        "A separate encoder-only transformer",
         "The base pre-trained model with the LM head intact",
-        "The SFT model with the LM head replaced by a scalar head"
+        "The SFT model with the LM head replaced by a scalar head",
+        "A separate encoder-only transformer",
+        "A random scalar regressor with no pretraining"
       ],
-      "correct": 3,
+      "correct": 1,
       "explanation": ""
     }
   ]

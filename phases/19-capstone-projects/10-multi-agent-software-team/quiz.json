@@ -6,10 +6,10 @@
       "stage": "pre",
       "question": "Why does a single-agent harness hit a ceiling on large tasks even with a 200k-token context?",
       "options": [
+        "Models lack support for git",
         "Single agents cannot make tool calls",
-        "Sandboxes refuse to host more than one process",
         "Context cannot hold the architecture plan, four parallel codebase slices, reviewer commentary, and test output at once",
-        "Models lack support for git"
+        "Sandboxes refuse to host more than one process"
       ],
       "correct": 2,
       "explanation": ""
@@ -18,9 +18,9 @@
       "stage": "pre",
       "question": "What does the architect role own in this factory shape?",
       "options": [
-        "Reviewing the merged diff for hallucinations",
-        "Reading the issue and emitting a plan with subtasks that have explicit interfaces",
         "Running the test suite in a clean sandbox",
+        "Reading the issue and emitting a plan with subtasks that have explicit interfaces",
+        "Reviewing the merged diff for hallucinations",
         "Force-merging branches when coders disagree"
       ],
       "correct": 1,
@@ -30,10 +30,10 @@
       "stage": "check",
       "question": "Why does each coder work in its own git worktree plus a Daytona sandbox?",
       "options": [
-        "Worktrees are faster to clone than branches",
+        "The architect requires worktree IDs",
         "Daytona is the only sandbox that supports SSH",
         "Isolated working trees let N coders implement subtasks in parallel without stepping on shared files",
-        "The architect requires worktree IDs"
+        "Worktrees are faster to clone than branches"
       ],
       "correct": 2,
       "explanation": ""
@@ -42,21 +42,21 @@
       "stage": "check",
       "question": "What constraint is placed on the reviewer to keep it honest?",
       "options": [
-        "It can only run after the tester signs off",
         "It cannot approve diffs it authored or proposed",
+        "It can only run after the tester signs off",
         "It must approve every diff it reads",
         "It must be the same model as the architect"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Why does the rubric weigh token efficiency against a single-agent baseline?",
       "options": [
-        "Multi-agent is always cheaper",
-        "Role boundaries add summary and handoff context, so the real question is whether the factory wins per dollar",
         "Single-agent has no observability story",
+        "Role boundaries add summary and handoff context, so the real question is whether the factory wins per dollar",
+        "Multi-agent is always cheaper",
         "Token cost is unrelated to performance"
       ],
       "correct": 1,
@@ -68,22 +68,22 @@
       "options": [
         "A new architect plan template",
         "An updated A2A protocol spec",
-        "A force-push log",
-        "A handoff-failure histogram identifying which role boundary broke (plan, merge, review, test)"
+        "A handoff-failure histogram identifying which role boundary broke (plan, merge, review, test)",
+        "A force-push log"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which evaluation set does the capstone use to score pass@1 across roles?",
       "options": [
-        "SWE-bench Pro 50-issue subset",
         "HumanEval-Java",
+        "MigrationBench",
         "MT-Bench-v2",
-        "MigrationBench"
+        "SWE-bench Pro 50-issue subset"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": ""
     }
   ]

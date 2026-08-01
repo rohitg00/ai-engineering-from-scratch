@@ -4,12 +4,12 @@
     "stage": "pre",
     "question": "What distinguishes unsupervised learning from supervised learning?",
     "options": [
-      "Unsupervised learning uses more data",
       "Unsupervised learning has no labeled outputs -- the algorithm finds structure on its own",
-      "Unsupervised learning only works with text data",
-      "Unsupervised learning always produces better results"
+      "Unsupervised learning always produces better results",
+      "Unsupervised learning uses more data",
+      "Unsupervised learning only works with text data"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "In unsupervised learning, there are no labels. The algorithm discovers patterns, groupings, or structure in the data without being told what the correct output should be."
   },
   {
@@ -17,12 +17,12 @@
     "stage": "pre",
     "question": "What does K-Means require you to specify before training?",
     "options": [
-      "The exact cluster centers",
       "The number of clusters K",
-      "The labels for each data point",
-      "The distance metric to use"
+      "The exact cluster centers",
+      "The distance metric to use",
+      "The labels for each data point"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "K-Means requires the number of clusters K as input. It then iteratively assigns points to the nearest centroid and recomputes centroids until convergence."
   },
   {
@@ -30,12 +30,12 @@
     "stage": "post",
     "question": "K-Means fails on two interlocking half-moon shapes but DBSCAN succeeds. Why?",
     "options": [
+      "DBSCAN always outperforms K-Means on every dataset",
       "DBSCAN uses more data than K-Means",
       "DBSCAN finds clusters based on density, so it can discover arbitrary shapes, while K-Means assumes spherical clusters",
-      "DBSCAN always outperforms K-Means on every dataset",
       "K-Means cannot handle 2D data"
     ],
-    "correct": 1,
+    "correct": 2,
     "explanation": "K-Means assigns points to the nearest centroid, producing spherical (convex) clusters. DBSCAN grows clusters from dense regions, discovering any shape as long as the cluster is connected by density."
   },
   {
@@ -58,8 +58,8 @@
     "options": [
       "GMM uses hard assignments where each point belongs to exactly one cluster",
       "GMM gives soft (probabilistic) assignments where each point has a probability of belonging to each cluster",
-      "GMM does not use centroids at all",
-      "GMM only works with one-dimensional data"
+      "GMM only works with one-dimensional data",
+      "GMM does not use centroids at all"
     ],
     "correct": 1,
     "explanation": "K-Means assigns each point to exactly one cluster (hard). GMM computes the probability that each point belongs to each Gaussian component (soft), and can model elliptical, overlapping clusters."

@@ -6,32 +6,32 @@
       "stage": "pre",
       "question": "What is the 'yellow zone' criterion that WMDP uses for question selection?",
       "options": [
-        "Open internet content with no expert review",
         "Synthesis recipes for dangerous compounds",
         "Proximate, enabling knowledge of a harmful process without being a direct synthesis recipe",
+        "Open internet content with no expert review",
         "Multilingual math reasoning"
       ],
-      "correct": 2,
+      "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Which three domains does WMDP cover?",
       "options": [
-        "Privacy, bias, watermarking",
+        "Biosecurity, cybersecurity, chemistry",
         "Vision, audio, text",
         "Math, code, language",
-        "Biosecurity, cybersecurity, chemistry"
+        "Privacy, bias, watermarking"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "What does RMU (the WMDP companion method) do?",
       "options": [
-        "Replaces PPO with DPO during alignment",
         "Generates harmful images",
+        "Replaces PPO with DPO during alignment",
         "Trains a new tokenizer for dual-use content",
         "Representation Misdirection for Unlearning: reduces WMDP scores to near-random while preserving general capability (e.g., MMLU) within a few points"
       ],
@@ -54,24 +54,24 @@
       "stage": "post",
       "question": "What is the distinction between novice-relative uplift and expert-absolute capability?",
       "options": [
-        "Novice-relative is the multiplicative help over status-quo (e.g., internet search) for non-experts; expert-absolute is the maximum information a motivated expert can extract from the model",
-        "Novice-relative is a benchmark; expert-absolute is a license",
+        "Both are measured only via MCQ",
         "They are synonyms",
-        "Both are measured only via MCQ"
+        "Novice-relative is a benchmark; expert-absolute is a license",
+        "Novice-relative is the multiplicative help over status-quo (e.g., internet search) for non-experts; expert-absolute is the maximum information a motivated expert can extract from the model"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which is NOT a measurement pitfall when interpreting WMDP scores as deployment risk?",
       "options": [
-        "Procurement and equipment barriers",
-        "Elicitation resistance (whether safety filters block extraction)",
         "Tacit knowledge needed for execution that is not captured by MCQ",
-        "The model's open-source license"
+        "Procurement and equipment barriers",
+        "The model's open-source license",
+        "Elicitation resistance (whether safety filters block extraction)"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": ""
     }
   ]

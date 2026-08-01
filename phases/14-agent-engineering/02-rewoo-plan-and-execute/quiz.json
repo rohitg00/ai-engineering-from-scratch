@@ -6,70 +6,70 @@
       "stage": "pre",
       "question": "Why does ReAct's prompt grow quadratically with depth?",
       "options": [
-        "The model re-tokenizes itself on every step",
         "Each step carries the full prior context including every previous thought and observation",
+        "The model re-tokenizes itself on every step",
         "Tool schemas are duplicated per call",
         "The provider charges per byte rather than per token"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "ReAct re-includes prior thoughts and observations on each step, making total prompt length grow with the square of the depth."
     },
     {
       "stage": "pre",
       "question": "What is the three-role split that defines ReWOO?",
       "options": [
-        "Reader, Writer, Reviewer",
         "Planner, Workers, Solver",
-        "Actor, Evaluator, Reflector",
-        "Generator, Critic, Optimizer"
+        "Reader, Writer, Reviewer",
+        "Generator, Critic, Optimizer",
+        "Actor, Evaluator, Reflector"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "ReWOO separates a Planner that emits a DAG, Workers that fetch evidence, and a Solver that composes the final answer."
     },
     {
       "stage": "check",
       "question": "What headline numbers does the paper report for ReWOO vs ReAct on HotpotQA?",
       "options": [
+        "10x fewer tokens and -2 accuracy",
         "~5x fewer tokens and +4 absolute accuracy",
-        "~2x more tokens and +10 accuracy",
         "Same tokens and +1 accuracy",
-        "10x fewer tokens and -2 accuracy"
+        "~2x more tokens and +10 accuracy"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": "ReWOO reports about a 5x token reduction and +4 absolute accuracy on HotpotQA compared to ReAct."
     },
     {
       "stage": "check",
       "question": "What does a placeholder like #E1 inside a ReWOO plan node mean?",
       "options": [
-        "An error code returned by worker 1",
         "A reference substituted at dispatch time with the output of an earlier worker node",
-        "A retry counter for evidence fetching",
-        "A planner version identifier"
+        "A planner version identifier",
+        "An error code returned by worker 1",
+        "A retry counter for evidence fetching"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Plan nodes use evidence references like #E1, #E2 that the executor substitutes with the output of upstream workers."
     },
     {
       "stage": "check",
       "question": "Why does ReWOO localize failures better than ReAct?",
       "options": [
+        "The Planner re-emits a fresh DAG after every error",
         "Workers crash the run on any error",
-        "An error in a worker becomes a string the Solver sees alongside the original plan, so degradation is per-node not per-step",
         "ReWOO retries every failed call up to ten times",
-        "The Planner re-emits a fresh DAG after every error"
+        "An error in a worker becomes a string the Solver sees alongside the original plan, so degradation is per-node not per-step"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Per-node failure with the original plan in context lets the Solver degrade gracefully rather than reasoning mid-stream out of an error."
     },
     {
       "stage": "post",
       "question": "Which task shape best fits Plan-and-Act over plain ReWOO?",
       "options": [
-        "A two-step factoid lookup",
+        "A pure arithmetic question",
         "A 40-step web or mobile navigation trajectory",
-        "A single-turn classification",
-        "A pure arithmetic question"
+        "A two-step factoid lookup",
+        "A single-turn classification"
       ],
       "correct": 1,
       "explanation": "Plan-and-Act is built for long-horizon (over 30 steps) web and mobile agents where a single ReAct trajectory loses coherence."

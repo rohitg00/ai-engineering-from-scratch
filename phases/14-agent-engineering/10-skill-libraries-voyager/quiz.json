@@ -7,35 +7,35 @@
       "question": "What does Voyager treat as the action space?",
       "options": [
         "Primitive Minecraft commands",
-        "Executable code (JavaScript functions) stored, retrieved, and composed",
+        "Reinforcement learning Q-values",
         "Text prompts only",
-        "Reinforcement learning Q-values"
+        "Executable code (JavaScript functions) stored, retrieved, and composed"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Voyager's contribution is making code the action: skills are programs, not raw commands."
     },
     {
       "stage": "pre",
       "question": "What three components define a Voyager agent?",
       "options": [
+        "Retriever, generator, ranker",
         "Encoder, decoder, value head",
         "Automatic curriculum, skill library, iterative prompting",
-        "Planner, executor, judge",
-        "Retriever, generator, ranker"
+        "Planner, executor, judge"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Voyager structures the agent around curriculum, skill library, and iterative prompting."
     },
     {
       "stage": "check",
       "question": "What three signals can return from a skill execution attempt?",
       "options": [
-        "Pass, fail, retry",
         "Success, error (with stack trace), self-verification failure",
-        "Green, yellow, red",
-        "Heartbeat, ack, nack"
+        "Pass, fail, retry",
+        "Heartbeat, ack, nack",
+        "Green, yellow, red"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Voyager's iterative prompting mechanism is driven by these three signals folded back into the next version."
     },
     {
@@ -54,24 +54,24 @@
       "stage": "check",
       "question": "Which 2026 product is the lesson's clearest match for the Voyager skill?",
       "options": [
-        "OpenAI fine-tuning",
         "Claude Agent SDK skills: named, retrievable code plus instructions loaded on demand",
+        "AWS Lambda layers",
         "Pinecone indices",
-        "AWS Lambda layers"
+        "OpenAI fine-tuning"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Agent SDK skills match Voyager's named-retrievable-composable code pattern."
     },
     {
       "stage": "post",
       "question": "Why does the lesson recommend dedup on write for the skill library?",
       "options": [
-        "Disk is expensive",
         "Without dedup, the same skill gets added many times with slightly different descriptions; retrieval should return one canonical version",
         "Providers reject duplicates",
-        "Git blocks duplicates"
+        "Git blocks duplicates",
+        "Disk is expensive"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Near-duplicate descriptions collapse to a single canonical skill so retrieval stays clean."
     },
     {

@@ -7,9 +7,9 @@
       "question": "Why is the chunking choice an upper bound on retrieval quality and not just a hyperparameter?",
       "options": [
         "Because the LLM never reads chunks",
-        "Because the embedding model is fixed at training time",
+        "Because BM25 has no role in modern RAG",
         "Because no embedding, reranker, or LLM downstream can recover an answer span that was cut into incoherent pieces",
-        "Because BM25 has no role in modern RAG"
+        "Because the embedding model is fixed at training time"
       ],
       "correct": 2,
       "explanation": "If the chunk that holds the answer span is incoherent the embedding moves to the wrong cluster and downstream components cannot repair the damage."
@@ -18,8 +18,8 @@
       "stage": "pre",
       "question": "Which strategy is the strongest single-strategy default when you have no prior knowledge of the corpus?",
       "options": [
-        "Fixed-window",
         "Sentence packer",
+        "Fixed-window",
         "Recursive split",
         "Structural markdown"
       ],
@@ -31,23 +31,23 @@
       "question": "What does recall@k measure in this lesson?",
       "options": [
         "Whether the top-k chunks contain the literal query string",
-        "Whether any of the top-k chunks overlaps the gold answer span",
         "The cosine similarity between the query and the top-k chunks",
-        "The number of unique documents in the top-k"
+        "The number of unique documents in the top-k",
+        "Whether any of the top-k chunks overlaps the gold answer span"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Each query carries gold offsets; recall@k is 1 if any top-k chunk overlaps the gold span, else 0; averaged across queries."
     },
     {
       "stage": "check",
       "question": "Why does fixed-window chunking fail badly on code or YAML corpora?",
       "options": [
-        "It loses Unicode characters",
         "It cuts identifiers and key-value pairs in half, producing chunks that embed to noise",
-        "It produces chunks larger than the embedding model's context window",
-        "It cannot be parallelized"
+        "It loses Unicode characters",
+        "It cannot be parallelized",
+        "It produces chunks larger than the embedding model's context window"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Character-level cuts inside a symbol destroy the meaning the embedding model is supposed to capture."
     },
     {

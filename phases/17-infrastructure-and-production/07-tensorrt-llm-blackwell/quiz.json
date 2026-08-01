@@ -6,10 +6,10 @@
       "stage": "pre",
       "question": "Roughly what is the per-million-tokens cost gap the lesson reports between Blackwell + TRT-LLM + Dynamo and H100 + vLLM on a comparable 120B-class workload?",
       "options": [
-        "About 100x",
-        "About 7x",
         "About 2x",
-        "About 1.1x"
+        "About 7x",
+        "About 1.1x",
+        "About 100x"
       ],
       "correct": 1,
       "explanation": ""
@@ -19,47 +19,47 @@
       "question": "Why does the lesson recommend keeping KV cache in FP8 rather than NVFP4 on Blackwell?",
       "options": [
         "NVFP4 KV cache is not yet supported in any engine",
-        "FP8 is the only precision NVLink 5 supports",
         "KV cache spans a wide dynamic range; FP4 quantization causes catastrophic accuracy loss in attention scores",
-        "FP8 uses less memory than FP4"
+        "FP8 uses less memory than FP4",
+        "FP8 is the only precision NVLink 5 supports"
       ],
-      "correct": 2,
+      "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Which Blackwell feature does TRT-LLM exploit so models can be loaded without a post-training conversion step?",
       "options": [
-        "Day-0 FP4 weights shipped by model providers",
-        "INT2 weights via bitsandbytes",
+        "BF16 KV cache",
         "FP64 attention",
-        "BF16 KV cache"
+        "INT2 weights via bitsandbytes",
+        "Day-0 FP4 weights shipped by model providers"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "What is the dominant tradeoff of choosing the TRT-LLM stack per the lesson?",
       "options": [
-        "It cannot serve MoE models",
         "It requires fully autonomous remediation",
-        "It locks you into NVIDIA hardware — no AMD, no Intel, no ARM",
-        "It only works at small scale"
+        "It cannot serve MoE models",
+        "It only works at small scale",
+        "It locks you into NVIDIA hardware — no AMD, no Intel, no ARM"
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which precision combination does the lesson describe as the typical Blackwell config?",
       "options": [
-        "Weights FP4, KV cache FP4, attention in INT8",
         "Everything in BF16",
         "Weights NVFP4, activations NVFP4, KV cache FP8, attention accumulator FP32",
-        "Weights INT8, activations FP32, KV cache INT4"
+        "Weights INT8, activations FP32, KV cache INT4",
+        "Weights FP4, KV cache FP4, attention in INT8"
       ],
-      "correct": 2,
+      "correct": 1,
       "explanation": ""
     },
     {

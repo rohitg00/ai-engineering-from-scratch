@@ -6,6 +6,7 @@ on:
     paths:
       - "phases/**"
       - "scripts/audit_lessons.py"
+      - "scripts/debias_quizzes.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
       - "README.md"
@@ -18,6 +19,7 @@ on:
     paths:
       - "phases/**"
       - "scripts/audit_lessons.py"
+      - "scripts/debias_quizzes.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
       - "README.md"
@@ -42,6 +44,8 @@ jobs:
           python-version: "3.12"
       - name: run scripts/audit_lessons.py
         run: python3 scripts/audit_lessons.py
+      - name: quiz answer positions are de-biased
+        run: python3 scripts/debias_quizzes.py --check
 
   readme-counts-sync:
     name: README counts auto-fix (main only)

@@ -4,12 +4,12 @@
     "stage": "pre",
     "question": "What is data leakage in the context of ML pipelines?",
     "options": [
-      "Data being accidentally deleted during preprocessing",
-      "Information from the test set or future data contaminating the training process",
+      "Features being dropped during encoding",
       "The model being too slow to process the data",
-      "Features being dropped during encoding"
+      "Information from the test set or future data contaminating the training process",
+      "Data being accidentally deleted during preprocessing"
     ],
-    "correct": 1,
+    "correct": 2,
     "explanation": "Data leakage occurs when information that would not be available at prediction time is used during training. Example: computing the scaler's mean/std on the full dataset including test data."
   },
   {
@@ -17,12 +17,12 @@
     "stage": "pre",
     "question": "Why is fitting a scaler on the full dataset before splitting into train/test considered leaky?",
     "options": [
-      "Scaling changes the data distribution",
       "The scaler's statistics (mean, std) include test data, so the model indirectly sees test information during training",
+      "Scaling changes the data distribution",
       "Scaling should only be done on the test set",
       "Fitting the scaler takes too long on large datasets"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "When the scaler is fit on all data, its mean and standard deviation encode information from test samples. Training features are then shifted using test statistics, leaking future information into training."
   },
   {
@@ -44,11 +44,11 @@
     "question": "Why is a ColumnTransformer necessary for real-world datasets?",
     "options": [
       "It makes the pipeline run in parallel on multiple CPUs",
+      "It converts all columns to the same data type",
       "It applies different preprocessing steps to numeric and categorical columns within the same pipeline",
-      "It removes columns with missing values automatically",
-      "It converts all columns to the same data type"
+      "It removes columns with missing values automatically"
     ],
-    "correct": 1,
+    "correct": 2,
     "explanation": "Real datasets have mixed types. Numeric columns need scaling, categorical columns need encoding. ColumnTransformer routes each column subset to the appropriate transformer within a single pipeline."
   },
   {
@@ -56,12 +56,12 @@
     "stage": "post",
     "question": "A production model receives a categorical value it never saw during training ('new_category'). What should the pipeline handle?",
     "options": [
-      "Ignore the row entirely and return no prediction",
-      "Retrain the entire model from scratch",
+      "Convert the unknown category to the number zero",
       "Handle unknown categories gracefully, e.g., by using an 'unknown' bucket or the global mean in target encoding",
-      "Convert the unknown category to the number zero"
+      "Ignore the row entirely and return no prediction",
+      "Retrain the entire model from scratch"
     ],
-    "correct": 2,
+    "correct": 1,
     "explanation": "Robust pipelines anticipate unseen categories in production. Solutions include an 'unknown' fallback for one-hot encoding, or defaulting to the global mean for target encoding."
   }
 ]
