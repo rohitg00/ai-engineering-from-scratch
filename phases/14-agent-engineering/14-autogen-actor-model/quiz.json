@@ -1,6 +1,6 @@
 {
   "lesson": "14-autogen-actor-model",
-  "title": "AutoGen v0.4: Actor Model and Agent Framework",
+  "title": "The Actor Model for Agents — Async Messages and Typed Runtimes",
   "questions": [
     {
       "stage": "pre",

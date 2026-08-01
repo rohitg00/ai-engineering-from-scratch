@@ -9,6 +9,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import process from "node:process";
 
+
 type MessagesRequest = {
   model: string;
   max_tokens: number;
@@ -90,6 +91,7 @@ async function callMessages(apiKey: string, request: MessagesRequest): Promise<M
 
 async function main(): Promise<number> {
   const env = mergeEnv();
+  const model = (env.LLM_MODEL ?? "").trim() || "claude-sonnet-5";
   const apiKey = env.ANTHROPIC_API_KEY ?? "mock";
   const usingMock = process.env.MOCK === "1" || apiKey === "mock";
 
@@ -101,7 +103,7 @@ async function main(): Promise<number> {
   );
 
   const request: MessagesRequest = {
-    model: "claude-sonnet-4-6",
+    model,
     max_tokens: 256,
     messages: [{ role: "user", content: "What is a neural network in one sentence?" }],
   };

@@ -59,8 +59,8 @@ def binary_cross_entropy_naive(y_true, y_pred):
 
 
 def binary_cross_entropy_stable(y_true, logit):
-    max_val = max(0.0, -logit)
-    return max_val + math.log(math.exp(-max_val) + math.exp(-logit - max_val)) - y_true * logit
+    max_val = max(0.0, logit)
+    return max_val + math.log(math.exp(-max_val) + math.exp(logit - max_val)) - y_true * logit
 
 
 def numerical_gradient(f, x, h=1e-5):

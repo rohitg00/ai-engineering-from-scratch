@@ -285,7 +285,7 @@ def cohens_d(data1, data2):
     pooled = math.sqrt(((n1 - 1) * v1 + (n2 - 1) * v2) / (n1 + n2 - 2))
     if pooled == 0:
         return 0.0
-    return (m2 - m1) / pooled
+    return (m1 - m2) / pooled
 
 
 def interpret_cohens_d(d):

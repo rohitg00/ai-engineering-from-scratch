@@ -158,6 +158,25 @@ ls phases/03-deep-learning-core/05-loss-functions/outputs/
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
+## Read it as a book
+
+The whole course compiles into a six-volume book series. EPUB and PDF are built by CI from the same lesson sources and attached to every [GitHub release](https://github.com/rohitg00/ai-engineering-from-scratch/releases); the links below always resolve to the newest release. Volume numbers index the series, not versions: each copy carries a dated edition stamp, and older editions stay downloadable from their release.
+
+| Vol | Title | Phases | Download |
+|-----|-------|--------|----------|
+| 1 | Foundations · Math, Tooling, and Classical Machine Learning | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Deep Learning · Networks, Vision, and Speech | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Language · NLP Foundations and the Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Large Language Models · Generation, Reinforcement, Pretraining, and Engineering | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Agents · Multimodality, Protocols, Autonomy, and Swarms | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Production · Infrastructure, Safety, and Capstones | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+The book is the snapshot; this repository is the living edition. Every chapter ends with links back to the lesson's animated figures, quiz, and runnable code. Build locally with `python3 scripts/build_book.py` (pandoc required); pipeline details in [book/README.md](book/README.md).
+
+```text
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
+
 ## Every lesson ships something
 
 Other curricula end with *"congratulations, you learned X."* Each lesson here ends with a
@@ -568,7 +587,7 @@ Twenty phases. Click any phase to expand its lesson list.
 | 13 | [Building a Production LLM App](phases/11-llm-engineering/13-production-app/) | Build | Python |
 | 14 | [Model Context Protocol (MCP)](phases/11-llm-engineering/14-model-context-protocol/) | Build | Python |
 | 15 | [Prompt Caching & Context Caching](phases/11-llm-engineering/15-prompt-caching/) | Build | Python |
-| 16 | [LangGraph: State Machines for Agents](phases/11-llm-engineering/16-langgraph-state-machines/) | Build | Python |
+| 16 | [Agent State Machines — Graphs, Nodes, Checkpoints](phases/11-llm-engineering/16-langgraph-state-machines/) | Build | Python |
 | 17 | [Agent Framework Tradeoffs](phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Learn | Python |
 
 </details>
@@ -651,18 +670,18 @@ Twenty phases. Click any phase to expand its lesson list.
 | 04 | [Tree of Thoughts and LATS](phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Build | Python |
 | 05 | [Self-Refine and CRITIC](phases/14-agent-engineering/05-self-refine-and-critic/) | Build | Python |
 | 06 | [Tool Use and Function Calling](phases/14-agent-engineering/06-tool-use-and-function-calling/) | Build | Python |
-| 07 | [Memory — Virtual Context and MemGPT](phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Build | Python |
+| 07 | [Agent Memory — Virtual Context and Memory Paging](phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Build | Python |
 | 08 | [Memory Blocks and Sleep-Time Compute](phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Build | Python |
-| 09 | [Hybrid Memory — Mem0 Vector + Graph + KV](phases/14-agent-engineering/09-hybrid-memory-mem0/) | Build | Python |
-| 10 | [Skill Libraries and Lifelong Learning — Voyager](phases/14-agent-engineering/10-skill-libraries-voyager/) | Build | Python |
+| 09 | [Hybrid Memory — Vector + Graph + KV](phases/14-agent-engineering/09-hybrid-memory-mem0/) | Build | Python |
+| 10 | [Skill Libraries and Lifelong Learning (Voyager)](phases/14-agent-engineering/10-skill-libraries-voyager/) | Build | Python |
 | 11 | [Planning with HTN and Evolutionary Search](phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Build | Python |
 | 12 | [Anthropic's Workflow Patterns](phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Build | Python |
-| 13 | [LangGraph — Stateful Graphs and Durable Execution](phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Build | Python |
-| 14 | [AutoGen v0.4 — Actor Model](phases/14-agent-engineering/14-autogen-actor-model/) | Build | Python |
-| 15 | [CrewAI — Role-Based Crews and Flows](phases/14-agent-engineering/15-crewai-role-based-crews/) | Build | Python |
+| 13 | [Stateful Graph Orchestration — Durable Execution and Checkpoints](phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Build | Python |
+| 14 | [The Actor Model for Agents](phases/14-agent-engineering/14-autogen-actor-model/) | Build | Python |
+| 15 | [Role-Based Agent Teams — Roles, Tasks, Processes](phases/14-agent-engineering/15-crewai-role-based-crews/) | Build | Python |
 | 16 | [OpenAI Agents SDK — Handoffs, Guardrails, Tracing](phases/14-agent-engineering/16-openai-agents-sdk/) | Build | Python |
-| 17 | [Claude Agent SDK — Subagents and Session Store](phases/14-agent-engineering/17-claude-agent-sdk/) | Build | Python |
-| 18 | [Agno and Mastra — Production Runtimes](phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Learn | Python |
+| 17 | [The Harness as a Library — Subagents and Session Store](phases/14-agent-engineering/17-claude-agent-sdk/) | Build | Python |
+| 18 | [Production Agent Runtimes](phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Learn | Python |
 | 19 | [Benchmarks — SWE-bench, GAIA, AgentBench](phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Learn | Python |
 | 20 | [Benchmarks — WebArena and OSWorld](phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Learn | Python |
 | 21 | [Computer Use — Claude, OpenAI CUA, Gemini](phases/14-agent-engineering/21-computer-use-agents/) | Build | Python |
@@ -707,7 +726,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 | 07 | [Recursive Self-Improvement: Capability vs Alignment](phases/15-autonomous-systems/07-recursive-self-improvement/) | Learn | Python |
 | 08 | [Bounded Self-Improvement Designs](phases/15-autonomous-systems/08-bounded-self-improvement/) | Learn | Python |
 | 09 | [Autonomous Coding Agent Landscape (SWE-bench, CodeAct)](phases/15-autonomous-systems/09-coding-agent-landscape/) | Learn | Python |
-| 10 | [Claude Code Permission Modes and Auto Mode](phases/15-autonomous-systems/10-claude-code-permission-modes/) | Learn | Python |
+| 10 | [Permission Modes for Autonomous Agents](phases/15-autonomous-systems/10-claude-code-permission-modes/) | Learn | Python |
 | 11 | [Browser Agents and Indirect Prompt Injection](phases/15-autonomous-systems/11-browser-agents/) | Learn | Python |
 | 12 | [Durable Execution for Long-Running Agents](phases/15-autonomous-systems/12-durable-execution/) | Learn | Python |
 | 13 | [Action Budgets, Iteration Caps, Cost Governors](phases/15-autonomous-systems/13-cost-governors/) | Learn | Python |
@@ -766,10 +785,10 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 | 01 | [Managed LLM Platforms — Bedrock, Azure OpenAI, Vertex AI](phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Learn | Python |
 | 02 | [Inference Platform Economics — Fireworks, Together, Baseten, Modal](phases/17-infrastructure-and-production/02-inference-platform-economics/) | Learn | Python |
 | 03 | [GPU Autoscaling on Kubernetes — Karpenter, KAI Scheduler](phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Learn | Python |
-| 04 | [vLLM Serving Internals — PagedAttention, Continuous Batching, Chunked Prefill](phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Learn | Python |
+| 04 | [Serving Engine Internals — PagedAttention, Continuous Batching, Chunked Prefill](phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Learn | Python |
 | 05 | [EAGLE-3 Speculative Decoding in Production](phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Learn | Python |
-| 06 | [SGLang and RadixAttention for Prefix-Heavy Workloads](phases/17-infrastructure-and-production/06-sglang-radixattention/) | Learn | Python |
-| 07 | [TensorRT-LLM on Blackwell with FP8 and NVFP4](phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Learn | Python |
+| 06 | [Prefix-Cache Serving — RadixAttention and KV Reuse](phases/17-infrastructure-and-production/06-sglang-radixattention/) | Learn | Python |
+| 07 | [Hardware-Specialized Inference Compilation — FP8 and NVFP4 on Blackwell](phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Learn | Python |
 | 08 | [Inference Metrics — TTFT, TPOT, ITL, Goodput, P99](phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Learn | Python |
 | 09 | [Production Quantization — AWQ, GPTQ, GGUF, FP8, NVFP4](phases/17-infrastructure-and-production/09-production-quantization/) | Learn | Python |
 | 10 | [Cold Start Mitigation for Serverless LLMs](phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Learn | Python |
@@ -780,7 +799,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 | 15 | [Batch APIs — the 50% Discount as Industry Standard](phases/17-infrastructure-and-production/15-batch-apis/) | Learn | Python |
 | 16 | [Model Routing as a Cost-Reduction Primitive](phases/17-infrastructure-and-production/16-model-routing/) | Learn | Python |
 | 17 | [Disaggregated Prefill/Decode — NVIDIA Dynamo and llm-d](phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Learn | Python |
-| 18 | [vLLM Production Stack with LMCache KV Offloading](phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Learn | Python |
+| 18 | [Production Serving Stack — KV Offloading and Cache-Aware Routing](phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Learn | Python |
 | 19 | [AI Gateways — LiteLLM, Portkey, Kong, Bifrost](phases/17-infrastructure-and-production/19-ai-gateways/) | Learn | Python |
 | 20 | [Shadow, Canary, and Progressive Deployment](phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Learn | Python |
 | 21 | [A/B Testing LLM Features — GrowthBook and Statsig](phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Learn | Python |
@@ -790,7 +809,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 | 25 | [Security — Secrets, PII Scrubbing, Audit Logs](phases/17-infrastructure-and-production/25-security-secrets-audit/) | Learn | Python |
 | 26 | [Compliance — SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](phases/17-infrastructure-and-production/26-compliance-frameworks/) | Learn | Python |
 | 27 | [FinOps for LLMs — Unit Economics and Multi-Tenant Attribution](phases/17-infrastructure-and-production/27-finops-llms/) | Learn | Python |
-| 28 | [Self-Hosted Serving Selection — llama.cpp, Ollama, TGI, vLLM, SGLang](phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Learn | Python |
+| 28 | [Self-Hosted Serving Selection — Matching Engine to Hardware and Scale](phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Learn | Python |
 
 </details>
 
@@ -1150,6 +1169,12 @@ Free, MIT-licensed, 503 lessons. The curriculum is maintained on sponsorship alo
 
 **Reach (verified 2026-05-14):** 55,593 monthly visitors · 90,709 page views · 7.5K stars ·
 Twitter/X is the #1 acquisition channel.
+
+<br />
+<br />
+<a href="https://vercel.com/open-source-program">
+  <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge-2026.svg" />
+</a>
 
 **Current sponsors:** [CodeRabbit](https://coderabbit.link/rohit-ghumare) · [iii](https://iii.dev?utm_source=ai-engineering-from-scratch&utm_medium=readme&utm_campaign=sponsor)
 

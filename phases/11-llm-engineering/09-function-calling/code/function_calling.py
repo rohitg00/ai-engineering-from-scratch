@@ -1,5 +1,6 @@
 import json
 import math
+import re
 import time
 
 
@@ -216,13 +217,17 @@ def simulate_model_decision(user_message, tools, conversation_history):
         return calls
 
     if any(word in msg for word in ["calculate", "compute", "math", "what is", "how much"]):
+        for run in re.findall(r"[0-9.+\-*/()\s]{3,}", msg):
+            expr = run.strip()
+            if not any(c.isdigit() for c in expr):
+                continue
+            if not any(c in expr for c in "+-*/"):
+                continue
+            if "error" not in calculator(expr):
+                return [{"name": "calculator", "arguments": {"expression": expr}}]
         for token in msg.split():
             if any(c in token for c in "+-*/"):
                 return [{"name": "calculator", "arguments": {"expression": token}}]
-        if "+" in msg or "-" in msg or "*" in msg or "/" in msg:
-            expr = "".join(c for c in msg if c in "0123456789+-*/.() ")
-            if expr.strip():
-                return [{"name": "calculator", "arguments": {"expression": expr.strip()}}]
         return [{"name": "calculator", "arguments": {"expression": "0"}}]
 
     if any(word in msg for word in ["search", "find", "look up", "google"]):

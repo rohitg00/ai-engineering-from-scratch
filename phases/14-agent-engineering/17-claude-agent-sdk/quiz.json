@@ -1,6 +1,6 @@
 {
   "lesson": "17-claude-agent-sdk",
-  "title": "Claude Agent SDK: Subagents and Session Store",
+  "title": "The Harness as a Library — Subagents and Session Store",
   "questions": [
     {
       "stage": "pre",

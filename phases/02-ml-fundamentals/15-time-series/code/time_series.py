@@ -132,7 +132,7 @@ class SimpleAR:
         predictions = []
 
         for _ in range(n_steps):
-            features = np.array(history[-self.n_lags:]).reshape(1, -1)
+            features = np.array(history[-self.n_lags:][::-1]).reshape(1, -1)
             pred = self.predict(features)[0]
             predictions.append(pred)
             history.append(pred)

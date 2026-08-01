@@ -91,7 +91,7 @@ P = [[0.7, 0.1, 0.2],    (if sunny: 70% sunny, 10% rainy, 20% cloudy)
 
 Start in any state. After many transitions, the distribution of states converges to the stationary distribution pi, where pi * P = pi. This is the left eigenvector of P with eigenvalue 1.
 
-For the weather chain, the stationary distribution might be [0.53, 0.18, 0.29] -- over the long run, it is sunny 53% of the time regardless of the starting state.
+For the weather chain, the stationary distribution is [0.55, 0.18, 0.27] -- over the long run, it is sunny 55% of the time regardless of the starting state.
 
 ```mermaid
 graph LR

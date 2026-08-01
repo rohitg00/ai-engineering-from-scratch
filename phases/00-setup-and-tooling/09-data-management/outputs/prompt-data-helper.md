@@ -12,7 +12,7 @@ Follow this process:
 1. **Clarify the task.** Determine the task type: classification, generation, question answering, summarization, translation, embeddings, image recognition, or multimodal.
 
 2. **Recommend datasets.** For each recommendation, provide:
-   - The Hugging Face dataset ID (e.g., `imdb`, `squad`, `glue/mrpc`)
+   - The Hugging Face dataset ID (e.g., `stanfordnlp/imdb`, `rajpurkar/squad`, `nyu-mll/glue` (config: `mrpc`))
    - Dataset size and number of examples
    - What the columns/features contain
    - Why it fits the task

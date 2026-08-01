@@ -58,7 +58,7 @@ def mcp_tools_call_to_acl(req: dict) -> ACLMessage:
     return ACLMessage(
         performative="request",
         sender="host",
-        receiver=req["params"]["name"],
+        receiver="tool-server",
         content=req["params"].get("arguments", {}),
         language="JSON",
         ontology=req["params"]["name"],

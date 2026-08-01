@@ -1516,34 +1516,110 @@
     }
 
     @media (max-width: 900px) {
+      html,
+      body {
+        overflow-x: hidden;
+      }
+      .lesson-layout { padding-top: 56px; }
       .lesson-sidebar { transform: translateX(-100%); }
       .lesson-sidebar.open { transform: translateX(0); }
       .lesson-sidebar-toggle {
         display: flex;
-        top: 70px;
-        right: 12px;
+        top: auto;
+        right: 16px;
+        bottom: 18px;
         left: auto;
-        width: 32px;
-        height: 32px;
-        font-size: 0.95rem;
+        width: auto;
+        height: 44px;
+        padding: 0 14px;
+        gap: 8px;
+        border-color: var(--blueprint);
+        background: var(--modal-bg);
+        color: var(--blueprint);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
-      .lesson-main { margin-left: 0; padding: 56px 20px 80px; }
+      .lesson-sidebar {
+        top: 56px;
+        width: min(360px, 88vw);
+        padding: 18px 0 88px;
+        border-right-color: var(--blueprint);
+        box-shadow: 16px 0 40px rgba(0, 0, 0, 0.22);
+      }
+      .sidebar-phase-header {
+        padding: 18px 18px 8px;
+      }
+      .sidebar-lesson-link {
+        padding: 10px 18px;
+        font-size: 1rem;
+        line-height: 1.35;
+      }
+      .lesson-main {
+        margin-left: 0;
+        justify-content: stretch;
+        padding: 44px 20px 80px;
+      }
+      .lesson-content { max-width: none; }
     }
 
     @media (max-width: 768px) {
-      .lesson-main { padding: 56px 16px 60px; }
+      .lesson-main { padding: 40px 16px 60px; }
       .lesson-article { max-width: 100%; }
+      .lesson-article h1 {
+        font-size: clamp(2.05rem, 11vw, 3rem);
+        line-height: 0.95;
+        margin-bottom: 16px;
+        padding-bottom: 14px;
+      }
+      .lesson-article h2 {
+        margin-top: 42px;
+        font-size: clamp(1.35rem, 8vw, 1.9rem);
+      }
+      .lesson-article h3 {
+        margin-top: 28px;
+        font-size: 0.84rem;
+        line-height: 1.35;
+      }
       .lesson-article p,
       .lesson-article ul li,
       .lesson-article ol li { font-size: 1rem; line-height: 1.65; }
+      .lesson-article p {
+        text-align: left;
+        hyphens: none;
+        -webkit-hyphens: none;
+      }
       .lesson-article > p:first-of-type::first-letter { font-size: 3rem; }
       .lesson-article pre code { font-size: 0.78rem; padding: 14px 14px; }
       .lesson-article table { font-size: 0.84rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
       .lesson-article table th,
       .lesson-article table td { padding: 8px 10px; white-space: nowrap; }
       .lesson-article .motto { font-size: 1.05rem; padding: 14px 16px; }
+      .learning-objectives,
+      .quiz-section,
+      .quiz-container {
+        padding: 18px 16px;
+      }
+      .lesson-meta {
+        gap: 6px;
+        margin-bottom: 24px;
+      }
+      .lesson-meta-tag {
+        font-size: 0.66rem;
+        letter-spacing: 0.07em;
+        padding: 3px 8px;
+      }
       .ai-panels { margin-top: 40px; gap: 28px; }
       .ai-panel { padding: 22px 16px; }
+      .ai-panel-header {
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .ai-panel-title {
+        font-size: 1.22rem;
+        line-height: 1.05;
+      }
       .output-cards,
       .code-cards { grid-template-columns: 1fr; }
       .lesson-nav-bottom { flex-direction: column; gap: 12px; }
@@ -1552,11 +1628,49 @@
     }
 
     @media (max-width: 480px) {
+      .lesson-main { padding: 36px 12px 56px; }
+      .lesson-sidebar-toggle {
+        right: 12px;
+        bottom: 14px;
+        height: 42px;
+        padding: 0 12px;
+      }
       .lesson-article p,
       .lesson-article ul li,
       .lesson-article ol li { font-size: 0.96rem; }
+      .lesson-article h1 { font-size: clamp(1.9rem, 12vw, 2.55rem); }
       .lesson-article > p:first-of-type::first-letter { font-size: 2.6rem; }
+      .lesson-article ul { padding-left: 18px; }
+      .lesson-article ol { padding-left: 24px; }
+      .learning-objectives,
+      .quiz-section,
+      .quiz-container {
+        padding: 16px 12px;
+      }
+      .learning-objectives-title,
+      .quiz-title {
+        align-items: flex-start;
+        font-size: 0.66rem;
+        line-height: 1.35;
+      }
+      .quiz-option {
+        gap: 10px;
+        padding: 10px 12px;
+      }
       .ai-panel { padding: 18px 12px; }
+      .code-card,
+      .output-card {
+        padding: 14px;
+      }
+      .code-card-actions,
+      .output-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .code-card-btn,
+      .output-btn {
+        text-align: center;
+      }
       .timeline-item { min-width: 70px; }
       .timeline-line { width: 20px; }
     }
@@ -1599,7 +1713,10 @@
     </div>
   </header>
 
-  <button class="lesson-sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">&#9776;</button>
+  <button class="lesson-sidebar-toggle" id="sidebarToggle" aria-label="Toggle lesson menu" type="button">
+    <span aria-hidden="true">&#9776;</span>
+    <span>Lessons</span>
+  </button>
 
   <div class="mermaid-modal-overlay" id="mermaidModalOverlay" aria-hidden="true">
     <div class="mermaid-modal" role="dialog" aria-modal="true" aria-label="Expanded diagram">
@@ -1626,6 +1743,7 @@
     <aside class="toc-sidebar" id="tocSidebar" aria-hidden="true"></aside>
   </div>
 
+  <script src="build-meta.js"></script>
   <script src="data.js?v=20260525a"></script>
   <script src="progress.js?v=20260525a"></script>
   <script src="header.js?v=20260525a" defer></script>
@@ -1670,6 +1788,7 @@
   <script src="figures-swarms3.js?v=20260612b"></script>
   <script src="figures-genai3.js?v=20260612b"></script>
   <script src="figures-misc2.js?v=20260612b"></script>
+  <script src="figures-history.js?v=20260612b"></script>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     mermaid.initialize({
@@ -1741,6 +1860,7 @@
       var currentPhaseIndex = -1;
       var currentLessonIndex = -1;
       var flatLessons = [];
+      var REPO_TREE = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/';
 
       if (typeof PHASES !== 'undefined') {
         for (var i = 0; i < PHASES.length; i++) {
@@ -1857,7 +1977,7 @@
 
         document.addEventListener('click', function (e) {
           if (window.innerWidth <= 900 && sidebar.classList.contains('open')) {
-            if (!sidebar.contains(e.target) && e.target !== toggle) {
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
               sidebar.classList.remove('open');
             }
           }
@@ -1875,9 +1995,22 @@
         }, { passive: true });
       }
 
-      function fetchLesson(path) {
-        var rawUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/docs/en.md';
-        var quizUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/quiz.json';
+      var lessonQuizPromise = null;
+
+      function fetchLesson(path, retried) {
+        // Fetch docs from the branch this site was built from (set by build.js
+        // via build-meta.js), so PR preview deploys render their own lesson
+        // edits instead of always pulling main. Falls back to main.
+        var ref = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
+        var base = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ref + '/';
+        var rawUrl = base + path + '/docs/en.md';
+        var quizUrl = base + path + '/quiz.json';
+
+        if (!retried || !lessonQuizPromise) {
+          lessonQuizPromise = fetch(quizUrl)
+            .then(function (res) { return res.ok ? res.json() : null; })
+            .catch(function () { return null; });
+        }
 
         fetch(rawUrl)
           .then(function (res) {
@@ -1892,9 +2025,7 @@
               showError('Render error', 'Loaded the lesson markdown but failed to render it. Details in the browser console.');
               return;
             }
-            fetch(quizUrl)
-              .then(function (res) { return res.ok ? res.json() : null; })
-              .catch(function () { return null; })
+            lessonQuizPromise
               .then(function (data) {
                 if (!data) return;
                 try { renderQuiz(data); }
@@ -1902,7 +2033,18 @@
               });
           })
           .catch(function () {
-            showError('Lesson not found', 'Could not fetch the lesson at <code>' + escapeHtml(path) + '</code>. It may not have been written yet.');
+            if (!retried) {
+              lessonQuizPromise = null;
+              setTimeout(function () { fetchLesson(path, true); }, 600);
+              return;
+            }
+            var ghLink = ' <a href="' + REPO_TREE + escapeAttr(path) + '" target="_blank" rel="noopener">Read it on GitHub</a>.';
+            var listed = currentLessonIndex >= 0 && flatLessons[currentLessonIndex].isReadable;
+            if (listed) {
+              showError('Lesson temporarily unavailable', 'Could not load the lesson at <code>' + escapeHtml(path) + '</code> right now. Try reloading the page.' + ghLink);
+            } else {
+              showError('Lesson not found', 'Could not fetch the lesson at <code>' + escapeHtml(path) + '</code>. It may not have been written yet.' + ghLink);
+            }
           });
       }
 
@@ -3056,15 +3198,15 @@
         return map[ext] || '··';
       }
 
-      function langCommand(filename) {
+      function langCommand(filename, path) {
         var ext = filename.split('.').pop().toLowerCase();
-        if (ext === 'py') return 'python';
-        if (ext === 'ts') return 'npx tsx';
-        if (ext === 'js') return 'node';
-        if (ext === 'rs') return 'cargo run --';
-        if (ext === 'jl') return 'julia';
-        if (ext === 'sh') return 'bash';
-        return 'run';
+        if (ext === 'py') return 'python ' + path;
+        if (ext === 'ts') return 'npx tsx ' + path;
+        if (ext === 'js') return 'node ' + path;
+        if (ext === 'rs') return 'rustc ' + path + ' -o main && ./main';
+        if (ext === 'jl') return 'julia ' + path;
+        if (ext === 'sh') return 'bash ' + path;
+        return 'run ' + path;
       }
 
       function formatSize(bytes) {
@@ -3085,10 +3227,11 @@
         panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">O</div><div class="ai-panel-title">What This Lesson Ships</div></div><div class="ai-panel-subtitle">Prompts, skills, and artifacts you can use right now</div><div id="outputsContent" class="panel-loading">Loading outputs...</div>';
         container.appendChild(panel);
 
+        var outputsEl = panel.querySelector('#outputsContent');
         ghApiFetch(lessonPath + '/outputs', function (err, data) {
-          var el = document.getElementById('outputsContent');
+          if (!outputsEl || !outputsEl.parentNode) return;
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            outputsEl.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); outputsEl.appendChild(fb);
             return;
           }
 
@@ -3133,7 +3276,7 @@
             });
           });
           html += '</div>';
-          el.innerHTML = html;
+          outputsEl.innerHTML = html;
         });
       }
 
@@ -3143,18 +3286,18 @@
         panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Executable files from this lesson</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
         container.appendChild(panel);
 
+        var codeEl = panel.querySelector('#codeContent');
         ghApiFetch(lessonPath + '/code', function (err, data) {
-          var el = document.getElementById('codeContent');
+          if (!codeEl || !codeEl.parentNode) return;
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            codeEl.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); codeEl.appendChild(fb);
             return;
           }
 
           var html = '<div class="code-cards">';
           data.forEach(function (file) {
             var icon = langIcon(file.name);
-            var cmd = langCommand(file.name);
-            var runCmd = cmd + ' ' + lessonPath + '/code/' + file.name;
+            var runCmd = langCommand(file.name, lessonPath + '/code/' + file.name);
             html += '<div class="code-card">';
             html += '<div class="code-card-header"><span class="code-lang-icon">' + icon + '</span><span class="code-card-name">' + escapeHtml(file.name) + '</span></div>';
             html += '<div class="code-card-size">' + formatSize(file.size) + '</div>';
@@ -3166,8 +3309,8 @@
             html += '</div>';
           });
           html += '</div>';
-          el.innerHTML = html;
-          el.querySelectorAll('.code-card-copy').forEach(function (btn) {
+          codeEl.innerHTML = html;
+          codeEl.querySelectorAll('.code-card-copy').forEach(function (btn) {
             btn.addEventListener('click', function () {
               var command = btn.getAttribute('data-command');
               navigator.clipboard.writeText(command).then(function () {
@@ -3247,19 +3390,44 @@
         ];
       }
 
+      function lessonQuizPanelQuestions(data) {
+        var source = data && (data.questions || data);
+        if (!Array.isArray(source)) return [];
+        var valid = source.filter(function (q) {
+          return q && q.question && Array.isArray(q.options) &&
+            typeof q.correct === 'number' && q.correct >= 0 && q.correct < q.options.length;
+        });
+        var post = valid.filter(function (q) { return q.stage === 'post'; });
+        return (post.length ? post : valid).slice(0, 3).map(function (q) {
+          return { q: q.question, opts: q.options, answer: q.correct, explain: q.explanation || '' };
+        });
+      }
+
       function renderQuizPanel(container) {
-        var questions = getQuizQuestions();
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">Q</div><div class="ai-panel-title">Test Your Understanding</div></div><div id="quizContent"><div class="panel-loading">Loading questions...</div></div>';
+        container.appendChild(panel);
 
+        if (lessonQuizPromise) {
+          lessonQuizPromise.then(function (data) {
+            var questions = lessonQuizPanelQuestions(data);
+            if (!questions.length) questions = getQuizQuestions();
+            fillQuizPanel(panel.querySelector('#quizContent'), questions);
+          });
+        } else {
+          fillQuizPanel(panel.querySelector('#quizContent'), getQuizQuestions());
+        }
+      }
+
+      function fillQuizPanel(body, questions) {
         var phase = '';
         if (currentLessonIndex >= 0) {
           var fl = flatLessons[currentLessonIndex];
           phase = fl.phaseSlug || '';
         }
 
-        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">Q</div><div class="ai-panel-title">Test Your Understanding</div></div>';
-        html += '<div class="ai-panel-subtitle">Did you get it?</div>';
+        var html = '<div class="ai-panel-subtitle">Did you get it?</div>';
         html += '<div class="quiz-container" id="quizContainer">';
 
         var letters = ['A', 'B', 'C', 'D'];
@@ -3283,8 +3451,7 @@
         html += '<div class="quiz-deeper">Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed</div>';
         html += '</div>';
 
-        panel.innerHTML = html;
-        container.appendChild(panel);
+        body.innerHTML = html;
 
         window._quizData = questions;
         window._quizAnswered = 0;

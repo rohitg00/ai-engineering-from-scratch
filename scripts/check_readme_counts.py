@@ -3,11 +3,12 @@
 
 Requires Python 3.10+. Stdlib only.
 
-catalog.json is filesystem-truth (rebuilt by scripts/build_catalog.py and
-checked in CI). The README, however, sprinkles hardcoded counts ("428
-lessons", "373 skills, 99 prompts, ...") that drift every time the
-curriculum grows or shrinks. This script pins each hardcoded count to a
-field in catalog.json's `totals` block and fails when they disagree.
+catalog.json is filesystem-truth (rebuilt by scripts/build_catalog.py in CI,
+or built ephemerally when the file is absent locally). The README, however,
+sprinkles hardcoded counts ("428 lessons", "373 skills, 99 prompts, ...") that
+drift every time the curriculum grows or shrinks. This script pins each
+hardcoded count to a field in catalog.json's `totals` block and fails when they
+disagree.
 
 Usage:
     python3 scripts/check_readme_counts.py            # exit 1 on any drift
@@ -36,6 +37,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CATALOG_PATH = ROOT / "catalog.json"
 README_PATH = ROOT / "README.md"
+VOLUMES_PATH = ROOT / "book" / "volumes.json"
+BOOK_README_PATH = ROOT / "book" / "README.md"
+INDEX_HTML_PATH = ROOT / "site" / "index.html"
 
 
 @dataclass(frozen=True)
@@ -121,8 +125,14 @@ class Mismatch:
 
 
 def load_totals() -> dict[str, int]:
-    with CATALOG_PATH.open(encoding="utf-8") as fh:
-        catalog = json.load(fh)
+    if CATALOG_PATH.exists():
+        with CATALOG_PATH.open(encoding="utf-8") as fh:
+            catalog = json.load(fh)
+    else:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from build_catalog import build_catalog
+
+        catalog = build_catalog()
     totals = catalog.get("totals")
     if not isinstance(totals, dict):
         raise SystemExit("catalog.json is missing the 'totals' block")
@@ -182,6 +192,101 @@ def apply_fixes(readme_text: str, totals: dict[str, int]) -> str:
 
         readme_text = pattern.regex.sub(replace, readme_text)
     return readme_text
+
+
+def expand_phase_display(display: str) -> list[str]:
+    """Parse a phase-band display ("00-02", "00–02", "03, 04, 06") into 2-digit ids."""
+    display = display.strip()
+    parts = [p.strip() for p in display.split(",")]
+    out: list[str] = []
+    for part in parts:
+        m = re.fullmatch(r"(\d{2})\s*[-–]\s*(\d{2})", part)
+        if m:
+            out.extend(f"{i:02d}" for i in range(int(m.group(1)), int(m.group(2)) + 1))
+        elif re.fullmatch(r"\d{2}", part):
+            out.append(part)
+        else:
+            return []
+    return out
+
+
+def check_book_volumes() -> list[str]:
+    """Pin the three presentation copies of the volume tables to book/volumes.json.
+
+    volumes.json drives the build (artifact filenames, titles, phase bands); the
+    README table, book/README.md table, and the homepage books array each carry a
+    hand-rendered copy. A rename or band move that misses one copy silently 404s
+    the release download links, so any disagreement fails here.
+    """
+    volumes = json.loads(VOLUMES_PATH.read_text(encoding="utf-8"))["volumes"]
+    readme = README_PATH.read_text(encoding="utf-8")
+    book_readme = BOOK_README_PATH.read_text(encoding="utf-8")
+    index_html = INDEX_HTML_PATH.read_text(encoding="utf-8")
+    errors: list[str] = []
+
+    for vol in volumes:
+        n, slug = vol["number"], vol["slug"]
+        title, subtitle = vol["title"], vol["subtitle"]
+        shorts = [p.split("-")[0] for p in vol["phases"]]
+        where = f"volume {n} ({slug})"
+
+        m = re.search(
+            rf"^\| {n} \| (.+?) \| (.+?) \| (.+) \|$", readme, re.MULTILINE
+        )
+        if not m or "aiefs-vol" not in m.group(3):
+            errors.append(f"README.md book table: no row for {where}")
+        else:
+            if m.group(1) != f"{title} · {subtitle}":
+                errors.append(
+                    f"README.md book table {where}: name cell {m.group(1)!r} != "
+                    f"{title!r} · {subtitle!r}"
+                )
+            if expand_phase_display(m.group(2)) != shorts:
+                errors.append(
+                    f"README.md book table {where}: phases {m.group(2)!r} != {shorts}"
+                )
+            for ext in ("epub", "pdf"):
+                if f"aiefs-vol{n}-{slug}.{ext}" not in m.group(3):
+                    errors.append(
+                        f"README.md book table {where}: missing aiefs-vol{n}-{slug}.{ext} link"
+                    )
+
+        m = re.search(rf"^\| {n} \| (.+?) \| (.+?) \|$", book_readme, re.MULTILINE)
+        if not m:
+            errors.append(f"book/README.md table: no row for {where}")
+        else:
+            if m.group(1) != title:
+                errors.append(
+                    f"book/README.md table {where}: title {m.group(1)!r} != {title!r}"
+                )
+            if expand_phase_display(m.group(2)) != shorts:
+                errors.append(
+                    f"book/README.md table {where}: phases {m.group(2)!r} != {shorts}"
+                )
+
+        m = re.search(
+            rf"\{{ n: {n}, slug: '([^']*)', title: '([^']*)', "
+            rf"subtitle: '([^']*)', phases: '([^']*)' \}}",
+            index_html,
+        )
+        if not m:
+            errors.append(f"site/index.html books array: no entry for {where}")
+        else:
+            if m.group(1) != slug:
+                errors.append(
+                    f"site/index.html books array {where}: slug {m.group(1)!r} != {slug!r}"
+                )
+            if m.group(2) != title or m.group(3) != subtitle:
+                errors.append(
+                    f"site/index.html books array {where}: title/subtitle drift "
+                    f"({m.group(2)!r}, {m.group(3)!r})"
+                )
+            if expand_phase_display(m.group(4)) != shorts:
+                errors.append(
+                    f"site/index.html books array {where}: phases {m.group(4)!r} != {shorts}"
+                )
+
+    return errors
 
 
 def render_text_report(mismatches: list[Mismatch]) -> str:
@@ -252,11 +357,26 @@ def main(argv: list[str] | None = None) -> int:
         return 1 if remaining else 0
 
     mismatches = find_mismatches(readme_text, totals)
+    volume_errors = check_book_volumes()
     if args.json:
-        sys.stdout.write(render_json_report(mismatches, totals))
+        report = json.loads(render_json_report(mismatches, totals))
+        report["ok"] = report["ok"] and not volume_errors
+        report["volume_errors"] = volume_errors
+        sys.stdout.write(json.dumps(report, indent=2) + "\n")
     else:
         sys.stdout.write(render_text_report(mismatches))
-    return 1 if mismatches else 0
+        if volume_errors:
+            sys.stdout.write(
+                f"book volume drift detected: {len(volume_errors)} error(s).\n"
+            )
+            for err in volume_errors:
+                sys.stdout.write(f"  {err}\n")
+            sys.stdout.write(
+                "book/volumes.json is the source of truth; sync the copies above.\n"
+            )
+        else:
+            sys.stdout.write("Book volume tables match book/volumes.json.\n")
+    return 1 if (mismatches or volume_errors) else 0
 
 
 if __name__ == "__main__":

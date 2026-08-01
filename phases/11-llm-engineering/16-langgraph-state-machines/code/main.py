@@ -22,6 +22,7 @@ Run:
 
 from __future__ import annotations
 
+import os
 from typing import Annotated, TypedDict
 
 from langchain_anthropic import ChatAnthropic
@@ -76,7 +77,7 @@ TOOLS = [calculator, web_lookup]
 
 def build_app() -> tuple:
     """Wire the four-node ReAct graph and return (compiled_app, llm_with_tools)."""
-    llm = ChatAnthropic(model="claude-sonnet-4-5", temperature=0).bind_tools(TOOLS)
+    llm = ChatAnthropic(model=os.environ.get("LLM_MODEL", "claude-sonnet-4-5"), temperature=0).bind_tools(TOOLS)
 
     def agent_node(state: State) -> dict:
         response = llm.invoke(state["messages"])

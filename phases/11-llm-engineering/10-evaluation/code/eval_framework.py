@@ -128,7 +128,7 @@ def simulate_judge_score(input_text, model_output, reference_output, criterion):
         if keyword_overlap > 0.3:
             base_score = min(5, base_score + 1)
 
-    seed = hash(f"{input_text}{model_output}{criterion}") % 100
+    seed = int(hashlib.md5(f"{input_text}{model_output}{criterion}".encode()).hexdigest(), 16) % 100
     if seed < 15:
         base_score = max(1, base_score - 1)
     elif seed > 85:

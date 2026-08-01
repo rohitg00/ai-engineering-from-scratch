@@ -457,7 +457,7 @@ The escalation logic: try cheap (single CoT) first. If self-consistency confiden
 
 ## Use It
 
-### With LangChain
+### Template-Driven Few-Shot Prompts
 
 LangChain provides built-in support for prompt templates and output parsing that simplify few-shot and CoT patterns:
 
@@ -495,7 +495,7 @@ selector = SemanticSimilarityExampleSelector.from_examples(
 )
 ```
 
-### With DSPy
+### Compiled Prompts
 
 DSPy treats prompting strategies as optimizable modules. Instead of handcrafting CoT prompts, you define a signature and let DSPy optimize the prompt:
 

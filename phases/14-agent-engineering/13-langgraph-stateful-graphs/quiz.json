@@ -1,6 +1,6 @@
 {
   "lesson": "13-langgraph-stateful-graphs",
-  "title": "LangGraph: Stateful Graphs and Durable Execution",
+  "title": "Stateful Graph Orchestration — Durable Execution and Checkpoints",
   "questions": [
     {
       "stage": "pre",

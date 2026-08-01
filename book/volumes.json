@@ -1,0 +1,50 @@
+{
+  "series": "AI Engineering from Scratch",
+  "author": "aiengineeringfromscratch.com",
+  "site": "https://aiengineeringfromscratch.com",
+  "repo": "https://github.com/rohitg00/ai-engineering-from-scratch",
+  "volumes": [
+    {
+      "slug": "foundations",
+      "number": 1,
+      "title": "Foundations",
+      "subtitle": "Math, Tooling, and Classical Machine Learning",
+      "phases": ["00-setup-and-tooling", "01-math-foundations", "02-ml-fundamentals"]
+    },
+    {
+      "slug": "deep-learning",
+      "number": 2,
+      "title": "Deep Learning",
+      "subtitle": "Networks, Vision, and Speech",
+      "phases": ["03-deep-learning-core", "04-computer-vision", "06-speech-and-audio"]
+    },
+    {
+      "slug": "language",
+      "number": 3,
+      "title": "Language",
+      "subtitle": "NLP Foundations and the Transformer",
+      "phases": ["05-nlp-foundations-to-advanced", "07-transformers-deep-dive"]
+    },
+    {
+      "slug": "llms",
+      "number": 4,
+      "title": "Large Language Models",
+      "subtitle": "Generation, Reinforcement, Pretraining, and Engineering",
+      "phases": ["08-generative-ai", "09-reinforcement-learning", "10-llms-from-scratch", "11-llm-engineering"]
+    },
+    {
+      "slug": "agents",
+      "number": 5,
+      "title": "Agents",
+      "subtitle": "Multimodality, Protocols, Autonomy, and Swarms",
+      "phases": ["12-multimodal-ai", "13-tools-and-protocols", "14-agent-engineering", "15-autonomous-systems", "16-multi-agent-and-swarms"]
+    },
+    {
+      "slug": "production",
+      "number": 6,
+      "title": "Production",
+      "subtitle": "Infrastructure, Safety, and Capstones",
+      "phases": ["17-infrastructure-and-production", "18-ethics-safety-alignment", "19-capstone-projects"]
+    }
+  ]
+}

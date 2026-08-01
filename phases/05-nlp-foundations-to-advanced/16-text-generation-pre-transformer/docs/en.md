@@ -19,6 +19,26 @@ The interesting problem is what to do about unseen n-grams. A raw count-based mo
 
 ![N-gram model: count, smooth, generate](../assets/ngram.svg)
 
+### The prediction game
+
+Before any of this machinery existed, one experiment defined what a language model is. Cover the next letter of an English sentence. Ask someone to guess it, one guess at a time, until they get it right. Write down the guess count. Repeat for a few hundred letters.
+
+The guess counts are not trivia. They are a lossless re-encoding of the text: hand the count sequence to a second, identical guesser and they can reconstruct every letter, because at each position they know exactly which guesses come first. A message you can re-encode in fewer symbols carries less information per symbol, so the guess-count statistics put a ceiling on the entropy of English.
+
+Shannon ran this in 1951 and got a number that still governs the field. A 27-symbol alphabet (26 letters plus space) could carry `log2(27) ≈ 4.75` bits per letter. Human guessers with 100 letters of context landed between 0.6 and 1.3 bits per letter. English is roughly three-quarters forced moves. The structure a model must learn was measured before any model could learn it.
+
+Every language model since is a mechanical player of this game, and every evaluation number in this lesson is the game scored:
+
+- **Cross-entropy loss** is the average number of bits the model needs per symbol. Training an LM is literally minimizing its score at the guessing game.
+- **Perplexity** is `2^bits` (or `e^nats`): the branching factor still facing the model after its guesswork. Uniform guessing over 27 symbols is perplexity 27; a 1-bit-per-letter player has perplexity 2.
+- **Context length is the player's memory.** A trigram model plays with two tokens of memory. A transformer plays the same game with 100K tokens. The rules never changed; the player got better.
+
+One unit switch to track: the game scores per letter in bits (`log2`), while the n-gram formulas below score per word token in nats (natural log) — and since perplexity `e^H` in nats equals `2^H` in bits, the two views are the same measurement in different units.
+
+```figure
+prediction-game
+```
+
 **N-gram probability:** `P(w_i | w_{i-n+1}, ..., w_{i-1})`. Fix `n` (typically 3 for trigrams, 4 for 4-grams). Compute from counts:
 
 ```text
@@ -225,9 +245,11 @@ Refuse to report perplexity computed with different tokenization between systems
 | Backoff | Fallback to shorter context | If trigram count is zero, use bigram. Katz backoff formalizes this. |
 | Kneser-Ney | Best smoothing for n-grams | Absolute discounting + continuation probability for the lower-order model. |
 | Continuation probability | KN-specific | `P(w)` weighted by number of contexts `w` appears in, not by raw count. |
+| Entropy of text | Information per symbol | Average bits needed to encode the next symbol given the context. Shannon's 1951 estimate for printed English with up to 100 letters of context: 0.6-1.3 bits/letter, measured before any model existed. |
 
 ## Further Reading
 
+- [Shannon (1951). Prediction and Entropy of Printed English](https://www.princeton.edu/~wbialek/rome/refs/shannon_51.pdf) — the guessing-game experiment that defined the target every language model still optimizes.
 - [Jurafsky and Martin — Speech and Language Processing, Chapter 3 (2026 draft)](https://web.stanford.edu/~jurafsky/slp3/3.pdf) — the canonical treatment of n-gram LMs and smoothing.
 - [Chen and Goodman (1998). An Empirical Study of Smoothing Techniques for Language Modeling](https://dash.harvard.edu/handle/1/25104739) — the paper that settled Kneser-Ney as the best n-gram smoother.
 - [Kneser and Ney (1995). Improved Backing-off for M-gram Language Modeling](https://ieeexplore.ieee.org/document/479394) — the original KN paper.

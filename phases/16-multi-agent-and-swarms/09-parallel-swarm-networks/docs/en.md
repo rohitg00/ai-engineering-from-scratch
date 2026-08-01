@@ -51,7 +51,7 @@ Matrix is the 2025 paper that takes swarm to its natural conclusion: both contro
 
 Contribution: a programming model where multi-agent coordination is "what message topic does this agent subscribe to?" rather than "which agent does the supervisor pick next?" This makes the system look like a pub/sub event mesh.
 
-### LangGraph's Swarm Architecture
+### Swarm in graph frameworks
 
 LangGraph 2025 docs explicitly describe "Swarm Architecture" as one of the multi-agent patterns: agents are nodes, but edges form a directed graph with cycles and any node can be activated from the pool. A worker picks from available work by condition, not by supervisor assignment.
 
