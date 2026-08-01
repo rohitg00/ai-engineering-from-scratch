@@ -191,6 +191,27 @@ def check_quiz(audit: Audit, lesson: Path) -> None:
                 quiz,
                 f"question[{idx}] correct={correct!r} not a valid index in options[0..{len(options) - 1}]",
             )
+    check_quiz_answer_distribution(audit, lesson, quiz, questions)
+
+
+def check_quiz_answer_distribution(
+    audit: Audit, lesson: Path, quiz: Path, questions: list[object]
+) -> None:
+    correct_indices: list[int] = []
+    for q in questions:
+        if not isinstance(q, dict):
+            continue
+        options = q.get("options")
+        correct = q.get("correct")
+        if isinstance(options, list) and isinstance(correct, int) and 0 <= correct < len(options):
+            correct_indices.append(correct)
+    if len(correct_indices) >= 3 and len(set(correct_indices)) == 1:
+        audit.add(
+            "L011",
+            lesson,
+            quiz,
+            f"all {len(correct_indices)} valid questions use answer index {correct_indices[0]}",
+        )
 
 
 def check_internal_links(audit: Audit, lesson: Path, text: str) -> None:
