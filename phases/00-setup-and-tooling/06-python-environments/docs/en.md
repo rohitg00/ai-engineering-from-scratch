@@ -45,6 +45,10 @@ graph TD
     end
 ```
 
+```figure
+s0-env-isolation
+```
+
 ## Build It
 
 ### Option 1: uv venv (Recommended)

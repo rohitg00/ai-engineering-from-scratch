@@ -55,6 +55,10 @@ The MLP from lesson 77 was sufficient to verify gradient sync. A tiny GPT adds t
 
 The loop runs a fixed 20 steps and exits. No `while True`, no human intervention, no resume from external state. A capstone you can leave running unattended and find a complete log when it finishes is a capstone that proves the system is wired correctly. If any piece deadlocks the demo never returns and the test rig catches it.
 
+```figure
+ci-distributed-assembly
+```
+
 ## Build It
 
 `code/main.py` implements:

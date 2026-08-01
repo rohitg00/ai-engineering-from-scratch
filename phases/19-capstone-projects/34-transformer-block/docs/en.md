@@ -69,6 +69,10 @@ The position wise MLP applies the same two layer network to every token independ
 
 They make the gradient path additive across depth, which keeps the gradient norm in scale through twelve layers. They also let each block learn an additive update to the running representation rather than a full replacement. Both effects are why the block scales.
 
+```figure
+cc-transformer-block
+```
+
 ## Build It
 
 `code/main.py` implements:

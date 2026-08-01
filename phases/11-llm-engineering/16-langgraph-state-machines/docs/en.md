@@ -60,6 +60,10 @@ That is it. You get the full ReAct loop (Thought → Action → Observation → 
 
 A compiled graph can be a node in another graph. The outer graph sees a single node; the inner graph has its own state and its own checkpoints. This is how teams build supervisor-worker agents: the supervisor graph routes user intent to a per-domain worker subgraph.
 
+```figure
+l5-state-graph-ledger
+```
+
 ## Build It
 
 ### Step 1: state and nodes

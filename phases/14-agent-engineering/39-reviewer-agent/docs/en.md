@@ -57,6 +57,10 @@ The reviewer reads the diff, the state, the feedback, the verdict. It writes a r
 
 The gate (Phase 14 · 38) checks deterministic facts: did acceptance run, did rules pass, did scope hold. The reviewer makes qualitative judgments: was this the right work, is it documented, is the handoff usable. Both are required.
 
+```figure
+wb-builder-marker
+```
+
 ## Build It
 
 `code/main.py` implements:

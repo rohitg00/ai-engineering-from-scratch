@@ -47,6 +47,10 @@ This breaks tabular convergence proofs (Q-learning's guarantee assumes a station
 
 **Communication.** Allow agents to send learned messages `m_i` to each other. Works in cooperative settings. Foerster et al. (2016) showed that differentiable inter-agent communication can be trained end-to-end. Today's LLM-based multi-agent systems (Phase 16) essentially communicate in natural language.
 
+```figure
+f3-marl-orbit
+```
+
 ## Build It
 
 This lesson uses a 6×6 GridWorld with two cooperative agents. They start in opposite corners and must reach a shared goal. Shared reward: `-1` per step while either agent is still moving, `+10` when both arrive. See `code/main.py`.

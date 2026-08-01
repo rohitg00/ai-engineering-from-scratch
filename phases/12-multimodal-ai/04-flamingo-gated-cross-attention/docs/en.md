@@ -108,6 +108,10 @@ Otter (2023) builds on OpenFlamingo with instruction tuning on MIMIC-IT (a datas
 
 Pick BLIP-2 for single-image VQA on a budget. Pick Flamingo/Idefics2 for interleaved, few-shot, or multi-image reasoning.
 
+```figure
+cross-attention-fusion
+```
+
 ## Use It
 
 `code/main.py` demonstrates:

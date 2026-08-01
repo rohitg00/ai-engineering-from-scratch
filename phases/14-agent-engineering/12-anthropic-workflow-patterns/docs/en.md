@@ -59,6 +59,10 @@ Foundation for all five patterns: one LLM with three capabilities wired in — s
 
 "Effective context engineering for AI agents" (Anthropic 2025) formalizes the adjacent discipline: the 200k window is a budget, not a container. What to include, when to compact, when to let context grow. Covered in detail in Phase 14 lesson on context compression (Phase 14 earlier lesson 06 in this curriculum before the renumber).
 
+```figure
+workflow-chain
+```
+
 ## Build It
 
 `code/main.py` implements all five workflow patterns against a `ScriptedLLM`:

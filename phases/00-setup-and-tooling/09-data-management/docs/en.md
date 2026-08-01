@@ -32,6 +32,10 @@ graph TD
 
 The Hugging Face `datasets` library is the standard way to load data for AI work. It handles downloading, caching, format conversion, and streaming out of the box.
 
+```figure
+s0-data-pipeline
+```
+
 ## Build It
 
 ### Step 1: Install the datasets library

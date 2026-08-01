@@ -60,6 +60,10 @@ Microsoft's Agent Governance Toolkit covers the OWASP Agentic Top 10 and the EU 
 
 The real case in the Microsoft docs: an e-commerce agent whose monthly cost tripled after a new tool was added. The tool allowed the agent to poll order status during every session. No loop detection. No per-tool cap. No alert on week-over-week growth. The fix was a per-tool cap plus a daily-growth alert. This is a template: every new tool surface is a new potential loop; every new tool needs its own cap and its own alert.
 
+```figure
+cost-governor-stack
+```
+
 ## Use It
 
 `code/main.py` simulates an agent run with and without a layered cost-governor stack. The simulated agent drifts into a polling loop after some turns; the layered stack catches it within the velocity window while a single monthly cap would not fire until days later.

@@ -29,6 +29,10 @@ The trend in 2026 is hybrid: retrieve the best few passages, then prompt a gener
 
 **Generative.** A decoder-only LLM (GPT, Claude, Llama) answers from learned weights. No retrieval step. Excellent on common knowledge, catastrophic on rare or recent facts. The hallucination rate is inversely correlated with fact frequency in the pretraining data.
 
+```figure
+qa-span
+```
+
 ## Build It
 
 ### Step 1: extractive QA with a pretrained model

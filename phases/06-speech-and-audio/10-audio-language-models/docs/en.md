@@ -80,6 +80,10 @@ The **multi-audio column is damning for everyone.** Random chance on 4-option mu
 - Multi-audio comparison (22-26% is barely above random).
 - Real-time streaming reasoning (most are offline batch inference).
 
+```figure
+v4-alm-tokens
+```
+
 ## Build It
 
 ### Step 1: query Qwen2.5-Omni

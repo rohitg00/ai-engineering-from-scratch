@@ -14,6 +14,10 @@
 - Map handler exceptions and transport faults onto a single error envelope the harness loop already understands.
 - Bound parallel dispatch with a concurrency limit so a fan-out of forty tool calls does not exhaust the event loop.
 
+```figure
+cf-dispatch-retry
+```
+
 ## Where the dispatcher sits
 
 Between the harness loop (lesson twenty) and the tool registry (lesson twenty-one). The transport (lesson twenty-two) feeds the loop. The loop hands a tool call to the dispatcher. The dispatcher calls the registry, runs the handler, and returns either a result or a JSON-RPC-shaped error envelope.

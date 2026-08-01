@@ -62,6 +62,10 @@ This is the same reasoning pattern as Lob's theorem (Lesson 8): the agent cannot
 - **HITL on consequential actions.** Propose-then-commit pattern (Lesson 15).
 - **Canary tokens on memory.** If a memory entry fires, the user sees it (Lesson 14).
 
+```figure
+injection-boundary
+```
+
 ## Use It
 
 `code/main.py` models a tiny browser-agent run against three synthetic pages. One page is benign, one has a direct prompt-injection blob in visible text, one has a URL-fragment injection (not visible but inside the agent's context). The script shows (a) what a naïve agent would do, (b) what a read/write boundary catches, (c) what a sanitizer catches, (d) what neither catches.

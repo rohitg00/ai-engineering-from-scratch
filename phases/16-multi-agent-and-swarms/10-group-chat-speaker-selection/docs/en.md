@@ -90,6 +90,10 @@ Same primitives, different defaults:
 
 Both use the four primitives from Lesson 04. Group chat defaults to LLM-selected orchestration and full-pool shared state.
 
+```figure
+swarm-speaker
+```
+
 ## Build It
 
 `code/main.py` implements a GroupChat from scratch in stdlib. Three agents (coder, reviewer, manager), round-robin and LLM-selected variants, and a termination on a `TERMINATE` token.

@@ -53,6 +53,10 @@ End-to-end: 125 ms VAD + flush STT = conversational latency.
 
 Silero is the right default. Cobra is the compliance / accuracy upgrade. Energy-only VAD has no place in 2026 production.
 
+```figure
+sp-vad-cascade
+```
+
 ## Build It
 
 ### Step 1: the energy gate

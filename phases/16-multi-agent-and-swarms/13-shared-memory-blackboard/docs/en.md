@@ -101,6 +101,10 @@ The most load-bearing mitigation is the read-only verifier. Implementation rules
 
 Without this separation, the verifier's outputs become new entries in the pool, which means a poisoned pool poisons the verifier, which poisons its verifications.
 
+```figure
+swarm-blackboard
+```
+
 ## Build It
 
 `code/main.py` implements both topologies in stdlib Python plus a toy poisoning attack and the three mitigations.

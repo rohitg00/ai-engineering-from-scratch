@@ -85,6 +85,10 @@ Cold-start anatomy for a 70B model on a fresh node (illustrative):
 - Run:ai Model Streamer: ~2x weight-load speedup.
 - ServerlessLLM tiered loading: 10-200x latency reduction (paper numbers).
 
+```figure
+cold-start-pipeline
+```
+
 ## Use It
 
 `code/main.py` models a cold-start path with and without each mitigation. Reports total cold-start time, warm-pool cost, and the break-even request rate above which warm pool pays for itself.

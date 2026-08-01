@@ -59,6 +59,10 @@ HPA on queue-wait metric
 - Eval: ShareGPT, MT-Bench-v2, GSM8K, HumanEval for domain-spread acceptance measurement
 - Reference: TensorRT-LLM speculative decoding for a vendor baseline
 
+```figure
+cf-spec-decode
+```
+
 ## Build It
 
 1. **Target model prep.** Pick Llama 3.3 70B. Quantize to FP8 via Marlin. Deploy under vLLM 0.7 on 1xH100 (or 2x tensor-parallel).

@@ -73,6 +73,10 @@ Gate routes by online quality metrics:
 - GPT-4-level 2022 vs 2026: ~$20/M → ~$0.40/M.
 - Cascade latency impact: ~1.2x median, ~2x escalated (~10% of traffic).
 
+```figure
+model-cascade-router
+```
+
 ## Use It
 
 `code/main.py` simulates pre-route, cascade, and ensemble on a mixed workload. Reports blended cost, quality loss, and escalation rate.

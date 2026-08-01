@@ -102,6 +102,10 @@ Across all 2024-2026 negotiation benchmarks, the consistent engineering rule is:
 
 If the offer needs to be a number (price, ETA, quantity), generate it deterministically from the negotiation state and have the LLM produce the framing. If the offer needs to be a proposal structure (task decomposition, role assignment), let the LLM draft it, but validate it against a schema and constraint-check before sending.
 
+```figure
+a5-og-narrator
+```
+
 ## Build It
 
 `code/main.py` implements:

@@ -66,6 +66,10 @@ The decoder consumes image memory tokens via cross-attention and predicts the ne
 
 The mock corpus is a synthetic 200-pair set with random images and random caption ids. After 50 SGD steps with batch size 16, both losses drop visibly even if the absolute values stay above what a real-data model would achieve. The point of the demo is to confirm the gradient plumbing works end to end and that adding the LM loss does not destabilize the contrastive objective.
 
+```figure
+ch-infonce-diagonal
+```
+
 ## Build It
 
 `code/main.py` implements:

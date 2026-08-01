@@ -87,6 +87,10 @@ Voice agents are latency-sensitive (first token < 500 ms). Local inference elimi
 - Datacenter-edge bandwidth gap: 30-50x.
 - WebGPU mobile coverage: ~70-75% (Firefox Android lagging).
 
+```figure
+edge-bandwidth-pipe
+```
+
 ## Use It
 
 `code/main.py` computes theoretical decode throughput ceilings from bandwidth-bound math across edge targets. Compares to observed benchmarks and highlights where bandwidth, not compute, is the bottleneck.

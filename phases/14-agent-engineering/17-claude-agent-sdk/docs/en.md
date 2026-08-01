@@ -77,6 +77,10 @@ The hosted alternative (beta header `managed-agents-2026-04-01`). Long-running a
 - **Hook creep.** Every team adds hooks; startup time balloons. Review hooks quarterly.
 - **Session bloat.** Sessions accumulate; size grows. Use `list_sessions` + expiry policy.
 
+```figure
+ae-subagent-isolation
+```
+
 ## Build It
 
 `code/main.py` implements the SDK shape in stdlib:

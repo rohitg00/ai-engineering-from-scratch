@@ -98,6 +98,10 @@ OpenAI maintains SOC 2 Type 2, ISO/IEC 27001:2022, ISO/IEC 27701:2019, GDPR/CCPA
 - SOC 2 Type II window: 6-12 months of operated controls.
 - Colorado AI Act effective date: June 30, 2026 (delayed from February 2026 by SB25B-004).
 
+```figure
+i4-control-matrix
+```
+
 ## Use It
 
 `code/main.py` is a compliance-mapping spreadsheet in Python — given a control, lists frameworks it satisfies.

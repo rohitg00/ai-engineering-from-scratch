@@ -121,6 +121,10 @@ Descriptions land in the model's context verbatim. A malicious server can embed 
 
 All three are open; a full evaluation loop runs in under an hour on a modest GPU setup. Include one in your CI (eval-driven development is covered in a future phase).
 
+```figure
+tp-schema-routing
+```
+
 ## Use It
 
 `code/main.py` ships a tool-schema linter that audits a registry against the rules above. It flags:

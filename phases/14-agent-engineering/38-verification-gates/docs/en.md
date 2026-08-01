@@ -64,6 +64,10 @@ The gate emits one `verification_report.json` per task close-out, written under 
 
 Block-severity findings cannot be overridden by the agent. They can only be overridden by a human, with a recorded `override_reason` and an `overridden_by` user id. The override is a signed change, not an agent decision.
 
+```figure
+wb-gate-sequence
+```
+
 ## Build It
 
 `code/main.py` implements:

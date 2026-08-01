@@ -101,6 +101,10 @@ Two standard metrics:
 
 For relative depth (Depth Anything V3, MiDaS), evaluation uses scale-and-shift invariant versions of both metrics.
 
+```figure
+depth-sweep
+```
+
 ## Build It
 
 ### Step 1: Depth metrics

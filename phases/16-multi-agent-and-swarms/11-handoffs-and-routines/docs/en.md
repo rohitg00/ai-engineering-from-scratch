@@ -80,6 +80,10 @@ Both use LLM-driven routing, but they differ on **who picks next**:
 
 Swarm is "agent decides what's next"; GroupChat is "manager decides what's next." Swarm's decision lives in the active agent's tool call; GroupChat's lives in the `GroupChatManager`.
 
+```figure
+sw-handoff-routing
+```
+
 ## Build It
 
 `code/main.py` implements Swarm from scratch: an Agent dataclass, a handoff mechanism (tool returns Agent), and a run loop that detects agent switches.

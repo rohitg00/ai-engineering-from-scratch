@@ -70,6 +70,10 @@ Canonical workflow in 2026:
 
 Community results: fine-tuning Medium on 20 hours of medical dictation drops WER from 12% to 4.5% on medical vocabulary. Fine-tuning Turbo on 4 hours of Icelandic drops WER from 18% to 6%.
 
+```figure
+sp-asr-attention
+```
+
 ## Build It
 
 ### Step 1: run Whisper out of the box

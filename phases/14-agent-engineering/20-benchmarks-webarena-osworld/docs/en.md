@@ -61,6 +61,10 @@ Claude computer use, OpenAI CUA, Gemini 2.5 Computer Use (Lesson 21) all train o
 - **Ignoring trajectory length.** Scoring only success-rate misses the 1.4-2.7x step inefficiency OSWorld-Human surfaces.
 - **Stale self-hosted apps.** WebArena's apps pin specific versions; update without re-curation breaks comparability.
 
+```figure
+ae-agent-human-gap
+```
+
 ## Build It
 
 `code/main.py` implements a toy web-agent harness:

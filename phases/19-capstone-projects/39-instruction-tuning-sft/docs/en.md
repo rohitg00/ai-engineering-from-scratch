@@ -119,6 +119,10 @@ Exact-match is the strictest text metric. The predicted response string is norma
 
 Real SFT pipelines complement exact-match with token-level F1 (lesson 41) and a judge model. Exact-match remains useful because it is unambiguous; if it says 0.7, exactly 70 percent of test instructions produced the gold response character for character.
 
+```figure
+cc-sft-loss-mask
+```
+
 ## What you will build
 
 The implementation is one `main.py` plus tests.

@@ -113,6 +113,10 @@ The implementation enforces these by:
 - Setting `requires_grad=False` on every reference parameter.
 - Constructing the policy via `policy.load_state_dict(reference.state_dict())` after the reference is built.
 
+```figure
+cap-dpo-preference
+```
+
 ## Architecture
 
 ```mermaid

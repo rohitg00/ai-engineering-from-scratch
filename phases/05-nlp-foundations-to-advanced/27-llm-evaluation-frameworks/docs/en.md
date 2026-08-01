@@ -50,6 +50,10 @@ Why it fails silently:
 
 **Calibration.** Never trust the raw judge score until you have a correlation against human labels. Run 100 hand-labeled examples. Plot judge vs human. Compute Spearman rho. If rho < 0.7, your judge rubric needs work.
 
+```figure
+n5-judge-gauge
+```
+
 ## Build It
 
 ### Step 1: faithfulness with NLI (RAGAS-style)

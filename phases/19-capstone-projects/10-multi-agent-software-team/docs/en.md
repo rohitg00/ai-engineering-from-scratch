@@ -64,6 +64,10 @@ Coder A          Coder B          Coder C          Coder D          (4 parallel)
 - Observability: Langfuse with role-tagged spans, per-agent token accounting
 - Deployment: K8s with each role as a separate Deployment + HPA on backlog
 
+```figure
+ce-team-handoff
+```
+
 ## Build It
 
 1. **Task board.** File-backed JSONL with typed messages: `plan_request`, `subtask`, `diff_ready`, `review_needed`, `test_needed`, `approved`, `rejected`, `replan_needed`. Agents subscribe to tags.

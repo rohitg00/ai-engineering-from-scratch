@@ -33,6 +33,10 @@ graph TD
 
 We install bottom-up. Each layer depends on the one below it.
 
+```figure
+s0-env-stack
+```
+
 ## Build It
 
 ### Step 1: System Foundation

@@ -66,6 +66,10 @@ The move from proof to evidence is what makes DGM exist. It also makes the evalu
 
 DGM sits one rung above AlphaEvolve: the target of self-modification is not a program but an agent (tools, prompts, routing, scaffolding). Lesson 6 (automated alignment research) sits one rung further — agents that modify research pipelines, not just scaffolding. Each step up in scope expands both capability and attack surface. Lessons 13-16 cover the controls that match.
 
+```figure
+dgm-archive
+```
+
 ## Use It
 
 `code/main.py` simulates a DGM-style loop on a toy benchmark where a tiny "agent" composes operators from a fixed tool library. The loop proposes tool-combination changes; the benchmark scores the agent's performance on held-out problems.

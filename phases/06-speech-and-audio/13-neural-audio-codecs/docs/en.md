@@ -74,6 +74,10 @@ An AR LM predicts the semantic token first (conditioned on text), then predicts 
 
 Traditional codecs like Opus still win per bit on perceptual quality. Neural codecs win on **discrete tokens** (which Opus does not produce) and **generative-model quality** (what the LM can do with those tokens).
 
+```figure
+rvq-codec-cascade
+```
+
 ## Build It
 
 ### Step 1: encode with EnCodec

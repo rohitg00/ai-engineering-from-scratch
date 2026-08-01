@@ -15,6 +15,10 @@
 - Emit per-model `EvalRun` records and feed them straight into the leaderboard aggregator.
 - Output both a JSON report and a markdown table; self-terminate with exit zero on a clean run, non-zero on validation or runtime failure.
 
+```figure
+eval-grid
+```
+
 ## The pipeline
 
 ```mermaid

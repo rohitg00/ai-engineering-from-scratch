@@ -70,6 +70,10 @@ From AudioMarkBench: "under pitch shift, all watermarks show Bit Recovery Accura
 
 Not an ML technique — a manifest format. Audio files carry cryptographically signed metadata about creation tool, author, date. Audobox / Seamless use it. Good for provenance; does nothing if a bad actor re-encodes and strips metadata.
 
+```figure
+v4-audio-watermark
+```
+
 ## Build It
 
 ### Step 1: a simple spectral-feature detector (toy)

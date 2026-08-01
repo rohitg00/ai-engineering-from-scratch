@@ -72,6 +72,10 @@ Vapi (~450–600ms on an optimized premium stack) and Retell (~600ms end-to-end 
 
 End-to-end 450–600ms is premium. 800–1200ms is common. Anything > 1500ms feels broken.
 
+```figure
+voice-pipeline
+```
+
 ## Build It
 
 `code/main.py` is a frame-based toy pipeline with:

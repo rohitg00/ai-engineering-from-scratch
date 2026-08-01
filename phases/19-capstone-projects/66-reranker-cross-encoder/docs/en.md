@@ -64,6 +64,10 @@ The numbers above are illustrative of the shape, not measurements from this fixt
 
 Pick N from the eval curve plus the latency budget. The cross-encoder cannot raise recall above the bi-encoder's recall at N, so a low N caps quality, not just latency.
 
+```figure
+rerank-funnel
+```
+
 ## Build It
 
 `code/main.py` implements:

@@ -69,6 +69,10 @@ seed idea + domain
 - Experiment framework: PyTorch 2.5 for the physical experiments, W&B for logging
 - Observability: Langfuse for agent traces, $30 hard budget per paper
 
+```figure
+ce-experiment-tree
+```
+
 ## Build It
 
 1. **Seed and domain scoping.** Take a seed idea (e.g., "investigate sparsity patterns in attention maps of sub-1B transformers"). Define the search space: models, datasets, compute budget.

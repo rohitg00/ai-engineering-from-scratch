@@ -40,6 +40,10 @@ Three things to remember:
 2. Push to remote (`git push`)
 3. Branch for experiments (`git checkout -b experiment`)
 
+```figure
+s0-commit-dag
+```
+
 ## Build It
 
 ### Step 1: Configure git

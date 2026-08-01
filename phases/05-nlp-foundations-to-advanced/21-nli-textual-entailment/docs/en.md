@@ -46,6 +46,10 @@ One task, three production uses. This is why every RAG evaluation framework ship
 
 **Zero-shot via NLI.** Given a document and candidate labels, turn each label into a hypothesis ("This text is about sports"). Compute entailment probability for each. Pick the max. This is the mechanism behind Hugging Face's `zero-shot-classification` pipeline.
 
+```figure
+nli-router
+```
+
 ## Build It
 
 ### Step 1: run a pretrained NLI model

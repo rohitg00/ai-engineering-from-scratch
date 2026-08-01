@@ -98,6 +98,10 @@ Each query carries:
 
 In production you label these. This lesson ships a hand-built fixture so the eval runs out of the box.
 
+```figure
+ci-rag-metric-ladder
+```
+
 ## Build It
 
 `code/main.py` implements:

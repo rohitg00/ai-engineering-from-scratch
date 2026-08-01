@@ -49,6 +49,10 @@ Language similarity predicts transfer quality better than raw corpus size. For S
 
 Practical rule: if your target language has a typologically close high-resource relative, try fine-tuning on that one first, then compare to English fine-tune.
 
+```figure
+n5-crosslingual-bridge
+```
+
 ## Build It
 
 ### Step 1: zero-shot cross-lingual classification

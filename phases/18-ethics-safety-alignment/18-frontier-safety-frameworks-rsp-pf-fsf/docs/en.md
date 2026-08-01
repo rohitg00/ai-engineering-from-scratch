@@ -97,6 +97,10 @@ UK AISI, US CAISI, and EU AI Office (Lesson 24) are the external governance coun
 
 Lessons 17-18 are the measurement-and-governance layer on top of the deception and red-team analyses. Lessons 19-24 cover welfare, bias, privacy, watermarking, and regulatory structure. Lesson 28 maps the research ecosystem (MATS, Redwood, Apollo, METR) that operationalizes the evaluations.
 
+```figure
+al-asl-ladder
+```
+
 ## Use It
 
 No code for this lesson. Read the three primary sources: RSP v3.0, PF v2, FSF v3.0. Map each lab's tier structure to the others and identify one threshold each lab defines that the others do not.

@@ -66,6 +66,10 @@ model card (2026 MOF) + safety eval (Llama Guard 4)
 - Infrastructure: Kubernetes + NVIDIA device plugin, HPA on queue-wait metric
 - Observability: W&B for training, Langfuse for inference
 
+```figure
+ce-finetune-stages
+```
+
 ## Build It
 
 1. **Data pipeline.** Run Datatrove dedup on raw corpus. Apply Nemotron-CC-style quality classifier. Presidio scrubs PII. Write train/val splits with explicit seed.

@@ -120,6 +120,10 @@ feature_map += MLP(t_embedding)
 
 Without time conditioning the network has to guess the noise level from the image itself, which works but is much less sample-efficient.
 
+```figure
+cv-diffusion-image
+```
+
 ## Build It
 
 ### Step 1: Noise schedule

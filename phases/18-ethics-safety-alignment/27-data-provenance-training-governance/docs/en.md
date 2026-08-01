@@ -71,6 +71,10 @@ dataprovenance.org. Longpre, Mahari, Lee et al. "Consent in Crisis" (July 2024):
 
 Lesson 26 is model-level documentation. Lesson 27 is dataset-level governance. Together they define the transparency layer. Lesson 28 maps the research ecosystem that works on these questions.
 
+```figure
+an-provenance-oneway
+```
+
 ## Use It
 
 `code/main.py` generates a California AB 2013-compliant 12-field dataset summary scaffold for a toy dataset. You can fill the fields and observe which ones trigger privacy or copyright follow-on obligations.

@@ -56,6 +56,10 @@ Run it twice in a row. The second run should be a no-op except for a fresh times
 
 Rules (Phase 14 · 33) describe what must be true to act. Init is the script that establishes that those rules can be checked. Rules without init become "be careful." Init without rules becomes a polished failure.
 
+```figure
+wb-init-probes
+```
+
 ## Build It
 
 `code/main.py` implements `init_agent.py`:

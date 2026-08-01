@@ -599,6 +599,10 @@ graph TB
 - **ACP** wraps responses in trajectory metadata for auditability
 - **ANP** provides identity verification for agents you don't control
 
+```figure
+swarm-message-bus
+```
+
 ## Build It
 
 ### Step 1: Core Message Types

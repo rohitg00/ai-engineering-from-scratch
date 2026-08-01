@@ -55,6 +55,10 @@ The 10-year literature review (arXiv:2508.11067, 2025) finds the field dispropor
 
 Lessons 20-21 cover bias and fairness formally. Lesson 22 covers privacy. Lesson 23 covers watermarking. These are the user-harm layer complementing the earlier deception/safety layer.
 
+```figure
+an-bias-two-harms
+```
+
 ## Use It
 
 `code/main.py` builds a toy embedding-based bias probe: measure WEAT-style distance between identity terms and attribute terms in a simple co-occurrence embedding. You can inject a bias and observe the metric fire; apply a simple debiasing operation and observe partial recovery.

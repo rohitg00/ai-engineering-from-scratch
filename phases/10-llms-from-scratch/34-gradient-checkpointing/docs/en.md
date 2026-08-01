@@ -108,6 +108,10 @@ All three give the same functional result. Wrappers are the standard idiom.
 - **Pipeline parallel:** typical pattern is to checkpoint each pipeline-stage's forward so reverse-order microbatches can reuse activation memory.
 - **FP8 recompute:** amax histories updated during recompute must match the original forward's, or the FP8 scale drifts. Most frameworks snapshot the scale.
 
+```figure
+activation-recompute
+```
+
 ## Build It
 
 ### Step 1: A Toy Model With Segments

@@ -88,6 +88,10 @@ VAR and diffusion share the same data-compression story: both break the generati
 
 They are different axes through the problem. Both yield tractable conditional distributions. Empirically VAR is faster at inference (fewer passes, all parallel within a scale) and matches or beats DiT on class-conditional ImageNet. Text-conditional VAR (VARclip, HART) is an active research direction.
 
+```figure
+gx-var-next-scale
+```
+
 ## Build It
 
 In `code/main.py` you will:

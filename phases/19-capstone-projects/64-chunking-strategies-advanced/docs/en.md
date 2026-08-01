@@ -67,6 +67,10 @@ For documents that carry explicit structure (markdown, reStructuredText, RFC-sty
 
 A gold-labeled query carries the exact character offsets of the answer span inside the source document. After chunking, you ask: does any of the top-k chunks the retriever returned overlap the gold span? If yes, recall@k for that query is 1. If no, it is 0. Average across the query set. Run the same evaluation for each strategy and the spread shows you which boundary policy survives the corpus you have.
 
+```figure
+ci-chunk-boundaries
+```
+
 ## Build It
 
 `code/main.py` implements:

@@ -111,6 +111,10 @@ Even in 2026, open any-to-any models trail closed ones on two axes:
 
 These are open research problems. Qwen3-Omni (Lesson 12.20) is the most advanced open attempt in 2025.
 
+```figure
+any-to-any-stream
+```
+
 ## Use It
 
 `code/main.py`:

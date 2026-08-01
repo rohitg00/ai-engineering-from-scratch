@@ -15,6 +15,10 @@
 - Cap rounds with a max-iteration budget so a non-converging critic does not run forever.
 - Emit a per-round trace so the dashboard or the next stage can render the score trajectory.
 
+```figure
+ch-critic-converge
+```
+
 ## Why five fixed dimensions
 
 A freeform critic is a model that returns a paragraph of suggestions. The next round's revision treats the paragraph as ambient context. Whether the rewrite addresses the criticism is unverifiable because the criticism never had structure.

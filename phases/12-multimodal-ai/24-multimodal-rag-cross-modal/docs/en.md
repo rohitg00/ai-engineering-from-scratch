@@ -111,6 +111,10 @@ Cross-modal evaluation is still immature. Common proxies:
 
 No standard benchmark spans all modalities. Most papers evaluate on domain-specific tasks.
 
+```figure
+contrastive-matrix
+```
+
 ## Use It
 
 `code/main.py`:

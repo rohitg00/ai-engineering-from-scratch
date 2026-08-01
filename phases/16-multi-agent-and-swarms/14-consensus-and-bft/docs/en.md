@@ -83,6 +83,10 @@ The `threshold` parameter decides when to accept and when to retry. Too low: you
 - **Compound questions.** "Write code and explain it" — two answers. Vote on each independently.
 - **Adversarial multi-round.** If agents can observe prior rounds and mimic (Du 2023 debate), they start agreeing with each other regardless of truth. Bound the rounds (2-3 typically).
 
+```figure
+swarm-consensus-wave
+```
+
 ## Build It
 
 `code/main.py` implements:

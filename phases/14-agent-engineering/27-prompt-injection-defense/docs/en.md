@@ -65,6 +65,10 @@ The trade-off: an extra inference per tool call. For the vast majority of agent 
 - **Relying on instruction-following alone.** "System prompt says ignore untrusted instructions" is not enforcement.
 - **Overtrust of retrieved memory.** Yesterday's agent wrote a poisoned memory note; today's agent reads it.
 
+```figure
+injection-hijack
+```
+
 ## Build It
 
 `code/main.py` implements PVE:

@@ -57,6 +57,10 @@ Used by: F5-TTS (2024), YourTTS (2022), XTTS v2 (2024), OpenVoice v2 (2024).
 
 SECS > 0.70 is generally indistinguishable from the target for most listeners.
 
+```figure
+sp-voice-factorize
+```
+
 ## Build It
 
 ### Step 1: decompose with recognition-synthesis (code-only demo in main.py)

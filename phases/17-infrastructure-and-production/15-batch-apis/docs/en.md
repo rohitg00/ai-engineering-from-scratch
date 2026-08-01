@@ -79,6 +79,10 @@ Writing "one batch client" across providers means adapter code per provider. Gat
 - Stacked batch + cached input: ~10% of sync uncached cost.
 - Workload triage rule: if 24h latency acceptable, always batch.
 
+```figure
+batch-lane-triage
+```
+
 ## Use It
 
 `code/main.py` computes costs across sync, sync+cache, batch, and batch+cache for a 50k-document workload. Reports savings in $ and percent.

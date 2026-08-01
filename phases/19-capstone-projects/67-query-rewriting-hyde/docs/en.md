@@ -99,6 +99,10 @@ The lesson runs offline. The mock LLM is a small lookup table keyed on the user'
 
 The shape of the mock is what matters, not the data. In production you swap the mock for a real model call. The retriever does not change.
 
+```figure
+cd-hyde-vector
+```
+
 ## Build It
 
 `code/main.py` implements:

@@ -119,6 +119,10 @@ This replaces reward shaping and sample-heavy RL. The world model does the imagi
 | Cosmos / Cosmos-Drive | autonomous driving sim | 7-14B | driving scenes | NVIDIA open |
 | Magica / Mirage 2 | AI-native game engine | — | modifiable worlds | product |
 
+```figure
+v4-world-rollout
+```
+
 ## Build It
 
 ### Step 1: 3D patchify for video

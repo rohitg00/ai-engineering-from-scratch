@@ -39,6 +39,10 @@ Key LDA output:
 
 Output is one topic per document (plus a -1 outlier label). Optionally, a soft membership via HDBSCAN's probability vector.
 
+```figure
+topic-drift
+```
+
 ## Build It
 
 ### Step 1: LDA via scikit-learn

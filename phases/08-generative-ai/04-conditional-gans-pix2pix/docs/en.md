@@ -40,6 +40,10 @@ Pix2Pix needs paired `(x, y)` data. CycleGAN (Zhu et al., 2017) drops this requi
 
 In 2026, unpaired image-to-image is mostly done via diffusion (ControlNet, IP-Adapter) rather than CycleGAN, but the cycle-consistency idea survives in almost every unpaired domain adaptation paper.
 
+```figure
+gx-patchgan
+```
+
 ## Build It
 
 `code/main.py` implements a tiny conditional GAN on 1-D data. The condition `c` is a class label (0 or 1). The task: produce a sample from the conditional distribution for the given class.

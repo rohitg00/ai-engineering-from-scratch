@@ -97,6 +97,10 @@ In LLM-agent systems, non-stationarity manifests as "my agent worked last month,
 
 Training actual networks is a Phase 09 topic. This lesson builds scripted-policy versions that demonstrate the CTDE, value-decomposition, and centralized-value patterns without gradient updates. The goal is to internalize the patterns before you pick up a full MARL library (PyMARL, MARLlib, RLlib multi-agent).
 
+```figure
+sw-ctde
+```
+
 ## Build It
 
 `code/main.py` implements three pattern demonstrations, all on a tiny 2-agent cooperative grid-world:

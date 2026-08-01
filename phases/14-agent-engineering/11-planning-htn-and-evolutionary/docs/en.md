@@ -87,6 +87,10 @@ The hard constraint: the fitness function must be machine-checkable. Evolutionar
 - **AlphaEvolve without a real evaluator.** "Ask the LLM if the code is better" is not a fitness function. The evaluator must be deterministic and fast.
 - **Over-engineering.** Most agent tasks don't need either. Reach for ReAct or ReWOO first.
 
+```figure
+htn-tree-expand
+```
+
 ## Build It
 
 `code/main.py` implements two toys:

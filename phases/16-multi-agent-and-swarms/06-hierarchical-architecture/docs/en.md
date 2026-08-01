@@ -67,6 +67,10 @@ LangGraph uses nested `create_supervisor` calls. The inner supervisor has its ow
 
 Reference: https://reference.langchain.com/python/langgraph-supervisor.
 
+```figure
+swarm-hierarchy-token
+```
+
 ## Build It
 
 `code/main.py` runs a 3-level hierarchy:

@@ -36,6 +36,10 @@ ExperimentSpec
 
 The script lives on disk; the runner writes the config to a temp file path that the script reads. The script is expected to print a single json line on stdout whose keys are a superset of `metric_keys`. Anything else on stdout is captured but ignored by the metrics parser.
 
+```figure
+cg-runner-limits
+```
+
 ## Architecture
 
 ```mermaid

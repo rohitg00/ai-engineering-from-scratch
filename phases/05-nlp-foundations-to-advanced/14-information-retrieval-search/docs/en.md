@@ -28,6 +28,10 @@ Four layers. Pick the ones you need.
 
 Three-way retrieval (BM25 + dense + learned-sparse like SPLADE) outperforms two-way in 2026 benchmarks but needs infrastructure for learned-sparse indexes. For most teams, two-way plus cross-encoder rerank is the sweet spot.
 
+```figure
+gx-hybrid-retrieval
+```
+
 ## Build It
 
 ### Step 1: BM25 from scratch

@@ -51,6 +51,10 @@ Match the chunk size to the query type:
 
 NVIDIA's 2026 benchmark. The chunk should be big enough to contain the answer plus local context, small enough that the retriever's top-K returns focus on the answer rather than context noise.
 
+```figure
+n5-chunk-cuts
+```
+
 ## Build It
 
 ### Step 1: fixed and recursive chunking

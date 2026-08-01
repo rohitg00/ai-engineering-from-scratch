@@ -113,6 +113,10 @@ Each MCP client publishes its metadata at a fixed URL. Authorization servers can
 
 Phase 13 · 17 shows how an enterprise gateway handles OAuth: gateway holds credentials for upstream servers, tokens to the client are gateway-issued, and upstream tokens never leave the gateway. This flips the trust model — users authenticate with the gateway once; gateway handles N server authorizations.
 
+```figure
+t3-scope-stepup
+```
+
 ## Use It
 
 `code/main.py` simulates the full OAuth 2.1 step-up flow as a state machine. It implements:

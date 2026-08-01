@@ -60,6 +60,10 @@ A task on the board has an id, a goal, an owner (`builder`, `reviewer`, or `huma
 
 Later lessons add scope contracts, feedback runners, verification gates, reviewer checklists, and handoff packets. The three files here are what they all assume.
 
+```figure
+wb-three-files
+```
+
 ## Build It
 
 `code/main.py` writes the minimal workbench into an empty repo and demonstrates a single agent turn that:

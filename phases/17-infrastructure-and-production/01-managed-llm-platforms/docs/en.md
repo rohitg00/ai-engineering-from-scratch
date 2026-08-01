@@ -78,6 +78,10 @@ All three meet the basic checkbox. The differences are in data retention policie
 - Azure PTU break-even: ~40-60% sustained utilization.
 - PTU savings vs on-demand at high utilization: up to 70%.
 
+```figure
+i4-platform-lanes
+```
+
 ## Use It
 
 `code/main.py` compares the three platforms on a synthetic workload — it models on-demand vs PTU economics, TTFT variance, and cost attribution fidelity. Run it to see where PTUs pay off and where the marketplace's model breadth outweighs a TTFT gap.

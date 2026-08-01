@@ -52,6 +52,10 @@ Field order matters. Put `answer` before `reasoning`, and the model commits to a
 
 Schema field order is logic, not formatting.
 
+```figure
+constrained-decoder
+```
+
 ## Build It
 
 ### Step 1: regex-constrained generation from scratch

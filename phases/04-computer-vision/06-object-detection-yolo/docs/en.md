@@ -135,6 +135,10 @@ Accuracy does not transfer to detection. Four numbers that do:
 
 Report all four. A detector that is strong on mAP@0.5 but weak on mAP@0.5:0.95 is localising roughly but not tightly; fix with better box-regression loss. A detector with high precision and low recall is too conservative; lower the confidence threshold or increase the objectness weight.
 
+```figure
+object-detection-nms
+```
+
 ## Build It
 
 ### Step 1: IoU

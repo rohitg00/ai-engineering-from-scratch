@@ -68,6 +68,10 @@ Each defence rejects the bad load early; the alternative is silent corruption th
 
 Concurrent write to one file via `O_APPEND` works on POSIX for byte-aligned writes, but in practice the offsets within one shard span MB-sized regions and the locking dominates. Per-rank files have no contention and benefit from striping when the underlying filesystem is parallel (Lustre, GPFS). Production stacks (DeepSpeed, FSDP, NeMo) all use per-rank files for that reason.
 
+```figure
+ci-sharded-checkpoint
+```
+
 ## Build It
 
 `code/main.py` implements:

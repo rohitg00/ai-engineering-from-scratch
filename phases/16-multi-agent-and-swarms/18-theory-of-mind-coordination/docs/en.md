@@ -103,6 +103,10 @@ Three practical signals a team's coordination is real rather than prompt-dressed
 
 These are measurable in a logged multi-agent system. They are the substantive version of the "coordination" narrative.
 
+```figure
+sw-theory-of-mind
+```
+
 ## Build It
 
 `code/main.py` implements:

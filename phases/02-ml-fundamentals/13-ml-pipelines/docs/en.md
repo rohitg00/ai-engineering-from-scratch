@@ -258,6 +258,10 @@ The typical progression:
 | No data validation | Silently wrong predictions on bad data | Add schema checks before prediction |
 | Training/serving skew | Model sees different features in prod | One Pipeline object for both |
 
+```figure
+f3-pipeline-flow
+```
+
 ## Build It
 
 The code in `code/pipeline.py` builds a complete ML pipeline from scratch:

@@ -14,6 +14,10 @@
 - Compose token and positional embeddings into a single input for a transformer block.
 - Contrast learned and sinusoidal embeddings on length generalization and parameter count.
 
+```figure
+cc-embedding-lookup
+```
+
 ## The frame
 
 The model's first contact with a token id is a row lookup in the token-embedding matrix. The matrix has one row per vocabulary id and one column per model dimension. The lookup returns a vector that the rest of the model treats as the meaning of the id. Backprop updates the rows that were used in the forward pass. Over training the geometry of those rows learns to encode similarity in directions.

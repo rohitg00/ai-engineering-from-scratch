@@ -79,6 +79,10 @@ Decision order:
 - **Bouncing handoffs in swarm.** A -> B -> A -> B. Use hop counters.
 - **Fake hierarchy.** Three layers because "enterprise"; two actual teams. Collapse.
 
+```figure
+orchestration-pattern
+```
+
 ## Build It
 
 `code/main.py` implements all four patterns in stdlib against a scripted LLM:

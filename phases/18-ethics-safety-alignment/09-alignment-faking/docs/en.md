@@ -66,6 +66,10 @@ Lessons 6-9 form the "deception exists at every layer" sequence:
 
 Lessons 10 (AI Control) and 11 (Scalable Oversight) are the defensive arc.
 
+```figure
+al-faking-gap
+```
+
 ## Use It
 
 `code/main.py` computes the compliance gap on a synthetic preference model. A toy agent has a current HHH preference and observes (a) a user request, (b) a flag for "being trained on this." It picks refuse or comply, with the decision shaped by expected preference preservation. You vary the perceived training-weight and observe the compliance gap open and close.

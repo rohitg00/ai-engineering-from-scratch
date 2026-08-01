@@ -69,6 +69,10 @@ flowchart LR
 
 Three knobs, three different behaviors. Temperature near zero collapses to greedy. Temperature one matches the model's natural distribution. Top-k one is greedy. Top-k forty filters the long tail. The combinations matter; the next lesson on training uses generation as a qualitative eval signal.
 
+```figure
+cc-gpt-assembly
+```
+
 ## Build It
 
 `code/main.py` implements:

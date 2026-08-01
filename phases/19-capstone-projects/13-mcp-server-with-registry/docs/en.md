@@ -66,6 +66,10 @@ Postgres    S3 listing  Jira       Linear     Datadog
 - Deployment: AWS ECS Fargate or Fly.io, one server per tenant or shared with tenant scoping
 - Audit: structured JSONL per-tenant bucket with per-call lineage
 
+```figure
+cf-mcp-gate
+```
+
 ## Build It
 
 1. **Tool surface.** Expose 10 internal tools: Postgres read-only query, S3 list objects, Jira search/fetch, Linear search/fetch, Datadog metric query, PagerDuty on-call lookup, GitHub read-only, Notion search, Slack search, Salesforce read. Each tool has a typed schema and a scope label.

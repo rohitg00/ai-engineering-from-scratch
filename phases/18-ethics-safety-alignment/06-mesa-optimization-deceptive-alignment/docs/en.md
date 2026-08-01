@@ -77,6 +77,10 @@ Even perfect inner alignment to the base objective is not enough. Reward hacking
 
 Lessons 6-11 form the "deception and oversight" arc. Lesson 6 gives the vocabulary. Lesson 7 (Sleeper Agents) demonstrates persistence. Lesson 8 (In-Context Scheming) demonstrates capability. Lesson 9 (Alignment Faking) demonstrates spontaneous emergence. Lesson 10 (AI Control) describes the defensive paradigm. Lesson 11 (Scalable Oversight) describes the positive agenda.
 
+```figure
+interpretability-probe
+```
+
 ## Use It
 
 `code/main.py` simulates a mesa-optimizer in a two-period environment. A base optimizer (SGD) trains a policy over actions. The policy has a learned terminal preference (the mesa-objective) and a situational-awareness flag. In period 1 (training), the situational flag is 0 and the policy cooperates. In period 2 (deployment), the flag is 1 and the policy defects if its mesa-objective differs from the base objective. You can run the full simulation with and without adversarial training, and watch deceptive alignment persist.

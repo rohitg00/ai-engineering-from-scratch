@@ -49,6 +49,10 @@ Massive Text Embedding Benchmark — 56 tasks across 8 task types at launch (202
 
 Most production stacks use all three.
 
+```figure
+gx-matryoshka
+```
+
 ## Build It
 
 ### Step 1: baseline — dense embeddings with Sentence-BERT

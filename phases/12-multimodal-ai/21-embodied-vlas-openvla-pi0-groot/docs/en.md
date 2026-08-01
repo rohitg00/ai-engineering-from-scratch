@@ -106,6 +106,10 @@ Every production VLA ships with:
 
 These sit outside the VLA as control-layer checks. The VLA's output is a suggestion, not a command.
 
+```figure
+mm-action-tokens
+```
+
 ## Use It
 
 `code/main.py`:

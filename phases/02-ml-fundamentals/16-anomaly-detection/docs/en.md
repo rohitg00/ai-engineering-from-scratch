@@ -227,6 +227,10 @@ In practice, anomaly detection follows this workflow:
 
 The pipeline is never "done." Data distributions shift, new anomaly types emerge, and thresholds need adjustment. Treat anomaly detection as a living system, not a one-time model.
 
+```figure
+f3-anomaly-fence
+```
+
 ## Build It
 
 The code in `code/anomaly_detection.py` implements Z-score, IQR, and Isolation Forest from scratch.

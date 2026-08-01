@@ -74,6 +74,10 @@ So the session does not end when the feature works. It ends when the workbench i
 
 The cleanup phase emits a `clean_state.json` of blocking issues; an empty list is the precondition the handoff generator asserts before it writes a packet. A handoff built on a dirty tree is not a handoff, it is a forwarded mess. The two artifacts pair: cleanup proves the workbench is safe to leave, the handoff proves the next session knows where to start.
 
+```figure
+wb-handoff-packet
+```
+
 ## Build It
 
 `code/main.py` implements:

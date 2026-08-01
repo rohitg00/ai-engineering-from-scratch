@@ -93,6 +93,10 @@ If a tool invocation would combine all three, the host must reject or escalate s
 - **Sanitizing description text.** Too many creative phrasings to catch all.
 - **Capping description length.** Injections fit in 200 characters.
 
+```figure
+tp-tool-poisoning
+```
+
 ## Use It
 
 `code/main.py` ships a tool-poisoning detector with two components:

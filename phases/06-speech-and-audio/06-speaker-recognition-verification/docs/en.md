@@ -49,6 +49,10 @@ The metric is **EER** — Equal Error Rate. Set your decision threshold so False
 
 "Who spoke when" in a multi-speaker clip. Pipeline: VAD → segment → embed each segment → cluster (agglomerative or spectral) → smooth boundaries. Modern stack: `pyannote.audio` 3.1, which bundles speaker segmentation + embedding + clustering behind one call. 2026 SOTA DER on AMI is ~15% (down from 23% in 2022).
 
+```figure
+sp-eer-crossover
+```
+
 ## Build It
 
 ### Step 1: toy embedding from MFCC statistics

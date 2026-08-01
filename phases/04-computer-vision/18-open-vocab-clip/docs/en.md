@@ -88,6 +88,10 @@ Prompt engineering matters. OpenAI published 80 prompt templates for ImageNet ("
 
 Once you have a shared embedding space, every vision+language task becomes a distance computation.
 
+```figure
+clip-contrastive
+```
+
 ## Build It
 
 ### Step 1: A tiny two-tower model

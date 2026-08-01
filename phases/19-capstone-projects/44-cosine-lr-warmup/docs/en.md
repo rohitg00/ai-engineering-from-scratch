@@ -56,6 +56,10 @@ For `step > total_steps` the learning rate stays at `lr_min`. The contract is ex
 
 The schedule is half of training health. The gradient norm is the other half. The training loop logs both per step. A divergent training run shows the gradient norm spike before the loss does; a well-tuned warmup keeps the norm rising linearly with the rate; a too-aggressive peak shows up as a norm that stays high after warmup. The dataset on disk is `step, lr, grad_l2_norm, loss`. The CSV is the only durable record.
 
+```figure
+cap-cosine-warmup
+```
+
 ## Build It
 
 `code/main.py` implements:

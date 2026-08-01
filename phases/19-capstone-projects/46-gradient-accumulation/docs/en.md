@@ -75,6 +75,10 @@ flowchart TD
 
 There is no free lunch. Doubling `accum_steps` doubles the wall time per optimizer step. What changes is the variance of the gradient estimate: at the same wall budget you have made fewer optimizer steps but each one was averaged over more samples. The literature treats large batch and small batch as different optimization problems; the lesson here is mechanical, not statistical.
 
+```figure
+cc-grad-accumulation
+```
+
 ## Build It
 
 `code/main.py` is the runnable artifact. It does three things.

@@ -35,6 +35,10 @@ The result dominates every modality by 2026. Language (GPT-5, Claude 4, Llama 4)
 
 **The inductive bias shift.** RNNs assume locality and recency. Transformers assume nothing — every pair is a candidate for attention. That is why transformers need more data to train well but scale further once they have it. Chinchilla (2022) formalized this: given enough tokens, a transformer always beats an RNN of equal parameter count.
 
+```figure
+rnn-vs-parallel
+```
+
 ## Build It
 
 No neural network here — we simulate the core bottleneck numerically so you feel the gap on your laptop.

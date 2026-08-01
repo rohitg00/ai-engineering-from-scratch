@@ -85,6 +85,10 @@ Emu3's deep contribution is conceptual. If next-token prediction scales to match
 
 Show-o, Janus-Pro, and InternVL-U all build on or challenge this thesis. Chinese labs (BAAI, DeepSeek) publish more aggressively in this direction than US labs through 2025.
 
+```figure
+l5-emu3-next-token
+```
+
 ## Use It
 
 `code/main.py` builds two toy pieces:

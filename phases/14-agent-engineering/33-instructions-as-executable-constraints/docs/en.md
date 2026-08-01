@@ -80,6 +80,10 @@ feature_list.json          # the backlog (Phase 14 · 36)
 
 Two tests keep the layering honest. The reachability test: an agent should reach any rule in at most two hops from the router, so the router must link every topic doc by path, not describe it in prose. The freshness test: the router is short enough that a reviewer rereads it on every PR, which is the only thing that stops it from silently growing back into the encyclopedia it replaced. A pointer that no longer resolves is a worse failure than a missing rule, so a broken link in the router is itself a startup-check violation.
 
+```figure
+wb-rule-checkoff
+```
+
 ## Build It
 
 `code/main.py` ships:

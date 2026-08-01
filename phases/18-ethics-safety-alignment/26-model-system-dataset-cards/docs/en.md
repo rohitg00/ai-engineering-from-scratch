@@ -80,6 +80,10 @@ Sidhpurwala 2024 and Meta system-level transparency work. "Blueprints of Trust" 
 
 Lessons 24-25 are regulatory and CVE layers. Lesson 26 is the documentation layer. Lesson 27 is training-data governance, which is the datasheet's upstream. Lesson 28 is the research ecosystem that produces evaluations referenced in cards.
 
+```figure
+an-card-scopes
+```
+
 ## Use It
 
 `code/main.py` generates a minimal model card, datasheet, and system card for a toy deployment. Each follows the canonical section structure. You can inspect the format and compare the three scopes.

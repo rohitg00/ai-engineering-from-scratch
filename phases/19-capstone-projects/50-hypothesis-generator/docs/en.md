@@ -41,6 +41,10 @@ Hypothesis
 
 `baseline_ref` is optional but recommended. The evaluator in lesson fifty-three needs a baseline to compare against. If the hypothesis omits one, the evaluator falls back to the previous run on the same metric.
 
+```figure
+cg-novelty-ramp
+```
+
 ## Architecture
 
 ```mermaid

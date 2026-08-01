@@ -122,6 +122,10 @@ Drift-risk note: the SEP-1036 response shape is still settling; some SDKs return
 
 Elicitation plus sampling together enable MCP's "human-in-the-loop" model. A server's agent loop can pause for either user input (elicitation) or model reasoning (sampling). Phase 13 · 11 covered sampling; this lesson covers elicitation. Put them together for full mid-loop control.
 
+```figure
+t3-roots-boundary
+```
+
 ## Use It
 
 `code/main.py` extends the notes server with:

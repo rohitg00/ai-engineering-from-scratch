@@ -41,6 +41,10 @@ Every session opens with `initialize`. The client sends protocol version and its
 - Not an agent framework. MCP is the plumbing; frameworks like LangGraph, PydanticAI, and OpenAI Agents SDK sit above it.
 - Not tied to Anthropic. The spec and reference implementations are open source under the `modelcontextprotocol` org.
 
+```figure
+mcp-nxm-collapse
+```
+
 ## Build It
 
 ### Step 1: a minimal MCP server

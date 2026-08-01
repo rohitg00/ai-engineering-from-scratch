@@ -64,6 +64,10 @@ State writes need to survive partial failures: write to a tempfile, fsync, renam
 
 When the schema changes, ship a migration script next to the schema bump. The state file carries a `schema_version` field; the manager refuses to load a file from a version it cannot migrate.
 
+```figure
+wb-state-persist
+```
+
 ## Build It
 
 `code/main.py` implements:

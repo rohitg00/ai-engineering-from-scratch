@@ -96,6 +96,10 @@ Multiplex is the new default for crowd tracking in 2026: concert crowds, warehou
 
 For surveillance (who is who): IDF1 is what you report. For sports analytics (counting passes): HOTA. For general academic comparison: HOTA.
 
+```figure
+cv3-track-assoc
+```
+
 ## Build It
 
 ### Step 1: IoU-based cost matrix

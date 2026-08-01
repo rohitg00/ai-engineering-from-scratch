@@ -92,6 +92,10 @@ In practice, production long-video pipelines are hybrid:
 
 This combines brute-context for global understanding and retrieval for local detail.
 
+```figure
+mm-video-token-budget
+```
+
 ## Use It
 
 `code/main.py`:

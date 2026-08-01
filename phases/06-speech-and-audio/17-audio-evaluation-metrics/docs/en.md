@@ -111,6 +111,10 @@ Imbalanced: **macro F1** + **per-class recall**. Report per-class — aggregate 
 | MMAU music subset | Music LALM | (within MMAU) |
 | HEAR benchmark | Self-supervised audio | `hearbenchmark.com` |
 
+```figure
+sp-wer-align
+```
+
 ## Build It
 
 ### Step 1: WER with normalization
