@@ -217,17 +217,45 @@ def chi_squared_p_value(chi2, df):
 def _lower_incomplete_gamma_ratio(a, x):
     if x <= 0:
         return 0.0
-    n_steps = 500
-    dt = x / n_steps
-    total = 0.0
-    for i in range(n_steps):
-        t = (i + 0.5) * dt
-        if t > 0:
-            total += math.exp((a - 1) * math.log(t) - t) * dt
-    gamma_a = math.exp(math.lgamma(a))
-    if gamma_a == 0:
-        return 0.0
-    return total / gamma_a
+    if x < a + 1.0:
+        return _gamma_series(a, x)
+    return 1.0 - _gamma_continued_fraction(a, x)
+
+
+def _gamma_series(a, x, max_iter=1000, tol=1e-16):
+    term = 1.0 / a
+    total = term
+    ap = a
+    for _ in range(max_iter):
+        ap += 1.0
+        term *= x / ap
+        total += term
+        if abs(term) < abs(total) * tol:
+            break
+    return total * math.exp(-x + a * math.log(x) - math.lgamma(a))
+
+
+def _gamma_continued_fraction(a, x, max_iter=1000, tol=1e-16):
+    tiny = 1e-300
+    b = x + 1.0 - a
+    c = 1.0 / tiny
+    d = 1.0 / b
+    h = d
+    for i in range(1, max_iter + 1):
+        an = -i * (i - a)
+        b += 2.0
+        d = an * d + b
+        if abs(d) < tiny:
+            d = tiny
+        c = b + an / c
+        if abs(c) < tiny:
+            c = tiny
+        d = 1.0 / d
+        delta = d * c
+        h *= delta
+        if abs(delta - 1.0) < tol:
+            break
+    return h * math.exp(-x + a * math.log(x) - math.lgamma(a))
 
 
 def bootstrap_statistic(data, stat_func, n_bootstrap=5000, ci=95):
