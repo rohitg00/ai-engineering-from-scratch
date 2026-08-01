@@ -452,6 +452,8 @@ p.dropcap::first-letter {
   padding: 36px 32px 28px;
   transform: translateY(16px);
   transition: transform 0.25s ease;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-soft) transparent;
 }
 
 .modal-overlay.open .modal {
@@ -1330,6 +1332,22 @@ body.js-anim .toc-row.in-view {
   flex: 1;
   min-height: 0;
   overscroll-behavior: contain;
+}
+
+.modal::-webkit-scrollbar       { width: 10px; transition: width 0.15s ease; }
+.modal::-webkit-scrollbar-track { background: var(--bg-surface); border-radius: 5px; }
+.modal::-webkit-scrollbar-thumb { background: var(--rule-soft); border-radius: 5px; border: 2px solid var(--bg-surface); transition: background 0.15s ease; }
+.modal:hover::-webkit-scrollbar { width: 14px; }
+.modal::-webkit-scrollbar-thumb:hover { background: var(--ink-mute); }
+
+.catalog-table-wrap::-webkit-scrollbar       { width: 8px; height: 8px; transition: width 0.15s ease, height 0.15s ease; }
+.catalog-table-wrap::-webkit-scrollbar-track { background: var(--bg-surface); border-radius: 4px; }
+.catalog-table-wrap::-webkit-scrollbar-thumb { background: var(--rule-soft); border-radius: 4px; border: 2px solid var(--bg-surface); transition: background 0.15s ease; }
+.catalog-table-wrap:hover::-webkit-scrollbar { width: 12px; height: 12px; }
+.catalog-table-wrap::-webkit-scrollbar-thumb:hover { background: var(--ink-mute); }
+.catalog-table-wrap {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-soft) transparent;
 }
 
 .cp-results::-webkit-scrollbar       { width: 4px; }
