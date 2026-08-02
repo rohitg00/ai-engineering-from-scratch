@@ -13,6 +13,7 @@ pandas>=2.0
 pillow>=10.0
 librosa>=0.10
 soundfile>=0.12
+numba>=0.59
 tiktoken>=0.5
 anthropic>=0.25
 openai>=1.0
