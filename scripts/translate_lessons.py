@@ -35,9 +35,13 @@ PHASES = ROOT / "phases"
 OUT_ROOT = ROOT / "i18n"
 
 
-def cache_path(lang):
-    # Per-language cache so parallel language jobs never touch the same file
-    # (no push races) and a timed-out run resumes exactly where it stopped.
+def cache_path(lang, phase=None):
+    # Per-(language, phase) cache so the sharded CI jobs never touch the same
+    # file: each job publishes only its own phase slice, so caches merge without
+    # clobbering and a timed-out run resumes exactly where it stopped. A full
+    # local run (no --phase) keeps the single combined cache.
+    if phase:
+        return OUT_ROOT / lang / ".cache" / f"{phase}.json"
     return OUT_ROOT / lang / ".translate-cache.json"
 
 def _load_registry():
@@ -242,16 +246,14 @@ def lesson_docs():
 
 
 def targets():
-    # The whole i18n surface in one pass: every lesson plus the repo README.
+    # Lessons only. The per-language README is hand-authored and built by
+    # scripts/build_readme_i18n.py into i18n/<lang>/README.md; translating it
+    # here would overwrite that file with a machine translation, so the README
+    # is deliberately not a target of this script.
     yield from lesson_docs()
-    readme = ROOT / "README.md"
-    if readme.is_file():
-        yield readme
 
 
 def out_path(doc, lang):
-    if doc.parent == ROOT:  # README.md and other root-level docs
-        return OUT_ROOT / lang / doc.name
     rel = doc.relative_to(ROOT).parent / f"{lang}.md"
     return OUT_ROOT / lang / rel
 
@@ -280,7 +282,7 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    cpath = cache_path(args.lang)
+    cpath = cache_path(args.lang, args.phase)
     cache = {}
     if cpath.is_file():
         cache = json.loads(cpath.read_text(encoding="utf-8"))

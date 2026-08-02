@@ -4,12 +4,19 @@
 
 <p align="center">
   <b>Read in your language:</b>
-  <a href="https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/zh/README.md">简体中文</a> ·
-  <a href="https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/hi/README.md">हिन्दी</a> ·
-  <a href="https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/es/README.md">Español</a> ·
-  <a href="https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/ar/README.md">العربية</a> ·
-  <a href="https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/tr/README.md">Türkçe</a>
-  <br><sub>machine-translated by CI to the <code>translations</code> branch; English is canonical. See <a href="docs/i18n.md">docs/i18n.md</a>.</sub>
+  <a href="i18n/es/README.md">Español</a> ·
+  <a href="i18n/fr/README.md">Français</a> ·
+  <a href="i18n/pt/README.md">Português</a> ·
+  <a href="i18n/de/README.md">Deutsch</a> ·
+  <a href="i18n/it/README.md">Italiano</a> ·
+  <a href="i18n/zh/README.md">简体中文</a> ·
+  <a href="i18n/ja/README.md">日本語</a> ·
+  <a href="i18n/ko/README.md">한국어</a> ·
+  <a href="i18n/hi/README.md">हिन्दी</a> ·
+  <a href="i18n/ar/README.md">العربية</a> ·
+  <a href="i18n/ru/README.md">Русский</a> ·
+  <a href="i18n/tr/README.md">Türkçe</a>
+  <br><sub>Translated landing pages, committed to the repo. English is canonical; lesson pages are machine-translated on the <code>translations</code> branch. See <a href="docs/i18n.md">docs/i18n.md</a>.</sub>
 </p>
 
 <p align="center">
@@ -22,7 +29,7 @@
 
 ## From the creator of [Agent Memory - #1 Persistent memory ⭐](https://github.com/rohitg00/agentmemory) <a href="https://github.com/rohitg00/agentmemory/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/agentmemory?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a> which naturally works with any agents or chat assistants.
 
-```
+```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
@@ -54,7 +61,7 @@ Each lesson runs the same loop: read the problem, derive the math, write the cod
 the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding.
 Free, open source, and built to run on your own laptop.
 
-```
+```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
@@ -90,7 +97,7 @@ flowchart TB
   P18 --> P19
 ```
 
-```
+```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
@@ -98,7 +105,7 @@ flowchart TB
 
 Each lesson lives in its own folder, with the same structure across the entire curriculum:
 
-```
+```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
 ├── code/      runnable implementations (Python, TypeScript, Rust, Julia)
 ├── docs/
@@ -164,7 +171,7 @@ ls phases/03-deep-learning-core/05-loss-functions/outputs/
 | [`/find-your-level`](.claude/skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
 | [`/check-understanding <phase>`](.claude/skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. |
 
-```
+```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
@@ -207,7 +214,7 @@ Other curricula end with *"congratulations, you learned X."* Each lesson here en
 </tr>
 </table>
 
-> Install the lot with `python3 scripts/install_skills.py`. Real tools, not homework.
+> Install the lot with `python3 scripts/install_skills.py <target>`. Real tools, not homework.
 > By the end of the curriculum, you have a portfolio of 503 artifacts you actually
 > understand because you built them.
 
@@ -263,7 +270,7 @@ the agent went wrong and explain why...
 </tr>
 </table>
 
-```
+```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
@@ -474,7 +481,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-7">
-<summary><b>Phase 7 — Transformers Deep Dive</b> &nbsp;<code>14 lessons</code>&nbsp; <em>The architecture that changed everything.</em></summary>
+<summary><b>Phase 7 — Transformers Deep Dive</b> &nbsp;<code>16 lessons</code>&nbsp; <em>The architecture that changed everything.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -499,7 +506,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-8">
-<summary><b>Phase 8 — Generative AI</b> &nbsp;<code>14 lessons</code>&nbsp; <em>Create images, video, audio, 3D, and more.</em></summary>
+<summary><b>Phase 8 — Generative AI</b> &nbsp;<code>15 lessons</code>&nbsp; <em>Create images, video, audio, 3D, and more.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -544,7 +551,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-10">
-<summary><b>Phase 10 — LLMs from Scratch</b> &nbsp;<code>22 lessons</code>&nbsp; <em>Build, train, and understand large language models.</em></summary>
+<summary><b>Phase 10 — LLMs from Scratch</b> &nbsp;<code>24 lessons</code>&nbsp; <em>Build, train, and understand large language models.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -961,7 +968,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 
 </details>
 
-```
+```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
@@ -969,7 +976,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 
 Every lesson produces a reusable artifact. By the end you have:
 
-```
+```text
 outputs/
 ├── prompts/      prompt templates for every AI task
 └── skills/       SKILL.md files for AI coding agents
@@ -1102,7 +1109,7 @@ HEAD/GET).
 | Know deep learning, want LLMs and agents | Phase 10 — LLMs from Scratch | ~100 hours |
 | Senior engineer, only want agent engineering | Phase 14 — Agent Engineering | ~60 hours |
 
-```
+```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
@@ -1118,10 +1125,10 @@ HEAD/GET).
 
 > *"The hottest new programming language is English."*<br/>
 > — **Andrej Karpathy** ([tweet](https://x.com/karpathy/status/1617979122625712128))
-
+>
 > *"Software engineering is being remade in front of our eyes."*<br/>
 > — **Boris Cherny**, creator of Claude Code
-
+>
 > *"Models will keep getting better. The skill that compounds is **knowing what to build**."*<br/>
 > — Industry consensus, 2026
 
@@ -1141,7 +1148,7 @@ HEAD/GET).
 </tr>
 </table>
 
-```
+```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
@@ -1169,7 +1176,7 @@ shape, `docs/en.md` presence + H1, `code/` non-emptiness, `quiz.json` schema
 (rejects the legacy `q/choices/answer` keys that caused issue #102), and
 relative links inside lesson docs.
 
-```
+```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
@@ -1199,7 +1206,7 @@ Twitter/X is the #1 acquisition channel.
 Full rate card, hard rules, pricing anchors, and reach data: [SPONSORS.md](SPONSORS.md).
 Sign up via [GitHub Sponsors](https://github.com/sponsors/rohitg00).
 
-```
+```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 

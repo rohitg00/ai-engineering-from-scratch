@@ -1332,8 +1332,29 @@ body.js-anim .toc-row.in-view {
   overscroll-behavior: contain;
 }
 
+/* ── Global themed scrollbar ─────────────────────────────────────────────
+   One base rule themes every scrollable surface — the page, code blocks, the
+   lesson body, the language list, tables, modals — in both light and dark, so
+   no component has to restyle its scrollbar. More specific rules below (e.g.
+   .cp-results) still override this baseline. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-soft) transparent;
+}
+*::-webkit-scrollbar        { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track  { background: transparent; }
+*::-webkit-scrollbar-thumb  {
+  background: var(--rule-soft);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+/* background-color, not the shorthand, so the padding-box inset is kept on hover */
+*::-webkit-scrollbar-thumb:hover { background-color: var(--ink-mute); }
+
 .cp-results::-webkit-scrollbar       { width: 4px; }
-.cp-results::-webkit-scrollbar-thumb { background: var(--rule-soft); border-radius: 2px; }
+/* border:0 + border-box so the global 2px inset does not eat the narrow 4px thumb */
+.cp-results::-webkit-scrollbar-thumb { background: var(--rule-soft); border-radius: 2px; border: 0; background-clip: border-box; }
 
 /* ── Empty / no-match state ──────────────────────────────────────────── */
 .cp-empty {
