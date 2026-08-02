@@ -310,19 +310,57 @@
     document.body.style.overflow = '';
   }
 
-  function initCopyButton() {
-    var btn = document.getElementById('copyBtn');
-    var code = document.getElementById('cloneCmd');
-    if (!btn || !code) return;
-    var originalLabel = btn.textContent;
+  // One clipboard implementation for every copy chip on the site: debounced
+  // copied-state revert, execCommand fallback when the async API is denied.
+  function wireCopyButton(btn, label, getText) {
+    if (!btn || !label) return;
     var revertTimer = null;
+    function confirmCopied() {
+      label.textContent = 'copied';
+      btn.classList.add('copied');
+      if (revertTimer) clearTimeout(revertTimer);
+      revertTimer = setTimeout(function () {
+        label.textContent = 'copy';
+        btn.classList.remove('copied');
+      }, 1500);
+    }
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); confirmCopied(); } catch (e) {}
+      ta.remove();
+    }
     btn.addEventListener('click', function () {
-      navigator.clipboard.writeText(code.textContent).then(function () {
-        btn.textContent = '✓';
-        if (revertTimer) clearTimeout(revertTimer);
-        revertTimer = setTimeout(function () { btn.textContent = originalLabel; }, 1500);
-      });
+      var text = getText();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(confirmCopied).catch(function () { fallbackCopy(text); });
+      } else {
+        fallbackCopy(text);
+      }
     });
+  }
+
+  function initCopyButton() {
+    var code = document.getElementById('cloneCmd');
+    if (code) {
+      wireCopyButton(
+        document.getElementById('copyBtn'),
+        document.getElementById('copyBtnLabel'),
+        function () { return code.textContent; }
+      );
+    }
+    var installBtn = document.getElementById('installCopy');
+    if (installBtn) {
+      wireCopyButton(
+        installBtn,
+        document.getElementById('installCopyLabel'),
+        function () { return installBtn.getAttribute('data-cmd'); }
+      );
+    }
   }
 
   function initSmoothScroll() {

@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - "phases/**"
+      - "skills/**"
+      - ".claude/skills/**"
       - "scripts/audit_lessons.py"
       - "scripts/debias_quizzes.py"
       - "scripts/build_readme_i18n.py"
@@ -20,6 +22,8 @@ on:
     branches: [main]
     paths:
       - "phases/**"
+      - "skills/**"
+      - ".claude/skills/**"
       - "scripts/audit_lessons.py"
       - "scripts/debias_quizzes.py"
       - "scripts/build_readme_i18n.py"
@@ -52,6 +56,11 @@ jobs:
         run: python3 scripts/debias_quizzes.py --check
       - name: README translations are in sync with English
         run: python3 scripts/build_readme_i18n.py --check
+      - name: learning skills mirror is in sync
+        # skills/ is the canonical, agent-neutral home (what `npx skills add`
+        # installs for every agent); .claude/skills/ is a mirror so cloning the
+        # repo auto-loads them in Claude Code. They must never diverge.
+        run: diff -r skills .claude/skills
 
   readme-counts-sync:
     name: README counts auto-fix (main only)

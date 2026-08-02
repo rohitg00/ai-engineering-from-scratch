@@ -44,6 +44,31 @@
 <p align="center"><sub><b>150,639</b> readers &nbsp;·&nbsp; <b>241,669</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-06-07</sub></p>
 <!-- STATS:END -->
 
+## Start learning in 30 seconds
+
+Your coding agent becomes your tutor. Two commands, no clone, no setup:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+Then, inside your agent:
+
+```text
+/start-learning
+```
+
+A ten-question placement quiz maps what you already know to a starting phase and
+saves a personalized study plan to `LEARNING.md`. From there, `/learn` teaches
+one lesson per session — concept, math, code, quiz — streaming lessons straight
+from this repo, and `/course-guide <topic>` jumps you to the exact lesson that
+covers anything you are stuck on.
+
+Works with Claude Code, Cursor, Codex, OpenClaw, Hermes, or any agent that
+reads a `SKILL.md` directory — the installer asks which agents to set up. No
+agent? Read the same lessons at
+[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
+
 ## 仕組み
 
 Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a
@@ -130,11 +155,27 @@ flowchart LR
 
 入り方は3つ。ひとつ選んでください。
 
-**Option A — read.** Open any completed lesson on
+**Option A — learn in your terminal *(recommended)*.** Install the learning
+skills into any agent and let the course drive itself:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+```text
+/start-learning     # interview + placement quiz -> personalized plan in LEARNING.md
+/learn              # next lesson, taught interactively: concept -> math -> code -> quiz
+/course-guide rag   # "which lessons teach X?" -> exact lessons + links
+```
+
+Lessons stream from this repo as you go — no clone needed. Progress lives in
+`LEARNING.md` in your project, so every session resumes where you left off.
+
+**Option B — read.** Open any completed lesson on
 [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) or expand a phase under
 [Contents](#contents). No setup, no cloning.
 
-**Option B — clone and run.**
+**Option C — clone and run.**
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
@@ -142,33 +183,23 @@ cd ai-engineering-from-scratch
 python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-**Option C — find your level *(recommended)*.** Skip ahead intelligently. Inside Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed:
-
-```bash
-/find-your-level
-```
-
-Ten questions. Maps your knowledge to a starting phase, builds a personalized path with hour
-estimates. After each phase:
-
-```bash
-/check-understanding 3        # quiz yourself on phase 3
-ls phases/03-deep-learning-core/05-loss-functions/outputs/
-# ├── prompt-loss-function-selector.md
-# └── prompt-loss-debugger.md
-```
+Cloning also auto-loads the learning skills in Claude Code, and gives every
+lesson's code to `/learn` for real execution instead of read-along.
 
 ### 前提知識
 
 - You can write code (any language; Python helps).
 - You want to understand how AI **actually works**, not just call APIs.
 
-### Built-in agent skills (Claude, Cursor, Codex, OpenClaw, Hermes)
+### The learning skills (any agent: Claude, Cursor, Codex, OpenClaw, Hermes, …)
 
 | Skill | What it does |
 |---|---|
-| [`/find-your-level`](../../.claude/skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
-| [`/check-understanding <phase>`](../../.claude/skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. |
+| [`/start-learning`](../../skills/start-learning/SKILL.md) | One-time onboarding: why you're learning, placement quiz, personalized plan saved to `LEARNING.md`. |
+| [`/learn`](../../skills/learn/SKILL.md) | The tutor loop. Warm-up recall, then the next lesson taught interactively, then its quiz; records progress and a review queue. |
+| [`/course-guide`](../../skills/course-guide/SKILL.md) | Topic router. "Where do I learn attention?" or "my loss is NaN" → the exact lessons, with links. |
+| [`/find-your-level`](../../skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
+| [`/check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. |
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -981,30 +1012,28 @@ outputs/
 └── skills/       SKILL.md files for AI coding agents
 ```
 
-Install them with `npx skills add`. Plug them into Claude, Cursor, Codex,
-OpenClaw, Hermes, or any agent that reads a SKILL.md / AGENTS.md directory.
-Real tools, not homework.
+Plug them into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that
+reads a SKILL.md / AGENTS.md directory. Real tools, not homework.
 
-### Install every course skill into your agent
+### Install course skills into your agent
 
-The repo ships 388 skills and 99 prompts under `phases/**/outputs/`.
+Two skill sets, two installers:
 
-**Recommended: install via [skills.sh](https://skills.sh).** No clone, no Python,
-detects your agent's skills directory automatically:
+**The learning skills** (`/start-learning`, `/learn`, `/course-guide`,
+`/find-your-level`, `/check-understanding`) live under [`skills/`](../../skills/)
+and install into any agent with one command — no clone, no Python:
 
 ```bash
-npx skills add rohitg00/ai-engineering-from-scratch                       # every skill
-npx skills add rohitg00/ai-engineering-from-scratch --skill agent-loop    # one skill
-npx skills add rohitg00/ai-engineering-from-scratch --phase 14            # one phase
+npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
 `skills` writes to whichever directory your agent picks up: `.claude/skills/`,
 `.cursor/skills/`, `.codex/skills/`, OpenClaw's skills folder, Hermes's bundle
 path, or any SKILL.md-aware tool. One command, every agent.
 
-**Advanced: offline / custom layout via `scripts/install_skills.py`.** Requires
-cloning the repo. Useful when you need tag filters, dry-runs, or a non-default
-layout:
+**The 388 lesson artifacts** (skills and prompts under `phases/**/outputs/`)
+install via `scripts/install_skills.py`. Requires cloning the repo. Supports
+tag filters, dry-runs, and per-agent layouts:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
