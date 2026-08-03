@@ -1770,20 +1770,6 @@ body[data-palette-open] {
   }
 }
 
-.tts-check {
-  accent-color: var(--blueprint);
-  width: 13px;
-  height: 13px;
-  cursor: pointer;
-  margin: 0;
-}
-
-.tts-field-code {
-  gap: 4px;
-  cursor: pointer;
-}
-
-pre.tts-reading,
 .quiz-option.tts-reading {
   box-shadow: inset 3px 0 0 var(--blueprint);
 }
@@ -1846,8 +1832,7 @@ pre.tts-reading,
 }
 
 .tts-bar .tts-btn,
-.tts-bar .tts-select,
-.tts-bar .tts-check {
+.tts-bar .tts-select {
   cursor: pointer;
 }
 

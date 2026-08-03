@@ -1,9 +1,14 @@
 /**
  * Read-aloud support built on the browser's built-in SpeechSynthesis API.
  *
- * Injects a speaker button into the site header (immediately before the
- * theme toggle) on any page that has readable article content, plus a
+ * Injects a speaker button into the site header (between the language picker
+ * and the theme toggle) on any page that has readable article content, plus a
  * floating control bar for pause/stop/speed while playback runs.
+ *
+ * Scope is the article prose: headings, paragraphs, lists, tables, the lesson
+ * motto and meta tags, quiz text and figure captions. Code blocks and rendered
+ * diagrams are skipped — narrating those needs its own parsing layer and lands
+ * separately.
  *
  * No network calls and no dependencies: everything is native Web Speech API.
  */
@@ -14,7 +19,6 @@
 
   var RATE_KEY = 'tts:rate';
   var VOICE_KEY = 'tts:voice';
-  var CODE_KEY = 'tts:code';
   var MAX_CHUNK = 220;
 
   // Regions that are chrome, not content — nothing inside is ever read.
@@ -48,7 +52,6 @@
   var BLOCK_SELECTOR = [
     'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'p', 'li', 'blockquote', 'dd', 'dt', 'figcaption', 'summary', 'td', 'th',
-    'pre',
     // Lesson prose and panels build their text out of plain divs.
     '.motto',
     '.lesson-meta-tag',
@@ -66,12 +69,14 @@
     '.lf-cap',
   ].join(',');
 
-  // Mermaid keeps its definition in a hidden <pre> next to the rendered SVG.
-  var MERMAID_SOURCE = 'pre.mermaid-source';
+  // A block that contains one of these is a wrapper: read only its own text
+  // so a list item holding a code block still reads its sentence, and the
+  // code inside it stays unread.
+  var NESTED_PROBE = BLOCK_SELECTOR + ',pre';
 
   // Storage throws instead of returning null when a browser blocks it
   // (Safari with cookies off, sandboxed iframes), so every read goes through
-  // these — readCode() runs on the collection hot path and must never throw.
+  // these — lsGet() runs on the collection hot path and must never throw.
   function lsGet(key) {
     try {
       return localStorage.getItem(key);
@@ -86,11 +91,6 @@
     } catch (e) {
       // Storage disabled; the preference just won't persist.
     }
-  }
-
-  // Code read aloud is hard to follow — off unless the listener opts in.
-  function readCode() {
-    return lsGet(CODE_KEY) === '1';
   }
 
   // Prev/next lesson links are full page loads, so playback state has to
@@ -157,13 +157,9 @@
 
   function isSkipped(el) {
     if (!el.closest) return true;
-    // The mermaid source <pre> is display:none by design — read it anyway,
-    // since the rendered SVG beside it has no speakable text.
-    if (el.matches(MERMAID_SOURCE)) return false;
     if (el.closest(HARD_SKIP)) return true;
     if (el.closest(ALLOW_SELECTOR)) return false;
-    if (el.matches('pre')) return !readCode();
-    // Code inside a <pre> is covered by the <pre> block itself.
+    // Code blocks and rendered diagrams are not narrated by this reader.
     if (el.closest('pre')) return true;
     return !!el.closest(INTERACTIVE_SKIP);
   }
@@ -181,326 +177,6 @@
       .replace(/[`*_#~|]+/g, ' ')
       .replace(/\s+([,.;:!?])/g, '$1')
       .trim();
-  }
-
-  /* ----------------------------------------------------------------- code */
-
-  var SYMBOLS = [
-    [/=>/g, ' arrow '],
-    [/->/g, ' arrow '],
-    [/===?/g, ' equals '],
-    [/!==?/g, ' not equals '],
-    [/<=/g, ' less than or equal '],
-    [/>=/g, ' greater than or equal '],
-    [/\+=/g, ' plus equals '],
-    [/-=/g, ' minus equals '],
-    [/\*\*/g, ' to the power of '],
-    [/\|\|/g, ' or '],
-    [/&&/g, ' and '],
-    [/@/g, ' at '],
-    [/#/g, ' comment: '],
-    [/\/\//g, ' comment: '],
-    [/=/g, ' equals '],
-    [/[{}[\]()]/g, ' '],
-    [/[;,]/g, ', '],
-    [/["'`]/g, ' '],
-    [/\|/g, ' pipe '],
-    [/\*/g, ' times '],
-    [/\//g, ' over '],
-    [/%/g, ' percent '],
-    [/</g, ' less than '],
-    [/>/g, ' greater than '],
-    [/:/g, ': '],
-  ];
-
-  function language(pre) {
-    var el = pre.querySelector('code') || pre;
-    var cls = (el.className || '') + ' ' + (pre.className || '');
-    var m = cls.match(/(?:language|lang)-([a-z0-9+#]+)/i);
-    if (m) return m[1];
-    var attr = pre.getAttribute('data-lang') || el.getAttribute('data-lang');
-    return attr || '';
-  }
-
-  /**
-   * Code read verbatim is unlistenable: punctuation soup and no word breaks.
-   * Convert identifiers to words and the common operators to their spoken
-   * form, then announce the block so listeners know where they are.
-   */
-  function codeToSpeech(pre) {
-    var raw = pre.textContent || '';
-    var lines = raw.split('\n').filter(function (l) {
-      return l.trim().length > 0;
-    });
-    if (!lines.length) return '';
-
-    var spoken = lines
-      .map(function (line) {
-        var t = line.trim();
-        for (var i = 0; i < SYMBOLS.length; i++) {
-          t = t.replace(SYMBOLS[i][0], SYMBOLS[i][1]);
-        }
-        t = t
-          .replace(/_/g, ' ')
-          .replace(/\.(?=[A-Za-z_])/g, ' dot ')
-          .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
-          .replace(/\s+/g, ' ')
-          .trim();
-        // Give the voice a beat between statements.
-        return t ? t.replace(/[.:,]+$/, '') + '.' : '';
-      })
-      .filter(Boolean)
-      .join(' ');
-
-    var lang = language(pre);
-    var head =
-      (lang ? lang + ' code block' : 'Code block') +
-      ', ' +
-      lines.length +
-      (lines.length === 1 ? ' line. ' : ' lines. ');
-    return head + spoken;
-  }
-
-  /* ------------------------------------------------------------- diagrams */
-
-  var DIAGRAM_NAMES = {
-    graph: 'Flowchart',
-    flowchart: 'Flowchart',
-    sequencediagram: 'Sequence diagram',
-    classdiagram: 'Class diagram',
-    statediagram: 'State diagram',
-    'statediagram-v2': 'State diagram',
-    erdiagram: 'Entity relationship diagram',
-    journey: 'User journey',
-    gantt: 'Gantt chart',
-    pie: 'Pie chart',
-    mindmap: 'Mind map',
-    timeline: 'Timeline',
-    quadrantchart: 'Quadrant chart',
-  };
-
-  var MAX_EDGES = 24;
-
-  // Arrow tokens: --> --- -.-> ==> --x --o <--> ~~~ ->> -->>
-  // Single-dash forms must still require a '>' so hyphenated ids stay intact.
-  var ARROW = /(<?(?:-\.->?|-{2,3}[->xo]{0,2}|={2,3}[>xo]{0,2}|~{2,3}|-{1,2}>{1,2}|={1,2}>{1,2}))/;
-
-  // Same pattern, compiled once for splitting edge chains.
-  var ARROW_SPLIT = new RegExp(ARROW.source, 'g');
-
-  var CLOSERS = { '[': ']', '(': ')', '{': '}' };
-
-  function stripLabel(raw) {
-    return clean(
-      String(raw)
-        .replace(/<br\s*\/?>/gi, ', ')
-        .replace(/\\n/g, ', ')
-        .replace(/["`*]/g, '')
-        // Divider runs and bullet glyphs are visual, not spoken.
-        .replace(/[-—–]{2,}/g, ', ')
-        .replace(/[►▶●■◆→⇒✓✗✔✘]/g, ' ')
-        // Leading bracket is the shape delimiter; trailing ones belong to the
-        // text itself ("Remote (GitHub)"), so only trim whitespace at the end.
-        .replace(/^[\s([{<]+|\s+$/g, '')
-    );
-  }
-
-  /**
-   * Pull `id[Label]` shapes off a line, recording each label and returning the
-   * line with the label text removed. Parsing edges on the stripped skeleton
-   * keeps punctuation inside labels (---, -->, |) from faking an arrow.
-   */
-  function stripNodeLabels(line, labels) {
-    var out = '';
-    var i = 0;
-    while (i < line.length) {
-      var ch = line[i];
-      // Only a bracket right after an identifier opens a node label.
-      var idMatch = CLOSERS[ch] ? out.match(/([A-Za-z0-9_.-]+)$/) : null;
-      if (!idMatch) {
-        out += ch;
-        i++;
-        continue;
-      }
-      var depth = 0;
-      var j = i;
-      var quote = '';
-      var body = '';
-      while (j < line.length) {
-        var c = line[j];
-        if (quote) {
-          if (c === quote) quote = '';
-          body += c;
-        } else if (c === '"' || c === "'") {
-          quote = c;
-          body += c;
-        } else if (CLOSERS[c] && c !== '>') {
-          depth++;
-          body += c;
-        } else if (c === ']' || c === ')' || c === '}') {
-          depth--;
-          if (depth <= 0) {
-            j++;
-            break;
-          }
-          body += c;
-        } else {
-          body += c;
-        }
-        j++;
-      }
-      var label = stripLabel(body);
-      if (idMatch && label) labels[idMatch[1]] = label;
-      i = j;
-    }
-    return out;
-  }
-
-  /**
-   * Turn a mermaid definition into prose. The rendered SVG carries no text we
-   * can speak, but the source says exactly what connects to what.
-   */
-  function mermaidToSpeech(src) {
-    var lines = String(src)
-      .split('\n')
-      .map(function (l) {
-        return l.replace(/%%.*$/, '').trim();
-      })
-      .filter(function (l) {
-        return (
-          l &&
-          !/^(classDef|class\s|style\s|click\s|linkStyle|direction\s|accTitle|accDescr|autonumber|loop\s|alt\s|else\b|opt\s|par\s|rect\s|activate\s|deactivate\s)/i.test(l)
-        );
-      });
-    if (!lines.length) return '';
-
-    var head = lines[0].split(/[\s;{]+/)[0].toLowerCase();
-    var kind = DIAGRAM_NAMES[head] || 'Diagram';
-    var labels = {};
-    var sentences = [];
-
-    // Ids keep their underscores; clean() would eat them and break lookups.
-    function idOf(s) {
-      return String(s).replace(/\s+/g, ' ').replace(/^[|"'\s]+|[|"'\s]+$/g, '');
-    }
-
-    function name(id) {
-      var key = idOf(id);
-      if (!key) return '';
-      if (labels[key]) return labels[key];
-      // Bare ids read better as words: kv_cache -> "kv cache".
-      return stripLabel(key.replace(/[_-]+/g, ' '));
-    }
-
-    // Pass 1: harvest every label first — a node is often described on a line
-    // after the edge that references it.
-    var prepared = [];
-    for (var p = 0; p < lines.length; p++) {
-      var raw = lines[p].replace(/;+$/, '');
-      var part = raw.match(/^(?:participant|actor)\s+([A-Za-z0-9_.-]+)(?:\s+as\s+(.+))?$/i);
-      if (part) {
-        if (part[2]) labels[part[1]] = stripLabel(part[2]);
-        prepared.push(null);
-        continue;
-      }
-      // Strip labels first, so a colon inside label text is not mistaken for
-      // the message separator of a sequence-diagram line.
-      var skel = stripNodeLabels(raw, labels);
-      var msg = '';
-      var cut = skel.indexOf(':');
-      if (cut !== -1 && ARROW.test(skel.slice(0, cut))) {
-        msg = stripLabel(skel.slice(cut + 1));
-        skel = skel.slice(0, cut);
-      }
-      prepared.push({ line: raw, skeleton: skel, message: msg });
-    }
-
-    // Pass 2: say it.
-    for (var j = 1; j < prepared.length; j++) {
-      if (!prepared[j]) continue;
-      var line = prepared[j].line;
-      var skeleton = prepared[j].skeleton;
-      var message = prepared[j].message;
-
-      var sub = line.match(/^subgraph\s+(.+)$/i);
-      if (sub) {
-        // Pass 1 already harvested `subgraph ID["Title"]` into labels.
-        var subId = idOf(skeleton.replace(/^subgraph\s+/i, ''));
-        var groupName = labels[subId] || stripLabel(sub[1]).replace(/["\])}]+$/, '');
-        if (groupName) sentences.push('Group: ' + groupName + '.');
-        continue;
-      }
-      if (/^end$/i.test(line)) continue;
-
-      var note = line.match(/^note\s+(?:over|left of|right of)\s+[^:]*:\s*(.+)$/i);
-      if (note) {
-        sentences.push('Note: ' + stripLabel(note[1]) + '.');
-        continue;
-      }
-
-      if (ARROW.test(skeleton)) {
-        var tokens = skeleton.split(ARROW_SPLIT);
-        var nodes = [];
-        var edgeLabels = [];
-        for (var t = 0; t < tokens.length; t++) {
-          if (t % 2 === 1) continue; // arrow token
-          var piece = tokens[t];
-          // An edge label rides on the piece after its arrow: |yes| Next
-          var pipe = piece.match(/^\s*\|([^|]*)\|/);
-          edgeLabels.push(pipe ? stripLabel(pipe[1]) : '');
-          nodes.push(name(pipe ? piece.slice(pipe[0].length) : piece));
-        }
-        var said = false;
-        for (var k = 0; k < nodes.length - 1; k++) {
-          if (!nodes[k] || !nodes[k + 1]) continue;
-          var via = edgeLabels[k + 1];
-          sentences.push(
-            nodes[k] +
-              (via ? ', ' + via + ', ' : ' ') +
-              (message ? 'to ' + nodes[k + 1] + ': ' + message : 'leads to ' + nodes[k + 1]) +
-              '.'
-          );
-          said = true;
-        }
-        if (said) continue;
-      }
-
-      var title = line.match(/^title\s+(.+)$/i);
-      if (title) {
-        sentences.push('Titled: ' + stripLabel(title[1]) + '.');
-        continue;
-      }
-
-      // A node declared on its own line: say its label, never its source.
-      var loneId = idOf(skeleton);
-      if (loneId && labels[loneId]) {
-        sentences.push(labels[loneId] + '.');
-        continue;
-      }
-
-      // Timeline entries, gantt rows, pie slices: "Label : value : detail".
-      if (line.indexOf(':') !== -1) {
-        var row = clean(line.replace(/\s*:\s*/g, ': '));
-        if (row.length > 1) sentences.push(row.replace(/[.:]+$/, '') + '.');
-      }
-    }
-
-    if (!sentences.length) {
-      // Nothing structural parsed: fall back to the labels in reading order.
-      var names = [];
-      for (var key in labels) {
-        if (Object.prototype.hasOwnProperty.call(labels, key)) names.push(labels[key]);
-      }
-      if (!names.length) return '';
-      sentences.push('Showing ' + names.join(', ') + '.');
-    }
-
-    var more = '';
-    if (sentences.length > MAX_EDGES) {
-      more = ' And ' + (sentences.length - MAX_EDGES) + ' more connections.';
-      sentences = sentences.slice(0, MAX_EDGES);
-    }
-    return kind + '. ' + sentences.join(' ') + more;
   }
 
   /** Split a long block into speakable pieces at sentence boundaries. */
@@ -557,27 +233,9 @@
     var seen = 0;
     for (var i = 0; i < blocks.length; i++) {
       var el = blocks[i];
-      if (isSkipped(el)) continue;
+      if (isSkipped(el) || !isVisible(el)) continue;
       var text;
-      if (el.matches(MERMAID_SOURCE)) {
-        // Highlight the rendered diagram, not the hidden source.
-        var render = document.getElementById(
-          'mermaid-render-' + (el.id || '').replace('mermaid-', '')
-        );
-        if (render && !isVisible(render)) continue;
-        text = mermaidToSpeech(el.textContent || '');
-        if (text) {
-          var mparts = split(text);
-          for (var mi = 0; mi < mparts.length; mi++) {
-            chunks.push({ text: mparts[mi], el: render || el });
-          }
-        }
-        continue;
-      }
-      if (!isVisible(el)) continue;
-      if (el.matches('pre')) {
-        text = codeToSpeech(el);
-      } else if (el.querySelector(BLOCK_SELECTOR)) {
+      if (el.querySelector(NESTED_PROBE)) {
         // A wrapper (list item holding a code block, panel holding headings).
         // Read only its own text; the nested blocks come round on their own.
         text = clean(ownText(el));
@@ -1217,8 +875,6 @@
       '<option value="1.75">1.75x</option><option value="2">2x</option></select></label>' +
       '<label class="tts-field tts-field-voice"><span>Voice</span>' +
       '<select class="tts-select" id="ttsVoice" aria-label="Voice"></select></label>' +
-      '<label class="tts-field tts-field-code"><input type="checkbox" class="tts-check" id="ttsCode">' +
-      '<span>Code</span></label>' +
       '<button type="button" class="tts-btn tts-btn-stop" data-tts="stop" aria-label="Stop reading">Stop</button>' +
       '<button type="button" class="tts-btn tts-btn-collapse" data-tts="collapse" ' +
       'aria-label="Collapse controls" aria-expanded="true" title="Collapse (drag to move)">▾</button>';
@@ -1229,7 +885,6 @@
     els.playPause = bar.querySelector('[data-tts="playpause"]');
     els.rate = bar.querySelector('#ttsRate');
     els.voice = bar.querySelector('#ttsVoice');
-    els.code = bar.querySelector('#ttsCode');
 
     els.collapse = bar.querySelector('[data-tts="collapse"]');
 
@@ -1267,22 +922,6 @@
         synth.cancel();
         speakCurrent();
       }
-    });
-
-    els.code.checked = readCode();
-    els.code.addEventListener('change', function () {
-      lsSet(CODE_KEY, els.code.checked ? '1' : '0');
-      if (!state.playing) return;
-      // Rebuild the queue and stay on the block currently being read.
-      var anchor = state.chunks[state.index] && state.chunks[state.index].el;
-      state.chunks = collect();
-      // Switching Code off drops the <pre> being read out of the queue, so
-      // fall through to the next block instead of restarting from the top.
-      state.index = indexOfBlock(anchor);
-      state.paused = false;
-      synth.cancel();
-      render();
-      speakCurrent();
     });
 
     bindDrag(bar);
