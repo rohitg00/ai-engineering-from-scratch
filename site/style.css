@@ -1609,6 +1609,8 @@ body[data-palette-open] {
 @media (prefers-reduced-motion: reduce) {
   .lang-picker-btn, .lang-item { transition: none; }
   .lang-picker-btn:active { transform: none; }
+}
+
 /* ============================================================
    READ ALOUD (SpeechSynthesis)
    ============================================================ */
@@ -1908,5 +1910,39 @@ pre.tts-reading,
   .tts-bar.is-reading .tts-btn-collapse .tts-wave-2 {
     animation: none;
     opacity: 1;
+  }
+}
+
+/* --- header: read-aloud sits with the icon controls, left of the theme
+   toggle and right of the language picker. At phone widths the row carries
+   search + language + read-aloud + theme, which already overflowed before
+   this button existed, so the picker drops to its glyph there. The label
+   stays in the accessibility tree. --- */
+
+@media (max-width: 600px) {
+  .lang-current {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .lang-picker-btn {
+    gap: 4px;
+    padding: 6px 8px;
+  }
+
+  .tts-toggle {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .search-toggle {
+    flex-shrink: 0;
   }
 }
