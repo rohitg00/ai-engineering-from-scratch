@@ -719,7 +719,8 @@
 
   function recoverFromStall() {
     state.stalls++;
-    if (state.stalls > 4) {
+    // Give up on the fourth ignored attempt; a fifth only skips one more chunk.
+    if (state.stalls >= 4) {
       flash('Speech engine stopped responding');
       stop();
       return;
