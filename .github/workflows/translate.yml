@@ -149,7 +149,14 @@ jobs:
             [ -d "$SLICE" ] && cp -r "$SLICE" "../pub/$SLICE"
             [ -f "$CACHE" ] && cp "$CACHE" "../pub/$CACHE"
             ( cd ../pub
-              git add "i18n/$LANG_CODE"
+              # -f: the translations branch is created from main's checkout
+              # (when it doesn't exist yet) and so carries main's .gitignore,
+              # which deliberately excludes i18n/*/phases/ and i18n/*/.cache/
+              # from main. That same rule silently no-ops a plain `git add`
+              # here, so every publish reports "no changes" and nothing is
+              # ever pushed. Force past it: this branch exists specifically
+              # to hold these files.
+              git add -f "i18n/$LANG_CODE"
               # nothing staged is the only success-without-push case; a real
               # commit or push failure must fall through to a retry, not be
               # swallowed as "no changes"
