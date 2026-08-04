@@ -455,7 +455,7 @@
       render();
       // Calling speak() synchronously from inside onend wedges the queue in
       // some Chromium builds; yielding first is reliable.
-      setTimeout(speakCurrent, 0);
+      deferSpeak();
     };
     u.onerror = function (e) {
       // "interrupted"/"canceled" are the normal result of stop()/next().
@@ -463,7 +463,7 @@
       if (token !== state.seq || !state.playing) return;
       state.index++;
       state.stalls = 0;
-      if (state.index < state.chunks.length) setTimeout(speakCurrent, 0);
+      if (state.index < state.chunks.length) deferSpeak();
       else stop();
     };
 
@@ -538,7 +538,7 @@
       if (!silentIfEmpty) flash('Nothing to read on this page');
       return false;
     }
-    synth.cancel();
+    cancelSpeech();
     state.index = fromEl ? indexOfBlock(fromEl) : 0;
     state.playing = true;
     state.paused = false;
@@ -576,7 +576,7 @@
     state.waiting = false;
     setResume(false);
     stopWatchdog();
-    synth.cancel();
+    cancelSpeech();
     highlight(null);
     hideSelectionButton();
     render();
@@ -654,9 +654,36 @@
     }
     state.index = next;
     state.paused = false;
-    synth.cancel();
+    cancelSpeech();
     render();
     speakCurrent();
+  }
+
+  /**
+   * cancel() does not silence the callbacks of the utterance it kills: WebKit
+   * still fires onend for a cancelled utterance, and engines that report an
+   * error without a recognised `error` string fall through the same path. Bump
+   * the sequence first so anything arriving afterwards is stale and cannot
+   * advance the queue or start a second reader.
+   */
+  function cancelSpeech() {
+    state.seq++;
+    synth.cancel();
+  }
+
+  /**
+   * Hand control to the next chunk on a fresh task. Each deferral remembers
+   * the sequence it was scheduled under, so if anything else takes over in the
+   * meantime — a stall retry, a jump, a stop — this one quietly drops instead
+   * of starting a second reader.
+   */
+  function deferSpeak() {
+    var expected = state.seq;
+    setTimeout(function () {
+      if (!state.playing || state.paused) return;
+      if (state.seq !== expected) return;
+      speakCurrent();
+    }, 0);
   }
 
   /**
@@ -713,8 +740,8 @@
       }
       render();
     }
-    synth.cancel();
-    setTimeout(speakCurrent, 0);
+    cancelSpeech();
+    deferSpeak();
   }
 
   /** Best offline voice, used when a network voice keeps dropping out. */
@@ -978,7 +1005,7 @@
       if (state.playing) {
         // Rate only applies to a new utterance, so restart the current chunk.
         state.paused = false;
-        synth.cancel();
+        cancelSpeech();
         speakCurrent();
       }
     });
@@ -989,7 +1016,7 @@
       state.forcedLocal = null;
       if (state.playing) {
         state.paused = false;
-        synth.cancel();
+        cancelSpeech();
         speakCurrent();
       }
     });
@@ -1090,7 +1117,7 @@
     // Leftover utterances would keep talking over the next page; the resume
     // flag (not the audio) is what carries playback across the navigation.
     window.addEventListener('pagehide', function () {
-      synth.cancel();
+      cancelSpeech();
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && (state.playing || state.waiting)) stop();
