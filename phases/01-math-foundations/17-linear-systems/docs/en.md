@@ -249,7 +249,7 @@ Normal equations:
 A^T A = | 4  10 |    A^T b = | 22 |
         | 10 30 |            | 63 |
 
-Solve: x = [1.5, 1.7]
+Solve: x = [1.5, 1.6]
 
 This is linear regression. x[0] is the intercept, x[1] is the slope.
 ```
