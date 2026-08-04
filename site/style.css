@@ -1931,3 +1931,427 @@ body[data-palette-open] {
     flex-shrink: 0;
   }
 }
+
+/* ── Auth: profile menu + login/signup modal ─────────────────────────── */
+
+.profile-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--rule-soft);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.profile-btn:hover {
+  border-color: var(--blueprint);
+  background: var(--blueprint-tint);
+}
+
+.profile-avatar {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blueprint);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 180px;
+  background: var(--bg);
+  border: 1px solid var(--rule-soft);
+  box-shadow: var(--shadow-hard);
+  z-index: 200;
+  display: none;
+  padding: 8px 0;
+}
+
+.profile-dropdown.open { display: block; }
+
+.profile-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.profile-dropdown-item:hover {
+  background: var(--blueprint-tint);
+  color: var(--blueprint);
+}
+
+.profile-dropdown-sep {
+  height: 1px;
+  background: var(--rule-soft);
+  margin: 4px 0;
+}
+
+.login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--blueprint);
+  background: transparent;
+  color: var(--blueprint);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.login-btn:hover {
+  background: var(--blueprint);
+  color: var(--bg);
+}
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  z-index: 99998;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.auth-overlay.open { display: flex; }
+
+.auth-modal {
+  width: min(420px, 96vw);
+  background: var(--bg);
+  border: 1px solid var(--ink);
+  padding: 32px 28px;
+}
+
+.auth-modal-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  color: var(--blueprint);
+  letter-spacing: 0.02em;
+  margin-bottom: 24px;
+}
+
+.auth-field {
+  margin-bottom: 16px;
+}
+
+.auth-field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.auth-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--rule-soft);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.auth-field input:focus {
+  border-color: var(--blueprint);
+}
+
+.auth-submit {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid var(--blueprint);
+  background: var(--blueprint);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 4px;
+}
+
+.auth-submit:hover {
+  background: var(--accent-hover);
+}
+
+.auth-switch {
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.auth-switch a {
+  color: var(--blueprint);
+  cursor: pointer;
+  border-bottom: 1px solid var(--blueprint);
+}
+
+.auth-error {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--warn);
+  margin-bottom: 12px;
+  display: none;
+}
+
+.auth-error.visible { display: block; }
+
+.auth-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: transparent;
+  border: 1px solid var(--rule-soft);
+  width: 30px;
+  height: 30px;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-close:hover {
+  border-color: var(--blueprint);
+  color: var(--blueprint);
+}
+
+@media (max-width: 600px) {
+  .profile-btn { padding: 4px 8px; font-size: 0.66rem; }
+  .profile-avatar { width: 20px; height: 20px; font-size: 0.62rem; }
+  .login-btn { padding: 4px 8px; font-size: 0.66rem; }
+}
+
+/* ── Continue Reading card ───────────────────────────────────────────── */
+
+.continue-card {
+  border: 1px solid var(--blueprint);
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  background: var(--blueprint-tint);
+  display: none;
+}
+
+.continue-card.visible { display: block; }
+
+.continue-card-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blueprint);
+  margin-bottom: 8px;
+}
+
+.continue-card-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+
+.continue-card-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+
+.continue-card-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.continue-card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid var(--blueprint);
+  background: var(--blueprint);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.continue-card-btn:hover {
+  background: var(--accent-hover);
+}
+
+.continue-card-pct {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--blueprint);
+  letter-spacing: 0.04em;
+}
+
+/* ── Streak widget ───────────────────────────────────────────────────── */
+
+.streak-widget {
+  border: 1px solid var(--rule-soft);
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  display: none;
+}
+
+.streak-widget.visible { display: block; }
+
+.streak-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.streak-icon {
+  font-size: 1.2rem;
+}
+
+.streak-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blueprint);
+}
+
+.streak-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.streak-stat {
+  text-align: center;
+}
+
+.streak-stat-value {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--blueprint);
+  line-height: 1;
+}
+
+.streak-stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 4px;
+}
+
+.streak-calendar {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.streak-day {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--rule-soft);
+  background: transparent;
+}
+
+.streak-day.read {
+  background: var(--blueprint);
+  border-color: var(--blueprint);
+}
+
+.streak-day.today {
+  border-color: var(--blueprint);
+}
+
+.streak-today {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+  margin-top: 8px;
+}
+
+.streak-today.done {
+  color: var(--blueprint);
+}
+
+@media (max-width: 600px) {
+  .streak-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .streak-stat-value { font-size: 1.3rem; }
+  .streak-day { width: 12px; height: 12px; }
+}
+
+/* ── Lesson progress bar (reading) ───────────────────────────────────── */
+
+.reading-progress-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--rule-soft);
+  z-index: 9998;
+}
+
+.reading-progress-fill {
+  height: 100%;
+  background: var(--blueprint);
+  transition: width 0.15s linear;
+  width: 0%;
+}

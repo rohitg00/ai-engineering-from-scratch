@@ -1341,6 +1341,18 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </button>
+      <div class="profile-wrap" id="profileWrap">
+        <button class="login-btn" id="loginBtn" type="button" style="display:none">Log In</button>
+        <button class="profile-btn" id="profileBtn" type="button" style="display:none">
+          <span class="profile-avatar" id="profileAvatar"></span>
+          <span id="profileName"></span>
+        </button>
+        <div class="profile-dropdown" id="profileDropdown">
+          <a class="profile-dropdown-item" href="#contents">My Progress</a>
+          <div class="profile-dropdown-sep"></div>
+          <button class="profile-dropdown-item" id="logoutBtn" type="button">Log Out</button>
+        </div>
+      </div>
       <div id="langPicker"></div>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
         <span class="theme-icon" id="themeIcon">N</span>
@@ -1349,6 +1361,32 @@
   </header>
 
   <main id="main">
+
+    <div class="auth-overlay" id="authOverlay">
+      <div class="auth-modal" style="position:relative">
+        <button class="auth-close" id="authClose" type="button" aria-label="Close">&times;</button>
+        <div class="auth-modal-title" id="authTitle">Log In</div>
+        <div class="auth-error" id="authError"></div>
+        <form id="authForm" autocomplete="on">
+          <div class="auth-field" id="authNameField" style="display:none">
+            <label for="authName">Name</label>
+            <input type="text" id="authName" placeholder="Your name" autocomplete="name">
+          </div>
+          <div class="auth-field">
+            <label for="authEmail">Email</label>
+            <input type="email" id="authEmail" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <div class="auth-field">
+            <label for="authPassword">Password</label>
+            <input type="password" id="authPassword" placeholder="Min. 6 characters" autocomplete="current-password" required>
+          </div>
+          <button class="auth-submit" type="submit" id="authSubmit">Log In</button>
+        </form>
+        <div class="auth-switch" id="authSwitch">
+          Don't have an account? <a id="authToggleLink">Sign up</a>
+        </div>
+      </div>
+    </div>
 
     <section class="manual-masthead container">
       <div class="manual-meta-row">
@@ -1594,6 +1632,39 @@
     </section>
 
     <section class="toc container" id="contents">
+      <div class="continue-card" id="continueCard">
+        <div class="continue-card-label">Continue Reading</div>
+        <div class="continue-card-title" id="continueTitle"></div>
+        <div class="continue-card-meta" id="continueMeta"></div>
+        <div class="continue-card-actions">
+          <a class="continue-card-btn" id="continueBtn" href="#">Resume</a>
+          <span class="continue-card-pct" id="continuePct"></span>
+        </div>
+      </div>
+
+      <div class="streak-widget" id="streakWidget">
+        <div class="streak-header">
+          <span class="streak-icon" aria-hidden="true">&#128293;</span>
+          <span class="streak-title">Reading Streak</span>
+        </div>
+        <div class="streak-stats">
+          <div class="streak-stat">
+            <div class="streak-stat-value" id="streakCurrent">0</div>
+            <div class="streak-stat-label">Current</div>
+          </div>
+          <div class="streak-stat">
+            <div class="streak-stat-value" id="streakLongest">0</div>
+            <div class="streak-stat-label">Longest</div>
+          </div>
+          <div class="streak-stat">
+            <div class="streak-stat-value" id="streakTotal">0</div>
+            <div class="streak-stat-label">Total Days</div>
+          </div>
+        </div>
+        <div class="streak-calendar" id="streakCalendar"></div>
+        <div class="streak-today" id="streakToday"></div>
+      </div>
+
       <div class="toc-title reveal reveal--left">Curriculum · 20 phases · 503 lessons</div>
       <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">Tap a phase to expand its lessons. Each one ships when its math, code, and test are all written.</div>
       <div class="toc-list" id="phasesGrid"></div>
@@ -1752,9 +1823,155 @@
   <script src="lang-picker.js?v=20260802a" defer></script>
   <script src="data.js?v=20260801a"></script>
   <script src="progress.js?v=20260801a"></script>
+  <script src="auth.js?v=20260804a"></script>
+  <script src="streak.js?v=20260804a"></script>
+  <script src="reading-progress.js?v=20260804a"></script>
   <script src="header.js?v=20260801a" defer></script>
   <script src="cmdpalette.js?v=20260801a" defer></script>
   <script src="app.js?v=20260803b"></script>
+  <script>
+    (function () {
+      var authOverlay = document.getElementById('authOverlay');
+      var authClose = document.getElementById('authClose');
+      var authForm = document.getElementById('authForm');
+      var authTitle = document.getElementById('authTitle');
+      var authError = document.getElementById('authError');
+      var authSubmit = document.getElementById('authSubmit');
+      var authToggleLink = document.getElementById('authToggleLink');
+      var authNameField = document.getElementById('authNameField');
+      var loginBtn = document.getElementById('loginBtn');
+      var profileBtn = document.getElementById('profileBtn');
+      var profileAvatar = document.getElementById('profileAvatar');
+      var profileName = document.getElementById('profileName');
+      var profileDropdown = document.getElementById('profileDropdown');
+      var logoutBtn = document.getElementById('logoutBtn');
+
+      var isSignup = false;
+
+      function openAuth(mode) {
+        isSignup = mode === 'signup';
+        authTitle.textContent = isSignup ? 'Sign Up' : 'Log In';
+        authSubmit.textContent = isSignup ? 'Sign Up' : 'Log In';
+        authNameField.style.display = isSignup ? '' : 'none';
+        authError.className = 'auth-error';
+        authError.textContent = '';
+        authToggleLink.textContent = isSignup ? 'Log in' : 'Sign up';
+        authForm.reset();
+        authOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeAuth() {
+        authOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      loginBtn.addEventListener('click', function () { openAuth('login'); });
+      authClose.addEventListener('click', closeAuth);
+      authOverlay.addEventListener('click', function (e) { if (e.target === authOverlay) closeAuth(); });
+      authToggleLink.addEventListener('click', function () { openAuth(isSignup ? 'login' : 'signup'); });
+
+      authForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var name = document.getElementById('authName').value;
+        var email = document.getElementById('authEmail').value;
+        var password = document.getElementById('authPassword').value;
+        var result;
+        if (isSignup) {
+          result = await window.AIFSAuth.signup(name, email, password);
+        } else {
+          result = await window.AIFSAuth.login(email, password);
+        }
+        if (result.ok) {
+          closeAuth();
+          updateAuthUI();
+        } else {
+          authError.textContent = result.errors.join(' ');
+          authError.className = 'auth-error visible';
+        }
+      });
+
+      profileBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        profileDropdown.classList.toggle('open');
+      });
+      document.addEventListener('click', function () { profileDropdown.classList.remove('open'); });
+
+      logoutBtn.addEventListener('click', function () {
+        window.AIFSAuth.logout();
+        profileDropdown.classList.remove('open');
+        updateAuthUI();
+      });
+
+      function updateAuthUI() {
+        var user = window.AIFSAuth.currentUser();
+        if (user) {
+          loginBtn.style.display = 'none';
+          profileBtn.style.display = '';
+          profileAvatar.textContent = user.name.charAt(0).toUpperCase();
+          profileName.textContent = user.name.split(' ')[0];
+        } else {
+          loginBtn.style.display = '';
+          profileBtn.style.display = 'none';
+          profileDropdown.classList.remove('open');
+        }
+      }
+
+      window.AIFSAuth.onChange(updateAuthUI);
+      updateAuthUI();
+
+      // Continue Reading card
+      function updateContinueCard() {
+        if (!window.AIFSReadingProgress) return;
+        var last = window.AIFSReadingProgress.getLastLesson();
+        var card = document.getElementById('continueCard');
+        if (!last || last.completed) { card.className = 'continue-card'; return; }
+
+        var title = last.path.replace('phases/', '').replace(/\//g, ' › ').replace(/-/g, ' ');
+        document.getElementById('continueTitle').textContent = title;
+        var pct = Math.round(last.scrollPct || 0);
+        document.getElementById('continuePct').textContent = pct + '% read';
+        document.getElementById('continueMeta').textContent = 'Last opened ' + new Date(last.lastOpened).toLocaleDateString();
+        document.getElementById('continueBtn').href = 'lesson.html?path=' + last.path;
+        card.className = 'continue-card visible';
+      }
+      updateContinueCard();
+      if (window.AIFSReadingProgress) window.AIFSReadingProgress.onChange(updateContinueCard);
+
+      // Streak widget
+      function updateStreakWidget() {
+        if (!window.AIFSStreak) return;
+        var streak = window.AIFSStreak.getStreak();
+        document.getElementById('streakCurrent').textContent = streak.currentStreak;
+        document.getElementById('streakLongest').textContent = streak.longestStreak;
+        document.getElementById('streakTotal').textContent = streak.totalDays;
+
+        var today = new Date();
+        var cal = document.getElementById('streakCalendar');
+        var html = '';
+        for (var i = 27; i >= 0; i--) {
+          var d = new Date(today);
+          d.setDate(d.getDate() - i);
+          var ds = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+          var isToday = i === 0;
+          var readDays = streak.readingDays || [];
+          var isRead = readDays.indexOf(ds) >= 0;
+          html += '<div class="streak-day' + (isRead ? ' read' : '') + (isToday ? ' today' : '') + '" title="' + ds + '"></div>';
+        }
+        cal.innerHTML = html;
+
+        var todayEl = document.getElementById('streakToday');
+        var todayDone = window.AIFSStreak.getTodayStatus();
+        todayEl.textContent = todayDone ? 'Today: reading logged' : 'Read today to keep your streak going';
+        todayEl.className = 'streak-today' + (todayDone ? ' done' : '');
+
+        var widget = document.getElementById('streakWidget');
+        widget.className = 'streak-widget' + (streak.totalDays > 0 ? ' visible' : '');
+      }
+      updateStreakWidget();
+      if (window.AIFSStreak) window.AIFSStreak.onChange(updateStreakWidget);
+    })();
+  </script>
   <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
 </body>
 </html>
