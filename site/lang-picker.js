@@ -7,6 +7,19 @@
   'use strict';
   var LANGS = Array.isArray(window.AIFS_LANGS) ? window.AIFS_LANGS : [{ code: 'en', native: 'English' }];
   var RTL = { ar: 1, he: 1, fa: 1, ur: 1 };
+  /*
+   * The picker is the one control that every page renders, including pages that
+   * ship no page-level locale file, so its own chrome strings live here rather
+   * than in a per-page catalog. Keyed by base language code; a missing key
+   * falls back to English.
+   */
+  var CHROME = {
+    fa: {
+      label: 'زبان',
+      filter_placeholder: 'فیلتر زبان‌ها…',
+      filter_aria: 'فیلتر زبان‌ها'
+    }
+  };
 
   function supported(code) {
     return !!code && LANGS.some(function (l) { return l.code === code; });
@@ -22,6 +35,10 @@
     if (supported(q)) return q;
     var saved = readStored();
     return supported(saved) ? saved : 'en';
+  }
+  function chromeText(key, fallback) {
+    var strings = CHROME[languageBase(current())];
+    return strings && strings[key] ? strings[key] : fallback;
   }
   function nativeOf(code) {
     for (var i = 0; i < LANGS.length; i++) if (LANGS[i].code === code) return LANGS[i].native;
@@ -63,13 +80,12 @@
     var list = panel.querySelector('.lang-list');
 
     function refreshChrome() {
-      var translate = typeof window.AIFS_langPickerText === 'function'
-        ? window.AIFS_langPickerText
-        : function (_, fallback) { return fallback; };
-      panel.querySelector('.lang-panel-head').textContent = translate('label', 'LANGUAGE');
-      filter.placeholder = translate('filter_placeholder', 'filter…');
-      filter.setAttribute('aria-label', translate('filter_aria', 'Filter languages'));
+      panel.querySelector('.lang-panel-head').textContent = chromeText('label', 'LANGUAGE');
+      filter.placeholder = chromeText('filter_placeholder', 'filter…');
+      filter.setAttribute('aria-label', chromeText('filter_aria', 'Filter languages'));
     }
+    // refreshChrome closes over this host's nodes: the export assumes a single
+    // #langPicker per page, which is what every page in the site renders.
     window.AIFS_refreshLangPicker = refreshChrome;
 
     function renderList(q) {

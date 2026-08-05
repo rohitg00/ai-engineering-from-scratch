@@ -22,14 +22,21 @@
     return String(code || 'en').toLowerCase().split('-')[0];
   }
 
+  // This file runs before langs.js, so the registry is not available to reject
+  // an unknown language here. Accept only a language-tag shape: an arbitrary
+  // string would land in documentElement.lang, which screen readers read for
+  // pronunciation, and would let any value paint a direction that
+  // lang-picker.js then reverses — the exact flash this bootstrap prevents.
+  var TAG = /^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
+
   function choice() {
     try {
       var query = new URLSearchParams(window.location.search).get('lang');
-      if (query) return query;
+      if (query && TAG.test(query)) return query;
     } catch (_) {}
     try {
       var saved = window.localStorage.getItem('lang');
-      if (saved) return saved;
+      if (saved && TAG.test(saved)) return saved;
     } catch (_) {}
     return 'en';
   }

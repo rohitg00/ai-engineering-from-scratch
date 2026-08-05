@@ -19,9 +19,6 @@
       'nav.about': 'درباره',
       'header.search': 'جست‌وجو (⌘K)',
       'header.theme': 'تغییر پوسته',
-      'picker.label': 'زبان',
-      'picker.filter_placeholder': 'فیلتر زبان‌ها…',
-      'picker.filter_aria': 'فیلتر زبان‌ها',
 
       'meta.curriculum': 'دوره‌ی آموزشی',
       'meta.open_source': 'متن‌باز · MIT',
@@ -180,7 +177,11 @@
    */
   function isolateLatinRuns(value) {
     var source = String(value == null ? '' : value);
-    var token = /[A-Za-z0-9][A-Za-z0-9_+#./:@-]*(?:\s+[A-Za-z0-9][A-Za-z0-9_+#./:@-]*)*/g;
+    // Each run must end on an alphanumeric character. Sentence punctuation that
+    // happens to follow a Latin word ("… Rust و Julia.") belongs to the RTL
+    // paragraph: inside the isolate the period would render on the wrong side.
+    var atom = '[A-Za-z0-9](?:[A-Za-z0-9_+#./:@-]*[A-Za-z0-9])?';
+    var token = new RegExp(atom + '(?:\\s+' + atom + ')*', 'g');
     var output = '';
     var cursor = 0;
     var match;
@@ -254,9 +255,6 @@
 
   window.AIFS_landingText = text;
   window.AIFS_landingBidi = bidi;
-  window.AIFS_langPickerText = function (key, fallback) {
-    return text('picker.' + key, fallback);
-  };
   window.AIFS_applyLandingLang = apply;
   window.AIFS_onLangChange = apply;
   apply();

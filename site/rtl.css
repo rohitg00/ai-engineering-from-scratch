@@ -33,10 +33,10 @@ html[dir="rtl"] bdi[dir="ltr"] {
 html[data-font="custom"] :is(
   .manual-tagline, .manual-attribution, .masthead-install-bar,
   .masthead-install-caption, .fig-caption, .learners-eyebrow,
-  .learners-quote, .preface-eyebrow, .preface-body, .stat-block-title,
-  .stat-row-label, .toc-title, .toc-subtitle, .toc-name, .legend,
-  .modal-title, .modal-desc, .modal-footer-note, .modal-reset,
-  .books-note, .colophon-eyebrow, .colophon p, .site-footer,
+  .learners-quote, .preface-body,
+  .stat-row-label, .toc-subtitle, .toc-name, .legend,
+  .modal-desc, .modal-footer-note, .modal-reset,
+  .books-note, .colophon p, .site-footer,
   .header-nav a, .lang-picker-btn, .lang-panel, .lang-item
 ) {
   font-family: var(--font-body);
@@ -430,7 +430,7 @@ html[dir="rtl"] .masthead-btn-count {
   margin-left: 0;
   margin-right: 4px;
   border-left: none;
-  border-right: 1px solid currentColor;
+  border-right: 1px solid currentcolor;
 }
 
 html[dir="rtl"] .colophon-cmd .copy-btn {
@@ -524,10 +524,6 @@ html[dir="rtl"] .masthead-install-caption {
 }
 
 /* --- catalog, glossary and roadmap ------------------------------------- */
-
-html[dir="rtl"] .catalog-table th {
-  text-align: right;
-}
 
 html[dir="rtl"] .catalog-table th .sort-arrow {
   margin-left: 0;

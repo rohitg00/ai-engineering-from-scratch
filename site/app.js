@@ -261,7 +261,7 @@
 
       var actionHtml = '';
       if ((l.status === 'complete' || userComplete) && lessonPath) {
-        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + (userComplete ? tx('modal.review', 'Review') : tx('modal.read', 'Read')) + '</a>';
+        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + escapeHtml(userComplete ? tx('modal.review', 'Review') : tx('modal.read', 'Read')) + '</a>';
       }
       var toggleHtml = '';
       if (hasProgress && lessonPath) {
@@ -506,9 +506,14 @@
     }
   }
 
+  // Explicit entity map rather than a textContent round-trip: the results are
+  // also interpolated into double-quoted attributes, and that path leaves " and
+  // ' untouched.
+  var HTML_ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+
   function escapeHtml(str) {
-    var div = document.createElement('div');
-    div.textContent = str == null ? '' : str;
-    return div.innerHTML;
+    return String(str == null ? '' : str).replace(/[&<>"']/g, function (char) {
+      return HTML_ESCAPES[char];
+    });
   }
 })();
