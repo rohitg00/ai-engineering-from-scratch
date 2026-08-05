@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "چرا پروژه‌های AI به یک محیط مجازی (virtual environment) جداگانه نیاز دارند؟",
+      "options": [
+        "Python برای import کردن بسته‌ها به محیط مجازی نیاز دارد",
+        "وابستگی‌ها را جدا نگه می‌دارند تا پروژه‌های مختلف با هم تداخل نداشته باشند",
+        "محیط‌های مجازی باعث می‌شوند کد سریع‌تر اجرا شود",
+        "محیط‌های مجازی دسترسی GPU فراهم می‌کنند"
+      ],
+      "correct": 1,
+      "explanation": "محیط‌های مجازی نسخه‌های بسته‌ها را برای هر پروژه جدا نگه می‌دارند. بدون آن‌ها، ارتقای PyTorch برای یک پروژه می‌تواند پروژه‌ی دیگری را که به نسخه‌ی قدیمی‌تر وابسته است از کار بیندازد."
+    },
+    {
+      "stage": "pre",
+      "question": "CUDA برای بارهای کاری AI چه امکانی فراهم می‌کند؟",
+      "options": [
+        "محاسبات موازی روی GPUهای NVIDIA برای عملیات ماتریسی",
+        "یک package manager برای کتابخانه‌های ML در Python",
+        "یک چارچوب وب (web framework) برای استقرار مدل‌ها",
+        "یک محیط اجرای کانتینر (container runtime) برای سرویس‌دهی مدل‌ها"
+      ],
+      "correct": 0,
+      "explanation": "CUDA پلتفرم محاسبات موازی NVIDIA است و اجازه می‌دهد عملیات ماتریسی را هم‌زمان روی هزاران هسته‌ی GPU اجرا کنید. PyTorch و TensorFlow در پشت صحنه از آن استفاده می‌کنند."
+    },
+    {
+      "stage": "post",
+      "question": "در پشته‌ی چهارلایه‌ی محیط، کدام لایه باید اول نصب شود؟",
+      "options": [
+        "محیط‌های اجرای زبان (Language Runtimes؛ Python، Node.js)",
+        "زیربنای سیستم (OS، shell، درایورهای GPU)",
+        "مدیران بسته (Package Managers؛ pip، npm، cargo)",
+        "کتابخانه‌های AI/ML (PyTorch، JAX)"
+      ],
+      "correct": 1,
+      "explanation": "نصب را از پایین به بالا انجام می‌دهید: ابتدا زیربنای سیستم (OS و درایورها)، بعد مدیران بسته، سپس محیط‌های اجرای زبان و در پایان کتابخانه‌های AI. هر لایه به لایه‌ی زیرین خود وابسته است."
+    },
+    {
+      "stage": "post",
+      "question": "uv در یک پروژه‌ی AI با Python چه کاربردی دارد؟",
+      "options": [
+        "یک ابزار پایش GPU",
+        "یک کتابخانه‌ی مصورسازی شبکه‌ی عصبی",
+        "یک نصب‌کننده و حل‌کننده‌ی بسیار سریع برای بسته‌های Python",
+        "یک کامپایلر CUDA برای kernelهای سفارشی"
+      ],
+      "correct": 2,
+      "explanation": "uv یک نصب‌کننده‌ی سریع بسته‌های Python است که با Rust نوشته شده است. این ابزار جای pip را می‌گیرد و فرایند حل وابستگی و نصب را بسیار سریع‌تر می‌کند؛ اغلب 10-100x سریع‌تر."
+    },
+    {
+      "stage": "post",
+      "question": "چطور بررسی می‌کنید که PyTorch می‌تواند به GPU شما دسترسی داشته باشد؟",
+      "options": [
+        "python -c 'import gpu'",
+        "import torch; print(torch.cuda.is_available())",
+        "import torch; print(torch.__version__)",
+        "nvidia-smi --query"
+      ],
+      "correct": 1,
+      "explanation": "torch.cuda.is_available() اگر PyTorch بتواند به GPUهای CUDA دسترسی داشته باشد، مقدار True برمی‌گرداند. روی Apple Silicon برای Metal Performance Shaders از torch.backends.mps.is_available() استفاده کنید."
+    }
+  ]
+}

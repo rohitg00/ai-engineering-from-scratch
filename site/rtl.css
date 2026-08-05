@@ -16,10 +16,12 @@ html[dir="rtl"] body {
   direction: rtl;
   hyphens: none;
   -webkit-hyphens: none;
+  overflow-x: hidden;
 }
 
-/* Mixed Persian/Latin prose uses semantic directional islands. The landing
-   translator adds these only for Persian; other locales keep plain text. */
+/* Mixed RTL/Latin prose can use semantic directional islands for technical
+   identifiers; the surrounding language remains responsible for its base
+   direction. */
 html[dir="rtl"] bdi[dir="ltr"] {
   direction: ltr;
   unicode-bidi: isolate;
@@ -62,10 +64,34 @@ html[dir="rtl"] :is(h1, h2, h3, h4, h5, h6, p, li, a, button, label,
 html[dir="rtl"] :is(p, li, dd, dt, figcaption, blockquote, .manual-tagline,
   .manual-attribution, .preface-body, .toc-subtitle, .modal-desc,
   .detail-desc, .about p, .about li, .glossary-col-says,
-  .glossary-col-means, .output-desc, .lesson-article p,
-  .lesson-article li, .lesson-article .motto, .learning-objectives li,
-  .quiz-question-text, .quiz-explanation) {
+  .glossary-col-means, .output-desc) {
   line-height: 1.85;
+}
+
+/* Lesson typography keeps the reference-manual rhythm in RTL. The broader
+   Arabic-script rule above is intentionally looser for the rest of the site;
+   lesson-specific selectors stay more specific than the generic element
+   selectors so these values mirror the original lesson CSS. */
+html[dir="rtl"] .lesson-article p,
+html[dir="rtl"] .lesson-article li,
+html[dir="rtl"] .lesson-article blockquote {
+  line-height: 1.7;
+}
+
+html[dir="rtl"] .lesson-article .motto {
+  line-height: 1.55;
+}
+
+html[dir="rtl"] .learning-objectives li {
+  line-height: 1.7;
+}
+
+html[dir="rtl"] .quiz-question-text {
+  line-height: 1.5;
+}
+
+html[dir="rtl"] .quiz-explanation {
+  line-height: 1.55;
 }
 
 html[dir="rtl"] :is(h1, h2, h3, h4, .modal-title, .detail-title,
@@ -75,6 +101,38 @@ html[dir="rtl"] :is(h1, h2, h3, h4, .modal-title, .detail-title,
 
 html[dir="rtl"] :is(h1, .manual-title, .lesson-article h1) {
   line-height: 1.15;
+}
+
+html[dir="rtl"] .lesson-article h2 {
+  line-height: 1.05;
+}
+
+/* Keep lesson headings on the same baseline rhythm as the reference CSS;
+   the generic RTL heading rule above is intentionally broader for shared UI. */
+html[dir="rtl"] .lesson-article h1 {
+  line-height: 1;
+}
+
+html[dir="rtl"] .lesson-article h3 {
+  line-height: 1.2;
+}
+
+@media (max-width: 900px) {
+  html[dir="rtl"] .lesson-article p,
+  html[dir="rtl"] .lesson-article li,
+  html[dir="rtl"] .lesson-article blockquote {
+    line-height: 1.65;
+  }
+
+  html[dir="rtl"] .learning-objectives li {
+    line-height: 1.65;
+  }
+}
+
+@media (max-width: 768px) {
+  html[dir="rtl"] .lesson-article h1 {
+    line-height: 0.95;
+  }
 }
 
 /* Inline code, paths, versions, counters and language tags must not inherit
@@ -98,16 +156,23 @@ html[dir="rtl"] :is(pre, pre code, .code-card-run, .colophon-cmd,
 
 /* A translated page can still contain an English lesson or an English quiz.
    Resolve those elements from their own first strong character. */
-html[dir="rtl"] :is(.quiz-question-text, .quiz-option,
-  .quiz-option > span:last-child, .quiz-explanation, .quiz-score-label,
-  .quiz-deeper, .output-desc, .lesson-contract-field, .detail-desc,
+html[dir="rtl"] :is(.output-desc, .lesson-contract-field, .detail-desc,
   .modal-desc, .cp-item-summary, .sidebar-lesson-link, .toc-link,
   .timeline-label, .continue-link, .lesson-nav-btn .nav-title,
   .modal-lesson > a, .catalog-table td, .glossary-term) {
   unicode-bidi: plaintext;
 }
 
-html[dir="rtl"] :is(.quiz-question-text, .quiz-option,
+/* Quiz prose follows the lesson direction even when its first token is a
+   Latin identifier such as `uv` or `CUDA`; only code/letter islands opt into
+   LTR below. */
+html[dir="rtl"] :is(.quiz-option, .quiz-option > span:last-child,
+  .quiz-explanation, .quiz-score-label, .quiz-deeper) {
+  direction: inherit;
+  unicode-bidi: isolate;
+}
+
+html[dir="rtl"] :is(.quiz-option,
   .quiz-option > span:last-child, .quiz-explanation, .quiz-score-label) {
   text-align: start;
 }
@@ -132,8 +197,81 @@ html[dir="rtl"] :is(.lesson-article table, .catalog-table, .glossary-card,
 }
 
 html[dir="rtl"] :is(.lesson-article .mermaid-render, .mermaid-modal-body,
-  .lesson-figure, .figure-body, .graph-svg, .marquee) {
+  .figure-body, .graph-svg, .marquee) {
   direction: ltr;
+}
+
+/* Figure chrome follows the reading direction; its authored diagram remains
+   an LTR geometry island so arrows, coordinates, and code labels do not flip. */
+html[dir="rtl"] .lesson-figure {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="rtl"] .lesson-figure .lf-head {
+  direction: rtl;
+  text-align: right;
+  letter-spacing: normal;
+}
+
+html[dir="rtl"] .lesson-figure .lf-head > span,
+html[dir="rtl"] .lesson-figure .lf-cap {
+  unicode-bidi: plaintext;
+}
+
+html[dir="rtl"] .lesson-figure .lf-body,
+html[dir="rtl"] .lesson-figure .lf-out {
+  direction: ltr;
+}
+
+html[dir="rtl"] .lesson-figure .lf-cap {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="rtl"] :is(.ai-panel, .ai-panel-header, .ai-panel-subtitle,
+  .output-card, .code-card, .continue-panel) {
+  direction: rtl;
+}
+
+html[dir="rtl"] .ai-panel-header {
+  text-align: right;
+}
+
+html[dir="rtl"] :is(.ai-panel-subtitle, .output-card, .code-card,
+  .output-desc, .phase-progress-text, .continue-link, .continue-callout,
+  .timeline-label, .quiz-question-num, .quiz-deeper) {
+  text-align: right;
+}
+
+html[dir="rtl"] .learning-timeline {
+  direction: rtl;
+}
+
+html[dir="rtl"] :is(.output-actions, .code-card-actions) {
+  justify-content: flex-start;
+}
+
+html[dir="rtl"] .code-card-run {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+}
+
+/* Language-configured UI labels use that language's configured font while
+   technical names and commands retain their own LTR/monospace islands. */
+html[data-font="custom"] :is(.ai-panel-title, .ai-panel-subtitle,
+  .output-badge, .output-desc, .output-btn, .code-card-btn,
+  .phase-progress-text, .continue-link, .continue-callout,
+  .quiz-question-num, .quiz-deeper, .panel-loading, .panel-fallback,
+  .lesson-figure .lf-head, .lesson-figure .lf-cap) {
+  font-family: var(--font-body);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+html[data-font="custom"] .ai-panel-title {
+  font-family: var(--font-heading);
 }
 
 html[dir="rtl"] :is(.lesson-figure svg, .figure-body svg) {
@@ -167,7 +305,6 @@ html[dir="rtl"] .skip-link:focus-visible {
 html[dir="rtl"] .dropcap > p:first-of-type::first-letter,
 html[dir="rtl"] p.dropcap::first-letter,
 html[dir="rtl"] .preface-body p:first-of-type::first-letter,
-html[dir="rtl"] .lesson-article > p:first-of-type::first-letter,
 html[dir="rtl"] .lesson-article .drop-cap::first-letter {
   float: right;
   font-family: inherit;
@@ -181,7 +318,6 @@ html[dir="rtl"] .lesson-article .drop-cap::first-letter {
   html[dir="rtl"] .dropcap > p:first-of-type::first-letter,
   html[dir="rtl"] p.dropcap::first-letter,
   html[dir="rtl"] .preface-body p:first-of-type::first-letter,
-  html[dir="rtl"] .lesson-article > p:first-of-type::first-letter,
   html[dir="rtl"] .lesson-article .drop-cap::first-letter {
     font-size: 3.2rem;
   }
@@ -191,9 +327,25 @@ html[dir="rtl"] .lesson-article .drop-cap::first-letter {
   html[dir="rtl"] .dropcap > p:first-of-type::first-letter,
   html[dir="rtl"] p.dropcap::first-letter,
   html[dir="rtl"] .preface-body p:first-of-type::first-letter,
-  html[dir="rtl"] .lesson-article > p:first-of-type::first-letter,
   html[dir="rtl"] .lesson-article .drop-cap::first-letter {
     font-size: 2.8rem;
+  }
+}
+
+/* Mirror the original lesson drop-cap scale; only its side changes in RTL. */
+html[dir="rtl"] .lesson-article .drop-cap::first-letter {
+  font-size: 4rem;
+}
+
+@media (max-width: 900px) {
+  html[dir="rtl"] .lesson-article .drop-cap::first-letter {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  html[dir="rtl"] .lesson-article .drop-cap::first-letter {
+    font-size: 2.6rem;
   }
 }
 

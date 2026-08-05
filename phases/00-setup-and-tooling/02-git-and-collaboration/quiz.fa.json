@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "version control (کنترل نسخه) عمدتاً به شما کمک می‌کند چه کاری انجام دهید؟",
+      "options": [
+        "اشکال‌های code را به‌طور خودکار برطرف کنید",
+        "اجرای code را سریع‌تر کنید",
+        "تغییرات فایل‌ها را در طول زمان پیگیری کنید و با دیگران همکاری کنید",
+        "فایل‌ها را برای صرفه‌جویی در فضای دیسک فشرده کنید"
+      ],
+      "correct": 2,
+      "explanation": "سیستم‌های کنترل نسخه مانند git هر تغییری را که در فایل‌ها ایجاد می‌شود ثبت می‌کنند؛ بنابراین می‌توانید به وضعیت‌های قبلی برگردید و با دیگران روی یک codebase مشترک همکاری کنید."
+    },
+    {
+      "stage": "pre",
+      "question": "در زمینه‌ی توسعه‌ی نرم‌افزار، «repository» چیست؟",
+      "options": [
+        "یک package manager برای نصب کتابخانه‌ها",
+        "مجموعه‌ای از فایل‌ها و تاریخچه‌ی کامل تغییرات آن‌ها که version control آن را مدیریت می‌کند",
+        "یک پایگاه داده برای ذخیره‌ی داده‌های کاربران",
+        "یک سرویس cloud storage مانند Google Drive"
+      ],
+      "correct": 1,
+      "explanation": "یک repository (مخزن)، دایرکتوری‌ای است که git آن را دنبال می‌کند و فایل‌های پروژه و تاریخچه‌ی کامل تغییرات آن‌ها را در خود نگه می‌دارد."
+    },
+    {
+      "stage": "post",
+      "question": "ترتیب درست برای ذخیره و پشتیبان‌گیری از کارتان در git چیست؟",
+      "options": [
+        "git push, git add, git commit",
+        "git clone, git add, git push",
+        "git add, git commit, git push",
+        "git commit, git add, git push"
+      ],
+      "correct": 2,
+      "explanation": "ابتدا تغییرات را با 'git add' برای stage شدن آماده می‌کنید، سپس با 'git commit' یک snapshot ثبت می‌کنید و در پایان با 'git push' آن را به remote می‌فرستید. این workflow روزانه است."
+    },
+    {
+      "stage": "post",
+      "question": "دستور 'git checkout -b experiment/new-optimizer' چه کاری انجام می‌دهد؟",
+      "options": [
+        "یک branch جدید با نام experiment/new-optimizer می‌سازد و به آن branch می‌رود",
+        "branch به نام experiment/new-optimizer را حذف می‌کند",
+        "یک branch به نام experiment/new-optimizer را از GitHub دانلود می‌کند",
+        "همه‌ی فایل‌ها را طوری برمی‌گرداند که با branch به نام experiment/new-optimizer یکسان شوند"
+      ],
+      "correct": 0,
+      "explanation": "پرچم '-b' یک branch جدید با نام داده‌شده می‌سازد و بلافاصله شما را به آن branch می‌برد؛ بنابراین می‌توانید بدون تأثیر گذاشتن روی branch اصلی آزمایش کنید."
+    },
+    {
+      "stage": "post",
+      "question": "چرا باید '.pt'، '.pth' و '.safetensors' را به .gitignore اضافه کنید؟",
+      "options": [
+        "آن‌ها فایل‌های checkpoint مدل هستند که برای git بیش از حد بزرگ‌اند و می‌توان دوباره آن‌ها را تولید کرد",
+        "git نمی‌تواند هیچ فایل باینری‌ای را track کند",
+        "آن‌ها فایل‌های test پایتون هستند که نباید commit شوند",
+        "آن‌ها کلیدهای API حساس را در خود دارند"
+      ],
+      "correct": 0,
+      "explanation": "فایل‌های checkpoint مدل (.pt، .pth، .safetensors) اغلب چند گیگابایت حجم دارند. git برای فایل‌های باینری بزرگ طراحی نشده است؛ بنابراین باید آن‌ها را کنار بگذارید و دوباره تولید کنید یا جداگانه ذخیره کنید."
+    }
+  ]
+}
