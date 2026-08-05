@@ -1,20 +1,26 @@
 // Shared language picker in the reference-manual aesthetic: a mono blueprint
 // button that opens a filterable panel of native language names. Reads the
-// registry from window.AIFS_LANGS (site/langs.js). On a lesson page the host
-// sets window.AIFS_onLangChange to re-render in the chosen language; on the
-// home page selecting a language just stores the preference for later.
+// registry from window.AIFS_LANGS (site/langs.js). A page may set
+// window.AIFS_onLangChange to re-render in the chosen language; pages without
+// that hook still persist the preference for the next page.
 (function () {
   'use strict';
   var LANGS = Array.isArray(window.AIFS_LANGS) ? window.AIFS_LANGS : [{ code: 'en', native: 'English' }];
   var RTL = { ar: 1, he: 1, fa: 1, ur: 1 };
 
   function supported(code) {
-    return !!code && code !== 'en' && LANGS.some(function (l) { return l.code === code; });
+    return !!code && LANGS.some(function (l) { return l.code === code; });
+  }
+  function languageBase(code) {
+    return String(code || 'en').toLowerCase().split('-')[0];
+  }
+  function readStored() {
+    try { return localStorage.getItem('lang'); } catch (_) { return null; }
   }
   function current() {
     var q = new URLSearchParams(location.search).get('lang');
     if (supported(q)) return q;
-    var saved = localStorage.getItem('lang');
+    var saved = readStored();
     return supported(saved) ? saved : 'en';
   }
   function nativeOf(code) {
@@ -23,7 +29,9 @@
   }
   function applyDir(code) {
     document.documentElement.lang = code;
-    document.documentElement.dir = RTL[code] ? 'rtl' : 'ltr';
+    document.documentElement.dir = RTL[languageBase(code)] ? 'rtl' : 'ltr';
+    document.documentElement.setAttribute('data-lang', languageBase(code));
+    if (typeof window.AIFS_ensureLanguageFont === 'function') window.AIFS_ensureLanguageFont(code);
   }
   window.AIFS_currentLang = current;
   window.AIFS_applyLangDir = applyDir;
@@ -54,6 +62,16 @@
     var filter = panel.querySelector('.lang-filter');
     var list = panel.querySelector('.lang-list');
 
+    function refreshChrome() {
+      var translate = typeof window.AIFS_langPickerText === 'function'
+        ? window.AIFS_langPickerText
+        : function (_, fallback) { return fallback; };
+      panel.querySelector('.lang-panel-head').textContent = translate('label', 'LANGUAGE');
+      filter.placeholder = translate('filter_placeholder', 'filter…');
+      filter.setAttribute('aria-label', translate('filter_aria', 'Filter languages'));
+    }
+    window.AIFS_refreshLangPicker = refreshChrome;
+
     function renderList(q) {
       q = (q || '').toLowerCase();
       var cur = current();
@@ -77,6 +95,7 @@
     function open() {
       renderList('');
       filter.value = '';
+      refreshChrome();
       panel.hidden = false;
       btn.setAttribute('aria-expanded', 'true');
       filter.focus();
@@ -90,13 +109,18 @@
     function choose(code) {
       var lang = supported(code) ? code : 'en';
       var url = new URL(location.href);
-      if (lang === 'en') { localStorage.removeItem('lang'); url.searchParams.delete('lang'); }
-      else { localStorage.setItem('lang', lang); url.searchParams.set('lang', lang); }
+      try {
+        if (lang === 'en') localStorage.removeItem('lang');
+        else localStorage.setItem('lang', lang);
+      } catch (_) {}
+      if (lang === 'en') url.searchParams.delete('lang');
+      else url.searchParams.set('lang', lang);
       history.replaceState(null, '', url);
       applyDir(lang);
       currentLabel.textContent = nativeOf(lang);
       close();
       if (typeof window.AIFS_onLangChange === 'function') window.AIFS_onLangChange(lang);
+      refreshChrome();
     }
 
     btn.addEventListener('click', function (e) { e.stopPropagation(); toggle(); });
@@ -110,6 +134,7 @@
 
     currentLabel.textContent = nativeOf(current());
     applyDir(current());
+    refreshChrome();
   }
 
   function init() {
