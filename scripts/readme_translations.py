@@ -49,6 +49,7 @@ README_NOTE = {
     "ar": '<p align="center" dir="rtl"><sub>ترجمة مجتمعية. النسخة <a href="../../README.md">الإنجليزية هي المرجعية</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
     "ru": '<p align="center"><sub>Перевод сообщества. Каноничной является <a href="../../README.md">английская версия</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
     "tr": '<p align="center"><sub>Topluluk çevirisi. Esas alınan sürüm <a href="../../README.md">İngilizce</a>dir · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
+    "fa": '<p align="center" dir="rtl"><sub>ترجمه‌ی انجمن کاربران. نسخه‌ی <a href="../../README.md">انگلیسی مرجع است</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
 }
 
 TRANSLATIONS = {
@@ -207,5 +208,18 @@ TRANSLATIONS = {
         H_SHIPS: "Her ders bir şey üretir", H_CONTENTS: "İçindekiler", H_TOOLKIT: "Araç seti",
         H_WHERE: "Nereden başlamalı", H_WHY: "Bu neden şimdi önemli", H_CONTRIB: "Katkıda bulunma",
         H_SPONSOR: "Projeye sponsor olun", H_STAR: "Yıldız geçmişi", H_LICENSE: "Lisans",
+    },
+    "fa": {
+        HERO1: "**همین حالا 84٪ از دانشجویان از ابزارهای AI استفاده می‌کنند، اما تنها 18٪ حس می‌کنند برای استفاده‌ی حرفه‌ای از آن‌ها آماده‌اند.** این دوره‌ی آموزشی همین شکاف را پر می‌کند.",
+        HERO2: "دوره شامل 503 درس در 20 مرحله و حدود 320 ساعت کار است، با Python، TypeScript، Rust و Julia. هر درس یک artifact قابل‌استفاده‌ی دوباره تحویل می‌دهد: یک prompt، یک skill، یک agent، یک سرور MCP. رایگان، متن‌باز، با مجوز MIT.",
+        HERO3: "تو فقط AI را یاد نمی‌گیری؛ خودت می‌سازی‌اش. سرتاسر مسیر. با دست خودت.",
+        WAYS: "سه راه برای شروع. یکی را انتخاب کن.",
+        LICENSE_LINE: "مجوز MIT. هرطور خواستی استفاده کن — fork کن، درس بده، بفروش، منتشر کن. ذکر منبع مایه‌ی خوشحالی است، اما اجباری نیست.",
+        MAINTAINED: "نگهداری‌شده توسط [Rohit Ghumare](https://github.com/rohitg00) و انجمن کاربران.",
+        H_HOW: "این دوره چگونه کار می‌کند", H_CURR: "شکل کلی دوره", H_LESSON: "شکل کلی یک درس",
+        H_START: "شروع کار", H_PREREQ: "پیش‌نیازها", H_BOOK: "خواندن به‌شکل کتاب",
+        H_SHIPS: "هر درس چیزی تحویل می‌دهد", H_CONTENTS: "فهرست مطالب", H_TOOLKIT: "جعبه‌ابزار",
+        H_WHERE: "از کجا شروع کنیم", H_WHY: "چرا همین حالا مهم است", H_CONTRIB: "مشارکت",
+        H_SPONSOR: "حمایت مالی از این کار", H_STAR: "تاریخچه‌ی Star", H_LICENSE: "مجوز",
     },
 }

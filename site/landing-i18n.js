@@ -11,14 +11,6 @@
       'meta.twitter_title': 'AI Engineering from Scratch — فارسی',
       'meta.twitter_description': '503 درس، 20 مرحله. backprop، tokenizer، attention mechanism و agent loop را از صفر بنویس.',
 
-      'nav.contents': 'محتوا',
-      'nav.books': 'کتاب‌ها',
-      'nav.catalog': 'فهرست',
-      'nav.roadmap': 'نقشه‌راه',
-      'nav.glossary': 'واژه‌نامه',
-      'nav.about': 'درباره',
-      'header.search': 'جست‌وجو (⌘K)',
-      'header.theme': 'تغییر پوسته',
 
       'meta.curriculum': 'دوره‌ی آموزشی',
       'meta.open_source': 'متن‌باز · MIT',
@@ -151,9 +143,14 @@
     return Object.prototype.hasOwnProperty.call(obj, key);
   }
 
+  /* Header nav, search and theme strings live in site/chrome-i18n.js because
+     every page renders that chrome; this catalog covers landing content and
+     defers those keys instead of holding a second copy. */
   function text(key, fallback) {
     var strings = LOCALES[locale()] || {};
-    return own(strings, key) ? strings[key] : fallback;
+    if (own(strings, key)) return strings[key];
+    if (typeof window.AIFS_chromeText === 'function') return window.AIFS_chromeText(key, fallback);
+    return fallback;
   }
 
   var HTML_ESCAPES = {
@@ -213,9 +210,15 @@
     return el.getAttribute('data-i18n-default-content');
   }
 
+  // Shared chrome keys belong to site/chrome-i18n.js; skip the elements it owns.
+  function chromeOwned(key) {
+    return typeof window.AIFS_chromeOwns === 'function' && window.AIFS_chromeOwns(key);
+  }
+
   function apply() {
     document.querySelectorAll('[data-i18n-bidi]').forEach(function (el) {
       var key = el.getAttribute('data-i18n-bidi');
+      if (chromeOwned(key)) return;
       var value = text(key, rememberText(el));
       if (locale() === 'fa') {
         el.innerHTML = isolateLatinRuns(value);
@@ -225,20 +228,24 @@
     });
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var key = el.getAttribute('data-i18n');
+      if (chromeOwned(key)) return;
       el.textContent = text(key, rememberText(el));
     });
     document.querySelectorAll('[data-i18n-content]').forEach(function (el) {
       var key = el.getAttribute('data-i18n-content');
+      if (chromeOwned(key)) return;
       el.setAttribute('content', text(key, rememberContent(el)));
     });
     document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
       var key = el.getAttribute('data-i18n-aria');
+      if (chromeOwned(key)) return;
       var fallback = el.getAttribute('aria-label') || '';
       if (!el.hasAttribute('data-i18n-default-aria')) el.setAttribute('data-i18n-default-aria', fallback);
       el.setAttribute('aria-label', text(key, el.getAttribute('data-i18n-default-aria')));
     });
     document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
       var key = el.getAttribute('data-i18n-title');
+      if (chromeOwned(key)) return;
       var fallback = el.getAttribute('title') || '';
       if (!el.hasAttribute('data-i18n-default-title')) el.setAttribute('data-i18n-default-title', fallback);
       el.setAttribute('title', text(key, el.getAttribute('data-i18n-default-title')));

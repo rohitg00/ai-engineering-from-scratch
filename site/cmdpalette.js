@@ -230,7 +230,7 @@
     el.id = PALETTE_ID;
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-modal', 'true');
-    el.setAttribute('aria-label', 'Search lessons and glossary');
+    el.setAttribute('aria-label', cpText('palette.aria', 'Search lessons and glossary'));
 
     el.innerHTML =
       '<div class="cp-backdrop" id="cpBackdrop"></div>' +
@@ -243,27 +243,27 @@
             '<line x1="21" y1="21" x2="16.65" y2="16.65"/>' +
           '</svg>' +
           '<input class="cp-input" id="cpInput" type="search"' +
-          ' placeholder="Search lessons and glossary…"' +
+          ' placeholder="' + escHtml(cpText('palette.placeholder', 'Search lessons and glossary…')) + '"' +
           ' autocomplete="off" autocorrect="off"' +
           ' autocapitalize="off" spellcheck="false"' +
-          ' aria-label="Search" aria-autocomplete="list"' +
+          ' aria-label="' + escHtml(cpText('palette.input_aria', 'Search')) + '" aria-autocomplete="list"' +
           ' aria-controls="cpResults">' +
           '<kbd class="cp-kbd-esc" id="cpKbdEsc">Esc</kbd>' +
         '</div>' +
         '<ul class="cp-results" id="cpResults"' +
-        ' role="listbox" aria-label="Search results"></ul>' +
+        ' role="listbox" aria-label="' + escHtml(cpText('palette.results_aria', 'Search results')) + '"></ul>' +
         '<div class="cp-footer">' +
           '<span class="cp-footer-group">' +
             '<kbd>↑</kbd><kbd>↓</kbd>' +
-            '<span class="cp-footer-label">navigate</span>' +
+            '<span class="cp-footer-label">' + escHtml(cpText('palette.navigate', 'navigate')) + '</span>' +
           '</span>' +
           '<span class="cp-footer-group">' +
             '<kbd>↵</kbd>' +
-            '<span class="cp-footer-label">open</span>' +
+            '<span class="cp-footer-label">' + escHtml(cpText('palette.open', 'open')) + '</span>' +
           '</span>' +
           '<span class="cp-footer-group">' +
             '<kbd>Esc</kbd>' +
-            '<span class="cp-footer-label">close</span>' +
+            '<span class="cp-footer-label">' + escHtml(cpText('palette.close', 'close')) + '</span>' +
           '</span>' +
           '<span class="cp-footer-shortcut">' + shortcutLabel + '</span>' +
         '</div>' +
@@ -279,6 +279,22 @@
     inp.addEventListener('input', _onInput);
     inp.addEventListener('keydown', _onKeyDown);
   }
+
+  // Shared chrome strings live in site/chrome-i18n.js; pages that do not load it
+  // keep the English fallbacks passed here.
+  function cpText(key, fallback) {
+    return typeof window.AIFS_chromeText === 'function'
+      ? window.AIFS_chromeText(key, fallback)
+      : fallback;
+  }
+
+  // The palette DOM is built once with the strings of the language that was
+  // active then. Drop it on a language change so the next open rebuilds it;
+  // rebuilding while it is open would take the focus away mid-typing.
+  document.addEventListener('aifs:langchange', function () {
+    var pal = document.getElementById(PALETTE_ID);
+    if (pal && !_isOpen) pal.parentNode.removeChild(pal);
+  });
 
   function _palEl()   { return document.getElementById(PALETTE_ID); }
   function _inputEl() { return document.getElementById('cpInput'); }
@@ -344,7 +360,7 @@
     if (!query) {
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
-        'Type to search 503 lessons, 499 outputs, and glossary terms' +
+        escHtml(cpText('palette.hint', 'Type to search 503 lessons, 499 outputs, and glossary terms')) +
         '</li>';
       _activeIdx = -1;
       return;
@@ -353,7 +369,7 @@
     if (results.length === 0) {
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
-        'No results for <em>' + escHtml(query) + '</em>' +
+        escHtml(cpText('palette.no_results', 'No results for')) + ' <em>' + escHtml(query) + '</em>' +
         '</li>';
       _activeIdx = -1;
       return;

@@ -1,4 +1,4 @@
-<p align="center"><sub>Topluluk çevirisi. Esas alınan sürüm <a href="../../README.md">İngilizce</a>dir · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
+<p align="center" dir="rtl"><sub>ترجمه‌ی انجمن کاربران. نسخه‌ی <a href="../../README.md">انگلیسی مرجع است</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
 <p align="center">
   <img src="../../assets/banner.svg" alt="AI Engineering from Scratch — reference manual banner" width="100%">
 </p>
@@ -35,11 +35,11 @@
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-> **Öğrencilerin %84'ü zaten yapay zeka araçlarını kullanıyor, ama yalnızca %18'i bunları profesyonelce kullanmaya hazır hissediyor.** Bu müfredat bu boşluğu kapatır.
+> **همین حالا 84٪ از دانشجویان از ابزارهای AI استفاده می‌کنند، اما تنها 18٪ حس می‌کنند برای استفاده‌ی حرفه‌ای از آن‌ها آماده‌اند.** این دوره‌ی آموزشی همین شکاف را پر می‌کند.
 >
-> 503 ders. 20 aşama. ~320 saat. Python, TypeScript, Rust, Julia. Her ders yeniden kullanılabilir bir çıktı verir: bir istem, bir beceri, bir ajan, bir MCP sunucusu. Ücretsiz, açık kaynak, MIT.
+> دوره شامل 503 درس در 20 مرحله و حدود 320 ساعت کار است، با Python، TypeScript، Rust و Julia. هر درس یک artifact قابل‌استفاده‌ی دوباره تحویل می‌دهد: یک prompt، یک skill، یک agent، یک سرور MCP. رایگان، متن‌باز، با مجوز MIT.
 >
-> Yapay zekayı yalnızca öğrenmezsiniz. Onu kendiniz kurarsınız. Baştan sona. Elle.
+> تو فقط AI را یاد نمی‌گیری؛ خودت می‌سازی‌اش. سرتاسر مسیر. با دست خودت.
 
 <!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
 <p align="center"><sub><b>150,639</b> readers &nbsp;·&nbsp; <b>241,669</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-06-07</sub></p>
@@ -70,7 +70,7 @@ reads a `SKILL.md` directory — the installer asks which agents to set up. No
 agent? Read the same lessons at
 [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## Nasıl çalışır
+## این دوره چگونه کار می‌کند
 
 Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a
 flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't
@@ -90,7 +90,7 @@ Free, open source, and built to run on your own laptop.
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Müfredatın yapısı
+## شکل کلی دوره
 
 Twenty phases stack on top of each other. Math is the floor. Agents and production are the roof.
 Skip ahead if you already know the lower layers, but don't skip and then wonder why something at
@@ -126,7 +126,7 @@ flowchart TB
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Bir dersin yapısı
+## شکل کلی یک درس
 
 Each lesson lives in its own folder, with the same structure across the entire curriculum:
 
@@ -152,9 +152,9 @@ flowchart LR
   U --> S["SHIP IT<br/><sub>prompt · skill · agent · MCP</sub>"]
 ```
 
-## Başlarken
+## شروع کار
 
-Başlamanın üç yolu. Birini seçin.
+سه راه برای شروع. یکی را انتخاب کن.
 
 **Option A — learn in your terminal *(recommended)*.** Install the learning
 skills into any agent and let the course drive itself:
@@ -187,7 +187,7 @@ python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 Cloning also auto-loads the learning skills in Claude Code, and gives every
 lesson's code to `/learn` for real execution instead of read-along.
 
-### Ön koşullar
+### پیش‌نیازها
 
 - You can write code (any language; Python helps).
 - You want to understand how AI **actually works**, not just call APIs.
@@ -206,7 +206,7 @@ lesson's code to `/learn` for real execution instead of read-along.
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Kitap olarak okuyun
+## خواندن به‌شکل کتاب
 
 The whole course compiles into a six-volume book series. EPUB and PDF are built by CI from the same lesson sources and attached to every [GitHub release](https://github.com/rohitg00/ai-engineering-from-scratch/releases); the links below always resolve to the newest release. Volume numbers index the series, not versions: each copy carries a dated edition stamp, and older editions stay downloadable from their release.
 
@@ -225,7 +225,7 @@ The book is the snapshot; this repository is the living edition. Every chapter e
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Her ders bir şey üretir
+## هر درس چیزی تحویل می‌دهد
 
 Other curricula end with *"congratulations, you learned X."* Each lesson here ends with a
 **reusable tool** you can install or paste into your daily workflow.
@@ -307,7 +307,7 @@ the agent went wrong and explain why...
 
 <a id="contents"></a>
 
-## İçindekiler
+## فهرست مطالب
 
 Twenty phases. Click any phase to expand its lesson list.
 
@@ -1003,7 +1003,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Araç seti
+## جعبه‌ابزار
 
 Every lesson produces a reusable artifact. By the end you have:
 
@@ -1128,7 +1128,7 @@ the default skip-list (`twitter.com`, `x.com`, `linkedin.com`,
 `instagram.com`, `medium.com` — domains that aggressively block automated
 HEAD/GET).
 
-## Nereden başlamalı
+## از کجا شروع کنیم
 
 | Background | Start at | Estimated time |
 |---|---|---|
@@ -1142,7 +1142,7 @@ HEAD/GET).
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Bu neden şimdi önemli
+## چرا همین حالا مهم است
 
 <table>
 <tr>
@@ -1181,7 +1181,7 @@ HEAD/GET).
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Katkıda bulunma
+## مشارکت
 
 | Goal | Read |
 |---|---|
@@ -1209,7 +1209,7 @@ relative links inside lesson docs.
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Projeye sponsor olun
+## حمایت مالی از این کار
 
 Free, MIT-licensed, 503 lessons. The curriculum is maintained on sponsorship alone. Cash only.
 
@@ -1239,7 +1239,7 @@ Sign up via [GitHub Sponsors](https://github.com/sponsors/rohitg00).
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Yıldız geçmişi
+## تاریخچه‌ی Star
 
 <a href="https://star-history.com/#rohitg00/ai-engineering-from-scratch&Date">
   <picture>
@@ -1250,11 +1250,11 @@ Sign up via [GitHub Sponsors](https://github.com/sponsors/rohitg00).
 
 If this manual helped you, star the repo. It keeps the project alive.
 
-## Lisans
+## مجوز
 
-MIT. İstediğiniz gibi kullanın: çatallayın, öğretin, satın, yayımlayın. Atıf makbule geçer ama zorunlu değildir.
+مجوز MIT. هرطور خواستی استفاده کن — fork کن، درس بده، بفروش، منتشر کن. ذکر منبع مایه‌ی خوشحالی است، اما اجباری نیست.
 
-[Rohit Ghumare](https://github.com/rohitg00) ve topluluk tarafından sürdürülmektedir.
+نگهداری‌شده توسط [Rohit Ghumare](https://github.com/rohitg00) و انجمن کاربران.
 
 <sub>
   <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;

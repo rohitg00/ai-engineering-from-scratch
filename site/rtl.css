@@ -525,6 +525,22 @@ html[dir="rtl"] .masthead-install-caption {
 
 /* --- catalog, glossary and roadmap ------------------------------------- */
 
+/* These two surfaces stay English until their content is translated: the search
+   placeholder and the "12 of 83 terms" counter. Resolve each from its own first
+   strong character so the trailing ellipsis and the counts keep their English
+   order instead of being reordered into the surrounding RTL page. */
+html[dir="rtl"] :is(.glossary-search, .catalog-search,
+  .glossary-count, .catalog-count) {
+  unicode-bidi: plaintext;
+  text-align: start;
+}
+
+/* The placeholder is its own text run and does not inherit the input's
+   plaintext resolution, so the trailing ellipsis would move to the left. */
+html[dir="rtl"] :is(.glossary-search, .catalog-search)::placeholder {
+  unicode-bidi: plaintext;
+}
+
 html[dir="rtl"] .catalog-table th .sort-arrow {
   margin-left: 0;
   margin-right: 4px;

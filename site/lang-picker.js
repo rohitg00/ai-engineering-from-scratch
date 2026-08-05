@@ -136,6 +136,11 @@
       currentLabel.textContent = nativeOf(lang);
       close();
       if (typeof window.AIFS_onLangChange === 'function') window.AIFS_onLangChange(lang);
+      // Broadcast as well, so several listeners (shared chrome, page content)
+      // can react without competing for the single AIFS_onLangChange slot.
+      try {
+        document.dispatchEvent(new CustomEvent('aifs:langchange', { detail: lang }));
+      } catch (_) {}
       refreshChrome();
     }
 
