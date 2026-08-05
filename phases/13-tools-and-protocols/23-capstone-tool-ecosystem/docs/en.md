@@ -106,6 +106,10 @@ Users deploy with `docker compose up`. Claude Code, Cursor, Codex, and opencode 
 | 20 | Routing gateway for the LLM layer |
 | 21 | SKILL.md + AGENTS.md packaging |
 
+```figure
+t3-capstone-chain
+```
+
 ## Use It
 
 `code/main.py` stitches the previous lessons' patterns into one runnable demo. All stdlib, all in-process so you can read it end to end. It runs the full flow for the research-and-report scenario: handshake with gateway, OAuth 2.1 simulated, tools/list merged, generate_report as a task, A2A call to writer, ui:// resource returned, OTel spans emitted.

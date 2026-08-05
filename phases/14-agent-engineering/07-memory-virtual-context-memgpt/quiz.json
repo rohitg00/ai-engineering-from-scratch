@@ -1,37 +1,37 @@
 {
   "lesson": "07-memory-virtual-context-memgpt",
-  "title": "Memory: Virtual Context and MemGPT",
+  "title": "Agent Memory — Virtual Context and Memory Paging",
   "questions": [
     {
       "stage": "pre",
       "question": "What OS analogy does MemGPT build on?",
       "options": [
-        "Processes and threads",
         "Virtual memory: main context as RAM, external store as disk, memory tools as page in and out",
+        "Processes and threads",
         "Network sockets",
         "File descriptors"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "MemGPT maps prompt to RAM, external store to disk, and memory tools to page-fault-style transfers."
     },
     {
       "stage": "pre",
       "question": "Why do bigger context windows not fully solve memory?",
       "options": [
-        "Providers cap them at 4k tokens",
-        "Overflow, dilution of attention, and lack of cross-session persistence still bite even with 128k windows",
+        "The model refuses long input",
         "Long context costs nothing",
-        "The model refuses long input"
+        "Overflow, dilution of attention, and lack of cross-session persistence still bite even with 128k windows",
+        "Providers cap them at 4k tokens"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Mem0 measured 128k-window baselines still missing facts a 4k agent with external memory catches; overflow, dilution, and persistence remain."
     },
     {
       "stage": "check",
       "question": "Which of these is NOT one of MemGPT's canonical memory tools?",
       "options": [
-        "core_memory_append",
         "archival_memory_search",
+        "core_memory_append",
         "conversation_search",
         "gradient_memory_update"
       ],
@@ -54,36 +54,36 @@
       "stage": "check",
       "question": "Which production system did MemGPT evolve into in 2024?",
       "options": [
+        "Pinecone",
         "Mem0",
-        "Letta",
         "Zep",
-        "Pinecone"
+        "Letta"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "MemGPT became Letta in September 2024; the research repo cpacker/MemGPT still exists as the origin."
     },
     {
       "stage": "post",
       "question": "What is memory poisoning in this context?",
       "options": [
-        "A bug that corrupts vector indices",
-        "An attacker's content gets stored as a memory note and is re-ingested on future recalls",
         "Reading from disk when RAM is available",
-        "Embedding model version drift"
+        "Embedding model version drift",
+        "A bug that corrupts vector indices",
+        "An attacker's content gets stored as a memory note and is re-ingested on future recalls"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "External memory is retrieved text; if attacker-reachable content lands in a memory note the agent re-ingests it next session."
     },
     {
       "stage": "post",
       "question": "Why does the lesson say production memory systems are MemGPT variants?",
       "options": [
-        "They use the same vector DB",
         "Letta, Mem0, Assistants threads, and Claude Agent SDK all run the two-tier (or more) paged-memory pattern; differences are operational shape",
-        "MemGPT owns the trademark",
-        "They share weights"
+        "They share weights",
+        "They use the same vector DB",
+        "MemGPT owns the trademark"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Pick by operational shape, not pattern; all share the MemGPT page in/out skeleton."
     }
   ]

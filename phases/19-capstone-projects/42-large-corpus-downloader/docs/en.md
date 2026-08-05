@@ -59,6 +59,10 @@ LSH then groups the `k` components into `b` bands of `r` rows each, where `k = b
 
 The downloader's only durable output is the manifest. The manifest holds, per shard, the URL, the decompressed byte count, the document count, the unique document count after dedup, and the sha256 of the final shard file. Downstream tokenization reads the manifest, not the directory listing. If a shard is missing or its sha256 is wrong, the manifest tells the next stage to refuse to start. The manifest is the deciding edge between "the data is downloaded" and "the data is downloaded and verifiable".
 
+```figure
+cap-corpus-downloader
+```
+
 ## Build It
 
 `code/main.py` implements:

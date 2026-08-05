@@ -48,6 +48,10 @@ Hallucinations drop sharply. Requires more compute but is auditable.
 
 Production KGs usually mix: open IE for discovery, then canonicalize relations onto a closed ontology before merging into the main graph.
 
+```figure
+relation-triples
+```
+
 ## Build It
 
 ### Step 1: pattern-based extraction

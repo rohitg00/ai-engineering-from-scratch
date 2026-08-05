@@ -1,6 +1,6 @@
-# LangGraph: Stateful Graphs and Durable Execution
+# Stateful Graph Orchestration — Durable Execution and Checkpoints
 
-> LangGraph is the 2026 reference for low-level stateful orchestration. Agent is a state machine; nodes are functions; edges are transitions; state is immutable and checkpointed after every step. Resume from any failure exactly where it left off.
+> Agent is a state machine; nodes are functions; edges are transitions; state is checkpointed after each node. Resume from any failure at the last successful checkpoint. LangGraph is the 2026 reference for this model of low-level stateful orchestration.
 
 **Type:** Learn + Build
 **Languages:** Python (stdlib)
@@ -9,10 +9,10 @@
 
 ## Learning Objectives
 
-- Describe LangGraph's core model: state machine with immutable state, function nodes, conditional edges, and post-step checkpoints.
+- Describe LangGraph's core model: state machine with typed state, function nodes, conditional edges, and post-node checkpoints.
 - Name the four capabilities the docs highlight: durable execution, streaming, human-in-the-loop, comprehensive memory.
 - Explain the three orchestration topologies LangGraph supports: supervisor, peer-to-peer (swarm), hierarchical (nested subgraphs).
-- Implement a stdlib state graph with immutable state, conditional edges, and a checkpoint/resume cycle.
+- Implement a stdlib state graph with typed state, conditional edges, and a checkpoint/resume cycle.
 
 ## The Problem
 
@@ -62,6 +62,10 @@ Short-term (within a run — conversation history in state) and long-term (acros
 - **Checkpoints too small.** Only checkpointing conversation turns leaves tool state and memory writes unrecoverable. Full state must serialize.
 - **Non-deterministic nodes.** Resume assumes node inputs produce the same state update. Random seeds, wall-clock, external APIs must be captured.
 - **Over-use of conditional edges.** A graph with every edge conditional is a state machine that cannot be reasoned about. Prefer linear chains with occasional branches.
+
+```figure
+langgraph-state
+```
 
 ## Build It
 

@@ -255,6 +255,10 @@ PKCE alone does not stop mix-up, because the client hands its `code_verifier` to
 - **Registration token theft.** A leaked `registration_access_token` lets the attacker rewrite redirect URIs. Hash these at rest; require the client to present the cleartext on every update; rotate on suspicion.
 - **`iss` not pinned.** A validator that accepts any `iss` lets an attacker stand up their own authorization server, register a client for the target audience, and issue tokens. The protected-resource metadata's `authorization_servers` list is the allow-list; enforce it.
 
+```figure
+t3-jwks-rotate
+```
+
 ## Use It
 
 `code/main.py` walks the full production flow with stdlib Python and three roles — `AuthorizationServer`, `ResourceServer`, and `Client`. The flow:

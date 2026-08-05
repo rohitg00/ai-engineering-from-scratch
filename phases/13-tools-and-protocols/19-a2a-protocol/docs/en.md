@@ -136,6 +136,10 @@ Rationale: A2A enables competitors to collaborate without revealing internals. A
 
 Use MCP when you want to invoke a specific tool. Use A2A when you want to delegate a whole task to another agent. Many production systems use both: an agent uses MCP for its tool layer and A2A for its collaboration layer.
 
+```figure
+a2a-task-lifecycle
+```
+
 ## Use It
 
 `code/main.py` implements a minimal A2A harness: a research agent publishes its card, a writer agent receives a `tasks/send` with parts including a PDF and a text instruction, transitions through working → input_required → working → completed, and returns a text artifact. All stdlib; uses an in-memory transport to focus on message shapes.

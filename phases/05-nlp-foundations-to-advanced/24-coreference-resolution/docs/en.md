@@ -50,6 +50,10 @@ Why it matters in 2026:
 - Zero anaphora in languages like Chinese and Japanese.
 - Cataphora (pronoun before referent): "When **she** walked in, Mary smiled."
 
+```figure
+coref-links
+```
+
 ## Build It
 
 ### Step 1: pretrained neural coreference (AllenNLP / spaCy-experimental)

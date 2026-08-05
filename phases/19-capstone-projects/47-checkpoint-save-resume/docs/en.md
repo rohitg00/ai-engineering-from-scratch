@@ -80,6 +80,10 @@ The index records the shard count, the sha256 of each shard, and the sha256 of t
 
 A resume that snaps to the start of the next epoch wastes anywhere from minutes to a day. The fix is `(epoch, batch_in_epoch)` plus the RNG state. After load, the training loop fast-forwards the random number generator past the batches already consumed in the current epoch and continues from `batch_in_epoch`. The lesson code does this exactly; the assertion is that the loss trajectory after resume matches the uninterrupted baseline within 1e-4.
 
+```figure
+cc-atomic-checkpoint
+```
+
 ## Build It
 
 `code/main.py` provides four primitives and a demo driver.

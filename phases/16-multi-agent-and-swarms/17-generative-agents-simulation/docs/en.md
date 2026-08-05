@@ -86,6 +86,10 @@ The architecture is the reference. Extensions swap components (vector store for 
 
 Smallville is the proof of concept that multi-agent emergence is cheap when the components are right. The architecture has now been replicated on open-source models (smaller LLMs lose believability gracefully, not sharply). Any production system that needs **emergent social behavior** uses this shape. Any system that needs **tight task execution** uses the supervisor / roles / primitives patterns from earlier in this phase.
 
+```figure
+a5-memory-reflection
+```
+
 ## Build It
 
 `code/main.py` implements the three components in stdlib Python with scripted agent policies (no real LLM). The demo reproduces the Valentine's-party emergence in miniature:

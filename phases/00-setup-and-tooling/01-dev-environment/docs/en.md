@@ -33,6 +33,10 @@ graph TD
 
 We install bottom-up. Each layer depends on the one below it.
 
+```figure
+s0-env-stack
+```
+
 ## Build It
 
 ### Step 1: System Foundation
@@ -92,6 +96,14 @@ npm install -g pnpm
 node -e "console.log('Node', process.version)"
 ```
 
+**macOS / Apple Silicon (M1/M2/M3/M4):** If the installer stops with `Error: Cannot install under Rosetta 2 in ARM default prefix (/opt/homebrew)`, your terminal is running under Rosetta 2 (`arch` prints `i386`) while Homebrew is a native arm64 build. Install fnm forcing arm64, wire it into your shell, then rerun the commands above from `fnm install 22`:
+
+```bash
+arch -arm64 brew install fnm
+echo 'eval "$(fnm env --use-on-cd)"' >> ~/.zshrc
+source ~/.zshrc
+```
+
 ### Step 4: Rust
 
 For performance-critical lessons (inference, systems).
@@ -115,17 +127,27 @@ julia -e 'println("Julia ", VERSION)'
 
 ### Step 6: GPU Setup (If You Have One)
 
+**NVIDIA (Linux / Windows):**
+
 ```bash
-# NVIDIA
 nvidia-smi
 
 # Install PyTorch with CUDA
 uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```
 
+**macOS / Apple Silicon (M1/M2/M3/M4):** There is no CUDA on a Mac — that's expected, not a failure. Do **not** pass `--index-url .../cuXXX` (those wheels are Linux/Windows only, so the install fails). Install the plain build, which includes Apple's MPS (Metal) GPU backend:
+
+```bash
+uv pip install torch torchvision torchaudio
+```
+
+Verify (works on any platform):
+
 ```python
 import torch
-print(f"CUDA available: {torch.cuda.is_available()}")
+print(f"CUDA available: {torch.cuda.is_available()}")           # False on macOS — expected
+print(f"MPS available:  {torch.backends.mps.is_available()}")   # True on Apple Silicon
 if torch.cuda.is_available():
     print(f"GPU: {torch.cuda.get_device_name(0)}")
 ```

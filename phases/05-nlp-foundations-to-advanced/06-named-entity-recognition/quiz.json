@@ -6,22 +6,22 @@
       "stage": "pre",
       "question": "What is BIO tagging?",
       "options": [
-        "Per-token labels: B-TYPE for entity start, I-TYPE for inside, O for outside",
+        "A tree representation of entities",
         "A binary entity vs non-entity scheme",
-        "A tokenization style",
-        "A tree representation of entities"
+        "Per-token labels: B-TYPE for entity start, I-TYPE for inside, O for outside",
+        "A tokenization style"
       ],
-      "correct": 0,
+      "correct": 2,
       "explanation": "BIO turns span extraction into token classification with B/I/O prefixes."
     },
     {
       "stage": "pre",
       "question": "Why are rule-based gazetteers brittle in production NER?",
       "options": [
-        "They require GPUs",
         "They are slow",
+        "They cannot handle multi-token entities",
         "They have zero coverage on new entities and cannot disambiguate (e.g. Apple fruit vs company)",
-        "They cannot handle multi-token entities"
+        "They require GPUs"
       ],
       "correct": 2,
       "explanation": "Gazetteers can match known strings but cannot disambiguate sense or generalize to unseen names."
@@ -31,11 +31,11 @@
       "question": "What is the key advantage of a CRF over an HMM for NER?",
       "options": [
         "CRFs avoid the Viterbi algorithm",
-        "CRFs never need training data",
         "CRFs are discriminative and can mix arbitrary features (shape, capitalization, neighbors)",
-        "CRFs are faster"
+        "CRFs are faster",
+        "CRFs never need training data"
       ],
-      "correct": 2,
+      "correct": 1,
       "explanation": "CRFs are discriminative and let you condition on rich, overlapping features."
     },
     {
@@ -43,56 +43,56 @@
       "question": "In a BiLSTM-CRF architecture, what role does the CRF layer play?",
       "options": [
         "Performs tokenization",
-        "Enforces valid BIO tag sequences by modeling tag-to-tag transitions on top of LSTM emissions",
+        "Replaces embeddings",
         "Pretrains the LSTM",
-        "Replaces embeddings"
+        "Enforces valid BIO tag sequences by modeling tag-to-tag transitions on top of LSTM emissions"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "The CRF on top of LSTM features models inter-label dependencies and rules out illegal sequences."
     },
     {
       "stage": "check",
       "question": "Why must NER be evaluated with entity-level F1, not token-level F1?",
       "options": [
-        "Entity-level F1 is easier to compute",
         "Predicted spans must match true spans exactly; token-level F1 overstates accuracy by counting partial matches",
+        "Entity-level F1 is required by HuggingFace",
         "Token-level F1 cannot handle BIO",
-        "Entity-level F1 is required by HuggingFace"
+        "Entity-level F1 is easier to compute"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Span exact-match is the meaningful metric; token-level F1 inflates scores via partial overlap."
     },
     {
       "stage": "post",
       "question": "What does aggregation_strategy='simple' do in the HuggingFace NER pipeline?",
       "options": [
-        "Lowercases the output",
-        "Skips tokenization",
+        "Returns only the most confident entity",
         "Merges contiguous B-X and I-X tokens into a single span",
-        "Returns only the most confident entity"
+        "Lowercases the output",
+        "Skips tokenization"
       ],
-      "correct": 2,
+      "correct": 1,
       "explanation": "It merges contiguous BIO tokens of the same type into span-level entities."
     },
     {
       "stage": "post",
       "question": "Why does standard BIO fail on nested entities?",
       "options": [
-        "BIO requires a transformer",
         "BIO is a flat per-token scheme and cannot express two overlapping spans of different types",
+        "BIO requires a transformer",
         "BIO cannot represent multi-token entities",
         "BIO drops the type label"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "BIO assigns one label per token; nested spans need multi-pass or span-based models."
     },
     {
       "stage": "post",
       "question": "When does classical NER (CRF or BiLSTM-CRF) still beat an LLM in 2026?",
       "options": [
+        "On open-domain narrative",
         "On nested entities",
         "Whenever the input is in English",
-        "On open-domain narrative",
         "Under tight latency budgets, abundant labels, stable ontologies, or non-generative regulatory constraints"
       ],
       "correct": 3,

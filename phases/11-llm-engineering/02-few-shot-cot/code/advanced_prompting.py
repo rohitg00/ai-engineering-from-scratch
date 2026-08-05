@@ -508,7 +508,7 @@ TEST_QUESTIONS = [
 
 if __name__ == "__main__":
     client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "your-api-key"))
-    model = "gpt-4o"
+    model = os.environ.get("LLM_MODEL", "gpt-4o")
 
     print("=" * 60)
     print("ADVANCED PROMPTING PIPELINE")

@@ -83,6 +83,10 @@ A classifier layer slots below the constitutional layer (Lesson 17), above the r
 
 No single layer is sufficient. The layers cover different attack classes.
 
+```figure
+a5-guard-sieve
+```
+
 ## Use It
 
 `code/main.py` simulates a toy classifier with a 6-category taxonomy over input-turn text. The same text is passed through raw, with emoji smuggling, and with homoglyph substitution; the classifier's hit rate drops in the ways the Huang et al. paper documents. The driver also shows how output rails would reject an output even when the input was accepted.

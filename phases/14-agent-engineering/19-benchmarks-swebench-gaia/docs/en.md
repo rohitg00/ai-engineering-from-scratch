@@ -76,6 +76,10 @@ GAIA is what you run to measure "generalist capability." Do not confuse with cod
 - **Contaminated claims.** Reporting SWE-bench without mentioning Verified or SWE-bench+ is misleading.
 - **Benchmark-as-development-target.** Optimizing for the benchmark diverges from production usefulness.
 
+```figure
+ae-swebench-gate
+```
+
 ## Build It
 
 `code/main.py` implements a toy SWE-bench-like harness:

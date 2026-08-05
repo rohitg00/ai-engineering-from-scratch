@@ -7,44 +7,44 @@
       "question": "Why cannot the builder reliably grade its own work?",
       "options": [
         "It runs out of tokens",
+        "The model rejects self-grading",
         "Acceptance is necessary but not sufficient; problem-fit, scope discipline, documented assumptions, and handoff readiness need a different role with different inputs",
-        "It loses authentication",
-        "The model rejects self-grading"
+        "It loses authentication"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "The gap between builder and reviewer is where reliability lives; acceptance only proves a weaker version."
     },
     {
       "stage": "pre",
       "question": "Which is NOT one of the five rubric dimensions?",
       "options": [
+        "Inference latency",
         "Problem fit",
         "Scope discipline",
-        "Verification quality",
-        "Inference latency"
+        "Verification quality"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": "The five are problem fit, scope discipline, assumptions, verification quality, handoff readiness."
     },
     {
       "stage": "check",
       "question": "What does role separation require?",
       "options": [
-        "A different model",
         "A different system prompt and different inputs; the same model can play both roles if posture changes and the reviewer has no write access to the diff",
-        "Different physical hardware",
-        "A new account"
+        "A different model",
+        "A new account",
+        "Different physical hardware"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Discipline is in posture and inputs, not in the model identity."
     },
     {
       "stage": "check",
       "question": "What does Cloudflare's 2026 review architecture look like?",
       "options": [
-        "One big reviewer",
-        "Up to seven specialist reviewers in parallel under a Review Coordinator that deduplicates findings; top-tier model only for the coordinator, cheaper tiers for specialists",
         "Round-robin two reviewers",
+        "Up to seven specialist reviewers in parallel under a Review Coordinator that deduplicates findings; top-tier model only for the coordinator, cheaper tiers for specialists",
+        "One big reviewer",
         "Single sequential LLM"
       ],
       "correct": 1,
@@ -54,12 +54,12 @@
       "stage": "check",
       "question": "Which of these is NOT one of the four LLM-judge biases the lesson lists?",
       "options": [
-        "Position bias (A,B vs B,A ordering inconsistency)",
+        "Vector locality",
         "Verbosity bias (longer outputs score higher)",
         "Self-preference (same model family)",
-        "Vector locality"
+        "Position bias (A,B vs B,A ordering inconsistency)"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": "The four are position, verbosity, self-preference, authority; vector locality is not one of them."
     },
     {
@@ -79,11 +79,11 @@
       "question": "Where does the reviewer's report integrate with the rest of the workbench?",
       "options": [
         "It replaces verification",
+        "It only goes to the manager",
         "It bundles into the handoff packet (Lesson 40); human review starts from the report, not from a blank page",
-        "It overrides the gate",
-        "It only goes to the manager"
+        "It overrides the gate"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "The review report feeds the handoff so the next session and the human reviewer start from a written verdict."
     }
   ]

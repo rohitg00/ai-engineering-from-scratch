@@ -49,6 +49,10 @@ Each state corresponds to a tool call. Each tool call passes through the gate ch
 
 The fixture bug is an off-by-one in `fizz.py`. The deterministic policy detects the bug from the test failure message via a regex and emits the corrected file. Replacing the policy with an LLM does not change the harness contract.
 
+```figure
+cg-harness-weave
+```
+
 ## Architecture
 
 ```mermaid

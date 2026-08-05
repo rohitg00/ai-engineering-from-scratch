@@ -8,10 +8,10 @@
       "options": [
         "It has no punctuation",
         "It mixes English and French",
-        "Negation flips meaning, but bag of words discards the link between 'not' and 'great'",
-        "It contains too few tokens"
+        "It contains too few tokens",
+        "Negation flips meaning, but bag of words discards the link between 'not' and 'great'"
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": "BoW cannot bind 'not' to the word it negates, so the classifier misses the polarity flip."
     },
     {
@@ -19,59 +19,59 @@
       "question": "What two steps make up classical sentiment analysis?",
       "options": [
         "Translate, then classify",
-        "Embed, then cluster",
         "Represent (vectorize text) and classify (linear model on the vector)",
-        "Search, then rank"
+        "Search, then rank",
+        "Embed, then cluster"
       ],
-      "correct": 2,
+      "correct": 1,
       "explanation": "Classical sentiment is feature extraction followed by a linear classifier."
     },
     {
       "stage": "check",
       "question": "Why does Naive Bayes work despite its 'naive' independence assumption?",
       "options": [
-        "With sparse text features and moderate data the classifier mostly cares which side each word leans toward, not exact joint probabilities",
-        "Naive Bayes secretly learns interactions",
+        "Laplace smoothing fixes dependence",
         "The assumption is actually true for text",
-        "Laplace smoothing fixes dependence"
+        "Naive Bayes secretly learns interactions",
+        "With sparse text features and moderate data the classifier mostly cares which side each word leans toward, not exact joint probabilities"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": "Even with wrong independence, leaning-direction information per word is enough to classify well."
     },
     {
       "stage": "check",
       "question": "Why include 'NOT_' prefixed tokens during preprocessing?",
       "options": [
-        "To normalize case",
         "To stem the words",
-        "To turn 'good' versus 'NOT_good' into separate features that the classifier can weight oppositely",
-        "To shrink the vocabulary"
+        "To shrink the vocabulary",
+        "To normalize case",
+        "To turn 'good' versus 'NOT_good' into separate features that the classifier can weight oppositely"
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": "Negation scoping splits negated forms into distinct features so a BoW classifier can model the flip."
     },
     {
       "stage": "check",
       "question": "Why is removing stopwords risky for sentiment analysis?",
       "options": [
-        "Negation words ('not', 'no', 'never') are usually treated as stopwords but carry sentiment signal",
-        "Stopword lists are too long",
+        "Stopword removal breaks tokenization",
         "It increases sparsity",
-        "Stopword removal breaks tokenization"
+        "Stopword lists are too long",
+        "Negation words ('not', 'no', 'never') are usually treated as stopwords but carry sentiment signal"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": "Default stopword lists drop negations and similar carriers of sentiment."
     },
     {
       "stage": "post",
       "question": "Which metric should you report when sentiment classes are imbalanced?",
       "options": [
-        "Macro-F1 (mean of per-class F1s, equal-weighted)",
         "Accuracy alone",
+        "Macro-F1 (mean of per-class F1s, equal-weighted)",
         "Mean squared error",
         "Micro-F1 only"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": "Macro-F1 forces the minority class to count; accuracy or micro-F1 hides it."
     },
     {
@@ -79,23 +79,23 @@
       "question": "When should you skip classical models and reach for a transformer for sentiment?",
       "options": [
         "When you have under 100 examples",
+        "Sarcasm detection, long shifting documents, aspect-based sentiment, or low-resource languages",
         "When latency is critical",
-        "When you need explainability",
-        "Sarcasm detection, long shifting documents, aspect-based sentiment, or low-resource languages"
+        "When you need explainability"
       ],
-      "correct": 3,
+      "correct": 1,
       "explanation": "Sarcasm, aspect-based, and cross-lingual sentiment exceed classical BoW models' reach."
     },
     {
       "stage": "post",
       "question": "Why is L2 regularization important for logistic regression on text?",
       "options": [
-        "Required to compute gradients",
-        "Avoids ReLU dead units",
         "Speeds up matrix inversion",
-        "Sparse high-dimensional text features otherwise let the model memorize training examples"
+        "Avoids ReLU dead units",
+        "Sparse high-dimensional text features otherwise let the model memorize training examples",
+        "Required to compute gradients"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": "L2 prevents overfitting in the sparse-feature, high-dimensional regime of text."
     }
   ]

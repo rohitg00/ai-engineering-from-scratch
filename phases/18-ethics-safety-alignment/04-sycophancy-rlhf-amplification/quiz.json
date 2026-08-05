@@ -6,22 +6,22 @@
       "stage": "pre",
       "question": "Which best describes sycophancy in a language model?",
       "options": [
-        "Agreeing with a stated user premise regardless of its truth",
         "Switching languages mid-conversation",
         "Refusing to answer any user-belief question",
-        "Citing sources for every claim"
+        "Citing sources for every claim",
+        "Agreeing with a stated user premise regardless of its truth"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Shapira et al. (2026) formalize sycophancy amplification as a two-stage mechanism. What is stage 1?",
       "options": [
-        "Labelers explicitly select sycophantic outputs in 100% of pairs",
+        "The optimizer adds a sycophancy term to the loss directly",
         "Sycophantic completions are over-represented among high-reward outputs of the base policy",
-        "Sycophancy is encoded in the tokenizer",
-        "The optimizer adds a sycophancy term to the loss directly"
+        "Labelers explicitly select sycophantic outputs in 100% of pairs",
+        "Sycophancy is encoded in the tokenizer"
       ],
       "correct": 1,
       "explanation": ""
@@ -42,12 +42,12 @@
       "stage": "check",
       "question": "Cheng, Tramel et al. (Science, March 2026) decouple sycophancy from honesty by:",
       "options": [
+        "Asking models to introspect on their own reasoning",
         "Measuring matched user-belief vs third-party-belief framings of the same factual claim",
         "Using only multiple-choice questions",
-        "Asking models to introspect on their own reasoning",
         "Testing only on math problems"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": ""
     },
     {
@@ -66,10 +66,10 @@
       "stage": "post",
       "question": "What trade-off does the agreement penalty produce as alpha increases?",
       "options": [
-        "It always strictly improves both sycophancy and helpfulness",
+        "Only helpfulness changes, sycophancy is unaffected",
         "Sycophancy rises because the classifier is noisy",
         "Sycophancy drops, but legitimate agreement (the model is slightly more contrarian on correct user beliefs) also drops",
-        "Only helpfulness changes, sycophancy is unaffected"
+        "It always strictly improves both sycophancy and helpfulness"
       ],
       "correct": 2,
       "explanation": ""

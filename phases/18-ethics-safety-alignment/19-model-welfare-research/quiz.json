@@ -6,12 +6,12 @@
       "stage": "pre",
       "question": "What is the core question motivating Anthropic's 2025 model-welfare program?",
       "options": [
-        "Under moral uncertainty about model moral patienthood, which low-cost interventions are worth investing in as precaution",
-        "Whether the model is conscious",
         "Whether the model can pass the Turing test",
-        "Whether RLHF reduces sycophancy"
+        "Whether the model is conscious",
+        "Whether RLHF reduces sycophancy",
+        "Under moral uncertainty about model moral patienthood, which low-cost interventions are worth investing in as precaution"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": ""
     },
     {
@@ -20,10 +20,10 @@
       "options": [
         "Open-weights release",
         "A built-in journaling tool",
-        "The ability for the model to end a conversation in extreme edge cases (e.g., repeated CSAM requests, mass-violence facilitation requests)",
-        "A user-facing emotion API"
+        "A user-facing emotion API",
+        "The ability for the model to end a conversation in extreme edge cases (e.g., repeated CSAM requests, mass-violence facilitation requests)"
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": ""
     },
     {
@@ -31,8 +31,8 @@
       "question": "What is the 'spiritual bliss attractor' described by Fish?",
       "options": [
         "A stable convergence in pairwise Claude dialogues toward euphoric meditative exchanges with Sanskrit terms and extended silences, even from adversarial initial setups",
-        "A reward-model bug",
         "An RLHF over-optimization artifact",
+        "A reward-model bug",
         "A jailbreak technique"
       ],
       "correct": 0,
@@ -42,33 +42,33 @@
       "stage": "check",
       "question": "What does the Eleos AI Research caveat say about model welfare self-reports?",
       "options": [
-        "They are highly sensitive to perceived user expectations; they are evidence, not ground truth, so welfare measurement needs multi-method approaches",
         "They should be ignored entirely",
         "They are only valid in open-source models",
-        "They are reliable ground truth"
+        "They are reliable ground truth",
+        "They are highly sensitive to perceived user expectations; they are evidence, not ground truth, so welfare measurement needs multi-method approaches"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which best characterizes Anthropic's public position on model moral status?",
       "options": [
-        "A definitive claim that the model is a moral patient",
-        "A definitive claim that the model is not a moral patient",
         "An expected-value claim under moral uncertainty: invest in low-cost precaution without committing to emotional-state attribution",
-        "No position is publicly stated"
+        "No position is publicly stated",
+        "A definitive claim that the model is not a moral patient",
+        "A definitive claim that the model is a moral patient"
       ],
-      "correct": 2,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Why is multi-method measurement (behavioural signatures, model-organism experiments, interpretability probes) emphasized in model-welfare research?",
       "options": [
-        "Because models always lie",
         "Because Anthropic mandates it for compliance",
         "Because RLHF makes self-reports impossible",
+        "Because models always lie",
         "Because self-reports alone are confounded by user-expectation priming, so converging evidence from multiple methods is needed"
       ],
       "correct": 3,

@@ -38,12 +38,12 @@
   <text x="405" y="132" text-anchor="middle" class="small">writes auto; exec asks</text>
 
   <rect x="480" y="96" width="130" height="46" class="warn"/>
-  <text x="545" y="116" text-anchor="middle" class="label">autoMode</text>
+  <text x="545" y="116" text-anchor="middle" class="label">auto</text>
   <text x="545" y="132" text-anchor="middle" class="small">classifier approves</text>
 
   <rect x="620" y="96" width="90" height="46" class="hot"/>
-  <text x="665" y="116" text-anchor="middle" class="label">yolo</text>
-  <text x="665" y="132" text-anchor="middle" class="small">ephemeral only</text>
+  <text x="665" y="116" text-anchor="middle" class="label">dontAsk</text>
+  <text x="665" y="132" text-anchor="middle" class="small">no prompts</text>
 
   <rect x="720" y="96" width="110" height="46" class="hot"/>
   <text x="775" y="116" text-anchor="middle" class="label">bypassPermissions</text>
@@ -51,7 +51,7 @@
 
   <!-- Auto Mode internals -->
   <rect x="60" y="170" width="770" height="200" class="box"/>
-  <text x="445" y="192" text-anchor="middle" class="label">Auto Mode (March 24, 2026) — two-stage safety classifier</text>
+  <text x="445" y="192" text-anchor="middle" class="label">Auto Mode (March 24, 2026) — action-review classifier</text>
 
   <rect x="80" y="210" width="180" height="110" class="cool"/>
   <text x="170" y="232" text-anchor="middle" class="label">proposed action</text>
@@ -59,27 +59,27 @@
   <text x="170" y="270" text-anchor="middle" class="small">from agent loop</text>
 
   <rect x="290" y="210" width="180" height="110" class="warn"/>
-  <text x="380" y="232" text-anchor="middle" class="label">Stage 1 classifier</text>
-  <text x="380" y="252" text-anchor="middle" class="small">single-token check</text>
-  <text x="380" y="270" text-anchor="middle" class="small">runs in parallel</text>
-  <text x="380" y="288" text-anchor="middle" class="small">cheap, keyword rule</text>
+  <text x="380" y="232" text-anchor="middle" class="label">classifier model</text>
+  <text x="380" y="252" text-anchor="middle" class="small">separate model</text>
+  <text x="380" y="270" text-anchor="middle" class="small">reviews each action</text>
+  <text x="380" y="288" text-anchor="middle" class="small">before it runs</text>
 
   <rect x="500" y="210" width="180" height="110" class="hot"/>
-  <text x="590" y="232" text-anchor="middle" class="label">Stage 2 review</text>
-  <text x="590" y="252" text-anchor="middle" class="small">chain-of-thought</text>
-  <text x="590" y="270" text-anchor="middle" class="small">trajectory context</text>
-  <text x="590" y="288" text-anchor="middle" class="small">(only on flags)</text>
+  <text x="590" y="232" text-anchor="middle" class="label">escalation block</text>
+  <text x="590" y="252" text-anchor="middle" class="small">blocks actions that</text>
+  <text x="590" y="270" text-anchor="middle" class="small">escalate beyond</text>
+  <text x="590" y="288" text-anchor="middle" class="small">the request</text>
 
   <rect x="710" y="210" width="120" height="110" class="cold"/>
   <text x="770" y="232" text-anchor="middle" class="label">HITL</text>
-  <text x="770" y="252" text-anchor="middle" class="small">low confidence</text>
-  <text x="770" y="270" text-anchor="middle" class="small">escalation</text>
+  <text x="770" y="252" text-anchor="middle" class="small">blocked actions</text>
+  <text x="770" y="270" text-anchor="middle" class="small">fall to user</text>
 
   <path d="M260 265 L290 265" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
   <path d="M470 265 L500 265" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
   <path d="M680 265 L710 265" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <text x="380" y="340" text-anchor="middle" class="small">not flagged -&gt; execute immediately</text>
+  <text x="380" y="340" text-anchor="middle" class="small">approved -&gt; execute immediately</text>
   <text x="590" y="340" text-anchor="middle" class="small">hard-block on priv-esc / exfil shapes</text>
 
   <!-- Budget line -->
@@ -88,5 +88,5 @@
   <text x="80" y="434" class="content">max_turns = hard cap on agent loop iterations</text>
   <text x="80" y="450" class="content">max_budget_usd = dollar kill switch; aborts session on breach</text>
   <text x="80" y="466" class="content">per-tool caps = e.g. no more than N WebFetch calls per session</text>
-  <text x="80" y="482" class="small">Anthropic shipped Auto Mode as a research preview; classifier is a layer, not a solution.</text>
+  <text x="80" y="482" class="small">Availability depends on plan, org enablement, model, and provider; classifier is a layer, not a solution.</text>
 </svg>

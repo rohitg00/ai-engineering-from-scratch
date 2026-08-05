@@ -4,24 +4,24 @@
       "stage": "pre",
       "question": "What does cosine similarity measure between two vectors?",
       "options": [
-        "The Euclidean distance between them",
         "The angle between them, ignoring their magnitudes",
-        "The sum of their element-wise products",
-        "The maximum difference in any single dimension"
+        "The Euclidean distance between them",
+        "The maximum difference in any single dimension",
+        "The sum of their element-wise products"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Cosine similarity measures the cosine of the angle between two vectors, normalized by their magnitudes. It ranges from -1 (opposite) to +1 (same direction) and ignores vector length, which is why it dominates in NLP where document length is noise."
     },
     {
       "stage": "pre",
       "question": "Why is L1 distance called 'Manhattan distance'?",
       "options": [
-        "It was invented in Manhattan",
-        "It measures distance along a grid, as if walking on city blocks",
         "It only works in exactly two dimensions",
-        "It computes the maximum difference across all dimensions"
+        "It computes the maximum difference across all dimensions",
+        "It was invented in Manhattan",
+        "It measures distance along a grid, as if walking on city blocks"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "L1 distance sums the absolute differences along each axis, which corresponds to the shortest path on a grid where you can only move along axes (no diagonals) — like walking on a city street grid."
     },
     {
@@ -52,12 +52,12 @@
       "stage": "post",
       "question": "When would you use Mahalanobis distance instead of Euclidean distance?",
       "options": [
-        "When features are all binary (0 or 1)",
         "When features have different scales and are correlated with each other",
-        "When you are comparing strings instead of vectors",
-        "When you need a faster computation than L2"
+        "When you need a faster computation than L2",
+        "When features are all binary (0 or 1)",
+        "When you are comparing strings instead of vectors"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Mahalanobis distance accounts for the covariance structure of the data, decorrelating and normalizing features before computing L2 distance. It correctly handles features at different scales and with correlations, whereas Euclidean distance treats all dimensions equally."
     }
   ]

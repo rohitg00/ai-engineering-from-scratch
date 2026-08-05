@@ -6,8 +6,8 @@
       "stage": "pre",
       "question": "What is the core idea of model cascading?",
       "options": [
-        "Run two models in parallel and average the outputs",
         "Always route by random weight",
+        "Run two models in parallel and average the outputs",
         "Run every request on the most expensive model first",
         "Run a cheap model first, escalate to a frontier model only on low confidence or refusal"
       ],
@@ -18,36 +18,36 @@
       "stage": "check",
       "question": "Which four signals does the lesson list for routing decisions?",
       "options": [
-        "Task classification, prompt length, embedding similarity to known-hard set, and self-confidence from a first-pass",
-        "Token count only",
         "User tier only",
+        "Token count only",
+        "Task classification, prompt length, embedding similarity to known-hard set, and self-confidence from a first-pass",
         "GPU temperature, fan speed, room humidity, time of day"
-      ],
-      "correct": 0,
-      "explanation": ""
-    },
-    {
-      "stage": "check",
-      "question": "What is the expected latency profile of a cascade router?",
-      "options": [
-        "Always slower by 10x",
-        "Identical to the frontier model",
-        "About 1.2x median latency (cheap run plus verify), about 2x on escalated requests (~10% of traffic)",
-        "Always faster than pre-route"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
+      "question": "What is the expected latency profile of a cascade router?",
+      "options": [
+        "Always faster than pre-route",
+        "About 1.2x median latency (cheap run plus verify), about 2x on escalated requests (~10% of traffic)",
+        "Always slower by 10x",
+        "Identical to the frontier model"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
       "question": "Which routing pattern adds 5-10ms latency up front and is fastest overall?",
       "options": [
-        "Pre-route with a classifier",
-        "Ensemble route",
         "Cascade",
-        "Random round-robin"
+        "Ensemble route",
+        "Random round-robin",
+        "Pre-route with a classifier"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": ""
     },
     {
@@ -56,22 +56,22 @@
       "options": [
         "The cheap model becomes more expensive",
         "Cascade falls through to frontier 100% of the time",
-        "Task distribution shifts but the trained router keeps sending requests to the cheap model, silently degrading quality",
-        "A latency drift in the cheap model"
+        "A latency drift in the cheap model",
+        "Task distribution shifts but the trained router keeps sending requests to the cheap model, silently degrading quality"
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which guard does the lesson recommend to catch routing drift?",
       "options": [
-        "Only offline eval sets",
-        "Disable routing in production",
+        "Online quality metrics — thumbs-up/down per route, LLM-judge on held-out samples, escalation rate, refusal rate",
         "Quarterly engineering review only",
-        "Online quality metrics — thumbs-up/down per route, LLM-judge on held-out samples, escalation rate, refusal rate"
+        "Only offline eval sets",
+        "Disable routing in production"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": ""
     }
   ]

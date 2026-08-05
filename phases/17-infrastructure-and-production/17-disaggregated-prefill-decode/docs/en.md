@@ -4,7 +4,7 @@
 
 **Type:** Learn
 **Languages:** Python (stdlib, toy disaggregated-vs-colocated simulator)
-**Prerequisites:** Phase 17 · 04 (vLLM Serving Internals), Phase 17 · 08 (Inference Metrics)
+**Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 08 (Inference Metrics)
 **Time:** ~75 minutes
 
 ## Learning Objectives
@@ -104,6 +104,10 @@ Benchmark numbers drift — NVIDIA and the inference stack post updated results 
 - Savings anchor (internal composite, not a single case study): $600-800K/year off a $2M annual spend at constant SLA.
 - Disaggregation threshold: prompts >512 tokens + outputs >200 tokens.
 - KV transfer via NIXL: 20-80 ms for 4K-prompt KV on 70B FP8.
+
+```figure
+prefill-decode-split
+```
 
 ## Use It
 

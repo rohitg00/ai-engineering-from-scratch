@@ -19,6 +19,28 @@ Chatbot architectures have cycled through four paradigms, each introduced becaus
 
 ![Chatbot evolution: rule-based → retrieval → neural → agent](../assets/chatbot.svg)
 
+### The scripted half-century, 1950-2001
+
+The first paradigm did not last five years. It lasted fifty. Knowing its arc matters because every system in it is the same machine — match input, emit a canned response, update a little state — and fifty years of adding rules to that machine never produced the general case. That ceiling is why paradigms two through four exist.
+
+**1950.** Turing sidesteps "can machines think?" by proposing an operational replacement: if an interrogator cannot tell the machine from a person over teletype, the philosophical question is moot. Conversation becomes the field's benchmark before the field has a name.
+
+**1956.** The name arrives — a summer workshop at Dartmouth coins "artificial intelligence" on the conjecture that every feature of intelligence "can in principle be so precisely described that a machine can be made to simulate it." The proposal budgets two months for substantial progress.
+
+**1966.** ELIZA ships the reflection trick you build in Step 1: decomposition rules pull fragments from the input, reassembly rules echo them back as questions. Around 200 patterns total, zero state, zero understanding — and users confided in it anyway. Weizenbaum spent the rest of his career alarmed by how little machinery it took.
+
+**1972.** PARRY, built at Stanford to model paranoia, adds the piece ELIZA lacked: internal state. Numeric variables for fear, anger, and mistrust update on every turn and gate which script fires next, so identical inputs produce different responses depending on the conversation so far. In a blinded transcript test, psychiatrists distinguished PARRY from human patients at chance. It is the direct ancestor of persona conditioning — a system prompt implemented as three floats. The same year, the two bots were pointed at each other over ARPANET: a therapist script interviewing a paranoia state machine, the first bot-to-bot conversation on a network.
+
+**1995.** ALICE scales the ELIZA recipe with AIML, an XML dialect for pattern-template pairs. Roughly 40,000 hand-written categories, three Loebner Prize wins. It proved the scaling law of rule-based systems: more rules buy coverage, never generality. Every rule is a liability someone must maintain.
+
+**2001.** SmarterChild puts the recipe in front of 30 million instant-messenger users and adds backend lookups — weather, stocks, movie times — spliced into templates. Squint and it is tool calling wearing a 2001 costume: parse intent, call a service, render the result into the reply.
+
+Fifty years, one mechanism, rising rule counts. The paradigm ended not because anyone disproved it but because the maintenance cost of hand-written state machines grows linearly with coverage while user expectations grow with whatever they saw last week.
+
+```figure
+chatbot-lineage
+```
+
 **Rule-based (ELIZA, AIML, DialogFlow).** Hand-authored patterns match user input and produce responses. Intent classifiers route to predefined flows. Slot-filling state machines collect required info. Works brilliantly inside the narrow scope it was designed for. Fails immediately outside it. Still ships in safety-critical domains (banking authentication, airline booking) where hallucination is not tolerated.
 
 **Retrieval-based.** A FAQ-style system. Encode every pair of (utterance, response). At runtime, encode the user's message and retrieve the nearest stored response. Think Zendesk's classic "similar articles" feature. Handles paraphrases better than rules. No generation, so no hallucination.
@@ -232,7 +254,9 @@ Refuse to recommend a pure-LLM agent for any destructive action (payments, accou
 
 ## Further Reading
 
+- [Turing (1950). Computing Machinery and Intelligence](https://academic.oup.com/mind/article/LIX/236/433/986238) — the paper that made conversation the field's benchmark.
 - [Weizenbaum (1966). ELIZA — A Computer Program For the Study of Natural Language Communication](https://web.stanford.edu/class/cs124/p36-weizenabaum.pdf) — the original rule-based chatbot paper.
+- [Colby, Weber, Hilf (1971). Artificial Paranoia](https://doi.org/10.1016/0004-3702(71)90002-6) — PARRY's affect-variable architecture, the first stateful chatbot.
 - [Thoppilan et al. (2022). LaMDA: Language Models for Dialog Applications](https://arxiv.org/abs/2201.08239) — Google's late neural-chatbot paper, just before LLM agents took over.
 - [Yao et al. (2022). ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) — the paper that named the agent loop pattern.
 - [Anthropic's guide on building effective agents](https://www.anthropic.com/research/building-effective-agents) — 2024 production guidance that still holds in 2026.

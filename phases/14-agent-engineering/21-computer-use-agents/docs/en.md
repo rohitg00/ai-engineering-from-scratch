@@ -75,6 +75,10 @@ Defense patterns (2026 convergence):
 - **No confirmation on sensitive actions.** Login, purchase, file delete without human-in-the-loop is a liability.
 - **Long horizons without observability.** A 200-click run that fails at click 180 is un-debuggable without per-step traces.
 
+```figure
+computer-use-cursor
+```
+
 ## Build It
 
 `code/main.py` simulates the vision-agent loop:

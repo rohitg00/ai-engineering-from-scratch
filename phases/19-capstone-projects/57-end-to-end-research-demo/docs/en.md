@@ -15,6 +15,10 @@
 - Keep the demo deterministic so the test suite can assert the final shape.
 - Surface a clear failure mode when any stage's contract breaks, so the next stage does not run with a broken input.
 
+```figure
+ch-research-pipeline
+```
+
 ## What composes here
 
 ```mermaid

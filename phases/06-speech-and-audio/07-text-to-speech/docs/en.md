@@ -66,6 +66,10 @@ By 2026 most "TTS" models are end-to-end from text to waveform; the mel spectrog
 | Kokoro v0.19 | 3.87 | 1.8% | 82M |
 | Parler-TTS Large | 3.76 | 2.8% | 2.3B |
 
+```figure
+sp-tts-stack
+```
+
 ## Build It
 
 ### Step 1: phonemize input

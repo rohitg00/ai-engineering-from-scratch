@@ -27,6 +27,10 @@ This lesson walks all three, then explains which to reach for when.
 
 **BPE (Byte-Pair Encoding).** Start with a vocabulary of individual bytes (or characters). Count every adjacent pair in the corpus. Merge the most frequent pair into a new token. Repeat for `k` iterations. Result: a vocabulary of `k + 256` tokens where frequent sequences (`ing`, `tion`, `the`) are single tokens and rare words are broken into familiar pieces. Every sentence tokenizes into something.
 
+```figure
+n5-subword-merge
+```
+
 ## Build It
 
 ### GloVe: factorize the co-occurrence matrix

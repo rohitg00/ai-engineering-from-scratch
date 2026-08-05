@@ -6,36 +6,36 @@
       "stage": "pre",
       "question": "Why does the scheduler use UCB scoring instead of always picking the current best branch?",
       "options": [
-        "Because UCB is faster to compute",
-        "Because greedy picks never explore; UCB balances exploitation with exploration",
+        "Because the queue cannot be sorted otherwise",
         "Because asyncio requires UCB",
-        "Because the queue cannot be sorted otherwise"
+        "Because UCB is faster to compute",
+        "Because greedy picks never explore; UCB balances exploitation with exploration"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Greedy locks onto the first lead. Uniform never exploits. UCB picks the leader while reserving capacity for less-explored branches via the sqrt(ln N / n) term."
     },
     {
       "stage": "pre",
       "question": "What score does a branch with zero completed runs receive under UCB1?",
       "options": [
-        "Zero",
-        "The exploration constant c",
         "Positive infinity, so untried branches are always picked first",
-        "The mean reward of all other branches"
+        "The mean reward of all other branches",
+        "Zero",
+        "The exploration constant c"
       ],
-      "correct": 2,
+      "correct": 0,
       "explanation": "The lesson assigns +inf for runs=0. This guarantees every branch is tried at least once before any branch is revisited."
     },
     {
       "stage": "check",
       "question": "How does the scheduler keep multiple slots busy?",
       "options": [
-        "It runs the runner in a thread pool",
         "It uses asyncio.create_task per dispatched hypothesis and awaits FIRST_COMPLETED on the in-flight set",
-        "It uses multiprocessing",
-        "It blocks the event loop on a sleep"
+        "It runs the runner in a thread pool",
+        "It blocks the event loop on a sleep",
+        "It uses multiprocessing"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Each dispatched hypothesis becomes a task. The main loop waits on FIRST_COMPLETED so a finished slot is freed immediately and another hypothesis is dispatched."
     },
     {
@@ -43,11 +43,11 @@
       "question": "When does the scheduler emit a paper.trigger for a branch?",
       "options": [
         "Every time a result lands on that branch",
-        "On the first result whose branch mean meets or exceeds the paper threshold, and only once per branch",
+        "When the prune floor is hit",
         "Only at the end of the run",
-        "When the prune floor is hit"
+        "On the first result whose branch mean meets or exceeds the paper threshold, and only once per branch"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "The trigger fires once per branch, the first time the branch's mean crosses the threshold. The paper_triggered flag on BranchStats prevents repeats."
     },
     {
@@ -55,11 +55,11 @@
       "question": "What happens to a branch whose mean reward stays below the prune floor after the minimum-runs threshold?",
       "options": [
         "Nothing; UCB will eventually pick another branch",
+        "The reward floor is lowered automatically",
         "The branch is marked pruned and remaining hypotheses on that branch are removed from the queue",
-        "The scheduler raises an exception",
-        "The reward floor is lowered automatically"
+        "The scheduler raises an exception"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Pruning removes the branch from future scheduling. Pruning is separate from the picker: UCB ranks, pruning culls."
     },
     {
@@ -67,11 +67,11 @@
       "question": "Which two budgets does the scheduler enforce as hard limits?",
       "options": [
         "Memory and CPU",
-        "max_experiments (total runs) and max_seconds (wall clock)",
+        "paper triggers and prune count",
         "slots and queue depth",
-        "paper triggers and prune count"
+        "max_experiments (total runs) and max_seconds (wall clock)"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Both fire as stop reasons. max_experiments caps total work. max_seconds caps wall time. The trace records which one stopped the run."
     }
   ]

@@ -127,6 +127,10 @@ For a new document-AI project:
 - Full arXiv ingestion: Nougat for math, VLM for figures.
 - Regulatory: OCR pipeline + VLM validator for cross-check.
 
+```figure
+mm-doc-layout
+```
+
 ## Use It
 
 `code/main.py`:

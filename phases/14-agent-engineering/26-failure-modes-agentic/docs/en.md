@@ -73,6 +73,10 @@ Automated verification gates at every step of a reasoning chain, checking factua
 - **No baseline.** Drift detection needs a last-known-good; without it you cannot say "this is getting worse."
 - **Over-alerting.** Every failure produces a page. Cluster and rate-limit.
 
+```figure
+failure-cascade
+```
+
 ## Build It
 
 `code/main.py` implements a stdlib failure-mode tagger:

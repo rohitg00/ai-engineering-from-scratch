@@ -14,6 +14,10 @@
 - Enforce per-session budgets (turns, tool calls, wall-clock) without leaking partial state on exceeding.
 - Emit a typed stream of eleven event types so downstream UIs and tracers can subscribe without inspecting the loop directly.
 
+```figure
+cf-loop-contract
+```
+
 ## The frame
 
 A coding agent that runs unattended for forty turns is not a chat loop. It is a state machine whose nodes the operator can intercept and whose edges the operator can audit. Once you write the contract down, swapping models, tools, or policies stops being a refactor. It becomes a registration call.

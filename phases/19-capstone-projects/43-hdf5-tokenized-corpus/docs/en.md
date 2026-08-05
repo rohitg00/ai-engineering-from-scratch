@@ -56,6 +56,10 @@ At training time each worker opens its share of HDF5 files in `swmr=True` mode a
 
 The dataloader is the only stage that knows about training-sequence length. It picks a random start index in the global token stream, reads `window_size + 1` tokens, and returns `(input, target) = (tokens[:-1], tokens[1:])`. Document boundaries are not enforced: a window may straddle two documents, with an explicit `boundary_token_id` between them so the model learns to use the separator. This is the standard packing rule; it is also the rule a beginner forgets, ending up with a corpus that is 8 percent training boundary tokens and 92 percent natural text.
 
+```figure
+cc-hdf5-corpus
+```
+
 ## Build It
 
 `code/main.py` implements:
@@ -120,7 +124,7 @@ Production patterns:
 
 ## Further Reading
 
-- [HDF5 chunking documentation](https://docs.hdfgroup.org/hdf5/v1_14/) - the chunked, resizable dataset layout this lesson uses
+- [HDF5 chunking documentation](https://support.hdfgroup.org/documentation/hdf5/latest/hdf5_chunking.html) - the chunked, resizable dataset layout this lesson uses
 - [h5py user guide](https://docs.h5py.org/en/stable/) - Python bindings for HDF5
 - [NumPy memory mapping](https://numpy.org/doc/stable/reference/generated/numpy.memmap.html) - the read-side primitive HDF5 exposes through h5py
 - Phase 19 · 42 - the downloader whose output this lesson tokenizes

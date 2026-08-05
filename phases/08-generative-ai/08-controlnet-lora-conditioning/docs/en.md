@@ -66,6 +66,10 @@ A tiny adapter that accepts an *image* as conditioning (alongside text). Uses th
 
 ControlNet ≈ spatial. LoRA ≈ semantic. Use both.
 
+```figure
+v4-controlnet-zero
+```
+
 ## Build It
 
 `code/main.py` simulates the two mechanisms on 1-D:

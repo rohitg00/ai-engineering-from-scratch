@@ -90,6 +90,10 @@ In the 2026 taxonomy:
 
 Pick by task: Show-o when you want T2I + inpainting + VQA in one open model with reasonable speed; Transfusion when quality is paramount and you can afford the two-loss plumbing.
 
+```figure
+masked-diffusion-unmask
+```
+
 ## Use It
 
 `code/main.py` simulates Show-o sampling:

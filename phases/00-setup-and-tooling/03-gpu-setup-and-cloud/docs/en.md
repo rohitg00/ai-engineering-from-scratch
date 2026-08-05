@@ -41,6 +41,10 @@ Your options:
    Best for: Serious training, large models
 ```
 
+```figure
+s0-gpu-dispatch
+```
+
 ## Build It
 
 ### Option 1: Local NVIDIA GPU

@@ -137,6 +137,10 @@ Some failures are immediate; some are slow. Immediate failures (timeout, schema 
 
 The 2026 engineering move: instrument slow-failure proxies so you can catch drift before it becomes a visible error. Agreement rate, retry rate, output-length distribution, and edit-distance between consecutive agent versions are all useful proxies.
 
+```figure
+a5-retry-cascade
+```
+
 ## Build It
 
 `code/main.py` implements:

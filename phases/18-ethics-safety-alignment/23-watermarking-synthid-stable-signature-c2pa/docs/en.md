@@ -73,6 +73,10 @@ Transparency Code for AI-generated content labeling (first draft December 2025, 
 
 Lessons 22-23 are about what the model emits (private data, provenance signal). Lesson 27 covers training-data governance. Lesson 24 is the regulatory framework that requires these technical measures.
 
+```figure
+an-watermark-greenlist
+```
+
 ## Use It
 
 `code/main.py` builds a toy text watermark. Tokens are integers 0..N-1; watermarked sampling biases toward the hash-defined green set. A detector computes the green-token z-score. You can observe detection at 1000-token generations, watch paraphrase destroy the signal, and measure the false-positive rate on human text.

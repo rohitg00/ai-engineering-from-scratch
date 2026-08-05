@@ -83,6 +83,10 @@ OpenAI Agents SDK ships this pattern as "output guardrails." A guardrail is a va
 - **Over-refinement.** Each refine pass adds latency and tokens. Budget 1-3 passes; after that, escalate to human review.
 - **CRITIC on trivial tasks.** If there is no external verifier, CRITIC degenerates to Self-Refine; do not pay the latency for a stub verifier.
 
+```figure
+self-refine
+```
+
 ## Build It
 
 `code/main.py` implements Self-Refine and CRITIC on a toy task: produce a short bullet list given a topic. The verifier checks format (3 bullets, each under 60 chars). CRITIC adds an external "fact verifier" that penalizes known hallucinations.

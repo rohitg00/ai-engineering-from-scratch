@@ -68,6 +68,10 @@ Pattern across the three: vendors initially rated EchoLeak low (information disc
 
 Lesson 15 is the attack class in the abstract. Lesson 25 is the concrete CVE layer. Lesson 24 is the regulatory framework that governs disclosure obligations. Lessons 26-27 cover documentation and data governance.
 
+```figure
+an-echoleak-chain
+```
+
 ## Use It
 
 `code/main.py` reconstructs the EchoLeak attack trace as a state-transition log. You can observe the email entering context, the instruction execution, and the exfiltration URL construction. A simple defense (scope separation: block tool calls triggered by untrusted content) prevents the exfiltration.

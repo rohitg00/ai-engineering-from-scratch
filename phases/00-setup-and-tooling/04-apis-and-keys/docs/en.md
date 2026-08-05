@@ -34,6 +34,10 @@ Every API call has:
 3. A request body (what you want)
 4. A response body (what you get back)
 
+```figure
+s0-secret-inject
+```
+
 ## Build It
 
 ### Step 1: Store API keys safely
@@ -55,18 +59,24 @@ OPENAI_API_KEY=sk-...
 ### Step 2: First API call (Python)
 
 ```python
+import os
+
 import anthropic
 
 client = anthropic.Anthropic()
 
+MODEL = os.environ.get("LLM_MODEL", "claude-sonnet-5")
+
 response = client.messages.create(
-    model="claude-sonnet-4-20250514",
+    model=MODEL,
     max_tokens=256,
     messages=[{"role": "user", "content": "What is a neural network in one sentence?"}]
 )
 
 print(response.content[0].text)
 ```
+
+`LLM_MODEL` selects the Anthropic model id, and the default is the un-dated Sonnet alias. Other providers (OpenAI, Google, and others) follow the same pattern of a key plus a model id, but each has its own SDK, endpoint, and request/response schema.
 
 ### Step 3: First API call (TypeScript)
 
@@ -75,8 +85,10 @@ import Anthropic from "@anthropic-ai/sdk";
 
 const client = new Anthropic();
 
+const MODEL = process.env.LLM_MODEL ?? "claude-sonnet-5";
+
 const response = await client.messages.create({
-  model: "claude-sonnet-4-20250514",
+  model: MODEL,
   max_tokens: 256,
   messages: [{ role: "user", content: "What is a neural network in one sentence?" }],
 });
@@ -98,7 +110,7 @@ headers = {
     "anthropic-version": "2023-06-01",
 }
 body = json.dumps({
-    "model": "claude-sonnet-4-20250514",
+    "model": os.environ.get("LLM_MODEL", "claude-sonnet-5"),
     "max_tokens": 256,
     "messages": [{"role": "user", "content": "What is a neural network in one sentence?"}],
 }).encode()

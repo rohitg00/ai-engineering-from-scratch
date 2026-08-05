@@ -92,6 +92,10 @@ Official Registry mandates reverse-DNS names for public servers: `io.github.alic
 
 Phase 17 (production infrastructure) dives deeper on gateway operations.
 
+```figure
+t3-gateway-funnel
+```
+
 ## Use It
 
 `code/main.py` ships a minimal gateway in ~150 lines: authenticates users by a fake Bearer token, holds a per-user RBAC policy, routes requests to two backend MCP servers, writes every call to an audit log, enforces a rate limit, and rejects any backend tool whose description hash does not match a pinned manifest.

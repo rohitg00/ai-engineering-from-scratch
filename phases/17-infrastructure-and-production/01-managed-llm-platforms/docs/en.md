@@ -78,6 +78,10 @@ All three meet the basic checkbox. The differences are in data retention policie
 - Azure PTU break-even: ~40-60% sustained utilization.
 - PTU savings vs on-demand at high utilization: up to 70%.
 
+```figure
+i4-platform-lanes
+```
+
 ## Use It
 
 `code/main.py` compares the three platforms on a synthetic workload — it models on-demand vs PTU economics, TTFT variance, and cost attribution fidelity. Run it to see where PTUs pay off and where the marketplace's model breadth outweighs a TTFT gap.
@@ -111,7 +115,7 @@ This lesson produces `outputs/skill-managed-platform-picker.md`. Given a workloa
 ## Further Reading
 
 - [AWS Bedrock Pricing](https://aws.amazon.com/bedrock/pricing/) — authoritative rate card and Provisioned Throughput pricing.
-- [Azure OpenAI Service Pricing](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/) — PTU economics and rate cards.
+- [Azure OpenAI Service Pricing](https://azure.microsoft.com/en-us/pricing/details/azure-openai/) — PTU economics and rate cards.
 - [Vertex AI Generative AI Pricing](https://cloud.google.com/vertex-ai/generative-ai/pricing) — Gemini tiers and Model Garden surcharges.
 - [Artificial Analysis LLM Leaderboard](https://artificialanalysis.ai/) — continuous latency and throughput benchmarks across providers.
 - [The AI Journal — AWS Bedrock vs Azure OpenAI CTO Guide 2026](https://theaijournal.co/2026/03/aws-bedrock-vs-azure-openai/) — enterprise decision framework.

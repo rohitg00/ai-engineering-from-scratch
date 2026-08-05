@@ -82,6 +82,10 @@ The suite is deterministic from the seed and held out from the training corpus, 
 
 For a 50-step training run on synthetic data, the metrics are not expected to be high; they are expected to be above the random baseline, which is what the demo checks.
 
+```figure
+ch-recall-window
+```
+
 ## Build It
 
 `code/main.py` implements:

@@ -52,7 +52,7 @@ When you need it: when a single supervisor's context budget cannot hold descript
 - Parallel proposers + iterative cross-critique (Lesson 25).
 - Not really orchestration — more verification — but shows up as a topology choice in frameworks.
 
-### CrewAI Crew vs Flow
+### Autonomous crews vs deterministic flows
 
 CrewAI formalizes two deployment modes:
 
@@ -78,6 +78,10 @@ Decision order:
 - **Topology-first thinking.** "We need multi-agent" before identifying what problem multi-agent solves.
 - **Bouncing handoffs in swarm.** A -> B -> A -> B. Use hop counters.
 - **Fake hierarchy.** Three layers because "enterprise"; two actual teams. Collapse.
+
+```figure
+orchestration-pattern
+```
 
 ## Build It
 

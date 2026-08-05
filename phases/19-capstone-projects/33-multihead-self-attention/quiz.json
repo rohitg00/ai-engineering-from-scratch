@@ -6,12 +6,12 @@
       "stage": "pre",
       "question": "Why does an efficient self-attention block use a single linear layer that outputs 3*D features?",
       "options": [
-        "It enforces weight sharing between Q, K, and V",
         "It is mathematically equivalent to three Linear(D, D) layers and runs as one matmul",
-        "It avoids the need for a causal mask",
-        "It reduces the model parameter count"
+        "It reduces the model parameter count",
+        "It enforces weight sharing between Q, K, and V",
+        "It avoids the need for a causal mask"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Stacking three (D, D) projection matrices into one (3D, D) matrix produces the same outputs, but the forward pass is a single accelerator-friendly matmul."
     },
     {
@@ -20,22 +20,22 @@
       "options": [
         "d_head = d_model * n_heads",
         "d_head = d_model + n_heads",
-        "d_head = d_model // n_heads and d_model must be divisible by n_heads",
-        "d_head is independent of d_model"
+        "d_head is independent of d_model",
+        "d_head = d_model // n_heads and d_model must be divisible by n_heads"
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": "The block splits d_model evenly across heads. The constraint d_model % n_heads == 0 is enforced at construction."
     },
     {
       "stage": "check",
       "question": "What value goes into the scaling factor of scaled dot-product attention?",
       "options": [
-        "sqrt(d_model)",
         "sqrt(d_head)",
         "sqrt(n_heads)",
+        "sqrt(d_model)",
         "sqrt(seq_len)"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Scores are divided by sqrt(d_head), the head dimension that the matmul contracts. This keeps the variance of the scores bounded as d_head grows."
     },
     {
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "What does an attention-weight matrix of shape (B, H, T, T) tell you?",
       "options": [
-        "How many parameters each head has",
         "Which key positions each query position attends to, per head, per batch element",
         "The cosine similarity between query and value vectors",
-        "The output logits for the next token"
+        "The output logits for the next token",
+        "How many parameters each head has"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Row t of the per-head matrix is the distribution over key positions used by query position t. Inspecting it shows where each head looks."
     }
   ]

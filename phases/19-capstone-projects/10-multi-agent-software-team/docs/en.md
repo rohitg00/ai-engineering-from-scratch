@@ -1,6 +1,6 @@
 # Capstone 10 — Multi-Agent Software Engineering Team
 
-> SWE-AF's factory architecture, MetaGPT's role-based prompting, AutoGen 0.4's typed actor graph, Cognition's Devin, and Factory's Droids all converged on the same 2026 shape: an architect plans, N coders work in parallel worktrees, a reviewer gates, a tester verifies. Parallel worktrees convert wall-clock into throughput. Shared state and handoff protocols become the failure surface. The capstone is to build the team, evaluate on SWE-bench Pro, and report which handoffs break and how often.
+> The 2026 shape of a multi-agent engineering team has converged: an architect plans, N coders work in parallel worktrees, a reviewer gates, a tester verifies. SWE-AF's factory architecture, MetaGPT's role-based prompting, AutoGen 0.4's typed actor graph, Cognition's Devin, and Factory's Droids all landed on it independently. Parallel worktrees convert wall-clock into throughput. Shared state and handoff protocols become the failure surface. The capstone is to build the team, evaluate on SWE-bench Pro, and report which handoffs break and how often.
 
 **Type:** Capstone
 **Languages:** Python / TypeScript (agents), Shell (worktree scripts)
@@ -63,6 +63,10 @@ Coder A          Coder B          Coder C          Coder D          (4 parallel)
 - Eval: SWE-bench Pro (50 issues), SWE-AF scenarios, HumanEval++ for unit tests
 - Observability: Langfuse with role-tagged spans, per-agent token accounting
 - Deployment: K8s with each role as a separate Deployment + HPA on backlog
+
+```figure
+ce-team-handoff
+```
 
 ## Build It
 
@@ -146,6 +150,6 @@ $ team run --issue https://github.com/acme/widget/issues/842
 - [AutoGen v0.4](https://github.com/microsoft/autogen) — Microsoft's typed actor framework
 - [Cognition AI (Devin)](https://cognition.ai) — reference product
 - [Factory Droids](https://www.factory.ai) — alternate reference product
-- [Google A2A protocol](https://developers.google.com/agent-to-agent) — inter-agent messaging spec
+- [Google A2A protocol](https://a2a-protocol.org/latest/) — inter-agent messaging spec
 - [git worktree documentation](https://git-scm.com/docs/git-worktree) — the isolation substrate
 - [SWE-bench Pro](https://www.swebench.com) — the evaluation target

@@ -8,8 +8,8 @@
       "options": [
         "vocab 30000, context 512, d_model 512, 6 heads, 6 layers",
         "vocab 50257, context 1024, d_model 768, 12 heads, 12 layers, parameters near 124 million",
-        "vocab 100000, context 2048, d_model 1024, 16 heads, 24 layers",
-        "vocab 50000, context 4096, d_model 4096, 32 heads, 32 layers"
+        "vocab 50000, context 4096, d_model 4096, 32 heads, 32 layers",
+        "vocab 100000, context 2048, d_model 1024, 16 heads, 24 layers"
       ],
       "correct": 1,
       "explanation": "GPT-2 small is the 124M parameter configuration; matching it confirms the wiring is correct."
@@ -30,24 +30,24 @@
       "stage": "check",
       "question": "How does generation slide its context window?",
       "options": [
-        "Truncates to half the context every step",
         "Each step takes the last context_length tokens of the running sequence (prompt plus generated) and feeds those to the model",
+        "Truncates to half the context every step",
         "Pads to the maximum context with zeros",
         "Restarts from the prompt every step"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Sliding window drops the oldest tokens once the running sequence overflows the context length."
     },
     {
       "stage": "check",
       "question": "Why initialize the attention output projection and the second MLP linear at a smaller std than the rest?",
       "options": [
-        "It saves memory",
-        "Both feed directly into a residual add. Scaling their std by 1 over sqrt of 2 times num_layers keeps the residual stream in scale through twelve layers",
         "The dataset requires it",
-        "Top-k sampling needs smaller weights"
+        "Top-k sampling needs smaller weights",
+        "Both feed directly into a residual add. Scaling their std by 1 over sqrt of 2 times num_layers keeps the residual stream in scale through twelve layers",
+        "It saves memory"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Without the scaling, the residual stream grows with depth and pushes the final LayerNorm into a hot regime."
     },
     {
@@ -56,8 +56,8 @@
       "options": [
         "Selects the optimizer learning rate",
         "Divides the logits before softmax. T less than 1 sharpens the distribution toward greedy, T equal to 1 keeps the natural model distribution, T greater than 1 flattens",
-        "Adds dropout to the head",
-        "Scales the embeddings"
+        "Scales the embeddings",
+        "Adds dropout to the head"
       ],
       "correct": 1,
       "explanation": "Temperature is the simplest knob; combined with top-k it controls how exploratory the generation is."

@@ -488,6 +488,10 @@ You will implement:
 
 All from scratch, using only `math` and `random`. No numpy, no scipy.
 
+```figure
+f3-bootstrap-resample
+```
+
 ## Key Terms
 
 | Term | Definition |

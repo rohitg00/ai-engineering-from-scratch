@@ -62,6 +62,10 @@ The sandbox is E2B or Daytona. Each task runs in a fresh devcontainer with a git
 - Observability: OpenTelemetry SDK with `gen_ai.*` semconv → self-hosted Langfuse
 - PR posting: GitHub App with fine-grained token, scope limited to the target repo
 
+```figure
+ce-agent-loop
+```
+
 ## Build It
 
 1. **TUI and command loop.** Scaffold a Bun project with Ink. Accept `agent run <repo> "<task>"`. Print a split view: plan pane (top), tool-call stream (middle), token budget (bottom). Add cancel on Ctrl-C that fires `SessionEnd` hook before exit.

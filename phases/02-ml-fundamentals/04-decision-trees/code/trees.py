@@ -159,6 +159,8 @@ class DecisionTree:
             k = max(1, int(math.sqrt(self.n_features)))
             feature_indices = random.sample(range(self.n_features), k)
         elif isinstance(self.max_features, int):
+            if self.max_features < 1:
+                raise ValueError("max_features must be at least 1 when given as an integer")
             k = min(self.max_features, self.n_features)
             feature_indices = random.sample(range(self.n_features), k)
         else:

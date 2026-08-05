@@ -131,7 +131,7 @@ Set timeouts on all tool executions. 30 seconds is a reasonable default. If a to
 - **Caching:** Cache tool results for identical arguments within the same session (weather does not change in 60 seconds)
 - **Streaming:** Stream the model's final response while tool results are being fetched
 - **Tool pruning:** If context is tight, only include tool definitions relevant to the current query (use a classifier to filter)
-- **Smaller models for routing:** Use `gpt-4o-mini` or `claude-3-5-haiku` for tool selection, then pass results to a stronger model for synthesis
+- **Smaller models for routing:** Use `gpt-4o-mini` or `claude-haiku-4-5` for tool selection, then pass results to a stronger model for synthesis
 
 ## Common failure patterns
 

@@ -63,3 +63,12 @@ catalog.json
 site/sitemap.xml
 site/llms.txt
 site/build-meta.js
+book/_build/
+
+# Lesson translations are generated to a separate `translations` branch, never
+# main. The per-language README, however, is hand-authored and committed to main
+# (see scripts/build_readme_i18n.py), so it is excluded from the ignore.
+i18n/*/phases/
+i18n/*/.cache/
+i18n/*/.translate-cache.json
+site/langs.js

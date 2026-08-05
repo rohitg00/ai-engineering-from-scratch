@@ -162,6 +162,10 @@ MCP Apps shipped January 26, 2026. Client support as of April 2026:
 
 Servers in production: dashboards, map visualizations, data tables, chart builders, sandbox IDE previews.
 
+```figure
+t3-ui-sandbox
+```
+
 ## Use It
 
 `code/main.py` extends the notes server with a `visualize_timeline` tool that returns a `ui://notes/timeline` resource, plus a handler for `resources/read` on that URI which returns a small but complete HTML bundle with an SVG timeline. The HTML is stdlib-templated — no build system. postMessage is sketched in JS comments since stdlib cannot drive a browser.

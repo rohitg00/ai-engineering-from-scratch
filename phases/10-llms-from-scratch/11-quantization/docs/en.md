@@ -818,7 +818,7 @@ if __name__ == "__main__":
 # llama-server -m llama-8b-q4km.gguf -c 4096 -ngl 99
 ```
 
-### Serving with vLLM
+### Serving quantized models
 
 ```python
 # pip install vllm

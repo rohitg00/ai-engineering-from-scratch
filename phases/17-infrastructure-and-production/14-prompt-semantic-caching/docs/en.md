@@ -6,7 +6,7 @@
 
 **Type:** Learn
 **Languages:** Python (stdlib, toy two-layer cache simulator)
-**Prerequisites:** Phase 17 · 04 (vLLM Serving Internals), Phase 17 · 06 (SGLang RadixAttention)
+**Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 06 (SGLang RadixAttention)
 **Time:** ~60 minutes
 
 ## Learning Objectives
@@ -94,6 +94,10 @@ Pricing points are captured 2026-04 from the linked vendor docs and drift every 
 - Semantic cache hit rate (community-reported): ~10% open chat; up to ~70% structured FAQ. Not a vendor-documented baseline.
 - ProjectDiscovery: 7% → 74% hit rate by moving dynamic out of prefix (project blog, 2025-11).
 - Parallelization anti-pattern: typical reports of 5–10x bill inflation when N parallel requests miss the first cache write.
+
+```figure
+semantic-cache-hit
+```
 
 ## Use It
 

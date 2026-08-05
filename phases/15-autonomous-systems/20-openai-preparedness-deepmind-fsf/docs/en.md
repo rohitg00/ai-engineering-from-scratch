@@ -62,6 +62,10 @@ If a model sandbags on evaluations, every framework's capability thresholds are 
 - Cadence: is the policy updated on a declared schedule, or only after specific events? Declared cadence is stronger.
 - Independence: is external review mandatory or optional? Anthropic partners with Apollo and US AI Safety Institute; OpenAI with METR; DeepMind with internal SAG primarily.
 
+```figure
+a5-tracked-vs-research
+```
+
 ## Use It
 
 `code/main.py` implements a small decision-table diff tool. Given a capability (autonomy, deceptive alignment, R&D automation, cyber uplift, etc.), it outputs how each of the three policies classifies the capability, and what mitigations trigger. It's a reading aid, not a policy tool.

@@ -15,6 +15,10 @@
 - Compute pass-at-k for tasks that sample multiple generations from one model.
 - Treat sandbox crashes, syntax errors, and timeouts as first-class fail modes with distinct exit codes the runner can log.
 
+```figure
+sandbox-runner
+```
+
 ## Why an isolated subprocess
 
 Inline `exec` is a security and stability hazard. A generated `while True: pass` blocks the eval forever. A generated `import shutil; shutil.rmtree('/')` is exactly as catastrophic as it sounds. The fix is to spawn a fresh Python interpreter per candidate, pass the code on stdin, write the assertion results to stdout, and kill the process if it overruns. The host eval process keeps running.

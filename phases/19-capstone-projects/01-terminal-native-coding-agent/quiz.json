@@ -6,48 +6,48 @@
       "stage": "pre",
       "question": "Which loop shape do 2026 terminal coding agents share?",
       "options": [
+        "Fetch, embed, rank, synthesize",
         "Plan, act, observe, recover",
-        "Encode, decode, sample, stream",
         "Train, evaluate, deploy, monitor",
-        "Fetch, embed, rank, synthesize"
+        "Encode, decode, sample, stream"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": ""
     },
     {
       "stage": "pre",
       "question": "Why does the harness run each task inside an E2B or Daytona sandbox?",
       "options": [
-        "To isolate filesystem and tool execution from the host so the worktree can be torn down on completion",
+        "To enable GPU access for the agent loop",
         "To bypass model-provider rate limits",
-        "To benchmark token throughput on cold caches",
-        "To enable GPU access for the agent loop"
+        "To isolate filesystem and tool execution from the host so the worktree can be torn down on completion",
+        "To benchmark token throughput on cold caches"
       ],
-      "correct": 0,
+      "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Which built-in hook is the natural place to block destructive shell commands before they execute?",
       "options": [
-        "PreToolUse",
-        "SessionStart",
         "Stop",
-        "PostToolUse"
+        "PostToolUse",
+        "PreToolUse",
+        "SessionStart"
       ],
-      "correct": 0,
+      "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "The capstone caps each tool result at roughly 4k tokens. Which failure mode does that primarily prevent?",
       "options": [
+        "Model overfitting to tool-call traces",
         "Sandbox escape via malicious shell metacharacters",
-        "Context poisoning and runaway cost when a tool returns a large dump",
         "Stale plan state across resumed sessions",
-        "Model overfitting to tool-call traces"
+        "Context poisoning and runaway cost when a tool returns a large dump"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": ""
     },
     {
@@ -55,21 +55,21 @@
       "question": "What does the PreCompact hook do at the 150k-token mark?",
       "options": [
         "Cancels the run and refunds the user budget",
-        "Summarizes older turns into a prior-state block so the plan and new observations still fit",
         "Force-pushes the current branch to back up progress",
+        "Summarizes older turns into a prior-state block so the plan and new observations still fit",
         "Switches the backing model to a smaller draft model"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which baseline does the capstone compare its harness against on a 30-issue SWE-bench Pro subset?",
       "options": [
-        "OpenCode",
+        "Aider",
         "mini-swe-agent",
         "Live-SWE-agent",
-        "Aider"
+        "OpenCode"
       ],
       "correct": 1,
       "explanation": ""
@@ -79,11 +79,11 @@
       "question": "Which metric set is the deliverable measuring against?",
       "options": [
         "WER, MOS, and first-audio-out",
+        "MRR@10 and nDCG@10",
         "Perplexity, BLEU, and ROUGE",
-        "pass@1, turns-per-task, and dollar-per-task",
-        "MRR@10 and nDCG@10"
+        "pass@1, turns-per-task, and dollar-per-task"
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": ""
     }
   ]

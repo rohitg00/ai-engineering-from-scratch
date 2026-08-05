@@ -71,6 +71,10 @@ This is a layered-defense model: CAI shapes behaviour; classifiers enforce invar
 
 The axis is "where does the preference signal come from." CAI's 2022 paper was the first serious shift from human to AI signal at frontier scale.
 
+```figure
+constitutional-ai
+```
+
 ## Use It
 
 `code/main.py` simulates the CAI critique-and-revise loop on a toy lexicon. A "principle" flags tokens from a harmful set. Given an initial response, the critique identifies the harmful tokens, and the revision replaces them. After 200 iterations the "trained" model has internalized the revision rule. Compare the base model, RLHF-shaped toy, and CAI-shaped toy on a held-out prompt set.

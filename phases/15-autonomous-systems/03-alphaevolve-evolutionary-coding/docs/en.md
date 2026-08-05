@@ -71,6 +71,10 @@ The evaluator, in turn, catches the LLM's confabulations. LLMs will confidently 
 
 All four are variations on the same recipe: generator plus evaluator, loop. The differences are what the evaluator grades and how rigorous it is.
 
+```figure
+alphaevolve-loop
+```
+
 ## Use It
 
 `code/main.py` implements a minimal AlphaEvolve-like loop over a toy symbolic-regression problem. The "LLM" is a stdlib proxy that proposes small syntactic mutations to a program that computes a target function. The "evaluator" measures mean squared error on held-out test points.

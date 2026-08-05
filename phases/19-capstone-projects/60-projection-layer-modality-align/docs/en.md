@@ -59,6 +59,10 @@ Align does not mean `image_emb == text_emb`. Align means `image_emb` points in t
 
 The vision encoder has 86M parameters. The text table has another few million. Training all of them from a mock corpus is a non-starter. Freezing both means the projection's 1.3M parameters are the only thing changing, and a few hundred steps on synthetic pairs is enough to drive the loss down. This is exactly the operational shape of every adapter-based VLM: the heavy parts stay frozen, the light bridge trains.
 
+```figure
+ch-projection-bridge
+```
+
 ## Build It
 
 `code/main.py` implements:

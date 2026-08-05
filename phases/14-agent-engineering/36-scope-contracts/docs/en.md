@@ -90,6 +90,10 @@ Two rules make the list load-bearing instead of decorative. First, the invariant
 
 The contract and the list compose by least privilege, the same merge described below: the task contract's `allowed_files` must sit inside whatever the active feature touches, never outside it.
 
+```figure
+wb-scope-bounce
+```
+
 ## Build It
 
 `code/main.py` implements:

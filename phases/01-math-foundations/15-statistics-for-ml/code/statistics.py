@@ -158,20 +158,57 @@ def _regularized_beta(x, a, b):
         return 0.0
     if x >= 1:
         return 1.0
-    n_steps = 200
-    total = 0.0
-    dt = x / n_steps
-    for i in range(n_steps):
-        t = (i + 0.5) * dt
-        total += t ** (a - 1) * (1 - t) ** (b - 1) * dt
-    beta_val = _beta_function(a, b)
-    if beta_val == 0:
-        return 0.0
-    return total / beta_val
+    front = math.exp(
+        a * math.log(x) + b * math.log(1.0 - x) - _log_beta_function(a, b)
+    )
+    if x < (a + 1.0) / (a + b + 2.0):
+        return front * _beta_continued_fraction(x, a, b) / a
+    return 1.0 - front * _beta_continued_fraction(1.0 - x, b, a) / b
+
+
+def _beta_continued_fraction(x, a, b, max_iter=300, tol=1e-15):
+    tiny = 1e-300
+    qab = a + b
+    qap = a + 1.0
+    qam = a - 1.0
+    c = 1.0
+    d = 1.0 - qab * x / qap
+    if abs(d) < tiny:
+        d = tiny
+    d = 1.0 / d
+    h = d
+    for m in range(1, max_iter + 1):
+        m2 = 2 * m
+        num = m * (b - m) * x / ((qam + m2) * (a + m2))
+        d = 1.0 + num * d
+        if abs(d) < tiny:
+            d = tiny
+        c = 1.0 + num / c
+        if abs(c) < tiny:
+            c = tiny
+        d = 1.0 / d
+        h *= d * c
+        num = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
+        d = 1.0 + num * d
+        if abs(d) < tiny:
+            d = tiny
+        c = 1.0 + num / c
+        if abs(c) < tiny:
+            c = tiny
+        d = 1.0 / d
+        delta = d * c
+        h *= delta
+        if abs(delta - 1.0) < tol:
+            break
+    return h
+
+
+def _log_beta_function(a, b):
+    return math.lgamma(a) + math.lgamma(b) - math.lgamma(a + b)
 
 
 def _beta_function(a, b):
-    return math.exp(math.lgamma(a) + math.lgamma(b) - math.lgamma(a + b))
+    return math.exp(_log_beta_function(a, b))
 
 
 def p_value_two_sided(t_val, df):
@@ -217,17 +254,45 @@ def chi_squared_p_value(chi2, df):
 def _lower_incomplete_gamma_ratio(a, x):
     if x <= 0:
         return 0.0
-    n_steps = 500
-    dt = x / n_steps
-    total = 0.0
-    for i in range(n_steps):
-        t = (i + 0.5) * dt
-        if t > 0:
-            total += math.exp((a - 1) * math.log(t) - t) * dt
-    gamma_a = math.exp(math.lgamma(a))
-    if gamma_a == 0:
-        return 0.0
-    return total / gamma_a
+    if x < a + 1.0:
+        return _gamma_series(a, x)
+    return 1.0 - _gamma_continued_fraction(a, x)
+
+
+def _gamma_series(a, x, max_iter=1000, tol=1e-16):
+    term = 1.0 / a
+    total = term
+    ap = a
+    for _ in range(max_iter):
+        ap += 1.0
+        term *= x / ap
+        total += term
+        if abs(term) < abs(total) * tol:
+            break
+    return total * math.exp(-x + a * math.log(x) - math.lgamma(a))
+
+
+def _gamma_continued_fraction(a, x, max_iter=1000, tol=1e-16):
+    tiny = 1e-300
+    b = x + 1.0 - a
+    c = 1.0 / tiny
+    d = 1.0 / b
+    h = d
+    for i in range(1, max_iter + 1):
+        an = -i * (i - a)
+        b += 2.0
+        d = an * d + b
+        if abs(d) < tiny:
+            d = tiny
+        c = b + an / c
+        if abs(c) < tiny:
+            c = tiny
+        d = 1.0 / d
+        delta = d * c
+        h *= delta
+        if abs(delta - 1.0) < tol:
+            break
+    return h * math.exp(-x + a * math.log(x) - math.lgamma(a))
 
 
 def bootstrap_statistic(data, stat_func, n_bootstrap=5000, ci=95):
@@ -285,7 +350,7 @@ def cohens_d(data1, data2):
     pooled = math.sqrt(((n1 - 1) * v1 + (n2 - 1) * v2) / (n1 + n2 - 2))
     if pooled == 0:
         return 0.0
-    return (m2 - m1) / pooled
+    return (m1 - m2) / pooled
 
 
 def interpret_cohens_d(d):
@@ -383,7 +448,7 @@ def run_multiple_ab_tests(
     }
 
 
-def statistical_vs_practical_significance(small_n=30, large_n=10000, effect=0.1):
+def statistical_vs_practical_significance(small_n=30, large_n=100000, effect=0.1):
     small_a = generate_normal(small_n, 50, 10)
     small_b = generate_normal(small_n, 50 + effect, 10)
     small_result = two_sample_ttest(small_a, small_b)
@@ -577,7 +642,7 @@ if __name__ == "__main__":
     print("STATISTICAL VS PRACTICAL SIGNIFICANCE")
     print("=" * 60)
     result = statistical_vs_practical_significance(
-        small_n=30, large_n=10000, effect=0.1
+        small_n=30, large_n=100000, effect=0.1
     )
     print(f"\nTrue effect: {result['true_effect']} (tiny)")
     print(f"\nSmall sample (n={result['small_sample']['n']}):")

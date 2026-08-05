@@ -1,4 +1,4 @@
-# Agent Framework Tradeoffs — LangGraph vs CrewAI vs AutoGen vs Agno
+# Agent Framework Tradeoffs — Graph, Role, and Actor Orchestration
 
 > Every framework sells the same demo (research agent builds a report) and hides the same bug (state schema fights with the orchestration layer). Pick the framework whose abstractions match the shape of your problem; everything else is glue you write twice.
 
@@ -99,6 +99,10 @@ Refuse to reach for a framework before you can draw the graph, the org chart, th
 | Single agent with tools, sessions, memory | Agno | Thinnest setup, built-in storage and memory. |
 | Thousands of parallel fanouts with reducers | LangGraph + `Send` | The only one with a first-class parallel-dispatch API. |
 | Quick prototype, no framework commitment | Plain Python + provider SDK | No framework is the fastest framework. |
+
+```figure
+l5-framework-fit
+```
 
 ## Exercises
 

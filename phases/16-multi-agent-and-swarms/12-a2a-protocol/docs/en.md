@@ -98,6 +98,10 @@ Several related specs emerged in 2024-2026:
 
 A2A is the most-adopted peer protocol as of April 2026. See arXiv:2505.02279 (Liu et al., "A Survey of Agent Interoperability Protocols") for the comparison.
 
+```figure
+sw-agent-card-discovery
+```
+
 ## Build It
 
 `code/main.py` implements an A2A-minimal server and client using `http.server` and JSON. The server:

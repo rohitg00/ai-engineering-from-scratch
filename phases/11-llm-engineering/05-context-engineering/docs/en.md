@@ -157,6 +157,10 @@ The key insight: different queries need different context. A static system promp
 
 This is what separates a good AI application from a great one. The model is the same. The context is the differentiator.
 
+```figure
+lost-in-the-middle
+```
+
 ## Build It
 
 ### Step 1: Token Counter
@@ -525,19 +529,19 @@ def run_demo():
 
 ## Use It
 
-### Claude Code's Context Strategy
+### Harness-Managed Context
 
 Claude Code manages context with a layered approach. The system prompt includes behavioral rules and tool definitions (~6K tokens). When you open a file, its contents are injected as context. When you search, results are added. Old conversation turns are summarized. CLAUDE.md provides long-term memory that persists across sessions.
 
 The key engineering decision: Claude Code does not dump your entire codebase into the context. It retrieves relevant files on demand. This is context engineering in practice.
 
-### Cursor's Dynamic Context Loading
+### Dynamic Context Loading
 
 Cursor indexes your entire codebase into embeddings. When you type a query, it retrieves the most relevant files and code blocks using vector similarity. Only those pieces go into the context window. A 500K-line codebase is compressed into the 5-10 most relevant code blocks.
 
 This is the pattern: embed everything, retrieve on demand, include only what matters.
 
-### ChatGPT Memory
+### Assistant Long-Term Memory
 
 ChatGPT stores user preferences and facts as long-term memory. On each conversation start, relevant memories are retrieved and included in the system prompt. "The user prefers Python" costs 5 tokens but saves hundreds of tokens of repeated instructions across conversations.
 

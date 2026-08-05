@@ -93,6 +93,10 @@ Pick your strategy by task:
 
 The 2026 production rule: pick a per-task max-pixels cap, encode at native aspect ratio up to that cap, pack the batch, and skip padding. Qwen2.5-VL exposes `min_pixels` and `max_pixels` for exactly this knob.
 
+```figure
+mm-patch-n-pack
+```
+
 ## Use It
 
 `code/main.py` implements patch-n'-pack for a heterogeneous batch of images with integer pixel coordinates. It:

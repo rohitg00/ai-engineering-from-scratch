@@ -1,6 +1,6 @@
-# Agno and Mastra: Production Runtimes
+# Production Agent Runtimes — Fast Instantiation and Typed Workflows
 
-> Agno (Python) and Mastra (TypeScript) are the 2026 production-runtime pairing. Agno aims at microsecond agent instantiation and stateless FastAPI backends. Mastra ships agents, tools, workflows, unified model routing, and composite storage on the Vercel AI SDK substrate.
+> A production agent runtime optimizes what prototyping frameworks ignore: instantiation cost, typed workflow surfaces, and a serving-ready backend. The 2026 pairing: Agno (Python) aims at microsecond agent instantiation and stateless FastAPI backends. Mastra ships agents, tools, workflows, unified model routing, and composite storage on the Vercel AI SDK substrate.
 
 **Type:** Learn
 **Languages:** Python, TypeScript
@@ -61,6 +61,10 @@ Neither is trying to be LangGraph. They compete on:
 - **Perf-for-perf's-sake.** Picking Agno because "2μs" sounds good when the workload is one slow agent call per request. Overhead is not the bottleneck.
 - **Ecosystem lock-in.** Mastra's Vercel-flavored integration is a plus on Vercel, a minus elsewhere.
 - **Enterprise license confusion.** Mastra's `ee/` directories are source-available, not Apache 2.0. Read the licenses if you're planning to fork.
+
+```figure
+wb-runtime-spawn
+```
 
 ## Build It
 

@@ -65,6 +65,10 @@ For classification: take `[CLS]` hidden state → linear → softmax. For DINOv2
 
 ViT needs *a lot* of data to match CNNs because it has none of the CNN inductive biases (translation invariance, locality). Without >100M labeled images or strong self-supervised pretraining, CNNs still win at matched compute. DeiT fixed this in 2021 with distillation tricks; DINOv2 fixed it permanently in 2023 with self-supervision.
 
+```figure
+n5-patch-stream
+```
+
 ## Build It
 
 See `code/main.py`. Pure-stdlib patchify + linear embedding + sanity checks. No training — ViT at any realistic scale needs PyTorch and hours of GPU time.

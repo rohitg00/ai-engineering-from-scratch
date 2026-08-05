@@ -322,6 +322,10 @@ Chaining beats single-prompt for three reasons:
 
 The right technique depends on three factors: accuracy requirement, latency budget, and cost tolerance. For most production systems, few-shot CoT with a 3-sample self-consistency fallback covers 90% of use cases.
 
+```figure
+few-shot-curve
+```
+
 ## Build It
 
 We will build a math problem solver that combines few-shot prompting, chain-of-thought reasoning, and self-consistency voting into a single pipeline. Then we will add tree-of-thought for hard problems.
@@ -453,7 +457,7 @@ The escalation logic: try cheap (single CoT) first. If self-consistency confiden
 
 ## Use It
 
-### With LangChain
+### Template-Driven Few-Shot Prompts
 
 LangChain provides built-in support for prompt templates and output parsing that simplify few-shot and CoT patterns:
 
@@ -491,7 +495,7 @@ selector = SemanticSimilarityExampleSelector.from_examples(
 )
 ```
 
-### With DSPy
+### Compiled Prompts
 
 DSPy treats prompting strategies as optimizable modules. Instead of handcrafting CoT prompts, you define a signature and let DSPy optimize the prompt:
 

@@ -14,6 +14,7 @@ import argparse
 import hashlib
 import hmac
 import json
+import math
 import os
 import sys
 import time
@@ -128,10 +129,12 @@ def _coverage_findings(art: Artifacts, floor: float) -> list[Finding]:
         findings.append(Finding("coverage.below_floor", "block",
                                 f"coverage {current:.2%} below floor {floor:.0%}"))
     delta = previous - current
-    if delta > COVERAGE_REGRESSION_DELTA:
+    if delta > COVERAGE_REGRESSION_DELTA and not math.isclose(
+        delta, COVERAGE_REGRESSION_DELTA, rel_tol=1e-9
+    ):
         findings.append(Finding("coverage.regression", "block",
                                 f"coverage dropped {delta:.2%} (prev {previous:.2%} -> {current:.2%})"))
-    elif delta > 0:
+    elif delta > 0 and not math.isclose(delta, 0.0, abs_tol=1e-12):
         findings.append(Finding("coverage.minor_regression", "warn",
                                 f"coverage dropped {delta:.2%}"))
     return findings

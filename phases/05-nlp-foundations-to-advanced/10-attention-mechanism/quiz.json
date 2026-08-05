@@ -7,83 +7,83 @@
       "question": "What problem in seq2seq did Bahdanau attention solve?",
       "options": [
         "Tokenization mismatch",
+        "Beam search latency",
         "The fixed-size context-vector bottleneck where the decoder only saw the encoder's final state",
-        "Vanishing gradients in encoders",
-        "Beam search latency"
+        "Vanishing gradients in encoders"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Attention lets the decoder consult every encoder state, not just the last one."
     },
     {
       "stage": "pre",
       "question": "What is the attention context vector at decoder step t?",
       "options": [
-        "The decoder's input embedding",
-        "A weighted average of encoder hidden states where the weights come from a query-key score",
         "The encoder's final hidden state",
-        "A random projection"
+        "The decoder's input embedding",
+        "A random projection",
+        "A weighted average of encoder hidden states where the weights come from a query-key score"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Context = sum of alpha_i * h_i, a step-dependent weighted average of encoder states."
     },
     {
       "stage": "check",
       "question": "In Bahdanau (additive) attention, what role does the vector v_a play?",
       "options": [
-        "It controls dropout",
-        "It is the projection that turns the attention-dim hidden combination into a scalar score per encoder position",
         "It encodes positions",
-        "It biases the softmax"
+        "It biases the softmax",
+        "It controls dropout",
+        "It is the projection that turns the attention-dim hidden combination into a scalar score per encoder position"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "v_a dot-products with tanh(W_a s + U_a h) to collapse a d_attn vector into a scalar score."
     },
     {
       "stage": "check",
       "question": "In Luong's 'dot' attention variant, what constraint must hold?",
       "options": [
+        "Beam search is required",
         "Decoder state and encoder state must share the same dimensionality (d_s == d_h)",
-        "The encoder must be bidirectional",
         "Softmax must be log-space",
-        "Beam search is required"
+        "The encoder must be bidirectional"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": "dot uses s^T h with no projection, so dimensions must match exactly."
     },
     {
       "stage": "check",
       "question": "Which Q/K/V mapping describes classical (Bahdanau/Luong) attention?",
       "options": [
-        "Q, K, V are three independent learned projections of the source",
-        "Q is random, K and V are learned",
         "Q from encoder, K and V from decoder",
-        "Q = decoder state; K and V = encoder states (same tensor)"
+        "Q, K, V are three independent learned projections of the source",
+        "Q = decoder state; K and V = encoder states (same tensor)",
+        "Q is random, K and V are learned"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": "In classical attention, keys and values are both encoder states; transformers split K and V via learned projections."
     },
     {
       "stage": "post",
       "question": "Why is reporting raw attention weights as 'explanation' considered fragile?",
       "options": [
-        "Attention weights leak labels",
-        "They are too small to plot",
         "Research (e.g. Jain and Wallace, 2019) showed attention distributions can be permuted without changing predictions on some tasks",
-        "Attention weights are not differentiable"
+        "Attention weights are not differentiable",
+        "Attention weights leak labels",
+        "They are too small to plot"
       ],
-      "correct": 2,
+      "correct": 0,
       "explanation": "Attention weights are correlated with predictions but not faithful explanations without ablation/counterfactual checks."
     },
     {
       "stage": "post",
       "question": "Which step bridges Bahdanau attention to transformer self-attention?",
       "options": [
+        "Querying a sequence against itself with separately learned Q, K, and V projections, run in parallel heads",
         "Dropping beam search",
-        "Adding more RNN layers",
         "Replacing softmax with sigmoid",
-        "Querying a sequence against itself with separately learned Q, K, and V projections, run in parallel heads"
+        "Adding more RNN layers"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": "Self-attention queries the same sequence, with split K and V projections, parallelized across heads."
     },
     {
@@ -91,11 +91,11 @@
       "question": "What is one practical use case for masking in attention?",
       "options": [
         "Replacing dropout",
-        "Setting attention weight for padding tokens to zero so they do not contribute to the context vector",
         "Encoding positions",
+        "Setting attention weight for padding tokens to zero so they do not contribute to the context vector",
         "Reducing model size"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Masking padding (or future tokens in a decoder) prevents the softmax from spreading weight onto invalid positions."
     }
   ]

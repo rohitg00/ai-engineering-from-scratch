@@ -69,6 +69,10 @@ browser / Twilio PSTN
 - Observability: OpenTelemetry voice spans, Langfuse voice traces with audio replay
 - Deployment: single g5.xlarge (24GB VRAM) for self-hosted Whisper + Orpheus; hosted APIs for lowest latency
 
+```figure
+ce-voice-latency
+```
+
 ## Build It
 
 1. **WebRTC session.** Stand up a LiveKit room and a web client that streams microphone audio. On the server, attach an agent worker that joins the room.

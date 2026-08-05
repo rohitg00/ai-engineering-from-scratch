@@ -14,6 +14,10 @@
 - Reserve and protect special tokens (`<|endoftext|>`, `<|pad|>`) so they survive training and decoding.
 - Reason about why a byte-level alphabet is the right floor for a general-purpose tokenizer.
 
+```figure
+cap-bpe-merge
+```
+
 ## The frame
 
 A language model never sees text. It sees integers. The map from a string to a list of integers and back is the tokenizer. Get this layer wrong and every loss curve in the training run is measuring the wrong thing.

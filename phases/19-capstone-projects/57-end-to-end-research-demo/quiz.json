@@ -6,12 +6,12 @@
       "stage": "pre",
       "question": "What is the demo's job in this lesson?",
       "options": [
-        "To replace the earlier lessons with a single new framework",
-        "To compose the primitives from the earlier lessons through plain Python imports",
         "To benchmark the scheduler against a baseline",
-        "To call a real language model on each branch"
+        "To call a real language model on each branch",
+        "To replace the earlier lessons with a single new framework",
+        "To compose the primitives from the earlier lessons through plain Python imports"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "The demo is a composition test. Each stage exists in its own lesson. The demo imports them and wires the report. No new framework, no new abstractions."
     },
     {
@@ -30,12 +30,12 @@
       "stage": "check",
       "question": "How does the best-result picker decide between branches when more than one triggered a paper?",
       "options": [
-        "It picks the branch with the most experiments run",
         "It picks the branch with the highest mean reward, breaking ties alphabetically by branch id",
+        "It picks the branch with the most experiments run",
         "It picks at random for fairness",
         "It picks the first triggered branch"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Highest mean wins. Ties break on branch id so the demo is deterministic. Random would defeat the determinism test."
     },
     {
@@ -43,20 +43,20 @@
       "question": "What error does the picker raise when the scheduler reports zero paper triggers?",
       "options": [
         "ValueError",
-        "NoTriggerError, which short-circuits the demo before the writer runs",
+        "It returns None",
         "PaperValidationError",
-        "It returns None"
+        "NoTriggerError, which short-circuits the demo before the writer runs"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "NoTriggerError is the typed failure mode. Returning None would let the writer run on a malformed input and break later with a less actionable error."
     },
     {
       "stage": "post",
       "question": "Why does the demo run twice with the same seed in the determinism test?",
       "options": [
-        "To exercise asyncio twice",
-        "To assert that the picked branch, reward, and paper section ids are identical across runs",
         "To catch a memory leak",
+        "To assert that the picked branch, reward, and paper section ids are identical across runs",
+        "To exercise asyncio twice",
         "To prove that the scheduler is fair"
       ],
       "correct": 1,
@@ -67,11 +67,11 @@
       "question": "What does the demo report contain after a successful run?",
       "options": [
         "Only the final LaTeX file",
-        "scheduler_report, best_branch, best_reward, critic_result, paper_manifest, and stop_reason",
         "Just the experiment count and a status string",
-        "A model prompt and completion log"
+        "A model prompt and completion log",
+        "scheduler_report, best_branch, best_reward, critic_result, paper_manifest, and stop_reason"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Every stage's output is preserved. The report is a composition of upstream outputs, not a transformed summary. Downstream tooling reads the manifest; debuggers read the trace inside scheduler_report."
     }
   ]

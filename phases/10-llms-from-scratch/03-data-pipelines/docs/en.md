@@ -179,6 +179,10 @@ In practice, this means you should scale model size and dataset size roughly equ
 
 Llama 3 deliberately violates the Chinchilla law. Meta found that overtraining on more data -- far beyond the compute-optimal ratio -- produces better models for inference. The extra training cost is paid once, but the smaller model is cheaper to serve forever. This is sometimes called the "inference-optimal" scaling approach, and it has become the industry standard since 2024.
 
+```figure
+l5-data-pipeline
+```
+
 ## Build It
 
 ### Step 1: Text Cleaning

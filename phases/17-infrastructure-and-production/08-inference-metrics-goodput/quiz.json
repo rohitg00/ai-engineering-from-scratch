@@ -6,60 +6,60 @@
       "stage": "pre",
       "question": "Which components dominate TTFT (time to first token)?",
       "options": [
-        "Decode-only forward time",
         "Disk I/O for weights",
+        "Queue time, network request time, and prefill time",
         "Tokenizer GIL overhead",
-        "Queue time, network request time, and prefill time"
+        "Decode-only forward time"
       ],
-      "correct": 3,
+      "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Which metric does the lesson call the one that actually matters for product?",
       "options": [
-        "GPU duty cycle",
-        "Aggregate throughput in tokens per second",
         "Goodput — fraction of requests meeting every SLO constraint simultaneously",
-        "Mean ITL"
+        "Aggregate throughput in tokens per second",
+        "Mean ITL",
+        "GPU duty cycle"
       ],
-      "correct": 2,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Why is mean the wrong statistic to report for LLM latency?",
       "options": [
+        "LLM latency distributions are right-skewed; users routinely hit P99 outliers that mean hides",
         "Mean is never computable on streaming responses",
         "Mean only works for prefill, not decode",
-        "LLM latency distributions are right-skewed; users routinely hit P99 outliers that mean hides",
         "Mean is not supported by GenAI-Perf"
       ],
-      "correct": 2,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Why do GenAI-Perf and LLMPerf disagree on TPOT for the same run?",
       "options": [
+        "They sample different requests",
         "GenAI-Perf only runs on Blackwell",
-        "GenAI-Perf excludes TTFT from the ITL calculation; LLMPerf includes it, so tool choice changes the number",
         "LLMPerf uses microseconds and GenAI-Perf uses milliseconds",
-        "They sample different requests"
+        "GenAI-Perf excludes TTFT from the ITL calculation; LLMPerf includes it, so tool choice changes the number"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "For long-output requests (>500 tokens), which metric dominates end-to-end latency?",
       "options": [
+        "Network response time",
         "TPOT times output length",
-        "Cold-start time",
         "TTFT",
-        "Network response time"
+        "Cold-start time"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": ""
     },
     {

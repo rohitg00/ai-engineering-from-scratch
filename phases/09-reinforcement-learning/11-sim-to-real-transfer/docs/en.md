@@ -46,6 +46,10 @@ You need a policy that is *robust to sim-to-real distribution shift*. Three hist
 4. Optional observation adaptation via autoencoder on real IMU.
 5. Deploy. Zero-shot on 10+ environments. If it fails, do minutes of real-world fine-tuning with safety-constrained PPO.
 
+```figure
+f3-reality-gap
+```
+
 ## Build It
 
 This lesson's code is a tiny demonstration of domain randomization on a GridWorld with *noisy* transitions. We train a policy that experiences randomized slip probabilities in "sim" and evaluate on "real" with a slip level it never saw during training. The shape maps directly to MuJoCo-to-hardware transfer.

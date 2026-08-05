@@ -201,6 +201,10 @@ Here is a real breakdown for a RAG chatbot serving 10,000 DAU.
 
 The embedding cost for semantic caching ($180/month) pays for itself within the first hour of cache hits.
 
+```figure
+semantic-cache
+```
+
 ## Build It
 
 ### Step 1: Cost Calculator
@@ -758,7 +762,7 @@ if __name__ == "__main__":
 # client = anthropic.Anthropic()
 #
 # response = client.messages.create(
-#     model="claude-sonnet-4-20250514",
+#     model="claude-sonnet-5",
 #     max_tokens=1024,
 #     system=[
 #         {

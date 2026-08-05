@@ -14,6 +14,10 @@
 - Wrap the dataset in a DataLoader with a deterministic shuffle seeded per epoch.
 - Reason about the trade-off between stride, redundancy, and effective dataset size.
 
+```figure
+cap-sliding-window
+```
+
 ## The frame
 
 A pretraining run reads one batch of token ids at a time and updates the model. The shape of each batch is fixed by the training contract. For a causal language model, the batch holds `(B, T)` input ids and `(B, T)` target ids where the target is the input shifted left by one. The job of the data pipeline is to produce that contract on demand, in a deterministic and reproducible way, from a corpus that may be several gigabytes of raw text.

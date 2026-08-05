@@ -1,15 +1,15 @@
 {
   "lesson": "17-claude-agent-sdk",
-  "title": "Claude Agent SDK: Subagents and Session Store",
+  "title": "The Harness as a Library — Subagents and Session Store",
   "questions": [
     {
       "stage": "pre",
       "question": "What is the difference between the Anthropic Client SDK and the Claude Agent SDK?",
       "options": [
         "Client SDK is raw Messages API; Agent SDK is the Claude Code harness shape with built-in tools, MCP, hooks, subagents, and session store",
-        "Client SDK is paid; Agent SDK is free",
+        "There is no difference",
         "Client SDK is for Python only",
-        "There is no difference"
+        "Client SDK is paid; Agent SDK is free"
       ],
       "correct": 0,
       "explanation": "Client SDK gives you the loop; Agent SDK ships the loop pre-built."
@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What are the two documented purposes of subagents?",
       "options": [
-        "Parallelization and context isolation",
-        "Caching and rate limiting",
+        "Authn and authz",
         "Logging and metrics",
-        "Authn and authz"
+        "Caching and rate limiting",
+        "Parallelization and context isolation"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": "Subagents run independent work concurrently and preserve the orchestrator's context budget by isolating context."
     },
     {
@@ -31,59 +31,59 @@
       "question": "Which method is NOT part of the session store surface?",
       "options": [
         "append",
+        "compile_prompt",
         "load",
-        "list_subkeys",
-        "compile_prompt"
+        "list_subkeys"
       ],
-      "correct": 3,
+      "correct": 1,
       "explanation": "Session store ships append, load, list_sessions, delete, list_subkeys; compile_prompt is not a session API."
     },
     {
       "stage": "check",
       "question": "Which is NOT a Claude Agent SDK lifecycle hook?",
       "options": [
+        "PreEmbedding",
         "PreToolUse",
         "PostToolUse",
-        "PreCompact",
-        "PreEmbedding"
+        "PreCompact"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": "Hooks include PreToolUse, PostToolUse, SessionStart/End, UserPromptSubmit, PreCompact, Stop, Notification. PreEmbedding is not a hook."
     },
     {
       "stage": "check",
       "question": "How does trace context propagate across the agent and CLI subprocess?",
       "options": [
-        "Through the file system",
-        "Through W3C trace context headers passed into the CLI subprocess",
         "Only via the provider's dashboard",
-        "Through environment variables only"
+        "Through the file system",
+        "Through environment variables only",
+        "Through W3C trace context headers passed into the CLI subprocess"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "OTel spans on the caller propagate into the CLI subprocess via W3C trace context, so the whole multi-process run is one trace."
     },
     {
       "stage": "post",
       "question": "What is subagent over-spawn and when does it happen?",
       "options": [
-        "Spawning 100 subagents for 100 tiny tasks where overhead dominates; batch instead",
-        "Forgetting to close subagents",
+        "Spawning more subagents than CPU cores",
         "Spawning before SessionStart",
-        "Spawning more subagents than CPU cores"
+        "Spawning 100 subagents for 100 tiny tasks where overhead dominates; batch instead",
+        "Forgetting to close subagents"
       ],
-      "correct": 0,
+      "correct": 2,
       "explanation": "Subagents have overhead; batch small tasks instead of spawning one each."
     },
     {
       "stage": "post",
       "question": "What does Claude Managed Agents trade off against the self-hosted SDK?",
       "options": [
-        "Control for managed infrastructure (long-running async, built-in prompt caching, built-in compaction)",
-        "Latency for cost",
+        "Tracing for streaming",
         "Tools for memory",
-        "Tracing for streaming"
+        "Latency for cost",
+        "Control for managed infrastructure (long-running async, built-in prompt caching, built-in compaction)"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": "Managed Agents is the hosted alternative for long-running async work; less control, less ops surface."
     }
   ]

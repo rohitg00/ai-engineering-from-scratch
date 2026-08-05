@@ -86,6 +86,10 @@ When someone claims a multi-agent result:
 
 Building your own internal benchmark for the axis you actually care about is often the right move.
 
+```figure
+a5-bench-gap
+```
+
 ## Build It
 
 `code/main.py` is a non-interactive walk-through:

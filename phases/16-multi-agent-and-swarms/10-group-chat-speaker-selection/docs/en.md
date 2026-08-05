@@ -1,6 +1,6 @@
 # Group Chat and Speaker Selection
 
-> AutoGen GroupChat and AG2 GroupChat share one conversation across N agents; a selector function (LLM, round-robin, or custom) picks who speaks next. This is the archetype of emergent multi-agent conversation — agents do not know their role in a static graph, they just react to the shared pool. AutoGen v0.2's GroupChat semantics were preserved in the AG2 fork; AutoGen v0.4 rewrote it as an event-driven actor model. Microsoft put AutoGen into maintenance mode in February 2026 and merged it with Semantic Kernel into Microsoft Agent Framework (RC February 2026). The GroupChat primitive survives in both AG2 and Microsoft Agent Framework — learn it once, use it everywhere.
+> Shared-conversation orchestration puts N agents in one conversation; a selector function (LLM, round-robin, or custom) picks who speaks next. This is the archetype of emergent multi-agent conversation — agents do not know their role in a static graph, they just react to the shared pool. AutoGen GroupChat and AG2 GroupChat are the reference implementations: AutoGen v0.2's GroupChat semantics were preserved in the AG2 fork; AutoGen v0.4 rewrote it as an event-driven actor model. Microsoft put AutoGen into maintenance mode in February 2026 and merged it with Semantic Kernel into Microsoft Agent Framework (RC February 2026). The GroupChat primitive survives in both AG2 and Microsoft Agent Framework — learn it once, use it everywhere.
 
 **Type:** Learn + Build
 **Languages:** Python (stdlib)
@@ -62,7 +62,7 @@ Three common patterns:
 - **"TERMINATE" token.** Agents can emit a sentinel message; the manager stops when one appears.
 - **Goal-reached check.** A lightweight verifier runs each turn and stops the chat when done.
 
-### The AutoGen → AG2 split and the Microsoft Agent Framework merge
+### Lineage: forks and mergers
 
 In early 2025, Microsoft began a major rewrite of AutoGen (v0.4) around an event-driven actor model. The community forked AutoGen v0.2's GroupChat semantics as AG2, preserving the API that early adopters had integrated.
 
@@ -89,6 +89,10 @@ Same primitives, different defaults:
 - Group chat: all agents are peers; selector is a function over the shared pool.
 
 Both use the four primitives from Lesson 04. Group chat defaults to LLM-selected orchestration and full-pool shared state.
+
+```figure
+swarm-speaker
+```
 
 ## Build It
 
@@ -141,5 +145,5 @@ Checklist:
 
 - [AutoGen group chat docs](https://microsoft.github.io/autogen/stable/user-guide/core-user-guide/design-patterns/group-chat.html) — the reference implementation
 - [AG2 repo](https://github.com/ag2ai/ag2) — community AutoGen v0.2 continuation
-- [Microsoft Agent Framework docs](https://microsoft.github.io/agent-framework/) — the merged successor, RC February 2026
+- [Microsoft Agent Framework docs](https://learn.microsoft.com/en-us/agent-framework/) — the merged successor, RC February 2026
 - [AutoGen v0.4 release notes](https://microsoft.github.io/autogen/stable/) — event-driven actor model rewrite details

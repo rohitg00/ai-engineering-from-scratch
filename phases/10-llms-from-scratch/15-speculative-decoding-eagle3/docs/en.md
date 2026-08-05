@@ -73,6 +73,10 @@ For EAGLE-2 tree search, the verifier runs attention with a non-causal mask that
 
 In 2026 production: vLLM and SGLang default to EAGLE-3 when available, EAGLE-2 otherwise. TensorRT-LLM has the fastest Medusa path for Meta and NVIDIA public models. llama.cpp ships vanilla draft for CPU deployments.
 
+```figure
+l5-spec-decode-eagle
+```
+
 ## Build It
 
 See `code/main.py`. This is the full Leviathan speculative loop with all the pieces: draft-of-N, verifier parallel pass, per-position rejection, residual sampling, bonus token, KV rollback, and empirical verification that the output distribution matches direct sampling from `q`.

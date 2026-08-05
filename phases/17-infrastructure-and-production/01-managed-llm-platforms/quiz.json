@@ -6,33 +6,33 @@
       "stage": "pre",
       "question": "Before this lesson, which platform would you reach for first if a customer needed Claude, Llama, and Cohere behind one API?",
       "options": [
-        "Vertex AI",
         "AWS Bedrock",
-        "Azure OpenAI Service",
-        "Direct Anthropic API"
+        "Vertex AI",
+        "Direct Anthropic API",
+        "Azure OpenAI Service"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "pre",
       "question": "Which hyperscaler's bet is described as exclusive partnership rather than marketplace?",
       "options": [
-        "Azure OpenAI",
         "Vertex AI",
         "AWS Bedrock",
-        "OCI Generative AI"
+        "OCI Generative AI",
+        "Azure OpenAI"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Roughly what is the measured median TTFT gap between Azure OpenAI (with PTUs) and Bedrock on-demand on Llama 3.1 405B equivalents?",
       "options": [
-        "~100 ms",
-        "~5 ms",
         "~250 ms",
+        "~5 ms",
+        "~100 ms",
         "~25 ms"
       ],
       "correct": 3,
@@ -42,48 +42,48 @@
       "stage": "check",
       "question": "Which Bedrock 2025 feature gives the cleanest per-product cost attribution natively in CloudWatch?",
       "options": [
+        "Bedrock Agents",
         "Bedrock Knowledge Bases",
         "Application Inference Profiles",
-        "Bedrock Guardrails",
-        "Bedrock Agents"
+        "Bedrock Guardrails"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Azure PTUs typically break even versus on-demand at what sustained utilization band?",
       "options": [
-        "5-10%",
+        "40-60%",
         "80-95%",
-        "20-30%",
-        "40-60%"
+        "5-10%",
+        "20-30%"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Why is the lesson's recommended 2026 policy a two-provider minimum for product-critical LLM calls?",
       "options": [
-        "It is required by SOC 2 Type II",
-        "Frontier model leadership rotates monthly, so single-vendor lock-in shuts you out of two-thirds of the frontier",
         "Hyperscalers refuse to sign BAAs unless you also use a competitor",
-        "Single-vendor pricing is always more expensive"
+        "Single-vendor pricing is always more expensive",
+        "It is required by SOC 2 Type II",
+        "Frontier model leadership rotates monthly, so single-vendor lock-in shuts you out of two-thirds of the frontier"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which statement best describes the FinOps surface across the three platforms?",
       "options": [
-        "Azure is cleanest native, Bedrock is opaque",
-        "Vertex has no attribution surface at all",
         "All three expose identical per-request attribution",
-        "Bedrock is cleanest native, Vertex is most flexible via BigQuery, Azure is most opaque without instrumentation"
+        "Bedrock is cleanest native, Vertex is most flexible via BigQuery, Azure is most opaque without instrumentation",
+        "Vertex has no attribution surface at all",
+        "Azure is cleanest native, Bedrock is opaque"
       ],
-      "correct": 3,
+      "correct": 1,
       "explanation": ""
     }
   ]

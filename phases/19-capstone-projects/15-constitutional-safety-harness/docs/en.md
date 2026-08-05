@@ -73,6 +73,10 @@ output: CVSS-scored findings + disclosure timeline + before/after harmlessness d
 - PII scrub: Presidio
 - Target: an 8B instruction-tuned model or one of the other capstones' RAG chatbots
 
+```figure
+cf-safety-stack
+```
+
 ## Build It
 
 1. **Target setup.** Stand up an 8B instruction-tuned model on vLLM (or reuse a RAG chatbot from another capstone). This is the app under test.
@@ -146,7 +150,7 @@ $ safety probe --model=target --family=PAIR --budget=50
 ## Further Reading
 
 - [Anthropic Constitutional Classifiers](https://www.anthropic.com/research/constitutional-classifiers) — training-time reference
-- [Meta Llama Guard 4](https://ai.meta.com/research/publications/llama-guard-4/) — the 2026 input/output classifier
+- [Meta Llama Guard 4](https://www.llama.com/docs/model-cards-and-prompt-formats/llama-guard-4/) — the 2026 input/output classifier
 - [Google ShieldGemma-2](https://huggingface.co/google/shieldgemma-2b) — image + multimodal safety
 - [NVIDIA Nemotron 3 Content Safety](https://developer.nvidia.com/blog/building-nvidia-nemotron-3-agents-for-reasoning-multimodal-rag-voice-and-safety/) — enterprise reference
 - [X-Guard (arXiv:2504.08848)](https://arxiv.org/abs/2504.08848) — 132-language multilingual safety

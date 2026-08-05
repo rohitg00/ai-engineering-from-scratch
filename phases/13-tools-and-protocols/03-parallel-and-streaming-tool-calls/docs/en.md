@@ -110,6 +110,10 @@ Real-world caveat: parallel calls stress downstream APIs. A 10-way fan-out to a 
 
 If the model itself streams, you can start executing as soon as one call's arguments are complete, rather than waiting for all calls to finalize. This is an optimization OpenAI documents but not all SDKs expose. The harness in this lesson does it: as soon as the simulated stream yields a complete argument object, the host kicks off that call.
 
+```figure
+tp-parallel-fanout
+```
+
 ## Use It
 
 `code/main.py` has two halves. The first runs three simulated weather calls sequentially and in parallel using `concurrent.futures.ThreadPoolExecutor` and prints wall-clock time. The second half replays a fake streaming response — chunks of `arguments` for three parallel calls interleaved on one stream — and reassembles them per-id with `StreamAccumulator`. No LLM, no network, just the reassembly logic.

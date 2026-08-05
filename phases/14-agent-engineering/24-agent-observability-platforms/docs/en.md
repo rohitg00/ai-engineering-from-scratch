@@ -63,6 +63,10 @@ Per Maxim (2026 field analysis): 89% of organizations have agent observability i
 - **Self-rolled LLM-judge without grounding.** CRITIC pattern (Lesson 05) applies — judges need external tools for factual verification.
 - **Prompt versions not tied to traces.** When prod regresses, you cannot bisect to the prompt that caused it.
 
+```figure
+wb-trace-ingest
+```
+
 ## Build It
 
 `code/main.py` implements a stdlib trace collector + LLM-judge evaluator:

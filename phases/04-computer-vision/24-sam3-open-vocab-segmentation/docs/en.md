@@ -104,6 +104,10 @@ Result: ~1.6× speedup over Grounded-SAM on open-vocabulary benchmarks.
 
 All return the same general structure (boxes + labels + scores + masks + IDs), which is helpful — your pipeline downstream does not have to branch on which model ran.
 
+```figure
+cv3-open-vocab
+```
+
 ## Build It
 
 ### Step 1: Prompt construction

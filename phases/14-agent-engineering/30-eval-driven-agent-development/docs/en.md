@@ -86,6 +86,10 @@ If your eval suite has cases for each, you have covered Phase 14.
 - **Over-fitting to evals.** Optimizing for the eval diverges from production usefulness. Rotate cases.
 - **Flaky evals.** Non-deterministic cases cause false alarms. Pin seeds, snapshot state.
 
+```figure
+ae-eval-three-layers
+```
+
 ## Build It
 
 `code/main.py` is a stdlib eval harness:

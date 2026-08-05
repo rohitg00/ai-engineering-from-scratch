@@ -68,6 +68,10 @@ Each defence rejects the bad load early; the alternative is silent corruption th
 
 Concurrent write to one file via `O_APPEND` works on POSIX for byte-aligned writes, but in practice the offsets within one shard span MB-sized regions and the locking dominates. Per-rank files have no contention and benefit from striping when the underlying filesystem is parallel (Lustre, GPFS). Production stacks (DeepSpeed, FSDP, NeMo) all use per-rank files for that reason.
 
+```figure
+ci-sharded-checkpoint
+```
+
 ## Build It
 
 `code/main.py` implements:
@@ -127,7 +131,7 @@ Lesson 81 saves a sharded checkpoint of the end-to-end DDP+ZeRO run and reloads 
 
 ## Further Reading
 
-- [DeepSpeed checkpointing](https://www.deepspeed.ai/tutorials/checkpointing/)
+- [DeepSpeed checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html)
 - [PyTorch torch.distributed.checkpoint](https://pytorch.org/docs/stable/distributed.checkpoint.html)
 - [POSIX rename atomicity](https://pubs.opengroup.org/onlinepubs/9699919799/functions/rename.html)
 - Phase 19 Lesson 78 - the ZeRO state this checkpoint is shaped to save

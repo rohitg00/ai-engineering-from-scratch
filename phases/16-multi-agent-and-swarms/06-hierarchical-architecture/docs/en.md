@@ -50,9 +50,9 @@ Three failure modes the 2026 post-mortems keep finding:
 
 Sequential (linear pipeline) vs hierarchical: does your task actually have independent sub-teams, or is it one linear flow pretending to be a tree? If the latter, use sequential. If the former, use hierarchical but budget explicit reconciliation rules.
 
-### CrewAI's implementation
+### Role-framework implementation
 
-`Process.hierarchical` wires a manager LLM over specialist crews. The manager:
+CrewAI's `Process.hierarchical` wires a manager LLM over specialist crews. The manager:
 
 - receives the top-level task,
 - assigns subtasks to crews,
@@ -61,11 +61,15 @@ Sequential (linear pipeline) vs hierarchical: does your task actually have indep
 
 Documentation: https://docs.crewai.com/en/introduction (look for "Hierarchical Process" under Core Concepts).
 
-### LangGraph's implementation
+### Graph-framework implementation
 
 LangGraph uses nested `create_supervisor` calls. The inner supervisor has its own graph; the outer supervisor treats the inner graph as an opaque node. This is cleaner than CrewAI for debugging (you can step through each graph separately) but harder to express dynamic reshaping of the tree.
 
 Reference: https://reference.langchain.com/python/langgraph-supervisor.
+
+```figure
+swarm-hierarchy-token
+```
 
 ## Build It
 

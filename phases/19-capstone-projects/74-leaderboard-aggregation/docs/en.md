@@ -15,6 +15,10 @@
 - Compute bootstrap confidence intervals on the mean score per model and on pairwise differences.
 - Output the leaderboard as a JSON report and as a markdown table the runner in lesson 75 can paste into a CI comment.
 
+```figure
+ci-leaderboard-ci
+```
+
 ## The shape of input
 
 The aggregator consumes a list of `EvalRun` records:

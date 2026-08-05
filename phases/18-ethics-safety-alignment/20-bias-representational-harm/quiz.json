@@ -6,32 +6,32 @@
       "stage": "pre",
       "question": "How does the lesson distinguish representational harm from allocational harm?",
       "options": [
-        "Representational harm only matters for vision models",
-        "Representational harm is stereotypes / erasure / demeaning portrayal; allocational harm is unequal material outcomes for a group",
         "Representational is computational; allocational is statistical",
-        "Allocational harm only occurs offline"
-      ],
-      "correct": 1,
-      "explanation": ""
-    },
-    {
-      "stage": "check",
-      "question": "Which of these are the three evaluation-metric categories from Gallegos et al. 2024?",
-      "options": [
-        "Pre-RLHF, mid-RLHF, post-RLHF",
-        "Vision, audio, text",
-        "WEAT, BLEU, ROUGE",
-        "Embedding-based, probability-based, generated-text-based"
+        "Allocational harm only occurs offline",
+        "Representational harm only matters for vision models",
+        "Representational harm is stereotypes / erasure / demeaning portrayal; allocational harm is unequal material outcomes for a group"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
+      "question": "Which of these are the three evaluation-metric categories from Gallegos et al. 2024?",
+      "options": [
+        "Vision, audio, text",
+        "WEAT, BLEU, ROUGE",
+        "Embedding-based, probability-based, generated-text-based",
+        "Pre-RLHF, mid-RLHF, post-RLHF"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
       "question": "Why is intersectional fairness evaluation needed in addition to single-axis evaluation?",
       "options": [
-        "Intersectionality is the same as cross-validation",
         "Single-axis measures are computationally cheaper",
+        "Intersectionality is the same as cross-validation",
         "Single-axis is the only legally allowed approach",
         "Bias that only emerges at intersections (e.g., gender x race) is missed by evaluations that look at one axis at a time"
       ],
@@ -42,22 +42,22 @@
       "stage": "check",
       "question": "What does WinoIdentity (COLM 2025) introduce?",
       "options": [
+        "Uncertainty-based intersectional fairness evaluation that compares the model's uncertainty over outcomes across intersectional identity tuples, not just point predictions",
         "An adversarial attack on demographic classifiers",
-        "A new tokenizer for identity terms",
         "A replacement for WEAT in embedding space",
-        "Uncertainty-based intersectional fairness evaluation that compares the model's uncertainty over outcomes across intersectional identity tuples, not just point predictions"
+        "A new tokenizer for identity terms"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which of these is a mechanistic-interpretability approach to bias?",
       "options": [
-        "Switching to DPO from PPO",
+        "Re-labeling the training set",
         "Identifying gender neurons in MLP layers, using SAEs to surface race-correlated features, or manipulating specific attention heads (UniBias)",
-        "Adding more KL regularization",
-        "Re-labeling the training set"
+        "Switching to DPO from PPO",
+        "Adding more KL regularization"
       ],
       "correct": 1,
       "explanation": ""
@@ -67,9 +67,9 @@
       "question": "What does the 10-year meta-critique (arXiv:2508.11067) argue about the bias literature?",
       "options": [
         "It disproportionately focuses on binary-gender bias, neglecting other axes (disability, religion, migration status, multi-lingual identity) that may harm marginalized groups by neglect",
+        "It is balanced across all identity axes",
         "It avoids quantitative methods",
-        "It overemphasizes intersectionality",
-        "It is balanced across all identity axes"
+        "It overemphasizes intersectionality"
       ],
       "correct": 0,
       "explanation": ""

@@ -1,6 +1,6 @@
 # The Multi-Agent Primitive Model
 
-> Every multi-agent framework shipping in 2026 — AutoGen, LangGraph, CrewAI, OpenAI Agents SDK, Microsoft Agent Framework — is a point in a four-dimensional design space. Four primitives, nothing more: the agent, the handoff, the shared state, the orchestrator. This lesson builds them from zero, runs a toy system on all four, then maps every major framework onto the same axes so you can read any new release in one paragraph.
+> Four primitives, nothing more — the agent, the handoff, the shared state, the orchestrator — span a four-dimensional design space, and the major multi-agent frameworks shipping in 2026 (AutoGen, LangGraph, CrewAI, OpenAI Agents SDK, Microsoft Agent Framework) are points in it. This lesson builds them from zero, runs a toy system on all four, then maps every major framework onto the same axes so you can read any new release in one paragraph.
 
 **Type:** Learn
 **Languages:** Python (stdlib)
@@ -110,6 +110,10 @@ Once the primitives are fixed, the remaining design decisions are:
 - **Observability** — tracing handoffs, persisting state for replay.
 
 All implementable on top of the primitives. None of them are new primitives.
+
+```figure
+a5-primitive-radar
+```
 
 ## Build It
 

@@ -91,6 +91,10 @@ PSO and ACO need only an *evaluator* function. If you can score a candidate outp
 - **Exploration vs exploitation.** Pheromone decay rate and PSO inertia trade off; too fast decay → forget solutions; too slow → stuck on early local optima.
 - **Catastrophic drift.** Both algorithms can converge and then diverge if fitness landscape shifts (new data distribution). Monitor best-fitness stability.
 
+```figure
+swarm-stigmergy
+```
+
 ## Build It
 
 `code/main.py` implements:

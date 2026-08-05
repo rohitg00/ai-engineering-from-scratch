@@ -74,6 +74,10 @@ Azure Content Moderator: deprecated February 2024, retired February 2027. Replac
 
 Lesson 16 covers the moderation tooling in the red-team context. Lesson 29 covers deployed moderation. Lesson 30 closes with the current dual-use capability evidence.
 
+```figure
+an-moderation-layers
+```
+
 ## Use It
 
 `code/main.py` builds a three-layer moderation harness: input moderator (keyword + category score), output moderator (same classifier on output), custom moderator (domain rules). You can run inputs through and observe which layer catches what.

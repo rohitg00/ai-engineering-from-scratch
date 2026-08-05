@@ -1,6 +1,6 @@
-# Memory Blocks and Sleep-Time Compute (Letta)
+# Memory Blocks and Sleep-Time Compute
 
-> MemGPT became Letta in 2024. The 2026 evolution adds two ideas: discrete functional memory blocks the model can edit directly, and a sleep-time agent that consolidates memory asynchronously while the primary agent is idle. This is how you scale memory beyond one conversation.
+> Discrete functional memory blocks the model can edit directly, and a sleep-time agent that consolidates memory asynchronously while the primary agent is idle. These two ideas are how you scale memory beyond one conversation.
 
 **Type:** Build
 **Languages:** Python (stdlib)
@@ -22,7 +22,7 @@ MemGPT (Lesson 07) solved the virtual-memory control flow. Three production prob
 2. **Memory rot.** Writes accumulate. Contradicted facts stay. Retrieval drowns in stale content.
 3. **Structure loss.** A flat archival store cannot express "the Human block is always in the prompt; the Persona block is always in the prompt; the Task block swaps per session."
 
-Letta (letta.com) is the 2026 rewrite. Memory blocks make structure explicit; sleep-time compute moves consolidation off the critical path.
+Letta (letta.com) is the platform name the original MemGPT project adopted in 2024 — the paper's pattern keeps the MemGPT name — and the 2026 Letta V1 rewrite is a later, separate step. Memory blocks make structure explicit; sleep-time compute moves consolidation off the critical path.
 
 ## The Concept
 
@@ -64,7 +64,7 @@ Properties that fall out:
 
 The shape matches how humans work: you do the task, you sleep on it, the long-term memory settles overnight.
 
-### Letta V1 and native reasoning
+### Native reasoning
 
 Letta V1 (`letta_v1_agent`, 2026) deprecates `send_message`/heartbeat and inline `Thought:` tokens in favor of native reasoning. The Responses API (OpenAI) and the Messages API with extended thinking (Anthropic) emit reasoning on a separate channel, passed through turns (encrypted across providers in production). The control loop is still ReAct. The thought trace is structural, not prompt-shaped.
 
@@ -73,6 +73,10 @@ Letta V1 (`letta_v1_agent`, 2026) deprecates `send_message`/heartbeat and inline
 - **Block bloat.** Infinite `block_append` hits the limit fast. Wire a block summarizer before the write that pushes over the cap.
 - **Silent drift.** Sleep-time agent rewrites a block and the primary agent never notices. Version blocks and surface diffs in the trace.
 - **Poisoned consolidation.** Sleep-time agent processes attacker-reachable content into core. Lesson 27 applies to the sleep-time surface too.
+
+```figure
+memory-blocks
+```
 
 ## Build It
 

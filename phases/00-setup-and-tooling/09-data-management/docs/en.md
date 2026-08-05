@@ -32,6 +32,10 @@ graph TD
 
 The Hugging Face `datasets` library is the standard way to load data for AI work. It handles downloading, caching, format conversion, and streaming out of the box.
 
+```figure
+s0-data-pipeline
+```
+
 ## Build It
 
 ### Step 1: Install the datasets library
@@ -45,7 +49,7 @@ pip install datasets huggingface_hub
 ```python
 from datasets import load_dataset
 
-dataset = load_dataset("imdb")
+dataset = load_dataset("stanfordnlp/imdb")
 print(dataset)
 print(dataset["train"][0])
 ```
@@ -72,7 +76,7 @@ Streaming gives you an `IterableDataset`. You process rows as they arrive. Memor
 The `datasets` library uses Apache Arrow under the hood. You can convert to other formats depending on what your pipeline needs.
 
 ```python
-dataset = load_dataset("imdb", split="train")
+dataset = load_dataset("stanfordnlp/imdb", split="train")
 
 dataset.to_csv("imdb_train.csv")
 dataset.to_json("imdb_train.json")
@@ -101,7 +105,7 @@ Every ML project needs three splits:
 Some datasets come pre-split. When they don't, split them yourself:
 
 ```python
-dataset = load_dataset("imdb", split="train")
+dataset = load_dataset("stanfordnlp/imdb", split="train")
 
 split = dataset.train_test_split(test_size=0.2, seed=42)
 train_val = split["train"].train_test_split(test_size=0.125, seed=42)

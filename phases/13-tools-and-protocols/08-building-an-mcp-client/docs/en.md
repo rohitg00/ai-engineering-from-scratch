@@ -87,6 +87,10 @@ Phase 13 · 09 covers the Streamable HTTP reconnection semantics; stdio is simpl
 
 Streamable HTTP uses a `Mcp-Session-Id` header. Stdio has no session id — the process identity IS the session. Keepalive pings are optional; stdio pipes do not break under inactivity.
 
+```figure
+tp-client-merge
+```
+
 ## Use It
 
 `code/main.py` spawns three simulated MCP servers as subprocesses, handshakes each, merges their tool lists, and routes tool calls to the right one. The "servers" are actually other Python processes running toy responders (no real LLM). Run it to see:

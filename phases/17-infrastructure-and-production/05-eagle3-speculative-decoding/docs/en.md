@@ -4,7 +4,7 @@
 
 **Type:** Learn
 **Languages:** Python (stdlib, toy acceptance-rate simulator)
-**Prerequisites:** Phase 17 · 04 (vLLM Serving Internals), Phase 10 · 18 (Multi-Token Prediction)
+**Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 18 (Multi-Token Prediction)
 **Time:** ~60 minutes
 
 ## Learning Objectives
@@ -69,6 +69,10 @@ Expected speedup: `S(alpha, K) = (1 + K*alpha) / (1 + verify_overhead)`. Setting
 - Very short outputs (under 50 tokens). Draft overhead and verify cost dominate.
 - Specialized domains without a domain-trained draft head. Alpha too low.
 - vLLM v0.18.0 plus draft-model spec decode plus `--enable-chunked-prefill`. This combination does not compile. The documented exception is N-gram GPU spec decode in V1.
+
+```figure
+mx-speculative-tree
+```
 
 ## Use It
 

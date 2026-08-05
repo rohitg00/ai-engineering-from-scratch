@@ -41,6 +41,10 @@ Every session opens with `initialize`. The client sends protocol version and its
 - Not an agent framework. MCP is the plumbing; frameworks like LangGraph, PydanticAI, and OpenAI Agents SDK sit above it.
 - Not tied to Anthropic. The spec and reference implementations are open source under the `modelcontextprotocol` org.
 
+```figure
+mcp-nxm-collapse
+```
+
 ## Build It
 
 ### Step 1: a minimal MCP server
@@ -202,5 +206,5 @@ Refuse to ship a server that writes to disk or calls external APIs without an ap
 - [Anthropic — Introducing MCP (Nov 2024)](https://www.anthropic.com/news/model-context-protocol) — launch post with design rationale.
 - [Python SDK](https://github.com/modelcontextprotocol/python-sdk) — official SDK used in this lesson.
 - [Security considerations for MCP](https://modelcontextprotocol.io/docs/concepts/security) — roots, destructive hints, tool poisoning.
-- [Google A2A specification](https://google.github.io/A2A/) — Agent2Agent protocol; the sibling standard for agent-to-agent communication that complements MCP's agent-to-tool scope.
+- [Google A2A specification](https://a2a-protocol.org/latest/) — Agent2Agent protocol; the sibling standard for agent-to-agent communication that complements MCP's agent-to-tool scope.
 - [Anthropic — Building effective agents (Dec 2024)](https://www.anthropic.com/research/building-effective-agents) — where MCP sits in the broader pattern library for agent design (augmented LLM, workflows, autonomous agents).

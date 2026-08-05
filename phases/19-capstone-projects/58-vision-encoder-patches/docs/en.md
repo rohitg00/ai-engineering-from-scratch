@@ -61,6 +61,10 @@ For ViT-Base/16 at 224 resolution: 590,592 parameters in the projection, 768 in 
 
 The patch step has two spellings: a `Conv2d` projection and an explicit unfold-then-linear. They must produce the same output for the same weights. If they do not, the unfold math is wrong, and the rest of the encoder is built on sand. The tests in this lesson exercise that equivalence.
 
+```figure
+ch-patch-tokenizer
+```
+
 ## Build It
 
 `code/main.py` implements:

@@ -80,6 +80,10 @@ feature_list.json          # the backlog (Phase 14 · 36)
 
 Two tests keep the layering honest. The reachability test: an agent should reach any rule in at most two hops from the router, so the router must link every topic doc by path, not describe it in prose. The freshness test: the router is short enough that a reviewer rereads it on every PR, which is the only thing that stops it from silently growing back into the encyclopedia it replaced. A pointer that no longer resolves is a worse failure than a missing rule, so a broken link in the router is itself a startup-check violation.
 
+```figure
+wb-rule-checkoff
+```
+
 ## Build It
 
 `code/main.py` ships:
@@ -140,7 +144,7 @@ The rule set is portable across all three because it is just markdown plus funct
 
 ## Further Reading
 
-- [OpenAI Agents SDK guardrails](https://platform.openai.com/docs/guides/agents-sdk/guardrails)
+- [OpenAI Agents SDK guardrails](https://openai.github.io/openai-agents-python/guardrails/)
 - [LangGraph interrupts](https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop/breakpoints/)
 - [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
 - [Rick Hightower, Agent RuleZ: A Deterministic Policy Engine](https://medium.com/@richardhightower/agent-rulez-a-deterministic-policy-engine-for-ai-coding-agents-9489e0561edf) — block/warn/info severity in production

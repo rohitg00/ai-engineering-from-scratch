@@ -46,7 +46,7 @@ If worker 3 fails in ReAct, the loop has to reason out of the error mid-stream. 
 
 The paper's second result: because the planner does not see observations, you can fine-tune a 7B model on planner outputs from a 175B teacher. The small model handles planning; the big model is not needed at inference. This is now standard — many 2026 production agents use a small planner and a big executor or vice-versa.
 
-### Plan-and-Execute (LangChain, 2023)
+### Plan-and-Execute (2023)
 
 The LangChain team's August 2023 post generalized ReWOO into a pattern name: Plan-and-Execute. Up-front planner emits a step list, executor runs each step, an optional replanner can revise after observing results. This is closer to ReAct than ReWOO (the replanner brings observations back into planning) but preserves the token savings.
 
@@ -65,6 +65,10 @@ Plan-and-Act scales the pattern to long-horizon web and mobile agents. The key c
 | Tree of Thoughts | Search is worth paying for (Lesson 04) |
 
 Anthropic's Dec 2024 guidance: start with the simplest. If the task is one tool call plus a summary, do not build ReWOO. If the task is a 40-step research assignment, do not do ReAct alone.
+
+```figure
+rewoo-plan
+```
 
 ## Build It
 

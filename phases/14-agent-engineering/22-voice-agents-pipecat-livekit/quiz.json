@@ -7,11 +7,11 @@
       "question": "Which two flow directions does a Pipecat pipeline use?",
       "options": [
         "Read and write",
-        "DOWNSTREAM (source to sink) and UPSTREAM (feedback, cancel, barge-in)",
+        "Hot and cold",
         "Inbound and outbound",
-        "Hot and cold"
+        "DOWNSTREAM (source to sink) and UPSTREAM (feedback, cancel, barge-in)"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Frames flow downstream source-to-sink and upstream for control and cancellation."
     },
     {
@@ -19,9 +19,9 @@
       "question": "What is the canonical Pipecat voice pipeline?",
       "options": [
         "VAD -> STT -> LLM -> TTS -> transport",
-        "TTS -> STT -> LLM -> VAD",
+        "Audio -> JSON -> SQL -> response",
         "LLM -> embed -> retrieve -> answer",
-        "Audio -> JSON -> SQL -> response"
+        "TTS -> STT -> LLM -> VAD"
       ],
       "correct": 0,
       "explanation": "VAD detects voice activity, STT transcribes, LLM responds, TTS speaks, transport delivers."
@@ -30,12 +30,12 @@
       "stage": "check",
       "question": "Which two voice agent classes does LiveKit Agents ship?",
       "options": [
-        "MultimodalAgent (direct audio) and VoicePipelineAgent (STT/LLM/TTS cascade)",
         "BatchAgent and StreamAgent",
         "TextAgent and SpeechAgent",
+        "MultimodalAgent (direct audio) and VoicePipelineAgent (STT/LLM/TTS cascade)",
         "LocalAgent and CloudAgent"
       ],
-      "correct": 0,
+      "correct": 2,
       "explanation": "MultimodalAgent uses direct audio (Realtime-style); VoicePipelineAgent uses STT->LLM->TTS for text-level control."
     },
     {
@@ -44,8 +44,8 @@
       "options": [
         "An LLM cost spike; reduce tokens",
         "The user interrupts while the agent is speaking; UPSTREAM cancel frames stop TTS mid-utterance",
-        "A provider outage; switch regions",
-        "Captcha failure; retry"
+        "Captcha failure; retry",
+        "A provider outage; switch regions"
       ],
       "correct": 1,
       "explanation": "Barge-in is user interruption; UPSTREAM cancellation is how Pipecat handles it cleanly."
@@ -54,34 +54,34 @@
       "stage": "check",
       "question": "What end-to-end latency does the lesson describe as premium?",
       "options": [
-        "About 50 ms",
         "About 450-600 ms",
         "About 1500 ms",
+        "About 50 ms",
         "About 5000 ms"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Premium stacks land around 450-600 ms; 800-1200 ms is common; over 1500 ms feels broken."
     },
     {
       "stage": "post",
       "question": "What goes wrong if STT confidence is ignored?",
       "options": [
+        "Calls get cheaper",
         "Latency improves",
-        "Low-confidence transcripts feed the LLM as if gospel, producing wrong answers; gate on confidence or ask for confirmation",
         "TTS gets faster",
-        "Calls get cheaper"
+        "Low-confidence transcripts feed the LLM as if gospel, producing wrong answers; gate on confidence or ask for confirmation"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Treating low-confidence STT as truth is a top voice-agent failure mode."
     },
     {
       "stage": "post",
       "question": "Why does the lesson recommend summing component latencies before shipping?",
       "options": [
-        "Providers bill by latency",
+        "Latency is required by WebRTC",
         "Every component adds 50-200 ms; the sum determines whether the experience feels broken",
-        "It satisfies a compliance requirement",
-        "Latency is required by WebRTC"
+        "Providers bill by latency",
+        "It satisfies a compliance requirement"
       ],
       "correct": 1,
       "explanation": "Sum the chain (VAD + STT + LLM + TTS + transport) before shipping; targets are tight."

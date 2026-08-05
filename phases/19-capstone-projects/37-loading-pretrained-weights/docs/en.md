@@ -92,6 +92,10 @@ The mapping is a fixed function. The lesson ships it as a dict that the loader i
 
 Real GPT-2 weights are 0.5 GB. The demo does not download them; it generates a small safetensors fixture at first run, with the exact GPT-2 naming convention and shapes appropriate to a 12-block model at d_model 192 instead of 768. The fixture has the right structure to exercise every code path in the loader. Swap the fixture for the real file and the loader works without modification.
 
+```figure
+cc-weight-remap
+```
+
 ## Build It
 
 `code/main.py` implements:

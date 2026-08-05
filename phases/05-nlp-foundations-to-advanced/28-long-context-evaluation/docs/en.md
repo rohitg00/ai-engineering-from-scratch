@@ -46,6 +46,10 @@ Long-context evaluation measures these axes. This lesson names the benchmarks, w
 
 Two numbers for your spec sheet: retrieval-effective and reasoning-effective. Usually the reasoning-effective is 25-50% of the advertised window.
 
+```figure
+gx-niah-decay
+```
+
 ## Build It
 
 ### Step 1: a custom NIAH for your domain

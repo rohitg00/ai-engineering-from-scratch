@@ -27,6 +27,10 @@ This lesson builds both, with the failure mode each one owns.
 
 Evaluation with **ROUGE** (Recall-Oriented Understudy for Gisting Evaluation). ROUGE-1 and ROUGE-2 score unigram and bigram overlap. ROUGE-L scores longest common subsequence. Higher is better but 40 ROUGE-L is "good" and 50 is "exceptional." Every paper reports all three. Use the `rouge-score` package.
 
+```figure
+summarize-collapse
+```
+
 ## Build It
 
 ### Step 1: TextRank (extractive)

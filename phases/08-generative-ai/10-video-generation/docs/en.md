@@ -60,6 +60,10 @@ Standard diffusion loss (ε or v prediction) over spatiotemporal latents. Data: 
 
 Open weights are closing the gap faster than in the image space: HunyuanVideo + WAN 2.2 LoRAs already power most open-source workflows by mid-2026.
 
+```figure
+video-diffusion-denoise
+```
+
 ## Build It
 
 `code/main.py` simulates the core spatiotemporal DiT idea: patchify a small synthetic video, add a per-patch position embedding, and denoise the whole sequence with a transformer-style attention over patches. No numpy; pure Python. We show that temporal coherence emerges even in 1-D when adjacent-frame patches share a denoiser and position embeddings.

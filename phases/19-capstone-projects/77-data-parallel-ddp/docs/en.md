@@ -59,6 +59,10 @@ A transformer has thousands of parameter tensors. One allreduce per tensor pays 
 
 Every rank must call `torch.manual_seed(seed + rank)` for shuffling but `torch.manual_seed(seed)` for parameter init. A single shared seed means every rank sees the same batch order (defeating data parallel); a rank-specific seed for params means initial parameters disagree by float epsilon and gradient sync no longer makes the replicas identical. Get the seed pattern right or the test for parameter equivalence fails on step 1.
 
+```figure
+ci-ddp-grad-sync
+```
+
 ## Build It
 
 `code/main.py` implements:

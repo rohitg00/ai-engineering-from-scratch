@@ -6,10 +6,10 @@
       "stage": "pre",
       "question": "What is the core question the Superalignment agenda asks?",
       "options": [
+        "Are humans more accurate than reward models?",
         "Can RLHF scale beyond 1B parameters?",
-        "Can adversarial training remove all backdoors?",
         "Can a weaker overseer reliably supervise a stronger, aligned model?",
-        "Are humans more accurate than reward models?"
+        "Can adversarial training remove all backdoors?"
       ],
       "correct": 2,
       "explanation": ""
@@ -20,31 +20,31 @@
       "options": [
         "A reward model is trained on synthetic data only",
         "Two strong models debate; a human judges",
-        "GPT-2 is fine-tuned on GPT-4 labels",
-        "A strong model (GPT-4 class) is fine-tuned on labels produced by a weak model (GPT-2 class) and its capability is measured against the strong supervised ceiling"
+        "A strong model (GPT-4 class) is fine-tuned on labels produced by a weak model (GPT-2 class) and its capability is measured against the strong supervised ceiling",
+        "GPT-2 is fine-tuned on GPT-4 labels"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "How is Performance Gap Recovered (PGR) defined?",
       "options": [
-        "(ceiling - fine-tuned) / weak",
         "(fine-tuned - weak) / (ceiling - weak)",
+        "(weak - ceiling) / ceiling",
         "fine-tuned / ceiling",
-        "(weak - ceiling) / ceiling"
+        "(ceiling - fine-tuned) / weak"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Which of the following is NOT a scalable-oversight mechanism listed in the lesson?",
       "options": [
-        "Task Decomposition",
-        "Tokenizer Distillation",
         "Recursive Reward Modeling",
+        "Tokenizer Distillation",
+        "Task Decomposition",
         "Debate"
       ],
       "correct": 1,
@@ -54,24 +54,24 @@
       "stage": "post",
       "question": "How are scalable oversight and W2SG complementary?",
       "options": [
-        "Scalable oversight improves the overseer's effective signal quality; W2SG closes the gap from whatever imperfect signal the overseer provides",
+        "They both require white-box access",
         "They both target the same metric",
-        "They are mutually exclusive",
-        "They both require white-box access"
+        "Scalable oversight improves the overseer's effective signal quality; W2SG closes the gap from whatever imperfect signal the overseer provides",
+        "They are mutually exclusive"
       ],
-      "correct": 0,
+      "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "What is the central assumption of the AI-safety-via-debate mechanism?",
       "options": [
-        "Debate transcripts are always shorter than direct answers",
         "Finding a convincing true answer is easier than finding a convincing false answer",
+        "Debate transcripts are always shorter than direct answers",
         "The judge is more capable than the debaters",
         "Both debaters always tell the truth"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": ""
     }
   ]

@@ -17,12 +17,12 @@
     "stage": "pre",
     "question": "What does Laplace smoothing prevent in Naive Bayes?",
     "options": [
-      "Overfitting to large datasets",
       "Zero probabilities for words never seen in a class during training",
+      "Class imbalance in the dataset",
       "Slow training on high-dimensional data",
-      "Class imbalance in the dataset"
+      "Overfitting to large datasets"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "Without smoothing, a word that never appeared in 'spam' training emails would get P(word|spam) = 0, making the entire product zero regardless of other strong evidence. Laplace smoothing adds 1 to each count."
   },
   {
@@ -31,11 +31,11 @@
     "question": "The naive independence assumption is clearly wrong for text. Why does Naive Bayes still classify well?",
     "options": [
       "It only works on very small vocabularies where independence holds",
-      "Classification only needs correct class rankings, not correct probability estimates, and the assumption introduces stable errors that affect all classes similarly",
+      "It only works when features are truly independent",
       "Modern implementations secretly remove the independence assumption",
-      "It only works when features are truly independent"
+      "Classification only needs correct class rankings, not correct probability estimates, and the assumption introduces stable errors that affect all classes similarly"
     ],
-    "correct": 1,
+    "correct": 3,
     "explanation": "NB needs to rank classes correctly, not estimate exact probabilities. The independence assumption is high bias but low variance, making it stable with limited data. Correlated features double-count evidence for the correct class too."
   },
   {
@@ -43,12 +43,12 @@
     "stage": "post",
     "question": "When should you use Multinomial NB versus Gaussian NB?",
     "options": [
-      "Multinomial for regression, Gaussian for classification",
       "Multinomial for word count/frequency features, Gaussian for continuous real-valued features",
+      "They are interchangeable -- always use whichever is faster",
       "Multinomial for binary data, Gaussian for multi-class problems",
-      "They are interchangeable -- always use whichever is faster"
+      "Multinomial for regression, Gaussian for classification"
     ],
-    "correct": 1,
+    "correct": 0,
     "explanation": "Multinomial NB models feature counts (word frequencies in text). Gaussian NB assumes features follow normal distributions, suitable for continuous features like measurements or sensor readings."
   },
   {
@@ -56,12 +56,12 @@
     "stage": "post",
     "question": "An email contains 'free' twice and 'money' once. In Multinomial NB with log probabilities, how is the spam score computed?",
     "options": [
-      "log P(spam) + log P(free|spam) + log P(money|spam)",
-      "log P(spam) + 2 * log P(free|spam) + 1 * log P(money|spam)",
       "P(spam) * P(free|spam) * P(money|spam)",
-      "log P(spam) * 2 * log P(free|spam)"
+      "log P(spam) * 2 * log P(free|spam)",
+      "log P(spam) + log P(free|spam) + log P(money|spam)",
+      "log P(spam) + 2 * log P(free|spam) + 1 * log P(money|spam)"
     ],
-    "correct": 1,
+    "correct": 3,
     "explanation": "Multinomial NB multiplies the word likelihoods raised to their count. In log space: log P(spam) + 2*log P(free|spam) + 1*log P(money|spam). The word count acts as an exponent."
   }
 ]

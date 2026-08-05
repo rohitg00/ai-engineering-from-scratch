@@ -6,9 +6,9 @@
       "stage": "pre",
       "question": "Why does prompt caching matter so much in a regulated-domain RAG chatbot?",
       "options": [
-        "It removes the need for a vector database",
-        "At 60-80% hit rate it cuts per-query cost 3-5x by discounting stable prefix tokens",
         "It eliminates hallucinations",
+        "At 60-80% hit rate it cuts per-query cost 3-5x by discounting stable prefix tokens",
+        "It removes the need for a vector database",
         "It improves recall on the rerank stage"
       ],
       "correct": 1,
@@ -30,9 +30,9 @@
       "stage": "check",
       "question": "How does the retrieval layer respect jurisdiction tags like GDPR or HIPAA?",
       "options": [
-        "It runs a separate index per country",
-        "It blocks the response after generation only",
         "It rewrites the user question per region",
+        "It blocks the response after generation only",
+        "It runs a separate index per country",
         "Role and jurisdiction filters apply before the hybrid search merge so chunks outside the user's scope are never reranked"
       ],
       "correct": 3,
@@ -42,12 +42,12 @@
       "stage": "check",
       "question": "Which layered guardrail combination does the synthesis stage pass output through?",
       "options": [
+        "Just an output PII regex",
         "Only Llama Guard 4 on input",
         "Llama Guard 4, NeMo Guardrails policy rails, and Presidio PII scrub, plus citation enforcement",
-        "Just an output PII regex",
         "A single LLM-judge faithfulness check"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": ""
     },
     {
@@ -66,22 +66,22 @@
       "stage": "post",
       "question": "How big is the golden set used to gate the deliverable's correctness rubric?",
       "options": [
-        "5 demo queries",
         "200 expert-labeled question/answer pairs with citations",
-        "20 questions",
-        "2000 synthetic questions"
+        "5 demo queries",
+        "2000 synthetic questions",
+        "20 questions"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "Which RAGAS scores are tracked online per turn?",
       "options": [
-        "Throughput, GPU utilization, and queue depth",
         "BLEU, ROUGE, and METEOR",
+        "Token count and dollar cost",
         "Faithfulness, answer relevance, and context precision",
-        "Token count and dollar cost"
+        "Throughput, GPU utilization, and queue depth"
       ],
       "correct": 2,
       "explanation": ""

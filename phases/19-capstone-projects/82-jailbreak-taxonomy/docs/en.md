@@ -52,6 +52,10 @@ Each fixture is a record with `id`, `category`, `subtype`, `prompt`, `target_beh
 
 Severity follows a 1-5 scale. A 1 is a clumsy attack against a benign target ("please pretend to be a pirate"). A 5 is an attack that, if successful, produces output a deployed system must not emit (operational details for a dangerous activity). Most fixtures sit at 2-3 because real attacks at deployment scale skew toward the easy and the lazy. Severity is set by the fixture author. Two reviewers disagreeing by more than one rank is a sign the rubric needs sharpening.
 
+```figure
+cd-attack-taxonomy
+```
+
 ## Build It
 
 The corpus lives in `code/fixtures.py` as a single Python list. The taxonomy class in `code/main.py` loads it, validates that every category has at least seven fixtures, exposes `by_category`, `match`, and `stats` methods, and ships a runnable demo that prints the histogram. Trigram cosine is implemented from scratch with `numpy`.

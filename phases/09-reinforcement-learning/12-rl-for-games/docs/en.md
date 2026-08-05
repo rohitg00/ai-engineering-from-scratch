@@ -80,6 +80,10 @@ The result matches o1 on AIME and MATH-500 at open weights, and is small enough 
 - *Perfect-information games with long horizons* (Go, chess): still search-based. AlphaZero / MuZero dominate.
 - *LLM reasoning*: no MCTS yet in production; GRPO on full rollouts, best-of-N for inference compute. Process reward models (PRMs) hint at step-level search being added back.
 
+```figure
+f3-selfplay-ladder
+```
+
 ## Build It
 
 The code in `code/main.py` implements **GRPO in miniature** — a bandit with multiple groups of samples. The algorithm is the same as on an LLM; only the policy and environment are simpler. It teaches the *loss* and the *group-relative advantage*, which is the 2025 innovation.

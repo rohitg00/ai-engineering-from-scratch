@@ -64,6 +64,10 @@ PagerDuty / Alertmanager webhook
 - Audit: append-only structured log (considered, executed, approved, outcome)
 - Deployment: K8s deployment with its own narrow RBAC role; separate namespace
 
+```figure
+ce-rootcause-walk
+```
+
 ## Build It
 
 1. **Graph ingestion.** Sync kube-state-metrics into Neo4j/kuzu every 30s. Nodes: Pod, Deployment, Node, Service, PVC, HPA. Edges: OWNED_BY, SCHEDULED_ON, EXPOSES, MOUNTS, SCALES. Telemetry overlay edges: OBSERVED_BY (a Pod is observed by a Prometheus series).

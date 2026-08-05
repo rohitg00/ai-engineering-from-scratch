@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260525a">
+  <link rel="stylesheet" href="style.css?v=20260803a">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -69,6 +69,207 @@
     .manual-masthead {
       padding: 96px 0 24px;
       border-bottom: 1px solid var(--rule-soft);
+      position: relative;
+    }
+
+    /* ── Masthead figure: three cycling plates that explain the course ── */
+    .masthead-figure {
+      display: none;
+      position: absolute;
+      top: 152px;
+      margin: 0;
+      /* fixed per-tier size and outward offset: predictable at every width,
+         immune to scrollbar-inflated 100vw */
+      right: -8px;
+      width: 430px;
+    }
+
+    @media (min-width: 1280px) { .masthead-figure { display: block; } }
+    @media (min-width: 1440px) { .masthead-figure { right: -80px; width: 520px; } }
+    @media (min-width: 1640px) { .masthead-figure { right: -150px; width: 600px; } }
+
+    .fig-plate { position: relative; aspect-ratio: 560 / 380; }
+
+    .fig-panel {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      /* sequential fade: the leaving plate is fully gone before the next one
+         appears, so two plates' text can never double-expose */
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+    .fig-panel.is-active { opacity: 1; transition: opacity 0.3s ease 0.3s; }
+    .fig-panel svg { width: 100%; height: 100%; }
+
+    .fig-frame { stroke: var(--rule-soft); }
+    .fig-tick  { stroke: var(--blueprint); stroke-width: 1.4; }
+
+    .fig-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      fill: var(--ink-mute);
+      text-transform: none;
+    }
+    .fig-label--right { text-anchor: end; fill: var(--blueprint); letter-spacing: 0.06em; }
+
+    .fig-axis {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      fill: var(--ink-mute);
+      text-anchor: middle;
+      text-transform: none;
+    }
+
+    /* FIG_001 — edges draw in layer by layer, then pulses travel the net */
+    .fig-edge {
+      stroke: var(--blueprint);
+      stroke-opacity: 0.28;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+    .is-active .fig-edge { animation: fig-draw 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+    .is-active .fig-l2 { animation-delay: 0.35s; }
+    .is-active .fig-l3 { animation-delay: 0.7s; }
+    @keyframes fig-draw { to { stroke-dashoffset: 0; } }
+
+    .fig-node { fill: var(--bg); stroke: var(--ink); stroke-width: 1.4; opacity: 0; }
+    .is-active .fig-node { animation: fig-node 0.45s ease-out forwards; }
+    .is-active .fig-n1 { animation-delay: 0.15s; }
+    .is-active .fig-n2 { animation-delay: 0.5s; }
+    .is-active .fig-n3 { animation-delay: 0.85s; }
+    .is-active .fig-n4 { animation-delay: 1.1s; }
+    @keyframes fig-node { to { opacity: 1; } }
+
+    .fig-pulse { fill: var(--blueprint); opacity: 0; offset-rotate: 0deg; }
+    .is-active .fig-pulse { animation: fig-pulse 3.8s linear infinite; }
+    @keyframes fig-pulse {
+      0%   { offset-distance: 0%;   opacity: 0; }
+      10%  { opacity: 1; }
+      82%  { opacity: 1; }
+      96%  { offset-distance: 100%; opacity: 0; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+
+    /* FIG_002 — an agent session types itself out */
+    .fig-term { fill: var(--bg-surface); stroke: var(--rule-soft); }
+    .fig-term-bar { stroke: var(--rule-soft); }
+    .fig-term-dot { fill: none; stroke: var(--ink-mute); }
+
+    .fig-line {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      fill: var(--ink);
+      opacity: 0;
+      text-transform: none;
+    }
+    .fig-line--cmd { fill: var(--blueprint); }
+    .fig-line--agent { fill: var(--ink); }
+    .fig-line--you { fill: var(--ink-mute); }
+    .is-active .fig-line { animation: fig-line 0.4s ease-out forwards; }
+    @keyframes fig-line { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* FIG_003 — the two learning curves draw in */
+    .fig-axis-line { stroke: var(--ink-mute); stroke-width: 1; }
+    .fig-curve { stroke-dasharray: 1; stroke-dashoffset: 1; stroke-width: 2; }
+    .fig-curve--flat { stroke: var(--ink-mute); }
+    .fig-curve--steep { stroke: var(--blueprint); }
+    .is-active .fig-curve--flat { animation: fig-draw 1.4s cubic-bezier(0.23, 1, 0.32, 1) 0.3s forwards; }
+    .is-active .fig-curve--steep { animation: fig-draw 1.4s cubic-bezier(0.23, 1, 0.32, 1) 0.8s forwards; }
+    .fig-curve--flat { stroke-dasharray: 1; }
+
+    .fig-curve-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      opacity: 0;
+      text-transform: none;
+    }
+    .fig-curve-label--flat { fill: var(--ink-mute); }
+    .fig-curve-label--steep { fill: var(--blueprint); }
+    .is-active .fig-curve-label { animation: fig-node 0.4s ease-out 1.9s forwards; }
+
+    .fig-caret {
+      fill: var(--blueprint);
+      opacity: 0;
+    }
+    .is-active .fig-caret { animation: fig-caret 1s steps(2, jump-none) infinite; }
+    @keyframes fig-caret { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+
+    .fig-grid { stroke: var(--rule-soft); stroke-dasharray: 2 5; }
+
+    .fig-area { fill: var(--blueprint); opacity: 0; }
+    .is-active .fig-area { animation: fig-area 0.8s ease-out 1.9s forwards; }
+    @keyframes fig-area { to { opacity: 0.07; } }
+
+    .fig-mile { fill: var(--bg); stroke: var(--blueprint); stroke-width: 1.4; opacity: 0; }
+    .fig-mile-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      fill: var(--ink);
+      opacity: 0;
+      text-transform: none;
+    }
+    .is-active .fig-mile,
+    .is-active .fig-mile-label { animation: fig-node 0.35s ease-out forwards; }
+    .is-active .fig-mile { animation-name: fig-node; }
+
+    /* a learner rides the curve after it draws in */
+    .fig-rider { fill: var(--blueprint); opacity: 0; offset-rotate: 0deg; }
+    .is-active .fig-rider { animation: fig-rider 4.6s linear 2.6s infinite; }
+    @keyframes fig-rider {
+      0%   { offset-distance: 0%;   opacity: 0; }
+      8%   { opacity: 1; }
+      86%  { opacity: 1; }
+      97%  { offset-distance: 100%; opacity: 0; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+
+    /* caption + progress dots */
+    .fig-meta { margin-top: 12px; text-align: center; }
+
+    .fig-caption {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-mute);
+      min-height: 2.4em;
+      padding: 0 16px;
+    }
+
+    .learners-quote {
+      margin: 18px auto 0;
+      max-width: 640px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 0.98rem;
+      color: var(--ink);
+      padding: 0 24px;
+    }
+
+    .learners-quote-attr {
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-mute);
+      white-space: nowrap;
+    }
+
+    .fig-dots { display: inline-flex; gap: 8px; margin-top: 8px; }
+    .fig-dot {
+      width: 7px;
+      height: 7px;
+      border: 1px solid var(--blueprint);
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+    .fig-dot.is-active { background: var(--blueprint); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fig-edge, .fig-node, .fig-curve, .fig-curve-label, .fig-line { animation: none !important; stroke-dashoffset: 0; opacity: 1; }
+      .fig-pulse { display: none; }
     }
 
     .manual-meta-row {
@@ -164,6 +365,236 @@
 
     @media (max-width: 480px) {
       .masthead-btn { font-size: 0.78rem; padding: 8px 12px; }
+    }
+
+    .masthead-install {
+      margin-top: 26px;
+      max-width: 560px;
+      border: 1px solid var(--rule-soft);
+      background: var(--bg-surface);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    .masthead-install-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 12px;
+      border-bottom: 1px solid var(--rule-soft);
+      color: var(--ink-mute);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .copy-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--blueprint);
+      background: var(--bg);
+      color: var(--blueprint);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 4px 9px;
+      margin: 4px 0;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.15s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .copy-chip:hover,
+    .copy-chip:focus-visible {
+      background: var(--blueprint);
+      color: var(--bg);
+    }
+
+    .copy-chip:active { transform: scale(0.96); }
+
+    .copy-chip svg { flex-shrink: 0; }
+
+    .copy-chip.copied {
+      background: var(--blueprint);
+      color: var(--bg);
+    }
+
+    .masthead-install pre {
+      margin: 0;
+      padding: 12px 14px;
+      overflow-x: auto;
+      line-height: 1.7;
+      color: var(--ink);
+    }
+
+    .masthead-install .cmd-prompt { color: var(--ink-mute); user-select: none; }
+    .masthead-install .cmd-skill { color: var(--blueprint); }
+
+    .masthead-install-agents {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+      padding: 8px 14px 9px;
+      border-top: 1px solid var(--rule-soft);
+      color: var(--ink-mute);
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .agent-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .agent-chip .glyph {
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
+      color: var(--ink);
+      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), color 0.3s ease;
+    }
+
+    /* each agent mark gets its own micro-motion when the card is hovered */
+    .masthead-install:hover .agent-chip .glyph { color: var(--blueprint); }
+    .masthead-install:hover .agent-chip:nth-child(1) .glyph { transform: rotate(-10deg) translateX(-1px) scale(1.12); }
+    .masthead-install:hover .agent-chip:nth-child(2) .glyph { transform: rotate(8deg) scale(1.15); }
+    .masthead-install:hover .agent-chip:nth-child(3) .glyph { transform: translateY(-2px) rotate(-6deg) scale(1.12); }
+    .masthead-install:hover .agent-chip:nth-child(4) .glyph { transform: rotate(10deg) translateX(1px); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .masthead-install:hover .agent-chip .glyph { transform: none; }
+    }
+
+    /* ── Learners marquee ─────────────────────────────────────────────── */
+    .learners-strip {
+      border-bottom: 1px solid var(--rule-soft);
+      padding: 22px 0 26px;
+      overflow: hidden;
+    }
+
+    .learners-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .marquee {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    }
+
+    .marquee + .marquee { margin-top: 14px; }
+
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+    }
+
+    /* animation starts only after JS has cloned enough halves for a seamless
+       loop (track = 2 identical groups, each at least as wide as the strip),
+       so there is never a blank gap at any viewport width. --marquee-dur is
+       set from the group width so scroll speed stays constant. */
+    .marquee.is-ready .marquee-track {
+      animation: marquee-left var(--marquee-dur, 36s) linear infinite;
+    }
+
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+
+    @keyframes marquee-left { to { transform: translateX(-50%); } }
+
+    .marquee-half {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      /* trailing gap lives inside the half so translateX(-50%) always lands
+         exactly on a copy boundary: no seam jump, no blank space */
+      padding-right: 48px;
+      flex-shrink: 0;
+    }
+
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      color: var(--ink-mute);
+      transition: color 0.15s ease;
+    }
+
+    .marquee-item:hover { color: var(--blueprint); }
+
+    .marquee-item .tick { color: var(--blueprint); user-select: none; }
+
+    .marquee-item .mark {
+      width: 15px;
+      height: 15px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .marquee-item .mark-logo {
+      height: 17px;
+      width: auto;
+      filter: grayscale(1);
+      opacity: 0.62;
+      transition: filter 0.15s ease, opacity 0.15s ease;
+    }
+
+    .marquee-item:hover .mark-logo { filter: none; opacity: 1; }
+
+    /* dark theme: monochrome-invert so dark wordmarks stay visible */
+    [data-theme="dark"] .marquee-item .mark-logo { filter: grayscale(1) invert(1) brightness(1.2); }
+    [data-theme="dark"] .marquee-item:hover .mark-logo { filter: grayscale(1) invert(1) brightness(1.5); }
+
+    /* universities read as serif wordmarks, like a press wall */
+    .marquee-item--uni {
+      font-family: var(--font-body);
+      font-size: 1.02rem;
+      letter-spacing: 0.01em;
+      font-weight: 600;
+    }
+
+    /* companies without a usable mark read as bold type wordmarks */
+    .marquee-item--wordmark {
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .marquee.is-ready .marquee-track { animation: none; }
+      .marquee-track { flex-wrap: wrap; width: auto; justify-content: center; }
+      .marquee-half { flex-wrap: wrap; justify-content: center; padding-right: 0; }
+      .marquee { mask-image: none; -webkit-mask-image: none; }
+      .marquee-track > [aria-hidden="true"] { display: none; }
+    }
+
+    .masthead-install-caption {
+      margin: 10px 0 0;
+      font-size: 0.78rem;
+      color: var(--ink-mute);
+      max-width: 560px;
+    }
+
+    @media (max-width: 480px) {
+      .masthead-install { font-size: 0.74rem; }
+      /* wrap the command instead of showing a horizontal scrollbar */
+      .masthead-install pre { white-space: pre-wrap; word-break: break-all; }
     }
 
 
@@ -481,12 +912,93 @@
       white-space: nowrap;
     }
 
-    .colophon-cmd .copy-btn {
+    .colophon-cmd .copy-chip {
       flex-shrink: 0;
       position: sticky;
       right: 0;
+      margin: 0;
+    }
+
+    .books {
+      padding: 40px 0 8px;
+      border-top: 1px solid var(--rule-soft);
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .book-card {
+      border: 1px solid var(--rule-soft);
       background: var(--code-bg);
-      padding-left: 8px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .book-card .vol {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      color: var(--blueprint);
+    }
+
+    .book-card h3 {
+      font-family: var(--font-body);
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--ink);
+    }
+
+    .book-card p {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      flex: 1;
+    }
+
+    .book-card .dl {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .book-card .dl a {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--blueprint);
+      border: 1px solid var(--blueprint);
+      padding: 4px 10px;
+      text-decoration: none;
+    }
+
+    .book-card .dl a:hover {
+      background: var(--blueprint);
+      color: var(--bg);
+    }
+
+    .books-note {
+      margin-top: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: var(--ink-mute);
+    }
+
+    .books-note a { color: var(--blueprint); }
+
+    @media (max-width: 900px) {
+      .books-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .books-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 900px) {
@@ -550,16 +1062,142 @@
       }
     }
 
+    @media (max-width: 600px) {
+      html,
+      body {
+        overflow-x: hidden;
+      }
+
+      .manual-masthead.container,
+      .preface.container,
+      .stat-block.container,
+      .toc.container,
+      .colophon.container {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .manual-masthead {
+        padding-top: 76px;
+      }
+
+      .manual-meta-row {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 20px;
+        gap: 6px;
+      }
+
+      .manual-title {
+        font-size: clamp(2.45rem, 12vw, 3.7rem);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .manual-tagline {
+        max-width: 34ch;
+        line-height: 1.48;
+        hyphens: none;
+        -webkit-hyphens: none;
+      }
+
+      .manual-attribution {
+        line-height: 1.45;
+      }
+
+      .masthead-cta {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .masthead-btn {
+        width: 100%;
+        justify-content: center;
+        min-width: 0;
+      }
+
+      .masthead-btn svg {
+        flex-shrink: 0;
+      }
+
+      .masthead-btn span {
+        min-width: 0;
+      }
+
+      .masthead-btn-count {
+        flex-shrink: 0;
+      }
+
+      .preface-body {
+        font-size: 1rem;
+        line-height: 1.62;
+        text-align: left;
+        hyphens: none;
+        -webkit-hyphens: none;
+      }
+
+      .preface-body p:first-of-type::first-letter {
+        float: none !important;
+        font-family: inherit !important;
+        font-size: inherit !important;
+        line-height: inherit !important;
+        padding: 0 !important;
+        color: inherit !important;
+      }
+
+      .stat-row {
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .stat-row-bar {
+        grid-column: 1 / -1;
+      }
+
+      .toc-row {
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 8px 12px;
+        padding: 14px 12px;
+        margin-bottom: 8px;
+        border: 1px solid var(--rule-soft);
+        background: rgba(107, 142, 255, 0.04);
+      }
+
+      .toc-row .toc-meta {
+        grid-column: 2;
+        min-width: 0;
+        text-align: left;
+      }
+
+      .toc-list {
+        border-top: none;
+      }
+
+      .toc-name {
+        font-size: 1.12rem;
+        line-height: 1.1;
+      }
+    }
+
     @media (max-width: 480px) {
-      .manual-masthead { padding: 72px 0 12px; }
+      .manual-masthead { padding: 70px 0 12px; }
       .preface { padding: 24px 0; }
       .stat-block { padding: 24px 0; }
       .toc { padding: 24px 0 32px; }
       .colophon { padding: 24px 0; }
 
+      .manual-masthead.container,
+      .preface.container,
+      .stat-block.container,
+      .toc.container,
+      .colophon.container {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
       .manual-title {
-        font-size: clamp(2.4rem, 14vw, 3.6rem);
-        line-height: 0.92;
+        font-size: clamp(2.05rem, 11vw, 2.75rem);
+        line-height: 1;
       }
 
       .manual-meta-row {
@@ -570,12 +1208,18 @@
       }
 
       .manual-tagline {
-        font-size: 0.96rem;
+        font-size: 1rem;
+        line-height: 1.45;
         margin: 16px 0 4px;
       }
 
+      .manual-attribution {
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+
       .ascii-rule {
-        margin: 16px 0;
+        margin: 18px 0 !important;
       }
 
       .preface-eyebrow,
@@ -590,8 +1234,12 @@
       }
 
       .preface-body p:first-of-type::first-letter {
-        font-size: 2.8rem;
-        padding: 0.04em 0.1em 0 0;
+        float: none !important;
+        font-family: inherit !important;
+        font-size: inherit !important;
+        line-height: inherit !important;
+        padding: 0 !important;
+        color: inherit !important;
       }
 
       .stat-row {
@@ -610,9 +1258,9 @@
       }
 
       .toc-row {
-        grid-template-columns: 30px 1fr auto;
+        grid-template-columns: auto minmax(0, 1fr);
         gap: 8px;
-        padding: 10px 0;
+        padding: 13px 12px;
       }
 
       .toc-name {
@@ -626,7 +1274,7 @@
     }
 
 
-    /* Figure card (makingsoftware aesthetic) */
+    /* Figure card */
     .figure-card {
       border: 1px solid var(--rule-soft);
       background: var(--bg);
@@ -674,6 +1322,7 @@
       </a>
       <nav class="header-nav">
         <a href="#contents">Contents</a>
+        <a href="#books">Books</a>
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
@@ -692,6 +1341,7 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </button>
+      <div id="langPicker"></div>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
         <span class="theme-icon" id="themeIcon">N</span>
       </button>
@@ -719,7 +1369,190 @@
           <span>Follow @rohitg00</span>
         </a>
       </div>
+      <div class="masthead-install reveal" style="--stagger-delay: 200ms;">
+        <div class="masthead-install-bar">
+          <span>Learn in your terminal</span>
+          <button class="copy-chip" type="button" id="installCopy"
+                  data-cmd="npx skills add rohitg00/ai-engineering-from-scratch"
+                  aria-label="Copy the install command">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+              <rect x="3.5" y="3.5" width="7" height="7"/>
+              <path d="M8.5 3.5v-2h-7v7h2"/>
+            </svg>
+            <span id="installCopyLabel" role="status" aria-live="polite">copy</span>
+          </button>
+        </div>
+        <pre id="installCmd"><span class="cmd-prompt">$</span> npx skills add rohitg00/ai-engineering-from-scratch
+<span class="cmd-prompt">&gt;</span> <span class="cmd-skill">/start-learning</span></pre>
+        <div class="masthead-install-agents" aria-label="Works with any coding agent">
+          <span class="agent-chip"><svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>Claude</span>
+          <span class="agent-chip"><svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23"/></svg>Cursor</span>
+          <span class="agent-chip"><svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg>Codex</span>
+          <span class="agent-chip">+ any SKILL.md agent</span>
+        </div>
+      </div>
+      <p class="masthead-install-caption reveal" style="--stagger-delay: 240ms;">Your agent becomes your tutor: placement quiz, personalized path, lessons taught interactively in your terminal.</p>
+      <figure class="masthead-figure" aria-hidden="true" data-fig-cycle>
+        <div class="fig-plate">
+        <div class="fig-panel is-active" data-caption="Every layer of this diagram is a lesson you implement by hand.">
+          <svg viewBox="0 0 560 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="fig-frame" x="8" y="8" width="544" height="364"/>
+            <path class="fig-tick" d="M8 28 V8 H28 M532 8 H552 V28 M552 352 V372 H532 M28 372 H8 V352"/>
+            <text class="fig-label" x="24" y="34">FIG_001 · FORWARD PASS</text>
+            <text class="fig-label fig-label--right" x="536" y="34">y = σ(Wx + b)</text>
+            <line class="fig-edge fig-l1" x1="90" y1="110" x2="230" y2="100" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="110" x2="230" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="110" x2="230" y2="240" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="110" x2="230" y2="310" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="175" x2="230" y2="100" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="175" x2="230" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="175" x2="230" y2="240" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="175" x2="230" y2="310" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="240" x2="230" y2="100" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="240" x2="230" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="240" x2="230" y2="240" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="240" x2="230" y2="310" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="305" x2="230" y2="100" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="305" x2="230" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="305" x2="230" y2="240" pathLength="1"/>
+            <line class="fig-edge fig-l1" x1="90" y1="305" x2="230" y2="310" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="100" x2="370" y2="100" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="100" x2="370" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="100" x2="370" y2="240" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="100" x2="370" y2="310" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="170" x2="370" y2="100" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="170" x2="370" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="170" x2="370" y2="240" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="170" x2="370" y2="310" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="240" x2="370" y2="100" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="240" x2="370" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="240" x2="370" y2="240" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="240" x2="370" y2="310" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="310" x2="370" y2="100" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="310" x2="370" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="310" x2="370" y2="240" pathLength="1"/>
+            <line class="fig-edge fig-l2" x1="230" y1="310" x2="370" y2="310" pathLength="1"/>
+            <line class="fig-edge fig-l3" x1="370" y1="100" x2="480" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l3" x1="370" y1="100" x2="480" y2="240" pathLength="1"/>
+            <line class="fig-edge fig-l3" x1="370" y1="170" x2="480" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l3" x1="370" y1="170" x2="480" y2="240" pathLength="1"/>
+            <line class="fig-edge fig-l3" x1="370" y1="240" x2="480" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l3" x1="370" y1="240" x2="480" y2="240" pathLength="1"/>
+            <line class="fig-edge fig-l3" x1="370" y1="310" x2="480" y2="170" pathLength="1"/>
+            <line class="fig-edge fig-l3" x1="370" y1="310" x2="480" y2="240" pathLength="1"/>
+            <circle class="fig-node fig-n1" cx="90" cy="110" r="7"/>
+            <circle class="fig-node fig-n1" cx="90" cy="175" r="7"/>
+            <circle class="fig-node fig-n1" cx="90" cy="240" r="7"/>
+            <circle class="fig-node fig-n1" cx="90" cy="305" r="7"/>
+            <circle class="fig-node fig-n2" cx="230" cy="100" r="7"/>
+            <circle class="fig-node fig-n2" cx="230" cy="170" r="7"/>
+            <circle class="fig-node fig-n2" cx="230" cy="240" r="7"/>
+            <circle class="fig-node fig-n2" cx="230" cy="310" r="7"/>
+            <circle class="fig-node fig-n3" cx="370" cy="100" r="7"/>
+            <circle class="fig-node fig-n3" cx="370" cy="170" r="7"/>
+            <circle class="fig-node fig-n3" cx="370" cy="240" r="7"/>
+            <circle class="fig-node fig-n3" cx="370" cy="310" r="7"/>
+            <circle class="fig-node fig-n4" cx="480" cy="170" r="7"/>
+            <circle class="fig-node fig-n4" cx="480" cy="240" r="7"/>
+            <circle class="fig-pulse" r="4" style="offset-path: path('M90,110 L230,100 L370,170 L480,170'); animation-delay: 0.9s"/>
+            <circle class="fig-pulse" r="4" style="offset-path: path('M90,240 L230,240 L370,240 L480,240'); animation-delay: 2.2s"/>
+            <circle class="fig-pulse" r="4" style="offset-path: path('M90,175 L230,310 L370,170 L480,240'); animation-delay: 3.5s"/>
+            <text class="fig-axis" x="90" y="345">x</text>
+            <text class="fig-axis" x="230" y="345">h₁</text>
+            <text class="fig-axis" x="370" y="345">h₂</text>
+            <text class="fig-axis" x="480" y="345">ŷ</text>
+          </svg>
+        </div>
+        <div class="fig-panel" data-caption="The first AI-native course: your agent teaches it, quizzes you, and tracks your path.">
+          <svg viewBox="0 0 560 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="fig-frame" x="8" y="8" width="544" height="364"/>
+            <path class="fig-tick" d="M8 28 V8 H28 M532 8 H552 V28 M552 352 V372 H532 M28 372 H8 V352"/>
+            <text class="fig-label" x="24" y="34">FIG_002 · AI-NATIVE LESSON</text>
+            <text class="fig-label fig-label--right" x="536" y="34">/learn</text>
+            <rect class="fig-term" x="68" y="76" width="424" height="252"/>
+            <line class="fig-term-bar" x1="68" y1="104" x2="492" y2="104"/>
+            <circle class="fig-term-dot" cx="84" cy="90" r="3.5"/>
+            <circle class="fig-term-dot" cx="98" cy="90" r="3.5"/>
+            <circle class="fig-term-dot" cx="112" cy="90" r="3.5"/>
+            <text class="fig-line fig-line--cmd" x="92" y="140" style="animation-delay: 0.35s">$ /learn</text>
+            <text class="fig-line fig-line--agent" x="92" y="184" style="animation-delay: 1.1s">agent: today — attention. why divide by √d?</text>
+            <text class="fig-line fig-line--you" x="92" y="228" style="animation-delay: 1.85s">you: it keeps softmax gradients alive</text>
+            <text class="fig-line fig-line--agent" x="92" y="272" style="animation-delay: 2.6s">agent: exactly. quiz 3/3 — next we build it</text>
+            <text class="fig-line fig-line--cmd" x="92" y="316" style="animation-delay: 3.4s">$</text>
+            <rect class="fig-caret" x="106" y="304" width="9" height="15" style="animation-delay: 3.5s"/>
+          </svg>
+        </div>
+        <div class="fig-panel" data-caption="One spine instead of scattered pieces — skill that compounds instead of plateauing.">
+          <svg viewBox="0 0 560 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="fig-frame" x="8" y="8" width="544" height="364"/>
+            <path class="fig-tick" d="M8 28 V8 H28 M532 8 H552 V28 M552 352 V372 H532 M28 372 H8 V352"/>
+            <text class="fig-label" x="24" y="34">FIG_003 · THE LEARNING CURVE</text>
+            <text class="fig-label fig-label--right" x="536" y="34">skill vs hours</text>
+            <line class="fig-grid" x1="150" y1="80" x2="150" y2="320"/>
+            <line class="fig-grid" x1="220" y1="80" x2="220" y2="320"/>
+            <line class="fig-grid" x1="290" y1="80" x2="290" y2="320"/>
+            <line class="fig-grid" x1="360" y1="80" x2="360" y2="320"/>
+            <line class="fig-grid" x1="430" y1="80" x2="430" y2="320"/>
+            <line class="fig-grid" x1="80" y1="130" x2="500" y2="130"/>
+            <line class="fig-grid" x1="80" y1="190" x2="500" y2="190"/>
+            <line class="fig-grid" x1="80" y1="250" x2="500" y2="250"/>
+            <line class="fig-axis-line" x1="80" y1="320" x2="504" y2="320"/>
+            <line class="fig-axis-line" x1="80" y1="320" x2="80" y2="68"/>
+            <path class="fig-axis-line" d="M498 315 L504 320 L498 325"/>
+            <path class="fig-axis-line" d="M75 74 L80 68 L85 74"/>
+            <text class="fig-axis" x="512" y="342">hours</text>
+            <text class="fig-axis" x="80" y="56">skill</text>
+            <path class="fig-area" d="M80,318 C205,306 255,178 490,92 L490,318 L80,318 Z"/>
+            <path class="fig-curve fig-curve--flat" d="M80,318 C180,297 290,288 490,270" pathLength="1"/>
+            <path class="fig-curve fig-curve--steep" d="M80,318 C205,306 255,178 490,92" pathLength="1"/>
+            <text class="fig-curve-label fig-curve-label--flat" x="368" y="252">tutorial hopping</text>
+            <rect class="fig-mile" x="188.2" y="268.2" width="7" height="7" style="animation-delay: 2.0s"/>
+            <text class="fig-mile-label" x="203.7" y="261.7" style="animation-delay: 2.1s">backprop</text>
+            <rect class="fig-mile" x="284.5" y="196.1" width="7" height="7" style="animation-delay: 2.4s"/>
+            <text class="fig-mile-label" x="300.0" y="189.6" style="animation-delay: 2.5s">transformers</text>
+            <rect class="fig-mile" x="403.7" y="123.8" width="7" height="7" style="animation-delay: 2.8s"/>
+            <text class="fig-mile-label" x="421.2" y="151.3" style="animation-delay: 2.9s">agents</text>
+            <circle class="fig-rider" r="5" style="offset-path: path('M80,318 C205,306 255,178 490,92')"/>
+          </svg>
+        </div>
+        </div>
+        <div class="fig-meta">
+          <figcaption class="fig-caption">Every layer of this diagram is a lesson you implement by hand.</figcaption>
+          <div class="fig-dots">
+            <span class="fig-dot is-active"></span><span class="fig-dot"></span><span class="fig-dot"></span>
+          </div>
+        </div>
+      </figure>
       <div class="ascii-rule" style="margin-top:48px;"></div>
+    </section>
+
+    <section class="learners-strip" aria-label="Where readers learn and where the course is discussed">
+      <div class="learners-eyebrow">Read by engineers and students at</div>
+      <div class="marquee" data-marquee>
+        <div class="marquee-track">
+          <div class="marquee-half">
+            <span class="marquee-item"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>Apple</span>
+            <span class="marquee-item"><img class="mark-logo" src="logos/berkeley.svg" alt="UC Berkeley" loading="lazy"></span>
+            <span class="marquee-item"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>Google</span>
+            <span class="marquee-item"><img class="mark-logo" src="logos/stanford.svg" alt="Stanford" loading="lazy"></span>
+            <span class="marquee-item"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg>Meta</span>
+            <span class="marquee-item"><img class="mark-logo" src="logos/mit.svg" alt="MIT" loading="lazy"></span>
+            <span class="marquee-item"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg>OpenAI</span>
+            <span class="marquee-item"><img class="mark-logo" src="logos/cornell.svg" alt="Cornell" loading="lazy"></span>
+            <span class="marquee-item"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.948 8.798v-1.43a6.7 6.7 0 0 1 .424-.018c3.922-.124 6.493 3.374 6.493 3.374s-2.774 3.851-5.75 3.851c-.398 0-.787-.062-1.158-.185v-4.346c1.528.185 1.837.857 2.747 2.385l2.04-1.714s-1.492-1.952-4-1.952a6.016 6.016 0 0 0-.796.035m0-4.735v2.138l.424-.027c5.45-.185 9.01 4.47 9.01 4.47s-4.08 4.964-8.33 4.964c-.37 0-.733-.035-1.095-.097v1.325c.3.035.61.062.91.062 3.957 0 6.82-2.023 9.593-4.408.459.371 2.34 1.263 2.73 1.652-2.633 2.208-8.772 3.984-12.253 3.984-.335 0-.653-.018-.971-.053v1.864H24V4.063zm0 10.326v1.131c-3.657-.654-4.673-4.46-4.673-4.46s1.758-1.944 4.673-2.262v1.237H8.94c-1.528-.186-2.73 1.245-2.73 1.245s.68 2.412 2.739 3.11M2.456 10.9s2.164-3.197 6.5-3.533V6.201C4.153 6.59 0 10.653 0 10.653s2.35 6.802 8.948 7.42v-1.237c-4.84-.6-6.492-5.936-6.492-5.936z"/></svg>NVIDIA</span>
+            <span class="marquee-item"><img class="mark-logo" src="logos/rutgers.svg" alt="Rutgers" loading="lazy"></span>
+            <span class="marquee-item"><img class="mark-logo" src="logos/microsoft.svg" alt="Microsoft" loading="lazy"></span>
+            <span class="marquee-item"><img class="mark-logo" src="logos/uconn.svg" alt="UConn" loading="lazy"></span>
+            <span class="marquee-item"><img class="mark-logo" src="logos/amazon.svg" alt="Amazon" loading="lazy"></span>
+            <span class="marquee-item"><img class="mark-logo" src="logos/cmu.svg" alt="Carnegie Mellon" loading="lazy"></span>
+            <span class="marquee-item"><img class="mark-logo" src="logos/yahoo.svg" alt="Yahoo" loading="lazy"></span>
+            <span class="marquee-item marquee-item--uni">IIT Bombay</span>
+            <span class="marquee-item"><img class="mark-logo" src="logos/mlh.svg" alt="Major League Hacking" loading="lazy"></span>
+            <span class="marquee-item marquee-item--uni">University of Windsor</span>
+          </div>
+        </div>
+      </div>
+      <p class="learners-quote">&ldquo;Obsessed with the AI Engineering from Scratch repo.&rdquo; <span class="learners-quote-attr">&mdash; AI engineer at Google</span></p>
     </section>
 
     <section class="preface container">
@@ -790,6 +1623,97 @@
     </div>
 
 
+    <section class="books container" id="books">
+      <div class="toc-title reveal reveal--left">The book edition · six volumes</div>
+      <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">The course, compiled. EPUB and PDF built from the same lessons and attached to every GitHub release. The site stays the living edition — every chapter links back here for the animated figures, quizzes, and code.</div>
+      <div class="books-grid" id="booksGrid"></div>
+      <div class="books-note">Links resolve to the newest <a href="https://github.com/rohitg00/ai-engineering-from-scratch/releases" target="_blank" rel="noopener">GitHub release</a> · rebuilt by CI from the lessons on every release · <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/book/README.md" target="_blank" rel="noopener">how it's made</a></div>
+    </section>
+
+    <script>
+      (function () {
+        // Cycle the masthead figure plates; pause on hover, skip under
+        // reduced motion (panel 1 stays, rendered static by CSS).
+        var fig = document.querySelector('[data-fig-cycle]');
+        if (!fig || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var panels = fig.querySelectorAll('.fig-panel');
+        var dots = fig.querySelectorAll('.fig-dot');
+        var cap = fig.querySelector('.fig-caption');
+        var i = 0, paused = false;
+        function show(n) {
+          panels.forEach(function (p, k) { p.classList.toggle('is-active', k === n); });
+          dots.forEach(function (d, k) { d.classList.toggle('is-active', k === n); });
+          cap.textContent = panels[n].getAttribute('data-caption');
+          i = n;
+        }
+        setInterval(function () { if (!paused) show((i + 1) % panels.length); }, 7000);
+        fig.addEventListener('mouseenter', function () { paused = true; });
+        fig.addEventListener('mouseleave', function () { paused = false; });
+      })();
+    </script>
+    <script>
+      (function () {
+        // Seamless marquee: clone the canonical half until one group spans the
+        // strip at any viewport width, then duplicate the group so the -50%
+        // keyframe loops with no blank space and no cut.
+        function build(mq) {
+          var track = mq.querySelector('.marquee-track');
+          var half = track.querySelector('.marquee-half');
+          track.querySelectorAll('.marquee-half[aria-hidden="true"]').forEach(function (n) { n.remove(); });
+          mq.classList.remove('is-ready');
+          if (!half.offsetWidth) return; // hidden/unmeasurable: retry on next resize
+          var need = Math.max(1, Math.ceil(mq.clientWidth / half.offsetWidth));
+          var copies = need * 2 - 1; // total halves = 2 * need
+          for (var i = 0; i < copies; i++) {
+            var c = half.cloneNode(true);
+            c.setAttribute('aria-hidden', 'true');
+            track.appendChild(c);
+          }
+          var groupWidth = half.offsetWidth * need;
+          mq.style.setProperty('--marquee-dur', Math.round(groupWidth / 42) + 's'); // ~42px/s
+          mq.classList.add('is-ready');
+        }
+        var marquees = document.querySelectorAll('[data-marquee]');
+        if (!marquees.length) return;
+        function buildAll() { marquees.forEach(build); }
+        buildAll();
+        var t = null;
+        window.addEventListener('resize', function () {
+          clearTimeout(t);
+          t = setTimeout(buildAll, 200);
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var grid = document.getElementById('booksGrid');
+        if (!grid) return;
+        var DL_BASE = 'https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol';
+        var volumes = [
+          { n: 1, slug: 'foundations', title: 'Foundations', subtitle: 'Math, Tooling, and Classical Machine Learning', phases: '00–02' },
+          { n: 2, slug: 'deep-learning', title: 'Deep Learning', subtitle: 'Networks, Vision, and Speech', phases: '03, 04, 06' },
+          { n: 3, slug: 'language', title: 'Language', subtitle: 'NLP Foundations and the Transformer', phases: '05, 07' },
+          { n: 4, slug: 'llms', title: 'Large Language Models', subtitle: 'Generation, Reinforcement, Pretraining, and Engineering', phases: '08–11' },
+          { n: 5, slug: 'agents', title: 'Agents', subtitle: 'Multimodality, Protocols, Autonomy, and Swarms', phases: '12–16' },
+          { n: 6, slug: 'production', title: 'Production', subtitle: 'Infrastructure, Safety, and Capstones', phases: '17–19' }
+        ];
+        var html = '';
+        volumes.forEach(function (v, i) {
+          var base = DL_BASE + v.n + '-' + v.slug;
+          html += '<div class="book-card reveal"' + (i > 0 ? ' style="--stagger-delay: ' + (i * 60) + 'ms;"' : '') + '>';
+          html += '<span class="vol">VOL_00' + v.n + '</span>';
+          html += '<h3>' + v.title + '</h3>';
+          html += '<p>' + v.subtitle + ' · phases ' + v.phases + '</p>';
+          html += '<div class="dl">';
+          html += '<a href="' + base + '.epub">EPUB</a>';
+          html += '<a href="' + base + '.pdf">PDF</a>';
+          html += '</div>';
+          html += '</div>';
+        });
+        grid.innerHTML = html;
+      })();
+    </script>
+
     <section class="colophon container">
       <div class="colophon-grid">
         <div class="colophon-eyebrow reveal reveal--left">Colophon</div>
@@ -797,7 +1721,13 @@
           <p>The entire curriculum is on GitHub. Clone it, fork it, learn at your own pace. No paywall, no signup. Every lesson has runnable code in Python, TypeScript, Rust, or Julia, depending on what fits the concept best.</p>
           <div class="colophon-cmd">
             <code id="cloneCmd">git clone https://github.com/rohitg00/ai-engineering-from-scratch.git</code>
-            <button class="copy-btn" id="copyBtn" aria-label="Copy command" type="button">cp</button>
+            <button class="copy-chip" id="copyBtn" aria-label="Copy command" type="button">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+                <rect x="3.5" y="3.5" width="7" height="7"/>
+                <path d="M8.5 3.5v-2h-7v7h2"/>
+              </svg>
+              <span id="copyBtnLabel" role="status" aria-live="polite">copy</span>
+            </button>
           </div>
         </div>
       </div>
@@ -818,11 +1748,13 @@
     </div>
   </footer>
 
-  <script src="data.js?v=20260525a"></script>
-  <script src="progress.js?v=20260525a"></script>
-  <script src="header.js?v=20260525a" defer></script>
-  <script src="cmdpalette.js?v=20260525a" defer></script>
-  <script src="app.js?v=20260525a"></script>
+  <script src="langs.js?v=20260802a"></script>
+  <script src="lang-picker.js?v=20260802a" defer></script>
+  <script src="data.js?v=20260801a"></script>
+  <script src="progress.js?v=20260801a"></script>
+  <script src="header.js?v=20260801a" defer></script>
+  <script src="cmdpalette.js?v=20260801a" defer></script>
+  <script src="app.js?v=20260803b"></script>
   <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
 </body>
 </html>

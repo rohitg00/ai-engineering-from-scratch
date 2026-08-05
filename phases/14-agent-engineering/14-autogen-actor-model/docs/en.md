@@ -1,6 +1,6 @@
-# AutoGen v0.4: Actor Model and Agent Framework
+# The Actor Model for Agents — Async Messages and Typed Runtimes
 
-> AutoGen v0.4 (Microsoft Research, Jan 2025) redesigned agent orchestration around the actor model. Async message exchange, event-driven agents, fault isolation, natural concurrency. The framework is now in maintenance mode while Microsoft Agent Framework (public preview Oct 2025) becomes the successor.
+> Agents as actors: async message exchange, event-driven handlers, fault isolation, natural concurrency. AutoGen v0.4 (Microsoft Research, Jan 2025) redesigned agent orchestration around this model; the framework is now in maintenance mode, with Microsoft Agent Framework (public preview Oct 2025) as its production successor.
 
 **Type:** Learn + Build
 **Languages:** Python (stdlib)
@@ -32,7 +32,9 @@ An actor has:
 
 Two actors cannot share memory. They can only send messages.
 
-### Three API layers in AutoGen v0.4
+### Three API layers
+
+AutoGen v0.4 splits its surface into three:
 
 1. **Core.** Low-level actor framework. `AgentRuntime`, `Agent`, `Message`, `Topic`. Async message exchange, event-driven.
 2. **AgentChat.** Task-driven high-level API (replacement for v0.2's ConversableAgent). `AssistantAgent`, `UserProxyAgent`, `RoundRobinGroupChat`, `SelectorGroupChat`.
@@ -58,7 +60,11 @@ OpenTelemetry support is built in. Every message emits a span; tool calls carry 
 
 ### Status: maintenance mode
 
-Early 2026: AutoGen v0.7.x is stable for research and prototyping. Microsoft has shifted active development to the Microsoft Agent Framework (public preview Oct 1 2025; 1.0 GA targeted end of Q1 2026). AutoGen patterns port forward cleanly — the actor model is the durable idea.
+Early 2026: AutoGen v0.7.x is stable for research and prototyping. Microsoft has shifted active development to the Microsoft Agent Framework, the production successor (public preview Oct 1 2025; 1.0 GA was targeted for end of Q1 2026). AutoGen patterns port forward cleanly — the actor model is the durable idea.
+
+```figure
+actor-mailbox
+```
 
 ## Build It
 
@@ -80,7 +86,7 @@ The trace shows message delivery, a simulated failure in one actor that does not
 ## Use It
 
 - **AutoGen v0.4/v0.7** (maintenance) — stable for research, prototyping, multi-agent patterns.
-- **Microsoft Agent Framework** (public preview) — the forward path; same actor-model ideas in a refreshed API.
+- **Microsoft Agent Framework** — the production successor (public preview Oct 2025); same actor-model ideas in a refreshed API.
 - **LangGraph swarm topology** (Lesson 13) — similar pattern via shared-tool handoffs.
 - **Custom actor runtime** — when you need specific transport (NATS, RabbitMQ, gRPC).
 

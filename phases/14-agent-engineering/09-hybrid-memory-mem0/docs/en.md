@@ -1,6 +1,6 @@
-# Hybrid Memory: Vector + Graph + KV (Mem0)
+# Hybrid Memory: Vector + Graph + KV
 
-> Mem0 (Chhikara et al., 2025) treats memory as three stores in parallel — vector for semantic similarity, KV for fast fact lookup, graph for entity-relationship reasoning. A scoring layer fuses the three on retrieval. This is the 2026 production standard for external memory.
+> Hybrid memory runs three stores in parallel — vector for semantic similarity, KV for fast fact lookup, graph for entity-relationship reasoning — with a scoring layer that fuses them on retrieval. This is a widely used production pattern for external memory; Mem0 (Chhikara et al., 2025) is one reference implementation.
 
 **Type:** Build
 **Languages:** Python (stdlib)
@@ -87,6 +87,10 @@ Every write picks one scope. Retrieval can query across scopes with per-scope we
 - **Embedding drift.** Vector results that look right on the first hundred queries degrade as the corpus grows. Add periodic re-embedding of the top-N-used records.
 - **KV schema creep.** `(user_id, type, entity)` looks simple until every team adds their own `type`. Audit the type set quarterly.
 - **Graph explosion.** One noisy extractor adds 50 edges per message. Cap graph writes per `add` call; drop low-confidence edges.
+
+```figure
+ae-memory-fusion
+```
 
 ## Build It
 

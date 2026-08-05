@@ -58,6 +58,10 @@ The detection happens in two places. First, the loss itself is checked with `tor
 
 The scaling factor is the GradScaler's internal state. Every step the lesson reads `scaler.get_scale()` and logs it next to the learning rate and gradient norm. A healthy run shows the scaling factor climbing in powers of two until it saturates near `2^17` or `2^18`. A misbehaving run shows the factor oscillating between high and low values, which is the signal that the model's gradients are sometimes in range and sometimes not. The diagnostic is invisible without logging.
 
+```figure
+grad-clip-monitor
+```
+
 ## Build It
 
 `code/main.py` implements:

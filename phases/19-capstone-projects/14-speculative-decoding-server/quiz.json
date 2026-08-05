@@ -18,12 +18,12 @@
       "stage": "pre",
       "question": "What does EAGLE-3 do that ngram drafts do not?",
       "options": [
-        "It replaces the target model",
-        "It trains draft heads on the target model's hidden states for higher acceptance rates",
         "It avoids tokenization entirely",
-        "It runs only on CPUs"
+        "It runs only on CPUs",
+        "It trains draft heads on the target model's hidden states for higher acceptance rates",
+        "It replaces the target model"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": ""
     },
     {
@@ -42,24 +42,24 @@
       "stage": "check",
       "question": "Why does acceptance rate drift when the traffic distribution shifts?",
       "options": [
-        "vLLM rotates models hourly",
         "Draft alignment depends on the input distribution: ShareGPT, code, and domain data exercise different patterns",
         "The OS scheduler reshuffles GPU memory",
-        "Quantization changes at runtime"
+        "Quantization changes at runtime",
+        "vLLM rotates models hourly"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "Which Kubernetes HPA signal does the deployment scale on?",
       "options": [
-        "Cluster autoscaler nodes",
-        "CPU utilization",
         "Disk IOPS",
-        "Queue-wait time on inference requests"
+        "CPU utilization",
+        "Queue-wait time on inference requests",
+        "Cluster autoscaler nodes"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": ""
     },
     {

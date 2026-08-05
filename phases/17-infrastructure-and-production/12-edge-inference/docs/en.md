@@ -4,7 +4,7 @@
 
 **Type:** Learn
 **Languages:** Python (stdlib, toy bandwidth-bound decode simulator)
-**Prerequisites:** Phase 17 · 04 (vLLM Serving Internals), Phase 17 · 09 (Production Quantization)
+**Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 09 (Production Quantization)
 **Time:** ~60 minutes
 
 ## Learning Objectives
@@ -86,6 +86,10 @@ Voice agents are latency-sensitive (first token < 500 ms). Local inference elimi
 - AGX Orin: ~40 tok/s on gpt-oss-20b via vLLM.
 - Datacenter-edge bandwidth gap: 30-50x.
 - WebGPU mobile coverage: ~70-75% (Firefox Android lagging).
+
+```figure
+edge-bandwidth-pipe
+```
 
 ## Use It
 

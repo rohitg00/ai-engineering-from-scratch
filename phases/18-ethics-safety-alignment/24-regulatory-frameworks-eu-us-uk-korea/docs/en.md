@@ -83,6 +83,10 @@ Competing regulatory philosophies. Deployers in multiple jurisdictions have to c
 
 Lesson 18 is lab-voluntary governance; Lesson 24 is regulatory; Lesson 25 is an emerging class of CVEs for AI systems; Lessons 26-27 cover documentation (cards) and training-data governance.
 
+```figure
+an-eu-act-timeline
+```
+
 ## Use It
 
 No code. Read the EU AI Act primary sources: the regulation text, the GPAI Code of Practice, the UK AISI Inspect framework. Map your deployment to the applicable obligations for each jurisdiction.

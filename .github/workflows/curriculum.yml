@@ -5,7 +5,12 @@ on:
     branches: [main]
     paths:
       - "phases/**"
+      - "skills/**"
+      - ".claude/skills/**"
       - "scripts/audit_lessons.py"
+      - "scripts/debias_quizzes.py"
+      - "scripts/build_readme_i18n.py"
+      - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
       - "README.md"
@@ -17,7 +22,12 @@ on:
     branches: [main]
     paths:
       - "phases/**"
+      - "skills/**"
+      - ".claude/skills/**"
       - "scripts/audit_lessons.py"
+      - "scripts/debias_quizzes.py"
+      - "scripts/build_readme_i18n.py"
+      - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
       - "README.md"
@@ -42,6 +52,15 @@ jobs:
           python-version: "3.12"
       - name: run scripts/audit_lessons.py
         run: python3 scripts/audit_lessons.py
+      - name: quiz answer positions are de-biased
+        run: python3 scripts/debias_quizzes.py --check
+      - name: README translations are in sync with English
+        run: python3 scripts/build_readme_i18n.py --check
+      - name: learning skills mirror is in sync
+        # skills/ is the canonical, agent-neutral home (what `npx skills add`
+        # installs for every agent); .claude/skills/ is a mirror so cloning the
+        # repo auto-loads them in Claude Code. They must never diverge.
+        run: diff -r skills .claude/skills
 
   readme-counts-sync:
     name: README counts auto-fix (main only)
@@ -61,12 +80,16 @@ jobs:
         run: python3 scripts/build_catalog.py
       - name: sync README counts
         run: python3 scripts/check_readme_counts.py --fix
+      - name: regenerate README translations from the synced English
+        run: python3 scripts/build_readme_i18n.py
       - name: commit + push if README changed
         env:
           BOT_COMMIT_PREFIX: "chore(readme): sync counts"
         run: |
-          if git diff --quiet README.md; then
-            echo "README.md already in sync"
+          # porcelain (not git diff) so a newly generated, still-untracked
+          # i18n/<lang>/README.md for a freshly added language is also detected
+          if [ -z "$(git status --porcelain -- README.md i18n)" ]; then
+            echo "README.md + translations already in sync"
             exit 0
           fi
           last_msg=$(git log -1 --pretty=%s)
@@ -76,7 +99,7 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md
+          git add README.md i18n
           git commit -m "$BOT_COMMIT_PREFIX"
           # Retry on non-fast-forward when another merge to main races us
           branch="${GITHUB_REF#refs/heads/}"

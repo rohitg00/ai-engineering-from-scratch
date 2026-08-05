@@ -6,34 +6,34 @@
       "stage": "pre",
       "question": "What does an HTN add over a free-form LLM plan?",
       "options": [
-        "Provable correctness when operator preconditions and effects are enforced",
+        "Better embeddings",
         "Cheaper inference",
-        "Shorter prompts",
-        "Better embeddings"
+        "Provable correctness when operator preconditions and effects are enforced",
+        "Shorter prompts"
       ],
-      "correct": 0,
+      "correct": 2,
       "explanation": "HTN's symbolic operators with preconditions and effects guarantee soundness by construction."
     },
     {
       "stage": "pre",
       "question": "Which problem class is AlphaEvolve built for?",
       "options": [
-        "Free-form prose generation",
-        "Optimizations with a machine-checkable, deterministic fitness function",
         "Multi-turn chat memory",
-        "Vector search ranking"
+        "Free-form prose generation",
+        "Vector search ranking",
+        "Optimizations with a machine-checkable, deterministic fitness function"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Evolutionary search needs a deterministic evaluator; AlphaEvolve targets domains where one exists."
     },
     {
       "stage": "check",
       "question": "How does ChatHTN preserve plan soundness while using an LLM?",
       "options": [
-        "It does not; soundness is best-effort",
+        "It uses a vector database",
         "LLM suggestions only enter as candidate decompositions, validated against the operator schema; the symbolic layer owns correctness",
-        "It fine-tunes the LLM on HTN traces",
-        "It uses a vector database"
+        "It does not; soundness is best-effort",
+        "It fine-tunes the LLM on HTN traces"
       ],
       "correct": 1,
       "explanation": "The LLM expands the method library but cannot bypass operator preconditions and effects."
@@ -43,9 +43,9 @@
       "question": "Which AlphaEvolve result does the lesson cite?",
       "options": [
         "First improvement over Strassen for 4x4 complex matrix multiplication in 56 years",
-        "10x speedup of inference on Gemini",
+        "First proof of P=NP",
         "Beating GPT-4 on HumanEval",
-        "First proof of P=NP"
+        "10x speedup of inference on Gemini"
       ],
       "correct": 0,
       "explanation": "AlphaEvolve found 48 scalar multiplications for 4x4 complex matmul, the first improvement on Strassen in 56 years."
@@ -54,12 +54,12 @@
       "stage": "check",
       "question": "Which element of an HTN is a primitive directly-executable action with preconditions and effects?",
       "options": [
+        "State",
         "Task",
         "Method",
-        "Operator",
-        "State"
+        "Operator"
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": "Operators are the primitives; methods decompose compound tasks; state is a set of facts."
     },
     {
@@ -67,11 +67,11 @@
       "question": "What is the lesson's warning about AlphaEvolve without a real evaluator?",
       "options": [
         "It is slow",
+        "It cannot run on GPUs",
         "Asking an LLM whether the code is better is not a fitness function; the evaluator must be deterministic and fast",
-        "It violates Apache 2.0",
-        "It cannot run on GPUs"
+        "It violates Apache 2.0"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Without a deterministic evaluator the search has no signal to converge on."
     },
     {

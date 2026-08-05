@@ -15,6 +15,10 @@
 - Wire a mocked prose generator that fills each section from a structured outline so the harness is testable without a model.
 - Emit a single `paper.tex` plus a `references.bib` plus a manifest that lists every figure referenced and every citation used.
 
+```figure
+ch-paper-skeleton
+```
+
 ## Why a skeleton first
 
 A draft that starts as prose accumulates structural debt. The introduction grows three paragraphs that should be in related work. A figure gets referenced before it is defined. The bibliography ends up with three keys for the same paper. By the time the author notices, the rewriting cost is higher than the writing cost.

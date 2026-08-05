@@ -129,8 +129,12 @@ def demo_memory_tracking():
     print("\n--- 3. Memory Tracking (tracemalloc) ---")
     tracemalloc.start()
 
-    data = [torch.randn(100, 100) for _ in range(100)]
-    more_data = torch.randn(1000, 1000)
+    if HAS_TORCH:
+        data = [torch.randn(100, 100) for _ in range(100)]
+        more_data = torch.randn(1000, 1000)
+    else:
+        data = [bytearray(4 * 100 * 100) for _ in range(100)]
+        more_data = bytearray(4 * 1000 * 1000)
 
     snapshot = tracemalloc.take_snapshot()
     top_stats = snapshot.statistics("lineno")

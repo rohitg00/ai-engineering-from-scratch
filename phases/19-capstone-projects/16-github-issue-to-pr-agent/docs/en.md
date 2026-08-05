@@ -1,6 +1,6 @@
 # Capstone 16 — GitHub Issue-to-PR Autonomous Agent
 
-> AWS Remote SWE Agents, Cursor Background Agents, OpenAI Codex cloud, and Google Jules all ship the same 2026 product shape: label an issue, get a PR. Run an agent in a cloud sandbox, verify tests pass, and post a review-ready PR with rationale. The hard parts are reproducing the repo's build environment automatically, preventing credential leakage, enforcing per-repo budgets, and making sure the agent cannot force-push. This capstone builds the self-hosted version and compares it on cost and pass rate to the hosted alternatives.
+> Label an issue, get a PR — the 2026 product shape for autonomous coding agents: run an agent in a cloud sandbox, verify tests pass, and post a review-ready PR with rationale. AWS Remote SWE Agents, Cursor Background Agents, OpenAI Codex cloud, and Google Jules all ship it. The hard parts are reproducing the repo's build environment automatically, preventing credential leakage, enforcing per-repo budgets, and making sure the agent cannot force-push. This capstone builds the self-hosted version and compares it on cost and pass rate to the hosted alternatives.
 
 **Type:** Capstone
 **Languages:** Python (agent), TypeScript (GitHub App), YAML (Actions)
@@ -64,6 +64,10 @@ GitHub issue labeled `@agent fix` or PR comment
 - Verification: full CI in-sandbox + coverage delta gate
 - Observability: Langfuse with per-PR trace archive linked from the PR body
 - Budget: per-repo daily dollar ceiling; max PRs per repo per day
+
+```figure
+cf-issue-to-pr
+```
 
 ## Build It
 

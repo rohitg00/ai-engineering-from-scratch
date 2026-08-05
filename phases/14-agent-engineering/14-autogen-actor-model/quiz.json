@@ -1,17 +1,17 @@
 {
   "lesson": "14-autogen-actor-model",
-  "title": "AutoGen v0.4: Actor Model and Agent Framework",
+  "title": "The Actor Model for Agents — Async Messages and Typed Runtimes",
   "questions": [
     {
       "stage": "pre",
       "question": "What is the only legal way actors interact in AutoGen v0.4?",
       "options": [
         "Direct access to a shared dict",
-        "Asynchronous messages exchanged through inboxes; no shared memory",
+        "Mutating each other's prompts",
         "Shared SQL transactions",
-        "Mutating each other's prompts"
+        "Asynchronous messages exchanged through inboxes; no shared memory"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Actors have private state and an inbox; messages are the only interaction."
     },
     {
@@ -32,8 +32,8 @@
       "options": [
         "The runtime catches handler failures in B without crashing A; A's send() returned immediately and never blocked",
         "Each actor runs on a separate machine",
-        "The runtime restarts the OS on failure",
-        "Handlers are pure functions"
+        "Handlers are pure functions",
+        "The runtime restarts the OS on failure"
       ],
       "correct": 0,
       "explanation": "send() puts the message in the recipient's inbox and returns; a handler crash is local to that actor."
@@ -43,23 +43,23 @@
       "question": "Which AgentChat topology rotates agents in a fixed order?",
       "options": [
         "SelectorGroupChat",
-        "RoundRobinGroupChat",
         "Magentic-One",
+        "RoundRobinGroupChat",
         "Supervisor"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "RoundRobinGroupChat is fixed rotation; SelectorGroupChat uses a selector to pick next."
     },
     {
       "stage": "check",
       "question": "What is Magentic-One in this lesson?",
       "options": [
-        "A new LLM model",
         "A reference multi-agent team for web browsing, code execution, and file handling built on AgentChat",
-        "A serialization format",
-        "An OTel exporter"
+        "An OTel exporter",
+        "A new LLM model",
+        "A serialization format"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Magentic-One is Microsoft's reference team that demonstrates the AgentChat API."
     },
     {
@@ -67,23 +67,23 @@
       "question": "What is the lesson's stated status of AutoGen v0.4 in early 2026?",
       "options": [
         "Deprecated and removed",
-        "Stable but in maintenance mode; Microsoft Agent Framework is the forward path",
+        "Replaced by LangGraph",
         "Just announced",
-        "Replaced by LangGraph"
+        "Stable but in maintenance mode; Microsoft Agent Framework is the forward path"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "AutoGen v0.7.x is stable for research; active development has shifted to Microsoft Agent Framework."
     },
     {
       "stage": "post",
       "question": "Which observability standard does AutoGen v0.4 emit by default?",
       "options": [
+        "Datadog APM",
         "Prometheus metrics only",
         "OpenTelemetry spans with gen_ai.* attributes per the OTel GenAI semantic conventions",
-        "StatsD",
-        "Datadog APM"
+        "StatsD"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Every message emits a span; tool calls carry gen_ai.* attributes per OTel GenAI conventions."
     }
   ]

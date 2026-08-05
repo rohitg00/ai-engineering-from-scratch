@@ -135,6 +135,10 @@ Two standard workarounds:
 
 For a first model, a 256x256 input with a 64-channel-base U-Net trains comfortably on 8 GB VRAM.
 
+```figure
+segmentation-flood
+```
+
 ## Build It
 
 ### Step 1: Encoder block

@@ -14,6 +14,10 @@
 - Reject re-registration without explicit override, since silent overwrites are how production tool catalogs drift.
 - Keep the validator pure (no I/O, no time, no globals) so it can be re-run on a replay log.
 
+```figure
+cf-registry-validate
+```
+
 ## Why the registry comes before the tool
 
 A coding agent in 2026 has more registered tools than the model can fit in a single context window. A non-trivial harness will register two hundred tools and surface ten to forty at any given turn. The registry is the source of truth for "what tools exist," "what shape do their arguments take," and "what handler do I call." Once those three answers are pinned, the rest of the harness can stop guessing.

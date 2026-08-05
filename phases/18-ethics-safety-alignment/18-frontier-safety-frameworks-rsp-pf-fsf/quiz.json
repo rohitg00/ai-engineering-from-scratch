@@ -6,12 +6,12 @@
       "stage": "pre",
       "question": "What does Anthropic's ASL structure model itself on?",
       "options": [
-        "ITIL incident severities",
         "EU AI Act categories",
+        "Biosafety levels (BSL)",
         "Internet RFC tiers",
-        "Biosafety levels (BSL)"
+        "ITIL incident severities"
       ],
-      "correct": 3,
+      "correct": 1,
       "explanation": ""
     },
     {
@@ -19,11 +19,11 @@
       "question": "Which OpenAI Preparedness Framework v2 criterion captures 'harm occurs fast or cannot be undone'?",
       "options": [
         "Net-new",
-        "Instantaneous-or-irremediable",
         "Plausible",
-        "Measurable"
+        "Measurable",
+        "Instantaneous-or-irremediable"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": ""
     },
     {
@@ -44,8 +44,8 @@
       "options": [
         "A provision allowing a lab to reduce safety requirements if peer labs ship without comparable safeguards",
         "An export-control exemption",
-        "A pricing rule for API access",
-        "A model-card disclosure requirement"
+        "A model-card disclosure requirement",
+        "A pricing rule for API access"
       ],
       "correct": 0,
       "explanation": ""
@@ -54,9 +54,9 @@
       "stage": "post",
       "question": "What are the three standard pillars of a safety case as described in the lesson?",
       "options": [
-        "Speed, accuracy, cost",
-        "Monitoring, illegibility, incapability",
         "Helpful, honest, harmless",
+        "Monitoring, illegibility, incapability",
+        "Speed, accuracy, cost",
         "Inner, outer, mesa"
       ],
       "correct": 1,
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "Which structural alignment exists across Anthropic's 'Capability Thresholds,' OpenAI's 'High Capability thresholds,' and DeepMind's 'Critical Capability Levels'?",
       "options": [
-        "Structural alignment: tiered frontier-capability thresholds with published evaluation criteria, even though terminology differs",
         "None are publicly documented",
+        "Structural alignment: tiered frontier-capability thresholds with published evaluation criteria, even though terminology differs",
         "Identical terminology and numeric cutoffs",
         "All three use the exact same evaluations"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": ""
     }
   ]

@@ -1,6 +1,6 @@
 # The Agent Loop: Observe, Think, Act
 
-> Every agent in 2026 — Claude Code, Cursor, Devin, Operator — is a variant of the ReAct loop from 2022. Reasoning tokens interleave with tool calls and observations until a stop condition fires. Learn this loop cold before touching any framework.
+> Every agent in 2026 is a variant of the ReAct loop from 2022 — Claude Code, Cursor, Devin, Operator included. Reasoning tokens interleave with tool calls and observations until a stop condition fires. Learn this loop cold before touching any framework.
 
 **Type:** Build
 **Languages:** Python (stdlib)
@@ -12,7 +12,7 @@
 - Name the three parts of the ReAct loop — Thought, Action, Observation — and explain why each one is load-bearing.
 - Implement a stdlib agent loop with a toy LLM, tool registry, and stop condition under 200 lines.
 - Identify the 2026 shift from prompt-based thought tokens to native model reasoning (Responses API, encrypted reasoning passthrough).
-- Explain why every modern harness (Claude Agent SDK, OpenAI Agents SDK, LangGraph, AutoGen v0.4) still runs this loop under the hood.
+- Explain why modern harnesses (Claude Agent SDK, OpenAI Agents SDK, LangGraph, AutoGen v0.4) still build on this loop under the hood.
 
 ## The Problem
 
@@ -60,7 +60,7 @@ Every agent loop needs exactly five things. Miss any one and you have a chat bot
 
 ### Why this loop is everywhere
 
-Claude Agent SDK, OpenAI Agents SDK, LangGraph, AutoGen v0.4 AgentChat, CrewAI, Agno, Mastra — every one of these runs ReAct under the hood. Framework differences are about what lives around the loop: state checkpointing (LangGraph), actor-model message passing (AutoGen v0.4), role templates (CrewAI), tracing spans (OpenAI Agents SDK). The loop itself is invariant.
+Claude Agent SDK, OpenAI Agents SDK, LangGraph, AutoGen v0.4 AgentChat, CrewAI, Agno, Mastra — a ReAct-shaped loop is the common, influential pattern under the hood of all of these. Framework differences are about what lives around the loop: state checkpointing (LangGraph), actor-model message passing (AutoGen v0.4), role templates (CrewAI), tracing spans (OpenAI Agents SDK). The loop itself is invariant.
 
 ### 2026 pitfalls
 

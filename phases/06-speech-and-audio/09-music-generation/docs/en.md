@@ -68,6 +68,10 @@ Safe-to-ship patterns:
 3. Train on owned or licensed catalog (most enterprises end up here).
 4. Tag generations with watermarks + metadata.
 
+```figure
+sp-codec-tokens
+```
+
 ## Build It
 
 ### Step 1: generate with MusicGen

@@ -18,60 +18,60 @@
       "stage": "check",
       "question": "Roughly how many MLCommons hazard categories does Llama Guard 3 cover?",
       "options": [
-        "7",
         "3",
         "40",
-        "14"
+        "14",
+        "7"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "How is Garak's architecture organized?",
       "options": [
-        "Tools, resources, prompts",
+        "Probes (attack generators), Detectors (output scorers), Harnesses (campaign managers)",
         "Embeddings, retrievers, rerankers",
-        "Routers, agents, queues",
-        "Probes (attack generators), Detectors (output scorers), Harnesses (campaign managers)"
+        "Tools, resources, prompts",
+        "Routers, agents, queues"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
       "question": "What is PyRIT primarily designed for, and how does it differ from Garak?",
       "options": [
-        "They are identical in scope and audience",
-        "PyRIT is a reward model trainer; Garak is a tokenizer",
         "PyRIT runs deep multi-turn campaigns (converter chains, orchestrators like Crescendo and TAP, scoring) while Garak runs thousands of single-turn probes",
-        "PyRIT is a Llama Guard variant; Garak is a Prompt-Guard variant"
+        "They are identical in scope and audience",
+        "PyRIT is a Llama Guard variant; Garak is a Prompt-Guard variant",
+        "PyRIT is a reward model trainer; Garak is a tokenizer"
       ],
-      "correct": 2,
+      "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "What is the recommended 2026 default red-team stack configuration?",
       "options": [
-        "Replace LLM evaluation with manual review only",
         "Use PAIR instead of any tooling",
-        "Put Llama Guard on both sides of the model, run Garak nightly for regression, and run PyRIT for pre-release campaigns",
-        "Run Garak once at launch only"
+        "Run Garak once at launch only",
+        "Replace LLM evaluation with manual review only",
+        "Put Llama Guard on both sides of the model, run Garak nightly for regression, and run PyRIT for pre-release campaigns"
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
       "question": "What evaluation pitfall is shared across Llama Guard, Garak, and PyRIT?",
       "options": [
-        "Reported attack/defense rates depend on the judge identity and probe staleness; you must specify the judge and refresh probes as models are patched",
-        "They only work in English",
         "They require white-box access",
-        "They cannot run on GPUs"
+        "They only work in English",
+        "They cannot run on GPUs",
+        "Reported attack/defense rates depend on the judge identity and probe staleness; you must specify the judge and refresh probes as models are patched"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": ""
     }
   ]

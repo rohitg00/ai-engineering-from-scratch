@@ -6,12 +6,12 @@
       "stage": "pre",
       "question": "What signal does Toolformer use to decide whether to keep a candidate tool annotation?",
       "options": [
+        "Whether the tool returns within 100 ms",
         "Human label agreement",
         "Whether including the tool result reduces next-token loss on surrounding text",
-        "Whether the tool returns within 100 ms",
         "Whether the tool emits valid JSON"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Toolformer's self-supervised signal keeps annotations whose tool results lower next-token loss."
     },
     {
@@ -19,11 +19,11 @@
       "question": "What is the BFCL V4 split that the lesson reports?",
       "options": [
         "100% single-turn",
-        "40% agentic, 30% multi-turn, 10% live, 10% non-live, 10% hallucination",
         "50% live, 50% synthetic",
-        "33% agentic, 33% planning, 33% reflection"
+        "33% agentic, 33% planning, 33% reflection",
+        "40% agentic, 30% multi-turn, 10% live, 10% non-live, 10% hallucination"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "BFCL V4 weights are 40 agentic / 30 multi-turn / 10 live / 10 non-live / 10 hallucination."
     },
     {
@@ -32,8 +32,8 @@
       "options": [
         "It is what the user sees in the UI",
         "The model reads it to choose the right tool; bad descriptions are the top cause of wrong-tool failures",
-        "It controls billing buckets",
-        "It is required by JSON Schema"
+        "It is required by JSON Schema",
+        "It controls billing buckets"
       ],
       "correct": 1,
       "explanation": "Tool descriptions are the model's primary signal for tool selection; poor descriptions cause wrong-tool routing."
@@ -42,12 +42,12 @@
       "stage": "check",
       "question": "What role does tool_use_id play in parallel tool calling?",
       "options": [
-        "It compresses the JSON payload",
         "It correlates each tool result with its originating call so results returning out of order route correctly",
         "It authorizes the call against an API key",
+        "It compresses the JSON payload",
         "It enables caching"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "tool_use_id is the correlation token; swapping them routes results to the wrong call."
     },
     {
@@ -55,11 +55,11 @@
       "question": "Which class of failure does V3 state-based evaluation try to catch?",
       "options": [
         "Token leakage",
-        "AST-matching tool calls that look right but leave the API in the wrong state",
+        "Schema versioning drift",
         "Slow tool execution",
-        "Schema versioning drift"
+        "AST-matching tool calls that look right but leave the API in the wrong state"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "State-based evaluation checks the resulting API state (e.g. file actually created) rather than syntactic call matching."
     },
     {
@@ -67,20 +67,20 @@
       "question": "Which 2026 problem does the lesson NOT list among the open ones for function calling?",
       "options": [
         "Long-horizon tool chaining",
+        "Token-level decoding speed",
         "Dynamic decision-making across many tools",
-        "Memory across turns",
-        "Token-level decoding speed"
+        "Memory across turns"
       ],
-      "correct": 3,
+      "correct": 1,
       "explanation": "The open problems are memory, dynamic decision-making, long-horizon chains, and hallucination detection; decoding speed is not on the list."
     },
     {
       "stage": "post",
       "question": "Why is a generic run_shell(cmd) tool called a red flag in this lesson?",
       "options": [
-        "It is slow",
-        "It widens the sandbox boundary; specific tools like git_status() bound read/write surface and risk",
         "It cannot be called in parallel",
+        "It widens the sandbox boundary; specific tools like git_status() bound read/write surface and risk",
+        "It is slow",
         "Providers reject it"
       ],
       "correct": 1,

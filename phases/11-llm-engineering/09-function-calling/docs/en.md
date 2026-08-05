@@ -171,6 +171,10 @@ One MCP server can expose tools to any compatible client. A Postgres MCP server 
 
 MCP is to function calling what HTTP is to networking. It standardizes the transport layer so tools become portable.
 
+```figure
+mx-tool-call-loop
+```
+
 ## Build It
 
 ### Step 1: Define the Tool Registry
@@ -612,7 +616,7 @@ OpenAI returns tool calls as `response.choices[0].message.tool_calls`. Each call
 # client = anthropic.Anthropic()
 #
 # response = client.messages.create(
-#     model="claude-sonnet-4-20250514",
+#     model="claude-sonnet-5",
 #     max_tokens=1024,
 #     tools=[{
 #         "name": "get_weather",
@@ -633,7 +637,7 @@ OpenAI returns tool calls as `response.choices[0].message.tool_calls`. Each call
 # result = get_weather(**tool_block.input)
 #
 # final = client.messages.create(
-#     model="claude-sonnet-4-20250514",
+#     model="claude-sonnet-5",
 #     max_tokens=1024,
 #     tools=[...],
 #     messages=[

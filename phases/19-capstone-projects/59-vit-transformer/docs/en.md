@@ -75,6 +75,10 @@ Vision Transformers are encoder-only and bidirectional: token `i` may attend to 
 
 The CLS token starts as a learned parameter, has no patch content of its own, and accumulates information through attention across every block. By the final layer, the CLS row is a vector summary of the whole image; downstream heads project this single vector into class logits, contrastive embeddings, or cross-attention keys for a text decoder.
 
+```figure
+ch-cls-funnel
+```
+
 ## Build It
 
 `code/main.py` implements:

@@ -82,6 +82,10 @@ For forms, use **Key-Value extraction** models (Donut for visually-rich document
 - **F1 on structured fields** — for key-value tasks; measures whether `{invoice_total: 42.50}` appears correctly.
 - **Edit distance on JSON** — for end-to-end document parsing; the Donut paper introduced normalised tree edit distance.
 
+```figure
+cv3-ctc-collapse
+```
+
 ## Build It
 
 ### Step 1: CTC loss + greedy decoder

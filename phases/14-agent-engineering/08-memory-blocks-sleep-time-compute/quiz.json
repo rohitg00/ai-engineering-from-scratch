@@ -1,63 +1,63 @@
 {
   "lesson": "08-memory-blocks-sleep-time-compute",
-  "title": "Memory Blocks and Sleep-Time Compute (Letta)",
+  "title": "Memory Blocks and Sleep-Time Compute",
   "questions": [
     {
       "stage": "pre",
       "question": "What are Letta's three memory tiers?",
       "options": [
+        "RAM, swap, disk",
         "Cache, KV, archival",
         "Core, recall, archival",
-        "RAM, swap, disk",
         "Working, episodic, semantic"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Letta uses core (always visible), recall (conversation history), and archival (external) tiers."
     },
     {
       "stage": "pre",
       "question": "Which production problem does sleep-time compute target?",
       "options": [
-        "Tail latency from doing memory consolidation on the critical path",
-        "Higher accuracy on math problems",
         "Lower embedding cost",
-        "Faster JSON parsing"
+        "Faster JSON parsing",
+        "Higher accuracy on math problems",
+        "Tail latency from doing memory consolidation on the critical path"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": "Sleep-time moves prune/summarize/reconcile off the user-facing path, so primary responses stay fast."
     },
     {
       "stage": "check",
       "question": "Which property is NOT a memory block field in Letta?",
       "options": [
-        "label",
-        "value",
         "limit",
-        "embedding_model_version"
+        "embedding_model_version",
+        "label",
+        "value"
       ],
-      "correct": 3,
+      "correct": 1,
       "explanation": "Blocks carry id, label, value, limit, description; embedding model version is not part of the block schema."
     },
     {
       "stage": "check",
       "question": "Why can the sleep-time agent run a stronger model than the primary?",
       "options": [
+        "Memory ops cost half tokens",
         "It receives a private API key",
         "It is off the critical path, so it is not latency-constrained",
-        "It is exempt from rate limits",
-        "Memory ops cost half tokens"
+        "It is exempt from rate limits"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Because it does not block user responses, the sleep-time agent can be slower and more expensive."
     },
     {
       "stage": "check",
       "question": "What pattern do the Human and Persona blocks generalize to?",
       "options": [
-        "Vector embeddings",
+        "OS processes",
         "Arbitrary user-defined typed editable blocks (Task, Project, Safety, ...)",
         "JSON-RPC channels",
-        "OS processes"
+        "Vector embeddings"
       ],
       "correct": 1,
       "explanation": "Letta generalizes the two MemGPT blocks to any user-defined block with id, label, value, limit, description."
@@ -67,8 +67,8 @@
       "question": "What is silent drift in this pattern?",
       "options": [
         "A primary agent never seeing that the sleep-time agent rewrote a block underneath it; fix with versioning and visible diffs",
-        "Slow disk writes",
         "Embedding model upgrades",
+        "Slow disk writes",
         "Rate-limit jitter"
       ],
       "correct": 0,

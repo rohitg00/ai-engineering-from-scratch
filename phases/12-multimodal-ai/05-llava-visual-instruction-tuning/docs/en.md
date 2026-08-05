@@ -126,6 +126,10 @@ LLaVA-1.5-7B breakdown:
 
 Training cost for stage 2: ~20 hours on 8xA100. This is the key number — one day, one node, reproducible. That is why LLaVA spread.
 
+```figure
+mm-llava-projector
+```
+
 ## Use It
 
 `code/main.py` implements:

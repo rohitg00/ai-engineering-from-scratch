@@ -112,6 +112,10 @@ Each loss has its own default weight; the torchvision implementation exposes the
 
 The mask is full image resolution already. The 28x28 head output has been upsampled internally.
 
+```figure
+cv3-roialign-sampling
+```
+
 ## Build It
 
 ### Step 1: RoIAlign from scratch

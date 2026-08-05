@@ -70,6 +70,10 @@ The defense: do not expose confidences, or truncate/quantize them before exposur
 
 Lessons 20-21 are bias/fairness. Lesson 22 is privacy. Lesson 23 is provenance via watermarking. Lesson 27 covers the regulatory data-provenance layer.
 
+```figure
+an-dp-clip-noise
+```
+
 ## Use It
 
 `code/main.py` simulates DP-SGD on a toy binary-classification dataset. You can sweep the noise multiplier σ and the clipping norm C and track the (ε, δ) budget and the accuracy cost. A "canary attack" inserts a unique training example and measures whether a log-loss test can detect it before and after DP.

@@ -6,24 +6,24 @@
       "stage": "pre",
       "question": "Why is prompt-only 'return JSON' not enough for production?",
       "options": [
-        "JSON is too verbose",
         "Prompts are too long",
-        "Frontier models comply most of the time but not always; the small fraction of malformed outputs breaks downstream parsers",
-        "Prompting cannot describe schemas"
+        "Prompting cannot describe schemas",
+        "JSON is too verbose",
+        "Frontier models comply most of the time but not always; the small fraction of malformed outputs breaks downstream parsers"
       ],
-      "correct": 2,
+      "correct": 3,
       "explanation": "Prompt-only structure works ~80% of the time on frontier models; production needs harder guarantees."
     },
     {
       "stage": "pre",
       "question": "What does constrained decoding modify at each generation step?",
       "options": [
-        "The KV cache",
-        "The tokenizer",
+        "The logit vector, masking tokens that would invalidate the target grammar so only valid continuations can be sampled",
         "The training loss",
-        "The logit vector, masking tokens that would invalidate the target grammar so only valid continuations can be sampled"
+        "The tokenizer",
+        "The KV cache"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": "A logit processor sets invalid tokens to -inf so the softmax cannot sample them."
     },
     {
@@ -31,11 +31,11 @@
       "question": "Why might constrained decoding be faster than free generation?",
       "options": [
         "The model is smaller",
-        "Forced scaffold tokens (e.g. '{\"name\": \"') can be emitted directly without sampling, and the valid-token search space shrinks",
         "It avoids softmax entirely",
-        "It skips backprop"
+        "It skips backprop",
+        "Forced scaffold tokens (e.g. '{\"name\": \"') can be emitted directly without sampling, and the valid-token search space shrinks"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Determined tokens skip sampling and reduced valid-token sets shrink the decode cost."
     },
     {
@@ -43,21 +43,21 @@
       "question": "Which schema design choice prevents premature commitment by the model?",
       "options": [
         "Put 'answer' first",
-        "Use shorter keys",
         "Place reasoning fields before the answer/decision field so the model thinks before committing",
+        "Use shorter keys",
         "Use snake_case"
       ],
-      "correct": 2,
+      "correct": 1,
       "explanation": "Field order is logic: putting reasoning first lets the model think before locking in an answer."
     },
     {
       "stage": "check",
       "question": "What is the limitation of FSM-based constrained decoding tools like Outlines?",
       "options": [
-        "They are not deterministic",
+        "They only support enums",
         "They lock you to OpenAI",
         "Recursive schemas have to be flattened; truly recursive structures need CFG-based engines such as XGrammar",
-        "They only support enums"
+        "They are not deterministic"
       ],
       "correct": 2,
       "explanation": "FSMs cannot represent unbounded recursion; CFG engines handle it."
@@ -67,9 +67,9 @@
       "question": "Why is Instructor described as not modifying logits?",
       "options": [
         "Instructor formats the schema into the prompt and parses/retries the output; logit masking happens server-side or not at all",
+        "It edits the prompt",
         "It uses gradient updates",
-        "Required by Anthropic",
-        "It edits the prompt"
+        "Required by Anthropic"
       ],
       "correct": 0,
       "explanation": "Instructor uses provider-side structured output plus client-side validation and retries, not logit masking."
@@ -78,9 +78,9 @@
       "stage": "post",
       "question": "What problem can a strict regex like date='YYYY-MM-DD' introduce?",
       "options": [
-        "It requires CFG support",
-        "It removes any escape hatch for unknown values, so the model fabricates a date instead of returning null/sentinel",
         "It breaks JSON parsing",
+        "It removes any escape hatch for unknown values, so the model fabricates a date instead of returning null/sentinel",
+        "It requires CFG support",
         "Regex is slow"
       ],
       "correct": 1,
@@ -90,12 +90,12 @@
       "stage": "post",
       "question": "When should you reach for vLLM guided decoding vs a vendor structured-output API?",
       "options": [
-        "Always vendor",
-        "Only for tiny schemas",
         "Only with byte-level BPE",
-        "Self-hosted inference where you control the model and want logit-level guarantees without retries"
+        "Always vendor",
+        "Self-hosted inference where you control the model and want logit-level guarantees without retries",
+        "Only for tiny schemas"
       ],
-      "correct": 3,
+      "correct": 2,
       "explanation": "vLLM guided decoding fits self-hosted serving with logit-level constraints; vendor APIs lock you to their stack."
     }
   ]

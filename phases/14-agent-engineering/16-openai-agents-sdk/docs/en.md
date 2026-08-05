@@ -67,6 +67,10 @@ On by default. Every LLM generation, tool call, handoff, and guardrail emits a s
 - **Guardrail bypass.** Tool guardrails only fire on function tools; built-in tools (file reader, web fetch) need separate policy.
 - **Over-tracing.** Sensitive content in spans. Pair with OTel GenAI content-capture rules (Lesson 23) — store externally, reference by ID.
 
+```figure
+ae-agent-handoff
+```
+
 ## Build It
 
 `code/main.py` implements the SDK shape in stdlib:

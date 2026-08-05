@@ -103,6 +103,10 @@ Three practical signals a team's coordination is real rather than prompt-dressed
 
 These are measurable in a logged multi-agent system. They are the substantive version of the "coordination" narrative.
 
+```figure
+sw-theory-of-mind
+```
+
 ## Build It
 
 `code/main.py` implements:
@@ -160,4 +164,4 @@ Coordination claims checklist:
 - [Li et al. — Theory of Mind for Multi-Agent Collaboration via Large Language Models](https://arxiv.org/abs/2310.10701) — emergent ToM in cooperative games; long-horizon failure modes
 - [Riedl — Emergent Coordination in Multi-Agent Language Models](https://arxiv.org/abs/2510.05174) — population-scale measurement; ToM prompting is the load-bearing condition
 - [Premack & Woodruff — Does the chimpanzee have a theory of mind?](https://www.cambridge.org/core/journals/behavioral-and-brain-sciences/article/does-the-chimpanzee-have-a-theory-of-mind/1E96B02CD9850E69AF20F81FA7EB3595) — the 1978 origin of the ToM concept
-- [Baron-Cohen, Leslie, Frith — Does the autistic child have a theory of mind?](https://www.cambridge.org/core/journals/behavioral-and-brain-sciences/article/does-the-autistic-child-have-a-theory-of-mind/) — the Sally-Anne paper (1985)
+- [Baron-Cohen, Leslie, Frith — Does the autistic child have a theory of mind?](https://doi.org/10.1016/0010-0277(85)90022-8) — the Sally-Anne paper (1985)
