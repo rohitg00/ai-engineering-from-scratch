@@ -290,10 +290,19 @@
 
   // The palette DOM is built once with the strings of the language that was
   // active then. Drop it on a language change so the next open rebuilds it;
-  // rebuilding while it is open would take the focus away mid-typing.
-  document.addEventListener('aifs:langchange', function () {
+  // rebuilding an open palette would take the focus away mid-typing, so that
+  // case defers the removal to close().
+  var _rebuildPending = false;
+
+  function dropPalette() {
     var pal = document.getElementById(PALETTE_ID);
-    if (pal && !_isOpen) pal.parentNode.removeChild(pal);
+    if (pal && pal.parentNode) pal.parentNode.removeChild(pal);
+    _rebuildPending = false;
+  }
+
+  document.addEventListener('aifs:langchange', function () {
+    if (_isOpen) { _rebuildPending = true; return; }
+    dropPalette();
   });
 
   function _palEl()   { return document.getElementById(PALETTE_ID); }
@@ -348,6 +357,10 @@
       }
     } catch (_) { /* element may have been removed from DOM */ }
     _prevFocus = null;
+
+    // A language change while the palette was open left it holding the previous
+    // language's strings; discard it now so the next open rebuilds it.
+    if (_rebuildPending) dropPalette();
   }
 
   // ── Render results ───────────────────────────────────────────────────

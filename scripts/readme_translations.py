@@ -20,6 +20,12 @@ WAYS = "Three ways in. Pick one."
 LICENSE_LINE = "MIT. Use it however you want — fork it, teach it, sell it, ship it. Attribution appreciated, not required."
 MAINTAINED = "Maintained by [Rohit Ghumare](https://github.com/rohitg00) and the community."
 
+H_START30 = "Start learning in 30 seconds"
+CTA_TUTOR = "Your coding agent becomes your tutor. Two commands, no clone, no setup:"
+CTA_INSIDE = "Then, inside your agent:"
+CTA_QUIZ = "A ten-question placement quiz maps what you already know to a starting phase and saves a personalized study plan to `LEARNING.md`. From there, `/learn` teaches one lesson per session — concept, math, code, quiz — streaming lessons straight from this repo, and `/course-guide <topic>` jumps you to the exact lesson that covers anything you are stuck on."
+CTA_WORKS = "Works with Claude Code, Cursor, Codex, OpenClaw, Hermes, or any agent that reads a `SKILL.md` directory — the installer asks which agents to set up. No agent? Read the same lessons at [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)."
+
 H_HOW = "How this works"
 H_CURR = "The shape of the curriculum"
 H_LESSON = "The shape of a lesson"
@@ -216,6 +222,11 @@ TRANSLATIONS = {
         WAYS: "سه راه برای شروع. یکی را انتخاب کن.",
         LICENSE_LINE: "مجوز MIT. هرطور خواستی استفاده کن — fork کن، درس بده، بفروش، منتشر کن. ذکر منبع مایه‌ی خوشحالی است، اما اجباری نیست.",
         MAINTAINED: "نگهداری‌شده توسط [Rohit Ghumare](https://github.com/rohitg00) و انجمن کاربران.",
+        H_START30: "شروع یادگیری در 30 ثانیه",
+        CTA_TUTOR: "coding agent خودت مدرست می‌شود. دو فرمان، بدون clone، بدون راه‌اندازی:",
+        CTA_INSIDE: "سپس، داخل agent خودت:",
+        CTA_QUIZ: "یک آزمون تعیین سطح ده‌سؤالی مشخص می‌کند چه چیزهایی را از قبل می‌دانی، مرحله‌ی شروع را پیدا می‌کند و یک برنامه‌ی مطالعه‌ی شخصی‌سازی‌شده در `LEARNING.md` ذخیره می‌کند. از آن‌جا، `/learn` در هر جلسه یک درس آموزش می‌دهد — مفهوم، ریاضیات، code، آزمون — و درس‌ها را مستقیم از همین مخزن می‌خواند؛ و `/course-guide <topic>` تو را به دقیقاً همان درسی می‌برد که موضوع گیرکرده‌ات را پوشش می‌دهد.",
+        CTA_WORKS: "با Claude Code، Cursor، Codex، OpenClaw، Hermes یا هر agent دیگری که یک پوشه‌ی `SKILL.md` را می‌خواند کار می‌کند — نصب‌کننده می‌پرسد کدام agentها راه‌اندازی شوند. agent نداری؟ همین درس‌ها را در [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) بخوان.",
         H_HOW: "این دوره چگونه کار می‌کند", H_CURR: "شکل کلی دوره", H_LESSON: "شکل کلی یک درس",
         H_START: "شروع کار", H_PREREQ: "پیش‌نیازها", H_BOOK: "خواندن به‌شکل کتاب",
         H_SHIPS: "هر درس چیزی تحویل می‌دهد", H_CONTENTS: "فهرست مطالب", H_TOOLKIT: "جعبه‌ابزار",

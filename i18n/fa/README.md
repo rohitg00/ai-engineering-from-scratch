@@ -45,30 +45,23 @@
 <p align="center"><sub><b>150,639</b> readers &nbsp;·&nbsp; <b>241,669</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-06-07</sub></p>
 <!-- STATS:END -->
 
-## Start learning in 30 seconds
+## شروع یادگیری در 30 ثانیه
 
-Your coding agent becomes your tutor. Two commands, no clone, no setup:
+coding agent خودت مدرست می‌شود. دو فرمان، بدون clone، بدون راه‌اندازی:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-Then, inside your agent:
+سپس، داخل agent خودت:
 
 ```text
 /start-learning
 ```
 
-A ten-question placement quiz maps what you already know to a starting phase and
-saves a personalized study plan to `LEARNING.md`. From there, `/learn` teaches
-one lesson per session — concept, math, code, quiz — streaming lessons straight
-from this repo, and `/course-guide <topic>` jumps you to the exact lesson that
-covers anything you are stuck on.
+یک آزمون تعیین سطح ده‌سؤالی مشخص می‌کند چه چیزهایی را از قبل می‌دانی، مرحله‌ی شروع را پیدا می‌کند و یک برنامه‌ی مطالعه‌ی شخصی‌سازی‌شده در `LEARNING.md` ذخیره می‌کند. از آن‌جا، `/learn` در هر جلسه یک درس آموزش می‌دهد — مفهوم، ریاضیات، code، آزمون — و درس‌ها را مستقیم از همین مخزن می‌خواند؛ و `/course-guide <topic>` تو را به دقیقاً همان درسی می‌برد که موضوع گیرکرده‌ات را پوشش می‌دهد.
 
-Works with Claude Code, Cursor, Codex, OpenClaw, Hermes, or any agent that
-reads a `SKILL.md` directory — the installer asks which agents to set up. No
-agent? Read the same lessons at
-[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
+با Claude Code، Cursor، Codex، OpenClaw، Hermes یا هر agent دیگری که یک پوشه‌ی `SKILL.md` را می‌خواند کار می‌کند — نصب‌کننده می‌پرسد کدام agentها راه‌اندازی شوند. agent نداری؟ همین درس‌ها را در [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) بخوان.
 
 ## این دوره چگونه کار می‌کند
 
