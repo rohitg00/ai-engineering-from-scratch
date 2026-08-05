@@ -71,30 +71,40 @@ class KVCache:
 
 def decode_naive(all_K, all_V, all_queries):
     """Recompute attention over the full prefix at every step.
-    Returns list of outputs, one per generated token. Op count = 1+2+...+N = N(N+1)/2.
+    Returns outputs plus (K,V computations, attention key/value reads).
+    Both are 1+2+...+N = N(N+1)/2 because the whole prefix is rebuilt each step.
     """
     outputs = []
-    ops = 0
+    kv_ops = 0
+    attn_reads = 0
     for t, q in enumerate(all_queries):
         Ks = all_K[:t + 1]
         Vs = all_V[:t + 1]
         out = attention_full(q, Ks, Vs)
-        ops += t + 1
+        kv_ops += t + 1
+        attn_reads += t + 1
         outputs.append(out)
-    return outputs, ops
+    return outputs, kv_ops, attn_reads
 
 
 def decode_cached(all_K, all_V, all_queries):
-    """KV cache: each new step appends one K,V and queries against the cache."""
+    """KV cache: each new step appends one K,V and queries against the cache.
+
+    Returns outputs plus (K,V computations, attention key/value reads). Each
+    token's K,V is computed once, so the first is N; attention still scans the
+    whole cache, so the second stays N(N+1)/2.
+    """
     cache = KVCache()
     outputs = []
-    ops = 0
-    for q, k, v in zip(all_queries, all_K, all_V):
+    kv_ops = 0
+    attn_reads = 0
+    for q, k, v in zip(all_queries, all_K, all_V, strict=True):
         cache.append(k, v)
         out = attention_full(q, cache.K, cache.V)
-        ops += len(cache)
+        kv_ops += 1
+        attn_reads += len(cache)
         outputs.append(out)
-    return outputs, ops
+    return outputs, kv_ops, attn_reads
 
 
 def kv_cache_bytes(N, n_layers, n_heads_kv, d_head, dtype=2):
@@ -105,24 +115,25 @@ def kv_cache_bytes(N, n_layers, n_heads_kv, d_head, dtype=2):
 def main():
     rng = random.Random(42)
     d_head = 8
-    N = 10
+    N = 100
 
-    # Random Q, K, V for a 10-token sequence, one head.
     all_Q = [[rng.gauss(0, 1) for _ in range(d_head)] for _ in range(N)]
     all_K = [[rng.gauss(0, 1) for _ in range(d_head)] for _ in range(N)]
     all_V = [[rng.gauss(0, 1) for _ in range(d_head)] for _ in range(N)]
 
-    naive, naive_ops = decode_naive(all_K, all_V, all_Q)
-    cached, cached_ops = decode_cached(all_K, all_V, all_Q)
+    naive, naive_kv, naive_reads = decode_naive(all_K, all_V, all_Q)
+    cached, cached_kv, cached_reads = decode_cached(all_K, all_V, all_Q)
 
     print(f"=== naive vs KV-cached decoding on N={N} tokens ===")
-    print(f"naive attention ops:  {naive_ops}  (O(N^2) = {N * (N + 1) // 2})")
-    print(f"cached attention ops: {cached_ops}  (O(N) with per-step cost, unchanged)")
+    print(f"naive  K,V computations: {naive_kv}  (O(N^2) = {N * (N + 1) // 2})")
+    print(f"cached K,V computations: {cached_kv}  (O(N) = {N})")
+    print(f"attention key/value reads: naive {naive_reads}, cached {cached_reads}"
+          "  (unchanged - attention still scans the whole prefix)")
     print("outputs match (max abs diff over all tokens):",
-          f"{max(abs(a - b) for va, vb in zip(naive, cached) for a, b in zip(va, vb)):.2e}")
+          f"{max(abs(a - b) for va, vb in zip(naive, cached, strict=True) for a, b in zip(va, vb, strict=True)):.2e}")
     print()
-    print("* naive has same per-step cost; saving comes from not REcomputing earlier")
-    print("  hidden states. counting K,V recomputes would make naive O(N^2) in matmuls.")
+    print("* naive recomputes K,V for the whole prefix each step; cached computes")
+    print("  each token's K,V exactly once and reuses them.")
     print()
 
     print("=== tiled-softmax (Flash) vs standard softmax agreement ===")
