@@ -103,6 +103,18 @@
     if (el) el.textContent = value;
   }
 
+  function tx(key, fallback) {
+    return typeof window.AIFS_landingText === 'function'
+      ? window.AIFS_landingText(key, fallback)
+      : fallback;
+  }
+
+  function txBidi(key, fallback) {
+    return typeof window.AIFS_landingBidi === 'function'
+      ? window.AIFS_landingBidi(key, fallback)
+      : escapeHtml(fallback);
+  }
+
   function renderPhases() {
     var grid = document.getElementById('phasesGrid');
     if (!grid) return;
@@ -126,7 +138,7 @@
       var num = String(p.id).padStart(2, '0');
       html += '<div class="toc-row" data-phase="' + i + '">';
       html += '<span class="toc-num">' + roman + '.</span>';
-      html += '<div><span class="toc-status ' + statusClass + '"></span><span class="toc-name">' + escapeHtml(p.name) + '</span></div>';
+      html += '<div><span class="toc-status ' + statusClass + '"></span><span class="toc-name">' + txBidi('phase.' + p.id + '.name', p.name) + '</span></div>';
       html += '<span class="toc-meta">' + done + ' / ' + total + '</span>';
       html += '<span class="toc-meta">' + num + '</span>';
       html += '</div>';
@@ -195,7 +207,7 @@
     if (resetBtn) {
       resetBtn.addEventListener('click', function () {
         if (!window.AIFSProgress) return;
-        var ok = window.confirm('Clear all your local progress (quiz answers and completed lessons)? This cannot be undone.');
+        var ok = window.confirm(tx('modal.confirm_reset', 'Clear all your local progress (quiz answers and completed lessons)? This cannot be undone.'));
         if (!ok) return;
         window.AIFSProgress.reset();
       });
@@ -209,9 +221,9 @@
     if (!p) return;
     currentPhaseIdx = idx;
 
-    document.getElementById('modalPhaseNum').textContent = 'PHASE ' + String(p.id).padStart(2, '0');
-    document.getElementById('modalTitle').textContent = p.name;
-    document.getElementById('modalDesc').textContent = p.desc;
+    document.getElementById('modalPhaseNum').textContent = tx('ui.phase_prefix', 'PHASE') + ' ' + String(p.id).padStart(2, '0');
+    document.getElementById('modalTitle').innerHTML = txBidi('phase.' + p.id + '.name', p.name);
+    document.getElementById('modalDesc').innerHTML = txBidi('phase.' + p.id + '.desc', p.desc);
 
     renderModalLessons(p);
 
@@ -238,7 +250,7 @@
       if (userComplete) statusClass = 'complete';
 
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
-      html += '<span class="modal-lesson-status ' + statusClass + '"' + (userComplete ? ' title="You completed this lesson"' : '') + '></span>';
+      html += '<span class="modal-lesson-status ' + statusClass + '"' + (userComplete ? ' title="' + escapeHtml(tx('modal.completed_lesson', 'You completed this lesson')) + '"' : '') + '></span>';
       if (l.url) {
         html += '<a href="' + l.url + '" target="_blank" rel="noopener">' + escapeHtml(l.name) + '</a>';
       } else {
@@ -249,11 +261,12 @@
 
       var actionHtml = '';
       if ((l.status === 'complete' || userComplete) && lessonPath) {
-        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + (userComplete ? 'Review' : 'Read') + '</a>';
+        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + escapeHtml(userComplete ? tx('modal.review', 'Review') : tx('modal.read', 'Read')) + '</a>';
       }
       var toggleHtml = '';
       if (hasProgress && lessonPath) {
-        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '" aria-label="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '">' + (userComplete ? '✓' : '+') + '</button>';
+        var toggleLabel = userComplete ? tx('modal.mark_not_done', 'Mark as not done') : tx('modal.mark_complete', 'Mark complete');
+        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + escapeHtml(toggleLabel) + '" aria-label="' + escapeHtml(toggleLabel) + '">' + (userComplete ? '✓' : '+') + '</button>';
       }
       html += (actionHtml || '<span class="modal-lesson-read-placeholder" aria-hidden="true"></span>') + toggleHtml;
       html += '</div>';
@@ -283,7 +296,7 @@
       var pct = Math.round((userDone / p.lessons.length) * 100);
       if (progEl) {
         progEl.style.display = '';
-        progEl.innerHTML = '<span class="modal-progress-count">' + userDone + ' / ' + p.lessons.length + '</span> <span class="modal-progress-label">completed</span> <span class="modal-progress-pct">' + pct + '%</span>';
+        progEl.innerHTML = '<span class="modal-progress-count">' + userDone + ' / ' + p.lessons.length + '</span> <span class="modal-progress-label">' + escapeHtml(tx('modal.completed', 'completed')) + '</span> <span class="modal-progress-pct">' + pct + '%</span>';
       }
       if (barEl && barFill) {
         barEl.style.display = '';
@@ -310,17 +323,28 @@
     document.body.style.overflow = '';
   }
 
+  window.AIFS_refreshLanding = function () {
+    populateStats();
+    renderPhases();
+    if (currentPhaseIdx >= 0 && PHASES[currentPhaseIdx]) {
+      var modal = document.getElementById('modalOverlay');
+      if (modal && modal.classList.contains('open')) {
+        openModal(currentPhaseIdx);
+      }
+    }
+  };
+
   // One clipboard implementation for every copy chip on the site: debounced
   // copied-state revert, execCommand fallback when the async API is denied.
   function wireCopyButton(btn, label, getText) {
     if (!btn || !label) return;
     var revertTimer = null;
     function confirmCopied() {
-      label.textContent = 'copied';
+      label.textContent = tx('ui.copied', 'copied');
       btn.classList.add('copied');
       if (revertTimer) clearTimeout(revertTimer);
       revertTimer = setTimeout(function () {
-        label.textContent = 'copy';
+        label.textContent = tx('ui.copy', 'copy');
         btn.classList.remove('copied');
       }, 1500);
     }
@@ -482,9 +506,14 @@
     }
   }
 
+  // Explicit entity map rather than a textContent round-trip: the results are
+  // also interpolated into double-quoted attributes, and that path leaves " and
+  // ' untouched.
+  var HTML_ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+
   function escapeHtml(str) {
-    var div = document.createElement('div');
-    div.textContent = str == null ? '' : str;
-    return div.innerHTML;
+    return String(str == null ? '' : str).replace(/[&<>"']/g, function (char) {
+      return HTML_ESCAPES[char];
+    });
   }
 })();

@@ -137,7 +137,8 @@
       "code": "fa",
       "name": "Persian",
       "native": "فارسی",
-      "nllb": "pes_Arab"
+      "nllb": "pes_Arab",
+      "ci": true
     },
     {
       "code": "ms",

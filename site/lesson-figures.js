@@ -729,6 +729,27 @@
         console.warn('lesson figure "' + name + '" failed:', e);
       }
     });
+    applyFigureCaptions(root);
+  }
+
+  // Figure prose lives in the JS module that draws the figure, so the Markdown
+  // translation pipeline never sees it. lesson.html loads
+  // site/figure-captions/<lang>.json into window.AIFS_FIGURE_CAPTIONS (figure
+  // id -> caption) and this swaps the description in after mounting. Only the
+  // description is localized: the label and the in-drawing text stay English,
+  // matching how code identifiers are left alone in translated lessons.
+  function applyFigureCaptions(root) {
+    var map = window.AIFS_FIGURE_CAPTIONS;
+    if (!map) return;
+    (root || document).querySelectorAll('.lesson-figure[data-figure]').forEach(function (host) {
+      var name = (host.dataset.figure || '').trim().split(/\s+/)[0];
+      var caption = map[name];
+      if (!caption) return;
+      var cap = host.querySelector('.lf-cap');
+      if (!cap || cap.dataset.lfLocalized === caption) return;
+      cap.textContent = caption;
+      cap.dataset.lfLocalized = caption;
+    });
   }
 
   // Register more widgets from external module files (figures-<topic>.js).
@@ -736,6 +757,7 @@
   function register(obj) { for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k)) FIGS[k] = obj[k]; }
 
   window.mountLessonFigures = mountLessonFigures;
+  window.applyFigureCaptions = applyFigureCaptions;
   window.LESSON_FIGURES = FIGS;
   // Shared toolkit for figure module files. Vanilla, no deps, theme via CSS vars.
   window.LF = {

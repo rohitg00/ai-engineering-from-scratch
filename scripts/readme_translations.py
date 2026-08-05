@@ -20,6 +20,12 @@ WAYS = "Three ways in. Pick one."
 LICENSE_LINE = "MIT. Use it however you want — fork it, teach it, sell it, ship it. Attribution appreciated, not required."
 MAINTAINED = "Maintained by [Rohit Ghumare](https://github.com/rohitg00) and the community."
 
+H_START30 = "Start learning in 30 seconds"
+CTA_TUTOR = "Your coding agent becomes your tutor. Two commands, no clone, no setup:"
+CTA_INSIDE = "Then, inside your agent:"
+CTA_QUIZ = "A ten-question placement quiz maps what you already know to a starting phase and saves a personalized study plan to `LEARNING.md`. From there, `/learn` teaches one lesson per session — concept, math, code, quiz — streaming lessons straight from this repo, and `/course-guide <topic>` jumps you to the exact lesson that covers anything you are stuck on."
+CTA_WORKS = "Works with Claude Code, Cursor, Codex, OpenClaw, Hermes, or any agent that reads a `SKILL.md` directory — the installer asks which agents to set up. No agent? Read the same lessons at [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)."
+
 H_HOW = "How this works"
 H_CURR = "The shape of the curriculum"
 H_LESSON = "The shape of a lesson"
@@ -49,6 +55,7 @@ README_NOTE = {
     "ar": '<p align="center" dir="rtl"><sub>ترجمة مجتمعية. النسخة <a href="../../README.md">الإنجليزية هي المرجعية</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
     "ru": '<p align="center"><sub>Перевод сообщества. Каноничной является <a href="../../README.md">английская версия</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
     "tr": '<p align="center"><sub>Topluluk çevirisi. Esas alınan sürüm <a href="../../README.md">İngilizce</a>dir · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
+    "fa": '<p align="center" dir="rtl"><sub>ترجمه‌ی انجمن کاربران. نسخه‌ی <a href="../../README.md">انگلیسی مرجع است</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
 }
 
 TRANSLATIONS = {
@@ -207,5 +214,23 @@ TRANSLATIONS = {
         H_SHIPS: "Her ders bir şey üretir", H_CONTENTS: "İçindekiler", H_TOOLKIT: "Araç seti",
         H_WHERE: "Nereden başlamalı", H_WHY: "Bu neden şimdi önemli", H_CONTRIB: "Katkıda bulunma",
         H_SPONSOR: "Projeye sponsor olun", H_STAR: "Yıldız geçmişi", H_LICENSE: "Lisans",
+    },
+    "fa": {
+        HERO1: "**همین حالا 84٪ از دانشجویان از ابزارهای AI استفاده می‌کنند، اما تنها 18٪ حس می‌کنند برای استفاده‌ی حرفه‌ای از آن‌ها آماده‌اند.** این دوره‌ی آموزشی همین شکاف را پر می‌کند.",
+        HERO2: "دوره شامل 503 درس در 20 مرحله و حدود 320 ساعت کار است، با Python، TypeScript، Rust و Julia. هر درس یک artifact قابل‌استفاده‌ی دوباره تحویل می‌دهد: یک prompt، یک skill، یک agent، یک سرور MCP. رایگان، متن‌باز، با مجوز MIT.",
+        HERO3: "تو فقط AI را یاد نمی‌گیری؛ خودت می‌سازی‌اش. سرتاسر مسیر. با دست خودت.",
+        WAYS: "سه راه برای شروع. یکی را انتخاب کن.",
+        LICENSE_LINE: "مجوز MIT. هرطور خواستی استفاده کن — fork کن، درس بده، بفروش، منتشر کن. ذکر منبع مایه‌ی خوشحالی است، اما اجباری نیست.",
+        MAINTAINED: "نگهداری‌شده توسط [Rohit Ghumare](https://github.com/rohitg00) و انجمن کاربران.",
+        H_START30: "شروع یادگیری در 30 ثانیه",
+        CTA_TUTOR: "coding agent خودت مدرست می‌شود. دو فرمان، بدون clone، بدون راه‌اندازی:",
+        CTA_INSIDE: "سپس، داخل agent خودت:",
+        CTA_QUIZ: "یک آزمون تعیین سطح ده‌سؤالی مشخص می‌کند چه چیزهایی را از قبل می‌دانی، مرحله‌ی شروع را پیدا می‌کند و یک برنامه‌ی مطالعه‌ی شخصی‌سازی‌شده در `LEARNING.md` ذخیره می‌کند. از آن‌جا، `/learn` در هر جلسه یک درس آموزش می‌دهد — مفهوم، ریاضیات، code، آزمون — و درس‌ها را مستقیم از همین مخزن می‌خواند؛ و `/course-guide <topic>` تو را به دقیقاً همان درسی می‌برد که موضوع گیرکرده‌ات را پوشش می‌دهد.",
+        CTA_WORKS: "با Claude Code، Cursor، Codex، OpenClaw، Hermes یا هر agent دیگری که یک پوشه‌ی `SKILL.md` را می‌خواند کار می‌کند — نصب‌کننده می‌پرسد کدام agentها راه‌اندازی شوند. agent نداری؟ همین درس‌ها را در [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) بخوان.",
+        H_HOW: "این دوره چگونه کار می‌کند", H_CURR: "شکل کلی دوره", H_LESSON: "شکل کلی یک درس",
+        H_START: "شروع کار", H_PREREQ: "پیش‌نیازها", H_BOOK: "خواندن به‌شکل کتاب",
+        H_SHIPS: "هر درس چیزی تحویل می‌دهد", H_CONTENTS: "فهرست مطالب", H_TOOLKIT: "جعبه‌ابزار",
+        H_WHERE: "از کجا شروع کنیم", H_WHY: "چرا همین حالا مهم است", H_CONTRIB: "مشارکت",
+        H_SPONSOR: "حمایت مالی از این کار", H_STAR: "تاریخچه‌ی Star", H_LICENSE: "مجوز",
     },
 }

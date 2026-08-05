@@ -15,8 +15,9 @@
   <a href="i18n/hi/README.md">हिन्दी</a> ·
   <a href="i18n/ar/README.md">العربية</a> ·
   <a href="i18n/ru/README.md">Русский</a> ·
-  <a href="i18n/tr/README.md">Türkçe</a>
-  <br><sub>Translated landing pages, committed to the repo. English is canonical; lesson pages are machine-translated on the <code>translations</code> branch. See <a href="docs/i18n.md">docs/i18n.md</a>.</sub>
+  <a href="i18n/tr/README.md">Türkçe</a> ·
+  <a href="i18n/fa/README.md">فارسی</a>
+  <br><sub>Translated landing pages, committed to the repo. English is canonical; lesson pages are machine-translated on the <code>translations</code> branch, except where a hand-authored translation is committed beside the English source. See <a href="docs/i18n.md">docs/i18n.md</a>.</sub>
 </p>
 
 <p align="center">

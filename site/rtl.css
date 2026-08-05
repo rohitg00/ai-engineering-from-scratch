@@ -1,0 +1,825 @@
+/*
+ * Directional overrides for Arabic-script languages.
+ *
+ * The document direction comes from lang-dir.js before first paint. Keep the
+ * selectors here scoped to html[dir="rtl"] so English and every existing LTR
+ * language retain the reference-manual layout unchanged.
+ */
+
+/* --- script-safe type and bidi ----------------------------------------- */
+
+html[dir="rtl"] {
+  direction: rtl;
+}
+
+html[dir="rtl"] body {
+  direction: rtl;
+  hyphens: none;
+  -webkit-hyphens: none;
+  overflow-x: hidden;
+}
+
+/* Mixed RTL/Latin prose can use semantic directional islands for technical
+   identifiers; the surrounding language remains responsible for its base
+   direction. */
+html[dir="rtl"] bdi[dir="ltr"] {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline;
+}
+
+/* A language may opt into a custom font through lang-dir.js. The selector is
+   intentionally generic: languages without a font config keep the defaults. */
+html[data-font="custom"] :is(
+  .manual-tagline, .manual-attribution, .masthead-install-bar,
+  .masthead-install-caption, .fig-caption, .learners-eyebrow,
+  .learners-quote, .preface-body,
+  .stat-row-label, .toc-subtitle, .toc-name, .legend,
+  .modal-desc, .modal-footer-note, .modal-reset,
+  .books-note, .colophon p, .site-footer,
+  .header-nav a, .lang-picker-btn, .lang-panel, .lang-item
+) {
+  font-family: var(--font-body);
+}
+
+html[data-font="custom"] :is(
+  h2, h3, h4, .section-title, .section-subtitle, .toc-title,
+  .stat-block-title, .preface-eyebrow, .colophon-eyebrow, .modal-title,
+  .book-card h3
+) {
+  font-family: var(--font-heading);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+/* Positive tracking disconnects joined Arabic-script glyphs. Code and other
+   LTR islands below get their own direction and spacing back. */
+html[dir="rtl"] :is(h1, h2, h3, h4, h5, h6, p, li, a, button, label,
+  summary, figcaption, input, select, option, blockquote, .toc-name,
+  .toc-meta, .stat-row-label, .stat-block-title, .toc-title, .section-title,
+  .section-subtitle, .learning-objectives-title, .quiz-title, .label) {
+  letter-spacing: normal;
+}
+
+html[dir="rtl"] :is(p, li, dd, dt, figcaption, blockquote, .manual-tagline,
+  .manual-attribution, .preface-body, .toc-subtitle, .modal-desc,
+  .detail-desc, .about p, .about li, .glossary-col-says,
+  .glossary-col-means, .output-desc) {
+  line-height: 1.85;
+}
+
+/* Lesson typography keeps the reference-manual rhythm in RTL. The broader
+   Arabic-script rule above is intentionally looser for the rest of the site;
+   lesson-specific selectors stay more specific than the generic element
+   selectors so these values mirror the original lesson CSS. */
+html[dir="rtl"] .lesson-article p,
+html[dir="rtl"] .lesson-article li,
+html[dir="rtl"] .lesson-article blockquote {
+  line-height: 1.7;
+}
+
+html[dir="rtl"] .lesson-article .motto {
+  line-height: 1.55;
+}
+
+html[dir="rtl"] .learning-objectives li {
+  line-height: 1.7;
+}
+
+html[dir="rtl"] .quiz-question-text {
+  line-height: 1.5;
+}
+
+html[dir="rtl"] .quiz-explanation {
+  line-height: 1.55;
+}
+
+html[dir="rtl"] :is(h1, h2, h3, h4, .modal-title, .detail-title,
+  .ai-panel-title, .lesson-error h2, .lab-challenge h2) {
+  line-height: 1.3;
+}
+
+html[dir="rtl"] :is(h1, .manual-title, .lesson-article h1) {
+  line-height: 1.15;
+}
+
+html[dir="rtl"] .lesson-article h2 {
+  line-height: 1.05;
+}
+
+/* Keep lesson headings on the same baseline rhythm as the reference CSS;
+   the generic RTL heading rule above is intentionally broader for shared UI. */
+html[dir="rtl"] .lesson-article h1 {
+  line-height: 1;
+}
+
+html[dir="rtl"] .lesson-article h3 {
+  line-height: 1.2;
+}
+
+@media (max-width: 900px) {
+  html[dir="rtl"] .lesson-article p,
+  html[dir="rtl"] .lesson-article li,
+  html[dir="rtl"] .lesson-article blockquote {
+    line-height: 1.65;
+  }
+
+  html[dir="rtl"] .learning-objectives li {
+    line-height: 1.65;
+  }
+}
+
+@media (max-width: 768px) {
+  html[dir="rtl"] .lesson-article h1 {
+    line-height: 0.95;
+  }
+}
+
+/* Inline code, paths, versions, counters and language tags must not inherit
+   the surrounding Persian/Arabic bidi run. */
+html[dir="rtl"] :is(code, pre, kbd, samp, .code-lang, .code-card-run,
+  .code-card-name, .code-lang-icon, .output-card-name, .output-install-hint,
+  .colophon-cmd, .cp-item-meta, .catalog-lang, .modal-lesson-lang,
+  .masthead-btn-count, .header-github .star-count, .book-card .vol,
+  .book-card .dl a, .quiz-option .opt-letter, .quiz-option .quiz-marker,
+  .li-num, .node-id, .modal-progress-count, .modal-progress-pct,
+  .stat-row-value, .toc-meta, .quiz-score-number, .modal-lesson-type,
+  .catalog-phase-label, .timeline-ellipsis, .i18n-id) {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+html[dir="rtl"] :is(pre, pre code, .code-card-run, .colophon-cmd,
+  .output-install-hint) {
+  text-align: left;
+}
+
+/* A translated page can still contain an English lesson or an English quiz.
+   Resolve those elements from their own first strong character. */
+html[dir="rtl"] :is(.output-desc, .lesson-contract-field, .detail-desc,
+  .modal-desc, .cp-item-summary, .sidebar-lesson-link, .toc-link,
+  .timeline-label, .continue-link, .lesson-nav-btn .nav-title,
+  .modal-lesson > a, .catalog-table td, .glossary-term) {
+  unicode-bidi: plaintext;
+}
+
+/* Quiz prose follows the lesson direction even when its first token is a
+   Latin identifier such as `uv` or `CUDA`; only code/letter islands opt into
+   LTR below. */
+html[dir="rtl"] :is(.quiz-option, .quiz-option > span:last-child,
+  .quiz-explanation, .quiz-score-label, .quiz-deeper) {
+  direction: inherit;
+  unicode-bidi: isolate;
+}
+
+html[dir="rtl"] :is(.quiz-option,
+  .quiz-option > span:last-child, .quiz-explanation, .quiz-score-label) {
+  text-align: start;
+}
+
+html[dir="rtl"] .modal-lesson > a {
+  text-align: right;
+}
+
+/* Arabic-script prose is start-aligned; browser justification inserts wide,
+   uneven gaps because it does not perform Persian/Arabic kashida shaping. */
+html[dir="rtl"] :is(.lesson-article p, .lesson-article ul li,
+  .lesson-article ol li, .lesson-article .motto, .lesson-article blockquote,
+  .learning-objectives li, .output-desc, .phase-progress-text,
+  .panel-fallback, .lesson-error, .preface-body, .about, .about li,
+  .detail-desc, .catalog-table th) {
+  text-align: right;
+}
+
+html[dir="rtl"] :is(.lesson-article table, .catalog-table, .glossary-card,
+  .detail-panel) {
+  direction: rtl;
+}
+
+html[dir="rtl"] :is(.lesson-article .mermaid-render, .mermaid-modal-body,
+  .figure-body, .graph-svg, .marquee) {
+  direction: ltr;
+}
+
+/* Figure chrome follows the reading direction; its authored diagram remains
+   an LTR geometry island so arrows, coordinates, and code labels do not flip. */
+html[dir="rtl"] .lesson-figure {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="rtl"] .lesson-figure .lf-head {
+  direction: rtl;
+  text-align: right;
+  letter-spacing: normal;
+}
+
+html[dir="rtl"] .lesson-figure .lf-head > span,
+html[dir="rtl"] .lesson-figure .lf-cap {
+  unicode-bidi: plaintext;
+}
+
+html[dir="rtl"] .lesson-figure .lf-body,
+html[dir="rtl"] .lesson-figure .lf-out {
+  direction: ltr;
+}
+
+html[dir="rtl"] .lesson-figure .lf-cap {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="rtl"] :is(.ai-panel, .ai-panel-header, .ai-panel-subtitle,
+  .output-card, .code-card, .continue-panel) {
+  direction: rtl;
+}
+
+html[dir="rtl"] .ai-panel-header {
+  text-align: right;
+}
+
+html[dir="rtl"] :is(.ai-panel-subtitle, .output-card, .code-card,
+  .output-desc, .phase-progress-text, .continue-link, .continue-callout,
+  .timeline-label, .quiz-question-num, .quiz-deeper) {
+  text-align: right;
+}
+
+html[dir="rtl"] .learning-timeline {
+  direction: rtl;
+}
+
+html[dir="rtl"] :is(.output-actions, .code-card-actions) {
+  justify-content: flex-start;
+}
+
+html[dir="rtl"] .code-card-run {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+}
+
+/* Language-configured UI labels use that language's configured font while
+   technical names and commands retain their own LTR/monospace islands. */
+html[data-font="custom"] :is(.ai-panel-title, .ai-panel-subtitle,
+  .output-badge, .output-desc, .output-btn, .code-card-btn,
+  .phase-progress-text, .continue-link, .continue-callout,
+  .quiz-question-num, .quiz-deeper, .panel-loading, .panel-fallback,
+  .lesson-figure .lf-head, .lesson-figure .lf-cap) {
+  font-family: var(--font-body);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+html[data-font="custom"] .ai-panel-title {
+  font-family: var(--font-heading);
+}
+
+html[dir="rtl"] :is(.lesson-figure svg, .figure-body svg) {
+  direction: ltr;
+}
+
+html[dir="rtl"] :is(.lesson-article .mermaid-render foreignObject p,
+  .lesson-article .mermaid-render foreignObject span,
+  .mermaid-modal-body foreignObject p,
+  .mermaid-modal-body foreignObject span) {
+  unicode-bidi: plaintext;
+  letter-spacing: normal;
+}
+
+/* --- shared chrome ------------------------------------------------------ */
+
+html[dir="rtl"] .skip-link {
+  left: auto;
+  right: -9999px;
+}
+
+html[dir="rtl"] .skip-link:focus,
+html[dir="rtl"] .skip-link:focus-visible {
+  left: auto;
+  right: 16px;
+}
+
+/* Keep the drop cap on the reading edge of RTL prose. Use the inherited
+   language font so Arabic-script glyphs do not fall back to the LTR display
+   font. */
+html[dir="rtl"] .dropcap > p:first-of-type::first-letter,
+html[dir="rtl"] p.dropcap::first-letter,
+html[dir="rtl"] .preface-body p:first-of-type::first-letter,
+html[dir="rtl"] .lesson-article .drop-cap::first-letter {
+  float: right;
+  font-family: inherit;
+  font-size: 4.4rem;
+  line-height: 0.85;
+  padding: 0.06em 0 0 0.14em;
+  color: var(--blueprint);
+}
+
+@media (max-width: 900px) {
+  html[dir="rtl"] .dropcap > p:first-of-type::first-letter,
+  html[dir="rtl"] p.dropcap::first-letter,
+  html[dir="rtl"] .preface-body p:first-of-type::first-letter,
+  html[dir="rtl"] .lesson-article .drop-cap::first-letter {
+    font-size: 3.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  html[dir="rtl"] .dropcap > p:first-of-type::first-letter,
+  html[dir="rtl"] p.dropcap::first-letter,
+  html[dir="rtl"] .preface-body p:first-of-type::first-letter,
+  html[dir="rtl"] .lesson-article .drop-cap::first-letter {
+    font-size: 2.8rem;
+  }
+}
+
+/* Mirror the original lesson drop-cap scale; only its side changes in RTL. */
+html[dir="rtl"] .lesson-article .drop-cap::first-letter {
+  font-size: 4rem;
+}
+
+@media (max-width: 900px) {
+  html[dir="rtl"] .lesson-article .drop-cap::first-letter {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  html[dir="rtl"] .lesson-article .drop-cap::first-letter {
+    font-size: 2.6rem;
+  }
+}
+
+html[dir="rtl"] :is(.ascii-rule, .lesson-article hr) {
+  background-image:
+    repeating-linear-gradient(to left,
+      var(--blueprint) 0, var(--blueprint) 4px,
+      transparent 4px, transparent 8px),
+    repeating-linear-gradient(to left,
+      transparent 0, transparent 8px,
+      var(--blueprint-tint-strong) 8px, var(--blueprint-tint-strong) 14px);
+  background-position: 100% 0, 100% 3px;
+}
+
+html[dir="rtl"] body.js-anim .ascii-rule {
+  clip-path: inset(0 0 0 100%);
+}
+
+html[dir="rtl"] body.js-anim .reveal--left {
+  transform: translateX(20px);
+}
+
+html[dir="rtl"] .modal-close {
+  right: auto;
+  left: 16px;
+}
+
+html[dir="rtl"] .modal-progress-pct {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+html[dir="rtl"] .modal-lesson-lang {
+  text-align: left;
+}
+
+html[dir="rtl"] .cp-item {
+  border-left: none;
+  border-right: 3px solid transparent;
+}
+
+html[dir="rtl"] .cp-item:hover,
+html[dir="rtl"] .cp-item--active {
+  border-right-color: var(--blueprint);
+}
+
+html[dir="rtl"] .cp-footer-shortcut {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+html[dir="rtl"] .lang-panel {
+  right: auto;
+  left: 0;
+}
+
+html[dir="rtl"] .lang-item {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="rtl"] .lang-code {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* --- home page ---------------------------------------------------------- */
+
+html[dir="rtl"] .stat-row-value,
+html[dir="rtl"] .toc-meta {
+  text-align: left;
+}
+
+html[dir="rtl"] .toc-status {
+  margin-right: 0;
+  margin-left: 6px;
+}
+
+html[dir="rtl"] .masthead-btn-count {
+  padding-left: 0;
+  padding-right: 8px;
+  margin-left: 0;
+  margin-right: 4px;
+  border-left: none;
+  border-right: 1px solid currentcolor;
+}
+
+html[dir="rtl"] .colophon-cmd .copy-btn {
+  right: auto;
+  left: 0;
+  padding-left: 0;
+  padding-right: 8px;
+}
+
+html[dir="rtl"] .preface-body {
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+
+/* The illustration is decorative and authored LTR; move it to the opposite
+   edge while leaving its SVG geometry untouched. */
+html[dir="rtl"] .masthead-figure {
+  right: auto;
+  left: -8px;
+}
+
+@media (min-width: 1440px) {
+  html[dir="rtl"] .masthead-figure { left: -80px; }
+}
+
+@media (min-width: 1640px) {
+  html[dir="rtl"] .masthead-figure { left: -150px; }
+}
+
+/* The masthead SVG contains authored English labels and fixed coordinates.
+   Keep that decorative island LTR so the page direction cannot reorder its
+   labels or change the meaning of its geometry. */
+html[dir="rtl"] .masthead-figure svg {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+html[dir="rtl"] .masthead-figure .fig-caption {
+  unicode-bidi: plaintext;
+  text-align: center;
+}
+
+/* Hero copy may remain English until a locale provides translated strings.
+   Plaintext bidi also lets a future Persian/Arabic translation choose its own
+   natural direction while keeping punctuation attached to the right run. */
+html[dir="rtl"] :is(.manual-title, .manual-tagline,
+  .manual-attribution, .masthead-install-caption) {
+  unicode-bidi: plaintext;
+  text-align: right;
+}
+
+/* Keep the desktop masthead's vertical rhythm aligned with the source LTR
+   layout. The generic Arabic-script prose line-height is intentionally more
+   generous elsewhere, but it should not make the hero grow by one extra line
+   box per element. */
+html[dir="rtl"] .manual-title {
+  line-height: 0.86 !important;
+}
+
+html[dir="rtl"] .manual-tagline {
+  line-height: 1.55 !important;
+}
+
+html[dir="rtl"] .manual-attribution,
+html[dir="rtl"] .masthead-install-caption {
+  line-height: 1.62 !important;
+}
+
+@media (max-width: 600px) {
+  html[dir="rtl"] .manual-title {
+    line-height: 0.98 !important;
+  }
+
+  html[dir="rtl"] .manual-tagline {
+    line-height: 1.48 !important;
+  }
+
+  html[dir="rtl"] .manual-attribution {
+    line-height: 1.45 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  html[dir="rtl"] .manual-title {
+    line-height: 1 !important;
+  }
+
+  html[dir="rtl"] .manual-tagline {
+    line-height: 1.45 !important;
+  }
+}
+
+/* --- catalog, glossary and roadmap ------------------------------------- */
+
+/* These two surfaces stay English until their content is translated: the search
+   placeholder and the "12 of 83 terms" counter. Resolve each from its own first
+   strong character so the trailing ellipsis and the counts keep their English
+   order instead of being reordered into the surrounding RTL page. */
+html[dir="rtl"] :is(.glossary-search, .catalog-search,
+  .glossary-count, .catalog-count) {
+  unicode-bidi: plaintext;
+  text-align: start;
+}
+
+/* The placeholder is its own text run and does not inherit the input's
+   plaintext resolution, so the trailing ellipsis would move to the left. */
+html[dir="rtl"] :is(.glossary-search, .catalog-search)::placeholder {
+  unicode-bidi: plaintext;
+}
+
+html[dir="rtl"] .catalog-table th .sort-arrow {
+  margin-left: 0;
+  margin-right: 4px;
+}
+
+html[dir="rtl"] .catalog-status-dot {
+  margin-right: 0;
+  margin-left: 6px;
+}
+
+html[dir="rtl"] .detail-prereq-list li .li-num,
+html[dir="rtl"] .detail-unlock-list li .li-num {
+  margin-right: 0;
+  margin-left: 6px;
+}
+
+html[dir="rtl"] .detail-section-title .title-icon {
+  margin-right: 0;
+  margin-left: 4px;
+}
+
+html[dir="rtl"] .detail-link:hover {
+  transform: translate(1px, -1px);
+}
+
+/* The roadmap graph uses authored coordinates and arrow geometry. */
+html[dir="rtl"] .graph-svg {
+  direction: ltr;
+}
+
+html[dir="rtl"] .graph-svg .node-name {
+  unicode-bidi: plaintext;
+  letter-spacing: normal;
+}
+
+html[dir="rtl"] .glossary-card,
+html[dir="rtl"] .detail-panel,
+html[dir="rtl"] .cp-panel {
+  box-shadow: -3px 3px 0 var(--ink);
+}
+
+html[dir="rtl"] .glossary-card:hover {
+  transform: translate(2px, -2px);
+  box-shadow: -5px 5px 0 var(--ink);
+}
+
+html[dir="rtl"] .about ul {
+  padding-left: 0;
+  padding-right: 1.1em;
+}
+
+html[dir="rtl"] :is(.catalog-header p, .glossary-header p,
+  .prereqs-header p, .about .lede, .site-footer p, .footer-links a) {
+  unicode-bidi: plaintext;
+}
+
+/* --- lesson page -------------------------------------------------------- */
+
+html[dir="rtl"] .scroll-progress {
+  left: auto;
+  right: 0;
+}
+
+html[dir="rtl"] .lesson-sidebar {
+  left: auto;
+  right: 0;
+  border-right: none;
+  border-left: 1px solid var(--rule-soft);
+}
+
+html[dir="rtl"] .lesson-main {
+  margin-left: 0;
+  margin-right: 240px;
+}
+
+html[dir="rtl"] .toc-sidebar {
+  right: auto;
+  left: 0;
+}
+
+html[dir="rtl"] .lesson-sidebar-toggle {
+  left: auto;
+  right: 10px;
+}
+
+html[dir="rtl"] .sidebar-lesson-link {
+  border-left: none;
+  border-right: 2px solid transparent;
+}
+
+html[dir="rtl"] .sidebar-lesson-link.active {
+  border-right-color: var(--blueprint);
+}
+
+html[dir="rtl"] .toc-nav {
+  border-left: none;
+  border-right: 1px solid var(--rule-soft);
+}
+
+html[dir="rtl"] .toc-link {
+  border-left: none;
+  border-right: 2px solid transparent;
+  margin-left: 0;
+  margin-right: -1px;
+}
+
+html[dir="rtl"] .toc-link.active {
+  border-right-color: var(--blueprint);
+}
+
+html[dir="rtl"] .toc-h3 .toc-link {
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+html[dir="rtl"] :is(.lesson-article h2.section-build,
+  .lesson-article h2.section-use, .lesson-article h2.section-ship) {
+  border-left: none;
+  border-right: 3px solid var(--blueprint);
+  padding-left: 0;
+  padding-right: 16px;
+}
+
+html[dir="rtl"] :is(.lesson-article .motto, .lesson-article blockquote,
+  .quiz-explanation) {
+  border-left: none;
+  border-right: 2px solid var(--blueprint);
+}
+
+html[dir="rtl"] .lesson-article ul {
+  padding-left: 0;
+  padding-right: 22px;
+}
+
+html[dir="rtl"] .lesson-article ul li {
+  padding-left: 0;
+  padding-right: 6px;
+}
+
+html[dir="rtl"] .lesson-article ul li::before {
+  left: auto;
+  right: -16px;
+}
+
+html[dir="rtl"] .lesson-article ol {
+  padding-left: 0;
+  padding-right: 28px;
+}
+
+html[dir="rtl"] .lesson-article ol li {
+  padding-left: 0;
+  padding-right: 6px;
+}
+
+html[dir="rtl"] .lesson-article ol li::before {
+  left: auto;
+  right: -28px;
+}
+
+html[dir="rtl"] .learning-objectives ul {
+  padding-left: 0;
+  padding-right: 20px;
+}
+
+html[dir="rtl"] .code-lang {
+  left: auto;
+  right: 0;
+}
+
+html[dir="rtl"] .code-copy {
+  right: auto;
+  left: 8px;
+}
+
+html[dir="rtl"] .lesson-nav-btn.next {
+  text-align: left;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+html[dir="rtl"] :is(.tts-bar, .tts-from-here) {
+  direction: ltr;
+}
+
+@media (max-width: 1279px) {
+  html[dir="rtl"] .lesson-main {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+@media (min-width: 1280px) {
+  html[dir="rtl"] .lesson-main {
+    padding-left: 240px;
+    padding-right: 32px;
+  }
+}
+
+@media (min-width: 1440px) {
+  html[dir="rtl"] .lesson-main {
+    margin-left: 0;
+    margin-right: 280px;
+    padding-left: 280px;
+    padding-right: 32px;
+  }
+}
+
+@media (max-width: 900px) {
+  html[dir="rtl"] .lesson-sidebar {
+    transform: translateX(100%);
+    border-left-color: var(--blueprint);
+    border-right-color: var(--rule-soft);
+    box-shadow: -16px 0 40px rgba(0, 0, 0, 0.22);
+  }
+
+  html[dir="rtl"] .lesson-sidebar.open {
+    transform: translateX(0);
+  }
+
+  html[dir="rtl"] .lesson-sidebar-toggle {
+    right: 16px;
+    left: auto;
+  }
+
+  html[dir="rtl"] .lesson-main {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  html[dir="rtl"] .lesson-nav-btn.next {
+    text-align: right;
+  }
+}
+
+@media (max-width: 600px) {
+  html[dir="rtl"] .header-nav {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  html[dir="rtl"] .modal-overlay {
+    justify-content: flex-start;
+  }
+
+  html[dir="rtl"] .modal-close {
+    left: 12px;
+    right: auto;
+  }
+
+  html[dir="rtl"] .modal-header {
+    padding-right: 0;
+    padding-left: 38px;
+  }
+
+  html[dir="rtl"] .modal-lesson-lang {
+    text-align: left;
+  }
+
+  html[dir="rtl"] .toc-row .toc-meta {
+    text-align: right;
+  }
+}
+
+@media (max-width: 480px) {
+  html[dir="rtl"] .stat-row-value {
+    text-align: right;
+  }
+
+  html[dir="rtl"] .lesson-article ul {
+    padding-right: 18px;
+    padding-left: 0;
+  }
+
+  html[dir="rtl"] .lesson-article ol {
+    padding-right: 24px;
+    padding-left: 0;
+  }
+}

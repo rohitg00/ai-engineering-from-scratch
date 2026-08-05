@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" dir="ltr" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="lang-dir.js?v=20260805d"></script>
   <title>Lesson - AI Engineering from Scratch</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
   <meta name="description" content="A lesson from the AI Engineering from Scratch curriculum. 503 lessons across 20 phases, four languages, every algorithm built from raw math.">
@@ -20,6 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20260803a">
+  <link rel="stylesheet" href="rtl.css?v=20260806b">
   <style>
     .scroll-progress {
       position: fixed;
@@ -292,8 +294,7 @@
       -webkit-hyphens: auto;
     }
 
-    .lesson-article > p:first-of-type::first-letter,
-    .lesson-article .drop-cap::first-letter {
+    html[dir="ltr"] .lesson-article .drop-cap::first-letter {
       float: left;
       font-family: var(--font-display);
       font-size: 4rem;
@@ -643,6 +644,44 @@
       margin-bottom: 12px;
       line-height: 1.5;
       text-align: left;
+    }
+
+    /* Keep the marker and question copy as separate directional islands.
+       The flex row follows the page direction: marker-left in LTR and
+       marker-right in RTL, while the numeric marker always stays LTR. */
+    .quiz-section .quiz-question-text {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 0.45em;
+      direction: inherit;
+      text-align: start;
+    }
+
+    /* The digits stay LTR inside their own <bdi>, but the trailing dot is a
+       neutral character that must follow the page direction: after the digit
+       in LTR, before it in RTL, so the dot always faces the question copy. */
+    .quiz-section .quiz-question-index {
+      flex: 0 0 auto;
+      direction: inherit;
+      unicode-bidi: isolate;
+      white-space: nowrap;
+    }
+
+    .quiz-section .quiz-question-copy {
+      min-width: 0;
+      flex: 1 1 auto;
+      direction: inherit;
+      unicode-bidi: isolate;
+      text-align: start;
+    }
+
+    /* The compact quiz panel has no numbered marker in its question copy,
+       but it still needs the same language-aware text alignment. */
+    .quiz-container .quiz-question-text {
+      direction: inherit;
+      unicode-bidi: isolate;
+      text-align: start;
     }
 
     .quiz-options {
@@ -1590,7 +1629,7 @@
         hyphens: none;
         -webkit-hyphens: none;
       }
-      .lesson-article > p:first-of-type::first-letter { font-size: 3rem; }
+      .lesson-article .drop-cap::first-letter { font-size: 3rem; }
       .lesson-article pre code { font-size: 0.78rem; padding: 14px 14px; }
       .lesson-article table { font-size: 0.84rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
       .lesson-article table th,
@@ -1639,7 +1678,7 @@
       .lesson-article ul li,
       .lesson-article ol li { font-size: 0.96rem; }
       .lesson-article h1 { font-size: clamp(1.9rem, 12vw, 2.55rem); }
-      .lesson-article > p:first-of-type::first-letter { font-size: 2.6rem; }
+      .lesson-article .drop-cap::first-letter { font-size: 2.6rem; }
       .lesson-article ul { padding-left: 18px; }
       .lesson-article ol { padding-left: 24px; }
       .learning-objectives,
@@ -1688,10 +1727,10 @@
         <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
       </a>
       <nav class="header-nav">
-        <a href="index.html#contents">Contents</a>
-        <a href="catalog.html">Catalog</a>
-        <a href="prereqs.html">Roadmap</a>
-        <a href="glossary.html">Glossary</a>
+        <a href="index.html#contents" data-i18n="nav.contents">Contents</a>
+        <a href="catalog.html" data-i18n="nav.catalog">Catalog</a>
+        <a href="prereqs.html" data-i18n="nav.roadmap">Roadmap</a>
+        <a href="glossary.html" data-i18n="nav.glossary">Glossary</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
@@ -1699,6 +1738,7 @@
         </a>
       </nav>
       <button class="search-toggle" type="button" data-cmd-palette
+        data-i18n-aria="header.search" data-i18n-title="header.search"
         aria-label="Search (⌘K)" title="Search (⌘K)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2.5"
@@ -1708,7 +1748,7 @@
         </svg>
       </button>
       <div id="langPicker"></div>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+      <button class="theme-toggle" id="themeToggle" data-i18n-aria="header.theme" aria-label="Toggle theme" type="button">
         <span class="theme-icon" id="themeIcon">N</span>
       </button>
     </div>
@@ -1745,15 +1785,16 @@
   </div>
 
   <script src="build-meta.js"></script>
-  <script src="langs.js?v=20260802a"></script>
-  <script src="lang-picker.js?v=20260802a"></script>
+  <script src="chrome-i18n.js?v=20260806b"></script>
+  <script src="langs.js?v=20260805a"></script>
+  <script src="lang-picker.js?v=20260805d"></script>
   <script src="data.js?v=20260801a"></script>
   <script src="progress.js?v=20260801a"></script>
   <script src="header.js?v=20260801a" defer></script>
   <script src="tts.js?v=20260803a" defer></script>
-  <script src="cmdpalette.js?v=20260801a" defer></script>
+  <script src="cmdpalette.js?v=20260806b" defer></script>
   <script src="figures.js?v=20260801a"></script>
-  <script src="lesson-figures.js?v=20260801a"></script>
+  <script src="lesson-figures.js?v=20260805a"></script>
   <script src="figures-math.js?v=20260801a"></script>
   <script src="figures-ml.js?v=20260801a"></script>
   <script src="figures-dl.js?v=20260801a"></script>
@@ -1860,9 +1901,13 @@
         });
       }
 
-      // lang-picker.js renders the switcher into #langPicker; when the reader
-      // chooses a language, re-fetch the current lesson in it (quiz stays English).
+      // lang-picker.js renders the switcher into #langPicker. On a language
+      // change, re-render everything that reads a localized label: the article
+      // and its panels come back with fetchLesson, but the sidebar is built once
+      // at boot, so it needs its own rebuild or it keeps the previous language
+      // until the next full page load.
       window.AIFS_onLangChange = function () {
+        if (typeof buildSidebar === 'function') buildSidebar();
         if (typeof lessonPath !== 'undefined' && lessonPath) fetchLesson(lessonPath);
       };
 
@@ -1918,7 +1963,6 @@
         }
       }
 
-      buildSidebar();
       initSidebarToggle();
       initScrollProgress();
       fetchLesson(lessonPath);
@@ -1958,20 +2002,20 @@
             var pp = PHASES[prevPhaseIdx];
             var ppSlug = extractPhaseSlug(pp, prevPhaseIdx);
             var ppFirstLesson = pp.lessons[0] ? extractLessonSlug(pp.lessons[0], 0) : '';
-            html += '<a href="lesson.html?path=phases/' + ppSlug + '/' + ppFirstLesson + '">&larr; Phase ' + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(pp.name) + '</a>';
+            html += '<a href="lesson.html?path=phases/' + ppSlug + '/' + ppFirstLesson + '">&larr; Phase ' + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(localizedPhaseName(pp, prevPhaseIdx)) + '</a>';
           }
           if (nextPhaseIdx >= 0) {
             var np = PHASES[nextPhaseIdx];
             var npSlug = extractPhaseSlug(np, nextPhaseIdx);
             var npFirstLesson = np.lessons[0] ? extractLessonSlug(np.lessons[0], 0) : '';
-            html += '<a href="lesson.html?path=phases/' + npSlug + '/' + npFirstLesson + '">Phase ' + String(np.id).padStart(2, '0') + ': ' + escapeHtml(np.name) + ' &rarr;</a>';
+            html += '<a href="lesson.html?path=phases/' + npSlug + '/' + npFirstLesson + '">Phase ' + String(np.id).padStart(2, '0') + ': ' + escapeHtml(localizedPhaseName(np, nextPhaseIdx)) + ' &rarr;</a>';
           }
           html += '</div>';
         }
 
         if (currentPhaseIndex >= 0) {
           var phase = PHASES[currentPhaseIndex];
-          html += '<div class="sidebar-phase-header">Phase ' + String(phase.id).padStart(2, '0') + ' · ' + escapeHtml(phase.name) + '</div>';
+          html += '<div class="sidebar-phase-header">Phase ' + String(phase.id).padStart(2, '0') + ' · ' + escapeHtml(localizedPhaseName(phase, currentPhaseIndex)) + '</div>';
           for (var k = 0; k < phase.lessons.length; k++) {
             var les = phase.lessons[k];
             var lesSlug = extractLessonSlug(les, k);
@@ -1984,7 +2028,10 @@
               html += '<span class="sidebar-lesson-link disabled">';
             }
             html += '<span class="sidebar-lesson-dot ' + les.status + '"></span>';
-            html += escapeHtml(les.name);
+            html += escapeHtml(localizedLessonName({
+              path: 'phases/' + pSlugCurrent + '/' + lesSlug,
+              lessonName: les.name
+            }));
             html += lesReadable ? '</a>' : '</span>';
           }
         }
@@ -2028,37 +2075,200 @@
         return window.AIFS_currentLang ? window.AIFS_currentLang() : 'en';
       }
 
+      var LESSON_LABELS = {
+        fa: {
+          objectives: 'اهداف یادگیری',
+          preCheck: 'بررسی پیش از درس',
+          midCheck: 'بررسی میان‌درس',
+          postQuiz: 'آزمون پایان درس',
+          onPage: 'در این صفحه',
+          type: 'نوع',
+          languages: 'زبان‌ها',
+          prerequisites: 'پیش‌نیازها',
+          time: 'زمان',
+          outputsTitle: 'خروجی‌های این درس',
+          outputsSubtitle: 'prompt، skill و خروجی‌هایی که همین حالا می‌توانید استفاده کنید',
+          loadingOutputs: 'در حال بارگذاری خروجی‌ها...',
+          outputBadge: 'خروجی',
+          viewOnGithub: 'مشاهده در GitHub',
+          install: 'نصب',
+          pastePrompt: 'در Claude، Cursor، Codex، OpenClaw، Hermes یا هر agent سازگار با prompt جای‌گذاری کنید',
+          codeTitle: 'اجرای کد',
+          codeSubtitle: 'فایل‌های قابل‌اجرای این درس',
+          loadingCode: 'در حال بارگذاری فایل‌های کد...',
+          copyCommand: 'کپی فرمان',
+          copied: 'کپی شد',
+          understandingTitle: 'درک خود را بسنجید',
+          understandingSubtitle: 'مطلب را گرفتید؟',
+          loadingQuestions: 'در حال بارگذاری سؤال‌ها...',
+          questionOf: 'سؤال {current} از {total}',
+          completeScore: 'برای دیدن امتیاز، به همهٔ سؤال‌ها پاسخ دهید',
+          perfectScore: 'امتیاز کامل!',
+          greatWork: 'عالی بود!',
+          keepStudying: 'به مطالعه ادامه دهید!',
+          quizDeeperBefore: 'آزمون عمیق‌تری می‌خواهید؟ فرمان',
+          quizDeeperAfter: 'را در Claude، Cursor، Codex، OpenClaw، Hermes یا هر agent سازگار با مهارت‌های دوره اجرا کنید',
+          learningPath: 'مسیر یادگیری',
+          phasePrefix: 'مرحلهٔ',
+          completedLessons: '{completed} مورد از {total} درس این مرحله را تکمیل کرده‌اید',
+          continueLearning: 'ادامهٔ یادگیری',
+          phaseFinished: 'این مرحله را به پایان رسانده‌اید!',
+          browsePhase: 'مرور همهٔ درس‌های مرحلهٔ {phase}',
+          fullCatalog: 'کاتالوگ کامل دوره',
+          continueCalloutBefore: 'برای تعیین سطح شخصی‌سازی‌شده، فرمان',
+          continueCalloutAfter: 'را در Claude، Cursor، Codex، OpenClaw، Hermes یا هر agent سازگار با مهارت‌های دوره اجرا کنید',
+          viewLessonOnGithub: 'مشاهدهٔ درس در GitHub',
+          phaseNames: {
+            '00-setup-and-tooling': 'راه‌اندازی و ابزارها'
+          },
+          lessonNames: {
+            'phases/00-setup-and-tooling/01-dev-environment': 'محیط توسعه',
+            'phases/00-setup-and-tooling/02-git-and-collaboration': 'Git و همکاری',
+            'phases/00-setup-and-tooling/03-gpu-setup-and-cloud': 'راه‌اندازی GPU و ابر',
+            'phases/00-setup-and-tooling/04-apis-and-keys': 'APIها و کلیدها',
+            'phases/00-setup-and-tooling/05-jupyter-notebooks': 'Jupyter و نوت‌بوک‌ها'
+          },
+          outputDescriptions: {
+            'prompt-env-check.md': 'مشکلات راه‌اندازی محیط مهندسی AI را پیدا و برطرف کنید'
+          }
+        }
+      };
+
+      function lessonBaseLang() {
+        return String(document.documentElement.getAttribute('lang') || currentLang() || 'en')
+          .toLowerCase().split('-')[0];
+      }
+
+      function lessonLabel(key, fallback) {
+        var lang = lessonBaseLang();
+        return LESSON_LABELS[lang] && LESSON_LABELS[lang][key] || fallback;
+      }
+
+      function lessonLabelFormat(key, fallback, values) {
+        var value = lessonLabel(key, fallback);
+        Object.keys(values || {}).forEach(function (name) {
+          value = value.replace(new RegExp('\\{' + name + '\\}', 'g'), String(values[name]));
+        });
+        return value;
+      }
+
+      function localizedPhaseName(phase, index) {
+        var slug = extractPhaseSlug(phase, index);
+        var labels = LESSON_LABELS[lessonBaseLang()];
+        return labels && labels.phaseNames && labels.phaseNames[slug] || phase.name;
+      }
+
+      function localizedLessonName(item) {
+        var labels = LESSON_LABELS[lessonBaseLang()];
+        return labels && labels.lessonNames && labels.lessonNames[item.path] || item.lessonName || item.name;
+      }
+
+      function localizedOutputDescription(name, fallback) {
+        var labels = LESSON_LABELS[lessonBaseLang()];
+        return labels && labels.outputDescriptions && labels.outputDescriptions[name] || fallback;
+      }
+
+      buildSidebar();
+
+      function isLocalPreview() {
+        var host = String(location.hostname || '').replace(/^\[|\]$/g, '');
+        return location.protocol === 'file:' ||
+          /^(localhost|127\.0\.0\.1|0\.0\.0\.0|::1|::)$/.test(host);
+      }
+
+      function localRepoUrl(relPath) {
+        return new URL('../' + relPath, location.href).href;
+      }
+
+      function fetchFirst(urls, parse) {
+        function attempt(index) {
+          if (index >= urls.length) return Promise.reject(new Error('fetch-failed'));
+          return fetch(urls[index]).then(function (res) {
+            if (!res.ok) throw new Error('fetch-failed');
+            return parse(res);
+          }).catch(function () {
+            return attempt(index + 1);
+          });
+        }
+        return attempt(0);
+      }
+
+      // Animated figures carry their prose inside figures-*.js, out of reach of
+      // the Markdown pipeline, so each locale ships a caption catalog at
+      // site/figure-captions/<lang>.json (figure id -> description). Regenerate
+      // the English source with scripts/extract_figure_captions.py.
+      // fetchLesson runs earlier in this script than the statements below, so the
+      // cache is created on first use rather than by a var initializer.
+      var figureCaptionCache;
+
+      function loadFigureCaptions() {
+        if (!figureCaptionCache) figureCaptionCache = {};
+        var lang = currentLang();
+        if (lang === 'en') {
+          window.AIFS_FIGURE_CAPTIONS = null;
+          return Promise.resolve(null);
+        }
+        if (figureCaptionCache[lang]) return figureCaptionCache[lang];
+        // 'pt-BR' falls back to the 'pt' catalog when it has none of its own.
+        var urls = ['figure-captions/' + lang + '.json'];
+        var bare = lang.split('-')[0];
+        if (bare !== lang) urls.push('figure-captions/' + bare + '.json');
+        figureCaptionCache[lang] = fetchFirst(urls, function (res) { return res.json(); })
+          .catch(function () { return null; })
+          .then(function (data) {
+            if (currentLang() !== lang) return data;
+            window.AIFS_FIGURE_CAPTIONS = data;
+            if (data && window.applyFigureCaptions) window.applyFigureCaptions();
+            return data;
+          });
+        return figureCaptionCache[lang];
+      }
+
       function fetchLesson(path, retried) {
         // Fetch docs from the branch this site was built from (set by build.js
         // via build-meta.js), so PR preview deploys render their own lesson
         // edits instead of always pulling main. Falls back to main.
         var ref = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
         var base = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ref + '/';
-        var enUrl = base + path + '/docs/en.md';
         var lang = currentLang();
-        var docUrl = lang === 'en' ? enUrl
-          : 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/'
-            + lang + '/' + path + '/docs/' + lang + '.md';
-        var quizUrl = base + path + '/quiz.json';
+        var local = isLocalPreview();
+        var localBase = local ? localRepoUrl('') : null;
+        var enUrls = [];
+        if (local) enUrls.push(localBase + path + '/docs/en.md');
+        enUrls.push(base + path + '/docs/en.md');
+
+        // A hand-authored translation lives beside its English source on this
+        // ref; the machine-translated ones live on the `translations` branch.
+        // Try the same ref first, or a lesson translated by hand would silently
+        // render in English everywhere except a local preview.
+        var docUrls = [];
+        if (lang !== 'en') {
+          if (local) docUrls.push(localBase + path + '/docs/' + lang + '.md');
+          docUrls.push(base + path + '/docs/' + lang + '.md');
+          docUrls.push('https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/'
+            + lang + '/' + path + '/docs/' + lang + '.md');
+        }
+        docUrls = docUrls.concat(enUrls);
+
+        // Same order for the quiz: localized beside the source, then English.
+        // The local English quiz stays in the list for every language so a
+        // preview keeps working without network access.
+        var quizUrls = [];
+        if (lang !== 'en') {
+          if (local) quizUrls.push(localBase + path + '/quiz.' + lang + '.json');
+          quizUrls.push(base + path + '/quiz.' + lang + '.json');
+        }
+        if (local) quizUrls.push(localBase + path + '/quiz.json');
+        quizUrls.push(base + path + '/quiz.json');
+
+        loadFigureCaptions();
 
         if (!retried || !lessonQuizPromise) {
-          lessonQuizPromise = fetch(quizUrl)
-            .then(function (res) { return res.ok ? res.json() : null; })
+          lessonQuizPromise = fetchFirst(quizUrls, function (res) { return res.json(); })
             .catch(function () { return null; });
         }
 
-        fetch(docUrl)
-          .then(function (res) {
-            if (res.ok) return res.text();
-            // translation not published yet -> fall back to canonical English
-            if (docUrl !== enUrl) {
-              return fetch(enUrl).then(function (r) {
-                if (!r.ok) throw new Error('fetch-failed');
-                return r.text();
-              });
-            }
-            throw new Error('fetch-failed');
-          })
+        fetchFirst(docUrls, function (res) { return res.text(); })
           .then(function (md) {
             try {
               renderLesson(md);
@@ -2227,8 +2437,9 @@
           return candidate;
         }
 
-        var html = '<div class="toc-header">On this page</div>';
-        html += '<nav aria-label="On this page"><ul class="toc-nav">';
+        var tocLabel = lessonLabel('onPage', 'On this page');
+        var html = '<div class="toc-header">' + escapeHtml(tocLabel) + '</div>';
+        html += '<nav aria-label="' + escapeAttr(tocLabel) + '"><ul class="toc-nav">';
         for (var i = 0; i < headings.length; i++) {
           var heading = headings[i];
           var level = heading.tagName.toLowerCase();
@@ -2391,6 +2602,7 @@
         var listItems = [];
         var firstBlockquoteDone = false;
         var firstParaAfterMottoDone = false;
+        var metadataSeen = false;
         var inBlockquote = false;
         var blockquoteLines = [];
         var mermaidBlocks = 0;
@@ -2538,10 +2750,10 @@
             var slug2 = slugify(h2[1]);
             var sectionClass = '';
             var txt = h2[1].toLowerCase();
-            if (txt.indexOf('build it') >= 0 || txt.indexOf('build ') === 0) sectionClass = ' section-build';
-            else if (txt.indexOf('use it') >= 0 || txt.indexOf('use ') === 0) sectionClass = ' section-use';
-            else if (txt.indexOf('ship it') >= 0 || txt.indexOf('ship ') === 0) sectionClass = ' section-ship';
-            if (txt.indexOf('learning objectives') >= 0) {
+            if (txt.indexOf('build it') >= 0 || txt.indexOf('build ') === 0 || txt.indexOf('آن را بسازید') === 0) sectionClass = ' section-build';
+            else if (txt.indexOf('use it') >= 0 || txt.indexOf('use ') === 0 || txt.indexOf('از آن استفاده کنید') === 0) sectionClass = ' section-use';
+            else if (txt.indexOf('ship it') >= 0 || txt.indexOf('ship ') === 0 || txt.indexOf('آن را عرضه کنید') === 0) sectionClass = ' section-ship';
+            if (txt.indexOf('learning objectives') >= 0 || txt.indexOf('اهداف یادگیری') >= 0) {
               var objItems = [];
               for (var lo = i + 1; lo < lines.length; lo++) {
                 var loLine = lines[lo];
@@ -2553,7 +2765,7 @@
                   break;
                 }
               }
-              out += '<div class="learning-objectives"><div class="learning-objectives-title">&#127919; Learning Objectives</div><ul>';
+              out += '<div class="learning-objectives"><div class="learning-objectives-title">&#127919; ' + escapeHtml(lessonLabel('objectives', 'Learning Objectives')) + '</div><ul>';
               for (var oi = 0; oi < objItems.length; oi++) {
                 out += '<li>' + inlineFormat(objItems[oi]) + '</li>';
               }
@@ -2621,19 +2833,31 @@
             continue;
           }
 
+          var metaMatch = line.match(/^\*\*([^*]+?)(?::)?\*\*:?\s*(.+)/);
+          if (metaMatch && !firstParaAfterMottoDone) {
+            var metaClass = metadataSeen ? '' : ' class="drop-cap"';
+            metadataSeen = true;
+            var metaKey = metaMatch[1].toLowerCase();
+            var metaLabel = metaKey === 'type' ? lessonLabel('type', metaMatch[1])
+              : metaKey === 'languages' ? lessonLabel('languages', metaMatch[1])
+              : metaKey === 'prerequisites' ? lessonLabel('prerequisites', metaMatch[1])
+              : metaKey === 'time' ? lessonLabel('time', metaMatch[1])
+              : metaMatch[1];
+            out += '<p' + metaClass + '><strong>' + escapeHtml(metaLabel) + ':</strong> ' + inlineFormat(metaMatch[2]) + '</p>';
+            continue;
+          }
+
           var paraClass = '';
           if (firstBlockquoteDone && !firstParaAfterMottoDone) {
-            var isMetaLine = line.match(/^\*\*[^*]+\*\*\s*:/);
-            if (!isMetaLine) {
+            // Metadata owns the opening drop-cap in the reference lesson.
+            // Once its block is complete, the first prose paragraph stays
+            // regular; lessons without metadata keep their authored cap.
+            if (metadataSeen) {
+              firstParaAfterMottoDone = true;
+            } else {
               paraClass = ' class="drop-cap"';
               firstParaAfterMottoDone = true;
             }
-          }
-
-          var metaMatch = line.match(/^\*\*([^*]+)\*\*:\s*(.+)/);
-          if (metaMatch && !firstParaAfterMottoDone) {
-            out += '<div class="lesson-meta-tag"><strong>' + escapeHtml(metaMatch[1]) + ':</strong> ' + inlineFormat(metaMatch[2]) + '</div>';
-            continue;
           }
 
           out += '<p' + paraClass + '>' + inlineFormat(line) + '</p>';
@@ -3008,13 +3232,29 @@
         var article = document.querySelector('.lesson-article');
         if (!article) return;
 
-        var conceptH2 = article.querySelector('#the-concept, #concept');
-        var buildH2 = article.querySelector('#build-it, #build');
-        var keyTermsH2 = article.querySelector('#key-terms');
+        function findSectionHeading(selectors, labels) {
+          var selected = selectors ? article.querySelector(selectors) : null;
+          if (selected) return selected;
+          var headings = article.querySelectorAll('h2');
+          for (var hi = 0; hi < headings.length; hi++) {
+            var text = (headings[hi].textContent || '').trim().toLowerCase();
+            for (var li = 0; li < labels.length; li++) {
+              if (text === labels[li] || text.indexOf(labels[li]) === 0) return headings[hi];
+            }
+          }
+          return null;
+        }
 
-        var preQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'pre'; }), 'pre', 'Pre-Lesson Check');
-        var checkQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'check'; }), 'check', 'Mid-Lesson Check');
-        var postQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'post'; }), 'post', 'Post-Lesson Quiz');
+        var conceptH2 = findSectionHeading('#the-concept, #concept', ['the concept', 'مفهوم']);
+        var buildH2 = findSectionHeading('#build-it, #build', ['build it', 'build', 'آن را بسازید']);
+        var useH2 = findSectionHeading('#use-it, #use', ['use it', 'use', 'از آن استفاده کنید']);
+        var shipH2 = findSectionHeading('#ship-it, #ship', ['ship it', 'ship', 'آن را عرضه کنید']);
+        var keyTermsH2 = findSectionHeading('#key-terms', ['key terms', 'واژگان کلیدی']);
+        var exercisesH2 = findSectionHeading('', ['exercises', 'تمرین‌ها', 'تمرین']);
+
+        var preQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'pre'; }), 'pre', lessonLabel('preCheck', 'Pre-Lesson Check'));
+        var checkQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'check'; }), 'check', lessonLabel('midCheck', 'Mid-Lesson Check'));
+        var postQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'post'; }), 'post', lessonLabel('postQuiz', 'Post-Lesson Quiz'));
 
         if (!preQuizHtml && !checkQuizHtml && !postQuizHtml) {
           var allHtml = buildQuizHtml(questions, 'all', 'Quiz');
@@ -3031,12 +3271,14 @@
           conceptH2.insertAdjacentHTML('beforebegin', preQuizHtml);
         } else if (preQuizHtml && buildH2) {
           buildH2.insertAdjacentHTML('beforebegin', preQuizHtml);
+        } else if (preQuizHtml) {
+          var firstH2 = article.querySelector('h2');
+          if (firstH2) firstH2.insertAdjacentHTML('beforebegin', preQuizHtml);
+          else article.insertAdjacentHTML('beforeend', preQuizHtml);
         }
 
         // Mid-lesson check: land between Build It and Use It if possible,
         // otherwise fall back to before Use It / Ship It / Key Terms.
-        var useH2 = article.querySelector('#use-it, #use');
-        var shipH2 = article.querySelector('#ship-it, #ship');
         if (checkQuizHtml && useH2) {
           useH2.insertAdjacentHTML('beforebegin', checkQuizHtml);
         } else if (checkQuizHtml && shipH2) {
@@ -3049,6 +3291,10 @@
 
         if (postQuizHtml && keyTermsH2) {
           keyTermsH2.insertAdjacentHTML('beforebegin', postQuizHtml);
+        } else if (postQuizHtml && exercisesH2) {
+          exercisesH2.insertAdjacentHTML('beforebegin', postQuizHtml);
+        } else if (postQuizHtml && shipH2) {
+          shipH2.insertAdjacentHTML('beforebegin', postQuizHtml);
         } else if (postQuizHtml) {
           article.insertAdjacentHTML('beforeend', postQuizHtml);
         }
@@ -3064,7 +3310,7 @@
           var q = questions[qi];
           var qid = id + '-q' + qi;
           html += '<div class="quiz-question" data-correct="' + q.correct + '" id="' + qid + '">';
-          html += '<div class="quiz-question-text">' + (qi + 1) + '. ' + escapeHtml(q.question) + '</div>';
+          html += '<div class="quiz-question-text"><span class="quiz-question-index"><bdi dir="ltr">' + (qi + 1) + '</bdi>.</span><span class="quiz-question-copy">' + escapeHtml(q.question) + '</span></div>';
           html += '<div class="quiz-options">';
           for (var oi = 0; oi < q.options.length; oi++) {
             html += '<div class="quiz-option" data-index="' + oi + '" onclick="handleQuizClick(this)">';
@@ -3181,7 +3427,7 @@
         if (prev) {
           nav += '<a class="lesson-nav-btn prev" href="lesson.html?path=' + prev.path + '">';
           nav += '<span class="nav-label">&larr; Previous</span>';
-          nav += '<span class="nav-title">' + escapeHtml(prev.lessonName) + '</span>';
+          nav += '<span class="nav-title">' + escapeHtml(localizedLessonName(prev)) + '</span>';
           nav += '</a>';
         } else {
           nav += '<div></div>';
@@ -3189,7 +3435,7 @@
         if (next) {
           nav += '<a class="lesson-nav-btn next" href="lesson.html?path=' + next.path + '">';
           nav += '<span class="nav-label">Next &rarr;</span>';
-          nav += '<span class="nav-title">' + escapeHtml(next.lessonName) + '</span>';
+          nav += '<span class="nav-title">' + escapeHtml(localizedLessonName(next)) + '</span>';
           nav += '</a>';
         }
         nav += '</div>';
@@ -3266,14 +3512,14 @@
       function renderOutputsPanel(container) {
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
-        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">O</div><div class="ai-panel-title">What This Lesson Ships</div></div><div class="ai-panel-subtitle">Prompts, skills, and artifacts you can use right now</div><div id="outputsContent" class="panel-loading">Loading outputs...</div>';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">O</div><div class="ai-panel-title">' + escapeHtml(lessonLabel('outputsTitle', 'What This Lesson Ships')) + '</div></div><div class="ai-panel-subtitle">' + escapeHtml(lessonLabel('outputsSubtitle', 'Prompts, skills, and artifacts you can use right now')) + '</div><div id="outputsContent" class="panel-loading">' + escapeHtml(lessonLabel('loadingOutputs', 'Loading outputs...')) + '</div>';
         container.appendChild(panel);
 
         var outputsEl = panel.querySelector('#outputsContent');
         ghApiFetch(lessonPath + '/outputs', function (err, data) {
           if (!outputsEl || !outputsEl.parentNode) return;
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            outputsEl.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); outputsEl.appendChild(fb);
+            outputsEl.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = lessonLabel('viewLessonOnGithub', 'View lesson on GitHub'); fb.appendChild(fbLink); outputsEl.appendChild(fb);
             return;
           }
 
@@ -3281,11 +3527,11 @@
           data.forEach(function (file, idx) {
             var type = classifyOutput(file.name);
             var badgeClass = type;
-            var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? 'Skill' : 'Output';
+            var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? 'Skill' : lessonLabel('outputBadge', 'Output');
             var installId = 'install-hint-' + idx;
             var installHint = '';
             if (type === 'prompt') {
-              installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
+              installHint = lessonLabel('pastePrompt', 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts');
             } else if (type === 'skill') {
               var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
               installHint = 'npx skills add rohitg00/ai-engineering-from-scratch --skill ' + skillName;
@@ -3296,9 +3542,9 @@
             html += '<div class="output-card-name">' + escapeHtml(file.name) + '</div>';
             html += '<div class="output-desc" id="desc-' + idx + '">Loading description...</div>';
             html += '<div class="output-actions">';
-            html += '<a class="output-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
+            html += '<a class="output-btn" href="' + file.html_url + '" target="_blank" rel="noopener">' + escapeHtml(lessonLabel('viewOnGithub', 'View on GitHub')) + '</a>';
             if (installHint) {
-              html += '<button class="output-btn" onclick="var h=document.getElementById(\'' + installId + '\');h.classList.toggle(\'visible\')">Install</button>';
+              html += '<button class="output-btn" onclick="var h=document.getElementById(\'' + installId + '\');h.classList.toggle(\'visible\')">' + escapeHtml(lessonLabel('install', 'Install')) + '</button>';
             }
             html += '</div>';
             if (installHint) {
@@ -3310,11 +3556,11 @@
               var descEl = document.getElementById('desc-' + idx);
               if (descEl) {
                 var desc = extractFrontmatterDesc(content);
-                descEl.textContent = desc || file.name;
+                descEl.textContent = localizedOutputDescription(file.name, desc || file.name);
               }
             }).catch(function () {
               var descEl = document.getElementById('desc-' + idx);
-              if (descEl) descEl.textContent = file.name;
+              if (descEl) descEl.textContent = localizedOutputDescription(file.name, file.name);
             });
           });
           html += '</div>';
@@ -3325,14 +3571,14 @@
       function renderCodePanel(container) {
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
-        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Executable files from this lesson</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">' + escapeHtml(lessonLabel('codeTitle', 'Run the Code')) + '</div></div><div class="ai-panel-subtitle">' + escapeHtml(lessonLabel('codeSubtitle', 'Executable files from this lesson')) + '</div><div id="codeContent" class="panel-loading">' + escapeHtml(lessonLabel('loadingCode', 'Loading code files...')) + '</div>';
         container.appendChild(panel);
 
         var codeEl = panel.querySelector('#codeContent');
         ghApiFetch(lessonPath + '/code', function (err, data) {
           if (!codeEl || !codeEl.parentNode) return;
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            codeEl.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); codeEl.appendChild(fb);
+            codeEl.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = lessonLabel('viewLessonOnGithub', 'View lesson on GitHub'); fb.appendChild(fbLink); codeEl.appendChild(fb);
             return;
           }
 
@@ -3345,8 +3591,8 @@
             html += '<div class="code-card-size">' + formatSize(file.size) + '</div>';
             html += '<div class="code-card-run">' + escapeHtml(runCmd) + '</div>';
             html += '<div class="code-card-actions">';
-            html += '<a class="code-card-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
-            html += '<button class="code-card-btn code-card-copy" data-command="' + escapeAttr(runCmd) + '">Copy command</button>';
+            html += '<a class="code-card-btn" href="' + file.html_url + '" target="_blank" rel="noopener">' + escapeHtml(lessonLabel('viewOnGithub', 'View on GitHub')) + '</a>';
+            html += '<button class="code-card-btn code-card-copy" data-command="' + escapeAttr(runCmd) + '">' + escapeHtml(lessonLabel('copyCommand', 'Copy command')) + '</button>';
             html += '</div>';
             html += '</div>';
           });
@@ -3356,8 +3602,8 @@
             btn.addEventListener('click', function () {
               var command = btn.getAttribute('data-command');
               navigator.clipboard.writeText(command).then(function () {
-                btn.textContent = 'Copied!';
-                setTimeout(function () { btn.textContent = 'Copy command'; }, 1500);
+                btn.textContent = lessonLabel('copied', 'Copied!');
+                setTimeout(function () { btn.textContent = lessonLabel('copyCommand', 'Copy command'); }, 1500);
               });
             });
           });
@@ -3448,7 +3694,7 @@
       function renderQuizPanel(container) {
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
-        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">Q</div><div class="ai-panel-title">Test Your Understanding</div></div><div id="quizContent"><div class="panel-loading">Loading questions...</div></div>';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">Q</div><div class="ai-panel-title">' + escapeHtml(lessonLabel('understandingTitle', 'Test Your Understanding')) + '</div></div><div id="quizContent"><div class="panel-loading">' + escapeHtml(lessonLabel('loadingQuestions', 'Loading questions...')) + '</div></div>';
         container.appendChild(panel);
 
         if (lessonQuizPromise) {
@@ -3469,13 +3715,13 @@
           phase = fl.phaseSlug || '';
         }
 
-        var html = '<div class="ai-panel-subtitle">Did you get it?</div>';
+        var html = '<div class="ai-panel-subtitle">' + escapeHtml(lessonLabel('understandingSubtitle', 'Did you get it?')) + '</div>';
         html += '<div class="quiz-container" id="quizContainer">';
 
         var letters = ['A', 'B', 'C', 'D'];
         questions.forEach(function (q, qi) {
           html += '<div class="quiz-question" id="quiz-q-' + qi + '">';
-          html += '<div class="quiz-question-num">Question ' + (qi + 1) + ' of ' + questions.length + '</div>';
+          html += '<div class="quiz-question-num">' + escapeHtml(lessonLabelFormat('questionOf', 'Question {current} of {total}', { current: qi + 1, total: questions.length })) + '</div>';
           html += '<div class="quiz-question-text">' + escapeHtml(q.q) + '</div>';
           html += '<div class="quiz-options">';
           q.opts.forEach(function (opt, oi) {
@@ -3489,8 +3735,8 @@
           html += '</div>';
         });
 
-        html += '<div class="quiz-score" id="quizScore"><div class="quiz-score-number" id="quizScoreNum">0/' + questions.length + '</div><div class="quiz-score-label">Complete all questions to see your score</div></div>';
-        html += '<div class="quiz-deeper">Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed</div>';
+        html += '<div class="quiz-score" id="quizScore"><div class="quiz-score-number" id="quizScoreNum">0/' + questions.length + '</div><div class="quiz-score-label">' + escapeHtml(lessonLabel('completeScore', 'Complete all questions to see your score')) + '</div></div>';
+        html += '<div class="quiz-deeper">' + escapeHtml(lessonLabel('quizDeeperBefore', 'Want a deeper quiz? Run')) + ' <code>/check-understanding ' + escapeHtml(phase) + '</code> ' + escapeHtml(lessonLabel('quizDeeperAfter', 'in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed')) + '</div>';
         html += '</div>';
 
         body.innerHTML = html;
@@ -3533,8 +3779,8 @@
           if (scoreEl && scoreNum) {
             scoreNum.textContent = window._quizCorrect + '/' + questions.length;
             scoreEl.querySelector('.quiz-score-label').textContent =
-              window._quizCorrect === questions.length ? 'Perfect score!' :
-              window._quizCorrect >= 2 ? 'Great work!' : 'Keep studying!';
+              window._quizCorrect === questions.length ? lessonLabel('perfectScore', 'Perfect score!') :
+              window._quizCorrect >= 2 ? lessonLabel('greatWork', 'Great work!') : lessonLabel('keepStudying', 'Keep studying!');
             scoreEl.classList.add('visible');
           }
         }
@@ -3559,8 +3805,8 @@
           }
         }
 
-        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">P</div><div class="ai-panel-title">Learning Path</div></div>';
-        html += '<div class="ai-panel-subtitle">Phase ' + String(phase.id).padStart(2, '0') + ': ' + escapeHtml(phase.name) + '</div>';
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">P</div><div class="ai-panel-title">' + escapeHtml(lessonLabel('learningPath', 'Learning Path')) + '</div></div>';
+        html += '<div class="ai-panel-subtitle">' + escapeHtml(lessonLabel('phasePrefix', 'Phase')) + ' ' + String(phase.id).padStart(2, '0') + ': ' + escapeHtml(localizedPhaseName(phase, phaseIdx)) + '</div>';
 
         // Window: 2 before current + current + 2 after, cap at 5 visible.
         var windowSize = 5;
@@ -3588,12 +3834,12 @@
           }
 
           if (item.flat.isReadable) {
-            html += '<a class="timeline-item ' + cls + '" href="lesson.html?path=' + item.flat.path + '" title="' + escapeAttr(item.flat.lessonName) + '">';
+            html += '<a class="timeline-item ' + cls + '" href="lesson.html?path=' + item.flat.path + '" title="' + escapeAttr(localizedLessonName(item.flat)) + '">';
           } else {
-            html += '<span class="timeline-item ' + cls + ' disabled" title="' + escapeAttr(item.flat.lessonName) + '">';
+            html += '<span class="timeline-item ' + cls + ' disabled" title="' + escapeAttr(localizedLessonName(item.flat)) + '">';
           }
           html += '<div class="timeline-dot"></div>';
-          html += '<div class="timeline-label">' + escapeHtml(item.flat.lessonName) + '</div>';
+          html += '<div class="timeline-label">' + escapeHtml(localizedLessonName(item.flat)) + '</div>';
           html += item.flat.isReadable ? '</a>' : '</span>';
         });
         if (hiddenAfter > 0) {
@@ -3607,11 +3853,11 @@
         var pct = Math.round((completedCount / totalCount) * 100);
 
         html += '<div class="phase-progress-bar"><div class="phase-progress-fill" style="width:' + pct + '%"></div></div>';
-        html += '<div class="phase-progress-text">You\'ve completed ' + completedCount + ' of ' + totalCount + ' lessons in this phase</div>';
+        html += '<div class="phase-progress-text">' + escapeHtml(lessonLabelFormat('completedLessons', 'You\'ve completed {completed} of {total} lessons in this phase', { completed: completedCount, total: totalCount })) + '</div>';
 
         if (completedCount >= totalCount && phaseIdx < PHASES.length - 1) {
           var nextPhase = PHASES[phaseIdx + 1];
-          html += '<div class="phase-complete-callout visible">Ready for Phase ' + String(nextPhase.id).padStart(2, '0') + ': ' + escapeHtml(nextPhase.name) + '</div>';
+          html += '<div class="phase-complete-callout visible">Ready for ' + escapeHtml(lessonLabel('phasePrefix', 'Phase')) + ' ' + String(nextPhase.id).padStart(2, '0') + ': ' + escapeHtml(localizedPhaseName(nextPhase, phaseIdx + 1)) + '</div>';
         }
 
         panel.innerHTML = html;
@@ -3632,22 +3878,22 @@
         var phaseIdx = current.phaseIndex;
         var phase = PHASES[phaseIdx];
 
-        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">N</div><div class="ai-panel-title">Continue Learning</div></div>';
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">N</div><div class="ai-panel-title">' + escapeHtml(lessonLabel('continueLearning', 'Continue Learning')) + '</div></div>';
         html += '<div class="continue-panel">';
 
         if (!next || !next.path) {
-          html += '<div class="phase-finished">\u2705 You finished this phase!</div>';
+          html += '<div class="phase-finished">\u2705 ' + escapeHtml(lessonLabel('phaseFinished', 'You finished this phase!')) + '</div>';
         }
 
         html += '<div class="continue-links">';
 
         var phaseSlug = extractPhaseSlug(phase, phaseIdx);
         var firstLesson = phase.lessons[0] ? extractLessonSlug(phase.lessons[0], 0) : '';
-        html += '<a class="continue-link" href="lesson.html?path=phases/' + phaseSlug + '/' + firstLesson + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
-        html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
+        html += '<a class="continue-link" href="lesson.html?path=phases/' + phaseSlug + '/' + firstLesson + '">' + escapeHtml(lessonLabelFormat('browsePhase', 'Browse all Phase {phase} lessons', { phase: String(phase.id).padStart(2, '0') })) + '</a>';
+        html += '<a class="continue-link" href="catalog.html">' + escapeHtml(lessonLabel('fullCatalog', 'Full course catalog')) + '</a>';
         html += '</div>';
 
-        html += '<div class="continue-callout">Run <code>/find-your-level</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed for a personalized learning path</div>';
+        html += '<div class="continue-callout">' + escapeHtml(lessonLabel('continueCalloutBefore', 'Run')) + ' <code>/find-your-level</code> ' + escapeHtml(lessonLabel('continueCalloutAfter', 'in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed for a personalized learning path')) + '</div>';
         html += '</div>';
 
         panel.innerHTML = html;
