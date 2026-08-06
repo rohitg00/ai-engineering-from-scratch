@@ -1,0 +1,85 @@
+[project]
+name = "ai-engineering-from-scratch"
+description = "A 20-phase, 503-lesson curriculum — build AI from first principles"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Rohit Ghumare", email = "rohitg00@users.noreply.github.com" }]
+dynamic = ["version"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E",     # pycodestyle errors
+    "F",     # pyflakes
+    "W",     # pycodestyle warnings
+    "I",     # isort
+    "UP",    # pyupgrade
+    "B",     # flake8-bugbear
+    "SIM",   # flake8-simplify
+    "RUF",   # ruff-specific rules
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+    "B008",  # do not perform function calls in argument defaults
+    "SIM108", # use ternary operator (sometimes less readable for teaching)
+    "RUF012", # mutable class attributes — used intentionally in dataclasses
+]
+
+[tool.ruff.lint.per-file-ignores]
+"phases/**/*.py" = [
+    "E402",  # module level import not at top (some lessons demo lazy import)
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+check_untyped_defs = true
+exclude = ["phases/"]
+# mypy is configured loosely — the curriculum uses from-future annotations
+# and varies in annotation completeness by design. Full strict mode is
+# reserved for scripts/ where correctness matters more than readability.
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "scripts.*"
+disallow_untyped_defs = true
+warn_return_any = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["phases"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--tb=short",
+    "--strict-markers",
+    "--disable-warnings",
+]
+# Default timeout of 30s — most lesson code is stdlib and fast.
+# Heavy lessons (torch, jax) should go in their own CI matrix.
+timeout = 30
+
+[tool.coverage.run]
+source = ["."]
+omit = ["phases/*/tests/*", "scripts/*", ".github/*"]
+
+[tool.coverage.report]
+exclude_also = [
+    "if __name__ == .__main__.:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+]
