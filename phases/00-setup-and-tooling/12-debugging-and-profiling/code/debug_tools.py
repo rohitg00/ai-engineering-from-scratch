@@ -198,10 +198,15 @@ def demo_device_checking():
 
     check_devices(model, t1, t2)
 
+    accel = None
     if torch.cuda.is_available():
-        model_gpu = model.cuda()
+        accel = "cuda"
+    elif torch.backends.mps.is_available():
+        accel = "mps"
+    if accel:
+        model_gpu = model.to(accel)
         t_cpu = torch.randn(4, 10)
-        t_gpu = torch.randn(4, 10).cuda()
+        t_gpu = torch.randn(4, 10).to(accel)
         print("  With mixed devices:")
         check_devices(model_gpu, t_cpu, t_gpu)
 
@@ -228,26 +233,40 @@ def demo_gradient_health():
 def demo_gpu_memory():
     print("\n--- 8. GPU Memory Summary ---")
 
-    if not torch.cuda.is_available():
-        print("  No GPU available. Skipping GPU memory demo.")
-        print("  On a GPU machine, torch.cuda.memory_summary() shows:")
-        print("    - Allocated memory per block size")
-        print("    - Cached (reserved) memory")
-        print("    - Peak memory usage")
+    if torch.cuda.is_available():
+        print(f"  GPU: {torch.cuda.get_device_name(0)}")
+        print(f"  Allocated: {torch.cuda.memory_allocated() / 1e6:.1f} MB")
+        print(f"  Cached: {torch.cuda.memory_reserved() / 1e6:.1f} MB")
+
+        large_tensor = torch.randn(10000, 10000, device="cuda")
+        print(f"  After 10k x 10k tensor:")
+        print(f"    Allocated: {torch.cuda.memory_allocated() / 1e6:.1f} MB")
+
+        del large_tensor
+        torch.cuda.empty_cache()
+        print(f"  After cleanup:")
+        print(f"    Allocated: {torch.cuda.memory_allocated() / 1e6:.1f} MB")
         return
 
-    print(f"  GPU: {torch.cuda.get_device_name(0)}")
-    print(f"  Allocated: {torch.cuda.memory_allocated() / 1e6:.1f} MB")
-    print(f"  Cached: {torch.cuda.memory_reserved() / 1e6:.1f} MB")
+    if torch.backends.mps.is_available():
+        print("  GPU: Apple Silicon (MPS) — unified memory")
+        print(f"  Allocated: {torch.mps.current_allocated_memory() / 1e6:.1f} MB")
 
-    large_tensor = torch.randn(10000, 10000, device="cuda")
-    print(f"  After 10k x 10k tensor:")
-    print(f"    Allocated: {torch.cuda.memory_allocated() / 1e6:.1f} MB")
+        large_tensor = torch.randn(10000, 10000, device="mps")
+        print(f"  After 10k x 10k tensor:")
+        print(f"    Allocated: {torch.mps.current_allocated_memory() / 1e6:.1f} MB")
 
-    del large_tensor
-    torch.cuda.empty_cache()
-    print(f"  After cleanup:")
-    print(f"    Allocated: {torch.cuda.memory_allocated() / 1e6:.1f} MB")
+        del large_tensor
+        torch.mps.empty_cache()
+        print(f"  After cleanup:")
+        print(f"    Allocated: {torch.mps.current_allocated_memory() / 1e6:.1f} MB")
+        return
+
+    print("  No GPU available. Skipping GPU memory demo.")
+    print("  On a GPU machine, torch.cuda.memory_summary() shows:")
+    print("    - Allocated memory per block size")
+    print("    - Cached (reserved) memory")
+    print("    - Peak memory usage")
 
 
 def demo_logging():
