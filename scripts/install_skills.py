@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import sys
 from dataclasses import dataclass, field
@@ -42,6 +43,7 @@ PHASES_DIR = ROOT / "phases"
 
 VALID_TYPES = ("skill", "prompt", "agent")
 LAYOUTS = ("flat", "by-phase", "skills")
+SAFE_ARTIFACT_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 
 
 @dataclass
@@ -155,14 +157,39 @@ def filter_artifacts(
 
 
 def target_path(artifact: Artifact, target_root: Path, layout: str) -> Path:
+    name = safe_artifact_name(artifact.name, artifact.source)
     if layout == "flat":
-        return target_root / f"{artifact.name}.md"
-    if layout == "by-phase":
+        dest = target_root / f"{name}.md"
+    elif layout == "by-phase":
         phase_dir = f"phase-{artifact.phase:02d}" if artifact.phase is not None else "phase-unknown"
-        return target_root / phase_dir / f"{artifact.name}.md"
-    if layout == "skills":
-        return target_root / artifact.name / "SKILL.md"
-    raise ValueError(f"unknown layout: {layout}")
+        dest = target_root / phase_dir / f"{name}.md"
+    elif layout == "skills":
+        dest = target_root / name / "SKILL.md"
+    else:
+        raise ValueError(f"unknown layout: {layout}")
+    return ensure_target_path(dest, target_root, artifact.source)
+
+
+def safe_artifact_name(name: str, source: Path) -> str:
+    if SAFE_ARTIFACT_NAME_RE.fullmatch(name):
+        return name
+    try:
+        rel = source.relative_to(ROOT).as_posix()
+    except ValueError:
+        rel = source.as_posix()
+    raise ValueError(f"unsafe artifact name {name!r} in {rel}")
+
+
+def ensure_target_path(dest: Path, target_root: Path, source: Path) -> Path:
+    root = target_root.resolve(strict=False)
+    resolved = dest.resolve(strict=False)
+    if resolved.is_relative_to(root):
+        return dest
+    try:
+        rel = source.relative_to(ROOT).as_posix()
+    except ValueError:
+        rel = source.as_posix()
+    raise ValueError(f"artifact target escapes target_dir for {rel}: {dest}")
 
 
 @dataclass
@@ -248,7 +275,11 @@ def main(argv: list[str]) -> int:
         sys.stderr.write("no artifacts matched the given filters\n")
         return 1
 
-    plan = build_plan(selected, args.target_dir, args.layout, args.force)
+    try:
+        plan = build_plan(selected, args.target_dir, args.layout, args.force)
+    except ValueError as exc:
+        sys.stderr.write(f"error: {exc}\n")
+        return 1
     if plan.collisions and not args.force:
         sys.stderr.write(
             f"error: {len(plan.collisions)} target file(s) already exist. "
