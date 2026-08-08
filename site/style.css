@@ -709,6 +709,19 @@ p.dropcap::first-letter {
   border-bottom: 1px solid var(--blueprint);
 }
 
+.modal-lesson .modal-lesson-github {
+  font-size: 0.68rem;
+  color: var(--ink-mute);
+  opacity: 0.6;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.modal-lesson .modal-lesson-github:hover {
+  opacity: 1;
+  color: var(--blueprint);
+  border-color: var(--rule-soft);
+}
+
 .modal-lesson-read-placeholder {
   display: inline-block;
   width: 64px;

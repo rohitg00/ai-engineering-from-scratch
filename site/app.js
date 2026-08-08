@@ -240,16 +240,20 @@
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
       html += '<span class="modal-lesson-status ' + statusClass + '"' + (userComplete ? ' title="You completed this lesson"' : '') + '></span>';
       if (l.url) {
-        html += '<a href="' + l.url + '" target="_blank" rel="noopener">' + escapeHtml(l.name) + '</a>';
+        if (lessonPath) {
+          html += '<a href="lesson.html?path=' + encodeURIComponent(lessonPath) + '">' + escapeHtml(l.name) + '</a>';
+        } else {
+          html += '<a href="' + l.url + '" target="_blank" rel="noopener">' + escapeHtml(l.name) + '</a>';
+        }
       } else {
-        html += '<a>' + escapeHtml(l.name) + '</a>';
+        html += '<span>' + escapeHtml(l.name) + '</span>';
       }
       html += '<span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Combines: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span>';
       html += '<span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span>';
 
       var actionHtml = '';
-      if ((l.status === 'complete' || userComplete) && lessonPath) {
-        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + (userComplete ? 'Review' : 'Read') + '</a>';
+      if (l.url && lessonPath) {
+        actionHtml = '<a href="' + l.url + '" target="_blank" rel="noopener" class="modal-lesson-read modal-lesson-github" title="View source on GitHub">GitHub</a>';
       }
       var toggleHtml = '';
       if (hasProgress && lessonPath) {

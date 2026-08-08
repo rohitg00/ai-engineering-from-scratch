@@ -192,6 +192,17 @@
       font-size: 1.1rem;
     }
 
+    .catalog-github-link {
+      font-size: 0.75rem;
+      text-decoration: none;
+      opacity: 0.5;
+      transition: opacity 0.15s;
+    }
+
+    .catalog-github-link:hover {
+      opacity: 1;
+    }
+
     @media (max-width: 768px) {
       .catalog-page {
         padding: 80px 0 48px;
@@ -348,6 +359,7 @@
 
           for (var j = 0; j < p.lessons.length; j++) {
             var l = p.lessons[j];
+            var pathMatch = l.url ? l.url.match(/(phases\/[^/]+\/[^/]+)\/?$/) : null;
             allRows.push({
               phase: p.id,
               phaseName: p.name,
@@ -355,7 +367,8 @@
               type: l.type,
               lang: l.lang,
               status: l.status,
-              url: l.url || ''
+              url: l.url || '',
+              lessonPath: pathMatch ? pathMatch[1] : ''
             });
           }
         }
@@ -425,7 +438,13 @@
             var r = rows[i];
             html += '<tr>';
             html += '<td><span class="catalog-phase-label">' + String(r.phase).padStart(2, '0') + '</span></td>';
-            if (r.url) {
+            if (r.lessonPath) {
+              html += '<td><a href="lesson.html?path=' + encodeURIComponent(r.lessonPath) + '">' + escapeHtml(r.name) + '</a>';
+              if (r.url) {
+                html += ' <a href="' + r.url + '" target="_blank" rel="noopener" class="catalog-github-link" title="View source on GitHub" aria-label="Open lesson source on GitHub (new tab)">↗</a>';
+              }
+              html += '</td>';
+            } else if (r.url) {
               html += '<td><a href="' + r.url + '" target="_blank" rel="noopener">' + escapeHtml(r.name) + '</a></td>';
             } else {
               html += '<td>' + escapeHtml(r.name) + '</td>';
