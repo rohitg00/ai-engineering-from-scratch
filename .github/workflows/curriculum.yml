@@ -5,9 +5,13 @@ on:
     branches: [main]
     paths:
       - "phases/**"
+      - "certifications/**"
       - "skills/**"
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
+      - "scripts/audit_certifications.py"
+      - "scripts/backfill_certification_references.py"
+      - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
       - "scripts/build_readme_i18n.py"
       - "scripts/readme_translations.py"
@@ -17,14 +21,20 @@ on:
       - "ROADMAP.md"
       - "glossary/**"
       - "site/build.js"
+      - "site/**"
+      - "vercel.json"
       - ".github/workflows/curriculum.yml"
   pull_request:
     branches: [main]
     paths:
       - "phases/**"
+      - "certifications/**"
       - "skills/**"
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
+      - "scripts/audit_certifications.py"
+      - "scripts/backfill_certification_references.py"
+      - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
       - "scripts/build_readme_i18n.py"
       - "scripts/readme_translations.py"
@@ -34,6 +44,8 @@ on:
       - "ROADMAP.md"
       - "glossary/**"
       - "site/build.js"
+      - "site/**"
+      - "vercel.json"
       - ".github/workflows/curriculum.yml"
 
 permissions:
@@ -52,8 +64,20 @@ jobs:
           python-version: "3.12"
       - name: run scripts/audit_lessons.py
         run: python3 scripts/audit_lessons.py
+      - name: run scripts/audit_certifications.py
+        run: python3 scripts/audit_certifications.py
+      - name: certification remediation references are complete
+        run: python3 scripts/backfill_certification_references.py --check
+      - name: run certification lab tests
+        run: find certifications/claude/lessons -path '*/code/tests/test_*.py' -print0 | xargs -0 -r -n1 python3
+      - name: run certification lab demos
+        run: find certifications/claude/lessons -path '*/code/main.py' -print0 | xargs -0 -r -n1 python3
+      - name: build the static site
+        run: node site/build.js
       - name: quiz answer positions are de-biased
         run: python3 scripts/debias_quizzes.py --check
+      - name: certification answer positions are de-biased
+        run: python3 scripts/debias_certification_questions.py --check
       - name: README translations are in sync with English
         run: python3 scripts/build_readme_i18n.py --check
       - name: learning skills mirror is in sync
