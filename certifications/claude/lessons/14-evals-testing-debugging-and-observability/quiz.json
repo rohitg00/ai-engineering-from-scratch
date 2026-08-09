@@ -1,0 +1,78 @@
+{
+  "lesson": "14-evals-testing-debugging-and-observability",
+  "title": "Evals Turn Agent Behavior Into Engineering Evidence",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An agent says an order shipped, but no tool call or database change exists. Which evaluation surface catches the decisive failure?",
+      "options": [
+        "A semantic grader comparing the claim with the user's requested outcome",
+        "Trajectory review of the claimed shipping action",
+        "Final-state verification against the authoritative order system",
+        "Protocol validation confirming that the response ended normally without tool use"
+      ],
+      "correct": 2,
+      "explanation": "The authoritative system state proves whether the action occurred. Fluent output cannot substitute for an external state check."
+    },
+    {
+      "stage": "check",
+      "question": "Which property should be tested deterministically instead of with an LLM judge?",
+      "options": [
+        "Whether two nuanced summaries preserve equivalent meaning and emphasis",
+        "Whether prose is empathetic to the reader",
+        "Whether an explanation communicates the core idea clearly to a novice reader",
+        "Whether JSON includes required fields and valid enums"
+      ],
+      "correct": 3,
+      "explanation": "Schema validity has exact rules. A deterministic validator is cheaper, reproducible, and more reliable than a model grader."
+    },
+    {
+      "stage": "check",
+      "question": "How should a model-based grader be validated?",
+      "options": [
+        "By calibrating it against independently labeled human examples and reviewing disagreements",
+        "By selecting a stronger grader model and allowing enough tokens for detailed reasoning",
+        "By repeating each judgment and accepting the label when multiple samples agree",
+        "By supplying the generator's full reasoning so the grader can reconstruct its intent"
+      ],
+      "correct": 0,
+      "explanation": "Human-labeled cases reveal false positives, false negatives, rubric ambiguity, and grader biases. Self-consistency alone cannot establish validity."
+    },
+    {
+      "stage": "check",
+      "question": "A provider response is valid, but the SDK client drops one response field during serialization. What should debugging inspect?",
+      "options": [
+        "The final application prompt and model settings",
+        "The live wire response and each serialization boundary",
+        "The SDK's public type declaration without capturing the provider's raw response",
+        "The final mapped object and downstream consumer without inspecting earlier boundaries"
+      ],
+      "correct": 1,
+      "explanation": "Comparing wire data, SDK types, and application mapping identifies where the field disappeared before changing model behavior."
+    },
+    {
+      "stage": "post",
+      "question": "Why should a release gate inspect slices and severe failures in addition to average score?",
+      "options": [
+        "Severe failures can be accepted when their aggregate contribution stays below the gate",
+        "An average score is sufficient only when each slice has the same traffic frequency",
+        "Averages can hide a new critical regression in one domain or safety case",
+        "Slices make model-based evaluation deterministic enough to replace severe-case review"
+      ],
+      "correct": 2,
+      "explanation": "A small overall gain can conceal data leakage, cross-tenant access, or a large drop for one important scenario group."
+    },
+    {
+      "stage": "post",
+      "question": "A request fails due to invalid tool-result ordering. Which recovery is most appropriate?",
+      "options": [
+        "Retry the malformed message with a larger model and preserve the same client history",
+        "Ask a model grader whether the intended tool sequence was semantically reasonable",
+        "Increase the tool timeout because late results can cause invalid content-block ordering",
+        "Fix the client protocol state and add a contract test"
+      ],
+      "correct": 3,
+      "explanation": "This is a deterministic protocol defect. Prompt or model changes do not repair malformed application state."
+    }
+  ]
+}
