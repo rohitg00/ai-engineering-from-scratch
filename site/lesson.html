@@ -2552,6 +2552,8 @@
         } else if (requestedTrackId && certificationOriginTrack) {
           url += '&track=' + encodeURIComponent(certificationOriginTrack.id);
         }
+        var renderedLang = document.documentElement.lang || 'en';
+        if (renderedLang !== 'en') url += '&lang=' + encodeURIComponent(renderedLang);
         var desc = lessonDescription(md);
         var courseName = certificationLesson
           ? (contextTrack && (contextTrack.credential || contextTrack.title || contextTrack.shortName) || 'Certification preparation')

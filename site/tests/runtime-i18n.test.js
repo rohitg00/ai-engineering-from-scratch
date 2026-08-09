@@ -206,5 +206,6 @@ test('internal lesson links preserve the selected translation language', () => {
   const html = fs.readFileSync(path.join(siteDir, 'lesson.html'), 'utf8');
   assert.match(html, /function lessonHref\(path, track\)/);
   assert.match(html, /searchParams\.set\('lang', lang\)/);
+  assert.match(html, /url \+= '&lang=' \+ encodeURIComponent\(renderedLang\)/);
   assert.doesNotMatch(html, /href=\\?"lesson\.html\?path=/);
 });
