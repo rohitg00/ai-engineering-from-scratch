@@ -1,0 +1,313 @@
+{
+  "id": "claude-ccao-f-diagnostic",
+  "version": 2,
+  "track": "claude-ccao-f",
+  "kind": "diagnostic",
+  "title": "Associate Foundations Diagnostic",
+  "timeLimitMinutes": 25,
+  "questions": [
+    {
+      "id": "ccao-d-001",
+      "domain": "prompting-task-execution",
+      "objective": "Create effective prompts for business and technical tasks",
+      "type": "single",
+      "prompt": "A director asks Claude to produce a comprehensive monthly report, but gives no audience, sources, or definition of success. What should the operator do first?",
+      "options": [
+        "Add a role saying Claude is an expert director",
+        "Choose the most capable available model and keep the original request",
+        "Choose the strongest available model and ask it to infer an executive audience, likely sources, and a comprehensive structure",
+        "Define the decision, audience, authoritative sources, constraints, output shape, and pass criteria"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The missing artifact is a prompt contract. It makes the outcome and checks observable before generation. More length, a role, or a larger model cannot establish absent requirements or evidence.",
+      "references": [
+        "certifications/claude/lessons/03-prompting-and-task-decomposition",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+      ]
+    },
+    {
+      "id": "ccao-d-002",
+      "domain": "prompting-task-execution",
+      "objective": "Decompose complex requests into manageable work",
+      "type": "multiple",
+      "prompt": "A team is building a source-backed policy briefing. Which two stage boundaries most improve verification? Select two.",
+      "options": [
+        "Let separate conversations independently discover sources and draft sections, then reconcile citations only after the full briefing is assembled",
+        "Verify the source inventory before extracting claims",
+        "Draft recommendations during extraction; check later",
+        "Verify extracted claims before interpreting patterns"
+      ],
+      "correct": [
+        1,
+        3
+      ],
+      "explanation": "Source approval and claim extraction are meaningful verification boundaries. Arbitrary paragraph splits add coordination cost, while recommending before evidence validation pushes defects downstream.",
+      "references": [
+        "certifications/claude/lessons/03-prompting-and-task-decomposition",
+        "https://www.anthropic.com/research/building-effective-agents"
+      ]
+    },
+    {
+      "id": "ccao-d-003",
+      "domain": "output-evaluation-validation",
+      "objective": "Fact-check against authoritative evidence",
+      "type": "single",
+      "prompt": "A response cites a real policy page beside the claim that all refunds require director approval. The page only says some refunds require approval. What is the primary defect?",
+      "options": [
+        "The claim overreaches the cited evidence",
+        "The response needs a friendlier tone",
+        "The citation is acceptable because the linked page discusses the same refund policy and therefore supports the stronger summary",
+        "The context window is necessarily full"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Citation presence is not proof. The universal claim is stronger than the source, so claim-evidence entailment fails. Tone and context capacity do not repair the factual overreach.",
+      "references": [
+        "certifications/claude/lessons/05-output-evaluation-and-validation",
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "ccao-d-004",
+      "domain": "output-evaluation-validation",
+      "objective": "Choose when human review or additional verification is required",
+      "type": "multiple",
+      "prompt": "Which two checks should be handled first by deterministic code rather than subjective model judgment? Select two.",
+      "options": [
+        "Whether JSON parses against the required schema",
+        "Whether an executive will find the recommendation persuasive",
+        "Whether a policy tradeoff is ethically acceptable",
+        "Whether regional subtotals equal the stated total"
+      ],
+      "correct": [
+        0,
+        3
+      ],
+      "explanation": "Schema validity and arithmetic reconciliation have exact repeatable answers. Ethical acceptability and audience persuasion require contextual criteria and often qualified human judgment.",
+      "references": [
+        "certifications/claude/lessons/05-output-evaluation-and-validation",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "ccao-d-005",
+      "domain": "product-model-selection",
+      "objective": "Choose among Projects, research, chat, and artifacts",
+      "type": "single",
+      "prompt": "A team repeats the same internal planning workflow each week using maintained instructions and an approved reference set. Which starting surface best fits?",
+      "options": [
+        "Any surface, because governance is identical",
+        "A Claude Project, if its current plan and data controls are approved",
+        "A fresh one-off chat each week with the approved references pasted manually and the instructions copied from the prior run",
+        "Public web research as the source of internal policy"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Projects are designed for recurring work with persistent instructions and knowledge. The organization must still verify current availability, plan controls, and data handling. Research does not replace internal sources of record.",
+      "references": [
+        "certifications/claude/lessons/01-claude-product-and-model-landscape",
+        "https://support.claude.com/en/articles/9517075-what-are-projects"
+      ]
+    },
+    {
+      "id": "ccao-d-006",
+      "domain": "product-model-selection",
+      "objective": "Balance quality, speed, and cost",
+      "type": "multiple",
+      "prompt": "Which two practices make a model-selection recommendation durable? Select two.",
+      "options": [
+        "Memorize one permanent ranking of model names",
+        "Record changeable prices, limits, and feature availability with a verification date",
+        "Test representative risk cases against explicit quality and latency gates",
+        "Ignore review and rework cost"
+      ],
+      "correct": [
+        1,
+        2
+      ],
+      "explanation": "A durable selection is evidence-based and date-stamps facts that can drift. Model labels and price tables change, and total workflow cost includes correction and failure.",
+      "references": [
+        "certifications/claude/lessons/02-model-selection-and-token-economics",
+        "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ]
+    },
+    {
+      "id": "ccao-d-007",
+      "domain": "workflow-integration-solution-design",
+      "objective": "Augment or redesign existing workflows",
+      "type": "single",
+      "prompt": "Analysts spend hours writing explanations for differences between two conflicting systems. What is the strongest first intervention?",
+      "options": [
+        "Remove all human checkpoints",
+        "Automate a structured explanation of every discrepancy while leaving the conflicting source and reconciliation process unchanged",
+        "Redesign the source and reconciliation process before automating the symptom",
+        "Use an open-ended agent with write access"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The underlying waste is inconsistent source state. Generating explanations faster preserves the failure. Workflow discovery should identify redesign opportunities before automation.",
+      "references": [
+        "certifications/claude/lessons/07-workflow-design-and-human-handoffs",
+        "https://www.anthropic.com/research/building-effective-agents"
+      ]
+    },
+    {
+      "id": "ccao-d-008",
+      "domain": "workflow-integration-solution-design",
+      "objective": "Communicate value and limitations to stakeholders",
+      "type": "multiple",
+      "prompt": "Which two items belong in a handoff to the person who must approve a high-impact recommendation? Select two.",
+      "options": [
+        "Known uncertainty and explicit approve, revise, reject, or escalate options",
+        "Supporting and conflicting evidence with failed checks",
+        "A concise model rationale and calibrated confidence band, without conflicting sources or details of which checks failed",
+        "The proposed decision, confidence score, and a single approve or escalate choice, with evidence available only through a separate request"
+      ],
+      "correct": [
+        0,
+        1
+      ],
+      "explanation": "A meaningful handoff equips the owner to verify and intervene. Confidence without evidence and a ceremonial button do not create informed human control.",
+      "references": [
+        "certifications/claude/lessons/07-workflow-design-and-human-handoffs",
+        "certifications/claude/lessons/29-associate-workflow-capstone"
+      ]
+    },
+    {
+      "id": "ccao-d-009",
+      "domain": "configuration-knowledge-management",
+      "objective": "Configure Projects with instructions and knowledge",
+      "type": "single",
+      "prompt": "Where should a recurring behavioral rule such as exposing conflicts between policy sources primarily live?",
+      "options": [
+        "Inside an unrelated historical file",
+        "Only in a remembered user preference",
+        "In a cached response",
+        "In maintained Project instructions"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Persistent behavioral guidance belongs in maintained instructions. The policy evidence itself belongs in governed knowledge. Memory and caching serve different purposes.",
+      "references": [
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching",
+        "https://support.claude.com/en/articles/9517075-what-are-projects"
+      ]
+    },
+    {
+      "id": "ccao-d-010",
+      "domain": "configuration-knowledge-management",
+      "objective": "Maintain configurations and sources over time",
+      "type": "multiple",
+      "prompt": "Which two metadata fields most directly help prevent stale or superseded knowledge from remaining active? Select two.",
+      "options": [
+        "The model and prompt version that last consumed the source without producing a validation failure",
+        "The source owner's name and the model version used for the most recent successful answer",
+        "Review date",
+        "Supersedes relationship"
+      ],
+      "correct": [
+        2,
+        3
+      ],
+      "explanation": "A review date creates a freshness trigger, and a supersedes relationship identifies the prior source to retire. Presentation and model labels do not govern source lifecycle.",
+      "references": [
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching",
+        "https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities"
+      ]
+    },
+    {
+      "id": "ccao-d-011",
+      "domain": "governance-risk-responsible-use",
+      "objective": "Apply privacy, data-sensitivity, and regulatory constraints",
+      "type": "single",
+      "prompt": "An employee wants to paste confidential customer transcripts into an unapproved personal Claude account. What is the correct first response?",
+      "options": [
+        "Stop and use the organization's data policy and approved surface review",
+        "Proceed in the personal account after adding a prompt instruction not to retain or reveal any transcript content",
+        "Remove only the transcript titles",
+        "Ask for a shorter summary"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Prompt text cannot approve a surface or enforce contractual data handling. The use must stop until purpose, classification, product terms, and organizational controls are resolved.",
+      "references": [
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use",
+        "https://platform.claude.com/docs/en/manage-claude/api-and-data-retention",
+        "https://privacy.anthropic.com/"
+      ]
+    },
+    {
+      "id": "ccao-d-012",
+      "domain": "governance-risk-responsible-use",
+      "objective": "Recognize ethical implications and escalate risk",
+      "type": "multiple",
+      "prompt": "A workflow recommends eligibility decisions that materially affect people. Which two controls are essential? Select two.",
+      "options": [
+        "Segmented fairness evaluation and a correction or appeal path",
+        "Automatic execution for decisions that pass a strict output schema and confidence threshold, with periodic human audit afterward",
+        "An authorized human gate with evidence and power to reject",
+        "A neutrality instruction plus aggregate accuracy monitoring, without predefined affected-group slices or appeal handling"
+      ],
+      "correct": [
+        0,
+        2
+      ],
+      "explanation": "High-impact decisions need meaningful authority, evidence, fairness analysis, and remedy. A vague instruction or machine-readable format does not control ethical or organizational risk.",
+      "references": [
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use",
+        "https://trust.anthropic.com/"
+      ]
+    },
+    {
+      "id": "ccao-d-013",
+      "domain": "troubleshooting-optimization",
+      "objective": "Diagnose underperforming prompts and poor outputs",
+      "type": "single",
+      "prompt": "A report repeatedly omits an exception that is absent from every supplied source. What should be fixed first?",
+      "options": [
+        "The output token allowance and report structure before checking whether the governing source was supplied",
+        "The source layer",
+        "The output token limit only",
+        "The writing tone"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A model cannot reliably apply evidence it never receives. Add or retrieve the authoritative exception before changing model capability or surface details.",
+      "references": [
+        "certifications/claude/lessons/02-model-selection-and-token-economics",
+        "certifications/claude/lessons/03-prompting-and-task-decomposition"
+      ]
+    },
+    {
+      "id": "ccao-d-014",
+      "domain": "troubleshooting-optimization",
+      "objective": "Optimize workflows for efficiency and effectiveness",
+      "type": "multiple",
+      "prompt": "A recurring API workflow is accurate but too expensive. Which two changes preserve an evidence-based quality gate? Select two.",
+      "options": [
+        "Validate only an initial sample after each release and treat subsequent routine classifications as equivalent until an incident occurs",
+        "Cache a stable repeated prompt prefix when current API behavior supports it",
+        "Route by provider price and public benchmark ranking, then evaluate only the cases that users challenge",
+        "Route observable routine cases to a cheaper passing model and audit exceptions"
+      ],
+      "correct": [
+        1,
+        3
+      ],
+      "explanation": "Routing and caching are separate efficiency levers that can preserve quality when measured and monitored. Removing validation or selecting by price alone ignores failure and rework cost.",
+      "references": [
+        "certifications/claude/lessons/02-model-selection-and-token-economics",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+      ]
+    }
+  ]
+}
