@@ -632,6 +632,13 @@
       gap: 8px;
     }
 
+    .quiz-language-note {
+      margin: -4px 0 16px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--ink-mute);
+    }
+
     .quiz-question {
       margin-bottom: 24px;
       border: none;
@@ -3532,6 +3539,9 @@
         if (!questions.length) return '';
         var html = '<div class="quiz-section" id="quiz-' + id + '">';
         html += '<div class="quiz-title">&#9989; ' + escapeHtml(title) + '</div>';
+        if (certificationLesson && document.documentElement.lang !== 'en') {
+          html += '<div class="quiz-language-note">Certification quizzes remain in English.</div>';
+        }
         html += '<div class="quiz-reset-status" role="status" aria-live="polite"></div>';
         for (var qi = 0; qi < questions.length; qi++) {
           var q = questions[qi];

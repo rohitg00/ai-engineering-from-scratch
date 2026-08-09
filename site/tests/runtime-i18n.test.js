@@ -196,6 +196,8 @@ test('lesson runtime renders only the latest response and keeps certification qu
   assert.match(html, /requestSequence !== lessonFetchSequence/);
   assert.match(html, /applyRenderedLanguage\(documentResult\.lang\)/);
   assert.match(html, /lessonQuizPromise = Promise\.resolve\(certificationLesson\.quiz \|\| null\)/);
+  assert.match(html, /quiz-language-note/);
+  assert.match(html, /Certification quizzes remain in English/);
   assert.doesNotMatch(html, /if \(certificationLesson\)[\s\S]{0,300}langPicker\.hidden = true/);
   assert.doesNotMatch(html, /raw\.githubusercontent\.com\/rohitg00[^\n]+translations\/i18n/);
 });
