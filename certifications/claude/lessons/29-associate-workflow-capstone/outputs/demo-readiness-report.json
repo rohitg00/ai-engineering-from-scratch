@@ -1,0 +1,10 @@
+{
+  "status": "ready_for_human_review",
+  "as_of": "2026-08-08",
+  "metrics": {"sources": 2, "claims": 2, "errors": 0, "warnings": 0},
+  "findings": [],
+  "decision_owner": "operations-director",
+  "source_snapshot": "regional-snapshot-w32",
+  "fallback": "Use the approved manual briefing template.",
+  "verification": "10 failure-first unit tests pass without network access"
+}
