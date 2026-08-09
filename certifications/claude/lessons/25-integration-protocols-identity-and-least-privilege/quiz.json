@@ -1,0 +1,78 @@
+{
+  "lesson": "25-integration-protocols-identity-and-least-privilege",
+  "title": "Integration Protocols, Identity, and Least Privilege",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Support staff only read tickets and draft replies, but their agent also has refund and account-deletion tools. What best reduces risk?",
+      "options": [
+        "Route sensitive tool calls to a larger model that can reason more reliably about authorization",
+        "Keep the capabilities visible but require each tool description to repeat the role's policy limits",
+        "Remove the unnecessary tools and scopes from that role",
+        "Keep every tool but log sensitive calls"
+      ],
+      "correct": 2,
+      "explanation": "Least privilege removes capabilities the role does not need. Logging and warnings can support controls but leave the unnecessary authority and attack surface intact."
+    },
+    {
+      "stage": "check",
+      "question": "Why are capability discovery and execution authorization separate controls?",
+      "options": [
+        "Discovery is evaluated when a session begins, so authorization is only required for tools reached outside the advertised catalog",
+        "Discovery limits context, so execution authorization is redundant",
+        "Discovery filters capabilities at the host, while the integration protocol automatically authorizes every advertised operation",
+        "Hiding tools reduces exposure, while execution authorization prevents direct or stale unauthorized calls"
+      ],
+      "correct": 3,
+      "explanation": "A narrow catalog improves selection and exposure, but a caller may still reach an endpoint or permissions may change. The service must authorize every execution."
+    },
+    {
+      "stage": "check",
+      "question": "When is MCP a stronger fit than a direct API?",
+      "options": [
+        "When multiple hosts need standardized dynamic discovery of capabilities across server boundaries",
+        "When one stable service needs the lowest latency",
+        "When an integration needs the protocol layer to infer user identity and grant permissions without a separate policy service",
+        "When any Claude application needs tool calls and wants one protocol to replace service-specific authorization"
+      ],
+      "correct": 0,
+      "explanation": "MCP earns its extra boundary through standardized capability discovery and integration across hosts. A known low-overhead service call may remain clearer as a direct API."
+    },
+    {
+      "stage": "check",
+      "question": "What must a reliable approval bind to?",
+      "options": [
+        "The model's confidence, risk classification, and stated reason for selecting the proposed capability",
+        "Exact action, parameters, requester, approver authority, and expiration",
+        "The tool name and approving tenant",
+        "The current prompt and conversation identifier so all tool calls within that model turn inherit approval"
+      ],
+      "correct": 1,
+      "explanation": "Approval is valid for a specific proposed effect under a specific identity and time window. Changed parameters require a new decision."
+    },
+    {
+      "stage": "post",
+      "question": "A tool returns an authorization error. How should an agent harness classify it?",
+      "options": [
+        "Route the request to a stronger model so it can revise the tool parameters until authorization succeeds",
+        "Retry with the same credentials after exponential backoff because authorization services can be temporarily inconsistent",
+        "Non-retryable unless access or approval state changes, with a safe escalation action",
+        "Record the failure as a tool warning, omit the restricted effect, and continue as though the workflow succeeded"
+      ],
+      "correct": 2,
+      "explanation": "Repeating the same unauthorized request cannot succeed. A structured error should explain the safe next step without leaking secret details."
+    },
+    {
+      "stage": "post",
+      "question": "Why is an application-wide service API key insufficient for per-user authorization?",
+      "options": [
+        "It prevents downstream audit logs from recording the application identity or the requested service operation",
+        "It authenticates only the client transport and therefore cannot invoke downstream service endpoints directly",
+        "It expires at application scope, so a user request can outlive the credential before authorization is checked",
+        "It identifies broad application authority but may not carry the human principal, tenant, or current scopes"
+      ],
+      "correct": 3,
+      "explanation": "The downstream service needs trusted claims about the actual principal and requested action. Broad application credentials can collapse user boundaries into unenforceable prompt instructions."
+    }
+  ]
+}
