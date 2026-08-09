@@ -1,0 +1,1293 @@
+{
+  "id": "claude-ccar-f-mock-01",
+  "version": 2,
+  "track": "claude-ccar-f",
+  "kind": "mock",
+  "title": "Architect Foundations Scenario Mock",
+  "timeLimitMinutes": 120,
+  "questions": [
+    {
+      "id": "ccar-f-m1-001",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Implement the tool-use lifecycle from stop reason to tool result",
+      "type": "single",
+      "prompt": "Packet 1, HelioDesk: A support assistant requests `read_case` and `read_active_policy` in one response. Both calls are authorized and independent. What should the orchestration harness do next?",
+      "options": [
+        "Execute both calls and append one combined natural-language observation without the original call IDs, then continue because the calls share a support-case goal",
+        "Convert the calls into one unstructured search query",
+        "Execute both calls, preserve each call ID, append structured tool results after the assistant turn, then continue Claude's loop",
+        "Return an empty user message and wait for another request"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The harness owns the tool protocol. Independent authorized calls may run concurrently, but every result must remain associated with its original call ID and appear in valid conversation order before continuation.",
+      "references": [
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops",
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-002",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Choose coordinator and subagent topologies",
+      "type": "single",
+      "prompt": "Packet 1, HelioDesk: Case analysis is short, uses two read tools, and fits comfortably in one context. The team proposes four subagents because multi-agent sounds more robust. What is the strongest initial architecture?",
+      "options": [
+        "Use four specialist agents with identical case context and read permissions, then select the majority resolution to increase robustness without first measuring one loop",
+        "Create one subagent per sentence in the resolution",
+        "Use a coordinator without any task contracts",
+        "Use one bounded agent loop and add subagents only if measured context, parallelism, specialization, or reviewer independence requires them"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A single-agent baseline is simpler to inspect and evaluate. Additional contexts are justified by a specific benefit, not by feature count, and broad duplicate agents create merge and authority problems.",
+      "references": [
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "https://www.anthropic.com/research/building-effective-agents"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-003",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Use Task, allowedTools, isolated context, parallelism, and forked sessions",
+      "type": "multiple",
+      "prompt": "Packet 1, HelioDesk: A policy specialist and a case-evidence specialist can work independently after intake. Which two design choices are strongest? Select two.",
+      "options": [
+        "Give both specialists a guarded refund dry-run tool",
+        "Begin a provisional final decision after the first specialist reports, then revise only if the second returns a direct contradiction",
+        "Run the specialists in isolated contexts with only their required read tools",
+        "Merge results by claim and source IDs after each returns complete or explicit partial state"
+      ],
+      "correct": [
+        2,
+        3
+      ],
+      "explanation": "Isolation protects attention and authority, while structured identity supports safe parallel reduction. Execution authority and premature decisions are unnecessary and can convert missing evidence into action.",
+      "references": [
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "certifications/claude/lessons/17-agent-sdk-sessions-subagents-and-context"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-004",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Use hooks for deterministic controls and normalization",
+      "type": "single",
+      "prompt": "Packet 1, HelioDesk: Refund execution must never occur without a fresh duty-manager approval token. Where should this invariant be enforced?",
+      "options": [
+        "In deterministic pre-action authorization plus service-side validation, with the prompt explaining workflow behavior",
+        "In the final writing-style rubric",
+        "By asking the agent to self-report confidence",
+        "In a system prompt that defines the fresh-token requirement and asks the agent to verify token timestamp and approver identity before selecting the refund tool"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Hard authorization cannot depend on model memory or wording. A deterministic gate and the service enforce the invariant even under long context, injection, retry, or model error.",
+      "references": [
+        "certifications/claude/lessons/17-agent-sdk-sessions-subagents-and-context",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-005",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Enforce prerequisites, decompose concerns, and structure handoffs",
+      "type": "multiple",
+      "prompt": "Packet 1, HelioDesk: Policy search returns valid UK evidence but times out before EU evidence. The case region is EU. Which two coordinator behaviors are correct? Select two.",
+      "options": [
+        "Keep the valid UK result as a partial artifact with its scope and provenance",
+        "Use the valid UK policy as a temporary proxy for EU handling when the product terms appear harmonized, while labeling the regional assumption",
+        "Block the EU recommendation and retry the named gap or escalate according to the error contract",
+        "Mark research complete with an EU evidence gap and allow synthesis to choose a conservative no-refund action without retry or escalation"
+      ],
+      "correct": [
+        0,
+        2
+      ],
+      "explanation": "Partial work should remain usable without being mistaken for coverage. Since the missing scope governs the actual case, synthesis must stop until a safe retry or authoritative escalation resolves it.",
+      "references": [
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-006",
+      "domain": "tool-design-mcp-integration",
+      "objective": "Write precise tool descriptions and boundaries",
+      "type": "single",
+      "prompt": "Packet 1, HelioDesk: `search`, `lookup`, and `find` all accept a string, but query public pages, customer cases, and active policy respectively. What is the strongest redesign?",
+      "options": [
+        "Add a lightweight router prompt over the unchanged catalog and retry with the next tool whenever the first result set is empty or irrelevant",
+        "Rename each by source and action, add positive and negative use guidance, constrain schemas, and test confusion pairs",
+        "Combine them behind a single discovery tool whose required source enum selects public pages, customer cases, or active policy, while keeping the generic search name",
+        "Keep the names and add a general reminder to choose well"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Selection quality depends on visible interface boundaries. Distinct source, purpose, schema, and negative-use guidance give the model a decision surface and make catalog evaluation possible.",
+      "references": [
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-007",
+      "domain": "tool-design-mcp-integration",
+      "objective": "Return structured and retry-aware MCP errors",
+      "type": "multiple",
+      "prompt": "Packet 1, HelioDesk: The policy MCP server reports a version conflict. Which two fields should guide recovery? Select two.",
+      "options": [
+        "A generic retryable conflict plus the server's latest policy version identifier, leaving the client to discard its local state and restart",
+        "Both conflicting source versions and a safe next action",
+        "The authenticated server identity and request trace, because a trusted server can resolve the version conflict internally on the next attempt",
+        "A conflict category with retryability false until state is refreshed or reconciled"
+      ],
+      "correct": [
+        1,
+        3
+      ],
+      "explanation": "A conflict is not a blind transient retry. The client needs category, source state, and a reconciliation path while protected internals and credentials remain outside the result.",
+      "references": [
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+        "https://modelcontextprotocol.io/specification/latest"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-008",
+      "domain": "tool-design-mcp-integration",
+      "objective": "Scope MCP configuration and resources",
+      "type": "single",
+      "prompt": "Packet 1, HelioDesk: Active policy text is read-only context with stable identifiers and no operation. Which MCP primitive best represents it?",
+      "options": [
+        "A hidden credential",
+        "A refund execution tool",
+        "A resource",
+        "A prompt"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A resource represents contextual data the host or model can read. Wrapping static policy in an action tool adds misleading semantics and can blur the authority boundary.",
+      "references": [
+        "certifications/claude/lessons/11-mcp-server-design-and-integration",
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-009",
+      "domain": "tool-design-mcp-integration",
+      "objective": "Manage tool distribution and tool choice",
+      "type": "multiple",
+      "prompt": "Packet 1, HelioDesk: A separate executor can issue refunds after approval. Which two controls are necessary? Select two.",
+      "options": [
+        "Distribute the write tool only to the executor role",
+        "Expose a guarded refund tool to the coordinator and research roles, relying on the approval-token schema to prevent any unauthorized call",
+        "Retry the same approved refund after a bounded delay using a new operation ID, because a timeout contains no success response",
+        "Require fresh authorization, an idempotency key, and reconciliation of unknown outcomes"
+      ],
+      "correct": [
+        0,
+        3
+      ],
+      "explanation": "Least-privilege distribution reduces accidental selection. Fresh approval and idempotent reconciliation protect against duplicate or unauthorized side effects when results are lost or retried.",
+      "references": [
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+        "certifications/claude/lessons/17-agent-sdk-sessions-subagents-and-context"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-010",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "Enforce schemas with tool use and tool choice",
+      "type": "single",
+      "prompt": "Packet 1, HelioDesk: A resolution candidate requires `policy_section`, `case_fact_ids`, `action`, and nullable `refund_amount`, but must not execute anything. What is the strongest output design?",
+      "options": [
+        "Ask for persuasive prose and parse it later",
+        "Make every field a required non-null string",
+        "Force a dry-run mode on the real refund tool so its production schema returns the typed candidate without committing an external state change",
+        "Use a no-side-effect structured candidate schema, require it when appropriate, then validate every field"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A typed recommendation should not inherit action authority. Nullable unknowns prevent invented amounts, while semantic and provenance validation determine whether the structurally valid candidate is supported.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-011",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "Validate, retry, and feed back semantic errors",
+      "type": "multiple",
+      "prompt": "Packet 1, HelioDesk: The candidate matches its schema but cites a policy section that does not authorize the proposed action. Which two responses are strongest? Select two.",
+      "options": [
+        "Replace the unsupported citation with the policy document identifier and retain the action when the case facts otherwise satisfy the candidate schema",
+        "Return a provenance error naming the action and unsupported source",
+        "Allow a bounded repair using the original evidence, then escalate if no supported action exists",
+        "Accept it when the candidate passes its schema and the cited section belongs to the active policy version, recording the support mismatch for audit"
+      ],
+      "correct": [
+        1,
+        2
+      ],
+      "explanation": "Schema validity does not establish policy support. Targeted feedback allows a supported correction, while bounded attempts ensure a policy gap becomes escalation rather than repeated fabrication.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "certifications/claude/lessons/05-output-evaluation-and-validation"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-012",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "Separate generator and independent reviewer passes",
+      "type": "single",
+      "prompt": "Packet 1, HelioDesk: Which reviewer input best protects independent judgment?",
+      "options": [
+        "The resolution candidate, active policy evidence, case facts, rubric, and finding schema in an isolated context",
+        "The same artifact, evidence, facts, and rubric, preceded by the generator's full rationale so the reviewer can concentrate on disputed assumptions",
+        "A request to agree with the coordinator",
+        "Only the proposed refund amount"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The reviewer needs the artifact and evidence but not the generator's persuasive trajectory. Isolation and a finding contract reduce correlated assumptions and preserve actionable defects.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-013",
+      "domain": "context-management-reliability",
+      "objective": "Place facts to reduce lost-in-the-middle failures",
+      "type": "single",
+      "prompt": "Packet 1, HelioDesk: The regional exception is buried between hundreds of case messages and is often missed. What is the strongest context design?",
+      "options": [
+        "Remove dates and section IDs",
+        "Put the task and hard constraints first, retrieve the regional exception with provenance, and place the decision question after focused evidence",
+        "Repeat all messages twice",
+        "Keep the entire case and policy corpus in one context, place the decision question at both ends, and rely on nominal capacity plus repetition for recall"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Focused retrieval and deliberate placement make critical evidence salient while preserving verifiability. Context capacity alone cannot guarantee that one buried rule controls the answer.",
+      "references": [
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/long-context-tips"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-014",
+      "domain": "context-management-reliability",
+      "objective": "Calibrate confidence and human review",
+      "type": "multiple",
+      "prompt": "Packet 1, HelioDesk: Which two cases should receive mandatory human review even if the ordinary automation path is accurate? Select two.",
+      "options": [
+        "High-impact refund recommendations",
+        "Partial, conflicting, novel, or low-evidence cases",
+        "Outputs below a fixed self-reported confidence threshold calibrated on aggregate cases but not segmented by impact, novelty, or evidence state",
+        "Cases with unusually long input records"
+      ],
+      "correct": [
+        0,
+        1
+      ],
+      "explanation": "Consequence and observable evidence risk should drive review. Self-reported percentages are not calibrated thresholds, and length does not reliably predict correctness or harm.",
+      "references": [
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-015",
+      "domain": "context-management-reliability",
+      "objective": "Track provenance, conflicts, dates, and content types",
+      "type": "single",
+      "prompt": "Packet 1, HelioDesk: Two approved policy resources contain conflicting effective dates and no precedence rule. What should synthesis do?",
+      "options": [
+        "Choose the longer document",
+        "Select the source with the newest visible effective date and record the other as supporting background, assuming recency defines precedence unless challenged",
+        "Preserve both source versions, block the governed action, and escalate the exact conflict to the policy owner",
+        "Average the dates"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "An undefined conflict is a policy gap, not a model reasoning problem. Provenance must remain visible while the authorized owner resolves the governing source.",
+      "references": [
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-016",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Choose coordinator and subagent topologies",
+      "type": "single",
+      "prompt": "Packet 2, Ridgeway: A monorepo migration touches four independent service adapters plus one shared protocol. Which topology is strongest?",
+      "options": [
+        "Run the cross-service review before inspecting adapters",
+        "Use one subagent for every deterministic test command",
+        "Give four adapter specialists the entire repository and shared write access, then ask a coordinator to resolve overlapping edits before running protocol tests",
+        "Build a manifest, run bounded adapter reviews in parallel, then perform one cross-service protocol pass after local results are validated"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Per-adapter work benefits from isolated parallel contexts, while the shared protocol requires a later global pass. A manifest enforces coverage and prevents duplicate ownership.",
+      "references": [
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "certifications/claude/lessons/31-architect-foundations-scenario-capstone"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-017",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Enforce prerequisites, decompose concerns, and structure handoffs",
+      "type": "multiple",
+      "prompt": "Packet 2, Ridgeway: Which two prerequisites should the orchestrator enforce structurally? Select two.",
+      "options": [
+        "The coordinator should approve the consolidated design narrative before contract tests, because test failures can then be interpreted against intended behavior",
+        "All adapter specialists should update one shared manifest during execution so cross-service synthesis always sees the latest findings",
+        "Deterministic contract tests pass before a reviewer may recommend merge",
+        "Every in-scope adapter has a complete or named partial review before cross-service synthesis"
+      ],
+      "correct": [
+        2,
+        3
+      ],
+      "explanation": "Coverage state and test gates have exact answers and belong in orchestration code. Style preference and shared unversioned notes cannot substitute for verified prerequisites.",
+      "references": [
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-018",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Resume or fork without carrying stale context",
+      "type": "single",
+      "prompt": "Packet 2, Ridgeway: During a long migration, the target dependency releases a breaking version and the branch changes. What should happen before continuing?",
+      "options": [
+        "Reconcile files and dependency state against the manifest, mark stale assumptions, and start or fork with a revised plan if divergence is material",
+        "Resume from the compacted plan, re-run only the last failed command, and treat new branch or dependency differences as implementation details to absorb during edits",
+        "Resume and repeat the last writes",
+        "Delete all test evidence"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Conversation continuity is not authoritative external state. Reconciliation prevents duplicate writes and obsolete planning, while a fresh branch of reasoning protects the valid prior work.",
+      "references": [
+        "certifications/claude/lessons/17-agent-sdk-sessions-subagents-and-context",
+        "https://platform.claude.com/docs/en/agent-sdk/sessions"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-019",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Use hooks for deterministic controls and normalization",
+      "type": "multiple",
+      "prompt": "Packet 2, Ridgeway: Which two hook uses are appropriate? Select two.",
+      "options": [
+        "Run targeted formatting or contract tests after an edited file changes",
+        "Run a shell hook that compares the changed architecture to repository examples and blocks writes when its heuristic similarity score is too low",
+        "Block edits outside the declared migration scope before write",
+        "Record credential identifiers and resolved secret-store paths in hook output so failed CI operations can be reproduced without exposing raw values"
+      ],
+      "correct": [
+        0,
+        2
+      ],
+      "explanation": "Scope gates and targeted verification are deterministic, observable hook responsibilities. Semantic design judgment belongs to reviewed reasoning, and secrets should never enter configuration or logs.",
+      "references": [
+        "certifications/claude/lessons/17-agent-sdk-sessions-subagents-and-context",
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-020",
+      "domain": "tool-design-mcp-integration",
+      "objective": "Choose Claude Code file, shell, and search tools safely",
+      "type": "single",
+      "prompt": "Packet 2, Ridgeway: The agent knows the exact file and needs to change one existing function. Which tool sequence is strongest?",
+      "options": [
+        "Use broad shell replacement across the repository",
+        "Read the known file, apply a bounded edit, then run the smallest relevant test command",
+        "Search for analogous functions across the repository, copy the most common implementation into the known file, and rely on the full test suite to expose local differences",
+        "Search the public web instead of the repository"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Specific file tools express intent and keep the diff inspectable. Shell remains appropriate for tests, but broad text mutation creates unnecessary scope and escaping risk.",
+      "references": [
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-021",
+      "domain": "tool-design-mcp-integration",
+      "objective": "Return structured and retry-aware MCP errors",
+      "type": "single",
+      "prompt": "Packet 2, Ridgeway: A test runner times out, but the persisted report shows 84 passing and one failing test before timeout. What should the tool return?",
+      "options": [
+        "A failure record containing the runner environment, complete command output, and a single retry recommendation, but omitting which 84 results remain valid",
+        "Success because most tests passed",
+        "A partial timeout result with counts, failing test identity, retry policy, trace, and full report reference",
+        "A generic error with no artifact"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The result must preserve both valid evidence and incomplete coverage. Structured partial state lets orchestration retry safely without erasing the observed failure or exposing unrelated environment data.",
+      "references": [
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-022",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Design CLAUDE.md hierarchy, imports, rules, and memory",
+      "type": "single",
+      "prompt": "Packet 2, Ridgeway: The root CLAUDE.md includes detailed rules for one adapter directory and all six languages in the monorepo. What is the best redesign?",
+      "options": [
+        "Keep concise shared boundaries at root and move adapter or language rules into each maintainer's user memory so only relevant experts load them",
+        "Keep adding global detail",
+        "Remove repository guidance entirely",
+        "Keep concise shared boundaries at root and move adapter or language guidance into versioned imports and path-specific rules"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The narrowest true scope reduces context bloat and conflicting instructions while preserving team review. Private configuration cannot serve as reproducible project policy.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "https://docs.anthropic.com/en/docs/claude-code/memory"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-023",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Apply path-specific rules",
+      "type": "multiple",
+      "prompt": "Packet 2, Ridgeway: Migration files are append-only, while adapter code requires contract tests. Which two configurations are strongest? Select two.",
+      "options": [
+        "One global append-only rule",
+        "A tested migration-path rule for append-only and rollback requirements",
+        "A team shell alias that selects migration or adapter checks from the changed paths but is distributed outside version control",
+        "A tested adapter-path rule requiring the relevant contract suite"
+      ],
+      "correct": [
+        1,
+        3
+      ],
+      "explanation": "Separate path rules encode different local policies without loading them everywhere. Fixture paths should prove globs match, because an inactive rule creates false confidence.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "certifications/claude/lessons/31-architect-foundations-scenario-capstone"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-024",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Create project and user commands and Skills",
+      "type": "single",
+      "prompt": "Packet 2, Ridgeway: The team has a reusable migration-review method with references, scripts, evidence rules, and stop conditions. Which Claude Code mechanism best packages it?",
+      "options": [
+        "A Skill loaded when the workflow is relevant",
+        "A project command containing the entire procedure inline, with scripts and references copied into its prompt whenever the command runs",
+        "A hidden post-write side effect",
+        "A secret value in CLAUDE.md"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A Skill supports progressive disclosure of a reusable method and its assets. It should define inputs and outputs but does not itself grant tool permissions or authorization.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "https://docs.anthropic.com/en/docs/claude-code/memory"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-025",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Choose plan mode, direct execution, or Explore",
+      "type": "multiple",
+      "prompt": "Packet 2, Ridgeway: The migration scope is ambiguous and the team does not know which services depend on the parser. Which two actions should precede implementation? Select two.",
+      "options": [
+        "Use read-only exploration to map dependencies and tests",
+        "Provision read-only production metadata access so the implementer can infer runtime dependencies before repository exploration or plan approval",
+        "Start a representative parser edit to reveal hidden dependencies, then use resulting test failures to define the migration scope",
+        "Prepare a plan with scope, risks, and verification for approval"
+      ],
+      "correct": [
+        0,
+        3
+      ],
+      "explanation": "Exploration answers bounded codebase questions, and planning makes the cross-service change reviewable before mutation. Broad edits and deployment authority are premature.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-026",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Run headless CI with structured output and independent review",
+      "type": "single",
+      "prompt": "Packet 2, Ridgeway: Which headless review design is strongest?",
+      "options": [
+        "Resume the implementer's interactive session and allow writes",
+        "Use a clean checkout, versioned settings, read-only tools, bounded runtime, structured findings, and separate deterministic tests",
+        "Use a clean checkout and read-only tools, but depend on a standard maintainer image whose undocumented hooks supply the review and security policy",
+        "Return prose with no finding identity"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Fresh state and stable finding schemas make CI reproducible and permit remediation checks. Write authority and hidden local state undermine reviewer independence and auditability.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "https://docs.anthropic.com/en/docs/claude-code/sdk/sdk-headless"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-027",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Use examples, test-driven iteration, and interviews",
+      "type": "single",
+      "prompt": "Packet 2, Ridgeway: A later CI run verifies remediation. What input should connect it to the original review?",
+      "options": [
+        "Only the number of changed files",
+        "A vague summary saying fix the issues",
+        "Stable finding IDs, original evidence and acceptance rules, current diff, and relevant test results",
+        "The implementer's full conversation and latest commit hash, allowing the reviewer to infer which original findings were intended to be fixed"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Structured findings preserve the exact claim under review across fresh runs. The full transcript is unnecessary and can introduce stale framing, while counts do not show remediation.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "certifications/claude/lessons/14-evals-testing-debugging-and-observability"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-028",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "State explicit evaluation criteria",
+      "type": "single",
+      "prompt": "Packet 2, Ridgeway: A CI reviewer returns valid findings but flags harmless style differences and misses protocol breaks. What should change first?",
+      "options": [
+        "Allow the reviewer to apply its own fixes and use the resulting clean diff as evidence that each reported style or protocol finding was valid",
+        "Remove deterministic tests",
+        "Increase the output length",
+        "Define severity and evidence criteria around behavioral contracts, then evaluate representative diffs"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The reviewer lacks the correct judgment contract. Explicit behavior-focused criteria and representative examples improve prioritization, while tests remain authoritative for exact properties.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "certifications/claude/lessons/14-evals-testing-debugging-and-observability"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-029",
+      "domain": "context-management-reliability",
+      "objective": "Propagate structured errors and partial results",
+      "type": "single",
+      "prompt": "Packet 2, Ridgeway: A 20,000-line build log must enter the coordinator context. Which adapter output is strongest?",
+      "options": [
+        "Status, failing targets and assertions, coverage counts, error category, affected scope, timestamps, and a full artifact reference",
+        "No log information",
+        "The complete compressed log embedded in coordinator context, preceded by the command status and final failing assertion so no diagnostic detail is lost",
+        "Build mostly worked"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Decision-relevant structure preserves failure and coverage while externalizing repetition. Arbitrary truncation can delete the only failing assertion and make partial state look complete.",
+      "references": [
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation",
+        "certifications/claude/lessons/17-agent-sdk-sessions-subagents-and-context"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-030",
+      "domain": "context-management-reliability",
+      "objective": "Use scratchpads, subagents, manifests, and compaction for large codebases",
+      "type": "multiple",
+      "prompt": "Packet 2, Ridgeway: Which two statements correctly separate large-codebase memory mechanisms? Select two.",
+      "options": [
+        "The scratchpad is the authoritative execution ledger for completed writes, while the manifest stores only initial scope and final coverage",
+        "The manifest stores durable scope, versions, coverage, findings, and gaps",
+        "Compaction rebuilds a smaller working context while evidence remains externally authoritative",
+        "Each subagent should receive complete repository history so local decisions preserve cross-service context, with compaction applied independently"
+      ],
+      "correct": [
+        1,
+        2
+      ],
+      "explanation": "Manifest and compaction solve durable state and context-size problems respectively. Scratchpads are temporary, and subagent isolation works only when inputs remain bounded and relevant.",
+      "references": [
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation",
+        "certifications/claude/lessons/17-agent-sdk-sessions-subagents-and-context"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-031",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Choose sequential or adaptive decomposition",
+      "type": "single",
+      "prompt": "Packet 3, Atlas: A migration-research project may uncover new questions depending on evidence. Which orchestration approach is strongest?",
+      "options": [
+        "One unrestricted agent with the complete enterprise catalog and a prompt to create internal specialist roles whenever an evidence gap appears",
+        "A coordinator that delegates bounded specialists for identified gaps, under deterministic budgets and result contracts",
+        "A fixed agent for every imaginable question",
+        "A fixed fan-out across source categories with free-form reports, followed by a coordinator that reconciles duplicate claims using text similarity"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Adaptive decomposition fits an unknown research frontier, but the coordinator still needs structural budgets, minimal tools, and typed results. Preallocating speculative agents creates duplicate and irrelevant work.",
+      "references": [
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "https://www.anthropic.com/research/building-effective-agents"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-032",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Choose coordinator and subagent topologies",
+      "type": "single",
+      "prompt": "Packet 3, Atlas: Before adding specialists, the team has not measured the single-agent workflow. What should it do?",
+      "options": [
+        "Add ten specialists to maximize coverage",
+        "Start several specialists on the same approved sources and compare their coverage before defining a single-agent baseline, using agreement as the quality signal",
+        "Establish a single-agent baseline for quality, repeated work, context growth, latency, and cost",
+        "Remove the evaluation set"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A baseline reveals whether isolation or parallelism solves a real failure and provides a comparison. Without it, multi-agent complexity has no measured justification.",
+      "references": [
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "certifications/claude/lessons/31-architect-foundations-scenario-capstone"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-033",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Use Task, allowedTools, isolated context, parallelism, and forked sessions",
+      "type": "multiple",
+      "prompt": "Packet 3, Atlas: Specialists research security, cost, and migration effort. Which two delegation-contract fields are essential? Select two.",
+      "options": [
+        "Non-overlapping scope and minimum allowed tools",
+        "A structured claim result with source IDs, conflicts, gaps, and completion state",
+        "Permission for each specialist to edit its section of the final report directly, using file ownership to prevent conflicts at merge time",
+        "A broad instruction to maximize coverage until sources repeat, leaving each specialist to infer a reasonable tool and token budget"
+      ],
+      "correct": [
+        0,
+        1
+      ],
+      "explanation": "Bounded ownership and typed evidence allow parallel merge without duplication. Broad mutation and undefined completion make the coordinator unable to measure coverage or control cost.",
+      "references": [
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-034",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Enforce prerequisites, decompose concerns, and structure handoffs",
+      "type": "single",
+      "prompt": "Packet 3, Atlas: The independent reviewer receives the generator's entire discussion and repeats its unsupported assumption. What is the strongest repair?",
+      "options": [
+        "Remove source evidence",
+        "Retain the full discussion but instruct the reviewer to challenge every generator assumption, cite contradictory evidence, and lower confidence when rationale is persuasive",
+        "Let the generator review itself",
+        "Use a fresh reviewer context containing the report, evidence, rubric, and finding schema but not the generator's persuasive trajectory"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Independence is architectural context separation, not a role label. The reviewer still needs complete evidence and criteria, but it should not inherit the reasoning path being challenged.",
+      "references": [
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-035",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Resume or fork without carrying stale context",
+      "type": "multiple",
+      "prompt": "Packet 3, Atlas: Architects want to compare two incompatible migration assumptions without contaminating the original branch. Which two practices are strongest? Select two.",
+      "options": [
+        "Merge the conclusion supported by more branch outputs and retain only the winning rationale so downstream reviewers receive one coherent recommendation",
+        "Treat both forks as independent validations of the common evidence state, even when that starting state has not been checked for authority or freshness",
+        "Fork from a verified common evidence state",
+        "Prevent either branch from mutating shared external state without coordination"
+      ],
+      "correct": [
+        2,
+        3
+      ],
+      "explanation": "Forking preserves a branch point for alternative reasoning, while mutation controls protect shared state. It does not validate inherited evidence, and synthesis must retain substantive conflicts.",
+      "references": [
+        "certifications/claude/lessons/17-agent-sdk-sessions-subagents-and-context",
+        "https://platform.claude.com/docs/en/agent-sdk/sessions"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-036",
+      "domain": "tool-design-mcp-integration",
+      "objective": "Manage tool distribution and tool choice",
+      "type": "single",
+      "prompt": "Packet 3, Atlas: The enterprise tool catalog has 900 capabilities, but a security researcher needs only public search and an internal advisory resource. What is the strongest approach?",
+      "options": [
+        "Use scoped progressive discovery and load only authorized relevant definitions",
+        "Load all 900 read-only definitions so Claude can discover cross-domain evidence, while service-side authorization blocks any tool the researcher should not use",
+        "Hide authorization inside tool descriptions",
+        "Give the researcher write access to improve recall"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Scoped discovery protects context, selection quality, and the security review surface. It must filter by identity and must not reveal or authorize unrelated capabilities.",
+      "references": [
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+        "https://modelcontextprotocol.io/specification/latest"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-037",
+      "domain": "tool-design-mcp-integration",
+      "objective": "Scope MCP configuration and resources",
+      "type": "multiple",
+      "prompt": "Packet 3, Atlas: Which two primitive choices are appropriate? Select two.",
+      "options": [
+        "Expose a bounded source-query operation as a tool with structured partial errors",
+        "Use a production write tool in validation-only mode to force its JSON claim schema, relying on a mode flag to prevent external mutation",
+        "Expose an approved research corpus as resources with stable provenance",
+        "Expose credential references through a reusable prompt so approved users can copy them into whichever research tool the current host selects"
+      ],
+      "correct": [
+        0,
+        2
+      ],
+      "explanation": "Resources represent contextual data and tools represent requested operations. Credentials stay outside protocol content, and structured generation should not borrow unnecessary action authority.",
+      "references": [
+        "certifications/claude/lessons/11-mcp-server-design-and-integration",
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-038",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Create project and user commands and Skills",
+      "type": "single",
+      "prompt": "Packet 3, Atlas: Researchers repeatedly use the same source-quality rubric, query sequence, evidence schema, and conflict procedure. How should the team package it for Claude Code?",
+      "options": [
+        "As an unrestricted deployment command",
+        "As a versioned research Skill with references, outputs, and stop conditions",
+        "As a secret in the root guidance",
+        "As a project hook that inserts the rubric and query sequence into every research prompt and writes the free-form report whenever a research command completes"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A Skill provides reusable guidance and progressive disclosure while remaining versioned for the team. Hidden side effects and secrets are not workflow instructions.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "https://docs.anthropic.com/en/docs/claude-code/memory"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-039",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "State explicit evaluation criteria",
+      "type": "single",
+      "prompt": "Packet 3, Atlas: Specialists return plausible claims but disagree about what counts as authoritative evidence. What should be defined first?",
+      "options": [
+        "A consensus rule requiring two specialists to support each claim before synthesis, with source disagreements resolved by the coordinator's confidence score",
+        "A single model confidence threshold",
+        "Source authority, freshness, claim support, coverage, conflict, and abstention criteria",
+        "A longer report template"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A shared evaluation contract aligns specialists and reviewers around observable evidence. Forced agreement can hide real conflicts, and confidence alone does not define authority or support.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "certifications/claude/lessons/05-output-evaluation-and-validation"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-040",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "Use few-shot examples for consistent judgment",
+      "type": "multiple",
+      "prompt": "Packet 3, Atlas: Which two examples most improve claim classification? Select two.",
+      "options": [
+        "A representative set of common supported claims with varied prose but no borderline entailment, conflict, or insufficient-evidence cases",
+        "A source that discusses a topic but does not entail the claim",
+        "An expert-labeled edge case whose classification differs from the current written rubric, without first updating the rubric or explaining the exception",
+        "Two authoritative sources that conflict and require explicit conflict state"
+      ],
+      "correct": [
+        1,
+        3
+      ],
+      "explanation": "Boundary and conflict examples teach the decisions most likely to vary. Repetitive easy cases add little information, while inconsistent labels damage the judgment contract.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "certifications/claude/lessons/03-prompting-and-task-decomposition"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-041",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "Enforce schemas with tool use and tool choice",
+      "type": "single",
+      "prompt": "Packet 3, Atlas: Every specialist must return claims with source ID, version, support class, conflicts, and unresolved questions. What is the strongest contract?",
+      "options": [
+        "A production database-write tool",
+        "A summary that omits empty fields",
+        "A detailed report template with labeled prose sections for source, version, support, conflicts, and open questions, followed by a parser that tolerates missing sections",
+        "A required no-side-effect structured result schema plus validation"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A typed contract makes merge and coverage deterministic without granting write authority. Unknowns and empty states should remain explicit so missing evidence cannot disappear during synthesis.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-042",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "Use batch processing for appropriate workloads",
+      "type": "multiple",
+      "prompt": "Packet 3, Atlas: Which two workloads are good batch candidates after current support and limits are verified? Select two.",
+      "options": [
+        "Offline extraction across 40,000 independent archived reports",
+        "A live approval workflow that batches requests for up to the response deadline and streams completed approvals as each batch result arrives",
+        "A low-latency interactive tool loop",
+        "Independent evidence review of already generated claim records"
+      ],
+      "correct": [
+        0,
+        3
+      ],
+      "explanation": "Large independent asynchronous items and offline reviewer passes fit batch economics. Adaptive tool loops and live approvals require real-time continuation or a redesigned staged workflow.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "https://platform.claude.com/docs/en/build-with-claude/message-batches"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-043",
+      "domain": "context-management-reliability",
+      "objective": "Track provenance, conflicts, dates, and content types",
+      "type": "single",
+      "prompt": "Packet 3, Atlas: The reducer receives two claims with the same text but different source versions and dates. What should it do?",
+      "options": [
+        "Merge by stable claim identity while preserving both provenance records and applying explicit freshness or authority rules",
+        "Choose the first arrival",
+        "Deduplicate by normalized claim text, retain only the newest source record, and assume its date resolves provenance conflicts without a separate authority rule",
+        "Average source dates"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Text equality does not prove evidential equivalence. Version and authority may change the claim's validity, so provenance and conflicts must survive reduction.",
+      "references": [
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation",
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-044",
+      "domain": "context-management-reliability",
+      "objective": "Track provenance, conflicts, dates, and content types",
+      "type": "multiple",
+      "prompt": "Packet 3, Atlas: A source is a table-heavy PDF with footnotes. Which two ingestion practices are strongest? Select two.",
+      "options": [
+        "Extract plain text in reading order, keep the document and page IDs, and discard table-cell and footnote relationships after successful OCR",
+        "Preserve page, table, cell relationship, footnote, content type, and extractor metadata",
+        "Verify important claims against the rendered page or original asset",
+        "Use OCR confidence thresholds as proof that layout and footnote associations were preserved, verifying only pages below the threshold"
+      ],
+      "correct": [
+        1,
+        2
+      ],
+      "explanation": "Layout and footnotes can change meaning. Structural metadata and rendered inspection keep citations resolvable and expose extraction risk that plain text or OCR confidence may hide.",
+      "references": [
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation",
+        "https://platform.claude.com/docs/en/build-with-claude/citations"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-045",
+      "domain": "context-management-reliability",
+      "objective": "Calibrate confidence and human review",
+      "type": "single",
+      "prompt": "Packet 3, Atlas: The system reviews only claims it labels low confidence. What additional review most improves detection of a broken confidence router?",
+      "options": [
+        "A stratified sample of low-confidence claims across source types, because confidence routing already identifies where the model is most likely to fail",
+        "A random sample of ordinary passing claims",
+        "No human review after launch",
+        "Only claims from one specialist"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Risk-triggered review catches known hazards, while random sampling measures false passes outside those triggers. Without it, a miscalibrated flagger can remain invisible.",
+      "references": [
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation",
+        "certifications/claude/lessons/14-evals-testing-debugging-and-observability"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-046",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Choose sequential or adaptive decomposition",
+      "type": "single",
+      "prompt": "Packet 4, Harbor: CI must extract a change record, run deterministic checks, generate findings, independently review them, and publish an artifact. Which orchestration is strongest?",
+      "options": [
+        "A bounded agent that chooses the order of extraction, testing, review, and publication from repository context, while a final gate checks only artifact existence",
+        "Run publication before validation",
+        "A fixed pipeline with structural gates, using model reasoning only inside bounded generation and review stages",
+        "Use a new subagent for each schema field"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The stage order is known and should be enforced by code. Model reasoning remains useful for semantic findings, while deterministic tests and publication prerequisites stay outside it.",
+      "references": [
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "certifications/claude/lessons/31-architect-foundations-scenario-capstone"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-047",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "Enforce prerequisites, decompose concerns, and structure handoffs",
+      "type": "multiple",
+      "prompt": "Packet 4, Harbor: Which two handoff fields let a downstream release owner act safely? Select two.",
+      "options": [
+        "Partial or blocked scope, residual risks, required decision, and fallback",
+        "Stable finding and artifact IDs with exact check status",
+        "The generator transcript and tool log so the release owner can reconstruct artifact identities, failed checks, and fallback decisions when needed",
+        "A polished readiness summary with aggregate pass counts and an owner, leaving individual blocked scopes and residual risks in the source system"
+      ],
+      "correct": [
+        0,
+        1
+      ],
+      "explanation": "A release owner needs verifiable state, unresolved scope, and explicit options. Smooth prose or raw trajectory forces rediscovery and can hide a blocking failure.",
+      "references": [
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "certifications/claude/lessons/31-architect-foundations-scenario-capstone"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-048",
+      "domain": "tool-design-mcp-integration",
+      "objective": "Scope MCP configuration and resources",
+      "type": "single",
+      "prompt": "Packet 4, Harbor: The repository should share an MCP test-service declaration, but CI and developers use separately provisioned tokens. What is the strongest configuration?",
+      "options": [
+        "Version the project declaration but use one centrally shared developer token in CI and local environments so configuration behavior remains identical",
+        "Put the token in CLAUDE.md",
+        "Commit every token for reproducibility",
+        "Version the safe project declaration and reference credentials injected from approved CI or user secret stores"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Shared server behavior belongs in project scope, while credential values remain external and identity-specific. This preserves reproducibility without exposing secrets or collapsing environments.",
+      "references": [
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-049",
+      "domain": "tool-design-mcp-integration",
+      "objective": "Manage tool distribution and tool choice",
+      "type": "single",
+      "prompt": "Packet 4, Harbor: CI needs a typed change record but should not publish or deploy. Which tool-choice design is strongest?",
+      "options": [
+        "Force a no-side-effect extraction contract and keep publish tools undistributed",
+        "Ask for prose and skip parsing",
+        "Give the reviewer every production write tool",
+        "Force the deployment tool in a documented validation-only mode and depend on its typed response, even though the production capability remains distributed to CI"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The typed-output requirement does not justify action authority. Tool distribution and choice should enforce structured generation while deployment stays behind a separate approved stage.",
+      "references": [
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-050",
+      "domain": "tool-design-mcp-integration",
+      "objective": "Return structured and retry-aware MCP errors",
+      "type": "multiple",
+      "prompt": "Packet 4, Harbor: A test service returns a rate-limit error after completing two of five independent suites. Which two responses are strongest? Select two.",
+      "options": [
+        "Retry all five suites after the stated delay",
+        "Mark the stage conditionally complete using the two passing suites, while scheduling the remaining three as post-release verification",
+        "Preserve completed suite results with identities and provenance",
+        "Return a retryable rate-limit category with remaining scope and safe retry timing"
+      ],
+      "correct": [
+        2,
+        3
+      ],
+      "explanation": "Structured partial state prevents duplicate work and preserves failures already observed. Retry metadata lets orchestration continue only the unresolved suites under service policy.",
+      "references": [
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+        "https://modelcontextprotocol.io/specification/latest"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-051",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Design CLAUDE.md hierarchy, imports, rules, and memory",
+      "type": "single",
+      "prompt": "Packet 4, Harbor: CI behavior depends on a reviewer rule stored only in one maintainer's user memory. What is the strongest repair?",
+      "options": [
+        "Remove configuration auditing",
+        "Move shared reviewer policy into versioned project guidance or scoped rules and test that CI loads it",
+        "Keep the policy in maintainer memory and add several compliant examples to the repository so headless CI can infer the same reviewer behavior from precedent",
+        "Copy it into the model output after review"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Team and CI behavior must come from reviewable project state. User memory is appropriate for personal preferences, not required shared policy or reproducible gates.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "https://docs.anthropic.com/en/docs/claude-code/memory"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-052",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Apply path-specific rules",
+      "type": "multiple",
+      "prompt": "Packet 4, Harbor: Release manifests require schema tests, while documentation changes require link checks. Which two configurations are strongest? Select two.",
+      "options": [
+        "Fixture files proving each rule activates only where intended",
+        "Two path rules reviewed against their glob syntax but not exercised with positive and negative fixture files in the headless environment",
+        "Separate tested path rules for manifest and documentation globs",
+        "One global hook that detects file type at runtime and invokes schema or link checks, maintained in the CI image rather than versioned path rules"
+      ],
+      "correct": [
+        0,
+        2
+      ],
+      "explanation": "Narrow tested globs load relevant policy and expose matching mistakes. A broad opaque hook increases surprise, while an untested rule can silently provide no protection.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "certifications/claude/lessons/31-architect-foundations-scenario-capstone"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-053",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Run headless CI with structured output and independent review",
+      "type": "single",
+      "prompt": "Packet 4, Harbor: A headless reviewer currently emits prose that cannot be reconciled across reruns. What output is strongest?",
+      "options": [
+        "An automatic merge command",
+        "A versioned prose report with file paths, quoted evidence, and severity headings, relying on issue order and wording to reconcile findings across reruns",
+        "Structured findings with stable ID, file, evidence, severity, rule, and disposition",
+        "A general quality score only"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Stable structured findings support deduplication, remediation verification, and audit. A score cannot identify the failed claim, and review should remain separate from mutation or merge authority.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "certifications/claude/lessons/14-evals-testing-debugging-and-observability"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-054",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Use examples, test-driven iteration, and interviews",
+      "type": "single",
+      "prompt": "Packet 4, Harbor: A generated pipeline change is supposed to preserve behavior. What is the strongest implementation loop?",
+      "options": [
+        "Edit broadly, then ask whether it looks correct",
+        "Use examples that cover only the happy path",
+        "Make the bounded change first, then ask an independent reviewer to infer preserved behavior from the diff and run deterministic tests only if it reports uncertainty",
+        "Establish a failing or characterizing test, make the bounded change, run focused and risk-proportional gates, then inspect the real artifact"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Tests define observable behavior and localize regressions. Independent review complements rather than replaces deterministic verification, and artifact inspection catches packaging or rendering boundaries.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "certifications/claude/lessons/14-evals-testing-debugging-and-observability"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-055",
+      "domain": "claude-code-configuration-workflows",
+      "objective": "Run headless CI with structured output and independent review",
+      "type": "multiple",
+      "prompt": "Packet 4, Harbor: Which two controls improve reproducibility of model-assisted CI findings? Select two.",
+      "options": [
+        "Use a centrally installed reviewer command pinned in the CI image but not declared in project configuration, because the image itself is versioned",
+        "Set bounded time, turns, cost, and allowed tools",
+        "Resume the implementer's latest session so review retains intent and prior tool evidence, while recording the current commit and deterministic test results",
+        "Record the commit, model or runtime configuration, settings, prompt or Skill version, and input artifacts"
+      ],
+      "correct": [
+        1,
+        3
+      ],
+      "explanation": "Declared versions and execution bounds make runs comparable and constrain failure. Interactive sessions and hidden commands introduce untracked state that other runs cannot reproduce.",
+      "references": [
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+        "https://docs.anthropic.com/en/docs/claude-code/sdk/sdk-headless"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-056",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "Enforce schemas with tool use and tool choice",
+      "type": "single",
+      "prompt": "Packet 4, Harbor: Some change notices omit an effective date. How should the schema represent this?",
+      "options": [
+        "Require the field but allow an explicit null or unknown state with review metadata",
+        "Require an ISO date and let the model infer it from nearby release context, recording low confidence for a reviewer when the source omits the value",
+        "Drop records with missing dates silently",
+        "Use an unrestricted free-form string"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Required and nullable forces an explicit supported value or known absence. It prevents silent omission and reduces pressure to invent a plausible date.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-057",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "Validate, retry, and feed back semantic errors",
+      "type": "multiple",
+      "prompt": "Packet 4, Harbor: A record's end date precedes its start date and its cited span has no end date. Which two validators should reject it? Select two.",
+      "options": [
+        "Semantic validation for the impossible date relationship",
+        "Schema validation requiring both fields to contain ISO-formatted dates, without comparing their relationship or verifying source support",
+        "A model review instructed to flag inconsistent dates from the extracted record, without access to the cited source span",
+        "Provenance validation for the unsupported extracted value"
+      ],
+      "correct": [
+        0,
+        3
+      ],
+      "explanation": "The payload may parse and match its schema while remaining internally invalid and unsupported. Semantic and evidence checks address those distinct failures.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "certifications/claude/lessons/09-structured-output-and-defensive-parsing"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-058",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "Separate generator and independent reviewer passes",
+      "type": "single",
+      "prompt": "Packet 4, Harbor: The generator silently corrects its own records during review, so CI cannot tell which fields originally failed. What is the strongest redesign?",
+      "options": [
+        "Allow in-place correction but require the generator to add a change-summary field after review, using that self-reported summary as the audit trail",
+        "Require a separate reviewer to emit finding IDs and evidence before a controlled correction pass",
+        "Increase the retry limit without recording errors",
+        "Delete the source version"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Findings must survive independently of correction for audit, evaluation, and remediation checks. Silent rewriting hides the defect and prevents learning from the failure.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "certifications/claude/lessons/14-evals-testing-debugging-and-observability"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-059",
+      "domain": "prompt-engineering-structured-output",
+      "objective": "Use batch processing for appropriate workloads",
+      "type": "multiple",
+      "prompt": "Packet 4, Harbor: An asynchronous extraction job returns results out of order and expires for 3 percent of items. Which two controls are necessary? Select two.",
+      "options": [
+        "Join by array position after sorting both requests and responses by their timestamps, assuming the service completes equal-priority items consistently",
+        "Join results by stable custom ID, not array position",
+        "Persist source, schema, prompt versions and retry only eligible failed items",
+        "Replace the first failed result when its retry succeeds so downstream users see only the latest output, while retaining aggregate retry metrics"
+      ],
+      "correct": [
+        1,
+        2
+      ],
+      "explanation": "Stable identity and versioned inputs make asynchronous results reconciliable. Selective retries preserve valid work and prevent source changes from silently altering historical decisions.",
+      "references": [
+        "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+        "https://platform.claude.com/docs/en/build-with-claude/message-batches"
+      ]
+    },
+    {
+      "id": "ccar-f-m1-060",
+      "domain": "context-management-reliability",
+      "objective": "Track provenance, conflicts, dates, and content types",
+      "type": "single",
+      "prompt": "Packet 4, Harbor: A release record combines a Markdown change notice, JSON manifest, test log, and rendered dashboard. What is the strongest reliability packet?",
+      "options": [
+        "Only the dashboard screenshot",
+        "Only a model confidence percentage",
+        "A manifest preserving each content type, version, date, location, extraction method, structured partial errors, conflicts, and full artifact references",
+        "One normalized JSON record that converts every content type to text, embeds the most important excerpts, and omits original artifact locations after validation"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Different formats carry different structural meaning. A provenance-rich manifest allows reviewers to trace claims, detect rendering loss, preserve partial state, and resolve conflicts safely.",
+      "references": [
+        "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation",
+        "certifications/claude/lessons/31-architect-foundations-scenario-capstone"
+      ]
+    }
+  ]
+}
