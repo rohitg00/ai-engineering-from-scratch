@@ -1,0 +1,88 @@
+{
+  "id": "claude-ccar-p",
+  "slug": "ccar-p",
+  "examCode": "CCAR-P",
+  "credential": "Claude Certified Architect - Professional",
+  "shortName": "Architect Professional",
+  "level": "Professional architecture",
+  "accent": "green",
+  "badge": {
+    "imageUrl": "https://images.credly.com/images/7583afbc-4aab-4c7d-8af4-d9af72786ab3/blob",
+    "width": 600,
+    "height": 600
+  },
+  "summary": "Own the full lifecycle of secure, observable, production-grade Claude systems from discovery to iteration.",
+  "audience": "Mid- to senior-level solution architects, AI engineers, technical leads, and senior software engineers responsible for end-to-end production systems and cross-functional decisions.",
+  "recommendedExperience": [
+    "Three or more years in systems architecture or platform engineering",
+    "Six or more months operating Claude or comparable LLM systems in production",
+    "Experience delivering systems from discovery through deployment and operations",
+    "Ability to defend cost, latency, quality, safety, and maintainability tradeoffs"
+  ],
+  "exam": {
+    "items": 63,
+    "timeLimitMinutes": 120,
+    "feeUsd": 175,
+    "passingScaledScore": 720,
+    "scoreScale": "100-1000",
+    "validityMonths": 12,
+    "format": "Multiple-choice and multiple-response",
+    "delivery": "Proctored online or at a test center",
+    "guideVersion": "1.0",
+    "effective": "July 2026",
+    "officialGuideUrl": "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf"
+  },
+  "domains": [
+    {"id": "solution-design-architecture", "name": "Solution Design and Architecture", "weight": 17, "objectives": ["Translate business problems into Claude solutions", "Design input, processing, output, and feedback loops", "Choose workflow, agentic, or augmented-LLM patterns", "Design multi-agent orchestration", "Decompose complex problems", "Align designs to value, cost, performance, and SLAs"]},
+    {"id": "models-prompting-context", "name": "Claude Models, Prompting and Context Engineering", "weight": 13, "objectives": ["Select models from explicit tradeoffs", "Design prompts, templates, and guardrails", "Apply zero-shot, few-shot, and reasoning techniques", "Manage context windows and token use", "Reuse stable prompts with caching, modular prompts, and Skills"]},
+    {"id": "integration", "name": "Integration", "weight": 19, "objectives": ["Reduce capability bloat", "Find authentication and authorization gaps", "Balance accuracy and latency", "Select observability at scale", "Design RAG chunking and indexing", "Match retrieval to data shape and query pattern", "Choose MCP, API, CLI, or agent-to-agent integration", "Use progressive discovery instead of monolithic context where appropriate"]},
+    {"id": "evaluation-testing-optimization", "name": "Evaluation, Testing and Optimization", "weight": 16, "objectives": ["Define accuracy, latency, cost, safety, and security metrics", "Build representative datasets and mixed-method test frameworks", "Run A/B tests and iterative improvements", "Diagnose prompt, hallucination, retrieval, and model failures", "Optimize tokens, latency, and cost-performance", "Monitor with logs, traces, and observability"]},
+    {"id": "governance-safety-risk", "name": "Governance, Safety and Risk Management", "weight": 14, "objectives": ["Layer guardrails and safety controls", "Identify LLM failure modes", "Design human-in-the-loop validation", "Account for GDPR, HIPAA, FedRAMP, and applicable regulation", "Address bias, fairness, and transparency"]},
+    {"id": "stakeholder-lifecycle", "name": "Stakeholder Communication and Lifecycle Management", "weight": 14, "objectives": ["Run structured discovery", "Communicate decisions and tradeoffs", "Manage feedback, expectations, and SLAs", "Document architectures and implementation guidance", "Support discovery, design, handoff, monitoring, and iteration"]},
+    {"id": "developer-productivity-operations", "name": "Developer Productivity and Operational Enablement", "weight": 7, "objectives": ["Configure Claude tools and team environments", "Improve engineering workflows with AI-assisted tooling", "Support debugging and operational incident resolution"]}
+  ],
+  "lessons": [
+    {"path": "certifications/claude/lessons/00-certification-strategy", "domains": ["stakeholder-lifecycle"], "role": "orientation", "required": true},
+    {"path": "certifications/claude/lessons/22-business-discovery-requirements-and-slas", "domains": ["solution-design-architecture", "stakeholder-lifecycle"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/23-end-to-end-architecture-and-value-tradeoffs", "domains": ["solution-design-architecture"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/01-claude-product-and-model-landscape", "domains": ["models-prompting-context", "solution-design-architecture"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/02-model-selection-and-token-economics", "domains": ["models-prompting-context", "evaluation-testing-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/03-prompting-and-task-decomposition", "domains": ["models-prompting-context"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/04-context-knowledge-memory-and-caching", "domains": ["models-prompting-context", "integration"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/05-output-evaluation-and-validation", "domains": ["evaluation-testing-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/06-governance-safety-and-responsible-use", "domains": ["governance-safety-risk"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/08-messages-api-and-application-lifecycle", "domains": ["integration", "models-prompting-context"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/09-structured-output-and-defensive-parsing", "domains": ["models-prompting-context", "evaluation-testing-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/10-tool-use-and-agentic-loops", "domains": ["solution-design-architecture", "integration"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/11-mcp-server-design-and-integration", "domains": ["integration"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/12-claude-agent-sdk-and-hooks", "domains": ["solution-design-architecture", "developer-productivity-operations"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/13-application-security-and-secrets", "domains": ["governance-safety-risk", "integration"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/14-evals-testing-debugging-and-observability", "domains": ["evaluation-testing-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/15-claude-code-for-development-teams", "domains": ["developer-productivity-operations"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation", "domains": ["solution-design-architecture"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery", "domains": ["integration"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/24-rag-retrieval-and-data-pipelines", "domains": ["integration", "evaluation-testing-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/25-integration-protocols-identity-and-least-privilege", "domains": ["integration", "governance-safety-risk"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/26-production-observability-latency-and-cost", "domains": ["integration", "evaluation-testing-optimization", "developer-productivity-operations"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/27-enterprise-governance-compliance-and-hitl", "domains": ["governance-safety-risk", "stakeholder-lifecycle"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/28-stakeholder-communication-adrs-and-lifecycle", "domains": ["stakeholder-lifecycle"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/32-architect-professional-system-capstone", "domains": ["solution-design-architecture", "models-prompting-context", "integration", "evaluation-testing-optimization", "governance-safety-risk", "stakeholder-lifecycle", "developer-productivity-operations"], "role": "capstone", "required": true}
+  ],
+  "deepDives": [
+    {"path": "phases/11-llm-engineering/13-production-app", "label": "Production LLM Application", "reason": "Connect model calls to a service boundary"},
+    {"path": "phases/11-llm-engineering/07-advanced-rag", "label": "Advanced RAG", "reason": "Go deeper on retrieval and reranking"},
+    {"path": "phases/17-infrastructure-and-production/13-llm-observability", "label": "LLM Observability", "reason": "Instrument production trajectories"},
+    {"path": "phases/17-infrastructure-and-production/21-ab-testing-llm-features", "label": "A/B Testing LLM Features", "reason": "Compare variants with live evidence"},
+    {"path": "phases/17-infrastructure-and-production/23-sre-for-ai", "label": "SRE for AI", "reason": "Own incidents, SLOs, and recovery"},
+    {"path": "phases/17-infrastructure-and-production/26-compliance-frameworks", "label": "Compliance Frameworks", "reason": "Map obligations to system controls"},
+    {"path": "phases/17-infrastructure-and-production/27-finops-llms", "label": "FinOps for LLMs", "reason": "Manage cost per useful outcome"}
+  ],
+  "assessments": [
+    {"id": "claude-ccar-p-diagnostic", "path": "certifications/claude/assessments/ccar-p/diagnostic.json", "kind": "diagnostic", "title": "Architect Professional Diagnostic", "timeLimitMinutes": 30},
+    {"id": "claude-ccar-p-mock-01", "path": "certifications/claude/assessments/ccar-p/mock-01.json", "kind": "mock", "title": "Architect Professional Full Mock", "timeLimitMinutes": 120}
+  ],
+  "studyPlans": [
+    {"id": "ccar-p-35-day", "label": "35-day professional sprint", "durationDays": 35, "hoursPerWeek": 14, "milestones": ["Days 1-5: discovery, requirements, product selection, and value tradeoffs", "Days 6-10: models, prompts, context, validation, and governance foundations", "Days 11-15: Messages API, structured output, tool loops, and MCP", "Days 16-20: Agent SDK, security, evaluation, Claude Code, and orchestration", "Days 21-25: tool contracts, RAG, identity, observability, and cost", "Days 26-30: enterprise governance, stakeholder lifecycle, and operations", "Days 31-35: capstone defense, full mock, and remediation"]},
+    {"id": "ccar-p-63-day", "label": "63-day production plan", "durationDays": 63, "hoursPerWeek": 8, "milestones": ["Week 1: discovery, value, and product landscape", "Week 2: model, prompt, context, and validation foundations", "Week 3: API lifecycle and structured output", "Week 4: tool loops, MCP, Agent SDK, and security", "Week 5: evaluation, Claude Code, orchestration, and tool contracts", "Week 6: RAG, identity, and integration", "Week 7: observability, latency, cost, and governance", "Week 8: stakeholder lifecycle and operational ownership", "Week 9: capstone, full mock, and remediation"]}
+  ]
+}
