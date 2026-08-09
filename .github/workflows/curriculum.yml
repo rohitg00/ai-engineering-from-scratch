@@ -10,6 +10,8 @@ on:
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
       - "scripts/audit_certifications.py"
+      - "scripts/audit_ru_translations.py"
+      - "scripts/tests/test_audit_ru_translations.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
@@ -35,6 +37,8 @@ on:
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
       - "scripts/audit_certifications.py"
+      - "scripts/audit_ru_translations.py"
+      - "scripts/tests/test_audit_ru_translations.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
@@ -70,6 +74,15 @@ jobs:
         run: python3 scripts/audit_lessons.py
       - name: run scripts/audit_certifications.py
         run: python3 scripts/audit_certifications.py
+      - name: test the Russian translation auditor
+        run: python3 -m unittest scripts.tests.test_audit_ru_translations -v
+      - name: audit Russian translations when this checkout contains them
+        run: |
+          if [ -f i18n/ru/.quality/manifest.json ]; then
+            python3 scripts/audit_ru_translations.py
+          else
+            echo "Russian translation manifest is on the translations branch; skipping content audit"
+          fi
       - name: certification remediation references are complete
         run: python3 scripts/backfill_certification_references.py --check
       - name: run certification lab tests
