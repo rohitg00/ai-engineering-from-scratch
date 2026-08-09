@@ -1,0 +1,14 @@
+{
+  "status": "ready_for_architecture_defense",
+  "blocking_count": 0,
+  "findings": [],
+  "outcome": "Reduce policy-correct first-response time from 11 minutes to under 3 minutes",
+  "hard_controls": ["authorization", "policy freshness"],
+  "evaluation_gates": {
+    "policy_support": 0.985,
+    "p95_latency_ms": 7200,
+    "unsafe_action_count": 0
+  },
+  "operating_owner": "support-platform",
+  "rollback": "Restore the known-safe route, prompt, and policy index."
+}
