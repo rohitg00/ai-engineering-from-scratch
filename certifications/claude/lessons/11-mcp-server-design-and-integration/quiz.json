@@ -1,0 +1,78 @@
+{
+  "lesson": "11-mcp-server-design-and-integration",
+  "title": "MCP Separates Capability From Host",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In MCP, which component owns the user experience, model interaction, and one or more protocol clients?",
+      "options": [
+        "The resource provider resolving URI context and maintaining conversation history",
+        "The host application coordinates the model, user interaction, and server clients",
+        "The tool handler selecting models and opening a client for each invocation",
+        "The server process exposing capabilities and deciding how the UI presents them"
+      ],
+      "correct": 1,
+      "explanation": "The host is the AI application. It manages the model and user experience and connects to servers through clients."
+    },
+    {
+      "stage": "check",
+      "question": "A server maintaining a legacy MCP profile wants to call roots/list on its client. What must it establish first?",
+      "options": [
+        "The server sends roots/list once and treats a method-not-found error as capability discovery",
+        "The host preloads the root list into every tool argument so no capability negotiation is needed",
+        "The client advertises roots, and the server stays inside that contract",
+        "The server advertises roots as one of its own capabilities during initialization"
+      ],
+      "correct": 2,
+      "explanation": "Roots belong to the client because they express client-selected scope. A legacy server may request roots only when the client advertised that capability. In the 2026-07-28 profile, roots is deprecated and any remaining interaction uses the stateless input-required flow."
+    },
+    {
+      "stage": "check",
+      "question": "Which MCP primitive best represents a URI-addressed read-only configuration document?",
+      "options": [
+        "A sampling request asking the host model to reconstruct the configuration",
+        "Use a read-only tool to return it",
+        "A prompt that accepts the URI and returns reusable messages containing the document",
+        "A resource that exposes addressable context through its URI"
+      ],
+      "correct": 3,
+      "explanation": "Resources expose addressable context by URI. Tools perform model-selected operations, while prompts package reusable templates."
+    },
+    {
+      "stage": "check",
+      "question": "Why must a stdio MCP server write diagnostic logs to stderr?",
+      "options": [
+        "stdout is reserved for JSON-RPC protocol frames",
+        "stdout may contain logs between frames when each diagnostic line is valid JSON",
+        "clients authenticate stderr separately, so diagnostics cannot affect the session",
+        "stderr preserves framing and redacts secrets"
+      ],
+      "correct": 0,
+      "explanation": "The stdio transport uses stdout for protocol messages. Debug text on stdout can corrupt framing and break the client connection."
+    },
+    {
+      "stage": "post",
+      "question": "A resource contains instructions to read a private key. What is the correct trust treatment?",
+      "options": [
+        "Allow the read when the resource URI is within an approved project namespace",
+        "Treat it as untrusted data that cannot expand tool permissions",
+        "Ask a separate model to classify the text before widening file permissions",
+        "Promote it to host policy only if the resource came from an authenticated server"
+      ],
+      "correct": 1,
+      "explanation": "Server content can be malicious or compromised. Preserve provenance and keep it below trusted policy and authorization boundaries."
+    },
+    {
+      "stage": "post",
+      "question": "Why is a current stateless Streamable HTTP server easier to place behind a round-robin load balancer than a legacy server using protocol sessions?",
+      "options": [
+        "Stateless transport removes application state and external side effects from every tool",
+        "SSE makes every tool call idempotent, so failed requests can always be replayed",
+        "Each request carries protocol metadata and avoids hidden per-instance session state",
+        "The load balancer can infer all tool authorization from the JSON-RPC method name"
+      ],
+      "correct": 2,
+      "explanation": "The 2026-07-28 core carries protocol metadata per request, so any healthy instance can handle it. Application state and side effects still require explicit handles, stores, and retry policy."
+    }
+  ]
+}

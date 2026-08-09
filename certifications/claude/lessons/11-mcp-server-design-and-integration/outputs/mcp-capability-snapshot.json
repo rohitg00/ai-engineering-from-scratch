@@ -1,0 +1,112 @@
+{
+  "initialize": {
+    "protocolVersion": "2025-06-18",
+    "serverInfo": {
+      "name": "study-server",
+      "version": "1.0.0"
+    },
+    "capabilities": {
+      "tools": {},
+      "resources": {},
+      "prompts": {},
+      "logging": {}
+    }
+  },
+  "tools": {
+    "tools": [
+      {
+        "name": "add",
+        "description": "Add two integers. Use only for arithmetic addition.",
+        "inputSchema": {
+          "type": "object",
+          "required": [
+            "a",
+            "b"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "integer"
+            },
+            "b": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "answer": {
+    "content": [
+      {
+        "type": "text",
+        "text": "42"
+      }
+    ],
+    "isError": false
+  },
+  "legacyCallbacks": {
+    "roots": {
+      "roots": [
+        {
+          "uri": "file:///workspace",
+          "name": "Workspace"
+        }
+      ]
+    },
+    "sampling": {
+      "role": "assistant",
+      "content": {
+        "type": "text",
+        "text": "approved training sample"
+      },
+      "model": "study-model",
+      "stopReason": "endTurn"
+    }
+  },
+  "notifications": [
+    {
+      "jsonrpc": "2.0",
+      "method": "notifications/progress",
+      "params": {
+        "progressToken": "addition-1",
+        "progress": 0,
+        "total": 1,
+        "message": "starting"
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "method": "notifications/progress",
+      "params": {
+        "progressToken": "addition-1",
+        "progress": 1,
+        "total": 1,
+        "message": "complete"
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "method": "notifications/message",
+      "params": {
+        "level": "info",
+        "logger": "study-server",
+        "data": "tool completed"
+      }
+    }
+  ],
+  "deployment": {
+    "legacyStateful": {
+      "protocolVersion": "2025-06-18",
+      "protocolSession": true,
+      "routing": "sticky-or-shared-session-store",
+      "applicationState": "session-bound"
+    },
+    "currentStateless": {
+      "protocolVersion": "2026-07-28",
+      "protocolSession": false,
+      "routing": "round-robin",
+      "applicationState": "explicit-handle-or-shared-store"
+    }
+  }
+}
