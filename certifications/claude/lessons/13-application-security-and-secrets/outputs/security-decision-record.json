@@ -1,0 +1,8 @@
+{
+  "decisions": [
+    {"allowed": true, "reason": "read is scoped to an allowed root", "controls": ["read_only", "audit_log"]},
+    {"allowed": false, "reason": "secret-bearing path is denied", "controls": ["secret_isolation"]},
+    {"allowed": false, "reason": "destructive command is denied", "controls": ["command_denylist", "fail_closed"]},
+    {"allowed": true, "reason": "read-only request to allowed host", "controls": ["network_allowlist", "response_size_limit"]}
+  ]
+}
