@@ -1,0 +1,77 @@
+{
+  "verified_on": "2026-08-09",
+  "checkpoint_after": 5,
+  "events": [
+    {
+      "id": "evt_01",
+      "type": "session.status_running"
+    },
+    {
+      "type": "event_delta",
+      "text": "Checking"
+    },
+    {
+      "id": "evt_02",
+      "type": "agent.message",
+      "content": [
+        {"type": "text", "text": "I need the current account status."}
+      ]
+    },
+    {
+      "id": "evt_03",
+      "type": "agent.custom_tool_use",
+      "name": "lookup_account",
+      "input": {"account_id": "A-17"}
+    },
+    {
+      "id": "evt_04",
+      "type": "session.status_idle",
+      "stop_reason": {
+        "type": "requires_action",
+        "event_ids": ["evt_03"]
+      }
+    },
+    {
+      "id": "evt_05",
+      "type": "user.custom_tool_result",
+      "custom_tool_use_id": "evt_03",
+      "content": [
+        {"type": "text", "text": "Account A-17 is active."}
+      ]
+    },
+    {
+      "id": "evt_06",
+      "type": "session.status_running"
+    },
+    {
+      "id": "evt_07",
+      "type": "agent.message",
+      "content": [
+        {"type": "text", "text": "Account A-17 is active."}
+      ]
+    },
+    {
+      "id": "evt_08",
+      "type": "session.status_idle",
+      "stop_reason": {"type": "end_turn"}
+    }
+  ],
+  "expected_checkpoint": {
+    "status": "idle",
+    "stop_reason": "requires_action",
+    "messages": ["I need the current account status."],
+    "pending_action_ids": ["evt_03"],
+    "last_event_id": "evt_04",
+    "preview_text": "Checking",
+    "complete": false
+  },
+  "expected_complete": {
+    "status": "idle",
+    "stop_reason": "end_turn",
+    "messages": ["I need the current account status.", "Account A-17 is active."],
+    "pending_action_ids": [],
+    "last_event_id": "evt_08",
+    "preview_text": "Checking",
+    "complete": true
+  }
+}
