@@ -1,0 +1,78 @@
+{
+  "lesson": "03-prompting-and-task-decomposition",
+  "title": "Turn a Request Into a Testable Contract",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What should you define before optimizing the wording of a complex prompt?",
+      "options": [
+        "Observable success criteria tied to representative inputs and failure conditions",
+        "The desired output format and maximum length without defining correctness",
+        "A detailed expert persona intended to improve confidence and domain vocabulary",
+        "The model family and maximum context budget available to the production workflow"
+      ],
+      "correct": 0,
+      "explanation": "Without observable criteria, prompt changes cannot be evaluated and fluent failure can look successful."
+    },
+    {
+      "stage": "check",
+      "question": "A report has accurate extraction but unsupported recommendations. Where is the most useful decomposition boundary?",
+      "options": [
+        "Combine extraction and analysis after retrieval",
+        "Between extraction and analysis, with an evidence gate",
+        "Between every paragraph so each section receives its own independent model call",
+        "Between analysis and formatting, after recommendations have already been accepted"
+      ],
+      "correct": 1,
+      "explanation": "Verifying extracted evidence before interpretation localizes the failure and prevents unsupported analysis from flowing downstream."
+    },
+    {
+      "stage": "check",
+      "question": "What makes a few-shot example most useful for a classification task?",
+      "options": [
+        "It shows a typical positive example with its label",
+        "It matches the average input length and uses the model's preferred response style",
+        "It shows an important boundary or ambiguous case with a correct label",
+        "It repeats a previously correct example using different wording but the same easy distinction"
+      ],
+      "correct": 2,
+      "explanation": "Boundary examples teach the distinction the model must apply, while repetitive easy examples add little signal."
+    },
+    {
+      "stage": "check",
+      "question": "Two supplied sources conflict. What should the prompt specify?",
+      "options": [
+        "A process that combines both claims whenever neither source can be discarded",
+        "A citation rule that reports only the selected source and suppresses the disagreement",
+        "A recency-first rule that always selects the most recently modified document",
+        "An authority order and conflict-reporting behavior"
+      ],
+      "correct": 3,
+      "explanation": "A source hierarchy separates authority from recency and tells Claude how to expose unresolved conflicts."
+    },
+    {
+      "stage": "post",
+      "question": "Repeated prompt edits do not fix a missing policy exception. What is the best next action?",
+      "options": [
+        "Diagnose whether the authoritative source is absent or buried",
+        "Add an explicit accuracy reminder and require a confidence score for every policy claim",
+        "Reduce the number of constraints so the model can infer exceptions more freely",
+        "Escalate to a larger model before inspecting the supplied evidence and context placement"
+      ],
+      "correct": 0,
+      "explanation": "The failure may be in the source or context layer. Wording changes cannot reliably recover unavailable evidence."
+    },
+    {
+      "stage": "post",
+      "question": "Which prompt instruction creates the safest uncertainty behavior?",
+      "options": [
+        "Return an empty response whenever any requested field lacks direct supporting evidence",
+        "State what is not established, name the missing source, and avoid unsupported inference",
+        "Provide the most likely complete answer and label any low-confidence values for later review",
+        "Estimate missing values from adjacent evidence but separate those estimates from sourced facts"
+      ],
+      "correct": 1,
+      "explanation": "Designed abstention keeps evidence gaps visible and prevents fluency from converting uncertainty into fact."
+    }
+  ]
+}
