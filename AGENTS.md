@@ -186,6 +186,8 @@ stored quiz or assessment, and preserve progress in
 `CLAUDE-CERTIFICATION.md`. Do not modify checked-in reference artifacts as
 learner work. The certification curriculum is delivered through GitHub and the
 website and is intentionally outside the book-generation pipeline.
+It remains English-only and is intentionally outside the machine-translation
+pipeline as well.
 
 ### code/
 

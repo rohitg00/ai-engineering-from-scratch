@@ -1184,8 +1184,25 @@ body.js-anim .toc-row.in-view {
 
   .footer-inner {
     flex-direction: column;
+    align-items: stretch;
     text-align: center;
-    gap: 8px;
+    gap: 16px;
+  }
+
+  .footer-inner p,
+  .footer-links {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .footer-inner p {
+    overflow-wrap: anywhere;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 20px;
   }
 }
 

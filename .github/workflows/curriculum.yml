@@ -17,6 +17,7 @@ on:
       - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
+      - "scripts/test_translate_workflow.py"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
@@ -24,6 +25,7 @@ on:
       - "site/**"
       - "vercel.json"
       - ".github/workflows/curriculum.yml"
+      - ".github/workflows/translate.yml"
   pull_request:
     branches: [main]
     paths:
@@ -40,6 +42,7 @@ on:
       - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
+      - "scripts/test_translate_workflow.py"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
@@ -47,6 +50,7 @@ on:
       - "site/**"
       - "vercel.json"
       - ".github/workflows/curriculum.yml"
+      - ".github/workflows/translate.yml"
 
 permissions:
   contents: read
@@ -80,6 +84,8 @@ jobs:
         run: python3 scripts/debias_certification_questions.py --check
       - name: README translations are in sync with English
         run: python3 scripts/build_readme_i18n.py --check
+      - name: translation workflow publisher retries safely
+        run: python3 scripts/test_translate_workflow.py
       - name: learning skills mirror is in sync
         # skills/ is the canonical, agent-neutral home (what `npx skills add`
         # installs for every agent); .claude/skills/ is a mirror so cloning the

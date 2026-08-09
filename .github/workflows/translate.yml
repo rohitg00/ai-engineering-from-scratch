@@ -22,10 +22,17 @@ on:
     branches: [main]
     paths:
       - "phases/**/docs/en.md"
+      - "languages.json"
+      # Publisher fixes must be able to bootstrap a missing translations branch
+      # even when no English lesson changed in the same merge.
+      - ".github/workflows/translate.yml"
   workflow_dispatch:
     inputs:
       langs:
         description: "space-separated language codes; blank = the ci:true set in languages.json"
+        default: ""
+      phase:
+        description: "one phase directory (for example 01-math-foundations); blank = all phases"
         default: ""
 
 concurrency:
@@ -47,6 +54,7 @@ jobs:
       - id: set
         env:
           REQUESTED: ${{ github.event.inputs.langs }}
+          REQUESTED_PHASE: ${{ github.event.inputs.phase }}
         run: |
           # every emitted code must exist in the registry; requested codes are
           # intersected with it, so untrusted input can never reach matrix.lang
@@ -59,9 +67,21 @@ jobs:
             JSON=$(jq -c '[.languages[] | select(.ci == true) | .code]' languages.json)
           fi
           echo "langs=$JSON" >> "$GITHUB_OUTPUT"
-          # one shard per phase dir (NN-name); the README is handled off-matrix
-          PHASES=$(find phases -mindepth 1 -maxdepth 1 -type d -printf '%f\n' \
-            | grep -E '^[0-9]{2}-[a-z0-9-]+$' | sort | jq -R . | jq -cs .)
+          # Manual runs can select one phase for a cheap end-to-end smoke test.
+          # Push runs and blank manual inputs retain the full phase matrix.
+          if [ -n "$REQUESTED_PHASE" ]; then
+            PHASE_LIST=$(find phases -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
+              | grep -E '^[0-9]{2}-[a-z0-9-]+$' | sort)
+            if ! printf '%s\n' "$PHASE_LIST" | grep -Fqx -- "$REQUESTED_PHASE"; then
+              echo "unknown phase: $REQUESTED_PHASE" >&2
+              exit 1
+            fi
+            PHASES=$(jq -cn --arg phase "$REQUESTED_PHASE" '[$phase]')
+          else
+            # one shard per phase dir (NN-name); the README is handled off-matrix
+            PHASES=$(find phases -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
+              | grep -E '^[0-9]{2}-[a-z0-9-]+$' | sort | jq -R . | jq -cs .)
+          fi
           echo "phases=$PHASES" >> "$GITHUB_OUTPUT"
 
   translate:
@@ -132,23 +152,49 @@ jobs:
         run: |
           # checkout used persist-credentials:false, so authenticate the push
           # explicitly with the job token rather than a stored credential
-          git remote set-url origin \
-            "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          if [ -n "${TRANSLATION_PUSH_URL:-}" ]; then
+            # Local regression tests use a bare repository instead of GitHub.
+            git remote set-url origin "$TRANSLATION_PUSH_URL"
+          else
+            git remote set-url origin \
+              "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           SLICE="i18n/$LANG_CODE/phases/$PHASE"
           CACHE="i18n/$LANG_CODE/.cache/$PHASE.json"
+          PUBLISH_DIR="$RUNNER_TEMP/translation-publish"
+
+          cleanup_publish_worktree() {
+            # Removing the directory alone leaves Git's worktree registration
+            # behind, so the next retry cannot recreate it. Remove both.
+            git worktree remove --force "$PUBLISH_DIR" 2>/dev/null || true
+            rm -rf "$PUBLISH_DIR"
+            git worktree prune
+          }
+          trap cleanup_publish_worktree EXIT
+
           # Sync only this (lang, phase) slice + its cache. Other phases in the
           # same language live on the branch untouched, so parallel shards merge
-          # without clobbering each other; retries rebuild from the latest branch.
+          # without clobbering each other. A detached worktree lets each retry
+          # rebuild from the latest remote branch without a stale local branch or
+          # a removed-but-still-registered worktree blocking the next attempt.
           for attempt in 1 2 3 4 5 6 7 8; do
-            rm -rf ../pub && git worktree add --force -B translations ../pub origin/translations 2>/dev/null \
-              || git worktree add --force -b translations ../pub
-            rm -rf "../pub/$SLICE"
-            mkdir -p "../pub/$(dirname "$SLICE")" "../pub/i18n/$LANG_CODE/.cache"
-            [ -d "$SLICE" ] && cp -r "$SLICE" "../pub/$SLICE"
-            [ -f "$CACHE" ] && cp "$CACHE" "../pub/$CACHE"
-            ( cd ../pub
+            cleanup_publish_worktree
+            if git fetch origin "+refs/heads/translations:refs/remotes/origin/translations"; then
+              BASE=origin/translations
+            else
+              # The first successful shard creates the translations branch.
+              # A concurrent creator makes this push lose normally; the next
+              # attempt fetches that winner and reapplies only this shard.
+              BASE=HEAD
+            fi
+            git worktree add --detach "$PUBLISH_DIR" "$BASE"
+            rm -rf "$PUBLISH_DIR/$SLICE"
+            mkdir -p "$PUBLISH_DIR/$(dirname "$SLICE")" "$PUBLISH_DIR/i18n/$LANG_CODE/.cache"
+            [ -d "$SLICE" ] && cp -r "$SLICE" "$PUBLISH_DIR/$SLICE"
+            [ -f "$CACHE" ] && cp "$CACHE" "$PUBLISH_DIR/$CACHE"
+            ( cd "$PUBLISH_DIR" || exit 1
               # -f: the translations branch is created from main's checkout
               # (when it doesn't exist yet) and so carries main's .gitignore,
               # which deliberately excludes i18n/*/phases/ and i18n/*/.cache/
@@ -156,13 +202,32 @@ jobs:
               # here, so every publish reports "no changes" and nothing is
               # ever pushed. Force past it: this branch exists specifically
               # to hold these files.
-              git add -f "i18n/$LANG_CODE"
+              if ! git add -f "i18n/$LANG_CODE"; then
+                echo "could not stage translation slice" >&2
+                exit 1
+              fi
               # nothing staged is the only success-without-push case; a real
               # commit or push failure must fall through to a retry, not be
               # swallowed as "no changes"
-              if git diff --cached --quiet; then echo "no changes"; exit 0; fi
-              git commit -m "chore(i18n): $LANG_CODE / $PHASE (NLLB-200)"
-              git push origin translations ) && exit 0
-            echo "push race, retrying ($attempt)"; git fetch origin "+refs/heads/translations:refs/remotes/origin/translations" || true; sleep $((RANDOM % 12 + 3))
+              if git diff --cached --quiet; then
+                echo "no changes"
+                exit 0
+              else
+                DIFF_STATUS=$?
+                if [ "$DIFF_STATUS" -ne 1 ]; then
+                  echo "could not inspect staged translation slice" >&2
+                  exit 1
+                fi
+              fi
+              if ! git commit -m "chore(i18n): $LANG_CODE / $PHASE (NLLB-200)"; then
+                echo "could not commit translation slice" >&2
+                exit 1
+              fi
+              if ! git push origin HEAD:refs/heads/translations; then
+                echo "could not push translation slice" >&2
+                exit 1
+              fi ) && exit 0
+            echo "push race, retrying ($attempt)"
+            sleep "${TRANSLATION_PUBLISH_RETRY_DELAY:-$((RANDOM % 12 + 3))}"
           done
           echo "could not publish after retries" >&2; exit 1
