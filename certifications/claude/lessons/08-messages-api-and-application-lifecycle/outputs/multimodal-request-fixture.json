@@ -1,0 +1,75 @@
+{
+  "verified_on": "2026-08-09",
+  "files_api_beta_header": "files-api-2025-04-14",
+  "owned_file_ids": [
+    "file_offline_policy_fixture"
+  ],
+  "access_decisions": [
+    {
+      "workload": "typed interactive request",
+      "client": "sdk",
+      "delivery": "synchronous"
+    },
+    {
+      "workload": "progressive user interface",
+      "client": "sdk",
+      "delivery": "streaming"
+    },
+    {
+      "workload": "overnight independent evaluation",
+      "client": "sdk",
+      "delivery": "message-batch"
+    },
+    {
+      "workload": "unsupported embedded runtime with custom transport",
+      "client": "raw-rest",
+      "delivery": "synchronous"
+    }
+  ],
+  "request": {
+    "model": "<current-model-id>",
+    "max_tokens": 400,
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Compare the synthetic chart with the approved policy document."
+          },
+          {
+            "type": "image",
+            "source": {
+              "type": "base64",
+              "media_type": "image/png",
+              "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+            }
+          },
+          {
+            "type": "document",
+            "source": {
+              "type": "file",
+              "file_id": "file_offline_policy_fixture"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "asset_boundary_ledger": [
+    {
+      "content_type": "image",
+      "source_type": "base64",
+      "reference_sha256": "2d38ae5f25cbddd617f6e3bc0f50c77e923b9ec27a63927473e1b9fe540e302f",
+      "boundary": "request-body",
+      "retention_action": "redact-request-content-from-logs"
+    },
+    {
+      "content_type": "document",
+      "source_type": "file",
+      "reference_sha256": "4b301ca52bb2bc90db3a67b59cdbaf310826d2cd552df452bd86279dd9801d10",
+      "boundary": "files-workspace",
+      "retention_action": "delete-when-workspace-retention-ends"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "08-messages-api-and-application-lifecycle",
+  "title": "The Messages API Is a State Machine",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Who owns conversation history when an application makes successive Messages API calls?",
+      "options": [
+        "The provider, which automatically carries prior Messages requests into the next call",
+        "The prompt cache, which restores omitted history when prefixes match",
+        "The latest tool, which returns both its result and the complete conversation state",
+        "The client application, which selects, stores, and resends the required messages"
+      ],
+      "correct": 3,
+      "explanation": "The Messages API is stateless. The client chooses, stores, and resends the message history required for each transition."
+    },
+    {
+      "stage": "check",
+      "question": "What must appear before a user-role tool_result in the next request?",
+      "options": [
+        "The preserved assistant message containing the matching tool_use block",
+        "A user message containing only the tool_result ID and output, without prior content blocks",
+        "The previous assistant text blocks, with the tool_use block removed after execution",
+        "A new assistant summary of the requested tool call"
+      ],
+      "correct": 0,
+      "explanation": "The assistant tool_use block establishes the request. The following tool_result must reference its ID and preserve protocol ordering."
+    },
+    {
+      "stage": "check",
+      "question": "A response looks complete but has stop_reason max_tokens. What is the safest interpretation?",
+      "options": [
+        "The response is complete if its final content block parses and ends at a sentence boundary",
+        "The output may be incomplete and needs explicit recovery or escalation",
+        "The client should resend only the final paragraph and ask the model to finish from there",
+        "Treat punctuation as evidence the response ended intentionally"
+      ],
+      "correct": 1,
+      "explanation": "Control metadata overrides visual impressions. max_tokens means generation reached the configured limit, so the output cannot be assumed complete."
+    },
+    {
+      "stage": "check",
+      "question": "A supported SDK is available for 50,000 independent classifications that may finish later. Which access pattern fits best?",
+      "options": [
+        "Raw REST plus a tool loop that recursively schedules each record",
+        "One synchronous SDK request containing the full collection in one conversation",
+        "SDK Message Batches with stable custom IDs and asynchronous reconciliation",
+        "SDK streaming so every classification is committed from its first text delta"
+      ],
+      "correct": 2,
+      "explanation": "The supported SDK reduces transport plumbing, while Message Batches match independent work whose results can arrive later. Client choice and completion pattern are separate decisions."
+    },
+    {
+      "stage": "post",
+      "question": "Why should a stream consumer wait for a terminal event before committing a structured result?",
+      "options": [
+        "A content-block stop proves the entire message and transport completed successfully",
+        "A tool-free stream can be committed after its first complete JSON object",
+        "A valid prefix can be committed if missing optional fields have schema defaults",
+        "Partial deltas may be incomplete and the connection may still fail"
+      ],
+      "correct": 3,
+      "explanation": "A partial stream is provisional. The client must know that the message completed before parsing a final contract or triggering downstream state changes."
+    },
+    {
+      "stage": "post",
+      "question": "A user supplies a Files API file_id that exists in the application's workspace. What must happen before including it in a Message?",
+      "options": [
+        "Bind it to the authenticated tenant and an application-owned asset record with retention policy",
+        "Retrieve it because existence in the workspace proves the current tenant owns it",
+        "Copy it into the system prompt so Claude can decide whether the reference is authorized",
+        "Convert it to inline base64 because inline content has no data-boundary requirements"
+      ],
+      "correct": 0,
+      "explanation": "Workspace scope is broader than tenant authorization. The application must allowlist the asset, bind ownership and sensitivity, and enforce deletion independently of the opaque ID."
+    }
+  ]
+}
