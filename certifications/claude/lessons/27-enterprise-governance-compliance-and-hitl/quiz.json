@@ -1,0 +1,78 @@
+{
+  "lesson": "27-enterprise-governance-compliance-and-hitl",
+  "title": "Enterprise Governance, Compliance, and Human Review",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team says a sensitive-data workflow is compliant because every output receives human review. What is the main problem with that claim?",
+      "options": [
+        "The only missing evidence is a benchmark proving reviewers outperform the model on average cases",
+        "The review stage should be replaced by a second model because automated consistency is easier to audit than reviewer judgment",
+        "Compliance follows from an enterprise plan and encrypted transport, so the team only needs to document those product settings",
+        "It omits the data flow, feature configuration, reviewer design, control evidence, and authorized compliance decision"
+      ],
+      "correct": 3,
+      "explanation": "Review is one possible control. Governance requires the exact data boundary, obligations, technical controls, owners, tests, residual risk, and decisions by qualified authorities."
+    },
+    {
+      "stage": "check",
+      "question": "Which action follows data minimization?",
+      "options": [
+        "Remove identity fields that the task does not require before sending data",
+        "Pseudonymize identifiers after the provider response while leaving the original request payload unchanged",
+        "Log every input field, encrypted, for future incident reconstruction",
+        "Send every available field but instruct the model to ignore attributes unrelated to the current task"
+      ],
+      "correct": 0,
+      "explanation": "Minimization prevents unnecessary data from entering the system. Encryption and access controls then protect the data that remains necessary."
+    },
+    {
+      "stage": "check",
+      "question": "What makes human review a real control?",
+      "options": [
+        "Two reviewers approve every output, regardless of risk, evidence quality, queue capacity, authority, or reversibility",
+        "A defined trigger, qualified reviewer, evidence packet, authority, service level, fallback, and audit record",
+        "Use model confidence alone to route low-scoring outputs to an available reviewer",
+        "Every output enters a general review queue, where any available reviewer chooses what evidence and escalation are needed"
+      ],
+      "correct": 1,
+      "explanation": "Review reduces risk only when the person can detect and act on the failure within an operationally viable process. The design must specify each boundary."
+    },
+    {
+      "stage": "check",
+      "question": "Why should an architect verify retention for each enabled feature?",
+      "options": [
+        "Feature retention determines model accuracy and context capacity even when the deployed data path remains unchanged",
+        "Prompt wording selects the provider retention tier, and each feature accepts a different retention instruction",
+        "Files, batch, hosted sessions, tools, and standard requests can cross different storage and eligibility boundaries",
+        "All hosted features inherit one retention policy, so the team must verify that shared policy only once for the account"
+      ],
+      "correct": 2,
+      "explanation": "The concrete data flow depends on the features and agreement in use. Governance must evaluate the deployed combination against current official documentation."
+    },
+    {
+      "stage": "post",
+      "question": "A high-impact workflow has an aggregate quality gain but a large regression for one affected group. What is the strongest response?",
+      "options": [
+        "Replace the group slice with a larger overall sample and apply the same aggregate threshold to every future release",
+        "Route the affected group to a larger model while keeping the rollout open, since model capacity is the most likely cause",
+        "Deploy the aggregate improvement, monitor the affected group in production, and wait for a larger sample before deciding on a separate control later",
+        "Investigate the slice, assess harm and uncertainty, involve the proper owner, and block or constrain rollout until the risk decision is made"
+      ],
+      "correct": 3,
+      "explanation": "Aggregate performance cannot average away a material group harm. The team needs contextual fairness analysis, evidence, authority, and a controlled deployment decision."
+    },
+    {
+      "stage": "post",
+      "question": "Which event should trigger governance reassessment?",
+      "options": [
+        "A material change to use case, model, data, tool authority, scale, policy, or observed risk",
+        "Any documentation-format change, because every editorial revision invalidates the architecture's approval boundary",
+        "Wait for the annual governance review unless a highest-severity production incident occurs",
+        "Only a change to the base model, because prompts, data, tools, scale, and policy do not alter approved risk"
+      ],
+      "correct": 0,
+      "explanation": "Approval applies to a specific architecture and risk profile. Material changes can alter affected people, data boundaries, controls, and residual risk, so the decision must be revisited."
+    }
+  ]
+}
