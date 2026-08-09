@@ -1,0 +1,78 @@
+{
+  "lesson": "21-long-context-reliability-provenance-and-escalation",
+  "title": "Make Large Context Observable",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A critical policy fits inside a very long prompt but is repeatedly missed. What is the strongest first redesign?",
+      "options": [
+        "Place the complete policy before the task, retain its original hierarchy, and rely on the context window to keep every rule available",
+        "Summarize the policy into a compact checklist, discard source metadata, and place that checklist immediately before the final decision",
+        "Split the policy into fixed overlapping chunks, retrieve the top-ranked chunks, and omit repeated constraints to reduce prompt redundancy",
+        "Place the task and hard constraints clearly, retrieve the relevant policy slice with metadata, and repeat only critical invariants near the decision"
+      ],
+      "correct": 3,
+      "explanation": "Capacity does not guarantee reliable use. Clear placement and focused retrieval improve salience while preserving source identity."
+    },
+    {
+      "stage": "check",
+      "question": "Which tool-result summary preserves the most useful recovery state?",
+      "options": [
+        "Partial: 18 of 24 files reviewed, two finding IDs, six omitted files, retryable timeout category, trace ID, and full artifact reference",
+        "Partial: 18 of 24 files reviewed, six files omitted after a timeout, and the entire review should be restarted from the beginning",
+        "Complete: findings from 18 reviewed files returned, six files skipped after timeout, and a summary attached without trace or artifact references",
+        "Failed: 18 file results retained, six files left unresolved, and a retry offered without coverage details or inspectable finding references"
+      ],
+      "correct": 0,
+      "explanation": "The structured partial result preserves coverage, valid work, error semantics, and inspectable evidence instead of erasing the gap."
+    },
+    {
+      "stage": "check",
+      "question": "What is the primary job of a large-codebase manifest?",
+      "options": [
+        "A generated resolution of conflicting source claims",
+        "Durable coverage, ownership, version, finding, and unresolved-work state",
+        "A compact substitute for source files, tests, and artifacts",
+        "A temporary file map and session reading order"
+      ],
+      "correct": 1,
+      "explanation": "A manifest is external authoritative workflow state. Scratchpads, context, and compaction serve different temporary or representational jobs."
+    },
+    {
+      "stage": "check",
+      "question": "A connected policy source conflicts with another approved source and precedence is undefined. What should the agent do?",
+      "options": [
+        "Retrieve both sources with a narrower query, compare relevance scores, and follow the higher-ranked passage for this case",
+        "Merge compatible statements, then apply the most recently updated wording wherever the approved sources still disagree",
+        "Preserve both sources and escalate the exact policy conflict to the owner",
+        "Prefer the narrower source as the more specific rule"
+      ],
+      "correct": 2,
+      "explanation": "Undefined policy precedence is an authority gap. More generation or retry cannot safely resolve it."
+    },
+    {
+      "stage": "post",
+      "question": "Which review policy best detects both known and unknown failure classes at scale?",
+      "options": [
+        "Review stratified samples of the shortest and longest records, using input size as the proxy for easy and difficult cases",
+        "Review every record that fails a deterministic check or receives low model confidence, then accept the remaining population",
+        "Accept ordinary schema-valid results and review only records with explicit conflict, provenance, or incomplete-coverage metadata",
+        "Review high-impact, partial, conflicting, novel, and threshold cases plus a random sample of ordinary passes"
+      ],
+      "correct": 3,
+      "explanation": "Risk strata focus attention on known hazards, while random sampling tests whether the flagging system itself is missing new failures."
+    },
+    {
+      "stage": "post",
+      "question": "Why should content type and extraction method remain attached to evidence?",
+      "options": [
+        "Flattening can lose tables, footnotes, code structure, and rendered relationships needed to interpret the claim",
+        "They distinguish parser defects from source conflicts so every extraction failure can be retried without reopening the original artifact",
+        "They establish that a source is authoritative when the same extraction process can reproduce the cited text from the artifact",
+        "They allow semantic validation to reconstruct layout-dependent meaning without retaining the original rendered source for review"
+      ],
+      "correct": 0,
+      "explanation": "Format carries meaning. Provenance must explain how the cited span was produced and where layout-dependent information may have changed."
+    }
+  ]
+}
