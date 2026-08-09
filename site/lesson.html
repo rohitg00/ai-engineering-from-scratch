@@ -19,7 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260803a">
+  <link rel="stylesheet" href="style.css?v=20260808f">
+  <link rel="stylesheet" href="certifications.css?v=20260809a">
   <style>
     .scroll-progress {
       position: fixed;
@@ -28,8 +29,10 @@
       height: 2px;
       background: var(--blueprint);
       z-index: 9999;
-      transition: width 0.05s linear;
-      width: 0%;
+      width: 100%;
+      transform: scaleX(0);
+      transform-origin: left center;
+      will-change: transform;
     }
 
     .lesson-layout {
@@ -49,7 +52,7 @@
       overflow-y: auto;
       z-index: 50;
       padding: 24px 0;
-      transition: transform 0.25s ease;
+      transition: transform var(--motion-drawer) var(--ease-drawer);
     }
 
     .lesson-sidebar-toggle {
@@ -68,11 +71,20 @@
       color: var(--ink);
       align-items: center;
       justify-content: center;
+      transition:
+        transform var(--motion-press) var(--ease-out),
+        border-color var(--motion-feedback) var(--ease-out),
+        color var(--motion-feedback) var(--ease-out);
     }
 
     .lesson-sidebar-toggle:hover {
       border-color: var(--blueprint);
       color: var(--blueprint);
+    }
+
+    .lesson-sidebar-toggle:active {
+      transform: scale(0.97);
+      transition: transform var(--motion-press) var(--ease-out);
     }
 
     .lesson-sidebar::-webkit-scrollbar { width: 4px; }
@@ -473,7 +485,10 @@
       color: var(--ink-soft);
       cursor: pointer;
       z-index: 2;
-      transition: color 0.15s, border-color 0.15s;
+      transition:
+        transform var(--motion-press) var(--ease-out),
+        color var(--motion-feedback) var(--ease-out),
+        border-color var(--motion-feedback) var(--ease-out);
     }
 
     .code-copy:hover {
@@ -662,15 +677,24 @@
       font-size: 0.96rem;
       color: var(--ink);
       cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
+      transition:
+        transform var(--motion-press) var(--ease-out),
+        border-color var(--motion-feedback) var(--ease-out),
+        background-color var(--motion-feedback) var(--ease-out),
+        color var(--motion-feedback) var(--ease-out);
       background: transparent;
       text-align: left;
       width: 100%;
+      appearance: none;
     }
 
     .quiz-option:hover:not(.selected):not(.disabled) {
       border-color: var(--blueprint);
       background: var(--blueprint-tint);
+    }
+
+    .quiz-option:active:not(.disabled) {
+      transform: scale(0.97);
     }
 
     .quiz-option .opt-letter,
@@ -720,7 +744,8 @@
       color: var(--bg);
     }
 
-    .quiz-option.disabled { cursor: default; opacity: 0.7; }
+    .quiz-option.disabled,
+    .quiz-option:disabled { cursor: default; opacity: 0.7; }
 
     .quiz-explanation {
       font-family: var(--font-body);
@@ -731,9 +756,13 @@
       border-left: 2px solid var(--blueprint);
       background: var(--blueprint-tint);
       display: none;
+      transform-origin: top center;
     }
 
-    .quiz-explanation.visible { display: block; }
+    .quiz-explanation.visible {
+      display: block;
+      animation: lesson-feedback-enter var(--motion-feedback) var(--ease-out) both;
+    }
 
     .quiz-score {
       text-align: center;
@@ -742,9 +771,29 @@
       background: var(--blueprint-tint);
       display: none;
       margin-top: 16px;
+      transform-origin: top center;
     }
 
-    .quiz-score.visible { display: block; }
+    .quiz-score.visible {
+      display: block;
+      animation: lesson-feedback-enter var(--motion-enter) var(--ease-out) both;
+    }
+
+    @keyframes lesson-feedback-enter {
+      from {
+        opacity: 0;
+        transform: scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes lesson-feedback-fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
     .quiz-score-number {
       font-family: var(--font-display);
@@ -760,6 +809,44 @@
       text-transform: uppercase;
       color: var(--ink-soft);
       margin-top: 6px;
+    }
+
+    .quiz-retry {
+      margin-top: 16px;
+      padding: 8px 14px;
+      border: 1px solid var(--blueprint);
+      background: transparent;
+      color: var(--blueprint);
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition:
+        transform var(--motion-press) var(--ease-out),
+        background-color var(--motion-feedback) var(--ease-out),
+        color var(--motion-feedback) var(--ease-out);
+    }
+
+    .quiz-retry:hover {
+      background: var(--blueprint);
+      color: var(--bg);
+    }
+
+    .quiz-retry:active {
+      transform: scale(0.97);
+    }
+
+    .quiz-reset-status {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .quiz-deeper {
@@ -817,7 +904,10 @@
       color: var(--ink-soft);
       background: transparent;
       cursor: pointer;
-      transition: color 0.15s, border-color 0.15s;
+      transition:
+        transform var(--motion-press) var(--ease-out),
+        color var(--motion-feedback) var(--ease-out),
+        border-color var(--motion-feedback) var(--ease-out);
     }
 
     .mermaid-btn:hover {
@@ -954,13 +1044,24 @@
       background: transparent;
       border: 1px solid var(--rule-soft);
       text-decoration: none;
-      transition: border-color 0.15s, background 0.15s;
+      transition:
+        transform var(--motion-press) var(--ease-out),
+        border-color var(--motion-feedback) var(--ease-out),
+        background-color var(--motion-feedback) var(--ease-out);
       max-width: 48%;
     }
 
     .lesson-nav-btn:hover {
       border-color: var(--blueprint);
       background: var(--blueprint-tint);
+    }
+
+    .lesson-nav-btn:active,
+    .output-btn:active,
+    .code-card-btn:active,
+    .code-copy:active,
+    .mermaid-btn:active {
+      transform: scale(0.97);
     }
 
     .lesson-nav-btn .nav-label {
@@ -1125,7 +1226,10 @@
       color: var(--ink-soft);
       background: transparent;
       cursor: pointer;
-      transition: color 0.15s, border-color 0.15s;
+      transition:
+        transform var(--motion-press) var(--ease-out),
+        color var(--motion-feedback) var(--ease-out),
+        border-color var(--motion-feedback) var(--ease-out);
     }
 
     .output-btn:hover,
@@ -1319,9 +1423,12 @@
     }
 
     .phase-progress-fill {
+      width: 100%;
       height: 100%;
       background: var(--blueprint);
-      transition: width 0.5s ease;
+      transform: scaleX(var(--lesson-progress, 0));
+      transform-origin: left center;
+      transition: transform var(--motion-drawer) var(--ease-out);
     }
 
     .phase-progress-text {
@@ -1418,6 +1525,38 @@
       border-bottom: 1px solid var(--blueprint);
       font-family: var(--font-body);
       font-size: 0.95rem;
+    }
+
+    .lesson-cert-notice {
+      margin: 0 0 28px;
+    }
+
+    .lesson-cert-breadcrumb {
+      margin: 0 0 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lesson-sidebar,
+      .phase-progress-fill {
+        transition: none;
+      }
+
+      .quiz-explanation.visible,
+      .quiz-score.visible {
+        animation: lesson-feedback-fade var(--motion-feedback) ease both;
+      }
+
+      .lesson-sidebar-toggle:active,
+      .quiz-option:active:not(.disabled),
+      .quiz-retry:active,
+      .lesson-nav-btn:active,
+      .output-btn:active,
+      .code-card-btn:active,
+      .code-copy:active,
+      .mermaid-btn:active {
+        transform: none;
+      }
     }
 
     .toc-sidebar {
@@ -1692,6 +1831,7 @@
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
+        <a href="about.html">About</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
@@ -1714,7 +1854,7 @@
     </div>
   </header>
 
-  <button class="lesson-sidebar-toggle" id="sidebarToggle" aria-label="Toggle lesson menu" type="button">
+  <button class="lesson-sidebar-toggle" id="sidebarToggle" aria-label="Toggle lesson menu" aria-controls="lessonSidebar" aria-expanded="false" type="button">
     <span aria-hidden="true">&#9776;</span>
     <span>Lessons</span>
   </button>
@@ -1746,12 +1886,32 @@
 
   <script src="build-meta.js"></script>
   <script src="langs.js?v=20260802a"></script>
-  <script src="lang-picker.js?v=20260802a"></script>
-  <script src="data.js?v=20260801a"></script>
+  <script src="lang-picker.js?v=20260808d"></script>
+  <script src="data.js?v=20260808g"></script>
+  <script>
+    (function () {
+      var path = '';
+      var hasTrackContext = false;
+      try {
+        var lessonParams = new URLSearchParams(window.location.search);
+        path = lessonParams.get('path') || '';
+        hasTrackContext = !!(lessonParams.get('track') || lessonParams.get('fromTrack'));
+      } catch (_) {}
+      if (path.indexOf('certifications/claude/lessons/') !== 0 && !hasTrackContext) return;
+
+      window.__AIFS_CERTIFICATION_DATA_READY = new Promise(function (resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'certification-data.js?v=20260809c';
+        script.onload = resolve;
+        script.onerror = function () { reject(new Error('certification-data.js failed to load')); };
+        document.head.appendChild(script);
+      });
+    }());
+  </script>
+  <script src="content-source.js?v=20260808d"></script>
   <script src="progress.js?v=20260801a"></script>
-  <script src="header.js?v=20260801a" defer></script>
-  <script src="tts.js?v=20260803a" defer></script>
-  <script src="cmdpalette.js?v=20260801a" defer></script>
+  <script src="header.js?v=20260808h" defer></script>
+  <script src="cmdpalette.js?v=20260808h" defer></script>
   <script src="figures.js?v=20260801a"></script>
   <script src="lesson-figures.js?v=20260801a"></script>
   <script src="figures-math.js?v=20260801a"></script>
@@ -1809,6 +1969,7 @@
   <script src="figures-llmstack5.js?v=20260801a"></script>
   <script src="figures-autoswarm5.js?v=20260801a"></script>
   <script src="figures-infra4.js?v=20260801a"></script>
+  <script src="figures-claude-certifications.js?v=20260808a"></script>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     mermaid.initialize({
@@ -1831,7 +1992,8 @@
   <script>
     (function () {
       var root = document.documentElement;
-      var stored = localStorage.getItem('theme');
+      var stored = '';
+      try { stored = localStorage.getItem('theme') || ''; } catch (_) {}
       if (stored) {
         root.setAttribute('data-theme', stored);
       } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -1854,7 +2016,7 @@
           var current = root.getAttribute('data-theme');
           var next = current === 'light' ? 'dark' : 'light';
           root.setAttribute('data-theme', next);
-          localStorage.setItem('theme', next);
+          try { localStorage.setItem('theme', next); } catch (_) {}
           updateThemeIcon();
           updateMermaidThemeAndRerender();
         });
@@ -1868,6 +2030,12 @@
 
       var params = new URLSearchParams(window.location.search);
       var lessonPath = params.get('path');
+      var requestedTrackId = params.get('track') || '';
+      var originatingTrackId = params.get('fromTrack') || '';
+
+      function preferredScrollBehavior() {
+        return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+      }
 
       if (!lessonPath) {
         showError('No lesson path specified', 'Add ?path=phases/01-math-foundations/01-linear-algebra-intuition to the URL.');
@@ -1886,42 +2054,217 @@
       var currentPhaseIndex = -1;
       var currentLessonIndex = -1;
       var flatLessons = [];
-      var REPO_TREE = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/';
+      var ACTIVE_REF = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
+      var REPO_TREE = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/' + encodeURIComponent(ACTIVE_REF) + '/';
+      var certificationTrack = null;
+      var certificationOriginTrack = null;
+      var certificationLesson = null;
+      var certificationMode = false;
+      var certificationSupplementalMode = false;
+      var PROGRESS_STORAGE_KEY = 'aifs:progress:v1';
 
-      if (typeof PHASES !== 'undefined') {
-        for (var i = 0; i < PHASES.length; i++) {
-          var p = PHASES[i];
-          var pSlug = extractPhaseSlug(p, i);
-          for (var j = 0; j < p.lessons.length; j++) {
-            var l = p.lessons[j];
-            var lSlug = extractLessonSlug(l, j);
+      function certificationData() {
+        return typeof CERTIFICATIONS !== 'undefined' && CERTIFICATIONS ? CERTIFICATIONS : null;
+      }
+
+      function certificationRefPath(ref) {
+        return typeof ref === 'string' ? ref : ref && ref.path ? ref.path : '';
+      }
+
+      function certificationTrackContains(track, path) {
+        return !!(track && Array.isArray(track.lessons) && track.lessons.some(function (ref) {
+          return certificationRefPath(ref) === path;
+        }));
+      }
+
+      function findCertificationTrack(id) {
+        var certs = certificationData();
+        if (!certs || !Array.isArray(certs.tracks)) return null;
+        return certs.tracks.find(function (track) {
+          return track.id === id || track.slug === id || track.examCode === id;
+        }) || null;
+      }
+
+      function certificationContextTrack() {
+        return certificationTrack || certificationOriginTrack || null;
+      }
+
+      function certificationTrackLabel(track) {
+        return track && (track.examCode || track.shortName || track.credential || track.title || track.id) || 'Certification';
+      }
+
+      function phaseLessonForPath(path) {
+        if (typeof PHASES === 'undefined') return null;
+        for (var pi = 0; pi < PHASES.length; pi++) {
+          for (var li = 0; li < PHASES[pi].lessons.length; li++) {
+            var phaseLesson = PHASES[pi].lessons[li];
+            var match = phaseLesson.url && phaseLesson.url.match(/(phases\/[^/?#]+\/[^/?#]+)/);
+            if (match && match[1] === path) return { phase: PHASES[pi], lesson: phaseLesson, phaseIndex: pi, lessonIndex: li };
+          }
+        }
+        return null;
+      }
+
+      function lessonProgressClass(path, readable) {
+        if (!readable) return 'planned';
+        if (!window.AIFSProgress || !path) return '';
+        if (window.AIFSProgress.isLessonComplete(path)) return 'complete';
+        var progress = window.AIFSProgress.getLessonProgress(path);
+        if (progress && (progress.visitedAt || (progress.answers && Object.keys(progress.answers).length))) {
+          return 'in-progress';
+        }
+        return '';
+      }
+
+      function currentCertificationQuizVersion() {
+        if (!certificationLesson) return '';
+        var value = certificationLesson.quizVersion;
+        if (typeof value !== 'string' && typeof value !== 'number') return '';
+        return String(value).trim();
+      }
+
+      function mutateLessonProgress(mutator) {
+        if (!lessonPath || typeof mutator !== 'function') return false;
+        try {
+          var raw = localStorage.getItem(PROGRESS_STORAGE_KEY);
+          var state = raw ? JSON.parse(raw) : { lessons: {}, updatedAt: 0 };
+          if (!state || typeof state !== 'object' || !state.lessons || typeof state.lessons !== 'object') return false;
+          var lesson = state.lessons[lessonPath];
+          if (!lesson || typeof lesson !== 'object') {
+            lesson = { answers: {}, completedAt: null, visitedAt: Date.now() };
+            state.lessons[lessonPath] = lesson;
+          }
+          if (!mutator(lesson)) return false;
+          state.updatedAt = Date.now();
+          localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(state));
+          return true;
+        } catch (_) {
+          return false;
+        }
+      }
+
+      function mutateCertificationLessonProgress(mutator) {
+        if (!certificationLesson) return false;
+        return mutateLessonProgress(mutator);
+      }
+
+      function syncCertificationQuizProgressVersion() {
+        var currentVersion = currentCertificationQuizVersion();
+        if (!currentVersion) return;
+        mutateCertificationLessonProgress(function (lesson) {
+          var storedVersion = lesson.quizVersion === undefined || lesson.quizVersion === null
+            ? ''
+            : String(lesson.quizVersion);
+          if (storedVersion === currentVersion) return false;
+          lesson.answers = {};
+          lesson.completedAt = null;
+          lesson.quizVersion = currentVersion;
+          return true;
+        });
+      }
+
+      function clearQuizSectionProgress(section) {
+        if (!section) return false;
+        var questionIds = Array.prototype.map.call(section.querySelectorAll('.quiz-question[id]'), function (question) {
+          return question.id;
+        });
+        if (!questionIds.length) return false;
+        var currentVersion = currentCertificationQuizVersion();
+        var changed = mutateLessonProgress(function (lesson) {
+          if (!lesson.answers || typeof lesson.answers !== 'object') lesson.answers = {};
+          for (var i = 0; i < questionIds.length; i++) delete lesson.answers[questionIds[i]];
+          lesson.completedAt = null;
+          if (currentVersion) lesson.quizVersion = currentVersion;
+          return true;
+        });
+        if (changed) refreshProgressUi();
+        return changed;
+      }
+
+      function initializeLessonData() {
+        var certs = certificationData();
+        certificationLesson = certs && certs.lessonsByPath ? certs.lessonsByPath[lessonPath] || null : null;
+        certificationOriginTrack = originatingTrackId ? findCertificationTrack(originatingTrackId) : null;
+        certificationTrack = null;
+
+        if (certificationOriginTrack && certificationTrackContains(certificationOriginTrack, lessonPath)) {
+          certificationTrack = certificationOriginTrack;
+        } else if (!certificationOriginTrack) {
+          var requestedTrack = requestedTrackId ? findCertificationTrack(requestedTrackId) : null;
+          if (requestedTrack && certificationTrackContains(requestedTrack, lessonPath)) {
+            certificationTrack = requestedTrack;
+          } else if (requestedTrack) {
+            certificationOriginTrack = requestedTrack;
+          }
+        }
+        if (!certificationTrack && !certificationOriginTrack && certificationLesson && Array.isArray(certificationLesson.trackIds)) {
+          certificationTrack = findCertificationTrack(certificationLesson.trackIds[0]);
+        }
+        certificationMode = !!(certificationTrack && certificationTrackContains(certificationTrack, lessonPath));
+        certificationSupplementalMode = !!(certificationOriginTrack && !certificationMode);
+
+        syncCertificationQuizProgressVersion();
+
+        if (certificationLesson) {
+          document.documentElement.lang = 'en';
+          document.documentElement.dir = 'ltr';
+          var langPicker = document.getElementById('langPicker');
+          if (langPicker) langPicker.hidden = true;
+        }
+
+        if (certificationMode) {
+          for (var ci = 0; ci < certificationTrack.lessons.length; ci++) {
+            var certRef = certificationTrack.lessons[ci];
+            var certPath = certificationRefPath(certRef);
+            if (!certPath) continue;
+            var embedded = certs.lessonsByPath[certPath] || null;
+            var core = embedded ? null : phaseLessonForPath(certPath);
+            var display = embedded || (core && core.lesson) || {};
             flatLessons.push({
-              phaseIndex: i,
-              lessonIndex: j,
-              phaseName: p.name,
-              phaseId: p.id,
-              phaseSlug: pSlug,
-              lessonName: l.name,
-              lessonSlug: lSlug,
-              status: l.status,
-              type: l.type,
-              lang: l.lang,
-              url: l.url,
-              path: 'phases/' + pSlug + '/' + lSlug,
-              isReadable: l.status === 'complete' || !!l.url
+              lessonIndex: ci,
+              lessonName: display.name || display.title || certPath.split('/').pop().replace(/^\d+-/, '').replace(/-/g, ' '),
+              lessonSlug: certPath.split('/').pop(),
+              status: display.status || 'complete',
+              type: certRef.role || display.type || 'Certification',
+              lang: display.languages || display.lang || '—',
+              url: display.url || '',
+              path: certPath,
+              isReadable: true,
+              domains: Array.isArray(certRef.domains) ? certRef.domains : [],
+              required: certRef.required !== false,
             });
-            if (pSlug === currentPhaseSlug && lSlug === currentLessonSlug) {
-              currentPhaseIndex = i;
-              currentLessonIndex = flatLessons.length - 1;
+            if (certPath === lessonPath) currentLessonIndex = flatLessons.length - 1;
+          }
+        } else if (typeof PHASES !== 'undefined') {
+          for (var i = 0; i < PHASES.length; i++) {
+            var p = PHASES[i];
+            var pSlug = extractPhaseSlug(p, i);
+            for (var j = 0; j < p.lessons.length; j++) {
+              var l = p.lessons[j];
+              var lSlug = extractLessonSlug(l, j);
+              flatLessons.push({
+                phaseIndex: i,
+                lessonIndex: j,
+                phaseName: p.name,
+                phaseId: p.id,
+                phaseSlug: pSlug,
+                lessonName: l.name,
+                lessonSlug: lSlug,
+                status: l.status,
+                type: l.type,
+                lang: l.lang,
+                url: l.url,
+                path: 'phases/' + pSlug + '/' + lSlug,
+                isReadable: l.status === 'complete' || !!l.url
+              });
+              if (pSlug === currentPhaseSlug && lSlug === currentLessonSlug) {
+                currentPhaseIndex = i;
+                currentLessonIndex = flatLessons.length - 1;
+              }
             }
           }
         }
       }
-
-      buildSidebar();
-      initSidebarToggle();
-      initScrollProgress();
-      fetchLesson(lessonPath);
 
       function extractPhaseSlug(phase, index) {
         if (phase.url) {
@@ -1945,7 +2288,37 @@
 
       function buildSidebar() {
         var sidebar = document.getElementById('lessonSidebar');
-        if (!sidebar || typeof PHASES === 'undefined') return;
+        if (!sidebar) return;
+
+        if (certificationSupplementalMode) {
+          var originLabel = certificationTrackLabel(certificationOriginTrack);
+          var supplementalCore = phaseLessonForPath(lessonPath);
+          var supplementalLesson = certificationLesson || (supplementalCore && supplementalCore.lesson) || {};
+          var lessonLabel = supplementalLesson.name || supplementalLesson.title || lessonPath.split('/').pop().replace(/^\d+-/, '').replace(/-/g, ' ');
+          var supplementalProgress = lessonProgressClass(lessonPath, true);
+          var supplementalHtml = '<div class="sidebar-phase-nav"><a href="certification.html?id=' + encodeURIComponent(certificationOriginTrack.id) + '">&larr; Back to ' + escapeHtml(originLabel) + '</a></div>';
+          supplementalHtml += '<div class="sidebar-phase-header">Supplemental lesson</div>';
+          supplementalHtml += '<span class="sidebar-lesson-link active"><span class="sidebar-lesson-dot ' + supplementalProgress + '"></span>' + escapeHtml(lessonLabel) + '</span>';
+          sidebar.innerHTML = supplementalHtml;
+          return;
+        }
+
+        if (certificationMode) {
+          var certHtml = '<div class="sidebar-phase-nav"><a href="certification.html?id=' + encodeURIComponent(certificationTrack.id) + '">&larr; Back to ' + escapeHtml(certificationTrack.examCode || certificationTrack.shortName || 'track') + '</a></div>';
+          certHtml += '<div class="sidebar-phase-header">' + escapeHtml(certificationTrack.examCode || 'Certification') + ' · ' + escapeHtml(certificationTrack.shortName || certificationTrack.credential || certificationTrack.title || 'Study path') + '</div>';
+          for (var ci = 0; ci < flatLessons.length; ci++) {
+            var certLesson = flatLessons[ci];
+            var certActive = certLesson.path === lessonPath;
+            var certProgress = lessonProgressClass(certLesson.path, true);
+            certHtml += '<a class="sidebar-lesson-link' + (certActive ? ' active' : '') + '" href="lesson.html?path=' + encodeURIComponent(certLesson.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '">';
+            certHtml += '<span class="sidebar-lesson-dot ' + certProgress + '"></span>';
+            certHtml += escapeHtml(certLesson.lessonName) + '</a>';
+          }
+          sidebar.innerHTML = certHtml;
+          return;
+        }
+
+        if (typeof PHASES === 'undefined') return;
 
         var html = '';
 
@@ -1978,12 +2351,13 @@
             var pSlugCurrent = extractPhaseSlug(phase, currentPhaseIndex);
             var isActive = lesSlug === currentLessonSlug;
             var lesReadable = les.status === 'complete' || !!les.url;
+            var lesPath = 'phases/' + pSlugCurrent + '/' + lesSlug;
             if (lesReadable) {
-              html += '<a class="sidebar-lesson-link' + (isActive ? ' active' : '') + '" href="lesson.html?path=phases/' + pSlugCurrent + '/' + lesSlug + '">';
+              html += '<a class="sidebar-lesson-link' + (isActive ? ' active' : '') + '" href="lesson.html?path=' + lesPath + '">';
             } else {
               html += '<span class="sidebar-lesson-link disabled">';
             }
-            html += '<span class="sidebar-lesson-dot ' + les.status + '"></span>';
+            html += '<span class="sidebar-lesson-dot ' + lessonProgressClass(lesPath, lesReadable) + '"></span>';
             html += escapeHtml(les.name);
             html += lesReadable ? '</a>' : '</span>';
           }
@@ -1997,15 +2371,27 @@
         var sidebar = document.getElementById('lessonSidebar');
         if (!toggle || !sidebar) return;
 
+        function setOpen(open) {
+          sidebar.classList.toggle('open', open);
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+
         toggle.addEventListener('click', function () {
-          sidebar.classList.toggle('open');
+          setOpen(!sidebar.classList.contains('open'));
         });
 
         document.addEventListener('click', function (e) {
           if (window.innerWidth <= 900 && sidebar.classList.contains('open')) {
             if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
-              sidebar.classList.remove('open');
+              setOpen(false);
             }
+          }
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && window.innerWidth <= 900 && sidebar.classList.contains('open')) {
+            setOpen(false);
+            toggle.focus();
           }
         });
       }
@@ -2013,12 +2399,21 @@
       function initScrollProgress() {
         var bar = document.getElementById('scrollProgress');
         if (!bar) return;
-        window.addEventListener('scroll', function () {
+        var frame = 0;
+        function update() {
           var scrollTop = window.scrollY || document.documentElement.scrollTop;
           var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-          var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-          bar.style.width = pct + '%';
-        }, { passive: true });
+          var ratio = docHeight > 0 ? scrollTop / docHeight : 0;
+          bar.style.transform = 'scaleX(' + Math.max(0, Math.min(1, ratio)) + ')';
+          frame = 0;
+        }
+        function schedule() {
+          if (frame) return;
+          frame = window.requestAnimationFrame(update);
+        }
+        window.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', schedule);
+        schedule();
       }
 
       var lessonQuizPromise = null;
@@ -2028,56 +2423,112 @@
         return window.AIFS_currentLang ? window.AIFS_currentLang() : 'en';
       }
 
-      function fetchLesson(path, retried) {
-        // Fetch docs from the branch this site was built from (set by build.js
-        // via build-meta.js), so PR preview deploys render their own lesson
-        // edits instead of always pulling main. Falls back to main.
-        var ref = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
-        var base = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ref + '/';
-        var enUrl = base + path + '/docs/en.md';
-        var lang = currentLang();
-        var docUrl = lang === 'en' ? enUrl
-          : 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/'
-            + lang + '/' + path + '/docs/' + lang + '.md';
-        var quizUrl = base + path + '/quiz.json';
+      function applyRenderedLanguage(lang) {
+        var actual = lang || 'en';
+        if (window.AIFS_applyLangDir) {
+          window.AIFS_applyLangDir(actual);
+          return;
+        }
+        document.documentElement.lang = actual;
+        document.documentElement.dir = /^(ar|he|fa|ur)$/i.test(actual) ? 'rtl' : 'ltr';
+      }
 
-        if (!retried || !lessonQuizPromise) {
-          lessonQuizPromise = fetch(quizUrl)
-            .then(function (res) { return res.ok ? res.json() : null; })
-            .catch(function () { return null; });
+      function fetchRepositoryFile(relativePath) {
+        var source = window.AIFSContentSource;
+        var primary = source && source.repoUrl
+          ? source.repoUrl(relativePath)
+          : 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ACTIVE_REF + '/' + relativePath;
+        var fallback = source && source.rawRepoUrl ? source.rawRepoUrl(relativePath) : primary;
+
+        return fetch(primary).then(function (response) {
+          if (response.ok) return response;
+          throw new Error('fetch-failed');
+        }).catch(function (error) {
+          if (!fallback || fallback === primary) throw error;
+          return fetch(fallback).then(function (response) {
+            if (!response.ok) throw new Error('fetch-failed');
+            return response;
+          });
+        });
+      }
+
+      var lessonFetchSequence = 0;
+
+      function fetchLesson(path, retried, requestSequence) {
+        if (!retried || !requestSequence) requestSequence = ++lessonFetchSequence;
+        if (certificationLesson && path === certificationLesson.path && typeof certificationLesson.markdown === 'string') {
+          applyRenderedLanguage('en');
+          lessonQuizPromise = Promise.resolve(certificationLesson.quiz || null);
+          try {
+            renderLesson(certificationLesson.markdown);
+          } catch (embeddedError) {
+            console.error('renderLesson failed', embeddedError);
+            showError('Render error', 'Loaded the certification lesson but failed to render it. Details are in the browser console.');
+            return;
+          }
+          lessonQuizPromise.then(function (embeddedQuiz) {
+            if (!embeddedQuiz || requestSequence !== lessonFetchSequence) return;
+            try { renderQuiz(embeddedQuiz); }
+            catch (quizError) { console.error('renderQuiz failed', quizError); }
+          });
+          return;
         }
 
-        fetch(docUrl)
-          .then(function (res) {
-            if (res.ok) return res.text();
-            // translation not published yet -> fall back to canonical English
-            if (docUrl !== enUrl) {
-              return fetch(enUrl).then(function (r) {
-                if (!r.ok) throw new Error('fetch-failed');
-                return r.text();
+        // Local previews read the checked-out repository first. Deploys and a
+        // missing local file use the branch-aware raw source from build-meta.
+        var enPath = path + '/docs/en.md';
+        var lang = currentLang();
+        var translatedUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/'
+          + lang + '/' + path + '/docs/' + lang + '.md';
+
+        if (!retried || !lessonQuizPromise) {
+          lessonQuizPromise = fetchRepositoryFile(path + '/quiz.json')
+            .then(function (res) { return res.json(); })
+            .catch(function () { return null; });
+        }
+        var quizPromiseForRequest = lessonQuizPromise;
+
+        var lessonDocument = lang === 'en'
+          ? fetchRepositoryFile(enPath).then(function (response) {
+              return { response: response, lang: 'en' };
+            })
+          : fetch(translatedUrl).then(function (response) {
+              if (!response.ok) throw new Error('fetch-failed');
+              return { response: response, lang: lang };
+            }).catch(function () {
+              return fetchRepositoryFile(enPath).then(function (response) {
+                return { response: response, lang: 'en' };
               });
-            }
-            throw new Error('fetch-failed');
+            });
+
+        lessonDocument
+          .then(function (documentResult) {
+            return documentResult.response.text().then(function (markdown) {
+              return { markdown: markdown, lang: documentResult.lang };
+            });
           })
-          .then(function (md) {
+          .then(function (documentResult) {
+            if (requestSequence !== lessonFetchSequence) return;
+            applyRenderedLanguage(documentResult.lang);
             try {
-              renderLesson(md);
+              renderLesson(documentResult.markdown);
             } catch (err) {
               console.error('renderLesson failed', err);
               showError('Render error', 'Loaded the lesson markdown but failed to render it. Details in the browser console.');
               return;
             }
-            lessonQuizPromise
+            quizPromiseForRequest
               .then(function (data) {
-                if (!data) return;
+                if (!data || requestSequence !== lessonFetchSequence) return;
                 try { renderQuiz(data); }
                 catch (err) { console.error('renderQuiz failed', err); }
               });
           })
           .catch(function () {
+            if (requestSequence !== lessonFetchSequence) return;
             if (!retried) {
               lessonQuizPromise = null;
-              setTimeout(function () { fetchLesson(path, true); }, 600);
+              setTimeout(function () { fetchLesson(path, true, requestSequence); }, 600);
               return;
             }
             var ghLink = ' <a href="' + REPO_TREE + escapeAttr(path) + '" target="_blank" rel="noopener">Read it on GitHub</a>.';
@@ -2092,7 +2543,10 @@
 
       function showError(title, msg) {
         var el = document.getElementById('lessonContent');
-        el.innerHTML = '<div class="lesson-error"><h2>' + title + '</h2><p>' + msg + '</p><a href="index.html" class="btn btn-primary">Back to Home</a></div>';
+        var contextTrack = certificationContextTrack();
+        var backHref = contextTrack ? 'certification.html?id=' + encodeURIComponent(contextTrack.id) : 'index.html';
+        var backLabel = contextTrack ? 'Back to Track' : 'Back to Home';
+        el.innerHTML = '<div class="lesson-error"><h2>' + title + '</h2><p>' + msg + '</p><a href="' + backHref + '" class="btn btn-primary">' + backLabel + '</a></div>';
       }
 
       function lessonDescription(md) {
@@ -2107,7 +2561,9 @@
             return p.replace(/[*_`]/g, '').slice(0, 200);
           }
         }
-        return '503 lessons. 20 phases. Build it from raw math, by hand.';
+        return certificationLesson
+          ? 'Independent, open-source certification preparation built around practical engineering decisions.'
+          : '503 lessons. 20 phases. Build it from raw math, by hand.';
       }
 
       // Client-side per-lesson SEO. Robust indexing comes with build-time
@@ -2115,9 +2571,20 @@
       function updateLessonSeo(title, md) {
         var ORIGIN = 'https://aiengineeringfromscratch.com';
         var path = new URLSearchParams(location.search).get('path') || '';
-        var url = ORIGIN + '/lesson.html?path=' + path;
+        var url = ORIGIN + '/lesson.html?path=' + encodeURIComponent(path);
+        var contextTrack = certificationContextTrack();
+        if (originatingTrackId && certificationOriginTrack) {
+          url += '&fromTrack=' + encodeURIComponent(certificationOriginTrack.id);
+        } else if (certificationMode) {
+          url += '&track=' + encodeURIComponent(certificationTrack.id);
+        } else if (requestedTrackId && certificationOriginTrack) {
+          url += '&track=' + encodeURIComponent(certificationOriginTrack.id);
+        }
         var desc = lessonDescription(md);
-        var fullTitle = title + ' · AI Engineering from Scratch';
+        var courseName = certificationLesson
+          ? (contextTrack && (contextTrack.credential || contextTrack.title || contextTrack.shortName) || 'Certification preparation')
+          : 'AI Engineering from Scratch';
+        var fullTitle = title + ' · ' + courseName;
         var set = function (sel, val) { var m = document.querySelector(sel); if (m) m.setAttribute('content', val); };
 
         var canon = document.querySelector('link[rel="canonical"]');
@@ -2133,17 +2600,30 @@
 
         var prev = document.getElementById('lessonJsonLd');
         if (prev) prev.remove();
+        var breadcrumbs;
+        if (certificationLesson) {
+          breadcrumbs = [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: ORIGIN },
+            { '@type': 'ListItem', position: 2, name: 'Certifications', item: ORIGIN + '/certifications.html' }
+          ];
+          if (contextTrack) {
+            breadcrumbs.push({ '@type': 'ListItem', position: 3, name: courseName, item: ORIGIN + '/certification.html?id=' + encodeURIComponent(contextTrack.id) });
+          }
+          breadcrumbs.push({ '@type': 'ListItem', position: breadcrumbs.length + 1, name: title, item: url });
+        } else {
+          breadcrumbs = [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: ORIGIN },
+            { '@type': 'ListItem', position: 2, name: 'Catalog', item: ORIGIN + '/catalog.html' },
+            { '@type': 'ListItem', position: 3, name: title, item: url }
+          ];
+        }
         var ld = {
           '@context': 'https://schema.org',
           '@graph': [
             { '@type': 'LearningResource', name: title, description: desc, url: url,
-              inLanguage: 'en', isAccessibleForFree: true,
-              isPartOf: { '@type': 'Course', name: 'AI Engineering from Scratch', url: ORIGIN } },
-            { '@type': 'BreadcrumbList', itemListElement: [
-              { '@type': 'ListItem', position: 1, name: 'Home', item: ORIGIN },
-              { '@type': 'ListItem', position: 2, name: 'Catalog', item: ORIGIN + '/catalog.html' },
-              { '@type': 'ListItem', position: 3, name: title, item: url }
-            ] }
+              inLanguage: document.documentElement.lang || 'en', isAccessibleForFree: true,
+              isPartOf: { '@type': 'Course', name: courseName, url: contextTrack ? ORIGIN + '/certification.html?id=' + encodeURIComponent(contextTrack.id) : ORIGIN } },
+            { '@type': 'BreadcrumbList', itemListElement: breadcrumbs }
           ]
         };
         var s = document.createElement('script');
@@ -2153,14 +2633,32 @@
         document.head.appendChild(s);
       }
 
+      var headingHashRestoreFrame = 0;
+
+      function restoreHeadingHash() {
+        if (!window.location.hash || window.location.hash.length < 2) return;
+        var id = window.location.hash.slice(1);
+        try { id = decodeURIComponent(id); } catch (_) {}
+        var target = document.getElementById(id);
+        if (!target) return;
+        if (headingHashRestoreFrame) window.cancelAnimationFrame(headingHashRestoreFrame);
+        headingHashRestoreFrame = window.requestAnimationFrame(function () {
+          headingHashRestoreFrame = 0;
+          target.scrollIntoView({ behavior: 'auto', block: 'start' });
+        });
+      }
+
       function renderLesson(md) {
         var el = document.getElementById('lessonContent');
         var html = parseMd(md);
         html += '<div class="ai-panels" id="aiPanels"></div>';
         html = addBottomNav(html);
-        el.innerHTML = '<article class="lesson-article">' + html + '</article>';
+        el.innerHTML = certificationDisclaimerHtml() + '<article class="lesson-article">' + html + '</article>';
 
-        document.title = extractTitle(md) + ' - AI Engineering from Scratch';
+        var contextTrack = certificationContextTrack();
+        document.title = extractTitle(md) + (certificationLesson
+          ? ' - ' + certificationTrackLabel(contextTrack)
+          : ' - AI Engineering from Scratch');
         updateLessonSeo(extractTitle(md), md);
 
         initCodeCopy();
@@ -2168,6 +2666,7 @@
         if (window.mountLessonFigures) window.mountLessonFigures(el);
         renderAIPanels();
         buildTOC();
+        restoreHeadingHash();
 
         document.querySelectorAll('a[href^="#"]').forEach(function (link) {
           link.addEventListener('click', function (e) {
@@ -2175,10 +2674,25 @@
             var target = document.querySelector(link.getAttribute('href'));
             if (target) {
               e.preventDefault();
-              target.scrollIntoView({ behavior: 'smooth' });
+              target.scrollIntoView({ behavior: preferredScrollBehavior() });
             }
           });
         });
+      }
+
+      function certificationDisclaimerHtml() {
+        if (!certificationLesson) return '';
+        var certs = certificationData();
+        var program = certs && certs.program ? certs.program : {};
+        var contextTrack = certificationContextTrack();
+        var disclaimer = program.disclaimer || 'This is independent community preparation and is not affiliated with, endorsed by, sponsored by, or authorized by Anthropic.';
+        var scoring = program.scoringNotice || 'Course practice percentages are not official certification scores and cannot guarantee a passing result.';
+        var breadcrumb = '<div class="cert-breadcrumb lesson-cert-breadcrumb" aria-label="Breadcrumb"><a href="certifications.html">Certifications</a>';
+        if (contextTrack) {
+          breadcrumb += '<span>/</span><a href="certification.html?id=' + encodeURIComponent(contextTrack.id) + '">' + escapeHtml(certificationTrackLabel(contextTrack)) + '</a>';
+        }
+        breadcrumb += '<span>/</span><span>' + (certificationSupplementalMode ? 'Supplemental lesson' : 'Lesson') + '</span></div>';
+        return breadcrumb + '<aside class="cert-notice lesson-cert-notice" aria-label="Independent certification preparation"><strong>Independent preparation</strong><p>' + escapeHtml(disclaimer) + '</p><p>' + escapeHtml(scoring) + '</p></aside>';
       }
 
       function buildTOC() {
@@ -2251,7 +2765,7 @@
             var target = document.getElementById(id);
             if (!target) return;
             e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.scrollIntoView({ behavior: preferredScrollBehavior(), block: 'start' });
             history.replaceState(null, '', '#' + id);
             if (!target.hasAttribute('tabindex')) {
               target.setAttribute('tabindex', '-1');
@@ -2307,7 +2821,7 @@
             var sidebarHeight = sidebar.clientHeight;
             var sidebarScroll = sidebar.scrollTop;
             if (linkTop < sidebarScroll + 50 || linkTop > sidebarScroll + sidebarHeight - 100) {
-              sidebar.scrollTo({ top: Math.max(0, linkTop - sidebarHeight / 3), behavior: 'smooth' });
+              sidebar.scrollTo({ top: Math.max(0, linkTop - sidebarHeight / 3), behavior: preferredScrollBehavior() });
             }
           }
         }
@@ -3024,6 +3538,7 @@
             article.insertAdjacentHTML('beforeend', allHtml);
           }
           restoreQuizAnswers();
+          restoreHeadingHash();
           return;
         }
 
@@ -3054,31 +3569,36 @@
         }
 
         restoreQuizAnswers();
+        restoreHeadingHash();
       }
 
       function buildQuizHtml(questions, id, title) {
         if (!questions.length) return '';
         var html = '<div class="quiz-section" id="quiz-' + id + '">';
         html += '<div class="quiz-title">&#9989; ' + escapeHtml(title) + '</div>';
+        html += '<div class="quiz-reset-status" role="status" aria-live="polite"></div>';
         for (var qi = 0; qi < questions.length; qi++) {
           var q = questions[qi];
           var qid = id + '-q' + qi;
+          var questionLabelId = qid + '-label';
+          var explanationId = qid + '-exp';
+          var hasExplanation = !!q.explanation || !!certificationLesson;
           html += '<div class="quiz-question" data-correct="' + q.correct + '" id="' + qid + '">';
-          html += '<div class="quiz-question-text">' + (qi + 1) + '. ' + escapeHtml(q.question) + '</div>';
-          html += '<div class="quiz-options">';
+          html += '<div class="quiz-question-text" id="' + questionLabelId + '">' + (qi + 1) + '. ' + escapeHtml(q.question) + '</div>';
+          html += '<div class="quiz-options" role="group" aria-labelledby="' + questionLabelId + '">';
           for (var oi = 0; oi < q.options.length; oi++) {
-            html += '<div class="quiz-option" data-index="' + oi + '" onclick="handleQuizClick(this)">';
-            html += '<span class="quiz-marker"></span>';
-            html += '<span>' + escapeHtml(q.options[oi]) + '</span>';
-            html += '</div>';
+            html += '<button type="button" class="quiz-option" data-index="' + oi + '" aria-pressed="false"' + (hasExplanation ? ' aria-describedby="' + explanationId + '"' : '') + ' onclick="handleQuizClick(this)">';
+            html += '<span class="quiz-marker" aria-hidden="true"></span>';
+            html += '<span class="quiz-option-text">' + escapeHtml(q.options[oi]) + '</span>';
+            html += '</button>';
           }
           html += '</div>';
-          if (q.explanation) {
-            html += '<div class="quiz-explanation" id="' + qid + '-exp">' + escapeHtml(q.explanation) + '</div>';
+          if (hasExplanation) {
+            html += '<div class="quiz-explanation" id="' + explanationId + '" role="status" aria-live="polite">' + escapeHtml(q.explanation || '') + '</div>';
           }
           html += '</div>';
         }
-        html += '<div class="quiz-score" id="quiz-' + id + '-score"></div>';
+        html += '<div class="quiz-score" id="quiz-' + id + '-score"><div class="quiz-score-result" role="status" aria-live="polite"></div><button type="button" class="quiz-retry" onclick="resetLessonQuizSection(this)">Retry this check</button></div>';
         html += '</div>';
         return html;
       }
@@ -3091,17 +3611,31 @@
 
       function applyQuizAnswer(questionDiv, chosen, persist) {
         if (!questionDiv || isNaN(chosen)) return;
-        questionDiv.classList.add('answered');
-
         var correct = parseInt(questionDiv.getAttribute('data-correct'));
         var options = questionDiv.querySelectorAll('.quiz-option');
+        if (chosen < 0 || chosen >= options.length || isNaN(correct)) return;
+        questionDiv.classList.add('answered');
 
         for (var i = 0; i < options.length; i++) {
-          options[i].classList.add('disabled');
+          var option = options[i];
+          var optionText = option.querySelector('.quiz-option-text');
+          var accessibleLabel = optionText ? optionText.textContent : option.textContent;
+          option.classList.add('disabled');
+          option.disabled = true;
+          option.setAttribute('aria-disabled', 'true');
+          option.setAttribute('aria-pressed', i === chosen ? 'true' : 'false');
           if (i === correct) {
-            options[i].classList.add('correct');
-            var mc = options[i].querySelector('.quiz-marker');
+            option.classList.add('correct');
+            var mc = option.querySelector('.quiz-marker');
             if (mc) mc.textContent = '\u2713';
+          }
+          if (i === chosen) option.classList.add('selected');
+          if (i === chosen && i === correct) {
+            option.setAttribute('aria-label', accessibleLabel + ', selected, correct');
+          } else if (i === chosen) {
+            option.setAttribute('aria-label', accessibleLabel + ', selected, incorrect');
+          } else if (i === correct) {
+            option.setAttribute('aria-label', accessibleLabel + ', correct answer');
           }
         }
         if (chosen !== correct) {
@@ -3114,9 +3648,16 @@
         }
 
         var exp = questionDiv.querySelector('.quiz-explanation');
-        if (exp) exp.style.display = 'block';
+        if (exp) {
+          if (certificationLesson) {
+            if (!exp.hasAttribute('data-base-explanation')) exp.setAttribute('data-base-explanation', exp.textContent || '');
+            exp.textContent = (chosen === correct ? 'Correct. ' : 'Not quite. ') + exp.getAttribute('data-base-explanation');
+          }
+          exp.classList.add('visible');
+        }
 
         if (persist && window.AIFSProgress && lessonPath) {
+          if (certificationLesson) syncCertificationQuizProgressVersion();
           window.AIFSProgress.recordAnswer(lessonPath, questionDiv.id, chosen, chosen === correct);
         }
 
@@ -3128,15 +3669,21 @@
         if (!section) return;
         var allQs = section.querySelectorAll('.quiz-question');
         var answeredQs = section.querySelectorAll('.quiz-question.answered');
-        if (allQs.length !== answeredQs.length) return;
         var correctCount = 0;
-        for (var j = 0; j < allQs.length; j++) {
-          if (!allQs[j].querySelector('.quiz-option.incorrect')) correctCount++;
+        for (var j = 0; j < answeredQs.length; j++) {
+          if (!answeredQs[j].querySelector('.quiz-option.incorrect')) correctCount++;
         }
+        var complete = allQs.length === answeredQs.length;
+        var hasWrongAnswer = !!section.querySelector('.quiz-option.incorrect');
+        if (!complete && !hasWrongAnswer) return;
         var scoreEl = section.querySelector('.quiz-score');
         if (scoreEl) {
-          scoreEl.textContent = correctCount + '/' + allQs.length + ' correct';
-          scoreEl.style.display = 'block';
+          var resultEl = scoreEl.querySelector('.quiz-score-result');
+          if (!resultEl) return;
+          resultEl.textContent = complete
+            ? correctCount + '/' + allQs.length + ' correct'
+            : answeredQs.length + '/' + allQs.length + ' answered. Review the feedback, then retry when ready.';
+          scoreEl.classList.add('visible');
         }
       }
 
@@ -3150,11 +3697,55 @@
           if (qs.length === 0 || qs.length !== answered.length) return;
           if (sections[s].querySelector('.quiz-option.incorrect')) return;
         }
+        if (certificationLesson) syncCertificationQuizProgressVersion();
         window.AIFSProgress.markLessonComplete(lessonPath);
       }
 
+      function resetLessonQuizSection(trigger) {
+        var section = trigger && trigger.closest ? trigger.closest('.quiz-section') : null;
+        if (!section) return;
+        clearQuizSectionProgress(section);
+
+        var questions = section.querySelectorAll('.quiz-question');
+        for (var qi = 0; qi < questions.length; qi++) {
+          questions[qi].classList.remove('answered');
+          var options = questions[qi].querySelectorAll('.quiz-option');
+          for (var oi = 0; oi < options.length; oi++) {
+            options[oi].classList.remove('disabled', 'selected', 'correct', 'incorrect', 'wrong', 'is-answer');
+            options[oi].disabled = false;
+            options[oi].removeAttribute('aria-disabled');
+            options[oi].setAttribute('aria-pressed', 'false');
+            options[oi].removeAttribute('aria-label');
+            var marker = options[oi].querySelector('.quiz-marker');
+            if (marker) marker.textContent = '';
+          }
+          var explanation = questions[qi].querySelector('.quiz-explanation');
+          if (explanation) {
+            explanation.classList.remove('visible');
+            if (explanation.hasAttribute('data-base-explanation')) {
+              explanation.textContent = explanation.getAttribute('data-base-explanation');
+            }
+          }
+        }
+
+        var score = section.querySelector('.quiz-score');
+        if (score) {
+          score.classList.remove('visible');
+          var result = score.querySelector('.quiz-score-result');
+          if (result) result.textContent = '';
+        }
+        var status = section.querySelector('.quiz-reset-status');
+        if (status) status.textContent = 'This check was reset. Choose a new answer for each question.';
+        var firstOption = section.querySelector('.quiz-option:not(:disabled)');
+        if (firstOption) firstOption.focus();
+      }
+
+      window.resetLessonQuizSection = resetLessonQuizSection;
+      window.resetCertificationLessonQuiz = resetLessonQuizSection;
+
       function restoreQuizAnswers() {
         if (!window.AIFSProgress || !lessonPath) return;
+        if (certificationLesson) syncCertificationQuizProgressVersion();
         var lp = window.AIFSProgress.getLessonProgress(lessonPath);
         if (!lp || !lp.answers) return;
         for (var qid in lp.answers) {
@@ -3178,8 +3769,9 @@
         }
 
         var nav = '<div class="lesson-nav-bottom">';
+        var trackSuffix = certificationMode ? '&track=' + encodeURIComponent(certificationTrack.id) : '';
         if (prev) {
-          nav += '<a class="lesson-nav-btn prev" href="lesson.html?path=' + prev.path + '">';
+          nav += '<a class="lesson-nav-btn prev" href="lesson.html?path=' + encodeURIComponent(prev.path) + trackSuffix + '">';
           nav += '<span class="nav-label">&larr; Previous</span>';
           nav += '<span class="nav-title">' + escapeHtml(prev.lessonName) + '</span>';
           nav += '</a>';
@@ -3187,7 +3779,7 @@
           nav += '<div></div>';
         }
         if (next) {
-          nav += '<a class="lesson-nav-btn next" href="lesson.html?path=' + next.path + '">';
+          nav += '<a class="lesson-nav-btn next" href="lesson.html?path=' + encodeURIComponent(next.path) + trackSuffix + '">';
           nav += '<span class="nav-label">Next &rarr;</span>';
           nav += '<span class="nav-title">' + escapeHtml(next.lessonName) + '</span>';
           nav += '</a>';
@@ -3207,20 +3799,30 @@
         renderContinuePanel(container);
       }
 
-      var ghApiCache = {};
+      var repositoryDirectoryCache = {};
 
-      function ghApiFetch(apiPath, cb) {
-        if (ghApiCache[apiPath]) {
-          cb(null, ghApiCache[apiPath]);
-          return;
-        }
-        fetch('https://api.github.com/repos/rohitg00/ai-engineering-from-scratch/contents/' + apiPath, {
+      function githubDirectoryFetch(apiPath) {
+        return fetch('https://api.github.com/repos/rohitg00/ai-engineering-from-scratch/contents/' + apiPath + '?ref=' + encodeURIComponent(ACTIVE_REF), {
           headers: { 'Accept': 'application/vnd.github.v3+json' }
         }).then(function (res) {
           if (!res.ok) throw new Error(res.status);
           return res.json();
-        }).then(function (data) {
-          ghApiCache[apiPath] = data;
+        });
+      }
+
+      function repositoryDirectoryFetch(apiPath, cb) {
+        if (repositoryDirectoryCache[apiPath]) {
+          cb(null, repositoryDirectoryCache[apiPath]);
+          return;
+        }
+
+        var source = window.AIFSContentSource;
+        var request = source && typeof source.isLocal === 'function' && source.isLocal() && typeof source.localDirectoryFiles === 'function'
+          ? source.localDirectoryFiles(apiPath).catch(function () { return githubDirectoryFetch(apiPath); })
+          : githubDirectoryFetch(apiPath);
+
+        request.then(function (data) {
+          repositoryDirectoryCache[apiPath] = data;
           cb(null, data);
         }).catch(function (err) {
           cb(err, null);
@@ -3242,7 +3844,7 @@
 
       function langCommand(filename, path) {
         var ext = filename.split('.').pop().toLowerCase();
-        if (ext === 'py') return 'python ' + path;
+        if (ext === 'py') return 'python3 ' + path;
         if (ext === 'ts') return 'npx tsx ' + path;
         if (ext === 'js') return 'node ' + path;
         if (ext === 'rs') return 'rustc ' + path + ' -o main && ./main';
@@ -3263,6 +3865,86 @@
         return firstLine ? firstLine.trim().substring(0, 120) : '';
       }
 
+      function lessonFileViewUrl(file) {
+        if (file && file.html_url) return file.html_url;
+        if (file && file.path && window.AIFSContentSource) return window.AIFSContentSource.repoUrl(file.path);
+        return REPO_TREE + (file && file.path ? file.path : lessonPath);
+      }
+
+      function lessonFileSourceUrl(file) {
+        if (file && file.download_url) return file.download_url;
+        if (file && file.path && window.AIFSContentSource) return window.AIFSContentSource.repoUrl(file.path);
+        return '';
+      }
+
+      function renderPanelFallback(target, message, href, label) {
+        target.textContent = '';
+        var fallback = document.createElement('div');
+        fallback.className = 'panel-fallback';
+        var copy = document.createElement('p');
+        copy.textContent = message;
+        fallback.appendChild(copy);
+        if (href) {
+          var link = document.createElement('a');
+          link.href = href;
+          link.target = '_blank';
+          link.rel = 'noopener';
+          link.textContent = label || 'Open source';
+          fallback.appendChild(link);
+        }
+        target.appendChild(fallback);
+      }
+
+      function renderOutputFiles(outputsEl, data) {
+        if (!data || !Array.isArray(data) || data.length === 0) {
+          renderPanelFallback(outputsEl, 'This lesson has no separate output artifact. The lesson itself is the deliverable.', '', '');
+          return;
+        }
+
+        var html = '<div class="output-cards">';
+        data.forEach(function (file, idx) {
+          var type = classifyOutput(file.name);
+          var badgeClass = type;
+          var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? 'Skill' : 'Output';
+          var installId = 'install-hint-' + idx;
+          var installHint = '';
+          var viewUrl = lessonFileViewUrl(file);
+          if (type === 'prompt') {
+            installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
+          } else if (type === 'skill') {
+            var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
+            installHint = 'npx skills add rohitg00/ai-engineering-from-scratch --skill ' + skillName;
+          }
+
+          html += '<div class="output-card">';
+          html += '<div class="output-badge ' + badgeClass + '">' + badgeText + '</div>';
+          html += '<div class="output-card-name">' + escapeHtml(file.name) + '</div>';
+          html += '<div class="output-desc" id="desc-' + idx + '">' + escapeHtml(file.description || file.name) + '</div>';
+          html += '<div class="output-actions">';
+          html += '<a class="output-btn" href="' + escapeAttr(viewUrl) + '" target="_blank" rel="noopener">Open file</a>';
+          if (installHint) {
+            html += '<button class="output-btn" onclick="var h=document.getElementById(\'' + installId + '\');h.classList.toggle(\'visible\')">Install</button>';
+          }
+          html += '</div>';
+          if (installHint) {
+            html += '<div class="output-install-hint" id="' + installId + '">' + escapeHtml(installHint) + '</div>';
+          }
+          html += '</div>';
+
+          if (!file.description) {
+            var sourceUrl = lessonFileSourceUrl(file);
+            if (sourceUrl) {
+              fetch(sourceUrl).then(function (r) { return r.text(); }).then(function (content) {
+                var descEl = document.getElementById('desc-' + idx);
+                if (descEl) descEl.textContent = extractFrontmatterDesc(content) || file.name;
+              }).catch(function () {});
+            }
+          }
+        });
+        html += '</div>';
+        outputsEl.innerHTML = html;
+      }
+
       function renderOutputsPanel(container) {
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
@@ -3270,55 +3952,52 @@
         container.appendChild(panel);
 
         var outputsEl = panel.querySelector('#outputsContent');
-        ghApiFetch(lessonPath + '/outputs', function (err, data) {
+        if (certificationLesson && certificationLesson.files) {
+          renderOutputFiles(outputsEl, certificationLesson.files.outputs || []);
+          return;
+        }
+
+        repositoryDirectoryFetch(lessonPath + '/outputs', function (err, data) {
           if (!outputsEl || !outputsEl.parentNode) return;
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            outputsEl.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); outputsEl.appendChild(fb);
+            renderPanelFallback(outputsEl, 'No separate output artifacts were found for this lesson.', REPO_TREE + lessonPath, 'View lesson source');
             return;
           }
+          renderOutputFiles(outputsEl, data);
+        });
+      }
 
-          var html = '<div class="output-cards">';
-          data.forEach(function (file, idx) {
-            var type = classifyOutput(file.name);
-            var badgeClass = type;
-            var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? 'Skill' : 'Output';
-            var installId = 'install-hint-' + idx;
-            var installHint = '';
-            if (type === 'prompt') {
-              installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
-            } else if (type === 'skill') {
-              var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
-              installHint = 'npx skills add rohitg00/ai-engineering-from-scratch --skill ' + skillName;
-            }
+      function renderCodeFiles(codeEl, data) {
+        if (!data || !Array.isArray(data) || data.length === 0) {
+          renderPanelFallback(codeEl, 'This lesson has no separate runnable file. Use the worked examples in the lesson.', '', '');
+          return;
+        }
 
-            html += '<div class="output-card">';
-            html += '<div class="output-badge ' + badgeClass + '">' + badgeText + '</div>';
-            html += '<div class="output-card-name">' + escapeHtml(file.name) + '</div>';
-            html += '<div class="output-desc" id="desc-' + idx + '">Loading description...</div>';
-            html += '<div class="output-actions">';
-            html += '<a class="output-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
-            if (installHint) {
-              html += '<button class="output-btn" onclick="var h=document.getElementById(\'' + installId + '\');h.classList.toggle(\'visible\')">Install</button>';
-            }
-            html += '</div>';
-            if (installHint) {
-              html += '<div class="output-install-hint" id="' + installId + '">' + escapeHtml(installHint) + '</div>';
-            }
-            html += '</div>';
-
-            fetch(file.download_url).then(function (r) { return r.text(); }).then(function (content) {
-              var descEl = document.getElementById('desc-' + idx);
-              if (descEl) {
-                var desc = extractFrontmatterDesc(content);
-                descEl.textContent = desc || file.name;
-              }
-            }).catch(function () {
-              var descEl = document.getElementById('desc-' + idx);
-              if (descEl) descEl.textContent = file.name;
+        var html = '<div class="code-cards">';
+        data.forEach(function (file) {
+          var icon = langIcon(file.name);
+          var filePath = file.path || (lessonPath + '/code/' + file.name);
+          var runCmd = langCommand(file.name, filePath);
+          html += '<div class="code-card">';
+          html += '<div class="code-card-header"><span class="code-lang-icon">' + icon + '</span><span class="code-card-name">' + escapeHtml(file.name) + '</span></div>';
+          html += '<div class="code-card-size">' + formatSize(Number(file.size || 0)) + '</div>';
+          html += '<div class="code-card-run">' + escapeHtml(runCmd) + '</div>';
+          html += '<div class="code-card-actions">';
+          html += '<a class="code-card-btn" href="' + escapeAttr(lessonFileViewUrl(file)) + '" target="_blank" rel="noopener">Open file</a>';
+          html += '<button class="code-card-btn code-card-copy" data-command="' + escapeAttr(runCmd) + '">Copy command</button>';
+          html += '</div>';
+          html += '</div>';
+        });
+        html += '</div>';
+        codeEl.innerHTML = html;
+        codeEl.querySelectorAll('.code-card-copy').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var command = btn.getAttribute('data-command');
+            navigator.clipboard.writeText(command).then(function () {
+              btn.textContent = 'Copied!';
+              setTimeout(function () { btn.textContent = 'Copy command'; }, 1500);
             });
           });
-          html += '</div>';
-          outputsEl.innerHTML = html;
         });
       }
 
@@ -3329,38 +4008,18 @@
         container.appendChild(panel);
 
         var codeEl = panel.querySelector('#codeContent');
-        ghApiFetch(lessonPath + '/code', function (err, data) {
+        if (certificationLesson && certificationLesson.files) {
+          renderCodeFiles(codeEl, certificationLesson.files.code || []);
+          return;
+        }
+
+        repositoryDirectoryFetch(lessonPath + '/code', function (err, data) {
           if (!codeEl || !codeEl.parentNode) return;
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            codeEl.textContent = ''; var fb = document.createElement('div'); fb.className = 'panel-fallback'; var fbLink = document.createElement('a'); fbLink.href = REPO_TREE + lessonPath; fbLink.target = '_blank'; fbLink.rel = 'noopener'; fbLink.textContent = 'View lesson on GitHub'; fb.appendChild(fbLink); codeEl.appendChild(fb);
+            renderPanelFallback(codeEl, 'No separate runnable files were found for this lesson.', REPO_TREE + lessonPath, 'View lesson source');
             return;
           }
-
-          var html = '<div class="code-cards">';
-          data.forEach(function (file) {
-            var icon = langIcon(file.name);
-            var runCmd = langCommand(file.name, lessonPath + '/code/' + file.name);
-            html += '<div class="code-card">';
-            html += '<div class="code-card-header"><span class="code-lang-icon">' + icon + '</span><span class="code-card-name">' + escapeHtml(file.name) + '</span></div>';
-            html += '<div class="code-card-size">' + formatSize(file.size) + '</div>';
-            html += '<div class="code-card-run">' + escapeHtml(runCmd) + '</div>';
-            html += '<div class="code-card-actions">';
-            html += '<a class="code-card-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
-            html += '<button class="code-card-btn code-card-copy" data-command="' + escapeAttr(runCmd) + '">Copy command</button>';
-            html += '</div>';
-            html += '</div>';
-          });
-          html += '</div>';
-          codeEl.innerHTML = html;
-          codeEl.querySelectorAll('.code-card-copy').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-              var command = btn.getAttribute('data-command');
-              navigator.clipboard.writeText(command).then(function () {
-                btn.textContent = 'Copied!';
-                setTimeout(function () { btn.textContent = 'Copy command'; }, 1500);
-              });
-            });
-          });
+          renderCodeFiles(codeEl, data);
         });
       }
 
@@ -3474,18 +4133,20 @@
 
         var letters = ['A', 'B', 'C', 'D'];
         questions.forEach(function (q, qi) {
+          var panelQuestionLabel = 'quiz-q-' + qi + '-label';
+          var panelExplanation = 'quiz-explain-' + qi;
           html += '<div class="quiz-question" id="quiz-q-' + qi + '">';
           html += '<div class="quiz-question-num">Question ' + (qi + 1) + ' of ' + questions.length + '</div>';
-          html += '<div class="quiz-question-text">' + escapeHtml(q.q) + '</div>';
-          html += '<div class="quiz-options">';
+          html += '<div class="quiz-question-text" id="' + panelQuestionLabel + '">' + escapeHtml(q.q) + '</div>';
+          html += '<div class="quiz-options" role="group" aria-labelledby="' + panelQuestionLabel + '">';
           q.opts.forEach(function (opt, oi) {
-            html += '<button class="quiz-option" data-qi="' + qi + '" data-oi="' + oi + '" onclick="handleQuizAnswer(' + qi + ',' + oi + ')">';
-            html += '<span class="opt-letter">' + letters[oi] + '</span>';
-            html += '<span>' + escapeHtml(opt) + '</span>';
+            html += '<button type="button" class="quiz-option" data-qi="' + qi + '" data-oi="' + oi + '" aria-pressed="false" aria-describedby="' + panelExplanation + '" onclick="handleQuizAnswer(' + qi + ',' + oi + ')">';
+            html += '<span class="opt-letter" aria-hidden="true">' + letters[oi] + '</span>';
+            html += '<span class="quiz-option-text">' + escapeHtml(opt) + '</span>';
             html += '</button>';
           });
           html += '</div>';
-          html += '<div class="quiz-explanation" id="quiz-explain-' + qi + '">' + escapeHtml(q.explain) + '</div>';
+          html += '<div class="quiz-explanation" id="' + panelExplanation + '" role="status" aria-live="polite">' + escapeHtml(q.explain) + '</div>';
           html += '</div>';
         });
 
@@ -3511,18 +4172,28 @@
 
         var correct = questions[qi].answer;
         opts.forEach(function (opt, i) {
+          var optionText = opt.querySelector('.quiz-option-text');
+          var accessibleLabel = optionText ? optionText.textContent : opt.textContent;
           opt.classList.add('disabled');
+          opt.disabled = true;
+          opt.setAttribute('aria-disabled', 'true');
+          opt.setAttribute('aria-pressed', i === oi ? 'true' : 'false');
           if (i === oi) {
             opt.classList.add('selected');
             opt.classList.add(i === correct ? 'correct' : 'wrong');
+            opt.setAttribute('aria-label', accessibleLabel + (i === correct ? ', selected, correct' : ', selected, incorrect'));
           }
           if (i === correct) {
             opt.classList.add('is-answer');
+            if (i !== oi) opt.setAttribute('aria-label', accessibleLabel + ', correct answer');
           }
         });
 
         var explain = document.getElementById('quiz-explain-' + qi);
-        if (explain) explain.classList.add('visible');
+        if (explain) {
+          explain.textContent = (oi === correct ? 'Correct. ' : 'Not quite. ') + explain.textContent;
+          explain.classList.add('visible');
+        }
 
         window._quizAnswered++;
         if (oi === correct) window._quizCorrect++;
@@ -3540,8 +4211,73 @@
         }
       };
 
+      function refreshProgressUi() {
+        buildSidebar();
+        var container = document.getElementById('aiPanels');
+        if (container) renderLearningPathPanel(container);
+      }
+
+      function mountLearningPathPanel(container, panel) {
+        panel.id = 'learningPathPanel';
+        var existing = document.getElementById('learningPathPanel');
+        if (existing && existing.parentNode) existing.parentNode.replaceChild(panel, existing);
+        else container.appendChild(panel);
+      }
+
       function renderLearningPathPanel(container) {
-        if (currentLessonIndex < 0 || typeof PHASES === 'undefined') return;
+        if (certificationMode) {
+          if (currentLessonIndex < 0) {
+            var staleCertPanel = document.getElementById('learningPathPanel');
+            if (staleCertPanel) staleCertPanel.remove();
+            return;
+          }
+          var certPanel = document.createElement('div');
+          certPanel.className = 'ai-panel';
+          var certTotal = flatLessons.length;
+          var certDone = 0;
+          for (var cp = 0; cp < flatLessons.length; cp++) {
+            if (window.AIFSProgress && window.AIFSProgress.isLessonComplete(flatLessons[cp].path)) certDone++;
+          }
+          var certPct = certTotal ? Math.round((certDone / certTotal) * 100) : 0;
+          var certStart = Math.max(0, currentLessonIndex - 2);
+          var certEnd = Math.min(certTotal, certStart + 5);
+          certStart = Math.max(0, certEnd - 5);
+          var certHtml = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Certification Path</div></div>';
+          certHtml += '<div class="ai-panel-subtitle">' + escapeHtml(certificationTrack.examCode || certificationTrack.shortName || 'Certification') + ': ' + escapeHtml(certificationTrack.credential || certificationTrack.title || 'Study path') + '</div>';
+          certHtml += '<div class="learning-timeline">';
+          var certLessonDoneAt = function (index) {
+            return !!(window.AIFSProgress && flatLessons[index] && window.AIFSProgress.isLessonComplete(flatLessons[index].path));
+          };
+          if (certStart > 0) {
+            var hiddenComplete = true;
+            for (var hiddenIndex = 0; hiddenIndex < certStart; hiddenIndex++) {
+              if (!certLessonDoneAt(hiddenIndex)) { hiddenComplete = false; break; }
+            }
+            certHtml += '<span class="timeline-ellipsis">&laquo; ' + certStart + '</span><div class="timeline-line ' + (hiddenComplete ? 'done' : '') + '"></div>';
+          }
+          for (var cv = certStart; cv < certEnd; cv++) {
+            var certItem = flatLessons[cv];
+            var certItemDone = certLessonDoneAt(cv);
+            if (cv > certStart) {
+              var certSegmentDone = certLessonDoneAt(cv - 1) && certItemDone;
+              certHtml += '<div class="timeline-line ' + (certSegmentDone ? 'done' : '') + '"></div>';
+            }
+            var certClass = cv === currentLessonIndex ? 'current' : certItemDone ? 'done' : '';
+            certHtml += '<a class="timeline-item ' + certClass + '" href="lesson.html?path=' + encodeURIComponent(certItem.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '" title="' + escapeAttr(certItem.lessonName) + '"><div class="timeline-dot"></div><div class="timeline-label">' + escapeHtml(certItem.lessonName) + '</div></a>';
+          }
+          if (certEnd < certTotal) certHtml += '<div class="timeline-line"></div><span class="timeline-ellipsis">' + (certTotal - certEnd) + ' &raquo;</span>';
+          certHtml += '</div><div class="phase-progress-bar"><div class="phase-progress-fill" style="--lesson-progress:' + (certPct / 100) + '"></div></div>';
+          certHtml += '<div class="phase-progress-text">' + certDone + ' of ' + certTotal + ' lessons completed in this certification path</div>';
+          certPanel.innerHTML = certHtml;
+          mountLearningPathPanel(container, certPanel);
+          return;
+        }
+
+        if (currentLessonIndex < 0 || typeof PHASES === 'undefined') {
+          var stalePanel = document.getElementById('learningPathPanel');
+          if (stalePanel) stalePanel.remove();
+          return;
+        }
 
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
@@ -3570,20 +4306,27 @@
         var visible = lessonsInPhase.slice(startIdx, endIdx);
         var hiddenBefore = startIdx;
         var hiddenAfter = lessonsInPhase.length - endIdx;
+        var coreLessonDoneAt = function (index) {
+          return !!(window.AIFSProgress && lessonsInPhase[index] && window.AIFSProgress.isLessonComplete(lessonsInPhase[index].flat.path));
+        };
 
         html += '<div class="learning-timeline">';
         if (hiddenBefore > 0) {
           html += '<span class="timeline-ellipsis" title="' + hiddenBefore + ' earlier lessons">&laquo; ' + hiddenBefore + '</span>';
-          html += '<div class="timeline-line done"></div>';
+          var hiddenBeforeComplete = true;
+          for (var hiddenCoreIndex = 0; hiddenCoreIndex < hiddenBefore; hiddenCoreIndex++) {
+            if (!coreLessonDoneAt(hiddenCoreIndex)) { hiddenBeforeComplete = false; break; }
+          }
+          html += '<div class="timeline-line ' + (hiddenBeforeComplete && coreLessonDoneAt(startIdx) ? 'done' : '') + '"></div>';
         }
         visible.forEach(function (item, vIdx) {
           var idx = startIdx + vIdx;
           var isCurrent = idx === currentIdxInPhase;
-          var isPrev = idx < currentIdxInPhase;
-          var cls = isCurrent ? 'current' : isPrev ? 'prev' : '';
+          var isDone = coreLessonDoneAt(idx);
+          var cls = (isCurrent ? 'current ' : '') + (isDone ? 'done' : '');
 
           if (vIdx > 0) {
-            var lineCls = idx <= currentIdxInPhase ? (idx === currentIdxInPhase ? 'active' : 'done') : '';
+            var lineCls = coreLessonDoneAt(idx - 1) && isDone ? 'done' : '';
             html += '<div class="timeline-line ' + lineCls + '"></div>';
           }
 
@@ -3602,11 +4345,14 @@
         }
         html += '</div>';
 
-        var completedCount = currentIdxInPhase + 1;
+        var completedCount = 0;
+        for (var completedIndex = 0; completedIndex < lessonsInPhase.length; completedIndex++) {
+          if (coreLessonDoneAt(completedIndex)) completedCount++;
+        }
         var totalCount = lessonsInPhase.length;
-        var pct = Math.round((completedCount / totalCount) * 100);
+        var pct = totalCount ? Math.round((completedCount / totalCount) * 100) : 0;
 
-        html += '<div class="phase-progress-bar"><div class="phase-progress-fill" style="width:' + pct + '%"></div></div>';
+        html += '<div class="phase-progress-bar"><div class="phase-progress-fill" style="--lesson-progress:' + (pct / 100) + '"></div></div>';
         html += '<div class="phase-progress-text">You\'ve completed ' + completedCount + ' of ' + totalCount + ' lessons in this phase</div>';
 
         if (completedCount >= totalCount && phaseIdx < PHASES.length - 1) {
@@ -3615,11 +4361,30 @@
         }
 
         panel.innerHTML = html;
-        container.appendChild(panel);
+        mountLearningPathPanel(container, panel);
       }
 
       function renderContinuePanel(container) {
         if (currentLessonIndex < 0) return;
+
+        if (certificationMode) {
+          var certContinue = document.createElement('div');
+          certContinue.className = 'ai-panel';
+          var certNext = null;
+          for (var cn = currentLessonIndex + 1; cn < flatLessons.length; cn++) {
+            if (flatLessons[cn].isReadable) { certNext = flatLessons[cn]; break; }
+          }
+          var continueHtml = '<div class="ai-panel-header"><div class="ai-panel-icon">N</div><div class="ai-panel-title">Continue Certification Prep</div></div><div class="continue-panel">';
+          if (!certNext) continueHtml += '<div class="phase-finished">You reached the end of this lesson path.</div>';
+          continueHtml += '<div class="continue-links">';
+          if (certNext) continueHtml += '<a class="continue-link" href="lesson.html?path=' + encodeURIComponent(certNext.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '">Next: ' + escapeHtml(certNext.lessonName) + '</a>';
+          continueHtml += '<a class="continue-link" href="certification.html?id=' + encodeURIComponent(certificationTrack.id) + '">Track overview and practice</a>';
+          continueHtml += '<a class="continue-link" href="certifications.html">All certification tracks</a></div>';
+          continueHtml += '<div class="continue-callout">Practice results are course percentages, not official scaled exam scores. Use them to find the next domain to study.</div></div>';
+          certContinue.innerHTML = continueHtml;
+          container.appendChild(certContinue);
+          return;
+        }
 
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
@@ -3662,6 +4427,28 @@
 
       function escapeAttr(str) {
         return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
+      // Start only after every module-level cache and promise has been
+      // initialized. The large certification bundle is loaded only for
+      // certification lesson paths, then the same rendering path continues.
+      function startLesson() {
+        initializeLessonData();
+        buildSidebar();
+        initSidebarToggle();
+        initScrollProgress();
+        if (window.AIFSProgress) window.AIFSProgress.onChange(refreshProgressUi);
+        fetchLesson(lessonPath);
+      }
+
+      var certificationDataReady = window.__AIFS_CERTIFICATION_DATA_READY;
+      if (certificationDataReady && typeof certificationDataReady.then === 'function') {
+        certificationDataReady.then(startLesson).catch(function (error) {
+          console.error('Certification data failed to load', error);
+          showError('Certification data unavailable', 'Reload the page after the certification bundle is available.');
+        });
+      } else {
+        startLesson();
       }
     })();
   </script>

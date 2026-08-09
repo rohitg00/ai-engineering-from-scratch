@@ -26,6 +26,28 @@
   var _prevFocus  = null;
 
   // ── Search index ─────────────────────────────────────────────────────
+  function certificationData() {
+    var data = null;
+    if (typeof CLAUDE_CERTIFICATION_DATA !== 'undefined' && CLAUDE_CERTIFICATION_DATA) {
+      data = CLAUDE_CERTIFICATION_DATA;
+    } else if (typeof CERTIFICATIONS !== 'undefined' && CERTIFICATIONS) {
+      data = CERTIFICATIONS;
+    }
+
+    var tracks = null;
+    if (typeof CERTIFICATION_TRACKS !== 'undefined' && CERTIFICATION_TRACKS) {
+      tracks = Array.isArray(CERTIFICATION_TRACKS)
+        ? CERTIFICATION_TRACKS
+        : CERTIFICATION_TRACKS.tracks;
+    }
+
+    if (!data && tracks) data = { tracks: tracks };
+    else if (data && !Array.isArray(data.tracks) && tracks) {
+      data = Object.assign({}, data, { tracks: tracks });
+    }
+    return data;
+  }
+
   /**
    * Build the flat search index once from window.PHASES and window.GLOSSARY.
    * Idempotent: subsequent calls return the cached array.
@@ -74,6 +96,16 @@
           name:    g.term  || '',
           summary: g.means || '',
           says:    g.says  || '',
+          slug:    g.slug  || '',
+          keywords: [
+            g.category,
+            g.whyItMatters,
+            g.example,
+            g.confusion,
+            g.whyCalled,
+            Array.isArray(g.aliases) ? g.aliases.join(' ') : '',
+            Array.isArray(g.related) ? g.related.join(' ') : '',
+          ].filter(Boolean).join(' '),
         });
       }
     }
@@ -96,7 +128,69 @@
       }
     }
 
+    // Certification data is optional. Index it only on pages that already
+    // loaded one of the supported globals; never fetch the large data bundle
+    // solely for search.
+    var certs = certificationData();
+    if (certs) {
+      var tracks = Array.isArray(certs.tracks) ? certs.tracks : [];
+      for (var t = 0; t < tracks.length; t++) {
+        var track = tracks[t] || {};
+        var trackId = track.id || track.slug || track.examCode || String(t);
+        var domainNames = Array.isArray(track.domains)
+          ? track.domains.map(function (domain) { return domain.name || domain.id || ''; }).join(' ')
+          : '';
+        _index.push({
+          kind:     'certification-track',
+          id:       'ct:' + trackId,
+          name:     track.credential || track.name || track.shortName || track.examCode || 'Certification track',
+          summary:  track.summary || track.audience || '',
+          keywords: [track.shortName, track.examCode, track.level, track.audience, domainNames].filter(Boolean).join(' '),
+          examCode: track.examCode || '',
+          level:    track.level || '',
+          url:      'certification.html?id=' + encodeURIComponent(trackId),
+        });
+      }
+
+      var lessonMap = certs.lessonsByPath || {};
+      var lessonList = Array.isArray(certs.lessons) ? certs.lessons : [];
+      var certLessons = Object.keys(lessonMap).map(function (path) {
+        var lesson = lessonMap[path] || {};
+        return Object.assign({ path: path }, lesson);
+      }).concat(lessonList);
+      var seenCertLessons = {};
+
+      for (var c = 0; c < certLessons.length; c++) {
+        var certLesson = certLessons[c] || {};
+        var certPath = certLesson.path || certLesson.lessonPath || '';
+        if (!certPath || seenCertLessons[certPath]) continue;
+        seenCertLessons[certPath] = true;
+        _index.push({
+          kind:       'certification-lesson',
+          id:         'cl:' + certPath,
+          name:       certLesson.name || certLesson.title || certLesson.slug || 'Certification lesson',
+          summary:    certLesson.summary || '',
+          keywords:   certLesson.keywords || '',
+          type:       certLesson.type || '',
+          lang:       certLesson.languages || certLesson.lang || '',
+          lessonPath: certPath,
+        });
+      }
+    }
+
     return _index;
+  }
+
+  function rebuildIndex() {
+    _index = null;
+    return buildIndex();
+  }
+
+  function refreshOpenPalette() {
+    if (!_isOpen) return;
+    var input = _inputEl();
+    var query = input ? input.value.trim() : '';
+    renderResults(query ? search(query) : []);
   }
 
   // ── Scoring ──────────────────────────────────────────────────────────
@@ -231,6 +325,8 @@
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-modal', 'true');
     el.setAttribute('aria-label', 'Search lessons and glossary');
+    el.setAttribute('aria-hidden', 'true');
+    el.inert = true;
 
     el.innerHTML =
       '<div class="cp-backdrop" id="cpBackdrop"></div>' +
@@ -246,9 +342,11 @@
           ' placeholder="Search lessons and glossary…"' +
           ' autocomplete="off" autocorrect="off"' +
           ' autocapitalize="off" spellcheck="false"' +
-          ' aria-label="Search" aria-autocomplete="list"' +
+          ' role="combobox" aria-label="Search" aria-autocomplete="list"' +
+          ' aria-haspopup="listbox" aria-expanded="false"' +
           ' aria-controls="cpResults">' +
-          '<kbd class="cp-kbd-esc" id="cpKbdEsc">Esc</kbd>' +
+          '<button class="cp-kbd-esc" id="cpClose" type="button"' +
+          ' aria-label="Close search">Esc</button>' +
         '</div>' +
         '<ul class="cp-results" id="cpResults"' +
         ' role="listbox" aria-label="Search results"></ul>' +
@@ -273,7 +371,8 @@
 
     // Wire up internal interactions
     document.getElementById('cpBackdrop').addEventListener('click', close);
-    document.getElementById('cpKbdEsc').addEventListener('click', close);
+    document.getElementById('cpClose').addEventListener('click', close);
+    el.addEventListener('keydown', _onDialogKeyDown);
 
     var inp = document.getElementById('cpInput');
     inp.addEventListener('input', _onInput);
@@ -283,6 +382,11 @@
   function _palEl()   { return document.getElementById(PALETTE_ID); }
   function _inputEl() { return document.getElementById('cpInput'); }
   function _listEl()  { return document.getElementById('cpResults'); }
+
+  function _clearActiveDescendant() {
+    var input = _inputEl();
+    if (input) input.removeAttribute('aria-activedescendant');
+  }
 
   // ── Open / close ─────────────────────────────────────────────────────
   function open() {
@@ -300,20 +404,21 @@
     createPaletteDOM();
     document.body.setAttribute(BODY_ATTR, '');
 
-    // Two-frame delay: first frame triggers transition, second ensures focus
-    requestAnimationFrame(function () {
-      var pal = _palEl();
-      if (pal) pal.classList.add('cp-open');
+    var pal = _palEl();
+    if (pal) {
+      pal.inert = false;
+      pal.setAttribute('aria-hidden', 'false');
+      pal.classList.add('cp-open');
+    }
 
-      requestAnimationFrame(function () {
-        var inp = _inputEl();
-        if (inp) {
-          inp.focus();
-          var q = inp.value.trim();
-          renderResults(q ? search(q) : []);
-        }
-      });
-    });
+    var input = _inputEl();
+    if (input) {
+      input.setAttribute('aria-expanded', 'true');
+      _clearActiveDescendant();
+      input.focus();
+      var q = input.value.trim();
+      renderResults(q ? search(q) : []);
+    }
   }
 
   function close() {
@@ -322,7 +427,14 @@
     _activeIdx = -1;
 
     var pal = _palEl();
-    if (pal) pal.classList.remove('cp-open');
+    if (pal) {
+      pal.classList.remove('cp-open');
+      pal.setAttribute('aria-hidden', 'true');
+      pal.inert = true;
+    }
+    var input = _inputEl();
+    if (input) input.setAttribute('aria-expanded', 'false');
+    _clearActiveDescendant();
     document.body.removeAttribute(BODY_ATTR);
 
     // Return focus to wherever the user was before
@@ -342,11 +454,24 @@
     var query = (_inputEl() ? _inputEl().value : '').trim();
 
     if (!query) {
+      var inventory = buildIndex();
+      var lessonCount = inventory.filter(function (item) { return item.kind === 'lesson'; }).length;
+      var certificationLessonCount = inventory.filter(function (item) { return item.kind === 'certification-lesson'; }).length;
+      var artifactCount = inventory.filter(function (item) { return item.kind === 'artifact'; }).length;
+      var glossaryCount = inventory.filter(function (item) { return item.kind === 'glossary'; }).length;
+      var inventoryParts = [lessonCount + ' lessons'];
+      if (certificationLessonCount) {
+        inventoryParts.push(certificationLessonCount + ' certification lessons');
+      }
+      inventoryParts.push(artifactCount + ' outputs');
+      inventoryParts.push(glossaryCount + ' glossary terms');
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
-        'Type to search 503 lessons, 499 outputs, and glossary terms' +
+        'Search ' + inventoryParts.slice(0, -1).join(', ') + ', and ' +
+        inventoryParts[inventoryParts.length - 1] +
         '</li>';
       _activeIdx = -1;
+      _clearActiveDescendant();
       return;
     }
 
@@ -356,6 +481,7 @@
         'No results for <em>' + escHtml(query) + '</em>' +
         '</li>';
       _activeIdx = -1;
+      _clearActiveDescendant();
       return;
     }
 
@@ -372,6 +498,14 @@
           ? 'lesson.html?path=' + encodeURIComponent(r.lessonPath)
           : r.url;
         chip = 'Phase ' + String(r.phaseId).padStart(2, '0');
+      } else if (r.kind === 'certification-lesson') {
+        dest = 'lesson.html?path=' + encodeURIComponent(r.lessonPath);
+        chip = 'Certification';
+        chipClass += ' cp-item-chip--alt';
+      } else if (r.kind === 'certification-track') {
+        dest = r.url;
+        chip = r.examCode || 'Certification';
+        chipClass += ' cp-item-chip--alt';
       } else if (r.kind === 'artifact') {
         // Jump to the lesson that produced this artifact
         dest = r.lessonPath
@@ -381,18 +515,22 @@
         chip = ak.charAt(0).toUpperCase() + ak.slice(1);
         chipClass += ' cp-item-chip--alt';
       } else {
-        // Deep-link: pre-populate glossary search with the exact term name
-        // so the user lands directly on the definition, not the full list.
-        dest      = 'glossary.html?q=' + encodeURIComponent(r.name);
+        // Prefer the canonical term anchor. Legacy generated data falls back
+        // to the exact-name query until the next site build.
+        dest      = r.slug
+          ? 'glossary.html#' + encodeURIComponent(r.slug)
+          : 'glossary.html?q=' + encodeURIComponent(r.name);
         chip      = 'Glossary';
         chipClass += ' cp-item-chip--alt';
       }
 
       var snippet = r.summary ? truncate(r.summary, 110) : '';
       var metaParts = [];
-      if (r.kind === 'lesson') {
+      if (r.kind === 'lesson' || r.kind === 'certification-lesson') {
         if (r.type && r.type !== '—') metaParts.push(r.type);
         if (r.lang && r.lang !== '—') metaParts.push(r.lang);
+      } else if (r.kind === 'certification-track') {
+        if (r.level) metaParts.push(r.level);
       } else if (r.kind === 'artifact') {
         if (r.phaseId !== undefined && r.phaseId !== null) {
           metaParts.push('Phase ' + String(r.phaseId).padStart(2, '0'));
@@ -401,7 +539,7 @@
       var meta = metaParts.join(' · '); // ·
 
       html +=
-        '<li class="cp-item" role="option" aria-selected="false"' +
+        '<li class="cp-item" id="cpOption-' + i + '" role="option" aria-selected="false"' +
         ' data-idx="' + i + '"' +
         ' data-href="' + escHtml(dest) + '">' +
           '<div class="cp-item-body">' +
@@ -420,6 +558,7 @@
 
     list.innerHTML = html;
     _activeIdx = -1;
+    _clearActiveDescendant();
 
     // Attach interaction handlers
     var items = list.querySelectorAll('.cp-item');
@@ -465,25 +604,45 @@
         break;
       }
 
-      case 'Tab':
-        // Trap focus inside the palette (only interactive element is the input)
-        e.preventDefault();
-        break;
+    }
+  }
 
-      case 'Escape':
-        e.preventDefault();
-        close();
-        break;
+  function _onDialogKeyDown(e) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      e.stopPropagation();
+      close();
+      return;
+    }
+
+    if (e.key !== 'Tab') return;
+    var input = _inputEl();
+    var closeButton = document.getElementById('cpClose');
+    if (!input || !closeButton) return;
+
+    if (e.shiftKey && document.activeElement === input) {
+      e.preventDefault();
+      closeButton.focus();
+    } else if (!e.shiftKey && document.activeElement === closeButton) {
+      e.preventDefault();
+      input.focus();
     }
   }
 
   function _updateActive(items) {
+    var input = _inputEl();
+    var activeId = '';
     for (var i = 0; i < items.length; i++) {
       var active = (i === _activeIdx);
       items[i].classList.toggle('cp-item--active', active);
       items[i].setAttribute('aria-selected', active ? 'true' : 'false');
-      if (active) items[i].scrollIntoView({ block: 'nearest' });
+      if (active) {
+        activeId = items[i].id;
+        items[i].scrollIntoView({ block: 'nearest', behavior: 'instant' });
+      }
     }
+    if (input && activeId) input.setAttribute('aria-activedescendant', activeId);
+    else _clearActiveDescendant();
   }
 
   function _onItemClick(e) {
@@ -532,8 +691,22 @@
       });
     }
 
-    // Build the search index now so the first keystroke is instant
+    // Build the core index now so the first keystroke is instant. On lesson
+    // pages, certification-data.js is loaded on demand and may still be in
+    // flight. Rebuild after it settles so an early core-only cache cannot
+    // permanently hide certification tracks and lessons.
     buildIndex();
+
+    var certificationReady = window.__AIFS_CERTIFICATION_DATA_READY;
+    if (certificationReady && typeof certificationReady.then === 'function') {
+      certificationReady.then(function () {
+        rebuildIndex();
+        refreshOpenPalette();
+      }).catch(function () {
+        // Keep the already-built core index available when the optional
+        // certification bundle cannot be loaded.
+      });
+    }
   }
 
   if (document.readyState === 'loading') {

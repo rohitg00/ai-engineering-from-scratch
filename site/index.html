@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260803a">
+  <link rel="stylesheet" href="style.css?v=20260808f">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -642,6 +642,215 @@
       color: var(--blueprint);
     }
 
+    .certification-spotlight {
+      padding: 40px 0 48px;
+    }
+
+    .certification-spotlight-grid {
+      display: grid;
+      grid-template-columns: 124px minmax(0, 1fr) minmax(182px, 210px);
+      align-items: center;
+      gap: clamp(24px, 3.4vw, 48px);
+      padding: clamp(22px, 3vw, 32px);
+      border: 1px solid var(--rule-soft);
+      box-shadow: inset 3px 0 0 var(--blueprint);
+      background: var(--code-bg);
+    }
+
+    .certification-badge-stage {
+      width: 124px;
+      margin: 0;
+    }
+
+    .certification-badge-stage img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1;
+      object-fit: contain;
+      clip-path: polygon(31% 0, 67% 0, 86% 6%, 97% 20%, 100% 36%, 99% 71%, 88% 84%, 61% 99%, 25% 97%, 6% 82%, 0 66%, 0 36%, 5% 20%);
+    }
+
+    .certification-eyebrow {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+    }
+
+    .certification-copy h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .certification-intro {
+      max-width: 64ch;
+      margin: 10px 0 0;
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+      line-height: 1.58;
+      color: var(--ink-soft);
+    }
+
+    .certification-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px 20px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--rule-soft);
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .certification-proof strong {
+      color: var(--blueprint);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .certification-disclaimer {
+      max-width: 72ch;
+      margin: 12px 0 0;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      line-height: 1.5;
+      letter-spacing: 0.03em;
+      color: var(--ink-mute);
+    }
+
+    .certification-actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    .certification-actions .masthead-btn,
+    .certification-github-link {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+      transition: opacity 120ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .certification-actions .masthead-btn:active,
+    .certification-github-link:active {
+      transform: scale(0.97);
+    }
+
+    .certification-github-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 39px;
+      padding: 8px 12px;
+      border: 1px solid var(--rule-soft);
+      color: var(--ink-soft);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .certification-actions .masthead-btn:hover,
+      .certification-github-link:hover {
+        opacity: 0.82;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .certification-spotlight-grid {
+        grid-template-columns: 112px minmax(0, 1fr);
+      }
+
+      .certification-badge-stage {
+        width: 112px;
+      }
+
+      .certification-actions {
+        grid-column: 2;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .certification-spotlight.container {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .certification-spotlight-grid {
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 20px;
+        padding: 22px;
+      }
+
+      .certification-copy {
+        grid-column: 1 / -1;
+        grid-row: 1;
+      }
+
+      .certification-badge-stage {
+        grid-column: 1;
+        grid-row: 2;
+        width: 92px;
+      }
+
+      .certification-actions {
+        grid-column: 2;
+        grid-row: 2;
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .certification-spotlight {
+        padding-top: 30px;
+        padding-bottom: 36px;
+      }
+
+      .certification-spotlight.container {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .certification-spotlight-grid {
+        grid-template-columns: 82px minmax(0, 1fr);
+        gap: 16px;
+        padding: 18px;
+      }
+
+      .certification-badge-stage {
+        width: 82px;
+      }
+
+      .certification-copy h2 {
+        font-size: clamp(1.75rem, 9vw, 2.35rem);
+      }
+
+      .certification-intro {
+        font-size: 0.91rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .certification-actions .masthead-btn,
+      .certification-github-link {
+        transition: none;
+      }
+    }
+
     .figure-demo {
       padding: 24px 0 0;
       border-bottom: 1px solid var(--rule-soft);
@@ -893,30 +1102,34 @@
     }
 
     .colophon-cmd {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
-      gap: 12px;
       margin-top: 16px;
-      padding: 10px 16px;
       background: var(--code-bg);
       border: 1px solid var(--rule-soft);
       font-family: var(--font-mono);
       font-size: 0.85rem;
       color: var(--blueprint);
       max-width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden;
     }
 
     .colophon-cmd code {
+      display: block;
+      min-width: 0;
+      padding: 12px 14px;
+      overflow-x: auto;
       white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
     }
 
     .colophon-cmd .copy-chip {
       flex-shrink: 0;
-      position: sticky;
-      right: 0;
-      margin: 0;
+      position: static;
+      justify-content: center;
+      min-height: 34px;
+      margin: 8px 10px 8px 8px;
     }
 
     .books {
@@ -1057,8 +1270,7 @@
 
       .colophon-cmd {
         max-width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        overflow: hidden;
       }
     }
 
@@ -1271,6 +1483,24 @@
       .toc-num {
         font-size: 0.7rem;
       }
+
+      .colophon-cmd {
+        align-items: stretch;
+      }
+
+      .colophon-cmd code {
+        padding: 12px;
+        overflow-x: visible;
+        overflow-wrap: anywhere;
+        white-space: normal;
+        line-height: 1.55;
+      }
+
+      .colophon-cmd .copy-chip {
+        align-self: stretch;
+        min-width: 70px;
+        margin: 8px 8px 8px 0;
+      }
     }
 
 
@@ -1382,7 +1612,7 @@
             <span id="installCopyLabel" role="status" aria-live="polite">copy</span>
           </button>
         </div>
-        <pre id="installCmd"><span class="cmd-prompt">$</span> npx skills add rohitg00/ai-engineering-from-scratch
+        <pre id="installCmd">npx skills add rohitg00/ai-engineering-from-scratch
 <span class="cmd-prompt">&gt;</span> <span class="cmd-skill">/start-learning</span></pre>
         <div class="masthead-install-agents" aria-label="Works with any coding agent">
           <span class="agent-chip"><svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>Claude</span>
@@ -1474,12 +1704,11 @@
             <circle class="fig-term-dot" cx="84" cy="90" r="3.5"/>
             <circle class="fig-term-dot" cx="98" cy="90" r="3.5"/>
             <circle class="fig-term-dot" cx="112" cy="90" r="3.5"/>
-            <text class="fig-line fig-line--cmd" x="92" y="140" style="animation-delay: 0.35s">$ /learn</text>
+            <text class="fig-line fig-line--cmd" x="92" y="140" style="animation-delay: 0.35s">/learn</text>
             <text class="fig-line fig-line--agent" x="92" y="184" style="animation-delay: 1.1s">agent: today — attention. why divide by √d?</text>
             <text class="fig-line fig-line--you" x="92" y="228" style="animation-delay: 1.85s">you: it keeps softmax gradients alive</text>
             <text class="fig-line fig-line--agent" x="92" y="272" style="animation-delay: 2.6s">agent: exactly. quiz 3/3 — next we build it</text>
-            <text class="fig-line fig-line--cmd" x="92" y="316" style="animation-delay: 3.4s">$</text>
-            <rect class="fig-caret" x="106" y="304" width="9" height="15" style="animation-delay: 3.5s"/>
+            <rect class="fig-caret" x="92" y="304" width="9" height="15" style="animation-delay: 3.5s"/>
           </svg>
         </div>
         <div class="fig-panel" data-caption="One spine instead of scattered pieces — skill that compounds instead of plateauing.">
@@ -1565,8 +1794,6 @@
         </div>
       </div>
     </section>
-
-
     <section class="stat-block container">
       <div class="stat-block-title reveal reveal--left">Current Progress</div>
       <div class="stat-rows reveal" style="--stagger-delay: 100ms;" id="statRows">
@@ -1628,6 +1855,34 @@
       <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">The course, compiled. EPUB and PDF built from the same lessons and attached to every GitHub release. The site stays the living edition — every chapter links back here for the animated figures, quizzes, and code.</div>
       <div class="books-grid" id="booksGrid"></div>
       <div class="books-note">Links resolve to the newest <a href="https://github.com/rohitg00/ai-engineering-from-scratch/releases" target="_blank" rel="noopener">GitHub release</a> · rebuilt by CI from the lessons on every release · <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/book/README.md" target="_blank" rel="noopener">how it's made</a></div>
+    </section>
+
+    <section class="certification-spotlight container" id="certifications" aria-labelledby="certification-spotlight-title">
+      <div class="certification-spotlight-grid reveal">
+        <figure class="certification-badge-stage" aria-hidden="true">
+          <img
+            src="https://images.credly.com/images/f101c6ac-8a2d-4220-b381-70e3e6c364e3/blob"
+            width="601" height="601" loading="lazy" decoding="async" referrerpolicy="no-referrer"
+            alt="">
+        </figure>
+
+        <div class="certification-copy">
+          <span class="certification-eyebrow">Independent certification preparation</span>
+          <h2 id="certification-spotlight-title">Prepare by building the real systems</h2>
+          <p class="certification-intro">Four Claude certification paths taught the same way as the course: step by step, with interactive labs, practical artifacts, and an AI tutor that works from the GitHub repo.</p>
+          <div class="certification-proof" aria-label="Certification curriculum coverage">
+            <span><strong>4</strong> tracks</span>
+            <span><strong>33</strong> certification lessons</span>
+            <span><strong>295</strong> original practice questions</span>
+          </div>
+          <p class="certification-disclaimer">Not affiliated with, endorsed by, sponsored by, or authorized by Anthropic. This curriculum does not issue credentials or guarantee a passing result.</p>
+        </div>
+
+        <div class="certification-actions">
+          <a class="masthead-btn masthead-btn--primary" href="certifications.html">Explore certifications</a>
+          <a class="certification-github-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/certifications/claude/GETTING_STARTED.md" target="_blank" rel="noopener" aria-label="Use the certification tutor on GitHub (opens in a new tab)">Learn with the GitHub tutor</a>
+        </div>
+      </div>
     </section>
 
     <script>
@@ -1741,6 +1996,7 @@
       <div class="footer-links">
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
         <a href="about.html">About</a>
+        <a href="certifications.html">Certifications</a>
         <a href="catalog.html">Catalog</a>
         <a href="glossary.html">Glossary</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report</a>
@@ -1749,12 +2005,12 @@
   </footer>
 
   <script src="langs.js?v=20260802a"></script>
-  <script src="lang-picker.js?v=20260802a" defer></script>
-  <script src="data.js?v=20260801a"></script>
+  <script src="lang-picker.js?v=20260808d" defer></script>
+  <script src="data.js?v=20260808g"></script>
   <script src="progress.js?v=20260801a"></script>
-  <script src="header.js?v=20260801a" defer></script>
-  <script src="cmdpalette.js?v=20260801a" defer></script>
-  <script src="app.js?v=20260803b"></script>
+  <script src="header.js?v=20260808h" defer></script>
+  <script src="cmdpalette.js?v=20260808h" defer></script>
+  <script src="app.js?v=20260808f"></script>
   <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
 </body>
 </html>

@@ -124,7 +124,7 @@
       var statusClass = p.status.replace(/ /g, '-');
       var roman = toRoman(p.id);
       var num = String(p.id).padStart(2, '0');
-      html += '<div class="toc-row" data-phase="' + i + '">';
+      html += '<div class="toc-row" data-phase="' + i + '" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open Phase ' + num + ': ' + escapeHtml(p.name) + '">';
       html += '<span class="toc-num">' + roman + '.</span>';
       html += '<div><span class="toc-status ' + statusClass + '"></span><span class="toc-name">' + escapeHtml(p.name) + '</span></div>';
       html += '<span class="toc-meta">' + done + ' / ' + total + '</span>';
@@ -172,23 +172,54 @@
 
   function initModal() {
     var overlay = document.getElementById('modalOverlay');
+    var modal = document.getElementById('modal');
     var closeBtn = document.getElementById('modalClose');
-    if (!overlay || !closeBtn) return;
+    if (!overlay || !modal || !closeBtn) return;
+
+    overlay.setAttribute('aria-hidden', 'true');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'modalTitle');
+    modal.setAttribute('aria-describedby', 'modalDesc');
+    closeBtn.setAttribute('aria-label', 'Close phase details');
 
     document.addEventListener('click', function (e) {
       var row = e.target.closest('.toc-row, .phase-card');
       if (row) {
         var idx = parseInt(row.getAttribute('data-phase'), 10);
-        if (!isNaN(idx)) openModal(idx);
+        if (!isNaN(idx)) openModal(idx, false);
       }
     });
 
-    closeBtn.addEventListener('click', closeModal);
+    document.addEventListener('keydown', function (e) {
+      var row = e.target.closest && e.target.closest('.toc-row, .phase-card');
+      if (!row || (e.key !== 'Enter' && e.key !== ' ')) return;
+      e.preventDefault();
+      var idx = parseInt(row.getAttribute('data-phase'), 10);
+      if (!isNaN(idx)) openModal(idx, true);
+    });
+
+    closeBtn.addEventListener('click', function () { closeModal(false); });
     overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) closeModal();
+      if (e.target === overlay) closeModal(false);
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Escape') {
+        closeModal(true);
+        return;
+      }
+      if (e.key !== 'Tab' || !overlay.classList.contains('open')) return;
+      var focusable = modal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     });
 
     var resetBtn = document.getElementById('modalReset');
@@ -203,11 +234,13 @@
   }
 
   var currentPhaseIdx = -1;
+  var modalReturnFocus = null;
 
-  function openModal(idx) {
+  function openModal(idx, fromKeyboard) {
     var p = PHASES[idx];
     if (!p) return;
     currentPhaseIdx = idx;
+    modalReturnFocus = document.activeElement;
 
     document.getElementById('modalPhaseNum').textContent = 'PHASE ' + String(p.id).padStart(2, '0');
     document.getElementById('modalTitle').textContent = p.name;
@@ -215,8 +248,16 @@
 
     renderModalLessons(p);
 
-    document.getElementById('modalOverlay').classList.add('open');
+    var overlay = document.getElementById('modalOverlay');
+    overlay.classList.toggle('no-motion', !!fromKeyboard);
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function () {
+      var close = document.getElementById('modalClose');
+      if (close) close.focus();
+      overlay.classList.remove('no-motion');
+    });
   }
 
   function renderModalLessons(p) {
@@ -234,28 +275,27 @@
       var userComplete = hasProgress && lessonPath && window.AIFSProgress.isLessonComplete(lessonPath);
       if (userComplete) userDone++;
 
-      var statusClass = l.status.replace(/ /g, '-');
-      if (userComplete) statusClass = 'complete';
+      var canOpen = (l.status === 'complete' || userComplete) && lessonPath;
+      var lessonUrl = canOpen ? 'lesson.html?path=' + encodeURIComponent(lessonPath) : '';
+      var lessonLabel = escapeHtml(l.name);
+      var lessonMeta = '<span class="modal-lesson-meta"><span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Combines: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span><span aria-hidden="true">·</span><span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span></span>';
 
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
-      html += '<span class="modal-lesson-status ' + statusClass + '"' + (userComplete ? ' title="You completed this lesson"' : '') + '></span>';
-      if (l.url) {
-        html += '<a href="' + l.url + '" target="_blank" rel="noopener">' + escapeHtml(l.name) + '</a>';
+      if (canOpen) {
+        html += '<a href="' + lessonUrl + '" class="modal-lesson-open" aria-label="Open lesson: ' + lessonLabel + '">';
+        html += '<span class="modal-lesson-copy"><span class="modal-lesson-name">' + lessonLabel + '</span>' + lessonMeta + '</span>';
+        html += '<span class="modal-lesson-cta">' + (userComplete ? 'Review' : 'Open lesson') + '<span aria-hidden="true">→</span></span></a>';
       } else {
-        html += '<a>' + escapeHtml(l.name) + '</a>';
+        html += '<span class="modal-lesson-open is-unavailable" aria-disabled="true">';
+        html += '<span class="modal-lesson-copy"><span class="modal-lesson-name">' + lessonLabel + '</span>' + lessonMeta + '</span>';
+        html += '<span class="modal-lesson-cta">Coming soon</span></span>';
       }
-      html += '<span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Combines: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span>';
-      html += '<span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span>';
 
-      var actionHtml = '';
-      if ((l.status === 'complete' || userComplete) && lessonPath) {
-        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + (userComplete ? 'Review' : 'Read') + '</a>';
-      }
       var toggleHtml = '';
-      if (hasProgress && lessonPath) {
-        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '" aria-label="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '">' + (userComplete ? '✓' : '+') + '</button>';
+      if (hasProgress && canOpen) {
+        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '" aria-label="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '"><span class="modal-lesson-check" aria-hidden="true">' + (userComplete ? '✓' : '') + '</span><span class="modal-lesson-toggle-label">' + (userComplete ? 'Done' : 'Mark done') + '</span></button>';
       }
-      html += (actionHtml || '<span class="modal-lesson-read-placeholder" aria-hidden="true"></span>') + toggleHtml;
+      html += toggleHtml;
       html += '</div>';
     }
 
@@ -283,11 +323,16 @@
       var pct = Math.round((userDone / p.lessons.length) * 100);
       if (progEl) {
         progEl.style.display = '';
-        progEl.innerHTML = '<span class="modal-progress-count">' + userDone + ' / ' + p.lessons.length + '</span> <span class="modal-progress-label">completed</span> <span class="modal-progress-pct">' + pct + '%</span>';
+        progEl.innerHTML = '<span><strong class="modal-progress-count">' + userDone + '</strong> of ' + p.lessons.length + ' lessons complete</span><span class="modal-progress-pct">' + pct + '%</span>';
       }
       if (barEl && barFill) {
         barEl.style.display = '';
-        barFill.style.width = pct + '%';
+        barEl.setAttribute('role', 'progressbar');
+        barEl.setAttribute('aria-label', p.name + ' progress');
+        barEl.setAttribute('aria-valuemin', '0');
+        barEl.setAttribute('aria-valuemax', '100');
+        barEl.setAttribute('aria-valuenow', String(pct));
+        barFill.style.transform = 'scaleX(' + (pct / 100) + ')';
       }
     } else {
       if (progEl) progEl.style.display = 'none';
@@ -305,9 +350,20 @@
     });
   }
 
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
+  function closeModal(fromKeyboard) {
+    var overlay = document.getElementById('modalOverlay');
+    if (!overlay || !overlay.classList.contains('open')) return;
+    overlay.classList.toggle('no-motion', !!fromKeyboard);
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (modalReturnFocus && modalReturnFocus.isConnected && typeof modalReturnFocus.focus === 'function') {
+      modalReturnFocus.focus();
+    }
+    modalReturnFocus = null;
+    requestAnimationFrame(function () {
+      overlay.classList.remove('no-motion');
+    });
   }
 
   // One clipboard implementation for every copy chip on the site: debounced
@@ -315,27 +371,55 @@
   function wireCopyButton(btn, label, getText) {
     if (!btn || !label) return;
     var revertTimer = null;
+    var defaultLabel = label.textContent || 'copy';
+    var defaultAriaLabel = btn.getAttribute('aria-label') || 'Copy command';
+    function resetCopyState() {
+      label.textContent = defaultLabel;
+      btn.classList.remove('copied');
+      btn.setAttribute('aria-label', defaultAriaLabel);
+    }
+    function scheduleReset() {
+      if (revertTimer) clearTimeout(revertTimer);
+      revertTimer = setTimeout(resetCopyState, 1500);
+    }
     function confirmCopied() {
       label.textContent = 'copied';
       btn.classList.add('copied');
-      if (revertTimer) clearTimeout(revertTimer);
-      revertTimer = setTimeout(function () {
-        label.textContent = 'copy';
-        btn.classList.remove('copied');
-      }, 1500);
+      btn.setAttribute('aria-label', 'Command copied');
+      scheduleReset();
+    }
+    function reportCopyFailure() {
+      label.textContent = 'retry';
+      btn.classList.remove('copied');
+      btn.setAttribute('aria-label', 'Copy failed. Try again');
+      scheduleReset();
     }
     function fallbackCopy(text) {
       var ta = document.createElement('textarea');
       ta.value = text;
+      ta.setAttribute('readonly', '');
       ta.style.position = 'fixed';
+      ta.style.top = '0';
+      ta.style.left = '0';
+      ta.style.width = '1px';
+      ta.style.height = '1px';
       ta.style.opacity = '0';
       document.body.appendChild(ta);
+      ta.focus();
       ta.select();
-      try { document.execCommand('copy'); confirmCopied(); } catch (e) {}
+      ta.setSelectionRange(0, ta.value.length);
+      var copied = false;
+      try { copied = document.execCommand('copy'); } catch (e) {}
       ta.remove();
+      if (copied) confirmCopied();
+      else reportCopyFailure();
     }
     btn.addEventListener('click', function () {
       var text = getText();
+      if (!text) {
+        reportCopyFailure();
+        return;
+      }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(confirmCopied).catch(function () { fallbackCopy(text); });
       } else {

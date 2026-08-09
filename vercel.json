@@ -6,6 +6,9 @@
   "rewrites": [
     { "source": "/glossary", "destination": "/glossary.html" },
     { "source": "/catalog", "destination": "/catalog.html" },
+    { "source": "/certifications", "destination": "/certifications.html" },
+    { "source": "/certification", "destination": "/certification.html" },
+    { "source": "/assessment", "destination": "/assessment.html" },
     { "source": "/path", "destination": "/prereqs.html" },
     { "source": "/roadmap", "destination": "/prereqs.html" },
     { "source": "/about", "destination": "/about.html" }
@@ -15,6 +18,18 @@
       "source": "/(.*)\\.(css|js|png|jpg|jpeg|svg|webp|woff2|woff|ttf|ico)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000" }
+      ]
+    },
+    {
+      "source": "/certification-data.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/build-meta.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
       ]
     },
     {
@@ -30,7 +45,7 @@
       ]
     },
     {
-      "source": "/(glossary|catalog|path|roadmap)",
+      "source": "/(glossary|catalog|certifications|certification|assessment|path|roadmap)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" }
       ]

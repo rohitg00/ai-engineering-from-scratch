@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260803a">
+  <link rel="stylesheet" href="style.css?v=20260808f">
   <style>
     .catalog-page {
       padding: 100px 0 80px;
@@ -128,6 +128,12 @@
 
     .catalog-table th:hover {
       color: var(--accent);
+    }
+
+    .catalog-table th:focus-visible {
+      color: var(--accent);
+      outline: 2px solid var(--blueprint);
+      outline-offset: -4px;
     }
 
     .catalog-table th .sort-arrow {
@@ -259,26 +265,26 @@
         <p>Every lesson across all 20 phases. Search, filter, sort.</p>
       </div>
       <div class="catalog-controls">
-        <input type="text" class="catalog-search" id="catalogSearch" placeholder="Search lessons...">
-        <select class="catalog-filter" id="catalogPhase">
+        <input type="text" class="catalog-search" id="catalogSearch" placeholder="Search lessons..." aria-label="Search lessons">
+        <select class="catalog-filter" id="catalogPhase" aria-label="Filter by phase">
           <option value="">All Phases</option>
         </select>
-        <select class="catalog-filter" id="catalogStatus">
+        <select class="catalog-filter" id="catalogStatus" aria-label="Filter by lesson status">
           <option value="">All Status</option>
           <option value="complete">Complete</option>
           <option value="planned">Planned</option>
         </select>
       </div>
-      <div class="catalog-count" id="catalogCount"></div>
+      <div class="catalog-count" id="catalogCount" role="status" aria-live="polite"></div>
       <div class="catalog-table-wrap">
         <table class="catalog-table" id="catalogTable">
           <thead>
             <tr>
-              <th data-sort="phase">Phase <span class="sort-arrow"></span></th>
-              <th data-sort="name">Lesson <span class="sort-arrow"></span></th>
-              <th data-sort="type">Type <span class="sort-arrow"></span></th>
-              <th data-sort="lang">Language <span class="sort-arrow"></span></th>
-              <th data-sort="status">Status <span class="sort-arrow"></span></th>
+              <th scope="col" data-sort="phase" tabindex="0" aria-sort="ascending">Phase <span class="sort-arrow" aria-hidden="true"> ▲</span></th>
+              <th scope="col" data-sort="name" tabindex="0" aria-sort="none">Lesson <span class="sort-arrow" aria-hidden="true"></span></th>
+              <th scope="col" data-sort="type" tabindex="0" aria-sort="none">Type <span class="sort-arrow" aria-hidden="true"></span></th>
+              <th scope="col" data-sort="lang" tabindex="0" aria-sort="none">Language <span class="sort-arrow" aria-hidden="true"></span></th>
+              <th scope="col" data-sort="status" tabindex="0" aria-sort="none">Status <span class="sort-arrow" aria-hidden="true"></span></th>
             </tr>
           </thead>
           <tbody id="catalogBody"></tbody>
@@ -299,10 +305,10 @@
     </div>
   </footer>
 
-  <script src="data.js?v=20260525a"></script>
+  <script src="data.js?v=20260808g"></script>
   <script src="progress.js?v=20260525a"></script>
-  <script src="header.js?v=20260525a" defer></script>
-  <script src="cmdpalette.js?v=20260525a" defer></script>
+  <script src="header.js?v=20260808h" defer></script>
+  <script src="cmdpalette.js?v=20260808h" defer></script>
   <script>
     (function () {
       var root = document.documentElement;
@@ -367,6 +373,20 @@
         var sortCol = 'phase';
         var sortDir = 1;
 
+        function syncUrl() {
+          try {
+            var url = new URL(window.location.href);
+            var query = searchInput.value.trim();
+            if (query) url.searchParams.set('q', query);
+            else url.searchParams.delete('q');
+            if (phaseSelect.value) url.searchParams.set('phase', phaseSelect.value);
+            else url.searchParams.delete('phase');
+            if (statusSelect.value) url.searchParams.set('status', statusSelect.value);
+            else url.searchParams.delete('status');
+            history.replaceState(history.state, '', url.pathname + url.search + url.hash);
+          } catch (_) {}
+        }
+
         function escapeHtml(str) {
           var div = document.createElement('div');
           div.textContent = str;
@@ -426,31 +446,37 @@
             html += '<tr>';
             html += '<td><span class="catalog-phase-label">' + String(r.phase).padStart(2, '0') + '</span></td>';
             if (r.url) {
-              html += '<td><a href="' + r.url + '" target="_blank" rel="noopener">' + escapeHtml(r.name) + '</a></td>';
+              var localMatch = String(r.url).match(/(phases\/[^/]+\/[^/]+)\/?$/);
+              var lessonHref = localMatch ? 'lesson.html?path=' + encodeURI(localMatch[1]) : r.url;
+              html += '<td><a href="' + lessonHref + '"' + (localMatch ? '' : ' target="_blank" rel="noopener"') + '>' + escapeHtml(r.name) + '</a></td>';
             } else {
               html += '<td>' + escapeHtml(r.name) + '</td>';
             }
             html += '<td>' + escapeHtml(r.type) + '</td>';
             html += '<td><span class="catalog-lang">' + escapeHtml(r.lang) + '</span></td>';
-            html += '<td><span class="catalog-status-dot ' + r.status + '"></span>' + r.status + '</td>';
+            html += '<td><span class="catalog-status-dot ' + r.status + '" aria-hidden="true"></span>' + r.status + '</td>';
             html += '</tr>';
           }
           bodyEl.innerHTML = html;
         }
 
-        var urlQuery = new URLSearchParams(window.location.search).get('q');
+        var initialParams = new URLSearchParams(window.location.search);
+        var urlQuery = initialParams.get('q');
         if (urlQuery) {
           searchInput.value = urlQuery;
           try { searchInput.setSelectionRange(urlQuery.length, urlQuery.length); } catch (_) {}
           try { searchInput.focus({ preventScroll: true }); } catch (_) { searchInput.focus(); }
         }
+        var urlPhase = initialParams.get('phase');
+        var urlStatus = initialParams.get('status');
+        if (urlPhase && Array.prototype.some.call(phaseSelect.options, function (option) { return option.value === urlPhase; })) phaseSelect.value = urlPhase;
+        if (urlStatus && Array.prototype.some.call(statusSelect.options, function (option) { return option.value === urlStatus; })) statusSelect.value = urlStatus;
 
-        searchInput.addEventListener('input', render);
-        phaseSelect.addEventListener('change', render);
-        statusSelect.addEventListener('change', render);
+        searchInput.addEventListener('input', function () { syncUrl(); render(); });
+        phaseSelect.addEventListener('change', function () { syncUrl(); render(); });
+        statusSelect.addEventListener('change', function () { syncUrl(); render(); });
 
-        document.querySelectorAll('.catalog-table th[data-sort]').forEach(function (th) {
-          th.addEventListener('click', function () {
+        function applySort(th) {
             var col = th.getAttribute('data-sort');
             if (sortCol === col) {
               sortDir = sortDir * -1;
@@ -458,11 +484,20 @@
               sortCol = col;
               sortDir = 1;
             }
-            document.querySelectorAll('.catalog-table th .sort-arrow').forEach(function (a) {
-              a.textContent = '';
+            document.querySelectorAll('.catalog-table th[data-sort]').forEach(function (header) {
+              header.setAttribute('aria-sort', header === th ? (sortDir === 1 ? 'ascending' : 'descending') : 'none');
+              header.querySelector('.sort-arrow').textContent = '';
             });
             th.querySelector('.sort-arrow').textContent = sortDir === 1 ? ' \u25B2' : ' \u25BC';
             render();
+        }
+
+        document.querySelectorAll('.catalog-table th[data-sort]').forEach(function (th) {
+          th.addEventListener('click', function () { applySort(th); });
+          th.addEventListener('keydown', function (event) {
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            event.preventDefault();
+            applySort(th);
           });
         });
 
