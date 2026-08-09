@@ -1,0 +1,78 @@
+{
+  "lesson": "05-output-evaluation-and-validation",
+  "title": "Validate the Claim, Not the Confidence",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A report includes a citation beside every claim. What must validation still establish?",
+      "options": [
+        "That each source is authoritative and supports the exact claim",
+        "That every factual sentence has one citation even when several claims share evidence",
+        "That the citation format is consistent and all links resolve without redirects",
+        "That every linked page shares one publication date"
+      ],
+      "correct": 0,
+      "explanation": "Citation presence does not prove authority, completeness, or entailment. The evidence must support the specific claim."
+    },
+    {
+      "stage": "check",
+      "question": "Which evaluator should check whether returned JSON parses and contains required fields?",
+      "options": [
+        "A model-based schema grader",
+        "A deterministic parser and schema check",
+        "The generating model asked to confirm that its own response follows the schema",
+        "A human reviewer applying a checklist to every returned object before use"
+      ],
+      "correct": 1,
+      "explanation": "Exact structural properties should be checked programmatically because the result is repeatable and unambiguous."
+    },
+    {
+      "stage": "check",
+      "question": "A response gives a fluent answer about a policy published after the supplied source snapshot. Which repair best targets the knowledge limitation?",
+      "options": [
+        "Increase the output length so the model can explain its recall",
+        "Treat polished wording as evidence that the policy is already known",
+        "Add the current approved policy as evidence and rerun claim-support checks",
+        "Ask for the same answer again with a higher confidence threshold"
+      ],
+      "correct": 2,
+      "explanation": "A knowledge gap needs authoritative current context and validation. A generic retry does not change the information available to the workflow."
+    },
+    {
+      "stage": "check",
+      "question": "An aggregate evaluation score is 95 percent, but high-impact exception cases pass only 40 percent. What should control deployment?",
+      "options": [
+        "A weighted average that assigns exception cases their expected traffic frequency only",
+        "The normal-case score plus a plan to monitor exceptions after full deployment",
+        "The aggregate score, provided the exception cases represent less than 5 percent of traffic",
+        "The risk-segment failure and required release threshold"
+      ],
+      "correct": 3,
+      "explanation": "Performance must be segmented by consequence. A high average cannot hide unacceptable behavior on critical cases."
+    },
+    {
+      "stage": "post",
+      "question": "A response states that training caused lower returns, but the source only shows that training occurred first. What defect is this?",
+      "options": [
+        "Overreach from correlation to causation",
+        "A completeness failure because the response did not cite every event in the timeline",
+        "An audience failure because causal language is acceptable only in technical reports",
+        "A provenance failure because temporal order cannot be represented in a citation"
+      ],
+      "correct": 0,
+      "explanation": "The conclusion is stronger than the evidence, so the claim-evidence relationship fails even if both events are real."
+    },
+    {
+      "stage": "post",
+      "question": "What is the strongest response to a material production failure?",
+      "options": [
+        "Raise the model's confidence threshold without locating the layer that caused the failure",
+        "Add a durable evaluation case and repair the relevant criterion, source, prompt, or workflow control",
+        "Correct the affected output and add a manual review step for similar requests this week",
+        "Exclude the failed example from aggregate reporting because production inputs are uncontrolled"
+      ],
+      "correct": 1,
+      "explanation": "Closing the loop prevents recurrence by making the failure part of future testing and system design."
+    }
+  ]
+}

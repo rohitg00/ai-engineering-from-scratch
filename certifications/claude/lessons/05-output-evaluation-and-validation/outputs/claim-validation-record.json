@@ -1,0 +1,55 @@
+{
+  "recordId": "weekly-brief-validation-v3",
+  "sourceSnapshot": "2026-W31",
+  "sources": [
+    {"id": "dataset-returns", "authority": "primary-data"},
+    {"id": "interview-07", "authority": "anecdotal"},
+    {"id": "policy-4.2", "authority": "approved-policy"}
+  ],
+  "claims": [
+    {"id": "C-01", "claim": "Returns rose in the North region", "sourceIds": ["dataset-returns"], "support": "direct-calculation", "severity": "required", "result": "pass"},
+    {"id": "C-02", "claim": "Training caused the change", "sourceIds": ["interview-07"], "support": "speculative", "severity": "blocker", "result": "fail"},
+    {"id": "C-03", "claim": "Refund exceptions require approval", "sourceIds": ["policy-4.2"], "support": "direct-policy", "severity": "blocker", "result": "pass"},
+    {"id": "C-04", "claim": "All seven regions are represented", "sourceIds": ["dataset-returns"], "support": "coverage-check", "severity": "required", "result": "pass"}
+  ],
+  "capabilityDiagnostic": {
+    "unexpectedOutput": "The brief states that training caused lower returns even though the evidence only establishes timing.",
+    "primaryProperty": "next-token-prediction",
+    "humanCompetency": "discernment",
+    "properties": [
+      {
+        "id": "next-token-prediction",
+        "evidence": "The generated causal continuation is plausible but not entailed by the interview note.",
+        "targetedFix": "Require quoted supporting spans and abstention when no source establishes causation."
+      },
+      {
+        "id": "knowledge",
+        "evidence": "The workflow is constrained to the supplied snapshot and has no approved causal study.",
+        "targetedFix": "Retrieve an authoritative current study or remove the causal claim."
+      },
+      {
+        "id": "working-memory",
+        "evidence": "All four claims and their source records are present in the review packet.",
+        "targetedFix": "Keep the claim-evidence matrix adjacent during revision so coverage remains verifiable."
+      },
+      {
+        "id": "steerability",
+        "evidence": "The generation contract did not prohibit causal language without direct support.",
+        "targetedFix": "Add an acceptance test that causal claims require direct causal evidence."
+      }
+    ]
+  },
+  "evaluatorAssignments": {
+    "schema": "deterministic",
+    "totals": "deterministic",
+    "claimSupport": "evidence-review",
+    "audienceFit": "human-rubric"
+  },
+  "uncertainties": ["West region sample is smaller than the target"],
+  "release": {
+    "blockerFailures": 1,
+    "requiredFailures": 0,
+    "decision": "revise",
+    "nextAction": "Remove the causal claim or obtain authoritative causal evidence"
+  }
+}
