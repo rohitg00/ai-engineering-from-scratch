@@ -1,0 +1,6 @@
+{
+  "category": "bug",
+  "priority": 4,
+  "summary": "App crashes after login",
+  "needs_human": true
+}

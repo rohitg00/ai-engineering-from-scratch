@@ -1,0 +1,78 @@
+{
+  "lesson": "09-structured-output-and-defensive-parsing",
+  "title": "Structured Output Is an Untrusted Contract",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A response is valid JSON and matches its schema. What has not yet been proven?",
+      "options": [
+        "That its claims are true and its proposed action is authorized",
+        "That every required key is present and no forbidden key was returned",
+        "That the response can be parsed into the declared primitive field types",
+        "That enum membership, string lengths, and numeric bounds are structurally valid"
+      ],
+      "correct": 0,
+      "explanation": "Syntax and schema validation do not establish semantic truth, resource ownership, or permission to act."
+    },
+    {
+      "stage": "check",
+      "question": "Why is silently converting the string \"4\" to integer 4 risky?",
+      "options": [
+        "It should occur before parsing so the producer's original value stays observable",
+        "It hides a contract violation and can make incompatible output appear valid",
+        "It preserves intent but prevents the validator from checking numeric bounds",
+        "It is safe whenever the schema also allows numeric strings through a union type"
+      ],
+      "correct": 1,
+      "explanation": "Optimistic coercion changes the returned value and masks a producer or schema problem. Strict parsing keeps failures observable."
+    },
+    {
+      "stage": "check",
+      "question": "Which schema choice best prevents new model-generated fields from leaking into logs?",
+      "options": [
+        "Store the raw response in restricted logs before parsing downstream fields",
+        "Accept extra fields and rely on log-redaction rules to remove sensitive ones",
+        "Set additionalProperties to false and map only approved fields",
+        "Allow optional extension fields but omit them from the user-facing result"
+      ],
+      "correct": 2,
+      "explanation": "Rejecting unexpected fields and explicitly mapping the validated contract prevents accidental propagation of unapproved content."
+    },
+    {
+      "stage": "check",
+      "question": "When should a bounded repair loop stop and escalate rather than keep requesting JSON?",
+      "options": [
+        "After the first structural failure, even when the evidence and repair are clear",
+        "Only when context and rate limits are reached during the same attempt",
+        "Whenever a schema-valid object fails one semantic business rule",
+        "When required evidence is absent or the retry budget is exhausted"
+      ],
+      "correct": 3,
+      "explanation": "Repair can correct formatting or shape. It cannot safely invent missing evidence, and unlimited retries waste budget and amplify hostile input."
+    },
+    {
+      "stage": "post",
+      "question": "A structured stream currently contains only {\"category\":\"bill. What should the application do?",
+      "options": [
+        "Buffer it until the content block and message complete, then parse and validate",
+        "Complete the obvious suffix locally, then validate the reconstructed object",
+        "Treat the prefix as malformed final JSON and begin a repair request immediately",
+        "Route it to billing provisionally because the observed prefix matches that category"
+      ],
+      "correct": 0,
+      "explanation": "The prefix is incomplete, not a finished contract. No downstream action should run until the stream completes and the full value passes validation."
+    },
+    {
+      "stage": "post",
+      "question": "Which component should verify that a refund does not exceed the authenticated user's charge?",
+      "options": [
+        "A constrained schema that limits refunds to a global maximum amount",
+        "Deterministic application code using authenticated identity and trusted charge records",
+        "A model reviewer that checks whether the refund seems proportionate",
+        "A system instruction that compares the amount with retrieved charge history"
+      ],
+      "correct": 1,
+      "explanation": "Ownership and monetary bounds are semantic and authorization checks. They require authenticated state and trusted application data."
+    }
+  ]
+}
