@@ -1,0 +1,78 @@
+{
+  "lesson": "02-model-selection-and-token-economics",
+  "title": "Spend Capability Where Failure Is Expensive",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the strongest model-selection rule?",
+      "options": [
+        "Use the strongest model for external outputs and smaller models for internal drafts",
+        "Use the smallest model that clears measured requirements with adequate margin",
+        "Use the newest model meeting context and modality needs",
+        "Use the lowest-cost model that passes one average-quality benchmark on sample inputs"
+      ],
+      "correct": 1,
+      "explanation": "Selection should follow representative quality, latency, cost, and risk criteria, not product rank."
+    },
+    {
+      "stage": "check",
+      "question": "A summary omits a policy exception because the policy was never supplied. Which failure layer is primary?",
+      "options": [
+        "A context-placement failure because the exception was supplied too far from the task",
+        "A caching failure because the policy should have persisted from an earlier request",
+        "A source failure because required authoritative evidence never entered the workflow",
+        "A model-capability failure because the model did not infer the missing exception"
+      ],
+      "correct": 2,
+      "explanation": "The model cannot reliably use a fact that was absent from its available sources. Upgrade is not the first repair."
+    },
+    {
+      "stage": "check",
+      "question": "Which cost comparison is most complete?",
+      "options": [
+        "Input and output token price multiplied by the expected request volume",
+        "Benchmark score divided by published token price",
+        "Average API cost per call plus infrastructure spend, excluding human correction",
+        "Token cost plus request volume, review, failures, and rework"
+      ],
+      "correct": 3,
+      "explanation": "A cheaper call can produce a more expensive workflow when correction and failure costs are ignored."
+    },
+    {
+      "stage": "check",
+      "question": "Two identical requests to a pinned model produce different valid phrasings even with the lowest supported sampling randomness. What is the strongest evaluation response?",
+      "options": [
+        "Expect variation, repeat the evaluation, and score the required behavior",
+        "Compare only the average word count because semantic variation cannot be evaluated deterministically",
+        "Lower temperature until every response is identical, then use one run per release",
+        "Reject the pinned model because a fixed identifier guarantees byte-identical output"
+      ],
+      "correct": 0,
+      "explanation": "Pinned model weights and low randomness do not guarantee identical output. Repeated trials plus deterministic behavior checks provide stronger evidence."
+    },
+    {
+      "stage": "post",
+      "question": "Low effort fails one repeated quality run. High effort clears quality, p95 latency, and cost. A supported fast route clears quality and latency but exceeds the cost gate. Which configuration should be selected?",
+      "options": [
+        "The fast route because lower latency should override a predeclared cost gate",
+        "High effort because it is the least costly supported configuration that clears every gate",
+        "Low effort because its average quality can hide the failing run",
+        "Whichever configuration current marketing material describes as most capable"
+      ],
+      "correct": 1,
+      "explanation": "The predeclared gate controls the decision. High effort is the only supported configuration in the scenario that satisfies quality, tail latency, and cost together."
+    },
+    {
+      "stage": "post",
+      "question": "What does an official passing threshold of 720 on a 100-to-1,000 scaled score mean for a practice quiz?",
+      "options": [
+        "A 72 percent practice score is equivalent when domain weights match the guide",
+        "The practice target should be exactly 72 percent correct",
+        "The scaled threshold cannot be converted into a raw percentage; practice percentages remain readiness evidence only",
+        "Any raw score above 720 divided by ten predicts an official pass"
+      ],
+      "correct": 2,
+      "explanation": "Scaled scoring equates exam forms and is not raw percent correct. Community practice scores cannot be converted to or predict the official result."
+    }
+  ]
+}

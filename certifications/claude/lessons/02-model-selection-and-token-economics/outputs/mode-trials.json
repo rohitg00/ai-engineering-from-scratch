@@ -1,0 +1,191 @@
+{
+  "experimentId": "operations-mode-trials-v1",
+  "verifiedOn": "2026-08-09",
+  "measurementStatus": "illustrative-not-live-provider-runs",
+  "settingSemantics": "settings contains normalized experiment labels. Standard speed means omitting the speed request field. Fast speed requires the documented request field, beta header, platform, and access prerequisites recorded on that configuration.",
+  "task": "Resolve an ambiguous refund-policy exception from two dated source documents and return a reviewed JSON recommendation",
+  "gate": {
+    "minimumRunCount": 3,
+    "minimumQuality": 0.95,
+    "maximumP95LatencyMs": 8000,
+    "maximumMeanCostUnits": 5.0
+  },
+  "verificationPolicy": {
+    "refreshBeforeExperiment": true,
+    "rule": "Verify model and platform support in current official documentation before running or copying any configuration.",
+    "sources": [
+      {
+        "id": "sampling-reference",
+        "verifiedOn": "2026-08-09",
+        "claim": "Sampling controls are model-dependent, and even temperature zero on models that accept it is not fully deterministic.",
+        "sourceUrl": "https://platform.claude.com/docs/en/api/messages/create"
+      },
+      {
+        "id": "sampling-support",
+        "verifiedOn": "2026-08-09",
+        "claim": "Current Messages guidance says Claude 4.7 and later reject non-default temperature, top_p, and top_k values.",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/working-with-messages"
+      },
+      {
+        "id": "model-versioning",
+        "verifiedOn": "2026-08-09",
+        "claim": "A pinned model ID fixes model weights, while serving infrastructure can still change observable behavior.",
+        "sourceUrl": "https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions"
+      },
+      {
+        "id": "models-overview",
+        "verifiedOn": "2026-08-09",
+        "claim": "The models overview lists claude-sonnet-5 and claude-opus-5 as the exact Claude API IDs and lists adaptive thinking for both.",
+        "sourceUrl": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      },
+      {
+        "id": "sonnet-5-configuration",
+        "verifiedOn": "2026-08-09",
+        "claim": "Claude Sonnet 5 uses claude-sonnet-5, has adaptive thinking on by default, accepts thinking disabled, and supports the low and high effort values used here.",
+        "sourceUrl": "https://platform.claude.com/docs/en/about-claude/models/whats-new-sonnet-5"
+      },
+      {
+        "id": "opus-5-configuration",
+        "verifiedOn": "2026-08-09",
+        "claim": "Claude Opus 5 uses claude-opus-5, accepts adaptive thinking, and supports the medium effort value used here.",
+        "sourceUrl": "https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5"
+      },
+      {
+        "id": "thinking-configuration",
+        "verifiedOn": "2026-08-09",
+        "claim": "Claude Opus 5 and Sonnet 5 have thinking enabled by default; adaptive is accepted, and model-specific rules govern disabling it.",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/thinking"
+      },
+      {
+        "id": "effort-control",
+        "verifiedOn": "2026-08-09",
+        "claim": "Claude Sonnet 5 supports low and high effort, Claude Opus 5 supports medium effort, and effort is a behavioral signal rather than a strict token budget.",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort"
+      },
+      {
+        "id": "fast-mode",
+        "verifiedOn": "2026-08-09",
+        "claim": "Fast mode lists Claude Opus 5, not Claude Sonnet 5, as supported; it is a Claude API research preview requiring access, speed fast, and the fast-mode-2026-02-01 beta header, with premium pricing.",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/fast-mode"
+      }
+    ]
+  },
+  "configurations": [
+    {
+      "id": "sonnet-standard-low",
+      "modelId": "claude-sonnet-5",
+      "platform": "claude-api",
+      "settings": {"speed": "standard", "effort": "low", "thinking": "adaptive"},
+      "support": {
+        "status": "docs-supported",
+        "verifiedOn": "2026-08-09",
+        "sourceIds": ["models-overview", "sonnet-5-configuration", "thinking-configuration", "effort-control"]
+      },
+      "runs": [
+        {"id": "low-01", "quality": 0.94, "latencyMs": 3400, "costUnits": 1.5, "outcomeFingerprint": "approve-with-two-citations"},
+        {"id": "low-02", "quality": 0.91, "latencyMs": 3800, "costUnits": 1.5, "outcomeFingerprint": "escalate-missing-exception"},
+        {"id": "low-03", "quality": 0.96, "latencyMs": 3600, "costUnits": 1.5, "outcomeFingerprint": "approve-with-three-citations"}
+      ],
+      "summary": {"runCount": 3, "minimumQuality": 0.91, "p95LatencyMs": 3800, "meanCostUnits": 1.5, "passesGate": false}
+    },
+    {
+      "id": "sonnet-standard-high",
+      "modelId": "claude-sonnet-5",
+      "platform": "claude-api",
+      "settings": {"speed": "standard", "effort": "high", "thinking": "adaptive"},
+      "support": {
+        "status": "docs-supported",
+        "verifiedOn": "2026-08-09",
+        "sourceIds": ["models-overview", "sonnet-5-configuration", "thinking-configuration", "effort-control"]
+      },
+      "runs": [
+        {"id": "high-01", "quality": 0.98, "latencyMs": 7100, "costUnits": 3.0, "outcomeFingerprint": "escalate-with-policy-conflict"},
+        {"id": "high-02", "quality": 0.96, "latencyMs": 7600, "costUnits": 3.0, "outcomeFingerprint": "escalate-with-date-conflict"},
+        {"id": "high-03", "quality": 0.97, "latencyMs": 7300, "costUnits": 3.0, "outcomeFingerprint": "escalate-with-two-conflicts"}
+      ],
+      "summary": {"runCount": 3, "minimumQuality": 0.96, "p95LatencyMs": 7600, "meanCostUnits": 3.0, "passesGate": true}
+    },
+    {
+      "id": "sonnet-standard-high-disabled",
+      "modelId": "claude-sonnet-5",
+      "platform": "claude-api",
+      "settings": {"speed": "standard", "effort": "high", "thinking": "disabled"},
+      "support": {
+        "status": "docs-supported",
+        "verifiedOn": "2026-08-09",
+        "sourceIds": ["models-overview", "sonnet-5-configuration", "thinking-configuration", "effort-control"]
+      },
+      "runs": [
+        {"id": "disabled-01", "quality": 0.92, "latencyMs": 5000, "costUnits": 2.4, "outcomeFingerprint": "approve-without-date-conflict"},
+        {"id": "disabled-02", "quality": 0.95, "latencyMs": 5400, "costUnits": 2.4, "outcomeFingerprint": "escalate-with-policy-conflict"},
+        {"id": "disabled-03", "quality": 0.93, "latencyMs": 5200, "costUnits": 2.4, "outcomeFingerprint": "approve-with-one-conflict"}
+      ],
+      "summary": {"runCount": 3, "minimumQuality": 0.92, "p95LatencyMs": 5400, "meanCostUnits": 2.4, "passesGate": false}
+    },
+    {
+      "id": "opus-standard-medium",
+      "modelId": "claude-opus-5",
+      "platform": "claude-api",
+      "settings": {"speed": "standard", "effort": "medium", "thinking": "adaptive"},
+      "support": {
+        "status": "docs-supported",
+        "verifiedOn": "2026-08-09",
+        "sourceIds": ["models-overview", "opus-5-configuration", "thinking-configuration", "effort-control"]
+      },
+      "runs": [
+        {"id": "opus-standard-01", "quality": 0.98, "latencyMs": 7200, "costUnits": 4.5, "outcomeFingerprint": "escalate-with-policy-conflict"},
+        {"id": "opus-standard-02", "quality": 0.97, "latencyMs": 7800, "costUnits": 4.5, "outcomeFingerprint": "escalate-with-date-conflict"},
+        {"id": "opus-standard-03", "quality": 0.98, "latencyMs": 7500, "costUnits": 4.5, "outcomeFingerprint": "escalate-with-two-conflicts"}
+      ],
+      "summary": {"runCount": 3, "minimumQuality": 0.97, "p95LatencyMs": 7800, "meanCostUnits": 4.5, "passesGate": true}
+    },
+    {
+      "id": "opus-fast-medium",
+      "modelId": "claude-opus-5",
+      "platform": "claude-api",
+      "settings": {"speed": "fast", "effort": "medium", "thinking": "adaptive"},
+      "support": {
+        "status": "docs-supported",
+        "verifiedOn": "2026-08-09",
+        "sourceIds": ["models-overview", "opus-5-configuration", "thinking-configuration", "effort-control", "fast-mode"]
+      },
+      "requestRequirements": {
+        "access": "Anthropic fast-mode research-preview access is required, and capacity is not guaranteed.",
+        "requestField": "speed: fast",
+        "betaHeaders": ["anthropic-beta: fast-mode-2026-02-01"]
+      },
+      "runs": [
+        {"id": "fast-01", "quality": 0.98, "latencyMs": 3900, "costUnits": 8.0, "outcomeFingerprint": "escalate-with-policy-conflict"},
+        {"id": "fast-02", "quality": 0.97, "latencyMs": 4200, "costUnits": 8.0, "outcomeFingerprint": "escalate-with-date-conflict"},
+        {"id": "fast-03", "quality": 0.98, "latencyMs": 4100, "costUnits": 8.0, "outcomeFingerprint": "escalate-with-two-conflicts"}
+      ],
+      "summary": {"runCount": 3, "minimumQuality": 0.97, "p95LatencyMs": 4200, "meanCostUnits": 8.0, "passesGate": false}
+    },
+    {
+      "id": "sonnet-fast-high",
+      "modelId": "claude-sonnet-5",
+      "platform": "claude-api",
+      "settings": {"speed": "fast", "effort": "high", "thinking": "adaptive"},
+      "support": {
+        "status": "docs-unsupported",
+        "verifiedOn": "2026-08-09",
+        "sourceIds": ["models-overview", "fast-mode"]
+      },
+      "runs": [],
+      "rejectionReason": "Current fast-mode documentation does not list this model as supported; do not send a trial request until current docs say otherwise."
+    }
+  ],
+  "selectedConfiguration": "sonnet-standard-high",
+  "decision": {
+    "why": "Within these illustrative measurements, it is the least costly docs-supported configuration that clears repeated-run quality and p95 latency gates; documentation support does not prove account entitlement or a successful live request.",
+    "repeatPolicy": "Run every supported configuration at least three times on each risk slice and compare minimum quality, tail latency, and mean accepted-outcome cost.",
+    "changePolicy": "Rerun documentation verification and the full repeated evaluation when the model ID, platform, speed, effort, thinking behavior, prompt, tools, or serving assumptions change.",
+    "rejected": [
+      "Low effort failed the minimum-quality gate on one repeated run.",
+      "Disabling thinking at high effort reduced cost and latency but failed the minimum-quality gate.",
+      "Standard-speed Opus cleared the gates but cost more than the selected Sonnet configuration.",
+      "Fast Opus met quality and latency but exceeded the cost gate.",
+      "Unsupported combinations are recorded as rejected evidence, not attempted or silently downgraded."
+    ]
+  }
+}
