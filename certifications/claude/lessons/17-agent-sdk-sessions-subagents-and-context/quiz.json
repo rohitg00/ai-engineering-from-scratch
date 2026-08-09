@@ -1,0 +1,78 @@
+{
+  "lesson": "17-agent-sdk-sessions-subagents-and-context",
+  "title": "Agent SDK Sessions, Subagents, and Context",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Where should an agent store authoritative task completion, approvals, and external side-effect IDs?",
+      "options": [
+        "In the session summary so resumption preserves completion and approval claims",
+        "In a stable system instruction listing approvals and last-known side-effect IDs",
+        "In durable external state with references loaded into context",
+        "In a structured confidence record attached to each completed operation"
+      ],
+      "correct": 2,
+      "explanation": "Conversation is a working set. Durable state provides versioning, reconciliation, idempotency, and recovery across sessions or context loss."
+    },
+    {
+      "stage": "check",
+      "question": "When is forking a session stronger than resuming it?",
+      "options": [
+        "When no prior state exists and two agents need independently written plans",
+        "When the original task is complete but its session should remain available for reference",
+        "When continuing the same reconciled plan after any external-state tool call",
+        "When exploring an alternative must preserve the original branch and isolate mutations"
+      ],
+      "correct": 3,
+      "explanation": "A fork preserves a common starting point while allowing isolated exploration. Resume continues one valid trajectory after external-state reconciliation."
+    },
+    {
+      "stage": "check",
+      "question": "What does compaction solve?",
+      "options": [
+        "Context size pressure while retaining a compact current working set",
+        "Revalidation of user identity and current scopes after a long pause",
+        "Durable recording of approvals and external transactions across restarts",
+        "Reconciliation of ambiguous side effects that may have completed before timeout"
+      ],
+      "correct": 0,
+      "explanation": "Compaction reduces context volume. Durable state, authorization, and side-effect reconciliation remain separate system responsibilities."
+    },
+    {
+      "stage": "check",
+      "question": "Which use is best for a pre-tool hook?",
+      "options": [
+        "Choose which unresolved hypothesis deserves the next research pass",
+        "Block a write outside the declared file scope",
+        "Rewrite an explanation until a grader considers it sufficiently persuasive",
+        "Decide whether a legal clause creates material risk under the current facts"
+      ],
+      "correct": 1,
+      "explanation": "Scope is a deterministic invariant that can be checked before execution. Semantic judgments belong in the model with evaluation and appropriate review."
+    },
+    {
+      "stage": "post",
+      "question": "A timeout occurs after a refund request may have succeeded. What should happen before retry?",
+      "options": [
+        "Retry immediately with the same key because identical requests are always safe",
+        "Resume with a larger model and infer completion from the session event sequence",
+        "Reconcile the idempotency key and external result to determine whether the side effect occurred",
+        "Mark the call failed locally, then issue a new refund operation identifier"
+      ],
+      "correct": 2,
+      "explanation": "An unknown outcome can make a retry duplicate a high-impact action. Reconciliation establishes current truth and makes the next operation safe."
+    },
+    {
+      "stage": "post",
+      "question": "A dependency changed materially since an agent session paused. What is the strongest continuation strategy?",
+      "options": [
+        "Append all prior tool logs so the existing context can adapt without replanning",
+        "Fork from the paused session without reconciliation so the original branch is preserved",
+        "Resume the old plan but ask the agent to account for the dependency while working",
+        "Revalidate state, mark stale assumptions, and start or fork with a fresh structured plan"
+      ],
+      "correct": 3,
+      "explanation": "Material external change invalidates the prior trajectory. A fresh working context built from durable current state avoids forcing stale assumptions through resume."
+    }
+  ]
+}
