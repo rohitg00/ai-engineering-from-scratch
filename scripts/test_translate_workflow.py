@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Regression checks for the phase-only translation workflow publisher."""
+"""Regression checks for scoped lesson translation and its workflow publisher."""
 
 from __future__ import annotations
 
+import importlib.util
+import io
 import os
 import shlex
 import stat
@@ -10,13 +12,20 @@ import subprocess
 import tempfile
 import textwrap
 import unittest
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "translate.yml"
 PREPARE_STEP = "      - id: set"
-PUBLISH_STEP = "      - name: Publish this phase slice to translations branch (race-safe)"
+PUBLISH_STEP = "      - name: Publish this translation slice (race-safe)"
+TRANSLATOR_PATH = ROOT / "scripts" / "translate_lessons.py"
+TRANSLATOR_SPEC = importlib.util.spec_from_file_location("translate_lessons_under_test", TRANSLATOR_PATH)
+assert TRANSLATOR_SPEC and TRANSLATOR_SPEC.loader
+TRANSLATOR = importlib.util.module_from_spec(TRANSLATOR_SPEC)
+TRANSLATOR_SPEC.loader.exec_module(TRANSLATOR)
 
 
 def run(
@@ -53,7 +62,7 @@ def publish_script() -> str:
     return step_script(PUBLISH_STEP)
 
 
-def create_publisher_fixture(root: Path) -> tuple[Path, Path, Path]:
+def create_publisher_fixture(root: Path, *, certification: bool = False) -> tuple[Path, Path, Path]:
     source = root / "source"
     remote = root / "remote.git"
     runner_temp = root / "runner"
@@ -65,7 +74,7 @@ def create_publisher_fixture(root: Path) -> tuple[Path, Path, Path]:
     run("git", "config", "user.name", "test", cwd=source)
     run("git", "config", "user.email", "test@example.com", cwd=source)
     (source / ".gitignore").write_text(
-        "i18n/*/phases/\ni18n/*/.cache/\n", encoding="utf-8"
+        "i18n/*/phases/\ni18n/*/certifications/\ni18n/*/.cache/\n", encoding="utf-8"
     )
     (source / "README.md").write_text("English source\n", encoding="utf-8")
     run("git", "add", ".gitignore", "README.md", cwd=source)
@@ -73,22 +82,29 @@ def create_publisher_fixture(root: Path) -> tuple[Path, Path, Path]:
     run("git", "remote", "add", "origin", str(remote), cwd=source)
     run("git", "push", "origin", "main", cwd=source)
 
-    translated = source / "i18n/fr/phases/01-foundations/lesson.md"
+    translated = source / (
+        "i18n/fr/certifications/claude/lessons/01-api/docs/fr.md"
+        if certification else "i18n/fr/phases/01-foundations/lesson.md"
+    )
     translated.parent.mkdir(parents=True)
     translated.write_text("traduit\n", encoding="utf-8")
-    cache = source / "i18n/fr/.cache/01-foundations.json"
+    cache_name = "certifications-claude.json" if certification else "01-foundations.json"
+    cache = source / f"i18n/fr/.cache/{cache_name}"
     cache.parent.mkdir(parents=True)
     cache.write_text("{}\n", encoding="utf-8")
     return source, remote, runner_temp
 
 
-def publisher_env(remote: Path, runner_temp: Path) -> dict[str, str]:
+def publisher_env(
+    remote: Path, runner_temp: Path, *, certification: bool = False
+) -> dict[str, str]:
     env = os.environ.copy()
     env.update(
         {
             "GH_TOKEN": "test",
             "LANG_CODE": "fr",
-            "PHASE": "01-foundations",
+            "SCOPE": "certifications/claude" if certification else "core",
+            "SHARD": "claude" if certification else "01-foundations",
             "RUNNER_TEMP": str(runner_temp),
             "TRANSLATION_PUSH_URL": str(remote),
             "TRANSLATION_PUBLISH_RETRY_DELAY": "0",
@@ -98,14 +114,17 @@ def publisher_env(remote: Path, runner_temp: Path) -> dict[str, str]:
 
 
 class TranslateWorkflowContractTest(unittest.TestCase):
-    def test_trigger_and_manual_scope_remain_phase_only(self) -> None:
+    def test_trigger_and_matrix_cover_core_and_claude_certifications(self) -> None:
         workflow = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn('- "phases/**/docs/en.md"', workflow)
+        self.assertIn('- "certifications/claude/lessons/**/docs/en.md"', workflow)
         self.assertIn('- "languages.json"', workflow)
         self.assertIn('- ".github/workflows/translate.yml"', workflow)
         self.assertIn("REQUESTED_PHASE: ${{ github.event.inputs.phase }}", workflow)
+        self.assertIn("REQUESTED_SCOPE: ${{ github.event.inputs.scope }}", workflow)
         self.assertIn("grep -Fqx -- \"$REQUESTED_PHASE\"", workflow)
-        self.assertNotIn("certifications/", workflow)
+        self.assertIn("--scope certifications/claude", workflow)
+        self.assertIn("matrix.slice.scope", workflow)
 
     def test_manual_phase_rejects_traversal_that_resolves_to_a_directory(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -149,6 +168,27 @@ class TranslateWorkflowContractTest(unittest.TestCase):
         self.assertIn("if ! git commit", script)
         self.assertIn("if ! git push", script)
         self.assertNotIn("worktree add --force -B translations", script)
+
+    def test_certification_publisher_uses_an_independent_slice_and_cache(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source, remote, runner_temp = create_publisher_fixture(root, certification=True)
+            run(
+                "bash", "-euo", "pipefail", "-c", publish_script(), cwd=source,
+                env=publisher_env(remote, runner_temp, certification=True),
+            )
+            translated = run(
+                "git", f"--git-dir={remote}", "show",
+                "translations:i18n/fr/certifications/claude/lessons/01-api/docs/fr.md",
+                cwd=root, capture=True,
+            )
+            self.assertEqual(translated.stdout, "traduit\n")
+            cache = run(
+                "git", f"--git-dir={remote}", "show",
+                "translations:i18n/fr/.cache/certifications-claude.json",
+                cwd=root, capture=True,
+            )
+            self.assertEqual(cache.stdout, "{}\n")
 
     def test_rejected_bootstrap_push_retries_and_cleans_registration(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -234,6 +274,108 @@ class TranslateWorkflowContractTest(unittest.TestCase):
                 check=False,
             )
             self.assertNotEqual(branch.returncode, 0)
+
+
+class TranslateCliScopeTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.root = Path(self.temporary.name)
+        self.patchers = [
+            mock.patch.object(TRANSLATOR, "ROOT", self.root),
+            mock.patch.object(TRANSLATOR, "PHASES", self.root / "phases"),
+            mock.patch.object(
+                TRANSLATOR, "CERTIFICATION_LESSONS", self.root / "certifications/claude/lessons"
+            ),
+            mock.patch.object(TRANSLATOR, "OUT_ROOT", self.root / "i18n"),
+        ]
+        for patcher in self.patchers:
+            patcher.start()
+
+    def tearDown(self) -> None:
+        for patcher in reversed(self.patchers):
+            patcher.stop()
+        self.temporary.cleanup()
+
+    def write_source(self, path: str, text: str = "# English\n") -> Path:
+        source = self.root / path
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text(text, encoding="utf-8")
+        return source
+
+    def invoke(self, *args: str) -> tuple[int, str, str]:
+        stdout, stderr = io.StringIO(), io.StringIO()
+        argv = [str(TRANSLATOR_PATH), "--lang", "ru", "--provider", "echo", *args]
+        with mock.patch.object(TRANSLATOR.sys, "argv", argv), redirect_stdout(stdout), redirect_stderr(stderr):
+            try:
+                TRANSLATOR.main()
+            except SystemExit as error:
+                code = error.code if isinstance(error.code, int) else 1
+            else:
+                code = 0
+        return code, stdout.getvalue(), stderr.getvalue()
+
+    def test_default_core_scope_is_unchanged(self) -> None:
+        phase = self.write_source("phases/01-foundations/01-intro/docs/en.md")
+        cert = self.write_source("certifications/claude/lessons/01-api/docs/en.md")
+        code, output, error = self.invoke()
+        self.assertEqual(code, 0, error)
+        self.assertTrue(TRANSLATOR.out_path(phase, "ru").is_file())
+        self.assertFalse(TRANSLATOR.out_path(cert, "ru").exists())
+        self.assertIn("phases/01-foundations/01-intro/docs/en.md", output)
+
+    def test_certification_scope_uses_contract_target_and_separate_cache(self) -> None:
+        source = self.write_source("certifications/claude/lessons/01-api/docs/en.md")
+        code, output, error = self.invoke("--scope", "certifications/claude")
+        self.assertEqual(code, 0, error)
+        target = self.root / "i18n/ru/certifications/claude/lessons/01-api/docs/ru.md"
+        self.assertEqual(target.read_text(encoding="utf-8"), source.read_text(encoding="utf-8"))
+        self.assertIn("certifications/claude/lessons/01-api/docs/en.md", output)
+        self.assertTrue((self.root / "i18n/ru/.cache/certifications-claude.json").is_file())
+
+    def test_certification_only_accepts_exact_safe_lesson_paths(self) -> None:
+        self.write_source("certifications/claude/lessons/01-api/docs/en.md")
+        valid, output, _ = self.invoke(
+            "--scope", "certifications/claude", "--only", "certifications/claude/lessons/01-api"
+        )
+        self.assertEqual(valid, 0)
+        self.assertIn("01-api/docs/en.md", output)
+        for unsafe in (
+            "certifications/claude/lessons/01-api/../01-api",
+            "/certifications/claude/lessons/01-api",
+            "phases/01-foundations/01-intro",
+            "certifications/claude/lessons/not-present",
+        ):
+            with self.subTest(unsafe=unsafe):
+                code, _, error = self.invoke(
+                    "--scope", "certifications/claude", "--only", unsafe, "--dry-run"
+                )
+                self.assertNotEqual(code, 0)
+                self.assertIn("invalid --only", error)
+
+    def test_cache_invalidates_on_source_change(self) -> None:
+        source = self.write_source("certifications/claude/lessons/01-api/docs/en.md")
+        self.assertIn("1 translated", self.invoke("--scope", "certifications/claude")[1])
+        self.assertIn("1 unchanged", self.invoke("--scope", "certifications/claude")[1])
+        source.write_text("# Changed\n", encoding="utf-8")
+        self.assertIn("1 translated", self.invoke("--scope", "certifications/claude")[1])
+
+    def test_dry_run_writes_neither_target_nor_cache(self) -> None:
+        self.write_source("certifications/claude/lessons/01-api/docs/en.md")
+        code, output, error = self.invoke("--scope", "certifications/claude", "--dry-run")
+        self.assertEqual(code, 0, error)
+        self.assertIn("would translate", output)
+        self.assertFalse((self.root / "i18n").exists())
+
+    def test_current_source_is_a_dry_run_cache_hit(self) -> None:
+        self.write_source("certifications/claude/lessons/01-api/docs/en.md")
+        self.assertEqual(self.invoke("--scope", "certifications/claude")[0], 0)
+        cache = self.root / "i18n/ru/.cache/certifications-claude.json"
+        before = cache.read_bytes()
+        code, output, error = self.invoke("--scope", "certifications/claude", "--dry-run")
+        self.assertEqual(code, 0, error)
+        self.assertIn("0 translated, 1 unchanged", output)
+        self.assertNotIn("would translate", output)
+        self.assertEqual(cache.read_bytes(), before)
 
 
 if __name__ == "__main__":

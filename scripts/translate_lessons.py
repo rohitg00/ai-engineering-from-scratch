@@ -11,6 +11,7 @@ re-translated only when its English source changes.
 Usage:
     LLM_API_KEY=... python3 scripts/translate_lessons.py --lang zh
     python3 scripts/translate_lessons.py --lang zh --phase 05-nlp-foundations-to-advanced
+    python3 scripts/translate_lessons.py --lang ru --scope certifications/claude
     python3 scripts/translate_lessons.py --lang tr --only phases/00-setup-and-tooling/01-dev-environment
     python3 scripts/translate_lessons.py --lang zh --dry-run   # show what would translate, no API calls
 
@@ -25,21 +26,25 @@ import json
 import os
 import re
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_catalog import LESSON_DIR_RE, PHASE_DIR_RE  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 PHASES = ROOT / "phases"
+CERTIFICATION_LESSONS = ROOT / "certifications" / "claude" / "lessons"
 OUT_ROOT = ROOT / "i18n"
+SCOPES = ("core", "certifications/claude")
 
 
-def cache_path(lang, phase=None):
-    # Per-(language, phase) cache so the sharded CI jobs never touch the same
-    # file: each job publishes only its own phase slice, so caches merge without
+def cache_path(lang, phase=None, scope="core"):
+    # Per-(language, source slice) cache so sharded CI jobs never touch the same
+    # file: each job publishes only its own slice, so caches merge without
     # clobbering and a timed-out run resumes exactly where it stopped. A full
     # local run (no --phase) keeps the single combined cache.
+    if scope == "certifications/claude":
+        return OUT_ROOT / lang / ".cache" / "certifications-claude.json"
     if phase:
         return OUT_ROOT / lang / ".cache" / f"{phase}.json"
     return OUT_ROOT / lang / ".translate-cache.json"
@@ -233,7 +238,7 @@ def source_hash(text):
     return hashlib.sha256(text.encode()).hexdigest()
 
 
-def lesson_docs():
+def core_lesson_docs():
     # Same "what is a lesson" definition as the catalog/book/llms.txt tooling,
     # so a non-conforming dir can't become a translated, published lesson.
     for phase in sorted(PHASES.iterdir()):
@@ -245,12 +250,52 @@ def lesson_docs():
                 yield doc
 
 
-def targets():
+def certification_lesson_docs():
+    """Yield only sources satisfying the shared certification lesson contract."""
+    if not CERTIFICATION_LESSONS.is_dir():
+        return
+    for lesson in sorted(CERTIFICATION_LESSONS.iterdir()):
+        doc = lesson / "docs" / "en.md"
+        if lesson.is_dir() and LESSON_DIR_RE.match(lesson.name) and doc.is_file():
+            yield doc
+
+
+def lesson_docs(scope="core"):
+    if scope == "core":
+        yield from core_lesson_docs()
+    elif scope == "certifications/claude":
+        yield from certification_lesson_docs()
+    else:  # callers outside argparse still fail closed
+        raise ValueError(f"unknown translation scope: {scope}")
+
+
+def targets(scope="core"):
     # Lessons only. The per-language README is hand-authored and built by
     # scripts/build_readme_i18n.py into i18n/<lang>/README.md; translating it
     # here would overwrite that file with a machine translation, so the README
     # is deliberately not a target of this script.
-    yield from lesson_docs()
+    yield from lesson_docs(scope)
+
+
+def validate_only(value, scope, docs):
+    """Return a canonical selector, rejecting traversal and out-of-scope paths."""
+    if value is None:
+        return None
+    if "\\" in value:
+        raise ValueError("invalid --only path")
+    stripped = value.rstrip("/")
+    path = PurePosixPath(stripped)
+    if not stripped or path.is_absolute() or any(part in ("", ".", "..") for part in path.parts):
+        raise ValueError("invalid --only path")
+
+    known = {}
+    for doc in docs:
+        rel = doc.relative_to(ROOT).as_posix()
+        known[rel] = rel
+        known[PurePosixPath(rel).parent.parent.as_posix()] = rel
+    if stripped not in known:
+        raise ValueError(f"invalid --only path for scope {scope}: {value}")
+    return known[stripped]
 
 
 def out_path(doc, lang):
@@ -277,12 +322,31 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--lang", required=True)
     ap.add_argument("--provider", default=os.environ.get("TRANSLATE_PROVIDER", "nllb"))
+    ap.add_argument("--scope", choices=SCOPES, default="core",
+                    help="translation source scope (default: core phases)")
     ap.add_argument("--phase", help="limit to one phase dir name")
     ap.add_argument("--only", help="limit to one lesson path (phases/.../lesson)")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    cpath = cache_path(args.lang, args.phase)
+    if args.lang not in LANG_NAMES:
+        ap.error(f"unknown target language: {args.lang}")
+    if args.scope != "core" and args.phase:
+        ap.error("--phase is valid only with --scope core")
+    if args.phase:
+        phases = {
+            path.name for path in PHASES.iterdir()
+            if path.is_dir() and PHASE_DIR_RE.match(path.name)
+        }
+        if args.phase not in phases:
+            ap.error(f"invalid --phase: {args.phase}")
+    docs = list(targets(args.scope))
+    try:
+        only_doc = validate_only(args.only, args.scope, docs)
+    except ValueError as error:
+        ap.error(str(error))
+
+    cpath = cache_path(args.lang, args.phase, args.scope)
     cache = {}
     if cpath.is_file():
         cache = json.loads(cpath.read_text(encoding="utf-8"))
@@ -292,11 +356,11 @@ def main():
         cpath.write_text(json.dumps(cache, indent=2, ensure_ascii=False), encoding="utf-8")
 
     translated = skipped = 0
-    for doc in targets():
+    for doc in docs:
         rel = str(doc.relative_to(ROOT))
         if args.phase and f"/{args.phase}/" not in f"/{rel}":
             continue
-        if args.only and not (rel == args.only.strip("/") or rel.startswith(args.only.strip("/") + "/")):
+        if only_doc and rel != only_doc:
             continue
 
         src = doc.read_text(encoding="utf-8")
