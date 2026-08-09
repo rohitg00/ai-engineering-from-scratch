@@ -1,0 +1,78 @@
+{
+  "lesson": "07-workflow-design-and-human-handoffs",
+  "title": "Design the Handoff Before the Automation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What should happen before choosing a Claude workflow pattern?",
+      "options": [
+        "Select a model family before mapping the process",
+        "Map the real current process, decisions, sources, owners, and exceptions",
+        "Define the future automated path before documenting slow or inconsistent current steps",
+        "Estimate token cost from the expected number of model calls and then set the workflow scope"
+      ],
+      "correct": 1,
+      "explanation": "Current-state mapping reveals the actual judgment, ownership, and failure paths the future design must preserve or improve."
+    },
+    {
+      "stage": "check",
+      "question": "A team spends hours reconciling conflicting source systems. Which intervention is strongest?",
+      "options": [
+        "Generate conflict reports for faster review",
+        "Add a final validation step after generation while leaving source ownership unchanged",
+        "Redesign the source process before automating the symptom",
+        "Use an adaptive agent to decide which source looks most credible for each conflict"
+      ],
+      "correct": 2,
+      "explanation": "The underlying waste is source conflict. Automating its description preserves the broken process."
+    },
+    {
+      "stage": "check",
+      "question": "What belongs in a reviewer handoff packet?",
+      "options": [
+        "The polished draft, its aggregate evaluation score, and the model's confidence estimate",
+        "The full conversation and tool trace so the reviewer can reconstruct the decision unaided",
+        "The recommended decision and citations, omitting rejected options to reduce review time",
+        "Decision required, evidence, source versions, checks, uncertainty, options, and fallback"
+      ],
+      "correct": 3,
+      "explanation": "A structured packet lets the reviewer verify and decide without reconstructing the workflow."
+    },
+    {
+      "stage": "check",
+      "question": "Why must retries be designed carefully for external actions?",
+      "options": [
+        "A repeated non-idempotent action can duplicate messages, charges, or other effects",
+        "A checkpoint proves the previous external action failed and therefore makes retry safe",
+        "Retrying generation can change parameters, so every repeated output should be discarded",
+        "Only tool calls with write permissions need retry limits; messages can always be resent"
+      ],
+      "correct": 0,
+      "explanation": "Generation retries are often harmless, but external actions need idempotency and recorded completion state."
+    },
+    {
+      "stage": "post",
+      "question": "A workflow posts an executive brief automatically, but ownership of approval is ambiguous. What is the best repair?",
+      "options": [
+        "Route low-confidence briefs to a generic reviewer while publishing all other outputs",
+        "Define a step owner, release gate, decision packet, and fallback before posting",
+        "Add a stronger rubric so the model can determine when its own brief is ready to post",
+        "Require two independent model reviewers to agree before the automated publication step"
+      ],
+      "correct": 1,
+      "explanation": "The primary defect is workflow authority and handoff, not generation quality."
+    },
+    {
+      "stage": "post",
+      "question": "What is the strongest evidence before limited production release?",
+      "options": [
+        "An internal pilot with high user adoption even though correction and review costs are unmeasured",
+        "A successful demonstration using the most common case and current production sources",
+        "Shadow-mode results across normal and exception cases, measured gates, review effort, and ready incident ownership",
+        "A vendor benchmark combined with unit tests of every deterministic workflow component"
+      ],
+      "correct": 2,
+      "explanation": "Shadow mode tests the real workflow without granting action authority and reveals exception and operational costs."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "workflowId": "weekly-release-brief-v1",
+  "sourceCutoff": "Thursday 15:00 UTC",
+  "steps": [
+    {
+      "id": "intake",
+      "trigger": "source cutoff reached",
+      "owner": "release-coordinator",
+      "inputs": ["approved tracker view", "signed security status"],
+      "output": "versioned source snapshot",
+      "gate": "all required teams and security status are present",
+      "escalation": "missing or conflicting source state",
+      "fallback": "coordinator uses the manual intake checklist",
+      "nextOwner": "brief-operator",
+      "irreversible": false,
+      "humanApproval": false
+    },
+    {
+      "id": "draft",
+      "trigger": "source snapshot accepted",
+      "owner": "brief-operator",
+      "inputs": ["versioned source snapshot"],
+      "output": "structured candidate items and draft brief",
+      "gate": "items retain source IDs and unresolved fields",
+      "escalation": "unsupported claim or missing team",
+      "fallback": "operator completes the manual brief template",
+      "nextOwner": "product-manager",
+      "irreversible": false,
+      "humanApproval": false
+    },
+    {
+      "id": "review",
+      "trigger": "automated checks completed",
+      "owner": "product-manager",
+      "inputs": ["candidate brief", "claim evidence", "failed checks"],
+      "output": "approve, revise, reject, or escalate decision",
+      "gate": "publication scope and unresolved risks are explicitly decided",
+      "escalation": "security or scope blocker remains",
+      "fallback": "delay publication and notify release owner",
+      "nextOwner": "publisher",
+      "irreversible": false,
+      "humanApproval": true
+    },
+    {
+      "id": "publish",
+      "trigger": "review approval recorded",
+      "owner": "publisher",
+      "inputs": ["approved brief", "approval operation ID"],
+      "output": "published brief with version ID",
+      "gate": "approval binds exact brief hash and destination",
+      "escalation": "approval mismatch or channel unavailable",
+      "fallback": "publish through the tested manual path",
+      "nextOwner": "release-coordinator",
+      "irreversible": true,
+      "humanApproval": true
+    }
+  ],
+  "checkpoints": ["source-snapshot-accepted", "draft-validated", "review-decision-recorded", "publication-confirmed"],
+  "handoff": {
+    "decisionRequired": "Confirm items R-14 and R-19 are authorized for external publication",
+    "deadlineAndOwner": "Friday 11:00 UTC, product-manager",
+    "workflowAndSourceVersions": "weekly-release-brief-v1, snapshot 2026-W31",
+    "candidateResult": "Draft brief version b7",
+    "evidence": "Tracker item IDs, signed security status, and claim checks",
+    "checksPassed": ["all teams represented", "source IDs resolve"],
+    "checksFailed": ["R-19 external scope is unresolved"],
+    "uncertainty": "R-19 launch state changed after the source cutoff",
+    "actionsAvailable": ["approve", "revise", "reject", "escalate"],
+    "fallback": "Delay the brief and use the manual release process"
+  }
+}
