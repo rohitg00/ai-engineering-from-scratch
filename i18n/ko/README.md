@@ -191,6 +191,25 @@ lesson's code to `/learn` for real execution instead of read-along.
 - You can write code (any language; Python helps).
 - You want to understand how AI **actually works**, not just call APIs.
 
+### Prepare for Claude certifications
+
+The [Claude Certification Academy](../../certifications/claude/README.md) is a free,
+open-source preparation program for all four official Claude certification tracks:
+Associate Foundations, Developer Foundations, Architect Foundations, and Architect
+Professional. Each route combines blueprint-mapped lessons, runnable labs, a
+diagnostic, capstone work, and a full-length original practice exam.
+
+Use the [AI-native GitHub onboarding guide](../../certifications/claude/GETTING_STARTED.md)
+with Claude Code, Codex, ChatGPT, Cursor, or another agent. Run
+`/claude-certification` to choose a track, create a persistent route in
+`CLAUDE-CERTIFICATION.md`, learn one step at a time, execute the real labs, and
+get artifact-based feedback. The same curriculum remains available on the
+[certification website](https://aiengineeringfromscratch.com/certifications.html).
+
+The academy is independent study material based on public exam objectives. It is not
+affiliated with Anthropic, does not reproduce live exam questions, and cannot guarantee
+a passing score.
+
 ### The learning skills (any agent: Claude, Cursor, Codex, OpenClaw, Hermes, …)
 
 | Skill | What it does |
@@ -198,6 +217,7 @@ lesson's code to `/learn` for real execution instead of read-along.
 | [`/start-learning`](../../skills/start-learning/SKILL.md) | One-time onboarding: why you're learning, placement quiz, personalized plan saved to `LEARNING.md`. |
 | [`/learn`](../../skills/learn/SKILL.md) | The tutor loop. Warm-up recall, then the next lesson taught interactively, then its quiz; records progress and a review queue. |
 | [`/course-guide`](../../skills/course-guide/SKILL.md) | Topic router. "Where do I learn attention?" or "my loss is NaN" → the exact lessons, with links. |
+| [`/claude-certification`](../../skills/claude-certification/SKILL.md) | Certification tutor. Chooses CCAO-F, CCDV-F, CCAR-F, or CCAR-P; teaches each lesson; runs labs; reviews artifacts; administers diagnostics and mocks; saves progress. |
 | [`/find-your-level`](../../skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
 | [`/check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. |
 
@@ -205,9 +225,13 @@ lesson's code to `/learn` for real execution instead of read-along.
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## 책으로 읽기
+## Read the core curriculum as a book
 
-The whole course compiles into a six-volume book series. EPUB and PDF are built by CI from the same lesson sources and attached to every [GitHub release](https://github.com/rohitg00/ai-engineering-from-scratch/releases); the links below always resolve to the newest release. Volume numbers index the series, not versions: each copy carries a dated edition stamp, and older editions stay downloadable from their release.
+The 20-phase core curriculum under `phases/` compiles into a six-volume book series. EPUB and PDF are built by CI from the same core lesson sources and attached to every [GitHub release](https://github.com/rohitg00/ai-engineering-from-scratch/releases); the links below always resolve to the newest release. Volume numbers index the series, not versions: each copy carries a dated edition stamp, and older editions stay downloadable from their release.
+
+Certification curricula are intentionally not converted into the books. Their
+AI tutor state, runnable labs, interactive figures, diagnostics, and timed mocks
+remain first-class on GitHub and the website.
 
 | Vol | Title | Phases | Download |
 |-----|-------|--------|----------|
@@ -1020,7 +1044,7 @@ reads a SKILL.md / AGENTS.md directory. Real tools, not homework.
 Two skill sets, two installers:
 
 **The learning skills** (`/start-learning`, `/learn`, `/course-guide`,
-`/find-your-level`, `/check-understanding`) live under [`skills/`](../../skills/)
+`/claude-certification`, `/find-your-level`, `/check-understanding`) live under [`skills/`](../../skills/)
 and install into any agent with one command — no clone, no Python:
 
 ```bash
