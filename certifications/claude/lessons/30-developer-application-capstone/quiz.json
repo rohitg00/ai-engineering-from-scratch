@@ -1,0 +1,78 @@
+{
+  "lesson": "30-developer-application-capstone",
+  "title": "Ship a Claude Application You Can Defend",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What should define capstone success before implementation begins?",
+      "options": [
+        "A minimum system-prompt length and a fixed amount of context for every request",
+        "Measurable functional, security, operational, and final-state requirements with explicit acceptance and release criteria",
+        "The complete catalog of available MCP servers and tools, regardless of workflow need",
+        "A fixed target for agent turns and tool calls in every successful workflow path"
+      ],
+      "correct": 1,
+      "explanation": "Explicit requirements make success, failure, authority, and evidence testable before architecture choices harden."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the capstone begin with a direct read-only tool instead of MCP?",
+      "options": [
+        "Direct tools inherit user authorization from the model request, so they need no application-side checks",
+        "MCP cannot expose a tool until at least two independent hosts connect to the same server",
+        "One host and one capability do not yet justify a separate discovery and server lifecycle",
+        "MCP is intended for mutating capabilities, while a direct tool is the required transport for read-only access"
+      ],
+      "correct": 2,
+      "explanation": "MCP earns its operational cost when shared discovery, governance, or interoperability is needed across hosts."
+    },
+    {
+      "stage": "check",
+      "question": "The injection test returns a safe refusal. What else must the test assert?",
+      "options": [
+        "That the model invoked each available read-only tool before concluding that the requested action was forbidden",
+        "That extended thinking was enabled so the trace contains a longer explanation of the refusal decision",
+        "That the refusal includes enough detail for an evaluator to identify which instruction caused the attack",
+        "That no forbidden tool, secret read, network request, or other side effect occurred anywhere in the trajectory"
+      ],
+      "correct": 3,
+      "explanation": "Security requires final-state and trajectory evidence. Refusal wording does not prove the application prevented side effects."
+    },
+    {
+      "stage": "check",
+      "question": "Why is extended thinking disabled by default for the order-status workflow?",
+      "options": [
+        "The direct lookup has no measured quality gain that earns added latency and cost",
+        "It cannot be combined with tool-result blocks in a multi-turn Messages request",
+        "It exposes hidden reasoning in the API response, which would automatically leak application secrets",
+        "It prevents schema-constrained output whenever the application also requests a deterministic tool result"
+      ],
+      "correct": 0,
+      "explanation": "Features should follow workload evidence. A simple lookup does not justify more reasoning budget without an eval showing benefit."
+    },
+    {
+      "stage": "post",
+      "question": "A live integration receives tool_use and then sends only tool_result in the next API request. Which capstone contract is broken?",
+      "options": [
+        "The evaluation time-limit contract, because the application made another request after tool execution began",
+        "The Messages content-block state contract linking assistant tool_use to the matching user tool_result",
+        "The prompt-caching contract, because the prior assistant content was not converted into a reusable cache prefix",
+        "The MCP resource-URI contract, because every tool result must be posted to a resource address before continuation"
+      ],
+      "correct": 1,
+      "explanation": "The application must preserve the assistant tool_use block and append the matching user tool_result before resending complete state."
+    },
+    {
+      "stage": "post",
+      "question": "Which three artifacts make the capstone operationally defensible?",
+      "options": [
+        "A plugin inventory, MCP registry, and model leaderboard showing which available components were selected",
+        "The system prompt, sampling settings, and one successful nominal transcript",
+        "A versioned architecture decision record, executable evaluation plan, and rehearsed failure runbook",
+        "A deployment screenshot, aggregate token count, and product page describing the application's intended behavior"
+      ],
+      "correct": 2,
+      "explanation": "Architecture explains decisions, evals verify behavior, and the runbook defines containment and recovery when production differs from the plan."
+    }
+  ]
+}
