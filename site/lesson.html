@@ -2309,7 +2309,7 @@
             var certLesson = flatLessons[ci];
             var certActive = certLesson.path === lessonPath;
             var certProgress = lessonProgressClass(certLesson.path, true);
-            certHtml += '<a class="sidebar-lesson-link' + (certActive ? ' active' : '') + '" href="lesson.html?path=' + encodeURIComponent(certLesson.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '">';
+            certHtml += '<a class="sidebar-lesson-link' + (certActive ? ' active' : '') + '" href="' + lessonHref(certLesson.path, certificationTrack.id) + '">';
             certHtml += '<span class="sidebar-lesson-dot ' + certProgress + '"></span>';
             certHtml += escapeHtml(certLesson.lessonName) + '</a>';
           }
@@ -2330,13 +2330,13 @@
             var pp = PHASES[prevPhaseIdx];
             var ppSlug = extractPhaseSlug(pp, prevPhaseIdx);
             var ppFirstLesson = pp.lessons[0] ? extractLessonSlug(pp.lessons[0], 0) : '';
-            html += '<a href="lesson.html?path=phases/' + ppSlug + '/' + ppFirstLesson + '">&larr; Phase ' + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(pp.name) + '</a>';
+            html += '<a href="' + lessonHref('phases/' + ppSlug + '/' + ppFirstLesson) + '">&larr; Phase ' + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(pp.name) + '</a>';
           }
           if (nextPhaseIdx >= 0) {
             var np = PHASES[nextPhaseIdx];
             var npSlug = extractPhaseSlug(np, nextPhaseIdx);
             var npFirstLesson = np.lessons[0] ? extractLessonSlug(np.lessons[0], 0) : '';
-            html += '<a href="lesson.html?path=phases/' + npSlug + '/' + npFirstLesson + '">Phase ' + String(np.id).padStart(2, '0') + ': ' + escapeHtml(np.name) + ' &rarr;</a>';
+            html += '<a href="' + lessonHref('phases/' + npSlug + '/' + npFirstLesson) + '">Phase ' + String(np.id).padStart(2, '0') + ': ' + escapeHtml(np.name) + ' &rarr;</a>';
           }
           html += '</div>';
         }
@@ -2352,7 +2352,7 @@
             var lesReadable = les.status === 'complete' || !!les.url;
             var lesPath = 'phases/' + pSlugCurrent + '/' + lesSlug;
             if (lesReadable) {
-              html += '<a class="sidebar-lesson-link' + (isActive ? ' active' : '') + '" href="lesson.html?path=' + lesPath + '">';
+              html += '<a class="sidebar-lesson-link' + (isActive ? ' active' : '') + '" href="' + lessonHref(lesPath) + '">';
             } else {
               html += '<span class="sidebar-lesson-link disabled">';
             }
@@ -2420,6 +2420,15 @@
       // language state (current lang + RTL direction) is owned by lang-picker.js
       function currentLang() {
         return window.AIFS_currentLang ? window.AIFS_currentLang() : 'en';
+      }
+
+      function lessonHref(path, track) {
+        var searchParams = new URLSearchParams();
+        searchParams.set('path', path);
+        if (track) searchParams.set('track', track);
+        var lang = currentLang();
+        if (lang && lang !== 'en') searchParams.set('lang', lang);
+        return 'lesson.html?' + searchParams.toString();
       }
 
       function applyRenderedLanguage(lang) {
@@ -3735,9 +3744,8 @@
         }
 
         var nav = '<div class="lesson-nav-bottom">';
-        var trackSuffix = certificationMode ? '&track=' + encodeURIComponent(certificationTrack.id) : '';
         if (prev) {
-          nav += '<a class="lesson-nav-btn prev" href="lesson.html?path=' + encodeURIComponent(prev.path) + trackSuffix + '">';
+          nav += '<a class="lesson-nav-btn prev" href="' + lessonHref(prev.path, certificationMode ? certificationTrack.id : '') + '">';
           nav += '<span class="nav-label">&larr; Previous</span>';
           nav += '<span class="nav-title">' + escapeHtml(prev.lessonName) + '</span>';
           nav += '</a>';
@@ -3745,7 +3753,7 @@
           nav += '<div></div>';
         }
         if (next) {
-          nav += '<a class="lesson-nav-btn next" href="lesson.html?path=' + encodeURIComponent(next.path) + trackSuffix + '">';
+          nav += '<a class="lesson-nav-btn next" href="' + lessonHref(next.path, certificationMode ? certificationTrack.id : '') + '">';
           nav += '<span class="nav-label">Next &rarr;</span>';
           nav += '<span class="nav-title">' + escapeHtml(next.lessonName) + '</span>';
           nav += '</a>';
@@ -4229,7 +4237,7 @@
               certHtml += '<div class="timeline-line ' + (certSegmentDone ? 'done' : '') + '"></div>';
             }
             var certClass = cv === currentLessonIndex ? 'current' : certItemDone ? 'done' : '';
-            certHtml += '<a class="timeline-item ' + certClass + '" href="lesson.html?path=' + encodeURIComponent(certItem.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '" title="' + escapeAttr(certItem.lessonName) + '"><div class="timeline-dot"></div><div class="timeline-label">' + escapeHtml(certItem.lessonName) + '</div></a>';
+            certHtml += '<a class="timeline-item ' + certClass + '" href="' + lessonHref(certItem.path, certificationTrack.id) + '" title="' + escapeAttr(certItem.lessonName) + '"><div class="timeline-dot"></div><div class="timeline-label">' + escapeHtml(certItem.lessonName) + '</div></a>';
           }
           if (certEnd < certTotal) certHtml += '<div class="timeline-line"></div><span class="timeline-ellipsis">' + (certTotal - certEnd) + ' &raquo;</span>';
           certHtml += '</div><div class="phase-progress-bar"><div class="phase-progress-fill" style="--lesson-progress:' + (certPct / 100) + '"></div></div>';
@@ -4297,7 +4305,7 @@
           }
 
           if (item.flat.isReadable) {
-            html += '<a class="timeline-item ' + cls + '" href="lesson.html?path=' + item.flat.path + '" title="' + escapeAttr(item.flat.lessonName) + '">';
+            html += '<a class="timeline-item ' + cls + '" href="' + lessonHref(item.flat.path) + '" title="' + escapeAttr(item.flat.lessonName) + '">';
           } else {
             html += '<span class="timeline-item ' + cls + ' disabled" title="' + escapeAttr(item.flat.lessonName) + '">';
           }
@@ -4343,7 +4351,7 @@
           var continueHtml = '<div class="ai-panel-header"><div class="ai-panel-icon">N</div><div class="ai-panel-title">Continue Certification Prep</div></div><div class="continue-panel">';
           if (!certNext) continueHtml += '<div class="phase-finished">You reached the end of this lesson path.</div>';
           continueHtml += '<div class="continue-links">';
-          if (certNext) continueHtml += '<a class="continue-link" href="lesson.html?path=' + encodeURIComponent(certNext.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '">Next: ' + escapeHtml(certNext.lessonName) + '</a>';
+          if (certNext) continueHtml += '<a class="continue-link" href="' + lessonHref(certNext.path, certificationTrack.id) + '">Next: ' + escapeHtml(certNext.lessonName) + '</a>';
           continueHtml += '<a class="continue-link" href="certification.html?id=' + encodeURIComponent(certificationTrack.id) + '">Track overview and practice</a>';
           continueHtml += '<a class="continue-link" href="certifications.html">All certification tracks</a></div>';
           continueHtml += '<div class="continue-callout">Practice results are course percentages, not official scaled exam scores. Use them to find the next domain to study.</div></div>';
@@ -4374,7 +4382,7 @@
 
         var phaseSlug = extractPhaseSlug(phase, phaseIdx);
         var firstLesson = phase.lessons[0] ? extractLessonSlug(phase.lessons[0], 0) : '';
-        html += '<a class="continue-link" href="lesson.html?path=phases/' + phaseSlug + '/' + firstLesson + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
+        html += '<a class="continue-link" href="' + lessonHref('phases/' + phaseSlug + '/' + firstLesson) + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
         html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
         html += '</div>';
 

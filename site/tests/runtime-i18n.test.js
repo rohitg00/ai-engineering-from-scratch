@@ -201,3 +201,10 @@ test('lesson runtime renders only the latest response and keeps certification qu
   assert.doesNotMatch(html, /if \(certificationLesson\)[\s\S]{0,300}langPicker\.hidden = true/);
   assert.doesNotMatch(html, /raw\.githubusercontent\.com\/rohitg00[^\n]+translations\/i18n/);
 });
+
+test('internal lesson links preserve the selected translation language', () => {
+  const html = fs.readFileSync(path.join(siteDir, 'lesson.html'), 'utf8');
+  assert.match(html, /function lessonHref\(path, track\)/);
+  assert.match(html, /searchParams\.set\('lang', lang\)/);
+  assert.doesNotMatch(html, /href=\\?"lesson\.html\?path=/);
+});
