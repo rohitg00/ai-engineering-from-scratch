@@ -6,7 +6,7 @@ description: >
   topic, a question, or a bug you are fighting, and it points at the exact
   lessons that teach it, plus the right next command. Trigger phrases:
   "where do I learn", "which lesson covers", "course guide", "I'm stuck on",
-  "what should I do next"
+  "what should I do next", "where do I prepare for a Claude certification"
 tags: [navigation, curriculum, ai-engineering, router]
 ---
 
@@ -31,9 +31,15 @@ https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/READ
 For term definitions, the glossary lives at `glossary/terms.md` (same rule:
 local first, raw fallback).
 
+Claude certification routes are a separate, AI-native curriculum. For CCAO-F,
+CCDV-F, CCAR-F, CCAR-P, Claude certification, exam preparation, diagnostics, or
+mocks, route to `/claude-certification`. Its sources are
+`certifications/claude/program.json`, `certifications/claude/tracks/*.json`, and
+`certifications/claude/GETTING_STARTED.md`.
+
 ## How to route
 
-1. **Interpret the ask**, which arrives in one of three shapes:
+1. **Interpret the ask**, which arrives in one of four shapes:
    - *Topic* ("attention", "how do diffusion models work") → find the
      lessons that teach it.
    - *Struggle* ("my agent loops forever", "loss goes to NaN") → find the
@@ -43,6 +49,9 @@ local first, raw fallback).
    - *Meta* ("what should I do next", "am I ready for phase 7") → read
      `LEARNING.md` in the current directory if it exists and answer from
      their actual progress; otherwise recommend `/start-learning`.
+   - *Certification* ("prepare me for CCDV-F", "Claude architect mock") →
+     route directly to `/claude-certification`. Do not mix certification state
+     into `LEARNING.md`; that tutor uses `CLAUDE-CERTIFICATION.md`.
 
 2. **Scan the Contents tables** for matching lessons by title and phase
    theme. Prefer precision: 1-3 lessons, not a phase dump. For a *struggle*,
@@ -66,3 +75,5 @@ The learner may also just be deciding between the course's own commands.
 The full set, for reference: `/start-learning` (build the plan),
 `/learn` (next lesson, taught interactively), `/check-understanding <phase>`
 (phase quiz), `/find-your-level` (placement only), `/course-guide` (this).
+Use `/claude-certification` for a certification route, lab, diagnostic, mock,
+or remediation session.
