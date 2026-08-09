@@ -1,0 +1,78 @@
+{
+  "lesson": "18-tool-contracts-errors-and-progressive-discovery",
+  "title": "Tool Contracts, Errors, and Progressive Discovery",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Three tools named search, find, and lookup have nearly identical descriptions. What should be fixed first?",
+      "options": [
+        "Keep the catalog but retry selection with examples of prior successful calls",
+        "Create distinct action, source, use-case, schema, and side-effect boundaries",
+        "Expose all three tools to every role so an agent can recover from a weak first choice",
+        "Use a stronger model to infer overlapping schema differences"
+      ],
+      "correct": 1,
+      "explanation": "The catalog removed the information needed for selection. Distinct names, descriptions, negative uses, schemas, and authority boundaries repair the interface structurally."
+    },
+    {
+      "stage": "check",
+      "question": "What should a structured authorization error communicate?",
+      "options": [
+        "A request to switch models and repeat the call with more conservative arguments",
+        "A generic failure category plus an automatic retry delay that conceals policy details",
+        "Category, non-retryable state, safe message, and the proper approval or access next step",
+        "The internal stack trace and rejected identity claims so the agent can diagnose access"
+      ],
+      "correct": 2,
+      "explanation": "Authorization will not change through blind retry. The harness needs a safe category and escalation action without internal or credential leakage."
+    },
+    {
+      "stage": "check",
+      "question": "When should an application force a structured output tool?",
+      "options": [
+        "Whenever a conversation may eventually call a tool, so every response stays structured",
+        "When an action is authorized in the prompt but the client cannot inspect its arguments",
+        "When the model must both format a refund request and execute the transaction",
+        "When it needs a typed, validated record with no real-world side effect"
+      ],
+      "correct": 3,
+      "explanation": "A schema-only tool can enforce the output contract. Real-world execution remains a separate authorized action and should not be forced merely to obtain JSON."
+    },
+    {
+      "stage": "check",
+      "question": "Why use progressive discovery for a large tool catalog?",
+      "options": [
+        "It reduces context and selection load while preserving a small stable starting surface",
+        "It guarantees selected tools are safe because discovery occurs only after a model request",
+        "It keeps credentials out of integration code by loading them with descriptions",
+        "It makes undiscovered tools unreachable, so execution authorization is unnecessary"
+      ],
+      "correct": 0,
+      "explanation": "Loading relevant capabilities on demand can improve context, selection, and cache behavior. Scoped discovery and execution authorization are still required."
+    },
+    {
+      "stage": "post",
+      "question": "Where should a team store shared MCP server declarations and personal secret values?",
+      "options": [
+        "Commit declarations and encrypted secret values together as one shared configuration",
+        "Shared safe declarations in project scope; secret values in environment or approved secret storage",
+        "Store secret references and resolved values in descriptions visible only to the host",
+        "Place declarations in project instructions and have each user provide secrets in prompts"
+      ],
+      "correct": 1,
+      "explanation": "Project configuration supports versioned collaboration, while secret values must remain outside version control and be provisioned through a secure mechanism."
+    },
+    {
+      "stage": "post",
+      "question": "A static policy document is exposed as a tool called get_policy without side effects. Which MCP primitive may express the boundary more directly?",
+      "options": [
+        "An agent-to-agent task assigned to a policy specialist with document access",
+        "An approval hook that injects the document after confirming the intended use",
+        "A resource exposing the policy as URI-addressed contextual data",
+        "A read-only tool because model-selected retrieval should always use the tools primitive"
+      ],
+      "correct": 2,
+      "explanation": "A resource represents contextual data the host or model can read. Tools are best reserved for model-requested actions or computations."
+    }
+  ]
+}
