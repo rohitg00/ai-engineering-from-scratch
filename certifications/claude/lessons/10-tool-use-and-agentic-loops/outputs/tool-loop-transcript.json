@@ -1,0 +1,24 @@
+{
+  "answer": "The total is 15.",
+  "transcript": [
+    {"role": "user", "content": "Add 7 and 8"},
+    {
+      "role": "assistant",
+      "content": [
+        {"type": "tool_use", "id": "call_1", "name": "add", "input": {"a": 7, "b": 8}}
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {"type": "tool_result", "tool_use_id": "call_1", "content": "15"}
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {"type": "text", "text": "The total is 15."}
+      ]
+    }
+  ]
+}
