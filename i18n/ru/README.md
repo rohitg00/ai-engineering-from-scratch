@@ -17,7 +17,7 @@
   <a href="../../i18n/ar/README.md">العربية</a> ·
   <a href="../../i18n/ru/README.md">Русский</a> ·
   <a href="../../i18n/tr/README.md">Türkçe</a>
-  <br><sub>Translated landing pages, committed to the repo. English is canonical; lesson pages are machine-translated on the <code>translations</code> branch. See <a href="../../docs/i18n.md">docs/i18n.md</a>.</sub>
+  <br><sub>Переведённые главные страницы хранятся в репозитории. Канонический язык — английский; переводы уроков находятся в ветке <code>translations</code>. Подробнее: <a href="../../docs/i18n.md">docs/i18n.md</a>.</sub>
 </p>
 
 <p align="center">
@@ -46,7 +46,7 @@
 
 ## Начните учиться за 30 секунд
 
-Ваш coding agent становится преподавателем. Две команды — без клонирования и настройки:
+Ваш агент для программирования становится преподавателем. Две команды — без клонирования и настройки:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
@@ -68,7 +68,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 Этот курс создаёт прочный каркас: 20 фаз, 503 урока и четыре языка — Python, TypeScript, Rust, Julia. От линейной алгебры до автономных роёв. Каждый алгоритм сначала строится непосредственно из математики: backprop, токенизатор, attention, цикл агента. Когда появляется PyTorch, вы уже понимаете, что происходит под капотом.
 
-Каждый урок проходит один цикл: понять задачу, вывести математику, написать код, запустить тест и сохранить артефакт. Без пятиминутных видео, copy-paste-деплоев и обучения за руку. Бесплатно, с открытым исходным кодом и возможностью запуска на вашем ноутбуке.
+Каждый урок проходит один цикл: понять задачу, вывести математику, написать код, запустить тест и сохранить артефакт. Без пятиминутных видео, без слепого копирования готовых развёртываний и без пошаговых подсказок. Бесплатно, с открытым исходным кодом и возможностью запуска на вашем ноутбуке.
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -76,7 +76,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Структура курса
 
-Двадцать фаз надстраиваются друг над другом. Математика — фундамент, агенты и production — верхний уровень. Переходите вперёд, если уже знаете нижние слои, но не пропускайте их, если затем не хотите гадать, почему наверху что-то ломается.
+Двадцать фаз надстраиваются друг над другом. Математика — фундамент, агенты и промышленная эксплуатация — верхний уровень. Переходите вперёд, если уже знаете нижние слои, но не пропускайте их, если затем не хотите гадать, почему наверху что-то ломается.
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
@@ -136,7 +136,7 @@ flowchart LR
 
 Три способа начать. Выберите один.
 
-**Вариант A — учиться в терминале *(рекомендуется)*.** Установите учебные skills в любого агента, и курс сам поведёт вас дальше:
+**Вариант A — учиться в терминале *(рекомендуется)*.** Установите учебные навыки в любого агента, и курс сам поведёт вас дальше:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
@@ -160,12 +160,12 @@ cd ai-engineering-from-scratch
 python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-При клонировании учебные skills автоматически загружаются в Claude Code, а `/learn` получает код каждого урока для реального выполнения, а не только чтения.
+При клонировании учебные навыки автоматически загружаются в Claude Code, а `/learn` получает код каждого урока для реального выполнения, а не только чтения.
 
 ### Предварительные требования
 
-- You can write code (any language; Python helps).
-- You want to understand how AI **actually works**, not just call APIs.
+- Вы умеете программировать на любом языке; знание Python будет полезно.
+- Вы хотите понять, как ИИ **действительно работает**, а не только вызывать API.
 
 ### Подготовка к сертификациям Claude
 
@@ -175,16 +175,16 @@ python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 Академия — независимый учебный материал на основе публичных целей экзаменов. Она не связана с Anthropic, не воспроизводит реальные экзаменационные вопросы и не гарантирует проходной балл.
 
-### Учебные skills (для любого агента: Claude, Cursor, Codex, OpenClaw, Hermes, …)
+### Учебные навыки (для любого агента: Claude, Cursor, Codex, OpenClaw, Hermes, …)
 
-| Skill | What it does |
+| Навык | Назначение |
 |---|---|
-| [`/start-learning`](../../skills/start-learning/SKILL.md) | One-time onboarding: why you're learning, placement quiz, personalized plan saved to `LEARNING.md`. |
-| [`/learn`](../../skills/learn/SKILL.md) | The tutor loop. Warm-up recall, then the next lesson taught interactively, then its quiz; records progress and a review queue. |
-| [`/course-guide`](../../skills/course-guide/SKILL.md) | Topic router. "Where do I learn attention?" or "my loss is NaN" → the exact lessons, with links. |
-| [`/claude-certification`](../../skills/claude-certification/SKILL.md) | Certification tutor. Chooses CCAO-F, CCDV-F, CCAR-F, or CCAR-P; teaches each lesson; runs labs; reviews artifacts; administers diagnostics and mocks; saves progress. |
-| [`/find-your-level`](../../skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
-| [`/check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. |
+| [`/start-learning`](../../skills/start-learning/SKILL.md) | Первичная настройка: цель обучения, входной тест и персональный план в `LEARNING.md`. |
+| [`/learn`](../../skills/learn/SKILL.md) | Учебный цикл: разминка, интерактивный урок и тест; сохраняет прогресс и очередь повторения. |
+| [`/course-guide`](../../skills/course-guide/SKILL.md) | Навигатор по темам: находит нужные уроки и ссылки по вопросу или проблеме. |
+| [`/claude-certification`](../../skills/claude-certification/SKILL.md) | Подготовка к сертификации: выбор CCAO-F, CCDV-F, CCAR-F или CCAR-P, уроки, лабораторные работы, проверка артефактов, диагностика и пробные экзамены. |
+| [`/find-your-level`](../../skills/find-your-level/SKILL.md) | Входной тест из десяти вопросов: определяет начальную фазу и формирует персональный маршрут с оценкой времени. |
+| [`/check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Тест из восьми вопросов по выбранной фазе с обратной связью и списком уроков для повторения. |
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -194,18 +194,18 @@ python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 Основной курс из 20 фаз в каталоге `phases/` собирается в шеститомную серию. CI создаёт EPUB и PDF из тех же исходников уроков и прикрепляет их к каждому [релизу GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases); ссылки ниже всегда ведут на последний релиз. Номера томов обозначают место в серии, а не версию: каждый экземпляр содержит дату издания, а старые издания остаются доступны в своих релизах.
 
-Курсы сертификации намеренно не преобразуются в книги. Состояние AI tutor, запускаемые лабораторные работы, интерактивные иллюстрации, диагностика и пробные экзамены с таймером остаются полноценными возможностями GitHub и сайта.
+Курсы сертификации намеренно не преобразуются в книги. Состояние AI-преподавателя, запускаемые лабораторные работы, интерактивные иллюстрации, диагностика и пробные экзамены с таймером по-прежнему доступны на GitHub и сайте без ограничений.
 
-| Vol | Title | Phases | Download |
+| Том | Название | Фазы | Скачать |
 |-----|-------|--------|----------|
-| 1 | Foundations · Math, Tooling, and Classical Machine Learning | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Deep Learning · Networks, Vision, and Speech | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Language · NLP Foundations and the Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Large Language Models · Generation, Reinforcement, Pretraining, and Engineering | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Agents · Multimodality, Protocols, Autonomy, and Swarms | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Production · Infrastructure, Safety, and Capstones | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+| 1 | Основы · Математика, инструменты и классическое машинное обучение | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Глубокое обучение · Сети, компьютерное зрение и речь | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Язык · Основы NLP и Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Большие языковые модели · Генерация, обучение с подкреплением, предобучение и инженерия | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Агенты · Мультимодальность, протоколы, автономность и рои | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Промышленная эксплуатация · Инфраструктура, безопасность и итоговые проекты | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
 
-Книга — это снимок, а репозиторий — живое издание. Каждая глава заканчивается ссылками на анимированные иллюстрации урока, тест и запускаемый код. Для локальной сборки выполните `python3 scripts/build_book.py` (требуется pandoc); подробности pipeline — в [book/README.md](../../book/README.md).
+Книга — это снимок, а репозиторий — живое издание. Каждая глава заканчивается ссылками на анимированные иллюстрации урока, тест и запускаемый код. Для локальной сборки выполните `python3 scripts/build_book.py` (требуется pandoc); описание процесса сборки — в [book/README.md](../../book/README.md).
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -213,20 +213,20 @@ python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## Каждый урок что-то даёт
 
-Другие курсы заканчиваются словами *«поздравляем, вы изучили X»*. Здесь каждый урок завершается **переиспользуемым инструментом**, который можно установить или встроить в повседневный workflow.
+Другие курсы заканчиваются словами *«поздравляем, вы изучили X»*. Здесь каждый урок завершается **переиспользуемым инструментом**, который можно установить или встроить в повседневный рабочий процесс.
 
 <table>
 <tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="96" height="96" alt="FIG_001.A prompts"/><br/><sub>FIG_001 · A</sub><br/><b>PROMPTS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="96" height="96" alt="FIG_001.B skills"/><br/><sub>FIG_001 · B</sub><br/><b>SKILLS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="96" height="96" alt="FIG_001.C agents"/><br/><sub>FIG_001 · C</sub><br/><b>AGENTS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="96" height="96" alt="FIG_001.D MCP servers"/><br/><sub>FIG_001 · D</sub><br/><b>MCP SERVERS</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="96" height="96" alt="FIG_001.A prompts"/><br/><sub>FIG_001 · A</sub><br/><b>ПРОМПТЫ</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="96" height="96" alt="FIG_001.B skills"/><br/><sub>FIG_001 · B</sub><br/><b>НАВЫКИ</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="96" height="96" alt="FIG_001.C agents"/><br/><sub>FIG_001 · C</sub><br/><b>АГЕНТЫ</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="96" height="96" alt="FIG_001.D MCP servers"/><br/><sub>FIG_001 · D</sub><br/><b>СЕРВЕРЫ MCP</b></th>
 </tr>
 <tr>
-<td valign="top">Paste into any AI assistant for expert-level help on a narrow task.</td>
-<td valign="top">Drop into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads <code>SKILL.md</code>.</td>
-<td valign="top">Deploy as autonomous workers — you wrote the loop yourself in Phase 14.</td>
-<td valign="top">Plug into any MCP-compatible client. Built end-to-end in Phase 13.</td>
+<td valign="top">Вставьте в любой ИИ-ассистент, чтобы получить экспертную помощь по узкой задаче.</td>
+<td valign="top">Добавьте в Claude, Cursor, Codex, OpenClaw, Hermes или любой агент, читающий <code>SKILL.md</code>.</td>
+<td valign="top">Разворачивайте как автономных исполнителей — цикл вы напишете самостоятельно в фазе 14.</td>
+<td valign="top">Подключайте к любому MCP-совместимому клиенту. Полная реализация создаётся в фазе 13.</td>
 </tr>
 </table>
 
@@ -295,7 +295,7 @@ the agent went wrong and explain why...
 Двадцать фаз. Нажмите на любую фазу, чтобы раскрыть список уроков.
 
 <a id="phase-0"></a>
-### Фаза 0: настройка и инструменты `12 lessons`
+### Фаза 0: настройка и инструменты `12 уроков`
 > Подготовьте окружение ко всем последующим этапам.
 
 | # | Lesson | Type | Lang |
@@ -314,7 +314,7 @@ the agent went wrong and explain why...
 | 12 | [Debugging & Profiling](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Build | Python |
 
 <details id="phase-1">
-<summary><b>Phase 1 — Math Foundations</b> &nbsp;<code>22 lessons</code>&nbsp; <em>The intuition behind every AI algorithm, through code.</em></summary>
+<summary><b>Фаза 1 — Математические основы</b> &nbsp;<code>22 урока</code>&nbsp; <em>Интуитивное понимание каждого алгоритма ИИ через код.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -345,7 +345,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-2">
-<summary><b>Phase 2 — ML Fundamentals</b> &nbsp;<code>18 lessons</code>&nbsp; <em>Classical ML — still the backbone of most production AI.</em></summary>
+<summary><b>Фаза 2 — Основы ML</b> &nbsp;<code>18 уроков</code>&nbsp; <em>Классическое машинное обучение по-прежнему лежит в основе большинства промышленных ИИ-систем.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -372,7 +372,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-3">
-<summary><b>Phase 3 — Deep Learning Core</b> &nbsp;<code>13 lessons</code>&nbsp; <em>Neural networks from first principles. No frameworks until you build one.</em></summary>
+<summary><b>Фаза 3 — Основы глубокого обучения</b> &nbsp;<code>13 уроков</code>&nbsp; <em>Нейронные сети с первых принципов. Никаких фреймворков, пока вы не создадите свою сеть.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -394,7 +394,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-4">
-<summary><b>Phase 4 — Computer Vision</b> &nbsp;<code>28 lessons</code>&nbsp; <em>From pixels to understanding — image, video, 3D, VLMs, and world models.</em></summary>
+<summary><b>Фаза 4 — Компьютерное зрение</b> &nbsp;<code>28 уроков</code>&nbsp; <em>От пикселей к пониманию: изображения, видео, 3D, VLM и модели мира.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -431,7 +431,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-5">
-<summary><b>Phase 5 — NLP: Foundations to Advanced</b> &nbsp;<code>29 lessons</code>&nbsp; <em>Language is the interface to intelligence.</em></summary>
+<summary><b>Фаза 5 — NLP: от основ к продвинутым методам</b> &nbsp;<code>29 уроков</code>&nbsp; <em>Язык — интерфейс к интеллекту.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -469,7 +469,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-6">
-<summary><b>Phase 6 — Speech & Audio</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Hear, understand, speak.</em></summary>
+<summary><b>Фаза 6 — Речь и аудио</b> &nbsp;<code>17 уроков</code>&nbsp; <em>Слышать, понимать и говорить.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -495,7 +495,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-7">
-<summary><b>Phase 7 — Transformers Deep Dive</b> &nbsp;<code>16 lessons</code>&nbsp; <em>The architecture that changed everything.</em></summary>
+<summary><b>Фаза 7 — Углублённое изучение Transformer</b> &nbsp;<code>16 уроков</code>&nbsp; <em>Архитектура, которая изменила всё.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -520,7 +520,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-8">
-<summary><b>Phase 8 — Generative AI</b> &nbsp;<code>15 lessons</code>&nbsp; <em>Create images, video, audio, 3D, and more.</em></summary>
+<summary><b>Фаза 8 — Генеративный ИИ</b> &nbsp;<code>15 уроков</code>&nbsp; <em>Создание изображений, видео, аудио, 3D и других материалов.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -544,7 +544,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-9">
-<summary><b>Phase 9 — Reinforcement Learning</b> &nbsp;<code>12 lessons</code>&nbsp; <em>The foundation of RLHF and game-playing AI.</em></summary>
+<summary><b>Фаза 9 — Обучение с подкреплением</b> &nbsp;<code>12 уроков</code>&nbsp; <em>Основа RLHF и игровых ИИ-систем.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -565,7 +565,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-10">
-<summary><b>Phase 10 — LLMs from Scratch</b> &nbsp;<code>24 lessons</code>&nbsp; <em>Build, train, and understand large language models.</em></summary>
+<summary><b>Фаза 10 — LLM с нуля</b> &nbsp;<code>24 урока</code>&nbsp; <em>Создание, обучение и понимание больших языковых моделей.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -598,7 +598,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-11">
-<summary><b>Phase 11 — LLM Engineering</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Put LLMs to work in production.</em></summary>
+<summary><b>Фаза 11 — Инженерия LLM</b> &nbsp;<code>17 уроков</code>&nbsp; <em>Применение LLM в промышленной эксплуатации.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -624,7 +624,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-12">
-<summary><b>Phase 12 — Multimodal AI</b> &nbsp;<code>25 lessons</code>&nbsp; <em>See, hear, read, and reason across modalities — from ViT patches to computer-use agents.</em></summary>
+<summary><b>Фаза 12 — Мультимодальный ИИ</b> &nbsp;<code>25 уроков</code>&nbsp; <em>Зрение, слух, чтение и рассуждение между модальностями: от патчей ViT до агентов, управляющих компьютером.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -658,7 +658,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-13">
-<summary><b>Phase 13 — Tools & Protocols</b> &nbsp;<code>23 lessons</code>&nbsp; <em>The interfaces between AI and the real world.</em></summary>
+<summary><b>Фаза 13 — Инструменты и протоколы</b> &nbsp;<code>23 урока</code>&nbsp; <em>Интерфейсы между ИИ и реальным миром.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -690,7 +690,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-14">
-<summary><b>Phase 14 — Agent Engineering</b> &nbsp;<code>42 lessons</code>&nbsp; <em>Build agents from first principles — loop, memory, planning, frameworks, benchmarks, production, workbench.</em></summary>
+<summary><b>Фаза 14 — Разработка агентов</b> &nbsp;<code>42 урока</code>&nbsp; <em>Создание агентов с первых принципов: цикл, память, планирование, фреймворки, бенчмарки, промышленная эксплуатация и рабочая среда.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -743,7 +743,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-15">
-<summary><b>Phase 15 — Autonomous Systems</b> &nbsp;<code>22 lessons</code>&nbsp; <em>Long-horizon agents, self-improvement, and the 2026 safety stack.</em></summary>
+<summary><b>Фаза 15 — Автономные системы</b> &nbsp;<code>22 урока</code>&nbsp; <em>Агенты с длинным горизонтом, самоулучшение и стек безопасности 2026 года.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -774,7 +774,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-16">
-<summary><b>Phase 16 — Multi-Agent & Swarms</b> &nbsp;<code>25 lessons</code>&nbsp; <em>Coordination, emergence, and collective intelligence.</em></summary>
+<summary><b>Фаза 16 — Мультиагентные системы и рои</b> &nbsp;<code>25 уроков</code>&nbsp; <em>Координация, эмерджентность и коллективный интеллект.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -808,7 +808,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-17">
-<summary><b>Phase 17 — Infrastructure & Production</b> &nbsp;<code>28 lessons</code>&nbsp; <em>Ship AI to the real world.</em></summary>
+<summary><b>Фаза 17 — Инфраструктура и промышленная эксплуатация</b> &nbsp;<code>28 уроков</code>&nbsp; <em>Вывод ИИ-систем в реальный мир.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -845,7 +845,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-18">
-<summary><b>Phase 18 — Ethics, Safety & Alignment</b> &nbsp;<code>30 lessons</code>&nbsp; <em>Build AI that helps humanity. Not optional.</em></summary>
+<summary><b>Фаза 18 — Этика, безопасность и alignment</b> &nbsp;<code>30 уроков</code>&nbsp; <em>Создавайте ИИ, который помогает человечеству. Это обязательно.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -884,7 +884,7 @@ the agent went wrong and explain why...
 </details>
 
 <details id="phase-19">
-<summary><b>Phase 19 — Capstone Projects</b> &nbsp;<code>85 lessons</code>&nbsp; <em>17 end-to-end products + 9 deep-build tracks. 20-40 hours per project; 4-12 lessons per track.</em></summary>
+<summary><b>Фаза 19 — Итоговые проекты</b> &nbsp;<code>85 уроков</code>&nbsp; <em>17 готовых продуктов и 9 углублённых треков. 20–40 часов на проект; 4–12 уроков на трек.</em></summary>
 <br/>
 
 | # | Project | Combines | Lang |
@@ -998,19 +998,19 @@ outputs/
 
 Подключайте их к Claude, Cursor, Codex, OpenClaw, Hermes или любому агенту, который читает каталог с SKILL.md / AGENTS.md. Это реальные инструменты, а не домашние задания.
 
-### Установите skills курса в своего агента
+### Установите навыки курса в своего агента
 
-Два набора skills — два способа установки:
+Два набора навыков — два способа установки:
 
-**Учебные skills** (`/start-learning`, `/learn`, `/course-guide`, `/claude-certification`, `/find-your-level`, `/check-understanding`) находятся в [`skills/`](../../skills/) и устанавливаются в любого агента одной командой — без клонирования и Python:
+**Учебные навыки** (`/start-learning`, `/learn`, `/course-guide`, `/claude-certification`, `/find-your-level`, `/check-understanding`) находятся в [`skills/`](../../skills/) и устанавливаются в любого агента одной командой — без клонирования и Python:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-`skills` записывает файлы в каталог, который использует ваш агент: `.claude/skills/`, `.cursor/skills/`, `.codex/skills/`, каталог skills OpenClaw, bundle-путь Hermes или любой инструмент с поддержкой SKILL.md. Одна команда для любого агента.
+`skills` записывает файлы в каталог, который использует ваш агент: `.claude/skills/`, `.cursor/skills/`, `.codex/skills/`, каталог навыков OpenClaw, путь к пакету Hermes или любой инструмент с поддержкой SKILL.md. Одна команда для любого агента.
 
-**Артефакты уроков.** Репозиторий содержит 388 skills и 99 промптов в `phases/**/outputs/`; установите их через `scripts/install_skills.py`. Требуется клонирование репозитория. Поддерживаются фильтры по тегам, dry run и разные layouts для агентов:
+**Артефакты уроков.** Репозиторий содержит 388 навыков и 99 промптов в `phases/**/outputs/`; установите их через `scripts/install_skills.py`. Требуется клонирование репозитория. Поддерживаются фильтры по тегам, пробный запуск и разные варианты структуры каталогов для агентов:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1023,15 +1023,15 @@ python3 scripts/install_skills.py <target> --dry-run                       # pre
 python3 scripts/install_skills.py <target> --force                         # overwrite existing files
 ```
 
-`<target>` — каталог skills вашего агента (например, `~/.claude/skills/`, `~/.cursor/skills/`, `~/.config/openclaw/skills/`, `.skills/` или любой читаемый агентом путь).
+`<target>` — каталог навыков вашего агента (например, `~/.claude/skills/`, `~/.cursor/skills/`, `~/.config/openclaw/skills/`, `.skills/` или любой читаемый агентом путь).
 
-По умолчанию скрипт отказывается перезаписывать существующие файлы и завершается с кодом 1, перечислив все конфликты путей. Используйте `--dry-run` для предварительного просмотра или `--force` для перезаписи. Каждый запуск без dry run записывает в целевой каталог `manifest.json` с полным перечнем по типу и фазе. Выберите layout, который читает ваш агент:
+По умолчанию скрипт отказывается перезаписывать существующие файлы и завершается с кодом 1, перечислив все конфликты путей. Используйте `--dry-run` для предварительного просмотра или `--force` для перезаписи. Каждый обычный запуск записывает в целевой каталог `manifest.json` с полным перечнем по типу и фазе. Выберите структуру каталогов, которую читает ваш агент:
 
-| `--layout`  | Path written |
+| `--layout` | Создаваемый путь |
 |---|---|
-| `skills`    | `<target>/<name>/SKILL.md` (nested convention, supported by Claude / Cursor / Codex / OpenClaw / Hermes) |
-| `by-phase`  | `<target>/phase-NN/<name>.md` |
-| `flat`      | `<target>/<name>.md` |
+| `skills` | `<target>/<name>/SKILL.md` (вложенная структура, поддерживаемая Claude / Cursor / Codex / OpenClaw / Hermes) |
+| `by-phase` | `<target>/phase-NN/<name>.md` |
+| `flat` | `<target>/<name>.md` |
 
 ### Добавьте Agent Workbench в свой репозиторий
 
@@ -1078,13 +1078,13 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 
 ## С чего начать
 
-| Background | Start at | Estimated time |
+| Подготовка | Начальная фаза | Примерное время |
 |---|---|---|
-| New to programming and AI | Phase 0 — Setup | ~306 hours |
-| Know Python, new to ML | Phase 1 — Math Foundations | ~270 hours |
-| Know ML, new to deep learning | Phase 3 — Deep Learning Core | ~200 hours |
-| Know deep learning, want LLMs and agents | Phase 10 — LLMs from Scratch | ~100 hours |
-| Senior engineer, only want agent engineering | Phase 14 — Agent Engineering | ~60 hours |
+| Новичок в программировании и ИИ | Фаза 0 — Настройка | ~306 часов |
+| Знаете Python, но не ML | Фаза 1 — Математические основы | ~270 часов |
+| Знаете ML, но не глубокое обучение | Фаза 3 — Основы глубокого обучения | ~200 часов |
+| Знаете глубокое обучение, хотите изучить LLM и агентов | Фаза 10 — LLM с нуля | ~100 часов |
+| Опытный инженер, интересует только разработка агентов | Фаза 14 — Разработка агентов | ~60 часов |
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -1094,8 +1094,8 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 
 <table>
 <tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>THE INDUSTRY SIGNAL</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>FOUNDATIONAL PAPERS COVERED</b></th>
+<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>СИГНАЛ ОТ ИНДУСТРИИ</b></th>
+<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>РАССМАТРИВАЕМЫЕ ОСНОВОПОЛАГАЮЩИЕ РАБОТЫ</b></th>
 </tr>
 <tr>
 <td valign="top">
@@ -1128,14 +1128,14 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 
 ## Как внести вклад
 
-| Goal | Read |
+| Цель | Материал |
 |---|---|
-| Contribute a lesson or fix | [CONTRIBUTING.md](../../CONTRIBUTING.md) |
-| Fork for your team or school | [FORKING.md](../../FORKING.md) |
-| Lesson template | [LESSON_TEMPLATE.md](../../LESSON_TEMPLATE.md) |
-| Track progress | [ROADMAP.md](../../ROADMAP.md) |
-| Glossary | [glossary/terms.md](../../glossary/terms.md) |
-| Code of conduct | [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md) |
+| Добавить урок или исправление | [CONTRIBUTING.md](../../CONTRIBUTING.md) |
+| Создать форк для команды или учебного заведения | [FORKING.md](../../FORKING.md) |
+| Шаблон урока | [LESSON_TEMPLATE.md](../../LESSON_TEMPLATE.md) |
+| Следить за прогрессом | [ROADMAP.md](../../ROADMAP.md) |
+| Глоссарий | [glossary/terms.md](../../glossary/terms.md) |
+| Кодекс поведения | [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md) |
 
 Перед отправкой урока запустите проверку инвариантов:
 
@@ -1165,13 +1165,13 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 
 **Текущие спонсоры:** [CodeRabbit](https://coderabbit.link/rohit-ghumare) · [iii](https://iii.dev?utm_source=ai-engineering-from-scratch&utm_medium=readme&utm_campaign=sponsor)
 
-| Tier | $/mo | What you get |
+| Уровень | $/мес. | Что входит |
 |------|------|---|
-| Backer | $25 | Name in BACKERS.md |
-| Bronze | $250 | Text-only row in README sponsor block + launch-day tweet |
-| Silver | $750 | Small logo in README + listed as one supported provider in API lessons |
-| Gold | $2,000 | Medium logo in README + sponsor page + quarterly X / LinkedIn co-feature |
-| Platinum | $5,000 | Hero logo above the fold + one dedicated integration lesson, max 1 partner |
+| Backer | $25 | Имя в BACKERS.md |
+| Bronze | $250 | Текстовая строка в блоке спонсоров README и публикация в день запуска |
+| Silver | $750 | Небольшой логотип в README и упоминание как поддерживаемого провайдера в уроках по API |
+| Gold | $2,000 | Средний логотип в README, страница спонсора и совместная публикация в X / LinkedIn раз в квартал |
+| Platinum | $5,000 | Крупный логотип в первом экране и отдельный урок по интеграции; не более одного партнёра |
 
 Полные тарифы, строгие правила, ценовые ориентиры и данные об аудитории приведены в [SPONSORS.md](../../SPONSORS.md). Оформить поддержку можно через [GitHub Sponsors](https://github.com/sponsors/rohitg00).
 
