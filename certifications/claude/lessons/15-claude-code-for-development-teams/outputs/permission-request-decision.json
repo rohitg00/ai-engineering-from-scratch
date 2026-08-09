@@ -1,0 +1,10 @@
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PermissionRequest",
+    "decision": {
+      "behavior": "deny",
+      "message": "External publishing requires an interactive human approval.",
+      "interrupt": false
+    }
+  }
+}
