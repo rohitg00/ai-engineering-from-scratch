@@ -12,6 +12,7 @@ on:
       - "scripts/audit_certifications.py"
       - "scripts/audit_ru_translations.py"
       - "scripts/tests/test_audit_ru_translations.py"
+      - "scripts/tests/test_readme_i18n.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
@@ -40,6 +41,7 @@ on:
       - "scripts/audit_certifications.py"
       - "scripts/audit_ru_translations.py"
       - "scripts/tests/test_audit_ru_translations.py"
+      - "scripts/tests/test_readme_i18n.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
@@ -101,6 +103,8 @@ jobs:
         run: python3 scripts/debias_certification_questions.py --check
       - name: README translations are in sync with English
         run: python3 scripts/build_readme_i18n.py --check
+      - name: test README localization coverage
+        run: python3 -m unittest scripts.tests.test_readme_i18n -v
       - name: translation workflow publisher retries safely
         run: python3 scripts/test_translate_workflow.py
       - name: learning skills mirror is in sync

@@ -30,6 +30,11 @@ class RussianReadmeCoverageTests(unittest.TestCase):
             hashlib.sha256(surface.encode()).hexdigest(),
         )
 
+    def test_curriculum_ci_runs_this_fail_closed_suite(self):
+        workflow = (ROOT / ".github/workflows/curriculum.yml").read_text(encoding="utf-8")
+        self.assertEqual(2, workflow.count('- "scripts/tests/test_readme_i18n.py"'))
+        self.assertIn("python3 -m unittest scripts.tests.test_readme_i18n -v", workflow)
+
     @classmethod
     def setUpClass(cls):
         source = (ROOT / "README.md").read_text(encoding="utf-8")
