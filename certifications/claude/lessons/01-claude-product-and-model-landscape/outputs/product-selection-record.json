@@ -1,0 +1,216 @@
+{
+  "decisionId": "weekly-competitor-brief-v1",
+  "verifiedOn": "2026-08-08",
+  "humanOwner": "competitive-intelligence-lead",
+  "requirements": {
+    "recurrence": "weekly",
+    "publicFreshnessDays": 7,
+    "internalSource": "current approved roadmap",
+    "sensitivity": "internal",
+    "output": "two-page executive brief with source appendix",
+    "collaboration": "shared team workflow",
+    "consequence": "executive planning input"
+  },
+  "surfaceCandidates": [
+    {
+      "id": "continued-chat",
+      "complexity": 1,
+      "meetsConstraints": false,
+      "reason": "Carries stale context and has no maintained internal source boundary"
+    },
+    {
+      "id": "project-research",
+      "complexity": 2,
+      "meetsConstraints": true,
+      "reason": "Combines current public research with maintained internal knowledge and review"
+    },
+    {
+      "id": "custom-application",
+      "complexity": 3,
+      "meetsConstraints": true,
+      "reason": "Meets the contract but adds ownership and integration cost not yet justified"
+    }
+  ],
+  "selectedSurface": "project-research",
+  "modelGate": {
+    "minimumCoverage": 0.95,
+    "maximumUnsupportedClaims": 0,
+    "maximumLatencySeconds": 20
+  },
+  "modelBenchmark": [
+    {
+      "id": "haiku-family",
+      "coverage": 0.86,
+      "unsupportedClaims": 1,
+      "latencySeconds": 5.2,
+      "costUnits": 1.0
+    },
+    {
+      "id": "sonnet-family",
+      "coverage": 0.98,
+      "unsupportedClaims": 0,
+      "latencySeconds": 11.4,
+      "costUnits": 3.0
+    }
+  ],
+  "selectedModel": "sonnet-family",
+  "deploymentMatrix": {
+    "scenario": {
+      "workload": "A regulated insurance team is adding a reviewed document-analysis service for employees and internal applications",
+      "cloudCommitment": "Azure is the approved production landing zone",
+      "procurement": "New consumption must flow through the existing Azure agreement",
+      "dataBoundary": "Prompts and completions must stay within an approved US cloud boundary",
+      "identity": "Human and workload access is governed with Microsoft Entra ID and Azure RBAC",
+      "seatsBudgets": "Twenty named users need governed access and the application needs a monthly consumption ceiling",
+      "operationalControl": "The platform team owns deployment, logging, quotas, and incident response"
+    },
+    "weights": {
+      "cloudCommitment": 5,
+      "procurement": 5,
+      "dataBoundary": 5,
+      "identity": 4,
+      "seatsBudgets": 3,
+      "operationalControl": 3
+    },
+    "candidates": [
+      {
+        "id": "claude-enterprise-direct",
+        "label": "Claude for Enterprise and direct Claude API",
+        "ratings": {
+          "cloudCommitment": {"score": 2, "reason": "Adds a direct Anthropic control plane beside the mandated Azure landing zone"},
+          "procurement": {"score": 2, "reason": "Requires direct Anthropic procurement instead of the existing Azure agreement"},
+          "dataBoundary": {"score": 3, "reason": "Anthropic documents first-party API data controls, but the stated requirement names an approved cloud boundary"},
+          "identity": {"score": 3, "reason": "Enterprise SSO and API workload federation are available, but they are separate from Azure resource RBAC"},
+          "seatsBudgets": {"score": 4, "reason": "Enterprise seats and member limits plus API workspace limits address both usage shapes"},
+          "operationalControl": {"score": 4, "reason": "Anthropic workspaces expose roles, rate limits, spend limits, and usage reporting"}
+        },
+        "weightedScore": 71,
+        "evidenceIds": ["direct-authentication", "direct-workspaces", "enterprise-sso", "enterprise-spend-limits"]
+      },
+      {
+        "id": "amazon-bedrock",
+        "label": "Amazon Bedrock",
+        "ratings": {
+          "cloudCommitment": {"score": 1, "reason": "Introduces AWS into an Azure-only production policy"},
+          "procurement": {"score": 1, "reason": "Moves consumption to AWS billing and model access"},
+          "dataBoundary": {"score": 2, "reason": "AWS-managed inference boundaries are strong but outside the approved Azure boundary"},
+          "identity": {"score": 2, "reason": "AWS IAM would duplicate the existing Entra and Azure RBAC operating model"},
+          "seatsBudgets": {"score": 2, "reason": "The workload is application inference, while named employee seats still need another surface"},
+          "operationalControl": {"score": 4, "reason": "Bedrock provides AWS-native authentication, billing, regions, and quotas"}
+        },
+        "weightedScore": 46,
+        "evidenceIds": ["bedrock-boundary"]
+      },
+      {
+        "id": "google-vertex-ai",
+        "label": "Google Vertex AI",
+        "ratings": {
+          "cloudCommitment": {"score": 1, "reason": "Introduces Google Cloud into an Azure-only production policy"},
+          "procurement": {"score": 1, "reason": "Requires a Google Cloud project and billing path"},
+          "dataBoundary": {"score": 2, "reason": "Regional and multi-region endpoints exist but do not satisfy the Azure-specific boundary"},
+          "identity": {"score": 2, "reason": "Google Cloud IAM would duplicate the approved Azure identity model"},
+          "seatsBudgets": {"score": 2, "reason": "The platform serves application inference and does not replace named employee access"},
+          "operationalControl": {"score": 4, "reason": "Global, multi-region, and regional endpoints give the application team deployment choices"}
+        },
+        "weightedScore": 46,
+        "evidenceIds": ["vertex-endpoints"]
+      },
+      {
+        "id": "microsoft-foundry",
+        "label": "Microsoft Foundry",
+        "ratings": {
+          "cloudCommitment": {"score": 5, "reason": "Uses the approved Azure subscription and resource hierarchy"},
+          "procurement": {"score": 5, "reason": "Claude usage is billed through Azure Marketplace"},
+          "dataBoundary": {"score": 5, "reason": "An Azure-hosted US Data Zone deployment matches the stated prompt and completion boundary"},
+          "identity": {"score": 5, "reason": "Azure-native authentication and RBAC match the existing control plane"},
+          "seatsBudgets": {"score": 4, "reason": "Azure consumption governance covers the application; named employee seats remain a separate decision"},
+          "operationalControl": {"score": 4, "reason": "The team controls Foundry resources and deployments while Anthropic operates the model service"}
+        },
+        "weightedScore": 119,
+        "evidenceIds": ["foundry-hosting"]
+      }
+    ]
+  },
+  "deploymentADR": {
+    "status": "accepted",
+    "selectedPath": "microsoft-foundry",
+    "decision": "Deploy application inference through an Azure-hosted Microsoft Foundry resource in the US Data Zone and procure employee seats separately only if the native Claude app is required.",
+    "rejectedAlternatives": [
+      "Direct Anthropic access conflicts with the required Azure procurement route for this application.",
+      "Amazon Bedrock and Google Vertex AI add unapproved cloud control planes without solving a workload requirement."
+    ],
+    "consequences": [
+      "The Azure team owns resource access, deployment configuration, budgets, logging, and regional verification.",
+      "Feature and model availability must be rechecked before every material model or mode change.",
+      "Human Claude seats are governed as a separate product decision rather than hidden inside API architecture."
+    ],
+    "reviewTriggers": [
+      "The approved cloud or marketplace agreement changes.",
+      "A required feature is unavailable in the selected Foundry hosting option.",
+      "The data-boundary requirement or processor terms change."
+    ]
+  },
+  "officialEvidence": [
+    {
+      "id": "direct-authentication",
+      "path": "claude-enterprise-direct",
+      "verifiedOn": "2026-08-09",
+      "claim": "The direct Claude API supports API keys and workload identity federation for production workloads.",
+      "sourceUrl": "https://platform.claude.com/docs/en/manage-claude/authentication"
+    },
+    {
+      "id": "direct-workspaces",
+      "path": "claude-enterprise-direct",
+      "verifiedOn": "2026-08-09",
+      "claim": "Claude API workspaces scope keys, roles, rate limits, spend limits, and usage reporting.",
+      "sourceUrl": "https://platform.claude.com/docs/en/manage-claude/workspaces"
+    },
+    {
+      "id": "enterprise-sso",
+      "path": "claude-enterprise-direct",
+      "verifiedOn": "2026-08-09",
+      "claim": "Claude organization access can be integrated with enterprise single sign-on and JIT or SCIM provisioning.",
+      "sourceUrl": "https://support.claude.com/en/articles/13132885-set-up-single-sign-on-sso"
+    },
+    {
+      "id": "enterprise-spend-limits",
+      "path": "claude-enterprise-direct",
+      "verifiedOn": "2026-08-09",
+      "claim": "Claude Enterprise has member spend limits that are separate from Claude API workspace limits.",
+      "sourceUrl": "https://platform.claude.com/docs/en/manage-claude/spend-limits-api"
+    },
+    {
+      "id": "bedrock-boundary",
+      "path": "amazon-bedrock",
+      "verifiedOn": "2026-08-09",
+      "claim": "Claude in Amazon Bedrock uses AWS-native authentication, billing, and AWS-managed security boundaries.",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/claude-in-amazon-bedrock"
+    },
+    {
+      "id": "vertex-endpoints",
+      "path": "google-vertex-ai",
+      "verifiedOn": "2026-08-09",
+      "claim": "Claude on Google Cloud offers global, multi-region, and regional endpoints with different residency and availability tradeoffs.",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai"
+    },
+    {
+      "id": "foundry-hosting",
+      "path": "microsoft-foundry",
+      "verifiedOn": "2026-08-09",
+      "claim": "Microsoft Foundry provides Azure-native endpoints and authentication, Azure Marketplace billing, and Azure-hosted or Anthropic-hosted deployment choices.",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry"
+    }
+  ],
+  "officialSources": [
+    "https://platform.claude.com/docs/en/about-claude/models/overview",
+    "https://platform.claude.com/docs/en/manage-claude/authentication",
+    "https://platform.claude.com/docs/en/manage-claude/workspaces",
+    "https://support.claude.com/en/articles/13132885-set-up-single-sign-on-sso",
+    "https://platform.claude.com/docs/en/manage-claude/spend-limits-api",
+    "https://platform.claude.com/docs/en/build-with-claude/claude-in-amazon-bedrock",
+    "https://platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai",
+    "https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry",
+    "https://support.claude.com/en/articles/9517075-what-are-projects",
+    "https://support.claude.com/en/articles/11095361-when-should-i-use-web-search-extended-thinking-and-research"
+  ]
+}
