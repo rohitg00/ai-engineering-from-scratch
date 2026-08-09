@@ -1,0 +1,78 @@
+{
+  "lesson": "26-production-observability-latency-and-cost",
+  "title": "Production Observability, Latency, and Cost",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A dashboard shows 99.9 percent successful API calls, but users report wrong answers. What is missing?",
+      "options": [
+        "A lower generation temperature recorded as an attribute on every successful model span",
+        "Task-quality and trajectory evaluation connected to system traces",
+        "A larger model for semantic errors",
+        "A transport retry metric that separates transient HTTP failures from successful first-attempt requests"
+      ],
+      "correct": 1,
+      "explanation": "Transport success only proves the protocol completed. The system needs evidence about retrieval, tools, validation, final-state quality, and downstream outcomes."
+    },
+    {
+      "stage": "check",
+      "question": "Why should a team monitor P95 latency as well as P50?",
+      "options": [
+        "P95 combines response time and model accuracy so a team can detect quality degradation in slow requests",
+        "P95 approximates the slowest request",
+        "P95 exposes slow paths such as retries, large contexts, and tool timeouts that the median hides",
+        "P50 is unstable at production traffic volumes, while P95 remains comparable across any sample size"
+      ],
+      "correct": 2,
+      "explanation": "The median describes the ordinary path. Tail percentiles reveal a slower cohort that can dominate user complaints and timeout behavior."
+    },
+    {
+      "stage": "check",
+      "question": "Which cost comparison best supports model routing decisions?",
+      "options": [
+        "The average provider charge per model call, including cached and uncached input tokens",
+        "The monthly application infrastructure spend allocated across all attempted tasks, regardless of acceptance",
+        "The output-token price for each model multiplied by the median completion length",
+        "Total model, tool, retry, review, and correction cost per accepted task outcome"
+      ],
+      "correct": 3,
+      "explanation": "A cheaper call can create more retries and review. Cost per successful outcome incorporates the full trajectory and enables a fair architecture comparison."
+    },
+    {
+      "stage": "check",
+      "question": "What is the primary purpose of a distributed trace in a Claude application?",
+      "options": [
+        "Connect model, retrieval, tool, validation, retry, and approval spans for one trajectory",
+        "Store complete user inputs and credentials so every production failure can be reproduced from one record",
+        "Guarantee task correctness by proving that every required model, retrieval, and tool span completed successfully",
+        "Replace aggregate service metrics"
+      ],
+      "correct": 0,
+      "explanation": "A trace reveals where time and failure occurred across the end-to-end path. Metrics aggregate behavior, while evaluations determine correctness."
+    },
+    {
+      "stage": "post",
+      "question": "After a release, P95 latency and cost rise while P50 stays stable. Which investigation is most useful?",
+      "options": [
+        "Treat the stable median as evidence that the release is healthy and wait for the tail to converge with more traffic",
+        "Inspect slow-path retries, rate limits, large inputs, tool timeouts, and cache misses by release version",
+        "Disable detailed tracing because added span collection is the most likely cause of the higher cost and tail latency",
+        "Shorten all prompts with higher median token use"
+      ],
+      "correct": 1,
+      "explanation": "The shape points to a slow cohort rather than a universal slowdown. Versioned traces and strata can identify retries, tools, input size, and cache behavior in that cohort."
+    },
+    {
+      "stage": "post",
+      "question": "Which rollout policy is strongest for a new architecture variant?",
+      "options": [
+        "Canary the variant while monitoring transport errors and latency, then evaluate task quality after reaching full traffic",
+        "Route all low-risk traffic to the cheapest variant first, then add quality evaluation if user complaints increase",
+        "Shadow, canary, guarded expansion, and automatic rollback using quality, safety, latency, and cost gates",
+        "Release to all users after the offline suite and one production demo pass, then compare aggregate metrics with the prior release"
+      ],
+      "correct": 2,
+      "explanation": "Progressive exposure limits harm while collecting live evidence. Multiple gates prevent an economic improvement from hiding quality or safety regression."
+    }
+  ]
+}

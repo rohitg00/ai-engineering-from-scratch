@@ -1,0 +1,24 @@
+{
+  "scorecard_id": "support-route-candidate-v1",
+  "baseline": {
+    "task_success_rate": 0.5,
+    "p95_ms": 1700,
+    "cost_per_task_success_usd": 0.044,
+    "cache_read_rate": 0.0
+  },
+  "candidate": {
+    "task_success_rate": 0.6667,
+    "p95_ms": 900,
+    "cost_per_task_success_usd": 0.0105,
+    "cache_read_rate": 1.0,
+    "system_error_categories": {"tool_timeout": 1}
+  },
+  "gates": {
+    "minimum_task_success_rate": 0.7,
+    "maximum_p95_ms": 1800,
+    "maximum_cost_per_success_usd": 0.03,
+    "hard_safety_failures": 0
+  },
+  "decision": "blocked_on_task_success",
+  "safe_next_action": "repair timeout path and rerun the representative evaluation"
+}
