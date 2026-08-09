@@ -43,8 +43,8 @@
   }
 
   function translationUrl(path, lang) {
-    var safeLang = String(lang || '').toLowerCase();
-    if (!/^[a-z][a-z0-9-]*$/.test(safeLang)) throw new Error('Invalid translation language');
+    var safeLang = String(lang || '');
+    if (!/^[A-Za-z][A-Za-z0-9-]*$/.test(safeLang)) throw new Error('Invalid translation language');
     var lessonPath = clean(path).replace(/\/+$/, '');
     return 'https://raw.githubusercontent.com/' + repository() + '/translations/i18n/'
       + safeLang + '/' + lessonPath + '/docs/' + safeLang + '.md';
@@ -93,7 +93,7 @@
    * translation remains available without a second network request.
    */
   function loadLessonDocument(path, lang, embeddedEnglish) {
-    var requested = String(lang || 'en').toLowerCase();
+    var requested = String(lang || 'en');
     if (requested === 'en') {
       return typeof embeddedEnglish === 'string'
         ? Promise.resolve({ markdown: embeddedEnglish, lang: 'en' })

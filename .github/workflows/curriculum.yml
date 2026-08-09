@@ -91,6 +91,8 @@ jobs:
         run: find certifications/claude/lessons -path '*/code/main.py' -print0 | xargs -0 -r -n1 python3
       - name: build the static site
         run: node site/build.js
+      - name: test runtime localization
+        run: node --test site/tests/runtime-i18n.test.js
       - name: quiz answer positions are de-biased
         run: python3 scripts/debias_quizzes.py --check
       - name: certification answer positions are de-biased

@@ -21,6 +21,11 @@
     }
   }
 
+  function isLessonPage() {
+    try { return new URLSearchParams(location.search).has('path'); }
+    catch (_) { return false; }
+  }
+
   function supported(code) {
     if (!code || code === 'en') return false;
     if (isCertificationLesson() && CERTIFICATION_LANGS.indexOf(code) < 0) return false;
@@ -145,7 +150,6 @@
         url.searchParams.set('lang', lang);
       }
       history.replaceState(null, '', url);
-      applyDir(lang);
       updateButton();
       close(true);
       if (typeof window.AIFS_onLangChange === 'function') window.AIFS_onLangChange(lang);
@@ -201,13 +205,13 @@
     });
 
     updateButton();
-    applyDir(current());
+    if (!isLessonPage()) applyDir(current());
   }
 
   function init() {
     var host = document.getElementById('langPicker');
     if (host) mount(host);
-    else applyDir(current());
+    else if (!isLessonPage()) applyDir(current());
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

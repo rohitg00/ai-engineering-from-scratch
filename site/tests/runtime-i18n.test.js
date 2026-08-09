@@ -7,6 +7,7 @@ const test = require('node:test');
 const vm = require('node:vm');
 
 const siteDir = path.join(__dirname, '..');
+const repoRoot = path.join(siteDir, '..');
 
 function loadContentSource(options = {}) {
   const requests = [];
@@ -187,7 +188,7 @@ test('certification picker accepts Russian and is not hard-hidden', () => {
 
   assert.equal(window.AIFS_currentLang(), 'ru');
   domReady();
-  assert.equal(document.documentElement.lang, 'ru');
+  assert.equal(document.documentElement.lang, undefined);
 });
 
 test('lesson runtime renders only the latest response and keeps certification quiz canonical', () => {
@@ -208,4 +209,27 @@ test('internal lesson links preserve the selected translation language', () => {
   assert.match(html, /searchParams\.set\('lang', lang\)/);
   assert.match(html, /url \+= '&lang=' \+ encodeURIComponent\(renderedLang\)/);
   assert.doesNotMatch(html, /href=\\?"lesson\.html\?path=/);
+});
+
+test('production language registry actually offers Russian', () => {
+  const registry = JSON.parse(fs.readFileSync(path.join(repoRoot, 'languages.json'), 'utf8'));
+  const offered = registry.languages.filter((lang) => lang.source || lang.ci).map((lang) => lang.code);
+  assert.ok(offered.includes('ru'));
+});
+
+test('language selection waits for the winning document before changing html lang', () => {
+  const picker = fs.readFileSync(path.join(siteDir, 'lang-picker.js'), 'utf8');
+  const choose = picker.match(/function choose\(code\) \{[\s\S]*?\n    \}/)[0];
+  assert.doesNotMatch(choose, /applyDir\(lang\)/);
+});
+
+test('translation URLs preserve canonical BCP-47 case', () => {
+  const sourceText = fs.readFileSync(path.join(siteDir, 'content-source.js'), 'utf8');
+  assert.match(sourceText, /\^\[A-Za-z\]/);
+  assert.doesNotMatch(sourceText, /String\(lang \|\| ''\)\.toLowerCase\(\)/);
+});
+
+test('curriculum CI runs the runtime i18n tests', () => {
+  const workflow = fs.readFileSync(path.join(repoRoot, '.github/workflows/curriculum.yml'), 'utf8');
+  assert.match(workflow, /node --test site\/tests\/runtime-i18n\.test\.js/);
 });
