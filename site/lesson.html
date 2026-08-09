@@ -2514,6 +2514,7 @@
       }
 
       function showError(title, msg) {
+        applyRenderedLanguage('en');
         var el = document.getElementById('lessonContent');
         var contextTrack = certificationContextTrack();
         var backHref = contextTrack ? 'certification.html?id=' + encodeURIComponent(contextTrack.id) : 'index.html';

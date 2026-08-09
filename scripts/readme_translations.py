@@ -357,7 +357,14 @@ RU_STRUCTURAL_TRANSLATIONS = {
     "<summary><b>Phase 17 — Infrastructure & Production</b> &nbsp;<code>28 lessons</code>&nbsp; <em>Ship AI to the real world.</em></summary>": "<summary><b>Фаза 17 — Инфраструктура и промышленная эксплуатация</b> &nbsp;<code>28 уроков</code>&nbsp; <em>Вывод ИИ-систем в реальный мир.</em></summary>",
     "<summary><b>Phase 18 — Ethics, Safety & Alignment</b> &nbsp;<code>30 lessons</code>&nbsp; <em>Build AI that helps humanity. Not optional.</em></summary>": "<summary><b>Фаза 18 — Этика, безопасность и alignment</b> &nbsp;<code>30 уроков</code>&nbsp; <em>Создавайте ИИ, который помогает человечеству. Это обязательно.</em></summary>",
     "<summary><b>Phase 19 — Capstone Projects</b> &nbsp;<code>85 lessons</code>&nbsp; <em>17 end-to-end products + 9 deep-build tracks. 20-40 hours per project; 4-12 lessons per track.</em></summary>": "<summary><b>Фаза 19 — Итоговые проекты</b> &nbsp;<code>85 уроков</code>&nbsp; <em>17 готовых продуктов и 9 углублённых треков. 20–40 часов на проект; 4–12 уроков на трек.</em></summary>",
+    "  <b>Read in your language:</b>": "  <b>Выберите язык:</b>",
+    "<p align=\"center\"><sub><b>150,639</b> readers &nbsp;·&nbsp; <b>241,669</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-06-07</sub></p>": "<p align=\"center\"><sub><b>150,639</b> читателей &nbsp;·&nbsp; <b>241,669</b> просмотров страниц за последние 30 дней &nbsp;·&nbsp; по состоянию на 2026-06-07</sub></p>",
+    "| # | Lesson | Type | Lang |": "| # | Урок | Тип | Язык |",
+    "| # | Project | Combines | Lang |": "| # | Проект | Объединяет | Язык |",
+    ">Report / Suggest</a>": ">Сообщить о проблеме / Предложить улучшение</a>",
 }
+for _phase in (7, 8, 10, 11, 13, 14):
+    RU_STRUCTURAL_TRANSLATIONS[f"[Phase {_phase}]"] = f"[Фаза {_phase}]"
 STRUCTURAL_TRANSLATIONS = {"ru": RU_STRUCTURAL_TRANSLATIONS}
 
 TRANSLATIONS["ru"].update(RU_COMPLETE_TRANSLATIONS)

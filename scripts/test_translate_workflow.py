@@ -114,6 +114,33 @@ def publisher_env(
 
 
 class TranslateWorkflowContractTest(unittest.TestCase):
+    def test_real_gitignore_excludes_generated_certification_outputs(self) -> None:
+        ignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
+        self.assertIn("i18n/*/certifications/", ignore.splitlines())
+
+    def test_orphaned_certification_output_and_cache_entry_are_pruned(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            out = root / "i18n"
+            current = root / "certifications/claude/lessons/01/docs/en.md"
+            current.parent.mkdir(parents=True)
+            current.write_text("current\n", encoding="utf-8")
+            orphan = out / "ru/certifications/claude/lessons/99/docs/ru.md"
+            orphan.parent.mkdir(parents=True)
+            orphan.write_text("orphan\n", encoding="utf-8")
+            cache = {
+                "certifications/claude/lessons/01/docs/en.md": "ok",
+                "certifications/claude/lessons/99/docs/en.md": "stale",
+            }
+            with mock.patch.object(TRANSLATOR, "ROOT", root), mock.patch.object(TRANSLATOR, "OUT_ROOT", out):
+                removed = TRANSLATOR.prune_orphans(
+                    docs=[current], lang="ru", scope="certifications/claude",
+                    phase=None, cache=cache, dry_run=False,
+                )
+            self.assertEqual(2, removed)
+            self.assertFalse(orphan.exists())
+            self.assertNotIn("certifications/claude/lessons/99/docs/en.md", cache)
+
     def test_trigger_and_matrix_cover_core_and_claude_certifications(self) -> None:
         workflow = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn('- "phases/**/docs/en.md"', workflow)

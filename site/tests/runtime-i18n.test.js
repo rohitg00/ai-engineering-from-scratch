@@ -232,4 +232,12 @@ test('translation URLs preserve canonical BCP-47 case', () => {
 test('curriculum CI runs the runtime i18n tests', () => {
   const workflow = fs.readFileSync(path.join(repoRoot, '.github/workflows/curriculum.yml'), 'utf8');
   assert.match(workflow, /node --test site\/tests\/runtime-i18n\.test\.js/);
+  assert.equal((workflow.match(/- "languages\.json"/g) || []).length, 2);
+});
+
+test('English error UI resets the rendered document language', () => {
+  const html = fs.readFileSync(path.join(siteDir, 'lesson.html'), 'utf8');
+  const showError = html.match(/function showError\(title, msg\) \{([\s\S]*?)\n      \}/);
+  assert.ok(showError);
+  assert.match(showError[1], /applyRenderedLanguage\('en'\)/);
 });

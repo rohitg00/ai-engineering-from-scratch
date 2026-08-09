@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Fail-closed coverage checks for hand-authored README translations."""
 
+import hashlib
 import re
 import sys
 import unittest
@@ -10,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-from build_readme_i18n import localize_links, spans  # noqa: E402
+from build_readme_i18n import STRUCTURAL, localize_links, spans  # noqa: E402
 from readme_translations import STRUCTURAL_TRANSLATIONS, TRANSLATIONS  # noqa: E402
 
 
@@ -20,6 +21,15 @@ TRANSLATABLE_CODE_LABELS = {"`12 lessons`", "`12 уроков`"}
 
 
 class RussianReadmeCoverageTests(unittest.TestCase):
+    def test_structural_surface_is_fail_closed(self):
+        """Any list/table/HTML/heading change requires explicit localization review."""
+        rendered = (ROOT / "i18n/ru/README.md").read_text(encoding="utf-8")
+        surface = "\n".join(line for line in rendered.splitlines() if STRUCTURAL.match(line)) + "\n"
+        self.assertEqual(
+            "1a3e086ba4642c0b1e261302057f611b63bc943d6bb332d08d132774290397de",
+            hashlib.sha256(surface.encode()).hexdigest(),
+        )
+
     @classmethod
     def setUpClass(cls):
         source = (ROOT / "README.md").read_text(encoding="utf-8")

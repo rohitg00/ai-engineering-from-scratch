@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <b>Read in your language:</b>
+  <b>Выберите язык:</b>
   <a href="../../i18n/es/README.md">Español</a> ·
   <a href="../../i18n/fr/README.md">Français</a> ·
   <a href="../../i18n/pt/README.md">Português</a> ·
@@ -41,7 +41,7 @@
 > Вы не просто изучаете ИИ. Вы строите его. От начала до конца. Своими руками.
 
 <!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>150,639</b> readers &nbsp;·&nbsp; <b>241,669</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-06-07</sub></p>
+<p align="center"><sub><b>150,639</b> читателей &nbsp;·&nbsp; <b>241,669</b> просмотров страниц за последние 30 дней &nbsp;·&nbsp; по состоянию на 2026-06-07</sub></p>
 <!-- STATS:END -->
 
 ## Начните учиться за 30 секунд
@@ -298,7 +298,7 @@ the agent went wrong and explain why...
 ### Фаза 0: настройка и инструменты `12 уроков`
 > Подготовьте окружение ко всем последующим этапам.
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Dev Environment](../../phases/00-setup-and-tooling/01-dev-environment/) | Build | Python |
 | 02 | [Git & Collaboration](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | Learn | — |
@@ -317,7 +317,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 1 — Математические основы</b> &nbsp;<code>22 урока</code>&nbsp; <em>Интуитивное понимание каждого алгоритма ИИ через код.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Linear Algebra Intuition](../../phases/01-math-foundations/01-linear-algebra-intuition/) | Learn | Python, Julia |
 | 02 | [Vectors, Matrices & Operations](../../phases/01-math-foundations/02-vectors-matrices-operations/) | Build | Python, Julia |
@@ -348,7 +348,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 2 — Основы ML</b> &nbsp;<code>18 уроков</code>&nbsp; <em>Классическое машинное обучение по-прежнему лежит в основе большинства промышленных ИИ-систем.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [What Is Machine Learning](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Learn | Python |
 | 02 | [Linear Regression from Scratch](../../phases/02-ml-fundamentals/02-linear-regression/) | Build | Python |
@@ -375,7 +375,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 3 — Основы глубокого обучения</b> &nbsp;<code>13 уроков</code>&nbsp; <em>Нейронные сети с первых принципов. Никаких фреймворков, пока вы не создадите свою сеть.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [The Perceptron: Where It All Started](../../phases/03-deep-learning-core/01-the-perceptron/) | Build | Python |
 | 02 | [Multi-Layer Networks & Forward Pass](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Build | Python |
@@ -397,7 +397,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 4 — Компьютерное зрение</b> &nbsp;<code>28 уроков</code>&nbsp; <em>От пикселей к пониманию: изображения, видео, 3D, VLM и модели мира.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Image Fundamentals: Pixels, Channels, Color Spaces](../../phases/04-computer-vision/01-image-fundamentals/) | Learn | Python |
 | 02 | [Convolutions from Scratch](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Build | Python |
@@ -434,7 +434,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 5 — NLP: от основ к продвинутым методам</b> &nbsp;<code>29 уроков</code>&nbsp; <em>Язык — интерфейс к интеллекту.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Text Processing: Tokenization, Stemming, Lemmatization](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Build | Python |
 | 02 | [Bag of Words, TF-IDF & Text Representation](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Build | Python |
@@ -472,7 +472,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 6 — Речь и аудио</b> &nbsp;<code>17 уроков</code>&nbsp; <em>Слышать, понимать и говорить.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Audio Fundamentals: Waveforms, Sampling, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Learn | Python |
 | 02 | [Spectrograms, Mel Scale & Audio Features](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Build | Python |
@@ -498,7 +498,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 7 — Углублённое изучение Transformer</b> &nbsp;<code>16 уроков</code>&nbsp; <em>Архитектура, которая изменила всё.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Why Transformers: The Problems with RNNs](../../phases/07-transformers-deep-dive/01-why-transformers/) | Learn | Python |
 | 02 | [Self-Attention from Scratch](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Build | Python |
@@ -523,7 +523,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 8 — Генеративный ИИ</b> &nbsp;<code>15 уроков</code>&nbsp; <em>Создание изображений, видео, аудио, 3D и других материалов.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Generative Models: Taxonomy & History](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Learn | Python |
 | 02 | [Autoencoders & VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Build | Python |
@@ -547,7 +547,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 9 — Обучение с подкреплением</b> &nbsp;<code>12 уроков</code>&nbsp; <em>Основа RLHF и игровых ИИ-систем.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [MDPs, States, Actions & Rewards](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Learn | Python |
 | 02 | [Dynamic Programming](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Build | Python |
@@ -568,7 +568,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 10 — LLM с нуля</b> &nbsp;<code>24 урока</code>&nbsp; <em>Создание, обучение и понимание больших языковых моделей.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Tokenizers: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Build | Python, Rust |
 | 02 | [Building a Tokenizer from Scratch](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Build | Python |
@@ -601,7 +601,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 11 — Инженерия LLM</b> &nbsp;<code>17 уроков</code>&nbsp; <em>Применение LLM в промышленной эксплуатации.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Prompt Engineering: Techniques & Patterns](../../phases/11-llm-engineering/01-prompt-engineering/) | Build | Python |
 | 02 | [Few-Shot, CoT, Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | Build | Python |
@@ -627,7 +627,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 12 — Мультимодальный ИИ</b> &nbsp;<code>25 уроков</code>&nbsp; <em>Зрение, слух, чтение и рассуждение между модальностями: от патчей ViT до агентов, управляющих компьютером.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Vision Transformers and the Patch-Token Primitive](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Learn | Python |
 | 02 | [CLIP and Contrastive Vision-Language Pretraining](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Build | Python |
@@ -661,7 +661,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 13 — Инструменты и протоколы</b> &nbsp;<code>23 урока</code>&nbsp; <em>Интерфейсы между ИИ и реальным миром.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [The Tool Interface](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Learn | Python |
 | 02 | [Function Calling Deep Dive](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Build | Python |
@@ -693,7 +693,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 14 — Разработка агентов</b> &nbsp;<code>42 урока</code>&nbsp; <em>Создание агентов с первых принципов: цикл, память, планирование, фреймворки, бенчмарки, промышленная эксплуатация и рабочая среда.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [The Agent Loop](../../phases/14-agent-engineering/01-the-agent-loop/) | Build | Python |
 | 02 | [ReWOO and Plan-and-Execute](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Build | Python |
@@ -746,7 +746,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 15 — Автономные системы</b> &nbsp;<code>22 урока</code>&nbsp; <em>Агенты с длинным горизонтом, самоулучшение и стек безопасности 2026 года.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [From Chatbots to Long-Horizon Agents (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Learn | Python |
 | 02 | [STaR, V-STaR, Quiet-STaR: Self-Taught Reasoning](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Learn | Python |
@@ -777,7 +777,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 16 — Мультиагентные системы и рои</b> &nbsp;<code>25 уроков</code>&nbsp; <em>Координация, эмерджентность и коллективный интеллект.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Why Multi-Agent](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | Learn | TypeScript |
 | 02 | [FIPA-ACL Heritage and Speech Acts](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Learn | Python |
@@ -811,7 +811,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 17 — Инфраструктура и промышленная эксплуатация</b> &nbsp;<code>28 уроков</code>&nbsp; <em>Вывод ИИ-систем в реальный мир.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Managed LLM Platforms — Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Learn | Python |
 | 02 | [Inference Platform Economics — Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Learn | Python |
@@ -848,7 +848,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 18 — Этика, безопасность и alignment</b> &nbsp;<code>30 уроков</code>&nbsp; <em>Создавайте ИИ, который помогает человечеству. Это обязательно.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | Урок | Тип | Язык |
 |:---:|--------|:----:|------|
 | 01 | [Instruction-Following as Alignment Signal](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Learn | Python |
 | 02 | [Reward Hacking & Goodhart's Law](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Learn | Python |
@@ -887,7 +887,7 @@ the agent went wrong and explain why...
 <summary><b>Фаза 19 — Итоговые проекты</b> &nbsp;<code>85 уроков</code>&nbsp; <em>17 готовых продуктов и 9 углублённых треков. 20–40 часов на проект; 4–12 уроков на трек.</em></summary>
 <br/>
 
-| # | Project | Combines | Lang |
+| # | Проект | Объединяет | Язык |
 |:---:|---------|----------|------|
 | 01 | [Terminal-Native Coding Agent](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
 | 02 | [RAG over Codebase (Cross-Repo Semantic Search)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
@@ -909,7 +909,7 @@ the agent went wrong and explain why...
 
 **Треки глубокой разработки** — серии из нескольких уроков, в которых полноценная подсистема создаётся с нуля.
 
-| # | Project | Combines | Lang |
+| # | Проект | Объединяет | Язык |
 |:---:|---------|----------|------|
 | 20 | [Agent Harness Loop Contract](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agent harness | Python |
 | 21 | [Tool Registry with Schema Validation](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agent harness | Python |
@@ -1109,14 +1109,14 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 </td>
 <td valign="top">
 
-- *Attention Is All You Need* — Vaswani et al., 2017 → [Phase 7](#phase-7)
-- *Language Models are Few-Shot Learners* (GPT-3) → [Phase 10](#phase-10)
-- *Denoising Diffusion Probabilistic Models* → [Phase 8](#phase-8)
-- *InstructGPT / RLHF* → [Phase 10](#phase-10)
-- *Direct Preference Optimization* → [Phase 10](#phase-10)
-- *Chain-of-Thought Prompting* → [Phase 11](#phase-11)
-- *ReAct: Reasoning + Acting in LLMs* → [Phase 14](#phase-14)
-- *Model Context Protocol* — Anthropic → [Phase 13](#phase-13)
+- *Attention Is All You Need* — Vaswani et al., 2017 → [Фаза 7](#phase-7)
+- *Language Models are Few-Shot Learners* (GPT-3) → [Фаза 10](#phase-10)
+- *Denoising Diffusion Probabilistic Models* → [Фаза 8](#phase-8)
+- *InstructGPT / RLHF* → [Фаза 10](#phase-10)
+- *Direct Preference Optimization* → [Фаза 10](#phase-10)
+- *Chain-of-Thought Prompting* → [Фаза 11](#phase-11)
+- *ReAct: Reasoning + Acting in LLMs* → [Фаза 14](#phase-14)
+- *Model Context Protocol* — Anthropic → [Фаза 13](#phase-13)
 
 </td>
 </tr>
@@ -1199,5 +1199,5 @@ MIT. Используйте как угодно: форкайте, препод�
 <sub>
   <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
   <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Report / Suggest</a>
+  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Сообщить о проблеме / Предложить улучшение</a>
 </sub>

@@ -318,6 +318,43 @@ def translate_doc(src, lang, provider):
     return restore(raw, store)
 
 
+def prune_orphans(*, docs, lang, scope, phase, cache, dry_run):
+    """Remove outputs/cache entries whose canonical English lesson disappeared."""
+    canonical = {
+        str(doc.relative_to(ROOT)) for doc in docs
+        if not phase or f"/{phase}/" in f"/{doc.relative_to(ROOT)}"
+    }
+    removed = 0
+    for key in list(cache):
+        if key not in canonical:
+            print(f"would remove stale cache entry {key}" if dry_run else f"removed stale cache entry {key}")
+            if not dry_run:
+                del cache[key]
+            removed += 1
+
+    scope_root = OUT_ROOT / lang
+    if scope == "core":
+        scope_root = scope_root / "phases"
+        if phase:
+            scope_root = scope_root / phase
+    else:
+        scope_root = scope_root / "certifications/claude/lessons"
+    if scope_root.is_dir():
+        for dst in scope_root.rglob(f"{lang}.md"):
+            source_rel = str(dst.relative_to(OUT_ROOT / lang).with_name("en.md"))
+            if source_rel in canonical:
+                continue
+            print(f"would remove orphaned output {dst}" if dry_run else f"removed orphaned output {dst}")
+            if not dry_run:
+                dst.unlink()
+                parent = dst.parent
+                while parent != scope_root and parent.is_dir() and not any(parent.iterdir()):
+                    parent.rmdir()
+                    parent = parent.parent
+            removed += 1
+    return removed
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--lang", required=True)
@@ -354,6 +391,12 @@ def main():
     def save_cache():
         cpath.parent.mkdir(parents=True, exist_ok=True)
         cpath.write_text(json.dumps(cache, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    if not only_doc:
+        prune_orphans(
+            docs=docs, lang=args.lang, scope=args.scope, phase=args.phase,
+            cache=cache, dry_run=args.dry_run,
+        )
 
     translated = skipped = 0
     for doc in docs:
