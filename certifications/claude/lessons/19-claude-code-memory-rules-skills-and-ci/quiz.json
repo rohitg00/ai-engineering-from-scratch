@@ -1,0 +1,78 @@
+{
+  "lesson": "19-claude-code-memory-rules-skills-and-ci",
+  "title": "Claude Code Memory, Rules, Skills, and CI",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A root CLAUDE.md contains hundreds of lines that apply only to database migrations. What is the strongest improvement?",
+      "options": [
+        "Move migration guidance to a scoped rule or Skill and keep the root file as a concise router",
+        "Keep the guidance in the root file but add a summary and stronger priority labels",
+        "Move every project instruction into separate Skills so the root file has no shared context or routing role",
+        "Copy the migration section into task prompts only when a developer remembers it is relevant"
+      ],
+      "correct": 0,
+      "explanation": "Narrow guidance should load only in its true scope. A concise root file preserves high-value project context without making every task pay the full instruction cost."
+    },
+    {
+      "stage": "check",
+      "question": "A PreToolUse command hook must block a tool and explain why. Which output contract is valid?",
+      "options": [
+        "Exit 2 and print structured JSON to stdout so both blocking mechanisms apply",
+        "Exit 2 with stderr, or exit 0 with event-specific JSON",
+        "Exit 0 with plain text that asks Claude to deny the tool",
+        "Exit 1 and print a JSON decision to stderr"
+      ],
+      "correct": 1,
+      "explanation": "Exit 2 is the blocking exit-code path; structured JSON is parsed only on exit 0. The two paths must not be combined, and each hook event has its own decision schema."
+    },
+    {
+      "stage": "check",
+      "question": "What does allowed-tools in SKILL.md do?",
+      "options": [
+        "Restricts Claude to exactly those tools until the session ends",
+        "Grants the listed tools permanently after the project folder is trusted",
+        "Pre-approves matching tools for one invocation turn",
+        "Overrides project deny rules for the Skill's bundled scripts"
+      ],
+      "correct": 2,
+      "explanation": "allowed-tools is a temporary pre-approval, not a sandbox. Other tools remain available under normal permissions, and deny rules continue to apply."
+    },
+    {
+      "stage": "check",
+      "question": "How should a team configure a migration-auditor subagent that must stop cleanly when evidence is missing?",
+      "options": [
+        "Use bypassPermissions in a worktree so missing access cannot interrupt the audit",
+        "Put its complete procedure in the root CLAUDE.md so every session sees the same prompt",
+        "Give it inherited tools and ask it to keep trying until it can report success",
+        "Use /agents with read-only tools, maxTurns, and a structured blocked result"
+      ],
+      "correct": 3,
+      "explanation": "Tool and turn boundaries limit the task, while a structured blocked result preserves the obstacle. A worktree isolates files but does not justify broader permissions."
+    },
+    {
+      "stage": "post",
+      "question": "A path-specific rule never appears to affect tasks. What should the team verify first?",
+      "options": [
+        "Whether its glob matches fixture paths and the file is in the documented configuration scope",
+        "Whether lower sampling variance would make the rule's effect easier to observe",
+        "Whether the selected model follows scoped rules more reliably than the previous version across the same fixture paths",
+        "Whether a plugin instruction layer is overriding the path-specific guidance"
+      ],
+      "correct": 0,
+      "explanation": "A configuration audit should prove the rule loads for expected paths and not for others. Silent glob mismatch creates false confidence regardless of model capability."
+    },
+    {
+      "stage": "post",
+      "question": "Several repositories need the same reviewed Skills, agents, and hooks. What is the strongest distribution design?",
+      "options": [
+        "Import the whole shared repository from every project's root CLAUDE.md",
+        "Use a versioned plugin, reviewed marketplace, and managed source restrictions",
+        "Copy each file into every user's home configuration and rely on manual updates",
+        "Enable automatic updates from any marketplace so every repository stays current"
+      ],
+      "correct": 1,
+      "explanation": "A plugin provides one versioned bundle, a marketplace distributes it, and managed settings can enforce organization source policy. Project-only procedures should remain directly in that repository."
+    }
+  ]
+}
