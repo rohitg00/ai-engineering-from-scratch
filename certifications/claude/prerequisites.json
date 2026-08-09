@@ -1,0 +1,162 @@
+{
+  "version": 1,
+  "lessons": {
+    "certifications/claude/lessons/00-certification-strategy": [],
+    "certifications/claude/lessons/01-claude-product-and-model-landscape": [
+      "certifications/claude/lessons/00-certification-strategy"
+    ],
+    "certifications/claude/lessons/02-model-selection-and-token-economics": [
+      "certifications/claude/lessons/01-claude-product-and-model-landscape"
+    ],
+    "certifications/claude/lessons/03-prompting-and-task-decomposition": [
+      "certifications/claude/lessons/00-certification-strategy"
+    ],
+    "certifications/claude/lessons/04-context-knowledge-memory-and-caching": [
+      "certifications/claude/lessons/03-prompting-and-task-decomposition"
+    ],
+    "certifications/claude/lessons/05-output-evaluation-and-validation": [
+      "certifications/claude/lessons/03-prompting-and-task-decomposition",
+      "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+    ],
+    "certifications/claude/lessons/06-governance-safety-and-responsible-use": [
+      "certifications/claude/lessons/04-context-knowledge-memory-and-caching",
+      "certifications/claude/lessons/05-output-evaluation-and-validation"
+    ],
+    "certifications/claude/lessons/07-workflow-design-and-human-handoffs": [
+      "certifications/claude/lessons/05-output-evaluation-and-validation",
+      "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+    ],
+    "certifications/claude/lessons/08-messages-api-and-application-lifecycle": [
+      "certifications/claude/lessons/02-model-selection-and-token-economics",
+      "certifications/claude/lessons/03-prompting-and-task-decomposition",
+      "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+    ],
+    "certifications/claude/lessons/09-structured-output-and-defensive-parsing": [
+      "certifications/claude/lessons/05-output-evaluation-and-validation",
+      "certifications/claude/lessons/08-messages-api-and-application-lifecycle"
+    ],
+    "certifications/claude/lessons/10-tool-use-and-agentic-loops": [
+      "certifications/claude/lessons/08-messages-api-and-application-lifecycle",
+      "certifications/claude/lessons/09-structured-output-and-defensive-parsing"
+    ],
+    "certifications/claude/lessons/11-mcp-server-design-and-integration": [
+      "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+    ],
+    "certifications/claude/lessons/12-claude-agent-sdk-and-hooks": [
+      "certifications/claude/lessons/10-tool-use-and-agentic-loops",
+      "certifications/claude/lessons/11-mcp-server-design-and-integration"
+    ],
+    "certifications/claude/lessons/13-application-security-and-secrets": [
+      "certifications/claude/lessons/09-structured-output-and-defensive-parsing",
+      "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+    ],
+    "certifications/claude/lessons/14-evals-testing-debugging-and-observability": [
+      "certifications/claude/lessons/08-messages-api-and-application-lifecycle",
+      "certifications/claude/lessons/10-tool-use-and-agentic-loops",
+      "certifications/claude/lessons/13-application-security-and-secrets"
+    ],
+    "certifications/claude/lessons/15-claude-code-for-development-teams": [
+      "certifications/claude/lessons/12-claude-agent-sdk-and-hooks",
+      "certifications/claude/lessons/14-evals-testing-debugging-and-observability"
+    ],
+    "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation": [
+      "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+    ],
+    "certifications/claude/lessons/17-agent-sdk-sessions-subagents-and-context": [
+      "certifications/claude/lessons/12-claude-agent-sdk-and-hooks",
+      "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation"
+    ],
+    "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery": [
+      "certifications/claude/lessons/10-tool-use-and-agentic-loops",
+      "certifications/claude/lessons/11-mcp-server-design-and-integration"
+    ],
+    "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci": [
+      "certifications/claude/lessons/15-claude-code-for-development-teams",
+      "certifications/claude/lessons/17-agent-sdk-sessions-subagents-and-context"
+    ],
+    "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers": [
+      "certifications/claude/lessons/05-output-evaluation-and-validation",
+      "certifications/claude/lessons/09-structured-output-and-defensive-parsing"
+    ],
+    "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation": [
+      "certifications/claude/lessons/17-agent-sdk-sessions-subagents-and-context",
+      "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+      "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers"
+    ],
+    "certifications/claude/lessons/22-business-discovery-requirements-and-slas": [],
+    "certifications/claude/lessons/23-end-to-end-architecture-and-value-tradeoffs": [
+      "certifications/claude/lessons/22-business-discovery-requirements-and-slas"
+    ],
+    "certifications/claude/lessons/24-rag-retrieval-and-data-pipelines": [
+      "certifications/claude/lessons/23-end-to-end-architecture-and-value-tradeoffs"
+    ],
+    "certifications/claude/lessons/25-integration-protocols-identity-and-least-privilege": [
+      "certifications/claude/lessons/23-end-to-end-architecture-and-value-tradeoffs"
+    ],
+    "certifications/claude/lessons/26-production-observability-latency-and-cost": [
+      "certifications/claude/lessons/24-rag-retrieval-and-data-pipelines"
+    ],
+    "certifications/claude/lessons/27-enterprise-governance-compliance-and-hitl": [
+      "certifications/claude/lessons/06-governance-safety-and-responsible-use",
+      "certifications/claude/lessons/25-integration-protocols-identity-and-least-privilege"
+    ],
+    "certifications/claude/lessons/28-stakeholder-communication-adrs-and-lifecycle": [
+      "certifications/claude/lessons/22-business-discovery-requirements-and-slas",
+      "certifications/claude/lessons/27-enterprise-governance-compliance-and-hitl"
+    ],
+    "certifications/claude/lessons/29-associate-workflow-capstone": [
+      "certifications/claude/lessons/01-claude-product-and-model-landscape",
+      "certifications/claude/lessons/03-prompting-and-task-decomposition",
+      "certifications/claude/lessons/04-context-knowledge-memory-and-caching",
+      "certifications/claude/lessons/05-output-evaluation-and-validation",
+      "certifications/claude/lessons/06-governance-safety-and-responsible-use",
+      "certifications/claude/lessons/07-workflow-design-and-human-handoffs"
+    ],
+    "certifications/claude/lessons/30-developer-application-capstone": [
+      "certifications/claude/lessons/02-model-selection-and-token-economics",
+      "certifications/claude/lessons/03-prompting-and-task-decomposition",
+      "certifications/claude/lessons/04-context-knowledge-memory-and-caching",
+      "certifications/claude/lessons/05-output-evaluation-and-validation",
+      "certifications/claude/lessons/08-messages-api-and-application-lifecycle",
+      "certifications/claude/lessons/09-structured-output-and-defensive-parsing",
+      "certifications/claude/lessons/10-tool-use-and-agentic-loops",
+      "certifications/claude/lessons/11-mcp-server-design-and-integration",
+      "certifications/claude/lessons/12-claude-agent-sdk-and-hooks",
+      "certifications/claude/lessons/13-application-security-and-secrets",
+      "certifications/claude/lessons/14-evals-testing-debugging-and-observability",
+      "certifications/claude/lessons/15-claude-code-for-development-teams"
+    ],
+    "certifications/claude/lessons/31-architect-foundations-scenario-capstone": [
+      "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+      "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+      "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
+      "certifications/claude/lessons/20-reliable-extraction-batch-and-reviewers",
+      "certifications/claude/lessons/21-long-context-reliability-provenance-and-escalation"
+    ],
+    "certifications/claude/lessons/32-architect-professional-system-capstone": [
+      "certifications/claude/lessons/01-claude-product-and-model-landscape",
+      "certifications/claude/lessons/02-model-selection-and-token-economics",
+      "certifications/claude/lessons/03-prompting-and-task-decomposition",
+      "certifications/claude/lessons/04-context-knowledge-memory-and-caching",
+      "certifications/claude/lessons/05-output-evaluation-and-validation",
+      "certifications/claude/lessons/06-governance-safety-and-responsible-use",
+      "certifications/claude/lessons/08-messages-api-and-application-lifecycle",
+      "certifications/claude/lessons/09-structured-output-and-defensive-parsing",
+      "certifications/claude/lessons/10-tool-use-and-agentic-loops",
+      "certifications/claude/lessons/11-mcp-server-design-and-integration",
+      "certifications/claude/lessons/12-claude-agent-sdk-and-hooks",
+      "certifications/claude/lessons/13-application-security-and-secrets",
+      "certifications/claude/lessons/14-evals-testing-debugging-and-observability",
+      "certifications/claude/lessons/15-claude-code-for-development-teams",
+      "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+      "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery",
+      "certifications/claude/lessons/22-business-discovery-requirements-and-slas",
+      "certifications/claude/lessons/23-end-to-end-architecture-and-value-tradeoffs",
+      "certifications/claude/lessons/24-rag-retrieval-and-data-pipelines",
+      "certifications/claude/lessons/25-integration-protocols-identity-and-least-privilege",
+      "certifications/claude/lessons/26-production-observability-latency-and-cost",
+      "certifications/claude/lessons/27-enterprise-governance-compliance-and-hitl",
+      "certifications/claude/lessons/28-stakeholder-communication-adrs-and-lifecycle"
+    ]
+  }
+}

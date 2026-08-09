@@ -1,0 +1,49 @@
+{
+  "id": "claude-certifications",
+  "name": "Claude Certification Curriculum",
+  "provider": "Anthropic",
+  "publisher": "AI Engineering from Scratch",
+  "version": "1.0.0-local-preview",
+  "lastVerified": "2026-08-09",
+  "guideVersion": "1.0",
+  "guideEffective": "July 2026",
+  "summary": "A free, open-source path from first Claude workflows to production architecture, mapped to all four public Claude certification blueprints.",
+  "promise": "Learn the judgment behind the answers by building the systems the exams describe.",
+  "accessNotice": "As verified on August 9, 2026, official exam registration is limited to people at Claude Partner Network organizations and requires a recognized partner-company email. This open curriculum is available to everyone. Verify current eligibility before paying or scheduling because access rules can change.",
+  "disclaimer": "This is an independent community curriculum. It is not affiliated with, endorsed by, sponsored by, or authorized by Anthropic. It does not contain live exam questions. The official exam guide and current program policies always take precedence.",
+  "scoringNotice": "Practice percentages in this curriculum are raw scores. They are not equivalent to Anthropic's scaled score of 100 to 1,000 and cannot predict an official result.",
+  "sourcePolicy": "Every exam fact is mapped to the public exam guides. Lessons and questions are original. Product details are checked against official Anthropic documentation and dated because the platform changes quickly.",
+  "prerequisitesPath": "certifications/claude/prerequisites.json",
+  "officialLinks": [
+    {
+      "label": "Claude certification exam prep courses",
+      "url": "https://anthropic-partners.skilljar.com/page/claude-certification-exam-prep-courses"
+    },
+    {
+      "label": "Claude certification program FAQ",
+      "url": "https://anthropic-partners.skilljar.com/page/faq-certifications"
+    },
+    {
+      "label": "Anthropic Academy course catalog",
+      "url": "https://anthropic.skilljar.com/"
+    },
+    {
+      "label": "Claude Platform documentation",
+      "url": "https://platform.claude.com/docs/en/home"
+    },
+    {
+      "label": "Claude Code documentation",
+      "url": "https://code.claude.com/docs/en/overview"
+    },
+    {
+      "label": "Model Context Protocol documentation",
+      "url": "https://modelcontextprotocol.io/docs/getting-started/intro"
+    }
+  ],
+  "tracks": [
+    "claude-ccao-f",
+    "claude-ccdv-f",
+    "claude-ccar-f",
+    "claude-ccar-p"
+  ]
+}
