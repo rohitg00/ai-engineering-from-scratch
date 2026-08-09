@@ -28,7 +28,7 @@
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Website"></a>
 </p>
 
-## From the creator of [Agent Memory - #1 Persistent memory ⭐](https://github.com/rohitg00/agentmemory) <a href="https://github.com/rohitg00/agentmemory/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/agentmemory?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a> which naturally works with any agents or chat assistants.
+## От создателя [Agent Memory — постоянной памяти № 1 ⭐](https://github.com/rohitg00/agentmemory) <a href="https://github.com/rohitg00/agentmemory/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/agentmemory?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a>, которая работает с любыми агентами и чат-ассистентами.
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -44,46 +44,31 @@
 <p align="center"><sub><b>150,639</b> readers &nbsp;·&nbsp; <b>241,669</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-06-07</sub></p>
 <!-- STATS:END -->
 
-## Start learning in 30 seconds
+## Начните учиться за 30 секунд
 
-Your coding agent becomes your tutor. Two commands, no clone, no setup:
+Ваш coding agent становится преподавателем. Две команды — без клонирования и настройки:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-Then, inside your agent:
+Затем внутри агента:
 
 ```text
 /start-learning
 ```
 
-A ten-question placement quiz maps what you already know to a starting phase and
-saves a personalized study plan to `LEARNING.md`. From there, `/learn` teaches
-one lesson per session — concept, math, code, quiz — streaming lessons straight
-from this repo, and `/course-guide <topic>` jumps you to the exact lesson that
-covers anything you are stuck on.
+Входной тест из десяти вопросов определяет подходящую начальную фазу и сохраняет персональный план в `LEARNING.md`. После этого `/learn` проводит по одному уроку за сессию — концепция, математика, код, тест — загружая материалы прямо из репозитория, а `/course-guide <topic>` находит точный урок по вызвавшей затруднения теме.
 
-Works with Claude Code, Cursor, Codex, OpenClaw, Hermes, or any agent that
-reads a `SKILL.md` directory — the installer asks which agents to set up. No
-agent? Read the same lessons at
-[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
+Работает с Claude Code, Cursor, Codex, OpenClaw, Hermes и любым агентом, который читает каталог с `SKILL.md`: установщик спросит, какие агенты настроить. Нет агента? Читайте те же уроки на [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
 ## Как это устроено
 
-Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a
-flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't
-explain its loss curve. You hook a function to an agent but can't say what attention does
-inside the model that's calling it.
+Большинство материалов об ИИ дают знания разрозненными фрагментами: здесь статья, там пост о fine-tuning, в другом месте эффектная демонстрация агента. Эти части редко складываются в систему. Вы выпускаете чат-бота, но не можете объяснить его кривую потерь; подключаете функцию к агенту, но не знаете, как работает attention внутри вызывающей её модели.
 
-This curriculum is the spine. 20 phases, 503 lessons, four languages: Python, TypeScript,
-Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm
-gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time
-PyTorch shows up, you already know what it's doing under the hood.
+Этот курс создаёт прочный каркас: 20 фаз, 503 урока и четыре языка — Python, TypeScript, Rust, Julia. От линейной алгебры до автономных роёв. Каждый алгоритм сначала строится непосредственно из математики: backprop, токенизатор, attention, цикл агента. Когда появляется PyTorch, вы уже понимаете, что происходит под капотом.
 
-Each lesson runs the same loop: read the problem, derive the math, write the code, run
-the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding.
-Free, open source, and built to run on your own laptop.
+Каждый урок проходит один цикл: понять задачу, вывести математику, написать код, запустить тест и сохранить артефакт. Без пятиминутных видео, copy-paste-деплоев и обучения за руку. Бесплатно, с открытым исходным кодом и возможностью запуска на вашем ноутбуке.
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -91,9 +76,7 @@ Free, open source, and built to run on your own laptop.
 
 ## Структура курса
 
-Twenty phases stack on top of each other. Math is the floor. Agents and production are the roof.
-Skip ahead if you already know the lower layers, but don't skip and then wonder why something at
-the top is breaking.
+Двадцать фаз надстраиваются друг над другом. Математика — фундамент, агенты и production — верхний уровень. Переходите вперёд, если уже знаете нижние слои, но не пропускайте их, если затем не хотите гадать, почему наверху что-то ломается.
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
@@ -127,7 +110,7 @@ flowchart TB
 
 ## Структура урока
 
-Each lesson lives in its own folder, with the same structure across the entire curriculum:
+Каждый урок находится в отдельной папке с единой для всего курса структурой:
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
@@ -137,9 +120,7 @@ phases/<NN>-<phase-name>/<NN>-<lesson-name>/
 └── outputs/   prompts, skills, agents, or MCP servers this lesson produces
 ```
 
-Every lesson follows six beats. The *Build It / Use It* split is the spine — you implement the
-algorithm from scratch first, then run the same thing through the production library. You
-understand what the framework is doing because you wrote the smaller version yourself.
+Каждый урок состоит из шести этапов. Разделение *Build It / Use It* — основа курса: сначала вы реализуете алгоритм с нуля, затем выполняете ту же задачу с production-библиотекой. Вы понимаете работу фреймворка, потому что уже написали его уменьшенную версию самостоятельно.
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
@@ -155,8 +136,7 @@ flowchart LR
 
 Три способа начать. Выберите один.
 
-**Option A — learn in your terminal *(recommended)*.** Install the learning
-skills into any agent and let the course drive itself:
+**Вариант A — учиться в терминале *(рекомендуется)*.** Установите учебные skills в любого агента, и курс сам поведёт вас дальше:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
@@ -168,14 +148,11 @@ npx skills add rohitg00/ai-engineering-from-scratch
 /course-guide rag   # "which lessons teach X?" -> exact lessons + links
 ```
 
-Lessons stream from this repo as you go — no clone needed. Progress lives in
-`LEARNING.md` in your project, so every session resumes where you left off.
+Уроки загружаются из репозитория по мере прохождения — клонирование не требуется. Прогресс хранится в `LEARNING.md` вашего проекта, поэтому каждая сессия продолжается с места остановки.
 
-**Option B — read.** Open any completed lesson on
-[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) or expand a phase under
-[Contents](#contents). No setup, no cloning.
+**Вариант B — читать.** Откройте любой завершённый урок на [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) или разверните фазу в [содержании](#contents). Без настройки и клонирования.
 
-**Option C — clone and run.**
+**Вариант C — клонировать и запустить.**
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
@@ -183,34 +160,22 @@ cd ai-engineering-from-scratch
 python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-Cloning also auto-loads the learning skills in Claude Code, and gives every
-lesson's code to `/learn` for real execution instead of read-along.
+При клонировании учебные skills автоматически загружаются в Claude Code, а `/learn` получает код каждого урока для реального выполнения, а не только чтения.
 
 ### Предварительные требования
 
 - You can write code (any language; Python helps).
 - You want to understand how AI **actually works**, not just call APIs.
 
-### Prepare for Claude certifications
+### Подготовка к сертификациям Claude
 
-The [Claude Certification Academy](../../certifications/claude/README.md) is a free,
-open-source preparation program for all four official Claude certification tracks:
-Associate Foundations, Developer Foundations, Architect Foundations, and Architect
-Professional. Each route combines blueprint-mapped lessons, runnable labs, a
-diagnostic, capstone work, and a full-length original practice exam.
+[Claude Certification Academy](../../certifications/claude/README.md) — бесплатная программа подготовки с открытым исходным кодом ко всем четырём официальным направлениям сертификации Claude: Associate Foundations, Developer Foundations, Architect Foundations и Architect Professional. Каждый маршрут объединяет уроки по blueprint экзамена, запускаемые лабораторные работы, диагностику, итоговый проект и полный оригинальный пробный экзамен.
 
-Use the [AI-native GitHub onboarding guide](../../certifications/claude/GETTING_STARTED.md)
-with Claude Code, Codex, ChatGPT, Cursor, or another agent. Run
-`/claude-certification` to choose a track, create a persistent route in
-`CLAUDE-CERTIFICATION.md`, learn one step at a time, execute the real labs, and
-get artifact-based feedback. The same curriculum remains available on the
-[certification website](https://aiengineeringfromscratch.com/certifications.html).
+Используйте [AI-native руководство по началу работы в GitHub](../../certifications/claude/GETTING_STARTED.md) с Claude Code, Codex, ChatGPT, Cursor или другим агентом. Запустите `/claude-certification`, чтобы выбрать направление, создать постоянный маршрут в `CLAUDE-CERTIFICATION.md`, учиться шаг за шагом, выполнять реальные лабораторные работы и получать обратную связь по артефактам. Тот же курс доступен на [сайте сертификации](https://aiengineeringfromscratch.com/certifications.html).
 
-The academy is independent study material based on public exam objectives. It is not
-affiliated with Anthropic, does not reproduce live exam questions, and cannot guarantee
-a passing score.
+Академия — независимый учебный материал на основе публичных целей экзаменов. Она не связана с Anthropic, не воспроизводит реальные экзаменационные вопросы и не гарантирует проходной балл.
 
-### The learning skills (any agent: Claude, Cursor, Codex, OpenClaw, Hermes, …)
+### Учебные skills (для любого агента: Claude, Cursor, Codex, OpenClaw, Hermes, …)
 
 | Skill | What it does |
 |---|---|
@@ -225,13 +190,11 @@ a passing score.
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Read the core curriculum as a book
+## Читайте основной курс как книгу
 
-The 20-phase core curriculum under `phases/` compiles into a six-volume book series. EPUB and PDF are built by CI from the same core lesson sources and attached to every [GitHub release](https://github.com/rohitg00/ai-engineering-from-scratch/releases); the links below always resolve to the newest release. Volume numbers index the series, not versions: each copy carries a dated edition stamp, and older editions stay downloadable from their release.
+Основной курс из 20 фаз в каталоге `phases/` собирается в шеститомную серию. CI создаёт EPUB и PDF из тех же исходников уроков и прикрепляет их к каждому [релизу GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases); ссылки ниже всегда ведут на последний релиз. Номера томов обозначают место в серии, а не версию: каждый экземпляр содержит дату издания, а старые издания остаются доступны в своих релизах.
 
-Certification curricula are intentionally not converted into the books. Their
-AI tutor state, runnable labs, interactive figures, diagnostics, and timed mocks
-remain first-class on GitHub and the website.
+Курсы сертификации намеренно не преобразуются в книги. Состояние AI tutor, запускаемые лабораторные работы, интерактивные иллюстрации, диагностика и пробные экзамены с таймером остаются полноценными возможностями GitHub и сайта.
 
 | Vol | Title | Phases | Download |
 |-----|-------|--------|----------|
@@ -242,7 +205,7 @@ remain first-class on GitHub and the website.
 | 5 | Agents · Multimodality, Protocols, Autonomy, and Swarms | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
 | 6 | Production · Infrastructure, Safety, and Capstones | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
 
-The book is the snapshot; this repository is the living edition. Every chapter ends with links back to the lesson's animated figures, quiz, and runnable code. Build locally with `python3 scripts/build_book.py` (pandoc required); pipeline details in [book/README.md](../../book/README.md).
+Книга — это снимок, а репозиторий — живое издание. Каждая глава заканчивается ссылками на анимированные иллюстрации урока, тест и запускаемый код. Для локальной сборки выполните `python3 scripts/build_book.py` (требуется pandoc); подробности pipeline — в [book/README.md](../../book/README.md).
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -250,8 +213,7 @@ The book is the snapshot; this repository is the living edition. Every chapter e
 
 ## Каждый урок что-то даёт
 
-Other curricula end with *"congratulations, you learned X."* Each lesson here ends with a
-**reusable tool** you can install or paste into your daily workflow.
+Другие курсы заканчиваются словами *«поздравляем, вы изучили X»*. Здесь каждый урок завершается **переиспользуемым инструментом**, который можно установить или встроить в повседневный workflow.
 
 <table>
 <tr>
@@ -268,19 +230,17 @@ Other curricula end with *"congratulations, you learned X."* Each lesson here en
 </tr>
 </table>
 
-> Install the lot with `python3 scripts/install_skills.py <target>`. Real tools, not homework.
-> By the end of the curriculum, you have a portfolio of 503 artifacts you actually
-> understand because you built them.
+> Установите всё командой `python3 scripts/install_skills.py <target>`. Это реальные инструменты, а не домашние задания. К концу курса у вас будет портфолио из 503 артефактов, которые вы действительно понимаете, потому что создали их сами.
 
-### FIG_002 · A worked sample
+### FIG_002 · Разобранный пример
 
-Phase 14, lesson 1: the agent loop. ~120 lines of pure Python, no dependencies.
+Фаза 14, урок 1: цикл агента. ~120 строк чистого Python без зависимостей.
 
 <table>
 <tr>
 <td valign="top" width="50%">
 
-**`code/agent_loop.py`** &nbsp; <sub><i>build it</i></sub>
+**`code/agent_loop.py`** &nbsp; <sub><i>строим</i></sub>
 
 ```python
 def run(query, tools):
@@ -299,7 +259,7 @@ def run(query, tools):
 </td>
 <td valign="top" width="50%">
 
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>ship it</i></sub>
+**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>поставляем</i></sub>
 
 ```markdown
 ---
@@ -332,11 +292,11 @@ the agent went wrong and explain why...
 
 ## Содержание
 
-Twenty phases. Click any phase to expand its lesson list.
+Двадцать фаз. Нажмите на любую фазу, чтобы раскрыть список уроков.
 
 <a id="phase-0"></a>
-### Phase 0: Setup & Tooling `12 lessons`
-> Get your environment ready for everything that follows.
+### Фаза 0: настройка и инструменты `12 lessons`
+> Подготовьте окружение ко всем последующим этапам.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
@@ -778,7 +738,7 @@ Twenty phases. Click any phase to expand its lesson list.
 | 41 | [The Workbench on a Real Repo](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Build | Python |
 | 42 | [Capstone: Ship a Reusable Agent Workbench Pack](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Build | Python |
 
-Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent before it opens the full lesson docs.
+Каждый урок Agent Workbench в фазе 14 (31–42) содержит `mission.md`, который ставит агенту задачу до открытия полной документации урока.
 
 </details>
 
@@ -947,7 +907,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 | 16 | [GitHub Issue-to-PR Autonomous Agent](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
 | 17 | [Personal AI Tutor (Adaptive, Multimodal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
 
-**Deep-build tracks** — multi-lesson series that build a complete subsystem from scratch.
+**Треки глубокой разработки** — серии из нескольких уроков, в которых полноценная подсистема создаётся с нуля.
 
 | # | Project | Combines | Lang |
 |:---:|---------|----------|------|
@@ -1028,7 +988,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 
 ## Набор инструментов
 
-Every lesson produces a reusable artifact. By the end you have:
+Каждый урок создаёт переиспользуемый артефакт. В итоге вы получите:
 
 ```text
 outputs/
@@ -1036,28 +996,21 @@ outputs/
 └── skills/       SKILL.md files for AI coding agents
 ```
 
-Plug them into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that
-reads a SKILL.md / AGENTS.md directory. Real tools, not homework.
+Подключайте их к Claude, Cursor, Codex, OpenClaw, Hermes или любому агенту, который читает каталог с SKILL.md / AGENTS.md. Это реальные инструменты, а не домашние задания.
 
-### Install course skills into your agent
+### Установите skills курса в своего агента
 
-Two skill sets, two installers:
+Два набора skills — два способа установки:
 
-**The learning skills** (`/start-learning`, `/learn`, `/course-guide`,
-`/claude-certification`, `/find-your-level`, `/check-understanding`) live under [`skills/`](../../skills/)
-and install into any agent with one command — no clone, no Python:
+**Учебные skills** (`/start-learning`, `/learn`, `/course-guide`, `/claude-certification`, `/find-your-level`, `/check-understanding`) находятся в [`skills/`](../../skills/) и устанавливаются в любого агента одной командой — без клонирования и Python:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-`skills` writes to whichever directory your agent picks up: `.claude/skills/`,
-`.cursor/skills/`, `.codex/skills/`, OpenClaw's skills folder, Hermes's bundle
-path, or any SKILL.md-aware tool. One command, every agent.
+`skills` записывает файлы в каталог, который использует ваш агент: `.claude/skills/`, `.cursor/skills/`, `.codex/skills/`, каталог skills OpenClaw, bundle-путь Hermes или любой инструмент с поддержкой SKILL.md. Одна команда для любого агента.
 
-**The lesson artifacts.** The repo ships 388 skills and 99 prompts under
-`phases/**/outputs/`; install them via `scripts/install_skills.py`. Requires
-cloning the repo. Supports tag filters, dry-runs, and per-agent layouts:
+**Артефакты уроков.** Репозиторий содержит 388 skills и 99 промптов в `phases/**/outputs/`; установите их через `scripts/install_skills.py`. Требуется клонирование репозитория. Поддерживаются фильтры по тегам, dry run и разные layouts для агентов:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1070,15 +1023,9 @@ python3 scripts/install_skills.py <target> --dry-run                       # pre
 python3 scripts/install_skills.py <target> --force                         # overwrite existing files
 ```
 
-`<target>` is the skills directory for your agent (examples:
-`~/.claude/skills/`, `~/.cursor/skills/`, `~/.config/openclaw/skills/`,
-`.skills/`, or any path your agent reads).
+`<target>` — каталог skills вашего агента (например, `~/.claude/skills/`, `~/.cursor/skills/`, `~/.config/openclaw/skills/`, `.skills/` или любой читаемый агентом путь).
 
-By default the script refuses to overwrite an existing destination and exits
-with code 1 after listing every colliding path. Use `--dry-run` to preview
-collisions or `--force` to overwrite. Every non-dry-run run writes a
-`manifest.json` in the target with the full inventory grouped by type and
-phase. Pick the layout your agent reads:
+По умолчанию скрипт отказывается перезаписывать существующие файлы и завершается с кодом 1, перечислив все конфликты путей. Используйте `--dry-run` для предварительного просмотра или `--force` для перезаписи. Каждый запуск без dry run записывает в целевой каталог `manifest.json` с полным перечнем по типу и фазе. Выберите layout, который читает ваш агент:
 
 | `--layout`  | Path written |
 |---|---|
@@ -1086,10 +1033,9 @@ phase. Pick the layout your agent reads:
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Drop the agent workbench into your own repo
+### Добавьте Agent Workbench в свой репозиторий
 
-The Phase 14 capstone ships a reusable Agent Workbench pack (AGENTS.md, schemas,
-init / verify / handoff scripts). Scaffold it into any repo with:
+Итоговый проект фазы 14 поставляет переиспользуемый комплект Agent Workbench (AGENTS.md, схемы и скрипты init / verify / handoff). Разверните его в любом репозитории командой:
 
 ```bash
 python3 scripts/scaffold_workbench.py path/to/your-repo            # full pack + seeds
@@ -1098,16 +1044,11 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --dry-run  # preview onl
 python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 ```
 
-You get the seven workbench surfaces wired up, a starter `task_board.json`,
-and a fresh `agent_state.json` at `schema_version: 1`. From there: edit the
-task, edit `AGENTS.md`, run `scripts/init_agent.py`, hand the contract to
-your agent. The pack source lives at
-`phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
+Вы получите семь связанных компонентов workbench, начальный `task_board.json` и новый `agent_state.json` со `schema_version: 1`. Затем отредактируйте задачу и `AGENTS.md`, запустите `scripts/init_agent.py` и передайте контракт агенту. Исходники комплекта находятся в `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
 
-### Browse the entire course as JSON
+### Просматривайте весь курс в формате JSON
 
-`scripts/build_catalog.py` walks every phase, every lesson, every artifact on
-disk and writes `catalog.json` at the repo root. One file, every course truth.
+`scripts/build_catalog.py` обходит все фазы, уроки и артефакты на диске и записывает `catalog.json` в корень репозитория. Один файл содержит все актуальные данные курса.
 
 ```bash
 python3 scripts/build_catalog.py               # writes <repo>/catalog.json
@@ -1115,23 +1056,13 @@ python3 scripts/build_catalog.py --stdout      # to stdout, do not touch repo
 python3 scripts/build_catalog.py --out path/to/file.json
 ```
 
-The catalog is filesystem-derived, not README-derived, so counts always match
-what is actually on disk. Use it for site builds, downstream tooling, or to
-verify the README counts have not drifted. Schema is documented at the top of
-the script.
+Каталог формируется из файловой системы, а не из README, поэтому счётчики всегда соответствуют содержимому диска. Используйте его для сборки сайта, downstream-инструментов или проверки счётчиков README. Схема описана в начале скрипта.
 
-A GitHub Action (`.github/workflows/curriculum.yml`) rebuilds `catalog.json`
-on every PR and fails the build if the committed file is stale. After editing
-any lesson, run `python3 scripts/build_catalog.py` and commit the result, or
-CI will reject the PR. The same workflow runs `audit_lessons.py` in
-warn-only mode (so existing drift does not block contributors).
+GitHub Action (`.github/workflows/curriculum.yml`) пересобирает `catalog.json` для каждого PR и завершает сборку ошибкой, если закоммиченный файл устарел. После изменения урока запустите `python3 scripts/build_catalog.py` и закоммитьте результат, иначе CI отклонит PR. Тот же workflow запускает `audit_lessons.py` в режиме предупреждений, чтобы существующие расхождения не блокировали участников.
 
-### Smoke-check every lesson's Python code
+### Выполните smoke-проверку Python-кода каждого урока
 
-`scripts/lesson_run.py` byte-compiles every `.py` file under each lesson's
-`code/` directory. Default mode is syntax-check only — no execution, no API
-keys, no heavy ML deps required. Catches the regressions contributors
-introduce most often (bad indentation, broken f-strings, stray edits).
+`scripts/lesson_run.py` компилирует в байт-код каждый файл `.py` в каталоге `code/` каждого урока. Режим по умолчанию только проверяет синтаксис: без выполнения, API-ключей и тяжёлых ML-зависимостей. Он выявляет наиболее частые регрессии от изменений участников: неверные отступы, сломанные f-строки и случайные правки.
 
 ```bash
 python3 scripts/lesson_run.py                  # syntax-check the whole curriculum
@@ -1141,15 +1072,9 @@ python3 scripts/lesson_run.py --strict         # exit 1 if any lesson fails
 python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per lesson
 ```
 
-`--execute` runs each lesson's `code/main.py` (or the first `.py` file) with a
-10-second timeout. Lessons whose entry file starts with a `# requires: pkg1,
-pkg2` comment listing non-stdlib deps are skipped with reason `needs <deps>`.
-The script is opt-in and not wired into CI.
+`--execute` запускает `code/main.py` каждого урока (или первый файл `.py`) с тайм-аутом 10 секунд. Уроки, в которых входной файл начинается с комментария `# requires: pkg1, pkg2` со списком зависимостей вне stdlib, пропускаются с причиной `needs <deps>`. Скрипт запускается только явно и не подключён к CI.
 
-Stdlib only, Python 3.10+. Set `LINK_CHECK_SKIP=domain1,domain2` to override
-the default skip-list (`twitter.com`, `x.com`, `linkedin.com`,
-`instagram.com`, `medium.com` — domains that aggressively block automated
-HEAD/GET).
+Только stdlib и Python 3.10+. Задайте `LINK_CHECK_SKIP=domain1,domain2`, чтобы переопределить список исключений по умолчанию (`twitter.com`, `x.com`, `linkedin.com`, `instagram.com`, `medium.com` — домены, которые активно блокируют автоматические HEAD/GET-запросы).
 
 ## С чего начать
 
@@ -1175,14 +1100,11 @@ HEAD/GET).
 <tr>
 <td valign="top">
 
-> *"The hottest new programming language is English."*<br/>
-> — **Andrej Karpathy** ([tweet](https://x.com/karpathy/status/1617979122625712128))
+> *«Самый востребованный новый язык программирования — английский».*<br/> — **Andrej Karpathy** ([публикация](https://x.com/karpathy/status/1617979122625712128))
 >
-> *"Software engineering is being remade in front of our eyes."*<br/>
-> — **Boris Cherny**, creator of Claude Code
+> *«Разработка программного обеспечения меняется прямо у нас на глазах».*<br/> — **Boris Cherny**, создатель Claude Code
 >
-> *"Models will keep getting better. The skill that compounds is **knowing what to build**."*<br/>
-> — Industry consensus, 2026
+> *«Модели будут становиться всё лучше. Навык, ценность которого растёт со временем, — **понимание того, что создавать**».*<br/> — Консенсус индустрии, 2026
 
 </td>
 <td valign="top">
@@ -1215,7 +1137,7 @@ HEAD/GET).
 | Glossary | [glossary/terms.md](../../glossary/terms.md) |
 | Code of conduct | [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md) |
 
-Before submitting a lesson, run the invariant check:
+Перед отправкой урока запустите проверку инвариантов:
 
 ```bash
 python3 scripts/audit_lessons.py           # full curriculum
@@ -1223,10 +1145,7 @@ python3 scripts/audit_lessons.py --phase 14  # single phase
 python3 scripts/audit_lessons.py --json    # CI-friendly output
 ```
 
-Exit code is non-zero when any rule fails. Rules (L001–L010) validate directory
-shape, `docs/en.md` presence + H1, `code/` non-emptiness, `quiz.json` schema
-(rejects the legacy `q/choices/answer` keys that caused issue #102), and
-relative links inside lesson docs.
+При нарушении любого правила команда завершается с ненулевым кодом. Правила (L001–L010) проверяют структуру каталогов, наличие `docs/en.md` и H1, непустой каталог `code/`, схему `quiz.json` (устаревшие ключи `q/choices/answer`, ставшие причиной issue #102, отклоняются) и относительные ссылки в документации уроков.
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -1234,10 +1153,9 @@ relative links inside lesson docs.
 
 ## Поддержать проект
 
-Free, MIT-licensed, 503 lessons. The curriculum is maintained on sponsorship alone. Cash only.
+Бесплатный курс из 503 уроков под лицензией MIT. Проект поддерживается исключительно за счёт спонсорской помощи. Только денежные взносы.
 
-**Reach (verified 2026-05-14):** 55,593 monthly visitors · 90,709 page views · 7.5K stars ·
-Twitter/X is the #1 acquisition channel.
+**Аудитория (проверено 2026-05-14):** 55 593 посетителя в месяц · 90 709 просмотров страниц · 7,5 тыс. звёзд · Twitter/X — канал привлечения № 1.
 
 <br />
 <br />
@@ -1245,7 +1163,7 @@ Twitter/X is the #1 acquisition channel.
   <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge-2026.svg" />
 </a>
 
-**Current sponsors:** [CodeRabbit](https://coderabbit.link/rohit-ghumare) · [iii](https://iii.dev?utm_source=ai-engineering-from-scratch&utm_medium=readme&utm_campaign=sponsor)
+**Текущие спонсоры:** [CodeRabbit](https://coderabbit.link/rohit-ghumare) · [iii](https://iii.dev?utm_source=ai-engineering-from-scratch&utm_medium=readme&utm_campaign=sponsor)
 
 | Tier | $/mo | What you get |
 |------|------|---|
@@ -1255,8 +1173,7 @@ Twitter/X is the #1 acquisition channel.
 | Gold | $2,000 | Medium logo in README + sponsor page + quarterly X / LinkedIn co-feature |
 | Platinum | $5,000 | Hero logo above the fold + one dedicated integration lesson, max 1 partner |
 
-Full rate card, hard rules, pricing anchors, and reach data: [SPONSORS.md](../../SPONSORS.md).
-Sign up via [GitHub Sponsors](https://github.com/sponsors/rohitg00).
+Полные тарифы, строгие правила, ценовые ориентиры и данные об аудитории приведены в [SPONSORS.md](../../SPONSORS.md). Оформить поддержку можно через [GitHub Sponsors](https://github.com/sponsors/rohitg00).
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -1271,7 +1188,7 @@ Sign up via [GitHub Sponsors](https://github.com/sponsors/rohitg00).
   </picture>
 </a>
 
-If this manual helped you, star the repo. It keeps the project alive.
+Если это руководство вам помогло, поставьте репозиторию звезду. Это помогает проекту жить.
 
 ## Лицензия
 
