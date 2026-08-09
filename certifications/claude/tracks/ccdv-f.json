@@ -1,0 +1,78 @@
+{
+  "id": "claude-ccdv-f",
+  "slug": "ccdv-f",
+  "examCode": "CCDV-F",
+  "credential": "Claude Certified Developer - Foundations",
+  "shortName": "Developer Foundations",
+  "level": "Foundational technical",
+  "accent": "blue",
+  "badge": {
+    "imageUrl": "https://images.credly.com/images/f101c6ac-8a2d-4220-b381-70e3e6c364e3/blob",
+    "width": 601,
+    "height": 601
+  },
+  "summary": "Build, integrate, secure, test, and ship Claude applications, agents, workflows, tools, and MCP servers.",
+  "audience": "Software engineers, AI engineers, and technical builders with Python or TypeScript experience and working knowledge of REST APIs and command-line tools.",
+  "recommendedExperience": [
+    "One to five years of software-engineering experience",
+    "At least six months with Claude or comparable LLM systems",
+    "Fluency with REST APIs, JSON, asynchronous code, and CLI tools",
+    "Working knowledge of agents, context management, and MCP"
+  ],
+  "exam": {
+    "items": 53,
+    "timeLimitMinutes": 120,
+    "feeUsd": 125,
+    "passingScaledScore": 720,
+    "scoreScale": "100-1000",
+    "validityMonths": 12,
+    "format": "Multiple-choice and multiple-response",
+    "delivery": "Proctored online or at a test center",
+    "guideVersion": "1.0",
+    "effective": "July 2026",
+    "officialGuideUrl": "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542875%2FClaude+Certified+Developer+%E2%80%93+Foundations+Exam+Guide.pdf"
+  },
+  "domains": [
+    {"id": "agents-workflows", "name": "Agents and Workflows", "weight": 14.7, "objectives": ["Choose workflows or agents from task constraints", "Design manager and subagent hierarchies", "Build with the Claude Agent SDK, custom loops, managed agents, and hooks", "Apply tool-loop, memory, context, and framework patterns"]},
+    {"id": "applications-integration", "name": "Applications and Integration", "weight": 33.1, "objectives": ["Translate business needs into functional and infrastructure requirements", "Apply system lifecycle practices", "Use messages, tools, streaming, vision, thinking, caching, batch, and third-party providers", "Apply REST, JSON, async, version-control, review, and refactoring practices", "Design instruction, schema, session, content-boundary, and plugin behavior", "Manage CLAUDE.md, settings, model, prompt, and plugin versions"]},
+    {"id": "claude-code", "name": "Claude Code", "weight": 3.1, "objectives": ["Operate Rules, Skills, Commands, Agents, memory, sessions, headless mode, streaming mode, auto-mode, CLAUDE.md, initialization, and settings"]},
+    {"id": "eval-testing-debugging", "name": "Eval, Testing, and Debugging", "weight": 2.6, "objectives": ["Classify errors, select recovery, analyze traces, and isolate integration failures from model failures"]},
+    {"id": "model-selection-optimization", "name": "Model Selection and Optimization", "weight": 16.8, "objectives": ["Explain tokens, sampling, context, non-determinism, thinking, effort, and prompting modes", "Integrate SDK and transport fundamentals", "Balance model quality, latency, cost, capability, and version changes", "Budget tokens and use prompt caching"]},
+    {"id": "prompt-context-engineering", "name": "Prompt and Context Engineering", "weight": 11.0, "objectives": ["Prevent context drift and bloat with pruning, compaction, and isolation", "Place clear instructions, examples, and constraints", "Sanitize input and iterate prompts", "Validate and defensively consume structured output"]},
+    {"id": "security-safety", "name": "Security and Safety", "weight": 8.1, "objectives": ["Mitigate prompt injection, jailbreaks, data leakage, and unsafe input", "Layer guardrails with least privilege", "Use hooks for deterministic safety controls", "Protect identity, secrets, keys, and access approvals"]},
+    {"id": "tools-mcps", "name": "Tools and MCPs", "weight": 10.6, "objectives": ["Design descriptions, schemas, errors, approvals, and tool sets", "Author and deploy MCP tools, resources, and prompts across transports", "Choose among built-in tools, custom tools, Skills, and MCP"]}
+  ],
+  "lessons": [
+    {"path": "certifications/claude/lessons/00-certification-strategy", "domains": ["applications-integration"], "role": "orientation", "required": true},
+    {"path": "certifications/claude/lessons/01-claude-product-and-model-landscape", "domains": ["model-selection-optimization", "applications-integration"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/02-model-selection-and-token-economics", "domains": ["model-selection-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/03-prompting-and-task-decomposition", "domains": ["prompt-context-engineering"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/04-context-knowledge-memory-and-caching", "domains": ["prompt-context-engineering", "model-selection-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/05-output-evaluation-and-validation", "domains": ["prompt-context-engineering", "eval-testing-debugging"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/08-messages-api-and-application-lifecycle", "domains": ["applications-integration", "model-selection-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/09-structured-output-and-defensive-parsing", "domains": ["prompt-context-engineering", "applications-integration"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/10-tool-use-and-agentic-loops", "domains": ["tools-mcps", "agents-workflows"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/11-mcp-server-design-and-integration", "domains": ["tools-mcps", "applications-integration"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/12-claude-agent-sdk-and-hooks", "domains": ["agents-workflows", "security-safety"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/13-application-security-and-secrets", "domains": ["security-safety", "applications-integration"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/14-evals-testing-debugging-and-observability", "domains": ["eval-testing-debugging", "applications-integration", "model-selection-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/15-claude-code-for-development-teams", "domains": ["claude-code", "applications-integration"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/30-developer-application-capstone", "domains": ["agents-workflows", "applications-integration", "claude-code", "eval-testing-debugging", "model-selection-optimization", "prompt-context-engineering", "security-safety", "tools-mcps"], "role": "capstone", "required": true}
+  ],
+  "deepDives": [
+    {"path": "phases/14-agent-engineering/01-the-agent-loop", "label": "The Agent Loop", "reason": "Build the loop before using an SDK"},
+    {"path": "phases/14-agent-engineering/17-claude-agent-sdk", "label": "Claude Agent SDK", "reason": "Go deeper on the production SDK surface"},
+    {"path": "phases/13-tools-and-protocols/05-tool-schema-design", "label": "Tool Schema Design", "reason": "Design clear, testable tool contracts"},
+    {"path": "phases/13-tools-and-protocols/07-building-an-mcp-server", "label": "Building an MCP Server", "reason": "Implement the server boundary end to end"},
+    {"path": "phases/14-agent-engineering/27-prompt-injection-defense", "label": "Prompt Injection Defense", "reason": "Threat-model untrusted instructions"},
+    {"path": "phases/14-agent-engineering/30-eval-driven-agent-development", "label": "Eval-Driven Agent Development", "reason": "Use trajectories and final state as release evidence"}
+  ],
+  "assessments": [
+    {"id": "claude-ccdv-f-diagnostic", "path": "certifications/claude/assessments/ccdv-f/diagnostic.json", "kind": "diagnostic", "title": "Developer Foundations Diagnostic", "timeLimitMinutes": 30},
+    {"id": "claude-ccdv-f-mock-01", "path": "certifications/claude/assessments/ccdv-f/mock-01.json", "kind": "mock", "title": "Developer Foundations Full Mock", "timeLimitMinutes": 120}
+  ],
+  "studyPlans": [
+    {"id": "ccdv-f-21-day", "label": "21-day intensive plan", "durationDays": 21, "hoursPerWeek": 12, "milestones": ["Days 1-4: models, prompts, context, and API mechanics", "Days 5-9: outputs, tools, MCP, and agent loops", "Days 10-14: SDK, security, evaluation, and Claude Code", "Days 15-18: build and defend the capstone", "Days 19-21: full mock and domain remediation"]},
+    {"id": "ccdv-f-42-day", "label": "42-day build plan", "durationDays": 42, "hoursPerWeek": 7, "milestones": ["Week 1: model and API foundations", "Week 2: prompt, context, and output contracts", "Week 3: tools and MCP", "Week 4: agents and security", "Week 5: evaluation, debugging, and Claude Code", "Week 6: capstone and mock"]}
+  ]
+}
