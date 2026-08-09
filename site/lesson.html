@@ -1886,7 +1886,7 @@
 
   <script src="build-meta.js"></script>
   <script src="langs.js?v=20260802a"></script>
-  <script src="lang-picker.js?v=20260808d"></script>
+  <script src="lang-picker.js?v=20260809b"></script>
   <script src="data.js?v=20260808g"></script>
   <script>
     (function () {
@@ -1908,7 +1908,7 @@
       });
     }());
   </script>
-  <script src="content-source.js?v=20260808d"></script>
+  <script src="content-source.js?v=20260809b"></script>
   <script src="progress.js?v=20260801a"></script>
   <script src="header.js?v=20260808h" defer></script>
   <script src="cmdpalette.js?v=20260808h" defer></script>
@@ -2054,8 +2054,7 @@
       var currentPhaseIndex = -1;
       var currentLessonIndex = -1;
       var flatLessons = [];
-      var ACTIVE_REF = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
-      var REPO_TREE = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/' + encodeURIComponent(ACTIVE_REF) + '/';
+      var REPO_TREE = window.AIFSContentSource.repoTreeUrl('');
       var certificationTrack = null;
       var certificationOriginTrack = null;
       var certificationLesson = null;
@@ -2204,13 +2203,6 @@
         certificationSupplementalMode = !!(certificationOriginTrack && !certificationMode);
 
         syncCertificationQuizProgressVersion();
-
-        if (certificationLesson) {
-          document.documentElement.lang = 'en';
-          document.documentElement.dir = 'ltr';
-          var langPicker = document.getElementById('langPicker');
-          if (langPicker) langPicker.hidden = true;
-        }
 
         if (certificationMode) {
           for (var ci = 0; ci < certificationTrack.lessons.length; ci++) {
@@ -2437,7 +2429,7 @@
         var source = window.AIFSContentSource;
         var primary = source && source.repoUrl
           ? source.repoUrl(relativePath)
-          : 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ACTIVE_REF + '/' + relativePath;
+          : relativePath;
         var fallback = source && source.rawRepoUrl ? source.rawRepoUrl(relativePath) : primary;
 
         return fetch(primary).then(function (response) {
@@ -2456,57 +2448,21 @@
 
       function fetchLesson(path, retried, requestSequence) {
         if (!retried || !requestSequence) requestSequence = ++lessonFetchSequence;
-        if (certificationLesson && path === certificationLesson.path && typeof certificationLesson.markdown === 'string') {
-          applyRenderedLanguage('en');
+        var embeddedEnglish = certificationLesson && path === certificationLesson.path
+          && typeof certificationLesson.markdown === 'string'
+          ? certificationLesson.markdown
+          : undefined;
+
+        if (embeddedEnglish !== undefined) {
           lessonQuizPromise = Promise.resolve(certificationLesson.quiz || null);
-          try {
-            renderLesson(certificationLesson.markdown);
-          } catch (embeddedError) {
-            console.error('renderLesson failed', embeddedError);
-            showError('Render error', 'Loaded the certification lesson but failed to render it. Details are in the browser console.');
-            return;
-          }
-          lessonQuizPromise.then(function (embeddedQuiz) {
-            if (!embeddedQuiz || requestSequence !== lessonFetchSequence) return;
-            try { renderQuiz(embeddedQuiz); }
-            catch (quizError) { console.error('renderQuiz failed', quizError); }
-          });
-          return;
-        }
-
-        // Local previews read the checked-out repository first. Deploys and a
-        // missing local file use the branch-aware raw source from build-meta.
-        var enPath = path + '/docs/en.md';
-        var lang = currentLang();
-        var translatedUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/'
-          + lang + '/' + path + '/docs/' + lang + '.md';
-
-        if (!retried || !lessonQuizPromise) {
+        } else if (!retried || !lessonQuizPromise) {
           lessonQuizPromise = fetchRepositoryFile(path + '/quiz.json')
             .then(function (res) { return res.json(); })
             .catch(function () { return null; });
         }
         var quizPromiseForRequest = lessonQuizPromise;
 
-        var lessonDocument = lang === 'en'
-          ? fetchRepositoryFile(enPath).then(function (response) {
-              return { response: response, lang: 'en' };
-            })
-          : fetch(translatedUrl).then(function (response) {
-              if (!response.ok) throw new Error('fetch-failed');
-              return { response: response, lang: lang };
-            }).catch(function () {
-              return fetchRepositoryFile(enPath).then(function (response) {
-                return { response: response, lang: 'en' };
-              });
-            });
-
-        lessonDocument
-          .then(function (documentResult) {
-            return documentResult.response.text().then(function (markdown) {
-              return { markdown: markdown, lang: documentResult.lang };
-            });
-          })
+        window.AIFSContentSource.loadLessonDocument(path, currentLang(), embeddedEnglish)
           .then(function (documentResult) {
             if (requestSequence !== lessonFetchSequence) return;
             applyRenderedLanguage(documentResult.lang);
@@ -3802,7 +3758,7 @@
       var repositoryDirectoryCache = {};
 
       function githubDirectoryFetch(apiPath) {
-        return fetch('https://api.github.com/repos/rohitg00/ai-engineering-from-scratch/contents/' + apiPath + '?ref=' + encodeURIComponent(ACTIVE_REF), {
+        return fetch(window.AIFSContentSource.contentsApiUrl(apiPath), {
           headers: { 'Accept': 'application/vnd.github.v3+json' }
         }).then(function (res) {
           if (!res.ok) throw new Error(res.status);
@@ -3913,7 +3869,7 @@
             installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
           } else if (type === 'skill') {
             var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
-            installHint = 'npx skills add rohitg00/ai-engineering-from-scratch --skill ' + skillName;
+            installHint = 'npx skills add ' + window.AIFSContentSource.repository() + ' --skill ' + skillName;
           }
 
           html += '<div class="output-card">';

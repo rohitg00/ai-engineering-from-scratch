@@ -6,6 +6,9 @@
 (function () {
   'use strict';
   var LANGS = Array.isArray(window.AIFS_LANGS) ? window.AIFS_LANGS : [{ code: 'en', native: 'English' }];
+  var CERTIFICATION_LANGS = Array.isArray(window.AIFS_CERTIFICATION_LANGS)
+    ? window.AIFS_CERTIFICATION_LANGS
+    : ['ru'];
   var RTL = { ar: 1, he: 1, fa: 1, ur: 1 };
   var pickerId = 0;
 
@@ -19,10 +22,11 @@
   }
 
   function supported(code) {
-    return !!code && code !== 'en' && LANGS.some(function (l) { return l.code === code; });
+    if (!code || code === 'en') return false;
+    if (isCertificationLesson() && CERTIFICATION_LANGS.indexOf(code) < 0) return false;
+    return LANGS.some(function (l) { return l.code === code; });
   }
   function current() {
-    if (isCertificationLesson()) return 'en';
     var q = new URLSearchParams(location.search).get('lang');
     if (supported(q)) return q;
     var saved = '';
@@ -84,6 +88,7 @@
       var cur = current();
       list.innerHTML = '';
       LANGS.forEach(function (l) {
+        if (isCertificationLesson() && l.code !== 'en' && CERTIFICATION_LANGS.indexOf(l.code) < 0) return;
         if (q && l.native.toLowerCase().indexOf(q) < 0 && l.code.toLowerCase().indexOf(q) < 0) return;
         var item = document.createElement('button');
         item.type = 'button';
@@ -201,12 +206,8 @@
 
   function init() {
     var host = document.getElementById('langPicker');
-    if (isCertificationLesson()) {
-      applyDir('en');
-      if (host) host.hidden = true;
-      return;
-    }
     if (host) mount(host);
+    else applyDir(current());
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
