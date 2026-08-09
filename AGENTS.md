@@ -28,6 +28,11 @@ glossary/terms.md             # canonical term definitions
 site/
   build.js                    # parses README + ROADMAP + glossary -> data.js
   data.js                     # generated; rebuilt by CI on main push
+certifications/claude/
+  program.json                # program metadata, source policy, official links
+  tracks/*.json               # exam blueprint, ordered route, study plans
+  lessons/NN-slug/            # shared certification lesson contract
+  assessments/<exam-code>/    # original diagnostics and full mocks
 scripts/                      # automation
 .github/workflows/
   curriculum.yml              # invariant + auto-sync workflow
@@ -99,6 +104,89 @@ The `**Languages:**` field must match the languages with a `main.*` file in `cod
 
 Exactly 6 questions: 1 pre + 3 check + 2 post. `correct` is zero-indexed. The site renderer only understands this shape — legacy `q/choices/answer` schemas crash silently.
 
+### Claude certification contract
+
+Certification lessons under `certifications/claude/lessons/` follow the same
+documentation, quiz, diagram, dependency, and one-commit-per-lesson rules as
+phase lessons. Every certification lesson needs a runnable main file and at
+least five deterministic tests. Tracks reference stable lesson paths so one
+lesson can serve several credentials without duplication. Conceptual lessons
+still need practical work: use a scenario runner, policy scorer, artifact
+validator, approval simulator, threat-model checker, or evidence grader instead
+of artificial provider API code. A track may also reference an existing
+`phases/` lesson as an optional deep dive.
+
+Full-parity certification lessons use the same explain, manipulate, build,
+ship, and verify loop as the strongest phase lessons. Every certification
+lesson must include the exact sections `Interactive Lab`, `Practice Lab`,
+`Shipped Artifact`, `Verify It`, and `Capstone Connection`; embed a registered
+`figure` mechanism; ship at least one file under `outputs/`; and provide a
+runnable scenario, simulator, scorer, or artifact validator with tests. Code in
+a conceptual lesson must exercise the lesson's judgment. Do not add a fake API
+integration merely to satisfy the runnable surface. Governance lessons can use
+mock incidents, policy scorers, threat-model checks, ADR validation, approval
+workflows, or evidence-bundle graders.
+
+`program.json` owns the independent-course disclaimer, verification date, and
+official links. `prerequisites.json` owns the machine-readable certification
+lesson dependency graph. Every required track route must contain those internal
+prerequisites before the lesson that consumes them. Each file in `tracks/` owns
+one public exam blueprint, its exact domain weights, ordered lesson route,
+assessment declarations, and study plans.
+Exam facts must come from the current official guide. Product and model details
+must be dated and checked against current official documentation.
+
+Diagnostics and mocks use a separate assessment schema because they support
+multiple-response questions:
+
+```json
+{
+  "id": "claude-ccar-f-diagnostic",
+  "version": 1,
+  "track": "claude-ccar-f",
+  "kind": "diagnostic",
+  "title": "Architect Foundations Diagnostic",
+  "timeLimitMinutes": 30,
+  "questions": [
+    {
+      "id": "ccar-f-agent-001",
+      "domain": "agentic-architecture-orchestration",
+      "objective": "choose-an-orchestration-pattern",
+      "type": "single",
+      "prompt": "A self-contained original scenario...",
+      "options": ["a", "b", "c", "d"],
+      "correct": [1],
+      "explanation": "Why the decision fits and the alternatives do not.",
+      "references": ["certifications/claude/lessons/16-multi-agent-orchestration-and-delegation"]
+    }
+  ]
+}
+```
+
+`correct` is always an array. A `single` item has exactly one index; a
+`multiple` item has at least two. Questions must be original, map to a public
+objective, include a substantive explanation, and never reproduce or attempt
+to reconstruct confidential exam content. Practice percentages are raw scores,
+not Anthropic scaled scores, and the curriculum never guarantees a pass.
+Public certification pages and lesson context must also state that this is an
+independent community curriculum that is not affiliated with, endorsed by,
+sponsored by, or authorized by Anthropic.
+
+### AI-native certification learner mode
+
+When a user asks to choose, start, resume, study, practice, or assess a Claude
+certification, read and follow `skills/claude-certification/SKILL.md` before
+teaching. This applies to Codex and any other harness that reads `AGENTS.md`;
+Claude Code also discovers the matching wrapper under `.claude/skills/`.
+
+Treat the repository as an interactive tutor in learner mode. Read the selected
+track manifest, teach one route lesson at a time, run its real scenario and
+tests, require a learner-owned artifact under `learning-artifacts/`, grade the
+stored quiz or assessment, and preserve progress in
+`CLAUDE-CERTIFICATION.md`. Do not modify checked-in reference artifacts as
+learner work. The certification curriculum is delivered through GitHub and the
+website and is intentionally outside the book-generation pipeline.
+
 ### code/
 
 - Runs end-to-end and exits 0 on the canonical command for the language.
@@ -118,6 +206,7 @@ Run locally before pushing:
 
 ```bash
 python3 scripts/audit_lessons.py
+python3 scripts/audit_certifications.py
 python3 scripts/check_readme_counts.py        # advisory — CI fixes on merge
 
 # For each lesson touched:
