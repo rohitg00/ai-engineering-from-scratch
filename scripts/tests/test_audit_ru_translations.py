@@ -118,6 +118,15 @@ class AuditRuTranslationsTest(unittest.TestCase):
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIn("structurally_invalid", result.stdout)
 
+    def test_currency_markers_are_not_treated_as_math_delimiters(self) -> None:
+        source = "# Costs\nRevenue rose from $50 to $75; one vendor uses $/M tokens and another uses $/second.\n"
+        target = "# Стоимость\nВыручка выросла с $50 до $75; один поставщик считает в $/M токенов, другой — в $/second.\n"
+        temporary, root, _ = self.make_repo(source=source, target=target)
+        with temporary:
+            result = self.run_audit(root)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("approved", result.stdout)
+
     def test_protected_markdown_structure_must_match(self) -> None:
         source = """# Heading
 ## Section

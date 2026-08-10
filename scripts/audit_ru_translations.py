@@ -30,7 +30,10 @@ REFERENCE_DEF_RE = re.compile(
 URL_RE = re.compile(r"https?://[^\s<>]+")
 MATH_RE = re.compile(
     r"(?s)(\$\$)(.+?)(\$\$)|"
-    r"(?<!\\)(?<!\$)(\$)(?!\$)([^$\n]+?)(?<!\\)(\$)|"
+    # A single-dollar math opener cannot be followed by a digit or slash:
+    # ``$50`` and ``$/M`` are currency notation, not TeX. Display math and
+    # symbolic inline math remain protected.
+    r"(?<!\\)(?<!\$)(\$)(?![\$\d/])([^$\n]+?)(?<!\\)(\$)|"
     r"(\\\[)(.+?)(\\\])|"
     r"(\\\()(.+?)(\\\))"
 )
