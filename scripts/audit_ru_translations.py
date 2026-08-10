@@ -19,6 +19,17 @@ from typing import Any
 
 SOURCE_ROOTS = ("phases", "certifications/claude/lessons")
 DEFAULT_MANIFEST = "i18n/ru/.quality/manifest.json"
+MANIFEST_SCHEMA_VERSION = 2
+REVIEW_STATUS_BY_UPDATE_KIND = {
+    "candidate_current": "approved_old_snapshot",
+    "needs_figure_sync": "approved_mechanical",
+    "metadata_label_localization": "approved_mechanical",
+    "needs_substantive": "approved",
+    "needs_substantive_and_figure": "approved",
+    "needs_structural_fix": "approved",
+    "needs_residual_translation": "approved",
+    "new_certification": "approved",
+}
 FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})([^\n]*)$", re.MULTILINE)
 HEADING_RE = re.compile(r"^ {0,3}(#{1,6})(?:[ \t]+|$)", re.MULTILINE)
 INLINE_CODE_RE = re.compile(r"(`+)(?!`)(.+?)(?<!`)\1(?!`)")
@@ -42,7 +53,7 @@ MATH_RE = re.compile(
 @dataclass(frozen=True)
 class MarkdownShape:
     fence_tags: tuple[str, ...]
-    fence_blocks: tuple[tuple[str, tuple[str, ...]], ...]
+    fence_blocks: tuple[str, ...]
     fences_balanced: bool
     figure_ids: tuple[str, ...]
     inline_code: tuple[tuple[str, str], ...]
@@ -54,14 +65,15 @@ class MarkdownShape:
     heading_levels: tuple[int, ...]
 
 
-def _without_fences(text: str) -> tuple[str, list[str], list[tuple[str, tuple[str, ...]]], list[str], bool]:
+def _without_fences(text: str) -> tuple[str, list[str], list[str], list[str], bool]:
     """Mask fenced blocks while retaining their ordered tags and figure IDs."""
     lines = text.splitlines(keepends=True)
     masked: list[str] = []
     tags: list[str] = []
-    blocks: list[tuple[str, tuple[str, ...]]] = []
+    blocks: list[str] = []
     figures: list[str] = []
     opening: tuple[str, int, str, str] | None = None
+    opening_line = ""
     body: list[str] = []
 
     for line in lines:
@@ -75,6 +87,7 @@ def _without_fences(text: str) -> tuple[str, list[str], list[tuple[str, tuple[st
             tag = info.strip().split(maxsplit=1)[0] if info.strip() else ""
             tags.append(tag)
             opening = (marker[0], len(marker), tag, info.strip())
+            opening_line = line
             body = []
             masked.append("\n" if line.endswith("\n") else "")
             continue
@@ -82,14 +95,15 @@ def _without_fences(text: str) -> tuple[str, list[str], list[tuple[str, tuple[st
         char, minimum, tag, info = opening
         close = re.match(rf"^ {{0,3}}{re.escape(char)}{{{minimum},}}[ \t]*$", candidate)
         if close:
-            blocks.append((info, tuple(body)))
+            blocks.append(opening_line + "".join(body) + line)
             if tag == "figure":
                 identifiers = [value.strip() for value in body if value.strip()]
                 figures.extend(identifiers)
             opening = None
+            opening_line = ""
             body = []
         else:
-            body.append(candidate)
+            body.append(line)
         masked.append("\n" if line.endswith("\n") else "")
 
     return "".join(masked), tags, blocks, figures, opening is None
@@ -144,6 +158,7 @@ def markdown_shape(text: str) -> MarkdownShape:
 def structural_errors(source: str, target: str) -> list[str]:
     expected = markdown_shape(source)
     actual = markdown_shape(target)
+    target_prose = _without_fences(target)[0]
     labels = {
         "fence_tags": "fenced code tags/count/order",
         "fence_blocks": "fenced code bodies/opening metadata",
@@ -157,11 +172,21 @@ def structural_errors(source: str, target: str) -> list[str]:
         "math": "formula delimiters/protected math",
         "heading_levels": "heading-level sequence",
     }
-    return [
+    errors = [
         label
         for field, label in labels.items()
         if getattr(expected, field) != getattr(actual, field)
     ]
+    metadata_surface = "\n".join(target_prose.splitlines()[:15])
+    if re.search(r"\*\*[A-Z][A-Za-z ]+:\*\*", metadata_surface):
+        errors.append("visible English metadata labels")
+    if re.search(r"\b(?:Phase|Lessons?|lesson|lessons|minutes?|hours?)\b", metadata_surface):
+        errors.append("visible English metadata values")
+    for alt_text in re.findall(r"!\[([^\]\n]+)\]\(", target_prose):
+        if not re.search(r"[А-Яа-яЁё]", alt_text) and len(re.findall(r"[A-Za-z]{2,}", alt_text)) >= 3:
+            errors.append("visible English image alt text")
+            break
+    return errors
 
 
 def source_inventory(root: Path) -> set[str]:
@@ -183,6 +208,8 @@ def load_manifest(path: Path) -> dict[str, Any]:
     value = json.loads(raw)
     if not isinstance(value, dict):
         raise ValueError("top level must be an object")
+    if value.get("schema_version") != MANIFEST_SCHEMA_VERSION:
+        raise ValueError(f"schema_version must be {MANIFEST_SCHEMA_VERSION}")
     if value.get("locale") != "ru":
         raise ValueError("locale must be 'ru'")
     if not isinstance(value.get("items"), list):
@@ -218,6 +245,19 @@ def validate_manifest(root: Path, manifest: dict[str, Any]) -> tuple[list[dict[s
         errors.append(f"manifest contains unknown source: {source}")
     for source in sorted({value for value in sources if sources.count(value) > 1}):
         errors.append(f"manifest duplicate source: {source}")
+    expected_targets = {expected_target(source) for source in inventory}
+    actual_targets = {
+        path.relative_to(root).as_posix()
+        for translated_root in (
+            root / "i18n/ru/phases",
+            root / "i18n/ru/certifications/claude/lessons",
+        )
+        if translated_root.is_dir()
+        for path in translated_root.rglob("docs/ru.md")
+        if path.is_file()
+    }
+    for target in sorted(actual_targets - expected_targets):
+        errors.append(f"orphan target: {target}")
     return items, errors
 
 
@@ -283,17 +323,16 @@ def main(argv: list[str] | None = None) -> int:
             elif item.get("status") != "approved":
                 status, detail = "structurally_invalid", "approval metadata: status is not approved"
             else:
-                expected_review_status = {
-                    "candidate_current": "approved_old_snapshot",
-                    "needs_figure_sync": "approved_mechanical",
-                    "needs_substantive": "approved",
-                    "needs_substantive_and_figure": "approved",
-                    "needs_structural_fix": "approved",
-                    "needs_residual_translation": "approved",
-                    "new_certification": "approved",
-                }.get(item.get("update_kind"))
+                update_kind = item.get("update_kind")
+                expected_review_status = (
+                    REVIEW_STATUS_BY_UPDATE_KIND.get(update_kind)
+                    if isinstance(update_kind, str)
+                    else None
+                )
                 review = item.get("review")
-                if item.get("review_status") != expected_review_status:
+                if expected_review_status is None:
+                    status, detail = "structurally_invalid", "approval metadata: unsupported update_kind"
+                elif item.get("review_status") != expected_review_status:
                     status, detail = "structurally_invalid", "approval metadata: unexpected review_status"
                 elif expected_review_status == "approved" and (
                     not isinstance(review, dict) or review.get("verdict") != "approve"

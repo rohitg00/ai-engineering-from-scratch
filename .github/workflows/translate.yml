@@ -190,7 +190,11 @@ jobs:
         env:
           LANG_CODE: ${{ matrix.lang }}
         run: |
-          if [ "$LANG_CODE" = ru ] && [ -f i18n/ru/.quality/manifest.json ]; then
+          if [ "$LANG_CODE" = ru ]; then
+            [ -f i18n/ru/.quality/manifest.json ] || {
+              echo "refusing to bootstrap Russian NLLB without a reviewed quality manifest" >&2
+              exit 1
+            }
             python3 scripts/audit_ru_translations.py \
               --root . --manifest i18n/ru/.quality/manifest.json
           fi
@@ -227,6 +231,7 @@ jobs:
             *) exit 1 ;;
           esac
           PUBLISH_DIR="$RUNNER_TEMP/translation-publish"
+          AUDIT_SCRIPT="$PWD/scripts/audit_ru_translations.py"
 
           cleanup_publish_worktree() {
             # Removing the directory alone leaves Git's worktree registration
@@ -258,6 +263,17 @@ jobs:
             [ -d "$SLICE" ] && cp -r "$SLICE" "$PUBLISH_DIR/$SLICE"
             [ -f "$CACHE" ] && cp "$CACHE" "$PUBLISH_DIR/$CACHE"
             ( cd "$PUBLISH_DIR" || exit 1
+              # Re-audit the exact detached candidate after fetching the latest
+              # translations branch and applying this slice. This closes the
+              # retry race: only the tree that will be committed may pass.
+              if [ "$LANG_CODE" = ru ]; then
+                [ -f i18n/ru/.quality/manifest.json ] || {
+                  echo "Russian publication candidate has no quality manifest" >&2
+                  exit 1
+                }
+                python3 "$AUDIT_SCRIPT" --root . \
+                  --manifest i18n/ru/.quality/manifest.json
+              fi
               # -f: the translations branch is created from main's checkout
               # (when it doesn't exist yet) and so carries main's .gitignore,
               # which deliberately excludes i18n/*/phases/ and i18n/*/.cache/

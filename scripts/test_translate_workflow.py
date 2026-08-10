@@ -118,6 +118,12 @@ class TranslateWorkflowContractTest(unittest.TestCase):
         workflow = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("scripts/audit_ru_translations.py", workflow)
         self.assertIn("i18n/ru/.quality/manifest.json", workflow)
+        self.assertIn("refusing to bootstrap Russian NLLB", workflow)
+        script = publish_script()
+        self.assertIn('if [ "$LANG_CODE" = ru ]', script)
+        self.assertIn("Russian publication candidate has no quality manifest", script)
+        self.assertIn('python3 "$AUDIT_SCRIPT" --root .', script)
+        self.assertLess(script.index('python3 "$AUDIT_SCRIPT" --root .'), script.index("git push origin"))
 
     def test_reviewed_target_gate_detects_stale_and_tampered_content(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

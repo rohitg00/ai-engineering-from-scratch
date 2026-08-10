@@ -41,7 +41,7 @@ class AuditRuTranslationsTest(unittest.TestCase):
         manifest.write_text(
             json.dumps(
                 {
-                    "schema_version": 1,
+                    "schema_version": 2,
                     "locale": "ru",
                     "items": [
                         {
@@ -103,6 +103,32 @@ class AuditRuTranslationsTest(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("unknown --paths", result.stderr)
 
+    def test_manifest_schema_and_update_kind_are_fail_closed(self) -> None:
+        for field, value in (("schema_version", 999), ("update_kind", "future-unreviewed-kind")):
+            with self.subTest(field=field):
+                temporary, root, _ = self.make_repo()
+                with temporary:
+                    manifest = root / "i18n/ru/.quality/manifest.json"
+                    data = json.loads(manifest.read_text(encoding="utf-8"))
+                    if field == "schema_version":
+                        data[field] = value
+                    else:
+                        data["items"][0][field] = value
+                        data["items"][0].pop("review_status", None)
+                    manifest.write_text(json.dumps(data), encoding="utf-8")
+                    result = self.run_audit(root)
+                self.assertNotEqual(result.returncode, 0)
+
+    def test_orphan_russian_target_is_rejected(self) -> None:
+        temporary, root, _ = self.make_repo()
+        with temporary:
+            orphan = root / "i18n/ru/phases/00-phase/99-orphan/docs/ru.md"
+            orphan.parent.mkdir(parents=True)
+            orphan.write_text("# Сирота\n", encoding="utf-8")
+            result = self.run_audit(root)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("orphan target", result.stderr)
+
     def test_changed_source_is_stale(self) -> None:
         temporary, root, source_file = self.make_repo()
         with temporary:
@@ -110,6 +136,33 @@ class AuditRuTranslationsTest(unittest.TestCase):
             result = self.run_audit(root)
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("stale phases/00-phase/01-lesson/docs/en.md", result.stdout)
+
+    def test_visible_english_image_alt_text_is_rejected(self) -> None:
+        source = "# English\n\n![Model flow through the router](../assets/model.svg)\n"
+        target = "# Русский\n\n![Model flow through the router](../assets/model.svg)\n"
+        temporary, root, _ = self.make_repo(source=source, target=target)
+        with temporary:
+            result = self.run_audit(root)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("visible English image alt text", result.stdout)
+
+    def test_visible_english_metadata_labels_are_rejected(self) -> None:
+        source = "# English\n\n**Type:** Learn\n"
+        target = "# Русский\n\n**Related:** API\n"
+        temporary, root, _ = self.make_repo(source=source, target=target)
+        with temporary:
+            result = self.run_audit(root)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("visible English metadata labels", result.stdout)
+
+    def test_visible_english_metadata_values_are_rejected(self) -> None:
+        source = "# English\n\n**Prerequisites:** Lessons 1-2\n"
+        target = "# Русский\n\n**Предварительные требования:** lessons 1-2\n"
+        temporary, root, _ = self.make_repo(source=source, target=target)
+        with temporary:
+            result = self.run_audit(root)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("visible English metadata values", result.stdout)
 
     def test_target_must_be_nonempty_utf8(self) -> None:
         for payload in (b"", b"\xff"):
@@ -193,6 +246,22 @@ print("protected")
         for label, (old, new) in mutations.items():
             with self.subTest(label=label):
                 temporary, root, _ = self.make_repo(source=source, target=target.replace(old, new))
+                with temporary:
+                    result = self.run_audit(root)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("structurally_invalid", result.stdout)
+
+    def test_fenced_blocks_are_exact_bytes(self) -> None:
+        source = "# Heading\n\n```python extra  metadata\nprint('x')\n```\n"
+        baseline = source.replace("Heading", "Заголовок")
+        mutations = (
+            baseline.replace("```python", "````python").replace("\n```\n", "\n````\n"),
+            baseline.replace("extra  metadata", "extra metadata"),
+            baseline.replace("print('x')\n", "print('x')\r\n"),
+        )
+        for target in mutations:
+            with self.subTest(target=target):
+                temporary, root, _ = self.make_repo(source=source, target=target)
                 with temporary:
                     result = self.run_audit(root)
                 self.assertNotEqual(result.returncode, 0)
