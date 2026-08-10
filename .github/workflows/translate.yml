@@ -186,6 +186,15 @@ jobs:
             *) echo "unexpected translation scope: $SCOPE" >&2; exit 1 ;;
           esac
 
+      - name: Gate reviewed Russian corpus before publication
+        env:
+          LANG_CODE: ${{ matrix.lang }}
+        run: |
+          if [ "$LANG_CODE" = ru ] && [ -f i18n/ru/.quality/manifest.json ]; then
+            python3 scripts/audit_ru_translations.py \
+              --root . --manifest i18n/ru/.quality/manifest.json
+          fi
+
       - name: Publish this translation slice (race-safe)
         env:
           GH_TOKEN: ${{ github.token }}

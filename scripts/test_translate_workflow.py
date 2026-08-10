@@ -114,6 +114,31 @@ def publisher_env(
 
 
 class TranslateWorkflowContractTest(unittest.TestCase):
+    def test_reviewed_russian_targets_are_gated_before_publication(self) -> None:
+        workflow = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("scripts/audit_ru_translations.py", workflow)
+        self.assertIn("i18n/ru/.quality/manifest.json", workflow)
+
+    def test_reviewed_target_gate_detects_stale_and_tampered_content(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "ru.md"
+            target.write_text("Проверенный перевод\n", encoding="utf-8")
+            target_sha = TRANSLATOR.hashlib.sha256(target.read_bytes()).hexdigest()
+            item = {
+                "status": "approved",
+                "source_sha256": "source-v1",
+                "target_sha256": target_sha,
+            }
+            self.assertEqual(
+                TRANSLATOR.reviewed_target_state(item, "source-v1", target), "current"
+            )
+            self.assertEqual(
+                TRANSLATOR.reviewed_target_state(item, "source-v2", target), "stale"
+            )
+            target.write_text("Подмена\n", encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "target SHA-256"):
+                TRANSLATOR.reviewed_target_state(item, "source-v1", target)
+
     def test_real_gitignore_excludes_generated_certification_outputs(self) -> None:
         ignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
         self.assertIn("i18n/*/certifications/", ignore.splitlines())

@@ -42,6 +42,7 @@ MATH_RE = re.compile(
 @dataclass(frozen=True)
 class MarkdownShape:
     fence_tags: tuple[str, ...]
+    fence_blocks: tuple[tuple[str, tuple[str, ...]], ...]
     fences_balanced: bool
     figure_ids: tuple[str, ...]
     inline_code: tuple[tuple[str, str], ...]
@@ -53,13 +54,14 @@ class MarkdownShape:
     heading_levels: tuple[int, ...]
 
 
-def _without_fences(text: str) -> tuple[str, list[str], list[str], bool]:
+def _without_fences(text: str) -> tuple[str, list[str], list[tuple[str, tuple[str, ...]]], list[str], bool]:
     """Mask fenced blocks while retaining their ordered tags and figure IDs."""
     lines = text.splitlines(keepends=True)
     masked: list[str] = []
     tags: list[str] = []
+    blocks: list[tuple[str, tuple[str, ...]]] = []
     figures: list[str] = []
-    opening: tuple[str, int, str] | None = None
+    opening: tuple[str, int, str, str] | None = None
     body: list[str] = []
 
     for line in lines:
@@ -72,14 +74,15 @@ def _without_fences(text: str) -> tuple[str, list[str], list[str], bool]:
             marker, info = match.groups()
             tag = info.strip().split(maxsplit=1)[0] if info.strip() else ""
             tags.append(tag)
-            opening = (marker[0], len(marker), tag)
+            opening = (marker[0], len(marker), tag, info.strip())
             body = []
             masked.append("\n" if line.endswith("\n") else "")
             continue
 
-        char, minimum, tag = opening
+        char, minimum, tag, info = opening
         close = re.match(rf"^ {{0,3}}{re.escape(char)}{{{minimum},}}[ \t]*$", candidate)
         if close:
+            blocks.append((info, tuple(body)))
             if tag == "figure":
                 identifiers = [value.strip() for value in body if value.strip()]
                 figures.extend(identifiers)
@@ -89,7 +92,7 @@ def _without_fences(text: str) -> tuple[str, list[str], list[str], bool]:
             body.append(candidate)
         masked.append("\n" if line.endswith("\n") else "")
 
-    return "".join(masked), tags, figures, opening is None
+    return "".join(masked), tags, blocks, figures, opening is None
 
 
 def _strip_url_punctuation(url: str) -> str:
@@ -97,7 +100,7 @@ def _strip_url_punctuation(url: str) -> str:
 
 
 def markdown_shape(text: str) -> MarkdownShape:
-    prose, tags, figures, balanced = _without_fences(text)
+    prose, tags, blocks, figures, balanced = _without_fences(text)
     inline = tuple((match.group(1), match.group(2)) for match in INLINE_CODE_RE.finditer(prose))
     no_code = INLINE_CODE_RE.sub(lambda match: " " * len(match.group(0)), prose)
 
@@ -125,6 +128,7 @@ def markdown_shape(text: str) -> MarkdownShape:
 
     return MarkdownShape(
         fence_tags=tuple(tags),
+        fence_blocks=tuple(blocks),
         fences_balanced=balanced,
         figure_ids=tuple(figures),
         inline_code=inline,
@@ -142,6 +146,7 @@ def structural_errors(source: str, target: str) -> list[str]:
     actual = markdown_shape(target)
     labels = {
         "fence_tags": "fenced code tags/count/order",
+        "fence_blocks": "fenced code bodies/opening metadata",
         "fences_balanced": "balanced fenced code",
         "figure_ids": "figure IDs/order",
         "inline_code": "inline code tokens",
@@ -275,21 +280,44 @@ def main(argv: list[str] | None = None) -> int:
             recorded_hash = item.get("source_sha256", item.get("current_source_sha256"))
             if hashlib.sha256(source_bytes).hexdigest() != recorded_hash:
                 status, detail = "stale", "source SHA-256 differs from manifest"
+            elif item.get("status") != "approved":
+                status, detail = "structurally_invalid", "approval metadata: status is not approved"
             else:
-                try:
-                    source_text = source_bytes.decode("utf-8")
-                    target_text = target_file.read_text(encoding="utf-8")
-                except UnicodeDecodeError:
-                    status, detail = "structurally_invalid", "target is not UTF-8"
+                expected_review_status = {
+                    "candidate_current": "approved_old_snapshot",
+                    "needs_figure_sync": "approved_mechanical",
+                    "needs_substantive": "approved",
+                    "needs_substantive_and_figure": "approved",
+                    "needs_structural_fix": "approved",
+                    "needs_residual_translation": "approved",
+                    "new_certification": "approved",
+                }.get(item.get("update_kind"))
+                review = item.get("review")
+                if item.get("review_status") != expected_review_status:
+                    status, detail = "structurally_invalid", "approval metadata: unexpected review_status"
+                elif expected_review_status == "approved" and (
+                    not isinstance(review, dict) or review.get("verdict") != "approve"
+                ):
+                    status, detail = "structurally_invalid", "approval metadata: structured reviewer approval missing"
                 else:
-                    if not target_text.strip():
-                        status, detail = "structurally_invalid", "target is empty"
+                    target_bytes = target_file.read_bytes()
+                    if hashlib.sha256(target_bytes).hexdigest() != item.get("target_sha256"):
+                        status, detail = "structurally_invalid", "target SHA-256 differs from manifest"
                     else:
-                        errors = structural_errors(source_text, target_text)
-                        if errors:
-                            status, detail = "structurally_invalid", "; ".join(errors)
+                        try:
+                            source_text = source_bytes.decode("utf-8")
+                            target_text = target_bytes.decode("utf-8")
+                        except UnicodeDecodeError:
+                            status, detail = "structurally_invalid", "target is not UTF-8"
                         else:
-                            status, detail = "approved", ""
+                            if not target_text.strip():
+                                status, detail = "structurally_invalid", "target is empty"
+                            else:
+                                errors = structural_errors(source_text, target_text)
+                                if errors:
+                                    status, detail = "structurally_invalid", "; ".join(errors)
+                                else:
+                                    status, detail = "approved", ""
         counts[status] += 1
         failed |= status != "approved"
         suffix = f": {detail}" if detail else ""

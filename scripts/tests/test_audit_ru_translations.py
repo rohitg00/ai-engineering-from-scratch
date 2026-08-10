@@ -48,6 +48,10 @@ class AuditRuTranslationsTest(unittest.TestCase):
                             "source": source_path,
                             "target": target_path.as_posix(),
                             "source_sha256": digest(source),
+                            "target_sha256": digest(target) if target is not None else "missing",
+                            "status": "approved",
+                            "review_status": "approved_old_snapshot",
+                            "update_kind": "candidate_current",
                         }
                     ],
                 }
@@ -118,6 +122,24 @@ class AuditRuTranslationsTest(unittest.TestCase):
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIn("structurally_invalid", result.stdout)
 
+    def test_approved_target_hash_and_status_are_enforced(self) -> None:
+        temporary, root, _ = self.make_repo(source="# English\n", target="# Русский\n")
+        with temporary:
+            target = root / "i18n/ru/phases/00-phase/01-lesson/docs/ru.md"
+            target.write_text("# Русский\n\nПодмена прозы.\n", encoding="utf-8")
+            result = self.run_audit(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("target SHA-256", result.stdout)
+
+            manifest = root / "i18n/ru/.quality/manifest.json"
+            data = json.loads(manifest.read_text(encoding="utf-8"))
+            data["items"][0]["target_sha256"] = digest(target.read_text(encoding="utf-8"))
+            data["items"][0]["status"] = "pending"
+            manifest.write_text(json.dumps(data), encoding="utf-8")
+            result = self.run_audit(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("approval metadata", result.stdout)
+
     def test_currency_markers_are_not_treated_as_math_delimiters(self) -> None:
         source = "# Costs\nRevenue rose from $50 to $75; one vendor uses $/M tokens and another uses $/second.\n"
         target = "# Стоимость\nВыручка выросла с $50 до $75; один поставщик считает в $/M токенов, другой — в $/second.\n"
@@ -160,6 +182,7 @@ print("protected")
 
         mutations = {
             "fenced code tags/count/order": ("```python", "```bash"),
+            "fenced code bodies": ('print("protected")', 'print("tampered")'),
             "figure IDs/order": ("figure-one", "figure-two"),
             "inline code tokens": ("`token --flag`", "`другой`"),
             "URL/link targets": ("https://example.com/api?q=1", "https://bad.example/api"),

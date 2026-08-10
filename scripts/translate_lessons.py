@@ -355,6 +355,34 @@ def prune_orphans(*, docs, lang, scope, phase, cache, dry_run):
     return removed
 
 
+def load_quality_items(lang: str) -> dict[str, dict]:
+    """Load reviewed targets for a language, failing closed on malformed data."""
+    path = OUT_ROOT / lang / ".quality" / "manifest.json"
+    if not path.is_file():
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    result: dict[str, dict] = {}
+    for item in payload.get("items", []):
+        source = item.get("source")
+        if not isinstance(source, str) or source in result:
+            raise RuntimeError(f"invalid or duplicate quality manifest source: {source!r}")
+        result[source] = item
+    return result
+
+
+def reviewed_target_state(item: dict, source_sha: str, target: Path) -> str:
+    """Return current/stale while ensuring reviewed target bytes are untouched."""
+    if item.get("status") != "approved":
+        raise RuntimeError("quality manifest entry is not approved")
+    if not target.is_file():
+        raise RuntimeError("reviewed target is missing")
+    actual = hashlib.sha256(target.read_bytes()).hexdigest()
+    if actual != item.get("target_sha256"):
+        raise RuntimeError("reviewed target SHA-256 differs from quality manifest")
+    recorded_source = item.get("source_sha256", item.get("current_source_sha256"))
+    return "current" if source_sha == recorded_source else "stale"
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--lang", required=True)
@@ -387,6 +415,7 @@ def main():
     cache = {}
     if cpath.is_file():
         cache = json.loads(cpath.read_text(encoding="utf-8"))
+    quality_items = load_quality_items(args.lang)
 
     def save_cache():
         cpath.parent.mkdir(parents=True, exist_ok=True)
@@ -398,7 +427,7 @@ def main():
             cache=cache, dry_run=args.dry_run,
         )
 
-    translated = skipped = 0
+    translated = skipped = protected_stale = 0
     for doc in docs:
         rel = str(doc.relative_to(ROOT))
         if args.phase and f"/{args.phase}/" not in f"/{rel}":
@@ -409,6 +438,20 @@ def main():
         src = doc.read_text(encoding="utf-8")
         h = source_hash(src)
         dst = out_path(doc, args.lang)
+        quality_item = quality_items.get(rel)
+        if quality_item is not None:
+            try:
+                reviewed_state = reviewed_target_state(quality_item, h, dst)
+            except RuntimeError as error:
+                print(f"ERROR protected reviewed target {rel}: {error}", file=sys.stderr)
+                return 2
+            if reviewed_state == "stale":
+                print(f"ERROR reviewed target is stale and was not overwritten: {rel}", file=sys.stderr)
+                protected_stale += 1
+                continue
+            cache[rel] = h
+            skipped += 1
+            continue
         # key is the lesson path; the cache file is already per-language
         if cache.get(rel) == h and dst.is_file():
             skipped += 1
@@ -437,7 +480,11 @@ def main():
     if not args.dry_run:
         save_cache()
     print(f"{args.lang}: {translated} translated, {skipped} unchanged (cache hit)")
+    if protected_stale:
+        print(f"ERROR: {protected_stale} reviewed target(s) require human update", file=sys.stderr)
+        return 2
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
