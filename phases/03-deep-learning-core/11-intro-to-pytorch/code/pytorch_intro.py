@@ -7,6 +7,15 @@ import os
 import time
 
 
+def get_device():
+    """Pick the best available accelerator: CUDA, then Apple Silicon (MPS), then CPU."""
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
 MNIST_BASE_URL = "https://storage.googleapis.com/cvdf-datasets/mnist/"
 MNIST_FILES = [
     "train-images-idx3-ubyte.gz",
@@ -297,11 +306,11 @@ if __name__ == "__main__":
     print("  Introduction to PyTorch -- Phase 3, Lesson 11")
     print("=" * 60)
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = get_device()
     print(f"\n  PyTorch version: {torch.__version__}")
     print(f"  Device: {device}")
-    print(f"  CUDA available: {torch.cuda.is_available()}")
-    if torch.cuda.is_available():
+    print(f"  Accelerator: {device.type}")
+    if device.type == "cuda":
         print(f"  GPU: {torch.cuda.get_device_name(0)}")
 
     demo_tensor_basics()

@@ -3,22 +3,27 @@ import torch
 import torch.nn as nn
 
 
+def _sync(device):
+    """Block until queued GPU work finishes, so timing is accurate."""
+    if device == "cuda":
+        torch.cuda.synchronize()
+    elif device == "mps":
+        torch.mps.synchronize()
+
+
 def measure_latency(model, input_shape, device="cpu", warmup=5, iters=20):
     model = model.to(device).eval()
     x = torch.randn(input_shape, device=device)
     with torch.no_grad():
         for _ in range(warmup):
             model(x)
-        if device == "cuda":
-            torch.cuda.synchronize()
+        _sync(device)
         times = []
         for _ in range(iters):
-            if device == "cuda":
-                torch.cuda.synchronize()
+            _sync(device)
             t0 = time.perf_counter()
             model(x)
-            if device == "cuda":
-                torch.cuda.synchronize()
+            _sync(device)
             times.append((time.perf_counter() - t0) * 1000)
     times.sort()
     return {

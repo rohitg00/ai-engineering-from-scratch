@@ -148,8 +148,8 @@ class AmpTrainState:
     ) -> None:
         if max_norm <= 0:
             raise ValueError("max_norm must be positive")
-        if device_type not in ("cpu", "cuda"):
-            raise ValueError(f"device_type must be 'cpu' or 'cuda', got {device_type}")
+        if device_type not in ("cpu", "cuda", "mps"):
+            raise ValueError(f"device_type must be 'cpu', 'cuda', or 'mps', got {device_type}")
         self.model = model
         self.max_norm = max_norm
         self.device_type = device_type

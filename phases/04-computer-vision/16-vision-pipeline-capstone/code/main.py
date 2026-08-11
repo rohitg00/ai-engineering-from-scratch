@@ -157,6 +157,8 @@ def benchmark(pipe, num_runs=10, image_size=(400, 600)):
     def sync():
         if pipe.device == "cuda" and torch.cuda.is_available():
             torch.cuda.synchronize()
+        elif pipe.device == "mps" and torch.backends.mps.is_available():
+            torch.mps.synchronize()
 
     for _ in range(num_runs):
         sync()
