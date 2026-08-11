@@ -74,29 +74,60 @@ def synthetic_loader(batch_size: int, num_batches: int, in_dim: int, out_dim: in
         yield x, y
 
 
+def _assert_safe_torch_for_weights_only() -> None:
+    """Ensure torch version is >= 2.10.1 for secure weights_only loading.
+
+    Earlier versions have known vulnerabilities (GHSA-53q9-r3pm-6pq6, GHSA-3749-ghw9-m3mg, etc.).
+    """
+    base = torch.__version__.split("+", 1)[0]
+    parts = base.split(".")
+    major = int(parts[0]) if len(parts) > 0 else 0
+    minor = int(parts[1]) if len(parts) > 1 else 0
+    patch = int(parts[2]) if len(parts) > 2 else 0
+    if (major, minor, patch) < (2, 10, 1):
+        raise RuntimeError(
+            f"torch>=2.10.1 is required for secure weights_only deserialization (found {torch.__version__}). "
+            "Please update torch to address security vulnerabilities."
+        )
+
+
 def capture_rng_state() -> Dict[str, Any]:
-    state: Dict[str, Any] = {
+    # np.random.get_state() returns a tuple with an ndarray.
+    # To support weights_only=True loading, we serialize it to primitives.
+    np_state = np.random.get_state()
+    return {
         "python": random.getstate(),
-        "numpy": np.random.get_state(),
+        "numpy": {
+            "keys": np_state[1].tolist(),
+            "pos": int(np_state[2]),
+            "has_gauss": int(np_state[3]),
+            "cached_gaussian": float(np_state[4]),
+        },
         "torch_cpu": torch.get_rng_state().tolist(),
+        "torch_cuda": [s.tolist() for s in torch.cuda.get_rng_state_all()] if torch.cuda.is_available() else None,
     }
-    if torch.cuda.is_available():
-        state["torch_cuda"] = [s.tolist() for s in torch.cuda.get_rng_state_all()]
-    return state
 
 
 def restore_rng_state(state: Dict[str, Any]) -> None:
     py = state.get("python")
-    if py is not None:
+    if py:
         random.setstate(tuple_from_nested(py))
-    np_state = state.get("numpy")
-    if np_state is not None:
-        np.random.set_state(tuple_from_nested(np_state))
+
+    np_raw = state.get("numpy")
+    if isinstance(np_raw, dict):
+        # Restore from the new weights_only-safe format
+        keys = np.array(np_raw["keys"], dtype=np.uint32)
+        np.random.set_state(("MT19937", keys, np_raw["pos"], np_raw["has_gauss"], np_raw["cached_gaussian"]))
+    elif np_raw:
+        # Backward compatibility for the old tuple format
+        np.random.set_state(tuple_from_nested(np_raw))
+
     cpu = state.get("torch_cpu")
-    if cpu is not None:
+    if cpu:
         torch.set_rng_state(torch.tensor(cpu, dtype=torch.uint8))
+
     cuda = state.get("torch_cuda")
-    if cuda is not None and torch.cuda.is_available():
+    if cuda and torch.cuda.is_available():
         torch.cuda.set_rng_state_all([torch.tensor(s, dtype=torch.uint8) for s in cuda])
 
 
@@ -197,8 +228,10 @@ def load_checkpoint(
     optimizer: torch.optim.Optimizer,
     scheduler: torch.optim.lr_scheduler._LRScheduler,
 ) -> TrainState:
-    payload = torch.load(path, map_location="cpu", weights_only=False)
-    assert payload["schema"].startswith("ckpt"), f"unknown schema {payload['schema']}"
+    _assert_safe_torch_for_weights_only()
+    payload = torch.load(path, map_location="cpu", weights_only=True)
+    if payload.get("schema") != CHECKPOINT_SCHEMA:
+        raise ValueError(f"unknown schema {payload.get('schema')}")
     model.load_state_dict(payload["model"])
     optimizer.load_state_dict(payload["optimizer"])
     scheduler.load_state_dict(payload["scheduler"])
@@ -288,19 +321,35 @@ def load_sharded_checkpoint(
     optimizer: torch.optim.Optimizer,
     scheduler: torch.optim.lr_scheduler._LRScheduler,
 ) -> TrainState:
+    _assert_safe_torch_for_weights_only()
     index = json.loads((ckpt_dir / "index.json").read_text())
+    if index.get("schema") != CHECKPOINT_SCHEMA + "-index":
+        raise ValueError(f"unknown index schema {index.get('schema')}")
     expected_sha = index["meta_sha256"]
     meta_path = ckpt_dir / "meta.pt"
     actual_sha = file_sha256(meta_path)
-    assert actual_sha == expected_sha, f"meta sha mismatch: {actual_sha} != {expected_sha}"
-    meta = torch.load(meta_path, map_location="cpu", weights_only=False)
+    if actual_sha != expected_sha:
+        raise ValueError(f"meta sha mismatch: {actual_sha} != {expected_sha}")
+    meta = torch.load(meta_path, map_location="cpu", weights_only=True)
+    if meta.get("schema") != CHECKPOINT_SCHEMA + "-sharded":
+        raise ValueError(f"unknown meta schema {meta.get('schema')}")
     merged: Dict[str, torch.Tensor] = {}
+    base_dir = ckpt_dir.resolve()
     for shard in meta["shards"]:
-        shard_path = ckpt_dir / shard["path"]
+        shard_rel = Path(shard["path"])
+        shard_path = (ckpt_dir / shard_rel).resolve()
+        # Path traversal protection: ensure resolved shard is within ckpt_dir
+        try:
+            shard_path.relative_to(base_dir)
+        except ValueError as exc:
+            raise ValueError(f"illegal shard path: {shard['path']}") from exc
+
         actual = file_sha256(shard_path)
-        assert actual == shard["sha256"], f"shard sha mismatch: {shard['path']}"
-        body = torch.load(shard_path, map_location="cpu", weights_only=False)
-        assert body["schema"] == SHARD_SCHEMA
+        if actual != shard["sha256"]:
+            raise ValueError(f"shard sha mismatch: {shard['path']}")
+        body = torch.load(shard_path, map_location="cpu", weights_only=True)
+        if body["schema"] != SHARD_SCHEMA:
+            raise ValueError(f"unknown shard schema {body['schema']}")
         merged.update(body["tensors"])
     model.load_state_dict(merged)
     optimizer.load_state_dict(meta["optimizer"])

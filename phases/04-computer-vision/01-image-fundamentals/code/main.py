@@ -1,6 +1,12 @@
+"""Image fundamentals: RGB representation, synthetic generation, and loading.
+Docs: phases/04-computer-vision/01-image-fundamentals/docs/en.md
+Source: ImageNet normalization standards (https://pytorch.org/vision/stable/models.html)
+"""
+
 import numpy as np
 from PIL import Image
 from io import BytesIO
+from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
 
@@ -20,6 +26,36 @@ def synthetic_image(height=128, width=192, seed=0):
 
 
 def load_rgb(url, timeout=5):
+    parsed = urlparse(url)
+    scheme = parsed.scheme.lower()
+    hostname = parsed.hostname
+
+    if scheme not in {"http", "https"}:
+        # In a real app, you would raise an error. For this lab, we fallback to synthetic.
+        return synthetic_image()
+
+    # SSRF protection: block local/internal hostnames and cloud metadata endpoints
+    if hostname:
+        hostname = hostname.lower()
+        # Block localhost, loopback, private RFC1918 ranges, and cloud metadata (169.254.169.254)
+        def is_private_172(h):
+            parts = h.split(".")
+            if len(parts) < 2 or not parts[1].isdigit():
+                return False
+            return 16 <= int(parts[1]) <= 31
+
+        is_unsafe = (
+            hostname == "localhost"
+            or hostname.startswith("127.")
+            or hostname.startswith("10.")
+            or hostname.startswith("192.168.")
+            or hostname.startswith("169.254.")
+            or (hostname.startswith("172.") and is_private_172(hostname))
+            or hostname == "::1"
+        )
+        if is_unsafe:
+            return synthetic_image()
+
     try:
         req = Request(url, headers={"User-Agent": "ai-eng-course/1.0"})
         data = urlopen(req, timeout=timeout).read()
