@@ -11,6 +11,7 @@ re-translated only when its English source changes.
 Usage:
     LLM_API_KEY=... python3 scripts/translate_lessons.py --lang zh
     python3 scripts/translate_lessons.py --lang zh --phase 05-nlp-foundations-to-advanced
+    python3 scripts/translate_lessons.py --lang ru --scope certifications/claude
     python3 scripts/translate_lessons.py --lang tr --only phases/00-setup-and-tooling/01-dev-environment
     python3 scripts/translate_lessons.py --lang zh --dry-run   # show what would translate, no API calls
 
@@ -25,21 +26,25 @@ import json
 import os
 import re
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_catalog import LESSON_DIR_RE, PHASE_DIR_RE  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 PHASES = ROOT / "phases"
+CERTIFICATION_LESSONS = ROOT / "certifications" / "claude" / "lessons"
 OUT_ROOT = ROOT / "i18n"
+SCOPES = ("core", "certifications/claude")
 
 
-def cache_path(lang, phase=None):
-    # Per-(language, phase) cache so the sharded CI jobs never touch the same
-    # file: each job publishes only its own phase slice, so caches merge without
+def cache_path(lang, phase=None, scope="core"):
+    # Per-(language, source slice) cache so sharded CI jobs never touch the same
+    # file: each job publishes only its own slice, so caches merge without
     # clobbering and a timed-out run resumes exactly where it stopped. A full
     # local run (no --phase) keeps the single combined cache.
+    if scope == "certifications/claude":
+        return OUT_ROOT / lang / ".cache" / "certifications-claude.json"
     if phase:
         return OUT_ROOT / lang / ".cache" / f"{phase}.json"
     return OUT_ROOT / lang / ".translate-cache.json"
@@ -233,7 +238,7 @@ def source_hash(text):
     return hashlib.sha256(text.encode()).hexdigest()
 
 
-def lesson_docs():
+def core_lesson_docs():
     # Same "what is a lesson" definition as the catalog/book/llms.txt tooling,
     # so a non-conforming dir can't become a translated, published lesson.
     for phase in sorted(PHASES.iterdir()):
@@ -245,12 +250,52 @@ def lesson_docs():
                 yield doc
 
 
-def targets():
+def certification_lesson_docs():
+    """Yield only sources satisfying the shared certification lesson contract."""
+    if not CERTIFICATION_LESSONS.is_dir():
+        return
+    for lesson in sorted(CERTIFICATION_LESSONS.iterdir()):
+        doc = lesson / "docs" / "en.md"
+        if lesson.is_dir() and LESSON_DIR_RE.match(lesson.name) and doc.is_file():
+            yield doc
+
+
+def lesson_docs(scope="core"):
+    if scope == "core":
+        yield from core_lesson_docs()
+    elif scope == "certifications/claude":
+        yield from certification_lesson_docs()
+    else:  # callers outside argparse still fail closed
+        raise ValueError(f"unknown translation scope: {scope}")
+
+
+def targets(scope="core"):
     # Lessons only. The per-language README is hand-authored and built by
     # scripts/build_readme_i18n.py into i18n/<lang>/README.md; translating it
     # here would overwrite that file with a machine translation, so the README
     # is deliberately not a target of this script.
-    yield from lesson_docs()
+    yield from lesson_docs(scope)
+
+
+def validate_only(value, scope, docs):
+    """Return a canonical selector, rejecting traversal and out-of-scope paths."""
+    if value is None:
+        return None
+    if "\\" in value:
+        raise ValueError("invalid --only path")
+    stripped = value.rstrip("/")
+    path = PurePosixPath(stripped)
+    if not stripped or path.is_absolute() or any(part in ("", ".", "..") for part in path.parts):
+        raise ValueError("invalid --only path")
+
+    known = {}
+    for doc in docs:
+        rel = doc.relative_to(ROOT).as_posix()
+        known[rel] = rel
+        known[PurePosixPath(rel).parent.parent.as_posix()] = rel
+    if stripped not in known:
+        raise ValueError(f"invalid --only path for scope {scope}: {value}")
+    return known[stripped]
 
 
 def out_path(doc, lang):
@@ -273,35 +318,140 @@ def translate_doc(src, lang, provider):
     return restore(raw, store)
 
 
+def prune_orphans(*, docs, lang, scope, phase, cache, dry_run):
+    """Remove outputs/cache entries whose canonical English lesson disappeared."""
+    canonical = {
+        str(doc.relative_to(ROOT)) for doc in docs
+        if not phase or f"/{phase}/" in f"/{doc.relative_to(ROOT)}"
+    }
+    removed = 0
+    for key in list(cache):
+        if key not in canonical:
+            print(f"would remove stale cache entry {key}" if dry_run else f"removed stale cache entry {key}")
+            if not dry_run:
+                del cache[key]
+            removed += 1
+
+    scope_root = OUT_ROOT / lang
+    if scope == "core":
+        scope_root = scope_root / "phases"
+        if phase:
+            scope_root = scope_root / phase
+    else:
+        scope_root = scope_root / "certifications/claude/lessons"
+    if scope_root.is_dir():
+        for dst in scope_root.rglob(f"{lang}.md"):
+            source_rel = str(dst.relative_to(OUT_ROOT / lang).with_name("en.md"))
+            if source_rel in canonical:
+                continue
+            print(f"would remove orphaned output {dst}" if dry_run else f"removed orphaned output {dst}")
+            if not dry_run:
+                dst.unlink()
+                parent = dst.parent
+                while parent != scope_root and parent.is_dir() and not any(parent.iterdir()):
+                    parent.rmdir()
+                    parent = parent.parent
+            removed += 1
+    return removed
+
+
+def load_quality_items(lang: str) -> dict[str, dict]:
+    """Load reviewed targets for a language, failing closed on malformed data."""
+    path = OUT_ROOT / lang / ".quality" / "manifest.json"
+    if not path.is_file():
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    result: dict[str, dict] = {}
+    for item in payload.get("items", []):
+        source = item.get("source")
+        if not isinstance(source, str) or source in result:
+            raise RuntimeError(f"invalid or duplicate quality manifest source: {source!r}")
+        result[source] = item
+    return result
+
+
+def reviewed_target_state(item: dict, source_sha: str, target: Path) -> str:
+    """Return current/stale while ensuring reviewed target bytes are untouched."""
+    if item.get("status") != "approved":
+        raise RuntimeError("quality manifest entry is not approved")
+    if not target.is_file():
+        raise RuntimeError("reviewed target is missing")
+    actual = hashlib.sha256(target.read_bytes()).hexdigest()
+    if actual != item.get("target_sha256"):
+        raise RuntimeError("reviewed target SHA-256 differs from quality manifest")
+    recorded_source = item.get("source_sha256", item.get("current_source_sha256"))
+    return "current" if source_sha == recorded_source else "stale"
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--lang", required=True)
     ap.add_argument("--provider", default=os.environ.get("TRANSLATE_PROVIDER", "nllb"))
+    ap.add_argument("--scope", choices=SCOPES, default="core",
+                    help="translation source scope (default: core phases)")
     ap.add_argument("--phase", help="limit to one phase dir name")
     ap.add_argument("--only", help="limit to one lesson path (phases/.../lesson)")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    cpath = cache_path(args.lang, args.phase)
+    if args.lang not in LANG_NAMES:
+        ap.error(f"unknown target language: {args.lang}")
+    if args.scope != "core" and args.phase:
+        ap.error("--phase is valid only with --scope core")
+    if args.phase:
+        phases = {
+            path.name for path in PHASES.iterdir()
+            if path.is_dir() and PHASE_DIR_RE.match(path.name)
+        }
+        if args.phase not in phases:
+            ap.error(f"invalid --phase: {args.phase}")
+    docs = list(targets(args.scope))
+    try:
+        only_doc = validate_only(args.only, args.scope, docs)
+    except ValueError as error:
+        ap.error(str(error))
+
+    cpath = cache_path(args.lang, args.phase, args.scope)
     cache = {}
     if cpath.is_file():
         cache = json.loads(cpath.read_text(encoding="utf-8"))
+    quality_items = load_quality_items(args.lang)
 
     def save_cache():
         cpath.parent.mkdir(parents=True, exist_ok=True)
         cpath.write_text(json.dumps(cache, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    translated = skipped = 0
-    for doc in targets():
+    if not only_doc:
+        prune_orphans(
+            docs=docs, lang=args.lang, scope=args.scope, phase=args.phase,
+            cache=cache, dry_run=args.dry_run,
+        )
+
+    translated = skipped = protected_stale = 0
+    for doc in docs:
         rel = str(doc.relative_to(ROOT))
         if args.phase and f"/{args.phase}/" not in f"/{rel}":
             continue
-        if args.only and not (rel == args.only.strip("/") or rel.startswith(args.only.strip("/") + "/")):
+        if only_doc and rel != only_doc:
             continue
 
         src = doc.read_text(encoding="utf-8")
         h = source_hash(src)
         dst = out_path(doc, args.lang)
+        quality_item = quality_items.get(rel)
+        if quality_item is not None:
+            try:
+                reviewed_state = reviewed_target_state(quality_item, h, dst)
+            except RuntimeError as error:
+                print(f"ERROR protected reviewed target {rel}: {error}", file=sys.stderr)
+                return 2
+            if reviewed_state == "stale":
+                print(f"ERROR reviewed target is stale and was not overwritten: {rel}", file=sys.stderr)
+                protected_stale += 1
+                continue
+            cache[rel] = h
+            skipped += 1
+            continue
         # key is the lesson path; the cache file is already per-language
         if cache.get(rel) == h and dst.is_file():
             skipped += 1
@@ -330,7 +480,11 @@ def main():
     if not args.dry_run:
         save_cache()
     print(f"{args.lang}: {translated} translated, {skipped} unchanged (cache hit)")
+    if protected_stale:
+        print(f"ERROR: {protected_stale} reviewed target(s) require human update", file=sys.stderr)
+        return 2
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

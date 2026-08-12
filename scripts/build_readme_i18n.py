@@ -16,8 +16,8 @@ without a translation falls back to English.
     python3 scripts/build_readme_i18n.py            # write i18n/<lang>/README.md
     python3 scripts/build_readme_i18n.py --check     # fail if any output is stale
 
-Output goes to i18n/<lang>/README.md and is committed to main (unlike the lesson
-translations, which live on the translations branch). English stays canonical.
+Output goes to i18n/<lang>/README.md and is committed with the reviewed locale.
+English stays canonical.
 """
 import argparse
 import re
@@ -123,7 +123,7 @@ def localize_links(md):
     return "\n".join(out)
 
 
-def render(text, lang, translations):
+def render(text, lang, translations, structural_translations=None):
     table = translations.get(lang, {})
     lines = text.split("\n")
     # replace bottom-up so earlier indices stay valid
@@ -133,6 +133,12 @@ def render(text, lang, translations):
             continue
         replacement = [sp["prefix"] + ln for ln in t.split("\n")]
         lines[sp["start"]:sp["end"]] = replacement
+    structural = (structural_translations or {}).get(lang, {})
+    for index, line in enumerate(lines):
+        for source, target in structural.items():
+            if source in line:
+                line = line.replace(source, target)
+        lines[index] = line
     return "\n".join(lines)
 
 
@@ -152,12 +158,12 @@ def main():
         print(f"\n{len(keys)} translatable blocks; round-trip identity OK", file=sys.stderr)
         return 0
 
-    from readme_translations import TRANSLATIONS, README_NOTE
+    from readme_translations import README_NOTE, STRUCTURAL_TRANSLATIONS, TRANSLATIONS
 
     stale = []
     for lang in TRANSLATIONS:
         note = README_NOTE.get(lang, "")
-        body = localize_links(render(text, lang, TRANSLATIONS))
+        body = localize_links(render(text, lang, TRANSLATIONS, STRUCTURAL_TRANSLATIONS))
         content = f"{note}\n{body}" if note else body
         dst = OUT_ROOT / lang / "README.md"
         if args.check:

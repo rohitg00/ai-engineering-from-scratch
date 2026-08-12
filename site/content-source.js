@@ -2,13 +2,32 @@
  * Resolve repository content for static pages.
  *
  * Local previews are served from the repository root, so ../ reaches lesson
- * and assessment source files directly. Deploys keep the existing branch-aware
- * raw GitHub behavior through build-meta.js.
+ * and assessment source files directly. Deploys keep the branch-aware raw
+ * GitHub behavior through build-meta.js.
  */
 (function () {
   'use strict';
 
-  var REPO_RAW = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/';
+  var DEFAULT_REPOSITORY = 'rohitg00/ai-engineering-from-scratch';
+
+  function buildMeta() {
+    return window.__AIFS_BUILD_META && typeof window.__AIFS_BUILD_META === 'object'
+      ? window.__AIFS_BUILD_META
+      : {};
+  }
+
+  function repository() {
+    var configured = window.__AIFS_REPOSITORY || buildMeta().repository || DEFAULT_REPOSITORY;
+    if (configured && typeof configured === 'object') {
+      configured = (configured.owner || '') + '/' + (configured.name || configured.repo || '');
+    }
+    configured = String(configured || '').replace(/^\/+|\/+$/g, '');
+    return /^[^/]+\/[^/]+$/.test(configured) ? configured : DEFAULT_REPOSITORY;
+  }
+
+  function activeRef() {
+    return window.__AIFS_REF || buildMeta().ref || 'main';
+  }
 
   function isLocal() {
     var host = window.location.hostname;
@@ -20,15 +39,88 @@
   }
 
   function rawRepoUrl(path) {
+    return 'https://raw.githubusercontent.com/' + repository() + '/' + activeRef() + '/' + clean(path);
+  }
+
+  function translationUrl(path, lang) {
+    var safeLang = String(lang || '');
+    if (!/^[A-Za-z][A-Za-z0-9-]*$/.test(safeLang)) throw new Error('Invalid translation language');
+    var lessonPath = clean(path).replace(/\/+$/, '');
+    var relativePath = 'i18n/' + safeLang + '/' + lessonPath + '/docs/' + safeLang + '.md';
+    return isLocal() ? '../' + relativePath : rawRepoUrl(relativePath);
+  }
+
+  function generatedTranslationUrl(path, lang) {
+    var safeLang = String(lang || '');
+    if (!/^[A-Za-z][A-Za-z0-9-]*$/.test(safeLang)) throw new Error('Invalid translation language');
+    var lessonPath = clean(path).replace(/\/+$/, '');
+    return 'https://raw.githubusercontent.com/' + repository() + '/translations/i18n/'
+      + safeLang + '/' + lessonPath + '/docs/' + safeLang + '.md';
+  }
+
+  function repoTreeUrl(path) {
     var safe = clean(path);
-    var ref = window.__AIFS_REF || 'main';
-    return REPO_RAW + ref + '/' + safe;
+    return 'https://github.com/' + repository() + '/tree/' + activeRef() + (safe ? '/' + safe : '/');
+  }
+
+  function contentsApiUrl(path) {
+    return 'https://api.github.com/repos/' + repository() + '/contents/' + clean(path)
+      + '?ref=' + encodeURIComponent(activeRef());
   }
 
   function repoUrl(path) {
     var safe = clean(path);
     if (isLocal()) return '../' + safe;
     return rawRepoUrl(safe);
+  }
+
+  function fetchOk(url) {
+    return fetch(url).then(function (response) {
+      if (!response.ok) throw new Error('fetch-failed');
+      return response;
+    });
+  }
+
+  function canonicalDocument(path) {
+    var relativePath = clean(path).replace(/\/+$/, '') + '/docs/en.md';
+    var primary = repoUrl(relativePath);
+    var fallback = rawRepoUrl(relativePath);
+    return fetchOk(primary).catch(function (error) {
+      if (fallback === primary) throw error;
+      return fetchOk(fallback);
+    }).then(function (response) {
+      return response.text().then(function (markdown) {
+        return { markdown: markdown, lang: 'en' };
+      });
+    });
+  }
+
+  /**
+   * Load translated lesson prose, returning the language that actually won.
+   * Certification callers pass their canonical embedded markdown so a missing
+   * translation remains available without a second network request.
+   */
+  function loadLessonDocument(path, lang, embeddedEnglish) {
+    var requested = String(lang || 'en');
+    if (requested === 'en') {
+      return typeof embeddedEnglish === 'string'
+        ? Promise.resolve({ markdown: embeddedEnglish, lang: 'en' })
+        : canonicalDocument(path);
+    }
+
+    return Promise.resolve().then(function () {
+      return fetchOk(translationUrl(path, requested));
+    }).catch(function () {
+      return fetchOk(generatedTranslationUrl(path, requested));
+    }).then(function (response) {
+      return response.text().then(function (markdown) {
+        return { markdown: markdown, lang: requested };
+      });
+    }).catch(function () {
+      return typeof embeddedEnglish === 'string'
+        ? { markdown: embeddedEnglish, lang: 'en' }
+        : canonicalDocument(path);
+    });
   }
 
   function localDirectoryFiles(path) {
@@ -99,9 +191,15 @@
   }
 
   window.AIFSContentSource = {
+    repository: repository,
     isLocal: isLocal,
     repoUrl: repoUrl,
     rawRepoUrl: rawRepoUrl,
+    translationUrl: translationUrl,
+    generatedTranslationUrl: generatedTranslationUrl,
+    repoTreeUrl: repoTreeUrl,
+    contentsApiUrl: contentsApiUrl,
+    loadLessonDocument: loadLessonDocument,
     localDirectoryFiles: localDirectoryFiles,
   };
 }());

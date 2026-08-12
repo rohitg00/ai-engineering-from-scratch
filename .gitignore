@@ -74,10 +74,9 @@ site/build-meta.js
 site/certification-data.js
 book/_build/
 
-# Lesson translations are generated to a separate `translations` branch, never
-# main. The per-language README, however, is hand-authored and committed to main
-# (see scripts/build_readme_i18n.py), so it is excluded from the ignore.
-i18n/*/phases/
+# Translation cache files are generated locally. Reviewed lesson translations,
+# their quality manifest, and language documentation are committed so a locale
+# remains available from a self-contained checkout.
 i18n/*/.cache/
 i18n/*/.translate-cache.json
 site/langs.js

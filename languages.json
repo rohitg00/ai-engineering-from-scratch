@@ -64,7 +64,8 @@
       "code": "ru",
       "name": "Russian",
       "native": "Русский",
-      "nllb": "rus_Cyrl"
+      "nllb": "rus_Cyrl",
+      "ci": true
     },
     {
       "code": "ja",

@@ -10,6 +10,9 @@ on:
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
       - "scripts/audit_certifications.py"
+      - "scripts/audit_ru_translations.py"
+      - "scripts/tests/test_audit_ru_translations.py"
+      - "scripts/tests/test_readme_i18n.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
@@ -18,6 +21,7 @@ on:
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
       - "scripts/test_translate_workflow.py"
+      - "languages.json"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
@@ -35,6 +39,9 @@ on:
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
       - "scripts/audit_certifications.py"
+      - "scripts/audit_ru_translations.py"
+      - "scripts/tests/test_audit_ru_translations.py"
+      - "scripts/tests/test_readme_i18n.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
@@ -43,6 +50,7 @@ on:
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
       - "scripts/test_translate_workflow.py"
+      - "languages.json"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
@@ -70,6 +78,15 @@ jobs:
         run: python3 scripts/audit_lessons.py
       - name: run scripts/audit_certifications.py
         run: python3 scripts/audit_certifications.py
+      - name: test the Russian translation auditor
+        run: python3 -m unittest scripts.tests.test_audit_ru_translations -v
+      - name: audit Russian translations when this checkout contains them
+        run: |
+          if [ -f i18n/ru/.quality/manifest.json ]; then
+            python3 scripts/audit_ru_translations.py
+          else
+            echo "Russian translation manifest is on the translations branch; skipping content audit"
+          fi
       - name: certification remediation references are complete
         run: python3 scripts/backfill_certification_references.py --check
       - name: run certification lab tests
@@ -78,12 +95,16 @@ jobs:
         run: find certifications/claude/lessons -path '*/code/main.py' -print0 | xargs -0 -r -n1 python3
       - name: build the static site
         run: node site/build.js
+      - name: test runtime localization
+        run: node --test site/tests/runtime-i18n.test.js
       - name: quiz answer positions are de-biased
         run: python3 scripts/debias_quizzes.py --check
       - name: certification answer positions are de-biased
         run: python3 scripts/debias_certification_questions.py --check
       - name: README translations are in sync with English
         run: python3 scripts/build_readme_i18n.py --check
+      - name: test README localization coverage
+        run: python3 -m unittest scripts.tests.test_readme_i18n -v
       - name: translation workflow publisher retries safely
         run: python3 scripts/test_translate_workflow.py
       - name: learning skills mirror is in sync

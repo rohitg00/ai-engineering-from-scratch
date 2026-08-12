@@ -632,6 +632,13 @@
       gap: 8px;
     }
 
+    .quiz-language-note {
+      margin: -4px 0 16px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--ink-mute);
+    }
+
     .quiz-question {
       margin-bottom: 24px;
       border: none;
@@ -1886,7 +1893,7 @@
 
   <script src="build-meta.js"></script>
   <script src="langs.js?v=20260802a"></script>
-  <script src="lang-picker.js?v=20260808d"></script>
+  <script src="lang-picker.js?v=20260809b"></script>
   <script src="data.js?v=20260808g"></script>
   <script>
     (function () {
@@ -1908,7 +1915,7 @@
       });
     }());
   </script>
-  <script src="content-source.js?v=20260808d"></script>
+  <script src="content-source.js?v=20260809b"></script>
   <script src="progress.js?v=20260801a"></script>
   <script src="header.js?v=20260808h" defer></script>
   <script src="cmdpalette.js?v=20260808h" defer></script>
@@ -2054,8 +2061,7 @@
       var currentPhaseIndex = -1;
       var currentLessonIndex = -1;
       var flatLessons = [];
-      var ACTIVE_REF = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
-      var REPO_TREE = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/' + encodeURIComponent(ACTIVE_REF) + '/';
+      var REPO_TREE = window.AIFSContentSource.repoTreeUrl('');
       var certificationTrack = null;
       var certificationOriginTrack = null;
       var certificationLesson = null;
@@ -2205,13 +2211,6 @@
 
         syncCertificationQuizProgressVersion();
 
-        if (certificationLesson) {
-          document.documentElement.lang = 'en';
-          document.documentElement.dir = 'ltr';
-          var langPicker = document.getElementById('langPicker');
-          if (langPicker) langPicker.hidden = true;
-        }
-
         if (certificationMode) {
           for (var ci = 0; ci < certificationTrack.lessons.length; ci++) {
             var certRef = certificationTrack.lessons[ci];
@@ -2310,7 +2309,7 @@
             var certLesson = flatLessons[ci];
             var certActive = certLesson.path === lessonPath;
             var certProgress = lessonProgressClass(certLesson.path, true);
-            certHtml += '<a class="sidebar-lesson-link' + (certActive ? ' active' : '') + '" href="lesson.html?path=' + encodeURIComponent(certLesson.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '">';
+            certHtml += '<a class="sidebar-lesson-link' + (certActive ? ' active' : '') + '" href="' + lessonHref(certLesson.path, certificationTrack.id) + '">';
             certHtml += '<span class="sidebar-lesson-dot ' + certProgress + '"></span>';
             certHtml += escapeHtml(certLesson.lessonName) + '</a>';
           }
@@ -2331,13 +2330,13 @@
             var pp = PHASES[prevPhaseIdx];
             var ppSlug = extractPhaseSlug(pp, prevPhaseIdx);
             var ppFirstLesson = pp.lessons[0] ? extractLessonSlug(pp.lessons[0], 0) : '';
-            html += '<a href="lesson.html?path=phases/' + ppSlug + '/' + ppFirstLesson + '">&larr; Phase ' + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(pp.name) + '</a>';
+            html += '<a href="' + lessonHref('phases/' + ppSlug + '/' + ppFirstLesson) + '">&larr; Phase ' + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(pp.name) + '</a>';
           }
           if (nextPhaseIdx >= 0) {
             var np = PHASES[nextPhaseIdx];
             var npSlug = extractPhaseSlug(np, nextPhaseIdx);
             var npFirstLesson = np.lessons[0] ? extractLessonSlug(np.lessons[0], 0) : '';
-            html += '<a href="lesson.html?path=phases/' + npSlug + '/' + npFirstLesson + '">Phase ' + String(np.id).padStart(2, '0') + ': ' + escapeHtml(np.name) + ' &rarr;</a>';
+            html += '<a href="' + lessonHref('phases/' + npSlug + '/' + npFirstLesson) + '">Phase ' + String(np.id).padStart(2, '0') + ': ' + escapeHtml(np.name) + ' &rarr;</a>';
           }
           html += '</div>';
         }
@@ -2353,7 +2352,7 @@
             var lesReadable = les.status === 'complete' || !!les.url;
             var lesPath = 'phases/' + pSlugCurrent + '/' + lesSlug;
             if (lesReadable) {
-              html += '<a class="sidebar-lesson-link' + (isActive ? ' active' : '') + '" href="lesson.html?path=' + lesPath + '">';
+              html += '<a class="sidebar-lesson-link' + (isActive ? ' active' : '') + '" href="' + lessonHref(lesPath) + '">';
             } else {
               html += '<span class="sidebar-lesson-link disabled">';
             }
@@ -2423,6 +2422,15 @@
         return window.AIFS_currentLang ? window.AIFS_currentLang() : 'en';
       }
 
+      function lessonHref(path, track) {
+        var searchParams = new URLSearchParams();
+        searchParams.set('path', path);
+        if (track) searchParams.set('track', track);
+        var lang = currentLang();
+        if (lang && lang !== 'en') searchParams.set('lang', lang);
+        return 'lesson.html?' + searchParams.toString();
+      }
+
       function applyRenderedLanguage(lang) {
         var actual = lang || 'en';
         if (window.AIFS_applyLangDir) {
@@ -2437,7 +2445,7 @@
         var source = window.AIFSContentSource;
         var primary = source && source.repoUrl
           ? source.repoUrl(relativePath)
-          : 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ACTIVE_REF + '/' + relativePath;
+          : relativePath;
         var fallback = source && source.rawRepoUrl ? source.rawRepoUrl(relativePath) : primary;
 
         return fetch(primary).then(function (response) {
@@ -2456,57 +2464,21 @@
 
       function fetchLesson(path, retried, requestSequence) {
         if (!retried || !requestSequence) requestSequence = ++lessonFetchSequence;
-        if (certificationLesson && path === certificationLesson.path && typeof certificationLesson.markdown === 'string') {
-          applyRenderedLanguage('en');
+        var embeddedEnglish = certificationLesson && path === certificationLesson.path
+          && typeof certificationLesson.markdown === 'string'
+          ? certificationLesson.markdown
+          : undefined;
+
+        if (embeddedEnglish !== undefined) {
           lessonQuizPromise = Promise.resolve(certificationLesson.quiz || null);
-          try {
-            renderLesson(certificationLesson.markdown);
-          } catch (embeddedError) {
-            console.error('renderLesson failed', embeddedError);
-            showError('Render error', 'Loaded the certification lesson but failed to render it. Details are in the browser console.');
-            return;
-          }
-          lessonQuizPromise.then(function (embeddedQuiz) {
-            if (!embeddedQuiz || requestSequence !== lessonFetchSequence) return;
-            try { renderQuiz(embeddedQuiz); }
-            catch (quizError) { console.error('renderQuiz failed', quizError); }
-          });
-          return;
-        }
-
-        // Local previews read the checked-out repository first. Deploys and a
-        // missing local file use the branch-aware raw source from build-meta.
-        var enPath = path + '/docs/en.md';
-        var lang = currentLang();
-        var translatedUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/'
-          + lang + '/' + path + '/docs/' + lang + '.md';
-
-        if (!retried || !lessonQuizPromise) {
+        } else if (!retried || !lessonQuizPromise) {
           lessonQuizPromise = fetchRepositoryFile(path + '/quiz.json')
             .then(function (res) { return res.json(); })
             .catch(function () { return null; });
         }
         var quizPromiseForRequest = lessonQuizPromise;
 
-        var lessonDocument = lang === 'en'
-          ? fetchRepositoryFile(enPath).then(function (response) {
-              return { response: response, lang: 'en' };
-            })
-          : fetch(translatedUrl).then(function (response) {
-              if (!response.ok) throw new Error('fetch-failed');
-              return { response: response, lang: lang };
-            }).catch(function () {
-              return fetchRepositoryFile(enPath).then(function (response) {
-                return { response: response, lang: 'en' };
-              });
-            });
-
-        lessonDocument
-          .then(function (documentResult) {
-            return documentResult.response.text().then(function (markdown) {
-              return { markdown: markdown, lang: documentResult.lang };
-            });
-          })
+        window.AIFSContentSource.loadLessonDocument(path, currentLang(), embeddedEnglish)
           .then(function (documentResult) {
             if (requestSequence !== lessonFetchSequence) return;
             applyRenderedLanguage(documentResult.lang);
@@ -2542,6 +2514,7 @@
       }
 
       function showError(title, msg) {
+        applyRenderedLanguage('en');
         var el = document.getElementById('lessonContent');
         var contextTrack = certificationContextTrack();
         var backHref = contextTrack ? 'certification.html?id=' + encodeURIComponent(contextTrack.id) : 'index.html';
@@ -2580,6 +2553,8 @@
         } else if (requestedTrackId && certificationOriginTrack) {
           url += '&track=' + encodeURIComponent(certificationOriginTrack.id);
         }
+        var renderedLang = document.documentElement.lang || 'en';
+        if (renderedLang !== 'en') url += '&lang=' + encodeURIComponent(renderedLang);
         var desc = lessonDescription(md);
         var courseName = certificationLesson
           ? (contextTrack && (contextTrack.credential || contextTrack.title || contextTrack.shortName) || 'Certification preparation')
@@ -3576,6 +3551,14 @@
         if (!questions.length) return '';
         var html = '<div class="quiz-section" id="quiz-' + id + '">';
         html += '<div class="quiz-title">&#9989; ' + escapeHtml(title) + '</div>';
+        if (certificationLesson && document.documentElement.lang !== 'en') {
+          var quizLanguageNotes = {
+            ru: 'Сертификационные тесты остаются на английском языке.'
+          };
+          var quizLanguageNote = quizLanguageNotes[document.documentElement.lang]
+            || 'Certification quizzes remain in English.';
+          html += '<div class="quiz-language-note">' + escapeHtml(quizLanguageNote) + '</div>';
+        }
         html += '<div class="quiz-reset-status" role="status" aria-live="polite"></div>';
         for (var qi = 0; qi < questions.length; qi++) {
           var q = questions[qi];
@@ -3769,9 +3752,8 @@
         }
 
         var nav = '<div class="lesson-nav-bottom">';
-        var trackSuffix = certificationMode ? '&track=' + encodeURIComponent(certificationTrack.id) : '';
         if (prev) {
-          nav += '<a class="lesson-nav-btn prev" href="lesson.html?path=' + encodeURIComponent(prev.path) + trackSuffix + '">';
+          nav += '<a class="lesson-nav-btn prev" href="' + lessonHref(prev.path, certificationMode ? certificationTrack.id : '') + '">';
           nav += '<span class="nav-label">&larr; Previous</span>';
           nav += '<span class="nav-title">' + escapeHtml(prev.lessonName) + '</span>';
           nav += '</a>';
@@ -3779,7 +3761,7 @@
           nav += '<div></div>';
         }
         if (next) {
-          nav += '<a class="lesson-nav-btn next" href="lesson.html?path=' + encodeURIComponent(next.path) + trackSuffix + '">';
+          nav += '<a class="lesson-nav-btn next" href="' + lessonHref(next.path, certificationMode ? certificationTrack.id : '') + '">';
           nav += '<span class="nav-label">Next &rarr;</span>';
           nav += '<span class="nav-title">' + escapeHtml(next.lessonName) + '</span>';
           nav += '</a>';
@@ -3802,7 +3784,7 @@
       var repositoryDirectoryCache = {};
 
       function githubDirectoryFetch(apiPath) {
-        return fetch('https://api.github.com/repos/rohitg00/ai-engineering-from-scratch/contents/' + apiPath + '?ref=' + encodeURIComponent(ACTIVE_REF), {
+        return fetch(window.AIFSContentSource.contentsApiUrl(apiPath), {
           headers: { 'Accept': 'application/vnd.github.v3+json' }
         }).then(function (res) {
           if (!res.ok) throw new Error(res.status);
@@ -3913,7 +3895,7 @@
             installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
           } else if (type === 'skill') {
             var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
-            installHint = 'npx skills add rohitg00/ai-engineering-from-scratch --skill ' + skillName;
+            installHint = 'npx skills add ' + window.AIFSContentSource.repository() + ' --skill ' + skillName;
           }
 
           html += '<div class="output-card">';
@@ -4263,7 +4245,7 @@
               certHtml += '<div class="timeline-line ' + (certSegmentDone ? 'done' : '') + '"></div>';
             }
             var certClass = cv === currentLessonIndex ? 'current' : certItemDone ? 'done' : '';
-            certHtml += '<a class="timeline-item ' + certClass + '" href="lesson.html?path=' + encodeURIComponent(certItem.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '" title="' + escapeAttr(certItem.lessonName) + '"><div class="timeline-dot"></div><div class="timeline-label">' + escapeHtml(certItem.lessonName) + '</div></a>';
+            certHtml += '<a class="timeline-item ' + certClass + '" href="' + lessonHref(certItem.path, certificationTrack.id) + '" title="' + escapeAttr(certItem.lessonName) + '"><div class="timeline-dot"></div><div class="timeline-label">' + escapeHtml(certItem.lessonName) + '</div></a>';
           }
           if (certEnd < certTotal) certHtml += '<div class="timeline-line"></div><span class="timeline-ellipsis">' + (certTotal - certEnd) + ' &raquo;</span>';
           certHtml += '</div><div class="phase-progress-bar"><div class="phase-progress-fill" style="--lesson-progress:' + (certPct / 100) + '"></div></div>';
@@ -4331,7 +4313,7 @@
           }
 
           if (item.flat.isReadable) {
-            html += '<a class="timeline-item ' + cls + '" href="lesson.html?path=' + item.flat.path + '" title="' + escapeAttr(item.flat.lessonName) + '">';
+            html += '<a class="timeline-item ' + cls + '" href="' + lessonHref(item.flat.path) + '" title="' + escapeAttr(item.flat.lessonName) + '">';
           } else {
             html += '<span class="timeline-item ' + cls + ' disabled" title="' + escapeAttr(item.flat.lessonName) + '">';
           }
@@ -4377,7 +4359,7 @@
           var continueHtml = '<div class="ai-panel-header"><div class="ai-panel-icon">N</div><div class="ai-panel-title">Continue Certification Prep</div></div><div class="continue-panel">';
           if (!certNext) continueHtml += '<div class="phase-finished">You reached the end of this lesson path.</div>';
           continueHtml += '<div class="continue-links">';
-          if (certNext) continueHtml += '<a class="continue-link" href="lesson.html?path=' + encodeURIComponent(certNext.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '">Next: ' + escapeHtml(certNext.lessonName) + '</a>';
+          if (certNext) continueHtml += '<a class="continue-link" href="' + lessonHref(certNext.path, certificationTrack.id) + '">Next: ' + escapeHtml(certNext.lessonName) + '</a>';
           continueHtml += '<a class="continue-link" href="certification.html?id=' + encodeURIComponent(certificationTrack.id) + '">Track overview and practice</a>';
           continueHtml += '<a class="continue-link" href="certifications.html">All certification tracks</a></div>';
           continueHtml += '<div class="continue-callout">Practice results are course percentages, not official scaled exam scores. Use them to find the next domain to study.</div></div>';
@@ -4408,7 +4390,7 @@
 
         var phaseSlug = extractPhaseSlug(phase, phaseIdx);
         var firstLesson = phase.lessons[0] ? extractLessonSlug(phase.lessons[0], 0) : '';
-        html += '<a class="continue-link" href="lesson.html?path=phases/' + phaseSlug + '/' + firstLesson + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
+        html += '<a class="continue-link" href="' + lessonHref('phases/' + phaseSlug + '/' + firstLesson) + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
         html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
         html += '</div>';
 
