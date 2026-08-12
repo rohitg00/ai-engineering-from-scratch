@@ -145,9 +145,12 @@ class TranslateWorkflowContractTest(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "target SHA-256"):
                 TRANSLATOR.reviewed_target_state(item, "source-v1", target)
 
-    def test_real_gitignore_excludes_generated_certification_outputs(self) -> None:
-        ignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
-        self.assertIn("i18n/*/certifications/", ignore.splitlines())
+    def test_real_gitignore_tracks_reviewed_corpus_but_excludes_caches(self) -> None:
+        ignore = (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
+        self.assertNotIn("i18n/*/phases/", ignore)
+        self.assertNotIn("i18n/*/certifications/", ignore)
+        self.assertIn("i18n/*/.cache/", ignore)
+        self.assertIn("i18n/*/.translate-cache.json", ignore)
 
     def test_orphaned_certification_output_and_cache_entry_are_pruned(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
