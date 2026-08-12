@@ -46,7 +46,8 @@
     var safeLang = String(lang || '');
     if (!/^[A-Za-z][A-Za-z0-9-]*$/.test(safeLang)) throw new Error('Invalid translation language');
     var lessonPath = clean(path).replace(/\/+$/, '');
-    return rawRepoUrl('i18n/' + safeLang + '/' + lessonPath + '/docs/' + safeLang + '.md');
+    var relativePath = 'i18n/' + safeLang + '/' + lessonPath + '/docs/' + safeLang + '.md';
+    return isLocal() ? '../' + relativePath : rawRepoUrl(relativePath);
   }
 
   function generatedTranslationUrl(path, lang) {

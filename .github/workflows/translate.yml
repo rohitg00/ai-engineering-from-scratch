@@ -2,7 +2,9 @@ name: translate
 
 # Machine-translates lesson prose with NLLB-200, a free open model that runs
 # inside the runner. No API key, no Vercel cost. Results are pushed to a
-# dedicated `translations` branch; main stays English-only.
+# dedicated `translations` branch. Reviewed locales may also commit an audited
+# self-contained corpus to main; the generated branch remains the incremental
+# publication fallback.
 #
 # Sharded one job per (language, source slice). Core slices remain one phase
 # each; certifications/claude is an independent slice with its own cache.

@@ -108,6 +108,22 @@ test('local and deployed canonical lesson loading keeps working', async () => {
   assert.equal(localCalls[0], '../phases/01-math/01-vectors/docs/en.md');
 });
 
+test('local preview loads the self-contained Russian document from checkout', async () => {
+  const calls = [];
+  const { source } = loadContentSource({
+    hostname: 'localhost',
+    fetch: async (url) => {
+      calls.push(String(url));
+      return response(true, '# Локальный русский');
+    },
+  });
+
+  const result = await source.loadLessonDocument('phases/01-math/01-vectors', 'ru');
+  assert.equal(result.markdown, '# Локальный русский');
+  assert.equal(result.lang, 'ru');
+  assert.deepEqual(calls, ['../i18n/ru/phases/01-math/01-vectors/docs/ru.md']);
+});
+
 test('Russian certification lesson requests translation before embedded English', async () => {
   const calls = [];
   const { source } = loadContentSource({
