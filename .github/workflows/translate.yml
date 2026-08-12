@@ -68,6 +68,7 @@ jobs:
           REQUESTED_SCOPE: ${{ github.event.inputs.scope }}
           EVENT_NAME: ${{ github.event_name }}
         run: |
+          set -euo pipefail
           # Pushes cover every publishable source. Manual runs retain the prior
           # core default and can explicitly select certifications/claude or all.
           if [ "${EVENT_NAME:-}" = "push" ]; then
@@ -283,7 +284,13 @@ jobs:
               # here, so every publish reports "no changes" and nothing is
               # ever pushed. Force past it: this branch exists specifically
               # to hold these files.
-              if ! git add -f -- "$SLICE" "$CACHE"; then
+              stage_path() {
+                path=$1
+                if [ -e "$path" ] || [ -n "$(git ls-files -- "$path")" ]; then
+                  git add -f -- "$path"
+                fi
+              }
+              if ! stage_path "$SLICE" || ! stage_path "$CACHE"; then
                 echo "could not stage translation slice" >&2
                 exit 1
               fi

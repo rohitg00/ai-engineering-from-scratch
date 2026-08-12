@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import json
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -62,7 +63,7 @@ class AuditRuTranslationsTest(unittest.TestCase):
 
     def run_audit(self, root: Path, *args: str) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
-            ["python3", str(SCRIPT), "--root", str(root), *args],
+            [sys.executable, str(SCRIPT), "--root", str(root), *args],
             text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -164,16 +165,31 @@ class AuditRuTranslationsTest(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("visible English metadata values", result.stdout)
 
+    def test_nonvisible_metadata_tokens_do_not_fail_the_audit(self) -> None:
+        for target in (
+            "# Русский\n\n`lessons`\n",
+            "# Русский\n\n[Урок](../02-lesson-name/docs/ru.md)\n",
+        ):
+            with self.subTest(target=target):
+                temporary, root, _ = self.make_repo(source=target, target=target)
+                with temporary:
+                    result = self.run_audit(root)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_target_must_be_nonempty_utf8(self) -> None:
-        for payload in (b"", b"\xff"):
+        for payload, detail in ((b"", "target is empty"), (b"\xff", "target is not UTF-8")):
             with self.subTest(payload=payload):
                 temporary, root, _ = self.make_repo()
                 with temporary:
                     target = root / "i18n/ru/phases/00-phase/01-lesson/docs/ru.md"
                     target.write_bytes(payload)
+                    manifest = root / "i18n/ru/.quality/manifest.json"
+                    data = json.loads(manifest.read_text(encoding="utf-8"))
+                    data["items"][0]["target_sha256"] = hashlib.sha256(payload).hexdigest()
+                    manifest.write_text(json.dumps(data), encoding="utf-8")
                     result = self.run_audit(root)
                 self.assertNotEqual(result.returncode, 0)
-                self.assertIn("structurally_invalid", result.stdout)
+                self.assertIn(detail, result.stdout)
 
     def test_approved_target_hash_and_status_are_enforced(self) -> None:
         temporary, root, _ = self.make_repo(source="# English\n", target="# Русский\n")

@@ -990,10 +990,10 @@ the agent went wrong and explain why...
 
 Каждый урок создаёт переиспользуемый артефакт. В итоге вы получите:
 
-```text
-outputs/
-├── prompts/      prompt templates for every AI task
-└── skills/       SKILL.md files for AI coding agents
+```mermaid
+flowchart TB
+  O["outputs/"] --> P["prompts/<br/><sub>prompt templates for every AI task</sub>"]
+  O --> S["skills/<br/><sub>SKILL.md files for AI coding agents</sub>"]
 ```
 
 Подключайте их к Claude, Cursor, Codex, OpenClaw, Hermes или любому агенту, который читает каталог с SKILL.md / AGENTS.md. Это реальные инструменты, а не домашние задания.

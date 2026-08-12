@@ -78,7 +78,7 @@ def _without_fences(text: str) -> tuple[str, list[str], list[str], list[str], bo
 
     for line in lines:
         candidate = line.rstrip("\r\n")
-        match = re.match(r"^ {0,3}(`{3,}|~{3,})([^\n]*)$", candidate)
+        match = FENCE_RE.match(candidate)
         if opening is None:
             if not match:
                 masked.append(line)
@@ -177,7 +177,9 @@ def structural_errors(source: str, target: str) -> list[str]:
         for field, label in labels.items()
         if getattr(expected, field) != getattr(actual, field)
     ]
-    metadata_surface = "\n".join(target_prose.splitlines()[:15])
+    metadata_prose = INLINE_CODE_RE.sub(lambda match: " " * len(match.group(0)), target_prose)
+    metadata_prose = re.sub(r"\]\([^)\n]*\)", "]()", metadata_prose)
+    metadata_surface = "\n".join(metadata_prose.splitlines()[:15])
     if re.search(r"\*\*[A-Z][A-Za-z ]+:\*\*", metadata_surface):
         errors.append("visible English metadata labels")
     if re.search(r"\b(?:Phase|Lessons?|lesson|lessons|minutes?|hours?)\b", metadata_surface):

@@ -108,7 +108,9 @@
         : canonicalDocument(path);
     }
 
-    return fetchOk(translationUrl(path, requested)).catch(function () {
+    return Promise.resolve().then(function () {
+      return fetchOk(translationUrl(path, requested));
+    }).catch(function () {
       return fetchOk(generatedTranslationUrl(path, requested));
     }).then(function (response) {
       return response.text().then(function (markdown) {

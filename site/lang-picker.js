@@ -22,8 +22,11 @@
   }
 
   function isLessonPage() {
-    try { return new URLSearchParams(location.search).has('path'); }
-    catch (_) { return false; }
+    try {
+      return /(?:^|\/)lesson\.html$/.test(location.pathname || '');
+    } catch (_) {
+      return false;
+    }
   }
 
   function supported(code) {

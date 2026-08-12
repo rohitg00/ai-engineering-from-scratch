@@ -21,6 +21,12 @@ TRANSLATABLE_CODE_LABELS = {"`12 lessons`", "`12 уроков`"}
 
 
 class RussianReadmeCoverageTests(unittest.TestCase):
+    def test_toolkit_readmes_do_not_use_box_drawing_diagram(self):
+        old_tree = "outputs/\n├── prompts/"
+        for relative in ("README.md", "i18n/ru/README.md"):
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            self.assertNotIn(old_tree, text, relative)
+
     def test_structural_surface_is_fail_closed(self):
         """Any list/table/HTML/heading change requires explicit localization review."""
         rendered = (ROOT / "i18n/ru/README.md").read_text(encoding="utf-8")

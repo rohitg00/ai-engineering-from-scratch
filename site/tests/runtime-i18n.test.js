@@ -184,31 +184,88 @@ test('core translation failure falls back to fetched canonical English', async (
   assert.match(calls[2], /\/main\/phases\/01-math\/01-vectors\/docs\/en\.md$/);
 });
 
-test('certification picker accepts Russian and is not hard-hidden', () => {
+test('invalid translation language rejects into the English fallback', async () => {
+  const { source } = loadContentSource({ fetch: async () => response(false, 'missing') });
+  const result = await source.loadLessonDocument('phases/01-math/01-vectors', 'bad/lang', '# English');
+  assert.deepEqual({ markdown: result.markdown, lang: result.lang }, { markdown: '# English', lang: 'en' });
+});
+
+test('index path query still applies the selected page direction', () => {
   let domReady;
+  const window = {
+    AIFS_LANGS: [{ code: 'en', native: 'English' }, { code: 'ar', native: 'العربية' }],
+    location: { href: 'https://example.com/index.html?path=ignored&lang=ar' },
+  };
+  const document = {
+    readyState: 'loading', documentElement: {},
+    addEventListener(name, callback) { if (name === 'DOMContentLoaded') domReady = callback; },
+    getElementById() { return null; },
+  };
+  vm.runInNewContext(fs.readFileSync(path.join(siteDir, 'lang-picker.js'), 'utf8'), {
+    window, document,
+    location: { pathname: '/index.html', search: '?path=ignored&lang=ar', href: window.location.href },
+    URL, URLSearchParams, localStorage: { getItem() { return ''; } },
+  });
+  domReady();
+  assert.equal(document.documentElement.lang, 'ar');
+  assert.equal(document.documentElement.dir, 'rtl');
+});
+
+test('certification picker renders Russian and filters unsupported Turkish', () => {
+  let domReady;
+  const renderedCodes = [];
+  function element(kind) {
+    const children = [];
+    const listeners = {};
+    const current = kind === 'button' ? element('current') : null;
+    const filter = kind === 'panel' ? element('filter') : null;
+    const list = kind === 'panel' ? element('list') : null;
+    return {
+      kind, children, listeners, hidden: false, dataset: {}, value: '',
+      classList: { add() {} }, setAttribute() {},
+      addEventListener(name, callback) { listeners[name] = callback; },
+      appendChild(child) {
+        children.push(child);
+        if (kind === 'list' && child.dataset.code) renderedCodes.push(child.dataset.code);
+      },
+      querySelector(selector) {
+        if (selector === '.lang-current') return current;
+        if (selector === '.lang-filter') return filter;
+        if (selector === '.lang-list') return list;
+        return null;
+      },
+      querySelectorAll() { return children; }, contains() { return false; }, focus() {},
+    };
+  }
+  const host = element('host');
   const window = {
     AIFS_LANGS: [{ code: 'en', native: 'English' }, { code: 'ru', native: 'Русский' }, { code: 'tr', native: 'Türkçe' }],
     AIFS_CERTIFICATION_LANGS: ['ru'],
     location: { href: 'https://example.com/lesson.html?path=certifications/claude/lessons/01-intro&lang=ru' },
   };
   const document = {
-    readyState: 'loading',
-    documentElement: {},
+    readyState: 'loading', documentElement: {},
     addEventListener(name, callback) { if (name === 'DOMContentLoaded') domReady = callback; },
-    getElementById() { return null; },
+    getElementById() { return host; },
+    createElement(tag) { return element(tag === 'div' ? 'panel' : tag); },
   };
-  const context = {
-    window,
-    document,
-    location: { search: '?path=certifications/claude/lessons/01-intro&lang=ru', href: window.location.href },
-    URL,
-    URLSearchParams,
+  vm.runInNewContext(fs.readFileSync(path.join(siteDir, 'lang-picker.js'), 'utf8'), {
+    window, document,
+    location: {
+      pathname: '/lesson.html',
+      search: '?path=certifications/claude/lessons/01-intro&lang=ru',
+      href: window.location.href,
+    },
+    URL, URLSearchParams,
     localStorage: { getItem() { return ''; } },
-  };
-  vm.runInNewContext(fs.readFileSync(path.join(siteDir, 'lang-picker.js'), 'utf8'), context);
+    history: { replaceState() {} },
+  });
 
   assert.equal(window.AIFS_currentLang(), 'ru');
   domReady();
+  const pickerButton = host.children[0];
+  pickerButton.listeners.click({ stopPropagation() {} });
+  assert.deepEqual(renderedCodes, ['en', 'ru']);
   assert.equal(document.documentElement.lang, undefined);
 });
 
@@ -219,7 +276,7 @@ test('lesson runtime renders only the latest response and keeps certification qu
   assert.match(html, /applyRenderedLanguage\(documentResult\.lang\)/);
   assert.match(html, /lessonQuizPromise = Promise\.resolve\(certificationLesson\.quiz \|\| null\)/);
   assert.match(html, /quiz-language-note/);
-  assert.match(html, /Certification quizzes remain in English/);
+  assert.match(html, /Сертификационные тесты остаются на английском языке/);
   assert.doesNotMatch(html, /if \(certificationLesson\)[\s\S]{0,300}langPicker\.hidden = true/);
   assert.doesNotMatch(html, /raw\.githubusercontent\.com\/rohitg00[^\n]+translations\/i18n/);
 });

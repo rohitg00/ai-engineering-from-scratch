@@ -225,10 +225,25 @@ class TranslateWorkflowContractTest(unittest.TestCase):
         self.assertIn("BASE=origin/translations", script)
         self.assertIn("BASE=HEAD", script)
         self.assertIn("git push origin HEAD:refs/heads/translations", script)
-        self.assertIn("if ! git add -f", script)
+        self.assertIn('stage_path "$SLICE"', script)
+        self.assertIn('stage_path "$CACHE"', script)
+        self.assertNotIn('git add -f -- "$SLICE" "$CACHE"', script)
         self.assertIn("if ! git commit", script)
         self.assertIn("if ! git push", script)
         self.assertNotIn("worktree add --force -B translations", script)
+
+    def test_publisher_accepts_a_never_created_slice_and_cache_as_noop(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source, remote, runner_temp = create_publisher_fixture(root)
+            (source / "i18n/fr/phases/01-foundations/lesson.md").unlink()
+            (source / "i18n/fr/.cache/01-foundations.json").unlink()
+            result = run(
+                "bash", "-euo", "pipefail", "-c", publish_script(), cwd=source,
+                env=publisher_env(remote, runner_temp), capture=True, check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("no changes", result.stdout)
 
     def test_certification_publisher_uses_an_independent_slice_and_cache(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -368,12 +383,17 @@ class TranslateCliScopeTest(unittest.TestCase):
         argv = [str(TRANSLATOR_PATH), "--lang", "ru", "--provider", "echo", *args]
         with mock.patch.object(TRANSLATOR.sys, "argv", argv), redirect_stdout(stdout), redirect_stderr(stderr):
             try:
-                TRANSLATOR.main()
+                status = TRANSLATOR.main()
             except SystemExit as error:
                 code = error.code if isinstance(error.code, int) else 1
             else:
-                code = 0
+                code = status or 0
         return code, stdout.getvalue(), stderr.getvalue()
+
+    def test_invoke_preserves_direct_main_return_status(self) -> None:
+        with mock.patch.object(TRANSLATOR, "main", return_value=2):
+            code, _, _ = self.invoke()
+        self.assertEqual(code, 2)
 
     def test_default_core_scope_is_unchanged(self) -> None:
         phase = self.write_source("phases/01-foundations/01-intro/docs/en.md")

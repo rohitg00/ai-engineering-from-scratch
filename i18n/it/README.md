@@ -1030,10 +1030,10 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 
 Every lesson produces a reusable artifact. By the end you have:
 
-```text
-outputs/
-├── prompts/      prompt templates for every AI task
-└── skills/       SKILL.md files for AI coding agents
+```mermaid
+flowchart TB
+  O["outputs/"] --> P["prompts/<br/><sub>prompt templates for every AI task</sub>"]
+  O --> S["skills/<br/><sub>SKILL.md files for AI coding agents</sub>"]
 ```
 
 Plug them into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that
