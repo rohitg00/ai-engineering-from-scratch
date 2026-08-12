@@ -46,6 +46,13 @@
     var safeLang = String(lang || '');
     if (!/^[A-Za-z][A-Za-z0-9-]*$/.test(safeLang)) throw new Error('Invalid translation language');
     var lessonPath = clean(path).replace(/\/+$/, '');
+    return rawRepoUrl('i18n/' + safeLang + '/' + lessonPath + '/docs/' + safeLang + '.md');
+  }
+
+  function generatedTranslationUrl(path, lang) {
+    var safeLang = String(lang || '');
+    if (!/^[A-Za-z][A-Za-z0-9-]*$/.test(safeLang)) throw new Error('Invalid translation language');
+    var lessonPath = clean(path).replace(/\/+$/, '');
     return 'https://raw.githubusercontent.com/' + repository() + '/translations/i18n/'
       + safeLang + '/' + lessonPath + '/docs/' + safeLang + '.md';
   }
@@ -100,7 +107,9 @@
         : canonicalDocument(path);
     }
 
-    return fetchOk(translationUrl(path, requested)).then(function (response) {
+    return fetchOk(translationUrl(path, requested)).catch(function () {
+      return fetchOk(generatedTranslationUrl(path, requested));
+    }).then(function (response) {
       return response.text().then(function (markdown) {
         return { markdown: markdown, lang: requested };
       });
@@ -184,6 +193,7 @@
     repoUrl: repoUrl,
     rawRepoUrl: rawRepoUrl,
     translationUrl: translationUrl,
+    generatedTranslationUrl: generatedTranslationUrl,
     repoTreeUrl: repoTreeUrl,
     contentsApiUrl: contentsApiUrl,
     loadLessonDocument: loadLessonDocument,

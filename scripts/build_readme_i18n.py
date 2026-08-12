@@ -16,8 +16,8 @@ without a translation falls back to English.
     python3 scripts/build_readme_i18n.py            # write i18n/<lang>/README.md
     python3 scripts/build_readme_i18n.py --check     # fail if any output is stale
 
-Output goes to i18n/<lang>/README.md and is committed to main (unlike the lesson
-translations, which live on the translations branch). English stays canonical.
+Output goes to i18n/<lang>/README.md and is committed with the reviewed locale.
+English stays canonical.
 """
 import argparse
 import re

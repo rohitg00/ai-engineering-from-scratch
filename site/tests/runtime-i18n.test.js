@@ -57,9 +57,13 @@ test('repository and translation URLs use configurable runtime metadata', () => 
   );
   assert.equal(
     source.translationUrl('certifications/claude/lessons/01-intro', 'ru'),
-    'https://raw.githubusercontent.com/example-fork/curriculum/translations/i18n/ru/certifications/claude/lessons/01-intro/docs/ru.md',
+    'https://raw.githubusercontent.com/example-fork/curriculum/feature/site-i18n/i18n/ru/certifications/claude/lessons/01-intro/docs/ru.md',
   );
   assert.equal(source.repository(), 'example-fork/curriculum');
+  assert.equal(
+    source.generatedTranslationUrl('certifications/claude/lessons/01-intro', 'ru'),
+    'https://raw.githubusercontent.com/example-fork/curriculum/translations/i18n/ru/certifications/claude/lessons/01-intro/docs/ru.md',
+  );
   assert.equal(
     source.repoTreeUrl('certifications/claude/lessons/01-intro'),
     'https://github.com/example-fork/curriculum/tree/feature/site-i18n/certifications/claude/lessons/01-intro',
@@ -123,7 +127,7 @@ test('Russian certification lesson requests translation before embedded English'
   assert.equal(result.markdown, '# Русский');
   assert.equal(result.lang, 'ru');
   assert.deepEqual(calls, [
-    'https://raw.githubusercontent.com/fork/repo/translations/i18n/ru/certifications/claude/lessons/01-intro/docs/ru.md',
+    'https://raw.githubusercontent.com/fork/repo/main/i18n/ru/certifications/claude/lessons/01-intro/docs/ru.md',
   ]);
 });
 
@@ -151,7 +155,7 @@ test('core translation failure falls back to fetched canonical English', async (
   const { source } = loadContentSource({
     fetch: async (url) => {
       calls.push(String(url));
-      if (String(url).includes('/translations/')) return response(false, 'missing');
+      if (String(url).includes('/i18n/ru/')) return response(false, 'missing');
       return response(true, '# Core English');
     },
   });
@@ -159,8 +163,9 @@ test('core translation failure falls back to fetched canonical English', async (
   const result = await source.loadLessonDocument('phases/01-math/01-vectors', 'ru');
   assert.equal(result.markdown, '# Core English');
   assert.equal(result.lang, 'en');
-  assert.match(calls[0], /\/translations\/i18n\/ru\/phases\/01-math\/01-vectors\/docs\/ru\.md$/);
-  assert.match(calls[1], /\/main\/phases\/01-math\/01-vectors\/docs\/en\.md$/);
+  assert.match(calls[0], /\/main\/i18n\/ru\/phases\/01-math\/01-vectors\/docs\/ru\.md$/);
+  assert.match(calls[1], /\/translations\/i18n\/ru\/phases\/01-math\/01-vectors\/docs\/ru\.md$/);
+  assert.match(calls[2], /\/main\/phases\/01-math\/01-vectors\/docs\/en\.md$/);
 });
 
 test('certification picker accepts Russian and is not hard-hidden', () => {
