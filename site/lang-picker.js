@@ -201,12 +201,13 @@
 
   function init() {
     var host = document.getElementById('langPicker');
+    if (!host || typeof window.AIFS_onLangChange !== 'function') return;
     if (isCertificationLesson()) {
       applyDir('en');
-      if (host) host.hidden = true;
+      host.hidden = true;
       return;
     }
-    if (host) mount(host);
+    mount(host);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
