@@ -36,9 +36,14 @@ I am learning AI engineering to change careers. I am not sure what I want to bui
 | 19 | Capstone Projects | Do | 620 |
 
 ## Progress log
-| Date | Lesson | Quiz | Note |
-|------|--------|------|------|
-| 2026-08-18 | 00/01-dev-environment | 3/3 | Set up and verified Python, Node.js, and Rust; CUDA requires an exposed GPU. |
-| 2026-08-18 | 00/02-git-and-collaboration | 3/3 | Practiced the stage, commit, and push workflow for reproducible work. |
+
+Date | Lesson | Quiz | Note
+--- | --- | --- | ---
+2026-08-18 | 00/01-dev-environment | 3/3 | Set up and verified Python, Node.js, and Rust; CUDA requires an exposed GPU.
+2026-08-18 | 00/02-git-and-collaboration | 3/3 | Practiced the stage, commit, and push workflow for reproducible work.
+2026-08-18 | 00/03-gpu-setup-and-cloud | 2/3 | Review GPU benchmark synchronization.
+2026-08-18 | 00/04-apis-and-keys | 3/3 | Stored local secrets safely and handled rate limits.
+2026-08-18 | 00/05-jupyter-notebooks | 3/3 | Used notebooks for exploration and scripts for reusable code.
 
 ## Review queue
+- 00/03-gpu-setup-and-cloud — GPU operations are asynchronous; benchmark with `torch.cuda.synchronize()`.
