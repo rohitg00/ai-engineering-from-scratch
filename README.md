@@ -1072,7 +1072,7 @@ python3 scripts/install_skills.py <target> --force                         # ove
 ```
 
 `<target>` is the skills directory for your agent (examples:
-`~/.claude/skills/`, `~/.cursor/skills/`, `~/.config/openclaw/skills/`,
+`~/.claude/skills/`, `~/.cursor/skills/`, `~/.openclaw/skills/`,
 `.skills/`, or any path your agent reads).
 
 By default the script refuses to overwrite an existing destination and exits

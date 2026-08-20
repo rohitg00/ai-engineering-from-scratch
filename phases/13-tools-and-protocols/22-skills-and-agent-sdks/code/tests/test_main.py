@@ -56,6 +56,38 @@ class DiscoveryTests(unittest.TestCase):
 
             self.assertIsNone(load_skill(root))
 
+    def test_load_skill_rejects_missing_description(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory) / "missing-description"
+            root.mkdir()
+            (root / "SKILL.md").write_text(
+                "---\nname: missing-description\n---\nBody\n", encoding="utf-8"
+            )
+
+            self.assertIsNone(load_skill(root))
+
+    def test_load_skill_rejects_invalid_name(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory) / "invalid_name"
+            root.mkdir()
+            (root / "SKILL.md").write_text(
+                "---\nname: invalid_name\ndescription: Invalid name\n---\nBody\n",
+                encoding="utf-8",
+            )
+
+            self.assertIsNone(load_skill(root))
+
+    def test_load_skill_rejects_directory_name_mismatch(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory) / "directory-name"
+            root.mkdir()
+            (root / "SKILL.md").write_text(
+                "---\nname: manifest-name\ndescription: Mismatch\n---\nBody\n",
+                encoding="utf-8",
+            )
+
+            self.assertIsNone(load_skill(root))
+
 
 class SubresourceTests(unittest.TestCase):
     def test_read_subresource_reads_file_inside_skill_root(self) -> None:

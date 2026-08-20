@@ -103,7 +103,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 npx skills list --json
 ```
 
-Project installs can share `.agents/skills/<name>/SKILL.md` across compatible runtimes. Claude Code also reads `.claude/skills/`; Hermes Agent reads `~/.hermes/skills/`; OpenClaw can read `~/.config/openclaw/skills/`. Treat these paths as runtime contracts, not portable source layout. Let the installer select them when possible.
+Project installs can share `<workspace>/.agents/skills/<name>/SKILL.md` across compatible runtimes. OpenClaw also reads `<workspace>/skills/` and uses `~/.openclaw/skills/` for global installs. Claude Code reads `.claude/skills/`; Hermes Agent reads `~/.hermes/skills/`. Treat these paths as runtime contracts, not portable source layout. Let the installer select them when possible.
 
 Loading is by folder name and frontmatter `name`. Verify the result with `npx skills list --json`, then review the installed files before invoking the Skill.
 

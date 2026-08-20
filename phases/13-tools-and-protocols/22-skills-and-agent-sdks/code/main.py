@@ -8,6 +8,7 @@ Run: python3 main.py
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -56,6 +57,8 @@ Steps:
 3. Write one comment per clear violation.
 """
 
+SKILL_NAME = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+
 
 @dataclass(frozen=True)
 class Skill:
@@ -87,11 +90,19 @@ def load_skill(folder: Path) -> Skill | None:
         return None
     frontmatter, body = parse_frontmatter(skill_path.read_text(encoding="utf-8"))
     name = frontmatter.get("name")
-    if not name:
+    description = frontmatter.get("description", "")
+    if (
+        not name
+        or len(name) > 64
+        or SKILL_NAME.fullmatch(name) is None
+        or name != folder.name
+        or not description
+        or len(description) > 1024
+    ):
         return None
     return Skill(
         name=name,
-        description=frontmatter.get("description", ""),
+        description=description,
         body=body.strip(),
         root=folder,
     )
