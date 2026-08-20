@@ -88,6 +88,18 @@ class DiscoveryTests(unittest.TestCase):
 
             self.assertIsNone(load_skill(root))
 
+    def test_discovery_skips_invalid_utf8_without_hiding_siblings(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            setup_fixtures(root)
+            invalid = root / "invalid-encoding"
+            invalid.mkdir()
+            (invalid / "SKILL.md").write_bytes(b"\xff\xfe")
+
+            skills = discover_skills(root)
+
+        self.assertEqual(set(skills), {"pr-reviewer", "release-notes-writer"})
+
 
 class SubresourceTests(unittest.TestCase):
     def test_read_subresource_reads_file_inside_skill_root(self) -> None:
@@ -110,6 +122,24 @@ class SubresourceTests(unittest.TestCase):
             result = read_subresource(skill, "../outside.md")
 
         self.assertEqual(result, "(subresource outside skill root: ../outside.md)")
+
+    def test_read_subresource_rejects_symlink_escape(self) -> None:
+        with TemporaryDirectory() as directory:
+            parent = Path(directory)
+            root = parent / "skill"
+            root.mkdir()
+            outside = parent / "outside.txt"
+            outside.write_text("secret", encoding="utf-8")
+            link = root / "link.txt"
+            try:
+                link.symlink_to(outside)
+            except OSError as error:
+                self.skipTest(f"symlinks unavailable: {error}")
+            skill = Skill("example", "", "", root)
+
+            result = read_subresource(skill, "link.txt")
+
+        self.assertEqual(result, "(subresource outside skill root: link.txt)")
 
     def test_agent_run_loads_referenced_style(self) -> None:
         with TemporaryDirectory() as directory:

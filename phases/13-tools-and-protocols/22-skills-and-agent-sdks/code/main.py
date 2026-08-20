@@ -62,6 +62,8 @@ SKILL_NAME = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 
 @dataclass(frozen=True)
 class Skill:
+    """A validated Agent Skill loaded from one directory."""
+
     name: str
     description: str
     body: str
@@ -69,6 +71,8 @@ class Skill:
 
 
 def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
+    """Split scalar YAML frontmatter from the Markdown body."""
+
     if not text.startswith("---\n"):
         return {}, text
     end = text.find("\n---\n", 4)
@@ -85,10 +89,16 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
 
 
 def load_skill(folder: Path) -> Skill | None:
+    """Load one valid Agent Skills manifest or skip it."""
+
     skill_path = folder / "SKILL.md"
     if not skill_path.is_file():
         return None
-    frontmatter, body = parse_frontmatter(skill_path.read_text(encoding="utf-8"))
+    try:
+        text = skill_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError):
+        return None
+    frontmatter, body = parse_frontmatter(text)
     name = frontmatter.get("name")
     description = frontmatter.get("description", "")
     if (
@@ -109,6 +119,8 @@ def load_skill(folder: Path) -> Skill | None:
 
 
 def discover_skills(root: Path) -> dict[str, Skill]:
+    """Discover every valid direct child Skill without failing siblings."""
+
     if not root.is_dir():
         return {}
     registry: dict[str, Skill] = {}
@@ -122,6 +134,8 @@ def discover_skills(root: Path) -> dict[str, Skill]:
 
 
 def read_subresource(skill: Skill, filename: str) -> str:
+    """Read one file whose resolved path stays inside the Skill root."""
+
     root = skill.root.resolve()
     path = (root / filename).resolve()
     if path != root and root not in path.parents:
@@ -132,6 +146,8 @@ def read_subresource(skill: Skill, filename: str) -> str:
 
 
 def setup_fixtures(root: Path) -> None:
+    """Write two deterministic Skill fixtures under an isolated root."""
+
     release_notes = root / "release-notes-writer"
     release_notes.mkdir(parents=True)
     (release_notes / "SKILL.md").write_text(
@@ -144,6 +160,8 @@ def setup_fixtures(root: Path) -> None:
 
 
 def agent_run(skill: Skill, user_task: str) -> str:
+    """Build a demo prompt and load its referenced style guide."""
+
     print(f"  [loader] loading skill '{skill.name}'")
     prompt = f"""You are an assistant with the {skill.name} skill loaded.
 
@@ -160,6 +178,8 @@ User task: {user_task}
 
 
 def demo() -> None:
+    """Run the isolated discovery and progressive-disclosure demo."""
+
     print("=" * 72)
     print("PHASE 13 LESSON 22 - SKILLS AND AGENT SDK LOADER")
     print("=" * 72)
