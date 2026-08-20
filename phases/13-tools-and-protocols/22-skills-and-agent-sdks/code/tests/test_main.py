@@ -20,12 +20,16 @@ from main import (
 
 class FrontmatterTests(unittest.TestCase):
     def test_parse_frontmatter_returns_metadata_and_body(self) -> None:
+        """Split valid metadata from its Markdown body."""
+
         frontmatter, body = parse_frontmatter(RELEASE_NOTES_SKILL)
 
         self.assertEqual(frontmatter["name"], "release-notes-writer")
         self.assertIn("# Release notes writer", body)
 
     def test_parse_frontmatter_preserves_plain_markdown(self) -> None:
+        """Keep Markdown without frontmatter unchanged."""
+
         text = "# Plain instructions\n"
 
         self.assertEqual(parse_frontmatter(text), ({}, text))
@@ -33,6 +37,8 @@ class FrontmatterTests(unittest.TestCase):
 
 class DiscoveryTests(unittest.TestCase):
     def test_discover_skills_loads_valid_fixtures(self) -> None:
+        """Load every valid direct child fixture."""
+
         with TemporaryDirectory() as directory:
             root = Path(directory)
             setup_fixtures(root)
@@ -42,12 +48,16 @@ class DiscoveryTests(unittest.TestCase):
         self.assertEqual(set(skills), {"pr-reviewer", "release-notes-writer"})
 
     def test_discover_skills_returns_empty_for_missing_root(self) -> None:
+        """Return an empty registry for a missing root."""
+
         with TemporaryDirectory() as directory:
             root = Path(directory) / "missing"
 
             self.assertEqual(discover_skills(root), {})
 
     def test_load_skill_rejects_missing_name(self) -> None:
+        """Reject a manifest without its required name."""
+
         with TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "SKILL.md").write_text(
@@ -57,6 +67,8 @@ class DiscoveryTests(unittest.TestCase):
             self.assertIsNone(load_skill(root))
 
     def test_load_skill_rejects_missing_description(self) -> None:
+        """Reject a manifest without its required description."""
+
         with TemporaryDirectory() as directory:
             root = Path(directory) / "missing-description"
             root.mkdir()
@@ -67,6 +79,8 @@ class DiscoveryTests(unittest.TestCase):
             self.assertIsNone(load_skill(root))
 
     def test_load_skill_rejects_invalid_name(self) -> None:
+        """Reject a name outside the Agent Skills format."""
+
         with TemporaryDirectory() as directory:
             root = Path(directory) / "invalid_name"
             root.mkdir()
@@ -78,6 +92,8 @@ class DiscoveryTests(unittest.TestCase):
             self.assertIsNone(load_skill(root))
 
     def test_load_skill_rejects_directory_name_mismatch(self) -> None:
+        """Reject a name that differs from its directory."""
+
         with TemporaryDirectory() as directory:
             root = Path(directory) / "directory-name"
             root.mkdir()
@@ -89,6 +105,8 @@ class DiscoveryTests(unittest.TestCase):
             self.assertIsNone(load_skill(root))
 
     def test_discovery_skips_invalid_utf8_without_hiding_siblings(self) -> None:
+        """Skip invalid UTF-8 while retaining valid siblings."""
+
         with TemporaryDirectory() as directory:
             root = Path(directory)
             setup_fixtures(root)
@@ -103,6 +121,8 @@ class DiscoveryTests(unittest.TestCase):
 
 class SubresourceTests(unittest.TestCase):
     def test_read_subresource_reads_file_inside_skill_root(self) -> None:
+        """Read a file contained by the Skill root."""
+
         with TemporaryDirectory() as directory:
             root = Path(directory)
             reference = root / "reference.md"
@@ -112,6 +132,8 @@ class SubresourceTests(unittest.TestCase):
             self.assertEqual(read_subresource(skill, "reference.md"), "bounded")
 
     def test_read_subresource_rejects_parent_traversal(self) -> None:
+        """Reject parent traversal beyond the Skill root."""
+
         with TemporaryDirectory() as directory:
             parent = Path(directory)
             root = parent / "skill"
@@ -124,6 +146,8 @@ class SubresourceTests(unittest.TestCase):
         self.assertEqual(result, "(subresource outside skill root: ../outside.md)")
 
     def test_read_subresource_rejects_symlink_escape(self) -> None:
+        """Reject symlinks that resolve outside the Skill root."""
+
         with TemporaryDirectory() as directory:
             parent = Path(directory)
             root = parent / "skill"
@@ -142,6 +166,8 @@ class SubresourceTests(unittest.TestCase):
         self.assertEqual(result, "(subresource outside skill root: link.txt)")
 
     def test_agent_run_loads_referenced_style(self) -> None:
+        """Load the referenced style guide into the prompt."""
+
         with TemporaryDirectory() as directory:
             root = Path(directory)
             setup_fixtures(root)
