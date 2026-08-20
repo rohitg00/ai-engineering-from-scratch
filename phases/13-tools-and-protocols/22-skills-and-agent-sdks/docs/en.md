@@ -1,6 +1,6 @@
 # Skills and Agent SDKs — Anthropic Skills, AGENTS.md, OpenAI Apps SDK
 
-> MCP says "what tools exist." Skills say "how to do a task." The 2026 stack layers both. Anthropic's Agent Skills (open standard, December 2025) ship as SKILL.md with progressive disclosure. OpenAI's Apps SDK is MCP plus widget metadata. AGENTS.md (now in 60,000+ repos) sits at the repo root as project-level agent context. This lesson names what each covers and builds a minimal SKILL.md + AGENTS.md bundle that travels across agents.
+> MCP says "what tools exist." Skills say "how to do a task." The 2026 stack layers both. Agent Skills ship as SKILL.md bundles with progressive disclosure. OpenAI's Apps SDK adds widget metadata to MCP. AGENTS.md supplies project context. This lesson builds a minimal bundle and installs it through the same cross-agent workflow used by this course.
 
 **Type:** Learn
 **Languages:** Python (stdlib, SKILL.md parser and loader)
@@ -12,13 +12,13 @@
 - Distinguish the three layers: AGENTS.md (project context), SKILL.md (reusable know-how), MCP (tools).
 - Write a SKILL.md with YAML frontmatter and progressive disclosure.
 - Load skills filesystem-style into an agent runtime.
-- Compose a skill with an MCP server and an AGENTS.md so one package works in Claude Code, Cursor, and Codex.
+- Install one Skill source for Claude Code, Cursor, Codex, Hermes Agent, and OpenClaw.
 
 ## The Problem
 
 An engineer distills a release-notes-writing workflow into a multi-step prompt: "Read the latest merged PRs. Group by area. Summarize each. Write a changelog entry following the team's style. Post to Slack draft." They put it in a Notion doc for their team.
 
-Now they want to use this workflow from Claude Code, Cursor, and Codex CLI. Each agent has a different way to load instructions: Claude Code slash-commands, Cursor rules, Codex `.codex.md`. The engineer copies the workflow three times and maintains three copies.
+Now they want to use this workflow from Claude Code, Cursor, Codex, Hermes Agent, and OpenClaw. Each runtime has its own discovery paths. The engineer copies the workflow five times and maintains five copies.
 
 AGENTS.md and SKILL.md together fix this:
 
@@ -94,15 +94,18 @@ skills/
 
 SKILL.md says "see style-guide.md for the style rules." The agent pulls style-guide.md only when the skill is actively running. This avoids bloating the prompt with detail the model may not need.
 
-### Filesystem discovery
+### Filesystem discovery and installation
 
-Agent runtimes scan known directories for SKILL.md files:
+Skill sources commonly keep bundles under `./skills/<name>/SKILL.md`. An installer then links or copies each selected bundle into the target runtime. The installer used by this repository supports one source and several agents:
 
-- `~/.anthropic/skills/*/SKILL.md`
-- Project `./skills/*/SKILL.md`
-- `~/.claude/skills/*/SKILL.md`
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+npx skills list --json
+```
 
-Loading is by folder name and frontmatter `name`. Claude Code, Anthropic Claude Agent SDK, and SkillKit (cross-agent) all follow this pattern.
+Project installs can share `.agents/skills/<name>/SKILL.md` across compatible runtimes. Claude Code also reads `.claude/skills/`; Hermes Agent reads `~/.hermes/skills/`; OpenClaw can read `~/.config/openclaw/skills/`. Treat these paths as runtime contracts, not portable source layout. Let the installer select them when possible.
+
+Loading is by folder name and frontmatter `name`. Verify the result with `npx skills list --json`, then review the installed files before invoking the Skill.
 
 ### Anthropic Claude Agent SDK
 
@@ -118,9 +121,9 @@ Launched October 2025; built directly on MCP. Unifies OpenAI's prior Connectors 
 
 Same protocol, richer UX.
 
-### Cross-agent portability via SkillKit
+### Cross-agent portability through one source
 
-Tools like SkillKit and similar cross-agent distribution layers translate a single SKILL.md into the native format of each of 32+ AI agents (Claude Code, Cursor, Codex, Gemini CLI, OpenCode, etc.). One source of truth; many consumers.
+Cross-agent installers link or copy a single SKILL.md bundle into each runtime's discovery path. Keep one source of truth, select explicit agent targets, and verify the installed inventory. Do not hand-maintain translated instruction copies when each target already reads SKILL.md.
 
 ### The three-layer stack
 
@@ -138,13 +141,14 @@ t3-skill-layers
 
 ## Use It
 
-`code/main.py` ships a stdlib SKILL.md parser and loader. It discovers skills under `./skills/`, parses the YAML frontmatter plus markdown body, and produces a dict keyed by skill name. It then simulates an agent loop that invokes `release-notes-writer` by name.
+`code/main.py` ships a stdlib SKILL.md parser and loader. It discovers Skills under a supplied root, parses the YAML frontmatter plus markdown body, and produces a dict keyed by Skill name. It then simulates an agent loop that invokes `release-notes-writer` by name.
 
 What to look at:
 
 - YAML frontmatter parsed with a minimal stdlib parser (no `pyyaml` dependency).
 - Skill body stored verbatim; agent prepends it to the system prompt on invocation.
-- Progressive disclosure demoed via a `read_subresource` function that pulls referenced files on demand.
+- Progressive disclosure through a `read_subresource` function that rejects paths outside the Skill root.
+- Temporary fixtures that leave no project or user files behind.
 
 ## Ship It
 
@@ -158,7 +162,7 @@ This lesson produces `outputs/skill-agent-bundle.md`. Given a workflow, the skil
 
 3. Port a multi-step workflow from your team's internal docs into a SKILL.md. Verify it loads in Claude Code.
 
-4. Translate the skill into Cursor's and Codex's native rule formats by hand. Count the diff between formats — this is the translation surface SkillKit automates.
+4. Install the Skill into two compatible agents. Compare `npx skills list --json` with the files each runtime reads.
 
 5. Read the Anthropic Agent Skills blog post. Identify one feature in the Claude Agent SDK that this lesson's loader does not cover. (Hint: agent sub-invocation.)
 
@@ -173,7 +177,7 @@ This lesson produces `outputs/skill-agent-bundle.md`. Given a workflow, the skil
 | Claude Agent SDK | "Anthropic's skill runtime" | `@anthropic-ai/claude-agent-sdk`, loads skills and routes |
 | OpenAI Apps SDK | "MCP + widget meta" | OpenAI's dev surface built on MCP plus ChatGPT UI hooks |
 | Skill discovery | "Filesystem scan" | Walk known dirs for SKILL.md, key by name |
-| Cross-agent portability | "One skill many agents" | Translate one SKILL.md to 32+ agents via SkillKit-style tools |
+| Cross-agent portability | "One skill many agents" | Install one reviewed SKILL.md source into compatible runtime paths |
 | Agent Skill | "Portable know-how" | Reusable task template outside MCP's tool concept |
 | Apps SDK | "MCP plus ChatGPT UI" | Connectors and Custom GPTs unified on MCP |
 
@@ -184,3 +188,5 @@ This lesson produces `outputs/skill-agent-bundle.md`. Given a workflow, the skil
 - [OpenAI — Apps SDK](https://developers.openai.com/apps-sdk) — MCP-based developer platform for ChatGPT
 - [agents.md](https://agents.md/) — AGENTS.md format and adoption list
 - [Anthropic — anthropics/skills GitHub](https://github.com/anthropics/skills) — official skill examples
+- [Agent Skills specification](https://agentskills.io/specification) — portable SKILL.md bundle contract
+- [skills CLI](https://github.com/vercel-labs/skills) — installer used by this repository

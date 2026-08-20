@@ -1,27 +1,17 @@
 """Phase 13 Lesson 22 - SKILL.md loader and agent bundle demo.
 
-Parses SKILL.md files with a stdlib YAML-frontmatter parser (no pyyaml),
-builds an in-memory skill registry, and simulates an agent loop that loads
-a skill by name and uses it to prefix the system prompt.
-
-Skills live under ./skills/*/SKILL.md (created in /tmp for this demo).
-
-Run: python code/main.py
+Lesson: ../docs/en.md
+Reference: https://agentskills.io/specification
+Parses frontmatter, discovers Skills, and loads bounded subresources.
+Run: python3 main.py
 """
 
 from __future__ import annotations
 
-import os
 from dataclasses import dataclass
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
-
-SKILL_ROOT = Path("/tmp/lesson-21-skills")
-
-
-# ------------------------------------------------------------------
-# toy fixture skills
-# ------------------------------------------------------------------
 
 RELEASE_NOTES_SKILL = """\
 ---
@@ -67,22 +57,7 @@ Steps:
 """
 
 
-def setup_fixtures() -> None:
-    SKILL_ROOT.mkdir(parents=True, exist_ok=True)
-    rn = SKILL_ROOT / "release-notes-writer"
-    rn.mkdir(exist_ok=True)
-    (rn / "SKILL.md").write_text(RELEASE_NOTES_SKILL)
-    (rn / "style-guide.md").write_text(RELEASE_STYLE)
-    pr = SKILL_ROOT / "pr-reviewer"
-    pr.mkdir(exist_ok=True)
-    (pr / "SKILL.md").write_text(PR_REVIEW_SKILL)
-
-
-# ------------------------------------------------------------------
-# loader
-# ------------------------------------------------------------------
-
-@dataclass
+@dataclass(frozen=True)
 class Skill:
     name: str
     description: str
@@ -90,100 +65,110 @@ class Skill:
     root: Path
 
 
-def parse_frontmatter(text: str) -> tuple[dict, str]:
+def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
     if not text.startswith("---\n"):
         return {}, text
     end = text.find("\n---\n", 4)
     if end == -1:
         return {}, text
-    fm_raw = text[4:end]
-    body = text[end + 5:]
-    fm: dict = {}
-    for line in fm_raw.splitlines():
-        if not line.strip() or line.strip().startswith("#"):
+    frontmatter: dict[str, str] = {}
+    for line in text[4:end].splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or ":" not in line:
             continue
-        if ":" in line:
-            k, v = line.split(":", 1)
-            fm[k.strip()] = v.strip()
-    return fm, body
+        key, value = line.split(":", 1)
+        frontmatter[key.strip()] = value.strip()
+    return frontmatter, text[end + 5 :]
 
 
 def load_skill(folder: Path) -> Skill | None:
-    skill_md = folder / "SKILL.md"
-    if not skill_md.exists():
+    skill_path = folder / "SKILL.md"
+    if not skill_path.is_file():
         return None
-    text = skill_md.read_text()
-    fm, body = parse_frontmatter(text)
-    if "name" not in fm:
+    frontmatter, body = parse_frontmatter(skill_path.read_text(encoding="utf-8"))
+    name = frontmatter.get("name")
+    if not name:
         return None
-    return Skill(name=fm["name"], description=fm.get("description", ""),
-                 body=body.strip(), root=folder)
+    return Skill(
+        name=name,
+        description=frontmatter.get("description", ""),
+        body=body.strip(),
+        root=folder,
+    )
 
 
 def discover_skills(root: Path) -> dict[str, Skill]:
+    if not root.is_dir():
+        return {}
     registry: dict[str, Skill] = {}
-    if not root.exists():
-        return registry
-    for item in sorted(root.iterdir()):
-        if item.is_dir():
-            s = load_skill(item)
-            if s:
-                registry[s.name] = s
+    for folder in sorted(root.iterdir()):
+        if not folder.is_dir():
+            continue
+        skill = load_skill(folder)
+        if skill is not None:
+            registry[skill.name] = skill
     return registry
 
 
 def read_subresource(skill: Skill, filename: str) -> str:
-    path = skill.root / filename
-    if not path.exists():
+    root = skill.root.resolve()
+    path = (root / filename).resolve()
+    if path != root and root not in path.parents:
+        return f"(subresource outside skill root: {filename})"
+    if not path.is_file():
         return f"(no such subresource: {filename})"
-    return path.read_text()
+    return path.read_text(encoding="utf-8")
 
 
-# ------------------------------------------------------------------
-# demo agent loop
-# ------------------------------------------------------------------
+def setup_fixtures(root: Path) -> None:
+    release_notes = root / "release-notes-writer"
+    release_notes.mkdir(parents=True)
+    (release_notes / "SKILL.md").write_text(
+        RELEASE_NOTES_SKILL, encoding="utf-8"
+    )
+    (release_notes / "style-guide.md").write_text(RELEASE_STYLE, encoding="utf-8")
+    reviewer = root / "pr-reviewer"
+    reviewer.mkdir()
+    (reviewer / "SKILL.md").write_text(PR_REVIEW_SKILL, encoding="utf-8")
+
 
 def agent_run(skill: Skill, user_task: str) -> str:
     print(f"  [loader] loading skill '{skill.name}'")
-    print(f"  [loader] progressive disclosure: read style-guide only if needed")
-    system_prompt = f"""You are an assistant with the {skill.name} skill loaded.
+    prompt = f"""You are an assistant with the {skill.name} skill loaded.
 
 Skill instructions:
 {skill.body}
 
 User task: {user_task}
 """
-    # demonstrate progressive disclosure
     if "style-guide" in skill.body.lower():
         style = read_subresource(skill, "style-guide.md")
         print(f"  [loader] subresource pulled ({len(style)} bytes)")
-        system_prompt += f"\n\nAdditional style guide:\n{style}"
-    return system_prompt
+        prompt += f"\n\nAdditional style guide:\n{style}"
+    return prompt
 
 
 def demo() -> None:
     print("=" * 72)
-    print("PHASE 13 LESSON 21 - SKILLS AND AGENT SDK LOADER")
+    print("PHASE 13 LESSON 22 - SKILLS AND AGENT SDK LOADER")
     print("=" * 72)
-
-    setup_fixtures()
-
-    print(f"\n--- discovery under {SKILL_ROOT} ---")
-    skills = discover_skills(SKILL_ROOT)
-    for name, s in skills.items():
-        print(f"  {name:25s} -> {s.description}")
-
-    print(f"\n--- invoke release-notes-writer with a fake user task ---")
-    prompt = agent_run(skills["release-notes-writer"],
-                       "draft the 1.4.0 release notes")
-    print(f"\n[the system prompt the agent would send to the model]")
-    print("-" * 72)
-    print(prompt[:600] + "...")
-
-    print("\n--- AGENTS.md + SKILL.md + MCP : the three-layer stack ---")
-    print("  AGENTS.md (repo root)   -> project conventions at session start")
-    print("  SKILL.md (./skills/*/)  -> reusable workflows on demand")
-    print("  MCP server              -> tools the skill invokes (Phase 13 / 06-14)")
+    with TemporaryDirectory(prefix="lesson-22-skills-") as directory:
+        root = Path(directory)
+        setup_fixtures(root)
+        print(f"\n--- discovery under {root} ---")
+        skills = discover_skills(root)
+        for name, skill in skills.items():
+            print(f"  {name:25s} -> {skill.description}")
+        prompt = agent_run(
+            skills["release-notes-writer"], "draft the 1.4.0 release notes"
+        )
+        print("\n[the system prompt the agent would send to the model]")
+        print("-" * 72)
+        print(prompt[:600] + "...")
+    print("\n--- AGENTS.md + SKILL.md + MCP: the three-layer stack ---")
+    print("  AGENTS.md (repo root)       -> project conventions at session start")
+    print("  SKILL.md (.agents/skills/)  -> reusable workflows on demand")
+    print("  MCP server                  -> tools the skill invokes")
 
 
 if __name__ == "__main__":
