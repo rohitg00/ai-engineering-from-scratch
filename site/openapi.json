@@ -1,0 +1,33 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AI Engineering from Scratch public resources",
+    "version": "1.0.0",
+    "description": "Read-only, public machine-readable resources for the AI Engineering from Scratch curriculum. Lesson source remains canonical in the GitHub repository."
+  },
+  "servers": [{"url": "https://aiengineeringfromscratch.com"}],
+  "paths": {
+    "/llms.txt": {
+      "get": {
+        "summary": "Read the agent-oriented curriculum map",
+        "operationId": "getAgentIndex",
+        "responses": {"200": {"description": "Markdown lesson and resource index", "content": {"text/markdown": {"schema": {"type": "string"}}}}}
+      }
+    },
+    "/sitemap.xml": {
+      "get": {
+        "summary": "Read canonical public URLs",
+        "operationId": "getSitemap",
+        "responses": {"200": {"description": "XML sitemap", "content": {"application/xml": {"schema": {"type": "string"}}}}}
+      }
+    },
+    "/lesson.html": {
+      "get": {
+        "summary": "Open a rendered lesson",
+        "operationId": "getLesson",
+        "parameters": [{"name": "path", "in": "query", "required": true, "schema": {"type": "string"}, "description": "Repository-relative lesson path, for example phases/01-math-foundations/01-linear-algebra-intuition"}],
+        "responses": {"200": {"description": "Rendered lesson page"}, "404": {"description": "Unknown lesson path"}}
+      }
+    }
+  }
+}

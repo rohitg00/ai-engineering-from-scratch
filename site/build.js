@@ -1607,6 +1607,10 @@ function writeSitemap(phases, glossaryCount, certifications) {
     { loc: '/', priority: '1.0', freq: 'weekly' },
     { loc: '/catalog.html', priority: '0.8', freq: 'weekly' },
     { loc: '/prereqs.html', priority: '0.7', freq: 'monthly' },
+    { loc: '/about.html', priority: '0.5', freq: 'yearly' },
+    { loc: '/developer.html', priority: '0.6', freq: 'monthly' },
+    { loc: '/contact.html', priority: '0.3', freq: 'yearly' },
+    { loc: '/privacy.html', priority: '0.3', freq: 'yearly' },
   ];
   if (glossaryCount > 0) urls.push({ loc: '/glossary.html', priority: '0.6', freq: 'monthly' });
   if (certifications && certifications.program) {
@@ -1647,6 +1651,12 @@ function writeLlms(phases, glossaryCount, artifactCount, certifications) {
   out += `Canonical site: ${SITE_ORIGIN}\n`;
   out += `Source: https://github.com/rohitg00/ai-engineering-from-scratch\n`;
   out += `Glossary terms: ${glossaryCount} · Reusable outputs (prompts/skills/agents): ${artifactCount}\n\n`;
+  out += `## Developer resources\n`;
+  out += `- [Developer documentation](${SITE_ORIGIN}/developer.html) — machine-readable site contracts and integration notes\n`;
+  out += `- [OpenAPI description](${SITE_ORIGIN}/openapi.json) — read-only public resource inventory\n`;
+  out += `- [Sitemap](${SITE_ORIGIN}/sitemap.xml) — canonical URL inventory\n`;
+  out += `- [Contact](${SITE_ORIGIN}/contact.html) — maintainer and project contact route\n`;
+  out += `- [Privacy](${SITE_ORIGIN}/privacy.html) — data and analytics policy\n\n`;
   out += `Lesson pages render client-side. Agents: fetch each lesson's raw markdown link; it is the full text. Lesson directories may also include code/ (runnable implementation) and quiz.json.\n\n`;
   for (const phase of phases) {
     out += `## Phase ${phase.id}: ${phase.name}\n`;

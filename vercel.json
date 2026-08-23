@@ -4,6 +4,16 @@
   "framework": null,
   "installCommand": "echo skip",
   "rewrites": [
+    { "source": "/", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/" },
+    { "source": "/about", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/about" },
+    { "source": "/catalog", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/catalog" },
+    { "source": "/glossary", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/glossary" },
+    { "source": "/path", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/path" },
+    { "source": "/roadmap", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/roadmap" },
+    { "source": "/developer", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/developer" },
+    { "source": "/docs", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/docs" },
+    { "source": "/contact", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/contact" },
+    { "source": "/privacy", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/privacy" },
     { "source": "/glossary", "destination": "/glossary.html" },
     { "source": "/catalog", "destination": "/catalog.html" },
     { "source": "/certifications", "destination": "/certifications.html" },
@@ -11,7 +21,11 @@
     { "source": "/assessment", "destination": "/assessment.html" },
     { "source": "/path", "destination": "/prereqs.html" },
     { "source": "/roadmap", "destination": "/prereqs.html" },
-    { "source": "/about", "destination": "/about.html" }
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/developer", "destination": "/developer.html" },
+    { "source": "/docs", "destination": "/developer.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/privacy", "destination": "/privacy.html" }
   ],
   "headers": [
     {
@@ -35,18 +49,29 @@
     {
       "source": "/(.*)\\.html",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" }
+        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" },
+        { "key": "Vary", "value": "Accept, Accept-Encoding" }
       ]
     },
     {
       "source": "/",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" }
+        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" },
+        { "key": "Vary", "value": "Accept, Accept-Encoding" }
       ]
     },
     {
-      "source": "/(glossary|catalog|certifications|certification|assessment|path|roadmap)",
+      "source": "/(glossary|catalog|certifications|certification|assessment|path|roadmap|about|developer|docs|contact|privacy)",
       "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" },
+        { "key": "Vary", "value": "Accept, Accept-Encoding" }
+      ]
+    },
+    {
+      "source": "/llms.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/markdown; charset=utf-8" },
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
         { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" }
       ]
     }

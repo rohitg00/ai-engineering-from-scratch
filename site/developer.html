@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer resources · AI Engineering from Scratch</title>
+  <meta name="description" content="Machine-readable developer resources, public URLs, OpenAPI description, sitemap, and agent integration notes for AI Engineering from Scratch.">
+  <link rel="canonical" href="https://aiengineeringfromscratch.com/developer.html">
+  <link rel="stylesheet" href="style.css?v=20260802a">
+  <style>
+    .trust-page { max-width: 780px; margin: 0 auto; padding: 100px 0 80px; }
+    .trust-page h1, .trust-page h2 { font-family: var(--font-display); color: var(--blueprint); text-transform: uppercase; }
+    .trust-page h1 { font-size: clamp(2.4rem, 6vw, 3.8rem); line-height: 1; }
+    .trust-page h2 { font-family: var(--font-mono); font-size: 1rem; letter-spacing: .12em; margin-top: 42px; }
+    .trust-page p, .trust-page li { font-family: var(--font-body); font-size: 1.05rem; line-height: 1.7; color: var(--ink); }
+    .trust-page a { color: var(--blueprint); }
+    .trust-page code { font-family: var(--font-mono); background: var(--bg-surface); border: 1px solid var(--rule-soft); padding: 1px 5px; }
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner">
+    <a href="index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH</a>
+    <nav class="header-nav"><a href="index.html#contents">Contents</a><a href="catalog.html">Catalog</a><a href="prereqs.html">Roadmap</a><a href="glossary.html">Glossary</a><a href="about.html">About</a></nav>
+  </div></header>
+  <main class="container"><article class="trust-page">
+    <p class="about-eyebrow">AI Engineering from Scratch</p>
+    <h1>Developer resources</h1>
+    <p>This is the machine-readable entry point for AI Engineering from Scratch. The project is a static, open-source curriculum rather than a hosted application API. Agents and developer tools should start with <a href="llms.txt">llms.txt</a>, which maps the lessons to their canonical pages and raw Markdown sources.</p>
+    <h2>Stable resources</h2>
+    <ul>
+      <li><a href="llms.txt"><code>/llms.txt</code></a> is the agent-oriented curriculum map.</li>
+      <li><a href="sitemap.xml"><code>/sitemap.xml</code></a> lists canonical public URLs.</li>
+      <li><a href="openapi.json"><code>/openapi.json</code></a> describes the read-only resource surface.</li>
+      <li><a href="catalog.html"><code>/catalog.html</code></a> is the searchable human catalog.</li>
+      <li><a href="https://github.com/rohitg00/ai-engineering-from-scratch"><code>GitHub</code></a> is the source of truth for lessons, code, quizzes, and reusable artifacts.</li>
+    </ul>
+    <h2>Markdown negotiation</h2>
+    <p>Requests for the homepage or major navigation routes with <code>Accept: text/markdown</code> receive the agent map with <code>Content-Type: text/markdown</code>. Responses vary on <code>Accept</code> so a cache cannot mix the HTML and Markdown representations.</p>
+    <h2>MCP status</h2>
+    <p>The website does not currently expose a hosted MCP server or authenticated product API. The curriculum does teach how to build and operate MCP servers, and those lesson artifacts live in the repository. A remote Streamable HTTP MCP endpoint would require a separate product decision, authentication policy, and operational owner.</p>
+  </article></main>
+  <footer class="site-footer"><div class="container footer-inner"><p>© 2026 · open source · free forever</p><div class="footer-links"><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="llms.txt">Agents</a></div></div></footer>
+</body>
+</html>
