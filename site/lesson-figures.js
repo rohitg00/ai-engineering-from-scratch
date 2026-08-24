@@ -24,20 +24,32 @@
       '.lf-ctrl{display:flex;flex-direction:column;gap:4px}',
       '.lf-ctrl label{font-family:var(--font-mono,monospace);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft,#555);display:flex;justify-content:space-between}',
       '.lf-ctrl label b{color:var(--blueprint,#3553ff);font-variant-numeric:tabular-nums}',
+      '.lf-ctrl-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}',
+      '.lf-ctrl-head label{display:block}',
+      '.lf-ctrl-head>b{color:var(--blueprint,#3553ff);font-family:var(--font-mono,monospace);font-size:.7rem;font-variant-numeric:tabular-nums}',
       '.lf-ctrl input[type=range]{width:100%;accent-color:var(--blueprint,#3553ff)}',
       '.lf-ctrl select{font-family:var(--font-mono,monospace);font-size:.82rem;padding:4px 6px;background:var(--bg,#fafaf5);color:var(--ink,#1a1a1a);border:1px solid var(--rule-soft,#ddd)}',
       '.lf-out{margin-top:18px;padding-top:14px;border-top:1px dashed var(--rule-soft,#ddd)}',
       '.lf-num{font-family:var(--font-mono,monospace);font-size:2rem;color:var(--blueprint,#3553ff);font-variant-numeric:tabular-nums;line-height:1}',
       '.lf-num small{font-size:.9rem;color:var(--ink-soft,#555);letter-spacing:.04em}',
       '.lf-bar{position:relative;height:10px;background:var(--rule-soft,#eee);margin-top:12px;overflow:hidden}',
-      '.lf-bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--blueprint,#3553ff);transition:width .12s ease}',
+      '.lf-bar i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--blueprint,#3553ff);transform:scaleX(0);transform-origin:left center;transition:transform 120ms var(--ease-out,cubic-bezier(.23,1,.32,1))}',
       '.lf-bar.over i{background:var(--warn,#b8870f)}',
       '.lf-meta{font-family:var(--font-mono,monospace);font-size:.7rem;color:var(--ink-mute,#777);margin-top:8px;letter-spacing:.04em}',
       '.lf-formula{font-family:var(--font-mono,monospace);font-size:.72rem;color:var(--ink-soft,#555);margin-top:6px;word-break:break-word}',
       '.lf-cap{font-family:var(--font-body,serif);font-size:.92rem;color:var(--ink-soft,#555);line-height:1.5;padding:12px 16px;border-top:1px solid var(--rule-soft,#ddd)}',
       '.lesson-figure.lf-animated{border:1px solid var(--rule-soft,#ddd);background:var(--bg,#fafaf5);margin:28px 0;padding:14px}',
       '.lesson-figure.lf-animated svg{display:block;width:100%;height:auto;max-width:760px;margin:0 auto;color:var(--blueprint,#3553ff)}',
-      '.lf-out svg{display:block;width:100%;height:auto;max-width:560px;margin:4px auto 0}'
+      '.lf-out svg{display:block;width:100%;height:auto;max-width:560px;margin:4px auto 0}',
+      '.lf-motion-toggle{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0 0 10px auto;padding:6px 12px;border:1px solid var(--rule-soft,#ddd);background:var(--bg,#fafaf5);color:var(--ink-soft,#555);font-family:var(--font-mono,monospace);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:color 180ms var(--ease-out,cubic-bezier(.23,1,.32,1)),border-color 180ms var(--ease-out,cubic-bezier(.23,1,.32,1)),opacity 180ms var(--ease-out,cubic-bezier(.23,1,.32,1))}',
+      '.lf-motion-toggle:hover,.lf-motion-toggle:focus-visible{color:var(--blueprint,#3553ff);border-color:var(--blueprint,#3553ff)}',
+      '.lf-motion-toggle[aria-pressed=true]{color:var(--blueprint,#3553ff);border-color:var(--blueprint,#3553ff);background:var(--blueprint-tint,rgba(53,83,255,.08))}',
+      '.lf-motion-toggle:disabled{cursor:default;opacity:.72}',
+      '.lf-motion-toggle:active{transform:scale(.97);transition:transform 160ms var(--ease-out,cubic-bezier(.23,1,.32,1))}',
+      '.lf-replay{margin-left:8px}',
+      '.lesson-figure svg [data-lf-stable=true]{transition:opacity 220ms var(--ease-out,cubic-bezier(.23,1,.32,1)),transform 220ms var(--ease-out,cubic-bezier(.23,1,.32,1)),fill 180ms var(--ease-out,cubic-bezier(.23,1,.32,1)),stroke 180ms var(--ease-out,cubic-bezier(.23,1,.32,1));transform-box:fill-box;transform-origin:center}',
+      '@media(prefers-reduced-motion:reduce){.lf-bar i{transition:none}.lf-motion-toggle{transform:none!important}.lesson-figure svg [data-lf-stable=true]{transition:opacity 180ms var(--ease-out,cubic-bezier(.23,1,.32,1)),fill 180ms var(--ease-out,cubic-bezier(.23,1,.32,1)),stroke 180ms var(--ease-out,cubic-bezier(.23,1,.32,1))}}',
+      '@media print{.lf-motion-toggle{display:none!important}}'
     ].join('\n');
     document.head.appendChild(s);
   }
@@ -54,6 +66,7 @@
   }
   function svgEl(tag, attrs, kids) {
     var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    attrs = normalizeSmilAttrs(tag, attrs);
     if (attrs) for (var k in attrs) e.setAttribute(k, attrs[k]);
     (kids || []).forEach(function (c) { e.appendChild(c); });
     return e;
@@ -61,36 +74,558 @@
   function fmtInt(n) { return n.toLocaleString('en-US'); }
   function fmtSeq(n) { return n >= 1024 ? (n / 1024) + 'K' : String(n); }
 
+  var MOTION = {
+    feedback: '180ms',
+    enter: '220ms',
+    press: '160ms',
+    easeOut: 'cubic-bezier(0.23, 1, 0.32, 1)',
+    easeInOut: 'cubic-bezier(0.77, 0, 0.175, 1)'
+  };
+  var uniqueId = 0;
+  var reducedMotionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var reducedMotionHosts = [];
+  var reducedMotionListening = false;
+  var PAINT_BOUND_GEOMETRY = {
+    width: true, height: true, x: true, y: true, x1: true, x2: true,
+    y1: true, y2: true, cx: true, cy: true, r: true, rx: true, ry: true
+  };
+
+  function uid(prefix) {
+    uniqueId += 1;
+    return (prefix || 'lf') + '-' + uniqueId;
+  }
+
+  function normalizeSmilAttrs(tag, attrs) {
+    if (!attrs || ['animate', 'animateMotion', 'animateTransform', 'set'].indexOf(tag) === -1) return attrs;
+    var normalized = {};
+    for (var key in attrs) normalized[key] = attrs[key];
+    if (normalized.repeatCount === undefined || normalized.repeatCount === null) {
+      normalized.repeatCount = '1';
+      if (normalized.fill === undefined || normalized.fill === null) normalized.fill = 'freeze';
+    }
+    if (normalized.fill === 'freeze' && normalized.repeatCount === 'indefinite') {
+      normalized.repeatCount = '1';
+      normalized.fill = 'freeze';
+    }
+    if (tag === 'animate' && PAINT_BOUND_GEOMETRY[normalized.attributeName] && normalized.repeatCount === 'indefinite') {
+      normalized.repeatCount = '1';
+      normalized.fill = 'freeze';
+      normalized['data-lf-finite-geometry'] = 'true';
+    }
+    return normalized;
+  }
+
+  function smil(tag, attrs, kids) {
+    return svgEl(tag, attrs, kids);
+  }
+
+  function formattedValue(state, key, fmt) {
+    return fmt ? fmt(state[key]) : String(state[key]);
+  }
+
+  function closestFigure(node) {
+    while (node) {
+      if (node.classList && node.classList.contains('lesson-figure')) return node;
+      node = node.parentNode;
+    }
+    return null;
+  }
+
+  function childNodes(node) {
+    return node && node.childNodes ? Array.prototype.slice.call(node.childNodes) : [];
+  }
+
+  function sameNodeKind(current, next) {
+    if (!current || !next) return false;
+    if (current.nodeType !== next.nodeType) return false;
+    if (current.nodeType === 1) return current.namespaceURI === next.namespaceURI && current.tagName === next.tagName;
+    return true;
+  }
+
+  function isSvgSemanticNode(node) {
+    var tag = String(node && node.tagName || '').toLowerCase();
+    return tag === 'title' || tag === 'desc';
+  }
+
+  function syncAttributes(current, next) {
+    if (!current.attributes || !next.attributes) return;
+    var keep = Object.create(null);
+    var i;
+    for (i = 0; i < next.attributes.length; i++) {
+      keep[next.attributes[i].name] = true;
+      if (current.getAttribute(next.attributes[i].name) !== next.attributes[i].value) {
+        current.setAttribute(next.attributes[i].name, next.attributes[i].value);
+      }
+    }
+    for (i = current.attributes.length - 1; i >= 0; i--) {
+      var name = current.attributes[i].name;
+      if (!keep[name] && name !== 'data-lf-stable') current.removeAttribute(name);
+    }
+    var tag = String(current.tagName || '').toLowerCase();
+    if (['defs', 'marker', 'title', 'desc', 'animate', 'animatemotion', 'animatetransform', 'set'].indexOf(tag) === -1) {
+      current.setAttribute('data-lf-stable', 'true');
+    }
+  }
+
+  function reconcileNode(current, next) {
+    if (current.nodeType !== 1) {
+      if (current.nodeValue !== next.nodeValue) current.nodeValue = next.nodeValue;
+      return;
+    }
+    syncAttributes(current, next);
+    var nextChildren = childNodes(next);
+    var i = 0;
+    while (i < nextChildren.length) {
+      var currentChild = current.childNodes[i];
+      var nextChild = nextChildren[i];
+      if (!currentChild) {
+        current.appendChild(nextChild);
+      } else if (sameNodeKind(currentChild, nextChild)) {
+        reconcileNode(currentChild, nextChild);
+      } else {
+        current.insertBefore(nextChild, currentChild);
+        current.removeChild(currentChild);
+      }
+      i += 1;
+    }
+    while (current.childNodes.length > nextChildren.length) current.removeChild(current.lastChild);
+  }
+
+  function renderPersistentSvg(anchor, render) {
+    var host = closestFigure(anchor);
+    if (!host || !host.querySelectorAll) return render();
+    var svgs = Array.prototype.slice.call(host.querySelectorAll('svg'));
+    var retained = svgs.map(function (svg) { return childNodes(svg); });
+    var result = render();
+    svgs.forEach(function (svg, index) {
+      if (!retained[index].length) return;
+      var nextChildren = childNodes(svg);
+      var nextSemantic = Object.create(null);
+      nextChildren.forEach(function (node) {
+        if (isSvgSemanticNode(node)) nextSemantic[String(node.tagName).toLowerCase()] = true;
+      });
+      var preservedSemantic = retained[index].filter(function (node) {
+        return isSvgSemanticNode(node) && !nextSemantic[String(node.tagName).toLowerCase()];
+      });
+      nextChildren = preservedSemantic.concat(nextChildren);
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      retained[index].forEach(function (node) { svg.appendChild(node); });
+      var i = 0;
+      while (i < nextChildren.length) {
+        var current = svg.childNodes[i];
+        var next = nextChildren[i];
+        if (!current) svg.appendChild(next);
+        else if (sameNodeKind(current, next)) reconcileNode(current, next);
+        else {
+          svg.insertBefore(next, current);
+          svg.removeChild(current);
+        }
+        i += 1;
+      }
+      while (svg.childNodes.length > nextChildren.length) svg.removeChild(svg.lastChild);
+    });
+    return result;
+  }
+
+  function bindPersistentRenderer(state, anchor) {
+    if (!state || typeof state._render !== 'function' || state._lfPersistentRender) return;
+    var render = state._render;
+    state._render = function () { return renderPersistentSvg(anchor, render); };
+    state._lfPersistentRender = true;
+  }
+
   function slider(state, key, label, min, max, step, fmt) {
-    var val = el('b', {}, [fmt ? fmt(state[key]) : String(state[key])]);
-    var input = el('input', { type: 'range', min: min, max: max, step: step, value: state[key] });
+    var inputId = uid('lf-range');
+    var value = formattedValue(state, key, fmt);
+    var val = el('b', { 'aria-hidden': 'true' }, [value]);
+    var input = el('input', {
+      id: inputId,
+      type: 'range',
+      min: min,
+      max: max,
+      step: step,
+      value: state[key],
+      'aria-valuetext': value
+    });
+    bindPersistentRenderer(state, input);
     input.addEventListener('input', function () {
       state[key] = Number(input.value);
-      val.textContent = fmt ? fmt(state[key]) : String(state[key]);
+      var nextValue = formattedValue(state, key, fmt);
+      val.textContent = nextValue;
+      input.setAttribute('aria-valuetext', nextValue);
       state._render();
     });
-    return el('div', { class: 'lf-ctrl' }, [el('label', {}, [label, val]), input]);
+    return el('div', { class: 'lf-ctrl' }, [
+      el('div', { class: 'lf-ctrl-head' }, [el('label', { for: inputId }, [label]), val]),
+      input
+    ]);
   }
 
   function select(state, key, label, options) {
-    var sel = el('select');
+    var selectId = uid('lf-select');
+    var sel = el('select', { id: selectId });
     options.forEach(function (o) { sel.appendChild(el('option', { value: o[1] }, [o[0]])); });
     sel.value = state[key];
+    bindPersistentRenderer(state, sel);
     sel.addEventListener('change', function () { state[key] = sel.value; state._render(); });
-    return el('div', { class: 'lf-ctrl' }, [el('label', {}, [label]), sel]);
+    return el('div', { class: 'lf-ctrl' }, [el('label', { for: selectId }, [label]), sel]);
   }
 
   function clamp(x, lo, hi) { return x < lo ? lo : x > hi ? hi : x; }
   function lerp(a, b, t) { return a + (b - a) * t; }
-  // requestAnimationFrame loop that respects reduced-motion (renders one static
-  // frame for headless / reduced-motion, animates in a real browser).
-  function raf(step) {
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce || !window.requestAnimationFrame) { step(0, true); return function () {}; }
-    var alive = true, t0 = null;
-    function tick(ts) { if (!alive) return; if (t0 === null) t0 = ts; step((ts - t0) / 1000, false); window.requestAnimationFrame(tick); }
-    window.requestAnimationFrame(tick);
-    return function () { alive = false; };
+  function prefersReducedMotion() {
+    return !!(reducedMotionQuery && reducedMotionQuery.matches);
+  }
+
+  function hostRecord(host) {
+    if (!host._aifsFigureRuntime) {
+      host._aifsFigureRuntime = {
+        controllers: [],
+        disposers: [],
+        userPaused: false,
+        offscreen: false,
+        hidden: !!document.hidden,
+        printing: false,
+        reduced: prefersReducedMotion(),
+        control: null,
+        policyInstalled: false
+      };
+    }
+    return host._aifsFigureRuntime;
+  }
+
+  function registerDisposer(host, dispose) {
+    if (!host || typeof dispose !== 'function') return dispose;
+    hostRecord(host).disposers.push(dispose);
+    return dispose;
+  }
+
+  function onReducedMotionChange(event) {
+    for (var i = 0; i < reducedMotionHosts.length; i++) {
+      if (!reducedMotionHosts[i] || !reducedMotionHosts[i]._aifsFigureRuntime) continue;
+      reducedMotionHosts[i]._aifsFigureRuntime.reduced = !!event.matches;
+      updateMotionPolicy(reducedMotionHosts[i]);
+    }
+  }
+
+  function startReducedMotionListener() {
+    if (!reducedMotionQuery || reducedMotionListening) return;
+    if (typeof reducedMotionQuery.addEventListener === 'function') reducedMotionQuery.addEventListener('change', onReducedMotionChange);
+    else if (typeof reducedMotionQuery.addListener === 'function') reducedMotionQuery.addListener(onReducedMotionChange);
+    else return;
+    reducedMotionListening = true;
+  }
+
+  function stopReducedMotionListener() {
+    if (!reducedMotionQuery || !reducedMotionListening || reducedMotionHosts.length) return;
+    if (typeof reducedMotionQuery.removeEventListener === 'function') reducedMotionQuery.removeEventListener('change', onReducedMotionChange);
+    else if (typeof reducedMotionQuery.removeListener === 'function') reducedMotionQuery.removeListener(onReducedMotionChange);
+    reducedMotionListening = false;
+  }
+
+  function watchReducedMotion(host) {
+    if (reducedMotionHosts.indexOf(host) === -1) reducedMotionHosts.push(host);
+    startReducedMotionListener();
+    registerDisposer(host, function () {
+      var index = reducedMotionHosts.indexOf(host);
+      if (index !== -1) reducedMotionHosts.splice(index, 1);
+      stopReducedMotionListener();
+    });
+  }
+
+  function updateMotionPolicy(host) {
+    var record = hostRecord(host);
+    var staticPolicy = record.reduced || record.printing;
+    var paused = staticPolicy || record.userPaused || record.offscreen || record.hidden;
+    for (var i = 0; i < record.controllers.length; i++) {
+      try {
+        if (staticPolicy && typeof record.controllers[i].staticFrame === 'function') record.controllers[i].staticFrame();
+        else if (paused) record.controllers[i].pause();
+        else record.controllers[i].resume();
+      } catch (_) {}
+    }
+    if (!record.control) return;
+    if (record.reduced) {
+      record.control.textContent = 'Motion reduced';
+      record.control.disabled = true;
+      record.control.setAttribute('aria-label', 'Animation disabled because reduced motion is enabled');
+      record.control.setAttribute('aria-pressed', 'true');
+    } else {
+      record.control.disabled = false;
+      record.control.textContent = record.userPaused ? 'Play animation' : 'Pause animation';
+      record.control.setAttribute('aria-label', record.userPaused ? 'Play explanatory animation' : 'Pause explanatory animation');
+      record.control.setAttribute('aria-pressed', record.userPaused ? 'true' : 'false');
+    }
+  }
+
+  function installMotionPolicy(host) {
+    var record = hostRecord(host);
+    if (record.policyInstalled) return;
+    record.policyInstalled = true;
+
+    var control = el('button', {
+      class: 'lf-motion-toggle',
+      type: 'button',
+      'aria-label': 'Pause explanatory animation',
+      'aria-pressed': 'false'
+    }, ['Pause animation']);
+    control.addEventListener('click', function () {
+      record.userPaused = !record.userPaused;
+      control.setAttribute('aria-label', record.userPaused ? 'Play explanatory animation' : 'Pause explanatory animation');
+      updateMotionPolicy(host);
+    });
+    host.insertBefore(control, host.firstChild || null);
+    record.control = control;
+    watchReducedMotion(host);
+
+    function onVisibility() {
+      record.hidden = !!document.hidden;
+      updateMotionPolicy(host);
+    }
+    document.addEventListener('visibilitychange', onVisibility);
+    registerDisposer(host, function () { document.removeEventListener('visibilitychange', onVisibility); });
+
+    function onBeforePrint() {
+      record.printing = true;
+      updateMotionPolicy(host);
+    }
+    function onAfterPrint() {
+      record.printing = false;
+      updateMotionPolicy(host);
+    }
+    window.addEventListener('beforeprint', onBeforePrint);
+    window.addEventListener('afterprint', onAfterPrint);
+    registerDisposer(host, function () {
+      window.removeEventListener('beforeprint', onBeforePrint);
+      window.removeEventListener('afterprint', onAfterPrint);
+    });
+
+    if (typeof window.IntersectionObserver === 'function') {
+      var observer = new window.IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].target !== host) continue;
+          record.offscreen = !entries[i].isIntersecting;
+          updateMotionPolicy(host);
+        }
+      }, { threshold: 0.02 });
+      observer.observe(host);
+      registerDisposer(host, function () { observer.disconnect(); });
+    }
+  }
+
+  function addMotionController(host, controller) {
+    if (!host || !controller) return;
+    var record = hostRecord(host);
+    record.controllers.push(controller);
+    installMotionPolicy(host);
+    updateMotionPolicy(host);
+  }
+
+  function autoplay(host, step, period, opts) {
+    period = period || 6000;
+    opts = opts || {};
+    var staticT = opts.staticT === undefined ? 0.62 : opts.staticT;
+    var alive = true;
+    var running = false;
+    var frame = 0;
+    var localT = staticT;
+    var startedAt = 0;
+
+    function tick(now) {
+      if (!alive || !running) return;
+      localT = ((now - startedAt) % period) / period;
+      step(localT, false);
+      frame = window.requestAnimationFrame(tick);
+    }
+    function pause() {
+      if (!running) return;
+      running = false;
+      if (frame) window.cancelAnimationFrame(frame);
+      frame = 0;
+    }
+    function resume() {
+      if (!alive || running || !window.requestAnimationFrame) return;
+      running = true;
+      startedAt = performance.now() - localT * period;
+      frame = window.requestAnimationFrame(tick);
+    }
+    function dispose() {
+      alive = false;
+      pause();
+    }
+    function staticFrame() {
+      pause();
+      localT = staticT;
+      step(staticT, true);
+    }
+
+    step(staticT, true);
+    addMotionController(host, { pause: pause, resume: resume, staticFrame: staticFrame });
+    registerDisposer(host, dispose);
+    return dispose;
+  }
+
+  function raf(host, step) {
+    if (typeof host === 'function') {
+      step = host;
+      host = null;
+    }
+    if (host) return autoplay(host, function (t, still) { step(t * 6, still); }, 6000, { staticT: 0.5 });
+    if (prefersReducedMotion() || !window.requestAnimationFrame) { step(0, true); return function () {}; }
+    var alive = true, frame = 0, startedAt = null;
+    function tick(ts) {
+      if (!alive) return;
+      if (startedAt === null) startedAt = ts;
+      step((ts - startedAt) / 1000, false);
+      frame = window.requestAnimationFrame(tick);
+    }
+    frame = window.requestAnimationFrame(tick);
+    return function () { alive = false; if (frame) window.cancelAnimationFrame(frame); };
+  }
+
+  function attachSmilController(host) {
+    var allAnimated = host.querySelectorAll('svg animate,svg animateMotion,svg animateTransform,svg set');
+    var continuous = host.querySelectorAll('svg animate[repeatCount="indefinite"],svg animateMotion[repeatCount="indefinite"],svg animateTransform[repeatCount="indefinite"],svg set[repeatCount="indefinite"]');
+    if (!allAnimated.length && !continuous.length) return;
+    var svgs = host.querySelectorAll('svg');
+    var staticTime = Number(host.getAttribute('data-static-time') || 1.5);
+    var hasFinite = false;
+    for (var a = 0; a < allAnimated.length; a++) {
+      if (allAnimated[a].getAttribute('repeatCount') !== 'indefinite') { hasFinite = true; break; }
+    }
+    function pause() {
+      for (var i = 0; i < svgs.length; i++) {
+        if (typeof svgs[i].pauseAnimations === 'function') svgs[i].pauseAnimations();
+      }
+    }
+    function resume() {
+      for (var i = 0; i < svgs.length; i++) {
+        if (typeof svgs[i].unpauseAnimations === 'function') svgs[i].unpauseAnimations();
+      }
+    }
+    function staticFrame() {
+      for (var i = 0; i < svgs.length; i++) {
+        try {
+          if (typeof svgs[i].setCurrentTime === 'function') svgs[i].setCurrentTime(staticTime);
+          if (typeof svgs[i].pauseAnimations === 'function') svgs[i].pauseAnimations();
+        } catch (_) {}
+      }
+    }
+    function replay() {
+      var record = hostRecord(host);
+      if (record.reduced || record.printing) { staticFrame(); return; }
+      record.userPaused = false;
+      for (var i = 0; i < svgs.length; i++) {
+        try {
+          if (typeof svgs[i].setCurrentTime === 'function') svgs[i].setCurrentTime(0);
+          if (typeof svgs[i].unpauseAnimations === 'function') svgs[i].unpauseAnimations();
+        } catch (_) {}
+      }
+      updateMotionPolicy(host);
+    }
+    if (prefersReducedMotion()) staticFrame();
+    addMotionController(host, { pause: pause, resume: resume, staticFrame: staticFrame });
+    if (hasFinite) {
+      var replayControl = el('button', {
+        class: 'lf-motion-toggle lf-replay',
+        type: 'button',
+        'aria-label': 'Replay explanatory animation'
+      }, ['Replay animation']);
+      replayControl.addEventListener('click', replay);
+      var record = hostRecord(host);
+      host.insertBefore(replayControl, record.control && record.control.nextSibling ? record.control.nextSibling : null);
+      registerDisposer(host, function () {
+        replayControl.removeEventListener('click', replay);
+        if (replayControl.parentNode) replayControl.parentNode.removeChild(replayControl);
+      });
+    }
+    registerDisposer(host, pause);
+  }
+
+  function directSvgChild(svg, tagName) {
+    var children = childNodes(svg);
+    tagName = tagName.toLowerCase();
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].nodeType === 1 && String(children[i].tagName).toLowerCase() === tagName) return children[i];
+    }
+    return null;
+  }
+
+  function textFrom(host, selector, fallback) {
+    var node = host.querySelector ? host.querySelector(selector) : null;
+    var value = node && node.textContent ? node.textContent.replace(/\s+/g, ' ').trim() : '';
+    return value || fallback;
+  }
+
+  function ensureSvgAccessibility(host) {
+    var svgs = host.querySelectorAll ? host.querySelectorAll('svg') : [];
+    var figureName = (host.dataset.figure || 'lesson figure').trim().split(/\s+/)[0].replace(/[-_]+/g, ' ');
+    var fallbackTitle = textFrom(host, '.lf-label', figureName);
+    var fallbackDesc = textFrom(host, '.lf-cap', 'Interactive explanation for ' + figureName + '.');
+    for (var i = 0; i < svgs.length; i++) {
+      var svg = svgs[i];
+      var title = directSvgChild(svg, 'title');
+      var desc = directSvgChild(svg, 'desc');
+      if (!title) {
+        title = svgEl('title');
+        title.appendChild(document.createTextNode(fallbackTitle));
+        svg.insertBefore(title, svg.firstChild || null);
+      }
+      if (!desc) {
+        desc = svgEl('desc');
+        desc.appendChild(document.createTextNode(fallbackDesc));
+        svg.insertBefore(desc, title.nextSibling || svg.firstChild || null);
+      }
+      if (!title.id) title.setAttribute('id', uid('lf-svg-title'));
+      if (!desc.id) desc.setAttribute('id', uid('lf-svg-desc'));
+      if (!svg.getAttribute('role')) svg.setAttribute('role', 'img');
+      if (!svg.getAttribute('aria-labelledby')) svg.setAttribute('aria-labelledby', title.id + ' ' + desc.id);
+    }
+  }
+
+  function closestControl(node) {
+    while (node) {
+      if (node.classList && node.classList.contains('lf-ctrl')) return node;
+      node = node.parentNode;
+    }
+    return null;
+  }
+
+  function ensureControlAccessibility(host) {
+    if (!host.querySelectorAll) return;
+    var controls = host.querySelectorAll('input[type="range"],select');
+    for (var i = 0; i < controls.length; i++) {
+      var control = controls[i];
+      if (!control.id) control.setAttribute('id', uid(control.tagName.toLowerCase() === 'select' ? 'lf-select' : 'lf-range'));
+      var wrapper = closestControl(control);
+      var label = wrapper && wrapper.querySelector ? wrapper.querySelector('label') : null;
+      if (label && !label.getAttribute('for')) label.setAttribute('for', control.id);
+      if (String(control.tagName).toLowerCase() === 'input' && control.getAttribute('type') === 'range' && !control.getAttribute('aria-valuetext')) {
+        control.setAttribute('aria-valuetext', control.value);
+      }
+    }
+  }
+
+  function disposeHost(host) {
+    if (!host || !host._aifsFigureRuntime) return;
+    var record = host._aifsFigureRuntime;
+    for (var i = record.disposers.length - 1; i >= 0; i--) {
+      try { record.disposers[i](); } catch (_) {}
+    }
+    if (record.control && record.control.parentNode) record.control.parentNode.removeChild(record.control);
+    delete host.dataset.lfMounted;
+    host._aifsFigureRuntime = null;
+  }
+
+  function disposeRoot(root) {
+    if (!root) return;
+    var hosts = [];
+    if (root.matches && root.matches('.lesson-figure[data-figure]')) hosts.push(root);
+    if (root.querySelectorAll) {
+      var found = root.querySelectorAll('.lesson-figure[data-figure]');
+      for (var i = 0; i < found.length; i++) hosts.push(found[i]);
+    }
+    for (var j = 0; j < hosts.length; j++) disposeHost(hosts[j]);
   }
 
   // ── kv-cache: drag the dims, watch the cache size ──────────────────────
@@ -113,7 +648,7 @@
       var gib = bytes / GiB;
       num.innerHTML = gib.toFixed(gib < 10 ? 2 : 1) + ' <small>GiB</small>';
       var pct = Math.min(100, gib / REF * 100);
-      bar.style.width = pct + '%';
+      bar.style.transform = 'scaleX(' + (pct / 100) + ')';
       barWrap.classList.toggle('over', gib > REF);
       meta.textContent = (gib > REF ? '⚠ exceeds ' : '') + Math.round(gib / REF * 100) + '% of one ' + REF + ' GiB GPU';
       formula.textContent = '2 · ' + state.layers + ' layers · ' + state.kvHeads + ' kv-heads · ' + state.headDim +
@@ -202,7 +737,7 @@
       var ent = -p.reduce(function (a, pi) { return a + (pi > 0 ? pi * Math.log2(pi) : 0); }, 0);
       while (rows.firstChild) rows.removeChild(rows.firstChild);
       p.forEach(function (pi, i) {
-        var bar = el('i'); bar.style.width = (pi * 100).toFixed(1) + '%';
+        var bar = el('i'); bar.style.transform = 'scaleX(' + pi.toFixed(3) + ')';
         rows.appendChild(el('div', { class: 'lf-ctrl' }, [
           el('label', {}, [labels[i], el('b', {}, [(pi * 100).toFixed(1) + '%'])]),
           el('div', { class: 'lf-bar' }, [bar])
@@ -270,7 +805,7 @@
       var norm = Math.sqrt(w.reduce(function (a, x) { return a + x * x; }, 0));
       while (rows.firstChild) rows.removeChild(rows.firstChild);
       w.forEach(function (wi, i) {
-        var bar = el('i'); bar.style.width = (Math.abs(wi) * 100).toFixed(0) + '%';
+        var bar = el('i'); bar.style.transform = 'scaleX(' + Math.abs(wi).toFixed(3) + ')';
         rows.appendChild(el('div', { class: 'lf-ctrl' }, [
           el('label', {}, ['w' + (i + 1), el('b', {}, [wi.toFixed(2)])]),
           el('div', { class: 'lf-bar' }, [bar])
@@ -363,7 +898,7 @@
       idx.forEach(function (i) {
         var on = !!keep[i];
         var renorm = on ? probs[i] / kSum : 0;
-        var bar = el('i'); bar.style.width = (renorm * 100).toFixed(1) + '%';
+        var bar = el('i'); bar.style.transform = 'scaleX(' + renorm.toFixed(3) + ')';
         if (!on) bar.style.background = 'var(--rule-soft,#ccc)';
         var lab = el('label', {}, [labels[i] + (on ? '' : ' ·'), el('b', {}, [on ? (renorm * 100).toFixed(1) + '%' : 'cut'])]);
         if (!on) lab.style.opacity = '0.45';
@@ -401,7 +936,7 @@
       var ratio = D / N;
       num.innerHTML = L.toFixed(3) + ' <small>loss</small>';
       var pct = Math.max(2, Math.min(100, (ratio / 20) * 50));
-      bar.style.width = pct + '%';
+      bar.style.transform = 'scaleX(' + (pct / 100) + ')';
       barWrap.classList.toggle('over', ratio > 30 || ratio < 12);
       meta.textContent = human(ratio) + ' tokens/param  ·  ' + (ratio < 12 ? 'under-trained: too few tokens' : ratio > 30 ? 'over-trained: spend on params instead' : 'near Chinchilla-optimal (~20)');
       formula.textContent = 'N = ' + human(N) + ' params · D = ' + human(D) + ' tokens · compute 6ND ≈ ' + human(C) + ' FLOPs';
@@ -434,7 +969,7 @@
       var bytes = N * state.bits / 8;
       var gb = bytes / GB;
       num.innerHTML = gb.toFixed(gb < 10 ? 2 : 1) + ' <small>GB</small>';
-      bar.style.width = Math.min(100, state.bits / 32 * 100) + '%';
+      bar.style.transform = 'scaleX(' + Math.min(1, state.bits / 32) + ')';
       var levels = Math.pow(2, state.bits);
       var err = state.bits >= 16 ? 'negligible' : state.bits >= 8 ? '< 1% perplexity hit' : state.bits >= 4 ? 'small with good schemes (GPTQ/AWQ)' : 'large: needs care';
       meta.textContent = Math.round((1 - bytes / bytesFp32) * 100) + '% smaller than fp32  ·  quantization error: ' + err;
@@ -509,7 +1044,7 @@
       var lora = mats * 2 * state.d * state.r;
       var frac = lora / full * 100;
       num.innerHTML = frac.toFixed(frac < 1 ? 3 : 2) + ' <small>% trainable</small>';
-      bar.style.width = Math.min(100, frac * 8) + '%';
+      bar.style.transform = 'scaleX(' + Math.min(1, frac * 0.08) + ')';
       meta.textContent = human(lora) + ' trainable of ' + human(full) + ' frozen  ·  ' + Math.round(full / lora) + 'x fewer gradients to store';
       formula.textContent = 'ΔW = B·A,  A∈ℝ^{r×d}, B∈ℝ^{d×r}  →  2·d·r per matrix vs d²  =  2r/d = ' + (2 * state.r / state.d * 100).toFixed(3) + '%';
     };
@@ -713,19 +1248,26 @@
       var rest = host.dataset.figure.trim().slice(name.length).trim();
       if (rest) { try { cfg = JSON.parse(rest); } catch (e) {} }
 
-      var local = FIGS[name];
-      var animated = window.AIFS_FIGURES && window.AIFS_FIGURES[name];
+      var figure = FIGS[name];
       try {
-        if (local) {
-          local(host, cfg);
-        } else if (animated) {
-          host.classList.add('lf-animated');
-          animated(host, cfg);
-        } else {
+        if (!figure) {
+          host.setAttribute('data-figure-missing', 'true');
           return; // unknown figure; leave the empty host out
         }
+        host.removeAttribute('data-figure-missing');
+        host.setAttribute('aria-busy', 'true');
+        var dispose = figure(host, cfg);
+        if (typeof dispose === 'function') registerDisposer(host, dispose);
+        ensureControlAccessibility(host);
+        ensureSvgAccessibility(host);
+        if (host.querySelector('svg')) host.classList.add('lf-animated');
+        attachSmilController(host);
         host.dataset.lfMounted = '1';
+        host.removeAttribute('aria-busy');
       } catch (e) {
+        disposeHost(host);
+        while (host.firstChild) host.removeChild(host.firstChild);
+        host.removeAttribute('aria-busy');
         console.warn('lesson figure "' + name + '" failed:', e);
       }
     });
@@ -735,12 +1277,69 @@
   // Modules load after this file and call LF.register({ 'name': fn, ... }).
   function register(obj) { for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k)) FIGS[k] = obj[k]; }
 
+  var providerPromises = Object.create(null);
+
+  function requiredProviders(root) {
+    var needed = Object.create(null);
+    var map = window.AIFS_FIGURE_PROVIDERS || {};
+    var order = window.AIFS_FIGURE_PROVIDER_ORDER || [];
+    var hosts = (root || document).querySelectorAll('.lesson-figure[data-figure]');
+    for (var i = 0; i < hosts.length; i++) {
+      var name = (hosts[i].dataset.figure || '').trim().split(/\s+/)[0];
+      var providers = map[name] || [];
+      for (var j = 0; j < providers.length; j++) needed[providers[j]] = true;
+    }
+    return order.filter(function (provider) { return !!needed[provider]; });
+  }
+
+  function loadProvider(provider) {
+    if (providerPromises[provider]) return providerPromises[provider];
+    providerPromises[provider] = new Promise(function (resolve, reject) {
+      var script = document.createElement('script');
+      var versions = window.AIFS_FIGURE_PROVIDER_VERSIONS || {};
+      var version = versions[provider] || '';
+      script.src = provider + (version ? '?v=' + encodeURIComponent(version) : '');
+      script.async = false;
+      script.setAttribute('data-figure-provider', provider);
+      script.onload = function () { resolve(provider); };
+      script.onerror = function () {
+        delete providerPromises[provider];
+        reject(new Error('Figure provider failed to load: ' + provider));
+      };
+      document.head.appendChild(script);
+    });
+    return providerPromises[provider];
+  }
+
+  function loadFigureProviders(root) {
+    var providers = requiredProviders(root);
+    return providers.reduce(function (chain, provider) {
+      return chain.then(function () {
+        return loadProvider(provider).catch(function (error) {
+          console.warn(error.message);
+          return null;
+        });
+      });
+    }, Promise.resolve()).then(function () { return providers; });
+  }
+
   window.mountLessonFigures = mountLessonFigures;
   window.LESSON_FIGURES = FIGS;
+  window.AIFS_loadFigureProviders = loadFigureProviders;
+  window.AIFSFigureRuntime = {
+    autoplay: autoplay,
+    registerDisposer: registerDisposer,
+    addMotionController: addMotionController,
+    disposeHost: disposeHost,
+    disposeRoot: disposeRoot,
+    requiredProviders: requiredProviders
+  };
   // Shared toolkit for figure module files. Vanilla, no deps, theme via CSS vars.
   window.LF = {
     el: el, svgEl: svgEl, slider: slider, select: select,
     fmtInt: fmtInt, fmtSeq: fmtSeq, clamp: clamp, lerp: lerp, raf: raf,
+    uid: uid, motion: MOTION, smil: smil,
+    autoplay: autoplay, registerDisposer: registerDisposer, addMotionController: addMotionController,
     register: register
   };
 })();

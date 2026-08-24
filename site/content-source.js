@@ -98,10 +98,53 @@
     });
   }
 
+  function mergeLessonOutputs(lessonPath, directoryEntries, artifacts) {
+    var lesson = clean(lessonPath).replace(/\/+$/, '');
+    var liveEntries = Array.isArray(directoryEntries) ? directoryEntries : [];
+    if (!lesson) return liveEntries.slice();
+
+    var prefix = lesson + '/outputs/';
+    var selected = (Array.isArray(artifacts) ? artifacts : []).filter(function (artifact) {
+      var artifactLesson = clean(artifact && artifact.lessonPath).replace(/\/+$/, '');
+      var artifactFile = clean(artifact && artifact.file).replace(/\/+$/, '');
+      return artifactLesson === lesson && artifactFile.indexOf(prefix) === 0;
+    });
+    var artifactByPath = Object.create(null);
+    selected.forEach(function (artifact, index) {
+      artifactByPath[clean(artifact.file).replace(/\/+$/, '')] = index;
+      if (artifact.bundlePath) {
+        artifactByPath[clean(artifact.bundlePath).replace(/\/+$/, '')] = index;
+      }
+    });
+
+    var seen = Object.create(null);
+    var merged = [];
+    liveEntries.forEach(function (entry) {
+      var entryPath = clean(entry && entry.path).replace(/\/+$/, '');
+      if (!entryPath && entry && entry.name) {
+        entryPath = prefix + clean(entry.name).replace(/\/+$/, '');
+      }
+      var index = Object.prototype.hasOwnProperty.call(artifactByPath, entryPath)
+        ? artifactByPath[entryPath]
+        : -1;
+      if (index < 0) {
+        merged.push(entry);
+      } else if (!seen[index]) {
+        merged.push(selected[index]);
+        seen[index] = true;
+      }
+    });
+    selected.forEach(function (artifact, index) {
+      if (!seen[index]) merged.push(artifact);
+    });
+    return merged;
+  }
+
   window.AIFSContentSource = {
     isLocal: isLocal,
     repoUrl: repoUrl,
     rawRepoUrl: rawRepoUrl,
     localDirectoryFiles: localDirectoryFiles,
+    mergeLessonOutputs: mergeLessonOutputs,
   };
 }());

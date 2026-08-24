@@ -143,11 +143,11 @@
     host.appendChild(el('div', { class: 'lf' }, [
       head('CLIENT MERGE', 'many servers, one tool list'),
       el('div', { class: 'lf-body' }, [out(svg)]),
-      cap('A real host loads several MCP servers at once and flattens their tool lists into one namespace the model sees. The client handshakes each server, prefixes names to avoid collisions, and remembers which server owns each tool so a call routes back to the right process.')
+      cap('A real host loads several MCP servers at once and flattens their discovered tool lists into one namespace the model sees. The client calls server/discover for each server, prefixes names to avoid collisions, and remembers which server owns each tool so a call routes back to the right process.')
     ]));
   }
 
-  // tp-transport-handshake: stdio vs Streamable HTTP, a session line draws in
+  // tp-transport-handshake: stdio vs stateless Streamable HTTP requests
   function transportHandshake(host) {
     var W = 520, H = 250, svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
     // stdio lane
@@ -160,24 +160,23 @@
     p1.appendChild(anim('cx', '110;410', '0;1', '2.2s'));
     svg.appendChild(p1);
     svg.appendChild(txt(260, 50, 'stdin / stdout', '8', 'var(--ink-mute,#777)'));
-    // http lane: session stroke draws in
+    // http lane: independent request packets cross one endpoint
     svg.appendChild(txt(20, 130, 'Streamable HTTP (remote)', '10', 'var(--ink-mute,#777)', 'start'));
     svg.appendChild(svgEl('rect', { x: 20, y: 142, width: 90, height: 34, rx: '4', fill: 'var(--bg-surface,#eee)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.3' }));
     svg.appendChild(txt(65, 163, 'client', '10', 'var(--ink,#1a1a1a)'));
     svg.appendChild(svgEl('rect', { x: 410, y: 142, width: 90, height: 34, rx: '4', fill: 'var(--bg-surface,#eee)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.3' }));
     svg.appendChild(txt(455, 163, 'endpoint', '10', 'var(--ink,#1a1a1a)'));
-    var sess = svgEl('line', { x1: '110', y1: '159', x2: '410', y2: '159', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '2.5', 'stroke-dasharray': '300', 'stroke-dashoffset': '300' });
-    sess.appendChild(anim('stroke-dashoffset', '300;0;0;300', '0;0.4;0.8;1', '3.4s'));
-    svg.appendChild(sess);
-    svg.appendChild(txt(260, 134, 'POST + GET, one Mcp-Session-Id', '8', 'var(--ink-mute,#777)'));
-    var ind = svgEl('circle', { cx: '410', cy: '210', r: '0', fill: 'var(--blueprint,#3553ff)', opacity: '0.5' });
-    ind.appendChild(anim('r', '0;26;0', '0;0.5;1', '3.4s'));
-    svg.appendChild(ind);
-    svg.appendChild(txt(410, 214, 'GET stream', '8', 'var(--ink-mute,#777)'));
+    svg.appendChild(svgEl('line', { x1: '110', y1: '159', x2: '410', y2: '159', stroke: 'var(--rule-soft,#ccc)', 'stroke-width': '1.5' }));
+    var req = svgEl('circle', { cy: '159', r: '6', fill: 'var(--blueprint,#3553ff)' });
+    req.appendChild(anim('cx', '110;410;410;110', '0;0.45;0.55;1', '3.4s'));
+    svg.appendChild(req);
+    svg.appendChild(txt(260, 134, 'POST /mcp per JSON-RPC message', '8', 'var(--ink-mute,#777)'));
+    svg.appendChild(txt(260, 200, 'response: application/json or request-scoped SSE', '8', 'var(--ink-mute,#777)'));
+    svg.appendChild(txt(260, 218, 'modern-only GET and DELETE return 405', '8', 'var(--ink-mute,#777)'));
     host.appendChild(el('div', { class: 'lf' }, [
       head('TRANSPORTS', 'stdio for local, HTTP for remote'),
       el('div', { class: 'lf-body' }, [out(svg)]),
-      cap('Two transports, two deployment shapes. stdio spawns the server as a child process and talks over stdin and stdout, perfect on one machine. Streamable HTTP uses a single endpoint with POST for requests and a GET stream for the session, the standard once the server lives over the network.')
+      cap('Two transports, two deployment shapes. stdio uses stdin and stdout with a local child process. MCP 2026-07-28 Streamable HTTP is stateless: every JSON-RPC message gets its own POST to one endpoint, and that request receives either JSON or request-scoped SSE. There is no Mcp-Session-Id, standalone GET stream, or session DELETE.')
     ]));
   }
 
@@ -207,11 +206,11 @@
     poll.appendChild(anim('r', '6;15;6', '0;0.5;1', '1.4s'));
     poll.appendChild(anim('opacity', '0.9;0;0.9', '0;0.5;1', '1.4s'));
     svg.appendChild(poll);
-    svg.appendChild(txt(260, 50, 'tasks/status polled, result fetched at the end', '9', 'var(--ink-mute,#777)'));
+    svg.appendChild(txt(260, 50, 'tasks/get polls; tasks/update supplies requested input', '9', 'var(--ink-mute,#777)'));
     host.appendChild(el('div', { class: 'lf' }, [
       head('ASYNC TASK', 'call now, fetch later'),
       el('div', { class: 'lf-body' }, [out(svg)]),
-      cap('Long-running work returns a task id immediately instead of holding the connection open. The task moves through working and any input-required pauses toward completed, while the client polls tasks/status and fetches the result at the end. Persisted state means a server restart does not lose work in flight.')
+      cap('The official tasks extension lets long-running work return a task handle instead of holding the request open. The client polls with tasks/get; a terminal task contains its final result. If the task enters input_required, tasks/update supplies responses to outstanding inputRequests, and tasks/cancel signals cancellation intent. The current extension has no tasks/list or tasks/result method.')
     ]));
   }
 

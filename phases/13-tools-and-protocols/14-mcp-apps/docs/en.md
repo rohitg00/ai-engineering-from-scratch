@@ -1,216 +1,318 @@
-# MCP Apps — Interactive UI Resources via `ui://`
+# MCP Apps on the Stateless Protocol
 
-> Text-only tool output caps what agents can show. MCP Apps (SEP-1724, official January 26, 2026) let a tool return sandboxed interactive HTML rendered inline in Claude Desktop, ChatGPT, Cursor, Goose, and VS Code. Dashboards, forms, maps, 3D scenes, all through one extension. This lesson walks the `ui://` resource scheme, the `text/html;profile=mcp-app` MIME, the iframe-sandbox postMessage protocol, and the security surface that comes with letting a server render HTML.
+> An interactive result is still an MCP tool and resource exchange. The 2026-07-28 core makes that exchange self-contained, while the Apps extension adds the sandboxed browser surface.
 
 **Type:** Build
-**Languages:** Python (stdlib, UI resource emitter), HTML (sample app)
+**Languages:** Python
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources)
 **Time:** ~75 minutes
 
 ## Learning Objectives
 
-- Return a `ui://` resource from a tool call and set the correct MIME and metadata.
-- Declare a tool's associated UI with `_meta.ui.resourceUri`, `_meta.ui.csp`, and `_meta.ui.permissions`.
-- Implement the iframe sandbox postMessage JSON-RPC for UI-to-host communication.
-- Apply CSP and permissions-policy defaults that defend against UI-originated attacks.
+- Advertise MCP Apps through `server/discover` and per-request extension capabilities.
+- Declare a `ui://` resource on a tool before the tool is called.
+- Return complete tool and resource results on the 2026-07-28 stateless wire.
+- Separate the Apps `ui/initialize` bridge message from the removed MCP core handshake.
+- Apply origin validation, sandboxing, CSP, and least-privilege permissions.
 
 ## The Problem
 
-A 2025-era `visualize_timeline` tool can return "Here are 14 notes organized chronologically: ...". That is a paragraph. Users actually want the interactive timeline. Before MCP Apps, the options were: client-specific widget APIs (Claude artifacts, OpenAI Custom GPT HTML), or no UI at all.
+A text result can describe a timeline. It cannot give the user a timeline they can filter, inspect, or act on.
 
-MCP Apps (SEP-1724, shipped January 26, 2026) standardize the contract. A tool result contains a `resource` whose URI is `ui://...` and whose MIME is `text/html;profile=mcp-app`. The host renders it in a sandboxed iframe with a limited CSP and no network access unless explicitly granted. The UI inside the iframe posts messages to the host via a tiny postMessage JSON-RPC dialect.
+MCP Apps solves the presentation problem with an optional extension. A tool definition points to a `ui://` resource. The host can fetch and review that resource before the tool runs, render it in a sandboxed iframe, and mediate all app actions through a JSON-RPC bridge.
 
-Every compatible client (Claude Desktop, ChatGPT, Goose, VS Code) renders the same `ui://` resource the same way. One server, one HTML bundle, universal UI.
+The core protocol changed in 2026-07-28. Do not wrap an App in the old connection lifecycle:
+
+- There is no core `initialize` request or `notifications/initialized` notification.
+- There is no `Mcp-Session-Id` header.
+- Every request carries protocol version and client capabilities in `params._meta`.
+- A server implements `server/discover` so clients can inspect versions, core capabilities, and extensions.
+- Every successful result has a `resultType` discriminator.
+- Streamable HTTP uses one POST per request. Modern GET and DELETE entrypoints return 405.
+
+The Apps bridge still has a method named `ui/initialize`. It belongs to the iframe postMessage dialect. It does not recreate a core MCP session.
 
 ## The Concept
 
-### The `ui://` resource scheme
+### Two protocols, one feature
 
-A tool returns:
+Keep the layers explicit:
+
+1. The MCP core carries `server/discover`, `tools/list`, `tools/call`, `resources/list`, and `resources/read`.
+2. The MCP Apps extension declares the UI and defines the iframe-to-host bridge.
+3. Browser sandbox rules limit what the UI can reach.
+
+The extension identifier is `io.modelcontextprotocol/ui`. Both peers opt in. A client sends extension support inside the capabilities object on each request:
 
 ```json
 {
-  "content": [
-    {"type": "text", "text": "Here is your notes timeline:"},
-    {"type": "ui_resource", "uri": "ui://notes/timeline"}
-  ],
-  "_meta": {
-    "ui": {
-      "resourceUri": "ui://notes/timeline",
-      "csp": {
-        "defaultSrc": "'self'",
-        "scriptSrc": "'self' 'unsafe-inline'",
-        "connectSrc": "'self'"
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "server/discover",
+  "params": {
+    "_meta": {
+      "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+      "io.modelcontextprotocol/clientCapabilities": {
+        "extensions": {
+          "io.modelcontextprotocol/ui": {}
+        }
       },
-      "permissions": []
+      "io.modelcontextprotocol/clientInfo": {
+        "name": "timeline-host",
+        "version": "1.0.0"
+      }
     }
   }
 }
 ```
 
-The host then calls `resources/read` on the `ui://notes/timeline` URI and gets back:
+`clientInfo` is recommended for diagnostics. It is self-reported data, not an authorization identity.
+
+### Discover before rendering
+
+The server's discovery result advertises the extension:
 
 ```json
 {
-  "contents": [{
-    "uri": "ui://notes/timeline",
-    "mimeType": "text/html;profile=mcp-app",
-    "text": "<!doctype html>..."
-  }]
+  "resultType": "complete",
+  "supportedVersions": ["2026-07-28"],
+  "capabilities": {
+    "tools": {},
+    "resources": {},
+    "extensions": {
+      "io.modelcontextprotocol/ui": {}
+    }
+  },
+  "ttlMs": 300000,
+  "cacheScope": "public",
+  "_meta": {
+    "io.modelcontextprotocol/serverInfo": {
+      "name": "timeline-app-server",
+      "version": "2.0.0"
+    }
+  }
 }
 ```
 
-### Iframe sandbox
+The server must support discovery. A client is not forced to call discovery before every action because each action carries its own capabilities.
 
-The host renders the HTML inside a sandboxed `<iframe>` with:
+### Declare the UI on the tool definition
 
-- `sandbox="allow-scripts allow-same-origin"` (or stricter per server declaration)
-- Server-declared CSP applied via response headers.
-- No cookies, no localStorage from the host's origin.
-- Network access limited to `connectSrc` in CSP.
-
-### postMessage protocol
-
-The iframe communicates with the host via `window.postMessage`. A tiny JSON-RPC 2.0 dialect:
-
-Always pin `targetOrigin` to the peer's exact origin, and on the receiving side validate `event.origin` against an allowlist before processing any payload. Never use `"*"` for either side of this channel — the body carries tool calls and resource reads.
-
-```js
-// iframe to host  (pin to host origin)
-window.parent.postMessage({
-  jsonrpc: "2.0",
-  id: 1,
-  method: "host.callTool",
-  params: { name: "notes_update", arguments: { id: "note-14", title: "..." } }
-}, "https://host.example.com");
-
-// host to iframe  (pin to iframe origin)
-iframe.contentWindow.postMessage({
-  jsonrpc: "2.0",
-  id: 1,
-  result: { content: [...] }
-}, "https://iframe.example.com");
-
-// receiver on both sides
-window.addEventListener("message", (event) => {
-  if (event.origin !== "https://expected-peer.example.com") return;
-  // safe to process event.data
-});
-```
-
-Available host-side methods the UI can call:
-
-- `host.callTool(name, arguments)` — invokes a server tool.
-- `host.readResource(uri)` — reads an MCP resource.
-- `host.getPrompt(name, arguments)` — fetches a prompt template.
-- `host.close()` — dismisses the UI.
-
-Every call still goes through the MCP protocol and inherits the server's permissions.
-
-### Permissions
-
-The `_meta.ui.permissions` list requests extra capabilities:
-
-- `camera` — access the user's camera (used for scan-a-document UIs).
-- `microphone` — voice input.
-- `geolocation` — location.
-- `network:*` — wider network access than `connectSrc` alone allows.
-
-Each permission is a prompt the user sees before the UI renders.
-
-### Security risks
-
-HTML in an iframe is still HTML. New attack surface:
-
-- **Prompt-injection via UI.** A malicious server UI can show text that looks like a system message and tricks the user. Host rendering should visibly distinguish server UI from host UI.
-- **Exfiltration via `connectSrc`.** If CSP permits `connect-src: *`, the UI can send data anywhere. Default should be strict.
-- **Clickjacking.** The UI overlays host chrome. Hosts must prevent z-index manipulation and enforce opacity rules.
-- **Steal focus.** UI takes keyboard focus and captures the next message. Hosts must intercept.
-
-Phase 13 · 15 covers these in depth as part of MCP security; this lesson introduces them.
-
-### `ui/initialize` handshake
-
-After the iframe loads, it sends `ui/initialize` over postMessage:
+The modern Apps contract binds a UI to the tool in `tools/list`:
 
 ```json
-{"jsonrpc": "2.0", "id": 0, "method": "ui/initialize",
- "params": {"theme": "dark", "locale": "en-US", "sessionId": "..."}}
+{
+  "name": "notes_timeline",
+  "description": "Render a timeline of notes.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {}
+  },
+  "_meta": {
+    "ui": {
+      "resourceUri": "ui://notes/timeline.html"
+    }
+  }
+}
 ```
 
-Host responds with capabilities and a session token. The UI uses the session token on every subsequent host call.
+This is deliberately pre-call metadata. The host can preload, cache, and security-review the HTML before a result asks to display it. Older flat metadata keys may be accepted by compatibility code, but new servers should emit the nested `_meta.ui.resourceUri` form.
 
-### AppRenderer / AppFrame SDK primitives
+`tools/list` is cacheable in the current core. Include deterministic ordering, `ttlMs`, and `cacheScope`. Use `private` when the visible tools vary by user or token.
 
-The ext-apps SDK exposes two convenience primitives:
+### Return data, then let the host bind the view
 
-- `AppRenderer` (server side) — wraps a React / Vue / Solid component and emits a `ui://` resource with the right MIME and metadata.
-- `AppFrame` (client side) — receives the resource, mounts the iframe, and mediates postMessage.
+The tool call returns ordinary content plus structured data:
 
-You can use these or hand-roll the HTML and JSON-RPC.
+```json
+{
+  "resultType": "complete",
+  "content": [
+    {"type": "text", "text": "Timeline ready."}
+  ],
+  "structuredContent": {
+    "notes": [
+      {"id": "note-1", "title": "Discover", "created": "2026-07-28"}
+    ]
+  },
+  "isError": false
+}
+```
 
-### Ecosystem status
+The host already knows which view belongs to the tool. Avoid inventing a new content block just to repeat the URI.
 
-MCP Apps shipped January 26, 2026. Client support as of April 2026:
+### Serve the app as a resource
 
-- **Claude Desktop.** Full support since January 2026.
-- **ChatGPT.** Full support via the Apps SDK (same underlying MCP Apps protocol).
-- **Cursor.** Beta; enable via settings.
-- **VS Code.** Insider builds only.
-- **Goose.** Full support.
-- **Zed, Windsurf.** Roadmapped.
+The server advertises `resources` in discovery, so it also implements the mandatory `resources/list` operation. Its deterministic list entry includes the canonical URI, a stable name, description, and MIME type. The list result includes `resultType`, server identity metadata, `ttlMs`, and `cacheScope`, just like the deterministic tool list.
 
-Servers in production: dashboards, map visualizations, data tables, chart builders, sandbox IDE previews.
+The host sends `resources/read`. On Streamable HTTP, the request has:
+
+```text
+POST /mcp
+MCP-Protocol-Version: 2026-07-28
+Mcp-Method: resources/read
+Mcp-Name: ui://notes/timeline.html
+```
+
+The header values and JSON-RPC body must match. A mismatch is protocol error `-32020`.
+
+The result contains the HTML resource and cache hints:
+
+```json
+{
+  "resultType": "complete",
+  "contents": [
+    {
+      "uri": "ui://notes/timeline.html",
+      "mimeType": "text/html;profile=mcp-app",
+      "text": "<!doctype html>...",
+      "_meta": {
+        "ui": {
+          "csp": {
+            "connectDomains": [],
+            "resourceDomains": [],
+            "frameDomains": [],
+            "baseUriDomains": []
+          },
+          "permissions": {}
+        }
+      }
+    }
+  ],
+  "ttlMs": 60000,
+  "cacheScope": "public"
+}
+```
+
+### Cache UI resources as executable content
+
+An App resource is not interchangeable with ordinary prose. Its cache entry can execute bridge code, render tool data, and request host-mediated actions. Key it by canonical `ui://` URI, admitted server identity and version, resource content digest, and authorization context when `cacheScope` is private. Never reuse a private App resource across principals because the HTML or its policy metadata may differ even when the URI is identical.
+
+Invalidate the entry when its `ttlMs` expires, the tool's `_meta.ui.resourceUri` binding changes, the server version or admitted descriptor pin changes, or an acknowledged resource-change subscription names the URI. Refetch and reapply CSP and permission review before remounting. A stale iframe must not keep broader permissions merely because a new resource version has not loaded yet.
+
+### Reject wire ambiguity before feature policy
+
+Validation has a deliberate order. First validate the JSON-RPC shape and require string protocol metadata plus an object client capability map. Next compare routing headers with the body. Only then decide whether the matched protocol version is supported. This order prevents a proxy and server from interpreting different requests.
+
+| Condition | HTTP | JSON-RPC error |
+|-----------|------|----------------|
+| Header and body version, method, or name disagree | 400 | `-32020` |
+| Header and body agree on an unsupported version | 400 | `-32022`, with `data` exactly `{"supported":["2026-07-28"],"requested":"<actual>"}` |
+| `resources/read` lacks the Apps extension capability | 400 | `-32021`, with `data.requiredCapabilities.extensions.io.modelcontextprotocol/ui` |
+| Method is unknown | 404 | `-32601` |
+
+A JSON-RPC notification has no `id`, so the server never emits a JSON-RPC response for it. An accepted HTTP notification returns 202 with an empty body. An error can change the HTTP status, but it still cannot create a JSON-RPC error body for a notification.
+
+### The sandbox is a boundary, not a trust verdict
+
+A host controls the iframe. The App cannot directly read host cookies, local storage, or page DOM. All privileged work must cross the bridge.
+
+Use these defaults:
+
+- Leave all CSP domain lists empty, then add only the origins the App needs. Use `connectDomains` for fetch, XHR, and WebSocket; use `resourceDomains` for scripts, styles, images, and fonts.
+- Bundle code and data when practical.
+- Request no camera, microphone, or location permission unless a visible feature needs it.
+- Pin `postMessage` to the exact peer origin and reject events from every other origin.
+- Treat tool arguments, tool results, resource text, and bridge messages as untrusted input.
+- Keep user consent in the host. The iframe cannot approve its own consequential action.
+
+Do not copy a fixed `sandbox` attribute from a tutorial into every host. The host must choose flags based on the App's origin model and its own isolation design.
+
+An allowed domain is still an exfiltration path. `connectDomains: ["https://api.example.com"]` means any script that executes inside the App can send permitted data there. Exact origin matching prevents destination confusion, but it does not decide whether the payload is appropriate. Keep connect access empty by default, avoid placing bearer tokens in the iframe, proxy narrow operations through the host when practical, limit response and request sizes, and audit which user action caused each outbound request. Treat `resourceDomains` separately from `connectDomains`; permission to load a font or script should not grant arbitrary data upload.
+
+### The Apps bridge has its own lifecycle
+
+The Apps bridge is a JSON-RPC dialect over `postMessage`. It can exchange `ui/initialize` and `ui/*` notifications and can proxy core-looking methods such as `tools/call`.
+
+The View sends `ui/initialize` with `appInfo` and an `appCapabilities` object. The host returns its capabilities and host context. Only after that response does the View send `ui/notifications/initialized`. The host must wait for this Apps notification before sending messages to the View.
+
+That local handshake creates a bridge between one iframe and one host frame. It does not negotiate the MCP protocol version, create server state, or mint a transport session. Notice the exact prefix: core `notifications/initialized` was removed, while Apps `ui/notifications/initialized` remains. A core request generated by a bridged tool call is a new self-contained request with a new JSON-RPC id and full request metadata.
+
+### Host context, actions, and revocation
+
+The host remains the authority after bridge initialization. A View can request a tool action, navigation, clipboard use, or another privileged effect only through a capability the host advertised. The host validates the typed request, current user, target, and arguments, applies approval policy, and may refuse it. A button click and a valid bridge message express intent; neither grants authority.
+
+Treat theme, size, and accessibility as changing host context rather than one-time render inputs:
+
+- Apply host-provided color and typography tokens, then react when theme or contrast preference changes.
+- Let the View report desired dimensions, but let the host cap and apply iframe size so content cannot escape its layout or create deceptive overlays.
+- Preserve keyboard order, visible focus, accessible names, screen-reader status, sufficient contrast, zoom, and reduced-motion behavior inside the iframe.
+- Re-test focus transfer between host controls and View controls after resize and rerender.
+
+Capabilities can be revoked while the App is open because the user changes account, policy changes, a server is quarantined, or the host narrows consent. Check capability and authorization at action time, not only during `ui/initialize`. On revocation, reject pending privileged calls, stop network activity that no longer fits policy, clear sensitive rendered state, and remount or fall back to text when the UI resource itself is no longer admitted. A View must handle refusal as a normal result, not retry until the host gives in.
+
+### Fallback is part of the contract
+
+An Apps-aware server can still serve hosts that do not advertise the UI extension:
+
+- Return the same tool without `_meta.ui` in `tools/list`.
+- Keep a useful text result for `tools/call`.
+- Refuse `resources/read` for the UI with a missing-capability error.
+- Never assume an iframe exists when deciding whether the tool completed.
 
 ```figure
 t3-ui-sandbox
 ```
 
+## Build It
+
+`code/main.py` builds a small in-process protocol model without an SDK. It validates the current request envelope and Streamable HTTP routing values, advertises Apps through `server/discover`, lists tools and resources, executes the tool, and serves a self-contained HTML resource.
+
+The model receives already parsed bodies and routing headers. It is not a complete HTTP adapter and does not parse `Content-Type` or `Accept`. Use Lesson 09 for the full Streamable HTTP adapter that requires `Content-Type: application/json` and an `Accept` value containing both `application/json` and `text/event-stream`.
+
+Run it:
+
+```bash
+cd phases/13-tools-and-protocols/14-mcp-apps
+python3 code/main.py
+python3 -m unittest discover code/tests -v
+```
+
+Inspect four things in the output:
+
+1. Every call is independent.
+2. Every request has `_meta` capabilities.
+3. `resources/list` returns a stable descriptor before any resource read.
+4. Every result has `resultType` and server identity metadata.
+5. No core session identifier appears.
+
 ## Use It
 
-`code/main.py` extends the notes server with a `visualize_timeline` tool that returns a `ui://notes/timeline` resource, plus a handler for `resources/read` on that URI which returns a small but complete HTML bundle with an SVG timeline. The HTML is stdlib-templated — no build system. postMessage is sketched in JS comments since stdlib cannot drive a browser.
+Start with `server/discover`. Confirm `io.modelcontextprotocol/ui` appears in the server extension map. Then call `tools/list` twice, once with Apps capability and once without it. The first response declares the resource. The second remains a usable text-only tool.
 
-What to look at:
-
-- `_meta.ui` on the tool response carries resourceUri, CSP, permissions.
-- The HTML renders without network access; all data is inlined.
-- JS calls `host.callTool` via `window.parent.postMessage` (documented but inert in this stdlib demo).
+Read `ui://notes/timeline.html`. Search the HTML for `hostOrigin` and the `event.origin` guard. Those two lines are the minimum visible proof that the bridge does not use a wildcard target.
 
 ## Ship It
 
-This lesson produces `outputs/skill-mcp-apps-spec.md`. Given a tool that would benefit from an interactive UI, the skill produces the full MCP Apps contract: `ui://` URI, CSP, permissions, postMessage entrypoints, and a security checklist.
+This lesson ships `outputs/skill-mcp-apps-spec.md`. Use it to review an App contract before writing framework code. It forces the author to state the current core envelope, extension negotiation, fallback, UI resource, cache policy, CSP, permissions, bridge methods, and consent boundary.
 
 ## Exercises
 
-1. Run `code/main.py` and inspect the HTML emitted. Open the HTML directly in a browser; verify the SVG renders. Then sketch the postMessage contract the UI would use to call `host.callTool("notes_update", ...)`.
-
-2. Tighten the CSP: remove `'unsafe-inline'` and use a nonce-based script policy. What changes in the HTML generation code?
-
-3. Add a second UI resource `ui://notes/editor` with a form for editing a note in place. When the user submits, the iframe calls `host.callTool("notes_update", ...)`.
-
-4. Audit the UI's attack surface. Where could a malicious server inject content? What does the iframe sandbox defend against and what does it not?
-
-5. Read the SEP-1724 spec and identify one capability in the MCP Apps SDK that this toy implementation does not use. (Hint: component-level state sync.)
+1. Change the client capability to an empty extension map. Confirm `tools/list` keeps the tool but removes the UI binding.
+2. Send `Mcp-Name: ui://notes/other.html` with a body that reads the timeline. Confirm error `-32020`.
+3. Change the resource to `cacheScope: private`. Describe the user-specific condition that justifies it.
+4. Move the script to `https://static.example.com/app.js`. Add that origin to `resourceDomains` and explain the new supply-chain risk.
+5. Add an `notes_open` tool and route the button click through the host. Keep user approval in the host.
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| MCP Apps | "Interactive UI resources" | SEP-1724 extension shipped 2026-01-26 |
-| `ui://` | "App URI scheme" | Resource scheme for UI bundles |
-| `text/html;profile=mcp-app` | "The MIME" | Content-type for MCP App HTML |
-| Iframe sandbox | "Render container" | Browser sandboxing of the UI with CSP and permissions |
-| postMessage JSON-RPC | "UI-to-host wire" | Tiny JSON-RPC-over-postMessage dialect for host calls |
-| `_meta.ui` | "Tool-UI binding" | Metadata linking a tool result to a UI resource |
-| CSP | "Content-Security-Policy" | Declares allowed sources for scripts, network, styles |
-| AppRenderer | "Server SDK primitive" | Converts a framework component into a `ui://` resource |
-| AppFrame | "Client SDK primitive" | Iframe mount helper that mediates postMessage |
-| `ui/initialize` | "Handshake" | First postMessage from UI to host |
+| Term | Meaning |
+|------|---------|
+| MCP Apps | Optional extension for interactive HTML rendered by an MCP host |
+| `io.modelcontextprotocol/ui` | Extension identifier advertised by both peers |
+| `ui://` | Resource scheme for an App's UI template |
+| `text/html;profile=mcp-app` | MIME type for MCP App HTML |
+| `server/discover` | Current RPC for protocol and capability discovery |
+| `resources/list` | Mandatory resource listing method when the server advertises resources |
+| `resultType` | Required discriminator for modern successful results |
+| `ui/initialize` | First Apps bridge request, separate from removed core initialization |
+| `ui/notifications/initialized` | Apps View readiness notification sent after the host responds |
+| CSP | Browser policy that restricts scripts, styles, images, and network origins |
+| Text fallback | Tool behavior retained for a host without Apps support |
 
 ## Further Reading
 
-- [MCP ext-apps — GitHub](https://github.com/modelcontextprotocol/ext-apps) — reference implementation and SDK
-- [MCP Apps specification 2026-01-26](https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/2026-01-26/apps.mdx) — formal spec document
-- [MCP — Apps extension overview](https://modelcontextprotocol.io/extensions/apps/overview) — high-level documentation
-- [MCP blog — MCP Apps launch](https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/) — January 2026 launch post
-- [MCP Apps API reference](https://apps.extensions.modelcontextprotocol.io/api/) — JSDoc-style SDK reference
+- [MCP 2026-07-28 base protocol](https://modelcontextprotocol.io/specification/2026-07-28/basic)
+- [MCP Apps overview](https://modelcontextprotocol.io/extensions/apps/overview)
+- [MCP Apps build guide](https://modelcontextprotocol.io/extensions/apps/build)
+- [Official extension support matrix](https://modelcontextprotocol.io/extensions/client-matrix)

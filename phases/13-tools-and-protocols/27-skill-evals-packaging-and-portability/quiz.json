@@ -1,0 +1,78 @@
+{
+  "lesson": "27-skill-evals-packaging-and-portability",
+  "title": "Skill Evals, Packaging, and Portability",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which evaluation set best reveals whether a skill description over-triggers in the lesson model?",
+      "options": [
+        "Clear positive prompts plus semantically close prompts that should remain negative",
+        "Only one successful end-to-end demonstration",
+        "A list of supported file extensions",
+        "Only prompts copied from the skill name"
+      ],
+      "correct": 0,
+      "explanation": "Easy positives measure whether the intended task can trigger. Near-miss negatives measure whether adjacent tasks trigger incorrectly, which is necessary to calculate false positives and precision."
+    },
+    {
+      "stage": "check",
+      "question": "A trigger test has 8 true positives and 2 false positives. What is its precision?",
+      "options": [
+        "0.8 recall, but precision cannot be computed",
+        "0.8",
+        "0.2",
+        "1.0"
+      ],
+      "correct": 1,
+      "explanation": "Precision is true positives divided by all predicted positives: 8 / (8 + 2) = 0.8. Recall needs the false-negative count, which this scenario does not provide."
+    },
+    {
+      "stage": "check",
+      "question": "Why compare baseline and with-skill artifacts using the same assertions?",
+      "options": [
+        "To guarantee the skill works in every host",
+        "To remove the need for trigger tests",
+        "To let the skill modify the expected result during evaluation",
+        "To measure whether the skill improves the task output rather than merely activating"
+      ],
+      "correct": 3,
+      "explanation": "Activation is not the outcome. A shared artifact contract tests whether loading the skill changes required headings, evidence, schema, or forbidden content while keeping the measurement comparable to baseline."
+    },
+    {
+      "stage": "check",
+      "question": "A host loads SKILL.md but drops `references/` and `scripts/` during installation. How should a portability matrix classify a bundle that requires both?",
+      "options": [
+        "Native, because the frontmatter loaded",
+        "Adapter required, with the missing companion-file and script capabilities listed",
+        "Unsupported, even if an adapter could preserve files",
+        "Guaranteed portable after renaming the directory"
+      ],
+      "correct": 1,
+      "explanation": "The host understands the core file, so it is not wholly unsupported. It still cannot satisfy the package's declared requirements natively, and the matrix should name the exact adapter work instead of flattening portability to yes or no."
+    },
+    {
+      "stage": "post",
+      "question": "What does a repeated-run rate add beyond one passing trigger evaluation?",
+      "options": [
+        "A replacement for structural package lint",
+        "Permission for the skill to execute bundled scripts",
+        "Evidence about consistency across multiple executions of each case",
+        "A universal host invocation command"
+      ],
+      "correct": 2,
+      "explanation": "A single run can hide nondeterminism. Per-case repeated-run rates reveal flaky activation or artifact production, while structural lint, runtime permissions, and host adapters remain separate concerns."
+    },
+    {
+      "stage": "post",
+      "question": "Which release gate is most complete for an Agent Skill bundle?",
+      "options": [
+        "The bundle has many reference files and a long description",
+        "The skill works on the author's machine without a baseline",
+        "SKILL.md exists and one positive prompt activates it",
+        "All six layers pass, local captured-mode values have matching source-bound digests, and an out-of-bundle trusted attestation binds the complete evidence root"
+      ],
+      "correct": 3,
+      "explanation": "The six layers are package structure; trigger routing with precision, recall, and repeated-run stability; instruction and artifact behavior; script correctness; safety and authority; and packaging plus portability, including a manifest-verified clean install. Every layer must pass. Source-bound local digests detect mismatches but can be recomputed with relabeled fixtures, so production readiness also requires an external attestation whose exact trusted SHA-256 binds the complete evidence root."
+    }
+  ]
+}

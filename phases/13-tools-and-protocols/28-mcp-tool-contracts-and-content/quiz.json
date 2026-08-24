@@ -1,0 +1,78 @@
+{
+  "lesson": "28-mcp-tool-contracts-and-content",
+  "title": "MCP Tool Contracts and Content",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A tool publishes an outputSchema with type array. Which structuredContent value is valid?",
+      "options": [
+        "Any JSON value because outputSchema is only documentation",
+        "Only an object because MCP structured results are object-only",
+        "An array whose items satisfy the published schema",
+        "A text block without structuredContent"
+      ],
+      "correct": 2,
+      "explanation": "structuredContent may be any JSON value, including an array, but it must conform to outputSchema when the tool publishes one."
+    },
+    {
+      "stage": "check",
+      "question": "A tools/list result contains nextCursor as an empty string. What should the client do?",
+      "options": [
+        "Treat the empty string as the end of pagination",
+        "Send another list request with the exact empty string cursor",
+        "Replace it with cursor zero",
+        "Decode it to discover the next page number"
+      ],
+      "correct": 1,
+      "explanation": "Cursor values are opaque. An empty string is a valid non-null cursor and must be sent back exactly."
+    },
+    {
+      "stage": "check",
+      "question": "Which parameter should be rejected by a strict deployment policy when marked with x-mcp-header?",
+      "options": [
+        "A string token field mirrored as Token",
+        "An integer shard field mirrored as Shard",
+        "A string region field mirrored as Region",
+        "A boolean dry_run field mirrored as Dry-Run"
+      ],
+      "correct": 0,
+      "explanation": "The protocol advises against mirroring sensitive values. A strict client admission policy should reject token, password, secret, credential, and PII fields."
+    },
+    {
+      "stage": "check",
+      "question": "What is the main difference between a resource_link block and an embedded resource block?",
+      "options": [
+        "A resource link points to data fetched later, while an embedded resource carries data now",
+        "A resource link is automatically authorized forever",
+        "An embedded resource must also appear in resources/list",
+        "Only resource links can include a URI"
+      ],
+      "correct": 0,
+      "explanation": "A link defers retrieval and needs authorization when followed. An embedded resource places the data in the current result."
+    },
+    {
+      "stage": "post",
+      "question": "How should a client handle one malformed tool descriptor in a tools/list page?",
+      "options": [
+        "Reject that tool while continuing to evaluate unrelated tools",
+        "Silently repair the descriptor",
+        "Expose it but add a warning to the model prompt",
+        "Treat every tool execution as a JSON-RPC notification"
+      ],
+      "correct": 0,
+      "explanation": "Descriptor admission is per tool. One malformed definition should be excluded without making valid tools unavailable."
+    },
+    {
+      "stage": "post",
+      "question": "Which failure belongs in a JSON-RPC error rather than a tool result with isError true?",
+      "options": [
+        "A report source is temporarily unavailable",
+        "A downstream API returns an actionable tool-specific error",
+        "A business rule rejects a requested date",
+        "The requested tool name does not exist"
+      ],
+      "correct": 3,
+      "explanation": "An unknown tool prevents protocol dispatch and belongs in a JSON-RPC error. Execution failures that a model can act on use isError true."
+    }
+  ]
+}

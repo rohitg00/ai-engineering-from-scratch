@@ -53,11 +53,18 @@
   var phaseProgress = {};
   var nodeEls = {};
   var edgeEls = [];
+  var edgeElsByKey = {};
+  var routeNodeStates = {};
+  var routeEdgeStates = {};
   var selectedId = null;
   var rovingId = 0;
   var zoom = window.matchMedia && window.matchMedia('(max-width: 760px)').matches ? MIN_ZOOM : 1;
   var draggedSincePointerDown = false;
-  var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reducedMotionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var prefersReducedMotion = !!(reducedMotionQuery && reducedMotionQuery.matches);
+  var reducedMotionListener = null;
+  var reducedMotionLifecycleBound = false;
+  var inspectorAnimation = null;
 
   document.addEventListener('DOMContentLoaded', init);
 
@@ -75,6 +82,7 @@
     renderHeroStats();
     renderGraph();
     renderEmptyInspector();
+    bindReducedMotionPreference();
     bindInteractions();
     updateThemeIcon();
 
@@ -238,6 +246,9 @@
     svg.textContent = '';
     nodeEls = {};
     edgeEls = [];
+    edgeElsByKey = {};
+    routeNodeStates = {};
+    routeEdgeStates = {};
 
     svg.setAttribute('viewBox', '0 0 ' + SVG_W + ' ' + SVG_H);
     svg.setAttribute('aria-labelledby', 'learningMapTitle roadmapKeyboardHelp');
@@ -268,7 +279,9 @@
         });
         edgeLayer.appendChild(path);
         edgeLayer.appendChild(arrow);
-        edgeEls.push({ path: path, arrow: arrow, from: parseInt(fromId, 10), to: parseInt(targetId, 10) });
+        var edgeRecord = { path: path, arrow: arrow, from: parseInt(fromId, 10), to: parseInt(targetId, 10) };
+        edgeEls.push(edgeRecord);
+        edgeElsByKey[fromId + '-' + targetId] = edgeRecord;
       }
     }
 
@@ -285,6 +298,55 @@
     applyZoom(zoom, false);
     setRovingFocus(rovingId, false);
     if (selectedId !== null) applyRouteHighlight(selectedId);
+  }
+
+  function bindReducedMotionPreference() {
+    if (!reducedMotionQuery) return;
+    if (!reducedMotionListener) {
+      reducedMotionListener = function (event) {
+        syncReducedMotionPreference(event.matches);
+      };
+      if (typeof reducedMotionQuery.addEventListener === 'function') {
+        reducedMotionQuery.addEventListener('change', reducedMotionListener);
+      } else if (typeof reducedMotionQuery.addListener === 'function') {
+        reducedMotionQuery.addListener(reducedMotionListener);
+      }
+    }
+    if (!reducedMotionLifecycleBound) {
+      window.addEventListener('pagehide', handleRoadmapPageHide);
+      window.addEventListener('pageshow', handleRoadmapPageShow);
+      reducedMotionLifecycleBound = true;
+    }
+    syncReducedMotionPreference(reducedMotionQuery.matches);
+  }
+
+  function syncReducedMotionPreference(matches) {
+    prefersReducedMotion = !!matches;
+    if (!prefersReducedMotion) return;
+    finishInspectorTransition();
+    var wrap = document.getElementById('roadmapGraphWrap');
+    if (wrap) wrap.scrollTo({ left: wrap.scrollLeft, top: wrap.scrollTop, behavior: 'auto' });
+    window.scrollTo({ left: window.scrollX, top: window.scrollY, behavior: 'auto' });
+  }
+
+  function handleRoadmapPageHide(event) {
+    finishInspectorTransition();
+    if (!event.persisted) disposeReducedMotionPreference();
+  }
+
+  function handleRoadmapPageShow() {
+    bindReducedMotionPreference();
+  }
+
+  function disposeReducedMotionPreference() {
+    if (!reducedMotionQuery || !reducedMotionListener) return;
+    if (typeof reducedMotionQuery.removeEventListener === 'function') {
+      reducedMotionQuery.removeEventListener('change', reducedMotionListener);
+    } else if (typeof reducedMotionQuery.removeListener === 'function') {
+      reducedMotionQuery.removeListener(reducedMotionListener);
+    }
+    reducedMotionListener = null;
+    finishInspectorTransition();
   }
 
   function renderStageBands(layer) {
@@ -372,18 +434,18 @@
     group.addEventListener('pointerdown', function (event) {
       event.stopPropagation();
     });
-    group.addEventListener('click', function () {
+    group.addEventListener('click', function (event) {
       if (draggedSincePointerDown) {
         draggedSincePointerDown = false;
         return;
       }
       setRovingFocus(phase.id, false);
-      togglePhaseSelection(phase.id);
+      togglePhaseSelection(phase.id, { animate: event.detail !== 0 });
     });
     group.addEventListener('keydown', function (event) {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        togglePhaseSelection(phase.id);
+        togglePhaseSelection(phase.id, { animate: false });
         return;
       }
       if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].indexOf(event.key) !== -1) {
@@ -482,7 +544,7 @@
       if (routeButton) {
         var routeId = parseInt(routeButton.getAttribute('data-route-phase'), 10);
         var keyboardTriggered = event.detail === 0;
-        selectPhase(routeId, { updateHistory: true });
+        selectPhase(routeId, { updateHistory: true, animate: !keyboardTriggered });
         focusPhase(routeId, true, !keyboardTriggered && !prefersReducedMotion);
         return;
       }
@@ -491,8 +553,9 @@
       if (stageButton) {
         var stage = stageById(stageButton.getAttribute('data-stage-target'));
         if (stage) {
-          if (selectedId !== null) clearSelection(true);
-          centerPhase(stage.focusPhase, event.detail !== 0 && !prefersReducedMotion);
+          var animateStage = event.detail !== 0 && !prefersReducedMotion;
+          if (selectedId !== null) clearSelection(true, { animate: animateStage });
+          centerPhase(stage.focusPhase, animateStage);
         }
         return;
       }
@@ -507,13 +570,15 @@
       jump.addEventListener('change', function () {
         if (this.value === '') return;
         var id = parseInt(this.value, 10);
-        selectPhase(id, { updateHistory: true });
+        selectPhase(id, { updateHistory: true, animate: false });
         focusPhase(id, true, false);
       });
     }
 
     var clear = document.getElementById('roadmapClear');
-    if (clear) clear.addEventListener('click', function () { clearSelection(true); });
+    if (clear) clear.addEventListener('click', function (event) {
+      clearSelection(true, { animate: event.detail !== 0 });
+    });
 
     var zoomOut = document.getElementById('roadmapZoomOut');
     var zoomIn = document.getElementById('roadmapZoomIn');
@@ -523,7 +588,7 @@
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' && selectedId !== null) {
         var previousId = selectedId;
-        clearSelection(true);
+        clearSelection(true, { animate: false });
         focusPhase(previousId, false, false);
       }
     });
@@ -610,11 +675,12 @@
 
   function selectPhase(id, options) {
     if (!phaseMap[id]) return;
+    var animate = !(options && options.animate === false);
     selectedId = id;
     setRovingFocus(id, false);
     applyRouteHighlight(id);
-    renderInspector(id);
-    revealStackedInspector();
+    renderInspector(id, animate);
+    revealStackedInspector(animate);
     announceSelection(id);
 
     var clear = document.getElementById('roadmapClear');
@@ -630,43 +696,34 @@
     }
   }
 
-  function revealStackedInspector() {
+  function revealStackedInspector(animate) {
     if (!window.matchMedia || !window.matchMedia('(max-width: 1040px)').matches) return;
     var panel = document.getElementById('roadmapInspector');
     if (!panel) return;
     requestAnimationFrame(function () {
       panel.scrollIntoView({
-        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        behavior: animate && !prefersReducedMotion ? 'smooth' : 'auto',
         block: 'start'
       });
     });
   }
 
-  function togglePhaseSelection(id) {
+  function togglePhaseSelection(id, options) {
     if (selectedId === id) {
-      clearSelection(true);
+      clearSelection(true, options);
       return;
     }
-    selectPhase(id, { updateHistory: true });
+    selectPhase(id, { updateHistory: true, animate: !(options && options.animate === false) });
   }
 
-  function clearSelection(updateHistory) {
+  function clearSelection(updateHistory, options) {
     selectedId = null;
-    for (var id in nodeEls) {
-      var node = nodeEls[id];
-      node.classList.remove('is-selected', 'is-prerequisite', 'is-unlock', 'is-dimmed');
-      node.setAttribute('aria-pressed', 'false');
-      restoreNodeState(node);
-    }
-    for (var i = 0; i < edgeEls.length; i++) {
-      edgeEls[i].path.classList.remove('is-prerequisite', 'is-unlock', 'is-dimmed');
-      edgeEls[i].arrow.classList.remove('is-prerequisite', 'is-unlock', 'is-dimmed');
-    }
+    applyRouteHighlight(null);
     var clear = document.getElementById('roadmapClear');
     if (clear) clear.hidden = true;
     var jump = document.getElementById('roadmapJump');
     if (jump) jump.value = '';
-    renderEmptyInspector();
+    renderEmptyInspector(!(options && options.animate === false));
     setText('roadmapGraphStatus', 'Route focus cleared.');
     if (updateHistory && window.location.hash) {
       history.replaceState({}, '', window.location.pathname + window.location.search);
@@ -674,45 +731,70 @@
   }
 
   function applyRouteHighlight(id) {
-    var ancestors = getAncestors(id);
-    var descendants = getDescendants(id);
+    var ancestors = id === null ? {} : getAncestors(id);
+    var descendants = id === null ? {} : getDescendants(id);
+    var nextNodeStates = {};
     for (var nodeId in nodeEls) {
       var numericId = parseInt(nodeId, 10);
-      var node = nodeEls[nodeId];
-      node.classList.remove('is-selected', 'is-prerequisite', 'is-unlock', 'is-dimmed');
-      node.setAttribute('aria-pressed', numericId === id ? 'true' : 'false');
-      restoreNodeState(node);
+      var nextNodeState = 'default';
       if (numericId === id) {
-        node.classList.add('is-selected');
-        setNodeState(node, 'Selected', true);
+        nextNodeState = 'selected';
       } else if (ancestors[numericId]) {
-        node.classList.add('is-prerequisite');
-        setNodeState(node, 'Prerequisite', true);
+        nextNodeState = 'prerequisite';
       } else if (descendants[numericId]) {
-        node.classList.add('is-unlock');
-        setNodeState(node, 'Unlocks', true);
-      } else {
-        node.classList.add('is-dimmed');
+        nextNodeState = 'unlock';
+      } else if (id !== null) {
+        nextNodeState = 'dimmed';
       }
+      nextNodeStates[nodeId] = nextNodeState;
+      if (routeNodeStates[nodeId] !== nextNodeState) updateNodeRouteState(nodeId, nextNodeState);
     }
+    routeNodeStates = nextNodeStates;
 
-    var ancestorEdges = buildEdgeSet(id, ancestors, true);
-    var descendantEdges = buildEdgeSet(id, descendants, false);
+    var ancestorEdges = id === null ? {} : buildEdgeSet(id, ancestors, true);
+    var descendantEdges = id === null ? {} : buildEdgeSet(id, descendants, false);
+    var nextEdgeStates = {};
     for (var i = 0; i < edgeEls.length; i++) {
       var edge = edgeEls[i];
       var key = edge.from + '-' + edge.to;
-      edge.path.classList.remove('is-prerequisite', 'is-unlock', 'is-dimmed');
-      edge.arrow.classList.remove('is-prerequisite', 'is-unlock', 'is-dimmed');
+      var nextEdgeState = 'default';
       if (ancestorEdges[key]) {
-        edge.path.classList.add('is-prerequisite');
-        edge.arrow.classList.add('is-prerequisite');
+        nextEdgeState = 'prerequisite';
       } else if (descendantEdges[key]) {
-        edge.path.classList.add('is-unlock');
-        edge.arrow.classList.add('is-unlock');
-      } else {
-        edge.path.classList.add('is-dimmed');
-        edge.arrow.classList.add('is-dimmed');
+        nextEdgeState = 'unlock';
+      } else if (id !== null) {
+        nextEdgeState = 'dimmed';
       }
+      nextEdgeStates[key] = nextEdgeState;
+      if (routeEdgeStates[key] !== nextEdgeState) updateEdgeRouteState(key, nextEdgeState);
+    }
+    routeEdgeStates = nextEdgeStates;
+  }
+
+  function updateNodeRouteState(nodeId, nextState) {
+    var node = nodeEls[nodeId];
+    if (!node) return;
+    var previousState = routeNodeStates[nodeId] || 'default';
+    if (previousState !== 'default') node.classList.remove('is-' + previousState);
+    if (nextState !== 'default') node.classList.add('is-' + nextState);
+    node.setAttribute('aria-pressed', nextState === 'selected' ? 'true' : 'false');
+    restoreNodeState(node);
+    if (nextState === 'selected') setNodeState(node, 'Selected', true);
+    else if (nextState === 'prerequisite') setNodeState(node, 'Prerequisite', true);
+    else if (nextState === 'unlock') setNodeState(node, 'Unlocks', true);
+  }
+
+  function updateEdgeRouteState(key, nextState) {
+    var edge = edgeElsByKey[key];
+    if (!edge) return;
+    var previousState = routeEdgeStates[key] || 'default';
+    if (previousState !== 'default') {
+      edge.path.classList.remove('is-' + previousState);
+      edge.arrow.classList.remove('is-' + previousState);
+    }
+    if (nextState !== 'default') {
+      edge.path.classList.add('is-' + nextState);
+      edge.arrow.classList.add('is-' + nextState);
     }
   }
 
@@ -854,30 +936,82 @@
     }
     if (selectedId !== null) {
       applyRouteHighlight(selectedId);
-      renderInspector(selectedId);
+      renderInspector(selectedId, false);
     } else {
-      renderEmptyInspector();
+      renderEmptyInspector(false);
     }
   }
 
-  function renderEmptyInspector() {
+  function inspectorContentRegion(panel) {
+    var content = panel.querySelector('.roadmap-inspector-content');
+    if (content) return content;
+    panel.textContent = '';
+    content = document.createElement('div');
+    content.className = 'roadmap-inspector-content';
+    panel.appendChild(content);
+    return content;
+  }
+
+  function finishInspectorTransition() {
+    if (inspectorAnimation) inspectorAnimation.cancel();
+    inspectorAnimation = null;
+    var content = document.querySelector('#roadmapInspector .roadmap-inspector-content');
+    if (!content) return;
+    content.style.opacity = '1';
+    content.style.transform = 'none';
+  }
+
+  function updateInspector(html, animate) {
     var panel = document.getElementById('roadmapInspector');
     if (!panel) return;
+    var content = inspectorContentRegion(panel);
+    var fromOpacity = '0';
+    var fromTransform = 'translateY(6px)';
+    if (inspectorAnimation) {
+      var rendered = window.getComputedStyle(content);
+      fromOpacity = rendered.opacity;
+      fromTransform = rendered.transform === 'none' ? 'translateY(0)' : rendered.transform;
+      inspectorAnimation.cancel();
+      inspectorAnimation = null;
+    }
+    content.innerHTML = html;
+    content.style.removeProperty('opacity');
+    content.style.removeProperty('transform');
+    if (!animate || prefersReducedMotion || typeof content.animate !== 'function') return;
+    var animation = content.animate([
+      { opacity: fromOpacity, transform: fromTransform },
+      { opacity: 1, transform: 'translateY(0)' }
+    ], {
+      duration: 180,
+      easing: 'cubic-bezier(0.23, 1, 0.32, 1)',
+      fill: 'none'
+    });
+    inspectorAnimation = animation;
+    animation.onfinish = function () {
+      if (inspectorAnimation === animation) inspectorAnimation = null;
+    };
+    animation.oncancel = function () {
+      if (inspectorAnimation === animation) inspectorAnimation = null;
+    };
+  }
+
+  function renderEmptyInspector(animate) {
     var recommendation = recommendedPhase();
     var recommendationHtml = recommendation
       ? '<div class="roadmap-recommendation"><span>Recommended next</span><button type="button" data-route-phase="' + recommendation.id + '">Phase ' + formatPhase(recommendation.id) + ' · ' + escapeHtml(recommendation.name) + '</button></div>'
       : '';
-    panel.innerHTML =
+    updateInspector(
       '<span class="roadmap-inspector-eyebrow">Route inspector</span>' +
       '<h2>Choose a phase</h2>' +
       '<p class="roadmap-inspector-copy">Select a node to illuminate the exact route into it, every phase it unlocks, and the best lesson to continue from your local progress.</p>' +
-      recommendationHtml;
+      recommendationHtml,
+      !!animate
+    );
   }
 
-  function renderInspector(id) {
-    var panel = document.getElementById('roadmapInspector');
+  function renderInspector(id, animate) {
     var phase = phaseMap[id];
-    if (!panel || !phase) return;
+    if (!phase) return;
     var progress = phaseProgress[id];
     var state = phaseState(id);
     var ancestors = getAncestors(id);
@@ -887,7 +1021,7 @@
     var lesson = nextLessonForPhase(phase);
     var lessonLink = lesson ? lessonPageUrl(lesson) : '';
     var actionLabel = progress.done === progress.total && progress.total > 0 ? 'Review phase' : (progress.done > 0 ? 'Continue phase' : 'Start phase');
-    panel.innerHTML =
+    updateInspector(
       '<span class="roadmap-inspector-eyebrow">Phase ' + formatPhase(id) + '</span>' +
       '<h2>' + escapeHtml(phase.name) + '</h2>' +
       '<span class="roadmap-inspector-state">' + state.label + '</span>' +
@@ -907,7 +1041,9 @@
       '<div class="roadmap-actions">' +
         (lessonLink ? '<a class="roadmap-action roadmap-action-primary" href="' + lessonLink + '">' + actionLabel + '</a>' : '') +
         '<a class="roadmap-action" href="' + phaseGithubUrl(phase) + '" target="_blank" rel="noopener">View phase on GitHub</a>' +
-      '</div>';
+      '</div>',
+      animate !== false
+    );
   }
 
   function renderRouteSection(title, ids, emptyMessage) {

@@ -1,90 +1,78 @@
 {
   "lesson": "13-mcp-server-with-registry",
-  "title": "Capstone 13 — MCP Server with Registry and Governance",
+  "title": "Capstone 13: Stateless MCP Server with Registry and Governance",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the 2026 MCP revision favor StreamableHTTP for production servers?",
+      "question": "Why does this capstone use both server.json and server/discover?",
       "options": [
-        "It is the only transport that supports tool calls",
-        "It is stateless by default, so a single endpoint behind a load balancer can scale horizontally",
-        "It encrypts payloads automatically",
-        "It removes the need for authentication"
-      ],
-      "correct": 1,
-      "explanation": ""
-    },
-    {
-      "stage": "pre",
-      "question": "Which authorization model gates tool calls in this capstone?",
-      "options": [
-        "OAuth 2.1 tokens carrying per-tool scopes, checked at tool-call time",
-        "API keys per IP address",
-        "Mutual TLS without scopes",
-        "A shared admin password"
-      ],
-      "correct": 0,
-      "explanation": ""
-    },
-    {
-      "stage": "check",
-      "question": "What is the role of the .well-known/mcp-capabilities document?",
-      "options": [
-        "Lists outbound IP ranges",
-        "Holds the OPA policy bundle",
-        "Exposes the tool manifest, transport URL, and auth requirements so the registry can validate and index the server",
-        "Stores audit logs for the server"
-      ],
-      "correct": 2,
-      "explanation": ""
-    },
-    {
-      "stage": "check",
-      "question": "Why do destructive tools live on a separate MCP server in this design?",
-      "options": [
-        "They run on slower hardware",
-        "They require a different programming language",
-        "They cannot be exposed over StreamableHTTP",
-        "They are gated behind an approval token elevated via a Slack card within a short window"
+        "server.json stores sessions, while server/discover deletes them",
+        "The Registry requires both files to contain identical version dates",
+        "They are two names for the same tool manifest",
+        "server.json publishes install and endpoint metadata, while server/discover reports live protocol capabilities"
       ],
       "correct": 3,
-      "explanation": ""
+      "explanation": "The Registry record helps clients locate and configure a server. The live RPC reports what the running process supports. Their schemas and version domains are independent, but the published identity must use the authenticated namespace and match live serverInfo."
     },
     {
       "stage": "check",
-      "question": "What does OPA / Rego decide on every tool call?",
+      "question": "What replaces the initialize handshake in MCP revision 2026-07-28?",
       "options": [
-        "Whether the caller's scopes permit invocation, plus PII redaction and payload caps",
-        "How the server should re-rank the response",
-        "Which model to invoke",
-        "Where to write the audit log"
+        "Mcp-Session-Id plus notifications/initialized",
+        "Every request carries protocol version and client capabilities, and clients can call mandatory server/discover",
+        "A GET request that opens a permanent server stream",
+        "A session cookie sent once per TCP connection"
       ],
-      "correct": 0,
-      "explanation": ""
+      "correct": 1,
+      "explanation": "The protocol is stateless. Version and capabilities are request metadata, while server/discover provides live version and capability discovery without creating a session."
+    },
+    {
+      "stage": "check",
+      "question": "Which tools/list behavior supports safe and efficient discovery?",
+      "options": [
+        "A response cached forever without a scope",
+        "A random tool order on each replica",
+        "A connection-local list created during initialize",
+        "Deterministic order plus ttlMs and a correct public or private cacheScope"
+      ],
+      "correct": 3,
+      "explanation": "Stable ordering improves reproducibility and prompt caching. ttlMs communicates freshness, and cacheScope prevents user-specific results from leaking through shared caches."
+    },
+    {
+      "stage": "check",
+      "question": "Which Streamable HTTP design matches the current stateless transport?",
+      "options": [
+        "All clients require sticky load-balancer routing",
+        "POST creates a session, GET resumes it, and DELETE closes it",
+        "A standalone GET stream uses Last-Event-ID replay",
+        "Each JSON-RPC message uses its own POST, with JSON or request-scoped SSE for a request"
+      ],
+      "correct": 3,
+      "explanation": "Current Streamable HTTP is POST-only for MCP messages and has no protocol session, standalone GET stream, session DELETE, or Last-Event-ID resumability."
     },
     {
       "stage": "post",
-      "question": "Which evidence demonstrates StreamableHTTP horizontal scaling in the load test?",
+      "question": "What must a production server validate before a policy-approved tool handler runs?",
       "options": [
-        "Adding a second replica and showing the load balancer redistributing without session stickiness",
-        "Running everything in a single process",
-        "Reducing concurrency to one client",
-        "Switching to stdio transport"
+        "Only that server.json lists the remote URL",
+        "Only the tool's destructiveHint annotation",
+        "Only that a human posted an approval message",
+        "Protocol metadata plus token issuer, audience or resource, expiry, scope, and any exact-action approval"
       ],
-      "correct": 0,
-      "explanation": ""
+      "correct": 3,
+      "explanation": "Transport metadata, token validation, and policy are separate gates. Annotations and publication metadata do not grant authority."
     },
     {
       "stage": "post",
-      "question": "Why does the audit log scrub PII via Presidio before being persisted per tenant?",
+      "question": "Which evidence best supports the claim that the server scales without protocol sessions?",
       "options": [
-        "To meet enterprise security requirements while keeping per-call lineage queryable",
-        "PII improves search performance",
-        "To make logs shorter",
-        "Presidio reduces ClickHouse write amplification"
+        "A server.json remote entry",
+        "A wire-level concurrent run across two interchangeable replicas with no affinity dependency",
+        "A unit test that constructs one response dictionary",
+        "A diagram showing a load balancer"
       ],
-      "correct": 0,
-      "explanation": ""
+      "correct": 1,
+      "explanation": "The real transport and deployment boundary must be exercised. Alternating requests across replicas proves correctness is not hidden in one process or sticky session."
     }
   ]
 }

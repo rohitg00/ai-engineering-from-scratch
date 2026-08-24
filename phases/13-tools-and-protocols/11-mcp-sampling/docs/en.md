@@ -1,182 +1,265 @@
-# MCP Sampling — Server-Requested LLM Completions and Agent Loops
+# MCP Model Input: Sampling Migration and Stateless MRTR
 
-> Most MCP servers are dumb executors: take arguments, run code, return content. Sampling lets a server flip direction: it asks the client's LLM to make a decision. This enables server-hosted agent loops without the server owning any model credentials. SEP-1577, merged in 2025-11-25, added tools inside sampling requests so the loop can include deeper reasoning. Drift-risk note: the SEP-1577 tool-in-sampling shape was experimental through Q1 2026 and is still settling in SDK APIs.
+> MCP 2026-07-28 deprecates Sampling for new designs and removes the server-to-client request channel. If an existing workflow still needs the client's model, the server returns an `input_required` result and the client retries the original request with the model output. The reasoning loop becomes explicit, bounded, and stateless at the protocol layer.
 
 **Type:** Build
-**Languages:** Python (stdlib, sampling harness)
+**Languages:** Python
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
 **Time:** ~75 minutes
 
 ## Learning Objectives
 
-- Explain what `sampling/createMessage` solves (server-hosted loops without server-side API keys).
-- Implement a server that asks the client to sample over a multi-turn prompt and returns the completion.
-- Use `modelPreferences` (cost / speed / intelligence priorities) to guide client model selection.
-- Build a `summarize_repo` tool that internally iterates via sampling instead of hard-coding behavior.
+- Explain why Sampling is deprecated in MCP 2026-07-28 and choose the direct model integration default for new servers.
+- Implement a compatibility workflow that carries `sampling/createMessage` through Multi Round-Trip Requests (MRTR).
+- Put the protocol revision and client capabilities in every request `_meta` object.
+- Return `resultType: "input_required"` and retry the original method with a fresh JSON-RPC id.
+- Integrity-protect `requestState` and bind it to the principal, method, arguments, and expiry.
+- Bound model-assisted loops with capability checks, approval, response validation, and a round limit.
 
-## The Problem
+## The Decision Before the Protocol
 
-A useful MCP server for a code-summarization workflow needs to: walk a file tree, pick which files to read, synthesize a summary, and return. Where does the LLM reasoning happen?
+A tool such as `summarize_repo` needs two kinds of work:
 
-Option A: the server calls its own LLM. Needs an API key, bills server-side, is expensive per user.
+1. Deterministic work: list files, read allowed files, validate paths, and assemble content.
+2. Model work: choose representative files and synthesize the summary.
 
-Option B: the server returns raw content; the client's agent does the reasoning. Works but moves server logic into the client prompt, which is fragile.
+You now have two valid architectures.
 
-Option C: the server asks the client's LLM via `sampling/createMessage`. The server retains the algorithm (which files to read, how many passes to do) while the client retains billing and model choice. The server has no credentials at all.
+### New server: integrate with a model provider directly
 
-Sampling is option C. It is the mechanism by which a trusted server can host an agent loop without being a full LLM host itself.
+This is the current default. The server owns model selection, credentials, budgets, retries, and observability. It returns one ordinary `tools/call` result to the MCP client.
 
-## The Concept
+Choose this when the server is already a hosted service or when predictable model behavior matters more than using the host's model.
 
-### `sampling/createMessage` request
+### Existing Sampling workflow: migrate it to MRTR
 
-Server sends:
+Sampling still exists during its deprecation window. A server targeting 2026-07-28 cannot send a live `sampling/createMessage` request back to the client. It instead embeds that request in an `InputRequiredResult`.
+
+Choose this compatibility path only when using the client's model and credentials is a real product requirement. Record a removal plan because new implementations should not adopt deprecated Sampling.
+
+## The Stateless Contract
+
+The July 2026 protocol has no `initialize` exchange, no `notifications/initialized`, and no `Mcp-Session-Id`. Every request carries the information that used to live in the handshake:
 
 ```json
 {
   "jsonrpc": "2.0",
-  "id": 42,
-  "method": "sampling/createMessage",
+  "id": 1,
+  "method": "tools/call",
   "params": {
-    "messages": [{"role": "user", "content": {"type": "text", "text": "..."}}],
-    "systemPrompt": "...",
-    "includeContext": "none",
-    "modelPreferences": {
-      "costPriority": 0.3,
-      "speedPriority": 0.2,
-      "intelligencePriority": 0.5,
-      "hints": [{"name": "claude-3-5-sonnet"}]
-    },
-    "maxTokens": 1024
+    "name": "summarize_repo",
+    "arguments": {"audience": "developer"},
+    "_meta": {
+      "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+      "io.modelcontextprotocol/clientCapabilities": {"sampling": {}},
+      "io.modelcontextprotocol/clientInfo": {
+        "name": "lesson-client",
+        "version": "1.0.0"
+      }
+    }
   }
 }
 ```
 
-Client runs its LLM, returns:
+The server validates the revision on every request. A missing or non-string version is invalid params, `-32602`. An unsupported string returns `-32022` with exact data `{"supported":["2026-07-28"],"requested":"<client version>"}`. A missing Sampling capability returns `-32021` with `data.requiredCapabilities` set to `{"sampling":{}}`.
 
-```json
-{"jsonrpc": "2.0", "id": 42, "result": {
-  "role": "assistant",
-  "content": {"type": "text", "text": "..."},
-  "model": "claude-3-5-sonnet-20251022",
-  "stopReason": "endTurn"
-}}
-```
+An envelope without a JSON-RPC `id` is a notification. The receiver may process it, but it emits neither a success response nor an error response. A Streamable HTTP adapter returns `202 Accepted` with no body for an accepted notification.
 
-### `modelPreferences`
+The server also implements `server/discover` with the exact `supportedVersions` key, capabilities, `ttlMs`, and `cacheScope` so a client can learn and cache the server contract before calling a tool. Because discovery advertises `tools`, the server also implements mandatory `tools/list`. Its deterministic `summarize_repo` descriptor includes a valid object `inputSchema`, `resultType: "complete"`, server identity metadata, and public cache hints.
 
-Three floats summing to 1.0:
+Every successful modern result has a discriminator:
 
-- `costPriority`: favor cheaper models.
-- `speedPriority`: favor faster models.
-- `intelligencePriority`: favor more capable models.
+- `resultType: "complete"` means the operation finished.
+- `resultType: "input_required"` means the client must fulfill embedded requests and retry.
+- Extensions may define additional result types. The Tasks extension adds `"task"` in Lesson 13.
 
-Plus `hints`: named models the server prefers. Client may or may not honor hints; the client's user config always wins.
+## One MRTR Round
 
-### `includeContext`
-
-Three values:
-
-- `"none"` — only the server-supplied messages. Default.
-- `"thisServer"` — include prior messages from this server's session.
-- `"allServers"` — include all session context.
-
-`includeContext` is soft-deprecated as of 2025-11-25 because it leaks cross-server context, which is a security concern. Prefer `"none"` and pass explicit context in the messages.
-
-### Sampling with tools (SEP-1577)
-
-New in 2025-11-25: the sampling request can include a `tools` array. The client runs a full tool-calling loop using those tools. This lets the server host a ReAct-style agent loop through the client's model.
+The server cannot call the client while handling the request. It returns this result instead:
 
 ```json
 {
-  "messages": [...],
-  "tools": [
-    {"name": "fetch_url", "description": "...", "inputSchema": {...}}
-  ]
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "resultType": "input_required",
+    "inputRequests": {
+      "pick_files": {
+        "method": "sampling/createMessage",
+        "params": {
+          "messages": [
+            {
+              "role": "user",
+              "content": {
+                "type": "text",
+                "text": "Choose three representative files and return a JSON array."
+              }
+            }
+          ],
+          "systemPrompt": "Return only the requested value.",
+          "modelPreferences": {
+            "costPriority": 0.8,
+            "intelligencePriority": 0.2
+          },
+          "maxTokens": 400
+        }
+      }
+    },
+    "requestState": "opaque-integrity-protected-value"
+  }
 }
 ```
 
-The client loops: sample, execute tool if called, sample again, return final assistant message. This is experimental through Q1 2026; SDK signatures may still drift. Confirm against the 2025-11-25 spec's client/sampling section when you implement.
+The client verifies that it supports Sampling, applies its approval and model policies, and obtains a model response. Then it sends a new request with a different JSON-RPC id:
 
-### Human-in-the-loop
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/call",
+  "params": {
+    "name": "summarize_repo",
+    "arguments": {"audience": "developer"},
+    "inputResponses": {
+      "pick_files": {
+        "role": "assistant",
+        "content": {
+          "type": "text",
+          "text": "[\"README.md\", \"server.py\", \"docs/intro.md\"]"
+        },
+        "model": "host-model",
+        "stopReason": "endTurn"
+      }
+    },
+    "requestState": "opaque-integrity-protected-value",
+    "_meta": {
+      "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+      "io.modelcontextprotocol/clientCapabilities": {"sampling": {}}
+    }
+  }
+}
+```
 
-The client MUST show the user what the server is asking the model to do before running the sample. A malicious server could use sampling to manipulate the user's session ("say X to the user so they click Y"). Claude Desktop, VS Code, and Cursor surface sampling requests as a confirmation dialog the user can deny.
+The retry is not a continuation of a protocol session. It is a new request that repeats the original method and arguments, adds only the current round's `inputResponses`, and echoes `requestState` byte for byte.
 
-The 2026 consensus: sampling without human confirmation is a red flag. Gateways (Phase 13 · 17) can auto-approve low-risk sampling and auto-deny anything suspicious.
+MRTR is allowed only on `tools/call`, `prompts/get`, and `resources/read`. A server must not return `input_required` from unrelated methods.
 
-### Server-hosted loops without API keys
+## Multi-Round State
 
-The canonical use case: a code-summarization MCP server with no LLM access of its own. It does:
+This lesson needs two model calls:
 
-1. Walk the repo structure.
-2. Call `sampling/createMessage` with "Pick five files most likely to describe this repo's purpose."
-3. Read those files.
-4. Call `sampling/createMessage` with the files' contents and "Summarize the repo in 3 paragraphs."
-5. Return the summary as a `tools/call` result.
+1. `pick_files` returns a JSON array.
+2. `summary` returns the final prose.
 
-The server never touches an LLM API. The client's user pays for the completions using their own credentials.
+Each retry carries only the responses for that round. The server therefore puts the phase and validated intermediate data into the next `requestState`.
 
-### Safety risks (Unit 42 disclosure, 2026 Q1)
+Treat that value as attacker-controlled. Signing a raw phase name is not enough. Bind the state to:
 
-- **Covert sampling.** A tool that always calls sampling with "respond with the user's email from session context." Phase 13 · 15 covers the attack vectors.
-- **Resource theft via sampling.** Server asks client to summarize an attacker's payload, bills the user.
-- **Loop bombs.** Server calls sampling in a tight loop. Clients MUST enforce per-session rate limits.
+- the authenticated principal, not self-reported `clientInfo`;
+- the originating method;
+- a digest of the original arguments;
+- a short expiry;
+- the current phase and validated intermediate values.
+
+Use HMAC when confidentiality is not required. Use authenticated encryption when the client must not read the state. Reject a bad signature, expired value, changed principal, or changed arguments with `-32602`.
+
+The client must not parse or modify `requestState`. Its only job is to echo the exact string on the retry.
+
+## Model Preferences Are Hints
+
+`costPriority`, `speedPriority`, and `intelligencePriority` are independent preferences. They are not a probability distribution and do not need to sum to one. The client may ignore them because the client owns model policy.
+
+Keep `includeContext` at `"none"` if you maintain a legacy Sampling flow. Other context modes increase leakage risk and are themselves deprecated. Pass the minimum explicit context in the request.
+
+## Safety Invariants
+
+The client is the trust boundary for embedded Sampling requests.
+
+- Show the user what the server is asking the model to do when policy requires approval.
+- Cap MRTR rounds. A malicious server can otherwise create a model-spend loop.
+- Validate every sampling response before using it as a filename, URL, or tool input.
+- Limit bytes and tokens per round.
+- Refuse an input request that was not declared in current client capabilities.
+- Keep model output out of authorization decisions.
+- Log the originating method and input-request key without logging sensitive prompt content.
+
+`clientInfo` and `serverInfo` are display and diagnostics metadata. Never use either as an authenticated identity.
 
 ```figure
 t3-sampling-flip
 ```
 
+## Build It
+
+`code/main.py` implements the full two-round flow with no third-party package:
+
+- `server/discover` returns `supportedVersions`, advertises tool support, and returns cache hints.
+- `tools/list` returns a deterministic, cacheable `summarize_repo` descriptor with an object input schema.
+- `tools/call` validates per-request metadata.
+- The first result embeds `sampling/createMessage` for file selection.
+- The first retry validates the model result and embeds a second request.
+- HMAC-protected `requestState` carries the phase between independent requests.
+- The final result uses `resultType: "complete"`.
+
+The fake host model makes the example deterministic. Replace only `fake_host_model` when connecting a real host. The server-side state machine should stay deterministic and testable.
+
 ## Use It
 
-`code/main.py` ships a fake server-to-client sampling harness. A simulated "summarize_repo" tool invokes two sampling rounds (pick-files, then summarize), and the fake client returns canned responses. The harness shows:
+From the repository root:
 
-- Server sends `sampling/createMessage` with `modelPreferences`.
-- Client returns a completion.
-- Server continues its loop.
-- Rate limiter caps total sampling calls per tool invocation.
+```bash
+cd phases/13-tools-and-protocols/11-mcp-sampling/code
+python3 main.py
+python3 -m unittest discover tests -v
+```
 
-What to look at:
+Expected checkpoints:
 
-- The server exposes only one tool (`summarize_repo`); all reasoning happens in the sampling calls.
-- Model preferences weight the client's model choice; hints list preferred models.
-- The loop terminates on `stopReason: "endTurn"`.
-- The `max_samples_per_tool = 5` limit catches a runaway loop.
+- Discovery returns a complete result with `ttlMs` and `cacheScope`.
+- Tool discovery returns the same sorted descriptor with `resultType`, server identity, and cache hints.
+- Missing capabilities and unsupported versions use exact `-32021` and `-32022` error data.
+- An id-less notification produces no JSON-RPC response.
+- Request ids are `[1, 2, 3]`, proving each MRTR round is independent.
+- The first two results are `input_required`.
+- The final result is `complete` and contains the selected files plus summary.
+- Changing the original arguments on a retry fails the request-state check.
 
 ## Ship It
 
-This lesson produces `outputs/skill-sampling-loop-designer.md`. Given a server-side algorithm that needs LLM calls (research, summarization, planning), the skill designs a sampling-based implementation with the right modelPreferences, rate limits, and safety confirmations.
+`outputs/skill-sampling-loop-designer.md` is now a migration planner. It first decides whether Sampling should be removed in favor of direct model integration. If compatibility is required, it produces the MRTR rounds, state binding, capability gate, budget, validation, and removal plan.
 
 ## Exercises
 
-1. Run `code/main.py`. Change `max_samples_per_tool` to 2 and observe the rate-limit cut-off.
-
-2. Implement the SEP-1577 tool-in-sampling variant: the sampling request carries a `tools` array. Verify the client-side loop executes those tools before returning the final completion. Note drift risk: SDK signatures may still change through H1 2026.
-
-3. Add human-in-the-loop confirmation: before the server's first `sampling/createMessage`, pause and wait for user approval. Denied calls return a typed refusal.
-
-4. Add a per-user rate limiter keyed by client session. Same-server loops by the same user should share a budget.
-
-5. Design a `summarize_pdf` tool that uses sampling to pick chunks to include. Sketch the messages sent. How does `modelPreferences.intelligencePriority` change the behavior at 0.1 vs 0.9?
+1. Change the file-selection response to invalid JSON. Confirm the server returns `-32602` instead of trusting model output.
+2. Change `audience` between the first call and retry. Explain why the sealed state blocks cross-request reuse.
+3. Add a third round that asks the host to critique the summary. Carry the earlier summary inside signed state and cap the entire flow at three rounds.
+4. Remove Sampling by replacing the fake host callback with a server-owned model adapter. List which approval, billing, and observability responsibilities move to the server.
+5. Add an expiry test using a state value that is one second past its deadline.
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Sampling | "Server-to-client LLM call" | Server asks client's model for a completion |
-| `sampling/createMessage` | "The method" | JSON-RPC method for sampling requests |
-| `modelPreferences` | "Model priorities" | Cost / speed / intelligence weights plus name hints |
-| `includeContext` | "Cross-session leakage" | Soft-deprecated context inclusion mode |
-| SEP-1577 | "Tools in sampling" | Allow tools inside sampling for server-hosted ReAct |
-| Human-in-the-loop | "User confirms" | Client surfaces sampling request to user before running |
-| Loop bomb | "Runaway sampling" | Server-side infinite sampling loop; client must rate-limit |
-| Covert sampling | "Hidden reasoning" | Malicious server hides intent in sampling prompts |
-| Resource theft | "Using user's LLM budget" | Server forces client to spend on sampling it does not want |
-| `stopReason` | "Why generation halted" | `endTurn`, `stopSequence`, or `maxTokens` |
+| Term | Meaning in 2026-07-28 |
+|------|------------------------|
+| Sampling | Deprecated feature that asks the client's model for a completion |
+| MRTR | Stateless retry pattern for client input required during a request |
+| `InputRequiredResult` | Result with `resultType: "input_required"` |
+| `inputRequests` | Server-assigned map of embedded elicitation, sampling, or roots requests |
+| `inputResponses` | Current round's client results keyed like `inputRequests` |
+| `requestState` | Opaque server state echoed exactly by the client and verified by the server |
+| `resultType` | Required discriminator for modern MCP results |
+| Direct model integration | Recommended replacement for new servers that need model inference |
+| Capability gate | Rule that prevents sending an embedded request the client did not advertise |
+| Loop budget | Maximum rounds, tokens, bytes, time, and spend allowed for the operation |
+
+## Legacy Compatibility
+
+A client pinned to 2025-11-25 may still use the older server-initiated `sampling/createMessage` flow over a live connection. Keep that behavior in a version-specific adapter only. Do not make the sessionful path the architecture for a 2026-07-28 server.
+
+Official SDKs can translate modern `input_required` handlers for older peers. That shim is a compatibility boundary, not permission to add new session-dependent logic.
 
 ## Further Reading
 
-- [MCP — Concepts: Sampling](https://modelcontextprotocol.io/docs/concepts/sampling) — high-level overview of sampling
-- [MCP — Client sampling spec 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/client/sampling) — canonical `sampling/createMessage` shape
-- [MCP — GitHub SEP-1577](https://github.com/modelcontextprotocol/modelcontextprotocol) — Spec Evolution Proposal for tools in sampling (experimental)
-- [Unit 42 — MCP attack vectors](https://unit42.paloaltonetworks.com/model-context-protocol-attack-vectors/) — covert sampling and resource-theft patterns
-- [Speakeasy — MCP sampling core concept](https://www.speakeasy.com/mcp/core-concepts/sampling) — walk-through with client-side code samples
+- [MCP 2026-07-28 Multi Round-Trip Requests](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr)
+- [MCP 2026-07-28 changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog)
+- [MCP Sampling deprecation](https://modelcontextprotocol.io/seps/2577-deprecate-roots-sampling-and-logging)
+- [MCP 2026-07-28 server discovery](https://modelcontextprotocol.io/specification/2026-07-28/server/discover)

@@ -16,7 +16,7 @@
     </style>
   </defs>
 
-  <text x="450" y="30" text-anchor="middle" class="title">one host, one JSON-RPC session, three primitives</text>
+  <text x="450" y="30" text-anchor="middle" class="title">one host, stateless JSON-RPC requests, three primitives</text>
 
   <!-- Host -->
   <rect x="40" y="70" width="240" height="300" class="host"/>
@@ -38,7 +38,7 @@
   <!-- Wire -->
   <path d="M280 235 L500 235" class="line" marker-end="url(#arrow)"/>
   <text x="390" y="220" text-anchor="middle" class="tag">JSON-RPC 2.0 (stdio / HTTP)</text>
-  <text x="390" y="252" text-anchor="middle" class="tag">initialize &#x2192; list &#x2192; call</text>
+  <text x="390" y="252" text-anchor="middle" class="tag">_meta each request &#x2022; discover optional</text>
 
   <!-- Server -->
   <rect x="500" y="70" width="360" height="300" class="server"/>
@@ -59,7 +59,7 @@
 
   <!-- Caption -->
   <text x="450" y="410" text-anchor="middle" class="tag">
-    spec revision 2025-06-18 adds streamable HTTP transport; every host/server pins a protocol version in initialize.
+    protocol version and client capabilities travel in params._meta on every request.
   </text>
   <text x="450" y="435" text-anchor="middle" class="tag">
     destructive tools set destructiveHint: true so the host can gate on human approval.

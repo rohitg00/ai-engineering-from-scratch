@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260809a">
+  <link rel="stylesheet" href="style.css?v=20260823b">
   <style>
     .glossary-page {
       padding-block: 104px 80px;
@@ -181,7 +181,8 @@
     .glossary-filter,
     .glossary-letter,
     .glossary-copy-link,
-    .glossary-read-aloud {
+    .glossary-read-aloud,
+    .glossary-show-button {
       border-radius: 0;
       cursor: pointer;
       font-family: var(--font-mono);
@@ -196,7 +197,8 @@
     .glossary-filter:active,
     .glossary-letter:active,
     .glossary-copy-link:active,
-    .glossary-read-aloud:active {
+    .glossary-read-aloud:active,
+    .glossary-show-button:active {
       transform: scale(0.97);
     }
 
@@ -205,6 +207,7 @@
     .glossary-letter:focus-visible,
     .glossary-copy-link:focus-visible,
     .glossary-read-aloud:focus-visible,
+    .glossary-show-button:focus-visible,
     .glossary-related-link:focus-visible,
     .glossary-resource-link:focus-visible,
     .glossary-details summary:focus-visible {
@@ -568,6 +571,46 @@
       border-color: var(--blueprint);
     }
 
+    .glossary-progressive-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-block-start: 20px;
+      padding-block-start: 18px;
+      border-block-start: 1px solid var(--rule-soft);
+    }
+
+    .glossary-progressive-note {
+      color: var(--ink-mute);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+    }
+
+    .glossary-progressive-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .glossary-show-button {
+      min-height: 42px;
+      padding: 8px 12px;
+      border: 1px solid var(--blueprint);
+      background: var(--bg);
+      color: var(--blueprint);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+    }
+
+    .glossary-noscript {
+      margin-block: 20px;
+      padding: 16px;
+      border: 1px solid var(--blueprint);
+      background: var(--blueprint-tint);
+      color: var(--ink);
+    }
+
     .glossary-visually-hidden {
       position: absolute;
       width: 1px;
@@ -588,6 +631,11 @@
       .glossary-read-aloud:hover {
         border-color: var(--blueprint);
         color: var(--blueprint);
+      }
+
+      .glossary-show-button:hover {
+        background: var(--blueprint);
+        color: var(--bg);
       }
 
       .glossary-related-link:hover,
@@ -733,6 +781,16 @@
       .glossary-details-body {
         padding-inline-start: 0;
       }
+
+      .glossary-progressive-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .glossary-progressive-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -741,7 +799,8 @@
       .glossary-filter,
       .glossary-letter,
       .glossary-copy-link,
-      .glossary-read-aloud {
+      .glossary-read-aloud,
+      .glossary-show-button {
         transition: none;
       }
     }
@@ -834,10 +893,20 @@
               <span class="glossary-section-label">Live reference</span>
               <h2 id="glossaryResultsHeading">Reference entries</h2>
             </div>
-            <p class="glossary-result-count" id="glossaryCount"></p>
+            <p class="glossary-result-count" id="glossaryCount" tabindex="-1">Loading reference entries...</p>
             <p class="glossary-visually-hidden" id="glossaryAnnounce" aria-live="polite" aria-atomic="true"></p>
           </header>
-          <div id="glossaryList"></div>
+          <noscript>
+            <div class="glossary-noscript">JavaScript is needed for local filtering. Every definition remains available in the <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/glossary/terms.md">GitHub glossary source</a>.</div>
+          </noscript>
+          <div id="glossaryList" aria-busy="true"></div>
+          <div class="glossary-progressive-actions" id="glossaryProgressiveActions" hidden>
+            <span class="glossary-progressive-note" id="glossaryProgressiveNote"></span>
+            <div class="glossary-progressive-buttons">
+              <button class="glossary-show-button" id="glossaryShowMore" type="button">Show more</button>
+              <button class="glossary-show-button" id="glossaryShowAll" type="button">Show all</button>
+            </div>
+          </div>
         </section>
       </div>
     </div>
@@ -855,10 +924,10 @@
     </div>
   </footer>
 
-  <script src="data.js?v=20260808g"></script>
-  <script src="progress.js?v=20260525a"></script>
-  <script src="header.js?v=20260808h" defer></script>
-  <script src="cmdpalette.js?v=20260808h" defer></script>
+  <script src="data.js?v=20260821c"></script>
+  <script src="progress.js?v=20260822a"></script>
+  <script src="header.js?v=20260823b" defer></script>
+  <script src="cmdpalette.js?v=20260821a" defer></script>
   <script>
     (function () {
       var root = document.documentElement;
@@ -902,7 +971,13 @@
         var announceEl = document.getElementById('glossaryAnnounce');
         var statTermsEl = document.getElementById('glossaryStatTerms');
         var statCategoriesEl = document.getElementById('glossaryStatCategories');
+        var progressiveActionsEl = document.getElementById('glossaryProgressiveActions');
+        var progressiveNoteEl = document.getElementById('glossaryProgressiveNote');
+        var showMoreButton = document.getElementById('glossaryShowMore');
+        var showAllButton = document.getElementById('glossaryShowAll');
         var announceTimer = 0;
+        var BATCH_SIZE = 32;
+        var visibleLimit = BATCH_SIZE;
         var collator = typeof Intl !== 'undefined' && Intl.Collator
           ? new Intl.Collator(undefined, { sensitivity: 'base', numeric: true })
           : null;
@@ -960,7 +1035,8 @@
           return collator ? collator.compare(a, b) : a.localeCompare(b);
         }
 
-        var rawGlossary = typeof GLOSSARY !== 'undefined' && Array.isArray(GLOSSARY) ? GLOSSARY : [];
+        var glossaryAvailable = typeof GLOSSARY !== 'undefined' && Array.isArray(GLOSSARY);
+        var rawGlossary = glossaryAvailable ? GLOSSARY : [];
         var slugUses = Object.create(null);
         var entries = rawGlossary.map(function (item, index) {
           var term = text(item.term) || ('Untitled term ' + (index + 1));
@@ -1234,27 +1310,40 @@
         }
 
         function renderGlossary() {
+          if (!glossaryAvailable) {
+            countEl.textContent = 'The glossary index could not be loaded.';
+            listEl.innerHTML = '<div class="glossary-empty"><h3>Reference unavailable</h3><p>Reload the page or open the glossary source on GitHub.</p></div>';
+            listEl.setAttribute('aria-busy', 'false');
+            progressiveActionsEl.hidden = true;
+            return;
+          }
+
           var results = filteredEntries();
+          var shownResults = results.slice(0, visibleLimit);
           var activeLetters = Object.create(null);
           var groups = Object.create(null);
           results.forEach(function (result) {
+            activeLetters[result.entry.letter] = true;
+          });
+          shownResults.forEach(function (result) {
             var letter = result.entry.letter;
-            activeLetters[letter] = true;
             if (!groups[letter]) groups[letter] = { letter: letter, score: result.score, entries: [] };
             groups[letter].score = Math.min(groups[letter].score, result.score);
             groups[letter].entries.push(result.entry);
           });
 
-          var countMessage = results.length + ' of ' + entries.length + ' terms';
+          var countMessage = 'Showing ' + shownResults.length + ' of ' + results.length + ' matching terms. ' + entries.length + ' total';
           if (currentCategory !== 'all') countMessage += ' · ' + currentCategory;
           countEl.textContent = countMessage;
           announce(countMessage + ' shown.');
+          listEl.setAttribute('aria-busy', 'false');
           clearButton.disabled = !currentQuery && currentCategory === 'all';
           renderCategoryFilters();
           renderAlphabet(activeLetters);
 
           if (!results.length) {
             listEl.innerHTML = '<div class="glossary-empty"><h3>No matching reference</h3><p>Try a broader idea, another learning area, or reset the ledger to see every term.</p><button class="glossary-clear" id="glossaryEmptyClear" type="button">Clear filters</button></div>';
+            progressiveActionsEl.hidden = true;
             return;
           }
 
@@ -1275,9 +1364,16 @@
             html += '</section>';
           });
           listEl.innerHTML = html;
+
+          var remaining = results.length - shownResults.length;
+          progressiveActionsEl.hidden = remaining <= 0;
+          progressiveNoteEl.textContent = remaining > 0 ? remaining + ' matching terms remain.' : '';
+          showMoreButton.textContent = 'Show next ' + Math.min(BATCH_SIZE, remaining);
+          showMoreButton.hidden = remaining <= 0;
+          showAllButton.hidden = remaining <= 0;
         }
 
-        function updateUrl(hash) {
+        function updateUrl(hash, mode) {
           try {
             var url = new URL(window.location.href);
             if (currentQuery) url.searchParams.set('q', currentQuery);
@@ -1286,15 +1382,18 @@
             else url.searchParams.delete('category');
             if (hash === null) url.hash = '';
             else if (typeof hash === 'string') url.hash = hash ? '#' + hash : '';
-            history.replaceState(history.state, '', url.pathname + url.search + url.hash);
+            var nextUrl = url.pathname + url.search + url.hash;
+            if (mode === 'push') history.pushState(null, '', nextUrl);
+            else history.replaceState(null, '', nextUrl);
           } catch (_) {}
         }
 
         function clearFilters(keepFocus) {
           currentQuery = '';
           currentCategory = 'all';
+          visibleLimit = BATCH_SIZE;
           searchInput.value = '';
-          updateUrl(null);
+          updateUrl(null, 'push');
           renderGlossary();
           if (keepFocus) searchInput.focus();
         }
@@ -1311,17 +1410,22 @@
           return true;
         }
 
-        function navigateToTerm(slug, fallbackLabel) {
+        function navigateToTerm(slug, fallbackLabel, historyMode) {
           currentQuery = '';
           currentCategory = 'all';
+          visibleLimit = BATCH_SIZE;
           searchInput.value = '';
-          updateUrl(slug);
+          var results = filteredEntries();
+          var targetIndex = results.findIndex(function (result) { return result.entry.slug === slug; });
+          if (targetIndex >= 0) visibleLimit = Math.max(visibleLimit, targetIndex + 1);
+          updateUrl(slug, historyMode || 'push');
           renderGlossary();
           window.requestAnimationFrame(function () {
             if (!focusTerm(slug, true) && fallbackLabel) {
               currentQuery = fallbackLabel;
               searchInput.value = fallbackLabel;
-              updateUrl(null);
+              visibleLimit = BATCH_SIZE;
+              updateUrl(null, 'replace');
               renderGlossary();
             }
           });
@@ -1383,6 +1487,18 @@
           }
         } catch (_) {}
 
+        var initialSlug = '';
+        try { initialSlug = decodeURIComponent(window.location.hash.replace(/^#/, '')); } catch (_) {}
+        if (initialSlug && entryByKey[normalize(initialSlug)]) {
+          var canonicalInitial = entryByKey[normalize(initialSlug)].slug;
+          currentQuery = '';
+          currentCategory = 'all';
+          var initialResults = filteredEntries();
+          var initialIndex = initialResults.findIndex(function (result) { return result.entry.slug === canonicalInitial; });
+          if (initialIndex >= 0) visibleLimit = Math.max(visibleLimit, initialIndex + 1);
+          initialSlug = canonicalInitial;
+        }
+
         searchInput.value = currentQuery;
         statTermsEl.textContent = entries.length;
         statCategoriesEl.textContent = categories.length;
@@ -1390,7 +1506,8 @@
 
         searchInput.addEventListener('input', function () {
           currentQuery = searchInput.value.trim();
-          updateUrl(null);
+          visibleLimit = BATCH_SIZE;
+          updateUrl(null, 'replace');
           renderGlossary();
         });
 
@@ -1402,7 +1519,8 @@
           var button = event.target.closest('[data-category]');
           if (!button) return;
           currentCategory = button.getAttribute('data-category') || 'all';
-          updateUrl(null);
+          visibleLimit = BATCH_SIZE;
+          updateUrl(null, 'push');
           renderGlossary();
           Array.prototype.some.call(categoriesEl.querySelectorAll('[data-category]'), function (candidate) {
             if (candidate.getAttribute('data-category') !== currentCategory) return false;
@@ -1419,11 +1537,17 @@
           var button = event.target.closest('[data-letter]');
           if (!button || button.disabled) return;
           currentLetterFocus = button.getAttribute('data-letter') || '';
-          setRovingTabStop(enabledButtons(alphabetEl, '[data-letter]'), button, false);
-          var section = document.getElementById('letter-' + button.getAttribute('data-letter'));
-          if (!section) return;
-          section.focus({ preventScroll: true });
-          section.scrollIntoView({ block: 'start', behavior: 'auto' });
+          var targetLetter = currentLetterFocus;
+          var letterResults = filteredEntries();
+          var letterIndex = letterResults.findIndex(function (result) { return result.entry.letter === targetLetter; });
+          if (letterIndex >= 0) visibleLimit = Math.max(visibleLimit, letterIndex + 1);
+          renderGlossary();
+          window.requestAnimationFrame(function () {
+            var section = document.getElementById('letter-' + targetLetter);
+            if (!section) return;
+            section.focus({ preventScroll: true });
+            section.scrollIntoView({ block: 'start', behavior: 'auto' });
+          });
         });
 
         alphabetEl.addEventListener('keydown', function (event) {
@@ -1471,19 +1595,56 @@
           try { slug = decodeURIComponent(window.location.hash.replace(/^#/, '')); } catch (_) { return; }
           if (!slug) return;
           if (!focusTerm(slug, true) && entryByKey[normalize(slug)]) {
-            navigateToTerm(entryByKey[normalize(slug)].slug, '');
+            navigateToTerm(entryByKey[normalize(slug)].slug, '', 'replace');
           }
         });
 
-        var initialSlug = '';
-        try { initialSlug = decodeURIComponent(window.location.hash.replace(/^#/, '')); } catch (_) {}
         if (initialSlug) {
           window.requestAnimationFrame(function () {
             if (!focusTerm(initialSlug, true) && entryByKey[normalize(initialSlug)]) {
-              navigateToTerm(entryByKey[normalize(initialSlug)].slug, '');
+              navigateToTerm(entryByKey[normalize(initialSlug)].slug, '', 'replace');
             }
           });
         }
+
+        showMoreButton.addEventListener('click', function () {
+          visibleLimit += BATCH_SIZE;
+          renderGlossary();
+          if (progressiveActionsEl.hidden) countEl.focus();
+          else showMoreButton.focus();
+        });
+
+        showAllButton.addEventListener('click', function () {
+          visibleLimit = Number.POSITIVE_INFINITY;
+          renderGlossary();
+          countEl.focus();
+        });
+
+        window.addEventListener('popstate', function () {
+          var params = new URLSearchParams(window.location.search);
+          currentQuery = text(params.get('q'));
+          var requestedCategory = text(params.get('category'));
+          currentCategory = categories.find(function (category) {
+            return normalize(category) === normalize(requestedCategory) || slugify(category) === slugify(requestedCategory);
+          }) || 'all';
+          visibleLimit = BATCH_SIZE;
+          searchInput.value = currentQuery;
+          var slug = '';
+          try { slug = decodeURIComponent(window.location.hash.replace(/^#/, '')); } catch (_) {}
+          if (slug && entryByKey[normalize(slug)]) {
+            var canonical = entryByKey[normalize(slug)].slug;
+            currentQuery = '';
+            currentCategory = 'all';
+            searchInput.value = '';
+            var results = filteredEntries();
+            var index = results.findIndex(function (result) { return result.entry.slug === canonical; });
+            if (index >= 0) visibleLimit = Math.max(visibleLimit, index + 1);
+            renderGlossary();
+            window.requestAnimationFrame(function () { focusTerm(canonical, true); });
+            return;
+          }
+          renderGlossary();
+        });
       });
     })();
   </script>

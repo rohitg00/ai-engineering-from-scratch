@@ -1,205 +1,360 @@
-"""Phase 13 Lesson 22 - SKILL.md loader and agent bundle demo.
-
-Lesson: ../docs/en.md
-Reference: https://agentskills.io/specification
-Parses frontmatter, discovers Skills, and loads bounded subresources.
-Run: python3 main.py
-"""
-
 from __future__ import annotations
 
+import json
 import re
-from dataclasses import dataclass
+import tempfile
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from tempfile import TemporaryDirectory
+from typing import Any, Iterable
 
 
-RELEASE_NOTES_SKILL = """\
----
-name: release-notes-writer
-description: Write a changelog entry for the latest merged PRs following this project's style.
----
-
-# Release notes writer
-
-When invoked, run these steps:
-
-1. List PRs merged since the last tag.
-2. Group by label: feature, fix, chore, docs.
-3. For each PR, write one line: `- <title> (#<num>)`.
-4. Draft the release notes and stage them in CHANGELOG.md.
-
-If the user says "ship", run `git tag vX.Y.Z` and `gh release create`.
-
-See style-guide.md for the house style rules.
-"""
-
-RELEASE_STYLE = """\
-# Release notes style guide
-
-- One line per PR. No prose.
-- Feature entries first; fixes second; chores third; docs last.
-- Skip chores from public changelog.
-"""
-
-PR_REVIEW_SKILL = """\
----
-name: pr-reviewer
-description: Review a PR diff against the project's style guide and open clarifying comments.
----
-
-# PR reviewer
-
-Steps:
-
-1. Fetch the PR diff.
-2. Identify rules from AGENTS.md that the diff touches.
-3. Write one comment per clear violation.
-"""
-
-SKILL_NAME = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+CORE_FIELDS = {
+    "name",
+    "description",
+    "license",
+    "compatibility",
+    "metadata",
+    "allowed-tools",
+}
+NAME_PATTERN = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 
 @dataclass(frozen=True)
-class Skill:
-    """A validated Agent Skill loaded from one directory."""
+class ValidationIssue:
+    code: str
+    message: str
 
-    name: str
-    description: str
+
+@dataclass(frozen=True)
+class SkillReport:
+    valid: bool
+    name: str | None
+    description: str | None
     body: str
-    root: Path
+    core_fields: tuple[str, ...]
+    runtime_extensions: tuple[str, ...]
+    issues: tuple[ValidationIssue, ...]
+
+    def to_dict(self) -> dict[str, Any]:
+        data = asdict(self)
+        data["issues"] = [asdict(issue) for issue in self.issues]
+        return data
 
 
-def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
-    """Split scalar YAML frontmatter from the Markdown body."""
-
-    if not text.startswith("---\n"):
-        return {}, text
-    end = text.find("\n---\n", 4)
-    if end == -1:
-        return {}, text
-    frontmatter: dict[str, str] = {}
-    for line in text[4:end].splitlines():
-        stripped = line.strip()
-        if not stripped or stripped.startswith("#") or ":" not in line:
-            continue
-        key, value = line.split(":", 1)
-        frontmatter[key.strip()] = value.strip()
-    return frontmatter, text[end + 5 :]
+class FrontmatterSyntaxError(ValueError):
+    """Raised when the lesson's deliberately small YAML subset is invalid."""
 
 
-def load_skill(folder: Path) -> Skill | None:
-    """Load one valid Agent Skills manifest or skip it."""
+def _decode_scalar(raw: str) -> str:
+    value = raw.strip()
+    if not value:
+        return ""
+    if value.startswith('"'):
+        try:
+            decoded = json.loads(value)
+        except json.JSONDecodeError as error:
+            raise FrontmatterSyntaxError(f"invalid quoted scalar: {error.msg}") from error
+        if not isinstance(decoded, str):
+            raise FrontmatterSyntaxError("frontmatter scalars must be strings")
+        return decoded
+    if value.startswith("'"):
+        if len(value) < 2 or not value.endswith("'"):
+            raise FrontmatterSyntaxError("unterminated single-quoted scalar")
+        return value[1:-1].replace("''", "'")
+    if value[0] in "[{&*!":
+        raise FrontmatterSyntaxError("unsupported YAML construct in portable subset")
+    return value
 
-    skill_path = folder / "SKILL.md"
-    if not skill_path.is_file():
-        return None
+
+def parse_frontmatter(text: str) -> tuple[dict[str, Any], str]:
+    """Parse top-level scalars, block scalars, and a one-level metadata map."""
+    lines = text.splitlines()
+    if not lines or lines[0] != "---":
+        raise FrontmatterSyntaxError("SKILL.md must begin with an exact --- line")
     try:
-        text = skill_path.read_text(encoding="utf-8")
-    except (OSError, UnicodeError):
-        return None
-    frontmatter, body = parse_frontmatter(text)
-    name = frontmatter.get("name")
-    description = frontmatter.get("description", "")
-    if (
-        not name
-        or len(name) > 64
-        or SKILL_NAME.fullmatch(name) is None
-        or name != folder.name
-        or not description
-        or len(description) > 1024
-    ):
-        return None
-    return Skill(
+        end = lines.index("---", 1)
+    except ValueError as error:
+        raise FrontmatterSyntaxError("frontmatter needs a closing --- line") from error
+
+    metadata: dict[str, Any] = {}
+    index = 1
+    while index < end:
+        line = lines[index]
+        if not line.strip() or line.lstrip().startswith("#"):
+            index += 1
+            continue
+        if line[:1].isspace() or ":" not in line:
+            raise FrontmatterSyntaxError(f"malformed top-level line {index + 1}")
+        key, raw_value = line.split(":", 1)
+        key = key.strip()
+        if not re.fullmatch(r"[A-Za-z][A-Za-z0-9-]*", key):
+            raise FrontmatterSyntaxError(f"invalid field name {key!r}")
+        if key in metadata:
+            raise FrontmatterSyntaxError(f"duplicate field {key!r}")
+
+        value = raw_value.strip()
+        if value in {">", "|"}:
+            block: list[str] = []
+            index += 1
+            while index < end and (not lines[index] or lines[index][:1].isspace()):
+                block.append(lines[index].lstrip())
+                index += 1
+            metadata[key] = (" " if value == ">" else "\n").join(block).strip()
+            continue
+        if key == "metadata" and not value:
+            nested: dict[str, str] = {}
+            index += 1
+            while index < end and (not lines[index] or lines[index][:1].isspace()):
+                nested_line = lines[index].strip()
+                if nested_line:
+                    if ":" not in nested_line:
+                        raise FrontmatterSyntaxError(
+                            f"malformed metadata line {index + 1}"
+                        )
+                    nested_key, nested_value = nested_line.split(":", 1)
+                    nested_key = nested_key.strip()
+                    if nested_key in nested:
+                        raise FrontmatterSyntaxError(
+                            f"duplicate metadata field {nested_key!r}"
+                        )
+                    nested[nested_key] = _decode_scalar(nested_value)
+                index += 1
+            metadata[key] = nested
+            continue
+        metadata[key] = _decode_scalar(value)
+        index += 1
+
+    body = "\n".join(lines[end + 1 :]).strip()
+    return metadata, body
+
+
+def validate_skill_text(
+    text: str,
+    directory_name: str,
+    allowed_runtime_extensions: Iterable[str] = (),
+) -> SkillReport:
+    issues: list[ValidationIssue] = []
+    try:
+        fields, body = parse_frontmatter(text)
+    except FrontmatterSyntaxError as error:
+        issue = ValidationIssue("frontmatter-syntax", str(error))
+        return SkillReport(False, None, None, "", (), (), (issue,))
+
+    name_value = fields.get("name")
+    description_value = fields.get("description")
+    name = name_value if isinstance(name_value, str) else None
+    description = description_value if isinstance(description_value, str) else None
+
+    if not name:
+        issues.append(ValidationIssue("name-required", "name must be a non-empty string"))
+    elif len(name) > 64:
+        issues.append(ValidationIssue("name-too-long", "name must be at most 64 characters"))
+    elif not NAME_PATTERN.fullmatch(name):
+        issues.append(
+            ValidationIssue(
+                "name-format",
+                "name must use lowercase letters, digits, and single hyphens",
+            )
+        )
+    elif name != directory_name:
+        issues.append(
+            ValidationIssue(
+                "directory-mismatch",
+                f"name {name!r} must match directory {directory_name!r}",
+            )
+        )
+
+    if not description or not description.strip():
+        issues.append(
+            ValidationIssue("description-required", "description must explain when to use the skill")
+        )
+    elif len(description) > 1024:
+        issues.append(
+            ValidationIssue(
+                "description-too-long", "description must be at most 1024 characters"
+            )
+        )
+
+    if "compatibility" in fields:
+        compatibility = fields["compatibility"]
+        if not isinstance(compatibility, str) or not compatibility.strip():
+            issues.append(
+                ValidationIssue(
+                    "compatibility-empty",
+                    "compatibility must be a non-empty string when provided",
+                )
+            )
+        elif len(compatibility) > 500:
+            issues.append(
+                ValidationIssue(
+                    "compatibility-too-long",
+                    "compatibility must be at most 500 characters",
+                )
+            )
+
+    if "metadata" in fields:
+        metadata = fields["metadata"]
+        if not isinstance(metadata, dict) or not all(
+            isinstance(key, str) and isinstance(value, str)
+            for key, value in metadata.items()
+        ):
+            issues.append(
+                ValidationIssue(
+                    "metadata-shape",
+                    "metadata must map string keys to string values",
+                )
+            )
+
+    if "allowed-tools" in fields:
+        allowed_tools = fields["allowed-tools"]
+        if not isinstance(allowed_tools, str) or not allowed_tools.strip():
+            issues.append(
+                ValidationIssue(
+                    "allowed-tools-shape",
+                    "allowed-tools must be a non-empty space-separated string",
+                )
+            )
+    if not body:
+        issues.append(ValidationIssue("body-required", "SKILL.md needs instruction content"))
+
+    extension_names = sorted(set(fields) - CORE_FIELDS)
+    allowed = set(allowed_runtime_extensions)
+    for field in extension_names:
+        if field not in allowed:
+            issues.append(
+                ValidationIssue(
+                    "unsupported-runtime-field",
+                    f"{field!r} is not part of the portable contract or this host policy",
+                )
+            )
+
+    return SkillReport(
+        valid=not issues,
         name=name,
         description=description,
-        body=body.strip(),
-        root=folder,
+        body=body,
+        core_fields=tuple(sorted(set(fields) & CORE_FIELDS)),
+        runtime_extensions=tuple(extension_names),
+        issues=tuple(issues),
     )
 
 
-def discover_skills(root: Path) -> dict[str, Skill]:
-    """Discover every valid direct child Skill without failing siblings."""
-
-    if not root.is_dir():
-        return {}
-    registry: dict[str, Skill] = {}
-    for folder in sorted(root.iterdir()):
-        if not folder.is_dir():
-            continue
-        skill = load_skill(folder)
-        if skill is not None:
-            registry[skill.name] = skill
-    return registry
+@dataclass(frozen=True)
+class TaskShape:
+    repeatable_method: bool = False
+    repository_default: bool = False
+    external_capability: bool = False
+    lifecycle_event: bool = False
+    deterministic_logic: bool = False
+    isolated_delegation: bool = False
 
 
-def read_subresource(skill: Skill, filename: str) -> str:
-    """Read one file whose resolved path stays inside the Skill root."""
-
-    root = skill.root.resolve()
-    path = (root / filename).resolve()
-    if path != root and root not in path.parents:
-        return f"(subresource outside skill root: {filename})"
-    if not path.is_file():
-        return f"(no such subresource: {filename})"
-    return path.read_text(encoding="utf-8")
-
-
-def setup_fixtures(root: Path) -> None:
-    """Write two deterministic Skill fixtures under an isolated root."""
-
-    release_notes = root / "release-notes-writer"
-    release_notes.mkdir(parents=True)
-    (release_notes / "SKILL.md").write_text(
-        RELEASE_NOTES_SKILL, encoding="utf-8"
-    )
-    (release_notes / "style-guide.md").write_text(RELEASE_STYLE, encoding="utf-8")
-    reviewer = root / "pr-reviewer"
-    reviewer.mkdir()
-    (reviewer / "SKILL.md").write_text(PR_REVIEW_SKILL, encoding="utf-8")
+def select_primitives(task: TaskShape) -> tuple[str, ...]:
+    """Select composable primitives by responsibility, not by product branding."""
+    choices: list[str] = []
+    if task.repository_default:
+        choices.append("AGENTS.md")
+    if task.repeatable_method:
+        choices.append("Agent Skill")
+    if task.external_capability:
+        choices.append("MCP tool")
+    if task.lifecycle_event:
+        choices.append("hook")
+    if task.deterministic_logic:
+        choices.append("ordinary code")
+    if task.isolated_delegation:
+        choices.append("subagent")
+    return tuple(choices or ["prompt"])
 
 
-def agent_run(skill: Skill, user_task: str) -> str:
-    """Build a demo prompt and load its referenced style guide."""
-
-    print(f"  [loader] loading skill '{skill.name}'")
-    prompt = f"""You are an assistant with the {skill.name} skill loaded.
-
-Skill instructions:
-{skill.body}
-
-User task: {user_task}
-"""
-    if "style-guide" in skill.body.lower():
-        style = read_subresource(skill, "style-guide.md")
-        print(f"  [loader] subresource pulled ({len(style)} bytes)")
-        prompt += f"\n\nAdditional style guide:\n{style}"
-    return prompt
+def build_xquik_search_plan(query: str, limit: int) -> dict[str, Any]:
+    """Build a bounded Xquik MCP request without handling credentials."""
+    normalized_query = query.strip()
+    if not normalized_query:
+        raise ValueError("query must not be empty")
+    if isinstance(limit, bool) or not isinstance(limit, int) or limit < 1:
+        raise ValueError("limit must be a positive integer")
+    return {
+        "skill": "x-twitter-scraper",
+        "mcp_server": "https://xquik.com/mcp",
+        "tool": "xquik",
+        "path": "/api/v1/x/tweets/search",
+        "options": {
+            "query": {
+                "q": normalized_query,
+                "queryType": "Latest",
+                "limit": limit,
+            }
+        },
+    }
 
 
 def demo() -> None:
-    """Run the isolated discovery and progressive-disclosure demo."""
+    portable_example = """---
+name: incident-summary
+description: Summarize an incident timeline when the user supplies event notes.
+metadata:
+  owner: reliability
+---
 
-    print("=" * 72)
-    print("PHASE 13 LESSON 22 - SKILLS AND AGENT SDK LOADER")
-    print("=" * 72)
-    with TemporaryDirectory(prefix="lesson-22-skills-") as directory:
-        root = Path(directory)
-        setup_fixtures(root)
-        print(f"\n--- discovery under {root} ---")
-        skills = discover_skills(root)
-        for name, skill in skills.items():
-            print(f"  {name:25s} -> {skill.description}")
-        prompt = agent_run(
-            skills["release-notes-writer"], "draft the 1.4.0 release notes"
+# Incident summary
+
+Preserve timestamps and separate observations from inferences.
+"""
+    host_extended_example = portable_example.replace(
+        "description:", "user-invocable: true\ndescription:", 1
+    )
+    invalid_example = portable_example.replace(
+        "name: incident-summary", "name: Incident_Summary", 1
+    )
+    with tempfile.TemporaryDirectory(prefix="lesson-22-") as temp_dir:
+        base = Path(temp_dir)
+        portable_dir = base / "incident-summary"
+        portable_dir.mkdir()
+        portable_path = portable_dir / "SKILL.md"
+        portable_path.write_text(portable_example, encoding="utf-8")
+        portable_report = validate_skill_text(
+            portable_path.read_text(encoding="utf-8"), portable_dir.name
         )
-        print("\n[the system prompt the agent would send to the model]")
-        print("-" * 72)
-        print(prompt[:600] + "...")
-    print("\n--- AGENTS.md + SKILL.md + MCP: the three-layer stack ---")
-    print("  AGENTS.md (repo root)       -> project conventions at session start")
-    print("  SKILL.md (.agents/skills/)  -> reusable workflows on demand")
-    print("  MCP server                  -> tools the skill invokes")
+        host_report = validate_skill_text(
+            host_extended_example,
+            "incident-summary",
+            allowed_runtime_extensions={"user-invocable"},
+        )
+        invalid_report = validate_skill_text(
+            invalid_example, "incident-summary"
+        )
+
+    result = {
+        "validation": portable_report.to_dict(),
+        "validation_cases": {
+            "portable_core": portable_report.to_dict(),
+            "host_extended": host_report.to_dict(),
+            "invalid_package": invalid_report.to_dict(),
+        },
+        "decision_examples": {
+            "one_off_rewrite": select_primitives(TaskShape()),
+            "repeatable_repo_workflow_with_api": select_primitives(
+                TaskShape(
+                    repeatable_method=True,
+                    repository_default=True,
+                    external_capability=True,
+                )
+            ),
+            "post_test_automation": select_primitives(TaskShape(lifecycle_event=True)),
+            "schema_normalization": select_primitives(TaskShape(deterministic_logic=True)),
+            "parallel_isolated_research": select_primitives(
+                TaskShape(isolated_delegation=True)
+            ),
+        },
+        "external_skill_integration": {
+            "primitives": select_primitives(
+                TaskShape(repeatable_method=True, external_capability=True)
+            ),
+            "request": build_xquik_search_plan("agent skills", 10),
+        },
+    }
+    print(json.dumps(result, indent=2))
 
 
 if __name__ == "__main__":

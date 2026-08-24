@@ -57,7 +57,7 @@
   <text x="60" y="356" class="step">query-ref</text>
   <text x="300" y="356" class="small">MCP resources/read · A2A GET /tasks/{id}</text>
   <text x="60" y="376" class="step">subscribe</text>
-  <text x="300" y="376" class="small">A2A SSE /tasks/{id}/events · MCP resources/subscribe</text>
+  <text x="300" y="376" class="small">A2A SSE task events · MCP subscriptions/listen</text>
   <text x="60" y="396" class="step">cfp</text>
   <text x="300" y="396" class="small">task-market broadcast (bid solicitation)</text>
   <text x="60" y="416" class="step">propose · accept · reject</text>

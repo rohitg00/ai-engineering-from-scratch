@@ -12,15 +12,32 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     initThemeToggle();
+    populateCurriculumSummary();
     populateStats();
     renderPhases();
     initStaggerIndex();
     initModal();
     initCopyButton();
-    initSmoothScroll();
+    initMastheadFigure();
     initFadeObserver();
-    initScrollExplode();
   });
+
+  function populateCurriculumSummary() {
+    if (typeof PHASES === 'undefined' || !Array.isArray(PHASES)) return;
+    var lessonTotal = PHASES.reduce(function (total, phase) {
+      return total + (Array.isArray(phase.lessons) ? phase.lessons.length : 0);
+    }, 0);
+    var values = {
+      mastheadLessonCount: lessonTotal + ' lessons',
+      mastheadPhaseCount: PHASES.length + ' phases',
+      prefaceLessonCount: lessonTotal + ' lessons',
+      prefacePhaseCount: PHASES.length + ' phases'
+    };
+    Object.keys(values).forEach(function (id) {
+      var target = document.getElementById(id);
+      if (target) target.textContent = values[id];
+    });
+  }
 
   function updateThemeIcon() {
     var icon = document.getElementById('themeIcon');
@@ -77,10 +94,15 @@
     var clamped = Math.max(0, Math.min(100, pct));
     el.setAttribute('data-target-pct', clamped.toFixed(1));
     if (el.classList.contains('in-view') || !window.IntersectionObserver) {
-      el.style.setProperty('--bar-pct', clamped.toFixed(1) + '%');
+      setBarScale(el, clamped);
     } else {
-      el.style.setProperty('--bar-pct', '0%');
+      setBarScale(el, 0);
     }
+  }
+
+  function setBarScale(el, pct) {
+    var clamped = Math.max(0, Math.min(100, Number(pct) || 0));
+    el.style.setProperty('--bar-scale', (clamped / 100).toFixed(3));
   }
 
   function populateStats() {
@@ -447,33 +469,208 @@
     }
   }
 
-  function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-      link.addEventListener('click', function (e) {
-        var target = document.querySelector(link.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
+  function initMastheadFigure() {
+    var figure = document.querySelector('[data-masthead-figure]');
+    if (!figure) return;
+    var panels = Array.prototype.slice.call(figure.querySelectorAll('.fig-panel'));
+    var dots = Array.prototype.slice.call(figure.querySelectorAll('.fig-dot'));
+    var previous = figure.querySelector('.fig-previous');
+    var next = figure.querySelector('.fig-next');
+    var controls = figure.querySelector('.fig-controls');
+    var caption = figure.querySelector('.fig-caption');
+    if (panels.length < 2 || dots.length !== panels.length || !previous || !next || !controls || !caption) return;
+
+    var autoplayDelay = 6500;
+    var current = Math.max(0, panels.findIndex(function (panel) { return panel.classList.contains('is-active'); }));
+    var reducedQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var desktopQuery = window.matchMedia ? window.matchMedia('(min-width: 1280px) and (hover: hover) and (pointer: fine)') : null;
+    var inViewport = !window.IntersectionObserver;
+    var timer = 0;
+    var timerStartedAt = 0;
+    var timerRemaining = autoplayDelay;
+    var autoplayCancelled = !!(reducedQuery && reducedQuery.matches);
+    var autoplayComplete = false;
+    var disposed = false;
+    var cleanups = [];
+
+    function now() {
+      return window.performance && typeof window.performance.now === 'function' ? window.performance.now() : Date.now();
+    }
+
+    function listen(target, type, handler, options) {
+      target.addEventListener(type, handler, options);
+      cleanups.push(function () { target.removeEventListener(type, handler, options); });
+    }
+
+    function listenToQuery(query, handler) {
+      if (!query) return;
+      if (typeof query.addEventListener === 'function') {
+        query.addEventListener('change', handler);
+        cleanups.push(function () { query.removeEventListener('change', handler); });
+      } else if (typeof query.addListener === 'function') {
+        query.addListener(handler);
+        cleanups.push(function () { query.removeListener(handler); });
+      }
+    }
+
+    function isDesktopView() {
+      return desktopQuery ? desktopQuery.matches : figure.getClientRects().length > 0;
+    }
+
+    function isReduced() {
+      return !!(reducedQuery && reducedQuery.matches);
+    }
+
+    function isOnScreen() {
+      var rect = figure.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth;
+    }
+
+    function showPlate(index, announce) {
+      current = Math.max(0, Math.min(panels.length - 1, index));
+      panels.forEach(function (panel, panelIndex) {
+        var active = panelIndex === current;
+        panel.classList.toggle('is-active', active);
+        panel.setAttribute('aria-hidden', active ? 'false' : 'true');
       });
+      dots.forEach(function (dot, dotIndex) {
+        var active = dotIndex === current;
+        dot.classList.toggle('is-active', active);
+        dot.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      caption.setAttribute('aria-live', announce ? 'polite' : 'off');
+      caption.textContent = 'Plate ' + (current + 1) + ' of ' + panels.length + '. ' + panels[current].getAttribute('data-caption');
+      previous.disabled = current === 0;
+      next.disabled = current === panels.length - 1;
+    }
+
+    function clearTimer(preserveRemaining) {
+      if (!timer) return;
+      if (preserveRemaining) {
+        timerRemaining = Math.max(0, timerRemaining - (now() - timerStartedAt));
+      }
+      window.clearTimeout(timer);
+      timer = 0;
+      timerStartedAt = 0;
+    }
+
+    function canAutoplay() {
+      return !autoplayCancelled && !autoplayComplete && !isReduced() && isDesktopView() && inViewport && !document.hidden && figure.getClientRects().length > 0;
+    }
+
+    function scheduleAutoplay() {
+      if (timer || !canAutoplay()) return;
+      if (current >= panels.length - 1) {
+        autoplayComplete = true;
+        figure.removeAttribute('data-autoplay');
+        return;
+      }
+      figure.setAttribute('data-autoplay', 'true');
+      timerStartedAt = now();
+      timer = window.setTimeout(function () {
+        timer = 0;
+        timerStartedAt = 0;
+        showPlate(current + 1, false);
+        timerRemaining = autoplayDelay;
+        if (current >= panels.length - 1) {
+          autoplayComplete = true;
+          figure.removeAttribute('data-autoplay');
+          return;
+        }
+        scheduleAutoplay();
+      }, Math.max(16, timerRemaining));
+    }
+
+    function cancelAutoplay() {
+      clearTimer(false);
+      autoplayCancelled = true;
+      figure.removeAttribute('data-autoplay');
+    }
+
+    function syncRuntime() {
+      if (disposed) return;
+      var paused = isReduced() || !isDesktopView() || !inViewport || document.hidden || figure.getClientRects().length === 0;
+      figure.setAttribute('data-motion-paused', paused ? 'true' : 'false');
+      if (paused) clearTimer(true);
+      else scheduleAutoplay();
+    }
+
+    function choosePlate(index) {
+      cancelAutoplay();
+      showPlate(index, true);
+      syncRuntime();
+    }
+
+    dots.forEach(function (dot, index) {
+      listen(dot, 'click', function () { choosePlate(index); });
     });
+    listen(previous, 'click', function () { choosePlate(current - 1); });
+    listen(next, 'click', function () { choosePlate(current + 1); });
+    listen(controls, 'pointerdown', cancelAutoplay);
+    listen(controls, 'keydown', cancelAutoplay);
+    listen(controls, 'focusin', cancelAutoplay);
+    listen(document, 'visibilitychange', syncRuntime);
+
+    listenToQuery(reducedQuery, function () {
+      if (isReduced()) cancelAutoplay();
+      syncRuntime();
+    });
+    listenToQuery(desktopQuery, function () {
+      inViewport = isOnScreen();
+      syncRuntime();
+    });
+
+    if (window.IntersectionObserver) {
+      var observer = new IntersectionObserver(function (entries) {
+        if (!entries.length) return;
+        inViewport = entries[0].isIntersecting && entries[0].intersectionRatio > 0;
+        syncRuntime();
+      }, { threshold: 0.12 });
+      observer.observe(figure);
+      cleanups.push(function () { observer.disconnect(); });
+    } else {
+      var checkViewport = function () {
+        inViewport = isOnScreen();
+        syncRuntime();
+      };
+      listen(window, 'scroll', checkViewport, { passive: true });
+      listen(window, 'resize', checkViewport);
+      checkViewport();
+    }
+
+    function cleanup() {
+      if (disposed) return;
+      disposed = true;
+      clearTimer(false);
+      while (cleanups.length) cleanups.pop()();
+      figure.removeAttribute('data-autoplay');
+      figure.setAttribute('data-motion-paused', 'true');
+    }
+
+    listen(window, 'pagehide', function (event) {
+      if (!event.persisted) cleanup();
+    });
+    showPlate(current, false);
+    syncRuntime();
   }
 
   function initFadeObserver() {
     var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var visibleEls = document.querySelectorAll('.reveal, .fade-in, .ascii-rule, .toc-row');
+    for (var v = 0; v < visibleEls.length; v++) {
+      visibleEls[v].classList.add('in-view', 'visible');
+    }
 
     if (!window.IntersectionObserver || prefersReduced) {
-      document.querySelectorAll('.reveal, .fade-in, .stat-row-bar').forEach(function (el) {
+      document.querySelectorAll('.stat-row-bar').forEach(function (el) {
         el.classList.add('in-view', 'visible');
         var target = el.getAttribute('data-target-pct');
-        if (target !== null) el.style.setProperty('--bar-pct', target + '%');
+        if (target !== null) setBarScale(el, target);
       });
       return;
     }
 
-    document.body.classList.add('js-anim');
-
-    var els = document.querySelectorAll('.reveal, .fade-in, .stat-row-bar, .ascii-rule, .toc-row');
+    var els = document.querySelectorAll('.stat-row-bar');
     if (!els.length) return;
     var observer = new IntersectionObserver(function (entries) {
       for (var i = 0; i < entries.length; i++) {
@@ -482,7 +679,7 @@
           el.classList.add('in-view', 'visible');
           var target = el.getAttribute('data-target-pct');
           if (target !== null) {
-            el.style.setProperty('--bar-pct', target + '%');
+            setBarScale(el, target);
           }
           observer.unobserve(el);
         }
@@ -497,72 +694,6 @@
     var rows = document.querySelectorAll('.toc-list .toc-row');
     for (var i = 0; i < rows.length; i++) {
       rows[i].style.setProperty('--stagger-delay', (i * 30) + 'ms');
-    }
-  }
-
-  function initScrollExplode() {
-    var containers = document.querySelectorAll('[data-svg-explode]');
-    if (!containers.length) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      for (var c = 0; c < containers.length; c++) applyExplode(containers[c], 1);
-      return;
-    }
-
-    var ticking = false;
-    function update() {
-      ticking = false;
-      var vh = window.innerHeight || document.documentElement.clientHeight;
-      for (var i = 0; i < containers.length; i++) {
-        var rect = containers[i].getBoundingClientRect();
-        var startEdge = vh;
-        var endEdge = vh * 0.35;
-        var raw = (startEdge - rect.top) / (startEdge - endEdge);
-        var progress = Math.max(0, Math.min(1, raw));
-        progress = 1 - Math.pow(1 - progress, 3);
-        applyExplode(containers[i], progress);
-      }
-    }
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(update);
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    update();
-  }
-
-  function applyExplode(container, progress) {
-    // Each layer / label animates over its own window in [stagger_start, stagger_start + window].
-    // Sequential reveal: layer N waits for layer N-1 to mostly settle before starting.
-    var STAGGER_DENOM = 720; // higher → wider gaps between layer entrances
-    var WINDOW = 0.55;       // each layer's local animation duration as fraction of global progress
-
-    function localProgress(staggerAttr) {
-      var stagger = parseFloat(staggerAttr) || 0;
-      var start = stagger / STAGGER_DENOM;
-      var local = (progress - start) / WINDOW;
-      if (local < 0) local = 0;
-      if (local > 1) local = 1;
-      // ease-out cubic on the local segment
-      return 1 - Math.pow(1 - local, 3);
-    }
-
-    var layers = container.querySelectorAll('.explode-layer');
-    for (var i = 0; i < layers.length; i++) {
-      var final = parseFloat(layers[i].getAttribute('data-final')) || 0;
-      var lp = localProgress(layers[i].getAttribute('data-stagger'));
-      var dy = -final * lp;
-      layers[i].setAttribute('transform', 'translate(0, ' + dy.toFixed(2) + ')');
-      layers[i].setAttribute('opacity', lp.toFixed(3));
-    }
-    var labels = container.querySelectorAll('.explode-label');
-    for (var j = 0; j < labels.length; j++) {
-      var final2 = parseFloat(labels[j].getAttribute('data-final')) || 0;
-      var lp2 = localProgress(labels[j].getAttribute('data-stagger'));
-      var dy2 = -final2 * lp2;
-      labels[j].setAttribute('transform', 'translate(0, ' + dy2.toFixed(2) + ')');
-      labels[j].setAttribute('opacity', lp2.toFixed(3));
     }
   }
 

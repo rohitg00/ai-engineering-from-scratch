@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lesson Catalog - AI Engineering from Scratch</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
-  <meta name="description" content="Full catalog of 503 AI engineering lessons. Search, filter, and sort every lesson across all 20 phases.">
+  <meta name="description" content="Full catalog of AI engineering lessons. Search, filter, and sort every lesson across all 20 phases.">
   <link rel="canonical" href="https://aiengineeringfromscratch.com/catalog.html">
   <meta property="og:title" content="Catalog · AI Engineering from Scratch">
-  <meta property="og:description" content="Search and filter 503 lessons across 20 phases. Python, TypeScript, Rust, Julia.">
+  <meta property="og:description" content="Search and filter the full curriculum across 20 phases. Python, TypeScript, Rust, Julia.">
   <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
   <meta property="og:url" content="https://aiengineeringfromscratch.com/catalog.html">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Catalog · AI Engineering from Scratch">
-  <meta name="twitter:description" content="Search and filter 503 lessons across 20 phases.">
+  <meta name="twitter:description" content="Search and filter the full curriculum across 20 phases.">
   <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260809a">
+  <link rel="stylesheet" href="style.css?v=20260823b">
   <style>
     .catalog-page {
       padding: 100px 0 80px;
@@ -27,7 +27,7 @@
     }
 
     .catalog-header {
-      text-align: center;
+      text-align: left;
       margin-bottom: 32px;
     }
 
@@ -101,7 +101,7 @@
     .catalog-table-wrap {
       overflow-x: auto;
       border: 2px solid var(--border);
-      border-radius: 12px;
+      border-radius: 0;
       background: var(--bg-surface);
     }
 
@@ -155,6 +155,28 @@
       background: var(--bg-surface-hover);
     }
 
+    .catalog-group-row th {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--blueprint-tint);
+      color: var(--ink);
+      cursor: default;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .catalog-group-row th:hover {
+      color: var(--ink);
+    }
+
+    .catalog-group-count {
+      margin-left: 10px;
+      color: var(--ink-mute);
+    }
+
     .catalog-table a {
       color: var(--secondary);
     }
@@ -198,6 +220,61 @@
       font-size: 1.1rem;
     }
 
+    .catalog-progressive-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule-soft);
+    }
+
+    .catalog-progressive-note {
+      color: var(--ink-mute);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+    }
+
+    .catalog-progressive-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .catalog-progressive-button {
+      min-height: 42px;
+      padding: 8px 12px;
+      border: 1px solid var(--blueprint);
+      background: var(--bg);
+      color: var(--blueprint);
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      transition: background-color 150ms ease, color 150ms ease, transform 150ms var(--ease-out);
+    }
+
+    .catalog-progressive-button:hover,
+    .catalog-progressive-button:focus-visible {
+      background: var(--blueprint);
+      color: var(--bg);
+    }
+
+    .catalog-progressive-button:active { transform: scale(0.97); }
+
+    .catalog-progressive-button:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: 2px;
+    }
+
+    .catalog-noscript {
+      margin-bottom: 18px;
+      padding: 16px;
+      border: 1px solid var(--blueprint);
+      background: var(--blueprint-tint);
+      color: var(--ink);
+    }
+
     @media (max-width: 768px) {
       .catalog-page {
         padding: 80px 0 48px;
@@ -218,6 +295,16 @@
       .catalog-table th,
       .catalog-table td {
         padding: 8px 10px;
+      }
+
+      .catalog-progressive-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .catalog-progressive-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
   </style>
@@ -275,8 +362,11 @@
           <option value="planned">Planned</option>
         </select>
       </div>
-      <div class="catalog-count" id="catalogCount" role="status" aria-live="polite"></div>
-      <div class="catalog-table-wrap">
+      <div class="catalog-count" id="catalogCount" role="status" aria-live="polite" tabindex="-1">Loading lesson index...</div>
+      <noscript>
+        <div class="catalog-noscript">JavaScript is needed for local filtering. Every lesson remains available in the <a href="https://github.com/rohitg00/ai-engineering-from-scratch#contents">GitHub curriculum index</a>.</div>
+      </noscript>
+      <div class="catalog-table-wrap" id="catalogTableWrap" aria-busy="true">
         <table class="catalog-table" id="catalogTable">
           <thead>
             <tr>
@@ -289,6 +379,13 @@
           </thead>
           <tbody id="catalogBody"></tbody>
         </table>
+      </div>
+      <div class="catalog-progressive-actions" id="catalogProgressiveActions" hidden>
+        <span class="catalog-progressive-note" id="catalogProgressiveNote"></span>
+        <div class="catalog-progressive-buttons">
+          <button class="catalog-progressive-button" id="catalogShowMore" type="button">Show more</button>
+          <button class="catalog-progressive-button" id="catalogShowAll" type="button">Show all</button>
+        </div>
       </div>
     </div>
   </main>
@@ -305,14 +402,15 @@
     </div>
   </footer>
 
-  <script src="data.js?v=20260808g"></script>
-  <script src="progress.js?v=20260525a"></script>
-  <script src="header.js?v=20260808h" defer></script>
-  <script src="cmdpalette.js?v=20260808h" defer></script>
+  <script src="data.js?v=20260821c"></script>
+  <script src="progress.js?v=20260822a"></script>
+  <script src="header.js?v=20260823b" defer></script>
+  <script src="cmdpalette.js?v=20260821a" defer></script>
   <script>
     (function () {
       var root = document.documentElement;
-      var stored = localStorage.getItem('theme');
+      var stored = '';
+      try { stored = localStorage.getItem('theme') || ''; } catch (_) {}
       if (stored) {
         root.setAttribute('data-theme', stored);
       } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -337,13 +435,31 @@
           btn.addEventListener('click', function () {
             var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
             root.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
+            try { localStorage.setItem('theme', next); } catch (_) {}
             updateIcon();
           });
         }
 
-        var allRows = [];
+        var searchInput = document.getElementById('catalogSearch');
         var phaseSelect = document.getElementById('catalogPhase');
+        var statusSelect = document.getElementById('catalogStatus');
+        var bodyEl = document.getElementById('catalogBody');
+        var countEl = document.getElementById('catalogCount');
+        var tableWrap = document.getElementById('catalogTableWrap');
+        var progressiveActions = document.getElementById('catalogProgressiveActions');
+        var progressiveNote = document.getElementById('catalogProgressiveNote');
+        var showMoreButton = document.getElementById('catalogShowMore');
+        var showAllButton = document.getElementById('catalogShowAll');
+        var PAGE_SIZE = 48;
+        var visibleLimit = PAGE_SIZE;
+        var allRows = [];
+
+        if (typeof PHASES === 'undefined' || !Array.isArray(PHASES)) {
+          countEl.textContent = 'The lesson index could not be loaded.';
+          bodyEl.innerHTML = '<tr><td colspan="5" class="catalog-empty">Reload the page or use the GitHub curriculum index.</td></tr>';
+          tableWrap.setAttribute('aria-busy', 'false');
+          return;
+        }
 
         for (var i = 0; i < PHASES.length; i++) {
           var p = PHASES[i];
@@ -366,14 +482,10 @@
           }
         }
 
-        var searchInput = document.getElementById('catalogSearch');
-        var statusSelect = document.getElementById('catalogStatus');
-        var bodyEl = document.getElementById('catalogBody');
-        var countEl = document.getElementById('catalogCount');
         var sortCol = 'phase';
         var sortDir = 1;
 
-        function syncUrl() {
+        function syncUrl(mode) {
           try {
             var url = new URL(window.location.href);
             var query = searchInput.value.trim();
@@ -383,7 +495,16 @@
             else url.searchParams.delete('phase');
             if (statusSelect.value) url.searchParams.set('status', statusSelect.value);
             else url.searchParams.delete('status');
-            history.replaceState(history.state, '', url.pathname + url.search + url.hash);
+            if (sortCol !== 'phase' || sortDir !== 1) {
+              url.searchParams.set('sort', sortCol);
+              url.searchParams.set('dir', sortDir === 1 ? 'asc' : 'desc');
+            } else {
+              url.searchParams.delete('sort');
+              url.searchParams.delete('dir');
+            }
+            var nextUrl = url.pathname + url.search + url.hash;
+            if (mode === 'push') history.pushState(null, '', nextUrl);
+            else history.replaceState(null, '', nextUrl);
           } catch (_) {}
         }
 
@@ -433,16 +554,29 @@
             return 0;
           });
 
-          countEl.textContent = rows.length + ' of ' + allRows.length + ' lessons';
+          var visibleRows = rows.slice(0, visibleLimit);
+          countEl.textContent = 'Showing ' + visibleRows.length + ' of ' + rows.length + ' matching lessons. ' + allRows.length + ' total.';
+          tableWrap.setAttribute('aria-busy', 'false');
 
           if (rows.length === 0) {
             bodyEl.innerHTML = '<tr><td colspan="5" class="catalog-empty">No lessons match your filters.</td></tr>';
+            progressiveActions.hidden = true;
             return;
           }
 
+          var phaseCounts = Object.create(null);
+          rows.forEach(function (row) {
+            phaseCounts[row.phase] = (phaseCounts[row.phase] || 0) + 1;
+          });
+
           var html = '';
-          for (var i = 0; i < rows.length; i++) {
-            var r = rows[i];
+          var previousPhase = null;
+          for (var i = 0; i < visibleRows.length; i++) {
+            var r = visibleRows[i];
+            if (sortCol === 'phase' && r.phase !== previousPhase) {
+              html += '<tr class="catalog-group-row"><th colspan="5" scope="rowgroup">Phase ' + String(r.phase).padStart(2, '0') + ': ' + escapeHtml(r.phaseName) + '<span class="catalog-group-count">' + phaseCounts[r.phase] + ' lessons</span></th></tr>';
+              previousPhase = r.phase;
+            }
             html += '<tr>';
             html += '<td><span class="catalog-phase-label">' + String(r.phase).padStart(2, '0') + '</span></td>';
             if (r.url) {
@@ -458,23 +592,67 @@
             html += '</tr>';
           }
           bodyEl.innerHTML = html;
+
+          var remaining = rows.length - visibleRows.length;
+          progressiveActions.hidden = remaining <= 0;
+          progressiveNote.textContent = remaining > 0 ? remaining + ' matching lessons remain.' : '';
+          showMoreButton.textContent = 'Show next ' + Math.min(PAGE_SIZE, remaining);
+          showMoreButton.hidden = remaining <= 0;
+          showAllButton.hidden = remaining <= 0;
         }
 
-        var initialParams = new URLSearchParams(window.location.search);
-        var urlQuery = initialParams.get('q');
-        if (urlQuery) {
+        function applyUrlState(focusSearch) {
+          var params = new URLSearchParams(window.location.search);
+          var urlQuery = params.get('q') || '';
+          var urlPhase = params.get('phase') || '';
+          var urlStatus = params.get('status') || '';
+          var urlSort = params.get('sort') || 'phase';
+          var urlDir = params.get('dir') || 'asc';
           searchInput.value = urlQuery;
-          try { searchInput.setSelectionRange(urlQuery.length, urlQuery.length); } catch (_) {}
-          try { searchInput.focus({ preventScroll: true }); } catch (_) { searchInput.focus(); }
+          phaseSelect.value = Array.prototype.some.call(phaseSelect.options, function (option) { return option.value === urlPhase; }) ? urlPhase : '';
+          statusSelect.value = Array.prototype.some.call(statusSelect.options, function (option) { return option.value === urlStatus; }) ? urlStatus : '';
+          sortCol = ['phase', 'name', 'type', 'lang', 'status'].indexOf(urlSort) !== -1 ? urlSort : 'phase';
+          sortDir = urlDir === 'desc' ? -1 : 1;
+          visibleLimit = PAGE_SIZE;
+          document.querySelectorAll('.catalog-table th[data-sort]').forEach(function (header) {
+            var active = header.getAttribute('data-sort') === sortCol;
+            header.setAttribute('aria-sort', active ? (sortDir === 1 ? 'ascending' : 'descending') : 'none');
+            header.querySelector('.sort-arrow').textContent = active ? (sortDir === 1 ? ' \u25B2' : ' \u25BC') : '';
+          });
+          render();
+          if (focusSearch && urlQuery) {
+            try { searchInput.focus({ preventScroll: true }); } catch (_) { searchInput.focus(); }
+          }
         }
-        var urlPhase = initialParams.get('phase');
-        var urlStatus = initialParams.get('status');
-        if (urlPhase && Array.prototype.some.call(phaseSelect.options, function (option) { return option.value === urlPhase; })) phaseSelect.value = urlPhase;
-        if (urlStatus && Array.prototype.some.call(statusSelect.options, function (option) { return option.value === urlStatus; })) statusSelect.value = urlStatus;
 
-        searchInput.addEventListener('input', function () { syncUrl(); render(); });
-        phaseSelect.addEventListener('change', function () { syncUrl(); render(); });
-        statusSelect.addEventListener('change', function () { syncUrl(); render(); });
+        searchInput.addEventListener('input', function () {
+          visibleLimit = PAGE_SIZE;
+          syncUrl('replace');
+          render();
+        });
+        phaseSelect.addEventListener('change', function () {
+          visibleLimit = PAGE_SIZE;
+          syncUrl('push');
+          render();
+        });
+        statusSelect.addEventListener('change', function () {
+          visibleLimit = PAGE_SIZE;
+          syncUrl('push');
+          render();
+        });
+
+        showMoreButton.addEventListener('click', function () {
+          visibleLimit += PAGE_SIZE;
+          render();
+          if (progressiveActions.hidden) countEl.focus();
+          else showMoreButton.focus();
+        });
+
+        showAllButton.addEventListener('click', function () {
+          visibleLimit = Number.POSITIVE_INFINITY;
+          render();
+          countEl.focus();
+        });
 
         function applySort(th) {
             var col = th.getAttribute('data-sort');
@@ -484,11 +662,13 @@
               sortCol = col;
               sortDir = 1;
             }
+            visibleLimit = PAGE_SIZE;
             document.querySelectorAll('.catalog-table th[data-sort]').forEach(function (header) {
               header.setAttribute('aria-sort', header === th ? (sortDir === 1 ? 'ascending' : 'descending') : 'none');
               header.querySelector('.sort-arrow').textContent = '';
             });
             th.querySelector('.sort-arrow').textContent = sortDir === 1 ? ' \u25B2' : ' \u25BC';
+            syncUrl('push');
             render();
         }
 
@@ -501,7 +681,8 @@
           });
         });
 
-        render();
+        window.addEventListener('popstate', function () { applyUrlState(false); });
+        applyUrlState(true);
       });
     })();
   </script>

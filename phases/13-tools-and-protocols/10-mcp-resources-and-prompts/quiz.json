@@ -1,0 +1,78 @@
+{
+  "lesson": "10-mcp-resources-and-prompts",
+  "title": "MCP Resources and Prompts",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A host needs to retrieve a stable architecture note by URI. Which MCP primitive fits best?",
+      "options": [
+        "A resource",
+        "A cancellation notification",
+        "A protocol session",
+        "A destructive tool"
+      ],
+      "correct": 0,
+      "explanation": "A resource exposes addressable content through a URI. A tool performs an operation, while sessions and cancellation do not model readable content."
+    },
+    {
+      "stage": "check",
+      "question": "What should a 2026-07-28 server return when resources/read receives an unknown resource URI?",
+      "options": [
+        "A resources/list_changed notification",
+        "JSON-RPC error -32601",
+        "An empty successful contents array",
+        "JSON-RPC error -32602"
+      ],
+      "correct": 3,
+      "explanation": "The current Resources contract uses invalid parameters, code -32602, for an invalid or unknown resource URI. Empty success would hide a caller error."
+    },
+    {
+      "stage": "check",
+      "question": "Which cache policy is safest for a user-owned note returned by resources/read?",
+      "options": [
+        "Public because the URI is stable",
+        "Shared across users when the MIME type matches",
+        "Private with a bounded TTL",
+        "Public with an unlimited TTL"
+      ],
+      "correct": 2,
+      "explanation": "A user-owned result should not cross identity boundaries. A bounded private cache can reduce repeated reads while preserving the authorization context."
+    },
+    {
+      "stage": "check",
+      "question": "What identifies every notification on a subscriptions/listen response stream?",
+      "options": [
+        "The original listen request ID in subscription metadata",
+        "The resource MIME type",
+        "A newly generated protocol session",
+        "The server process ID"
+      ],
+      "correct": 0,
+      "explanation": "The JSON-RPC ID of subscriptions/listen becomes io.modelcontextprotocol/subscriptionId and is repeated in the acknowledgment and every later event."
+    },
+    {
+      "stage": "post",
+      "question": "Why must resources/list and prompts/list be deterministic for the same request inputs?",
+      "options": [
+        "To grant public access to all returned entries",
+        "To avoid validating pagination cursors",
+        "To stabilize caches, snapshots, and host interfaces",
+        "To make list membership depend on a prior read"
+      ],
+      "correct": 2,
+      "explanation": "Stable membership and ordering prevent noisy cache misses and changing interfaces. Authorization can still affect visibility because credentials are explicit request input."
+    },
+    {
+      "stage": "post",
+      "question": "What must a current MCP server expose even when clients may call resources/list directly?",
+      "options": [
+        "A resources/subscribe method for every URI",
+        "An initialize method that creates a protocol session",
+        "A standalone HTTP GET event stream",
+        "server/discover with supported revisions and capabilities"
+      ],
+      "correct": 3,
+      "explanation": "Servers must implement server/discover so clients can obtain one capability and version snapshot. Calling it remains optional for a client, which may call another method and handle a structured version error."
+    }
+  ]
+}

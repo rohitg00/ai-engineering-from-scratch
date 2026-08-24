@@ -17,59 +17,52 @@
     </style>
   </defs>
 
-  <text x="480" y="26" text-anchor="middle" class="title">stdio MCP server anatomy</text>
+  <text x="480" y="26" text-anchor="middle" class="title">stateless stdio MCP server anatomy</text>
 
-  <rect x="40" y="50" width="200" height="400" class="cold"/>
-  <text x="140" y="72" text-anchor="middle" class="head">client (host)</text>
-  <text x="56" y="104" class="small">Claude Desktop,</text>
-  <text x="56" y="120" class="small">Cursor, VS Code,</text>
-  <text x="56" y="136" class="small">ChatGPT, ...</text>
-  <text x="56" y="172" class="step">spawns server as</text>
-  <text x="56" y="188" class="step">child process</text>
-  <text x="56" y="220" class="small">writes JSON-RPC</text>
-  <text x="56" y="236" class="small">to child's stdin</text>
-  <text x="56" y="268" class="small">reads responses</text>
-  <text x="56" y="284" class="small">from child's stdout</text>
-  <text x="56" y="316" class="step">newline-delimited</text>
-  <text x="56" y="332" class="small">one JSON object</text>
-  <text x="56" y="348" class="small">per line</text>
+  <rect x="35" y="55" width="210" height="400" class="cold"/>
+  <text x="140" y="80" text-anchor="middle" class="head">client process</text>
+  <text x="55" y="116" class="step">each request includes</text>
+  <text x="55" y="138" class="small">protocolVersion</text>
+  <text x="55" y="156" class="small">clientCapabilities</text>
+  <text x="55" y="174" class="small">clientInfo (SHOULD)</text>
+  <text x="55" y="220" class="step">stdio transport</text>
+  <text x="55" y="242" class="small">one JSON object per line</text>
+  <text x="55" y="260" class="small">EOF ends process lifetime</text>
+  <text x="55" y="306" class="step">no protocol session</text>
+  <text x="55" y="328" class="small">no initialize gate</text>
+  <text x="55" y="346" class="small">no remembered capabilities</text>
 
-  <path d="M240,250 L320,250" class="edge" marker-end="url(#arrow)"/>
-  <path d="M320,300 L240,300" class="edge" marker-end="url(#arrow)"/>
+  <path d="M245,230 L315,230" class="edge" marker-end="url(#arrow)"/>
+  <path d="M315,285 L245,285" class="edge" marker-end="url(#arrow)"/>
 
-  <rect x="320" y="50" width="600" height="400" class="box"/>
-  <text x="620" y="72" text-anchor="middle" class="head">server process (this lesson's code)</text>
+  <rect x="315" y="55" width="610" height="400" class="box"/>
+  <text x="620" y="80" text-anchor="middle" class="head">server process</text>
 
-  <rect x="340" y="90" width="560" height="50" class="cool"/>
-  <text x="620" y="112" text-anchor="middle" class="step">dispatch loop</text>
-  <text x="620" y="130" text-anchor="middle" class="small">read line -&gt; json.loads -&gt; route by method -&gt; write response</text>
+  <rect x="335" y="100" width="570" height="70" class="hot"/>
+  <text x="620" y="122" text-anchor="middle" class="step">parse -&gt; validate current _meta -&gt; route</text>
+  <text x="620" y="146" text-anchor="middle" class="small">unsupported version returns -32022 with requested and supported</text>
 
-  <rect x="340" y="150" width="170" height="80" class="hot"/>
-  <text x="425" y="170" text-anchor="middle" class="step">tools</text>
-  <text x="425" y="188" text-anchor="middle" class="small">notes_list</text>
-  <text x="425" y="204" text-anchor="middle" class="small">notes_search</text>
-  <text x="425" y="220" text-anchor="middle" class="small">notes_create</text>
+  <rect x="335" y="190" width="170" height="90" class="cool"/>
+  <text x="420" y="214" text-anchor="middle" class="step">tools</text>
+  <text x="420" y="238" text-anchor="middle" class="small">list, search, create</text>
+  <text x="420" y="260" text-anchor="middle" class="small">deterministic list</text>
 
-  <rect x="530" y="150" width="170" height="80" class="cool"/>
-  <text x="615" y="170" text-anchor="middle" class="step">resources</text>
-  <text x="615" y="188" text-anchor="middle" class="small">notes://note-1</text>
-  <text x="615" y="204" text-anchor="middle" class="small">notes://note-2</text>
-  <text x="615" y="220" text-anchor="middle" class="small">notes://note-N</text>
+  <rect x="525" y="190" width="170" height="90" class="cold"/>
+  <text x="610" y="214" text-anchor="middle" class="step">resources</text>
+  <text x="610" y="238" text-anchor="middle" class="small">list and read</text>
+  <text x="610" y="260" text-anchor="middle" class="small">private cache scope</text>
 
-  <rect x="720" y="150" width="170" height="80" class="cold"/>
-  <text x="805" y="170" text-anchor="middle" class="step">prompts</text>
-  <text x="805" y="188" text-anchor="middle" class="small">review_note</text>
-  <text x="805" y="210" text-anchor="middle" class="small">(slash-command</text>
-  <text x="805" y="226" text-anchor="middle" class="small">template)</text>
+  <rect x="715" y="190" width="170" height="90" class="cool"/>
+  <text x="800" y="214" text-anchor="middle" class="step">prompts</text>
+  <text x="800" y="238" text-anchor="middle" class="small">list and get</text>
+  <text x="800" y="260" text-anchor="middle" class="small">stable templates</text>
 
-  <rect x="340" y="250" width="560" height="70" class="box"/>
-  <text x="620" y="272" text-anchor="middle" class="step">capabilities at initialize</text>
-  <text x="620" y="294" text-anchor="middle" class="small">{ tools: {listChanged: true}, resources: {subscribe: false},</text>
-  <text x="620" y="310" text-anchor="middle" class="small">  prompts: {} }</text>
+  <rect x="335" y="300" width="570" height="125" class="cool"/>
+  <text x="620" y="324" text-anchor="middle" class="step">complete response wrapper</text>
+  <text x="355" y="350" class="small">resultType: complete</text>
+  <text x="355" y="372" class="small">_meta.io.modelcontextprotocol/serverInfo</text>
+  <text x="355" y="394" class="small">cacheable results also include ttlMs + cacheScope</text>
+  <text x="355" y="414" class="small">server/discover is a mandatory handler</text>
 
-  <rect x="340" y="340" width="560" height="100" class="cool"/>
-  <text x="620" y="362" text-anchor="middle" class="step">graduation: FastMCP / TS SDK</text>
-  <text x="356" y="384" class="small">@app.tool() def notes_search(query: str, limit: int = 10) -&gt; list[dict]: ...</text>
-  <text x="356" y="400" class="small">same wire behavior; ~80 lines vs ~200. Decorator generates schema</text>
-  <text x="356" y="416" class="small">from type hints and runs the stdio dispatcher for you.</text>
+  <text x="480" y="490" text-anchor="middle" class="caption">A dual-era deployment keeps any legacy initialize adapter separate from this modern path.</text>
 </svg>

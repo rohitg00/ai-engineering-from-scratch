@@ -1,85 +1,95 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
     </marker>
     <style>
-      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
-      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
-      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
-      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
-      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
-      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .green { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .blue { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .orange { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.3; }
+      .title { font-size: 17px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+      .mono { font-size: 10.5px; font-family: Menlo, monospace; fill: #222; }
+      .small { font-size: 10.5px; fill: #333; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
-      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.4; fill: none; }
     </style>
   </defs>
 
-  <text x="480" y="26" text-anchor="middle" class="title">MCP gateway in the control plane</text>
+  <text x="480" y="28" text-anchor="middle" class="title">A 2026-07-28 gateway forwards requests, not protocol sessions</text>
 
-  <rect x="40" y="60" width="200" height="440" class="cool"/>
-  <text x="140" y="82" text-anchor="middle" class="head">developers</text>
-  <text x="60" y="110" class="small">5000 users</text>
-  <text x="60" y="128" class="small">across IDEs</text>
-  <text x="60" y="162" class="step">seen as single</text>
-  <text x="60" y="180" class="step">MCP endpoint</text>
-  <text x="60" y="212" class="small">auth via gateway's</text>
-  <text x="60" y="228" class="small">own OAuth 2.1</text>
-  <text x="60" y="260" class="small">never see backend</text>
-  <text x="60" y="276" class="small">tokens</text>
+  <rect x="25" y="58" width="210" height="445" rx="8" class="green"/>
+  <text x="130" y="84" text-anchor="middle" class="head">client</text>
+  <text x="42" y="116" class="mono">POST /mcp</text>
+  <text x="42" y="136" class="small">bearer principal</text>
+  <text x="42" y="156" class="small">version + method + name</text>
+  <text x="42" y="176" class="small">params._meta capabilities</text>
+  <text x="42" y="214" class="mono">server/discover</text>
+  <text x="42" y="234" class="mono">tools/list</text>
+  <text x="42" y="254" class="mono">tools/call</text>
+  <text x="42" y="274" class="mono">subscriptions/listen</text>
+  <text x="42" y="312" class="small">JSON or request SSE</text>
+  <text x="42" y="350" class="mono">never current</text>
+  <text x="42" y="370" class="small">initialize</text>
+  <text x="42" y="390" class="small">Mcp-Session-Id</text>
+  <text x="42" y="410" class="small">standalone GET stream</text>
+  <text x="42" y="430" class="small">Last-Event-ID replay</text>
 
-  <path d="M240,280 L340,280" class="edge" marker-end="url(#arrow)"/>
+  <path d="M235,280 L300,280" class="edge" marker-end="url(#arrow)"/>
 
-  <rect x="340" y="60" width="320" height="440" class="cold"/>
-  <text x="500" y="82" text-anchor="middle" class="head">gateway</text>
-  <text x="356" y="108" class="step">1 / auth (OAuth 2.1)</text>
-  <text x="356" y="124" class="small">map developer to user_id</text>
-  <text x="356" y="146" class="step">2 / RBAC</text>
-  <text x="356" y="162" class="small">user -&gt; allowed tools</text>
-  <text x="356" y="184" class="step">3 / pinned-hash check</text>
-  <text x="356" y="200" class="small">reject mutated descriptions</text>
-  <text x="356" y="222" class="step">4 / rate limit</text>
-  <text x="356" y="238" class="small">per-user token bucket</text>
-  <text x="356" y="260" class="step">5 / policy-as-code</text>
-  <text x="356" y="276" class="small">OPA / Rego, Kyverno, Styra</text>
-  <text x="356" y="298" class="step">6 / audit log</text>
-  <text x="356" y="314" class="small">append-only event stream</text>
-  <text x="356" y="336" class="step">7 / PII redaction</text>
-  <text x="356" y="352" class="small">filter results pre-return</text>
-  <text x="356" y="374" class="step">8 / OTel GenAI spans</text>
-  <text x="356" y="390" class="small">gen_ai.* attributes per call</text>
-  <text x="356" y="420" class="step">vendors (2026)</text>
-  <text x="356" y="438" class="small">Cloudflare MCP Portals,</text>
-  <text x="356" y="454" class="small">Kong AI Gateway, IBM</text>
-  <text x="356" y="470" class="small">ContextForge, MintMCP,</text>
-  <text x="356" y="486" class="small">Envoy AI Gateway</text>
+  <rect x="300" y="58" width="360" height="445" rx="8" class="blue"/>
+  <text x="480" y="84" text-anchor="middle" class="head">stateless gateway policy</text>
+  <rect x="320" y="104" width="150" height="68" rx="5" class="box"/>
+  <text x="334" y="126" class="mono">wire validation</text>
+  <text x="334" y="146" class="small">header equals body</text>
+  <text x="334" y="162" class="small">before routing</text>
+  <rect x="490" y="104" width="150" height="68" rx="5" class="box"/>
+  <text x="504" y="126" class="mono">admission</text>
+  <text x="504" y="146" class="small">server.json publication</text>
+  <text x="504" y="162" class="small">+ external verified state</text>
+  <rect x="320" y="190" width="150" height="68" rx="5" class="box"/>
+  <text x="334" y="212" class="mono">namespace + pin</text>
+  <text x="334" y="232" class="small">notes.search</text>
+  <text x="334" y="248" class="small">descriptor digest</text>
+  <rect x="490" y="190" width="150" height="68" rx="5" class="box"/>
+  <text x="504" y="212" class="mono">auth + RBAC</text>
+  <text x="504" y="232" class="small">principal and issuer</text>
+  <text x="504" y="248" class="small">resource + arguments</text>
+  <rect x="320" y="276" width="150" height="68" rx="5" class="box"/>
+  <text x="334" y="298" class="mono">private cache</text>
+  <text x="334" y="318" class="small">deterministic lists</text>
+  <text x="334" y="334" class="small">bounded ttlMs</text>
+  <rect x="490" y="276" width="150" height="68" rx="5" class="box"/>
+  <text x="504" y="298" class="mono">rate + audit</text>
+  <text x="504" y="318" class="small">key by principal</text>
+  <text x="504" y="334" class="small">trace route decision</text>
+  <rect x="320" y="362" width="320" height="98" rx="5" class="box"/>
+  <text x="334" y="384" class="mono">interaction routing</text>
+  <text x="334" y="404" class="small">subscriptions/listen: POST response SSE</text>
+  <text x="334" y="422" class="small">MRTR: preserve protected requestState</text>
+  <text x="334" y="440" class="small">Tasks: route get/update/cancel by task id</text>
 
-  <path d="M660,200 L760,200" class="edge" marker-end="url(#arrow)"/>
-  <path d="M660,280 L760,280" class="edge" marker-end="url(#arrow)"/>
-  <path d="M660,360 L760,360" class="edge" marker-end="url(#arrow)"/>
+  <path d="M660,180 L725,150" class="edge" marker-end="url(#arrow)"/>
+  <path d="M660,280 L725,280" class="edge" marker-end="url(#arrow)"/>
+  <path d="M660,380 L725,410" class="edge" marker-end="url(#arrow)"/>
 
-  <rect x="760" y="60" width="160" height="440" class="hot"/>
-  <text x="840" y="82" text-anchor="middle" class="head">backends</text>
-  <text x="776" y="108" class="step">notes MCP</text>
-  <text x="776" y="126" class="small">Official Registry</text>
+  <rect x="725" y="58" width="210" height="445" rx="8" class="orange"/>
+  <text x="830" y="84" text-anchor="middle" class="head">backend servers</text>
+  <text x="742" y="116" class="mono">fresh request each hop</text>
+  <text x="742" y="136" class="small">gateway is the client</text>
+  <text x="742" y="156" class="small">new request id + _meta</text>
+  <text x="742" y="194" class="mono">notes backend</text>
+  <text x="742" y="214" class="small">discover + list + call</text>
+  <text x="742" y="252" class="mono">issues backend</text>
+  <text x="742" y="272" class="small">discover + list + call</text>
+  <text x="742" y="310" class="mono">credential boundary</text>
+  <text x="742" y="330" class="small">outer token never sent</text>
+  <text x="742" y="348" class="small">backend token bound to</text>
+  <text x="742" y="366" class="small">issuer + resource</text>
+  <text x="742" y="404" class="mono">durable handles</text>
+  <text x="742" y="424" class="small">application state, MRTR,</text>
+  <text x="742" y="442" class="small">or Tasks, not sessions</text>
 
-  <text x="776" y="158" class="step">github MCP</text>
-  <text x="776" y="176" class="small">Official Registry</text>
-
-  <text x="776" y="208" class="step">postgres MCP</text>
-  <text x="776" y="226" class="small">Glama / admin-curated</text>
-
-  <text x="776" y="258" class="step">custom</text>
-  <text x="776" y="276" class="small">internal / reverse-DNS</text>
-  <text x="776" y="292" class="small">namespace pinned</text>
-
-  <text x="776" y="330" class="step">credentials</text>
-  <text x="776" y="348" class="small">stay in vault</text>
-  <text x="776" y="364" class="small">behind gateway</text>
-
-  <text x="776" y="396" class="step">session ids</text>
-  <text x="776" y="414" class="small">per-backend, rewritten</text>
-  <text x="776" y="430" class="small">at gateway boundary</text>
+  <text x="480" y="542" text-anchor="middle" class="caption">Any healthy gateway instance can validate and route the next self-contained request.</text>
 </svg>

@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lesson - AI Engineering from Scratch</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
-  <meta name="description" content="A lesson from the AI Engineering from Scratch curriculum. 503 lessons across 20 phases, four languages, every algorithm built from raw math.">
+  <meta name="description" content="A lesson from the AI Engineering from Scratch curriculum. 511 lessons across 20 phases, four languages, every algorithm built from raw math.">
   <link rel="canonical" href="https://aiengineeringfromscratch.com/lesson.html">
   <meta property="og:title" content="AI Engineering from Scratch · Lesson">
-  <meta property="og:description" content="503 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
+  <meta property="og:description" content="511 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
   <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
   <!-- og:url omitted intentionally: lesson.html is a static template that loads the lesson body client-side via ?path=. Static hosting cannot template the URL, so we let crawlers fall back to the request URL (which is the lesson-specific share link). -->
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Engineering from Scratch">
-  <meta name="twitter:description" content="503 lessons. 20 phases. Build it from raw math, by hand.">
+  <meta name="twitter:description" content="511 lessons. 20 phases. Build it from raw math, by hand.">
   <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260809a">
+  <link rel="stylesheet" href="style.css?v=20260823b">
   <link rel="stylesheet" href="certifications.css?v=20260809a">
   <style>
     .scroll-progress {
@@ -440,6 +440,7 @@
     .lesson-article pre {
       position: relative;
       margin: 20px 0;
+      padding-top: 44px;
       overflow: hidden;
       border: 1px solid var(--rule-soft);
       background: var(--code-bg);
@@ -460,12 +461,19 @@
       position: absolute;
       top: 0;
       left: 0;
+      max-width: calc(100% - 88px);
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       font-family: var(--font-mono);
       font-size: 0.66rem;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      padding: 4px 10px;
+      padding: 0 12px;
       background: var(--blueprint);
       color: var(--bg);
       z-index: 2;
@@ -473,11 +481,13 @@
 
     .code-copy {
       position: absolute;
-      top: 6px;
-      right: 8px;
+      top: 0;
+      right: 0;
+      min-width: 88px;
+      min-height: 44px;
       background: transparent;
       border: 1px solid var(--rule-soft);
-      padding: 3px 10px;
+      padding: 8px 12px;
       font-family: var(--font-mono);
       font-size: 0.66rem;
       letter-spacing: 0.12em;
@@ -609,6 +619,238 @@
       border-color: var(--blueprint);
       color: var(--blueprint);
       background: var(--blueprint-tint);
+    }
+
+    .lesson-action-panel {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 24px 0 34px;
+      border: 1px solid var(--blueprint);
+      background: var(--blueprint-tint);
+      overflow: hidden;
+    }
+
+    .lesson-action-head {
+      min-width: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--blueprint);
+    }
+
+    .lesson-action-head > *,
+    .lesson-action-body > *,
+    .lesson-action-command-row > * {
+      min-width: 0;
+    }
+
+    .lesson-action-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      line-height: 1;
+      text-transform: uppercase;
+      color: var(--blueprint);
+    }
+
+    .lesson-action-intro {
+      max-width: 450px;
+      margin: 7px 0 0;
+      font-family: var(--font-body);
+      font-size: 0.94rem;
+      line-height: 1.45;
+      color: var(--ink-soft);
+      text-align: left;
+    }
+
+    .lesson-action-status {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .lesson-action-loop {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      border-bottom: 1px solid var(--rule-soft);
+    }
+
+    .lesson-action-step {
+      min-width: 0;
+      min-height: 112px;
+      padding: 14px 12px;
+      border: 0;
+      border-right: 1px solid var(--rule-soft);
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      transition:
+        color var(--motion-feedback) var(--ease-out),
+        background-color var(--motion-feedback) var(--ease-out),
+        opacity var(--motion-feedback) var(--ease-out);
+    }
+
+    .lesson-action-step:last-child { border-right: 0; }
+
+    .lesson-action-step:hover,
+    .lesson-action-step:focus-visible {
+      color: var(--blueprint);
+      background: var(--bg-surface);
+    }
+
+    .lesson-action-step.is-done {
+      background: var(--blueprint);
+      color: var(--bg);
+    }
+
+    .lesson-action-step-num,
+    .lesson-action-step-title,
+    .lesson-action-step-copy {
+      display: block;
+    }
+
+    .lesson-action-step-num {
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.12em;
+      opacity: 0.72;
+    }
+
+    .lesson-action-step-title {
+      margin-top: 7px;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .lesson-action-step-copy {
+      margin-top: 6px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      line-height: 1.35;
+      color: inherit;
+      opacity: 0.82;
+    }
+
+    .lesson-action-body {
+      min-width: 0;
+      display: grid;
+      gap: 14px;
+      padding: 18px 20px 20px;
+    }
+
+    .lesson-action-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .lesson-action-tag {
+      padding: 3px 8px;
+      border: 1px solid var(--rule-soft);
+      background: var(--bg);
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .lesson-action-run,
+    .lesson-action-path {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      border: 1px solid var(--rule-soft);
+      background: var(--bg);
+      padding: 14px 16px;
+    }
+
+    .lesson-action-label {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+    }
+
+    .lesson-action-command-row {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 9px;
+    }
+
+    .lesson-action-command {
+      min-width: 0;
+      max-width: 100%;
+      flex: 1;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      padding: 9px 10px;
+      background: var(--code-bg);
+      border: 1px solid var(--rule-soft);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.45;
+      color: var(--blueprint);
+      white-space: pre-wrap;
+    }
+
+    .lesson-action-copy {
+      min-height: 44px;
+      padding: 7px 10px;
+      border: 1px solid var(--rule-soft);
+      background: transparent;
+      color: var(--ink-soft);
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .lesson-action-copy:hover,
+    .lesson-action-copy:focus-visible {
+      border-color: var(--blueprint);
+      color: var(--blueprint);
+    }
+
+    .lesson-action-note,
+    .lesson-action-path p,
+    .lesson-action-path li {
+      margin: 7px 0 0;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      text-align: left;
+    }
+
+    .lesson-action-path ul {
+      margin: 7px 0 0;
+      padding-left: 18px;
+    }
+
+    .lesson-action-path code {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--blueprint);
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .quiz-section,
@@ -1027,33 +1269,46 @@
     }
 
     .lesson-nav-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: stretch;
-      gap: 16px;
-      margin-top: 64px;
-      padding-top: 32px;
-      border-top: 1px solid var(--rule-soft);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      margin-top: 32px;
+      border: 1px solid var(--rule-soft);
+      background: var(--bg);
     }
 
     .lesson-nav-btn {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      padding: 16px 20px;
+      justify-content: center;
+      gap: 6px;
+      min-width: 0;
+      min-height: 88px;
+      padding: 16px 18px;
       background: transparent;
-      border: 1px solid var(--rule-soft);
+      border: 0;
       text-decoration: none;
       transition:
         transform var(--motion-press) var(--ease-out),
         border-color var(--motion-feedback) var(--ease-out),
         background-color var(--motion-feedback) var(--ease-out);
-      max-width: 48%;
+      max-width: none;
     }
 
+    .lesson-nav-btn + .lesson-nav-btn { border-left: 1px solid var(--rule-soft); }
+
+    .lesson-nav-btn:only-child { grid-column: 1 / -1; }
+
     .lesson-nav-btn:hover {
-      border-color: var(--blueprint);
       background: var(--blueprint-tint);
+    }
+
+    .lesson-nav-btn:focus-visible,
+    .timeline-item:focus-visible,
+    .output-btn:focus-visible,
+    .code-card-btn:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: -2px;
     }
 
     .lesson-nav-btn:active,
@@ -1075,20 +1330,23 @@
     .lesson-nav-btn .nav-title {
       font-family: var(--font-body);
       font-size: 0.98rem;
+      line-height: 1.35;
       color: var(--ink);
       font-weight: 500;
     }
 
     .lesson-nav-btn.next {
       text-align: right;
-      margin-left: auto;
+      margin-left: 0;
     }
 
+    .lesson-nav-btn.next:only-child { text-align: left; }
+
     .ai-panels {
-      margin-top: 64px;
+      margin-top: 48px;
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      gap: 28px;
     }
 
     .ai-panel {
@@ -1144,6 +1402,24 @@
       color: var(--ink-soft);
       margin-top: -8px;
       margin-bottom: 18px;
+    }
+
+    .ai-panel--compact,
+    .ai-panel--path,
+    .ai-panel--continue {
+      padding: 20px;
+    }
+
+    .ai-panel--compact .ai-panel-header,
+    .ai-panel--path .ai-panel-header,
+    .ai-panel--continue .ai-panel-header {
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+    }
+
+    .ai-panel--compact .ai-panel-subtitle,
+    .ai-panel--continue .ai-panel-subtitle {
+      margin: 0 0 14px;
     }
 
     .output-cards,
@@ -1208,6 +1484,8 @@
       text-align: left;
     }
 
+    .output-card-main { min-width: 0; }
+
     .output-actions {
       display: flex;
       gap: 8px;
@@ -1226,6 +1504,8 @@
       color: var(--ink-soft);
       background: transparent;
       cursor: pointer;
+      min-height: 34px;
+      white-space: nowrap;
       transition:
         transform var(--motion-press) var(--ease-out),
         color var(--motion-feedback) var(--ease-out),
@@ -1252,7 +1532,33 @@
 
     .output-install-hint.visible { display: block; }
 
+    .output-cards.single,
+    .code-cards.single {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .output-cards.single .output-card {
+      display: grid;
+      grid-template-columns: minmax(150px, 0.62fr) minmax(0, 1.38fr);
+      align-items: start;
+      gap: 10px 20px;
+      padding: 16px 18px;
+    }
+
+    .output-cards.single .output-badge,
+    .output-cards.single .output-card-name,
+    .output-cards.single .output-desc {
+      margin-bottom: 0;
+    }
+
+    .output-cards.single .output-actions,
+    .output-cards.single .output-install-hint {
+      grid-column: 1 / -1;
+    }
+
     .code-card {
+      min-width: 0;
+      max-width: 100%;
       background: var(--code-bg);
       border: 1px solid var(--rule-soft);
       padding: 18px;
@@ -1268,6 +1574,7 @@
       align-items: center;
       gap: 10px;
       margin-bottom: 12px;
+      min-width: 0;
     }
 
     .code-lang-icon {
@@ -1293,10 +1600,14 @@
       font-family: var(--font-mono);
       font-size: 0.7rem;
       color: var(--ink-mute);
-      margin-bottom: 12px;
+      margin-bottom: 0;
+      margin-left: auto;
+      white-space: nowrap;
     }
 
     .code-card-run {
+      min-width: 0;
+      max-width: 100%;
       font-family: var(--font-mono);
       font-size: 0.78rem;
       color: var(--blueprint);
@@ -1306,27 +1617,10 @@
       border: 1px solid var(--blueprint);
       text-transform: none;
       line-height: 1.4;
-      white-space: nowrap;
-      overflow-x: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--rule-soft) transparent;
-    }
-
-    .code-card-run::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .code-card-run::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .code-card-run::-webkit-scrollbar-thumb {
-      background: var(--rule-soft);
-      border-radius: 3px;
-    }
-
-    .code-card-run::-webkit-scrollbar-thumb:hover {
-      background: var(--ink-mute);
+      text-align: left;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .code-card-actions {
@@ -1334,38 +1628,79 @@
       gap: 8px;
     }
 
-    .learning-timeline {
-      display: flex;
+    .code-cards.single .code-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
+      gap: 12px 16px;
+      padding: 16px 18px;
+    }
+
+    .code-cards.single .code-card-header,
+    .code-cards.single .code-card-run {
+      margin-bottom: 0;
+    }
+
+    .code-cards.single .code-card-run { grid-column: 1 / -1; }
+
+    .code-cards.single .code-card-actions {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .learning-timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(132px, 100%), 1fr));
       gap: 0;
-      overflow-x: auto;
-      padding: 24px 0;
+      overflow: hidden;
+      margin: 14px 0 0;
+      border: 1px solid var(--rule-soft);
       position: relative;
     }
 
     .timeline-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      min-width: 92px;
-      flex-shrink: 0;
+      display: block;
+      min-width: 0;
+      padding: 12px;
       position: relative;
       text-decoration: none;
+      background: var(--bg);
+      transition:
+        background-color var(--motion-feedback) var(--ease-out),
+        box-shadow var(--motion-feedback) var(--ease-out);
+    }
+
+    .timeline-item + .timeline-item,
+    .timeline-ellipsis + .timeline-item,
+    .timeline-item + .timeline-ellipsis {
+      border-left: 1px solid var(--rule-soft);
+    }
+
+    .timeline-item:hover { background: var(--blueprint-tint); }
+
+    .timeline-item.current {
+      background: var(--blueprint-tint);
+      box-shadow: inset 0 3px 0 var(--blueprint);
+    }
+
+    .timeline-step-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 16px;
+      margin-bottom: 7px;
     }
 
     .timeline-dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       background: transparent;
       border: 1px solid var(--ink-mute);
-      z-index: 2;
+      flex: 0 0 auto;
       transition: transform 0.15s, background 0.15s, border-color 0.15s;
     }
 
     .timeline-item.current .timeline-dot {
-      width: 18px;
-      height: 18px;
       background: var(--blueprint);
       border-color: var(--blueprint);
     }
@@ -1377,10 +1712,7 @@
     }
 
     .timeline-line {
-      width: 36px;
-      height: 1px;
-      background: var(--rule-soft);
-      flex-shrink: 0;
+      display: none;
     }
 
     .timeline-line.done,
@@ -1390,13 +1722,17 @@
 
     .timeline-label {
       font-family: var(--font-body);
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       letter-spacing: 0;
       text-transform: none;
       color: var(--ink-mute);
-      text-align: center;
-      max-width: 120px;
+      text-align: left;
+      max-width: none;
       line-height: 1.35;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
     }
 
     .timeline-item.current .timeline-label {
@@ -1404,22 +1740,58 @@
       font-weight: 500;
     }
 
-    .timeline-ellipsis {
+    .timeline-index {
       font-family: var(--font-mono);
-      font-size: 0.78rem;
+      font-size: 0.66rem;
       color: var(--ink-mute);
-      letter-spacing: 0.04em;
-      padding: 0 8px;
+      letter-spacing: 0.08em;
+    }
+
+    .timeline-item.current .timeline-index,
+    .timeline-item.done .timeline-index { color: var(--blueprint); }
+
+    .timeline-ellipsis {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink-mute);
+      letter-spacing: 0.08em;
+      padding: 12px;
+      white-space: nowrap;
+      background: var(--code-bg);
+    }
+
+    .path-panel-context {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .path-panel-context .ai-panel-subtitle {
+      margin: 0;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .path-position {
+      flex: 0 0 auto;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-mute);
       white-space: nowrap;
     }
 
 
     .phase-progress-bar {
       width: 100%;
-      height: 4px;
+      height: 3px;
       background: var(--rule-soft);
       overflow: hidden;
-      margin: 14px 0 8px;
+      margin: 12px 0 7px;
     }
 
     .phase-progress-fill {
@@ -1428,7 +1800,7 @@
       background: var(--blueprint);
       transform: scaleX(var(--lesson-progress, 0));
       transform-origin: left center;
-      transition: transform var(--motion-drawer) var(--ease-out);
+      transition: transform var(--motion-enter) var(--ease-out);
     }
 
     .phase-progress-text {
@@ -1439,7 +1811,107 @@
       text-align: left;
     }
 
+    .path-completion-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--rule-soft);
+    }
+
+    .path-completion-actions a {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--blueprint);
+      text-decoration: none;
+    }
+
+    .path-completion-actions a:hover { text-decoration: underline; }
+
+    .learning-path-preflights {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0 2px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule-soft);
+    }
+
+    .learning-path-preflight {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px 18px;
+      align-items: center;
+      padding: 14px 16px;
+      border: 1px solid var(--rule-soft);
+      background: var(--code-bg);
+    }
+
+    .learning-path-preflight-copy { min-width: 0; }
+
+    .learning-path-preflight-label,
+    .learning-path-preflight-status {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .learning-path-preflight-label {
+      color: var(--blueprint);
+      margin-bottom: 5px;
+    }
+
+    .learning-path-preflight-title {
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .learning-path-preflight-description {
+      color: var(--ink-soft);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      line-height: 1.45;
+      margin-top: 4px;
+    }
+
+    .learning-path-preflight-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .learning-path-preflight-status { color: var(--ink-mute); }
+    .learning-path-preflight.confirmed { border-color: var(--blueprint); }
+    .learning-path-preflight.confirmed .learning-path-preflight-status { color: var(--blueprint); }
+
+    .learning-path-confirm[disabled] {
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    .learning-path-locked {
+      cursor: not-allowed;
+      opacity: 0.48;
+    }
+
+    .learning-path-locked:hover {
+      color: var(--ink-mute);
+      border-color: transparent;
+    }
+
+    .prerequisite-callout:focus {
+      outline: 2px solid var(--blueprint);
+      outline-offset: 3px;
+    }
+
     .phase-complete-callout {
+      position: relative;
+      overflow: hidden;
       font-family: var(--font-mono);
       font-size: 0.85rem;
       letter-spacing: 0.12em;
@@ -1453,7 +1925,42 @@
       display: none;
     }
 
-    .phase-complete-callout.visible { display: block; }
+    .phase-complete-callout.visible {
+      display: block;
+      opacity: 1;
+      transform: none;
+    }
+
+    .phase-complete-callout.visible::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--blueprint);
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
+
+    .phase-complete-callout.visible.is-entering {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    .phase-complete-callout.visible.is-entering::before {
+      transform: scaleX(0);
+    }
+
+    .phase-complete-callout.visible.is-entered {
+      transition:
+        opacity var(--motion-enter) var(--ease-out),
+        transform var(--motion-enter) var(--ease-out);
+    }
+
+    .phase-complete-callout.visible.is-entered::before {
+      transition: transform var(--motion-drawer) var(--ease-out);
+    }
 
     .continue-panel {
       display: flex;
@@ -1537,8 +2044,29 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      .spinner {
+        animation: none;
+        border-color: var(--rule-soft);
+        border-top-color: var(--blueprint);
+      }
+
       .lesson-sidebar,
       .phase-progress-fill {
+        transition: none;
+      }
+
+      .phase-complete-callout.visible,
+      .phase-complete-callout.visible.is-entering,
+      .phase-complete-callout.visible.is-entered {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .phase-complete-callout.visible::before,
+      .phase-complete-callout.visible.is-entering::before,
+      .phase-complete-callout.visible.is-entered::before {
+        transform: scaleX(1);
         transition: none;
       }
 
@@ -1749,8 +2277,27 @@
         letter-spacing: 0.07em;
         padding: 3px 8px;
       }
-      .ai-panels { margin-top: 40px; gap: 28px; }
+      .lesson-action-head {
+        flex-direction: column;
+        padding: 16px;
+      }
+      .lesson-action-loop {
+        grid-template-columns: 1fr;
+      }
+      .lesson-action-step {
+        min-height: 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--rule-soft);
+      }
+      .lesson-action-step:last-child { border-bottom: 0; }
+      .lesson-action-body { padding: 16px; }
+      .lesson-action-command-row { flex-direction: column; }
+      .lesson-action-copy { width: 100%; }
+      .ai-panels { margin-top: 40px; gap: 20px; }
       .ai-panel { padding: 22px 16px; }
+      .ai-panel--compact,
+      .ai-panel--path,
+      .ai-panel--continue { padding: 16px; }
       .ai-panel-header {
         align-items: flex-start;
         gap: 10px;
@@ -1761,8 +2308,47 @@
       }
       .output-cards,
       .code-cards { grid-template-columns: 1fr; }
-      .lesson-nav-bottom { flex-direction: column; gap: 12px; }
-      .lesson-nav-btn { max-width: 100%; }
+      .output-cards.single .output-card,
+      .code-cards.single .code-card {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .output-cards.single .output-card > *,
+      .code-cards.single .code-card > * {
+        grid-column: 1;
+        grid-row: auto;
+      }
+      .learning-timeline { grid-template-columns: minmax(0, 1fr); }
+      .timeline-item {
+        display: grid;
+        grid-template-columns: 52px minmax(0, 1fr);
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+      }
+      .timeline-step-meta { margin-bottom: 0; }
+      .timeline-item + .timeline-item,
+      .timeline-ellipsis + .timeline-item,
+      .timeline-item + .timeline-ellipsis {
+        border-left: 0;
+        border-top: 1px solid var(--rule-soft);
+      }
+      .timeline-label { -webkit-line-clamp: 2; }
+      .timeline-ellipsis {
+        justify-content: flex-start;
+        border-left: 0;
+        border-top: 1px solid var(--rule-soft);
+      }
+      .path-panel-context {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .lesson-nav-bottom { grid-template-columns: minmax(0, 1fr); }
+      .lesson-nav-btn + .lesson-nav-btn {
+        border-left: 0;
+        border-top: 1px solid var(--rule-soft);
+      }
+      .lesson-nav-btn { max-width: 100%; min-height: 78px; }
       .lesson-nav-btn.next { text-align: left; }
     }
 
@@ -1771,7 +2357,7 @@
       .lesson-sidebar-toggle {
         right: 12px;
         bottom: 14px;
-        height: 42px;
+        height: 44px;
         padding: 0 12px;
       }
       .lesson-article p,
@@ -1809,9 +2395,14 @@
       .code-card-btn,
       .output-btn {
         text-align: center;
+        min-height: 44px;
       }
-      .timeline-item { min-width: 70px; }
-      .timeline-line { width: 20px; }
+      .learning-path-preflight {
+        grid-template-columns: 1fr;
+      }
+      .learning-path-preflight-actions {
+        align-items: stretch;
+      }
     }
   </style>
 </head>
@@ -1887,7 +2478,7 @@
   <script src="build-meta.js"></script>
   <script src="langs.js?v=20260802a"></script>
   <script src="lang-picker.js?v=20260808d"></script>
-  <script src="data.js?v=20260808g"></script>
+  <script src="data.js?v=20260821c"></script>
   <script>
     (function () {
       var path = '';
@@ -1908,87 +2499,111 @@
       });
     }());
   </script>
-  <script src="content-source.js?v=20260808d"></script>
-  <script src="progress.js?v=20260801a"></script>
-  <script src="header.js?v=20260808h" defer></script>
-  <script src="cmdpalette.js?v=20260808h" defer></script>
-  <script src="figures.js?v=20260801a"></script>
-  <script src="lesson-figures.js?v=20260801a"></script>
-  <script src="figures-math.js?v=20260801a"></script>
-  <script src="figures-ml.js?v=20260801a"></script>
-  <script src="figures-dl.js?v=20260801a"></script>
-  <script src="figures-vision-speech.js?v=20260801a"></script>
-  <script src="figures-transformers.js?v=20260801a"></script>
-  <script src="figures-genai-rl.js?v=20260801a"></script>
-  <script src="figures-llms-systems.js?v=20260801a"></script>
-  <script src="figures-agents-alignment.js?v=20260801a"></script>
-  <script src="figures-math2.js?v=20260801a"></script>
-  <script src="figures-nlp2.js?v=20260801a"></script>
-  <script src="figures-llms2.js?v=20260801a"></script>
-  <script src="figures-infra.js?v=20260801a"></script>
-  <script src="figures-frontier.js?v=20260801a"></script>
-  <script src="figures-llmeng.js?v=20260801a"></script>
-  <script src="figures-multimodal.js?v=20260801a"></script>
-  <script src="figures-agents2.js?v=20260801a"></script>
-  <script src="figures-alignment2.js?v=20260801a"></script>
-  <script src="figures-foundations2.js?v=20260801a"></script>
-  <script src="figures-capstone-a.js?v=20260801a"></script>
-  <script src="figures-capstone-b.js?v=20260801a"></script>
-  <script src="figures-agents3.js?v=20260801a"></script>
-  <script src="figures-nlp3.js?v=20260801a"></script>
-  <script src="figures-cv2.js?v=20260801a"></script>
-  <script src="figures-llms3.js?v=20260801a"></script>
-  <script src="figures-autonomous2.js?v=20260801a"></script>
-  <script src="figures-swarms2.js?v=20260801a"></script>
-  <script src="figures-infra2.js?v=20260801a"></script>
-  <script src="figures-systems3.js?v=20260801a"></script>
-  <script src="figures-capstone-c.js?v=20260801a"></script>
-  <script src="figures-capstone-d.js?v=20260801a"></script>
-  <script src="figures-cv3.js?v=20260801a"></script>
-  <script src="figures-speech2.js?v=20260801a"></script>
-  <script src="figures-multimodal2.js?v=20260801a"></script>
-  <script src="figures-tools2.js?v=20260801a"></script>
-  <script src="figures-agents4.js?v=20260801a"></script>
-  <script src="figures-swarms3.js?v=20260801a"></script>
-  <script src="figures-genai3.js?v=20260801a"></script>
-  <script src="figures-misc2.js?v=20260801a"></script>
-  <script src="figures-history.js?v=20260801a"></script>
-  <script src="figures-capstone-e.js?v=20260801a"></script>
-  <script src="figures-capstone-f.js?v=20260801a"></script>
-  <script src="figures-capstone-g.js?v=20260801a"></script>
-  <script src="figures-capstone-h.js?v=20260801a"></script>
-  <script src="figures-capstone-i.js?v=20260801a"></script>
-  <script src="figures-alignment3.js?v=20260801a"></script>
-  <script src="figures-alignment4.js?v=20260801a"></script>
-  <script src="figures-workbench.js?v=20260801a"></script>
-  <script src="figures-tools3.js?v=20260801a"></script>
-  <script src="figures-setup.js?v=20260801a"></script>
-  <script src="figures-foundations3.js?v=20260801a"></script>
-  <script src="figures-visaudio4.js?v=20260801a"></script>
-  <script src="figures-nlp5.js?v=20260801a"></script>
-  <script src="figures-llmstack5.js?v=20260801a"></script>
-  <script src="figures-autoswarm5.js?v=20260801a"></script>
-  <script src="figures-infra4.js?v=20260801a"></script>
-  <script src="figures-claude-certifications.js?v=20260808a"></script>
-  <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: document.documentElement.getAttribute('data-theme') === 'light' ? 'default' : 'dark',
-      fontFamily: 'JetBrains Mono, ui-monospace, monospace',
-      themeVariables: {
-        fontSize: '13px'
-      },
-      flowchart: {
-        useMaxWidth: true,
-        htmlLabels: true,
-        nodeSpacing: 40,
-        rankSpacing: 50,
-        padding: 12
+  <script src="content-source.js?v=20260821a"></script>
+  <script src="progress.js?v=20260822a"></script>
+  <script id="learningPathProgressRuntime">
+    (function (root) {
+      'use strict';
+
+      var STORAGE_KEY = 'aifs:learning-path-progress:v1';
+
+      function emptyState() {
+        return { version: 1, paths: {} };
       }
-    });
-    window._mermaidReady = mermaid;
+
+      function createStore(storage) {
+        var memoryState = emptyState();
+
+        function read() {
+          try {
+            var raw = storage && storage.getItem(STORAGE_KEY);
+            var parsed = raw ? JSON.parse(raw) : null;
+            if (parsed && parsed.version === 1 && parsed.paths && typeof parsed.paths === 'object') {
+              memoryState = parsed;
+            }
+          } catch (_) {}
+          return memoryState;
+        }
+
+        function write(state) {
+          memoryState = state;
+          try {
+            if (storage) storage.setItem(STORAGE_KEY, JSON.stringify(state));
+          } catch (_) {}
+          return true;
+        }
+
+        function checkIds(entry) {
+          if (!entry || !Array.isArray(entry.prerequisiteChecks)) return [];
+          return entry.prerequisiteChecks.filter(function (id) {
+            return typeof id === 'string' && id.length > 0;
+          });
+        }
+
+        function prerequisitePaths(entry) {
+          if (!entry || !Array.isArray(entry.prerequisitePaths)) return [];
+          return entry.prerequisitePaths.filter(function (lessonPath) {
+            return typeof lessonPath === 'string' && lessonPath.length > 0;
+          });
+        }
+
+        function isConfirmed(pathId, checkId) {
+          var state = read();
+          return !!(state.paths[pathId] && state.paths[pathId].checks && state.paths[pathId].checks[checkId]);
+        }
+
+        function confirm(pathId, checkId) {
+          if (typeof pathId !== 'string' || !pathId || typeof checkId !== 'string' || !checkId) return false;
+          var state = read();
+          if (!state.paths[pathId] || typeof state.paths[pathId] !== 'object') state.paths[pathId] = {};
+          if (!state.paths[pathId].checks || typeof state.paths[pathId].checks !== 'object') state.paths[pathId].checks = {};
+          state.paths[pathId].checks[checkId] = true;
+          return write(state);
+        }
+
+        function unmetChecks(path, entry) {
+          if (!path || typeof path.id !== 'string') return [];
+          var prerequisites = Array.isArray(path.prerequisites) ? path.prerequisites : [];
+          return checkIds(entry).filter(function (checkId) {
+            return !isConfirmed(path.id, checkId);
+          }).map(function (checkId) {
+            return prerequisites.find(function (candidate) {
+              return candidate && candidate.id === checkId;
+            });
+          }).filter(Boolean);
+        }
+
+        function unmetPaths(entry, isLessonComplete) {
+          return prerequisitePaths(entry).filter(function (lessonPath) {
+            return typeof isLessonComplete !== 'function' || !isLessonComplete(lessonPath);
+          });
+        }
+
+        return {
+          storageKey: STORAGE_KEY,
+          isConfirmed: isConfirmed,
+          confirm: confirm,
+          unmetChecks: unmetChecks,
+          unmetPaths: unmetPaths,
+          firstUnmetCheckId: function (path, entry) {
+            var first = unmetChecks(path, entry)[0];
+            return first ? first.id : '';
+          },
+          canEnter: function (path, entry, isLessonComplete) {
+            return unmetChecks(path, entry).length === 0 &&
+              unmetPaths(entry, isLessonComplete).length === 0;
+          },
+          createForStorage: createStore
+        };
+      }
+
+      root.AIFSLearningPathProgress = createStore(root.localStorage);
+    }(window));
   </script>
+  <script src="header.js?v=20260823b" defer></script>
+  <script src="cmdpalette.js?v=20260821a" defer></script>
+  <script src="lesson-figures.js?v=843871fd2942"></script>
+  <script src="figure-manifest.js?v=0980822a99ac"></script>
   <script>
     (function () {
       var root = document.documentElement;
@@ -2032,6 +2647,16 @@
       var lessonPath = params.get('path');
       var requestedTrackId = params.get('track') || '';
       var originatingTrackId = params.get('fromTrack') || '';
+      var LEARNING_PATH_ID_ALIASES = { 'mcp-engineering': 'model-context-protocol' };
+      var incomingLearningPathId = params.get('learningPath') || '';
+      var requestedLearningPathId = LEARNING_PATH_ID_ALIASES[incomingLearningPathId] || incomingLearningPathId;
+      function replaceLearningPathInUrl(pathId) {
+        if (!pathId || !window.history || !window.history.replaceState) return;
+        var canonicalLearningPathUrl = new URL(window.location.href);
+        canonicalLearningPathUrl.searchParams.set('learningPath', pathId);
+        window.history.replaceState(null, '', canonicalLearningPathUrl.pathname + canonicalLearningPathUrl.search + canonicalLearningPathUrl.hash);
+      }
+      if (incomingLearningPathId && incomingLearningPathId !== requestedLearningPathId) replaceLearningPathInUrl(requestedLearningPathId);
 
       function preferredScrollBehavior() {
         return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
@@ -2061,7 +2686,9 @@
       var certificationLesson = null;
       var certificationMode = false;
       var certificationSupplementalMode = false;
-      var PROGRESS_STORAGE_KEY = 'aifs:progress:v1';
+      var learningPath = null;
+      var learningPathMode = false;
+      var PROGRESS_STORAGE_KEY = 'aifs:progress:v2';
 
       function certificationData() {
         return typeof CERTIFICATIONS !== 'undefined' && CERTIFICATIONS ? CERTIFICATIONS : null;
@@ -2105,14 +2732,260 @@
         return null;
       }
 
+      function learningPathEntryPath(entry) {
+        return typeof entry === 'string' ? entry : entry && entry.path ? entry.path : '';
+      }
+
+      function findLearningPath(id) {
+        if (!id || typeof LEARNING_PATHS === 'undefined' || !Array.isArray(LEARNING_PATHS)) return null;
+        return LEARNING_PATHS.find(function (path) { return path && path.id === id; }) || null;
+      }
+
+      function inferLearningPath(target) {
+        if (!target || typeof LEARNING_PATHS === 'undefined' || !Array.isArray(LEARNING_PATHS)) return null;
+        var preferredIds = ['agent-skills', 'model-context-protocol'];
+        for (var i = 0; i < preferredIds.length; i++) {
+          var preferred = findLearningPath(preferredIds[i]);
+          if (preferred && learningPathContains(preferred, target)) return preferred;
+        }
+        return LEARNING_PATHS.find(function (path) { return learningPathContains(path, target); }) || null;
+      }
+
+      function learningPathEntries(path, includeOptional) {
+        if (!path) return [];
+        var required = Array.isArray(path.lessons) ? path.lessons : [];
+        var optional = includeOptional && Array.isArray(path.optionalLessons) ? path.optionalLessons : [];
+        return required.concat(optional);
+      }
+
+      function learningPathContains(path, target) {
+        return learningPathEntries(path, true).some(function (entry) {
+          return learningPathEntryPath(entry) === target;
+        });
+      }
+
+      function learningPathLessonHref(path) {
+        return 'lesson.html?path=' + encodeURIComponent(path) +
+          '&learningPath=' + encodeURIComponent(learningPath.id);
+      }
+
+      function learningPathPrerequisiteLabel(path) {
+        var core = phaseLessonForPath(path);
+        if (!core) return path;
+        return 'Phase ' + String(core.phase.id).padStart(2, '0') + ' · ' + core.lesson.name;
+      }
+
+      function unmetLearningPathPrerequisites(entry) {
+        var prerequisites = entry && Array.isArray(entry.prerequisitePaths)
+          ? entry.prerequisitePaths
+          : [];
+        return prerequisites.filter(function (prerequisitePath) {
+          return !(window.AIFSProgress && window.AIFSProgress.isLessonComplete(prerequisitePath));
+        });
+      }
+
+      function learningPathPrerequisiteChecks(entry) {
+        if (!learningPathMode || !window.AIFSLearningPathProgress) return [];
+        return window.AIFSLearningPathProgress.unmetChecks(learningPath, entry);
+      }
+
+      function learningPathCheckIds(entry) {
+        return entry && Array.isArray(entry.prerequisiteChecks)
+          ? entry.prerequisiteChecks.filter(function (id) { return typeof id === 'string' && id.length > 0; })
+          : [];
+      }
+
+      function learningPathPrerequisitePaths(entry) {
+        return entry && Array.isArray(entry.prerequisitePaths)
+          ? entry.prerequisitePaths.filter(function (path) { return typeof path === 'string' && path.length > 0; })
+          : [];
+      }
+
+      function learningPathEntryLocked(entry) {
+        return unmetLearningPathPrerequisites(entry).length > 0 ||
+          learningPathPrerequisiteChecks(entry).length > 0;
+      }
+
+      function learningPathGateClass(entry) {
+        return learningPathEntryLocked(entry) ? ' learning-path-locked' : '';
+      }
+
+      function learningPathGateAttributes(entry) {
+        var ids = learningPathCheckIds(entry);
+        var paths = learningPathPrerequisitePaths(entry);
+        if (!ids.length && !paths.length) return '';
+        var locked = learningPathEntryLocked(entry);
+        return ' data-learning-path-id="' + escapeAttr(learningPath.id) + '"' +
+          ' data-learning-path-gate="true"' +
+          ' data-prerequisite-checks="' + escapeAttr(ids.join(' ')) + '"' +
+          ' data-prerequisite-paths="' + escapeAttr(paths.join(' ')) + '"' +
+          (locked ? ' aria-disabled="true"' : '');
+      }
+
+      function learningPathPreflightDefinitions() {
+        if (!learningPathMode) return [];
+        var referenced = {};
+        for (var lessonIndex = 0; lessonIndex < flatLessons.length; lessonIndex++) {
+          var ids = learningPathCheckIds(flatLessons[lessonIndex]);
+          for (var checkIndex = 0; checkIndex < ids.length; checkIndex++) referenced[ids[checkIndex]] = true;
+        }
+        var definitions = Array.isArray(learningPath.prerequisites) ? learningPath.prerequisites : [];
+        return Object.keys(referenced).map(function (id) {
+          return definitions.find(function (entry) { return entry && entry.id === id; });
+        }).filter(Boolean);
+      }
+
+      function learningPathPreflightHtml() {
+        var checks = learningPathPreflightDefinitions();
+        if (!checks.length) return '';
+        var html = '<div class="learning-path-preflights" aria-label="Knowledge preflights">';
+        for (var index = 0; index < checks.length; index++) {
+          var check = checks[index];
+          var confirmed = window.AIFSLearningPathProgress && window.AIFSLearningPathProgress.isConfirmed(learningPath.id, check.id);
+          html += '<div class="learning-path-preflight' + (confirmed ? ' confirmed' : '') + '" data-learning-path-preflight="' + escapeAttr(check.id) + '">';
+          html += '<div class="learning-path-preflight-copy"><div class="learning-path-preflight-label">Required knowledge preflight</div>';
+          html += '<div class="learning-path-preflight-title">' + escapeHtml(check.title || check.id) + '</div>';
+          if (check.description) html += '<div class="learning-path-preflight-description">' + escapeHtml(check.description) + '</div>';
+          html += '</div><div class="learning-path-preflight-actions">';
+          html += '<div class="learning-path-preflight-status" role="status" aria-live="polite">' + (confirmed ? 'Confirmed' : 'Confirmation required') + '</div>';
+          html += '<button type="button" class="output-btn learning-path-confirm" data-learning-path-check-id="' + escapeAttr(check.id) + '" aria-pressed="' + (confirmed ? 'true' : 'false') + '" onclick="confirmLearningPathCheck(this)"' + (confirmed ? ' disabled' : '') + '>' + (confirmed ? 'Confirmed' : 'Confirm preflight') + '</button>';
+          html += '</div></div>';
+        }
+        html += '</div>';
+        return html;
+      }
+
+      function learningPathPrerequisiteCallout(entry, heading) {
+        var unmet = unmetLearningPathPrerequisites(entry);
+        var unmetChecks = learningPathPrerequisiteChecks(entry);
+        if (!unmet.length && !unmetChecks.length) return '';
+        var html = '<div class="continue-callout prerequisite-callout" role="status" tabindex="-1" data-learning-path-prerequisite-callout="true"' +
+          ' data-prerequisite-paths="' + escapeAttr(unmet.join(' ')) + '"' +
+          ' data-prerequisite-checks="' + escapeAttr(unmetChecks.map(function (check) { return check.id; }).join(' ')) + '"><strong>' +
+          escapeHtml(heading || 'Prerequisite check') + '</strong><br>';
+        for (var index = 0; index < unmet.length; index++) {
+          var prerequisitePath = unmet[index];
+          var label = learningPathPrerequisiteLabel(prerequisitePath);
+          if (prerequisitePath === lessonPath) {
+            html += '<span>Complete this lesson: ' + escapeHtml(label) + '.</span>';
+          } else {
+            var insideFocusedPath = learningPathContains(learningPath, prerequisitePath);
+            var href = insideFocusedPath
+              ? learningPathLessonHref(prerequisitePath)
+              : 'lesson.html?path=' + encodeURIComponent(prerequisitePath);
+            html += '<a href="' + href + '"' + (insideFocusedPath ? '' : ' target="_blank" rel="noopener"') + '>Detour: ' + escapeHtml(label) + '</a>';
+          }
+          if (index < unmet.length - 1) html += '<br>';
+        }
+        if (unmet.some(function (prerequisitePath) { return !learningPathContains(learningPath, prerequisitePath); })) {
+          html += '<br><span>The external prerequisite opens in a new tab so this focused route stays in place.</span>';
+        }
+        for (var checkIndex = 0; checkIndex < unmetChecks.length; checkIndex++) {
+          var check = unmetChecks[checkIndex];
+          if (unmet.length || checkIndex > 0) html += '<br>';
+          html += '<span>Knowledge preflight: ' + escapeHtml(check.title || check.id) + '.</span>';
+          html += '<button type="button" class="output-btn learning-path-confirm" data-learning-path-check-id="' + escapeAttr(check.id) + '" aria-pressed="false" onclick="confirmLearningPathCheck(this)">Confirm preflight</button>';
+        }
+        html += '</div>';
+        return html;
+      }
+
+      function linkUnmetLearningPathCheckIds(link) {
+        if (!learningPathMode || !link || !window.AIFSLearningPathProgress) return [];
+        var ids = (link.getAttribute('data-prerequisite-checks') || '').split(/\s+/).filter(Boolean);
+        return ids.filter(function (id) {
+          return !window.AIFSLearningPathProgress.isConfirmed(learningPath.id, id);
+        });
+      }
+
+      function linkUnmetLearningPathPrerequisitePaths(link) {
+        if (!learningPathMode || !link) return [];
+        var paths = (link.getAttribute('data-prerequisite-paths') || '').split(/\s+/).filter(Boolean);
+        return paths.filter(function (path) {
+          return !(window.AIFSProgress && window.AIFSProgress.isLessonComplete(path));
+        });
+      }
+
+      function linkHasUnmetLearningPathPrerequisite(link) {
+        if (!learningPathMode || !link) return false;
+        return linkUnmetLearningPathPrerequisitePaths(link).length > 0 ||
+          linkUnmetLearningPathCheckIds(link).length > 0;
+      }
+
+      function syncLearningPathGateLinks() {
+        var links = document.querySelectorAll('a[data-learning-path-gate]');
+        for (var index = 0; index < links.length; index++) {
+          var locked = linkHasUnmetLearningPathPrerequisite(links[index]);
+          links[index].classList.toggle('learning-path-locked', locked);
+          if (locked) links[index].setAttribute('aria-disabled', 'true');
+          else links[index].removeAttribute('aria-disabled');
+          var label = links[index].querySelector('[data-learning-path-gate-label]');
+          if (label) label.textContent = locked ? 'Locked' : 'Next \u2192';
+        }
+      }
+
+      function findLearningPathConfirmButton(checkId) {
+        var buttons = document.querySelectorAll('[data-learning-path-check-id]');
+        for (var index = 0; index < buttons.length; index++) {
+          if (buttons[index].getAttribute('data-learning-path-check-id') === checkId && !buttons[index].disabled) return buttons[index];
+        }
+        return null;
+      }
+
+      function findLearningPathPrerequisiteCallout(paths) {
+        if (!paths.length) return null;
+        var callouts = document.querySelectorAll('[data-learning-path-prerequisite-callout]');
+        for (var index = 0; index < callouts.length; index++) {
+          var describedPaths = (callouts[index].getAttribute('data-prerequisite-paths') || '').split(/\s+/).filter(Boolean);
+          if (paths.some(function (path) { return describedPaths.indexOf(path) >= 0; })) return callouts[index];
+        }
+        return null;
+      }
+
+      function ensureLearningPathPrerequisiteCallout(link) {
+        var paths = linkUnmetLearningPathPrerequisitePaths(link);
+        var callout = findLearningPathPrerequisiteCallout(paths);
+        if (callout || !paths.length) return callout;
+        var panel = document.getElementById('continuePathPanel') || document.getElementById('learningPathPanel');
+        if (!panel) return null;
+        var wrapper = document.createElement('div');
+        wrapper.innerHTML = learningPathPrerequisiteCallout({ prerequisitePaths: paths }, 'Required before this lesson');
+        callout = wrapper.firstElementChild;
+        if (!callout) return null;
+        var body = panel.querySelector('.continue-panel') || panel;
+        body.appendChild(callout);
+        return callout;
+      }
+
+      function initLearningPathGateNavigation() {
+        document.addEventListener('click', function (event) {
+          var link = event.target && event.target.closest ? event.target.closest('a[data-learning-path-gate]') : null;
+          if (!link || !linkHasUnmetLearningPathPrerequisite(link)) return;
+          event.preventDefault();
+          var firstId = linkUnmetLearningPathCheckIds(link)[0] || '';
+          var button = findLearningPathConfirmButton(firstId);
+          var pathCallout = button ? null : ensureLearningPathPrerequisiteCallout(link);
+          var feedbackTarget = button || pathCallout;
+          if (feedbackTarget) {
+            feedbackTarget.scrollIntoView({ behavior: preferredScrollBehavior(), block: 'center' });
+            feedbackTarget.focus();
+          }
+        });
+      }
+
+      window.confirmLearningPathCheck = function (button) {
+        if (!learningPathMode || !button || !window.AIFSLearningPathProgress) return false;
+        var checkId = button.getAttribute('data-learning-path-check-id') || '';
+        if (!window.AIFSLearningPathProgress.confirm(learningPath.id, checkId)) return false;
+        refreshProgressUi();
+        return true;
+      };
+
       function lessonProgressClass(path, readable) {
         if (!readable) return 'planned';
         if (!window.AIFSProgress || !path) return '';
         if (window.AIFSProgress.isLessonComplete(path)) return 'complete';
-        var progress = window.AIFSProgress.getLessonProgress(path);
-        if (progress && (progress.visitedAt || (progress.answers && Object.keys(progress.answers).length))) {
-          return 'in-progress';
-        }
+        if (window.AIFSProgress.hasLessonActivity(path)) return 'in-progress';
         return '';
       }
 
@@ -2127,11 +3000,11 @@
         if (!lessonPath || typeof mutator !== 'function') return false;
         try {
           var raw = localStorage.getItem(PROGRESS_STORAGE_KEY);
-          var state = raw ? JSON.parse(raw) : { lessons: {}, updatedAt: 0 };
+            var state = raw ? JSON.parse(raw) : { schemaVersion: 2, lessons: {}, updatedAt: 0 };
           if (!state || typeof state !== 'object' || !state.lessons || typeof state.lessons !== 'object') return false;
           var lesson = state.lessons[lessonPath];
           if (!lesson || typeof lesson !== 'object') {
-            lesson = { answers: {}, completedAt: null, visitedAt: Date.now() };
+            lesson = { answers: {}, quizPassedAt: null, checkpoints: {}, completedAt: null, completionSource: '', visitedAt: Date.now() };
             state.lessons[lessonPath] = lesson;
           }
           if (!mutator(lesson)) return false;
@@ -2157,7 +3030,7 @@
             : String(lesson.quizVersion);
           if (storedVersion === currentVersion) return false;
           lesson.answers = {};
-          lesson.completedAt = null;
+          lesson.quizPassedAt = null;
           lesson.quizVersion = currentVersion;
           return true;
         });
@@ -2173,7 +3046,7 @@
         var changed = mutateLessonProgress(function (lesson) {
           if (!lesson.answers || typeof lesson.answers !== 'object') lesson.answers = {};
           for (var i = 0; i < questionIds.length; i++) delete lesson.answers[questionIds[i]];
-          lesson.completedAt = null;
+          lesson.quizPassedAt = null;
           if (currentVersion) lesson.quizVersion = currentVersion;
           return true;
         });
@@ -2202,6 +3075,11 @@
         }
         certificationMode = !!(certificationTrack && certificationTrackContains(certificationTrack, lessonPath));
         certificationSupplementalMode = !!(certificationOriginTrack && !certificationMode);
+        learningPath = !certificationMode && !certificationSupplementalMode
+          ? (requestedLearningPathId ? findLearningPath(requestedLearningPathId) : inferLearningPath(lessonPath))
+          : null;
+        learningPathMode = !!(learningPath && learningPathContains(learningPath, lessonPath));
+        if (learningPathMode && !incomingLearningPathId) replaceLearningPathInUrl(learningPath.id);
 
         syncCertificationQuizProgressVersion();
 
@@ -2234,6 +3112,51 @@
               required: certRef.required !== false,
             });
             if (certPath === lessonPath) currentLessonIndex = flatLessons.length - 1;
+          }
+        } else if (learningPathMode) {
+          var requiredCount = Array.isArray(learningPath.lessons) ? learningPath.lessons.length : 0;
+          var pathEntries = learningPathEntries(learningPath, true);
+          for (var lp = 0; lp < pathEntries.length; lp++) {
+            var pathEntry = pathEntries[lp];
+            var pathValue = learningPathEntryPath(pathEntry);
+            var coreLesson = phaseLessonForPath(pathValue);
+            if (!coreLesson) continue;
+            var corePhaseSlug = extractPhaseSlug(coreLesson.phase, coreLesson.phaseIndex);
+            var coreLessonSlug = extractLessonSlug(coreLesson.lesson, coreLesson.lessonIndex);
+            flatLessons.push({
+              phaseIndex: coreLesson.phaseIndex,
+              lessonIndex: coreLesson.lessonIndex,
+              phaseName: coreLesson.phase.name,
+              phaseId: coreLesson.phase.id,
+              phaseSlug: corePhaseSlug,
+              lessonName: pathEntry && typeof pathEntry === 'object' && pathEntry.title
+                ? String(pathEntry.title)
+                : coreLesson.lesson.name,
+              lessonSlug: coreLessonSlug,
+              status: coreLesson.lesson.status,
+              type: coreLesson.lesson.type,
+              lang: coreLesson.lesson.lang,
+              url: coreLesson.lesson.url,
+              path: pathValue,
+              isReadable: true,
+              required: lp < requiredCount && (!pathEntry || typeof pathEntry === 'string' || pathEntry.required !== false),
+              minutes: pathEntry && typeof pathEntry === 'object' ? Number(pathEntry.minutes || 0) : 0,
+              group: pathEntry && typeof pathEntry === 'object' ? String(pathEntry.group || '') : '',
+              checkpoint: pathEntry && typeof pathEntry === 'object' ? String(pathEntry.checkpoint || '') : '',
+              checkpointEvidence: pathEntry && typeof pathEntry === 'object' && Array.isArray(pathEntry.checkpointEvidence)
+                ? pathEntry.checkpointEvidence.slice()
+                : [],
+              prerequisitePaths: pathEntry && typeof pathEntry === 'object' && Array.isArray(pathEntry.prerequisitePaths)
+                ? pathEntry.prerequisitePaths.slice()
+                : [],
+              prerequisiteChecks: pathEntry && typeof pathEntry === 'object' && Array.isArray(pathEntry.prerequisiteChecks)
+                ? pathEntry.prerequisiteChecks.slice()
+                : []
+            });
+            if (pathValue === lessonPath) {
+              currentPhaseIndex = coreLesson.phaseIndex;
+              currentLessonIndex = flatLessons.length - 1;
+            }
           }
         } else if (typeof PHASES !== 'undefined') {
           for (var i = 0; i < PHASES.length; i++) {
@@ -2315,6 +3238,32 @@
             certHtml += escapeHtml(certLesson.lessonName) + '</a>';
           }
           sidebar.innerHTML = certHtml;
+          return;
+        }
+
+        if (learningPathMode) {
+          var pathHtml = '<div class="sidebar-phase-nav"><a href="catalog.html?q=' + encodeURIComponent(learningPath.title || learningPath.id) + '">&larr; Full course catalog</a></div>';
+          var requiredPathLessons = flatLessons.filter(function (item) { return item.required !== false; });
+          var optionalPathLessons = flatLessons.filter(function (item) { return item.required === false; });
+          pathHtml += '<div class="sidebar-phase-header">' + escapeHtml(learningPath.title || learningPath.id) + ' · ' + requiredPathLessons.length + ' lessons</div>';
+          for (var lpi = 0; lpi < requiredPathLessons.length; lpi++) {
+            var pathLesson = requiredPathLessons[lpi];
+            var pathActive = pathLesson.path === lessonPath;
+            pathHtml += '<a class="sidebar-lesson-link' + (pathActive ? ' active' : '') + learningPathGateClass(pathLesson) + '" href="' + learningPathLessonHref(pathLesson.path) + '"' + learningPathGateAttributes(pathLesson) + '>';
+            pathHtml += '<span class="sidebar-lesson-dot ' + lessonProgressClass(pathLesson.path, true) + '"></span>';
+            pathHtml += escapeHtml(pathLesson.lessonName) + '</a>';
+          }
+          if (optionalPathLessons.length) {
+            pathHtml += '<div class="sidebar-phase-header">Optional capstone</div>';
+            for (var lpo = 0; lpo < optionalPathLessons.length; lpo++) {
+              var optionalLesson = optionalPathLessons[lpo];
+              var optionalActive = optionalLesson.path === lessonPath;
+              pathHtml += '<a class="sidebar-lesson-link' + (optionalActive ? ' active' : '') + learningPathGateClass(optionalLesson) + '" href="' + learningPathLessonHref(optionalLesson.path) + '"' + learningPathGateAttributes(optionalLesson) + '>';
+              pathHtml += '<span class="sidebar-lesson-dot ' + lessonProgressClass(optionalLesson.path, true) + '"></span>';
+              pathHtml += escapeHtml(optionalLesson.lessonName) + '</a>';
+            }
+          }
+          sidebar.innerHTML = pathHtml;
           return;
         }
 
@@ -2417,6 +3366,7 @@
       }
 
       var lessonQuizPromise = null;
+      var lessonQuizCorrectAnswers = Object.create(null);
 
       // language state (current lang + RTL direction) is owned by lang-picker.js
       function currentLang() {
@@ -2435,17 +3385,19 @@
 
       function fetchRepositoryFile(relativePath) {
         var source = window.AIFSContentSource;
+        var localPreview = !!(source && typeof source.isLocal === 'function' && source.isLocal());
+        var fetchOptions = localPreview ? { cache: 'no-store' } : undefined;
         var primary = source && source.repoUrl
           ? source.repoUrl(relativePath)
           : 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ACTIVE_REF + '/' + relativePath;
         var fallback = source && source.rawRepoUrl ? source.rawRepoUrl(relativePath) : primary;
 
-        return fetch(primary).then(function (response) {
+        return fetch(primary, fetchOptions).then(function (response) {
           if (response.ok) return response;
           throw new Error('fetch-failed');
         }).catch(function (error) {
           if (!fallback || fallback === primary) throw error;
-          return fetch(fallback).then(function (response) {
+          return fetch(fallback, fetchOptions).then(function (response) {
             if (!response.ok) throw new Error('fetch-failed');
             return response;
           });
@@ -2543,6 +3495,7 @@
 
       function showError(title, msg) {
         var el = document.getElementById('lessonContent');
+        disposeRenderedLesson(el);
         var contextTrack = certificationContextTrack();
         var backHref = contextTrack ? 'certification.html?id=' + encodeURIComponent(contextTrack.id) : 'index.html';
         var backLabel = contextTrack ? 'Back to Track' : 'Back to Home';
@@ -2563,7 +3516,7 @@
         }
         return certificationLesson
           ? 'Independent, open-source certification preparation built around practical engineering decisions.'
-          : '503 lessons. 20 phases. Build it from raw math, by hand.';
+          : '511 lessons. 20 phases. Build it from raw math, by hand.';
       }
 
       // Client-side per-lesson SEO. Robust indexing comes with build-time
@@ -2579,11 +3532,13 @@
           url += '&track=' + encodeURIComponent(certificationTrack.id);
         } else if (requestedTrackId && certificationOriginTrack) {
           url += '&track=' + encodeURIComponent(certificationOriginTrack.id);
+        } else if (learningPathMode) {
+          url += '&learningPath=' + encodeURIComponent(learningPath.id);
         }
         var desc = lessonDescription(md);
         var courseName = certificationLesson
           ? (contextTrack && (contextTrack.credential || contextTrack.title || contextTrack.shortName) || 'Certification preparation')
-          : 'AI Engineering from Scratch';
+          : learningPathMode ? (learningPath.title || 'Focused learning path') : 'AI Engineering from Scratch';
         var fullTitle = title + ' · ' + courseName;
         var set = function (sel, val) { var m = document.querySelector(sel); if (m) m.setAttribute('content', val); };
 
@@ -2634,6 +3589,30 @@
       }
 
       var headingHashRestoreFrame = 0;
+      var mermaidRenderSeq = 0;
+      var mermaidPromise = null;
+
+      function disposeTocRuntime() {
+        var sidebar = document.getElementById('tocSidebar');
+        if (!sidebar) return;
+        if (sidebar._tocObserver && sidebar._tocObserver.disconnect) sidebar._tocObserver.disconnect();
+        if (sidebar._tocScrollHandler) window.removeEventListener('scroll', sidebar._tocScrollHandler);
+        if (sidebar._tocResizeHandler) window.removeEventListener('resize', sidebar._tocResizeHandler);
+        sidebar._tocObserver = null;
+        sidebar._tocScrollHandler = null;
+        sidebar._tocResizeHandler = null;
+      }
+
+      function disposeRenderedLesson(root) {
+        if (window.AIFSFigureRuntime && root) window.AIFSFigureRuntime.disposeRoot(root);
+        disposeTocRuntime();
+        mermaidRenderSeq++;
+        if (headingHashRestoreFrame) {
+          window.cancelAnimationFrame(headingHashRestoreFrame);
+          headingHashRestoreFrame = 0;
+        }
+        closeMermaidModal();
+      }
 
       function restoreHeadingHash() {
         if (!window.location.hash || window.location.hash.length < 2) return;
@@ -2650,6 +3629,7 @@
 
       function renderLesson(md) {
         var el = document.getElementById('lessonContent');
+        disposeRenderedLesson(el);
         var html = parseMd(md);
         html += '<div class="ai-panels" id="aiPanels"></div>';
         html = addBottomNav(html);
@@ -2661,9 +3641,17 @@
           : ' - AI Engineering from Scratch');
         updateLessonSeo(extractTitle(md), md);
 
+        var article = el.querySelector('.lesson-article');
+        renderLessonActionPanel(article);
         initCodeCopy();
-        renderMermaidBlocks();
-        if (window.mountLessonFigures) window.mountLessonFigures(el);
+        renderMermaidBlocks(article);
+        var assetPromise = window.AIFS_loadFigureProviders
+          ? window.AIFS_loadFigureProviders(article)
+          : Promise.resolve([]);
+        assetPromise.then(function () {
+          if (!article || !article.isConnected) return;
+          if (window.mountLessonFigures) window.mountLessonFigures(article);
+        });
         renderAIPanels();
         buildTOC();
         restoreHeadingHash();
@@ -2678,6 +3666,175 @@
             }
           });
         });
+      }
+
+      function currentFocusedPathEntry() {
+        if (!learningPathMode || currentLessonIndex < 0) return null;
+        return flatLessons[currentLessonIndex] && flatLessons[currentLessonIndex].path === lessonPath
+          ? flatLessons[currentLessonIndex]
+          : flatLessons.find(function (item) { return item.path === lessonPath; }) || null;
+      }
+
+      function lessonActionPathHtml() {
+        if (!learningPathMode || !learningPath) return '';
+        var entry = currentFocusedPathEntry();
+        var quickStart = learningPath.quickStart || null;
+        var html = '<div class="lesson-action-path"><div class="lesson-action-label">Focused path context</div>';
+        if (entry && entry.checkpointEvidence && entry.checkpointEvidence.length) {
+          html += '<p>Capture this checkpoint evidence:</p><ul>';
+          for (var i = 0; i < entry.checkpointEvidence.length; i++) {
+            html += '<li>' + escapeHtml(String(entry.checkpointEvidence[i])) + '</li>';
+          }
+          html += '</ul>';
+        } else if (entry && entry.checkpoint) {
+          html += '<p><strong>Checkpoint:</strong> ' + escapeHtml(entry.checkpoint) + '</p>';
+        }
+        if (quickStart && quickStart.lessonPath === lessonPath) {
+          html += '<p><strong>Quick start:</strong> ' + escapeHtml(quickStart.goal || 'Complete the first executable checkpoint.') + '</p>';
+          if (quickStart.estimatedMinutes) html += '<p>Allow about ' + escapeHtml(String(quickStart.estimatedMinutes)) + ' minutes for this first run.</p>';
+          var quickStartCommand = quickStart.command || quickStart.installCommand || '';
+          if (quickStartCommand) html += '<p><strong>Quick start command:</strong> <code>' + escapeHtml(quickStartCommand) + '</code></p>';
+          if (quickStart.expectedEvidence && quickStart.expectedEvidence.length) {
+            html += '<p>Quick start evidence:</p><ul>';
+            for (var q = 0; q < quickStart.expectedEvidence.length; q++) {
+              html += '<li>' + escapeHtml(String(quickStart.expectedEvidence[q])) + '</li>';
+            }
+            html += '</ul>';
+          }
+        }
+        html += '</div>';
+        return html;
+      }
+
+      function lessonActionRunFile(files) {
+        if (!Array.isArray(files)) return null;
+        var supported = /\.(py|ts|js|rs|jl|sh)$/i;
+        for (var i = 0; i < files.length; i++) {
+          var name = files[i] && String(files[i].name || '').trim();
+          if (/^main\.(py|ts|js|rs|jl|sh)$/i.test(name)) return files[i];
+        }
+        for (var j = 0; j < files.length; j++) {
+          var fallbackName = files[j] && String(files[j].name || '').trim();
+          if (files.length === 1 && supported.test(fallbackName)) return files[j];
+        }
+        return null;
+      }
+
+      function setLessonActionRun(panel, files) {
+        if (!panel || !panel.isConnected) return;
+        var commandEl = panel.querySelector('.lesson-action-command');
+        var copyBtn = panel.querySelector('.lesson-action-copy');
+        var note = panel.querySelector('.lesson-action-note');
+        var file = lessonActionRunFile(files);
+        if (!file) {
+          panel._lessonRunCommand = '';
+          if (commandEl) commandEl.textContent = 'No standalone main file detected';
+          if (copyBtn) copyBtn.hidden = true;
+          if (note) note.textContent = 'Use the worked examples as guidance. Mark Run only after you execute an appropriate example or exercise. A code fence is not automatically a runnable program.';
+          return;
+        }
+        var filePath = file.path || file.file || (lessonPath + '/code/' + file.name);
+        var command = repoRootCommand(file.name, filePath);
+        panel._lessonRunCommand = command;
+        if (commandEl) commandEl.textContent = command;
+        if (copyBtn) copyBtn.hidden = false;
+        if (note) note.textContent = 'Run from the repository root, the folder containing README.md.';
+      }
+
+      function resolveLessonActionRun(panel) {
+        if (certificationLesson && certificationLesson.files) {
+          setLessonActionRun(panel, certificationLesson.files.code || []);
+          return;
+        }
+        repositoryDirectoryFetch(lessonPath + '/code', function (err, files) {
+          setLessonActionRun(panel, err ? [] : files);
+        });
+      }
+
+      function renderLessonActionPanel(article) {
+        if (!article || !window.AIFSProgress) return;
+        var entry = currentFocusedPathEntry();
+        var panel = document.createElement('aside');
+        panel.id = 'lessonActionPanel';
+        panel.className = 'lesson-action-panel';
+        panel.setAttribute('aria-labelledby', 'lessonActionTitle');
+        var tags = '<span class="lesson-action-tag">Local progress</span>';
+        if (learningPathMode && learningPath) {
+          tags += '<span class="lesson-action-tag">' + escapeHtml(learningPath.title || learningPath.id) + '</span>';
+          if (learningPath.estimatedMinutes) tags += '<span class="lesson-action-tag">Path ' + escapeHtml(String(learningPath.estimatedMinutes)) + ' min</span>';
+          if (entry && entry.minutes) tags += '<span class="lesson-action-tag">Lesson ' + escapeHtml(String(entry.minutes)) + ' min</span>';
+          if (entry && entry.group) tags += '<span class="lesson-action-tag">Group ' + escapeHtml(entry.group) + '</span>';
+        }
+        panel.innerHTML =
+          '<div class="lesson-action-head"><div><h2 class="lesson-action-title" id="lessonActionTitle">Act on this lesson</h2>' +
+          '<p class="lesson-action-intro">Use this loop to turn reading into evidence. Each checkpoint is yours to mark and stays separate from quiz correctness.</p></div>' +
+          '<div class="lesson-action-status" role="status" aria-live="polite">0 of 5 checkpoints</div></div>' +
+          '<div class="lesson-action-loop" aria-label="Lesson workflow checkpoints">' +
+          '<button class="lesson-action-step" type="button" data-checkpoint="read"><span class="lesson-action-step-num">01</span><span class="lesson-action-step-title">Read</span><span class="lesson-action-step-copy">Understand the claim and constraints.</span></button>' +
+          '<button class="lesson-action-step" type="button" data-checkpoint="built"><span class="lesson-action-step-num">02</span><span class="lesson-action-step-title">Build</span><span class="lesson-action-step-copy">Create or modify the lesson artifact.</span></button>' +
+          '<button class="lesson-action-step" type="button" data-checkpoint="ran"><span class="lesson-action-step-num">03</span><span class="lesson-action-step-title">Run</span><span class="lesson-action-step-copy">Execute the relevant program or exercise.</span></button>' +
+          '<button class="lesson-action-step" type="button" data-checkpoint="evidence"><span class="lesson-action-step-num">04</span><span class="lesson-action-step-title">Prove</span><span class="lesson-action-step-copy">Capture output that supports the claim.</span></button>' +
+          '<button class="lesson-action-step" type="button" data-lesson-complete="true"><span class="lesson-action-step-num">05</span><span class="lesson-action-step-title">Continue</span><span class="lesson-action-step-copy">Mark the lesson complete when you are ready.</span></button>' +
+          '</div><div class="lesson-action-body"><div class="lesson-action-tags">' + tags + '</div>' +
+          '<div class="lesson-action-run"><div class="lesson-action-label">Run from the repository</div>' +
+          '<div class="lesson-action-command-row"><code class="lesson-action-command">Checking for a standalone runnable file</code><button class="lesson-action-copy" type="button" hidden>Copy command</button></div>' +
+          '<p class="lesson-action-note">The page is checking the lesson code directory for a standalone entry point.</p></div>' +
+          lessonActionPathHtml() + '</div>';
+
+        var metaTags = article.querySelectorAll('.lesson-meta-tag');
+        var anchor = metaTags.length ? metaTags[metaTags.length - 1] : article.querySelector('.learning-objectives, .motto, h1');
+        if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(panel, anchor.nextSibling);
+        else article.insertBefore(panel, article.firstChild);
+
+        panel.querySelectorAll('[data-checkpoint]').forEach(function (button) {
+          button.addEventListener('click', function () {
+            window.AIFSProgress.toggleCheckpoint(lessonPath, button.getAttribute('data-checkpoint'));
+          });
+        });
+        var completeButton = panel.querySelector('[data-lesson-complete]');
+        if (completeButton) {
+          completeButton.addEventListener('click', function () {
+            if (window.AIFSProgress.isLessonComplete(lessonPath)) window.AIFSProgress.unmarkLessonComplete(lessonPath);
+            else window.AIFSProgress.markLessonComplete(lessonPath, 'learner');
+          });
+        }
+        var copyButton = panel.querySelector('.lesson-action-copy');
+        if (copyButton) {
+          copyButton.addEventListener('click', function () {
+            if (!panel._lessonRunCommand || !navigator.clipboard) return;
+            navigator.clipboard.writeText(panel._lessonRunCommand).then(function () {
+              copyButton.textContent = 'Copied';
+              window.setTimeout(function () {
+                if (copyButton.isConnected) copyButton.textContent = 'Copy command';
+              }, 1200);
+            });
+          });
+        }
+        syncLessonActionProgress();
+        resolveLessonActionRun(panel);
+      }
+
+      function syncLessonActionProgress() {
+        var panel = document.getElementById('lessonActionPanel');
+        if (!panel || !window.AIFSProgress || !lessonPath) return;
+        var progress = window.AIFSProgress.getLessonProgress(lessonPath);
+        var checkpoints = progress && progress.checkpoints ? progress.checkpoints : {};
+        var doneCount = 0;
+        panel.querySelectorAll('[data-checkpoint]').forEach(function (button) {
+          var done = !!checkpoints[button.getAttribute('data-checkpoint') + 'At'];
+          button.classList.toggle('is-done', done);
+          button.setAttribute('aria-pressed', done ? 'true' : 'false');
+          if (done) doneCount++;
+        });
+        var completeButton = panel.querySelector('[data-lesson-complete]');
+        var complete = !!(progress && progress.completedAt);
+        if (completeButton) {
+          completeButton.classList.toggle('is-done', complete);
+          completeButton.setAttribute('aria-pressed', complete ? 'true' : 'false');
+        }
+        if (complete) doneCount++;
+        var status = panel.querySelector('.lesson-action-status');
+        if (status) status.textContent = doneCount + ' of 5 checkpoints · Quiz ' + (progress && progress.quizPassedAt ? 'passed' : 'not yet passed');
       }
 
       function certificationDisclaimerHtml() {
@@ -3269,7 +4426,34 @@
         });
       }
 
-      function renderMermaidBlocks() {
+      function initializeMermaid(mermaid) {
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: mermaidTheme(),
+          fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+          themeVariables: { fontSize: '13px' },
+          flowchart: { useMaxWidth: true, htmlLabels: true, nodeSpacing: 40, rankSpacing: 50, padding: 12 }
+        });
+        window._mermaidReady = mermaid;
+        return mermaid;
+      }
+
+      function loadMermaid() {
+        if (window._mermaidReady) return Promise.resolve(window._mermaidReady);
+        if (!mermaidPromise) {
+          mermaidPromise = import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs')
+            .then(function (module) { return initializeMermaid(module.default || module); })
+            .catch(function (error) {
+              mermaidPromise = null;
+              throw error;
+            });
+        }
+        return mermaidPromise;
+      }
+
+      function renderMermaidBlocks(root) {
+        var sources = (root || document).querySelectorAll('pre.mermaid.mermaid-source');
+        if (!sources.length) return Promise.resolve();
         var fontsReady = (document.fonts && document.fonts.load)
           ? Promise.all([
               document.fonts.load('400 13px "JetBrains Mono"'),
@@ -3277,16 +4461,20 @@
               document.fonts.load('700 13px "JetBrains Mono"')
             ]).catch(function () {})
           : Promise.resolve();
-        var check = setInterval(function () {
-          if (!window._mermaidReady) return;
-          clearInterval(check);
-          fontsReady.then(function () {
+        return loadMermaid().then(function () {
+          return fontsReady.then(function () {
+            if (root && !root.isConnected) return;
             rerenderMermaidBlocks();
             bindMermaidToolbar();
             initMermaidModal();
           });
-        }, 100);
-        setTimeout(function () { clearInterval(check); }, 10000);
+        }).catch(function () {
+          sources.forEach(function (source) {
+            var block = source.closest('.mermaid-block');
+            var target = block && block.querySelector('.mermaid-render');
+            if (target) target.innerHTML = '<p>Diagram could not be rendered.</p>';
+          });
+        });
       }
 
       function mermaidTheme() {
@@ -3443,8 +4631,6 @@
 
       var lastMermaidTrigger = null;
       var openMermaidIndex = null;
-      var mermaidRenderSeq = 0;
-
       function getMermaidModalFocusables() {
         var modal = document.querySelector('#mermaidModalOverlay .mermaid-modal');
         if (!modal) return [];
@@ -3518,6 +4704,7 @@
       function renderQuiz(data) {
         var questions = data.questions || data;
         if (!questions || !questions.length) return;
+        lessonQuizCorrectAnswers = Object.create(null);
 
         var article = document.querySelector('.lesson-article');
         if (!article) return;
@@ -3583,7 +4770,8 @@
           var questionLabelId = qid + '-label';
           var explanationId = qid + '-exp';
           var hasExplanation = !!q.explanation || !!certificationLesson;
-          html += '<div class="quiz-question" data-correct="' + q.correct + '" id="' + qid + '">';
+          lessonQuizCorrectAnswers[qid] = q.correct;
+          html += '<div class="quiz-question" id="' + qid + '">';
           html += '<div class="quiz-question-text" id="' + questionLabelId + '">' + (qi + 1) + '. ' + escapeHtml(q.question) + '</div>';
           html += '<div class="quiz-options" role="group" aria-labelledby="' + questionLabelId + '">';
           for (var oi = 0; oi < q.options.length; oi++) {
@@ -3611,9 +4799,9 @@
 
       function applyQuizAnswer(questionDiv, chosen, persist) {
         if (!questionDiv || isNaN(chosen)) return;
-        var correct = parseInt(questionDiv.getAttribute('data-correct'));
+        var correct = lessonQuizCorrectAnswers[questionDiv.id];
         var options = questionDiv.querySelectorAll('.quiz-option');
-        if (chosen < 0 || chosen >= options.length || isNaN(correct)) return;
+        if (chosen < 0 || chosen >= options.length || !Number.isInteger(correct)) return;
         questionDiv.classList.add('answered');
 
         for (var i = 0; i < options.length; i++) {
@@ -3698,7 +4886,7 @@
           if (sections[s].querySelector('.quiz-option.incorrect')) return;
         }
         if (certificationLesson) syncCertificationQuizProgressVersion();
-        window.AIFSProgress.markLessonComplete(lessonPath);
+        window.AIFSProgress.markQuizPassed(lessonPath);
       }
 
       function resetLessonQuizSection(trigger) {
@@ -3761,30 +4949,33 @@
 
         var prev = null;
         for (var pi = currentLessonIndex - 1; pi >= 0; pi--) {
+          if (learningPathMode && flatLessons[pi].required === false) continue;
           if (flatLessons[pi].isReadable) { prev = flatLessons[pi]; break; }
         }
         var next = null;
         for (var ni = currentLessonIndex + 1; ni < flatLessons.length; ni++) {
+          if (learningPathMode && flatLessons[ni].required === false) continue;
           if (flatLessons[ni].isReadable) { next = flatLessons[ni]; break; }
         }
 
-        var nav = '<div class="lesson-nav-bottom">';
-        var trackSuffix = certificationMode ? '&track=' + encodeURIComponent(certificationTrack.id) : '';
+        var nav = '<nav class="lesson-nav-bottom" aria-label="Lesson navigation">';
+        var trackSuffix = certificationMode
+          ? '&track=' + encodeURIComponent(certificationTrack.id)
+          : learningPathMode ? '&learningPath=' + encodeURIComponent(learningPath.id) : '';
         if (prev) {
           nav += '<a class="lesson-nav-btn prev" href="lesson.html?path=' + encodeURIComponent(prev.path) + trackSuffix + '">';
           nav += '<span class="nav-label">&larr; Previous</span>';
           nav += '<span class="nav-title">' + escapeHtml(prev.lessonName) + '</span>';
           nav += '</a>';
-        } else {
-          nav += '<div></div>';
         }
         if (next) {
-          nav += '<a class="lesson-nav-btn next" href="lesson.html?path=' + encodeURIComponent(next.path) + trackSuffix + '">';
-          nav += '<span class="nav-label">Next &rarr;</span>';
+          var nextLocked = learningPathMode && learningPathEntryLocked(next);
+          nav += '<a class="lesson-nav-btn next' + (learningPathMode ? learningPathGateClass(next) : '') + '" href="lesson.html?path=' + encodeURIComponent(next.path) + trackSuffix + '"' + (learningPathMode ? learningPathGateAttributes(next) : '') + '>';
+          nav += '<span class="nav-label" data-learning-path-gate-label>' + (nextLocked ? 'Locked' : 'Next &rarr;') + '</span>';
           nav += '<span class="nav-title">' + escapeHtml(next.lessonName) + '</span>';
           nav += '</a>';
         }
-        nav += '</div>';
+        nav += '</nav>';
         return html + nav;
       }
 
@@ -3842,15 +5033,19 @@
         return map[ext] || '··';
       }
 
-      function langCommand(filename, path) {
+      function repoRootCommand(filename, path) {
         var ext = filename.split('.').pop().toLowerCase();
-        if (ext === 'py') return 'python3 ' + path;
-        if (ext === 'ts') return 'npx tsx ' + path;
-        if (ext === 'js') return 'node ' + path;
-        if (ext === 'rs') return 'rustc ' + path + ' -o main && ./main';
-        if (ext === 'jl') return 'julia ' + path;
-        if (ext === 'sh') return 'bash ' + path;
-        return 'run ' + path;
+        var relativePath = String(path).replace(/^\/+/, '');
+        var pathArg = /^[A-Za-z0-9_./-]+$/.test(relativePath)
+          ? relativePath
+          : "'" + relativePath.replace(/'/g, "'\\''") + "'";
+        if (ext === 'py') return 'python3 ' + pathArg;
+        if (ext === 'ts') return 'npx tsx ' + pathArg;
+        if (ext === 'js') return 'node ' + pathArg;
+        if (ext === 'rs') return 'rustc ' + pathArg + ' -o /tmp/aiefs-lesson-main && /tmp/aiefs-lesson-main';
+        if (ext === 'jl') return 'julia ' + pathArg;
+        if (ext === 'sh') return 'bash ' + pathArg;
+        return 'test -e ' + pathArg;
       }
 
       function formatSize(bytes) {
@@ -3866,18 +5061,21 @@
       }
 
       function lessonFileViewUrl(file) {
+        var filePath = file && (file.path || file.file);
         if (file && file.html_url) return file.html_url;
-        if (file && file.path && window.AIFSContentSource) return window.AIFSContentSource.repoUrl(file.path);
-        return REPO_TREE + (file && file.path ? file.path : lessonPath);
+        if (filePath && window.AIFSContentSource) return window.AIFSContentSource.repoUrl(filePath);
+        return REPO_TREE + (filePath || lessonPath);
       }
 
       function lessonFileSourceUrl(file) {
+        var filePath = file && (file.path || file.file);
         if (file && file.download_url) return file.download_url;
-        if (file && file.path && window.AIFSContentSource) return window.AIFSContentSource.repoUrl(file.path);
+        if (filePath && window.AIFSContentSource) return window.AIFSContentSource.repoUrl(filePath);
         return '';
       }
 
       function renderPanelFallback(target, message, href, label) {
+        target.classList.remove('panel-loading');
         target.textContent = '';
         var fallback = document.createElement('div');
         fallback.className = 'panel-fallback';
@@ -3896,34 +5094,57 @@
       }
 
       function renderOutputFiles(outputsEl, data) {
+        outputsEl.classList.remove('panel-loading');
         if (!data || !Array.isArray(data) || data.length === 0) {
           renderPanelFallback(outputsEl, 'This lesson has no separate output artifact. The lesson itself is the deliverable.', '', '');
           return;
         }
 
-        var html = '<div class="output-cards">';
+        var html = '<div class="output-cards' + (data.length === 1 ? ' single' : '') + '">';
         data.forEach(function (file, idx) {
-          var type = classifyOutput(file.name);
+          var type = file.kind || classifyOutput(file.name);
           var badgeClass = type;
-          var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? 'Skill' : 'Output';
+          var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? (file.bundle ? 'Skill bundle' : 'Skill') : 'Output';
           var installId = 'install-hint-' + idx;
           var installHint = '';
+          var installCommand = '';
           var viewUrl = lessonFileViewUrl(file);
+          var viewLabel = file.bundle ? 'Open SKILL.md' : 'Open file';
+          var bundleUrl = '';
+          var bundleLabel = '';
+          if (file.bundle && file.bundlePath) {
+            var source = window.AIFSContentSource;
+            bundleUrl = source && typeof source.isLocal === 'function' && source.isLocal()
+              ? source.repoUrl(file.bundlePath + '/')
+              : REPO_TREE + file.bundlePath;
+            bundleLabel = 'Browse bundle (' + (Array.isArray(file.files) ? file.files.length : 0) + ' files)';
+          }
           if (type === 'prompt') {
             installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
           } else if (type === 'skill') {
-            var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
-            installHint = 'npx skills add rohitg00/ai-engineering-from-scratch --skill ' + skillName;
+            var skillName = file.kind === 'skill'
+              ? file.name
+              : file.name.replace(/\.md$/, '').replace(/^skill-/, '');
+            installCommand = 'npx skills add rohitg00/ai-engineering-from-scratch --skill ' + skillName + ' --full-depth';
+            installHint = installCommand;
           }
 
           html += '<div class="output-card">';
+          html += '<div class="output-card-main">';
           html += '<div class="output-badge ' + badgeClass + '">' + badgeText + '</div>';
           html += '<div class="output-card-name">' + escapeHtml(file.name) + '</div>';
+          html += '</div>';
           html += '<div class="output-desc" id="desc-' + idx + '">' + escapeHtml(file.description || file.name) + '</div>';
           html += '<div class="output-actions">';
-          html += '<a class="output-btn" href="' + escapeAttr(viewUrl) + '" target="_blank" rel="noopener">Open file</a>';
+          html += '<a class="output-btn" href="' + escapeAttr(viewUrl) + '" target="_blank" rel="noopener">' + viewLabel + '</a>';
+          if (bundleUrl) {
+            html += '<a class="output-btn" href="' + escapeAttr(bundleUrl) + '" target="_blank" rel="noopener">' + escapeHtml(bundleLabel) + '</a>';
+          }
           if (installHint) {
-            html += '<button class="output-btn" onclick="var h=document.getElementById(\'' + installId + '\');h.classList.toggle(\'visible\')">Install</button>';
+            html += '<button class="output-btn output-install-toggle" type="button" aria-expanded="false" aria-controls="' + installId + '">Install</button>';
+          }
+          if (installCommand) {
+            html += '<button class="output-btn output-install-copy" data-command="' + escapeAttr(installCommand) + '">Copy install</button>';
           }
           html += '</div>';
           if (installHint) {
@@ -3943,11 +5164,27 @@
         });
         html += '</div>';
         outputsEl.innerHTML = html;
+        outputsEl.querySelectorAll('.output-install-toggle').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var hint = document.getElementById(btn.getAttribute('aria-controls'));
+            if (!hint) return;
+            var expanded = hint.classList.toggle('visible');
+            btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+          });
+        });
+        outputsEl.querySelectorAll('.output-install-copy').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            navigator.clipboard.writeText(btn.getAttribute('data-command')).then(function () {
+              btn.textContent = 'Copied!';
+              setTimeout(function () { btn.textContent = 'Copy install'; }, 1500);
+            });
+          });
+        });
       }
 
       function renderOutputsPanel(container) {
         var panel = document.createElement('div');
-        panel.className = 'ai-panel';
+        panel.className = 'ai-panel ai-panel--compact ai-panel--outputs';
         panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">O</div><div class="ai-panel-title">What This Lesson Ships</div></div><div class="ai-panel-subtitle">Prompts, skills, and artifacts you can use right now</div><div id="outputsContent" class="panel-loading">Loading outputs...</div>';
         container.appendChild(panel);
 
@@ -3959,28 +5196,34 @@
 
         repositoryDirectoryFetch(lessonPath + '/outputs', function (err, data) {
           if (!outputsEl || !outputsEl.parentNode) return;
-          if (err || !data || !Array.isArray(data) || data.length === 0) {
+          var source = window.AIFSContentSource;
+          var directoryEntries = Array.isArray(data) ? data : [];
+          var artifacts = typeof ARTIFACTS !== 'undefined' && Array.isArray(ARTIFACTS) ? ARTIFACTS : [];
+          var outputs = source && typeof source.mergeLessonOutputs === 'function'
+            ? source.mergeLessonOutputs(lessonPath, directoryEntries, artifacts)
+            : directoryEntries;
+          if (outputs.length === 0) {
             renderPanelFallback(outputsEl, 'No separate output artifacts were found for this lesson.', REPO_TREE + lessonPath, 'View lesson source');
             return;
           }
-          renderOutputFiles(outputsEl, data);
+          renderOutputFiles(outputsEl, outputs);
         });
       }
 
       function renderCodeFiles(codeEl, data) {
+        codeEl.classList.remove('panel-loading');
         if (!data || !Array.isArray(data) || data.length === 0) {
           renderPanelFallback(codeEl, 'This lesson has no separate runnable file. Use the worked examples in the lesson.', '', '');
           return;
         }
 
-        var html = '<div class="code-cards">';
+        var html = '<div class="code-cards' + (data.length === 1 ? ' single' : '') + '">';
         data.forEach(function (file) {
           var icon = langIcon(file.name);
           var filePath = file.path || (lessonPath + '/code/' + file.name);
-          var runCmd = langCommand(file.name, filePath);
+          var runCmd = repoRootCommand(file.name, filePath);
           html += '<div class="code-card">';
-          html += '<div class="code-card-header"><span class="code-lang-icon">' + icon + '</span><span class="code-card-name">' + escapeHtml(file.name) + '</span></div>';
-          html += '<div class="code-card-size">' + formatSize(Number(file.size || 0)) + '</div>';
+          html += '<div class="code-card-header"><span class="code-lang-icon">' + icon + '</span><span class="code-card-name">' + escapeHtml(file.name) + '</span><span class="code-card-size">' + formatSize(Number(file.size || 0)) + '</span></div>';
           html += '<div class="code-card-run">' + escapeHtml(runCmd) + '</div>';
           html += '<div class="code-card-actions">';
           html += '<a class="code-card-btn" href="' + escapeAttr(lessonFileViewUrl(file)) + '" target="_blank" rel="noopener">Open file</a>';
@@ -4003,8 +5246,8 @@
 
       function renderCodePanel(container) {
         var panel = document.createElement('div');
-        panel.className = 'ai-panel';
-        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Executable files from this lesson</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
+        panel.className = 'ai-panel ai-panel--compact ai-panel--code';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Requires a local clone. Run copied commands from the repository root, the directory containing README.md and phases/.</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
         container.appendChild(panel);
 
         var codeEl = panel.querySelector('#codeContent');
@@ -4151,7 +5394,9 @@
         });
 
         html += '<div class="quiz-score" id="quizScore"><div class="quiz-score-number" id="quizScoreNum">0/' + questions.length + '</div><div class="quiz-score-label">Complete all questions to see your score</div></div>';
-        html += '<div class="quiz-deeper">Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed</div>';
+        var phaseArgumentMatch = phase.match(/^(\d+)/);
+        var phaseArgument = phaseArgumentMatch ? phaseArgumentMatch[1] : phase || 'current phase';
+        html += '<div class="quiz-deeper">Want a deeper quiz? In Codex use <code>check-understanding ' + escapeHtml(phaseArgument) + '</code> or choose it from <code>/skills</code>. In Claude Code use <code>/check-understanding ' + escapeHtml(phaseArgument) + '</code>. In another compatible host say: <code>Use check-understanding to quiz me on Phase ' + escapeHtml(phaseArgument) + '.</code></div>';
         html += '</div>';
 
         body.innerHTML = html;
@@ -4213,13 +5458,127 @@
 
       function refreshProgressUi() {
         buildSidebar();
+        syncLessonActionProgress();
         var container = document.getElementById('aiPanels');
-        if (container) renderLearningPathPanel(container);
+        if (container) {
+          renderLearningPathPanel(container);
+          if (learningPathMode) renderContinuePanel(container);
+        }
+        syncLearningPathGateLinks();
       }
 
-      function mountLearningPathPanel(container, panel) {
+      function learningPanelReducedMotion() {
+        return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      }
+
+      function timelineItemKey(item, index) {
+        return item.getAttribute('data-path-step') || item.getAttribute('data-timeline-key') || item.tagName + ':' + index;
+      }
+
+      function copyOptionalAttribute(target, source, name) {
+        if (source.hasAttribute(name)) target.setAttribute(name, source.getAttribute(name));
+        else target.removeAttribute(name);
+      }
+
+      function syncLearningTimeline(currentTimeline, nextTimeline) {
+        if (!currentTimeline || !nextTimeline) return;
+        var currentItems = Array.prototype.slice.call(currentTimeline.children);
+        var nextItems = Array.prototype.slice.call(nextTimeline.children);
+        var compatible = currentItems.length === nextItems.length && currentItems.every(function (item, index) {
+          return item.tagName === nextItems[index].tagName && timelineItemKey(item, index) === timelineItemKey(nextItems[index], index);
+        });
+        if (!compatible) {
+          currentTimeline.replaceWith(nextTimeline.cloneNode(true));
+          return;
+        }
+        for (var i = 0; i < currentItems.length; i++) {
+          var currentItem = currentItems[i];
+          var nextItem = nextItems[i];
+          currentItem.className = nextItem.className;
+          copyOptionalAttribute(currentItem, nextItem, 'href');
+          copyOptionalAttribute(currentItem, nextItem, 'title');
+          copyOptionalAttribute(currentItem, nextItem, 'aria-label');
+          copyOptionalAttribute(currentItem, nextItem, 'aria-current');
+          var currentIndex = currentItem.querySelector('.timeline-index');
+          var nextIndex = nextItem.querySelector('.timeline-index');
+          if (currentIndex && nextIndex) currentIndex.textContent = nextIndex.textContent;
+          var currentLabel = currentItem.querySelector('.timeline-label');
+          var nextLabel = nextItem.querySelector('.timeline-label');
+          if (currentLabel && nextLabel) currentLabel.textContent = nextLabel.textContent;
+          if (!currentLabel && !nextLabel) currentItem.textContent = nextItem.textContent;
+        }
+      }
+
+      function revealPhaseCompletion(panel, animate) {
+        var callout = panel && panel.querySelector('.phase-complete-callout.visible');
+        if (!callout) return;
+        callout.classList.remove('is-entering', 'is-entered');
+        if (!animate || learningPanelReducedMotion()) {
+          callout.classList.add('is-entered');
+          return;
+        }
+        callout.classList.add('is-entering');
+        window.requestAnimationFrame(function () {
+          if (!callout.isConnected) return;
+          callout.classList.remove('is-entering');
+          callout.classList.add('is-entered');
+        });
+      }
+
+      function syncLearningPathPanel(currentPanel, nextPanel) {
+        currentPanel.className = nextPanel.className;
+        var currentTitle = currentPanel.querySelector('.ai-panel-title');
+        var nextTitle = nextPanel.querySelector('.ai-panel-title');
+        if (currentTitle && nextTitle) currentTitle.textContent = nextTitle.textContent;
+        var currentIcon = currentPanel.querySelector('.ai-panel-icon');
+        var nextIcon = nextPanel.querySelector('.ai-panel-icon');
+        if (currentIcon && nextIcon) currentIcon.textContent = nextIcon.textContent;
+        var currentSubtitle = currentPanel.querySelector('.path-panel-context .ai-panel-subtitle');
+        var nextSubtitle = nextPanel.querySelector('.path-panel-context .ai-panel-subtitle');
+        if (currentSubtitle && nextSubtitle) currentSubtitle.textContent = nextSubtitle.textContent;
+        var currentPosition = currentPanel.querySelector('.path-position');
+        var nextPosition = nextPanel.querySelector('.path-position');
+        if (currentPosition && nextPosition) currentPosition.textContent = nextPosition.textContent;
+
+        syncLearningTimeline(
+          currentPanel.querySelector('.learning-timeline'),
+          nextPanel.querySelector('.learning-timeline')
+        );
+
+        var currentFill = currentPanel.querySelector('.phase-progress-fill');
+        var nextFill = nextPanel.querySelector('.phase-progress-fill');
+        if (currentFill && nextFill) {
+          currentFill.style.setProperty('--lesson-progress', nextFill.style.getPropertyValue('--lesson-progress'));
+        }
+        var currentCounter = currentPanel.querySelector('.phase-progress-text');
+        var nextCounter = nextPanel.querySelector('.phase-progress-text');
+        if (currentCounter && nextCounter) currentCounter.textContent = nextCounter.textContent;
+
+        var currentTail = currentPanel.querySelector('.path-panel-tail');
+        var nextTail = nextPanel.querySelector('.path-panel-tail');
+        var hadCompletion = !!(currentTail && currentTail.querySelector('.phase-complete-callout.visible'));
+        if (currentTail && nextTail) currentTail.innerHTML = nextTail.innerHTML;
+        var hasCompletion = !!(currentTail && currentTail.querySelector('.phase-complete-callout.visible'));
+        if (hasCompletion) revealPhaseCompletion(currentPanel, !hadCompletion);
+      }
+
+      function mountLearningPathPanel(container, panel, pathKey) {
         panel.id = 'learningPathPanel';
+        panel.setAttribute('data-learning-path-key', pathKey);
         var existing = document.getElementById('learningPathPanel');
+        if (existing && existing.getAttribute('data-learning-path-key') === pathKey) {
+          syncLearningPathPanel(existing, panel);
+          return existing;
+        }
+        if (existing && existing.parentNode) existing.parentNode.replaceChild(panel, existing);
+        else container.appendChild(panel);
+        revealPhaseCompletion(panel, true);
+        return panel;
+      }
+
+      function mountContinuePanel(container, panel) {
+        panel.id = 'continuePathPanel';
+        var existing = document.getElementById('continuePathPanel');
         if (existing && existing.parentNode) existing.parentNode.replaceChild(panel, existing);
         else container.appendChild(panel);
       }
@@ -4232,44 +5591,108 @@
             return;
           }
           var certPanel = document.createElement('div');
-          certPanel.className = 'ai-panel';
+          certPanel.className = 'ai-panel ai-panel--path';
           var certTotal = flatLessons.length;
           var certDone = 0;
           for (var cp = 0; cp < flatLessons.length; cp++) {
             if (window.AIFSProgress && window.AIFSProgress.isLessonComplete(flatLessons[cp].path)) certDone++;
           }
           var certPct = certTotal ? Math.round((certDone / certTotal) * 100) : 0;
-          var certStart = Math.max(0, currentLessonIndex - 2);
-          var certEnd = Math.min(certTotal, certStart + 5);
-          certStart = Math.max(0, certEnd - 5);
+          var certStart = Math.max(0, currentLessonIndex - 1);
+          var certEnd = Math.min(certTotal, certStart + 3);
+          certStart = Math.max(0, certEnd - 3);
           var certHtml = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Certification Path</div></div>';
-          certHtml += '<div class="ai-panel-subtitle">' + escapeHtml(certificationTrack.examCode || certificationTrack.shortName || 'Certification') + ': ' + escapeHtml(certificationTrack.credential || certificationTrack.title || 'Study path') + '</div>';
+          certHtml += '<div class="path-panel-context"><div class="ai-panel-subtitle">' + escapeHtml(certificationTrack.examCode || certificationTrack.shortName || 'Certification') + ': ' + escapeHtml(certificationTrack.credential || certificationTrack.title || 'Study path') + '</div><span class="path-position">Lesson ' + (currentLessonIndex + 1) + ' of ' + certTotal + '</span></div>';
           certHtml += '<div class="learning-timeline">';
           var certLessonDoneAt = function (index) {
             return !!(window.AIFSProgress && flatLessons[index] && window.AIFSProgress.isLessonComplete(flatLessons[index].path));
           };
           if (certStart > 0) {
-            var hiddenComplete = true;
-            for (var hiddenIndex = 0; hiddenIndex < certStart; hiddenIndex++) {
-              if (!certLessonDoneAt(hiddenIndex)) { hiddenComplete = false; break; }
-            }
-            certHtml += '<span class="timeline-ellipsis">&laquo; ' + certStart + '</span><div class="timeline-line ' + (hiddenComplete ? 'done' : '') + '"></div>';
+            certHtml += '<span class="timeline-ellipsis" data-timeline-key="before">' + certStart + ' earlier</span>';
           }
           for (var cv = certStart; cv < certEnd; cv++) {
             var certItem = flatLessons[cv];
             var certItemDone = certLessonDoneAt(cv);
-            if (cv > certStart) {
-              var certSegmentDone = certLessonDoneAt(cv - 1) && certItemDone;
-              certHtml += '<div class="timeline-line ' + (certSegmentDone ? 'done' : '') + '"></div>';
-            }
             var certClass = cv === currentLessonIndex ? 'current' : certItemDone ? 'done' : '';
-            certHtml += '<a class="timeline-item ' + certClass + '" href="lesson.html?path=' + encodeURIComponent(certItem.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '" title="' + escapeAttr(certItem.lessonName) + '"><div class="timeline-dot"></div><div class="timeline-label">' + escapeHtml(certItem.lessonName) + '</div></a>';
+            certHtml += '<a class="timeline-item ' + certClass + '" data-path-step="' + escapeAttr(certItem.path) + '" href="lesson.html?path=' + encodeURIComponent(certItem.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '" title="' + escapeAttr(certItem.lessonName) + '" aria-label="Lesson ' + (cv + 1) + ' of ' + certTotal + ': ' + escapeAttr(certItem.lessonName) + '"' + (cv === currentLessonIndex ? ' aria-current="step"' : '') + '><div class="timeline-step-meta"><div class="timeline-dot"></div><span class="timeline-index">' + String(cv + 1).padStart(2, '0') + '</span></div><div class="timeline-label">' + escapeHtml(certItem.lessonName) + '</div></a>';
           }
-          if (certEnd < certTotal) certHtml += '<div class="timeline-line"></div><span class="timeline-ellipsis">' + (certTotal - certEnd) + ' &raquo;</span>';
+          if (certEnd < certTotal) certHtml += '<span class="timeline-ellipsis" data-timeline-key="after">' + (certTotal - certEnd) + ' later</span>';
           certHtml += '</div><div class="phase-progress-bar"><div class="phase-progress-fill" style="--lesson-progress:' + (certPct / 100) + '"></div></div>';
-          certHtml += '<div class="phase-progress-text">' + certDone + ' of ' + certTotal + ' lessons completed in this certification path</div>';
+          certHtml += '<div class="phase-progress-text">' + certDone + ' of ' + certTotal + ' lessons completed in this certification path</div><div class="path-panel-tail"></div>';
           certPanel.innerHTML = certHtml;
-          mountLearningPathPanel(container, certPanel);
+          mountLearningPathPanel(container, certPanel, 'certification:' + certificationTrack.id);
+          return;
+        }
+
+        if (learningPathMode) {
+          var focusedPanel = document.createElement('div');
+          focusedPanel.className = 'ai-panel ai-panel--path';
+          var focusedLessons = flatLessons.filter(function (item) { return item.required !== false; });
+          var focusedOptionalLessons = flatLessons.filter(function (item) { return item.required === false; });
+          var focusedIndex = focusedLessons.findIndex(function (item) { return item.path === lessonPath; });
+          var focusedEntry = flatLessons.find(function (item) { return item.path === lessonPath; }) || null;
+          var focusedDone = 0;
+          for (var fp = 0; fp < focusedLessons.length; fp++) {
+            if (window.AIFSProgress && window.AIFSProgress.isLessonComplete(focusedLessons[fp].path)) focusedDone++;
+          }
+          var focusedPct = focusedLessons.length ? Math.round((focusedDone / focusedLessons.length) * 100) : 0;
+          var focusedHtml = '<div class="ai-panel-header"><div class="ai-panel-icon">P</div><div class="ai-panel-title">Focused Learning Path</div></div>';
+          focusedHtml += '<div class="path-panel-context"><div class="ai-panel-subtitle">' + escapeHtml(learningPath.title || learningPath.id) + '</div><span class="path-position">';
+          focusedHtml += focusedIndex >= 0
+            ? 'Lesson ' + (focusedIndex + 1) + ' of ' + focusedLessons.length
+            : 'Optional lesson';
+          focusedHtml += '</span></div>';
+          focusedHtml += learningPathPreflightHtml();
+          focusedHtml += '<div class="learning-timeline">';
+          var focusedWindowSize = 3;
+          var focusedStart = focusedIndex >= 0
+            ? Math.max(0, focusedIndex - 1)
+            : Math.max(0, focusedLessons.length - focusedWindowSize);
+          var focusedEnd = Math.min(focusedLessons.length, focusedStart + focusedWindowSize);
+          focusedStart = Math.max(0, focusedEnd - focusedWindowSize);
+          if (focusedStart > 0) focusedHtml += '<span class="timeline-ellipsis" data-timeline-key="before">' + focusedStart + ' earlier</span>';
+          for (var fpi = focusedStart; fpi < focusedEnd; fpi++) {
+            var focusedLesson = focusedLessons[fpi];
+            var focusedLessonDone = !!(window.AIFSProgress && window.AIFSProgress.isLessonComplete(focusedLesson.path));
+            var focusedClass = focusedLesson.path === lessonPath ? 'current' : focusedLessonDone ? 'done' : '';
+            focusedHtml += '<a class="timeline-item ' + focusedClass + learningPathGateClass(focusedLesson) + '" data-path-step="' + escapeAttr(focusedLesson.path) + '" href="' + learningPathLessonHref(focusedLesson.path) + '" title="' + escapeAttr(focusedLesson.lessonName) + '"' + learningPathGateAttributes(focusedLesson) + ' aria-label="Lesson ' + (fpi + 1) + ' of ' + focusedLessons.length + ': ' + escapeAttr(focusedLesson.lessonName) + '"' + (focusedLesson.path === lessonPath ? ' aria-current="step"' : '') + '>';
+            focusedHtml += '<div class="timeline-step-meta"><div class="timeline-dot"></div><span class="timeline-index">' + String(fpi + 1).padStart(2, '0') + '</span></div><div class="timeline-label">' + escapeHtml(focusedLesson.lessonName) + '</div></a>';
+          }
+          if (focusedEnd < focusedLessons.length) focusedHtml += '<span class="timeline-ellipsis" data-timeline-key="after">' + (focusedLessons.length - focusedEnd) + ' later</span>';
+          focusedHtml += '</div><div class="phase-progress-bar"><div class="phase-progress-fill" style="--lesson-progress:' + (focusedPct / 100) + '"></div></div>';
+          focusedHtml += '<div class="phase-progress-text">';
+          focusedHtml += focusedIndex >= 0
+            ? focusedDone + ' of ' + focusedLessons.length + ' lessons completed in this path.'
+            : 'Optional lesson. ' + focusedDone + ' of ' + focusedLessons.length + ' required lessons completed.';
+          var focusedChecks = learningPathPreflightDefinitions();
+          var focusedChecksDone = focusedChecks.filter(function (check) {
+            return window.AIFSLearningPathProgress && window.AIFSLearningPathProgress.isConfirmed(learningPath.id, check.id);
+          }).length;
+          if (focusedChecks.length) focusedHtml += ' ' + focusedChecksDone + ' of ' + focusedChecks.length + ' knowledge preflights confirmed.';
+          focusedHtml += '</div>';
+          focusedHtml += '<div class="path-panel-tail">';
+          if (focusedEntry) {
+            focusedHtml += learningPathPrerequisiteCallout(focusedEntry, 'Required before this lesson');
+          }
+          var nextRequired = focusedIndex >= 0 && focusedIndex < focusedLessons.length - 1
+            ? focusedLessons[focusedIndex + 1]
+            : null;
+          if (nextRequired) {
+            focusedHtml += learningPathPrerequisiteCallout(nextRequired, 'Before the next lesson');
+          } else {
+            focusedHtml += '<div class="path-completion-actions">';
+            for (var focusedOptionalIndex = 0; focusedOptionalIndex < focusedOptionalLessons.length; focusedOptionalIndex++) {
+              var focusedOptionalLesson = focusedOptionalLessons[focusedOptionalIndex];
+              if (focusedOptionalLesson.path === lessonPath) continue;
+              var focusedOptionalLocked = learningPathEntryLocked(focusedOptionalLesson);
+              focusedHtml += '<a class="path-completion-link' + learningPathGateClass(focusedOptionalLesson) + '" href="' + learningPathLessonHref(focusedOptionalLesson.path) + '"' + learningPathGateAttributes(focusedOptionalLesson) + '>' + (focusedOptionalLocked ? 'Locked optional capstone: ' : 'Optional capstone: ') + escapeHtml(focusedOptionalLesson.lessonName) + '</a>';
+            }
+            if (focusedLessons.length) focusedHtml += '<a href="' + learningPathLessonHref(focusedLessons[0].path) + '">Restart path</a>';
+            focusedHtml += '<a href="catalog.html">Full course catalog</a></div>';
+          }
+          focusedHtml += '</div>';
+          focusedPanel.innerHTML = focusedHtml;
+          mountLearningPathPanel(container, focusedPanel, 'learning-path:' + learningPath.id);
           return;
         }
 
@@ -4280,7 +5703,7 @@
         }
 
         var panel = document.createElement('div');
-        panel.className = 'ai-panel';
+        panel.className = 'ai-panel ai-panel--path';
 
         var current = flatLessons[currentLessonIndex];
         var phaseIdx = current.phaseIndex;
@@ -4296,11 +5719,11 @@
         }
 
         var html = '<div class="ai-panel-header"><div class="ai-panel-icon">P</div><div class="ai-panel-title">Learning Path</div></div>';
-        html += '<div class="ai-panel-subtitle">Phase ' + String(phase.id).padStart(2, '0') + ': ' + escapeHtml(phase.name) + '</div>';
+        html += '<div class="path-panel-context"><div class="ai-panel-subtitle">Phase ' + String(phase.id).padStart(2, '0') + ': ' + escapeHtml(phase.name) + '</div><span class="path-position">Lesson ' + (currentIdxInPhase + 1) + ' of ' + lessonsInPhase.length + '</span></div>';
 
-        // Window: 2 before current + current + 2 after, cap at 5 visible.
-        var windowSize = 5;
-        var startIdx = Math.max(0, currentIdxInPhase - 2);
+        // Keep the route readable in the available column: one before, current, one after.
+        var windowSize = 3;
+        var startIdx = Math.max(0, currentIdxInPhase - 1);
         var endIdx = Math.min(lessonsInPhase.length, startIdx + windowSize);
         startIdx = Math.max(0, endIdx - windowSize);
         var visible = lessonsInPhase.slice(startIdx, endIdx);
@@ -4312,12 +5735,7 @@
 
         html += '<div class="learning-timeline">';
         if (hiddenBefore > 0) {
-          html += '<span class="timeline-ellipsis" title="' + hiddenBefore + ' earlier lessons">&laquo; ' + hiddenBefore + '</span>';
-          var hiddenBeforeComplete = true;
-          for (var hiddenCoreIndex = 0; hiddenCoreIndex < hiddenBefore; hiddenCoreIndex++) {
-            if (!coreLessonDoneAt(hiddenCoreIndex)) { hiddenBeforeComplete = false; break; }
-          }
-          html += '<div class="timeline-line ' + (hiddenBeforeComplete && coreLessonDoneAt(startIdx) ? 'done' : '') + '"></div>';
+          html += '<span class="timeline-ellipsis" data-timeline-key="before" title="' + hiddenBefore + ' earlier lessons">' + hiddenBefore + ' earlier</span>';
         }
         visible.forEach(function (item, vIdx) {
           var idx = startIdx + vIdx;
@@ -4325,23 +5743,17 @@
           var isDone = coreLessonDoneAt(idx);
           var cls = (isCurrent ? 'current ' : '') + (isDone ? 'done' : '');
 
-          if (vIdx > 0) {
-            var lineCls = coreLessonDoneAt(idx - 1) && isDone ? 'done' : '';
-            html += '<div class="timeline-line ' + lineCls + '"></div>';
-          }
-
           if (item.flat.isReadable) {
-            html += '<a class="timeline-item ' + cls + '" href="lesson.html?path=' + item.flat.path + '" title="' + escapeAttr(item.flat.lessonName) + '">';
+            html += '<a class="timeline-item ' + cls + '" data-path-step="' + escapeAttr(item.flat.path) + '" href="lesson.html?path=' + item.flat.path + '" title="' + escapeAttr(item.flat.lessonName) + '" aria-label="Lesson ' + (idx + 1) + ' of ' + lessonsInPhase.length + ': ' + escapeAttr(item.flat.lessonName) + '"' + (isCurrent ? ' aria-current="step"' : '') + '>';
           } else {
-            html += '<span class="timeline-item ' + cls + ' disabled" title="' + escapeAttr(item.flat.lessonName) + '">';
+            html += '<span class="timeline-item ' + cls + ' disabled" data-path-step="' + escapeAttr(item.flat.path) + '" title="' + escapeAttr(item.flat.lessonName) + '">';
           }
-          html += '<div class="timeline-dot"></div>';
+          html += '<div class="timeline-step-meta"><div class="timeline-dot"></div><span class="timeline-index">' + String(idx + 1).padStart(2, '0') + '</span></div>';
           html += '<div class="timeline-label">' + escapeHtml(item.flat.lessonName) + '</div>';
           html += item.flat.isReadable ? '</a>' : '</span>';
         });
         if (hiddenAfter > 0) {
-          html += '<div class="timeline-line"></div>';
-          html += '<span class="timeline-ellipsis" title="' + hiddenAfter + ' later lessons">' + hiddenAfter + ' &raquo;</span>';
+          html += '<span class="timeline-ellipsis" data-timeline-key="after" title="' + hiddenAfter + ' later lessons">' + hiddenAfter + ' later</span>';
         }
         html += '</div>';
 
@@ -4355,13 +5767,15 @@
         html += '<div class="phase-progress-bar"><div class="phase-progress-fill" style="--lesson-progress:' + (pct / 100) + '"></div></div>';
         html += '<div class="phase-progress-text">You\'ve completed ' + completedCount + ' of ' + totalCount + ' lessons in this phase</div>';
 
+        html += '<div class="path-panel-tail">';
         if (completedCount >= totalCount && phaseIdx < PHASES.length - 1) {
           var nextPhase = PHASES[phaseIdx + 1];
           html += '<div class="phase-complete-callout visible">Ready for Phase ' + String(nextPhase.id).padStart(2, '0') + ': ' + escapeHtml(nextPhase.name) + '</div>';
         }
+        html += '</div>';
 
         panel.innerHTML = html;
-        mountLearningPathPanel(container, panel);
+        mountLearningPathPanel(container, panel, 'phase:' + phase.id);
       }
 
       function renderContinuePanel(container) {
@@ -4369,7 +5783,7 @@
 
         if (certificationMode) {
           var certContinue = document.createElement('div');
-          certContinue.className = 'ai-panel';
+          certContinue.className = 'ai-panel ai-panel--continue';
           var certNext = null;
           for (var cn = currentLessonIndex + 1; cn < flatLessons.length; cn++) {
             if (flatLessons[cn].isReadable) { certNext = flatLessons[cn]; break; }
@@ -4386,8 +5800,14 @@
           return;
         }
 
+        if (learningPathMode) {
+          var staleFocusedContinue = document.getElementById('continuePathPanel');
+          if (staleFocusedContinue) staleFocusedContinue.remove();
+          return;
+        }
+
         var panel = document.createElement('div');
-        panel.className = 'ai-panel';
+        panel.className = 'ai-panel ai-panel--continue';
 
         var next = null;
         for (var ci = currentLessonIndex + 1; ci < flatLessons.length; ci++) {
@@ -4437,6 +5857,7 @@
         buildSidebar();
         initSidebarToggle();
         initScrollProgress();
+        initLearningPathGateNavigation();
         if (window.AIFSProgress) window.AIFSProgress.onChange(refreshProgressUi);
         fetchLesson(lessonPath);
       }

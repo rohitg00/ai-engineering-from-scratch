@@ -1,30 +1,39 @@
 ---
 name: mcp-transport-migrator
-description: Produce a migration plan from legacy HTTP+SSE to Streamable HTTP with session id continuity and Origin validation.
-version: 1.0.0
+description: Migrate legacy MCP HTTP transports to the stateless, POST-only 2026-07-28 contract.
+version: 2.0.0
 phase: 13
 lesson: 09
-tags: [mcp, streamable-http, sse-migration, session-id, origin]
+tags: [mcp, streamable-http, stateless, migration, headers]
 ---
 
-Given an existing HTTP+SSE (legacy) MCP server, produce a migration plan to single-endpoint Streamable HTTP.
+Given a session-based Streamable HTTP or HTTP+SSE server, produce a migration runbook for MCP `2026-07-28`.
 
 Produce:
 
-1. Endpoint rewrite. Merge `/messages` and `/sse` into one `/mcp`. Map POST to request handling, GET to SSE stream, DELETE to session termination.
-2. Session continuity. Generate new `Mcp-Session-Id` on first POST. Reject client-supplied ids. Retain bridging logic if the client first sends a legacy session cookie.
-3. Origin validation. Allowlist explicit production origins (`https://app.company.com`, `https://claude.ai`, localhost variants). Reject all others with 403.
-4. Last-event-id replay. Keep a ring buffer of recent events per session so reconnects can resume.
-5. Deprecation window. Document the cut-over date and a 60-day grace period where the legacy endpoints 301 to the new one with a warning header.
+1. Endpoint map. Define one modern MCP endpoint that accepts POST. Each JSON-RPC request or notification receives a new POST.
+2. Response map. Use `application/json` for one response or request-scoped `text/event-stream` for related notifications followed by the final response.
+3. Removed behavior. Return `405` for modern GET and DELETE. Ignore `Mcp-Session-Id` and `Last-Event-ID`; never mint, echo, revoke, or resume them.
+4. Request metadata. Require protocol version and client capabilities in every body `_meta`, with recommended client identity.
+5. Header validation. Require `MCP-Protocol-Version`, `Mcp-Method`, and conditional `Mcp-Name`. Decode the Base64 sentinel and compare headers with the body. Return `-32020` on mismatch. Return `-32022` on an unsupported matching version with exact data keys `supported` and `requested`.
+6. Subscription migration. Replace standalone GET, `resources/subscribe`, and `resources/unsubscribe` with POST `subscriptions/listen`. Tag the acknowledgement, every notification, and the final result with `io.modelcontextprotocol/subscriptionId` equal to the listen request id.
+7. State migration. Replace connection affinity with explicit, opaque application handles bound to the authenticated principal.
+8. Compatibility window. Keep older endpoints separate and clearly labeled. Modern POST errors must be inspected before any legacy fallback. Do not redirect POST with `301` or `302` because method and body preservation are unsafe.
+9. Verification. Test Origin rejection, POST media negotiation, body metadata, mirrored headers, JSON response, accepted notification `202` with no body, scoped SSE subscription metadata, GET and DELETE `405`, ignored removed headers, and broken-stream retry with a new id.
 
 Hard rejects:
-- Any plan that keeps both endpoints alive indefinitely. Legacy SSE is being removed in 2026.
-- Any plan where session ids are client-generated. Breaks the cryptographic-randomness requirement.
-- Any plan without Origin validation. DNS-rebinding vulnerability.
+
+- Presenting session ids, standalone GET, DELETE, or replay as modern behavior.
+- Sharing per-request capabilities through process or connection memory.
+- Sending server-initiated JSON-RPC requests.
+- Resuming a modern SSE stream with `Last-Event-ID`.
+- Falling back to legacy after a recognized modern error.
+- Using a redirect to move a JSON-RPC POST during migration.
 
 Refusal rules:
-- If the server is local-only (stdio), refuse to migrate to HTTP; stdio is correct for local.
-- If the server does not yet ship OAuth, complete Phase 13 · 16 before exposing it publicly.
-- If the hosting target does not support long-lived HTTP (e.g. Vercel free tier), refuse and recommend Cloudflare Workers.
 
-Output: a migration runbook with the endpoint changes, Origin allowlist, session-id plan, deprecation schedule, and a test checklist covering initialize, tools/list, streaming notifications, reconnect with last-event-id, and explicit DELETE.
+- Refuse public exposure without authentication, authorization, and exact Origin policy.
+- Refuse hidden sticky routing as a replacement for explicit workflow state.
+- Refuse automatic retry of a non-idempotent operation without an application idempotency control.
+
+Output a before-and-after endpoint table, staged rollout, rollback boundary, and executable conformance checklist. End with the exact date when legacy routes will be removed.

@@ -7,6 +7,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
   <meta name="description" content="What AI Engineering from Scratch is, why it exists, who builds it, and how the site is made. A free, open-source, MIT-licensed curriculum.">
   <link rel="canonical" href="https://aiengineeringfromscratch.com/about.html">
+  <link rel="alternate" type="text/markdown" href="https://aiengineeringfromscratch.com/llms.txt">
   <meta property="og:title" content="About · AI Engineering from Scratch">
   <meta property="og:description" content="Why this curriculum exists, who builds it, and how the site is made. Free, open source, MIT.">
   <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
@@ -19,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260809a">
+  <link rel="stylesheet" href="style.css?v=20260823b">
   <style>
     .about {
       max-width: 760px;
@@ -111,7 +112,7 @@
       <div class="about-eyebrow">About</div>
       <h1>About this project</h1>
 
-      <p class="lede">AI Engineering from Scratch is a free, open-source curriculum that builds every core AI algorithm by hand. 503 lessons across 20 phases, from linear algebra to autonomous agents, in Python, TypeScript, Rust, and Julia.</p>
+      <p class="lede">AI Engineering from Scratch is a free, open-source curriculum that builds every core AI algorithm by hand. The curriculum spans <span id="aboutLessonCount">every published lesson</span> across 20 phases, from linear algebra to autonomous agents, in Python, TypeScript, Rust, and Julia.</p>
 
       <h2>Why it exists</h2>
       <p>Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a framework demo somewhere else. You can ship a chatbot without being able to explain its loss curve, or wire a tool to an agent without knowing what attention does inside the model calling it.</p>
@@ -119,7 +120,7 @@
 
       <h2>How it is made</h2>
       <p>The lessons are authored with AI assistance and reviewed by a human against primary sources. Where a lesson states a fact, it cites the original: an RFC, a spec, or a research paper, not a secondary summary. Corrections are welcome and tracked in the open on GitHub.</p>
-      <p>The site itself is deliberately plain: hand-written HTML, CSS, and vanilla JavaScript, no framework. A single build script (<code>site/build.js</code>) reads the lesson Markdown in the repository and generates the catalog, search index, sitemap, and <code>llms.txt</code> on every deploy, so the published numbers can never drift from the source. It is hosted on Vercel.</p>
+      <p>The site itself is deliberately plain: hand-written HTML, CSS, and vanilla JavaScript, no framework. A single build script (<code>site/build.js</code>) reads the lesson Markdown in the repository and generates the catalog, search index, sitemap, and <code>llms.txt</code> on every deploy. Public curriculum counts are read from that generated data. It is hosted on Vercel.</p>
 
       <h2>Who builds it</h2>
       <p>Maintained by <a href="https://github.com/rohitg00" target="_blank" rel="noopener">Rohit Ghumare</a> and contributors. It is MIT-licensed and free forever. There is no token, no course upsell, and no gated content.</p>
@@ -157,6 +158,7 @@
       "name": "AI Engineering from Scratch",
       "url": "https://aiengineeringfromscratch.com",
       "sameAs": ["https://github.com/rohitg00/ai-engineering-from-scratch", "https://github.com/rohitg00"],
+      "contactPoint": { "@type": "ContactPoint", "contactType": "project support", "url": "https://github.com/rohitg00/ai-engineering-from-scratch/issues" },
       "founder": { "@type": "Person", "name": "Rohit Ghumare", "url": "https://github.com/rohitg00" }
     }
   }
@@ -184,6 +186,14 @@
       document.addEventListener('DOMContentLoaded', function () {
         updateIcon();
 
+        var lessonCount = document.getElementById('aboutLessonCount');
+        if (lessonCount && typeof PHASES !== 'undefined' && Array.isArray(PHASES)) {
+          var totalLessons = PHASES.reduce(function (total, phase) {
+            return total + (Array.isArray(phase.lessons) ? phase.lessons.length : 0);
+          }, 0);
+          if (totalLessons > 0) lessonCount.textContent = totalLessons + ' lessons';
+        }
+
         var btn = document.getElementById('themeToggle');
         if (btn) {
           btn.addEventListener('click', function () {
@@ -196,10 +206,10 @@
       });
     })();
   </script>
-  <script src="data.js?v=20260808g"></script>
-  <script src="progress.js?v=20260525a"></script>
-  <script src="header.js?v=20260808h" defer></script>
-  <script src="cmdpalette.js?v=20260808h" defer></script>
+  <script src="data.js?v=20260821c"></script>
+  <script src="progress.js?v=20260822a"></script>
+  <script src="header.js?v=20260823b" defer></script>
+  <script src="cmdpalette.js?v=20260821a" defer></script>
   <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
 </body>
 </html>

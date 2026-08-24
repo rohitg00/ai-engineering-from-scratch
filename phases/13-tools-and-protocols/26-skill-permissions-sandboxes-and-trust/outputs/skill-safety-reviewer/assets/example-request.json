@@ -1,0 +1,10 @@
+{
+  "kind": "write",
+  "target": "reports/summary.json",
+  "command": [],
+  "url": null,
+  "payload": "public summary data",
+  "influencedByUntrustedContent": false,
+  "approved": false,
+  "claimedPermissions": ["write-anywhere"]
+}

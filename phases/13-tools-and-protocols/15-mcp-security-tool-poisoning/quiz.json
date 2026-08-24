@@ -1,0 +1,78 @@
+{
+  "lesson": "15-mcp-security-tool-poisoning",
+  "title": "MCP Security: Poisoned Metadata, Routing, and MRTR State",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which MCP field is safe to use as an authenticated client identity?",
+      "options": [
+        "None of the self-reported clientInfo fields",
+        "clientInfo.name",
+        "clientInfo.version",
+        "clientCapabilities"
+      ],
+      "correct": 0,
+      "explanation": "Client information and capabilities are protocol metadata, not authentication evidence."
+    },
+    {
+      "stage": "check",
+      "question": "What should a gateway hash after approving a tool?",
+      "options": [
+        "The canonical complete descriptor, including description, schema, and relevant annotations",
+        "Only the tool name",
+        "Only the server display name",
+        "The current session identifier"
+      ],
+      "correct": 0,
+      "explanation": "Whole-descriptor pinning detects schema and annotation changes that a description-only hash misses."
+    },
+    {
+      "stage": "check",
+      "question": "How should a gateway expose two backend tools both named search?",
+      "options": [
+        "Ask the model to infer the server",
+        "Randomly choose a backend",
+        "Use stable qualified names such as notes.search and issues.search",
+        "Keep the last discovered tool"
+      ],
+      "correct": 2,
+      "explanation": "Qualified names make routing, approval, auditing, and header validation refer to one stable tool."
+    },
+    {
+      "stage": "check",
+      "question": "Which client capability declarations support an MCP form elicitation?",
+      "options": [
+        "Either elicitation: {} implicitly or elicitation: {form: {}} explicitly",
+        "Any non-empty extensions object",
+        "Only a protocol session with form enabled",
+        "Only elicitation.url"
+      ],
+      "correct": 0,
+      "explanation": "An empty elicitation object implies form support, while form: {} states it explicitly. URL-only support is insufficient for a form request."
+    },
+    {
+      "stage": "post",
+      "question": "Why must requestState be integrity protected and bound to exact arguments?",
+      "options": [
+        "To select a cache scope",
+        "To replace OAuth",
+        "To stop a client from reusing or altering confirmation for another action",
+        "To make JSON smaller"
+      ],
+      "correct": 2,
+      "explanation": "requestState round-trips through an untrusted peer, so the server must detect tampering and context changes. A shared atomic nonce claim prevents reuse across handler instances."
+    },
+    {
+      "stage": "post",
+      "question": "Which is the correct order for a modern gateway?",
+      "options": [
+        "Trust clientInfo, execute, then audit",
+        "Accept declared capabilities as permission",
+        "Authenticate, validate wire and headers, check capability compatibility, authorize, then execute",
+        "Create a session, route by discovery order, then authorize"
+      ],
+      "correct": 2,
+      "explanation": "Wire ambiguity and identity must be resolved before authorization and execution."
+    }
+  ]
+}

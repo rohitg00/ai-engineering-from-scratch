@@ -86,6 +86,16 @@ The twelve categories are: Math & training; Models & inference; Data & represent
 - **Learn it:** [Repository Memory and State](../phases/14-agent-engineering/34-repo-memory-and-state/)
 - **Related terms:** Checkpoint, Durable Execution, Context Engineering, Handoff
 
+### Agent Skill
+- **Category:** Agents & tools
+- **What it actually means:** A discoverable directory of procedural instructions whose entry point is `SKILL.md`, with optional references, scripts, and assets that a compatible runtime can load in stages.
+- **Why it matters:** It packages reusable task knowledge separately from one conversation while keeping deeper context and deterministic helpers available on demand.
+- **In practice:** Publish a compact name and routing description, load the workflow only after activation, and read branch-specific references when the task reaches them.
+- **Common confusion:** Activating a skill supplies context. It does not expose a tool, grant permission, create a sandbox, or prove that the resulting work is correct.
+- **Learn it:** [Agent Skills: Portable Contract and Runtime Boundary](../phases/13-tools-and-protocols/22-skills-and-agent-sdks/)
+- **Related terms:** Skill Bundle, Skill Catalog, Skill Invocation, Progressive Disclosure, MCP (Model Context Protocol)
+- **Sources:** [Agent Skills specification](https://agentskills.io/specification)
+
 ### AI Risk Assessment
 - **Category:** Security & governance
 - **What it actually means:** A documented analysis of how an AI system can affect people, organizations, and environments, including context, hazards, likelihood, impact, controls, residual risk, and monitoring responsibilities.
@@ -323,7 +333,7 @@ The twelve categories are: Math & training; Models & inference; Data & represent
 - **Why it matters:** Its value depends on repository context, tool permissions, review boundaries, and verification, not only code generation quality.
 - **In practice:** Give the agent an issue, a scope contract, repository instructions, and a test command; review the resulting patch and evidence before accepting it.
 - **Common confusion:** A coding assistant that only suggests text is not necessarily an agent. The agent acts through tools and observes results.
-- **Learn it:** [Workbench for Real Repositories](../phases/14-agent-engineering/41-workbench-for-real-repos/)
+- **Learn it:** [Skill Discovery and Progressive Disclosure](../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/)
 - **Related terms:** Agent Harness, Repository Map, Patch, Scope Contract, Reviewer Agent
 
 ### Compensating Action
@@ -1166,11 +1176,11 @@ The twelve categories are: Math & training; Models & inference; Data & represent
 ### MCP (Model Context Protocol)
 - **Category:** Agents & tools
 - **What people say:** A standard way for AI applications to connect to tools and context.
-- **What it actually means:** An open protocol for a host to connect to servers that expose capabilities such as tools, resources, and prompts through a defined message lifecycle and transport bindings.
-- **Common confusion:** MCP standardizes capability discovery and exchange. It does not decide which tool is safe to call or grant permission by itself.
+- **What it actually means:** An open JSON-RPC protocol for a host to connect to servers that expose tools, resources, prompts, and extensions through defined request, result, discovery, and transport contracts. In revision 2026-07-28, every request carries its protocol version and client capabilities instead of relying on an initialization handshake or protocol session.
+- **Common confusion:** MCP standardizes discovery and exchange. It does not decide which tool is safe to call, grant permission, or forbid an application from using explicit state handles.
 - **Learn it:** [Model Context Protocol](../phases/11-llm-engineering/14-model-context-protocol/)
-- **Sources:** [Model Context Protocol specification](https://modelcontextprotocol.io/specification/)
-- **Related terms:** Function Calling, Tool Contract, Least Privilege
+- **Sources:** [MCP 2026-07-28 key changes](https://modelcontextprotocol.io/specification/2026-07-28/changelog)
+- **Related terms:** Stateless MCP, Multi Round-Trip Request (MRTR), Function Calling, Tool Contract, Least Privilege
 
 ### Membership Inference
 - **Category:** Security & governance
@@ -1264,6 +1274,17 @@ The twelve categories are: Math & training; Models & inference; Data & represent
 - **Learn it:** [MIO Any-to-Any Streaming](../phases/12-multimodal-ai/16-mio-any-to-any-streaming/)
 - **Related terms:** Modality, Vision-Language Model (VLM), Multimodal Fusion, Transformer
 - **Sources:** [Flamingo: a Visual Language Model for Few-Shot Learning](https://arxiv.org/abs/2204.14198); [Multimodal Machine Learning: A Survey and Taxonomy](https://arxiv.org/abs/1705.09406)
+
+### Multi Round-Trip Request (MRTR)
+- **Category:** Agents & tools
+- **Aliases:** MRTR
+- **What it actually means:** An MCP request pattern in which an operation returns `resultType: input_required` with one or more `inputRequests`, then the client retries the original method with `inputResponses` and the exact returned `requestState`.
+- **Why it matters:** It lets a stateless server request user, model, or root input without opening a server-initiated JSON-RPC exchange or storing protocol session state.
+- **In practice:** Return an input request from `tools/call`, collect the authorized response in the host, and retry that same tool call with a new JSON-RPC id.
+- **Common confusion:** `requestState` is untrusted round-trip data. Integrity-protect it before using it for authorization or business decisions, and do not treat it as a server-side session identifier.
+- **Learn it:** [MCP Roots and Elicitation](../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/)
+- **Related terms:** Stateless MCP, MCP (Model Context Protocol), Human-in-the-Loop (HITL), Tool Contract
+- **Sources:** [MCP Multi Round-Trip Requests](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr)
 
 ## N
 
@@ -1793,6 +1814,46 @@ The twelve categories are: Math & training; Models & inference; Data & represent
 - **Related terms:** Embedding, Cosine Similarity, Modality Alignment, Semantic Search
 - **Sources:** [Learning Transferable Visual Models From Natural Language Supervision](https://proceedings.mlr.press/v139/radford21a.html)
 
+### Skill Bundle
+- **Category:** Agents & tools
+- **What it actually means:** The complete installable skill directory, including `SKILL.md` and every reference, script, asset, fixture, or companion file required by the workflow.
+- **Why it matters:** Copying only the entry file can leave valid-looking instructions that point to missing resources or lose the deterministic code the workflow depends on.
+- **In practice:** Install the tree as one unit, record hashes and source revision, validate the installed copy, and show collisions before replacing an existing bundle.
+- **Common confusion:** `SKILL.md` is the entry point, not necessarily the entire artifact.
+- **Learn it:** [Skill Evals, Packaging, and Portability](../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/)
+- **Related terms:** Agent Skill, Skill Catalog, Reproducible Build, Provenance Attestation
+- **Sources:** [Agent Skills specification](https://agentskills.io/specification)
+
+### Skill Catalog
+- **Category:** Agents & tools
+- **What it actually means:** The compact model-visible inventory of eligible skills, usually containing routing metadata such as name, description, and an internal source identifier rather than every skill body.
+- **Why it matters:** A catalog lets an agent discover relevant procedures without loading every installed package into the working context.
+- **In practice:** Validate packages first, apply an explicit duplicate-name policy, measure the serialized catalog budget, and retain diagnostics for entries that were shortened, omitted, or shadowed.
+- **Common confusion:** A catalog entry means the skill is discoverable. It does not mean the body is active or its tools are authorized.
+- **Learn it:** [Skill Discovery and Progressive Disclosure](../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/)
+- **Related terms:** Skill Discovery, Skill Invocation, Progressive Disclosure, Token Budget
+- **Sources:** [Agent Skills specification](https://agentskills.io/specification)
+
+### Skill Discovery
+- **Category:** Agents & tools
+- **What it actually means:** A runtime pipeline that searches configured roots, identifies candidate skill directories, validates their package contract, attaches scope and provenance, resolves collisions, and publishes eligible catalog entries.
+- **Why it matters:** Deterministic discovery makes missing, malformed, shadowed, and unsafe packages diagnosable before model routing begins.
+- **In practice:** Declare search scopes and duplicate behavior, decide how symlinks are handled, reject resource escapes, and log why each candidate was accepted or rejected.
+- **Common confusion:** Skill discovery is not an unrestricted recursive search for filenames called `SKILL.md`; installation locations and precedence are runtime policy.
+- **Learn it:** [Skill Discovery and Progressive Disclosure](../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/)
+- **Related terms:** Skill Catalog, Skill Bundle, Progressive Disclosure, Trust Boundary
+- **Sources:** [Agent Skills client implementation guide](https://agentskills.io/client-implementation/adding-skills-support)
+
+### Skill Invocation
+- **Category:** Agents & tools
+- **What it actually means:** The runtime-mediated process in which an eligible human, model, application, or other skill selects a skill and causes its instructions to enter the working context.
+- **Why it matters:** Explicit user access, implicit model routing, activation, argument binding, tool permission, and execution are separate decisions with different failure modes.
+- **In practice:** Define actor policy, evaluate descriptions with positive and near-miss requests, record the selected package identity, and keep host-specific invocation fields in tested adapters.
+- **Common confusion:** Invocation activates instructions. It does not automatically execute a command or bypass approval and sandbox policy.
+- **Learn it:** [Skill Invocation and Routing](../phases/13-tools-and-protocols/25-skill-invocation-and-routing/)
+- **Related terms:** Agent Skill, Skill Catalog, Approval Gate, Sandbox
+- **Sources:** [Evaluating Agent Skills](https://agentskills.io/skill-creation/evaluating-skills)
+
 ### Softmax
 - **Category:** Math & training
 - **What people say:** A function that turns logits into normalized positive values.
@@ -1818,6 +1879,16 @@ The twelve categories are: Math & training; Models & inference; Data & represent
 - **Common confusion:** Speculative decoding is not ordinary model routing or unverified autocomplete. Exact variants preserve the target distribution through acceptance and correction, while approximate variants may trade that guarantee for speed.
 - **Related terms:** Autoregressive, KV Cache, Decoding Strategy, Tokens per Second (TPS)
 - **Sources:** [Fast Inference from Transformers via Speculative Decoding](https://proceedings.mlr.press/v202/leviathan23a.html)
+
+### Stateless MCP
+- **Category:** Agents & tools
+- **What it actually means:** The MCP 2026-07-28 request model in which every request carries the protocol version and client capabilities in `params._meta`, while results carry an explicit `resultType`; no protocol state is keyed by an initialization handshake, connection, or `Mcp-Session-Id`.
+- **Why it matters:** Any worker can validate and process a request from its contents and authorization context, which avoids hidden connection affinity and makes horizontal routing easier to reason about.
+- **In practice:** Implement `server/discover`, rebuild request metadata on every call, validate transport headers against the JSON-RPC body, and pass server-minted application handles as ordinary tool arguments when continuity is required.
+- **Common confusion:** Stateless MCP removes protocol sessions, not application state, transport connections, streaming responses, tasks, or explicit handles.
+- **Learn it:** [MCP Fundamentals](../phases/13-tools-and-protocols/06-mcp-fundamentals/)
+- **Related terms:** MCP (Model Context Protocol), Multi Round-Trip Request (MRTR), Tool Contract, Idempotency
+- **Sources:** [MCP 2026-07-28 key changes](https://modelcontextprotocol.io/specification/2026-07-28/changelog); [MCP Streamable HTTP](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http)
 
 ### Stochastic Gradient Descent (SGD)
 - **Category:** Math & training

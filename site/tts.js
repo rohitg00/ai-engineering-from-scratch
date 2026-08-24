@@ -207,9 +207,32 @@
 
   var reducedMotion =
     window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  var reducedMotionListener = null;
 
   function prefersReducedMotion() {
     return !!(reducedMotion && reducedMotion.matches);
+  }
+
+  function bindReducedMotionPreference() {
+    if (!reducedMotion || reducedMotionListener) return;
+    reducedMotionListener = function (event) {
+      if (event.matches) commitDragInertiaForReducedMotion();
+    };
+    if (typeof reducedMotion.addEventListener === 'function') {
+      reducedMotion.addEventListener('change', reducedMotionListener);
+    } else if (typeof reducedMotion.addListener === 'function') {
+      reducedMotion.addListener(reducedMotionListener);
+    }
+  }
+
+  function disposeReducedMotionPreference() {
+    if (!reducedMotion || !reducedMotionListener) return;
+    if (typeof reducedMotion.removeEventListener === 'function') {
+      reducedMotion.removeEventListener('change', reducedMotionListener);
+    } else if (typeof reducedMotion.removeListener === 'function') {
+      reducedMotion.removeListener(reducedMotionListener);
+    }
+    reducedMotionListener = null;
   }
 
   var state = {
@@ -1150,8 +1173,10 @@
     }
     if (!els.bar) return;
     updateBarReserve(active);
+    var wasHidden = els.bar.hidden;
     els.bar.hidden = !active;
     els.bar.classList.toggle('is-visible', active);
+    if (active && wasHidden && els.bar.classList.contains('is-placed')) schedulePlacementBoundsRefresh();
     // Collapsed, the puck's speaker icon is the only playback feedback left.
     els.bar.classList.toggle('is-reading', isPlaying() || isWaiting());
     if (!active) return;
@@ -1257,12 +1282,28 @@
   var POS_KEY = 'tts:pos';
   var DRAG_SLOP = 4;
   var dragInertiaFrame = 0;
+  var placementBoundsFrame = 0;
+  var placementTransitionFrame = 0;
+  var placementBounds = null;
+  var placedPosition = null;
+  var playerResizeObserver = null;
 
   function stopDragInertia() {
-    if (!dragInertiaFrame) return;
-    window.cancelAnimationFrame(dragInertiaFrame);
+    if (dragInertiaFrame) window.cancelAnimationFrame(dragInertiaFrame);
     dragInertiaFrame = 0;
-    if (els.bar) els.bar.classList.remove('is-gliding');
+    if (els.bar) {
+      els.bar.classList.remove('is-gliding');
+      els.bar.style.removeProperty('transition');
+    }
+  }
+
+  function commitDragInertiaForReducedMotion() {
+    if (!els.bar || (!dragInertiaFrame && !els.bar.classList.contains('is-gliding'))) return;
+    stopDragInertia();
+    if (!els.bar.classList.contains('is-placed') || !placedPosition) return;
+    els.bar.style.transition = 'none';
+    place(placedPosition.x, placedPosition.y, true, placementBounds || refreshPlacementBounds());
+    restorePlacementTransition();
   }
 
   /** Collapsed, the bar is just the speaker puck — click it to expand. */
@@ -1278,7 +1319,7 @@
       els.collapse.setAttribute('aria-label', label);
       els.collapse.title = label + ' (drag to move)';
     }
-    clampToViewport();
+    schedulePlacementBoundsRefresh();
   }
 
   function savedPosition() {
@@ -1294,38 +1335,72 @@
   }
 
   /** Pin the bar at viewport coordinates, replacing the default anchoring. */
-  function place(x, y, persist) {
+  function enterPlacedMode() {
+    if (!els.bar || els.bar.classList.contains('is-placed')) return;
+    els.bar.classList.add('is-placed');
+    els.bar.style.left = '0px';
+    els.bar.style.top = '0px';
+  }
+
+  function place(x, y, persist, limits) {
     if (!els.bar) return;
-    var limits = positionLimits();
+    limits = limits || placementBounds || refreshPlacementBounds();
     var cx = Math.min(Math.max(limits.minX, x), limits.maxX);
     var cy = Math.min(Math.max(limits.minY, y), limits.maxY);
-    els.bar.classList.add('is-placed');
-    els.bar.style.left = cx + 'px';
-    els.bar.style.top = cy + 'px';
+    placedPosition = { x: cx, y: cy };
+    enterPlacedMode();
+    els.bar.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
     if (els.resetPosition) els.resetPosition.hidden = false;
     if (persist) lsSet(POS_KEY, JSON.stringify({ x: cx, y: cy }));
+    return placedPosition;
   }
 
   function resetPosition() {
     stopDragInertia();
     lsSet(POS_KEY, '');
+    placedPosition = null;
     if (!els.bar) return;
     els.bar.classList.remove('is-placed', 'is-gliding');
     els.bar.style.removeProperty('left');
     els.bar.style.removeProperty('top');
+    els.bar.style.removeProperty('transform');
+    els.bar.style.removeProperty('transition');
     if (els.resetPosition) els.resetPosition.hidden = true;
     updateBarReserve(isActive());
   }
 
-  function positionLimits() {
-    var w = els.bar ? els.bar.offsetWidth : 0;
-    var h = els.bar ? els.bar.offsetHeight : 0;
-    return {
+  function refreshPlacementBounds(rect) {
+    var measured = rect || (els.bar ? els.bar.getBoundingClientRect() : null);
+    var width = measured && measured.width ? measured.width : placementBounds ? placementBounds.width : 0;
+    var height = measured && measured.height ? measured.height : placementBounds ? placementBounds.height : 0;
+    placementBounds = {
       minX: 8,
       minY: 8,
-      maxX: Math.max(8, document.documentElement.clientWidth - w - 8),
-      maxY: Math.max(8, window.innerHeight - h - 8),
+      maxX: Math.max(8, document.documentElement.clientWidth - width - 8),
+      maxY: Math.max(8, window.innerHeight - height - 8),
+      width: width,
+      height: height,
     };
+    return placementBounds;
+  }
+
+  function schedulePlacementBoundsRefresh() {
+    if (placementBoundsFrame) return;
+    placementBoundsFrame = window.requestAnimationFrame(function () {
+      placementBoundsFrame = 0;
+      if (!els.bar) return;
+      if (els.bar.classList.contains('is-placed')) clampToViewport();
+      else refreshPlacementBounds();
+    });
+  }
+
+  function restorePlacementTransition() {
+    if (placementTransitionFrame) window.cancelAnimationFrame(placementTransitionFrame);
+    placementTransitionFrame = window.requestAnimationFrame(function () {
+      placementTransitionFrame = 0;
+      if (!els.bar || els.bar.classList.contains('is-dragging') || els.bar.classList.contains('is-gliding')) return;
+      els.bar.style.removeProperty('transition');
+    });
   }
 
   function resistEdge(value, min, max) {
@@ -1340,19 +1415,23 @@
     return value;
   }
 
-  function placeDuringDrag(x, y) {
+  function placeDuringDrag(x, y, limits) {
     if (!els.bar) return;
-    var limits = positionLimits();
-    els.bar.classList.add('is-placed');
-    els.bar.style.left = resistEdge(x, limits.minX, limits.maxX) + 'px';
-    els.bar.style.top = resistEdge(y, limits.minY, limits.maxY) + 'px';
+    var resistedX = resistEdge(x, limits.minX, limits.maxX);
+    var resistedY = resistEdge(y, limits.minY, limits.maxY);
+    enterPlacedMode();
+    els.bar.style.transform = 'translate3d(' + resistedX + 'px,' + resistedY + 'px,0)';
+    placedPosition = { x: resistedX, y: resistedY };
+    return placedPosition;
   }
 
   function clampToViewport() {
     if (!els.bar || !els.bar.classList.contains('is-placed')) return;
     stopDragInertia();
     var rect = els.bar.getBoundingClientRect();
-    place(rect.left, rect.top, false);
+    var limits = refreshPlacementBounds(rect);
+    var current = placedPosition || { x: rect.left, y: rect.top };
+    place(current.x, current.y, false, limits);
   }
 
   /**
@@ -1372,32 +1451,36 @@
     var lastTime = 0;
     var velocityX = 0;
     var velocityY = 0;
+    var currentX = 0;
+    var currentY = 0;
+    var dragLimits = null;
 
-    function beginInertia(initialVelocityX, initialVelocityY) {
+    function beginInertia(initialVelocityX, initialVelocityY, initialX, initialY, limits) {
       if (prefersReducedMotion()) {
-        var reducedRect = bar.getBoundingClientRect();
-        place(reducedRect.left, reducedRect.top, true);
+        bar.style.transition = 'none';
+        place(initialX, initialY, true, limits);
+        restorePlacementTransition();
         return;
       }
 
-      var rect = bar.getBoundingClientRect();
-      var x = rect.left;
-      var y = rect.top;
+      var x = initialX;
+      var y = initialY;
       var vx = initialVelocityX;
       var vy = initialVelocityY;
       var previous = performance.now();
       bar.classList.add('is-gliding');
+      bar.style.transition = 'none';
 
       function settle() {
         dragInertiaFrame = 0;
         bar.classList.remove('is-gliding');
-        place(x, y, true);
+        place(x, y, true, limits);
+        restorePlacementTransition();
       }
 
       function glide(now) {
         var elapsed = Math.min(32, Math.max(1, now - previous));
         previous = now;
-        var limits = positionLimits();
 
         x += vx * elapsed;
         y += vy * elapsed;
@@ -1414,7 +1497,7 @@
         var damping = Math.pow(0.9, elapsed / (1000 / 60));
         vx *= damping;
         vy *= damping;
-        place(x, y, false);
+        place(x, y, false, limits);
 
         if (Math.abs(vx) + Math.abs(vy) < 0.018) {
           settle();
@@ -1434,12 +1517,16 @@
       if (!state.collapsed && e.target.closest('select,input,option')) return;
       stopDragInertia();
       var rect = bar.getBoundingClientRect();
+      dragLimits = refreshPlacementBounds(rect);
       active = true;
       moved = false;
       startX = e.clientX;
       startY = e.clientY;
       originX = rect.left;
       originY = rect.top;
+      currentX = originX;
+      currentY = originY;
+      placedPosition = { x: originX, y: originY };
       lastX = e.clientX;
       lastY = e.clientY;
       lastTime = e.timeStamp || performance.now();
@@ -1467,7 +1554,9 @@
       lastX = e.clientX;
       lastY = e.clientY;
       lastTime = now;
-      placeDuringDrag(originX + dx, originY + dy);
+      var placement = placeDuringDrag(originX + dx, originY + dy, dragLimits);
+      currentX = placement.x;
+      currentY = placement.y;
     });
 
     var end = function (e) {
@@ -1482,11 +1571,12 @@
           // Capture may already be gone.
         }
       }
-      var rect = bar.getBoundingClientRect();
       if (e.type === 'pointerup' && Math.abs(velocityX) + Math.abs(velocityY) >= 0.06) {
-        beginInertia(velocityX, velocityY);
+        beginInertia(velocityX, velocityY, currentX, currentY, dragLimits);
       } else {
-        place(rect.left, rect.top, true);
+        bar.style.transition = 'none';
+        place(currentX, currentY, true, dragLimits);
+        restorePlacementTransition();
       }
       // Swallow the click a completed drag is about to produce. A cancelled
       // gesture emits no click, so arming the guard there would eat the next
@@ -1496,7 +1586,12 @@
 
     bar.addEventListener('pointerup', end);
     bar.addEventListener('pointercancel', end);
-    window.addEventListener('resize', clampToViewport);
+    window.addEventListener('resize', schedulePlacementBoundsRefresh);
+    window.addEventListener('orientationchange', schedulePlacementBoundsRefresh);
+    if (typeof ResizeObserver === 'function') {
+      playerResizeObserver = new ResizeObserver(schedulePlacementBoundsRefresh);
+      playerResizeObserver.observe(bar);
+    }
   }
 
   function buildBar() {
@@ -1729,6 +1824,7 @@
       return;
     }
     buildBar();
+    bindReducedMotionPreference();
     bindSelection();
     bindSectionStarts();
     bindNavigationResume();
@@ -1736,9 +1832,14 @@
 
     // Leftover utterances would keep talking over the next page; the resume
     // flag (not the audio) is what carries playback across the navigation.
-    window.addEventListener('pagehide', function () {
+    window.addEventListener('pagehide', function (event) {
       if (!state.navigationTarget) clearResumeTarget();
       cancelSpeech();
+      if (!event.persisted) disposeReducedMotionPreference();
+    });
+    window.addEventListener('pageshow', function () {
+      bindReducedMotionPreference();
+      if (prefersReducedMotion()) commitDragInertiaForReducedMotion();
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !e.defaultPrevented && isActive()) stop();

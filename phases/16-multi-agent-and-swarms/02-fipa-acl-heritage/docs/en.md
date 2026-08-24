@@ -107,7 +107,7 @@ The 2025 survey by Liu et al. ("A Survey of Agent Interoperability Protocols: MC
 - JSON-native payloads compatible with every modern tool.
 - Natural-language content that LLMs can interpret without a hand-coded ontology.
 - Web-stack transport (HTTP, SSE, WebSocket).
-- Capability discovery via self-describing documents (MCP `listTools`, A2A Agent Card).
+- Capability discovery via live MCP `server/discover` and A2A Agent Cards.
 
 Looser intent semantics for easier implementation. That is the exact trade.
 
@@ -207,5 +207,5 @@ Document these five questions for any new protocol before you ship it into produ
 - [Liu et al. — A Survey of Agent Interoperability Protocols: MCP, ACP, A2A, ANP](https://arxiv.org/html/2505.02279v1) — the canonical 2025 survey connecting modern specs to FIPA heritage
 - [FIPA ACL Message Structure Specification (fipa00037)](http://www.fipa.org/specs/fipa00037/) — the ratified 2000 envelope format
 - [FIPA Communicative Act Library Specification (fipa00037)](http://www.fipa.org/specs/fipa00037/) — the full performative catalog
-- [MCP specification 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25) — the modern tool-use equivalent of `request`/`query-ref`
+- [MCP specification 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28) — the current stateless tool-use equivalent of `request`/`query-ref`
 - [A2A specification](https://a2a-protocol.org/latest/specification/) — the modern agent-peer equivalent of contract-net and subscribe-notify

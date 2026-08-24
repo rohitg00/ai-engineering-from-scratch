@@ -373,8 +373,7 @@
   opacity: 0.62;
   transition:
     stroke var(--motion-feedback) ease,
-    opacity var(--motion-feedback) ease,
-    stroke-width var(--motion-feedback) ease;
+    opacity var(--motion-feedback) ease;
 }
 
 .roadmap-edge-arrow {
@@ -435,8 +434,7 @@
   shape-rendering: crispEdges;
   transition:
     fill var(--motion-feedback) ease,
-    stroke var(--motion-feedback) ease,
-    stroke-width var(--motion-feedback) ease;
+    stroke var(--motion-feedback) ease;
 }
 
 .roadmap-node-focus {
@@ -560,6 +558,10 @@
   border: 1px solid var(--rule);
   background: var(--bg-surface);
   box-shadow: 5px 5px 0 var(--rule-soft);
+}
+
+.roadmap-inspector-content {
+  transform-origin: top center;
 }
 
 .roadmap-inspector h2 {
@@ -841,17 +843,56 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .roadmap-stage-jump,
-  .roadmap-clear,
-  .roadmap-zoom-button,
-  .roadmap-edge,
-  .roadmap-edge-arrow,
-  .roadmap-node-surface,
-  .roadmap-node-card,
-  .roadmap-route-button,
-  .roadmap-action {
-    transition-duration: 0.01ms;
+  .roadmap-stage-jump {
+    transition:
+      background-color var(--motion-feedback) ease,
+      color var(--motion-feedback) ease;
   }
 
-  .roadmap-node:hover .roadmap-node-surface { transform: none; }
+  .roadmap-clear,
+  .roadmap-zoom-button,
+  .roadmap-route-button {
+    transition:
+      border-color var(--motion-feedback) ease,
+      color var(--motion-feedback) ease;
+  }
+
+  .roadmap-edge {
+    transition:
+      stroke var(--motion-feedback) ease,
+      opacity var(--motion-feedback) ease;
+  }
+
+  .roadmap-edge-arrow {
+    transition:
+      fill var(--motion-feedback) ease,
+      opacity var(--motion-feedback) ease;
+  }
+
+  .roadmap-node-surface {
+    transition: opacity var(--motion-feedback) ease;
+  }
+
+  .roadmap-node-card {
+    transition:
+      fill var(--motion-feedback) ease,
+      stroke var(--motion-feedback) ease;
+  }
+
+  .roadmap-action {
+    transition:
+      border-color var(--motion-feedback) ease,
+      color var(--motion-feedback) ease,
+      background-color var(--motion-feedback) ease;
+  }
+
+  .roadmap-inspector-content,
+  .roadmap-node:hover .roadmap-node-surface,
+  .roadmap-stage-jump:active,
+  .roadmap-clear:active,
+  .roadmap-zoom-button:active,
+  .roadmap-route-button:active,
+  .roadmap-action:active {
+    transform: none;
+  }
 }

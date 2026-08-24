@@ -1,0 +1,17 @@
+{
+  "triggerTerms": ["skill", "package", "bundle", "trigger", "portability", "evaluate", "release"],
+  "evaluationMode": "deterministic-fixture",
+  "threshold": 2,
+  "runs": 5,
+  "minimumPrecision": 0.8,
+  "minimumRecall": 0.8,
+  "minimumRepeatRate": 0.9,
+  "cases": [
+    {"id": "positive-package", "prompt": "evaluate this skill package before release", "expected": true},
+    {"id": "positive-trigger", "prompt": "measure skill trigger precision and recall", "expected": true},
+    {"id": "positive-portability", "prompt": "check bundle portability across hosts", "expected": true},
+    {"id": "near-release-notes", "prompt": "publish release notes", "expected": false},
+    {"id": "near-model-eval", "prompt": "evaluate model response quality", "expected": false},
+    {"id": "near-dependency", "prompt": "install package dependencies", "expected": false}
+  ]
+}

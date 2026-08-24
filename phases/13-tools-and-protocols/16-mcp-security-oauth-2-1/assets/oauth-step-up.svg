@@ -1,77 +1,79 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
     </marker>
     <style>
-      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
-      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
-      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
-      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
-      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
-      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .green { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .blue { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .orange { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 17px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+      .mono { font-size: 10.5px; font-family: Menlo, monospace; fill: #222; }
+      .small { font-size: 10.5px; fill: #333; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
-      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.4; fill: none; }
     </style>
   </defs>
 
-  <text x="480" y="26" text-anchor="middle" class="title">OAuth 2.1 + PKCE + step-up (SEP-835)</text>
+  <text x="480" y="28" text-anchor="middle" class="title">MCP authorization: issuer-bound enrollment and resource-bound tokens</text>
 
-  <rect x="40" y="60" width="180" height="460" class="cool"/>
-  <text x="130" y="82" text-anchor="middle" class="head">client</text>
-  <text x="56" y="108" class="small">Claude Desktop,</text>
-  <text x="56" y="124" class="small">Cursor, VS Code</text>
-  <text x="56" y="156" class="step">holds</text>
-  <text x="56" y="174" class="small">- access tokens</text>
-  <text x="56" y="190" class="small">  keyed by resource</text>
-  <text x="56" y="206" class="small">- refresh tokens</text>
-  <text x="56" y="222" class="small">- PKCE verifiers</text>
+  <rect x="30" y="58" width="230" height="445" rx="8" class="green"/>
+  <text x="145" y="84" text-anchor="middle" class="head">MCP client</text>
+  <text x="48" y="116" class="mono">issuer credentials[issuer]</text>
+  <text x="48" y="138" class="mono">tokens[issuer, resource]</text>
+  <text x="48" y="176" class="small">1. read protected-resource</text>
+  <text x="48" y="194" class="small">metadata and issuer metadata</text>
+  <text x="48" y="228" class="small">2. prefer CIMD HTTPS URL</text>
+  <text x="48" y="246" class="small">DCR only as compatibility</text>
+  <text x="48" y="280" class="small">3. PKCE S256 + resource</text>
+  <text x="48" y="298" class="small">in authorization and token</text>
+  <text x="48" y="332" class="small">4. validate response iss</text>
+  <text x="48" y="350" class="small">exactly before using code</text>
+  <text x="48" y="388" class="mono">POST /mcp per request</text>
+  <text x="48" y="408" class="small">Bearer + version + method</text>
+  <text x="48" y="426" class="small">+ name + params._meta</text>
+  <text x="48" y="462" class="mono">no Mcp-Session-Id</text>
 
-  <rect x="400" y="60" width="180" height="460" class="cold"/>
-  <text x="490" y="82" text-anchor="middle" class="head">authorization server</text>
-  <text x="416" y="108" class="small">Auth0 / Keycloak /</text>
-  <text x="416" y="124" class="small">Cognito / custom</text>
-  <text x="416" y="156" class="step">responsibilities</text>
-  <text x="416" y="174" class="small">- consent UI</text>
-  <text x="416" y="190" class="small">- issue tokens</text>
-  <text x="416" y="206" class="small">- PKCE check</text>
-  <text x="416" y="222" class="small">- audience-pin via</text>
-  <text x="416" y="238" class="small">  resource indicator</text>
-  <text x="416" y="254" class="small">  (RFC 8707)</text>
+  <rect x="365" y="58" width="230" height="445" rx="8" class="blue"/>
+  <text x="480" y="84" text-anchor="middle" class="head">authorization server</text>
+  <text x="383" y="116" class="mono">issuer: exact URI</text>
+  <text x="383" y="154" class="small">CIMD: fetch client metadata</text>
+  <text x="383" y="174" class="small">client_id equals document URL</text>
+  <text x="383" y="208" class="small">DCR fallback validates</text>
+  <text x="383" y="228" class="small">application_type + redirects</text>
+  <text x="383" y="266" class="small">authorize: consent + PKCE</text>
+  <text x="383" y="286" class="small">response: code + iss</text>
+  <text x="383" y="324" class="small">token: issuer + audience</text>
+  <text x="383" y="344" class="small">+ subject + scopes + expiry</text>
+  <text x="383" y="382" class="small">CIMD URL is portable;</text>
+  <text x="383" y="402" class="small">minted credentials are not</text>
 
-  <rect x="760" y="60" width="180" height="460" class="hot"/>
-  <text x="850" y="82" text-anchor="middle" class="head">resource server</text>
-  <text x="776" y="108" class="small">MCP server</text>
-  <text x="776" y="124" class="small">e.g. notes.example</text>
-  <text x="776" y="156" class="step">responsibilities</text>
-  <text x="776" y="174" class="small">- validate aud</text>
-  <text x="776" y="190" class="small">- check scope</text>
-  <text x="776" y="206" class="small">- 403 on shortfall</text>
-  <text x="776" y="222" class="small">- WWW-Authenticate</text>
-  <text x="776" y="238" class="small">  with scope hint</text>
-  <text x="776" y="254" class="small">- publish .well-known/</text>
-  <text x="776" y="270" class="small">  oauth-protected-</text>
-  <text x="776" y="286" class="small">  resource (RFC 9728)</text>
+  <rect x="700" y="58" width="230" height="445" rx="8" class="orange"/>
+  <text x="815" y="84" text-anchor="middle" class="head">MCP resource server</text>
+  <text x="718" y="116" class="mono">RFC 9728 metadata</text>
+  <text x="718" y="136" class="small">well-known path keeps /mcp</text>
+  <text x="718" y="174" class="mono">validate every request</text>
+  <text x="718" y="194" class="small">issuer, audience, expiry</text>
+  <text x="718" y="212" class="small">scope, headers, params._meta</text>
+  <text x="718" y="250" class="small">401 invalid token or audience</text>
+  <text x="718" y="288" class="small">403 insufficient_scope</text>
+  <text x="718" y="308" class="small">scope challenge is current</text>
+  <text x="718" y="326" class="small">operation authority</text>
+  <text x="718" y="364" class="small">retry after consent uses</text>
+  <text x="718" y="384" class="small">a new MCP request id</text>
+  <text x="718" y="422" class="mono">resultType: complete</text>
 
-  <path d="M220,280 L400,280" class="edge" marker-end="url(#arrow)"/>
-  <text x="310" y="270" text-anchor="middle" class="small">authorize code_challenge</text>
-  <text x="310" y="298" text-anchor="middle" class="small">user consents</text>
+  <path d="M260,185 L365,185" class="edge" marker-end="url(#arrow)"/>
+  <text x="312" y="174" text-anchor="middle" class="mono">CIMD</text>
+  <path d="M365,310 L260,310" class="edge" marker-end="url(#arrow)"/>
+  <text x="312" y="299" text-anchor="middle" class="mono">code + iss</text>
+  <path d="M260,360 L365,360" class="edge" marker-end="url(#arrow)"/>
+  <text x="312" y="349" text-anchor="middle" class="mono">verifier</text>
+  <path d="M595,250 L700,250" class="edge" marker-end="url(#arrow)"/>
+  <text x="648" y="239" text-anchor="middle" class="mono">token aud</text>
+  <path d="M260,440 L700,440" class="edge" marker-end="url(#arrow)"/>
+  <text x="480" y="429" text-anchor="middle" class="mono">authorized stateless tool call</text>
 
-  <path d="M400,330 L220,330" class="edge" marker-end="url(#arrow)"/>
-  <text x="310" y="322" text-anchor="middle" class="small">code</text>
-
-  <path d="M220,360 L400,360" class="edge" marker-end="url(#arrow)"/>
-  <text x="310" y="352" text-anchor="middle" class="small">token grant + verifier + resource</text>
-
-  <path d="M400,400 L220,400" class="edge" marker-end="url(#arrow)"/>
-  <text x="310" y="392" text-anchor="middle" class="small">access token (aud, scopes)</text>
-
-  <path d="M220,440 L760,440" class="edge" marker-end="url(#arrow)"/>
-  <text x="490" y="432" text-anchor="middle" class="small">Authorization: Bearer ...</text>
-
-  <path d="M760,480 L220,480" class="edge" marker-end="url(#arrow)"/>
-  <text x="490" y="472" text-anchor="middle" class="small">403 insufficient_scope (SEP-835)</text>
-  <text x="490" y="498" text-anchor="middle" class="caption">client redirects user for larger scope, flow repeats, retries request</text>
+  <text x="480" y="542" text-anchor="middle" class="caption">Protocol metadata negotiates behavior. OAuth credentials authorize a principal. Keep the boundaries separate.</text>
 </svg>

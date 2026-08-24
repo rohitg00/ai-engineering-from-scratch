@@ -1,0 +1,78 @@
+{
+  "lesson": "11-mcp-sampling",
+  "title": "MCP Model Input: Sampling Migration and Stateless MRTR",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A new MCP server needs model inference. What is the default architecture under 2026-07-28?",
+      "options": [
+        "Integrate directly with a model provider",
+        "Send sampling/createMessage before every tool call",
+        "Store the client's model key in a protocol session",
+        "Open a permanent SSE stream for Sampling"
+      ],
+      "correct": 0,
+      "explanation": "Sampling is deprecated for new designs. Direct provider integration is the recommended default when a server needs model inference."
+    },
+    {
+      "stage": "check",
+      "question": "How does a 2026-07-28 server request compatibility Sampling during tools/call?",
+      "options": [
+        "It writes the prompt into server/discover",
+        "It places the prompt in an Mcp-Session-Id header",
+        "It returns resultType input_required with sampling/createMessage in inputRequests",
+        "It sends a reverse JSON-RPC request on the same connection"
+      ],
+      "correct": 2,
+      "explanation": "MRTR carries server-to-client requests inside an input_required result, avoiding a reverse request channel. The advertised summarize_repo tool must first be available through deterministic tools/list with a valid inputSchema."
+    },
+    {
+      "stage": "check",
+      "question": "Which property proves an MRTR retry is an independent JSON-RPC request?",
+      "options": [
+        "It omits per-request metadata",
+        "It uses the same id as the original request",
+        "It uses a fresh id while repeating the original method and arguments",
+        "It removes the original tool arguments"
+      ],
+      "correct": 2,
+      "explanation": "The client repeats the original operation with a new JSON-RPC id, current inputResponses, and the echoed requestState."
+    },
+    {
+      "stage": "check",
+      "question": "What must protect requestState when it affects resource access?",
+      "options": [
+        "HMAC or authenticated encryption bound to principal, request, and expiry",
+        "Base64 encoding alone",
+        "A clientInfo name",
+        "A long-lived transport session"
+      ],
+      "correct": 0,
+      "explanation": "requestState passes through an untrusted client. Integrity protection and binding prevent tampering and cross-request replay."
+    },
+    {
+      "stage": "post",
+      "question": "The client did not advertise Sampling in its per-request capabilities. What exact protocol response should the server use?",
+      "options": [
+        "Send the embedded sampling request anyway",
+        "Return -32021 with data.requiredCapabilities, or choose a non-Sampling path",
+        "Add the capability to the client's metadata",
+        "Assume capability from a previous request"
+      ],
+      "correct": 1,
+      "explanation": "A server must not emit an input request the client did not declare support for on the current request. The exact missing-capability code is -32021."
+    },
+    {
+      "stage": "post",
+      "question": "Which migration keeps a two-round compatibility loop stateless at the protocol layer?",
+      "options": [
+        "Carry only current-round inputResponses and signed phase state on each fresh retry",
+        "Store phase state under Mcp-Session-Id",
+        "Reuse the original request id until completion",
+        "Accumulate all model responses in a hidden session"
+      ],
+      "correct": 0,
+      "explanation": "Each retry is self-contained. Signed requestState carries validated intermediate state, and inputResponses contains only the current round."
+    }
+  ]
+}

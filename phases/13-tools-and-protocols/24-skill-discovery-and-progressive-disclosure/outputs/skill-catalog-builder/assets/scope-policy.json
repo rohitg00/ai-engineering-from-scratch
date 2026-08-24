@@ -1,0 +1,8 @@
+{
+  "precedence": ["project", "user"],
+  "maxEntries": 40,
+  "maxDescriptionChars": 240,
+  "maxCatalogChars": 8000,
+  "equalPrecedenceCollision": "error",
+  "note": "This is an example host policy, not a portable Agent Skills rule."
+}

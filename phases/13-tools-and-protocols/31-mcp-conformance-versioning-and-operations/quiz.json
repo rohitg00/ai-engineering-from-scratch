@@ -1,0 +1,78 @@
+{
+  "lesson": "31-mcp-conformance-versioning-and-operations",
+  "title": "MCP Conformance Engineering: Versioning, Evidence, and Operations",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is one successful SDK tools/list call insufficient conformance evidence?",
+      "options": [
+        "The normalized value may hide wire fields, version behavior, proxy changes, and invalid responses",
+        "SDKs cannot call MCP tools",
+        "A successful call always selects the legacy era",
+        "Conformance applies only to Registry publishers"
+      ],
+      "correct": 0,
+      "explanation": "Conformance must inspect the raw request and response, selected version era, intermediaries, and SDK transformation."
+    },
+    {
+      "stage": "check",
+      "question": "A modern probe returns JSON-RPC error -32021. What should a fallback-capable client do?",
+      "options": [
+        "Immediately send initialize for the legacy era",
+        "Treat the peer as offline",
+        "Keep the modern era and correct or report the missing capability declaration",
+        "Ignore the error and retry without capabilities"
+      ],
+      "correct": 2,
+      "explanation": "A recognized modern error proves modern behavior. It is correction evidence, not permission to downgrade."
+    },
+    {
+      "stage": "check",
+      "question": "How should a modern client handle a result with resultType complete and an unfamiliar additive field?",
+      "options": [
+        "Change resultType to input_required",
+        "Reject every result containing an unknown key",
+        "Accept the known result type and preserve or deliberately ignore the additive field according to its role",
+        "Treat the unfamiliar field as a legacy handshake"
+      ],
+      "correct": 2,
+      "explanation": "Additive fields support forward compatibility. They are different from an unknown lifecycle discriminator."
+    },
+    {
+      "stage": "check",
+      "question": "What is the required JSON-RPC response to a notification with no id?",
+      "options": [
+        "A server/discover result",
+        "No JSON-RPC response",
+        "A complete result with null content",
+        "An error with id null"
+      ],
+      "correct": 1,
+      "explanation": "Notifications are one-way. The final transport serializer must not emit a JSON-RPC success or error."
+    },
+    {
+      "stage": "post",
+      "question": "Which evidence best proves that a proxy preserved an origin protocol error?",
+      "options": [
+        "Redacted ingress, origin, and egress status and body evidence with stable digests",
+        "A screenshot of the gateway dashboard",
+        "The SDK exception class alone",
+        "The proxy process uptime"
+      ],
+      "correct": 0,
+      "explanation": "Three-boundary evidence reveals status collapse, body rewriting, and the exact hop where behavior changed."
+    },
+    {
+      "stage": "post",
+      "question": "A candidate fails its negative transcripts and the previous version has no admission or health evidence. What should the release gate do?",
+      "options": [
+        "Select the newest Registry version",
+        "Promote because golden transcripts passed",
+        "Roll back to the package tagged latest",
+        "Hold the release until an eligible rollback target or a corrected candidate is proven"
+      ],
+      "correct": 3,
+      "explanation": "A rollback without exact admission and health evidence is another unverified release, so the safe action is to hold."
+    }
+  ]
+}

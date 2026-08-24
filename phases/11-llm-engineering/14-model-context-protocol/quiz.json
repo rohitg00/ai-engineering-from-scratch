@@ -3,64 +3,76 @@
   "title": "Model Context Protocol",
   "questions": [
     {
-      "stage": "post",
-      "question": "What three primitives does an MCP server expose?",
+      "stage": "pre",
+      "question": "In MCP 2026-07-28, where does a client send its protocol version and capabilities?",
       "options": [
-        "Agents, skills, workflows",
-        "Endpoints, webhooks, queues",
-        "Functions, types, classes",
-        "Tools, resources, prompts"
-      ],
-      "correct": 3,
-      "explanation": ""
-    },
-    {
-      "stage": "post",
-      "question": "What wire format does MCP use?",
-      "options": [
-        "gRPC with protobuf",
-        "JSON-RPC 2.0",
-        "REST with OpenAPI",
-        "GraphQL over HTTP"
-      ],
-      "correct": 1,
-      "explanation": ""
-    },
-    {
-      "stage": "post",
-      "question": "Which metadata field signals a tool mutates state and should require human approval?",
-      "options": [
-        "destructiveHint: true",
-        "readonly: false",
-        "mutating: true",
-        "requiresAuth: true"
-      ],
-      "correct": 0,
-      "explanation": ""
-    },
-    {
-      "stage": "post",
-      "question": "What is the 2025-06-18 transport that replaced the earlier SSE-only remote transport?",
-      "options": [
-        "gRPC bidi",
-        "WebSocket-only",
-        "Streamable HTTP",
-        "WebTransport"
+        "Only in the HTTP cookie",
+        "Only in an initialize request",
+        "In params._meta on every request",
+        "In a server-side session record"
       ],
       "correct": 2,
-      "explanation": ""
+      "explanation": "Modern MCP is stateless. Each request carries the protocol version and client capabilities in params._meta."
+    },
+    {
+      "stage": "check",
+      "question": "What must every modern MCP server implement for up-front version and capability discovery?",
+      "options": [
+        "server/discover",
+        "sessions/create",
+        "logging/setLevel",
+        "initialize"
+      ],
+      "correct": 0,
+      "explanation": "server/discover advertises supported versions, server capabilities, and server identity."
+    },
+    {
+      "stage": "check",
+      "question": "Which Streamable HTTP shape is current in MCP 2026-07-28?",
+      "options": [
+        "A DELETE request after every tool call",
+        "A WebSocket session identified by Mcp-Session-Id",
+        "One POST per JSON-RPC message; request POSTs receive JSON or request-scoped SSE",
+        "A GET stream plus a separate POST endpoint"
+      ],
+      "correct": 2,
+      "explanation": "The current transport has one POST endpoint. Request POSTs receive JSON or request-scoped SSE; an accepted notification POST receives HTTP 202 with no body."
+    },
+    {
+      "stage": "check",
+      "question": "How should a server distinguish missing protocol-version metadata from a well-formed but unsupported version?",
+      "options": [
+        "Return -32022 for both cases",
+        "Return HTTP 301 for a missing version and mint Mcp-Session-Id for an unsupported version",
+        "Return -32602 for missing or non-string metadata and -32022 with supported/requested for an unsupported string",
+        "Accept a missing version and return -32601 for an unsupported version"
+      ],
+      "correct": 2,
+      "explanation": "A missing or ill-typed required field is malformed JSON-RPC params. UnsupportedProtocolVersionError applies only when a supplied version string is not implemented."
     },
     {
       "stage": "post",
-      "question": "When should a tool be split into its own MCP server instead of staying inline?",
+      "question": "A multi-step tool needs continuity across calls. What is the modern MCP design?",
       "options": [
-        "When it is called from two or more hosts and is read-only/cacheable",
-        "Never; MCP is only for local dev",
-        "When it is called fewer than 10 times per day",
-        "When it returns more than 1KB of data"
+        "Put mutable state in clientInfo",
+        "Restore Mcp-Session-Id for this tool only",
+        "Mint an opaque handle and require it as a later tool argument",
+        "Store state behind the TCP connection"
       ],
-      "correct": 0,
-      "explanation": ""
+      "correct": 2,
+      "explanation": "Cross-call state is explicit application state. A server-minted handle travels as an ordinary, authorized argument."
+    },
+    {
+      "stage": "post",
+      "question": "How does a modern server ask for user, model, or root input during a tool operation?",
+      "options": [
+        "It writes the question to stderr",
+        "It opens a second SSE connection",
+        "It returns input_required and the client retries with inputResponses",
+        "It sends an independent server-to-client JSON-RPC request"
+      ],
+      "correct": 2,
+      "explanation": "The Multi Round-Trip Requests pattern embeds inputRequests in an input_required result and retries the original operation."
     }
   ]
 }

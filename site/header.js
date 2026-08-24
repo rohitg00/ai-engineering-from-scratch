@@ -8,8 +8,9 @@
   var REPO = 'rohitg00/ai-engineering-from-scratch';
   var CACHE_KEY = 'gh:stars:' + REPO;
   var CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
-  var COMPACT_HEADER_QUERY = '(max-width: 1100px)';
-  var NARRATION_VERSION = '20260809a';
+  var COMPACT_HEADER_QUERY = '(max-width: 1240px)';
+  var NARROW_HEADER_QUERY = '(max-width: 820px)';
+  var NARRATION_VERSION = '20260822a';
   var navId = 0;
 
   function format(n) {
@@ -25,6 +26,10 @@
     for (var i = 0; i < els.length; i++) {
       els[i].textContent = format(n);
       els[i].removeAttribute('data-loading');
+    }
+    var links = document.querySelectorAll('.header-github');
+    for (var j = 0; j < links.length; j++) {
+      links[j].setAttribute('aria-label', 'View ai-engineering-from-scratch on GitHub, ' + format(n) + ' stars');
     }
   }
 
@@ -170,6 +175,30 @@
       + '<span></span><span></span><span></span></span>';
     inner.insertBefore(toggle, nav);
 
+    var priorityNav = document.createElement('nav');
+    priorityNav.className = 'header-priority-nav';
+    priorityNav.setAttribute('aria-label', 'Quick links');
+    priorityNav.hidden = true;
+    inner.insertBefore(priorityNav, nav);
+
+    var priorityEntries = [];
+    var routeLinks = Array.prototype.filter.call(nav.children, function (child) {
+      return child.tagName === 'A';
+    });
+    routeLinks.forEach(function (link) {
+      var label = link.textContent.trim().toLowerCase();
+      if (label !== 'contents' && label !== 'catalog') return;
+      var marker = document.createComment('header-priority-' + label);
+      nav.insertBefore(marker, link);
+      priorityEntries.push({ link: link, marker: marker });
+    });
+
+    var github = nav.querySelector('.header-github');
+    if (github) {
+      github.setAttribute('data-header-persistent', 'true');
+      inner.insertBefore(github, nav.nextSibling);
+    }
+
     var tools = document.createElement('div');
     tools.className = 'header-mobile-tools';
     tools.setAttribute('role', 'group');
@@ -178,23 +207,55 @@
 
     var toolAnchor = document.createComment('header-tools');
     var directChildren = Array.prototype.slice.call(inner.children);
-    var firstTool = directChildren.find(function (child) {
-      return child !== logo && child !== nav && child !== toggle;
+    var search = directChildren.find(function (child) {
+      return child.classList && child.classList.contains('search-toggle');
     });
-    inner.insertBefore(toolAnchor, firstTool || null);
+    var firstTool = directChildren.find(function (child) {
+      return child !== logo && child !== nav && child !== toggle && child !== priorityNav && child !== github && child !== search;
+    });
+    inner.insertBefore(toolAnchor, search ? search.nextSibling : (firstTool || null));
 
     var compact = window.matchMedia ? window.matchMedia(COMPACT_HEADER_QUERY) : null;
+    var narrow = window.matchMedia ? window.matchMedia(NARROW_HEADER_QUERY) : null;
     var open = false;
+
+    function isMovableTool(child) {
+      return child !== logo && child !== nav && child !== toggle && child !== priorityNav && child !== github && child !== search;
+    }
+
+    function appendTool(child) {
+      var theme = tools.querySelector('.theme-toggle:not(.tts-toggle)');
+      if (child.classList && child.classList.contains('tts-toggle') && theme) {
+        tools.insertBefore(child, theme);
+      } else {
+        tools.appendChild(child);
+      }
+    }
 
     function moveToolsIntoMenu() {
       var children = Array.prototype.slice.call(inner.children);
       children.forEach(function (child) {
-        if (child !== logo && child !== nav && child !== toggle) tools.appendChild(child);
+        if (isMovableTool(child)) appendTool(child);
       });
     }
 
     function restoreDesktopTools() {
       while (tools.firstChild) inner.insertBefore(tools.firstChild, toolAnchor);
+    }
+
+    function movePriorityLinksOut() {
+      for (var i = 0; i < priorityEntries.length; i++) {
+        priorityNav.appendChild(priorityEntries[i].link);
+      }
+      priorityNav.hidden = priorityEntries.length === 0;
+    }
+
+    function restorePriorityLinks() {
+      for (var i = 0; i < priorityEntries.length; i++) {
+        var entry = priorityEntries[i];
+        nav.insertBefore(entry.link, entry.marker.nextSibling);
+      }
+      priorityNav.hidden = true;
     }
 
     function setOpen(next, restoreFocus) {
@@ -209,10 +270,16 @@
 
     function syncLayout() {
       var isCompact = compact ? compact.matches : false;
+      var isNarrow = narrow ? narrow.matches : false;
+      var menuHadFocus = nav.contains(document.activeElement);
+      var priorityHadFocus = priorityNav.contains(document.activeElement);
       if (isCompact) {
+        if (isNarrow) restorePriorityLinks();
+        else movePriorityLinksOut();
         moveToolsIntoMenu();
-        setOpen(false, false);
+        setOpen(false, menuHadFocus || (isNarrow && priorityHadFocus));
       } else {
+        restorePriorityLinks();
         setOpen(false, false);
         restoreDesktopTools();
         nav.hidden = false;
@@ -243,6 +310,23 @@
     if (compact) {
       if (typeof compact.addEventListener === 'function') compact.addEventListener('change', syncLayout);
       else if (typeof compact.addListener === 'function') compact.addListener(syncLayout);
+    }
+    if (narrow) {
+      if (typeof narrow.addEventListener === 'function') narrow.addEventListener('change', syncLayout);
+      else if (typeof narrow.addListener === 'function') narrow.addListener(syncLayout);
+    }
+
+    if (typeof MutationObserver === 'function') {
+      var observer = new MutationObserver(function (mutations) {
+        if (!compact || !compact.matches) return;
+        for (var i = 0; i < mutations.length; i++) {
+          var added = mutations[i].addedNodes;
+          for (var j = 0; j < added.length; j++) {
+            if (added[j].nodeType === 1 && isMovableTool(added[j])) appendTool(added[j]);
+          }
+        }
+      });
+      observer.observe(inner, { childList: true });
     }
     syncLayout();
   }

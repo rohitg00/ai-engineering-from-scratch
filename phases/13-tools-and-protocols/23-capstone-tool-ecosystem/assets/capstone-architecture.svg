@@ -17,16 +17,16 @@
     </style>
   </defs>
 
-  <text x="490" y="26" text-anchor="middle" class="title">capstone: research and report ecosystem, every Phase 13 primitive</text>
+  <text x="490" y="26" text-anchor="middle" class="title">capstone: stateless research and report ecosystem</text>
 
   <rect x="40" y="60" width="160" height="440" class="cool"/>
   <text x="120" y="82" text-anchor="middle" class="head">client / host</text>
   <text x="56" y="108" class="small">Claude Desktop,</text>
   <text x="56" y="124" class="small">Cursor, VS Code</text>
-  <text x="56" y="148" class="step">loads:</text>
-  <text x="56" y="166" class="small">- AGENTS.md</text>
-  <text x="56" y="182" class="small">- SKILL.md</text>
-  <text x="56" y="198" class="small">  (run-research)</text>
+  <text x="56" y="148" class="step">per request:</text>
+  <text x="56" y="166" class="small">protocolVersion</text>
+  <text x="56" y="182" class="small">clientCapabilities</text>
+  <text x="56" y="198" class="small">clientInfo</text>
   <text x="56" y="230" class="step">renders:</text>
   <text x="56" y="248" class="small">ui://report/current</text>
   <text x="56" y="264" class="small">(iframe sandbox)</text>
@@ -42,9 +42,9 @@
   <text x="296" y="148" class="step">RBAC:</text>
   <text x="296" y="166" class="small">research:read</text>
   <text x="296" y="182" class="small">research:write</text>
-  <text x="296" y="214" class="step">pinned-hash:</text>
-  <text x="296" y="232" class="small">SHA256 per tool</text>
-  <text x="296" y="248" class="small">reject mutations</text>
+  <text x="296" y="214" class="step">stateless route:</text>
+  <text x="296" y="232" class="small">Mcp-Method</text>
+  <text x="296" y="248" class="small">Mcp-Name</text>
   <text x="296" y="280" class="step">audit log</text>
   <text x="296" y="298" class="small">user, tool, decision</text>
   <text x="296" y="330" class="step">OTel: gen_ai.*</text>
@@ -56,20 +56,20 @@
 
   <rect x="560" y="60" width="220" height="440" class="hot"/>
   <text x="670" y="82" text-anchor="middle" class="head">research MCP server</text>
-  <text x="576" y="108" class="step">tools</text>
-  <text x="576" y="126" class="small">arxiv_search</text>
-  <text x="576" y="142" class="small">generate_report (task)</text>
+  <text x="576" y="108" class="step">server/discover</text>
+  <text x="576" y="126" class="small">2026-07-28</text>
+  <text x="576" y="142" class="small">tools + extensions</text>
   <text x="576" y="174" class="step">resources</text>
   <text x="576" y="192" class="small">notes://recent</text>
   <text x="576" y="224" class="step">prompts</text>
   <text x="576" y="242" class="small">/research_topic</text>
   <text x="576" y="274" class="step">ui://</text>
   <text x="576" y="292" class="small">ui://report/current</text>
-  <text x="576" y="324" class="step">tasks</text>
-  <text x="576" y="342" class="small">durable; crash safe</text>
+  <text x="576" y="324" class="step">tasks extension</text>
+  <text x="576" y="342" class="small">get / update / cancel</text>
   <text x="576" y="374" class="step">A2A call out:</text>
   <text x="576" y="392" class="small">writer-agent</text>
-  <text x="576" y="408" class="small">tasks/send summary</text>
+  <text x="576" y="408" class="small">SendMessage summary</text>
 
   <path d="M780,390 L860,390" class="edge" marker-end="url(#arrow)"/>
 
@@ -84,5 +84,5 @@
   <text x="876" y="232" class="small">Artifact</text>
   <text x="876" y="248" class="small">summary.md</text>
 
-  <text x="490" y="540" text-anchor="middle" class="caption">one trace id, spans across client -&gt; gateway -&gt; server -&gt; a2a; OTel GenAI everywhere.</text>
+  <text x="490" y="540" text-anchor="middle" class="caption">no protocol session: every request carries version and capabilities; traces cross each boundary.</text>
 </svg>

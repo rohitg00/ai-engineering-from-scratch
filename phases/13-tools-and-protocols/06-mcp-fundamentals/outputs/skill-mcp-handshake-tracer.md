@@ -1,29 +1,40 @@
 ---
-name: mcp-handshake-tracer
-description: Given a pcap-style transcript of an MCP client-server conversation, annotate every message with its primitive, lifecycle phase, and capability dependency.
-version: 1.0.0
+name: mcp-request-tracer
+description: Audit MCP transcripts message by message across modern stateless and explicit legacy protocol eras.
+version: 2.0.0
 phase: 13
 lesson: 06
-tags: [mcp, json-rpc, lifecycle, capabilities]
+tags: [mcp, json-rpc, stateless, metadata, compatibility]
 ---
 
-Given a sequence of JSON-RPC 2.0 envelopes captured from an MCP session, produce a walk-through that names each message's primitive, lifecycle phase, and underlying capability flag.
+Given a sequence of MCP JSON-RPC envelopes, audit each message independently against MCP `2026-07-28`. Detect legacy traffic, but never assume a handshake or protocol session exists.
 
 Produce:
 
-1. Per-message annotation. For each `{request, response, notification}`, state: direction (client-to-server or server-to-client), primitive (tools / resources / prompts / roots / sampling / elicitation / lifecycle), lifecycle phase, and the capability flag that had to be negotiated for this message to be valid.
-2. Capability check. Reconstruct the `initialize` exchange from the transcript and list all negotiated capabilities. Flag any message that would violate an absent capability.
-3. Error diagnostics. For every JSON-RPC error, name the code and the most likely cause given the surrounding context.
-4. Completeness audit. Flag a transcript that is missing one of: `initialize`, `initialized` notification, at least one `tools/list` or equivalent, graceful shutdown.
-5. Spec compliance. Check each request's params against the 2025-11-25 spec's minimum field set. Flag omissions.
+1. Message annotation. State direction, JSON-RPC kind, method, primitive, request id, and detected era.
+2. Modern metadata check. For every request, verify `params._meta.io.modelcontextprotocol/protocolVersion` and `params._meta.io.modelcontextprotocol/clientCapabilities`. Record whether recommended `clientInfo` is present.
+3. Result check. Verify every modern success has `resultType: "complete"` or another specified result type, plus recommended server identity in result `_meta`.
+4. Discovery and version check. Verify modern servers implement `server/discover`. Interpret `-32022` as modern evidence and check `data.requested` plus `data.supported`.
+5. Cache check. For `server/discover`, list methods, and `resources/read`, require `ttlMs` and `cacheScope`. Flag nondeterministic list ordering.
+6. Direction check. Reject server-initiated JSON-RPC requests in modern traffic. Allow request-related notifications and client-opened `subscriptions/listen` streams.
+7. Compatibility check. Label `initialize` and `notifications/initialized` as legacy only. Do not require them in modern traffic.
 
 Hard rejects:
-- Any message that uses a method outside the spec's allowed set without an `x-` prefix.
-- Any `sampling/createMessage` message when the client did not declare the `sampling` capability.
-- Any invocation before `notifications/initialized` arrived.
+
+- Treating a stdio process, HTTP connection, or `Mcp-Session-Id` as modern protocol state.
+- Inferring client capabilities from an earlier request.
+- Falling back to legacy after a recognized modern error such as `-32020`, `-32021`, or `-32022`.
+- Accepting a modern success without `resultType`.
 
 Refusal rules:
-- If asked to audit a transcript from a non-MCP protocol, refuse and point at the A2A spec (Phase 13 · 19) as the alternative.
-- If asked to "fix" the transcript, refuse. This skill annotates; it does not rewrite. Route corrections through the implementing SDK.
 
-Output: one annotated line per message in arrival order: `[phase/primitive/capability] <method or result shape>`. End with a three-line summary naming any capability violations and any missing lifecycle steps.
+- If the transcript is not JSON-RPC 2.0, stop and identify the incompatible envelope.
+- If asked to silently rewrite evidence, refuse. Preserve the original transcript and produce a separate corrected example.
+
+Output one line per message in arrival order:
+
+```text
+[request/modern/tools] id=7 tools/list metadata=valid
+```
+
+End with counts for modern, legacy, invalid, and ambiguous messages, followed by the first corrective action.

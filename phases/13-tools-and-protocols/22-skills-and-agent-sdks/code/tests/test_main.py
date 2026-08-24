@@ -1,183 +1,296 @@
+"""Deterministic tests for the Lesson 22 skill contract lab."""
+
 from __future__ import annotations
 
+import importlib.util
+import json
+import sys
+import tempfile
 import unittest
-from contextlib import redirect_stdout
-from io import StringIO
 from pathlib import Path
-from tempfile import TemporaryDirectory
+
+
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from main import (
-    RELEASE_NOTES_SKILL,
-    Skill,
-    agent_run,
-    discover_skills,
-    load_skill,
+    TaskShape,
+    build_xquik_search_plan,
     parse_frontmatter,
-    read_subresource,
-    setup_fixtures,
+    select_primitives,
+    validate_skill_text,
 )
 
 
+def skill_text(name: str = "release-check", description: str = "Check a release.") -> str:
+    return f"""---
+name: {name}
+description: {description}
+---
+
+# Release check
+
+Verify the version and produce a report.
+"""
+
+
 class FrontmatterTests(unittest.TestCase):
-    def test_parse_frontmatter_returns_metadata_and_body(self) -> None:
-        """Split valid metadata from its Markdown body."""
+    def test_parses_folded_description_and_metadata(self) -> None:
+        text = """---
+name: release-check
+description: >
+  Check a release when a maintainer
+  asks for a readiness report.
+metadata:
+  owner: platform
+---
+# Instructions
+Run read-only checks.
+"""
+        fields, body = parse_frontmatter(text)
+        self.assertEqual(
+            fields["description"],
+            "Check a release when a maintainer asks for a readiness report.",
+        )
+        self.assertEqual(fields["metadata"], {"owner": "platform"})
+        self.assertIn("Run read-only checks", body)
 
-        frontmatter, body = parse_frontmatter(RELEASE_NOTES_SKILL)
+    def test_rejects_duplicate_fields(self) -> None:
+        text = """---
+name: release-check
+name: second-name
+description: Check a release.
+---
+Body
+"""
+        report = validate_skill_text(text, "release-check")
+        self.assertEqual(report.issues[0].code, "frontmatter-syntax")
 
-        self.assertEqual(frontmatter["name"], "release-notes-writer")
-        self.assertIn("# Release notes writer", body)
-
-    def test_parse_frontmatter_preserves_plain_markdown(self) -> None:
-        """Keep Markdown without frontmatter unchanged."""
-
-        text = "# Plain instructions\n"
-
-        self.assertEqual(parse_frontmatter(text), ({}, text))
+    def test_rejects_malformed_top_level_line(self) -> None:
+        text = skill_text().replace(
+            "description: Check a release.",
+            "this is not yaml\ndescription: Check a release.",
+        )
+        report = validate_skill_text(text, "release-check")
+        self.assertEqual(report.issues[0].code, "frontmatter-syntax")
 
 
-class DiscoveryTests(unittest.TestCase):
-    def test_discover_skills_loads_valid_fixtures(self) -> None:
-        """Load every valid direct child fixture."""
+class ValidationTests(unittest.TestCase):
+    def test_accepts_valid_core_skill(self) -> None:
+        report = validate_skill_text(skill_text(), "release-check")
+        self.assertTrue(report.valid)
+        self.assertEqual(report.runtime_extensions, ())
 
-        with TemporaryDirectory() as directory:
-            root = Path(directory)
-            setup_fixtures(root)
+    def test_rejects_non_kebab_name(self) -> None:
+        report = validate_skill_text(skill_text("Release_Check"), "Release_Check")
+        self.assertIn("name-format", {issue.code for issue in report.issues})
 
-            skills = discover_skills(root)
+    def test_rejects_directory_mismatch(self) -> None:
+        report = validate_skill_text(skill_text(), "different-directory")
+        self.assertIn("directory-mismatch", {issue.code for issue in report.issues})
 
-        self.assertEqual(set(skills), {"pr-reviewer", "release-notes-writer"})
+    def test_requires_description(self) -> None:
+        report = validate_skill_text(skill_text(description=""), "release-check")
+        self.assertIn("description-required", {issue.code for issue in report.issues})
 
-    def test_discover_skills_returns_empty_for_missing_root(self) -> None:
-        """Return an empty registry for a missing root."""
+    def test_host_extension_requires_explicit_policy(self) -> None:
+        text = skill_text().replace("description:", "user-invocable: false\ndescription:")
+        portable = validate_skill_text(text, "release-check")
+        adapted = validate_skill_text(
+            text, "release-check", allowed_runtime_extensions={"user-invocable"}
+        )
+        self.assertFalse(portable.valid)
+        self.assertTrue(adapted.valid)
+        self.assertEqual(adapted.runtime_extensions, ("user-invocable",))
 
-        with TemporaryDirectory() as directory:
-            root = Path(directory) / "missing"
+    def test_compatibility_enforces_normative_length(self) -> None:
+        valid = skill_text().replace(
+            "description:", f"compatibility: {'x' * 500}\ndescription:"
+        )
+        invalid = skill_text().replace(
+            "description:", f"compatibility: {'x' * 501}\ndescription:"
+        )
+        self.assertTrue(validate_skill_text(valid, "release-check").valid)
+        report = validate_skill_text(invalid, "release-check")
+        self.assertIn("compatibility-too-long", {issue.code for issue in report.issues})
 
-            self.assertEqual(discover_skills(root), {})
+    def test_metadata_must_be_string_mapping(self) -> None:
+        text = skill_text().replace("description:", "metadata: owner\ndescription:")
+        report = validate_skill_text(text, "release-check")
+        self.assertIn("metadata-shape", {issue.code for issue in report.issues})
 
-    def test_load_skill_rejects_missing_name(self) -> None:
-        """Reject a manifest without its required name."""
+    def test_allowed_tools_must_be_non_empty_string(self) -> None:
+        text = skill_text().replace("description:", "allowed-tools:\ndescription:")
+        report = validate_skill_text(text, "release-check")
+        self.assertIn("allowed-tools-shape", {issue.code for issue in report.issues})
 
-        with TemporaryDirectory() as directory:
-            root = Path(directory)
-            (root / "SKILL.md").write_text(
-                "---\ndescription: Missing name\n---\nBody\n", encoding="utf-8"
-            )
-
-            self.assertIsNone(load_skill(root))
-
-    def test_load_skill_rejects_missing_description(self) -> None:
-        """Reject a manifest without its required description."""
-
-        with TemporaryDirectory() as directory:
-            root = Path(directory) / "missing-description"
-            root.mkdir()
-            (root / "SKILL.md").write_text(
-                "---\nname: missing-description\n---\nBody\n", encoding="utf-8"
-            )
-
-            self.assertIsNone(load_skill(root))
-
-    def test_load_skill_rejects_invalid_name(self) -> None:
-        """Reject a name outside the Agent Skills format."""
-
-        with TemporaryDirectory() as directory:
-            root = Path(directory) / "invalid_name"
-            root.mkdir()
-            (root / "SKILL.md").write_text(
-                "---\nname: invalid_name\ndescription: Invalid name\n---\nBody\n",
+    def test_bundled_checker_parses_folded_description(self) -> None:
+        script_path = (
+            Path(__file__).resolve().parents[2]
+            / "outputs"
+            / "skill-contract-reviewer"
+            / "scripts"
+            / "check_skill.py"
+        )
+        spec = importlib.util.spec_from_file_location("bundled_checker", script_path)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            bundle = Path(temp_dir) / "folded-skill"
+            bundle.mkdir()
+            (bundle / "SKILL.md").write_text(
+                """---
+name: folded-skill
+description: >
+  Review a package when release
+  evidence is required.
+---
+Body
+""",
                 encoding="utf-8",
             )
+            result = module.validate(bundle)
+        self.assertTrue(result["valid"])
+        self.assertEqual(
+            result["description"],
+            "Review a package when release evidence is required.",
+        )
 
-            self.assertIsNone(load_skill(root))
-
-    def test_load_skill_rejects_directory_name_mismatch(self) -> None:
-        """Reject a name that differs from its directory."""
-
-        with TemporaryDirectory() as directory:
-            root = Path(directory) / "directory-name"
-            root.mkdir()
-            (root / "SKILL.md").write_text(
-                "---\nname: manifest-name\ndescription: Mismatch\n---\nBody\n",
+    def test_bundled_checker_validates_optional_core_fields(self) -> None:
+        script_path = (
+            Path(__file__).resolve().parents[2]
+            / "outputs"
+            / "skill-contract-reviewer"
+            / "scripts"
+            / "check_skill.py"
+        )
+        spec = importlib.util.spec_from_file_location("bundled_optional_checker", script_path)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            bundle = Path(temp_dir) / "optional-fields"
+            bundle.mkdir()
+            (bundle / "SKILL.md").write_text(
+                """---
+name: optional-fields
+description: Validate optional fields when reviewing a package.
+compatibility: Requires Python 3.13.
+metadata:
+  owner: platform
+allowed-tools: Read
+---
+Body
+""",
                 encoding="utf-8",
             )
+            result = module.validate(bundle)
+        self.assertTrue(result["valid"])
 
-            self.assertIsNone(load_skill(root))
+    def test_bundled_checker_rejects_malformed_top_level_line(self) -> None:
+        script_path = (
+            Path(__file__).resolve().parents[2]
+            / "outputs"
+            / "skill-contract-reviewer"
+            / "scripts"
+            / "check_skill.py"
+        )
+        spec = importlib.util.spec_from_file_location("bundled_strict_checker", script_path)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            bundle = Path(temp_dir) / "strict-skill"
+            bundle.mkdir()
+            (bundle / "SKILL.md").write_text(
+                """---
+name: strict-skill
+this is not yaml
+description: Reject malformed frontmatter.
+---
+Body
+""",
+                encoding="utf-8",
+            )
+            result = module.validate(bundle)
+        self.assertFalse(result["valid"])
+        self.assertIn(
+            "frontmatter-syntax", {error["code"] for error in result["errors"]}
+        )
 
-    def test_discovery_skips_invalid_utf8_without_hiding_siblings(self) -> None:
-        """Skip invalid UTF-8 while retaining valid siblings."""
 
-        with TemporaryDirectory() as directory:
-            root = Path(directory)
-            setup_fixtures(root)
-            invalid = root / "invalid-encoding"
-            invalid.mkdir()
-            (invalid / "SKILL.md").write_bytes(b"\xff\xfe")
+class DecisionModelTests(unittest.TestCase):
+    def test_one_off_task_stays_a_prompt(self) -> None:
+        self.assertEqual(select_primitives(TaskShape()), ("prompt",))
 
-            skills = discover_skills(root)
+    def test_repo_method_and_capability_compose(self) -> None:
+        shape = TaskShape(
+            repeatable_method=True,
+            repository_default=True,
+            external_capability=True,
+        )
+        self.assertEqual(
+            select_primitives(shape), ("AGENTS.md", "Agent Skill", "MCP tool")
+        )
 
-        self.assertEqual(set(skills), {"pr-reviewer", "release-notes-writer"})
+    def test_lifecycle_event_selects_hook(self) -> None:
+        self.assertEqual(
+            select_primitives(TaskShape(lifecycle_event=True)), ("hook",)
+        )
 
+    def test_deterministic_transformation_selects_ordinary_code(self) -> None:
+        self.assertEqual(
+            select_primitives(TaskShape(deterministic_logic=True)), ("ordinary code",)
+        )
 
-class SubresourceTests(unittest.TestCase):
-    def test_read_subresource_reads_file_inside_skill_root(self) -> None:
-        """Read a file contained by the Skill root."""
+    def test_isolated_context_selects_subagent(self) -> None:
+        self.assertEqual(
+            select_primitives(TaskShape(isolated_delegation=True)), ("subagent",)
+        )
 
-        with TemporaryDirectory() as directory:
-            root = Path(directory)
-            reference = root / "reference.md"
-            reference.write_text("bounded", encoding="utf-8")
-            skill = Skill("example", "", "", root)
+    def test_xquik_search_composes_a_skill_and_mcp_tool(self) -> None:
+        plan = build_xquik_search_plan("  agent skills  ", 10)
+        self.assertEqual(plan["skill"], "x-twitter-scraper")
+        self.assertEqual(plan["mcp_server"], "https://xquik.com/mcp")
+        self.assertEqual(plan["tool"], "xquik")
+        self.assertEqual(plan["path"], "/api/v1/x/tweets/search")
+        self.assertEqual(
+            plan["options"]["query"],
+            {"q": "agent skills", "queryType": "Latest", "limit": 10},
+        )
+        self.assertEqual(
+            select_primitives(
+                TaskShape(repeatable_method=True, external_capability=True)
+            ),
+            ("Agent Skill", "MCP tool"),
+        )
 
-            self.assertEqual(read_subresource(skill, "reference.md"), "bounded")
+    def test_xquik_search_rejects_unbounded_inputs(self) -> None:
+        for query, limit in (("", 10), ("agent skills", 0), ("agent skills", True)):
+            with self.subTest(query=query, limit=limit):
+                with self.assertRaises(ValueError):
+                    build_xquik_search_plan(query, limit)
 
-    def test_read_subresource_rejects_parent_traversal(self) -> None:
-        """Reject parent traversal beyond the Skill root."""
-
-        with TemporaryDirectory() as directory:
-            parent = Path(directory)
-            root = parent / "skill"
-            root.mkdir()
-            (parent / "outside.md").write_text("secret", encoding="utf-8")
-            skill = Skill("example", "", "", root)
-
-            result = read_subresource(skill, "../outside.md")
-
-        self.assertEqual(result, "(subresource outside skill root: ../outside.md)")
-
-    def test_read_subresource_rejects_symlink_escape(self) -> None:
-        """Reject symlinks that resolve outside the Skill root."""
-
-        with TemporaryDirectory() as directory:
-            parent = Path(directory)
-            root = parent / "skill"
-            root.mkdir()
-            outside = parent / "outside.txt"
-            outside.write_text("secret", encoding="utf-8")
-            link = root / "link.txt"
-            try:
-                link.symlink_to(outside)
-            except OSError as error:
-                self.skipTest(f"symlinks unavailable: {error}")
-            skill = Skill("example", "", "", root)
-
-            result = read_subresource(skill, "link.txt")
-
-        self.assertEqual(result, "(subresource outside skill root: link.txt)")
-
-    def test_agent_run_loads_referenced_style(self) -> None:
-        """Load the referenced style guide into the prompt."""
-
-        with TemporaryDirectory() as directory:
-            root = Path(directory)
-            setup_fixtures(root)
-            skill = discover_skills(root)["release-notes-writer"]
-
-            with redirect_stdout(StringIO()):
-                prompt = agent_run(skill, "draft notes")
-
-        self.assertIn("Additional style guide", prompt)
-        self.assertIn("User task: draft notes", prompt)
+    def test_xquik_fixture_matches_the_request_builder(self) -> None:
+        fixture_path = (
+            Path(__file__).resolve().parents[2]
+            / "outputs"
+            / "skill-contract-reviewer"
+            / "assets"
+            / "task-shapes.json"
+        )
+        fixtures = json.loads(fixture_path.read_text(encoding="utf-8"))
+        fixture = next(item for item in fixtures if "integration" in item)
+        integration = fixture["integration"]
+        plan = build_xquik_search_plan("agent skills", 10)
+        self.assertEqual(integration["skill"], plan["skill"])
+        self.assertEqual(integration["mcpServer"], plan["mcp_server"])
+        self.assertEqual(integration["tool"], plan["tool"])
+        self.assertEqual(integration["path"], plan["path"])
 
 
 if __name__ == "__main__":

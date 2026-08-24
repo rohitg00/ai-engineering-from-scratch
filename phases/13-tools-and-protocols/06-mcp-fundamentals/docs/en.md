@@ -1,115 +1,158 @@
-# MCP Fundamentals — Primitives, Lifecycle, JSON-RPC Base
+# MCP Fundamentals: Stateless Requests and JSON-RPC
 
-> Every integration before MCP was a one-off. The Model Context Protocol, first shipped by Anthropic in November 2024 and now stewarded by the Linux Foundation's Agentic AI Foundation, standardizes discovery and invocation so any client can speak to any server. The 2025-11-25 spec names six primitives (three server, three client), a three-phase lifecycle, and a JSON-RPC 2.0 wire format. Learn those and the rest of the MCP chapter of this phase becomes reading.
+> Modern MCP has no handshake and no protocol session. Each request must carry enough metadata to be understood, authorized, routed, and retried on its own.
 
 **Type:** Learn
-**Languages:** Python (stdlib, JSON-RPC parser)
-**Prerequisites:** Phase 13 · 01 through 05 (the tool interface and function calling)
-**Time:** ~45 minutes
+**Languages:** Python
+**Prerequisites:** Phase 13, Lessons 01 through 05
+**Time:** ~55 minutes
 
 ## Learning Objectives
 
-- Name all six MCP primitives (tools, resources, prompts on the server; roots, sampling, elicitation on the client) and give one use case each.
-- Walk through the three-phase lifecycle (initialize, operation, shutdown) and state who sends which message at each phase.
-- Parse and emit JSON-RPC 2.0 request, response, and notification envelopes.
-- Explain what capability negotiation at `initialize` is and what breaks without it.
+- Distinguish MCP's server primitives from its client-side features.
+- Build valid JSON-RPC 2.0 requests and responses for MCP `2026-07-28`.
+- Attach protocol version, client capabilities, and client identity to every request.
+- Use `server/discover` and handle `UnsupportedProtocolVersionError` without a handshake.
+- Trace one independent request from validation through a complete result.
 
 ## The Problem
 
-Before MCP, every tool-using agent had its own protocol. Cursor had an MCP-shaped but incompatible tool system. Claude Desktop shipped with a different one. VS Code's Copilot extension had a third. A team that built a "Postgres query" tool wrote the same tool three times, each to a different host's API. Reusing it required copying code.
+An MCP server can receive two consecutive requests from different clients, with different capabilities, on the same process or HTTP worker. If the server remembers what the previous request declared, it can apply the wrong permissions or return the wrong wire shape.
 
-The result was a Cambrian explosion of one-off integrations and a ceiling on ecosystem velocity.
+MCP `2026-07-28` removes that ambiguity. The protocol core is stateless. A server must decide how to handle the current request from the current request, not from connection history.
 
-MCP fixes this by standardizing the wire format. A single MCP server works in every MCP client: Claude Desktop, ChatGPT, Cursor, VS Code, Gemini, Goose, Zed, Windsurf, 300+ clients by April 2026. 110M monthly SDK downloads. 10,000+ public servers. The Linux Foundation took stewardship in December 2025 under the new Agentic AI Foundation.
+This changes the mental model. The old sequence was connection first, handshake second, operations third. The modern sequence is simpler:
 
-The spec revision used in this phase is **2025-11-25**. It adds async Tasks (SEP-1686), URL-mode elicitation (SEP-1036), sampling with tools (SEP-1577), incremental scope consent (SEP-835), and OAuth 2.1 resource-indicator semantics. Phase 13 · 09 through 16 cover those extensions. This lesson stops at the base.
+1. The client sends a self-describing request.
+2. The server validates that request's version and capabilities.
+3. The server handles the method.
+4. The server returns a typed result or a JSON-RPC error.
+
+The next request repeats the same process from scratch.
 
 ## The Concept
 
-### Three server primitives
+### Server primitives
 
-1. **Tools.** Callable actions. Same four-step loop from Phase 13 · 01.
-2. **Resources.** Exposed data. Read-only content addressable by URI: `file:///path`, `db://query/...`, custom schemes.
-3. **Prompts.** Reusable templates. Slash-commands in the host UI; server supplies the template, client fills arguments.
+MCP servers expose three primary primitives:
 
-### Three client primitives
+1. **Tools** are model-controlled actions, discovered with `tools/list` and invoked with `tools/call`.
+2. **Resources** are URI-addressed data, discovered with `resources/list` and retrieved with `resources/read`.
+3. **Prompts** are reusable templates, discovered with `prompts/list` and rendered with `prompts/get`.
 
-4. **Roots.** The set of URIs the server is allowed to touch. Client declares them; server respects them.
-5. **Sampling.** Server requests the client's model to perform a completion. Enables server-hosted agent loops without server-side API keys.
-6. **Elicitation.** Server asks the client's user for structured input mid-flight. Forms or URLs (SEP-1036).
+Roots, sampling, and logging remain in the `2026-07-28` schema for compatibility, but they are deprecated. New implementations should use explicit tool or resource inputs for roots, direct model-provider APIs for sampling, and stderr or OpenTelemetry for logging. Elicitation remains available through Multi Round-Trip Requests, where a server returns an input request and the client retries the original operation. A modern server never starts an independent JSON-RPC request.
 
-Every capability in MCP belongs to exactly one of these six. Phase 13 · 10 through 14 cover each in depth.
+### JSON-RPC envelopes
 
-### Wire format: JSON-RPC 2.0
+MCP uses JSON-RPC 2.0:
 
-Every message is a JSON object with these fields:
+- Request: `{jsonrpc, id, method, params}`
+- Response: `{jsonrpc, id, result}` or `{jsonrpc, id, error}`
+- Notification: `{jsonrpc, method, params}` with no `id`
 
-- Requests: `{jsonrpc: "2.0", id, method, params}`.
-- Responses: `{jsonrpc: "2.0", id, result | error}`.
-- Notifications: `{jsonrpc: "2.0", method, params}` — no `id`, no response expected.
+The request `id` correlates one response. It does not create a protocol session.
 
-The base spec has ~15 methods, grouped by primitive. The important ones:
+### Required request metadata
 
-- `initialize` / `initialized` (handshake)
-- `tools/list`, `tools/call`
-- `resources/list`, `resources/read`, `resources/subscribe`
-- `prompts/list`, `prompts/get`
-- `sampling/createMessage` (server-to-client)
-- `notifications/tools/list_changed`, `notifications/resources/updated`, `notifications/progress`
-
-### Three-phase lifecycle
-
-**Phase 1: initialize.**
-
-Client sends `initialize` with its `capabilities` and `clientInfo`. Server responds with its own `capabilities`, `serverInfo`, and the spec version it speaks. Client sends `notifications/initialized` when it has digested the response. From here on, either side can send requests per the negotiated capabilities.
-
-**Phase 2: operation.**
-
-Bidirectional. Client calls `tools/list` to discover, then `tools/call` to invoke. Server may send `sampling/createMessage` if it declared that capability. Server may send `notifications/tools/list_changed` when its tool set mutates. Client may send `notifications/roots/list_changed` when the user changes root scope.
-
-**Phase 3: shutdown.**
-
-Either side closes the transport. No structured shutdown method in MCP; the transport (stdio or Streamable HTTP, Phase 13 · 09) carries the end-of-connection signal.
-
-### Capability negotiation
-
-`capabilities` in the `initialize` handshake is the contract. Example from a server:
+Every modern request carries a `_meta` object inside `params`:
 
 ```json
 {
-  "tools": {"listChanged": true},
-  "resources": {"subscribe": true, "listChanged": true},
-  "prompts": {"listChanged": true}
+  "jsonrpc": "2.0",
+  "id": 7,
+  "method": "tools/list",
+  "params": {
+    "_meta": {
+      "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+      "io.modelcontextprotocol/clientCapabilities": {},
+      "io.modelcontextprotocol/clientInfo": {
+        "name": "course-client",
+        "version": "1.0.0"
+      }
+    }
+  }
 }
 ```
 
-The server declares it can emit `tools/list_changed` notifications and supports `resources/subscribe`. The client agrees by declaring its own:
+The protocol version and client capabilities are required. Client identity is recommended. It is self-reported display and debugging data, not a security credential.
+
+The server must not infer any of these values from an earlier request, a stdio process, an HTTP connection, or a transport header alone.
+
+### Complete results and server identity
+
+Every successful modern result includes `resultType`. A normal final result uses `"complete"`. Servers should also identify themselves in result metadata:
 
 ```json
 {
-  "roots": {"listChanged": true},
-  "sampling": {},
-  "elicitation": {}
+  "jsonrpc": "2.0",
+  "id": 7,
+  "result": {
+    "resultType": "complete",
+    "tools": [],
+    "ttlMs": 30000,
+    "cacheScope": "public",
+    "_meta": {
+      "io.modelcontextprotocol/serverInfo": {
+        "name": "notes-server",
+        "version": "1.0.0"
+      }
+    }
+  }
 }
 ```
 
-If the client does not declare `sampling`, the server must not call `sampling/createMessage`. Symmetric: if the server does not declare `resources.subscribe`, the client must not try to subscribe.
+`tools/list`, `resources/list`, `prompts/list`, `resources/templates/list`, `resources/read`, and `server/discover` are cacheable results. They include `ttlMs` and `cacheScope`. A safe default is `ttlMs: 0` and `cacheScope: "private"`. List items should have deterministic ordering so equivalent responses produce stable cache keys and stable model context.
 
-This is what prevents ecosystem drift. A client that does not support sampling is still a valid MCP client; a server that does not call `sampling` is still a valid MCP server. They just do not use that feature together.
+### Discovery without a handshake
 
-### Structured content and error shapes
+Every modern server must implement `server/discover`. The client may call it before another method to retrieve:
 
-`tools/call` returns a `content` array of typed blocks: `text`, `image`, `resource`. Phase 13 · 14 adds MCP Apps (`ui://` interactive UI) to that list.
+- `supportedVersions`
+- server `capabilities`
+- optional usage `instructions`
+- server identity in result `_meta`
+- cache hints
 
-Errors use JSON-RPC error codes. The spec-defined additions: `-32002` "Resource not found", `-32603` "Internal error", plus MCP-specific error data as `error.data`.
+Discovery is useful, but it is not a gate. A client can send `tools/list` first because that request already carries its protocol version and capabilities.
 
-### Client capabilities vs tool call details
+If the requested version is unsupported, the server returns JSON-RPC code `-32022` with:
 
-A common confusion: `capabilities.tools` is whether the client supports tool-list-changed notifications. Whether the client WILL call specific tools is a runtime choice driven by its model, not a capability flag. The capability flag is the spec-level contract. The model's choice is orthogonal.
+```json
+{
+  "requested": "2027-01-01",
+  "supported": ["2026-07-28"]
+}
+```
 
-### Why JSON-RPC and not REST?
+The client selects a mutually supported modern version and retries with a new JSON-RPC request id.
 
-JSON-RPC 2.0 (2010) is a lightweight bidirectional protocol. REST is client-initiated. MCP needed server-initiated messages (sampling, notifications), so JSON-RPC with its symmetric request/response shape was a natural fit. JSON-RPC also composes cleanly over stdio and WebSocket/Streamable HTTP without re-inventing HTTP's request shape.
+### One request lifecycle
+
+Trace a modern request in this order:
+
+1. Parse one JSON-RPC envelope.
+2. Confirm `jsonrpc` is `"2.0"`, an `id` exists, `method` is a string, and `params` is an object.
+3. Require the version string and capability object in `params._meta`; malformed or missing metadata is `-32602`.
+4. At an HTTP boundary, compare the version, method, and applicable name headers with the body. A mismatch is `-32020` even when one of the two version values is unsupported.
+5. After equality is established, reject a matched but unsupported version with `-32022`.
+6. Check required capabilities, then route by `method` and validate method-specific arguments.
+7. Authenticate and authorize the concrete operation before its handler runs.
+8. Return a complete result with server identity.
+9. Forget request-scoped protocol metadata.
+
+That order prevents two components from interpreting different calls. A gateway must not authorize `Mcp-Name: notes.read` while the origin executes `params.name: notes.delete`. It also keeps malformed input, header confusion, version negotiation, capability failure, authorization, and handler failure as distinct evidence.
+
+Closing stdin or an HTTP response ends transport activity. It does not terminate a protocol session because modern MCP has no protocol session.
+
+### Explicit legacy compatibility
+
+Versions through `2025-11-25` use `initialize`, `notifications/initialized`, connection-scoped capabilities, and, on earlier Streamable HTTP, optional protocol sessions. That behavior is still relevant when a dual-era client talks to an old server.
+
+Keep the eras separate. A modern request is identified by the required per-request metadata. A legacy connection is selected only through the documented fallback path. Do not send `initialize` as the default for a `2026-07-28` server.
+
+“Stateless” therefore has an era-specific meaning. In `2026-07-28`, it is a protocol invariant: every ordinary request is independently interpretable and no MCP session exists. In versions through `2025-11-25`, initialization and negotiated capabilities belong to a connection, so a compatibility adapter may retain that legacy connection state. A dual-era implementation is not one permissive state machine. It is a stateless modern core beside an isolated legacy adapter, with an explicit selection decision before either parser runs.
+
+Neither meaning forbids durable application state. A workflow, task, or draft can live behind an opaque handle in a shared store. The client sends that handle as ordinary input, and every replica authenticates and authorizes its use. Protocol context must not leak into that store as a substitute for the removed session.
 
 ```figure
 mcp-tool-call
@@ -117,50 +160,47 @@ mcp-tool-call
 
 ## Use It
 
-`code/main.py` ships a minimal JSON-RPC 2.0 parser and emitter, then walks the `initialize` → `tools/list` → `tools/call` → `shutdown` sequence by hand, printing every message. No real transport; just the message shapes. Compare to the spec linked in Further Reading to verify each envelope.
+`code/main.py` builds, validates, traces, and dispatches modern MCP messages without a framework. Run:
 
-What to look at:
+```bash
+python3 code/main.py
+python3 -m unittest discover code/tests -v
+```
 
-- `initialize` declares capabilities both ways; the response has `serverInfo` and `protocolVersion: "2025-11-25"`.
-- `tools/list` returns a `tools` array; each entry has `name`, `description`, `inputSchema`.
-- `tools/call` uses `params.name` and `params.arguments`.
-- The response `content` is an array of `{type, text}` blocks.
+Watch for three invariants in the output:
+
+- Every request repeats its `_meta` fields.
+- Every successful result is `resultType: "complete"` and includes server identity.
+- The list result is deterministically ordered and has explicit cache hints.
 
 ## Ship It
 
-This lesson produces `outputs/skill-mcp-handshake-tracer.md`. Given a pcap-style transcript of an MCP client-server interaction, the skill annotates each message with which primitive, which lifecycle phase, and which capability it depends on.
+This lesson ships `outputs/skill-mcp-handshake-tracer.md`. The historical filename remains stable, but the artifact is now a stateless request tracer. It audits each message independently and labels legacy handshake traffic only when it is genuinely present.
 
 ## Exercises
 
-1. Run `code/main.py`. Identify the line where capability negotiation happens and describe what would change if the server did not declare `tools.listChanged`.
-
-2. Extend the parser to handle `notifications/progress`. The message shape: `{method: "notifications/progress", params: {progressToken, progress, total}}`. Emit it while a long-running `tools/call` is in progress and confirm the client handler would display a progress bar.
-
-3. Read the MCP 2025-11-25 spec top to bottom — the whole document is about 80 pages. Identify the one capability flag most servers do NOT need. Hint: it relates to resource subscription.
-
-4. Sketch on paper the primitive a hypothetical "cron job" feature would belong to. (Hint: the server wants the client to invoke it at a scheduled time. None of the six primitives fit today.) MCP's 2026 roadmap has a draft SEP for this.
-
-5. Parse one session log from an open MCP server on GitHub. Count request vs response vs notification messages. Compute what fraction of traffic is lifecycle vs operation.
+1. Change one request's protocol version to `2027-01-01`. Confirm the error code is `-32022` and the data advertises the supported version.
+2. Remove `io.modelcontextprotocol/clientCapabilities` from the second request. Confirm the server does not reuse capabilities from the first request.
+3. Reverse the in-memory tool registry. Confirm `tools/list` still returns the same deterministic order.
+4. Change `cacheScope` from `public` to `private`. Explain which authorization contexts may reuse the response in each case.
+5. Add an optional `clientInfo` omission test. The request should remain valid because client identity is recommended, not required.
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| MCP | "Model Context Protocol" | Open protocol for model-to-tool discovery and invocation |
-| Server primitive | "What a server exposes" | tools (actions), resources (data), prompts (templates) |
-| Client primitive | "What a client lets servers use" | roots (scope), sampling (LLM callbacks), elicitation (user input) |
-| JSON-RPC 2.0 | "The wire format" | Symmetric request/response/notification envelopes |
-| `initialize` handshake | "Capability negotiation" | First message pair; servers and clients declare features they support |
-| `tools/list` | "Discovery" | Client asks server for its current tool set |
-| `tools/call` | "Invocation" | Client asks server to execute a tool with arguments |
-| `notifications/*_changed` | "Mutation events" | Server tells client that its primitive list has changed |
-| Content block | "Typed result" | `{type: "text" \| "image" \| "resource" \| "ui_resource"}` in tool result |
-| SEP | "Spec Evolution Proposal" | Named draft proposal (e.g. SEP-1686 for async Tasks) |
+| Term | Meaning |
+|------|---------|
+| Stateless protocol | Every request supplies the metadata needed to interpret it |
+| Request metadata | Version, client capabilities, and recommended client identity in `params._meta` |
+| `server/discover` | Mandatory server method for versions, capabilities, instructions, and identity |
+| `resultType` | Discriminator on every successful modern result |
+| Cacheable result | Result that includes required `ttlMs` and `cacheScope` hints |
+| Protocol era | Modern per-request metadata or legacy connection-scoped initialization |
+| Transport lifetime | Process, connection, or response-stream lifetime, not protocol session state |
+| `-32022` | Unsupported protocol version error with requested and supported versions |
 
 ## Further Reading
 
-- [Model Context Protocol — Specification 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25) — the canonical spec document
-- [Model Context Protocol — Architecture concepts](https://modelcontextprotocol.io/docs/concepts/architecture) — the six-primitive mental model
-- [Anthropic — Introducing the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol) — November 2024 launch post
-- [MCP blog — First MCP anniversary](https://blog.modelcontextprotocol.io/posts/2025-11-25-first-mcp-anniversary/) — one-year retrospective and the 2025-11-25 spec changes
-- [WorkOS — MCP 2025-11-25 spec update](https://workos.com/blog/mcp-2025-11-25-spec-update) — summary of SEP-1686, 1036, 1577, 835, and 1724
+- [MCP Architecture](https://modelcontextprotocol.io/specification/2026-07-28/architecture)
+- [MCP Base Protocol](https://modelcontextprotocol.io/specification/2026-07-28/basic)
+- [MCP Server Discovery](https://modelcontextprotocol.io/specification/2026-07-28/server/discover)
+- [MCP 2026-07-28 Changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog)

@@ -1,30 +1,42 @@
 ---
 name: sampling-loop-designer
-description: Design a server-hosted agent loop using MCP sampling with the right modelPreferences, rate limits, and safety confirmations.
-version: 1.0.0
+description: Migrate model-assisted MCP tools to direct inference or stateless 2026-07-28 MRTR with bounded compatibility sampling.
+version: 2.0.0
 phase: 13
 lesson: 11
-tags: [mcp, sampling, agent-loop, model-preferences]
+tags: [mcp, mrtr, sampling, stateless, migration]
 ---
 
-Given a server-side algorithm that needs LLM reasoning (research, summarization, planning, triage), design an MCP sampling-based implementation.
+Design model-assisted behavior for an MCP server targeting protocol revision `2026-07-28`.
+
+Start with one decision: can the server integrate directly with a model provider? Sampling is deprecated for new designs. Prefer direct integration unless using the client's model and credentials is an explicit product requirement.
 
 Produce:
 
-1. Loop structure. Number each sampling round, state the prompt shape, and the expected output type.
-2. `modelPreferences` per round. Weight cost / speed / intelligence (sum 1.0) per round. A "pick files" round leans cost; a "synthesize" round leans intelligence.
-3. Rate limit. Set `max_samples_per_tool` per invocation; justify the number.
-4. Safety hooks. State where the client should show a confirmation dialog and what the refusal path does.
-5. SEP-1577 inclusion. Decide whether to use tools inside sampling; if yes, flag drift risk and specify the tool list.
+1. Architecture decision. Choose direct inference or compatibility Sampling and state why.
+2. Discovery contract. Show `server/discover` with exact `supportedVersions`, advertised capabilities, `ttlMs`, and `cacheScope`. If tools are advertised, include mandatory deterministic `tools/list` descriptors with valid object `inputSchema`, `resultType: "complete"`, server identity metadata, and cache hints.
+3. Request envelope. Include protocol version and client capabilities in `_meta` on every request. Use `-32602` for a missing or non-string version, `-32022` with exact `supported` and `requested` data for an unsupported version, and `-32021` with a `requiredCapabilities` object when Sampling is absent. Treat client identity metadata as informational only. Never emit a JSON-RPC response for an id-less notification; an accepted HTTP notification receives `202` with no body.
+4. Round table. For each MRTR round, name the `inputRequests` key, embedded request method, expected response schema, validation, and budget.
+5. Retry contract. Require the original method and arguments, a fresh JSON-RPC id, current-round `inputResponses`, and byte-exact `requestState`.
+6. State protection. Bind HMAC or authenticated encryption to the authenticated principal, method, argument digest, phase, and short expiry.
+7. Safety policy. Define approval, maximum rounds, token and byte limits, response validation, logging, and refusal behavior.
+8. Removal plan. If Sampling remains, name the condition and date for replacing it with direct integration.
 
 Hard rejects:
-- Any loop without a rate limit. Loop bombs and resource theft risk.
-- Any loop that sets `includeContext: "allServers"`. Cross-server leakage.
-- Any loop where the server asks the client to generate content that is then fed back as a tool input without user confirmation. Confused-deputy vector.
+
+- A new design that adopts deprecated Sampling without a documented requirement.
+- A 2026-07-28 server that sends `sampling/createMessage` as a live server-to-client request.
+- Any use of `initialize`, `notifications/initialized`, `Mcp-Session-Id`, or hidden protocol-session state.
+- Unsigned `requestState` that affects authorization, resource access, or business logic.
+- A retry that reuses the original JSON-RPC id or changes the original arguments.
+- A client model loop without capability checks, approval policy, validation, and a hard round limit.
+- `includeContext: "allServers"` or implicit cross-server context.
 
 Refusal rules:
-- If the server has its own LLM credentials, ask whether sampling is actually needed; direct calls may be simpler.
-- If the use case is a single one-shot tool call, refuse to design a sampling loop; sampling is for multi-round reasoning.
-- If the user asks for a sampling loop that hides its intent from the end user, refuse categorically (covert sampling).
 
-Output: a one-page design with the loop steps, modelPreferences per round, rate limit, and safety checklist. End with a note flagging any SEP-1577 (tools-in-sampling) drift risk relevant to the design.
+- Refuse covert model calls or any design that hides the server's intent from the user.
+- Refuse model output as proof of identity, authorization, or user consent.
+- Refuse a multi-round design when one deterministic tool call is sufficient.
+- Refuse to call client and server metadata an authenticated identity.
+
+Output a one-page architecture with the decision, wire flow, round table, signed state contents, safety budget, failure cases, and migration plan. End with a verdict: `direct inference`, `temporary MRTR compatibility`, or `no model required`.

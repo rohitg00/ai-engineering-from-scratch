@@ -12,7 +12,7 @@
 - Explain how a continuous scene gets discretized into pixels and why sampling/quantization decisions set the ceiling on every downstream model
 - Read, slice, and inspect images as NumPy arrays and switch fluently between HWC and CHW layouts
 - Convert between RGB, grayscale, HSV, and YCbCr and justify why each color space exists
-- Apply pixel-level preprocessing (normalize, standardize, resize, channel-first) exactly as torchvision expects it
+- Apply pixel-level preprocessing (normalize, standardize, resize, channel-first) exactly as pretrained PyTorch vision models expect it
 
 ## The Problem
 
@@ -202,13 +202,12 @@ conv-output-size
 
 ## Build It
 
-### Step 1: Load an image and inspect its shape
+### Step 1: Build an image tensor and inspect its shape
 
-Use Pillow to load any JPEG or PNG, convert to NumPy, and print what you got. For a deterministic example that runs offline, synthesize one.
+Start with a deterministic synthetic image so the first lab runs offline with only NumPy. File decoding is a separate boundary: once a JPEG or PNG decoder returns RGB bytes, every tensor operation below is the same.
 
 ```python
 import numpy as np
-from PIL import Image
 
 def synthetic_rgb(h=128, w=192, seed=0):
     rng = np.random.default_rng(seed)
@@ -220,8 +219,6 @@ def synthetic_rgb(h=128, w=192, seed=0):
     return np.clip(rgb, 0, 255).astype(np.uint8)
 
 arr = synthetic_rgb()
-# Or load from disk:
-# arr = np.asarray(Image.open("your_image.jpg").convert("RGB"))
 
 print(f"type:   {type(arr).__name__}")
 print(f"dtype:  {arr.dtype}")
@@ -231,7 +228,7 @@ print(f"max:    {arr.max()}")
 print(f"pixel at (0, 0): {arr[0, 0]}")
 ```
 
-Expected output: `shape: (H, W, 3)`, `dtype: uint8`, range `[0, 255]`. That is the canonical on-disk representation whether the bytes came from a camera, a JPEG decoder, or a synthetic generator.
+Expected output: `shape: (H, W, 3)`, `dtype: uint8`, range `[0, 255]`. That is the canonical decoded representation whether the bytes came from a camera, an image decoder, or this synthetic generator.
 
 ### Step 2: Split channels and re-order layout
 
@@ -270,15 +267,16 @@ def rgb_to_hsv(rgb):
 
     h = np.zeros_like(cmax)
     mask = delta > 0
-    rmax = mask & (cmax == r)
-    gmax = mask & (cmax == g)
-    bmax = mask & (cmax == b)
+    argmax = np.argmax(rgb_f, axis=-1)
+    rmax = mask & (argmax == 0)
+    gmax = mask & (argmax == 1)
+    bmax = mask & (argmax == 2)
     h[rmax] = ((g[rmax] - b[rmax]) / delta[rmax]) % 6
     h[gmax] = ((b[gmax] - r[gmax]) / delta[gmax]) + 2
     h[bmax] = ((r[bmax] - g[bmax]) / delta[bmax]) + 4
     h = h * 60.0
 
-    s = np.where(cmax > 0, delta / cmax, 0)
+    s = np.divide(delta, cmax, out=np.zeros_like(delta), where=cmax > 0)
     v = cmax
     return np.stack([h, s, v], axis=-1)
 
@@ -326,58 +324,93 @@ print(f"roundtrip max pixel diff: {max_diff}    # should be 0 or 1")
 
 Per-channel mean should be close to zero, std close to one. The preprocess/deprocess pair is exactly what every torchvision `transforms.Normalize` call is doing under the hood.
 
-### Step 5: Resize with three interpolation methods
+### Step 5: Resize from scratch
 
-Compare nearest, bilinear, and bicubic on an upscale so the difference is visible.
+Nearest neighbor rounds each output coordinate to one source pixel. Bilinear interpolation finds the four surrounding pixels and blends them by distance. Both implementations below use endpoint-aligned coordinates so the first and last source pixels stay fixed.
 
 ```python
-target = (arr.shape[0] * 3, arr.shape[1] * 3)
+def resize_coordinates(source_length, target_length):
+    if target_length == 1:
+        return np.zeros(1, dtype=np.float32)
+    return np.linspace(0, source_length - 1, target_length, dtype=np.float32)
 
-nearest = np.asarray(Image.fromarray(arr).resize(target[::-1], Image.NEAREST))
-bilinear = np.asarray(Image.fromarray(arr).resize(target[::-1], Image.BILINEAR))
-bicubic = np.asarray(Image.fromarray(arr).resize(target[::-1], Image.BICUBIC))
+def nearest_resize(image, target_height, target_width):
+    y = np.rint(resize_coordinates(image.shape[0], target_height)).astype(int)
+    x = np.rint(resize_coordinates(image.shape[1], target_width)).astype(int)
+    return image[y[:, None], x[None, :]]
+
+def bilinear_resize(image, target_height, target_width):
+    y = resize_coordinates(image.shape[0], target_height)
+    x = resize_coordinates(image.shape[1], target_width)
+    y0 = np.floor(y).astype(int)
+    x0 = np.floor(x).astype(int)
+    y1 = np.minimum(y0 + 1, image.shape[0] - 1)
+    x1 = np.minimum(x0 + 1, image.shape[1] - 1)
+    wy = (y - y0)[:, None, None]
+    wx = (x - x0)[None, :, None]
+
+    source = image.astype(np.float32)
+    top = source[y0[:, None], x0[None, :]] * (1 - wx)
+    top += source[y0[:, None], x1[None, :]] * wx
+    bottom = source[y1[:, None], x0[None, :]] * (1 - wx)
+    bottom += source[y1[:, None], x1[None, :]] * wx
+    result = top * (1 - wy) + bottom * wy
+    return np.clip(np.rint(result), 0, 255).astype(image.dtype)
+
+target_height = arr.shape[0] * 3
+target_width = arr.shape[1] * 3
+nearest = nearest_resize(arr, target_height, target_width)
+bilinear = bilinear_resize(arr, target_height, target_width)
 
 def local_roughness(x):
     gy = np.diff(x.astype(float), axis=0)
     gx = np.diff(x.astype(float), axis=1)
     return float(np.abs(gy).mean() + np.abs(gx).mean())
 
-for name, out in [("nearest", nearest), ("bilinear", bilinear), ("bicubic", bicubic)]:
+for name, out in [("nearest", nearest), ("bilinear", bilinear)]:
     print(f"{name:>8}  shape={out.shape}  roughness={local_roughness(out):6.2f}")
 ```
 
-Nearest scores highest on roughness because it keeps hard edges. Bilinear is the smoothest. Bicubic sits in between, preserving perceived sharpness without the stair-step artifacts.
+Nearest scores highest on roughness because it keeps hard edges. Bilinear is smoother because every new pixel blends two positions on each axis. The runnable companion extends the same separable idea to four neighbors per axis with a Catmull-Rom cubic kernel, then prints all three results without an image library.
 
 ## Use It
 
-`torchvision.transforms` bundles everything above into a single composable pipeline. The code below reproduces exactly what `preprocess_imagenet` does, plus resize and crop.
+PyTorch performs the same operations on batched, device-aware tensors. The code below resizes the shorter side, takes a center crop, standardizes each channel, and produces the NCHW tensor a pretrained model expects.
 
 ```python
 import torch
-from torchvision import transforms
-from PIL import Image
+import torch.nn.functional as F
 
-img = Image.fromarray(synthetic_rgb(256, 256))
+image_hwc = torch.from_numpy(synthetic_rgb(256, 320))
+batch = image_hwc.permute(2, 0, 1).unsqueeze(0).float() / 255.0
 
-pipeline = transforms.Compose([
-    transforms.Resize(256),
-    transforms.CenterCrop(224),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-])
+height, width = batch.shape[-2:]
+scale = 256 / min(height, width)
+resized_height = round(height * scale)
+resized_width = round(width * scale)
+batch = F.interpolate(
+    batch,
+    size=(resized_height, resized_width),
+    mode="bilinear",
+    align_corners=False,
+    antialias=True,
+)
 
-x = pipeline(img)
-print(f"tensor type:  {type(x).__name__}")
-print(f"tensor dtype: {x.dtype}")
-print(f"tensor shape: {tuple(x.shape)}      # (C, H, W)")
-print(f"per-channel mean: {x.mean(dim=(1, 2)).tolist()}")
-print(f"per-channel std:  {x.std(dim=(1, 2)).tolist()}")
+top = (resized_height - 224) // 2
+left = (resized_width - 224) // 2
+batch = batch[:, :, top:top + 224, left:left + 224]
 
-batch = x.unsqueeze(0)
-print(f"\nbatched shape: {tuple(batch.shape)}   # (N, C, H, W) — ready for a model")
+mean = torch.tensor([0.485, 0.456, 0.406]).view(1, 3, 1, 1)
+std = torch.tensor([0.229, 0.224, 0.225]).view(1, 3, 1, 1)
+batch = (batch - mean) / std
+
+print(f"tensor dtype: {batch.dtype}")
+print(f"batched shape: {tuple(batch.shape)}")
+print(f"per-channel mean: {batch.mean(dim=(0, 2, 3)).tolist()}")
+print(f"per-channel std:  {batch.std(dim=(0, 2, 3)).tolist()}")
 ```
 
-Four steps, in this exact order: `Resize(256)` scales the shorter side to 256; `CenterCrop(224)` takes a 224x224 patch from the middle; `ToTensor()` divides by 255 and swaps HWC to CHW; `Normalize` subtracts the ImageNet mean and divides by std. Reversing that order silently changes what reaches the model.
+Four steps, in this exact order: convert bytes to float and swap HWC to NCHW, resize the shorter side to 256, take a 224x224 center crop, then subtract the ImageNet mean and divide by its standard deviation. Reversing that order silently changes what reaches the model.
 
 ## Ship It
 
@@ -388,7 +421,7 @@ This lesson produces:
 
 ## Exercises
 
-1. **(Easy)** Load a JPEG with OpenCV (`cv2.imread`) and with Pillow. Print both shapes and the pixel at `(0, 0)`. Explain the channel-order difference, then write a one-line conversion that makes the OpenCV array identical to the Pillow one.
+1. **(Easy)** Create a 2x2 RGB `uint8` array with four distinct colors. Convert HWC to CHW and back, print both shapes, and prove the round trip preserves every value.
 2. **(Medium)** Write `standardize(img, mean, std)` and its inverse that together pass a `roundtrip_max_diff <= 1` test on any uint8 image. Your functions must work on a single image in HWC and on a batch in NCHW with the same call.
 3. **(Hard)** Take a 3-channel ImageNet-standardized tensor and run it through a 1x1 conv that learns a weighted mixture of RGB into a single grayscale channel. Initialize the weights to `[0.299, 0.587, 0.114]`, freeze them, and verify the output matches your manual `rgb_to_grayscale` to within floating-point error. What other classical color-space transforms can be written as 1x1 convolutions?
 

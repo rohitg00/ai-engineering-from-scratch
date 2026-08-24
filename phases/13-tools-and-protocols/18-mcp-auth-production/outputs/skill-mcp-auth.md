@@ -1,7 +1,7 @@
 ---
 name: mcp-auth-wiring
-description: Stand up production MCP authorization (RFC 8414, CIMD, 7591, 8707, 7636 PKCE, 9728, 9207) — protected-resource metadata, enrollment, JWKS refresh, and per-request token validation.
-version: 1.1.0
+description: Design MCP 2026-07-28 authorization with issuer-bound enrollment, CIMD, protected-resource metadata, JWKS refresh, audience pinning, and per-request validation.
+version: 2.0.0
 phase: 13
 lesson: 18
 tags: [mcp, oauth, cimd, dcr, jwks, rfc8414, rfc7591, rfc8707, rfc7636, rfc9728, rfc9207]
@@ -13,8 +13,11 @@ Inputs:
 
 - `mcp_resource_url` — canonical resource URL (most-specific identifier; keep a path only when it distinguishes co-hosted servers), used as `aud` and as the protected-resource metadata `resource` value.
 - `idp_metadata_url` — the IdP's `/.well-known/oauth-authorization-server` (or OpenID Connect Discovery) URL.
-- `idp_capabilities` — observed values for `code_challenge_methods_supported`, `grant_types_supported`, `client_id_metadata_document_supported` (CIMD), `registration_endpoint` (DCR), `response_types_supported`, `authorization_response_iss_parameter_supported` (RFC 9207).
-- `tools` — the MCP tool list with the scope each requires.
+- `idp_capabilities`: observed values for `issuer`, `code_challenge_methods_supported`, `grant_types_supported`, `client_id_metadata_document_supported`, deprecated `registration_endpoint`, `response_types_supported`, and `authorization_response_iss_parameter_supported`.
+- `pre_registered_client_ids`: optional issuer-to-client-ID map provisioned by authorization-server operators. Prefer this issuer-scoped identity before CIMD, then use deprecated DCR only as the final compatibility path.
+- `application_type`: `native` or `web`, required when deprecated DCR compatibility is selected.
+- `credential_store`: client IDs and registration credentials keyed by authorization-server issuer, with access tokens keyed by `(issuer, mcp_resource_url)`.
+- `tools`: the MCP tool list with the scope each requires.
 
 Produce:
 
@@ -22,14 +25,17 @@ Produce:
    - `S256` is missing from `code_challenge_methods_supported` (PKCE has no degraded mode).
    - `authorization_code` is missing from `grant_types_supported`.
    - `response_types_supported` is anything other than exactly `["code"]`.
-   - No enrollment path exists: none of a pre-registered `client_id`, `client_id_metadata_document_supported: true` (CIMD), or a `registration_endpoint` (DCR) is available. Any one suffices — DCR absence alone is no longer a refusal (2025-11-25 demoted DCR to a `MAY`; CIMD is the preferred default).
+   - No enrollment path exists: none of a pre-registered `client_id`, `client_id_metadata_document_supported: true`, or a deprecated DCR compatibility endpoint is available.
+   - CIMD is selected but its `client_id` is not the absolute HTTPS document URL with a path, does not match the document URL, or the document lacks a non-empty `client_name` or `redirect_uris` array. `application_type` is optional for CIMD.
+   - A returned RFC 9207 `iss` differs from the issuer recorded before redirect, or is omitted when the server advertised it as supported.
+   - Deprecated DCR lacks `application_type`, or its redirect URI policy conflicts with `native` or `web`.
 
-2. **Protected-resource metadata document** (RFC 9728) for the MCP server to publish at `/.well-known/oauth-protected-resource`. Includes `resource`, `authorization_servers` (the issuer allow-list), `scopes_supported`, `bearer_methods_supported: ["header"]`.
+2. **Protected-resource metadata document** (RFC 9728) for the MCP server. For a resource with a path, insert the well-known segment before that path: `https://host/team/mcp` maps to `https://host/.well-known/oauth-protected-resource/team/mcp`. Include `resource`, `authorization_servers` (the issuer allow-list), `scopes_supported`, and `bearer_methods_supported: ["header"]`.
 
 3. **HTTP endpoints.**
    - `GET /.well-known/oauth-protected-resource` — returns the document from (2).
-   - `POST /mcp` (the MCP transport) — runs token validation before any tool dispatches.
-   - (DCR path only) `POST /register` — the registrar, with a rate-limit check ahead of it.
+   - `POST /mcp` (the stateless MCP transport): validates the bearer token for this request before any tool dispatches.
+   - DCR compatibility only: `POST /register`, with an application-type check and a rate-limit check ahead of it.
 
 4. **Background job + routines.**
    - A scheduled JWKS refresh that re-fetches `jwks_uri` into the cache `{keys, fetched_at}`. Idempotent; never mints keys. The AS rotates; the resource server only refreshes. Default `0 */6 * * *`; tighten to `*/15 * * * *` for high-rotation IdPs.
@@ -46,7 +52,8 @@ Produce:
    - Reject when `iss not in authorization_servers`.
    - Reject when `kid` not in cached JWKS after a single re-fetch fall-back.
    - Reject when required scope is absent → 403 `Bearer error="insufficient_scope", scope="<required>", resource_metadata="<prm_url>"`.
-   - Reject any token request without `code_verifier` or `resource` parameter.
+   - Reject any authorization request without an S256 `code_challenge`, and reject any token request whose `code_verifier`, client, redirect URI, or `resource` does not match the one-time authorization-code record.
+   - Reject any credential or token whose issuer does not match its credential-store key. Issuer change requires new enrollment.
 
 Hard rejects (never wire any of these — refuse the request and document why):
 
@@ -58,5 +65,6 @@ Hard rejects (never wire any of these — refuse the request and document why):
 - Trusting the `iss` claim without an allow-list. Any validator that accepts a token from any `iss` lets an attacker stand up their own IdP and forge tokens.
 - Forwarding the inbound MCP token to an upstream API (token passthrough). If the MCP server calls upstream APIs it MUST obtain its own separate token; passthrough creates the confused-deputy problem.
 - Storing `registration_access_token` in plaintext. Hash-at-rest; require cleartext on every update.
+- Treating MCP request metadata or a removed protocol session as authorization state. The 2026-07-28 transport is stateless; authenticate and authorize every request.
 
-Output: a one-page plan with the protected-resource document, the chosen enrollment path (CIMD / pre-registration / DCR), the HTTP endpoints, the JWKS refresh job, the cache plan, the scope mapping table, and the encoded runtime refusal rules. End with the single deployment-blocking gap most likely to surface against the chosen IdP — typically whether CIMD is supported yet, falling back to DCR availability for enterprise SSO.
+Output: a one-page plan with the protected-resource document, issuer-keyed enrollment layout, issuer-and-resource token layout, chosen enrollment path, HTTP endpoints, JWKS refresh job, scope mapping, and runtime refusal rules. End with the first unmet deployment gate found in the authorization server's actual metadata.

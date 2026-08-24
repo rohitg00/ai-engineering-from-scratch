@@ -16,7 +16,7 @@
 
 ## The Problem
 
-You're about to learn AI engineering across 200+ lessons using Python, TypeScript, Rust, and Julia. If your environment is broken, every single lesson becomes a fight against tooling instead of learning.
+You're about to learn AI engineering across 500+ lessons using Python, TypeScript, Rust, and Julia. If your environment is broken, every single lesson becomes a fight against tooling instead of learning.
 
 Most people skip environment setup. Then they spend hours debugging import errors, version conflicts, and missing CUDA drivers. We're going to do this once, properly.
 
@@ -154,17 +154,51 @@ if torch.cuda.is_available():
 
 No GPU? No problem. Most lessons work on CPU. For training-heavy lessons, use Google Colab or cloud GPUs.
 
-### Step 7: Verify Everything
+### Step 7: Verify the route you want to start
 
-Run the verification script:
+Run every command in this lesson from the repository root, the directory that
+contains `README.md` and `phases/`. The preflight checks only what you need to
+start the selected route. It skips later tools by default so a new learner sees
+one clear answer instead of a wall of warnings.
+
+Start the full beginner sequence:
 
 ```bash
-python phases/00-setup-and-tooling/01-dev-environment/code/verify.py
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+```
+
+Or check only the route you want:
+
+```bash
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route ml-foundations
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route llm-engineering
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route agents
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route mcp
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route agent-skills
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route certification
+```
+
+Add `--show-later` when you want the same preflight to inspect optional tools
+and dependencies used by later lessons. A missing later tool never blocks the
+selected route.
+
+Each failed required check includes the detected path or import error and an
+exact corrective command. The Agent Skills and certification routes also show
+manual host checks because a Python script cannot prove that an AI host has
+discovered a skill or that your chosen skill scope is writable.
+
+When the beginner preflight passes, it prints the exact first runnable lesson:
+
+```text
+Ready to start Beginner course.
+Next: python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
 ## Use It
 
-Your environment is now ready for every lesson in this course. Here's what you'll use where:
+Your environment is ready to start the route you checked. Install later tools
+when a lesson asks for them instead of blocking your first lesson on the whole
+stack. Here is what you will use across the curriculum:
 
 | Language | Used In | Package Manager |
 |----------|---------|-----------------|

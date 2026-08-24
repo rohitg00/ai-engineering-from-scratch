@@ -1,0 +1,48 @@
+{
+  "lesson": "09-mcp-transports",
+  "title": "MCP Transports: stdio and Stateless Streamable HTTP",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which HTTP method carries every modern Streamable HTTP message?",
+      "options": ["PATCH", "DELETE", "GET", "POST"],
+      "correct": 3,
+      "explanation": "Each modern JSON-RPC request or notification is a new POST to one MCP endpoint."
+    },
+    {
+      "stage": "check",
+      "question": "What should a modern-only MCP endpoint return for GET and DELETE?",
+      "options": ["301", "200", "202", "405"],
+      "correct": 3,
+      "explanation": "Standalone GET and DELETE are not part of Streamable HTTP 2026-07-28."
+    },
+    {
+      "stage": "check",
+      "question": "Which headers must match the body on every modern request?",
+      "options": ["Mcp-Session-Id and Last-Event-ID", "ETag and If-None-Match", "MCP-Protocol-Version and Mcp-Method", "Cookie and Host"],
+      "correct": 2,
+      "explanation": "Mcp-Name is also required for tools/call, resources/read, and prompts/get."
+    },
+    {
+      "stage": "check",
+      "question": "How does a client request long-lived change notifications?",
+      "options": ["POST subscriptions/listen", "resources/subscribe", "Mcp-Session-Id", "GET /mcp"],
+      "correct": 0,
+      "explanation": "subscriptions/listen opens the response stream. Its acknowledgement, notifications, and final result carry the listen request id as subscription metadata."
+    },
+    {
+      "stage": "post",
+      "question": "A modern request-scoped SSE stream breaks before its final response. What next?",
+      "options": ["DELETE the session", "Reuse the same response stream", "Resume with Last-Event-ID", "Retry safely with a new JSON-RPC id"],
+      "correct": 3,
+      "explanation": "Modern SSE is not resumable. A safe retry is a new request with a new id."
+    },
+    {
+      "stage": "post",
+      "question": "What should a server do with Mcp-Session-Id on a 2026-07-28 request?",
+      "options": ["Ignore it and do not echo it", "Reject every request that includes it", "Use it for routing", "Rotate it"],
+      "correct": 0,
+      "explanation": "Protocol sessions and the session header were removed from the modern revision."
+    }
+  ]
+}

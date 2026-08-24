@@ -94,18 +94,18 @@
       'Ingest cuts the video into scenes, and every scene stores three vectors side by side: caption embedding, keyframe embedding, transcript embedding. A query fires against all three at once, results merge, and the answer comes back as a (start, end) window inside the top scene rather than a whole file.');
   }
 
-  // ── cf-mcp-gate (13): scope check at call time, human approval, registry poll ─
+  // ── cf-mcp-gate (13): stateless metadata, policy, registry and live discovery ─
   function mcpGate(host) {
     var D = '5s', s = svg(250);
-    s.appendChild(pop([box(24, 44, 92, 40), txt(70, 62, 'MCP client', '9'), txt(70, 76, 'IDE / agent', '8', MUTE)], 70, 64, D, '0s'));
+    s.appendChild(pop([box(24, 44, 92, 40), txt(70, 62, 'MCP client', '9'), txt(70, 76, 'version + caps', '8', MUTE)], 70, 64, D, '0s'));
     s.appendChild(pop([box(404, 44, 92, 40), txt(450, 62, 'MCP server', '9'), txt(450, 76, 'stateless', '8', MUTE)], 450, 64, D, '0.15s'));
     var pipe = line(116, 64, 404, 64, SOFT, { 'stroke-dasharray': '6 5' });
     pipe.appendChild(anim('stroke-dashoffset', '22;0', '1.4s'));
     s.appendChild(pipe);
-    s.appendChild(txt(258, 30, 'StreamableHTTP · JSON-RPC', '8', MUTE));
+    s.appendChild(txt(258, 30, 'one POST per JSON-RPC message', '8', MUTE));
     var gr = svgEl('rect', { x: 252, y: 42, width: 10, height: 44, rx: 2, fill: WARN });
     gr.appendChild(anim('opacity', '1;1;0.3;1;1', D, { keyTimes: '0;0.24;0.28;0.34;1' }));
-    s.appendChild(pop([gr, txt(257, 100, 'scope check', '8', WARN)], 257, 64, D, '0.3s'));
+    s.appendChild(pop([gr, txt(257, 100, 'auth + policy', '8', WARN)], 257, 64, D, '0.3s'));
     var p1 = dot('5', BLUE);
     p1.appendChild(mov('M116 58 L404 58', D, { calcMode: 'linear', keyPoints: '0;0.48;0.48;1;1', keyTimes: '0;0.2;0.32;0.5;1' }));
     p1.appendChild(anim('opacity', '0;1;1;0;0', D, { keyTimes: '0;0.04;0.5;0.56;1' }));
@@ -114,19 +114,19 @@
     p2.appendChild(mov('M116 70 L257 70 L257 140', D, { begin: '2.4s', calcMode: 'linear', keyPoints: '0;0.668;0.668;1;1', keyTimes: '0;0.15;0.25;0.4;1' }));
     p2.appendChild(anim('opacity', '0;1;1;1;0;0', D, { begin: '2.4s', keyTimes: '0;0.03;0.3;0.38;0.44;1' }));
     s.appendChild(p2);
-    var ok = txt(257, 190, 'approved:by:human', '8', WARN);
+    var ok = txt(257, 190, 'actor + tool + args + expiry', '8', WARN);
     ok.appendChild(anim('opacity', '0;0;1;1;0', D, { keyTimes: '0;0.85;0.9;0.98;1' }));
-    s.appendChild(pop([box(197, 146, 120, 28), txt(257, 163, 'human approval', '9'), ok], 257, 160, D, '0.45s'));
-    var reg = [box(40, 170, 110, 30), txt(95, 189, 'registry', '9'),
+    s.appendChild(pop([box(197, 146, 120, 28), txt(257, 163, 'approval record', '9'), ok], 257, 160, D, '0.45s'));
+    var reg = [box(40, 170, 110, 30), txt(95, 184, 'registry', '9'), txt(95, 196, 'server.json', '7', MUTE),
       line(150, 185, 430, 86, SOFT, { 'stroke-dasharray': '4 3' }),
-      txt(300, 152, '.well-known/mcp-capabilities', '8', MUTE)];
+      txt(300, 152, 'live server/discover probe', '8', MUTE)];
     s.appendChild(pop(reg, 95, 185, D, '0.6s'));
     var poll = dot('3.5', MUTE);
     poll.appendChild(mov('M150 185 L430 86', D, { begin: '0.9s', calcMode: 'linear', keyPoints: '0;1;1', keyTimes: '0;0.22;1' }));
     poll.appendChild(anim('opacity', '0;1;0;0', D, { begin: '0.9s', keyTimes: '0;0.06;0.24;1' }));
     s.appendChild(poll);
-    shell(host, 'MCP SCOPE GATE + REGISTRY', 'checked per call, not per session', s,
-      'One stateless HTTP endpoint carries the JSON-RPC stream, so servers scale behind a load balancer. Every tool call crosses the scope gate at call time; a destructive call detours to a human approval card and only proceeds with a fresh approved:by:human elevation. Underneath, the registry polls each server\'s .well-known manifest so platform teams can discover and enable it.');
+    shell(host, 'STATELESS MCP GATE + REGISTRY', 'metadata and authority checked per request', s,
+      'Each JSON-RPC message gets its own POST and carries protocol version plus client capabilities. The gate validates issuer, audience, scope, tool, and arguments; a consequential call also needs an approval record bound to that exact action. The registry indexes server.json publication metadata, while a separate server/discover probe verifies what the live endpoint supports.');
   }
 
   // ── cf-spec-decode (14): draft proposes k tokens, one verify pass accepts a prefix ─

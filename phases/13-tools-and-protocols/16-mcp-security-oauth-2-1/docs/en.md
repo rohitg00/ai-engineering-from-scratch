@@ -1,169 +1,303 @@
-# MCP Security II — OAuth 2.1, Resource Indicators, Incremental Scopes
+# MCP Authorization: CIMD, Issuer Binding, PKCE, and Step-Up
 
-> Remote MCP servers need authorization, not just authentication. The 2025-11-25 spec aligns with OAuth 2.1 + PKCE + resource indicators (RFC 8707) + protected-resource metadata (RFC 9728). SEP-835 adds incremental scope consent with step-up authorization on 403 WWW-Authenticate. This lesson implements the step-up flow as a state machine so you can see every hop.
+> A remote MCP request is stateless, but its authorization is not anonymous. Bind every credential to the issuer that created it and every token to the resource that receives it.
 
 **Type:** Build
-**Languages:** Python (stdlib, OAuth state machine simulator)
-**Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 15 (security I)
-**Time:** ~75 minutes
+**Languages:** Python
+**Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 15 (security)
+**Time:** ~90 minutes
 
 ## Learning Objectives
 
-- Distinguish resource server from authorization server responsibilities.
-- Walk the PKCE-protected OAuth 2.1 authorization code flow.
-- Use `resource` (RFC 8707) and protected-resource metadata (RFC 9728) to prevent confused-deputy attacks.
-- Implement step-up authorization: server responds 403 with WWW-Authenticate asking for a higher scope; client re-prompts user consent and retries.
+- Discover authorization servers through protected-resource metadata.
+- Prefer Client ID Metadata Documents over deprecated Dynamic Client Registration.
+- Declare the correct `application_type` when a DCR compatibility path is unavoidable.
+- Validate authorization response `iss` and isolate credentials by issuer.
+- Use PKCE, resource indicators, audience validation, and incremental scopes.
+- Send authorized MCP 2026-07-28 requests without protocol sessions.
 
 ## The Problem
 
-Early MCP (pre-2025) shipped remote servers with ad-hoc API keys or even no auth. The 2025-11-25 spec closes that gap with a full OAuth 2.1 profile.
+A remote MCP server may read private records, write external systems, or trigger costly work. Authentication tells it who presented a credential. Authorization must also answer:
 
-Three real-world needs:
+- Which authorization server issued the credential?
+- Which MCP resource is the token for?
+- Which client and redirect URI completed the flow?
+- Which operations did the user approve?
+- Does this exact request still fit that approval?
 
-- **Ordinary remote servers.** User installs a remote MCP server that accesses their Notion / GitHub / Gmail. OAuth 2.1 with PKCE is the right shape.
-- **Scope escalation.** A notes server granted `notes:read` can later need `notes:write` for a specific action. Instead of re-doing the whole flow, step-up (SEP-835) asks for the additional scope.
-- **Confused deputy prevention.** Client holds a token audience-scoped for Server A. Server A is malicious and tries to present the token to Server B. Resource indicators (RFC 8707) pin the token to its intended audience.
+The 2026-07-28 authorization profile hardens client enrollment and issuer handling. It prefers Client ID Metadata Documents, deprecates Dynamic Client Registration, requires the right `application_type` on DCR, validates RFC 9207 issuer responses, and forbids credential reuse across issuers.
 
-OAuth 2.1 is not new. What is new is MCP's profile: specific required flows (authorization code + PKCE only; no implicit, no client credentials by default), resource indicators mandatory on every token request, and protected-resource metadata published so clients know where to go.
+These rules complement the stateless core. They do not restore a core handshake or `Mcp-Session-Id`.
 
 ## The Concept
 
-### Roles
+### Know the three roles
 
-- **Client.** The MCP client (Claude Desktop, Cursor, etc.).
-- **Resource server.** The MCP server (notes, GitHub, Postgres, whatever).
-- **Authorization server.** Issues tokens. May be the same service as the resource server or a separate IdP (Auth0, Keycloak, Cognito).
+- **MCP client:** sends requests on behalf of a resource owner.
+- **MCP resource server:** accepts the access token and serves the MCP endpoint.
+- **Authorization server:** authenticates the resource owner, collects consent, and issues tokens.
 
-In MCP's profile, resource and authorization servers CAN be the same host but SHOULD be distinguished by URLs.
+The resource server and authorization server can be operated together, but keep their identifiers and validation responsibilities separate.
 
-### Authorization code + PKCE
+### Authorization applies to HTTP
 
-The flow:
+The MCP authorization specification applies to HTTP-based transports. A local stdio server runs under the process and operating-system trust boundary. Do not add a fake browser OAuth flow to stdio merely for symmetry.
 
-1. Client generates `code_verifier` (random) and `code_challenge` (SHA256).
-2. Client redirects user to `/authorize?response_type=code&client_id=...&redirect_uri=...&scope=notes:read&code_challenge=...&resource=https://notes.example.com`.
-3. User consents. Authorization server redirects to `redirect_uri?code=...`.
-4. Client POSTs to `/token?grant_type=authorization_code&code=...&code_verifier=...&resource=...`.
-5. Authorization server validates the verifier's hash against the stored challenge and issues an access token.
-6. Client uses the token: `Authorization: Bearer ...` on every request to the resource server.
+For remote Streamable HTTP, send the bearer token in the `Authorization` header on every request. Never place it in the URL.
 
-PKCE prevents authorization-code interception attacks. Resource indicators prevent the token from being valid elsewhere.
+### Start with protected-resource metadata
 
-### Protected-resource metadata (RFC 9728)
-
-The resource server publishes a `.well-known/oauth-protected-resource` document:
+The resource server publishes RFC 9728 metadata:
 
 ```json
 {
-  "resource": "https://notes.example.com",
+  "resource": "https://notes.example.com/mcp",
   "authorization_servers": ["https://auth.example.com"],
-  "scopes_supported": ["notes:read", "notes:write", "notes:delete"]
+  "scopes_supported": ["notes:delete", "notes:read", "notes:write"]
 }
 ```
 
-Client discovers the authorization server from the resource server. Reduces configuration — the client only needs the resource URL.
+The client starts from the MCP resource URL, fetches this document, selects an advertised authorization server, and then fetches that server's OAuth or OpenID Connect metadata.
 
-### Resource indicators (RFC 8707)
+Preserve the resource path when constructing the RFC 9728 well-known URL. For the resource `https://notes.example.com/mcp`, this lesson uses `https://notes.example.com/.well-known/oauth-protected-resource/mcp`. Dropping the `/mcp` suffix can select metadata for a different protected resource on the same origin.
 
-`resource` parameter in the token request pins the token's intended audience. The issued token contains `aud: "https://notes.example.com"`. Another MCP server receiving this token checks `aud` and rejects it.
+Do not guess the authorization server from a hostname. Do not follow an issuer discovered from an unvalidated error body. Keep a policy for which issuers the client is willing to trust.
 
-### Scope model
+### Verify authorization server metadata
 
-Scopes are space-separated strings. Common MCP conventions:
+The metadata should expose endpoints and supported controls:
 
-- `notes:read`, `notes:write`, `notes:delete`
-- `admin:*` for admin capabilities (use sparingly)
-- `profile:read` for identity
-
-Scope selection should be least-privilege: request what you need now, step up when you need more.
-
-### Step-up authorization (SEP-835)
-
-User grants `notes:read`. They later ask the agent to delete a note. The server responds:
-
+```json
+{
+  "issuer": "https://auth.example.com",
+  "authorization_endpoint": "https://auth.example.com/authorize",
+  "token_endpoint": "https://auth.example.com/token",
+  "code_challenge_methods_supported": ["S256"],
+  "authorization_response_iss_parameter_supported": true,
+  "client_id_metadata_document_supported": true
+}
 ```
-HTTP/1.1 403 Forbidden
+
+Require S256 for PKCE. Record the exact issuer string. That exact value becomes the key for registration and token storage.
+
+### Follow the registration priority
+
+Use pre-registered client information when the client already has an explicit relationship with the selected issuer. Otherwise prefer Client ID Metadata Documents when the authorization server advertises support. Use DCR only as the deprecated compatibility fallback, then prompt for client information if none of those mechanisms is available.
+
+### Prefer Client ID Metadata Documents
+
+A Client ID Metadata Document gives the authorization server an HTTPS URL that is both the client identifier and the location of its metadata:
+
+```json
+{
+  "client_id": "https://client.example.com/oauth/metadata.json",
+  "client_name": "Notes desktop client",
+  "application_type": "native",
+  "redirect_uris": ["http://127.0.0.1:8765/callback"],
+  "grant_types": ["authorization_code"],
+  "response_types": ["code"]
+}
+```
+
+The authorization server fetches and validates the document. The `client_id` must be an HTTPS URL with a path, and the value inside the document must equal that URL exactly. The required document fields are `client_id`, `client_name`, and `redirect_uris`. `application_type` appears in this example but is not a CIMD requirement. Its new mandatory use is specifically the DCR path.
+
+Treat fetching the document as an SSRF-sensitive operation. Resolve and validate the destination, reject loopback, private, link-local, and otherwise disallowed addresses, re-check after redirects and DNS changes, limit redirects, bytes, and time, require JSON, and cache only according to validated HTTP cache controls. Treat `client_name` and other display fields as untrusted text.
+
+CIMD removes the need to mint a fresh dynamic identifier for every first contact. It does not remove redirect URI validation, issuer policy, or user consent.
+
+### DCR is a compatibility path
+
+Dynamic Client Registration remains available for older authorization servers, but it is deprecated for new MCP implementations.
+
+When using DCR, declare `application_type`:
+
+```json
+{
+  "client_name": "Notes desktop client",
+  "application_type": "native",
+  "redirect_uris": ["http://127.0.0.1:8765/callback"],
+  "grant_types": ["authorization_code"],
+  "response_types": ["code"]
+}
+```
+
+- Desktop, mobile, command-line, and loopback clients use `native`.
+- Remotely hosted browser applications use `web` and remote HTTPS redirects.
+
+Omitting the field can default to `web` in an OpenID Connect registration implementation and make a legitimate loopback redirect fail.
+
+Keep DCR code behind an explicit fallback decision. Do not silently fall back after an arbitrary CIMD validation failure. That could turn a security failure into a weaker enrollment path.
+
+### Bind credentials to the issuer
+
+Store issuer-minted enrollment material under the exact issuer:
+
+```text
+issuer_credentials[issuer] = pre_registered_or_dcr_client
+tokens[(issuer, resource)] = access_token
+```
+
+If protected-resource discovery changes from `https://auth-one.example` to `https://auth-two.example`, re-evaluate trust. Never send the first issuer's client secret, DCR client id, registration access token, refresh token, or access token to the second. Pre-registered and DCR clients must use credentials issued for the new issuer.
+
+A CIMD client id is different because it is a self-hosted HTTPS URL, not a credential minted by an authorization server. The same CIMD URL is portable: a new trusted issuer fetches and validates the document without DCR re-registration. Authorization responses and tokens are still validated and stored under the new issuer.
+
+### Authorization code with PKCE
+
+The interactive flow is:
+
+1. Generate a high-entropy `code_verifier`.
+2. Derive the S256 `code_challenge`.
+3. Send the authorization request with exact `client_id`, `redirect_uri`, `scope`, `code_challenge`, and `resource`.
+4. Receive an authorization response containing `code` and, when provided, `iss`.
+5. Validate `iss` against the exact recorded issuer before using any response field.
+6. Exchange the code with `code_verifier`, the same redirect URI, and the same `resource`.
+7. Store the resulting token under `(issuer, resource)`.
+
+The `resource` parameter from RFC 8707 appears in both authorization and token requests. It identifies the canonical MCP server URI.
+
+### Validate `iss` exactly
+
+RFC 9207 prevents an authorization response from one issuer being confused with a response from another.
+
+When `iss` is present, compare it to the recorded issuer without case folding, trailing-slash changes, default-port removal, or percent-encoding normalization. On mismatch, do not act on the code or even display attacker-controlled error details from that response.
+
+An authorization server that includes `iss` advertises `authorization_response_iss_parameter_supported: true`. Current clients still validate a present `iss` even when that advertisement is missing.
+
+### Validate audience at the MCP server
+
+The resource server accepts only tokens issued for itself:
+
+```text
+token.issuer == configured_authorization_server
+token.audience == canonical_mcp_resource
+```
+
+Invalid, expired, wrong-issuer, or wrong-audience tokens receive 401. The MCP server must not accept or transit a token meant for another service.
+
+### Request the smallest current scope
+
+Start with the scope needed now. If a later tool requires more, the server returns 403 with an authoritative scope challenge:
+
+```text
 WWW-Authenticate: Bearer error="insufficient_scope",
-    scope="notes:delete", resource="https://notes.example.com"
+  scope="notes:delete",
+  resource_metadata="https://notes.example.com/.well-known/oauth-protected-resource/mcp"
 ```
 
-Client sees the insufficient_scope error, prompts the user with a consent dialog for the additional scope, performs a mini OAuth flow for it, retries the request with the new token.
+The client explains the new permission, obtains consent, performs a new authorization flow with the combined scope set, and retries the MCP request with a new JSON-RPC id.
 
-### Token audience validation
+Do not assume the challenged scope is a subset of `scopes_supported`. The challenge is authoritative for the current operation.
 
-Every request: server checks `token.aud == self.resource_url`. Mismatch = 401. This stops cross-server token reuse.
+### Authorization and the stateless MCP wire
 
-### Short-lived tokens and rotation
+An authorized tool call still carries the complete current request envelope:
 
-Access tokens SHOULD be short-lived (1 hour default). Refresh tokens rotate on every refresh. The client handles silent refresh in the background.
+```text
+POST /mcp
+Authorization: Bearer <access-token>
+MCP-Protocol-Version: 2026-07-28
+Mcp-Method: tools/call
+Mcp-Name: notes.delete
+```
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 12,
+  "method": "tools/call",
+  "params": {
+    "name": "notes.delete",
+    "arguments": {"id": "note-7"},
+    "_meta": {
+      "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+      "io.modelcontextprotocol/clientCapabilities": {},
+      "io.modelcontextprotocol/clientInfo": {
+        "name": "oauth-lesson-client",
+        "version": "1.0.0"
+      }
+    }
+  }
+}
+```
+
+The token authorizes the principal. The request metadata negotiates protocol behavior. Neither substitutes for the other.
+
+Validate the wire in a fixed order: JSON-RPC and metadata types, header and body equality, then protocol support. A routing or version-header mismatch returns HTTP 400 with `-32020`. If header and body agree on an unsupported version, return HTTP 400 with `-32022` and `data` exactly `{"supported":["2026-07-28"],"requested":"<actual>"}`. An unknown method returns HTTP 404 with `-32601`.
+
+Every request error, including 401 invalid token and 403 insufficient scope, is a JSON-RPC error envelope with the original request `id`. Structured recovery information belongs in optional error `data`; `WWW-Authenticate` remains an HTTP response header. A notification has no `id`, so it receives no JSON-RPC body. An accepted HTTP notification returns 202 with an empty body.
+
+The server implements `server/discover` and advertises tools, so it also implements the mandatory `tools/list` method. Its tool descriptors have stable names, descriptions, and object-root `inputSchema` values. The list is deterministic and returns `resultType`, server identity metadata, a bounded `ttlMs`, and `cacheScope`. Discovery and a user-independent tool list can be available before authorization. Apply normal policy and private caching if either varies by principal.
 
 ### No token passthrough
 
-Sampling servers (Phase 13 · 11) MUST NOT pass the client's token through to other services. The sampling request is the boundary.
+An MCP server must not forward the client's MCP access token to a downstream API. Obtain a separate downstream token with the right audience or use an explicit token-exchange design. Audience validation only works when services refuse tokens minted for someone else.
 
-### Confused deputy prevention
+### Refresh tokens
 
-Token binds to `aud`. Client binds to `client_id`. Every request validated against both. The spec explicitly bans the old "pass-the-token" pattern that was common in pre-MCP remote tool ecosystems.
-
-### Client ID discovery
-
-Each MCP client publishes its metadata at a fixed URL. Authorization servers can fetch the client's metadata document to discover redirect URIs and contact info. This removes manual client registration.
-
-### Gateways and OAuth
-
-Phase 13 · 17 shows how an enterprise gateway handles OAuth: gateway holds credentials for upstream servers, tokens to the client are gateway-issued, and upstream tokens never leave the gateway. This flips the trust model — users authenticate with the gateway once; gateway handles N server authorizations.
+Refresh tokens are optional. When issued, store them confidentially and key them by issuer and resource. Do not assume they exist. Rotate them when the authorization server supports rotation and detect reuse of invalidated values.
 
 ```figure
 t3-scope-stepup
 ```
 
+## Build It
+
+`code/main.py` is an in-process protocol and authorization simulator. It implements protected-resource discovery, authorization server metadata, CIMD enrollment, version-gated DCR fallback, application type checks, PKCE, issuer validation, resource-bound tokens, scope step-up, `server/discover`, `tools/list`, and a stateless tool request.
+
+The model receives parsed request bodies and routing headers. It is not a complete HTTP adapter and does not parse `Content-Type` or `Accept`. Connect it to Lesson 09's Streamable HTTP adapter, which requires `Content-Type: application/json` and an `Accept` value containing both `application/json` and `text/event-stream`.
+
+Run it:
+
+```bash
+cd phases/13-tools-and-protocols/16-mcp-security-oauth-2-1
+python3 code/main.py
+python3 -m unittest discover code/tests -v
+```
+
+The output shows discovery first, CIMD enrollment, an ordinary read, two separate scope step-ups, and issuer-keyed credential storage.
+
 ## Use It
 
-`code/main.py` simulates the full OAuth 2.1 step-up flow as a state machine. It implements:
+Map the simulator objects to production components:
 
-- PKCE code-verifier / challenge generation.
-- Authorization code flow with resource indicator.
-- Protected-resource metadata endpoint.
-- Token validation with audience check.
-- Step-up on `insufficient_scope`.
-
-No HTTP server in this lesson; the state machine runs in memory so you can trace every hop. Phase 13 · 17's gateway lesson wires it to an actual transport.
+- `ResourceServer.protected_resource_metadata` becomes the RFC 9728 endpoint.
+- `AuthorizationServer.metadata` becomes RFC 8414 or OpenID Connect discovery.
+- `Client.enroll` becomes CIMD resolution plus an explicit DCR compatibility branch.
+- Issuer-minted client credentials and `tokens_by_issuer_resource` become encrypted records. A CIMD URL may remain portable while its authorization results remain issuer-bound.
+- `ResourceServer.handle` becomes middleware that validates current MCP headers, token, and tool scope before dispatch while keeping every request error in a matching JSON-RPC envelope.
 
 ## Ship It
 
-This lesson produces `outputs/skill-oauth-scope-planner.md`. Given a remote MCP server with tools, the skill designs the scope set, pinning rules, and step-up policy.
+This lesson ships `outputs/skill-oauth-scope-planner.md`. It now designs enrollment priority, issuer-bound credential storage, application type, PKCE, resource indicators, scope challenges, and the current stateless request boundary.
 
 ## Exercises
 
-1. Run `code/main.py`. Trace the two-scope step-up flow. Note which hops repeat on step-up.
-
-2. Add refresh-token rotation: every refresh issues a new refresh token and invalidates the old one. Simulate a stolen refresh token being used after rotation and confirm it fails.
-
-3. Implement the protected-resource metadata endpoint as a real HTTP response using stdlib http.server. Mirror the /mcp endpoint from Lesson 09.
-
-4. Design a scope hierarchy for a GitHub MCP server: read repo, write PR, approve PR, merge PR, admin. Use step-up between each level.
-
-5. Read RFC 8707 and RFC 9728. Identify the one field in 9728 that MCP uses differently from the RFC's example. (Hint: it concerns `scopes_supported`.)
+1. Add refresh-token rotation and reject reuse of the previous refresh token.
+2. Add an issuer allowlist. On issuer change, reuse only a portable CIMD URL; refuse all prior issuer-minted credentials and tokens.
+3. Add an expiry to authorization codes and confirm a late exchange fails.
+4. Build a web client variant with a remote HTTPS redirect and compare its DCR metadata to the native client.
+5. Add a second resource under the same issuer. Confirm its access token cannot be used at the first resource.
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| OAuth 2.1 | "Modern OAuth" | Consolidated RFC that mandates PKCE and forbids implicit flow |
-| PKCE | "Proof-of-possession" | Code verifier + challenge defeating authorization-code interception |
-| Resource indicator | "Token audience" | RFC 8707 `resource` parameter pinning token to one server |
-| Protected-resource metadata | "Discovery doc" | RFC 9728 `.well-known/oauth-protected-resource` |
-| Step-up authorization | "Incremental consent" | SEP-835 flow for adding scopes on demand |
-| `insufficient_scope` | "403 with WWW-Authenticate" | Server signal to re-consent for a larger scope |
-| Confused deputy | "Token reuse across services" | Attack where a trusted holder forwards a token inappropriately |
-| Short-lived token | "Access token TTL" | Bearer that expires quickly; refresh token renews |
-| Scope hierarchy | "Least privilege stack" | Graduated scope set with step-up between levels |
-| Client ID metadata | "Client discovery doc" | URL at which the client publishes its own OAuth metadata |
+| Term | Meaning |
+|------|---------|
+| Protected-resource metadata | RFC 9728 document that identifies the resource and authorization servers |
+| CIMD | HTTPS metadata document whose URL is the OAuth client identifier |
+| DCR | Deprecated dynamic client enrollment retained for compatibility |
+| `application_type` | `native` or `web`, used to validate redirect URI rules |
+| PKCE | Verifier and S256 challenge that protect an intercepted authorization code |
+| `iss` | RFC 9207 authorization response issuer identifier |
+| Resource indicator | RFC 8707 parameter that binds a token request to an MCP resource |
+| Audience | Resource for which a token is valid |
+| Step-up | New consent and token issuance for an additional current-operation scope |
+| Issuer-bound credentials | Registration and token records isolated by exact authorization server issuer |
 
 ## Further Reading
 
-- [MCP — Authorization spec](https://modelcontextprotocol.io/specification/draft/basic/authorization) — canonical MCP OAuth profile
-- [den.dev — MCP November authorization spec](https://den.dev/blog/mcp-november-authorization-spec/) — walkthrough of the 2025-11-25 changes
-- [RFC 8707 — Resource indicators for OAuth 2.0](https://datatracker.ietf.org/doc/html/rfc8707) — the audience-pinning RFC
-- [RFC 9728 — OAuth 2.0 protected resource metadata](https://datatracker.ietf.org/doc/html/rfc9728) — the discovery-document RFC
-- [Aembit — MCP OAuth 2.1, PKCE and the future of AI authorization](https://aembit.io/blog/mcp-oauth-2-1-pkce-and-the-future-of-ai-authorization/) — practical step-up-flow walk-through
+- [MCP 2026-07-28 authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization)
+- [RFC 9728: OAuth 2.0 Protected Resource Metadata](https://www.rfc-editor.org/rfc/rfc9728)
+- [RFC 8707: Resource Indicators for OAuth 2.0](https://www.rfc-editor.org/rfc/rfc8707)
+- [RFC 9207: OAuth 2.0 Authorization Server Issuer Identification](https://www.rfc-editor.org/rfc/rfc9207)
+- [OAuth Client ID Metadata Document draft](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/)

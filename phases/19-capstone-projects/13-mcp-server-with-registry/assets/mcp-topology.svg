@@ -14,25 +14,25 @@
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">MCP 2026 — StreamableHTTP + scopes + OPA + registry</text>
+  <text x="480" y="24" text-anchor="middle" class="title">MCP 2026-07-28: stateless requests + policy + registry</text>
 
   <rect x="40" y="50" width="260" height="80" class="cool"/>
   <text x="170" y="72" text-anchor="middle" class="head">MCP clients</text>
-  <text x="170" y="94" text-anchor="middle" class="small">Claude Code, Cursor 3, Amp,</text>
-  <text x="170" y="112" text-anchor="middle" class="small">OpenCode, Gemini CLI</text>
+  <text x="170" y="94" text-anchor="middle" class="small">version + capabilities</text>
+  <text x="170" y="112" text-anchor="middle" class="small">on every request</text>
 
   <rect x="340" y="50" width="260" height="80" class="dsk"/>
-  <text x="470" y="72" text-anchor="middle" class="head">StreamableHTTP</text>
-  <text x="470" y="94" text-anchor="middle" class="small">JSON-RPC + streaming</text>
-  <text x="470" y="112" text-anchor="middle" class="small">stateless, horizontally scalable</text>
+  <text x="470" y="72" text-anchor="middle" class="head">Streamable HTTP</text>
+  <text x="470" y="94" text-anchor="middle" class="small">one POST per JSON-RPC message</text>
+  <text x="470" y="112" text-anchor="middle" class="small">no protocol session</text>
 
   <rect x="640" y="50" width="280" height="80" class="cold"/>
   <text x="780" y="72" text-anchor="middle" class="head">OAuth 2.1 scopes</text>
-  <text x="780" y="94" text-anchor="middle" class="small">SPIFFE workload identity</text>
-  <text x="780" y="112" text-anchor="middle" class="small">per-tool scope enforcement</text>
+  <text x="780" y="94" text-anchor="middle" class="small">issuer + audience + expiry</text>
+  <text x="780" y="112" text-anchor="middle" class="small">scope checked per tool call</text>
 
   <rect x="40" y="160" width="560" height="200" class="box"/>
-  <text x="320" y="182" text-anchor="middle" class="head">read-only MCP server (FastMCP)</text>
+  <text x="320" y="182" text-anchor="middle" class="head">read-only MCP replicas</text>
   <rect x="60" y="200" width="170" height="40" class="cool"/>
   <text x="145" y="220" text-anchor="middle" class="step">postgres.readonly</text>
   <text x="145" y="234" text-anchor="middle" class="small">scope: postgres:query:readonly</text>
@@ -55,28 +55,28 @@
   <text x="780" y="182" text-anchor="middle" class="head">destructive MCP server</text>
   <rect x="660" y="200" width="240" height="44" class="hot"/>
   <text x="780" y="220" text-anchor="middle" class="step">jira.create / linear.create</text>
-  <text x="780" y="234" text-anchor="middle" class="small">scope: +approved:by:human</text>
+  <text x="780" y="234" text-anchor="middle" class="small">write scope + separate approval</text>
   <rect x="660" y="254" width="240" height="44" class="hot"/>
   <text x="780" y="274" text-anchor="middle" class="step">postgres.write</text>
-  <text x="780" y="288" text-anchor="middle" class="small">fresh Slack approval required</text>
+  <text x="780" y="288" text-anchor="middle" class="small">action-bound approval required</text>
 
   <rect x="660" y="310" width="240" height="40" class="dsk"/>
-  <text x="780" y="330" text-anchor="middle" class="step">Slack approval card</text>
-  <text x="780" y="344" text-anchor="middle" class="small">elevates scope for 15 min</text>
+  <text x="780" y="330" text-anchor="middle" class="step">approval record</text>
+  <text x="780" y="344" text-anchor="middle" class="small">actor + tool + args + target + expiry</text>
 
   <rect x="40" y="380" width="420" height="130" class="box"/>
   <text x="250" y="402" text-anchor="middle" class="head">registry service</text>
-  <text x="250" y="422" text-anchor="middle" class="small">polls .well-known/mcp-capabilities</text>
-  <text x="250" y="440" text-anchor="middle" class="small">validates JSON Schema</text>
-  <text x="250" y="458" text-anchor="middle" class="small">UI: list / search / validate / enable</text>
-  <text x="250" y="476" text-anchor="middle" class="small">team ownership + SLO per server</text>
-  <text x="250" y="498" text-anchor="middle" class="caption">AAIF Registry spec</text>
+  <text x="250" y="422" text-anchor="middle" class="small">publishes and indexes server.json</text>
+  <text x="250" y="440" text-anchor="middle" class="small">validates Registry schema</text>
+  <text x="250" y="458" text-anchor="middle" class="small">probes live server/discover</text>
+  <text x="250" y="476" text-anchor="middle" class="small">reports metadata/runtime drift</text>
+  <text x="250" y="498" text-anchor="middle" class="caption">Registry and MCP versions are separate</text>
 
   <rect x="500" y="380" width="420" height="130" class="box"/>
   <text x="710" y="402" text-anchor="middle" class="head">audit + load</text>
   <text x="710" y="422" text-anchor="middle" class="small">per-tenant JSONL audit log</text>
   <text x="710" y="440" text-anchor="middle" class="small">Presidio PII redaction before write</text>
   <text x="710" y="458" text-anchor="middle" class="small">load test: 100 concurrent clients</text>
-  <text x="710" y="476" text-anchor="middle" class="small">horizontal scale via LB</text>
-  <text x="710" y="498" text-anchor="middle" class="caption">MCP conformance tests green</text>
+  <text x="710" y="476" text-anchor="middle" class="small">two replicas without affinity</text>
+  <text x="710" y="498" text-anchor="middle" class="caption">receiver-side wire evidence</text>
 </svg>

@@ -1,7 +1,10 @@
+"""Runnable companion for the Image Fundamentals lesson.
+Builds a deterministic RGB image and transforms it as a NumPy tensor.
+Implements nearest, bilinear, and bicubic resizing from scratch.
+See ../docs/en.md for the derivations and production-library comparison.
+"""
+
 import numpy as np
-from PIL import Image
-from io import BytesIO
-from urllib.request import Request, urlopen
 
 
 IMAGENET_MEAN = np.array([0.485, 0.456, 0.406], dtype=np.float32)
@@ -19,24 +22,19 @@ def synthetic_image(height=128, width=192, seed=0):
     return np.clip(rgb, 0, 255).astype(np.uint8)
 
 
-def load_rgb(url, timeout=5):
-    try:
-        req = Request(url, headers={"User-Agent": "ai-eng-course/1.0"})
-        data = urlopen(req, timeout=timeout).read()
-        img = Image.open(BytesIO(data)).convert("RGB")
-        return np.asarray(img)
-    except Exception:
-        return synthetic_image()
-
-
 def inspect(arr, label="image"):
     if arr.ndim == 2:
-        print(f"[{label}] dtype={arr.dtype} shape={arr.shape} "
-              f"min={arr.min()} max={arr.max()} mean={float(arr.mean()):.2f}")
+        print(
+            f"[{label}] dtype={arr.dtype} shape={arr.shape} "
+            f"min={arr.min()} max={arr.max()} mean={float(arr.mean()):.2f}"
+        )
         return
-    print(f"[{label}] dtype={arr.dtype} shape={arr.shape} "
-          f"min={arr.min()} max={arr.max()} "
-          f"per-channel mean={arr.reshape(-1, arr.shape[-1]).mean(axis=0).round(2).tolist()}")
+    print(
+        f"[{label}] dtype={arr.dtype} shape={arr.shape} "
+        f"min={arr.min()} max={arr.max()} "
+        f"per-channel mean="
+        f"{arr.reshape(-1, arr.shape[-1]).mean(axis=0).round(2).tolist()}"
+    )
 
 
 def hwc_to_chw(arr):
@@ -61,8 +59,6 @@ def rgb_to_hsv(rgb):
 
     h = np.zeros_like(cmax)
     mask = delta > 0
-    # argmax-based masks avoid float-equality edge cases where
-    # cmax == r/g/b would silently miss a pixel.
     argmax = np.argmax(rgb_f, axis=-1)
     rmax = mask & (argmax == 0)
     gmax = mask & (argmax == 1)
@@ -72,7 +68,7 @@ def rgb_to_hsv(rgb):
     h[bmax] = ((r[bmax] - g[bmax]) / delta[bmax]) + 4
     h = h * 60.0
 
-    s = np.where(cmax > 0, delta / cmax, 0)
+    s = np.divide(delta, cmax, out=np.zeros_like(delta), where=cmax > 0)
     v = cmax
     return np.stack([h, s, v], axis=-1)
 
@@ -91,16 +87,85 @@ def deprocess_imagenet(chw_float32):
     return x
 
 
+def resize_coordinates(source_length, target_length):
+    if target_length < 1:
+        raise ValueError("target length must be positive")
+    if source_length < 1:
+        raise ValueError("source length must be positive")
+    if target_length == 1:
+        return np.zeros(1, dtype=np.float32)
+    return np.linspace(0, source_length - 1, target_length, dtype=np.float32)
+
+
+def nearest_resize(arr, target_height, target_width):
+    y = np.rint(resize_coordinates(arr.shape[0], target_height)).astype(int)
+    x = np.rint(resize_coordinates(arr.shape[1], target_width)).astype(int)
+    return arr[y[:, None], x[None, :]]
+
+
+def bilinear_resize(arr, target_height, target_width):
+    y = resize_coordinates(arr.shape[0], target_height)
+    x = resize_coordinates(arr.shape[1], target_width)
+    y0 = np.floor(y).astype(int)
+    x0 = np.floor(x).astype(int)
+    y1 = np.minimum(y0 + 1, arr.shape[0] - 1)
+    x1 = np.minimum(x0 + 1, arr.shape[1] - 1)
+    wy = (y - y0)[:, None, None]
+    wx = (x - x0)[None, :, None]
+
+    source = arr.astype(np.float32)
+    top = source[y0[:, None], x0[None, :]] * (1 - wx)
+    top += source[y0[:, None], x1[None, :]] * wx
+    bottom = source[y1[:, None], x0[None, :]] * (1 - wx)
+    bottom += source[y1[:, None], x1[None, :]] * wx
+    result = top * (1 - wy) + bottom * wy
+    return np.clip(np.rint(result), 0, 255).astype(arr.dtype)
+
+
+def cubic_weight(distance, tension=-0.5):
+    x = np.abs(distance)
+    inner = (tension + 2) * x**3 - (tension + 3) * x**2 + 1
+    outer = tension * x**3 - 5 * tension * x**2 + 8 * tension * x - 4 * tension
+    return np.where(x <= 1, inner, np.where(x < 2, outer, 0.0))
+
+
+def bicubic_resize(arr, target_height, target_width):
+    y = resize_coordinates(arr.shape[0], target_height)
+    x = resize_coordinates(arr.shape[1], target_width)
+    offsets = np.arange(-1, 3)
+
+    x_base = np.floor(x).astype(int)
+    x_neighbors = x_base[:, None] + offsets[None, :]
+    x_weights = cubic_weight(x[:, None] - x_neighbors)
+    x_weights /= x_weights.sum(axis=1, keepdims=True)
+    x_indices = np.clip(x_neighbors, 0, arr.shape[1] - 1)
+
+    source = arr.astype(np.float32)
+    horizontal = np.zeros((arr.shape[0], target_width, arr.shape[2]), dtype=np.float32)
+    for tap in range(4):
+        horizontal += source[:, x_indices[:, tap], :] * x_weights[None, :, tap, None]
+
+    y_base = np.floor(y).astype(int)
+    y_neighbors = y_base[:, None] + offsets[None, :]
+    y_weights = cubic_weight(y[:, None] - y_neighbors)
+    y_weights /= y_weights.sum(axis=1, keepdims=True)
+    y_indices = np.clip(y_neighbors, 0, arr.shape[0] - 1)
+
+    result = np.zeros((target_height, target_width, arr.shape[2]), dtype=np.float32)
+    for tap in range(4):
+        result += horizontal[y_indices[:, tap], :, :] * y_weights[:, tap, None, None]
+    return np.clip(np.rint(result), 0, 255).astype(arr.dtype)
+
+
 def resize_compare(arr, scale=3):
-    target = (arr.shape[1] * scale, arr.shape[0] * scale)
-    methods = {
-        "nearest": Image.NEAREST,
-        "bilinear": Image.BILINEAR,
-        "bicubic": Image.BICUBIC,
-    }
+    if not isinstance(scale, int) or scale < 1:
+        raise ValueError("scale must be a positive integer")
+    target_height = arr.shape[0] * scale
+    target_width = arr.shape[1] * scale
     return {
-        name: np.asarray(Image.fromarray(arr).resize(target, filt))
-        for name, filt in methods.items()
+        "nearest": nearest_resize(arr, target_height, target_width),
+        "bilinear": bilinear_resize(arr, target_height, target_width),
+        "bicubic": bicubic_resize(arr, target_height, target_width),
     }
 
 
@@ -111,11 +176,8 @@ def local_roughness(x):
 
 
 def main():
-    url = (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/"
-        "PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png"
-    )
-    arr = load_rgb(url)
+    arr = synthetic_image()
+    print("source: deterministic synthetic RGB image (offline)")
     inspect(arr, "raw")
 
     chw = hwc_to_chw(arr)

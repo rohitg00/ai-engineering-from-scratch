@@ -1,32 +1,49 @@
 ---
 name: mcp-apps-spec
-description: Produce the full MCP Apps contract for a tool that needs an interactive UI resource.
-version: 1.0.0
+description: Design and review an MCP App contract on the stateless 2026-07-28 protocol.
+version: 2.0.0
 phase: 13
 lesson: 14
-tags: [mcp, apps, ui-resources, csp, iframe-sandbox]
+tags: [mcp, apps, stateless, ui-resources, csp, sandbox]
 ---
 
-Given a tool that would benefit from an interactive UI (timeline, form, dashboard, map, chart), produce the MCP Apps contract.
+Given an MCP tool that may need an interactive view, produce a framework-neutral contract.
 
-Produce:
+## Required inputs
 
-1. `ui://` URI. One canonical name for the UI resource (e.g. `ui://notes/timeline`).
-2. Tool result shape. `content[]` with `text` preamble and `ui_resource` block; `_meta.ui` populated.
-3. CSP. Minimum allowlist for `default-src`, `script-src`, `connect-src`, `img-src`, `style-src`. Avoid `'unsafe-inline'` unless necessary.
-4. Permissions list. Camera / mic / geolocation / network if needed; empty if not.
-5. postMessage entry points. Which `host.*` calls the UI will make and what they return.
-6. Security checklist. Distinguish-from-host, no clickjacking, strict connect-src, HTML sanitization if any user content is rendered.
+- Tool name, arguments, ordinary text result, and structured result.
+- User interactions the view must support.
+- Data sensitivity and whether responses vary by authorization context.
+- Browser permissions and external origins the view needs.
+- Text-only behavior for hosts without Apps support.
 
-Hard rejects:
-- CSP with `default-src *`. Wide-open security risk.
-- Any `permissions` request beyond what the UI actually uses. Minimum privilege.
-- Any ui:// resource that loads external scripts. Bundle or refuse.
-- Any UI that renders user-controlled HTML without sanitization. XSS vector.
+## Produce
 
-Refusal rules:
-- If the UI is just a static result, refuse to scaffold an App; return text content.
-- If the tool would benefit from native host widgets (progress bars, confirmation dialogs), recommend those instead.
-- If the host does not yet support MCP Apps (VS Code stable, Zed, Windsurf as of 2026-04), flag fallback-to-text path.
+1. Current core envelope. Show `2026-07-28`, per-request `protocolVersion`, `clientCapabilities`, recommended `clientInfo`, matching `Mcp-Method` and `Mcp-Name` headers, and `resultType` responses.
+2. Discovery entry. Advertise `io.modelcontextprotocol/ui` in `server/discover`, with conservative `ttlMs` and `cacheScope`.
+3. Tool declaration. Put nested `_meta.ui.resourceUri` on the tool returned by `tools/list`. Do not wait for `tools/call` to reveal the UI.
+4. Resource contract. Include deterministic `resources/list` metadata before `resources/read`. Give one canonical `ui://` URI, stable name and description, `text/html;profile=mcp-app`, cache hints, CSP domain lists (`connectDomains`, `resourceDomains`, `frameDomains`, `baseUriDomains`), and the minimum permissions object.
+5. Result contract. Return useful text and structured data whether or not the host renders the App.
+6. Bridge contract. List every Apps `ui/*` or proxied method, exact message origin, argument schema, result schema, and host-side consent check.
+7. Fallback. Describe the tool and result when the client omits the Apps extension capability.
+8. Verification table. Cover HTTP 400 `-32020` header mismatch before routing, HTTP 400 `-32022` with exact supported and requested version data, HTTP 400 `-32021` with `data.requiredCapabilities`, HTTP 404 `-32601`, 202 empty-body notifications, CSP violation, untrusted content, unauthorized bridge calls, and text fallback.
+9. Transport boundary. If the implementation receives parsed requests and headers, label it an in-process protocol model and connect it to Lesson 09's complete Streamable HTTP adapter. A real adapter must require JSON Content-Type and an Accept value containing JSON plus SSE.
 
-Output: a one-page contract with the `ui://` URI, tool result JSON, CSP, permissions, postMessage entry points, and a security checklist. End with one sentence on the minimum host that will render this UI.
+## Hard rejects
+
+- A core `initialize`, `notifications/initialized`, or `Mcp-Session-Id` path presented as current MCP.
+- A wildcard `postMessage` target origin or a receiver that skips `event.origin` validation.
+- A UI binding revealed only after the tool runs.
+- Wildcard CSP domain lists, unbounded network origins, or permissions without a visible feature.
+- User-controlled HTML inserted without a defined sanitization boundary.
+- A consequential UI action that treats an iframe click as host authorization.
+- A server that advertises resources but omits `resources/list`.
+- Any JSON-RPC response body for a notification without an `id`.
+
+## Compatibility boundary
+
+Legacy flat UI metadata may be read as a fallback, but new output uses nested `_meta.ui.resourceUri`. `ui/initialize` is allowed only when identified as the Apps postMessage handshake. It never stands in for removed MCP core initialization.
+
+## Output format
+
+Return a compact design with these headings: Core Wire, Discovery, Tool, Resource, Result, Bridge, Security, Fallback, Verification. End with the single riskiest origin, permission, or consent assumption.

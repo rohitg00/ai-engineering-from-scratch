@@ -1,8 +1,9 @@
-export type JsonRpcId = number | string | null;
+export type JsonRpcRequestId = number | string;
+export type JsonRpcResponseId = JsonRpcRequestId | null;
 
 export type JsonRpcRequest = {
   jsonrpc: "2.0";
-  id?: JsonRpcId;
+  id?: JsonRpcRequestId;
   method: string;
   params?: Record<string, unknown>;
 };
@@ -15,7 +16,7 @@ export type JsonRpcError = {
 
 export type JsonRpcResponse = {
   jsonrpc: "2.0";
-  id: JsonRpcId;
+  id: JsonRpcResponseId;
   result?: unknown;
   error?: JsonRpcError;
 };
@@ -25,6 +26,7 @@ export type JsonSchema = {
   properties?: Record<string, JsonSchema>;
   required?: string[];
   enum?: string[];
+  additionalProperties?: boolean;
 };
 
 export type ToolAnnotations = {

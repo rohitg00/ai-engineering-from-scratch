@@ -1,0 +1,78 @@
+{
+  "lesson": "13-mcp-async-tasks",
+  "title": "MCP Tasks Extension: Durable Work on a Stateless Core",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How can a stateless MCP server support work that lasts ten minutes?",
+      "options": [
+        "Keep an Mcp-Session-Id connection open for ten minutes",
+        "Store progress only in initialize state",
+        "Require every client to use sticky load balancing",
+        "Return an explicit durable task handle backed by application storage"
+      ],
+      "correct": 3,
+      "explanation": "Stateless describes the protocol request model. Durable application state is represented by an explicit task id and shared storage."
+    },
+    {
+      "stage": "check",
+      "question": "When may a server return resultType task from tools/call?",
+      "options": [
+        "After the current request advertises the extension and the task is durably readable",
+        "Whenever a previous session advertised Tasks",
+        "Before persistence so the client can poll optimistically",
+        "Only when params._meta.task.required is true"
+      ],
+      "correct": 0,
+      "explanation": "Task creation is server-directed, but current-request capability support and durable-before-return creation are mandatory. Missing support returns -32021 with data.requiredCapabilities."
+    },
+    {
+      "stage": "check",
+      "question": "A tasks/get response has resultType complete and status working. What does that mean?",
+      "options": [
+        "The response violates the extension",
+        "The underlying job completed",
+        "The task was cancelled",
+        "The polling RPC completed but the job is still running"
+      ],
+      "correct": 3,
+      "explanation": "resultType describes the tasks/get RPC. The task status independently describes the durable job. When status is completed, the nested CallToolResult has its own resultType complete and serverInfo metadata."
+    },
+    {
+      "stage": "check",
+      "question": "How does a client answer input_required after a task already exists?",
+      "options": [
+        "Call tasks/result with an answer field",
+        "Open a new initialize session",
+        "Retry the original tools/call with the same id",
+        "Send tasks/update with inputResponses for outstanding task keys"
+      ],
+      "correct": 3,
+      "explanation": "Post-creation task input is surfaced by tasks/get and fulfilled through tasks/update, not by retrying the original call."
+    },
+    {
+      "stage": "post",
+      "question": "What does a successful tasks/cancel response guarantee?",
+      "options": [
+        "The server acknowledged cancellation intent",
+        "The result has been deleted",
+        "The final task status will be cancelled",
+        "The worker has already stopped"
+      ],
+      "correct": 0,
+      "explanation": "Cancellation is cooperative and eventually consistent. Work may finish or ignore cancellation after the acknowledgement."
+    },
+    {
+      "stage": "post",
+      "question": "Which method set matches the current official Tasks extension?",
+      "options": [
+        "tools/task, notifications/task_result, and roots/list",
+        "tasks/get, tasks/update, and tasks/cancel",
+        "tasks/create, tasks/subscribe, and tasks/delete",
+        "tasks/status, tasks/result, and tasks/list"
+      ],
+      "correct": 1,
+      "explanation": "The extension uses tasks/get, tasks/update, and tasks/cancel. Each HTTP request sets Mcp-Name to params.taskId. The older status, result, and list methods are migration-only."
+    }
+  ]
+}

@@ -3,7 +3,7 @@ name: find-your-level
 version: 1.0.0
 description: >
   Interactive quiz that maps your AI/ML knowledge to a starting point in the
-  503-lesson, 20-phase AI Engineering from Scratch curriculum.
+  511-lesson, 20-phase AI Engineering from Scratch curriculum.
   Trigger phrases: "where should I start", "find my level", "what do I know",
   "which phase", "assess my knowledge", "placement test", "skip ahead"
 tags: [assessment, onboarding, curriculum, ai-engineering]
@@ -12,7 +12,7 @@ tags: [assessment, onboarding, curriculum, ai-engineering]
 # Find Your Level
 
 You are administering a placement quiz for the **AI Engineering from Scratch**
-curriculum (20 phases, 503 lessons). Your job is to figure out where the
+curriculum (20 phases, 511 lessons). Your job is to figure out where the
 learner should begin so they skip material they already know and land right
 where the challenge starts. Works with any agent.
 

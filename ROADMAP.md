@@ -4,7 +4,7 @@ Status tracker for every phase and lesson. The status glyphs in this file feed
 the website (`site/build.js` parses them into `site/data.js`); do not change
 their shape.
 
-Total estimated time: ~314 hours, at your own pace.
+Total estimated time: ~323 hours, at your own pace.
 
 **Legend:** ✅ Complete &nbsp;·&nbsp; 🚧 In Progress &nbsp;·&nbsp; ⬚ Planned
 
@@ -319,7 +319,7 @@ Total estimated time: ~314 hours, at your own pace.
 | 24 | [Multimodal RAG and Cross-Modal Retrieval](phases/12-multimodal-ai/24-multimodal-rag-cross-modal) | ✅ | ~180 min |
 | 25 | [Multimodal Agents and Computer-Use (Capstone)](phases/12-multimodal-ai/25-multimodal-agents-computer-use) | ✅ | ~240 min |
 
-## Phase 13: Tools & Protocols — ✅ (~24.5 hours)
+## Phase 13: Tools & Protocols — ✅ (~43 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
@@ -328,24 +328,32 @@ Total estimated time: ~314 hours, at your own pace.
 | 03 | [Parallel and Streaming Tool Calls](phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | ✅ | ~75 min |
 | 04 | [Structured Output](phases/13-tools-and-protocols/04-structured-output/) | ✅ | ~75 min |
 | 05 | [Tool Schema Design](phases/13-tools-and-protocols/05-tool-schema-design/) | ✅ | ~45 min |
-| 06 | [MCP Fundamentals](phases/13-tools-and-protocols/06-mcp-fundamentals/) | ✅ | ~45 min |
-| 07 | [Building an MCP Server](phases/13-tools-and-protocols/07-building-an-mcp-server/) | ✅ | ~75 min |
-| 08 | [Building an MCP Client](phases/13-tools-and-protocols/08-building-an-mcp-client/) | ✅ | ~75 min |
-| 09 | [MCP Transports](phases/13-tools-and-protocols/09-mcp-transports/) | ✅ | ~45 min |
-| 10 | [MCP Resources and Prompts](phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | ✅ | ~45 min |
-| 11 | [MCP Sampling](phases/13-tools-and-protocols/11-mcp-sampling/) | ✅ | ~75 min |
-| 12 | [MCP Roots and Elicitation](phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | ✅ | ~45 min |
-| 13 | [MCP Async Tasks](phases/13-tools-and-protocols/13-mcp-async-tasks/) | ✅ | ~75 min |
-| 14 | [MCP Apps](phases/13-tools-and-protocols/14-mcp-apps/) | ✅ | ~75 min |
-| 15 | [MCP Security I — Tool Poisoning](phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | ✅ | ~45 min |
-| 16 | [MCP Security II — OAuth 2.1](phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | ✅ | ~75 min |
-| 17 | [MCP Gateways and Registries](phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | ✅ | ~45 min |
-| 18 | [MCP Auth in Production — Enrollment, JWKS Refresh, Audience Pinning](phases/13-tools-and-protocols/18-mcp-auth-production/) | ✅ | ~90 min |
+| 06 | [MCP Fundamentals: Stateless Requests and JSON-RPC](phases/13-tools-and-protocols/06-mcp-fundamentals/) | ✅ | ~55 min |
+| 07 | [Building an MCP Server: Stateless Python and TypeScript](phases/13-tools-and-protocols/07-building-an-mcp-server/) | ✅ | ~85 min |
+| 08 | [Building an MCP Client: Discovery, Routing, and Dual-Era Fallback](phases/13-tools-and-protocols/08-building-an-mcp-client/) | ✅ | ~85 min |
+| 09 | [MCP Transports: stdio and Stateless Streamable HTTP](phases/13-tools-and-protocols/09-mcp-transports/) | ✅ | ~65 min |
+| 10 | [MCP Resources and Prompts: Addressable Context for Stateless Servers](phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | ✅ | ~60 min |
+| 11 | [MCP Model Input: Sampling Migration and Stateless MRTR](phases/13-tools-and-protocols/11-mcp-sampling/) | ✅ | ~75 min |
+| 12 | [Explicit Scope and Stateless Elicitation](phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | ✅ | ~60 min |
+| 13 | [MCP Tasks Extension: Durable Work on a Stateless Core](phases/13-tools-and-protocols/13-mcp-async-tasks/) | ✅ | ~90 min |
+| 14 | [MCP Apps on the Stateless Protocol](phases/13-tools-and-protocols/14-mcp-apps/) | ✅ | ~75 min |
+| 15 | [MCP Security: Poisoned Metadata, Routing, and MRTR State](phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | ✅ | ~60 min |
+| 16 | [MCP Authorization: CIMD, Issuer Binding, PKCE, and Step-Up](phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | ✅ | ~90 min |
+| 17 | [Stateless MCP Gateways and Registry Admission](phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | ✅ | ~75 min |
+| 18 | [MCP Auth in Production: Issuer-Bound Enrollment and Tokens](phases/13-tools-and-protocols/18-mcp-auth-production/) | ✅ | ~90 min |
 | 19 | [A2A Protocol](phases/13-tools-and-protocols/19-a2a-protocol/) | ✅ | ~75 min |
 | 20 | [OpenTelemetry GenAI](phases/13-tools-and-protocols/20-opentelemetry-genai/) | ✅ | ~75 min |
 | 21 | [LLM Routing Layer](phases/13-tools-and-protocols/21-llm-routing-layer/) | ✅ | ~45 min |
-| 22 | [Skills and Agent SDKs](phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | ✅ | ~45 min |
-| 23 | [Capstone — Tool Ecosystem](phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | ✅ | ~120 min |
+| 22 | [Agent Skills: Portable Contract and Runtime Boundary](phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | ✅ | ~90 min |
+| 23 | [Capstone: Stateless Tool Ecosystem](phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | ✅ | ~120 min |
+| 24 | [Skill Discovery and Progressive Disclosure](phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | ✅ | ~105 min |
+| 25 | [Skill Invocation and Routing](phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | ✅ | ~105 min |
+| 26 | [Skill Permissions, Sandboxes, and Trust](phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | ✅ | ~120 min |
+| 27 | [Skill Evals, Packaging, and Portability](phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | ✅ | ~150 min |
+| 28 | [MCP Tool Contracts and Content](phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | ✅ | ~120 min |
+| 29 | [MCP Reliability, Cancellation, and Flow Control](phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | ✅ | ~120 min |
+| 30 | [MCP Registry Supply Chain: Admission, Drift, and Rollback](phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | ✅ | ~90 min |
+| 31 | [MCP Conformance Engineering: Versioning, Evidence, and Operations](phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | ✅ | ~100 min |
 
 ## Phase 14: Agent Engineering — ✅ (~42 hours)
 
@@ -535,7 +543,7 @@ Total estimated time: ~314 hours, at your own pace.
 | 10 | [Multi-Agent Software Engineering Team](phases/19-capstone-projects/10-multi-agent-software-team) | ✅ | ~40 hr |
 | 11 | [LLM Observability & Eval Dashboard](phases/19-capstone-projects/11-llm-observability-dashboard) | ✅ | ~25 hr |
 | 12 | [Video Understanding Pipeline (Scene to QA)](phases/19-capstone-projects/12-video-understanding-pipeline) | ✅ | ~30 hr |
-| 13 | [MCP Server with Registry and Governance](phases/19-capstone-projects/13-mcp-server-with-registry) | ✅ | ~25 hr |
+| 13 | [Stateless MCP Server with Registry and Governance](phases/19-capstone-projects/13-mcp-server-with-registry) | ✅ | ~25 hr |
 | 14 | [Speculative-Decoding Inference Server](phases/19-capstone-projects/14-speculative-decoding-server) | ✅ | ~30 hr |
 | 15 | [Constitutional Safety Harness + Red-Team Range](phases/19-capstone-projects/15-constitutional-safety-harness) | ✅ | ~25 hr |
 | 16 | [GitHub Issue-to-PR Autonomous Agent](phases/19-capstone-projects/16-github-issue-to-pr-agent) | ✅ | ~30 hr |
@@ -611,6 +619,6 @@ Total estimated time: ~314 hours, at your own pace.
 
 ---
 
-**Total: 20 phases, 503 lessons | 503 complete | ~1,050 hours estimated**
+**Total: 20 phases, 511 lessons | 511 complete | ~1,066 hours estimated**
 
 Want to help? Pick any ⬚ lesson and submit a PR. See [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -1,0 +1,10 @@
+{
+  "artifactMode": "fixture",
+  "contract": {
+    "requiredHeadings": ["Decision", "Evidence"],
+    "requiredTerms": ["precision", "recall"],
+    "forbiddenTerms": ["guaranteed portable"]
+  },
+  "baseline": "Release looks fine.",
+  "withSkill": "# Decision\n\nPass.\n\n# Evidence\n\nPrecision: 1.0. Recall: 1.0."
+}

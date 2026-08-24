@@ -1,0 +1,78 @@
+{
+  "lesson": "16-mcp-security-oauth-2-1",
+  "title": "MCP Authorization: CIMD, Issuer Binding, PKCE, and Step-Up",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which mechanism is preferred for new MCP OAuth client enrollment in 2026-07-28?",
+      "options": [
+        "An access token in the URL",
+        "Mcp-Session-Id",
+        "Client ID Metadata Documents",
+        "Dynamic Client Registration"
+      ],
+      "correct": 2,
+      "explanation": "CIMD is preferred; DCR is deprecated and retained as a compatibility path."
+    },
+    {
+      "stage": "check",
+      "question": "What application_type should a desktop client with a loopback redirect declare during DCR fallback?",
+      "options": [
+        "web",
+        "stateless",
+        "native",
+        "confidential"
+      ],
+      "correct": 2,
+      "explanation": "Desktop, mobile, command-line, and loopback clients are native applications."
+    },
+    {
+      "stage": "check",
+      "question": "What must a client do with an authorization response iss value?",
+      "options": [
+        "Normalize it and compare hostnames",
+        "Store it as clientInfo",
+        "Ignore it after PKCE succeeds",
+        "Compare it exactly with the recorded issuer before using the response"
+      ],
+      "correct": 3,
+      "explanation": "RFC 9207 issuer checking prevents authorization response mix-up between issuers."
+    },
+    {
+      "stage": "check",
+      "question": "How should a client key issuer-minted OAuth credentials and access tokens?",
+      "options": [
+        "Issuer-minted credentials by issuer and tokens by issuer plus resource",
+        "All registrations and tokens under one global client name",
+        "By the server display name only",
+        "By protocol session identifier"
+      ],
+      "correct": 0,
+      "explanation": "Issuer and resource keys prevent minted credentials from crossing security authorities or audiences. A self-hosted CIMD URL remains portable."
+    },
+    {
+      "stage": "post",
+      "question": "A resource returns 403 with scope notes:delete. What is the correct next step?",
+      "options": [
+        "Add notes:delete locally without authorization",
+        "Explain the scope, obtain consent, authorize for it, then retry with a new request id",
+        "Send the MCP token to a downstream API",
+        "Reuse the current token and ignore the challenge"
+      ],
+      "correct": 1,
+      "explanation": "Step-up obtains a newly authorized token before retrying the operation."
+    },
+    {
+      "stage": "post",
+      "question": "What is the RFC 9728 metadata URL for the MCP resource https://notes.example.com/mcp?",
+      "options": [
+        "https://notes.example.com/.well-known/oauth-protected-resource/mcp",
+        "https://auth.example.com/.well-known/oauth-protected-resource",
+        "https://notes.example.com/.well-known/oauth-protected-resource",
+        "https://notes.example.com/mcp/.well-known/oauth-protected-resource"
+      ],
+      "correct": 0,
+      "explanation": "RFC 9728 preserves the protected resource path after the well-known segment, so the /mcp suffix is required."
+    }
+  ]
+}

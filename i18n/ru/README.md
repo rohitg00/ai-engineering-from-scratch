@@ -22,7 +22,7 @@
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-503-3553ff?style=flat-square&labelColor=fafaf5" alt="503 lessons"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-511-3553ff?style=flat-square&labelColor=fafaf5" alt="511 lessons"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Website"></a>
@@ -36,7 +36,8 @@
 
 > **84% студентов уже используют инструменты ИИ, но лишь 18% чувствуют себя готовыми применять их профессионально.** Этот курс закрывает этот разрыв.
 >
-> 503 урока. 20 фаз. ~320 часов. Python, TypeScript, Rust, Julia. Каждый урок оставляет переиспользуемый артефакт: промпт, навык, агент, сервер MCP. Бесплатно, открытый исходный код, лицензия MIT.
+> 511 lessons. 20 phases. ~329 hours. Python, TypeScript, Rust, Julia. Every lesson ships
+> a reusable artifact: a prompt, a skill, an agent, an MCP server. Free, open source, MIT.
 >
 > Вы не просто изучаете ИИ. Вы строите его. От начала до конца. Своими руками.
 
@@ -44,29 +45,108 @@
 <p align="center"><sub><b>150,639</b> readers &nbsp;·&nbsp; <b>241,669</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-06-07</sub></p>
 <!-- STATS:END -->
 
-## Start learning in 30 seconds
+## Start here: choose what you want to build
 
-Your coding agent becomes your tutor. Two commands, no clone, no setup:
+You do not need to scan 511 lessons before beginning. Pick one goal. Each link
+opens the same curriculum on GitHub or the website, and both versions use the
+same lesson code.
+
+| Your goal | Learn on GitHub | Learn on the website |
+|---|---|---|
+| I am new and want the complete foundation | [Phase 0: Setup and Tooling](../../phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson.html?path=phases/00-setup-and-tooling/01-dev-environment) |
+| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](../../phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson.html?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| I want to build production LLM applications | [Phase 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson.html?path=phases/11-llm-engineering/01-prompt-engineering) |
+| I want to build agents | [Phase 14: Agent Engineering](../../phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson.html?path=phases/14-agent-engineering/01-the-agent-loop) |
+| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson.html?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson.html?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| I want to prepare for a Claude certification | [Certification onboarding](../../certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |
+
+Not sure where you fit? Use the [`start-learning` placement tutor](../../skills/start-learning/SKILL.md)
+or the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).
+
+### Use every lesson the same way
+
+1. **Read** `docs/en.md` and explain the core idea in your own words.
+2. **Type and build** the important code instead of treating the code block as decoration.
+3. **Run** the lesson command from the repository root, the directory containing `README.md` and `phases/`.
+4. **Keep evidence**: the command, working directory, exit code, meaningful output, and the artifact you changed or produced.
+5. **Continue** only when you can explain the output and make one small change without guessing.
+
+Commands in lesson pages are paths from the repository root unless the lesson
+explicitly says to change directories. If a lesson offers several languages,
+run the implementation for the language you are learning.
+
+### Clone it and produce your first evidence
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+```
+
+The preflight separates requirements needed now from tools needed later. Every
+required failure includes the detected reason and a corrective command. The
+second command is a dependency-free lesson and ends by showing that a matrix
+times a vector is the operation inside a neural network layer. Save that
+terminal output as your first evidence.
+
+## Add the AI tutor in 30 seconds
+
+If Node.js, `npx`, and a skill-capable coding agent are already installed,
+your coding agent can become your tutor in two commands. A repository clone is
+not needed to install or read the tutor. Runnable focused-path labs need
+`python3`. Agent Skills host labs also need a selected host and a writable
+user or project skill scope.
+
+Check the local requirements first:
+
+```bash
+node --version
+npx --version
+python3 --version
+```
+
+Then install the curriculum skills and choose the host and scope you intend to
+use when the installer asks:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-Then, inside your agent:
+Invocation syntax belongs to the host, not to the portable `SKILL.md` format:
 
-```text
-/start-learning
-```
+| Host | Start the course | Start Model Context Protocol (MCP) | Start Agent Skills | Run a phase quiz |
+|---|---|---|---|---|
+| Codex | `start-learning`, or choose it from `/skills` | `learn-mcp`, or choose it from `/skills` | `learn-agent-skills`, or choose it from `/skills` | `check-understanding 13`, or choose it from `/skills` |
+| Claude Code | `/start-learning` | `/learn-mcp` | `/learn-agent-skills` | `/check-understanding 13` |
+| Other compatible hosts | `Use start-learning to begin the course.` | `Use learn-mcp to start the Model Context Protocol (MCP) path.` | `Use learn-agent-skills to start the Agent Skills Engineering path.` | `Use check-understanding to quiz me on Phase 13.` |
 
 A ten-question placement quiz maps what you already know to a starting phase and
-saves a personalized study plan to `LEARNING.md`. From there, `/learn` teaches
-one lesson per session — concept, math, code, quiz — streaming lessons straight
-from this repo, and `/course-guide <topic>` jumps you to the exact lesson that
-covers anything you are stuck on.
+saves a personalized study plan to `LEARNING.md`. From there, the `learn` skill
+teaches one lesson per session: concept, math, code, quiz. It streams lessons
+straight from this repo, and the `course-guide` skill jumps you to the exact
+lesson that covers anything you are stuck on. In Codex, invoke these skills with
+`learn` and `course-guide`; in Claude Code, use `/learn` and `/course-guide`;
+in other compatible hosts, ask to use the skill by name.
 
-Works with Claude Code, Cursor, Codex, OpenClaw, Hermes, or any agent that
-reads a `SKILL.md` directory — the installer asks which agents to set up. No
-agent? Read the same lessons at
+Only want Model Context Protocol (MCP)? Use the MCP invocation for your host. It creates
+`MCP-LEARNING.md` and follows one 17-lesson route through stateless
+requests, transports, bidirectional work, security, reliability, registry
+governance, and conformance evidence. The exact order and checkpoints live in
+the [Model Context Protocol (MCP) manifest](../../learning-paths/model-context-protocol.json).
+
+Only want Agent Skills? Use the Agent Skills invocation for your host. It
+creates `AGENT-SKILLS-LEARNING.md` and follows one coherent five-lesson route:
+contract, discovery, invocation, sandbox boundaries, then release evals and
+real-host portability. Start on the web with the
+[Agent Skills path](https://aiengineeringfromscratch.com/lesson.html?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+
+The installer lists the hosts it can configure and asks where to install. If
+you do not have Node.js, `npx`, `python3`, a supported host, or a writable
+scope yet, use the website or read `docs/en.md` manually. That path teaches the
+concepts, but real-host discovery, invocation, script, and uninstall evidence
+remains pending until the preflight is available. Read the lessons at
 [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
 ## Как это устроено
@@ -76,7 +156,7 @@ flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot 
 explain its loss curve. You hook a function to an agent but can't say what attention does
 inside the model that's calling it.
 
-This curriculum is the spine. 20 phases, 503 lessons, four languages: Python, TypeScript,
+This curriculum is the spine. 20 phases, 511 lessons, four languages: Python, TypeScript,
 Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm
 gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time
 PyTorch shows up, you already know what it's doing under the hood.
@@ -155,21 +235,21 @@ flowchart LR
 
 Три способа начать. Выберите один.
 
-**Option A — learn in your terminal *(recommended)*.** Install the learning
-skills into any agent and let the course drive itself:
+**Option A — learn in your terminal *(recommended)*.** After the Node.js,
+`npx`, host, and scope preflight above, install the learning skills into a
+compatible agent and let the course drive itself:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-```text
-/start-learning     # interview + placement quiz -> personalized plan in LEARNING.md
-/learn              # next lesson, taught interactively: concept -> math -> code -> quiz
-/course-guide rag   # "which lessons teach X?" -> exact lessons + links
-```
-
-Lessons stream from this repo as you go — no clone needed. Progress lives in
-`LEARNING.md` in your project, so every session resumes where you left off.
+Use the host-specific invocation table above. The installed skills provide
+`start-learning`, `learn`, `course-guide`, and the focused
+`learn-mcp` and `learn-agent-skills` routes. Lesson prose can
+stream from this repository without a clone. A local clone is required for
+copied repository code commands and executable MCP or Agent Skills labs.
+Progress lives in `LEARNING.md`, `MCP-LEARNING.md`, or
+`AGENT-SKILLS-LEARNING.md` in your project, so every session can resume.
 
 **Option B — read.** Open any completed lesson on
 [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) or expand a phase under
@@ -180,11 +260,11 @@ Lessons stream from this repo as you go — no clone needed. Progress lives in
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
 cd ai-engineering-from-scratch
-python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
 Cloning also auto-loads the learning skills in Claude Code, and gives every
-lesson's code to `/learn` for real execution instead of read-along.
+lesson's code to the `learn` tutor for real execution instead of read-along.
 
 ### Предварительные требования
 
@@ -201,25 +281,28 @@ diagnostic, capstone work, and a full-length original practice exam.
 
 Use the [AI-native GitHub onboarding guide](../../certifications/claude/GETTING_STARTED.md)
 with Claude Code, Codex, ChatGPT, Cursor, or another agent. Run
-`/claude-certification` to choose a track, create a persistent route in
-`CLAUDE-CERTIFICATION.md`, learn one step at a time, execute the real labs, and
-get artifact-based feedback. The same curriculum remains available on the
-[certification website](https://aiengineeringfromscratch.com/certifications.html).
+`claude-certification` in Codex, `/claude-certification` in Claude Code, or ask
+another host to use `claude-certification`. It chooses a track, creates a
+persistent route in `CLAUDE-CERTIFICATION.md`, teaches one step at a time, runs
+the real labs, and gives artifact-based feedback. The same curriculum remains
+available on the [certification website](https://aiengineeringfromscratch.com/certifications.html).
 
 The academy is independent study material based on public exam objectives. It is not
 affiliated with Anthropic, does not reproduce live exam questions, and cannot guarantee
 a passing score.
 
-### The learning skills (any agent: Claude, Cursor, Codex, OpenClaw, Hermes, …)
+### The learning skills
 
 | Skill | What it does |
 |---|---|
-| [`/start-learning`](../../skills/start-learning/SKILL.md) | One-time onboarding: why you're learning, placement quiz, personalized plan saved to `LEARNING.md`. |
-| [`/learn`](../../skills/learn/SKILL.md) | The tutor loop. Warm-up recall, then the next lesson taught interactively, then its quiz; records progress and a review queue. |
-| [`/course-guide`](../../skills/course-guide/SKILL.md) | Topic router. "Where do I learn attention?" or "my loss is NaN" → the exact lessons, with links. |
-| [`/claude-certification`](../../skills/claude-certification/SKILL.md) | Certification tutor. Chooses CCAO-F, CCDV-F, CCAR-F, or CCAR-P; teaches each lesson; runs labs; reviews artifacts; administers diagnostics and mocks; saves progress. |
-| [`/find-your-level`](../../skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
-| [`/check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. |
+| [`start-learning`](../../skills/start-learning/SKILL.md) | One-time onboarding: why you're learning, placement quiz, personalized plan saved to `LEARNING.md`. |
+| [`learn`](../../skills/learn/SKILL.md) | The tutor loop. Warm-up recall, then the next lesson taught interactively, then its quiz; records progress and a review queue. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | Topic router. "Where do I learn attention?" or "my loss is NaN" → the exact lessons, with links. |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Focused Model Context Protocol (MCP) tutor. Creates `MCP-LEARNING.md`, follows the 17-lesson manifest, and records wire, security, reliability, and conformance evidence. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Focused Agent Skills tutor. Creates `AGENT-SKILLS-LEARNING.md`, teaches lessons 22, 24, 25, 26, and 27, and records real-host evidence. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Certification tutor. Chooses CCAO-F, CCDV-F, CCAR-F, or CCAR-P; teaches each lesson; runs labs; reviews artifacts; administers diagnostics and mocks; saves progress. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. Use the Codex, Claude Code, or natural-language form in the invocation table above. |
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -269,7 +352,7 @@ Other curricula end with *"congratulations, you learned X."* Each lesson here en
 </table>
 
 > Install the lot with `python3 scripts/install_skills.py <target>`. Real tools, not homework.
-> By the end of the curriculum, you have a portfolio of 503 artifacts you actually
+> By the end of the curriculum, you have a portfolio of 511 artifacts you actually
 > understand because you built them.
 
 ### FIG_002 · A worked sample
@@ -698,7 +781,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-13">
-<summary><b>Phase 13 — Tools & Protocols</b> &nbsp;<code>23 lessons</code>&nbsp; <em>The interfaces between AI and the real world.</em></summary>
+<summary><b>Phase 13 — Tools & Protocols</b> &nbsp;<code>31 lessons</code>&nbsp; <em>The interfaces between AI and the real world.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -708,24 +791,44 @@ Twenty phases. Click any phase to expand its lesson list.
 | 03 | [Parallel and Streaming Tool Calls](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Build | Python |
 | 04 | [Structured Output](../../phases/13-tools-and-protocols/04-structured-output/) | Build | Python |
 | 05 | [Tool Schema Design](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Learn | Python |
-| 06 | [MCP Fundamentals](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Learn | Python |
-| 07 | [Building an MCP Server](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Build | Python |
-| 08 | [Building an MCP Client](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Build | Python |
-| 09 | [MCP Transports](../../phases/13-tools-and-protocols/09-mcp-transports/) | Learn | Python |
-| 10 | [MCP Resources and Prompts](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Build | Python |
-| 11 | [MCP Sampling](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Build | Python |
-| 12 | [MCP Roots and Elicitation](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Build | Python |
-| 13 | [MCP Async Tasks](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Build | Python |
-| 14 | [MCP Apps](../../phases/13-tools-and-protocols/14-mcp-apps/) | Build | Python |
-| 15 | [MCP Security I — Tool Poisoning](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Learn | Python |
-| 16 | [MCP Security II — OAuth 2.1](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Build | Python |
-| 17 | [MCP Gateways and Registries](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Learn | Python |
-| 18 | [MCP Auth in Production — Enrollment, JWKS Refresh, Audience Pinning](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Build | Python |
+| 06 | [MCP Fundamentals: Stateless Requests and JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Learn | Python |
+| 07 | [Building an MCP Server: Stateless Python and TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Build | Python, TypeScript |
+| 08 | [Building an MCP Client: Discovery, Routing, and Dual-Era Fallback](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Build | Python |
+| 09 | [MCP Transports: stdio and Stateless Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Learn | Python |
+| 10 | [MCP Resources and Prompts: Addressable Context for Stateless Servers](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Build | Python |
+| 11 | [MCP Model Input: Sampling Migration and Stateless MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Build | Python |
+| 12 | [Explicit Scope and Stateless Elicitation](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Build | Python |
+| 13 | [MCP Tasks Extension: Durable Work on a Stateless Core](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Build | Python |
+| 14 | [MCP Apps on the Stateless Protocol](../../phases/13-tools-and-protocols/14-mcp-apps/) | Build | Python |
+| 15 | [MCP Security: Poisoned Metadata, Routing, and MRTR State](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Learn | Python |
+| 16 | [MCP Authorization: CIMD, Issuer Binding, PKCE, and Step-Up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Build | Python |
+| 17 | [Stateless MCP Gateways and Registry Admission](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Learn | Python |
+| 18 | [MCP Auth in Production: Issuer-Bound Enrollment and Tokens](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Build | Python |
 | 19 | [A2A Protocol](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Build | Python |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Build | Python |
 | 21 | [LLM Routing Layer](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Learn | Python |
-| 22 | [Skills and Agent SDKs](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Learn | Python |
-| 23 | [Capstone — Tool Ecosystem](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Build | Python |
+| 22 | [Agent Skills: Portable Contract and Runtime Boundary](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Build | Python |
+| 23 | [Capstone: Stateless Tool Ecosystem](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Build | Python |
+| 24 | [Skill Discovery and Progressive Disclosure](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Build | Python |
+| 25 | [Skill Invocation and Routing](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Build | Python |
+| 26 | [Skill Permissions, Sandboxes, and Trust](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Build | Python |
+| 27 | [Skill Evals, Packaging, and Portability](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Build | Python |
+| 28 | [MCP Tool Contracts and Content](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Build | Python |
+| 29 | [MCP Reliability, Cancellation, and Flow Control](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Build | Python |
+| 30 | [MCP Registry Supply Chain: Admission, Drift, and Rollback](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Build | Python |
+| 31 | [MCP Conformance Engineering: Versioning, Evidence, and Operations](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Build | Python |
+
+Lessons 06-18 and 28-31 form the focused
+[Model Context Protocol (MCP) path](../../learning-paths/model-context-protocol.json). Its manifest order
+is 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Start
+it with the host-specific `learn-mcp` invocation above. Lesson 23
+is its only optional capstone and also requires Lessons 19 and 20.
+
+Lessons 22 and 24-27 form the focused
+[Agent Skills learning path](../../learning-paths/agent-skills.json), from package
+contract through real-host release gates. Start it with the host-specific
+`learn-agent-skills` invocation shown above; do not follow numeric next
+navigation from 22 to 23.
 
 </details>
 
@@ -941,7 +1044,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 | 10 | [Multi-Agent Software Engineering Team](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
 | 11 | [LLM Observability & Eval Dashboard](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
 | 12 | [Video Understanding Pipeline (Scene → QA)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [MCP Server with Registry and Governance](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
+| 13 | [Stateless MCP Server with Registry and Governance](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
 | 14 | [Speculative-Decoding Inference Server](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
 | 15 | [Constitutional Safety Harness + Red-Team Range](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
 | 16 | [GitHub Issue-to-PR Autonomous Agent](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
@@ -1043,19 +1146,21 @@ reads a SKILL.md / AGENTS.md directory. Real tools, not homework.
 
 Two skill sets, two installers:
 
-**The learning skills** (`/start-learning`, `/learn`, `/course-guide`,
-`/claude-certification`, `/find-your-level`, `/check-understanding`) live under [`skills/`](../../skills/)
-and install into any agent with one command — no clone, no Python:
+**The learning skills** (`start-learning`, `learn`, `course-guide`,
+`learn-mcp`, `learn-agent-skills`, `claude-certification`, `find-your-level`, and
+`check-understanding`) live under [`skills/`](../../skills/) and install into a
+supported skill-capable host with one command. Installation needs Node.js and
+`npx`, but not a repository clone or Python:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-`skills` writes to whichever directory your agent picks up: `.claude/skills/`,
-`.cursor/skills/`, `.codex/skills/`, OpenClaw's skills folder, Hermes's bundle
-path, or any SKILL.md-aware tool. One command, every agent.
+`skills` writes to the host and scope selected during installation, such as
+`.claude/skills/`, `.cursor/skills/`, `.codex/skills/`, or another supported
+skills folder. Verify that the selected host discovers that exact destination.
 
-**The lesson artifacts.** The repo ships 388 skills and 99 prompts under
+**The lesson artifacts.** The repo ships 396 skills and 99 prompts under
 `phases/**/outputs/`; install them via `scripts/install_skills.py`. Requires
 cloning the repo. Supports tag filters, dry-runs, and per-agent layouts:
 
@@ -1160,6 +1265,8 @@ HEAD/GET).
 | Know ML, new to deep learning | Phase 3 — Deep Learning Core | ~200 hours |
 | Know deep learning, want LLMs and agents | Phase 10 — LLMs from Scratch | ~100 hours |
 | Senior engineer, only want agent engineering | Phase 14 — Agent Engineering | ~60 hours |
+| Only want to build production MCP systems | [Model Context Protocol (MCP) path](../../learning-paths/model-context-protocol.json) | ~23 hours 15 min |
+| Only want to build production Agent Skills | [Agent Skills Engineering path](../../learning-paths/agent-skills.json) | ~9.5 hours |
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -1234,7 +1341,7 @@ relative links inside lesson docs.
 
 ## Поддержать проект
 
-Free, MIT-licensed, 503 lessons. The curriculum is maintained on sponsorship alone. Cash only.
+Free, MIT-licensed, 511 lessons. The curriculum is maintained on sponsorship alone. Cash only.
 
 **Reach (verified 2026-05-14):** 55,593 monthly visitors · 90,709 page views · 7.5K stars ·
 Twitter/X is the #1 acquisition channel.
@@ -1261,15 +1368,6 @@ Sign up via [GitHub Sponsors](https://github.com/sponsors/rohitg00).
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
-
-## История звёзд
-
-<a href="https://star-history.com/#rohitg00/ai-engineering-from-scratch&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=rohitg00/ai-engineering-from-scratch&type=Date&theme=dark">
-    <img alt="Star history" src="https://api.star-history.com/svg?repos=rohitg00/ai-engineering-from-scratch&type=Date" width="100%">
-  </picture>
-</a>
 
 If this manual helped you, star the repo. It keeps the project alive.
 

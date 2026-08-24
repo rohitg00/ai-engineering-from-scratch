@@ -1,30 +1,40 @@
 ---
 name: mcp-client-harness
-description: Given a declarative list of MCP servers (name, command, args), scaffold a multi-server client with handshake, namespace merge, and routing.
-version: 1.0.0
+description: Scaffold a multi-server MCP client with modern metadata, safe era negotiation, deterministic merge, and routing.
+version: 2.1.0
 phase: 13
 lesson: 08
-tags: [mcp, client, multi-server, routing, namespace]
+tags: [mcp, client, stateless, compatibility, routing]
 ---
 
-Given a configuration of MCP servers to run, produce a client harness that spawns each, handshakes each, merges their tool lists into one namespace, and routes each call to the owning server.
+Given a list of MCP server transports, produce a client harness that prefers MCP `2026-07-28` and isolates legacy compatibility.
 
 Produce:
 
-1. Server configuration parser. Map `name -> {command, args, env}`. Validate that commands exist on the path.
-2. Spawn plan. Use subprocess.Popen with stdin/stdout/stderr pipes, `bufsize=1`, text mode. One background reader thread per server.
-3. Handshake pipeline. For each session: send `initialize`, wait for response, persist capabilities, send `notifications/initialized`.
-4. Namespace merge. Choose a collision policy: `prefix-on-collision` (default), `reject-on-collision`, or `silent-overwrite` (forbidden). Print a merged tool list at startup.
-5. Routing function. `client.call(canonical_name, arguments)` looks up the owning session and writes a `tools/call` message. Await the matching-id response via a future in the pending-request table.
+1. Peer configuration. Map a stable server name to a pinned command or endpoint, arguments, environment allowlist, authorization context, transport kind, and an explicit `allow_legacy` flag that defaults to false.
+2. Modern request builder. Stamp protocol version, current client capabilities, and recommended client identity into every `params._meta` immediately before serialization.
+3. stdio era probe. Send `server/discover` first. Accept a valid DiscoverResult, retry `-32022` at a mutually supported modern version, and treat `-32020` plus `-32021` as correctable modern errors.
+4. Legacy compatibility probe. Treat an unrecognized error, timeout, connection close, or empty response as ambiguous. Send one deadline-bound `initialize` only when that exact peer has `allow_legacy: true`. Select legacy only after a correlated JSON-RPC success containing a configured legacy revision, object capabilities, and non-empty server identity. Otherwise fail closed.
+5. Tool cache. Honor `ttlMs` and `cacheScope` in the negotiated authorization context. Treat absent legacy `resultType` as `"complete"`.
+6. Namespace merge. Sort peers and tools. Prefix or reject collisions. Forbid silent overwrite.
+7. Router. Map canonical tool names to peer plus local name, create a new request id, send the era-correct request, and verify the response id.
+8. Recovery. On transport loss, fail in-flight work, restart or reconnect, repeat discovery and lists, re-open subscriptions, and retry only operations allowed by the safety policy.
 
 Hard rejects:
-- Any harness that does not spawn each server in its own process. Multiplexing in-process defeats the isolation model.
-- Any harness with `silent-overwrite` as the default collision policy. Security risk.
-- Any harness that blocks the main thread on stdout reads. Notifications will stall.
+
+- Sending modern requests without current `_meta`.
+- Falling back to initialization after a recognized modern error.
+- Sending `initialize` to a peer that is not explicitly allowlisted for legacy compatibility.
+- Treating a timeout, connection close, empty response, unrecognized error, malformed result, or unsupported revision as proof of legacy behavior.
+- Treating a process, connection, or `Mcp-Session-Id` as modern protocol state.
+- Sharing a private cached list across authorization contexts.
+- Silently overwriting a duplicate tool name.
+- Accepting a modern success without `resultType`.
 
 Refusal rules:
-- If a server's command is untrusted (not in a pinned allowlist), refuse to spawn and route to Phase 13 · 15 for the security check.
-- If the user configures more than 10 servers without a reason, warn and suggest a gateway (Phase 13 · 17).
-- If asked to handle OAuth here, refuse and route to Phase 13 · 16.
 
-Output: a complete client-harness Python file (~150 lines) with Session, merge logic, routing, and a main loop that exercises each configured server. End with a one-line summary naming the collision policy and the number of merged tools.
+- Refuse to spawn a command outside a pinned allowlist.
+- Refuse to route a tool when the owner is ambiguous.
+- Refuse to retry a non-idempotent call automatically without an application idempotency key or user decision.
+
+Output a complete Python harness, at least six conformance tests, and a startup report listing peer, selected era, selected version, cache scope, and canonical tool names.

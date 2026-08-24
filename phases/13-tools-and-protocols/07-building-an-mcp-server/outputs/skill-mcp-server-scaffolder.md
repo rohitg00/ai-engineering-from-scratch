@@ -1,30 +1,37 @@
 ---
 name: mcp-server-scaffolder
-description: Scaffold a domain-specific MCP server with the right tools/resources/prompts split and SDK graduation path.
-version: 1.0.0
+description: Design a stateless MCP 2026-07-28 server with discovery, request validation, and deterministic primitives.
+version: 2.0.0
 phase: 13
 lesson: 07
-tags: [mcp, server, fastmcp, scaffold]
+tags: [mcp, server, stateless, discovery, scaffold]
 ---
 
-Given a domain (notes, tickets, files, database, whatever), produce an MCP server plan: which capabilities to expose as tools, which as resources, which as prompts, plus a graduation path to the Python or TypeScript SDK.
+Given a domain, produce a modern MCP server plan. Keep application state explicit and keep protocol behavior stateless.
 
 Produce:
 
-1. Tools list. Atomic operations the user explicitly asks to perform. Include name, description (Use-when pattern), input schema, and annotation hints.
-2. Resources list. Data the user wants to read. URI scheme, mime type, and whether to enable `resources/subscribe`.
-3. Prompts list. Reusable templates the host should expose as slash-commands. Argument list.
-4. Capability declaration. The exact `capabilities` object the server returns in `initialize`.
-5. Graduation notes. FastMCP (Python) or TypeScript SDK equivalents for each piece. Name one SDK feature (e.g. `lifespan`, `context`) that replaces a hand-rolled stdlib pattern from the scaffold.
+1. Primitive split. Define atomic tools, URI-addressed resources, and useful prompts. Omit a primitive when the domain has no honest use for it.
+2. Discovery result. Provide `supportedVersions`, server capabilities, optional instructions, `resultType: "complete"`, cache hints, and server identity in result `_meta`.
+3. Request validator. Require protocol version and client capabilities in every `params._meta`. Validate recommended client identity when present. Return `-32022` with requested and supported versions on a mismatch.
+4. Result wrapper. Add `resultType: "complete"` and server identity to every success. Add `ttlMs` and `cacheScope` to discovery, lists, templates, and resource reads.
+5. Ordering policy. Define a stable sort key for every list response.
+6. State policy. Put durable state in a database or return an explicit, opaque handle as a normal tool argument. Never hide state in a protocol session.
+7. Compatibility boundary. If legacy support is required, isolate a `2025-11-25` initialize adapter. Select it only for legacy traffic and test both eras independently.
 
 Hard rejects:
-- Any "database query" exposed only as a tool and not as a resource. The correct split is resource for `/list` and `/read`, tool for `/query` with parameters.
-- Any server that mixes user-input tools with privileged ones in the same namespace without annotations.
-- Any server scaffold that claims `resources/subscribe` capability without a durable notification mechanism.
+
+- A modern server whose first valid method must be `initialize`.
+- Reusing capabilities, identity, or version from an earlier request.
+- Returning `Mcp-Session-Id` on modern HTTP traffic.
+- Returning list or resource-read results without cache hints.
+- Treating annotations as authorization controls.
+- Sending an independent JSON-RPC request from the server.
 
 Refusal rules:
-- If the domain has no read-only surface, refuse to scaffold resources; recommend a tool-only server.
-- If the domain has no natural slash-command templates, refuse to scaffold prompts.
-- If the user asks for an auth scheme, refuse and route to Phase 13 · 16 (OAuth 2.1).
 
-Output: a one-page server plan with the three primitive lists, the capability object, and a 10-line sample `@app.tool()` decorator-style graduation snippet. End with the single most important annotation flag the server should set.
+- If a requested resource would expose secrets without authorization, stop and require an access policy.
+- If a domain has no read-only data, omit resources rather than inventing them.
+- If a domain has no reusable template, omit prompts rather than shipping filler.
+
+Output a one-page architecture, method table, validation pseudocode, result examples, deterministic ordering rules, and at least six conformance tests. End with the boundary between application state and protocol state.

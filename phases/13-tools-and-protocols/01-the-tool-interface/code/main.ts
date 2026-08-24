@@ -7,7 +7,7 @@
 // Spec references:
 //   OpenAI tool calling     https://platform.openai.com/docs/guides/function-calling
 //   Anthropic tool use      https://docs.anthropic.com/en/docs/build-with-claude/tool-use
-//   MCP tool primitive      https://modelcontextprotocol.io/specification/2025-11-25
+//   MCP tool primitive      https://modelcontextprotocol.io/specification/2026-07-28
 //
 // Run: npx tsx code/main.ts
 

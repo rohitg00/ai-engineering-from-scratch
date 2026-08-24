@@ -24,46 +24,156 @@
     return svgEl('line', { x1: x1, y1: y1, x2: x2, y2: y2, stroke: 'var(--ink-soft,#555)', 'stroke-width': '1.4', 'marker-end': 'url(#lf-aa-arrow)', 'stroke-dasharray': dash || '' });
   }
 
-  // ── agent-loop: think → act → observe cycle, current node highlighted ──────
+  // ── agent-loop: persistent causal trace with evidence flowing into context ─
   function agentLoop(host) {
     var state = { step: 0 };
-    var W = 520, H = 240;
-    var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
-    var meta = el('div', { class: 'lf-meta' });
+    var W = 620, H = 330;
+    var markerId = LF.uid('lf-agent-loop-arrow');
+    var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img' });
+    var title = svgEl('title', { id: LF.uid('lf-agent-loop-title') });
+    title.appendChild(document.createTextNode('Twelve-step agent loop causal trace'));
+    var desc = svgEl('desc', { id: LF.uid('lf-agent-loop-desc') });
+    desc.appendChild(document.createTextNode('A persistent Think, Act, Tool, Observe, and Context loop. The selected step highlights the active node, causal edge, and accumulated evidence.'));
+    svg.setAttribute('aria-labelledby', title.id + ' ' + desc.id);
+    svg.appendChild(title);
+    svg.appendChild(desc);
+    svg.appendChild(svgEl('defs', {}, [
+      svgEl('marker', { id: markerId, viewBox: '0 0 8 8', refX: '7', refY: '4', markerWidth: '7', markerHeight: '7', orient: 'auto-start-reverse' }, [
+        svgEl('path', { d: 'M0 0 L8 4 L0 8 z', fill: 'context-stroke' })
+      ])
+    ]));
+    var meta = el('div', { class: 'lf-meta', role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true' });
     var nodes = [
-      { x: 210, y: 28, label: 'THINK' },
-      { x: 360, y: 150, label: 'ACT' },
-      { x: 60, y: 150, label: 'OBSERVE' }
+      { id: 'think', x: 28, y: 34, w: 112, label: 'THINK' },
+      { id: 'act', x: 188, y: 34, w: 112, label: 'ACT' },
+      { id: 'tool', x: 348, y: 34, w: 112, label: 'TOOL' },
+      { id: 'observe', x: 444, y: 146, w: 132, label: 'OBSERVE' },
+      { id: 'context', x: 204, y: 146, w: 132, label: 'CONTEXT' }
     ];
-    var notes = ['plan the next action from goal + history', 'call a tool with the chosen arguments', 'read the result, append to the trajectory'];
+    var edgeSpecs = [
+      { id: 'think-act', d: 'M140 56 H178' },
+      { id: 'act-tool', d: 'M300 56 H338' },
+      { id: 'tool-observe', d: 'M460 56 C528 56 548 102 510 136' },
+      { id: 'observe-context', d: 'M444 168 H346' },
+      { id: 'context-think', d: 'M204 168 C92 168 74 106 84 86' }
+    ];
+    var steps = [
+      { node: 0, edge: -1, phase: 'Think', note: 'Read the goal and trajectory, then form a plan.', evidence: 0, value: 'find city count' },
+      { node: 1, edge: 0, phase: 'Chosen action', note: 'Select search_web because current evidence is missing.', evidence: 1, value: 'search_web' },
+      { node: 2, edge: 1, phase: 'Tool call', note: 'Send the chosen tool its explicit query arguments.', evidence: 1, value: 'query: Tokyo' },
+      { node: 2, edge: 2, phase: 'Tool result', note: 'The tool returns a metro population result.', evidence: 2, value: '37m metro' },
+      { node: 3, edge: 2, phase: 'Observe', note: 'Notice that metro population does not answer city proper.', evidence: 3, value: 'scope mismatch' },
+      { node: 4, edge: 3, phase: 'Context update', note: 'Append the result and scope mismatch to the trajectory.', evidence: 4, value: 'evidence added' },
+      { node: 0, edge: 4, phase: 'Think again', note: 'Use the updated context to refine the next plan.', evidence: 0, value: 'verify 23 wards' },
+      { node: 1, edge: 0, phase: 'Chosen action', note: 'Choose a narrower search with the corrected scope.', evidence: 1, value: 'search_web' },
+      { node: 2, edge: 1, phase: 'Tool call', note: 'Request the population for Tokyo city proper.', evidence: 1, value: 'query: 23 wards' },
+      { node: 2, edge: 2, phase: 'Tool result', note: 'The tool returns the scoped population evidence.', evidence: 2, value: '14m wards' },
+      { node: 3, edge: 2, phase: 'Observe', note: 'Confirm that this result matches the requested scope.', evidence: 3, value: 'scope matched' },
+      { node: 4, edge: 3, phase: 'Context update', note: 'Store the supported answer so the next thought can finish.', evidence: 4, value: 'ready to answer' }
+    ];
+    var evidenceSpecs = [
+      { label: 'PLAN', x: 18 },
+      { label: 'ACTION', x: 138 },
+      { label: 'RESULT', x: 258 },
+      { label: 'OBSERVATION', x: 378 },
+      { label: 'CONTEXT', x: 498 }
+    ];
+    var edgeEls = [];
+    var nodeEls = [];
+    var evidenceEls = [];
+    var stepText = svgEl('text', {
+      x: '310', y: '124', 'text-anchor': 'middle',
+      'font-family': 'var(--font-mono,monospace)', 'font-size': '10',
+      fill: 'var(--ink-mute,#777)'
+    });
+
+    edgeSpecs.forEach(function (edge) {
+      var path = svgEl('path', {
+        d: edge.d, fill: 'none', stroke: 'var(--rule-soft,#c9c9c2)', 'stroke-width': '2',
+        'marker-end': 'url(#' + markerId + ')', 'data-part': 'edge-' + edge.id,
+        style: 'transition:stroke 180ms var(--ease-out,cubic-bezier(.23,1,.32,1)),opacity 180ms var(--ease-out,cubic-bezier(.23,1,.32,1))'
+      });
+      edgeEls.push(path);
+      svg.appendChild(path);
+    });
+
+    nodes.forEach(function (node) {
+      var inner = svgEl('g', {
+        'data-part': 'node-' + node.id,
+        style: 'transform-box:fill-box;transform-origin:center;transition:transform 220ms var(--ease-out,cubic-bezier(.23,1,.32,1)),opacity 220ms var(--ease-out,cubic-bezier(.23,1,.32,1))'
+      });
+      var rect = svgEl('rect', {
+        width: node.w, height: '44', rx: '4', fill: 'var(--bg-surface,#eee)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.5',
+        style: 'transition:fill 180ms var(--ease-out,cubic-bezier(.23,1,.32,1)),stroke 180ms var(--ease-out,cubic-bezier(.23,1,.32,1))'
+      });
+      var text = svgEl('text', {
+        x: node.w / 2, y: '26', 'text-anchor': 'middle', 'font-family': 'var(--font-mono,monospace)', 'font-size': '11', fill: 'var(--ink,#1a1a1a)',
+        style: 'transition:fill 180ms var(--ease-out,cubic-bezier(.23,1,.32,1))'
+      });
+      text.appendChild(document.createTextNode(node.label));
+      inner.appendChild(rect);
+      inner.appendChild(text);
+      svg.appendChild(svgEl('g', { transform: 'translate(' + node.x + ' ' + node.y + ')' }, [inner]));
+      nodeEls.push({ group: inner, rect: rect, text: text });
+    });
+
+    svg.appendChild(stepText);
+    svg.appendChild(svgEl('line', { x1: '18', y1: '218', x2: '602', y2: '218', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1', 'stroke-dasharray': '3 4' }));
+    var laneLabel = svgEl('text', { x: '18', y: '209', 'font-family': 'var(--font-mono,monospace)', 'font-size': '9', fill: 'var(--ink-mute,#777)', 'letter-spacing': '1.4' });
+    laneLabel.appendChild(document.createTextNode('EVIDENCE ENTERING THE NEXT THOUGHT'));
+    svg.appendChild(laneLabel);
+
+    evidenceSpecs.forEach(function (item, index) {
+      var inner = svgEl('g', {
+        'data-part': 'evidence-' + index, opacity: '0.24',
+        style: 'transform-box:fill-box;transform-origin:center;transition:opacity 220ms var(--ease-out,cubic-bezier(.23,1,.32,1)),transform 220ms var(--ease-out,cubic-bezier(.23,1,.32,1))'
+      });
+      var rect = svgEl('rect', { width: '104', height: '62', rx: '3', fill: 'var(--bg-surface,#eee)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1' });
+      var label = svgEl('text', { x: '8', y: '17', 'font-family': 'var(--font-mono,monospace)', 'font-size': '8.5', fill: 'var(--blueprint,#3553ff)', 'letter-spacing': '1' });
+      label.appendChild(document.createTextNode(item.label));
+      var value = svgEl('text', { x: '8', y: '39', 'font-family': 'var(--font-mono,monospace)', 'font-size': '9.5', fill: 'var(--ink-soft,#555)' });
+      value.appendChild(document.createTextNode('waiting'));
+      inner.appendChild(rect);
+      inner.appendChild(label);
+      inner.appendChild(value);
+      svg.appendChild(svgEl('g', { transform: 'translate(' + item.x + ' 236)' }, [inner]));
+      evidenceEls.push({ group: inner, rect: rect, value: value });
+    });
+
     state._render = function () {
-      while (svg.firstChild) svg.removeChild(svg.firstChild);
-      svg.appendChild(arrowDefs());
-      var cur = state.step % 3;
-      var cx = [285, 210, 135], cy = [108, 192, 108];
+      var current = steps[state.step];
       var i;
-      for (i = 0; i < 3; i++) {
-        var a = nodes[i], b = nodes[(i + 1) % 3];
-        svg.appendChild(arrow(a.x + 75, a.y + 22 + 6 * (i === 0 ? 1 : -0), b.x + (i === 2 ? 75 : 0), b.y + 22));
+      for (i = 0; i < nodeEls.length; i++) {
+        var activeNode = i === current.node;
+        nodeEls[i].group.style.transform = activeNode ? 'translateY(-3px)' : 'translateY(0)';
+        nodeEls[i].group.style.opacity = activeNode ? '1' : '0.72';
+        nodeEls[i].rect.setAttribute('fill', activeNode ? 'var(--blueprint,#3553ff)' : 'var(--bg-surface,#eee)');
+        nodeEls[i].rect.setAttribute('stroke', activeNode ? 'var(--blueprint,#3553ff)' : 'var(--rule-soft,#ddd)');
+        nodeEls[i].text.setAttribute('fill', activeNode ? 'var(--bg,#fafaf5)' : 'var(--ink,#1a1a1a)');
       }
-      svg.appendChild(arrow(135, 128, 240, 60, '4 4'));
-      svg.appendChild(arrow(290, 60, 380, 128, '4 4'));
-      svg.appendChild(arrow(360, 196, 100, 196, '4 4'));
-      for (i = 0; i < 3; i++) {
-        svg.appendChild(box(nodes[i].x, nodes[i].y, 100, 44, nodes[i].label, i === cur));
+      for (i = 0; i < edgeEls.length; i++) {
+        var activeEdge = i === current.edge;
+        edgeEls[i].setAttribute('stroke', activeEdge ? 'var(--blueprint,#3553ff)' : 'var(--rule-soft,#c9c9c2)');
+        edgeEls[i].setAttribute('opacity', activeEdge ? '1' : '0.58');
       }
-      svg.appendChild((function () {
-        var t = svgEl('text', { x: 260, y: 132, 'text-anchor': 'middle', 'font-family': 'var(--font-mono,monospace)', 'font-size': '10', fill: 'var(--ink-mute,#777)' });
-        t.appendChild(document.createTextNode('step ' + (state.step + 1)));
-        return t;
-      })());
-      meta.textContent = nodes[cur].label.toLowerCase() + ': ' + notes[cur] + '  ·  loop ends when the goal is met or a step budget runs out';
+      var accumulated = {};
+      for (i = 0; i <= state.step; i++) accumulated[steps[i].evidence] = steps[i].value;
+      for (i = 0; i < evidenceEls.length; i++) {
+        var visible = Object.prototype.hasOwnProperty.call(accumulated, i);
+        var activeEvidence = i === current.evidence;
+        evidenceEls[i].group.setAttribute('opacity', visible ? (activeEvidence ? '1' : '0.72') : '0.24');
+        evidenceEls[i].group.style.transform = activeEvidence ? 'translateY(-4px)' : 'translateY(0)';
+        evidenceEls[i].rect.setAttribute('stroke', activeEvidence ? 'var(--blueprint,#3553ff)' : 'var(--rule-soft,#ddd)');
+        evidenceEls[i].value.textContent = visible ? accumulated[i] : 'waiting';
+      }
+      stepText.textContent = 'STEP ' + (state.step + 1) + ' OF 12  ·  ' + current.phase.toUpperCase();
+      meta.textContent = current.phase + ': ' + current.note + ' The loop stops only when the goal is met or its step budget runs out.';
     };
-    var grid = el('div', {}, [LF.slider(state, 'step', 'step', 0, 11, 1)]);
+    var grid = el('div', {}, [LF.slider(state, 'step', 'causal step', 0, 11, 1, function (value) { return (value + 1) + ' / 12'; })]);
     host.appendChild(el('div', { class: 'lf' }, [
       el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['AGENT LOOP']), el('span', {}, ['drag the step'])]),
       el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [svg, meta])]),
-      el('div', { class: 'lf-cap' }, ['An agent is a loop, not a single call. It thinks about the next move, acts by calling a function, observes the result, and feeds that observation back into the next thought. The cycle repeats until the goal is reached or a step budget is exhausted.'])
+      el('div', { class: 'lf-cap' }, ['An agent loop is a causal trajectory, not three boxes rotating emphasis. Each thought chooses an action, the tool call produces evidence, the observation updates context, and that new context changes the next thought.'])
     ]));
     state._render();
   }
@@ -131,7 +241,7 @@
       while (rows.firstChild) rows.removeChild(rows.firstChild);
       tools.forEach(function (t, idx) {
         var on = idx === bi;
-        var bar = el('i'); bar.style.width = (q.sim[idx] * 100).toFixed(0) + '%';
+        var bar = el('i'); bar.style.transform = 'scaleX(' + q.sim[idx].toFixed(3) + ')';
         if (!on) bar.style.background = 'var(--rule-soft,#ccc)';
         var lab = el('label', {}, [t.name + '  (' + t.desc + ')', el('b', {}, [on ? 'routed →' : q.sim[idx].toFixed(2)])]);
         if (!on) lab.style.opacity = '0.5';
@@ -343,7 +453,7 @@
       var used = state.perTurn * state.turns;
       var pct = used / win * 100;
       num.innerHTML = LF.fmtInt(used) + ' <small>/ ' + LF.fmtInt(win) + ' tokens</small>';
-      bar.style.width = Math.min(100, pct) + '%';
+      bar.style.transform = 'scaleX(' + Math.min(1, pct / 100) + ')';
       barWrap.classList.toggle('over', used > win);
       var turnsToFull = Math.ceil(win / state.perTurn);
       meta.textContent = (used > win ? '⚠ window overflowed: ' : Math.round(pct) + '% full: ')

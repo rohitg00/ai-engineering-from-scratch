@@ -1,91 +1,171 @@
-# Building an MCP Client — Discovery, Invocation, Session Management
+# Building an MCP Client: Discovery, Routing, and Dual-Era Fallback
 
-> Most MCP content ships server tutorials and waves a hand at the client. Client code is where the hard orchestration lives: process spawning, capability negotiation, tool list merging across multiple servers, sampling callbacks, reconnection, and namespace collision resolution. This lesson builds a multi-server client that lifts three different MCP servers into one flat tool namespace for the model.
+> A modern MCP client repeats its contract on every request. Its hardest compatibility decision is knowing when an old server is truly old and when a modern server is reporting a correctable error.
 
 **Type:** Build
-**Languages:** Python (stdlib, multi-server MCP client)
-**Prerequisites:** Phase 13 · 07 (building an MCP server)
-**Time:** ~75 minutes
+**Languages:** Python
+**Prerequisites:** Phase 13, Lesson 07
+**Time:** ~85 minutes
 
 ## Learning Objectives
 
-- Spawn an MCP server as a child process, complete `initialize`, and send a `notifications/initialized`.
-- Maintain per-server session state (capabilities, tool list, last-seen notification ids).
-- Merge tool lists across multiple servers into one namespace with collision handling.
-- Route a tool call to the server that owns it and reassemble the response.
+- Build every MCP `2026-07-28` request with current metadata.
+- Probe stdio servers with `server/discover` and select a mutually supported version.
+- Authorize a bounded legacy probe only for explicitly allowlisted peers.
+- Accept a legacy era only after validating a positive `initialize` result for a supported revision.
+- Merge deterministic tool lists without silently overwriting collisions.
+- Route calls to the peer that owns each tool without inventing protocol sessions.
 
 ## The Problem
 
-A real agent host (Claude Desktop, Cursor, Goose, Gemini CLI) loads multiple MCP servers at once. A user might have a filesystem server, a Postgres server, and a GitHub server running simultaneously. The client's job:
+An agent host usually talks to more than one MCP server. It must discover each server, merge tool catalogs, resolve duplicate names, route calls, and recover from transport failure.
 
-1. Spawn each server.
-2. Handshake each independently.
-3. Call `tools/list` on each and flatten the result.
-4. When the model emits `notes_search`, look it up in the merged namespace and route to the right server.
-5. Handle notifications from any server (`tools/list_changed`) without blocking.
-6. Reconnect on transport failure.
+The `2026-07-28` revision makes the steady state simpler because each request is self-contained. Compatibility makes startup more subtle. A client may encounter:
 
-Hand-rolling all of that is what separates "toy" from "serviceable". The official SDKs wrap this, but the mental model has to be yours.
+- a modern server that supports the preferred version;
+- a modern server that returns a recognized version or header error;
+- a legacy server that has never heard of `server/discover`;
+- a legacy server that stays silent until it receives `initialize`.
+
+Treating every probe error as legacy is dangerous. A malformed modern request, an overloaded server, a dead process, and an old server can all produce the same timeout or connection close. Those signals are ambiguous. The client must combine explicit operator intent with positive protocol evidence before it chooses the legacy era.
 
 ## The Concept
 
-### Child-process spawning
+### A peer, not a protocol session
 
-`subprocess.Popen` with `stdin=PIPE, stdout=PIPE, stderr=PIPE`. Set `bufsize=1` and use text mode for line-by-line reads. Each server is one process; the client holds one `Popen` handle per server.
+Keep one transport peer record for each server process or endpoint:
 
-### Per-server session state
+- transport handle or send function;
+- selected protocol era and version;
+- last discovered server capabilities;
+- last deterministic tool list;
+- pending request ids for correlation;
+- transport health.
 
-A `Session` object per server holds:
+This is client bookkeeping. It is not protocol session state. On modern MCP, the server still receives current version and capabilities on every request.
 
-- `process` — the Popen handle.
-- `capabilities` — what the server declared at `initialize`.
-- `tools` — the last `tools/list` result.
-- `pending` — map of request id to a promise/future waiting for the response.
+### Build every modern request from scratch
 
-Requests are async by nature; a `tools/call` sent to server A while server B is mid-call must not block. Either use threads with queues or asyncio.
+```python
+def modern_request(request_id, method, params, version, capabilities):
+    return {
+        "jsonrpc": "2.0",
+        "id": request_id,
+        "method": method,
+        "params": {
+            **params,
+            "_meta": {
+                "io.modelcontextprotocol/protocolVersion": version,
+                "io.modelcontextprotocol/clientCapabilities": capabilities,
+                "io.modelcontextprotocol/clientInfo": CLIENT_INFO,
+            },
+        },
+    }
+```
 
-### Merged namespace
+Do not attach metadata once to a connection object and assume it reached the wire. Stamp and inspect the final serialized request.
 
-When the client sees the aggregate tool list, names can collide. Two servers might both expose `search`. The client has three options:
+### Modern discovery
 
-1. **Prefix by server name.** `notes/search`, `files/search`. Clear but ugly.
-2. **Silent first-come.** Later server's `search` overrides the earlier. Risky; hides collisions.
-3. **Collision rejection.** Refuse to load the second server; notify the user. Safest for security-sensitive hosts.
+`server/discover` returns supported versions, server capabilities, instructions, cache hints, and recommended server identity. A client chooses the highest mutually supported modern version.
 
-Claude Desktop uses prefix-by-server. Cursor uses collision rejection with a clear error. VS Code MCP adopts prefix-by-server as well.
+Discovery is optional for a modern-only client, but it is recommended on stdio. Some legacy servers accept an operation before initialization, so sending `tools/list` first can produce an ambiguous success. `server/discover` creates a clean era boundary.
 
-### Routing
+### The stdio compatibility probe
 
-After merging, a dispatch table maps `tool_name -> session`. The model emits a call by name; the client finds the session and writes a `tools/call` message to that server's stdin, then awaits the response.
+A dual-era stdio client sends `server/discover` with its preferred modern metadata before any other request. There are three outcome classes:
 
-### Sampling callback
+1. **DiscoverResult.** The server is modern. Select a mutually supported version and continue with per-request metadata.
+2. **Recognized modern error.** The server is modern. For `-32022`, choose from `data.supported` and retry with a new request id. For header or capability errors, correct the request. Do not send `initialize`.
+3. **Ambiguous signal.** An unrecognized JSON-RPC error, timeout, connection close, or empty response does not identify an era. Fail closed unless that exact peer is configured for legacy compatibility.
 
-If the server declared the `sampling` capability at `initialize`, it may send `sampling/createMessage` asking the client to run its LLM. The client must:
+Recognized modern protocol errors include:
 
-1. Block further requests to that server until the sample resolves, or pipeline if its implementation supports concurrency.
-2. Call its LLM provider.
-3. Send the response back to the server.
+- `-32020` HeaderMismatch
+- `-32021` MissingRequiredClientCapability
+- `-32022` UnsupportedProtocolVersion
 
-Lesson 11 covers sampling end-to-end. This lesson stubs it for completeness.
+Recognized modern errors remain modern even when the peer is on the legacy allowlist. Once a server proves that it understands the modern error vocabulary, sending `initialize` would be a downgrade.
 
-### Notification handling
+Do not treat `-32601` as positive legacy evidence. It only makes an explicitly allowlisted peer eligible for one legacy probe. The same rule applies to a timeout, connection close, or empty response.
 
-`notifications/tools/list_changed` means re-call `tools/list`. `notifications/resources/updated` means re-read the resource if it is in use. Notifications must not produce responses — do not try to ack them.
+### Allowlisting is operator intent, not evidence
 
-A common client bug: blocking the read loop on `tools/call` while a notification sits in the stream. Use a background reader thread that pushes every message onto a queue; the main thread dequeues and dispatches.
+Legacy compatibility must be an explicit property of one pinned peer configuration:
 
-### Reconnection
+```python
+client.add_server("archive", archive_transport, allow_legacy=True)
+```
 
-Transport can fail: server crashed, OS killed the process, stdio pipe broke. The client detects EOF on stdout and treats the session as dead. Options:
+Bind that choice to the configured command or endpoint. Do not use a wildcard that lets an arbitrary server opt itself into weaker semantics. A peer without `allow_legacy=True` fails after an ambiguous discovery outcome and never receives `initialize`.
 
-- Silently restart the server and re-handshake. OK for pure read-only servers.
-- Surface the failure to the user. OK for stateful servers with user-visible sessions.
+The allowlist grants permission to probe. It does not select the era. The client sends one `initialize` under a transport-enforced deadline, then requires all of the following:
 
-Phase 13 · 09 covers the Streamable HTTP reconnection semantics; stdio is simpler.
+- a JSON-RPC `2.0` response with the matching request id;
+- exactly one `result` and no `error`;
+- a `protocolVersion` in the client's configured legacy revision set;
+- an object-valued `capabilities` field;
+- a `serverInfo` object with non-empty string `name` and `version` fields.
 
-### Keepalive and session id
+A timeout, connection close, error response, malformed result, mismatched id, or unsupported revision fails closed. Only a structurally valid positive result selects the legacy era. The code passes `legacy_probe_timeout_ms` to the transport adapter; a real stdio or HTTP adapter must enforce that deadline rather than merely record it.
 
-Streamable HTTP uses a `Mcp-Session-Id` header. Stdio has no session id — the process identity IS the session. Keepalive pings are optional; stdio pipes do not break under inactivity.
+Cache the selected era for the transport peer. Do not probe again before every call.
+
+### Legacy is a compatibility branch
+
+Once the bounded probe returns valid positive legacy evidence, the client uses the selected legacy version exactly as defined by that revision:
+
+1. Verify the response envelope and correlation id.
+2. Verify the negotiated revision is in the configured legacy set.
+3. Record validated capabilities and server identity.
+4. Send `notifications/initialized` only after all checks pass.
+5. Use legacy request shapes for that transport lifetime.
+
+This branch exists for interoperability with known peers. It is not the default design for new servers or new requests. If the transport restarts or its endpoint changes, discard the peer-era cache and negotiate again.
+
+### Discovering and caching tools
+
+For each active peer, call `tools/list`. A modern result includes `resultType`, `ttlMs`, and `cacheScope`. Honor the freshness hint within the correct authorization context. Re-fetch after expiry or a subscribed list-change event.
+
+Clients must treat a missing `resultType` from a legacy server as `"complete"`. Do not require modern cache fields on a response from an earlier negotiated era.
+
+The server should return deterministic ordering. The client should also sort before merging so local registry order does not depend on process startup timing.
+
+### Collision-safe namespace merge
+
+Two servers may both expose `search`. Choose a declared policy:
+
+1. **Prefix on collision.** Keep the first canonical name and expose later collisions as `<server>/<tool>`.
+2. **Reject on collision.** Do not load the duplicate and surface a clear configuration error.
+3. **Silent overwrite.** Never use this. It hides which server receives a model-selected action.
+
+Store both canonical and local names. The model sees the canonical name. The outgoing `tools/call` uses the local name the owning server declared.
+
+### Routing a call
+
+Routing is a pure lookup:
+
+```text
+canonical tool name
+  -> peer name + local tool name
+  -> new JSON-RPC request id
+  -> modern request metadata or explicit legacy shape
+  -> matching response id
+```
+
+Do not send a call when its owning transport is unavailable. Reconnect or restart the transport, then re-run discovery and `tools/list`. Modern in-flight requests lost on a broken transport can be retried with a new JSON-RPC id when the operation's safety policy permits it.
+
+### Notifications and subscriptions
+
+Modern list and resource changes arrive only on a client-opened `subscriptions/listen` stream. The client sends the notification filter, waits for `notifications/subscriptions/acknowledged`, and correlates events with the listen request id in notification metadata.
+
+On disconnect, open a new listen request and refetch relevant lists or resources. Modern streams do not resume with `Last-Event-ID`.
+
+### No server-initiated requests
+
+Modern servers do not call the client with independent JSON-RPC requests for sampling, elicitation, or roots. They return `input_required`, and the client retries the original request after fulfilling the embedded input requests.
+
+Do not block the peer's response reader while fulfilling input. Preserve correlation and create a new JSON-RPC id for the retry.
 
 ```figure
 tp-client-merge
@@ -93,55 +173,55 @@ tp-client-merge
 
 ## Use It
 
-`code/main.py` spawns three simulated MCP servers as subprocesses, handshakes each, merges their tool lists, and routes tool calls to the right one. The "servers" are actually other Python processes running toy responders (no real LLM). Run it to see:
+`code/main.py` uses in-process peer functions so the protocol decisions stay visible. It connects to two modern peers and one intentionally allowlisted legacy peer, then merges and routes their tools. The transport callable receives a timeout budget so the compatibility branch cannot hide an unbounded probe.
 
-- Three initializations, each with their own capability set.
-- Three `tools/list` results merged into a 7-tool namespace.
-- A routing decision based on the tool name.
-- A collision prevented by namespace prefixing.
+```bash
+cd code
+python3 main.py
+python3 -m unittest discover tests -v
+```
 
-What to look at:
+The tests prove boundaries that normal demos miss:
 
-- The `Session` dataclass holds per-server state cleanly.
-- The background reader thread dequeues every line on stdout without blocking the main thread.
-- The dispatch table is a simple `dict[str, Session]`.
-- Collision handling is explicit: when two servers declare the same name, the later one is renamed with a prefix.
+- modern requests repeat metadata;
+- `-32022` retries modern discovery without initialization;
+- recognized modern errors never downgrade, even for an allowlisted peer;
+- timeouts, connection closes, empty responses, and unrecognized errors do not trigger `initialize` without an allowlist;
+- an allowlisted peer becomes legacy only after a valid, supported `initialize` result;
+- malformed and unsupported legacy results leave the peer unavailable;
+- a successfully selected era is cached for the transport lifetime.
 
 ## Ship It
 
-This lesson produces `outputs/skill-mcp-client-harness.md`. Given a declarative list of MCP servers (name, command, args), the skill produces a harness that spawns them, merges tool lists, and ships a routing function with collision resolution.
+This lesson ships `outputs/skill-mcp-client-harness.md`. It scaffolds modern request stamping, stdio era negotiation, deterministic namespace merge, routing, and a fail-closed legacy compatibility branch.
 
 ## Exercises
 
-1. Run `code/main.py` and watch the server spawn log. Kill one of the simulated server processes with a SIGTERM and observe how the client detects the EOF and marks that session as dead.
-
-2. Implement namespace prefixing. When two servers expose `search`, rename the second as `<server>/search`. Update the dispatch table and verify tool calls route correctly.
-
-3. Add a connection-pool-style backoff for server restart: exponential backoff on consecutive failures, cap at 30 seconds, emit a notification to the user after three failures.
-
-4. Sketch a client that supports 100 concurrent MCP servers. What data structure replaces the simple dispatch dict? (Hint: trie for prefix namespacing, plus a metric for tool-count-per-server.)
-
-5. Port the client to the official MCP Python SDK. The SDK wraps `stdio_client` and `ClientSession`. The code should shrink from ~200 lines to ~40 lines while preserving multi-server routing.
+1. Make a fake server return `-32022` with no mutually supported version. Confirm the client fails instead of sending `initialize`.
+2. Allowlist a fake legacy server, make its bounded `initialize` probe time out, and prove the peer stays `unknown` and unavailable.
+3. Add `cacheScope: "private"` tool lists for two authorization contexts. Confirm the client never shares one context's cached result with the other.
+4. Change the collision policy to rejection and make startup fail with both peer names in the error.
+5. Add a finite `subscriptions/listen` simulator. On stream loss, re-listen with a new request id and refetch tools.
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| MCP client | "The agent host" | Process that spawns servers and orchestrates tool calls |
-| Session | "Per-server state" | Capabilities, tool list, and pending-request bookkeeping |
-| Merged namespace | "One tool list" | Flat set of tool names across all active servers |
-| Namespace collision | "Two servers same tool" | Client must prefix, reject, or first-come the duplicate |
-| Routing | "Who gets this call?" | Dispatch from tool name to owning server |
-| Background reader | "Non-blocking stdout" | Thread or task that drains server stdout into a queue |
-| Sampling callback | "LLM-as-a-service" | Client handler for `sampling/createMessage` from server |
-| `notifications/*_changed` | "Primitive mutated" | Signal the client must re-discover or re-read |
-| Reconnection policy | "When server dies" | Restart semantics when transport fails |
-| Stdio session | "Process = session" | No session id; child process lifetime is the session |
+| Term | Meaning |
+|------|---------|
+| Peer | Client-side record for one server transport and its discovered data |
+| Protocol era | Modern per-request metadata or legacy initialization semantics |
+| Discovery probe | Initial `server/discover` used to identify the stdio era |
+| Recognized modern error | Error that proves modern behavior and forbids legacy fallback |
+| Legacy allowlist | Operator configuration permitting one bounded compatibility probe for a pinned peer |
+| Positive legacy evidence | Valid, correlated `initialize` result for an explicitly supported legacy revision |
+| Merged namespace | Canonical tool names across all active peers |
+| Collision policy | Prefix or reject rule for duplicate tool names |
+| Era cache | Selected modern or legacy behavior stored for one transport peer |
+| Transport recovery | Restart or reconnect, rediscover, relist, and retry safely with a new id |
 
 ## Further Reading
 
-- [Model Context Protocol — Client spec](https://modelcontextprotocol.io/specification/2025-11-25/client) — canonical client behavior
-- [MCP — Quickstart client guide](https://modelcontextprotocol.io/quickstart/client) — hello-world client tutorial with the Python SDK
-- [MCP Python SDK — client module](https://github.com/modelcontextprotocol/python-sdk) — reference `ClientSession` and `stdio_client`
-- [MCP TypeScript SDK — Client](https://github.com/modelcontextprotocol/typescript-sdk) — TS parallel
-- [VS Code — MCP in extensions](https://code.visualstudio.com/api/extension-guides/ai/mcp) — how VS Code multiplexes multiple MCP servers in a single editor host
+- [MCP Specification 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28/)
+- [MCP Server Discovery](https://modelcontextprotocol.io/specification/2026-07-28/server/discover)
+- [MCP stdio Transport](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/stdio)
+- [MCP Versioning](https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning)
+- [MCP Tools](https://modelcontextprotocol.io/specification/2026-07-28/server/tools)

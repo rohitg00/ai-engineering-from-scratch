@@ -17,6 +17,8 @@ on:
       - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
+      - "scripts/install_skills.py"
+      - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
       - "README.md"
       - "ROADMAP.md"
@@ -42,6 +44,8 @@ on:
       - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
+      - "scripts/install_skills.py"
+      - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
       - "README.md"
       - "ROADMAP.md"
@@ -76,6 +80,10 @@ jobs:
         run: find certifications/claude/lessons -path '*/code/tests/test_*.py' -print0 | xargs -0 -r -n1 python3
       - name: run certification lab demos
         run: find certifications/claude/lessons -path '*/code/main.py' -print0 | xargs -0 -r -n1 python3
+      - name: skill artifact bundles install without losing companion files
+        run: python3 scripts/test_skill_artifact_bundles.py
+      - name: skill artifact bundles render as one lesson output
+        run: node --test site/test_build_artifacts.js
       - name: build the static site
         run: node site/build.js
       - name: quiz answer positions are de-biased

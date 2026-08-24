@@ -133,7 +133,7 @@
     ]));
   }
 
-  // t3-sampling-flip: the server asks the client's LLM, keys never move
+  // t3-sampling-flip: deprecated Sampling expressed through current MRTR
   function samplingFlip(host) {
     var svg = svgEl('svg', { viewBox: '0 0 520 230' });
     svg.appendChild(enter(105, 115, '0.1s', [
@@ -151,9 +151,9 @@
     var key = svgEl('circle', { cx: 98, cy: 150, r: 5, fill: 'var(--warn,#b8870f)' });
     key.appendChild(anim('opacity', '0.45;1;0.45', '0;0.5;1', '3s'));
     svg.appendChild(key);
-    svg.appendChild(txt(260, 74, 'tools/call', '8', 'var(--ink-mute,#777)'));
-    svg.appendChild(txt(260, 116, 'sampling/createMessage', '8', 'var(--ink-mute,#777)'));
-    svg.appendChild(txt(260, 158, 'completion', '8', 'var(--ink-mute,#777)'));
+    svg.appendChild(txt(260, 74, 'tools/call + request meta', '8', 'var(--ink-mute,#777)'));
+    svg.appendChild(txt(260, 116, 'input_required + sampling inputRequest', '8', 'var(--ink-mute,#777)'));
+    svg.appendChild(txt(260, 158, 'retry + inputResponses', '8', 'var(--ink-mute,#777)'));
     svg.appendChild(packet(chip(46, 'call'), 'M187 86 L333 86', '5.5s',
       '0;0.02;0.24;1', '0;1;1;0;0', '0;0.03;0.23;0.27;1'));
     svg.appendChild(packet(chip(46, 'ask'), 'M333 128 L187 128', '5.5s',
@@ -161,23 +161,23 @@
     svg.appendChild(packet(chip(56, 'answer'), 'M187 170 L333 170', '5.5s',
       '0;0.66;0.88;1', '0;0;1;1;0;0', '0;0.66;0.68;0.87;0.92;1'));
     host.appendChild(el('div', { class: 'lf' }, [
-      head('SAMPLING FLIP', 'the server asks the client to think'),
+      head('DEPRECATED SAMPLING VIA MRTR', 'no unsolicited reverse request'),
       el('div', { class: 'lf-body' }, [out(svg)]),
-      cap('A normal call flows client to server. Sampling reverses the arrow: the server sends sampling/createMessage and the client runs its own LLM, then returns the completion. The server keeps the algorithm, the client keeps billing, model choice, and API keys, which is how a server hosts an agent loop with zero credentials of its own.')
+      cap('Sampling is deprecated for new MCP designs; call a model provider directly instead. A compatibility server does not send a reverse request in the current protocol. It returns resultType input_required with a sampling inputRequest, the client obtains the completion under its own policy, and then retries the original method with inputResponses and the exact requestState.')
     ]));
   }
 
-  // t3-roots-boundary: reads inside the declared root pass, outside are refused
+  // t3-roots-boundary: explicit resource scope replaces Roots in new designs
   function rootsBoundary(host) {
     var svg = svgEl('svg', { viewBox: '0 0 520 240' });
     svg.appendChild(enter(80, 108, '0.1s', [
       box(-58, -30, 116, 60),
       txt(0, -4, 'notes server', '10', 'var(--ink,#1a1a1a)'),
-      txt(0, 13, 'honors roots', '8', 'var(--ink-mute,#777)')
+      txt(0, 13, 'validates scope', '8', 'var(--ink-mute,#777)')
     ]));
     svg.appendChild(enter(375, 92, '0.25s', [
       svgEl('rect', { x: -125, y: -66, width: 250, height: 132, rx: '5', fill: 'none', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '1.6', 'stroke-dasharray': '6 5' }),
-      txt(0, -50, 'root: file:///Users/a/Notes', '9', 'var(--blueprint,#3553ff)'),
+      txt(0, -50, 'tool arg: scope=file:///project/Notes', '9', 'var(--blueprint,#3553ff)'),
       box(-52, -16, 104, 34),
       txt(0, 5, 'meeting.md', '9', 'var(--ink,#1a1a1a)')
     ]));
@@ -197,9 +197,9 @@
     rej.appendChild(anim('opacity', '0;0;1;1;0', '0;0.78;0.82;0.94;1', '5s'));
     svg.appendChild(rej);
     host.appendChild(el('div', { class: 'lf' }, [
-      head('ROOTS BOUNDARY', 'the client draws the fence'),
+      head('EXPLICIT RESOURCE SCOPE', 'Roots are deprecated for new designs'),
       el('div', { class: 'lf-body' }, [out(svg)]),
-      cap('The client declares which URIs the server may touch. A read inside the declared root goes through; the same server refuses the path outside it. The boundary is honored by spec-compliant servers rather than enforced by the client, so roots pair with OS-level sandboxing instead of replacing it. Elicitation is the sibling primitive: when arguments are ambiguous the server pauses and asks the user instead of guessing.')
+      cap('Pass the authorized directory or resource URI as an explicit tool argument, resource reference, or server configuration. The server resolves and contains every path before access, so the inside read succeeds and the outside path is rejected. MCP Roots remain available only during their deprecation window and never replace authorization or an OS sandbox.')
     ]));
   }
 
@@ -455,7 +455,7 @@
     var stops = [
       { x: 55, y: 60, w: 80, t: 'user', s: 'asks', d: '0.1s' },
       { x: 195, y: 60, w: 96, t: 'gateway', s: 'OAuth + RBAC', d: '0.22s' },
-      { x: 350, y: 60, w: 120, t: 'MCP server', s: 'tools + tasks + ui', d: '0.34s' },
+      { x: 350, y: 60, w: 120, t: 'MCP server', s: 'discover + tools + task ext', d: '0.34s' },
       { x: 350, y: 165, w: 120, t: 'writer agent', s: 'A2A, opaque', d: '0.46s' }
     ];
     var i;
@@ -491,11 +491,11 @@
       tick.appendChild(anim('opacity', '0;0;1;1;0', '0;' + (h.s + 0.12) + ';' + (h.s + 0.16) + ';0.94;1', '6s'));
       svg.appendChild(tick);
     }
-    svg.appendChild(txt(255, 152, 'tasks/send', '8', 'var(--ink-mute,#777)'));
+    svg.appendChild(txt(255, 152, 'A2A SendMessage', '8', 'var(--ink-mute,#777)'));
     host.appendChild(el('div', { class: 'lf' }, [
       head('CAPSTONE CHAIN', 'every Phase 13 piece, one request'),
       el('div', { class: 'lf-body' }, [out(svg)]),
-      cap('One research request crosses the whole stack: the gateway authenticates and applies RBAC, the MCP server runs tools and a long task, part of the work delegates to a writer agent over A2A without exposing its internals, and the answer comes back as an interactive ui:// report. Each hop drops a span on the shared trace, which is what makes the composite system debuggable.')
+      cap('Every stateless MCP request carries version and capabilities. The gateway authenticates and applies policy, the server may return an official task-extension handle that the client polls with tasks/get, and separate work delegates through A2A SendMessage. The final ui:// report and every boundary span remain linked without relying on a protocol session.')
     ]));
   }
 

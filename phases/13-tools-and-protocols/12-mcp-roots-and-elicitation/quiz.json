@@ -1,0 +1,78 @@
+{
+  "lesson": "12-mcp-roots-and-elicitation",
+  "title": "Explicit Scope and Stateless Elicitation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What security guarantee did MCP Roots provide?",
+      "options": [
+        "Informational workspace guidance, not authorization or sandboxing",
+        "Operating-system isolation for every server process",
+        "Proof that the caller owns every file below the root",
+        "Automatic prevention of symbolic-link escapes"
+      ],
+      "correct": 0,
+      "explanation": "Roots were informational and are deprecated in 2026-07-28. Servers still need authorization, containment, and sandboxing."
+    },
+    {
+      "stage": "check",
+      "question": "What is the clearest modern replacement when workspace scope changes per tool call?",
+      "options": [
+        "A hidden value stored under a transport session",
+        "A roots/list request sent after mutation",
+        "The self-reported clientInfo name",
+        "An explicit workspace URI argument that the server authorizes"
+      ],
+      "correct": 3,
+      "explanation": "An explicit handle is visible and replayable, but the server must still authorize it for the authenticated principal."
+    },
+    {
+      "stage": "check",
+      "question": "How is form-mode elicitation delivered under MCP 2026-07-28?",
+      "options": [
+        "As an HTTP redirect from server/discover",
+        "Through notifications/roots/list_changed",
+        "As a reverse request over an Mcp-Session-Id stream",
+        "Inside inputRequests on an input_required result"
+      ],
+      "correct": 3,
+      "explanation": "MRTR embeds elicitation/create in inputRequests, then the client retries the original operation with inputResponses. Elicitation {} and elicitation.form support form mode; URL-only support returns -32021 with data.requiredCapabilities.elicitation.form."
+    },
+    {
+      "stage": "check",
+      "question": "Which value must never be collected through form-mode elicitation?",
+      "options": [
+        "A boolean destructive-action confirmation",
+        "A note id selected from an enum",
+        "An API access token",
+        "A non-sensitive display preference"
+      ],
+      "correct": 2,
+      "explanation": "Secrets and credentials must not transit the MCP client. Use a carefully bound URL-mode flow for sensitive external interactions."
+    },
+    {
+      "stage": "post",
+      "question": "A user declines a deletion elicitation. What is the safe result?",
+      "options": [
+        "Delete because the model already selected the note",
+        "Treat the missing content as implicit consent",
+        "Return a complete non-error refusal outcome and preserve the note",
+        "Repeat the same dialog until the user accepts"
+      ],
+      "correct": 2,
+      "explanation": "Decline is explicit refusal. It must not be converted into consent, error-loop prompting, or mutation."
+    },
+    {
+      "stage": "post",
+      "question": "Which design safely binds a destructive confirmation to what the user saw?",
+      "options": [
+        "Base64-encode the chosen note id without a signature",
+        "Sign the principal, original argument digest, candidate ids, phase, and expiry, then re-check the live target",
+        "Use clientInfo as the authoritative user identity",
+        "Trust any note id returned with action accept"
+      ],
+      "correct": 1,
+      "explanation": "Integrity-protected state prevents tampering. A shared atomic one-time nonce claim prevents replay, while final live checks address races before mutation."
+    }
+  ]
+}

@@ -1,250 +1,582 @@
-"""Phase 13 Lesson 09 - Streamable HTTP MCP endpoint skeleton.
-
-Uses stdlib http.server to serve a single /mcp endpoint supporting:
-  - POST /mcp   (client request; JSON-RPC in, JSON or SSE out)
-  - GET  /mcp   (open server-to-client SSE stream)
-  - DELETE /mcp (explicit session termination)
-
-Enforces Origin allowlist and assigns Mcp-Session-Id on first POST.
-Reuses the Lesson 07 dispatch shape for tool behavior.
-
-Run: python code/main.py               # starts server on :8017
-      python code/main.py --probe       # run self-probe over TCP loopback
+"""Phase 13 Lesson 09: stateless MCP Streamable HTTP.
+Lesson: phases/13-tools-and-protocols/09-mcp-transports/docs/en.md
+Specification: https://modelcontextprotocol.io/specification/2026-07-28/
+Implements POST-only transport, header validation, JSON, and finite SSE.
+Run: python3 main.py
 """
 
 from __future__ import annotations
 
+import base64
 import json
-import secrets
 import sys
 import threading
 import time
+import urllib.error
 import urllib.request
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from typing import Any, Mapping
 
 
+PROTOCOL_VERSION = "2026-07-28"
+SUPPORTED_VERSIONS = [PROTOCOL_VERSION]
+VERSION_KEY = "io.modelcontextprotocol/protocolVersion"
+CAPABILITIES_KEY = "io.modelcontextprotocol/clientCapabilities"
+CLIENT_INFO_KEY = "io.modelcontextprotocol/clientInfo"
+SERVER_INFO_KEY = "io.modelcontextprotocol/serverInfo"
+SUBSCRIPTION_ID_KEY = "io.modelcontextprotocol/subscriptionId"
+
+CLIENT_INFO = {"name": "lesson-09-client", "version": "2.0.0"}
+SERVER_INFO = {"name": "lesson-09-http", "version": "2.0.0"}
+SERVER_CAPABILITIES = {"tools": {"listChanged": True}}
 ORIGIN_ALLOWLIST = {
     "http://localhost",
     "http://127.0.0.1",
-    "https://claude.ai",
-    "vscode-webview://localhost",
+    "https://client.example",
 }
-
-
-SESSIONS: dict[str, dict] = {}
+MAX_REQUEST_BYTES = 1_048_576
+READ_TIMEOUT_SECONDS = 5.0
+ROUTING_HEADERS = ("MCP-Protocol-Version", "Mcp-Method", "Mcp-Name")
 
 TOOLS = [
-    {"name": "ping", "description": "Use when you need a sanity check. Do not use for real work.",
-     "inputSchema": {"type": "object", "properties": {}, "required": []}},
+    {
+        "name": "ping",
+        "description": "Return pong for a transport health check.",
+        "inputSchema": {"type": "object", "properties": {}, "required": []},
+        "annotations": {"readOnlyHint": True, "idempotentHint": True},
+    }
 ]
 
 
-def dispatch(msg: dict) -> dict | None:
-    if "id" not in msg:
-        return None
-    method = msg.get("method")
-    if method == "initialize":
-        return {"jsonrpc": "2.0", "id": msg["id"], "result": {
-            "protocolVersion": "2025-11-25",
-            "capabilities": {"tools": {}},
-            "serverInfo": {"name": "lesson-09-http", "version": "1.0.0"},
-        }}
-    if method == "tools/list":
-        return {"jsonrpc": "2.0", "id": msg["id"], "result": {"tools": TOOLS}}
-    if method == "tools/call":
-        return {"jsonrpc": "2.0", "id": msg["id"], "result": {
-            "content": [{"type": "text", "text": "pong"}],
-            "isError": False,
-        }}
-    return {"jsonrpc": "2.0", "id": msg["id"],
-            "error": {"code": -32601, "message": f"method not found: {method}"}}
+class RpcFault(Exception):
+    def __init__(self, code: int, message: str, data: Any | None = None) -> None:
+        super().__init__(message)
+        self.code = code
+        self.data = data
+
+
+def request_meta(version: str = PROTOCOL_VERSION) -> dict[str, Any]:
+    return {
+        VERSION_KEY: version,
+        CAPABILITIES_KEY: {},
+        CLIENT_INFO_KEY: CLIENT_INFO.copy(),
+    }
+
+
+def make_request(
+    request_id: int | str,
+    method: str,
+    params: dict[str, Any] | None = None,
+    *,
+    version: str = PROTOCOL_VERSION,
+) -> dict[str, Any]:
+    body_params = dict(params or {})
+    body_params["_meta"] = request_meta(version)
+    return {"jsonrpc": "2.0", "id": request_id, "method": method, "params": body_params}
+
+
+def rpc_error(
+    request_id: int | str | None,
+    code: int,
+    message: str,
+    data: Any | None = None,
+) -> dict[str, Any]:
+    error: dict[str, Any] = {"code": code, "message": message}
+    if data is not None:
+        error["data"] = data
+    return {"jsonrpc": "2.0", "id": request_id, "error": error}
+
+
+def complete(
+    payload: dict[str, Any],
+    *,
+    ttl_ms: int | None = None,
+    cache_scope: str = "private",
+    result_meta: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    metadata = {SERVER_INFO_KEY: SERVER_INFO.copy()}
+    if result_meta:
+        metadata.update(result_meta)
+    result = {
+        "resultType": "complete",
+        **payload,
+        "_meta": metadata,
+    }
+    if ttl_ms is not None:
+        result["ttlMs"] = ttl_ms
+        result["cacheScope"] = cache_scope
+    return result
 
 
 def origin_allowed(origin: str | None) -> bool:
-    if origin is None:
-        return False
-    for a in ORIGIN_ALLOWLIST:
-        if origin == a or origin.startswith(a + "/") or origin.startswith(a + ":"):
-            return True
-    return False
+    return origin is None or origin in ORIGIN_ALLOWLIST
+
+
+def encode_header_value(value: str) -> str:
+    safe = all(0x20 <= ord(character) <= 0x7E for character in value)
+    sentinel = value.startswith("=?base64?") and value.endswith("?=")
+    if safe and value == value.strip() and not sentinel:
+        return value
+    encoded = base64.b64encode(value.encode("utf-8")).decode("ascii")
+    return f"=?base64?{encoded}?="
+
+
+def decode_header_value(value: str) -> str:
+    if value.startswith("=?base64?") and value.endswith("?="):
+        encoded = value[len("=?base64?") : -2]
+        try:
+            return base64.b64decode(encoded, validate=True).decode("utf-8")
+        except (ValueError, UnicodeDecodeError) as exc:
+            raise RpcFault(-32020, "Malformed Base64 MCP header value") from exc
+    if any(ord(character) < 0x20 or ord(character) > 0x7E for character in value):
+        raise RpcFault(-32020, "Malformed MCP header value")
+    return value
+
+
+def body_name(message: dict[str, Any]) -> str | None:
+    params = message.get("params", {})
+    if message.get("method") == "resources/read":
+        value = params.get("uri")
+    elif message.get("method") in {"tools/call", "prompts/get"}:
+        value = params.get("name")
+    else:
+        return None
+    return value if isinstance(value, str) else None
+
+
+def http_headers_for(
+    message: dict[str, Any],
+    *,
+    origin: str = "http://localhost",
+    extra: Mapping[str, str] | None = None,
+) -> dict[str, str]:
+    meta = message["params"]["_meta"]
+    headers = {
+        "Accept": "application/json, text/event-stream",
+        "Content-Type": "application/json",
+        "Origin": origin,
+        "MCP-Protocol-Version": str(meta[VERSION_KEY]),
+        "Mcp-Method": str(message["method"]),
+    }
+    name = body_name(message)
+    if name is not None:
+        headers["Mcp-Name"] = encode_header_value(name)
+    if extra:
+        headers.update(extra)
+    return headers
+
+
+def validate_request_structure(message: dict[str, Any]) -> str:
+    if message.get("jsonrpc") != "2.0" or not isinstance(message.get("method"), str):
+        raise RpcFault(-32600, "Invalid Request")
+    params = message.get("params")
+    if not isinstance(params, dict):
+        raise RpcFault(-32602, "params must be an object")
+    meta = params.get("_meta")
+    if not isinstance(meta, dict):
+        raise RpcFault(-32602, "params._meta is required")
+    version = meta.get(VERSION_KEY)
+    if not isinstance(version, str):
+        raise RpcFault(-32602, f"{VERSION_KEY} is required")
+    if not isinstance(meta.get(CAPABILITIES_KEY), dict):
+        raise RpcFault(-32602, f"{CAPABILITIES_KEY} is required")
+    client_info = meta.get(CLIENT_INFO_KEY)
+    if client_info is not None and (
+        not isinstance(client_info, dict)
+        or not isinstance(client_info.get("name"), str)
+        or not isinstance(client_info.get("version"), str)
+    ):
+        raise RpcFault(-32602, f"{CLIENT_INFO_KEY} is malformed")
+    return version
+
+
+def validate_supported_version(version: str) -> None:
+    if version not in SUPPORTED_VERSIONS:
+        raise RpcFault(
+            -32022,
+            "Unsupported protocol version",
+            {"supported": SUPPORTED_VERSIONS.copy(), "requested": version},
+        )
+
+
+def validate_http_headers(
+    headers: Mapping[str, str],
+    message: dict[str, Any],
+    body_version: str,
+) -> None:
+    header_version = headers.get("MCP-Protocol-Version")
+    if header_version is None or header_version != body_version:
+        raise RpcFault(-32020, "Header mismatch: MCP-Protocol-Version")
+    header_method = headers.get("Mcp-Method")
+    if header_method is None or header_method != message["method"]:
+        raise RpcFault(-32020, "Header mismatch: Mcp-Method")
+    expected_name = body_name(message)
+    if message["method"] in {"tools/call", "resources/read", "prompts/get"}:
+        header_name = headers.get("Mcp-Name")
+        if header_name is None or expected_name is None:
+            raise RpcFault(-32020, "Header mismatch: Mcp-Name")
+        if decode_header_value(header_name) != expected_name:
+            raise RpcFault(-32020, "Header mismatch: Mcp-Name")
+
+
+def reject_duplicate_routing_headers(headers: Any) -> None:
+    get_all = getattr(headers, "get_all", None)
+    if not callable(get_all):
+        return
+    for name in ROUTING_HEADERS:
+        if len(get_all(name, [])) > 1:
+            raise RpcFault(-32020, f"Duplicate routing header: {name}")
+
+
+def reject_duplicate_origin(headers: Any) -> None:
+    get_all = getattr(headers, "get_all", None)
+    if callable(get_all) and len(get_all("Origin", [])) > 1:
+        raise RpcFault(-32020, "Duplicate Origin header")
+
+
+def reject_ambiguous_body_framing(headers: Any) -> None:
+    get_all = getattr(headers, "get_all", None)
+    if not callable(get_all):
+        return
+    if len(get_all("Content-Length", [])) > 1:
+        raise ValueError("duplicate Content-Length headers are not allowed")
+    if get_all("Transfer-Encoding", []):
+        raise ValueError("Transfer-Encoding is not supported")
+
+
+def dispatch(message: dict[str, Any]) -> dict[str, Any] | None:
+    if "id" not in message:
+        return None
+    request_id = message["id"]
+    try:
+        version = validate_request_structure(message)
+        validate_supported_version(version)
+        method = message["method"]
+        params = message["params"]
+        if method == "server/discover":
+            result = complete(
+                {
+                    "supportedVersions": SUPPORTED_VERSIONS.copy(),
+                    "capabilities": SERVER_CAPABILITIES.copy(),
+                    "instructions": "Call ping for a transport health check.",
+                },
+                ttl_ms=3_600_000,
+                cache_scope="public",
+            )
+        elif method == "tools/list":
+            result = complete(
+                {"tools": sorted(TOOLS, key=lambda tool: tool["name"])},
+                ttl_ms=30_000,
+                cache_scope="public",
+            )
+        elif method == "tools/call":
+            if params.get("name") != "ping" or not isinstance(params.get("arguments", {}), dict):
+                result = complete(
+                    {
+                        "content": [{"type": "text", "text": "Unknown or invalid tool"}],
+                        "isError": True,
+                    }
+                )
+            else:
+                result = complete(
+                    {"content": [{"type": "text", "text": "pong"}], "isError": False}
+                )
+        elif method == "subscriptions/listen":
+            notifications = params.get("notifications")
+            if not isinstance(notifications, dict):
+                raise RpcFault(-32602, "subscriptions/listen requires notifications")
+            result = complete({})
+        else:
+            raise RpcFault(-32601, f"Method not found: {method}")
+        return {"jsonrpc": "2.0", "id": request_id, "result": result}
+    except RpcFault as exc:
+        return rpc_error(request_id, exc.code, str(exc), exc.data)
+
+
+def accepted_filter(requested: dict[str, Any]) -> dict[str, Any]:
+    accepted: dict[str, Any] = {}
+    for key in ("toolsListChanged", "promptsListChanged", "resourcesListChanged"):
+        if requested.get(key) is True:
+            accepted[key] = True
+    resources = requested.get("resourceSubscriptions")
+    if isinstance(resources, list) and all(isinstance(uri, str) for uri in resources):
+        accepted["resourceSubscriptions"] = resources.copy()
+    return accepted
+
+
+def subscription_messages(message: dict[str, Any]) -> list[dict[str, Any]]:
+    request_id = message["id"]
+    requested = message["params"]["notifications"]
+    accepted = accepted_filter(requested)
+    subscription_meta = {SUBSCRIPTION_ID_KEY: request_id}
+    messages: list[dict[str, Any]] = [
+        {
+            "jsonrpc": "2.0",
+            "method": "notifications/subscriptions/acknowledged",
+            "params": {"notifications": accepted, "_meta": subscription_meta.copy()},
+        }
+    ]
+    if accepted.get("toolsListChanged"):
+        messages.append(
+            {
+                "jsonrpc": "2.0",
+                "method": "notifications/tools/list_changed",
+                "params": {"_meta": subscription_meta.copy()},
+            }
+        )
+    resources = accepted.get("resourceSubscriptions", [])
+    if resources:
+        messages.append(
+            {
+                "jsonrpc": "2.0",
+                "method": "notifications/resources/updated",
+                "params": {"uri": resources[0], "_meta": subscription_meta.copy()},
+            }
+        )
+    messages.append(
+        {
+            "jsonrpc": "2.0",
+            "id": request_id,
+            "result": complete({}, result_meta=subscription_meta),
+        }
+    )
+    return messages
 
 
 class Handler(BaseHTTPRequestHandler):
-    def log_message(self, fmt: str, *args) -> None:
-        sys.stderr.write("[srv] " + (fmt % args) + "\n")
+    def log_message(self, format_string: str, *args: Any) -> None:
+        sys.stderr.write("[mcp-http] " + (format_string % args) + "\n")
 
-    def _deny(self, code: int, msg: str) -> None:
-        self.send_response(code)
+    def _write_json(self, status: int, payload: dict[str, Any]) -> None:
+        body = json.dumps(payload, separators=(",", ":")).encode("utf-8")
+        self.send_response(status)
         self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
         self.end_headers()
-        self.wfile.write(json.dumps({"error": msg}).encode())
+        self.wfile.write(body)
 
-    def _require_origin(self) -> bool:
+    def _write_fault(self, status: int, request_id: Any, fault: RpcFault) -> None:
+        self._write_json(status, rpc_error(request_id, fault.code, str(fault), fault.data))
+
+    def _valid_path_and_origin(self) -> bool:
+        if self.path != "/mcp":
+            self._write_json(404, {"error": "Not found"})
+            return False
+        try:
+            reject_duplicate_origin(self.headers)
+        except RpcFault as fault:
+            self._write_fault(400, None, fault)
+            return False
         origin = self.headers.get("Origin")
         if not origin_allowed(origin):
-            self._deny(403, f"Origin not allowed: {origin!r}")
+            self._write_json(403, {"error": "Origin not allowed"})
             return False
         return True
 
-    def _resolve_session(self, msg: dict) -> str | None:
-        """Return the session id, or None if a 404 was already sent.
-
-        Per the Streamable HTTP spec (2025-11-25), only the `initialize`
-        method may mint a session. Any other method arriving with an
-        unknown or missing `Mcp-Session-Id` MUST be rejected with 404
-        so the client knows to re-initialize.
-        """
-        sid = self.headers.get("Mcp-Session-Id")
-        if msg.get("method") == "initialize":
-            new = secrets.token_hex(16)
-            SESSIONS[new] = {"created": time.time()}
-            return new
-        if not sid or sid not in SESSIONS:
-            self._deny(404, "Unknown or expired session; re-initialize")
-            return None
-        return sid
-
-    def do_POST(self) -> None:  # noqa: N802
-        if self.path != "/mcp":
-            return self._deny(404, "Not found")
-        if not self._require_origin():
-            return
-        length = int(self.headers.get("Content-Length", "0"))
-        body = self.rfile.read(length)
-        try:
-            msg = json.loads(body)
-        except json.JSONDecodeError:
-            return self._deny(400, "Invalid JSON")
-        sid = self._resolve_session(msg)
-        if sid is None:
-            return
-        resp = dispatch(msg)
-        if resp is None:
-            # JSON-RPC notification or response: ack only.
-            self.send_response(202)
-            self.send_header("Mcp-Session-Id", sid)
-            self.end_headers()
-            return
-        self.send_response(200)
+    def _method_not_allowed(self) -> None:
+        body = json.dumps({"error": "Method not allowed"}).encode("utf-8")
+        self.send_response(405)
+        self.send_header("Allow", "POST")
         self.send_header("Content-Type", "application/json")
-        self.send_header("Mcp-Session-Id", sid)
+        self.send_header("Content-Length", str(len(body)))
         self.end_headers()
-        self.wfile.write(json.dumps(resp).encode() + b"\n")
+        self.wfile.write(body)
 
-    def do_GET(self) -> None:  # noqa: N802
-        if self.path != "/mcp":
-            return self._deny(404, "Not found")
-        if not self._require_origin():
-            return
-        accept = self.headers.get("Accept", "")
-        if "text/event-stream" not in accept:
-            return self._deny(405, "GET requires Accept: text/event-stream")
-        sid = self.headers.get("Mcp-Session-Id")
-        if not sid or sid not in SESSIONS:
-            return self._deny(404, "Unknown session")
+    def _write_subscription_stream(self, message: dict[str, Any]) -> None:
         self.send_response(200)
         self.send_header("Content-Type", "text/event-stream")
-        self.send_header("Mcp-Session-Id", sid)
         self.send_header("Cache-Control", "no-cache")
+        self.send_header("X-Accel-Buffering", "no")
         self.end_headers()
-        for i in range(3):
-            payload = json.dumps({"jsonrpc": "2.0", "method": "notifications/progress",
-                                  "params": {"progressToken": "p1", "progress": i, "total": 3}})
-            self.wfile.write(f"id: {i}\nevent: message\ndata: {payload}\n\n".encode())
-            try:
-                self.wfile.flush()
-            except Exception:
-                return
-            time.sleep(0.05)
+        for payload in subscription_messages(message):
+            self.wfile.write(
+                f"data: {json.dumps(payload, separators=(',', ':'))}\n\n".encode("utf-8")
+            )
+            self.wfile.flush()
 
-    def do_DELETE(self) -> None:  # noqa: N802
-        if self.path != "/mcp":
-            return self._deny(404, "Not found")
-        if not self._require_origin():
+    def do_POST(self) -> None:
+        if not self._valid_path_and_origin():
             return
-        sid = self.headers.get("Mcp-Session-Id")
-        if sid:
-            SESSIONS.pop(sid, None)
-        self.send_response(204)
-        self.end_headers()
+        content_type = self.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
+        if content_type != "application/json":
+            self._write_json(415, {"error": "Content-Type must be application/json"})
+            return
+        accept = self.headers.get("Accept", "")
+        if "application/json" not in accept or "text/event-stream" not in accept:
+            self._write_json(406, {"error": "Accept must include JSON and SSE"})
+            return
+        try:
+            reject_ambiguous_body_framing(self.headers)
+            raw_length = self.headers.get("Content-Length")
+            if raw_length is None:
+                raise ValueError("Content-Length is required")
+            if not raw_length.isascii() or not raw_length.isdigit():
+                raise ValueError("Content-Length must contain ASCII decimal digits")
+            length = int(raw_length)
+            if not 1 <= length <= MAX_REQUEST_BYTES:
+                raise ValueError(
+                    f"Content-Length must be from 1 through {MAX_REQUEST_BYTES}"
+                )
+            self.connection.settimeout(READ_TIMEOUT_SECONDS)
+            body = self.rfile.read(length)
+            if len(body) != length:
+                raise ValueError("request body ended before Content-Length bytes arrived")
+            message = json.loads(body)
+            if not isinstance(message, dict):
+                raise ValueError("message must be an object")
+        except (ValueError, json.JSONDecodeError, TimeoutError) as exc:
+            self._write_json(400, rpc_error(None, -32700, "Parse error", {"detail": str(exc)}))
+            return
+
+        request_id = message.get("id")
+        try:
+            body_version = validate_request_structure(message)
+            reject_duplicate_routing_headers(self.headers)
+            validate_http_headers(self.headers, message, body_version)
+            validate_supported_version(body_version)
+        except RpcFault as fault:
+            self._write_fault(400, request_id, fault)
+            return
+
+        if "id" not in message:
+            self.send_response(202)
+            self.end_headers()
+            return
+
+        if message["method"] == "subscriptions/listen":
+            notifications = message["params"].get("notifications")
+            if not isinstance(notifications, dict):
+                self._write_fault(
+                    400,
+                    request_id,
+                    RpcFault(-32602, "subscriptions/listen requires notifications"),
+                )
+                return
+            self._write_subscription_stream(message)
+            return
+
+        response = dispatch(message)
+        status = 404 if response and response.get("error", {}).get("code") == -32601 else 200
+        if response is not None:
+            self._write_json(status, response)
+
+    def do_GET(self) -> None:
+        if self._valid_path_and_origin():
+            self._method_not_allowed()
+
+    def do_DELETE(self) -> None:
+        if self._valid_path_and_origin():
+            self._method_not_allowed()
 
 
-def serve(host: str, port: int) -> HTTPServer:
-    srv = HTTPServer((host, port), Handler)
-    threading.Thread(target=srv.serve_forever, daemon=True).start()
-    return srv
+def serve(host: str = "127.0.0.1", port: int = 0) -> ThreadingHTTPServer:
+    server = ThreadingHTTPServer((host, port), Handler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    return server
+
+
+def post(url: str, message: dict[str, Any], headers: Mapping[str, str]) -> tuple[int, Any, Any]:
+    request = urllib.request.Request(
+        url,
+        data=json.dumps(message).encode("utf-8"),
+        headers=dict(headers),
+        method="POST",
+    )
+    try:
+        response = urllib.request.urlopen(request, timeout=3)
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8")
+        status = exc.code
+        response_headers = exc.headers
+        exc.close()
+        return status, response_headers, json.loads(body) if body else None
+    with response:
+        body = response.read().decode("utf-8")
+        if response.headers.get_content_type() == "application/json":
+            payload: Any = json.loads(body)
+        else:
+            payload = body
+        return response.status, response.headers, payload
 
 
 def probe() -> None:
-    srv = serve("127.0.0.1", 8017)
-    time.sleep(0.2)
-    print("=" * 72)
-    print("PHASE 13 LESSON 09 - STREAMABLE HTTP PROBE")
-    print("=" * 72)
+    server = serve()
+    url = f"http://127.0.0.1:{server.server_port}/mcp"
+    print("MCP 2026-07-28 Streamable HTTP probe")
 
-    print("\n1) evil origin is rejected")
-    req = urllib.request.Request("http://127.0.0.1:8017/mcp",
-                                 data=b'{"jsonrpc":"2.0","id":1,"method":"initialize"}',
-                                 headers={"Origin": "http://evil.example", "Content-Type": "application/json"},
-                                 method="POST")
-    try:
-        urllib.request.urlopen(req)
-    except urllib.error.HTTPError as e:
-        print(f"  -> HTTP {e.code} (expected 403)")
+    discover = make_request(1, "server/discover")
+    status, _, _ = post(url, discover, http_headers_for(discover, origin="http://evil.example"))
+    print(f"  invalid Origin: HTTP {status}")
 
-    print("\n2) localhost origin is accepted; session id assigned")
-    req = urllib.request.Request("http://127.0.0.1:8017/mcp",
-                                 data=b'{"jsonrpc":"2.0","id":1,"method":"initialize"}',
-                                 headers={"Origin": "http://localhost", "Content-Type": "application/json"},
-                                 method="POST")
-    with urllib.request.urlopen(req) as resp:
-        sid = resp.headers.get("Mcp-Session-Id")
-        print(f"  -> HTTP {resp.status}  session={sid}")
+    status, headers, payload = post(url, discover, http_headers_for(discover))
+    print(
+        f"  discovery: HTTP {status}, version={payload['result']['supportedVersions'][0]}, "
+        f"session-header={headers.get('Mcp-Session-Id')}"
+    )
 
-    print("\n3) echo session id on next request")
-    req = urllib.request.Request("http://127.0.0.1:8017/mcp",
-                                 data=b'{"jsonrpc":"2.0","id":2,"method":"tools/list"}',
-                                 headers={"Origin": "http://localhost", "Content-Type": "application/json",
-                                          "Mcp-Session-Id": sid},
-                                 method="POST")
-    with urllib.request.urlopen(req) as resp:
-        body = resp.read().decode()
-        print(f"  -> HTTP {resp.status}  echoed session {resp.headers.get('Mcp-Session-Id') == sid}")
-        print(f"     tools: {json.loads(body)['result']['tools'][0]['name']}")
+    listing = make_request(2, "tools/list")
+    removed = {"Mcp-Session-Id": "ignored", "Last-Event-ID": "ignored"}
+    status, headers, payload = post(url, listing, http_headers_for(listing, extra=removed))
+    print(
+        f"  removed headers ignored: HTTP {status}, tool={payload['result']['tools'][0]['name']}, "
+        f"echo={headers.get('Mcp-Session-Id')}"
+    )
 
-    print("\n4) DELETE session")
-    req = urllib.request.Request("http://127.0.0.1:8017/mcp",
-                                 headers={"Origin": "http://localhost", "Mcp-Session-Id": sid},
-                                 method="DELETE")
-    with urllib.request.urlopen(req) as resp:
-        print(f"  -> HTTP {resp.status} (expected 204)")
+    mismatched = http_headers_for(listing)
+    mismatched["Mcp-Method"] = "tools/call"
+    status, _, payload = post(url, listing, mismatched)
+    print(f"  header mismatch: HTTP {status}, code={payload['error']['code']}")
 
-    print("\n5) next request with dead session is refused")
-    req = urllib.request.Request("http://127.0.0.1:8017/mcp",
-                                 headers={"Origin": "http://localhost",
-                                          "Mcp-Session-Id": sid,
-                                          "Accept": "text/event-stream"},
-                                 method="GET")
-    try:
-        with urllib.request.urlopen(req) as resp:
-            print(f"  -> HTTP {resp.status} (unexpected)")
-    except urllib.error.HTTPError as e:
-        print(f"  -> HTTP {e.code} (expected 404)")
+    future = make_request(3, "tools/list", version="2027-01-01")
+    status, _, payload = post(url, future, http_headers_for(future))
+    print(f"  unsupported version: HTTP {status}, code={payload['error']['code']}")
 
-    srv.shutdown()
+    notification = make_request(4, "tools/list")
+    del notification["id"]
+    status, _, payload = post(url, notification, http_headers_for(notification))
+    print(f"  accepted notification: HTTP {status}, empty-body={payload == ''}")
+
+    for method in ("GET", "DELETE"):
+        request = urllib.request.Request(
+            url,
+            headers={"Origin": "http://localhost"},
+            method=method,
+        )
+        try:
+            urllib.request.urlopen(request, timeout=3)
+        except urllib.error.HTTPError as exc:
+            status = exc.code
+            exc.close()
+            print(f"  {method}: HTTP {status}")
+
+    listen = make_request(
+        "listen-1",
+        "subscriptions/listen",
+        {"notifications": {"toolsListChanged": True}},
+    )
+    status, _, stream = post(url, listen, http_headers_for(listen))
+    print(
+        f"  subscriptions/listen: HTTP {status}, "
+        f"SSE={('notifications/subscriptions/acknowledged' in stream)}, "
+        f"tagged={SUBSCRIPTION_ID_KEY in stream}"
+    )
+
+    server.shutdown()
+    server.server_close()
 
 
 def main() -> None:
-    if len(sys.argv) > 1 and sys.argv[1] == "--probe":
+    if "--serve" not in sys.argv:
         probe()
         return
-    srv = serve("127.0.0.1", 8017)
-    print("Streamable HTTP MCP endpoint on 127.0.0.1:8017/mcp  (Ctrl-C to stop)")
+    server = serve("127.0.0.1", 8017)
+    print("MCP 2026-07-28 endpoint: http://127.0.0.1:8017/mcp")
     try:
         while True:
             time.sleep(60)
     except KeyboardInterrupt:
-        srv.shutdown()
+        server.shutdown()
+        server.server_close()
 
 
 if __name__ == "__main__":

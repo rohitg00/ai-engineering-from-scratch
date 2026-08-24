@@ -11,12 +11,11 @@
      loss-curve           — compact (legacy) training curve
      embedding-projection — compact (legacy) cluster jitter
      kv-cache             — compact (legacy) growing cache
-   No deps. Hover-pause. Step controls on big figures. Reduced-motion = nice still.
+   No deps. The shared lesson runtime owns mounting, pause state, and disposal.
 */
 (function () {
   'use strict';
   const NS = 'http://www.w3.org/2000/svg';
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function el(name, attrs = {}, kids = []) {
     const e = document.createElementNS(NS, name);
@@ -26,19 +25,13 @@
   }
   const txt = (s) => document.createTextNode(s);
 
-  // host loop with hover-pause + optional step control
+  // The lesson runtime owns each loop so a language rerender can dispose it.
   function loop(host, fn, period = 6000, opts = {}) {
-    let raf, paused = false, t0 = performance.now(), localT = 0;
-    const onTick = (now) => {
-      if (!paused) localT = ((now - t0) % period) / period;
-      fn(localT);
-      raf = requestAnimationFrame(onTick);
-    };
-    host.addEventListener('mouseenter', () => paused = true);
-    host.addEventListener('mouseleave', () => paused = false);
-    if (reduced) { fn(opts.staticT ?? 0.62); return () => {}; }
-    raf = requestAnimationFrame(onTick);
-    return () => cancelAnimationFrame(raf);
+    if (window.LF && typeof window.LF.autoplay === 'function') {
+      return window.LF.autoplay(host, fn, period, opts);
+    }
+    fn(opts.staticT ?? 0.62, true);
+    return () => {};
   }
 
   function softmax(xs, t = 1) {
@@ -918,21 +911,6 @@
     'kv-cache':              kvCache
   };
 
-  function mount(root = document) {
-    root.querySelectorAll('[data-figure]').forEach(host => {
-      if (host.dataset.figureMounted) return;
-      const fn = FIGURES[host.dataset.figure];
-      if (!fn) return;
-      try {
-        fn(host);
-        host.dataset.figureMounted = '1';
-      } catch (err) {
-        console.warn(`figure "${host.dataset.figure}" failed to render:`, err);
-      }
-    });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => mount());
-  else mount();
+  if (window.LF && typeof window.LF.register === 'function') window.LF.register(FIGURES);
   window.AIFS_FIGURES = FIGURES;
-  window.AIFS_mountFigures = mount;
 })();

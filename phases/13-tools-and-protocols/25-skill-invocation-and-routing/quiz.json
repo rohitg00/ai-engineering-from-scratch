@@ -1,0 +1,78 @@
+{
+  "lesson": "25-skill-invocation-and-routing",
+  "title": "Skill Invocation and Routing",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which event is an example of programmatic skill activation from the host perspective?",
+      "options": [
+        "An evaluation harness selects a named skill for a scheduled scenario",
+        "A user chooses a named skill in the host UI",
+        "A model infers a skill from semantic relevance",
+        "A catalog reads descriptions during discovery"
+      ],
+      "correct": 0,
+      "explanation": "Programmatic activation comes from runtime or harness control flow, such as an evaluation selecting an exact skill. Human selection is explicit user activation, while semantic matching is implicit model activation."
+    },
+    {
+      "stage": "check",
+      "question": "A host recognizes `user-invocable: false`. How should a portability guide describe that field?",
+      "options": [
+        "A filesystem permission bit",
+        "A replacement for the skill description",
+        "A host-specific invocation extension interpreted by an adapter",
+        "A required field in every Agent Skill"
+      ],
+      "correct": 2,
+      "explanation": "A particular host can assign meaning to an extension without making it universal. Portable tooling should preserve or explicitly adapt the field and avoid promising identical behavior in runtimes that do not recognize it."
+    },
+    {
+      "stage": "check",
+      "question": "What should an implicit model router do with a near-miss query below its activation threshold?",
+      "options": [
+        "Activate the alphabetically first skill",
+        "Lower the threshold silently for that request",
+        "Convert the query into a human slash command",
+        "Decline activation and continue without the skill or request clarification"
+      ],
+      "correct": 3,
+      "explanation": "Near-miss negatives are where over-triggering appears. A threshold is useful only if the router honors it, reports the non-activation, and allows normal reasoning or clarification to continue."
+    },
+    {
+      "stage": "check",
+      "question": "In the human/model 2x2, what does `human=true, model=false` mean?",
+      "options": [
+        "The skill has unrestricted tool authority",
+        "A human may invoke it explicitly, but the model should not select it implicitly",
+        "Only an evaluation harness may activate it",
+        "The model may activate it only after a network request"
+      ],
+      "correct": 1,
+      "explanation": "The axes describe activation channels, not permissions. This quadrant supports deliberate user selection while suppressing automatic model routing, which is useful for costly or disruptive workflows."
+    },
+    {
+      "stage": "post",
+      "question": "Why does an evaluation harness usually activate a skill by exact name?",
+      "options": [
+        "It makes descriptions unnecessary",
+        "Exact naming grants sandbox escape privileges",
+        "It isolates skill behavior from routing variance so repeated runs are comparable",
+        "It proves all hosts share one command syntax"
+      ],
+      "correct": 2,
+      "explanation": "A harness often needs to test the skill itself, not the discovery model. Exact programmatic selection removes one source of variance; separate trigger evaluations can then measure implicit routing precision and recall."
+    },
+    {
+      "stage": "post",
+      "question": "Which design keeps invocation and authority correctly separated?",
+      "options": [
+        "Allow model activation only when the bundle contains a shell script",
+        "If a user invokes a skill, approve every action it requests",
+        "Route activation through host policy, then review each requested action under the permission model",
+        "Let extension metadata replace filesystem and network policy"
+      ],
+      "correct": 2,
+      "explanation": "Activation decides whether instructions enter context. Permission review decides whether proposed reads, writes, commands, or network calls may occur. Keeping those gates separate prevents discoverability or invocation from becoming accidental authority."
+    }
+  ]
+}

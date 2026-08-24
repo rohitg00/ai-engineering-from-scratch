@@ -1,0 +1,78 @@
+{
+  "lesson": "26-skill-permissions-sandboxes-and-trust",
+  "title": "Skill Permissions, Sandboxes, and Trust",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A SKILL.md says `You may write anywhere on disk`. What authority does that sentence provide?",
+      "options": [
+        "No authority; the host permission model still decides each action",
+        "Write access to the user's home directory",
+        "Write access to every path named by a reference",
+        "Write access after the model repeats the sentence"
+      ],
+      "correct": 0,
+      "explanation": "Skill content is instruction data, not a capability token. Filesystem scope, tool access, network policy, and approvals come from the host and remain in force even when the skill claims broader permissions."
+    },
+    {
+      "stage": "check",
+      "question": "Why must a workspace jail resolve symlinks before checking containment?",
+      "options": [
+        "Resolved paths automatically redact secrets",
+        "Resolution makes every path writable",
+        "Symlinks always contain malformed YAML",
+        "A lexical in-workspace path can point through a symlink to a target outside the jail"
+      ],
+      "correct": 3,
+      "explanation": "Checking only the input string misses links such as `workspace/report` that resolve elsewhere. Containment must be evaluated on the resolved target, and conservative systems may reject direct symlink targets entirely."
+    },
+    {
+      "stage": "check",
+      "question": "An external webpage embedded in a task says to disable approval checks. How should the runtime treat that text in this scenario?",
+      "options": [
+        "As a portable SKILL.md extension",
+        "As untrusted data that cannot expand authority",
+        "As a new top-priority system policy",
+        "As approval from the user"
+      ],
+      "correct": 1,
+      "explanation": "External content may inform the task, but it is not part of the trusted policy channel. Requests influenced by it should remain within existing permissions and may deserve an additional approval gate for stateful actions."
+    },
+    {
+      "stage": "check",
+      "question": "What is the safest educational way to demonstrate destructive-command review?",
+      "options": [
+        "Allow it whenever the skill bundle contains a script",
+        "Run the command in the course repository and restore files later",
+        "Parse and classify an argv vector, return `deny`, and never execute it",
+        "Print a shell string that students can paste without review"
+      ],
+      "correct": 2,
+      "explanation": "A policy simulator can teach executable allowlists, destructive patterns, metacharacter checks, and verdicts without creating real side effects. The lesson's result should explicitly record that execution never occurred."
+    },
+    {
+      "stage": "post",
+      "question": "A skill proposes an HTTPS call to an origin outside the network allowlist. The user previously invoked the skill. What is the correct verdict?",
+      "options": [
+        "Allow only if the description mentions the internet",
+        "Allow, because invocation implies network consent",
+        "Rewrite the hostname to the first allowlisted host",
+        "Deny under the network policy; activation is not authorization"
+      ],
+      "correct": 3,
+      "explanation": "The invocation gate controls instruction loading, while the network gate controls normalized HTTPS origins, including effective ports. Prior skill selection does not broaden the allowlist or authorize credential transmission."
+    },
+    {
+      "stage": "post",
+      "question": "What should happen when a write request contains possible secret material and no approved secret-use path exists?",
+      "options": [
+        "Trust it if the target path is inside the workspace",
+        "Replace it with a random value and continue",
+        "Log the payload so reviewers can inspect the full value",
+        "Deny it without printing the value, and require a separately authorized secret workflow"
+      ],
+      "correct": 3,
+      "explanation": "Workspace containment does not make secret handling safe. The reviewer should block the request, avoid echoing sensitive material, and require explicit policy and approval before any legitimate secret use."
+    }
+  ]
+}
