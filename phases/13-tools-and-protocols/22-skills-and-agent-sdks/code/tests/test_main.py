@@ -270,7 +270,12 @@ class DecisionModelTests(unittest.TestCase):
         )
 
     def test_xquik_search_rejects_unbounded_inputs(self) -> None:
-        for query, limit in (("", 10), ("agent skills", 0), ("agent skills", True)):
+        for query, limit in (
+            ("", 10),
+            ("agent skills", 0),
+            ("agent skills", 10_001),
+            ("agent skills", True),
+        ):
             with self.subTest(query=query, limit=limit):
                 with self.assertRaises(ValueError):
                     build_xquik_search_plan(query, limit)

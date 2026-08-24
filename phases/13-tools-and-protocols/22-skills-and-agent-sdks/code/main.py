@@ -272,8 +272,12 @@ def build_xquik_search_plan(query: str, limit: int) -> dict[str, Any]:
     normalized_query = query.strip()
     if not normalized_query:
         raise ValueError("query must not be empty")
-    if isinstance(limit, bool) or not isinstance(limit, int) or limit < 1:
-        raise ValueError("limit must be a positive integer")
+    if (
+        isinstance(limit, bool)
+        or not isinstance(limit, int)
+        or not 1 <= limit <= 10_000
+    ):
+        raise ValueError("limit must be an integer from 1 through 10,000")
     return {
         "skill": "x-twitter-scraper",
         "mcp_server": "https://xquik.com/mcp",
