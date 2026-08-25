@@ -119,13 +119,13 @@ end
 
 
 function build_metrics(y_true::Vector{Int}, y_pred::Vector{Int})
-    tp = sum(1 for i in 1:length(y_true) if y_true[i] == 1 && y_pred[i] == 1; init=0)
-    tn = sum(1 for i in 1:length(y_true) if y_true[i] == 0 && y_pred[i] == 0; init=0)
-    fp = sum(1 for i in 1:length(y_true) if y_true[i] == 0 && y_pred[i] == 1; init=0)
-    fn = sum(1 for i in 1:length(y_true) if y_true[i] == 1 && y_pred[i] == 0; init=0)
+  # count() naturally returns 0 for empty matches, preventing crashes
+    tp = count(i -> y_true[i] == 1 && y_pred[i] == 1, eachindex(y_true))
+    tn = count(i -> y_true[i] == 0 && y_pred[i] == 0, eachindex(y_true))
+    fp = count(i -> y_true[i] == 0 && y_pred[i] == 1, eachindex(y_true))
+    fn = count(i -> y_true[i] == 1 && y_pred[i] == 0, eachindex(y_true))
     return ClassificationMetrics(tp, tn, fp, fn)
 end
-
 
 metric_accuracy(m::ClassificationMetrics) =
     (m.tp + m.tn + m.fp + m.fn) > 0 ? (m.tp + m.tn) / (m.tp + m.tn + m.fp + m.fn) : 0.0
