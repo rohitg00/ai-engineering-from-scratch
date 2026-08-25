@@ -127,6 +127,7 @@ function build_metrics(y_true::Vector{Int}, y_pred::Vector{Int})
     return ClassificationMetrics(tp, tn, fp, fn)
 end
 
+
 metric_accuracy(m::ClassificationMetrics) =
     (m.tp + m.tn + m.fp + m.fn) > 0 ? (m.tp + m.tn) / (m.tp + m.tn + m.fp + m.fn) : 0.0
 metric_precision(m::ClassificationMetrics) =
