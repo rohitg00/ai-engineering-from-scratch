@@ -1,0 +1,9 @@
+[project]
+name = "python-environments-demo"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=0.39",
+    "numpy>=1.26",
+    "torch>=2.3",
+]
