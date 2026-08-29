@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build translated README files from the canonical English README.
 
-The README is mostly structure: a banner, badges, a 584-row lesson table, and
+The README is mostly structure: a banner, badges, a 523-row lesson table, and
 HTML blocks. Only prose and headings are translated; every other byte is kept
 exactly, so a translation can never break the layout, the lesson table, or a
 link. The generator works by replacing only the translated line-spans in a copy
@@ -133,6 +133,13 @@ def render(text, lang, translations):
             continue
         replacement = [sp["prefix"] + ln for ln in t.split("\n")]
         lines[sp["start"]:sp["end"]] = replacement
+    in_code = False
+    for index, line in enumerate(lines):
+        if FENCE.match(line):
+            in_code = not in_code
+            continue
+        if not in_code:
+            lines[index] = table.get(line, line)
     return "\n".join(lines)
 
 

@@ -1,0 +1,48 @@
+{
+  "lesson": "43-frame-the-task-before-code",
+  "title": "Frame the Task Before Code",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What should be the first unit of reliable coding-agent work?",
+      "options": ["A task frame backed by repository evidence", "A model call", "An edit", "A pull request"],
+      "correct": 0,
+      "explanation": "The task frame establishes facts, boundaries, unknowns, and proof before implementation."
+    },
+    {
+      "stage": "check",
+      "question": "Which of these statements is a repository fact?",
+      "options": ["The duplicate-response test expects 409 at tests/test_accounts.py:44", "The API probably uses 409", "409 feels conventional", "The API should use 409"],
+      "correct": 0,
+      "explanation": "A fact carries a concrete receipt that can be inspected."
+    },
+    {
+      "stage": "check",
+      "question": "Why name forbidden paths?",
+      "options": ["To select a model", "To define the negative space of the change", "To make the prompt longer", "To avoid running tests"],
+      "correct": 1,
+      "explanation": "Allowed paths alone do not state what tempting adjacent work must remain untouched."
+    },
+    {
+      "stage": "check",
+      "question": "When should a human unknown pause the agent?",
+      "options": ["Whenever any file is unfamiliar", "Before every command", "Only after deployment", "When it changes product behavior, risk, authority, or irreversible cost"],
+      "correct": 3,
+      "explanation": "High-consequence choices require an explicit checkpoint before they are buried in code."
+    },
+    {
+      "stage": "post",
+      "question": "What makes acceptance evidence strong?",
+      "options": ["It is written after coding", "It uses many tools", "It names the exact command or observation and the claim it proves", "It says tests pass"],
+      "correct": 2,
+      "explanation": "Specific proof lets another session reproduce task closure."
+    },
+    {
+      "stage": "post",
+      "question": "When is reconnaissance sufficient?",
+      "options": ["When the context window is full", "When every planned decision has evidence, delegated authority, or an explicit unknown", "After one search", "After reading every file"],
+      "correct": 1,
+      "explanation": "Reconnaissance stops when decisions are grounded or visibly unresolved."
+    }
+  ]
+}

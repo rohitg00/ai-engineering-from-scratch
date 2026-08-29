@@ -1144,7 +1144,7 @@
 
   function lessonPageUrl(lesson) {
     var path = lessonPath(lesson && lesson.url);
-    return path ? 'lesson.html?path=' + encodeURI(path) : '';
+    return path ? 'lesson?path=' + encodeURI(path) : '';
   }
 
   function lessonPath(url) {

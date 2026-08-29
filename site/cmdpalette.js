@@ -31,13 +31,18 @@
 
   function learningPathDestination(lessonPath, learningPathId) {
     if (!lessonPath || !learningPathId) return '';
-    return 'lesson.html?path=' + encodeURIComponent(lessonPath) +
+    return 'lesson?path=' + encodeURIComponent(lessonPath) +
       '&learningPath=' + encodeURIComponent(learningPathId);
   }
 
   function resultIndexForEnter(activeIndex, resultCount) {
     if (activeIndex >= 0 && activeIndex < resultCount) return activeIndex;
     return resultCount > 0 ? 0 : -1;
+  }
+
+  function navigationDestination(href, routeLinks) {
+    var routes = routeLinks || (typeof window !== 'undefined' ? window.AIFSRouteLinks : null);
+    return routes && typeof routes.adaptHref === 'function' ? routes.adaptHref(href) : href;
   }
 
   // ── Search index ─────────────────────────────────────────────────────
@@ -104,7 +109,7 @@
         for (var j = 0; j < phase.lessons.length; j++) {
           var lesson = phase.lessons[j];
 
-          // Extract the phases/…/… path used for lesson.html?path=
+          // Extract the phases/…/… path used for lesson?path=
           var lessonPath = '';
           if (lesson.url) {
             var m = lesson.url.match(/(phases\/[^/?#]+\/[^/?#]+)/);
@@ -190,7 +195,7 @@
           keywords: [track.shortName, track.examCode, track.level, track.audience, domainNames].filter(Boolean).join(' '),
           examCode: track.examCode || '',
           level:    track.level || '',
-          url:      'certification.html?id=' + encodeURIComponent(trackId),
+          url:      'certification?id=' + encodeURIComponent(trackId),
         });
       }
 
@@ -546,11 +551,11 @@
       } else if (r.kind === 'lesson') {
         // Prefer the in-site reader; fall back to GitHub URL
         dest = r.lessonPath
-          ? 'lesson.html?path=' + encodeURIComponent(r.lessonPath)
+          ? 'lesson?path=' + encodeURIComponent(r.lessonPath)
           : r.url;
         chip = 'Phase ' + String(r.phaseId).padStart(2, '0');
       } else if (r.kind === 'certification-lesson') {
-        dest = 'lesson.html?path=' + encodeURIComponent(r.lessonPath);
+        dest = 'lesson?path=' + encodeURIComponent(r.lessonPath);
         chip = 'Certification';
         chipClass += ' cp-item-chip--alt';
       } else if (r.kind === 'certification-track') {
@@ -560,7 +565,7 @@
       } else if (r.kind === 'artifact') {
         // Jump to the lesson that produced this artifact
         dest = r.lessonPath
-          ? 'lesson.html?path=' + encodeURIComponent(r.lessonPath)
+          ? 'lesson?path=' + encodeURIComponent(r.lessonPath)
           : ('https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + r.file);
         var ak = (r.artKind || 'artifact');
         chip = ak.charAt(0).toUpperCase() + ak.slice(1);
@@ -720,7 +725,7 @@
     var href = item.getAttribute('data-href');
     if (!href) return;
     close();
-    window.location.href = href;
+    window.location.href = navigationDestination(href);
   }
 
   // ── Global keyboard shortcut (Cmd/Ctrl+K) ────────────────────────────
@@ -785,6 +790,7 @@
       rebuildIndex: rebuildIndex,
       search: search,
       learningPathDestination: learningPathDestination,
+      navigationDestination: navigationDestination,
       resultIndexForEnter: resultIndexForEnter,
     };
   }

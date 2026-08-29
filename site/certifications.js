@@ -131,7 +131,7 @@
   }
 
   function lessonReferenceHref(path, sourceTrack) {
-    var href = 'lesson.html?path=' + encodeURIComponent(path);
+    var href = 'lesson?path=' + encodeURIComponent(path);
     if (sourceTrack) {
       href += trackContainsLesson(sourceTrack, path)
         ? '&track=' + encodeURIComponent(sourceTrack.id)
@@ -294,7 +294,7 @@
       var lessonCount = Array.isArray(track.lessons) ? track.lessons.length : 0;
       var delay = Math.min(index * 30, 80);
       var badge = renderTrackBadge(track);
-      return '<a class="cert-track-card cert-catalog-arrival" style="--cert-arrival-delay:' + delay + 'ms" href="certification.html?id=' + encodeURIComponent(track.id) + '">' +
+      return '<a class="cert-track-card cert-catalog-arrival" style="--cert-arrival-delay:' + delay + 'ms" href="certification?id=' + encodeURIComponent(track.id) + '">' +
         '<div class="cert-card-top"><span class="cert-card-code">' + esc(track.examCode || track.shortName || track.slug) + '</span><span class="cert-status">' + esc(track.level || 'Study path') + '</span></div>' +
         '<div class="cert-card-identity' + (badge ? ' has-badge' : '') + '"><h3>' + esc(track.credential || track.title || track.shortName || track.id) + '</h3>' + badge + '</div>' +
         '<p>' + esc(track.summary || track.audience || 'A practical route through this certification blueprint.') + '</p>' +
@@ -355,7 +355,7 @@
     var desc = document.querySelector('meta[name="description"]');
     if (desc) desc.setAttribute('content', description);
     var canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) canonical.setAttribute('href', 'https://aiengineeringfromscratch.com/certification.html?id=' + encodeURIComponent(track.id));
+    if (canonical) canonical.setAttribute('href', 'https://aiengineeringfromscratch.com/certification?id=' + encodeURIComponent(track.id));
   }
 
   function renderTrackNotFound(hero) {
@@ -406,7 +406,7 @@
         return metaChip(fact.label + ': ' + value);
       }).join('') + '</div>' +
       '<div class="cert-track-hero-actions">' +
-        (firstPath ? '<a class="cert-action" href="lesson.html?path=' + encodeURIComponent(firstPath) + '&track=' + encodeURIComponent(track.id) + '">' + (complete ? 'Continue path' : 'Start learning') + '</a>' : '') +
+        (firstPath ? '<a class="cert-action" href="lesson?path=' + encodeURIComponent(firstPath) + '&track=' + encodeURIComponent(track.id) + '">' + (complete ? 'Continue path' : 'Start learning') + '</a>' : '') +
         '<a class="cert-action secondary" href="#trackAssessments">Practice readiness</a>' +
         '<a class="cert-action secondary" href="' + attr(TUTOR_GUIDE_URL) + '" target="_blank" rel="noopener" aria-label="Learn with an AI tutor on GitHub (opens in a new tab)">Learn with an AI tutor on GitHub ↗</a>' +
         (track.exam && track.exam.officialGuideUrl ? '<a class="cert-action secondary" href="' + attr(track.exam.officialGuideUrl) + '" target="_blank" rel="noopener">Official exam guide</a>' : '') +
@@ -469,7 +469,7 @@
         '<div class="cert-lesson-num">' + String(index + 1).padStart(2, '0') + '</div>' +
         '<div class="cert-lesson-copy"><h3>' + esc(lesson.name) + '</h3><p>' + esc((done ? 'Complete · ' : '') + origin + (lesson.summary ? ' · ' + lesson.summary : '')) + '</p></div>' +
         '<div class="cert-domain-chips">' + domains.map(function (domain) { return '<span class="cert-domain-chip">' + esc(domain) + '</span>'; }).join('') + '</div>' +
-        '<a class="cert-lesson-open" href="lesson.html?path=' + encodeURIComponent(path) + '&track=' + encodeURIComponent(track.id) + '">' + (done ? 'Review' : 'Open') + ' →</a>' +
+        '<a class="cert-lesson-open" href="lesson?path=' + encodeURIComponent(path) + '&track=' + encodeURIComponent(track.id) + '">' + (done ? 'Review' : 'Open') + ' →</a>' +
       '</article>';
     }).join('') : '<div class="cert-empty">Lessons have not been added to this track yet.</div>';
   }
@@ -657,7 +657,7 @@
   function renderAssessmentLoaded(mount, assessment, track, forceForm) {
     var questions = (assessment.questions || []).map(normalizeQuestion);
     if (!questions.length) {
-      mount.innerHTML = '<div class="cert-error"><h1>Practice is being written</h1><p>This assessment has metadata but no questions yet.</p><a class="cert-action" href="' + (track ? 'certification.html?id=' + encodeURIComponent(track.id) : 'certifications.html') + '">Back to track</a></div>';
+      mount.innerHTML = '<div class="cert-error"><h1>Practice is being written</h1><p>This assessment has metadata but no questions yet.</p><a class="cert-action" href="' + (track ? 'certification?id=' + encodeURIComponent(track.id) : 'certifications.html') + '">Back to track</a></div>';
       return;
     }
     var title = assessment.title || 'Practice assessment';
@@ -681,7 +681,7 @@
       if (window.AIFSCertProgress) window.AIFSCertProgress.saveDraft(assessment.id, version, draft);
     }
 
-    mount.innerHTML = '<div class="assessment-shell"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification.html?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Practice</span></div><section class="assessment-hero"><div class="cert-eyebrow">' + esc(assessment.kind || 'PRACTICE') + '</div><h1>' + esc(title) + '</h1><p>' + esc(assessment.summary || assessment.description || 'Work through the original scenarios, then submit to reveal explanations and domain feedback.') + '</p><p class="assessment-scoring-note">Submit whenever you are ready. Unanswered questions count as incorrect.</p><div class="cert-meta-row">' + metaChip(questions.length + ' original questions') + metaChip(limit ? limit + ' minute limit' : 'Untimed') + metaChip(progressIsPersistent() ? 'Saved locally' : 'Progress lasts for this page only') + '</div></section>' +
+    mount.innerHTML = '<div class="assessment-shell"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Practice</span></div><section class="assessment-hero"><div class="cert-eyebrow">' + esc(assessment.kind || 'PRACTICE') + '</div><h1>' + esc(title) + '</h1><p>' + esc(assessment.summary || assessment.description || 'Work through the original scenarios, then submit to reveal explanations and domain feedback.') + '</p><p class="assessment-scoring-note">Submit whenever you are ready. Unanswered questions count as incorrect.</p><div class="cert-meta-row">' + metaChip(questions.length + ' original questions') + metaChip(limit ? limit + ' minute limit' : 'Untimed') + metaChip(progressIsPersistent() ? 'Saved locally' : 'Progress lasts for this page only') + '</div></section>' +
       '<div class="cert-notice"><strong>Practice score only</strong><p>Your result is a percentage created by this open-source course. It is not an official scaled exam score, credential decision, or guarantee of passing.</p></div>' +
       (limit ? '<div class="cert-timer" id="assessmentTimer" role="timer" aria-live="off" aria-label="Time remaining"><span>Time remaining</span><strong id="assessmentTimerValue">' + formatRemaining(draft.deadlineAt - Date.now()) + '</strong></div>' : '') +
       '<form class="assessment-form" id="assessmentForm" tabindex="-1" aria-label="Assessment questions">' + questions.map(function (question, index) { return renderQuestion(question, index, draft.answers[question.id] || []); }).join('') + '<div class="cert-submit-row"><p>You can submit a partial attempt. Unanswered questions count as incorrect, and explanations appear after submission.</p><button class="cert-action" type="submit">Submit practice</button></div></form></div>';
@@ -833,7 +833,7 @@
     }).join('');
     var remediationHtml = renderRemediation(track, questions, attempt);
     var latestResultHref = 'assessment.html?id=' + encodeURIComponent(assessment.id) + '&result=latest';
-    mount.innerHTML = '<div class="assessment-shell cert-results"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification.html?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Results</span></div><section class="cert-results-summary" id="assessmentResultsSummary" tabindex="-1" aria-label="Assessment result"><div class="cert-results-head"><div><div class="cert-eyebrow">PRACTICE RESULT</div><div class="cert-results-score">' + scoreSummary.percent + '%</div></div><div><strong>' + scoreSummary.correct + ' of ' + scoreSummary.total + ' exact answers</strong><p>' + (attempt.timedOut ? 'Submitted when the timer expired.' : 'Submitted in ' + formatDuration(attempt.durationMs)) + '</p></div></div><div class="cert-domain-score-grid">' + domainHtml + '</div><div class="cert-notice"><strong>Not an official scaled score</strong><p>This percentage measures this original practice set only. It cannot predict or guarantee the provider\'s scaled certification result.</p></div><div class="cert-track-hero-actions"><button class="cert-action" type="button" id="assessmentRetake">Start a fresh attempt</button><a class="cert-action secondary" href="' + attr(latestResultHref) + '">Revisit latest result</a>' + (track ? '<a class="cert-action secondary" href="certification.html?id=' + encodeURIComponent(track.id) + '">Return to track</a>' : '') + '</div></section>' + remediationHtml + '<section aria-labelledby="reviewTitle"><div class="cert-section-heading"><div><div class="cert-eyebrow">REVIEW</div><h2 id="reviewTitle">Decisions and explanations</h2></div><p>Use every miss to identify the domain and decision rule you need to revisit.</p></div>' + questions.map(function (question, index) { return renderReview(question, index, attemptAnswers[question.id] || [], track); }).join('') + '</section></div>';
+    mount.innerHTML = '<div class="assessment-shell cert-results"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Results</span></div><section class="cert-results-summary" id="assessmentResultsSummary" tabindex="-1" aria-label="Assessment result"><div class="cert-results-head"><div><div class="cert-eyebrow">PRACTICE RESULT</div><div class="cert-results-score">' + scoreSummary.percent + '%</div></div><div><strong>' + scoreSummary.correct + ' of ' + scoreSummary.total + ' exact answers</strong><p>' + (attempt.timedOut ? 'Submitted when the timer expired.' : 'Submitted in ' + formatDuration(attempt.durationMs)) + '</p></div></div><div class="cert-domain-score-grid">' + domainHtml + '</div><div class="cert-notice"><strong>Not an official scaled score</strong><p>This percentage measures this original practice set only. It cannot predict or guarantee the provider\'s scaled certification result.</p></div><div class="cert-track-hero-actions"><button class="cert-action" type="button" id="assessmentRetake">Start a fresh attempt</button><a class="cert-action secondary" href="' + attr(latestResultHref) + '">Revisit latest result</a>' + (track ? '<a class="cert-action secondary" href="certification?id=' + encodeURIComponent(track.id) + '">Return to track</a>' : '') + '</div></section>' + remediationHtml + '<section aria-labelledby="reviewTitle"><div class="cert-section-heading"><div><div class="cert-eyebrow">REVIEW</div><h2 id="reviewTitle">Decisions and explanations</h2></div><p>Use every miss to identify the domain and decision rule you need to revisit.</p></div>' + questions.map(function (question, index) { return renderReview(question, index, attemptAnswers[question.id] || [], track); }).join('') + '</section></div>';
     var retake = document.getElementById('assessmentRetake');
     if (retake) retake.addEventListener('click', function () {
       if (window.AIFSCertProgress) window.AIFSCertProgress.clearDraft(assessment.id, assessmentVersion(assessment));

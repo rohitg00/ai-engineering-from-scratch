@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 820" role="img" aria-labelledby="title desc">
+  <title id="title">AI Engineering Learning Paths</title>
+  <desc id="desc">AI Engineering connects four vertically arranged core learning paths: building and deploying AI applications, software engineering fundamentals, agent-assisted engineering, and product judgment and delivery.</desc>
+  <style>
+    .bg{fill:#fafaf5}.line{fill:none;stroke:#3553ff;stroke-width:2}.node{fill:#fafaf5;stroke:#1a1a1a;stroke-width:2}.root{fill:#fafaf5;stroke:#1a1a1a;stroke-width:3}.label{fill:#1a1a1a;font:600 16px ui-monospace,SFMono-Regular,Menlo,monospace;text-anchor:middle}.small{fill:#555;font:400 11px ui-monospace,SFMono-Regular,Menlo,monospace;text-anchor:middle}
+    @media(prefers-color-scheme:dark){.bg{fill:#080b18}.node,.root{fill:#10162c;stroke:#d9dded}.label{fill:#f4f1e8}.small{fill:#aab2cf}.line{stroke:#7892ff}}
+  </style>
+  <rect class="bg" width="360" height="820"/>
+  <path class="line" d="M180 112V158M180 282V306M180 430V454M180 578V602"/>
+  <rect class="node root" x="42" y="34" width="276" height="78" rx="4"/>
+  <text class="label" x="180" y="67">AI ENGINEERING</text>
+  <text class="small" x="180" y="90">learn the system and shape the work</text>
+  <g>
+    <rect class="node" x="18" y="158" width="324" height="124" rx="4"/>
+    <text class="label" x="180" y="193"><tspan x="180">BUILDING AND DEPLOYING</tspan><tspan x="180" dy="22">AI APPLICATIONS</tspan></text>
+    <text class="small" x="180" y="247">models · data · evaluation · serving · release</text>
+  </g>
+  <g>
+    <rect class="node" x="18" y="306" width="324" height="124" rx="4"/>
+    <text class="label" x="180" y="341"><tspan x="180">SOFTWARE ENGINEERING</tspan><tspan x="180" dy="22">FUNDAMENTALS</tspan></text>
+    <text class="small" x="180" y="395">repositories · interfaces · tests · security</text>
+  </g>
+  <g>
+    <rect class="node" x="18" y="454" width="324" height="124" rx="4"/>
+    <text class="label" x="180" y="489"><tspan x="180">AGENT-ASSISTED</tspan><tspan x="180" dy="22">ENGINEERING</tspan></text>
+    <text class="small" x="180" y="543">frame · plan · delegate · verify · improve</text>
+  </g>
+  <g>
+    <rect class="node" x="18" y="602" width="324" height="124" rx="4"/>
+    <text class="label" x="180" y="637"><tspan x="180">PRODUCT JUDGMENT</tspan><tspan x="180" dy="22">AND DELIVERY</tspan></text>
+    <text class="small" x="180" y="691">outcomes · evidence · risk · metrics · feedback</text>
+  </g>
+  <text class="small" x="180" y="780">FOUR DOMAINS · ONE ENGINEERING DISCIPLINE</text>
+</svg>

@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Regression checks for the phase-only translation workflow publisher."""
+"""Regression checks for the translation registry and workflow publisher."""
 
 from __future__ import annotations
 
+import json
 import os
+import re
 import shlex
 import stat
 import subprocess
@@ -12,11 +14,17 @@ import textwrap
 import unittest
 from pathlib import Path
 
+from build_readme_i18n import render
+from readme_translations import HERO2, TRANSLATIONS
+
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "translate.yml"
+CURRICULUM_WORKFLOW = ROOT / ".github" / "workflows" / "curriculum.yml"
+LANGUAGES = ROOT / "languages.json"
 PREPARE_STEP = "      - id: set"
 PUBLISH_STEP = "      - name: Publish this phase slice to translations branch (race-safe)"
+LANGUAGE_CODE = re.compile(r"^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$")
 
 
 def run(
@@ -98,6 +106,82 @@ def publisher_env(remote: Path, runner_temp: Path) -> dict[str, str]:
 
 
 class TranslateWorkflowContractTest(unittest.TestCase):
+    def test_readme_exact_line_translations_skip_fenced_code(self) -> None:
+        heading = "| Your goal | Learn on GitHub | Learn on the website |"
+        source = f"```text\n{heading}\n```\n{heading}"
+        rendered = render(source, "pt", TRANSLATIONS).splitlines()
+        self.assertEqual(rendered[1], heading)
+        self.assertEqual(rendered[3], "| Seu objetivo | Aprenda no GitHub | Aprenda no site |")
+
+    def test_readme_hero_counts_match_the_canonical_curriculum(self) -> None:
+        for language, translations in TRANSLATIONS.items():
+            with self.subTest(language=language):
+                hero = translations[HERO2]
+                self.assertIn("523", hero)
+                self.assertIn("342", hero)
+
+    def test_german_hero_uses_the_masculine_skill_article(self) -> None:
+        hero = TRANSLATIONS["de"][HERO2]
+        self.assertIn("einen Skill", hero)
+        self.assertNotIn("eine Skill", hero)
+
+    def test_language_registry_contract(self) -> None:
+        registry = json.loads(LANGUAGES.read_text(encoding="utf-8"))
+        languages = registry.get("languages")
+        self.assertIsInstance(languages, list)
+        self.assertTrue(languages)
+
+        codes: list[str] = []
+        sources: list[dict[str, object]] = []
+        for index, language in enumerate(languages):
+            code = language.get("code") if isinstance(language, dict) else None
+            with self.subTest(index=index, code=code):
+                self.assertIsInstance(language, dict)
+                for field in ("code", "name", "native", "nllb"):
+                    self.assertIn(field, language)
+                    self.assertIsInstance(language[field], str)
+                    self.assertTrue(language[field].strip())
+                self.assertRegex(language["code"], LANGUAGE_CODE)
+                if "source" in language:
+                    self.assertIsInstance(language["source"], bool)
+                if "ci" in language:
+                    self.assertIsInstance(language["ci"], bool)
+
+                codes.append(language["code"])
+                if language.get("source") is True:
+                    sources.append(language)
+
+        self.assertEqual(len(codes), len(set(codes)), "language codes must be unique")
+        self.assertEqual(len(sources), 1, "exactly one source language is required")
+        self.assertFalse(
+            sources[0].get("ci", False),
+            "the source language must not enter the translation matrix",
+        )
+
+    def test_default_translation_matrix_fits_github_limit(self) -> None:
+        registry = json.loads(LANGUAGES.read_text(encoding="utf-8"))
+        enabled = [
+            language["code"]
+            for language in registry["languages"]
+            if language.get("ci") is True
+        ]
+        phases = [
+            path.name
+            for path in (ROOT / "phases").iterdir()
+            if path.is_dir() and re.fullmatch(r"[0-9]{2}-[a-z0-9-]+", path.name)
+        ]
+        self.assertTrue(enabled)
+        self.assertTrue(phases)
+        self.assertLessEqual(
+            len(enabled) * len(phases),
+            256,
+            "GitHub Actions permits at most 256 jobs in one matrix",
+        )
+
+    def test_registry_changes_trigger_curriculum_checks(self) -> None:
+        workflow = CURRICULUM_WORKFLOW.read_text(encoding="utf-8")
+        self.assertEqual(workflow.count('- "languages.json"'), 2)
+
     def test_trigger_and_manual_scope_remain_phase_only(self) -> None:
         workflow = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn('- "phases/**/docs/en.md"', workflow)

@@ -46,13 +46,15 @@
       "code": "fr",
       "name": "French",
       "native": "Français",
-      "nllb": "fra_Latn"
+      "nllb": "fra_Latn",
+      "ci": true
     },
     {
       "code": "pt",
       "name": "Portuguese",
       "native": "Português",
-      "nllb": "por_Latn"
+      "nllb": "por_Latn",
+      "ci": true
     },
     {
       "code": "bn",
@@ -101,7 +103,8 @@
       "code": "vi",
       "name": "Vietnamese",
       "native": "Tiếng Việt",
-      "nllb": "vie_Latn"
+      "nllb": "vie_Latn",
+      "ci": true
     },
     {
       "code": "id",

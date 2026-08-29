@@ -1,0 +1,57 @@
+[
+  {
+    "stage": "prototype",
+    "decision": {
+      "unknown": "Can the service be identified from an alert?",
+      "real_users_required": false,
+      "real_data_required": false,
+      "consequence": 2,
+      "reversible": true,
+      "operational_readiness": false
+    },
+    "required_controls": [
+      "synthetic or recorded inputs",
+      "discardable implementation",
+      "learning question"
+    ]
+  },
+  {
+    "stage": "pilot",
+    "decision": {
+      "unknown": "Will engineers trust the recommendation?",
+      "real_users_required": true,
+      "real_data_required": true,
+      "consequence": 4,
+      "reversible": true,
+      "operational_readiness": false
+    },
+    "required_controls": [
+      "limited audience",
+      "rollback",
+      "human owner",
+      "audit trail",
+      "exit criteria"
+    ]
+  },
+  {
+    "stage": "production",
+    "decision": {
+      "unknown": "Can the workflow meet its SLO?",
+      "real_users_required": true,
+      "real_data_required": true,
+      "consequence": 2,
+      "reversible": true,
+      "operational_readiness": true
+    },
+    "required_controls": [
+      "service level objective",
+      "on-call owner",
+      "security review",
+      "cost and capacity controls",
+      "rollback",
+      "recovery",
+      "continuous monitoring",
+      "retirement path"
+    ]
+  }
+]

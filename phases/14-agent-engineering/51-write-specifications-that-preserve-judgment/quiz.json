@@ -1,0 +1,48 @@
+{
+  "lesson": "51-write-specifications-that-preserve-judgment",
+  "title": "Specifications That Preserve Judgment",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the useful middle between under- and over-specification?",
+      "options": ["No plan", "A longer request", "A complete implementation script", "An executable contract that fixes invariants and evidence while preserving reversible choices"],
+      "correct": 3,
+      "explanation": "The contract constrains outcomes and risk without scripting every implementation detail."
+    },
+    {
+      "stage": "check",
+      "question": "Which decision should usually be locked?",
+      "options": ["A local variable name", "Whether the system may write to production", "A reversible file split", "The order of private helper functions"],
+      "correct": 1,
+      "explanation": "Authority and high-consequence behavior require a human-owned decision."
+    },
+    {
+      "stage": "check",
+      "question": "What is a bounded decision?",
+      "options": ["The agent cannot act", "The agent may choose inside explicit safe limits", "The choice is random", "There is no proof"],
+      "correct": 1,
+      "explanation": "Bounds preserve useful judgment while keeping risk controlled."
+    },
+    {
+      "stage": "check",
+      "question": "Why pair examples with invariants?",
+      "options": ["They reduce all ambiguity", "Examples prove every universal rule", "They replace outcomes", "Examples reveal intent while invariants state conditions that must always hold"],
+      "correct": 3,
+      "explanation": "Concrete cases and universal constraints serve different roles."
+    },
+    {
+      "stage": "post",
+      "question": "What proof matches a user-journey claim?",
+      "options": ["A browser or end-to-end journey observation", "A type annotation", "A local unit test only", "A plan"],
+      "correct": 0,
+      "explanation": "Proof must operate at the same layer as the claim."
+    },
+    {
+      "stage": "post",
+      "question": "Why record rationale for locked decisions?",
+      "options": ["To prevent all change", "To make the file longer", "So later evidence can revise the choice without archaeology", "To hide uncertainty"],
+      "correct": 2,
+      "explanation": "Traceable reasons let specifications evolve deliberately."
+    }
+  ]
+}

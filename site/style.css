@@ -111,8 +111,8 @@ body {
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
   transition: background-color 0.2s, color 0.2s;
 }
 
@@ -1112,7 +1112,7 @@ body.js-anim .toc-row.in-view {
   }
 }
 
-@media (max-width: 1320px) and (min-width: 1241px) {
+@media (max-width: 1480px) and (min-width: 1401px) {
   .header-inner {
     padding: 0 24px;
     gap: 8px;
@@ -1146,7 +1146,7 @@ body.js-anim .toc-row.in-view {
   }
 }
 
-@media (max-width: 1240px) {
+@media (max-width: 1400px) {
   .header-inner {
     position: relative;
     justify-content: flex-start;

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "kind": "career-route",
+  "id": "ai-developer-relations-engineer",
+  "title": "Developer Experience and Education",
+  "workFamily": "Developer Experience and Education",
+  "commonTitles": ["AI Developer Relations Engineer", "AI Developer Advocate", "Developer Experience Engineer"],
+  "summary": "Build credible integrations, examples, and reusable agent packages, then turn developer friction into clearer tools and teaching.",
+  "keywords": "ai developer relations devrel developer education technical content integrations examples sdk mcp skills",
+  "decisionPrompt": "Do you want to make AI capabilities easier for developers to understand, adopt, and use correctly?",
+  "mission": "Build on shared foundations to turn technical capabilities into trustworthy interfaces, runnable examples, and reusable learning assets.",
+  "responsibilities": [
+    "Design clear API, tool, and protocol contracts for developer use.",
+    "Build runnable examples and reusable agent packages.",
+    "Teach runtime behavior, tradeoffs, and failure modes accurately.",
+    "Turn developer friction and feedback into product and documentation improvements."
+  ],
+  "goodFitIf": [
+    "You enjoy building software and explaining why it works.",
+    "You care about first-run success, examples, documentation, and developer trust.",
+    "You want developer feedback to shape the product."
+  ],
+  "baseline": [
+    "Complete the shared software engineering and AI foundations, or demonstrate equivalent working knowledge.",
+    "Be able to read API contracts and run local examples from source.",
+    "Be comfortable testing instructions from a new developer's point of view."
+  ],
+  "boundary": "This is a specialist overlay after shared foundations. The route is strongest on technical integration and reusable teaching assets, while community programs, events, and distribution need additional practice.",
+  "timeNote": "The estimate covers lesson time only. Portfolio work and practice take additional time.",
+  "portfolioProof": {
+    "title": "Developer Adoption Kit",
+    "description": "Package one AI capability as a discoverable integration that another developer can run, inspect, and verify.",
+    "evidence": [
+      "A runnable API or tool integration",
+      "A concise quickstart and working example",
+      "A validated skill or reusable agent package",
+      "An evaluation and portability report",
+      "A documented improvement based on developer feedback"
+    ]
+  },
+  "readinessCriteria": [
+    "Can explain the difference between an instruction package and an executable tool.",
+    "Can design a small, unambiguous interface with useful failure messages.",
+    "Can create a runnable example that works from a clean setup.",
+    "Can validate discovery, invocation, packaging, and portability.",
+    "Can turn observed developer friction into a concrete product or teaching change."
+  ],
+  "coverage": {
+    "strong": ["API and tool contracts", "MCP implementation", "Skill discovery and packaging", "Runnable technical examples"],
+    "partial": ["Technical writing and quickstarts", "Developer feedback research", "Community education"],
+    "outsideCourse": ["Event and community program ownership", "Content distribution strategy", "Years of public developer-facing experience"]
+  },
+  "completionClaim": "Completing this route shows that you can build and explain a verifiable developer integration. It does not guarantee a role or replace sustained work with a developer community.",
+  "sourceBasis": {
+    "reviewedAt": "2026-08-29",
+    "method": "Synthesized from current primary job descriptions across AI field, product, platform, data, developer, and evaluation teams."
+  },
+  "estimatedMinutes": 905,
+  "stages": [
+    {
+      "id": "common-core",
+      "title": "Common Core",
+      "outcome": "Build a sound capability interface from credentials through tool and protocol contracts.",
+      "lessonPaths": [
+        "phases/00-setup-and-tooling/04-apis-and-keys",
+        "phases/13-tools-and-protocols/01-the-tool-interface",
+        "phases/13-tools-and-protocols/05-tool-schema-design",
+        "phases/13-tools-and-protocols/06-mcp-fundamentals",
+        "phases/13-tools-and-protocols/07-building-an-mcp-server"
+      ],
+      "artifact": "A runnable integration with a clear contract, setup path, and observable error behavior."
+    },
+    {
+      "id": "role-practice",
+      "title": "Role Practice",
+      "outcome": "Make reusable agent knowledge discoverable, invocable, and progressively disclosed.",
+      "lessonPaths": [
+        "phases/13-tools-and-protocols/22-skills-and-agent-sdks",
+        "phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure",
+        "phases/13-tools-and-protocols/25-skill-invocation-and-routing"
+      ],
+      "artifact": "A skill package with concise metadata, staged references, and explicit invocation examples."
+    },
+    {
+      "id": "proof-project",
+      "title": "Proof Project",
+      "outcome": "Prove that the package and its surrounding tool ecosystem work across supported contexts.",
+      "lessonPaths": [
+        "phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability",
+        "phases/13-tools-and-protocols/23-capstone-tool-ecosystem"
+      ],
+      "artifact": "A developer adoption kit with validation results, portability notes, and a working end-to-end example."
+    },
+    {
+      "id": "interview-readiness-evidence",
+      "title": "Interview and Readiness Evidence",
+      "outcome": "Show how developer feedback changed the integration or its teaching path.",
+      "lessonPaths": ["phases/14-agent-engineering/54-build-the-feedback-ratchet"],
+      "artifact": "A short adoption case study with friction evidence, the change made, and the measured result."
+    }
+  ],
+  "lessons": [
+    {"order": 1, "path": "phases/00-setup-and-tooling/04-apis-and-keys", "minutes": 30, "required": true},
+    {"order": 2, "path": "phases/13-tools-and-protocols/01-the-tool-interface", "minutes": 45, "required": true},
+    {"order": 3, "path": "phases/13-tools-and-protocols/05-tool-schema-design", "minutes": 45, "required": true},
+    {"order": 4, "path": "phases/13-tools-and-protocols/06-mcp-fundamentals", "minutes": 55, "required": true},
+    {"order": 5, "path": "phases/13-tools-and-protocols/07-building-an-mcp-server", "minutes": 85, "required": true},
+    {"order": 6, "path": "phases/13-tools-and-protocols/22-skills-and-agent-sdks", "minutes": 90, "required": true},
+    {"order": 7, "path": "phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure", "minutes": 105, "required": true},
+    {"order": 8, "path": "phases/13-tools-and-protocols/25-skill-invocation-and-routing", "minutes": 105, "required": true},
+    {"order": 9, "path": "phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability", "minutes": 150, "required": true},
+    {"order": 10, "path": "phases/13-tools-and-protocols/23-capstone-tool-ecosystem", "minutes": 120, "required": true},
+    {"order": 11, "path": "phases/14-agent-engineering/54-build-the-feedback-ratchet", "minutes": 75, "required": true}
+  ]
+}

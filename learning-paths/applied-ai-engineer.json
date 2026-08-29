@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "kind": "career-route",
+  "id": "applied-ai-engineer",
+  "title": "LLM Product Engineering",
+  "workFamily": "LLM Product Engineering",
+  "commonTitles": ["Applied AI Engineer", "LLM Engineer", "AI Product Engineer"],
+  "summary": "Turn language-model capability into evaluated, safe, cost-aware product behavior that can survive production traffic.",
+  "keywords": "applied ai engineer llm product prompt structured output rag tools evaluation guardrails production",
+  "decisionPrompt": "Do you want to turn language-model capability into a reliable product feature with measurable user behavior?",
+  "mission": "Build on shared foundations to ship grounded LLM features with explicit contracts, evaluation, safety, cost, and release controls.",
+  "responsibilities": [
+    "Shape model behavior with prompts, schemas, context, retrieval, and tools.",
+    "Define evaluation sets and guardrails around product requirements.",
+    "Balance quality, latency, cost, and operational risk.",
+    "Ship through production interfaces and controlled rollout stages."
+  ],
+  "goodFitIf": [
+    "You want to connect model behavior directly to a user-facing product.",
+    "You enjoy balancing quality, safety, latency, and cost.",
+    "You prefer measured product behavior over isolated model demos."
+  ],
+  "baseline": [
+    "Complete the shared software engineering and AI foundations, or demonstrate equivalent working knowledge.",
+    "Be able to call a model API and build a small web or service interface.",
+    "Understand basic evaluation, testing, and production error handling."
+  ],
+  "boundary": "This is a specialist overlay after shared foundations and focuses on LLM product engineering. It does not cover every applied AI modality or replace product discovery and live production ownership.",
+  "timeNote": "The estimate covers lesson time only. Portfolio work and practice take additional time.",
+  "portfolioProof": {
+    "title": "Production LLM Feature",
+    "description": "Build a grounded LLM feature with a clear user contract, measurable quality, safety controls, and a staged release plan.",
+    "evidence": [
+      "A user contract and structured output schema",
+      "A grounded application using retrieval or tools",
+      "An evaluation set and guardrail report",
+      "A quality, latency, and cost scorecard",
+      "A deployment and staged rollout record"
+    ]
+  },
+  "readinessCriteria": [
+    "Can choose prompts, schemas, retrieval, and tools based on a product requirement.",
+    "Can build an evaluation set before tuning behavior.",
+    "Can identify and test safety and failure boundaries.",
+    "Can measure quality, latency, and cost together.",
+    "Can explain deployment, gateway, canary, and rollback choices."
+  ],
+  "coverage": {
+    "strong": ["Prompt and structured output design", "Context, retrieval, and tools", "LLM evaluation and guardrails", "Cost-aware production rollout"],
+    "partial": ["Product discovery", "User experience research", "Full cloud operations"],
+    "outsideCourse": ["Vision and audio product specialization", "Foundation-model training ownership", "Commercial product management"]
+  },
+  "completionClaim": "Completing this route shows that you can build and evaluate a production-style LLM feature. It does not guarantee a role or prove ownership of a live commercial product.",
+  "sourceBasis": {
+    "reviewedAt": "2026-08-29",
+    "method": "Synthesized from current primary job descriptions across AI field, product, platform, data, developer, and evaluation teams."
+  },
+  "estimatedMinutes": 885,
+  "stages": [
+    {
+      "id": "common-core",
+      "title": "Common Core",
+      "outcome": "Shape language-model behavior through prompts, schemas, context, retrieval, and tools.",
+      "lessonPaths": [
+        "phases/11-llm-engineering/01-prompt-engineering",
+        "phases/11-llm-engineering/03-structured-outputs",
+        "phases/11-llm-engineering/04-embeddings",
+        "phases/11-llm-engineering/05-context-engineering",
+        "phases/11-llm-engineering/06-rag",
+        "phases/11-llm-engineering/09-function-calling"
+      ],
+      "artifact": "A grounded feature prototype with a typed user contract and observable tool or retrieval behavior."
+    },
+    {
+      "id": "role-practice",
+      "title": "Role Practice",
+      "outcome": "Measure quality and control cost and safety before production exposure.",
+      "lessonPaths": [
+        "phases/11-llm-engineering/10-evaluation",
+        "phases/11-llm-engineering/11-caching-cost",
+        "phases/11-llm-engineering/12-guardrails"
+      ],
+      "artifact": "An evaluation suite with guardrail tests and a quality, latency, and cost scorecard."
+    },
+    {
+      "id": "proof-project",
+      "title": "Proof Project",
+      "outcome": "Package the feature as a production-style application behind operational controls.",
+      "lessonPaths": [
+        "phases/11-llm-engineering/13-production-app",
+        "phases/17-infrastructure-and-production/19-ai-gateways"
+      ],
+      "artifact": "A deployed LLM feature with routing, limits, observability hooks, and documented failure behavior."
+    },
+    {
+      "id": "interview-readiness-evidence",
+      "title": "Interview and Readiness Evidence",
+      "outcome": "Show how the feature advances through controlled exposure with rollback evidence.",
+      "lessonPaths": ["phases/17-infrastructure-and-production/20-shadow-canary-progressive"],
+      "artifact": "A product case study with eval results, cost tradeoffs, release gates, and a rollback decision."
+    }
+  ],
+  "lessons": [
+    {"order": 1, "path": "phases/11-llm-engineering/01-prompt-engineering", "minutes": 90, "required": true},
+    {"order": 2, "path": "phases/11-llm-engineering/03-structured-outputs", "minutes": 90, "required": true},
+    {"order": 3, "path": "phases/11-llm-engineering/04-embeddings", "minutes": 75, "required": true},
+    {"order": 4, "path": "phases/11-llm-engineering/05-context-engineering", "minutes": 90, "required": true},
+    {"order": 5, "path": "phases/11-llm-engineering/06-rag", "minutes": 90, "required": true},
+    {"order": 6, "path": "phases/11-llm-engineering/09-function-calling", "minutes": 75, "required": true},
+    {"order": 7, "path": "phases/11-llm-engineering/10-evaluation", "minutes": 45, "required": true},
+    {"order": 8, "path": "phases/11-llm-engineering/11-caching-cost", "minutes": 45, "required": true},
+    {"order": 9, "path": "phases/11-llm-engineering/12-guardrails", "minutes": 45, "required": true},
+    {"order": 10, "path": "phases/11-llm-engineering/13-production-app", "minutes": 120, "required": true},
+    {"order": 11, "path": "phases/17-infrastructure-and-production/19-ai-gateways", "minutes": 60, "required": true},
+    {"order": 12, "path": "phases/17-infrastructure-and-production/20-shadow-canary-progressive", "minutes": 60, "required": true}
+  ]
+}

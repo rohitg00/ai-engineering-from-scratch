@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "kind": "career-route",
+  "id": "ai-evaluation-reliability-engineer",
+  "title": "AI Evaluation and Reliability",
+  "workFamily": "AI Evaluation and Reliability",
+  "commonTitles": ["AI Evaluation Engineer", "AI Reliability Engineer", "Machine Learning Site Reliability Engineer"],
+  "summary": "Measure model and agent behavior, expose failure modes, instrument the runtime, and build release and incident controls around evidence.",
+  "keywords": "ai evaluation reliability engineer evals testing observability metrics load canary chaos sre",
+  "decisionPrompt": "Do you want to turn model and system uncertainty into evaluation, observability, release, and recovery evidence?",
+  "mission": "Build on shared foundations to define trustworthy behavior, expose failures, and operate AI releases through measurable reliability controls.",
+  "responsibilities": [
+    "Design model, LLM, and agent evaluations around real failure risks.",
+    "Instrument inference behavior and system health with useful telemetry.",
+    "Test load, experiments, canaries, and rollback conditions before release.",
+    "Use incidents and chaos tests to improve reliability controls."
+  ],
+  "goodFitIf": [
+    "You prefer measurable evidence to confident completion claims.",
+    "You enjoy finding edge cases, regressions, and system failure paths.",
+    "You want evaluation and operations to share the same release evidence."
+  ],
+  "baseline": [
+    "Complete the shared software engineering and AI foundations, or demonstrate equivalent working knowledge.",
+    "Understand model metrics, tests, APIs, and basic production telemetry.",
+    "Be able to reproduce failures and compare behavior across controlled runs."
+  ],
+  "boundary": "This is a specialist overlay after shared foundations and combines adjacent evaluation and reliability work. It does not claim one universal job title or replace live incident and on-call experience.",
+  "timeNote": "The estimate covers lesson time only. Portfolio work and practice take additional time.",
+  "portfolioProof": {
+    "title": "Regression and Reliability Gate",
+    "description": "Build an evidence gate that connects behavior evaluation, runtime telemetry, load, rollout, and recovery decisions.",
+    "evidence": [
+      "An evaluation set, rubric, and regression thresholds",
+      "A trace schema and observability view",
+      "An SLO and load test report",
+      "A canary and rollback decision record",
+      "A chaos test or incident analysis with corrective actions"
+    ]
+  },
+  "readinessCriteria": [
+    "Can select metrics that match the behavior and failure risk being tested.",
+    "Can build reproducible model, LLM, and agent regression checks.",
+    "Can connect traces, inference metrics, and user-visible outcomes.",
+    "Can define load, SLO, canary, and rollback thresholds.",
+    "Can turn a failure exercise into a tested reliability improvement."
+  ],
+  "coverage": {
+    "strong": ["Model, LLM, and agent evaluation", "Failure taxonomy and observability", "Inference metrics and load testing", "Experiments, rollout, chaos, and SRE controls"],
+    "partial": ["Human annotation operations", "Incident leadership", "Large distributed infrastructure"],
+    "outsideCourse": ["Production on-call ownership", "Compliance signoff", "Large-scale benchmark laboratory operations"]
+  },
+  "completionClaim": "Completing this route shows that you can build an evidence-based evaluation and reliability gate. It does not guarantee a role or prove experience owning live production incidents.",
+  "sourceBasis": {
+    "reviewedAt": "2026-08-29",
+    "method": "Synthesized from current primary job descriptions across AI field, product, platform, data, developer, and evaluation teams."
+  },
+  "estimatedMinutes": 750,
+  "stages": [
+    {
+      "id": "common-core",
+      "title": "Common Core",
+      "outcome": "Define behavior, evaluation layers, failure modes, and trace semantics.",
+      "lessonPaths": [
+        "phases/02-ml-fundamentals/09-model-evaluation",
+        "phases/11-llm-engineering/10-evaluation",
+        "phases/14-agent-engineering/30-eval-driven-agent-development",
+        "phases/14-agent-engineering/26-failure-modes-agentic",
+        "phases/14-agent-engineering/23-otel-genai-conventions"
+      ],
+      "artifact": "A layered evaluation plan with a failure taxonomy, trace schema, and regression thresholds."
+    },
+    {
+      "id": "role-practice",
+      "title": "Role Practice",
+      "outcome": "Measure inference health, production behavior, experiments, and capacity limits.",
+      "lessonPaths": [
+        "phases/17-infrastructure-and-production/08-inference-metrics-goodput",
+        "phases/17-infrastructure-and-production/13-llm-observability",
+        "phases/17-infrastructure-and-production/21-ab-testing-llm-features",
+        "phases/17-infrastructure-and-production/22-load-testing-llm-apis"
+      ],
+      "artifact": "An observability and load report that connects service metrics with behavior and user outcomes."
+    },
+    {
+      "id": "proof-project",
+      "title": "Proof Project",
+      "outcome": "Prove release and recovery behavior under controlled failure.",
+      "lessonPaths": [
+        "phases/17-infrastructure-and-production/20-shadow-canary-progressive",
+        "phases/17-infrastructure-and-production/24-chaos-engineering-llm"
+      ],
+      "artifact": "A regression and reliability gate with canary thresholds, rollback evidence, and a chaos result."
+    },
+    {
+      "id": "interview-readiness-evidence",
+      "title": "Interview and Readiness Evidence",
+      "outcome": "Show how objectives, incidents, and corrective actions form an operating system for reliability.",
+      "lessonPaths": ["phases/17-infrastructure-and-production/23-sre-for-ai"],
+      "artifact": "A reliability case study with SLOs, failure evidence, response decisions, and verified corrective actions."
+    }
+  ],
+  "lessons": [
+    {"order": 1, "path": "phases/02-ml-fundamentals/09-model-evaluation", "minutes": 90, "required": true},
+    {"order": 2, "path": "phases/11-llm-engineering/10-evaluation", "minutes": 45, "required": true},
+    {"order": 3, "path": "phases/14-agent-engineering/30-eval-driven-agent-development", "minutes": 60, "required": true},
+    {"order": 4, "path": "phases/14-agent-engineering/26-failure-modes-agentic", "minutes": 60, "required": true},
+    {"order": 5, "path": "phases/14-agent-engineering/23-otel-genai-conventions", "minutes": 60, "required": true},
+    {"order": 6, "path": "phases/17-infrastructure-and-production/08-inference-metrics-goodput", "minutes": 60, "required": true},
+    {"order": 7, "path": "phases/17-infrastructure-and-production/13-llm-observability", "minutes": 60, "required": true},
+    {"order": 8, "path": "phases/17-infrastructure-and-production/21-ab-testing-llm-features", "minutes": 60, "required": true},
+    {"order": 9, "path": "phases/17-infrastructure-and-production/22-load-testing-llm-apis", "minutes": 75, "required": true},
+    {"order": 10, "path": "phases/17-infrastructure-and-production/20-shadow-canary-progressive", "minutes": 60, "required": true},
+    {"order": 11, "path": "phases/17-infrastructure-and-production/24-chaos-engineering-llm", "minutes": 60, "required": true},
+    {"order": 12, "path": "phases/17-infrastructure-and-production/23-sre-for-ai", "minutes": 60, "required": true}
+  ]
+}

@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lesson - AI Engineering from Scratch</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
-  <meta name="description" content="A lesson from the AI Engineering from Scratch curriculum. 511 lessons across 20 phases, four languages, every algorithm built from raw math.">
-  <link rel="canonical" href="https://aiengineeringfromscratch.com/lesson.html">
+  <!-- AIFS:LESSON-SEO:START -->
+  <title>Lesson - AI Engineering from Scratch</title>
+  <meta name="description" content="A lesson from the AI Engineering from Scratch curriculum. 523 lessons across 20 phases, four languages, every algorithm built from raw math.">
+  <link rel="canonical" href="https://aiengineeringfromscratch.com/lesson">
   <meta property="og:title" content="AI Engineering from Scratch · Lesson">
-  <meta property="og:description" content="511 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
+  <meta property="og:description" content="523 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
   <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
-  <!-- og:url omitted intentionally: lesson.html is a static template that loads the lesson body client-side via ?path=. Static hosting cannot template the URL, so we let crawlers fall back to the request URL (which is the lesson-specific share link). -->
+  <meta property="og:url" content="https://aiengineeringfromscratch.com/lesson">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Engineering from Scratch">
-  <meta name="twitter:description" content="511 lessons. 20 phases. Build it from raw math, by hand.">
+  <meta name="twitter:description" content="523 lessons. 20 phases. Build it from raw math, by hand.">
   <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
+  <!-- AIFS:LESSON-SEO:END -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260823b">
+  <link rel="stylesheet" href="style.css?v=20260824a">
   <link rel="stylesheet" href="certifications.css?v=20260809a">
   <style>
     .scroll-progress {
@@ -299,9 +301,9 @@
       line-height: 1.7;
       color: var(--ink);
       margin-bottom: 18px;
-      text-align: justify;
-      hyphens: auto;
-      -webkit-hyphens: auto;
+      text-align: left;
+      hyphens: none;
+      -webkit-hyphens: none;
     }
 
     .lesson-article > p:first-of-type::first-letter,
@@ -1425,43 +1427,43 @@
     .output-cards,
     .code-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: stretch;
       gap: 14px;
     }
 
     .output-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100%;
       border: 1px solid var(--rule-soft);
       padding: 18px;
-      background: var(--bg);
-      transition: border-color 0.15s, background 0.15s;
-    }
-
-    .output-card:hover {
-      border-color: var(--blueprint);
-      background: var(--blueprint-tint);
+      background: var(--bg-surface);
     }
 
     .output-card-name {
       font-family: var(--font-mono);
       font-size: 0.84rem;
       color: var(--ink);
-      word-break: break-all;
-      margin-bottom: 10px;
+      overflow-wrap: anywhere;
+      word-break: normal;
       text-transform: none;
     }
 
     .output-badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       font-family: var(--font-mono);
       font-size: 0.62rem;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       padding: 2px 8px;
-      margin-bottom: 10px;
       border: 1px solid var(--blueprint);
       color: var(--blueprint);
       background: var(--blueprint-tint);
+      white-space: nowrap;
     }
 
     .output-badge.prompt,
@@ -1477,19 +1479,32 @@
       font-size: 0.96rem;
       color: var(--ink-soft);
       line-height: 1.5;
-      margin-bottom: 12px;
+      margin-top: 10px;
       text-transform: none;
       letter-spacing: 0;
       font-variant: normal;
       text-align: left;
     }
 
-    .output-card-main { min-width: 0; }
+    .output-card-main {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .output-card-heading {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+    }
 
     .output-actions {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+      align-items: stretch;
+      margin-top: 14px;
     }
 
     .output-btn,
@@ -1505,6 +1520,9 @@
       background: transparent;
       cursor: pointer;
       min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       white-space: nowrap;
       transition:
         transform var(--motion-press) var(--ease-out),
@@ -1539,26 +1557,41 @@
 
     .output-cards.single .output-card {
       display: grid;
-      grid-template-columns: minmax(150px, 0.62fr) minmax(0, 1.38fr);
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px 16px;
+      padding: 14px 16px;
+    }
+
+    .output-cards.single .output-actions {
+      grid-column: 2;
+      grid-row: 1;
+      justify-content: flex-end;
+      margin-top: 0;
+    }
+
+    .output-cards.single .output-card--stacked-actions {
+      grid-template-columns: minmax(0, 1fr);
       align-items: start;
-      gap: 10px 20px;
-      padding: 16px 18px;
     }
 
-    .output-cards.single .output-badge,
-    .output-cards.single .output-card-name,
-    .output-cards.single .output-desc {
-      margin-bottom: 0;
+    .output-cards.single .output-card--stacked-actions .output-actions {
+      grid-column: 1;
+      grid-row: auto;
+      justify-content: flex-start;
     }
 
-    .output-cards.single .output-actions,
     .output-cards.single .output-install-hint {
       grid-column: 1 / -1;
+      margin-top: 0;
     }
 
     .code-card {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
       min-width: 0;
       max-width: 100%;
+      height: 100%;
       background: var(--code-bg);
       border: 1px solid var(--rule-soft);
       padding: 18px;
@@ -1624,8 +1657,14 @@
     }
 
     .code-card-actions {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
+    }
+
+    .output-cards:not(.single) .output-card:last-child:nth-child(odd),
+    .code-cards:not(.single) .code-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
     }
 
     .code-cards.single .code-card {
@@ -2317,6 +2356,9 @@
         grid-column: 1;
         grid-row: auto;
       }
+      .output-cards.single .output-actions {
+        justify-content: flex-start;
+      }
       .learning-timeline { grid-template-columns: minmax(0, 1fr); }
       .timeline-item {
         display: grid;
@@ -2466,10 +2508,12 @@
     <aside class="lesson-sidebar" id="lessonSidebar"></aside>
     <main class="lesson-main" id="main">
       <div class="lesson-content" id="lessonContent">
+        <!-- AIFS:LESSON-FALLBACK:START -->
         <div class="lesson-loading" id="lessonLoading">
           <div class="spinner"></div>
           <div class="lesson-loading-text">Loading lesson...</div>
         </div>
+        <!-- AIFS:LESSON-FALLBACK:END -->
       </div>
     </main>
     <aside class="toc-sidebar" id="tocSidebar" aria-hidden="true"></aside>
@@ -2600,7 +2644,7 @@
       root.AIFSLearningPathProgress = createStore(root.localStorage);
     }(window));
   </script>
-  <script src="header.js?v=20260823b" defer></script>
+  <script src="header.js?v=20260829b" defer></script>
   <script src="cmdpalette.js?v=20260821a" defer></script>
   <script src="lesson-figures.js?v=843871fd2942"></script>
   <script src="figure-manifest.js?v=0980822a99ac"></script>
@@ -2680,7 +2724,10 @@
       var currentLessonIndex = -1;
       var flatLessons = [];
       var ACTIVE_REF = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
-      var REPO_TREE = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/' + encodeURIComponent(ACTIVE_REF) + '/';
+      var SOURCE_CONFIG = (typeof window !== 'undefined' && window.__AIFS_SOURCE) ? window.__AIFS_SOURCE : {};
+      var SOURCE_OWNER = /^[A-Za-z0-9-]+$/.test(SOURCE_CONFIG.owner || '') ? SOURCE_CONFIG.owner : 'rohitg00';
+      var SOURCE_REPO = /^[A-Za-z0-9_.-]+$/.test(SOURCE_CONFIG.repo || '') ? SOURCE_CONFIG.repo : 'ai-engineering-from-scratch';
+      var REPO_TREE = 'https://github.com/' + SOURCE_OWNER + '/' + SOURCE_REPO + '/tree/' + encodeURIComponent(ACTIVE_REF) + '/';
       var certificationTrack = null;
       var certificationOriginTrack = null;
       var certificationLesson = null;
@@ -2765,7 +2812,7 @@
       }
 
       function learningPathLessonHref(path) {
-        return 'lesson.html?path=' + encodeURIComponent(path) +
+        return 'lesson?path=' + encodeURIComponent(path) +
           '&learningPath=' + encodeURIComponent(learningPath.id);
       }
 
@@ -2872,7 +2919,7 @@
             var insideFocusedPath = learningPathContains(learningPath, prerequisitePath);
             var href = insideFocusedPath
               ? learningPathLessonHref(prerequisitePath)
-              : 'lesson.html?path=' + encodeURIComponent(prerequisitePath);
+              : 'lesson?path=' + encodeURIComponent(prerequisitePath);
             html += '<a href="' + href + '"' + (insideFocusedPath ? '' : ' target="_blank" rel="noopener"') + '>Detour: ' + escapeHtml(label) + '</a>';
           }
           if (index < unmet.length - 1) html += '<br>';
@@ -3219,7 +3266,7 @@
           var supplementalLesson = certificationLesson || (supplementalCore && supplementalCore.lesson) || {};
           var lessonLabel = supplementalLesson.name || supplementalLesson.title || lessonPath.split('/').pop().replace(/^\d+-/, '').replace(/-/g, ' ');
           var supplementalProgress = lessonProgressClass(lessonPath, true);
-          var supplementalHtml = '<div class="sidebar-phase-nav"><a href="certification.html?id=' + encodeURIComponent(certificationOriginTrack.id) + '">&larr; Back to ' + escapeHtml(originLabel) + '</a></div>';
+          var supplementalHtml = '<div class="sidebar-phase-nav"><a href="certification?id=' + encodeURIComponent(certificationOriginTrack.id) + '">&larr; Back to ' + escapeHtml(originLabel) + '</a></div>';
           supplementalHtml += '<div class="sidebar-phase-header">Supplemental lesson</div>';
           supplementalHtml += '<span class="sidebar-lesson-link active"><span class="sidebar-lesson-dot ' + supplementalProgress + '"></span>' + escapeHtml(lessonLabel) + '</span>';
           sidebar.innerHTML = supplementalHtml;
@@ -3227,13 +3274,13 @@
         }
 
         if (certificationMode) {
-          var certHtml = '<div class="sidebar-phase-nav"><a href="certification.html?id=' + encodeURIComponent(certificationTrack.id) + '">&larr; Back to ' + escapeHtml(certificationTrack.examCode || certificationTrack.shortName || 'track') + '</a></div>';
+          var certHtml = '<div class="sidebar-phase-nav"><a href="certification?id=' + encodeURIComponent(certificationTrack.id) + '">&larr; Back to ' + escapeHtml(certificationTrack.examCode || certificationTrack.shortName || 'track') + '</a></div>';
           certHtml += '<div class="sidebar-phase-header">' + escapeHtml(certificationTrack.examCode || 'Certification') + ' · ' + escapeHtml(certificationTrack.shortName || certificationTrack.credential || certificationTrack.title || 'Study path') + '</div>';
           for (var ci = 0; ci < flatLessons.length; ci++) {
             var certLesson = flatLessons[ci];
             var certActive = certLesson.path === lessonPath;
             var certProgress = lessonProgressClass(certLesson.path, true);
-            certHtml += '<a class="sidebar-lesson-link' + (certActive ? ' active' : '') + '" href="lesson.html?path=' + encodeURIComponent(certLesson.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '">';
+            certHtml += '<a class="sidebar-lesson-link' + (certActive ? ' active' : '') + '" href="lesson?path=' + encodeURIComponent(certLesson.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '">';
             certHtml += '<span class="sidebar-lesson-dot ' + certProgress + '"></span>';
             certHtml += escapeHtml(certLesson.lessonName) + '</a>';
           }
@@ -3242,7 +3289,13 @@
         }
 
         if (learningPathMode) {
-          var pathHtml = '<div class="sidebar-phase-nav"><a href="catalog.html?q=' + encodeURIComponent(learningPath.title || learningPath.id) + '">&larr; Full course catalog</a></div>';
+          var pathReturnHref = 'catalog.html';
+          var pathReturnLabel = 'Full course catalog';
+          if (learningPath.kind === 'career-route') {
+            pathReturnHref = 'learning-paths.html#career-route-' + encodeURIComponent(learningPath.id);
+            pathReturnLabel = 'Back to career route';
+          }
+          var pathHtml = '<div class="sidebar-phase-nav"><a href="' + pathReturnHref + '">&larr; ' + pathReturnLabel + '</a></div>';
           var requiredPathLessons = flatLessons.filter(function (item) { return item.required !== false; });
           var optionalPathLessons = flatLessons.filter(function (item) { return item.required === false; });
           pathHtml += '<div class="sidebar-phase-header">' + escapeHtml(learningPath.title || learningPath.id) + ' · ' + requiredPathLessons.length + ' lessons</div>';
@@ -3280,13 +3333,13 @@
             var pp = PHASES[prevPhaseIdx];
             var ppSlug = extractPhaseSlug(pp, prevPhaseIdx);
             var ppFirstLesson = pp.lessons[0] ? extractLessonSlug(pp.lessons[0], 0) : '';
-            html += '<a href="lesson.html?path=phases/' + ppSlug + '/' + ppFirstLesson + '">&larr; Phase ' + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(pp.name) + '</a>';
+            html += '<a href="lesson?path=phases/' + ppSlug + '/' + ppFirstLesson + '">&larr; Phase ' + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(pp.name) + '</a>';
           }
           if (nextPhaseIdx >= 0) {
             var np = PHASES[nextPhaseIdx];
             var npSlug = extractPhaseSlug(np, nextPhaseIdx);
             var npFirstLesson = np.lessons[0] ? extractLessonSlug(np.lessons[0], 0) : '';
-            html += '<a href="lesson.html?path=phases/' + npSlug + '/' + npFirstLesson + '">Phase ' + String(np.id).padStart(2, '0') + ': ' + escapeHtml(np.name) + ' &rarr;</a>';
+            html += '<a href="lesson?path=phases/' + npSlug + '/' + npFirstLesson + '">Phase ' + String(np.id).padStart(2, '0') + ': ' + escapeHtml(np.name) + ' &rarr;</a>';
           }
           html += '</div>';
         }
@@ -3302,7 +3355,7 @@
             var lesReadable = les.status === 'complete' || !!les.url;
             var lesPath = 'phases/' + pSlugCurrent + '/' + lesSlug;
             if (lesReadable) {
-              html += '<a class="sidebar-lesson-link' + (isActive ? ' active' : '') + '" href="lesson.html?path=' + lesPath + '">';
+              html += '<a class="sidebar-lesson-link' + (isActive ? ' active' : '') + '" href="lesson?path=' + lesPath + '">';
             } else {
               html += '<span class="sidebar-lesson-link disabled">';
             }
@@ -3389,7 +3442,7 @@
         var fetchOptions = localPreview ? { cache: 'no-store' } : undefined;
         var primary = source && source.repoUrl
           ? source.repoUrl(relativePath)
-          : 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + ACTIVE_REF + '/' + relativePath;
+          : 'https://raw.githubusercontent.com/' + SOURCE_OWNER + '/' + SOURCE_REPO + '/' + ACTIVE_REF + '/' + relativePath;
         var fallback = source && source.rawRepoUrl ? source.rawRepoUrl(relativePath) : primary;
 
         return fetch(primary, fetchOptions).then(function (response) {
@@ -3497,7 +3550,7 @@
         var el = document.getElementById('lessonContent');
         disposeRenderedLesson(el);
         var contextTrack = certificationContextTrack();
-        var backHref = contextTrack ? 'certification.html?id=' + encodeURIComponent(contextTrack.id) : 'index.html';
+        var backHref = contextTrack ? 'certification?id=' + encodeURIComponent(contextTrack.id) : 'index.html';
         var backLabel = contextTrack ? 'Back to Track' : 'Back to Home';
         el.innerHTML = '<div class="lesson-error"><h2>' + title + '</h2><p>' + msg + '</p><a href="' + backHref + '" class="btn btn-primary">' + backLabel + '</a></div>';
       }
@@ -3516,25 +3569,14 @@
         }
         return certificationLesson
           ? 'Independent, open-source certification preparation built around practical engineering decisions.'
-          : '511 lessons. 20 phases. Build it from raw math, by hand.';
+          : '523 lessons. 20 phases. Build it from raw math, by hand.';
       }
 
-      // Client-side per-lesson SEO. Robust indexing comes with build-time
-      // prerender (next PR); this covers JS-executing crawlers + correct tabs.
       function updateLessonSeo(title, md) {
         var ORIGIN = 'https://aiengineeringfromscratch.com';
         var path = new URLSearchParams(location.search).get('path') || '';
-        var url = ORIGIN + '/lesson.html?path=' + encodeURIComponent(path);
+        var url = ORIGIN + '/lesson?path=' + encodeURIComponent(path);
         var contextTrack = certificationContextTrack();
-        if (originatingTrackId && certificationOriginTrack) {
-          url += '&fromTrack=' + encodeURIComponent(certificationOriginTrack.id);
-        } else if (certificationMode) {
-          url += '&track=' + encodeURIComponent(certificationTrack.id);
-        } else if (requestedTrackId && certificationOriginTrack) {
-          url += '&track=' + encodeURIComponent(certificationOriginTrack.id);
-        } else if (learningPathMode) {
-          url += '&learningPath=' + encodeURIComponent(learningPath.id);
-        }
         var desc = lessonDescription(md);
         var courseName = certificationLesson
           ? (contextTrack && (contextTrack.credential || contextTrack.title || contextTrack.shortName) || 'Certification preparation')
@@ -3562,7 +3604,7 @@
             { '@type': 'ListItem', position: 2, name: 'Certifications', item: ORIGIN + '/certifications.html' }
           ];
           if (contextTrack) {
-            breadcrumbs.push({ '@type': 'ListItem', position: 3, name: courseName, item: ORIGIN + '/certification.html?id=' + encodeURIComponent(contextTrack.id) });
+            breadcrumbs.push({ '@type': 'ListItem', position: 3, name: courseName, item: ORIGIN + '/certification?id=' + encodeURIComponent(contextTrack.id) });
           }
           breadcrumbs.push({ '@type': 'ListItem', position: breadcrumbs.length + 1, name: title, item: url });
         } else {
@@ -3577,7 +3619,7 @@
           '@graph': [
             { '@type': 'LearningResource', name: title, description: desc, url: url,
               inLanguage: document.documentElement.lang || 'en', isAccessibleForFree: true,
-              isPartOf: { '@type': 'Course', name: courseName, url: contextTrack ? ORIGIN + '/certification.html?id=' + encodeURIComponent(contextTrack.id) : ORIGIN } },
+              isPartOf: { '@type': 'Course', name: courseName, url: contextTrack ? ORIGIN + '/certification?id=' + encodeURIComponent(contextTrack.id) : ORIGIN } },
             { '@type': 'BreadcrumbList', itemListElement: breadcrumbs }
           ]
         };
@@ -3846,7 +3888,7 @@
         var scoring = program.scoringNotice || 'Course practice percentages are not official certification scores and cannot guarantee a passing result.';
         var breadcrumb = '<div class="cert-breadcrumb lesson-cert-breadcrumb" aria-label="Breadcrumb"><a href="certifications.html">Certifications</a>';
         if (contextTrack) {
-          breadcrumb += '<span>/</span><a href="certification.html?id=' + encodeURIComponent(contextTrack.id) + '">' + escapeHtml(certificationTrackLabel(contextTrack)) + '</a>';
+          breadcrumb += '<span>/</span><a href="certification?id=' + encodeURIComponent(contextTrack.id) + '">' + escapeHtml(certificationTrackLabel(contextTrack)) + '</a>';
         }
         breadcrumb += '<span>/</span><span>' + (certificationSupplementalMode ? 'Supplemental lesson' : 'Lesson') + '</span></div>';
         return breadcrumb + '<aside class="cert-notice lesson-cert-notice" aria-label="Independent certification preparation"><strong>Independent preparation</strong><p>' + escapeHtml(disclaimer) + '</p><p>' + escapeHtml(scoring) + '</p></aside>';
@@ -4963,14 +5005,14 @@
           ? '&track=' + encodeURIComponent(certificationTrack.id)
           : learningPathMode ? '&learningPath=' + encodeURIComponent(learningPath.id) : '';
         if (prev) {
-          nav += '<a class="lesson-nav-btn prev" href="lesson.html?path=' + encodeURIComponent(prev.path) + trackSuffix + '">';
+          nav += '<a class="lesson-nav-btn prev" href="lesson?path=' + encodeURIComponent(prev.path) + trackSuffix + '">';
           nav += '<span class="nav-label">&larr; Previous</span>';
           nav += '<span class="nav-title">' + escapeHtml(prev.lessonName) + '</span>';
           nav += '</a>';
         }
         if (next) {
           var nextLocked = learningPathMode && learningPathEntryLocked(next);
-          nav += '<a class="lesson-nav-btn next' + (learningPathMode ? learningPathGateClass(next) : '') + '" href="lesson.html?path=' + encodeURIComponent(next.path) + trackSuffix + '"' + (learningPathMode ? learningPathGateAttributes(next) : '') + '>';
+          nav += '<a class="lesson-nav-btn next' + (learningPathMode ? learningPathGateClass(next) : '') + '" href="lesson?path=' + encodeURIComponent(next.path) + trackSuffix + '"' + (learningPathMode ? learningPathGateAttributes(next) : '') + '>';
           nav += '<span class="nav-label" data-learning-path-gate-label>' + (nextLocked ? 'Locked' : 'Next &rarr;') + '</span>';
           nav += '<span class="nav-title">' + escapeHtml(next.lessonName) + '</span>';
           nav += '</a>';
@@ -4993,7 +5035,7 @@
       var repositoryDirectoryCache = {};
 
       function githubDirectoryFetch(apiPath) {
-        return fetch('https://api.github.com/repos/rohitg00/ai-engineering-from-scratch/contents/' + apiPath + '?ref=' + encodeURIComponent(ACTIVE_REF), {
+        return fetch('https://api.github.com/repos/' + SOURCE_OWNER + '/' + SOURCE_REPO + '/contents/' + apiPath + '?ref=' + encodeURIComponent(ACTIVE_REF), {
           headers: { 'Accept': 'application/vnd.github.v3+json' }
         }).then(function (res) {
           if (!res.ok) throw new Error(res.status);
@@ -5021,10 +5063,39 @@
       }
 
       function classifyOutput(name) {
-        var lower = name.toLowerCase();
+        var lower = String(name || '').toLowerCase();
         if (lower.indexOf('prompt') >= 0) return 'prompt';
         if (lower.indexOf('skill') >= 0) return 'skill';
+        if (lower.indexOf('agent') >= 0) return 'agent';
         return 'other';
+      }
+
+      function outputFileName(file) {
+        return file && typeof file.name === 'string' ? file.name.trim() : '';
+      }
+
+      function isRenderableOutput(file) {
+        var name = outputFileName(file);
+        return !!name && name.charAt(0) !== '.' && (!file.type || file.type !== 'dir');
+      }
+
+      function isMarkdownOutput(file) {
+        return /\.md(?:own)?$/i.test(outputFileName(file));
+      }
+
+      function outputType(file) {
+        var declared = file && typeof file.kind === 'string' ? file.kind.toLowerCase() : '';
+        return ['prompt', 'skill', 'agent'].indexOf(declared) >= 0
+          ? declared
+          : classifyOutput(outputFileName(file));
+      }
+
+      function outputBadgeLabel(type, filename) {
+        if (type === 'prompt') return 'Prompt';
+        if (type === 'skill') return 'Skill';
+        if (type === 'agent') return 'Agent';
+        var extension = String(filename || '').match(/\.([a-z0-9]+)$/i);
+        return extension ? extension[1].toUpperCase() + ' output' : 'Output';
       }
 
       function langIcon(filename) {
@@ -5053,7 +5124,7 @@
         return (bytes / 1024).toFixed(1) + ' KB';
       }
 
-      function extractFrontmatterDesc(content) {
+      function extractMarkdownDesc(content) {
         var match = content.match(/^---[\s\S]*?description:\s*(.+?)[\r\n]/m);
         if (match) return match[1].replace(/^["']|["']$/g, '').trim();
         var firstLine = content.split('\n').find(function (l) { return l.trim() && !l.match(/^[#-]/) && !l.match(/^---/); });
@@ -5095,16 +5166,19 @@
 
       function renderOutputFiles(outputsEl, data) {
         outputsEl.classList.remove('panel-loading');
-        if (!data || !Array.isArray(data) || data.length === 0) {
+        var visibleOutputs = Array.isArray(data) ? data.filter(isRenderableOutput) : [];
+        if (visibleOutputs.length === 0) {
           renderPanelFallback(outputsEl, 'This lesson has no separate output artifact. The lesson itself is the deliverable.', '', '');
           return;
         }
 
-        var html = '<div class="output-cards' + (data.length === 1 ? ' single' : '') + '">';
-        data.forEach(function (file, idx) {
-          var type = file.kind || classifyOutput(file.name);
+        var descriptionRequests = [];
+        var html = '<div class="output-cards' + (visibleOutputs.length === 1 ? ' single' : '') + '">';
+        visibleOutputs.forEach(function (file, idx) {
+          var filename = outputFileName(file);
+          var type = outputType(file);
           var badgeClass = type;
-          var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? (file.bundle ? 'Skill bundle' : 'Skill') : 'Output';
+          var badgeText = type === 'skill' && file.bundle ? 'Skill bundle' : outputBadgeLabel(type, filename);
           var installId = 'install-hint-' + idx;
           var installHint = '';
           var installCommand = '';
@@ -5129,12 +5203,20 @@
             installHint = installCommand;
           }
 
-          html += '<div class="output-card">';
+          var actionCount = 1 + (bundleUrl ? 1 : 0) + (installHint ? 1 : 0) + (installCommand ? 1 : 0);
+          html += '<div class="output-card' + (actionCount > 2 ? ' output-card--stacked-actions' : '') + '">';
           html += '<div class="output-card-main">';
-          html += '<div class="output-badge ' + badgeClass + '">' + badgeText + '</div>';
-          html += '<div class="output-card-name">' + escapeHtml(file.name) + '</div>';
+          html += '<div class="output-card-heading">';
+          html += '<span class="output-badge ' + badgeClass + '">' + badgeText + '</span>';
+          html += '<span class="output-card-name">' + escapeHtml(filename) + '</span>';
           html += '</div>';
-          html += '<div class="output-desc" id="desc-' + idx + '">' + escapeHtml(file.description || file.name) + '</div>';
+          if (file.description) {
+            html += '<div class="output-desc" data-output-description="' + idx + '">' + escapeHtml(file.description) + '</div>';
+          } else if (isMarkdownOutput(file)) {
+            html += '<div class="output-desc" data-output-description="' + idx + '" hidden></div>';
+            descriptionRequests.push({ file: file, index: idx });
+          }
+          html += '</div>';
           html += '<div class="output-actions">';
           html += '<a class="output-btn" href="' + escapeAttr(viewUrl) + '" target="_blank" rel="noopener">' + viewLabel + '</a>';
           if (bundleUrl) {
@@ -5151,19 +5233,24 @@
             html += '<div class="output-install-hint" id="' + installId + '">' + escapeHtml(installHint) + '</div>';
           }
           html += '</div>';
-
-          if (!file.description) {
-            var sourceUrl = lessonFileSourceUrl(file);
-            if (sourceUrl) {
-              fetch(sourceUrl).then(function (r) { return r.text(); }).then(function (content) {
-                var descEl = document.getElementById('desc-' + idx);
-                if (descEl) descEl.textContent = extractFrontmatterDesc(content) || file.name;
-              }).catch(function () {});
-            }
-          }
         });
         html += '</div>';
         outputsEl.innerHTML = html;
+        descriptionRequests.forEach(function (request) {
+          var sourceUrl = lessonFileSourceUrl(request.file);
+          if (!sourceUrl) return;
+          fetch(sourceUrl).then(function (response) {
+            if (!response.ok) throw new Error('fetch-failed');
+            return response.text();
+          }).then(function (content) {
+            if (!outputsEl.isConnected) return;
+            var desc = extractMarkdownDesc(content);
+            var descEl = outputsEl.querySelector('[data-output-description="' + request.index + '"]');
+            if (!desc || !descEl) return;
+            descEl.textContent = desc;
+            descEl.hidden = false;
+          }).catch(function () {});
+        });
         outputsEl.querySelectorAll('.output-install-toggle').forEach(function (btn) {
           btn.addEventListener('click', function () {
             var hint = document.getElementById(btn.getAttribute('aria-controls'));
@@ -5614,7 +5701,7 @@
             var certItem = flatLessons[cv];
             var certItemDone = certLessonDoneAt(cv);
             var certClass = cv === currentLessonIndex ? 'current' : certItemDone ? 'done' : '';
-            certHtml += '<a class="timeline-item ' + certClass + '" data-path-step="' + escapeAttr(certItem.path) + '" href="lesson.html?path=' + encodeURIComponent(certItem.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '" title="' + escapeAttr(certItem.lessonName) + '" aria-label="Lesson ' + (cv + 1) + ' of ' + certTotal + ': ' + escapeAttr(certItem.lessonName) + '"' + (cv === currentLessonIndex ? ' aria-current="step"' : '') + '><div class="timeline-step-meta"><div class="timeline-dot"></div><span class="timeline-index">' + String(cv + 1).padStart(2, '0') + '</span></div><div class="timeline-label">' + escapeHtml(certItem.lessonName) + '</div></a>';
+            certHtml += '<a class="timeline-item ' + certClass + '" data-path-step="' + escapeAttr(certItem.path) + '" href="lesson?path=' + encodeURIComponent(certItem.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '" title="' + escapeAttr(certItem.lessonName) + '" aria-label="Lesson ' + (cv + 1) + ' of ' + certTotal + ': ' + escapeAttr(certItem.lessonName) + '"' + (cv === currentLessonIndex ? ' aria-current="step"' : '') + '><div class="timeline-step-meta"><div class="timeline-dot"></div><span class="timeline-index">' + String(cv + 1).padStart(2, '0') + '</span></div><div class="timeline-label">' + escapeHtml(certItem.lessonName) + '</div></a>';
           }
           if (certEnd < certTotal) certHtml += '<span class="timeline-ellipsis" data-timeline-key="after">' + (certTotal - certEnd) + ' later</span>';
           certHtml += '</div><div class="phase-progress-bar"><div class="phase-progress-fill" style="--lesson-progress:' + (certPct / 100) + '"></div></div>';
@@ -5744,7 +5831,7 @@
           var cls = (isCurrent ? 'current ' : '') + (isDone ? 'done' : '');
 
           if (item.flat.isReadable) {
-            html += '<a class="timeline-item ' + cls + '" data-path-step="' + escapeAttr(item.flat.path) + '" href="lesson.html?path=' + item.flat.path + '" title="' + escapeAttr(item.flat.lessonName) + '" aria-label="Lesson ' + (idx + 1) + ' of ' + lessonsInPhase.length + ': ' + escapeAttr(item.flat.lessonName) + '"' + (isCurrent ? ' aria-current="step"' : '') + '>';
+            html += '<a class="timeline-item ' + cls + '" data-path-step="' + escapeAttr(item.flat.path) + '" href="lesson?path=' + item.flat.path + '" title="' + escapeAttr(item.flat.lessonName) + '" aria-label="Lesson ' + (idx + 1) + ' of ' + lessonsInPhase.length + ': ' + escapeAttr(item.flat.lessonName) + '"' + (isCurrent ? ' aria-current="step"' : '') + '>';
           } else {
             html += '<span class="timeline-item ' + cls + ' disabled" data-path-step="' + escapeAttr(item.flat.path) + '" title="' + escapeAttr(item.flat.lessonName) + '">';
           }
@@ -5791,8 +5878,8 @@
           var continueHtml = '<div class="ai-panel-header"><div class="ai-panel-icon">N</div><div class="ai-panel-title">Continue Certification Prep</div></div><div class="continue-panel">';
           if (!certNext) continueHtml += '<div class="phase-finished">You reached the end of this lesson path.</div>';
           continueHtml += '<div class="continue-links">';
-          if (certNext) continueHtml += '<a class="continue-link" href="lesson.html?path=' + encodeURIComponent(certNext.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '">Next: ' + escapeHtml(certNext.lessonName) + '</a>';
-          continueHtml += '<a class="continue-link" href="certification.html?id=' + encodeURIComponent(certificationTrack.id) + '">Track overview and practice</a>';
+          if (certNext) continueHtml += '<a class="continue-link" href="lesson?path=' + encodeURIComponent(certNext.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '">Next: ' + escapeHtml(certNext.lessonName) + '</a>';
+          continueHtml += '<a class="continue-link" href="certification?id=' + encodeURIComponent(certificationTrack.id) + '">Track overview and practice</a>';
           continueHtml += '<a class="continue-link" href="certifications.html">All certification tracks</a></div>';
           continueHtml += '<div class="continue-callout">Practice results are course percentages, not official scaled exam scores. Use them to find the next domain to study.</div></div>';
           certContinue.innerHTML = continueHtml;
@@ -5828,7 +5915,7 @@
 
         var phaseSlug = extractPhaseSlug(phase, phaseIdx);
         var firstLesson = phase.lessons[0] ? extractLessonSlug(phase.lessons[0], 0) : '';
-        html += '<a class="continue-link" href="lesson.html?path=phases/' + phaseSlug + '/' + firstLesson + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
+        html += '<a class="continue-link" href="lesson?path=phases/' + phaseSlug + '/' + firstLesson + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
         html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
         html += '</div>';
 

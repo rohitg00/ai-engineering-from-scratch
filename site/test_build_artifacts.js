@@ -10,13 +10,18 @@ const vm = require('node:vm');
 
 const {
   FIGURE_PROVIDER_ORDER,
+  buildSeoManifests,
   buildFigureProviderManifest,
   discoverFigureProviderOrder,
   discoverUsedFigureIds,
   discoverArtifacts,
+  lessonDocumentSeo,
   parseLearningPaths,
+  parseCertifications,
   parseReadme,
   parseRoadmap,
+  renderCatalogDiscovery,
+  renderCertificationDiscovery,
   serializeFigureProviderManifest,
 } = require('./build.js');
 const {
@@ -26,12 +31,14 @@ const {
   search,
 } = require('./cmdpalette.js');
 
-function loadContentSource() {
+function loadContentSource(options = {}) {
   const context = {
     URL,
     window: {
+      __AIFS_SOURCE: options.source,
+      __AIFS_REF: options.ref,
       location: {
-        hostname: 'localhost',
+        hostname: options.hostname || 'localhost',
         href: 'http://localhost/site/lesson.html',
       },
     },
@@ -451,7 +458,9 @@ function writeMarkdown(file, { name, description, version }) {
 
 test('shared site asset families use the expected cache keys on every page', () => {
   const release = '20260822a';
-  const navigationRelease = '20260823b';
+  const styleRelease = '20260824a';
+  const navigationRelease = '20260829b';
+  const narrationRelease = '20260829a';
   const pages = [
     'about.html',
     'assessment.html',
@@ -473,7 +482,7 @@ test('shared site asset families use the expected cache keys on every page', () 
 
   for (const page of pages) {
     const source = sourceFor(page);
-    assert.equal(versionFor(source, 'style.css'), navigationRelease, `${page} has stale style.css`);
+    assert.equal(versionFor(source, 'style.css'), styleRelease, `${page} has stale style.css`);
     assert.equal(versionFor(source, 'progress.js'), release, `${page} has stale progress.js`);
     assert.equal(versionFor(source, 'header.js'), navigationRelease, `${page} has stale header.js`);
   }
@@ -483,8 +492,155 @@ test('shared site asset families use the expected cache keys on every page', () 
   assert.equal(versionFor(sourceFor('prereqs.html'), 'roadmap.js'), release);
   assert.match(
     fs.readFileSync(path.join(__dirname, 'header.js'), 'utf8'),
-    new RegExp(`NARRATION_VERSION = '${release}'`)
+    new RegExp(`NARRATION_VERSION = '${narrationRelease}'`)
   );
+});
+
+test('build-time SEO manifests cover every readable lesson and expose canonical no-JavaScript discovery links', () => {
+  const root = path.resolve(__dirname, '..');
+  const roadmap = parseRoadmap(fs.readFileSync(path.join(root, 'ROADMAP.md'), 'utf8'));
+  const phases = parseReadme(fs.readFileSync(path.join(root, 'README.md'), 'utf8'), roadmap);
+  const learningPaths = parseLearningPaths(root, phases);
+  const certifications = parseCertifications();
+  const { lessonManifest, certificationManifest } = buildSeoManifests(phases, certifications, learningPaths);
+  const expectedCoursePaths = phases.flatMap(phase => phase.lessons.map(lesson => {
+    const match = lesson.url && lesson.url.match(/(phases\/[^/?#]+\/[^/?#]+)/);
+    if (!match || !fs.existsSync(path.join(root, match[1], 'docs', 'en.md'))) return null;
+    return match[1];
+  }).filter(Boolean));
+  const expectedCertificationPaths = Object.keys(certifications.lessonsByPath);
+  const expectedPaths = expectedCoursePaths.concat(expectedCertificationPaths).sort();
+
+  assert.equal(lessonManifest.version, 1);
+  assert.deepEqual(
+    lessonManifest.certificationTrackIds,
+    certifications.tracks.map(track => track.id).sort()
+  );
+  assert.deepEqual(Object.keys(lessonManifest.lessons).sort(), expectedPaths);
+  assert.equal(certificationManifest.version, 1);
+  assert.equal(Object.keys(certificationManifest.tracks).length, 4);
+
+  function inspectKeys(value) {
+    if (!value || typeof value !== 'object') return;
+    for (const [key, child] of Object.entries(value)) {
+      assert.ok(!['quiz', 'questions', 'correct', 'options', 'answerKey'].includes(key), `SEO manifest leaked ${key}`);
+      inspectKeys(child);
+    }
+  }
+  inspectKeys(lessonManifest);
+
+  const lessonEntries = Object.values(lessonManifest.lessons);
+  assert.equal(new Set(lessonEntries.map(entry => entry.seoTitle)).size, lessonEntries.length);
+  const visionTransformerEntries = [
+    lessonManifest.lessons['phases/04-computer-vision/14-vision-transformers'],
+    lessonManifest.lessons['phases/07-transformers-deep-dive/09-vision-transformers'],
+  ];
+  assert.ok(visionTransformerEntries.every(entry => entry.title === 'Vision Transformers (ViT)'));
+  assert.equal(new Set(visionTransformerEntries.map(entry => entry.seoTitle)).size, 2);
+  assert.match(visionTransformerEntries[0].seoTitle, /Computer Vision/);
+  assert.match(visionTransformerEntries[1].seoTitle, /Transformers Deep Dive/);
+
+  const expectedLearningPathIds = new Map();
+  for (const learningPath of learningPaths) {
+    for (const lesson of learningPath.lessons.concat(learningPath.optionalLessons)) {
+      const ids = expectedLearningPathIds.get(lesson.path) || [];
+      ids.push(learningPath.id);
+      expectedLearningPathIds.set(lesson.path, ids);
+    }
+  }
+  const expectedFromTrackIds = new Map();
+  for (const track of certifications.tracks) {
+    for (const lesson of track.lessons) {
+      if (lesson.path.startsWith('certifications/')) continue;
+      const ids = expectedFromTrackIds.get(lesson.path) || [];
+      ids.push(track.id);
+      expectedFromTrackIds.set(lesson.path, ids);
+    }
+  }
+
+  for (const [lessonPath, entry] of Object.entries(lessonManifest.lessons)) {
+    assert.equal(entry.path, lessonPath);
+    const expectedKeys = ['path', 'title', 'seoTitle', 'description', 'excerpt', 'context', 'previous', 'next'];
+    if (entry.context.kind === 'certification') expectedKeys.push('navigationByTrack');
+    expectedKeys.push('learningPathIds');
+    expectedKeys.push('fromTrackIds');
+    expectedKeys.push('sourceUrl', 'canonicalUrl');
+    assert.deepEqual(
+      Object.keys(entry),
+      expectedKeys
+    );
+    assert.ok(entry.title && entry.seoTitle && entry.description && entry.excerpt);
+    assert.ok(entry.seoTitle.length <= 60);
+    assert.ok(entry.description.length <= 160);
+    assert.ok(entry.excerpt.split(/\s+/).length <= 220);
+    assert.match(entry.canonicalUrl, /^https:\/\/aiengineeringfromscratch\.com\/lesson\?path=/);
+    assert.doesNotMatch(entry.canonicalUrl, /lesson\.html|[&?](?:track|learningPath)=/);
+    assert.match(entry.sourceUrl, /^https:\/\/github\.com\/rohitg00\/ai-engineering-from-scratch\//);
+    assert.ok(['course', 'certification'].includes(entry.context.kind));
+    assert.deepEqual(entry.learningPathIds, (expectedLearningPathIds.get(lessonPath) || []).sort());
+    assert.deepEqual(entry.fromTrackIds, (expectedFromTrackIds.get(lessonPath) || []).sort());
+    for (const neighbor of [entry.previous, entry.next]) {
+      if (!neighbor) continue;
+      assert.deepEqual(Object.keys(neighbor), ['path', 'title', 'canonicalUrl']);
+      assert.equal(neighbor.canonicalUrl, lessonManifest.lessons[neighbor.path].canonicalUrl);
+    }
+    if (entry.context.kind === 'certification') {
+      assert.deepEqual(
+        Object.keys(entry.navigationByTrack).sort(),
+        [...new Set(entry.context.trackIds)].sort()
+      );
+      for (const navigation of Object.values(entry.navigationByTrack)) {
+        for (const neighbor of [navigation.previous, navigation.next]) {
+          if (!neighbor) continue;
+          assert.deepEqual(Object.keys(neighbor), ['path', 'title', 'canonicalUrl']);
+          assert.equal(neighbor.canonicalUrl, lessonManifest.lessons[neighbor.path].canonicalUrl);
+        }
+      }
+    }
+  }
+
+  const trackEntries = Object.values(certificationManifest.tracks);
+  for (const field of ['title', 'description', 'excerpt', 'canonicalUrl']) {
+    assert.equal(new Set(trackEntries.map(track => track[field])).size, 4, `track ${field} values are not unique`);
+  }
+  for (const track of trackEntries) {
+    assert.ok(track.seoTitle.length <= 60);
+    assert.ok(track.description.length <= 160);
+    assert.ok(track.excerpt.split(/\s+/).length <= 220);
+    assert.match(track.canonicalUrl, /^https:\/\/aiengineeringfromscratch\.com\/certification\?id=/);
+    assert.doesNotMatch(track.canonicalUrl, /certification\.html/);
+    assert.ok(track.lessons.length > 0);
+    for (const lesson of track.lessons) {
+      assert.equal(lesson.canonicalUrl, lessonManifest.lessons[lesson.path].canonicalUrl);
+    }
+  }
+
+  const catalogDiscovery = renderCatalogDiscovery(phases, lessonManifest);
+  const certificationDiscovery = renderCertificationDiscovery(certifications, certificationManifest);
+  assert.equal((catalogDiscovery.match(/href="lesson\?path=/g) || []).length, expectedCoursePaths.length);
+  assert.equal((certificationDiscovery.match(/href="certification\?id=/g) || []).length, 4);
+  assert.ok((certificationDiscovery.match(/href="lesson\?path=/g) || []).length >= expectedCertificationPaths.length);
+  assert.doesNotMatch(catalogDiscovery + certificationDiscovery, /(?:lesson|certification)\.html\?/);
+
+  for (const file of ['index.html', 'prereqs.html']) {
+    const source = fs.readFileSync(path.join(__dirname, file), 'utf8');
+    const description = source.match(/<meta name="description" content="([^"]+)">/);
+    assert.ok(description, `${file} lacks a meta description`);
+    assert.ok(description[1].length <= 160, `${file} meta description exceeds 160 characters`);
+  }
+
+  const longDocument = lessonDocumentSeo(
+    '# A Deliberately Long Lesson Title for Search Metadata Validation\n\n' +
+    '> A compact hook that needs supporting prose before it can describe the lesson well.\n\n' +
+    '## The mechanism\n\n' +
+    Array.from({ length: 260 }, (_, index) => `evidence${index + 1}`).join(' '),
+    'Fallback title'
+  );
+  assert.ok(longDocument.seoTitle.length <= 60);
+  assert.ok(longDocument.description.length >= 120 && longDocument.description.length <= 160);
+  assert.ok(longDocument.sourceWordCount >= 180);
+  assert.ok(longDocument.excerpt.split(/\s+/).length >= 180);
+  assert.ok(longDocument.excerpt.split(/\s+/).length <= 220);
 });
 
 test('site discovery emits one bundle linked to SKILL.md and preserves flat records', t => {
@@ -668,6 +824,34 @@ test('lesson output merging preserves bundle identity and unmatched live files',
   assert.equal(withoutDirectoryListing.length, 2);
   assert.equal(withoutDirectoryListing[0], flat);
   assert.equal(withoutDirectoryListing[1], bundle);
+});
+
+test('remote content source rejects dot-segment repositories and revisions', () => {
+  const invalid = loadContentSource({
+    source: { owner: 'example-owner', repo: '..', revision: 'release/../private' },
+    ref: 'preview/ref',
+  });
+  assert.equal(
+    invalid.rawRepoUrl('phases/00-setup-and-tooling/01-dev-environment/docs/en.md'),
+    'https://raw.githubusercontent.com/example-owner/ai-engineering-from-scratch/preview/ref/phases/00-setup-and-tooling/01-dev-environment/docs/en.md'
+  );
+
+  const invalidFallback = loadContentSource({
+    source: { owner: 'example-owner', repo: 'course', revision: 'a/../b' },
+    ref: '../main',
+  });
+  assert.equal(
+    invalidFallback.rawRepoUrl('README.md'),
+    'https://raw.githubusercontent.com/example-owner/course/main/README.md'
+  );
+
+  const valid = loadContentSource({
+    source: { owner: 'example-owner', repo: 'course.repo', revision: 'feature/lesson-copy' },
+  });
+  assert.equal(
+    valid.rawRepoUrl('README.md'),
+    'https://raw.githubusercontent.com/example-owner/course.repo/feature/lesson-copy/README.md'
+  );
 });
 
 test('learning path manifests preserve route order and use canonical lesson titles', t => {
@@ -1000,6 +1184,127 @@ test('generic course skills dispatch every supported state to an installed owner
   assert.equal(fs.existsSync(path.join(root, 'skills', 'learn-mcp-engineering')), false);
 });
 
+test('terminal quiz skills isolate answer keys and use neutral reply formats', () => {
+  const root = path.resolve(__dirname, '..');
+  const neutralSkills = [
+    'check-understanding',
+    'find-your-level',
+    'learn',
+    'learn-agent-skills',
+    'learn-mcp',
+    'start-learning',
+  ];
+  const sources = neutralSkills.map(name => {
+    const canonical = fs.readFileSync(path.join(root, 'skills', name, 'SKILL.md'), 'utf8');
+    const mirror = fs.readFileSync(path.join(root, '.claude', 'skills', name, 'SKILL.md'), 'utf8');
+    assert.equal(canonical, mirror, `${name} skill mirrors diverged`);
+    return canonical;
+  });
+  const placement = sources[neutralSkills.indexOf('find-your-level')];
+  const canonicalKey = fs.readFileSync(
+    path.join(root, 'skills', 'find-your-level', 'references', 'answer-key.md'),
+    'utf8'
+  );
+  const mirrorKey = fs.readFileSync(
+    path.join(root, '.claude', 'skills', 'find-your-level', 'references', 'answer-key.md'),
+    'utf8'
+  );
+
+  assert.match(placement, /references\/answer-key\.md/);
+  assert.match(placement, /Reply with Q1: <letter>, Q2: <letter>\./);
+  assert.doesNotMatch(placement, /\*\*Correct:/);
+  assert.equal(canonicalKey, mirrorKey);
+  const answers = new Map(
+    Array.from(canonicalKey.matchAll(/^- Q(\d+): ([A-D])\./gm), match => [Number(match[1]), match[2]])
+  );
+  const questionBlocks = Array.from(
+    placement.matchAll(/\*\*Q(\d+)\.\*\*[\s\S]*?(?=\n---|\n\*\*Q\d+\.\*\*|\n## )/g)
+  );
+  assert.equal(questionBlocks.length, 10);
+  for (const match of questionBlocks) {
+    const questionNumber = Number(match[1]);
+    const options = Array.from(match[0].matchAll(/^- ([A-D])\) (.+)$/gm), option => ({
+      letter: option[1],
+      text: option[2].trim(),
+    }));
+    const correct = options.find(option => option.letter === answers.get(questionNumber));
+    assert.ok(correct, `Q${questionNumber} is missing its keyed answer`);
+    assert.ok(
+      options.some(option => option.letter !== correct.letter && option.text.length >= correct.text.length),
+      `Q${questionNumber} exposes its answer as the uniquely longest option`
+    );
+  }
+  for (let round = 1; round <= 5; round++) {
+    assert.match(canonicalKey, new RegExp(`## Round ${round}:`));
+  }
+  const combined = sources.join('\n');
+  assert.match(combined, /Reply with one letter: <A\|B\|C\|D>\./);
+  assert.doesNotMatch(combined, /Reply like Q\d+:\s*[A-D]\b/i);
+  assert.doesNotMatch(combined, /Reply with[^.\n]{0,80}\b[A-D]\s*,\s*[A-D]\b/i);
+});
+
+test('the vectors and matrices quiz has parallel choices and varied answer positions', () => {
+  const root = path.resolve(__dirname, '..');
+  const file = path.join(
+    root,
+    'phases',
+    '01-math-foundations',
+    '02-vectors-matrices-operations',
+    'quiz.json'
+  );
+  const questions = JSON.parse(fs.readFileSync(file, 'utf8')).questions;
+  const expectedAnswers = [
+    "The first matrix's columns must equal the second matrix's rows",
+    'A square matrix that leaves a compatible matrix unchanged when multiplied',
+    'Element-wise multiplication uses matching entries; matrix multiplication uses row-column dot products',
+    'It expands b across compatible batch dimensions before addition',
+    'The matrix is singular and cannot have an inverse',
+    'It exchanges the matrix rows and columns',
+  ];
+
+  assert.equal(questions.length, expectedAnswers.length);
+  assert.deepEqual(
+    questions.map(question => question.options[question.correct]),
+    expectedAnswers
+  );
+  assert.ok(new Set(questions.map(question => question.correct)).size >= 4);
+  assert.match(questions[3].explanation, /b\[:, None\]/);
+  assert.match(questions[3].explanation, /trailing-dimension alignment/);
+  assert.match(questions[3].explanation, /does not reliably broadcast across the batch axis/);
+  for (const question of questions) {
+    const wordCounts = question.options.map(option => option.trim().split(/\s+/).length);
+    const correctWords = wordCounts[question.correct];
+    const distractorWords = wordCounts.filter((_, index) => index !== question.correct).sort((a, b) => a - b);
+    const medianDistractor = distractorWords[1];
+    assert.ok(
+      correctWords <= medianDistractor * 1.6,
+      `correct option is an obvious length outlier: ${question.question}`
+    );
+  }
+});
+
+test('new Phase 14 quizzes use one pre, three check, and two post questions', () => {
+  const root = path.resolve(__dirname, '..');
+  const quizPaths = [
+    '44-plan-from-evidence',
+    '47-outcomes-before-output',
+    '48-discover-the-real-workflow',
+    '51-write-specifications-that-preserve-judgment',
+    '54-build-the-feedback-ratchet',
+  ];
+
+  for (const lesson of quizPaths) {
+    const quiz = JSON.parse(fs.readFileSync(
+      path.join(root, 'phases', '14-agent-engineering', lesson, 'quiz.json'),
+      'utf8'
+    ));
+    const stages = quiz.questions.map(question => question.stage);
+    assert.equal(stages.filter(stage => stage === 'pre').length, 1, lesson);
+    assert.equal(stages.filter(stage => stage === 'check').length, 3, lesson);
+    assert.equal(stages.filter(stage => stage === 'post').length, 2, lesson);
+  }
+});
+
 test('course guide shape count matches its six routing bullets in both mirrors', () => {
   const root = path.resolve(__dirname, '..');
   for (const file of [
@@ -1028,25 +1333,63 @@ test('repository exposes the canonical Model Context Protocol learning path only
   assert.equal(fs.existsSync(path.join(root, 'learning-paths', 'mcp-engineering.json')), false);
 });
 
-test('homepage routes loop, graph, and harness engineering to real lessons', () => {
+test('repository exposes the four core AI engineering learning paths', () => {
   const root = path.resolve(__dirname, '..');
+  const roadmap = parseRoadmap(fs.readFileSync(path.join(root, 'ROADMAP.md'), 'utf8'));
+  const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
+  const phases = parseReadme(readme, roadmap);
+  const learningPaths = parseLearningPaths(root, phases);
   const homepage = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
-  const routes = [
-    ['Loop engineering', 'phases/14-agent-engineering/01-the-agent-loop'],
-    ['Graph engineering', 'phases/14-agent-engineering/13-langgraph-stateful-graphs'],
-    ['Harness engineering', 'phases/14-agent-engineering/31-agent-workbench-why-models-fail'],
+  const domains = [
+    ['building-and-deploying-ai-applications', 'Building and Deploying AI Applications', 12],
+    ['software-engineering-fundamentals', 'Software Engineering Fundamentals', 13],
+    ['using-coding-agents', 'Agent-Assisted Engineering', 16],
+    ['shaping-the-build', 'Product Judgment and Delivery', 8],
   ];
 
-  for (const [label, lessonPath] of routes) {
-    assert.ok(fs.existsSync(path.join(root, lessonPath, 'docs', 'en.md')), `${label} lesson docs are missing`);
-    assert.ok(fs.existsSync(path.join(root, lessonPath, 'code')), `${label} lesson code is missing`);
-    assert.match(homepage, new RegExp(`>${label}<`, 'i'));
-    assert.match(homepage, new RegExp(`lesson\\.html\\?path=${lessonPath}`));
-    assert.match(homepage, new RegExp(`github\\.com/rohitg00/ai-engineering-from-scratch/tree/main/${lessonPath}`));
+  for (const [id, title, lessonCount] of domains) {
+    const learningPath = learningPaths.find(entry => entry.id === id);
+    assert.ok(learningPath, `${id} manifest is missing`);
+    assert.equal(learningPath.title, title);
+    assert.equal(learningPath.lessons.length, lessonCount);
+    assert.match(homepage, new RegExp(`>${title}<`, 'i'));
+    assert.match(homepage, new RegExp(`learningPath=${id}`));
+    assert.match(homepage, new RegExp(`learning-paths/${id}\\.json`));
   }
 
-  assert.equal((homepage.match(/lesson\.html\?path=phases\/14-agent-engineering\/01-the-agent-loop/g) || []).length, 1);
-  assert.match(homepage, /Build agent state-graph orchestration/);
+  const shaping = learningPaths.find(entry => entry.id === 'shaping-the-build');
+  assert.deepEqual(
+    shaping.lessons.map(entry => entry.path),
+    [
+      'phases/14-agent-engineering/47-outcomes-before-output',
+      'phases/14-agent-engineering/48-discover-the-real-workflow',
+      'phases/14-agent-engineering/49-map-assumptions-and-risk',
+      'phases/14-agent-engineering/50-choose-the-smallest-testable-slice',
+      'phases/14-agent-engineering/51-write-specifications-that-preserve-judgment',
+      'phases/14-agent-engineering/52-design-success-metrics',
+      'phases/14-agent-engineering/53-prototype-pilot-or-production',
+      'phases/14-agent-engineering/54-build-the-feedback-ratchet',
+    ]
+  );
+  assert.match(homepage, /assets\/figures\/006-ai-engineering-learning-paths\.svg/);
+  assert.match(homepage, /assets\/figures\/006-ai-engineering-learning-paths-mobile\.svg/);
+  assert.equal((homepage.match(/class="learning-paths-node /g) || []).length, domains.length);
+  const homepageTargets = new Map([
+    ['building-and-deploying-ai-applications', ['Building and Deploying AI Applications', 'building-and-deploying']],
+    ['software-engineering-fundamentals', ['Software Engineering Fundamentals', 'software-fundamentals']],
+    ['using-coding-agents', ['Agent-Assisted Engineering', 'coding-agents']],
+    ['shaping-the-build', ['Product Judgment and Delivery', 'shaping-the-build']],
+  ]);
+  for (const [id] of domains) {
+    const [title, anchor] = homepageTargets.get(id);
+    assert.match(
+      homepage,
+      new RegExp(`class="learning-paths-node [^"]+"[^>]+href="learning-paths\\.html#${anchor}"[^>]+aria-label="Explore the competencies for ${title}"`)
+    );
+  }
+  assert.match(readme, /<!-- STATS:START[\s\S]*?<p align="center"><sub><b>[^<]+<\/b> readers[\s\S]*?<!-- STATS:END -->/);
+  assert.doesNotMatch(readme, /\[stats-start\]: #/);
+  assert.doesNotMatch(readme, /## AI Engineering Learning Paths|site\/assets\/figures\/006-ai-engineering-learning-paths\.svg/);
 });
 
 test('homepage preserves live GitHub CTAs and the motion-aware learner marquee', () => {
@@ -1060,7 +1403,7 @@ test('homepage preserves live GitHub CTAs and the motion-aware learner marquee',
 
   assert.ok(mastheadCta, 'prominent masthead CTA row is missing');
   assert.match(mastheadCta[0], /<span>Start the Course<\/span>/);
-  assert.match(mastheadCta[0], /<span>Choose Your Goal<\/span>/);
+  assert.match(mastheadCta[0], /href="learning-paths\.html"[\s\S]*?<span>Explore Learning Paths<\/span>/);
   assert.doesNotMatch(mastheadCta[0], /Start (?:MCP Engineering|Agent Skills)/i);
   assert.match(
     mastheadCta[0],
@@ -1111,15 +1454,53 @@ test('homepage preserves live GitHub CTAs and the motion-aware learner marquee',
   assert.match(homepage, /reducedMotion\.addEventListener\('change', buildAll\)/);
 });
 
+test('homepage uses consistent responsive grids for controls, routes, and curriculum rows', () => {
+  const homepage = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+
+  assert.match(
+    homepage,
+    /\.masthead-cta\s*\{[\s\S]*?display: grid;[\s\S]*?grid-template-columns: minmax\(0, 1fr\) minmax\(0, 1fr\) minmax\(0, 1\.28fr\) minmax\(0, 1\.12fr\)/
+  );
+  assert.match(homepage, /@media \(min-width: 761px\) \{[\s\S]*?\.masthead-cta\s*\{[\s\S]*?height: 44px;/);
+  assert.match(
+    homepage,
+    /@media \(min-width: 601px\) and \(max-width: 1279px\) \{[\s\S]*?\.masthead-install,[\s\S]*?\.masthead-install-caption\s*\{[\s\S]*?max-width: none;/
+  );
+  assert.match(
+    homepage,
+    /\.course-route-actions\s*\{[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);[\s\S]*?width: 248px;[\s\S]*?justify-self: end;/
+  );
+  assert.match(
+    homepage,
+    /@media \(max-width: 600px\) \{[\s\S]*?\.course-route-actions\s*\{[\s\S]*?width: 100%;[\s\S]*?justify-self: stretch;[\s\S]*?\.toc-row\s*\{[\s\S]*?grid-template-columns: 36px minmax\(0, 1fr\) auto;[\s\S]*?\.toc-row \.toc-meta\s*\{[\s\S]*?grid-column: 3;[\s\S]*?grid-row: 1;/
+  );
+});
+
+test('reader prose stays ragged-right without browser-inserted hyphens', () => {
+  const styles = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
+  const homepage = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  const lessonHtml = fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8');
+
+  assert.match(styles, /body\s*\{[\s\S]*?hyphens: none;[\s\S]*?-webkit-hyphens: none;/);
+  assert.match(lessonHtml, /\.lesson-article p\s*\{[\s\S]*?text-align: left;[\s\S]*?hyphens: none;[\s\S]*?-webkit-hyphens: none;/);
+  assert.match(homepage, /\.preface-body\s*\{[\s\S]*?text-align: left;[\s\S]*?hyphens: none;[\s\S]*?-webkit-hyphens: none;/);
+
+  [styles, homepage, lessonHtml].forEach(source => {
+    assert.doesNotMatch(source, /(?:-webkit-)?hyphens:\s*auto/);
+    assert.doesNotMatch(source, /text-align:\s*justify/);
+  });
+});
+
 test('shared header progressively compacts without hiding GitHub stars or search', () => {
   const headerSource = fs.readFileSync(path.join(__dirname, 'header.js'), 'utf8');
   const styles = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
   const movableTools = headerSource.match(/function isMovableTool\(child\) \{([\s\S]*?)\n    \}/);
 
-  assert.match(headerSource, /var COMPACT_HEADER_QUERY = '\(max-width: 1240px\)'/);
+  assert.match(headerSource, /var COMPACT_HEADER_QUERY = '\(max-width: 1400px\)'/);
   assert.match(headerSource, /var NARROW_HEADER_QUERY = '\(max-width: 820px\)'/);
   assert.match(headerSource, /priorityNav\.className = 'header-priority-nav'/);
-  assert.match(headerSource, /label !== 'contents' && label !== 'catalog'/);
+  assert.match(headerSource, /label !== 'contents' && label !== 'catalog' && label !== 'learning paths'/);
+  assert.match(headerSource, /ensureNavigationLink\(nav, 'learning-paths\.html', 'Learning Paths', ''\)/);
   assert.match(headerSource, /if \(isNarrow\) restorePriorityLinks\(\);[\s\S]*?else movePriorityLinksOut\(\)/);
 
   assert.match(
@@ -1142,8 +1523,8 @@ test('shared header progressively compacts without hiding GitHub stars or search
 
   assert.match(styles, /\.header-inner\s*\{[\s\S]*?width: 100%;[\s\S]*?max-width: 1360px;[\s\S]*?min-width: 0;/);
   assert.match(styles, /\.header-nav,\s*\n\.header-priority-nav\s*\{[\s\S]*?white-space: nowrap;/);
-  assert.match(styles, /@media \(max-width: 1320px\) and \(min-width: 1241px\)/);
-  assert.match(styles, /@media \(max-width: 1240px\) \{[\s\S]*?\.header-priority-nav\s*\{[\s\S]*?\.header-inner > \.header-github[\s\S]*?\.header-inner > \.search-toggle[\s\S]*?\.header-nav\s*\{[\s\S]*?width: min\(360px, calc\(100vw - 32px\)\);[\s\S]*?overflow-y: auto;/);
+  assert.match(styles, /@media \(max-width: 1480px\) and \(min-width: 1401px\)/);
+  assert.match(styles, /@media \(max-width: 1400px\) \{[\s\S]*?\.header-priority-nav\s*\{[\s\S]*?\.header-inner > \.header-github[\s\S]*?\.header-inner > \.search-toggle[\s\S]*?\.header-nav\s*\{[\s\S]*?width: min\(360px, calc\(100vw - 32px\)\);[\s\S]*?overflow-y: auto;/);
   assert.match(styles, /@media \(max-width: 820px\) \{[\s\S]*?\.header-priority-nav\s*\{\s*display: none;[\s\S]*?\.header-inner > \.header-github[\s\S]*?\.header-inner > \.search-toggle/);
   assert.match(styles, /@media \(max-width: 480px\) \{[\s\S]*?\.header-inner > \.header-github svg\s*\{\s*display: none;[\s\S]*?\.header-inner > \.header-github::before/);
 });
@@ -1191,14 +1572,54 @@ test('website motion contracts keep interaction state stable and compositor-frie
   assert.match(roadmapSource, /var keyboardTriggered = event\.detail === 0;[\s\S]*?animate: !keyboardTriggered/);
 });
 
+test('TTS continuation accepts canonical and legacy lesson routes under one route key', () => {
+  const source = fs.readFileSync(path.join(__dirname, 'tts.js'), 'utf8');
+  const routeKeySource = source.match(/function routeKey\(url\) \{[\s\S]*?\n  \}/);
+  const continuationSource = source.match(/function isLessonContinuationLink\(link\) \{[\s\S]*?\n  \}/);
+  assert.ok(routeKeySource, 'TTS route key helper is missing');
+  assert.ok(continuationSource, 'TTS continuation helper is missing');
+
+  const origin = 'https://aiengineeringfromscratch.com';
+  const context = {
+    URL,
+    URLSearchParams,
+    location: {
+      href: origin + '/lesson?path=phases%2F00-setup-and-tooling%2F01-dev-environment',
+      origin,
+    },
+  };
+  vm.runInNewContext(
+    `${routeKeySource[0]}\n${continuationSource[0]}\nthis.routeKey = routeKey; this.isLessonContinuationLink = isLessonContinuationLink;`,
+    context
+  );
+
+  const query = 'path=phases%2F00-setup-and-tooling%2F01-dev-environment&learningPath=software-engineering-fundamentals';
+  assert.equal(context.routeKey(origin + '/lesson.html?' + query), context.routeKey(origin + '/lesson?' + query));
+  const link = href => ({ href, matches: selector => selector === '.lesson-nav-btn,.continue-link' });
+  assert.equal(context.isLessonContinuationLink(link(origin + '/lesson?' + query)), true);
+  assert.equal(context.isLessonContinuationLink(link(origin + '/lesson.html?' + query)), true);
+  assert.equal(context.isLessonContinuationLink(link(origin + '/certification?id=claude-architect')), false);
+});
+
 test('learning path query and Enter fallback open the first result predictably', () => {
   assert.equal(
     learningPathDestination('phases/13-tools-and-protocols/22-skills-and-agent-sdks', 'agent-skills'),
-    'lesson.html?path=phases%2F13-tools-and-protocols%2F22-skills-and-agent-sdks&learningPath=agent-skills'
+    'lesson?path=phases%2F13-tools-and-protocols%2F22-skills-and-agent-sdks&learningPath=agent-skills'
   );
   assert.equal(resultIndexForEnter(-1, 5), 0);
   assert.equal(resultIndexForEnter(3, 5), 3);
   assert.equal(resultIndexForEnter(-1, 0), -1);
+});
+
+test('career lessons return to their exact learning paths guide without a fake catalog search', () => {
+  const lessonHtml = fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8');
+
+  assert.match(lessonHtml, /var pathReturnHref = 'catalog\.html';/);
+  assert.match(lessonHtml, /if \(learningPath\.kind === 'career-route'\)/);
+  assert.match(lessonHtml, /pathReturnHref = 'learning-paths\.html#career-route-' \+ encodeURIComponent\(learningPath\.id\);/);
+  assert.match(lessonHtml, /pathReturnLabel = 'Back to career route';/);
+  assert.match(lessonHtml, /href="' \+ pathReturnHref \+ '">&larr; ' \+ pathReturnLabel/);
+  assert.doesNotMatch(lessonHtml, /catalog\.html\?q=' \+ encodeURIComponent\(learningPath\.title/);
 });
 
 test('exact Agent Skills search ranks the focused path before individual lessons', () => {
@@ -1223,7 +1644,7 @@ test('exact Agent Skills search ranks the focused path before individual lessons
     rebuildIndex();
     const [first] = search('Agent Skills');
     assert.equal(first.kind, 'learning-path');
-    assert.equal(first.url, 'lesson.html?path=phases%2F13-tools-and-protocols%2F22-skills-and-agent-sdks&learningPath=agent-skills');
+    assert.equal(first.url, 'lesson?path=phases%2F13-tools-and-protocols%2F22-skills-and-agent-sdks&learningPath=agent-skills');
   } finally {
     delete global.LEARNING_PATHS;
     delete global.PHASES;
@@ -1281,6 +1702,28 @@ test('lesson reader keeps learning-path context and renders a copyable full-dept
   assert.equal((lessonHtml.match(/repoRootCommand\(file\.name, filePath\)/g) || []).length, 2);
   assert.match(lessonHtml, /\.code-card-run \{[\s\S]*?white-space: pre-wrap;[\s\S]*?overflow-wrap: anywhere;/);
   assert.doesNotMatch(lessonHtml, /\.code-card-run::-[a-z-]*scrollbar/);
+  assert.match(lessonHtml, /\.output-cards,[\s\S]*?\.code-cards \{[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);/);
+  assert.match(lessonHtml, /\.code-card \{[\s\S]*?display: grid;[\s\S]*?grid-template-rows: auto minmax\(0, 1fr\) auto;[\s\S]*?height: 100%;/);
+  assert.match(lessonHtml, /\.code-card-actions \{[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);/);
+  assert.match(lessonHtml, /\.code-cards:not\(\.single\) \.code-card:last-child:nth-child\(odd\) \{[\s\S]*?grid-column: 1 \/ -1;/);
+  assert.match(lessonHtml, /\.output-card-heading \{[\s\S]*?display: flex;[\s\S]*?flex-wrap: wrap;/);
+  assert.match(lessonHtml, /\.output-card-name \{[\s\S]*?overflow-wrap: anywhere;[\s\S]*?word-break: normal;/);
+  assert.match(lessonHtml, /\.output-cards\.single \.output-card \{[\s\S]*?grid-template-columns: minmax\(0, 1fr\) auto;[\s\S]*?align-items: center;/);
+  assert.match(lessonHtml, /\.output-cards\.single \.output-actions \{[\s\S]*?grid-column: 2;[\s\S]*?grid-row: 1;[\s\S]*?margin-top: 0;/);
+  assert.match(lessonHtml, /\.output-cards\.single \.output-card--stacked-actions \{[\s\S]*?grid-template-columns: minmax\(0, 1fr\);[\s\S]*?align-items: start;/);
+  assert.match(lessonHtml, /\.output-cards\.single \.output-card--stacked-actions \.output-actions \{[\s\S]*?grid-column: 1;[\s\S]*?grid-row: auto;[\s\S]*?justify-content: flex-start;/);
+  assert.match(lessonHtml, /var actionCount = 1 \+ \(bundleUrl \? 1 : 0\) \+ \(installHint \? 1 : 0\) \+ \(installCommand \? 1 : 0\);/);
+  assert.match(lessonHtml, /actionCount > 2 \? ' output-card--stacked-actions' : ''/);
+  assert.match(lessonHtml, /\.output-cards\.single \.output-install-hint \{[\s\S]*?grid-column: 1 \/ -1;/);
+  assert.match(lessonHtml, /var visibleOutputs = Array\.isArray\(data\) \? data\.filter\(isRenderableOutput\) : \[\];/);
+  assert.match(lessonHtml, /name\.charAt\(0\) !== '\.'/);
+  assert.match(lessonHtml, /else if \(isMarkdownOutput\(file\)\)/);
+  assert.match(lessonHtml, /data-output-description=/);
+  assert.match(lessonHtml, /if \(!response\.ok\) throw new Error\('fetch-failed'\)/);
+  assert.doesNotMatch(lessonHtml, /extractFrontmatterDesc/);
+  assert.doesNotMatch(lessonHtml, /id="desc-/);
+  assert.match(lessonHtml, /@media \(max-width: 768px\) \{[\s\S]*?\.output-cards,[\s\S]*?\.code-cards \{ grid-template-columns: 1fr; \}/);
+  assert.match(lessonHtml, /@media \(max-width: 480px\) \{[\s\S]*?\.code-card-actions,[\s\S]*?\.output-actions \{[\s\S]*?grid-template-columns: 1fr;/);
   assert.match(lessonHtml, /Run from the repository root, the folder containing README\.md/);
   assert.match(lessonHtml, /Run copied commands from the repository root, the directory containing README\.md and phases\//);
   assert.doesNotMatch(lessonHtml, /shell is anywhere inside the repository/);

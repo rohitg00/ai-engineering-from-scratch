@@ -60,7 +60,7 @@ def phase_title(phase):
 def urls_for(phase, lesson):
     rel = f"phases/{phase}/{lesson}"
     return {
-        "web": f"{SITE}/lesson.html?path={rel}",
+        "web": f"{SITE}/lesson?path={rel}",
         "code": f"{REPO}/tree/main/{rel}/code",
         "repo": f"{REPO}/tree/main/{rel}",
     }

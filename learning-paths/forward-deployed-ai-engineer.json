@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "kind": "career-route",
+  "id": "forward-deployed-ai-engineer",
+  "title": "Customer AI Deployment",
+  "workFamily": "Customer AI Deployment",
+  "commonTitles": ["Forward-Deployed AI Engineer", "Field AI Engineer", "AI Solutions Engineer"],
+  "summary": "Discover a customer workflow, reduce its riskiest assumptions, and carry a useful AI system through measurement and rollout.",
+  "keywords": "forward deployed field engineering customer workflow discovery scoping prototype pilot production",
+  "decisionPrompt": "Do you want to discover a customer workflow, prove a narrow solution, and carry it into a measured rollout?",
+  "mission": "Build on shared foundations to turn an observed customer workflow into a scoped, evaluated, and operable AI deployment.",
+  "responsibilities": [
+    "Observe the real workflow and define the outcome with users.",
+    "Map assumptions, constraints, dependencies, and failure risks.",
+    "Build the smallest vertical slice that can test the core claim.",
+    "Define success metrics, rollout controls, and feedback loops."
+  ],
+  "goodFitIf": [
+    "You want to work close to users and ambiguous operating environments.",
+    "You enjoy moving between discovery, implementation, evaluation, and rollout.",
+    "You can explain tradeoffs to both technical and operational stakeholders."
+  ],
+  "baseline": [
+    "Complete the shared software engineering and AI foundations, or demonstrate equivalent working knowledge.",
+    "Be able to build and evaluate an API-backed AI application.",
+    "Be comfortable gathering workflow evidence before proposing a solution."
+  ],
+  "boundary": "This is a specialist overlay after shared foundations, not customer support or generic consulting. It prepares you to demonstrate a deployment workflow, but it does not replace live customer or production experience.",
+  "timeNote": "The estimate covers lesson time only. Portfolio work and practice take additional time.",
+  "portfolioProof": {
+    "title": "Measured Customer Pilot",
+    "description": "Turn a documented workflow into a narrow pilot with explicit evidence, release controls, and a feedback plan.",
+    "evidence": [
+      "Workflow evidence and an assumption map",
+      "An executable specification for the smallest testable slice",
+      "A working vertical slice with evaluation results",
+      "Success metrics and a staged rollout plan",
+      "A feedback record that drives the next decision"
+    ]
+  },
+  "readinessCriteria": [
+    "Can separate the requested output from the underlying operational outcome.",
+    "Can rank assumptions by uncertainty and consequence.",
+    "Can build a vertical slice that tests one valuable workflow end to end.",
+    "Can define evaluation, success, rollback, and feedback criteria before release.",
+    "Can explain what evidence supports moving from prototype to pilot or production."
+  ],
+  "coverage": {
+    "strong": ["Workflow discovery and scoping", "Evidence-driven prototyping", "Evaluation and success metrics", "Staged rollout and feedback"],
+    "partial": ["Stakeholder facilitation", "Enterprise integration and security", "Production operations under live traffic"],
+    "outsideCourse": ["Commercial account ownership", "Procurement and legal negotiation", "Years of customer deployment experience"]
+  },
+  "completionClaim": "Completing this route shows that you can produce evidence for a scoped customer AI pilot. It does not guarantee a role or establish production experience.",
+  "sourceBasis": {
+    "reviewedAt": "2026-08-29",
+    "method": "Synthesized from current primary job descriptions across AI field, product, platform, data, developer, and evaluation teams."
+  },
+  "estimatedMinutes": 865,
+  "stages": [
+    {
+      "id": "common-core",
+      "title": "Common Core",
+      "outcome": "Frame the customer outcome, workflow, assumptions, and smallest useful test.",
+      "lessonPaths": [
+        "phases/14-agent-engineering/47-outcomes-before-output",
+        "phases/14-agent-engineering/48-discover-the-real-workflow",
+        "phases/14-agent-engineering/49-map-assumptions-and-risk",
+        "phases/14-agent-engineering/50-choose-the-smallest-testable-slice",
+        "phases/14-agent-engineering/51-write-specifications-that-preserve-judgment"
+      ],
+      "artifact": "A workflow brief with outcome, evidence, assumptions, risks, and an executable slice specification."
+    },
+    {
+      "id": "role-practice",
+      "title": "Role Practice",
+      "outcome": "Build and evaluate the narrow AI system against explicit success criteria.",
+      "lessonPaths": [
+        "phases/11-llm-engineering/06-rag",
+        "phases/11-llm-engineering/10-evaluation",
+        "phases/11-llm-engineering/13-production-app",
+        "phases/14-agent-engineering/52-design-success-metrics"
+      ],
+      "artifact": "A working vertical slice with an evaluation set, baseline, and success scorecard."
+    },
+    {
+      "id": "proof-project",
+      "title": "Proof Project",
+      "outcome": "Choose the right release stage and move the pilot through controlled exposure.",
+      "lessonPaths": [
+        "phases/14-agent-engineering/53-prototype-pilot-or-production",
+        "phases/17-infrastructure-and-production/20-shadow-canary-progressive"
+      ],
+      "artifact": "A measured pilot with release gates, rollback conditions, and recorded results."
+    },
+    {
+      "id": "interview-readiness-evidence",
+      "title": "Interview and Readiness Evidence",
+      "outcome": "Show how evidence and user feedback determine the next iteration.",
+      "lessonPaths": ["phases/14-agent-engineering/54-build-the-feedback-ratchet"],
+      "artifact": "A concise case study that connects user evidence, system results, tradeoffs, and the next decision."
+    }
+  ],
+  "lessons": [
+    {"order": 1, "path": "phases/14-agent-engineering/47-outcomes-before-output", "minutes": 60, "required": true},
+    {"order": 2, "path": "phases/14-agent-engineering/48-discover-the-real-workflow", "minutes": 70, "required": true},
+    {"order": 3, "path": "phases/14-agent-engineering/49-map-assumptions-and-risk", "minutes": 65, "required": true},
+    {"order": 4, "path": "phases/14-agent-engineering/50-choose-the-smallest-testable-slice", "minutes": 65, "required": true},
+    {"order": 5, "path": "phases/14-agent-engineering/51-write-specifications-that-preserve-judgment", "minutes": 75, "required": true},
+    {"order": 6, "path": "phases/11-llm-engineering/06-rag", "minutes": 90, "required": true},
+    {"order": 7, "path": "phases/11-llm-engineering/10-evaluation", "minutes": 45, "required": true},
+    {"order": 8, "path": "phases/11-llm-engineering/13-production-app", "minutes": 120, "required": true},
+    {"order": 9, "path": "phases/14-agent-engineering/52-design-success-metrics", "minutes": 70, "required": true},
+    {"order": 10, "path": "phases/14-agent-engineering/53-prototype-pilot-or-production", "minutes": 70, "required": true},
+    {"order": 11, "path": "phases/17-infrastructure-and-production/20-shadow-canary-progressive", "minutes": 60, "required": true},
+    {"order": 12, "path": "phases/14-agent-engineering/54-build-the-feedback-ratchet", "minutes": 75, "required": true}
+  ]
+}

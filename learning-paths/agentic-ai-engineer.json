@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "kind": "career-route",
+  "id": "agentic-ai-engineer",
+  "title": "Agent Systems Engineering",
+  "workFamily": "Agent Systems Engineering",
+  "commonTitles": ["Agent Systems Engineer", "Agentic AI Engineer", "AI Agent Engineer"],
+  "summary": "Engineer tool-using agent loops with explicit context, memory, orchestration, safety, evaluation, and production control.",
+  "keywords": "agentic ai engineer agents tools mcp memory orchestration safety evaluation runtime observability",
+  "decisionPrompt": "Do you want to engineer tool-using systems whose state, decisions, failures, and controls remain observable?",
+  "mission": "Build on shared foundations to create agent systems with explicit tool contracts, state, safety boundaries, evaluation, and runtime evidence.",
+  "responsibilities": [
+    "Design tool contracts and close the thought, action, observation loop.",
+    "Control context, memory, state transitions, and orchestration.",
+    "Model failures and defend tool and instruction boundaries.",
+    "Evaluate behavior and operate the runtime from traces and controls."
+  ],
+  "goodFitIf": [
+    "You enjoy reasoning about stateful systems, control flow, and failure recovery.",
+    "You want autonomy to be bounded by explicit contracts and evidence.",
+    "You prefer testable orchestration over opaque agent demos."
+  ],
+  "baseline": [
+    "Complete the shared software engineering and AI foundations, or demonstrate equivalent working knowledge.",
+    "Be able to build an API-backed LLM application and read structured traces.",
+    "Understand basic testing, state management, and security boundaries."
+  ],
+  "boundary": "This is a specialist overlay after shared foundations. MCP is one integration surface, not the definition of agent systems engineering, and the route does not replace distributed systems or live operations experience.",
+  "timeNote": "The estimate covers lesson time only. Portfolio work and practice take additional time.",
+  "portfolioProof": {
+    "title": "Observable Agent System",
+    "description": "Build a bounded agent workflow whose tools, state, memory, failure behavior, and release evidence can be inspected.",
+    "evidence": [
+      "A typed tool registry and agent loop",
+      "Explicit state and memory behavior",
+      "Failure and prompt injection tests",
+      "An agent evaluation suite",
+      "Runtime traces with stop, retry, and escalation evidence"
+    ]
+  },
+  "readinessCriteria": [
+    "Can separate tool capability from agent decision policy.",
+    "Can explain what enters context, what persists, and what expires.",
+    "Can model state transitions and orchestration failure paths.",
+    "Can test prompt injection, tool misuse, loops, and false completion claims.",
+    "Can evaluate behavior from trajectories and operate it from traces."
+  ],
+  "coverage": {
+    "strong": ["Tool contracts and agent loops", "Context, memory, and state", "Orchestration and failure modes", "Agent safety, evaluation, and observability"],
+    "partial": ["Distributed agent systems", "Human approval experience", "Long-running workflow durability"],
+    "outsideCourse": ["Production fleet ownership", "Provider-internal model control", "Years of live on-call experience"]
+  },
+  "completionClaim": "Completing this route shows that you can build and evaluate an observable agent system. It does not guarantee a role or prove experience operating a production agent fleet.",
+  "sourceBasis": {
+    "reviewedAt": "2026-08-29",
+    "method": "Synthesized from current primary job descriptions across AI field, product, platform, data, developer, and evaluation teams."
+  },
+  "estimatedMinutes": 865,
+  "stages": [
+    {
+      "id": "common-core",
+      "title": "Common Core",
+      "outcome": "Build a typed tool surface and a bounded agent loop.",
+      "lessonPaths": [
+        "phases/13-tools-and-protocols/01-the-tool-interface",
+        "phases/13-tools-and-protocols/05-tool-schema-design",
+        "phases/13-tools-and-protocols/06-mcp-fundamentals",
+        "phases/14-agent-engineering/01-the-agent-loop",
+        "phases/14-agent-engineering/06-tool-use-and-function-calling"
+      ],
+      "artifact": "A deterministic agent loop with typed tools, validation, stop conditions, and a transcript."
+    },
+    {
+      "id": "role-practice",
+      "title": "Role Practice",
+      "outcome": "Make context, memory, state, and orchestration explicit and testable.",
+      "lessonPaths": [
+        "phases/11-llm-engineering/05-context-engineering",
+        "phases/14-agent-engineering/07-memory-virtual-context-memgpt",
+        "phases/14-agent-engineering/13-langgraph-stateful-graphs",
+        "phases/14-agent-engineering/28-orchestration-patterns"
+      ],
+      "artifact": "A stateful workflow with a context budget, memory policy, checkpoints, and recovery paths."
+    },
+    {
+      "id": "proof-project",
+      "title": "Proof Project",
+      "outcome": "Stress the system against realistic failures and unsafe inputs before release.",
+      "lessonPaths": [
+        "phases/14-agent-engineering/26-failure-modes-agentic",
+        "phases/14-agent-engineering/27-prompt-injection-defense",
+        "phases/14-agent-engineering/30-eval-driven-agent-development"
+      ],
+      "artifact": "An observable agent system with adversarial tests, trajectory evaluations, and explicit release gates."
+    },
+    {
+      "id": "interview-readiness-evidence",
+      "title": "Interview and Readiness Evidence",
+      "outcome": "Show that the runtime can be operated from controls and trace evidence.",
+      "lessonPaths": [
+        "phases/14-agent-engineering/29-production-runtimes",
+        "phases/14-agent-engineering/24-agent-observability-platforms"
+      ],
+      "artifact": "A case study with architecture, failure evidence, runtime controls, traces, and justified tradeoffs."
+    }
+  ],
+  "lessons": [
+    {"order": 1, "path": "phases/13-tools-and-protocols/01-the-tool-interface", "minutes": 45, "required": true},
+    {"order": 2, "path": "phases/13-tools-and-protocols/05-tool-schema-design", "minutes": 45, "required": true},
+    {"order": 3, "path": "phases/13-tools-and-protocols/06-mcp-fundamentals", "minutes": 55, "required": true},
+    {"order": 4, "path": "phases/14-agent-engineering/01-the-agent-loop", "minutes": 60, "required": true},
+    {"order": 5, "path": "phases/14-agent-engineering/06-tool-use-and-function-calling", "minutes": 60, "required": true},
+    {"order": 6, "path": "phases/11-llm-engineering/05-context-engineering", "minutes": 90, "required": true},
+    {"order": 7, "path": "phases/14-agent-engineering/07-memory-virtual-context-memgpt", "minutes": 75, "required": true},
+    {"order": 8, "path": "phases/14-agent-engineering/13-langgraph-stateful-graphs", "minutes": 75, "required": true},
+    {"order": 9, "path": "phases/14-agent-engineering/28-orchestration-patterns", "minutes": 60, "required": true},
+    {"order": 10, "path": "phases/14-agent-engineering/26-failure-modes-agentic", "minutes": 60, "required": true},
+    {"order": 11, "path": "phases/14-agent-engineering/27-prompt-injection-defense", "minutes": 75, "required": true},
+    {"order": 12, "path": "phases/14-agent-engineering/30-eval-driven-agent-development", "minutes": 60, "required": true},
+    {"order": 13, "path": "phases/14-agent-engineering/29-production-runtimes", "minutes": 60, "required": true},
+    {"order": 14, "path": "phases/14-agent-engineering/24-agent-observability-platforms", "minutes": 45, "required": true}
+  ]
+}

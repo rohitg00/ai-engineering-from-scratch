@@ -1,0 +1,53 @@
+{
+  "status": "grounded",
+  "issues": [],
+  "direct_evidence_ratio": 0.67,
+  "friction_points": [
+    "owner lookup",
+    "context switching"
+  ],
+  "steps": [
+    {
+      "order": 1,
+      "actor": "on-call engineer",
+      "action": "opens the alert",
+      "evidence": [
+        {
+          "source": "screen recording 01",
+          "observation": "alert lacks service owner",
+          "direct": true,
+          "confidence": 0.95
+        }
+      ],
+      "friction": "owner lookup"
+    },
+    {
+      "order": 2,
+      "actor": "on-call engineer",
+      "action": "searches dashboards",
+      "evidence": [
+        {
+          "source": "incident 184",
+          "observation": "three dashboards opened",
+          "direct": true,
+          "confidence": 0.9
+        }
+      ],
+      "friction": "context switching"
+    },
+    {
+      "order": 3,
+      "actor": "incident commander",
+      "action": "approves mitigation",
+      "evidence": [
+        {
+          "source": "runbook",
+          "observation": "production writes require approval",
+          "direct": false,
+          "confidence": 0.8
+        }
+      ],
+      "friction": ""
+    }
+  ]
+}

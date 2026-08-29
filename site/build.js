@@ -20,6 +20,13 @@ const OUTPUT_PATH = path.join(__dirname, 'data.js');
 const CERTIFICATIONS_PATH = path.join(REPO_ROOT, 'certifications');
 const CERTIFICATION_OUTPUT_PATH = path.join(__dirname, 'certification-data.js');
 const FIGURE_MANIFEST_OUTPUT_PATH = path.join(__dirname, 'figure-manifest.js');
+const LESSON_SEO_OUTPUT_PATH = path.join(__dirname, 'lesson-seo.json');
+const CERTIFICATION_SEO_OUTPUT_PATH = path.join(__dirname, 'certification-seo.json');
+const SEO_MANIFEST_VERSION = 1;
+const CATALOG_DISCOVERY_START = '<!-- GENERATED:LESSON-DISCOVERY:START -->';
+const CATALOG_DISCOVERY_END = '<!-- GENERATED:LESSON-DISCOVERY:END -->';
+const CERTIFICATION_DISCOVERY_START = '<!-- GENERATED:CERTIFICATION-DISCOVERY:START -->';
+const CERTIFICATION_DISCOVERY_END = '<!-- GENERATED:CERTIFICATION-DISCOVERY:END -->';
 
 // Registration order is public behavior. Later providers intentionally replace
 // selected legacy figures, including figures-tools3.js -> figures-mcp.js.
@@ -733,6 +740,464 @@ function extractLessonMeta(relPath) {
     // File absent or unreadable — expected for planned lessons.
   }
   return result;
+}
+
+function normalizeWhitespace(value) {
+  return String(value || '').replace(/\s+/g, ' ').trim();
+}
+
+function plainMarkdown(value) {
+  return normalizeWhitespace(value)
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/[*_~]+/g, '')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/\\([\\`*_[\]{}()#+\-.!])/g, '$1');
+}
+
+function truncateText(value, limit) {
+  const text = normalizeWhitespace(value);
+  if (!limit || text.length <= limit) return text;
+  const clipped = text.slice(0, Math.max(0, limit - 1));
+  const boundary = clipped.lastIndexOf(' ');
+  return (boundary >= Math.floor(limit * 0.65) ? clipped.slice(0, boundary) : clipped).trimEnd() + '…';
+}
+
+function wordCount(value) {
+  const text = normalizeWhitespace(value);
+  return text ? text.split(' ').length : 0;
+}
+
+function truncateWords(value, limit) {
+  const words = normalizeWhitespace(value).split(' ').filter(Boolean);
+  if (!limit || words.length <= limit) return words.join(' ');
+  return words.slice(0, limit).join(' ') + '…';
+}
+
+function seoTitleFor(title) {
+  const brandedTitle = `${title} | AI Engineering from Scratch`;
+  return brandedTitle.length <= 60 ? brandedTitle : truncateText(title, 60);
+}
+
+function descriptionFromParts(title, parts) {
+  const uniqueParts = [];
+  for (const value of parts) {
+    const text = normalizeWhitespace(value);
+    if (text && !uniqueParts.includes(text)) uniqueParts.push(text);
+  }
+  let body = '';
+  for (const part of uniqueParts) {
+    body = normalizeWhitespace(`${body} ${part}`);
+    const candidate = body.toLowerCase().startsWith(title.toLowerCase()) ? body : `${title}: ${body}`;
+    if (candidate.length >= 125) break;
+  }
+  const source = body
+    ? (body.toLowerCase().startsWith(title.toLowerCase()) ? body : `${title}: ${body}`)
+    : title;
+  return { description: truncateText(source, 160), descriptionSourceLength: source.length };
+}
+
+function lessonDocumentSeo(markdown, fallbackTitle) {
+  const lines = String(markdown || '').split(/\r?\n/);
+  let title = normalizeWhitespace(fallbackTitle);
+  let summary = '';
+  let inFence = false;
+  let paragraph = [];
+  const paragraphs = [];
+
+  function flushParagraph() {
+    const text = plainMarkdown(paragraph.join(' '));
+    if (text) paragraphs.push(text);
+    paragraph = [];
+  }
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (/^```/.test(line)) {
+      flushParagraph();
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence) continue;
+    if (!line) {
+      flushParagraph();
+      continue;
+    }
+    if (line.startsWith('# ')) {
+      title = plainMarkdown(line.slice(2)) || title;
+      flushParagraph();
+      continue;
+    }
+    if (line.startsWith('>')) {
+      if (!summary) summary = plainMarkdown(line.replace(/^>\s*/, ''));
+      flushParagraph();
+      continue;
+    }
+    const listItem = line.match(/^(?:[-*+]\s|\d+[.)]\s)(.+)$/);
+    if (listItem) {
+      const item = plainMarkdown(listItem[1]).replace(/^\[[ xX]\]\s*/, '');
+      if (item) paragraph.push(/[.!?]$/.test(item) ? item : item + '.');
+      continue;
+    }
+    if (/^#{2,6}\s/.test(line) ||
+        /^\*\*(Type|Languages|Prerequisites|Time):\*\*/i.test(line) ||
+        /^\|/.test(line) ||
+        /^(?:---+|===+)$/.test(line)) {
+      flushParagraph();
+      continue;
+    }
+    paragraph.push(line);
+  }
+  flushParagraph();
+
+  const proseParts = [summary].concat(paragraphs).filter(Boolean);
+  const excerptSource = proseParts.join(' ') || title;
+  const excerpt = truncateWords(excerptSource, 220);
+  const { description, descriptionSourceLength } = descriptionFromParts(title, proseParts);
+  return {
+    title,
+    seoTitle: seoTitleFor(title),
+    description,
+    excerpt,
+    sourceWordCount: wordCount(excerptSource),
+    descriptionSourceLength,
+  };
+}
+
+function canonicalLessonUrl(lessonPathValue) {
+  return `${SITE_ORIGIN}/lesson?path=${encodeURIComponent(lessonPathValue)}`;
+}
+
+function lessonHref(lessonPathValue) {
+  return `lesson?path=${encodeURIComponent(lessonPathValue)}`;
+}
+
+function canonicalCertificationUrl(trackId) {
+  return `${SITE_ORIGIN}/certification?id=${encodeURIComponent(trackId)}`;
+}
+
+function certificationHref(trackId) {
+  return `certification?id=${encodeURIComponent(trackId)}`;
+}
+
+function lessonLink(entry) {
+  return entry ? {
+    path: entry.path,
+    title: entry.title,
+    canonicalUrl: entry.canonicalUrl,
+  } : null;
+}
+
+function disambiguateDuplicateSeoTitles(entries) {
+  const entriesByTitle = new Map();
+  for (const entry of entries) {
+    const matches = entriesByTitle.get(entry.seoTitle) || [];
+    matches.push(entry);
+    entriesByTitle.set(entry.seoTitle, matches);
+  }
+  for (const matches of entriesByTitle.values()) {
+    if (matches.length < 2) continue;
+    for (const entry of matches) {
+      const qualifier = entry.context.kind === 'course'
+        ? entry.context.phaseName
+        : entry.context.programName;
+      entry.seoTitle = seoTitleFor(`${entry.title} - ${qualifier}`);
+    }
+    if (new Set(matches.map(entry => entry.seoTitle)).size !== matches.length) {
+      throw new Error(`Could not disambiguate duplicate SEO title: ${matches[0].title}`);
+    }
+  }
+}
+
+function buildSeoManifests(phases, certifications, learningPaths = []) {
+  const learningPathIdsByLesson = new Map();
+  for (const learningPath of learningPaths) {
+    for (const lesson of (learningPath.lessons || []).concat(learningPath.optionalLessons || [])) {
+      if (!lesson || !lesson.path) continue;
+      const ids = learningPathIdsByLesson.get(lesson.path) || [];
+      if (!ids.includes(learningPath.id)) ids.push(learningPath.id);
+      learningPathIdsByLesson.set(lesson.path, ids);
+    }
+  }
+  const fromTrackIdsByLesson = new Map();
+  for (const track of certifications.tracks || []) {
+    for (const lesson of track.lessons || []) {
+      if (!lesson || !lesson.path || lesson.path.startsWith('certifications/')) continue;
+      const ids = fromTrackIdsByLesson.get(lesson.path) || [];
+      if (!ids.includes(track.id)) ids.push(track.id);
+      fromTrackIdsByLesson.set(lesson.path, ids);
+    }
+  }
+
+  const courseEntries = [];
+  for (const phase of phases) {
+    for (const lesson of phase.lessons) {
+      const relPath = lessonPath(lesson.url);
+      if (!relPath) continue;
+      const docPath = path.join(REPO_ROOT, relPath, 'docs', 'en.md');
+      if (!fs.existsSync(docPath)) continue;
+      const docSeoResult = lessonDocumentSeo(fs.readFileSync(docPath, 'utf8'), lesson.name);
+      const { sourceWordCount, descriptionSourceLength, ...docSeo } = docSeoResult;
+      if (sourceWordCount >= 180 && wordCount(docSeo.excerpt) < 180) {
+        throw new Error(`SEO lesson ${relPath} has enough prose but an excerpt shorter than 180 words`);
+      }
+      if (descriptionSourceLength >= 120 && docSeo.description.length < 120) {
+        throw new Error(`SEO lesson ${relPath} has enough prose but a description shorter than 120 characters`);
+      }
+      courseEntries.push({
+        path: relPath,
+        ...docSeo,
+        context: {
+          kind: 'course',
+          phaseId: phase.id,
+          phaseName: phase.name,
+          type: lesson.type || '',
+          languages: lesson.lang || '',
+        },
+        previous: null,
+        next: null,
+        learningPathIds: (learningPathIdsByLesson.get(relPath) || []).slice().sort(),
+        fromTrackIds: (fromTrackIdsByLesson.get(relPath) || []).slice().sort(),
+        sourceUrl: githubSourceUrl(relPath),
+        canonicalUrl: canonicalLessonUrl(relPath),
+      });
+    }
+  }
+  for (let index = 0; index < courseEntries.length; index++) {
+    courseEntries[index].previous = lessonLink(courseEntries[index - 1]);
+    courseEntries[index].next = lessonLink(courseEntries[index + 1]);
+  }
+
+  const certificationEntries = [];
+  const certificationEntryByPath = new Map();
+  for (const lesson of Object.values(certifications.lessonsByPath || {}).sort((a, b) => a.path.localeCompare(b.path))) {
+    const docSeoResult = lessonDocumentSeo(lesson.markdown, lesson.name);
+    const { sourceWordCount, descriptionSourceLength, ...docSeo } = docSeoResult;
+    if (sourceWordCount >= 180 && wordCount(docSeo.excerpt) < 180) {
+      throw new Error(`SEO lesson ${lesson.path} has enough prose but an excerpt shorter than 180 words`);
+    }
+    if (descriptionSourceLength >= 120 && docSeo.description.length < 120) {
+      throw new Error(`SEO lesson ${lesson.path} has enough prose but a description shorter than 120 characters`);
+    }
+    const entry = {
+      path: lesson.path,
+      ...docSeo,
+      context: {
+        kind: 'certification',
+        programId: certifications.program && certifications.program.id || '',
+        programName: certifications.program && certifications.program.name || '',
+        trackIds: Array.isArray(lesson.trackIds) ? lesson.trackIds.slice() : [],
+        type: lesson.type || '',
+        languages: lesson.languages || '',
+      },
+      previous: null,
+      next: null,
+      navigationByTrack: {},
+      learningPathIds: [],
+      fromTrackIds: [],
+      sourceUrl: githubSourceUrl(lesson.path),
+      canonicalUrl: canonicalLessonUrl(lesson.path),
+    };
+    certificationEntries.push(entry);
+    certificationEntryByPath.set(entry.path, entry);
+  }
+  const certificationRouteAssigned = new Set();
+  for (const track of certifications.tracks || []) {
+    const route = (track.lessons || [])
+      .map(ref => certificationEntryByPath.get(ref && ref.path))
+      .filter(Boolean);
+    for (let index = 0; index < route.length; index++) {
+      const entry = route[index];
+      const navigation = {
+        previous: lessonLink(route[index - 1]),
+        next: lessonLink(route[index + 1]),
+      };
+      entry.navigationByTrack[track.id] = navigation;
+      if (!certificationRouteAssigned.has(entry.path)) {
+        entry.previous = navigation.previous;
+        entry.next = navigation.next;
+        certificationRouteAssigned.add(entry.path);
+      }
+    }
+  }
+
+  for (const entry of certificationEntries) {
+    const expectedTrackIds = [...new Set(entry.context.trackIds)].sort();
+    const emittedTrackIds = Object.keys(entry.navigationByTrack).sort();
+    if (JSON.stringify(expectedTrackIds) !== JSON.stringify(emittedTrackIds)) {
+      throw new Error(`Certification navigation coverage mismatch for ${entry.path}`);
+    }
+  }
+
+  const allEntries = courseEntries.concat(certificationEntries)
+    .sort((a, b) => a.path.localeCompare(b.path));
+  disambiguateDuplicateSeoTitles(allEntries);
+  const lessons = Object.fromEntries(allEntries.map(entry => [entry.path, entry]));
+  const certificationTrackIds = (certifications.tracks || [])
+    .map(track => track && track.id)
+    .filter(Boolean)
+    .sort();
+  const lessonManifest = { version: SEO_MANIFEST_VERSION, certificationTrackIds, lessons };
+
+  const lessonByPath = new Map(allEntries.map(entry => [entry.path, entry]));
+  const tracks = {};
+  for (const track of certifications.tracks || []) {
+    const title = normalizeWhitespace(track.credential || track.title || track.shortName || track.id);
+    const audience = normalizeWhitespace(track.audience || '');
+    const trackProse = [
+      track.summary,
+      audience,
+      ...(track.recommendedExperience || []),
+      ...(track.domains || []).flatMap(domain => [domain.name, ...(domain.objectives || [])]),
+    ].filter(Boolean);
+    const { description } = descriptionFromParts(title, [track.summary, audience]);
+    const excerpt = truncateWords(trackProse.join(' '), 220);
+    const trackLessons = (track.lessons || []).map(ref => {
+      const lesson = lessonByPath.get(ref && ref.path);
+      return lesson ? lessonLink(lesson) : null;
+    }).filter(Boolean);
+    tracks[track.id] = {
+      id: track.id,
+      title,
+      seoTitle: seoTitleFor(title),
+      description,
+      excerpt,
+      canonicalUrl: canonicalCertificationUrl(track.id),
+      sourceUrl: githubSourceUrl(`certifications/claude/tracks/${track.slug}.json`, 'blob'),
+      lessons: trackLessons,
+    };
+  }
+  const certificationManifest = { version: SEO_MANIFEST_VERSION, tracks };
+
+  const readableDocs = collectMarkdownFiles(path.join(REPO_ROOT, 'phases'), [])
+    .concat(collectMarkdownFiles(path.join(REPO_ROOT, 'certifications', 'claude', 'lessons'), []))
+    .filter(file => file.endsWith(`${path.sep}docs${path.sep}en.md`))
+    .map(file => path.relative(REPO_ROOT, path.dirname(path.dirname(file))).split(path.sep).join('/'))
+    .sort();
+  const emittedPaths = Object.keys(lessons).sort();
+  if (JSON.stringify(readableDocs) !== JSON.stringify(emittedPaths)) {
+    const emitted = new Set(emittedPaths);
+    const readable = new Set(readableDocs);
+    const missing = readableDocs.filter(value => !emitted.has(value));
+    const extra = emittedPaths.filter(value => !readable.has(value));
+    throw new Error(`SEO lesson coverage mismatch. Missing: ${missing.join(', ') || 'none'}. Extra: ${extra.join(', ') || 'none'}.`);
+  }
+  const canonicals = new Set();
+  const seoTitles = new Set();
+  for (const entry of Object.values(lessons)) {
+    for (const field of ['path', 'title', 'seoTitle', 'description', 'excerpt', 'sourceUrl', 'canonicalUrl']) {
+    if (!entry[field]) throw new Error(`SEO lesson ${entry.path || '(unknown)'} is missing ${field}`);
+    }
+    if (entry.seoTitle.length > 60) throw new Error(`SEO lesson ${entry.path} title exceeds 60 characters`);
+    if (seoTitles.has(entry.seoTitle)) throw new Error(`Duplicate SEO lesson title: ${entry.seoTitle}`);
+    seoTitles.add(entry.seoTitle);
+    if (entry.description.length > 160) throw new Error(`SEO lesson ${entry.path} description exceeds 160 characters`);
+    if (wordCount(entry.excerpt) > 220) throw new Error(`SEO lesson ${entry.path} excerpt exceeds 220 words`);
+    if (canonicals.has(entry.canonicalUrl)) throw new Error(`Duplicate lesson canonical URL: ${entry.canonicalUrl}`);
+    canonicals.add(entry.canonicalUrl);
+  }
+  const trackEntries = Object.values(tracks);
+  const configuredTrackIds = (certifications.tracks || []).map(track => track.id);
+  if (configuredTrackIds.length === 0) throw new Error('Expected at least one certification SEO track');
+  if (new Set(configuredTrackIds).size !== configuredTrackIds.length) {
+    throw new Error('Certification SEO track ids must be unique');
+  }
+  if (trackEntries.length !== configuredTrackIds.length) {
+    throw new Error(`Expected ${configuredTrackIds.length} certification SEO tracks, found ${trackEntries.length}`);
+  }
+  for (const field of ['title', 'description', 'excerpt', 'canonicalUrl']) {
+    if (new Set(trackEntries.map(entry => entry[field])).size !== trackEntries.length) {
+      throw new Error(`Certification SEO tracks need unique ${field} values`);
+    }
+  }
+  for (const entry of trackEntries) {
+    if (entry.seoTitle.length > 60) throw new Error(`Certification SEO track ${entry.id} title exceeds 60 characters`);
+    if (entry.description.length > 160) throw new Error(`Certification SEO track ${entry.id} description exceeds 160 characters`);
+    if (wordCount(entry.excerpt) > 220) throw new Error(`Certification SEO track ${entry.id} excerpt exceeds 220 words`);
+  }
+
+  return { lessonManifest, certificationManifest };
+}
+
+function htmlEscape(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderCatalogDiscovery(phases, lessonManifest) {
+  const rows = [];
+  for (const phase of phases) {
+    for (const lesson of phase.lessons) {
+      const relPath = lessonPath(lesson.url);
+      const seo = relPath && lessonManifest.lessons[relPath];
+      if (!seo) continue;
+      rows.push(
+        `            <tr data-generated-discovery="lesson">` +
+        `<td>${htmlEscape(String(phase.id).padStart(2, '0'))}</td>` +
+        `<td><a href="${htmlEscape(lessonHref(relPath))}">${htmlEscape(seo.title)}</a></td>` +
+        `<td>${htmlEscape(lesson.type || '')}</td>` +
+        `<td>${htmlEscape(lesson.lang || '')}</td>` +
+        `<td>${htmlEscape(lesson.status || '')}</td></tr>`
+      );
+    }
+  }
+  return rows.join('\n');
+}
+
+function renderCertificationDiscovery(certifications, certificationManifest) {
+  return (certifications.tracks || []).map(track => {
+    const seo = certificationManifest.tracks[track.id];
+    if (!seo) return '';
+    const links = seo.lessons.map(lesson =>
+      `              <li><a href="${htmlEscape(lessonHref(lesson.path))}">${htmlEscape(lesson.title)}</a></li>`
+    ).join('\n');
+    return `        <article class="cert-track-card" data-generated-discovery="certification">\n` +
+      `          <h3><a href="${htmlEscape(certificationHref(track.id))}">${htmlEscape(seo.title)}</a></h3>\n` +
+      `          <p>${htmlEscape(seo.description)}</p>\n` +
+      `          <ul aria-label="${htmlEscape(seo.title)} lessons">\n${links}\n          </ul>\n` +
+      `        </article>`;
+  }).filter(Boolean).join('\n');
+}
+
+function replaceGeneratedDiscovery(filePath, startMarker, endMarker, content) {
+  const source = fs.readFileSync(filePath, 'utf8');
+  const pattern = new RegExp(`${escapeRegExp(startMarker)}[\\s\\S]*?${escapeRegExp(endMarker)}`);
+  if (!pattern.test(source)) throw new Error(`${path.basename(filePath)} is missing generated discovery markers`);
+  const updated = source.replace(pattern, `${startMarker}\n${content}\n          ${endMarker}`);
+  fs.writeFileSync(filePath, updated, 'utf8');
+}
+
+function writeSeoArtifacts(phases, certifications, learningPaths) {
+  const manifests = buildSeoManifests(phases, certifications, learningPaths);
+  fs.writeFileSync(LESSON_SEO_OUTPUT_PATH, JSON.stringify(manifests.lessonManifest, null, 2) + '\n', 'utf8');
+  fs.writeFileSync(CERTIFICATION_SEO_OUTPUT_PATH, JSON.stringify(manifests.certificationManifest, null, 2) + '\n', 'utf8');
+  replaceGeneratedDiscovery(
+    path.join(__dirname, 'catalog.html'),
+    CATALOG_DISCOVERY_START,
+    CATALOG_DISCOVERY_END,
+    renderCatalogDiscovery(phases, manifests.lessonManifest)
+  );
+  replaceGeneratedDiscovery(
+    path.join(__dirname, 'certifications.html'),
+    CERTIFICATION_DISCOVERY_START,
+    CERTIFICATION_DISCOVERY_END,
+    renderCertificationDiscovery(certifications, manifests.certificationManifest)
+  );
+  console.log(`   wrote lesson-seo.json (${Object.keys(manifests.lessonManifest.lessons).length} lessons)`);
+  console.log(`   wrote certification-seo.json (${Object.keys(manifests.certificationManifest.tracks).length} tracks)`);
+  console.log('   refreshed no-JavaScript catalog discovery links');
+  return manifests;
 }
 
 // ─── Certification programs, tracks, lessons, and assessments ─────────
@@ -1482,12 +1947,47 @@ function resolveRef() {
   return ref;
 }
 
+function sourceRevision() {
+  if (process.env.VERCEL_ENV === 'production') return 'main';
+  if (process.env.VERCEL_ENV === 'preview') {
+    const sha = String(process.env.VERCEL_GIT_COMMIT_SHA || '').trim();
+    return /^[0-9a-f]{7,40}$/i.test(sha) ? sha : resolveRef();
+  }
+  return 'main';
+}
+
+function sourceRepository() {
+  const ownerValue = String(process.env.VERCEL_GIT_REPO_OWNER || '').trim();
+  const repoValue = String(process.env.VERCEL_GIT_REPO_SLUG || '').trim();
+  return {
+    owner: /^[A-Za-z0-9-]+$/.test(ownerValue) ? ownerValue : 'rohitg00',
+    repo: /^[A-Za-z0-9_.-]+$/.test(repoValue) ? repoValue : 'ai-engineering-from-scratch',
+  };
+}
+
+function githubSourceUrl(relativePath, view = 'tree') {
+  const { owner, repo } = sourceRepository();
+  const revision = sourceRevision()
+    .split('/')
+    .map(encodeURIComponent)
+    .join('/');
+  const cleanPath = String(relativePath || '')
+    .replace(/^\/+|\/+$/g, '')
+    .split('/')
+    .map(encodeURIComponent)
+    .join('/');
+  const sourceView = view === 'blob' ? 'blob' : 'tree';
+  return `https://github.com/${owner}/${repo}/${sourceView}/${revision}/${cleanPath}`;
+}
+
 function writeBuildMeta() {
-  const ref = resolveRef();
+  const revision = sourceRevision();
+  const repository = sourceRepository();
   const js = '// Auto-generated by build.js on each deploy — do not edit.\n'
-    + 'window.__AIFS_REF = ' + JSON.stringify(ref) + ';\n';
+    + 'window.__AIFS_REF = ' + JSON.stringify(revision) + ';\n'
+    + 'window.__AIFS_SOURCE = ' + JSON.stringify({ ...repository, revision }) + ';\n';
   fs.writeFileSync(path.join(__dirname, 'build-meta.js'), js, 'utf8');
-  console.log('   wrote build-meta.js (ref: ' + ref + ')');
+  console.log('   wrote build-meta.js (ref: ' + revision + ')');
 }
 
 // ─── langs.js: language switcher options, from the canonical registry ────
@@ -1553,6 +2053,9 @@ function build() {
     }
   }
 
+  console.log('🔎 Generating lesson and certification SEO manifests...');
+  const seoManifests = writeSeoArtifacts(phases, certifications, learningPaths);
+
   // Stats
   let totalLessons = 0;
   let completeLessons = 0;
@@ -1596,17 +2099,17 @@ const ARTIFACTS = ${JSON.stringify(artifacts, null, 2)};
 
   syncCounts(totalLessons, phases.length, artifacts.length);
   syncReadme(totalLessons);
-  writeSitemap(phases, glossaryTerms.length, certifications);
+  writeSitemap(seoManifests.lessonManifest, glossaryTerms.length, certifications);
   writeLlms(phases, glossaryTerms.length, artifacts.length, certifications);
 }
 
-// ─── sitemap.xml from the same PHASES the site renders ───────────────────
-function writeSitemap(phases, glossaryCount, certifications) {
-  const today = new Date().toISOString().slice(0, 10);
+// ─── sitemap.xml from the same SEO manifest the lesson route renders ─────
+function writeSitemap(lessonManifest, glossaryCount, certifications) {
   const urls = [
     { loc: '/', priority: '1.0', freq: 'weekly' },
     { loc: '/catalog.html', priority: '0.8', freq: 'weekly' },
     { loc: '/prereqs.html', priority: '0.7', freq: 'monthly' },
+    { loc: '/learning-paths.html', priority: '0.8', freq: 'monthly' },
     { loc: '/about.html', priority: '0.5', freq: 'yearly' },
     { loc: '/developer.html', priority: '0.6', freq: 'monthly' },
     { loc: '/contact.html', priority: '0.3', freq: 'yearly' },
@@ -1616,24 +2119,20 @@ function writeSitemap(phases, glossaryCount, certifications) {
   if (certifications && certifications.program) {
     urls.push({ loc: '/certifications.html', priority: '0.9', freq: 'weekly' });
     for (const track of certifications.tracks) {
-      urls.push({ loc: '/certification.html?id=' + encodeURIComponent(track.id), priority: '0.8', freq: 'monthly' });
+      urls.push({ loc: '/certification?id=' + encodeURIComponent(track.id), priority: '0.8', freq: 'monthly' });
     }
     for (const lesson of Object.values(certifications.lessonsByPath)) {
-      const track = lesson.trackIds && lesson.trackIds[0];
-      let loc = '/lesson.html?path=' + encodeURIComponent(lesson.path);
-      if (track) loc += '&track=' + encodeURIComponent(track);
-      urls.push({ loc, priority: '0.7', freq: 'monthly' });
+      urls.push({ loc: '/lesson?path=' + encodeURIComponent(lesson.path), priority: '0.7', freq: 'monthly' });
     }
   }
-  for (const phase of phases) {
-    for (const l of phase.lessons) {
-      const p = lessonPath(l.url);
-      if (p) urls.push({ loc: '/lesson.html?path=' + p, priority: '0.6', freq: 'monthly' });
+  for (const lesson of Object.values(lessonManifest.lessons || {})) {
+    if (lesson.context && lesson.context.kind === 'course') {
+      urls.push({ loc: '/lesson?path=' + encodeURIComponent(lesson.path), priority: '0.6', freq: 'monthly' });
     }
   }
   const body = urls.map(u =>
     `  <url>\n    <loc>${SITE_ORIGIN}${u.loc.replace(/&/g, '&amp;')}</loc>\n` +
-    `    <lastmod>${today}</lastmod>\n    <changefreq>${u.freq}</changefreq>\n` +
+    `    <changefreq>${u.freq}</changefreq>\n` +
     `    <priority>${u.priority}</priority>\n  </url>`).join('\n');
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;
@@ -1657,7 +2156,7 @@ function writeLlms(phases, glossaryCount, artifactCount, certifications) {
   out += `- [Sitemap](${SITE_ORIGIN}/sitemap.xml) — canonical URL inventory\n`;
   out += `- [Contact](${SITE_ORIGIN}/contact.html) — maintainer and project contact route\n`;
   out += `- [Privacy](${SITE_ORIGIN}/privacy.html) — data and analytics policy\n\n`;
-  out += `Lesson pages render client-side. Agents: fetch each lesson's raw markdown link; it is the full text. Lesson directories may also include code/ (runnable implementation) and quiz.json.\n\n`;
+  out += `Lesson routes include crawler-readable titles, summaries, navigation, and canonical URLs. Each raw markdown link below is the complete source text. Lesson directories may also include code/ (runnable implementation) and quiz.json.\n\n`;
   for (const phase of phases) {
     out += `## Phase ${phase.id}: ${phase.name}\n`;
     if (phase.desc) out += `${phase.desc}\n`;
@@ -1666,13 +2165,14 @@ function writeLlms(phases, glossaryCount, artifactCount, certifications) {
       const p = lessonPath(l.url);
       if (!p) continue;
       const note = l.summary ? ` — ${l.summary}` : '';
-      out += `- [${l.name}](${SITE_ORIGIN}/lesson.html?path=${p}) · [raw](${rawOrigin}/${p}/docs/en.md)${note}\n`;
+      out += `- [${l.name}](${SITE_ORIGIN}/lesson?path=${encodeURIComponent(p)}) · [raw](${rawOrigin}/${p}/docs/en.md)${note}\n`;
     }
     out += `\n`;
   }
   out += `## Optional\n`;
   out += `- [Catalog](${SITE_ORIGIN}/catalog.html) — full searchable lesson index\n`;
   out += `- [Roadmap](${SITE_ORIGIN}/prereqs.html) — prerequisite ordering across phases\n`;
+  out += `- [AI Engineering Learning Paths](${SITE_ORIGIN}/learning-paths.html) — four core domain paths and six career routes connected to practical lessons\n`;
   if (glossaryCount > 0) out += `- [Glossary](${SITE_ORIGIN}/glossary.html) — plain-language definitions of ${glossaryCount} terms\n`;
   if (certifications && certifications.program) {
     out += `\n## Certification preparation\n`;
@@ -1681,13 +2181,13 @@ function writeLlms(phases, glossaryCount, artifactCount, certifications) {
     out += `- [Claude certification tutor contract](${rawOrigin}/skills/claude-certification/SKILL.md)\n`;
     out += `- [Certification catalog](${SITE_ORIGIN}/certifications.html)\n`;
     for (const track of certifications.tracks) {
-      out += `- [${track.credential || track.shortName || track.id}](${SITE_ORIGIN}/certification.html?id=${encodeURIComponent(track.id)})`;
+      out += `- [${track.credential || track.shortName || track.id}](${SITE_ORIGIN}/certification?id=${encodeURIComponent(track.id)})`;
       if (track.summary) out += ` — ${track.summary}`;
       out += `\n`;
     }
     const certRawOrigin = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/' + resolveRef();
     for (const lesson of Object.values(certifications.lessonsByPath)) {
-      out += `- [${lesson.name}](${SITE_ORIGIN}/lesson.html?path=${encodeURIComponent(lesson.path)}) · [raw](${certRawOrigin}/${lesson.path}/docs/en.md)`;
+      out += `- [${lesson.name}](${SITE_ORIGIN}/lesson?path=${encodeURIComponent(lesson.path)}) · [raw](${certRawOrigin}/${lesson.path}/docs/en.md)`;
       if (lesson.summary) out += ` — ${lesson.summary}`;
       out += `\n`;
     }
@@ -1719,12 +2219,12 @@ function syncReadme(lessons) {
         `<b>${fmt(s.pageViews30d)}</b> page views in the last ${s.period} &nbsp;·&nbsp; ` +
         `as of ${s.updated}</sub></p>\n` +
         '<!-- STATS:END -->';
-      const statsRe = /<!-- STATS:START[\s\S]*?<!-- STATS:END -->/;
+      const statsRe = /(?:<!-- STATS:START[\s\S]*?<!-- STATS:END -->|\[stats-start\]: #[\s\S]*?\[stats-end\]: #)/;
       if (statsRe.test(md)) {
         md = md.replace(statsRe, block);
       } else {
         // Self-heal: re-insert the block if the markers were removed/mangled
-        md = md.replace(/\n## How this works/, `\n${block}\n\n## How this works`);
+        md = md.replace(/\n(?=## Start here:|## How this works)/, `\n${block}\n\n`);
       }
     } catch (err) {
       console.warn(`⚠️  README stats sync skipped: ${err.message}`);
@@ -1739,7 +2239,7 @@ function syncReadme(lessons) {
 
 // ─── Keep marketing counts in sync (single source of truth = this build) ──
 function syncCounts(lessons, phaseCount, outputs) {
-  const targets = ['index.html', 'catalog.html', 'lesson.html', 'prereqs.html', 'cmdpalette.js'];
+  const targets = ['index.html', 'catalog.html', 'lesson.html', 'prereqs.html', 'learning-paths.html', 'cmdpalette.js'];
   for (const f of targets) {
     const p = path.join(__dirname, f);
     if (!fs.existsSync(p)) continue;
@@ -1765,10 +2265,18 @@ module.exports = {
   discoverFigureProviderOrder,
   discoverArtifacts,
   discoverUsedFigureIds,
+  buildSeoManifests,
+  canonicalCertificationUrl,
+  canonicalLessonUrl,
+  githubSourceUrl,
+  lessonDocumentSeo,
   parseReadme,
   parseRoadmap,
   parseLearningPaths,
+  parseCertifications,
   parseFrontmatter,
+  renderCatalogDiscovery,
+  renderCertificationDiscovery,
   serializeFigureProviderManifest,
   writeFigureManifest,
 };

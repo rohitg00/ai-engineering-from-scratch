@@ -5,47 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Engineering from Scratch</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
-  <meta name="description" content="AI Engineering from Scratch is a free, open-source curriculum that builds every core AI algorithm by hand. 511 lessons, 20 phases, four languages. The math, the model, the tokenizer, and the agent loop. Once, by hand.">
+  <meta name="description" content="Build AI systems from first principles with 523 free, open-source lessons spanning math, models, tokenizers, agents, evaluation, and production.">
   <link rel="canonical" href="https://aiengineeringfromscratch.com/">
   <link rel="alternate" type="text/markdown" href="https://aiengineeringfromscratch.com/llms.txt">
   <meta property="og:title" content="AI Engineering from Scratch">
-  <meta property="og:description" content="511 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand before any framework gets imported. Python, TypeScript, Rust, Julia.">
+  <meta property="og:description" content="523 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand before any framework gets imported. Python, TypeScript, Rust, Julia.">
   <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
   <meta property="og:url" content="https://aiengineeringfromscratch.com">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Engineering from Scratch">
-  <meta name="twitter:description" content="511 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
+  <meta name="twitter:description" content="523 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
   <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260823b">
+  <link rel="stylesheet" href="style.css?v=20260824a">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://aiengineeringfromscratch.com/#org",
-        "name": "AI Engineering from Scratch",
-        "url": "https://aiengineeringfromscratch.com",
-        "logo": "https://aiengineeringfromscratch.com/og-image.png",
-        "sameAs": ["https://github.com/rohitg00/ai-engineering-from-scratch", "https://github.com/rohitg00"],
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "contactType": "project support",
-          "url": "https://github.com/rohitg00/ai-engineering-from-scratch/issues"
-        },
-        "founder": { "@type": "Person", "name": "Rohit Ghumare", "url": "https://github.com/rohitg00" }
-      },
       {
         "@type": "WebSite",
         "@id": "https://aiengineeringfromscratch.com/#website",
         "url": "https://aiengineeringfromscratch.com",
         "name": "AI Engineering from Scratch",
         "description": "A free, open-source curriculum that builds every core AI algorithm by hand.",
-        "publisher": { "@id": "https://aiengineeringfromscratch.com/#org" },
         "potentialAction": {
           "@type": "SearchAction",
           "target": { "@type": "EntryPoint", "urlTemplate": "https://aiengineeringfromscratch.com/catalog.html?q={search_term_string}" },
@@ -56,16 +41,14 @@
         "@type": "Course",
         "@id": "https://aiengineeringfromscratch.com/#course",
         "name": "AI Engineering from Scratch",
-        "description": "511 lessons across 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand before any framework gets imported.",
-        "provider": { "@id": "https://aiengineeringfromscratch.com/#org" },
+        "description": "523 lessons across 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand before any framework gets imported.",
         "url": "https://aiengineeringfromscratch.com",
         "isAccessibleForFree": true,
         "inLanguage": "en",
         "teaches": ["Neural networks", "Backpropagation", "Tokenization", "Attention mechanisms", "LLM training", "Inference optimization", "Agent loops", "Model context protocol"],
         "hasCourseInstance": {
           "@type": "CourseInstance",
-          "courseMode": "online",
-          "instructor": { "@type": "Person", "name": "Rohit Ghumare" }
+          "courseMode": "online"
         }
       }
     ]
@@ -90,6 +73,11 @@
       .manual-masthead.container {
         padding-left: clamp(24px, 2.5vw, 32px);
         padding-right: clamp(24px, 2.5vw, 32px);
+      }
+
+      .masthead-install,
+      .masthead-install-caption {
+        max-width: none;
       }
     }
 
@@ -443,16 +431,19 @@
     }
 
     .masthead-cta {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.28fr) minmax(0, 1.12fr);
       gap: 12px;
-      flex-wrap: wrap;
       margin-top: 20px;
     }
 
     .masthead-btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
+      min-width: 0;
+      min-height: 44px;
       padding: 9px 14px;
       border: 1px solid var(--ink);
       background: var(--bg);
@@ -461,6 +452,7 @@
       font-family: var(--font-mono);
       font-size: 0.82rem;
       letter-spacing: 0.02em;
+      white-space: nowrap;
       transition:
         transform var(--motion-press) var(--ease-out),
         background-color var(--motion-feedback) ease,
@@ -495,13 +487,25 @@
       font-variant-numeric: tabular-nums;
     }
 
+    @media (min-width: 601px) and (max-width: 760px) {
+      .masthead-cta {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 761px) {
+      .masthead-cta {
+        height: 44px;
+      }
+    }
+
     @media (max-width: 480px) {
       .masthead-btn { font-size: 0.78rem; padding: 8px 12px; }
     }
 
     .masthead-install {
       margin-top: 26px;
-      max-width: 560px;
+      max-width: none;
       border: 1px solid var(--rule-soft);
       background: var(--bg-surface);
       font-family: var(--font-mono);
@@ -730,7 +734,23 @@
       margin: 10px 0 0;
       font-size: 0.78rem;
       color: var(--ink-mute);
-      max-width: 560px;
+      max-width: none;
+    }
+
+    @media (min-width: 601px) and (max-width: 1279px) {
+      .masthead-install,
+      .masthead-install-caption {
+        max-width: none;
+      }
+    }
+
+    @media (min-width: 761px) and (max-width: 900px) {
+      .masthead-btn {
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 0.72rem;
+        white-space: nowrap;
+      }
     }
 
     @media (max-width: 480px) {
@@ -746,16 +766,14 @@
     }
 
     .course-paths {
-      padding: 44px 32px 52px;
+      padding: 40px 32px 46px;
       border-bottom: 1px solid var(--rule-soft);
     }
 
     .course-paths-header {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(240px, 420px);
-      gap: 32px;
-      align-items: end;
-      margin-bottom: 24px;
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .course-paths-header h2 {
@@ -765,9 +783,134 @@
     }
 
     .course-paths-header p {
+      max-width: 72ch;
+      margin: 0;
       color: var(--ink-soft);
       font-size: 0.96rem;
       line-height: 1.55;
+    }
+
+    .course-paths-header-copy {
+      display: grid;
+      gap: 12px;
+    }
+
+    .course-paths-entry-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .course-paths-entry-links a {
+      display: inline-flex;
+      min-height: 38px;
+      align-items: center;
+      padding: 7px 11px;
+      border: 1px solid var(--rule-soft);
+      color: var(--ink-soft);
+      font-family: var(--font-mono);
+      font-size: 0.67rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: border-color 150ms var(--ease-out), background-color 150ms var(--ease-out), color 150ms var(--ease-out), transform 120ms var(--ease-out);
+    }
+
+    .course-paths-entry-links a:first-child {
+      border-color: var(--blueprint);
+      color: var(--blueprint);
+    }
+
+    .course-paths-entry-links a:hover,
+    .course-paths-entry-links a:focus-visible {
+      border-color: var(--blueprint);
+      background: var(--blueprint-tint);
+      color: var(--blueprint);
+    }
+
+    .course-paths-entry-links a:active {
+      transform: scale(0.98);
+    }
+
+    .course-paths-entry-links a:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .course-paths-entry-links a {
+        transition: none;
+      }
+
+      .course-paths-entry-links a:active {
+        transform: none;
+      }
+    }
+
+    .learning-paths-figure {
+      position: relative;
+      margin: 0 0 22px;
+      border: 1px solid var(--rule);
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .learning-paths-figure picture {
+      display: block;
+    }
+
+    .learning-paths-compact-root {
+      display: none;
+    }
+
+    .learning-paths-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      color-scheme: light;
+      pointer-events: none;
+    }
+
+    html[data-theme="dark"] .learning-paths-figure img { color-scheme: dark; }
+
+    .learning-paths-node {
+      position: absolute;
+      top: 46.923%;
+      width: 22.5%;
+      height: 35.385%;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color var(--motion-feedback) ease, box-shadow var(--motion-feedback) ease;
+    }
+
+    .learning-paths-node--applications { left: 2.5%; }
+    .learning-paths-node--software { left: 26.667%; }
+    .learning-paths-node--agents { left: 50.833%; }
+    .learning-paths-node--shaping { left: 75%; }
+
+    .learning-paths-node:hover,
+    .learning-paths-node:focus-visible {
+      background: rgba(53, 83, 255, 0.08);
+      box-shadow: inset 0 0 0 3px var(--blueprint);
+    }
+
+    .learning-paths-node:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: -6px;
+    }
+
+    .learning-paths-node-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .course-route-list {
@@ -817,9 +960,11 @@
     }
 
     .course-route-actions {
-      display: flex;
-      justify-content: flex-end;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
+      width: 248px;
+      justify-self: end;
       white-space: nowrap;
     }
 
@@ -834,6 +979,7 @@
       font-family: var(--font-mono);
       font-size: 0.68rem;
       letter-spacing: 0.04em;
+      text-align: center;
       text-decoration: none;
       transition: color var(--motion-feedback) ease, border-color var(--motion-feedback) ease, background-color var(--motion-feedback) ease, transform var(--motion-press) var(--ease-out);
     }
@@ -858,15 +1004,89 @@
     }
 
     @media (max-width: 900px) {
-      .course-paths-header { grid-template-columns: 1fr; gap: 10px; }
       .course-route { grid-template-columns: minmax(150px, 0.8fr) minmax(0, 1.5fr); }
-      .course-route-actions { grid-column: 1 / -1; justify-content: flex-start; }
+      .course-route-actions { grid-column: 1 / -1; justify-self: start; }
     }
 
     @media (max-width: 600px) {
       .course-paths { padding: 34px 18px 40px; }
+      .course-paths-entry-links { display: grid; }
+      .course-paths-entry-links a { justify-content: center; }
+      .learning-paths-figure {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 14px;
+        padding: 12px;
+      }
+      .learning-paths-figure::before {
+        content: "";
+        position: absolute;
+        top: 36px;
+        bottom: 36px;
+        left: 50%;
+        border-left: 2px solid var(--blueprint);
+        pointer-events: none;
+      }
+      .learning-paths-figure picture { display: none; }
+      .learning-paths-compact-root {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        gap: 2px;
+        min-height: 48px;
+        padding: 6px 10px;
+        border: 2px solid var(--ink);
+        border-radius: 4px;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-mono);
+        text-align: center;
+        text-transform: uppercase;
+      }
+      .learning-paths-compact-root strong {
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+      }
+      .learning-paths-compact-root span {
+        color: var(--ink-mute);
+        font-size: 0.58rem;
+        letter-spacing: 0.08em;
+      }
+      .learning-paths-node {
+        position: relative;
+        z-index: 1;
+        top: auto;
+        left: auto;
+        display: flex;
+        width: 100%;
+        min-height: 48px;
+        height: auto;
+        align-items: center;
+        justify-content: center;
+        padding: 7px 10px;
+        border: 1px solid var(--ink);
+        background: var(--bg);
+        color: var(--ink);
+        text-align: center;
+      }
+      .learning-paths-node-label {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: 0.025em;
+        text-transform: uppercase;
+      }
       .course-route { grid-template-columns: 1fr; gap: 8px; padding: 16px 12px; }
-      .course-route-actions { grid-column: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .course-route-actions { grid-column: auto; width: 100%; justify-self: stretch; }
       .course-route-link { white-space: normal; text-align: center; }
     }
 
@@ -891,8 +1111,9 @@
       font-family: var(--font-body);
       font-size: 1rem;
       line-height: 1.7;
-      text-align: justify;
-      hyphens: auto;
+      text-align: left;
+      hyphens: none;
+      -webkit-hyphens: none;
     }
 
     .preface-body p {
@@ -1637,18 +1858,31 @@
       }
 
       .toc-row {
-        grid-template-columns: auto minmax(0, 1fr);
-        gap: 8px 12px;
-        padding: 14px 12px;
+        grid-template-columns: 36px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 12px;
         margin-bottom: 8px;
         border: 1px solid var(--rule-soft);
         background: rgba(107, 142, 255, 0.04);
       }
 
-      .toc-row .toc-meta {
-        grid-column: 2;
+      .toc-row > div {
+        display: flex;
+        align-items: center;
         min-width: 0;
-        text-align: left;
+      }
+
+      .toc-row .toc-meta {
+        grid-column: 3;
+        grid-row: 1;
+        min-width: 58px;
+        text-align: right;
+      }
+
+      .toc-status {
+        margin: 0 8px 0 0;
+        vertical-align: 0;
       }
 
       .toc-list {
@@ -1741,9 +1975,9 @@
       }
 
       .toc-row {
-        grid-template-columns: auto minmax(0, 1fr);
-        gap: 8px;
-        padding: 13px 12px;
+        grid-template-columns: 32px minmax(0, 1fr) auto;
+        gap: 10px;
+        padding: 12px 10px;
       }
 
       .toc-name {
@@ -1860,11 +2094,11 @@
       <p class="manual-tagline reveal"><span id="mastheadLessonCount">Every published lesson</span>. <span id="mastheadPhaseCount">Every phase</span>. Every algorithm built from raw math before a single framework gets imported.</p>
       <p class="manual-attribution reveal" style="--stagger-delay: 40ms;">Maintained by Rohit Ghumare and contributors. Run on your own machine.</p>
       <div class="masthead-cta reveal" style="--stagger-delay: 80ms;">
-        <a class="masthead-btn masthead-btn--primary" href="lesson.html?path=phases/00-setup-and-tooling/01-dev-environment">
+        <a class="masthead-btn masthead-btn--primary" href="lesson?path=phases/00-setup-and-tooling/01-dev-environment">
           <span>Start the Course</span>
         </a>
-        <a class="masthead-btn" href="#choose-path">
-          <span>Choose Your Goal</span>
+        <a class="masthead-btn" href="learning-paths.html">
+          <span>Explore Learning Paths</span>
         </a>
         <a class="masthead-btn" href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" aria-label="Star ai-engineering-from-scratch on GitHub">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
@@ -2080,62 +2314,82 @@
     <section class="course-paths container" id="choose-path" aria-labelledby="coursePathsTitle">
       <header class="course-paths-header">
         <h2 id="coursePathsTitle">Choose the work you want to do</h2>
-        <p>Each route starts with a real lesson. Learn in the browser or open the same source, code, tests, and artifacts on GitHub.</p>
+        <div class="course-paths-header-copy">
+          <p>AI engineering is larger than model code. Choose one of four core learning paths, then learn from the same source, labs, tests, and artifacts in the browser or on GitHub.</p>
+          <div class="course-paths-entry-links">
+            <a href="learning-paths.html">View Learning Paths</a>
+            <a href="learning-paths.html#career-routes">Browse career routes</a>
+          </div>
+        </div>
       </header>
+      <figure class="learning-paths-figure">
+        <figcaption class="learning-paths-compact-root">
+          <strong>AI Engineering</strong>
+          <span>4 connected domains</span>
+        </figcaption>
+        <picture>
+          <source media="(max-width: 600px)" srcset="assets/figures/006-ai-engineering-learning-paths-mobile.svg">
+          <img src="assets/figures/006-ai-engineering-learning-paths.svg" alt="AI Engineering connects building and deploying AI applications, software engineering fundamentals, agent-assisted engineering, and product judgment and delivery." loading="lazy">
+        </picture>
+        <a class="learning-paths-node learning-paths-node--applications" href="learning-paths.html#building-and-deploying" aria-label="Explore the competencies for Building and Deploying AI Applications">
+          <span class="learning-paths-node-label">Building and Deploying AI Applications</span>
+        </a>
+        <a class="learning-paths-node learning-paths-node--software" href="learning-paths.html#software-fundamentals" aria-label="Explore the competencies for Software Engineering Fundamentals">
+          <span class="learning-paths-node-label">Software Engineering Fundamentals</span>
+        </a>
+        <a class="learning-paths-node learning-paths-node--agents" href="learning-paths.html#coding-agents" aria-label="Explore the competencies for Agent-Assisted Engineering">
+          <span class="learning-paths-node-label">Agent-Assisted Engineering</span>
+        </a>
+        <a class="learning-paths-node learning-paths-node--shaping" href="learning-paths.html#shaping-the-build" aria-label="Explore the competencies for Product Judgment and Delivery">
+          <span class="learning-paths-node-label">Product Judgment and Delivery</span>
+        </a>
+      </figure>
       <div class="course-route-list">
         <article class="course-route is-recommended">
           <div class="course-route-name"><span>Recommended first</span><strong>New to AI engineering</strong></div>
           <p>Set up a working environment, run the repository, and learn the lesson workflow before choosing a specialization.</p>
           <div class="course-route-actions">
-            <a class="course-route-link" href="lesson.html?path=phases/00-setup-and-tooling/01-dev-environment">Open lesson</a>
+            <a class="course-route-link" href="lesson?path=phases/00-setup-and-tooling/01-dev-environment">Open lesson</a>
             <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/01-dev-environment" target="_blank" rel="noopener">GitHub source</a>
           </div>
         </article>
         <article class="course-route">
-          <div class="course-route-name"><span>Build the base</span><strong>Math and ML foundations</strong></div>
-          <p>Start with linear algebra, then move through optimization, probability, classical ML, and neural networks.</p>
+          <div class="course-route-name"><span>Core domain</span><strong>Building and Deploying AI Applications</strong></div>
+          <p>Move from prompts, structured outputs, embeddings, and retrieval through evaluation, serving, observability, and safe release.</p>
           <div class="course-route-actions">
-            <a class="course-route-link" href="lesson.html?path=phases/01-math-foundations/01-linear-algebra-intuition">Open lesson</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math-foundations/01-linear-algebra-intuition" target="_blank" rel="noopener">GitHub source</a>
+            <a class="course-route-link" href="lesson?path=phases/11-llm-engineering/01-prompt-engineering&amp;learningPath=building-and-deploying-ai-applications">Start path</a>
+            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/learning-paths/building-and-deploying-ai-applications.json" target="_blank" rel="noopener">GitHub path</a>
           </div>
         </article>
         <article class="course-route">
-          <div class="course-route-name"><span>Ship model features</span><strong>LLM engineering</strong></div>
-          <p>Build prompting, structured outputs, embeddings, retrieval, evaluation, fine-tuning, serving, and observability.</p>
+          <div class="course-route-name"><span>Core domain</span><strong>Software Engineering Fundamentals</strong></div>
+          <p>Build the repository, environment, interface, debugging, verification, security, release, and operational foundations AI systems depend on.</p>
           <div class="course-route-actions">
-            <a class="course-route-link" href="lesson.html?path=phases/11-llm-engineering/01-prompt-engineering">Open lesson</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/11-llm-engineering/01-prompt-engineering" target="_blank" rel="noopener">GitHub source</a>
+            <a class="course-route-link" href="lesson?path=phases/00-setup-and-tooling/01-dev-environment&amp;learningPath=software-engineering-fundamentals">Start path</a>
+            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/learning-paths/software-engineering-fundamentals.json" target="_blank" rel="noopener">GitHub path</a>
           </div>
         </article>
         <article class="course-route">
-          <div class="course-route-name"><span>Control every turn</span><strong>Loop engineering</strong></div>
-          <p>Build the observe, think, act cycle by hand with tool dispatch, real observations, budgets, and explicit stop conditions.</p>
+          <div class="course-route-name"><span>Core domain</span><strong>Agent-Assisted Engineering</strong></div>
+          <p>Frame the task, plan from repository evidence, engineer the loop and harness, isolate delegation, verify the result, and preserve feedback.</p>
           <div class="course-route-actions">
-            <a class="course-route-link" href="lesson.html?path=phases/14-agent-engineering/01-the-agent-loop">Open lesson</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/01-the-agent-loop" target="_blank" rel="noopener">GitHub source</a>
+            <a class="course-route-link" href="lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&amp;learningPath=using-coding-agents">Start path</a>
+            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/learning-paths/using-coding-agents.json" target="_blank" rel="noopener">GitHub path</a>
           </div>
         </article>
         <article class="course-route">
-          <div class="course-route-name"><span>Make state explicit</span><strong>Graph engineering</strong></div>
-          <p>Build agent state-graph orchestration with typed nodes, conditional edges, checkpoints, interrupts, and resumable execution.</p>
+          <div class="course-route-name"><span>Core domain</span><strong>Product Judgment and Delivery</strong></div>
+          <p>Turn observed work into outcomes, assumptions, testable slices, executable specifications, measurement plans, staged releases, and owned feedback.</p>
           <div class="course-route-actions">
-            <a class="course-route-link" href="lesson.html?path=phases/14-agent-engineering/13-langgraph-stateful-graphs">Open lesson</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/13-langgraph-stateful-graphs" target="_blank" rel="noopener">GitHub source</a>
-          </div>
-        </article>
-        <article class="course-route">
-          <div class="course-route-name"><span>Engineer the runtime</span><strong>Harness engineering</strong></div>
-          <p>Wrap the model with instructions, durable state, scope, runtime feedback, verification, review, and handoff.</p>
-          <div class="course-route-actions">
-            <a class="course-route-link" href="lesson.html?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail">Open lesson</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/14-agent-engineering/31-agent-workbench-why-models-fail" target="_blank" rel="noopener">GitHub source</a>
+            <a class="course-route-link" href="lesson?path=phases/14-agent-engineering/47-outcomes-before-output&amp;learningPath=shaping-the-build">Start path</a>
+            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/learning-paths/shaping-the-build.json" target="_blank" rel="noopener">GitHub path</a>
           </div>
         </article>
         <article class="course-route">
           <div class="course-route-name"><span>Focused path</span><strong>Model Context Protocol (MCP)</strong></div>
           <p>Build, secure, verify, and operate stateless MCP systems from wire envelopes through release gates.</p>
           <div class="course-route-actions">
-            <a class="course-route-link" href="lesson.html?path=phases/13-tools-and-protocols/06-mcp-fundamentals&amp;learningPath=model-context-protocol">Start path</a>
+            <a class="course-route-link" href="lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&amp;learningPath=model-context-protocol">Start path</a>
             <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/06-mcp-fundamentals" target="_blank" rel="noopener">GitHub source</a>
           </div>
         </article>
@@ -2143,7 +2397,7 @@
           <div class="course-route-name"><span>Focused path</span><strong>Agent Skills</strong></div>
           <p>Build, invoke, route, secure, evaluate, package, and verify portable skills in real agent hosts.</p>
           <div class="course-route-actions">
-            <a class="course-route-link" href="lesson.html?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&amp;learningPath=agent-skills">Start path</a>
+            <a class="course-route-link" href="lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&amp;learningPath=agent-skills">Start path</a>
             <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/22-skills-and-agent-sdks" target="_blank" rel="noopener">GitHub source</a>
           </div>
         </article>
@@ -2184,7 +2438,7 @@
     </section>
 
     <section class="toc container" id="contents">
-      <div class="toc-title reveal reveal--left">Curriculum · 20 phases · 511 lessons</div>
+      <div class="toc-title reveal reveal--left">Curriculum · 20 phases · 523 lessons</div>
       <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">Tap a phase to expand its lessons. Each one ships when its math, code, and test are all written.</div>
       <div class="toc-list" id="phasesGrid"></div>
       <div class="legend">
@@ -2387,7 +2641,7 @@
   <script src="lang-picker.js?v=20260808d" defer></script>
   <script src="data.js?v=20260821c"></script>
   <script src="progress.js?v=20260822a"></script>
-  <script src="header.js?v=20260823b" defer></script>
+  <script src="header.js?v=20260829b" defer></script>
   <script src="cmdpalette.js?v=20260821a" defer></script>
   <script src="app.js?v=20260822a"></script>
   <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>

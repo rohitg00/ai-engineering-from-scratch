@@ -1,0 +1,48 @@
+{
+  "lesson": "53-prototype-pilot-or-production",
+  "title": "Prototype, Pilot, or Production",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What primarily distinguishes prototype, pilot, and production?",
+      "options": ["Programming language", "Visual polish", "Model size", "The learning question, real exposure, consequence, and ownership"],
+      "correct": 3,
+      "explanation": "The stages are different evidence and responsibility environments."
+    },
+    {
+      "stage": "check",
+      "question": "When is the prototype stage appropriate?",
+      "options": ["Only for UI", "When the unknown can be answered without real users or real data", "Whenever production is difficult", "After public launch"],
+      "correct": 1,
+      "explanation": "A prototype should answer the mechanism question with minimal consequence."
+    },
+    {
+      "stage": "check",
+      "question": "What must a pilot include?",
+      "options": ["No stop rule", "Automatic authority", "Bounded audience, owner, rollback, audit, metrics, and exit criteria", "Unlimited audience"],
+      "correct": 2,
+      "explanation": "A pilot exposes realistic conditions inside explicit limits."
+    },
+    {
+      "stage": "check",
+      "question": "When does a deployed build become production in the meaningful sense?",
+      "options": ["When the organization accepts continuous reliability, risk, and operational ownership", "When it has a URL", "When the prototype looks polished", "At the first commit"],
+      "correct": 0,
+      "explanation": "Production is an ongoing responsibility, not merely a hosting state."
+    },
+    {
+      "stage": "post",
+      "question": "What does stage drift mean?",
+      "options": ["A pilot ends", "A prototype gains users, data, or authority without gaining controls and ownership", "A metric changes", "A branch is renamed"],
+      "correct": 1,
+      "explanation": "Uncontrolled exposure turns a learning artifact into an unsafe service."
+    },
+    {
+      "stage": "post",
+      "question": "Why must stage boundaries be enforced technically?",
+      "options": ["A warning banner cannot prevent access or authority", "Documentation is illegal", "It replaces ownership", "It improves color contrast"],
+      "correct": 0,
+      "explanation": "Configuration, access control, and telemetry make the stage observable and enforceable."
+    }
+  ]
+}

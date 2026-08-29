@@ -1,0 +1,32 @@
+[
+  {
+    "target": "automation",
+    "rule": "Prevent implicit environment assumptions",
+    "verification": "Run the setup or tool preflight",
+    "fingerprint": "4583ddf9efe6",
+    "symptom": "Setup command failed",
+    "cause": "environment assumptions were implicit",
+    "recurrence": 3,
+    "consequence": "lost session"
+  },
+  {
+    "target": "scope",
+    "rule": "Prevent unchecked scope description",
+    "verification": "Run the scope checker",
+    "fingerprint": "84a04b190176",
+    "symptom": "Agent edited an unrelated file",
+    "cause": "scope was described but not checked",
+    "recurrence": 2,
+    "consequence": "review churn"
+  },
+  {
+    "target": "test",
+    "rule": "Prevent missing executable example for edge case",
+    "verification": "Run the new regression test",
+    "fingerprint": "a615a06d2823",
+    "symptom": "A regression escaped",
+    "cause": "edge case had no executable example",
+    "recurrence": 1,
+    "consequence": "user-visible failure"
+  }
+]

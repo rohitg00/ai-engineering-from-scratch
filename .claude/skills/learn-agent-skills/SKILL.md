@@ -137,7 +137,9 @@ Never drop or mark a prerequisite complete by assumption.
    record the resolved script path, resolved target path, cwd, exact argv, and
    exit code.
 7. Ask post-stage quiz questions one at a time. Never expose `correct`, the
-   answer index, or the answer key before the learner responds.
+   answer index, or the answer key before the learner responds. Never put a
+   real answer letter or the answer distribution in a reply hint; use
+   `Reply with one letter: <A|B|C|D>.`
 8. Mark the row `Done` only after the checkpoint and quiz are complete. Record
    a compact evidence note, the date, and unlock the next row.
 

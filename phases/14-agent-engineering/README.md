@@ -8,6 +8,11 @@
 
 **First lesson:** [The Agent Loop](01-the-agent-loop/)
 
+Two focused routes are available when you do not need the full phase:
+
+- [Agent-Assisted Engineering](../../learning-paths/using-coding-agents.json) covers task framing, repository evidence, harnesses, isolation, verification, review, and durable feedback.
+- [Product Judgment and Delivery](../../learning-paths/shaping-the-build.json) covers outcomes, workflow discovery, assumptions, slices, specifications, metrics, staged release, and feedback ownership.
+
 Run this command from the repository root:
 
 ```bash

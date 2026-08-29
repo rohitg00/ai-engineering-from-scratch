@@ -202,7 +202,8 @@ credential, publishing, or deployment authority.
    unexecuted command and remaining uncertainty.
 7. Ask every `post` quiz item one at a time. If the quiz has no staged items,
    ask all items. Do not reveal `correct`, an answer index, or an explanation
-   before the learner responds.
+   before the learner responds. Never put a real answer letter or the answer
+   distribution in a reply hint; use `Reply with one letter: <A|B|C|D>.`
 8. Mark the row `Done` only after the lesson checkpoint and quiz. Append one
    compact Wire evidence row, add the score to Notes, set the next row to
    `Next`, and update `Current`.

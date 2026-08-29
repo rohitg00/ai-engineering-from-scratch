@@ -3,7 +3,13 @@
   "outputDirectory": "site",
   "framework": null,
   "installCommand": "echo skip",
+  "routes": [
+    { "src": "/lesson\\.html", "methods": ["GET", "HEAD"], "dest": "/api/lesson?legacy=1" },
+    { "src": "/certification\\.html", "methods": ["GET", "HEAD"], "dest": "/api/certification?legacy=1" }
+  ],
   "rewrites": [
+    { "source": "/lesson", "destination": "/api/lesson" },
+    { "source": "/certification", "destination": "/api/certification" },
     { "source": "/", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/" },
     { "source": "/about", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/about" },
     { "source": "/catalog", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/catalog" },
@@ -17,7 +23,6 @@
     { "source": "/glossary", "destination": "/glossary.html" },
     { "source": "/catalog", "destination": "/catalog.html" },
     { "source": "/certifications", "destination": "/certifications.html" },
-    { "source": "/certification", "destination": "/certification.html" },
     { "source": "/assessment", "destination": "/assessment.html" },
     { "source": "/path", "destination": "/prereqs.html" },
     { "source": "/roadmap", "destination": "/prereqs.html" },

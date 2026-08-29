@@ -16,6 +16,8 @@ The aesthetic is documented in the `blueprint-diagram` Claude Code skill, which 
 | 003 | pixel-vector-bezier | — | — | 2026-05-09 | reference example for the skill |
 | 004 | gaussian-kernel-blur | 1 | 8 | 2026-05-09 | gaussian blur visualization for "Optimization: Gradient Descent Family" lesson |
 | 005 | transformer-attention-heads | 7 | 1 | 2026-05-09 | exploded view of multi-head attention block |
+| 006 | ai-engineering-learning-paths | all | core learning paths | 2026-08-23 | four connected domain paths for navigating the curriculum |
+| 006.M | ai-engineering-learning-paths-mobile | all | core learning paths | 2026-08-23 | vertical narrow-screen view of the four connected domain paths |
 
 ## Numbering
 

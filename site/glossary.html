@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260823b">
+  <link rel="stylesheet" href="style.css?v=20260824a">
   <style>
     .glossary-page {
       padding-block: 104px 80px;
@@ -849,6 +849,7 @@
           <p class="glossary-kicker">Reference ledger · curriculum v1.0</p>
           <h1>AI Engineering Glossary</h1>
           <p class="glossary-deck">Precise working definitions for the systems you build. Start with the meaning, then use the examples, distinctions, and lesson links to turn vocabulary into judgment.</p>
+          <p class="glossary-deck">Each entry separates a term's working definition from why it matters in an AI system, how it appears in practice, and what engineers commonly confuse it with. Search by term, alias, or idea; narrow the ledger by learning area; then follow the linked course lesson or primary source when you need the full derivation. Every entry has a stable fragment link, so you can cite one definition directly without sending someone through the entire index.</p>
         </div>
         <div class="glossary-stats" aria-label="Glossary statistics">
           <div class="glossary-stat">
@@ -926,7 +927,7 @@
 
   <script src="data.js?v=20260821c"></script>
   <script src="progress.js?v=20260822a"></script>
-  <script src="header.js?v=20260823b" defer></script>
+  <script src="header.js?v=20260829b" defer></script>
   <script src="cmdpalette.js?v=20260821a" defer></script>
   <script>
     (function () {
@@ -1226,7 +1227,7 @@
             var rawUrl = text(resource.url || resource.href);
             var lessonMatch = !sourceKind && rawUrl.match(/(?:^|\.\.\/|\/)(phases\/[^/?#]+\/[^/?#]+)/);
             var url = lessonMatch
-              ? 'lesson.html?path=' + encodeURIComponent(lessonMatch[1])
+              ? 'lesson?path=' + encodeURIComponent(lessonMatch[1])
               : safeUrl(rawUrl);
             if (!resourceLabel || !url) return;
             var external = false;

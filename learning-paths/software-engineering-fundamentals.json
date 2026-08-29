@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "software-engineering-fundamentals",
+  "title": "Software Engineering Fundamentals",
+  "summary": "Build the repository, debugging, testing, interface, security, release, and operational foundations AI systems depend on.",
+  "estimatedMinutes": 730,
+  "lessons": [
+    {"order": 1, "path": "phases/00-setup-and-tooling/01-dev-environment", "minutes": 45, "required": true},
+    {"order": 2, "path": "phases/00-setup-and-tooling/02-git-and-collaboration", "minutes": 60, "required": true},
+    {"order": 3, "path": "phases/00-setup-and-tooling/06-python-environments", "minutes": 45, "required": true},
+    {"order": 4, "path": "phases/00-setup-and-tooling/07-docker-for-ai", "minutes": 60, "required": true},
+    {"order": 5, "path": "phases/00-setup-and-tooling/09-data-management", "minutes": 60, "required": true},
+    {"order": 6, "path": "phases/00-setup-and-tooling/10-terminal-and-shell", "minutes": 45, "required": true},
+    {"order": 7, "path": "phases/00-setup-and-tooling/12-debugging-and-profiling", "minutes": 60, "required": true},
+    {"order": 8, "path": "phases/13-tools-and-protocols/01-the-tool-interface", "minutes": 60, "required": true},
+    {"order": 9, "path": "phases/13-tools-and-protocols/05-tool-schema-design", "minutes": 60, "required": true},
+    {"order": 10, "path": "phases/14-agent-engineering/38-verification-gates", "minutes": 55, "required": true},
+    {"order": 11, "path": "phases/17-infrastructure-and-production/20-shadow-canary-progressive", "minutes": 60, "required": true},
+    {"order": 12, "path": "phases/17-infrastructure-and-production/25-security-secrets-audit", "minutes": 60, "required": true},
+    {"order": 13, "path": "phases/17-infrastructure-and-production/23-sre-for-ai", "minutes": 60, "required": true}
+  ]
+}

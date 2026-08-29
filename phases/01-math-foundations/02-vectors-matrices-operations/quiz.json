@@ -3,37 +3,44 @@
     {
       "stage": "pre",
       "question": "For matrix multiplication (m x n) @ (n x p), what must be true about the dimensions?",
-      "options": ["m must be greater than p", "m must equal p", "The inner dimensions n must match", "All dimensions must be equal"],
+      "options": ["The first matrix's rows must equal the second matrix's columns", "The outer dimensions m and p must match", "The first matrix's columns must equal the second matrix's rows", "Every dimension m, n, and p must be equal"],
       "correct": 2,
       "explanation": "Matrix multiplication requires the number of columns in the first matrix (n) to equal the number of rows in the second matrix (n). The result has shape (m x p)."
     },
     {
-      "stage": "pre",
-      "question": "What is the identity matrix?",
-      "options": ["A square matrix with ones on the diagonal and zeros elsewhere that acts as the multiplicative identity", "A matrix of all ones", "The transpose of any given matrix", "A matrix where every element is unique"],
+      "stage": "check",
+      "question": "How is the identity matrix defined?",
+      "options": ["A square matrix that leaves a compatible matrix unchanged when multiplied", "A square matrix whose entries are all equal to one", "A transposed matrix whose rows and columns are exchanged", "A square matrix whose diagonal entries are all distinct"],
       "correct": 0,
       "explanation": "The identity matrix I has ones on the diagonal and zeros everywhere else. Multiplying any matrix by I returns the original matrix unchanged, like multiplying a number by 1."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "What is the key difference between element-wise multiplication and matrix multiplication?",
-      "options": ["Element-wise is faster while matrix multiplication is more accurate", "They produce the same result but use different notation", "Element-wise only works on vectors while matrix multiplication works on matrices", "Element-wise multiplies matching positions (same shape required), matrix multiplication takes dot products of rows and columns (inner dimensions must match)"],
-      "correct": 3,
+      "options": ["Element-wise multiplication applies only to vectors; matrix multiplication applies only to matrices", "Element-wise multiplication uses matching entries; matrix multiplication uses row-column dot products", "Element-wise multiplication requires inner dimensions; matrix multiplication requires identical shapes", "Element-wise multiplication changes shapes; matrix multiplication always preserves them"],
+      "correct": 1,
       "explanation": "Element-wise (Hadamard) product multiplies corresponding elements and requires identical shapes. Matrix multiplication computes dot products between rows and columns with the rule (m,n)@(n,p)=(m,p)."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "In the expression 'output = relu(W @ x + b)', what role does broadcasting play?",
-      "options": ["It converts the data types of W and x to match", "It broadcasts the computation across multiple GPUs", "It automatically stretches the bias vector b to match the shape of W @ x so they can be added", "It repeats the relu activation across all elements"],
-      "correct": 2,
-      "explanation": "W @ x produces a column vector, and b is also a vector. Broadcasting stretches b across the batch dimension if needed, allowing element-wise addition without explicit shape matching."
+      "options": ["It distributes the calculation across available compute devices", "It converts W and x to use the same numeric data type", "It applies ReLU separately to every position in the output", "It expands b across compatible batch dimensions before addition"],
+      "correct": 3,
+      "explanation": "For one input, W @ x and b must have the same output shape. For a column-oriented batch shaped (features, batch), use b[:, None] so the bias has shape (outputs, 1) and broadcasts across columns. A one-dimensional b follows trailing-dimension alignment and does not reliably broadcast across the batch axis."
     },
     {
       "stage": "post",
-      "question": "What does a determinant of zero for a matrix indicate?",
-      "options": ["The matrix is singular: it crushes at least one dimension, cannot be inverted, and has no unique solution", "The matrix is the identity matrix", "The matrix has all zero entries", "The matrix performs a rotation"],
+      "question": "Which property follows from a zero determinant?",
+      "options": ["The matrix is singular and cannot have an inverse", "The matrix preserves lengths while rotating the input", "The matrix is an identity transformation with no scaling", "The matrix contains zero in every row and column"],
       "correct": 0,
       "explanation": "A zero determinant means the transformation collapses space by at least one dimension (e.g., mapping 2D to a line). The matrix has no inverse, and linear systems using it have either no solution or infinitely many."
+    },
+    {
+      "stage": "post",
+      "question": "How does the transpose operation change a matrix?",
+      "options": ["It replaces every off-diagonal entry with zero", "It exchanges the matrix rows and columns", "It guarantees that the matrix has an inverse", "It preserves both angle and length for every vector"],
+      "correct": 1,
+      "explanation": "Transposition exchanges rows and columns, so an entry at row i and column j moves to row j and column i."
     }
   ]
 }

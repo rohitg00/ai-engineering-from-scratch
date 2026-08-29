@@ -22,7 +22,7 @@
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-511-3553ff?style=flat-square&labelColor=fafaf5" alt="511 lessons"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lessons"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Website"></a>
@@ -36,33 +36,36 @@
 
 > **84% 的学生已经在使用 AI 工具，却只有 18% 觉得自己能专业地使用它们。** 这套课程正是为了填补这道鸿沟。
 >
-> 511 lessons. 20 phases. ~329 hours. Python, TypeScript, Rust, Julia. Every lesson ships
-> a reusable artifact: a prompt, a skill, an agent, an MCP server. Free, open source, MIT.
+> 523 节课。20 个阶段。约 342 小时。Python、TypeScript、Rust、Julia。每节课都产出一个可复用的成果：一个提示词、一个技能、一个智能体、一个 MCP 服务器。免费、开源、MIT 许可。
 >
 > 你不只是学 AI，你亲手把它造出来。从头到尾，全部手写。
 
 <!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>150,639</b> readers &nbsp;·&nbsp; <b>241,669</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-06-07</sub></p>
+<p align="center"><sub><b>114,584</b> readers &nbsp;·&nbsp; <b>181,995</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-08-29</sub></p>
 <!-- STATS:END -->
 
 ## Start here: choose what you want to build
 
-You do not need to scan 511 lessons before beginning. Pick one goal. Each link
+You do not need to scan 523 lessons before beginning. Pick one goal. Each link
 opens the same curriculum on GitHub or the website, and both versions use the
 same lesson code.
 
 | Your goal | Learn on GitHub | Learn on the website |
 |---|---|---|
-| I am new and want the complete foundation | [Phase 0: Setup and Tooling](../../phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson.html?path=phases/00-setup-and-tooling/01-dev-environment) |
-| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](../../phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson.html?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| I want to build production LLM applications | [Phase 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson.html?path=phases/11-llm-engineering/01-prompt-engineering) |
-| I want to build agents | [Phase 14: Agent Engineering](../../phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson.html?path=phases/14-agent-engineering/01-the-agent-loop) |
-| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson.html?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson.html?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| I am new and want the complete foundation | [Phase 0: Setup and Tooling](../../phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](../../phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| I want to build production LLM applications | [Phase 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| I want to build agents | [Phase 14: Agent Engineering](../../phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| I want to use coding agents on real repositories | [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json) | [Agent-Assisted Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| I want to shape the right build before implementation | [Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json) | [Product Judgment and Delivery](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
 | I want to prepare for a Claude certification | [Certification onboarding](../../certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |
 
 Not sure where you fit? Use the [`start-learning` placement tutor](../../skills/start-learning/SKILL.md)
 or the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).
+
+Compare four core domains and six career routes in the [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
 
 ### Use every lesson the same way
 
@@ -140,7 +143,7 @@ Only want Agent Skills? Use the Agent Skills invocation for your host. It
 creates `AGENT-SKILLS-LEARNING.md` and follows one coherent five-lesson route:
 contract, discovery, invocation, sandbox boundaries, then release evals and
 real-host portability. Start on the web with the
-[Agent Skills path](https://aiengineeringfromscratch.com/lesson.html?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+[Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
 
 The installer lists the hosts it can configure and asks where to install. If
 you do not have Node.js, `npx`, `python3`, a supported host, or a writable
@@ -156,7 +159,7 @@ flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot 
 explain its loss curve. You hook a function to an agent but can't say what attention does
 inside the model that's calling it.
 
-This curriculum is the spine. 20 phases, 511 lessons, four languages: Python, TypeScript,
+This curriculum is the spine. 20 phases, 523 lessons, four languages: Python, TypeScript,
 Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm
 gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time
 PyTorch shows up, you already know what it's doing under the hood.
@@ -352,7 +355,7 @@ Other curricula end with *"congratulations, you learned X."* Each lesson here en
 </table>
 
 > Install the lot with `python3 scripts/install_skills.py <target>`. Real tools, not homework.
-> By the end of the curriculum, you have a portfolio of 511 artifacts you actually
+> By the end of the curriculum, you have a portfolio of 523 artifacts you actually
 > understand because you built them.
 
 ### FIG_002 · A worked sample
@@ -833,7 +836,7 @@ navigation from 22 to 23.
 </details>
 
 <details id="phase-14">
-<summary><b>Phase 14 — Agent Engineering</b> &nbsp;<code>42 lessons</code>&nbsp; <em>Build agents from first principles — loop, memory, planning, frameworks, benchmarks, production, workbench.</em></summary>
+<summary><b>Phase 14 — Agent Engineering</b> &nbsp;<code>54 lessons</code>&nbsp; <em>Build agents from first principles, use coding agents reliably, and shape the work before implementation.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -880,8 +883,26 @@ navigation from 22 to 23.
 | 40 | [Multi-Session Handoff](../../phases/14-agent-engineering/40-multi-session-handoff/) | Build | Python |
 | 41 | [The Workbench on a Real Repo](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Build | Python |
 | 42 | [Capstone: Ship a Reusable Agent Workbench Pack](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Build | Python |
+| 43 | [Frame the Task Before the Agent Writes Code](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Build | Python |
+| 44 | [Build an Evidence-Backed Execution Plan](../../phases/14-agent-engineering/44-plan-from-evidence/) | Build | Python |
+| 45 | [Delegate Agent Work with Isolation and Merge Contracts](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Build | Python |
+| 46 | [Turn Every Agent Correction into a System Improvement](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Build | Python |
+| 47 | [Define the Outcome Before You Choose the Output](../../phases/14-agent-engineering/47-outcomes-before-output/) | Build | Python |
+| 48 | [Discover the Workflow People Actually Perform](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Build | Python |
+| 49 | [Map Assumptions and Resolve the Riskiest One First](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Build | Python |
+| 50 | [Choose the Smallest Slice That Can Change the Decision](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Build | Python |
+| 51 | [Write Specifications That Preserve Judgment](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Build | Python |
+| 52 | [Design Success Metrics Before the Result Exists](../../phases/14-agent-engineering/52-design-success-metrics/) | Build | Python |
+| 53 | [Choose Prototype, Pilot, or Production Deliberately](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Build | Python |
+| 54 | [Build a Feedback Ratchet with Ownership and Retirement](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Build | Python |
 
 Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent before it opens the full lesson docs.
+
+Lessons 31-46 form the [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json).
+Its manifest order combines the workbench foundation with task framing, planning,
+delegation, and durable feedback. Lessons 47-54 form the
+[Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json), from outcome framing
+through evidence, risk, scope, measurement, staged release, and feedback ownership.
 
 </details>
 
@@ -1341,18 +1362,18 @@ relative links inside lesson docs.
 
 ## 赞助本项目
 
-Free, MIT-licensed, 511 lessons. The curriculum is maintained on sponsorship alone. Cash only.
+Free, MIT-licensed, 523 lessons. The curriculum is maintained through cash sponsorships
+and approved Hardware Lab Partners.
 
-**Reach (verified 2026-05-14):** 55,593 monthly visitors · 90,709 page views · 7.5K stars ·
-Twitter/X is the #1 acquisition channel.
+**Reach:** 114,584 monthly visitors · 181,995 page views (Vercel Web Analytics verified
+2026-08-29) · 50,728 GitHub stars (verified 2026-08-29).
 
-<br />
-<br />
-<a href="https://vercel.com/open-source-program">
-  <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge-2026.svg" />
-</a>
+### Current sponsors
 
-**Current sponsors:** [CodeRabbit](https://coderabbit.link/rohit-ghumare) · [iii](https://iii.dev?utm_source=ai-engineering-from-scratch&utm_medium=readme&utm_campaign=sponsor)
+| Sponsor | What they support |
+|---|---|
+| [CodeRabbit](https://coderabbit.link/rohit-ghumare) · [iii](https://iii.dev?utm_source=ai-engineering-from-scratch&utm_medium=readme&utm_campaign=sponsor) | Current sponsors supporting curriculum maintenance and open-source development. |
+| [![Vercel OSS Program](https://vercel.com/oss/program-badge-2026.svg)](https://vercel.com/open-source-program) | Open-source infrastructure support through the Vercel Open Source Program. |
 
 | Tier | $/mo | What you get |
 |------|------|---|
@@ -1361,6 +1382,11 @@ Twitter/X is the #1 acquisition channel.
 | Silver | $750 | Small logo in README + listed as one supported provider in API lessons |
 | Gold | $2,000 | Medium logo in README + sponsor page + quarterly X / LinkedIn co-feature |
 | Platinum | $5,000 | Hero logo above the fold + one dedicated integration lesson, max 1 partner |
+| Diamond / Title Partner | $10,000 | Sole title-partner placement + hero logo + quarterly reporting and co-feature, max 1 partner |
+
+Hardware manufacturers can support the course through the separate
+[Hardware Lab Partner policy](../../SPONSORS.md#hardware-lab-partner). Equipment is in-kind
+support and does not automatically grant a cash sponsorship tier.
 
 Full rate card, hard rules, pricing anchors, and reach data: [SPONSORS.md](../../SPONSORS.md).
 Sign up via [GitHub Sponsors](https://github.com/sponsors/rohitg00).

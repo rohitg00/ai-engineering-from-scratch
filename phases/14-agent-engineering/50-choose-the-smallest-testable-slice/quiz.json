@@ -1,0 +1,48 @@
+{
+  "lesson": "50-choose-the-smallest-testable-slice",
+  "title": "Choose the Smallest Testable Slice",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What makes a small slice useful?",
+      "options": ["It has little code", "It avoids real uncertainty", "It can change an important decision", "It has a polished UI"],
+      "correct": 2,
+      "explanation": "Size matters only in relation to decisive evidence."
+    },
+    {
+      "stage": "check",
+      "question": "What must be defined before comparing candidate slices?",
+      "options": ["A release name", "A framework", "A final architecture", "The required proof set"],
+      "correct": 3,
+      "explanation": "Eligibility depends on covering the risky assumptions that need evidence."
+    },
+    {
+      "stage": "check",
+      "question": "Why can a cheap dashboard mockup be the wrong minimum?",
+      "options": ["It is too reversible", "It has users", "It may remove data and operational uncertainty from the test", "Dashboards are always bad"],
+      "correct": 2,
+      "explanation": "A slice that avoids the risky mechanism cannot answer the decision."
+    },
+    {
+      "stage": "check",
+      "question": "What is the correct response to a high-scoring slice that misses required proof?",
+      "options": ["Reject it as ineligible", "Increase its score", "Select it", "Call it production"],
+      "correct": 0,
+      "explanation": "Coverage is a gate before optimization."
+    },
+    {
+      "stage": "post",
+      "question": "Why add a stop rule?",
+      "options": ["To avoid measurement", "To specify what evidence would cause reframe, revision, or abandonment", "To limit documentation", "To make every result support the idea"],
+      "correct": 1,
+      "explanation": "An experiment must be capable of changing the decision."
+    },
+    {
+      "stage": "post",
+      "question": "Which slice is generally safer for testing diagnosis?",
+      "options": ["Production auto-remediation", "A read-only replay over representative incidents", "A migration", "A full platform"],
+      "correct": 1,
+      "explanation": "Replay can test the core unknown with lower consequence and high reversibility."
+    }
+  ]
+}

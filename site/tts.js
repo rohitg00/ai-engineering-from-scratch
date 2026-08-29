@@ -16,7 +16,7 @@
   'use strict';
 
   if (typeof window === 'undefined') return;
-  var VERSION = '20260809a';
+  var VERSION = '20260829a';
   if (window.__AIFS_TTS_VERSION === VERSION && window.AIFS_TTS) return;
   window.__AIFS_TTS_VERSION = VERSION;
 
@@ -159,7 +159,14 @@
     try {
       var parsed = new URL(url, location.href);
       if (parsed.origin !== location.origin) return '';
-      return parsed.pathname + parsed.search;
+      var pathname = parsed.pathname.replace(/\/lesson\.html$/, '/lesson');
+      var entries = Array.from(parsed.searchParams.entries()).sort(function (a, b) {
+        return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0;
+      });
+      var normalized = new URLSearchParams();
+      entries.forEach(function (entry) { normalized.append(entry[0], entry[1]); });
+      var search = normalized.toString();
+      return pathname + (search ? '?' + search : '');
     } catch (e) {
       return '';
     }
@@ -971,7 +978,7 @@
     if (!link || !link.matches('.lesson-nav-btn,.continue-link')) return false;
     try {
       var url = new URL(link.href, location.href);
-      return url.origin === location.origin && /\/lesson\.html$/.test(url.pathname) && !!url.searchParams.get('path');
+      return url.origin === location.origin && /\/lesson(?:\.html)?$/.test(url.pathname) && !!url.searchParams.get('path');
     } catch (e) {
       return false;
     }

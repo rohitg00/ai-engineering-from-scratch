@@ -125,6 +125,10 @@ Retrieval after a gap is what moves knowledge to long-term memory; that is
 this step's entire job. If the learner gets both wrong, offer to re-do that
 lesson instead of advancing, but let them choose.
 
+Keep each correct option private until the learner answers. Never put a real
+answer letter, a likely answer, or the quiz's answer distribution in a
+reply-format hint. In plain text, use `Reply with one letter: <A|B|C|D>.`
+
 ## Step 2 — Teach the lesson
 
 Fetch the lesson's `en.md`. The lessons share a fixed skeleton — problem,
@@ -153,7 +157,8 @@ artifact. Teach it in that order, interactively:
 Fetch `quiz.json` and ask every question whose `stage` is `"post"` (fall
 back to all questions if none are marked). One at a time, lettered options,
 no hints. After each answer, give the verdict and the explanation from the
-file. Report the score as `N/M`.
+file. Do not expose `correct`, the answer index, or a literal answer-letter
+example before the learner responds. Report the score as `N/M`.
 
 ## Step 4 — Record
 

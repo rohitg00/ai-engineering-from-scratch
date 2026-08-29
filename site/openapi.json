@@ -2,31 +2,302 @@
   "openapi": "3.1.0",
   "info": {
     "title": "AI Engineering from Scratch public resources",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Read-only, public machine-readable resources for the AI Engineering from Scratch curriculum. Lesson source remains canonical in the GitHub repository."
   },
-  "servers": [{"url": "https://aiengineeringfromscratch.com"}],
+  "servers": [
+    {
+      "url": "https://aiengineeringfromscratch.com"
+    }
+  ],
   "paths": {
     "/llms.txt": {
       "get": {
         "summary": "Read the agent-oriented curriculum map",
         "operationId": "getAgentIndex",
-        "responses": {"200": {"description": "Markdown lesson and resource index", "content": {"text/markdown": {"schema": {"type": "string"}}}}}
+        "responses": {
+          "200": {
+            "description": "Markdown lesson and resource index",
+            "content": {
+              "text/markdown": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/sitemap.xml": {
       "get": {
         "summary": "Read canonical public URLs",
         "operationId": "getSitemap",
-        "responses": {"200": {"description": "XML sitemap", "content": {"application/xml": {"schema": {"type": "string"}}}}}
+        "responses": {
+          "200": {
+            "description": "XML sitemap",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lesson": {
+      "parameters": [
+        {
+          "name": "path",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^(phases|certifications)/"
+          },
+          "description": "Repository-relative lesson path, for example phases/01-math-foundations/01-linear-algebra-intuition"
+        }
+      ],
+      "get": {
+        "summary": "Open a crawlable rendered lesson",
+        "operationId": "getLesson",
+        "responses": {
+          "200": {
+            "description": "Rendered lesson page with lesson-specific metadata and visible content",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "308": {
+            "$ref": "#/components/responses/PermanentRedirect"
+          },
+          "404": {
+            "description": "Missing, invalid, or unknown lesson path",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed; use GET or HEAD"
+          },
+          "500": {
+            "description": "Lesson page could not be assembled"
+          }
+        }
+      },
+      "head": {
+        "summary": "Read lesson response metadata",
+        "operationId": "headLesson",
+        "responses": {
+          "200": {
+            "description": "Lesson exists"
+          },
+          "308": {
+            "$ref": "#/components/responses/PermanentRedirect"
+          },
+          "404": {
+            "description": "Missing, invalid, or unknown lesson path"
+          },
+          "405": {
+            "description": "Method not allowed; use GET or HEAD"
+          },
+          "500": {
+            "description": "Lesson page could not be assembled"
+          }
+        }
+      }
+    },
+    "/certification": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$"
+          },
+          "description": "Certification track identifier, for example claude-ccao-f"
+        }
+      ],
+      "get": {
+        "summary": "Open a crawlable certification track",
+        "operationId": "getCertification",
+        "responses": {
+          "200": {
+            "description": "Rendered certification page with track-specific metadata and visible content",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "308": {
+            "$ref": "#/components/responses/PermanentRedirect"
+          },
+          "404": {
+            "description": "Missing, invalid, or unknown certification track ID",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed; use GET or HEAD"
+          },
+          "500": {
+            "description": "Certification page could not be assembled"
+          }
+        }
+      },
+      "head": {
+        "summary": "Read certification response metadata",
+        "operationId": "headCertification",
+        "responses": {
+          "200": {
+            "description": "Certification track exists"
+          },
+          "308": {
+            "$ref": "#/components/responses/PermanentRedirect"
+          },
+          "404": {
+            "description": "Missing, invalid, or unknown certification track ID"
+          },
+          "405": {
+            "description": "Method not allowed; use GET or HEAD"
+          },
+          "500": {
+            "description": "Certification page could not be assembled"
+          }
+        }
       }
     },
     "/lesson.html": {
+      "parameters": [
+        {
+          "name": "path",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Repository-relative lesson path preserved by the compatibility redirect"
+        }
+      ],
       "get": {
-        "summary": "Open a rendered lesson",
-        "operationId": "getLesson",
-        "parameters": [{"name": "path", "in": "query", "required": true, "schema": {"type": "string"}, "description": "Repository-relative lesson path, for example phases/01-math-foundations/01-linear-algebra-intuition"}],
-        "responses": {"200": {"description": "Rendered lesson page"}, "404": {"description": "Unknown lesson path"}}
+        "summary": "Redirect a legacy lesson URL to /lesson",
+        "operationId": "redirectLegacyLesson",
+        "deprecated": true,
+        "responses": {
+          "308": {
+            "description": "Permanent compatibility redirect to /lesson with the query string preserved",
+            "headers": {
+              "Location": {
+                "description": "Canonical extensionless lesson URL",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "summary": "Redirect a legacy lesson HEAD request to /lesson",
+        "operationId": "redirectLegacyLessonHead",
+        "deprecated": true,
+        "responses": {
+          "308": {
+            "description": "Permanent compatibility redirect to /lesson with the query string preserved",
+            "headers": {
+              "Location": {
+                "description": "Canonical extensionless lesson URL",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/certification.html": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Certification track ID preserved by the compatibility redirect"
+        }
+      ],
+      "get": {
+        "summary": "Redirect a legacy certification URL to /certification",
+        "operationId": "redirectLegacyCertification",
+        "deprecated": true,
+        "responses": {
+          "308": {
+            "description": "Permanent compatibility redirect to /certification with the query string preserved",
+            "headers": {
+              "Location": {
+                "description": "Canonical extensionless certification URL",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "summary": "Redirect a legacy certification HEAD request to /certification",
+        "operationId": "redirectLegacyCertificationHead",
+        "deprecated": true,
+        "responses": {
+          "308": {
+            "description": "Permanent compatibility redirect to /certification with the query string preserved",
+            "headers": {
+              "Location": {
+                "description": "Canonical extensionless certification URL",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "PermanentRedirect": {
+        "description": "Permanent redirect to the canonical public URL",
+        "headers": {
+          "Location": {
+            "description": "Canonical destination URL",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
       }
     }
   }

@@ -79,7 +79,7 @@ These test applied knowledge and implementation awareness. Examples:
 - "What is the correct order of steps to build Z?"
 - "If you observe X during training, what should you do?"
 
-Each question must have 3 or 4 answer options labeled A, B, C (and optionally D). Exactly one option is correct. The wrong options should be plausible but clearly incorrect to someone who studied the material.
+Each question must have exactly 4 answer options labeled A, B, C, and D. Exactly one option is correct. The wrong options should be plausible but clearly incorrect to someone who studied the material.
 
 Tag each question with the specific lesson it draws from (e.g., "Lesson 03: Matrix Transformations").
 
@@ -99,6 +99,13 @@ D) The rank of the matrix after transformation
 ```
 
 Wait for the user's answer before moving to the next question.
+
+### Answer isolation
+
+Keep the correct option and explanation private until the learner answers the
+current question. Never use a real answer letter, a likely answer, or the
+generated answer distribution in a reply-format hint. When a plain-text hint
+is needed, use exactly: `Reply with one letter: <A|B|C|D>.`
 
 ### Step 5: Track and Score
 
@@ -153,6 +160,8 @@ Wait for the user's choice and act accordingly.
 - Avoid repeating questions on retakes until the question pool is exhausted. Once exhausted, reshuffle or rephrase questions for subsequent retakes.
 - Questions must be directly grounded in the lesson docs, not general knowledge.
 - Do not show the correct answer until after the user responds.
+- Do not include literal answer letters in examples of how the learner should
+  reply; use `<A|B|C|D>` as the placeholder.
 - Keep question text concise. One or two sentences max.
 - Wrong options must be plausible. No joke answers.
 - If a phase has no lesson docs written yet (no `en.md` files found), tell the user: "Phase N does not have lesson content yet. Pick a completed phase to quiz on."

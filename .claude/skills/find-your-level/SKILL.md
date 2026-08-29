@@ -3,7 +3,7 @@ name: find-your-level
 version: 1.0.0
 description: >
   Interactive quiz that maps your AI/ML knowledge to a starting point in the
-  511-lesson, 20-phase AI Engineering from Scratch curriculum.
+  523-lesson, 20-phase AI Engineering from Scratch curriculum.
   Trigger phrases: "where should I start", "find my level", "what do I know",
   "which phase", "assess my knowledge", "placement test", "skip ahead"
 tags: [assessment, onboarding, curriculum, ai-engineering]
@@ -12,7 +12,7 @@ tags: [assessment, onboarding, curriculum, ai-engineering]
 # Find Your Level
 
 You are administering a placement quiz for the **AI Engineering from Scratch**
-curriculum (20 phases, 511 lessons). Your job is to figure out where the
+curriculum (20 phases, 523 lessons). Your job is to figure out where the
 learner should begin so they skip material they already know and land right
 where the challenge starts. Works with any agent.
 
@@ -36,6 +36,19 @@ the reply. After each round, tell the learner their score for that area
 (e.g. "Math & Statistics: 2/2") before moving to the next round. Keep
 commentary short. Do not explain the answers until the very end.
 
+### Answer isolation
+
+The answer key is intentionally stored in `references/answer-key.md`, outside
+this quiz body. Do not read that reference before the learner submits both
+answers for the current round. Then read only that round's key, score it, and
+keep its explanation private until all five rounds are complete. Do not preload
+later rounds.
+
+Never put a real answer letter, a likely answer, or the answer distribution in
+a reply-format example. For plain text, use this neutral prompt exactly:
+`Reply with Q1: <letter>, Q2: <letter>.` Substitute the current question
+numbers, but keep both values as `<letter>`.
+
 ---
 
 ### Round 1 -- Math & Statistics
@@ -43,22 +56,18 @@ commentary short. Do not explain the answers until the very end.
 **Q1.** You have two vectors, a = [1, 2, 3] and b = [4, 5, 6]. What is their
 dot product?
 
-- A) 21
-- B) 32
+- A) 32
+- B) 21
 - C) 15
 - D) 27
-
-**Correct: B) 32** (1*4 + 2*5 + 3*6 = 32)
 
 **Q2.** A fair coin is flipped 3 times. What is the probability of getting
 exactly 2 heads?
 
 - A) 1/4
-- B) 3/8
-- C) 1/2
-- D) 1/8
-
-**Correct: B) 3/8** (C(3,2) * (1/2)^3 = 3/8)
+- B) 1/2
+- C) 1/8
+- D) 3/8
 
 ---
 
@@ -68,20 +77,16 @@ exactly 2 heads?
 a model predicts everything as negative. What is its accuracy?
 
 - A) 50%
-- B) 10%
-- C) 90%
+- B) 90%
+- C) 10%
 - D) 0%
-
-**Correct: C) 90%** (it gets all negatives right, all positives wrong)
 
 **Q4.** Which of the following is a hyperparameter of a Random Forest?
 
 - A) The learned split thresholds
-- B) The number of trees
-- C) The leaf node predictions
+- B) The leaf node predictions
+- C) The number of trees
 - D) The Gini impurity at each node
-
-**Correct: B) The number of trees**
 
 ---
 
@@ -89,22 +94,18 @@ a model predicts everything as negative. What is its accuracy?
 
 **Q5.** During backpropagation, what does the chain rule compute?
 
-- A) The optimal learning rate
-- B) The gradient of the loss with respect to each weight
-- C) The number of layers needed
-- D) The batch size
-
-**Correct: B) The gradient of the loss with respect to each weight**
+- A) The loss gradient for each trainable weight
+- B) The best learning rate for the current optimizer
+- C) The exact number of layers the network requires
+- D) The batch size used for each training step
 
 **Q6.** What problem do residual connections (skip connections) in ResNet
 primarily address?
 
-- A) Overfitting on small datasets
-- B) Vanishing gradients in deep networks
-- C) Slow data loading
-- D) High memory usage
-
-**Correct: B) Vanishing gradients in deep networks**
+- A) Poor generalization on small training datasets
+- B) Slow loading of batches from persistent storage
+- C) High activation memory during model inference
+- D) Weak gradient flow through very deep networks
 
 ---
 
@@ -114,21 +115,17 @@ primarily address?
 compute between?
 
 - A) Pixels and labels
-- B) Queries, Keys, and Values
-- C) Encoder and Decoder only
+- B) Encoder and Decoder only
+- C) Queries, Keys, and Values
 - D) Embeddings and positions only
-
-**Correct: B) Queries, Keys, and Values**
 
 **Q8.** What is the main benefit of LoRA (Low-Rank Adaptation) when
 fine-tuning a large language model?
 
-- A) It trains all parameters from scratch
-- B) It freezes most weights and trains small low-rank update matrices
-- C) It removes the need for any training data
-- D) It doubles the model size for better results
-
-**Correct: B) It freezes most weights and trains small low-rank update matrices**
+- A) It retrains every base-model parameter from a completely fresh initialization
+- B) It trains low-rank adapters while the base-model weights stay frozen
+- C) It removes the need for labeled examples or task-specific training data
+- D) It duplicates the model layers to increase its adaptation capacity
 
 ---
 
@@ -137,22 +134,18 @@ fine-tuning a large language model?
 **Q9.** In a RAG (Retrieval-Augmented Generation) system, what happens before
 the LLM generates an answer?
 
-- A) The model is retrained on the query
-- B) Relevant documents are retrieved and injected into the prompt
-- C) The user manually selects context
-- D) The model searches its own weights
-
-**Correct: B) Relevant documents are retrieved and injected into the prompt**
+- A) Relevant documents are retrieved and added to the model prompt
+- B) The whole model is fully retrained on the user's current question
+- C) The user selects every context passage before each model request
+- D) The model searches only its pretrained parameter values
 
 **Q10.** In a multi-agent system, what is the primary purpose of a
 "coordinator" or "orchestrator" agent?
 
-- A) To replace all other agents
-- B) To assign tasks, route messages, and manage agent collaboration
-- C) To increase token usage
-- D) To serve as a backup model
-
-**Correct: B) To assign tasks, route messages, and manage agent collaboration**
+- A) To replace every specialist agent with one general-purpose model
+- B) To assign tasks, route messages, and coordinate the other agents
+- C) To maximize token usage across every agent interaction
+- D) To keep an identical backup model ready for system failures
 
 ---
 

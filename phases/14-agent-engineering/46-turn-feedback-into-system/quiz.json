@@ -1,0 +1,48 @@
+{
+  "lesson": "46-turn-feedback-into-system",
+  "title": "Turn Feedback into a System",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does a repeated agent correction reveal?",
+      "options": ["A missing or weak control in the work system", "A reason to skip tests", "A need for more chat history", "Only a weak model"],
+      "correct": 0,
+      "explanation": "Corrections are observations about missing tests, boundaries, examples, tools, or decisions."
+    },
+    {
+      "stage": "check",
+      "question": "Where should a regression correction become durable?",
+      "options": ["A longer prompt", "A test or evaluation", "A new model", "A meeting note"],
+      "correct": 1,
+      "explanation": "Executable proof prevents the same wrong result from silently returning."
+    },
+    {
+      "stage": "check",
+      "question": "Why find the root cause before writing a rule?",
+      "options": ["It removes the need for evidence", "Rules require citations", "It avoids all complexity", "Symptoms can arise from different missing controls"],
+      "correct": 3,
+      "explanation": "A symptom-only rule fails when the same cause appears in a different form."
+    },
+    {
+      "stage": "check",
+      "question": "When does a one-off correction justify a permanent control?",
+      "options": ["Always", "Never", "When recurrence or consequence justifies lasting complexity", "Only after release"],
+      "correct": 2,
+      "explanation": "The ratchet should preserve meaningful judgment without accumulating every preference."
+    },
+    {
+      "stage": "post",
+      "question": "Why fingerprint promoted controls?",
+      "options": ["To hide ownership", "For visual design", "To replace verification", "To collapse repeated lessons without losing distinct causes"],
+      "correct": 3,
+      "explanation": "Stable identity prevents the same control from being added repeatedly."
+    },
+    {
+      "stage": "post",
+      "question": "Why does every control need a retirement check?",
+      "options": ["Controls can become stale, contradictory, or superseded", "Agents dislike instructions", "Tests cannot persist", "All rules expire daily"],
+      "correct": 0,
+      "explanation": "The work system should remain minimal and current, not merely accumulate policy."
+    }
+  ]
+}

@@ -18,13 +18,19 @@ on:
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
       - "scripts/install_skills.py"
+      - "scripts/test_agent_negotiation.js"
+      - "scripts/test_agent_readiness.py"
+      - "scripts/test_seo_routes.js"
       - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
+      - "site/test_learning_paths.js"
+      - "languages.json"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
       - "site/build.js"
       - "site/**"
+      - "api/**"
       - "vercel.json"
       - ".github/workflows/curriculum.yml"
       - ".github/workflows/translate.yml"
@@ -45,13 +51,19 @@ on:
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
       - "scripts/install_skills.py"
+      - "scripts/test_agent_negotiation.js"
+      - "scripts/test_agent_readiness.py"
+      - "scripts/test_seo_routes.js"
       - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
+      - "site/test_learning_paths.js"
+      - "languages.json"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
       - "site/build.js"
       - "site/**"
+      - "api/**"
       - "vercel.json"
       - ".github/workflows/curriculum.yml"
       - ".github/workflows/translate.yml"
@@ -86,6 +98,16 @@ jobs:
         run: node --test site/test_build_artifacts.js
       - name: build the static site
         run: node site/build.js
+      - name: dynamic lesson and certification routes preserve their public contracts
+        run: node --test scripts/test_seo_routes.js
+      - name: agent-facing discovery surfaces stay complete
+        run: python3 scripts/test_agent_readiness.py
+      - name: Markdown negotiation stays cache-safe
+        run: node --test scripts/test_agent_negotiation.js
+      - name: static preview routes stay navigable
+        run: node --test site/test_static_preview_routes.js
+      - name: learning paths links and routes stay valid
+        run: node --test site/test_learning_paths.js
       - name: quiz answer positions are de-biased
         run: python3 scripts/debias_quizzes.py --check
       - name: certification answer positions are de-biased

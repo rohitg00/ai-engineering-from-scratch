@@ -355,7 +355,7 @@ Total estimated time: ~323 hours, at your own pace.
 | 30 | [MCP Registry Supply Chain: Admission, Drift, and Rollback](phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | ✅ | ~90 min |
 | 31 | [MCP Conformance Engineering: Versioning, Evidence, and Operations](phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | ✅ | ~100 min |
 
-## Phase 14: Agent Engineering — ✅ (~42 hours)
+## Phase 14: Agent Engineering — ✅ (~55 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
@@ -401,6 +401,18 @@ Total estimated time: ~323 hours, at your own pace.
 | 40 | Multi-Session Handoff | ✅ | ~50 min |
 | 41 | The Workbench on a Real Repo | ✅ | ~60 min |
 | 42 | Capstone: Ship a Reusable Agent Workbench Pack | ✅ | ~75 min |
+| 43 | Frame the Task Before the Agent Writes Code | ✅ | ~60 min |
+| 44 | Build an Evidence-Backed Execution Plan | ✅ | ~65 min |
+| 45 | Delegate Agent Work with Isolation and Merge Contracts | ✅ | ~70 min |
+| 46 | Turn Every Agent Correction into a System Improvement | ✅ | ~65 min |
+| 47 | Define the Outcome Before You Choose the Output | ✅ | ~60 min |
+| 48 | Discover the Workflow People Actually Perform | ✅ | ~70 min |
+| 49 | Map Assumptions and Resolve the Riskiest One First | ✅ | ~65 min |
+| 50 | Choose the Smallest Slice That Can Change the Decision | ✅ | ~65 min |
+| 51 | Write Specifications That Preserve Judgment | ✅ | ~75 min |
+| 52 | Design Success Metrics Before the Result Exists | ✅ | ~70 min |
+| 53 | Choose Prototype, Pilot, or Production Deliberately | ✅ | ~70 min |
+| 54 | Build a Feedback Ratchet with Ownership and Retirement | ✅ | ~75 min |
 
 ## Phase 15: Autonomous Systems — ✅ (~20 hours)
 
@@ -619,6 +631,6 @@ Total estimated time: ~323 hours, at your own pace.
 
 ---
 
-**Total: 20 phases, 511 lessons | 511 complete | ~1,066 hours estimated**
+**Total: 20 phases, 523 lessons | 523 complete | ~1,079 hours estimated**
 
 Want to help? Pick any ⬚ lesson and submit a PR. See [CONTRIBUTING.md](CONTRIBUTING.md).

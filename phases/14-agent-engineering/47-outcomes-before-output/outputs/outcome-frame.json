@@ -1,0 +1,20 @@
+{
+  "status": "ready-to-discover",
+  "issues": [],
+  "frame": {
+    "user": "on-call engineer",
+    "situation": "a production alert arrives during an incident",
+    "current_behavior": "searches three dashboards before finding the affected service",
+    "desired_outcome": "identifies the failing service and safe next action within two minutes",
+    "constraints": [
+      "read-only during diagnosis",
+      "must preserve the audit trail"
+    ],
+    "non_goals": [
+      "automatic remediation",
+      "replacing the incident commander"
+    ],
+    "proposed_output": "incident assistant"
+  },
+  "next_question": "What evidence would show that the desired outcome was achieved for the on-call engineer?"
+}
