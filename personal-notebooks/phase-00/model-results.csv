@@ -1,0 +1,4 @@
+model,accuracy,training_time
+Linear,0.72,0.1
+Random Forest,0.89,2.3
+Neural Net,0.94,45.6
