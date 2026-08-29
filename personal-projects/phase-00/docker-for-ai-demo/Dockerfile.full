@@ -1,0 +1,19 @@
+FROM python:3.12
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN python -m pip install \
+    --no-cache-dir \
+    --requirement requirements.txt
+
+COPY app.py .
+
+EXPOSE 5000
+
+CMD ["python", "app.py"]
