@@ -17,15 +17,26 @@ struct Check {
     optional: bool,
 }
 
+impl Check {
+    const fn new(name: &'static str, program: &'static str, optional: bool) -> Self {
+        Check {
+            name,
+            program,
+            args: &["--version"],
+            optional,
+        }
+    }
+}
+
 const CHECKS: &[Check] = &[
-    Check { name: "Git",         program: "git",    args: &["--version"], optional: false },
-    Check { name: "Python 3.10+", program: "python3", args: &["--version"], optional: false },
-    Check { name: "Node.js",     program: "node",   args: &["--version"], optional: false },
-    Check { name: "Rust (rustc)", program: "rustc",  args: &["--version"], optional: false },
-    Check { name: "Cargo",       program: "cargo",  args: &["--version"], optional: false },
-    Check { name: "uv (Python)", program: "uv",     args: &["--version"], optional: true },
-    Check { name: "pnpm",        program: "pnpm",   args: &["--version"], optional: true },
-    Check { name: "Julia",       program: "julia",  args: &["--version"], optional: true },
+    Check::new("Git", "git", false),
+    Check::new("Python 3.10+", "python3", false),
+    Check::new("Node.js", "node", false),
+    Check::new("Rust (rustc)", "rustc", false),
+    Check::new("Cargo", "cargo", false),
+    Check::new("uv (Python)", "uv", true),
+    Check::new("pnpm", "pnpm", true),
+    Check::new("Julia", "julia", true),
 ];
 
 fn run_check(check: &Check) -> Result<String, String> {
