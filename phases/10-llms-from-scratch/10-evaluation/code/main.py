@@ -1,3 +1,4 @@
+import hashlib
 import json
 from collections import Counter
 
@@ -110,7 +111,7 @@ def perplexity(log_probs):
 
 
 def token_log_probs_simulated(text, model_quality=0.8):
-    np.random.seed(hash(text) % 2**31)
+    np.random.seed(int(hashlib.sha256(text.encode()).hexdigest()[:8], 16) % 2**31)
     tokens = text.split()
     log_probs = []
     for i, token in enumerate(tokens):
@@ -188,7 +189,7 @@ def demo_model_bad(prompt):
 
 
 def demo_model_random(prompt):
-    np.random.seed(hash(prompt) % 2**31)
+    np.random.seed(int(hashlib.sha256(prompt.encode()).hexdigest()[:8], 16) % 2**31)
     words = ["yes", "no", "maybe", "42", "Paris", "unknown", "error"]
     return words[np.random.randint(len(words))]
 
