@@ -215,9 +215,13 @@ def _looks_like_path(arg: str) -> bool:
 def _check_path_jail(argv: Sequence[str], cfg: SandboxConfig) -> str | None:
     root = cfg.project_root
     for arg in argv[1:]:
-        if not _looks_like_path(arg):
+        if not arg or arg.startswith("-"):
             continue
-        if arg.startswith("-"):
+        # Also jail-check slashless names that exist under root: a symlink like
+        # `link.txt` -> /etc/passwd has no path separator, so _looks_like_path
+        # misses it, yet realpath still escapes the jail. lexists() catches the
+        # symlink even when its target is missing.
+        if not _looks_like_path(arg) and not os.path.lexists(os.path.join(root, arg)):
             continue
         # Resolve against root if arg is relative; let absolute paths stay absolute.
         candidate = arg
