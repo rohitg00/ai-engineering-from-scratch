@@ -8,8 +8,15 @@
     "primitives": ["Agent Skill"]
   },
   {
-    "task": "Use the release checklist and query a deployment API",
-    "primitives": ["Agent Skill", "MCP tool"]
+    "task": "Use the Xquik Skill and MCP tool for a bounded X post search",
+    "primitives": ["Agent Skill", "MCP tool"],
+    "integration": {
+      "skill": "x-twitter-scraper",
+      "source": "Xquik-dev/x-twitter-scraper",
+      "mcpServer": "https://xquik.com/mcp",
+      "tool": "xquik",
+      "path": "/api/v1/x/tweets/search"
+    }
   },
   {
     "task": "Enforce formatting after every generated file",

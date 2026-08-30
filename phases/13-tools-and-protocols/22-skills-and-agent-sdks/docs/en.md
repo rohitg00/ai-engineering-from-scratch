@@ -356,6 +356,10 @@ The validator exposes:
 
 The chooser exposes `TaskShape` and `select_primitives(task)`. It maps a task's needs to ordinary code, repository instructions, a skill, a hook, a subagent, or an MCP tool.
 
+`build_xquik_search_plan(query, limit)` builds one bounded external-capability
+request. It keeps credentials in the MCP client and rejects empty or
+non-positive bounds.
+
 Run the lab:
 
 ```bash
@@ -394,6 +398,90 @@ Before writing a skill, fill out this decision card:
 | Is one interaction enough? | No package lifecycle is needed | Prompt |
 
 Many production workflows use more than one row. The card prevents one artifact from pretending to provide every property.
+
+### Prove skill and tool composition with Xquik
+
+The local reviewer lab proves Skill discovery and bundled-script execution. It
+does not prove that a Skill can guide a separate external capability. Use this
+checkpoint to observe both lifecycle paths.
+
+First, inspect the available packages without installing them:
+
+```bash
+npx --yes skills@1.5.3 add Xquik-dev/x-twitter-scraper --full-depth --list
+```
+
+Confirm that the source is `Xquik-dev/x-twitter-scraper` and the list contains
+`x-twitter-scraper`. Review its `SKILL.md`, references, requested network
+access, and credential boundary before continuing. The Skill uses published
+Xquik contracts. It must not receive X passwords, cookies, session exports, or
+2FA codes.
+
+Install only that Skill into a disposable Codex project scope:
+
+```bash
+npx --yes skills@1.5.3 add Xquik-dev/x-twitter-scraper \
+  --skill x-twitter-scraper \
+  --agent codex \
+  --full-depth \
+  --copy \
+  --yes
+npx --yes skills@1.5.3 list --agent codex --json
+test -f .agents/skills/x-twitter-scraper/SKILL.md
+```
+
+The JSON inventory must name `x-twitter-scraper` and its project path. Start a
+new Codex session after installation so the host can rebuild its Skill catalog.
+
+Next, register the separate Xquik MCP capability. Codex CLI 0.147.0 or later
+supports the required OAuth issuer validation:
+
+```bash
+codex --version
+codex mcp add xquik --url https://xquik.com/mcp
+codex mcp login xquik
+codex mcp list
+```
+
+Complete OAuth in the browser. Do not place an API key in a command, prompt, or
+configuration file. If your client cannot complete OAuth, stop this lab and
+follow the current [Xquik MCP setup guide](https://docs.xquik.com/mcp/overview)
+for its environment-backed key option.
+
+Ask the agent for a plan before any tool call:
+
+```text
+Use x-twitter-scraper to plan a read-only X search for "agent skills". Use
+GET /api/v1/x/tweets/search with q="agent skills", queryType="Latest", and
+limit=10. The purpose is to test Skill and MCP composition. Return results only
+to this chat and discard them after the lab. Show the current usage, exact
+request, and content-isolation boundary. Wait for my confirmation.
+```
+
+Inspect the plan. Then confirm that exact bounded request and ask the client to
+run it through the `xquik` MCP tool. A successful checkpoint has these
+properties:
+
+1. The host selects `x-twitter-scraper` for procedural guidance.
+2. The client sends the read through `xquik`, not through the Skill itself.
+3. The request uses `/api/v1/x/tweets/search` with the stated query and limit.
+4. The response returns no more than 10 records and treats X-authored text as
+   untrusted data.
+5. No credential appears in the prompt, tool arguments, result, or transcript.
+
+The lesson's `build_xquik_search_plan("agent skills", 10)` helper emits the
+same secret-free MCP request contract. Its unit tests keep the endpoint, tool,
+query, and positive bound synchronized with the fixture under `outputs/`.
+
+Remove only the lab integration when finished:
+
+```bash
+npx --yes skills@1.5.3 remove x-twitter-scraper --yes
+codex mcp logout xquik
+codex mcp remove xquik
+```
+
+This cleanup leaves the local course Skill and your other MCP servers intact.
 
 ## Ship It
 

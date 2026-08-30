@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-import sys
 import importlib.util
+import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -12,7 +13,13 @@ from pathlib import Path
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from main import TaskShape, parse_frontmatter, select_primitives, validate_skill_text
+from main import (
+    TaskShape,
+    build_xquik_search_plan,
+    parse_frontmatter,
+    select_primitives,
+    validate_skill_text,
+)
 
 
 def skill_text(name: str = "release-check", description: str = "Check a release.") -> str:
@@ -244,6 +251,51 @@ class DecisionModelTests(unittest.TestCase):
         self.assertEqual(
             select_primitives(TaskShape(isolated_delegation=True)), ("subagent",)
         )
+
+    def test_xquik_search_composes_a_skill_and_mcp_tool(self) -> None:
+        plan = build_xquik_search_plan("  agent skills  ", 10)
+        self.assertEqual(plan["skill"], "x-twitter-scraper")
+        self.assertEqual(plan["mcp_server"], "https://xquik.com/mcp")
+        self.assertEqual(plan["tool"], "xquik")
+        self.assertEqual(plan["path"], "/api/v1/x/tweets/search")
+        self.assertEqual(
+            plan["options"]["query"],
+            {"q": "agent skills", "queryType": "Latest", "limit": 10},
+        )
+        self.assertEqual(
+            select_primitives(
+                TaskShape(repeatable_method=True, external_capability=True)
+            ),
+            ("Agent Skill", "MCP tool"),
+        )
+
+    def test_xquik_search_rejects_unbounded_inputs(self) -> None:
+        for query, limit in (
+            ("", 10),
+            ("agent skills", 0),
+            ("agent skills", 10_001),
+            ("agent skills", True),
+        ):
+            with self.subTest(query=query, limit=limit):
+                with self.assertRaises(ValueError):
+                    build_xquik_search_plan(query, limit)
+
+    def test_xquik_fixture_matches_the_request_builder(self) -> None:
+        fixture_path = (
+            Path(__file__).resolve().parents[2]
+            / "outputs"
+            / "skill-contract-reviewer"
+            / "assets"
+            / "task-shapes.json"
+        )
+        fixtures = json.loads(fixture_path.read_text(encoding="utf-8"))
+        fixture = next(item for item in fixtures if "integration" in item)
+        integration = fixture["integration"]
+        plan = build_xquik_search_plan("agent skills", 10)
+        self.assertEqual(integration["skill"], plan["skill"])
+        self.assertEqual(integration["mcpServer"], plan["mcp_server"])
+        self.assertEqual(integration["tool"], plan["tool"])
+        self.assertEqual(integration["path"], plan["path"])
 
 
 if __name__ == "__main__":

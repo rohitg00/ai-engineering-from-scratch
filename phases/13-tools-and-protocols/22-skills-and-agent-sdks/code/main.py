@@ -267,6 +267,32 @@ def select_primitives(task: TaskShape) -> tuple[str, ...]:
     return tuple(choices or ["prompt"])
 
 
+def build_xquik_search_plan(query: str, limit: int) -> dict[str, Any]:
+    """Build a bounded Xquik MCP request without handling credentials."""
+    normalized_query = query.strip()
+    if not normalized_query:
+        raise ValueError("query must not be empty")
+    if (
+        isinstance(limit, bool)
+        or not isinstance(limit, int)
+        or not 1 <= limit <= 10_000
+    ):
+        raise ValueError("limit must be an integer from 1 through 10,000")
+    return {
+        "skill": "x-twitter-scraper",
+        "mcp_server": "https://xquik.com/mcp",
+        "tool": "xquik",
+        "path": "/api/v1/x/tweets/search",
+        "options": {
+            "query": {
+                "q": normalized_query,
+                "queryType": "Latest",
+                "limit": limit,
+            }
+        },
+    }
+
+
 def demo() -> None:
     portable_example = """---
 name: incident-summary
@@ -324,6 +350,12 @@ Preserve timestamps and separate observations from inferences.
             "parallel_isolated_research": select_primitives(
                 TaskShape(isolated_delegation=True)
             ),
+        },
+        "external_skill_integration": {
+            "primitives": select_primitives(
+                TaskShape(repeatable_method=True, external_capability=True)
+            ),
+            "request": build_xquik_search_plan("agent skills", 10),
         },
     }
     print(json.dumps(result, indent=2))
