@@ -26,6 +26,42 @@ function documentFor(nodes) {
   };
 }
 
+function browserRootFor(nodes) {
+  let observerCallback;
+  const document = documentFor(nodes);
+  document.addEventListener = () => {};
+
+  function MutationObserver(callback) {
+    observerCallback = callback;
+  }
+
+  MutationObserver.prototype.observe = () => {};
+
+  return {
+    document,
+    root: {
+      AIFS_currentLang: () => 'zh',
+      MutationObserver,
+      document,
+    },
+    notifyMutation() {
+      observerCallback();
+    },
+  };
+}
+
+function loadBrowserApi(root) {
+  const modulePath = require.resolve('./home-i18n.js');
+  const previousWindow = global.window;
+  delete require.cache[modulePath];
+  global.window = root;
+  const api = require('./home-i18n.js');
+  delete require.cache[modulePath];
+  if (previousWindow === undefined) delete global.window;
+  else global.window = previousWindow;
+  return api;
+}
+
 test('Chinese homepage language selection localizes the primary navigation and masthead', () => {
   const nodes = [
     textNode('Contents'),
@@ -61,4 +97,32 @@ test('Chinese homepage copy covers navigation injected by the shared header', ()
     '。在引入任何框架之前，先从原始数学推导并实现每一个算法。'
   );
   assert.equal(translateText('LEARNING PATHS', 'en'), 'LEARNING PATHS');
+});
+
+test('Chinese translation ignores inherited dictionary properties', () => {
+  assert.equal(translateText('toString', 'zh'), 'toString');
+  assert.equal(translateText('constructor', 'zh'), 'constructor');
+});
+
+test('unsupported homepage languages use English document metadata', () => {
+  const document = documentFor([textNode('Start the Course')]);
+
+  applyHomeLanguage('fr', document);
+
+  assert.equal(document.documentElement.lang, 'en');
+  assert.equal(document.documentElement.dir, 'ltr');
+});
+
+test('delayed shared-header nodes translate and restore through the observer', () => {
+  const nodes = [];
+  const browser = browserRootFor(nodes);
+  const { applyHomeLanguage } = loadBrowserApi(browser.root);
+  const delayedNode = textNode('Learning Paths');
+
+  nodes.push(delayedNode);
+  browser.notifyMutation();
+
+  assert.equal(delayedNode.nodeValue, '学习路径');
+  applyHomeLanguage('en', browser.document);
+  assert.equal(delayedNode.nodeValue, 'Learning Paths');
 });

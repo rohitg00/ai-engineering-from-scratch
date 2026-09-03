@@ -77,13 +77,14 @@
     var prefix = (source.match(/^\s*/) || [''])[0];
     var suffix = (source.match(/\s*$/) || [''])[0];
     var middle = source.slice(prefix.length, source.length - suffix.length);
-    return prefix + (zh[middle] || middle) + suffix;
+    var translated = Object.prototype.hasOwnProperty.call(zh, middle) ? zh[middle] : middle;
+    return prefix + translated + suffix;
   }
 
   function applyHomeLanguage(lang, document) {
     var active = lang === 'zh' ? 'zh' : 'en';
     activeLanguage = active;
-    document.documentElement.lang = lang || 'en';
+    document.documentElement.lang = active;
     document.documentElement.dir = 'ltr';
 
     if (!document.body || typeof document.createTreeWalker !== 'function') return;
